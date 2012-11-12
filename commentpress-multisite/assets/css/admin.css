@@ -1,0 +1,17 @@
+/* Admin Styles */
+
+#cpmu_admin_wrapper h4 
+{
+	padding-top: 0;
+}
+
+#cpmu_bp_admin_options
+{
+	border-top: 1px solid #ddd;
+	margin-top: 30px;
+	padding-top: 20px;
+}
+
+#cpmu_bp_admin_options h3 
+{
+}

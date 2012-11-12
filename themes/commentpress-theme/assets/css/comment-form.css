@@ -1,0 +1,41 @@
+/*
+================================================================================
+CommentPress Comment Form Stylesheet
+================================================================================
+AUTHOR: Christian Wach <needle@haystack.co.uk>
+--------------------------------------------------------------------------------
+NOTES
+
+These styles amend the WP themed TinyMCE editor when applied to the comment form
+
+--------------------------------------------------------------------------------
+*/
+
+body
+{
+	margin: 0; /* prevent initial scrolling state */
+	padding: 0 7px;
+	line-height: 1;
+}
+
+p,
+ul,
+ol
+{
+	font-size: 14px;
+	margin: 0;
+	padding: 7px 0 7px 0;
+}
+
+ul li
+{
+	list-style-type: disc;
+	margin: 2px 0 10px 28px;
+}
+
+ol li
+{
+	list-style-type: decimal;
+	margin: 2px 0 10px 28px;
+}
+

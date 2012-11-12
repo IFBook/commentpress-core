@@ -1,0 +1,95 @@
+/* IE7 */
+
+
+
+/* zoom! */
+#container,
+#main_wrapper,
+#page_wrapper,
+#footer,
+div.item_body,
+div.item_body ul,
+div.item_body ul li,
+#content,
+.sidebar_minimiser,
+.sidebar_minimiser ul li a,
+.sidebar_contents_wrapper,
+#cp_book_info,
+div.paragraph_wrapper,
+.multipager,
+.multipager .alignleft,
+.multipager .alignright
+{
+	zoom: 1;
+}
+
+/* add layout to paragraphs and list items to prevent guillotine bug */
+.post p
+{
+	zoom: 1;
+}
+
+img.alignleft,
+img.alignright
+{
+	zoom: 1;
+}
+
+
+
+/* multipager */
+.multipager
+{
+	text-align: right;
+}
+
+/* seems to need forcing */
+.multipager span
+{
+	cursor: pointer;
+}
+
+.multipager .alignright
+{
+	float: none;
+}
+
+.multipager .alignleft
+{
+	padding-top: 4px;
+}
+
+
+
+/* comment formatting */
+.comments_container .comment-content > ol
+{
+	margin: 0 0 8px 28px;
+}
+
+
+
+
+#footer,
+#page_wrapper
+{
+	margin-bottom: 10px;
+}
+
+
+
+/* Book search */
+#book_search 
+{
+	padding: 4px 0 0 0;
+}
+
+#book_search input#s
+{
+	margin: 2px 5px 0 0;
+}
+
+#book_search input#searchsubmit
+{
+	margin: 0 10px 0 0;
+}
