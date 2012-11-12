@@ -1,0 +1,61 @@
+/*
+================================================================================
+CommentPress Admin Stylesheet
+================================================================================
+AUTHOR: Christian Wach <needle@haystack.co.uk>
+--------------------------------------------------------------------------------
+NOTES
+=====
+
+Delete or rename this file if you don't want a formatted back-end
+
+--------------------------------------------------------------------------------
+*/
+
+#commentpress_admin_wrapper h4
+{
+	padding-top: 20px;
+}
+
+
+
+/*
+The following are examples of amending the WP back end...
+
+body,
+#wpcontent
+{
+	background: #BBC5B9;
+}
+
+div#wphead
+{
+	background: #9AAB84;
+	border-bottom: 3px solid #453234;
+	height: 51px;
+}
+
+h1#site-heading a span
+{
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 0.8em;
+	font-weight: normal;	
+	padding: 2px 0 0 0;
+}
+
+div#wphead #user_info p
+{
+	color: #fff;
+}
+
+#header-logo
+{
+	display: none;
+}
+
+#media-buttons
+{
+}
+
+*/
+

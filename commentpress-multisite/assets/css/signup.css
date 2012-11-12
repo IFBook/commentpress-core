@@ -1,0 +1,19 @@
+/* Signup Form Styles */
+
+/* CommentPress theme compatibility */
+body.commentpress_page #cp-multisite-options h3
+{
+	color: #761D19;
+	font-size: 1.2em;
+	margin: 30px 0 5px 0;
+}
+
+body.commentpress_page #content .mu_register #setupform  #cp-multisite-options p,
+body.commentpress_page #content .mu_register #setupform #cp-multisite-options label
+{
+	color: black;
+	font-size: 1em;
+	margin-top: 0;
+	padding-top: 0;
+}
+
