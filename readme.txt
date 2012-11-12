@@ -154,7 +154,7 @@ To create a "CommentPress Core"-enabled Groupblog:
 
 == Other Notes ==
 
-Upgrades from previous versions of CommentPress are possible. Please follow the following procedures for your context.
+Upgrades from previous versions of "CommentPress" are possible. Please follow the following procedures for your context.
 
 
 <h4>Upgrade to CommentPress Core</h4>
