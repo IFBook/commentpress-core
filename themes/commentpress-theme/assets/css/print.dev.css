@@ -1,0 +1,450 @@
+/* 
+Print Style Sheet
+Original Author: Jack Dougherty for Writing History in the Digital Age 
+Updated by Christian Wach for CommentPress Core
+*/
+
+@media print {
+
+	*
+	{
+		width: auto !important;
+		height: auto !important;
+		min-height: 0 !important;
+		color: #000;
+	}
+	
+	/* Set sensible defaults */
+	body 
+	{
+		background: white;
+		color: #000;
+		font-size: 9pt;
+		/* Text should be "readable" */
+		font-family: Georgia, serif;
+		margin: 24pt;
+		padding: 0;
+	}
+	
+	/* Link style */
+	a
+	{
+		color: #000;
+		text-decoration: underline;
+	}
+	
+	/* Headings should be "legible" */
+	h1, h2, h3, h4, h5, h6 
+	{
+		font-weight: bold;
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		/* Avoid printed page breaks immediately after headers, or in middle of images or blockquotes */
+		page-break-after: avoid; 
+		page-break-inside: avoid;
+		text-transform: none;
+	}
+
+	/* Headings as links are superfluous */
+	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a
+	{
+		text-decoration: none;
+	}
+	
+	/* Remove unnecessary elements */
+	a.skip,
+	span.off-left,
+	#book_header img,
+	#tagline,
+	#book_search,
+	#user_links,
+	#header,
+	span.commenticonbox,
+	p.postmetadata,
+	div.ui-resizable-handle,
+	ul#sidebar_tabs,
+	div#activity_sidebar,
+	div#toc_sidebar,
+	#respond_wrapper,
+	#respond,
+	div.reply_to_para,
+	div.reply,
+	img.avatar,
+	a.comment-edit-link,
+	.no_comments,
+	.multipager,
+	p.edit_link
+	{
+		display: none; 
+	}
+	
+	/* force comment form to be hidden */
+	#respond
+	{
+		display: none !important;
+	}
+	
+	
+	
+	/* show Site Title */
+	#book_header h1
+	{
+		font-size: 12pt;
+		color: #666;
+	}
+	
+	
+	
+	/* prioritise content */
+	.post
+	{
+		font-size: 100%;
+		border-bottom: 2px solid #ccc;
+	}
+	
+	/* Page Title */
+	.post h2.post_title
+	{
+		margin: 0;
+		padding-top: 2pt;
+		padding-bottom: 4pt;
+		font-size: 24pt;
+		text-transform: none;
+	}
+	
+	/* post meta */
+	.post .search_meta
+	{
+		margin: 0;
+		padding: 0;
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	}
+
+	.post .search_meta,
+	.post .search_meta cite,
+	.post .search_meta p
+	{
+		margin: 0;
+		padding: 0;
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		font-size: 90%;
+		color: #444;
+	}
+
+	.post .search_meta a
+	{
+		text-decoration: none;
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	}
+	
+
+
+	/* post content */
+	.post h1, .post h2, .post h3, .post h4, .post h5, .post h6 
+	{
+		font-weight: bold;
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		text-transform: none;
+	}
+
+	.post p,
+	.post address,
+	.post pre
+	{
+		padding-left: 2.5em;
+		line-height: 1.5;
+	}
+	
+	.post ul,
+	.post ol
+	{
+		padding-left: 2.5em;
+		line-height: 1.5;
+	}
+	
+	.post ul li,
+	.post ol li
+	{
+		margin-bottom: 2pt;
+		line-height: 1.5;
+	}
+	
+	.post > ul,
+	.post > ol
+	{
+		padding-left: 4.5em;
+	}
+	
+	.post dd
+	{
+		line-height: 1.5;
+	}
+	
+	/* to show it */
+	li.list_commenticon
+	{
+		float: left;
+		width: 2.5em;
+		color: #888;
+		margin-left: -2.5em;
+		list-style: none;
+	}
+	
+	/* to hide the nested list comment icons */
+	ul ul li.list_commenticon,
+	ul ol li.list_commenticon,
+	ol ol li.list_commenticon,
+	ol ul li.list_commenticon
+	{
+		visibility: hidden;
+		float: left;
+		height: 1px;
+		margin: 0;
+		padding: 0;
+	}
+	
+	
+	
+	
+	/* paragraph marker */
+	span.para_marker
+	{
+		display: block;
+		float: left;
+		width: 2.5em;
+		font-size: 80%;
+		color: #888;
+		margin-left: -2.5em;
+	}
+	
+	span.para_marker a
+	{
+		color: #aaa;
+		text-decoration: none;
+	}
+	
+	.running_header_bottom
+	{
+		text-align: center;
+		padding-bottom: 1em;
+	}
+	
+	
+	
+	/* show divider */
+	#comments_sidebar
+	{
+		border-bottom: 2px solid #ccc;
+	}
+	
+	/* release vertical constraint on comment wrapper */
+	.sidebar_contents_wrapper
+	{
+		height: auto;
+	}
+	
+	/* prioritise comment content */
+	div#comments_sidebar .comments_container .comment-content
+	{
+		font-size: 100%;
+		padding: 0.2em 0 1em 0;
+		border: none !important;
+	}
+	
+	/* comment meta */
+	.comment-identifier a
+	{
+		color: #aaa;
+		text-decoration: none;
+	}
+	
+	/* comment elements to hide */
+	div#comments_sidebar .comments_container .reply
+	{
+		font-size: 110%;
+		padding: 0.2em 0 1em 0;
+		border: none !important;
+	}
+	
+	/* comment elements to show */
+	div#comments_sidebar .paragraph_wrapper
+	{
+		display: block !important;
+	}
+	
+	/* comment elements to hide */
+	div#comments_sidebar .paragraph_wrapper.no_comments,
+	a.comment-reply-link
+	{
+		display: none !important;
+	}
+	
+	
+	
+	
+	
+	/* comment content */
+	div#comments_sidebar .comments_container .comment-content h1,
+	div#comments_sidebar .comments_container .comment-content h2, 
+	div#comments_sidebar .comments_container .comment-content h3, 
+	div#comments_sidebar .comments_container .comment-content h4, 
+	div#comments_sidebar .comments_container .comment-content h5, 
+	div#comments_sidebar .comments_container .comment-content h6 
+	{
+		font-weight: bold;
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		text-transform: none;
+	}
+
+	div#comments_sidebar .comments_container .comment-content p
+	{
+		line-height: 1.4;
+		padding: 0 0 0.6em 0.2em;
+		margin: 0;
+	}
+	
+	div#comments_sidebar .comments_container .comment-content ul,
+	div#comments_sidebar .comments_container .comment-content ol
+	{
+		line-height: 1.4;
+		padding: 0 0 0 1.1em;
+		margin: 0;
+	}
+	
+	div#comments_sidebar .comments_container .comment-content > ul,
+	div#comments_sidebar .comments_container .comment-content > ol
+	{
+		padding: 0 0 0 1.1em;
+		margin: 0;
+	}
+	
+	div#comments_sidebar .comments_container .comment-content ul li,
+	div#comments_sidebar .comments_container .comment-content ol li
+	{
+		margin-bottom: 2pt;
+		line-height: 1.4;
+	}
+	
+	
+	
+	/* All Comments */
+	ul.all_comments_listing div.item_body
+	{
+		display: block !important;
+	}
+	
+	
+	
+	/* footer enabled */
+	#footer
+	{
+		border: none;
+		margin: 0;
+		padding: 0;
+		padding-top: 1em;
+		color: #aaa;
+		-webkit-box-shadow: 0 0 0 #fff;
+		-moz-box-shadow: 0 0 0 #fff;
+		-khtml-box-shadow: 0 0 0 #fff;
+		box-shadow: 0 0 0 #fff;
+	}
+	
+	#footer_inner 
+	{
+		margin: 0;
+		padding: 0;
+	}
+	
+	/* guessing some tags */
+	#footer h3,
+	#footer h4,
+	#footer h5,
+	#footer h6,
+	#footer address,
+	#footer span,
+	#footer p,
+	#footer ul li,
+	#footer ol li
+	{
+		color: #aaa;
+		font-size: 0.8em;
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	}
+	
+	#footer a
+	{
+		color: #aaa;
+		text-decoration: none;
+	}
+	
+	/* show url */
+	.hidden_page_url
+	{
+		display: block;
+		color: #666;
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		font-size: 0.8em;
+	}
+	
+	
+	
+	/* layout preferences for other elements */
+	img
+	{
+		page-break-inside: avoid; 
+		page-break-after: avoid;
+	}
+	
+	blockquote, 
+	table, 
+	pre 
+	{
+		page-break-inside: avoid;
+	}
+	
+	blockquote
+	{
+		margin-left: 1em;
+		padding-left: 1em;
+		border-left: 1px solid #aaa;
+		font-style: italic;
+	}
+	
+	table
+	{
+	}
+	
+	table th,
+	table td
+	{
+		border: 1px solid #aaa;
+	}
+	
+	ul, 
+	ol, 
+	dl
+	{
+		page-break-before: avoid;
+	}
+	
+	dt
+	{
+		font-weight: bold;
+	}
+	
+	
+	
+	/* footnotes plugin compatibility */
+	.simple-footnotes .para_marker,
+	.simple-footnotes .commenticonbox,
+	.simple-footnotes li.list_commenticon .para_marker,
+	.simple-footnotes li.list_commenticon .commenticonbox,
+	.simple-footnotes li > a:last-child,
+	.footnotes li.list_commenticon .para_marker,
+	.footnotes li.list_commenticon .commenticonbox,
+	.footnotes li .footnotereverse,
+	.footnotes li > a:last-child
+	{
+		display: none;
+	}
+	
+}

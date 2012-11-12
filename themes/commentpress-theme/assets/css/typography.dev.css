@@ -1,0 +1,1565 @@
+/* TYPOGRAPHY */
+
+
+
+/* This helps to identify headings at the initial build stage */
+h1, h2, h3, h5, h5, h6 { font-weight: bold }
+
+
+
+/* definition lists */
+dt 
+{ 
+	font-weight: bold;
+	padding: 3px 0;
+}
+
+dd 
+{
+	padding: 0 0 12px 8px;
+}
+
+/* acronyms etc */
+acronym, 
+abbr
+{
+	border-bottom: 1px dotted #B5BFB2;
+	cursor: help;
+}
+
+/* 
+In an aural stylesheet, we'd add:
+acronym { speak: normal; }
+abbr.initialism { speak: spell-out; }
+abbr.truncation { speak: normal; }
+*/
+
+
+
+/* buttons borrowed from BuddyPress */
+button,
+a.button,
+input[type=submit],
+input[type=button],
+input[type=reset],
+ul.button-nav li a,
+div.generic-button a
+{
+	background: #fff; /* Old browsers */
+	background: -moz-linear-gradient(top, #ffffff 0%, #ededed 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ededed)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #ffffff 0%,#ededed 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #ffffff 0%,#ededed 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, #ffffff 0%,#ededed 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, #ffffff 0%,#ededed 100%); /* W3C */
+	border: 1px solid #ccc;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	color: #777;
+	cursor: pointer;
+	font: normal 12px/20px Arial, Tahoma, Verdana, sans-serif;
+	outline: none;
+	padding: 4px 10px;
+	text-align: center;
+	text-decoration: none;
+	line-height: 14px;
+}
+
+button:hover,
+a.button:hover,
+a.button:focus,
+input[type=submit]:hover,
+input[type=button]:hover,
+input[type=reset]:hover,
+ul.button-nav li a:hover,
+ul.button-nav li.current a,
+div.generic-button a:hover
+{
+	background: #ededed;
+	background: -moz-linear-gradient(top, #ffffff 0%, #e0e0e0 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e0e0e0)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e0e0e0',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* W3C */
+	border: 1px solid #bbb;
+	color: #555;
+	outline: none;
+	text-decoration: none;
+}
+
+/* except for Search and User Links */
+#book_search input#search-submit, 
+#book_search input#searchsubmit,
+#book_header #user_links a.button
+{
+	margin-top: 1px
+	margin-left: 5px;
+	line-height: 10px;
+	color: #777;
+	padding: 3px 6px;
+}
+
+#book_header #user_links a.button
+{
+	margin-top: 1px
+	line-height: 10px;
+	color: #777;
+	padding: 1px 6px;
+}
+
+
+
+/* ajax commenting errors */
+#cpajax_error_msg
+{
+	font-weight: normal;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	text-decoration: none;
+	background-image: -webkit-linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255, 255, 255, .5)), color-stop(100%,rgba(255, 255, 255, 0)));
+	background-image: -moz-linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+	background-image: -ms-linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+	background-image: -o-linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+	background-image: linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+	background-color: #DB1717;
+	border: 1px solid #E1CA82;
+	clear: left;
+	color: #fff;
+	font-size: 12px;
+	display: block;
+	padding: 5px 10px;
+}
+
+
+
+
+
+
+/* 
+--------------------------------------------------------------------------------
+Page heading-related styles
+--------------------------------------------------------------------------------
+*/
+
+#title h1
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 1.4em;
+	line-height: 1;
+	font-weight: normal;	
+	color: #eee;
+	padding-top: 12px;
+}
+
+#title h1 a
+{
+	color: #eee;
+}
+
+#title h1 a:focus
+{
+	background-color: #9AAB84;
+}
+
+#tagline
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.9em;
+	line-height: 1;
+	font-style : italic;
+	font-weight: normal;
+	color: #eee;
+	padding-top: 3px;
+}
+
+
+
+/* Table Of Contents-related styles */
+ul#toc,
+ul#toc ul,
+ul#toc ul ul
+{
+	margin: 6px 0; 
+}
+
+ul#toc li
+{
+	margin: 0 0 4px 20px; 
+	list-style: circle;
+}
+
+ul#toc li a:link,
+ul#toc li a:hover,
+ul#toc li a:active,
+ul#toc li a:visited
+{
+	font-weight: normal;
+	color: #666;
+	text-decoration: none;
+}
+
+.sidebar_header h2
+{
+	float: left;
+	/* margin-bottom: 5px; */
+	/* margin-top: 4px; */
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 15px;
+	color: #761D19;
+	font-weight: normal;
+	padding-left: 5px;
+}
+
+
+
+
+
+
+/* 
+--------------------------------------------------------------------------------
+Post-related styles
+--------------------------------------------------------------------------------
+*/
+
+.post p,
+.post ul,
+.post ol,
+.post dl,
+.post address
+{
+	padding: 7px 7px 11px 7px;
+}
+
+.post h1 
+{
+	font-family: Georgia, serif;
+	font-size: 1.8em;
+	font-weight: normal;
+	color: #761D19;
+	margin: 8px 0 16px 0;
+	padding-left: 7px;
+	padding-right: 7px;
+}
+
+.post h2 
+{
+	font-family: Georgia, serif;
+	font-size: 1.55em;
+	font-weight: normal;
+	color: #761D19;
+	margin: 8px 0 16px 0;
+	padding-left: 7px;
+	padding-right: 7px;
+}
+
+.post h2.post_title
+{
+	font-size: 2em;
+	margin: 15px 0 5px 0;
+}
+
+.post h2 a:link,
+.post h2 a:hover,
+.post h2 a:visited
+{
+	color: #761D19;
+	text-decoration: none;
+}
+
+.post h2 a:active,
+.post h2 a:focus
+{
+	background-color: #CBFFBD;
+}
+
+.post h3
+{
+	font-size: 1.3em;
+	font-weight: normal;
+	color: #761D19;
+	margin: 12px 0 6px 0;
+	padding-left: 7px;
+	padding-right: 7px;
+}
+
+.post h3 a:link,
+.post h3 a:hover,
+.post h3 a:active,
+.post h3 a:visited
+{
+	font-weight: normal;
+	text-decoration: none;
+	color: #761D19;
+}
+
+.post h4
+{
+	font-size: 1.2em;
+	font-weight: 200;
+	color: #555;
+	margin: 20px 0 10px 0;
+	padding-left: 7px;
+	padding-right: 7px;
+}
+
+.post h5
+{
+	font-size: 1.1em;
+	font-weight: normal;
+	color: #888;
+	margin: 10px 0 10px 0;
+	padding-left: 7px;
+	padding-right: 7px;
+}
+
+.post h6
+{
+	font-size: 1em;
+	font-weight: normal;
+	color: #888;
+	margin: 10px 0 10px 0;
+	padding-left: 7px;
+	padding-right: 7px;
+}
+
+.post p
+{
+	
+	font-size: 1em;
+	line-height: 1.5;
+	padding-left: 7px;
+	padding-right: 7px;
+}
+
+.post img
+{
+	vertical-align: top;
+}
+
+.post img.alignleft
+{
+	margin: 0 10px 10px 0;
+}
+
+.post img.alignright
+{
+	margin: 0 0 10px 10px;
+}
+
+
+
+/* tables included in content */
+.post table
+{
+	margin: 0 7px 11px 7px;
+	color: #333;
+	border: 1px solid white;
+}
+
+.post table th
+{
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+.post table th,
+.post table td
+{
+	text-align: center;
+	padding: 5px;
+	border: 1px solid white;
+	background: #c5c7c8;
+}
+
+.post table tr.alternate th,
+.post table tr.alternate td
+{
+	background: #d6d6d7;
+}
+
+/* resets for the TinyMCE editor on General Comments */
+.post table.mceLayout th,
+.post table.mceLayout td
+{
+	text-align: left;
+	padding: 0;
+	border: none;
+	background: transparent;
+}
+
+
+
+.post p,
+.post ul,
+.post ol
+{
+	padding: 7px 7px 11px 7px;
+}
+
+.post small
+{
+	padding-left: 7px;
+	padding-right: 7px;
+}
+
+.post ul li
+{
+	list-style-type: disc;
+	margin: 2px 0 10px 28px;
+	line-height: 1.5;
+}
+
+.post ol li
+{
+	list-style-type: decimal;
+	margin: 2px 0 10px 28px;
+	line-height: 1.5;
+}
+
+.post ul li.list_commenticon,
+.post ol li.list_commenticon
+{
+	list-style-type: none;
+}
+
+.post p.postmetadata
+{
+	font-size: .7em;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	padding: 5px 0;
+	color: #666;
+	padding-left: 7px;
+	padding-right: 7px;
+}
+
+.post p.postname 
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	padding: 0 0 7px 0;
+	font-size: 0.7em;
+	color: #666;
+	padding-left: 7px;
+	padding-right: 7px;
+}
+
+.post-edit-link
+{
+	color: #666;
+	text-decoration: none;
+}
+
+.post_date
+{
+	font-size:1em;
+}
+
+ul.page_nav li a:link,
+ul.page_nav li a:hover,
+ul.page_nav li a:active,
+ul.page_nav li a:visited
+{
+	color: #444;
+	text-decoration: none;
+}
+
+p.edit_link
+{
+	clear: both;
+}
+
+p.edit_link a:link,
+p.edit_link a:hover,
+p.edit_link a:active,
+p.edit_link a:visited
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 70%;
+	color: #666;
+	text-decoration: none;
+}
+
+.post blockquote
+{
+	margin-left: 0;
+	margin-right: 0;
+	padding: 1px 15px;
+	background: transparent url(../images/icons/quote.png) no-repeat;
+	font-style: italic;
+}
+
+.post blockquote cite:before
+{
+	content: "\00BB \0020";
+}
+
+.post blockquote cite
+{
+}
+
+.post p.comments_hl
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 1.1em;
+	color: #444;
+	padding-top: 20px;
+}
+
+.post p.archive_hl
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 1.1em;
+	border-bottom: 2px solid #B5BFB2;
+	color: #666;
+}
+
+.post p.archive_hl a:link,
+.post p.archive_hl a:visited,
+.post p.archive_hl a:active,
+.post p.archive_hl a:hover
+{
+	color:#666;
+}
+
+.post .archive_item h3,
+.post .archive_item h3 a:link,
+.post .archive_item h3 a:visited,
+.post .archive_item h3 a:active,
+.post .archive_item h3 a:hover
+{
+	color: #761D19;
+}
+
+/* footnotes plugins compat */
+ol.footnotes,
+.footnotes ol,
+.simple-footnotes ol
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.8em;
+	color: #666;
+}
+
+.simple-footnotes
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #666;
+}
+
+.simple-footnotes p.notes
+{
+	font-size: 1em;
+	font-weight: bold;
+	color: #666;
+}
+
+#content a.simple-footnote,
+#content sup.footnote
+{
+	color: #761D19;
+	font-weight: bold;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-decoration: none;
+}
+
+#content a.simple-footnote sup,
+#content sup.footnote a
+{
+	padding: 0 1px;
+	background-color: #eee;
+	text-decoration: none;
+}
+
+#content sup a.footnote-link
+{
+	padding: 0 1px;
+	color: #761D19;
+	background-color: #eee;
+	font-weight: bold;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-decoration: none;
+}
+
+/* horizontal rule (can be used to divide text from footnotes) */
+.post hr 
+{
+	margin: 20px 0 8px 0;
+	padding-left: 7px;
+	padding-right: 7px;
+	color: #999;
+	background-color: #999;
+	height: 1px;
+	border: none;
+}
+
+.post a
+{
+	text-decoration: underline;
+}
+
+.post .postname a
+{
+	color: #666;
+	text-decoration: none;
+}
+
+big
+{
+	font-size: larger;
+}
+
+tt,
+code,
+kbd,
+samp
+{
+	font-family: monospace;
+}
+
+.post pre, 
+.post xmp, 
+.post plaintext, 
+.post listing
+{
+	padding: 7px 7px 11px 7px;
+}
+
+i, 
+cite, 
+em, 
+var, 
+address, 
+q
+{
+	font-style: italic;
+}
+
+sub
+{
+	vertical-align: sub;
+	font-size: smaller;
+}
+
+sup
+{
+	vertical-align: super;
+	font-size: smaller;
+}
+
+
+
+
+/* 
+--------------------------------------------------------------------------------
+Comment container & form styles
+--------------------------------------------------------------------------------
+*/
+
+div#comments_sidebar .comments_container > h3
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: normal;
+	font-size: 80%;
+	color: #761D19;
+	text-decoration: none;
+	background: #EFEFEF;
+	border-bottom: 1px solid #B5BFB2;
+}
+
+	/* comment_block_permalink */
+	div#comments_sidebar .comments_container > h3 a
+	{
+		display: block;
+		padding: 6px 0 6px 20px;
+		color: #761D19;
+		text-decoration: none;
+	}
+
+/* no comments header */
+h3.nocomments
+{
+	font-size: 90%;
+	text-transform: uppercase;
+	padding: 10px 0 6px 20px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+a.comment-edit-link:link,
+a.comment-edit-link:hover,
+a.comment-edit-link:active,
+a.comment-edit-link:visited
+{
+	display: block;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #761D19;
+	text-decoration: none;
+	margin: 5px 5px 0 0;
+	padding: 2px;
+	text-transform: uppercase;
+	font-size: 11px;
+}
+
+a.comment-edit-link:hover
+{
+	color: #761D19;
+}
+
+.comment-identifier > a img,
+.comment-identifier > img
+{
+	float: left;
+	margin: 5px 0 0 5px;
+	padding: 0 5px 0 0;
+	vertical-align: bottom;
+}
+
+.comment-identifier cite
+{
+	display: block;
+	padding: 5px;
+	font-size: 80%;
+	font-style: normal;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #222;
+	letter-spacing: 1px;
+}
+
+.comment-identifier cite img
+{
+	display: none;
+	vertical-align: middle;
+}
+
+.comment-identifier cite a,
+.comment-identifier cite a:hover,
+.comment-identifier cite a:active,
+.comment-identifier cite a:visited
+{
+	font-style: normal;
+	font-weight: normal;
+	color: #761D19;
+	text-decoration: none;
+}
+
+a.comment_permalink:link,
+a.comment_permalink:hover,
+a.comment_permalink:active,
+a.comment_permalink:visited
+{
+	display: block;
+	padding: 0 5px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 70%;
+	color: #666;
+	text-decoration: none;
+}
+
+a.comment_permalink:hover
+{
+	color: #761D19;
+}
+
+/* reply to a particular paragraph div */
+div.reply_to_para
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 70%;
+	color: #666;
+	text-decoration: none;
+}
+
+/* reply to a particular paragraph link */
+a.reply_to_para,
+a.reply_to_para:link,
+a.reply_to_para:hover,
+a.reply_to_para:active,
+a.reply_to_para:visited
+a#cancel-comment-reply-link,
+a#cancel-comment-reply-link:link,
+a#cancel-comment-reply-link:hover,
+a#cancel-comment-reply-link:active,
+a#cancel-comment-reply-link:visited
+{	
+	display: block;
+	padding: 5px 4px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #666;
+	text-decoration: none;
+}
+
+.reply a
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 70%;
+	color: #666;
+	text-decoration: none;
+	display: block;
+	padding: 4px 0 4px 4px;
+	border-bottom: 1px dashed #B5BFB2;
+}
+
+/* hover colour */
+a.reply_to_para:hover,
+.reply a:hover
+{	
+	color: #761D19;
+	background: #eee;
+}
+
+div#respond h4#respond_title
+{
+	padding: 0px 0 5px 0;
+	background-color: transparent;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #761D19;
+	font-size: 1em;
+	font-weight: normal;
+	margin: 0 0 5px 0;
+}
+
+div#respond h4 a:link,
+div#respond h4 a:hover,
+div#respond h4 a:active,
+div#respond h4 a:visited
+{
+	color: #761D19;
+	text-decoration: none;
+}
+
+div#respond p
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 80%;
+	color: #666;
+	padding: 0;
+	margin: 0 0 5px 0;
+	line-height: 1.6;
+}
+
+div#respond p a:link,
+div#respond p a:hover,
+div#respond p a:active,
+div#respond p a:visited
+{
+	color: #761D19;
+	text-decoration: none;
+	padding: 0;
+}
+
+div#respond p a:active,
+div#respond p a:hover,
+div#respond p a#cancel-comment-reply-link:hover
+{	
+	color: #761D19;
+}
+
+#commentform #author_details input, 
+#commentform textarea
+{
+	width: 90%;
+}
+
+#commentform #author_details label
+{
+	text-transform: uppercase;
+}
+
+#commentform #author_details input
+{
+	padding: 3px;
+	font-size: 12px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* logged in */
+#commentform #author_details p.author_is_logged_in
+{
+	text-transform: uppercase;
+	font-size: 12px;
+}
+
+/* not logged in */
+#commentform #author_details p.author_not_logged_in
+{
+	text-transform: uppercase;
+	font-size: 12px;
+	margin-bottom: 12px;
+}
+
+/*
+div#respond p a#cancel-comment-reply-link
+{	
+	border-top: 1px dashed #B5BFB2;
+	border-bottom: 1px dashed #B5BFB2;
+}
+*/
+
+.req
+{
+	color: #761D19;
+}
+
+/* compatibility with Subscribe to Comments Reloaded */
+div#respond .subscribe_reloaded_insert
+{
+	font-size: 11px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #666;
+	padding: 0;
+	margin: 15px 0;
+}
+
+div#respond .subscribe_reloaded_insert p
+{
+	font-size: 11px;
+}
+
+
+
+
+
+/* 
+--------------------------------------------------------------------------------
+Comment content styles
+--------------------------------------------------------------------------------
+*/
+
+div#sidebar .comments_container .comment-content 
+{
+	font-size: 95%;
+}
+
+div#sidebar .comments_container .comment-content h1,
+div#sidebar .comments_container .comment-content h2,
+div#sidebar .comments_container .comment-content h3,
+div#sidebar .comments_container .comment-content h4,
+div#sidebar .comments_container .comment-content h5,
+div#sidebar .comments_container .comment-content h6
+{
+	float: none;
+	font-size: 100%;
+	height: auto;
+	width: auto;
+	font-weight: bold;
+	color: #222;
+	font-family: Georgia, serif;
+	text-decoration: none;
+	border: none;
+	background: transparent;
+	padding: 0 0 8px 0;
+	margin: 0;
+	line-height: 1.3;
+}
+
+div#sidebar .comments_container .comment-content h1
+{
+	font-size: 140%;
+	padding: 8px 0 8px 0;
+}
+
+div#sidebar .comments_container .comment-content h2
+{
+	font-size: 130%;
+	padding: 6px 0 8px 0;
+}
+
+div#sidebar .comments_container .comment-content h3
+{
+	font-size: 120%;
+	padding: 4px 0 8px 0;
+}
+
+div#sidebar .comments_container .comment-content h4
+{
+	font-size: 110%;
+	padding: 2px 0 8px 0;
+}
+
+div#sidebar .comments_container .comment-content h5
+{
+	font-size: 100%;
+}
+
+div#sidebar .comments_container .comment-content h6
+{
+	font-size: 90%;
+}
+
+div#sidebar .comments_container .comment-content blockquote
+{
+	margin: 0 0 8px 0;
+	padding: 4px 8px 1px 8px;
+	font-style: italic;
+	background: #eee;
+	border: 1px dotted #ccc;
+}
+
+/* create alternately coloured blockquotes */
+div#sidebar .comments_container .comment-content blockquote blockquote,
+div#sidebar .comments_container .comment-content blockquote blockquote blockquote blockquote
+{
+	background: #fff;
+}
+
+div#sidebar .comments_container .comment-content blockquote blockquote blockquote,
+div#sidebar .comments_container .comment-content blockquote blockquote blockquote blockquote blockquote
+{
+	background: #eee;
+}
+
+div#sidebar .comments_container .comment-content blockquote cite:before
+{
+	content: "\00BB \0020";
+}
+
+div#sidebar .comments_container .comment-content blockquote cite
+{
+	font-style: italic;
+}
+
+div#sidebar .comments_container .comment-content table
+{
+	color: #333;
+	border: 1px solid #ccc;
+	margin: 0 0 8px 0;
+}
+
+div#sidebar .comments_container .comment-content table th
+{
+	font-weight: bold;
+}
+
+div#sidebar .comments_container .comment-content table th,
+div#sidebar .comments_container .comment-content table td
+{
+	text-align: center;
+	padding: 5px;
+	border: 1px solid #ccc;
+	background: #eee;
+}
+
+div#sidebar .comments_container .comment-content table tr.alternate th,
+div#sidebar .comments_container .comment-content table tr.alternate td
+{
+	background: #fff;
+}
+
+div#sidebar .comments_container .comment-content p,
+div#sidebar .comments_container .comment-content dl
+{
+	line-height: 1.3;
+	padding: 0 0 8px 0;
+}
+
+div#sidebar .comments_container .comment-content ul,
+div#sidebar .comments_container .comment-content ol
+{
+	margin: 0 0 0 20px;
+}
+
+div#sidebar .comments_container .comment-content > ul,
+div#sidebar .comments_container .comment-content > ol
+{
+	margin: 0 0 8px 20px;
+	border-bottom: none;
+}
+
+div#sidebar .comments_container .comment-content ul li
+{
+	list-style-type: disc;
+}
+
+div#sidebar .comments_container .comment-content ol li
+{
+	list-style-type: decimal;
+}
+
+div#sidebar .comments_container .comment-content ul li,
+div#sidebar .comments_container .comment-content ol li
+{
+	margin: 2px 0;
+	padding: 0;
+	line-height: 1.2;
+	border-top: none;
+}
+
+div#sidebar .comments_container .comment-content address,
+div#sidebar .comments_container .comment-content pre, 
+div#sidebar .comments_container .comment-content xmp, 
+div#sidebar .comments_container .comment-content plaintext, 
+div#sidebar .comments_container .comment-content listing
+{
+	padding: 0 0 8px 0;
+}
+
+div#sidebar .comments_container .comment-content a
+{
+	text-decoration: underline;
+}
+
+
+
+
+
+/* 
+--------------------------------------------------------------------------------
+Comment content styles on Special Pages (in content)
+--------------------------------------------------------------------------------
+*/
+
+#comments_in_page_wrapper .comment-content 
+{
+	font-size: 90%;
+	padding-top: 13px;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+#comments_in_page_wrapper .comment-content h1,
+#comments_in_page_wrapper .comment-content h2,
+#comments_in_page_wrapper .comment-content h3,
+#comments_in_page_wrapper .comment-content h4,
+#comments_in_page_wrapper .comment-content h5,
+#comments_in_page_wrapper .comment-content h6
+{
+	float: none;
+	font-size: 100%;
+	height: auto;
+	width: auto;
+	font-weight: bold;
+	color: #222;
+	font-family: Georgia, serif;
+	text-decoration: none;
+	border: none;
+	background: transparent;
+	padding: 0 0 8px 0;
+	margin: 0;
+	text-transform: none;
+	color: #761D19;
+}
+
+#comments_in_page_wrapper .comment-content h1
+{
+	font-size: 140%;
+	padding: 8px 0 8px 0;
+}
+
+#comments_in_page_wrapper .comment-content h2
+{
+	font-size: 130%;
+	padding: 6px 0 8px 0;
+}
+
+#comments_in_page_wrapper .comment-content h3
+{
+	font-size: 120%;
+	padding: 4px 0 8px 0;
+}
+
+#comments_in_page_wrapper .comment-content h4
+{
+	font-size: 110%;
+	padding: 2px 0 8px 0;
+}
+
+#comments_in_page_wrapper .comment-content h5
+{
+	font-size: 100%;
+}
+
+#comments_in_page_wrapper .comment-content h6
+{
+	font-size: 90%;
+}
+
+#comments_in_page_wrapper .comment-content blockquote
+{
+	margin: 0 0 8px 0;
+	padding: 4px 8px 1px 8px;
+	font-style: italic;
+	background: #eee;
+	border: 1px dotted #ccc;
+}
+
+/* create alternately coloured blockquotes */
+#comments_in_page_wrapper .comment-content blockquote blockquote,
+#comments_in_page_wrapper .comment-content blockquote blockquote blockquote blockquote
+{
+	background: #fff;
+}
+
+#comments_in_page_wrapper .comment-content blockquote blockquote blockquote,
+#comments_in_page_wrapper .comment-content blockquote blockquote blockquote blockquote blockquote
+{
+	background: #eee;
+}
+
+#comments_in_page_wrapper .comment-content blockquote cite:before
+{
+	content: "\00BB \0020";
+}
+
+#comments_in_page_wrapper .comment-content blockquote cite
+{
+	font-style: italic;
+}
+
+#comments_in_page_wrapper .comment-content table
+{
+	color: #333;
+	border: 1px solid #ccc;
+	margin: 0 0 8px 0;
+}
+
+#comments_in_page_wrapper .comment-content table th
+{
+	font-weight: bold;
+}
+
+#comments_in_page_wrapper .comment-content table th,
+#comments_in_page_wrapper .comment-content table td
+{
+	text-align: center;
+	padding: 5px;
+	border: 1px solid #ccc;
+	background: #eee;
+}
+
+#comments_in_page_wrapper .comment-content table tr.alternate th,
+#comments_in_page_wrapper .comment-content table tr.alternate td
+{
+	background: #fff;
+}
+
+#comments_in_page_wrapper .comment-content p,
+#comments_in_page_wrapper .comment-content dl
+{
+	line-height: 1.3;
+	padding: 0 0 8px 0;
+}
+
+#comments_in_page_wrapper .comment-content ul,
+#comments_in_page_wrapper .comment-content ol
+{
+	margin: 0 0 0 20px;
+	padding: 0;
+}
+
+#comments_in_page_wrapper .comment-content > ul,
+#comments_in_page_wrapper .comment-content > ol
+{
+	margin: 0 0 8px 20px;
+	border-bottom: none;
+}
+
+#comments_in_page_wrapper .comment-content ul li
+{
+	list-style-type: disc;
+}
+
+#comments_in_page_wrapper .comment-content ol li
+{
+	list-style-type: decimal;
+}
+
+#comments_in_page_wrapper .comment-content ul li,
+#comments_in_page_wrapper .comment-content ol li
+{
+	margin: 2px 0;
+	padding: 0;
+	line-height: 1.2;
+	border-top: none;
+}
+
+#comments_in_page_wrapper .comment-content address,
+#comments_in_page_wrapper .comment-content pre, 
+#comments_in_page_wrapper .comment-content xmp, 
+#comments_in_page_wrapper .comment-content plaintext, 
+#comments_in_page_wrapper .comment-content listing
+{
+	padding: 0 0 8px 0;
+}
+
+#comments_in_page_wrapper .comment-content a
+{
+	text-decoration: underline;
+}
+
+
+
+
+
+/* Group Page */
+ul#group_list li
+{
+	padding: 0 0 10px 0;
+	margin: 0 20px;
+	list-style: disc;
+}
+
+
+
+
+
+
+/* Search Results Page */
+#content .search_result
+{
+	padding: 7px 0 45px 0;
+}
+
+#content .search_result h3
+{
+	font-size: 2em;
+	margin: 15px 0 5px 0;
+	padding: 0 7px;
+}
+
+#content div.search_meta
+{
+	padding: 7px;
+	font-size: 70%;
+	color: #777;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#content div.search_meta img.avatar
+{
+	float: left;
+	margin: 0 7px 7px 0;
+}
+
+#content div.search_meta p
+{
+	margin: 0;
+	padding: 0;
+}
+
+#content p.search_meta
+{
+	font-size: 70%;
+	color: #777;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#content .search_meta cite 
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	display: block;
+	padding: 2px 0;
+	font-size: 1.1em;
+	font-weight: normal;
+	font-style: normal;
+}
+
+#content .search_meta a
+{
+	color: #222;
+	text-decoration: none;
+}
+
+#content .search_meta cite a
+{
+	color: #761D19;
+	text-decoration: none;
+	letter-spacing: 1px;
+}
+
+
+
+
+
+
+/* Image Page */
+ul.image_link h4
+{
+	font-size: 1.1em;
+	font-weight: 200;
+	color: #555;
+	margin: 20px 0 10px 0;
+}
+
+
+
+
+
+
+/* Version info */
+#content div.version_info
+{
+	margin: 10px 0;
+	background: #EFEFEF;
+	border-top: 1px solid #B5BFB2;
+	border-bottom: 1px solid #B5BFB2;
+	color: #f00;
+}
+
+#content div.version_info ul,
+#content div.version_info ul li
+{
+	list-style: none;
+	list-style-image: none;
+}
+
+#content div.version_info ul
+{
+	margin: 0;
+	padding: 0;
+	overflow: auto;
+}
+
+#content div.version_info ul li
+{
+	margin: 0;
+	padding: 0;
+}
+
+#content div.version_info ul li.newer_version
+{
+	float: right;
+	text-align: right;
+	width: 50%;
+}
+
+#content div.version_info ul li.older_version
+{
+	width: 50%;
+}
+
+#content div.version_info a
+{
+	display: block;
+	padding: 6px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.7em;
+	font-weight: normal;
+	display: block;
+	line-height: 1;
+	color: #761D19;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+#content div.version_info a:hover
+{
+	color: #222;
+}
+
+
+
+
+
+
+/* Footer styles */
+#footer
+{
+	color: #fff;
+}
+
+#footer .widget.license-widget h3.widget-title
+{
+	color: #ddd;
+	padding-bottom: 4px;
+}
+
+#footer p 
+{
+	font-size: 0.8em;
+	color: #fff;
+}
+
+#footer_inner a,
+#footer_inner p a
+{
+	color: #bbb;
+	text-decoration: underline;
+}
+
+
+
+
+/* WP-License Plugin Compatibility */
+#footer .wp_license
+{
+	text-align: center;
+	font-size: 90%;
+	font-weight: normal;
+}
+
+#footer .license-wrap
+{
+	font-size: 90%;
+	font-weight: normal;
+}
+
+
+
+
+
+/* Font stack options
+
+	The following represents a list of font stacks, as recommended by Nathan Ford in
+	http://unitinteractive.com/blog/2008/06/26/better-css-font-stacks/
+
+	I've added inverted commas around the relevant family names to ensure compatibility.
+	p = balanced for paragraphs or body copy
+	t = balanced for headlines or titles
+
+	- - - -
+
+Arial, 'Helvetica Neue', Helvetica, sans-serif - p, t
+
+Baskerville, 'Times New Roman', Times, serif - p
+Baskerville, 'Times, Times New Roman', serif - t
+
+Cambria, Georgia, Times, 'Times New Roman', serif - p, t
+'Century Gothic', 'Apple Gothic', sans-serif - p, t
+
+Consolas, 'Lucida Console', Monaco, monospace - p, t
+
+'Copperplate Light', 'Copperplate Gothic Light', serif - p, t
+
+'Courier New', Courier, monospace - p, t
+
+'Franklin Gothic Medium', 'Arial Narrow Bold', Arial, sans-serif - p, t
+
+Futura, 'Century Gothic', 'Apple Gothic', sans-serif - p, t
+
+Garamond, 'Hoefler Text', 'Times New Roman', Times, serif - p
+Garamond, 'Hoefler Text', Palatino, 'Palatino Linotype', serif - t
+
+Geneva, 'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif - p
+Geneva, Verdana, 'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', sans-serif - t
+
+Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif - p
+Georgia, Times, 'Times New Roman', serif - t
+
+GillSans, Calibri, Trebuchet, sans-serif - p
+GillSans, Trebuchet, Calibri, sans-serif - t
+
+'Helvetica Neue', Arial, Helvetica, sans-serif - p
+Helvetica, 'Helvetica Neue', Arial, sans-serif - t
+
+Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif - p, t
+
+'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', sans-serif - p, t
+
+Palatino, 'Palatino Linotype', Georgia, Times, 'Times New Roman', serif - p
+Palatino, 'Palatino Linotype', 'Hoefler Text', Times, 'Times New Roman', serif - t
+
+Tahoma, Geneva, Verdana - p
+Tahoma, Verdana, Geneva - t
+
+Times, 'Times New Roman', Georgia, serif - p, t
+
+Trebuchet, 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif - p
+Trebuchet, Tahoma, Arial, sans-serif - t
+
+Verdana, Geneva, Tahoma, sans-serif - p
+Verdana, Tahoma, Geneva, sans-serif - t
+
+*/
