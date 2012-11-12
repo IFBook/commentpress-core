@@ -1,4 +1,4 @@
-=== CommentPress Plugin ===
+=== CommentPress Core ===
 Contributors: needle, commentpress
 Author URI: http://www.haystack.co.uk
 Plugin URI: http://www.futureofthebook.org/commentpress
@@ -19,6 +19,8 @@ CommentPress Core allows fine-grained commenting in the margins of a text. Use i
 CommentPress Core is an open source theme and plugin for WordPress that allows readers to comment paragraph-by-paragraph, line-by-line or block-by-block in the margins of a text.
 
 Annotate, gloss, workshop, debate: with CommentPress Core you can do all of these things on a finer-grained level, turning a document into a conversation. It can be applied to a fixed document (paper/essay/book etc.) or to a running blog. Use it in combination with BuddyPress and Groupblogs to create communities around your documents.
+
+**The name has been changed from "CommentPress" to "CommentPress Core" for two reasons:** (a) because it serves as the basis for extending it for your purposes and (b) to safeguard historical installations, which could break if they upgrade. Newer "CommentPress" installations (versions 3.0.x - 3.3.x) can upgrade to the current version.
 
 **Please note:** this plugin comes bundled with the official CommentPress Default Theme which will be auto-activated when the plugin is activated. If you are upgrading from a previous version of CommentPress, please follow the instructions in the Installation section before doing so.
 
@@ -88,9 +90,9 @@ Base Install:
 
 Essential Plugins:
 
-1. Install, Network Activate and configure "BuddyPress"
-2. Download and Network Activate my fork of "BuddyPress Groupblog" on GitHub (which fixes a number of bugs) from https://github.com/christianwach/bp-groupblog
-3. If you can't do this, Install and Network Activate "BuddyPress Groupblog" 1.8+
+1. Install, Network Activate and configure "BuddyPress" (**Please note:** "CommentPress Core" has not been tested with the Forums component)
+2. Download and Network Activate the following fork of "BuddyPress Groupblog" on GitHub (which fixes a number of bugs). Download the .zip from [https://github.com/christianwach/bp-groupblog](https://github.com/christianwach/bp-groupblog)
+3. If you can't do this, Install and Network Activate "BuddyPress Groupblog" 1.8+ which is mostly okay
 4. Install and DO NOT Network Activate "BuddyPress Template Pack"
 
 Optional Plugins:
@@ -234,7 +236,7 @@ The merging process for the plugins and theme.
 
 <h4>Up to 3.3.6</h4>
 
-Up to this version, CommentPress was a separate plugin and theme.
+Up to this version, "CommentPress" was a collection of separate plugins and a theme.
 
 * See the [plugin commits on GitHub](https://github.com/IFBook/CommentPressPlugin/commits/master)
 * See the [theme commits on GitHub](https://github.com/IFBook/CommentPressTheme/commits/master)
