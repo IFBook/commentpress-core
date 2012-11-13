@@ -385,6 +385,7 @@ function cpajax_reassign_comments() {
 
 	// get all droppable items
 	var droppers = jQuery( '#content .post .textblock' );
+	console.log( droppers );
 
 	// remove droppability for repeated calls
 	droppers.droppable( 'destroy' );

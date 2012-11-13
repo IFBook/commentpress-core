@@ -55,7 +55,7 @@ function cpajax_enable_plugin() {
 	add_action( 'wp_head', 'cpajax_localise' );
 
 	// add our javascripts
-	add_action( 'wp_enqueue_scripts', 'cpajax_add_javascripts', 20 );
+	add_action( 'wp_enqueue_scripts', 'cpajax_add_javascripts', 120 );
 	
 	// add a button to the comment meta
 	add_filter( 'cp_comment_edit_link', 'cpajax_add_reassign_button', 20, 2 );
@@ -434,7 +434,7 @@ function cpajax_add_reassign_button( $edit_button, $comment ) {
 	// set default edit link text
 	$_text = apply_filters( 
 		'cp_comment_assign_link_text', 
-		__( 'Reassign', 'commentpress-plugin' )
+		__( 'Move', 'commentpress-plugin' )
 	);
 
 	// construct assign button
