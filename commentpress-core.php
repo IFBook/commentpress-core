@@ -22,7 +22,7 @@ Mark James for the icons: http://www.famfamfam.com/lab/icons/silk/
 // -----------------------------------------------------------------------------
 
 // set version
-define( 'COMMENTPRESS_VERSION', '3.4' );
+define( 'COMMENTPRESS_VERSION', '3.4.1' );
 
 // store reference to this file
 if ( !defined( 'COMMENTPRESS_PLUGIN_FILE' ) ) {
