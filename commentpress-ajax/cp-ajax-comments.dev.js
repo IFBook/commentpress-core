@@ -385,7 +385,7 @@ function cpajax_reassign_comments() {
 
 	// get all droppable items
 	var droppers = jQuery( '#content .post .textblock' );
-	console.log( droppers );
+	//console.log( droppers );
 
 	// remove droppability for repeated calls
 	droppers.droppable( 'destroy' );
@@ -395,7 +395,7 @@ function cpajax_reassign_comments() {
 		
 		// configure droppers
 		accept: '.comment-assign',
-		hoverClass: 'selected_para',
+		hoverClass: 'selected_para selected_dropzone',
 
 		// when the button is dropped
 		drop: function( event, ui ) {
