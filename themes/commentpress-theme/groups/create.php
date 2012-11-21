@@ -210,7 +210,7 @@
 
 					<?php do_action( 'bp_before_group_invites_creation_step' ); ?>
 
-					<?php if ( bp_is_active( 'friends' ) && bp_get_total_friend_count( bp_loggedin_user_id() ) ) : ?>
+					<?php if ( bp_is_active( 'friends' ) AND bp_get_total_friend_count( bp_loggedin_user_id() ) ) : ?>
 
 						<div class="left-menu">
 
@@ -289,7 +289,7 @@
 						<?php endif; ?>
 
 						<?php /* Next Button */ ?>
-						<?php if ( !bp_is_last_group_creation_step() && !bp_is_first_group_creation_step() ) : ?>
+						<?php if ( !bp_is_last_group_creation_step() AND !bp_is_first_group_creation_step() ) : ?>
 
 							<input type="submit" value="<?php _e( 'Next Step', 'buddypress' ); ?>" id="group-creation-next" name="save" />
 

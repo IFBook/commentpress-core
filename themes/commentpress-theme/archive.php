@@ -37,7 +37,7 @@
 	<h3 class="post_title">Archive for <?php the_time('Y'); ?></h3>
 	<?php /* If this is an author archive */ } elseif (is_author()) { ?>
 	<h3 class="post_title">Author Archive</h3>
-	<?php /* If this is a paged archive */ } elseif (isset($_GET['paged']) && !empty($_GET['paged'])) { ?>
+	<?php /* If this is a paged archive */ } elseif (isset($_GET['paged']) AND !empty($_GET['paged'])) { ?>
 	<h3 class="post_title">Archives</h3>
 	<?php } ?>
 	

@@ -29,7 +29,7 @@
 	<h3 class="post_title">Archive for the &#8216;<?php single_cat_title(); ?>&#8217; Category</h3>
 	<?php /* If this is a tag archive */ } elseif( is_tag() ) { ?>
 	<h3 class="post_title">Posts Tagged &#8216;<?php single_tag_title(); ?>&#8217;</h3>
-	<?php /* If this is a paged archive */ } elseif (isset($_GET['paged']) && !empty($_GET['paged'])) { ?>
+	<?php /* If this is a paged archive */ } elseif (isset($_GET['paged']) AND !empty($_GET['paged'])) { ?>
 	<h3 class="post_title">Archives</h3>
 	<?php } ?>
 	

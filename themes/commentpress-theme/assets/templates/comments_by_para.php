@@ -14,7 +14,7 @@ Comments template for CommentPress
 
 
 // Do not delete these lines
-if (!empty($_SERVER['SCRIPT_FILENAME']) && 'comments_by_para.php' == basename($_SERVER['SCRIPT_FILENAME'])) {
+if (!empty($_SERVER['SCRIPT_FILENAME']) AND 'comments_by_para.php' == basename($_SERVER['SCRIPT_FILENAME'])) {
 	die ('Please do not load this page directly. Thanks!');
 }
 
