@@ -4,6 +4,10 @@
 
 <!-- page.php -->
 
+<div id="wrapper">
+
+
+
 <div id="main_wrapper" class="clearfix">
 
 
@@ -138,6 +142,10 @@
 
 
 </div><!-- /main_wrapper -->
+
+
+
+</div><!-- /wrapper -->
 
 
 

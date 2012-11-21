@@ -6,7 +6,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: commentpress, buddypress, groups, blogs, groupblogs, content, comments, commenting, debate, collaboration
 Requires at least: 3.3
 Tested up to: 3.4.2
-Stable tag: 3.4
+Stable tag: 3.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,7 +154,7 @@ To create a "CommentPress Core"-enabled Groupblog:
 
 == Other Notes ==
 
-Upgrades from previous versions of CommentPress are possible. Please follow the following procedures for your context.
+Upgrades from previous versions of "CommentPress" are possible. Please follow the following procedures for your context.
 
 
 <h4>Upgrade to CommentPress Core</h4>
