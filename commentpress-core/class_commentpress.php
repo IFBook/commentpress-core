@@ -527,7 +527,7 @@ class CommentpressCore {
 			//print_r( $screen ); die();
 			
 			// use method in this class
-			$this->options_help( &$screen );
+			$this->options_help( $screen );
 			
 		}
 		
