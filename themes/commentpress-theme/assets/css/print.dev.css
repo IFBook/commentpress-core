@@ -6,12 +6,13 @@ Updated by Christian Wach for CommentPress Core
 
 @media print {
 
-	*
+	div, h1, h2, h3, h4, h5, h6, p, ol, ul, li
 	{
 		width: auto !important;
 		height: auto !important;
 		min-height: 0 !important;
 		color: #000;
+		position: static !important;
 	}
 	
 	/* Set sensible defaults */
@@ -34,8 +35,12 @@ Updated by Christian Wach for CommentPress Core
 	}
 	
 	/* Headings should be "legible" */
-	h1, h2, h3, h4, h5, h6 
+	h1, h2, h3, h4, h5, h6,
+	.post h1, .post h2, .post h3, .post h4, .post h5, .post h6
 	{
+		padding-left: 0;
+		padding-right: 0;
+		color: #000;
 		font-weight: bold;
 		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 		/* Avoid printed page breaks immediately after headers, or in middle of images or blockquotes */
@@ -47,6 +52,7 @@ Updated by Christian Wach for CommentPress Core
 	/* Headings as links are superfluous */
 	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a
 	{
+		color: #000;
 		text-decoration: none;
 	}
 	
@@ -72,9 +78,12 @@ Updated by Christian Wach for CommentPress Core
 	a.comment-edit-link,
 	.no_comments,
 	.multipager,
-	p.edit_link
+	p.edit_link,
+	.cp_logo_image,
+	.comment-identifier span.comment-edit,
+	.comment-identifier span.comment-assign
 	{
-		display: none; 
+		display: none !important;
 	}
 	
 	/* force comment form to be hidden */
@@ -85,53 +94,138 @@ Updated by Christian Wach for CommentPress Core
 	
 	
 	
-	/* show Site Title */
-	#book_header h1
+	/* show header */
+	#book_header,
+	#titlewrap
 	{
-		font-size: 12pt;
-		color: #666;
+		position: static !important;
+		height: auto;
+		border: none;
+		margin: 0;
+		padding: 0;
+	}
+	
+	#page_title,
+	#title
+	{
+		float: none;
+	}
+	
+	/* show Site Title */
+	#book_header #title h1,
+	#book_header #title h1 a,
+	#book_header #title h1 a:link,
+	#book_header #title h1 a:hover,
+	#book_header #title h1 a:active,
+	#book_header #title h1 a:visited
+	{
+		letter-spacing: 0;
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		font-size: 11pt;
+		font-weight: normal;
+		color: #ccc !important;
+		margin: 0;
+		padding: 0;
+	}
+	
+	#book_header #title h1
+	{
+		padding-left: 24pt;
+	}
+	
+	body.commentpress_page #book_header #title h1
+	{
+		padding-left: 0;
 	}
 	
 	
+	/* Place content */
+	#container
+	{
+		position: static !important;
+		top: auto !important;
+	}
+	
+	/* Remove borders */
+	#page_wrapper,
+	.sidebar_minimiser
+	{
+		border: none;
+	}
+	
+	/* Remove drop shadows */
+	#page_wrapper,
+	.sidebar_minimiser
+	{
+		width: auto;
+		padding: 0;
+		margin: 0;
+		-webkit-box-shadow: 0 0 0 #fff;
+		-moz-box-shadow: 0 0 0 #fff;
+		-khtml-box-shadow: 0 0 0 #fff;
+		box-shadow: 0 0 0 #fff;
+	}
+
+	#content
+	{
+		padding: 0;
+		margin: 0;
+		height: auto;
+	}
 	
 	/* prioritise content */
 	.post
 	{
+		padding: 0 0 20pt 24pt;
 		font-size: 100%;
 		border-bottom: 2px solid #ccc;
+	}
+	
+	body.commentpress_page .post
+	{
+		padding: 0 0 20pt 0;
 	}
 	
 	/* Page Title */
 	.post h2.post_title
 	{
 		margin: 0;
-		padding-top: 2pt;
+		padding-top: 10pt;
 		padding-bottom: 4pt;
+		padding-left: 0;
 		font-size: 24pt;
 		text-transform: none;
 	}
 	
-	/* post meta */
-	.post .search_meta
+	.post h2.post_title a
 	{
-		margin: 0;
+		color: #000;
+	}
+	
+	/* post meta */
+	#content .post .search_meta
+	{
+		margin: 0 0 1em 0;
 		padding: 0;
 		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	}
 
-	.post .search_meta,
-	.post .search_meta cite,
-	.post .search_meta p
+	#content .post .search_meta,
+	#content .post .search_meta cite,
+	#content .post .search_meta p
 	{
 		margin: 0;
 		padding: 0;
 		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 		font-size: 90%;
-		color: #444;
+		color: #aaa;
 	}
 
-	.post .search_meta a
+	#content .post .search_meta cite a,
+	#content .post .search_meta a
 	{
+		letter-spacing: 0;
+		color: #aaa;
 		text-decoration: none;
 		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	}
@@ -145,19 +239,26 @@ Updated by Christian Wach for CommentPress Core
 		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 		text-transform: none;
 	}
+	
+	.post .textblock
+	{
+		position: relative !important;
+	}
 
 	.post p,
 	.post address,
 	.post pre
 	{
-		padding-left: 2.5em;
+		margin: 1em 0;
+		padding: 0;
 		line-height: 1.5;
 	}
 	
 	.post ul,
 	.post ol
 	{
-		padding-left: 2.5em;
+		margin: 1em 0;
+		padding: 0;
 		line-height: 1.5;
 	}
 	
@@ -171,7 +272,6 @@ Updated by Christian Wach for CommentPress Core
 	.post > ul,
 	.post > ol
 	{
-		padding-left: 4.5em;
 	}
 	
 	.post dd
@@ -179,7 +279,16 @@ Updated by Christian Wach for CommentPress Core
 		line-height: 1.5;
 	}
 	
-	/* to show it */
+	span.captioned_image
+	{
+		border: 1px solid #ccc;
+		page-break-inside: avoid; 
+		page-break-after: avoid;
+	}
+	
+	
+	
+	/* to show comment icons */
 	li.list_commenticon
 	{
 		float: left;
@@ -209,39 +318,205 @@ Updated by Christian Wach for CommentPress Core
 	span.para_marker
 	{
 		display: block;
-		float: left;
-		width: 2.5em;
-		font-size: 80%;
-		color: #888;
-		margin-left: -2.5em;
+		position: absolute !important;
+		width: auto !important;
+		margin-left: 0;
+		color: #ccc !important;
+		background-color: red;
 	}
 	
+	#content .post span.para_marker a,
+	#content .post span.para_marker a span,
 	span.para_marker a
 	{
-		color: #aaa;
+		font-size: 8pt;
+		color: #ccc !important;
 		text-decoration: none;
 	}
 	
+	
+	
+	/* page numbering */
 	.running_header_bottom
 	{
 		text-align: center;
+		margin: 3em 0 1em 0;
 		padding-bottom: 1em;
 	}
 	
 	
 	
+	/* special pages */
+	#comments_in_page_wrapper
+	{
+		margin: 0;
+		padding: 0;
+	}
+	
+	#comments_in_page_wrapper ul.all_comments_listing li > h3
+	{
+		font-size: 14pt;
+		color: #000;
+		border-top: none;
+		border-bottom: 1px solid #ccc;
+	}
+	
+	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment_wrapper
+	{
+		border-top: 1px solid #ccc;
+		border-bottom: none;
+		page-break-inside: avoid;
+	}
+	
+	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment_meta
+	{
+		padding: 0;
+		padding-top: 3px;
+		border: none;
+	}
+	
+	#comments_in_page_wrapper .comment-content
+	{
+		padding: 0;
+	}
+	
+	#comments_in_page_wrapper .comment-content h1, 
+	#comments_in_page_wrapper .comment-content h2, 
+	#comments_in_page_wrapper .comment-content h3, 
+	#comments_in_page_wrapper .comment-content h4, 
+	#comments_in_page_wrapper .comment-content h5, 
+	#comments_in_page_wrapper .comment-content h6
+	{
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		text-transform: none;
+		color: #000;
+	}
+	
+	.post p.comments_hl
+	{
+		padding: 0;
+		margin: 0.5em 0;
+		font-size: 16pt;
+		font-weight: bold;
+		color: #000;
+	}
+	
+	.general_comments
+	{
+		margin: 0;
+		padding: 0;
+	}
+	
+	.post .comments_container > h3
+	{
+		padding: 0;
+		margin: 0.5em 0 1em 0;
+		font-size: 16pt;
+		font-weight: bold;
+		color: #000;
+	}
+	
+	#comments_in_page_wrapper .comment-content
+	{
+		margin: 0;
+		padding: 0;
+	}
+	
+	
+	
+	/* show sidebar */
+	#sidebar
+	{
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		top: auto !important;
+		left: auto !important;
+		float: none;
+		clear: left;
+	}
+	
 	/* show divider */
 	#comments_sidebar
 	{
+		position: static !important;
+		width: auto !important;
 		border-bottom: 2px solid #ccc;
+	}
+	
+	#comments_sidebar .sidebar_header
+	{
+		display: block;
+		padding-top: 10pt;
+	}
+	
+	#comments_sidebar .sidebar_header h2
+	{
+		display: block;
+		padding-top: 10pt;
+		font-size: 16pt;
+		font-weight: bold;
+		text-transform: none;
+		color: #000;
 	}
 	
 	/* release vertical constraint on comment wrapper */
 	.sidebar_contents_wrapper
 	{
-		height: auto;
+		height: auto !important;
+		overflow: visible;
 	}
 	
+	/* para headers */
+	div#comments_sidebar .comments_container > h3
+	{
+		color: #000;
+		margin: 1em 0;
+		padding: 0 0 0.2em 0;
+		font-size: 12pt;
+		font-weight: bold;
+		border: none;
+	}
+	
+	div#comments_sidebar .comments_container > h3 a
+	{
+		display: inline;
+		color: #000;
+		margin: 0;
+		padding: 0;
+	}
+	
+	ol.commentlist,
+	ol.children
+	{
+		margin: 0;
+		padding: 0;
+	}
+
+	ol.commentlist li,
+	.post ol.commentlist li
+	{
+		list-style: decimal;
+		margin: 0 0 0 12pt;
+		padding: 0;
+	}
+
+	ol.children li,
+	.post ol.children li
+	{
+		list-style: decimal;
+		margin: 0 0 0 12pt;
+		padding: 0;
+	}
+
+	.comment-wrapper 
+	{
+		page-break-inside: avoid;
+	}
+
+
+
+
 	/* prioritise comment content */
 	div#comments_sidebar .comments_container .comment-content
 	{
@@ -250,7 +525,43 @@ Updated by Christian Wach for CommentPress Core
 		border: none !important;
 	}
 	
+	
+	
+	
+	
+	
 	/* comment meta */
+	.comment-identifier,
+	.comment-content
+	{
+		border: none;
+	}
+	
+	.comment-identifier cite,
+	.comment-identifier a.comment_permalink
+	{
+		letter-spacing: 0;
+		color: #aaa !important;
+		display: inline;
+		font-size: 7pt;
+		margin: 0;
+		padding: 0;
+	}
+	
+	.comment-identifier cite
+	{
+	}
+	
+	.comment-identifier cite a,
+	.comment-identifier cite a:hover,
+	.comment-identifier cite a:visited,
+	.comment-identifier cite a:active
+	{
+		font-weight: bold;
+		color: #aaa;
+		text-decoration: none;
+	}
+	
 	.comment-identifier a
 	{
 		color: #aaa;
@@ -337,6 +648,9 @@ Updated by Christian Wach for CommentPress Core
 	/* footer enabled */
 	#footer
 	{
+		position: static !important;
+		float: none;
+		clear: left;
 		border: none;
 		margin: 0;
 		padding: 0;
@@ -403,8 +717,8 @@ Updated by Christian Wach for CommentPress Core
 	
 	blockquote
 	{
-		margin-left: 1em;
-		padding-left: 1em;
+		margin: 0;
+		padding: 1pt 0;
 		border-left: 1px solid #aaa;
 		font-style: italic;
 	}
@@ -414,7 +728,9 @@ Updated by Christian Wach for CommentPress Core
 	}
 	
 	table th,
-	table td
+	.post table th,
+	table td,
+	.post table td
 	{
 		border: 1px solid #aaa;
 	}
