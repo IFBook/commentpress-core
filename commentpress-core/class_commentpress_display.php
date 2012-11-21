@@ -352,7 +352,7 @@ class CommentpressCoreDisplay {
 	function get_custom_quicktags() {
 	
 		// don't bother if the current user lacks permissions
-		if ( ! current_user_can('edit_posts') && ! current_user_can('edit_pages') ) {
+		if ( ! current_user_can('edit_posts') AND ! current_user_can('edit_pages') ) {
 			return;
 		}
 		

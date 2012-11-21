@@ -2838,7 +2838,7 @@ class Walker_Comment_Press extends Walker_Comment {
 	 * @param int $depth Depth of comment.
 	 * @param array $args Uses 'style' argument for type of HTML list.
 	 */
-	function start_lvl(&$output, $depth, $args) {
+	function start_lvl( &$output, $depth, $args ) {
 	
 		// if on top level
 		if( $depth === 0 ) {
@@ -2987,7 +2987,7 @@ function commentpress_comment_reply_link( $args = array(), $comment = null, $pos
 	$link = '';
 	
 	// if we have to log in to comment...
-	if ( get_option('comment_registration') && !$user_ID ) {
+	if ( get_option('comment_registration') AND !$user_ID ) {
 	
 		$link = '<a rel="nofollow" href="' . site_url('wp-login.php?redirect_to=' . get_permalink()) . '">' . $login_text . '</a>';
 		
@@ -3482,7 +3482,7 @@ function commentpress_get_post_multipage_url( $i, $post = '' ) {
 		} else {
 			if ( '' == get_option('permalink_structure') || in_array($post->post_status, array('draft', 'pending')) )
 				$url = add_query_arg( 'page', $i, get_permalink() );
-			elseif ( 'page' == get_option('show_on_front') && get_option('page_on_front') == $post->ID )
+			elseif ( 'page' == get_option('show_on_front') AND get_option('page_on_front') == $post->ID )
 				$url = trailingslashit(get_permalink()) . user_trailingslashit("$wp_rewrite->pagination_base/" . $i, 'single_paged');
 			else
 				$url = trailingslashit(get_permalink()) . user_trailingslashit($i, 'single_paged');
@@ -3496,7 +3496,7 @@ function commentpress_get_post_multipage_url( $i, $post = '' ) {
 		} else {
 			if ( '' == get_option('permalink_structure') || in_array($post->post_status, array('draft', 'pending')) )
 				$url = add_query_arg( 'page', $i, get_permalink( $post->ID ) );
-			elseif ( 'page' == get_option('show_on_front') && get_option('page_on_front') == $post->ID )
+			elseif ( 'page' == get_option('show_on_front') AND get_option('page_on_front') == $post->ID )
 				$url = trailingslashit(get_permalink( $post->ID )) . user_trailingslashit("$wp_rewrite->pagination_base/" . $i, 'single_paged');
 			else
 				$url = trailingslashit(get_permalink( $post->ID )) . user_trailingslashit($i, 'single_paged');
@@ -3905,7 +3905,7 @@ function commentpress_add_commentblock_button() {
 	if ( !is_admin() ) { return; }
 	
 	// don't bother doing this stuff if the current user lacks permissions
-	if ( ! current_user_can('edit_posts') && ! current_user_can('edit_pages') ) {
+	if ( ! current_user_can('edit_posts') AND ! current_user_can('edit_pages') ) {
 		return;
 	}
 	

@@ -1604,7 +1604,7 @@ class CommentpressCore {
 		global $pagenow, $post_type;
 		
 		// check admin location
-		if (is_admin() && $pagenow=='edit.php' && $post_type =='page') {
+		if (is_admin() AND $pagenow=='edit.php' AND $post_type =='page') {
 		
 			// get special pages array, if it's there
 			$special_pages = $this->db->option_get( 'cp_special_pages' );

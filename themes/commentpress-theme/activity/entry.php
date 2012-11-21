@@ -111,7 +111,7 @@ if ( $current_activity->component == 'groups' ) {
 	
 		<?php do_action( 'bp_before_activity_entry_comments' ); ?>
 	
-		<?php if ( ( is_user_logged_in() && bp_activity_can_comment() ) || bp_activity_get_comment_count() ) : ?>
+		<?php if ( ( is_user_logged_in() AND bp_activity_can_comment() ) || bp_activity_get_comment_count() ) : ?>
 	
 			<div class="activity-comments">
 	

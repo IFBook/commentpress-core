@@ -104,7 +104,7 @@
 
 				<?php if ( is_user_logged_in() ) : ?>
 
-					<?php if ( bp_is_active( 'groups' ) && bp_has_groups( 'user_id=' . bp_loggedin_user_id() . '&type=alphabetical&max=100&per_page=100' ) ) : ?>
+					<?php if ( bp_is_active( 'groups' ) AND bp_has_groups( 'user_id=' . bp_loggedin_user_id() . '&type=alphabetical&max=100&per_page=100' ) ) : ?>
 
 						<form action="" method="post" id="forum-topic-form" class="standard-form">
 
@@ -131,7 +131,7 @@
 
 								<?php while ( bp_groups() ) : bp_the_group(); ?>
 
-									<?php if ( bp_group_is_forum_enabled() && ( is_super_admin() || 'public' == bp_get_group_status() || bp_group_is_member() ) ) : ?>
+									<?php if ( bp_group_is_forum_enabled() AND ( is_super_admin() || 'public' == bp_get_group_status() || bp_group_is_member() ) ) : ?>
 
 										<option value="<?php bp_group_id(); ?>"><?php bp_group_name(); ?></option>
 

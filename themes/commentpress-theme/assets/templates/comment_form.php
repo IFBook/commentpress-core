@@ -14,7 +14,7 @@ Comment form template for CommentPress
 
 
 // Do not delete these lines
-if (!empty($_SERVER['SCRIPT_FILENAME']) && 'comment_form.php' == basename($_SERVER['SCRIPT_FILENAME'])) {
+if (!empty($_SERVER['SCRIPT_FILENAME']) AND 'comment_form.php' == basename($_SERVER['SCRIPT_FILENAME'])) {
 	die ('Please do not load this page directly. Thanks!');
 }
 
@@ -49,7 +49,7 @@ global $post;
 
 <h4 id="respond_title"><?php commentpress_comment_form_title( 'Leave a Comment', 'Leave a Reply to %s' ); ?></h4>
 
-<?php if ( get_option('comment_registration') && !$user_ID ) : ?>
+<?php if ( get_option('comment_registration') AND !$user_ID ) : ?>
 
 	<p>You must be <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?redirect_to=<?php echo urlencode(get_permalink()); ?>">logged in</a> to post a comment.</p>
 

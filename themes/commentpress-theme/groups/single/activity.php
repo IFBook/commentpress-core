@@ -25,7 +25,7 @@
 
 <?php do_action( 'bp_before_group_activity_post_form' ) ?>
 
-<?php if ( is_user_logged_in() && bp_group_is_member() ) : ?>
+<?php if ( is_user_logged_in() AND bp_group_is_member() ) : ?>
 	<?php locate_template( array( 'activity/post-form.php'), true ) ?>
 <?php endif; ?>
 

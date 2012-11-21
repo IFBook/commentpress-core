@@ -42,7 +42,7 @@
 			// allow overrides
 			echo apply_filters( 'cp_site_directory_page_title', $page_title );
 			
-			?><?php if ( is_user_logged_in() && bp_blog_signup_enabled() ) : ?> &nbsp;<a class="button" href="<?php echo bp_get_root_domain() . '/' . bp_get_blogs_root_slug() . '/create/' ?>"><?php 
+			?><?php if ( is_user_logged_in() AND bp_blog_signup_enabled() ) : ?> &nbsp;<a class="button" href="<?php echo bp_get_root_domain() . '/' . bp_get_blogs_root_slug() . '/create/' ?>"><?php 
 			
 			// define title
 			$create_title = __( 'Create a New Document', 'commentpress-theme' );
@@ -64,7 +64,7 @@
 				<ul>
 					<li class="selected" id="blogs-all"><a href="<?php bp_root_domain(); ?>/<?php bp_blogs_root_slug() ?>"><?php printf( __( 'All Sites <span>%s</span>', 'buddypress' ), bp_get_total_blog_count() ); ?></a></li>
 
-					<?php if ( is_user_logged_in() && bp_get_total_blog_count_for_user( bp_loggedin_user_id() ) ) : ?>
+					<?php if ( is_user_logged_in() AND bp_get_total_blog_count_for_user( bp_loggedin_user_id() ) ) : ?>
 
 						<li id="blogs-personal"><a href="<?php echo bp_loggedin_user_domain() . bp_get_blogs_slug() ?>"><?php printf( __( 'My Sites <span>%s</span>', 'buddypress' ), bp_get_total_blog_count_for_user( bp_loggedin_user_id() ) ); ?></a></li>
 
