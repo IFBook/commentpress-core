@@ -113,16 +113,16 @@
 
 		</div>
 
-		<?php if ( ( is_user_logged_in() && 'public' == bp_get_group_status() ) || bp_group_is_member() ) : ?>
+		<?php if ( ( is_user_logged_in() AND 'public' == bp_get_group_status() ) || bp_group_is_member() ) : ?>
 
 			<?php if ( bp_get_the_topic_is_last_page() ) : ?>
 
-				<?php if ( bp_get_the_topic_is_topic_open() && !bp_group_is_user_banned() ) : ?>
+				<?php if ( bp_get_the_topic_is_topic_open() AND !bp_group_is_user_banned() ) : ?>
 
 					<div id="post-topic-reply">
 						<p id="post-reply"></p>
 
-						<?php if ( bp_groups_auto_join() && !bp_group_is_member() ) : ?>
+						<?php if ( bp_groups_auto_join() AND !bp_group_is_member() ) : ?>
 							<p><?php _e( 'You will auto join this group when you reply to this topic.', 'buddypress' ) ?></p>
 						<?php endif; ?>
 

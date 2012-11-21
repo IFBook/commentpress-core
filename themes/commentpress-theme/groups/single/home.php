@@ -43,22 +43,22 @@
 
 				<?php do_action( 'bp_before_group_body' );
 
-				if ( bp_is_group_admin_page() && bp_group_is_visible() ) :
+				if ( bp_is_group_admin_page() AND bp_group_is_visible() ) :
 					locate_template( array( 'groups/single/admin.php' ), true );
 
-				elseif ( bp_is_group_members() && bp_group_is_visible() ) :
+				elseif ( bp_is_group_members() AND bp_group_is_visible() ) :
 					locate_template( array( 'groups/single/members.php' ), true );
 
-				elseif ( bp_is_group_invites() && bp_group_is_visible() ) :
+				elseif ( bp_is_group_invites() AND bp_group_is_visible() ) :
 					locate_template( array( 'groups/single/send-invites.php' ), true );
 
-				elseif ( bp_is_group_forum() && bp_group_is_visible() && bp_is_active( 'forums' ) && bp_forums_is_installed_correctly() ) :
+				elseif ( bp_is_group_forum() AND bp_group_is_visible() AND bp_is_active( 'forums' ) AND bp_forums_is_installed_correctly() ) :
 					locate_template( array( 'groups/single/forum.php' ), true );
 
 				elseif ( bp_is_group_membership_request() ) :
 					locate_template( array( 'groups/single/request-membership.php' ), true );
 
-				elseif ( bp_group_is_visible() && bp_is_active( 'activity' ) ) :
+				elseif ( bp_group_is_visible() AND bp_is_active( 'activity' ) ) :
 					locate_template( array( 'groups/single/activity.php' ), true );
 
 				elseif ( bp_group_is_visible() ) :

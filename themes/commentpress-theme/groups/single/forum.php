@@ -56,16 +56,16 @@ else : ?>
 
 <?php do_action( 'bp_after_group_forum_content' ) ?>
 
-<?php if ( !bp_is_group_forum_topic_edit() && !bp_is_group_forum_topic() ) : ?>
+<?php if ( !bp_is_group_forum_topic_edit() AND !bp_is_group_forum_topic() ) : ?>
 
-	<?php if ( !bp_group_is_user_banned() && ( ( is_user_logged_in() && 'public' == bp_get_group_status() ) || bp_group_is_member() ) ) : ?>
+	<?php if ( !bp_group_is_user_banned() AND ( ( is_user_logged_in() AND 'public' == bp_get_group_status() ) || bp_group_is_member() ) ) : ?>
 
 		<form action="" method="post" id="forum-topic-form" class="standard-form">
 			<div id="new-topic-post">
 
 				<?php do_action( 'bp_before_group_forum_post_new' ) ?>
 
-				<?php if ( bp_groups_auto_join() && !bp_group_is_member() ) : ?>
+				<?php if ( bp_groups_auto_join() AND !bp_group_is_member() ) : ?>
 					<p><?php _e( 'You will auto join this group when you start a new topic.', 'buddypress' ) ?></p>
 				<?php endif; ?>
 
