@@ -180,6 +180,7 @@ class CommentpressCoreParser {
 		$content = $this->_strip_shortcodes( $content );
 		
 		
+		
 		// check for our quicktag
 		$has_quicktag = $this->_has_comment_block_quicktag( $content );
 
@@ -595,7 +596,7 @@ class CommentpressCoreParser {
 			$prepared_para = str_replace( '/', '\/', $prepared_para );
 			
 			// protect all dollar numbers
-			//$block = str_replace( "$", "\\\$", $block );
+			$block = str_replace( "$", "\\\$", $block );
 			
 			// only once please
 			$limit = 1;
