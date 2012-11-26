@@ -26,8 +26,6 @@ Annotate, gloss, workshop, debate: with CommentPress Core you can do all of thes
 
 **For sites hosted in the European Union, please note:** CommentPress makes use of cookies, but for presentational purposes only. If you intend to use CommentPress on a public site, you may need to inform visitors of this.
 
-The name has been changed from CommentPress to CommentPress Core for two reasons: because it serves as the basis for extending it for your purposes and also to safeguard historical installations, which could break if they upgrade. Newer CommentPress installations (version 3.0 onwards) can upgrade to the current version.
-
 For further information and instructions please see the [CommentPress site](http://www.futureofthebook.org/commentpress/) or contact the developers by email at [cpdev@futureofthebook.org](mailto:cpdev@futureofthebook.org)
 
 

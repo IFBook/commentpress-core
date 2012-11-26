@@ -482,6 +482,10 @@ class CommentpressCoreParser {
 						$tag = 'p style="text-align:left;"';
 					} elseif ( substr( $paragraph, 0 , 26 ) == '<p style="text-align:left"' ) {
 						$tag = 'p style="text-align:left"';
+					} elseif ( substr( $paragraph, 0 , 28 ) == '<p style="text-align: left;"' ) {
+						$tag = 'p style="text-align: left;"';
+					} elseif ( substr( $paragraph, 0 , 27 ) == '<p style="text-align: left"' ) {
+						$tag = 'p style="text-align: left"';
 					}
 		
 					// test for right
@@ -489,6 +493,10 @@ class CommentpressCoreParser {
 						$tag = 'p style="text-align:right;"';
 					} elseif ( substr( $paragraph, 0 , 27 ) == '<p style="text-align:right"' ) {
 						$tag = 'p style="text-align:right"';
+					} elseif ( substr( $paragraph, 0 , 29 ) == '<p style="text-align: right;"' ) {
+						$tag = 'p style="text-align: right;"';
+					} elseif ( substr( $paragraph, 0 , 28 ) == '<p style="text-align: right"' ) {
+						$tag = 'p style="text-align: right"';
 					}
 		
 					// test for center
@@ -496,6 +504,10 @@ class CommentpressCoreParser {
 						$tag = 'p style="text-align:center;"';
 					} elseif ( substr( $paragraph, 0 , 28 ) == '<p style="text-align:center"' ) {
 						$tag = 'p style="text-align:center"';
+					} elseif ( substr( $paragraph, 0 , 30 ) == '<p style="text-align: center;"' ) {
+						$tag = 'p style="text-align: center;"';
+					} elseif ( substr( $paragraph, 0 , 29 ) == '<p style="text-align: center"' ) {
+						$tag = 'p style="text-align: center"';
 					}
 		
 					// test for justify
@@ -503,6 +515,10 @@ class CommentpressCoreParser {
 						$tag = 'p style="text-align:justify;"';
 					} elseif ( substr( $paragraph, 0 , 29 ) == '<p style="text-align:justify"' ) {
 						$tag = 'p style="text-align:justify"';
+					} elseif ( substr( $paragraph, 0 , 31 ) == '<p style="text-align: justify;"' ) {
+						$tag = 'p style="text-align: justify;"';
+					} elseif ( substr( $paragraph, 0 , 30 ) == '<p style="text-align: justify"' ) {
+						$tag = 'p style="text-align: justify"';
 					}
 				
 				} // end check for text-align
@@ -579,6 +595,9 @@ class CommentpressCoreParser {
 			// because we use / as the delimiter, we need to escape all /s
 			$prepared_para = str_replace( '/', '\/', $prepared_para );
 			
+			// protect all dollar numbers
+			$block = str_replace( "$", "\\\$", $block );
+			
 			// only once please
 			$limit = 1;
 
@@ -611,14 +630,15 @@ class CommentpressCoreParser {
 		/*
 		print_r( array( 
 		
-			'd' => $duplicates,
+			//'d' => $duplicates,
 			't' => $this->text_signatures,
 			'c' => $content 
 		
 		) ); 
-		
-		die();
 		*/
+		
+		//die();
+		//*/
 		
 
 
