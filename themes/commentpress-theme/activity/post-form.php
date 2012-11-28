@@ -20,9 +20,9 @@
 	</div>
 
 	<h5><?php if ( bp_is_group() )
-			printf( __( "What's new in %s, %s?", 'buddypress' ), bp_get_group_name(), bp_get_user_firstname() );
+			printf( __( "What's new in %s, %s?", 'commentpress-core' ), bp_get_group_name(), bp_get_user_firstname() );
 		else
-			printf( __( "What's new, %s?", 'buddypress' ), bp_get_user_firstname() );
+			printf( __( "What's new, %s?", 'commentpress-core' ), bp_get_user_firstname() );
 	?></h5>
 
 	<div id="whats-new-content">
@@ -32,17 +32,17 @@
 
 		<div id="whats-new-options">
 			<div id="whats-new-submit">
-				<input type="submit" name="aw-whats-new-submit" id="aw-whats-new-submit" value="<?php _e( 'Post Update', 'buddypress' ); ?>" />
+				<input type="submit" name="aw-whats-new-submit" id="aw-whats-new-submit" value="<?php _e( 'Post Update', 'commentpress-core' ); ?>" />
 			</div>
 
 			<?php if ( bp_is_active( 'groups' ) AND !bp_is_my_profile() AND !bp_is_group() ) : ?>
 
 				<div id="whats-new-post-in-box">
 
-					<?php _e( 'Post in', 'buddypress' ) ?>:
+					<?php _e( 'Post in', 'commentpress-core' ) ?>:
 
 					<select id="whats-new-post-in" name="whats-new-post-in">
-						<option selected="selected" value="0"><?php _e( 'My Profile', 'buddypress' ); ?></option>
+						<option selected="selected" value="0"><?php _e( 'My Profile', 'commentpress-core' ); ?></option>
 
 						<?php if ( bp_has_groups( 'user_id=' . bp_loggedin_user_id() . '&type=alphabetical&max=100&per_page=100&populate_extras=0' ) ) :
 							while ( bp_groups() ) : bp_the_group(); ?>

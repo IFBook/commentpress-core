@@ -17,11 +17,11 @@
 
 			<li id="members-order-select" class="last filter">
 
-				<label for="members-all"><?php _e( 'Order By:', 'buddypress' ) ?></label>
+				<label for="members-all"><?php _e( 'Order By:', 'commentpress-core' ) ?></label>
 				<select id="members-all">
-					<option value="active"><?php _e( 'Last Active', 'buddypress' ) ?></option>
-					<option value="newest"><?php _e( 'Newest Registered', 'buddypress' ) ?></option>
-					<option value="alphabetical"><?php _e( 'Alphabetical', 'buddypress' ) ?></option>
+					<option value="active"><?php _e( 'Last Active', 'commentpress-core' ) ?></option>
+					<option value="newest"><?php _e( 'Newest Registered', 'commentpress-core' ) ?></option>
+					<option value="alphabetical"><?php _e( 'Alphabetical', 'commentpress-core' ) ?></option>
 
 					<?php do_action( 'bp_member_blog_order_options' ) ?>
 

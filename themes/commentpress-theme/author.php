@@ -140,7 +140,7 @@ if ( $my_author->description != '' ) { ?>
 
 <?php endwhile; else: ?>
 
-<p><?php _e( 'No posts by this author.','commentpress-theme' ); ?></p>
+<p><?php _e( 'No posts by this author.', 'commentpress-core' ); ?></p>
 
 <?php endif; ?>
 <!-- End Loop -->

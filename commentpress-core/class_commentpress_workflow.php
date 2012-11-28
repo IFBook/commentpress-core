@@ -175,7 +175,7 @@ class CommentpressCoreWorkflow {
 		return apply_filters( 
 			
 			'cp_class_commentpress_workflow_label', 
-			__( 'Enable Translation Workflow', 'commentpress-plugin' )
+			__( 'Enable Translation Workflow', 'commentpress-core' )
 		
 		);
 		
@@ -229,7 +229,7 @@ class CommentpressCoreWorkflow {
 		wp_nonce_field( 'commentpress_post_workflow_settings', 'commentpress_workflow_nonce' );
 		
 		// label
-		echo '<h3>' . __( 'Original Text', 'commentpress-plugin' ) . '</h3>';
+		echo '<h3>' . __( 'Original Text', 'commentpress-core' ) . '</h3>';
 		
 		// set key
 		$key = '_cp_original_text';
@@ -254,7 +254,7 @@ class CommentpressCoreWorkflow {
 		);
 		
 		// label
-		echo '<h3>' . __( 'Literal Translation', 'commentpress-plugin' ) . '</h3>';
+		echo '<h3>' . __( 'Literal Translation', 'commentpress-core' ) . '</h3>';
 		
 		// set key
 		$key = '_cp_literal_translation';
@@ -296,7 +296,7 @@ class CommentpressCoreWorkflow {
 		return apply_filters( 
 			
 			'cp_class_commentpress_workflow_metabox_title', 
-			__( 'Translations', 'commentpress-plugin' )
+			__( 'Translations', 'commentpress-core' )
 		
 		);
 		

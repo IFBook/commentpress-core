@@ -17,8 +17,8 @@ global $commentpress_core;
 <?php
 
 // set default link names
-$previous_title = apply_filters( 'cp_nav_previous_link_title', __( 'Older Entries', 'commentpress-theme' ) );
-$next_title = apply_filters( 'cp_nav_next_link_title', __( 'Newer Entries', 'commentpress-theme' ) );
+$previous_title = apply_filters( 'cp_nav_previous_link_title', __( 'Older Entries', 'commentpress-core' ) );
+$next_title = apply_filters( 'cp_nav_next_link_title', __( 'Newer Entries', 'commentpress-core' ) );
 
 // is it a page?
 if ( is_page() ) {
@@ -73,7 +73,7 @@ elseif ( is_home() ) {
 	
 	<?php } ?>
 	
-	<div id="cp_book_info"><p><?php echo __( 'Blog', 'commentpress-theme' ); ?></p></div>
+	<div id="cp_book_info"><p><?php echo __( 'Blog', 'commentpress-core' ); ?></p></div>
 	<?php
 
 }
@@ -96,7 +96,7 @@ elseif ( is_day() || is_month() || is_year() ) {
 	
 	<?php } ?>
 	
-	<div id="cp_book_info"><p><?php echo __( 'Blog Archives: ', 'commentpress-theme' ); wp_title(''); ?></p></div>
+	<div id="cp_book_info"><p><?php echo __( 'Blog Archives: ', 'commentpress-core' ); wp_title(''); ?></p></div>
 	<?php
 
 }
@@ -159,7 +159,7 @@ else {
 		if ( is_multisite() ) {
 			
 			// set default link name
-			$site_title = apply_filters( 'cp_nav_network_home_title', __( 'Site Home Page', 'commentpress-theme' ) );
+			$site_title = apply_filters( 'cp_nav_network_home_title', __( 'Site Home Page', 'commentpress-core' ) );
 
 			// show home
 			?><li><a href="<?php echo network_home_url(); ?>" id="btn_home" class="css_btn" title="<?php echo $site_title; ?>"><?php echo $site_title; ?></a></li><?php
@@ -180,7 +180,7 @@ else {
 					$group_url = bp_get_group_permalink( $group );
 					
 					// set default link name
-					$group_title = apply_filters( 'cp_nav_group_home_title', __( 'Group Home Page', 'commentpress-theme' ) );
+					$group_title = apply_filters( 'cp_nav_group_home_title', __( 'Group Home Page', 'commentpress-core' ) );
 		
 					?><li><a href="<?php echo $group_url; ?>" id="btn_grouphome" class="css_btn" title="<?php echo $group_title; ?>"><?php echo $group_title; ?></a></li><?php
 					
@@ -194,7 +194,7 @@ else {
 			if ( $title_id != get_option('page_on_front') ) {
 		
 				// set default link name
-				$home_title = apply_filters( 'cp_nav_blog_home_title', __( 'Home Page', 'commentpress-theme' ) );
+				$home_title = apply_filters( 'cp_nav_blog_home_title', __( 'Home Page', 'commentpress-core' ) );
 	
 				// show home
 				?><li><a href="<?php echo home_url(); ?>" id="btn_home" class="css_btn" title="<?php echo $home_title; ?>"><?php echo $home_title; ?></a></li><?php
@@ -207,7 +207,7 @@ else {
 		if ( !empty( $title_url ) ) {
 	
 			// set default link name
-			$title_title = apply_filters( 'cp_nav_title_page_title', __( 'Title Page', 'commentpress-theme' ) );
+			$title_title = apply_filters( 'cp_nav_title_page_title', __( 'Title Page', 'commentpress-core' ) );
 	
 			?><li><a href="<?php echo $title_url; ?>" id="btn_cover" class="css_btn" title="<?php echo $title_title; ?>"><?php echo $title_title; ?></a></li><?php
 		

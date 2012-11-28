@@ -161,7 +161,7 @@ class CommentpressGroupblogWorkshop {
 	function groupblog_comment_name() { 
 	
 		// default name
-		return __( 'Workshop Comments', 'commentpress-plugin' );
+		return __( 'Workshop Comments', 'commentpress-core' );
 		
 	}
 	
@@ -178,7 +178,7 @@ class CommentpressGroupblogWorkshop {
 	function groupblog_post_name() {
 	
 		// default name
-		return __( 'Workshop Posts', 'commentpress-plugin' );
+		return __( 'Workshop Posts', 'commentpress-core' );
 	
 	}
 	
@@ -195,7 +195,7 @@ class CommentpressGroupblogWorkshop {
 	function activity_post_name() {
 	
 		// default name
-		return __( 'workshop post', 'commentpress-plugin' );
+		return __( 'workshop post', 'commentpress-core' );
 	
 	}
 	
@@ -211,7 +211,7 @@ class CommentpressGroupblogWorkshop {
 	 */
 	function filter_blog_name( $name ) {
 	
-		return __( 'Workshop', 'commentpress-plugin' );
+		return __( 'Workshop', 'commentpress-core' );
 		
 	}
 	
@@ -257,7 +257,7 @@ class CommentpressGroupblogWorkshop {
 			// override default link name
 			return apply_filters(
 				'cpmsextras_user_links_new_site_title', 
-				__( 'Recent Comments in this Workshop', 'commentpress-plugin' )
+				__( 'Recent Comments in this Workshop', 'commentpress-core' )
 			);
 			
 		}
@@ -268,7 +268,7 @@ class CommentpressGroupblogWorkshop {
 			// override default link name
 			return apply_filters(
 				'cpmsextras_user_links_new_site_title', 
-				__( 'Recent Comments in Site Blog', 'commentpress-plugin' )
+				__( 'Recent Comments in Site Blog', 'commentpress-core' )
 			);
 			
 		}
@@ -291,7 +291,7 @@ class CommentpressGroupblogWorkshop {
 	function page_all_comments_blog_title( $title ) {
 	
 		// --<
-		return __( 'Comments on Workshop Posts', 'commentpress-plugin' );
+		return __( 'Comments on Workshop Posts', 'commentpress-core' );
 	
 	}
 	
@@ -308,7 +308,7 @@ class CommentpressGroupblogWorkshop {
 	function page_all_comments_book_title( $title ) {
 	
 		// --<
-		return __( 'Comments on Workshop Pages', 'commentpress-plugin' );
+		return __( 'Comments on Workshop Pages', 'commentpress-core' );
 	
 	}
 	
@@ -325,7 +325,7 @@ class CommentpressGroupblogWorkshop {
 	function filter_activity_title_all_yours( $title ) {
 	
 		// --<
-		return __( 'Recent Activity in your Workshops', 'commentpress-plugin' );
+		return __( 'Recent Activity in your Workshops', 'commentpress-core' );
 	
 	}
 	
@@ -342,7 +342,7 @@ class CommentpressGroupblogWorkshop {
 	function filter_activity_title_all_public( $title ) {
 	
 		// --<
-		return __( 'Recent Activity in Public Workshops', 'commentpress-plugin' );
+		return __( 'Recent Activity in Public Workshops', 'commentpress-core' );
 	
 	}
 	
@@ -371,7 +371,7 @@ class CommentpressGroupblogWorkshop {
 		) {
 		
 			// --<
-			return __( 'Workshop Home Page', 'commentpress-plugin' );
+			return __( 'Workshop Home Page', 'commentpress-core' );
 			
 		}
 		
@@ -393,7 +393,7 @@ class CommentpressGroupblogWorkshop {
 	function get_blogs_visit_blog_button( $button ) {
 		
 		// update link for groupblogs
-		return __( 'Visit Workshop', 'commentpress-plugin' );
+		return __( 'Visit Workshop', 'commentpress-core' );
 	
 	}
 	
@@ -508,7 +508,7 @@ class CommentpressGroupblogWorkshop {
 		// define form element
 		$element = '
 	<tr valign="top">
-		<th scope="row"><label for="cpmu_bp_workshop_nomenclature">'.__( 'Change the name of a Group "Blog" to "Workshop"', 'commentpress-plugin' ).'</label></th>
+		<th scope="row"><label for="cpmu_bp_workshop_nomenclature">'.__( 'Change the name of a Group "Blog" to "Workshop"', 'commentpress-core' ).'</label></th>
 		<td><input id="cpmu_bp_workshop_nomenclature" name="cpmu_bp_workshop_nomenclature" value="1" type="checkbox"'.( $this->db->option_get( 'cpmu_bp_workshop_nomenclature' ) == '1' ? ' checked="checked"' : '' ).' /></td>
 	</tr>
 

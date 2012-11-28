@@ -40,12 +40,16 @@ function commentpress_setup(
 	 * Make CommentPress Default Theme available for translation.
 	 * Translations can be added to the /assets/languages/ directory.
 	 */
+	
+	/*
+	// we no longer use this: instead, the plugin's textdomain is used
 	load_theme_textdomain( 
 	
 		'commentpress-theme', 
 		get_template_directory() . '/assets/languages' 
 		
 	);
+	*/
 
 	// add_custom_background function is deprecated in WP 3.4+
 	global $wp_version;
@@ -96,25 +100,25 @@ function commentpress_setup(
 				'url' => '%s/assets/images/header/caves-green.jpg',
 				'thumbnail_url' => '%s/assets/images/header/caves-green-thumbnail.jpg',
 				/* translators: header image description */
-				'description' => __( 'Abstract Green', 'commentpress-theme' )
+				'description' => __( 'Abstract Green', 'commentpress-core' )
 			),
 			'caves-red' => array(
 				'url' => '%s/assets/images/header/caves-red.jpg',
 				'thumbnail_url' => '%s/assets/images/header/caves-red-thumbnail.jpg',
 				/* translators: header image description */
-				'description' => __( 'Abstract Red', 'commentpress-theme' )
+				'description' => __( 'Abstract Red', 'commentpress-core' )
 			),
 			'caves-blue' => array(
 				'url' => '%s/assets/images/header/caves-blue.jpg',
 				'thumbnail_url' => '%s/assets/images/header/caves-blue-thumbnail.jpg',
 				/* translators: header image description */
-				'description' => __( 'Abstract Blue', 'commentpress-theme' )
+				'description' => __( 'Abstract Blue', 'commentpress-core' )
 			),
 			'caves-violet' => array(
 				'url' => '%s/assets/images/header/caves-violet.jpg',
 				'thumbnail_url' => '%s/assets/images/header/caves-violet-thumbnail.jpg',
 				/* translators: header image description */
-				'description' => __( 'Abstract Violet', 'commentpress-theme' )
+				'description' => __( 'Abstract Violet', 'commentpress-core' )
 			)
 		)
 	);
@@ -126,7 +130,7 @@ function commentpress_setup(
 	add_editor_style();
 
 	// testing the use of wp_nav_menu() - first we need to register it
-	register_nav_menu( 'toc', __( 'Table of Contents', 'commentpress-theme' ) );
+	register_nav_menu( 'toc', __( 'Table of Contents', 'commentpress-core' ) );
 
 }
 endif; // commentpress_setup
@@ -627,7 +631,7 @@ function commentpress_customize_register(
 	
 	// add customizer section title
 	$wp_customize->add_section( 'cp_inline_header_image', array(
-		'title' => __( 'Site Logo', 'commentpress-theme' ),
+		'title' => __( 'Site Logo', 'commentpress-core' ),
 		'priority' => 35,
 	) );
 	
@@ -642,7 +646,7 @@ function commentpress_customize_register(
 	 
 	$wp_customize->add_control( new WP_Customize_Image_Control(
 		$wp_customize, 'cp_inline_header_image', array(
-		'label' => __( 'Logo Image', 'commentpress-theme' ),
+		'label' => __( 'Logo Image', 'commentpress-core' ),
 		'section' => 'cp_inline_header_image',
 		'settings' => 'commentpress_theme_settings[cp_inline_header_image]',
 		'priority'	=>	1
@@ -658,7 +662,7 @@ function commentpress_customize_register(
 	));
 	 
 	$wp_customize->add_control( 'commentpress_theme_settings[cp_inline_header_padding]', array(
-		'label' => __( 'Top padding in px', 'commentpress-theme' ),
+		'label' => __( 'Top padding in px', 'commentpress-core' ),
 		'section' => 'cp_inline_header_image',
 		'type' => 'text'
 	) );
@@ -1161,13 +1165,13 @@ function commentpress_page_navigation( $with_comments = false ) {
 	
 		// init title
 		$img = '';
-		$title = __( 'Next page', 'commentpress-theme' ); //htmlentities( $next_page->post_title );	
+		$title = __( 'Next page', 'commentpress-core' ); //htmlentities( $next_page->post_title );	
 	
 		// if we wanted pages with comments...
 		if ( $with_comments ) {
 		
 			// set title
-			$title = __( 'Next page with comments', 'commentpress-theme' );
+			$title = __( 'Next page with comments', 'commentpress-core' );
 			$img = '<img src="'.get_bloginfo('template_directory').'/assets/images/next.png" />';	
 
 		}
@@ -1191,13 +1195,13 @@ function commentpress_page_navigation( $with_comments = false ) {
 		
 		// init title
 		$img = '';
-		$title = __( 'Previous page', 'commentpress-theme' ); //htmlentities( $prev_page->post_title );
+		$title = __( 'Previous page', 'commentpress-core' ); //htmlentities( $prev_page->post_title );
 	
 		// if we wanted pages with comments...
 		if ( $with_comments ) {
 		
 			// set title
-			$title = __( 'Previous page with comments', 'commentpress-theme' );
+			$title = __( 'Previous page with comments', 'commentpress-core' );
 			$img = '<img src="'.get_bloginfo('template_directory').'/assets/images/prev.png" />';
 		
 		}
@@ -1542,7 +1546,7 @@ function commentpress_echo_post_meta() {
 				if ( $n == ($author_count - 1) ) {
 				
 					// use ampersand
-					$sep = __( ' &amp; ', 'commentpress-theme' );
+					$sep = __( ' &amp; ', 'commentpress-core' );
 					
 				}
 				
@@ -1611,7 +1615,7 @@ function commentpress_show_source_url() {
 	?><p class="hidden_page_url"><?php 
 		
 		// label
-		echo __( 'Source: ', 'commentpress-theme' ); 
+		echo __( 'Source: ', 'commentpress-core' ); 
 		
 		// path from server array, if set
 		$path = ( isset( $_SERVER['REQUEST_URI'] ) ) ? $_SERVER['REQUEST_URI'] : '';
@@ -1743,7 +1747,7 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 		} else { 
 		
 			// we don't have a name
-			$_context = __( 'by Anonymous', 'commentpress-theme' );
+			$_context = __( 'by Anonymous', 'commentpress-core' );
 			
 		}
 	
@@ -1945,7 +1949,7 @@ function commentpress_get_all_comments_page_content() {
 	// set default
 	$pagetitle = apply_filters( 
 		'cp_page_all_comments_title', 
-		__( 'All Comments', 'commentpress-theme' )
+		__( 'All Comments', 'commentpress-core' )
 	);
 
 	// set title
@@ -1961,13 +1965,13 @@ function commentpress_get_all_comments_page_content() {
 	// set default
 	$blogtitle = apply_filters( 
 		'cp_page_all_comments_blog_title', 
-		__( 'Comments on the Blog', 'commentpress-theme' )
+		__( 'Comments on the Blog', 'commentpress-core' )
 	);
 
 	// set default
 	$booktitle = apply_filters( 
 		'cp_page_all_comments_book_title', 
-		__( 'Comments on the Pages', 'commentpress-theme' )
+		__( 'Comments on the Pages', 'commentpress-core' )
 	);
 
 	// get title
@@ -2453,7 +2457,7 @@ function commentpress_get_comment_activity( $scope = 'all' ) {
 '.apply_filters('comment_text', $comment_text ).'
 </div><!-- /comment-content -->
 
-<div class="reply"><p><a class="comment_activity_link'.$is_on_current_post.'" href="'.htmlspecialchars( get_comment_link() ).'">'.__( 'See in context', 'commentpress-theme' ).'</a></p></div><!-- /reply -->
+<div class="reply"><p><a class="comment_activity_link'.$is_on_current_post.'" href="'.htmlspecialchars( get_comment_link() ).'">'.__( 'See in context', 'commentpress-core' ).'</a></p></div><!-- /reply -->
 
 </div><!-- /comment-wrapper -->
 
@@ -2563,7 +2567,7 @@ function commentpress_get_comments_by_para() {
 					$para_num = '';
 					
 					// define default phrase
-					$paragraph_text = __( 'the whole page', 'commentpress-theme' );
+					$paragraph_text = __( 'the whole page', 'commentpress-core' );
 					
 					$current_type = get_post_type();
 					//print_r( $current_type ); die();
@@ -2571,13 +2575,13 @@ function commentpress_get_comments_by_para() {
 					switch( $current_type ) {
 						
 						// we can add more of these if needed
-						case 'post': $paragraph_text = __( 'the whole post', 'commentpress-theme' ); break;
-						case 'page': $paragraph_text = __( 'the whole page', 'commentpress-theme' ); break;
+						case 'post': $paragraph_text = __( 'the whole post', 'commentpress-core' ); break;
+						case 'page': $paragraph_text = __( 'the whole page', 'commentpress-core' ); break;
 						
 					}
 				
 					// set permalink text
-					$permalink_text = __('Permalink for comments on ', 'commentpress-theme' ).$paragraph_text;
+					$permalink_text = __('Permalink for comments on ', 'commentpress-core' ).$paragraph_text;
 					
 					// define heading text
 					$heading_text = sprintf( _n(
@@ -2592,7 +2596,7 @@ function commentpress_get_comments_by_para() {
 						$comment_count, 
 						
 						// domain
-						'commentpress-theme'
+						'commentpress-core'
 					
 					// substitution
 					), $comment_count );
@@ -2624,13 +2628,13 @@ function commentpress_get_comments_by_para() {
 						$comment_count, 
 						
 						// domain
-						'commentpress-theme'
+						'commentpress-core'
 					
 					// substitution
 					), $comment_count );
 					
 					// set permalink text
-					$permalink_text = __('Permalink for pingbacks and trackbacks', 'commentpress-theme' );
+					$permalink_text = __('Permalink for pingbacks and trackbacks', 'commentpress-core' );
 					
 					break;
 					
@@ -2651,21 +2655,21 @@ function commentpress_get_comments_by_para() {
 							case 'tag' :
 								
 								// set block identifier
-								$block_name = __( 'paragraph', 'commentpress-theme' );
+								$block_name = __( 'paragraph', 'commentpress-core' );
 							
 								break;
 								
 							case 'block' :
 								
 								// set block identifier
-								$block_name = __( 'block', 'commentpress-theme' );
+								$block_name = __( 'block', 'commentpress-core' );
 							
 								break;
 								
 							case 'line' :
 								
 								// set block identifier
-								$block_name = __( 'line', 'commentpress-theme' );
+								$block_name = __( 'line', 'commentpress-core' );
 							
 								break;
 								
@@ -2674,7 +2678,7 @@ function commentpress_get_comments_by_para() {
 					} else {
 					
 						// set block identifier
-						$block_name = __( 'paragraph', 'commentpress-theme' );
+						$block_name = __( 'paragraph', 'commentpress-core' );
 					
 					}
 					
@@ -2682,7 +2686,7 @@ function commentpress_get_comments_by_para() {
 					$paragraph_text = $block_name.' '.$para_num;
 					
 					// set permalink text
-					$permalink_text = __('Permalink for comments on ', 'commentpress-theme' ).$paragraph_text;
+					$permalink_text = __('Permalink for comments on ', 'commentpress-core' ).$paragraph_text;
 					
 					// define heading text
 					$heading_text = sprintf( _n(
@@ -2697,7 +2701,7 @@ function commentpress_get_comments_by_para() {
 						$comment_count, 
 						
 						// domain
-						'commentpress-theme'
+						'commentpress-core'
 					
 					// substitution
 					), $comment_count );
@@ -2783,7 +2787,7 @@ function commentpress_get_comments_by_para() {
 							// leave comment link
 							echo '<div class="reply_to_para" id="reply_to_para-'.$para_num.'">'."\n".
 									'<p><a class="reply_to_para" rel="nofollow" href="' . site_url('wp-login.php?redirect_to=' . get_permalink()) . '">'.
-										__( 'Login to leave a comment on ', 'commentpress-theme' ).$paragraph_text.
+										__( 'Login to leave a comment on ', 'commentpress-core' ).$paragraph_text.
 									'</a></p>'."\n".
 								 '</div>'."\n\n";
 							
@@ -2792,7 +2796,7 @@ function commentpress_get_comments_by_para() {
 							// leave comment link
 							echo '<div class="reply_to_para" id="reply_to_para-'.$para_num.'">'."\n".
 									'<p><a class="reply_to_para" href="'.$query.'#respond" onclick="'.$onclick.'">'.
-										__( 'Leave a comment on ', 'commentpress-theme' ).$paragraph_text.
+										__( 'Leave a comment on ', 'commentpress-core' ).$paragraph_text.
 									'</a></p>'."\n".
 								 '</div>'."\n\n";
 							
@@ -2962,8 +2966,8 @@ function commentpress_comment_reply_link( $args = array(), $comment = null, $pos
 	
 		'add_below' => 'comment', 
 		'respond_id' => 'respond', 
-		'reply_text' => __('Reply','commentpress-theme'),
-		'login_text' => __('Log in to Reply','commentpress-theme'), 
+		'reply_text' => __('Reply','commentpress-core'),
+		'login_text' => __('Log in to Reply','commentpress-core'), 
 		'depth' => 0, 
 		'before' => '', 
 		'after' => ''
@@ -3100,7 +3104,7 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 	
 	
 	if ( $comment->comment_approved == '0' ) {
-		$comment_text = '<p><em>'.__( 'Comment awaiting moderation', 'commentpress-theme' ).'</em></p>';
+		$comment_text = '<p><em>'.__( 'Comment awaiting moderation', 'commentpress-core' ).'</em></p>';
 	} else {
 		$comment_text = get_comment_text();
 	}
@@ -3169,13 +3173,13 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 		// set default edit link title text
 		$edit_title_text = apply_filters( 
 			'cp_comment_edit_link_title_text', 
-			__( 'Edit this comment', 'commentpress-theme' )
+			__( 'Edit this comment', 'commentpress-core' )
 		);
 	
 		// set default edit link text
 		$edit_text = apply_filters( 
 			'cp_comment_edit_link_text', 
-			__( 'Edit', 'commentpress-theme' )
+			__( 'Edit', 'commentpress-core' )
 		);
 	
 		// get edit comment link
@@ -3529,8 +3533,8 @@ function commentpress_multipager() {
 		'link_before' => '', 
 		'link_after' => '',
 		'next_or_number' => 'next', 
-		'nextpagelink' => '<span class="alignright">'.__('Next page','commentpress-theme').' &raquo;</span>',
-		'previouspagelink' => '<span class="alignleft">&laquo; '.__('Previous page','commentpress-theme').'</span>',
+		'nextpagelink' => '<span class="alignright">'.__('Next page','commentpress-core').' &raquo;</span>',
+		'previouspagelink' => '<span class="alignleft">&laquo; '.__('Previous page','commentpress-core').'</span>',
 		'pagelink' => '%',
 		'more_file' => '', 
 		'echo' => 0
@@ -3553,7 +3557,7 @@ function commentpress_multipager() {
 	// get page links
 	$page_links .= wp_link_pages( array(
 	
-		'before' => '<div class="multipager multipager_all"><span>' . __('Pages: ','commentpress-theme') . '</span>', 
+		'before' => '<div class="multipager multipager_all"><span>' . __('Pages: ','commentpress-core') . '</span>', 
 		'after' => '</div>',
 		'pagelink' => '<span class="multipager_link">%</span>',
 		'echo' => 0 
@@ -4065,9 +4069,9 @@ function commentpress_widgets_init() {
 
 	// define an area where a widget may be placed
 	register_sidebar( array(
-		'name' => __( 'CommentPress Footer', 'commentpress-theme' ),
+		'name' => __( 'CommentPress Footer', 'commentpress-core' ),
 		'id' => 'cp-license-8',
-		'description' => __( 'An optional widget area in the page footer of the CommentPress theme', 'commentpress-theme' ),
+		'description' => __( 'An optional widget area in the page footer of the CommentPress theme', 'commentpress-core' ),
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget' => "</div>",
 		'before_title' => '<h3 class="widget-title">',
