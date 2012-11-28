@@ -341,19 +341,19 @@ function cpajax_localise() {
 	$text = array();
 	
 	// add translations for comment form
-	$text[] = __( 'Loading...', 'commentpress-plugin' );
-	$text[] = __( 'Please enter your name.', 'commentpress-plugin' );
-	$text[] = __( 'Please enter your email address.', 'commentpress-plugin' );
-	$text[] = __( 'Please enter a valid email address.', 'commentpress-plugin' );
-	$text[] = __( 'Please enter your comment.', 'commentpress-plugin' );
-	$text[] = __( 'Your comment has been added.', 'commentpress-plugin' );
-	$text[] = __( 'AJAX error!', 'commentpress-plugin' );
+	$text[] = __( 'Loading...', 'commentpress-core' );
+	$text[] = __( 'Please enter your name.', 'commentpress-core' );
+	$text[] = __( 'Please enter your email address.', 'commentpress-core' );
+	$text[] = __( 'Please enter a valid email address.', 'commentpress-core' );
+	$text[] = __( 'Please enter your comment.', 'commentpress-core' );
+	$text[] = __( 'Your comment has been added.', 'commentpress-core' );
+	$text[] = __( 'AJAX error!', 'commentpress-core' );
 	
 	// add translations for comment reassignment
-	$text[] = __( 'Are you sure?', 'commentpress-plugin' );
-	$text[] = __( 'Are you sure you want to assign the comment and its replies to the textblock? This action cannot be undone.', 'commentpress-plugin' );
-	$text[] = __( 'Submitting...', 'commentpress-plugin' );
-	$text[] = __( 'Please wait while the comments are reassigned. The page will refresh when this has been done.', 'commentpress-plugin' );
+	$text[] = __( 'Are you sure?', 'commentpress-core' );
+	$text[] = __( 'Are you sure you want to assign the comment and its replies to the textblock? This action cannot be undone.', 'commentpress-core' );
+	$text[] = __( 'Submitting...', 'commentpress-core' );
+	$text[] = __( 'Please wait while the comments are reassigned. The page will refresh when this has been done.', 'commentpress-core' );
 	
 	// wrap each item in single quotes
 	array_walk( $text, create_function( '&$val', '$val = "\'".$val."\'";' ) );
@@ -428,13 +428,13 @@ function cpajax_add_reassign_button( $edit_button, $comment ) {
 	// set default edit link title text
 	$_title_text = apply_filters( 
 		'cpajax_comment_assign_link_title_text', 
-		__( 'Drop on to a text-block to reassign this comment (and any replies) to it', 'commentpress-plugin' )
+		__( 'Drop on to a text-block to reassign this comment (and any replies) to it', 'commentpress-core' )
 	);
 
 	// set default edit link text
 	$_text = apply_filters( 
 		'cp_comment_assign_link_text', 
-		__( 'Move', 'commentpress-plugin' )
+		__( 'Move', 'commentpress-core' )
 	);
 
 	// construct assign button

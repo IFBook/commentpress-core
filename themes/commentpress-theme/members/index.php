@@ -34,7 +34,7 @@
 
 		<form action="" method="post" id="members-directory-form" class="dir-form">
 
-			<h3><?php _e( 'Members', 'buddypress' ); ?></h3>
+			<h3><?php _e( 'Members', 'commentpress-core' ); ?></h3>
 
 			<?php do_action( 'bp_before_directory_members_content' ); ?>
 
@@ -46,11 +46,11 @@
 
 			<div class="item-list-tabs" role="navigation">
 				<ul>
-					<li class="selected" id="members-all"><a href="<?php echo trailingslashit( bp_get_root_domain() . '/' . bp_get_members_root_slug() ); ?>"><?php printf( __( 'All Members <span>%s</span>', 'buddypress' ), bp_get_total_member_count() ); ?></a></li>
+					<li class="selected" id="members-all"><a href="<?php echo trailingslashit( bp_get_root_domain() . '/' . bp_get_members_root_slug() ); ?>"><?php printf( __( 'All Members <span>%s</span>', 'commentpress-core' ), bp_get_total_member_count() ); ?></a></li>
 
 					<?php if ( is_user_logged_in() AND bp_is_active( 'friends' ) AND bp_get_total_friend_count( bp_loggedin_user_id() ) ) : ?>
 
-						<li id="members-personal"><a href="<?php echo bp_loggedin_user_domain() . bp_get_friends_slug() . '/my-friends/' ?>"><?php printf( __( 'My Friends <span>%s</span>', 'buddypress' ), bp_get_total_friend_count( bp_loggedin_user_id() ) ); ?></a></li>
+						<li id="members-personal"><a href="<?php echo bp_loggedin_user_domain() . bp_get_friends_slug() . '/my-friends/' ?>"><?php printf( __( 'My Friends <span>%s</span>', 'commentpress-core' ), bp_get_total_friend_count( bp_loggedin_user_id() ) ); ?></a></li>
 
 					<?php endif; ?>
 
@@ -66,14 +66,14 @@
 
 					<li id="members-order-select" class="last filter">
 
-						<label for="members-order-by"><?php _e( 'Order By:', 'buddypress' ); ?></label>
+						<label for="members-order-by"><?php _e( 'Order By:', 'commentpress-core' ); ?></label>
 						<select id="members-order-by">
-							<option value="active"><?php _e( 'Last Active', 'buddypress' ); ?></option>
-							<option value="newest"><?php _e( 'Newest Registered', 'buddypress' ); ?></option>
+							<option value="active"><?php _e( 'Last Active', 'commentpress-core' ); ?></option>
+							<option value="newest"><?php _e( 'Newest Registered', 'commentpress-core' ); ?></option>
 
 							<?php if ( bp_is_active( 'xprofile' ) ) : ?>
 
-								<option value="alphabetical"><?php _e( 'Alphabetical', 'buddypress' ); ?></option>
+								<option value="alphabetical"><?php _e( 'Alphabetical', 'commentpress-core' ); ?></option>
 
 							<?php endif; ?>
 

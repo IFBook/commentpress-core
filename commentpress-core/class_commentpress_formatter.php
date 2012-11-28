@@ -154,7 +154,7 @@ class CommentpressCoreFormatter {
 		return apply_filters( 
 			
 			'cp_class_commentpress_formatter_label', 
-			__( 'Default Text Format', 'commentpress-plugin' )
+			__( 'Default Text Format', 'commentpress-core' )
 		
 		);
 		

@@ -1037,7 +1037,7 @@ class CommentpressCoreDatabase {
 		if ( $option_name == '' ) {
 		
 			// oops
-			die( __( 'You must supply an option to option_exists()', 'commentpress-plugin' ) );
+			die( __( 'You must supply an option to option_exists()', 'commentpress-core' ) );
 		
 		}
 	
@@ -1061,7 +1061,7 @@ class CommentpressCoreDatabase {
 		if ( $option_name == '' ) {
 		
 			// oops
-			die( __( 'You must supply an option to option_get()', 'commentpress-plugin' ) );
+			die( __( 'You must supply an option to option_get()', 'commentpress-core' ) );
 		
 		}
 	
@@ -1085,7 +1085,7 @@ class CommentpressCoreDatabase {
 		if ( $option_name == '' ) {
 		
 			// oops
-			die( __( 'You must supply an option to option_set()', 'commentpress-plugin' ) );
+			die( __( 'You must supply an option to option_set()', 'commentpress-core' ) );
 		
 		}
 	
@@ -1093,7 +1093,7 @@ class CommentpressCoreDatabase {
 		if ( !is_string( $option_name ) ) {
 		
 			// oops
-			die( __( 'You must supply the option as a string to option_set()', 'commentpress-plugin' ) );
+			die( __( 'You must supply the option as a string to option_set()', 'commentpress-core' ) );
 		
 		}
 	
@@ -1117,7 +1117,7 @@ class CommentpressCoreDatabase {
 		if ( $option_name == '' ) {
 		
 			// oops
-			die( __( 'You must supply an option to option_delete()', 'commentpress-plugin' ) );
+			die( __( 'You must supply an option to option_delete()', 'commentpress-core' ) );
 		
 		}
 	
@@ -1141,7 +1141,7 @@ class CommentpressCoreDatabase {
 		if ( $option_name == '' ) {
 		
 			// oops
-			die( __( 'You must supply an option to option_wp_exists()', 'commentpress-plugin' ) );
+			die( __( 'You must supply an option to option_wp_exists()', 'commentpress-core' ) );
 		
 		}
 	
@@ -1175,7 +1175,7 @@ class CommentpressCoreDatabase {
 		if ( $option_name == '' ) {
 		
 			// oops
-			die( __( 'You must supply an option to option_wp_get()', 'commentpress-plugin' ) );
+			die( __( 'You must supply an option to option_wp_get()', 'commentpress-core' ) );
 		
 		}
 	
@@ -1199,7 +1199,7 @@ class CommentpressCoreDatabase {
 		if ( $option_name == '' ) {
 		
 			// oops
-			die( __( 'You must supply an option to option_wp_set()', 'commentpress-plugin' ) );
+			die( __( 'You must supply an option to option_wp_set()', 'commentpress-core' ) );
 		
 		}
 	
@@ -3171,7 +3171,7 @@ class CommentpressCoreDatabase {
 		//print_r( $post ); die();
 		
 		// default page title
-		$prefix = __( 'Copy of ', 'commentpress-plugin' );
+		$prefix = __( 'Copy of ', 'commentpress-core' );
 
 		// allow overrides of prefix
 		$prefix = apply_filters( 'commentpress_new_post_title_prefix', $prefix );
@@ -3261,7 +3261,7 @@ class CommentpressCoreDatabase {
 		// add post-specific stuff
 		
 		// default page title
-		$_title = __( 'Title Page', 'commentpress-plugin' );
+		$_title = __( 'Title Page', 'commentpress-core' );
 
 		// set, but allow overrides
 		$title['post_title'] = apply_filters( 'cp_title_page_title', $_title );
@@ -3273,7 +3273,7 @@ class CommentpressCoreDatabase {
 
 This is your title page. Edit it to suit your needs. It has been automatically set as your homepage but if you want another page as your homepage, set it in <em>Wordpress</em> &#8594; <em>Settings</em> &#8594; <em>Reading</em>.
 
-You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings</em> &#8594; <em>CommentPress</em> to make the site work the way you want it to. Use the Theme Customizer to change the way your site looks in <em>Wordpress</em> &#8594; <em>Appearance</em> &#8594; <em>Customize</em>. For help with structuring, formatting and reading text in CommentPress, please refer to the <a href="http://www.futureofthebook.org/commentpress/">CommentPress website</a>.', 'commentpress-plugin' 
+You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings</em> &#8594; <em>CommentPress</em> to make the site work the way you want it to. Use the Theme Customizer to change the way your site looks in <em>Wordpress</em> &#8594; <em>Appearance</em> &#8594; <em>Customize</em>. For help with structuring, formatting and reading text in CommentPress, please refer to the <a href="http://www.futureofthebook.org/commentpress/">CommentPress website</a>.', 'commentpress-core' 
 			
 		);
 		
@@ -3331,13 +3331,13 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 		// add post-specific stuff
 
 		// default page title
-		$title = __( 'General Comments', 'commentpress-plugin' );
+		$title = __( 'General Comments', 'commentpress-core' );
 
 		// set, but allow overrides
 		$general_comments['post_title'] = apply_filters( 'cp_general_comments_title', $title );
 
 		// default content
-		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-plugin' );
+		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-core' );
 		
 		// set, but allow overrides
 		$general_comments['post_content'] = apply_filters( 'cp_general_comments_content', $content );
@@ -3386,13 +3386,13 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 		// add post-specific stuff
 
 		// default page title
-		$title = __( 'All Comments', 'commentpress-plugin' );
+		$title = __( 'All Comments', 'commentpress-core' );
 
 		// set, but allow overrides
 		$all_comments['post_title'] = apply_filters( 'cp_all_comments_title', $title );
 		
 		// default content
-		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-plugin' );
+		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-core' );
 		
 		// set, but allow overrides
 		$all_comments['post_content'] = apply_filters( 'cp_all_comments_content', $content );
@@ -3441,13 +3441,13 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 		// add post-specific stuff
 
 		// default page title
-		$title = __( 'Comments by Commenter', 'commentpress-plugin' );
+		$title = __( 'Comments by Commenter', 'commentpress-core' );
 
 		// set, but allow overrides
 		$group['post_title'] = apply_filters( 'cp_comments_by_title', $title );
 		
 		// default content
-		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-plugin' );
+		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-core' );
 		
 		// set, but allow overrides
 		$group['post_content'] = apply_filters( 'cp_comments_by_content', $content );
@@ -3496,13 +3496,13 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 		// add post-specific stuff
 
 		// default page title
-		$title = __( 'Blog', 'commentpress-plugin' );
+		$title = __( 'Blog', 'commentpress-core' );
 
 		// set, but allow overrides
 		$blog['post_title'] = apply_filters( 'cp_blog_page_title', $title );
 		
 		// default content
-		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-plugin' );
+		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-core' );
 		
 		// set, but allow overrides
 		$blog['post_content'] = apply_filters( 'cp_blog_page_content', $content );
@@ -3554,13 +3554,13 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 		// add post-specific stuff
 
 		// default page title
-		$title = __( 'Blog Archive', 'commentpress-plugin' );
+		$title = __( 'Blog Archive', 'commentpress-core' );
 
 		// set, but allow overrides
 		$blog['post_title'] = apply_filters( 'cp_blog_archive_page_title', $title );
 		
 		// default content
-		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-plugin' );
+		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-core' );
 		
 		// set, but allow overrides
 		$blog['post_content'] = apply_filters( 'cp_blog_archive_page_content', $content );
@@ -3607,13 +3607,13 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 		);
 		
 		// default page title
-		$title = __( 'Table of Contents', 'commentpress-plugin' );
+		$title = __( 'Table of Contents', 'commentpress-core' );
 
 		// set, but allow overrides
 		$toc['post_title'] = apply_filters( 'cp_toc_page_title', $title );
 		
 		// default content
-		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-plugin' );
+		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-core' );
 		
 		// set, but allow overrides
 		$toc['post_content'] = apply_filters( 'cp_toc_page_content', $content );

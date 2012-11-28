@@ -15,7 +15,7 @@ $_is_commentable = commentpress_is_commentable();
 if ( $_is_commentable ) {
 
 	// set default phrase
-	$_paragraph_text = __( 'Recent Comments on this Page', 'commentpress-theme' );
+	$_paragraph_text = __( 'Recent Comments on this Page', 'commentpress-core' );
 
 	$_current_type = get_post_type();
 	//print_r( $_current_type ); die();
@@ -23,8 +23,8 @@ if ( $_is_commentable ) {
 	switch( $_current_type ) {
 		
 		// we can add more of these if needed
-		case 'post': $_paragraph_text = __( 'Recent Comments on this Post', 'commentpress-theme' ); break;
-		case 'page': $_paragraph_text = __( 'Recent Comments on this Page', 'commentpress-theme' ); break;
+		case 'post': $_paragraph_text = __( 'Recent Comments on this Post', 'commentpress-core' ); break;
+		case 'page': $_paragraph_text = __( 'Recent Comments on this Page', 'commentpress-core' ); break;
 		
 	}
 	
@@ -46,7 +46,7 @@ if ( $_is_commentable ) {
 // set default
 $_all_comments_title = apply_filters(
 	'cp_activity_tab_recent_title_blog', 
-	__( 'Recent Comments in this Document', 'commentpress-theme' )
+	__( 'Recent Comments in this Document', 'commentpress-core' )
 );
 
 // get all comments
@@ -236,7 +236,7 @@ if (
 			// set default
 			$_section_header_text = apply_filters(
 				'cp_activity_tab_recent_title_all_yours', 
-				__( 'Recent Activity in your Documents', 'commentpress-theme' )
+				__( 'Recent Activity in your Documents', 'commentpress-core' )
 			);
 			
 		} else { 
@@ -244,7 +244,7 @@ if (
 			// set default
 			$_section_header_text = apply_filters(
 				'cp_activity_tab_recent_title_all_public', 
-				__( 'Recent Activity in Public Documents', 'commentpress-theme' )
+				__( 'Recent Activity in Public Documents', 'commentpress-core' )
 			);
 		
 		 } ?>

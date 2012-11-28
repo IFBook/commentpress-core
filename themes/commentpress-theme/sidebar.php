@@ -63,7 +63,7 @@ $_comments_title = apply_filters(
 	'cp_tab_title_comments', 
 	
 	// default value
-	__( 'Comments', 'commentpress-theme' )
+	__( 'Comments', 'commentpress-core' )
 	
 );
 
@@ -110,7 +110,7 @@ if ( commentpress_show_activity_tab() ) {
 		'cp_tab_title_activity', 
 		
 		// default value
-		__( 'Activity', 'commentpress-theme' )
+		__( 'Activity', 'commentpress-core' )
 		
 	);
 	
@@ -157,7 +157,7 @@ $_toc_title = apply_filters(
 	'cp_tab_title_toc', 
 	
 	// default value
-	__( 'Contents', 'commentpress-theme' )
+	__( 'Contents', 'commentpress-core' )
 	
 );
 
