@@ -174,8 +174,8 @@ class CommentpressMultisite {
 		$page = add_submenu_page( 
 		
 			'settings.php', 
-			__( 'CommentPress', 'commentpress-plugin' ), 
-			__( 'CommentPress', 'commentpress-plugin' ), 
+			__( 'CommentPress', 'commentpress-core' ), 
+			__( 'CommentPress', 'commentpress-core' ), 
 			'manage_options', 
 			'cpmu_admin_page', 
 			array( $this, '_network_admin_form' )
@@ -291,7 +291,7 @@ class CommentpressMultisite {
 			// define text, but allow overrides
 			$text = apply_filters( 
 				'cp_multisite_options_signup_text_forced',
-				__( 'Select the options for your new CommentPress document.', 'commentpress-plugin' )
+				__( 'Select the options for your new CommentPress document.', 'commentpress-core' )
 			);
 			
 		} else {
@@ -299,14 +299,14 @@ class CommentpressMultisite {
 			// set checkbox
 			$forced_html = '
 			<div class="checkbox">
-				<label for="cpmu-new-blog"><input type="checkbox" value="1" id="cpmu-new-blog" name="cpmu-new-blog" /> '.__( 'Enable CommentPress', 'commentpress-plugin' ).'</label>
+				<label for="cpmu-new-blog"><input type="checkbox" value="1" id="cpmu-new-blog" name="cpmu-new-blog" /> '.__( 'Enable CommentPress', 'commentpress-core' ).'</label>
 			</div>
 			';
 					
 			// define text, but allow overrides
 			$text = apply_filters( 
 				'cp_multisite_options_signup_text',
-				__( 'Do you want to make the new site a CommentPress document?', 'commentpress-plugin' )
+				__( 'Do you want to make the new site a CommentPress document?', 'commentpress-core' )
 			);
 			
 		}
@@ -327,7 +327,7 @@ class CommentpressMultisite {
 		<br />
 		<div id="cp-multisite-options">
 
-			<h3>'.__( 'CommentPress:', 'commentpress-plugin' ).'</h3>
+			<h3>'.__( 'CommentPress:', 'commentpress-core' ).'</h3>
 
 			<p>'.$text.'</p>
 
@@ -592,7 +592,7 @@ class CommentpressMultisite {
 		if( is_super_admin() == false ) {
 			
 			// disallow
-			wp_die( __( 'You do not have permission to access this page.', 'commentpress-plugin' ) );
+			wp_die( __( 'You do not have permission to access this page.', 'commentpress-core' ) );
 			
 		}
 		
@@ -602,7 +602,7 @@ class CommentpressMultisite {
 
 		// show message
 		if ( isset( $_GET['updated'] ) ) {
-			echo '<div id="message" class="updated"><p>'.__( 'Options saved.', 'commentpress-plugin' ).'</p></div>';
+			echo '<div id="message" class="updated"><p>'.__( 'Options saved.', 'commentpress-core' ).'</p></div>';
 		}
 		
 
@@ -620,7 +620,7 @@ class CommentpressMultisite {
 
 <div class="icon32" id="icon-options-general"><br/></div>
 
-<h2>'.__( 'CommentPress Network Settings', 'commentpress-plugin' ).'</h2>
+<h2>'.__( 'CommentPress Network Settings', 'commentpress-core' ).'</h2>
 
 <form method="post" action="'.htmlentities($url.'&updated=true').'">
 
@@ -637,29 +637,29 @@ class CommentpressMultisite {
 		echo '
 <div id="cpmu_admin_options">
 
-<h3>'.__( 'Multisite Settings', 'commentpress-plugin' ).'</h3>
+<h3>'.__( 'Multisite Settings', 'commentpress-core' ).'</h3>
 
-<p>'.__( 'Configure how your CommentPress Network behaves. Site-specific options are set on the CommentPress Core Settings page for that site.', 'commentpress-plugin' ).'</p>';
+<p>'.__( 'Configure how your CommentPress Network behaves. Site-specific options are set on the CommentPress Core Settings page for that site.', 'commentpress-core' ).'</p>';
 		
 		
 		// add global options
 		echo '
-<h4>'.__( 'Global Options', 'commentpress-plugin' ).'</h4>
+<h4>'.__( 'Global Options', 'commentpress-core' ).'</h4>
 
 <table class="form-table">
 
 	<tr valign="top">
-		<th scope="row"><label for="cpmu_reset">'.__( 'Reset Multisite options', 'commentpress-plugin' ).'</label></th>
+		<th scope="row"><label for="cpmu_reset">'.__( 'Reset Multisite options', 'commentpress-core' ).'</label></th>
 		<td><input id="cpmu_reset" name="cpmu_reset" value="1" type="checkbox" /></td>
 	</tr>
 
 	<tr valign="top">
-		<th scope="row"><label for="cpmu_force_commentpress">'.__( 'Make all new sites CommentPress-enabled', 'commentpress-plugin' ).'</label></th>
+		<th scope="row"><label for="cpmu_force_commentpress">'.__( 'Make all new sites CommentPress-enabled', 'commentpress-core' ).'</label></th>
 		<td><input id="cpmu_force_commentpress" name="cpmu_force_commentpress" value="1" type="checkbox"'.( $this->db->option_get( 'cpmu_force_commentpress' ) == '1' ? ' checked="checked"' : '' ).' /></td>
 	</tr>
 
 	<tr valign="top">
-		<th scope="row"><label for="cpmu_disable_translation_workflow">'.__( 'Disable Translation Workflow (Recommended because it is still very experimental)', 'commentpress-plugin' ).'</label></th>
+		<th scope="row"><label for="cpmu_disable_translation_workflow">'.__( 'Disable Translation Workflow (Recommended because it is still very experimental)', 'commentpress-core' ).'</label></th>
 		<td><input id="cpmu_disable_translation_workflow" name="cpmu_disable_translation_workflow" value="1" type="checkbox"'.( $this->db->option_get( 'cpmu_disable_translation_workflow' ) == '1' ? ' checked="checked"' : '' ).' /></td>
 	</tr>
 
@@ -671,22 +671,22 @@ class CommentpressMultisite {
 		/*
 		// add WordPress overrides
 		echo '
-<h4>'.__( 'Override WordPress behaviour', 'commentpress-plugin' ).'</h4>
+<h4>'.__( 'Override WordPress behaviour', 'commentpress-core' ).'</h4>
 
 <table class="form-table">
 
 	<tr valign="top">
-		<th scope="row"><label for="cpmu_delete_first_page">'.__( 'Delete WordPress-generated Sample Page', 'commentpress-plugin' ).'</label></th>
+		<th scope="row"><label for="cpmu_delete_first_page">'.__( 'Delete WordPress-generated Sample Page', 'commentpress-core' ).'</label></th>
 		<td><input id="cpmu_delete_first_page" name="cpmu_delete_first_page" value="1" type="checkbox"'.( $this->db->option_get( 'cpmu_delete_first_page' ) == '1' ? ' checked="checked"' : '' ).' /></td>
 	</tr>
 
 	<tr valign="top">
-		<th scope="row"><label for="cpmu_delete_first_post">'.__( 'Delete WordPress-generated Hello World post', 'commentpress-plugin' ).'</label></th>
+		<th scope="row"><label for="cpmu_delete_first_post">'.__( 'Delete WordPress-generated Hello World post', 'commentpress-core' ).'</label></th>
 		<td><input id="cpmu_delete_first_post" name="cpmu_delete_first_post" value="1" type="checkbox"'.( $this->db->option_get( 'cpmu_delete_first_post' ) == '1' ? ' checked="checked"' : '' ).' /></td>
 	</tr>
 
 	<tr valign="top">
-		<th scope="row"><label for="cpmu_delete_first_comment">'.__( 'Delete WordPress-generated First Comment', 'commentpress-plugin' ).'</label></th>
+		<th scope="row"><label for="cpmu_delete_first_comment">'.__( 'Delete WordPress-generated First Comment', 'commentpress-core' ).'</label></th>
 		<td><input id="cpmu_delete_first_comment" name="cpmu_delete_first_comment" value="1" type="checkbox"'.( $this->db->option_get( 'cpmu_delete_first_comment' ) == '1' ? ' checked="checked"' : '' ).' /></td>
 	</tr>
 
@@ -702,10 +702,10 @@ class CommentpressMultisite {
 		
 		/*
 		// title
-		echo '<h3>'.__( 'Title Page Content', 'commentpress-plugin' ).'</h3>';
+		echo '<h3>'.__( 'Title Page Content', 'commentpress-core' ).'</h3>';
 
 		// explanation
-		echo '<p>'.__( 'The following is the content of the Title Page for each new CommentPress site. Edit it if you want to show something else on the Title Page.', 'commentpress-plugin' ).'</p>';
+		echo '<p>'.__( 'The following is the content of the Title Page for each new CommentPress site. Edit it if you want to show something else on the Title Page.', 'commentpress-core' ).'</p>';
 
 		// get content
 		$content = stripslashes( $this->db->option_get( 'cpmu_title_page_content' ) );
@@ -735,7 +735,7 @@ class CommentpressMultisite {
 		// close admin form
 		echo '
 <p class="submit">
-	<input type="submit" name="cpmu_submit" value="'.__( 'Save Changes', 'commentpress-plugin' ).'" class="button-primary" />
+	<input type="submit" name="cpmu_submit" value="'.__( 'Save Changes', 'commentpress-core' ).'" class="button-primary" />
 </p>
 
 </form>
@@ -929,7 +929,7 @@ class CommentpressMultisite {
 
 This is your title page. Edit it to suit your needs. It has been automatically set as your homepage but if you want another page as your homepage, set it in <em>Wordpress</em> &#8594; <em>Settings</em> &#8594; <em>Reading</em>.
 
-You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings</em> &#8594; <em>CommentPress</em> to make the site work the way you want it to. Use the Theme Customizer to change the way your site looks in <em>Wordpress</em> &#8594; <em>Appearance</em> &#8594; <em>Customize</em>. For help with structuring, formatting and reading text in CommentPress, please refer to the <a href="http://www.futureofthebook.org/commentpress/">CommentPress website</a>.', 'commentpress-plugin' 
+You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings</em> &#8594; <em>CommentPress</em> to make the site work the way you want it to. Use the Theme Customizer to change the way your site looks in <em>Wordpress</em> &#8594; <em>Appearance</em> &#8594; <em>Customize</em>. For help with structuring, formatting and reading text in CommentPress, please refer to the <a href="http://www.futureofthebook.org/commentpress/">CommentPress website</a>.', 'commentpress-core' 
 			
 		);
 		

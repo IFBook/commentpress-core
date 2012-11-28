@@ -531,7 +531,7 @@ class CommentpressMultisiteAdmin {
 		if ( $option_name == '' ) {
 		
 			// oops
-			die( __( 'You must supply an option to option_exists()', 'commentpress-plugin' ) );
+			die( __( 'You must supply an option to option_exists()', 'commentpress-core' ) );
 		
 		}
 	
@@ -555,7 +555,7 @@ class CommentpressMultisiteAdmin {
 		if ( $option_name == '' ) {
 		
 			// oops
-			die( __( 'You must supply an option to option_get()', 'commentpress-plugin' ) );
+			die( __( 'You must supply an option to option_get()', 'commentpress-core' ) );
 		
 		}
 	
@@ -579,7 +579,7 @@ class CommentpressMultisiteAdmin {
 		if ( $option_name == '' ) {
 		
 			// oops
-			die( __( 'You must supply an option to option_set()', 'commentpress-plugin' ) );
+			die( __( 'You must supply an option to option_set()', 'commentpress-core' ) );
 		
 		}
 	
@@ -587,7 +587,7 @@ class CommentpressMultisiteAdmin {
 		if ( !is_string( $option_name ) ) {
 		
 			// oops
-			die( __( 'You must supply the option as a string to option_set()', 'commentpress-plugin' ) );
+			die( __( 'You must supply the option as a string to option_set()', 'commentpress-core' ) );
 		
 		}
 	
@@ -611,7 +611,7 @@ class CommentpressMultisiteAdmin {
 		if ( $option_name == '' ) {
 		
 			// oops
-			die( __( 'You must supply an option to option_delete()', 'commentpress-plugin' ) );
+			die( __( 'You must supply an option to option_delete()', 'commentpress-core' ) );
 		
 		}
 	
@@ -635,7 +635,7 @@ class CommentpressMultisiteAdmin {
 		if ( $option_name == '' ) {
 		
 			// oops
-			die( __( 'You must supply an option to option_wpms_exists()', 'commentpress-plugin' ) );
+			die( __( 'You must supply an option to option_wpms_exists()', 'commentpress-core' ) );
 		
 		}
 	
@@ -669,7 +669,7 @@ class CommentpressMultisiteAdmin {
 		if ( $option_name == '' ) {
 		
 			// oops
-			die( __( 'You must supply an option to option_wpms_get()', 'commentpress-plugin' ) );
+			die( __( 'You must supply an option to option_wpms_get()', 'commentpress-core' ) );
 		
 		}
 	
@@ -693,7 +693,7 @@ class CommentpressMultisiteAdmin {
 		if ( $option_name == '' ) {
 		
 			// oops
-			die( __( 'You must supply an option to option_wpms_set()', 'commentpress-plugin' ) );
+			die( __( 'You must supply an option to option_wpms_set()', 'commentpress-core' ) );
 		
 		}
 	
@@ -880,7 +880,7 @@ class CommentpressMultisiteAdmin {
 		if ( $has_workflow !== false ) {
 		
 			// define workflow label
-			$workflow_label = __( 'Enable Custom Workflow', 'commentpress-plugin' );
+			$workflow_label = __( 'Enable Custom Workflow', 'commentpress-core' );
 			
 			// allow overrides
 			$workflow_label = apply_filters( 'cp_blog_workflow_label', $workflow_label );
@@ -926,7 +926,7 @@ class CommentpressMultisiteAdmin {
 		if ( !empty( $types ) ) {
 		
 			// define blog type label
-			$type_label = __( 'Document Type', 'commentpress-plugin' );
+			$type_label = __( 'Document Type', 'commentpress-core' );
 			
 			// allow overrides
 			$type_label = apply_filters( 'cp_blog_type_label', $type_label );
@@ -1095,8 +1095,8 @@ class CommentpressMultisiteAdmin {
 		// insert item in relevant menu
 		$this->options_page = add_options_page(
 		
-			__( 'CommentPress Core Settings', 'commentpress-plugin' ), 
-			__( 'CommentPress Core', 'commentpress-plugin' ), 
+			__( 'CommentPress Core Settings', 'commentpress-core' ), 
+			__( 'CommentPress Core', 'commentpress-core' ), 
 			'manage_options', 
 			'commentpress_admin', 
 			array( $this, '_options_page' )
@@ -1162,7 +1162,7 @@ class CommentpressMultisiteAdmin {
 			if ( current_user_can('manage_options') ) {
 			
 				// show it
-				echo '<div id="message" class="error"><p>'.__( 'CommentPress Core has detected that a previous version of Commentpress is active on this site. Please visit the <a href="options-general.php?page=commentpress_admin">Settings Page</a> to upgrade.', 'commentpress-plugin' ).'</p></div>';
+				echo '<div id="message" class="error"><p>'.__( 'CommentPress Core has detected that a previous version of Commentpress is active on this site. Please visit the <a href="options-general.php?page=commentpress_admin">Settings Page</a> to upgrade.', 'commentpress-core' ).'</p></div>';
 			
 			}
 			
@@ -1249,15 +1249,15 @@ class CommentpressMultisiteAdmin {
 		
 		
 		// init vars
-		$label = __( 'Activate CommentPress', 'commentpress-plugin' );
-		$submit = __( 'Save Changes', 'commentpress-plugin' );
+		$label = __( 'Activate CommentPress', 'commentpress-core' );
+		$submit = __( 'Save Changes', 'commentpress-core' );
 		
 		// test if we have a existing pre-3.4 Commentpress instance
 		if ( commentpress_is_legacy_plugin_active() ) {
 
 			// override vars
-			$label = __( 'Upgrade to CommentPress Core', 'commentpress-plugin' );
-			$submit = __( 'Upgrade', 'commentpress-plugin' );
+			$label = __( 'Upgrade to CommentPress Core', 'commentpress-core' );
+			$submit = __( 'Upgrade', 'commentpress-core' );
 			
 		}
 		
@@ -1267,7 +1267,7 @@ class CommentpressMultisiteAdmin {
 		$admin_page = '
 <div class="icon32" id="icon-options-general"><br/></div>
 
-<h2>'.__( 'CommentPress Core Settings', 'commentpress-plugin' ).'</h2>
+<h2>'.__( 'CommentPress Core Settings', 'commentpress-core' ).'</h2>
 
 
 
@@ -1279,7 +1279,7 @@ class CommentpressMultisiteAdmin {
 
 
 
-<h4>'.__( 'Activation', 'commentpress-plugin' ).'</h4>
+<h4>'.__( 'Activation', 'commentpress-core' ).'</h4>
 
 <table class="form-table">
 
@@ -1453,7 +1453,7 @@ class CommentpressMultisiteAdmin {
 		// define html
 		return '
 	<tr valign="top">
-		<th scope="row"><label for="cp_deactivate_commentpress">'.__( 'Deactivate CommentPress Core', 'commentpress-plugin' ).'</label></th>
+		<th scope="row"><label for="cp_deactivate_commentpress">'.__( 'Deactivate CommentPress Core', 'commentpress-core' ).'</label></th>
 		<td><input id="cp_deactivate_commentpress" name="cp_deactivate_commentpress" value="1" type="checkbox" /></td>
 	</tr>
 ';		

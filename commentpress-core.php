@@ -4,8 +4,9 @@ Plugin Name: CommentPress Core
 Plugin URI: http://www.futureofthebook.org/commentpress/
 Description: CommentPress allows readers to comment paragraph by paragraph in the margins of a text. You can use it to annotate, gloss, workshop, debate and more!
 Author: Institute for the Future of the Book
-Version: 3.4.2
+Version: 3.4.3
 Author URI: http://www.futureofthebook.org
+Text Domain: commentpress-core
 --------------------------------------------------------------------------------
 Special thanks to:
 Eddie Tejeda @ http://www.visudo.com for Commentpress 2.0
@@ -22,7 +23,7 @@ Mark James for the icons: http://www.famfamfam.com/lab/icons/silk/
 // -----------------------------------------------------------------------------
 
 // set version
-define( 'COMMENTPRESS_VERSION', '3.4.2' );
+define( 'COMMENTPRESS_VERSION', '3.4.3' );
 
 // store reference to this file
 if ( !defined( 'COMMENTPRESS_PLUGIN_FILE' ) ) {
@@ -245,7 +246,7 @@ function commentpress_plugin_action_links( $links, $file ) {
 	
 	// add settings link
 	if ( $file == plugin_basename( dirname( __FILE__ ).'/commentpress-core.php' ) ) {
-		$links[] = '<a href="options-general.php?page=commentpress_admin">'.__( 'Settings', 'commentpress-plugin' ).'</a>';
+		$links[] = '<a href="options-general.php?page=commentpress_admin">'.__( 'Settings', 'commentpress-core' ).'</a>';
 	}
 	
 	// --<

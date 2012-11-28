@@ -61,19 +61,19 @@
 					</ul>
 				</div><!-- .item-list-tabs -->
 
-				<h3><?php _e( 'Email Notification', 'buddypress' ); ?></h3>
+				<h3><?php _e( 'Email Notification', 'commentpress-core' ); ?></h3>
 
 				<?php do_action( 'bp_template_content' ) ?>
 
 				<form action="<?php echo bp_displayed_user_domain() . bp_get_settings_slug() . '/notifications'; ?>" method="post" class="standard-form" id="settings-form">
-					<p><?php _e( 'Send a notification by email when:', 'buddypress' ); ?></p>
+					<p><?php _e( 'Send a notification by email when:', 'commentpress-core' ); ?></p>
 
 					<?php do_action( 'bp_notification_settings' ); ?>
 
 					<?php do_action( 'bp_members_notification_settings_before_submit' ); ?>
 
 					<div class="submit">
-						<input type="submit" name="submit" value="<?php _e( 'Save Changes', 'buddypress' ); ?>" id="submit" class="auto" />
+						<input type="submit" name="submit" value="<?php _e( 'Save Changes', 'commentpress-core' ); ?>" id="submit" class="auto" />
 					</div>
 
 					<?php do_action( 'bp_members_notification_settings_after_submit' ); ?>

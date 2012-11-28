@@ -638,7 +638,7 @@ HELPTEXT;
 							if ( $n == ($author_count - 1) ) {
 							
 								// use ampersand
-								$sep = __( ' &amp; ', 'commentpress-theme' );
+								$sep = __( ' &amp; ', 'commentpress-core' );
 								
 							}
 							
@@ -742,7 +742,7 @@ HELPTEXT;
 			$link = sprintf(
 				'<a href="%1$s" title="%2$s" rel="author">%3$s</a>',
 				get_author_posts_url( $user->ID, $user->user_nicename ),
-				esc_attr( sprintf( __( 'Posts by %s' ), $user->display_name ) ),
+				esc_attr( sprintf( __( 'Posts by %s', 'commentpress-core' ), $user->display_name ) ),
 				esc_html( $user->display_name )
 			);
 			$author = apply_filters( 'the_author_posts_link', $link );
@@ -778,7 +778,7 @@ HELPTEXT;
 		
 		
 		// If we set the theme to use wp_nav_menu(), we need to register it
-		register_nav_menu( 'primary', __( 'Primary Menu', 'twentyeleven' ) );
+		register_nav_menu( 'primary', __( 'Primary Menu', 'commentpress-core' ) );
 	
 		Our navigation menu. If one isn't filled out, wp_nav_menu falls back to 
 		wp_page_menu. The menu assiged to the primary position is the one used. If 
@@ -980,7 +980,7 @@ HELPTEXT;
 					$comment_count, 
 					
 					// domain
-					'commentpress-plugin'
+					'commentpress-core'
 				
 				// substitution
 				), $comment_count );
@@ -998,7 +998,7 @@ HELPTEXT;
 					$para_num, 
 					
 					// domain
-					'commentpress-plugin'
+					'commentpress-core'
 				
 				// substitution
 				), $para_num );
@@ -1023,7 +1023,7 @@ HELPTEXT;
 					$comment_count, 
 					
 					// domain
-					'commentpress-plugin'
+					'commentpress-core'
 				
 				// substitution
 				), $comment_count );
@@ -1041,7 +1041,7 @@ HELPTEXT;
 					$para_num, 
 					
 					// domain
-					'commentpress-plugin'
+					'commentpress-core'
 				
 				// substitution
 				), $para_num );
@@ -1067,7 +1067,7 @@ HELPTEXT;
 					$comment_count, 
 					
 					// domain
-					'commentpress-plugin'
+					'commentpress-core'
 				
 				// substitution
 				), $comment_count );
@@ -1085,7 +1085,7 @@ HELPTEXT;
 					$para_num, 
 					
 					// domain
-					'commentpress-plugin'
+					'commentpress-core'
 				
 				// substitution
 				), $para_num );
@@ -1153,7 +1153,7 @@ HELPTEXT;
 					$para_num, 
 					
 					// domain
-					'commentpress-plugin'
+					'commentpress-core'
 				
 				// substitution
 				), $para_num );
@@ -1181,7 +1181,7 @@ HELPTEXT;
 					$para_num, 
 					
 					// domain
-					'commentpress-plugin'
+					'commentpress-core'
 				
 				// substitution
 				), $para_num );
@@ -1210,7 +1210,7 @@ HELPTEXT;
 					$para_num, 
 					
 					// domain
-					'commentpress-plugin'
+					'commentpress-core'
 				
 				// substitution
 				), $para_num );
@@ -1390,17 +1390,17 @@ HELPTEXT;
 	
 			case 'comments':
 				// define minimise button
-				$tag = '<span id="cp_minimise_all_comments" title="'.__( 'Minimise all Comment Sections', 'commentpress-plugin' ).'"></span>';
+				$tag = '<span id="cp_minimise_all_comments" title="'.__( 'Minimise all Comment Sections', 'commentpress-core' ).'"></span>';
 				break;
 			
 			case 'activity':
 				// define minimise button
-				$tag = '<span id="cp_minimise_all_activity" title="'.__( 'Minimise all Activity Sections', 'commentpress-plugin' ).'"></span>';
+				$tag = '<span id="cp_minimise_all_activity" title="'.__( 'Minimise all Activity Sections', 'commentpress-core' ).'"></span>';
 				break;
 			
 			case 'toc':
 				// define minimise button
-				$tag = '<span id="cp_minimise_all_contents" title="'.__( 'Minimise all Contents Sections', 'commentpress-plugin' ).'"></span>';
+				$tag = '<span id="cp_minimise_all_contents" title="'.__( 'Minimise all Contents Sections', 'commentpress-core' ).'"></span>';
 				break;
 			
 		}
@@ -1426,7 +1426,7 @@ HELPTEXT;
 	function get_header_min_link() {
 	
 		// define minimise button
-		$link = '<li><a href="#" id="btn_header_min" class="css_btn" title="'.__( 'Minimise Header', 'commentpress-plugin' ).'">'.__( 'Minimise Header', 'commentpress-plugin' ).'</a></li>'."\n";
+		$link = '<li><a href="#" id="btn_header_min" class="css_btn" title="'.__( 'Minimise Header', 'commentpress-core' ).'">'.__( 'Minimise Header', 'commentpress-core' ).'</a></li>'."\n";
 		
 		
 		// --<
@@ -1590,7 +1590,7 @@ HELPTEXT;
 			// if there are options
 			if ( $upgrade != '' ) {
 				
-				$options_text = __( ' The following options have become available in the new version.', 'commentpress-plugin' );
+				$options_text = __( ' The following options have become available in the new version.', 'commentpress-core' );
 				
 			}
 			
@@ -1598,7 +1598,7 @@ HELPTEXT;
 			$admin_page = '
 <div class="icon32" id="icon-options-general"><br/></div>
 
-<h2>'.__( 'CommentPress Core Upgrade', 'commentpress-plugin' ).'</h2>
+<h2>'.__( 'CommentPress Core Upgrade', 'commentpress-core' ).'</h2>
 
 
 
@@ -1610,9 +1610,9 @@ HELPTEXT;
 
 
 
-<h3>'.__( 'Please upgrade CommentPress Core', 'commentpress-plugin' ).'</h3>
+<h3>'.__( 'Please upgrade CommentPress Core', 'commentpress-core' ).'</h3>
 
-<p>'.__( 'It looks like you are running an older version of CommentPress Core.', 'commentpress-plugin' ).$options_text.'</p>
+<p>'.__( 'It looks like you are running an older version of CommentPress Core.', 'commentpress-core' ).$options_text.'</p>
 
 
 
@@ -1633,7 +1633,7 @@ HELPTEXT;
 
 
 <p class="submit">
-	<input type="submit" name="commentpress_submit" value="'.__( 'Upgrade', 'commentpress-plugin' ).'" class="button-primary" />
+	<input type="submit" name="commentpress_submit" value="'.__( 'Upgrade', 'commentpress-core' ).'" class="button-primary" />
 </p>
 				
 
@@ -1646,7 +1646,7 @@ HELPTEXT;
 			$admin_page = '
 <div class="icon32" id="icon-options-general"><br/></div>
 
-<h2>'.__( 'CommentPress Core Settings', 'commentpress-plugin' ).'</h2>
+<h2>'.__( 'CommentPress Core Settings', 'commentpress-core' ).'</h2>
 
 
 
@@ -1697,13 +1697,13 @@ $this->_get_options().
 	
 		// define CommentPress Core theme options
 		$options = '
-<h3>'.__( 'Options for CommentPress Core', 'commentpress-plugin' ).'</h3>
+<h3>'.__( 'Options for CommentPress Core', 'commentpress-core' ).'</h3>
 
-<p>'.__( 'When the CommentPress Default Theme (or a valid CommentPress Child Theme) is active, the following options modify its behaviour.', 'commentpress-plugin' ).'</p>
+<p>'.__( 'When the CommentPress Default Theme (or a valid CommentPress Child Theme) is active, the following options modify its behaviour.', 'commentpress-core' ).'</p>
 
 
 
-<h4>'.__( 'Global Options', 'commentpress-plugin' ).'</h4>
+<h4>'.__( 'Global Options', 'commentpress-core' ).'</h4>
 
 <table class="form-table">
 
@@ -1717,10 +1717,10 @@ $this->_get_options().
 
 
 
-<h4>'.__( 'Table of Contents', 'commentpress-plugin' ).'</h4>
+<h4>'.__( 'Table of Contents', 'commentpress-core' ).'</h4>
 
 <p>'.__( 'Choose how you want your Table of Contents to appear and function.<br />
-<strong style="color: red;">NOTE!</strong> When Chapters are Pages, the TOC will always show Sub-Pages, since collapsing the TOC makes no sense in that situation.', 'commentpress-plugin' ).'</p>
+<strong style="color: red;">NOTE!</strong> When Chapters are Pages, the TOC will always show Sub-Pages, since collapsing the TOC makes no sense in that situation.', 'commentpress-core' ).'</p>
 
 <table class="form-table">
 
@@ -1730,38 +1730,38 @@ $this->_get_options().
 
 
 
-<h4>'.__( 'Page Display Options', 'commentpress-plugin' ).'</h4>
+<h4>'.__( 'Page Display Options', 'commentpress-core' ).'</h4>
 
 <table class="form-table">
 
 	<tr valign="top">
-		<th scope="row"><label for="cp_title_visibility">'.__( 'Default page title visibility (can be overridden on individual pages)', 'commentpress-plugin' ).'</label></th>
+		<th scope="row"><label for="cp_title_visibility">'.__( 'Default page title visibility (can be overridden on individual pages)', 'commentpress-core' ).'</label></th>
 		<td><select id="cp_title_visibility" name="cp_title_visibility">
-				<option value="show" '.(($this->db->option_get('cp_title_visibility') == 'show') ? ' selected="selected"' : '').'>'.__( 'Show page titles', 'commentpress-plugin' ).'</option>
-				<option value="hide" '.(($this->db->option_get('cp_title_visibility') == 'hide') ? ' selected="selected"' : '').'>'.__( 'Hide page titles', 'commentpress-plugin' ).'</option>
+				<option value="show" '.(($this->db->option_get('cp_title_visibility') == 'show') ? ' selected="selected"' : '').'>'.__( 'Show page titles', 'commentpress-core' ).'</option>
+				<option value="hide" '.(($this->db->option_get('cp_title_visibility') == 'hide') ? ' selected="selected"' : '').'>'.__( 'Hide page titles', 'commentpress-core' ).'</option>
 			</select>
 		</td>
 	</tr>
 
 	<tr valign="top">
-		<th scope="row"><label for="cp_page_meta_visibility">'.__( 'Default page meta visibility (can be overridden on individual pages)', 'commentpress-plugin' ).'</label></th>
+		<th scope="row"><label for="cp_page_meta_visibility">'.__( 'Default page meta visibility (can be overridden on individual pages)', 'commentpress-core' ).'</label></th>
 		<td><select id="cp_page_meta_visibility" name="cp_page_meta_visibility">
-				<option value="show" '.(($this->db->option_get('cp_page_meta_visibility') == 'show') ? ' selected="selected"' : '').'>'.__( 'Show page meta', 'commentpress-plugin' ).'</option>
-				<option value="hide" '.(($this->db->option_get('cp_page_meta_visibility') == 'hide') ? ' selected="selected"' : '').'>'.__( 'Hide page meta', 'commentpress-plugin' ).'</option>
+				<option value="show" '.(($this->db->option_get('cp_page_meta_visibility') == 'show') ? ' selected="selected"' : '').'>'.__( 'Show page meta', 'commentpress-core' ).'</option>
+				<option value="hide" '.(($this->db->option_get('cp_page_meta_visibility') == 'hide') ? ' selected="selected"' : '').'>'.__( 'Hide page meta', 'commentpress-core' ).'</option>
 			</select>
 		</td>
 	</tr>
 
 	<tr valign="top">
-		<th scope="row"><label for="cp_excerpt_length">'.__( 'Blog excerpt length', 'commentpress-plugin' ).'</label></th>
-		<td><input type="text" id="cp_excerpt_length" name="cp_excerpt_length" value="'.$this->db->option_get('cp_excerpt_length').'" class="small-text" /> '.__( 'words', 'commentpress-plugin' ).'</td>
+		<th scope="row"><label for="cp_excerpt_length">'.__( 'Blog excerpt length', 'commentpress-core' ).'</label></th>
+		<td><input type="text" id="cp_excerpt_length" name="cp_excerpt_length" value="'.$this->db->option_get('cp_excerpt_length').'" class="small-text" /> '.__( 'words', 'commentpress-core' ).'</td>
 	</tr>
 
 </table>
 
 
 
-<h4>'.__( 'Commenting Options', 'commentpress-plugin' ).'</h4>
+<h4>'.__( 'Commenting Options', 'commentpress-core' ).'</h4>
 
 <table class="form-table">
 
@@ -1773,27 +1773,27 @@ $this->_get_options().
 
 
 
-<h4>'.__( 'Theme Customisation', 'commentpress-plugin' ).'</h4>
+<h4>'.__( 'Theme Customisation', 'commentpress-core' ).'</h4>
 
 <p>'.__( 'You can set a custom background colour in <em>Appearance &#8594; Background</em>.<br />
 You can also set a custom header image and header text colour in <em>Appearance &#8594; Header</em>.<br />
-Below are extra options for changing how the theme looks.', 'commentpress-plugin' ).'</p>
+Below are extra options for changing how the theme looks.', 'commentpress-core' ).'</p>
 
 <table class="form-table">
 
 	<tr valign="top" id="cp_header_bg_colour-row">
-		<th scope="row"><label for="cp_header_bg_colour">'.__( 'Header Background Colour', 'commentpress-plugin' ).'</label></th>
-		<td><input type="text" name="cp_header_bg_colour" id="cp_header_bg_colour" value="'.$this->db->option_get('cp_header_bg_colour').'" /><span class="description hide-if-js">'.__( 'If you want to hide header text, add <strong>#blank</strong> as text colour.', 'commentpress-plugin' ).'</span><input type="button" class="button hide-if-no-js" value="'.__( 'Select a Colour', 'commentpress-plugin' ).'" id="pickcolor" /><div id="color-picker" style="z-index: 100; background:#eee; border:1px solid #ccc; position:absolute; display:none;"></div></td>
+		<th scope="row"><label for="cp_header_bg_colour">'.__( 'Header Background Colour', 'commentpress-core' ).'</label></th>
+		<td><input type="text" name="cp_header_bg_colour" id="cp_header_bg_colour" value="'.$this->db->option_get('cp_header_bg_colour').'" /><span class="description hide-if-js">'.__( 'If you want to hide header text, add <strong>#blank</strong> as text colour.', 'commentpress-core' ).'</span><input type="button" class="button hide-if-no-js" value="'.__( 'Select a Colour', 'commentpress-core' ).'" id="pickcolor" /><div id="color-picker" style="z-index: 100; background:#eee; border:1px solid #ccc; position:absolute; display:none;"></div></td>
 	</tr>
 	
 	<tr valign="top">
-		<th scope="row"><label for="cp_js_scroll_speed">'.__( 'Scroll speed', 'commentpress-plugin' ).'</label></th>
-		<td><input type="text" id="cp_js_scroll_speed" name="cp_js_scroll_speed" value="'.$this->db->option_get('cp_js_scroll_speed').'" class="small-text" /> '.__( 'milliseconds', 'commentpress-plugin' ).'</td>
+		<th scope="row"><label for="cp_js_scroll_speed">'.__( 'Scroll speed', 'commentpress-core' ).'</label></th>
+		<td><input type="text" id="cp_js_scroll_speed" name="cp_js_scroll_speed" value="'.$this->db->option_get('cp_js_scroll_speed').'" class="small-text" /> '.__( 'milliseconds', 'commentpress-core' ).'</td>
 	</tr>
 
 	<tr valign="top">
-		<th scope="row"><label for="cp_min_page_width">'.__( 'Minimum page width', 'commentpress-plugin' ).'</label></th>
-		<td><input type="text" id="cp_min_page_width" name="cp_min_page_width" value="'.$this->db->option_get('cp_min_page_width').'" class="small-text" /> '.__( 'pixels', 'commentpress-plugin' ).'</td>
+		<th scope="row"><label for="cp_min_page_width">'.__( 'Minimum page width', 'commentpress-core' ).'</label></th>
+		<td><input type="text" id="cp_min_page_width" name="cp_min_page_width" value="'.$this->db->option_get('cp_min_page_width').'" class="small-text" /> '.__( 'pixels', 'commentpress-core' ).'</td>
 	</tr>
 
 '.$this->_get_sidebar().'
@@ -1844,13 +1844,13 @@ Below are extra options for changing how the theme looks.', 'commentpress-plugin
 			if ( !empty( $types ) ) {
 			
 				// define title
-				$type_title = __( 'Default Text Format', 'commentpress-plugin' );
+				$type_title = __( 'Default Text Format', 'commentpress-core' );
 			
 				// allow overrides
 				$type_title = apply_filters( 'cp_blog_type_label', $type_title );
 				
 				// add extra message
-				$type_title .= __( ' (can be overridden on individual pages)', 'commentpress-plugin' );
+				$type_title .= __( ' (can be overridden on individual pages)', 'commentpress-core' );
 			
 				// construct options
 				$type_option_list = array();
@@ -1902,7 +1902,7 @@ Below are extra options for changing how the theme looks.', 'commentpress-plugin
 			if ( $has_workflow !== false ) {
 			
 				// define label
-				$workflow_label = __( 'Enable Custom Workflow', 'commentpress-plugin' );
+				$workflow_label = __( 'Enable Custom Workflow', 'commentpress-core' );
 			
 				// define label
 				$workflow_label = apply_filters( 'cp_blog_workflow_label', $workflow_label );
@@ -1955,10 +1955,10 @@ Below are extra options for changing how the theme looks.', 'commentpress-plugin
 		if ( !$this->db->option_exists( 'cp_sidebar_default' ) ) {
 		
 			// define labels
-			$label = __( 'Which sidebar do you want to be active by default? (can be overridden on individual pages)', 'commentpress-plugin' );
-			$contents_label = __( 'Contents', 'commentpress-plugin' );
-			$activity_label = __( 'Activity', 'commentpress-plugin' );
-			$comments_label = __( 'Comments', 'commentpress-plugin' );
+			$label = __( 'Which sidebar do you want to be active by default? (can be overridden on individual pages)', 'commentpress-core' );
+			$contents_label = __( 'Contents', 'commentpress-core' );
+			$activity_label = __( 'Activity', 'commentpress-core' );
+			$comments_label = __( 'Comments', 'commentpress-core' );
 	
 			// define upgrade
 			$upgrade .= '
@@ -1981,9 +1981,9 @@ Below are extra options for changing how the theme looks.', 'commentpress-plugin
 		// do we have the option to show or hide page meta (new in 3.3.2)?
 		if ( !$this->db->option_exists( 'cp_page_meta_visibility' ) ) {
 		
-			$meta_label = __( 'Show or hide page meta by default', 'commentpress-plugin' );
-			$meta_show_label = __( 'Show page meta', 'commentpress-plugin' );
-			$meta_hide_label = __( 'Hide page meta', 'commentpress-plugin' );
+			$meta_label = __( 'Show or hide page meta by default', 'commentpress-core' );
+			$meta_show_label = __( 'Show page meta', 'commentpress-core' );
+			$meta_hide_label = __( 'Hide page meta', 'commentpress-core' );
 	
 			// define upgrade
 			$upgrade .= '
@@ -2014,7 +2014,7 @@ Below are extra options for changing how the theme looks.', 'commentpress-plugin
 			if ( !empty( $types ) ) {
 			
 				// define title
-				$type_title = __( 'Blog Type', 'commentpress-plugin' );
+				$type_title = __( 'Blog Type', 'commentpress-core' );
 			
 				// allow overrides
 				$type_title = apply_filters( 'cp_blog_type_label', $type_title );
@@ -2061,7 +2061,7 @@ Below are extra options for changing how the theme looks.', 'commentpress-plugin
 			if ( $has_workflow !== false ) {
 			
 				// define label
-				$workflow_label = __( 'Enable Custom Workflow', 'commentpress-plugin' );
+				$workflow_label = __( 'Enable Custom Workflow', 'commentpress-core' );
 			
 				// define label
 				$workflow_label = apply_filters( 'cp_blog_workflow_label', $workflow_label );
@@ -2084,9 +2084,9 @@ Below are extra options for changing how the theme looks.', 'commentpress-plugin
 		// do we have the option to choose the TOC layout (new in 3.3)?
 		if ( !$this->db->option_exists( 'cp_show_extended_toc' ) ) {
 		
-			$extended_label = __( 'Appearance of TOC for posts', 'commentpress-plugin' );
-			$extended_info_label = __( 'Extended information', 'commentpress-plugin' );
-			$extended_title_label = __( 'Just the title', 'commentpress-plugin' );
+			$extended_label = __( 'Appearance of TOC for posts', 'commentpress-core' );
+			$extended_info_label = __( 'Extended information', 'commentpress-core' );
+			$extended_title_label = __( 'Just the title', 'commentpress-core' );
 	
 			// define upgrade
 			$upgrade .= '
@@ -2108,9 +2108,9 @@ Below are extra options for changing how the theme looks.', 'commentpress-plugin
 		// do we have the option to set the comment editor?
 		if ( !$this->db->option_exists( 'cp_comment_editor' ) ) {
 		
-			$editor_label = __( 'Comment form editor', 'commentpress-plugin' );
-			$rich_label = __( 'Rich-text Editor', 'commentpress-plugin' );
-			$plain_label = __( 'Plain-text Editor', 'commentpress-plugin' );
+			$editor_label = __( 'Comment form editor', 'commentpress-core' );
+			$rich_label = __( 'Rich-text Editor', 'commentpress-core' );
+			$plain_label = __( 'Plain-text Editor', 'commentpress-core' );
 	
 			// define upgrade
 			$upgrade .= '
@@ -2131,9 +2131,9 @@ Below are extra options for changing how the theme looks.', 'commentpress-plugin
 		// do we have the option to set the default behaviour?
 		if ( !$this->db->option_exists( 'cp_promote_reading' ) ) {
 		
-			$behaviour_label = __( 'Default comment form behaviour', 'commentpress-plugin' );
-			$reading_label = __( 'Promote reading', 'commentpress-plugin' );
-			$commenting_label = __( 'Promote commenting', 'commentpress-plugin' );
+			$behaviour_label = __( 'Default comment form behaviour', 'commentpress-core' );
+			$reading_label = __( 'Promote reading', 'commentpress-core' );
+			$commenting_label = __( 'Promote commenting', 'commentpress-core' );
 	
 			// define upgrade
 			$upgrade .= '
@@ -2155,9 +2155,9 @@ Below are extra options for changing how the theme looks.', 'commentpress-plugin
 		if ( !$this->db->option_exists( 'cp_title_visibility' ) ) {
 		
 			// define labels
-			$titles_label = __( 'Show or hide page titles by default', 'commentpress-plugin' );
-			$titles_select_show = __( 'Show page titles', 'commentpress-plugin' );
-			$titles_select_hide = __( 'Hide page titles', 'commentpress-plugin' );
+			$titles_label = __( 'Show or hide page titles by default', 'commentpress-core' );
+			$titles_select_show = __( 'Show page titles', 'commentpress-core' );
+			$titles_select_hide = __( 'Hide page titles', 'commentpress-core' );
 	
 			// define upgrade
 			$upgrade .= '
@@ -2179,9 +2179,9 @@ Below are extra options for changing how the theme looks.', 'commentpress-plugin
 		if ( !$this->db->option_exists( 'cp_header_bg_colour' ) ) {
 		
 			// define labels
-			$colour_label = __( 'Header Background Colour', 'commentpress-plugin' );
-			$colour_select_text = __( 'If you want to hide header text, add <strong>#blank</strong> as text colour.', 'commentpress-plugin' );
-			$colour_select_label = __( 'Select a Colour', 'commentpress-plugin' );
+			$colour_label = __( 'Header Background Colour', 'commentpress-core' );
+			$colour_select_text = __( 'If you want to hide header text, add <strong>#blank</strong> as text colour.', 'commentpress-core' );
+			$colour_select_label = __( 'Select a Colour', 'commentpress-core' );
 	
 			// define upgrade
 			$upgrade .= '
@@ -2200,8 +2200,8 @@ Below are extra options for changing how the theme looks.', 'commentpress-plugin
 		if ( !$this->db->option_exists( 'cp_js_scroll_speed' ) ) {
 		
 			// define labels
-			$scroll_label = __( 'Scroll speed', 'commentpress-plugin' );
-			$scroll_ms_label = __( 'milliseconds', 'commentpress-plugin' );
+			$scroll_label = __( 'Scroll speed', 'commentpress-core' );
+			$scroll_ms_label = __( 'milliseconds', 'commentpress-core' );
 	
 			// define upgrade
 			$upgrade .= '
@@ -2220,8 +2220,8 @@ Below are extra options for changing how the theme looks.', 'commentpress-plugin
 		if ( !$this->db->option_exists( 'cp_min_page_width' ) ) {
 		
 			// define labels
-			$min_label = __( 'Minimum page width', 'commentpress-plugin' );
-			$min_pix_label = __( 'pixels', 'commentpress-plugin' );
+			$min_label = __( 'Minimum page width', 'commentpress-core' );
+			$min_pix_label = __( 'pixels', 'commentpress-core' );
 	
 			// define upgrade
 			$upgrade .= '
@@ -2277,7 +2277,7 @@ Below are extra options for changing how the theme looks.', 'commentpress-plugin
 	function _get_reset() {
 	
 		// define label
-		$label = __( 'Reset options to plugin defaults', 'commentpress-plugin' );
+		$label = __( 'Reset options to plugin defaults', 'commentpress-core' );
 		
 		
 		
@@ -2311,13 +2311,13 @@ Below are extra options for changing how the theme looks.', 'commentpress-plugin
 	function _get_editor() {
 		
 		// define labels
-		$editor_label = __( 'Comment form editor', 'commentpress-plugin' );
-		$rich_label = __( 'Rich-text Editor', 'commentpress-plugin' );
-		$plain_label = __( 'Plain-text Editor', 'commentpress-plugin' );
+		$editor_label = __( 'Comment form editor', 'commentpress-core' );
+		$rich_label = __( 'Rich-text Editor', 'commentpress-core' );
+		$plain_label = __( 'Plain-text Editor', 'commentpress-core' );
 		
-		$behaviour_label = __( 'Default comment form behaviour', 'commentpress-plugin' );
-		$reading_label = __( 'Promote reading', 'commentpress-plugin' );
-		$commenting_label = __( 'Promote commenting', 'commentpress-plugin' );
+		$behaviour_label = __( 'Default comment form behaviour', 'commentpress-core' );
+		$reading_label = __( 'Promote reading', 'commentpress-core' );
+		$commenting_label = __( 'Promote commenting', 'commentpress-core' );
 		
 		
 		
@@ -2367,17 +2367,17 @@ Below are extra options for changing how the theme looks.', 'commentpress-plugin
 	function _get_toc() {
 		
 		// define labels
-		$toc_label = __( 'Table of Contents contains', 'commentpress-plugin' );
-		$posts_label = __( 'Posts', 'commentpress-plugin' );
-		$pages_label = __( 'Pages', 'commentpress-plugin' );
+		$toc_label = __( 'Table of Contents contains', 'commentpress-core' );
+		$posts_label = __( 'Posts', 'commentpress-core' );
+		$pages_label = __( 'Pages', 'commentpress-core' );
 		
-		$chapter_label = __( 'Chapters are', 'commentpress-plugin' );
-		$chapter_pages_label = __( 'Pages', 'commentpress-plugin' );
-		$chapter_headings_label = __( 'Headings', 'commentpress-plugin' );
+		$chapter_label = __( 'Chapters are', 'commentpress-core' );
+		$chapter_pages_label = __( 'Pages', 'commentpress-core' );
+		$chapter_headings_label = __( 'Headings', 'commentpress-core' );
 		
-		$extended_label = __( 'Appearance of TOC for posts', 'commentpress-plugin' );
-		$extended_info_label = __( 'Extended information', 'commentpress-plugin' );
-		$extended_title_label = __( 'Just the title', 'commentpress-plugin' );
+		$extended_label = __( 'Appearance of TOC for posts', 'commentpress-core' );
+		$extended_info_label = __( 'Extended information', 'commentpress-core' );
+		$extended_title_label = __( 'Just the title', 'commentpress-core' );
 		
 		
 		
@@ -2442,10 +2442,10 @@ Below are extra options for changing how the theme looks.', 'commentpress-plugin
 	function _get_sidebar() {
 	
 		// define labels
-		$label = __( 'Which sidebar do you want to be active by default? (can be overridden on individual pages)', 'commentpress-plugin' );
-		$contents_label = __( 'Contents', 'commentpress-plugin' );
-		$activity_label = __( 'Activity', 'commentpress-plugin' );
-		$comments_label = __( 'Comments', 'commentpress-plugin' );
+		$label = __( 'Which sidebar do you want to be active by default? (can be overridden on individual pages)', 'commentpress-core' );
+		$contents_label = __( 'Contents', 'commentpress-core' );
+		$activity_label = __( 'Activity', 'commentpress-core' );
+		$comments_label = __( 'Comments', 'commentpress-core' );
 		
 
 
@@ -2489,7 +2489,7 @@ Below are extra options for changing how the theme looks.', 'commentpress-plugin
 	function _get_override() {
 	
 		// define label
-		$label = __( 'Enable "live" comment refreshing (Please note: may cause heavy load on your server)', 'commentpress-plugin' );
+		$label = __( 'Enable "live" comment refreshing (Please note: may cause heavy load on your server)', 'commentpress-core' );
 		
 		// define override
 		$override = '
@@ -2520,7 +2520,7 @@ Below are extra options for changing how the theme looks.', 'commentpress-plugin
 	function _get_submit() {
 	
 		// define label
-		$label = __( 'Save Changes', 'commentpress-plugin' );
+		$label = __( 'Save Changes', 'commentpress-core' );
 		
 		// define editor
 		$submit = '

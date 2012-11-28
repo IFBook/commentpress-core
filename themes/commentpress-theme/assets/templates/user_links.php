@@ -58,7 +58,7 @@ if ( is_multisite() ) {
 				// set default link name
 				$_new_site_title = apply_filters( 
 					'cp_user_links_new_site_title', 
-					__( 'Create a new document', 'commentpress-theme' )
+					__( 'Create a new document', 'commentpress-core' )
 				);
 		
 				// BP uses its own signup page
@@ -76,7 +76,7 @@ if ( is_multisite() ) {
 			// set default link name
 			$_new_site_title = apply_filters( 
 				'cp_user_links_new_site_title', 
-				__( 'Create a new document', 'commentpress-theme' )
+				__( 'Create a new document', 'commentpress-core' )
 			);
 	
 			// standard WP multisite
@@ -95,7 +95,7 @@ if ( is_multisite() ) {
 		// set default link name
 		$_dashboard_title = apply_filters( 
 			'cp_user_links_dashboard_title', 
-			__( 'Dashboard', 'commentpress-theme' )
+			__( 'Dashboard', 'commentpress-core' )
 		);
 
 		?>

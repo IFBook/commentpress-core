@@ -37,7 +37,7 @@
 			<h3><?php 
 			
 			// define title
-			$page_title = __( 'Sites', 'commentpress-theme' );
+			$page_title = __( 'Sites', 'commentpress-core' );
 			
 			// allow overrides
 			echo apply_filters( 'cp_site_directory_page_title', $page_title );
@@ -45,7 +45,7 @@
 			?><?php if ( is_user_logged_in() AND bp_blog_signup_enabled() ) : ?> &nbsp;<a class="button" href="<?php echo bp_get_root_domain() . '/' . bp_get_blogs_root_slug() . '/create/' ?>"><?php 
 			
 			// define title
-			$create_title = __( 'Create a New Document', 'commentpress-theme' );
+			$create_title = __( 'Create a New Document', 'commentpress-core' );
 			
 			// allow overrides
 			echo apply_filters( 'cp_site_directory_link_title', $create_title );
@@ -62,11 +62,11 @@
 
 			<div class="item-list-tabs" role="navigation">
 				<ul>
-					<li class="selected" id="blogs-all"><a href="<?php bp_root_domain(); ?>/<?php bp_blogs_root_slug() ?>"><?php printf( __( 'All Sites <span>%s</span>', 'buddypress' ), bp_get_total_blog_count() ); ?></a></li>
+					<li class="selected" id="blogs-all"><a href="<?php bp_root_domain(); ?>/<?php bp_blogs_root_slug() ?>"><?php printf( __( 'All Sites <span>%s</span>', 'commentpress-core' ), bp_get_total_blog_count() ); ?></a></li>
 
 					<?php if ( is_user_logged_in() AND bp_get_total_blog_count_for_user( bp_loggedin_user_id() ) ) : ?>
 
-						<li id="blogs-personal"><a href="<?php echo bp_loggedin_user_domain() . bp_get_blogs_slug() ?>"><?php printf( __( 'My Sites <span>%s</span>', 'buddypress' ), bp_get_total_blog_count_for_user( bp_loggedin_user_id() ) ); ?></a></li>
+						<li id="blogs-personal"><a href="<?php echo bp_loggedin_user_domain() . bp_get_blogs_slug() ?>"><?php printf( __( 'My Sites <span>%s</span>', 'commentpress-core' ), bp_get_total_blog_count_for_user( bp_loggedin_user_id() ) ); ?></a></li>
 
 					<?php endif; ?>
 
@@ -82,11 +82,11 @@
 
 					<li id="blogs-order-select" class="last filter">
 
-						<label for="blogs-order-by"><?php _e( 'Order By:', 'buddypress' ); ?></label>
+						<label for="blogs-order-by"><?php _e( 'Order By:', 'commentpress-core' ); ?></label>
 						<select id="blogs-order-by">
-							<option value="active"><?php _e( 'Last Active', 'buddypress' ); ?></option>
-							<option value="newest"><?php _e( 'Newest', 'buddypress' ); ?></option>
-							<option value="alphabetical"><?php _e( 'Alphabetical', 'buddypress' ); ?></option>
+							<option value="active"><?php _e( 'Last Active', 'commentpress-core' ); ?></option>
+							<option value="newest"><?php _e( 'Newest', 'commentpress-core' ); ?></option>
+							<option value="alphabetical"><?php _e( 'Alphabetical', 'commentpress-core' ); ?></option>
 
 							<?php do_action( 'bp_blogs_directory_order_options' ); ?>
 

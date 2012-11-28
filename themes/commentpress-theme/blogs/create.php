@@ -37,7 +37,7 @@
 			// define title
 			$create_title = apply_filters(
 				'cp_register_new_site_page_title', 
-				__( 'Create a New Document', 'commentpress-theme' )
+				__( 'Create a New Document', 'commentpress-core' )
 			);
 			
 			// allow overrides
@@ -46,7 +46,7 @@
 			?> &nbsp;<a class="button" href="<?php echo trailingslashit( bp_get_root_domain() . '/' . bp_get_blogs_root_slug() ) ?>"><?php 
 			
 			// define link title
-			$link_title = __( 'Directory', 'commentpress-theme' );
+			$link_title = __( 'Directory', 'commentpress-core' );
 			
 			// allow overrides
 			echo apply_filters( 'cp_create_site_page_link_title', $link_title );
@@ -62,7 +62,7 @@
 		<?php else: ?>
 
 			<div id="message" class="info">
-				<p><?php _e( 'Site registration is currently disabled', 'buddypress' ); ?></p>
+				<p><?php _e( 'Site registration is currently disabled', 'commentpress-core' ); ?></p>
 			</div>
 
 		<?php endif; ?>
