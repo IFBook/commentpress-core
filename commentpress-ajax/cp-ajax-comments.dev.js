@@ -369,15 +369,6 @@ function cpajax_reassign_comments() {
 	// show them
 	draggers.show();
 	
-	// check if already draggable
-	var is_draggable = draggers.draggable( 'option', 'disabled' );
-	if( is_draggable ) {
-	
-		// remove draggability for repeated calls
-		draggers.draggable( 'destroy' );
-		
-	}
-
 	// make comment reassign button draggable
 	draggers.draggable({
 		
@@ -392,9 +383,6 @@ function cpajax_reassign_comments() {
 	// get all droppable items
 	var droppers = jQuery( '#content .post .textblock' );
 	//console.log( droppers );
-
-	// remove droppability for repeated calls
-	droppers.droppable( 'destroy' );
 
 	// make textblocks droppable
 	droppers.droppable({
