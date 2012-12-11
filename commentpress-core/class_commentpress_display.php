@@ -2495,7 +2495,7 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 		$override = '
 	<tr valign="top">
 		<th scope="row"><label for="cp_para_comments_live">'.$label.'</label></th>
-		<td><input id="cp_para_comments_live" name="cp_para_comments_live" value="1" type="checkbox" '.( ($this->db->option_get('cp_para_comments_live') == '0') ? ' checked="checked"' : ''  ).' /></td>
+		<td><input id="cp_para_comments_live" name="cp_para_comments_live" value="1" type="checkbox" '.( ($this->db->option_get('cp_para_comments_live') == '1') ? ' checked="checked"' : ''  ).' /></td>
 	</tr>
 ';		
 		

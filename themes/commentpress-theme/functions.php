@@ -1172,7 +1172,7 @@ function commentpress_page_navigation( $with_comments = false ) {
 		
 			// set title
 			$title = __( 'Next page with comments', 'commentpress-core' );
-			$img = '<img src="'.get_bloginfo('template_directory').'/assets/images/next.png" />';	
+			$img = '<img src="'.get_template_directory_uri().'/assets/images/next.png" />';	
 
 		}
 		
@@ -1202,7 +1202,7 @@ function commentpress_page_navigation( $with_comments = false ) {
 		
 			// set title
 			$title = __( 'Previous page with comments', 'commentpress-core' );
-			$img = '<img src="'.get_bloginfo('template_directory').'/assets/images/prev.png" />';
+			$img = '<img src="'.get_template_directory_uri().'/assets/images/prev.png" />';
 		
 		}
 		
