@@ -369,8 +369,14 @@ function cpajax_reassign_comments() {
 	// show them
 	draggers.show();
 	
-	// remove draggability for repeated calls
-	draggers.draggable( 'destroy' );
+	// check if already draggable
+	var is_draggable = draggers.draggable( 'option', 'disabled' );
+	if( is_draggable ) {
+	
+		// remove draggability for repeated calls
+		draggers.draggable( 'destroy' );
+		
+	}
 
 	// make comment reassign button draggable
 	draggers.draggable({
