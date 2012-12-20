@@ -126,7 +126,12 @@ if ( is_object( $commentpress_core ) ) {
 
 
 
-<?php else : // this is displayed if there are no comments so far ?>
+<?php 
+
+else : 
+// this is displayed if there are no comments so far
+
+?>
 
 
 
@@ -143,7 +148,10 @@ if ( is_object( $commentpress_core ) ) {
 			
 		</div><!-- /paragraph_wrapper -->
 	
-	 <?php else : // comments are closed ?>
+	 <?php 
+	 else : 
+	 // comments are closed 
+	 ?>
 
 		<!-- comments are closed. -->
 		<h3 class="nocomments">Comments are closed.</h3>

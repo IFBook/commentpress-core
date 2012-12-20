@@ -741,6 +741,7 @@ class CommentpressCoreDatabase {
 
 		// --<
 		return $result;
+
 	}
 	
 	
