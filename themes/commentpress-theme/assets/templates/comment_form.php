@@ -132,7 +132,12 @@ global $post;
 
 	</form>
 
-<?php endif; // If registration required and not logged in ?>
+<?php 
+
+// end if registration required and not logged in
+endif; 
+
+?>
 
 
 
