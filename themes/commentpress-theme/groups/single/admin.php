@@ -355,7 +355,7 @@
 	<?php do_action( 'bp_after_group_delete_admin' ); ?>
 
 	<div class="submit">
-		<input type="submit" disabled="disabled" value="<?php _e( 'Delete Group', 'commentpress-core''commentpress-core' ) ?>" id="delete-group-button" name="delete-group-button" />
+		<input type="submit" disabled="disabled" value="<?php _e( 'Delete Group', 'commentpress-core' ) ?>" id="delete-group-button" name="delete-group-button" />
 	</div>
 
 	<?php wp_nonce_field( 'groups_delete_group' ) ?>

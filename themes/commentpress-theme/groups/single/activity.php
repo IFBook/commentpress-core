@@ -15,7 +15,7 @@
 					<option value="new_forum_post"><?php _e( 'Forum Replies', 'commentpress-core' ) ?></option>
 				<?php endif; ?>
 
-				<option value="joined_group"><?php _e( 'Group Memberships', 'commentpress-core''commentpress-core' ) ?></option>
+				<option value="joined_group"><?php _e( 'Group Memberships', 'commentpress-core' ) ?></option>
 
 				<?php do_action( 'bp_group_activity_filter_options' ) ?>
 			</select>
