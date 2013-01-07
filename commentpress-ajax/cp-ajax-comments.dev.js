@@ -1080,11 +1080,13 @@ jQuery(document).ready(function($) {
 
 			success: function(data) {
 
+				//console.log( data );
+
 				try {
 				
 					// get our data as object
 					var response = jQuery(data);
-					//console.log( data );
+					console.log( response );
 					
 					// add comment
 					cpajax_add_comment( response );
