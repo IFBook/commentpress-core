@@ -285,7 +285,7 @@ addComment = {
 				// a paragraph, but there will be no *exact* reference in the DOM.
 
 				// find para num
-				var para_id = jQuery('#para_wrapper-' + text_sig + ' .reply_to_para').attr('id');
+				var para_id = jQuery('#para_wrapper-' + text_sig + ' .reply_to_para').prop('id');
 				
 				// is there an element for the exact match?
 				if ( para_id === undefined ) {
@@ -297,10 +297,10 @@ addComment = {
 					if ( parent_wrapper.length > 0 ) {
 					
 						// grab it's id
-						var parent_wrapper_id = parent_wrapper.attr('id');
+						var parent_wrapper_id = parent_wrapper.prop('id');
 						
 						// proceed with this instead
-						var para_id = jQuery( '#' + parent_wrapper_id + ' .reply_to_para').attr('id');
+						var para_id = jQuery( '#' + parent_wrapper_id + ' .reply_to_para').prop('id');
 
 					}
 

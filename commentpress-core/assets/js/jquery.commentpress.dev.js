@@ -143,13 +143,13 @@ Array.prototype.remove_item = function( item ) {
 		if ( plugin_context == 'internal' ) {
 	
 			// is our item already highlighted?
-			if ( $.accordion_query( element.attr('id') ) ) {
+			if ( $.accordion_query( element.prop('id') ) ) {
 			
 				// clear current element in global
 				highlighted_para = '';
 				
 				// close this part of the accordion
-				$.accordion_close( element.attr('id') );
+				$.accordion_close( element.prop('id') );
 			
 				// --<
 				return;
@@ -157,7 +157,7 @@ Array.prototype.remove_item = function( item ) {
 			} else {
 			
 				// open this part of the accordion
-				$.accordion_open( element.attr('id') );
+				$.accordion_open( element.prop('id') );
 			
 				// store current element in global
 				highlighted_para = element;
@@ -278,7 +278,7 @@ Array.prototype.remove_item = function( item ) {
 		}
 	
 		// is our item already highlighted?
-		if ( $.accordion_query( element.attr('id') ) ) {
+		if ( $.accordion_query( element.prop('id') ) ) {
 		
 			// --<
 			return true;

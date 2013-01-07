@@ -259,7 +259,7 @@ jQuery(document).ready(function($) {
 	function cpajax_cleanup( content, last ) {
 	
 		// get the id of the last list item
-		var last_id = jQuery(last).attr('id');
+		var last_id = jQuery(last).prop('id');
 	
 		// construct new comment id
 		var new_comm_id = '#comment-' + last_id.split('-')[2];
@@ -383,7 +383,7 @@ jQuery(document).ready(function($) {
 			beforeSubmit: function() {
 				
 				jQuery('#loading').show();
-				jQuery('#submit').attr('disabled','disabled');
+				jQuery('#submit').prop('disabled','disabled');
 				jQuery('#submit').hide();
 
 			}, // end beforeSubmit
