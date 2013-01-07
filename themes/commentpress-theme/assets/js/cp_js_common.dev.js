@@ -49,11 +49,12 @@ var msie6, cp_wp_adminbar_height, cp_book_header_height, cp_header_animating,
 
 
 
+// init IE6 var
+msie6 = false;
+
 // browser detection via conditional comments in <head>
 if ( 'undefined' !== typeof cp_msie6 ) {
 	msie6 = true;
-} else {
-	msie6 = false;
 }
 
 // define utility globals
