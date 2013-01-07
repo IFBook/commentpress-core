@@ -43,15 +43,18 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 
 
 // define vars
-var msie, msie6, cp_wp_adminbar_height, cp_book_header_height, cp_header_animating,
+var msie6, cp_wp_adminbar_height, cp_book_header_height, cp_header_animating,
 	cp_toc_on_top, page_highlight, cp_header_minimised, cp_sidebar_minimised,
 	cp_container_top_max, cp_container_top_min;
 
 
 
-// browser detection
-msie = jQuery.browser.msie;
-msie6 = jQuery.browser.msie && jQuery.browser.version == "6.0";
+// browser detection via conditional comments in <head>
+if ( 'undefined' !== typeof cp_msie6 ) {
+	msie6 = true;
+} else {
+	msie6 = false;
+}
 
 // define utility globals
 cp_wp_adminbar_height = 28;
@@ -377,13 +380,15 @@ function commentpress_setup_page_layout() {
 		// calculate gap to sidebar
 		gap = sidebar.offset().left - original_content_width;
 		
-		// if Opera...
+		/*
+		// if Opera... (assume this is fixed in 10)
 		if ( jQuery.browser.opera ) {
 		
 			// set the position of #content to avoid alsoResize bug
 			content.css( 'position', 'static' );
 		
 		}
+		*/
 
 		// make page wrapper resizable
 		me.resizable({ 
@@ -395,7 +400,7 @@ function commentpress_setup_page_layout() {
 			
 
 
-			// on stop... (note: this doesn't fire on the first go in Opera!)
+			// on stop... (note: this doesn't fire on the first go in Opera 9!)
 			start: function( event, ui ) {			
 				
 				// store original widths
@@ -437,7 +442,7 @@ function commentpress_setup_page_layout() {
 			
 
 
-			// on stop... (note: this doesn't fire on the first go in Opera!)
+			// on stop... (note: this doesn't fire on the first go in Opera 9!)
 			stop: function( event, ui ) {
 				
 				// define vars

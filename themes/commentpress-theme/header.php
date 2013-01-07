@@ -27,6 +27,15 @@
 <!-- pingbacks -->
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 
+<!--[if IE 6]>
+<script type='text/javascript'>
+/* <![CDATA[ */
+// set this before wp_head()
+var cp_msie6 = 1;
+/* ]]> */
+</script>
+<![endif]-->
+
 <!-- wp_head -->
 <?php wp_head(); ?>
 
