@@ -1102,7 +1102,7 @@ jQuery(document).ready(function($) {
 						
 					}
 					
-					console.log( response );
+					//console.log( response );
 					
 					// add comment
 					cpajax_add_comment( response );

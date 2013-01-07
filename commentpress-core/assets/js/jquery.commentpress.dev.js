@@ -461,7 +461,7 @@ Array.prototype.remove_item = function( item ) {
 	
 	/** 
 	 * @description: set height of sidebar minimiser (scrolling element) so that the column fills the viewport
-	 * @todo: 
+	 * @todo: in jQuery 1.9, we get a 143px error, related to sidebar.position().top
 	 *
 	 */
 	$.set_sidebar_height = function() {
@@ -474,7 +474,7 @@ Array.prototype.remove_item = function( item ) {
 	
 		// get data on sidebar element
 		//var s_top = $.css_to_num( $.px_to_num( sidebar.css('top') ) );
-		var s_top = sidebar.position().top;
+		var s_top = sidebar.offset().top;
 		//console.log( 's_top: ' + s_top );
 		var sidebar_inside_h = $.get_element_adjust( sidebar );
 		var sidebar_inner_inside_h = $.get_element_adjust( sidebar_inner );
