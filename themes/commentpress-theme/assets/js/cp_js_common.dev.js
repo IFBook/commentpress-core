@@ -2072,7 +2072,7 @@ function commentpress_setup_para_permalink_icons() {
 		event.preventDefault();
 	
 		// get text signature
-		text_sig = jQuery(this).prop('href').substring(1);
+		text_sig = jQuery(this).prop('href').split('#')[1];
 		//console.log( text_sig );
 		
 		// use function
@@ -2099,10 +2099,10 @@ function commentpress_setup_para_permalink_icons() {
 			var text_sig;
 		
 			// get text signature
-			text_sig = jQuery(this).prop('href');
-			//console.log( 'span.para_marker a'.text_sig );
+			text_sig = jQuery(this).prop('href').split('#')[1];
+			//console.log( text_sig );
 			
-			jQuery('span.para_marker a' + text_sig).addClass( 'js-hover' );
+			jQuery('span.para_marker a#' + text_sig).addClass( 'js-hover' );
 			
 		}
 		
@@ -2120,10 +2120,10 @@ function commentpress_setup_para_permalink_icons() {
 			var text_sig;
 		
 			// get text signature
-			text_sig = jQuery(this).prop('href');
+			text_sig = jQuery(this).prop('href').split('#')[1];
 			//console.log( text_sig );
 			
-			jQuery('span.para_marker a' + text_sig).removeClass( 'js-hover' );
+			jQuery('span.para_marker a#' + text_sig).removeClass( 'js-hover' );
 			
 		}
 	
@@ -2203,11 +2203,8 @@ function commentpress_setup_page_click_actions() {
 		var text_sig;
 	
 		// get text signature
-		text_sig = jQuery(this).prop('href');
+		text_sig = jQuery(this).prop('href').split('#')[1];
 		//console.log( text_sig );
-		
-		// remove leading #
-		text_sig = text_sig.substring(1);
 		
 		// use function
 		cp_do_comment_icon_action( text_sig, 'marker' );
@@ -2230,12 +2227,8 @@ function commentpress_setup_page_click_actions() {
 		function( event ) {
 			
 			// define vars
-			var text_sig, target;
+			var target;
 		
-			// get text signature
-			text_sig = jQuery(this).prop('href');
-			//console.log( 'span.para_marker a'.text_sig );
-			
 			// get target item
 			target = jQuery(this).parent().next().children('.comment_count');
 			//console.log( target );
@@ -2255,12 +2248,8 @@ function commentpress_setup_page_click_actions() {
 		function( event ) {
 			
 			// define vars
-			var text_sig, target;
+			var target;
 		
-			// get text signature
-			text_sig = jQuery(this).prop('href');
-			//console.log( text_sig );
-			
 			// get target item
 			target = jQuery(this).parent().next().children('.comment_count');
 			//console.log( target );
@@ -2619,7 +2608,7 @@ function commentpress_setup_para_links() {
 		event.preventDefault();
 	
 		// get text signature
-		text_sig = jQuery(this).prop('href').substring(1);
+		text_sig = jQuery(this).prop('href').split('#')[1];
 		//console.log(text_sig);
 		
 		// use function
@@ -2662,9 +2651,9 @@ function commentpress_setup_footnotes_compatibility() {
 		// override event
 		event.preventDefault();
 	
-		// get text signature
+		// get target
 		target = jQuery(this).prop('href');
-		//console.log(text_sig);
+		//console.log(target);
 		
 		// use function for offset
 		cp_quick_scroll_page( target, 100 );
@@ -2686,9 +2675,9 @@ function commentpress_setup_footnotes_compatibility() {
 		// define vars
 		var target;
 	
-		// get text signature
+		// get target
 		target = jQuery(this).prop('href');
-		//console.log(text_sig);
+		//console.log(target);
 		
 		// is it a backlink?
 		if ( target.match('#return-note-' ) ) {
