@@ -2078,13 +2078,14 @@ function commentpress_setup_para_permalink_icons() {
 	});
 
 	// unbind first to allow repeated calls to this function
-	jQuery('a.para_permalink').unbind( 'hover' );
+	jQuery('a.para_permalink').unbind( 'mouseenter' );
+	jQuery('a.para_permalink').unbind( 'mouseleave' );
 
 	/** 
-	 * @description: clicking on the little comment icon
+	 * @description: rolling onto the little comment icon
 	 *
 	 */
-	jQuery('a.para_permalink').hover( 
+	jQuery('a.para_permalink').mouseenter( 
 	
 		function( event ) {
 			
@@ -2097,7 +2098,15 @@ function commentpress_setup_para_permalink_icons() {
 			
 			jQuery('span.para_marker a' + text_sig).addClass( 'js-hover' );
 			
-		},
+		}
+		
+	);
+	
+	/** 
+	 * @description: rolling off the little comment icon
+	 *
+	 */
+	jQuery('a.para_permalink').mouseleave( 
 	
 		function( event ) {
 			
@@ -2203,13 +2212,14 @@ function commentpress_setup_page_click_actions() {
 	});
 
 	// unbind first to allow repeated calls to this function
-	jQuery('span.para_marker a').unbind( 'hover' );
+	jQuery('span.para_marker a').unbind( 'mouseenter' );
+	jQuery('span.para_marker a').unbind( 'mouseleave' );
 
 	/** 
-	 * @description: clicking on the little comment icon
+	 * @description: rolling onto the little comment icon
 	 *
 	 */
-	jQuery('span.para_marker a').hover( 
+	jQuery('span.para_marker a').mouseenter( 
 	
 		function( event ) {
 			
@@ -2226,7 +2236,15 @@ function commentpress_setup_page_click_actions() {
 			
 			target.addClass( 'js-hover' );
 			
-		},
+		}
+		
+	);
+	
+	/** 
+	 * @description: rolling off the little comment icon
+	 *
+	 */
+	jQuery('span.para_marker a').mouseleave( 
 	
 		function( event ) {
 			
