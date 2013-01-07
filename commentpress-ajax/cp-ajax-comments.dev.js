@@ -1079,13 +1079,29 @@ jQuery(document).ready(function($) {
 
 
 			success: function(data) {
-
+				
+				// declare vars
+				var response;
+				
+				// trace
 				//console.log( data );
 
 				try {
-				
-					// get our data as object
-					var response = jQuery(data);
+					
+					// jQuery 1.9 fails to recognise the response as HTML, so
+					// we *must* use parseHTML if it's available...
+					if ( jQuery.parseHTML ) {
+					
+						// if our jQuery version is 1.8+, it'll have parseHTML
+						response =  jQuery( jQuery.parseHTML(data) );
+						
+					} else {
+					
+						// get our data as object in the basic way
+						response = jQuery(data);
+						
+					}
+					
 					console.log( response );
 					
 					// add comment
