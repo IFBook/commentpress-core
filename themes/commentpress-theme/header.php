@@ -1,5 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if IE 6]>
+<html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?> class="ie6">
+<![endif]-->
+<!--[if IE 7]>
+<html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?> class="ie7">
+<![endif]-->
+<!--[if IE 8]>
+<html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?> class="ie8">
+<![endif]-->
+<!--[if !(IE 6) | !(IE 7) | !(IE 8)  ]><!-->
 <html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?>>
+<!--<![endif]-->
 
 <head profile="http://gmpg.org/xfn/11">
 
@@ -15,6 +26,15 @@
 
 <!-- pingbacks -->
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
+
+<!--[if IE 6]>
+<script type='text/javascript'>
+/* <![CDATA[ */
+// set this before wp_head()
+var cp_msie6 = 1;
+/* ]]> */
+</script>
+<![endif]-->
 
 <!-- wp_head -->
 <?php wp_head(); ?>
