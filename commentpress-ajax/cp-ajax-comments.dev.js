@@ -395,7 +395,7 @@ function cpajax_reassign_comments() {
 		drop: function( event, ui ) {
 			
 			// get id of dropped-on item
-			var text_sig = jQuery( this ).attr('id').split('-')[1];
+			var text_sig = jQuery( this ).prop('id').split('-')[1];
 			
 			// create options for modal dialog
 			var options = {
@@ -443,7 +443,7 @@ function cpajax_reassign_comments() {
 		
 			// create modal dialog
 			var div = jQuery('<div><p class="cp_alert_text">' + alert_text + '</p></div>');
-			div.attr( 'title', cpajax_lang[7] )
+			div.prop( 'title', cpajax_lang[7] )
 			   .appendTo( 'body' )
 			   .dialog( options );
 			
@@ -465,7 +465,7 @@ function cpajax_reassign_comments() {
 function cpajax_reassign( text_sig, ui ) {
 
 	// get comment id
-	var comment_id = jQuery( ui.draggable ).attr('id').split('-')[1];
+	var comment_id = jQuery( ui.draggable ).prop('id').split('-')[1];
 
 	// let's see what params we've got
 	//console.log( 'text_sig: ' + text_sig );
@@ -881,7 +881,7 @@ jQuery(document).ready(function($) {
 	function cpajax_cleanup( content, last ) {
 	
 		// get the id of the last list item
-		var last_id = jQuery(last).attr('id');
+		var last_id = jQuery(last).prop('id');
 	
 		// construct new comment id
 		var new_comm_id = '#comment-' + last_id.split('-')[2];
@@ -1056,7 +1056,7 @@ jQuery(document).ready(function($) {
 			beforeSubmit: function() {
 				
 				jQuery('#loading').show();
-				jQuery('#submit').attr('disabled','disabled');
+				jQuery('#submit').prop('disabled','disabled');
 				jQuery('#submit').hide();
 
 			}, // end beforeSubmit
@@ -1079,12 +1079,30 @@ jQuery(document).ready(function($) {
 
 
 			success: function(data) {
+				
+				// declare vars
+				var response;
+				
+				// trace
+				//console.log( data );
 
 				try {
-				
-					// get our data as object
-					var response = jQuery(data);
-					//console.log( data );
+					
+					// jQuery 1.9 fails to recognise the response as HTML, so
+					// we *must* use parseHTML if it's available...
+					if ( jQuery.parseHTML ) {
+					
+						// if our jQuery version is 1.8+, it'll have parseHTML
+						response =  jQuery( jQuery.parseHTML(data) );
+						
+					} else {
+					
+						// get our data as object in the basic way
+						response = jQuery(data);
+						
+					}
+					
+					//console.log( response );
 					
 					// add comment
 					cpajax_add_comment( response );

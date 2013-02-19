@@ -143,13 +143,13 @@ Array.prototype.remove_item = function( item ) {
 		if ( plugin_context == 'internal' ) {
 	
 			// is our item already highlighted?
-			if ( $.accordion_query( element.attr('id') ) ) {
+			if ( $.accordion_query( element.prop('id') ) ) {
 			
 				// clear current element in global
 				highlighted_para = '';
 				
 				// close this part of the accordion
-				$.accordion_close( element.attr('id') );
+				$.accordion_close( element.prop('id') );
 			
 				// --<
 				return;
@@ -157,7 +157,7 @@ Array.prototype.remove_item = function( item ) {
 			} else {
 			
 				// open this part of the accordion
-				$.accordion_open( element.attr('id') );
+				$.accordion_open( element.prop('id') );
 			
 				// store current element in global
 				highlighted_para = element;
@@ -278,7 +278,7 @@ Array.prototype.remove_item = function( item ) {
 		}
 	
 		// is our item already highlighted?
-		if ( $.accordion_query( element.attr('id') ) ) {
+		if ( $.accordion_query( element.prop('id') ) ) {
 		
 			// --<
 			return true;
@@ -461,7 +461,7 @@ Array.prototype.remove_item = function( item ) {
 	
 	/** 
 	 * @description: set height of sidebar minimiser (scrolling element) so that the column fills the viewport
-	 * @todo: 
+	 * @todo: in jQuery 1.9, we get a 143px error, related to sidebar.position().top
 	 *
 	 */
 	$.set_sidebar_height = function() {
@@ -474,7 +474,7 @@ Array.prototype.remove_item = function( item ) {
 	
 		// get data on sidebar element
 		//var s_top = $.css_to_num( $.px_to_num( sidebar.css('top') ) );
-		var s_top = sidebar.position().top;
+		var s_top = sidebar.offset().top;
 		//console.log( 's_top: ' + s_top );
 		var sidebar_inside_h = $.get_element_adjust( sidebar );
 		var sidebar_inner_inside_h = $.get_element_adjust( sidebar_inner );
