@@ -776,6 +776,16 @@ class CommentpressCore {
 		
 		
 		
+		// compat with Members List plugin
+		if( $this->is_members_list_page() ) {
+		
+			// --<
+			return $content;
+			
+		}
+		
+		
+		
 		// test for buddypress special page (compat with BP Docs)
 		if ( $this->is_buddypress() ) {
 			
@@ -1982,6 +1992,45 @@ class CommentpressCore {
 	
 
 	/** 
+	 * @description: utility to check for presence of Members List
+	 * @return boolean $success
+	 * @todo: 
+	 *
+	 */
+	function is_members_list_page() {
+		
+		// access page
+		global $post;
+	
+		// compat with Members List
+		if( 
+		
+			is_page() AND 
+			!$this->db->is_special_page() AND 
+			( strstr( $post->post_content, '[members-list' ) !== false )
+			
+		) {
+		
+			// --<
+			return true;
+			
+		}
+		
+		
+		
+		// --<
+		return false;
+
+	}
+	
+	
+	
+	
+	
+	
+	
+
+	/** 
 	 * @description: utility to check for presence of Subscribe to Comments Reloaded
 	 * @return boolean $success
 	 * @todo: 
@@ -2195,6 +2244,9 @@ class CommentpressCore {
 
 		// Theme My Login page is not
 		if ( $this->is_theme_my_login_page() ) { return false; }
+
+		// Members List page is not
+		if ( $this->is_members_list_page() ) { return false; }
 
 		// Subscribe to Comments Reloaded page is not
 		if ( $this->is_subscribe_to_comments_reloaded_page() ) { return false; }
