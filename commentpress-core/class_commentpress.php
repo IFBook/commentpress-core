@@ -1751,6 +1751,9 @@ class CommentpressCore {
 	 */
 	function get_page_link( $page_type = 'cp_all_comments_page' ) {
 	
+		// access globals
+		global $post;
+	
 		// init
 		$link = '';
 		
@@ -1764,6 +1767,15 @@ class CommentpressCore {
 		
 			// get page
 			$_page = get_post( $_page_id );
+			
+			$_active = '';
+			
+			// is it the current page?
+			if ( isset( $post ) AND $_page->ID == $post->ID ) {
+			
+				$_active = ' class="active_page"';
+
+			}
 			
 			// get link
 			$_url = get_permalink( $_page );
@@ -1806,7 +1818,7 @@ class CommentpressCore {
 			$_title = apply_filters( 'commentpress_page_link_title', $_link_title );
 			
 			// show link
-			$link = '<li><a href="'.$_url.'" id="btn_'.$_button.'" class="css_btn" title="'.$_title.'">'.$_title.'</a></li>'."\n";
+			$link = '<li'.$_active.'><a href="'.$_url.'" id="btn_'.$_button.'" class="css_btn" title="'.$_title.'">'.$_title.'</a></li>'."\n";
 		
 		}
 		
