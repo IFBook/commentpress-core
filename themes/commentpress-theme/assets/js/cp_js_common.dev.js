@@ -1504,6 +1504,9 @@ function cp_scroll_to_anchor_on_load() {
 			// if IE6, then we have to scroll the page to the top
 			//if ( msie6 ) { jQuery(window).scrollTo( 0, 1 ); }
 
+			// --<
+			return;
+			
 		}
 		
 	} else {
