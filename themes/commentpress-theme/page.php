@@ -68,6 +68,21 @@
 
 	<?php
 	
+	// test for "Post Tags and Categories for Pages" plugin
+	if ( class_exists( 'PTCFP' ) ) {
+	
+	?>
+	<p class="search_meta"><?php the_tags('Tags: ', ', ', '<br />'); ?> Posted in <?php the_category(', ') ?></p>
+	<?php
+	
+	}
+	
+	?>
+	
+	
+	
+	<?php
+	
 	// NOTE: Comment permalinks are filtered if the comment is not on the first page 
 	// in a multipage post... see: commentpress_multipage_comment_link in functions.php
 	echo commentpress_multipager();
