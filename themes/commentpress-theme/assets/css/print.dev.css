@@ -322,7 +322,7 @@ Updated by Christian Wach for CommentPress Core
 		width: auto !important;
 		margin-left: 0;
 		color: #ccc !important;
-		background-color: red;
+		background-color: transparent;
 	}
 	
 	#content .post span.para_marker a,

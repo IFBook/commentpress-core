@@ -1,8 +1,11 @@
-/* 
+/*
 ================================================================================
 Common Javascript
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
+--------------------------------------------------------------------------------
+NOTES
+
 --------------------------------------------------------------------------------
 */
 
@@ -156,7 +159,7 @@ function cp_page_setup() {
 		// are subpages to be shown?
 		if ( cp_show_subpages == '0' ) {
 		
-			// avoid flash of hidden elements
+			// avoid flash of hidden elements on collapsed items
 			styles += '#toc_sidebar .sidebar_contents_wrapper ul li ul { display: none; } ';
 		
 		}
@@ -1265,135 +1268,6 @@ function commentpress_setup_context_headers() {
 
 
 /** 
- * @description: get top of sidebar
- *
- */
-function cp_get_sidebar_top() {
-
-	// --<
-	return jQuery.px_to_num( jQuery('#toc_sidebar').css('top') );
-	
-}
-
-
-
-
-
-	
-/** 
- * @description: get border width of sidebar
- *
- */
-function cp_get_sidebar_top_border() {
-
-	// --<
-	return jQuery.px_to_num( jQuery('.sidebar_minimiser').css('borderTopWidth') );
-	
-}
-
-
-
-
-
-
-/** 
- * @description: bring sidebar to front
- *
- */
-function cp_activate_sidebar( sidebar ) {
-
-	// define vars
-	var ontop, s_top, s_top_border;
-
-	// get "visibility" of the requested sidebar
-	ontop = jQuery('#' + sidebar + '_sidebar').css('z-index');
-	
-	// is it hidden (ie, does it have a lower z-index)
-	if ( ontop == '2001' ) {
-	
-		// hide all
-		jQuery('.sidebar_container').css('z-index','2001');
-
-		// show it
-		jQuery('#' + sidebar + '_sidebar').css('z-index','2010');
-		
-		s_top = cp_get_sidebar_top();
-		s_top_border = cp_get_sidebar_top_border();
-
-		// set all tabs to min height
-		jQuery('.sidebar_header').css( 'height', ( s_top - s_top_border ) + 'px' );
-		
-		// set our tab to max height
-		jQuery('#' + sidebar + '_header.sidebar_header').css( 'height', s_top + 'px' );
-		
-		// set flag
-		cp_toc_on_top = 'y';
-		
-	}
-	
-	// don't set height when mobile device (but allow tablets)
-	if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
-
-		// just to make sure...
-		jQuery.set_sidebar_height();
-		
-	} else {
-		
-		// hide all
-		jQuery('.sidebar_container').css('visibility','hidden');
-
-		// show it
-		jQuery('#' + sidebar + '_sidebar').css('visibility','visible');
-		
-		/*
-		// define vars
-		var containers, tallest, this_height;
-		
-		// set to height of tallest
-		containers = jQuery('.sidebar_contents_wrapper');
-		//console.log( containers );
-		
-		// did we get any?
-		if ( containers.length > 0 ) {
-		
-			// init
-			tallest = 0;
-			
-			// find height of each
-			containers.each( function(i) {
-			
-				// get height
-				this_height = jQuery(this).height()
-				
-				// is it taller?
-				if ( this_height > tallest ) {
-					tallest = this_height;
-				}
-			
-			});
-			//console.log( tallest );
-			//alert( tallest );
-			
-			// set it to that height
-			jQuery('.sidebar_contents_wrapper').height( tallest );
-				
-			// then make it auto
-			// BUT, this won't allow it to expand in future...
-			//jQuery('#' + sidebar + '_sidebar .sidebar_contents_wrapper').css('height','auto');
-			
-		}
-		*/
-
-	}
-
-}
-
-
-
-
-
-	
-/** 
  * @description: clicking on the "see in context" link
  *
  */
@@ -1630,6 +1504,9 @@ function cp_scroll_to_anchor_on_load() {
 			// if IE6, then we have to scroll the page to the top
 			//if ( msie6 ) { jQuery(window).scrollTo( 0, 1 ); }
 
+			// --<
+			return;
+			
 		}
 		
 	} else {
@@ -1692,6 +1569,26 @@ function cp_scroll_to_anchor_on_load() {
 		// same as clicking on the "whole page" heading
 		jQuery('h3#para_heading- a.comment_block_permalink').click();
 	
+		// --<
+		return;
+		
+	}
+
+	// any other anchors in the .post?
+	if ( url.match( '#' ) ) {
+		
+		// get anchor
+		var anchor_id = url.split('#')[1];
+		
+		// add class
+		jQuery('#' + anchor_id).addClass('selected_para');
+		
+		// scroll page
+		commentpress_scroll_page( jQuery('#' + anchor_id) );
+		
+		// --<
+		return;
+		
 	}
 
 }
@@ -2166,6 +2063,9 @@ function commentpress_setup_page_click_actions() {
 		
 	});
 
+	// unbind first to allow repeated calls to this function
+	jQuery('.textblock').unbind( 'click' );
+
 	/** 
 	 * @description: clicking on the textblock
 	 *
@@ -2267,6 +2167,286 @@ function commentpress_setup_page_click_actions() {
 
 
 	
+/** 
+ * @description: set up paragraph links: cp_para_link is a class writers can use
+ * in their markup to create nicely scrolling links within their pages
+ *
+ */
+function commentpress_setup_para_links() {
+
+	// unbind first to allow repeated calls to this function
+	jQuery('a.cp_para_link').unbind( 'click' );
+
+	/** 
+	 * @description: clicking on links to paragraphs
+	 *
+	 */
+	jQuery('a.cp_para_link').click( function( event ) {
+	
+		// define vars
+		var text_sig;
+	
+		// override event
+		event.preventDefault();
+	
+		// get text signature
+		text_sig = jQuery(this).prop('href').split('#')[1];
+		//console.log(text_sig);
+		
+		// use function
+		cp_do_comment_icon_action( text_sig, 'auto' );
+		
+		// --<
+		return false;
+		
+	});
+
+}
+
+
+
+
+
+	
+/** 
+ * @description: set up footnote links for various plugins
+ *
+ */
+function commentpress_setup_footnotes_compatibility() {
+	
+	// -------------------------------------------------------------------------
+	// Back links
+	// -------------------------------------------------------------------------
+
+	// unbind first to allow repeated calls to this function
+	jQuery('span.footnotereverse a').unbind( 'click' );
+
+	/** 
+	 * @description: clicking on reverse links in FD-Footnotes and WP_Footnotes
+	 *
+	 */
+	jQuery('span.footnotereverse a, a.footnote-back-link').click( function( event ) {
+	
+		// define vars
+		var target;
+	
+		// override event
+		event.preventDefault();
+	
+		// get target
+		target = jQuery(this).prop('href').split('#')[1];
+		//console.log(target);
+		
+		// use function for offset
+		cp_quick_scroll_page( '#' + target, 100 );
+		
+		// --<
+		return false;
+		
+	});
+	
+	// unbind first to allow repeated calls to this function
+	jQuery('.simple-footnotes ol li > a').unbind( 'click' );
+
+	/** 
+	 * @description: clicking on reverse links in Simple Footnotes plugin
+	 *
+	 */
+	jQuery('.simple-footnotes ol li > a').click( function( event ) {
+	
+		// define vars
+		var target;
+	
+		// get target
+		target = jQuery(this).prop('href');
+		//console.log(target);
+		
+		// is it a backlink?
+		if ( target.match('#return-note-' ) ) {
+		
+			// override event
+			event.preventDefault();
+			
+			// remove url
+			target = target.split('#')[1];
+
+			// use function for offset
+			cp_quick_scroll_page( '#' + target, 100 );
+			
+			// --<
+			return false;
+			
+		}
+		
+	});
+
+	// -------------------------------------------------------------------------
+	// Footnote links
+	// -------------------------------------------------------------------------
+
+	// unbind first to allow repeated calls to this function
+	jQuery('a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link, a.zp-ZotpressInText').unbind( 'click' );
+
+	/** 
+	 * @description: clicking on footnote links in FD-Footnotes, WP-Footnotes, Simple Footnotes and ZotPress
+	 *
+	 */
+	jQuery('a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link, a.zp-ZotpressInText').click( function( event ) {
+	
+		// define vars
+		var target;
+	
+		// override event
+		event.preventDefault();
+	
+		// get target
+		target = jQuery(this).prop('href').split('#')[1];
+		//console.log(target);
+		
+		// use function for offset
+		cp_quick_scroll_page( '#' + target, 100 );
+		
+		// --<
+		return false;
+		
+	});
+	
+}
+
+
+
+
+
+	
+/** 
+ * @description: bring sidebar to front
+ *
+ */
+function cp_activate_sidebar( sidebar ) {
+
+	// define vars
+	var ontop, s_top, s_top_border;
+
+	// get "visibility" of the requested sidebar
+	ontop = jQuery('#' + sidebar + '_sidebar').css('z-index');
+	
+	// is it hidden (ie, does it have a lower z-index)
+	if ( ontop == '2001' ) {
+	
+		// hide all
+		jQuery('.sidebar_container').css('z-index','2001');
+
+		// show it
+		jQuery('#' + sidebar + '_sidebar').css('z-index','2010');
+		
+		s_top = cp_get_sidebar_top();
+		s_top_border = cp_get_sidebar_top_border();
+
+		// set all tabs to min height
+		jQuery('.sidebar_header').css( 'height', ( s_top - s_top_border ) + 'px' );
+		
+		// set our tab to max height
+		jQuery('#' + sidebar + '_header.sidebar_header').css( 'height', s_top + 'px' );
+		
+		// set flag
+		cp_toc_on_top = 'y';
+		
+	}
+	
+	// don't set height when mobile device (but allow tablets)
+	if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+
+		// just to make sure...
+		jQuery.set_sidebar_height();
+		
+	} else {
+		
+		// hide all
+		jQuery('.sidebar_container').css('visibility','hidden');
+
+		// show it
+		jQuery('#' + sidebar + '_sidebar').css('visibility','visible');
+		
+		/*
+		// define vars
+		var containers, tallest, this_height;
+		
+		// set to height of tallest
+		containers = jQuery('.sidebar_contents_wrapper');
+		//console.log( containers );
+		
+		// did we get any?
+		if ( containers.length > 0 ) {
+		
+			// init
+			tallest = 0;
+			
+			// find height of each
+			containers.each( function(i) {
+			
+				// get height
+				this_height = jQuery(this).height()
+				
+				// is it taller?
+				if ( this_height > tallest ) {
+					tallest = this_height;
+				}
+			
+			});
+			//console.log( tallest );
+			//alert( tallest );
+			
+			// set it to that height
+			jQuery('.sidebar_contents_wrapper').height( tallest );
+				
+			// then make it auto
+			// BUT, this won't allow it to expand in future...
+			//jQuery('#' + sidebar + '_sidebar .sidebar_contents_wrapper').css('height','auto');
+			
+		}
+		*/
+
+	}
+
+}
+
+
+
+
+
+	
+/** 
+ * @description: get top of sidebar
+ *
+ */
+function cp_get_sidebar_top() {
+
+	// --<
+	return jQuery.px_to_num( jQuery('#toc_sidebar').css('top') );
+	
+}
+
+
+
+
+
+	
+/** 
+ * @description: get border width of sidebar
+ *
+ */
+function cp_get_sidebar_top_border() {
+
+	// --<
+	return jQuery.px_to_num( jQuery('.sidebar_minimiser').css('borderTopWidth') );
+	
+}
+
+
+
+
+
+
 /** 
  * @description: open header
  *
@@ -2586,154 +2766,6 @@ function commentpress_setup_header_minimiser() {
 
 	
 /** 
- * @description: set up paragraph links: cp_para_link is a class writers can use
- * in their markup to create nicely scrolling links within their pages
- *
- */
-function commentpress_setup_para_links() {
-
-	// unbind first to allow repeated calls to this function
-	jQuery('a.cp_para_link').unbind( 'click' );
-
-	/** 
-	 * @description: clicking on links to paragraphs
-	 *
-	 */
-	jQuery('a.cp_para_link').click( function( event ) {
-	
-		// define vars
-		var text_sig;
-	
-		// override event
-		event.preventDefault();
-	
-		// get text signature
-		text_sig = jQuery(this).prop('href').split('#')[1];
-		//console.log(text_sig);
-		
-		// use function
-		cp_do_comment_icon_action( text_sig, 'auto' );
-		
-		// --<
-		return false;
-		
-	});
-
-}
-
-
-
-
-
-	
-/** 
- * @description: set up footnote links for various plugins
- *
- */
-function commentpress_setup_footnotes_compatibility() {
-	
-	// -------------------------------------------------------------------------
-	// Back links
-	// -------------------------------------------------------------------------
-
-	// unbind first to allow repeated calls to this function
-	jQuery('span.footnotereverse a').unbind( 'click' );
-
-	/** 
-	 * @description: clicking on reverse links in FD-Footnotes and WP_Footnotes
-	 *
-	 */
-	jQuery('span.footnotereverse a, a.footnote-back-link').click( function( event ) {
-	
-		// define vars
-		var target;
-	
-		// override event
-		event.preventDefault();
-	
-		// get target
-		target = jQuery(this).prop('href');
-		//console.log(target);
-		
-		// use function for offset
-		cp_quick_scroll_page( target, 100 );
-		
-		// --<
-		return false;
-		
-	});
-	
-	// unbind first to allow repeated calls to this function
-	jQuery('.simple-footnotes ol li > a').unbind( 'click' );
-
-	/** 
-	 * @description: clicking on reverse links in Simple Footnotes plugin
-	 *
-	 */
-	jQuery('.simple-footnotes ol li > a').click( function( event ) {
-	
-		// define vars
-		var target;
-	
-		// get target
-		target = jQuery(this).prop('href');
-		//console.log(target);
-		
-		// is it a backlink?
-		if ( target.match('#return-note-' ) ) {
-		
-			// override event
-			event.preventDefault();
-		
-			// use function for offset
-			cp_quick_scroll_page( target, 100 );
-			
-			// --<
-			return false;
-			
-		}
-		
-	});
-
-	// -------------------------------------------------------------------------
-	// Footnote links
-	// -------------------------------------------------------------------------
-
-	// unbind first to allow repeated calls to this function
-	jQuery('a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link').unbind( 'click' );
-
-	/** 
-	 * @description: clicking on footnote links in FD-Footnotes, WP-Footnotes and Simple Footnotes
-	 *
-	 */
-	jQuery('a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link').click( function( event ) {
-	
-		// define vars
-		var target;
-	
-		// override event
-		event.preventDefault();
-	
-		// get text signature
-		target = jQuery(this).prop('href');
-		//console.log(text_sig);
-		
-		// use function for offset
-		cp_quick_scroll_page( target, 100 );
-		
-		// --<
-		return false;
-		
-	});
-	
-}
-
-
-
-
-
-	
-/** 
  * @description: define what happens when the page is ready
  *
  */
@@ -2859,6 +2891,11 @@ jQuery(document).ready( function($) {
 		return false;
 		
 	});
+
+
+
+
+
 
 	/** 
 	 * @description: clicking on the Comments Header
