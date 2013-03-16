@@ -2443,6 +2443,140 @@ ul.tml-user-links
 
 /* 
 --------------------------------------------------------------------------------
+Compatibility with Members List plugin
+--------------------------------------------------------------------------------
+*/
+
+#tern_members .tern_members_search
+{
+	padding: 0 0 20px 0;
+}
+
+#tern_members .tern_members_view
+{
+	margin-bottom: 0;
+	padding: 5px 0;
+	font-family: sans-serif;
+	text-transform: uppercase;
+	padding: 2%;
+	font-size: 80%;
+	font-weight: bold;
+	color: #222;
+	background-color: #BDBDBD;
+	border: none;
+}
+
+#tern_members .tern_wp_members_list li 
+{
+	height: auto;
+	padding-top: 0
+}
+
+html>/**/body #tern_members .tern_wp_members_list li 
+{
+	height: auto;
+	min-height: 0;
+}
+
+#tern_members .tern_wp_members_list 
+{
+	margin: 0;
+	padding: 0;
+}
+
+#tern_members .tern_wp_members_list li
+{
+	list-style: none;
+	list-style-image: none;
+}
+
+#tern_members .tern_wp_members_list li .tern_wp_member_info a 
+{
+	display: block;
+	font-family: sans-serif;
+	font-weight: normal;
+	font-size: 80%;
+	padding: 6px 6px;
+	background-color: #ddd;
+	color: #000;
+	text-decoration: none;
+}
+
+#tern_members .tern_wp_members_list li .tern_wp_member_info a:hover
+{
+	background-color: #eee;
+	color: #000;
+}
+
+#tern_members .tern_wp_members_list li .tern_wp_member_info a 
+{
+	font-size: 80% !important;
+}
+
+/* alphabet */
+#tern_members .tern_members_alpha span 
+{
+	font-size: inherit;
+	font-style: italic;
+}
+
+#tern_members .tern_members_alpha
+{
+	font-family: sans-serif;
+	text-transform: uppercase;
+	font-size: 80%;
+	border: none;
+}
+
+.tern_members_alpha a 
+{
+	padding: 0 3px;
+	margin-right: 5px;
+	background-color: #ddd;
+	text-decoration: none;
+	color: #222;
+	font-family: sans-serif;
+}
+
+.tern_members_alpha a:hover
+{
+	background-color: #eee;
+}
+
+
+
+
+
+
+
+/*
+--------------------------------------------------------------------------------
+Compatibility with ZotPress plugin
+--------------------------------------------------------------------------------
+*/
+
+div.zp-Zotpress
+{
+	margin-top: 1em;
+	padding-top: 1em;
+	border-top: 1px solid #ddd;
+}
+
+.csl-entry
+{
+	line-height: 1.6;
+	font-size: 80%;
+}
+
+
+
+
+
+
+
+
+/* 
+--------------------------------------------------------------------------------
 Misc
 --------------------------------------------------------------------------------
 */

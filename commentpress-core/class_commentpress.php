@@ -776,6 +776,16 @@ class CommentpressCore {
 		
 		
 		
+		// compat with Members List plugin
+		if( $this->is_members_list_page() ) {
+		
+			// --<
+			return $content;
+			
+		}
+		
+		
+		
 		// test for buddypress special page (compat with BP Docs)
 		if ( $this->is_buddypress() ) {
 			
@@ -1751,6 +1761,9 @@ class CommentpressCore {
 	 */
 	function get_page_link( $page_type = 'cp_all_comments_page' ) {
 	
+		// access globals
+		global $post;
+	
 		// init
 		$link = '';
 		
@@ -1764,6 +1777,15 @@ class CommentpressCore {
 		
 			// get page
 			$_page = get_post( $_page_id );
+			
+			$_active = '';
+			
+			// is it the current page?
+			if ( isset( $post ) AND $_page->ID == $post->ID ) {
+			
+				$_active = ' class="active_page"';
+
+			}
 			
 			// get link
 			$_url = get_permalink( $_page );
@@ -1806,7 +1828,7 @@ class CommentpressCore {
 			$_title = apply_filters( 'commentpress_page_link_title', $_link_title );
 			
 			// show link
-			$link = '<li><a href="'.$_url.'" id="btn_'.$_button.'" class="css_btn" title="'.$_title.'">'.$_title.'</a></li>'."\n";
+			$link = '<li'.$_active.'><a href="'.$_url.'" id="btn_'.$_button.'" class="css_btn" title="'.$_title.'">'.$_title.'</a></li>'."\n";
 		
 		}
 		
@@ -1947,6 +1969,45 @@ class CommentpressCore {
 			!$this->db->is_special_page() AND 
 			$post->post_name == 'login' AND 
 			$post->post_content == '[theme-my-login]'
+			
+		) {
+		
+			// --<
+			return true;
+			
+		}
+		
+		
+		
+		// --<
+		return false;
+
+	}
+	
+	
+	
+	
+	
+	
+	
+
+	/** 
+	 * @description: utility to check for presence of Members List
+	 * @return boolean $success
+	 * @todo: 
+	 *
+	 */
+	function is_members_list_page() {
+		
+		// access page
+		global $post;
+	
+		// compat with Members List
+		if( 
+		
+			is_page() AND 
+			!$this->db->is_special_page() AND 
+			( strstr( $post->post_content, '[members-list' ) !== false )
 			
 		) {
 		
@@ -2183,6 +2244,9 @@ class CommentpressCore {
 
 		// Theme My Login page is not
 		if ( $this->is_theme_my_login_page() ) { return false; }
+
+		// Members List page is not
+		if ( $this->is_members_list_page() ) { return false; }
 
 		// Subscribe to Comments Reloaded page is not
 		if ( $this->is_subscribe_to_comments_reloaded_page() ) { return false; }

@@ -131,7 +131,10 @@ function commentpress_setup(
 
 	// testing the use of wp_nav_menu() - first we need to register it
 	register_nav_menu( 'toc', __( 'Table of Contents', 'commentpress-core' ) );
-
+	
+	// ignore BP 1.7 auto-compatibility? First need to add JS file...
+	//add_theme_support( 'buddypress' );
+	
 }
 endif; // commentpress_setup
 
@@ -701,6 +704,47 @@ add_action( 'admin_menu', 'commentpress_admin_menu' );
 
 
 
+if ( ! function_exists( 'commentpress_fix_bp_core_avatar_url' ) ):
+/** 
+ * @description: filter to fix broken group avatar images in BP 1.7
+ * @todo: 
+ *
+ */
+function commentpress_fix_bp_core_avatar_url( 
+
+	$url
+
+) { //-->
+	
+	// if in multisite and on non-root site
+	if ( is_multisite() && !bp_is_root_blog() ) {
+		
+		// switch to root site
+		switch_to_blog( bp_get_root_blog_id() );
+		
+		// get upload dir data
+		$upload_dir = wp_upload_dir();
+		
+		// get storage location of avatars
+		$url = $upload_dir['baseurl'];
+		
+		// switch back
+		restore_current_blog();
+		
+	}
+	
+	// --<
+	return $url;
+	
+}
+endif; // commentpress_fix_bp_core_avatar_url
+
+
+
+
+
+
+
 if ( ! function_exists( 'commentpress_get_header_image' ) ):
 /** 
  * @description: function that sets a header foreground image (a logo, for example)
@@ -731,9 +775,17 @@ function commentpress_get_header_image(
 			'height' => 48, 
 			'html' => true 
 		);
+		
+		//print_r( $avatar_options ); die();
         
+		// add filter for the function above
+		add_filter( 'bp_core_avatar_url', 'commentpress_fix_bp_core_avatar_url', 10, 1 );
+		
         // show group avatar
         echo bp_core_fetch_avatar( $avatar_options );
+        
+        // remove filter
+        remove_filter( 'bp_core_avatar_url', 'commentpress_fix_bp_core_avatar_url' );
 		
 		// --<
 		return;
