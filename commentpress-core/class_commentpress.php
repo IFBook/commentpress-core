@@ -810,6 +810,11 @@ class CommentpressCore {
 		}
 		
 		
+		
+		// only parse content once
+		remove_filter( 'the_content', array( $this, 'the_content' ), 20 )
+		
+		
 
 		// --<
 		return $content;
@@ -1808,6 +1813,7 @@ class CommentpressCore {
 					
 				case 'cp_blog_page': 
 					$_link_title = __( 'Blog', 'commentpress-core' );
+					if ( is_home() ) { $_active = ' class="active_page"'; }
 					$_button = 'blog'; break;
 					
 				case 'cp_blog_archive_page': 
