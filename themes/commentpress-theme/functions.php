@@ -330,7 +330,7 @@ function commentpress_enqueue_scripts_and_styles() {
 			);
 				
 		}
-			
+		
 		// get vars
 		$vars = $commentpress_core->db->get_javascript_vars();
 		
@@ -2654,7 +2654,7 @@ function commentpress_get_comments_by_para() {
 					), $comment_count );
 					
 					// append para text
-					$heading_text .= $paragraph_text;
+					$heading_text .= '<span class="source_block">'.$paragraph_text.'</span>';
 					
 					break;
 				
@@ -2688,6 +2688,9 @@ function commentpress_get_comments_by_para() {
 					// set permalink text
 					$permalink_text = __('Permalink for pingbacks and trackbacks', 'commentpress-core' );
 					
+					// wrap in span
+					$heading_text = '<span>'.$heading_text.'</span>';
+
 					break;
 					
 				// textblock comments
@@ -2759,7 +2762,7 @@ function commentpress_get_comments_by_para() {
 					), $comment_count );
 					
 					// append para text
-					$heading_text .= $paragraph_text;
+					$heading_text .= '<span class="source_block">'.$paragraph_text.'</span>';
 					
 			} // end switch
 		
@@ -3943,6 +3946,39 @@ endif; // commentpress_image_caption_shortcode
 
 // add a filter for the above
 add_filter( 'img_caption_shortcode', 'commentpress_image_caption_shortcode', 10, 3 );
+
+
+
+
+
+
+
+if ( ! function_exists( 'commentpress_audio' ) ):
+/** 
+ * @description: enable audio shortcode
+ * @param array $attr Attributes attributed to the shortcode.
+ * @param string $content Optional. Shortcode content.
+ * @return string
+ * @todo:
+ *
+ */
+function commentpress_audio( $atts, $content = null ) {
+
+    extract(shortcode_atts(array(
+        "src" => '',
+        "autoplay" => '',
+        "preload"=> 'true',
+        "loop" => '',
+        "controls"=> ''
+    ), $atts));
+    
+    return '<audio src="'.$src.'" autoplay="'.$autoplay.'" preload="'.$preload.'" loop="'.$loop.'" controls="'.$controls.'" autobuffer />';
+
+}
+endif; // commentpress_audio
+
+// add a shortcode for the above
+//add_shortcode( 'audio', 'commentpress_audio' );
 
 
 
