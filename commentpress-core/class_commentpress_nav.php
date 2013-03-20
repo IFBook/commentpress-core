@@ -699,6 +699,11 @@ class CommentpressCoreNavigator {
 			}
 			
 		}
+		
+		
+		
+		// apply a filter
+		$num = apply_filters( 'cp_nav_page_num', $num );
 	
 	
 	
