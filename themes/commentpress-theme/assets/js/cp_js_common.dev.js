@@ -747,36 +747,43 @@ function commentpress_scroll_to_top( target, speed ) {
 
 /** 
  * @description: highlight the comment header
- *
+ * @todo: this no longer works in jQuery without a plugin https://github.com/jquery/jquery-color
  */
 function cp_flash_comment_header( comment ) {
 
+	return;
+	
+	/*
 	//console.log( 'flash' );
 
 	// define vars
 	var comment_header, bg;
 
 	// get header
-	comment_header = comment.children( '.comment-identifier' );
-	//console.log( comment_header.css('backgroundColor') );
+	comment_header = comment.children( '.comment-content' );
+	console.log( comment_header.css('color') );
 	
 	if ( !comment_header ) { return; }
 					
 	// store existing color
-	bg = comment_header.css('backgroundColor');
+	//bg = comment_header.css('color');
+	bg = 'black';
 	
 	// animate to highlight
-	comment_header.animate({ backgroundColor: "#819565" }, 100, function () {
+	comment_header.animate({ color: "red" }, 100, function () {
+		
+		console.log( comment_header.css('color') );
 		
 		// animate to white
-		comment_header.animate({ backgroundColor: bg }, 1000, function () {
+		comment_header.animate({ color: bg }, 1000, function () {
 			
 			// then do something?
-			//console.log( 'flashed' );
+			console.log( 'flashed' );
 		
 		});
 		
 	});
+	*/
 	
 }
 
