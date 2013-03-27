@@ -768,7 +768,7 @@ HELPTEXT;
 	 * @todo:
 	 *
 	 */
-	function list_pages() {
+	function list_pages( $exclude_pages = array() ) {
 	
 		/* 
 		Question: do we want to use WP menus? And if so, how?
@@ -860,6 +860,14 @@ HELPTEXT;
 		
 		// exclude title page, if we have one
 		if ( $welcome_id !== false ) { $exclude[] = $welcome_id; }
+		
+		// did we get any passed to us?
+		if ( !empty( $exclude_pages ) ) {
+		
+			// merge arrays
+			$exclude = array_merge( $exclude, $exclude_pages );
+		
+		}
 
 
 		// set list pages defaults
@@ -882,37 +890,7 @@ HELPTEXT;
 		
 		// use Wordpress function to echo
 		wp_list_pages( $defaults );
-
-
 		
-		
-		/*
-		
-		// The following code manually lists pages, but adds the comment count to the name
-		
-		// init params
-		$params = 'sort_column=menu_order';
-		
-		// exclude the special pages
-		$params .= '&exclude='.implode( ',', $special );
-		
-		//echo $params; exit();
-	
-		// get all pages
-		$_pages = get_pages( $params );
-		
-		// run through them...
-		foreach( $_pages AS $_page ) {
-	
-			// get comment count for that page
-			$count = count( $this->db->get_approved_comments( $_page->ID ) );
-	
-			// write list item
-			echo '<li class="title"><a href="'.get_page_link( $_page->ID ).'">'.$_page->post_title.' ('.$count.')</a></li>'."\n";
-		
-		}
-		*/
-
 	}
 	
 	
