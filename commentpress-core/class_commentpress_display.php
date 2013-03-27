@@ -446,8 +446,12 @@ class CommentpressCoreDisplay {
 		
 		
 		// don't return TinyMCE for touchscreens, mobile phones or tablets
-		if ( $this->db->is_mobile_touch OR $this->db->is_mobile OR $this->db->is_tablet ) {
-		
+		if ( 
+			( isset( $this->db->is_mobile_touch ) AND $this->db->is_mobile_touch ) OR
+			( isset( $this->db->is_mobile ) AND $this->db->is_mobile ) OR
+			( isset( $this->db->is_tablet ) AND $this->db->is_tablet )
+		) {
+			
 			// --<
 			return false;
 		

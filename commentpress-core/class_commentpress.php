@@ -2270,6 +2270,24 @@ class CommentpressCore {
 	
 	
 	
+	/** 
+	 * @description: check if user agent is mobile
+	 * @return boolean true if mobile OS, false otherwise
+	 * @todo:
+	 */
+	function is_mobile() {
+	
+		// --<
+		return $this->db->is_mobile();
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 //##############################################################################
 
 
