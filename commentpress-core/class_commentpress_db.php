@@ -39,15 +39,6 @@ class CommentpressCoreDatabase {
 	// parent object reference
 	var $parent_obj;
 	
-	// standard mobile browser
-	var $is_mobile = false;
-	
-	// touch-based mobile browser
-	var $is_mobile_touch = false;
-	
-	// touch-based tablet browser
-	var $is_tablet = false;
-	
 	// ---------- options ----------
 	var $commentpress_options = array();
 	
@@ -3060,7 +3051,7 @@ class CommentpressCoreDatabase {
 			if ( !class_exists( 'Mobile_Detect' ) ) {
 			
 				// use code from http://code.google.com/p/php-mobile-detect/
-				include( COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/includes/mobile-detect/Mobile_Detect.php' );
+				include_once( COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/includes/mobile-detect/Mobile_Detect.php' );
 			
 			}
 			
@@ -3085,6 +3076,32 @@ class CommentpressCoreDatabase {
 			
 		}
 
+	}
+	
+	
+
+
+
+
+
+	/** 
+	 * @description: returns class properties for mobile browsers
+	 * @todo: 
+	 *
+	 */
+	function is_mobile() {
+	
+		// do we have the property?
+		if ( !isset( $this->is_mobile ) ) { 
+		
+			// get it
+			$this->test_for_mobile();
+		
+		}
+
+		// --<
+		return $this->is_mobile;
+			
 	}
 	
 	
