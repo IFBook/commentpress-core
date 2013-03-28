@@ -1519,7 +1519,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function get_toc_list() {
+	function get_toc_list( $exclude_pages = array() ) {
 	
 		// switch pages or posts
 		if( $this->get_list_option() == 'post' ) {
@@ -1530,7 +1530,7 @@ class CommentpressCore {
 		} else {
 		
 			// list pages
-			$this->display->list_pages();
+			$this->display->list_pages( $exclude_pages );
 			
 		} 
 		
@@ -2261,6 +2261,24 @@ class CommentpressCore {
 	
 		// --<
 		return true;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	/** 
+	 * @description: check if user agent is mobile
+	 * @return boolean true if mobile OS, false otherwise
+	 * @todo:
+	 */
+	function is_mobile() {
+	
+		// --<
+		return $this->db->is_mobile();
 		
 	}
 	
