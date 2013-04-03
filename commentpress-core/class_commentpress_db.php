@@ -3110,6 +3110,32 @@ class CommentpressCoreDatabase {
 
 
 
+	/** 
+	 * @description: returns class properties for tablet browsers
+	 * @todo: 
+	 *
+	 */
+	function is_tablet() {
+	
+		// do we have the property?
+		if ( !isset( $this->is_tablet ) ) { 
+		
+			// get it
+			$this->test_for_mobile();
+		
+		}
+
+		// --<
+		return $this->is_tablet;
+			
+	}
+	
+	
+
+
+
+
+
 //##############################################################################
 
 

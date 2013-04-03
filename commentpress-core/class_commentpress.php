@@ -2288,6 +2288,24 @@ class CommentpressCore {
 	
 	
 	
+	/** 
+	 * @description: check if user agent is tablet
+	 * @return boolean true if tablet OS, false otherwise
+	 * @todo:
+	 */
+	function is_tablet() {
+	
+		// --<
+		return $this->db->is_tablet();
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 //##############################################################################
 
 
