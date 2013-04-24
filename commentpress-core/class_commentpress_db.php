@@ -37,61 +37,61 @@ class CommentpressCoreDatabase {
 	*/
 	
 	// parent object reference
-	var $parent_obj;
+	public $parent_obj;
 	
 	// ---------- options ----------
-	var $commentpress_options = array();
+	public $commentpress_options = array();
 	
 	// TOC content ('post' or 'page')
-	var $toc_content = 'page';
+	public $toc_content = 'page';
 	
 	// TOC chapters are pages by default
-	var $toc_chapter_is_page = 1;
+	public $toc_chapter_is_page = 1;
 
 	// Show extended TOC content for posts lists
-	var $show_extended_toc = 1;
+	public $show_extended_toc = 1;
 		
 	// TOC shows subpages by default
-	var $show_subpages = 1;
+	public $show_subpages = 1;
 	
 	// show page titles by default
-	var $title_visibility = 'show';
+	public $title_visibility = 'show';
 	
 	// hide page meta by default
-	var $page_meta_visibility = 'hide';
+	public $page_meta_visibility = 'hide';
 	
 	// default editor (tinyMCE)
-	var $comment_editor = 1;
+	public $comment_editor = 1;
 	
 	// promote reading (1) or commenting (0)
-	var $promote_reading = 0;
+	public $promote_reading = 0;
 	
 	// default excerpt length
-	var $excerpt_length = 55;
+	public $excerpt_length = 55;
 	
 	// default header background colour (hex, same as in layout.css)
-	var $header_bg_colour = '2c2622';
+	public $header_bg_colour = '2c2622';
 	
 	// default scroll speed (ms)
-	var $js_scroll_speed = '800';
+	public $js_scroll_speed = '800';
 	
 	// default type of blog - eg, array('0' => 'Poetry','1' => 'Prose')
-	var $blog_type = false;
+	public $blog_type = false;
 		
 	// default blog workflow (like translation, for example), off by default
-	var $blog_workflow = 0;
+	public $blog_workflow = 0;
 	
 	// default sidebar ('toc' => Contents tab)
-	var $sidebar_default = 'toc';
+	public $sidebar_default = 'toc';
 		
 	// default minimum page width (px)
-	var $min_page_width = '447';
+	public $min_page_width = '447';
 		
 	// "live" comment refreshing off by default
-	var $para_comments_live = 0;
+	public $para_comments_live = 0;
 		
 	// prevent save_post hook firing more than once
-	var $saved_post = false;
+	public $saved_post = false;
 	
 
 

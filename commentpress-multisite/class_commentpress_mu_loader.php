@@ -37,16 +37,16 @@ class CommentpressMultisiteLoader {
 	*/
 	
 	// parent object reference
-	var $parent_obj;
+	public $parent_obj;
 	
 	// admin object reference
-	var $db;
+	public $db;
 	
 	// multisite object reference
-	var $mu;
+	public $mu;
 	
 	// buddypress object reference
-	var $bp;
+	public $bp;
 	
 	
 	

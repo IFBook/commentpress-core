@@ -37,13 +37,13 @@ class CommentpressGroupblogWorkshop {
 	*/
 	
 	// parent object reference
-	var $parent_obj;
+	public $parent_obj;
 	
 	// admin object reference
-	var $db;
+	public $db;
 	
 	// default to "off"
-	var $cpmu_bp_workshop_nomenclature = 0;
+	public $cpmu_bp_workshop_nomenclature = 0;
 	
 	
 	
