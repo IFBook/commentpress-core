@@ -37,13 +37,13 @@ class CommentpressMultisiteAdmin {
 	*/
 	
 	// parent object reference
-	var $parent_obj;
+	public $parent_obj;
 	
 	// options page
-	var $options_page;
+	public $options_page;
 	
 	// options array
-	var $cpmu_options = array();
+	public $cpmu_options = array();
 	
 
 

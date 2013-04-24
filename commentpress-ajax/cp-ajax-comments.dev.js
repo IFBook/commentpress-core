@@ -669,7 +669,7 @@ jQuery(document).ready(function($) {
 			'<div id="cpajax_error_msg"></div>'
 			
 		);
-		jQuery('#commentform').after(
+		jQuery('#submit').after(
 			'<img src="' + cpajax_spinner_url + '" id="loading" alt="' + cpajax_lang[0] + '" />'
 		);
 		jQuery('#loading').hide();

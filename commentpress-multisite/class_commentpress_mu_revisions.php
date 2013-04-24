@@ -37,10 +37,10 @@ class CommentpressMultisiteRevisions {
 	*/
 	
 	// parent object reference
-	var $parent_obj;
+	public $parent_obj;
 	
 	// admin object reference
-	var $db;
+	public $db;
 	
 	
 	

@@ -37,25 +37,25 @@ class CommentpressMultisiteBuddypress {
 	*/
 	
 	// parent object reference
-	var $parent_obj;
+	public $parent_obj;
 	
 	// admin object reference
-	var $db;
+	public $db;
 	
 	// BP: CommentPress Core enabled on all groupblogs, default is "false"
-	var $cpmu_bp_force_commentpress = '0';
+	public $cpmu_bp_force_commentpress = '0';
 	
 	// BP: default theme stylesheet for groupblogs (WP3.4+)
-	var $cpmu_bp_groupblog_theme = 'commentpress-theme';
+	public $cpmu_bp_groupblog_theme = 'commentpress-theme';
 	
 	// BP: default theme name for groupblogs (pre-WP3.4)
-	var $cpmu_bp_groupblog_theme_name = 'CommentPress Default Theme';
+	public $cpmu_bp_groupblog_theme_name = 'CommentPress Default Theme';
 	
 	// BP: make groupblogs private by default
-	var $cpmu_bp_groupblog_privacy = 1;
+	public $cpmu_bp_groupblog_privacy = 1;
 	
 	// anon comments on groupblogs (commenters must be logged in and members)
-	var $cpmu_bp_require_comment_registration = 1;
+	public $cpmu_bp_require_comment_registration = 1;
 	
 	
 

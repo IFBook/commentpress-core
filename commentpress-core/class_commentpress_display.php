@@ -37,10 +37,10 @@ class CommentpressCoreDisplay {
 	*/
 	
 	// parent object reference
-	var $parent_obj;
+	public $parent_obj;
 	
 	// database object
-	var $db;
+	public $db;
 	
 
 

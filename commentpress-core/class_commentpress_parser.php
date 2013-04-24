@@ -42,19 +42,19 @@ class CommentpressCoreParser {
 	*/
 	
 	// parent object reference
-	var $parent_obj;
+	public $parent_obj;
 	
 	// init text_signatures
-	var $text_signatures = array();
+	public $text_signatures = array();
 	
 	// all comments
-	var $comments_all = array();
+	public $comments_all = array();
 	
 	// approved comments
-	var $comments_approved = array();
+	public $comments_approved = array();
 	
 	// sorted comments
-	var $comments_sorted = array();
+	public $comments_sorted = array();
 	
 
 
@@ -1747,15 +1747,13 @@ class CommentpressCoreParser {
 	/** 
 	 * @description: generates a text signature based on the content of a paragraph
 	 * @param string $text the text of a paragraph
-	 * @param integer $position paragraph position in a post
-	 * @return string $sig the generated text signature
-	 * @todo: implement some kind of paragraph identifier to distiguish identical paragraphs?
+	 * @return string $text_signature the generated text signature
 	 *
 	 */
-	function _generate_text_signature( $text, $position = null ) {
+	function _generate_text_signature( $text ) {
 	
 		// get an array of words from the text
-		$words = explode( ' ', ereg_replace( '[^A-Za-z]', ' ', html_entity_decode($text) ) );
+		$words = explode( ' ', preg_replace( '/[^A-Za-z]/', ' ', html_entity_decode($text) ) );
 		
 		// store unique words
 		// NB: this may be a mistake for poetry, which can use any words in any order
@@ -1782,15 +1780,8 @@ class CommentpressCoreParser {
 		
 		
 		
-		// get sig - think this through (not used, as position always null
-		$sig = ($position) ? 
-				$position . ':' . $text_signature : 
-				$text_signature;
-		
-		
-		
 		// --<
-		return $sig;
+		return $text_signature;
 		
 	}
 	

@@ -37,31 +37,31 @@ class CommentpressCore {
 	*/
 	
 	// database object
-	var $db;
+	public $db;
 	
 	// display object
-	var $display;
+	public $display;
 	
 	// nav object
-	var $nav;
+	public $nav;
 	
 	// parser object
-	var $parser;
+	public $parser;
 	
 	// formatter object
-	var $formatter;
+	public $formatter;
 	
 	// workflow object
-	var $workflow;
+	public $workflow;
 	
 	// options page
-	var $options_page;
+	public $options_page;
 	
 	// buddypress present
-	var $buddypress = false;
+	public $buddypress = false;
 	
 	// bp-groupblog present
-	var $bp_groupblog = false;
+	public $bp_groupblog = false;
 	
 
 
