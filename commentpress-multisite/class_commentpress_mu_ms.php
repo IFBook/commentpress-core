@@ -37,19 +37,19 @@ class CommentpressMultisite {
 	*/
 	
 	// parent object reference
-	var $parent_obj;
+	public $parent_obj;
 	
 	// admin object reference
-	var $db;
+	public $db;
 	
 	// MS: CommentPress Core enabled on all sites, default is "false"
-	var $cpmu_force_commentpress = '0';
+	public $cpmu_force_commentpress = '0';
 	
 	// MS: default title page content (not yet used)
-	//var $cpmu_title_page_content = '';
+	//public $cpmu_title_page_content = '';
 	
 	// MS: allow translation workflow, default is "off"
-	var $cpmu_disable_translation_workflow = '1';
+	public $cpmu_disable_translation_workflow = '1';
 	
 	
 	

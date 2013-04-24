@@ -42,19 +42,19 @@ class CommentpressCoreParser {
 	*/
 	
 	// parent object reference
-	var $parent_obj;
+	public $parent_obj;
 	
 	// init text_signatures
-	var $text_signatures = array();
+	public $text_signatures = array();
 	
 	// all comments
-	var $comments_all = array();
+	public $comments_all = array();
 	
 	// approved comments
-	var $comments_approved = array();
+	public $comments_approved = array();
 	
 	// sorted comments
-	var $comments_sorted = array();
+	public $comments_sorted = array();
 	
 
 

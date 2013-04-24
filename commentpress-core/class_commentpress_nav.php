@@ -38,22 +38,22 @@ class CommentpressCoreNavigator {
 	*/
 	
 	// parent object reference
-	var $parent_obj;
+	public $parent_obj;
 	
 	// next pages array
-	var $next_pages = array();
+	public $next_pages = array();
 	
 	// previous pages array
-	var $previous_pages = array();
+	public $previous_pages = array();
 	
 	// next posts array
-	var $next_posts = array();
+	public $next_posts = array();
 	
 	// previous posts array
-	var $previous_posts = array();
+	public $previous_posts = array();
 	
 	// page numbers array
-	var $page_numbers = array();
+	public $page_numbers = array();
 	
 	
 	
