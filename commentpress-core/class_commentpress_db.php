@@ -2874,6 +2874,19 @@ class CommentpressCoreDatabase {
 			
 		}
 		
+		// if on a public groupblog and user isn't logged in
+		if (
+			
+			$this->parent_obj->is_groupblog() AND
+			! is_user_logged_in()
+			
+		) {
+			
+			// don't add rich text editor, because only members can comment
+			$vars['cp_tinymce'] = 0;
+		
+		}
+			
 		// add mobile var
 		$vars['cp_is_mobile'] = 0;
 
