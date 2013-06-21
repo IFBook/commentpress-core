@@ -258,6 +258,22 @@ class CommentpressMultisite {
 			
 		);
 		
+		// CBOX theme compat
+		if ( function_exists( 'cbox_theme_register_widgets' ) ) {
+		
+			// add css amends
+			wp_enqueue_style( 
+		
+				'cpmu-cbox-style', 
+				COMMENTPRESS_PLUGIN_URL . 'commentpress-multisite/assets/css/cbox.css',
+				null,
+				COMMENTPRESS_MU_PLUGIN_VERSION,
+				'all' // media
+			
+			);
+		
+		}
+		
 	}
 	
 	
