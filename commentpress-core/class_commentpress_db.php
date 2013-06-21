@@ -894,8 +894,8 @@ class CommentpressCoreDatabase {
 			}
 
 			// excerpt length
-			$this->option_set( 'cp_excerpt_length', $cp_excerpt_length );
 			$cp_excerpt_length = $wpdb->escape( $cp_excerpt_length );
+			$this->option_set( 'cp_excerpt_length', intval( $cp_excerpt_length ) );
 			
 			// comment editor
 			$cp_comment_editor = $wpdb->escape( $cp_comment_editor );
