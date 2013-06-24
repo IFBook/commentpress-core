@@ -1,0 +1,6 @@
+/* CBOX Theme Compatibility Styles */
+
+#group-blog-groups-li #group-blog:before 
+{
+	content: "C";
+}
