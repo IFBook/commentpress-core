@@ -355,6 +355,52 @@ class CommentpressMultisiteBuddypress {
 
 
 	/** 
+	 * @description: add pages to the post_types that BP records published activity for
+	 */
+	function record_published_pages( $post_types ) {
+		
+		// if not in the array already
+		if ( ! in_array( 'page', $post_types ) ) {
+
+			// add page post_type
+			$post_types[] = 'page';
+			
+		}
+		
+		// --<
+		return $post_types;
+	
+	}
+	
+	
+	
+	
+	
+	
+	/** 
+	 * @description: add pages to the post_types that BP records comment activity for
+	 */
+	function record_comments_on_pages( $post_types ) {
+		
+		// if not in the array already
+		if ( ! in_array( 'page', $post_types ) ) {
+
+			// add page post_type
+			$post_types[] = 'page';
+			
+		}
+		
+		// --<
+		return $post_types;
+	
+	}
+	
+	
+	
+	
+	
+	
+	/** 
 	 * @description: override "publicness" of groupblogs so that we can set the hide_sitewide
 	 * property of the activity item (post or comment) depending on the group's setting.
 	 * @todo: test if they are CP-enabled?
@@ -1343,6 +1389,12 @@ class CommentpressMultisiteBuddypress {
 		// amend comment activity
 		add_filter( 'pre_comment_approved', array( $this, 'pre_comment_approved' ), 99, 2 );
 		//add_action( 'preprocess_comment', 'my_check_comment', 1 );
+		
+		// add pages to the post_types that BP records comment activity for
+		add_filter( 'bp_blogs_record_comment_post_types', array( $this, 'record_comments_on_pages' ), 10, 1 );
+		
+		// add pages to the post_types that BP records published activity for
+		//add_filter( 'bp_blogs_record_post_post_types', array( $this, 'record_published_pages' ), 10, 1 );
 		
 		// override "publicness" of groupblogs
 		add_filter( 'bp_is_blog_public', array( $this, 'is_blog_public' ), 20, 1 );

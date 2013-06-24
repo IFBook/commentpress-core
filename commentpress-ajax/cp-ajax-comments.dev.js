@@ -884,7 +884,7 @@ jQuery(document).ready(function($) {
 		var last_id = jQuery(last).prop('id');
 	
 		// construct new comment id
-		var new_comm_id = '#comment-' + last_id.split('-')[2];
+		var new_comm_id = '#comment-' + ( last_id.toString().split('-')[2] );
 		var comment = jQuery(new_comm_id);
 		
 		// highlight it

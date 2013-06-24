@@ -45,6 +45,15 @@ class CommentpressGroupblogWorkshop {
 	// default to "off"
 	public $cpmu_bp_workshop_nomenclature = 0;
 	
+	// default name to "Document"
+	public $cpmu_bp_workshop_nomenclature_name = 'Document';
+	
+	// default plural to "Documents"
+	public $cpmu_bp_workshop_nomenclature_plural = 'Documents';
+	
+	// default slug to "document"
+	public $cpmu_bp_workshop_nomenclature_slug = 'document';
+	
 	
 	
 
@@ -161,7 +170,10 @@ class CommentpressGroupblogWorkshop {
 	function groupblog_comment_name() { 
 	
 		// default name
-		return __( 'Workshop Comments', 'commentpress-core' );
+		return sprintf(
+			__( '%s Comments', 'commentpress-core' ),
+			$this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' )
+		);
 		
 	}
 	
@@ -178,7 +190,10 @@ class CommentpressGroupblogWorkshop {
 	function groupblog_post_name() {
 	
 		// default name
-		return __( 'Workshop Posts', 'commentpress-core' );
+		return sprintf(
+			__( '%s Posts', 'commentpress-core' ),
+			$this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' )
+		);
 	
 	}
 	
@@ -195,7 +210,10 @@ class CommentpressGroupblogWorkshop {
 	function activity_post_name() {
 	
 		// default name
-		return __( 'workshop post', 'commentpress-core' );
+		return sprintf( 
+			__( '%s post', 'commentpress-core' ), 
+			strtolower( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) )
+		);
 	
 	}
 	
@@ -211,7 +229,7 @@ class CommentpressGroupblogWorkshop {
 	 */
 	function filter_blog_name( $name ) {
 	
-		return __( 'Workshop', 'commentpress-core' );
+		return $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' );
 		
 	}
 	
@@ -227,7 +245,7 @@ class CommentpressGroupblogWorkshop {
 	 */
 	function filter_blog_slug( $slug ) {
 	
-		return 'workshop';
+		return $this->db->option_get( 'cpmu_bp_workshop_nomenclature_slug' );
 		
 	}
 	
@@ -257,7 +275,10 @@ class CommentpressGroupblogWorkshop {
 			// override default link name
 			return apply_filters(
 				'cpmsextras_user_links_new_site_title', 
-				__( 'Recent Comments in this Workshop', 'commentpress-core' )
+				sprintf(
+					__( 'Recent Comments in this %s', 'commentpress-core' ),
+					$this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' )
+				)
 			);
 			
 		}
@@ -291,7 +312,10 @@ class CommentpressGroupblogWorkshop {
 	function page_all_comments_blog_title( $title ) {
 	
 		// --<
-		return __( 'Comments on Workshop Posts', 'commentpress-core' );
+		return sprintf(
+			__( 'Comments on %s Posts', 'commentpress-core' ),
+			$this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' )
+		);
 	
 	}
 	
@@ -308,7 +332,10 @@ class CommentpressGroupblogWorkshop {
 	function page_all_comments_book_title( $title ) {
 	
 		// --<
-		return __( 'Comments on Workshop Pages', 'commentpress-core' );
+		return sprintf(
+			__( 'Comments on %s Pages', 'commentpress-core' ),
+			$this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' )
+		);
 	
 	}
 	
@@ -325,7 +352,10 @@ class CommentpressGroupblogWorkshop {
 	function filter_activity_title_all_yours( $title ) {
 	
 		// --<
-		return __( 'Recent Activity in your Workshops', 'commentpress-core' );
+		return sprintf(
+			__( 'Recent Activity in your %s', 'commentpress-core' ),
+			$this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' )			
+		);
 	
 	}
 	
@@ -342,7 +372,10 @@ class CommentpressGroupblogWorkshop {
 	function filter_activity_title_all_public( $title ) {
 	
 		// --<
-		return __( 'Recent Activity in Public Workshops', 'commentpress-core' );
+		return sprintf(
+			__( 'Recent Activity in Public %s', 'commentpress-core' ),
+			$this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' )
+		);
 	
 	}
 	
@@ -371,7 +404,10 @@ class CommentpressGroupblogWorkshop {
 		) {
 		
 			// --<
-			return __( 'Workshop Home Page', 'commentpress-core' );
+			return sprintf(
+				__( '%s Home Page', 'commentpress-core' ),
+				$this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' )
+			);
 			
 		}
 		
@@ -393,7 +429,10 @@ class CommentpressGroupblogWorkshop {
 	function get_blogs_visit_blog_button( $button ) {
 		
 		// update link for groupblogs
-		return __( 'Visit Workshop', 'commentpress-core' );
+		return sprintf(
+			__( 'Visit %s', 'commentpress-core' ),
+			$this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' )
+		);
 	
 	}
 	
@@ -505,11 +544,42 @@ class CommentpressGroupblogWorkshop {
 	 */
 	function _buddypress_admin_form() {
 	
+		// check if we already have it switched on
+		if ( $this->db->option_get( 'cpmu_bp_workshop_nomenclature' ) == '1' ) {
+			
+			// do we have the name option already defined?
+			if ( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ) {
+			
+				// no, so we must have switched to the legacy "Workshop" setting
+				$this->cpmu_bp_workshop_nomenclature_name = __( 'Workshop', 'commentpress-core' );
+			
+			}
+			
+			// do we have the plural option already defined?
+			if ( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ) {
+			
+				// no, likewise we must have switched to the legacy "Workshop" setting
+				$this->cpmu_bp_workshop_nomenclature_plural = __( 'Workshops', 'commentpress-core' );
+			
+			}
+			
+		}
+	
 		// define form element
 		$element = '
 	<tr valign="top">
-		<th scope="row"><label for="cpmu_bp_workshop_nomenclature">'.__( 'Change the name of a Group "Blog" to "Workshop"', 'commentpress-core' ).'</label></th>
+		<th scope="row"><label for="cpmu_bp_workshop_nomenclature">'.__( 'Change the name of a Group "Document"?', 'commentpress-core' ).'</label></th>
 		<td><input id="cpmu_bp_workshop_nomenclature" name="cpmu_bp_workshop_nomenclature" value="1" type="checkbox"'.( $this->db->option_get( 'cpmu_bp_workshop_nomenclature' ) == '1' ? ' checked="checked"' : '' ).' /></td>
+	</tr>
+
+	<tr valign="top">
+		<th scope="row"><label for="cpmu_bp_workshop_nomenclature_name">'.__( 'Singular name for a Group "Document"', 'commentpress-core' ).'</label></th>
+		<td><input id="cpmu_bp_workshop_nomenclature_name" name="cpmu_bp_workshop_nomenclature_name" value="'.( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ? $this->cpmu_bp_workshop_nomenclature_name : $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) ).'" type="text" /></td>
+	</tr>
+
+	<tr valign="top">
+		<th scope="row"><label for="cpmu_bp_workshop_nomenclature_plural">'.__( 'Plural name for Group "Documents"', 'commentpress-core' ).'</label></th>
+		<td><input id="cpmu_bp_workshop_nomenclature_plural" name="cpmu_bp_workshop_nomenclature_plural" value="'.( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) == '' ? $this->cpmu_bp_workshop_nomenclature_plural : $this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) ).'" type="text" /></td>
 	</tr>
 
 ';
@@ -540,9 +610,43 @@ class CommentpressGroupblogWorkshop {
 		// get variables
 		extract( $_POST );
 		
-		// set option
+		
+		
+		// set on/off option
 		$cpmu_bp_workshop_nomenclature = $wpdb->escape( $cpmu_bp_workshop_nomenclature );
 		$this->db->option_set( 'cpmu_bp_workshop_nomenclature', ( $cpmu_bp_workshop_nomenclature ? 1 : 0 ) );
+		
+		
+		
+		// get name option
+		$cpmu_bp_workshop_nomenclature_name = $wpdb->escape( $cpmu_bp_workshop_nomenclature_name );
+		
+		// revert to default if we didn't get one...
+		if ( $cpmu_bp_workshop_nomenclature_name == '' ) {
+			$cpmu_bp_workshop_nomenclature_name = $this->cpmu_bp_workshop_nomenclature_name;
+		}
+		
+		// set name option
+		$this->db->option_set( 'cpmu_bp_workshop_nomenclature_name', $cpmu_bp_workshop_nomenclature_name );
+		
+		
+		
+		// get plural option
+		$cpmu_bp_workshop_nomenclature_plural = $wpdb->escape( $cpmu_bp_workshop_nomenclature_plural );
+		
+		// revert to default if we didn't get one...
+		if ( $cpmu_bp_workshop_nomenclature_plural == '' ) {
+			$cpmu_bp_workshop_nomenclature_plural = $this->cpmu_bp_workshop_nomenclature_plural;
+		}
+
+		// set plural option
+		$this->db->option_set( 'cpmu_bp_workshop_nomenclature_plural', $cpmu_bp_workshop_nomenclature_plural );
+		
+		
+		
+		// set slug option
+		$cpmu_bp_workshop_nomenclature_slug = sanitize_title( $cpmu_bp_workshop_nomenclature_name );
+		$this->db->option_set( 'cpmu_bp_workshop_nomenclature_slug', $cpmu_bp_workshop_nomenclature_slug );
 		
 	}
 	
@@ -558,8 +662,11 @@ class CommentpressGroupblogWorkshop {
 	 */
 	function _get_default_settings( $settings ) {
 	
-		// add our option
+		// add our options
 		$settings['cpmu_bp_workshop_nomenclature'] = $this->cpmu_bp_workshop_nomenclature;
+		$settings['cpmu_bp_workshop_nomenclature_name'] = $this->cpmu_bp_workshop_nomenclature_name;
+		$settings['cpmu_bp_workshop_nomenclature_plural'] = $this->cpmu_bp_workshop_nomenclature_plural;
+		$settings['cpmu_bp_workshop_nomenclature_slug'] = $this->cpmu_bp_workshop_nomenclature_slug;
 		
 		// --<
 		return $settings;
