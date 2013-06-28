@@ -282,31 +282,30 @@ class CommentpressMultisiteBuddypress {
 	
 		//print_r( $commentdata ); die();
 	
-		global $wpdb;
-		$blog_id = (int)$wpdb->blogid;
-	
 		// do we have groupblogs?
 		if ( function_exists( 'get_groupblog_group_id' ) ) {
 		
+			// get  blog ID
+			global $wpdb;
+			$blog_id = (int) $wpdb->blogid;
+	
 			// check if this blog is a group blog...
 			$group_id = get_groupblog_group_id( $blog_id );
 			
-		}
+			// when this blog is a groupblog
+			if ( isset( $group_id ) AND is_numeric( $group_id ) ) {
 		
-		// when this blog is a groupblog
-		if ( isset( $group_id ) AND is_numeric( $group_id ) ) {
+				// is this user a member?
+				if ( groups_is_user_member( $commentdata['user_id'], $group_id ) ) {
+				
+					// allow un-moderated commenting
+					return 1;
+				
+				}
 		
-			// is this user a member?
-			if ( groups_is_user_member( $commentdata['user_id'], $group_id ) ) {
-				
-				// allow un-moderated commenting
-				return 1;
-				
 			}
 		
 		}
-		
-		
 		
 		// pass through
 		return $approved;
