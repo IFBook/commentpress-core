@@ -2546,6 +2546,11 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ):
  */
 function commentpress_get_comments_by_para() {
 
+	// allow plugins to precede comments
+	do_action( 'commentpress_before_scrollable_comments' );
+	
+	
+	
 	// declare access to globals
 	global $post, $commentpress_core;
 	
@@ -2639,10 +2644,10 @@ function commentpress_get_comments_by_para() {
 					$heading_text = sprintf( _n(
 						
 						// singular
-						'<span>%d</span> Comment on ', 
+						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span> on ', 
 						
 						// plural
-						'<span>%d</span> Comments on ', 
+						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span> on ', 
 						
 						// number
 						$comment_count, 
@@ -2747,10 +2752,10 @@ function commentpress_get_comments_by_para() {
 					$heading_text = sprintf( _n(
 						
 						// singular
-						'<span>%d</span> Comment on ', 
+						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span> on ', 
 						
 						// plural
-						'<span>%d</span> Comments on ', 
+						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span> on ', 
 						
 						// number
 						$comment_count, 
@@ -2796,7 +2801,7 @@ function commentpress_get_comments_by_para() {
 					// show some kind of message TO DO: incorporate para order too
 					echo '<div class="reply_to_para" id="reply_to_para-'.$para_num.'">'."\n".
 							'<p>'.
-								'It appears that this paragraph is a duplicate of a previous one.'.
+								__( 'It appears that this paragraph is a duplicate of a previous one.', 'commentpress-core' ).
 							'</p>'."\n".
 						 '</div>'."\n\n";
 	
