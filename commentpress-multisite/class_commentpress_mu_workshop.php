@@ -172,7 +172,7 @@ class CommentpressGroupblogWorkshop {
 		// default name
 		return sprintf(
 			__( '%s Comments', 'commentpress-core' ),
-			$this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' )
+			$this->cpmu_bp_workshop_nomenclature_name
 		);
 		
 	}
@@ -192,7 +192,7 @@ class CommentpressGroupblogWorkshop {
 		// default name
 		return sprintf(
 			__( '%s Posts', 'commentpress-core' ),
-			$this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' )
+			$this->cpmu_bp_workshop_nomenclature_name
 		);
 	
 	}
@@ -212,7 +212,7 @@ class CommentpressGroupblogWorkshop {
 		// default name
 		return sprintf( 
 			__( '%s post', 'commentpress-core' ), 
-			strtolower( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) )
+			strtolower( $this->cpmu_bp_workshop_nomenclature_name )
 		);
 	
 	}
@@ -229,7 +229,7 @@ class CommentpressGroupblogWorkshop {
 	 */
 	function filter_blog_name( $name ) {
 	
-		return $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' );
+		return $this->cpmu_bp_workshop_nomenclature_name;
 		
 	}
 	
@@ -277,7 +277,7 @@ class CommentpressGroupblogWorkshop {
 				'cpmsextras_user_links_new_site_title', 
 				sprintf(
 					__( 'Recent Comments in this %s', 'commentpress-core' ),
-					$this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' )
+					$this->cpmu_bp_workshop_nomenclature_name
 				)
 			);
 			
@@ -314,7 +314,7 @@ class CommentpressGroupblogWorkshop {
 		// --<
 		return sprintf(
 			__( 'Comments on %s Posts', 'commentpress-core' ),
-			$this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' )
+			$this->cpmu_bp_workshop_nomenclature_name
 		);
 	
 	}
@@ -334,7 +334,7 @@ class CommentpressGroupblogWorkshop {
 		// --<
 		return sprintf(
 			__( 'Comments on %s Pages', 'commentpress-core' ),
-			$this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' )
+			$this->cpmu_bp_workshop_nomenclature_name
 		);
 	
 	}
@@ -354,7 +354,7 @@ class CommentpressGroupblogWorkshop {
 		// --<
 		return sprintf(
 			__( 'Recent Activity in your %s', 'commentpress-core' ),
-			$this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' )			
+			$this->cpmu_bp_workshop_nomenclature_plural			
 		);
 	
 	}
@@ -374,7 +374,7 @@ class CommentpressGroupblogWorkshop {
 		// --<
 		return sprintf(
 			__( 'Recent Activity in Public %s', 'commentpress-core' ),
-			$this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' )
+			$this->cpmu_bp_workshop_nomenclature_plural
 		);
 	
 	}
@@ -406,7 +406,7 @@ class CommentpressGroupblogWorkshop {
 			// --<
 			return sprintf(
 				__( '%s Home Page', 'commentpress-core' ),
-				$this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' )
+				$this->cpmu_bp_workshop_nomenclature_name
 			);
 			
 		}
@@ -431,7 +431,7 @@ class CommentpressGroupblogWorkshop {
 		// update link for groupblogs
 		return sprintf(
 			__( 'Visit %s', 'commentpress-core' ),
-			$this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' )
+			$this->cpmu_bp_workshop_nomenclature_name
 		);
 	
 	}
@@ -483,6 +483,35 @@ class CommentpressGroupblogWorkshop {
 		// do we have our option set?
 		if ( $this->db->option_get( 'cpmu_bp_workshop_nomenclature' ) == '1' ) {
 		
+			// store the setting locally
+			$this->cpmu_bp_workshop_nomenclature = '1';
+		
+			// do we have the name option already defined?
+			if ( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ) {
+			
+				// no, so we must have switched to the legacy "Workshop" setting
+				$this->cpmu_bp_workshop_nomenclature_name = $this->_get_legacy_name();
+				
+			} else {
+			
+				// store the setting locally
+				$this->cpmu_bp_workshop_nomenclature_name = $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' );
+
+			}
+			
+			// do we have the plural option already defined?
+			if ( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) == '' ) {
+			
+				// no, likewise we must have switched to the legacy "Workshop" setting
+				$this->cpmu_bp_workshop_nomenclature_plural = $this->_get_legacy_plural();
+			
+			} else {
+			
+				// store the setting locally
+				$this->cpmu_bp_workshop_nomenclature_plural = $this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' );
+
+			}
+			
 			// register hooks
 			$this->_register_hooks();
 			
@@ -551,15 +580,15 @@ class CommentpressGroupblogWorkshop {
 			if ( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ) {
 			
 				// no, so we must have switched to the legacy "Workshop" setting
-				$this->cpmu_bp_workshop_nomenclature_name = __( 'Workshop', 'commentpress-core' );
+				$this->cpmu_bp_workshop_nomenclature_name = $this->_get_legacy_name();
 			
 			}
 			
 			// do we have the plural option already defined?
-			if ( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ) {
+			if ( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) == '' ) {
 			
 				// no, likewise we must have switched to the legacy "Workshop" setting
-				$this->cpmu_bp_workshop_nomenclature_plural = __( 'Workshops', 'commentpress-core' );
+				$this->cpmu_bp_workshop_nomenclature_plural = $this->_get_legacy_plural();
 			
 			}
 			
@@ -670,6 +699,51 @@ class CommentpressGroupblogWorkshop {
 		
 		// --<
 		return $settings;
+		
+	}
+	
+	
+	
+
+
+
+	/**
+	 * @description: get legacy name when already set
+	 */
+	function _get_legacy_name() {
+	
+		// --<
+		return __( 'Workshop', 'commentpress-core' );
+		
+	}
+	
+	
+	
+
+
+
+	/**
+	 * @description: get legacy plural name when already set
+	 */
+	function _get_legacy_plural() {
+	
+		// --<
+		return __( 'Workshops', 'commentpress-core' );
+		
+	}
+	
+	
+	
+
+
+
+	/**
+	 * @description: get legacy slug when already set
+	 */
+	function _get_legacy_slug() {
+	
+		// --<
+		return 'workshop';
 		
 	}
 	
