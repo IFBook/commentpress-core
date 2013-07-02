@@ -245,7 +245,7 @@ class CommentpressGroupblogWorkshop {
 	 */
 	function filter_blog_slug( $slug ) {
 	
-		return $this->db->option_get( 'cpmu_bp_workshop_nomenclature_slug' );
+		return $this->cpmu_bp_workshop_nomenclature_slug;
 		
 	}
 	
@@ -509,6 +509,19 @@ class CommentpressGroupblogWorkshop {
 			
 				// store the setting locally
 				$this->cpmu_bp_workshop_nomenclature_plural = $this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' );
+
+			}
+			
+			// do we have the slug option already defined?
+			if ( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_slug' ) == '' ) {
+			
+				// no, likewise we must have switched to the legacy "Workshop" setting
+				$this->cpmu_bp_workshop_nomenclature_slug = $this->_get_legacy_slug();
+			
+			} else {
+			
+				// store the setting locally
+				$this->cpmu_bp_workshop_nomenclature_slug = $this->db->option_get( 'cpmu_bp_workshop_nomenclature_slug' );
 
 			}
 			
