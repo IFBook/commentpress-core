@@ -3939,6 +3939,21 @@ function commentpress_image_caption_shortcode( $empty=null, $attr, $content ) {
 	// get width
 	$_width = (0 + (int) $width);
 	
+	// sanitise caption
+	$caption = wp_kses( $caption,
+		
+		// allow a few tags
+		array(
+			'em' => array(),  
+			'strong' => array(),  
+			'a' => array('href')
+		)
+		
+	);
+	
+	// force balance those tags
+	$caption = balanceTags( $caption, true );
+	
 	// construct
 	$_caption = '<!-- cp_caption_start --><span class="captioned_image'.$_alignment.'" style="width: '.$_width.'px"><span '.$id.' class="wp-caption">'
 	. do_shortcode( $content ) . '</span><small class="wp-caption-text">'.$caption.'</small></span><!-- cp_caption_end -->';
