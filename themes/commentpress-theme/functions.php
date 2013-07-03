@@ -1935,7 +1935,7 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 		), $post_comment_counts[$_post->ID] );
 		
 		// show it
-		$html .= '<h4>'.esc_html( $_post->post_title ).' <span>('.$comment_count_text.')</span></h4>'."\n\n";
+		$html .= '<h3>'.esc_html( $_post->post_title ).' <span>('.$comment_count_text.')</span></h3>'."\n\n";
 
 		// open comments div
 		$html .= '<div class="item_body">'."\n\n";
