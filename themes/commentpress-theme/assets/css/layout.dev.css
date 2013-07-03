@@ -2575,6 +2575,35 @@ div.zp-Zotpress
 
 
 
+/*
+--------------------------------------------------------------------------------
+Compatibility with BP Group Sites plugin
+--------------------------------------------------------------------------------
+*/
+
+#bpgsites-post-in-box
+{
+	margin: 0.4em;
+}
+
+#bpgsites-post-in-box span,
+.bpgsites_comment_group_label
+{
+	font-size: 70%;
+	font-family: sans-serif;
+	text-transform: uppercase;
+}
+
+#bpgsites-post-in-box select
+{
+	font-size: 70%;
+}
+
+
+
+
+
+
 /* 
 --------------------------------------------------------------------------------
 Misc

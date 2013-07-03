@@ -1810,7 +1810,7 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 		$_page_link = trailingslashit( get_permalink( $comment->comment_post_ID ) );
 		
 		// construct context
-		$_context = 'on <a href="'.$_page_link.'">'.$comment->post_title.'</a>';
+		$_context = 'on <a href="'.$_page_link.'">'.get_the_title( $comment->comment_post_ID ).'</a>';
 	
 	}
 	
@@ -1845,138 +1845,159 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 	// declare access to globals
 	global $wpdb, $commentpress_core, $cp_comment_output;
 
-	// init page content
-	$_page_content = '';
+	// init output
+	$html = '';
 	
 	
 	
-	// construct query
-	$querystr = "
-	SELECT $wpdb->comments.*, $wpdb->posts.post_title, $wpdb->posts.post_name, $wpdb->posts.comment_count
-	FROM $wpdb->comments, $wpdb->posts
-	WHERE $wpdb->comments.comment_post_ID = $wpdb->posts.ID 
-	AND $wpdb->posts.post_type = '$page_or_post' 
-	AND $wpdb->comments.comment_approved = '1' 
-	AND $wpdb->comments.comment_parent = '0' 
-	AND $wpdb->comments.comment_type != 'pingback' 
-	AND $wpdb->posts.post_status = 'publish' 
-	ORDER BY $wpdb->posts.comment_count DESC, $wpdb->comments.comment_post_ID, $wpdb->comments.comment_date ASC
-	";
+	// get all approved comments
+	$all_comments = get_comments( array(
+		'status' => 'approve',
+		'orderby' => 'comment_post_ID,comment_date',
+		'order' => 'ASC',
+		'post_type' => $page_or_post,
+	) );
+	//print_r( $all_comments ); //die();
 	
-	//echo $querystr; exit();
-	
-	
-	// get data
-	$_data = $wpdb->get_results($querystr, OBJECT);
+	// kick out if none
+	if ( count( $all_comments ) == 0 ) return $html;
 	
 	
 	
-	// did we get any?
-	if ( count( $_data ) > 0 ) {
-	
-	
-	
-		// open ul
-		$_page_content .= '<ul class="all_comments_listing">'."\n\n";
+	// build list of posts to which they are attached
+	$posts_with = array();
+	$post_comment_counts = array();
+	foreach( $all_comments AS $comment ) {
 		
-		// init title
-		$_title = '';
-	
-		// init global comment output
-		$cp_comment_output = '';
-		
-		// loop
-		foreach ($_data as $comment) {
-		
-	
-	
-			// show page title, if not shown
-			if ( $_title != $comment->post_title ) {
-			
-				// if not first...
-				if ( $_title != '' ) {
-				
-					// close ul
-					$_page_content .= '</ul>'."\n\n";
-					
-					// close item div
-					$_page_content .= '</div><!-- /item_body -->'."\n\n";
-					
-					// close li
-					$_page_content .= '</li><!-- /page li -->'."\n\n\n\n";
-					
-				}
-		
-				// open li
-				$_page_content .= '<li class="page_li"><!-- page li -->'."\n\n";
-				
-				// count comments
-				if ( $comment->comment_count > 1 ) { $_comment_count_text = 'comments'; } else { $_comment_count_text = 'comment'; }
-		
-				// show it
-				$_page_content .= '<h3>'.$comment->post_title.' <span>('.$comment->comment_count.' '.$_comment_count_text.')</span></h3>'."\n\n";
-	
-				// open comments div
-				$_page_content .= '<div class="item_body">'."\n\n";
-				
-				// open ul
-				$_page_content .= '<ul class="item_ul">'."\n\n";
-		
-				// set mem
-				$_title = $comment->post_title;
-	
-			}
-		
-			
-			// open li
-			$_page_content .= '<li class="item_li"><!-- item li -->'."\n\n";
-	
-			// show the comment
-			$_page_content .= commentpress_format_comment( $comment );
-		
-			// get comment children
-			$children = commentpress_get_children( $comment, $page_or_post );
-			
-			// do we have any?
-			if( count( $children ) > 0 ) {
-	
-				// recurse
-				commentpress_get_comments( $children, $page_or_post );
-				
-				// show them
-				$_page_content .= $cp_comment_output;
-				
-				// clear global comment output
-				$cp_comment_output = '';
-				
-			}
-			
-			// close li
-			$_page_content .= '</li><!-- /item li -->'."\n\n";
-	
-		
-			
+		// add to posts with comments array
+		if ( !in_array( $comment->comment_post_ID, $posts_with ) ) {
+			$posts_with[] = $comment->comment_post_ID;
 		}
-	
-		// close ul
-		$_page_content .= '</ul>'."\n\n";
 		
-		// close item div
-		$_page_content .= '</div><!-- /item_body -->'."\n\n";
+		// increment counter
+		if ( !isset( $post_comment_counts[$comment->comment_post_ID] ) ) {
+			$post_comment_counts[$comment->comment_post_ID] = 1;
+		} else {
+			$post_comment_counts[$comment->comment_post_ID]++;
+		}
+		
+	}
+	/*
+	if ( $page_or_post == 'post' ) {
+		print_r( $post_comment_counts ); die();
+		print_r( $posts_with ); die();
+	}
+	*/
+	
+	// kick out if none
+	if ( count( $posts_with ) == 0 ) return $html;
+	
+	
+	
+	// get those posts
+	$posts = get_posts( array(
+		'orderby' => 'comment_count',
+		'order' => 'DESC',
+		'post_type' => $page_or_post,
+		'include' => $posts_with,
+	) );
+	//print_r( $posts ); die();
+	
+	// kick out if none
+	if ( count( $posts ) == 0 ) return $html;
+	
+	
+	
+	// open ul
+	$html .= '<ul class="all_comments_listing">'."\n\n";
+
+	foreach( $posts AS $_post ) {
+
+		// open li
+		$html .= '<li class="page_li"><!-- page li -->'."\n\n";
+		
+		// define comment count
+		$comment_count_text = sprintf( _n(
+			
+			// singular
+			'<span class="cp_comment_count">%d</span> comment', 
+			
+			// plural
+			'<span class="cp_comment_count">%d</span> comments', 
+			
+			// number
+			$post_comment_counts[$_post->ID], 
+			
+			// domain
+			'commentpress-theme'
+		
+		// substitution
+		), $post_comment_counts[$_post->ID] );
+		
+		// show it
+		$html .= '<h3>'.esc_html( $_post->post_title ).' <span>('.$comment_count_text.')</span></h3>'."\n\n";
+
+		// open comments div
+		$html .= '<div class="item_body">'."\n\n";
+		
+		// open ul
+		$html .= '<ul class="item_ul">'."\n\n";
+
+		// open li
+		$html .= '<li class="item_li"><!-- item li -->'."\n\n";
+		
+		foreach( $all_comments AS $comment ) {
+		
+			if ( $comment->comment_post_ID == $_post->ID ) {
+		
+				// show the comment
+				$html .= commentpress_format_comment( $comment );
+				
+				/*
+				// get comment children
+				$children = commentpress_get_children( $comment, $page_or_post );
+		
+				// do we have any?
+				if( count( $children ) > 0 ) {
+
+					// recurse
+					commentpress_get_comments( $children, $page_or_post );
+			
+					// show them
+					$html .= $cp_comment_output;
+			
+					// clear global comment output
+					$cp_comment_output = '';
+			
+				}
+				*/
+			
+			}
+		
+		}
 		
 		// close li
-		$_page_content .= '</li><!-- /page li -->'."\n\n\n\n";
-		
+		$html .= '</li><!-- /item li -->'."\n\n";
+
 		// close ul
-		$_page_content .= '</ul><!-- /all_comments_listing -->'."\n\n";
+		$html .= '</ul>'."\n\n";
+	
+		// close item div
+		$html .= '</div><!-- /item_body -->'."\n\n";
+	
+		// close li
+		$html .= '</li><!-- /page li -->'."\n\n\n\n";
 	
 	}
+
+	// close ul
+	$html .= '</ul><!-- /all_comments_listing -->'."\n\n";
 	
 	
 	
 	// --<
-	return $_page_content;
-	
+	return $html;
+
 }
 endif; // commentpress_get_all_comments_content
 	
@@ -2070,126 +2091,109 @@ if ( ! function_exists( 'commentpress_get_comments_by_content' ) ):
  */
 function commentpress_get_comments_by_content() {
 
-	// declare access to globals
-	global $wpdb, $commentpress_core;
+	// init return
+	$html = '';
 
-	// init page content
-	$_page_content = '';
+	// get all approved comments
+	$all_comments = get_comments( array(
+		'status' => 'approve',
+		'orderby' => 'comment_author, comment_post_ID, comment_date',
+		'order' => 'ASC',
+	) );
+	//print_r( $all_comments ); //die();
+	
+	// kick out if none
+	if ( count( $all_comments ) == 0 ) return $html;
 	
 	
 	
-	// construct query
-	$querystr = "
-	SELECT $wpdb->comments.*, $wpdb->posts.post_title, $wpdb->posts.post_name
-	FROM $wpdb->comments, $wpdb->posts
-	WHERE $wpdb->comments.comment_post_ID = $wpdb->posts.ID 
-	AND $wpdb->comments.comment_type != 'pingback' 
-	AND $wpdb->comments.comment_approved = '1' 
-	AND $wpdb->posts.post_status = 'publish' 
-	ORDER BY $wpdb->comments.comment_author, $wpdb->posts.post_title, $wpdb->comments.comment_post_ID, $wpdb->comments.comment_date ASC
-	";
+	// build list of authors
+	$authors_with = array();
+	$author_names = array();
+	//$post_comment_counts = array();
+
+	foreach( $all_comments AS $comment ) {
+		
+		// add to authors with comments array
+		if ( !in_array( $comment->comment_author_email, $authors_with ) ) {
+			$authors_with[] = $comment->comment_author_email;
+			$name = $comment->comment_author != '' ? $comment->comment_author : __( 'Anonymous', 'commentpress-theme' );
+			$author_names[$comment->comment_author_email] = $name;
+		}
+		
+		/*
+		// increment counter
+		if ( !isset( $post_comment_counts[$comment->comment_author_email] ) ) {
+			$post_comment_counts[$comment->comment_author_email] = 1;
+		} else {
+			$post_comment_counts[$comment->comment_author_email]++;
+		}
+		*/
+		
+	}
+	//print_r( $post_comment_counts ); //die();
+	//print_r( $authors_with ); die();
 	
-	//echo $querystr; exit();
-	
-	
-	// get data
-	$_data = $wpdb->get_results( $querystr, OBJECT );
-	
-	//print_r( $_data ); exit();
-	
-	
-	// did we get any?
-	if ( count( $_data ) > 0 ) {
+	// kick out if none
+	if ( count( $authors_with ) == 0 ) return $html;
 	
 	
 	
+	// open ul
+	$html .= '<ul class="all_comments_listing">'."\n\n";
+	
+	// loop through authors
+	foreach( $authors_with AS $author ) {
+		
+		// open li
+		$html .= '<li class="author_li"><!-- author li -->'."\n\n";
+		
+		// add gravatar
+		$html .= '<h3>'.get_avatar( $author, $size='24' ). esc_html( $author_names[$author] ).'</h3>'."\n\n";
+
+		// open comments div
+		$html .= '<div class="item_body">'."\n\n";
+		
 		// open ul
-		$_page_content .= '<ul class="all_comments_listing">'."\n\n";
-		
-		// init title
-		$_title = '';
-	
-		// loop
-		foreach ($_data as $comment) {
-		
-			// test for anonymous comment (usually generated by WP itself in multisite installs)
-			if ( empty( $comment->comment_author ) ) {
+		$html .= '<ul class="item_ul">'."\n\n";
+
+		// loop through comments
+		foreach( $all_comments AS $comment ) {
 			
-				$comment->comment_author = 'Anonymous';
-			
-			}
-	
-			// show commenter, if not shown
-			if ( $_title != $comment->comment_author ) {
-			
-				// if not first...
-				if ( $_title != '' ) {
-				
-					// close ul
-					$_page_content .= '</ul>'."\n\n";
-					
-					// close item div
-					$_page_content .= '</div><!-- /item_body -->'."\n\n";
-					
-					// close li
-					$_page_content .= '</li><!-- /author li -->'."\n\n\n\n";
-					
-				}
+			// does it belong to this author?
+			if ( $author == $comment->comment_author_email ) {
 		
 				// open li
-				$_page_content .= '<li class="author_li"><!-- author li -->'."\n\n";
-				
-				// count comments
-				//if ( $comment->comment_count > 1 ) { $_comment_count_text = 'comments'; } else { $_comment_count_text = 'comment'; }
-		
-				// show it --  <span>('.$comment->comment_count.' '.$_comment_count_text.')</span>
-				
-				// add gravatar
-				$_page_content .= '<h3>'.get_avatar( $comment, $size='24' ).$comment->comment_author.'</h3>'."\n\n";
+				$html .= '<li class="item_li"><!-- item li -->'."\n\n";
 	
-				// open comments div
-				$_page_content .= '<div class="item_body">'."\n\n";
-				
-				// open ul
-				$_page_content .= '<ul class="item_ul">'."\n\n";
+				// show the comment
+				$html .= commentpress_format_comment( $comment, 'by' );
 		
-				// set mem
-				$_title = $comment->comment_author;
-	
+				// close li
+				$html .= '</li><!-- /item li -->'."\n\n";
+
 			}
-		
-			
-			// open li
-			$_page_content .= '<li class="item_li"><!-- item li -->'."\n\n";
-	
-			// show the comment
-			$_page_content .= commentpress_format_comment( $comment, 'by' );
-		
-			// close li
-			$_page_content .= '</li><!-- /item li -->'."\n\n";
-	
-		
-			
+
 		}
 	
 		// close ul
-		$_page_content .= '</ul>'."\n\n";
+		$html .= '</ul>'."\n\n";
 		
 		// close item div
-		$_page_content .= '</div><!-- /item_body -->'."\n\n";
+		$html .= '</div><!-- /item_body -->'."\n\n";
 		
 		// close li
-		$_page_content .= '</li><!-- /author li -->'."\n\n\n\n";
+		$html .= '</li><!-- /.author_li -->'."\n\n\n\n";
 		
-		// close ul
-		$_page_content .= '</ul><!-- /all_comments_listing -->'."\n\n";
-	
 	}
 	
+	// close ul
+	$html .= '</ul><!-- /.all_comments_listing -->'."\n\n";
+
 	
 	
 	// --<
-	return $_page_content;
+	return $html;
 	
 }
 endif; // commentpress_get_comments_by_content
@@ -2546,6 +2550,11 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ):
  */
 function commentpress_get_comments_by_para() {
 
+	// allow plugins to precede comments
+	do_action( 'commentpress_before_scrollable_comments' );
+	
+	
+	
 	// declare access to globals
 	global $post, $commentpress_core;
 	
@@ -2639,10 +2648,10 @@ function commentpress_get_comments_by_para() {
 					$heading_text = sprintf( _n(
 						
 						// singular
-						'<span>%d</span> Comment on ', 
+						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span> on ', 
 						
 						// plural
-						'<span>%d</span> Comments on ', 
+						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span> on ', 
 						
 						// number
 						$comment_count, 
@@ -2747,10 +2756,10 @@ function commentpress_get_comments_by_para() {
 					$heading_text = sprintf( _n(
 						
 						// singular
-						'<span>%d</span> Comment on ', 
+						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span> on ', 
 						
 						// plural
-						'<span>%d</span> Comments on ', 
+						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span> on ', 
 						
 						// number
 						$comment_count, 
@@ -2796,7 +2805,7 @@ function commentpress_get_comments_by_para() {
 					// show some kind of message TO DO: incorporate para order too
 					echo '<div class="reply_to_para" id="reply_to_para-'.$para_num.'">'."\n".
 							'<p>'.
-								'It appears that this paragraph is a duplicate of a previous one.'.
+								__( 'It appears that this paragraph is a duplicate of a previous one.', 'commentpress-core' ).
 							'</p>'."\n".
 						 '</div>'."\n\n";
 	
@@ -3933,6 +3942,21 @@ function commentpress_image_caption_shortcode( $empty=null, $attr, $content ) {
 	
 	// get width
 	$_width = (0 + (int) $width);
+	
+	// sanitise caption
+	$caption = wp_kses( $caption,
+		
+		// allow a few tags
+		array(
+			'em' => array(),  
+			'strong' => array(),  
+			'a' => array('href')
+		)
+		
+	);
+	
+	// force balance those tags
+	$caption = balanceTags( $caption, true );
 	
 	// construct
 	$_caption = '<!-- cp_caption_start --><span class="captioned_image'.$_alignment.'" style="width: '.$_width.'px"><span '.$id.' class="wp-caption">'

@@ -16,21 +16,22 @@ Based loosely on the 'Ajax Comment Posting' WordPress plugin (version 2.0)
 
 
 
-
+// define vars
+var cpajax_live, cpajax_ajax_url, cpajax_spinner_url, cpajax_post_id, cpajax_submitting;
 
 // test for our localisation object
 if ( 'undefined' !== typeof CommentpressAjaxSettings ) {
 
 	// reference our object vars
-	var cpajax_live = CommentpressAjaxSettings.cpajax_live;
-	var cpajax_ajax_url = CommentpressAjaxSettings.cpajax_ajax_url;
-	var cpajax_spinner_url = CommentpressAjaxSettings.cpajax_spinner_url;
-	var cpajax_post_id = CommentpressAjaxSettings.cpajax_post_id;
+	cpajax_live = CommentpressAjaxSettings.cpajax_live;
+	cpajax_ajax_url = CommentpressAjaxSettings.cpajax_ajax_url;
+	cpajax_spinner_url = CommentpressAjaxSettings.cpajax_spinner_url;
+	cpajax_post_id = CommentpressAjaxSettings.cpajax_post_id;
 
 }
 
 // init submitting flag
-var cpajax_submitting = false;
+cpajax_submitting = false;
 
 
 
@@ -43,17 +44,20 @@ var cpajax_submitting = false;
  */
 function cpajax_ajax_callback( data ) {
 	
+	// define vars
+	var diff, i, comment;
+	
 	// get diff
-	var diff = parseInt( data.cpajax_comment_count ) - parseInt( CommentpressAjaxSettings.cpajax_comment_count );
+	diff = parseInt( data.cpajax_comment_count ) - parseInt( CommentpressAjaxSettings.cpajax_comment_count );
 	
 	// did we get any new comments?
 	if ( diff > 0 ) {
 	
 		// loop through them
-		for( var i = 1; i <= diff; i++ ) {
+		for( i = 1; i <= diff; i++ ) {
 		
 			// get comment array (will rejig when I can find a way to pass nested arrays)
-			var comment = eval( 'data.' + 'cpajax_new_comment_' + i );
+			comment = eval( 'data.' + 'cpajax_new_comment_' + i );
 			
 			// deal with each comment
 			cpajax_add_new_comment( jQuery(comment.markup), comment.text_sig, comment.parent, comment.id );
@@ -78,9 +82,13 @@ function cpajax_ajax_callback( data ) {
  *
  */
 function cpajax_add_new_comment( markup, text_sig, comm_parent, comm_id ) {
-
+	
+	// define vars
+	var comment_container, para_id, head_id, comm_list, parent_id, child_list, 
+		head, head_array, comment_num, new_comment_count;
+	
 	// get container
-	var comment_container = jQuery('div.comments_container');
+	comment_container = jQuery('div.comments_container');
 	
 	// kick out if we have it already
 	if ( comment_container.find( '#li-comment-' + comm_id )[0] ) { return; }
@@ -88,20 +96,20 @@ function cpajax_add_new_comment( markup, text_sig, comm_parent, comm_id ) {
 	
 	
 	// get useful ids
-	var para_id = '#para_wrapper-' + text_sig;
-	var head_id = '#para_heading-' + text_sig;
+	para_id = '#para_wrapper-' + text_sig;
+	head_id = '#para_heading-' + text_sig;
 	
 	// find the commentlist we want
-	var comm_list = jQuery(para_id + ' ol.commentlist:first');
+	comm_list = jQuery(para_id + ' ol.commentlist:first');
 
 	// if the comment is a reply, append the comment to the children
 	if ( comm_parent != '0' ) {
 		
-		//alert( comm_parent );
-		var parent_id = '#li-comment-' + comm_parent;
+		//console.log( comm_parent );
+		parent_id = '#li-comment-' + comm_parent;
 		
 		// find the child list we want
-		var child_list = jQuery(parent_id + ' > ol.children:first');
+		child_list = jQuery(parent_id + ' > ol.children:first');
 
 		// is there a child list?
 		if ( child_list[0] ) {
@@ -185,41 +193,20 @@ function cpajax_add_new_comment( markup, text_sig, comm_parent, comm_id ) {
 		}
 		
 	}
-
-
-
-	// get paragraph header link
-	var head = comment_container.find( head_id + ' a' );
 	
-	// get text as array
-	var head_array = head.text().split(' ');
-
-	// get current comment number from paragraph header
-	var comment_num = parseInt( head_array[0] );
+	
+	
+	// get current count
+	comment_num = parseInt( jQuery( head_id + ' a span.cp_comment_num' ).text() );
 	
 	// increment
-	comment_num++;
+	new_comment_count = comment_num + 1;
 	
-	// replace in array
-	head_array[0] = comment_num;
+	// update heading
+	cpajax_update_comments_para_heading( head_id, new_comment_count );
 	
-	// make plural by default
-	head_array[1] = 'Comments';
-	
-	// is the word 'comment' singular?
-	if ( comment_num == 1 ) {
-	
-		// make singular
-		head_array[1] = 'Comment';
-		
-	}
-	
-	// replace head with new
-	head.text( head_array.join( ' ' ) );
-	
-	// get existing bg (but interferes with animate below)
-	//var head_bg = head.css( 'backgroundColor' );
-	
+
+
 	// highlight
 	head.css( 'background', '#c2d8bc' );
 	
@@ -228,34 +215,15 @@ function cpajax_add_new_comment( markup, text_sig, comm_parent, comm_id ) {
 	
 	
 	
-	// cast comment num as string
-	var comment_num = comment_num.toString();
-
-	// get textblock id
-	var textblock_id = '#textblock-' + text_sig;
-
-	// get small tag
-	var small = textblock_id + ' span small';
-
-	// set comment icon text
-	jQuery(small).html( comment_num );
+	// update paragraph icon
+	cpajax_update_para_icon( text_sig, new_comment_count );	
 	
-	// if we're changing from 0 to 1...
-	if ( comment_num == '1' ) {
-
-		// set comment icon class
-		jQuery(textblock_id + ' span.commenticonbox a.para_permalink').addClass('has_comments');
 	
-		// show it
-		jQuery(small).css( 'visibility', 'visible' );
-
-	}
-
-
-
+	
 	// re-enable clicks
 	commentpress_enable_comment_permalink_clicks();
 	commentpress_setup_comment_headers();
+	cpajax_reassign_comments();
 	
 }
 
@@ -276,7 +244,7 @@ function cpajax_ajax_update() {
 	/*
 	// we can use this to log ajax errors from jQuery.post()
 	$(document).ajaxError( function( e, xhr, settings, exception ) { 
-		alert( 'error in: ' + settings.url + ' \n'+'error:\n' + xhr.responseText ); 
+		console.log( 'error in: ' + settings.url + ' \n'+'error:\n' + xhr.responseText ); 
 	});
 	*/
 	
@@ -300,8 +268,8 @@ function cpajax_ajax_update() {
 		// callback
 		function( data, textStatus ) { 
 		
-			//alert( data );
-			//alert( textStatus );
+			//console.log( data );
+			//console.log( textStatus );
 			
 			// if success
 			if ( textStatus == 'success' ) {
@@ -363,6 +331,9 @@ function cpajax_ajax_updater( toggle ) {
  */
 function cpajax_reassign_comments() {
 
+	// define vars
+	var draggers, droppers, text_sig, options, alert_text, div;
+
 	// get all draggable items
 	var draggers = jQuery( '#comments_sidebar .comment-wrapper .comment-assign' );
 	
@@ -381,7 +352,7 @@ function cpajax_reassign_comments() {
 
 
 	// get all droppable items
-	var droppers = jQuery( '#content .post .textblock' );
+	droppers = jQuery( '#content .post .textblock' );
 	//console.log( droppers );
 
 	// make textblocks droppable
@@ -395,10 +366,10 @@ function cpajax_reassign_comments() {
 		drop: function( event, ui ) {
 			
 			// get id of dropped-on item
-			var text_sig = jQuery( this ).prop('id').split('-')[1];
+			text_sig = jQuery( this ).prop('id').split('-')[1];
 			
 			// create options for modal dialog
-			var options = {
+			options = {
 				
 				resizable: false,
 				height: 160,
@@ -439,10 +410,10 @@ function cpajax_reassign_comments() {
 			};
 			
 			// define message
-			var alert_text = cpajax_lang[8];
+			alert_text = cpajax_lang[8];
 		
 			// create modal dialog
-			var div = jQuery('<div><p class="cp_alert_text">' + alert_text + '</p></div>');
+			div = jQuery('<div><p class="cp_alert_text">' + alert_text + '</p></div>');
 			div.prop( 'title', cpajax_lang[7] )
 			   .appendTo( 'body' )
 			   .dialog( options );
@@ -463,28 +434,31 @@ function cpajax_reassign_comments() {
  *
  */
 function cpajax_reassign( text_sig, ui ) {
-
+	
+	// define vars
+	var comment_id, comment_item, comment_to_move, other_comments, comment_list;
+	
 	// get comment id
-	var comment_id = jQuery( ui.draggable ).prop('id').split('-')[1];
+	comment_id = jQuery( ui.draggable ).prop('id').split('-')[1];
 
 	// let's see what params we've got
 	//console.log( 'text_sig: ' + text_sig );
 	//console.log( 'comment id: ' + comment_id );
 	
 	// get comment parent li
-	var comment_item = jQuery( ui.draggable ).closest( 'li.comment' );
+	comment_item = jQuery( ui.draggable ).closest( 'li.comment' );
 	
 	// assign as comment to move
-	var comment_to_move = comment_item;
+	comment_to_move = comment_item;
 		
 	// get siblings
-	var other_comments = comment_item.siblings( 'li.comment' );
+	other_comments = comment_item.siblings( 'li.comment' );
 	
 	// are there any?
 	if ( other_comments.length == 0 ) {
 	
 		// get comment list, because we need to remove the entire list
-		var comment_list = comment_item.parent( 'ol.commentlist' );
+		comment_list = comment_item.parent( 'ol.commentlist' );
 		
 		// overwrite comment to move
 		comment_to_move = comment_list;
@@ -563,8 +537,8 @@ function cpajax_reassign( text_sig, ui ) {
 				// callback
 				function( data, textStatus ) { 
 				
-					//alert( data.msg );
-					//alert( textStatus );
+					//console.log( data.msg );
+					//console.log( textStatus );
 					
 					// if success
 					if ( textStatus == 'success' ) {
@@ -713,14 +687,18 @@ jQuery(document).ready(function($) {
 	 *
 	 */
 	function cpajax_add_comment( response ) {
+		
+		// define vars
+		var text_sig, comm_parent, para_id, head_id, parent_id, child_list, 
+			comm_list, comment_num, new_comment_count;
 	
 		// get form data
-		var text_sig = form.find('#text_signature').val();
-		var comm_parent = form.find('#comment_parent').val();
+		text_sig = form.find('#text_signature').val();
+		comm_parent = form.find('#comment_parent').val();
 		
 		// get useful ids
-		var para_id = '#para_wrapper-' + text_sig;
-		var head_id = '#para_heading-' + text_sig;
+		para_id = '#para_wrapper-' + text_sig;
+		head_id = '#para_heading-' + text_sig;
 		
 		// we no longer have zero comments
 		jQuery(para_id).removeClass( 'no_comments' );
@@ -729,10 +707,10 @@ jQuery(document).ready(function($) {
 		if ( comm_parent != '0' ) {
 			
 			// get parent
-			var parent_id = '#li-comment-' + comm_parent;
+			parent_id = '#li-comment-' + comm_parent;
 			
 			// find the child list we want
-			var child_list = jQuery(parent_id + ' > ol.children:first');
+			child_list = jQuery(parent_id + ' > ol.children:first');
 	
 			// is there a child list?
 			if ( child_list[0] ) {
@@ -759,7 +737,7 @@ jQuery(document).ready(function($) {
 		} else {
 				
 			// find the commentlist we want
-			var comm_list = jQuery(para_id + ' > ol.commentlist:first');
+			comm_list = jQuery(para_id + ' > ol.commentlist:first');
 	
 			// is there a comment list?
 			if ( comm_list[0] ) {
@@ -793,19 +771,37 @@ jQuery(document).ready(function($) {
 			
 		});
 		
-		// get paragraph header
-		var head = response.find(head_id);
-	
-		// replace heading
-		jQuery(head_id).replaceWith(head);
 		
-		// get comment number from paragraph header
-		var comment_num = head.text().split(' ')[0];
-		//alert(comment_num);
 		
-		// replace paragraph icon
-		cpajax_update_para_icon( text_sig, comment_num );	
-	
+		// get existing current count
+		comment_num = parseInt( jQuery( head_id + ' a span.cp_comment_num' ).text() );
+		
+		// increment
+		new_comment_count = comment_num + 1;
+		
+		// update heading
+		cpajax_update_comments_para_heading( head_id, new_comment_count );
+		
+		// update paragraph icon
+		cpajax_update_para_icon( text_sig, new_comment_count );	
+		
+		
+		
+		// if not the whole page...
+		if( text_sig != '' ) {
+
+			// scroll page to text block
+			commentpress_scroll_page( jQuery( '#textblock-' + text_sig ) );
+			
+		} else {
+		
+			// scroll to top
+			commentpress_scroll_to_top( 0, cp_scroll_speed );
+			
+		}
+		
+		
+		
 		// re-enable clicks
 		commentpress_enable_comment_permalink_clicks();
 		commentpress_setup_comment_headers();
@@ -879,13 +875,16 @@ jQuery(document).ready(function($) {
 	 *
 	 */
 	function cpajax_cleanup( content, last ) {
+		
+		// define vars
+		var last_id, new_comm_id, comment;
 	
 		// get the id of the last list item
-		var last_id = jQuery(last).prop('id');
+		last_id = jQuery(last).prop('id');
 	
 		// construct new comment id
-		var new_comm_id = '#comment-' + ( last_id.toString().split('-')[2] );
-		var comment = jQuery(new_comm_id);
+		new_comm_id = '#comment-' + ( last_id.toString().split('-')[2] );
+		comment = jQuery(new_comm_id);
 		
 		// highlight it
 		comment.css('background', '#c2d8bc');
@@ -927,51 +926,65 @@ jQuery(document).ready(function($) {
 
 	
 	/** 
+	 * @description: update comments paragraph heading
+	 * @todo: 
+	 *
+	 */
+	function cpajax_update_comments_para_heading( head_id, new_comment_count ) {
+		
+		// increment
+		jQuery( head_id + ' a span.cp_comment_num' ).text( new_comment_count.toString() );
+		
+		// if exactly one comment
+		if ( new_comment_count == 1 ) {
+		
+			// update current word
+			jQuery( head_id + ' a span.cp_comment_word' ).text( cpajax_lang[11] );
+		
+		}
+		
+		// if greater than one comment
+		if ( new_comment_count > 1 ) {
+		
+			// update current word
+			jQuery( head_id + ' a span.cp_comment_word' ).text( cpajax_lang[12] );
+		
+		}
+		
+	}
+	
+	
+	
+	
+
+	
+	/** 
 	 * @description: update paragraph comment icon
 	 * @todo: 
 	 *
 	 */
-	function cpajax_update_para_icon( text_sig, comment_num ) {
-	
-		// cast comment num as string
-		var comment_num = comment_num.toString();
-	
-		// get textblock id
-		var textblock_id = '#textblock-' + text_sig;
-	
-		// get small tag
-		var small = textblock_id + ' span small';
-
+	function cpajax_update_para_icon( text_sig, new_comment_count ) {
+		
+		// define vars
+		var textblock_id;
+		
+		// construct textblock_id
+		textblock_id = '#textblock-' + text_sig;
+		
 		// set comment icon text
-		jQuery(small).html( comment_num );
+		jQuery( textblock_id + ' span small' ).text( new_comment_count.toString() );
 		
 		// if we're changing from 0 to 1...
-		if ( comment_num == '1' ) {
+		if ( new_comment_count == 1 ) {
 	
 			// set comment icon
-			jQuery(textblock_id + ' span.commenticonbox a.para_permalink').addClass( 'has_comments' );
+			jQuery( textblock_id + ' span.commenticonbox a.para_permalink' ).addClass( 'has_comments' );
 		
-			// show it
-			jQuery(small).css( 'visibility', 'visible' );
+			// show comment icon text
+			jQuery( textblock_id + ' span small' ).css( 'visibility', 'visible' );
 
 		}
 
-		// if not the whole page...
-		if( text_sig != '' ) {
-
-			// get text block
-			var textblock = jQuery(textblock_id);
-			
-			// scroll page to
-			commentpress_scroll_page( textblock );
-			
-		} else {
-		
-			// scroll to top
-			commentpress_scroll_to_top( 0, cp_scroll_speed );
-			
-		}
-		
 	}
 	
 	
@@ -984,7 +997,10 @@ jQuery(document).ready(function($) {
 	 * @todo: 
 	 *
 	 */
-	jQuery('#commentform').on('submit', function(evt) {
+	jQuery('#commentform').on('submit', function( event ) {
+	
+		// define vars
+		var filter;
 	
 		// set global flag
 		cpajax_submitting = true;
@@ -993,10 +1009,10 @@ jQuery(document).ready(function($) {
 		err.hide();
 		
 		// if not logged in, validate name and email
-		if(form.find('#author')[0]) {
+		if ( form.find( '#author' )[0] ) {
 			
 			// check for name
-			if(form.find('#author').val() == '') {
+			if ( form.find( '#author' ).val() == '' ) {
 				err.html('<span class="error">' + cpajax_lang[1] + '</span>');
 				err.show();
 				cpajax_submitting = false;
@@ -1004,7 +1020,7 @@ jQuery(document).ready(function($) {
 			}
 			
 			// check for email
-			if(form.find('#email').val() == '') {
+			if ( form.find( '#email' ).val() == '' ) {
 				err.html('<span class="error">' + cpajax_lang[2] + '</span>');
 				err.show();
 				cpajax_submitting = false;
@@ -1012,11 +1028,11 @@ jQuery(document).ready(function($) {
 			}
 
 			// validate email
-			var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-				if(!filter.test(form.find('#email').val())) {
+			filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+			if( !filter.test( form.find('#email').val() ) ) {
 				err.html('<span class="error">' + cpajax_lang[3] + '</span>');
 				err.show();
-				if (evt.preventDefault) {evt.preventDefault();}
+				if (event.preventDefault) {event.preventDefault();}
 				cpajax_submitting = false;
 				return false;
 			}
@@ -1037,7 +1053,7 @@ jQuery(document).ready(function($) {
 		}
 		
 		// check for comment
-		if(form.find('#comment').val() == '') {
+		if ( form.find( '#comment' ).val() == '' ) {
 			err.html('<span class="error">' + cpajax_lang[4] + '</span>');
 			err.show();
 			// reload tinyMCE
@@ -1065,8 +1081,11 @@ jQuery(document).ready(function($) {
 
 			error: function(request) {
 
+				// define vars
+				var data;
+	
 				err.empty();
-				var data = request.responseText.match(/<p>(.*)<\/p>/);
+				data = request.responseText.match(/<p>(.*)<\/p>/);
 				err.html('<span class="error">' + data[1] + '</span>');
 				err.show();
 
@@ -1078,7 +1097,7 @@ jQuery(document).ready(function($) {
 			
 
 
-			success: function(data) {
+			success: function( data ) {
 				
 				// declare vars
 				var response;
@@ -1093,12 +1112,12 @@ jQuery(document).ready(function($) {
 					if ( jQuery.parseHTML ) {
 					
 						// if our jQuery version is 1.8+, it'll have parseHTML
-						response =  jQuery( jQuery.parseHTML(data) );
+						response =  jQuery( jQuery.parseHTML( data ) );
 						
 					} else {
 					
 						// get our data as object in the basic way
-						response = jQuery(data);
+						response = jQuery( data );
 						
 					}
 					
