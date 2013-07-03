@@ -355,6 +355,12 @@ function cpajax_localise() {
 	$text[] = __( 'Submitting...', 'commentpress-core' );
 	$text[] = __( 'Please wait while the comments are reassigned. The page will refresh when this has been done.', 'commentpress-core' );
 	
+	// add translations for comment word...
+	// singular
+	$text[] = __( 'Comment', 'commentpress-core' );
+	// plural
+	$text[] = __( 'Comments', 'commentpress-core' );
+
 	// wrap each item in single quotes
 	array_walk( $text, create_function( '&$val', '$val = "\'".$val."\'";' ) );
 	
