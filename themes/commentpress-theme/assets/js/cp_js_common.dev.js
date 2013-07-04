@@ -751,6 +751,8 @@ function commentpress_scroll_to_top( target, speed ) {
  */
 function cp_flash_comment_header( comment ) {
 
+	//jQuery( '#li-comment-' + target.prop( 'id' ).split( '-' )[1] ).removeClass( 'flash-comment' );
+
 	return;
 	
 	/*
@@ -813,6 +815,9 @@ function cp_scroll_comments( target, speed, flash ) {
 		// either flash at the end or not..
 		if ( flash == 'flash' ) {
 		
+			// add highlight class
+			jQuery( '#li-comment-' + target.prop( 'id' ).split( '-' )[1] ).addClass( 'flash-comment' );
+			
 			// scroll to new comment
 			jQuery('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
 				target, 
@@ -1350,6 +1355,9 @@ function cp_enable_context_clicks() {
 				// scroll page to it
 				commentpress_scroll_page_to_textblock( text_sig );
 				
+				// add highlight class
+				jQuery( '#li-comment-' + comment_id ).addClass( 'flash-comment' );
+				
 				// scroll to new comment
 				jQuery('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
 					comment, 
@@ -1533,7 +1541,7 @@ function cp_scroll_to_anchor_on_load() {
 			// do we have a paragraph or comment block permalink?
 			if ( url.match('#' + text_sig ) || url.match('#para_heading-' + text_sig ) ) {
 			
-				//console.log('yep');
+				//console.log( 'we've got a match: ' + text_sig );
 			
 				// are comments open?
 				if ( cp_comments_open == 'y' ) {
@@ -1564,6 +1572,9 @@ function cp_scroll_to_anchor_on_load() {
 				// scroll page
 				commentpress_scroll_page( textblock );
 				
+				// --<
+				return;
+				
 			}
 			
 		});
@@ -1586,12 +1597,18 @@ function cp_scroll_to_anchor_on_load() {
 		
 		// get anchor
 		var anchor_id = url.split('#')[1];
+		//console.log( 'anchor_id: ' + anchor_id );
+
+		// did we get one?
+		if ( anchor_id != '' ) {
 		
-		// add class
-		jQuery('#' + anchor_id).addClass('selected_para');
+			// add class
+			jQuery('#' + anchor_id).addClass('selected_para');
+			
+			// scroll page
+			commentpress_scroll_page( jQuery('#' + anchor_id) );
 		
-		// scroll page
-		commentpress_scroll_page( jQuery('#' + anchor_id) );
+		}
 		
 		// --<
 		return;
@@ -1612,7 +1629,7 @@ function cp_scroll_to_anchor_on_load() {
 function cp_scroll_to_comment_on_load() {
 
 	// define vars
-	var url, comment_id, comment;
+	var url, comment_id;
 
 	// if there is an anchor in the URL...
 	url = document.location.toString();
