@@ -2886,7 +2886,13 @@ class CommentpressCoreDatabase {
 			$vars['cp_tinymce'] = 0;
 		
 		}
-			
+		
+		// allow plugins to override TinyMCE
+		$vars['cp_tinymce'] = apply_filters(
+			'cp_override_tinymce',
+			$vars['cp_tinymce']
+		);
+		
 		// add mobile var
 		$vars['cp_is_mobile'] = 0;
 
