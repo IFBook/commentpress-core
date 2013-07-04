@@ -1612,7 +1612,7 @@ function cp_scroll_to_anchor_on_load() {
 function cp_scroll_to_comment_on_load() {
 
 	// define vars
-	var url, comment_id;
+	var url, comment_id, comment;
 
 	// if there is an anchor in the URL...
 	url = document.location.toString();
@@ -1622,37 +1622,45 @@ function cp_scroll_to_comment_on_load() {
 	
 		// get comment ID
 		comment_id = url.split('#comment-')[1];
+		
+		// get comment in DOM
+		comment = jQuery( '#comment-' + comment_id );
+		
+		// did we get one?
+		if ( comment ) {
 
-		// if IE6, then we have to scroll #wrapper
-		if ( msie6 ) {
+			// if IE6, then we have to scroll #wrapper
+			if ( msie6 ) {
 		
-			// scroll to new comment
-			jQuery('#main_wrapper').scrollTo(
-				jQuery('#comment-'+comment_id), 
-				{
-					duration: cp_scroll_speed, 
-					axis:'y', 
-					offset: commentpress_get_header_offset()
-				}
-			);
-			
-		} else {
-		
-			// only scroll if not mobile (but allow tablets)
-			if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
-			
 				// scroll to new comment
-				jQuery.scrollTo(
-					jQuery('#comment-'+comment_id), 
+				jQuery('#main_wrapper').scrollTo(
+					comment, 
 					{
 						duration: cp_scroll_speed, 
 						axis:'y', 
 						offset: commentpress_get_header_offset()
 					}
 				);
-				
-			}
 			
+			} else {
+		
+				// only scroll if not mobile (but allow tablets)
+				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+			
+					// scroll to new comment
+					jQuery.scrollTo(
+						comment, 
+						{
+							duration: cp_scroll_speed, 
+							axis:'y', 
+							offset: commentpress_get_header_offset()
+						}
+					);
+				
+				}
+			
+			}
+		
 		}
 
 	}
