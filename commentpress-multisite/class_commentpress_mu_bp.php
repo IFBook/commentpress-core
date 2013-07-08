@@ -1080,7 +1080,11 @@ class CommentpressMultisiteBuddypress {
 	function filter_nav_title_page_title( $title ) {
 		
 		// --<
-		return __( 'Document Home Page', 'cpmsextras' );
+		// override default link name
+		return apply_filters(
+			'cpmu_bp_nav_title_page_title', 
+			__( 'Document Home Page', 'commentpress-core' )
+		);
 	
 	}
 	
