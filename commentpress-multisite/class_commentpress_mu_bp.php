@@ -482,7 +482,8 @@ class CommentpressMultisiteBuddypress {
 			if ( $is_groupsite ) {
 		
 				// get group ID from POST
-				$group_id = bpgsites_get_group_id_from_comment_form();
+				global $bp_groupsites;
+				$group_id = $bp_groupsites->activity->get_group_id_from_comment_form();
 
 				// kick out if not a comment in a group
 				if ( false === $group_id ) return $activity;
@@ -1582,7 +1583,8 @@ class CommentpressMultisiteBuddypress {
 		// CommentPress needs to know the sub-page for a comment, therefore...
 		
 		// drop the bp-group-sites comment activity action
-		remove_action( 'bp_activity_before_save', 'bpgsites_custom_comment_activity' );
+		global $bp_groupsites;
+		remove_action( 'bp_activity_before_save', array( $bp_groupsites->activity, 'custom_comment_activity' ) );
 		
 		// add our own custom comment activity
 		add_action( 'bp_activity_before_save', array( $this, 'group_custom_comment_activity' ), 20, 1 );
