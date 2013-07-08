@@ -816,7 +816,7 @@ function cp_scroll_comments( target, speed, flash ) {
 		if ( flash == 'flash' ) {
 		
 			// add highlight class
-			jQuery( '#li-comment-' + target.prop( 'id' ).split( '-' )[1] ).addClass( 'flash-comment' );
+			//jQuery( '#li-comment-' + target.prop( 'id' ).split( '-' )[1] ).addClass( 'flash-comment' );
 			
 			// scroll to new comment
 			jQuery('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
@@ -1356,7 +1356,7 @@ function cp_enable_context_clicks() {
 				commentpress_scroll_page_to_textblock( text_sig );
 				
 				// add highlight class
-				jQuery( '#li-comment-' + comment_id ).addClass( 'flash-comment' );
+				//jQuery( '#li-comment-' + comment_id ).addClass( 'flash-comment' );
 				
 				// scroll to new comment
 				jQuery('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
