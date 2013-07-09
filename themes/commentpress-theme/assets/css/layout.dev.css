@@ -280,12 +280,32 @@ Header
 					background: transparent url(../images/buttons/home.jpg);
 				}
 
+				/* BP Group Blog compatibility */
 				a#btn_grouphome
 				{
 					width: 33px;
 					background: transparent url(../images/buttons/members.jpg);
 				}
+				
+					/* BP Group Sites compatibility - won't work because of sublist...
+					#book_nav ul#nav li a#btn_groupsites
+					{
+						width: 33px;
+						background: transparent url(../images/buttons/members.jpg);
+					}
 
+					#groupsites-list li
+					{
+						padding: 0;
+					}
+					
+					#groupsites-list li a.btn_groupsites
+					{
+						width: 33px;
+						background: transparent url(../images/buttons/members.jpg);
+					}
+					*/
+					
 				a#btn_general
 				{
 					width: 33px;
