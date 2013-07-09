@@ -1537,12 +1537,12 @@ function cp_scroll_to_anchor_on_load() {
 			
 			// get text signature
 			text_sig = jQuery(this).prop( 'id' );
-			console.log( "ID: " + text_sig );
+			//console.log( "ID: " + text_sig );
 			
 			// do we have a paragraph or comment block permalink?
 			if ( url.match( '#' + text_sig ) || url.match( '#para_heading-' + text_sig ) ) {
 			
-				console.log( "we've got a match: " + text_sig );
+				//console.log( "we've got a match: " + text_sig );
 			
 				// are comments open?
 				if ( cp_comments_open == 'y' ) {
