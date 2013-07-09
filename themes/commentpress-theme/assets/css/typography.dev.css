@@ -799,8 +799,11 @@ a#cancel-comment-reply-link:visited
 	color: #666;
 	text-decoration: none;
 	display: block;
-	padding: 4px 0 4px 4px;
+	padding: 4px;
 	border-bottom: 1px dashed #B5BFB2;
+	text-align: right;
+	text-transform: uppercase;
+	color: #761D19;
 }
 
 /* hover colour */
