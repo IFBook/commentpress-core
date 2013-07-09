@@ -1397,7 +1397,7 @@ function cp_scroll_to_anchor_on_load() {
 
 	// define vars
 	var text_sig, url, comment_id, para_wrapper_array, item, para_id, para_num, 
-		post_id, textblock;
+		post_id, textblock, anchor_id, anchor;
 	
 	// init
 	text_sig = '';
@@ -1406,7 +1406,7 @@ function cp_scroll_to_anchor_on_load() {
 	url = document.location.toString();
 	
 	// do we have a comment permalink?
-	if ( url.match('#comment-' ) ) {
+	if ( url.match( '#comment-' ) ) {
 	
 		// activate comments sidebar
 		cp_activate_sidebar('comments');
@@ -1530,18 +1530,19 @@ function cp_scroll_to_anchor_on_load() {
 		 * @description: loop through the paragraph permalinks checking for a match
 		 *
 		 */
-		jQuery('a.para_permalink').each( function(i) {
+		jQuery('span.para_marker > a').each( function(i) {
 		
 			// define vars
 			var text_sig, para_id, para_num, post_id, textblock;
 			
 			// get text signature
-			text_sig = jQuery(this).prop('id');
+			text_sig = jQuery(this).prop( 'id' );
+			console.log( "ID: " + text_sig );
 			
 			// do we have a paragraph or comment block permalink?
-			if ( url.match('#' + text_sig ) || url.match('#para_heading-' + text_sig ) ) {
+			if ( url.match( '#' + text_sig ) || url.match( '#para_heading-' + text_sig ) ) {
 			
-				//console.log( 'we've got a match: ' + text_sig );
+				console.log( "we've got a match: " + text_sig );
 			
 				// are comments open?
 				if ( cp_comments_open == 'y' ) {
@@ -1596,17 +1597,20 @@ function cp_scroll_to_anchor_on_load() {
 	if ( url.match( '#' ) ) {
 		
 		// get anchor
-		var anchor_id = url.split('#')[1];
+		anchor_id = url.split('#')[1];
 		//console.log( 'anchor_id: ' + anchor_id );
+		
+		// locate in DOM
+		anchor = jQuery( '#' + anchor_id );
 
 		// did we get one?
-		if ( anchor_id != '' ) {
+		if ( anchor ) {
 		
 			// add class
-			jQuery('#' + anchor_id).addClass('selected_para');
+			anchor.addClass('selected_para');
 			
 			// scroll page
-			commentpress_scroll_page( jQuery('#' + anchor_id) );
+			commentpress_scroll_page( anchor );
 		
 		}
 		
