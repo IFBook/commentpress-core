@@ -1582,9 +1582,11 @@ class CommentpressMultisiteBuddypress {
 		
 		// CommentPress needs to know the sub-page for a comment, therefore...
 		
-		// drop the bp-group-sites comment activity action
+		// drop the bp-group-sites comment activity action, if present
 		global $bp_groupsites;
-		remove_action( 'bp_activity_before_save', array( $bp_groupsites->activity, 'custom_comment_activity' ) );
+		if ( !is_null( $bp_groupsites ) AND is_object( $bp_groupsites ) ) {
+			remove_action( 'bp_activity_before_save', array( $bp_groupsites->activity, 'custom_comment_activity' ) );
+		}
 		
 		// add our own custom comment activity
 		add_action( 'bp_activity_before_save', array( $this, 'group_custom_comment_activity' ), 20, 1 );
