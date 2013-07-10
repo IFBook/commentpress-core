@@ -2075,7 +2075,29 @@ class CommentpressCore {
 	
 	
 	
+	/** 
+	 * @description: override the comments tempate for BP Docs
+	 */
+	function bp_docs_comment_tempate( $path, $original_path ) {
 
+		// if in multisite and on root site
+		if ( is_multisite() AND bp_is_root_blog() ) {
+		
+			// override default link name
+			return $original_path;
+		
+		}
+	
+		// pass through
+		return $path;
+
+	}
+	
+	
+	
+	
+	
+	
 	/** 
 	 * @description: return the name of the default sidebar
 	 * @return array $settings
@@ -2576,6 +2598,9 @@ class CommentpressCore {
 		// add BuddyPress functionality (really late, so group object is set up)
 		add_action( 'bp_setup_globals', array( $this, 'buddypress_globals_loaded' ), 1000 );
 		
+		// override BP Docs comment template
+		add_filter( 'bp_docs_comment_template_path', array( $this, 'bp_docs_comment_tempate' ), 20, 2 );
+
 	}
 	
 	
