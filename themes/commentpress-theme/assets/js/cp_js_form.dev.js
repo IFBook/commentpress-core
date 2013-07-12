@@ -168,8 +168,9 @@ addComment = {
 		} else {
 		
 			// try and give focus to textarea - disabled since we use tinyMCE
-			try { this.I('comment').focus(); }
-			catch(e) {}
+			// except for on mobile devices, where we don't want to auto-focus
+			//try { this.I('comment').focus(); }
+			//catch(e) {}
 			
 		}
 		
@@ -285,7 +286,7 @@ addComment = {
 				// a paragraph, but there will be no *exact* reference in the DOM.
 
 				// find para num
-				var para_id = jQuery('#para_wrapper-' + text_sig + ' .reply_to_para').prop('id');
+				var para_id = jQuery('#para_wrapper-' + text_sig + ' .reply_to_para').attr('id');
 				
 				// is there an element for the exact match?
 				if ( para_id === undefined ) {
@@ -297,10 +298,10 @@ addComment = {
 					if ( parent_wrapper.length > 0 ) {
 					
 						// grab it's id
-						var parent_wrapper_id = parent_wrapper.prop('id');
+						var parent_wrapper_id = parent_wrapper.attr('id');
 						
 						// proceed with this instead
-						var para_id = jQuery( '#' + parent_wrapper_id + ' .reply_to_para').prop('id');
+						var para_id = jQuery( '#' + parent_wrapper_id + ' .reply_to_para').attr('id');
 
 					}
 
@@ -482,7 +483,13 @@ addComment = {
 					if ( comment_list[0] && cp_promote_reading == '0' ) {
 						jQuery( '#para_wrapper-' + addComment.text_signature + ' div.reply_to_para' ).show();
 					}
-					jQuery( '#para_wrapper-' + textSig + ' div.reply_to_para' ).hide();
+					
+					// if we're cancelling, show all reply to links
+					if ( mode == 'cancel' && cp_promote_reading == '1' ) {
+						jQuery( 'div.reply_to_para' ).show();
+					} else {
+						jQuery( '#para_wrapper-' + textSig + ' div.reply_to_para' ).hide();
+					}
 					
 				}
 					
@@ -509,8 +516,9 @@ addComment = {
 				if ( cp_promote_reading == '0' ) {
 					jQuery( '#para_wrapper-' + textSig + ' div.reply_to_para' ).hide();
 				} else {
+					// if we're cancelling, show all reply to links
 					if ( mode == 'cancel' ) {
-						jQuery( '#para_wrapper-' + textSig + ' div.reply_to_para' ).show();
+						jQuery( 'div.reply_to_para' ).show();
 					} else {
 						jQuery( '#para_wrapper-' + textSig + ' div.reply_to_para' ).toggle();
 					}
