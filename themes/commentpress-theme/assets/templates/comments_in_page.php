@@ -45,14 +45,25 @@ NOTES
 	); 
 	
 	?></h3>
-
-
-
+	
+	
+	
+	<?php do_action( 'commentpress_before_scrollable_comments' ); ?>
+	
+	
+	
 	<div class="paragraph_wrapper">
 
 		<ol class="commentlist">
 	
-		<?php wp_list_comments(
+		<?php 
+		
+		// get comments for this post again
+		$comments = get_comments( array(
+			'post_id' => $post->ID
+		) );
+		
+		wp_list_comments(
 		
 			array(
 			
@@ -61,7 +72,9 @@ NOTES
 				'reply_text' => 'Reply to this comment',
 				'callback' => 'commentpress_comments'
 				
-			)
+			),
+			
+			$comments
 			
 		); ?>
 	
