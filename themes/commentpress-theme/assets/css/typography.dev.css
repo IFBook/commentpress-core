@@ -1504,6 +1504,32 @@ ul.image_link h4
 
 
 
+/* Featured Comments Plugin Compatibility */
+.feature-burry-comments
+{
+	margin: 2px 5px 0 0;
+	float: right;
+}
+
+.feature-burry-comments a.feature-comments,
+.feature-burry-comments a.feature-comments:link,
+.feature-burry-comments a.feature-comments:hover,
+.feature-burry-comments a.feature-comments:active,
+.feature-burry-comments a.feature-comments:visited
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #761D19;
+	text-decoration: none;
+	padding: 2px;
+	text-transform: uppercase;
+	font-size: 11px;
+}
+
+
+
+
+
+
 /* Font stack options
 
 	The following represents a list of font stacks, as recommended by Nathan Ford in
