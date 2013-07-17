@@ -1759,7 +1759,7 @@ if ( ! function_exists( 'commentpress_format_comment' ) ):
 function commentpress_format_comment( $comment, $context = 'all' ) {
 
 	// declare access to globals
-	global $wpdb, $commentpress_core, $cp_comment_output;
+	global $commentpress_core, $cp_comment_output;
 
 	// enable Wordpress API on comment
 	//$GLOBALS['comment'] = $comment;
@@ -1843,7 +1843,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ):
 function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 
 	// declare access to globals
-	global $wpdb, $commentpress_core, $cp_comment_output;
+	global $commentpress_core, $cp_comment_output;
 
 	// init output
 	$html = '';
@@ -2325,7 +2325,7 @@ if ( ! function_exists( 'commentpress_get_comment_activity' ) ):
 function commentpress_get_comment_activity( $scope = 'all' ) {
 
 	// declare access to globals
-	global $wpdb, $commentpress_core, $post;
+	global $commentpress_core, $post;
 
 	// init page content
 	$_page_content = '';

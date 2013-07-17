@@ -167,9 +167,6 @@ class CommentpressMultisiteAdmin {
 			Example of how upgrades work...
 			--------------------------------------------------------------------
 			
-			// database object
-			global $wpdb;
-			
 			// default
 			$cpmu_xxxx = '';
 			
@@ -180,7 +177,7 @@ class CommentpressMultisiteAdmin {
 			if ( !$this->option_exists( 'cpmu_xxxx' ) ) {
 			
 				// get choice
-				$_choice = $wpdb->escape( $cpmu_xxxx );
+				$_choice = esc_sql( $cpmu_xxxx );
 			
 				// add chosen option
 				$this->option_set( 'cpmu_xxxx', $_choice );
@@ -354,11 +351,6 @@ class CommentpressMultisiteAdmin {
 	 *
 	 */
 	function options_update() {
-	
-		// database object
-		global $wpdb;
-		
-		
 	
 		// init result
 		$result = false;
@@ -719,7 +711,7 @@ class CommentpressMultisiteAdmin {
 		commentpress_activate_core();
 		
 		// access globals
-		global $commentpress_core, $wpdb;
+		global $commentpress_core;
 		
 		// run activation hook
 		$commentpress_core->activate();
@@ -834,7 +826,7 @@ class CommentpressMultisiteAdmin {
 		commentpress_activate_core();
 		
 		// access globals
-		global $commentpress_core, $wpdb;
+		global $commentpress_core;
 		
 		// run deactivation hook
 		$commentpress_core->deactivate();
@@ -1403,9 +1395,6 @@ class CommentpressMultisiteAdmin {
 	 */
 	function _enable_core() {
 		
-		// database object
-		global $wpdb;
-		
 	 	// was the form submitted?
 		if( !isset( $_POST[ 'commentpress_submit' ] ) ) { return; }
 
@@ -1472,9 +1461,6 @@ class CommentpressMultisiteAdmin {
 	 *
 	 */
 	function _disable_core() {
-		
-		// database object
-		global $wpdb;
 		
 	 	// was the form submitted?
 		if( !isset( $_POST[ 'commentpress_submit' ] ) ) { return; }

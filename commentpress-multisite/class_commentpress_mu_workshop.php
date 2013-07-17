@@ -643,9 +643,6 @@ class CommentpressGroupblogWorkshop {
 	 */
 	function _buddypress_admin_update() {
 	
-		// database object
-		global $wpdb;
-		
 		// init
 		$cpmu_bp_workshop_nomenclature = 0;
 	
@@ -655,13 +652,13 @@ class CommentpressGroupblogWorkshop {
 		
 		
 		// set on/off option
-		$cpmu_bp_workshop_nomenclature = $wpdb->escape( $cpmu_bp_workshop_nomenclature );
+		$cpmu_bp_workshop_nomenclature = esc_sql( $cpmu_bp_workshop_nomenclature );
 		$this->db->option_set( 'cpmu_bp_workshop_nomenclature', ( $cpmu_bp_workshop_nomenclature ? 1 : 0 ) );
 		
 		
 		
 		// get name option
-		$cpmu_bp_workshop_nomenclature_name = $wpdb->escape( $cpmu_bp_workshop_nomenclature_name );
+		$cpmu_bp_workshop_nomenclature_name = esc_sql( $cpmu_bp_workshop_nomenclature_name );
 		
 		// revert to default if we didn't get one...
 		if ( $cpmu_bp_workshop_nomenclature_name == '' ) {
@@ -674,7 +671,7 @@ class CommentpressGroupblogWorkshop {
 		
 		
 		// get plural option
-		$cpmu_bp_workshop_nomenclature_plural = $wpdb->escape( $cpmu_bp_workshop_nomenclature_plural );
+		$cpmu_bp_workshop_nomenclature_plural = esc_sql( $cpmu_bp_workshop_nomenclature_plural );
 		
 		// revert to default if we didn't get one...
 		if ( $cpmu_bp_workshop_nomenclature_plural == '' ) {

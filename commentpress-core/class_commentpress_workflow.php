@@ -358,11 +358,6 @@ class CommentpressCoreWorkflow {
 		
 
 
-		// database object
-		global $wpdb;
-		
-
-
 		// ---------------------------------------------------------------------
 		// Save the content of the two wp_editors
 		// ---------------------------------------------------------------------
@@ -396,7 +391,7 @@ class CommentpressCoreWorkflow {
 			if ( $original !== '' ) {
 		
 				// add the data
-				add_post_meta( $post->ID, $key, $wpdb->escape( $original ) );
+				add_post_meta( $post->ID, $key, esc_sql( $original ) );
 			
 			}
 			
@@ -430,7 +425,7 @@ class CommentpressCoreWorkflow {
 			if ( $literal !== '' ) {
 		
 				// add the data
-				add_post_meta( $post->ID, $key, $wpdb->escape( $literal ) );
+				add_post_meta( $post->ID, $key, esc_sql( $literal ) );
 			
 			}
 			
@@ -462,11 +457,6 @@ class CommentpressCoreWorkflow {
 
 
 
-		// database object
-		global $wpdb;
-		
-
-
 		// get original text
 		$original = ( isset( $_POST['cporiginaltext'] ) ) ? $_POST['cporiginaltext'] : '';
 		//print_r( $post ); die();
@@ -496,7 +486,7 @@ class CommentpressCoreWorkflow {
 			if ( $original != '' ) {
 		
 				// add the data
-				add_post_meta( $new_post_id, $key, $wpdb->escape( $original ) );
+				add_post_meta( $new_post_id, $key, esc_sql( $original ) );
 			
 			}
 			
@@ -532,7 +522,7 @@ class CommentpressCoreWorkflow {
 			if ( $literal != '' ) {
 		
 				// add the data
-				add_post_meta( $new_post_id, $key, $wpdb->escape( $literal ) );
+				add_post_meta( $new_post_id, $key, esc_sql( $literal ) );
 			
 			}
 			

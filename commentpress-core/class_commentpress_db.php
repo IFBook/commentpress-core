@@ -242,9 +242,6 @@ class CommentpressCoreDatabase {
 	 */
 	function upgrade() {
 		
-		// database object
-		global $wpdb;
-		
 		// init return
 		$result = false;
 
@@ -341,7 +338,7 @@ class CommentpressCoreDatabase {
 			if ( !$this->option_exists( 'cp_sidebar_default' ) ) {
 			
 				// get choice
-				$_choice = $wpdb->escape( $cp_sidebar_default );
+				$_choice = esc_sql( $cp_sidebar_default );
 			
 				// add chosen cp_page_meta_visibility option
 				$this->option_set( 'cp_sidebar_default', $_choice );
@@ -354,7 +351,7 @@ class CommentpressCoreDatabase {
 			if ( !$this->option_exists( 'cp_page_meta_visibility' ) ) {
 			
 				// get choice
-				$_choice = $wpdb->escape( $cp_page_meta_visibility );
+				$_choice = esc_sql( $cp_page_meta_visibility );
 			
 				// add chosen cp_page_meta_visibility option
 				$this->option_set( 'cp_page_meta_visibility', $_choice );
@@ -367,7 +364,7 @@ class CommentpressCoreDatabase {
 			if ( !$this->option_exists( 'cp_blog_workflow' ) ) {
 			
 				// get choice
-				$_choice = $wpdb->escape( $cp_blog_workflow );
+				$_choice = esc_sql( $cp_blog_workflow );
 			
 				// add chosen cp_blog_workflow option
 				$this->option_set( 'cp_blog_workflow', $_choice );
@@ -380,7 +377,7 @@ class CommentpressCoreDatabase {
 			if ( !$this->option_exists( 'cp_blog_type' ) ) {
 			
 				// get choice
-				$_choice = $wpdb->escape( $cp_blog_type );
+				$_choice = esc_sql( $cp_blog_type );
 			
 				// add chosen cp_blog_type option
 				$this->option_set( 'cp_blog_type', $_choice );
@@ -393,7 +390,7 @@ class CommentpressCoreDatabase {
 			if ( !$this->option_exists( 'cp_show_extended_toc' ) ) {
 			
 				// get choice
-				$_choice = $wpdb->escape( $cp_show_extended_toc );
+				$_choice = esc_sql( $cp_show_extended_toc );
 			
 				// add chosen cp_show_extended_toc option
 				$this->option_set( 'cp_show_extended_toc', $_choice );
@@ -406,7 +403,7 @@ class CommentpressCoreDatabase {
 			if ( !$this->option_exists( 'cp_comment_editor' ) ) {
 			
 				// get choice
-				$_choice = $wpdb->escape( $cp_comment_editor );
+				$_choice = esc_sql( $cp_comment_editor );
 			
 				// add chosen cp_comment_editor option
 				$this->option_set( 'cp_comment_editor', $_choice );
@@ -419,7 +416,7 @@ class CommentpressCoreDatabase {
 			if ( !$this->option_exists( 'cp_promote_reading' ) ) {
 			
 				// get choice
-				$_choice = $wpdb->escape( $cp_promote_reading );
+				$_choice = esc_sql( $cp_promote_reading );
 			
 				// add chosen cp_promote_reading option
 				$this->option_set( 'cp_promote_reading', $_choice );
@@ -432,7 +429,7 @@ class CommentpressCoreDatabase {
 			if ( !$this->option_exists( 'cp_title_visibility' ) ) {
 			
 				// get choice
-				$_choice = $wpdb->escape( $cp_title_visibility );
+				$_choice = esc_sql( $cp_title_visibility );
 			
 				// add chosen cp_title_visibility option
 				$this->option_set( 'cp_title_visibility', $_choice );
@@ -445,7 +442,7 @@ class CommentpressCoreDatabase {
 			if ( !$this->option_exists( 'cp_header_bg_colour' ) ) {
 			
 				// get choice
-				$_choice = $wpdb->escape( $cp_header_bg_colour );
+				$_choice = esc_sql( $cp_header_bg_colour );
 			
 				// strip our rgb #
 				if ( stristr( $_choice, '#' ) ) {
@@ -468,7 +465,7 @@ class CommentpressCoreDatabase {
 			if ( !$this->option_exists( 'cp_js_scroll_speed' ) ) {
 			
 				// get choice
-				$_choice = $wpdb->escape( $cp_js_scroll_speed );
+				$_choice = esc_sql( $cp_js_scroll_speed );
 			
 				// add chosen cp_js_scroll_speed option
 				$this->option_set( 'cp_js_scroll_speed', $_choice );
@@ -481,7 +478,7 @@ class CommentpressCoreDatabase {
 			if ( !$this->option_exists( 'cp_min_page_width' ) ) {
 			
 				// get choice
-				$_choice = $wpdb->escape( $cp_min_page_width );
+				$_choice = esc_sql( $cp_min_page_width );
 			
 				// add chosen cp_min_page_width option
 				$this->option_set( 'cp_min_page_width', $_choice );
@@ -749,11 +746,6 @@ class CommentpressCoreDatabase {
 	 */
 	function options_update() {
 	
-		// database object
-		global $wpdb;
-		
-		
-	
 		// init result
 		$result = false;
 		
@@ -849,11 +841,11 @@ class CommentpressCoreDatabase {
 			// let's deal with our params now
 
 			// individual special pages
-			//$cp_welcome_page = $wpdb->escape( $cp_welcome_page );
-			//$cp_blog_page = $wpdb->escape( $cp_blog_page );
-			//$cp_general_comments_page = $wpdb->escape( $cp_general_comments_page );
-			//$cp_all_comments_page = $wpdb->escape( $cp_all_comments_page );
-			//$cp_comments_by_page = $wpdb->escape( $cp_comments_by_page );
+			//$cp_welcome_page = esc_sql( $cp_welcome_page );
+			//$cp_blog_page = esc_sql( $cp_blog_page );
+			//$cp_general_comments_page = esc_sql( $cp_general_comments_page );
+			//$cp_all_comments_page = esc_sql( $cp_all_comments_page );
+			//$cp_comments_by_page = esc_sql( $cp_comments_by_page );
 			//$this->option_set( 'cp_welcome_page', $cp_welcome_page );
 			//$this->option_set( 'cp_blog_page', $cp_blog_page );
 			//$this->option_set( 'cp_general_comments_page', $cp_general_comments_page );
@@ -861,19 +853,19 @@ class CommentpressCoreDatabase {
 			//$this->option_set( 'cp_comments_by_page', $cp_comments_by_page );
 			
 			// TOC content
-			$cp_show_posts_or_pages_in_toc = $wpdb->escape( $cp_show_posts_or_pages_in_toc );
+			$cp_show_posts_or_pages_in_toc = esc_sql( $cp_show_posts_or_pages_in_toc );
 			$this->option_set( 'cp_show_posts_or_pages_in_toc', $cp_show_posts_or_pages_in_toc );
 			
 			// if we have pages in TOC and a value for the next param...
 			if ( $cp_show_posts_or_pages_in_toc == 'page' AND isset( $cp_toc_chapter_is_page ) ) {
 				
-				$cp_toc_chapter_is_page = $wpdb->escape( $cp_toc_chapter_is_page );
+				$cp_toc_chapter_is_page = esc_sql( $cp_toc_chapter_is_page );
 				$this->option_set( 'cp_toc_chapter_is_page', $cp_toc_chapter_is_page );
 				
 				// if chapters are not pages and we have a value for the next param...
 				if ( $cp_toc_chapter_is_page == '0' ) {
 					
-					$cp_show_subpages = $wpdb->escape( $cp_show_subpages );
+					$cp_show_subpages = esc_sql( $cp_show_subpages );
 					$this->option_set( 'cp_show_subpages', ( $cp_show_subpages ? 1 : 0 ) );
 
 				} else {
@@ -888,38 +880,38 @@ class CommentpressCoreDatabase {
 			// extended or vanilla posts TOC
 			if ( $cp_show_posts_or_pages_in_toc == 'post' ) {
 				
-				$cp_show_extended_toc = $wpdb->escape( $cp_show_extended_toc );
+				$cp_show_extended_toc = esc_sql( $cp_show_extended_toc );
 				$this->option_set( 'cp_show_extended_toc', ( $cp_show_extended_toc ? 1 : 0 ) );
 
 			}
 
 			// excerpt length
-			$cp_excerpt_length = $wpdb->escape( $cp_excerpt_length );
+			$cp_excerpt_length = esc_sql( $cp_excerpt_length );
 			$this->option_set( 'cp_excerpt_length', intval( $cp_excerpt_length ) );
 			
 			// comment editor
-			$cp_comment_editor = $wpdb->escape( $cp_comment_editor );
+			$cp_comment_editor = esc_sql( $cp_comment_editor );
 			$this->option_set( 'cp_comment_editor', ( $cp_comment_editor ? 1 : 0 ) );
 			
 			// has AJAX "live" comment refreshing been migrated?
 			if ( $this->option_exists( 'cp_para_comments_live' ) ) {
 	
 				// "live" comment refreshing
-				$cp_para_comments_live = $wpdb->escape( $cp_para_comments_live );
+				$cp_para_comments_live = esc_sql( $cp_para_comments_live );
 				$this->option_set( 'cp_para_comments_live', ( $cp_para_comments_live ? 1 : 0 ) );
 				
 			}
 			
 			// behaviour
-			$cp_promote_reading = $wpdb->escape( $cp_promote_reading );
+			$cp_promote_reading = esc_sql( $cp_promote_reading );
 			$this->option_set( 'cp_promote_reading', ( $cp_promote_reading ? 1 : 0 ) );
 			
 			// title visibility
-			$cp_title_visibility = $wpdb->escape( $cp_title_visibility );
+			$cp_title_visibility = esc_sql( $cp_title_visibility );
 			$this->option_set( 'cp_title_visibility', $cp_title_visibility );
 			
 			// page meta visibility
-			$cp_page_meta_visibility = $wpdb->escape( $cp_page_meta_visibility );
+			$cp_page_meta_visibility = esc_sql( $cp_page_meta_visibility );
 			$this->option_set( 'cp_page_meta_visibility', $cp_page_meta_visibility );
 			
 			// header background colour
@@ -935,23 +927,23 @@ class CommentpressCoreDatabase {
 			}
 			
 			// save it
-			$cp_header_bg_colour = $wpdb->escape( $cp_header_bg_colour );
+			$cp_header_bg_colour = esc_sql( $cp_header_bg_colour );
 			$this->option_set( 'cp_header_bg_colour', $cp_header_bg_colour );
 			
 			// save scroll speed
-			$cp_js_scroll_speed = $wpdb->escape( $cp_js_scroll_speed );
+			$cp_js_scroll_speed = esc_sql( $cp_js_scroll_speed );
 			$this->option_set( 'cp_js_scroll_speed', $cp_js_scroll_speed );
 			
 			// save min page width
-			$cp_min_page_width = $wpdb->escape( $cp_min_page_width );
+			$cp_min_page_width = esc_sql( $cp_min_page_width );
 			$this->option_set( 'cp_min_page_width', $cp_min_page_width );
 			
 			// save workflow
-			$cp_blog_workflow = $wpdb->escape( $cp_blog_workflow );
+			$cp_blog_workflow = esc_sql( $cp_blog_workflow );
 			$this->option_set( 'cp_blog_workflow', ( $cp_blog_workflow ? 1 : 0 ) );
 
 			// save blog type
-			$cp_blog_type = $wpdb->escape( $cp_blog_type );
+			$cp_blog_type = esc_sql( $cp_blog_type );
 			$this->option_set( 'cp_blog_type', $cp_blog_type );
 			
 			// if it's a groupblog
@@ -973,7 +965,7 @@ class CommentpressCoreDatabase {
 			}
 
 			// save default sidebar
-			$cp_sidebar_default = $wpdb->escape( $cp_sidebar_default );
+			$cp_sidebar_default = esc_sql( $cp_sidebar_default );
 			$this->option_set( 'cp_sidebar_default', $cp_sidebar_default );
 			
 
@@ -1318,11 +1310,6 @@ class CommentpressCoreDatabase {
 		
 
 
-		// database object and post
-		global $wpdb;
-		
-
-
 		// ---------------------------------------------------------------------
 		// Show or Hide Page Meta
 		// ---------------------------------------------------------------------
@@ -1348,14 +1335,14 @@ class CommentpressCoreDatabase {
 			} else {
 			
 				// update the data
-				update_post_meta( $post->ID, $key, $wpdb->escape( $_data ) );
+				update_post_meta( $post->ID, $key, esc_sql( $_data ) );
 				
 			}
 			
 		} else {
 		
 			// add the data
-			add_post_meta( $post->ID, $key, $wpdb->escape( $_data ) );
+			add_post_meta( $post->ID, $key, esc_sql( $_data ) );
 			
 		}
 
@@ -1386,14 +1373,14 @@ class CommentpressCoreDatabase {
 			} else {
 			
 				// update the data
-				update_post_meta( $post->ID, $key, $wpdb->escape( $_data ) );
+				update_post_meta( $post->ID, $key, esc_sql( $_data ) );
 				
 			}
 			
 		} else {
 		
 			// add the data
-			add_post_meta( $post->ID, $key, $wpdb->escape( $_data ) );
+			add_post_meta( $post->ID, $key, esc_sql( $_data ) );
 			
 		}
 
@@ -1436,14 +1423,14 @@ class CommentpressCoreDatabase {
 					} else {
 					
 						// update the data
-						update_post_meta( $post->ID, $key, $wpdb->escape( $_data ) );
+						update_post_meta( $post->ID, $key, esc_sql( $_data ) );
 						
 					}
 					
 				} else {
 				
 					// add the data
-					add_post_meta( $post->ID, $key, $wpdb->escape( $_data ) );
+					add_post_meta( $post->ID, $key, esc_sql( $_data ) );
 					
 				}
 
@@ -1502,14 +1489,14 @@ class CommentpressCoreDatabase {
 				} else {
 				
 					// update the data
-					update_post_meta( $post->ID, $key, $wpdb->escape( $_data ) );
+					update_post_meta( $post->ID, $key, esc_sql( $_data ) );
 					
 				}
 				
 			} else {
 			
 				// add the data
-				add_post_meta( $post->ID, $key, $wpdb->escape( $_data ) );
+				add_post_meta( $post->ID, $key, esc_sql( $_data ) );
 				
 			}
 			
@@ -1542,14 +1529,14 @@ class CommentpressCoreDatabase {
 			} else {
 			
 				// update the data
-				update_post_meta( $post->ID, $key, $wpdb->escape( $_data ) );
+				update_post_meta( $post->ID, $key, esc_sql( $_data ) );
 				
 			}
 			
 		} else {
 		
 			// add the data
-			add_post_meta( $post->ID, $key, $wpdb->escape( $_data ) );
+			add_post_meta( $post->ID, $key, esc_sql( $_data ) );
 			
 		}
 
@@ -1585,14 +1572,14 @@ class CommentpressCoreDatabase {
 				} else {
 				
 					// update the data
-					update_post_meta( $post->ID, $key, $wpdb->escape( $_data ) );
+					update_post_meta( $post->ID, $key, esc_sql( $_data ) );
 					
 				}
 				
 			} else {
 			
 				// add the data
-				add_post_meta( $post->ID, $key, $wpdb->escape( $_data ) );
+				add_post_meta( $post->ID, $key, esc_sql( $_data ) );
 				
 			}
 			
@@ -1661,11 +1648,6 @@ class CommentpressCoreDatabase {
 		
 
 
-		// database object and post
-		global $wpdb;
-		
-
-
 		// ---------------------------------------------------------------------
 		// Override post formatter (override blog_type)
 		// ---------------------------------------------------------------------
@@ -1691,14 +1673,14 @@ class CommentpressCoreDatabase {
 			} else {
 			
 				// update the data
-				update_post_meta( $post->ID, $key, $wpdb->escape( $_formatter ) );
+				update_post_meta( $post->ID, $key, esc_sql( $_formatter ) );
 				
 			}
 			
 		} else {
 		
 			// add the data
-			add_post_meta( $post->ID, $key, $wpdb->escape( $_formatter ) );
+			add_post_meta( $post->ID, $key, esc_sql( $_formatter ) );
 			
 		}
 
@@ -1759,14 +1741,14 @@ class CommentpressCoreDatabase {
 				} else {
 				
 					// update the data
-					update_post_meta( $post->ID, $key, $wpdb->escape( $_data ) );
+					update_post_meta( $post->ID, $key, esc_sql( $_data ) );
 					
 				}
 				
 			} else {
 			
 				// add the data
-				add_post_meta( $post->ID, $key, $wpdb->escape( $_data ) );
+				add_post_meta( $post->ID, $key, esc_sql( $_data ) );
 				
 			}
 			// ----------------
@@ -1806,14 +1788,14 @@ class CommentpressCoreDatabase {
 				} else {
 				
 					// update the data
-					update_post_meta( $post->ID, $key, $wpdb->escape( $_data ) );
+					update_post_meta( $post->ID, $key, esc_sql( $_data ) );
 					
 				}
 				
 			} else {
 			
 				// add the data
-				add_post_meta( $post->ID, $key, $wpdb->escape( $_data ) );
+				add_post_meta( $post->ID, $key, esc_sql( $_data ) );
 				
 			}
 			
@@ -1932,7 +1914,7 @@ class CommentpressCoreDatabase {
 		if ( $_formatter != '' ) {
 		
 			// add the data
-			add_post_meta( $new_post_id, $key, $wpdb->escape( $_formatter ) );
+			add_post_meta( $new_post_id, $key, esc_sql( $_formatter ) );
 			
 		}
 		
@@ -2590,7 +2572,7 @@ class CommentpressCoreDatabase {
 		if ( $text_signature != '' ) {
 		
 			// escape it
-			$text_signature = $wpdb->escape( $text_signature );
+			$text_signature = esc_sql( $text_signature );
 			
 			// construct query
 			$query = $wpdb->prepare(
@@ -2637,9 +2619,6 @@ class CommentpressCoreDatabase {
 	 */
 	function save_comment_page( $comment_ID ) {
 	
-		// database object
-		global $wpdb;
-
 		// is this a paged post?
 		if ( isset( $_POST['page'] ) AND is_numeric( $_POST['page'] ) ) {
 		
@@ -2650,7 +2629,7 @@ class CommentpressCoreDatabase {
 			if ( $text_signature != '' ) {
 			
 				// get page number
-				$page_number = $wpdb->escape( $_POST['page'] );
+				$page_number = esc_sql( $_POST['page'] );
 				
 				// set key
 				$key = '_cp_comment_page';

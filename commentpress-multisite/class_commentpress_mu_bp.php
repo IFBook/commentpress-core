@@ -2443,9 +2443,6 @@ class CommentpressMultisiteBuddypress {
 	 */
 	function _buddypress_admin_update() {
 	
-		// database object
-		global $wpdb;
-		
 		// init
 		$cpmu_bp_force_commentpress = '0';
 		$cpmu_bp_groupblog_privacy = '0';
@@ -2455,19 +2452,19 @@ class CommentpressMultisiteBuddypress {
 		extract( $_POST );
 		
 		// force CommentPress Core to be enabled on all groupblogs
-		$cpmu_bp_force_commentpress = $wpdb->escape( $cpmu_bp_force_commentpress );
+		$cpmu_bp_force_commentpress = esc_sql( $cpmu_bp_force_commentpress );
 		$this->db->option_set( 'cpmu_bp_force_commentpress', ( $cpmu_bp_force_commentpress ? 1 : 0 ) );
 		
 		// groupblog privacy synced to group privacy
-		$cpmu_bp_groupblog_privacy = $wpdb->escape( $cpmu_bp_groupblog_privacy );
+		$cpmu_bp_groupblog_privacy = esc_sql( $cpmu_bp_groupblog_privacy );
 		$this->db->option_set( 'cpmu_bp_groupblog_privacy', ( $cpmu_bp_groupblog_privacy ? 1 : 0 ) );
 		
 		// default groupblog theme
-		$cpmu_bp_groupblog_theme = $wpdb->escape( $cpmu_bp_groupblog_theme );
+		$cpmu_bp_groupblog_theme = esc_sql( $cpmu_bp_groupblog_theme );
 		$this->db->option_set( 'cpmu_bp_groupblog_theme', $cpmu_bp_groupblog_theme );
 		
 		// anon comments on groupblogs
-		$cpmu_bp_require_comment_registration = $wpdb->escape( $cpmu_bp_require_comment_registration );
+		$cpmu_bp_require_comment_registration = esc_sql( $cpmu_bp_require_comment_registration );
 		$this->db->option_set( 'cpmu_bp_require_comment_registration', ( $cpmu_bp_require_comment_registration ? 1 : 0 ) );
 		
 	}
