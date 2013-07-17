@@ -58,9 +58,10 @@ NOTES
 	
 		<?php 
 		
-		// get comments for this post again
+		// get comments for this post in ascending order
 		$comments = get_comments( array(
-			'post_id' => $post->ID
+			'post_id' => $post->ID,
+			'order' => 'ASC'
 		) );
 		
 		wp_list_comments(

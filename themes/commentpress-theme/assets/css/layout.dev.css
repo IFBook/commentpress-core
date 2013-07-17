@@ -1699,7 +1699,6 @@ body.cp_sidebar_comments #comments_sidebar
 	
 	/* wrapper for each comment */
 	.comment-wrapper
-	
 	{
 		margin: 0;
 		padding: 0;
@@ -1721,6 +1720,25 @@ body.cp_sidebar_comments #comments_sidebar
 		background-color: #fff;
 		margin: 0;
 	}
+	
+
+
+	/* AJAX highlighting */
+	.comment-highlighted
+	{
+		background-color: #c2d8bc;
+	}
+
+	.comment-fade
+	{
+		-webkit-transition: background-color 1s ease;
+		-moz-transition: background-color 1s ease;
+		-o-transition: background-color 1s ease;
+		-ms-transition: background-color 1s ease;
+		transition: background-color 1s ease;
+		background-color: transparent;
+	}
+
 	
 
 

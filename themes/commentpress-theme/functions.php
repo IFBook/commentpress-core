@@ -3293,6 +3293,9 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 		
 	}
 	
+	// add a nopriv filter for plugins
+	$editlink = apply_filters( 'cp_comment_action_links', $editlink, $comment );
+	
 	
 	
 	// get comment class(es)
