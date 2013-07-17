@@ -2075,7 +2075,81 @@ class CommentpressCore {
 	
 	
 	
+	/** 
+	 * @description: override the comments tempate for BP Docs
+	 */
+	function bp_docs_comment_tempate( $path, $original_path ) {
 
+		// if in multisite and on root site
+		if ( is_multisite() AND bp_is_root_blog() ) {
+		
+			// override default link name
+			return $original_path;
+		
+		}
+	
+		// pass through
+		return $path;
+
+	}
+	
+	
+	
+	
+	
+	
+	/** 
+	 * @description: override the Featured Comments behaviour
+	 */
+	function featured_comments_override() {
+	
+		// is the plugin available?
+		if ( function_exists( 'wp_featured_comments_load' ) ) {
+		
+			// get instance
+			$fc = wp_featured_comments_load();
+			
+			// remove comment_text filter
+			remove_filter( 'comment_text', array( $fc, 'comment_text' ), 10 );
+			
+			// get the plugin markup in the comment edit section
+			add_filter( 'cp_comment_edit_link', array( $this, 'featured_comments_markup' ), 100, 2 );
+			
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	/** 
+	 * @description: get the Featured Comments link markup
+	 */
+	function featured_comments_markup( $editlink, $comment ) {
+	
+		// is the plugin available?
+		if ( function_exists( 'wp_featured_comments_load' ) ) {
+		
+			// get instance
+			$fc = wp_featured_comments_load();
+			
+			// get markup
+			return $editlink.$fc->comment_text( '' );
+			
+		}
+		
+		// --<
+		return $editlink;
+	
+	}
+	
+	
+	
+	
+	
+	
 	/** 
 	 * @description: return the name of the default sidebar
 	 * @return array $settings
@@ -2575,6 +2649,12 @@ class CommentpressCore {
 		
 		// add BuddyPress functionality (really late, so group object is set up)
 		add_action( 'bp_setup_globals', array( $this, 'buddypress_globals_loaded' ), 1000 );
+		
+		// override BP Docs comment template
+		add_filter( 'bp_docs_comment_template_path', array( $this, 'bp_docs_comment_tempate' ), 20, 2 );
+
+		// amend the behaviour of Featured Comments plugin
+		add_action( 'plugins_loaded', array( $this, 'featured_comments_override' ), 1000 );
 		
 	}
 	

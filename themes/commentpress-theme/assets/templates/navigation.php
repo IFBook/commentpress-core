@@ -164,6 +164,9 @@ else {
 			// show home
 			?><li><a href="<?php echo network_home_url(); ?>" id="btn_home" class="css_btn" title="<?php echo $site_title; ?>"><?php echo $site_title; ?></a></li><?php
 		
+			// allow plugins to inject links
+			//do_action( 'cp_nav_after_network_home_title' );
+			
 			// link to group in multisite groupblog
 			if ( $commentpress_core->is_groupblog() ) {
 				

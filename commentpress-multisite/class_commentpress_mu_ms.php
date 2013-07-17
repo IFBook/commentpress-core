@@ -850,9 +850,6 @@ class CommentpressMultisite {
 	 */
 	function _network_admin_update() {
 		
-		// database object
-		global $wpdb;
-		
 		// init
 		$cpmu_force_commentpress = '0';
 		//$cpmu_title_page_content = ''; // replace with content from _get_default_title_page_content()
@@ -862,17 +859,17 @@ class CommentpressMultisite {
 		extract( $_POST );
 		
 		// force all new sites to be CommentPress Core-enabled
-		$cpmu_force_commentpress = $wpdb->escape( $cpmu_force_commentpress );
+		$cpmu_force_commentpress = esc_sql( $cpmu_force_commentpress );
 		$this->db->option_set( 'cpmu_force_commentpress', ( $cpmu_force_commentpress ? 1 : 0 ) );
 		
 		/*
 		// default title page content
-		$cpmu_title_page_content = $wpdb->escape( $cpmu_title_page_content );
+		$cpmu_title_page_content = esc_sql( $cpmu_title_page_content );
 		$this->db->option_set( 'cpmu_title_page_content', $cpmu_title_page_content );
 		*/
 		
 		// allow translation workflow
-		$cpmu_disable_translation_workflow = $wpdb->escape( $cpmu_disable_translation_workflow );
+		$cpmu_disable_translation_workflow = esc_sql( $cpmu_disable_translation_workflow );
 		$this->db->option_set( 'cpmu_disable_translation_workflow', ( $cpmu_disable_translation_workflow ? 1 : 0 ) );
 		
 	}

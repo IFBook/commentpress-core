@@ -280,12 +280,32 @@ Header
 					background: transparent url(../images/buttons/home.jpg);
 				}
 
+				/* BP Group Blog compatibility */
 				a#btn_grouphome
 				{
 					width: 33px;
 					background: transparent url(../images/buttons/members.jpg);
 				}
+				
+					/* BP Group Sites compatibility - won't work because of sublist...
+					#book_nav ul#nav li a#btn_groupsites
+					{
+						width: 33px;
+						background: transparent url(../images/buttons/members.jpg);
+					}
 
+					#groupsites-list li
+					{
+						padding: 0;
+					}
+					
+					#groupsites-list li a.btn_groupsites
+					{
+						width: 33px;
+						background: transparent url(../images/buttons/members.jpg);
+					}
+					*/
+					
 				a#btn_general
 				{
 					width: 33px;
@@ -1679,7 +1699,6 @@ body.cp_sidebar_comments #comments_sidebar
 	
 	/* wrapper for each comment */
 	.comment-wrapper
-	
 	{
 		margin: 0;
 		padding: 0;
@@ -1701,6 +1720,25 @@ body.cp_sidebar_comments #comments_sidebar
 		background-color: #fff;
 		margin: 0;
 	}
+	
+
+
+	/* AJAX highlighting */
+	.comment-highlighted
+	{
+		background-color: #c2d8bc;
+	}
+
+	.comment-fade
+	{
+		-webkit-transition: background-color 1s ease;
+		-moz-transition: background-color 1s ease;
+		-o-transition: background-color 1s ease;
+		-ms-transition: background-color 1s ease;
+		transition: background-color 1s ease;
+		background-color: transparent;
+	}
+
 	
 
 

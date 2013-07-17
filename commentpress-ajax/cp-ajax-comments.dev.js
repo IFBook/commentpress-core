@@ -39,6 +39,30 @@ cpajax_submitting = false;
 
 
 /** 
+ * @description: re-enable Featured Comments plugin functionality
+ */
+function cpajax_reenable_featured_comments() {
+
+	// test for the Featured Comments localisation object
+	if ( 'undefined' !== typeof featured_comments ) {
+	
+		// we've got it, test for function existence
+		if ( jQuery.is_function_defined( 'featured_comments_click' ) ) {
+			
+			// call function
+			featured_comments_click();
+			
+		}
+	
+	}
+	
+}
+
+
+
+
+
+/** 
  * @description: an example ajax callback
  *
  */
@@ -224,6 +248,9 @@ function cpajax_add_new_comment( markup, text_sig, comm_parent, comm_id ) {
 	commentpress_enable_comment_permalink_clicks();
 	commentpress_setup_comment_headers();
 	cpajax_reassign_comments();
+	
+	// compatibility with Featured Comments
+	cpajax_reenable_featured_comments();
 	
 }
 
@@ -811,6 +838,9 @@ jQuery(document).ready(function($) {
 		form.find('#comment').val( '' );
 
 		//err.html('<span class="success">' + cpajax_lang[5] + '</span>');
+		
+		// compatibility with Featured Comments
+		cpajax_reenable_featured_comments();
 		
 	}
 	

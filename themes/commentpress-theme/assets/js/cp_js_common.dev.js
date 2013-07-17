@@ -751,6 +751,8 @@ function commentpress_scroll_to_top( target, speed ) {
  */
 function cp_flash_comment_header( comment ) {
 
+	//jQuery( '#li-comment-' + target.prop( 'id' ).split( '-' )[1] ).removeClass( 'flash-comment' );
+
 	return;
 	
 	/*
@@ -813,6 +815,9 @@ function cp_scroll_comments( target, speed, flash ) {
 		// either flash at the end or not..
 		if ( flash == 'flash' ) {
 		
+			// add highlight class
+			//jQuery( '#li-comment-' + target.prop( 'id' ).split( '-' )[1] ).addClass( 'flash-comment' );
+			
 			// scroll to new comment
 			jQuery('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
 				target, 
@@ -1350,6 +1355,9 @@ function cp_enable_context_clicks() {
 				// scroll page to it
 				commentpress_scroll_page_to_textblock( text_sig );
 				
+				// add highlight class
+				//jQuery( '#li-comment-' + comment_id ).addClass( 'flash-comment' );
+				
 				// scroll to new comment
 				jQuery('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
 					comment, 
@@ -1389,7 +1397,7 @@ function cp_scroll_to_anchor_on_load() {
 
 	// define vars
 	var text_sig, url, comment_id, para_wrapper_array, item, para_id, para_num, 
-		post_id, textblock;
+		post_id, textblock, anchor_id, anchor;
 	
 	// init
 	text_sig = '';
@@ -1398,7 +1406,7 @@ function cp_scroll_to_anchor_on_load() {
 	url = document.location.toString();
 	
 	// do we have a comment permalink?
-	if ( url.match('#comment-' ) ) {
+	if ( url.match( '#comment-' ) ) {
 	
 		// activate comments sidebar
 		cp_activate_sidebar('comments');
@@ -1522,18 +1530,19 @@ function cp_scroll_to_anchor_on_load() {
 		 * @description: loop through the paragraph permalinks checking for a match
 		 *
 		 */
-		jQuery('a.para_permalink').each( function(i) {
+		jQuery('span.para_marker > a').each( function(i) {
 		
 			// define vars
 			var text_sig, para_id, para_num, post_id, textblock;
 			
 			// get text signature
-			text_sig = jQuery(this).prop('id');
+			text_sig = jQuery(this).prop( 'id' );
+			//console.log( "ID: " + text_sig );
 			
 			// do we have a paragraph or comment block permalink?
-			if ( url.match('#' + text_sig ) || url.match('#para_heading-' + text_sig ) ) {
+			if ( url.match( '#' + text_sig ) || url.match( '#para_heading-' + text_sig ) ) {
 			
-				//console.log('yep');
+				//console.log( "we've got a match: " + text_sig );
 			
 				// are comments open?
 				if ( cp_comments_open == 'y' ) {
@@ -1564,6 +1573,9 @@ function cp_scroll_to_anchor_on_load() {
 				// scroll page
 				commentpress_scroll_page( textblock );
 				
+				// --<
+				return;
+				
 			}
 			
 		});
@@ -1585,13 +1597,22 @@ function cp_scroll_to_anchor_on_load() {
 	if ( url.match( '#' ) ) {
 		
 		// get anchor
-		var anchor_id = url.split('#')[1];
+		anchor_id = url.split('#')[1];
+		//console.log( 'anchor_id: ' + anchor_id );
 		
-		// add class
-		jQuery('#' + anchor_id).addClass('selected_para');
+		// locate in DOM
+		anchor = jQuery( '#' + anchor_id );
+
+		// did we get one?
+		if ( anchor ) {
 		
-		// scroll page
-		commentpress_scroll_page( jQuery('#' + anchor_id) );
+			// add class
+			anchor.addClass('selected_para');
+			
+			// scroll page
+			commentpress_scroll_page( anchor );
+		
+		}
 		
 		// --<
 		return;
@@ -1622,37 +1643,45 @@ function cp_scroll_to_comment_on_load() {
 	
 		// get comment ID
 		comment_id = url.split('#comment-')[1];
+		
+		// get comment in DOM
+		comment = jQuery( '#comment-' + comment_id );
+		
+		// did we get one?
+		if ( comment ) {
 
-		// if IE6, then we have to scroll #wrapper
-		if ( msie6 ) {
+			// if IE6, then we have to scroll #wrapper
+			if ( msie6 ) {
 		
-			// scroll to new comment
-			jQuery('#main_wrapper').scrollTo(
-				jQuery('#comment-'+comment_id), 
-				{
-					duration: cp_scroll_speed, 
-					axis:'y', 
-					offset: commentpress_get_header_offset()
-				}
-			);
-			
-		} else {
-		
-			// only scroll if not mobile (but allow tablets)
-			if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
-			
 				// scroll to new comment
-				jQuery.scrollTo(
-					jQuery('#comment-'+comment_id), 
+				jQuery('#main_wrapper').scrollTo(
+					comment, 
 					{
 						duration: cp_scroll_speed, 
 						axis:'y', 
 						offset: commentpress_get_header_offset()
 					}
 				);
-				
-			}
 			
+			} else {
+		
+				// only scroll if not mobile (but allow tablets)
+				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+			
+					// scroll to new comment
+					jQuery.scrollTo(
+						comment, 
+						{
+							duration: cp_scroll_speed, 
+							axis:'y', 
+							offset: commentpress_get_header_offset()
+						}
+					);
+				
+				}
+			
+			}
+		
 		}
 
 	}
