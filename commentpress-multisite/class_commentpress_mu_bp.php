@@ -482,7 +482,8 @@ class CommentpressMultisiteBuddypress {
 			if ( $is_groupsite ) {
 		
 				// get group ID from POST
-				$group_id = bpgsites_get_group_id_from_comment_form();
+				global $bp_groupsites;
+				$group_id = $bp_groupsites->activity->get_group_id_from_comment_form();
 
 				// kick out if not a comment in a group
 				if ( false === $group_id ) return $activity;
@@ -1080,7 +1081,11 @@ class CommentpressMultisiteBuddypress {
 	function filter_nav_title_page_title( $title ) {
 		
 		// --<
-		return __( 'Document Home Page', 'cpmsextras' );
+		// override default link name
+		return apply_filters(
+			'cpmu_bp_nav_title_page_title', 
+			__( 'Document Home Page', 'commentpress-core' )
+		);
 	
 	}
 	
@@ -1577,8 +1582,11 @@ class CommentpressMultisiteBuddypress {
 		
 		// CommentPress needs to know the sub-page for a comment, therefore...
 		
-		// drop the bp-group-sites comment activity action
-		remove_action( 'bp_activity_before_save', 'bpgsites_custom_comment_activity' );
+		// drop the bp-group-sites comment activity action, if present
+		global $bp_groupsites;
+		if ( !is_null( $bp_groupsites ) AND is_object( $bp_groupsites ) ) {
+			remove_action( 'bp_activity_before_save', array( $bp_groupsites->activity, 'custom_comment_activity' ) );
+		}
 		
 		// add our own custom comment activity
 		add_action( 'bp_activity_before_save', array( $this, 'group_custom_comment_activity' ), 20, 1 );
@@ -2435,9 +2443,6 @@ class CommentpressMultisiteBuddypress {
 	 */
 	function _buddypress_admin_update() {
 	
-		// database object
-		global $wpdb;
-		
 		// init
 		$cpmu_bp_force_commentpress = '0';
 		$cpmu_bp_groupblog_privacy = '0';
@@ -2447,19 +2452,19 @@ class CommentpressMultisiteBuddypress {
 		extract( $_POST );
 		
 		// force CommentPress Core to be enabled on all groupblogs
-		$cpmu_bp_force_commentpress = $wpdb->escape( $cpmu_bp_force_commentpress );
+		$cpmu_bp_force_commentpress = esc_sql( $cpmu_bp_force_commentpress );
 		$this->db->option_set( 'cpmu_bp_force_commentpress', ( $cpmu_bp_force_commentpress ? 1 : 0 ) );
 		
 		// groupblog privacy synced to group privacy
-		$cpmu_bp_groupblog_privacy = $wpdb->escape( $cpmu_bp_groupblog_privacy );
+		$cpmu_bp_groupblog_privacy = esc_sql( $cpmu_bp_groupblog_privacy );
 		$this->db->option_set( 'cpmu_bp_groupblog_privacy', ( $cpmu_bp_groupblog_privacy ? 1 : 0 ) );
 		
 		// default groupblog theme
-		$cpmu_bp_groupblog_theme = $wpdb->escape( $cpmu_bp_groupblog_theme );
+		$cpmu_bp_groupblog_theme = esc_sql( $cpmu_bp_groupblog_theme );
 		$this->db->option_set( 'cpmu_bp_groupblog_theme', $cpmu_bp_groupblog_theme );
 		
 		// anon comments on groupblogs
-		$cpmu_bp_require_comment_registration = $wpdb->escape( $cpmu_bp_require_comment_registration );
+		$cpmu_bp_require_comment_registration = esc_sql( $cpmu_bp_require_comment_registration );
 		$this->db->option_set( 'cpmu_bp_require_comment_registration', ( $cpmu_bp_require_comment_registration ? 1 : 0 ) );
 		
 	}

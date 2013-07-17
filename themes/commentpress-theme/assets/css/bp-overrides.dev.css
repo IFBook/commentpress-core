@@ -1380,7 +1380,8 @@ table.profile-fields td.label
 
 
 /* Recent Activity (activity tab) */
-#activity_sidebar .workshop_comments_output .comment-identifier p
+#activity_sidebar .workshop_comments_output .comment-identifier p,
+#activity_sidebar .groupsites_comments_output .comment-identifier p
 {
 	/* we have to use p instead of cite because that's how BP stores activity meta */
 	padding: 5px 5px 0 5px;
@@ -1391,21 +1392,32 @@ table.profile-fields td.label
 	line-height: 1.3;
 }
 
-#activity_sidebar .workshop_comments_output .comment-identifier p a
+#activity_sidebar .workshop_comments_output .comment-identifier p a,
+#activity_sidebar .groupsites_comments_output .comment-identifier p a
 {
 	color: #761D19;
 }
 
-#activity_sidebar .workshop_comments_output .comment-identifier p img 
+#activity_sidebar .workshop_comments_output .comment-identifier p img,
+#activity_sidebar .groupsites_comments_output .comment-identifier p img 
 {
 	display: none;
 	vertical-align: middle;
 }
 
-#activity_sidebar .workshop_comments_output .comment-content
+#activity_sidebar .workshop_comments_output .comment-content,
+#activity_sidebar .groupsites_comments_output .comment-content
 {
 	border-bottom: none;
 }
+
+#activity_sidebar  .groupsites_comments_output li.groups 
+{
+	/* override BP Groupblog compatibility for now */
+	border-left: none;
+	margin-bottom: 0;
+}
+
 
 
 

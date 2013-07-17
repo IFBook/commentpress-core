@@ -799,8 +799,11 @@ a#cancel-comment-reply-link:visited
 	color: #666;
 	text-decoration: none;
 	display: block;
-	padding: 4px 0 4px 4px;
+	padding: 4px;
 	border-bottom: 1px dashed #B5BFB2;
+	text-align: right;
+	text-transform: uppercase;
+	color: #761D19;
 }
 
 /* hover colour */
@@ -1496,6 +1499,32 @@ ul.image_link h4
 	font-size: 90%;
 	font-weight: normal;
 }
+
+
+
+
+
+/* Featured Comments Plugin Compatibility */
+.feature-burry-comments
+{
+	margin: 2px 5px 0 0;
+	float: right;
+}
+
+.feature-burry-comments a.feature-comments,
+.feature-burry-comments a.feature-comments:link,
+.feature-burry-comments a.feature-comments:hover,
+.feature-burry-comments a.feature-comments:active,
+.feature-burry-comments a.feature-comments:visited
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #761D19;
+	text-decoration: none;
+	padding: 2px;
+	text-transform: uppercase;
+	font-size: 11px;
+}
+
 
 
 

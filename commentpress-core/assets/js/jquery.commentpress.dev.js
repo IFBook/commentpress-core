@@ -790,6 +790,25 @@ Array.prototype.remove_item = function( item ) {
 
 
 	/** 
+	 * @description: test if a function exists without throwing a Reference Error
+	 */
+	$.is_function_defined = function ( function_name ) {
+	
+		// use eval
+		if ( eval( 'typeof(' + function_name + ') == typeof(Function)' ) ) {
+		
+			// --<
+			return true;
+			
+		}
+		
+		// --<
+		return false;
+	}
+	
+	
+	
+	/** 
 	 * @description: utility to strip 'px' off css values
 	 * @todo: 
 	 *
