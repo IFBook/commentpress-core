@@ -2488,4 +2488,3 @@ class CommentpressMultisiteBuddypress {
 
 
 
-?>
