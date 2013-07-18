@@ -64,6 +64,30 @@ function cpajax_reenable_featured_comments() {
 
 
 /** 
+ * @description: re-enable Comment Upvoter plugin functionality
+ */
+function cpajax_reenable_comment_upvoter() {
+
+	// test for the Comment Upvoter localisation object
+	if ( 'undefined' !== typeof comment_upvoter ) {
+	
+		// we've got it, test for function existence
+		if ( jQuery.is_function_defined( 'comment_upvoter_click' ) ) {
+			
+			// call function
+			comment_upvoter_click();
+			
+		}
+	
+	}
+	
+}
+
+
+
+
+
+/** 
  * @description: an example ajax callback
  *
  */
@@ -210,13 +234,16 @@ function cpajax_add_new_comment( markup, text_sig, comm_parent, comm_id ) {
 	// update heading
 	cpajax_update_comments_para_heading( head_id, new_comment_count );
 	
-
-
+	
+	
+	// find header
+	head = jQuery( head_id );
+	
 	// highlight
-	head.css( 'background', '#c2d8bc' );
+	head.addClass( 'heading-highlighted' );
 	
 	// animate to existing bg (from css file)
-	head.animate( { backgroundColor: '#EFEFEF' }, 1000 );
+	head.addClass( 'heading-fade' );
 	
 	
 	
@@ -232,6 +259,9 @@ function cpajax_add_new_comment( markup, text_sig, comm_parent, comm_id ) {
 	
 	// compatibility with Featured Comments
 	cpajax_reenable_featured_comments();
+	
+	// compatibility with Comment Upvoter
+	cpajax_reenable_comment_upvoter();
 	
 }
 
@@ -586,20 +616,6 @@ function cpajax_reassign( text_sig, ui ) {
  */
 jQuery(document).ready(function($) {
 
-	/* cpajax_lang[]:
-	[0]: 'Loading...'
-	[1]: 'Please enter your name.'
-	[2]: 'Please enter your email address.'
-	[3]: 'Please enter a valid email address.'
-	[4]: 'Please enter your comment'
-	[5]: 'Your comment has been added.'
-	[6]: 'AJAX error!'
-	*/
-	
-	
-	
-	
-
 	// trigger repeat calls
 	cpajax_ajax_updater( cpajax_live );
 	
@@ -823,6 +839,9 @@ jQuery(document).ready(function($) {
 		// compatibility with Featured Comments
 		cpajax_reenable_featured_comments();
 		
+		// compatibility with Comment Upvoter
+		cpajax_reenable_comment_upvoter();
+		
 	}
 	
 	
@@ -900,7 +919,7 @@ jQuery(document).ready(function($) {
 		// add a couple of classes
 		comment.addClass( 'comment-highlighted' );
 		
-		jQuery(content).slideDown('slow',
+		jQuery(content).slideDown( 'slow',
 		
 			// animation complete
 			function() {

@@ -1326,6 +1326,8 @@ div#respond .subscribe_reloaded_insert p
 
 
 
+
+
 /* AJAX highlighting */
 .comment-highlighted
 {
@@ -1340,6 +1342,21 @@ div#respond .subscribe_reloaded_insert p
 	-ms-transition: background-color 1s ease;
 	transition: background-color 1s ease;
 	background-color: transparent;
+}
+
+.heading-highlighted
+{
+	background-color: #c2d8bc;
+}
+
+.heading-fade
+{
+	-webkit-transition: background-color 1s ease;
+	-moz-transition: background-color 1s ease;
+	-o-transition: background-color 1s ease;
+	-ms-transition: background-color 1s ease;
+	transition: background-color 1s ease;
+	background-color: #BDBDBD;
 }
 
 

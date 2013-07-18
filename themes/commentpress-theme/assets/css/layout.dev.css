@@ -1739,6 +1739,21 @@ body.cp_sidebar_comments #comments_sidebar
 		background-color: transparent;
 	}
 
+	.heading-highlighted
+	{
+		background-color: #c2d8bc;
+	}
+
+	.heading-fade
+	{
+		-webkit-transition: background-color 1s ease;
+		-moz-transition: background-color 1s ease;
+		-o-transition: background-color 1s ease;
+		-ms-transition: background-color 1s ease;
+		transition: background-color 1s ease;
+		background-color: #EFEFEF;
+	}
+
 	
 
 

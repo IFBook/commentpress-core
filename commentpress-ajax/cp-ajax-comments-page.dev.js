@@ -66,26 +66,35 @@ function cpajax_reenable_featured_comments() {
 
 
 /** 
+ * @description: re-enable Comment Upvoter plugin functionality
+ */
+function cpajax_reenable_comment_upvoter() {
+
+	// test for the Comment Upvoter localisation object
+	if ( 'undefined' !== typeof comment_upvoter ) {
+	
+		// we've got it, test for function existence
+		if ( jQuery.is_function_defined( 'comment_upvoter_click' ) ) {
+			
+			// call function
+			comment_upvoter_click();
+			
+		}
+	
+	}
+	
+}
+
+
+
+
+
+/** 
  * @description: define what happens when the page is ready
  * @todo: 
  *
  */
 jQuery(document).ready(function($) {
-
-	/* cpajax_lang[]:
-	[0]: 'Loading...'
-	[1]: 'Please enter your name.'
-	[2]: 'Please enter your email address.'
-	[3]: 'Please enter a valid email address.'
-	[4]: 'Please enter your comment'
-	[5]: 'Your comment has been added.'
-	[6]: 'AJAX error!'
-	*/
-	
-	
-	
-	
-
 
 	/** 
 	 * @description: init
@@ -227,6 +236,9 @@ jQuery(document).ready(function($) {
 		
 		// compatibility with Featured Comments
 		cpajax_reenable_featured_comments();
+
+		// compatibility with Comment Upvoter
+		cpajax_reenable_comment_upvoter();
 		
 	}
 	
