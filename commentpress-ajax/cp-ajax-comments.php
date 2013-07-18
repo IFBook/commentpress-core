@@ -51,9 +51,6 @@ function cpajax_enable_plugin() {
 		
 	
 	
-	// add localised text
-	add_action( 'wp_head', 'cpajax_localise' );
-
 	// add our javascripts
 	add_action( 'wp_enqueue_scripts', 'cpajax_add_javascripts', 120 );
 	
@@ -273,6 +270,9 @@ function cpajax_add_javascripts() {
 	// add post ID
 	$vars['cpajax_post_id'] = $post->ID;
 	
+	// get translations array
+	$vars['cpajax_lang'] = cpajax_localise();
+	
 	
 	
 	// default to minified scripts
@@ -334,44 +334,33 @@ function cpajax_add_javascripts() {
  */
 function cpajax_localise() {
 	
-	// can only now see $post
-	if ( !cpajax_plugin_can_activate() ) { return; }
-	
 	// init array
-	$text = array();
+	$translations = array();
 	
 	// add translations for comment form
-	$text[] = __( 'Loading...', 'commentpress-core' );
-	$text[] = __( 'Please enter your name.', 'commentpress-core' );
-	$text[] = __( 'Please enter your email address.', 'commentpress-core' );
-	$text[] = __( 'Please enter a valid email address.', 'commentpress-core' );
-	$text[] = __( 'Please enter your comment.', 'commentpress-core' );
-	$text[] = __( 'Your comment has been added.', 'commentpress-core' );
-	$text[] = __( 'AJAX error!', 'commentpress-core' );
+	$translations[] = __( 'Loading...', 'commentpress-core' );
+	$translations[] = __( 'Please enter your name.', 'commentpress-core' );
+	$translations[] = __( 'Please enter your email address.', 'commentpress-core' );
+	$translations[] = __( 'Please enter a valid email address.', 'commentpress-core' );
+	$translations[] = __( 'Please enter your comment.', 'commentpress-core' );
+	$translations[] = __( 'Your comment has been added.', 'commentpress-core' );
+	$translations[] = __( 'AJAX error!', 'commentpress-core' );
 	
 	// add translations for comment reassignment
-	$text[] = __( 'Are you sure?', 'commentpress-core' );
-	$text[] = __( 'Are you sure you want to assign the comment and its replies to the textblock? This action cannot be undone.', 'commentpress-core' );
-	$text[] = __( 'Submitting...', 'commentpress-core' );
-	$text[] = __( 'Please wait while the comments are reassigned. The page will refresh when this has been done.', 'commentpress-core' );
+	$translations[] = __( 'Are you sure?', 'commentpress-core' );
+	$translations[] = __( 'Are you sure you want to assign the comment and its replies to the textblock? This action cannot be undone.', 'commentpress-core' );
+	$translations[] = __( 'Submitting...', 'commentpress-core' );
+	$translations[] = __( 'Please wait while the comments are reassigned. The page will refresh when this has been done.', 'commentpress-core' );
 	
 	// add translations for comment word...
 	// singular
-	$text[] = __( 'Comment', 'commentpress-core' );
+	$translations[] = __( 'Comment', 'commentpress-core' );
 	// plural
-	$text[] = __( 'Comments', 'commentpress-core' );
+	$translations[] = __( 'Comments', 'commentpress-core' );
+	
+	// --<
+	return $translations;
 
-	// wrap each item in single quotes
-	array_walk( $text, create_function( '&$val', '$val = "\'".$val."\'";' ) );
-	
-	// construct array
-	$array = implode( ', ', $text );
-	
-	// add to head
-	echo '<script type="text/javascript">
-	var cpajax_lang = ['.$array.'];
-	</script>';
-	
 }
 
 

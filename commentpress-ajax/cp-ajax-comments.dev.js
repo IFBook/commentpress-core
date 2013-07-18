@@ -17,7 +17,7 @@ Based loosely on the 'Ajax Comment Posting' WordPress plugin (version 2.0)
 
 
 // define vars
-var cpajax_live, cpajax_ajax_url, cpajax_spinner_url, cpajax_post_id, cpajax_submitting;
+var cpajax_live, cpajax_ajax_url, cpajax_spinner_url, cpajax_post_id, cpajax_submitting, cpajax_lang;
 
 // test for our localisation object
 if ( 'undefined' !== typeof CommentpressAjaxSettings ) {
@@ -27,6 +27,7 @@ if ( 'undefined' !== typeof CommentpressAjaxSettings ) {
 	cpajax_ajax_url = CommentpressAjaxSettings.cpajax_ajax_url;
 	cpajax_spinner_url = CommentpressAjaxSettings.cpajax_spinner_url;
 	cpajax_post_id = CommentpressAjaxSettings.cpajax_post_id;
+	cpajax_lang = CommentpressAjaxSettings.cpajax_lang;
 
 }
 
