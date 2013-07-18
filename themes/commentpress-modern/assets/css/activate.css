@@ -1,0 +1,128 @@
+/*
+================================================================================
+CommentPress Multisite Activate Page Stylesheet
+================================================================================
+AUTHOR: Christian Wach <needle@haystack.co.uk>
+--------------------------------------------------------------------------------
+NOTES
+=====
+
+Because we have no control over the activate page markup, we have 
+to override some styles for it to fit with our static header.
+
+--------------------------------------------------------------------------------
+*/
+
+
+
+/* override inline style */
+body form
+{
+	margin: 0;
+}
+
+
+
+/* content */
+#content
+{
+	width: 58%;
+	padding: 45px 0;
+	margin: 0 auto;
+	margin-bottom: 10px;
+	background: #fff;
+	border: 5px solid #B5BFB2;
+	-webkit-box-shadow: #888 2px 2px 5px;
+	-moz-box-shadow: #888 2px 2px 5px;
+	-khtml-box-shadow: #888 2px 2px 5px;
+}
+
+	#content h2
+	{
+		font-family: Georgia, serif;
+		font-size: 1.55em;
+		font-weight: normal;
+		color: #761D19;
+		margin: 8px 0 16px 0;
+		padding: 0 60px 0 77px;
+	}
+	
+	#content p
+	{
+		font-size: 1em;
+		line-height: 1.45;
+		margin: 7px 0 11px 0;
+		padding: 0 60px 0 77px;
+	}
+	
+	#content ul
+	{
+		font-size: 1em;
+		line-height: 1.45;
+		padding: 7px 0 4px 0;
+		background-color: #CBFFBD;
+		-moz-border-radius: 10px;
+		-khtml-border-radius: 10px;
+		-webkit-border-radius: 10px;
+		border-radius: 10px;
+	}
+	
+	#content ul li
+	{
+		font-size: 1.2em;
+		line-height: 1.45;
+		margin: 0 15px;
+		padding: 0px 0 7px 0;
+	}
+	
+	#content a
+	{
+		text-decoration: underline;
+	}
+	
+	#content #signup-welcome
+	{
+		padding: 7px;
+		margin: 7px 60px 7px 77px;
+		background-color: #CBFFBD;
+		-moz-border-radius: 10px;
+		-khtml-border-radius: 10px;
+		-webkit-border-radius: 10px;
+		border-radius: 10px;
+	}
+	
+		#content #signup-welcome p
+		{
+			padding: 0;
+		}
+		
+	#content #activateform label
+	{
+		color: #761D19;
+		font-size: 1.2em;
+	}
+	
+	#content #activateform p
+	{
+		padding-top: 30px;
+	}
+	
+	#content p.submit input
+	{
+		width: auto;
+		font-size: 1.55em;
+		border: 3px solid #761D19;
+		padding: 8px 20px;
+		cursor: pointer;
+		-moz-border-radius: 22px;
+		-khtml-border-radius: 22px;
+		-webkit-border-radius: 22px;
+		border-radius: 22px;
+	}
+
+
+	
+#footer
+{
+	display: none;
+}
