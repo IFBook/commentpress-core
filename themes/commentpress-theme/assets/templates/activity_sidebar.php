@@ -278,7 +278,7 @@ if (
 				// set default
 				$_section_header_text = apply_filters(
 					'cp_activity_tab_recent_title_all_yours', 
-					__( 'Recent Activity in your Documents', 'commentpress-theme' )
+					__( 'Recent Activity in your Documents', 'commentpress-core' )
 				);
 			
 			} else { 
@@ -286,7 +286,7 @@ if (
 				// set default
 				$_section_header_text = apply_filters(
 					'cp_activity_tab_recent_title_all_public', 
-					__( 'Recent Activity in Public Documents', 'commentpress-theme' )
+					__( 'Recent Activity in Public Documents', 'commentpress-core' )
 				);
 		
 			 } ?>
