@@ -140,36 +140,26 @@ function cpajax_add_new_comment( markup, text_sig, comm_parent, comm_id ) {
 		if ( child_list[0] ) {
 		
 			markup.hide()
-				  .css('background', '#c2d8bc')
+				  .addClass( 'comment-highlighted' )
 				  .appendTo( child_list )
 				  .slideDown( 'fast', function() { 
 				  
-						// animate to white
-						markup.animate({ backgroundColor: "#ffffff" }, 1000, function () {
-							
-							// then make transparent
-							markup.css('background', 'transparent');
-						
-						});
-						
+						// remove highlight class
+						markup.addClass( 'comment-fade' );
+	
 				  });
 			
 		} else {
 		
 			markup.wrap( '<ol class="children" />' )
 				  .parent()
-				  .css('background', '#c2d8bc')
+				  .addClass( 'comment-highlighted' )
 				  .hide()
 				  .appendTo( parent_id )
 				  .slideDown( 'fast', function() { 
 				  
 						// animate to white
-						markup.parent().animate({ backgroundColor: "#ffffff" }, 1000, function () {
-							
-							// then make transparent
-							markup.parent().css('background', 'transparent');
-						
-						});
+						markup.parent().addClass( 'comment-fade' );
 						
 				  });
 			
@@ -182,17 +172,12 @@ function cpajax_add_new_comment( markup, text_sig, comm_parent, comm_id ) {
 		if ( comm_list[0] ) {
 		
 			markup.hide()
-				  .css('background', '#c2d8bc')
+				  .addClass( 'comment-highlighted' )
 				  .appendTo( comm_list )
 				  .slideDown( 'fast', function() { 
 				  
 						// animate to white
-						markup.animate({ backgroundColor: "#ffffff" }, 1000, function () {
-							
-							// then make transparent
-							markup.css('background', 'transparent');
-						
-						});
+						markup.addClass( 'comment-fade' );
 						
 				  });
 			
@@ -200,18 +185,13 @@ function cpajax_add_new_comment( markup, text_sig, comm_parent, comm_id ) {
 		
 			markup.wrap( '<ol class="commentlist" />' )
 				  .parent()
-				  .css('background', '#c2d8bc')
+				  .addClass( 'comment-highlighted' )
 				  .hide()
 				  .prependTo( para_id )
 				  .slideDown( 'fast', function() { 
 				  
 						// animate to white
-						markup.parent().animate({ backgroundColor: "#ffffff" }, 1000, function () {
-							
-							// then make transparent
-							markup.parent().css('background', 'transparent');
-						
-						});
+						markup.parent().addClass( 'comment-fade' );
 						
 				  });
 			
@@ -917,8 +897,8 @@ jQuery(document).ready(function($) {
 		new_comm_id = '#comment-' + ( last_id.toString().split('-')[2] );
 		comment = jQuery(new_comm_id);
 		
-		// highlight it
-		comment.css('background', '#c2d8bc');
+		// add a couple of classes
+		comment.addClass( 'comment-highlighted' );
 		
 		jQuery(content).slideDown('slow',
 		
@@ -933,14 +913,9 @@ jQuery(document).ready(function($) {
 						axis: 'y',
 						onAfter: function() {
 						
-							// animate to white
-							comment.animate({ backgroundColor: "#ffffff" }, 1000, function () {
-								
-								// then make transparent
-								comment.css('background', 'transparent');
-							
-							});
-							
+							// remove highlight class
+							comment.addClass( 'comment-fade' );
+		
 						}
 					}
 				);
