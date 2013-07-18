@@ -46,7 +46,7 @@ class CommentpressMultisiteBuddypress {
 	public $cpmu_bp_force_commentpress = '0';
 	
 	// BP: default theme stylesheet for groupblogs (WP3.4+)
-	public $cpmu_bp_groupblog_theme = 'commentpress-theme';
+	public $cpmu_bp_groupblog_theme = 'commentpress-modern';
 	
 	// BP: default theme name for groupblogs (pre-WP3.4)
 	public $cpmu_bp_groupblog_theme_name = 'CommentPress Default Theme';
