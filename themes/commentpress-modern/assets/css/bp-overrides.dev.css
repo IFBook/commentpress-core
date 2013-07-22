@@ -1872,6 +1872,7 @@ ul#groupblog-details li
 #activity_sidebar .workshop_comments_output .comment-identifier p
 {
 	/* we have to use p instead of cite because that's how BP stores activity meta */
+	margin-top: 0;
 	padding: 0;
 	font-size: 70%;
 	font-style: normal;
@@ -1986,6 +1987,7 @@ Compatibility with BP Group Sites plugin
 #activity_sidebar .groupsites_comments_output .comment-identifier p
 {
 	/* we have to use p instead of cite because that's how BP stores activity meta */
+	margin-top: 0;
 	padding: 0;
 	font-size: 70%;
 	font-style: normal;

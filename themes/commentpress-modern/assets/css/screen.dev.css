@@ -1108,6 +1108,7 @@ p.comment_activity_date
 
 .comment-content
 {
+	clear: left;
 	background-color: #fff;
 	padding: 1% 2% 1% 4%;
 	margin: 1% 2% 0 2%;
