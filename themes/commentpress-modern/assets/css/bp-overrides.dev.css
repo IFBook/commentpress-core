@@ -1918,6 +1918,7 @@ Compatibility with BP Group Sites plugin
 }
 
 .bpgsites_comment_group_mine,
+.bpgsites_comment_group_linked,
 .bpgsites_comment_group_public
 {
 	font-size: 70%;

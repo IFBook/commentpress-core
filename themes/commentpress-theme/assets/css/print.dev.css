@@ -713,7 +713,7 @@ Updated by Christian Wach for CommentPress Core
 	}
 	
 	/* show url */
-	.hidden_page_url
+	#footer_inner p.hidden_page_url
 	{
 		display: block;
 		color: #666;
