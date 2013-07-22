@@ -313,3 +313,65 @@ img.alignright
 	margin: 0 0 0.5em 0.5em;
 }
 
+
+
+/* 
+--------------------------------------------------------------------------------
+Captioned Images
+--------------------------------------------------------------------------------
+*/
+
+span.captioned_image
+{
+	display: block;
+	background: #eee; 
+	margin: 7px 0; 
+	border: 1px solid #B5BFB2; 
+	max-width: 99%;
+	height: auto;
+}
+
+	span.captioned_image.aligncenter
+	{
+		margin: 0 auto;
+		margin-top: 0.5em; 
+	}
+	
+	span.captioned_image.alignleft
+	{ 
+		margin-right: 0.5em; 
+	}
+	
+	span.captioned_image.alignright
+	{ 
+		margin-left: 0.5em; 
+	}
+
+span.wp-caption 
+{ 
+	display: block;
+	text-align: center; 
+	padding: 0;
+	margin: 10px;
+}
+
+small.wp-caption-text
+{ 
+	display: block;
+	text-align: center;
+	padding: 0;
+	margin: 10px;
+	margin-top: 0.2em;
+	font-family: sans-serif;
+}
+
+/* support unfiltered captions */
+dd.wp-caption-dd
+{ 
+	text-align: center;
+	padding: 0;
+	margin-top: 0.2em;
+	font-family: sans-serif;
+}
+
+

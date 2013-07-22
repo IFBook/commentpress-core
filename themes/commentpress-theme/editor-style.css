@@ -1,32 +1,198 @@
-/* Global reset */
-/* Based upon 'reset.css' in the Yahoo! User Interface Library: http://developer.yahoo.com/yui */
-*, html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, label, fieldset, input, p, blockquote, th, td { margin:0; padding:0 }
-table { border-collapse:collapse; border-spacing:0 }
-fieldset, img { border:0 }
-address, caption, cite, code, dfn, em, strong, th, var { font-style:normal; font-weight:normal }
-ol, ul, li { list-style:none }
-caption, th { text-align:left }
-h1, h2, h3, h4, h5, h6 { font-size:100%; font-weight:normal }
-q:before, q:after { content:'' }
+/*
+================================================================================
+CommentPress Default Editor Stylesheet
+================================================================================
+AUTHOR: Christian Wach <needle@haystack.co.uk>
+--------------------------------------------------------------------------------
+NOTES
+
+--------------------------------------------------------------------------------
+*/
 
 
 
-/* Global reset-RESET */
-/* The below restores some sensible defaults */
-strong { font-weight: bold }
-em { font-style: italic }
-a img { border:none } /* Gets rid of IE's blue borders */
 
 
 
-/* TYPOGRAPHY */
+/* 
+--------------------------------------------------------------------------------
+RESET & BASICS
+--------------------------------------------------------------------------------
+Based on Yahoo! User Interface Library: 
+http://yuilibrary.com/yui/docs/cssreset/
+http://yuilibrary.com/yui/docs/cssbase/
+--------------------------------------------------------------------------------
+*/
+
+html
+{
+	color: #000;
+	background-color: #fff;
+	font-size: 100%; 
+	overflow-y: scroll; 
+	-webkit-text-size-adjust: 100%; 
+	-moz-text-size-adjust: 100%; 
+	-ms-text-size-adjust: 100%;
+}
+
+body, div,
+dl, dt, dd, ul, ol, li,
+h1, h2, h3, h4, h5, h6,
+pre, code,
+form, fieldset, legend, textarea,
+p, blockquote, th, td
+{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+body
+{
+	margin: 0 6%;
+	padding: 2% 0;
+	line-height: 1.2;
+}
+
+table { border-collapse: collapse; border-spacing: 0; }
+fieldset, img { border: 0; }
+address, caption, cite, code, dfn, em, strong, th, var { font-style: normal; font-weight: normal; }
+ol, ul { list-style: none; }
+caption, th { text-align: left; }
+h1, h2, h3, h4, h5, h6 { font-size: 100%; font-weight: normal; }
+q:before, q:after { content: ''; }
+abbr, acronym { border: 0; font-variant: normal; }
+/* "sub, sup" from https://gist.github.com/unruthless/413930 */
+sub, sup 
+{
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+input, textarea, select { font-family: inherit; font-size: inherit; font-weight: inherit; }
+input, textarea, select { *font-size: 100%; }
+legend { color: #000; }
 
 
+
+/* selection - uncomment if needed */
+/*
+::-moz-selection { background: #ff0; color: #000; text-shadow: none; }
+::selection { background: #ff0; color: #000; text-shadow: none; }
+*/
+
+
+/* sensible defaults */
+h1 {
+	/*18px via YUI Fonts CSS foundation*/
+	font-size: 138.5%;
+}
+h2 {
+	/*16px via YUI Fonts CSS foundation*/
+	font-size: 123.1%; 
+}
+h3 {
+	/*14px via YUI Fonts CSS foundation*/
+	font-size: 108%;
+}
+h1, h2, h3 {
+	/* top & bottom margin based on font size */
+	margin: 1em 0;
+}
+h1, h2, h3, h4, h5, h6, strong {
+	/*bringing boldness back to headers and the strong element*/
+	font-weight: bold; 
+}
+abbr, acronym {
+	/*indicating to users that more info is available */
+	border-bottom: 1px dotted #000;
+	cursor: help;
+} 
+em {
+	/*bringing italics back to the em element*/
+	font-style: italic;
+}
+blockquote, ul, ol, dl {
+	/*giving blockquotes and lists room to breath*/
+	margin: 1em;
+}
+ol, ul, dl {
+	/*bringing lists on to the page with breathing room */
+	margin-left: 2em;
+}
+ol {
+	/*giving OL's LIs generated numbers*/
+	list-style: decimal outside;	
+}
+ul {
+	/*giving UL's LIs generated disc markers*/
+	list-style: disc outside;
+}
+dt {
+	/*bringing boldness back to definition titles*/
+	font-weight: bold; 
+}
+dl dd {
+	/*providing spacing for definition terms*/
+	margin-left: 1em;
+}
+th, td {
+	/*borders and padding to make the table readable*/
+	border: 1px solid #000;
+	padding: .5em;
+}
+th {
+	/*distinguishing table headers from data cells*/
+	font-weight: bold;
+	text-align: center;
+}
+caption {
+	/*coordinated margin to match cell's padding*/
+	margin-bottom: 0.5em;
+	/*centered so it doesn't blend in to other content*/
+	text-align: center;
+}
+p, fieldset, table, pre, address {
+	/*so things don't run into each other*/
+	margin-top: 0.7em;
+	margin-bottom: 0.7em;
+}
+p, li
+{
+	/* let text elements break words to wrap */
+	-ms-word-wrap: break-word;
+	word-wrap: break-word;
+}
+address, caption, cite, dfn, em, th, var, q
+{
+	/*let's not confound people's expectations*/
+	font-style: italic;
+}
+u, ins
+{
+	/*let's not confound people's expectations*/
+	text-decoration: underline;
+}
+tt, code, kbd, samp
+{
+	/*let's not confound people's expectations*/
+	font-family: monospace;
+}
+/* setting a consistent width, 160px; 
+   control of type=file still not possible */
+input[type=text], input[type=password], textarea { width: 12.25em; *width: 11.9em; }
+
+/* prevents outlines - we set them explicitly for elements that require them */
+a:focus { outline: 0; }
 
 /* This helps to identify headings at the initial build stage */
 h1, h2, h3, h5, h5, h6 { font-weight: bold }
-
-
 
 /* definition lists */
 dt { font-weight: bold }
@@ -41,7 +207,6 @@ abbr
 }
 
 /* In an aural stylesheet, we'd add:
-
 acronym { speak: normal; }
 abbr.initialism { speak: spell-out; }
 abbr.truncation { speak: normal; }
@@ -54,15 +219,6 @@ abbr.truncation { speak: normal; }
 Post-related styles
 --------------------------------------------------------------------------------
 */
-
-p,
-ul,
-ol,
-dl,
-address
-{
-	padding: 7px 0 11px 0;
-}
 
 h1 
 {
