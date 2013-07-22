@@ -1344,12 +1344,21 @@ div#respond .subscribe_reloaded_insert p
 	background-color: transparent;
 }
 
-.heading-highlighted
+.notransition 
+{
+	-webkit-transition: none !important;
+	-moz-transition: none !important;
+	-o-transition: none !important;
+	-ms-transition: none !important;
+	transition: none !important;
+}
+
+.comments_container > h3.heading-highlighted
 {
 	background-color: #c2d8bc;
 }
 
-.heading-fade
+.comments_container > h3.heading-highlighted.heading-fade
 {
 	-webkit-transition: background-color 1s ease;
 	-moz-transition: background-color 1s ease;

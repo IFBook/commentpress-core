@@ -274,11 +274,28 @@ function cpajax_add_new_comment( markup, text_sig, comm_parent, comm_id ) {
 	
 	
 	
-	// find header
+	// find header and prepare
 	head = jQuery( head_id );
+	
+	// add notransition class
+	head.addClass( 'notransition' );
+	
+	// remove existing classes
+	if ( head.hasClass( 'heading-fade' ) ) {
+		head.removeClass( 'heading-fade' );
+	}
+	if ( head.hasClass( 'heading-highlighted' ) ) {
+		head.removeClass( 'heading-highlighted' );
+	}
 	
 	// highlight
 	head.addClass( 'heading-highlighted' );
+	
+	// remove notransition class
+	head.removeClass( 'notransition' );
+	
+	// trigger reflow
+	head.height();
 	
 	// animate to existing bg (from css file)
 	head.addClass( 'heading-fade' );

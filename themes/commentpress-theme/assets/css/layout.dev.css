@@ -1739,12 +1739,21 @@ body.cp_sidebar_comments #comments_sidebar
 		background-color: transparent;
 	}
 
-	.heading-highlighted
+	.notransition 
+	{
+		-webkit-transition: none !important;
+		-moz-transition: none !important;
+		-o-transition: none !important;
+		-ms-transition: none !important;
+		transition: none !important;
+	}
+
+	div#comments_sidebar .comments_container > h3.heading-highlighted
 	{
 		background-color: #c2d8bc;
 	}
 
-	.heading-fade
+	div#comments_sidebar .comments_container > h3.heading-fade
 	{
 		-webkit-transition: background-color 1s ease;
 		-moz-transition: background-color 1s ease;
