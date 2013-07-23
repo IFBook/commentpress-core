@@ -1415,4 +1415,3 @@ class CommentpressCoreNavigator {
 
 
 
-?>

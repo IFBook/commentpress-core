@@ -42,7 +42,7 @@ global $post;
 
 
 <div class="cancel-comment-reply">
-	<p><?php cancel_comment_reply_link('Cancel'); ?></p>
+	<p><?php cancel_comment_reply_link( 'Cancel' ); ?></p>
 </div>
 
 
@@ -67,21 +67,21 @@ global $post;
 	
 		<fieldset id="author_details">
 	
-			<legend class="off-left">Your details</legend>
+			<legend class="off-left"><?php _e( 'Your details', 'commentpress-core' ); ?></legend>
 		
 			<?php if ( $user_ID ) : ?>
 		
-				<p class="author_is_logged_in">Logged in as <a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php echo $user_identity; ?></a> &rarr; <a href="<?php echo wp_logout_url(get_permalink()); ?>" title="Log out of this account">Log out</a></p>
+				<p class="author_is_logged_in"><?php _e( 'Logged in as', 'commentpress-core' ); ?> <a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php echo $user_identity; ?></a> &rarr; <a href="<?php echo wp_logout_url(get_permalink()); ?>" title="<?php _e( 'Log out of this account', 'commentpress-core' ); ?>"><?php _e( 'Log out', 'commentpress-core' ); ?></a></p>
 		
 			<?php else : ?>
 		
-				<p><label for="author"><small>Name<?php if ($req) echo ' <span class="req">(required)</span>'; ?></small></label><br />
+				<p><label for="author"><small><?php _e( 'Name', 'commentpress-core' ); ?><?php if ($req) echo ' <span class="req">('.__( 'required', 'commentpress-core' ).')</span>'; ?></small></label><br />
 				<input type="text" name="author" id="author" value="<?php echo $comment_author; ?>" size="30"<?php if ($req) echo ' aria-required="true"'; ?> /></p>
 			
-				<p><label for="email"><small>Mail (will not be published)<?php if ($req) echo ' <span class="req">(required)</span>'; ?></small></label><br />
+				<p><label for="email"><small><?php _e( 'Mail (will not be published)', 'commentpress-core' ); ?><?php if ($req) echo ' <span class="req">('.__( 'required', 'commentpress-core' ).')</span>'; ?></small></label><br />
 				<input type="text" name="email" id="email" value="<?php echo $comment_author_email; ?>" size="30"<?php if ($req) { echo ' aria-required="true"'; } ?> /></p>
 			
-				<p class="author_not_logged_in"><label for="url"><small>Website</small></label><br />
+				<p class="author_not_logged_in"><label for="url"><small><?php _e( 'Website', 'commentpress-core' ); ?></small></label><br />
 				<input type="text" name="url" id="url" value="<?php echo $comment_author_url; ?>" size="30" /></p>
 		
 			<?php endif; ?>
@@ -90,9 +90,9 @@ global $post;
 	
 		<fieldset id="comment_details">
 	
-			<legend class="off-left">Your comment</legend>
+			<legend class="off-left"><?php _e( 'Your comment', 'commentpress-core' ); ?></legend>
 		
-			<label for="comment" class="off-left">Comment</label>
+			<label for="comment" class="off-left"><?php _e( 'Comment', 'commentpress-core' ); ?></label>
 			<?php
 		
 			// in functions.php
@@ -134,7 +134,7 @@ global $post;
 	
 		?>
 
-		<p id="respond_button"><input name="submit" type="submit" id="submit" value="Submit Comment" /></p>
+		<p id="respond_button"><input name="submit" type="submit" id="submit" value="<?php _e( 'Submit Comment', 'commentpress-core' ); ?>" /></p>
 
 		<?php do_action('comment_form', $post->ID); ?>
 

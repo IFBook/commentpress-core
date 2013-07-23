@@ -133,7 +133,7 @@ class CommentpressCoreDisplay {
 			// get CommentPress Core theme by default, but allow overrides
 			$target_theme = apply_filters(
 				'cp_forced_theme_slug',
-				'commentpress-theme'
+				'commentpress-modern'
 			);
 			
 			// get the theme we want
@@ -2958,4 +2958,3 @@ tinyMCE.init(tinyMCEPreInit.mceInit);
 
 
 
-?>

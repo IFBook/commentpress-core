@@ -6,7 +6,7 @@
 
 <div class="sidebar_header">
 
-<h2>Table of Contents</h2>
+<h2><?php _e( 'Table of Contents', 'commentpress-core' ); ?></h2>
 
 </div>
 

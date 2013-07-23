@@ -16,6 +16,11 @@ Updated by Christian Wach for CommentPress Core
 	}
 	
 	/* Set sensible defaults */
+	* 
+	{
+		background: white;
+	}
+	
 	body 
 	{
 		background: white;
@@ -81,7 +86,15 @@ Updated by Christian Wach for CommentPress Core
 	p.edit_link,
 	.cp_logo_image,
 	.comment-identifier span.comment-edit,
-	.comment-identifier span.comment-assign
+	.comment-identifier span.comment-assign,
+	/* JetPack sharing */
+	div.sharedaddy, 
+	#content div.sharedaddy, 
+	#main div.sharedaddy,
+	/* Featured Comments */
+	div.feature-burry-comments,
+	/* Comment Upvoter */
+	.comment-upvote
 	{
 		display: none !important;
 	}
@@ -109,6 +122,8 @@ Updated by Christian Wach for CommentPress Core
 	#title
 	{
 		float: none;
+		margin: 0;
+		padding: 0;
 	}
 	
 	/* show Site Title */
@@ -144,6 +159,7 @@ Updated by Christian Wach for CommentPress Core
 	{
 		position: static !important;
 		top: auto !important;
+		background: white;
 	}
 	
 	/* Remove borders */
@@ -160,10 +176,11 @@ Updated by Christian Wach for CommentPress Core
 		width: auto;
 		padding: 0;
 		margin: 0;
-		-webkit-box-shadow: 0 0 0 #fff;
-		-moz-box-shadow: 0 0 0 #fff;
-		-khtml-box-shadow: 0 0 0 #fff;
-		box-shadow: 0 0 0 #fff;
+		border: none;
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		-khtml-box-shadow: none;
+		box-shadow: none;
 	}
 
 	#content
@@ -171,6 +188,7 @@ Updated by Christian Wach for CommentPress Core
 		padding: 0;
 		margin: 0;
 		height: auto;
+		border: none;
 	}
 	
 	/* prioritise content */
@@ -252,6 +270,11 @@ Updated by Christian Wach for CommentPress Core
 		margin: 1em 0;
 		padding: 0;
 		line-height: 1.5;
+	}
+	
+	p.selected_para 
+	{
+		color: #000;
 	}
 	
 	.post ul,
@@ -516,7 +539,6 @@ Updated by Christian Wach for CommentPress Core
 
 
 
-
 	/* prioritise comment content */
 	div#comments_sidebar .comments_container .comment-content
 	{
@@ -691,7 +713,7 @@ Updated by Christian Wach for CommentPress Core
 	}
 	
 	/* show url */
-	.hidden_page_url
+	#footer_inner p.hidden_page_url
 	{
 		display: block;
 		color: #666;
@@ -725,6 +747,7 @@ Updated by Christian Wach for CommentPress Core
 	
 	table
 	{
+		width: auto;
 	}
 	
 	table th,

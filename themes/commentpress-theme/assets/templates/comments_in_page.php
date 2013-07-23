@@ -26,7 +26,7 @@ NOTES
 <?php if ('open' != $post->comment_status) : ?>
 
 	<!-- comments are closed. -->
-	<h3 class="nocomments">Comments are closed</h3>
+	<h3 class="nocomments comments-closed"><span><?php _e( 'Comments are closed', 'commentpress-core' ); ?></span></h3>
 
 <?php endif; ?>
 

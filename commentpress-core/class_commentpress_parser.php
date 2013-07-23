@@ -2239,4 +2239,3 @@ class CommentpressCoreParser {
 
 
 
-?>

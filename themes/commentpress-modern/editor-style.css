@@ -1,0 +1,377 @@
+/*
+================================================================================
+CommentPress Modern Editor Stylesheet
+================================================================================
+AUTHOR: Christian Wach <needle@haystack.co.uk>
+--------------------------------------------------------------------------------
+NOTES
+
+--------------------------------------------------------------------------------
+*/
+
+
+
+
+
+
+/* 
+--------------------------------------------------------------------------------
+RESET & BASICS
+--------------------------------------------------------------------------------
+Based on Yahoo! User Interface Library: 
+http://yuilibrary.com/yui/docs/cssreset/
+http://yuilibrary.com/yui/docs/cssbase/
+--------------------------------------------------------------------------------
+*/
+
+html
+{
+	color: #000;
+	background-color: #fff;
+	font-size: 100%; 
+	overflow-y: scroll; 
+	-webkit-text-size-adjust: 100%; 
+	-moz-text-size-adjust: 100%; 
+	-ms-text-size-adjust: 100%;
+}
+
+body, div,
+dl, dt, dd, ul, ol, li,
+h1, h2, h3, h4, h5, h6,
+pre, code,
+form, fieldset, legend, textarea,
+p, blockquote, th, td
+{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+body
+{
+	margin: 0 6%;
+	padding: 2% 0;
+	line-height: 1.6;
+}
+
+table { border-collapse: collapse; border-spacing: 0; }
+fieldset, img { border: 0; }
+address, caption, cite, code, dfn, em, strong, th, var { font-style: normal; font-weight: normal; }
+ol, ul { list-style: none; }
+caption, th { text-align: left; }
+h1, h2, h3, h4, h5, h6 { font-size: 100%; font-weight: normal; }
+q:before, q:after { content: ''; }
+abbr, acronym { border: 0; font-variant: normal; }
+/* "sub, sup" from https://gist.github.com/unruthless/413930 */
+sub, sup 
+{
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+input, textarea, select { font-family: inherit; font-size: inherit; font-weight: inherit; }
+input, textarea, select { *font-size: 100%; }
+legend { color: #000; }
+
+
+
+/* selection - uncomment if needed */
+/*
+::-moz-selection { background: #ff0; color: #000; text-shadow: none; }
+::selection { background: #ff0; color: #000; text-shadow: none; }
+*/
+
+
+/* sensible defaults */
+h1 {
+	/*18px via YUI Fonts CSS foundation*/
+	font-size: 138.5%;
+}
+h2 {
+	/*16px via YUI Fonts CSS foundation*/
+	font-size: 123.1%; 
+}
+h3 {
+	/*14px via YUI Fonts CSS foundation*/
+	font-size: 108%;
+}
+h1, h2, h3 {
+	/* top & bottom margin based on font size */
+	margin: 1em 0;
+}
+h1, h2, h3, h4, h5, h6, strong {
+	/*bringing boldness back to headers and the strong element*/
+	font-weight: bold; 
+}
+abbr, acronym {
+	/*indicating to users that more info is available */
+	border-bottom: 1px dotted #000;
+	cursor: help;
+} 
+em {
+	/*bringing italics back to the em element*/
+	font-style: italic;
+}
+blockquote, ul, ol, dl {
+	/*giving blockquotes and lists room to breath*/
+	margin: 1em;
+}
+ol, ul, dl {
+	/*bringing lists on to the page with breathing room */
+	margin-left: 2em;
+}
+ol {
+	/*giving OL's LIs generated numbers*/
+	list-style: decimal outside;	
+}
+ul {
+	/*giving UL's LIs generated disc markers*/
+	list-style: disc outside;
+}
+dt {
+	/*bringing boldness back to definition titles*/
+	font-weight: bold; 
+}
+dl dd {
+	/*providing spacing for definition terms*/
+	margin-left: 1em;
+}
+th, td {
+	/*borders and padding to make the table readable*/
+	border: 1px solid #000;
+	padding: .5em;
+}
+th {
+	/*distinguishing table headers from data cells*/
+	font-weight: bold;
+	text-align: center;
+}
+caption {
+	/*coordinated margin to match cell's padding*/
+	margin-bottom: 0.5em;
+	/*centered so it doesn't blend in to other content*/
+	text-align: center;
+}
+p, fieldset, table, pre, address {
+	/*so things don't run into each other*/
+	margin-top: 0.7em;
+	margin-bottom: 0.7em;
+}
+p, li
+{
+	/* let text elements break words to wrap */
+	-ms-word-wrap: break-word;
+	word-wrap: break-word;
+}
+address, caption, cite, dfn, em, th, var, q
+{
+	/*let's not confound people's expectations*/
+	font-style: italic;
+}
+u, ins
+{
+	/*let's not confound people's expectations*/
+	text-decoration: underline;
+}
+tt, code, kbd, samp
+{
+	/*let's not confound people's expectations*/
+	font-family: monospace;
+}
+/* setting a consistent width, 160px; 
+   control of type=file still not possible */
+input[type=text], input[type=password], textarea { width: 12.25em; *width: 11.9em; }
+
+/* prevents outlines - we set them explicitly for elements that require them */
+a:focus { outline: 0; }
+
+blockquote 
+{
+	margin-left: 0;
+	margin-right: 0;
+	padding: 0 15px 0 15px;
+	border-left: 1px solid #ddd;
+	font-style: italic;
+}
+
+/* buttons borrowed from BuddyPress */
+button,
+a.button,
+input[type=submit],
+input[type=button],
+input[type=reset],
+ul.button-nav li a,
+div.generic-button a
+{
+	background: #fff; /* Old browsers */
+	background: -moz-linear-gradient(top, #ffffff 0%, #ededed 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ededed)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #ffffff 0%,#ededed 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #ffffff 0%,#ededed 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, #ffffff 0%,#ededed 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, #ffffff 0%,#ededed 100%); /* W3C */
+	border: 1px solid #ccc;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	color: #777;
+	cursor: pointer;
+	font: normal 12px/20px Arial, Tahoma, Verdana, sans-serif;
+	outline: none;
+	padding: 4px 10px;
+	text-align: center;
+	text-decoration: none;
+	line-height: 14px;
+}
+
+button:hover,
+a.button:hover,
+a.button:focus,
+input[type=submit]:hover,
+input[type=button]:hover,
+input[type=reset]:hover,
+ul.button-nav li a:hover,
+ul.button-nav li.current a,
+div.generic-button a:hover
+{
+	background: #ededed;
+	background: -moz-linear-gradient(top, #ffffff 0%, #e0e0e0 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e0e0e0)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e0e0e0',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* W3C */
+	border: 1px solid #bbb;
+	color: #555;
+	outline: none;
+	text-decoration: none;
+}
+
+pre
+{
+	font-family: monospace;
+	overflow: auto;
+	background-color: #f8f8f8;
+	border: 1px solid #eee;
+	padding: 0.6em;
+	line-height: 1.4;
+}
+
+/* Tables */
+table 
+{
+	border: 0;
+	border-collapse: collapse;
+	border-spacing: 0;
+	border-bottom: 1px solid #e6e6e6;
+	width: 100%;
+}
+
+table td 
+{
+	border: 0;
+	border-top: 1px solid #e6e6e6;
+}
+
+table th 
+{
+	border: 0;
+	border-top: 1px solid #e6e6e6;
+	font-weight: bold;
+	font-style: normal;
+	text-align: left;
+}
+
+h1, h2, h3, h4, h5, h6
+{
+	font-family: sans-serif;
+	text-transform: uppercase; 
+}
+
+img 
+{
+	max-width: 100%;
+	height: auto;
+}
+
+img.alignleft 
+{
+	margin: 0 0.5em 0.5em 0;
+}
+
+img.alignright
+{
+	margin: 0 0 0.5em 0.5em;
+}
+
+
+
+/* 
+--------------------------------------------------------------------------------
+Captioned Images
+--------------------------------------------------------------------------------
+*/
+
+span.captioned_image
+{
+	display: block;
+	background: #eee; 
+	margin: 7px 0; 
+	border: 1px solid #B5BFB2; 
+	max-width: 99%;
+	height: auto;
+}
+
+	span.captioned_image.aligncenter
+	{
+		margin: 0 auto;
+		margin-top: 0.5em; 
+	}
+	
+	span.captioned_image.alignleft
+	{ 
+		margin-right: 0.5em; 
+	}
+	
+	span.captioned_image.alignright
+	{ 
+		margin-left: 0.5em; 
+	}
+
+span.wp-caption 
+{ 
+	display: block;
+	text-align: center; 
+	padding: 0;
+	margin: 10px;
+}
+
+small.wp-caption-text
+{ 
+	display: block;
+	text-align: center;
+	padding: 0;
+	margin: 10px;
+	margin-top: 0.2em;
+	font-family: sans-serif;
+}
+
+/* support unfiltered captions */
+dd.wp-caption-dd
+{ 
+	text-align: center;
+	padding: 0;
+	margin-top: 0.2em;
+	font-family: sans-serif;
+}
+
+

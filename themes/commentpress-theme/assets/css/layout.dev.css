@@ -1739,6 +1739,30 @@ body.cp_sidebar_comments #comments_sidebar
 		background-color: transparent;
 	}
 
+	.notransition 
+	{
+		-webkit-transition: none !important;
+		-moz-transition: none !important;
+		-o-transition: none !important;
+		-ms-transition: none !important;
+		transition: none !important;
+	}
+
+	div#comments_sidebar .comments_container > h3.heading-highlighted
+	{
+		background-color: #c2d8bc;
+	}
+
+	div#comments_sidebar .comments_container > h3.heading-fade
+	{
+		-webkit-transition: background-color 1s ease;
+		-moz-transition: background-color 1s ease;
+		-o-transition: background-color 1s ease;
+		-ms-transition: background-color 1s ease;
+		transition: background-color 1s ease;
+		background-color: #EFEFEF;
+	}
+
 	
 
 
@@ -2637,6 +2661,21 @@ Compatibility with BP Group Sites plugin
 	font-size: 70%;
 }
 
+
+
+
+
+
+/*
+--------------------------------------------------------------------------------
+Compatibility with BP Docs plugin
+--------------------------------------------------------------------------------
+*/
+
+.single-bp_doc #respond
+{
+	margin-top: 0;
+}
 
 
 
