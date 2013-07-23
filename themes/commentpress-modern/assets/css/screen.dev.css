@@ -2546,11 +2546,17 @@ ol.footnotes,
 	text-decoration: none;
 	font-size: 70%;
 	font-weight: bold;
-	vertical-align: top;
 	-moz-border-radius: 6px;
 	-khtml-border-radius: 6px;
 	-webkit-border-radius: 6px;
 	border-radius: 6px;
+}
+
+.footnotereverse a,
+.footnote-link.footnote-back-link,
+.simple-footnotes li > a
+{
+	vertical-align: top;
 }
 
 .footnote-link.footnote-back-link
