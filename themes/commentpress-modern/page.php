@@ -97,7 +97,7 @@ include( $page_navigation );
 	if ( class_exists( 'PTCFP' ) ) {
 	
 	?>
-	<p class="search_meta"><?php the_tags('Tags: ', ', ', '<br />'); ?> Posted in <?php the_category(', ') ?></p>
+	<p class="search_meta"><?php the_tags('Tags: ', ', ', '<br />'); ?> <?php _e( 'Posted in', 'commentpress-core' ); ?> <?php the_category(', ') ?></p>
 	<?php
 	
 	}
@@ -150,9 +150,9 @@ include( $page_navigation );
 
 <div class="post">
 
-	<h2 class="post_title">Page Not Found</h2>
+	<h2 class="post_title"><?php _e( 'Page Not Found', 'commentpress-core' ); ?></h2>
 	
-	<p>Sorry, but you are looking for something that isn't here.</p>
+	<p><?php _e( "Sorry, but you are looking for something that isn't here.", 'commentpress-core' ); ?></p>
 	
 	<?php get_search_form(); ?>
 

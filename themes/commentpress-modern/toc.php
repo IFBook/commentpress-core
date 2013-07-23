@@ -27,7 +27,7 @@ get_header(); ?>
 
 <div class="post">
 
-<h2 class="post_title">TOC</h2>
+<h2 class="post_title"><?php _e( 'TOC', 'commentpress-core' ); ?></h2>
 
 </div><!-- /post -->
 

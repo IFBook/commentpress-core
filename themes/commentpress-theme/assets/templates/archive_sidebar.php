@@ -6,7 +6,7 @@
 
 <div class="sidebar_header">
 
-<h2>Archives</h2>
+<h2><?php _e( 'Archives', 'commentpress-core' ); ?></h2>
 
 </div>
 

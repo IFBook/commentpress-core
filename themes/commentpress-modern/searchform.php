@@ -47,7 +47,7 @@ if (
 
 <input type="text" value="<?php the_search_query(); ?>" name="s" id="s" />
 
-<input type="submit" id="searchsubmit" value="Search" />
+<input type="submit" id="searchsubmit" value="<?php _e( 'Search', 'commentpress-core' ); ?>" />
 
 </form>
 

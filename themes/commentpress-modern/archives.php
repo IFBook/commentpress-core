@@ -43,7 +43,7 @@ get_header(); ?>
 
 <div class="archives_by_month">
 
-<h3>Archives by Month</h3>
+<h3><?php _e( 'Archives by Month', 'commentpress-core' ); ?></h3>
 
 <ul>
 	<?php wp_get_archives('type=monthly'); ?>
@@ -55,7 +55,7 @@ get_header(); ?>
 
 <div class="categories">
 
-<h3>Categories</h3>
+<h3><?php _e( 'Categories', 'commentpress-core' ); ?></h3>
 
 <ul>
 <?php 
@@ -97,7 +97,7 @@ wp_list_categories( $defaults );
 
 <div class="tags">
 
-<h3>Tags</h3>
+<h3><?php _e( 'Tags', 'commentpress-core' ); ?></h3>
 
 <?php 
 
@@ -129,7 +129,7 @@ if ( $tags != '' ) {
 
 } else {
 
-	echo '<ul><li class="no_tags">No tags yet</li></ul>';
+	echo '<ul><li class="no_tags">'.__( 'No tags yet', 'commentpress-core' ).'</li></ul>';
 
 }
 

@@ -45,7 +45,7 @@
 			
 		</div>
 	
-		<?php the_content('<p class="serif">Read the rest of the text &raquo;</p>'); ?>
+		<?php the_content('<p>Read the rest of the text &raquo;</p>'); ?>
 
 		<p class="postmetadata" style="clear: left;">
 			This image was posted on <?php the_time('l, F jS, Y') ?> at <?php the_time() ?>
@@ -76,11 +76,11 @@
 
 		<ul class="image_link">
 			<li class="alignright">
-				<h4>Next Image &raquo;</h4>
+				<h4><?php _e( 'Next Image &raquo;', 'commentpress-core' ); ?></h4>
 				<?php next_image_link() ?>
 			</li>
 			<li class="alignleft">
-				<h4>&laquo; Previous Image</h4>
+				<h4><?php _e( '&laquo; Previous Image', 'commentpress-core' ); ?></h4>
 				<?php previous_image_link() ?>
 			</li>
 		</ul>
@@ -95,7 +95,9 @@
 
 	<div class="post">
 
-		<p>Sorry, no attachments matched your criteria.</p>
+		<h2><?php _e( 'Not Found', 'commentpress-core' ); ?></h2>
+	
+		<p><?php _e( 'Sorry, no attachments matched your criteria.', 'commentpress-core' ); ?></p>
 
 	</div><!-- /post -->
 

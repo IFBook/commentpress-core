@@ -27,7 +27,7 @@ get_header(); ?>
 
 <div class="post">
 
-<h2 class="post_title">Links:</h2>
+<h2 class="post_title"><?php _e( 'Links:', 'commentpress-core' ); ?></h2>
 
 <ul>
 <?php wp_list_bookmarks(); ?>

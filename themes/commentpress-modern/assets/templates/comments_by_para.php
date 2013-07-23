@@ -14,7 +14,7 @@ Comments template for CommentPress
 
 
 // Do not delete these lines
-if (!empty($_SERVER['SCRIPT_FILENAME']) && 'comments_by_para.php' == basename($_SERVER['SCRIPT_FILENAME'])) {
+if (!empty($_SERVER['SCRIPT_FILENAME']) AND 'comments_by_para.php' == basename($_SERVER['SCRIPT_FILENAME'])) {
 	die ('Please do not load this page directly. Thanks!');
 }
 
@@ -37,7 +37,7 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) && 'comments_by_para.php' == basename($_
 <?php if ('closed' == $post->comment_status) : ?>
 
 	<!-- comments are closed. -->
-	<h3 class="nocomments comments-closed"><span>Comments are closed</span></h3>
+	<h3 class="nocomments comments-closed"><span><?php _e( 'Comments are closed', 'commentpress-core' ); ?></span></h3>
 
 <?php endif; ?>
 

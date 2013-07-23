@@ -51,7 +51,7 @@ get_header(); ?>
 
 
 
-<h2 class="post_title">Group Members</h2>
+<h2 class="post_title"><?php _e( 'Group Members', 'commentpress-core' ); ?></h2>
 
 
 

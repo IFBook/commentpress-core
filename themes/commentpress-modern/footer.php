@@ -27,31 +27,7 @@
 		} else {
 			
 			// show copyright 
-			?>
-		
-			<p>Website content &copy; <a href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a> <?php echo date('Y'); ?>. All rights reserved.</p>
-			
-			<?php 
-			
-			/*
-			// legacy backlink, leave out for now
-			if ( 
-			
-				"http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == home_url()."/" || 
-				"http://www.".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == home_url()."/" || 
-				$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == home_url()."/" || 
-				"www.".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == home_url()."/" 
-				
-			) { 
-			
-			?>
-			
-			<p>This site is powered by <a href="http://www.futureofthebook.org/commentpress/">CommentPress</a></p>
-			
-			<?php 
-			
-			}
-			*/
+			?><p><?php _e( 'Website content', 'commentpress-core' ); ?> &copy; <a href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a> <?php echo date('Y'); ?>. <?php _e( 'All rights reserved.', 'commentpress-core' ); ?></p><?php 
 			
 		}
 		

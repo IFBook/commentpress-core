@@ -8,7 +8,7 @@
 
 <div class="sidebar_header">
 
-<h2>Contents</h2>
+<h2><?php _e( 'Contents', 'commentpress-core' ); ?></h2>
 
 </div>
 
