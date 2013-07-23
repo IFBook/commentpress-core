@@ -2912,4 +2912,3 @@ class CommentpressCore {
 
 
 
-?>

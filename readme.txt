@@ -3,8 +3,8 @@ Contributors: needle, commentpress
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZSKM8T5ZP3SC
 Tags: commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
 Requires at least: 3.3
-Tested up to: 3.5.1
-Stable tag: 3.4.8
+Tested up to: 3.5.2
+Stable tag: 3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,9 +20,9 @@ Annotate, gloss, workshop, debate: with CommentPress Core you can do all of thes
 
 **The name has been changed from "CommentPress" to "CommentPress Core" for two reasons:** (a) because it serves as the basis for extending it for your purposes and (b) to safeguard historical installations, which could break if they upgrade. Newer "CommentPress" installations (versions 3.0.x - 3.3.x) can upgrade to the current version.
 
-**Please note:** this plugin comes bundled with the official CommentPress Default Theme which will be auto-activated when the plugin is activated. If you are upgrading from a previous version of CommentPress, please follow the instructions in the Installation section before doing so.
+**Please note:** this plugin comes bundled with two official themes. The new "CommentPress Modern Theme" will be auto-activated when the plugin is first activated. The old "CommentPress Default Theme" is still included for those who wish to stay with it or have built their own child themes for it. If you are upgrading from a previous version of *CommentPress* (3.0.x - 3.3.x), please follow the instructions in the Installation section before doing so.
 
-**For sites hosted in the European Union, please note:** CommentPress makes use of cookies, but for presentational purposes only. If you intend to use CommentPress on a public site, you may need to inform visitors of this.
+**For sites hosted in the European Union, please note:** the "CommentPress Default Theme" makes use of cookies, but for presentational purposes only. If you intend to use the "CommentPress Default Theme" on a public site, you may need to inform visitors of this.
 
 For further information and instructions please see the [CommentPress site](http://www.futureofthebook.org/commentpress/) or contact the developers by email at [cpdev@futureofthebook.org](mailto:cpdev@futureofthebook.org)
 
@@ -60,7 +60,7 @@ Okay, we're ready to install "CommentPress Core":
 
 1. Install and Network Activate "CommentPress Core"
 2. This should have enabled "CommentPress Core" on your main blog
-3. Network Enable the "CommentPress Default Theme" UNLESS
+3. Network Enable the "CommentPress Modern Theme" and/or the "CommentPress Default Theme" UNLESS
 4. You have "CommentPress Core"-compatible child themes you want to use instead:
 5. Network Enable any "CommentPress Core"-compatible child themes you want to use
 
@@ -87,8 +87,7 @@ Base Install:
 Essential Plugins:
 
 1. Install, Network Activate and configure "BuddyPress" (**Please note:** "CommentPress Core" has not been tested with the Forums component)
-2. Download and Network Activate the following fork of "BuddyPress Groupblog" on GitHub (which fixes a number of bugs). Download the .zip from [https://github.com/christianwach/bp-groupblog](https://github.com/christianwach/bp-groupblog)
-3. If you can't do this, Install and Network Activate "BuddyPress Groupblog" 1.8+ which is mostly okay
+2. Download and Network Activate the latest version of "BuddyPress Groupblog" greater than 1.8.3
 4. Install and DO NOT Network Activate "BuddyPress Template Pack"
 
 Optional Plugins:
@@ -103,7 +102,7 @@ Okay, we're ready to install "CommentPress Core":
 
 1. Install and Network Activate "CommentPress Core"
 2. This should have enabled "CommentPress Core" on your main blog
-3. Network Enable the "CommentPress Default Theme" UNLESS
+3. Network Enable the "CommentPress Modern Theme" and/or the "CommentPress Default Theme" UNLESS
 4. You have "CommentPress Core"-compatible child themes you want to use instead:
 5. Network Enable any "CommentPress Core"-compatible child themes you want to use
 
@@ -142,7 +141,7 @@ To create a "CommentPress Core"-enabled Groupblog:
 1. Begin to create a group as usual
 2. At the "Groupblog" screen, click "Enable CommentPress"
 3. Choose any further options
-4. It is recommended that you "Enable member blog posting" with the default settings
+4. Check the box for "Enable member blog posting" and use the default settings unless you have reason not to
 5. Continue and finish creating the group
 6. To go to the groupblog, click "Blog" (or "Workshop" if you have chosen that naming scheme)
 7. Start your group blogging!

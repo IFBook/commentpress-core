@@ -3487,21 +3487,31 @@ if ( ! function_exists( 'commentpress_add_loginout_id' ) ):
  */
 function commentpress_add_loginout_id( $link ) {
 
-	// if logged in
-	if ( is_user_logged_in() ) {
+	// site admin link?
+	if ( false !== strstr( $link, admin_url() ) ) {
 	
-		// logout
-		$_id = 'btn_logout';
-		
+		// site admin
+		$_id = 'btn_site_admin';
+	
 	} else {
-	
-		// login
-		$_id = 'btn_login';
 
+		// if logged in
+		if ( is_user_logged_in() ) {
+	
+			// logout
+			$_id = 'btn_logout';
+		
+		} else {
+	
+			// login
+			$_id = 'btn_login';
+
+		}
+	
 	}
 	
 	// add css
-	$link = str_replace( '<a ', '<a id="'.$_id.'"  class="button"', $link );
+	$link = str_replace( '<a ', '<a id="'.$_id.'" class="button" ', $link );
 
 	// --<
 	return $link;

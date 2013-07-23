@@ -16,9 +16,9 @@ Separated this out for inclusion in multiple files.
 
 // Start HTML
 ?>
-<a class="skip" href="#content">Skip to Content</a>
+<a class="skip" href="#content"><?php _e( 'Skip to Content', 'commentpress-core' ); ?></a>
 <span class="off-left"> | </span>
-<a class="skip" href="#toc_list">Skip to Table of Contents</a><!-- /skip_links -->
+<a class="skip" href="#toc_list"><?php _e( 'Skip to Table of Contents', 'commentpress-core' ); ?></a><!-- /skip_links -->
 
 
 
@@ -32,7 +32,7 @@ Separated this out for inclusion in multiple files.
 		
 		?>
 		<div id="page_title">
-		<div id="title"><h1><a href="<?php echo home_url(); ?>" title="Home"><?php bloginfo('title'); ?></a></h1></div>
+		<div id="title"><h1><a href="<?php echo home_url(); ?>" title="<?php _e( 'Home', 'commentpress-core' ); ?>"><?php bloginfo('title'); ?></a></h1></div>
 		<div id="tagline"><?php bloginfo('description'); ?></div>
 		</div>
 	</div>

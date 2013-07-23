@@ -135,7 +135,7 @@ if ( $my_author->description != '' ) { ?>
 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
 <li>
-<a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link: <?php the_title(); ?>"><?php the_title(); ?></a> on <?php the_time('l, F jS, Y'); ?>
+<a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link: <?php the_title_attribute(); ?>"><?php the_title(); ?></a> on <?php the_time('l, F jS, Y'); ?>
 </li>
 
 <?php endwhile; else: ?>
