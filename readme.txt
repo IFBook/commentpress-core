@@ -3,8 +3,8 @@ Contributors: needle, commentpress
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZSKM8T5ZP3SC
 Tags: commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
 Requires at least: 3.3
-Tested up to: 3.5.1
-Stable tag: 3.4.8
+Tested up to: 3.5.2
+Stable tag: 3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,7 +87,7 @@ Base Install:
 Essential Plugins:
 
 1. Install, Network Activate and configure "BuddyPress" (**Please note:** "CommentPress Core" has not been tested with the Forums component)
-2. Download and Network Activate the latest version of "BuddyPress Groupblog" greater than 1.8.4
+2. Download and Network Activate the latest version of "BuddyPress Groupblog" greater than 1.8.3
 4. Install and DO NOT Network Activate "BuddyPress Template Pack"
 
 Optional Plugins:

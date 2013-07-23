@@ -95,7 +95,7 @@ Base Install:
 Essential Plugins:
 
 1. Install, Network Activate and configure *BuddyPress* (**Please note:** *CommentPress Core* has not been tested with the Forums component)
-2. Download and Network Activate the latest version of *BuddyPress Groupblog* greater than 1.8.4
+2. Download and Network Activate the latest version of *BuddyPress Groupblog* greater than 1.8.3
 4. Install and DO NOT Network Activate *BuddyPress Template Pack*
 
 Optional Plugins:
