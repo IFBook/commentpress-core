@@ -2690,10 +2690,10 @@ function commentpress_get_comments_by_para() {
 					$heading_text = sprintf( _n(
 						
 						// singular
-						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span> on ', 
+						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">'.__( 'Comment', 'commentpress-core' ).'</span> on ', 
 						
 						// plural
-						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span> on ', 
+						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">'.__( 'Comments', 'commentpress-core' ).'</span> on ', 
 						
 						// number
 						$comment_count, 
@@ -2722,10 +2722,10 @@ function commentpress_get_comments_by_para() {
 					$heading_text = sprintf( _n(
 						
 						// singular
-						'<span>%d</span> Pingback or trackback', 
+						'<span>%d</span> '.__( 'Pingback or trackback', 'commentpress-core' ), 
 						
 						// plural
-						'<span>%d</span> Pingbacks and trackbacks', 
+						'<span>%d</span> '.__( 'Pingbacks and trackbacks', 'commentpress-core' ), 
 						
 						// number
 						$comment_count, 
@@ -2737,7 +2737,7 @@ function commentpress_get_comments_by_para() {
 					), $comment_count );
 					
 					// set permalink text
-					$permalink_text = __('Permalink for pingbacks and trackbacks', 'commentpress-core' );
+					$permalink_text = __( 'Permalink for pingbacks and trackbacks', 'commentpress-core' );
 					
 					// wrap in span
 					$heading_text = '<span>'.$heading_text.'</span>';
@@ -2798,10 +2798,10 @@ function commentpress_get_comments_by_para() {
 					$heading_text = sprintf( _n(
 						
 						// singular
-						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span> on ', 
+						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">'.__( 'Comment', 'commentpress-core' ).'</span> on ', 
 						
 						// plural
-						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span> on ', 
+						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">'.__( 'Comments', 'commentpress-core' ).'</span> on ', 
 						
 						// number
 						$comment_count, 
