@@ -778,7 +778,8 @@ BASIC LAYOUT
 	padding: 0;
 }
 
-#toc_sidebar .sidebar_minimiser ul.children
+#toc_sidebar .sidebar_minimiser ul.children,
+#toc_sidebar .sidebar_minimiser ul.sub-menu
 {
 	margin: 0 0 0 1.2em;
 	padding: 0;
