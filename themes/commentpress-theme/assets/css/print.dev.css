@@ -141,6 +141,7 @@ Updated by Christian Wach for CommentPress Core
 		color: #ccc !important;
 		margin: 0;
 		padding: 0;
+		text-indent: 0 !important;
 	}
 	
 	#book_header #title h1
