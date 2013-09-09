@@ -331,7 +331,7 @@ if (
 		
 	) ) : ?>
 	
-		<h3 class="activity_heading"><?php __( 'Recently Active Members', 'commentpress-core' ); ?></h3>
+		<h3 class="activity_heading"><?php _e( 'Recently Active Members', 'commentpress-core' ); ?></h3>
 	
 		<div class="paragraph_wrapper active_members_output">
 	
@@ -382,7 +382,7 @@ if (
 		
 	) ) : ?>
 	
-		<h3 class="activity_heading"><?php __( "Who's Online", 'commentpress-core' ); ?></h3>
+		<h3 class="activity_heading"><?php _e( "Who's Online", 'commentpress-core' ); ?></h3>
 	
 		<div class="paragraph_wrapper online_members_output">
 	
