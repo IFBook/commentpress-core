@@ -18,7 +18,7 @@ Updated by Christian Wach for CommentPress Core
 	/* Set sensible defaults */
 	* 
 	{
-		background: white;
+		background: white !important;
 	}
 	
 	body 
