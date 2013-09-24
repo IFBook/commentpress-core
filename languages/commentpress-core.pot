@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the CommentPress Core package.
 msgid ""
 msgstr ""
-"Project-Id-Version: CommentPress Core 3.5\n"
+"Project-Id-Version: CommentPress Core 3.5.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/commentpress-core\n"
-"POT-Creation-Date: 2013-07-23 12:45:55+00:00\n"
+"POT-Creation-Date: 2013-09-24 16:55:23+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -45,9 +45,7 @@ msgid "Are you sure?"
 msgstr ""
 
 #: commentpress-ajax/cp-ajax-comments.php:351
-msgid ""
-"Are you sure you want to assign the comment and its replies to the "
-"textblock? This action cannot be undone."
+msgid "Are you sure you want to assign the comment and its replies to the textblock? This action cannot be undone."
 msgstr ""
 
 #: commentpress-ajax/cp-ajax-comments.php:352
@@ -55,9 +53,7 @@ msgid "Submitting..."
 msgstr ""
 
 #: commentpress-ajax/cp-ajax-comments.php:353
-msgid ""
-"Please wait while the comments are reassigned. The page will refresh when "
-"this has been done."
+msgid "Please wait while the comments are reassigned. The page will refresh when this has been done."
 msgstr ""
 
 #: commentpress-ajax/cp-ajax-comments.php:357
@@ -82,8 +78,7 @@ msgid "Comments"
 msgstr ""
 
 #: commentpress-ajax/cp-ajax-comments.php:426
-msgid ""
-"Drop on to a text-block to reassign this comment (and any replies) to it"
+msgid "Drop on to a text-block to reassign this comment (and any replies) to it"
 msgstr ""
 
 #: commentpress-ajax/cp-ajax-comments.php:432
@@ -105,8 +100,6 @@ msgstr ""
 msgid "CommentPress Core Settings"
 msgstr ""
 
-#. #-#-#-#-#  plugin.pot (CommentPress Core 3.5)  #-#-#-#-#
-#. Plugin Name of the plugin/theme
 #: commentpress-core/class_commentpress.php:486
 #: commentpress-multisite/class_commentpress_mu_admin.php:1091
 msgid "CommentPress Core"
@@ -227,6 +220,7 @@ msgstr ""
 
 #: commentpress-core/class_commentpress.php:1824
 #: commentpress-core/class_commentpress_db.php:3486
+#: themes/commentpress-theme/functions.php:2220
 msgid "Comments by Commenter"
 msgstr ""
 
@@ -306,23 +300,11 @@ msgstr ""
 #: commentpress-core/class_commentpress_db.php:3312
 #: commentpress-multisite/class_commentpress_mu_ms.php:939
 msgid ""
-"Welcome to your new CommentPress site, which allows your readers to comment "
-"paragraph-by-paragraph or line-by-line in the margins of a text. Annotate, "
-"gloss, workshop, debate: with CommentPress you can do all of these things on "
-"a finer-grained level, turning a document into a conversation.\n"
+"Welcome to your new CommentPress site, which allows your readers to comment paragraph-by-paragraph or line-by-line in the margins of a text. Annotate, gloss, workshop, debate: with CommentPress you can do all of these things on a finer-grained level, turning a document into a conversation.\n"
 "\n"
-"This is your title page. Edit it to suit your needs. It has been "
-"automatically set as your homepage but if you want another page as your "
-"homepage, set it in <em>Wordpress</em> &#8594; <em>Settings</em> &#8594; "
-"<em>Reading</em>.\n"
+"This is your title page. Edit it to suit your needs. It has been automatically set as your homepage but if you want another page as your homepage, set it in <em>Wordpress</em> &#8594; <em>Settings</em> &#8594; <em>Reading</em>.\n"
 "\n"
-"You can also set a number of options in <em>Wordpress</em> &#8594; "
-"<em>Settings</em> &#8594; <em>CommentPress</em> to make the site work the "
-"way you want it to. Use the Theme Customizer to change the way your site "
-"looks in <em>Wordpress</em> &#8594; <em>Appearance</em> &#8594; "
-"<em>Customize</em>. For help with structuring, formatting and reading text "
-"in CommentPress, please refer to the <a href=\"http://www.futureofthebook."
-"org/commentpress/\">CommentPress website</a>."
+"You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings</em> &#8594; <em>CommentPress</em> to make the site work the way you want it to. Use the Theme Customizer to change the way your site looks in <em>Wordpress</em> &#8594; <em>Appearance</em> &#8594; <em>Customize</em>. For help with structuring, formatting and reading text in CommentPress, please refer to the <a href=\"http://www.futureofthebook.org/commentpress/\">CommentPress website</a>."
 msgstr ""
 
 #: commentpress-core/class_commentpress_db.php:3382
@@ -331,8 +313,7 @@ msgstr ""
 #: commentpress-core/class_commentpress_db.php:3547
 #: commentpress-core/class_commentpress_db.php:3605
 #: commentpress-core/class_commentpress_db.php:3658
-msgid ""
-"Do not delete this page. Page content is generated with a custom template."
+msgid "Do not delete this page. Page content is generated with a custom template."
 msgstr ""
 
 #: commentpress-core/class_commentpress_db.php:3652
@@ -401,9 +382,7 @@ msgid "Options for CommentPress Core"
 msgstr ""
 
 #: commentpress-core/class_commentpress_display.php:1684
-msgid ""
-"When the CommentPress Default Theme (or a valid CommentPress Child Theme) is "
-"active, the following options modify its behaviour."
+msgid "When the CommentPress Default Theme (or a valid CommentPress Child Theme) is active, the following options modify its behaviour."
 msgstr ""
 
 #: commentpress-core/class_commentpress_display.php:1688
@@ -414,9 +393,7 @@ msgstr ""
 #: commentpress-core/class_commentpress_display.php:1704
 msgid ""
 "Choose how you want your Table of Contents to appear and function.<br />\n"
-"<strong style=\"color: red;\">NOTE!</strong> When Chapters are Pages, the "
-"TOC will always show Sub-Pages, since collapsing the TOC makes no sense in "
-"that situation."
+"<strong style=\"color: red;\">NOTE!</strong> When Chapters are Pages, the TOC will always show Sub-Pages, since collapsing the TOC makes no sense in that situation."
 msgstr ""
 
 #: commentpress-core/class_commentpress_display.php:1715
@@ -459,10 +436,8 @@ msgstr ""
 
 #: commentpress-core/class_commentpress_display.php:1760
 msgid ""
-"You can set a custom background colour in <em>Appearance &#8594; Background</"
-"em>.<br />\n"
-"You can also set a custom header image and header text colour in "
-"<em>Appearance &#8594; Header</em>.<br />\n"
+"You can set a custom background colour in <em>Appearance &#8594; Background</em>.<br />\n"
+"You can also set a custom header image and header text colour in <em>Appearance &#8594; Header</em>.<br />\n"
 "Below are extra options for changing how the theme looks."
 msgstr ""
 
@@ -473,8 +448,7 @@ msgstr ""
 
 #: commentpress-core/class_commentpress_display.php:1768
 #: commentpress-core/class_commentpress_display.php:2165
-msgid ""
-"If you want to hide header text, add <strong>#blank</strong> as text colour."
+msgid "If you want to hide header text, add <strong>#blank</strong> as text colour."
 msgstr ""
 
 #: commentpress-core/class_commentpress_display.php:1768
@@ -521,9 +495,7 @@ msgstr ""
 
 #: commentpress-core/class_commentpress_display.php:1940
 #: commentpress-core/class_commentpress_display.php:2427
-msgid ""
-"Which sidebar do you want to be active by default? (can be overridden on "
-"individual pages)"
+msgid "Which sidebar do you want to be active by default? (can be overridden on individual pages)"
 msgstr ""
 
 #: commentpress-core/class_commentpress_display.php:1966
@@ -615,9 +587,7 @@ msgid "Headings"
 msgstr ""
 
 #: commentpress-core/class_commentpress_display.php:2474
-msgid ""
-"Enable \"live\" comment refreshing (Please note: may cause heavy load on "
-"your server)"
+msgid "Enable \"live\" comment refreshing (Please note: may cause heavy load on your server)"
 msgstr ""
 
 #: commentpress-core/class_commentpress_display.php:2505
@@ -683,10 +653,7 @@ msgid "Document Type"
 msgstr ""
 
 #: commentpress-multisite/class_commentpress_mu_admin.php:1157
-msgid ""
-"CommentPress Core has detected that a previous version of Commentpress is "
-"active on this site. Please visit the <a href=\"options-general.php?"
-"page=commentpress_admin\">Settings Page</a> to upgrade."
+msgid "CommentPress Core has detected that a previous version of Commentpress is active on this site. Please visit the <a href=\"options-general.php?page=commentpress_admin\">Settings Page</a> to upgrade."
 msgstr ""
 
 #: commentpress-multisite/class_commentpress_mu_admin.php:1244
@@ -767,10 +734,7 @@ msgid "Create a New Site"
 msgstr ""
 
 #: commentpress-multisite/class_commentpress_mu_bp.php:1672
-msgid ""
-"Select the options for your new CommentPress-enabled blog. Note: if you "
-"choose an existing blog as a group blog, setting these options will have no "
-"effect."
+msgid "Select the options for your new CommentPress-enabled blog. Note: if you choose an existing blog as a group blog, setting these options will have no effect."
 msgstr ""
 
 #: commentpress-multisite/class_commentpress_mu_bp.php:1680
@@ -780,11 +744,7 @@ msgid "Enable CommentPress"
 msgstr ""
 
 #: commentpress-multisite/class_commentpress_mu_bp.php:1687
-msgid ""
-"When you create a group blog, you can choose to enable it as a CommentPress "
-"blog. This is a \"one time only\" option because you cannot disable "
-"CommentPress from here once the group blog is created. Note: if you choose "
-"an existing blog as a group blog, setting this option will have no effect."
+msgid "When you create a group blog, you can choose to enable it as a CommentPress blog. This is a \"one time only\" option because you cannot disable CommentPress from here once the group blog is created. Note: if you choose an existing blog as a group blog, setting this option will have no effect."
 msgstr ""
 
 #: commentpress-multisite/class_commentpress_mu_bp.php:1775
@@ -856,9 +816,7 @@ msgid "Multisite Settings"
 msgstr ""
 
 #: commentpress-multisite/class_commentpress_mu_ms.php:658
-msgid ""
-"Configure how your CommentPress Network behaves. Site-specific options are "
-"set on the CommentPress Core Settings page for that site."
+msgid "Configure how your CommentPress Network behaves. Site-specific options are set on the CommentPress Core Settings page for that site."
 msgstr ""
 
 #: commentpress-multisite/class_commentpress_mu_ms.php:668
@@ -870,9 +828,7 @@ msgid "Make all new sites CommentPress-enabled"
 msgstr ""
 
 #: commentpress-multisite/class_commentpress_mu_ms.php:678
-msgid ""
-"Disable Translation Workflow (Recommended because it is still very "
-"experimental)"
+msgid "Disable Translation Workflow (Recommended because it is still very experimental)"
 msgstr ""
 
 #: commentpress-multisite/class_commentpress_mu_workshop.php:174
@@ -887,55 +843,55 @@ msgstr ""
 msgid "%s post"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:279
+#: commentpress-multisite/class_commentpress_mu_workshop.php:285
 msgid "Recent Comments in this %s"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:292
+#: commentpress-multisite/class_commentpress_mu_workshop.php:298
 msgid "Recent Comments in Site Blog"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:316
+#: commentpress-multisite/class_commentpress_mu_workshop.php:327
 msgid "Comments on %s Posts"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:336
+#: commentpress-multisite/class_commentpress_mu_workshop.php:352
 msgid "Comments on %s Pages"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:356
+#: commentpress-multisite/class_commentpress_mu_workshop.php:377
 msgid "Recent Activity in your %s"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:376
+#: commentpress-multisite/class_commentpress_mu_workshop.php:402
 msgid "Recent Activity in Public %s"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:408
+#: commentpress-multisite/class_commentpress_mu_workshop.php:427
 msgid "%s Home Page"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:433
+#: commentpress-multisite/class_commentpress_mu_workshop.php:447
 msgid "Visit %s"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:613
+#: commentpress-multisite/class_commentpress_mu_workshop.php:627
 msgid "Change the name of a Group \"Document\"?"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:618
+#: commentpress-multisite/class_commentpress_mu_workshop.php:632
 msgid "Singular name for a Group \"Document\""
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:623
+#: commentpress-multisite/class_commentpress_mu_workshop.php:637
 msgid "Plural name for Group \"Documents\""
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:726
+#: commentpress-multisite/class_commentpress_mu_workshop.php:740
 msgid "Workshop"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:741
+#: commentpress-multisite/class_commentpress_mu_workshop.php:755
 msgid "Workshops"
 msgstr ""
 
@@ -960,11 +916,10 @@ msgstr ""
 #. activity timestamp
 #. translators: 1: user profile link, 2: user name, 3: activity permalink, 3:
 #. activity timestamp
+
 #: themes/commentpress-modern/activity/comment.php:27
 #: themes/commentpress-theme/activity/comment.php:27
-msgid ""
-"<a href=\"%1$s\">%2$s</a> replied <a href=\"%3$s\" class=\"activity-time-"
-"since\"><span class=\"time-since\">%4$s</span></a>"
+msgid "<a href=\"%1$s\">%2$s</a> replied <a href=\"%3$s\" class=\"activity-time-since\"><span class=\"time-since\">%4$s</span></a>"
 msgstr ""
 
 #: themes/commentpress-modern/activity/comment.php:37
@@ -1312,6 +1267,16 @@ msgstr ""
 msgid "Recent Activity in Public Documents"
 msgstr ""
 
+#: themes/commentpress-modern/assets/templates/activity_sidebar.php:334
+#: themes/commentpress-theme/assets/templates/activity_sidebar.php:334
+msgid "Recently Active Members"
+msgstr ""
+
+#: themes/commentpress-modern/assets/templates/activity_sidebar.php:385
+#: themes/commentpress-theme/assets/templates/activity_sidebar.php:385
+msgid "Who's Online"
+msgstr ""
+
 #: themes/commentpress-modern/assets/templates/comment_form.php:70
 #: themes/commentpress-theme/assets/templates/comment_form.php:70
 msgid "Your details"
@@ -1468,9 +1433,7 @@ msgstr ""
 
 #: themes/commentpress-modern/assets/widgets/widgets.php:11
 #: themes/commentpress-theme/assets/widgets/widgets.php:11
-msgid ""
-"This widget is supplied by the CommentPress Default Theme for placing HTML "
-"in the page footer - for example, copyright or licensing information"
+msgid "This widget is supplied by the CommentPress Default Theme for placing HTML in the page footer - for example, copyright or licensing information"
 msgstr ""
 
 #: themes/commentpress-modern/assets/widgets/widgets.php:14
@@ -1653,12 +1616,14 @@ msgid "Permanent link to this post"
 msgstr ""
 
 #. translators: "started by [poster] in [forum]"
+
 #: themes/commentpress-modern/forums/forums-loop.php:61
 #: themes/commentpress-theme/forums/forums-loop.php:61
 msgid "Started by %1$s"
 msgstr ""
 
 #. translators: "started by [poster] in [forum]"
+
 #: themes/commentpress-modern/forums/forums-loop.php:72
 #: themes/commentpress-theme/forums/forums-loop.php:72
 msgid "in %1$s"
@@ -1738,6 +1703,7 @@ msgid "Post In Group Forum:"
 msgstr ""
 
 #. translators: no option picked in select box
+
 #: themes/commentpress-modern/forums/index.php:130
 #: themes/commentpress-theme/forums/index.php:130
 msgid "----"
@@ -1757,33 +1723,32 @@ msgstr ""
 
 #: themes/commentpress-modern/forums/index.php:159
 #: themes/commentpress-theme/forums/index.php:159
-msgid ""
-"You are not a member of any groups so you don't have any group forums you "
-"can post in. To start posting, first find a group that matches the topic "
-"subject you'd like to start. If this group does not exist, why not <a "
-"href='%s'>create a new group</a>? Once you have joined or created the group "
-"you can post your topic in that group's forum."
+msgid "You are not a member of any groups so you don't have any group forums you can post in. To start posting, first find a group that matches the topic subject you'd like to start. If this group does not exist, why not <a href='%s'>create a new group</a>? Once you have joined or created the group you can post your topic in that group's forum."
 msgstr ""
 
 #. translators: header image description
+
 #: themes/commentpress-modern/functions.php:103
 #: themes/commentpress-theme/functions.php:103
 msgid "Abstract Green"
 msgstr ""
 
 #. translators: header image description
+
 #: themes/commentpress-modern/functions.php:109
 #: themes/commentpress-theme/functions.php:109
 msgid "Abstract Red"
 msgstr ""
 
 #. translators: header image description
+
 #: themes/commentpress-modern/functions.php:115
 #: themes/commentpress-theme/functions.php:115
 msgid "Abstract Blue"
 msgstr ""
 
 #. translators: header image description
+
 #: themes/commentpress-modern/functions.php:121
 #: themes/commentpress-theme/functions.php:121
 msgid "Abstract Violet"
@@ -1915,6 +1880,7 @@ msgid "Log in to Reply"
 msgstr ""
 
 #: themes/commentpress-modern/functions.php:3243
+#: themes/commentpress-theme/functions.php:2426
 #: themes/commentpress-theme/functions.php:3210
 msgid "Comment awaiting moderation"
 msgstr ""
@@ -1983,9 +1949,7 @@ msgstr ""
 
 #: themes/commentpress-modern/groups/create.php:83
 #: themes/commentpress-theme/groups/create.php:83
-msgid ""
-"<strong>Attention Site Admin:</strong> Group forums require the <a href=\"%s"
-"\">correct setup and configuration</a> of a bbPress installation."
+msgid "<strong>Attention Site Admin:</strong> Group forums require the <a href=\"%s\">correct setup and configuration</a> of a bbPress installation."
 msgstr ""
 
 #: themes/commentpress-modern/groups/create.php:92
@@ -2017,8 +1981,7 @@ msgstr ""
 #: themes/commentpress-theme/groups/create.php:108
 #: themes/commentpress-theme/groups/single/admin.php:64
 #: themes/commentpress-theme/groups/single/admin.php:74
-msgid ""
-"This group will be listed in the groups directory and in search results."
+msgid "This group will be listed in the groups directory and in search results."
 msgstr ""
 
 #: themes/commentpress-modern/groups/create.php:100
@@ -2050,8 +2013,7 @@ msgstr ""
 #: themes/commentpress-theme/groups/create.php:118
 #: themes/commentpress-theme/groups/single/admin.php:75
 #: themes/commentpress-theme/groups/single/admin.php:85
-msgid ""
-"Group content and activity will only be visible to members of the group."
+msgid "Group content and activity will only be visible to members of the group."
 msgstr ""
 
 #: themes/commentpress-modern/groups/create.php:114
@@ -2072,8 +2034,7 @@ msgstr ""
 #: themes/commentpress-modern/groups/single/admin.php:84
 #: themes/commentpress-theme/groups/create.php:117
 #: themes/commentpress-theme/groups/single/admin.php:84
-msgid ""
-"This group will not be listed in the groups directory or search results."
+msgid "This group will not be listed in the groups directory or search results."
 msgstr ""
 
 #: themes/commentpress-modern/groups/create.php:125
@@ -2115,9 +2076,7 @@ msgstr ""
 #: themes/commentpress-modern/groups/single/admin.php:127
 #: themes/commentpress-theme/groups/create.php:168
 #: themes/commentpress-theme/groups/single/admin.php:127
-msgid ""
-"Upload an image to use as an avatar for this group. The image will be shown "
-"on the main group page, and in search results."
+msgid "Upload an image to use as an avatar for this group. The image will be shown on the main group page, and in search results."
 msgstr ""
 
 #: themes/commentpress-modern/groups/create.php:172
@@ -2184,10 +2143,7 @@ msgstr ""
 #: themes/commentpress-modern/groups/single/send-invites.php:73
 #: themes/commentpress-theme/groups/create.php:265
 #: themes/commentpress-theme/groups/single/send-invites.php:73
-msgid ""
-"Once you have built up friend connections you will be able to invite others "
-"to your group. You can send invites any time in the future by selecting the "
-"\"Send Invites\" option when viewing your new group."
+msgid "Once you have built up friend connections you will be able to invite others to your group. You can send invites any time in the future by selecting the \"Send Invites\" option when viewing your new group."
 msgstr ""
 
 #: themes/commentpress-modern/groups/create.php:287
@@ -2267,9 +2223,7 @@ msgstr ""
 
 #: themes/commentpress-modern/groups/single/admin.php:137
 #: themes/commentpress-theme/groups/single/admin.php:137
-msgid ""
-"If you'd like to remove the existing avatar but not upload a new one, please "
-"use the delete avatar button."
+msgid "If you'd like to remove the existing avatar but not upload a new one, please use the delete avatar button."
 msgstr ""
 
 #: themes/commentpress-modern/groups/single/admin.php:139
@@ -2387,9 +2341,7 @@ msgstr ""
 
 #: themes/commentpress-modern/groups/single/admin.php:350
 #: themes/commentpress-theme/groups/single/admin.php:350
-msgid ""
-"WARNING: Deleting this group will completely remove ALL content associated "
-"with it. There is no way back, please be careful with this option."
+msgid "WARNING: Deleting this group will completely remove ALL content associated with it. There is no way back, please be careful with this option."
 msgstr ""
 
 #: themes/commentpress-modern/groups/single/admin.php:353
@@ -2539,9 +2491,7 @@ msgid "Go to your dashboard to add one."
 msgstr ""
 
 #: themes/commentpress-modern/index.php:78
-msgid ""
-"If you were looking for something that hasn't been found, try using the "
-"search form below."
+msgid "If you were looking for something that hasn't been found, try using the search form below."
 msgstr ""
 
 #: themes/commentpress-modern/links.php:30
@@ -2666,25 +2616,17 @@ msgstr ""
 
 #: themes/commentpress-modern/members/single/profile/change-avatar.php:7
 #: themes/commentpress-theme/members/single/profile/change-avatar.php:7
-msgid ""
-"Your avatar will be used on your profile and throughout the site. If there "
-"is a <a href=\"http://gravatar.com\">Gravatar</a> associated with your "
-"account email we will use that, or you can upload an image from your "
-"computer."
+msgid "Your avatar will be used on your profile and throughout the site. If there is a <a href=\"http://gravatar.com\">Gravatar</a> associated with your account email we will use that, or you can upload an image from your computer."
 msgstr ""
 
 #: themes/commentpress-modern/members/single/profile/change-avatar.php:14
 #: themes/commentpress-theme/members/single/profile/change-avatar.php:14
-msgid ""
-"Click below to select a JPG, GIF or PNG format photo from your computer and "
-"then click 'Upload Image' to proceed."
+msgid "Click below to select a JPG, GIF or PNG format photo from your computer and then click 'Upload Image' to proceed."
 msgstr ""
 
 #: themes/commentpress-modern/members/single/profile/change-avatar.php:23
 #: themes/commentpress-theme/members/single/profile/change-avatar.php:23
-msgid ""
-"If you'd like to delete your current avatar but not upload a new one, please "
-"use the delete avatar button."
+msgid "If you'd like to delete your current avatar but not upload a new one, please use the delete avatar button."
 msgstr ""
 
 #: themes/commentpress-modern/members/single/profile/change-avatar.php:24
@@ -2699,11 +2641,7 @@ msgstr ""
 
 #: themes/commentpress-modern/members/single/profile/change-avatar.php:55
 #: themes/commentpress-theme/members/single/profile/change-avatar.php:55
-msgid ""
-"Your avatar will be used on your profile and throughout the site. To change "
-"your avatar, please create an account with <a href=\"http://gravatar.com"
-"\">Gravatar</a> using the same email address as you used to register with "
-"this site."
+msgid "Your avatar will be used on your profile and throughout the site. To change your avatar, please create an account with <a href=\"http://gravatar.com\">Gravatar</a> using the same email address as you used to register with this site."
 msgstr ""
 
 #: themes/commentpress-modern/members/single/profile/edit.php:10
@@ -2810,9 +2748,7 @@ msgstr ""
 
 #: themes/commentpress-modern/members/single/settings/delete-account.php:69
 #: themes/commentpress-theme/members/single/settings/delete-account.php:69
-msgid ""
-"WARNING: Deleting your account will completely remove ALL content associated "
-"with it. There is no way back, please be careful with this option."
+msgid "WARNING: Deleting your account will completely remove ALL content associated with it. There is no way back, please be careful with this option."
 msgstr ""
 
 #: themes/commentpress-modern/members/single/settings/delete-account.php:72
@@ -2832,9 +2768,7 @@ msgstr ""
 
 #: themes/commentpress-modern/members/single/settings/general.php:70
 #: themes/commentpress-theme/members/single/settings/general.php:70
-msgid ""
-"Current Password <span>(required to update email or change current password)"
-"</span>"
+msgid "Current Password <span>(required to update email or change current password)</span>"
 msgstr ""
 
 #: themes/commentpress-modern/members/single/settings/general.php:71
@@ -2884,16 +2818,12 @@ msgstr ""
 
 #: themes/commentpress-modern/registration/activate.php:31
 #: themes/commentpress-theme/registration/activate.php:31
-msgid ""
-"Your account was activated successfully! Your account details have been sent "
-"to you in a separate email."
+msgid "Your account was activated successfully! Your account details have been sent to you in a separate email."
 msgstr ""
 
 #: themes/commentpress-modern/registration/activate.php:33
 #: themes/commentpress-theme/registration/activate.php:33
-msgid ""
-"Your account was activated successfully! You can now log in with the "
-"username and password you provided when you signed up."
+msgid "Your account was activated successfully! You can now log in with the username and password you provided when you signed up."
 msgstr ""
 
 #: themes/commentpress-modern/registration/activate.php:38
@@ -2928,9 +2858,7 @@ msgstr ""
 
 #: themes/commentpress-modern/registration/register.php:41
 #: themes/commentpress-theme/registration/register.php:41
-msgid ""
-"Registering for this site is easy, just fill in the fields below and we'll "
-"get a new account set up for you in no time."
+msgid "Registering for this site is easy, just fill in the fields below and we'll get a new account set up for you in no time."
 msgstr ""
 
 #: themes/commentpress-modern/registration/register.php:51
@@ -2985,9 +2913,7 @@ msgstr ""
 
 #: themes/commentpress-modern/registration/register.php:229
 #: themes/commentpress-theme/registration/register.php:218
-msgid ""
-"I would like my site to appear in search engines, and in public listings "
-"around this network."
+msgid "I would like my site to appear in search engines, and in public listings around this network."
 msgstr ""
 
 #: themes/commentpress-modern/registration/register.php:248
@@ -3002,17 +2928,12 @@ msgstr ""
 
 #: themes/commentpress-modern/registration/register.php:267
 #: themes/commentpress-theme/registration/register.php:256
-msgid ""
-"You have successfully created your account! To begin using this site you "
-"will need to activate your account via the email we have just sent to your "
-"address."
+msgid "You have successfully created your account! To begin using this site you will need to activate your account via the email we have just sent to your address."
 msgstr ""
 
 #: themes/commentpress-modern/registration/register.php:269
 #: themes/commentpress-theme/registration/register.php:258
-msgid ""
-"You have successfully created your account! Please log in using the username "
-"and password you have just created."
+msgid "You have successfully created your account! Please log in using the username and password you have just created."
 msgstr ""
 
 #: themes/commentpress-modern/search.php:40
@@ -3065,15 +2986,16 @@ msgstr ""
 #: themes/commentpress-theme/forums/forums-loop.php:54
 msgid "Permalink"
 msgstr ""
+#. Plugin Name of the plugin/theme
+msgid "CommentPress Core"
+msgstr ""
 
 #. Plugin URI of the plugin/theme
 msgid "http://www.futureofthebook.org/commentpress/"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid ""
-"CommentPress allows readers to comment paragraph by paragraph in the margins "
-"of a text. You can use it to annotate, gloss, workshop, debate and more!"
+msgid "CommentPress allows readers to comment paragraph by paragraph in the margins of a text. You can use it to annotate, gloss, workshop, debate and more!"
 msgstr ""
 
 #. Author of the plugin/theme
