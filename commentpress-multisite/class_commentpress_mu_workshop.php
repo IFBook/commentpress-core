@@ -228,8 +228,14 @@ class CommentpressGroupblogWorkshop {
 	 *
 	 */
 	function filter_blog_name( $name ) {
-	
-		return $this->cpmu_bp_workshop_nomenclature_name;
+		
+		// override if groupblog
+		if ( $this->parent_obj->bp->_is_commentpress_groupblog() ) {
+			$name =  $this->cpmu_bp_workshop_nomenclature_name;
+		}
+		
+		// --<
+		return $name;
 		
 	}
 	
@@ -311,6 +317,11 @@ class CommentpressGroupblogWorkshop {
 	 */
 	function page_all_comments_blog_title( $title ) {
 	
+		// override if groupblog
+		if ( !$this->parent_obj->bp->_is_commentpress_groupblog() ) {
+			return $title;
+		}
+		
 		// --<
 		return sprintf(
 			__( 'Comments on %s Posts', 'commentpress-core' ),
@@ -331,6 +342,11 @@ class CommentpressGroupblogWorkshop {
 	 */
 	function page_all_comments_book_title( $title ) {
 	
+		// override if groupblog
+		if ( !$this->parent_obj->bp->_is_commentpress_groupblog() ) {
+			return $title;
+		}
+		
 		// --<
 		return sprintf(
 			__( 'Comments on %s Pages', 'commentpress-core' ),
@@ -351,6 +367,11 @@ class CommentpressGroupblogWorkshop {
 	 */
 	function filter_activity_title_all_yours( $title ) {
 	
+		// override if groupblog
+		if ( !$this->parent_obj->bp->_is_commentpress_groupblog() ) {
+			return $title;
+		}
+		
 		// --<
 		return sprintf(
 			__( 'Recent Activity in your %s', 'commentpress-core' ),
@@ -371,6 +392,11 @@ class CommentpressGroupblogWorkshop {
 	 */
 	function filter_activity_title_all_public( $title ) {
 	
+		// override if groupblog
+		if ( !$this->parent_obj->bp->_is_commentpress_groupblog() ) {
+			return $title;
+		}
+		
 		// --<
 		return sprintf(
 			__( 'Recent Activity in Public %s', 'commentpress-core' ),
@@ -391,29 +417,17 @@ class CommentpressGroupblogWorkshop {
 	 */
 	function filter_nav_title_page_title( $title ) {
 		
-		// access globals
-		global $commentpress_core;
-
-		// if plugin active...
-		if ( 
-		
-			!is_null( $commentpress_core ) 
-			AND is_object( $commentpress_core )
-			AND $commentpress_core->is_groupblog()
-			
-		) {
-		
-			// --<
-			return sprintf(
-				__( '%s Home Page', 'commentpress-core' ),
-				$this->cpmu_bp_workshop_nomenclature_name
-			);
-			
+		// override if groupblog
+		if ( !$this->parent_obj->bp->_is_commentpress_groupblog() ) {
+			return $title;
 		}
 		
 		// --<
-		return $title;
-	
+		return sprintf(
+			__( '%s Home Page', 'commentpress-core' ),
+			$this->cpmu_bp_workshop_nomenclature_name
+		);
+		
 	}
 	
 	
