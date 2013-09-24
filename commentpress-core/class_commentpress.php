@@ -2334,7 +2334,7 @@ class CommentpressCore {
 
 	
 		// --<
-		return true;
+		return apply_filters( 'cp_is_commentable', true );
 		
 	}
 	
