@@ -2080,8 +2080,8 @@ class CommentpressCore {
 	 */
 	function bp_docs_comment_tempate( $path, $original_path ) {
 
-		// if in multisite and on root site
-		if ( is_multisite() AND bp_is_root_blog() ) {
+		// if on BP root site
+		if ( bp_is_root_blog() ) {
 		
 			// override default link name
 			return $original_path;
