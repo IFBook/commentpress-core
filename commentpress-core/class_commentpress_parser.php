@@ -555,19 +555,30 @@ class CommentpressCoreParser {
 			--------------------------------------------------------------------
 			*/
 			
+			// init start (for ol attribute)
+			$start = 0;
+			
 			// further checks when there's a <ol> tag
 			if ( $tag == 'ol' ) {
 				
 				// compat with WP Footnotes
 				if ( substr( $paragraph, 0 , 21 ) == '<ol class="footnotes"' ) {
+					
+					// construct tag
 					$tag = 'ol class="footnotes"';
 				
 				// add support for <ol start="n">
 				} elseif ( substr( $paragraph, 0 , 11 ) == '<ol start="' ) {
+					
+					// parse tag
 					preg_match( '/start="([^"]*)"/i', $paragraph, $matches );
-					//print_r( $matches ); die();
+					
+					// construct new tag
 					$tag = 'ol '.$matches[0];
-					//print_r( $tag ); die();
+					
+					// set start
+					$start = $matches[1];
+					
 				}
 	
 			}
@@ -580,7 +591,8 @@ class CommentpressCoreParser {
 				$this->parent_obj->display->get_para_tag( 
 					$text_signature, 
 					$paragraph_icon.$comment_icon, 
-					$tag 
+					$tag,
+					$start
 				) 
 				
 			);
