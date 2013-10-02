@@ -1222,11 +1222,14 @@ HELPTEXT;
 	/** 
 	 * @description: get the content comment icon tag
 	 * @param string $text_signature comment text signature
+	 * @param string $commenticon comment icon
+	 * @param string $tag tag
+	 * @param string $start ol start value
 	 * @return string $para_tag
 	 * @todo: 
 	 *
 	 */
-	function get_para_tag( $text_signature, $commenticon, $tag = 'p' ) {
+	function get_para_tag( $text_signature, $commenticon, $tag = 'p', $start = 0 ) {
 	
 		// return different stuff for different tags
 		switch( $tag ) {
@@ -1250,6 +1253,14 @@ HELPTEXT;
 		
 				// define list tag
 				$para_tag = '<ol class="footnotes textblock" id="textblock-'.$text_signature.'" start="0">'.
+							'<li class="list_commenticon">'.$commenticon.'</li>'; 
+				break;
+							
+			// compat with WP Footnotes
+			case ( substr( $tag, 0 , 10 ) == 'ol start="' ):
+			
+				// define list tag
+				$para_tag = '<ol class="textblock" id="textblock-'.$text_signature.'" start="'.($start - 1).'">'.
 							'<li class="list_commenticon">'.$commenticon.'</li>'; 
 				break;
 							

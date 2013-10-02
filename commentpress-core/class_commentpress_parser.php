@@ -558,14 +558,16 @@ class CommentpressCoreParser {
 			// further checks when there's a <ol> tag
 			if ( $tag == 'ol' ) {
 				
-				// set pattern by TinyMCE tag attribute
-				switch ( substr( $paragraph, 0 , 21 ) ) {
-					
-					// compat with WP Footnotes
-					case '<ol class="footnotes"': $tag = 'ol class="footnotes"'; break;
-					
-					// see notes for p tag above
+				// compat with WP Footnotes
+				if ( substr( $paragraph, 0 , 21 ) == '<ol class="footnotes"' ) {
+					$tag = 'ol class="footnotes"';
 				
+				// add support for <ol start="n">
+				} elseif ( substr( $paragraph, 0 , 11 ) == '<ol start="' ) {
+					preg_match( '/start="([^"]*)"/i', $paragraph, $matches );
+					//print_r( $matches ); die();
+					$tag = 'ol '.$matches[0];
+					//print_r( $tag ); die();
 				}
 	
 			}
