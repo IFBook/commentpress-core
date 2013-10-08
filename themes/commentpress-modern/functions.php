@@ -830,7 +830,10 @@ function commentpress_get_header_image(
 		}		
 		
 		// show the uploaded image
-		echo '<img src="'.$options['cp_inline_header_image'].'" class="cp_logo_image" '.$style.'alt="Logo" />';
+		echo apply_filters(
+			'commentpress_header_image',
+			'<img src="'.$options['cp_inline_header_image'].'" class="cp_logo_image"'.$style.' alt="Logo" />'
+		);
 		
 		// --<
 		return;
