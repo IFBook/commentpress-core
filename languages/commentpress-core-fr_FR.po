@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: CommentPress Core v3.5\n"
+"Project-Id-Version: CommentPress Core v3.5.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-08-19 16:17:17+0000\n"
+"PO-Revision-Date: 2013-09-28 17:31:45+0000\n"
 "Last-Translator: admin <pouhiou@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -88,10 +88,14 @@ msgstr "Commentaire"
 #: commentpress-core/class_commentpress_display.php:2430
 #: themes/commentpress-modern/activity/index.php:116
 #: themes/commentpress-modern/assets/templates/comments_sidebar.php:20
+#: themes/commentpress-modern/functions.php:2696
+#: themes/commentpress-modern/functions.php:2804
 #: themes/commentpress-modern/members/single/activity.php:28
 #: themes/commentpress-modern/sidebar.php:71
 #: themes/commentpress-theme/activity/index.php:116
 #: themes/commentpress-theme/assets/templates/comments_sidebar.php:20
+#: themes/commentpress-theme/functions.php:2667
+#: themes/commentpress-theme/functions.php:2775
 #: themes/commentpress-theme/members/single/activity.php:28
 #: themes/commentpress-theme/sidebar.php:66
 #@ commentpress-core
@@ -111,7 +115,7 @@ msgstr "Déplacer"
 #: commentpress-core/class_commentpress.php:427
 #@ default
 msgid "CommentPress Core has been updated. Please visit the "
-msgstr ""
+msgstr "CommentPress Core a été mis a jour. Merci de visiter le"
 
 #: commentpress-core/class_commentpress.php:427
 #@ commentpress-core
@@ -271,6 +275,7 @@ msgstr "Archive du blog"
 
 #: commentpress-core/class_commentpress.php:1824
 #: commentpress-core/class_commentpress_db.php:3486
+#: themes/commentpress-theme/functions.php:2220
 #@ commentpress-core
 msgid "Comments by Commenter"
 msgstr "Commentaires par commentateur"
@@ -373,6 +378,11 @@ msgid ""
 "\n"
 "You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings</em> &#8594; <em>CommentPress</em> to make the site work the way you want it to. Use the Theme Customizer to change the way your site looks in <em>Wordpress</em> &#8594; <em>Appearance</em> &#8594; <em>Customize</em>. For help with structuring, formatting and reading text in CommentPress, please refer to the <a href=\"http://www.futureofthebook.org/commentpress/\">CommentPress website</a>."
 msgstr ""
+"Bienvenue dans votre nouveau site CommentPress qui permet à vos lecteurs de commenter paragraphe par paragraphe ou ligne par ligne à la marge du texte. Annoter, améliorer, travailler, débattre : CommentPress vous permet de faire cela de manière pointue, transformant votre document en conversation.\n"
+"\n"
+"Voici votre Page Titre. Modifiez-la selon vos besoins. Elle a été automatiquement réglée comme votre page d'accueil, mais si vous souhaitez une autre page pour page d'accueil, allez dans <em>Wordpress</em> &#8594; <em>Réglages</em> &#8594; <em>Lecture</em>.\n"
+"\n"
+"Vous pouvez aussi paramétrer de nombreuses options dans <em>Wordpress</em> &#8594; <em>Réglages</em> &#8594; <em>CommentPress</em> pour que ce site fonctionne à votre convenance. Utilisez le Customiseur de Thème pour modifier l'apparence de votre site dans <em>Wordpress</em> &#8594; <em>Apparance</em> &#8594; <em>Customize</em>. Pour savoir comment structurer, formatter et lire un texte dans CommentPress, visitez le <a href=\"http://www.futureofthebook.org/commentpress/\">site web de CommentPress [english]</a>."
 
 #: commentpress-core/class_commentpress_db.php:3382
 #: commentpress-core/class_commentpress_db.php:3437
@@ -402,7 +412,7 @@ msgstr "Table des matières"
 #: themes/commentpress-theme/functions.php:1601
 #@ commentpress-core
 msgid " &amp; "
-msgstr ""
+msgstr " &amp; "
 
 #: commentpress-core/class_commentpress_display.php:749
 #: themes/commentpress-modern/functions.php:1743
@@ -1107,74 +1117,74 @@ msgstr "%s articles"
 msgid "%s post"
 msgstr "%s article"
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:279
+#: commentpress-multisite/class_commentpress_mu_workshop.php:285
 #, php-format
 #@ commentpress-core
 msgid "Recent Comments in this %s"
 msgstr "Commentaires récents dans ce %s"
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:292
+#: commentpress-multisite/class_commentpress_mu_workshop.php:298
 #@ commentpress-core
 msgid "Recent Comments in Site Blog"
 msgstr "Commentaires récents dans le blog du site"
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:316
+#: commentpress-multisite/class_commentpress_mu_workshop.php:327
 #, php-format
 #@ commentpress-core
 msgid "Comments on %s Posts"
 msgstr "Commentaires sur %s articles"
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:336
+#: commentpress-multisite/class_commentpress_mu_workshop.php:352
 #, php-format
 #@ commentpress-core
 msgid "Comments on %s Pages"
 msgstr "Commentaires sur %s pages"
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:356
+#: commentpress-multisite/class_commentpress_mu_workshop.php:377
 #, php-format
 #@ commentpress-core
 msgid "Recent Activity in your %s"
 msgstr "Activité récente dans vos %s"
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:376
+#: commentpress-multisite/class_commentpress_mu_workshop.php:402
 #, php-format
 #@ commentpress-core
 msgid "Recent Activity in Public %s"
 msgstr "Activité récente dans un %s public"
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:408
+#: commentpress-multisite/class_commentpress_mu_workshop.php:427
 #, php-format
 #@ commentpress-core
 msgid "%s Home Page"
 msgstr "%s page d'accueil"
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:433
+#: commentpress-multisite/class_commentpress_mu_workshop.php:447
 #, php-format
 #@ commentpress-core
 msgid "Visit %s"
 msgstr "Visite %s"
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:613
+#: commentpress-multisite/class_commentpress_mu_workshop.php:627
 #@ commentpress-core
 msgid "Change the name of a Group \"Document\"?"
 msgstr "Changer le nom d'un \"Document\" de groupe ?"
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:618
+#: commentpress-multisite/class_commentpress_mu_workshop.php:632
 #@ commentpress-core
 msgid "Singular name for a Group \"Document\""
 msgstr "Nom singulier pour un \"Documen\" de groupe"
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:623
+#: commentpress-multisite/class_commentpress_mu_workshop.php:637
 #@ commentpress-core
 msgid "Plural name for Group \"Documents\""
 msgstr "Nom pluriel pour des \"Documents\" de groupe"
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:726
+#: commentpress-multisite/class_commentpress_mu_workshop.php:740
 #@ commentpress-core
 msgid "Workshop"
 msgstr "Atelier"
 
-#: commentpress-multisite/class_commentpress_mu_workshop.php:741
+#: commentpress-multisite/class_commentpress_mu_workshop.php:755
 #@ commentpress-core
 msgid "Workshops"
 msgstr "Ateliers"
@@ -1830,7 +1840,7 @@ msgstr "Titre :"
 #: themes/commentpress-theme/assets/widgets/widgets.php:49
 #@ default
 msgid "Automatically add paragraphs"
-msgstr ""
+msgstr "Ajouter des paragraphes automatiquement."
 
 #: themes/commentpress-modern/author.php:155
 #@ commentpress-core
@@ -1976,7 +1986,7 @@ msgstr "sur toute la page"
 #: themes/commentpress-modern/comments.php:141
 #@ commentpress-core
 msgid "Leave a comment on the whole page"
-msgstr "Laisser un commentaire sur la page en elle-même."
+msgstr "Commenter la page en entier."
 
 #: themes/commentpress-modern/comments.php:136
 #@ commentpress-core
@@ -2289,17 +2299,7 @@ msgstr "l'article intégral"
 msgid "Permalink for comments on "
 msgstr "Permalien pour les commentaires de"
 
-#: themes/commentpress-modern/functions.php:2693
-#: themes/commentpress-modern/functions.php:2801
-#: themes/commentpress-theme/functions.php:2664
-#: themes/commentpress-theme/functions.php:2772
-#, php-format
-#@ commentpress-core
-msgid "<span class=\"cp_comment_num\">%d</span> <span class=\"cp_comment_word\">Comment</span> on "
-msgid_plural "<span class=\"cp_comment_num\">%d</span> <span class=\"cp_comment_word\">Comments</span> on "
-msgstr[0] ""
-msgstr[1] ""
-
+#. gettext fix: identical singular and plural forms found, that may be ambiguous! Please check the code!
 #: themes/commentpress-modern/functions.php:2725
 #: themes/commentpress-theme/functions.php:2696
 #, php-format
@@ -2352,7 +2352,7 @@ msgstr "Se connecter pour commenter"
 #, php-format
 #@ commentpress-core
 msgid "Leave a comment on %s"
-msgstr "Laisser un commentaire sur %s"
+msgstr "Commenter le %s"
 
 #: themes/commentpress-modern/functions.php:3101
 #: themes/commentpress-theme/functions.php:3073
@@ -2361,6 +2361,7 @@ msgid "Log in to Reply"
 msgstr "S'identifier pour répondre"
 
 #: themes/commentpress-modern/functions.php:3243
+#: themes/commentpress-theme/functions.php:2426
 #: themes/commentpress-theme/functions.php:3210
 #@ commentpress-core
 msgid "Comment awaiting moderation"
@@ -3013,7 +3014,7 @@ msgstr "Modos du groupe"
 #, php-format
 #@ buddypress
 msgid "You are requesting to become a member of the group '%s'."
-msgstr ""
+msgstr "Vous demandez à adhérer au groupe '%s'."
 
 #: themes/commentpress-modern/groups/single/request-membership.php:7
 #: themes/commentpress-theme/groups/single/request-membership.php:7
@@ -3132,7 +3133,7 @@ msgstr "Envoyer à (Nom d'utilisateur ou d'ami)"
 #: themes/commentpress-theme/members/single/messages/compose.php:14
 #@ buddypress
 msgid "This is a notice to all users."
-msgstr ""
+msgstr "Remarque pour tous les utilisateurs."
 
 #: themes/commentpress-modern/members/single/messages/compose.php:17
 #: themes/commentpress-theme/members/single/messages/compose.php:17
@@ -3168,7 +3169,7 @@ msgstr "À :"
 #: themes/commentpress-theme/members/single/messages/messages-loop.php:42
 #@ buddypress
 msgid "View Message"
-msgstr ""
+msgstr "Voir le message"
 
 #: themes/commentpress-modern/members/single/messages/messages-loop.php:50
 #: themes/commentpress-modern/members/single/messages/notices-loop.php:38
@@ -3178,7 +3179,7 @@ msgstr ""
 #: themes/commentpress-theme/members/single/messages/single.php:24
 #@ buddypress
 msgid "Delete Message"
-msgstr ""
+msgstr "Supprimer le message"
 
 #: themes/commentpress-modern/members/single/messages/messages-loop.php:68
 #: themes/commentpress-theme/members/single/messages/messages-loop.php:68
@@ -3190,7 +3191,7 @@ msgstr "Désolé, aucun message trouvé."
 #: themes/commentpress-theme/members/single/messages/notices-loop.php:31
 #@ buddypress
 msgid "Sent:"
-msgstr ""
+msgstr "Envoyer :"
 
 #: themes/commentpress-modern/members/single/messages/notices-loop.php:49
 #: themes/commentpress-theme/members/single/messages/notices-loop.php:49
@@ -3270,7 +3271,7 @@ msgstr "Votre avatar apparaîtra sur votre profil et sur tout le site. Pour chan
 #, php-format
 #@ buddypress
 msgid "Editing '%s' Profile Group"
-msgstr ""
+msgstr "Editer le profil de groupe de '%s'"
 
 #: themes/commentpress-modern/members/single/profile/edit.php:26
 #: themes/commentpress-modern/members/single/profile/edit.php:33
@@ -3672,3 +3673,29 @@ msgstr "Pas d'artcile pour cet auteur."
 msgid "Permalink"
 msgstr "Permalien"
 
+#: themes/commentpress-modern/assets/templates/activity_sidebar.php:334
+#: themes/commentpress-theme/assets/templates/activity_sidebar.php:334
+#@ commentpress-core
+msgid "Recently Active Members"
+msgstr "Membres actifs récemment"
+
+#: themes/commentpress-modern/assets/templates/activity_sidebar.php:385
+#: themes/commentpress-theme/assets/templates/activity_sidebar.php:385
+#@ commentpress-core
+msgid "Who's Online"
+msgstr "En ligne"
+
+#: themes/commentpress-modern/functions.php:2693
+#: themes/commentpress-modern/functions.php:2801
+#: themes/commentpress-theme/functions.php:2664
+#: themes/commentpress-theme/functions.php:2772
+#, php-format
+#@ commentpress-core
+msgid "<span class=\"cp_comment_num\">%d</span> <span class=\"cp_comment_word\">Comment"
+msgstr "<span class=\"cp_comment_num\">%d</span> <span class=\"cp_comment_word\">Commentaire"
+
+#: themes/commentpress-modern/functions.php:2728
+#: themes/commentpress-theme/functions.php:2699
+#@ commentpress-core
+msgid "Pingbacks and trackbacks"
+msgstr "Pingbacks et trackbacks"
