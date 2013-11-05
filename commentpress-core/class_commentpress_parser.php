@@ -373,7 +373,10 @@ class CommentpressCoreParser {
 
 		// parse standalone captioned images
 		$content = $this->_parse_captions( $content );
-				
+		
+		// parse embedded quotes
+		$content = $this->_parse_blockquotes_in_paras( $content );
+		
 
 
 		// get our paragraphs
@@ -1907,6 +1910,55 @@ class CommentpressCoreParser {
 		die();
 		*/
 
+		// --<
+		return $content;
+				
+	}
+	
+	
+	
+		
+		
+		
+
+	/** 
+	 * @description: removes leading and trailing <br /> tags from embedded quotes
+	 * @param string $content the post content
+	 * @return string $content the filtered post content
+	 * @todo:
+	 *
+	 */
+	function _parse_blockquotes_in_paras( $content ) {
+		
+		// make sure we strip leading br
+		$content = str_replace( 
+			'<br />'."\n".'<span class="blockquote-in-para">',
+			"\n".'<span class="blockquote-in-para">',
+			$content
+		);
+		
+		// analyse
+		preg_match_all( '#(<span class="blockquote-in-para">(.*?)</span>)<br />#si', $content, $matches );
+		
+		// did we get any?
+		if ( isset( $matches[0] ) AND !empty( $matches[0] ) ) {
+		
+			$content = str_replace( 
+				$matches[0],
+				$matches[1],
+				$content
+			);
+		
+		}
+		
+		/*
+		print_r( array(
+			'c' => $content,
+			//'new' => $_content,
+			'm' => $matches,
+		) ); die();
+		*/
+		
 		// --<
 		return $content;
 				

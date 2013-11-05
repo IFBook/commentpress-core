@@ -184,13 +184,20 @@ input[type=text], input[type=password], textarea { width: 12.25em; *width: 11.9e
 /* prevents outlines - we set them explicitly for elements that require them */
 a:focus { outline: 0; }
 
-blockquote 
+blockquote,
+.blockquote-in-para
 {
 	margin-left: 0;
 	margin-right: 0;
 	padding: 0 15px 0 15px;
 	border-left: 1px solid #ddd;
 	font-style: italic;
+}
+
+.blockquote-in-para
+{
+	display: block;
+	margin: 0.7em 0;
 }
 
 /* WordPress presentational styles */
