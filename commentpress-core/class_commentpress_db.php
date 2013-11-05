@@ -1587,6 +1587,52 @@ class CommentpressCoreDatabase {
 
 
 
+		// ---------------------------------------------------------------------
+		// Starting Paragraph Number - meta only exists when not default value
+		// ---------------------------------------------------------------------
+		
+		// get the data
+		$_data = ( isset( $_POST['cp_starting_para_number'] ) ) ? $_POST['cp_starting_para_number'] : 1;
+		
+		// if not numeric, set to default
+		if ( ! is_numeric( $_data ) ) { $_data = 1; }
+		
+		// sanitize it
+		$_data = absint( $_data );
+
+		// set key
+		$key = '_cp_starting_para_number';
+		
+		// if the custom field already has a value...
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+		
+			// if default...
+			if ( $_data === 1 ) {
+		
+				// delete the meta_key
+				delete_post_meta( $post->ID, $key );
+			
+			} else {
+			
+				// update the data
+				update_post_meta( $post->ID, $key, esc_sql( $_data ) );
+				
+			}
+			
+		} else {
+		
+			// if greater than default...
+			if ( $_data > 1 ) {
+		
+				// add the data
+				add_post_meta( $post->ID, $key, esc_sql( $_data ) );
+			
+			}
+			
+		}
+		
+
+
 	}
 	
 	

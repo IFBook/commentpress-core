@@ -2639,6 +2639,20 @@ function commentpress_get_comments_by_para() {
 	// get text signatures
 	//$text_sigs = $commentpress_core->db->get_text_sigs();
 
+	// init starting paragraph number
+	$start_num = 1;
+	
+	// set key
+	$key = '_cp_starting_para_number';
+	
+	// if the custom field already has a value...
+	if ( get_post_meta( $post->ID, $key, true ) != '' ) {
+	
+		// get it
+		$start_num = absint( get_post_meta( $post->ID, $key, true ) );
+		
+	}
+	
 
 
 	// if we have any...
@@ -2794,7 +2808,7 @@ function commentpress_get_comments_by_para() {
 					$text_sig = $text_signature;
 				
 					// paragraph number
-					$para_num = $sig_counter;
+					$para_num = $sig_counter + ( $start_num - 1 );
 					
 					// which parsing method?
 					if ( defined( 'COMMENTPRESS_BLOCK' ) ) {

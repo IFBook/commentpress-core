@@ -398,9 +398,24 @@ class CommentpressCoreParser {
 		// get sorted comments and store
 		$this->comments_sorted = $this->_get_sorted_comments( $post->ID );
 		//print_r( $this->comments_sorted ); die();
-	
-
-
+		
+		// init starting paragraph number
+		$start_num = 1;
+		
+		// set key
+		$key = '_cp_starting_para_number';
+		
+		// if the custom field already has a value...
+		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
+		
+			// get it
+			$start_num = absint( get_post_meta( $post->ID, $key, true ) );
+			
+		}
+		
+		
+		
+		
 		// we already have our text signatures, so set flag
 		$sig_key = 0;
 		
@@ -409,6 +424,9 @@ class CommentpressCoreParser {
 	  
 			// get a signature for the paragraph
 			$text_signature = $this->text_signatures[ $sig_key ];
+			
+			// construct paragraph number
+			$para_num = $sig_key + $start_num;
 			
 			// increment
 			$sig_key++;
@@ -422,7 +440,7 @@ class CommentpressCoreParser {
 				$comment_count, 
 				$text_signature, 
 				'auto', 
-				$sig_key 
+				$para_num 
 				
 			);
 			
@@ -432,7 +450,7 @@ class CommentpressCoreParser {
 				$comment_count, 
 				$text_signature, 
 				'auto', 
-				$sig_key 
+				$para_num 
 				
 			);
 			

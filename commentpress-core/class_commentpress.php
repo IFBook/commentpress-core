@@ -1243,6 +1243,11 @@ class CommentpressCore {
 		// get default sidebar
 		$this->_get_default_sidebar_metabox( $post );
 		
+		
+		
+		// get starting para number
+		$this->_get_para_numbering_metabox( $post );
+		
 
 
 	}
@@ -2852,6 +2857,45 @@ class CommentpressCore {
 			
 		}
 
+	}
+	
+	
+	
+	
+	
+	
+		
+	/** 
+	 * @description: adds the paragraph numbering preference to the page/post metabox
+	 * @todo:
+	 *
+	 */
+	function _get_para_numbering_metabox( $post ) {
+		
+		// show a title
+		echo '<p><strong><label for="cp_starting_para_number">' . __( 'Starting Paragraph Number' , 'commentpress-core' ) . '</label></strong></p>';
+		
+		// set key
+		$key = '_cp_starting_para_number';
+		
+		// default to start with para 1
+		$_num = 1;
+		
+		// if the custom field already has a value...
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+		
+			// get it
+			$_num = get_post_meta( $post->ID, $key, true );
+			
+		}
+		
+		// select
+		echo '
+<p>
+<input type="text" id="cp_starting_para_number" name="cp_starting_para_number" value="'.$_num.'" />
+</p>
+';
+		
 	}
 	
 	
