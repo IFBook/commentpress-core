@@ -7,6 +7,7 @@ Author: Institute for the Future of the Book
 Version: 3.5.3
 Author URI: http://www.futureofthebook.org
 Text Domain: commentpress-core
+Domain Path: /languages
 --------------------------------------------------------------------------------
 Special thanks to:
 Eddie Tejeda @ http://www.visudo.com for Commentpress 2.0
