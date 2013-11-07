@@ -572,7 +572,7 @@ function commentpress_setup_comment_headers() {
 			//alert( 'comment_block_permalink click' );
 	
 			// if not the whole page or pings...
-			if( text_sig != '' && text_sig != 'pingbacksandtrackbacks' ) {
+			if( text_sig !== '' && text_sig != 'pingbacksandtrackbacks' ) {
 	
 				// get text block
 				textblock = jQuery('#textblock-' + text_sig);
@@ -793,7 +793,7 @@ function commentpress_scroll_page_to_textblock( text_sig ) {
 	var textblock;
 	
 	// if not the whole page...
-	if( text_sig != '' ) {
+	if( text_sig !== '' ) {
 
 		// get text block
 		textblock = jQuery('#textblock-' + text_sig);
@@ -1113,7 +1113,7 @@ function cp_scroll_to_anchor_on_load() {
 				if ( cp_tinymce == '1' ) { 
 					
 					// if we have link text, then a comment reply is allowed...
-					if ( jQuery( '#comment-' + comment_id + ' > .reply' ).text() != '' ) {
+					if ( jQuery( '#comment-' + comment_id + ' > .reply' ).text() !== '' ) {
 						
 						// temporarily override global so that TinyMCE is not
 						// meddled with in any way...
@@ -1159,7 +1159,7 @@ function cp_scroll_to_anchor_on_load() {
 			cp_scroll_comments( jQuery('#comment-' + comment_id), 1, 'flash' );
 			
 			// if not the whole page...
-			if( text_sig != '' ) {
+			if( text_sig !== '' ) {
 	
 				// get text block
 				textblock = jQuery('#textblock-' + text_sig);
@@ -1415,7 +1415,7 @@ function cp_do_comment_icon_action( text_sig, mode ) {
 	jQuery.unhighlight_para();
 	
 	// did we get a text_sig?
-	if ( text_sig != '' ) {
+	if ( text_sig !== '' ) {
 	
 		// get text block
 		textblock = jQuery('#textblock-' + text_sig);
@@ -2118,7 +2118,7 @@ var setSidebarHeight = function() {
 	// set height
 	jQuery('#sidebar .sidebar_contents_wrapper').css( 'height', sidebar_height + 'px' );
 
-}
+};
 
 
 
@@ -2129,21 +2129,21 @@ var showMenu = function() {
 	jQuery('body').toggleClass('active-nav').removeClass('active-sidebar');
 	jQuery('.sidebar-button,.content-button').removeClass('active-button');				
 	jQuery('.navigation-button').toggleClass('active-button');	
-}
+};
 
 // show content
 var showContent = function() {
 	jQuery('body').removeClass('active-sidebar').removeClass('active-nav');
 	jQuery('.navigation-button,.sidebar-button').removeClass('active-button');					
 	jQuery('.content-button').toggleClass('active-button');
-}
+};
 
 // show sidebar
 var showSidebar = function() {
 	jQuery('body').toggleClass('active-sidebar').removeClass('active-nav');
 	jQuery('.navigation-button,.content-button').removeClass('active-button');					
 	jQuery('.sidebar-button').toggleClass('active-button');
-}
+};
 
 
 
