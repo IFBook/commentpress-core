@@ -2833,11 +2833,28 @@ class CommentpressCoreDatabase {
 		$vars['cp_wp_adminbar'] = 'n';
 		$vars['cp_bp_adminbar'] = 'n';
 
+		// assume pre-3.8 admin bar
+		$vars['cp_wp_adminbar_height'] = '28';
+		$vars['cp_wp_adminbar_expanded'] = '0';
+
 		// are we showing the WP admin bar?
 		if ( function_exists( 'is_admin_bar_showing' ) AND is_admin_bar_showing() ) {
 			
 			// we have it...
 			$vars['cp_wp_adminbar'] = 'y';
+			
+			// check for a WP 3.8+ function
+			if ( function_exists( 'wp_admin_bar_sidebar_toggle' ) ) {
+				
+				//die('here');
+			
+				// the 3.8+ admin bar is taller
+				$vars['cp_wp_adminbar_height'] = '32';
+				
+				// it also expands in height below 782px viewport width
+				$vars['cp_wp_adminbar_expanded'] = '46';
+
+			}
 
 		}
 		

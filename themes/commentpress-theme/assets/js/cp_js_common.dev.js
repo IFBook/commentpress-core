@@ -1,6 +1,6 @@
 /*
 ================================================================================
-Common Javascript
+CommentPress Default Common Javascript
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
@@ -15,13 +15,16 @@ NOTES
 if ( 'undefined' !== typeof CommentpressSettings ) {
 	
 	// define our vars
-	var cp_wp_adminbar, cp_bp_adminbar, cp_comments_open, cp_special_page, cp_tinymce,
+	var cp_wp_adminbar, cp_wp_adminbar_height, cp_wp_adminbar_expanded, cp_bp_adminbar, 
+		cp_comments_open, cp_special_page, cp_tinymce,
 		cp_promote_reading, cp_is_mobile, cp_is_touch, cp_is_tablet, cp_cookie_path,
 		cp_multipage_page, cp_template_dir, cp_plugin_dir, cp_toc_chapter_is_page, cp_show_subpages,
 		cp_default_sidebar, cp_is_signup_page, cp_scroll_speed, cp_min_page_width;
 	
 	// set our vars
 	cp_wp_adminbar = CommentpressSettings.cp_wp_adminbar;
+	cp_wp_adminbar_height = parseInt( CommentpressSettings.cp_wp_adminbar_height );
+	cp_wp_adminbar_expanded = parseInt( CommentpressSettings.cp_wp_adminbar_expanded );
 	cp_bp_adminbar = CommentpressSettings.cp_bp_adminbar;
 	cp_comments_open = CommentpressSettings.cp_comments_open;
 	cp_special_page = CommentpressSettings.cp_special_page;
@@ -46,7 +49,7 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 
 
 // define vars
-var msie6, cp_wp_adminbar_height, cp_book_header_height, cp_header_animating,
+var msie6, cp_book_header_height, cp_header_animating,
 	cp_toc_on_top, page_highlight, cp_header_minimised, cp_sidebar_minimised,
 	cp_container_top_max, cp_container_top_min;
 
@@ -61,7 +64,6 @@ if ( 'undefined' !== typeof cp_msie6 ) {
 }
 
 // define utility globals
-cp_wp_adminbar_height = 28;
 cp_header_animating = false;
 
 // set toc on top flag
@@ -152,6 +154,17 @@ function cp_page_setup() {
 			styles += '#header { top: ' + cp_wp_adminbar_height + 'px; } ';
 			styles += '#book_header { top: ' + (cp_wp_adminbar_height + 32) + 'px; } ';
 		
+			// if we have the responsive admin bar in 3.8+
+			if ( cp_wp_adminbar_height == '32' ) {
+				
+				// react to responsive admin bar
+				styles += '@media screen and ( max-width: 782px ) { ' + 
+							'#header { top: ' + cp_wp_adminbar_expanded + 'px; }' + 
+							'#book_header { top: ' + (cp_wp_adminbar_expanded + 32) + 'px; }' + 
+						' } ';
+			
+			}
+		
 		}
 		
 
@@ -188,6 +201,21 @@ function cp_page_setup() {
 			styles += '#container { top: ' + cp_container_top + 'px; } ';
 			styles += '#sidebar { top: ' + cp_container_top_max + 'px; } ';
 
+			// is the admin bar shown?
+			if ( cp_wp_adminbar == 'y' ) {
+			
+				// if we have the responsive admin bar in 3.8+
+				if ( cp_wp_adminbar_height == '32' ) {
+				
+					// react to responsive admin bar
+					styles += '@media screen and ( max-width: 782px ) { ' + 
+								'#sidebar { top: ' + (cp_container_top + cp_wp_adminbar_expanded) + 'px; }' + 
+							' } ';
+			
+				}
+		
+			}
+				
 		} else {
 		
 			// set visibility of comments
@@ -205,6 +233,21 @@ function cp_page_setup() {
 			styles += '#container { top: ' + cp_container_top + 'px; } ';
 			styles += '#sidebar { top: ' + cp_container_top_min + 'px; } ';
 
+			// is the admin bar shown?
+			if ( cp_wp_adminbar == 'y' ) {
+			
+				// if we have the responsive admin bar in 3.8+
+				if ( cp_wp_adminbar_height == '32' ) {
+				
+					// react to responsive admin bar
+					styles += '@media screen and ( max-width: 782px ) { ' + 
+								'#sidebar { top: ' + (cp_container_top + cp_wp_adminbar_expanded) + 'px; }' + 
+							' } ';
+			
+				}
+				
+			}
+		
 		}
 	
 
@@ -892,7 +935,7 @@ function commentpress_setup_comment_headers() {
 			//alert( 'comment_block_permalink click' );
 	
 			// if not the whole page or pings...
-			if( text_sig != '' && text_sig != 'pingbacksandtrackbacks' ) {
+			if( text_sig !== '' && text_sig != 'pingbacksandtrackbacks' ) {
 	
 				// get text block
 				textblock = jQuery('#textblock-' + text_sig);
@@ -1113,7 +1156,7 @@ function commentpress_scroll_page_to_textblock( text_sig ) {
 	var textblock;
 	
 	// if not the whole page...
-	if( text_sig != '' ) {
+	if( text_sig !== '' ) {
 
 		// get text block
 		textblock = jQuery('#textblock-' + text_sig);
@@ -1431,7 +1474,7 @@ function cp_scroll_to_anchor_on_load() {
 				if ( cp_tinymce == '1' ) { 
 					
 					// if we have link text, then a comment reply is allowed...
-					if ( jQuery( '#comment-' + comment_id + ' > .reply' ).text() != '' ) {
+					if ( jQuery( '#comment-' + comment_id + ' > .reply' ).text() !== '' ) {
 						
 						// temporarily override global so that TinyMCE is not
 						// meddled with in any way...
@@ -1477,7 +1520,7 @@ function cp_scroll_to_anchor_on_load() {
 			cp_scroll_comments( jQuery('#comment-' + comment_id), 0, 'flash' );
 			
 			// if not the whole page...
-			if( text_sig != '' ) {
+			if( text_sig !== '' ) {
 	
 				// get text block
 				textblock = jQuery('#textblock-' + text_sig);
@@ -1524,7 +1567,7 @@ function cp_scroll_to_anchor_on_load() {
 			
 			// get text signature
 			text_sig = jQuery(this).prop( 'id' );
-			//console.log( "ID: " + text_sig );
+			//console.log( 'text_sig: ' + text_sig );
 			
 			// do we have a paragraph or comment block permalink?
 			if ( url.match( '#' + text_sig ) || url.match( '#para_heading-' + text_sig ) ) {
@@ -1620,7 +1663,7 @@ function cp_scroll_to_anchor_on_load() {
 function cp_scroll_to_comment_on_load() {
 
 	// define vars
-	var url, comment_id;
+	var url, comment_id, comment;
 
 	// if there is an anchor in the URL...
 	url = document.location.toString();
@@ -1668,7 +1711,7 @@ function cp_scroll_to_comment_on_load() {
 				}
 			
 			}
-		
+			
 		}
 
 	}
@@ -1726,7 +1769,7 @@ function cp_do_comment_icon_action( text_sig, mode ) {
 	jQuery.unhighlight_para();
 	
 	// did we get a text_sig?
-	if ( text_sig != '' ) {
+	if ( text_sig !== '' ) {
 	
 		// get text block
 		textblock = jQuery('#textblock-' + text_sig);
@@ -2242,7 +2285,7 @@ function commentpress_setup_footnotes_compatibility() {
 	// -------------------------------------------------------------------------
 
 	// unbind first to allow repeated calls to this function
-	jQuery('span.footnotereverse a').unbind( 'click' );
+	jQuery('span.footnotereverse a, a.footnote-back-link').unbind( 'click' );
 
 	/** 
 	 * @description: clicking on reverse links in FD-Footnotes and WP_Footnotes

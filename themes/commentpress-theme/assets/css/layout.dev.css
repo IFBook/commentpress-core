@@ -2681,6 +2681,26 @@ Compatibility with BP Docs plugin
 
 
 
+
+/* 
+--------------------------------------------------------------------------------
+Compatibility with WordPress 3.8+
+--------------------------------------------------------------------------------
+*/
+
+/* override admin bar z-index */
+@media screen and ( max-width: 782px ) {
+
+	html body #wpadminbar {
+		z-index: 99999 !important;
+	}
+	
+}
+
+
+
+
+
 /* 
 --------------------------------------------------------------------------------
 Misc
