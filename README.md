@@ -13,6 +13,12 @@ Annotate, gloss, workshop, debate: with *CommentPress Core* you can do all of th
 
 For further information and instructions please see the [CommentPress site](http://www.futureofthebook.org/commentpress/) or contact the developers by email at [cpdev@futureofthebook.org](mailto:cpdev@futureofthebook.org)
 
+Many thanks to the following for translations: 
+
+* French - [Pouhiou](http://wordpress.org/support/profile/pouhiou)
+* Spanish - [WebHostingHub](http://www.webhostinghub.com/)
+
+
 ---
 
 ## Installation ##
