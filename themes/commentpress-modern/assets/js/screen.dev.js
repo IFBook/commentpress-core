@@ -146,7 +146,7 @@ function cp_page_setup() {
 		if ( cp_wp_adminbar == 'y' ) {
 		
 			// move down
-			styles += '#header { top: ' + cp_wp_adminbar_height + 'px; } ';
+			styles += 'body.admin-bar #header, #header { top: ' + cp_wp_adminbar_height + 'px; } ';
 			styles += '#sidebar, #navigation { top: ' + (cp_wp_adminbar_height + cp_header_height) + 'px; } ';
 			
 			// if we have the responsive admin bar in 3.8+
