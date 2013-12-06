@@ -136,12 +136,92 @@ function commentpress_setup(
 	// ignore BP 1.7 auto-compatibility - see commentpress_enqueue_theme_styles()
 	//add_theme_support( 'buddypress' );
 	
+	// if we have the plugin enabled...
+	global $commentpress_core;
+	if ( is_object( $commentpress_core ) ) {
+	
+		// get the option
+		$featured_images = $commentpress_core->db->option_get( 'cp_featured_images', 'n' );
+	
+		// do we have the featured imaegs option enabled?
+		if ( $featured_images == 'y' ) {
+			
+			// use Featured Images (also known as post thumbnails)
+			add_theme_support( 'post-thumbnails' );
+	
+			// define a custom image size, cropped to fit
+			add_image_size( 
+				'commentpress-feature', 
+				apply_filters( 'cp_feature_image_width', 1200 ), 
+				apply_filters( 'cp_feature_image_height', 600 ), 
+				true // crop
+			);
+	
+		}
+		
+	}
+
 }
 endif; // commentpress_setup
 
 // add after theme setup hook
 add_action( 'after_setup_theme', 'commentpress_setup' );
 
+
+
+
+
+
+if ( ! function_exists( 'commentpress_get_feature_image' ) ):
+/** 
+ * @description: show feature image
+ */
+function commentpress_get_feature_image() {
+	
+	// do we have a featured image?
+	if ( has_post_thumbnail() ) {
+	
+		// show it
+		echo '<div class="cp_feature_image">';
+		
+		echo get_the_post_thumbnail( get_the_ID(), 'commentpress-feature' );
+		
+		?>
+		<div class="cp_featured_title">
+			<div class="cp_featured_title_inner">
+				
+				<?php if ( is_page() ) { ?>
+				
+					<?php if ( commentpress_get_post_title_visibility( get_the_ID() ) ) { ?>
+					<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+					<?php } ?>
+
+					<?php if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) { ?>
+					<div class="search_meta">
+						<?php commentpress_echo_post_meta(); ?>
+					</div>
+					<?php } ?>
+				
+				<?php } else { ?>
+
+					<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+
+					<div class="search_meta">
+						<?php commentpress_echo_post_meta(); ?>
+					</div>
+				
+				<?php } ?>
+
+			</div>
+		</div>
+		<?php
+
+		echo '</div>';
+
+	}
+	
+}
+endif; // commentpress_get_feature_image
 
 
 

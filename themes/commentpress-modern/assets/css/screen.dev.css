@@ -2771,6 +2771,52 @@ Comment Orphaning
 
 
 
+/*
+--------------------------------------------------------------------------------
+Feature images
+--------------------------------------------------------------------------------
+*/
+
+.cp_feature_image
+{
+	position: relative;
+}
+
+.cp_feature_image img.wp-post-image
+{
+	width: 100%;
+	height: auto;
+}
+
+.cp_feature_image .cp_featured_title
+{
+	width: 100%;
+	background: #fff;
+	background: rgba( 255, 255, 255, 0.66 );
+	position: absolute;
+	bottom: 0;
+}
+
+.cp_feature_image .cp_featured_title .cp_featured_title_inner
+{
+	padding: 2% 12%;
+}
+
+.cp_feature_image .cp_featured_title .cp_featured_title_inner h2.post_title
+{
+	margin: 0;
+}
+
+.cp_feature_image .cp_featured_title .cp_featured_title_inner div.search_meta
+{
+	margin-top: 0;
+	margin-bottom: 0.3em;
+}
+
+
+
+
+
 /* 
 --------------------------------------------------------------------------------
 Compatibility with WordPress 3.8+

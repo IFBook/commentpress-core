@@ -1728,6 +1728,15 @@ $this->_get_options().
 <table class="form-table">
 
 	<tr valign="top">
+		<th scope="row"><label for="cp_featured_images">'.__( 'Enable Featured Images (Note: if you have already implemented this in a child theme, you should choose "No")', 'commentpress-core' ).'</label></th>
+		<td><select id="cp_featured_images" name="cp_featured_images">
+				<option value="y" '.(($this->db->option_get('cp_featured_images', 'n') == 'y') ? ' selected="selected"' : '').'>'.__( 'Yes', 'commentpress-core' ).'</option>
+				<option value="n" '.(($this->db->option_get('cp_featured_images', 'n') == 'n') ? ' selected="selected"' : '').'>'.__( 'No', 'commentpress-core' ).'</option>
+			</select>
+		</td>
+	</tr>
+
+	<tr valign="top">
 		<th scope="row"><label for="cp_title_visibility">'.__( 'Default page title visibility (can be overridden on individual pages)', 'commentpress-core' ).'</label></th>
 		<td><select id="cp_title_visibility" name="cp_title_visibility">
 				<option value="show" '.(($this->db->option_get('cp_title_visibility') == 'show') ? ' selected="selected"' : '').'>'.__( 'Show page titles', 'commentpress-core' ).'</option>
@@ -1943,6 +1952,31 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 		$upgrade = '';
 		
 		
+		
+		// do we have the option to choose featured images (new in 3.5.4)?
+		if ( !$this->db->option_exists( 'cp_featured_images' ) ) {
+		
+			// define labels
+			$label = __( 'Enable Featured Images', 'commentpress-core' );
+			$yes_label = __( 'Yes', 'commentpress-core' );
+			$no_label = __( 'No', 'commentpress-core' );
+	
+			// define upgrade
+			$upgrade .= '
+	<tr valign="top">
+		<th scope="row"><label for="cp_featured_images">'.$label.'</label></th>
+		<td><select id="cp_featured_images" name="cp_featured_images">
+				<option value="y" selected="selected">'.$yes_label.'</option>
+				<option value="n">'.$no_label.'</option>
+			</select>
+		</td>
+	</tr>
+
+';
+
+		}
+		
+
 		
 		// do we have the option to choose the default sidebar (new in 3.3.3)?
 		if ( !$this->db->option_exists( 'cp_sidebar_default' ) ) {

@@ -93,6 +93,9 @@ class CommentpressCoreDatabase {
 	// prevent save_post hook firing more than once
 	public $saved_post = false;
 	
+	// featured images off by default
+	public $featured_images = 'n';
+	
 
 
 
@@ -272,6 +275,19 @@ class CommentpressCoreDatabase {
 			
 			// get variables
 			extract( $_POST );
+			
+			
+			
+			// New in CP 3.5.4 - featured image capabilities
+			if ( !$this->option_exists( 'cp_featured_images' ) ) {
+	
+				// get choice
+				$_choice = esc_sql( $cp_featured_images );
+			
+				// add chosen featured images option
+				$this->option_set( 'cp_featured_images', $_choice );
+				
+			}
 			
 			
 			
@@ -773,6 +789,7 @@ class CommentpressCoreDatabase {
 			$cp_blog_type = 0;
 			$cp_blog_workflow = 0;
 			$cp_sidebar_default = 'comments';
+			$cp_featured_images = 'n';
 			
 			
 			
@@ -967,6 +984,10 @@ class CommentpressCoreDatabase {
 			// save default sidebar
 			$cp_sidebar_default = esc_sql( $cp_sidebar_default );
 			$this->option_set( 'cp_sidebar_default', $cp_sidebar_default );
+			
+			// save featured images
+			$cp_featured_images = esc_sql( $cp_featured_images );
+			$this->option_set( 'cp_featured_images', $cp_featured_images );
 			
 
 
@@ -3876,7 +3897,8 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 			'cp_para_comments_live' => $this->para_comments_live,
 			'cp_blog_type' => $this->blog_type,
 			'cp_blog_workflow' => $this->blog_workflow,
-			'cp_sidebar_default' => $this->sidebar_default
+			'cp_sidebar_default' => $this->sidebar_default,
+			'cp_featured_images' => $this->featured_images,
 		
 		);
 
@@ -3945,6 +3967,9 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 		
 		// default sidebar
 		$this->option_set( 'cp_sidebar_default', $this->sidebar_default );
+		
+		// featured images
+		$this->option_set( 'cp_featured_images', $this->featured_images );
 		
 		// store it
 		$this->options_save();
@@ -4042,6 +4067,10 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 										$old[ 'cp_sidebar_default' ] :
 										$this->sidebar_default;
 		
+		$this->featured_images =	 	isset( $old[ 'cp_featured_images' ] ) ?
+										$old[ 'cp_featured_images' ] :
+										$this->featured_images;
+		
 
 
 		// ---------------------------------------------------------------------
@@ -4096,7 +4125,8 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 			'cp_para_comments_live' => $this->para_comments_live,
 			'cp_blog_type' => $blog_type,
 			'cp_blog_workflow' => $blog_workflow,
-			'cp_sidebar_default' => $this->sidebar_default
+			'cp_sidebar_default' => $this->sidebar_default,
+			'cp_featured_images' => $this->featured_images,
 			
 		);
 			

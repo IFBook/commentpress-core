@@ -42,30 +42,47 @@ get_header(); ?>
 
 
 
-<?php if ( $next_page_html != '' ) { ?>
-	<div class="page_navigation">
+<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
-	<ul>
-	<li class="alignright">
 
-	<?php
 
-	echo $next_page_html;
+<?php
 
-	?>
-	</li>
-	</ul>
+// show feature image
+commentpress_get_feature_image();
 
-	</div><!-- /page_navigation -->
-<?php } ?>
+?>
+
+
+
+<?php
+
+// do we have a featured image?
+if ( !has_post_thumbnail() ) {
+
+	if ( $next_page_html != '' ) { ?>
+		<div class="page_navigation">
+
+		<ul>
+		<li class="alignright">
+
+		<?php
+
+		echo $next_page_html;
+
+		?>
+		</li>
+		</ul>
+
+		</div><!-- /page_navigation -->
+	<?php 
+	} 
+
+} ?>
 
 
 
 <div id="content">
-
-
-
-<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 
 
@@ -74,33 +91,38 @@ get_header(); ?>
 
 
 	<?php
+
+	// do we have a featured image?
+	if ( !has_post_thumbnail() ) {
+
+		// if we've elected to show the title...
+		if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
+
+		?>
+		<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+		<?php
 	
-	// if we've elected to show the title...
-	if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
+		}
 
-	?>
-	<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
-	<?php
-	
-	}
-
-	?>
+		?>
 	
 
 
-	<?php
+		<?php
 	
-	// if we've elected to show the meta...
-	if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
+		// if we've elected to show the meta...
+		if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
 
-	?>
-	<div class="search_meta">
+		?>
+		<div class="search_meta">
 		
-		<?php commentpress_echo_post_meta(); ?>
+			<?php commentpress_echo_post_meta(); ?>
 		
-	</div>
-	<?php
+		</div>
+		<?php
 	
+		}
+
 	}
 
 	?>
@@ -125,9 +147,15 @@ get_header(); ?>
 
 
 
+</div><!-- /content -->
+
+
+
 <?php endwhile; else: ?>
 
 
+
+<div id="content">
 
 <div class="post">
 
@@ -139,13 +167,11 @@ get_header(); ?>
 
 </div><!-- /post -->
 
+</div><!-- /content -->
+
 
 
 <?php endif; ?>
-
-
-
-</div><!-- /content -->
 
 
 

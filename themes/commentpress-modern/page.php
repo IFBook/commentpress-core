@@ -16,6 +16,19 @@
 
 
 
+<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+
+
+
+<?php
+
+// show feature image
+commentpress_get_feature_image();
+
+?>
+
+
+
 <?php
 
 // until WordPress supports a locate_theme_file() function, use filter
@@ -24,8 +37,13 @@ $page_navigation = apply_filters(
 	get_template_directory() . '/assets/templates/page_navigation.php'
 );
 
-// always include
-include( $page_navigation );
+// do we have a featured image?
+if ( !has_post_thumbnail() ) {
+
+	// always include
+	include( $page_navigation );
+
+}
 
 ?>
 
@@ -35,42 +53,43 @@ include( $page_navigation );
 
 
 
-<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-
-
-
 <div class="post<?php echo commentpress_get_post_css_override( get_the_ID() ); ?>" id="post-<?php the_ID(); ?>">
 
 
 
 	<?php
+
+	// do we have a featured image?
+	if ( !has_post_thumbnail() ) {
+
+		// if we've elected to show the title...
+		if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
+
+		?>
+		<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+		<?php
 	
-	// if we've elected to show the title...
-	if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
+		}
 
-	?>
-	<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
-	<?php
-	
-	}
-
-	?>
+		?>
 	
 
 
-	<?php
+		<?php
 	
-	// if we've elected to show the meta...
-	if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
+		// if we've elected to show the meta...
+		if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
 
-	?>
-	<div class="search_meta">
+		?>
+		<div class="search_meta">
 		
-		<?php commentpress_echo_post_meta(); ?>
+			<?php commentpress_echo_post_meta(); ?>
 		
-	</div>
-	<?php
+		</div>
+		<?php
 	
+		}
+
 	}
 
 	?>
@@ -144,9 +163,15 @@ include( $page_navigation );
 
 
 
+</div><!-- /content -->
+
+
+
 <?php endwhile; else: ?>
 
 
+
+<div id="content">
 
 <div class="post">
 
@@ -158,13 +183,11 @@ include( $page_navigation );
 
 </div><!-- /post -->
 
+</div><!-- /content -->
+
 
 
 <?php endif; ?>
-
-
-
-</div><!-- /content -->
 
 
 

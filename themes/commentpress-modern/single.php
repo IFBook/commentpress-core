@@ -115,14 +115,28 @@ if ( $tabs_class != '' ) {
 
 <?php
 
+// show feature image
+commentpress_get_feature_image();
+
+?>
+
+
+
+<?php
+
 // until WordPress supports a locate_theme_file() function, use filter
 $page_navigation = apply_filters( 
 	'cp_template_page_navigation',
 	get_template_directory() . '/assets/templates/page_navigation.php'
 );
 
-// always include
-include( $page_navigation );
+// do we have a featured image?
+if ( !has_post_thumbnail() ) {
+
+	// always include
+	include( $page_navigation );
+
+}
 
 ?>
 
@@ -136,14 +150,23 @@ include( $page_navigation );
 
 
 
-<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+<?php
 
-<div class="search_meta">
-	
-	<?php commentpress_echo_post_meta(); ?>
-	
-</div>
+// do we have a featured image?
+if ( !has_post_thumbnail() ) {
 
+	?><h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+
+	<div class="search_meta">
+	
+		<?php commentpress_echo_post_meta(); ?>
+	
+	</div>
+	<?php
+
+}
+
+?>
 
 
 <?php commentpress_get_post_version_info( $post ); ?>
