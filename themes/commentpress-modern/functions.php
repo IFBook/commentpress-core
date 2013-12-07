@@ -2705,6 +2705,14 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ):
  */
 function commentpress_get_comments_by_para() {
 	
+	// allow oEmbed in comments
+	global $wp_embed;
+	if ( is_a( $wp_embed, 'WP_Embed' ) ) {
+		add_filter( 'comment_text', array( $wp_embed, 'autoembed' ), 1 );
+	}
+	
+	
+	
 	// allow plugins to precede comments
 	do_action( 'commentpress_before_scrollable_comments' );
 	
@@ -3931,7 +3939,7 @@ function commentpress_add_wp_editor() {
 	$settings = array(
 		
 		// configure comment textarea
-		'media_buttons' => false,
+		'media_buttons' => true,
 		'textarea_name' => 'comment',
 		'textarea_rows' => 10,
 		
@@ -3961,19 +3969,19 @@ function commentpress_add_wp_editor() {
 		
 		),
 		
-		// no quicktags
-		'quicktags' => false
+		// uncomment for no quicktags
+		//'quicktags' => false
 	
-	);
-	
-	/*
-	had we wanted quicktags, we could have used:
+		///*
+		//when quicktags enabled, we can use:
 	
 		'quicktags' => array(
 			'buttons' => 'strong,em,ul,ol,li,link,close'
 		)
 
-	*/
+		//*/
+	
+	);
 	
 	// create editor
 	wp_editor(
