@@ -40,3 +40,9 @@ ol li
 	margin: 2px 0 10px 28px;
 }
 
+img 
+{
+	max-width: 97%;
+	height: auto;
+}
+
