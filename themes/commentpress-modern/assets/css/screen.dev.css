@@ -1146,6 +1146,19 @@ p.comment_activity_date
 	background: none;
 }
 
+/* YouTube embeds */
+.comment-content iframe 
+{
+	max-width: 100%;
+}
+
+/* Images in comments */
+.comment-content img 
+{
+	max-width: 97%;
+	height: auto;
+}
+
 .reply
 {
 	text-transform: uppercase;
