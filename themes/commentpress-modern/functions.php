@@ -1933,7 +1933,7 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 	);
 	
 	// comment content
-	$_comment_body = '<div class="comment-content">'.wpautop(convert_chars(wptexturize($comment->comment_content))).'</div>'."\n";
+	$_comment_body = '<div class="comment-content">'.apply_filters( 'comment_text', $comment->comment_content ).'</div>'."\n";
 	
 	// construct comment
 	return '<div class="comment_wrapper">'."\n".$_comment_meta.$_comment_body.'</div>'."\n\n";
@@ -2126,6 +2126,14 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ):
  */
 function commentpress_get_all_comments_page_content() {
 
+	// allow oEmbed in comments
+	global $wp_embed;
+	if ( is_a( $wp_embed, 'WP_Embed' ) ) {
+		add_filter( 'comment_text', array( $wp_embed, 'autoembed' ), 1 );
+	}
+	
+	
+	
 	// declare access to globals
 	global $commentpress_core;
 
@@ -2339,6 +2347,14 @@ if ( ! function_exists( 'commentpress_get_comments_by_page_content' ) ):
  */
 function commentpress_get_comments_by_page_content() {
 
+	// allow oEmbed in comments
+	global $wp_embed;
+	if ( is_a( $wp_embed, 'WP_Embed' ) ) {
+		add_filter( 'comment_text', array( $wp_embed, 'autoembed' ), 1 );
+	}
+	
+	
+	
 	// declare access to globals
 	global $commentpress_core;
 
@@ -2452,6 +2468,14 @@ if ( ! function_exists( 'commentpress_get_comment_activity' ) ):
  */
 function commentpress_get_comment_activity( $scope = 'all' ) {
 
+	// allow oEmbed in comments
+	global $wp_embed;
+	if ( is_a( $wp_embed, 'WP_Embed' ) ) {
+		add_filter( 'comment_text', array( $wp_embed, 'autoembed' ), 1 );
+	}
+	
+	
+	
 	// declare access to globals
 	global $commentpress_core, $post;
 
@@ -2674,7 +2698,7 @@ function commentpress_get_comment_activity_item( $comment ) {
 
 
 <div class="comment-content">
-'.apply_filters('comment_text', $comment_text ).'
+'.apply_filters( 'comment_text', $comment_text ).'
 </div><!-- /comment-content -->
 
 <div class="reply"><p><a class="comment_activity_link'.$is_on_current_post.'" href="'.htmlspecialchars( get_comment_link() ).'">'.__( 'See in context', 'commentpress-core' ).'</a></p></div><!-- /reply -->
@@ -3505,7 +3529,7 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 
 
 <div class="comment-content'.$_comment_orphan.'">
-'.apply_filters('comment_text', $comment_text ).'
+'.apply_filters( 'comment_text', $comment_text ).'
 </div><!-- /comment-content -->
 
 
