@@ -2823,6 +2823,12 @@ Compatibility with WordPress 3.8+
 --------------------------------------------------------------------------------
 */
 
+/* sans serif is easier to read, methinks */
+body .wp-dialog
+{
+	font-family: sans-serif;
+}
+
 /* override admin bar z-index */
 @media screen and ( max-width: 782px ) {
 

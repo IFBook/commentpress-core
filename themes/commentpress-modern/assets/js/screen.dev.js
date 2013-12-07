@@ -147,15 +147,15 @@ function cp_page_setup() {
 		
 			// move down
 			styles += 'body.admin-bar #header, #header { top: ' + cp_wp_adminbar_height + 'px; } ';
-			styles += '#sidebar, #navigation { top: ' + (cp_wp_adminbar_height + cp_header_height) + 'px; } ';
+			styles += 'body.admin-bar #sidebar, #sidebar, body.admin-bar #navigation, #navigation { top: ' + (cp_wp_adminbar_height + cp_header_height) + 'px; } ';
 			
 			// if we have the responsive admin bar in 3.8+
 			if ( cp_wp_adminbar_height == '32' ) {
 				
 				// react to responsive admin bar
 				styles += '@media screen and ( max-width: 782px ) { ' + 
-							'#header { top: ' + cp_wp_adminbar_expanded + 'px; }' + 
-							'#sidebar, #navigation { top: ' + (cp_wp_adminbar_expanded + cp_header_height) + 'px; }' + 
+							'body.admin-bar #header, #header { top: ' + cp_wp_adminbar_expanded + 'px; }' + 
+							'body.admin-bar #sidebar, #sidebar, body.admin-bar #navigation, #navigation { top: ' + (cp_wp_adminbar_expanded + cp_header_height) + 'px; }' + 
 						' } ';
 			
 			}
