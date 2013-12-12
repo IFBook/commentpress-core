@@ -172,61 +172,6 @@ add_action( 'after_setup_theme', 'commentpress_setup' );
 
 
 
-if ( ! function_exists( 'commentpress_get_feature_image' ) ):
-/** 
- * @description: show feature image
- */
-function commentpress_get_feature_image() {
-	
-	// do we have a featured image?
-	if ( has_post_thumbnail() ) {
-	
-		// show it
-		echo '<div class="cp_feature_image">';
-		
-		echo get_the_post_thumbnail( get_the_ID(), 'commentpress-feature' );
-		
-		?>
-		<div class="cp_featured_title">
-			<div class="cp_featured_title_inner">
-				
-				<?php if ( is_page() ) { ?>
-				
-					<?php if ( commentpress_get_post_title_visibility( get_the_ID() ) ) { ?>
-					<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
-					<?php } ?>
-
-					<?php if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) { ?>
-					<div class="search_meta">
-						<?php commentpress_echo_post_meta(); ?>
-					</div>
-					<?php } ?>
-				
-				<?php } else { ?>
-
-					<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
-
-					<div class="search_meta">
-						<?php commentpress_echo_post_meta(); ?>
-					</div>
-				
-				<?php } ?>
-
-			</div>
-		</div>
-		<?php
-
-		echo '</div>';
-
-	}
-	
-}
-endif; // commentpress_get_feature_image
-
-
-
-
-
 if ( ! function_exists( 'commentpress_enqueue_theme_styles' ) ):
 /** 
  * @description: add buddypress front-end styles
@@ -4804,6 +4749,61 @@ function commentpress_get_post_meta_visibility( $post_id ) {
 
 }
 endif; // commentpress_get_post_meta_visibility
+
+
+
+
+
+if ( ! function_exists( 'commentpress_get_feature_image' ) ):
+/** 
+ * @description: show feature image
+ */
+function commentpress_get_feature_image() {
+	
+	// do we have a featured image?
+	if ( has_post_thumbnail() ) {
+	
+		// show it
+		echo '<div class="cp_feature_image">';
+		
+		echo get_the_post_thumbnail( get_the_ID(), 'commentpress-feature' );
+		
+		?>
+		<div class="cp_featured_title">
+			<div class="cp_featured_title_inner">
+				
+				<?php if ( is_page() ) { ?>
+				
+					<?php if ( commentpress_get_post_title_visibility( get_the_ID() ) ) { ?>
+					<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+					<?php } ?>
+
+					<?php if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) { ?>
+					<div class="search_meta">
+						<?php commentpress_echo_post_meta(); ?>
+					</div>
+					<?php } ?>
+				
+				<?php } else { ?>
+
+					<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+
+					<div class="search_meta">
+						<?php commentpress_echo_post_meta(); ?>
+					</div>
+				
+				<?php } ?>
+
+			</div>
+		</div>
+		<?php
+
+		echo '</div>';
+
+	}
+	
+}
+endif; // commentpress_get_feature_image
 
 
 
