@@ -1957,7 +1957,7 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 		if ( !$this->db->option_exists( 'cp_featured_images' ) ) {
 		
 			// define labels
-			$label = __( 'Enable Featured Images', 'commentpress-core' );
+			$label = __( 'Enable Featured Images (Note: if you have already implemented this in a child theme, you should choose "No")', 'commentpress-core' );
 			$yes_label = __( 'Yes', 'commentpress-core' );
 			$no_label = __( 'No', 'commentpress-core' );
 	
