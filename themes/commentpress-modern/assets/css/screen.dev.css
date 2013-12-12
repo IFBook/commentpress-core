@@ -2793,6 +2793,7 @@ Feature images
 .cp_feature_image
 {
 	position: relative;
+	line-height: 0;
 }
 
 .cp_feature_image img.wp-post-image
