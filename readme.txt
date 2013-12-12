@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
 Requires at least: 3.4
 Tested up to: 3.8
-Stable tag: 3.5.4
+Stable tag: 3.5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,8 +21,6 @@ Annotate, gloss, workshop, debate: with CommentPress Core you can do all of thes
 **The name has been changed from "CommentPress" to "CommentPress Core" for two reasons:** (a) because it serves as the basis for extending it for your purposes and (b) to safeguard historical installations, which could break if they upgrade. Newer "CommentPress" installations (versions 3.0.x - 3.3.x) can upgrade to the current version.
 
 **Please note:** this plugin comes bundled with two official themes. The new "CommentPress Modern Theme" will be auto-activated when the plugin is first activated. The old "CommentPress Default Theme" is still included for those who wish to stay with it or have built their own child themes for it. If you are upgrading from a previous version of *CommentPress* (3.0.x - 3.3.x), please follow the instructions in the Installation section before doing so.
-
-**For sites hosted in the European Union, please note:** the "CommentPress Default Theme" makes use of cookies, but for presentational purposes only. If you intend to use the "CommentPress Default Theme" on a public site, you may need to inform visitors of this.
 
 For further information and instructions please see the [CommentPress site](http://www.futureofthebook.org/commentpress/) or contact the developers by email at [cpdev@futureofthebook.org](mailto:cpdev@futureofthebook.org)
 
@@ -151,6 +149,9 @@ To create a "CommentPress Core"-enabled Groupblog:
 6. To go to the groupblog, click "Blog" (or "Workshop" if you have chosen that naming scheme)
 7. Start your group blogging!
 
+**For sites hosted in the European Union, please note:** the "CommentPress Default Theme" makes use of cookies, but for presentational purposes only. If you intend to use the "CommentPress Default Theme" on a public site, you may need to inform visitors of this.
+
+
 
 == Other Notes ==
 
@@ -218,6 +219,13 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 
 == Changelog == 
+
+
+<h4>3.5.5</h4>
+
+* Introduces media insertion into comments via Add Media button when logged in
+* Allows switching between Visual and HTML editor in comment form
+* Introduces featured images to pages and posts
 
 
 <h4>3.4 onwards</h4>
