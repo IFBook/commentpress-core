@@ -2460,7 +2460,7 @@ function commentpress_get_comment_activity_item( $comment ) {
 	
 	
 	// only comments until we decide what to do with pingbacks
-	if ( $comment->comment_type == 'pingback' ) { continue; }
+	if ( $comment->comment_type == 'pingback' ) { return $item_html; }
 
 
 
