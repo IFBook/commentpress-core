@@ -2924,7 +2924,20 @@ class CommentpressCoreDatabase {
 		// add rich text editor
 		$vars['cp_tinymce'] = 1;
 		
-		// check option
+		// check if users must be logged in to comment
+		if ( 
+		
+			get_option( 'comment_registration' ) == '1' AND
+			! is_user_logged_in()
+			
+		) {
+		
+			// don't add rich text editor
+			$vars['cp_tinymce'] = 0;
+			
+		}
+		
+		// check CP option
 		if ( 
 		
 			$this->option_exists( 'cp_comment_editor' ) AND
