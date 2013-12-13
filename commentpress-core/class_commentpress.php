@@ -811,8 +811,14 @@ class CommentpressCore {
 		
 		
 		
+		/*
+		The following fails with JetPack 2.7, which parses content in the head to create content summaries
+		I now can't remember why I was being so cautious about not parsing twice, but since JetPack is
+		so useful and common, I'm commenting this out until I get reports that something odd is happening
+		*/
+
 		// only parse content once
-		remove_filter( 'the_content', array( $this, 'the_content' ), 20 );
+		//remove_filter( 'the_content', array( $this, 'the_content' ), 20 );
 		
 		
 
