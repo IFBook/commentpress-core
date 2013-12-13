@@ -131,7 +131,7 @@ $page_navigation = apply_filters(
 );
 
 // do we have a featured image?
-if ( !has_post_thumbnail() ) {
+if ( !commentpress_has_feature_image() ) {
 
 	// always include
 	include( $page_navigation );
@@ -153,7 +153,7 @@ if ( !has_post_thumbnail() ) {
 <?php
 
 // do we have a featured image?
-if ( !has_post_thumbnail() ) {
+if ( !commentpress_has_feature_image() ) {
 
 	?><h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
 

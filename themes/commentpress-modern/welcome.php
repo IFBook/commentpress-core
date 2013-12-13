@@ -58,7 +58,7 @@ commentpress_get_feature_image();
 <?php
 
 // do we have a featured image?
-if ( !has_post_thumbnail() ) {
+if ( !commentpress_has_feature_image() ) {
 
 	if ( $next_page_html != '' ) { ?>
 		<div class="page_navigation">
@@ -93,7 +93,7 @@ if ( !has_post_thumbnail() ) {
 	<?php
 
 	// do we have a featured image?
-	if ( !has_post_thumbnail() ) {
+	if ( !commentpress_has_feature_image() ) {
 
 		// if we've elected to show the title...
 		if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {

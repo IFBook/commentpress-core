@@ -4761,7 +4761,7 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ):
 function commentpress_get_feature_image() {
 	
 	// do we have a featured image?
-	if ( has_post_thumbnail() ) {
+	if ( commentpress_has_feature_image() ) {
 	
 		// show it
 		echo '<div class="cp_feature_image">';
@@ -4804,6 +4804,27 @@ function commentpress_get_feature_image() {
 	
 }
 endif; // commentpress_get_feature_image
+
+
+
+
+
+
+/** 
+ * @description: utility to test for feature image, because has_post_thumbnail() fails sometimes
+ * @see http://codex.wordpress.org/Function_Reference/has_post_thumbnail
+ */
+function commentpress_has_feature_image() {
+	
+	// replacement check
+	if ( '' != get_the_post_thumbnail() ) { 
+		return true;
+	}
+	
+	// --<
+	return false;
+	
+}
 
 
 
