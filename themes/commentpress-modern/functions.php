@@ -3907,6 +3907,16 @@ function commentpress_add_wp_editor() {
 	// allow media buttons setting to be overridden
 	$media_buttons = apply_filters( 'commentpress_rte_media_buttons', true );
 
+	// allow tinymce config to be overridden
+	$tinymce_config = apply_filters( 
+		'commentpress_rte_tinymce', 
+		array(
+			'theme' => 'advanced',
+			'theme_advanced_buttons1' => implode( ',', $mce_buttons ),
+			'theme_advanced_statusbar_location' => 'none',
+		)
+	);
+	
 	// allow quicktags setting to be overridden
 	$quicktags = apply_filters( 
 		'commentpress_rte_quicktags', 
@@ -3941,13 +3951,7 @@ function commentpress_add_wp_editor() {
 		',
 		
 		// configure TinyMCE
-		'tinymce' => array(
-			
-			'theme' => 'advanced',
-			'theme_advanced_buttons1' => implode( ',', $mce_buttons ),
-			'theme_advanced_statusbar_location' => 'none',
-		
-		),
+		'tinymce' => $tinymce_config,
 		
 		// configure quicktags
 		'quicktags' => $quicktags
