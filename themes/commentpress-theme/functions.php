@@ -3844,11 +3844,22 @@ function commentpress_add_wp_editor() {
 		
 	);
 	
+	// allow media buttons setting to be overridden
+	$media_buttons = apply_filters( 'commentpress_rte_media_buttons', true );
+
+	// allow quicktags setting to be overridden
+	$quicktags = apply_filters( 
+		'commentpress_rte_quicktags', 
+		array(
+			'buttons' => 'strong,em,ul,ol,li,link,close'
+		)
+	);
+	
 	// our settings
 	$settings = array(
 		
 		// configure comment textarea
-		'media_buttons' => false,
+		'media_buttons' => $media_buttons,
 		'textarea_name' => 'comment',
 		'textarea_rows' => 10,
 		
@@ -3879,18 +3890,9 @@ function commentpress_add_wp_editor() {
 		),
 		
 		// no quicktags
-		'quicktags' => false
+		'quicktags' => $quicktags
 	
 	);
-	
-	/*
-	had we wanted quicktags, we could have used:
-	
-		'quicktags' => array(
-			'buttons' => 'strong,em,ul,ol,li,link,close'
-		)
-
-	*/
 	
 	// create editor
 	wp_editor(
