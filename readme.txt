@@ -27,7 +27,7 @@ For further information and instructions please see the [CommentPress site](http
 Many thanks to the following for translations: 
 
 * French - [Pouhiou](http://wordpress.org/support/profile/pouhiou)
-* Spanish - [WebHostingHub](http://www.webhostinghub.com/)
+* Spanish - Andrew Kurtis from [WebHostingHub](http://www.webhostinghub.com/)
 
 
 
