@@ -2437,6 +2437,15 @@ jQuery(document).ready( function($) {
 
 
 
+	// define vars
+	var content_min_height, content_padding_bottom;
+
+	// store content min-height on load
+	content_min_height = $('#page_wrapper').css( 'min-height' );
+	
+	// store content padding-bottom on load
+	content_padding_bottom = $('#page_wrapper').css( 'padding-bottom' );
+	
 	// hide workflow content
 	$('#literal .post').css( 'display', 'none' );
 	$('#original .post').css( 'display', 'none' );

@@ -2192,6 +2192,90 @@ h3.comments_hl
 
 /* 
 --------------------------------------------------------------------------------
+Translation Workflow
+--------------------------------------------------------------------------------
+*/
+
+ul#content-tabs
+{
+	margin: 0;
+	padding: 0;
+	height: 32px;
+	z-index: 1000;
+	background-color: #bdbdbd;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+
+ul#content-tabs li
+{
+	list-style: none;
+	list-style-image: none;
+	float: left;
+	width: 33%;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+}
+
+	ul#content-tabs li#original_header
+	{
+		width: 34%;
+	}
+
+	ul#content-tabs li h2
+	{
+		font-size: 16px;
+		line-height: 1;
+		margin: 0;
+		padding: 0;
+		height: 24px;
+	}
+	
+	ul#content-tabs li#content_header h2
+	{
+	}
+	
+	ul#content-tabs li h2 a
+	{
+		display: block;
+		padding: 8px 0;
+		text-decoration: none;
+		color: #000;
+		background-color: #bdbdbd;
+	}	
+
+	ul#content-tabs li h2 a:hover
+	{
+		background-color: #bdbdbd;
+	}	
+
+	ul#content-tabs li.default-content-tab h2 a
+	{
+		background-color: #fff;
+	}
+
+#page_wrapper.with-content-tabs
+{
+	margin-top: 32px;
+}
+
+	#literal,
+	#original
+	{
+		margin: 0 12%;
+		padding: 0 0;
+	}
+
+	
+	
+
+
+
+/* 
+--------------------------------------------------------------------------------
 Post Versioning
 --------------------------------------------------------------------------------
 */
