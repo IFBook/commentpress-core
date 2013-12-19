@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CommentPress Core 3.5.6\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/commentpress-core\n"
-"POT-Creation-Date: 2013-12-18 14:30:06+00:00\n"
+"POT-Creation-Date: 2013-12-19 12:51:49+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -955,10 +955,10 @@ msgid "<a href=\"%1$s\">%2$s</a> replied <a href=\"%3$s\" class=\"activity-time-
 msgstr ""
 
 #: themes/commentpress-modern/activity/comment.php:37
-#: themes/commentpress-modern/functions.php:3217
+#: themes/commentpress-modern/functions.php:3237
 #: themes/commentpress-modern/groups/single/forum/edit.php:10
 #: themes/commentpress-theme/activity/comment.php:37
-#: themes/commentpress-theme/functions.php:3157
+#: themes/commentpress-theme/functions.php:3177
 #: themes/commentpress-theme/groups/single/forum/edit.php:10
 msgid "Reply"
 msgstr ""
@@ -1807,9 +1807,9 @@ msgid "Logo"
 msgstr ""
 
 #: themes/commentpress-modern/functions.php:1261
-#: themes/commentpress-modern/functions.php:3802
+#: themes/commentpress-modern/functions.php:3822
 #: themes/commentpress-theme/functions.php:1249
-#: themes/commentpress-theme/functions.php:3742
+#: themes/commentpress-theme/functions.php:3762
 msgid "Next page"
 msgstr ""
 
@@ -1819,9 +1819,9 @@ msgid "Next page with comments"
 msgstr ""
 
 #: themes/commentpress-modern/functions.php:1291
-#: themes/commentpress-modern/functions.php:3803
+#: themes/commentpress-modern/functions.php:3823
 #: themes/commentpress-theme/functions.php:1279
-#: themes/commentpress-theme/functions.php:3743
+#: themes/commentpress-theme/functions.php:3763
 msgid "Previous page"
 msgstr ""
 
@@ -1856,9 +1856,9 @@ msgid "Comments on the Pages"
 msgstr ""
 
 #: themes/commentpress-modern/functions.php:2559
-#: themes/commentpress-modern/functions.php:3360
+#: themes/commentpress-modern/functions.php:3380
 #: themes/commentpress-theme/functions.php:2507
-#: themes/commentpress-theme/functions.php:3300
+#: themes/commentpress-theme/functions.php:3320
 msgid "Comment awaiting moderation"
 msgstr ""
 
@@ -1867,89 +1867,89 @@ msgstr ""
 msgid "See in context"
 msgstr ""
 
-#: themes/commentpress-modern/functions.php:2790
-#: themes/commentpress-modern/functions.php:2799
-#: themes/commentpress-theme/functions.php:2730
-#: themes/commentpress-theme/functions.php:2739
+#: themes/commentpress-modern/functions.php:2810
+#: themes/commentpress-modern/functions.php:2819
+#: themes/commentpress-theme/functions.php:2750
+#: themes/commentpress-theme/functions.php:2759
 msgid "the whole page"
 msgstr ""
 
-#: themes/commentpress-modern/functions.php:2798
-#: themes/commentpress-theme/functions.php:2738
+#: themes/commentpress-modern/functions.php:2818
+#: themes/commentpress-theme/functions.php:2758
 msgid "the whole post"
 msgstr ""
 
-#: themes/commentpress-modern/functions.php:2804
-#: themes/commentpress-modern/functions.php:2912
-#: themes/commentpress-theme/functions.php:2744
-#: themes/commentpress-theme/functions.php:2852
+#: themes/commentpress-modern/functions.php:2824
+#: themes/commentpress-modern/functions.php:2932
+#: themes/commentpress-theme/functions.php:2764
+#: themes/commentpress-theme/functions.php:2872
 msgid "Permalink for comments on "
 msgstr ""
 
-#: themes/commentpress-modern/functions.php:2857
-#: themes/commentpress-theme/functions.php:2797
+#: themes/commentpress-modern/functions.php:2877
+#: themes/commentpress-theme/functions.php:2817
 msgid "Permalink for pingbacks and trackbacks"
 msgstr ""
 
-#: themes/commentpress-modern/functions.php:2881
-#: themes/commentpress-modern/functions.php:2904
-#: themes/commentpress-theme/functions.php:2821
-#: themes/commentpress-theme/functions.php:2844
+#: themes/commentpress-modern/functions.php:2901
+#: themes/commentpress-modern/functions.php:2924
+#: themes/commentpress-theme/functions.php:2841
+#: themes/commentpress-theme/functions.php:2864
 msgid "paragraph"
 msgstr ""
 
-#: themes/commentpress-modern/functions.php:2888
-#: themes/commentpress-theme/functions.php:2828
+#: themes/commentpress-modern/functions.php:2908
+#: themes/commentpress-theme/functions.php:2848
 msgid "block"
 msgstr ""
 
-#: themes/commentpress-modern/functions.php:2895
-#: themes/commentpress-theme/functions.php:2835
+#: themes/commentpress-modern/functions.php:2915
+#: themes/commentpress-theme/functions.php:2855
 msgid "line"
 msgstr ""
 
-#: themes/commentpress-modern/functions.php:2968
-#: themes/commentpress-theme/functions.php:2908
+#: themes/commentpress-modern/functions.php:2988
+#: themes/commentpress-theme/functions.php:2928
 msgid "It appears that this paragraph is a duplicate of a previous one."
 msgstr ""
 
-#: themes/commentpress-modern/functions.php:3000
-#: themes/commentpress-theme/functions.php:2940
+#: themes/commentpress-modern/functions.php:3020
+#: themes/commentpress-theme/functions.php:2960
 msgid "Login to leave a comment on "
 msgstr ""
 
-#: themes/commentpress-modern/functions.php:3034
-#: themes/commentpress-theme/functions.php:2974
+#: themes/commentpress-modern/functions.php:3054
+#: themes/commentpress-theme/functions.php:2994
 msgid "Leave a comment on %s"
 msgstr ""
 
-#: themes/commentpress-modern/functions.php:3218
-#: themes/commentpress-theme/functions.php:3158
+#: themes/commentpress-modern/functions.php:3238
+#: themes/commentpress-theme/functions.php:3178
 msgid "Log in to Reply"
 msgstr ""
 
-#: themes/commentpress-modern/functions.php:3429
-#: themes/commentpress-theme/functions.php:3369
+#: themes/commentpress-modern/functions.php:3449
+#: themes/commentpress-theme/functions.php:3389
 msgid "Edit this comment"
 msgstr ""
 
-#: themes/commentpress-modern/functions.php:3435
-#: themes/commentpress-theme/functions.php:3375
+#: themes/commentpress-modern/functions.php:3455
+#: themes/commentpress-theme/functions.php:3395
 msgid "Edit"
 msgstr ""
 
-#: themes/commentpress-modern/functions.php:3826
-#: themes/commentpress-theme/functions.php:3766
+#: themes/commentpress-modern/functions.php:3846
+#: themes/commentpress-theme/functions.php:3786
 msgid "Pages: "
 msgstr ""
 
-#: themes/commentpress-modern/functions.php:4392
-#: themes/commentpress-theme/functions.php:4332
+#: themes/commentpress-modern/functions.php:4416
+#: themes/commentpress-theme/functions.php:4356
 msgid "CommentPress Footer"
 msgstr ""
 
-#: themes/commentpress-modern/functions.php:4394
-#: themes/commentpress-theme/functions.php:4334
+#: themes/commentpress-modern/functions.php:4418
+#: themes/commentpress-theme/functions.php:4358
 msgid "An optional widget area in the page footer of the CommentPress theme"
 msgstr ""
 
