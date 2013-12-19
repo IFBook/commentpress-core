@@ -2684,19 +2684,39 @@ function commentpress_get_comments_by_para() {
 		
 		
 
-		// init new walker
-		$walker = new Walker_Comment_Press;
+		// check for a WP 3.8+ function
+		if ( function_exists( 'wp_admin_bar_sidebar_toggle' ) ) {
 		
-		// define args
-		$args = array(
+			// Walker_Comment has changed to buffered output, so define args without
+			// our custom walker. The built in walker works just fine now.
+			$args = array(
 			
-			// list comments params
-			'walker' => $walker,
-			'style'=> 'ol', 
-			'type'=> $comment_type, 
-			'callback' => 'commentpress_comments'
+				// list comments params
+				'style'=> 'ol', 
+				'type'=> $comment_type, 
+				'callback' => 'commentpress_comments'
 			
-		);
+			);
+			
+		} else {
+
+			// init new walker, because the original class did not include the option 
+			// of using ordered lists <ol> instead of unordered ones <ul>
+			// @see https://github.com/WordPress/WordPress/blob/5828310157f1805a5f0976d76692c7023e8a895d/wp-includes/comment-template.php#L880
+			$walker = new Walker_Comment_Press;
+		
+			// define args
+			$args = array(
+			
+				// list comments params
+				'walker' => $walker,
+				'style'=> 'ol', 
+				'type'=> $comment_type, 
+				'callback' => 'commentpress_comments'
+			
+			);
+			
+		}
 
 		
 		
