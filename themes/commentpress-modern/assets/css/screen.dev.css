@@ -2432,7 +2432,7 @@ New Look TOC Sidebar for posts
 	font-weight: normal;
 	font-style: normal;
 	font-size: 0.8em;
-	line-height: 1.5;
+	line-height: 1;
 }
 
 #toc_sidebar .sidebar_minimiser .post-identifier cite a,
@@ -2451,6 +2451,7 @@ New Look TOC Sidebar for posts
 
 .post_activity_date
 {
+	margin-top: 0.3em;
 	margin-bottom: 0;
 	display: block;
 	color: #000;
