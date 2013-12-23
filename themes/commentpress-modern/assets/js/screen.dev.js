@@ -193,7 +193,10 @@ function cp_page_setup() {
 		styles += '#navigation .paragraph_wrapper.start_open { display: block; } ';
 		styles += '.commentpress_page #navigation .paragraph_wrapper.special_pages_wrapper { display: block; } ';
 		//styles += '#sidebar .paragraph_wrapper { display: none; } ';
-
+		
+		// hide original and literal content when JS-enabled
+		styles += '#original .post, #literal .post { display: none; } ';
+		
 		
 		
 		// show tabs when JS enabled
