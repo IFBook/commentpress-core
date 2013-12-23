@@ -83,6 +83,32 @@ if ( is_object( $commentpress_core ) ) {
 
 
 
+<?php 
+
+// did we get tabs?
+if ( $tabs_class != '' ) {
+	
+	// did we get either type of workflow content?
+	if ( $literal != '' OR $original != '' ) {
+	
+	?>
+	<ul id="content-tabs">
+		<li id="content_header" class="default-content-tab"><h2><a href="#content"><?php _e( 'Content', 'commentpress-core' ); ?></a></h2></li>
+		<?php if ( $literal != '' ) { ?>
+		<li id="literal_header"><h2><a href="#literal"><?php _e( 'Literal', 'commentpress-core' ); ?></a></h2></li>
+		<?php } ?>
+		<?php if ( $original != '' ) { ?>
+		<li id="original_header"><h2><a href="#original"><?php _e( 'Original', 'commentpress-core' ); ?></a></h2></li>
+		<?php } ?>
+	</ul>
+	<?php
+	
+	}
+	
+}
+		
+?>
+
 <div id="page_wrapper"<?php echo $tabs_classes; ?>>
 
 
@@ -275,32 +301,6 @@ include( $page_navigation );
 </div><!-- /page_wrapper -->
 
 
-
-<?php 
-
-// did we get tabs?
-if ( $tabs_class != '' ) {
-	
-	// did we get either type of workflow content?
-	if ( $literal != '' OR $original != '' ) {
-	
-	?>
-	<ul id="content-tabs">
-		<li id="content_header" class="default-content-tab"><h2><a href="#content"><?php _e( 'Content', 'commentpress-core' ); ?></a></h2></li>
-		<?php if ( $literal != '' ) { ?>
-		<li id="literal_header"><h2><a href="#literal"><?php _e( 'Literal', 'commentpress-core' ); ?></a></h2></li>
-		<?php } ?>
-		<?php if ( $original != '' ) { ?>
-		<li id="original_header"><h2><a href="#original"><?php _e( 'Original', 'commentpress-core' ); ?></a></h2></li>
-		<?php } ?>
-	</ul>
-	<?php
-	
-	}
-	
-}
-		
-?>
 
 </div><!-- /main_wrapper -->
 
