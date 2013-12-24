@@ -228,7 +228,7 @@ echo commentpress_multipager();
 		// Neither Comments, nor Pings are open 
 		?>Both comments and pings are currently closed. <?php 
 		
-	} edit_post_link('Edit this entry','','.'); 
+	} edit_post_link( 'Edit this entry', '', '.' ); 
 	
 ?></p>
 
@@ -258,7 +258,12 @@ if ( $tabs_class != '' ) {
 	
 	<div class="post">
 	
-	<h2 class="post_title"><?php _e( 'Literal Translation', 'commentpress-core' ); ?></h2>
+	<h2 class="post_title"><?php 
+		echo apply_filters( 
+			'commentpress_literal_title', 
+			__( 'Literal Translation', 'commentpress-core' )
+		); 
+	?></h2>
 	
 	<?php echo wpautop(convert_chars(wptexturize( stripslashes( $literal ) ))); ?>
 	
@@ -280,7 +285,12 @@ if ( $tabs_class != '' ) {
 	
 	<div class="post">
 	
-	<h2 class="post_title"><?php _e( 'Original Text', 'commentpress-core' ); ?></h2>
+	<h2 class="post_title"><?php 
+		echo apply_filters( 
+			'commentpress_original_title', 
+			__( 'Original Text', 'commentpress-core' )
+		); 
+	?></h2>
 	
 	<?php echo wpautop(convert_chars(wptexturize( stripslashes( $original ) ))); ?>
 	
