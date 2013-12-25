@@ -499,6 +499,9 @@ class CommentpressCoreNavigator {
 							// add menu ID (for filtering below)
 							$pseudo_post->menu_id = $menu_item->ID;
 						
+							// add menu item parent ID (for finding parent below)
+							$pseudo_post->menu_item_parent = $menu_item->menu_item_parent;
+						
 							// add comment count for possible calls for "next with comments"
 							$pseudo_post->comment_count = $menu_item->comment_count;
 						
@@ -847,96 +850,6 @@ class CommentpressCoreNavigator {
 
 
 	/** 
-	 * @description: strip out all but lowest level menu items
-	 * @param array $menu_items array of menu item objects
-	 * @return array $sub_items all lowest level items
-	 */
-	function _filter_menu( $menu_items ) {
-	
-		// init return
-		$sub_items = array();
-		
-		
-	
-		// if we have any...
-		if ( count( $menu_items ) > 0 ) {
-		
-			// loop
-			foreach( $menu_items AS $key => $menu_obj ) {
-			
-				// get item children
-				$kids = $this->_get_menu_item_children( $menu_items, $menu_obj );
-				
-				// do we have any?
-				if ( empty( $kids ) ) {
-				
-					// add to our return array
-					$sub_items[] = $menu_obj;
-				
-				}
-			
-			}
-
-		} // end have array check
-
-
-
-		// --<
-		return $sub_items;
-	
-	}
-
-
-
-
-
-
-
-	/** 
-	 * @description: utility to get children of a menu item
-	 * @param array $menu_items array of menu item objects
-	 * @param obj $menu_obj menu item object
-	 * @return array $sub_items menu item children
-	 */
-	function _get_menu_item_children( $menu_items, $menu_obj ) {
-	
-		// init return
-		$sub_items = array();
-		
-		
-	
-		// if we have any...
-		if ( count( $menu_items ) > 0 ) {
-		
-			// loop
-			foreach( $menu_items AS $key => $menu_item ) {
-			
-				// is this item a child of the passed in menu object?
-				if ( $menu_item->menu_item_parent == $menu_obj->ID ) {
-				
-					// add to our return array
-					$sub_items[] = $menu_item;
-				
-				}
-			
-			}
-
-		} // end have array check
-
-
-
-		// --<
-		return $sub_items;
-	
-	}
-
-
-
-
-
-
-
-	/** 
 	 * @description: set up page list
 	 * @todo: 
 	 *
@@ -1250,7 +1163,18 @@ class CommentpressCoreNavigator {
 		
 			// init with page 1
 			$num = 1;
+			
+			// assume no menu
+			$has_nav_menu = false;
 		
+			// if we have a custom menu...
+			if ( has_nav_menu( 'toc' ) ) {
+			
+				// override
+				$has_nav_menu = true;
+			
+			}
+
 			// loop
 			foreach( $pages AS $page_obj ) {
 			
@@ -1275,14 +1199,43 @@ class CommentpressCoreNavigator {
 			
 				} else {
 				
-					// get top level parent
-					$top_page_id = $this->_get_top_parent_id( $page_obj->ID );
+					// if we have a custom menu...
+					if ( $has_nav_menu ) {
+		
+						//print_r( $page_obj ); die();
+
+						// get top level menu item
+						$top_menu_item = $this->_get_top_menu_obj( $page_obj );
+						//print_r( $top_menu_item ); //die();
+						
+						// since this might not be a WP_POST object...
+						if ( isset( $top_menu_item->object_id ) ) {
+						
+							// get ID of top level parent
+							$top_page_id = $top_menu_item->object_id;
+						
+							// if the custom field has a value...
+							if ( get_post_meta( $top_page_id, $key, true ) !== '' ) {
 				
-					// if the custom field has a value...
-					if ( get_post_meta( $top_page_id, $key, true ) !== '' ) {
-					
-						// get it
-						$format = get_post_meta( $top_page_id, $key, true );
+								// get it
+								$format = get_post_meta( $top_page_id, $key, true );
+			
+							}
+							
+						}
+				
+					} else {
+	
+						// get top level parent
+						$top_page_id = $this->_get_top_parent_id( $page_obj->ID );
+				
+						// if the custom field has a value...
+						if ( get_post_meta( $top_page_id, $key, true ) !== '' ) {
+				
+							// get it
+							$format = get_post_meta( $top_page_id, $key, true );
+			
+						}
 				
 					}
 					
@@ -1470,38 +1423,201 @@ class CommentpressCoreNavigator {
 	 * @description: get top parent page id
 	 * @param integer $post_id the queried page id
 	 * @return integer $post_id
-	 * @todo: 
-	 *
 	 */
 	function _get_top_parent_id( $post_id ) {
 		
-		// if we have a custom menu...
-		if ( has_nav_menu( 'toc' ) ) {
-		
-			// there is no point walking the menu tree because menu items can appear
-			// more than once in the menu - walking therefore makes no sense...
-			return $post_id;
-			
+		// get page data
+		$_page = get_page( $post_id );
+	
+		// is the top page?
+		if ( $_page->post_parent == 0 ) {
+	
+			// yes -> return the id
+			return $_page->ID;
+	
 		} else {
 	
-			// get page data
-			$_page = get_page( $post_id );
-		
-			// is the top page?
-			if ( $_page->post_parent == 0 ) {
-		
-				// yes -> return the id
-				return $_page->ID;
-		
-			} else {
-		
-				// no -> recurse upwards
-				return $this->_get_top_parent_id( $_page->post_parent );
-			
-			}
+			// no -> recurse upwards
+			return $this->_get_top_parent_id( $_page->post_parent );
 		
 		}
 	
+	}
+	
+	
+	
+	
+	
+	
+	/** 
+	 * @description: strip out all but lowest level menu items
+	 * @param array $menu_items array of menu item objects
+	 * @return array $sub_items all lowest level items
+	 */
+	function _filter_menu( $menu_items ) {
+	
+		// init return
+		$sub_items = array();
+		
+		
+	
+		// if we have any...
+		if ( count( $menu_items ) > 0 ) {
+		
+			// loop
+			foreach( $menu_items AS $key => $menu_obj ) {
+			
+				// get item children
+				$kids = $this->_get_menu_item_children( $menu_items, $menu_obj );
+				
+				// do we have any?
+				if ( empty( $kids ) ) {
+				
+					// add to our return array
+					$sub_items[] = $menu_obj;
+				
+				}
+			
+			}
+
+		} // end have array check
+
+
+
+		// --<
+		return $sub_items;
+	
+	}
+
+
+
+
+
+
+
+	/** 
+	 * @description: utility to get children of a menu item
+	 * @param array $menu_items array of menu item objects
+	 * @param obj $menu_obj menu item object
+	 * @return array $sub_items menu item children
+	 */
+	function _get_menu_item_children( $menu_items, $menu_obj ) {
+	
+		// init return
+		$sub_items = array();
+		
+		
+	
+		// if we have any...
+		if ( count( $menu_items ) > 0 ) {
+		
+			// loop
+			foreach( $menu_items AS $key => $menu_item ) {
+			
+				// is this item a child of the passed in menu object?
+				if ( $menu_item->menu_item_parent == $menu_obj->ID ) {
+				
+					// add to our return array
+					$sub_items[] = $menu_item;
+				
+				}
+			
+			}
+
+		} // end have array check
+
+
+
+		// --<
+		return $sub_items;
+	
+	}
+
+
+
+
+
+
+
+	/** 
+	 * @description: utility to get parent of a menu item
+	 * @param obj $menu_obj menu item object
+	 * @return int $menu_obj the parent menu item
+	 */
+	function _get_menu_item_parent( $menu_obj ) {
+	
+		// if we have any...
+		if ( count( $this->menu_objects ) > 0 ) {
+		
+			// loop
+			foreach( $this->menu_objects AS $key => $menu_item ) {
+			
+				// is this item the first parent of the passed in menu object?
+				if ( $menu_item->ID == $menu_obj->menu_item_parent ) {
+				
+					// --<
+					return $menu_item;
+				
+				}
+			
+			}
+
+		} // end have array check
+
+
+
+		// --<
+		return false;
+	
+	}
+
+
+
+
+
+
+
+	/** 
+	 * @description: get top parent menu item
+	 * @param object $menu_obj the queried menu object
+	 * @return object $parent_obj the parent object or false if
+	 */
+	function _get_top_menu_obj( $menu_obj ) {
+		
+		// there is little point walking the menu tree because menu items can appear
+		// more than once in the menu...
+
+		// HOWEVER: for instances where people do use the menu sensibly, we should
+		// attempt to walk the tree as best we can
+		
+		// is this the top item?
+		if ( $menu_obj->menu_item_parent == 0 ) {
+	
+			// yes -> return the object
+			return $menu_obj;
+			
+		}
+	
+		//print_r( $menu_obj ); //die();
+
+		// get parent item
+		$parent_obj = $this->_get_menu_item_parent( $menu_obj );
+	
+		//print_r( $parent_obj ); //die();
+
+		// is the top item?
+		if ( $parent_obj->menu_item_parent !== 0 ) {
+	
+			// no -> recurse upwards
+			return $this->_get_top_menu_obj( $parent_obj );
+		
+		}
+	
+		//print_r( $parent_obj ); die();
+
+		// yes -> return the object
+		return $parent_obj;
+
 	}
 	
 	
