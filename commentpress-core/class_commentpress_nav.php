@@ -472,6 +472,11 @@ class CommentpressCoreNavigator {
 							// filter chapters out
 							$menu_items = $this->_filter_menu( $this->menu_objects );
 			
+						} else {
+						
+							// structural - use a copy of the raw menu data
+							$menu_items = $this->menu_objects;
+							
 						}
 			
 					} else {
