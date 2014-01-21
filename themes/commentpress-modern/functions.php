@@ -1793,9 +1793,7 @@ endif; // commentpress_echo_post_author
 
 if ( ! function_exists( 'commentpress_format_comment' ) ):
 /** 
- * @description: format comment on comments pages
- * @todo: 
- *
+ * @description: format comment on custom CommentPress comments pages
  */
 function commentpress_format_comment( $comment, $context = 'all' ) {
 
@@ -1804,8 +1802,20 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 
 	// enable Wordpress API on comment
 	//$GLOBALS['comment'] = $comment;
-
-
+	
+	
+	
+	// construct link
+	$_comment_link = get_comment_link( $comment->comment_ID );
+	
+	// construct anchor
+	$_comment_anchor = '<a href="'.$_comment_link.'" title="'.esc_attr( __( 'See comment in context', 'commentpress-core' ) ).'">'.__( 'Comment', 'commentpress-core' ).'</a>';
+	
+	// construct date
+	$_comment_date = date( 'F jS, Y', strtotime( $comment->comment_date ) );
+	
+	
+	
 	// if context is 'all comments'...
 	if ( $context == 'all' ) {
 	
@@ -1822,17 +1832,33 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 				// get user link
 				$user_link = commentpress_get_user_link( $user );
 				
-				// construct link to user url
-				$_context = ( $user_link != '' AND $user_link != 'http://' ) ? 
-							'by <a href="'.$user_link.'">'.$comment->comment_author.'</a>' : 
-							'by '.$comment->comment_author;
+				// did we get one?
+				if ( $user_link != '' AND $user_link != 'http://' ) {
+				
+					// construct link to user url
+					$_comment_author = '<a href="'.$user_link.'">'.$comment->comment_author.'</a>';
+					
+				} else {
+				
+					// just show author name
+					$_comment_author = $comment->comment_author;
+				
+				}
 				
 			} else {
 			
-				// construct link to commenter url
-				$_context = ( $comment->comment_author_url != '' AND $comment->comment_author_url != 'http://' ) ? 
-							'by <a href="'.$comment->comment_author_url.'">'.$comment->comment_author.'</a>' : 
-							'by '.$comment->comment_author;
+				// do we have an author URL?
+				if ( $comment->comment_author_url != '' AND $comment->comment_author_url != 'http://' ) {
+				
+					// construct link to user url
+					$_comment_author = '<a href="'.$comment->comment_author_url.'">'.$comment->comment_author.'</a>';
+					
+				} else {
+				
+					// define context
+					$_comment_author = $comment->comment_author;
+				
+				}
 				
 			}
 			
@@ -1840,42 +1866,66 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 		} else { 
 		
 			// we don't have a name
-			$_context = __( 'by Anonymous', 'commentpress-core' );
+			$_comment_author = __( 'Anonymous', 'commentpress-core' );
 			
 		}
 	
+		// construct comment header content
+		$_comment_meta_content = sprintf(
+			__( '%1$s by %2$s on %3$s', 'commentpress-core' ),
+			$_comment_anchor,
+			$_comment_author,
+			$_comment_date
+		);
+		
+		// wrap comment meta in a div
+		$_comment_meta = '<div class="comment_meta">'.$_comment_meta_content.'</div>'."\n";
+	
+		// allow filtering by plugins
+		$_comment_meta = apply_filters( 
+			'commentpress_format_comment_all_meta', // filter name
+			$_comment_meta, // built meta
+			$comment,
+			$_comment_anchor,
+			$_comment_author,
+			$_comment_date
+		);
+		
+		
+		
 	// if context is 'by commenter'
 	} elseif ( $context == 'by' ) {
 	
 		// construct link
 		$_page_link = trailingslashit( get_permalink( $comment->comment_post_ID ) );
 		
-		// construct context
-		$_context = 'on <a href="'.$_page_link.'">'.get_the_title( $comment->comment_post_ID ).'</a>';
+		// construct page anchor
+		$_page_anchor = '<a href="'.$_page_link.'">'.get_the_title( $comment->comment_post_ID ).'</a>';
+	
+		// construct comment header content
+		$_comment_meta_content = sprintf(
+			__( '%1$s on %2$s on %3$s', 'commentpress-core' ),
+			$_comment_anchor,
+			$_page_anchor,
+			$_comment_date
+		);
+
+		// wrap comment meta in a div
+		$_comment_meta = '<div class="comment_meta">'.$_comment_meta_content.'</div>'."\n";
+	
+		// allow filtering by plugins
+		$_comment_meta = apply_filters( 
+			'commentpress_format_comment_by_meta', // filter name
+			$_comment_meta, // built meta
+			$comment,
+			$_comment_anchor,
+			$_page_anchor,
+			$_comment_date
+		);
 	
 	}
 	
-	// construct link
-	$_comment_link = get_comment_link( $comment->comment_ID );
 	
-	// construct anchor
-	$_comment_anchor = '<a href="'.$_comment_link.'" title="'.esc_attr( __( 'See comment in context', 'commentpress-core' ) ).'">'.__( 'Comment', 'commentpress-core' ).'</a>';
-	
-	// construct date
-	$_comment_date = date( 'F jS, Y', strtotime( $comment->comment_date ) );
-
-	// comment header
-	$_comment_meta = '<div class="comment_meta">'.$_comment_anchor.' '.$_context.' on '.$_comment_date.'</div>'."\n";
-	
-	// allow filtering by plugins
-	$_comment_meta = apply_filters( 
-		'commentpress_format_comment_meta', // filter name
-		$_comment_meta, // built meta
-		$comment,
-		$_comment_anchor,
-		$_context,
-		$_comment_date
-	);
 	
 	// comment content
 	$_comment_body = '<div class="comment-content">'.apply_filters( 'comment_text', $comment->comment_content ).'</div>'."\n";
@@ -2821,16 +2871,19 @@ function commentpress_get_comments_by_para() {
 					}
 				
 					// set permalink text
-					$permalink_text = __('Permalink for comments on ', 'commentpress-core' ).$paragraph_text;
+					$permalink_text = sprintf(
+						__('Permalink for comments on %s', 'commentpress-core' ),
+						$paragraph_text
+					);
 					
 					// define heading text
 					$heading_text = sprintf( _n(
 						
 						// singular
-						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">'.__( 'Comment', 'commentpress-core' ).'</span> on ', 
+						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span> on ', 
 						
 						// plural
-						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">'.__( 'Comments', 'commentpress-core' ).'</span> on ', 
+						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span> on ', 
 						
 						// number
 						$comment_count, 
@@ -2859,10 +2912,10 @@ function commentpress_get_comments_by_para() {
 					$heading_text = sprintf( _n(
 						
 						// singular
-						'<span>%d</span> '.__( 'Pingback or trackback', 'commentpress-core' ), 
+						'<span>%d</span> Pingback or trackback', 
 						
 						// plural
-						'<span>%d</span> '.__( 'Pingbacks and trackbacks', 'commentpress-core' ), 
+						'<span>%d</span> Pingbacks and trackbacks', 
 						
 						// number
 						$comment_count, 
@@ -2929,16 +2982,19 @@ function commentpress_get_comments_by_para() {
 					$paragraph_text = $block_name.' '.$para_num;
 					
 					// set permalink text
-					$permalink_text = __('Permalink for comments on ', 'commentpress-core' ).$paragraph_text;
+					$permalink_text = sprintf(
+						__('Permalink for comments on %s', 'commentpress-core' ),
+						$paragraph_text
+					);
 					
 					// define heading text
 					$heading_text = sprintf( _n(
 						
 						// singular
-						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">'.__( 'Comment', 'commentpress-core' ).'</span> on ', 
+						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span> on ', 
 						
 						// plural
-						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">'.__( 'Comments', 'commentpress-core' ).'</span> on ', 
+						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span> on ', 
 						
 						// number
 						$comment_count, 
@@ -3154,13 +3210,20 @@ if ( ! function_exists( 'commentpress_comment_form_title' ) ):
  */
 function commentpress_comment_form_title( 
 	
-	$no_reply_text = 'Leave a Reply', 
-	$reply_to_comment_text = 'Leave a Reply to %s', 
-	$reply_to_para_text = 'Leave a Comment on %s', 
+	$no_reply_text = '', 
+	$reply_to_comment_text = '', 
+	$reply_to_para_text = '', 
 	$link_to_parent = TRUE 
 	
 ) {
-
+	
+	// sanity checks
+	if ( $no_reply_text == '' ) { $no_reply_text = __( 'Leave a Reply', 'commentpress-core' ); }
+	if ( $reply_to_comment_text == '' ) { $reply_to_comment_text = __( 'Leave a Reply to %s', 'commentpress-core' ); }
+	if ( $reply_to_para_text == '' ) { $reply_to_para_text = __( 'Leave a Comment on %s', 'commentpress-core' ); }
+	
+	
+	
 	// declare access to globals
 	global $comment, $commentpress_core;
 
@@ -3202,9 +3265,26 @@ function commentpress_comment_form_title(
 			$text_sig = $commentpress_core->get_text_signature( $reply_to_para_id );
 		
 			// get link to paragraph
-			$paragraph = ( $link_to_parent ) ? 
-				'<a href="#para_heading-' . $text_sig . '">Paragraph ' .$reply_to_para_id. '</a>' : 
-				'Paragraph ' .$para_num;
+			if ( $link_to_parent ) {
+				
+				// construct link text
+				$para_text = sprintf(
+					__( 'Paragraph %s', 'commentpress-core' ),
+					$reply_to_para_id
+				);
+				
+				// construct paragraph
+				$paragraph = '<a href="#para_heading-' . $text_sig . '">'.$para_text.'</a>';
+				
+			} else {
+			
+				// construct paragraph without link
+				$paragraph = sprintf(
+					__( 'Paragraph %s', 'commentpress-core' ),
+					$para_num
+				);
+			
+			}
 			
 			// write to page
 			printf( $reply_to_para_text, $paragraph );
@@ -3234,8 +3314,8 @@ function commentpress_comment_reply_link( $args = array(), $comment = null, $pos
 	
 		'add_below' => 'comment', 
 		'respond_id' => 'respond', 
-		'reply_text' => __('Reply','commentpress-core'),
-		'login_text' => __('Log in to Reply','commentpress-core'), 
+		'reply_text' => __( 'Reply', 'commentpress-core' ),
+		'login_text' => __( 'Log in to Reply', 'commentpress-core' ), 
 		'depth' => 0, 
 		'before' => '', 
 		'after' => ''
@@ -3263,7 +3343,7 @@ function commentpress_comment_reply_link( $args = array(), $comment = null, $pos
 	$link = '';
 	
 	// if we have to log in to comment...
-	if ( get_option('comment_registration') AND !is_user_logged_in() ) {
+	if ( get_option( 'comment_registration' ) AND !is_user_logged_in() ) {
 		
 		// construct link
 		$link = '<a rel="nofollow" href="' . site_url('wp-login.php?redirect_to=' . get_permalink()) . '">' . $login_text . '</a>';
@@ -3414,7 +3494,7 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 				
 					$args, 
 					array(
-						'reply_text' => 'Reply to '.get_comment_author(),
+						'reply_text' => sprintf( __( 'Reply to %s', 'commentpress-core' ), get_comment_author() ),
 						'depth' => $depth, 
 						'max_depth' => $args['max_depth']
 					)
@@ -3819,8 +3899,8 @@ function commentpress_multipager() {
 		'link_before' => '', 
 		'link_after' => '',
 		'next_or_number' => 'next', 
-		'nextpagelink' => '<span class="alignright">'.__('Next page','commentpress-core').' &raquo;</span>',
-		'previouspagelink' => '<span class="alignleft">&laquo; '.__('Previous page','commentpress-core').'</span>',
+		'nextpagelink' => '<span class="alignright">'.__( 'Next page', 'commentpress-core' ).' &raquo;</span>',
+		'previouspagelink' => '<span class="alignleft">&laquo; '.__( 'Previous page', 'commentpress-core' ).'</span>',
 		'pagelink' => '%',
 		'more_file' => '', 
 		'echo' => 0
@@ -3843,7 +3923,7 @@ function commentpress_multipager() {
 	// get page links
 	$page_links .= wp_link_pages( array(
 	
-		'before' => '<div class="multipager multipager_all"><span>' . __('Pages: ','commentpress-core') . '</span>', 
+		'before' => '<div class="multipager multipager_all"><span>' . __( 'Pages: ', 'commentpress-core' ) . '</span>', 
 		'after' => '</div>',
 		'pagelink' => '<span class="multipager_link">%</span>',
 		'echo' => 0 
@@ -4487,7 +4567,7 @@ if ( ! function_exists( 'commentpress_wplicense_compat' ) ):
 function commentpress_wplicense_compat() {
 	
 	// let's not have the default footer
-	remove_action('wp_footer', 'cc_showLicenseHtml');
+	remove_action( 'wp_footer', 'cc_showLicenseHtml' );
 
 }
 endif; // commentpress_wplicense_compat
@@ -4580,9 +4660,12 @@ function commentpress_get_post_version_info( $post ) {
 	
 			// get link
 			$_link = get_permalink( $newer_post->ID );
-		
+			
+			// define title
+			$_title = __( 'Newer version', 'commentpress-core' );
+			
 			// construct anchor
-			$newer_link = '<a href="'.$_link.'" title="Newer version">Newer version &rarr;</a>';
+			$newer_link = '<a href="'.$_link.'" title="'.$_title.'">'.$_title.' &rarr;</a>';
 		
 		}
 	
@@ -4617,8 +4700,11 @@ function commentpress_get_post_version_info( $post ) {
 			// get link
 			$_link = get_permalink( $older_post->ID );
 			
+			// define title
+			$_title = __( 'Older version', 'commentpress-core' );
+			
 			// construct anchor
-			$older_link = '<a href="'.$_link.'" title="Older version">&larr; Older version</a>';
+			$older_link = '<a href="'.$_link.'" title="'.$_title.'">&larr; '.$_title.'</a>';
 		
 		}
 	
