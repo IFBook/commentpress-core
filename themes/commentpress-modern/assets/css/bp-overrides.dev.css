@@ -1466,6 +1466,12 @@ table.notifications th.title
 	width: 55%;
 }
 
+#content table.notifications a.button
+{
+	vertical-align: 10%;
+	text-decoration: none;
+}
+
 
 
 

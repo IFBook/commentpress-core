@@ -16,7 +16,9 @@
 				<td></td>
 				<td><?php bp_the_notification_description();  ?></td>
 				<td><?php bp_the_notification_time_since();   ?></td>
-				<td><?php bp_the_notification_action_links(); ?></td>
+				<td><?php bp_the_notification_action_links( array(
+					'sep'    => ''
+				) ); ?></td>
 			</tr>
 
 		<?php endwhile; ?>

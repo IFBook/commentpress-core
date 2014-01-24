@@ -3726,6 +3726,35 @@ add_filter( 'excerpt_length', 'commentpress_excerpt_length' );
 
 if ( ! function_exists( 'commentpress_add_link_css' ) ):
 /** 
+ * @description: utility to add button class to BP 1.9 notification links
+ * @todo: 
+ *
+ */
+function commentpress_convert_link_to_button( $link ) {
+
+	// add css
+	$link = str_replace( 'class="mark-unread', 'class="button mark-unread', $link );
+	$link = str_replace( 'class="mark-read', 'class="button mark-read', $link );
+	$link = str_replace( 'class="delete', 'class="button delete', $link );
+
+	// --<
+	return $link;
+	
+}
+endif; // commentpress_convert_link_to_button
+
+// add filters for the above
+add_filter( 'bp_get_the_notification_mark_unread_link', 'commentpress_convert_link_to_button' );
+add_filter( 'bp_get_the_notification_mark_read_link', 'commentpress_convert_link_to_button' );
+add_filter( 'bp_get_the_notification_delete_link', 'commentpress_convert_link_to_button' );
+
+
+
+
+
+
+if ( ! function_exists( 'commentpress_add_link_css' ) ):
+/** 
  * @description: utility to add button css class to blog nav links
  * @todo: 
  *
