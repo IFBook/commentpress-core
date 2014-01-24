@@ -305,7 +305,7 @@ ul.item-list li div.item-desc
 #activity_sidebar li.groups
 {
     border-left: 10px solid #761D19;
-    margin-bottom: 1px;
+    margin-bottom: 0;
 }
 
 
