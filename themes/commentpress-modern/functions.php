@@ -60,7 +60,15 @@ function commentpress_setup(
 		// -------------------------
 	
 		// allow custom backgrounds
-		add_theme_support( 'custom-background' );
+		add_theme_support( 'custom-background', array(
+		
+			'default-color'          => 'ccc',
+			'default-image'          => '',
+			'wp-head-callback'       => 'commentpress_background',
+			'admin-head-callback'    => '',
+			'admin-preview-callback' => ''
+			
+		) );
 		
 		// allow custom header
 		add_theme_support( 'custom-header', array( 
@@ -427,6 +435,45 @@ add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_print_styles', 999 );
 
 
 
+
+
+
+if ( ! function_exists( 'commentpress_header' ) ):
+/** 
+ * @description: custom background colour
+ * @see: _custom_background_cb() 
+ *
+ */
+function commentpress_background( 
+	
+) { //-->
+
+	// $color is the saved custom color.
+	// A default has to be specified in style.css. It will not be printed here.
+	$color = get_theme_mod( 'background_color' );
+	
+	// bail if we don't have one
+	if ( ! $color ) return;
+
+	$style = $color ? "background-color: #$color; !important" : '';
+
+	echo '
+<style type="text/css" id="custom-background-css">
+
+	html,
+	body.custom-background,
+	#toc_sidebar .sidebar_minimiser ul#toc_list,
+	.sidebar_contents_wrapper,
+	#footer_inner
+	{ 
+		'.trim( $style ).'
+	}
+	
+</style>
+	';
+	
+}
+endif; // commentpress_background
 
 
 
