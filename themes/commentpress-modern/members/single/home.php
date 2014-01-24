@@ -38,7 +38,7 @@
 
 			<div id="item-nav">
 				<div class="item-list-tabs no-ajax" id="object-nav" role="navigation">
-					<ul>
+					<ul class="clearfix">
 
 						<?php bp_get_displayed_user_nav(); ?>
 
