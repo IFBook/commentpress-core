@@ -1447,6 +1447,28 @@ ul#members-list.item-list li div.item-title span.activity-read-more a
 
 
 
+
+/* BuddyPress 1.9 compatibility */
+table.notifications 
+{
+	margin: 0;
+	text-align: left;
+}
+
+table.notifications th.icon,
+table.notifications td:first-child 
+{
+	display: none;
+}
+
+table.notifications th.title 
+{
+	width: 55%;
+}
+
+
+
+
 /* Invite Anyone plugin compatibility */
 body.groups.invite-anyone #item-body,
 form#invite-anyone-by-email
