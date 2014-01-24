@@ -1080,6 +1080,9 @@ class CommentpressMultisiteBuddypress {
 	 */
 	function filter_nav_title_page_title( $title ) {
 		
+		// bail if main BP site
+		if ( bp_is_root_blog() ) return $title;
+		
 		// --<
 		// override default link name
 		return apply_filters(

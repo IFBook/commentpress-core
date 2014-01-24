@@ -418,12 +418,12 @@ class CommentpressGroupblogWorkshop {
 	 *
 	 */
 	function filter_nav_title_page_title( $title ) {
+	
+		// bail if main BP site
+		if ( bp_is_root_blog() ) return $title;
 		
-		// override if groupblog
-		if ( 
-			! bp_is_root_blog() AND 
-			! $this->parent_obj->bp->_is_commentpress_groupblog() ) 
-		{
+		// bail if not groupblog
+		if ( ! $this->parent_obj->bp->_is_commentpress_groupblog() ) {
 			return $title;
 		}
 		
