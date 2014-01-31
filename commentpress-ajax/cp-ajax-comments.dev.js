@@ -910,6 +910,16 @@ function cpajax_cleanup( content, last ) {
 	// get the id of the last list item
 	last_id = jQuery(last).prop('id');
 	
+	/*
+	// IE seems to grab the result from cache despite nocache_headers()
+	// the following is an action of last resort - the cache is being busted in 
+	// commentpress_comment_post_redirect() instead
+	if ( typeof last_id == 'undefined' || last_id === null ) {
+		document.location.reload( true );
+		return;
+	}
+	*/
+	
 	// construct new comment id
 	new_comm_id = '#comment-' + ( last_id.toString().split('-')[2] );
 	comment = jQuery(new_comm_id);

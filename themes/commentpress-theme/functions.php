@@ -4153,25 +4153,47 @@ if ( ! function_exists( 'commentpress_comment_post_redirect' ) ):
  * @todo: should this go in the plugin?
  *
  */
-function commentpress_comment_post_redirect( $link ) {
+function commentpress_comment_post_redirect( $link, $comment ) {
 
-	// get page var, indicating subpage
-	$page = (isset($_POST['page'])) ? $_POST['page'] : 0;
+	// get URL of the page that submitted the comment
+	$page_url = $_SERVER['HTTP_REFERER'];
+	
+	// get anchor position
+	$hash = strpos( $page_url, '#' );
 
-	// are we on a subpage?
-	if ( $page ) {
-	
-		// get current redirect
-		$current_redirect = parse_url( $link );
-	
-		// we need to use the page that submitted the comment
-		$page_info = $_SERVER['HTTP_REFERER'];
+	// well, do we have an anchor?
+	if ( $hash !== false ) {
 		
-		// set redirect to comment on subpage
-		return $page_info.'#'.$current_redirect['fragment'];
+		// yup, so strip it
+		$page_url = substr( $page_url, 0, $hash );
+	
+	}
+
+	// assume not AJAX
+	$ajax_token = '';
+	
+	// is this an AJAX comment form submission?
+	if ( isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) ) {
+		if ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' ) {
+
+			// yes, it's AJAX - some browsers cache POST, so invalidate
+			$ajax_token = '?cachebuster='.time();
+			
+			// but, test for pretty permalinks
+			if ( false !== strpos( $page_url, '?' ) ) {
+		
+				// pretty permalinks are off...
+				$ajax_token = '&cachebuster='.time();
+		
+			}
+	
+		}
 		
 	}
 
+	// construct cachebusting comment redirect
+	$link = $page_url.$ajax_token.'#comment-'.$comment->comment_ID;
+	
 	// --<
 	return $link;
 
@@ -4179,7 +4201,7 @@ function commentpress_comment_post_redirect( $link ) {
 endif; // commentpress_comment_post_redirect
 
 // add filter for the above, making it run early so it can be overridden by AJAX commenting
-add_filter( 'comment_post_redirect', 'commentpress_comment_post_redirect', 4, 1 );
+add_filter( 'comment_post_redirect', 'commentpress_comment_post_redirect', 4, 2 );
 
 
 
