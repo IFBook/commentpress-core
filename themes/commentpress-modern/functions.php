@@ -3605,7 +3605,7 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 	
 	// stripped source
 	$html = '	
-<li id="li-comment-'.$comment->comment_ID.'"'.$_comment_class.'>
+<li id="li-comment-'.$comment->comment_ID.'" '.$_comment_class.'>
 <div class="comment-wrapper">
 <div id="comment-'.$comment->comment_ID.'">
 
