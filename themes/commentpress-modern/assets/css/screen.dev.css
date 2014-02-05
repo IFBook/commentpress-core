@@ -3227,27 +3227,16 @@ RESPONSIVENESS
 
 @media all and (max-width: 600px) {
 
-	/*
 	#header
 	{
-		display: none;
+		position: absolute;
 	}
 
 	#content_container
 	{
-		margin-top: 0;
 		left: 0;
 	}
 	
-	body.admin-bar #content_container #sidebar, 
-	#content_container #sidebar, 
-	body.admin-bar #content_container #navigation, 
-	#content_container #navigation
-	{
-		top: 48px;
-	}
-	*/
-
 	.active-nav #content_container
 	{
 		left: 70%;
@@ -3312,6 +3301,12 @@ RESPONSIVENESS
 		line-height: 1.8;
 	}
 	
+	h2.post_title,
+	.search_result h3
+	{
+		font-size: 1.5em;
+	}
+
 	#switcher ul li 
 	{
 		height: 38px;
