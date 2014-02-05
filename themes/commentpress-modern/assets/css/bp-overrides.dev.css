@@ -1770,6 +1770,22 @@ table.profile-fields td.label
 	padding: 0.2em 0.2em 0.5em 0.2em;
 }
 
+#profile-edit-form
+{
+	padding: 0;
+	padding-bottom: 19px;
+}
+
+ul.button-nav
+{
+	margin: 0;
+}
+
+ul.button-nav li
+{
+	list-style: none;
+	list-style-image: none;
+}
 
 
 
