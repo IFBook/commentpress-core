@@ -3227,11 +3227,27 @@ RESPONSIVENESS
 
 @media all and (max-width: 600px) {
 
+	/*
+	#header
+	{
+		display: none;
+	}
+
 	#content_container
 	{
+		margin-top: 0;
 		left: 0;
 	}
 	
+	body.admin-bar #content_container #sidebar, 
+	#content_container #sidebar, 
+	body.admin-bar #content_container #navigation, 
+	#content_container #navigation
+	{
+		top: 48px;
+	}
+	*/
+
 	.active-nav #content_container
 	{
 		left: 70%;
@@ -3296,11 +3312,24 @@ RESPONSIVENESS
 		line-height: 1.8;
 	}
 	
-	#switcher ul li a
+	#switcher ul li 
 	{
-		font-size: 18px;
+		height: 38px;
 	}
 	
+	#switcher ul li a
+	{
+		font-size: 14px;
+		padding: 12px;
+		height: 14px;
+	}
+	
+	#toc_sidebar .sidebar_header h2,
+	ul#sidebar_tabs li a
+	{
+		font-size: 16px;
+	}
+
 	#content 
 	{
 		padding: 2% 0 6% 0;
@@ -3338,5 +3367,13 @@ RESPONSIVENESS
 	
 }
 
+
+
+/* Specify orientation styles here, when supported 
+@media screen and (orientation:portrait) {
+}
+@media screen and (orientation:landscape) {
+}
+*/
 
 
