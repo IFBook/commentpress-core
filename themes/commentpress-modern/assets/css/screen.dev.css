@@ -505,6 +505,7 @@ img.cp_logo_image
 	top: 70px;
 	left: 0;
 	background-color: #ddd;
+	z-index: 499;
 }
 
 body.admin-bar #navigation
@@ -3167,7 +3168,7 @@ RESPONSIVENESS
 	
 	.active-sidebar #navigation
 	{
-		left: -50%;
+		left: -100%;
 	}
 	
 	.active-sidebar #wrapper
@@ -3305,8 +3306,14 @@ RESPONSIVENESS
 	.search_result h3
 	{
 		font-size: 1.5em;
+		line-height: 3.5;
 	}
 
+	.cp_featured_title_inner h2.post_title
+	{
+		line-height: 1.5;
+	}
+	
 	#switcher ul li 
 	{
 		height: 38px;
