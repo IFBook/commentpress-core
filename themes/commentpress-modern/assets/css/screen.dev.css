@@ -178,7 +178,8 @@ tt, code, kbd, samp
 	font-family: monospace;
 }
 /* setting a consistent width, 160px; 
-   control of type=file still not possible */
+   control of type=file still not possible
+   *width is for ie7 (no ie6 fallback) */
 input[type=text], input[type=password], textarea { width: 12.25em; *width: 11.9em; }
 
 /* prevents outlines - we set them explicitly for elements that require them */
