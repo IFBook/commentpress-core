@@ -418,7 +418,10 @@ addComment = {
 		if ( cp_tinymce == '1' ) {
 		
 			// load tinyMCE, changed from this: tinyMCE.execCommand('mceAddControl', false, 'comment');
-			setTimeout( function() { tinyMCE.execCommand('mceAddControl', false, 'comment'); }, 1 );
+			setTimeout( function() { 
+				tinyMCE.execCommand( 'mceAddControl', false, 'comment' );
+				tinyMCE.execCommand( 'render' );
+			}, 1 );
 			//console.log( 'control added' );
 			
 		}
@@ -437,7 +440,7 @@ addComment = {
 		if ( cp_tinymce == '1' ) {
 		
 			// unload tinyMCE
-			tinyMCE.execCommand('mceRemoveControl', false, 'comment');
+			tinyMCE.execCommand( 'mceRemoveControl', false, 'comment' );
 			//console.log( 'control removed' );
 			
 		}
