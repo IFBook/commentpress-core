@@ -2977,14 +2977,15 @@ body.tinymce-4 .mce-toolbar .mce-btn button:hover
 	text-decoration: none;
 }
 
-body.tinymce-4 .wp-switch-editor
+body.tinymce-4 .wp-editor-container 
 {
-	top: 0;
+	border: 1px solid #dedede;
 }
 
 body.tinymce-4 #commentform #wp-comment-wrap textarea 
 {
 	width: 100%;
+	margin: 0;
 }
 
 
