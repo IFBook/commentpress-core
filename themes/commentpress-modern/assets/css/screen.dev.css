@@ -2951,6 +2951,28 @@ body.tinymce-4.mce-fullscreen #wpadminbar
 	z-index: 100;
 }
 
+/* some BuddyPress button styles leak into the TinyMCE buttons */
+body.tinymce-4 .mce-toolbar .mce-btn button:hover
+{
+	background: none;
+	filter: none;
+	border: none;
+	color: #333;
+	outline: none;
+	text-decoration: none;
+}
+
+body.tinymce-4 .wp-switch-editor
+{
+	top: 0;
+}
+
+body.tinymce-4 #commentform #wp-comment-wrap textarea 
+{
+	width: 100%;
+}
+
+
 
 
 
