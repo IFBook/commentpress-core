@@ -1334,7 +1334,9 @@ function commentpress_page_navigation( $with_comments = false ) {
 		
 		// define list item 
 		$next_page_html = $before_next.
-						  $img.'<a href="'.get_permalink( $next_page->ID ).'" id="next_page" class="css_btn" title="'.$title.'">'.$title.'</a>'.$after_next;
+						  $img.
+						  '<a href="'.get_permalink( $next_page->ID ).'" class="next_page" title="'.$title.'">'.$title.'</a>'.
+						  $after_next;
 		
 	}
 	
@@ -1364,7 +1366,9 @@ function commentpress_page_navigation( $with_comments = false ) {
 		
 		// define list item 
 		$prev_page_html = $before_prev.
-						  $img.'<a href="'.get_permalink( $prev_page->ID ).'" id="previous_page" class="css_btn" title="'.$title.'">'.$title.'</a>'.$after_prev;
+						  $img.
+						  '<a href="'.get_permalink( $prev_page->ID ).'" class="previous_page" title="'.$title.'">'.$title.'</a>'.
+						  $after_prev;
 		
 	}
 	
@@ -4110,6 +4114,9 @@ function commentpress_add_wp_editor() {
 				'statusbar' => false,
 			)
 		);
+		
+		// no need for editor css
+		$editor_css = '';
 	
 	} else {
 	
@@ -4122,6 +4129,16 @@ function commentpress_add_wp_editor() {
 				'theme_advanced_statusbar_location' => 'none',
 			)
 		);
+		
+		// use legacy editor css
+		$editor_css = '
+			<style type="text/css">
+				.wp_themeSkin iframe
+				{
+					background: #fff;
+				}
+			</style>
+		';
 	
 	}
 	
@@ -4145,18 +4162,7 @@ function commentpress_add_wp_editor() {
 		'teeny' => true,
 		
 		// give the iframe a white background
-		'editor_css' => '
-			<style type="text/css">
-				/* <![CDATA[ */
-				
-				.wp_themeSkin iframe
-				{
-					background: #fff;
-				}
-				
-				/* ]]> */
-			</style>
-		',
+		'editor_css' => $editor_css,
 		
 		// configure TinyMCE
 		'tinymce' => $tinymce_config,
@@ -4495,15 +4501,15 @@ if ( ! function_exists( 'commentpress_add_commentblock_button' ) ):
 function commentpress_add_commentblock_button() {
 
 	// only on back-end
-	if ( !is_admin() ) { return; }
+	if ( ! is_admin() ) { return; }
 	
 	// don't bother doing this stuff if the current user lacks permissions
-	if ( ! current_user_can('edit_posts') AND ! current_user_can('edit_pages') ) {
+	if ( ! current_user_can( 'edit_posts' ) AND ! current_user_can( 'edit_pages' ) ) {
 		return;
 	}
 	
 	// add only if user can edit in Rich-text Editor mode
-	if ( get_user_option('rich_editing') == 'true') {
+	if ( get_user_option( 'rich_editing' ) == 'true' ) {
 	
 		add_filter( 'mce_external_plugins', 'commentpress_add_commentblock_tinymce_plugin' );
 		add_filter( 'mce_buttons', 'commentpress_register_commentblock_button' );

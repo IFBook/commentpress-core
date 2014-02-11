@@ -1336,16 +1336,31 @@ div#respond .subscribe_reloaded_insert p
 
 #cpajax_error_msg
 {
+	border: 1px solid #E1CA82;
+	border: none;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	font-weight: normal;
 	margin: 0.6em 0;
-	padding: 0.6em;
-	color: #ca0000;
-	background-color: #eee;
-	border: 1px solid #ca0000;
+	text-decoration: none;
+	background: #FFEAA6;
+	background-image: -webkit-linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255, 255, 255, .5)), color-stop(100%,rgba(255, 255, 255, 0)));
+	background-image: -moz-linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+	background-image: -ms-linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+	background-image: -o-linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+	background-image: linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+	background-color: #DB1717;
+	border-color: #A71A1A;
+	clear: left;
+	color: #fff;
+	font-size: 90%;
 	font-family: sans-serif;
-	line-height: 1.3em;
-	text-transform: uppercase;
-	font-size: 80%;
-	font-weight: bold;
+	display: block;
+	padding: 0.6em;
+	line-height: 1.5em;
 }
 
 
