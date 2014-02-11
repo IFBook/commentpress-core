@@ -321,7 +321,8 @@ function commentpress_enqueue_scripts_and_styles() {
 		
 			'cp_common_js', 
 			get_template_directory_uri() . '/assets/js/cp_js_common'.$dev.'.js', 
-			array( 'jquery_commentpress' )
+			array( 'jquery_commentpress' ),
+			COMMENTPRESS_VERSION // version
 		
 		);
 		
@@ -337,7 +338,8 @@ function commentpress_enqueue_scripts_and_styles() {
 			
 				'cp_form', 
 				get_template_directory_uri() . '/assets/js/cp_js_form'.$dev.'.js', 
-				array( 'cp_common_js' )
+				array( 'cp_common_js' ),
+				COMMENTPRESS_VERSION // version
 			
 			);
 				
@@ -351,7 +353,8 @@ function commentpress_enqueue_scripts_and_styles() {
 			
 				'cp_special', 
 				get_template_directory_uri() . '/assets/js/cp_js_all_comments.js', 
-				array( 'cp_form' )
+				array( 'cp_form' ),
+				COMMENTPRESS_VERSION // version
 			
 			);
 				

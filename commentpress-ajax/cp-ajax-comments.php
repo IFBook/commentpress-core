@@ -295,7 +295,9 @@ function cpajax_add_javascripts() {
 		wp_enqueue_script( 
 			
 			'cpajax', 
-			plugins_url( 'commentpress-ajax/cp-ajax-comments-page'.$debug_state.'.js', COMMENTPRESS_PLUGIN_FILE ) 
+			plugins_url( 'commentpress-ajax/cp-ajax-comments-page'.$debug_state.'.js', COMMENTPRESS_PLUGIN_FILE ),
+			null, // no dependencies
+			COMMENTPRESS_VERSION // version
 			
 		);
 	
@@ -306,9 +308,8 @@ function cpajax_add_javascripts() {
 			
 			'cpajax', 
 			plugins_url( 'commentpress-ajax/cp-ajax-comments'.$debug_state.'.js', COMMENTPRESS_PLUGIN_FILE ),
-			
-			// load in droppable
-			array( 'jquery-ui-droppable', 'jquery-ui-dialog' )
+			array( 'jquery-ui-droppable', 'jquery-ui-dialog' ), // load droppable and dialog as dependencies
+			COMMENTPRESS_VERSION // version
 			
 		);
 		
