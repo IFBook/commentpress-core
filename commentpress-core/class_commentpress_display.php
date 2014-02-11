@@ -2651,9 +2651,12 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 					jQuery(this).fadeOut(2);
 			});
 		});
-
-		farbtastic = jQuery.farbtastic("#color-picker", function(color) { pickColor(color); });
-		pickColor("#'.$this->db->option_get_header_bg().'");
+		
+		// test for picker
+		if ( jQuery("#cp_header_bg_colour").length > 0 ) {
+			farbtastic = jQuery.farbtastic("#color-picker", function(color) { pickColor(color); });
+			pickColor("#'.$this->db->option_get_header_bg().'");
+		}
 
 		'.( ( 'blank' == $this->db->option_get_header_bg() OR '' == $this->db->option_get_header_bg() ) ? 'toggle_text();' : '' ).'
 		});
