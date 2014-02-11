@@ -3013,6 +3013,19 @@ class CommentpressCoreDatabase {
 		
 
 
+		// add TinyMCE version var
+		$vars['cp_tinymce_version'] = 3;
+
+		// test for WP 3.9 function
+		if ( function_exists( 'get_taxonomy_last_changed' ) ) {
+
+			// add newer TinyMCE version 
+			$vars['cp_tinymce_version'] = 4;
+
+		}
+		
+		
+		
 		// add rich text editor behaviour
 		$vars['cp_promote_reading'] = 1;
 		

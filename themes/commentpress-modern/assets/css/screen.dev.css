@@ -2939,6 +2939,17 @@ body .wp-dialog
 	
 }
 
+/* allow TinyMCE 4 to go fullscreen */
+body.tinymce-4.mce-fullscreen #header,
+body.tinymce-4.mce-fullscreen #sidebar
+{
+	z-index: 500;
+}
+
+body.tinymce-4.mce-fullscreen #wpadminbar
+{
+	z-index: 100;
+}
 
 
 

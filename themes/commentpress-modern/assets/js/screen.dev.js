@@ -16,7 +16,7 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 	
 	// define our vars
 	var cp_wp_adminbar, cp_wp_adminbar_height, cp_wp_adminbar_expanded, cp_bp_adminbar, 
-		cp_comments_open, cp_special_page, cp_tinymce,
+		cp_comments_open, cp_special_page, cp_tinymce, cp_tinymce_version,
 		cp_promote_reading, cp_is_mobile, cp_is_touch, cp_is_tablet, cp_cookie_path,
 		cp_multipage_page, cp_template_dir, cp_plugin_dir, cp_toc_chapter_is_page, cp_show_subpages,
 		cp_default_sidebar, cp_is_signup_page, cp_scroll_speed, cp_min_page_width;
@@ -29,6 +29,7 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 	cp_comments_open = CommentpressSettings.cp_comments_open;
 	cp_special_page = CommentpressSettings.cp_special_page;
 	cp_tinymce = CommentpressSettings.cp_tinymce;
+	cp_tinymce_version = CommentpressSettings.cp_tinymce_version;
 	cp_promote_reading = CommentpressSettings.cp_promote_reading;
 	cp_is_mobile = CommentpressSettings.cp_is_mobile;
 	cp_is_touch = CommentpressSettings.cp_is_touch;
