@@ -1784,9 +1784,7 @@ endif; // commentpress_echo_post_author
 
 if ( ! function_exists( 'commentpress_format_comment' ) ):
 /** 
- * @description: format comment on comments pages
- * @todo: 
- *
+ * @description: format comment on custom CommentPress comments pages
  */
 function commentpress_format_comment( $comment, $context = 'all' ) {
 
@@ -2158,11 +2156,19 @@ function commentpress_get_all_comments_page_content() {
 	// get title
 	$title = ( $page_or_post == 'page' ) ? $booktitle : $blogtitle;
 	
-	// set title
-	$_page_content .= '<p class="comments_hl">'.$title.'</p>'."\n\n";
-	
 	// get data
-	$_page_content .= commentpress_get_all_comments_content( $page_or_post );
+	$_data = commentpress_get_all_comments_content( $page_or_post );
+	
+	// did we get any?
+	if ( $_data != '' ) {
+	
+		// set title
+		$_page_content .= '<p class="comments_hl">'.$title.'</p>'."\n\n";
+	
+		// set data
+		$_page_content .= $_data."\n\n";
+		
+	}
 	
 	
 	
@@ -2172,11 +2178,19 @@ function commentpress_get_all_comments_page_content() {
 	// get title
 	$title = ( $page_or_post == 'page' ) ? $blogtitle : $booktitle;
 	
-	// set title
-	$_page_content .= '<p class="comments_hl">'.$title.'</p>'."\n\n";
-	
 	// get data
-	$_page_content .= commentpress_get_all_comments_content( $other_type );
+	$_data = commentpress_get_all_comments_content( $other_type );
+	
+	// did we get any?
+	if ( $_data != '' ) {
+	
+		// set title
+		$_page_content .= '<p class="comments_hl">'.$title.'</p>'."\n\n";
+		
+		// set data
+		$_page_content .= $_data."\n\n";
+		
+	}
 	
 	
 	
