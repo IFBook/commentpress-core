@@ -3016,9 +3016,12 @@ class CommentpressCoreDatabase {
 		// add TinyMCE version var
 		$vars['cp_tinymce_version'] = 3;
 
-		// test for WP 3.9 function
-		if ( function_exists( 'get_taxonomy_last_changed' ) ) {
-
+		// access WP version
+		global $wp_version;
+	
+		// if greater than 3.8
+		if ( version_compare( $wp_version, '3.8', '>' ) ) {
+		
 			// add newer TinyMCE version 
 			$vars['cp_tinymce_version'] = 4;
 
