@@ -47,7 +47,10 @@ global $post;
 
 
 
-<h4 id="respond_title"><?php commentpress_comment_form_title( 'Leave a Comment', 'Leave a Reply to %s' ); ?></h4>
+<h4 id="respond_title"><?php commentpress_comment_form_title( 
+	__( 'Leave a Comment', 'commentpress-core' ), 
+	__( 'Leave a Reply to %s', 'commentpress-core' ) 
+); ?></h4>
 
 <?php if ( get_option('comment_registration') AND !$user_ID ) : ?>
 

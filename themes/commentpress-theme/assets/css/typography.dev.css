@@ -484,13 +484,20 @@ p.edit_link a:visited
 	text-decoration: none;
 }
 
-.post blockquote
+.post blockquote,
+.blockquote-in-para
 {
 	margin-left: 0;
 	margin-right: 0;
 	padding: 1px 15px;
 	background: transparent url(../images/icons/quote.png) no-repeat;
 	font-style: italic;
+}
+
+.blockquote-in-para
+{
+	display: block;
+	margin: 0.7em 0;
 }
 
 .post blockquote cite:before

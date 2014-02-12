@@ -17,7 +17,6 @@
 <meta charset="<?php bloginfo( 'charset' ); ?>" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
 <meta name="description" content="<?php bloginfo('description') ?>" />
-<meta name="mssmarttagspreventparsing" content="true" />
 <?php if(is_search()) { ?><meta name="robots" content="noindex, nofollow" /><?php } ?>
 
 <!-- profile -->

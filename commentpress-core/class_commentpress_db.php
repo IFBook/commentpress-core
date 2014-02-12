@@ -93,6 +93,9 @@ class CommentpressCoreDatabase {
 	// prevent save_post hook firing more than once
 	public $saved_post = false;
 	
+	// featured images off by default
+	public $featured_images = 'n';
+	
 
 
 
@@ -272,6 +275,19 @@ class CommentpressCoreDatabase {
 			
 			// get variables
 			extract( $_POST );
+			
+			
+			
+			// New in CP 3.5.4 - featured image capabilities
+			if ( !$this->option_exists( 'cp_featured_images' ) ) {
+	
+				// get choice
+				$_choice = esc_sql( $cp_featured_images );
+			
+				// add chosen featured images option
+				$this->option_set( 'cp_featured_images', $_choice );
+				
+			}
 			
 			
 			
@@ -773,6 +789,7 @@ class CommentpressCoreDatabase {
 			$cp_blog_type = 0;
 			$cp_blog_workflow = 0;
 			$cp_sidebar_default = 'comments';
+			$cp_featured_images = 'n';
 			
 			
 			
@@ -967,6 +984,10 @@ class CommentpressCoreDatabase {
 			// save default sidebar
 			$cp_sidebar_default = esc_sql( $cp_sidebar_default );
 			$this->option_set( 'cp_sidebar_default', $cp_sidebar_default );
+			
+			// save featured images
+			$cp_featured_images = esc_sql( $cp_featured_images );
+			$this->option_set( 'cp_featured_images', $cp_featured_images );
 			
 
 
@@ -1585,6 +1606,52 @@ class CommentpressCoreDatabase {
 			
 		}
 
+
+
+		// ---------------------------------------------------------------------
+		// Starting Paragraph Number - meta only exists when not default value
+		// ---------------------------------------------------------------------
+		
+		// get the data
+		$_data = ( isset( $_POST['cp_starting_para_number'] ) ) ? $_POST['cp_starting_para_number'] : 1;
+		
+		// if not numeric, set to default
+		if ( ! is_numeric( $_data ) ) { $_data = 1; }
+		
+		// sanitize it
+		$_data = absint( $_data );
+
+		// set key
+		$key = '_cp_starting_para_number';
+		
+		// if the custom field already has a value...
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+		
+			// if default...
+			if ( $_data === 1 ) {
+		
+				// delete the meta_key
+				delete_post_meta( $post->ID, $key );
+			
+			} else {
+			
+				// update the data
+				update_post_meta( $post->ID, $key, esc_sql( $_data ) );
+				
+			}
+			
+		} else {
+		
+			// if greater than default...
+			if ( $_data > 1 ) {
+		
+				// add the data
+				add_post_meta( $post->ID, $key, esc_sql( $_data ) );
+			
+			}
+			
+		}
+		
 
 
 	}
@@ -2787,11 +2854,28 @@ class CommentpressCoreDatabase {
 		$vars['cp_wp_adminbar'] = 'n';
 		$vars['cp_bp_adminbar'] = 'n';
 
+		// assume pre-3.8 admin bar
+		$vars['cp_wp_adminbar_height'] = '28';
+		$vars['cp_wp_adminbar_expanded'] = '0';
+
 		// are we showing the WP admin bar?
 		if ( function_exists( 'is_admin_bar_showing' ) AND is_admin_bar_showing() ) {
 			
 			// we have it...
 			$vars['cp_wp_adminbar'] = 'y';
+			
+			// check for a WP 3.8+ function
+			if ( function_exists( 'wp_admin_bar_sidebar_toggle' ) ) {
+				
+				//die('here');
+			
+				// the 3.8+ admin bar is taller
+				$vars['cp_wp_adminbar_height'] = '32';
+				
+				// it also expands in height below 782px viewport width
+				$vars['cp_wp_adminbar_expanded'] = '46';
+
+			}
 
 		}
 		
@@ -2840,7 +2924,20 @@ class CommentpressCoreDatabase {
 		// add rich text editor
 		$vars['cp_tinymce'] = 1;
 		
-		// check option
+		// check if users must be logged in to comment
+		if ( 
+		
+			get_option( 'comment_registration' ) == '1' AND
+			! is_user_logged_in()
+			
+		) {
+		
+			// don't add rich text editor
+			$vars['cp_tinymce'] = 0;
+			
+		}
+		
+		// check CP option
 		if ( 
 		
 			$this->option_exists( 'cp_comment_editor' ) AND
@@ -2916,6 +3013,22 @@ class CommentpressCoreDatabase {
 		
 
 
+		// add TinyMCE version var
+		$vars['cp_tinymce_version'] = 3;
+
+		// access WP version
+		global $wp_version;
+	
+		// if greater than 3.8
+		if ( version_compare( $wp_version, '3.8.9999', '>' ) ) {
+		
+			// add newer TinyMCE version 
+			$vars['cp_tinymce_version'] = 4;
+
+		}
+		
+		
+		
 		// add rich text editor behaviour
 		$vars['cp_promote_reading'] = 1;
 		
@@ -3813,7 +3926,8 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 			'cp_para_comments_live' => $this->para_comments_live,
 			'cp_blog_type' => $this->blog_type,
 			'cp_blog_workflow' => $this->blog_workflow,
-			'cp_sidebar_default' => $this->sidebar_default
+			'cp_sidebar_default' => $this->sidebar_default,
+			'cp_featured_images' => $this->featured_images,
 		
 		);
 
@@ -3882,6 +3996,9 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 		
 		// default sidebar
 		$this->option_set( 'cp_sidebar_default', $this->sidebar_default );
+		
+		// featured images
+		$this->option_set( 'cp_featured_images', $this->featured_images );
 		
 		// store it
 		$this->options_save();
@@ -3979,6 +4096,10 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 										$old[ 'cp_sidebar_default' ] :
 										$this->sidebar_default;
 		
+		$this->featured_images =	 	isset( $old[ 'cp_featured_images' ] ) ?
+										$old[ 'cp_featured_images' ] :
+										$this->featured_images;
+		
 
 
 		// ---------------------------------------------------------------------
@@ -4033,7 +4154,8 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 			'cp_para_comments_live' => $this->para_comments_live,
 			'cp_blog_type' => $blog_type,
 			'cp_blog_workflow' => $blog_workflow,
-			'cp_sidebar_default' => $this->sidebar_default
+			'cp_sidebar_default' => $this->sidebar_default,
+			'cp_featured_images' => $this->featured_images,
 			
 		);
 			

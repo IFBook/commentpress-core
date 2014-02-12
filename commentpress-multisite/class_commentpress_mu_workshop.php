@@ -229,13 +229,8 @@ class CommentpressGroupblogWorkshop {
 	 */
 	function filter_blog_name( $name ) {
 		
-		// override if groupblog
-		if ( $this->parent_obj->bp->_is_commentpress_groupblog() ) {
-			$name =  $this->cpmu_bp_workshop_nomenclature_name;
-		}
-		
 		// --<
-		return $name;
+		return $this->cpmu_bp_workshop_nomenclature_name;
 		
 	}
 	
@@ -251,6 +246,7 @@ class CommentpressGroupblogWorkshop {
 	 */
 	function filter_blog_slug( $slug ) {
 	
+		// --<
 		return $this->cpmu_bp_workshop_nomenclature_slug;
 		
 	}
@@ -368,7 +364,10 @@ class CommentpressGroupblogWorkshop {
 	function filter_activity_title_all_yours( $title ) {
 	
 		// override if groupblog
-		if ( !$this->parent_obj->bp->_is_commentpress_groupblog() ) {
+		if ( 
+			! bp_is_root_blog() AND 
+			! $this->parent_obj->bp->_is_commentpress_groupblog() ) 
+		{
 			return $title;
 		}
 		
@@ -393,7 +392,10 @@ class CommentpressGroupblogWorkshop {
 	function filter_activity_title_all_public( $title ) {
 	
 		// override if groupblog
-		if ( !$this->parent_obj->bp->_is_commentpress_groupblog() ) {
+		if ( 
+			! bp_is_root_blog() AND 
+			! $this->parent_obj->bp->_is_commentpress_groupblog() ) 
+		{
 			return $title;
 		}
 		
@@ -416,9 +418,12 @@ class CommentpressGroupblogWorkshop {
 	 *
 	 */
 	function filter_nav_title_page_title( $title ) {
+	
+		// bail if main BP site
+		if ( bp_is_root_blog() ) return $title;
 		
-		// override if groupblog
-		if ( !$this->parent_obj->bp->_is_commentpress_groupblog() ) {
+		// bail if not groupblog
+		if ( ! $this->parent_obj->bp->_is_commentpress_groupblog() ) {
 			return $title;
 		}
 		

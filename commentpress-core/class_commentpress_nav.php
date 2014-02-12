@@ -55,6 +55,9 @@ class CommentpressCoreNavigator {
 	// page numbers array
 	public $page_numbers = array();
 	
+	// menu objects array, when using custom menu
+	public $menu_objects = array();
+	
 	
 	
 
@@ -428,27 +431,16 @@ class CommentpressCoreNavigator {
 		// do we have a nav menu enabled?
 		if ( has_nav_menu( 'toc' ) ) {
 			
-			// YES - a custom menu disables "book" navigation
-			
-			// --<
-			return $all_pages;
 			
 			
-			
-			/*
-			
-			// -----------------------------------------------------------------
-			// For posterity: here's what I considered when trying to tease out
-			// page lists from menu items. However, menus can contain anything,
-			// including external links, so the effort to parse the menu doesn't
-			// seem to be worthwhile.
-			// -----------------------------------------------------------------
+			// YES - get menu locations
+			$locations = get_nav_menu_locations();
 			
 			// check menu locations
-			if ( ( $locations = get_nav_menu_locations() ) AND isset( $locations[ $menu_name ] ) ) {
+			if ( isset( $locations[ 'toc' ] ) ) {
 				
 				// get the menu object
-				$menu = wp_get_nav_menu_object( $locations[ $menu_name ] );
+				$menu = wp_get_nav_menu_object( $locations[ 'toc' ] );
 			
 				// default args for reference
 				$args = array(
@@ -464,54 +456,78 @@ class CommentpressCoreNavigator {
 				
 				);
 	
-				// get the page references
-				$menu_items = wp_get_nav_menu_items( $menu->term_id, $args );
-				
-				// init
-				$pages_to_get = array();
-				
+				// get the menu objects and store for later
+				$this->menu_objects = wp_get_nav_menu_items( $menu->term_id, $args );
+				//print_r( $this->menu_objects ); die();
+
 				// if we get some
-				if ( $menu_items ) {
+				if ( $this->menu_objects ) {
 					
+					// if chapters are not pages, filter the menu items...
+					if ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
+		
+						// do we want all readable pages?
+						if ( $mode == 'readable' ) {
+			
+							// filter chapters out
+							$menu_items = $this->_filter_menu( $this->menu_objects );
+			
+						} else {
+						
+							// structural - use a copy of the raw menu data
+							$menu_items = $this->menu_objects;
+							
+						}
+			
+					} else {
+					
+						// use a copy of the raw menu data
+						$menu_items = $this->menu_objects;
+					
+					}
+					
+					// init
+					$pages_to_get = array();
+				
 					// convert to array of pages
 					foreach ( $menu_items AS $menu_item ) {
 					
 						// is it a WP item?
 						if ( isset( $menu_item->object_id ) ) {
 							
-							// construct array of WP pages in menu
-							$pages_to_get[] = $menu_item->object_id;
+							// init pseudo WP_POST object
+							$pseudo_post = new stdClass;
+							
+							// add post ID
+							$pseudo_post->ID = $menu_item->object_id;
+						
+							// add menu ID (for filtering below)
+							$pseudo_post->menu_id = $menu_item->ID;
+						
+							// add menu item parent ID (for finding parent below)
+							$pseudo_post->menu_item_parent = $menu_item->menu_item_parent;
+						
+							// add comment count for possible calls for "next with comments"
+							$pseudo_post->comment_count = $menu_item->comment_count;
+						
+							// add to array of WP pages in menu
+							$all_pages[] = $pseudo_post;
 							
 						}
 					
 					}
-				
-					print_r( array( 'menu_items' => $menu_items, 'pages_to_get' => $pages_to_get ) ); die();
-
-					// set list pages defaults
-					$defaults = array(
-						'child_of' => 0, 
-						'sort_order' => 'ASC',
-						'sort_column' => 'menu_order, post_title', 
-						'hierarchical' => 1,
-						'exclude' => '', 
-						'include' => implode( ',', $pages_to_get ),
-						'meta_key' => '', 
-						'meta_value' => '',
-						'authors' => '', 
-						'parent' => -1, 
-						'exclude_tree' => ''
-					);
 					
-					// get them
-					$all_pages = get_pages( $defaults );
+					/*
+					print_r( array( 
+						'menu_items' => $menu_items, 
+						'all_pages' => $all_pages,
+					) ); die();
+					*/
 					
-				}
+				} // end check for menu items
 				
-			}
+			} // end check for our menu
 		
-			*/
-
 
 
 		} else {
@@ -1152,7 +1168,18 @@ class CommentpressCoreNavigator {
 		
 			// init with page 1
 			$num = 1;
+			
+			// assume no menu
+			$has_nav_menu = false;
 		
+			// if we have a custom menu...
+			if ( has_nav_menu( 'toc' ) ) {
+			
+				// override
+				$has_nav_menu = true;
+			
+			}
+
 			// loop
 			foreach( $pages AS $page_obj ) {
 			
@@ -1177,14 +1204,43 @@ class CommentpressCoreNavigator {
 			
 				} else {
 				
-					// get top level parent
-					$top_page_id = $this->_get_top_parent_id( $page_obj->ID );
+					// if we have a custom menu...
+					if ( $has_nav_menu ) {
+		
+						//print_r( $page_obj ); die();
+
+						// get top level menu item
+						$top_menu_item = $this->_get_top_menu_obj( $page_obj );
+						//print_r( $top_menu_item ); //die();
+						
+						// since this might not be a WP_POST object...
+						if ( isset( $top_menu_item->object_id ) ) {
+						
+							// get ID of top level parent
+							$top_page_id = $top_menu_item->object_id;
+						
+							// if the custom field has a value...
+							if ( get_post_meta( $top_page_id, $key, true ) !== '' ) {
 				
-					// if the custom field has a value...
-					if ( get_post_meta( $top_page_id, $key, true ) !== '' ) {
-					
-						// get it
-						$format = get_post_meta( $top_page_id, $key, true );
+								// get it
+								$format = get_post_meta( $top_page_id, $key, true );
+			
+							}
+							
+						}
+				
+					} else {
+	
+						// get top level parent
+						$top_page_id = $this->_get_top_parent_id( $page_obj->ID );
+				
+						// if the custom field has a value...
+						if ( get_post_meta( $top_page_id, $key, true ) !== '' ) {
+				
+							// get it
+							$format = get_post_meta( $top_page_id, $key, true );
+			
+						}
 				
 					}
 					
@@ -1372,27 +1428,201 @@ class CommentpressCoreNavigator {
 	 * @description: get top parent page id
 	 * @param integer $post_id the queried page id
 	 * @return integer $post_id
-	 * @todo: 
-	 *
 	 */
-	function _get_top_parent_id( $post_id ){
-	
+	function _get_top_parent_id( $post_id ) {
+		
 		// get page data
 		$_page = get_page( $post_id );
-		
+	
 		// is the top page?
 		if ( $_page->post_parent == 0 ) {
-		
+	
 			// yes -> return the id
 			return $_page->ID;
-		
+	
 		} else {
-		
+	
 			// no -> recurse upwards
 			return $this->_get_top_parent_id( $_page->post_parent );
+		
+		}
+	
+	}
+	
+	
+	
+	
+	
+	
+	/** 
+	 * @description: strip out all but lowest level menu items
+	 * @param array $menu_items array of menu item objects
+	 * @return array $sub_items all lowest level items
+	 */
+	function _filter_menu( $menu_items ) {
+	
+		// init return
+		$sub_items = array();
+		
+		
+	
+		// if we have any...
+		if ( count( $menu_items ) > 0 ) {
+		
+			// loop
+			foreach( $menu_items AS $key => $menu_obj ) {
+			
+				// get item children
+				$kids = $this->_get_menu_item_children( $menu_items, $menu_obj );
+				
+				// do we have any?
+				if ( empty( $kids ) ) {
+				
+					// add to our return array
+					$sub_items[] = $menu_obj;
+				
+				}
+			
+			}
+
+		} // end have array check
+
+
+
+		// --<
+		return $sub_items;
+	
+	}
+
+
+
+
+
+
+
+	/** 
+	 * @description: utility to get children of a menu item
+	 * @param array $menu_items array of menu item objects
+	 * @param obj $menu_obj menu item object
+	 * @return array $sub_items menu item children
+	 */
+	function _get_menu_item_children( $menu_items, $menu_obj ) {
+	
+		// init return
+		$sub_items = array();
+		
+		
+	
+		// if we have any...
+		if ( count( $menu_items ) > 0 ) {
+		
+			// loop
+			foreach( $menu_items AS $key => $menu_item ) {
+			
+				// is this item a child of the passed in menu object?
+				if ( $menu_item->menu_item_parent == $menu_obj->ID ) {
+				
+					// add to our return array
+					$sub_items[] = $menu_item;
+				
+				}
+			
+			}
+
+		} // end have array check
+
+
+
+		// --<
+		return $sub_items;
+	
+	}
+
+
+
+
+
+
+
+	/** 
+	 * @description: utility to get parent of a menu item
+	 * @param obj $menu_obj menu item object
+	 * @return int $menu_obj the parent menu item
+	 */
+	function _get_menu_item_parent( $menu_obj ) {
+	
+		// if we have any...
+		if ( count( $this->menu_objects ) > 0 ) {
+		
+			// loop
+			foreach( $this->menu_objects AS $key => $menu_item ) {
+			
+				// is this item the first parent of the passed in menu object?
+				if ( $menu_item->ID == $menu_obj->menu_item_parent ) {
+				
+					// --<
+					return $menu_item;
+				
+				}
+			
+			}
+
+		} // end have array check
+
+
+
+		// --<
+		return false;
+	
+	}
+
+
+
+
+
+
+
+	/** 
+	 * @description: get top parent menu item
+	 * @param object $menu_obj the queried menu object
+	 * @return object $parent_obj the parent object or false if
+	 */
+	function _get_top_menu_obj( $menu_obj ) {
+		
+		// there is little point walking the menu tree because menu items can appear
+		// more than once in the menu...
+
+		// HOWEVER: for instances where people do use the menu sensibly, we should
+		// attempt to walk the tree as best we can
+		
+		// is this the top item?
+		if ( $menu_obj->menu_item_parent == 0 ) {
+	
+			// yes -> return the object
+			return $menu_obj;
 			
 		}
 	
+		//print_r( $menu_obj ); //die();
+
+		// get parent item
+		$parent_obj = $this->_get_menu_item_parent( $menu_obj );
+	
+		//print_r( $parent_obj ); //die();
+
+		// is the top item?
+		if ( $parent_obj->menu_item_parent !== 0 ) {
+	
+			// no -> recurse upwards
+			return $this->_get_top_menu_obj( $parent_obj );
+		
+		}
+	
+		//print_r( $parent_obj ); die();
+
+		// yes -> return the object
+		return $parent_obj;
+
 	}
 	
 	

@@ -20,7 +20,6 @@
 <!-- meta -->
 <meta http-equiv="content-type" content="<?php bloginfo('html_type') ?>; charset=<?php bloginfo('charset') ?>" />
 <meta name="description" content="<?php bloginfo('description') ?>" />
-<meta name="MSSmartTagsPreventParsing" content="true" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <?php if(is_search()) { ?><meta name="robots" content="noindex, nofollow" /><?php } ?>
 

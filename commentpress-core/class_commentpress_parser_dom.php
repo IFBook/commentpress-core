@@ -7,11 +7,10 @@ AUTHOR: Christian Wach <needle@haystack.co.uk>
 NOTES
 =====
 
-This class is a wrapper for parsing content and comments. 
+This class is a wrapper for parsing content and the comments associated with
+each "block". 
 
-The aim is to migrate parsing of content to DOM parsing instead of regex.
-
-When converted to DOM parsing, the class will two other classes, which help with
+With DOM parsing, this class includes two other classes, which help with some
 oddities in DOMDocument. These can be found in `inc/dom-helpers`.
 
 --------------------------------------------------------------------------------
@@ -43,6 +42,12 @@ class CommentpressCoreParser {
 	
 	// parent object reference
 	public $parent_obj;
+	
+	// DOM helper
+	public $dom;
+	
+	// XHTML helper
+	public $xhtml;
 	
 	// init text_signatures
 	public $text_signatures = array();
@@ -231,17 +236,8 @@ class CommentpressCoreParser {
 					if ( !defined( 'COMMENTPRESS_BLOCK' ) ) 
 						define( 'COMMENTPRESS_BLOCK', 'tag' );
 						
-					// generate text signatures array
-					$this->text_signatures = $this->_generate_text_signatures( $content, 'p|ul|ol' );
-					//print_r( $this->text_signatures ); die();
-					
-					// only continue parsing if we have an array of sigs
-					if ( !empty( $this->text_signatures ) ) {
-					
-						// filter content by <p>, <ul> and <ol> tags
-						$content = $this->_parse_content( $content, 'p|ul|ol' );
-						
-					}
+					// filter content by lexia
+					$content = $this->_parse_with_xml( $content );
 					
 					break;
 			
@@ -340,6 +336,18 @@ class CommentpressCoreParser {
 	 */
 	function _init() {
 	
+		// define filename
+		$class_file = 'commentpress-core/assets/includes/dom-helpers/class.custom.domdocument.php';
+
+		// get path
+		$class_file_path = commentpress_file_is_present( $class_file );
+
+		// we're fine, include class definition
+		require_once( $class_file_path );
+	
+		// init DOM object
+		$this->dom = new CommentPress_DOMDocument();
+	
 	}
 
 
@@ -349,59 +357,40 @@ class CommentpressCoreParser {
 
 
 	/** 
-	 * @description: parses the content by tag
-	 * @param string $content the post content
-	 * @param string $tag the tag to filter by
-	 * @return string $content the parsed content
-	 * @todo: 
-	 *
+	 * @description: parse with DOMDocument
 	 */
-	function _parse_content( $content, $tag = 'p|ul|ol' ) {
+	function _parse_with_xml( $content ) {
 	
-
-		/*
-		print_r( array( 
-		
-			'c' => $content 
-		
-		) ); 
-		
-		die();
-		*/
-		
-
-
-		// parse standalone captioned images
-		$content = $this->_parse_captions( $content );
-		
-		// parse embedded quotes
-		$content = $this->_parse_blockquotes_in_paras( $content );
-		
-
-
-		// get our paragraphs
-		$matches = $this->_get_text_matches( $content, $tag );
-		//print_r( $matches ); die();
-		
-		// kick out if we don't have any
-		if( !count( $matches ) ) {
-		
-			// --<
-			return $content;
-			
-		}
-		
-		
-		
 		// reference our post
 		global $post;
-
-
 
 		// get sorted comments and store
 		$this->comments_sorted = $this->_get_sorted_comments( $post->ID );
 		//print_r( $this->comments_sorted ); die();
 		
+		
+		
+		// parse standalone captioned images
+		$content = $this->_parse_captions( $content );
+		
+		
+		
+		// suppress error bubbling
+		libxml_use_internal_errors( true );
+		
+		// load the markup
+		$this->dom->loadHTML( $content );
+
+
+
+		// init debugger
+		$blah = array();
+		
+		// init lexia tags
+		$lexia = array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'ul',  'ol', 'dl', 'pre' );
+
+
+
 		// init starting paragraph number
 		$start_num = 1;
 		
@@ -416,415 +405,328 @@ class CommentpressCoreParser {
 			
 		}
 		
-		
-		
-		
 		// we already have our text signatures, so set flag
 		$sig_key = 0;
-		
-		// run through 'em...
-		foreach( $matches AS $paragraph ) {
-	  
-			// get a signature for the paragraph
-			$text_signature = $this->text_signatures[ $sig_key ];
-			
-			// construct paragraph number
-			$para_num = $sig_key + $start_num;
-			
-			// increment
-			$sig_key++;
-			
-			// get comment count
-			$comment_count = count( $this->comments_sorted[ $text_signature ] );
-			
-			// get comment icon
-			$comment_icon = $this->parent_obj->display->get_comment_icon( 
-			
-				$comment_count, 
-				$text_signature, 
-				'auto', 
-				$para_num 
-				
-			);
-			
-			// get paragraph icon
-			$paragraph_icon = $this->parent_obj->display->get_paragraph_icon( 
-			
-				$comment_count, 
-				$text_signature, 
-				'auto', 
-				$para_num 
-				
-			);
-			
-			// set pattern by first tag
-			switch ( substr( $paragraph, 0 , 2 ) ) {
-			
-				case '<p': $tag = 'p'; break;
-				case '<o': $tag = 'ol'; break;
-				case '<u': $tag = 'ul'; break;
-			
-			}
-
-			/*
-			--------------------------------------------------------------------
-			NOTES
-			--------------------------------------------------------------------
-			
-			There's a temporary fix to exclude <param> and <pre> tags by excluding subsequent 'a' and 
-			'r' chars - this regex needs more attention so that only <p> and <p ...> are captured.
-			In HTML5 there is also the <progress> tag, but this is excluded along with <pre>
-			Also, the WordPress visual editor inserts styles into <p> tags for text justification,
-			so we need to feed this regex with enhanced tags to capture the following:
-			
-			<p style="text-align:left;"> 
-			<p style="text-align:right;"> 
-			<p style="text-align:center;">
-			<p style="text-align:justify;">
-			
-			AND
-			
-			<p style="text-align:left"> 
-			<p style="text-align:right"> 
-			<p style="text-align:center">
-			<p style="text-align:justify">
-			
-			--------------------------------------------------------------------
-			*/
-			
-			// further checks when there's a <p> tag
-			if ( $tag == 'p' ) {
-				
-				// set pattern by TinyMCE tag attribute, if we have one...
-				if ( substr( $paragraph, 0 , 17 ) == '<p style="text-al' ) {
-				
-					// test for left
-					if ( substr( $paragraph, 0 , 27 ) == '<p style="text-align:left;"' ) {
-						$tag = 'p style="text-align:left;"';
-					} elseif ( substr( $paragraph, 0 , 26 ) == '<p style="text-align:left"' ) {
-						$tag = 'p style="text-align:left"';
-					} elseif ( substr( $paragraph, 0 , 28 ) == '<p style="text-align: left;"' ) {
-						$tag = 'p style="text-align: left;"';
-					} elseif ( substr( $paragraph, 0 , 27 ) == '<p style="text-align: left"' ) {
-						$tag = 'p style="text-align: left"';
-					}
-		
-					// test for right
-					if ( substr( $paragraph, 0 , 28 ) == '<p style="text-align:right;"' ) {
-						$tag = 'p style="text-align:right;"';
-					} elseif ( substr( $paragraph, 0 , 27 ) == '<p style="text-align:right"' ) {
-						$tag = 'p style="text-align:right"';
-					} elseif ( substr( $paragraph, 0 , 29 ) == '<p style="text-align: right;"' ) {
-						$tag = 'p style="text-align: right;"';
-					} elseif ( substr( $paragraph, 0 , 28 ) == '<p style="text-align: right"' ) {
-						$tag = 'p style="text-align: right"';
-					}
-		
-					// test for center
-					if ( substr( $paragraph, 0 , 29 ) == '<p style="text-align:center;"' ) {
-						$tag = 'p style="text-align:center;"';
-					} elseif ( substr( $paragraph, 0 , 28 ) == '<p style="text-align:center"' ) {
-						$tag = 'p style="text-align:center"';
-					} elseif ( substr( $paragraph, 0 , 30 ) == '<p style="text-align: center;"' ) {
-						$tag = 'p style="text-align: center;"';
-					} elseif ( substr( $paragraph, 0 , 29 ) == '<p style="text-align: center"' ) {
-						$tag = 'p style="text-align: center"';
-					}
-		
-					// test for justify
-					if ( substr( $paragraph, 0 , 30 ) == '<p style="text-align:justify;"' ) {
-						$tag = 'p style="text-align:justify;"';
-					} elseif ( substr( $paragraph, 0 , 29 ) == '<p style="text-align:justify"' ) {
-						$tag = 'p style="text-align:justify"';
-					} elseif ( substr( $paragraph, 0 , 31 ) == '<p style="text-align: justify;"' ) {
-						$tag = 'p style="text-align: justify;"';
-					} elseif ( substr( $paragraph, 0 , 30 ) == '<p style="text-align: justify"' ) {
-						$tag = 'p style="text-align: justify"';
-					}
-				
-				} // end check for text-align
-	
-				// test for Simple Footnotes para "heading"
-				if ( substr( $paragraph, 0 , 16 ) == '<p class="notes"' ) {
-					$tag = 'p class="notes"';
-				}
-	
-				// if we fall through to here, treat it like it's just a <p> tag above.
-				// This will fail if there are custom attributes set in the HTML editor,
-				// but I'm not sure how to handle that without migrating to an XML parser
-				//print_r( $tag ); //die();
-			
-			}
-
-			/*
-			--------------------------------------------------------------------
-			NOTES
-			--------------------------------------------------------------------
-			
-			There are also flaws with parsing nested lists, both ordered and unordered. The WordPress
-			Unit Tests XML file reveals these, though the docs are hopefully clear enough that people
-			won't use nested lists. However, the severity is such that I'm contemplating migrating to
-			a DOM parser such as:
-			
-			phpQuery <https://github.com/TobiaszCudnik/phpquery>
-			Simple HTML DOM <http://sourceforge.net/projects/simplehtmldom/>
-			Others <http://stackoverflow.com/questions/3577641/how-to-parse-and-process-html-with-php>
-			
-			There are so many examples of people saying "don't use regex with HTML" that this probably
-			ought to be done when time allows.
-
-			--------------------------------------------------------------------
-			*/
-			
-			// init start (for ol attribute)
-			$start = 0;
-			
-			// further checks when there's a <ol> tag
-			if ( $tag == 'ol' ) {
-				
-				// compat with WP Footnotes
-				if ( substr( $paragraph, 0 , 21 ) == '<ol class="footnotes"' ) {
-					
-					// construct tag
-					$tag = 'ol class="footnotes"';
-				
-				// add support for <ol start="n">
-				} elseif ( substr( $paragraph, 0 , 11 ) == '<ol start="' ) {
-					
-					// parse tag
-					preg_match( '/start="([^"]*)"/i', $paragraph, $matches );
-					
-					// construct new tag
-					$tag = 'ol '.$matches[0];
-					
-					// set start
-					$start = $matches[1];
-					
-				}
-	
-			}
-
-			// assign icons to paras
-			$pattern = array('#<('.$tag.'[^a^r>]*)>#');
-			
-			$replace = array( 
-				
-				$this->parent_obj->display->get_para_tag( 
-					$text_signature, 
-					$paragraph_icon.$comment_icon, 
-					$tag,
-					$start
-				) 
-				
-			);
-			
-			$block = preg_replace( $pattern, $replace, $paragraph );
-			
-			// NB: because str_replace() has no limit to the replacements, I am switching to
-			// preg_replace() because that does have a limit
-			//$content = str_replace( $paragraph, $block, $content );
-			
-			// prepare paragraph for preg_replace
-			$prepared_para = preg_quote( $paragraph );
-			
-			// because we use / as the delimiter, we need to escape all /s
-			$prepared_para = str_replace( '/', '\/', $prepared_para );
-			
-			// protect all dollar numbers
-			$block = str_replace( "$", "\\\$", $block );
-			
-			// only once please
-			$limit = 1;
-
-			// replace the paragraph in the original context, preserving all other content
-			$content = preg_replace( 
-			
-				//array($paragraph), 
-				'/'.$prepared_para.'/', 
-				$block,
-				$content,
-				$limit				
-				
-			);
-			
-			/*
-			print_r( array( 
-			
-				//'p' => $paragraph,
-				'p' => $prepared_para,
-				'b' => $block,
-				'c' => $content
-			
-			) ); //die();
-			*/
-			
-		}
-		
-
-
-		/*
-		print_r( array( 
-		
-			//'d' => $duplicates,
-			't' => $this->text_signatures,
-			'c' => $content 
-		
-		) ); 
-		*/
-		
-		//die();
-		//*/
-		
-
-
-		// --<
-		return $content;
-
-	}
-	
-
-
-
-
-
-
-	/** 
-	 * @description: splits the content into an array by tag
-	 * @param string $content the post content
-	 * @param string $tag the tag to filter by
-	 * @return array $matches the ordered array of matched items
-	 * @todo: 
-	 *
-	 */
-	function _get_text_matches( $content, $tag = 'p|ul|ol' ) {
-	
-		// filter out embedded tweets
-		$content = $this->_filter_twitter_embeds( $content );
-		
-		// get our paragraphs (needed to split regex into two strings as some IDEs 
-		// don't like PHP closing tags, even they are part of a regex and not actually
-		// closing tags at all) 
-		//preg_match_all( '/<('.$tag.')[^>]*>(.*?)(<\/('.$tag.')>)/', $content, $matches );
-		preg_match_all( '#<('.$tag.')[^>]*?'.'>(.*?)</('.$tag.')>#si', $content, $matches );
-		//print_r( $matches[0] ); print_r( $matches[1] ); exit();
-		
-		// kick out if we don't have any
-		if( !empty($matches[0]) ) {
-		
-			// --<
-			return $matches[0];
-			
-		} else {
-		
-			// --<
-			return array();
-		
-		}
-		
-	}
-	
-	
-	
-		
-		
-		
-	/** 
-	 * @description: parses the content by tag and builds text signatures array
-	 * @param string $content the post content
-	 * @param string $tag the tag to filter by
-	 * @return array $text_signatures the ordered array of text signatures
-	 * @todo: 
-	 *
-	 */
-	function _generate_text_signatures( $content, $tag = 'p|ul|ol' ) {
-	
-		// don't filter if a password is required
-		if ( post_password_required() ) {
-		
-			// store text sigs array in global
-			$this->parent_obj->db->set_text_sigs( $this->text_signatures );
-
-			// --<
-			return $this->text_signatures;
-			
-		}
-		
-		
-		
-		// parse standalone captioned images
-		$content = $this->_parse_captions( $content );
-
-
-				
-		// get our paragraphs
-		$matches = $this->_get_text_matches( $content, $tag );
-		
-		// kick out if we don't have any
-		if( !count( $matches ) ) {
-		
-			// store text sigs array in global
-			$this->parent_obj->db->set_text_sigs( $this->text_signatures );
-
-			// --<
-			return $this->text_signatures;
-			
-		}
 		
 		
 		
 		// init ( array( 'text_signature' => n ), where n is the number of duplicates )
 		$duplicates = array();
+		
+		// get all elements
+		$elements = $this->dom->getElementsByTagName( '*' );
 
-		// run through 'em...
-		foreach( $matches AS $paragraph ) {
-	  
-			// get a signature for the paragraph
-			$text_signature = $this->_generate_text_signature( $paragraph );
+		// deal with them in turn...
+		foreach ( $elements as $element ) {
 			
-			// do we have one already?
-			if ( in_array( $text_signature, $this->text_signatures ) ) {
+			// extract node name 
+			$node_name = strtolower($element->nodeName);
+	
+			// deal with tags in array
+			if ( in_array( $node_name, $lexia ) ) {
+				
+				/*
+				print_r( "\n\n".'-----------------------------'."\n\n" );
+				print_r( $element );
+				print_r( "\n\n".'-----------------------------'."\n\n" );
+				//die();
+				*/
+				
+				// first get element as raw HTML - we need this to maintain 
+				// compatibility with the previous parsing method
+				$value = $this->dom->saveXHTML( $element );
+				
+				/*
+				print_r( "\n\n".'-----------------------------'."\n\n" );
+				print_r( $value );
+				print_r( "\n\n".'-----------------------------'."\n\n" );
+				*/
+				
+				
+				
+				// now get equivalent of innerHTML
+				//$original_content = $element->childNodes;
+				
+				/*
+				print_r( "\n\n".'-----------------------------'."\n\n" );
+				print_r( $value );
+				print_r( "\n\n".'-----------------------------'."\n\n" );
+				*/
+				
+				/*
+				// remove them so we can rebuild
+				foreach( $original_content AS $node ) {
+					$element->removeChild( $node );
+				}
+				*/
+				
+				
+				
+				// our class
+				$our_class = 'textblock';
+		
+				// get any existing
+				$existing_classes = $element->getAttribute( 'class' );
+		
+				// if we get any...
+				if ( $existing_classes != '' ) {
 			
-				// is it in the duplicates array?
-				if ( array_key_exists( $text_signature, $duplicates ) ) {
+					// append ours
+					$our_class = $existing_classes.' '.$our_class;
+			
+				}
+		
+				// set class
+				$element->setAttribute( 'class', $our_class );
 				
-					// add one
-					$duplicates[ $text_signature ]++;
 				
-				} else {
 				
-					// add it
-					$duplicates[ $text_signature ] = 1;
+				// get first character of tag to maintain compatibility with regex parser
+				$text_sig_prefix = substr( $node_name, 0, 1 );
+				
+				// get text signature
+				$text_signature = $text_sig_prefix . $this->_generate_text_signature( $value );
+				
+				// do we have one already?
+				if ( in_array( $text_signature, $this->text_signatures ) ) {
+			
+					// is it in the duplicates array?
+					if ( array_key_exists( $text_signature, $duplicates ) ) {
+				
+						// add one
+						$duplicates[ $text_signature ]++;
+				
+					} else {
+				
+						// add it
+						$duplicates[ $text_signature ] = 1;
+				
+					}
+				
+					// add number to end of text sig
+					$text_signature .= '_'.$duplicates[ $text_signature ];
 				
 				}
 				
-				// add number to end of text sig
-				$text_signature .= '_'.$duplicates[ $text_signature ];
+				// construct ID
+				$text_sig_id = 'textblock-' . $text_signature;
+				
+				// set class
+				$element->setAttribute( 'id', $text_sig_id );
+				
+				// add to signatures array
+				$this->text_signatures[] = $text_signature;
+			
+				
+				
+				// construct paragraph number
+				$para_num = $sig_key + $start_num;
+			
+				// increment
+				$sig_key++;
+			
+				// get comment count
+				$comment_count = count( $this->comments_sorted[ $text_signature ] );
+			
+				// get comment icon
+				$comment_icon_markup = $this->parent_obj->display->get_comment_icon( 
+			
+					$comment_count, 
+					$text_signature, 
+					'auto', 
+					$para_num 
+				
+				);
+			
+				// get paragraph icon
+				$paragraph_icon = $this->parent_obj->display->get_paragraph_icon( 
+			
+					$comment_count, 
+					$text_signature, 
+					'auto', 
+					$para_num 
+				
+				);
+				
+				/*
+				print_r( "\n\n".'-----------------------------'."\n\n" );
+				print_r( $paragraph_icon );
+				print_r( "\n" );
+				print_r( $comment_icon );
+				print_r( "\n\n".'-----------------------------'."\n\n" );
+				*/
+				
+				$para_icon = new CommentPress_DOMDocument;
+				$para_icon->loadHTML( $paragraph_icon );
+				$para_icon_body = $para_icon->getElementsByTagName( 'body' )->item(0);
+
+				/*
+				print_r( "\n\n".'-----------------------------'."\n\n" );
+				print_r( $para_icon_body );
+				print_r( "\n\n".'-----------------------------'."\n\n" );
+				*/
+				
+				$para_icon_fragment = $para_icon_body->firstChild;
+				
+				// create fragment from icons
+				//$fragment = $this->dom->createDocumentFragment();
+				//$fragment->loadHTML( $paragraph_icon.$comment_icon );
+				
+				$para_icon_node = $this->dom->importNode( $para_icon_fragment, true );
+				
+				/*
+				print_r( "\n\n".'-----------------------------'."\n\n" );
+				print_r( $node->childNodes );
+				print_r( "\n\n".'-----------------------------'."\n\n" );
+				*/
+				
+				// add icon to lexia
+				$element->appendChild( $para_icon_node );
+				
+				
+				
+				
+				$comment_icon = new CommentPress_DOMDocument;
+				$comment_icon->loadHTML( $comment_icon_markup );
+				$comment_icon_body = $comment_icon->getElementsByTagName( 'body' )->item(0);
+
+				/*
+				print_r( "\n\n".'-----------------------------'."\n\n" );
+				print_r( $comment_icon_body );
+				print_r( "\n\n".'-----------------------------'."\n\n" );
+				*/
+				
+				$comment_icon_fragment = $comment_icon_body->firstChild;
+				
+				// create fragment from icons
+				//$fragment = $this->dom->createDocumentFragment();
+				//$fragment->loadHTML( $paragraph_icon.$comment_icon );
+				
+				$comment_icon_node = $this->dom->importNode( $comment_icon_fragment, true );
+				
+				/*
+				print_r( "\n\n".'-----------------------------'."\n\n" );
+				print_r( $node->childNodes );
+				print_r( "\n\n".'-----------------------------'."\n\n" );
+				*/
+				
+				// add icon to lexia
+				$element->appendChild( $comment_icon_node );
+				
+				
+				
+				/*
+				// add original content back to lexia
+				foreach( $original_content AS $node ) {
+					$element->appendChild( $node );
+				}
+				
+				//$element->appendChild( $original_text );
+				*/
+				
+				
+				
+			} // end check for lexia
+			
+			
+			
+			// check for inline blockquotes
+			if ( $node_name == 'span' ) {
+			
+				//print_r( $element );
+				$this->_remove_inline_blockquote_breaks( $element );
 				
 			}
 			
-			// add to signatures array
-			$this->text_signatures[] = $text_signature;
-			
 		}
 		
+		//die();
 		
-		
+
+
 		// store text sigs array in global
 		$this->parent_obj->db->set_text_sigs( $this->text_signatures );
-
-
-
+		
+		
+		
+		// output correctly formatted (X)HTML
+		$content = preg_replace(
+			array( "/<html><body>/si", "!</body></html>$!si" ),
+			'',
+			$this->dom->saveXHTML()
+		);
+		
+		
+		
 		// --<
-		return $this->text_signatures;
+		return $content;
+
+	}
+
+
+
+
+
+
+	/** 
+	 * @description: removes <br /> tags that precede and follow span
+	 * @param DOMDocument object $element the element
+	 * @return string $content the parsed content
+	 */
+	function _remove_inline_blockquote_breaks( $element ) {
+	
+		// get existing classes
+		$existing_classes = $element->getAttribute( 'class' );
+		
+		//print_r( $existing_classes."\n\n" );
+
+		// are there any?
+		if ( $existing_classes != '' ) {
+			
+			// split by space char
+			$existing_array = explode( ' ', $existing_classes );
+			
+			// sanity check
+			if ( count( $existing_array ) > 0 ) {
+				
+				// let's run through them
+				foreach( $existing_array AS $existing_class ) {
+				
+					// is it our inline blockquote class?
+					if ( $existing_class == 'blockquote-in-para' ) {
+						
+						// get previous br
+						$br_before = $element->previousSibling;
+					
+						//print_r( $br_before );
+						
+						// delete it
+						$element->parentNode->removeChild( $br_before );
+
+						// get next br
+						$br_after = $element->nextSibling;
+					
+						//print_r( $br_after );
+
+						// delete it
+						$element->parentNode->removeChild( $br_after );
+
+					}
+				
+				}
+			
+			}
+			
+		}
 
 	}
 	
-
-
-
-
-
-
+	
+	
+	
+	
+	
+	
 	/** 
 	 * @description: parse the content by line (<br />)
 	 * @param string $content the post content

@@ -294,12 +294,12 @@ div.item-list-tabs ul li span {
 div.item-list-tabs ul li a span {
 	background: #eee;
 	border-radius: 50%;
-	border: 1px solid #ccc;
-	color: #999;
+	border: 1px solid #999;
+	color: #444;
 	display: inline;
 	font-size: 70%;
-	margin-left: 2px;
-	padding: 3px 6px;
+	margin-left: 1px;
+	padding: 2px 4px;
 	text-align: center;
 	vertical-align: middle;
 }
@@ -309,6 +309,13 @@ div.item-list-tabs ul li.current a {
 	color: #555;
 	opacity: .8;
 	font-weight: bold;
+	/* dispense with tab-like look */
+	-moz-border-radius-topleft: 0;
+	-webkit-border-top-left-radius: 0;
+	-moz-border-radius-topright: 0;
+	-webkit-border-top-right-radius: 0;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
 }
 div.item-list-tabs ul li.selected a span,
 div.item-list-tabs ul li.current a span,
@@ -347,7 +354,7 @@ div.item-list-tabs ul li
 {
 	float: left;
 	list-style-type: none;
-	margin: 5px 0 0 1px;
+	margin: 5px 0 0 0;
 	font-family: sans-serif;
 	font-size: 0.7em;
 	line-height: 22px !important;
@@ -356,7 +363,7 @@ div.item-list-tabs ul li
 
 div.item-list-tabs ul li:first-child 
 {
-	margin-left: 10px;
+	margin-left: 0;
 }
 
 div.item-list-tabs ul li select
@@ -368,10 +375,15 @@ div.item-list-tabs ul li a,
 div.item-list-tabs ul li span 
 {
 	display: block;
-	padding: 5px 10px;
+	padding: 5px 8px;
 	text-decoration: none;
 	height: 20px;
 	color: #fff;
+}
+
+div#object-nav.item-list-tabs ul li a
+{
+	padding: 4px 8px 5px;
 }
 
 div.item-list-tabs#subnav 
@@ -1090,6 +1102,19 @@ form#send_message_form
 	padding-bottom: 19px;
 }
 
+li span.unread-count, 
+tr.unread span.unread-count 
+{
+	background: #dd0000;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 50%;
+	color: #fff;
+	font-weight: bold;
+	font-family: sans-serif;
+	padding: 2px 6px;
+	font-size: 90%;
+}
 
 
 /* Message formatting */
@@ -1422,6 +1447,34 @@ ul#members-list.item-list li div.item-title span.activity-read-more a
 
 
 
+
+/* BuddyPress 1.9 compatibility */
+table.notifications 
+{
+	margin: 0;
+	text-align: left;
+}
+
+table.notifications th.icon,
+table.notifications td:first-child 
+{
+	display: none;
+}
+
+table.notifications th.title 
+{
+	width: 55%;
+}
+
+#content table.notifications a.button
+{
+	vertical-align: 10%;
+	text-decoration: none;
+}
+
+
+
+
 /* Invite Anyone plugin compatibility */
 body.groups.invite-anyone #item-body,
 form#invite-anyone-by-email
@@ -1717,6 +1770,22 @@ table.profile-fields td.label
 	padding: 0.2em 0.2em 0.5em 0.2em;
 }
 
+#profile-edit-form
+{
+	padding: 0;
+	padding-bottom: 19px;
+}
+
+ul.button-nav
+{
+	margin: 0;
+}
+
+ul.button-nav li
+{
+	list-style: none;
+	list-style-image: none;
+}
 
 
 

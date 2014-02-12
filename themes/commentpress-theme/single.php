@@ -93,12 +93,27 @@ if ( $tabs_class != '' ) {
 	
 	?>
 	<ul id="content-tabs">
-		<li id="content_header" class="default-content-tab"><h2><a href="#content">Content</a></h2></li>
+		<li id="content_header" class="default-content-tab"><h2><a href="#content"><?php 
+			echo apply_filters( 
+				'commentpress_content_tab_content', 
+				__( 'Content', 'commentpress-core' )
+			); 
+		?></a></h2></li>
 		<?php if ( $literal != '' ) { ?>
-		<li id="literal_header"><h2><a href="#literal">Literal</a></h2></li>
+		<li id="literal_header"><h2><a href="#literal"><?php 
+			echo apply_filters( 
+				'commentpress_content_tab_literal', 
+				__( 'Literal', 'commentpress-core' )
+			); 
+		?></a></h2></li>
 		<?php } ?>
 		<?php if ( $original != '' ) { ?>
-		<li id="original_header"><h2><a href="#original">Original</a></h2></li>
+		<li id="original_header"><h2><a href="#original"><?php 
+			echo apply_filters( 
+				'commentpress_content_tab_original', 
+				__( 'Original', 'commentpress-core' )
+			);
+		?></a></h2></li>
 		<?php } ?>
 	</ul>
 	<?php
@@ -205,7 +220,12 @@ if ( $tabs_class != '' ) {
 	
 	<div class="post">
 	
-	<h2 class="post_title"><?php _e( 'Literal Translation', 'commentpress-core' ); ?></h2>
+	<h2 class="post_title"><?php 
+		echo apply_filters( 
+			'commentpress_literal_title', 
+			__( 'Literal Translation', 'commentpress-core' )
+		); 
+	?></h2>
 	
 	<?php echo wpautop(convert_chars(wptexturize( stripslashes( $literal ) ))); ?>
 	
@@ -227,7 +247,12 @@ if ( $tabs_class != '' ) {
 	
 	<div class="post">
 	
-	<h2 class="post_title"><?php _e( 'Original Text', 'commentpress-core' ); ?></h2>
+	<h2 class="post_title"><?php 
+		echo apply_filters( 
+			'commentpress_original_title', 
+			__( 'Original Text', 'commentpress-core' )
+		); 
+	?></h2>
 	
 	<?php echo wpautop(convert_chars(wptexturize( stripslashes( $original ) ))); ?>
 	

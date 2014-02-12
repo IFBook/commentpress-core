@@ -417,8 +417,25 @@ addComment = {
 		// test for tinyMCE
 		if ( cp_tinymce == '1' ) {
 		
-			// load tinyMCE, changed from this: tinyMCE.execCommand('mceAddControl', false, 'comment');
-			setTimeout( function() { tinyMCE.execCommand('mceAddControl', false, 'comment'); }, 1 );
+			// test for tinyMCE version
+			if ( cp_tinymce_version == '3' ) {
+		
+				// load tinyMCE up to version 3
+				setTimeout( function() { 
+					tinyMCE.execCommand( 'mceAddControl', false, 'comment' );
+					tinyMCE.execCommand( 'render' );
+				}, 1 );
+			
+			} else {
+			
+				// load tinyMCE version 4
+				setTimeout( function() { 
+					tinyMCE.execCommand( 'mceAddEditor', false, 'comment' ); 
+					tinyMCE.execCommand( 'render' );
+				}, 1 );
+
+			}
+			
 			//console.log( 'control added' );
 			
 		}
@@ -436,8 +453,19 @@ addComment = {
 		// test for tinyMCE
 		if ( cp_tinymce == '1' ) {
 		
-			// unload tinyMCE
-			tinyMCE.execCommand('mceRemoveControl', false, 'comment');
+			// test for tinyMCE version
+			if ( cp_tinymce_version == '3' ) {
+		
+				// unload tinyMCE up to version 3
+				tinyMCE.execCommand( 'mceRemoveControl', false, 'comment' );
+				
+			} else {
+
+				// unload tinyMCE version 4
+				tinyMCE.execCommand( 'mceRemoveEditor', false, 'comment' );
+			
+			}
+			
 			//console.log( 'control removed' );
 			
 		}

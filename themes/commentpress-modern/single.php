@@ -93,12 +93,27 @@ if ( $tabs_class != '' ) {
 	
 	?>
 	<ul id="content-tabs">
-		<li id="content_header" class="default-content-tab"><h2><a href="#content"><?php _e( 'Content', 'commentpress-core' ); ?></a></h2></li>
+		<li id="content_header" class="default-content-tab"><h2><a href="#content"><?php 
+			echo apply_filters( 
+				'commentpress_content_tab_content', 
+				__( 'Content', 'commentpress-core' )
+			); 
+		?></a></h2></li>
 		<?php if ( $literal != '' ) { ?>
-		<li id="literal_header"><h2><a href="#literal"><?php _e( 'Literal', 'commentpress-core' ); ?></a></h2></li>
+		<li id="literal_header"><h2><a href="#literal"><?php 
+			echo apply_filters( 
+				'commentpress_content_tab_literal', 
+				__( 'Literal', 'commentpress-core' )
+			); 
+		?></a></h2></li>
 		<?php } ?>
 		<?php if ( $original != '' ) { ?>
-		<li id="original_header"><h2><a href="#original"><?php _e( 'Original', 'commentpress-core' ); ?></a></h2></li>
+		<li id="original_header"><h2><a href="#original"><?php 
+			echo apply_filters( 
+				'commentpress_content_tab_original', 
+				__( 'Original', 'commentpress-core' )
+			);
+		?></a></h2></li>
 		<?php } ?>
 	</ul>
 	<?php
@@ -115,14 +130,28 @@ if ( $tabs_class != '' ) {
 
 <?php
 
+// show feature image
+commentpress_get_feature_image();
+
+?>
+
+
+
+<?php
+
 // until WordPress supports a locate_theme_file() function, use filter
 $page_navigation = apply_filters( 
 	'cp_template_page_navigation',
 	get_template_directory() . '/assets/templates/page_navigation.php'
 );
 
-// always include
-include( $page_navigation );
+// do we have a featured image?
+if ( !commentpress_has_feature_image() ) {
+
+	// always include
+	include( $page_navigation );
+
+}
 
 ?>
 
@@ -136,14 +165,23 @@ include( $page_navigation );
 
 
 
-<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+<?php
 
-<div class="search_meta">
-	
-	<?php commentpress_echo_post_meta(); ?>
-	
-</div>
+// do we have a featured image?
+if ( !commentpress_has_feature_image() ) {
 
+	?><h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+
+	<div class="search_meta">
+	
+		<?php commentpress_echo_post_meta(); ?>
+	
+	</div>
+	<?php
+
+}
+
+?>
 
 
 <?php commentpress_get_post_version_info( $post ); ?>
@@ -190,7 +228,7 @@ echo commentpress_multipager();
 		// Neither Comments, nor Pings are open 
 		?>Both comments and pings are currently closed. <?php 
 		
-	} edit_post_link('Edit this entry','','.'); 
+	} edit_post_link( 'Edit this entry', '', '.' ); 
 	
 ?></p>
 
@@ -220,7 +258,12 @@ if ( $tabs_class != '' ) {
 	
 	<div class="post">
 	
-	<h2 class="post_title"><?php _e( 'Literal Translation', 'commentpress-core' ); ?></h2>
+	<h2 class="post_title"><?php 
+		echo apply_filters( 
+			'commentpress_literal_title', 
+			__( 'Literal Translation', 'commentpress-core' )
+		); 
+	?></h2>
 	
 	<?php echo wpautop(convert_chars(wptexturize( stripslashes( $literal ) ))); ?>
 	
@@ -242,7 +285,12 @@ if ( $tabs_class != '' ) {
 	
 	<div class="post">
 	
-	<h2 class="post_title"><?php _e( 'Original Text', 'commentpress-core' ); ?></h2>
+	<h2 class="post_title"><?php 
+		echo apply_filters( 
+			'commentpress_original_title', 
+			__( 'Original Text', 'commentpress-core' )
+		); 
+	?></h2>
 	
 	<?php echo wpautop(convert_chars(wptexturize( stripslashes( $original ) ))); ?>
 	

@@ -38,7 +38,7 @@
 
 			<div id="item-nav">
 				<div class="item-list-tabs no-ajax" id="object-nav" role="navigation">
-					<ul>
+					<ul class="clearfix">
 
 						<?php bp_get_displayed_user_nav(); ?>
 
@@ -75,6 +75,9 @@
 
 				elseif ( bp_is_user_settings() ) :
 					locate_template( array( 'members/single/settings.php'  ), true );
+
+				elseif ( function_exists( 'bp_is_user_notifications' ) AND bp_is_user_notifications() ) :
+					locate_template( array( 'members/single/notifications.php' ), true );
 
 				// If nothing sticks, load a generic template
 				else :

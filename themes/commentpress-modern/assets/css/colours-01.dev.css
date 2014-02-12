@@ -79,7 +79,8 @@ h3.activity-subscription-settings-title,
 h3#message-subject,
 table#message-threads tr td.thread-from,
 table#message-threads tr td.thread-info p,
-form#settings-form table.notification-settings th.title
+form#settings-form table.notification-settings th.title,
+table.notifications th
 {
 	font-family: Lato, 'Trebuchet MS', Helvetica, Arial, sans-serif;
 }
@@ -140,7 +141,8 @@ span.highlight,
 .standard-form label, 
 .standard-form span.label,
 form#send-reply div.message-box .avatar-box strong,
-form#settings-form table.notification-settings th.title
+form#settings-form table.notification-settings th.title,
+table.notifications th
 {
 	text-transform: uppercase;
 }
@@ -184,7 +186,8 @@ div.generic-button a
 #item-body a,
 .standard-form label, 
 .standard-form span.label,
-form#settings-form table.notification-settings th.title
+form#settings-form table.notification-settings th.title,
+table.notifications th
 {
 	color: #761D19;
 }
@@ -305,7 +308,7 @@ ul.item-list li div.item-desc
 #activity_sidebar li.groups
 {
     border-left: 10px solid #761D19;
-    margin-bottom: 1px;
+    margin-bottom: 0;
 }
 
 

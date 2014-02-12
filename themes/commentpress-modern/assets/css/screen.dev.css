@@ -178,19 +178,27 @@ tt, code, kbd, samp
 	font-family: monospace;
 }
 /* setting a consistent width, 160px; 
-   control of type=file still not possible */
+   control of type=file still not possible
+   *width is for ie7 (no ie6 fallback) */
 input[type=text], input[type=password], textarea { width: 12.25em; *width: 11.9em; }
 
 /* prevents outlines - we set them explicitly for elements that require them */
 a:focus { outline: 0; }
 
-blockquote 
+blockquote,
+.blockquote-in-para
 {
 	margin-left: 0;
 	margin-right: 0;
 	padding: 0 15px 0 15px;
 	border-left: 1px solid #ddd;
 	font-style: italic;
+}
+
+.blockquote-in-para
+{
+	display: block;
+	margin: 0.7em 0;
 }
 
 /* WordPress presentational styles */
@@ -498,6 +506,7 @@ img.cp_logo_image
 	top: 70px;
 	left: 0;
 	background-color: #ddd;
+	z-index: 499;
 }
 
 body.admin-bar #navigation
@@ -1139,6 +1148,19 @@ p.comment_activity_date
 	background: none;
 }
 
+/* YouTube embeds */
+.comment-content iframe 
+{
+	max-width: 100%;
+}
+
+/* Images in comments */
+.comment-content img 
+{
+	max-width: 97%;
+	height: auto;
+}
+
 .reply
 {
 	text-transform: uppercase;
@@ -1314,16 +1336,31 @@ div#respond .subscribe_reloaded_insert p
 
 #cpajax_error_msg
 {
+	border: 1px solid #E1CA82;
+	border: none;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	font-weight: normal;
 	margin: 0.6em 0;
-	padding: 0.6em;
-	color: #ca0000;
-	background-color: #eee;
-	border: 1px solid #ca0000;
+	text-decoration: none;
+	background: #FFEAA6;
+	background-image: -webkit-linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255, 255, 255, .5)), color-stop(100%,rgba(255, 255, 255, 0)));
+	background-image: -moz-linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+	background-image: -ms-linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+	background-image: -o-linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+	background-image: linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+	background-color: #DB1717;
+	border-color: #A71A1A;
+	clear: left;
+	color: #fff;
+	font-size: 90%;
 	font-family: sans-serif;
-	line-height: 1.3em;
-	text-transform: uppercase;
-	font-size: 80%;
-	font-weight: bold;
+	display: block;
+	padding: 0.6em;
+	line-height: 1.5em;
 }
 
 
@@ -2172,6 +2209,90 @@ h3.comments_hl
 
 /* 
 --------------------------------------------------------------------------------
+Translation Workflow
+--------------------------------------------------------------------------------
+*/
+
+ul#content-tabs
+{
+	margin: 0;
+	padding: 0;
+	height: 32px;
+	z-index: 1000;
+	background-color: #bdbdbd;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+
+ul#content-tabs li
+{
+	list-style: none;
+	list-style-image: none;
+	float: left;
+	width: 33%;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+}
+
+	ul#content-tabs li#original_header
+	{
+		width: 34%;
+	}
+
+	ul#content-tabs li h2
+	{
+		font-size: 16px;
+		line-height: 1;
+		margin: 0;
+		padding: 0;
+		height: 24px;
+	}
+	
+	ul#content-tabs li#content_header h2
+	{
+	}
+	
+	ul#content-tabs li h2 a
+	{
+		display: block;
+		padding: 8px 0;
+		text-decoration: none;
+		color: #000;
+		background-color: #bdbdbd;
+	}	
+
+	ul#content-tabs li h2 a:hover
+	{
+		background-color: #bdbdbd;
+	}	
+
+	ul#content-tabs li.default-content-tab h2 a
+	{
+		background-color: #fff;
+	}
+
+#page_wrapper.with-content-tabs
+{
+	margin-top: 32px;
+}
+
+	#literal,
+	#original
+	{
+		margin: 0 12%;
+		padding: 0 0;
+	}
+
+	
+	
+
+
+
+/* 
+--------------------------------------------------------------------------------
 Post Versioning
 --------------------------------------------------------------------------------
 */
@@ -2328,7 +2449,7 @@ New Look TOC Sidebar for posts
 	font-weight: normal;
 	font-style: normal;
 	font-size: 0.8em;
-	line-height: 1.5;
+	line-height: 1;
 }
 
 #toc_sidebar .sidebar_minimiser .post-identifier cite a,
@@ -2347,6 +2468,7 @@ New Look TOC Sidebar for posts
 
 .post_activity_date
 {
+	margin-top: 0.3em;
 	margin-bottom: 0;
 	display: block;
 	color: #000;
@@ -2763,6 +2885,113 @@ Comment Orphaning
 
 
 
+
+/*
+--------------------------------------------------------------------------------
+Feature images
+--------------------------------------------------------------------------------
+*/
+
+.cp_feature_image
+{
+	position: relative;
+	line-height: 0;
+}
+
+.cp_feature_image img.wp-post-image
+{
+	width: 100%;
+	height: auto;
+}
+
+.cp_feature_image .cp_featured_title
+{
+	width: 100%;
+	background: #fff;
+	background: rgba( 255, 255, 255, 0.66 );
+	position: absolute;
+	bottom: 0;
+}
+
+.cp_feature_image .cp_featured_title .cp_featured_title_inner
+{
+	padding: 2% 12%;
+}
+
+.cp_feature_image .cp_featured_title .cp_featured_title_inner h2.post_title
+{
+	margin: 0;
+}
+
+.cp_feature_image .cp_featured_title .cp_featured_title_inner div.search_meta
+{
+	margin-top: 0;
+	margin-bottom: 0.3em;
+}
+
+
+
+
+
+/* 
+--------------------------------------------------------------------------------
+Compatibility with WordPress 3.8+
+--------------------------------------------------------------------------------
+*/
+
+/* sans serif is easier to read, methinks */
+body .wp-dialog
+{
+	font-family: sans-serif;
+}
+
+/* override admin bar z-index */
+@media screen and ( max-width: 782px ) {
+
+	html body #wpadminbar {
+		z-index: 99999 !important;
+	}
+	
+}
+
+/* allow TinyMCE 4 to go fullscreen */
+body.tinymce-4.mce-fullscreen #header,
+body.tinymce-4.mce-fullscreen #sidebar
+{
+	z-index: 500;
+}
+
+body.tinymce-4.mce-fullscreen #wpadminbar
+{
+	z-index: 100;
+}
+
+/* some BuddyPress button styles leak into the TinyMCE buttons */
+body.tinymce-4 .mce-toolbar .mce-btn button:hover
+{
+	background: none;
+	filter: none;
+	border: none;
+	color: #333;
+	outline: none;
+	text-decoration: none;
+}
+
+body.tinymce-4 .wp-editor-container 
+{
+	border: 1px solid #dedede;
+}
+
+body.tinymce-4 #commentform #wp-comment-wrap textarea 
+{
+	width: 100%;
+	margin: 0;
+}
+
+
+
+
+
 /* 
 --------------------------------------------------------------------------------
 RESPONSIVENESS
@@ -2989,7 +3218,7 @@ RESPONSIVENESS
 	
 	.active-sidebar #navigation
 	{
-		left: -50%;
+		left: -100%;
 	}
 	
 	.active-sidebar #wrapper
@@ -3048,6 +3277,11 @@ RESPONSIVENESS
 
 
 @media all and (max-width: 600px) {
+
+	#header
+	{
+		position: absolute;
+	}
 
 	#content_container
 	{
@@ -3118,11 +3352,36 @@ RESPONSIVENESS
 		line-height: 1.8;
 	}
 	
-	#switcher ul li a
+	h2.post_title,
+	.search_result h3
 	{
-		font-size: 18px;
+		font-size: 1.5em;
+		line-height: 3.5;
+	}
+
+	.cp_featured_title_inner h2.post_title
+	{
+		line-height: 1.5;
 	}
 	
+	#switcher ul li 
+	{
+		height: 38px;
+	}
+	
+	#switcher ul li a
+	{
+		font-size: 14px;
+		padding: 12px;
+		height: 14px;
+	}
+	
+	#toc_sidebar .sidebar_header h2,
+	ul#sidebar_tabs li a
+	{
+		font-size: 16px;
+	}
+
 	#content 
 	{
 		padding: 2% 0 6% 0;
@@ -3160,5 +3419,13 @@ RESPONSIVENESS
 	
 }
 
+
+
+/* Specify orientation styles here, when supported 
+@media screen and (orientation:portrait) {
+}
+@media screen and (orientation:landscape) {
+}
+*/
 
 

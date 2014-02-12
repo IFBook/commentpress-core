@@ -1080,6 +1080,9 @@ class CommentpressMultisiteBuddypress {
 	 */
 	function filter_nav_title_page_title( $title ) {
 		
+		// bail if main BP site
+		if ( bp_is_root_blog() ) return $title;
+		
 		// --<
 		// override default link name
 		return apply_filters(
@@ -1947,7 +1950,7 @@ class CommentpressMultisiteBuddypress {
 			
 			// set hidden element
 			$forced_html = '
-			<input type="hidden" value="1" id="cpmu-new-blog" name="cpmu-new-blog" />
+			<input type="hidden" value="1" id="cpbp-new-blog" name="cpbp-new-blog" />
 			';
 
 			// define text
@@ -1958,7 +1961,7 @@ class CommentpressMultisiteBuddypress {
 			// set checkbox
 			$forced_html = '
 			<div class="checkbox">
-				<label for="cpmu-new-blog"><input type="checkbox" value="1" id="cpmu-new-blog" name="cpmu-new-blog" /> '.__( 'Enable CommentPress', 'commentpress-core' ).'</label>
+				<label for="cpbp-new-blog"><input type="checkbox" value="1" id="cpbp-new-blog" name="cpbp-new-blog" /> '.__( 'Enable CommentPress', 'commentpress-core' ).'</label>
 			</div>
 			';
 					

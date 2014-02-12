@@ -2681,6 +2681,55 @@ Compatibility with BP Docs plugin
 
 
 
+
+/* 
+--------------------------------------------------------------------------------
+Compatibility with WordPress 3.8+
+--------------------------------------------------------------------------------
+*/
+
+/* override admin bar z-index */
+@media screen and ( max-width: 782px ) {
+
+	html body #wpadminbar {
+		z-index: 99999 !important;
+	}
+	
+}
+
+/* allow TinyMCE 4 to go fullscreen */
+body.tinymce-4.mce-fullscreen #wpadminbar
+{
+	z-index: 100;
+}
+
+/* some BuddyPress button styles leak into the TinyMCE buttons */
+body.tinymce-4 .mce-toolbar .mce-btn button:hover
+{
+	background: none;
+	filter: none;
+	border: none;
+	color: #333;
+	outline: none;
+	text-decoration: none;
+}
+
+body.tinymce-4 .wp-editor-container 
+{
+	border: 1px solid #dedede;
+}
+
+body.tinymce-4 #commentform #wp-comment-wrap textarea 
+{
+	width: 100%;
+	margin: 0;
+}
+
+
+
+
+
+
 /* 
 --------------------------------------------------------------------------------
 Misc
