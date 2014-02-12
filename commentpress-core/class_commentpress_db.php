@@ -3020,7 +3020,7 @@ class CommentpressCoreDatabase {
 		global $wp_version;
 	
 		// if greater than 3.8
-		if ( version_compare( $wp_version, '3.8', '>' ) ) {
+		if ( version_compare( $wp_version, '3.8.9999', '>' ) ) {
 		
 			// add newer TinyMCE version 
 			$vars['cp_tinymce_version'] = 4;

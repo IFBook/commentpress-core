@@ -1175,7 +1175,7 @@ function commentpress_get_body_classes(
 	global $wp_version;
 
 	// if greater than 3.8
-	if ( version_compare( $wp_version, '3.8', '>' ) ) {
+	if ( version_compare( $wp_version, '3.8.9999', '>' ) ) {
 	
 		// override TinyMCE class
 		$tinymce_version = ' tinymce-4';
@@ -4110,7 +4110,7 @@ function commentpress_add_wp_editor() {
 	global $wp_version;
 
 	// if greater than 3.8
-	if ( version_compare( $wp_version, '3.8', '>' ) ) {
+	if ( version_compare( $wp_version, '3.8.9999', '>' ) ) {
 	
 		// TinyMCE 4 - allow tinymce config to be overridden
 		$tinymce_config = apply_filters( 
@@ -4323,7 +4323,7 @@ function commentpress_assign_editor_buttons( $buttons ) {
 global $wp_version;
 
 // if greater than 3.8
-if ( version_compare( $wp_version, '3.8', '>' ) ) {
+if ( version_compare( $wp_version, '3.8.9999', '>' ) ) {
 	add_filter( 'teeny_mce_buttons', 'commentpress_assign_editor_buttons' );
 }
 
