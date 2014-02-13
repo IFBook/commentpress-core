@@ -264,9 +264,13 @@ body#main_blog
 
 	body#main_blog.create-blog.buddypress_page #content .padder h3,
 	body#main_blog form.dir-form,
+	body.buddypress form.dir-form,
 	body#main_blog div.item-list-tabs,
+	body.buddypress div.item-list-tabs,
 	body#main_blog form#whats-new-form, 
 	body#main_blog .home-page form#whats-new-form,
+	body.buddypress form#whats-new-form, 
+	body.home-page form#whats-new-form,
 	body.directory #content h3, 
 	body.group-create #content form.standard-form > h3,
 	#register-page #signup_form h2,
@@ -283,7 +287,8 @@ body#main_blog
 		background: #fff;
 	}
 	
-	body#main_blog #item-body form#whats-new-form
+	body#main_blog #item-body form#whats-new-form,
+	body.buddypress #item-body form#whats-new-form
 	{
 		background-color: #eee;
 	}

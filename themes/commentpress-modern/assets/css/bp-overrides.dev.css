@@ -11,7 +11,12 @@ NOTES
 
 
 
-/* Import BP Template Pack CSS - this is copied from BP Template Pack Plugin and overriden below */
+/* 
+--------------------------------------------------------------------------------
+Import BuddyPress styles
+This is copied and amended from BP Default Theme and overriden below 
+--------------------------------------------------------------------------------
+*/
 @import url("bp.css");
 
 

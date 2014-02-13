@@ -47,6 +47,9 @@ form#whats-new-form textarea {
 	padding: 6px;
 	width: 98%;
 }
+body.no-js form#whats-new-form textarea {
+	height: 50px;
+}
 form#whats-new-form #whats-new-options select {
 	max-width: 200px;
 	margin-top: 12px;
@@ -58,6 +61,9 @@ form#whats-new-form #whats-new-submit {
 #whats-new-options {
 	overflow: auto;
 	height: 0;
+}
+body.no-js #whats-new-options {
+	height: auto;
 }
 #whats-new:focus {
 	border-color: rgba(31, 179, 221, 0.9) !important;
@@ -513,8 +519,22 @@ ul.button-nav li.current a {
 --------------------------------------------------------------*/
 .standard-form textarea,
 .standard-form input[type=text],
+.standard-form input[type=color],
+.standard-form input[type=date],
+.standard-form input[type=datetime],
+.standard-form input[type=datetime-local],
+.standard-form input[type=email],
+.standard-form input[type=month],
+.standard-form input[type=number],
+.standard-form input[type=range],
+.standard-form input[type=search],
+.standard-form input[type=tel],
+.standard-form input[type=time],
+.standard-form input[type=url],
+.standard-form input[type=week],
 .standard-form select,
 .standard-form input[type=password],
+.dir-search input[type=search]
 .dir-search input[type=text] {
 	border: 1px inset #ccc;
 	-moz-border-radius: 3px;
@@ -967,9 +987,9 @@ table.forum p.topic-meta {
 	margin: 5px 0 0 0;
 }
 
-/*--------------------------------------------------------------
-8 - Headers, Lists and Tabs - Activity, Groups, Blogs, Forums
---------------------------------------------------------------*/
+/*-------------------------------------------------------------------------
+8 - Headers, Lists and Tabs - Activity, Groups, Blogs, Forums, Profiles
+-------------------------------------------------------------------------*/
 .item-body {
 	margin: 20px 0;
 }
@@ -1240,7 +1260,9 @@ div.item-list-tabs ul li.feed a {
 	background: url( ../images/buddypress/rss.png ) center left no-repeat;
 	padding-left: 20px;
 }
-#admins-list li {
+#admins-list li,
+#mods-list li,
+#members-list li {
 	overflow: auto;
 }
 
@@ -1310,11 +1332,62 @@ div#message-thread div.message-options {
 	text-align: right;
 }
 
+div.message-search {
+	float: right;
+	margin: 0 20px;
+}
 
 /*--------------------------------------------------------------
-10 - Pagination
+10 - Extended Profiles
 --------------------------------------------------------------*/
-.padder div.pagination {
+
+div.profile h4 {
+	margin-bottom: auto;
+	margin-top: 15px;
+}
+#profile-edit-form ul.button-nav {
+	margin-top: 15px;
+}
+body.no-js .field-visibility-settings-toggle,
+body.no-js .field-visibility-settings-close {
+	display: none;
+}
+.field-visibility-settings {
+	display: none;
+	margin-top: 10px;
+}
+	body.no-js .field-visibility-settings {
+		display: block;
+	}
+.current-visibility-level {
+	font-weight: bold;
+	font-style: normal;
+}
+.field-visibility-settings,
+.field-visibility-settings-toggle,
+.field-visibility-settings-notoggle {
+	color: #888;
+}
+.field-visibility-settings-toggle a,
+.field-visibility-settings a {
+	font-size: .9em;
+}
+body.register div.page ul {
+	list-style: none;
+}
+.standard-form .field-visibility-settings label {
+	margin: 0;
+	font-weight: normal;
+}
+.field-visibility-settings legend,
+.field-visibility-settings-toggle {
+	font-style: italic;
+}
+
+/*--------------------------------------------------------------
+11 - Pagination
+--------------------------------------------------------------*/
+div.pagination {
 	background: #f4f4f4;
 	border: none;
 	color: #888;
@@ -1324,26 +1397,30 @@ div#message-thread div.message-options {
 	padding: 8px 20px;
 	position: relative;
 }
-.padder div.pagination .pag-count {
+div.pagination .pag-count {
 	float: left;
 }
-.padder div.pagination .pagination-links {
+div.pagination .pagination-links {
 	float: right;
 }
-.padder div.pagination .pagination-links span,
-.padder div.pagination .pagination-links a {
+div.pagination .pagination-links span,
+div.pagination .pagination-links a {
 	font-size: 12px;
 	padding: 0 5px;
 }
-.padder div.pagination .pagination-links a:hover {
+div.pagination .pagination-links a:hover {
 	font-weight: bold;
 }
-.padder div#pag-bottom {
+noscript div.pagination {
+	margin-bottom: 15px;
+}
+div#pag-bottom {
 	margin-top: -1px;
 }
-.padder #nav-above {
+#nav-above {
 	display: none;
 }
-.padder .paged #nav-above {
+.paged #nav-above {
 	display: block;
 }
+
