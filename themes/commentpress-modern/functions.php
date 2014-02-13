@@ -322,7 +322,8 @@ function commentpress_bp_theme_support() {
 		require_once( BP_PLUGIN_DIR . '/bp-themes/bp-default/_inc/ajax.php' );
 	}
 	
-	// call after_setup_theme function directly otherwise it doesn't run
+	// call after_setup_theme function directly otherwise it doesn't run: this is 
+	// because we're hooking into bp_after_setup_theme which runs with priority 100
 	bp_dtheme_register_actions();
 
 	// tell BP that we support it
@@ -375,7 +376,7 @@ function commentpress_buddypress_support() {
 	//print_r( 'commentpress_buddypress_support' );
 	
 	// add an action to enable compatibility with BuddyPress
-	add_action( 'after_setup_theme', 'commentpress_bp_theme_compatibility', 1 );
+	add_action( 'after_setup_theme', 'commentpress_bp_theme_compatibility' );
 	
 	// include bp-overrides when buddypress is active
 	add_action( 'wp_enqueue_scripts', 'commentpress_bp_enqueue_styles', 994 );
@@ -383,7 +384,7 @@ function commentpress_buddypress_support() {
 	
 }
 
-// add an action for the above
+// add an action for the above (BP hooks this to after_setup_theme with priority 100)
 add_action( 'bp_after_setup_theme', 'commentpress_buddypress_support' );
 
 
