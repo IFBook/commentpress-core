@@ -286,17 +286,16 @@ endif; // commentpress_bp_enqueue_scripts
  */
 function commentpress_bp_theme_compatibility() {
 
-	//die('commentpress_bp_theme_compatibility');
-	//print_r( 'commentpress_bp_theme_compatibility' );
-
 	// BP 1.7 auto-compatibility - see commentpress_enqueue_theme_styles()
 	
-	// if we're using BP Theme Pack
+	// if we're using BP Template Pack
 	if ( function_exists( 'bp_tpack_theme_setup' ) ) {
+	
+		// assume that BP Template Pack has been activated and set up correctly
 	
 	} else {
 	
-		// use cloned function
+		// use function cloned from BP Template Pack
 		commentpress_bp_theme_support();
 		
 	}
@@ -314,9 +313,6 @@ function commentpress_bp_theme_compatibility() {
  */
 function commentpress_bp_theme_support() {
 
-	//die( 'commentpress_bp_theme_support' );
-	//print_r( 'commentpress_bp_theme_support' );
-	
 	// load the default BuddyPress AJAX functions if it isn't already included
 	if ( ! function_exists( 'bp_dtheme_register_actions' ) ) {
 		require_once( BP_PLUGIN_DIR . '/bp-themes/bp-default/_inc/ajax.php' );
@@ -329,37 +325,74 @@ function commentpress_bp_theme_support() {
 	// tell BP that we support it
 	add_theme_support( 'buddypress' );
 	
-	if ( ! is_admin() ) {
+	// bail if admin
+	if ( is_admin() ) { return; }
 	
-		// register buttons for the relevant component templates
-		
-		// friends button
-		if ( bp_is_active( 'friends' ) )
-			add_action( 'bp_member_header_actions',    'bp_add_friend_button' );
+	// register buttons for the relevant component templates
+	
+	// friends button
+	if ( bp_is_active( 'friends' ) )
+		add_action( 'bp_member_header_actions',    'bp_add_friend_button' );
 
-		// activity button
-		if ( bp_is_active( 'activity' ) )
-			add_action( 'bp_member_header_actions',    'bp_send_public_message_button' );
+	// activity button
+	if ( bp_is_active( 'activity' ) )
+		add_action( 'bp_member_header_actions',    'bp_send_public_message_button' );
 
-		// messages button
-		if ( bp_is_active( 'messages' ) )
-			add_action( 'bp_member_header_actions',    'bp_send_private_message_button' );
+	// messages button
+	if ( bp_is_active( 'messages' ) )
+		add_action( 'bp_member_header_actions',    'bp_send_private_message_button' );
 
-		// group buttons
-		if ( bp_is_active( 'groups' ) ) {
-			add_action( 'bp_group_header_actions',     'bp_group_join_button' );
-			add_action( 'bp_group_header_actions',     'bp_group_new_topic_button' );
-			add_action( 'bp_directory_groups_actions', 'bp_group_join_button' );
-		}
+	// group buttons
+	if ( bp_is_active( 'groups' ) ) {
+		add_action( 'bp_group_header_actions',     'bp_group_join_button' );
+		add_action( 'bp_group_header_actions',     'bp_group_new_topic_button' );
+		add_action( 'bp_directory_groups_actions', 'bp_group_join_button' );
+	}
 
-		// blog button
-		if ( bp_is_active( 'blogs' ) ) {
-			add_action( 'bp_directory_blogs_actions',  'bp_blogs_visit_blog_button' );
-		}
-		
+	// blog button
+	if ( bp_is_active( 'blogs' ) ) {
+		add_action( 'bp_directory_blogs_actions',  'bp_blogs_visit_blog_button' );
 	}
 	
 } // commentpress_bp_theme_support
+
+
+
+
+
+
+/** 
+ * @description: update BuddyPress activity CSS class with groupblog type
+ *
+ */
+function commentpress_bp_activity_css_class( $existing_class ) {
+	
+	// $activities_template->activity->component . ' ' . $activities_template->activity->type . $class
+	//print_r( array( 'existing_class' => $existing_class ) ); die();
+	
+	// init group blog type
+	$groupblogtype = '';
+
+	// get current item
+	global $activities_template;
+	$current_activity = $activities_template->activity;
+	//print_r( array( 'a' => $current_activity ) ); die();
+
+	// for group activity...
+	if ( $current_activity->component == 'groups' ) {
+
+		// get group blogtype
+		$groupblogtype = groups_get_groupmeta( $current_activity->item_id, 'groupblogtype' );
+	
+		// add space before if we have it
+		if ( $groupblogtype ) { $groupblogtype = ' '.$groupblogtype; }
+	
+	}
+	
+	// --<
+	return $existing_class . $groupblogtype;
+
+}
 
 
 
@@ -376,11 +409,14 @@ function commentpress_buddypress_support() {
 	//print_r( 'commentpress_buddypress_support' );
 	
 	// add an action to enable compatibility with BuddyPress
-	add_action( 'after_setup_theme', 'commentpress_bp_theme_compatibility' );
+	add_action( 'after_setup_theme', 'commentpress_bp_theme_compatibility', 101 );
 	
 	// include bp-overrides when buddypress is active
 	add_action( 'wp_enqueue_scripts', 'commentpress_bp_enqueue_styles', 994 );
 	add_action( 'wp_enqueue_scripts', 'commentpress_bp_enqueue_scripts', 994 );
+	
+	// add filter for activity class
+	add_filter( 'bp_get_activity_css_class', 'commentpress_bp_activity_css_class' );
 	
 }
 
