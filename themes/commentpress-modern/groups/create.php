@@ -29,6 +29,7 @@
 		<div class="padder">
 
 		<form action="<?php bp_group_creation_form_action(); ?>" method="post" id="create-group-form" class="standard-form" enctype="multipart/form-data">
+		
 			<h3><?php _e( 'Create a Group', 'commentpress-core' ); ?> &nbsp;<a class="button" href="<?php echo trailingslashit( bp_get_root_domain() . '/' . bp_get_groups_root_slug() ); ?>"><?php _e( 'Groups Directory', 'commentpress-core' ); ?></a></h3>
 
 			<?php do_action( 'bp_before_create_group' ); ?>
@@ -49,12 +50,16 @@
 				<?php if ( bp_is_group_creation_step( 'group-details' ) ) : ?>
 
 					<?php do_action( 'bp_before_group_details_creation_step' ); ?>
-
-					<label for="group-name"><?php _e( 'Group Name (required)', 'commentpress-core' ); ?></label>
-					<input type="text" name="group-name" id="group-name" aria-required="true" value="<?php bp_new_group_name(); ?>" />
-
-					<label for="group-desc"><?php _e( 'Group Description (required)', 'commentpress-core' ) ?></label>
-					<textarea name="group-desc" id="group-desc" aria-required="true"><?php bp_new_group_description(); ?></textarea>
+					
+					<div>
+						<label for="group-name"><?php _e( 'Group Name (required)', 'commentpress-core' ); ?></label>
+						<input type="text" name="group-name" id="group-name" aria-required="true" value="<?php bp_new_group_name(); ?>" />
+					</div>
+					
+					<div>
+						<label for="group-desc"><?php _e( 'Group Description (required)', 'commentpress-core' ) ?></label>
+						<textarea name="group-desc" id="group-desc" aria-required="true"><?php bp_new_group_description(); ?></textarea>
+					</div>
 
 					<?php
 					do_action( 'bp_after_group_details_creation_step' );
@@ -68,26 +73,6 @@
 				<?php if ( bp_is_group_creation_step( 'group-settings' ) ) : ?>
 
 					<?php do_action( 'bp_before_group_settings_creation_step' ); ?>
-
-					<?php if ( bp_is_active( 'forums' ) ) : ?>
-						<?php if ( bp_forums_is_installed_correctly() ) : ?>
-
-							<div class="checkbox">
-								<label><input type="checkbox" name="group-show-forum" id="group-show-forum" value="1"<?php checked( bp_get_new_group_enable_forum(), true, true ); ?> /> <?php _e( 'Enable discussion forum', 'commentpress-core' ); ?></label>
-							</div>
-
-						<?php else : ?>
-							<?php if ( is_super_admin() ) : ?>
-
-								<div class="checkbox">
-									<label><input type="checkbox" disabled="disabled" name="disabled" id="disabled" value="0" /> <?php printf( __( '<strong>Attention Site Admin:</strong> Group forums require the <a href="%s">correct setup and configuration</a> of a bbPress installation.', 'commentpress-core' ), bp_get_root_domain() . '/wp-admin/admin.php?page=bb-forums-setup' ); ?></label>
-								</div>
-
-							<?php endif; ?>
-						<?php endif; ?>
-					<?php endif; ?>
-
-					<hr />
 
 					<h4><?php _e( 'Privacy Options', 'commentpress-core' ); ?></h4>
 
@@ -120,8 +105,6 @@
 						</label>
 					</div>
 
-					<hr />
-
 					<h4><?php _e( 'Group Invitations', 'commentpress-core' ); ?></h4>
 
 					<p><?php _e( 'Which members of this group are allowed to invite others?', 'commentpress-core' ) ?></p>
@@ -143,7 +126,27 @@
 						</label>
 					</div>
 
-					<hr />
+					<?php if ( bp_is_active( 'forums' ) ) : ?>
+
+						<h4><?php _e( 'Group Forums', 'commentpress-core' ); ?></h4>
+
+						<?php if ( bp_forums_is_installed_correctly() ) : ?>
+
+							<p><?php _e( 'Should this group have a forum?', 'commentpress-core' ); ?></p>
+
+							<div class="checkbox">
+								<label><input type="checkbox" name="group-show-forum" id="group-show-forum" value="1"<?php checked( bp_get_new_group_enable_forum(), true, true ); ?> /> <?php _e( 'Enable discussion forum', 'commentpress-core' ); ?></label>
+							</div>
+
+						<?php elseif ( is_super_admin() ) : ?>
+
+								<div class="checkbox">
+									<label><input type="checkbox" disabled="disabled" name="disabled" id="disabled" value="0" /> <?php printf( __( '<strong>Attention Site Admin:</strong> Group forums require the <a href="%s">correct setup and configuration</a> of a bbPress installation.', 'commentpress-core' ), bp_get_root_domain() . '/wp-admin/admin.php?page=bb-forums-setup' ); ?></label>
+								</div>
+
+						<?php endif; ?>
+						
+					<?php endif; ?>
 
 					<?php do_action( 'bp_after_group_settings_creation_step' ); ?>
 

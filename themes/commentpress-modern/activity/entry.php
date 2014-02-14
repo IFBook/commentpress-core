@@ -7,35 +7,14 @@
  * each activity.
  *
  * @package BuddyPress
- * @subpackage bp-default
+ * @subpackage bp-legacy
  */
-
-
-
-// init group blog type
-$groupblogtype = '';
-
-// get current item
-global $activities_template;
-$current_activity = $activities_template->activity;
-//print_r( array( 'a' => $current_activity ) ); die();
-
-// for group activity...
-if ( $current_activity->component == 'groups' ) {
-
-	// get group blogtype
-	$groupblogtype = groups_get_groupmeta( $current_activity->item_id, 'groupblogtype' );
-	
-	// add space before if we have it
-	if ( $groupblogtype ) { $groupblogtype = ' '.$groupblogtype; }
-	
-}
 
 ?>
 
 <?php do_action( 'bp_before_activity_entry' ); ?>
 
-<li class="<?php bp_activity_css_class(); echo $groupblogtype; ?>" id="activity-<?php bp_activity_id(); ?>">
+<li class="<?php bp_activity_css_class(); ?>" id="activity-<?php bp_activity_id(); ?>">
 
 	<div class="activity-wrapper clearfix">
 	
@@ -106,7 +85,7 @@ if ( $current_activity->component == 'groups' ) {
 				</div>
 	
 			<?php endif; ?>
-	
+
 		</div>
 	
 		<?php do_action( 'bp_before_activity_entry_comments' ); ?>
