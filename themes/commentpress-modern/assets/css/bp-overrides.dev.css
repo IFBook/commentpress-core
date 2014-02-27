@@ -27,10 +27,55 @@ BuddyPress compatibility
 --------------------------------------------------------------------------------
 */
 
+/* links to be styled like BuddyPress buttons */
+body.groups.invite-anyone #invite-anyone-invite-list .remove
+{
+	background: #fff; /* Old browsers */
+	background: -moz-linear-gradient(top, #ffffff 0%, #ededed 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ededed)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #ffffff 0%,#ededed 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #ffffff 0%,#ededed 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, #ffffff 0%,#ededed 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, #ffffff 0%,#ededed 100%); /* W3C */
+	border: 1px solid #ccc;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	color: #777;
+	cursor: pointer;
+	font: normal 12px/20px Arial, Tahoma, Verdana, sans-serif;
+	outline: none;
+	padding: 4px 10px;
+	text-align: center;
+	text-decoration: none;
+	line-height: 14px;
+	text-transform: none;
+}
+
+body.groups.invite-anyone #invite-anyone-invite-list .remove:hover
+{
+	background: #ededed;
+	background: -moz-linear-gradient(top, #ffffff 0%, #e0e0e0 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e0e0e0)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e0e0e0',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* W3C */
+	border: 1px solid #bbb;
+	color: #555;
+	outline: none;
+	text-decoration: none;
+	text-transform: none;
+}
+
 /* override links to graphics in bp.css */
 div.item-list-tabs ul li.feed a 
 {
 	background: url( ../images/buddypress/rss.png ) center left no-repeat;
+	margin-left: 5px;
 }
 
 div.activity-comments form.loading,
@@ -127,6 +172,7 @@ body.buddypress_page #content
 
 
 /* buttons */
+/* 
 button, 
 a.button, 
 input[type="submit"],
@@ -135,8 +181,21 @@ input[type="reset"],
 ul.button-nav li a, 
 div.generic-button a 
 {
-	color: #761D19;
+	color: #761D19; 
 }
+*/
+
+/* link underlining */
+.activity-header a, 
+.comment-meta a, 
+.acomment-meta a,
+.meta a,
+#groups-list .group-subscription-div a,
+body.create-blog #content a
+{
+	text-decoration: underline;
+}
+
 
 
 
@@ -286,6 +345,7 @@ div.item-list-tabs ul li.last {
 }
 div.item-list-tabs#subnav ul li.last {
 	margin-top: 4px;
+	margin-right: 4px;
 }
 div.item-list-tabs ul li.last select {
 	max-width: 175px;
@@ -483,6 +543,14 @@ body.create-blog.buddypress_page #content a.button,
 	margin-left: 190px;
 }
 
+.standard-form label, 
+.standard-form span.labe
+{
+	color: #761D19;
+	font-family: sans-serif;
+	text-transform: uppercase;
+}
+
 
 
 /* override bp.css table styles */
@@ -677,10 +745,6 @@ ul.item-list .activity-inner ol li
 	border: none;
 }
 
-ul.item-list li
-{
-}
-
 /* groups, blogs & activities lists */
 ul#groups-list > li,
 ul#blogs-list > li
@@ -786,6 +850,11 @@ div.blog-button
 	font-size: 1em;
 	line-height: 1.5;
 	padding: 7px 19px 11px 19px;
+}
+
+#activate-page p.submit
+{
+	padding: 7px 0 11px 0;
 }
 
 #details-section-wrapper
@@ -1035,6 +1104,14 @@ div#message p
 div#message.updated
 {
 }
+
+#account-delete-form #message.info
+{
+	margin: 0 0 15px 0;
+}
+
+
+
 
 
 
@@ -1347,6 +1424,8 @@ div#item-header h2 a,
 .item-title a
 {
 	color: #761D19;
+	font-family: sans-serif;
+	text-transform: uppercase;
 }
 
 /* group title */
@@ -1492,6 +1571,30 @@ body.groups.invite-anyone .left-menu
 	float: left;
 }
 
+#create-group-form ul.first li 
+{
+	list-style: none;
+	list-style-image: none;
+}
+
+body.groups.invite-anyone #invite-anyone-invite-list h4
+{
+	margin: 0 0 0 60px;
+}
+
+body.groups.invite-anyone #invite-anyone-invite-list h4 a
+{
+	color: #761D19;
+	font-family: sans-serif;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+body.groups.invite-anyone #invite-anyone-member-list ul li
+{
+	font-family: sans-serif;
+}
+
 #invite-anyone-by-email h4,
 body.sent-invites h4
 {
@@ -1568,6 +1671,17 @@ span.activity,
 {
 	font-family: sans-serif;
 	text-transform: none;
+	color: #666;
+}
+
+.activity-header a
+{
+	color: #761D19;
+}
+
+.activity-header a.activity-time-since
+{
+	color: #761D19;
 }
 
 .activity-list li .activity-inreplyto
@@ -1600,11 +1714,20 @@ span.activity,
 div#item-header div#item-meta 
 {
 	font-size: 14px;
-	color: #000;
+	color: #fff;
 	overflow: hidden;
 	margin: 15px 0 5px 0;
 	padding-bottom: 10px;
 }
+
+body#main_blog div#item-header div#item-meta,
+body.buddypress div#item-header div#item-meta 
+{
+	font-size: 1em;
+	line-height: 1.2;
+}
+
+
 
 #item-body p,
 .item-body p
@@ -1943,6 +2066,12 @@ ul#groupblog-details li
 
 
 /* Recent Activity (activity tab) */
+#activity_sidebar li.groups
+{
+    border-left: 10px solid #761D19;
+    margin-bottom: 0;
+}
+
 #activity_sidebar .workshop_comments_output .comment-identifier p
 {
 	/* we have to use p instead of cite because that's how BP stores activity meta */
@@ -2130,13 +2259,54 @@ table.group-docs-options td.label
 
 /* 
 --------------------------------------------------------------------------------
+BuddyPress Group Announcements compatibility
+--------------------------------------------------------------------------------
+*/
+
+body.groups.announcements #item-body
+{
+	padding: 0;
+}
+
+body.groups.announcements #item-body h3
+{
+	font-size: 1.3em;
+	font-weight: normal;
+	color: #761D19;
+	margin: 16px 0 12px 0;
+	padding: 9px 19px;
+}
+
+body.groups.announcements #item-body > p
+{
+	margin: 0.2em 0 0.6em 0;
+	padding: 0;
+	padding-left: 19px;
+	padding-right: 19px;
+}
+
+body.groups.announcements #item-body #whats-new-form
+{
+	margin: 1.5em 0 0 0;
+}
+
+
+
+
+/* 
+--------------------------------------------------------------------------------
 BuddyPress Group Email Subscription compatibility 
 --------------------------------------------------------------------------------
 */
 
-#groups-dir-list .group-subscription-div, #groups-list .group-subscription-div
+#groups-dir-list .group-subscription-div, 
+#groups-list .group-subscription-div
 {
 	font-family: sans-serif;
+	padding-top: 0;
+	padding-bottom: 0;
+	margin-bottom: 12px;
+	text-transform: uppercase;
 }
 
 a.group-subscription-options-link
@@ -2153,9 +2323,6 @@ a.group-subscription-options-link
 #groups-dir-list .group-subscription-div, 
 #groups-list .group-subscription-div 
 {
-	padding-top: 0;
-	padding-bottom: 0;
-	margin-bottom: 12px;
 }
 
 .single-item .group-subscription-div

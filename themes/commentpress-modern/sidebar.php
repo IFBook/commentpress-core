@@ -5,7 +5,7 @@ global $commentpress_core;
 
 
 
-// init tab order (only relevant for old default theme
+// init tab order (only relevant for old default theme)
 $_tab_order = array( 'comments', 'activity' );
 //print_r( $_tab_order ); die();
 

@@ -299,6 +299,7 @@ div.generic-button a
 	text-align: center;
 	text-decoration: none;
 	line-height: 14px;
+	text-transform: none;
 }
 
 button:hover,
@@ -323,6 +324,7 @@ div.generic-button a:hover
 	color: #555;
 	outline: none;
 	text-decoration: none;
+	text-transform: none;
 }
 
 /* the all-important highlight state */
@@ -379,6 +381,7 @@ table th
 }
 
 
+
 /* 
 --------------------------------------------------------------------------------
 SCREEN STYLES 
@@ -415,6 +418,28 @@ img.cp_logo_image
 	float: left;
 	padding: 12px 10px 0 10px;
 }
+
+#title h1
+{
+	letter-spacing: 1px;
+}
+
+#header #tagline 
+{
+	font-style: normal;
+	font-size: 1em;
+	color: #999;
+	padding-top: 2px;
+	letter-spacing: 1px;
+}
+
+
+
+/* 
+--------------------------------------------------------------------------------
+Switcher
+--------------------------------------------------------------------------------
+*/
 
 #switcher
 {
@@ -485,6 +510,12 @@ img.cp_logo_image
 
 
 
+/* 
+--------------------------------------------------------------------------------
+Content
+--------------------------------------------------------------------------------
+*/
+
 #content_container
 {
 	position: relative;
@@ -540,6 +571,12 @@ body.admin-bar #sidebar
 }
 
 
+
+/* 
+--------------------------------------------------------------------------------
+Shadows and Transitions
+--------------------------------------------------------------------------------
+*/
 
 /* 10px outer shadow */
 #header
