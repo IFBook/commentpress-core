@@ -16,7 +16,7 @@
 
 
 
-<div id="content" class="clearfix">
+<div id="content" class="error-404 clearfix">
 
 <div class="post">
 

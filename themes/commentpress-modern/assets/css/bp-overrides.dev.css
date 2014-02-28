@@ -142,7 +142,7 @@ div.dir-list
     margin-top: 0;
 }
 
-/* BuddyPress special pages need no bottom padding */
+/* BuddyPress special pages need no padding */
 body.buddypress_page #content
 {
 	padding: 0;
@@ -150,6 +150,12 @@ body.buddypress_page #content
 	/* min-height: 0; */
 }
 
+/* BuddyPress 404s do need padding */
+div#content.error-404
+{
+	margin: 0 12%;
+	padding: 6% 0;
+}
 
 
 /* buddybar tweaks */
