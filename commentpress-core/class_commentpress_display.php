@@ -1758,6 +1758,8 @@ $this->_get_options().
 		</td>
 	</tr>
 
+'.$this->_get_textblock_meta().'
+
 	<tr valign="top">
 		<th scope="row"><label for="cp_excerpt_length">'.__( 'Blog excerpt length', 'commentpress-core' ).'</label></th>
 		<td><input type="text" id="cp_excerpt_length" name="cp_excerpt_length" value="'.$this->db->option_get('cp_excerpt_length').'" class="small-text" /> '.__( 'words', 'commentpress-core' ).'</td>
@@ -1960,6 +1962,31 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 		$upgrade = '';
 		
 		
+		
+		// do we have the option to choose to hide textblock meta (new in 3.5.9)?
+		if ( !$this->db->option_exists( 'cp_textblock_meta' ) ) {
+		
+			// define labels
+			$label = __( 'Show paragraph meta (Number and Comment Icon)', 'commentpress-core' );
+			$yes_label = __( 'Always', 'commentpress-core' );
+			$no_label = __( 'On rollover', 'commentpress-core' );
+	
+			// define upgrade
+			$upgrade .= '
+	<tr valign="top">
+		<th scope="row"><label for="cp_textblock_meta">'.$label.'</label></th>
+		<td><select id="cp_textblock_meta" name="cp_textblock_meta">
+				<option value="y" selected="selected">'.$yes_label.'</option>
+				<option value="n">'.$no_label.'</option>
+			</select>
+		</td>
+	</tr>
+
+';
+
+		}
+		
+
 		
 		// do we have the option to choose featured images (new in 3.5.4)?
 		if ( !$this->db->option_exists( 'cp_featured_images' ) ) {
@@ -2532,6 +2559,39 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 		<th scope="row"><label for="cp_para_comments_live">'.$label.'</label></th>
 		<td><input id="cp_para_comments_live" name="cp_para_comments_live" value="1" type="checkbox" '.( ($this->db->option_get('cp_para_comments_live') == '1') ? ' checked="checked"' : ''  ).' /></td>
 	</tr>
+';		
+		
+		// --<
+		return $override;
+		
+	}
+	
+	
+	
+	
+	
+
+
+
+	/** 
+	 * @description: returns the textblock meta button for the admin form
+	 * @return string $reset
+	 * @todo: 
+	 *
+	 */
+	function _get_textblock_meta() {
+	
+		// define override
+		$override = '
+	<tr valign="top">
+		<th scope="row"><label for="cp_textblock_meta">'.__( 'Show paragraph meta (Number and Comment Icon)', 'commentpress-core' ).'</label></th>
+		<td><select id="cp_textblock_meta" name="cp_textblock_meta">
+				<option value="y" '.(($this->db->option_get('cp_textblock_meta', 'y') == 'y') ? ' selected="selected"' : '').'>'.__( 'Always', 'commentpress-core' ).'</option>
+				<option value="n" '.(($this->db->option_get('cp_textblock_meta', 'y') == 'n') ? ' selected="selected"' : '').'>'.__( 'On rollover', 'commentpress-core' ).'</option>
+			</select>
+		</td>
+	</tr>
+
 ';		
 		
 		// --<

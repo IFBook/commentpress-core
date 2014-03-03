@@ -338,6 +338,14 @@ div.generic-button a:hover
 	background-color: #eee;
 }
 
+#content .textblock.textblock-in span.para_marker,
+#content .textblock.selected_para span.para_marker,
+#content .textblock.textblock-in span.commenticonbox,
+#content .textblock.selected_para span.commenticonbox
+{
+	display: block;
+}
+
 pre
 {
 	font-family: monospace;
@@ -1662,7 +1670,9 @@ div.search_meta p a
 	position: absolute;
 	font-style: normal;
 	left: -32px;
-	margin-top: 2px;
+	margin-top: 0;
+	width: 36px;
+	display: block;
 }
 
 #content .post span.para_marker a 
@@ -1676,13 +1686,15 @@ div.search_meta p a
 .post span.commenticonbox
 {
 	position: absolute;
-	margin-top: 4px;
+	margin-top: 5px;
 	padding-right: 20px;
 	right: -44px;
 	font-family: sans-serif;
 	color: #000;
 	font-size: 1em;
 	font-style: normal;
+	width: 17px;
+	padding-left: 9px;
 }
 
 span.commenticonbox a.para_permalink 

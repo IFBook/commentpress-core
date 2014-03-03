@@ -96,6 +96,9 @@ class CommentpressCoreDatabase {
 	// featured images off by default
 	public $featured_images = 'n';
 	
+	// show textblock meta by default
+	public $textblock_meta = 'y';
+	
 
 
 
@@ -275,6 +278,19 @@ class CommentpressCoreDatabase {
 			
 			// get variables
 			extract( $_POST );
+			
+			
+			
+			// New in CP 3.5.9 - textblock meta can be hidden
+			if ( !$this->option_exists( 'cp_textblock_meta' ) ) {
+	
+				// get choice
+				$_choice = esc_sql( $cp_textblock_meta );
+			
+				// add chosen featured images option
+				$this->option_set( 'cp_textblock_meta', $_choice );
+				
+			}
 			
 			
 			
@@ -790,6 +806,7 @@ class CommentpressCoreDatabase {
 			$cp_blog_workflow = 0;
 			$cp_sidebar_default = 'comments';
 			$cp_featured_images = 'n';
+			$cp_textblock_meta = 'y';
 			
 			
 			
@@ -988,6 +1005,10 @@ class CommentpressCoreDatabase {
 			// save featured images
 			$cp_featured_images = esc_sql( $cp_featured_images );
 			$this->option_set( 'cp_featured_images', $cp_featured_images );
+			
+			// save textblock meta
+			$cp_textblock_meta = esc_sql( $cp_textblock_meta );
+			$this->option_set( 'cp_textblock_meta', $cp_textblock_meta );
 			
 
 
@@ -3106,6 +3127,22 @@ class CommentpressCoreDatabase {
 			
 		}
 		
+		// default to showing textblock meta
+		$vars['cp_textblock_meta'] = 1;
+		
+		// check option
+		if ( 
+		
+			$this->option_exists( 'cp_textblock_meta' ) AND
+			$this->option_get( 'cp_textblock_meta' ) != 'n'
+			
+		) {
+		
+			// show textblock meta on rollover
+			$vars['cp_textblock_meta'] = 0;
+			
+		}
+		
 		
 		
 		// --<
@@ -3928,6 +3965,7 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 			'cp_blog_workflow' => $this->blog_workflow,
 			'cp_sidebar_default' => $this->sidebar_default,
 			'cp_featured_images' => $this->featured_images,
+			'cp_textblock_meta' => $this->textblock_meta,
 		
 		);
 
@@ -3999,6 +4037,9 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 		
 		// featured images
 		$this->option_set( 'cp_featured_images', $this->featured_images );
+		
+		// textblock meta
+		$this->option_set( 'cp_textblock_meta', $this->textblock_meta );
 		
 		// store it
 		$this->options_save();
@@ -4100,6 +4141,10 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 										$old[ 'cp_featured_images' ] :
 										$this->featured_images;
 		
+		$this->textblock_meta =		 	isset( $old[ 'cp_textblock_meta' ] ) ?
+										$old[ 'cp_textblock_meta' ] :
+										$this->textblock_meta;
+		
 
 
 		// ---------------------------------------------------------------------
@@ -4156,6 +4201,7 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 			'cp_blog_workflow' => $blog_workflow,
 			'cp_sidebar_default' => $this->sidebar_default,
 			'cp_featured_images' => $this->featured_images,
+			'cp_textblock_meta' => $this->textblock_meta,
 			
 		);
 			
