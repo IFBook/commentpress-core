@@ -1690,13 +1690,13 @@ $this->_get_options().
 	
 		// define CommentPress Core theme options
 		$options = '
-<h3>'.__( 'Options for CommentPress Core', 'commentpress-core' ).'</h3>
-
 <p>'.__( 'When the CommentPress Default Theme (or a valid CommentPress Child Theme) is active, the following options modify its behaviour.', 'commentpress-core' ).'</p>
 
 
 
-<h4>'.__( 'Global Options', 'commentpress-core' ).'</h4>
+<hr />
+
+<h3>'.__( 'Global Options', 'commentpress-core' ).'</h3>
 
 <table class="form-table">
 
@@ -1710,7 +1710,9 @@ $this->_get_options().
 
 
 
-<h4>'.__( 'Table of Contents', 'commentpress-core' ).'</h4>
+<hr />
+
+<h3>'.__( 'Table of Contents', 'commentpress-core' ).'</h3>
 
 <p>'.__( 'Choose how you want your Table of Contents to appear and function.<br />
 <strong style="color: red;">NOTE!</strong> When Chapters are Pages, the TOC will always show Sub-Pages, since collapsing the TOC makes no sense in that situation.', 'commentpress-core' ).'</p>
@@ -1723,7 +1725,9 @@ $this->_get_options().
 
 
 
-<h4>'.__( 'Page Display Options', 'commentpress-core' ).'</h4>
+<hr />
+
+<h3>'.__( 'Page Display Options', 'commentpress-core' ).'</h3>
 
 <table class="form-table">
 
@@ -1763,7 +1767,9 @@ $this->_get_options().
 
 
 
-<h4>'.__( 'Commenting Options', 'commentpress-core' ).'</h4>
+<hr />
+
+<h3>'.__( 'Commenting Options', 'commentpress-core' ).'</h3>
 
 <table class="form-table">
 
@@ -1775,7 +1781,9 @@ $this->_get_options().
 
 
 
-<h4>'.__( 'Theme Customisation', 'commentpress-core' ).'</h4>
+<hr />
+
+<h3>'.__( 'Theme Customisation', 'commentpress-core' ).'</h3>
 
 <p>'.__( 'You can set a custom background colour in <em>Appearance &#8594; Background</em>.<br />
 You can also set a custom header image and header text colour in <em>Appearance &#8594; Header</em>.<br />
