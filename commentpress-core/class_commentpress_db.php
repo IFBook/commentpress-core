@@ -751,9 +751,14 @@ class CommentpressCoreDatabase {
 		
 		// if we have a commentpress install and it's lower than this one
 		if ( $_version !== false AND version_compare( COMMENTPRESS_VERSION, $_version, '>' ) ) {
-		
-			// override
-			$result = true;
+			
+			// check whether any options need to be shown
+			if ( $this->check_upgrade_options() ) {
+			
+				// override
+				$result = true;
+			
+			}
 
 		}
 		
@@ -761,6 +766,66 @@ class CommentpressCoreDatabase {
 
 		// --<
 		return $result;
+
+	}
+	
+	
+	
+	
+	
+
+
+	/** 
+	 * @description: check for options added in this plugin upgrade
+	 * @return boolean $result
+	 * @todo: 
+	 *
+	 */
+	function check_upgrade_options() {
+	
+		// do we have the option to choose to hide textblock meta (new in 3.5.9)?
+		if ( !$this->db->option_exists( 'cp_textblock_meta' ) ) { return true; }
+		
+		// do we have the option to choose featured images (new in 3.5.4)?
+		if ( !$this->db->option_exists( 'cp_featured_images' ) ) { return true; }
+		
+		// do we have the option to choose the default sidebar (new in 3.3.3)?
+		if ( !$this->db->option_exists( 'cp_sidebar_default' ) ) { return true; }
+		
+		// do we have the option to show or hide page meta (new in 3.3.2)?
+		if ( !$this->db->option_exists( 'cp_page_meta_visibility' ) ) { return true; }
+		
+		// do we have the option to choose blog type (new in 3.3.1)?
+		if ( !$this->db->option_exists( 'cp_blog_type' ) ) { return true; }
+		
+		// do we have the option to choose blog workflow (new in 3.3.1)?
+		if ( !$this->db->option_exists( 'cp_blog_workflow' ) ) { return true; }
+		
+		// do we have the option to choose the TOC layout (new in 3.3)?
+		if ( !$this->db->option_exists( 'cp_show_extended_toc' ) ) { return true; }
+		
+		// do we have the option to set the comment editor?
+		if ( !$this->db->option_exists( 'cp_comment_editor' ) ) { return true; }
+		
+		// do we have the option to set the default behaviour?
+		if ( !$this->db->option_exists( 'cp_promote_reading' ) ) { return true; }
+		
+		// do we have the option to show or hide titles?
+		if ( !$this->db->option_exists( 'cp_title_visibility' ) ) { return true; }
+		
+		// do we have the option to set the header bg colour?
+		if ( !$this->db->option_exists( 'cp_header_bg_colour' ) ) { return true; }
+		
+		// do we have the option to set the scroll speed?
+		if ( !$this->db->option_exists( 'cp_js_scroll_speed' ) ) { return true; }
+		
+		// do we have the option to set the minimum page width?
+		if ( !$this->db->option_exists( 'cp_min_page_width' ) ) { return true; }
+		
+
+
+		// --<
+		return false;
 
 	}
 	
