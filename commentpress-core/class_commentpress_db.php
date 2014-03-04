@@ -784,43 +784,43 @@ class CommentpressCoreDatabase {
 	function check_upgrade_options() {
 	
 		// do we have the option to choose to hide textblock meta (new in 3.5.9)?
-		if ( !$this->db->option_exists( 'cp_textblock_meta' ) ) { return true; }
+		if ( !$this->option_exists( 'cp_textblock_meta' ) ) { return true; }
 		
 		// do we have the option to choose featured images (new in 3.5.4)?
-		if ( !$this->db->option_exists( 'cp_featured_images' ) ) { return true; }
+		if ( !$this->option_exists( 'cp_featured_images' ) ) { return true; }
 		
 		// do we have the option to choose the default sidebar (new in 3.3.3)?
-		if ( !$this->db->option_exists( 'cp_sidebar_default' ) ) { return true; }
+		if ( !$this->option_exists( 'cp_sidebar_default' ) ) { return true; }
 		
 		// do we have the option to show or hide page meta (new in 3.3.2)?
-		if ( !$this->db->option_exists( 'cp_page_meta_visibility' ) ) { return true; }
+		if ( !$this->option_exists( 'cp_page_meta_visibility' ) ) { return true; }
 		
 		// do we have the option to choose blog type (new in 3.3.1)?
-		if ( !$this->db->option_exists( 'cp_blog_type' ) ) { return true; }
+		if ( !$this->option_exists( 'cp_blog_type' ) ) { return true; }
 		
 		// do we have the option to choose blog workflow (new in 3.3.1)?
-		if ( !$this->db->option_exists( 'cp_blog_workflow' ) ) { return true; }
+		if ( !$this->option_exists( 'cp_blog_workflow' ) ) { return true; }
 		
 		// do we have the option to choose the TOC layout (new in 3.3)?
-		if ( !$this->db->option_exists( 'cp_show_extended_toc' ) ) { return true; }
+		if ( !$this->option_exists( 'cp_show_extended_toc' ) ) { return true; }
 		
 		// do we have the option to set the comment editor?
-		if ( !$this->db->option_exists( 'cp_comment_editor' ) ) { return true; }
+		if ( !$this->option_exists( 'cp_comment_editor' ) ) { return true; }
 		
 		// do we have the option to set the default behaviour?
-		if ( !$this->db->option_exists( 'cp_promote_reading' ) ) { return true; }
+		if ( !$this->option_exists( 'cp_promote_reading' ) ) { return true; }
 		
 		// do we have the option to show or hide titles?
-		if ( !$this->db->option_exists( 'cp_title_visibility' ) ) { return true; }
+		if ( !$this->option_exists( 'cp_title_visibility' ) ) { return true; }
 		
 		// do we have the option to set the header bg colour?
-		if ( !$this->db->option_exists( 'cp_header_bg_colour' ) ) { return true; }
+		if ( !$this->option_exists( 'cp_header_bg_colour' ) ) { return true; }
 		
 		// do we have the option to set the scroll speed?
-		if ( !$this->db->option_exists( 'cp_js_scroll_speed' ) ) { return true; }
+		if ( !$this->option_exists( 'cp_js_scroll_speed' ) ) { return true; }
 		
 		// do we have the option to set the minimum page width?
-		if ( !$this->db->option_exists( 'cp_min_page_width' ) ) { return true; }
+		if ( !$this->option_exists( 'cp_min_page_width' ) ) { return true; }
 		
 
 
@@ -3199,11 +3199,11 @@ class CommentpressCoreDatabase {
 		if ( 
 		
 			$this->option_exists( 'cp_textblock_meta' ) AND
-			$this->option_get( 'cp_textblock_meta' ) != 'n'
+			$this->option_get( 'cp_textblock_meta' ) == 'n'
 			
 		) {
 		
-			// show textblock meta on rollover
+			// only show textblock meta on rollover
 			$vars['cp_textblock_meta'] = 0;
 			
 		}

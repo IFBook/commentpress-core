@@ -143,7 +143,7 @@ function cp_page_setup() {
 		// if mobile, don't hide textblock meta
 		if ( cp_is_mobile == '0' ) {
 			
-			console.log( cp_textblock_meta );
+			//console.log( cp_textblock_meta );
 			
 			// have we explicitly hidden textblock meta?
 			if ( cp_textblock_meta == '0' ) {
