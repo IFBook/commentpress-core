@@ -12,7 +12,7 @@
 
 
 
-<div id="page_wrapper">
+<div id="page_wrapper" class="page_wrapper">
 
 
 
