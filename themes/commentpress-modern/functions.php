@@ -3010,11 +3010,11 @@ function commentpress_get_comments_by_para() {
 		$redirect = site_url( 'wp-login.php?redirect_to='.get_permalink() );
 		
 		// init allowed to comment
-		$allowed_to_comment = false;
+		$login_to_comment = false;
 		
-		// test current state
+		// if we have to log in to comment...
 		if ( get_option('comment_registration') AND !is_user_logged_in() ) {
-			$allowed_to_comment = true;
+			$login_to_comment = true;
 		}
 		
 		
@@ -3306,7 +3306,7 @@ function commentpress_get_comments_by_para() {
 					if ( 'open' == $post->comment_status AND $text_signature != 'PINGS_AND_TRACKS' ) {
 					
 						// if we have to log in to comment...
-						if ( $allowed_to_comment ) {
+						if ( $login_to_comment ) {
 						
 							// leave comment link
 							echo '<div class="reply_to_para" id="reply_to_para-'.$para_num.'">'."\n".
