@@ -130,59 +130,6 @@ Array.prototype.remove_item = function( item ) {
 			return;
 		
 		}
-
-		
-		
-		// unhighlight
-		//$.unhighlight_para();
-		
-
-		
-		/*
-		// only store highlight if in our CommentPress context
-		if ( plugin_context == 'internal' ) {
-	
-			// is our item already highlighted?
-			if ( $.accordion_query( element.prop('id') ) ) {
-			
-				// clear current element in global
-				highlighted_para = '';
-				
-				// close this part of the accordion
-				$.accordion_close( element.prop('id') );
-			
-				// --<
-				return;
-			
-			} else {
-			
-				// open this part of the accordion
-				$.accordion_open( element.prop('id') );
-			
-				// store current element in global
-				highlighted_para = element;
-				
-			}
-			
-		}
-		
-		
-		
-		// widen
-		//var width = parseInt( element.width() );
-		//element.css( 'width', (width + selected_para_widen) + 'px' );
-
-		// get padding
-		var padding_top = parseInt( element.css( 'padding-top' ).split('px')[0] );
-		var padding_right = parseInt( element.css( 'padding-right' ).split('px')[0] );
-		var padding_bottom = parseInt( element.css( 'padding-bottom' ).split('px')[0] );
-		var padding_left = parseInt( element.css( 'padding-left' ).split('px')[0] );
-
-		element.css( 'padding-top', padding_top + selected_para_widen );
-		element.css( 'padding-right', padding_right + selected_para_widen );
-		element.css( 'padding-bottom', padding_bottom + selected_para_widen );
-		element.css( 'padding-left', padding_left + selected_para_widen );
-		*/
 		
 		// amend p tag css
 		element.addClass( 'selected_para' );
@@ -198,43 +145,10 @@ Array.prototype.remove_item = function( item ) {
 	 */	
 	$.unhighlight_para = function() {
 	
-		// if we have a highlight
-		//if ( highlighted_para != '' ) {
-			
-			var highlighted_paras = $('.textblock');
-			
-			// remove class from all
-			highlighted_paras.removeClass( 'selected_para' );
-			
-			/*
-			// get padding
-			var padding_top = parseInt( highlighted_paras.css( 'padding-top' ).split('px')[0] );
-			var padding_right = parseInt( highlighted_paras.css( 'padding-right' ).split('px')[0] );
-			var padding_bottom = parseInt( highlighted_paras.css( 'padding-bottom' ).split('px')[0] );
-			var padding_left = parseInt( highlighted_paras.css( 'padding-left' ).split('px')[0] );
-			
-			// remove visible highlight
-			highlighted_paras.css( 'padding-top', padding_top - selected_para_widen );
-			highlighted_paras.css( 'padding-right', padding_right - selected_para_widen );
-			highlighted_paras.css( 'padding-bottom', padding_bottom - selected_para_widen );
-			highlighted_paras.css( 'padding-left', padding_left - selected_para_widen );
-			
-			// narrow
-			//var width = parseInt( highlighted_para.width() );
-			//highlighted_para.css( 'width', (width - selected_para_widen) + 'px' );
-			*/
-			
-		//}
+		var highlighted_paras = $('.textblock');
 		
-		/*
-		// only clear highlight if in our CommentPress context
-		if ( plugin_context == 'internal' ) {
-	
-			// clear global
-			highlighted_para = '';
-		
-		}
-		*/
+		// remove class from all
+		highlighted_paras.removeClass( 'selected_para' );
 		
 	}
 
@@ -739,6 +653,64 @@ Array.prototype.remove_item = function( item ) {
 	
 	
 	
+	/** 
+	 * @description: get currently highlighted menu item ID
+	 */
+	$.get_current_menu_item_id = function() {
+		
+		// declare vars
+		var current_menu_item = 0, 
+			current_menu_obj, current_item_id, 
+			current_item_classes, current_item_class;
+			
+		// get highlighted menu item object
+		current_menu_obj = $('.current_page_item');
+		//console.log( 'current_menu_item:' );
+		//console.log( current_menu_item );
+		
+		// did we get one?
+		if ( current_menu_obj.length > 0 ) {
+	
+			// get ID, if present
+			current_item_id = current_menu_obj.prop('id');
+			//console.log( 'current_item_id:' );
+			//console.log( current_item_id );
+			
+			// if we do have an ID...
+			if ( current_item_id.length > 0 ) {
+		
+				// it's a WP custom menu
+				current_menu_item = current_item_id.split('-')[2];
+			
+			} else {
+			
+				// it's a WP page menu
+				current_item_class = current_menu_obj.prop('class');
+				
+				// get classes
+				current_item_classes = current_item_class.split(' ');
+				
+				// loop to find the one we want
+				for (var i = 0, item; item = current_item_classes[i++];) {
+					if ( item.match( 'page-item-' ) ) {
+						current_menu_item = item.split('-')[2];
+						break;
+					}
+				}
+			
+			}
+		
+		}
+	
+		//console.log( 'cpajax_current_menu_item: ' + cpajax_current_menu_item );
+		
+		// --<
+		return current_menu_item;
+		
+	}
+
+
+
 	/** 
 	 * @description: utility replacement for PHP's in_array
 	 * @todo: 
