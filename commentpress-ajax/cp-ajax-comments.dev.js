@@ -15,7 +15,6 @@ Based loosely on the 'Ajax Comment Posting' WordPress plugin (version 2.0)
 
 
 
-
 // define vars
 var cpajax_live, cpajax_ajax_url, cpajax_spinner_url, cpajax_post_id, cpajax_submitting, 
 	cpajax_lang, cpajax_form, cpajax_error;
@@ -34,9 +33,6 @@ if ( 'undefined' !== typeof CommentpressAjaxSettings ) {
 
 // init submitting flag
 cpajax_submitting = false;
-
-
-
 
 
 
@@ -73,10 +69,6 @@ function cpajax_initialise() {
 
 
 
-
-
-
-
 /** 
  * @description: re-enable Featured Comments plugin functionality
  */
@@ -99,8 +91,6 @@ function cpajax_reenable_featured_comments() {
 
 
 
-
-
 /** 
  * @description: re-enable Comment Upvoter plugin functionality
  */
@@ -120,8 +110,6 @@ function cpajax_reenable_comment_upvoter() {
 	}
 	
 }
-
-
 
 
 
@@ -157,9 +145,6 @@ function cpajax_ajax_callback( data ) {
 	}
 	
 }
-
-
-
 
 
 
@@ -322,9 +307,6 @@ function cpajax_add_new_comment( markup, text_sig, comm_parent, comm_id ) {
 
 
 
-
-
-
 /** 
  * @description: an example ajax update
  *
@@ -386,9 +368,6 @@ function cpajax_ajax_update() {
 
 
 
-
-
-
 /** 
  * @description: an example ajax updater
  *
@@ -415,9 +394,6 @@ function cpajax_ajax_updater( toggle ) {
 	}
 	
 }
-
-
-
 
 
 
@@ -520,9 +496,6 @@ function cpajax_reassign_comments() {
 	});
     
 }
-
-
-
 
 
 
@@ -671,9 +644,6 @@ function cpajax_reassign( text_sig, ui ) {
 
 
 
-
-
-
 /** 
  * @description: reset
  * @todo: 
@@ -700,9 +670,6 @@ function cpajax_reset() {
 
 
 
-
-
-
 /** 
  * @description: add comment to page
  * @todo: 
@@ -721,6 +688,19 @@ function cpajax_add_comment( response ) {
 	// get useful ids
 	para_id = '#para_wrapper-' + text_sig;
 	head_id = '#para_heading-' + text_sig;
+	
+	/*
+	console.log( 'response' );
+	console.log( response );
+	console.log( 'text_sig' );
+	console.log( text_sig );
+	console.log( 'comm_parent' );
+	console.log( comm_parent );
+	console.log( 'para_id' );
+	console.log( para_id );
+	console.log( 'head_id' );
+	console.log( head_id );
+	*/
 	
 	// we no longer have zero comments
 	jQuery(para_id).removeClass( 'no_comments' );
@@ -844,9 +824,6 @@ function cpajax_add_comment( response ) {
 
 
 
-
-
-
 /** 
  * @description: do comment append
  * @todo: 
@@ -858,7 +835,17 @@ function cpajax_nice_append( response, content, target, last ) {
 	// which have lost their original context
 	if ( response === undefined || response === null ) { return; }
 	
+	/*
+	console.log( 'content' );
+	console.log( content );
+	console.log( 'target' );
+	console.log( target );
+	console.log( 'comment' );
+	console.log( response.find(content) );
+	*/
+	
 	response.find(content)
+			.clone()
 			.hide()
 			.appendTo(target);
 	
@@ -866,9 +853,6 @@ function cpajax_nice_append( response, content, target, last ) {
 	cpajax_cleanup( content, last );
 	
 }
-
-
-
 
 
 
@@ -883,7 +867,17 @@ function cpajax_nice_prepend( response, content, target, last ) {
 	// which have lost their original context
 	if ( response === undefined || response === null ) { return; }
 	
+	/*
+	console.log( 'content' );
+	console.log( content );
+	console.log( 'target' );
+	console.log( target );
+	console.log( 'comment' );
+	console.log( response.find(content) );
+	*/
+	
 	response.find(content)
+			.clone()
 			.hide()
 			.prependTo(target);
 	
@@ -891,9 +885,6 @@ function cpajax_nice_prepend( response, content, target, last ) {
 	cpajax_cleanup( content, last );
 	
 }
-
-
-
 
 
 
@@ -955,9 +946,6 @@ function cpajax_cleanup( content, last ) {
 
 
 
-
-
-
 /** 
  * @description: update comments paragraph heading
  * @todo: 
@@ -985,9 +973,6 @@ function cpajax_update_comments_para_heading( head_id, new_comment_count ) {
 	}
 	
 }
-
-
-
 
 
 
@@ -1022,53 +1007,12 @@ function cpajax_update_para_icon( text_sig, new_comment_count ) {
 
 
 
-
-
-
 /** 
- * @description: define what happens when the page is ready
+ * @description: init comment form
  * @todo: 
  *
  */
-jQuery(document).ready(function($) {
-
-	// trigger repeat calls
-	cpajax_ajax_updater( cpajax_live );
-	
-	/** 
-	 * @description: ajax comment updating control mechanism?
-	 * @todo: 
-	 *
-	jQuery('#btn_js').toggle( function() {
-		
-		// trigger repeat calls
-		cpajax_ajax_updater( false );
-		
-		jQuery(this).text('Javascript Off');
-		
-		return false;
-		
-	}, function() {
-		
-		// trigger repeat calls
-		cpajax_ajax_updater( true );
-		
-		jQuery(this).text('Javascript On');
-		
-		return false;
-		
-	});
-	 */
-	
-	
-	
-	// enable comment reassignment
-	cpajax_reassign_comments();
-	
-	// initialise
-	cpajax_initialise();
-	
-	
+function cpajax_initialise_form() {
 	
 	/** 
 	 * @description: comment submission method
@@ -1183,32 +1127,35 @@ jQuery(document).ready(function($) {
 				// trace
 				//console.log( data );
 				
+				// jQuery 1.9 fails to recognise the response as HTML, so
+				// we *must* use parseHTML if it's available...
+				if ( jQuery.parseHTML ) {
+					
+					// if our jQuery version is 1.8+, it'll have parseHTML
+					response =  jQuery( jQuery.parseHTML( data ) );
+					
+				} else {
+					
+					// get our data as object in the basic way
+					response = jQuery( data );
+					
+				}
+				
+				//console.log( response );
+				
+				// avoid errors if we can
 				try {
-					
-					// jQuery 1.9 fails to recognise the response as HTML, so
-					// we *must* use parseHTML if it's available...
-					if ( jQuery.parseHTML ) {
-						
-						// if our jQuery version is 1.8+, it'll have parseHTML
-						response =  jQuery( jQuery.parseHTML( data ) );
-						
-					} else {
-						
-						// get our data as object in the basic way
-						response = jQuery( data );
-						
-					}
-					
-					//console.log( response );
 					
 					// add comment
 					cpajax_add_comment( response );
 					cpajax_reset();
-					
+				
+				// oh well...
 				} catch (e) {
 					
 					cpajax_reset();
 					alert( cpajax_lang[6] + '\n\n' + e );
+					//console.log( data );
 					
 				} // end try
 				
@@ -1225,11 +1172,53 @@ jQuery(document).ready(function($) {
 		
 	}); // end form.submit()
 	
+}
+
+
+
+/** 
+ * @description: define what happens when the page is ready
+ * @todo: 
+ *
+ */
+jQuery(document).ready(function($) {
+
+	// trigger repeat calls
+	cpajax_ajax_updater( cpajax_live );
 	
+	// enable comment reassignment
+	cpajax_reassign_comments();
 	
+	// initialise plugin
+	cpajax_initialise();
 	
+	// initialise comment form
+	cpajax_initialise_form();
 	
-	
+	/** 
+	 * @description: ajax comment updating control mechanism?
+	 * @todo: 
+	 *
+	jQuery('#btn_js').toggle( function() {
+		
+		// trigger repeat calls
+		cpajax_ajax_updater( false );
+		
+		jQuery(this).text('Javascript Off');
+		
+		return false;
+		
+	}, function() {
+		
+		// trigger repeat calls
+		cpajax_ajax_updater( true );
+		
+		jQuery(this).text('Javascript On');
+		
+		return false;
+		
+	});
+	 */
 	
 }); // end document.ready()
 
