@@ -150,6 +150,7 @@ function cp_page_setup() {
 
 				// avoid flash of textblock meta elements
 				styles += '#content .textblock span.para_marker, #content .textblock span.commenticonbox { display: none; } ';
+				styles += '.content .textblock span.para_marker, .content .textblock span.commenticonbox { display: none; } ';
 			
 			}
 
@@ -315,7 +316,7 @@ function commentpress_scroll_page( target ) {
 			target, 
 			{
 				duration: (cp_scroll_speed * 1.5), 
-				axis:'y', 
+				axis: 'y', 
 				offset: commentpress_get_header_offset()
 			}, function () {
 				// when done, make sure page is ok
@@ -333,7 +334,7 @@ function commentpress_scroll_page( target ) {
 				target, 
 				{
 					duration: (cp_scroll_speed * 1.5), 
-					axis:'y', 
+					axis: 'y', 
 					offset: commentpress_get_header_offset()
 				}
 			);
@@ -364,7 +365,7 @@ function cp_quick_scroll_page( target, duration ) {
 			target, 
 			{
 				duration: (duration * 1.5), 
-				axis:'y', 
+				axis: 'y', 
 				offset: commentpress_get_header_offset()
 			}, function () {
 				// when done, make sure page is ok
@@ -382,7 +383,7 @@ function cp_quick_scroll_page( target, duration ) {
 				target, 
 				{
 					duration: (duration * 1.5), 
-					axis:'y', 
+					axis: 'y', 
 					offset: commentpress_get_header_offset()
 				}
 			);
@@ -401,6 +402,9 @@ function cp_quick_scroll_page( target, duration ) {
  *
  */
 function commentpress_scroll_to_top( target, speed ) {
+	
+	// declare vars
+	var post_id;
 
 	// if IE6, then we have to scroll #wrapper
 	if ( msie6 ) {
@@ -412,9 +416,35 @@ function commentpress_scroll_to_top( target, speed ) {
 	
 		// only scroll if not mobile (but allow tablets)
 		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
-		
+			
+			// let's try and scroll to the title
+			if ( target == 0 ) {
+				
+				// parse post ID
+				post_id = jQuery('.comments_container').prop('id');
+				
+				// sanity check
+				if ( typeof post_id !== 'undefined' ) {
+				
+					// get target post ID
+					target_id = post_id.split('-')[1];
+					
+					// contruct target
+					target = jQuery('#post-' + target_id);
+					
+				}
+				
+			}
+			
 			// scroll
-			jQuery.scrollTo( target, speed );
+			jQuery.scrollTo( 
+				target,
+				{
+					duration: (speed * 1.5), 
+					axis: 'y', 
+					offset: commentpress_get_header_offset()
+				}
+			);
 			
 		}
 		
@@ -581,6 +611,7 @@ function commentpress_setup_comment_headers() {
 	
 		// get text_sig
 		text_sig = jQuery(this).parent().prop( 'id' ).split('para_heading-')[1];
+		//console.log( 'text_sig: ' + text_sig );
 		
 		// get para wrapper
 		para_wrapper = jQuery(this).parent().next('div.paragraph_wrapper');
