@@ -605,7 +605,8 @@ Shadows and Transitions
 }
 
 /* 15px outer shadows */
-#page_wrapper
+#page_wrapper,
+.page_wrapper
 {
 	-webkit-box-shadow: #888 0 0 15px;
 	-moz-box-shadow: #888 0 0 15px;
@@ -683,6 +684,14 @@ BASIC LAYOUT
 	background-color: #fff;
 	min-height: 620px;
 	position: relative;
+}
+
+.page_wrapper
+{
+	background-color: #fff;
+	min-height: 620px;
+	position: relative;
+	margin: 0 0 20px 0;
 }
 
 .page_navigation ul,
@@ -782,7 +791,8 @@ BASIC LAYOUT
 	text-indent: -4000px;
 }
 
-#content
+#content,
+.content
 {
 	margin: 0 12%;
 	padding: 6% 0;
@@ -1675,7 +1685,8 @@ div.search_meta p a
 	display: block;
 }
 
-#content .post span.para_marker a 
+#content .post span.para_marker a,
+.content .post span.para_marker a 
 {
 	text-decoration: none;
 	font-family: sans-serif;
@@ -1764,7 +1775,8 @@ div.multipager .multipager_sep
 	visibility: hidden;
 }
 
-#content div.multipager:after 
+#content div.multipager:after,
+.content div.multipager:after 
 {
 	content: "";
 	display: block;
@@ -1967,7 +1979,8 @@ dl.gallery-item
 	font-family: sans-serif;
 }
 
-#content ul.image_link 
+#content ul.image_link,
+.content ul.image_link 
 {
 	margin: 0;
 	margin-top: 2em;
@@ -2346,7 +2359,8 @@ Post Versioning
 --------------------------------------------------------------------------------
 */
 
-#content div.version_info
+#content div.version_info,
+.content div.version_info
 {
 	margin: 0 0 1.6em 0;
 	margin-top: -2em;
@@ -2357,38 +2371,45 @@ Post Versioning
 }
 
 #content div.version_info ul,
-#content div.version_info ul li
+.content div.version_info ul,
+#content div.version_info ul li,
+.content div.version_info ul li
 {
 	list-style: none;
 	list-style-image: none;
 }
 
-#content div.version_info ul
+#content div.version_info ul,
+.content div.version_info ul
 {
 	margin: 0;
 	padding: 0;
 	overflow: auto;
 }
 
-#content div.version_info ul li
+#content div.version_info ul li,
+.content div.version_info ul li
 {
 	margin: 0;
 	padding: 0;
 }
 
-#content div.version_info ul li.newer_version
+#content div.version_info ul li.newer_version,
+.content div.version_info ul li.newer_version
 {
 	float: right;
 	text-align: right;
 	width: 50%;
 }
 
-#content div.version_info ul li.older_version
+#content div.version_info ul li.older_version,
+.content div.version_info ul li.older_version
 {
 	width: 50%;
 }
 
-#content div.version_info a
+#content div.version_info a,
+.content div.version_info a
 {
 	display: block;
 	padding: 6px;
@@ -2402,7 +2423,8 @@ Post Versioning
 	text-transform: uppercase;
 }
 
-#content div.version_info a:hover
+#content div.version_info a:hover,
+.content div.version_info a:hover
 {
 	color: #222;
 }
@@ -2650,7 +2672,8 @@ Compatibility with ZotPress plugin
 --------------------------------------------------------------------------------
 */
 
-#content div.zp-Zotpress
+#content div.zp-Zotpress,
+.content div.zp-Zotpress
 {
 	margin-top: 1em;
 	padding-top: 1em;
@@ -2697,8 +2720,11 @@ ol.footnotes,
 }
 
 #content sup a.footnote-link,
+.content sup a.footnote-link,
 #content a.simple-footnote,
-#content sup.footnote
+.content a.simple-footnote,
+#content sup.footnote,
+.content sup.footnote
 {
 	color: #761D19;
 	font-weight: bold;
@@ -2707,8 +2733,11 @@ ol.footnotes,
 }
 
 #content sup a.footnote-link,
+.content sup a.footnote-link,
 #content a.simple-footnote sup,
+.content a.simple-footnote sup,
 #content sup.footnote a,
+.content sup.footnote a,
 .footnotereverse a,
 .footnote-link.footnote-back-link,
 .simple-footnotes li > a
@@ -2739,6 +2768,7 @@ ol.footnotes,
 }
 
 #content a.simple-footnote sup,
+.content a.simple-footnote sup
 {
 	font-size: 60%;
 }
@@ -2766,7 +2796,8 @@ Compatibility with JetPack plugin
 --------------------------------------------------------------------------------
 */
 
-#content div.sharedaddy div.sd-block
+#content div.sharedaddy div.sd-block,
+.content div.sharedaddy div.sd-block
 {
 	padding-top: 1.5em;
 }
@@ -3431,7 +3462,8 @@ RESPONSIVENESS
 		font-size: 16px;
 	}
 
-	#content 
+	#content,
+	.content 
 	{
 		padding: 2% 0 6% 0;
 	}
