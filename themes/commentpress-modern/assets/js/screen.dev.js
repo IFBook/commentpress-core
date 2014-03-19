@@ -1842,23 +1842,33 @@ function commentpress_setup_page_click_actions() {
 		
 	});
 
-	/** 
-	 * @description: hover over textblock
-	 */
-	jQuery('.textblock').mouseover(function() {
+	// if mobile, we don't hide textblock meta
+	if ( cp_is_mobile == '0' ) {
+		
+		// have we explicitly hidden textblock meta?
+		if ( cp_textblock_meta == '0' ) {
+
+			/** 
+			 * @description: hover over textblock
+			 */
+			jQuery('.textblock').mouseover(function() {
 	
-		jQuery(this).addClass('textblock-in');
+				jQuery(this).addClass('textblock-in');
 	
-	});
+			});
 	
-	/** 
-	 * @description: move out of textblock
-	 */
-	jQuery('.textblock').mouseout(function() {
+			/** 
+			 * @description: move out of textblock
+			 */
+			jQuery('.textblock').mouseout(function() {
 	
-		jQuery(this).removeClass('textblock-in');
+				jQuery(this).removeClass('textblock-in');
 	
-	});
+			});
+	
+		}
+	
+	}
 	
 	// unbind first to allow repeated calls to this function
 	jQuery('.textblock').unbind( 'click' );

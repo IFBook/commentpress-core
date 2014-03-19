@@ -321,13 +321,12 @@ class CommentpressCoreWorkflow {
 	 */
 	function workflow_save_post( $post_obj ) {
 	
-		// how do we get the content of wp_editor()?
-	
 		// if no post, kick out
 		if ( !$post_obj ) { return; }
 		
-		// if not page, kick out
-		if ( $post_obj->post_type != 'post' ) { return; }
+		// if not post or page, kick out
+		$types = array( 'post', 'page' );
+		if ( ! in_array( $post_obj->post_type, $types ) ) { return; }
 		
 		
 		
@@ -339,9 +338,11 @@ class CommentpressCoreWorkflow {
 		if ( defined('DOING_AUTOSAVE') AND DOING_AUTOSAVE ) { return; }
 		
 		//print_r( array( 'can' => current_user_can( 'edit_posts' ) ) ); die();
+		//print_r( array( 'can' => current_user_can( 'edit_pages' ) ) ); die();
 		
-		// Check permissions
-		if ( !current_user_can( 'edit_posts' ) ) { return; }
+		// check permissions
+		if ( $post_obj->post_type == 'post' AND !current_user_can( 'edit_posts' ) ) { return; }
+		if ( $post_obj->post_type == 'page' AND !current_user_can( 'edit_pages' ) ) { return; }
 		
 		
 		
@@ -604,6 +605,9 @@ class CommentpressCoreWorkflow {
 		
 			// save post with translation workflow
 			add_action( 'cp_workflow_save_post', array( $this, 'workflow_save_post' ), 21, 1 );
+		
+			// save page with translation workflow
+			add_action( 'cp_workflow_save_page', array( $this, 'workflow_save_post' ), 21, 1 );
 		
 			// save translation workflow for copied posts
 			add_action( 'cp_workflow_save_copy', array( $this, 'workflow_save_copy' ), 21, 1 );

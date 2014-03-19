@@ -343,7 +343,7 @@ div.generic-button a:hover
 #content .textblock.textblock-in span.commenticonbox,
 #content .textblock.selected_para span.commenticonbox
 {
-	display: block;
+	display: inline-block;
 }
 
 pre

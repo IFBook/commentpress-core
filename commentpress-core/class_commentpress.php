@@ -1063,6 +1063,17 @@ class CommentpressCore {
 				
 			);
 			
+			// add our meta box to pages
+			add_meta_box(
+			
+				'commentpress_workflow_fields', 
+				$title, 
+				array( $this, 'custom_box_workflow' ),
+				'page',
+				'normal'
+				
+			);
+			
 		}
 		
 	}

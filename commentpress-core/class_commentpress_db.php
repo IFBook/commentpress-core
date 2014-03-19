@@ -1740,6 +1740,78 @@ class CommentpressCoreDatabase {
 		
 
 
+		// ---------------------------------------------------------------------
+		// Workflow
+		// ---------------------------------------------------------------------
+		
+		// do we have the option to set workflow (new in 3.3.1)?
+		if ( $this->option_exists( 'cp_blog_workflow' ) ) {
+		
+			// get workflow setting for the blog
+			$_workflow = $this->option_get( 'cp_blog_workflow' );
+			
+			/*
+			// ----------------
+			// WORK IN PROGRESS
+			
+			// set key
+			$key = '_cp_blog_workflow_override';
+			
+			// if the custom field already has a value...
+			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+			
+				// get existing value
+				$_workflow = get_post_meta( $post->ID, $key, true );
+				
+			}
+			// ----------------
+			*/
+			
+			// if it's enabled...
+			if ( $_workflow == '1' ) {
+			
+				// notify plugins that workflow stuff needs saving
+				do_action( 'cp_workflow_save_page', $post );
+			
+			}
+			
+			/*
+			// ----------------
+			// WORK IN PROGRESS
+			
+			// get the setting for the post (we do this after saving the extra
+			// post data because 
+			$_formatter = ( isset( $_POST['cp_post_type_override'] ) ) ? $_POST['cp_post_type_override'] : '';
+	
+			// if the custom field already has a value...
+			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+			
+				// if empty string...
+				if ( $_data === '' ) {
+			
+					// delete the meta_key
+					delete_post_meta( $post->ID, $key );
+				
+				} else {
+				
+					// update the data
+					update_post_meta( $post->ID, $key, esc_sql( $_data ) );
+					
+				}
+				
+			} else {
+			
+				// add the data
+				add_post_meta( $post->ID, $key, esc_sql( $_data ) );
+				
+			}
+			// ----------------
+			*/
+			
+		}
+		
+
+
 	}
 	
 	
