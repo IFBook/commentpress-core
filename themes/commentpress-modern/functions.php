@@ -495,6 +495,36 @@ function commentpress_enqueue_scripts_and_styles() {
 	}
 	
 	// -------------------------------------------------------------------------
+	// Styles for TinyMCE 4 in WP 3.9+
+	// -------------------------------------------------------------------------
+	
+	// access WP version
+	global $wp_version, $commentpress_core;
+
+	// if greater than 3.8
+	if ( version_compare( $wp_version, '3.8.9999', '>' ) ) {
+	
+		// if wp_editor is present and allowed
+		if ( function_exists( 'wp_editor' ) AND $commentpress_core->display->is_tinymce_allowed() ) {
+		
+			// add wp_editor css
+			wp_enqueue_style( 
+		
+				'cp_wp_editor', 
+				admin_url( 'css/edit.css' ),
+				null,
+				COMMENTPRESS_VERSION, // version
+				'all' // media
+		
+			);
+	
+		}
+	
+	}
+	
+
+
+	// -------------------------------------------------------------------------
 	// Javascripts
 	// -------------------------------------------------------------------------
 	

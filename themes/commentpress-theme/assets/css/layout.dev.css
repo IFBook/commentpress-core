@@ -2698,7 +2698,8 @@ Compatibility with WordPress 3.8+
 }
 
 /* allow TinyMCE 4 to go fullscreen */
-body.tinymce-4.mce-fullscreen #wpadminbar
+body.tinymce-4.mce-fullscreen #wpadminbar,
+body.tinymce-4.mce-fullscreen ul#sidebar_tabs
 {
 	z-index: 100;
 }
