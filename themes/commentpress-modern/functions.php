@@ -504,8 +504,8 @@ function commentpress_enqueue_scripts_and_styles() {
 	// if greater than 3.8
 	if ( version_compare( $wp_version, '3.8.9999', '>' ) ) {
 	
-		// if wp_editor is present and allowed
-		if ( function_exists( 'wp_editor' ) AND $commentpress_core->display->is_tinymce_allowed() ) {
+		// if wp_editor is allowed
+		if ( $commentpress_core->display->is_tinymce_allowed() ) {
 		
 			// add wp_editor css
 			wp_enqueue_style( 
