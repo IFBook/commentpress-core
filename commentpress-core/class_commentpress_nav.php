@@ -1275,8 +1275,8 @@ class CommentpressCoreNavigator {
 		// default to no excludes
 		$excludes = '';
 		
-		// get special pages
-		$special_pages = $this->parent_obj->db->option_get( 'cp_special_pages' );
+		// init excluded array with "special pages"
+		$excluded_pages = $this->parent_obj->db->option_get( 'cp_special_pages' );
 		
 		// are we in a BuddyPress scenario?
 		if ( $this->parent_obj->is_buddypress() ) {
@@ -1295,7 +1295,7 @@ class CommentpressCoreNavigator {
 				if ( is_object( $reg_page ) AND isset( $reg_page->ID ) ) {
 					
 					// yes - exclude it as well
-					$special_pages[] = $reg_page->ID;
+					$excluded_pages[] = $reg_page->ID;
 				
 				}
 			
@@ -1303,11 +1303,14 @@ class CommentpressCoreNavigator {
 		
 		}
 		
+		// allow plugins to filter
+		$excluded_pages = apply_filters( 'cp_exclude_pages_from_nav', $excluded_pages );
+		
 		// are there any?
-		if ( is_array( $special_pages ) AND count( $special_pages ) > 0 ) {
+		if ( is_array( $excluded_pages ) AND count( $excluded_pages ) > 0 ) {
 
 			// format them for the exclude param
-			$excludes = implode( ',', $special_pages );
+			$excludes = implode( ',', $excluded_pages );
 			
 		}
 		
