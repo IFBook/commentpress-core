@@ -226,6 +226,16 @@ function commentpress_bp_enqueue_scripts() {
 
 	/*
 	----------------------------------------------------------------------------
+	Some notes on BuddyPress 2+ theme compatibility
+	----------------------------------------------------------------------------
+	
+	Theme compatibility needs revisiting, because the default theme is being
+	removed from BuddyPress core. 
+	
+	All theme markup needs to be adjusted to be compatible with the code in 
+	`buddypress/bp-templates` instead
+	
+	----------------------------------------------------------------------------
 	Some notes on BuddyPress 1.7 theme compatibility
 	----------------------------------------------------------------------------
 
@@ -245,8 +255,8 @@ function commentpress_bp_enqueue_scripts() {
 	wp_enqueue_script( 
 	
 		'cp_buddypress_js', 
-		//BP_PLUGIN_URL . '/bp-templates/bp-legacy/js/buddypress.js',
-		BP_PLUGIN_URL . '/bp-themes/bp-default/_inc/global.js',
+		//BP_PLUGIN_URL . 'bp-templates/bp-legacy/js/buddypress.js',
+		BP_PLUGIN_URL . 'bp-themes/bp-default/_inc/global.js',
 		array( 'jquery' ),
 		COMMENTPRESS_VERSION // version
 
@@ -315,7 +325,7 @@ function commentpress_bp_theme_support() {
 
 	// load the default BuddyPress AJAX functions if it isn't already included
 	if ( ! function_exists( 'bp_dtheme_register_actions' ) ) {
-		require_once( BP_PLUGIN_DIR . '/bp-themes/bp-default/_inc/ajax.php' );
+		require_once( BP_PLUGIN_DIR . 'bp-themes/bp-default/_inc/ajax.php' );
 	}
 	
 	// call after_setup_theme function directly otherwise it doesn't run: this is 
