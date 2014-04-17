@@ -667,21 +667,6 @@ div#signup-avatar img {
 	background: #fafafa;
 	color: #555;
 }
-form#send-invite-form {
-	margin-top: 20px;
-}
-div#invite-list {
-	background: #f5f5f5;
-	border: 1px solid #e4e4e4;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-	height: 400px;
-	margin: 0 0 10px;
-	overflow: auto;
-	padding: 5px;
-	width: 160px;
-}
 button,
 a.button,
 input[type=submit],
@@ -1423,12 +1408,20 @@ div.pagination .pagination-links {
 	float: right;
 }
 div.pagination .pagination-links span,
-div.pagination .pagination-links a {
+div.pagination .pagination-links a 
+{
+	font-family: sans-serif;
 	font-size: 12px;
 	padding: 0 5px;
+	text-decoration: none;
+	color: #888;
 }
-div.pagination .pagination-links a:hover {
+div.pagination .pagination-links span.current,
+div.pagination .pagination-links a:hover 
+{
 	font-weight: bold;
+	text-decoration: none;
+	color: #000;
 }
 noscript div.pagination {
 	margin-bottom: 15px;
@@ -1451,50 +1444,6 @@ div#pag-bottom {
 BuddyPress compatibility and overrides
 --------------------------------------------------------------------------------
 */
-
-/* links to be styled like BuddyPress buttons */
-body.groups.invite-anyone #invite-anyone-invite-list .remove
-{
-	background: #fff; /* Old browsers */
-	background: -moz-linear-gradient(top, #ffffff 0%, #ededed 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ededed)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, #ffffff 0%,#ededed 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, #ffffff 0%,#ededed 100%); /* Opera11.10+ */
-	background: -ms-linear-gradient(top, #ffffff 0%,#ededed 100%); /* IE10+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
-	background: linear-gradient(top, #ffffff 0%,#ededed 100%); /* W3C */
-	border: 1px solid #ccc;
-	-moz-border-radius: 3px;
-	-khtml-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-	color: #777;
-	cursor: pointer;
-	font: normal 12px/20px Arial, Tahoma, Verdana, sans-serif;
-	outline: none;
-	padding: 4px 10px;
-	text-align: center;
-	text-decoration: none;
-	line-height: 14px;
-	text-transform: none;
-}
-
-body.groups.invite-anyone #invite-anyone-invite-list .remove:hover
-{
-	background: #ededed;
-	background: -moz-linear-gradient(top, #ffffff 0%, #e0e0e0 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e0e0e0)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* Opera11.10+ */
-	background: -ms-linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* IE10+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e0e0e0',GradientType=0 ); /* IE6-9 */
-	background: linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* W3C */
-	border: 1px solid #bbb;
-	color: #555;
-	outline: none;
-	text-decoration: none;
-	text-transform: none;
-}
 
 /* override links to graphics in bp.css */
 div.item-list-tabs ul li.feed a 
@@ -2990,7 +2939,74 @@ table.notifications th.title
 
 
 
-/* Invite Anyone plugin compatibility */
+
+/* 
+--------------------------------------------------------------------------------
+Invite Anyone plugin compatibility
+--------------------------------------------------------------------------------
+*/
+
+form#send-invite-form {
+	margin-top: 20px;
+}
+
+div#invite-list {
+	background: #f5f5f5;
+	border: 1px solid #e4e4e4;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	height: 400px;
+	margin: 0 0 10px;
+	overflow: auto;
+	padding: 5px;
+	width: 160px;
+}
+
+/* links to be styled like BuddyPress buttons */
+body.groups.invite-anyone #invite-anyone-invite-list .remove
+{
+	background: #fff; /* Old browsers */
+	background: -moz-linear-gradient(top, #ffffff 0%, #ededed 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ededed)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #ffffff 0%,#ededed 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #ffffff 0%,#ededed 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, #ffffff 0%,#ededed 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, #ffffff 0%,#ededed 100%); /* W3C */
+	border: 1px solid #ccc;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	color: #777;
+	cursor: pointer;
+	font: normal 12px/20px Arial, Tahoma, Verdana, sans-serif;
+	outline: none;
+	padding: 4px 10px;
+	text-align: center;
+	text-decoration: none;
+	line-height: 14px;
+	text-transform: none;
+}
+
+body.groups.invite-anyone #invite-anyone-invite-list .remove:hover
+{
+	background: #ededed;
+	background: -moz-linear-gradient(top, #ffffff 0%, #e0e0e0 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e0e0e0)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e0e0e0',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* W3C */
+	border: 1px solid #bbb;
+	color: #555;
+	outline: none;
+	text-decoration: none;
+	text-transform: none;
+}
+
 body.groups.invite-anyone #item-body,
 form#invite-anyone-by-email
 {
@@ -3067,6 +3083,13 @@ ol#invite-anyone-steps
 ol#invite-anyone-steps li 
 {
 	margin: 20px 0;
+	list-style: none;
+	list-style-image: none;
+}
+
+ul#invite-anyone-group-list li
+{
+	font-size: 100%;
 }
 
 ol#invite-anyone-steps textarea.invite-anyone-email-addresses,
@@ -3074,12 +3097,17 @@ ol#invite-anyone-steps #invite-anyone-custom-subject,
 ol#invite-anyone-steps #invite-anyone-custom-message
 {
 	width: 90%;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	padding: 0.5em;
 }
 
 #invite-anyone-by-email .submit 
 {
 	padding: 20px 0;
 }
+
+
 
 
 
