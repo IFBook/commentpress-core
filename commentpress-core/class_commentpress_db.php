@@ -4009,7 +4009,7 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 		add_option( 'commentpress_sidebars_widgets', $this->option_wp_get( 'sidebars_widgets' ) );
 
 		// clear them
-		update_option( 'sidebars_widgets', null );
+		update_option( 'sidebars_widgets', array() );
 
 	}
 	
