@@ -87,35 +87,12 @@ class CommentpressGroupblogWorkshop {
 
 
 
-	/**
-	 * PHP 4 constructor
-	 */
-	function CommentpressGroupblogWorkshop( $parent_obj = null ) {
-		
-		// is this php5?
-		if ( version_compare( PHP_VERSION, "5.0.0", "<" ) ) {
-		
-			// call php5 constructor
-			$this->__construct( $parent_obj );
-			
-		}
-		
-		// --<
-		return $this;
-
-	}
-
-
-
-
-
-
 	/** 
 	 * @description: set up all items associated with this object
 	 * @todo: 
 	 *
 	 */
-	function initialise() {
+	public function initialise() {
 	
 	}
 	
@@ -129,7 +106,7 @@ class CommentpressGroupblogWorkshop {
 	 * @todo: 
 	 *
 	 */
-	function destroy() {
+	public function destroy() {
 	
 	}
 	
@@ -167,7 +144,7 @@ class CommentpressGroupblogWorkshop {
 	 * @todo: 
 	 *
 	 */
-	function groupblog_comment_name() { 
+	public function groupblog_comment_name() { 
 	
 		// default name
 		return sprintf(
@@ -187,7 +164,7 @@ class CommentpressGroupblogWorkshop {
 	 * @todo: 
 	 *
 	 */
-	function groupblog_post_name() {
+	public function groupblog_post_name() {
 	
 		// default name
 		return sprintf(
@@ -207,7 +184,7 @@ class CommentpressGroupblogWorkshop {
 	 * @todo: 
 	 *
 	 */
-	function activity_post_name() {
+	public function activity_post_name() {
 	
 		// default name
 		return sprintf( 
@@ -227,7 +204,7 @@ class CommentpressGroupblogWorkshop {
 	 * @todo: 
 	 *
 	 */
-	function filter_blog_name( $name ) {
+	public function filter_blog_name( $name ) {
 		
 		// --<
 		return $this->cpmu_bp_workshop_nomenclature_name;
@@ -244,7 +221,7 @@ class CommentpressGroupblogWorkshop {
 	 * @todo: 
 	 *
 	 */
-	function filter_blog_slug( $slug ) {
+	public function filter_blog_slug( $slug ) {
 	
 		// --<
 		return $this->cpmu_bp_workshop_nomenclature_slug;
@@ -262,7 +239,7 @@ class CommentpressGroupblogWorkshop {
 	 * @todo: 
 	 *
 	 */
-	function activity_tab_recent_title_blog( $title ) {
+	public function activity_tab_recent_title_blog( $title ) {
 	
 		// if groupblog...
 		global $commentpress_core;
@@ -311,7 +288,7 @@ class CommentpressGroupblogWorkshop {
 	 * @todo: 
 	 *
 	 */
-	function page_all_comments_blog_title( $title ) {
+	public function page_all_comments_blog_title( $title ) {
 	
 		// override if groupblog
 		if ( !$this->parent_obj->bp->_is_commentpress_groupblog() ) {
@@ -336,7 +313,7 @@ class CommentpressGroupblogWorkshop {
 	 * @todo: 
 	 *
 	 */
-	function page_all_comments_book_title( $title ) {
+	public function page_all_comments_book_title( $title ) {
 	
 		// override if groupblog
 		if ( !$this->parent_obj->bp->_is_commentpress_groupblog() ) {
@@ -361,7 +338,7 @@ class CommentpressGroupblogWorkshop {
 	 * @todo: 
 	 *
 	 */
-	function filter_activity_title_all_yours( $title ) {
+	public function filter_activity_title_all_yours( $title ) {
 	
 		// override if groupblog
 		if ( 
@@ -389,7 +366,7 @@ class CommentpressGroupblogWorkshop {
 	 * @todo: 
 	 *
 	 */
-	function filter_activity_title_all_public( $title ) {
+	public function filter_activity_title_all_public( $title ) {
 	
 		// override if groupblog
 		if ( 
@@ -417,7 +394,7 @@ class CommentpressGroupblogWorkshop {
 	 * @todo: 
 	 *
 	 */
-	function filter_nav_title_page_title( $title ) {
+	public function filter_nav_title_page_title( $title ) {
 	
 		// bail if main BP site
 		if ( bp_is_root_blog() ) return $title;
@@ -445,7 +422,7 @@ class CommentpressGroupblogWorkshop {
 	 * @todo: 
 	 *
 	 */
-	function get_blogs_visit_blog_button( $button ) {
+	public function get_blogs_visit_blog_button( $button ) {
 		
 		// update link for groupblogs
 		return sprintf(

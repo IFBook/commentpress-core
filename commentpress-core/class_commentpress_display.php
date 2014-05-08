@@ -76,35 +76,12 @@ class CommentpressCoreDisplay {
 
 
 
-	/**
-	 * @description: PHP 4 constructor
-	 */
-	function CommentpressCoreDisplay( $parent_obj ) {
-		
-		// is this php5?
-		if ( version_compare( PHP_VERSION, "5.0.0", "<" ) ) {
-		
-			// call php5 constructor
-			$this->__construct( $parent_obj );
-			
-		}
-		
-		// --<
-		return $this;
-
-	}
-
-
-
-
-
-
 	/** 
 	 * @description: if needed, sets up this object
 	 * @todo: work out how to upgrade.
 	 *
 	 */
-	function activate() {
+	public function activate() {
 		
 		// force WordPress to regenerate theme directories
 		search_theme_directories( true );
@@ -196,7 +173,7 @@ class CommentpressCoreDisplay {
 	 * @todo: 
 	 *
 	 */
-	function deactivate() {
+	public function deactivate() {
 	
 		// test for WP3.4...
 		if ( function_exists( 'wp_get_theme' ) ) {
@@ -285,7 +262,7 @@ class CommentpressCoreDisplay {
 	 * @todo: 
 	 *
 	 */
-	function get_jquery() {
+	public function get_jquery() {
 	
 		// default to minified scripts
 		$debug_state = '';
@@ -349,7 +326,7 @@ class CommentpressCoreDisplay {
 	 * @todo: 
 	 *
 	 */
-	function get_custom_quicktags() {
+	public function get_custom_quicktags() {
 	
 		// don't bother if the current user lacks permissions
 		if ( ! current_user_can('edit_posts') AND ! current_user_can('edit_pages') ) {
@@ -402,7 +379,7 @@ class CommentpressCoreDisplay {
 	 * @todo: 
 	 *
 	 */
-	function get_frontend_styles() {
+	public function get_frontend_styles() {
 		
 		// add jQuery UI stylesheet -> needed for resizable columns
 		wp_enqueue_style(
@@ -428,7 +405,7 @@ class CommentpressCoreDisplay {
 	 * @todo: 
 	 *
 	 */
-	function is_tinymce_allowed() {
+	public function is_tinymce_allowed() {
 	
 		// check option
 		if ( 
@@ -475,7 +452,7 @@ class CommentpressCoreDisplay {
 	 * @todo: 
 	 *
 	 */
-	function get_tinymce() {
+	public function get_tinymce() {
 	
 		// check if we can
 		if ( !$this->is_tinymce_allowed() ) {
@@ -539,7 +516,7 @@ class CommentpressCoreDisplay {
 	 * @todo: translation
 	 *
 	 */
-	function get_help() {
+	public function get_help() {
 	
 		$help = <<<HELPTEXT
 <p>For further information about using CommentPress, please refer to the <a href="http://www.futureofthebook.org/commentpress/support/">CommentPress support pages</a> or use one of the links below:</p>
@@ -568,7 +545,7 @@ HELPTEXT;
 	 * @todo:
 	 *
 	 */
-	function list_posts( $params = 'numberposts=-1&order=DESC' ) {
+	public function list_posts( $params = 'numberposts=-1&order=DESC' ) {
 	
 		// get all posts
 		$posts = get_posts( $params );
@@ -721,7 +698,7 @@ HELPTEXT;
 	 * @todo: remove from theme functions.php?
 	 *
 	 */
-	function echo_post_author( $author_id, $echo = true ) {
+	public function echo_post_author( $author_id, $echo = true ) {
 	
 		// get author details
 		$user = get_userdata( $author_id );
@@ -772,7 +749,7 @@ HELPTEXT;
 	 * @todo:
 	 *
 	 */
-	function list_pages( $exclude_pages = array() ) {
+	public function list_pages( $exclude_pages = array() ) {
 	
 		/* 
 		Question: do we want to use WP menus? And if so, how?
@@ -913,7 +890,7 @@ HELPTEXT;
 	 * @todo: 
 	 *
 	 */
-	function get_comment_icon(
+	public function get_comment_icon(
 		
 		$comment_count, 
 		$text_signature, 
@@ -1104,7 +1081,7 @@ HELPTEXT;
 	 * @todo: 
 	 *
 	 */
-	function get_paragraph_icon( 
+	public function get_paragraph_icon( 
 	
 		$comment_count, 
 		$text_signature, 
@@ -1229,7 +1206,7 @@ HELPTEXT;
 	 * @todo: 
 	 *
 	 */
-	function get_para_tag( $text_signature, $commenticon, $tag = 'p', $start = 0 ) {
+	public function get_para_tag( $text_signature, $commenticon, $tag = 'p', $start = 0 ) {
 	
 		// return different stuff for different tags
 		switch( $tag ) {
@@ -1353,7 +1330,7 @@ HELPTEXT;
 	 * @todo: 
 	 *
 	 */
-	function get_signature_input( $text_sig = '' ) {
+	public function get_signature_input( $text_sig = '' ) {
 	
 		// define input tag
 		$input = '<input type="hidden" name="text_signature" value="'.$text_sig.'" id="text_signature" />';
@@ -1377,7 +1354,7 @@ HELPTEXT;
 	 * @todo: 
 	 *
 	 */
-	function get_minimise_all_button( $sidebar = 'comments' ) {
+	public function get_minimise_all_button( $sidebar = 'comments' ) {
 	
 		switch( $sidebar ) {
 	
@@ -1416,7 +1393,7 @@ HELPTEXT;
 	 * @todo: 
 	 *
 	 */
-	function get_header_min_link() {
+	public function get_header_min_link() {
 	
 		// define minimise button
 		$link = '<li><a href="#" id="btn_header_min" class="css_btn" title="'.__( 'Minimise Header', 'commentpress-core' ).'">'.__( 'Minimise Header', 'commentpress-core' ).'</a></li>'."\n";
@@ -1442,7 +1419,7 @@ HELPTEXT;
 	 * @todo: 
 	 *
 	 */
-	function get_linked_image( $src = '', $url = '' ) {
+	public function get_linked_image( $src = '', $url = '' ) {
 	
 		// init html
 		$html = '';
@@ -1483,7 +1460,7 @@ HELPTEXT;
 	 * @todo: 
 	 *
 	 */
-	function get_admin_page() {
+	public function get_admin_page() {
 	
 		// init
 		$admin_page = '';

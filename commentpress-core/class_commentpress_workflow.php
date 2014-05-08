@@ -72,35 +72,12 @@ class CommentpressCoreWorkflow {
 
 
 
-	/**
-	 * PHP 4 constructor
-	 */
-	function CommentpressCoreWorkflow( $parent_obj = null ) {
-		
-		// is this php5?
-		if ( version_compare( PHP_VERSION, "5.0.0", "<" ) ) {
-		
-			// call php5 constructor
-			$this->__construct( $parent_obj );
-			
-		}
-		
-		// --<
-		return $this;
-
-	}
-
-
-
-
-
-
 	/** 
 	 * @description: set up all items associated with this object
 	 * @todo: 
 	 *
 	 */
-	function initialise() {
+	public function initialise() {
 	
 	}
 	
@@ -114,7 +91,7 @@ class CommentpressCoreWorkflow {
 	 * @todo: 
 	 *
 	 */
-	function destroy() {
+	public function destroy() {
 	
 	}
 	
@@ -146,7 +123,7 @@ class CommentpressCoreWorkflow {
 	 * @todo: 
 	 *
 	 */
-	function blog_workflow_exists( $exists ) {
+	public function blog_workflow_exists( $exists ) {
 	
 		// switch on, but allow overrides
 		return apply_filters( 
@@ -169,7 +146,7 @@ class CommentpressCoreWorkflow {
 	 * @todo: 
 	 *
 	 */
-	function blog_workflow_label( $name ) {
+	public function blog_workflow_label( $name ) {
 	
 		// set label, but allow overrides
 		return apply_filters( 
@@ -191,7 +168,7 @@ class CommentpressCoreWorkflow {
 	 * @todo: 
 	 *
 	 */
-	function group_meta_set_blog_type( $blog_type, $blog_workflow ) {
+	public function group_meta_set_blog_type( $blog_type, $blog_workflow ) {
 	
 		// if the blog workflow is enabled, then this is a translation group
 		if ( $blog_workflow == '1' ) {
@@ -221,7 +198,7 @@ class CommentpressCoreWorkflow {
 	 * @todo: 
 	 *
 	 */
-	function workflow_metabox() {
+	public function workflow_metabox() {
 	
 		global $post;
 	
@@ -297,7 +274,7 @@ class CommentpressCoreWorkflow {
 	 * @todo: 
 	 *
 	 */
-	function workflow_metabox_title( $title ) {
+	public function workflow_metabox_title( $title ) {
 	
 		// set label, but allow overrides
 		return apply_filters( 
@@ -319,7 +296,7 @@ class CommentpressCoreWorkflow {
 	 * @todo: 
 	 *
 	 */
-	function workflow_save_post( $post_obj ) {
+	public function workflow_save_post( $post_obj ) {
 	
 		// if no post, kick out
 		if ( !$post_obj ) { return; }
@@ -451,7 +428,7 @@ class CommentpressCoreWorkflow {
 	 * @todo: 
 	 *
 	 */
-	function workflow_save_copy( $new_post_id ) {
+	public function workflow_save_copy( $new_post_id ) {
 	
 		// ---------------------------------------------------------------------
 		// If we are making a copy of the current version, also save meta

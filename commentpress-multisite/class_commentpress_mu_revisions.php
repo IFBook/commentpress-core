@@ -75,35 +75,12 @@ class CommentpressMultisiteRevisions {
 
 
 
-	/**
-	 * PHP 4 constructor
-	 */
-	function CommentpressMultisiteRevisions( $parent_obj = null ) {
-		
-		// is this php5?
-		if ( version_compare( PHP_VERSION, "5.0.0", "<" ) ) {
-		
-			// call php5 constructor
-			$this->__construct( $parent_obj );
-			
-		}
-		
-		// --<
-		return $this;
-
-	}
-
-
-
-
-
-
 	/** 
 	 * @description: set up all items associated with this object
 	 * @todo: 
 	 *
 	 */
-	function initialise() {
+	public function initialise() {
 	
 	}
 	
@@ -117,7 +94,7 @@ class CommentpressMultisiteRevisions {
 	 * @todo: 
 	 *
 	 */
-	function destroy() {
+	public function destroy() {
 	
 	}
 	
@@ -155,7 +132,7 @@ class CommentpressMultisiteRevisions {
 	 * @todo: 
 	 *
 	 */
-	function new_post_title_prefix( $prefix ) {
+	public function new_post_title_prefix( $prefix ) {
 		
 		// don't use a prefix
 		return '';
@@ -171,7 +148,7 @@ class CommentpressMultisiteRevisions {
 	 * @todo: 
 	 *
 	 */
-	function new_post_title( $title, $post ) {
+	public function new_post_title( $title, $post ) {
 	
 		// get incremental version number of source post
 		$key = '_cp_version_count';

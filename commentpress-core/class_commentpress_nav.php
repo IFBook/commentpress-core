@@ -91,35 +91,12 @@ class CommentpressCoreNavigator {
 
 
 
-	/**
-	 * @description: PHP 4 constructor
-	 */
-	function CommentpressCoreNavigator( $parent_obj ) {
-		
-		// is this php5?
-		if ( version_compare( PHP_VERSION, "5.0.0", "<" ) ) {
-		
-			// call php5 constructor
-			$this->__construct( $parent_obj );
-			
-		}
-		
-		// --<
-		return $this;
-
-	}
-
-
-
-
-
-
 	/** 
 	 * @description: set up all items associated with this object
 	 * @todo: 
 	 *
 	 */
-	function initialise() {
+	public function initialise() {
 	
 		// if we're navigating pages
 		if ( is_page() ) {
@@ -150,7 +127,7 @@ class CommentpressCoreNavigator {
 	 * @todo: 
 	 *
 	 */
-	function destroy() {
+	public function destroy() {
 	
 	}
 
@@ -186,7 +163,7 @@ class CommentpressCoreNavigator {
 	 * @todo: 
 	 *
 	 */
-	function get_next_page( $with_comments = false ) {
+	public function get_next_page( $with_comments = false ) {
 	
 		// do we have any next pages?
 		if ( count( $this->next_pages ) > 0 ) {
@@ -236,7 +213,7 @@ class CommentpressCoreNavigator {
 	 * @todo: 
 	 *
 	 */
-	function get_previous_page( $with_comments = false ) {
+	public function get_previous_page( $with_comments = false ) {
 	
 		// do we have any previous pages?
 		if ( count( $this->previous_pages ) > 0 ) {
@@ -286,7 +263,7 @@ class CommentpressCoreNavigator {
 	 * @todo: 
 	 *
 	 */
-	function get_next_post( $with_comments = false ) {
+	public function get_next_post( $with_comments = false ) {
 	
 		// do we have any next posts?
 		if ( count( $this->next_posts ) > 0 ) {
@@ -336,7 +313,7 @@ class CommentpressCoreNavigator {
 	 * @todo: 
 	 *
 	 */
-	function get_previous_post( $with_comments = false ) {
+	public function get_previous_post( $with_comments = false ) {
 	
 		// do we have any previous posts?
 		if ( count( $this->previous_posts ) > 0 ) {
@@ -386,7 +363,7 @@ class CommentpressCoreNavigator {
 	 * @todo:
 	 *
 	 */
-	function get_first_child( $page_id ) {
+	public function get_first_child( $page_id ) {
 	
 		// init to look for published pages
 		$defaults = array( 
@@ -431,7 +408,7 @@ class CommentpressCoreNavigator {
 	 * @todo:
 	 *
 	 */
-	function get_book_pages( $mode = 'readable' ) {
+	public function get_book_pages( $mode = 'readable' ) {
 	
 		// init
 		$all_pages = array();
@@ -472,7 +449,7 @@ class CommentpressCoreNavigator {
 	 * @todo:
 	 *
 	 */
-	function get_first_page() {
+	public function get_first_page() {
 	
 		// init
 		$id = false;
@@ -506,7 +483,7 @@ class CommentpressCoreNavigator {
 	 * @todo:
 	 *
 	 */
-	function get_page_number( $page_id ) {
+	public function get_page_number( $page_id ) {
 	
 		// init
 		$num = 0;

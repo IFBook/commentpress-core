@@ -91,35 +91,12 @@ class CommentpressCoreParser {
 
 
 
-	/**
-	 * @description: PHP 4 constructor
-	 */
-	function CommentpressCoreParser( $parent_obj ) {
-		
-		// is this php5?
-		if ( version_compare( PHP_VERSION, "5.0.0", "<" ) ) {
-		
-			// call php5 constructor
-			$this->__construct( $parent_obj );
-			
-		}
-		
-		// --<
-		return $this;
-
-	}
-
-
-
-
-
-
 	/** 
 	 * @description: set up all items associated with this object
 	 * @todo: 
 	 *
 	 */
-	function initialise() {
+	public function initialise() {
 		
 	}
 
@@ -134,7 +111,7 @@ class CommentpressCoreParser {
 	 * @todo: 
 	 *
 	 */
-	function destroy() {
+	public function destroy() {
 	
 	}
 
@@ -168,7 +145,7 @@ class CommentpressCoreParser {
 	 * @todo:
 	 *
 	 */
-	function the_content( $content ) {
+	public function the_content( $content ) {
 	
 		// reference our post
 		global $post;
@@ -289,7 +266,7 @@ class CommentpressCoreParser {
 	 * @todo: 
 	 *
 	 */
-	function get_sorted_comments( $post_ID ) {
+	public function get_sorted_comments( $post_ID ) {
 	
 		// have we already sorted the comments?
 		if ( !empty( $this->comments_sorted ) ) {
