@@ -64,8 +64,8 @@ $success = commentpress_schema_restore();
 if ( is_multisite() ) {
 
 	// delete multisite options
-	//delete_site_option( 'cpmu_options' );
-	//delete_site_option( 'cpmu_version' );
+	delete_site_option( 'cpmu_options' );
+	delete_site_option( 'cpmu_version' );
 	
 }
 
