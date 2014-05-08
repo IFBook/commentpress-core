@@ -27,6 +27,228 @@ add_action( 'wp_ajax_nopriv_cpajax_get_new_comments', 'cpajax_get_new_comments' 
 add_action( 'wp_ajax_cpajax_reassign_comment', 'cpajax_reassign_comment' );
 add_action( 'wp_ajax_nopriv_cpajax_reassign_comment', 'cpajax_reassign_comment' );
 
+// let's disable infinite scroll unless we set a constant
+if ( defined( 'COMMENTPRESS_INFINITE_SCROLL' ) AND COMMENTPRESS_INFINITE_SCROLL ) {
+
+	// add AJAX infinite scroll functionality
+	add_action( 'wp_ajax_cpajax_load_next_page', 'cpajax_load_next_page' );
+	add_action( 'wp_ajax_nopriv_cpajax_load_next_page', 'cpajax_load_next_page' );
+
+}
+
+
+
+/** 
+ * @description: load the next page
+ * @todo: 
+ *
+ */
+function cpajax_load_next_page() {
+	
+	// error check
+	//if ( ! wp_verify_nonce( $_REQUEST['nonce'], 'cpajax_infinite_nonce' ) ) { die( 'Nonce failure' ); }
+
+	// access globals
+	global $commentpress_core;
+	
+	// die if cp is not enabled
+	if ( is_null( $commentpress_core ) OR !is_object( $commentpress_core ) ) { die( 'No CP' ); }
+	
+	// init data
+	$data = '';
+
+	// get incoming data
+	$current_post_id = isset( $_POST['current_post_id'] ) ? absint( $_POST['current_post_id'] ) : '';
+	
+	// sanity check
+	if ( $current_post_id === '' ) { die( 'No $current_post_id' ); }
+		
+	// get all pages
+	$all_pages = $commentpress_core->nav->get_book_pages( 'readable' );
+	//if ( is_user_logged_in() ) { print_r( $all_pages ); die(); }
+	
+	// if we have any pages...
+	if ( count( $all_pages ) == 0 ) { die( 'No $all_pages' ); }
+	
+	// init the key we want
+	$page_key = false;
+	
+	// loop
+	foreach( $all_pages AS $key => $page_obj ) {
+	
+		// is it the currently viewed page?
+		if ( $page_obj->ID == $current_post_id ) {
+		
+			// set page key
+			$page_key = $key;
+		
+			// kick out to preserve key
+			break;
+		
+		}
+	
+	}
+	
+	// die if we don't get a key
+	if ( $page_key === false ) { die( ' No $page_key' ); }
+	
+	// die if there is no next item
+	if ( !isset( $all_pages[$page_key + 1] ) ) { die( 'No key in array' ); }
+	
+	// get object
+	$new_post = $all_pages[$page_key + 1];
+	
+	global $post;
+	
+	// get page data
+	$post = get_post( $new_post->ID );
+	
+	setup_postdata( $post );
+	
+	///*
+	// get title using buffer
+	ob_start();
+	//wp_title( '|', true, 'right' ); 
+	bloginfo( 'name' ); commentpress_site_title( '|' );
+	$page_title = ob_get_contents();
+	ob_end_clean();
+	//*/
+	
+	$page_title = get_the_title( $post->ID ).' | '.$page_title;
+	
+	// get next page
+	//print_r( array( $post, $post->post_title ) ); die();
+	
+	// because AJAX may be routed via admin or front end
+	if ( defined( 'DOING_AJAX' ) AND DOING_AJAX AND is_admin() ) {
+	
+		// add CP filter to the content when it's on the admin side
+		add_filter( 'the_content', array( $commentpress_core->parser, 'the_content' ), 20 );
+	
+	}
+	
+	// get feature image
+	ob_start();
+	commentpress_get_feature_image();
+	$feature_image = ob_get_contents();
+	ob_end_clean();
+	
+	// get title
+	$title = '<h2 class="post_title"><a href="'.get_permalink( $post->ID ).'">'.get_the_title( $post->ID ).'</a></h2>';
+	
+	// get content
+	$content = apply_filters( 'the_content', $post->post_content );
+	
+	// generate page numbers
+	$commentpress_core->nav->_generate_page_numbers( $all_pages );
+	
+	// get page number
+	$number = $commentpress_core->nav->get_page_number( $post->ID );
+	//print_r( $number ); die();
+	
+	// get menu ID, if we have one
+	if ( isset( $new_post->menu_id ) ) {
+		$menu_id = 'wpcustom_menuid-'.$new_post->menu_id;
+	} else {
+		$menu_id = 'wppage_menuid-'.$new_post->ID;
+	}
+	
+	// init page number html
+	$page_num = '';
+
+	// if we get one
+	if ( $number ) {
+		
+		// is it arabic?
+		if ( is_numeric( $number ) ) {
+		
+			// add page number
+			$page_num = '<div class="running_header_bottom">page '.$number.'</div>';
+	
+		} else {
+		
+			// add page number
+			$page_num = '<div class="running_header_bottom">page '.strtolower( $number ).'</div>';
+	
+		}
+		
+	}
+	
+	// init nav
+	$commentpress_core->nav->initialise();
+
+	// get page navigation
+	$navigation = commentpress_page_navigation();
+	
+	// if we get any...
+	if ( $navigation != '' ) { 
+		$navigation = '<div class="page_navigation"><ul>'.$navigation.'</ul></div><!-- /page_navigation -->';
+	}
+
+	// init upper nav
+	$upper_navigation = '';
+
+	// do we have a featured image?
+	if ( !commentpress_has_feature_image() ) {
+
+		// assign upper page navigation
+		$upper_navigation = $navigation;
+
+	}
+	
+	// always show lower nav
+	$lower_navigation = '<div class="page_nav_lower">'.
+							$navigation.
+						'</div><!-- /page_nav_lower -->';
+
+	// wrap in div
+	$data = '<div class="page_wrapper cp_page_wrapper">'.
+				$feature_image.
+				$upper_navigation.
+				'<div class="content"><div class="post'.commentpress_get_post_css_override( $post->ID ).' '.$menu_id.'" id="post-'.$post->ID.'">'.
+					$title.
+					$content.
+					$page_num.
+				'</div></div>'.
+				$lower_navigation.
+			'</div>';
+	
+	
+	// get comments using buffer
+	ob_start();
+	$vars = $commentpress_core->db->get_javascript_vars();
+	include_once( get_template_directory() . '/assets/templates/comments_by_para.php' );
+	$comments = ob_get_contents();
+	ob_end_clean();
+	
+	// wrap in div
+	$comments = '<div class="comments-for-'.$post->ID.'">'.$comments.'</div>';
+
+	// construct response
+	$response =  array(
+	
+		'post_id'     => $post->ID,
+		'url'     => get_permalink( $post->ID ),
+		'title'     => $page_title,
+		'content'     => $data,
+		'comments'     => $comments,
+		
+	);
+
+	// set reasonable headers
+	header('Content-type: text/plain'); 
+	header("Cache-Control: no-cache");
+	header("Expires: -1");
+
+	// echo
+	echo json_encode( $response );
+	
+	// die!
+	exit();
+	
+}
+
+
 
 
 
@@ -320,6 +542,47 @@ function cpajax_add_javascripts() {
 	
 	// use wp function to localise
 	wp_localize_script( 'cpajax', 'CommentpressAjaxSettings', $vars );
+	
+	
+	
+	// let's disable infinite scroll unless we set a constant
+	if ( defined( 'COMMENTPRESS_INFINITE_SCROLL' ) AND COMMENTPRESS_INFINITE_SCROLL ) {
+
+		// are we asking for in-page comments?
+		if ( ! $commentpress_core->db->is_special_page() ) {
+	
+			// add waypoints script
+			wp_enqueue_script( 
+			
+				'cpajax-waypoints', 
+				plugins_url( 'commentpress-ajax/assets/js/waypoints'.$debug_state.'.js', COMMENTPRESS_PLUGIN_FILE ),
+				array( 'jquery' ), //dependencies
+				COMMENTPRESS_VERSION // version
+			
+			);
+		
+			// add infinite scroll script
+			wp_enqueue_script( 
+			
+				'cpajax-infinite', 
+				plugins_url( 'commentpress-ajax/assets/js/cp-ajax-infinite'.$debug_state.'.js', COMMENTPRESS_PLUGIN_FILE ),
+				array( 'cpajax', 'cpajax-waypoints' ), //dependencies
+				COMMENTPRESS_VERSION // version
+			
+			);
+		
+			// init vars
+			$infinite = array();
+
+			// is "live" comment refreshing enabled?
+			$infinite['nonce'] = wp_create_nonce( 'cpajax_infinite_nonce' );
+	
+			// use wp function to localise
+			wp_localize_script( 'cpajax', 'CommentpressAjaxInfiniteSettings', $infinite );
+	
+		}
+	
+	}
 	
 }
 

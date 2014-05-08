@@ -19,7 +19,8 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 		cp_comments_open, cp_special_page, cp_tinymce, cp_tinymce_version,
 		cp_promote_reading, cp_is_mobile, cp_is_touch, cp_is_tablet, cp_cookie_path,
 		cp_multipage_page, cp_template_dir, cp_plugin_dir, cp_toc_chapter_is_page, cp_show_subpages,
-		cp_default_sidebar, cp_is_signup_page, cp_scroll_speed, cp_min_page_width;
+		cp_default_sidebar, cp_is_signup_page, cp_scroll_speed, cp_min_page_width,
+		cp_textblock_meta;
 	
 	// set our vars
 	cp_wp_adminbar = CommentpressSettings.cp_wp_adminbar;
@@ -44,6 +45,7 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 	cp_is_signup_page = CommentpressSettings.cp_is_signup_page;
 	cp_scroll_speed = CommentpressSettings.cp_js_scroll_speed;
 	cp_min_page_width = CommentpressSettings.cp_min_page_width;
+	cp_textblock_meta = CommentpressSettings.cp_textblock_meta;
 
 }
 
@@ -137,7 +139,25 @@ function cp_page_setup() {
 		styles += '<style type="text/css" media="screen">';
 
 	
-	
+		
+		// if mobile, don't hide textblock meta
+		if ( cp_is_mobile == '0' ) {
+			
+			//console.log( cp_textblock_meta );
+			
+			// have we explicitly hidden textblock meta?
+			if ( cp_textblock_meta == '0' ) {
+
+				// avoid flash of textblock meta elements
+				styles += '#content .textblock span.para_marker, #content .textblock span.commenticonbox { display: none; } ';
+				styles += '.content .textblock span.para_marker, .content .textblock span.commenticonbox { display: none; } ';
+			
+			}
+
+		}
+		
+
+
 		// avoid flash of all-comments hidden elements
 		styles += 'ul.all_comments_listing div.item_body { display: none; } ';
 	
@@ -296,7 +316,7 @@ function commentpress_scroll_page( target ) {
 			target, 
 			{
 				duration: (cp_scroll_speed * 1.5), 
-				axis:'y', 
+				axis: 'y', 
 				offset: commentpress_get_header_offset()
 			}, function () {
 				// when done, make sure page is ok
@@ -314,7 +334,7 @@ function commentpress_scroll_page( target ) {
 				target, 
 				{
 					duration: (cp_scroll_speed * 1.5), 
-					axis:'y', 
+					axis: 'y', 
 					offset: commentpress_get_header_offset()
 				}
 			);
@@ -345,7 +365,7 @@ function cp_quick_scroll_page( target, duration ) {
 			target, 
 			{
 				duration: (duration * 1.5), 
-				axis:'y', 
+				axis: 'y', 
 				offset: commentpress_get_header_offset()
 			}, function () {
 				// when done, make sure page is ok
@@ -363,7 +383,7 @@ function cp_quick_scroll_page( target, duration ) {
 				target, 
 				{
 					duration: (duration * 1.5), 
-					axis:'y', 
+					axis: 'y', 
 					offset: commentpress_get_header_offset()
 				}
 			);
@@ -382,6 +402,9 @@ function cp_quick_scroll_page( target, duration ) {
  *
  */
 function commentpress_scroll_to_top( target, speed ) {
+	
+	// declare vars
+	var post_id;
 
 	// if IE6, then we have to scroll #wrapper
 	if ( msie6 ) {
@@ -393,9 +416,35 @@ function commentpress_scroll_to_top( target, speed ) {
 	
 		// only scroll if not mobile (but allow tablets)
 		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
-		
+			
+			// let's try and scroll to the title
+			if ( target == 0 ) {
+				
+				// parse post ID
+				post_id = jQuery('.comments_container').prop('id');
+				
+				// sanity check
+				if ( typeof post_id !== 'undefined' ) {
+				
+					// get target post ID
+					target_id = post_id.split('-')[1];
+					
+					// contruct target
+					target = jQuery('#post-' + target_id);
+					
+				}
+				
+			}
+			
 			// scroll
-			jQuery.scrollTo( target, speed );
+			jQuery.scrollTo( 
+				target,
+				{
+					duration: (speed * 1.5), 
+					axis: 'y', 
+					offset: commentpress_get_header_offset()
+				}
+			);
 			
 		}
 		
@@ -562,6 +611,7 @@ function commentpress_setup_comment_headers() {
 	
 		// get text_sig
 		text_sig = jQuery(this).parent().prop( 'id' ).split('para_heading-')[1];
+		//console.log( 'text_sig: ' + text_sig );
 		
 		// get para wrapper
 		para_wrapper = jQuery(this).parent().next('div.paragraph_wrapper');
@@ -1792,6 +1842,34 @@ function commentpress_setup_page_click_actions() {
 		
 	});
 
+	// if mobile, we don't hide textblock meta
+	if ( cp_is_mobile == '0' ) {
+		
+		// have we explicitly hidden textblock meta?
+		if ( cp_textblock_meta == '0' ) {
+
+			/** 
+			 * @description: hover over textblock
+			 */
+			jQuery('.textblock').mouseover(function() {
+	
+				jQuery(this).addClass('textblock-in');
+	
+			});
+	
+			/** 
+			 * @description: move out of textblock
+			 */
+			jQuery('.textblock').mouseout(function() {
+	
+				jQuery(this).removeClass('textblock-in');
+	
+			});
+	
+		}
+	
+	}
+	
 	// unbind first to allow repeated calls to this function
 	jQuery('.textblock').unbind( 'click' );
 

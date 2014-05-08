@@ -75,36 +75,13 @@ class CommentpressMultisiteAdmin {
 
 
 
-	/**
-	 * PHP 4 constructor
-	 */
-	function CommentpressMultisiteAdmin( $parent_obj = null ) {
-		
-		// is this php5?
-		if ( version_compare( PHP_VERSION, "5.0.0", "<" ) ) {
-		
-			// call php5 constructor
-			$this->__construct( $parent_obj );
-			
-		}
-		
-		// --<
-		return $this;
-
-	}
-
-
-
-
-
-
 	/** 
 	 * @description: set up all options associated with this object
 	 * @param string $component a component identifier, either 'multisite' or 'buddypress'
 	 * @todo: 
 	 *
 	 */
-	function initialise( $component = 'multisite' ) {
+	public function initialise( $component = 'multisite' ) {
 	
 		// we always get a multisite request
 		if ( $component == 'multisite' ) {
@@ -150,7 +127,7 @@ class CommentpressMultisiteAdmin {
 	 * @todo: 
 	 *
 	 */
-	function upgrade() {
+	public function upgrade() {
 		
 		// init return
 		$result = false;
@@ -214,7 +191,7 @@ class CommentpressMultisiteAdmin {
 	 * @todo: 
 	 *
 	 */
-	function destroy() {
+	public function destroy() {
 	
 		// delete options
 		$this->options_delete();
@@ -232,7 +209,7 @@ class CommentpressMultisiteAdmin {
 	 * @todo: 
 	 *
 	 */
-	function uninstall() {
+	public function uninstall() {
 	
 		// nothing
 		
@@ -268,7 +245,7 @@ class CommentpressMultisiteAdmin {
 	 * @todo: 
 	 *
 	 */
-	function check_upgrade() {
+	public function check_upgrade() {
 	
 		// init
 		$result = false;
@@ -301,7 +278,7 @@ class CommentpressMultisiteAdmin {
 	 * @todo: 
 	 *
 	 */
-	function options_create() {
+	public function options_create() {
 	
 		// init default options
 		$this->cpmu_options = array();
@@ -328,7 +305,7 @@ class CommentpressMultisiteAdmin {
 	 * @todo: 
 	 *
 	 */
-	function options_delete() {
+	public function options_delete() {
 		
 		// delete CommentPress Multisite version
 		delete_site_option( 'cpmu_version' );
@@ -350,7 +327,7 @@ class CommentpressMultisiteAdmin {
 	 * @todo: do more error checking?
 	 *
 	 */
-	function options_update() {
+	public function options_update() {
 	
 		// init result
 		$result = false;
@@ -454,7 +431,7 @@ class CommentpressMultisiteAdmin {
 	 * @todo: 
 	 *
 	 */
-	function options_save() {
+	public function options_save() {
 		
 		// set option
 		return $this->option_wpms_set( 'cpmu_options', $this->cpmu_options );
@@ -473,7 +450,7 @@ class CommentpressMultisiteAdmin {
 	 * @todo: 
 	 *
 	 */
-	function options_reset( $component = 'multisite' ) {
+	public function options_reset( $component = 'multisite' ) {
 	
 		// init default options
 		$options = array();
@@ -517,7 +494,7 @@ class CommentpressMultisiteAdmin {
 	 * @description: return existence of a specified option
 	 * @todo: 
 	 */
-	function option_exists( $option_name = '' ) {
+	public function option_exists( $option_name = '' ) {
 	
 		// test for null
 		if ( $option_name == '' ) {
@@ -541,7 +518,7 @@ class CommentpressMultisiteAdmin {
 	 * @description: return a value for a specified option
 	 * @todo: 
 	 */
-	function option_get( $option_name = '', $default = false ) {
+	public function option_get( $option_name = '', $default = false ) {
 	
 		// test for null
 		if ( $option_name == '' ) {
@@ -565,7 +542,7 @@ class CommentpressMultisiteAdmin {
 	 * @description: sets a value for a specified option
 	 * @todo: 
 	 */
-	function option_set( $option_name = '', $value = '' ) {
+	public function option_set( $option_name = '', $value = '' ) {
 	
 		// test for null
 		if ( $option_name == '' ) {
@@ -597,7 +574,7 @@ class CommentpressMultisiteAdmin {
 	 * @description: deletes a specified option
 	 * @todo: 
 	 */
-	function option_delete( $option_name = '' ) {
+	public function option_delete( $option_name = '' ) {
 	
 		// test for null
 		if ( $option_name == '' ) {
@@ -621,7 +598,7 @@ class CommentpressMultisiteAdmin {
 	 * @description: return existence of a specified site option
 	 * @todo: 
 	 */
-	function option_wpms_exists( $option_name = '' ) {
+	public function option_wpms_exists( $option_name = '' ) {
 	
 		// test for null
 		if ( $option_name == '' ) {
@@ -655,7 +632,7 @@ class CommentpressMultisiteAdmin {
 	 * @description: return a value for a specified site option
 	 * @todo: 
 	 */
-	function option_wpms_get( $option_name = '', $default = false ) {
+	public function option_wpms_get( $option_name = '', $default = false ) {
 	
 		// test for null
 		if ( $option_name == '' ) {
@@ -679,7 +656,7 @@ class CommentpressMultisiteAdmin {
 	 * @description: sets a value for a specified site option
 	 * @todo: 
 	 */
-	function option_wpms_set( $option_name = '', $value = '' ) {
+	public function option_wpms_set( $option_name = '', $value = '' ) {
 	
 		// test for null
 		if ( $option_name == '' ) {
@@ -705,7 +682,7 @@ class CommentpressMultisiteAdmin {
 	 * @todo:
 	 *
 	 */
-	function install_commentpress( $context = 'new_blog' ) {
+	public function install_commentpress( $context = 'new_blog' ) {
 		
 		// activate core
 		commentpress_activate_core();
@@ -820,7 +797,7 @@ class CommentpressMultisiteAdmin {
 	 * @todo:
 	 *
 	 */
-	function uninstall_commentpress() {
+	public function uninstall_commentpress() {
 		
 		// activate core
 		commentpress_activate_core();
@@ -854,7 +831,7 @@ class CommentpressMultisiteAdmin {
 	 * @return: keyed array of form data
 	 *
 	 */
-	function get_workflow_data() {
+	public function get_workflow_data() {
 	
 		// init
 		$return = array();
@@ -903,7 +880,7 @@ class CommentpressMultisiteAdmin {
 	 * @return: keyed array of form data
 	 *
 	 */
-	function get_blogtype_data() {
+	public function get_blogtype_data() {
 	
 		// init
 		$return = array();

@@ -141,8 +141,6 @@ function commentpress_setup(
 	register_nav_menu( 'toc', __( 'Table of Contents', 'commentpress-core' ) );
 
 	
-	// ignore BP 1.7 auto-compatibility - see commentpress_enqueue_theme_styles()
-	//add_theme_support( 'buddypress' );
 	
 	// if we have the plugin enabled...
 	global $commentpress_core;
@@ -180,13 +178,13 @@ add_action( 'after_setup_theme', 'commentpress_setup' );
 
 
 
-if ( ! function_exists( 'commentpress_enqueue_theme_styles' ) ):
+if ( ! function_exists( 'commentpress_bp_enqueue_styles' ) ):
 /** 
  * @description: add buddypress front-end styles
  * @todo:
  *
  */
-function commentpress_enqueue_theme_styles() {
+function commentpress_bp_enqueue_styles() {
 
 	// kick out on admin
 	if ( is_admin() ) { return; }
@@ -210,7 +208,33 @@ function commentpress_enqueue_theme_styles() {
 		
 	);
 	
+}
+endif; // commentpress_bp_enqueue_styles
+
+
+
+
+
+
+if ( ! function_exists( 'commentpress_bp_enqueue_scripts' ) ):
+/** 
+ * @description: add buddypress front-end scripts
+ * @todo:
+ *
+ */
+function commentpress_bp_enqueue_scripts() {
+
 	/*
+	----------------------------------------------------------------------------
+	Some notes on BuddyPress 2+ theme compatibility
+	----------------------------------------------------------------------------
+	
+	Theme compatibility needs revisiting, because the default theme is being
+	removed from BuddyPress core. 
+	
+	All theme markup needs to be adjusted to be compatible with the code in 
+	`buddypress/bp-templates` instead
+	
 	----------------------------------------------------------------------------
 	Some notes on BuddyPress 1.7 theme compatibility
 	----------------------------------------------------------------------------
@@ -224,36 +248,190 @@ function commentpress_enqueue_theme_styles() {
 	----------------------------------------------------------------------------
 	*/
 	
-	/*
-	// enqueue a copy of the legacy buddypress js
-	wp_enqueue_script(
+	// kick out on admin
+	if ( is_admin() ) { return; }
+
+	// enqueue buddypress js
+	wp_enqueue_script( 
 	
 		'cp_buddypress_js', 
-		get_template_directory_uri() . '/assets/js/buddypress.js', 
-		array( 'cp_common_js' )
-	
+		//BP_PLUGIN_URL . 'bp-templates/bp-legacy/js/buddypress.js',
+		BP_PLUGIN_URL . 'bp-themes/bp-default/_inc/global.js',
+		array( 'jquery' ),
+		COMMENTPRESS_VERSION // version
+
 	);
-	*/
+	
+	// add translation: this needs to be checked against BP_Legacy::enqueue_scripts
+	// from time to time to make sure it's up-to-date
+	$params = array(
+		'my_favs'           => __( 'My Favorites', 'commentpress-core' ),
+		'accepted'          => __( 'Accepted', 'commentpress-core' ),
+		'rejected'          => __( 'Rejected', 'commentpress-core' ),
+		'show_all_comments' => __( 'Show all comments for this thread', 'commentpress-core' ),
+		'show_x_comments'   => __( 'Show all %d comments', 'commentpress-core' ),
+		'show_all'          => __( 'Show all', 'commentpress-core' ),
+		'comments'          => __( 'comments', 'commentpress-core' ),
+		'close'             => __( 'Close', 'commentpress-core' ),
+		'view'              => __( 'View', 'commentpress-core' ),
+		'mark_as_fav'	    => __( 'Favorite', 'commentpress-core' ),
+		'remove_fav'	    => __( 'Remove Favorite', 'commentpress-core' ),
+		'unsaved_changes'   => __( 'Your profile has unsaved changes. If you leave the page, the changes will be lost.', 'commentpress-core' ),
+	);
+	
+	// localise
+	wp_localize_script( 'cp_buddypress_js', 'BP_DTheme', $params );
+
+}
+endif; // commentpress_bp_enqueue_scripts
+
+
+
+
+
+
+/** 
+ * @description: enable compatibility with BuddyPress
+ *
+ */
+function commentpress_bp_theme_compatibility() {
+
+	// BP 1.7 auto-compatibility - see commentpress_enqueue_theme_styles()
+	
+	// if we're using BP Template Pack
+	if ( function_exists( 'bp_tpack_theme_setup' ) ) {
+	
+		// assume that BP Template Pack has been activated and set up correctly
+	
+	} else {
+	
+		// use function cloned from BP Template Pack
+		commentpress_bp_theme_support();
+		
+	}
 	
 }
-endif; // commentpress_enqueue_theme_styles
 
-if ( ! function_exists( 'commentpress_enqueue_bp_theme_styles' ) ):
+
+
+
+
+
+/**
+ * @description: sets up WordPress theme for BuddyPress support - cloned from BP Template Pack
+ *
+ */
+function commentpress_bp_theme_support() {
+
+	// load the default BuddyPress AJAX functions if it isn't already included
+	if ( ! function_exists( 'bp_dtheme_register_actions' ) ) {
+		require_once( BP_PLUGIN_DIR . 'bp-themes/bp-default/_inc/ajax.php' );
+	}
+	
+	// call after_setup_theme function directly otherwise it doesn't run: this is 
+	// because we're hooking into bp_after_setup_theme which runs with priority 100
+	bp_dtheme_register_actions();
+
+	// tell BP that we support it
+	add_theme_support( 'buddypress' );
+	
+	// bail if admin
+	if ( is_admin() ) { return; }
+	
+	// register buttons for the relevant component templates
+	
+	// friends button
+	if ( bp_is_active( 'friends' ) )
+		add_action( 'bp_member_header_actions',    'bp_add_friend_button' );
+
+	// activity button
+	if ( bp_is_active( 'activity' ) )
+		add_action( 'bp_member_header_actions',    'bp_send_public_message_button' );
+
+	// messages button
+	if ( bp_is_active( 'messages' ) )
+		add_action( 'bp_member_header_actions',    'bp_send_private_message_button' );
+
+	// group buttons
+	if ( bp_is_active( 'groups' ) ) {
+		add_action( 'bp_group_header_actions',     'bp_group_join_button' );
+		add_action( 'bp_group_header_actions',     'bp_group_new_topic_button' );
+		add_action( 'bp_directory_groups_actions', 'bp_group_join_button' );
+	}
+
+	// blog button
+	if ( bp_is_active( 'blogs' ) ) {
+		add_action( 'bp_directory_blogs_actions',  'bp_blogs_visit_blog_button' );
+	}
+	
+} // commentpress_bp_theme_support
+
+
+
+
+
+
 /** 
- * @description: enqueue buddypress front-end styles
+ * @description: update BuddyPress activity CSS class with groupblog type
+ *
+ */
+function commentpress_bp_activity_css_class( $existing_class ) {
+	
+	// $activities_template->activity->component . ' ' . $activities_template->activity->type . $class
+	//print_r( array( 'existing_class' => $existing_class ) ); die();
+	
+	// init group blog type
+	$groupblogtype = '';
+
+	// get current item
+	global $activities_template;
+	$current_activity = $activities_template->activity;
+	//print_r( array( 'a' => $current_activity ) ); die();
+
+	// for group activity...
+	if ( $current_activity->component == 'groups' ) {
+
+		// get group blogtype
+		$groupblogtype = groups_get_groupmeta( $current_activity->item_id, 'groupblogtype' );
+	
+		// add space before if we have it
+		if ( $groupblogtype ) { $groupblogtype = ' '.$groupblogtype; }
+	
+	}
+	
+	// --<
+	return $existing_class . $groupblogtype;
+
+}
+
+
+
+
+
+
+/** 
+ * @description: enable support for BuddyPress
  * @todo:
  *
  */
-function commentpress_enqueue_bp_theme_styles() {
-
-	// add an action to include bp-overrides when buddypress is active
-	add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_theme_styles', 997 );
+function commentpress_buddypress_support() {
+	
+	//print_r( 'commentpress_buddypress_support' );
+	
+	// add an action to enable compatibility with BuddyPress
+	add_action( 'after_setup_theme', 'commentpress_bp_theme_compatibility', 101 );
+	
+	// include bp-overrides when buddypress is active
+	add_action( 'wp_enqueue_scripts', 'commentpress_bp_enqueue_styles', 994 );
+	add_action( 'wp_enqueue_scripts', 'commentpress_bp_enqueue_scripts', 994 );
+	
+	// add filter for activity class
+	add_filter( 'bp_get_activity_css_class', 'commentpress_bp_activity_css_class' );
 	
 }
-endif; // commentpress_enqueue_bp_theme_styles
 
-// add an action for the above
-add_action( 'bp_setup_globals', 'commentpress_enqueue_theme_styles' );
+// add an action for the above (BP hooks this to after_setup_theme with priority 100)
+add_action( 'bp_after_setup_theme', 'commentpress_buddypress_support' );
 
 
 
@@ -301,8 +479,8 @@ function commentpress_enqueue_scripts_and_styles() {
 		'cp_webfont_lato_css', 
 		'http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic',
 		array( 'cp_screen_css' ),
-		null, // no version, thanks
-		null // no media, thanks
+		COMMENTPRESS_VERSION, // version
+		'all' // media
 		
 	);
 	
@@ -2842,11 +3020,11 @@ function commentpress_get_comments_by_para() {
 		$redirect = site_url( 'wp-login.php?redirect_to='.get_permalink() );
 		
 		// init allowed to comment
-		$allowed_to_comment = false;
+		$login_to_comment = false;
 		
-		// test current state
+		// if we have to log in to comment...
 		if ( get_option('comment_registration') AND !is_user_logged_in() ) {
-			$allowed_to_comment = true;
+			$login_to_comment = true;
 		}
 		
 		
@@ -3138,7 +3316,7 @@ function commentpress_get_comments_by_para() {
 					if ( 'open' == $post->comment_status AND $text_signature != 'PINGS_AND_TRACKS' ) {
 					
 						// if we have to log in to comment...
-						if ( $allowed_to_comment ) {
+						if ( $login_to_comment ) {
 						
 							// leave comment link
 							echo '<div class="reply_to_para" id="reply_to_para-'.$para_num.'">'."\n".
@@ -5118,6 +5296,27 @@ function commentpress_has_feature_image() {
 	
 }
 
+
+
+
+
+/** 
+ * @description: temporary fix for WP 3.9
+ */
+function commentpress_sidebars_widgets( $array ) {
+	
+	// prevent errors in Theme Customizer
+	if ( !is_array( $array ) ) {
+		$array = array();
+	}
+	
+	// --<
+	return $array;
+
+}
+
+// add filter for above
+add_filter( 'sidebars_widgets', 'commentpress_sidebars_widgets', 1000 );
 
 
 

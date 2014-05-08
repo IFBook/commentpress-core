@@ -75,35 +75,12 @@ class CommentpressCoreFormatter {
 
 
 
-	/**
-	 * PHP 4 constructor
-	 */
-	function CommentpressCoreFormatter( $parent_obj = null ) {
-		
-		// is this php5?
-		if ( version_compare( PHP_VERSION, "5.0.0", "<" ) ) {
-		
-			// call php5 constructor
-			$this->__construct( $parent_obj );
-			
-		}
-		
-		// --<
-		return $this;
-
-	}
-
-
-
-
-
-
 	/** 
 	 * @description: set up all items associated with this object
 	 * @todo: 
 	 *
 	 */
-	function initialise() {
+	public function initialise() {
 	
 	}
 	
@@ -117,7 +94,7 @@ class CommentpressCoreFormatter {
 	 * @todo: 
 	 *
 	 */
-	function destroy() {
+	public function destroy() {
 	
 	}
 	
@@ -149,7 +126,7 @@ class CommentpressCoreFormatter {
 	 * @todo: 
 	 *
 	 */
-	function blog_type_label( $name ) {
+	public function blog_type_label( $name ) {
 	
 		return apply_filters( 
 			
@@ -170,7 +147,7 @@ class CommentpressCoreFormatter {
 	 * @todo: 
 	 *
 	 */
-	function blog_type_options( $existing_options ) {
+	public function blog_type_options( $existing_options ) {
 	
 		// define types
 		$types = array(
@@ -200,7 +177,7 @@ class CommentpressCoreFormatter {
 	 * @todo: 
 	 *
 	 */
-	function content_formatter( $formatter ) {
+	public function content_formatter( $formatter ) {
 		
 		// access globals
 		global $post;

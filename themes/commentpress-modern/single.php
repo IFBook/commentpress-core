@@ -124,6 +124,8 @@ if ( $tabs_class != '' ) {
 		
 ?>
 
+
+
 <div id="page_wrapper"<?php echo $tabs_classes; ?>>
 
 

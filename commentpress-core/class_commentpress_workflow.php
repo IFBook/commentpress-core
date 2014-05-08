@@ -72,35 +72,12 @@ class CommentpressCoreWorkflow {
 
 
 
-	/**
-	 * PHP 4 constructor
-	 */
-	function CommentpressCoreWorkflow( $parent_obj = null ) {
-		
-		// is this php5?
-		if ( version_compare( PHP_VERSION, "5.0.0", "<" ) ) {
-		
-			// call php5 constructor
-			$this->__construct( $parent_obj );
-			
-		}
-		
-		// --<
-		return $this;
-
-	}
-
-
-
-
-
-
 	/** 
 	 * @description: set up all items associated with this object
 	 * @todo: 
 	 *
 	 */
-	function initialise() {
+	public function initialise() {
 	
 	}
 	
@@ -114,7 +91,7 @@ class CommentpressCoreWorkflow {
 	 * @todo: 
 	 *
 	 */
-	function destroy() {
+	public function destroy() {
 	
 	}
 	
@@ -146,7 +123,7 @@ class CommentpressCoreWorkflow {
 	 * @todo: 
 	 *
 	 */
-	function blog_workflow_exists( $exists ) {
+	public function blog_workflow_exists( $exists ) {
 	
 		// switch on, but allow overrides
 		return apply_filters( 
@@ -169,7 +146,7 @@ class CommentpressCoreWorkflow {
 	 * @todo: 
 	 *
 	 */
-	function blog_workflow_label( $name ) {
+	public function blog_workflow_label( $name ) {
 	
 		// set label, but allow overrides
 		return apply_filters( 
@@ -191,7 +168,7 @@ class CommentpressCoreWorkflow {
 	 * @todo: 
 	 *
 	 */
-	function group_meta_set_blog_type( $blog_type, $blog_workflow ) {
+	public function group_meta_set_blog_type( $blog_type, $blog_workflow ) {
 	
 		// if the blog workflow is enabled, then this is a translation group
 		if ( $blog_workflow == '1' ) {
@@ -221,7 +198,7 @@ class CommentpressCoreWorkflow {
 	 * @todo: 
 	 *
 	 */
-	function workflow_metabox() {
+	public function workflow_metabox() {
 	
 		global $post;
 	
@@ -297,7 +274,7 @@ class CommentpressCoreWorkflow {
 	 * @todo: 
 	 *
 	 */
-	function workflow_metabox_title( $title ) {
+	public function workflow_metabox_title( $title ) {
 	
 		// set label, but allow overrides
 		return apply_filters( 
@@ -319,15 +296,14 @@ class CommentpressCoreWorkflow {
 	 * @todo: 
 	 *
 	 */
-	function workflow_save_post( $post_obj ) {
-	
-		// how do we get the content of wp_editor()?
+	public function workflow_save_post( $post_obj ) {
 	
 		// if no post, kick out
 		if ( !$post_obj ) { return; }
 		
-		// if not page, kick out
-		if ( $post_obj->post_type != 'post' ) { return; }
+		// if not post or page, kick out
+		$types = array( 'post', 'page' );
+		if ( ! in_array( $post_obj->post_type, $types ) ) { return; }
 		
 		
 		
@@ -339,9 +315,11 @@ class CommentpressCoreWorkflow {
 		if ( defined('DOING_AUTOSAVE') AND DOING_AUTOSAVE ) { return; }
 		
 		//print_r( array( 'can' => current_user_can( 'edit_posts' ) ) ); die();
+		//print_r( array( 'can' => current_user_can( 'edit_pages' ) ) ); die();
 		
-		// Check permissions
-		if ( !current_user_can( 'edit_posts' ) ) { return; }
+		// check permissions
+		if ( $post_obj->post_type == 'post' AND !current_user_can( 'edit_posts' ) ) { return; }
+		if ( $post_obj->post_type == 'page' AND !current_user_can( 'edit_pages' ) ) { return; }
 		
 		
 		
@@ -450,7 +428,7 @@ class CommentpressCoreWorkflow {
 	 * @todo: 
 	 *
 	 */
-	function workflow_save_copy( $new_post_id ) {
+	public function workflow_save_copy( $new_post_id ) {
 	
 		// ---------------------------------------------------------------------
 		// If we are making a copy of the current version, also save meta
@@ -604,6 +582,9 @@ class CommentpressCoreWorkflow {
 		
 			// save post with translation workflow
 			add_action( 'cp_workflow_save_post', array( $this, 'workflow_save_post' ), 21, 1 );
+		
+			// save page with translation workflow
+			add_action( 'cp_workflow_save_page', array( $this, 'workflow_save_post' ), 21, 1 );
 		
 			// save translation workflow for copied posts
 			add_action( 'cp_workflow_save_copy', array( $this, 'workflow_save_copy' ), 21, 1 );

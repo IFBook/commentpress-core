@@ -96,6 +96,9 @@ class CommentpressCoreDatabase {
 	// featured images off by default
 	public $featured_images = 'n';
 	
+	// show textblock meta by default
+	public $textblock_meta = 'y';
+	
 
 
 
@@ -127,35 +130,12 @@ class CommentpressCoreDatabase {
 
 
 
-	/**
-	 * @description: PHP 4 constructor
-	 */
-	function CommentpressCoreDatabase( $parent_obj ) {
-		
-		// is this php5?
-		if ( version_compare( PHP_VERSION, "5.0.0", "<" ) ) {
-		
-			// call php5 constructor
-			$this->__construct( $parent_obj );
-			
-		}
-		
-		// --<
-		return $this;
-
-	}
-
-
-
-
-
-
 	/** 
 	 * @description: set up all items associated with this object
 	 * @todo: 
 	 *
 	 */
-	function activate() {
+	public function activate() {
 		
 		// have we already got a modified database?
 		$modified = $this->db_is_modified( 'comment_text_signature' ) ? 'y' : 'n';
@@ -243,7 +223,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function upgrade() {
+	public function upgrade() {
 		
 		// init return
 		$result = false;
@@ -275,6 +255,19 @@ class CommentpressCoreDatabase {
 			
 			// get variables
 			extract( $_POST );
+			
+			
+			
+			// New in CP 3.5.9 - textblock meta can be hidden
+			if ( !$this->option_exists( 'cp_textblock_meta' ) ) {
+	
+				// get choice
+				$_choice = esc_sql( $cp_textblock_meta );
+			
+				// add chosen featured images option
+				$this->option_set( 'cp_textblock_meta', $_choice );
+				
+			}
 			
 			
 			
@@ -559,7 +552,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function deactivate() {
+	public function deactivate() {
 		
 		// reset comment paging option
 		$this->_reset_comment_paging();
@@ -602,7 +595,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function schema_update() {
+	public function schema_update() {
 		
 		// database object
 		global $wpdb;
@@ -639,7 +632,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function schema_upgrade() {
+	public function schema_upgrade() {
 		
 		// database object
 		global $wpdb;
@@ -677,7 +670,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function db_is_modified( $column_name ) {
+	public function db_is_modified( $column_name ) {
 		
 		// database object
 		global $wpdb;
@@ -725,7 +718,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function check_upgrade() {
+	public function check_upgrade() {
 	
 		// init
 		$result = false;
@@ -735,9 +728,14 @@ class CommentpressCoreDatabase {
 		
 		// if we have a commentpress install and it's lower than this one
 		if ( $_version !== false AND version_compare( COMMENTPRESS_VERSION, $_version, '>' ) ) {
-		
-			// override
-			$result = true;
+			
+			// check whether any options need to be shown
+			if ( $this->check_upgrade_options() ) {
+			
+				// override
+				$result = true;
+			
+			}
 
 		}
 		
@@ -755,12 +753,72 @@ class CommentpressCoreDatabase {
 
 
 	/** 
+	 * @description: check for options added in this plugin upgrade
+	 * @return boolean $result
+	 * @todo: 
+	 *
+	 */
+	public function check_upgrade_options() {
+	
+		// do we have the option to choose to hide textblock meta (new in 3.5.9)?
+		if ( !$this->option_exists( 'cp_textblock_meta' ) ) { return true; }
+		
+		// do we have the option to choose featured images (new in 3.5.4)?
+		if ( !$this->option_exists( 'cp_featured_images' ) ) { return true; }
+		
+		// do we have the option to choose the default sidebar (new in 3.3.3)?
+		if ( !$this->option_exists( 'cp_sidebar_default' ) ) { return true; }
+		
+		// do we have the option to show or hide page meta (new in 3.3.2)?
+		if ( !$this->option_exists( 'cp_page_meta_visibility' ) ) { return true; }
+		
+		// do we have the option to choose blog type (new in 3.3.1)?
+		if ( !$this->option_exists( 'cp_blog_type' ) ) { return true; }
+		
+		// do we have the option to choose blog workflow (new in 3.3.1)?
+		if ( !$this->option_exists( 'cp_blog_workflow' ) ) { return true; }
+		
+		// do we have the option to choose the TOC layout (new in 3.3)?
+		if ( !$this->option_exists( 'cp_show_extended_toc' ) ) { return true; }
+		
+		// do we have the option to set the comment editor?
+		if ( !$this->option_exists( 'cp_comment_editor' ) ) { return true; }
+		
+		// do we have the option to set the default behaviour?
+		if ( !$this->option_exists( 'cp_promote_reading' ) ) { return true; }
+		
+		// do we have the option to show or hide titles?
+		if ( !$this->option_exists( 'cp_title_visibility' ) ) { return true; }
+		
+		// do we have the option to set the header bg colour?
+		if ( !$this->option_exists( 'cp_header_bg_colour' ) ) { return true; }
+		
+		// do we have the option to set the scroll speed?
+		if ( !$this->option_exists( 'cp_js_scroll_speed' ) ) { return true; }
+		
+		// do we have the option to set the minimum page width?
+		if ( !$this->option_exists( 'cp_min_page_width' ) ) { return true; }
+		
+
+
+		// --<
+		return false;
+
+	}
+	
+	
+	
+	
+	
+
+
+	/** 
 	 * @description: save the settings set by the administrator
 	 * @return boolean success or failure
 	 * @todo: do more error checking?
 	 *
 	 */
-	function options_update() {
+	public function options_update() {
 	
 		// init result
 		$result = false;
@@ -790,6 +848,7 @@ class CommentpressCoreDatabase {
 			$cp_blog_workflow = 0;
 			$cp_sidebar_default = 'comments';
 			$cp_featured_images = 'n';
+			$cp_textblock_meta = 'y';
 			
 			
 			
@@ -989,6 +1048,10 @@ class CommentpressCoreDatabase {
 			$cp_featured_images = esc_sql( $cp_featured_images );
 			$this->option_set( 'cp_featured_images', $cp_featured_images );
 			
+			// save textblock meta
+			$cp_textblock_meta = esc_sql( $cp_textblock_meta );
+			$this->option_set( 'cp_textblock_meta', $cp_textblock_meta );
+			
 
 
 			// save
@@ -1019,7 +1082,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function options_save() {
+	public function options_save() {
 		
 		// set option
 		return $this->option_wp_set( 'commentpress_options', $this->commentpress_options );
@@ -1036,7 +1099,7 @@ class CommentpressCoreDatabase {
 	 * @description: return a value for a specified option
 	 * @todo: 
 	 */
-	function option_exists( $option_name = '' ) {
+	public function option_exists( $option_name = '' ) {
 	
 		// test for null
 		if ( $option_name == '' ) {
@@ -1060,7 +1123,7 @@ class CommentpressCoreDatabase {
 	 * @description: return a value for a specified option
 	 * @todo: 
 	 */
-	function option_get( $option_name = '', $default = false ) {
+	public function option_get( $option_name = '', $default = false ) {
 	
 		// test for null
 		if ( $option_name == '' ) {
@@ -1084,7 +1147,7 @@ class CommentpressCoreDatabase {
 	 * @description: sets a value for a specified option
 	 * @todo: 
 	 */
-	function option_set( $option_name = '', $value = '' ) {
+	public function option_set( $option_name = '', $value = '' ) {
 	
 		// test for null
 		if ( $option_name == '' ) {
@@ -1116,7 +1179,7 @@ class CommentpressCoreDatabase {
 	 * @description: deletes a specified option
 	 * @todo: 
 	 */
-	function option_delete( $option_name = '' ) {
+	public function option_delete( $option_name = '' ) {
 	
 		// test for null
 		if ( $option_name == '' ) {
@@ -1140,7 +1203,7 @@ class CommentpressCoreDatabase {
 	 * @description: return a value for a specified option
 	 * @todo: 
 	 */
-	function option_wp_exists( $option_name = '' ) {
+	public function option_wp_exists( $option_name = '' ) {
 	
 		// test for null
 		if ( $option_name == '' ) {
@@ -1174,7 +1237,7 @@ class CommentpressCoreDatabase {
 	 * @description: return a value for a specified option
 	 * @todo: 
 	 */
-	function option_wp_get( $option_name = '', $default = false ) {
+	public function option_wp_get( $option_name = '', $default = false ) {
 	
 		// test for null
 		if ( $option_name == '' ) {
@@ -1198,7 +1261,7 @@ class CommentpressCoreDatabase {
 	 * @description: sets a value for a specified option
 	 * @todo: 
 	 */
-	function option_wp_set( $option_name = '', $value = null ) {
+	public function option_wp_set( $option_name = '', $value = null ) {
 	
 		// test for null
 		if ( $option_name == '' ) {
@@ -1222,7 +1285,7 @@ class CommentpressCoreDatabase {
 	 * @description: get default header bg colour
 	 * @todo: 
 	 */
-	function option_get_header_bg() {
+	public function option_get_header_bg() {
 	
 		// test for option
 		if ( $this->option_exists( 'cp_header_bg_colour' ) ) {
@@ -1251,7 +1314,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function save_meta( $post_obj ) {
+	public function save_meta( $post_obj ) {
 	
 		// if no post, kick out
 		if ( !$post_obj ) { return; }
@@ -1285,7 +1348,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function save_page_meta( $post_obj ) {
+	public function save_page_meta( $post_obj ) {
 		
 		//print_r( 'data: '.$_data ); die();
 		//print_r( '$post_obj->post_type: '.$post_obj->post_type ); die();
@@ -1654,6 +1717,78 @@ class CommentpressCoreDatabase {
 		
 
 
+		// ---------------------------------------------------------------------
+		// Workflow
+		// ---------------------------------------------------------------------
+		
+		// do we have the option to set workflow (new in 3.3.1)?
+		if ( $this->option_exists( 'cp_blog_workflow' ) ) {
+		
+			// get workflow setting for the blog
+			$_workflow = $this->option_get( 'cp_blog_workflow' );
+			
+			/*
+			// ----------------
+			// WORK IN PROGRESS
+			
+			// set key
+			$key = '_cp_blog_workflow_override';
+			
+			// if the custom field already has a value...
+			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+			
+				// get existing value
+				$_workflow = get_post_meta( $post->ID, $key, true );
+				
+			}
+			// ----------------
+			*/
+			
+			// if it's enabled...
+			if ( $_workflow == '1' ) {
+			
+				// notify plugins that workflow stuff needs saving
+				do_action( 'cp_workflow_save_page', $post );
+			
+			}
+			
+			/*
+			// ----------------
+			// WORK IN PROGRESS
+			
+			// get the setting for the post (we do this after saving the extra
+			// post data because 
+			$_formatter = ( isset( $_POST['cp_post_type_override'] ) ) ? $_POST['cp_post_type_override'] : '';
+	
+			// if the custom field already has a value...
+			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+			
+				// if empty string...
+				if ( $_data === '' ) {
+			
+					// delete the meta_key
+					delete_post_meta( $post->ID, $key );
+				
+				} else {
+				
+					// update the data
+					update_post_meta( $post->ID, $key, esc_sql( $_data ) );
+					
+				}
+				
+			} else {
+			
+				// add the data
+				add_post_meta( $post->ID, $key, esc_sql( $_data ) );
+				
+			}
+			// ----------------
+			*/
+			
+		}
+		
+
+
 	}
 	
 	
@@ -1669,7 +1804,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function save_post_meta( $post_obj ) {
+	public function save_post_meta( $post_obj ) {
 		
 		//print_r( 'data: '.$_data ); die();
 		//print_r( '$post_obj->post_type: '.$post_obj->post_type ); die();
@@ -2012,7 +2147,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function delete_meta( $post_id ) {
+	public function delete_meta( $post_id ) {
 	
 		// if no post, kick out
 		if ( !$post_id ) { return; }
@@ -2074,7 +2209,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function create_special_pages() {
+	public function create_special_pages() {
 		
 		// one of the CommentPress Core themes MUST be active...
 		// or WordPress will fail to set the page templates for the pages that require them.
@@ -2127,7 +2262,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function create_special_page( $_page ) {
+	public function create_special_page( $_page ) {
 	
 		// init
 		$new_id = false;
@@ -2216,7 +2351,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function delete_special_pages() {
+	public function delete_special_pages() {
 	
 		// init success flag
 		$success = true;
@@ -2291,7 +2426,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function delete_special_page( $_page ) {
+	public function delete_special_page( $_page ) {
 	
 		// init success flag
 		$success = true;
@@ -2424,7 +2559,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function is_special_page() {
+	public function is_special_page() {
 	
 		// init flag
 		$is_special_page = false;
@@ -2479,7 +2614,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function comments_enabled() {
+	public function comments_enabled() {
 	
 		// init return
 		$allowed = false;
@@ -2526,7 +2661,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function get_approved_comments( $post_ID ) {
+	public function get_approved_comments( $post_ID ) {
 		
 		// for Wordpress, we use the API
 		$comments = get_approved_comments( $post_ID );
@@ -2550,7 +2685,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function get_all_comments( $post_ID ) {
+	public function get_all_comments( $post_ID ) {
 	
 		// access post
 		global $post;
@@ -2587,7 +2722,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function get_comments( $post_ID ) {
+	public function get_comments( $post_ID ) {
 	
 		// database object
 		global $wpdb;
@@ -2626,7 +2761,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function save_comment_signature( $comment_ID ) {
+	public function save_comment_signature( $comment_ID ) {
 		
 		// database object
 		global $wpdb;
@@ -2684,7 +2819,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function save_comment_page( $comment_ID ) {
+	public function save_comment_page( $comment_ID ) {
 	
 		// is this a paged post?
 		if ( isset( $_POST['page'] ) AND is_numeric( $_POST['page'] ) ) {
@@ -2738,7 +2873,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function get_text_signature_by_comment_id( $comment_ID ) {
+	public function get_text_signature_by_comment_id( $comment_ID ) {
 	
 		// database object
 		global $wpdb;
@@ -2776,7 +2911,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function set_text_sigs( $sigs ) {
+	public function set_text_sigs( $sigs ) {
 	
 		global $ffffff_sigs;
 	
@@ -2801,7 +2936,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function get_text_sigs() {
+	public function get_text_sigs() {
 	
 		global $ffffff_sigs;
 	
@@ -2825,7 +2960,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function get_javascript_vars() {
+	public function get_javascript_vars() {
 	
 		// init return
 		$vars = array();
@@ -3106,6 +3241,22 @@ class CommentpressCoreDatabase {
 			
 		}
 		
+		// default to showing textblock meta
+		$vars['cp_textblock_meta'] = 1;
+		
+		// check option
+		if ( 
+		
+			$this->option_exists( 'cp_textblock_meta' ) AND
+			$this->option_get( 'cp_textblock_meta' ) == 'n'
+			
+		) {
+		
+			// only show textblock meta on rollover
+			$vars['cp_textblock_meta'] = 0;
+			
+		}
+		
 		
 		
 		// --<
@@ -3124,7 +3275,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function test_for_mobile() {
+	public function test_for_mobile() {
 	
 		// do we have a user agent?
 		if ( isset( $_SERVER["HTTP_USER_AGENT"] ) ) {
@@ -3200,7 +3351,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function is_mobile() {
+	public function is_mobile() {
 	
 		// do we have the property?
 		if ( !isset( $this->is_mobile ) ) { 
@@ -3226,7 +3377,7 @@ class CommentpressCoreDatabase {
 	 * @todo: 
 	 *
 	 */
-	function is_tablet() {
+	public function is_tablet() {
 	
 		// do we have the property?
 		if ( !isset( $this->is_tablet ) ) { 
@@ -3835,7 +3986,7 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 		add_option( 'commentpress_sidebars_widgets', $this->option_wp_get( 'sidebars_widgets' ) );
 
 		// clear them
-		update_option( 'sidebars_widgets', null );
+		update_option( 'sidebars_widgets', array() );
 
 	}
 	
@@ -3928,6 +4079,7 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 			'cp_blog_workflow' => $this->blog_workflow,
 			'cp_sidebar_default' => $this->sidebar_default,
 			'cp_featured_images' => $this->featured_images,
+			'cp_textblock_meta' => $this->textblock_meta,
 		
 		);
 
@@ -3999,6 +4151,9 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 		
 		// featured images
 		$this->option_set( 'cp_featured_images', $this->featured_images );
+		
+		// textblock meta
+		$this->option_set( 'cp_textblock_meta', $this->textblock_meta );
 		
 		// store it
 		$this->options_save();
@@ -4100,6 +4255,10 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 										$old[ 'cp_featured_images' ] :
 										$this->featured_images;
 		
+		$this->textblock_meta =		 	isset( $old[ 'cp_textblock_meta' ] ) ?
+										$old[ 'cp_textblock_meta' ] :
+										$this->textblock_meta;
+		
 
 
 		// ---------------------------------------------------------------------
@@ -4156,6 +4315,7 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 			'cp_blog_workflow' => $blog_workflow,
 			'cp_sidebar_default' => $this->sidebar_default,
 			'cp_featured_images' => $this->featured_images,
+			'cp_textblock_meta' => $this->textblock_meta,
 			
 		);
 			

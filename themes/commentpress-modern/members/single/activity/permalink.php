@@ -1,6 +1,6 @@
 <?php get_header( 'buddypress' ) ?>
 
-<!-- members/index.php -->
+<!-- members/single/activity/permalink.php -->
 
 <div id="wrapper">
 

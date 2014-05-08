@@ -299,6 +299,7 @@ div.generic-button a
 	text-align: center;
 	text-decoration: none;
 	line-height: 14px;
+	text-transform: none;
 }
 
 button:hover,
@@ -323,6 +324,7 @@ div.generic-button a:hover
 	color: #555;
 	outline: none;
 	text-decoration: none;
+	text-transform: none;
 }
 
 /* the all-important highlight state */
@@ -334,6 +336,14 @@ div.generic-button a:hover
 .selected_para.selected_dropzone
 {
 	background-color: #eee;
+}
+
+#content .textblock.textblock-in span.para_marker,
+#content .textblock.selected_para span.para_marker,
+#content .textblock.textblock-in span.commenticonbox,
+#content .textblock.selected_para span.commenticonbox
+{
+	display: inline-block;
 }
 
 pre
@@ -379,6 +389,7 @@ table th
 }
 
 
+
 /* 
 --------------------------------------------------------------------------------
 SCREEN STYLES 
@@ -415,6 +426,28 @@ img.cp_logo_image
 	float: left;
 	padding: 12px 10px 0 10px;
 }
+
+#title h1
+{
+	letter-spacing: 1px;
+}
+
+#header #tagline 
+{
+	font-style: normal;
+	font-size: 1em;
+	color: #999;
+	padding-top: 2px;
+	letter-spacing: 1px;
+}
+
+
+
+/* 
+--------------------------------------------------------------------------------
+Switcher
+--------------------------------------------------------------------------------
+*/
 
 #switcher
 {
@@ -485,6 +518,12 @@ img.cp_logo_image
 
 
 
+/* 
+--------------------------------------------------------------------------------
+Content
+--------------------------------------------------------------------------------
+*/
+
 #content_container
 {
 	position: relative;
@@ -541,6 +580,12 @@ body.admin-bar #sidebar
 
 
 
+/* 
+--------------------------------------------------------------------------------
+Shadows and Transitions
+--------------------------------------------------------------------------------
+*/
+
 /* 10px outer shadow */
 #header
 {
@@ -560,7 +605,8 @@ body.admin-bar #sidebar
 }
 
 /* 15px outer shadows */
-#page_wrapper
+#page_wrapper,
+.page_wrapper
 {
 	-webkit-box-shadow: #888 0 0 15px;
 	-moz-box-shadow: #888 0 0 15px;
@@ -638,6 +684,14 @@ BASIC LAYOUT
 	background-color: #fff;
 	min-height: 620px;
 	position: relative;
+}
+
+.page_wrapper
+{
+	background-color: #fff;
+	min-height: 620px;
+	position: relative;
+	/* margin: 0 0 20px 0; */
 }
 
 .page_navigation ul,
@@ -737,7 +791,8 @@ BASIC LAYOUT
 	text-indent: -4000px;
 }
 
-#content
+#content,
+.content
 {
 	margin: 0 12%;
 	padding: 6% 0;
@@ -1625,10 +1680,13 @@ div.search_meta p a
 	position: absolute;
 	font-style: normal;
 	left: -32px;
-	margin-top: 2px;
+	margin-top: 0;
+	width: 36px;
+	display: block;
 }
 
-#content .post span.para_marker a 
+#content .post span.para_marker a,
+.content .post span.para_marker a 
 {
 	text-decoration: none;
 	font-family: sans-serif;
@@ -1639,13 +1697,15 @@ div.search_meta p a
 .post span.commenticonbox
 {
 	position: absolute;
-	margin-top: 4px;
+	margin-top: 5px;
 	padding-right: 20px;
 	right: -44px;
 	font-family: sans-serif;
 	color: #000;
 	font-size: 1em;
 	font-style: normal;
+	width: 17px;
+	padding-left: 9px;
 }
 
 span.commenticonbox a.para_permalink 
@@ -1715,7 +1775,8 @@ div.multipager .multipager_sep
 	visibility: hidden;
 }
 
-#content div.multipager:after 
+#content div.multipager:after,
+.content div.multipager:after 
 {
 	content: "";
 	display: block;
@@ -1918,7 +1979,8 @@ dl.gallery-item
 	font-family: sans-serif;
 }
 
-#content ul.image_link 
+#content ul.image_link,
+.content ul.image_link 
 {
 	margin: 0;
 	margin-top: 2em;
@@ -2297,7 +2359,8 @@ Post Versioning
 --------------------------------------------------------------------------------
 */
 
-#content div.version_info
+#content div.version_info,
+.content div.version_info
 {
 	margin: 0 0 1.6em 0;
 	margin-top: -2em;
@@ -2308,38 +2371,45 @@ Post Versioning
 }
 
 #content div.version_info ul,
-#content div.version_info ul li
+.content div.version_info ul,
+#content div.version_info ul li,
+.content div.version_info ul li
 {
 	list-style: none;
 	list-style-image: none;
 }
 
-#content div.version_info ul
+#content div.version_info ul,
+.content div.version_info ul
 {
 	margin: 0;
 	padding: 0;
 	overflow: auto;
 }
 
-#content div.version_info ul li
+#content div.version_info ul li,
+.content div.version_info ul li
 {
 	margin: 0;
 	padding: 0;
 }
 
-#content div.version_info ul li.newer_version
+#content div.version_info ul li.newer_version,
+.content div.version_info ul li.newer_version
 {
 	float: right;
 	text-align: right;
 	width: 50%;
 }
 
-#content div.version_info ul li.older_version
+#content div.version_info ul li.older_version,
+.content div.version_info ul li.older_version
 {
 	width: 50%;
 }
 
-#content div.version_info a
+#content div.version_info a,
+.content div.version_info a
 {
 	display: block;
 	padding: 6px;
@@ -2353,7 +2423,8 @@ Post Versioning
 	text-transform: uppercase;
 }
 
-#content div.version_info a:hover
+#content div.version_info a:hover,
+.content div.version_info a:hover
 {
 	color: #222;
 }
@@ -2601,7 +2672,8 @@ Compatibility with ZotPress plugin
 --------------------------------------------------------------------------------
 */
 
-#content div.zp-Zotpress
+#content div.zp-Zotpress,
+.content div.zp-Zotpress
 {
 	margin-top: 1em;
 	padding-top: 1em;
@@ -2648,8 +2720,11 @@ ol.footnotes,
 }
 
 #content sup a.footnote-link,
+.content sup a.footnote-link,
 #content a.simple-footnote,
-#content sup.footnote
+.content a.simple-footnote,
+#content sup.footnote,
+.content sup.footnote
 {
 	color: #761D19;
 	font-weight: bold;
@@ -2658,8 +2733,11 @@ ol.footnotes,
 }
 
 #content sup a.footnote-link,
+.content sup a.footnote-link,
 #content a.simple-footnote sup,
+.content a.simple-footnote sup,
 #content sup.footnote a,
+.content sup.footnote a,
 .footnotereverse a,
 .footnote-link.footnote-back-link,
 .simple-footnotes li > a
@@ -2690,6 +2768,7 @@ ol.footnotes,
 }
 
 #content a.simple-footnote sup,
+.content a.simple-footnote sup
 {
 	font-size: 60%;
 }
@@ -2717,7 +2796,8 @@ Compatibility with JetPack plugin
 --------------------------------------------------------------------------------
 */
 
-#content div.sharedaddy div.sd-block
+#content div.sharedaddy div.sd-block,
+.content div.sharedaddy div.sd-block
 {
 	padding-top: 1.5em;
 }
@@ -3382,7 +3462,8 @@ RESPONSIVENESS
 		font-size: 16px;
 	}
 
-	#content 
+	#content,
+	.content 
 	{
 		padding: 2% 0 6% 0;
 	}

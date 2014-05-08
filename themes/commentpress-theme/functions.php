@@ -4954,3 +4954,25 @@ endif; // commentpress_get_post_meta_visibility
 
 
 
+
+/** 
+ * @description: temporary fix for WP 3.9
+ */
+function commentpress_sidebars_widgets( $array ) {
+	
+	// prevent errors in Theme Customizer
+	if ( !is_array( $array ) ) {
+		$array = array();
+	}
+	
+	// --<
+	return $array;
+
+}
+
+// add filter for above
+add_filter( 'sidebars_widgets', 'commentpress_sidebars_widgets', 1000 );
+
+
+
+

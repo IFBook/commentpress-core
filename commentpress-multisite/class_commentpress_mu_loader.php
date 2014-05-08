@@ -78,35 +78,12 @@ class CommentpressMultisiteLoader {
 
 
 
-	/**
-	 * PHP 4 constructor
-	 */
-	function CommentpressMultisiteLoader( $parent_obj = null ) {
-		
-		// is this php5?
-		if ( version_compare( PHP_VERSION, "5.0.0", "<" ) ) {
-		
-			// call php5 constructor
-			$this->__construct( $parent_obj );
-			
-		}
-		
-		// --<
-		return $this;
-
-	}
-
-
-
-
-
-
 	/** 
 	 * @description: set up all items associated with this object
 	 * @todo: 
 	 *
 	 */
-	function initialise() {
+	public function initialise() {
 	
 	}
 	
@@ -120,7 +97,7 @@ class CommentpressMultisiteLoader {
 	 * @todo: 
 	 *
 	 */
-	function destroy() {
+	public function destroy() {
 	
 	}
 	

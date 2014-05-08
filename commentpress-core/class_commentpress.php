@@ -91,35 +91,12 @@ class CommentpressCore {
 
 
 
-	/**
-	 * PHP 4 constructor
-	 */
-	function CommentpressCore() {
-		
-		// is this php5?
-		if ( version_compare( PHP_VERSION, "5.0.0", "<" ) ) {
-		
-			// call php5 constructor
-			$this->__construct();
-			
-		}
-		
-		// --<
-		return $this;
-
-	}
-
-
-
-
-
-
 	/** 
 	 * @description: if needed, destroys this object
 	 * @todo: 
 	 *
 	 */
-	function destroy() {
+	public function destroy() {
 	
 		// nothing
 
@@ -154,7 +131,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function activate() {
+	public function activate() {
 	
 		// initialise display - sets the theme
 		$this->display->activate();
@@ -175,7 +152,7 @@ class CommentpressCore {
 	 * @todo:
 	 *
 	 */
-	function deactivate() {
+	public function deactivate() {
 	
 		// call database destroy method
 		$this->db->deactivate();
@@ -196,7 +173,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function translation() {
+	public function translation() {
 		
 		// only use, if we have it...
 		if( function_exists('load_plugin_textdomain') ) {
@@ -230,7 +207,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function buddypress_init() {
+	public function buddypress_init() {
 	
 		// we've got BuddyPress installed
 		$this->buddypress = true;
@@ -248,7 +225,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function buddypress_globals_loaded() {
+	public function buddypress_globals_loaded() {
 	
 		// for bp-groupblog integration...
 		if ( 
@@ -288,7 +265,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function is_buddypress() {
+	public function is_buddypress() {
 	
 		// --<
 		return $this->buddypress;
@@ -306,7 +283,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function is_groupblog() {
+	public function is_groupblog() {
 	
 		// --<
 		return $this->bp_groupblog;
@@ -324,7 +301,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function get_groupblog_theme() {
+	public function get_groupblog_theme() {
 	
 		// kick out if not in a group context
 		if ( !function_exists( 'bp_is_groups_component' ) ) { return false; }
@@ -390,7 +367,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function is_buddypress_special_page() {
+	public function is_buddypress_special_page() {
 		
 		// kick out if not BP
 		if ( !$this->is_buddypress() ) {
@@ -415,7 +392,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function admin_upgrade_alert() {
+	public function admin_upgrade_alert() {
 
 		// sanity check function exists
 		if ( function_exists('current_user_can') ) {
@@ -442,7 +419,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function admin_menu() {
+	public function admin_menu() {
 		
 		// sanity check function exists
 		if ( function_exists('current_user_can') ) {
@@ -514,7 +491,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function admin_head() {
+	public function admin_head() {
 		
 		// get admin javascript
 		echo $this->display->get_admin_js();
@@ -561,7 +538,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function admin_css() {
+	public function admin_css() {
 		
 		// enqueue farbtastic
 		wp_enqueue_style( 'farbtastic' );
@@ -589,7 +566,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function admin_js() {
+	public function admin_js() {
 		
 		// enqueue farbtastic
 		wp_enqueue_script( 'farbtastic' );
@@ -606,7 +583,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function options_page() {
+	public function options_page() {
 	
 		// sanity check function exists
 		if ( function_exists( 'current_user_can' ) ) {
@@ -633,7 +610,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function enqueue_admin_scripts() {
+	public function enqueue_admin_scripts() {
 	
 		// add quicktag button to page editor
 		$this->display->get_custom_quicktags();
@@ -651,7 +628,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function enqueue_scripts() {
+	public function enqueue_scripts() {
 		
 		// don't include in admin or wp-login.php
 		if ( is_admin() OR ( isset( $GLOBALS['pagenow'] ) AND 'wp-login.php' == $GLOBALS['pagenow'] ) ) {
@@ -687,7 +664,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function enqueue_styles() {
+	public function enqueue_styles() {
 		
 		// add plugin styles
 		$this->display->get_frontend_styles();
@@ -705,7 +682,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function redirect_to_child() {
+	public function redirect_to_child() {
 		
 		// do redirect
 		$this->nav->redirect_to_child();
@@ -725,7 +702,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function head( $headers ) {
+	public function head( $headers ) {
 		
 		// do we have navigation?
 		if ( is_single() OR is_page() OR is_attachment() ) {
@@ -749,7 +726,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function the_content( $content ) {
+	public function the_content( $content ) {
 	
 		// reference our post
 		global $post;
@@ -839,7 +816,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function get_list_option() {
+	public function get_list_option() {
 	
 		// get list option flag
 		$result = $this->db->option_get( 'cp_show_posts_or_pages_in_toc' );
@@ -863,7 +840,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function get_minimise_all_button( $sidebar = 'comments' ) {
+	public function get_minimise_all_button( $sidebar = 'comments' ) {
 	
 		// get minimise image
 		$result = $this->display->get_minimise_all_button( $sidebar );
@@ -884,7 +861,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function get_header_min_link() {
+	public function get_header_min_link() {
 	
 		// get minimise image
 		$result = $this->display->get_header_min_link();
@@ -905,7 +882,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function get_signature_field() {
+	public function get_signature_field() {
 	
 		// init text signature
 		$text_sig = '';
@@ -959,7 +936,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function add_reserved_names( $reserved_names ) {
+	public function add_reserved_names( $reserved_names ) {
 	
 		// get all image attachments to our title page
 		$reserved_names = array_merge(
@@ -998,7 +975,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function after_signup_form() {
+	public function after_signup_form() {
 		
 		// add sidebar
 		get_sidebar();
@@ -1016,7 +993,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function add_meta_boxes() {
+	public function add_meta_boxes() {
 		
 		// add our meta boxes to pages
 		add_meta_box(
@@ -1063,6 +1040,17 @@ class CommentpressCore {
 				
 			);
 			
+			// add our meta box to pages
+			add_meta_box(
+			
+				'commentpress_workflow_fields', 
+				$title, 
+				array( $this, 'custom_box_workflow' ),
+				'page',
+				'normal'
+				
+			);
+			
 		}
 		
 	}
@@ -1078,7 +1066,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function custom_box_page() {
+	public function custom_box_page() {
 		
 		// access post
 		global $post;
@@ -1269,7 +1257,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function custom_box_post() {
+	public function custom_box_post() {
 		
 		// access post
 		global $post;
@@ -1352,7 +1340,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function custom_box_workflow() {
+	public function custom_box_workflow() {
 		
 		// we now need to add any workflow that a plugin might want
 		do_action( 'cp_workflow_metabox' );
@@ -1370,7 +1358,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function contextual_help( $text ) {
+	public function contextual_help( $text ) {
 		
 		$text = '';
 		$screen = isset( $_GET['page'] ) ? $_GET['page'] : '';
@@ -1398,7 +1386,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function options_help( $screen ) {
+	public function options_help( $screen ) {
 	
 		//print_r( $screen ); die();
 		
@@ -1437,7 +1425,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function save_post( $post_id, $post ) {
+	public function save_post( $post_id, $post ) {
 	
 		// we don't use post_id because we're not interested in revisions
 		
@@ -1459,7 +1447,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function delete_post( $post_id ) {
+	public function delete_post( $post_id ) {
 	
 		// store our meta data
 		$result = $this->db->delete_meta( $post_id );
@@ -1479,7 +1467,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function save_comment( $comment_ID, $comment_status ) {
+	public function save_comment( $comment_ID, $comment_status ) {
 	
 		// we don't use comment_status
 	
@@ -1502,7 +1490,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function get_toc() {
+	public function get_toc() {
 	
 		// switch pages or posts
 		if( $this->get_list_option() == 'post' ) {
@@ -1530,7 +1518,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function get_toc_list( $exclude_pages = array() ) {
+	public function get_toc_list( $exclude_pages = array() ) {
 	
 		// switch pages or posts
 		if( $this->get_list_option() == 'post' ) {
@@ -1558,7 +1546,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function exclude_special_pages( $excluded_array ) {
+	public function exclude_special_pages( $excluded_array ) {
 	
 		//print_r( $excluded_array ); die();
 	
@@ -1589,7 +1577,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function exclude_special_pages_from_admin( $query ) {
+	public function exclude_special_pages_from_admin( $query ) {
 	
 		//print_r( $query ); die();
 	
@@ -1623,7 +1611,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function update_page_counts_in_admin( $vars ) {
+	public function update_page_counts_in_admin( $vars ) {
 	
 		//print_r( $vars ); die();
 	
@@ -1706,7 +1694,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function get_sorted_comments( $post_ID ) {
+	public function get_sorted_comments( $post_ID ) {
 	
 		// --<
 		return $this->parser->get_sorted_comments( $post_ID );
@@ -1726,7 +1714,7 @@ class CommentpressCore {
 	 * @todo: deal with duplicates
 	 *
 	 */
-	function get_para_num( $text_signature ) {
+	public function get_para_num( $text_signature ) {
 	
 		// get position in array
 		$num = array_search( $text_signature, $this->db->get_text_sigs() );
@@ -1749,7 +1737,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function get_text_signature( $para_num ) {
+	public function get_text_signature( $para_num ) {
 	
 		// get text sigs
 		$_sigs = $this->db->get_text_sigs();
@@ -1775,7 +1763,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function get_page_link( $page_type = 'cp_all_comments_page' ) {
+	public function get_page_link( $page_type = 'cp_all_comments_page' ) {
 	
 		// access globals
 		global $post;
@@ -1869,7 +1857,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function get_page_url( $page_type = 'cp_all_comments_page' ) {
+	public function get_page_url( $page_type = 'cp_all_comments_page' ) {
 	
 		// init
 		$_url = '';
@@ -1908,7 +1896,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function get_book_cover() {
+	public function get_book_cover() {
 		
 		// get image SRC
 		$src = $this->db->option_get( 'cp_book_picture' );
@@ -1935,7 +1923,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function is_signup_page() {
+	public function is_signup_page() {
 	
 		// init
 		$is_signup = false;
@@ -1974,7 +1962,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function is_theme_my_login_page() {
+	public function is_theme_my_login_page() {
 		
 		// access page
 		global $post;
@@ -2014,7 +2002,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function is_members_list_page() {
+	public function is_members_list_page() {
 		
 		// access page
 		global $post;
@@ -2053,7 +2041,7 @@ class CommentpressCore {
 	 * @todo: 
 	 *
 	 */
-	function is_subscribe_to_comments_reloaded_page() {
+	public function is_subscribe_to_comments_reloaded_page() {
 		
 		// access page
 		global $post;
@@ -2089,7 +2077,7 @@ class CommentpressCore {
 	/** 
 	 * @description: override the comments tempate for BP Docs
 	 */
-	function bp_docs_comment_tempate( $path, $original_path ) {
+	public function bp_docs_comment_tempate( $path, $original_path ) {
 
 		// if on BP root site
 		if ( bp_is_root_blog() ) {
@@ -2112,7 +2100,7 @@ class CommentpressCore {
 	/** 
 	 * @description: override the Featured Comments behaviour
 	 */
-	function featured_comments_override() {
+	public function featured_comments_override() {
 	
 		// is the plugin available?
 		if ( function_exists( 'wp_featured_comments_load' ) ) {
@@ -2138,7 +2126,7 @@ class CommentpressCore {
 	/** 
 	 * @description: get the Featured Comments link markup
 	 */
-	function featured_comments_markup( $editlink, $comment ) {
+	public function featured_comments_markup( $editlink, $comment ) {
 	
 		// is the plugin available?
 		if ( function_exists( 'wp_featured_comments_load' ) ) {
@@ -2166,7 +2154,7 @@ class CommentpressCore {
 	 * @return array $settings
 	 * @todo:
 	 */
-	function get_default_sidebar() {
+	public function get_default_sidebar() {
 	
 		// set sensible default
 		$return = 'toc';
@@ -2286,7 +2274,7 @@ class CommentpressCore {
 	 * @return array sidebars in order of display
 	 * @todo:
 	 */
-	function get_sidebar_order() {
+	public function get_sidebar_order() {
 		
 		// set default but allow overrides
 		$order = apply_filters( 
@@ -2315,7 +2303,7 @@ class CommentpressCore {
 	 * @return boolean true if commentable, false otherwise
 	 * @todo:
 	 */
-	function is_commentable() {
+	public function is_commentable() {
 	
 		// declare access to globals
 		global $post;
@@ -2360,7 +2348,7 @@ class CommentpressCore {
 	 * @return boolean true if mobile OS, false otherwise
 	 * @todo:
 	 */
-	function is_mobile() {
+	public function is_mobile() {
 	
 		// --<
 		return $this->db->is_mobile();
@@ -2378,7 +2366,7 @@ class CommentpressCore {
 	 * @return boolean true if tablet OS, false otherwise
 	 * @todo:
 	 */
-	function is_tablet() {
+	public function is_tablet() {
 	
 		// --<
 		return $this->db->is_tablet();

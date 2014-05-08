@@ -4,7 +4,7 @@ Plugin Name: CommentPress Core
 Plugin URI: http://www.futureofthebook.org/commentpress/
 Description: CommentPress allows readers to comment paragraph by paragraph in the margins of a text. You can use it to annotate, gloss, workshop, debate and more!
 Author: Institute for the Future of the Book
-Version: 3.5.8
+Version: 3.5.9
 Author URI: http://www.futureofthebook.org
 Text Domain: commentpress-core
 Domain Path: /languages
@@ -24,7 +24,7 @@ Mark James for the icons: http://www.famfamfam.com/lab/icons/silk/
 // -----------------------------------------------------------------------------
 
 // set version
-define( 'COMMENTPRESS_VERSION', '3.5.8' );
+define( 'COMMENTPRESS_VERSION', '3.5.9' );
 
 // store reference to this file
 if ( !defined( 'COMMENTPRESS_PLUGIN_FILE' ) ) {
@@ -71,8 +71,12 @@ if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
 	// unfortunately, is_plugin_active_for_network() is not yet available so
 	// we have to do this manually...
 	
+	// also note: during network activation, this plugin is not yet present in
+	// the active_sitewide_plugins array...
+	
 	// get sitewide plugins
 	$active_plugins = (array) get_site_option( 'active_sitewide_plugins' );
+	//print_r( ( is_network_admin() ? 'yes' : 'no' ) ); die();
 	
 	// is the plugin network activated?
 	if ( isset( $active_plugins[ $this_plugin ] ) ) {
@@ -395,8 +399,16 @@ Init Standalone
 --------------------------------------------------------------------------------
 */
 
+// note: we exclude activation on network admin pages to avoid auto-installation
+// on main site when the plugin is network activated
+
 // only activate if in standard or mu_optional context
-if ( COMMENTPRESS_PLUGIN_CONTEXT == 'standard' OR COMMENTPRESS_PLUGIN_CONTEXT == 'mu_optional' ) {
+if ( 
+
+	COMMENTPRESS_PLUGIN_CONTEXT == 'standard' OR 
+	( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_optional' AND !is_network_admin() )
+	
+) {
 
 	// CommentPress Core
 	commentpress_activate_core();

@@ -10,112 +10,14 @@
 
 
 /** 
- * @description: a nifty JS array utility to remove a specified value
- *
- */
-Array.prototype.remove_item = function( item ) {
-
-	// loop through the array
-	for (var i = 0; i < this.length; i++){
-		
-		// remove our item
-		if (item === this[i]) { this.splice(i, 1); }
-		
-	}
-
-}
-
-
-
-
-/** 
  * @description: our jQuery plugin
  *
  */
 ;( function( $ ) {
 
-	// plugin context (external or internal)
-	var plugin_context = 'internal';
-
-	/** 
-	 * @description: set the context of this plugin
-	 * @todo: remove
-	 *
-	 */	
-	$.set_context = function( context ) {
-	
-		// store global
-		plugin_context = context;
-	
-	};
-	
-	
-	
-	// define open accordion parts array
-	var open_parts = new Array();
-	
-	/** 
-	 * @description: reset the accordion
-	 * @todo: remove
-	 *
-	 */	
-	$.accordion_reset = function() {
-	
-		// reset open_parts
-		open_parts = new Array();
-	
-	};
-	
-	
-	
-	/** 
-	 * @description: open a section of the accordion
-	 * @todo: remove
-	 *
-	 */	
-	$.accordion_open = function( part ) {
-	
-		// add part to open array
-		open_parts.push( part );
-	
-	};
-	
-	
-	
-	/** 
-	 * @description: close a section of the accordion
-	 * @todo: remove
-	 *
-	 */	
-	$.accordion_close = function( part ) {
-	
-		// remove this part from the open array
-		open_parts.remove_item( part );
-	
-	};
-	
-	
-	
-	/** 
-	 * @description: query the accordion for the open/closed status of a part
-	 * @todo: remove
-	 *
-	 */	
-	$.accordion_query = function( part ) {
-
-		// is our part in the open array?
-		return $.in_array( part, open_parts )
-
-	};
-	
-	
-	
 	// our currently highlighted paragraph
 	var highlighted_para = '';
 	
-	// our widening constant (must match selected_para: top in CSS)
-	var selected_para_widen = 7;
-
 	/**
 	 * @description: highlight the current paragraph
 	 * @todo: 
@@ -130,59 +32,6 @@ Array.prototype.remove_item = function( item ) {
 			return;
 		
 		}
-
-		
-		
-		// unhighlight
-		//$.unhighlight_para();
-		
-
-		
-		/*
-		// only store highlight if in our CommentPress context
-		if ( plugin_context == 'internal' ) {
-	
-			// is our item already highlighted?
-			if ( $.accordion_query( element.prop('id') ) ) {
-			
-				// clear current element in global
-				highlighted_para = '';
-				
-				// close this part of the accordion
-				$.accordion_close( element.prop('id') );
-			
-				// --<
-				return;
-			
-			} else {
-			
-				// open this part of the accordion
-				$.accordion_open( element.prop('id') );
-			
-				// store current element in global
-				highlighted_para = element;
-				
-			}
-			
-		}
-		
-		
-		
-		// widen
-		//var width = parseInt( element.width() );
-		//element.css( 'width', (width + selected_para_widen) + 'px' );
-
-		// get padding
-		var padding_top = parseInt( element.css( 'padding-top' ).split('px')[0] );
-		var padding_right = parseInt( element.css( 'padding-right' ).split('px')[0] );
-		var padding_bottom = parseInt( element.css( 'padding-bottom' ).split('px')[0] );
-		var padding_left = parseInt( element.css( 'padding-left' ).split('px')[0] );
-
-		element.css( 'padding-top', padding_top + selected_para_widen );
-		element.css( 'padding-right', padding_right + selected_para_widen );
-		element.css( 'padding-bottom', padding_bottom + selected_para_widen );
-		element.css( 'padding-left', padding_left + selected_para_widen );
-		*/
 		
 		// amend p tag css
 		element.addClass( 'selected_para' );
@@ -198,43 +47,10 @@ Array.prototype.remove_item = function( item ) {
 	 */	
 	$.unhighlight_para = function() {
 	
-		// if we have a highlight
-		//if ( highlighted_para != '' ) {
-			
-			var highlighted_paras = $('.textblock');
-			
-			// remove class from all
-			highlighted_paras.removeClass( 'selected_para' );
-			
-			/*
-			// get padding
-			var padding_top = parseInt( highlighted_paras.css( 'padding-top' ).split('px')[0] );
-			var padding_right = parseInt( highlighted_paras.css( 'padding-right' ).split('px')[0] );
-			var padding_bottom = parseInt( highlighted_paras.css( 'padding-bottom' ).split('px')[0] );
-			var padding_left = parseInt( highlighted_paras.css( 'padding-left' ).split('px')[0] );
-			
-			// remove visible highlight
-			highlighted_paras.css( 'padding-top', padding_top - selected_para_widen );
-			highlighted_paras.css( 'padding-right', padding_right - selected_para_widen );
-			highlighted_paras.css( 'padding-bottom', padding_bottom - selected_para_widen );
-			highlighted_paras.css( 'padding-left', padding_left - selected_para_widen );
-			
-			// narrow
-			//var width = parseInt( highlighted_para.width() );
-			//highlighted_para.css( 'width', (width - selected_para_widen) + 'px' );
-			*/
-			
-		//}
+		var highlighted_paras = $('.textblock');
 		
-		/*
-		// only clear highlight if in our CommentPress context
-		if ( plugin_context == 'internal' ) {
-	
-			// clear global
-			highlighted_para = '';
-		
-		}
-		*/
+		// remove class from all
+		highlighted_paras.removeClass( 'selected_para' );
 		
 	}
 
@@ -259,55 +75,7 @@ Array.prototype.remove_item = function( item ) {
 	 * @todo: 
 	 *
 	 */	
-	$.is_highlighted_para = function( element ) {
-	
-		// only return highlight status if in our CommentPress context
-		if ( plugin_context != 'internal' ) {
-		
-			// --<
-			return false;
-		
-		}
-	
-		// test that we have a proper element
-		if ( typeof( element ) != 'object' ) {
-		
-			// --<
-			return false;
-		
-		}
-	
-		// is our item already highlighted?
-		if ( $.accordion_query( element.prop('id') ) ) {
-		
-			// --<
-			return true;
-		
-		} else {
-		
-			// --<
-			return false;
-		
-		}
-		
-	}
-
-	
-
-	/** 
-	 * @description: test if the element is currently highlighted
-	 * @todo: 
-	 *
-	 */	
 	$.is_highlighted = function( element ) {
-	
-		// only return highlight status if in our CommentPress context
-		if ( plugin_context != 'internal' ) {
-		
-			// --<
-			return false;
-		
-		}
 	
 		// test that we have a proper element
 		if ( typeof( element ) != 'object' ) {
@@ -334,131 +102,6 @@ Array.prototype.remove_item = function( item ) {
 
 	
 
-	/**
-	 * @description: highlight the current text
-	 * @todo: 
-	 *
-	 */	
-	$.highlight_text = function( element ) {
-	
-		// get padding
-		var padding_top = parseInt( element.css( 'padding-top' ).split('px')[0] );
-		var padding_right = parseInt( element.css( 'padding-right' ).split('px')[0] );
-		var padding_bottom = parseInt( element.css( 'padding-bottom' ).split('px')[0] );
-		var padding_left = parseInt( element.css( 'padding-left' ).split('px')[0] );
-
-		/*
-		console.log( 'padding_bottom: ' + padding_bottom );
-		console.log( 'padding_top: ' + padding_top );
-		console.log( 'padding_right: ' + padding_right );
-		console.log( 'padding_left: ' + padding_left );
-		*/
-		
-		// get margin
-		var margin_top = parseInt( element.css( 'margin-top' ).split('px')[0] );
-		var margin_right = parseInt( element.css( 'margin-right' ).split('px')[0] );
-		var margin_bottom = parseInt( element.css( 'margin-bottom' ).split('px')[0] );
-		var margin_left = parseInt( element.css( 'margin-left' ).split('px')[0] );
-		
-		/*
-		console.log( 'margin_top: ' + margin_top );
-		console.log( 'margin_bottom: ' + margin_bottom );
-		console.log( 'margin_right: ' + margin_right );
-		console.log( 'margin_left: ' + margin_left );
-		*/
-		
-		// gap between paragraphs
-		var gap = margin_top + margin_bottom + padding_top + padding_bottom;
-		//console.log( 'element gap: ' + gap );
-
-		// so, halve it
-		var half_gap = parseInt( gap / 2 );
-
-		// get params
-		var top = parseInt( element.position().top ) + margin_top + padding_top - selected_para_widen;
-		var left = parseInt( element.position().left ) + margin_left + padding_left - selected_para_widen;
-		var width = parseInt( element.width() ) + ( selected_para_widen * 2 );
-		var height = parseInt( element.height() ) + ( selected_para_widen * 2 );
-
-		/*
-		console.log( 'element top: ' + top );
-		console.log( 'element left: ' + left );
-		console.log( 'element width: ' + width );
-		console.log( 'element height: ' + height );
-		
-		// init adjustor value
-		var adjust = 0;
-		
-		// if we have no padding and margin, adjust by 10px
-		if ( margin_left + margin_right + padding_left + padding_right == 0 ) {
-		
-			// set adjust to our desired padding in px
-			adjust = 10;
-		
-		}
-		
-		// set dimensions for highlighted element
-		top = top + padding_top + margin_top - half_gap;
-		height = height + gap - 40;
-		left = left + padding_left + margin_left - adjust;
-		width = width + padding_left + padding_right + adjust + adjust - 18; // + margin_left + margin_right;
-		*/
-
-		/*
-		console.log( 'final top: ' + top );
-		console.log( 'final left: ' + left );
-		console.log( 'final width: ' + width );
-		console.log( 'final height: ' + height );
-		*/
-		
-		// unhighlight_text();		
-	
-		// create a highlighted element
-		var highlite = $.create(
-	
-			'div', 
-	
-			{
-			'id':'selected_text', 
-			'class':'selected_text',
-			'style':'top: ' + top + 'px; left: ' + left + 'px; width: ' + width + 'px; height: ' + height + 'px;'
-			//'style':'top: ' + (top + 10) + 'px; left: ' + (left - 5) + 'px; width: ' + width + 'px; height: ' + (height - 20) + 'px;'
-			}, ''
-	
-		);
-		
-		// show it
-		$('#content').append(highlite);
-	
-	}
-	
-	
-
-	/** 
-	 * @description: unhighlight all text
-	 * @todo: 
-	 *
-	 */	
-	$.unhighlight_text = function() {
-	
-		// remove visible highlight
-		$('.selected_text').remove();
-		
-	}
-
-	
-
-	/** 
-	 * @description: scroll to page title
-	 * @todo: implement
-	 *
-	 */	
-	$.scroll_to_title = function() {
-	
-	};
-	
-	
-	
 	/** 
 	 * @description: set height of sidebar minimiser (scrolling element) so that the column fills the viewport
 	 * @todo: in jQuery 1.9, we get a 143px error, related to sidebar.position().top
@@ -531,9 +174,6 @@ Array.prototype.remove_item = function( item ) {
 	
 	
 	
-	
-	
-	
 	/** 
 	 * @description: get height data on element
 	 * @todo: 
@@ -565,9 +205,6 @@ Array.prototype.remove_item = function( item ) {
 	
 	
 	
-	
-	
-		
 	/** 
 	 * @description: get visible sidebar minimiser
 	 * @todo: 
@@ -584,9 +221,6 @@ Array.prototype.remove_item = function( item ) {
 	
 	
 	
-	
-	
-		
 	/** 
 	 * @description: get visible sidebar
 	 * @todo: 
@@ -625,124 +259,66 @@ Array.prototype.remove_item = function( item ) {
 	
 	
 	
-	
-	
-		
 	/** 
-	 * @description: compare strings and returns a measure of similarity (replicates PHP's similar_text)
-	 * @todo: 
-	 * 
-	 *
-	 */	
-	$.similar_string = function( str1, str2 ) {
-	
-		// use levenshtein
-		var distance = $.cp_levenshtein( str1, str2 );
+	 * @description: get currently highlighted menu item ID
+	 */
+	$.get_current_menu_item_id = function() {
 		
-		// get percent
-		var percent = ( 1 - distance / Math.max( str1.length, str2.length ) ) * 100;
+		// declare vars
+		var current_menu_item = 0, 
+			current_menu_obj, current_item_id, 
+			current_item_classes, current_item_class;
+			
+		// get highlighted menu item object
+		current_menu_obj = $('.current_page_item');
+		//console.log( 'current_menu_item:' );
+		//console.log( current_menu_item );
 		
-		// debug
-		//console.log( 'TESTING: ' + str1 + ' AND ' + str2 + ' PERCENT: ' + percent );
-
-
-
-		// --<
-		return percent;
+		// did we get one?
+		if ( current_menu_obj.length > 0 ) {
+	
+			// get ID, if present
+			current_item_id = current_menu_obj.prop('id');
+			//console.log( 'current_item_id:' );
+			//console.log( current_item_id );
+			
+			// if we do have an ID...
+			if ( current_item_id.length > 0 ) {
 		
-	}
-	
-	
-	
-	/** 
-	 * @description: Javascript implementation of PHP levenshtein
-	 * @todo: 
-	 * 
-	 *
-	 */	
-	$.cp_levenshtein = function(a, b) {
-	
-		// Calculate Levenshtein distance between two strings
-		// 
-		// +    discuss at: http://kevin.vanzonneveld.net/techblog/article/javascript_equivalent_for_phps_levenshtein/
-		// +       version: 903.421
-		// +      original by: Carlos R. L. Rodrigues (http://www.jsfromhell.com)
-		// +      bugfixed by: Onno Marsman
-		// +       revised by: Andrea Giammarchi (http://webreflection.blogspot.com)
-		// + reimplemented by: Brett Zamir
-		// *        example 1: levenshtein('Kevin van Zonneveld', 'Kevin van Sommeveld');
-		// *        returns 1: 3
-		
-		var split=false, min=Math.min, len1=0, len2=0, I=0, i=0, d=[], c='', j=0, J=0;
-		try{
-			('0')[0];
-		} catch(i){
-			split=true;
-		}
-		if (a == b) {
-			return 0;
-		}
-		if (!a.length || !b.length) {
-			return b.length || a.length;
-		}
-		if (split){
-			a = a.split('');b = b.split('');
-		}
-		len1 = a.length + 1;
-		len2 = b.length + 1;
-		d = [[0]];
-		while (++i < len2) {
-			d[0][i] = i;
-		}
-		i = 0;
-		while (++i < len1) {
-			J = j = 0;
-			c = a[I];
-			d[i] = [i];
-			while (++j < len2) {
-				d[i][j] = min(d[I][j] + 1, d[i][J] + 1, d[I][J] + (c != b[J]));
-				++J;
+				// it's a WP custom menu
+				current_menu_item = current_item_id.split('-')[2];
+			
+			} else {
+			
+				// it's a WP page menu
+				current_item_class = current_menu_obj.prop('class');
+				
+				// get classes
+				current_item_classes = current_item_class.split(' ');
+				
+				// loop to find the one we want
+				for (var i = 0, item; item = current_item_classes[i++];) {
+					if ( item.match( 'page-item-' ) ) {
+						current_menu_item = item.split('-')[2];
+						break;
+					}
+				}
+			
 			}
-			++I;
+		
 		}
+	
+		//console.log( 'cpajax_current_menu_item: ' + cpajax_current_menu_item );
 		
 		// --<
-		return d[len1 - 1][len2 - 1];
+		return current_menu_item;
 		
 	}
 
 
 
-	/** 
-	 * @description: move comment area to an accordion section
-	 * @todo: 
-	 *
-	 */	
-	$.move_comment_form = function( text_signature ) {
-	
-		// move the respond div
-		$('#respond').appendTo('#comment-group-' + text_signature);
-
-		// make it visible
-		$('#respond').css('display', 'block');
-
-		// set the text signature value
-		$('#text_signature').val( text_signature );
-
-		// clear the reply to value
-		$('#comment_parent').val( '' );
-		
-		// hide cancel reply link
-		$('#cancel-comment-reply-link').css('display','none');
-		
-	}
-	
-	
-	
 	/** 
 	 * @description: utility replacement for PHP's in_array
-	 * @todo: 
-	 *
 	 */	
 	$.in_array = function( needle, haystack, argStrict ) {
 	
@@ -754,7 +330,7 @@ Array.prototype.remove_item = function( item ) {
 		var found = false, key, strict = !!argStrict;
 		
 		for( key in haystack ) {
-			if ((strict && haystack[key] === needle) || (!strict && haystack[key] == needle)) {
+			if ( (strict && haystack[key] === needle) || (!strict && haystack[key] == needle) ) {
 				found = true;
 				break;
 			}
@@ -766,6 +342,34 @@ Array.prototype.remove_item = function( item ) {
 	
 	
 	
+	/** 
+	 * @description: a nifty JS array utility to remove a specified value
+	 */
+	$.remove_from_array = function( item, sourceArray ) {
+
+		// loop through the array
+		for ( var i = 0; i < sourceArray.length; i++ ) {
+		
+			// remove our item
+			if ( item === sourceArray[i] ) {
+				
+				// splice it at that point
+				sourceArray.splice(i, 1);
+				
+				// kick out
+				break;
+				
+			}
+		
+		}
+		
+		// --<
+		return sourceArray;
+
+	}
+
+
+
 	/** 
 	 * @description: utility replacement for PHP's is_object
 	 * @todo: 
@@ -804,6 +408,7 @@ Array.prototype.remove_item = function( item ) {
 		
 		// --<
 		return false;
+		
 	}
 	
 	

@@ -7,7 +7,7 @@
  * each activity.
  *
  * @package BuddyPress
- * @subpackage bp-default
+ * @subpackage bp-legacy
  */
 
 ?>

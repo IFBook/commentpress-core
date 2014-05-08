@@ -84,35 +84,12 @@ class CommentpressMultisite {
 
 
 
-	/**
-	 * PHP 4 constructor
-	 */
-	function CommentpressMultisite( $parent_obj = null ) {
-		
-		// is this php5?
-		if ( version_compare( PHP_VERSION, "5.0.0", "<" ) ) {
-		
-			// call php5 constructor
-			$this->__construct( $parent_obj );
-			
-		}
-		
-		// --<
-		return $this;
-
-	}
-
-
-
-
-
-
 	/** 
 	 * @description: set up all items associated with this object
 	 * @todo: 
 	 *
 	 */
-	function initialise() {
+	public function initialise() {
 	
 	}
 	
@@ -126,7 +103,7 @@ class CommentpressMultisite {
 	 * @todo: 
 	 *
 	 */
-	function destroy() {
+	public function destroy() {
 	
 	}
 	
@@ -158,7 +135,7 @@ class CommentpressMultisite {
 	 * @todo: 
 	 *
 	 */
-	function add_admin_menu() {
+	public function add_admin_menu() {
 		
 		// we must be network admin
 		if ( !is_super_admin() ) { return false; }
@@ -198,7 +175,7 @@ class CommentpressMultisite {
 	 * @todo: 
 	 *
 	 */
-	function add_admin_styles() {
+	public function add_admin_styles() {
 		
 		/*
 		// EXAMPLES:
@@ -233,7 +210,7 @@ class CommentpressMultisite {
 	 * @todo: 
 	 *
 	 */
-	function add_frontend_styles() {
+	public function add_frontend_styles() {
 		
 		/*
 		// EXAMPLES:
@@ -286,7 +263,7 @@ class CommentpressMultisite {
 	 * @todo: 
 	 *
 	 */
-	function signup_blogform( $errors ) {
+	public function signup_blogform( $errors ) {
 	
 		// only apply to wordpress signup form (not the BuddyPress one)
 		if ( is_object( $this->parent_obj->bp ) ) { return; }
@@ -371,7 +348,7 @@ class CommentpressMultisite {
 	 * @todo: 
 	 *
 	 */
-	function wpmu_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
+	public function wpmu_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 	
 		// test for presence of our checkbox variable in _POST
 		if ( isset( $_POST['cpmu-new-blog'] ) AND $_POST['cpmu-new-blog'] == '1' ) {
@@ -392,7 +369,7 @@ class CommentpressMultisite {
 	 * Change the greeting in the WordPress Admin Bar
 	 * Props: http://pankajanupam.in
 	 */
-	function change_admin_greeting( $translated, $text, $domain ) {
+	public function change_admin_greeting( $translated, $text, $domain ) {
 		
 		// look only for default WordPress translations
 		if ('default' != $domain) { return $translated; }

@@ -80,7 +80,9 @@ h3#message-subject,
 table#message-threads tr td.thread-from,
 table#message-threads tr td.thread-info p,
 form#settings-form table.notification-settings th.title,
-table.notifications th
+table.notifications th,
+/* BuddyPress Group Announcements compatibility */
+body.groups.announcements #item-body h3
 {
 	font-family: Lato, 'Trebuchet MS', Helvetica, Arial, sans-serif;
 }
@@ -95,18 +97,9 @@ Stylistic regularity
 --------------------------------------------------------------------------------
 */
 
-#title h1
-{
-	letter-spacing: 1px;
-}
-
 #header #tagline 
 {
-	font-style: normal;
-	font-size: 1em;
 	color: #999;
-	padding-top: 2px;
-	letter-spacing: 1px;
 }
 
 .post h1,
@@ -152,7 +145,8 @@ table.notifications th
 	text-transform: none;
 }
 
-body#main_blog #content div#item-header h2
+body#main_blog #content div#item-header h2,
+body.buddypress #content div#item-header h2
 {
 	font-size: 1.6em;
 	margin: 0;
@@ -173,7 +167,6 @@ ul.button-nav li a,
 div.generic-button a 
 {
 	color: #777;
-	text-transform: none;
 }
 
 /* the all-important highlight state */
@@ -205,7 +198,6 @@ table.notifications th
 body.create-blog #content a
 {
 	color: #761D19;
-	text-decoration: underline;
 }
 
 #cancel-comment-reply-link
@@ -228,12 +220,6 @@ body.create-blog #content a
 #groups-list .group-subscription-div
 {
 	color: #777;
-	text-transform: uppercase;
-}
-
-#account-delete-form #message.info
-{
-	margin: 0 0 15px 0;
 }
 
 
@@ -264,9 +250,13 @@ body#main_blog
 
 	body#main_blog.create-blog.buddypress_page #content .padder h3,
 	body#main_blog form.dir-form,
+	body.buddypress form.dir-form,
 	body#main_blog div.item-list-tabs,
+	body.buddypress div.item-list-tabs,
 	body#main_blog form#whats-new-form, 
 	body#main_blog .home-page form#whats-new-form,
+	body.buddypress form#whats-new-form, 
+	body.home-page form#whats-new-form,
 	body.directory #content h3, 
 	body.group-create #content form.standard-form > h3,
 	#register-page #signup_form h2,
@@ -283,15 +273,15 @@ body#main_blog
 		background: #fff;
 	}
 	
-	body#main_blog #item-body form#whats-new-form
+	body#main_blog #item-body form#whats-new-form,
+	body.buddypress #item-body form#whats-new-form
 	{
 		background-color: #eee;
 	}
 	
-	body#main_blog div#item-header div#item-meta 
+	body#main_blog div#item-header div#item-meta,
+	body.buddypress div#item-header div#item-meta 
 	{
-		font-size: 1em;
-		line-height: 1.2;
 		color: #fff;
 	}
 	
@@ -302,13 +292,6 @@ body#main_blog
 ul.item-list li div.item-desc 
 {
 	color: #761D19;
-}
-
-/* activity tab default */
-#activity_sidebar li.groups
-{
-    border-left: 10px solid #761D19;
-    margin-bottom: 0;
 }
 
 

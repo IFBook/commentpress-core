@@ -91,41 +91,28 @@ class CommentpressCoreNavigator {
 
 
 
-	/**
-	 * @description: PHP 4 constructor
-	 */
-	function CommentpressCoreNavigator( $parent_obj ) {
-		
-		// is this php5?
-		if ( version_compare( PHP_VERSION, "5.0.0", "<" ) ) {
-		
-			// call php5 constructor
-			$this->__construct( $parent_obj );
-			
-		}
-		
-		// --<
-		return $this;
-
-	}
-
-
-
-
-
-
 	/** 
 	 * @description: set up all items associated with this object
 	 * @todo: 
 	 *
 	 */
-	function initialise() {
+	public function initialise() {
 	
-		// init page lists
-		$this->_init_page_lists();
+		// if we're navigating pages
+		if ( is_page() ) {
 		
-		// init posts lists
-		$this->_init_posts_lists();
+			// init page lists
+			$this->_init_page_lists();
+		
+		}
+		
+		// if we're navigating posts
+		if( is_single() ) {
+			
+			// init posts lists
+			$this->_init_posts_lists();
+			
+		}
 		
 	}
 
@@ -140,7 +127,7 @@ class CommentpressCoreNavigator {
 	 * @todo: 
 	 *
 	 */
-	function destroy() {
+	public function destroy() {
 	
 	}
 
@@ -176,7 +163,7 @@ class CommentpressCoreNavigator {
 	 * @todo: 
 	 *
 	 */
-	function get_next_page( $with_comments = false ) {
+	public function get_next_page( $with_comments = false ) {
 	
 		// do we have any next pages?
 		if ( count( $this->next_pages ) > 0 ) {
@@ -226,7 +213,7 @@ class CommentpressCoreNavigator {
 	 * @todo: 
 	 *
 	 */
-	function get_previous_page( $with_comments = false ) {
+	public function get_previous_page( $with_comments = false ) {
 	
 		// do we have any previous pages?
 		if ( count( $this->previous_pages ) > 0 ) {
@@ -276,7 +263,7 @@ class CommentpressCoreNavigator {
 	 * @todo: 
 	 *
 	 */
-	function get_next_post( $with_comments = false ) {
+	public function get_next_post( $with_comments = false ) {
 	
 		// do we have any next posts?
 		if ( count( $this->next_posts ) > 0 ) {
@@ -326,7 +313,7 @@ class CommentpressCoreNavigator {
 	 * @todo: 
 	 *
 	 */
-	function get_previous_post( $with_comments = false ) {
+	public function get_previous_post( $with_comments = false ) {
 	
 		// do we have any previous posts?
 		if ( count( $this->previous_posts ) > 0 ) {
@@ -376,7 +363,7 @@ class CommentpressCoreNavigator {
 	 * @todo:
 	 *
 	 */
-	function get_first_child( $page_id ) {
+	public function get_first_child( $page_id ) {
 	
 		// init to look for published pages
 		$defaults = array( 
@@ -421,7 +408,7 @@ class CommentpressCoreNavigator {
 	 * @todo:
 	 *
 	 */
-	function get_book_pages( $mode = 'readable' ) {
+	public function get_book_pages( $mode = 'readable' ) {
 	
 		// init
 		$all_pages = array();
@@ -430,204 +417,16 @@ class CommentpressCoreNavigator {
 		
 		// do we have a nav menu enabled?
 		if ( has_nav_menu( 'toc' ) ) {
-			
-			
-			
-			// YES - get menu locations
-			$locations = get_nav_menu_locations();
-			
-			// check menu locations
-			if ( isset( $locations[ 'toc' ] ) ) {
-				
-				// get the menu object
-				$menu = wp_get_nav_menu_object( $locations[ 'toc' ] );
-			
-				// default args for reference
-				$args = array(
-				
-					'order' => 'ASC',
-					'orderby' => 'menu_order',
-					'post_type' => 'nav_menu_item',
-					'post_status' => 'publish',
-					'output' => ARRAY_A,
-					'output_key' => 'menu_order',
-					'nopaging' => true,
-					'update_post_term_cache' => false
-				
-				);
-	
-				// get the menu objects and store for later
-				$this->menu_objects = wp_get_nav_menu_items( $menu->term_id, $args );
-				//print_r( $this->menu_objects ); die();
-
-				// if we get some
-				if ( $this->menu_objects ) {
-					
-					// if chapters are not pages, filter the menu items...
-					if ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
 		
-						// do we want all readable pages?
-						if ( $mode == 'readable' ) {
+			// parse menu
+			$all_pages = $this->_parse_menu( $mode );
 			
-							// filter chapters out
-							$menu_items = $this->_filter_menu( $this->menu_objects );
-			
-						} else {
-						
-							// structural - use a copy of the raw menu data
-							$menu_items = $this->menu_objects;
-							
-						}
-			
-					} else {
-					
-						// use a copy of the raw menu data
-						$menu_items = $this->menu_objects;
-					
-					}
-					
-					// init
-					$pages_to_get = array();
-				
-					// convert to array of pages
-					foreach ( $menu_items AS $menu_item ) {
-					
-						// is it a WP item?
-						if ( isset( $menu_item->object_id ) ) {
-							
-							// init pseudo WP_POST object
-							$pseudo_post = new stdClass;
-							
-							// add post ID
-							$pseudo_post->ID = $menu_item->object_id;
-						
-							// add menu ID (for filtering below)
-							$pseudo_post->menu_id = $menu_item->ID;
-						
-							// add menu item parent ID (for finding parent below)
-							$pseudo_post->menu_item_parent = $menu_item->menu_item_parent;
-						
-							// add comment count for possible calls for "next with comments"
-							$pseudo_post->comment_count = $menu_item->comment_count;
-						
-							// add to array of WP pages in menu
-							$all_pages[] = $pseudo_post;
-							
-						}
-					
-					}
-					
-					/*
-					print_r( array( 
-						'menu_items' => $menu_items, 
-						'all_pages' => $all_pages,
-					) ); die();
-					*/
-					
-				} // end check for menu items
-				
-			} // end check for our menu
-		
-
-
 		} else {
-		
-		
 	
-			// -----------------------------------------------------------------
-			// construct "book" navigation based on pages
-			// -----------------------------------------------------------------
-				
-			// default to no excludes
-			$excludes = '';
-			
-			// get special pages
-			$special_pages = $this->parent_obj->db->option_get( 'cp_special_pages' );
-			
-			// are we in a BuddyPress scenario?
-			if ( $this->parent_obj->is_buddypress() ) {
-			
-				// BuddyPress creates its own registration page at /register and
-				// redirects ordinary WP registration page requests to it. It also
-				// seems to exclude it from wp_list_pages(), see: $cp->display->list_pages()
-			
-				// check if registration is allowed
-				if ( '1' == get_option('users_can_register') AND is_main_site() ) {
-				
-					// find the registration page by its slug
-					$reg_page = get_page_by_path( 'register' );
-					
-					// did we get one?
-					if ( is_object( $reg_page ) AND isset( $reg_page->ID ) ) {
-						
-						// yes - exclude it as well
-						$special_pages[] = $reg_page->ID;
-					
-					}
-				
-				}
-			
-			}
-			
-			// are there any?
-			if ( is_array( $special_pages ) AND count( $special_pages ) > 0 ) {
-	
-				// format them for the exclude param
-				$excludes = implode( ',', $special_pages );
-				
-			}
-			
-			// set list pages defaults
-			$defaults = array(
-				'child_of' => 0, 
-				'sort_order' => 'ASC',
-				'sort_column' => 'menu_order, post_title', 
-				'hierarchical' => 1,
-				'exclude' => $excludes, 
-				'include' => '',
-				'meta_key' => '', 
-				'meta_value' => '',
-				'authors' => '', 
-				'parent' => -1, 
-				'exclude_tree' => ''
-			);
-			
-			// get them
-			$all_pages = get_pages( $defaults );
-			
-			
-			
-			// if we have any pages...
-			if ( count( $all_pages ) > 0 ) {
-	
-				// if chapters are not pages...
-				if ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
-				
-					// do we want all readable pages?
-					if ( $mode == 'readable' ) {
-					
-						// filter chapters out
-						$all_pages = $this->_filter_chapters( $all_pages );
-					
-					}
-					
-				}
-				
-				// if Theme My Login is present...
-				if ( defined( 'TML_ABSPATH' ) ) {
-				
-					// filter its page out
-					$all_pages = $this->_filter_theme_my_login_page( $all_pages );
-					
-				}
-				
-			}
-				
-				
+			// parse page order
+			$all_pages = $this->_parse_pages( $mode );
 			
 		} // end check for custom menu
-		
-		
 		
 		//print_r( $all_pages ); die();
 		
@@ -650,7 +449,7 @@ class CommentpressCoreNavigator {
 	 * @todo:
 	 *
 	 */
-	function get_first_page() {
+	public function get_first_page() {
 	
 		// init
 		$id = false;
@@ -684,7 +483,7 @@ class CommentpressCoreNavigator {
 	 * @todo:
 	 *
 	 */
-	function get_page_number( $page_id ) {
+	public function get_page_number( $page_id ) {
 	
 		// init
 		$num = 0;
@@ -861,89 +660,80 @@ class CommentpressCoreNavigator {
 	 */
 	function _init_page_lists() {
 	
-		// if we're navigating pages
-		if( is_page() ) {
-			
-			
-			
-			// get all pages
-			$all_pages = $this->get_book_pages( 'readable' );
+		// get all pages
+		$all_pages = $this->get_book_pages( 'readable' );
 
-			// if we have any pages...
-			if ( count( $all_pages ) > 0 ) {
-			
+		// if we have any pages...
+		if ( count( $all_pages ) > 0 ) {
+		
 
-			
-				// generate page numbers
-				$this->_generate_page_numbers( $all_pages );
+		
+			// generate page numbers
+			$this->_generate_page_numbers( $all_pages );
 
 
 
-				// access post object
-				global $post;
+			// access post object
+			global $post;
+			
+			
+			
+			// init the key we want
+			$page_key = false;
+			
+			// loop
+			foreach( $all_pages AS $key => $page_obj ) {
+			
+				// is it the currently viewed page?
+				if ( $page_obj->ID == $post->ID ) {
 				
+					// set page key
+					$page_key = $key;
 				
-				
-				// init the key we want
-				$page_key = false;
-				
-				// loop
-				foreach( $all_pages AS $key => $page_obj ) {
-				
-					// is it the currently viewed page?
-					if ( $page_obj->ID == $post->ID ) {
-					
-						// set page key
-						$page_key = $key;
-					
-						// kick out to preserve key
-						break;
-					
-					}
+					// kick out to preserve key
+					break;
 				
 				}
-				
+			
+			}
+			
 
 
-				// if we don't get a key...
-				if ( $page_key === false ) {
+			// if we don't get a key...
+			if ( $page_key === false ) {
+			
+				// the current page is a chapter and is not a page
+				$this->next_pages = array();
 				
-					// the current page is a chapter and is not a page
-					$this->next_pages = array();
-					
-					// --<
-					return;
-				
-				}
+				// --<
+				return;
+			
+			}
 
 
-				
-				// will there be a next array?
-				if ( isset( $all_pages[$key + 1] ) ) {
-				
-					// get all subsequent pages
-					$this->next_pages = array_slice( $all_pages, $key + 1 );
-				
-				}
-				
+			
+			// will there be a next array?
+			if ( isset( $all_pages[$key + 1] ) ) {
+			
+				// get all subsequent pages
+				$this->next_pages = array_slice( $all_pages, $key + 1 );
+			
+			}
+			
 
 
-				// will there be a previous array?
-				if ( isset( $all_pages[$key - 1] ) ) {
+			// will there be a previous array?
+			if ( isset( $all_pages[$key - 1] ) ) {
+			
+				// get all previous pages
+				$this->previous_pages = array_reverse( array_slice( $all_pages, 0, $key ) );
 				
-					// get all previous pages
-					$this->previous_pages = array_reverse( array_slice( $all_pages, 0, $key ) );
-					
-				}
-				
-				
-				
-			} // end have array check
+			}
 			
 			
 			
-		} // end is_page() check
-	
+		} // end have array check
+		
 	}
 
 
@@ -959,75 +749,66 @@ class CommentpressCoreNavigator {
 	 */
 	function _init_posts_lists() {
 	
-		// if we're navigating posts
-		if( is_single() ) {
-			
-			
-			
-			// set defaults
-			$defaults = array(
-			
-				'numberposts' => -1,
-				'orderby' => 'date'
+		// set defaults
+		$defaults = array(
+		
+			'numberposts' => -1,
+			'orderby' => 'date'
 
-			); 
-			
-			// get them
-			$all_posts = get_posts( $defaults );
-			
+		); 
+		
+		// get them
+		$all_posts = get_posts( $defaults );
+		
 
 
-			// if we have any posts...
-			if ( count( $all_posts ) > 0 ) {
+		// if we have any posts...
+		if ( count( $all_posts ) > 0 ) {
 
 
 
-				// access post object
-				global $post;
+			// access post object
+			global $post;
+			
+
+		
+			// loop
+			foreach( $all_posts AS $key => $post_obj ) {
+			
+				// is it ours?
+				if ( $post_obj->ID == $post->ID ) {
 				
-
-			
-				// loop
-				foreach( $all_posts AS $key => $post_obj ) {
-				
-					// is it ours?
-					if ( $post_obj->ID == $post->ID ) {
-					
-						// kick out to preserve key
-						break;
-					
-					}
+					// kick out to preserve key
+					break;
 				
 				}
+			
+			}
 
 
-				
-				// will there be a next array?
-				if ( isset( $all_posts[$key + 1] ) ) {
-				
-					// get all subsequent posts
-					$this->next_posts = array_slice( $all_posts, $key + 1 );
-				
-				}
-				
+			
+			// will there be a next array?
+			if ( isset( $all_posts[$key + 1] ) ) {
+			
+				// get all subsequent posts
+				$this->next_posts = array_slice( $all_posts, $key + 1 );
+			
+			}
+			
 
 
-				// will there be a previous array?
-				if ( isset( $all_posts[$key - 1] ) ) {
+			// will there be a previous array?
+			if ( isset( $all_posts[$key - 1] ) ) {
+			
+				// get all previous posts
+				$this->previous_posts = array_reverse( array_slice( $all_posts, 0, $key ) );
 				
-					// get all previous posts
-					$this->previous_posts = array_reverse( array_slice( $all_posts, 0, $key ) );
-					
-				}
-				
-				
-				
-			} // end have array check
+			}
 			
 			
 			
-		} // end is_single() check
-	
+		} // end have array check
+		
 	}
 
 
@@ -1454,6 +1235,240 @@ class CommentpressCoreNavigator {
 	
 	
 	
+	/** 
+	 * @description: parse a WP page list
+	 * @param string $mode either 'structural' or 'readable'
+	 * @return array $pages all 'book' pages
+	 */
+	function _parse_pages( $mode ) {
+	
+		// init return
+		$pages = array();
+		
+		// -----------------------------------------------------------------
+		// construct "book" navigation based on pages
+		// -----------------------------------------------------------------
+			
+		// default to no excludes
+		$excludes = '';
+		
+		// init excluded array with "special pages"
+		$excluded_pages = $this->parent_obj->db->option_get( 'cp_special_pages' );
+		
+		// are we in a BuddyPress scenario?
+		if ( $this->parent_obj->is_buddypress() ) {
+		
+			// BuddyPress creates its own registration page at /register and
+			// redirects ordinary WP registration page requests to it. It also
+			// seems to exclude it from wp_list_pages(), see: $cp->display->list_pages()
+		
+			// check if registration is allowed
+			if ( '1' == get_option('users_can_register') AND is_main_site() ) {
+			
+				// find the registration page by its slug
+				$reg_page = get_page_by_path( 'register' );
+				
+				// did we get one?
+				if ( is_object( $reg_page ) AND isset( $reg_page->ID ) ) {
+					
+					// yes - exclude it as well
+					$excluded_pages[] = $reg_page->ID;
+				
+				}
+			
+			}
+		
+		}
+		
+		// allow plugins to filter
+		$excluded_pages = apply_filters( 'cp_exclude_pages_from_nav', $excluded_pages );
+		
+		// are there any?
+		if ( is_array( $excluded_pages ) AND count( $excluded_pages ) > 0 ) {
+
+			// format them for the exclude param
+			$excludes = implode( ',', $excluded_pages );
+			
+		}
+		
+		// set list pages defaults
+		$defaults = array(
+			'child_of' => 0, 
+			'sort_order' => 'ASC',
+			'sort_column' => 'menu_order, post_title', 
+			'hierarchical' => 1,
+			'exclude' => $excludes, 
+			'include' => '',
+			'meta_key' => '', 
+			'meta_value' => '',
+			'authors' => '', 
+			'parent' => -1, 
+			'exclude_tree' => ''
+		);
+		
+		// get them
+		$pages = get_pages( $defaults );
+		
+		
+		
+		// if we have any pages...
+		if ( count( $pages ) > 0 ) {
+
+			// if chapters are not pages...
+			if ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
+			
+				// do we want all readable pages?
+				if ( $mode == 'readable' ) {
+				
+					// filter chapters out
+					$pages = $this->_filter_chapters( $pages );
+				
+				}
+				
+			}
+			
+			// if Theme My Login is present...
+			if ( defined( 'TML_ABSPATH' ) ) {
+			
+				// filter its page out
+				$pages = $this->_filter_theme_my_login_page( $pages );
+				
+			}
+			
+		}
+			
+			
+		
+		// --<
+		return $pages;
+	
+	}
+	
+	
+	
+	
+	
+	
+	/** 
+	 * @description: parse a WP menu
+	 * @param string $mode either 'structural' or 'readable'
+	 * @return array $pages all 'book' pages
+	 */
+	function _parse_menu( $mode ) {
+	
+		// init return
+		$pages = array();
+		
+		
+	
+		// get menu locations
+		$locations = get_nav_menu_locations();
+		
+		// check menu locations
+		if ( isset( $locations[ 'toc' ] ) ) {
+			
+			// get the menu object
+			$menu = wp_get_nav_menu_object( $locations[ 'toc' ] );
+		
+			// default args for reference
+			$args = array(
+			
+				'order' => 'ASC',
+				'orderby' => 'menu_order',
+				'post_type' => 'nav_menu_item',
+				'post_status' => 'publish',
+				'output' => ARRAY_A,
+				'output_key' => 'menu_order',
+				'nopaging' => true,
+				'update_post_term_cache' => false
+			
+			);
+
+			// get the menu objects and store for later
+			$this->menu_objects = wp_get_nav_menu_items( $menu->term_id, $args );
+			//print_r( $this->menu_objects ); die();
+
+			// if we get some
+			if ( $this->menu_objects ) {
+				
+				// if chapters are not pages, filter the menu items...
+				if ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
+	
+					// do we want all readable pages?
+					if ( $mode == 'readable' ) {
+		
+						// filter chapters out
+						$menu_items = $this->_filter_menu( $this->menu_objects );
+		
+					} else {
+					
+						// structural - use a copy of the raw menu data
+						$menu_items = $this->menu_objects;
+						
+					}
+		
+				} else {
+				
+					// use a copy of the raw menu data
+					$menu_items = $this->menu_objects;
+				
+				}
+				
+				// init
+				$pages_to_get = array();
+			
+				// convert to array of pages
+				foreach ( $menu_items AS $menu_item ) {
+				
+					// is it a WP item?
+					if ( isset( $menu_item->object_id ) ) {
+						
+						// init pseudo WP_POST object
+						$pseudo_post = new stdClass;
+						
+						// add post ID
+						$pseudo_post->ID = $menu_item->object_id;
+					
+						// add menu ID (for filtering below)
+						$pseudo_post->menu_id = $menu_item->ID;
+					
+						// add menu item parent ID (for finding parent below)
+						$pseudo_post->menu_item_parent = $menu_item->menu_item_parent;
+					
+						// add comment count for possible calls for "next with comments"
+						$pseudo_post->comment_count = $menu_item->comment_count;
+					
+						// add to array of WP pages in menu
+						$pages[] = $pseudo_post;
+						
+					}
+				
+				}
+				
+				/*
+				print_r( array( 
+					'menu_items' => $menu_items, 
+					'pages' => $pages,
+				) ); die();
+				*/
+				
+			} // end check for menu items
+			
+		} // end check for our menu
+	
+
+
+		// --<
+		return $pages;
+	
+	}
+
+
+
+
+
+
+
 	/** 
 	 * @description: strip out all but lowest level menu items
 	 * @param array $menu_items array of menu item objects

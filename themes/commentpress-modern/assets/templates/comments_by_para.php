@@ -20,17 +20,21 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) AND 'comments_by_para.php' == basename($
 
 
 
+// add identifier ID
+if ( isset( $post->ID ) ) {
+	$comments_post_identifier = ' id="comments_post_identifier-'.$post->ID.'"';
+}
+
+
+
 ?>
-
-
-
 <!-- comments_by_para.php -->
 
 <div class="sidebar_contents_wrapper">
 
 
 
-<div class="comments_container">
+<div class="comments_container"<?php echo $comments_post_identifier; ?>>
 
 
 
@@ -47,14 +51,23 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) AND 'comments_by_para.php' == basename($
 
 <?php
 
-// until WordPress supports a locate_theme_file() function, use filter
-$include = apply_filters( 
-	'cp_template_comment_form',
-	get_template_directory() . '/assets/templates/comment_form.php'
-);
+// because AJAX may be routed via admin or front end
+if ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) {
+	
+	// skip
+	
+} else {
 
-// include comment form
-include( $include );
+	// until WordPress supports a locate_theme_file() function, use filter
+	$include = apply_filters( 
+		'cp_template_comment_form',
+		get_template_directory() . '/assets/templates/comment_form.php'
+	);
+
+	// include comment form
+	include( $include );
+
+}
 
 ?>
 
