@@ -2590,7 +2590,7 @@ Compatibility with Members List plugin
 	padding-top: 0
 }
 
-html>/**/body #tern_members .tern_wp_members_list li 
+html>body #tern_members .tern_wp_members_list li 
 {
 	height: auto;
 	min-height: 0;
@@ -2924,6 +2924,23 @@ Compatibility with BP Docs plugin
 {
 	margin-top: 0;
 }
+
+
+
+
+
+
+/*
+--------------------------------------------------------------------------------
+Compatibility with Cookies for Comments plugin
+--------------------------------------------------------------------------------
+*/
+
+body > img
+{
+	float: left;
+}
+
 
 
 
