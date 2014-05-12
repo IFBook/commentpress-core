@@ -900,6 +900,66 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	/**
+	 * Check if a group has a CommentPress-enabled groupblog
+	 *
+	 * @return boolean True if group has CommentPress groupblog, false otherwise
+	 */
+	public function group_has_commentpress_groupblog( $group_id = null ) {
+	
+		// do we have groupblogs enabled?
+		if ( function_exists( 'get_groupblog_group_id' ) ) {
+			
+			// did we get a specific group passed in?
+			if ( is_null( $group_id ) ) {
+				
+				// use BP API
+				$group_id = bp_get_current_group_id();
+				
+				// unlikely, but if we don't get one...
+				if ( empty( $group_id ) ) {
+				
+					// try and get ID from BP
+					global $bp;
+					
+					if ( isset( $bp->groups->current_group->id ) ) {
+						$group_id = $bp->groups->current_group->id;
+					}
+				
+				}
+				
+			}
+			
+			// yes, is this blog a groupblog? 
+			if ( !empty( $group_id ) AND is_numeric( $group_id ) ) {
+			
+				// is it CommentPress Core-enabled?
+			
+				// get group blogtype
+				$groupblog_type = groups_get_groupmeta( $group_id, 'groupblogtype' );
+				
+				// did we get one?
+				if ( $groupblog_type ) {
+				
+					// yes
+					return true;
+				
+				}
+				
+			}
+			
+		}
+		
+		// --<
+		return false;
+		
+	}
+	
+	
+	
+
+
+
+	/**
 	 * Add a filter option to the filter select box on group activity pages.
 	 */
 	public function groupblog_comments_filter_option() { 
@@ -1524,6 +1584,9 @@ class CommentpressMultisiteBuddypress {
 	 */
 	function _groupblog_filter_options() {
 		
+		// kick out if this group does not have a CommentPress groupblog
+		if ( !$this->group_has_commentpress_groupblog() ) return;
+		
 		// remove bp-groupblog's contradictory option
 		remove_action( 'bp_group_activity_filter_options', 'bp_groupblog_posts' );
 		
@@ -2077,9 +2140,9 @@ class CommentpressMultisiteBuddypress {
 
 
 	/** 
-	 * @description: utility to wrap is_groupblog()
-	 * @todo: 
-	 *
+	 * @description: utility to wrap is_groupblog(). Note that this only tests the
+	 * current blog and cannot be used to discover if a specific blog is a
+	 * CommentPress groupblog.
 	 */
 	function _is_commentpress_groupblog() {
 	
