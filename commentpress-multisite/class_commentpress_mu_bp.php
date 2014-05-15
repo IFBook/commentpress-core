@@ -468,12 +468,37 @@ class CommentpressMultisiteBuddypress {
 				// set activity type
 				$type = 'new_groupsite_comment';
 			
+			} else {
+			
+				// set working paper status to false by default
+				$is_working_paper = false;
+		
+				// do we have the function we need to call?
+				if ( function_exists( 'bpwpapers_is_working_paper' ) ) {
+			
+					// only on working papers
+					if ( ! bpwpapers_is_working_paper( $blog_id ) ) return $activity;
+		
+					// get the group ID for this blog
+					$group_id = bpwpapers_get_group_by_blog_id( $blog_id );
+		
+					// sanity check
+					if ( $group_id === false ) return $activity;
+				
+					// set activity type
+					$type = 'new_working_paper_comment';
+			
+					// working paper is active
+					$is_working_paper = true;
+		
+				}
+				
 			}
 			
 		}
 		
 		// sanity check
-		if ( ! $is_groupblog AND ! $is_groupsite ) return $activity;
+		if ( ! $is_groupblog AND ! $is_groupsite AND ! $is_working_paper ) return $activity;
 
 		// okay, let's get the group object
 		$group = groups_get_group( array( 'group_id' => $group_id ) );
@@ -1629,6 +1654,12 @@ class CommentpressMultisiteBuddypress {
 		global $bp_groupsites;
 		if ( !is_null( $bp_groupsites ) AND is_object( $bp_groupsites ) ) {
 			remove_action( 'bp_activity_before_save', array( $bp_groupsites->activity, 'custom_comment_activity' ) );
+		}
+		
+		// drop the bp-working-papers comment activity action, if present
+		global $bp_working_papers;
+		if ( !is_null( $bp_working_papers ) AND is_object( $bp_working_papers ) ) {
+			remove_action( 'bp_activity_before_save', array( $bp_working_papers->activity, 'custom_comment_activity' ) );
 		}
 		
 		// add our own custom comment activity
