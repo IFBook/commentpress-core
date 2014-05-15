@@ -2075,6 +2075,36 @@ class CommentpressCore {
 	
 	
 	/** 
+	 * @description: override the comment reply script that BP Docs loads
+	 */
+	public function bp_docs_loaded() {
+		
+		// dequeue offending script (after BP Docs runs its enqueuing)
+		add_action( 'wp_enqueue_scripts', array( $this, 'bp_docs_dequeue_scripts' ), 20 );
+
+	}
+	
+	
+	
+	
+	
+	
+	/** 
+	 * @description: override the comment reply script that BP Docs loads
+	 */
+	public function bp_docs_dequeue_scripts() {
+		
+		// dequeue offending script
+		wp_dequeue_script( 'comment-reply' );
+
+	}
+	
+	
+	
+	
+	
+	
+	/** 
 	 * @description: override the comments tempate for BP Docs
 	 */
 	public function bp_docs_comment_tempate( $path, $original_path ) {
@@ -2648,6 +2678,9 @@ class CommentpressCore {
 		
 		// add BuddyPress functionality (really late, so group object is set up)
 		add_action( 'bp_setup_globals', array( $this, 'buddypress_globals_loaded' ), 1000 );
+		
+		// actions to perform on BP Docs load
+		add_action( 'bp_docs_load', array( $this, 'bp_docs_loaded' ), 20 );
 		
 		// override BP Docs comment template
 		add_filter( 'bp_docs_comment_template_path', array( $this, 'bp_docs_comment_tempate' ), 20, 2 );
