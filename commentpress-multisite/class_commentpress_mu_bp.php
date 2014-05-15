@@ -419,7 +419,8 @@ class CommentpressMultisiteBuddypress {
 	 */
 	public function group_custom_comment_activity( $activity ) {
 		
-		//print_r( array( 'a1' => $activity ) );// die();
+		//trigger_error( print_r( array( 'comment activity BEFORE' => $activity ), true ), E_USER_ERROR ); die();
+		//print_r( array( 'comment activity BEFORE' => $activity ) ); //die();
 		
 		// only deal with comments
 		if ( ( $activity->type != 'new_blog_comment' ) ) return;
@@ -429,6 +430,7 @@ class CommentpressMultisiteBuddypress {
 		// init vars
 		$is_groupblog = false;
 		$is_groupsite = false;
+		$is_working_paper = false;
 		
 		
 		
@@ -470,12 +472,12 @@ class CommentpressMultisiteBuddypress {
 			
 			} else {
 			
-				// set working paper status to false by default
-				$is_working_paper = false;
-		
 				// do we have the function we need to call?
 				if ( function_exists( 'bpwpapers_is_working_paper' ) ) {
 			
+					// which blog?
+					$blog_id = $activity->item_id;
+
 					// only on working papers
 					if ( ! bpwpapers_is_working_paper( $blog_id ) ) return $activity;
 		
@@ -648,6 +650,8 @@ class CommentpressMultisiteBuddypress {
 		
 		
 		// note: BP seemingly runs content through wp_filter_kses (sad face)
+		//trigger_error( print_r( array( 'comment activity AFTER' => $activity ), true ), E_USER_ERROR ); die();
+		//print_r( array( 'comment activity AFTER' => $activity ) ); //die();
 		
 
 
