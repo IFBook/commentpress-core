@@ -1024,6 +1024,12 @@ function commentpress_get_header_image(
 	// access plugin
 	global $commentpress_core;
 
+
+
+	// -------------------------------------------------------------------------
+	// if this is a groupblog, always show group avatar
+	// -------------------------------------------------------------------------
+
 	// test for groupblog
 	if ( is_object( $commentpress_core ) AND $commentpress_core->is_groupblog() ) {
 	
@@ -1061,6 +1067,26 @@ function commentpress_get_header_image(
 	
 	
 	// -------------------------------------------------------------------------
+	// allow plugins to hook in before Theme Customizer
+	// -------------------------------------------------------------------------
+
+	// allow plugins to hook in
+	$custom_avatar_pre = apply_filters( 'commentpress_header_image_pre_customizer', false );
+	
+	// did we get one?
+	if ( $custom_avatar_pre !== false ) {
+	
+		// show it
+		echo $custom_avatar_pre;
+	
+		// bail before fallback
+		return;
+
+	}
+	
+	
+		
+	// -------------------------------------------------------------------------
 	// implement compatibility with WordPress Theme Customizer
 	// -------------------------------------------------------------------------
 
@@ -1095,6 +1121,26 @@ function commentpress_get_header_image(
 	
 	
 	
+	// -------------------------------------------------------------------------
+	// allow plugins to hook in after Theme Customizer
+	// -------------------------------------------------------------------------
+
+	// allow plugins to hook in
+	$custom_avatar_post = apply_filters( 'commentpress_header_image_post_customizer', false );
+	
+	// did we get one?
+	if ( $custom_avatar_post !== false ) {
+	
+		// show it
+		echo bp_core_fetch_avatar( $custom_avatar_post );
+	
+		// bail before fallback
+		return;
+
+	}
+	
+	
+		
 	// -------------------------------------------------------------------------
 	// our fallback is to go with the legacy method that some people might still be using
 	// -------------------------------------------------------------------------
