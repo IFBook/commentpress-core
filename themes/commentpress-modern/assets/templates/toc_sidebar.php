@@ -6,6 +6,10 @@
 
 
 
+<?php do_action( 'cp_content_tab_before' ); ?>
+
+
+
 <div class="sidebar_header">
 
 <h2><?php _e( 'Contents', 'commentpress-core' ); ?></h2>
@@ -17,6 +21,10 @@
 <div class="sidebar_minimiser">
 
 <div class="sidebar_contents_wrapper">
+
+
+
+<?php do_action( 'cp_content_tab_before_search' ); ?>
 
 
 
@@ -83,6 +91,10 @@ if ( is_object( $commentpress_core ) ) {
 ?>
 	
 </div>
+
+
+
+<?php do_action( 'cp_content_tab_after' ); ?>
 
 
 

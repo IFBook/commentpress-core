@@ -1132,7 +1132,7 @@ function commentpress_get_header_image(
 	if ( $custom_avatar_post !== false ) {
 	
 		// show it
-		echo bp_core_fetch_avatar( $custom_avatar_post );
+		echo $custom_avatar_post;
 	
 		// bail before fallback
 		return;
