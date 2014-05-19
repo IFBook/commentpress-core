@@ -588,6 +588,18 @@ class CommentpressMultisiteBuddypress {
 			
 		}
 		
+		// if on a CP-enabled working paper
+		if ( $is_working_paper ) {
+	
+			// respect BP Working Papers filter for the name of the activity item
+			$activity_name = apply_filters(
+				'bpwpapers_activity_post_name',
+				__( 'post', 'commentpress-core' ),
+				$post
+			);
+			
+		}
+		
 		// set key
 		$key = '_cp_comment_page';
 		
@@ -616,6 +628,10 @@ class CommentpressMultisiteBuddypress {
 								'</a>';
 			
 		}
+		
+		// construct links
+		$comment_link = '<a href="' . $activity->primary_link .'">' . __( 'comment', 'commentpress-core' ) . '</a>';
+		$group_link = '<a href="' . bp_get_group_permalink( $group ) . '">' . esc_html( $group->name ) . '</a>';
 	
 		// Replace the necessary values to display in group activity stream
 		$activity->action = sprintf( 
@@ -623,10 +639,24 @@ class CommentpressMultisiteBuddypress {
 			__( '%s left a %s on a %s %s in the group %s:', 'commentpress-core' ), 
 			
 			$user_link, 
-			'<a href="' . $activity->primary_link .'">' . __( 'comment', 'commentpress-core' ) . '</a>', 
+			$comment_link, 
 			$activity_name, 
 			$target_post_link, 
-			'<a href="' . bp_get_group_permalink( $group ) . '">' . esc_html( $group->name ) . '</a>' 
+			$group_link
+			
+		);
+		
+		// allow plugins to override this
+		$activity->action = apply_filters(
+		
+			'commentpress_comment_activity_action', // hook
+			$activity->action, // default
+			$activity, 
+			$user_link, 
+			$comment_link, 
+			$activity_name, 
+			$target_post_link, 
+			$group_link
 			
 		);
 		
