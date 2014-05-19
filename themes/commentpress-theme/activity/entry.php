@@ -33,11 +33,13 @@ if ( $current_activity->component == 'groups' ) {
 
 ?>
 
+<!-- activity/entry.php -->
+
 <?php do_action( 'bp_before_activity_entry' ); ?>
 
 <li class="<?php bp_activity_css_class(); echo $groupblogtype; ?>" id="activity-<?php bp_activity_id(); ?>">
 
-	<div class="activity-wrapper">
+	<div class="activity-wrapper clearfix">
 	
 		<div class="activity-avatar">
 			<a href="<?php bp_activity_user_link(); ?>">
@@ -81,7 +83,15 @@ if ( $current_activity->component == 'groups' ) {
 	
 					<?php if ( bp_activity_can_comment() ) : ?>
 	
-						<a href="<?php bp_get_activity_comment_link(); ?>" class="button acomment-reply bp-primary-action" id="acomment-comment-<?php bp_activity_id(); ?>"><?php printf( __( 'Comment <span>%s</span>', 'commentpress-core' ), bp_activity_get_comment_count() ); ?></a>
+						<?php
+						
+						// construct comment link 
+						$comment_link = '<a href="' . bp_get_activity_comment_link() . '" class="button acomment-reply bp-primary-action" id="acomment-comment-' . bp_get_activity_id() . '">'.sprintf( __( 'Comment <span>%s</span>', 'commentpress-core' ), bp_activity_get_comment_count() ) . '</a>';
+						
+						// echo it, but allow plugin overrides first
+						echo apply_filters( 'cp_activity_entry_comment_link', $comment_link );
+						
+						?>
 	
 					<?php endif; ?>
 	
@@ -89,11 +99,11 @@ if ( $current_activity->component == 'groups' ) {
 	
 						<?php if ( !bp_get_activity_is_favorite() ) : ?>
 	
-							<a href="<?php bp_activity_favorite_link(); ?>" class="button fav bp-secondary-action" title="<?php esc_attr_e( 'Mark as Favorite', 'commentpress-core' ); ?>"><?php _e( 'Favorite', 'commentpress-core' ) ?></a>
+							<a href="<?php bp_activity_favorite_link(); ?>" class="button fav bp-secondary-action" title="<?php esc_attr_e( 'Mark as Favorite', 'commentpress-core' ); ?>"><?php _e( 'Favorite', 'commentpress-core' ); ?></a>
 	
 						<?php else : ?>
 	
-							<a href="<?php bp_activity_unfavorite_link(); ?>" class="button unfav bp-secondary-action" title="<?php esc_attr_e( 'Remove Favorite', 'commentpress-core' ); ?>"><?php _e( 'Remove Favorite', 'commentpress-core' ) ?></a>
+							<a href="<?php bp_activity_unfavorite_link(); ?>" class="button unfav bp-secondary-action" title="<?php esc_attr_e( 'Remove Favorite', 'commentpress-core' ); ?>"><?php _e( 'Remove Favorite', 'commentpress-core' ); ?></a>
 	
 						<?php endif; ?>
 	
@@ -106,7 +116,7 @@ if ( $current_activity->component == 'groups' ) {
 				</div>
 	
 			<?php endif; ?>
-	
+
 		</div>
 	
 		<?php do_action( 'bp_before_activity_entry_comments' ); ?>
