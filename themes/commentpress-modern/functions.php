@@ -3396,7 +3396,8 @@ function commentpress_get_comments_by_para() {
 							// construct href attribute
 							$href = apply_filters( 
 								'commentpress_reply_to_para_link_href',
-								$query.'#respond' // add respond ID
+								$query.'#respond', // add respond ID
+								$text_sig
 							);
 						
 							// construct link content
