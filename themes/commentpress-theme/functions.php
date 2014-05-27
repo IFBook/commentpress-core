@@ -2740,7 +2740,7 @@ function commentpress_get_comment_activity_item( $comment ) {
 <div class="comment-identifier">
 '.get_avatar( $comment, $size='32' ).'
 '.$author.'		
-<p class="comment_activity_date"><a class="comment_activity_link'.$is_on_current_post.'" href="'.htmlspecialchars( get_comment_link() ).'">'.get_comment_date().' at '.get_comment_time().'</a></p>
+<p class="comment_activity_date"><a class="comment_activity_link'.$is_on_current_post.'" href="'.htmlspecialchars( get_comment_link() ).'">'.sprintf( __( '%1$s at %2$s', 'commentpress-core' ), get_comment_date(), get_comment_time() ).'</a></p>
 </div><!-- /comment-identifier -->
 
 
