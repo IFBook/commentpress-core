@@ -23,7 +23,7 @@ if ( post_password_required() ) { ?>
 
 <div class="sidebar_contents_wrapper">
 <div class="comments_container">
-	<h3 class="nocomments">Enter the password to view comments</h3>
+	<h3 class="nocomments"><span><?php _e( 'Enter the password to view comments', 'commentpress-core' ); ?></span></h3>
 </div><!-- /comments_container -->
 </div><!-- /sidebar_contents_wrapper -->
 
@@ -95,7 +95,7 @@ if ( is_object( $commentpress_core ) ) {
 		'<span>%</span> comments'
 	); 
 	
-	?> on the whole page</span></h3>
+	?> <?php _e( 'on the whole page', 'commentpress-core' ); ?></span></h3>
 
 
 
@@ -119,7 +119,7 @@ if ( is_object( $commentpress_core ) ) {
 		</ol>
 
 		<div class="reply_to_para" id="reply_to_para-">
-		<p><a class="reply_to_para" href="<?php the_permalink() ?>?replytopara#respond" onclick="return addComment.moveFormToPara( '', '', '1' )">Leave a comment on the whole page</a></p>
+		<p><a class="reply_to_para" href="<?php the_permalink() ?>?replytopara#respond" onclick="return addComment.moveFormToPara( '', '', '1' )"><?php _e( 'Leave a comment on the whole page', 'commentpress-core' ); ?></a></p>
 		</div>
 		
 	</div><!-- /paragraph_wrapper -->
@@ -138,12 +138,12 @@ else :
 	<?php if ('open' == $post->comment_status) : ?>
 
 		<!-- comments are open, but there are no comments. -->
-		<h3 class="nocomments">No comments on the whole page</h3>
+		<h3 class="nocomments"><span><?php _e( 'No comments on the whole page', 'commentpress-core' ); ?></span></h3>
 
 		<div class="paragraph_wrapper">
 	
 			<div class="reply_to_para" id="reply_to_para-">
-			<p><a class="reply_to_para" href="<?php the_permalink() ?>?replytopara#respond" onclick="return addComment.moveFormToPara( '', '', '1' )">Leave a comment on the whole page</a></p>
+			<p><a class="reply_to_para" href="<?php the_permalink() ?>?replytopara#respond" onclick="return addComment.moveFormToPara( '', '', '1' )"><?php _e( 'Leave a comment on the whole page', 'commentpress-core' ); ?></a></p>
 			</div>
 			
 		</div><!-- /paragraph_wrapper -->
@@ -154,7 +154,7 @@ else :
 	 ?>
 
 		<!-- comments are closed. -->
-		<h3 class="nocomments">Comments are closed.</h3>
+		<h3 class="nocomments comments-closed"><span><?php _e( 'Comments are closed.', 'commentpress-core' ); ?></span></h3>
 
 	<?php endif; ?>
 

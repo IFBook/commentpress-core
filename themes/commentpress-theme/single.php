@@ -190,7 +190,7 @@ echo commentpress_multipager();
 		// Neither Comments, nor Pings are open 
 		?>Both comments and pings are currently closed. <?php 
 		
-	} edit_post_link('Edit this entry','','.'); 
+	} edit_post_link( 'Edit this entry', '', '.' ); 
 	
 ?></p>
 
@@ -300,9 +300,9 @@ if ( $tabs_class != '' ) {
 
 <div class="post">
 
-<h2 class="post_title">Post Not Found</h2>
+<h2 class="post_title"><?php _e( 'Post Not Found', 'commentpress-core' ); ?></h2>
 
-<p>Sorry, no posts matched your criteria.</p>
+<p><?php _e( 'Sorry, no posts matched your criteria.', 'commentpress-core' ); ?></p>
 
 <?php get_search_form(); ?>
 

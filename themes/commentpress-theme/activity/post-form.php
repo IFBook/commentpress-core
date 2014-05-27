@@ -39,7 +39,7 @@
 
 				<div id="whats-new-post-in-box">
 
-					<?php _e( 'Post in', 'commentpress-core' ) ?>:
+					<?php _e( 'Post in', 'commentpress-core' ); ?>:
 
 					<select id="whats-new-post-in" name="whats-new-post-in">
 						<option selected="selected" value="0"><?php _e( 'My Profile', 'commentpress-core' ); ?></option>

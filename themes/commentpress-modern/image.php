@@ -53,19 +53,19 @@
 			<?php the_taxonomies(); ?>
 			You can follow any comments on this image through the <?php post_comments_feed_link('RSS 2.0'); ?> feed.
 
-			<?php if (('open' == $post-> comment_status) && ('open' == $post->ping_status)) {
+			<?php if (('open' == $post-> comment_status) AND ('open' == $post->ping_status)) {
 				// Both Comments and Pings are open ?>
 				You are welcome to <a href="#respond">leave a comment</a>, or <a href="<?php trackback_url(); ?>" rel="trackback">trackback</a> from your own site.
 
-			<?php } elseif (!('open' == $post-> comment_status) && ('open' == $post->ping_status)) {
+			<?php } elseif (!('open' == $post-> comment_status) AND ('open' == $post->ping_status)) {
 				// Only Pings are Open ?>
 				Comments are currently closed, but you can <a href="<?php trackback_url(); ?> " rel="trackback">trackback</a> from your own site.
 
-			<?php } elseif (('open' == $post-> comment_status) && !('open' == $post->ping_status)) {
+			<?php } elseif (('open' == $post-> comment_status) AND !('open' == $post->ping_status)) {
 				// Comments are open, Pings are not ?>
 				You are welcome to <a href="#respond">leave a comment</a>. Pinging is currently not allowed.
 
-			<?php } elseif (!('open' == $post-> comment_status) && !('open' == $post->ping_status)) {
+			<?php } elseif (!('open' == $post-> comment_status) AND !('open' == $post->ping_status)) {
 				// Neither Comments, nor Pings are open ?>
 				Both comments and pings are currently closed.
 

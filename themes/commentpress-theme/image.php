@@ -33,22 +33,22 @@
 		<?php the_content('<p class="serif">Read the rest of this entry &raquo;</p>'); ?>
 
 		<p class="postmetadata" style="clear: left;">
-			This entry was posted on <?php the_time('l, F jS, Y') ?> at <?php the_time() ?>
+			This image was posted on <?php the_time('l, F jS, Y') ?> at <?php the_time() ?>
 			and is filed under <?php the_category(', ') ?>.
 			<?php the_taxonomies(); ?>
-			You can follow any responses to this entry through the <?php post_comments_feed_link('RSS 2.0'); ?> feed.
+			You can follow any comments on this image through the <?php post_comments_feed_link('RSS 2.0'); ?> feed.
 
 			<?php if (('open' == $post-> comment_status) AND ('open' == $post->ping_status)) {
 				// Both Comments and Pings are open ?>
-				You can <a href="#respond">leave a response</a>, or <a href="<?php trackback_url(); ?>" rel="trackback">trackback</a> from your own site.
+				You are welcome to <a href="#respond">leave a comment</a>, or <a href="<?php trackback_url(); ?>" rel="trackback">trackback</a> from your own site.
 
 			<?php } elseif (!('open' == $post-> comment_status) AND ('open' == $post->ping_status)) {
 				// Only Pings are Open ?>
-				Responses are currently closed, but you can <a href="<?php trackback_url(); ?> " rel="trackback">trackback</a> from your own site.
+				Comments are currently closed, but you can <a href="<?php trackback_url(); ?> " rel="trackback">trackback</a> from your own site.
 
 			<?php } elseif (('open' == $post-> comment_status) AND !('open' == $post->ping_status)) {
 				// Comments are open, Pings are not ?>
-				You can skip to the end and leave a response. Pinging is currently not allowed.
+				You are welcome to <a href="#respond">leave a comment</a>. Pinging is currently not allowed.
 
 			<?php } elseif (!('open' == $post-> comment_status) AND !('open' == $post->ping_status)) {
 				// Neither Comments, nor Pings are open ?>
@@ -61,11 +61,11 @@
 
 		<ul class="image_link">
 			<li class="alignright">
-				<h4>Next Image &raquo;</h4>
+				<h4><?php _e( 'Next Image &raquo;', 'commentpress-core' ); ?></h4>
 				<?php next_image_link() ?>
 			</li>
 			<li class="alignleft">
-				<h4>&laquo; Previous Image</h4>
+				<h4><?php _e( '&laquo; Previous Image', 'commentpress-core' ); ?></h4>
 				<?php previous_image_link() ?>
 			</li>
 		</ul>
@@ -80,7 +80,9 @@
 
 	<div class="post">
 
-		<p>Sorry, no attachments matched your criteria.</p>
+		<h2><?php _e( 'Not Found', 'commentpress-core' ); ?></h2>
+	
+		<p><?php _e( 'Sorry, no attachments matched your criteria.', 'commentpress-core' ); ?></p>
 
 	</div><!-- /post -->
 

@@ -43,7 +43,7 @@ if (
 
 ?><form method="get" id="searchform" action="<?php echo site_url(); ?>/">
 
-<label for="s"><?php _e('Search for:', 'commentpress-core'); ?></label>
+<label for="s"><?php _e( 'Search for:', 'commentpress-core' ); ?></label>
 
 <input type="text" value="<?php the_search_query(); ?>" name="s" id="s" />
 

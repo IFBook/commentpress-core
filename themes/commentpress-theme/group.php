@@ -51,7 +51,7 @@ if ( version_compare( $wp_version, '3.1', '>=' ) ) {
 
 
 
-<h2 class="post_title">Group Members</h2>
+<h2 class="post_title"><?php _e( 'Group Members', 'commentpress-core' ); ?></h2>
 
 
 
