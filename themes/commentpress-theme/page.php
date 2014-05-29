@@ -72,7 +72,7 @@
 	if ( class_exists( 'PTCFP' ) ) {
 	
 	?>
-	<p class="search_meta"><?php the_tags( __( 'Tags: ', 'commentpress-core' ), ', ', '<br />' ); ?> <?php _e( 'Posted in', 'commentpress-core' ); ?> <?php the_category(', ') ?></p>
+	<p class="search_meta"><?php the_tags( __( 'Tags: ', 'commentpress-core' ), ', ', '<br />' ); ?> <?php _e( 'Posted in', 'commentpress-core' ); ?> <?php the_category( ', ' ); ?></p>
 	<?php
 	
 	}
