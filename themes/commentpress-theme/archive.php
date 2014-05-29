@@ -30,11 +30,11 @@
 	<?php /* If this is a tag archive */ } elseif( is_tag() ) { ?>
 	<h3 class="post_title"><?php _e( 'Posts Tagged', 'commentpress-core' ); ?> &#8216;<?php single_tag_title(); ?>&#8217;</h3>
 	<?php /* If this is a daily archive */ } elseif (is_day()) { ?>
-	<h3 class="post_title"><?php _e( 'Archive for', 'commentpress-core' ); ?> <?php the_time('F jS, Y'); ?></h3>
+	<h3 class="post_title"><?php _e( 'Archive for', 'commentpress-core' ); ?> <?php the_time( __( 'F jS, Y', 'commentpress-core' ) ); ?></h3>
 	<?php /* If this is a monthly archive */ } elseif (is_month()) { ?>
-	<h3 class="post_title"><?php _e( 'Archive for', 'commentpress-core' ); ?> <?php the_time('F, Y'); ?></h3>
+	<h3 class="post_title"><?php _e( 'Archive for', 'commentpress-core' ); ?> <?php the_time( __( 'F, Y', 'commentpress-core' ) ); ?></h3>
 	<?php /* If this is a yearly archive */ } elseif (is_year()) { ?>
-	<h3 class="post_title"><?php _e( 'Archive for', 'commentpress-core' ); ?> <?php the_time('Y'); ?></h3>
+	<h3 class="post_title"><?php _e( 'Archive for', 'commentpress-core' ); ?> <?php the_time( __( 'Y', 'commentpress-core' ) ); ?></h3>
 	<?php /* If this is an author archive */ } elseif (is_author()) { ?>
 	<h3 class="post_title"><?php _e( 'Author Archive', 'commentpress-core' ); ?></h3>
 	<?php /* If this is a paged archive */ } elseif (isset($_GET['paged']) && !empty($_GET['paged'])) { ?>

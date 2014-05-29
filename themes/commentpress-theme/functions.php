@@ -1720,7 +1720,7 @@ function commentpress_echo_post_meta() {
 			
 			?><cite class="fn"><?php echo $author_html; ?></cite>
 			
-			<p><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
+			<p><a href="<?php the_permalink() ?>"><?php echo esc_html( get_the_date( __( 'l, F jS, Y', 'commentpress-core' ) ) ); ?></a></p>
 			
 			<?php
 				
@@ -1736,7 +1736,7 @@ function commentpress_echo_post_meta() {
 		
 		<cite class="fn"><?php commentpress_echo_post_author( $author_id ) ?></cite>
 		
-		<p><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
+		<p><a href="<?php the_permalink() ?>"><?php echo esc_html( get_the_date( __( 'l, F jS, Y', 'commentpress-core' ) ) ); ?></a></p>
 		
 		<?php 
 	
