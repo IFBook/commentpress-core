@@ -957,7 +957,7 @@ function commentpress_admin_menu() {
 	if ( version_compare( $wp_version, '3.4', '>=' ) ) {
 
 		// add the Customize link to the admin menu
-		add_theme_page( 'Customize', 'Customize', 'edit_theme_options', 'customize.php' );
+		add_theme_page( __( 'Customize', 'commentpress-core' ), __( 'Customize', 'commentpress-core' ), 'edit_theme_options', 'customize.php' );
 		
 	}
 	
@@ -1041,7 +1041,7 @@ function commentpress_get_header_image(
 			'item_id' => $group_id, 
 			'object' => 'group', 
 			'type' => 'full', 
-			'alt' => 'Group avatar', 
+			'alt' => __( 'Group avatar', 'commentpress-core' ), 
 			'class' => 'cp_logo_image cp_group_avatar', 
 			'width' => 48, 
 			'height' => 48, 
@@ -1562,7 +1562,7 @@ function commentpress_page_navigation( $with_comments = false ) {
 		// define list item 
 		$next_page_html = $before_next.
 						  $img.
-						  '<a href="'.get_permalink( $next_page->ID ).'" class="next_page" title="'.$title.'">'.$title.'</a>'.
+						  '<a href="'.get_permalink( $next_page->ID ).'" class="next_page" title="'.esc_attr( $title ).'">'.$title.'</a>'.
 						  $after_next;
 		
 	}
@@ -1594,7 +1594,7 @@ function commentpress_page_navigation( $with_comments = false ) {
 		// define list item 
 		$prev_page_html = $before_prev.
 						  $img.
-						  '<a href="'.get_permalink( $prev_page->ID ).'" class="previous_page" title="'.$title.'">'.$title.'</a>'.
+						  '<a href="'.get_permalink( $prev_page->ID ).'" class="previous_page" title="'.esc_attr( $title ).'">'.$title.'</a>'.
 						  $after_prev;
 		
 	}
@@ -2106,7 +2106,7 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 	$_comment_anchor = '<a href="'.$_comment_link.'" title="'.esc_attr( __( 'See comment in context', 'commentpress-core' ) ).'">'.__( 'Comment', 'commentpress-core' ).'</a>';
 	
 	// construct date
-	$_comment_date = date( 'F jS, Y', strtotime( $comment->comment_date ) );
+	$_comment_date = date( __( 'F jS, Y', 'commentpress-core' ), strtotime( $comment->comment_date ) );
 	
 	
 	
