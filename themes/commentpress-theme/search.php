@@ -22,7 +22,7 @@
 
 	<div class="post">
 
-	<h3 class="post_title">Search Results for &#8216;<?php the_search_query(); ?>&#8217;</h3>
+	<h3 class="post_title"><?php _e( 'Search Results for', 'commentpress-core' ); ?> &#8216;<?php the_search_query(); ?>&#8217;</h3>
 
 	<?php
 	
@@ -57,7 +57,7 @@
 
 		<div class="search_result">
 
-			<h3 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
+			<h3 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'commentpress-core' ); ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
 			
 			<div class="search_meta">
 			
@@ -67,7 +67,7 @@
 
 			<?php the_excerpt() ?>
 		
-			<p class="search_meta"><?php the_tags('Tags: ', ', ', '<br />'); ?> Posted in <?php the_category(', ') ?> | <?php edit_post_link('Edit', '', ' | '); ?>  <?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?></p>
+			<p class="search_meta"><?php the_tags( __( 'Tags: ', 'commentpress-core' ), ', ', '<br />'); ?> <?php _e( 'Posted in', 'commentpress-core' ); ?> <?php the_category( ', ' ) ?> | <?php edit_post_link( __( 'Edit', 'commentpress-core' ), '', ' | '); ?>  <?php comments_popup_link( __( 'No Comments &#187;', 'commentpress-core' ), __( '1 Comment &#187;', 'commentpress-core' ), __( '% Comments &#187;', 'commentpress-core' ) ); ?></p>
 		
 		</div><!-- /search_result -->
 
@@ -85,9 +85,9 @@
 
 	<div class="post">
 
-	<h2>Nothing found for &#8216;<?php the_search_query(); ?>&#8217;</h2>
+	<h2><?php _e( 'Nothing found for', 'commentpress-core' ); ?> &#8216;<?php the_search_query(); ?>&#8217;</h2>
 	
-	<p>Try a different search?</p>
+	<p><?php _e( 'Try a different search?', 'commentpress-core' ); ?></p>
 
 	<?php get_search_form(); ?>
 

@@ -30,7 +30,7 @@ Template Name: General Comments
 
 <div class="post general_comments">
 
-<h2 class="post_title">General Comments</h2>
+<h2 class="post_title"><?php _e( 'General Comments', 'commentpress-core' ); ?></h2>
 
 <?php comments_template(); ?>
 

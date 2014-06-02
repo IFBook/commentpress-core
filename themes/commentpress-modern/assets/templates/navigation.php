@@ -85,6 +85,9 @@ global $commentpress_core;
 		
 		}
 	
+		// allow plugins to inject links
+		do_action( 'cp_nav_before_special_pages' );
+		
 		// show link to general comments page if we have one
 		echo $commentpress_core->get_page_link( 'cp_general_comments_page' );
 		
@@ -137,13 +140,13 @@ global $commentpress_core;
 					);
 			
 					// BP uses its own signup page
-					?><li><a href="<?php echo bp_get_root_domain().'/'.bp_get_blogs_root_slug(); ?>/create/" title="<?php echo $_new_site_title; ?>" id="btn_create"><?php echo $_new_site_title; ?></a></li>
-					<?php 
+					$item = '<li><a href="'.bp_get_root_domain().'/'.bp_get_blogs_root_slug().'/create/" title="'.$_new_site_title.'" id="btn_create">'.$_new_site_title.'</a></li>';
 				
 				} else {
 				
 					// not directly allowed - done through signup form
-				
+					$item = '';
+					
 				}
 	
 			} else {
@@ -155,10 +158,12 @@ global $commentpress_core;
 				);
 		
 				// standard WP multisite
-				?><li><a href="<?php echo network_site_url(); ?>wp-signup.php" title="<?php echo $_new_site_title; ?>" id="btn_create"><?php echo $_new_site_title; ?></a></li>
-				<?php 
+				$item = '<li><a href="'.network_site_url().'wp-signup.php" title="'.$_new_site_title.'" id="btn_create">'.$_new_site_title.'</a></li>';
 			
 			}
+			
+			// show it, but allow plugins to override
+			echo apply_filters( 'cp_user_links_new_site_link', $item );
 		
 		}
 	

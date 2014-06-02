@@ -720,7 +720,7 @@ function commentpress_admin_menu() {
 	if ( version_compare( $wp_version, '3.4', '>=' ) ) {
 
 		// add the Customize link to the admin menu
-		add_theme_page( 'Customize', 'Customize', 'edit_theme_options', 'customize.php' );
+		add_theme_page( __( 'Customize', 'commentpress-core' ), __( 'Customize', 'commentpress-core' ), 'edit_theme_options', 'customize.php' );
 		
 	}
 	
@@ -787,6 +787,12 @@ function commentpress_get_header_image(
 	// access plugin
 	global $commentpress_core;
 
+
+
+	// -------------------------------------------------------------------------
+	// if this is a groupblog, always show group avatar
+	// -------------------------------------------------------------------------
+
 	// test for groupblog
 	if ( is_object( $commentpress_core ) AND $commentpress_core->is_groupblog() ) {
 	
@@ -798,7 +804,7 @@ function commentpress_get_header_image(
 			'item_id' => $group_id, 
 			'object' => 'group', 
 			'type' => 'full', 
-			'alt' => 'Group avatar', 
+			'alt' => __( 'Group avatar', 'commentpress-core' ), 
 			'class' => 'cp_logo_image cp_group_avatar', 
 			'width' => 48, 
 			'height' => 48, 
@@ -823,6 +829,26 @@ function commentpress_get_header_image(
 	
 	
 	
+	// -------------------------------------------------------------------------
+	// allow plugins to hook in before Theme Customizer
+	// -------------------------------------------------------------------------
+
+	// allow plugins to hook in
+	$custom_avatar_pre = apply_filters( 'commentpress_header_image_pre_customizer', false );
+	
+	// did we get one?
+	if ( $custom_avatar_pre !== false ) {
+	
+		// show it
+		echo $custom_avatar_pre;
+	
+		// bail before fallback
+		return;
+
+	}
+	
+	
+		
 	// -------------------------------------------------------------------------
 	// implement compatibility with WordPress Theme Customizer
 	// -------------------------------------------------------------------------
@@ -858,6 +884,26 @@ function commentpress_get_header_image(
 	
 	
 	
+	// -------------------------------------------------------------------------
+	// allow plugins to hook in after Theme Customizer
+	// -------------------------------------------------------------------------
+
+	// allow plugins to hook in
+	$custom_avatar_post = apply_filters( 'commentpress_header_image_post_customizer', false );
+	
+	// did we get one?
+	if ( $custom_avatar_post !== false ) {
+	
+		// show it
+		echo $custom_avatar_post;
+	
+		// bail before fallback
+		return;
+
+	}
+	
+	
+		
 	// -------------------------------------------------------------------------
 	// our fallback is to go with the legacy method that some people might still be using
 	// -------------------------------------------------------------------------
@@ -1278,7 +1324,7 @@ function commentpress_page_navigation( $with_comments = false ) {
 		
 		// define list item 
 		$next_page_html = $before_next.
-						  $img.'<a href="'.get_permalink( $next_page->ID ).'" id="next_page" class="css_btn" title="'.$title.'">'.$title.'</a>'.$after_next;
+						  $img.'<a href="'.get_permalink( $next_page->ID ).'" id="next_page" class="css_btn" title="'.esc_attr( $title ).'">'.$title.'</a>'.$after_next;
 		
 	}
 	
@@ -1308,7 +1354,7 @@ function commentpress_page_navigation( $with_comments = false ) {
 		
 		// define list item 
 		$prev_page_html = $before_prev.
-						  $img.'<a href="'.get_permalink( $prev_page->ID ).'" id="previous_page" class="css_btn" title="'.$title.'">'.$title.'</a>'.$after_prev;
+						  $img.'<a href="'.get_permalink( $prev_page->ID ).'" id="previous_page" class="css_btn" title="'.esc_attr( $title ).'">'.$title.'</a>'.$after_prev;
 		
 	}
 	
@@ -1674,7 +1720,7 @@ function commentpress_echo_post_meta() {
 			
 			?><cite class="fn"><?php echo $author_html; ?></cite>
 			
-			<p><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
+			<p><a href="<?php the_permalink() ?>"><?php echo esc_html( get_the_date( __( 'l, F jS, Y', 'commentpress-core' ) ) ); ?></a></p>
 			
 			<?php
 				
@@ -1690,7 +1736,7 @@ function commentpress_echo_post_meta() {
 		
 		<cite class="fn"><?php commentpress_echo_post_author( $author_id ) ?></cite>
 		
-		<p><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
+		<p><a href="<?php the_permalink() ?>"><?php echo esc_html( get_the_date( __( 'l, F jS, Y', 'commentpress-core' ) ) ); ?></a></p>
 		
 		<?php 
 	
@@ -1819,7 +1865,7 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 	$_comment_anchor = '<a href="'.$_comment_link.'" title="'.esc_attr( __( 'See comment in context', 'commentpress-core' ) ).'">'.__( 'Comment', 'commentpress-core' ).'</a>';
 	
 	// construct date
-	$_comment_date = date( 'F jS, Y', strtotime( $comment->comment_date ) );
+	$_comment_date = date( __( 'F jS, Y', 'commentpress-core' ), strtotime( $comment->comment_date ) );
 	
 	
 	
@@ -2694,7 +2740,7 @@ function commentpress_get_comment_activity_item( $comment ) {
 <div class="comment-identifier">
 '.get_avatar( $comment, $size='32' ).'
 '.$author.'		
-<p class="comment_activity_date"><a class="comment_activity_link'.$is_on_current_post.'" href="'.htmlspecialchars( get_comment_link() ).'">'.get_comment_date().' at '.get_comment_time().'</a></p>
+<p class="comment_activity_date"><a class="comment_activity_link'.$is_on_current_post.'" href="'.htmlspecialchars( get_comment_link() ).'">'.sprintf( __( '%1$s at %2$s', 'commentpress-core' ), get_comment_date(), get_comment_time() ).'</a></p>
 </div><!-- /comment-identifier -->
 
 
@@ -3109,7 +3155,8 @@ function commentpress_get_comments_by_para() {
 							// construct href attribute
 							$href = apply_filters( 
 								'commentpress_reply_to_para_link_href',
-								$query.'#respond' // add respond ID
+								$query.'#respond', // add respond ID
+								$text_sig
 							);
 						
 							// construct link content

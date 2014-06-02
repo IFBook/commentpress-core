@@ -649,7 +649,7 @@ HELPTEXT;
 						$_html .= '<cite class="fn">'.$author_html.'</cite>'."\n";
 						
 						// add permalink
-						$_html .= '<p class="post_activity_date">'.get_the_time('l, F jS, Y', $item->ID).'</p>'."\n";
+						$_html .= '<p class="post_activity_date">'.esc_html( get_the_time( __( 'l, F jS, Y', 'commentpress-core' ) ), $item->ID ).'</p>'."\n";
 							
 					}
 				
@@ -669,7 +669,7 @@ HELPTEXT;
 					$_html .= '<cite class="fn">'.$this->echo_post_author( $author_id, false ).'</cite>';
 					
 					// add permalink
-					$_html .= '<p class="post_activity_date">'.get_the_time('l, F jS, Y', $item->ID).'</p>';
+					$_html .= '<p class="post_activity_date">'.esc_html( get_the_time( __( 'l, F jS, Y', 'commentpress-core' ) ), $item->ID ).'</p>';
 					
 				}
 					

@@ -164,33 +164,86 @@ echo commentpress_multipager();
 
 
 
-<?php the_tags( '<p class="postmetadata">Tags: ', ', ', '</p>'); ?>
+<?php the_tags( '<p class="postmetadata">' . __( 'Tags: ', 'commentpress-core' ), ', ', '</p>'); ?>
 
 
 
-<p class="postmetadata">This entry is filed under <?php the_category(', ') ?>. You can follow any responses to this entry through the <?php post_comments_feed_link('RSS 2.0'); ?> feed. <?php 
+<p class="postmetadata"><?php
+	
+	// define RSS text
+	$rss_text = __( 'RSS 2.0', 'commentpress-core' );
+	
+	// construct RSS link
+	$rss_link = '<a href="'.esc_url( get_post_comments_feed_link() ).'">'.$rss_text.'</a>';
+	
+	// show text
+	echo sprintf( 
+		__( 'This entry is filed under %1$s. You can follow any comments on this entry through the %2$s feed.', 'commentpress-core' ), 
+		get_the_category_list( ', ' ),
+		$rss_link
+	);
+	
+	// add trailing space
+	echo ' ';
 	
 	if (('open' == $post->comment_status) AND ('open' == $post->ping_status)) {
 		
-		// Both Comments and Pings are open 
-		?>You can leave a response, or <a href="<?php trackback_url(); ?>" rel="trackback">trackback</a> from your own site. <?php 
+		// both comments and pings are open
+
+		// define trackback text
+		$trackback_text = __( 'trackback', 'commentpress-core' );
+	
+		// construct RSS link
+		$trackback_link = '<a href="'.esc_url( get_trackback_url() ).'"rel="trackback">'.$trackback_text.'</a>';
 		
+		// write out
+		echo sprintf(
+			__( 'You can leave a comment, or %s from your own site.' ),
+			$trackback_link
+		);
+		
+		// add trailing space
+		echo ' ';
+	
 	} elseif (!('open' == $post->comment_status) AND ('open' == $post->ping_status)) {
 	
-		// Only Pings are Open 
-		?>Responses are currently closed, but you can <a href="<?php trackback_url(); ?> " rel="trackback">trackback</a> from your own site. <?php 
+		// only pings are open 
+
+		// define trackback text
+		$trackback_text = __( 'trackback', 'commentpress-core' );
+	
+		// construct RSS link
+		$trackback_link = '<a href="'.esc_url( get_trackback_url() ).'"rel="trackback">'.$trackback_text.'</a>';
+	
+		// write out
+		echo sprintf(
+			__( 'Comments are currently closed, but you can %s from your own site.', 'commentpress-core' ),
+			$trackback_link
+		);
 		
+		// add trailing space
+		echo ' ';
+	
 	} elseif (('open' == $post->comment_status) AND !('open' == $post->ping_status)) {
 	
-		// Comments are open, Pings are not 
-		?>You can leave a response. Pinging is currently not allowed. <?php 
+		// comments are open, pings are not 
+		_e( 'You can leave a comment. Pinging is currently not allowed.', 'commentpress-core' ); 
 		
+		// add trailing space
+		echo ' ';
+	
 	} elseif (!('open' == $post->comment_status) AND !('open' == $post->ping_status)) {
 		
-		// Neither Comments, nor Pings are open 
-		?>Both comments and pings are currently closed. <?php 
+		// neither comments nor pings are open 
+		_e( 'Both comments and pings are currently closed.', 'commentpress-core' ); 
 		
-	} edit_post_link('Edit this entry','','.'); 
+		// add trailing space
+		echo ' ';
+	
+	}
+	
+	// show edit link
+	edit_post_link( __( 'Edit this entry', 'commentpress-core' ), '', '.' ); 
 	
 ?></p>
 
@@ -300,9 +353,9 @@ if ( $tabs_class != '' ) {
 
 <div class="post">
 
-<h2 class="post_title">Post Not Found</h2>
+<h2 class="post_title"><?php _e( 'Post Not Found', 'commentpress-core' ); ?></h2>
 
-<p>Sorry, no posts matched your criteria.</p>
+<p><?php _e( 'Sorry, no posts matched your criteria.', 'commentpress-core' ); ?></p>
 
 <?php get_search_form(); ?>
 

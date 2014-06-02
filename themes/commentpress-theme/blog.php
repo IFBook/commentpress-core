@@ -37,7 +37,7 @@ if (have_posts()) : ?>
 		
 		<div <?php post_class() ?> id="post-<?php the_ID(); ?>">
 
-			<h3><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
+			<h3><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'commentpress-core' ); ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
 
 			<div class="search_meta">
 				<?php commentpress_echo_post_meta(); ?>
@@ -47,7 +47,7 @@ if (have_posts()) : ?>
 				<?php the_content('Read the rest of this entry &raquo;'); ?>
 			</div>
 
-			<p class="postmetadata"><?php the_tags('Tags: ', ', ', '<br />'); ?> Posted in <?php the_category(', ') ?> | <?php edit_post_link('Edit', '', ' | '); ?>  <?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?></p>
+			<p class="postmetadata"><?php the_tags( __( 'Tags: ', 'commentpress-core' ), ', ', '<br />' ); ?> <?php _e( 'Posted in', 'commentpress-core' ); ?> <?php the_category( ', ' ) ?> | <?php edit_post_link( __( 'Edit', 'commentpress-core' ), '', ' | ' ); ?>  <?php comments_popup_link( __( 'No Comments &#187;', 'commentpress-core' ), __( '1 Comment &#187;', 'commentpress-core' ), __( '% Comments &#187;', 'commentpress-core' ) ); ?></p>
 			
 		</div>
 
@@ -57,9 +57,9 @@ if (have_posts()) : ?>
 	
 <?php else : ?>
 
-	<h2>Not Found</h2>
+	<h2><?php _e( 'Not Found', 'commentpress-core' ); ?></h2>
 	
-	<p>Sorry, but you are looking for something that isn't here.</p>
+	<p><?php _e( "Sorry, but you are looking for something that isn't here.", 'commentpress-core' ); ?></p>
 	
 	<?php get_search_form(); ?>
 

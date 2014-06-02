@@ -419,7 +419,8 @@ class CommentpressMultisiteBuddypress {
 	 */
 	public function group_custom_comment_activity( $activity ) {
 		
-		//print_r( array( 'a1' => $activity ) );// die();
+		//trigger_error( print_r( array( 'comment activity BEFORE' => $activity ), true ), E_USER_ERROR ); die();
+		//print_r( array( 'comment activity BEFORE' => $activity ) ); //die();
 		
 		// only deal with comments
 		if ( ( $activity->type != 'new_blog_comment' ) ) return;
@@ -429,6 +430,7 @@ class CommentpressMultisiteBuddypress {
 		// init vars
 		$is_groupblog = false;
 		$is_groupsite = false;
+		$is_working_paper = false;
 		
 		
 		
@@ -468,12 +470,37 @@ class CommentpressMultisiteBuddypress {
 				// set activity type
 				$type = 'new_groupsite_comment';
 			
+			} else {
+			
+				// do we have the function we need to call?
+				if ( function_exists( 'bpwpapers_is_working_paper' ) ) {
+			
+					// which blog?
+					$blog_id = $activity->item_id;
+
+					// only on working papers
+					if ( ! bpwpapers_is_working_paper( $blog_id ) ) return $activity;
+		
+					// get the group ID for this blog
+					$group_id = bpwpapers_get_group_by_blog_id( $blog_id );
+		
+					// sanity check
+					if ( $group_id === false ) return $activity;
+				
+					// set activity type
+					$type = 'new_working_paper_comment';
+			
+					// working paper is active
+					$is_working_paper = true;
+		
+				}
+				
 			}
 			
 		}
 		
 		// sanity check
-		if ( ! $is_groupblog AND ! $is_groupsite ) return $activity;
+		if ( ! $is_groupblog AND ! $is_groupsite AND ! $is_working_paper ) return $activity;
 
 		// okay, let's get the group object
 		$group = groups_get_group( array( 'group_id' => $group_id ) );
@@ -561,6 +588,18 @@ class CommentpressMultisiteBuddypress {
 			
 		}
 		
+		// if on a CP-enabled working paper
+		if ( $is_working_paper ) {
+	
+			// respect BP Working Papers filter for the name of the activity item
+			$activity_name = apply_filters(
+				'bpwpapers_activity_post_name',
+				__( 'post', 'commentpress-core' ),
+				$post
+			);
+			
+		}
+		
 		// set key
 		$key = '_cp_comment_page';
 		
@@ -589,6 +628,10 @@ class CommentpressMultisiteBuddypress {
 								'</a>';
 			
 		}
+		
+		// construct links
+		$comment_link = '<a href="' . $activity->primary_link .'">' . __( 'comment', 'commentpress-core' ) . '</a>';
+		$group_link = '<a href="' . bp_get_group_permalink( $group ) . '">' . esc_html( $group->name ) . '</a>';
 	
 		// Replace the necessary values to display in group activity stream
 		$activity->action = sprintf( 
@@ -596,10 +639,24 @@ class CommentpressMultisiteBuddypress {
 			__( '%s left a %s on a %s %s in the group %s:', 'commentpress-core' ), 
 			
 			$user_link, 
-			'<a href="' . $activity->primary_link .'">' . __( 'comment', 'commentpress-core' ) . '</a>', 
+			$comment_link, 
 			$activity_name, 
 			$target_post_link, 
-			'<a href="' . bp_get_group_permalink( $group ) . '">' . esc_html( $group->name ) . '</a>' 
+			$group_link
+			
+		);
+		
+		// allow plugins to override this
+		$activity->action = apply_filters(
+		
+			'commentpress_comment_activity_action', // hook
+			$activity->action, // default
+			$activity, 
+			$user_link, 
+			$comment_link, 
+			$activity_name, 
+			$target_post_link, 
+			$group_link
 			
 		);
 		
@@ -623,6 +680,8 @@ class CommentpressMultisiteBuddypress {
 		
 		
 		// note: BP seemingly runs content through wp_filter_kses (sad face)
+		//trigger_error( print_r( array( 'comment activity AFTER' => $activity ), true ), E_USER_ERROR ); die();
+		//print_r( array( 'comment activity AFTER' => $activity ) ); //die();
 		
 
 
@@ -899,6 +958,66 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
+	/**
+	 * Check if a group has a CommentPress-enabled groupblog
+	 *
+	 * @return boolean True if group has CommentPress groupblog, false otherwise
+	 */
+	public function group_has_commentpress_groupblog( $group_id = null ) {
+	
+		// do we have groupblogs enabled?
+		if ( function_exists( 'get_groupblog_group_id' ) ) {
+			
+			// did we get a specific group passed in?
+			if ( is_null( $group_id ) ) {
+				
+				// use BP API
+				$group_id = bp_get_current_group_id();
+				
+				// unlikely, but if we don't get one...
+				if ( empty( $group_id ) ) {
+				
+					// try and get ID from BP
+					global $bp;
+					
+					if ( isset( $bp->groups->current_group->id ) ) {
+						$group_id = $bp->groups->current_group->id;
+					}
+				
+				}
+				
+			}
+			
+			// yes, is this blog a groupblog? 
+			if ( !empty( $group_id ) AND is_numeric( $group_id ) ) {
+			
+				// is it CommentPress Core-enabled?
+			
+				// get group blogtype
+				$groupblog_type = groups_get_groupmeta( $group_id, 'groupblogtype' );
+				
+				// did we get one?
+				if ( $groupblog_type ) {
+				
+					// yes
+					return true;
+				
+				}
+				
+			}
+			
+		}
+		
+		// --<
+		return false;
+		
+	}
+	
+	
+	
+
+
+
 	/**
 	 * Add a filter option to the filter select box on group activity pages.
 	 */
@@ -1524,6 +1643,9 @@ class CommentpressMultisiteBuddypress {
 	 */
 	function _groupblog_filter_options() {
 		
+		// kick out if this group does not have a CommentPress groupblog
+		if ( !$this->group_has_commentpress_groupblog() ) return;
+		
 		// remove bp-groupblog's contradictory option
 		remove_action( 'bp_group_activity_filter_options', 'bp_groupblog_posts' );
 		
@@ -1566,6 +1688,12 @@ class CommentpressMultisiteBuddypress {
 		global $bp_groupsites;
 		if ( !is_null( $bp_groupsites ) AND is_object( $bp_groupsites ) ) {
 			remove_action( 'bp_activity_before_save', array( $bp_groupsites->activity, 'custom_comment_activity' ) );
+		}
+		
+		// drop the bp-working-papers comment activity action, if present
+		global $bp_working_papers;
+		if ( !is_null( $bp_working_papers ) AND is_object( $bp_working_papers ) ) {
+			remove_action( 'bp_activity_before_save', array( $bp_working_papers->activity, 'custom_comment_activity' ) );
 		}
 		
 		// add our own custom comment activity
@@ -2077,9 +2205,9 @@ class CommentpressMultisiteBuddypress {
 
 
 	/** 
-	 * @description: utility to wrap is_groupblog()
-	 * @todo: 
-	 *
+	 * @description: utility to wrap is_groupblog(). Note that this only tests the
+	 * current blog and cannot be used to discover if a specific blog is a
+	 * CommentPress groupblog.
 	 */
 	function _is_commentpress_groupblog() {
 	

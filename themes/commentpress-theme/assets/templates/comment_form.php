@@ -52,10 +52,16 @@ global $post;
 	__( 'Leave a Reply to %s', 'commentpress-core' ) 
 ); ?></h4>
 
-
 <?php if ( get_option('comment_registration') AND !$user_ID ) : ?>
 
-	<p>You must be <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?redirect_to=<?php echo urlencode(get_permalink()); ?>">logged in</a> to post a comment.</p>
+	<p><?php
+	
+	echo sprintf( 
+		__( 'You must be <a href="%s">logged in</a> to post a comment.', 'commentpress-core' ),
+		get_option('siteurl') . '/wp-login.php?redirect_to=' . urlencode( get_permalink() )
+	);
+	
+	?></p>
 
 <?php else : ?>
 

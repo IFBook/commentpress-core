@@ -52,9 +52,9 @@ get_header();
 <div class="post">
 
 <?php if ( $my_author->display_name != '' ) { ?>
-<h2 class="post_title">About <?php echo $my_author->display_name; ?></h2>
+<h2 class="post_title"><?php echo $my_author->display_name; ?></h2>
 <?php } else { ?>
-<h2 class="post_title">About <?php echo $my_author->nickname; ?></h2>
+<h2 class="post_title"><?php echo $my_author->nickname; ?></h2>
 <?php } ?>
 
 <p><?php echo get_avatar( $my_author->user_email, $size='128' ); ?></p>
@@ -89,32 +89,32 @@ if ( $my_name != '' ) { ?>
 */
 
 if ( $my_author->description != '' ) { ?>
-<dt>Profile</dt>
+<dt><?php _e( 'Profile', 'commentpress-core' ); ?></dt>
 <dd><?php echo nl2br( $my_author->description ); ?></dd>
 <?php } ?>
 
 <?php if ( $authorURL != '' ) { ?>
-<dt>Website</dt>
+<dt><?php _e( 'Website', 'commentpress-core' ); ?></dt>
 <dd><a href="<?php echo $my_author->user_url; ?>"><?php echo $my_author->user_url; ?></a></dd>
 <?php } ?>
 
 <?php if ( $my_author->user_email != '' ) { ?>
-<dt>Email</dt>
+<dt><?php _e( 'Email', 'commentpress-core' ); ?></dt>
 <dd><a href="mailto:<?php echo $my_author->user_email; ?>"><?php echo $my_author->user_email; ?></a></dd>
 <?php } ?>
 
 <?php if ( $my_author->yim != '' ) { ?>
-<dt>Yahoo IM</dt>
+<dt><?php _e( 'Yahoo IM', 'commentpress-core' ); ?></dt>
 <dd><?php echo $my_author->yim; ?></dd>
 <?php } ?>
 
 <?php if ( $my_author->aim != '' ) { ?>
-<dt>AIM</dt>
+<dt><?php _e( 'AIM', 'commentpress-core' ); ?></dt>
 <dd><?php echo $my_author->aim; ?></dd>
 <?php } ?>
 
 <?php if ( $my_author->jabber != '' ) { ?>
-<dt>Jabber / Google Talk</dt>
+<dt><?php _e( 'Jabber / Google Talk', 'commentpress-core' ); ?></dt>
 <dd><?php echo $my_author->jabber; ?></dd>
 <?php } ?>
 
@@ -123,9 +123,9 @@ if ( $my_author->description != '' ) { ?>
 
 
 <?php if ( $my_author->display_name != '' ) { ?>
-<h3>Posts by <?php echo $my_author->display_name; ?></h3>
+<h3><?php _e( 'Posts by', 'commentpress-core' ); ?> <?php echo $my_author->display_name; ?></h3>
 <?php } else { ?>
-<h3>Posts by <?php echo $my_author->nickname; ?></h3>
+<h3><?php _e( 'Posts by', 'commentpress-core' ); ?> <?php echo $my_author->nickname; ?></h3>
 <?php } ?>
 
 
@@ -135,7 +135,7 @@ if ( $my_author->description != '' ) { ?>
 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
 <li>
-<a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link: <?php the_title_attribute(); ?>"><?php the_title(); ?></a> on <?php the_time('l, F jS, Y'); ?>
+<a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link:', 'commentpress-core' ); ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a> on <?php the_time( __( 'l, F jS, Y', 'commentpress-core' ) ); ?>
 </li>
 
 <?php endwhile; else: ?>

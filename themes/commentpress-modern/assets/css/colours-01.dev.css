@@ -185,7 +185,8 @@ table.notifications th
 	color: #761D19;
 }
 
-.comment-content a
+.comment-content a,
+div#respond .subscribe_reloaded_insert a
 {
 	color: #761D19;
 }

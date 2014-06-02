@@ -26,26 +26,26 @@
 
 	<?php //$post = $posts[0]; // Hack. Set $post so that the_date() works. ?>
 	<?php /* If this is a category archive */ if (is_category()) { ?>
-	<h3 class="post_title">Archive for the &#8216;<?php single_cat_title(); ?>&#8217; Category</h3>
+	<h3 class="post_title"><?php echo sprintf( __( 'Archive for the &#8216;%s&#8217; Category', 'commentpress-core' ), single_cat_title( '', false ) ) ?></h3>
 	<?php /* If this is a tag archive */ } elseif( is_tag() ) { ?>
-	<h3 class="post_title">Posts Tagged &#8216;<?php single_tag_title(); ?>&#8217;</h3>
+	<h3 class="post_title"><?php _e( 'Posts Tagged', 'commentpress-core' ); ?> &#8216;<?php single_tag_title(); ?>&#8217;</h3>
 	<?php /* If this is a daily archive */ } elseif (is_day()) { ?>
-	<h3 class="post_title">Archive for <?php the_time('F jS, Y'); ?></h3>
+	<h3 class="post_title"><?php _e( 'Archive for', 'commentpress-core' ); ?> <?php the_time( __( 'F jS, Y', 'commentpress-core' ) ); ?></h3>
 	<?php /* If this is a monthly archive */ } elseif (is_month()) { ?>
-	<h3 class="post_title">Archive for <?php the_time('F, Y'); ?></h3>
+	<h3 class="post_title"><?php _e( 'Archive for', 'commentpress-core' ); ?> <?php the_time( __( 'F, Y', 'commentpress-core' ) ); ?></h3>
 	<?php /* If this is a yearly archive */ } elseif (is_year()) { ?>
-	<h3 class="post_title">Archive for <?php the_time('Y'); ?></h3>
+	<h3 class="post_title"><?php _e( 'Archive for', 'commentpress-core' ); ?> <?php the_time( __( 'Y', 'commentpress-core' ) ); ?></h3>
 	<?php /* If this is an author archive */ } elseif (is_author()) { ?>
-	<h3 class="post_title">Author Archive</h3>
-	<?php /* If this is a paged archive */ } elseif (isset($_GET['paged']) AND !empty($_GET['paged'])) { ?>
-	<h3 class="post_title">Archives</h3>
+	<h3 class="post_title"><?php _e( 'Author Archive', 'commentpress-core' ); ?></h3>
+	<?php /* If this is a paged archive */ } elseif (isset($_GET['paged']) && !empty($_GET['paged'])) { ?>
+	<h3 class="post_title"><?php _e( 'Archives', 'commentpress-core' ); ?></h3>
 	<?php } ?>
 	
 	<?php while (have_posts()) : the_post(); ?>
 
 		<div class="search_result">
 
-			<h3 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
+			<h3 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'commentpress-core' ); ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
 			
 			<div class="search_meta">
 				<?php commentpress_echo_post_meta(); ?>
@@ -53,7 +53,7 @@
 
 			<?php the_excerpt() ?>
 		
-			<p class="search_meta"><?php the_tags('Tags: ', ', ', '<br />'); ?> Posted in <?php the_category(', ') ?> | <?php edit_post_link('Edit', '', ' | '); ?>  <?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?></p>
+			<p class="search_meta"><?php the_tags( __( 'Tags: ', 'commentpress-core' ), ', ', '<br />'); ?> <?php _e( 'Posted in', 'commentpress-core' ); ?> <?php the_category( ', ' ) ?> | <?php edit_post_link( __( 'Edit', 'commentpress-core' ), '', ' | ' ); ?>  <?php comments_popup_link( __( 'No Comments &#187;', 'commentpress-core' ), __( '1 Comment &#187;', 'commentpress-core' ), __( '% Comments &#187;', 'commentpress-core' ) ); ?></p>
 		
 		</div><!-- /archive_item -->
 	
@@ -63,8 +63,10 @@
 	
 <?php else : ?>
 
-	<h2 class="post_title">Not Found</h2>
+	<h2 class="post_title"><?php _e( 'Not Found', 'commentpress-core' ); ?></h2>
 
+	<p><?php _e( "Sorry, but you are looking for something that isn't here.", 'commentpress-core' ); ?></p>
+	
 	<?php get_search_form(); ?>
 
 <?php endif; ?>

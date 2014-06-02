@@ -163,7 +163,7 @@ if ( $my_name != '' ) { ?>
 	<?php while ( have_posts() ) : the_post(); ?>
 
 		<li>
-		<a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?> (<?php the_time('F jS, Y'); ?>)</a>
+		<a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?> (<?php the_time( __( 'F jS, Y', 'commentpress-core' ) ); ?>)</a>
 		</li>
 
 	<?php endwhile; ?>

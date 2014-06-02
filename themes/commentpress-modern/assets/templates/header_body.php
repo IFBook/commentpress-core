@@ -24,6 +24,8 @@ Separated this out for inclusion in multiple files.
 
 <div id="header">
 	
+	<?php do_action( 'commentpress_header_before' ); ?>
+
 	<?php
 	
 	// get header image
@@ -35,8 +37,8 @@ Separated this out for inclusion in multiple files.
 		<div id="tagline"><?php bloginfo('description'); ?></div>
 	</div>
 	
-
-
+	<?php do_action( 'commentpress_header_after' ); ?>
+	
 </div><!-- /header -->
 
 

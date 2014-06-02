@@ -10,11 +10,34 @@
  * @subpackage bp-legacy
  */
 
+
+
+// init group blog type
+$groupblogtype = '';
+
+// get current item
+global $activities_template;
+$current_activity = $activities_template->activity;
+//print_r( array( 'a' => $current_activity ) ); die();
+
+// for group activity...
+if ( $current_activity->component == 'groups' ) {
+
+	// get group blogtype
+	$groupblogtype = groups_get_groupmeta( $current_activity->item_id, 'groupblogtype' );
+	
+	// add space before if we have it
+	if ( $groupblogtype ) { $groupblogtype = ' '.$groupblogtype; }
+	
+}
+
 ?>
+
+<!-- activity/entry.php -->
 
 <?php do_action( 'bp_before_activity_entry' ); ?>
 
-<li class="<?php bp_activity_css_class(); ?>" id="activity-<?php bp_activity_id(); ?>">
+<li class="<?php bp_activity_css_class(); echo $groupblogtype; ?>" id="activity-<?php bp_activity_id(); ?>">
 
 	<div class="activity-wrapper clearfix">
 	
@@ -60,7 +83,15 @@
 	
 					<?php if ( bp_activity_can_comment() ) : ?>
 	
-						<a href="<?php bp_activity_comment_link(); ?>" class="button acomment-reply bp-primary-action" id="acomment-comment-<?php bp_activity_id(); ?>"><?php printf( __( 'Comment <span>%s</span>', 'commentpress-core' ), bp_activity_get_comment_count() ); ?></a>
+						<?php
+						
+						// construct comment link 
+						$comment_link = '<a href="' . bp_get_activity_comment_link() . '" class="button acomment-reply bp-primary-action" id="acomment-comment-' . bp_get_activity_id() . '">'.sprintf( __( 'Comment <span>%s</span>', 'commentpress-core' ), bp_activity_get_comment_count() ) . '</a>';
+						
+						// echo it, but allow plugin overrides first
+						echo apply_filters( 'cp_activity_entry_comment_link', $comment_link );
+						
+						?>
 	
 					<?php endif; ?>
 	
@@ -90,7 +121,7 @@
 	
 		<?php do_action( 'bp_before_activity_entry_comments' ); ?>
 	
-		<?php if ( ( is_user_logged_in() && bp_activity_can_comment() ) || bp_activity_get_comment_count() ) : ?>
+		<?php if ( ( is_user_logged_in() AND bp_activity_can_comment() ) || bp_activity_get_comment_count() ) : ?>
 	
 			<div class="activity-comments">
 	

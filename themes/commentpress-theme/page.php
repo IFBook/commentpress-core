@@ -72,7 +72,7 @@
 	if ( class_exists( 'PTCFP' ) ) {
 	
 	?>
-	<p class="search_meta"><?php the_tags('Tags: ', ', ', '<br />'); ?> Posted in <?php the_category(', ') ?></p>
+	<p class="search_meta"><?php the_tags( __( 'Tags: ', 'commentpress-core' ), ', ', '<br />' ); ?> <?php _e( 'Posted in', 'commentpress-core' ); ?> <?php the_category( ', ' ); ?></p>
 	<?php
 	
 	}
@@ -106,15 +106,15 @@
 			
 			// is it arabic?
 			if ( is_numeric( $num ) ) {
-			
-				// add page number
-				?><div class="running_header_bottom">page <?php echo $num; ?></div><?php 
 		
+				// add page number
+				?><div class="running_header_bottom"><?php echo sprintf( __( 'Page %d', 'commentpress-core' ), $num ); ?></div><?php 
+	
 			} else {
-			
-				// add page number
-				?><div class="running_header_bottom">page <?php echo strtolower( $num ); ?></div><?php 
 		
+				// add page number
+				?><div class="running_header_bottom"><?php echo sprintf( __( 'Page %s', 'commentpress-core' ), strtolower( $num ) ); ?></div><?php 
+	
 			}
 			
 		}
@@ -134,10 +134,10 @@
 
 <div class="post">
 
-	<h2 class="post_title">Page Not Found</h2>
-	
-	<p>Sorry, but you are looking for something that isn't here.</p>
-	
+	<h2 class="post_title"><?php _e( 'Page Not Found', 'commentpress-core' ); ?></h2>
+
+	<p><?php _e( "Sorry, but you are looking for something that isn't here.", 'commentpress-core' ); ?></p>
+
 	<?php get_search_form(); ?>
 
 </div><!-- /post -->
