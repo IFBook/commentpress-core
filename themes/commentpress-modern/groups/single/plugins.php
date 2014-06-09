@@ -34,7 +34,7 @@
 				</div>
 			</div><!-- #item-nav -->
 
-			<div id="item-body">
+			<div id="item-body" class="clearfix">
 
 				<?php do_action( 'bp_before_group_body' ) ?>
 
