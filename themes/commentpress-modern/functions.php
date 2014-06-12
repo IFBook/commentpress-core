@@ -251,12 +251,24 @@ function commentpress_bp_enqueue_scripts() {
 	// kick out on admin
 	if ( is_admin() ) { return; }
 
+	// construct path to BP default javascript file
+	// Eventually use:
+	// $bp_js_file = BP_PLUGIN_URL . 'bp-templates/bp-legacy/js/buddypress.js',
+	$bp_js_file = BP_PLUGIN_URL . 'bp-themes/bp-default/_inc/global.js';
+	
+	// look for BP AJAX file in default theme directory
+	if ( !is_file( $bp_js_file ) ) {
+		
+		// temporarily use our copy
+		$bp_js_file = COMMENTPRESS_PLUGIN_URL . 'commentpress-core/assets/includes/bp-compat/global.js';
+		
+	}
+	
 	// enqueue buddypress js
 	wp_enqueue_script( 
 	
 		'cp_buddypress_js', 
-		//BP_PLUGIN_URL . 'bp-templates/bp-legacy/js/buddypress.js',
-		BP_PLUGIN_URL . 'bp-themes/bp-default/_inc/global.js',
+		$bp_js_file,
 		array( 'jquery' ),
 		COMMENTPRESS_VERSION // version
 
@@ -322,10 +334,26 @@ function commentpress_bp_theme_compatibility() {
  *
  */
 function commentpress_bp_theme_support() {
-
+	
 	// load the default BuddyPress AJAX functions if it isn't already included
 	if ( ! function_exists( 'bp_dtheme_register_actions' ) ) {
-		require_once( BP_PLUGIN_DIR . 'bp-themes/bp-default/_inc/ajax.php' );
+
+		// construct path to BP default theme AJAX file
+		$ajax_file = BP_PLUGIN_DIR . 'bp-themes/bp-default/_inc/ajax.php';
+		
+		// look for BP AJAX file in default theme directory
+		if ( is_file( $ajax_file ) ) {
+			
+			// okay, we found it
+			require_once( $ajax_file );
+			
+		} else {
+			
+			// temporarily use our copy
+			require_once( COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/includes/bp-compat/ajax.php' );
+			
+		}
+		
 	}
 	
 	// call after_setup_theme function directly otherwise it doesn't run: this is 
