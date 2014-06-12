@@ -1964,6 +1964,9 @@ class CommentpressMultisiteBuddypress {
 		// get blog type (saved already)
 		$cp_blog_type = $commentpress_core->db->option_get( 'cp_blog_type' );
 		
+		// get workflow (saved already)
+		$cp_blog_workflow = $commentpress_core->db->option_get( 'cp_blog_workflow' );
+		
 		// did we get a group id before we switched blogs?
 		if ( isset( $group_id ) ) {
 
