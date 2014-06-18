@@ -2574,8 +2574,11 @@ function commentpress_get_comment_activity( $scope = 'all' ) {
 		
 		// loop
 		foreach ($_data as $comment) {
-		
-			$_page_content .= commentpress_get_comment_activity_item( $comment );
+			
+			// exclude comments from password-protected posts
+			if ( ! post_password_required( $comment->comment_post_ID ) ) {
+				$_page_content .= commentpress_get_comment_activity_item( $comment );
+			}
 		
 		}
 	

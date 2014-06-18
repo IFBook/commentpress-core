@@ -12,7 +12,7 @@ $_page_comments_output = '';
 $_is_commentable = commentpress_is_commentable();
 
 // if a commentable post...
-if ( $_is_commentable ) {
+if ( $_is_commentable AND ! post_password_required() ) {
 
 	// set default phrase
 	$_paragraph_text = __( 'Recent Comments on this Page', 'commentpress-core' );
