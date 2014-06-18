@@ -239,11 +239,7 @@ function commentpress_bp_enqueue_scripts() {
 	Some notes on BuddyPress 1.7 theme compatibility
 	----------------------------------------------------------------------------
 
-	(a) see commentpress_enqueue_scripts_and_styles() for dequeuing bp-legacy-css
-	
-	(b) CommentPress Core and themes based on it require the inclusion and setup
-	    of the BuddyPress Template Pack plugin, which should have only Javascript
-	    enabled for the main BuddyPress site
+	@see commentpress_enqueue_scripts_and_styles() for dequeuing bp-legacy-css
 	
 	----------------------------------------------------------------------------
 	*/
@@ -251,48 +247,61 @@ function commentpress_bp_enqueue_scripts() {
 	// kick out on admin
 	if ( is_admin() ) { return; }
 
-	// construct path to BP default javascript file
-	// Eventually use:
-	// $bp_js_file = BP_PLUGIN_URL . 'bp-templates/bp-legacy/js/buddypress.js',
-	$bp_js_file = BP_PLUGIN_URL . 'bp-themes/bp-default/_inc/global.js';
-	
-	// look for BP AJAX file in default theme directory
-	if ( !is_file( $bp_js_file ) ) {
-		
-		// temporarily use our copy
-		$bp_js_file = COMMENTPRESS_PLUGIN_URL . 'commentpress-core/assets/includes/bp-compat/global.js';
-		
-	}
-	
-	// enqueue buddypress js
-	wp_enqueue_script( 
-	
-		'cp_buddypress_js', 
-		$bp_js_file,
-		array( 'jquery' ),
-		COMMENTPRESS_VERSION // version
+	// access plugin
+	global $commentpress_core;
 
-	);
+	// if we have the plugin enabled...
+	if ( is_object( $commentpress_core ) ) {
+		
+		// test for buddypress special page
+		if ( $commentpress_core->is_buddypress() AND $commentpress_core->is_buddypress_special_page() ) {
+			
+			// construct path to BP default javascript file
+			// Eventually use:
+			// $bp_js_file = BP_PLUGIN_URL . 'bp-templates/bp-legacy/js/buddypress.js',
+			$bp_js_file = BP_PLUGIN_URL . 'bp-themes/bp-default/_inc/global.js';
 	
-	// add translation: this needs to be checked against BP_Legacy::enqueue_scripts
-	// from time to time to make sure it's up-to-date
-	$params = array(
-		'my_favs'           => __( 'My Favorites', 'commentpress-core' ),
-		'accepted'          => __( 'Accepted', 'commentpress-core' ),
-		'rejected'          => __( 'Rejected', 'commentpress-core' ),
-		'show_all_comments' => __( 'Show all comments for this thread', 'commentpress-core' ),
-		'show_x_comments'   => __( 'Show all %d comments', 'commentpress-core' ),
-		'show_all'          => __( 'Show all', 'commentpress-core' ),
-		'comments'          => __( 'comments', 'commentpress-core' ),
-		'close'             => __( 'Close', 'commentpress-core' ),
-		'view'              => __( 'View', 'commentpress-core' ),
-		'mark_as_fav'	    => __( 'Favorite', 'commentpress-core' ),
-		'remove_fav'	    => __( 'Remove Favorite', 'commentpress-core' ),
-		'unsaved_changes'   => __( 'Your profile has unsaved changes. If you leave the page, the changes will be lost.', 'commentpress-core' ),
-	);
+			// look for BP AJAX file in default theme directory
+			if ( !is_file( $bp_js_file ) ) {
+		
+				// temporarily use our copy
+				$bp_js_file = COMMENTPRESS_PLUGIN_URL . 'commentpress-core/assets/includes/bp-compat/global.js';
+		
+			}
 	
-	// localise
-	wp_localize_script( 'cp_buddypress_js', 'BP_DTheme', $params );
+			// enqueue buddypress js
+			wp_enqueue_script( 
+	
+				'cp_buddypress_js', 
+				$bp_js_file,
+				array( 'jquery' ),
+				COMMENTPRESS_VERSION // version
+
+			);
+	
+			// add translation: this needs to be checked against BP_Legacy::enqueue_scripts
+			// from time to time to make sure it's up-to-date
+			$params = array(
+				'my_favs'           => __( 'My Favorites', 'commentpress-core' ),
+				'accepted'          => __( 'Accepted', 'commentpress-core' ),
+				'rejected'          => __( 'Rejected', 'commentpress-core' ),
+				'show_all_comments' => __( 'Show all comments for this thread', 'commentpress-core' ),
+				'show_x_comments'   => __( 'Show all %d comments', 'commentpress-core' ),
+				'show_all'          => __( 'Show all', 'commentpress-core' ),
+				'comments'          => __( 'comments', 'commentpress-core' ),
+				'close'             => __( 'Close', 'commentpress-core' ),
+				'view'              => __( 'View', 'commentpress-core' ),
+				'mark_as_fav'	    => __( 'Favorite', 'commentpress-core' ),
+				'remove_fav'	    => __( 'Remove Favorite', 'commentpress-core' ),
+				'unsaved_changes'   => __( 'Your profile has unsaved changes. If you leave the page, the changes will be lost.', 'commentpress-core' ),
+			);
+	
+			// localise
+			wp_localize_script( 'cp_buddypress_js', 'BP_DTheme', $params );
+	
+		}
+	
+	}
 
 }
 endif; // commentpress_bp_enqueue_scripts
