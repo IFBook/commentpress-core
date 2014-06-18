@@ -308,7 +308,7 @@ function commentpress_scroll_page( target ) {
 	//console.log( target );
 	
 	// bail if we didn't get a valid target
-	if ( typeof target !== 'undefined' ) { return; }
+	if ( typeof target === 'undefined' ) { return; }
 	
 	// if IE6, then we have to scroll #wrapper
 	if ( msie6 ) {
@@ -360,7 +360,7 @@ function commentpress_scroll_page( target ) {
 function cp_quick_scroll_page( target, duration ) {
 
 	// bail if we didn't get a valid target
-	if ( typeof target !== 'undefined' ) { return; }
+	if ( typeof target === 'undefined' ) { return; }
 	
 	// if IE6, then we have to scroll #wrapper
 	if ( msie6 ) {
@@ -412,7 +412,7 @@ function cp_quick_scroll_page( target, duration ) {
 function commentpress_scroll_to_top( target, speed ) {
 	
 	// bail if we didn't get a valid target
-	if ( typeof target !== 'undefined' ) { return; }
+	if ( typeof target === 'undefined' ) { return; }
 	
 	// declare vars
 	var post_id;
