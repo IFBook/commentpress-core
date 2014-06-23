@@ -2092,7 +2092,7 @@ h3.comments_hl
 	background-color: #BDBDBD;
 }
 
-.all_comments_listing .page_li h4
+.all_comments_listing .page_li > h4
 {
 	font-family: sans-serif;
 	font-weight: normal;
@@ -2145,7 +2145,7 @@ h3.comments_hl
 	margin: 0;
 }
 
-.all_comments_listing ul.item_ul li
+.all_comments_listing ul.item_ul > li
 {
 	list-style: none;
 	list-style-image: none;

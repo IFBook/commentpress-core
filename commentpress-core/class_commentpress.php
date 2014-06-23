@@ -376,8 +376,11 @@ class CommentpressCore {
 			
 		}
 		
+		// is it a BP page?
+		$is_bp = ! bp_is_blog_page();
+		
 		// let's see...
-		return !bp_is_blog_page();
+		return apply_filters( 'cp_is_buddypress_special_page', $is_bp );
 	
 	}
 	
