@@ -1,27 +1,24 @@
-<?php
-
-/**
- * BuddyPress - Activity Loop
- *
- * Querystring is set via AJAX in _inc/ajax.php - bp_dtheme_object_filter()
- *
- * @package BuddyPress
- * @subpackage bp-default
- */
-
-?>
-
 <?php do_action( 'bp_before_activity_loop' ); ?>
 
 <?php if ( bp_has_activities( bp_ajax_querystring( 'activity' ) ) ) : ?>
 
-	<?php /* Show pagination if JS is not enabled, since the "Load More" link will do nothing */ ?>
-	<noscript>
-		<div class="pagination">
-			<div class="pag-count"><?php bp_activity_pagination_count(); ?></div>
-			<div class="pagination-links"><?php bp_activity_pagination_links(); ?></div>
-		</div>
-	</noscript>
+	<?php 
+	
+	// do not load in BP2.1+
+	if ( ! function_exists( 'bp_activity_load_more_link' ) ) {
+
+		/* Show pagination if JS is not enabled, since the "Load More" link will do nothing */ ?>
+		<noscript>
+			<div class="pagination">
+				<div class="pag-count"><?php bp_activity_pagination_count(); ?></div>
+				<div class="pagination-links"><?php bp_activity_pagination_links(); ?></div>
+			</div>
+		</noscript>
+		<?php 
+		
+	}
+	
+	?>
 
 	<?php if ( empty( $_POST['page'] ) ) : ?>
 
@@ -31,14 +28,20 @@
 
 	<?php while ( bp_activities() ) : bp_the_activity(); ?>
 
-		<?php locate_template( array( 'activity/entry.php' ), true, false ); ?>
+		<?php bp_get_template_part( 'activity/entry' ); ?>
 
 	<?php endwhile; ?>
 
 	<?php if ( bp_activity_has_more_items() ) : ?>
 
 		<li class="load-more">
-			<a href="#more"><?php _e( 'Load More', 'commentpress-core' ); ?></a>
+			<a href="<?php
+				if ( function_exists( 'bp_activity_load_more_link' ) ) {
+					bp_activity_load_more_link();
+				} else {
+					echo '#more';
+				}
+			?>"><?php _e( 'Load More', 'commentpress-core' ); ?></a>
 		</li>
 
 	<?php endif; ?>
