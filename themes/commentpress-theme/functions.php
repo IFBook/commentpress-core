@@ -2106,32 +2106,45 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 		// open li
 		$html .= '<li class="item_li"><!-- item li -->'."\n\n";
 		
-		foreach( $all_comments AS $comment ) {
+		// check for password-protected
+		if ( post_password_required( $_post->ID ) ) {
+			
+			// construct notice
+			$_comment_body = '<div class="comment-content">'.__( 'Password protected', 'commentpress-core' ).'</div>'."\n";
+	
+			// add notice
+			$html .= '<div class="comment_wrapper">'."\n".$_comment_body.'</div>'."\n\n";
+			
+		} else {
 		
-			if ( $comment->comment_post_ID == $_post->ID ) {
+			foreach( $all_comments AS $comment ) {
 		
-				// show the comment
-				$html .= commentpress_format_comment( $comment );
+				if ( $comment->comment_post_ID == $_post->ID ) {
+		
+					// show the comment
+					$html .= commentpress_format_comment( $comment );
 				
-				/*
-				// get comment children
-				$children = commentpress_get_children( $comment, $page_or_post );
+					/*
+					// get comment children
+					$children = commentpress_get_children( $comment, $page_or_post );
 		
-				// do we have any?
-				if( count( $children ) > 0 ) {
+					// do we have any?
+					if( count( $children ) > 0 ) {
 
-					// recurse
-					commentpress_get_comments( $children, $page_or_post );
+						// recurse
+						commentpress_get_comments( $children, $page_or_post );
 			
-					// show them
-					$html .= $cp_comment_output;
+						// show them
+						$html .= $cp_comment_output;
 			
-					// clear global comment output
-					$cp_comment_output = '';
+						// clear global comment output
+						$cp_comment_output = '';
+			
+					}
+					*/
 			
 				}
-				*/
-			
+		
 			}
 		
 		}
