@@ -221,6 +221,15 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 == Changelog == 
 
 
+<h4>3.6</h4>
+
+* Compatibility with latest BuddyPress
+* avoid AJAX errors for suspected spam comments
+* respect password-protected post comment visibility
+* additional hooks for plugins
+
+
+
 <h4>3.5.7</h4>
 
 * Critical fix to account for the change in the way comments are "walked" in WordPress 3.8
