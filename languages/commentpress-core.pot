@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the CommentPress Core package.
 msgid ""
 msgstr ""
-"Project-Id-Version: CommentPress Core 3.5.9\n"
+"Project-Id-Version: CommentPress Core 3.6\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/commentpress-core\n"
-"POT-Creation-Date: 2014-06-26 13:57:24+00:00\n"
+"POT-Creation-Date: 2014-08-27 19:19:58+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -65,7 +65,7 @@ msgid "Comment"
 msgstr ""
 
 #: commentpress-ajax/cp-ajax-comments.php:623
-#: commentpress-core/class_commentpress.php:2883
+#: commentpress-core/class_commentpress.php:2889
 #: commentpress-core/class_commentpress_display.php:2000
 #: commentpress-core/class_commentpress_display.php:2487
 #: themes/commentpress-modern/activity/index.php:120
@@ -330,46 +330,50 @@ msgstr ""
 msgid "CommentPress Core Help"
 msgstr ""
 
-#: commentpress-core/class_commentpress.php:1804
+#: commentpress-core/class_commentpress.php:1485
+msgid "This comment has been marked as spam. Please contact a site administrator."
+msgstr ""
+
+#: commentpress-core/class_commentpress.php:1810
 #: commentpress-core/class_commentpress_db.php:3570
 #: themes/commentpress-modern/assets/templates/navigation.php:82
 #: themes/commentpress-theme/assets/templates/navigation.php:213
 msgid "Title Page"
 msgstr ""
 
-#: commentpress-core/class_commentpress.php:1809
+#: commentpress-core/class_commentpress.php:1815
 #: commentpress-core/class_commentpress_db.php:3695
 #: themes/commentpress-modern/functions.php:2484
 #: themes/commentpress-theme/functions.php:2206
 msgid "All Comments"
 msgstr ""
 
-#: commentpress-core/class_commentpress.php:1813
+#: commentpress-core/class_commentpress.php:1819
 #: commentpress-core/class_commentpress_db.php:3640
 #: themes/commentpress-modern/comments-general.php:34
 #: themes/commentpress-theme/comments-general.php:33
 msgid "General Comments"
 msgstr ""
 
-#: commentpress-core/class_commentpress.php:1817
+#: commentpress-core/class_commentpress.php:1823
 #: commentpress-core/class_commentpress_db.php:3805
 #: themes/commentpress-theme/assets/templates/navigation.php:76
 msgid "Blog"
 msgstr ""
 
-#: commentpress-core/class_commentpress.php:1822
+#: commentpress-core/class_commentpress.php:1828
 #: commentpress-core/class_commentpress_db.php:3863
 msgid "Blog Archive"
 msgstr ""
 
-#: commentpress-core/class_commentpress.php:1826
+#: commentpress-core/class_commentpress.php:1832
 #: commentpress-core/class_commentpress_db.php:3750
 #: themes/commentpress-modern/functions.php:2703
 #: themes/commentpress-theme/functions.php:2425
 msgid "Comments by Commenter"
 msgstr ""
 
-#: commentpress-core/class_commentpress.php:1830
+#: commentpress-core/class_commentpress.php:1836
 #: themes/commentpress-modern/groups/single/admin.php:229
 #: themes/commentpress-modern/members/index.php:37
 #: themes/commentpress-theme/groups/single/admin.php:229
@@ -377,15 +381,15 @@ msgstr ""
 msgid "Members"
 msgstr ""
 
-#: commentpress-core/class_commentpress.php:2787
+#: commentpress-core/class_commentpress.php:2793
 msgid "Text Formatting"
 msgstr ""
 
-#: commentpress-core/class_commentpress.php:2861
+#: commentpress-core/class_commentpress.php:2867
 msgid "Default Sidebar"
 msgstr ""
 
-#: commentpress-core/class_commentpress.php:2881
+#: commentpress-core/class_commentpress.php:2887
 #: commentpress-core/class_commentpress_display.php:1998
 #: commentpress-core/class_commentpress_display.php:2485
 #: themes/commentpress-modern/assets/templates/toc_sidebar.php:15
@@ -393,7 +397,7 @@ msgstr ""
 msgid "Contents"
 msgstr ""
 
-#: commentpress-core/class_commentpress.php:2882
+#: commentpress-core/class_commentpress.php:2888
 #: commentpress-core/class_commentpress_display.php:1999
 #: commentpress-core/class_commentpress_display.php:2486
 #: themes/commentpress-modern/sidebar.php:122
@@ -401,7 +405,7 @@ msgstr ""
 msgid "Activity"
 msgstr ""
 
-#: commentpress-core/class_commentpress.php:2906
+#: commentpress-core/class_commentpress.php:2912
 msgid "Starting Paragraph Number"
 msgstr ""
 
@@ -565,18 +569,18 @@ msgstr ""
 #: commentpress-core/class_commentpress_display.php:1714
 #: commentpress-core/class_commentpress_display.php:1973
 #: themes/commentpress-modern/groups/single/admin.php:26
-#: themes/commentpress-modern/registration/register.php:232
+#: themes/commentpress-modern/registration/register.php:265
 #: themes/commentpress-theme/groups/single/admin.php:26
-#: themes/commentpress-theme/registration/register.php:221
+#: themes/commentpress-theme/registration/register.php:265
 msgid "Yes"
 msgstr ""
 
 #: commentpress-core/class_commentpress_display.php:1715
 #: commentpress-core/class_commentpress_display.php:1974
 #: themes/commentpress-modern/groups/single/admin.php:27
-#: themes/commentpress-modern/registration/register.php:233
+#: themes/commentpress-modern/registration/register.php:266
 #: themes/commentpress-theme/groups/single/admin.php:27
-#: themes/commentpress-theme/registration/register.php:222
+#: themes/commentpress-theme/registration/register.php:266
 msgid "No"
 msgstr ""
 
@@ -792,14 +796,14 @@ msgstr ""
 #: themes/commentpress-modern/groups/single/admin.php:117
 #: themes/commentpress-modern/groups/single/forum/edit.php:60
 #: themes/commentpress-modern/groups/single/forum/edit.php:76
-#: themes/commentpress-modern/members/single/profile/edit.php:126
+#: themes/commentpress-modern/members/single/profile/edit.php:159
 #: themes/commentpress-modern/members/single/settings/general.php:83
 #: themes/commentpress-modern/members/single/settings/notifications.php:76
 #: themes/commentpress-theme/groups/single/admin.php:32
 #: themes/commentpress-theme/groups/single/admin.php:117
 #: themes/commentpress-theme/groups/single/forum/edit.php:60
 #: themes/commentpress-theme/groups/single/forum/edit.php:76
-#: themes/commentpress-theme/members/single/profile/edit.php:126
+#: themes/commentpress-theme/members/single/profile/edit.php:159
 #: themes/commentpress-theme/members/single/settings/general.php:83
 #: themes/commentpress-theme/members/single/settings/notifications.php:76
 msgid "Save Changes"
@@ -2131,6 +2135,10 @@ msgid "comments"
 msgstr ""
 
 #: themes/commentpress-modern/functions.php:292
+#: themes/commentpress-modern/members/single/profile/edit.php:45
+#: themes/commentpress-modern/registration/register.php:110
+#: themes/commentpress-theme/members/single/profile/edit.php:45
+#: themes/commentpress-theme/registration/register.php:110
 msgid "Close"
 msgstr ""
 
@@ -3186,55 +3194,78 @@ msgstr ""
 msgid "Editing '%s' Profile Group"
 msgstr ""
 
-#: themes/commentpress-modern/members/single/profile/edit.php:26
-#: themes/commentpress-modern/members/single/profile/edit.php:33
-#: themes/commentpress-modern/members/single/profile/edit.php:40
+#: themes/commentpress-modern/members/single/profile/edit.php:35
 #: themes/commentpress-modern/members/single/profile/edit.php:49
-#: themes/commentpress-modern/members/single/profile/edit.php:67
-#: themes/commentpress-modern/members/single/profile/edit.php:83
-#: themes/commentpress-modern/members/single/profile/edit.php:93
+#: themes/commentpress-modern/registration/register.php:100
+#: themes/commentpress-modern/registration/register.php:115
+#: themes/commentpress-theme/members/single/profile/edit.php:35
+#: themes/commentpress-theme/members/single/profile/edit.php:49
+#: themes/commentpress-theme/registration/register.php:100
+#: themes/commentpress-theme/registration/register.php:115
+msgid "This field can be seen by: <span class=\"current-visibility-level\">%s</span>"
+msgstr ""
+
+#: themes/commentpress-modern/members/single/profile/edit.php:35
+#: themes/commentpress-theme/members/single/profile/edit.php:35
+msgid "Change"
+msgstr ""
+
+#: themes/commentpress-modern/members/single/profile/edit.php:40
+#: themes/commentpress-modern/registration/register.php:105
+#: themes/commentpress-theme/members/single/profile/edit.php:40
+#: themes/commentpress-theme/registration/register.php:105
+msgid "Who can see this field?"
+msgstr ""
+
+#: themes/commentpress-modern/members/single/profile/edit.php:57
+#: themes/commentpress-modern/members/single/profile/edit.php:64
+#: themes/commentpress-modern/members/single/profile/edit.php:71
+#: themes/commentpress-modern/members/single/profile/edit.php:80
+#: themes/commentpress-modern/members/single/profile/edit.php:98
+#: themes/commentpress-modern/members/single/profile/edit.php:114
+#: themes/commentpress-modern/members/single/profile/edit.php:124
 #: themes/commentpress-modern/registration/register.php:53
 #: themes/commentpress-modern/registration/register.php:57
 #: themes/commentpress-modern/registration/register.php:61
 #: themes/commentpress-modern/registration/register.php:65
-#: themes/commentpress-modern/registration/register.php:92
-#: themes/commentpress-modern/registration/register.php:100
-#: themes/commentpress-modern/registration/register.php:108
-#: themes/commentpress-modern/registration/register.php:118
-#: themes/commentpress-modern/registration/register.php:129
-#: themes/commentpress-modern/registration/register.php:144
-#: themes/commentpress-modern/registration/register.php:155
-#: themes/commentpress-modern/registration/register.php:216
-#: themes/commentpress-modern/registration/register.php:225
-#: themes/commentpress-theme/members/single/profile/edit.php:26
-#: themes/commentpress-theme/members/single/profile/edit.php:33
-#: themes/commentpress-theme/members/single/profile/edit.php:40
-#: themes/commentpress-theme/members/single/profile/edit.php:49
-#: themes/commentpress-theme/members/single/profile/edit.php:67
-#: themes/commentpress-theme/members/single/profile/edit.php:83
-#: themes/commentpress-theme/members/single/profile/edit.php:93
+#: themes/commentpress-modern/registration/register.php:123
+#: themes/commentpress-modern/registration/register.php:131
+#: themes/commentpress-modern/registration/register.php:139
+#: themes/commentpress-modern/registration/register.php:149
+#: themes/commentpress-modern/registration/register.php:160
+#: themes/commentpress-modern/registration/register.php:175
+#: themes/commentpress-modern/registration/register.php:186
+#: themes/commentpress-modern/registration/register.php:249
+#: themes/commentpress-modern/registration/register.php:258
+#: themes/commentpress-theme/members/single/profile/edit.php:57
+#: themes/commentpress-theme/members/single/profile/edit.php:64
+#: themes/commentpress-theme/members/single/profile/edit.php:71
+#: themes/commentpress-theme/members/single/profile/edit.php:80
+#: themes/commentpress-theme/members/single/profile/edit.php:98
+#: themes/commentpress-theme/members/single/profile/edit.php:114
+#: themes/commentpress-theme/members/single/profile/edit.php:124
 #: themes/commentpress-theme/registration/register.php:53
 #: themes/commentpress-theme/registration/register.php:57
 #: themes/commentpress-theme/registration/register.php:61
 #: themes/commentpress-theme/registration/register.php:65
-#: themes/commentpress-theme/registration/register.php:92
-#: themes/commentpress-theme/registration/register.php:100
-#: themes/commentpress-theme/registration/register.php:108
-#: themes/commentpress-theme/registration/register.php:118
-#: themes/commentpress-theme/registration/register.php:129
-#: themes/commentpress-theme/registration/register.php:144
-#: themes/commentpress-theme/registration/register.php:155
-#: themes/commentpress-theme/registration/register.php:205
-#: themes/commentpress-theme/registration/register.php:214
+#: themes/commentpress-theme/registration/register.php:123
+#: themes/commentpress-theme/registration/register.php:131
+#: themes/commentpress-theme/registration/register.php:139
+#: themes/commentpress-theme/registration/register.php:149
+#: themes/commentpress-theme/registration/register.php:160
+#: themes/commentpress-theme/registration/register.php:175
+#: themes/commentpress-theme/registration/register.php:186
+#: themes/commentpress-theme/registration/register.php:249
+#: themes/commentpress-theme/registration/register.php:258
 msgid "(required)"
 msgstr ""
 
-#: themes/commentpress-modern/members/single/profile/edit.php:58
-#: themes/commentpress-modern/members/single/profile/edit.php:73
-#: themes/commentpress-modern/registration/register.php:135
-#: themes/commentpress-theme/members/single/profile/edit.php:58
-#: themes/commentpress-theme/members/single/profile/edit.php:73
-#: themes/commentpress-theme/registration/register.php:135
+#: themes/commentpress-modern/members/single/profile/edit.php:89
+#: themes/commentpress-modern/members/single/profile/edit.php:104
+#: themes/commentpress-modern/registration/register.php:166
+#: themes/commentpress-theme/members/single/profile/edit.php:89
+#: themes/commentpress-theme/members/single/profile/edit.php:104
+#: themes/commentpress-theme/registration/register.php:166
 msgid "Clear"
 msgstr ""
 
@@ -3465,48 +3496,54 @@ msgstr ""
 msgid "Profile Details"
 msgstr ""
 
-#: themes/commentpress-modern/registration/register.php:210
-#: themes/commentpress-theme/registration/register.php:199
+#: themes/commentpress-modern/registration/register.php:100
+#: themes/commentpress-theme/registration/register.php:100
+msgctxt "Change profile field visibility level"
+msgid "Change"
+msgstr ""
+
+#: themes/commentpress-modern/registration/register.php:243
+#: themes/commentpress-theme/registration/register.php:243
 msgid "Blog Details"
 msgstr ""
 
-#: themes/commentpress-modern/registration/register.php:212
-#: themes/commentpress-theme/registration/register.php:201
+#: themes/commentpress-modern/registration/register.php:245
+#: themes/commentpress-theme/registration/register.php:245
 msgid "Yes, I'd like to create a new site"
 msgstr ""
 
-#: themes/commentpress-modern/registration/register.php:216
-#: themes/commentpress-theme/registration/register.php:205
+#: themes/commentpress-modern/registration/register.php:249
+#: themes/commentpress-theme/registration/register.php:249
 msgid "Blog URL"
 msgstr ""
 
-#: themes/commentpress-modern/registration/register.php:225
-#: themes/commentpress-theme/registration/register.php:214
+#: themes/commentpress-modern/registration/register.php:258
+#: themes/commentpress-theme/registration/register.php:258
 msgid "Site Title"
 msgstr ""
 
-#: themes/commentpress-modern/registration/register.php:229
-#: themes/commentpress-theme/registration/register.php:218
+#: themes/commentpress-modern/registration/register.php:262
+#: themes/commentpress-theme/registration/register.php:262
 msgid "I would like my site to appear in search engines, and in public listings around this network."
 msgstr ""
 
-#: themes/commentpress-modern/registration/register.php:248
-#: themes/commentpress-theme/registration/register.php:237
+#: themes/commentpress-modern/registration/register.php:281
+#: themes/commentpress-theme/registration/register.php:281
 msgid "Complete Sign Up"
 msgstr ""
 
-#: themes/commentpress-modern/registration/register.php:261
-#: themes/commentpress-theme/registration/register.php:250
+#: themes/commentpress-modern/registration/register.php:294
+#: themes/commentpress-theme/registration/register.php:294
 msgid "Sign Up Complete!"
 msgstr ""
 
-#: themes/commentpress-modern/registration/register.php:267
-#: themes/commentpress-theme/registration/register.php:256
+#: themes/commentpress-modern/registration/register.php:300
+#: themes/commentpress-theme/registration/register.php:300
 msgid "You have successfully created your account! To begin using this site you will need to activate your account via the email we have just sent to your address."
 msgstr ""
 
-#: themes/commentpress-modern/registration/register.php:269
-#: themes/commentpress-theme/registration/register.php:258
+#: themes/commentpress-modern/registration/register.php:302
+#: themes/commentpress-theme/registration/register.php:302
 msgid "You have successfully created your account! Please log in using the username and password you have just created."
 msgstr ""
 
