@@ -1472,13 +1472,19 @@ class CommentpressCore {
 	 */
 	public function save_comment( $comment_ID, $comment_status ) {
 	
-		// we don't use comment_status
-	
 		// store our comment signature
 		$result = $this->db->save_comment_signature( $comment_ID );
 		
 		// in multipage situations, store our comment's page
 		$result = $this->db->save_comment_page( $comment_ID );
+		
+		// has the comment been marked as spam?
+		if ( $comment_status == 'spam' ) {
+			
+			// yes - let the commenter know without throwing an AJAX error
+			wp_die( __( 'This comment has been marked as spam. Please contact a site administrator.',  'commentpress-core' ) );
+			
+		}
 		
 	}
 	

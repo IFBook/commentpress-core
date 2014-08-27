@@ -20,96 +20,129 @@ if ( bp_has_profile( 'profile_group_id=' . bp_get_current_profile_group_id() ) )
 		<?php while ( bp_profile_fields() ) : bp_the_profile_field(); ?>
 
 			<div<?php bp_field_css_class( 'editfield' ) ?>>
+			
+				<?php if ( function_exists( 'bp_xprofile_create_field_type' ) ) : ?>
+				
+					<?php
+					$field_type = bp_xprofile_create_field_type( bp_get_the_profile_field_type() );
+					$field_type->edit_field_html();
 
-				<?php if ( 'textbox' == bp_get_the_profile_field_type() ) : ?>
+					do_action( 'bp_custom_profile_edit_fields_pre_visibility' );
+					?>
 
-					<label for="<?php bp_the_profile_field_input_name(); ?>"><?php bp_the_profile_field_name(); ?> <?php if ( bp_get_the_profile_field_is_required() ) : ?><?php _e( '(required)', 'commentpress-core' ); ?><?php endif; ?></label>
-					<input type="text" name="<?php bp_the_profile_field_input_name(); ?>" id="<?php bp_the_profile_field_input_name(); ?>" value="<?php bp_the_profile_field_edit_value(); ?>" <?php if ( bp_get_the_profile_field_is_required() ) : ?>aria-required="true"<?php endif; ?>/>
+					<?php if ( bp_current_user_can( 'bp_xprofile_change_field_visibility' ) ) : ?>
+						<p class="field-visibility-settings-toggle" id="field-visibility-settings-toggle-<?php bp_the_profile_field_id() ?>">
+							<?php printf( __( 'This field can be seen by: <span class="current-visibility-level">%s</span>', 'buddypress' ), bp_get_the_profile_field_visibility_level_label() ) ?> <a href="#" class="visibility-toggle-link"><?php _e( 'Change', 'buddypress' ); ?></a>
+						</p>
 
-				<?php endif; ?>
+						<div class="field-visibility-settings" id="field-visibility-settings-<?php bp_the_profile_field_id() ?>">
+							<fieldset>
+								<legend><?php _e( 'Who can see this field?', 'buddypress' ) ?></legend>
 
-				<?php if ( 'textarea' == bp_get_the_profile_field_type() ) : ?>
+								<?php bp_profile_visibility_radio_buttons() ?>
 
-					<label for="<?php bp_the_profile_field_input_name() ?>"><?php bp_the_profile_field_name(); ?> <?php if ( bp_get_the_profile_field_is_required() ) : ?><?php _e( '(required)', 'commentpress-core' ); ?><?php endif; ?></label>
-					<textarea rows="5" cols="40" name="<?php bp_the_profile_field_input_name(); ?>" id="<?php bp_the_profile_field_input_name(); ?>" <?php if ( bp_get_the_profile_field_is_required() ) : ?>aria-required="true"<?php endif; ?>><?php bp_the_profile_field_edit_value(); ?></textarea>
+							</fieldset>
+							<a class="field-visibility-settings-close" href="#"><?php _e( 'Close', 'buddypress' ) ?></a>
+						</div>
+					<?php else : ?>
+						<div class="field-visibility-settings-notoggle" id="field-visibility-settings-toggle-<?php bp_the_profile_field_id() ?>">
+							<?php printf( __( 'This field can be seen by: <span class="current-visibility-level">%s</span>', 'buddypress' ), bp_get_the_profile_field_visibility_level_label() ) ?>
+						</div>
+					<?php endif ?>
 
-				<?php endif; ?>
+				<?php else : ?>
 
-				<?php if ( 'selectbox' == bp_get_the_profile_field_type() ) : ?>
+					<?php if ( 'textbox' == bp_get_the_profile_field_type() ) : ?>
 
-					<label for="<?php bp_the_profile_field_input_name(); ?>"><?php bp_the_profile_field_name(); ?> <?php if ( bp_get_the_profile_field_is_required() ) : ?><?php _e( '(required)', 'commentpress-core' ); ?><?php endif; ?></label>
-					<select name="<?php bp_the_profile_field_input_name(); ?>" id="<?php bp_the_profile_field_input_name(); ?>" <?php if ( bp_get_the_profile_field_is_required() ) : ?>aria-required="true"<?php endif; ?>>
-						<?php bp_the_profile_field_options() ?>
-					</select>
-
-				<?php endif; ?>
-
-				<?php if ( 'multiselectbox' == bp_get_the_profile_field_type() ) : ?>
-
-					<label for="<?php bp_the_profile_field_input_name() ?>"><?php bp_the_profile_field_name() ?> <?php if ( bp_get_the_profile_field_is_required() ) : ?><?php _e( '(required)', 'commentpress-core' ); ?><?php endif; ?></label>
-					<select name="<?php bp_the_profile_field_input_name() ?>" id="<?php bp_the_profile_field_input_name() ?>" multiple="multiple" <?php if ( bp_get_the_profile_field_is_required() ) : ?>aria-required="true"<?php endif; ?>>
-
-						<?php bp_the_profile_field_options(); ?>
-
-					</select>
-
-					<?php if ( !bp_get_the_profile_field_is_required() ) : ?>
-
-						<a class="clear-value" href="javascript:clear( '<?php bp_the_profile_field_input_name(); ?>' );"><?php _e( 'Clear', 'commentpress-core' ); ?></a>
+						<label for="<?php bp_the_profile_field_input_name(); ?>"><?php bp_the_profile_field_name(); ?> <?php if ( bp_get_the_profile_field_is_required() ) : ?><?php _e( '(required)', 'commentpress-core' ); ?><?php endif; ?></label>
+						<input type="text" name="<?php bp_the_profile_field_input_name(); ?>" id="<?php bp_the_profile_field_input_name(); ?>" value="<?php bp_the_profile_field_edit_value(); ?>" <?php if ( bp_get_the_profile_field_is_required() ) : ?>aria-required="true"<?php endif; ?>/>
 
 					<?php endif; ?>
 
-				<?php endif; ?>
+					<?php if ( 'textarea' == bp_get_the_profile_field_type() ) : ?>
 
-				<?php if ( 'radio' == bp_get_the_profile_field_type() ) : ?>
+						<label for="<?php bp_the_profile_field_input_name() ?>"><?php bp_the_profile_field_name(); ?> <?php if ( bp_get_the_profile_field_is_required() ) : ?><?php _e( '(required)', 'commentpress-core' ); ?><?php endif; ?></label>
+						<textarea rows="5" cols="40" name="<?php bp_the_profile_field_input_name(); ?>" id="<?php bp_the_profile_field_input_name(); ?>" <?php if ( bp_get_the_profile_field_is_required() ) : ?>aria-required="true"<?php endif; ?>><?php bp_the_profile_field_edit_value(); ?></textarea>
 
-					<div class="radio">
-						<span class="label"><?php bp_the_profile_field_name(); ?> <?php if ( bp_get_the_profile_field_is_required() ) : ?><?php _e( '(required)', 'commentpress-core' ); ?><?php endif; ?></span>
+					<?php endif; ?>
 
-						<?php bp_the_profile_field_options(); ?>
+					<?php if ( 'selectbox' == bp_get_the_profile_field_type() ) : ?>
+
+						<label for="<?php bp_the_profile_field_input_name(); ?>"><?php bp_the_profile_field_name(); ?> <?php if ( bp_get_the_profile_field_is_required() ) : ?><?php _e( '(required)', 'commentpress-core' ); ?><?php endif; ?></label>
+						<select name="<?php bp_the_profile_field_input_name(); ?>" id="<?php bp_the_profile_field_input_name(); ?>" <?php if ( bp_get_the_profile_field_is_required() ) : ?>aria-required="true"<?php endif; ?>>
+							<?php bp_the_profile_field_options() ?>
+						</select>
+
+					<?php endif; ?>
+
+					<?php if ( 'multiselectbox' == bp_get_the_profile_field_type() ) : ?>
+
+						<label for="<?php bp_the_profile_field_input_name() ?>"><?php bp_the_profile_field_name() ?> <?php if ( bp_get_the_profile_field_is_required() ) : ?><?php _e( '(required)', 'commentpress-core' ); ?><?php endif; ?></label>
+						<select name="<?php bp_the_profile_field_input_name() ?>" id="<?php bp_the_profile_field_input_name() ?>" multiple="multiple" <?php if ( bp_get_the_profile_field_is_required() ) : ?>aria-required="true"<?php endif; ?>>
+
+							<?php bp_the_profile_field_options(); ?>
+
+						</select>
 
 						<?php if ( !bp_get_the_profile_field_is_required() ) : ?>
 
 							<a class="clear-value" href="javascript:clear( '<?php bp_the_profile_field_input_name(); ?>' );"><?php _e( 'Clear', 'commentpress-core' ); ?></a>
 
 						<?php endif; ?>
-					</div>
 
-				<?php endif; ?>
+					<?php endif; ?>
 
-				<?php if ( 'checkbox' == bp_get_the_profile_field_type() ) : ?>
+					<?php if ( 'radio' == bp_get_the_profile_field_type() ) : ?>
 
-					<div class="checkbox">
-						<span class="label"><?php bp_the_profile_field_name(); ?> <?php if ( bp_get_the_profile_field_is_required() ) : ?><?php _e( '(required)', 'commentpress-core' ); ?><?php endif; ?></span>
+						<div class="radio">
+							<span class="label"><?php bp_the_profile_field_name(); ?> <?php if ( bp_get_the_profile_field_is_required() ) : ?><?php _e( '(required)', 'commentpress-core' ); ?><?php endif; ?></span>
 
-						<?php bp_the_profile_field_options(); ?>
-					</div>
+							<?php bp_the_profile_field_options(); ?>
 
-				<?php endif; ?>
+							<?php if ( !bp_get_the_profile_field_is_required() ) : ?>
 
-				<?php if ( 'datebox' == bp_get_the_profile_field_type() ) : ?>
+								<a class="clear-value" href="javascript:clear( '<?php bp_the_profile_field_input_name(); ?>' );"><?php _e( 'Clear', 'commentpress-core' ); ?></a>
 
-					<div class="datebox">
-						<label for="<?php bp_the_profile_field_input_name(); ?>_day"><?php bp_the_profile_field_name(); ?> <?php if ( bp_get_the_profile_field_is_required() ) : ?><?php _e( '(required)', 'commentpress-core' ); ?><?php endif; ?></label>
+							<?php endif; ?>
+						</div>
 
-						<select name="<?php bp_the_profile_field_input_name(); ?>_day" id="<?php bp_the_profile_field_input_name(); ?>_day" <?php if ( bp_get_the_profile_field_is_required() ) : ?>aria-required="true"<?php endif; ?>>
+					<?php endif; ?>
 
-							<?php bp_the_profile_field_options( 'type=day' ); ?>
+					<?php if ( 'checkbox' == bp_get_the_profile_field_type() ) : ?>
 
-						</select>
+						<div class="checkbox">
+							<span class="label"><?php bp_the_profile_field_name(); ?> <?php if ( bp_get_the_profile_field_is_required() ) : ?><?php _e( '(required)', 'commentpress-core' ); ?><?php endif; ?></span>
 
-						<select name="<?php bp_the_profile_field_input_name() ?>_month" id="<?php bp_the_profile_field_input_name(); ?>_month" <?php if ( bp_get_the_profile_field_is_required() ) : ?>aria-required="true"<?php endif; ?>>
+							<?php bp_the_profile_field_options(); ?>
+						</div>
 
-							<?php bp_the_profile_field_options( 'type=month' ); ?>
+					<?php endif; ?>
 
-						</select>
+					<?php if ( 'datebox' == bp_get_the_profile_field_type() ) : ?>
 
-						<select name="<?php bp_the_profile_field_input_name() ?>_year" id="<?php bp_the_profile_field_input_name(); ?>_year" <?php if ( bp_get_the_profile_field_is_required() ) : ?>aria-required="true"<?php endif; ?>>
+						<div class="datebox">
+							<label for="<?php bp_the_profile_field_input_name(); ?>_day"><?php bp_the_profile_field_name(); ?> <?php if ( bp_get_the_profile_field_is_required() ) : ?><?php _e( '(required)', 'commentpress-core' ); ?><?php endif; ?></label>
 
-							<?php bp_the_profile_field_options( 'type=year' ); ?>
+							<select name="<?php bp_the_profile_field_input_name(); ?>_day" id="<?php bp_the_profile_field_input_name(); ?>_day" <?php if ( bp_get_the_profile_field_is_required() ) : ?>aria-required="true"<?php endif; ?>>
 
-						</select>
-					</div>
+								<?php bp_the_profile_field_options( 'type=day' ); ?>
+
+							</select>
+
+							<select name="<?php bp_the_profile_field_input_name() ?>_month" id="<?php bp_the_profile_field_input_name(); ?>_month" <?php if ( bp_get_the_profile_field_is_required() ) : ?>aria-required="true"<?php endif; ?>>
+
+								<?php bp_the_profile_field_options( 'type=month' ); ?>
+
+							</select>
+
+							<select name="<?php bp_the_profile_field_input_name() ?>_year" id="<?php bp_the_profile_field_input_name(); ?>_year" <?php if ( bp_get_the_profile_field_is_required() ) : ?>aria-required="true"<?php endif; ?>>
+
+								<?php bp_the_profile_field_options( 'type=year' ); ?>
+
+							</select>
+						</div>
+
+					<?php endif; ?>
 
 				<?php endif; ?>
 
@@ -123,7 +156,7 @@ if ( bp_has_profile( 'profile_group_id=' . bp_get_current_profile_group_id() ) )
 	<?php do_action( 'bp_after_profile_field_content' ); ?>
 
 	<div class="submit">
-		<input type="submit" name="profile-group-edit-submit" id="profile-group-edit-submit" value="<?php _e( 'Save Changes', 'commentpress-core' ); ?> " />
+		<input type="submit" name="profile-group-edit-submit" id="profile-group-edit-submit" value="<?php esc_attr_e( 'Save Changes', 'commentpress-core' ); ?> " />
 	</div>
 
 	<input type="hidden" name="field_ids" id="field_ids" value="<?php bp_the_profile_group_field_ids(); ?>" />
