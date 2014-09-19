@@ -224,7 +224,8 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 <h4>3.6.1</h4>
 
 * Update compatibility notice
-* Remvoe deprecated function calls
+* Update BP compatibility
+* Remove deprecated function calls
 
 
 
