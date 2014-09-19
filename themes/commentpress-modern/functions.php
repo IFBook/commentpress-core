@@ -282,18 +282,19 @@ function commentpress_bp_enqueue_scripts() {
 			// add translation: this needs to be checked against BP_Legacy::enqueue_scripts
 			// from time to time to make sure it's up-to-date
 			$params = array(
-				'my_favs'           => __( 'My Favorites', 'commentpress-core' ),
-				'accepted'          => __( 'Accepted', 'commentpress-core' ),
-				'rejected'          => __( 'Rejected', 'commentpress-core' ),
-				'show_all_comments' => __( 'Show all comments for this thread', 'commentpress-core' ),
-				'show_x_comments'   => __( 'Show all %d comments', 'commentpress-core' ),
-				'show_all'          => __( 'Show all', 'commentpress-core' ),
-				'comments'          => __( 'comments', 'commentpress-core' ),
-				'close'             => __( 'Close', 'commentpress-core' ),
-				'view'              => __( 'View', 'commentpress-core' ),
-				'mark_as_fav'	    => __( 'Favorite', 'commentpress-core' ),
-				'remove_fav'	    => __( 'Remove Favorite', 'commentpress-core' ),
-				'unsaved_changes'   => __( 'Your profile has unsaved changes. If you leave the page, the changes will be lost.', 'commentpress-core' ),
+				'accepted'            => __( 'Accepted', 'commentpress-core' ),
+				'close'               => __( 'Close', 'commentpress-core' ),
+				'comments'            => __( 'comments', 'commentpress-core' ),
+				'leave_group_confirm' => __( 'Are you sure you want to leave this group?', 'commentpress-core' ),
+				'mark_as_fav'	      => __( 'Favorite', 'commentpress-core' ),
+				'my_favs'             => __( 'My Favorites', 'commentpress-core' ),
+				'rejected'            => __( 'Rejected', 'commentpress-core' ),
+				'remove_fav'	      => __( 'Remove Favorite', 'commentpress-core' ),
+				'show_all'            => __( 'Show all', 'commentpress-core' ),
+				'show_all_comments'   => __( 'Show all comments for this thread', 'commentpress-core' ),
+				'show_x_comments'     => __( 'Show all %d comments', 'commentpress-core' ),
+				'unsaved_changes'     => __( 'Your profile has unsaved changes. If you leave the page, the changes will be lost.', 'commentpress-core' ),
+				'view'                => __( 'View', 'commentpress-core' ),
 			);
 	
 			// localise
