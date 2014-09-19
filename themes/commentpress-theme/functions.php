@@ -2189,7 +2189,7 @@ function commentpress_get_all_comments_page_content() {
 
 	// allow oEmbed in comments
 	global $wp_embed;
-	if ( is_a( $wp_embed, 'WP_Embed' ) ) {
+	if ( $wp_embed instanceof WP_Embed ) {
 		add_filter( 'comment_text', array( $wp_embed, 'autoembed' ), 1 );
 	}
 	
@@ -2410,7 +2410,7 @@ function commentpress_get_comments_by_page_content() {
 
 	// allow oEmbed in comments
 	global $wp_embed;
-	if ( is_a( $wp_embed, 'WP_Embed' ) ) {
+	if ( $wp_embed instanceof WP_Embed ) {
 		add_filter( 'comment_text', array( $wp_embed, 'autoembed' ), 1 );
 	}
 	
@@ -2531,7 +2531,7 @@ function commentpress_get_comment_activity( $scope = 'all' ) {
 
 	// allow oEmbed in comments
 	global $wp_embed;
-	if ( is_a( $wp_embed, 'WP_Embed' ) ) {
+	if ( $wp_embed instanceof WP_Embed ) {
 		add_filter( 'comment_text', array( $wp_embed, 'autoembed' ), 1 );
 	}
 	
@@ -2795,7 +2795,7 @@ function commentpress_get_comments_by_para() {
 	
 	// allow oEmbed in comments
 	global $wp_embed;
-	if ( is_a( $wp_embed, 'WP_Embed' ) ) {
+	if ( $wp_embed instanceof WP_Embed ) {
 		add_filter( 'comment_text', array( $wp_embed, 'autoembed' ), 1 );
 	}
 	
