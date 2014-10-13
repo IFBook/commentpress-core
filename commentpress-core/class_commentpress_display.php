@@ -2109,7 +2109,7 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 				$upgrade .= '
 	<tr valign="top">
 		<th scope="row"><label for="cp_blog_workflow">'.$workflow_label.'</label></th>
-		<td><input id="cp_reset" name="cp_blog_workflow" value="1" type="checkbox" /></td>
+		<td><input id="cp_blog_workflow" name="cp_blog_workflow" value="1" type="checkbox" /></td>
 	</tr>
 
 ';
