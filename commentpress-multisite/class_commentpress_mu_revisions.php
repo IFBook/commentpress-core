@@ -24,11 +24,9 @@ class CommentpressMultisiteRevisions {
 	
 	
 	
-	/*
-	============================================================================
-	Properties
-	============================================================================
-	*/
+	/**
+	 * Properties
+	 */
 	
 	// parent object reference
 	public $parent_obj;

@@ -24,11 +24,9 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	/*
-	============================================================================
-	Properties
-	============================================================================
-	*/
+	/**
+	 * Properties
+	 */
 	
 	// parent object reference
 	public $parent_obj;

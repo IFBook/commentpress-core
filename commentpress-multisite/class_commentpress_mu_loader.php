@@ -24,11 +24,9 @@ class CommentpressMultisiteLoader {
 	
 	
 	
-	/*
-	============================================================================
-	Properties
-	============================================================================
-	*/
+	/**
+	 * Properties
+	 */
 	
 	// parent object reference
 	public $parent_obj;

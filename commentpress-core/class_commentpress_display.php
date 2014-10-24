@@ -24,11 +24,9 @@ class CommentpressCoreDisplay {
 	
 	
 	
-	/*
-	============================================================================
-	Properties
-	============================================================================
-	*/
+	/**
+	 * Properties
+	 */
 	
 	// parent object reference
 	public $parent_obj;
