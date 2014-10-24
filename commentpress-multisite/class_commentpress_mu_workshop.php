@@ -106,12 +106,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-	/*
-	----------------------------------------------------------------------------
-	BuddyPress Groupblog Text Overrides
-	----------------------------------------------------------------------------
-	*/
-	
 	/**
 	 * Override the name of the filter item
 	 *

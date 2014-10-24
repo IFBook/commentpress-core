@@ -859,12 +859,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-	/*
-	---------------------------------------------------------------
-	Object Initialisation
-	---------------------------------------------------------------
-	*/
-	
 	/** 
 	 * Object initialisation
 	 *
@@ -890,9 +884,9 @@ class CommentpressMultisiteAdmin {
 		
 		
 		
-		// ----------------------------------------
-		// optionally load CommentPress Core 
-		// ----------------------------------------
+		/**
+		 * Optionally load CommentPress Core
+		 */
 		
 		// if we're network-enabled
 		if ( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_sitewide' ) {

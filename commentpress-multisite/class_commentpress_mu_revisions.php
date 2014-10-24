@@ -94,12 +94,6 @@ class CommentpressMultisiteRevisions {
 	
 	
 	
-	/*
-	----------------------------------------------------------------------------
-	Methods to be merged into CommentPress Core
-	----------------------------------------------------------------------------
-	*/
-	
 	/** 
 	 * Amend the post title prefix
 	 *

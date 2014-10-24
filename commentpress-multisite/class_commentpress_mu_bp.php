@@ -109,12 +109,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-	/*
-	----------------------------------------------------------------------------
-	BuddyPress Compatibility
-	----------------------------------------------------------------------------
-	*/
-	
 	/**
 	 * Enqueue any styles and scripts needed by our public page
 	 *
@@ -138,12 +132,6 @@ class CommentpressMultisiteBuddypress {
 	}
 	
 	
-	
-	/*
-	----------------------------------------------------------------------------
-	BP Groupblog Compatibility
-	----------------------------------------------------------------------------
-	*/
 	
 	/**
 	 * Allow HTML comments and content in Multisite blogs
