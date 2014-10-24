@@ -14,9 +14,6 @@ This class encapsulates all BuddyPress compatibility
 
 
 
-
-
-
 /*
 ================================================================================
 Class Name
@@ -24,12 +21,9 @@ Class Name
 */
 
 class CommentpressMultisiteBuddypress {
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	Properties
@@ -58,9 +52,7 @@ class CommentpressMultisiteBuddypress {
 	public $cpmu_bp_require_comment_registration = 1;
 	
 	
-
-
-
+	
 	/** 
 	 * @description: initialises this object
 	 * @param object $parent_obj a reference to the parent object
@@ -86,9 +78,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: set up all items associated with this object
 	 * @todo: 
@@ -100,9 +89,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: if needed, destroys all items associated with this object
 	 * @todo: 
@@ -114,16 +100,10 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 //##############################################################################
 	
 	
 	
-
-
-
 	/*
 	============================================================================
 	PUBLIC METHODS
@@ -132,9 +112,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/*
 	----------------------------------------------------------------------------
 	BuddyPress Compatibility
@@ -165,9 +142,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/*
 	----------------------------------------------------------------------------
 	BP Groupblog Compatibility
@@ -191,9 +165,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/**
 	 * Allow HTML in Activity items
 	 */
@@ -209,9 +180,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: add capability to edit own comments
 	 * @todo:
@@ -244,12 +212,9 @@ class CommentpressMultisiteBuddypress {
 		return $caps;
 		
 	}
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: override capability to comment based on group membership.
 	 * @todo:
@@ -291,9 +256,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-	
-	
-	
 	/*
 	// a nicer way?
 	add_action( 'preprocess_comment', 'my_check_comment', 1 );
@@ -326,10 +288,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-	
-
-
-
 	/** 
 	 * @description: add pages to the post_types that BP records published activity for
 	 */
@@ -350,9 +308,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-	
-	
-	
 	/** 
 	 * @description: add pages to the post_types that BP records comment activity for
 	 */
@@ -370,9 +325,6 @@ class CommentpressMultisiteBuddypress {
 		return $post_types;
 	
 	}
-	
-	
-	
 	
 	
 	
@@ -411,9 +363,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/**
 	 * @description: record the blog activity for the group - amended from bp_groupblog_set_group_to_post_activity
 	 */
@@ -697,9 +646,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: add some meta for the activity item - bp_activity_after_save doesn't seem to fire
 	 */
@@ -733,9 +679,6 @@ class CommentpressMultisiteBuddypress {
 		return $activity;
 	
 	}
-	
-	
-	
 	
 	
 	
@@ -926,9 +869,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: add some meta for the activity item (DISABLED)
 	 */
@@ -952,9 +892,6 @@ class CommentpressMultisiteBuddypress {
 		return $activity;
 	
 	}
-	
-	
-	
 	
 	
 	
@@ -1015,9 +952,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/**
 	 * Add a filter option to the filter select box on group activity pages.
 	 */
@@ -1039,9 +973,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: override the name of the filter item
 	 * @todo: 
@@ -1065,9 +996,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: for group blogs, override the avatar with that of the group
 	 * @todo: 
@@ -1103,9 +1031,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-	
-	
-	
 	/** 
 	 * @description: override the name of the sub-nav item
 	 * @todo: 
@@ -1131,9 +1056,6 @@ class CommentpressMultisiteBuddypress {
 		return $name;
 		
 	}
-	
-	
-	
 	
 	
 	
@@ -1165,10 +1087,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-	
-	
-	
-	
 	/** 
 	 * @description: override CommentPress "Title Page"
 	 * @todo: 
@@ -1190,9 +1108,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-	
-	
-
 	/** 
 	 * @description: remove group blogs from blog list
 	 * @todo: 
@@ -1240,9 +1155,6 @@ class CommentpressMultisiteBuddypress {
 		return $blogs;
 	
 	}
-	
-	
-	
 	
 	
 	
@@ -1353,9 +1265,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-	
-	
-	
 	/** 
 	 * @description: hook into the group blog signup form
 	 * @todo: 
@@ -1377,9 +1286,6 @@ class CommentpressMultisiteBuddypress {
 		}
 	
 	}
-	
-	
-	
 	
 	
 	
@@ -1410,9 +1316,6 @@ class CommentpressMultisiteBuddypress {
 		
 	}
 	
-
-	
-	
 	
 	
 	/** 
@@ -1429,10 +1332,6 @@ class CommentpressMultisiteBuddypress {
 		);
 	
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -1489,18 +1388,12 @@ class CommentpressMultisiteBuddypress {
 		
 	}
 	
-
-
-
-
-
+	
+	
 //##############################################################################
 	
 	
 	
-
-
-
 	/*
 	============================================================================
 	PRIVATE METHODS
@@ -1509,9 +1402,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: object initialisation
 	 * @todo:
@@ -1526,9 +1416,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: register Wordpress hooks
 	 * @todo: 
@@ -1633,9 +1520,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/**
 	 * _groupblog_filter_options()
 	 *
@@ -1663,9 +1547,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/**
 	 * _group_activity_mods()
 	 *
@@ -1708,9 +1589,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/**
 	 * @description: allow our TinyMCE comment markup in activity content
 	 * @todo:
@@ -1740,9 +1618,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: hook into the groupblog create screen
 	 * @todo:
@@ -1902,9 +1777,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: create a blog that is a groupblog
 	 * @todo:
@@ -2040,9 +1912,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: hook into the blog create screen on registration page
 	 * @todo:
@@ -2181,9 +2050,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: create a blog that is not a groupblog
 	 * @todo:
@@ -2204,9 +2070,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: utility to wrap is_groupblog(). Note that this only tests the
 	 * current blog and cannot be used to discover if a specific blog is a
@@ -2234,9 +2097,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-	
-	
-	
 	/** 
 	 * @description: utility to discover if this is a BP Group Site
 	 * @todo: 
@@ -2259,9 +2119,6 @@ class CommentpressMultisiteBuddypress {
 		return false;
 		
 	}
-	
-	
-	
 	
 	
 	
@@ -2292,9 +2149,6 @@ class CommentpressMultisiteBuddypress {
 		return false;
 		
 	}
-	
-	
-	
 	
 	
 	
@@ -2350,9 +2204,6 @@ class CommentpressMultisiteBuddypress {
 		return $admin_page;
 
 	}
-	
-	
-	
 	
 	
 	
@@ -2457,9 +2308,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: get Groupblog theme as defined in Network BuddyPress admin
 	 * @todo: 
@@ -2474,9 +2322,6 @@ class CommentpressMultisiteBuddypress {
 		return $theme;
 	
 	}
-	
-	
-	
 	
 	
 	
@@ -2497,9 +2342,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/**
 	 * @description: get default BuddyPress-related settings
 	 * @todo: 
@@ -2544,9 +2386,6 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: hook into Network BuddyPress form update
 	 * @todo: 
@@ -2582,20 +2421,11 @@ class CommentpressMultisiteBuddypress {
 	
 	
 	
-	
-	
-	
 //##############################################################################
 	
 	
 	
-
-
-
 } // class ends
-	
-	
-	
 
 
 

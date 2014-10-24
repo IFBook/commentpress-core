@@ -17,8 +17,6 @@ Mark James for the icons: http://www.famfamfam.com/lab/icons/silk/
 
 
 
-
-
 // -----------------------------------------------------------------------------
 // No need to edit below this line
 // -----------------------------------------------------------------------------
@@ -39,10 +37,6 @@ if ( !defined( 'COMMENTPRESS_PLUGIN_URL' ) ) {
 if ( !defined( 'COMMENTPRESS_PLUGIN_PATH' ) ) {
 	define( 'COMMENTPRESS_PLUGIN_PATH', plugin_dir_path( COMMENTPRESS_PLUGIN_FILE ) );
 }
-
-
-
-
 
 
 
@@ -108,9 +102,6 @@ if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
 
 
 
-
-
-
 /*
 --------------------------------------------------------------------------------
 Misc Utility Functions
@@ -146,9 +137,6 @@ function commentpress_file_is_present( $filename ) {
 
 
 
-
-
-
 /** 
  * @description: utility to include the core plugin
  * @todo: 
@@ -174,9 +162,6 @@ function commentpress_include_core() {
 
 
 
-
-
-
 /** 
  * @description: utility to activate the core plugin
  * @todo: 
@@ -196,9 +181,6 @@ function commentpress_activate_core() {
 	}
 
 }
-
-
-
 
 
 
@@ -222,9 +204,6 @@ function commentpress_activate_ajax() {
 
 
 
-
-
-
 /**
  * shortcut for debugging
  */
@@ -236,9 +215,6 @@ function _cpdie( $var ) {
 	die();
 	
 }
-
-
-
 
 
 
@@ -261,9 +237,6 @@ function commentpress_plugin_action_links( $links, $file ) {
 
 // add filter for the above
 add_filter( 'plugin_action_links', 'commentpress_plugin_action_links', 10, 2 );
-
-
-
 
 
 
@@ -312,8 +285,6 @@ function commentpress_find_plugin_by_name( $plugin_name = '' ) {
 
 
 
-
-
 /** 
  * @description: test if the old pre-3.4 Commentpress plugin is active
  * @todo: 
@@ -348,8 +319,6 @@ function commentpress_is_legacy_plugin_active() {
 
 
 
-
-
 /*
 --------------------------------------------------------------------------------
 NOTE: in multisite, child themes are registered as broken if the plugin is not 
@@ -376,10 +345,6 @@ register_theme_directory( plugin_dir_path( COMMENTPRESS_PLUGIN_FILE ) . 'themes'
 
 
 
-
-
-
-
 /*
 --------------------------------------------------------------------------------
 Include Standalone
@@ -387,9 +352,6 @@ Include Standalone
 */
 
 commentpress_include_core();
-
-
-
 
 
 
@@ -433,8 +395,6 @@ if (
 
 
 
-
-
 /*
 --------------------------------------------------------------------------------
 Init Multisite
@@ -456,8 +416,6 @@ if ( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_sitewide' ) {
 	require_once( $_file_path );
 
 }
-
-
 
 
 

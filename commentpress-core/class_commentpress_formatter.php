@@ -14,9 +14,6 @@ This class provides "Prose" and "Poetry" formatting to CommentPress Core.
 
 
 
-
-
-
 /*
 ================================================================================
 Class Name
@@ -24,12 +21,9 @@ Class Name
 */
 
 class CommentpressCoreFormatter {
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	Properties
@@ -44,9 +38,6 @@ class CommentpressCoreFormatter {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: initialises this object
 	 * @param object $parent_obj a reference to the parent object
@@ -72,9 +63,6 @@ class CommentpressCoreFormatter {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: set up all items associated with this object
 	 * @todo: 
@@ -86,9 +74,6 @@ class CommentpressCoreFormatter {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: if needed, destroys all items associated with this object
 	 * @todo: 
@@ -100,16 +85,10 @@ class CommentpressCoreFormatter {
 	
 	
 	
-
-
-
 //##############################################################################
 	
 	
 	
-
-
-
 	/*
 	============================================================================
 	PUBLIC METHODS
@@ -118,9 +97,6 @@ class CommentpressCoreFormatter {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: override the name of the type dropdown label
 	 * @todo: 
@@ -136,9 +112,6 @@ class CommentpressCoreFormatter {
 		);
 		
 	}
-	
-	
-	
 	
 	
 	
@@ -166,9 +139,6 @@ class CommentpressCoreFormatter {
 		);
 		
 	}
-	
-	
-	
 	
 	
 	
@@ -226,17 +196,11 @@ class CommentpressCoreFormatter {
 	}
 	
 	
-
-	
-	
 	
 //##############################################################################
 	
 	
 	
-
-
-
 	/*
 	============================================================================
 	PRIVATE METHODS
@@ -245,9 +209,6 @@ class CommentpressCoreFormatter {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: object initialisation
 	 * @todo:
@@ -262,9 +223,6 @@ class CommentpressCoreFormatter {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: register Wordpress hooks
 	 * @todo: 
@@ -290,21 +248,11 @@ class CommentpressCoreFormatter {
 	
 	
 	
-
-
-
 //##############################################################################
 	
 	
 	
-
-
-
 } // class ends
-	
-	
-	
-
 
 
 

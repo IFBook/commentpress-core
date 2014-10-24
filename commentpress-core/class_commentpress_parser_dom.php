@@ -18,9 +18,6 @@ oddities in DOMDocument. These can be found in `inc/dom-helpers`.
 
 
 
-
-
-
 /*
 ================================================================================
 Class Name
@@ -28,12 +25,9 @@ Class Name
 */
 
 class CommentpressCoreParser {
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	Properties
@@ -61,11 +55,8 @@ class CommentpressCoreParser {
 	// sorted comments
 	public $comments_sorted = array();
 	
-
-
-
-
-
+	
+	
 	/** 
 	 * @description: initialises this object
 	 * @param object $parent_obj a reference to the parent object
@@ -85,12 +76,9 @@ class CommentpressCoreParser {
 		return $this;
 
 	}
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: set up all items associated with this object
 	 * @todo: 
@@ -99,13 +87,9 @@ class CommentpressCoreParser {
 	public function initialise() {
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: if needed, destroys all items associated with this object
 	 * @todo: 
@@ -114,32 +98,21 @@ class CommentpressCoreParser {
 	public function destroy() {
 	
 	}
-
-
-
-
-
-
-
+	
+	
+	
 //##############################################################################
-
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	PUBLIC METHODS
 	============================================================================
 	*/
 	
-
-
-
-
-
+	
+	
 	/** 
 	 * @description: call
 	 * @todo:
@@ -252,13 +225,9 @@ class CommentpressCoreParser {
 		return $content;
 	
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: get comments sorted by text signature and paragraph
 	 * @param integer $post_ID the ID of the post
@@ -283,18 +252,10 @@ class CommentpressCoreParser {
 	
 	
 	
-	
-	
-	
-	
 //##############################################################################
-
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	PRIVATE METHODS
@@ -303,9 +264,6 @@ class CommentpressCoreParser {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: object initialisation
 	 * @todo:
@@ -326,13 +284,9 @@ class CommentpressCoreParser {
 		$this->dom = new CommentPress_DOMDocument();
 	
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: parse with DOMDocument
 	 */
@@ -639,12 +593,9 @@ class CommentpressCoreParser {
 		return $content;
 
 	}
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: removes <br /> tags that precede and follow span
 	 * @param DOMDocument object $element the element
@@ -697,10 +648,6 @@ class CommentpressCoreParser {
 		}
 
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -839,12 +786,8 @@ class CommentpressCoreParser {
 
 	}
 	
-
-
-
-
-
-
+	
+	
 	/** 
 	 * @description: splits the content into an array by line
 	 * @param string $content the post content
@@ -922,8 +865,6 @@ class CommentpressCoreParser {
 	
 	
 	
-		
-		
 	/** 
 	 * @description: parses the content by line (<br />) and builds text signatures array
 	 * @param string $content the post content
@@ -1047,12 +988,8 @@ class CommentpressCoreParser {
 
 	}
 	
-
-
-
-
-
-
+	
+	
 	/** 
 	 * @description: parses the content by comment block
 	 * @param string $content the post content
@@ -1168,12 +1105,8 @@ class CommentpressCoreParser {
 
 	}
 	
-
-
-
-
-
-
+	
+	
 	/** 
 	 * @description: splits the content into an array by block
 	 * @param string $content the post content
@@ -1321,8 +1254,6 @@ class CommentpressCoreParser {
 	
 	
 	
-		
-		
 	/** 
 	 * @description: parses the content by comment block and generates text signature array
 	 * @param string $content the post content
@@ -1408,12 +1339,8 @@ class CommentpressCoreParser {
 
 	}
 	
-
-
-
-
-
-
+	
+	
 	/** 
 	 * @description: utility to check if the content has our custom quicktag
 	 * @param string $content the post content
@@ -1442,10 +1369,6 @@ class CommentpressCoreParser {
 		return $return;
 
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -1488,10 +1411,6 @@ class CommentpressCoreParser {
 		return $content;
 
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -1654,10 +1573,6 @@ class CommentpressCoreParser {
 	
 	
 	
-	
-	
-	
-	
 	/** 
 	 * @description: generates a text signature based on the content of a paragraph
 	 * @param string $text the text of a paragraph
@@ -1698,10 +1613,6 @@ class CommentpressCoreParser {
 		return $text_signature;
 		
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -1748,9 +1659,6 @@ class CommentpressCoreParser {
 	
 	
 	
-		
-		
-		
 	/** 
 	 * @description: wraps standalone captions (ie, not inside <p> tags) in <p>
 	 * @param string $content the post content
@@ -1796,10 +1704,6 @@ class CommentpressCoreParser {
 	
 	
 	
-		
-		
-		
-
 	/** 
 	 * @description: removes leading and trailing <br /> tags from embedded quotes
 	 * @param string $content the post content
@@ -1845,10 +1749,6 @@ class CommentpressCoreParser {
 	
 	
 	
-		
-		
-		
-
 	/** 
 	 * @description: get comments sorted by text signature and paragraph
 	 * @param integer $post_ID the ID of the post
@@ -1952,10 +1852,6 @@ class CommentpressCoreParser {
 	
 	
 	
-	
-	
-	
-	
 	/** 
 	 * @description: filter comments to find comments for the current page of a multipage post
 	 * @param array $comments array of comment objects
@@ -2034,12 +1930,8 @@ class CommentpressCoreParser {
 		
 	}
 	
-
-
-
-
-
-
+	
+	
 	/** 
 	 * @description: filter comments by text signature
 	 * @param array $comments array of comment objects
@@ -2181,24 +2073,13 @@ class CommentpressCoreParser {
 		
 	}
 	
-
-
-
-
-
-
+	
+	
 //##############################################################################
-
-
-
-
-
-
-
+	
+	
+	
 } // class ends
-
-
-
 
 
 

@@ -14,9 +14,6 @@ This class is a wrapper for the majority of database operations.
 
 
 
-
-
-
 /*
 ================================================================================
 Class Name
@@ -24,12 +21,9 @@ Class Name
 */
 
 class CommentpressMultisiteAdmin {
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	Properties
@@ -45,11 +39,8 @@ class CommentpressMultisiteAdmin {
 	// options array
 	public $cpmu_options = array();
 	
-
-
-
-
-
+	
+	
 	/** 
 	 * @description: initialises this object
 	 * @param object $parent_obj a reference to the parent object
@@ -72,9 +63,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: set up all options associated with this object
 	 * @param string $component a component identifier, either 'multisite' or 'buddypress'
@@ -114,13 +102,9 @@ class CommentpressMultisiteAdmin {
 		}
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: upgrade plugin from 1.0 options to latest set
 	 * @return boolean $result
@@ -182,10 +166,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: if needed, destroys all items associated with this object
 	 * @todo: 
@@ -197,13 +177,9 @@ class CommentpressMultisiteAdmin {
 		$this->options_delete();
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: uninstalls database modifications
 	 * @todo: 
@@ -214,31 +190,21 @@ class CommentpressMultisiteAdmin {
 		// nothing
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 //##############################################################################
-
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	PUBLIC METHODS
 	============================================================================
 	*/
 	
-
-
-
-
+	
+	
 	/** 
 	 * @description: check for plugin upgrade
 	 * @return boolean $result
@@ -269,10 +235,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: create all plugin options
 	 * @todo: 
@@ -296,10 +258,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: delete all plugin options
 	 * @todo: 
@@ -317,10 +275,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: save the settings set by the administrator
 	 * @return boolean success or failure
@@ -422,10 +376,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-	
-	
-	
-	
 	/** 
 	 * @description: save options array as WordPress site option
 	 * @todo: 
@@ -440,10 +390,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: reset options
 	 * @param string $component a component identifier, either 'multisite' or 'buddypress'
@@ -486,10 +432,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: return existence of a specified option
 	 * @todo: 
@@ -511,9 +453,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-	
-	
-	
 	/** 
 	 * @description: return a value for a specified option
 	 * @todo: 
@@ -532,9 +471,6 @@ class CommentpressMultisiteAdmin {
 		return ( array_key_exists( $option_name, $this->cpmu_options ) ) ? $this->cpmu_options[ $option_name ] : $default;
 		
 	}
-	
-	
-	
 	
 	
 	
@@ -567,9 +503,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-	
-	
-	
 	/** 
 	 * @description: deletes a specified option
 	 * @todo: 
@@ -588,9 +521,6 @@ class CommentpressMultisiteAdmin {
 		unset( $this->cpmu_options[ $option_name ] );
 		
 	}
-	
-	
-	
 	
 	
 	
@@ -625,9 +555,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-	
-	
-	
 	/** 
 	 * @description: return a value for a specified site option
 	 * @todo: 
@@ -646,9 +573,6 @@ class CommentpressMultisiteAdmin {
 		return get_site_option( $option_name, $default );
 		
 	}
-	
-	
-	
 	
 	
 	
@@ -673,10 +597,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-	
-	
-	
-
 	/** 
 	 * @description: CommentPress Core initialisation
 	 * @todo:
@@ -788,10 +708,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-
-
-
-
 	/** 
 	 * @description: CommentPress Core deactivation
 	 * @todo:
@@ -822,10 +738,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-
-
-
-
 	/** 
 	 * @description: get workflow form data
 	 * @return: keyed array of form data
@@ -872,9 +784,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: get blog type form elements
 	 * @return: keyed array of form data
@@ -924,17 +833,10 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-
-
-
 //##############################################################################
-
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	PRIVATE METHODS
@@ -943,9 +845,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-
-
-
 	/*
 	---------------------------------------------------------------
 	Object Initialisation
@@ -1034,13 +933,9 @@ class CommentpressMultisiteAdmin {
 		}
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: appends option to admin menu
 	 * @todo: 
@@ -1113,10 +1008,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-	
-	
-	
-	
 	/** 
 	 * @description: utility to add a message to admin pages when migration is required
 	 * @todo: 
@@ -1141,9 +1032,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-	
-	
-	
 	/** 
 	 * @description: prints plugin options page
 	 * @todo: 
@@ -1161,10 +1049,6 @@ class CommentpressMultisiteAdmin {
 		echo $this->_get_admin_page();
 		
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -1196,10 +1080,6 @@ class CommentpressMultisiteAdmin {
 		return $admin_page;
 		
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -1280,10 +1160,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-	
-	
-	
-
 	/** 
 	 * @description: get workflow form elements
 	 * @return: form html
@@ -1319,9 +1195,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: get blog type form elements
 	 *
@@ -1359,9 +1232,6 @@ class CommentpressMultisiteAdmin {
 		return $type_html;
 		
 	}
-	
-	
-	
 	
 	
 	
@@ -1406,9 +1276,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-	
-	
-	
 	/** 
 	 * @description: get deactivation form element
 	 * @return: form html
@@ -1428,10 +1295,6 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-
-
-
-
 	/** 
 	 * @description: disable CommentPress Core
 	 * @todo: 
@@ -1476,21 +1339,11 @@ class CommentpressMultisiteAdmin {
 	
 	
 	
-	
-	
-	
 //##############################################################################
-
-
-
-
-
-
-
+	
+	
+	
 } // class ends
-
-
-
 
 
 

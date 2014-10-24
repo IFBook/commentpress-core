@@ -15,9 +15,6 @@ or relationship they have been assigned
 
 
 
-
-
-
 /*
 ================================================================================
 Class Name
@@ -25,12 +22,9 @@ Class Name
 */
 
 class CommentpressCoreNavigator {
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	Properties
@@ -60,12 +54,6 @@ class CommentpressCoreNavigator {
 	
 	
 	
-
-
-
-
-
-
 	/** 
 	 * @description: initialises this object
 	 * @param object $parent_obj a reference to the parent object
@@ -85,12 +73,9 @@ class CommentpressCoreNavigator {
 		return $this;
 
 	}
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: set up all items associated with this object
 	 * @todo: 
@@ -115,13 +100,9 @@ class CommentpressCoreNavigator {
 		}
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: if needed, destroys all items associated with this object
 	 * @todo: 
@@ -130,32 +111,21 @@ class CommentpressCoreNavigator {
 	public function destroy() {
 	
 	}
-
-
-
-
-
-
-
+	
+	
+	
 //##############################################################################
-
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	PUBLIC METHODS
 	============================================================================
 	*/
 	
-
-
-
-
-
+	
+	
 	/** 
 	 * @description: get next page link
 	 * @param boolean $with_comments requested page has comments - default false
@@ -199,13 +169,9 @@ class CommentpressCoreNavigator {
 		return false;
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: get previous page link
 	 * @param boolean $with_comments requested page has comments - default false
@@ -249,13 +215,9 @@ class CommentpressCoreNavigator {
 		return false;
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: get next post link
 	 * @param boolean $with_comments requested post has comments - default false
@@ -299,13 +261,9 @@ class CommentpressCoreNavigator {
 		return false;
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: get previous post link
 	 * @param boolean $with_comments requested post has comments - default false
@@ -349,13 +307,9 @@ class CommentpressCoreNavigator {
 		return false;
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: get first viewable child page
 	 * @param integer $page_id the page ID
@@ -394,13 +348,9 @@ class CommentpressCoreNavigator {
 		return $this->_get_first_child( $kids );
 
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: get list of 'book' pages
 	 * @param string $mode either 'structural' or 'readable'
@@ -436,13 +386,9 @@ class CommentpressCoreNavigator {
 		return $all_pages;
 
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: get first readable 'book' page
 	 * @return integer $id ID of the first page (or false if not found)
@@ -469,13 +415,9 @@ class CommentpressCoreNavigator {
 		return $id;
 
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: get page number
 	 * @param integer $page_id the page ID
@@ -526,13 +468,9 @@ class CommentpressCoreNavigator {
 		return $num;
 
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: get page number
 	 * @param integer $page_id the page ID
@@ -557,13 +495,9 @@ class CommentpressCoreNavigator {
 		return $num;
 
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: redirect to child
 	 * @todo: 
@@ -611,19 +545,10 @@ class CommentpressCoreNavigator {
 	
 	
 	
-	
-	
-
-
-
 //##############################################################################
-
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	PRIVATE METHODS
@@ -632,9 +557,6 @@ class CommentpressCoreNavigator {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: object initialisation
 	 * @todo:
@@ -646,13 +568,9 @@ class CommentpressCoreNavigator {
 		// wp_head() is fired - see initialise() above
 	
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: set up page list
 	 * @todo: 
@@ -735,13 +653,9 @@ class CommentpressCoreNavigator {
 		} // end have array check
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: set up posts list
 	 * @todo: 
@@ -810,13 +724,9 @@ class CommentpressCoreNavigator {
 		} // end have array check
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: strip out all but lowest level pages
 	 * @param array $pages array of page objects
@@ -868,13 +778,9 @@ class CommentpressCoreNavigator {
 		return $subpages;
 	
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: get first published child, however deep
 	 * @param array $pages array of page objects
@@ -929,13 +835,9 @@ class CommentpressCoreNavigator {
 		return false;
 	
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: generates page numbers
 	 * @param array $pages array of page objects in the 'book'
@@ -1061,13 +963,9 @@ class CommentpressCoreNavigator {
 		}
 	
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: utility to remove the Theme My Login page
 	 * @return boolean $success
@@ -1108,11 +1006,6 @@ class CommentpressCoreNavigator {
 	
 	
 	
-	
-	
-	
-	
-
 	/** 
 	 * @description: utility to detect the Theme My Login page
 	 * @return boolean $success
@@ -1143,11 +1036,6 @@ class CommentpressCoreNavigator {
 	
 	
 	
-	
-	
-	
-	
-
 	/**
 	 * PHP Roman Numeral Library
 	 * 
@@ -1200,11 +1088,6 @@ class CommentpressCoreNavigator {
 	
 	
 	
-	
-	
-	
-	
-
 	/** 
 	 * @description: get top parent page id
 	 * @param integer $post_id the queried page id
@@ -1229,9 +1112,6 @@ class CommentpressCoreNavigator {
 		}
 	
 	}
-	
-	
-	
 	
 	
 	
@@ -1343,9 +1223,6 @@ class CommentpressCoreNavigator {
 		return $pages;
 	
 	}
-	
-	
-	
 	
 	
 	
@@ -1462,13 +1339,9 @@ class CommentpressCoreNavigator {
 		return $pages;
 	
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: strip out all but lowest level menu items
 	 * @param array $menu_items array of menu item objects
@@ -1508,13 +1381,9 @@ class CommentpressCoreNavigator {
 		return $sub_items;
 	
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: utility to get children of a menu item
 	 * @param array $menu_items array of menu item objects
@@ -1552,13 +1421,9 @@ class CommentpressCoreNavigator {
 		return $sub_items;
 	
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: utility to get parent of a menu item
 	 * @param obj $menu_obj menu item object
@@ -1590,13 +1455,9 @@ class CommentpressCoreNavigator {
 		return false;
 	
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: get top parent menu item
 	 * @param object $menu_obj the queried menu object
@@ -1642,21 +1503,11 @@ class CommentpressCoreNavigator {
 	
 	
 	
-	
-	
-	
 //##############################################################################
-
-
-
-
-
-
-
+	
+	
+	
 } // class ends
-
-
-
 
 
 

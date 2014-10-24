@@ -14,9 +14,6 @@ This class loads all Multisite compatibility
 
 
 
-
-
-
 /*
 ================================================================================
 Class Name
@@ -24,12 +21,9 @@ Class Name
 */
 
 class CommentpressMultisiteLoader {
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	Properties
@@ -47,9 +41,6 @@ class CommentpressMultisiteLoader {
 	
 	// buddypress object reference
 	public $bp;
-	
-	
-	
 	
 	
 	
@@ -75,9 +66,6 @@ class CommentpressMultisiteLoader {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: set up all items associated with this object
 	 * @todo: 
@@ -89,9 +77,6 @@ class CommentpressMultisiteLoader {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: if needed, destroys all items associated with this object
 	 * @todo: 
@@ -103,16 +88,10 @@ class CommentpressMultisiteLoader {
 	
 	
 	
-
-
-
 //##############################################################################
 	
 	
 	
-
-
-
 	/*
 	============================================================================
 	PUBLIC METHODS
@@ -121,17 +100,10 @@ class CommentpressMultisiteLoader {
 	
 	
 	
-
-
-
-
 //##############################################################################
 	
 	
 	
-
-
-
 	/*
 	============================================================================
 	PRIVATE METHODS
@@ -140,9 +112,6 @@ class CommentpressMultisiteLoader {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: object initialisation
 	 * @todo:
@@ -232,9 +201,6 @@ class CommentpressMultisiteLoader {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: BuddyPress object initialisation
 	 * @todo:
@@ -289,9 +255,6 @@ class CommentpressMultisiteLoader {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: this plugin has been network-activated (does not fire!)!
 	 * @todo:
@@ -317,9 +280,6 @@ class CommentpressMultisiteLoader {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: this plugin has been network-deactivated
 	 * @todo:
@@ -347,20 +307,11 @@ class CommentpressMultisiteLoader {
 	
 	
 	
-
-
-
 //##############################################################################
 	
 	
 	
-
-
-
 } // class ends
-	
-	
-	
 
 
 

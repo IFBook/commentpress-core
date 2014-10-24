@@ -14,9 +14,6 @@ This class encapsulates all Multisite compatibility
 
 
 
-
-
-
 /*
 ================================================================================
 Class Name
@@ -24,12 +21,9 @@ Class Name
 */
 
 class CommentpressMultisite {
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	Properties
@@ -53,9 +47,6 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: initialises this object
 	 * @param object $parent_obj a reference to the parent object
@@ -81,9 +72,6 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: set up all items associated with this object
 	 * @todo: 
@@ -95,9 +83,6 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: if needed, destroys all items associated with this object
 	 * @todo: 
@@ -109,16 +94,10 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 //##############################################################################
 	
 	
 	
-
-
-
 	/*
 	============================================================================
 	PUBLIC METHODS
@@ -127,9 +106,6 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: add an admin page for this plugin
 	 * @todo: 
@@ -167,9 +143,6 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/**
 	 * @description: enqueue any styles and scripts needed by our admin page
 	 * @todo: 
@@ -202,9 +175,6 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/**
 	 * @description: enqueue any styles and scripts needed by our public pages
 	 * @todo: 
@@ -255,9 +225,6 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: hook into the blog signup form
 	 * @todo: 
@@ -340,9 +307,6 @@ class CommentpressMultisite {
 	
 	
 	
-	
-	
-	
 	/** 
 	 * @description: hook into wpmu_new_blog and target plugins to be activated
 	 * @todo: 
@@ -359,9 +323,6 @@ class CommentpressMultisite {
 		}
 		
 	}
-	
-
-	
 	
 	
 	
@@ -383,19 +344,13 @@ class CommentpressMultisite {
 		return $translated;
 		
 	}
-
-
-
-
-
-
+	
+	
+	
 //##############################################################################
 	
 	
 	
-
-
-
 	/*
 	============================================================================
 	PRIVATE METHODS
@@ -404,9 +359,6 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: object initialisation
 	 * @todo:
@@ -421,9 +373,6 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: register Wordpress hooks
 	 * @todo: 
@@ -469,9 +418,6 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: create a blog
 	 * @todo:
@@ -492,9 +438,6 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: get workflow form elements
 	 * @return: form html
@@ -529,9 +472,6 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: get blog type form elements
 	 *
@@ -571,9 +511,6 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/**
 	 * @description: show our admin page
 	 * @todo: 
@@ -742,9 +679,6 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/**
 	 * @description: allow other plugins to hook into our multisite admin options
 	 * @todo: 
@@ -762,9 +696,6 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/**
 	 * @description: allow other plugins to hook into our admin form
 	 * @todo: 
@@ -782,9 +713,6 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/**
 	 * @description: get default Multisite-related settings
 	 * @todo: 
@@ -817,9 +745,6 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: hook into Network form update
 	 * @todo: 
@@ -853,9 +778,6 @@ class CommentpressMultisite {
 	
 	
 	
-	
-	
-	
 	/**
 	 * @description: get workflow enabled setting
 	 * @todo: 
@@ -874,9 +796,6 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: get default Title Page content, if set
 	 * @todo: enable this when we enable the admin page editor
@@ -902,9 +821,6 @@ class CommentpressMultisite {
 	
 	
 	
-	
-	
-	
 	/** 
 	 * @description: get default Title Page content
 	 * @todo: 
@@ -927,20 +843,11 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 	
 	
 	
-	
-	
-	
 //##############################################################################
 	
 	
 	
-
-
-
 } // class ends
-	
-	
-	
 
 
 

@@ -14,9 +14,6 @@ NOTES
 
 
 
-
-
-
 /*
 ================================================================================
 Class Name
@@ -24,12 +21,9 @@ Class Name
 */
 
 class CommentpressCoreDisplay {
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	Properties
@@ -42,12 +36,8 @@ class CommentpressCoreDisplay {
 	// database object
 	public $db;
 	
-
-
-
-
-
-
+	
+	
 	/** 
 	 * @description: initialises this object
 	 * @param object $parent_obj a reference to the parent object
@@ -70,12 +60,9 @@ class CommentpressCoreDisplay {
 		return $this;
 
 	}
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: if needed, sets up this object
 	 * @todo: work out how to upgrade.
@@ -161,13 +148,9 @@ class CommentpressCoreDisplay {
 		}
 
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: if needed, destroys this object
 	 * @todo: 
@@ -232,31 +215,21 @@ class CommentpressCoreDisplay {
 		}
 
 	}
-
-
-
-
-
-
-
+	
+	
+	
 //##############################################################################
-
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	PUBLIC METHODS
 	============================================================================
 	*/
 	
-
-
-
-
+	
+	
 	/** 
 	 * @description: enqueue jQuery, jQuery UI and plugins
 	 * @todo: 
@@ -317,10 +290,6 @@ class CommentpressCoreDisplay {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: enqueue our quicktags script
 	 * @todo: 
@@ -369,10 +338,6 @@ class CommentpressCoreDisplay {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: get plugin stylesheets
 	 * @return string $styles
@@ -396,9 +361,6 @@ class CommentpressCoreDisplay {
 	
 	
 	
-	
-
-
 	/** 
 	 * @description: test if TinyMCE is allowed
 	 * @return boolean $allowed
@@ -443,9 +405,6 @@ class CommentpressCoreDisplay {
 	
 	
 	
-		
-		
-		
 	/** 
 	 * @description: get built-in TinyMCE scripts from Wordpress Includes directory
 	 * @return string $scripts
@@ -506,10 +465,6 @@ class CommentpressCoreDisplay {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: get help text
 	 * @return HTML $help
@@ -535,11 +490,6 @@ HELPTEXT;
 	
 	
 	
-	
-	
-	
-
-
 	/** 
 	 * @description: show the posts and their comment count in a list format
 	 * @todo:
@@ -689,10 +639,6 @@ HELPTEXT;
 	
 	
 	
-	
-	
-	
-	
 	/** 
 	 * @description: show username (with link)
 	 * @todo: remove from theme functions.php?
@@ -738,9 +684,6 @@ HELPTEXT;
 		}
 			
 	}
-	
-	
-	
 	
 	
 	
@@ -873,10 +816,6 @@ HELPTEXT;
 		wp_list_pages( $defaults );
 		
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -1068,9 +1007,6 @@ HELPTEXT;
 	
 	
 	
-	
-	
-
 	/** 
 	 * @description: get the block paragraph icon
 	 * @param integer $comment_count number of comments
@@ -1193,9 +1129,6 @@ HELPTEXT;
 	
 	
 	
-	
-	
-
 	/** 
 	 * @description: get the content comment icon tag
 	 * @param string $text_signature comment text signature
@@ -1318,11 +1251,6 @@ HELPTEXT;
 	
 	
 	
-	
-	
-
-
-
 	/** 
 	 * @description: get the text signature input for the comment form
 	 * @param string $text_sig comment text signature
@@ -1342,11 +1270,6 @@ HELPTEXT;
 	
 	
 	
-	
-	
-
-
-
 	/** 
 	 * @description: get the minimise all button
 	 * @param: string $sidebar type of sidebar (comments, toc, activity)
@@ -1382,11 +1305,6 @@ HELPTEXT;
 	
 	
 	
-	
-	
-
-
-
 	/** 
 	 * @description: get the header minimise button
 	 * @return string $tag
@@ -1406,11 +1324,6 @@ HELPTEXT;
 	
 	
 	
-	
-	
-
-
-
 	/** 
 	 * @description: get an image wrapped in a link
 	 * @param: string $src location of image file
@@ -1449,11 +1362,6 @@ HELPTEXT;
 	
 	
 	
-	
-	
-
-
-
 	/** 
 	 * @description: got the Wordpress admin page
 	 * @return string $admin_page
@@ -1485,19 +1393,10 @@ HELPTEXT;
 	
 	
 	
-	
-	
-
-
-
 //##############################################################################
-
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	PRIVATE METHODS
@@ -1506,9 +1405,6 @@ HELPTEXT;
 	
 	
 	
-
-
-
 	/*
 	----------------------------------------------------------------------------
 	Object Initialisation
@@ -1526,13 +1422,9 @@ HELPTEXT;
 		// and so that it loads *after* the old Commentpress loads it
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: returns the admin form HTML
 	 * @return string $admin_page
@@ -1652,11 +1544,6 @@ $this->_get_options().
 	
 	
 	
-	
-	
-
-
-
 	/** 
 	 * @description: returns the CommentPress Core options for the admin form
 	 * @return string $options
@@ -1802,11 +1689,6 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	
-	
-	
-
-
-
 	/** 
 	 * @description: returns optional options, if defined
 	 * @return string $html
@@ -1922,11 +1804,6 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	
-	
-	
-		
-
-		
 	/** 
 	 * @description: returns the upgrade details for the admin form
 	 * @return string $upgrade
@@ -2282,11 +2159,6 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	
-	
-	
-
-
-
 	/** 
 	 * @description: returns the multisite deactivate button for the admin form
 	 * @return string $html
@@ -2302,11 +2174,6 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	
-	
-	
-
-
-
 	/** 
 	 * @description: returns the reset button for the admin form
 	 * @return string $reset
@@ -2336,11 +2203,6 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	
-	
-	
-
-
-
 	/** 
 	 * @description: returns the rich text editor button for the admin form
 	 * @return string $editor
@@ -2392,11 +2254,6 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	
-	
-	
-
-
-
 	/** 
 	 * @description: returns the TOC options for the admin form
 	 * @return string $editor
@@ -2467,11 +2324,6 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	
-	
-	
-
-
-
 	/** 
 	 * @description: returns the Sidebar options for the admin form
 	 * @return string $editor
@@ -2514,11 +2366,6 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	
-	
-	
-
-
-
 	/** 
 	 * @description: returns the override paragraph commenting button for the admin form
 	 * @return string $reset
@@ -2545,11 +2392,6 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	
-	
-	
-
-
-
 	/** 
 	 * @description: returns the textblock meta button for the admin form
 	 * @return string $reset
@@ -2578,11 +2420,6 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	
-	
-	
-
-
-
 	/** 
 	 * @description: returns the submit button
 	 * @return string $editor
@@ -2613,11 +2450,6 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	
-	
-	
-
-
-
 	/** 
 	 * @description: get admin javascript, copied from wp-includes/custom-header.php
 	 * @todo: 
@@ -2715,9 +2547,6 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	
-	
-
-
 	/** 
 	 * @description: return the javascript to init tinyMCE for WP < 3.2
 	 * @return string $js
@@ -2847,11 +2676,6 @@ tinyMCE.init(tinyMCEPreInit.mceInit);
 	
 	
 	
-	
-	
-
-
-
 	/**
 	 * Adds the TinyMCE editor to comment textareas in WP > 3.2
 	 * Adapted from wp_tiny_mce in /wp-admin/includes/post.php
@@ -3033,21 +2857,11 @@ tinyMCE.init(tinyMCEPreInit.mceInit);
 	
 	
 	
-	
-	
-	
 //##############################################################################
-
-
-
-
-
-
-
+	
+	
+	
 } // class ends
-
-
-
 
 
 

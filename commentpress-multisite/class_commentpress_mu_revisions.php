@@ -14,9 +14,6 @@ This class overrides the way that new post revisions are named
 
 
 
-
-
-
 /*
 ================================================================================
 Class Name
@@ -24,12 +21,9 @@ Class Name
 */
 
 class CommentpressMultisiteRevisions {
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	Properties
@@ -44,9 +38,6 @@ class CommentpressMultisiteRevisions {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: initialises this object
 	 * @param object $parent_obj a reference to the parent object
@@ -72,9 +63,6 @@ class CommentpressMultisiteRevisions {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: set up all items associated with this object
 	 * @todo: 
@@ -86,9 +74,6 @@ class CommentpressMultisiteRevisions {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: if needed, destroys all items associated with this object
 	 * @todo: 
@@ -100,16 +85,10 @@ class CommentpressMultisiteRevisions {
 	
 	
 	
-
-
-
 //##############################################################################
 	
 	
 	
-
-
-
 	/*
 	============================================================================
 	PUBLIC METHODS
@@ -118,9 +97,6 @@ class CommentpressMultisiteRevisions {
 	
 	
 	
-
-
-
 	/*
 	----------------------------------------------------------------------------
 	Methods to be merged into CommentPress Core
@@ -138,8 +114,6 @@ class CommentpressMultisiteRevisions {
 		return '';
 	
 	}
-	
-	
 	
 	
 	
@@ -193,19 +167,13 @@ class CommentpressMultisiteRevisions {
 		return $title;
 	
 	}
-
-
-
-
-
-
+	
+	
+	
 //##############################################################################
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	PRIVATE METHODS
@@ -214,9 +182,6 @@ class CommentpressMultisiteRevisions {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: object initialisation
 	 * @todo:
@@ -231,9 +196,6 @@ class CommentpressMultisiteRevisions {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: register Wordpress hooks
 	 * @todo: 
@@ -251,21 +213,11 @@ class CommentpressMultisiteRevisions {
 	
 	
 	
-
-
-
 //##############################################################################
 	
 	
 	
-
-
-
 } // class ends
-	
-	
-	
-
 
 
 

@@ -14,9 +14,6 @@ This class overrides the name of Groupblogs from "Blog" (or "Document") to "Work
 
 
 
-
-
-
 /*
 ================================================================================
 Class Name
@@ -24,12 +21,9 @@ Class Name
 */
 
 class CommentpressGroupblogWorkshop {
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	Properties
@@ -56,9 +50,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: initialises this object
 	 * @param object $parent_obj a reference to the parent object
@@ -84,9 +75,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: set up all items associated with this object
 	 * @todo: 
@@ -98,9 +86,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: if needed, destroys all items associated with this object
 	 * @todo: 
@@ -112,16 +97,10 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 //##############################################################################
 	
 	
 	
-
-
-
 	/*
 	============================================================================
 	PUBLIC METHODS
@@ -130,9 +109,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/*
 	----------------------------------------------------------------------------
 	BuddyPress Groupblog Text Overrides
@@ -156,9 +132,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: override the name of the filter item
 	 * @todo: 
@@ -176,9 +149,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: override the name of the filter item
 	 * @todo: 
@@ -196,9 +166,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: override the name of the sub-nav item
 	 * @todo: 
@@ -213,9 +180,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-	
-	
-	
 	/** 
 	 * @description: override the slug of the sub-nav item
 	 * @todo: 
@@ -227,10 +191,6 @@ class CommentpressGroupblogWorkshop {
 		return $this->cpmu_bp_workshop_nomenclature_slug;
 		
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -279,10 +239,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-	
-	
-	
-	
 	/** 
 	 * @description: override title on All Comments page
 	 * @todo: 
@@ -305,9 +261,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-	
-	
-
 	/** 
 	 * @description: override title on All Comments page
 	 * @todo: 
@@ -330,9 +283,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-	
-	
-
 	/** 
 	 * @description: override title on Activity tab
 	 * @todo: 
@@ -358,9 +308,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-	
-	
-
 	/** 
 	 * @description: override title on Activity tab
 	 * @todo: 
@@ -386,9 +333,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-	
-	
-
 	/** 
 	 * @description: override CommentPress "Title Page"
 	 * @todo: 
@@ -414,9 +358,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-	
-	
-
 	/** 
 	 * @description: override the BP Sites Directory "visit" button
 	 * @todo: 
@@ -434,16 +375,10 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-	
-	
-	
 //##############################################################################
 	
 	
 	
-
-
-
 	/*
 	============================================================================
 	PRIVATE METHODS
@@ -452,9 +387,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: object initialisation
 	 * @todo:
@@ -530,9 +462,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: register Wordpress hooks
 	 * @todo: 
@@ -572,9 +501,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: add our options to the BuddyPress admin form
 	 * @todo: 
@@ -626,9 +552,6 @@ class CommentpressGroupblogWorkshop {
 		return $element;
 
 	}
-	
-	
-	
 	
 	
 	
@@ -687,9 +610,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-	
-	
-	
 	/**
 	 * @description: add our default BuddyPress-related settings
 	 * @todo: 
@@ -710,9 +630,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/**
 	 * @description: get legacy name when already set
 	 */
@@ -725,9 +642,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/**
 	 * @description: get legacy plural name when already set
 	 */
@@ -740,9 +654,6 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/**
 	 * @description: get legacy slug when already set
 	 */
@@ -755,21 +666,11 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 //##############################################################################
 	
 	
 	
-
-
-
 } // class ends
-	
-	
-	
-
 
 
 

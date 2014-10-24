@@ -14,9 +14,6 @@ This class is a wrapper for the majority of database operations.
 
 
 
-
-
-
 /*
 ================================================================================
 Class Name
@@ -24,12 +21,9 @@ Class Name
 */
 
 class CommentpressCoreDatabase {
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	Properties
@@ -99,12 +93,8 @@ class CommentpressCoreDatabase {
 	// show textblock meta by default
 	public $textblock_meta = 'y';
 	
-
-
-
-
-
-
+	
+	
 	/** 
 	 * @description: initialises this object
 	 * @param object $parent_obj a reference to the parent object
@@ -124,12 +114,9 @@ class CommentpressCoreDatabase {
 		return $this;
 
 	}
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: set up all items associated with this object
 	 * @todo: 
@@ -210,13 +197,9 @@ class CommentpressCoreDatabase {
 		$this->_clear_widgets();
 
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: upgrade Commentpress plugin from 3.1 options to latest set
 	 * @return boolean $result
@@ -543,10 +526,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: reset Wordpress to prior state, but retain options
 	 * @todo: 
@@ -564,31 +543,21 @@ class CommentpressCoreDatabase {
 		$this->delete_special_pages();
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 //##############################################################################
-
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	PUBLIC METHODS
 	============================================================================
 	*/
 	
-
-
-
-
+	
+	
 	/** 
 	 * @description: update Wordpress database schema
 	 * @return boolean $result
@@ -622,10 +591,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: upgrade Wordpress database schema
 	 * @return boolean $result
@@ -660,10 +625,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: do we have a column in the comments table?
 	 * @return boolean $result
@@ -708,10 +669,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: check for plugin upgrade
 	 * @return boolean $result
@@ -748,10 +705,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: check for options added in this plugin upgrade
 	 * @return boolean $result
@@ -808,10 +761,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: save the settings set by the administrator
 	 * @return boolean success or failure
@@ -1073,10 +1022,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-	
-	
 	/** 
 	 * @description: upgrade CommentPress Core options to array
 	 * @todo: 
@@ -1091,10 +1036,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: return a value for a specified option
 	 * @todo: 
@@ -1116,9 +1057,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-	
 	/** 
 	 * @description: return a value for a specified option
 	 * @todo: 
@@ -1137,9 +1075,6 @@ class CommentpressCoreDatabase {
 		return ( array_key_exists( $option_name, $this->commentpress_options ) ) ? $this->commentpress_options[ $option_name ] : $default;
 		
 	}
-	
-	
-	
 	
 	
 	
@@ -1172,9 +1107,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-	
 	/** 
 	 * @description: deletes a specified option
 	 * @todo: 
@@ -1193,9 +1125,6 @@ class CommentpressCoreDatabase {
 		unset( $this->commentpress_options[ $option_name ] );
 		
 	}
-	
-	
-	
 	
 	
 	
@@ -1230,9 +1159,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-	
 	/** 
 	 * @description: return a value for a specified option
 	 * @todo: 
@@ -1251,9 +1177,6 @@ class CommentpressCoreDatabase {
 		return get_option( $option_name, $default );
 		
 	}
-	
-	
-	
 	
 	
 	
@@ -1278,9 +1201,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-	
 	/** 
 	 * @description: get default header bg colour
 	 * @todo: 
@@ -1301,9 +1221,6 @@ class CommentpressCoreDatabase {
 		}
 	
 	}
-	
-	
-	
 	
 	
 	
@@ -1334,10 +1251,6 @@ class CommentpressCoreDatabase {
 		}
 		
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -1793,10 +1706,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: when a post is saved, this also saves the CP options
 	 * @param object $post_obj the post object
@@ -2136,10 +2045,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: when a page is deleted, this makes sure that the CP options are synced
 	 * @param object $post_id the post ID
@@ -2200,10 +2105,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-	
-	
 	/** 
 	 * @description: create all "special" pages
 	 * @todo: 
@@ -2253,10 +2154,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: create a particular "special" page
 	 * @todo: 
@@ -2341,10 +2238,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: delete "special" pages
 	 * @return boolean $success
@@ -2416,10 +2309,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: delete a particular "special" page
 	 * @return boolean $success
@@ -2549,10 +2438,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: test if a page is a "special" page
 	 * @return boolean $is_special_page
@@ -2604,10 +2489,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: check if a post allows comments to be posted
 	 * @return boolean $allowed
@@ -2650,10 +2531,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: get Wordpress approved comments
 	 * @param integer $post_id the ID of the post
@@ -2674,10 +2551,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: get all Wordpress comments for a post, unless paged
 	 * @param integer $post_id the ID of the post
@@ -2711,10 +2584,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: get all comments for a post
 	 * @param integer $post_id the ID of the post
@@ -2748,12 +2617,8 @@ class CommentpressCoreDatabase {
 	
 	}
 	
-
-
-
-
-
-
+	
+	
 	/** 
 	 * @description: when a comment is saved, this also saves the text signature
 	 * @param integer $comment_id the ID of the comment
@@ -2808,10 +2673,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: when a comment is saved, this also saves the page it was submitted on. this allows
 	 * us to point to the correct page of a multipage post without parsing the content every time
@@ -2862,10 +2723,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: retrieves text signature by comment ID
 	 * @param integer $comment_id the ID of the comment
@@ -2901,10 +2758,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-	
-
 	/** 
 	 * @description: store text sigs in a global - because some versions of PHP do not save properties!
 	 * @param: array $sigs array of text signatures
@@ -2924,12 +2777,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
-
-
 	/** 
 	 * @description: retrieve text sigs
 	 * @return array $text_signatures
@@ -2949,11 +2796,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
-
 	/** 
 	 * @description: get javascript for the plugin, context dependent
 	 * @return string $script
@@ -3266,10 +3108,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-	
-
 	/** 
 	 * @description: sets class properties for mobile browsers
 	 * @todo: 
@@ -3341,11 +3179,7 @@ class CommentpressCoreDatabase {
 	}
 	
 	
-
-
-
-
-
+	
 	/** 
 	 * @description: returns class properties for mobile browsers
 	 * @todo: 
@@ -3367,11 +3201,7 @@ class CommentpressCoreDatabase {
 	}
 	
 	
-
-
-
-
-
+	
 	/** 
 	 * @description: returns class properties for tablet browsers
 	 * @todo: 
@@ -3393,19 +3223,11 @@ class CommentpressCoreDatabase {
 	}
 	
 	
-
-
-
-
-
+	
 //##############################################################################
-
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	PRIVATE METHODS
@@ -3414,9 +3236,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-
-
-
 	/*
 	---------------------------------------------------------------
 	Object Initialisation
@@ -3447,13 +3266,9 @@ class CommentpressCoreDatabase {
 		}
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
 	 * @description: create new post with content of existing
 	 * @todo: 
@@ -3508,10 +3323,6 @@ class CommentpressCoreDatabase {
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: create "title" page
 	 * @todo: 
@@ -3609,10 +3420,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: create "general comments" page
 	 * @todo: 
@@ -3664,10 +3471,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: create "all comments" page
 	 * @todo: 
@@ -3719,10 +3522,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: create "comments by author" page
 	 * @todo: 
@@ -3774,10 +3573,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: create "blog" page
 	 * @todo: 
@@ -3832,10 +3627,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: create "blog archive" page
 	 * @todo: 
@@ -3887,10 +3678,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: create "table of contents" page
 	 * @todo: NOT USED
@@ -3940,10 +3727,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: cancels comment paging because CP will not work with comment paging
 	 * @todo: 
@@ -3957,9 +3740,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 	
 	
 	
-	
-	
-	
 	/** 
 	 * @description: resets comment paging option when plugin is deactivated
 	 * @todo: 
@@ -3970,9 +3750,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 		$this->_reset_wordpress_option( 'page_comments' );
 	
 	}
-	
-	
-	
 	
 	
 	
@@ -3992,9 +3769,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 	
 	
 	
-	
-	
-	
 	/** 
 	 * @description: resets widgets when plugin is deactivated
 	 * @todo: 
@@ -4005,9 +3779,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 		$this->_reset_wordpress_option( 'sidebars_widgets' );
 	
 	}
-	
-	
-	
 	
 	
 	
@@ -4029,9 +3800,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 	
 	
 	
-	
-	
-	
 	/** 
 	 * @description: reset Wordpress option
 	 * @param string $name the name of the option
@@ -4046,9 +3814,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 		delete_option( 'commentpress_'.$name );
 
 	}
-	
-	
-	
 	
 	
 	
@@ -4090,10 +3855,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: reset CommentPress Core options
 	 * @todo: 
@@ -4162,10 +3923,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: migrate all CommentPress Core options from old plugin
 	 * @todo:
@@ -4504,9 +4261,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 	
 	
 	
-	
-	
-
 	/** 
 	 * @description: upgrade Commentpress options to array (only for pre-CP3.2 upgrades)
 	 * @todo: 
@@ -4546,10 +4300,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 	
 	
 	
-	
-	
-
-
 	/** 
 	 * @description: delete all legacy Commentpress options
 	 * @todo: 
@@ -4617,22 +4367,11 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 	
 	
 	
-	
-	
-
-
 //##############################################################################
-
-
-
-
-
-
-
+	
+	
+	
 } // class ends
-
-
-
 
 
 

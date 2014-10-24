@@ -14,9 +14,6 @@ This class provides "Translation" workflow to CommentPress Core.
 
 
 
-
-
-
 /*
 ================================================================================
 Class Name
@@ -24,12 +21,9 @@ Class Name
 */
 
 class CommentpressCoreWorkflow {
-
-
-
-
-
-
+	
+	
+	
 	/*
 	============================================================================
 	Properties
@@ -41,9 +35,6 @@ class CommentpressCoreWorkflow {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: initialises this object
 	 * @param object $parent_obj a reference to the parent object
@@ -69,9 +60,6 @@ class CommentpressCoreWorkflow {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: set up all items associated with this object
 	 * @todo: 
@@ -83,9 +71,6 @@ class CommentpressCoreWorkflow {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: if needed, destroys all items associated with this object
 	 * @todo: 
@@ -97,16 +82,10 @@ class CommentpressCoreWorkflow {
 	
 	
 	
-
-
-
 //##############################################################################
 	
 	
 	
-
-
-
 	/*
 	============================================================================
 	PUBLIC METHODS
@@ -115,9 +94,6 @@ class CommentpressCoreWorkflow {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: enable workflow
 	 * @todo: 
@@ -137,10 +113,6 @@ class CommentpressCoreWorkflow {
 	
 	
 	
-	
-	
-	
-	
 	/** 
 	 * @description: override the name of the workflow checkbox label
 	 * @todo: 
@@ -157,9 +129,6 @@ class CommentpressCoreWorkflow {
 		);
 		
 	}
-	
-	
-	
 	
 	
 	
@@ -190,9 +159,6 @@ class CommentpressCoreWorkflow {
 	
 	
 	
-	
-	
-
 	/** 
 	 * @description: add our metabox if workflow is enabled
 	 * @todo: 
@@ -266,9 +232,6 @@ class CommentpressCoreWorkflow {
 	
 	
 	
-	
-	
-
 	/** 
 	 * @description: amend the workflow metabox title
 	 * @todo: 
@@ -288,9 +251,6 @@ class CommentpressCoreWorkflow {
 	
 	
 	
-	
-	
-
 	/** 
 	 * @description: amend the workflow metabox title
 	 * @todo: 
@@ -420,9 +380,6 @@ class CommentpressCoreWorkflow {
 	
 	
 	
-	
-	
-
 	/** 
 	 * @description: add the workflow content to the new version
 	 * @todo: 
@@ -517,16 +474,10 @@ class CommentpressCoreWorkflow {
 	
 	
 	
-	
-	
-
 //##############################################################################
 	
 	
 	
-
-
-
 	/*
 	============================================================================
 	PRIVATE METHODS
@@ -535,9 +486,6 @@ class CommentpressCoreWorkflow {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: object initialisation
 	 * @todo:
@@ -552,9 +500,6 @@ class CommentpressCoreWorkflow {
 	
 	
 	
-
-
-
 	/** 
 	 * @description: register Wordpress hooks
 	 * @todo: 
@@ -595,21 +540,11 @@ class CommentpressCoreWorkflow {
 	
 	
 	
-
-
-
 //##############################################################################
 	
 	
 	
-
-
-
 } // class ends
-	
-	
-	
-
 
 
 

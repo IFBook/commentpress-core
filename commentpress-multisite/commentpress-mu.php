@@ -15,13 +15,8 @@ a unified plugin that covers all situations.
 
 
 
-
-
 // define version
 define( 'COMMENTPRESS_MU_PLUGIN_VERSION', '1.0' );
-
-
-
 
 
 
@@ -50,8 +45,6 @@ if ( !class_exists( 'CommentpressMultisiteLoader' ) ) {
 	$commentpress_mu = new CommentpressMultisiteLoader;
 	
 }
-
-
 
 
 
@@ -103,8 +96,6 @@ function commentpress_mu_find_plugin_by_name( $plugin_name = '' ) {
 	return $path_to_plugin;
 	
 }
-
-
 
 
 
@@ -161,9 +152,6 @@ function commentpress_mu_activate_plugin( $plugin, $buffer = false ) {
 
 
 
-
-
-
 /** 
  * @description: utility to show theme environment
  * @todo: 
@@ -196,9 +184,6 @@ function _commentpress_mu_environment() {
 
 
 
-
-
-
 /** 
  * @description: utility to show tests
  * @todo: 
@@ -212,8 +197,6 @@ function _commentpress_mu_test() {
 }
 
 //add_action( 'wp_head', '_commentpress_mu_test' );
-
-
 
 
 

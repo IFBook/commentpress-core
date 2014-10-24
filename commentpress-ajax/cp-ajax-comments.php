@@ -11,8 +11,6 @@ NOTES
 
 
 
-
-
 // enable the plugin at the appropriate point
 add_action( 'wp', 'cpajax_enable_plugin' );
 
@@ -250,9 +248,6 @@ function cpajax_load_next_page() {
 
 
 
-
-
-
 /** 
  * @description: get context in which to enable this plugin
  * @todo: 
@@ -280,9 +275,6 @@ function cpajax_enable_plugin() {
 	add_filter( 'cp_comment_edit_link', 'cpajax_add_reassign_button', 20, 2 );
 	
 }
-
-
-
 
 
 
@@ -419,9 +411,6 @@ function cpajax_get_new_comments() {
 
 
 
-
-
-
 /** 
  * @description: get comment depth
  * @todo: 
@@ -447,9 +436,6 @@ function cpajax_get_comment_depth( $comment, $depth ) {
 	return cpajax_get_comment_depth( $parent, $depth );
 
 }
-
-
-
 
 
 
@@ -588,9 +574,6 @@ function cpajax_add_javascripts() {
 
 
 
-
-
-
 /** 
  * @description: translation
  * @todo: 
@@ -629,9 +612,6 @@ function cpajax_localise() {
 
 
 
-
-
-
 /** 
  * @description: validate that the plugin can be activated
  * @todo: 
@@ -661,8 +641,6 @@ function cpajax_plugin_can_activate() {
 	return $allowed;
 	
 }
-
-
 
 
 
@@ -710,9 +688,6 @@ function cpajax_add_reassign_button( $edit_button, $comment ) {
 	return $edit_button;
 
 }
-
-
-
 
 
 
@@ -771,9 +746,6 @@ function cpajax_reassign_comment() {
 
 
 
-
-
-
 /** 
  * @description: store text signature for all children of a comment
  * @todo: 
@@ -810,8 +782,6 @@ function cpajax_reassign_comment_children( $comment_id, $text_sig, &$comment_ids
 
 
 
-
-
 /** 
  * @description: retrieve comment children
  * @todo: 
@@ -838,8 +808,6 @@ function cpajax_get_children(
 	return $wpdb->get_results( $query );
 
 }
-
-
 
 
 
