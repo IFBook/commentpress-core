@@ -48,11 +48,10 @@ class CommentpressMultisite {
 	
 	
 	/** 
-	 * @description: initialises this object
-	 * @param object $parent_obj a reference to the parent object
-	 * @return object
-	 * @todo: 
+	 * Initialises this object
 	 *
+	 * @param object $parent_obj A reference to the parent object
+	 * @return object
 	 */
 	function __construct( $parent_obj = null ) {
 	
@@ -73,9 +72,9 @@ class CommentpressMultisite {
 	
 	
 	/** 
-	 * @description: set up all items associated with this object
-	 * @todo: 
+	 * Set up all items associated with this object
 	 *
+	 * @return void
 	 */
 	public function initialise() {
 	
@@ -84,9 +83,9 @@ class CommentpressMultisite {
 	
 	
 	/** 
-	 * @description: if needed, destroys all items associated with this object
-	 * @todo: 
+	 * If needed, destroys all items associated with this object
 	 *
+	 * @return void
 	 */
 	public function destroy() {
 	
@@ -107,9 +106,9 @@ class CommentpressMultisite {
 	
 	
 	/** 
-	 * @description: add an admin page for this plugin
-	 * @todo: 
+	 * Add an admin page for this plugin
 	 *
+	 * @return void
 	 */
 	public function add_admin_menu() {
 		
@@ -144,9 +143,9 @@ class CommentpressMultisite {
 	
 	
 	/**
-	 * @description: enqueue any styles and scripts needed by our admin page
-	 * @todo: 
+	 * Enqueue any styles and scripts needed by our admin page
 	 *
+	 * @return void
 	 */
 	public function add_admin_styles() {
 		
@@ -176,9 +175,9 @@ class CommentpressMultisite {
 	
 	
 	/**
-	 * @description: enqueue any styles and scripts needed by our public pages
-	 * @todo: 
+	 * Enqueue any styles and scripts needed by our public pages
 	 *
+	 * @return void
 	 */
 	public function add_frontend_styles() {
 		
@@ -226,9 +225,9 @@ class CommentpressMultisite {
 	
 	
 	/** 
-	 * @description: hook into the blog signup form
-	 * @todo: 
+	 * Hook into the blog signup form
 	 *
+	 * @return void
 	 */
 	public function signup_blogform( $errors ) {
 	
@@ -308,9 +307,9 @@ class CommentpressMultisite {
 	
 	
 	/** 
-	 * @description: hook into wpmu_new_blog and target plugins to be activated
-	 * @todo: 
+	 * Hook into wpmu_new_blog and target plugins to be activated
 	 *
+	 * @return void
 	 */
 	public function wpmu_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 	
@@ -329,6 +328,11 @@ class CommentpressMultisite {
 	/**
 	 * Change the greeting in the WordPress Admin Bar
 	 * Props: http://pankajanupam.in
+	 *
+	 * @param str $translated The existing translated string
+	 * @param str $text The existing untranslated string
+	 * @param str $domain The domain for this translation
+	 * @return str $translated The modified translated string
 	 */
 	public function change_admin_greeting( $translated, $text, $domain ) {
 		
@@ -360,9 +364,9 @@ class CommentpressMultisite {
 	
 	
 	/** 
-	 * @description: object initialisation
-	 * @todo:
+	 * Object initialisation
 	 *
+	 * @return void
 	 */
 	function _init() {
 	
@@ -374,9 +378,9 @@ class CommentpressMultisite {
 	
 	
 	/** 
-	 * @description: register Wordpress hooks
-	 * @todo: 
+	 * Register Wordpress hooks
 	 *
+	 * @return void
 	 */
 	function _register_hooks() {
 		
@@ -419,9 +423,9 @@ class CommentpressMultisite {
 	
 	
 	/** 
-	 * @description: create a blog
-	 * @todo:
+	 * Create a blog
 	 *
+	 * @return void
 	 */
 	function _create_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 	
@@ -439,9 +443,9 @@ class CommentpressMultisite {
 	
 	
 	/** 
-	 * @description: get workflow form elements
-	 * @return: form html
+	 * Get workflow form elements
 	 *
+	 * @return str $workflow_html The HTML form element
 	 */
 	function _get_workflow() {
 	
@@ -473,8 +477,9 @@ class CommentpressMultisite {
 	
 	
 	/** 
-	 * @description: get blog type form elements
+	 * Get blog type form elements
 	 *
+	 * @return str $type_html The HTML form element
 	 */
 	function _get_blogtype() {
 	
@@ -512,9 +517,9 @@ class CommentpressMultisite {
 	
 	
 	/**
-	 * @description: show our admin page
-	 * @todo: 
+	 * Show our admin page
 	 *
+	 * @return void
 	 */
 	function _network_admin_form() {
 	
@@ -680,9 +685,9 @@ class CommentpressMultisite {
 	
 	
 	/**
-	 * @description: allow other plugins to hook into our multisite admin options
-	 * @todo: 
+	 * Allow other plugins to hook into our multisite admin options
 	 *
+	 * @return str Empty string by default, but may be overridden
 	 */
 	function _additional_multisite_options() {
 	
@@ -697,9 +702,9 @@ class CommentpressMultisite {
 	
 	
 	/**
-	 * @description: allow other plugins to hook into our admin form
-	 * @todo: 
+	 * Allow other plugins to hook into our admin form
 	 *
+	 * @return str Empty string by default, but may be overridden
 	 */
 	function _additional_form_options() {
 	
@@ -714,9 +719,10 @@ class CommentpressMultisite {
 	
 	
 	/**
-	 * @description: get default Multisite-related settings
-	 * @todo: 
+	 * Get default Multisite-related settings
 	 *
+	 * @param array $existing_options The existing options
+	 * @return array $existing_options The modified options
 	 */
 	function _get_default_settings( $existing_options ) {
 	
@@ -746,9 +752,9 @@ class CommentpressMultisite {
 	
 	
 	/** 
-	 * @description: hook into Network form update
-	 * @todo: 
+	 * Hook into Network form update
 	 *
+	 * @return void
 	 */
 	function _network_admin_update() {
 		
@@ -779,9 +785,9 @@ class CommentpressMultisite {
 	
 	
 	/**
-	 * @description: get workflow enabled setting
-	 * @todo: 
+	 * Get workflow enabled setting
 	 *
+	 * @return bool $disabled True if disabled, false otherwise
 	 */
 	function _get_workflow_enabled() {
 	
@@ -797,9 +803,11 @@ class CommentpressMultisite {
 	
 	
 	/** 
-	 * @description: get default Title Page content, if set
-	 * @todo: enable this when we enable the admin page editor
+	 * Get default Title Page content, if set
+	 * Do we want to enable this when we enable the admin page editor?
 	 *
+	 * @param str $content The existing content
+	 * @return str $content The modified content
 	 */
 	function _get_title_page_content( $content ) {
 		
@@ -822,9 +830,9 @@ class CommentpressMultisite {
 	
 	
 	/** 
-	 * @description: get default Title Page content
-	 * @todo: 
+	 * Get default Title Page content
 	 *
+	 * @return str $content The default Title Page content
 	 */
 	function _get_default_title_page_content() {
 		

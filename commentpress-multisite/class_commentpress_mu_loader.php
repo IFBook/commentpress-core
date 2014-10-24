@@ -45,11 +45,10 @@ class CommentpressMultisiteLoader {
 	
 	
 	/** 
-	 * @description: initialises this object
+	 * Initialises this object
+	 *
 	 * @param object $parent_obj a reference to the parent object
 	 * @return object
-	 * @todo: 
-	 *
 	 */
 	function __construct( $parent_obj = null ) {
 	
@@ -67,9 +66,9 @@ class CommentpressMultisiteLoader {
 	
 	
 	/** 
-	 * @description: set up all items associated with this object
-	 * @todo: 
+	 * Set up all items associated with this object
 	 *
+	 * @return void
 	 */
 	public function initialise() {
 	
@@ -78,9 +77,9 @@ class CommentpressMultisiteLoader {
 	
 	
 	/** 
-	 * @description: if needed, destroys all items associated with this object
-	 * @todo: 
+	 * If needed, destroys all items associated with this object
 	 *
+	 * @return void
 	 */
 	public function destroy() {
 	
@@ -113,9 +112,9 @@ class CommentpressMultisiteLoader {
 	
 	
 	/** 
-	 * @description: object initialisation
-	 * @todo:
+	 * Object initialisation
 	 *
+	 * @return void
 	 */
 	function _init() {
 	
@@ -202,9 +201,9 @@ class CommentpressMultisiteLoader {
 	
 	
 	/** 
-	 * @description: BuddyPress object initialisation
-	 * @todo:
+	 * BuddyPress object initialisation
 	 *
+	 * @return void
 	 */
 	function _load_buddypress_object() {
 	
@@ -256,9 +255,9 @@ class CommentpressMultisiteLoader {
 	
 	
 	/** 
-	 * @description: this plugin has been network-activated (does not fire!)!
-	 * @todo:
+	 * This plugin has been network-activated (does not fire!)!
 	 *
+	 * @return void
 	 */
 	function _network_activated( $plugin, $network_wide = null ) {
 	
@@ -281,9 +280,9 @@ class CommentpressMultisiteLoader {
 	
 	
 	/** 
-	 * @description: this plugin has been network-deactivated
-	 * @todo:
+	 * This plugin has been network-deactivated
 	 *
+	 * @return void
 	 */
 	function _network_deactivated( $plugin, $network_wide = null ) {
 	

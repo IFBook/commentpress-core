@@ -42,11 +42,10 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: initialises this object
+	 * Initialises this object
+	 *
 	 * @param object $parent_obj a reference to the parent object
 	 * @return object
-	 * @todo: 
-	 *
 	 */
 	function __construct( $parent_obj = null ) {
 	
@@ -64,10 +63,10 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: set up all options associated with this object
-	 * @param string $component a component identifier, either 'multisite' or 'buddypress'
-	 * @todo: 
+	 * Set up all options associated with this object
 	 *
+	 * @param string $component a component identifier, either 'multisite' or 'buddypress'
+	 * @return void
 	 */
 	public function initialise( $component = 'multisite' ) {
 	
@@ -106,10 +105,9 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: upgrade plugin from 1.0 options to latest set
-	 * @return boolean $result
-	 * @todo: 
+	 * Upgrade plugin from 1.0 options to latest set
 	 *
+	 * @return boolean $result
 	 */
 	public function upgrade() {
 		
@@ -167,9 +165,9 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: if needed, destroys all items associated with this object
-	 * @todo: 
+	 * If needed, destroys all items associated with this object
 	 *
+	 * @return void
 	 */
 	public function destroy() {
 	
@@ -181,9 +179,9 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: uninstalls database modifications
-	 * @todo: 
+	 * Uninstalls database modifications
 	 *
+	 * @return void
 	 */
 	public function uninstall() {
 	
@@ -206,10 +204,9 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: check for plugin upgrade
-	 * @return boolean $result
-	 * @todo: 
+	 * Check for plugin upgrade
 	 *
+	 * @return boolean $result True if upgrade required, false otherwise
 	 */
 	public function check_upgrade() {
 	
@@ -236,9 +233,9 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: create all plugin options
-	 * @todo: 
+	 * Create all plugin options
 	 *
+	 * @return void
 	 */
 	public function options_create() {
 	
@@ -259,9 +256,9 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: delete all plugin options
-	 * @todo: 
+	 * Delete all plugin options
 	 *
+	 * @return void
 	 */
 	public function options_delete() {
 		
@@ -276,10 +273,9 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: save the settings set by the administrator
-	 * @return boolean success or failure
-	 * @todo: do more error checking?
+	 * Save the settings set by the administrator
 	 *
+	 * @return boolean True on success, false on failure
 	 */
 	public function options_update() {
 	
@@ -377,9 +373,9 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: save options array as WordPress site option
-	 * @todo: 
+	 * Save options array as WordPress site option
 	 *
+	 * @return boolean $success True if successful, false otherwise
 	 */
 	public function options_save() {
 		
@@ -391,10 +387,10 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: reset options
-	 * @param string $component a component identifier, either 'multisite' or 'buddypress'
-	 * @todo: 
+	 * Reset options
 	 *
+	 * @param string $component a component identifier, either 'multisite' or 'buddypress'
+	 * @return void
 	 */
 	public function options_reset( $component = 'multisite' ) {
 	
@@ -433,8 +429,10 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: return existence of a specified option
-	 * @todo: 
+	 * Return existence of a specified option
+	 *
+	 * @param str $option_name The name of the option
+	 * @return bool True if the option exists, false otherwise
 	 */
 	public function option_exists( $option_name = '' ) {
 	
@@ -454,8 +452,11 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: return a value for a specified option
-	 * @todo: 
+	 * Return a value for a specified option
+	 *
+	 * @param str $option_name The name of the option
+	 * @param mixed $default The default value for the option
+	 * @return mixed The value of the option if it exists, $default otherwise
 	 */
 	public function option_get( $option_name = '', $default = false ) {
 	
@@ -475,8 +476,11 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: sets a value for a specified option
-	 * @todo: 
+	 * Sets a value for a specified option
+	 *
+	 * @param str $option_name The name of the option
+	 * @param mixed $value The value for the option
+	 * @return void
 	 */
 	public function option_set( $option_name = '', $value = '' ) {
 	
@@ -504,8 +508,10 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: deletes a specified option
-	 * @todo: 
+	 * Deletes a specified option
+	 *
+	 * @param str $option_name The name of the option
+	 * @return void
 	 */
 	public function option_delete( $option_name = '' ) {
 	
@@ -525,8 +531,10 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: return existence of a specified site option
-	 * @todo: 
+	 * Return existence of a specified site option
+	 *
+	 * @param str $option_name The name of the option
+	 * @return bool True if option exists, false otherwise
 	 */
 	public function option_wpms_exists( $option_name = '' ) {
 	
@@ -556,8 +564,11 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: return a value for a specified site option
-	 * @todo: 
+	 * Return a value for a specified site option
+	 *
+	 * @param str $option_name The name of the option
+	 * @param mixed $default The default value for the option
+	 * @return mixed The value of the option if it exists, $default otherwise
 	 */
 	public function option_wpms_get( $option_name = '', $default = false ) {
 	
@@ -577,8 +588,11 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: sets a value for a specified site option
-	 * @todo: 
+	 * Sets a value for a specified site option
+	 *
+	 * @param str $option_name The name of the option
+	 * @param mixed $value The value for the option
+	 * @return void
 	 */
 	public function option_wpms_set( $option_name = '', $value = '' ) {
 	
@@ -598,9 +612,10 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: CommentPress Core initialisation
-	 * @todo:
+	 * CommentPress Core initialisation
 	 *
+	 * @param str $context The initialisation context
+	 * @return void
 	 */
 	public function install_commentpress( $context = 'new_blog' ) {
 		
@@ -709,9 +724,9 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: CommentPress Core deactivation
-	 * @todo:
+	 * CommentPress Core deactivation
 	 *
+	 * @return void
 	 */
 	public function uninstall_commentpress() {
 		
@@ -739,9 +754,9 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: get workflow form data
-	 * @return: keyed array of form data
+	 * Get workflow form data
 	 *
+	 * @return array $return Keyed array of form data
 	 */
 	public function get_workflow_data() {
 	
@@ -785,8 +800,9 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: get blog type form elements
-	 * @return: keyed array of form data
+	 * Get blog type form elements
+	 *
+	 * @return array $return Keyed array of form data
 	 *
 	 */
 	public function get_blogtype_data() {
@@ -852,9 +868,9 @@ class CommentpressMultisiteAdmin {
 	*/
 	
 	/** 
-	 * @description: object initialisation
-	 * @todo:
+	 * Object initialisation
 	 *
+	 * @return void
 	 */
 	function _init() {
 		
@@ -937,9 +953,9 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: appends option to admin menu
-	 * @todo: 
+	 * Appends option to admin menu
 	 *
+	 * @return void
 	 */
 	function _admin_menu() {
 		
@@ -1009,9 +1025,9 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: utility to add a message to admin pages when migration is required
-	 * @todo: 
+	 * Utility to add a message to admin pages when migration is required
 	 *
+	 * @return void
 	 */
 	function _migrate_alert() {
 
@@ -1033,9 +1049,9 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: prints plugin options page
-	 * @todo: 
+	 * Prints plugin options page
 	 *
+	 * @return void
 	 */
 	function _options_page() {
 	
@@ -1053,10 +1069,9 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: get the Wordpress admin page
-	 * @return string $admin_page
-	 * @todo: 
+	 * Get the Wordpress admin page
 	 *
+	 * @return string $admin_page The HTML for the admin page
 	 */
 	function _get_admin_page() {
 	
@@ -1084,10 +1099,9 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: returns the admin form HTML
-	 * @return string $admin_page
-	 * @todo: translation
+	 * Returns the admin form HTML
 	 *
+	 * @return string $admin_page The HTML for the admin page
 	 */
 	function _get_admin_form() {
 	
@@ -1161,9 +1175,9 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: get workflow form elements
-	 * @return: form html
+	 * Get workflow form elements
 	 *
+	 * @return str The form HTML
 	 */
 	function _get_workflow() {
 	
@@ -1196,8 +1210,9 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: get blog type form elements
+	 * Get blog type form elements
 	 *
+	 * @return str $type_html The HTML for the form element
 	 */
 	function _get_blogtype() {
 	
@@ -1236,9 +1251,9 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: enable CommentPress Core
-	 * @todo: 
+	 * Enable CommentPress Core
 	 *
+	 * @return void
 	 */
 	function _enable_core() {
 		
@@ -1277,9 +1292,9 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: get deactivation form element
-	 * @return: form html
+	 * Get deactivation form element
 	 *
+	 * @return str The HTML for the form element
 	 */
 	function _get_deactivate_element() {
 	
@@ -1296,9 +1311,9 @@ class CommentpressMultisiteAdmin {
 	
 	
 	/** 
-	 * @description: disable CommentPress Core
-	 * @todo: 
+	 * Disable CommentPress Core
 	 *
+	 * @return void
 	 */
 	function _disable_core() {
 		

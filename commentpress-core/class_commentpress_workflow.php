@@ -36,11 +36,10 @@ class CommentpressCoreWorkflow {
 	
 	
 	/** 
-	 * @description: initialises this object
+	 * Initialises this object
+	 *
 	 * @param object $parent_obj a reference to the parent object
 	 * @return object
-	 * @todo: 
-	 *
 	 */
 	function __construct( $parent_obj = null ) {
 	
@@ -61,9 +60,9 @@ class CommentpressCoreWorkflow {
 	
 	
 	/** 
-	 * @description: set up all items associated with this object
-	 * @todo: 
+	 * Set up all items associated with this object
 	 *
+	 * @return void
 	 */
 	public function initialise() {
 	
@@ -72,9 +71,9 @@ class CommentpressCoreWorkflow {
 	
 	
 	/** 
-	 * @description: if needed, destroys all items associated with this object
-	 * @todo: 
+	 * If needed, destroys all items associated with this object
 	 *
+	 * @return void
 	 */
 	public function destroy() {
 	
@@ -95,9 +94,10 @@ class CommentpressCoreWorkflow {
 	
 	
 	/** 
-	 * @description: enable workflow
-	 * @todo: 
+	 * Enable workflow
 	 *
+	 * @param bool $exists True if "workflow" is enabled, false otherwise
+	 * @return bool $exists True if "workflow" is enabled, false otherwise
 	 */
 	public function blog_workflow_exists( $exists ) {
 	
@@ -114,9 +114,10 @@ class CommentpressCoreWorkflow {
 	
 	
 	/** 
-	 * @description: override the name of the workflow checkbox label
-	 * @todo: 
+	 * Override the name of the workflow checkbox label
 	 *
+	 * @param str $name The existing singular name of the label
+	 * @return str $name The modified singular name of the label
 	 */
 	public function blog_workflow_label( $name ) {
 	
@@ -133,9 +134,10 @@ class CommentpressCoreWorkflow {
 	
 	
 	/** 
-	 * @description: amend the group meta if workflow is enabled
-	 * @todo: 
+	 * Amend the group meta if workflow is enabled
 	 *
+	 * @param str $blog_type The existing numerical type of the blog
+	 * @return str $blog_type The modified numerical type of the blog
 	 */
 	public function group_meta_set_blog_type( $blog_type, $blog_workflow ) {
 	
@@ -160,9 +162,9 @@ class CommentpressCoreWorkflow {
 	
 	
 	/** 
-	 * @description: add our metabox if workflow is enabled
-	 * @todo: 
+	 * Add our metabox if workflow is enabled
 	 *
+	 * @return void
 	 */
 	public function workflow_metabox() {
 	
@@ -233,9 +235,10 @@ class CommentpressCoreWorkflow {
 	
 	
 	/** 
-	 * @description: amend the workflow metabox title
-	 * @todo: 
+	 * Amend the workflow metabox title
 	 *
+	 * @param str $title The existing title of the metabox
+	 * @return str $title The overridden title of the metabox
 	 */
 	public function workflow_metabox_title( $title ) {
 	
@@ -252,9 +255,10 @@ class CommentpressCoreWorkflow {
 	
 	
 	/** 
-	 * @description: amend the workflow metabox title
-	 * @todo: 
+	 * Save workflow data based on the state of the metabox
 	 *
+	 * @param object $post_obj The WordPress post object
+	 * @return void
 	 */
 	public function workflow_save_post( $post_obj ) {
 	
@@ -381,9 +385,10 @@ class CommentpressCoreWorkflow {
 	
 	
 	/** 
-	 * @description: add the workflow content to the new version
-	 * @todo: 
+	 * Add the workflow content to the new version
 	 *
+	 * @param int $new_post_id The numeric ID of the new WordPress post
+	 * @return void
 	 */
 	public function workflow_save_copy( $new_post_id ) {
 	
@@ -487,9 +492,9 @@ class CommentpressCoreWorkflow {
 	
 	
 	/** 
-	 * @description: object initialisation
-	 * @todo:
+	 * Object initialisation
 	 *
+	 * @return void
 	 */
 	function _init() {
 	
@@ -501,9 +506,9 @@ class CommentpressCoreWorkflow {
 	
 	
 	/** 
-	 * @description: register Wordpress hooks
-	 * @todo: 
+	 * Register Wordpress hooks
 	 *
+	 * @return void
 	 */
 	function _register_hooks() {
 		

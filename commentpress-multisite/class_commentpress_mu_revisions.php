@@ -39,11 +39,10 @@ class CommentpressMultisiteRevisions {
 	
 	
 	/** 
-	 * @description: initialises this object
+	 * Initialises this object
+	 *
 	 * @param object $parent_obj a reference to the parent object
 	 * @return object
-	 * @todo: 
-	 *
 	 */
 	function __construct( $parent_obj = null ) {
 	
@@ -64,9 +63,9 @@ class CommentpressMultisiteRevisions {
 	
 	
 	/** 
-	 * @description: set up all items associated with this object
-	 * @todo: 
+	 * Set up all items associated with this object
 	 *
+	 * @return void
 	 */
 	public function initialise() {
 	
@@ -75,9 +74,9 @@ class CommentpressMultisiteRevisions {
 	
 	
 	/** 
-	 * @description: if needed, destroys all items associated with this object
-	 * @todo: 
+	 * If needed, destroys all items associated with this object
 	 *
+	 * @return void
 	 */
 	public function destroy() {
 	
@@ -104,9 +103,9 @@ class CommentpressMultisiteRevisions {
 	*/
 	
 	/** 
-	 * @description: amend the post title prefix
-	 * @todo: 
+	 * Amend the post title prefix
 	 *
+	 * @return str An empty string
 	 */
 	public function new_post_title_prefix( $prefix ) {
 		
@@ -118,9 +117,11 @@ class CommentpressMultisiteRevisions {
 	
 	
 	/** 
-	 * @description: add suffix " - Draft N", where N is the latest version number
-	 * @todo: 
+	 * Add suffix " - Draft N", where N is the latest version number
 	 *
+	 * @param str $title The existing title of the post
+	 * @param object $post The WordPress post object
+	 * @return str $title The modified title of the post
 	 */
 	public function new_post_title( $title, $post ) {
 	
@@ -183,9 +184,9 @@ class CommentpressMultisiteRevisions {
 	
 	
 	/** 
-	 * @description: object initialisation
-	 * @todo:
+	 * Object initialisation
 	 *
+	 * @return void
 	 */
 	function _init() {
 	
@@ -197,9 +198,9 @@ class CommentpressMultisiteRevisions {
 	
 	
 	/** 
-	 * @description: register Wordpress hooks
-	 * @todo: 
+	 * Register Wordpress hooks
 	 *
+	 * @return void
 	 */
 	function _register_hooks() {
 		

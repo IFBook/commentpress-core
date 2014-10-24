@@ -39,11 +39,10 @@ class CommentpressCoreFormatter {
 	
 	
 	/** 
-	 * @description: initialises this object
-	 * @param object $parent_obj a reference to the parent object
-	 * @return object
-	 * @todo: 
+	 * Initialises this object
 	 *
+	 * @param object $parent_obj A reference to the parent object
+	 * @return object
 	 */
 	function __construct( $parent_obj = null ) {
 	
@@ -64,9 +63,9 @@ class CommentpressCoreFormatter {
 	
 	
 	/** 
-	 * @description: set up all items associated with this object
-	 * @todo: 
+	 * Set up all items associated with this object
 	 *
+	 * @return void
 	 */
 	public function initialise() {
 	
@@ -75,9 +74,9 @@ class CommentpressCoreFormatter {
 	
 	
 	/** 
-	 * @description: if needed, destroys all items associated with this object
-	 * @todo: 
+	 * If needed, destroys all items associated with this object
 	 *
+	 * @return void
 	 */
 	public function destroy() {
 	
@@ -98,9 +97,10 @@ class CommentpressCoreFormatter {
 	
 	
 	/** 
-	 * @description: override the name of the type dropdown label
-	 * @todo: 
+	 * Override the name of the type dropdown label
 	 *
+	 * @param str $name The existing name of the label
+	 * @return str $name The modified name of the label
 	 */
 	public function blog_type_label( $name ) {
 	
@@ -116,9 +116,10 @@ class CommentpressCoreFormatter {
 	
 	
 	/** 
-	 * @description: define the "types" of groupblog 
-	 * @todo: 
+	 * Define the "types" of groupblog 
 	 *
+	 * @param array $existing_options The existing types of groupblog
+	 * @return array $existing_options The modified types of groupblog
 	 */
 	public function blog_type_options( $existing_options ) {
 	
@@ -143,9 +144,10 @@ class CommentpressCoreFormatter {
 	
 	
 	/** 
-	 * @description: choose content formatter by blog type or post meta value
-	 * @todo: 
+	 * Choose content formatter by blog type or post meta value
 	 *
+	 * @param str $formatter The existing formatter code
+	 * @return str $formatter The existing formatter code
 	 */
 	public function content_formatter( $formatter ) {
 		
@@ -210,9 +212,9 @@ class CommentpressCoreFormatter {
 	
 	
 	/** 
-	 * @description: object initialisation
-	 * @todo:
+	 * Object initialisation
 	 *
+	 * @return void
 	 */
 	function _init() {
 	
@@ -224,9 +226,9 @@ class CommentpressCoreFormatter {
 	
 	
 	/** 
-	 * @description: register Wordpress hooks
-	 * @todo: 
+	 * Register Wordpress hooks
 	 *
+	 * @return void
 	 */
 	function _register_hooks() {
 		

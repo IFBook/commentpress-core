@@ -39,11 +39,10 @@ class CommentpressCoreDisplay {
 	
 	
 	/** 
-	 * @description: initialises this object
-	 * @param object $parent_obj a reference to the parent object
-	 * @return object
-	 * @todo: 
+	 * Initialises this object
 	 *
+	 * @param object $parent_obj A reference to the parent object
+	 * @return object
 	 */
 	function __construct( $parent_obj ) {
 	
@@ -64,9 +63,9 @@ class CommentpressCoreDisplay {
 	
 	
 	/** 
-	 * @description: if needed, sets up this object
-	 * @todo: work out how to upgrade.
+	 * If needed, sets up this object
 	 *
+	 * @return void
 	 */
 	public function activate() {
 		
@@ -152,9 +151,9 @@ class CommentpressCoreDisplay {
 	
 	
 	/** 
-	 * @description: if needed, destroys this object
-	 * @todo: 
+	 * If needed, destroys this object
 	 *
+	 * @return void
 	 */
 	public function deactivate() {
 	
@@ -231,9 +230,9 @@ class CommentpressCoreDisplay {
 	
 	
 	/** 
-	 * @description: enqueue jQuery, jQuery UI and plugins
-	 * @todo: 
+	 * Enqueue jQuery, jQuery UI and plugins
 	 *
+	 * @return void
 	 */
 	public function get_jquery() {
 	
@@ -291,9 +290,9 @@ class CommentpressCoreDisplay {
 	
 	
 	/** 
-	 * @description: enqueue our quicktags script
-	 * @todo: 
+	 * Enqueue our quicktags script
 	 *
+	 * @return void
 	 */
 	public function get_custom_quicktags() {
 	
@@ -339,10 +338,9 @@ class CommentpressCoreDisplay {
 	
 	
 	/** 
-	 * @description: get plugin stylesheets
-	 * @return string $styles
-	 * @todo: 
+	 * Get plugin stylesheets
 	 *
+	 * @return void
 	 */
 	public function get_frontend_styles() {
 		
@@ -362,10 +360,9 @@ class CommentpressCoreDisplay {
 	
 	
 	/** 
-	 * @description: test if TinyMCE is allowed
-	 * @return boolean $allowed
-	 * @todo: 
+	 * Test if TinyMCE is allowed
 	 *
+	 * @return bool $allowed
 	 */
 	public function is_tinymce_allowed() {
 	
@@ -406,10 +403,9 @@ class CommentpressCoreDisplay {
 	
 	
 	/** 
-	 * @description: get built-in TinyMCE scripts from Wordpress Includes directory
-	 * @return string $scripts
-	 * @todo: 
+	 * Get built-in TinyMCE scripts from Wordpress Includes directory
 	 *
+	 * @return void
 	 */
 	public function get_tinymce() {
 	
@@ -466,10 +462,9 @@ class CommentpressCoreDisplay {
 	
 	
 	/** 
-	 * @description: get help text
-	 * @return HTML $help
-	 * @todo: translation
+	 * Get help text
 	 *
+	 * @return str $help The hrlp HTML
 	 */
 	public function get_help() {
 	
@@ -491,9 +486,10 @@ HELPTEXT;
 	
 	
 	/** 
-	 * @description: show the posts and their comment count in a list format
-	 * @todo:
+	 * Show the posts and their comment count in a list format
 	 *
+	 * @param str $params the parameters to list posts by
+	 * @return void
 	 */
 	public function list_posts( $params = 'numberposts=-1&order=DESC' ) {
 	
@@ -640,9 +636,12 @@ HELPTEXT;
 	
 	
 	/** 
-	 * @description: show username (with link)
+	 * Show username (with link)
+	 *
 	 * @todo: remove from theme functions.php?
 	 *
+	 * @param int $author_id The numeric ID of the author
+	 * @param bool $echo True if link is to be echoed, false if returned
 	 */
 	public function echo_post_author( $author_id, $echo = true ) {
 	
@@ -688,9 +687,9 @@ HELPTEXT;
 	
 	
 	/** 
-	 * @description: print the posts and their comment count in a list format
-	 * @todo:
+	 * Print the posts and their comment count in a list format
 	 *
+	 * @return void
 	 */
 	public function list_pages( $exclude_pages = array() ) {
 	
@@ -820,14 +819,13 @@ HELPTEXT;
 	
 	
 	/** 
-	 * @description: get the block comment icon
-	 * @param integer $comment_count number of comments
-	 * @param string $text_signature comment text signature
-	 * @param string $block_type either 'auto', 'line' or 'block'
-	 * @param integer $para_num sequnetial commentable block number
-	 * @return string $comment_icon
-	 * @todo: 
+	 * Get the block comment icon
 	 *
+	 * @param int $comment_count The number of comments
+	 * @param str $text_signature The comment text signature
+	 * @param str $block_type Either 'auto', 'line' or 'block'
+	 * @param int $para_num Sequential commentable block number
+	 * @return str $comment_icon
 	 */
 	public function get_comment_icon(
 		
@@ -1008,14 +1006,13 @@ HELPTEXT;
 	
 	
 	/** 
-	 * @description: get the block paragraph icon
-	 * @param integer $comment_count number of comments
-	 * @param string $text_signature comment text signature
-	 * @param string $block_type either 'auto', 'line' or 'block'
-	 * @param integer $para_num sequnetial commentable block number
-	 * @return string $comment_icon
-	 * @todo: 
+	 * Get the block paragraph icon
 	 *
+	 * @param int $comment_count The number of comments
+	 * @param str $text_signature The comment text signature
+	 * @param str $block_type Either 'auto', 'line' or 'block'
+	 * @param int $para_num The sequential commentable block number
+	 * @return str $comment_icon
 	 */
 	public function get_paragraph_icon( 
 	
@@ -1130,14 +1127,13 @@ HELPTEXT;
 	
 	
 	/** 
-	 * @description: get the content comment icon tag
-	 * @param string $text_signature comment text signature
-	 * @param string $commenticon comment icon
-	 * @param string $tag tag
-	 * @param string $start ol start value
-	 * @return string $para_tag
-	 * @todo: 
+	 * Get the content comment icon tag
 	 *
+	 * @param str $text_signature The comment text signature
+	 * @param str $commenticon The comment icon
+	 * @param str $tag The tag
+	 * @param str $start The ordered list start value
+	 * @return str $para_tag
 	 */
 	public function get_para_tag( $text_signature, $commenticon, $tag = 'p', $start = 0 ) {
 	
@@ -1252,11 +1248,10 @@ HELPTEXT;
 	
 	
 	/** 
-	 * @description: get the text signature input for the comment form
-	 * @param string $text_sig comment text signature
-	 * @return string $input
-	 * @todo: 
+	 * Get the text signature input for the comment form
 	 *
+	 * @param str $text_sig The comment text signature
+	 * @return str $input
 	 */
 	public function get_signature_input( $text_sig = '' ) {
 	
@@ -1271,11 +1266,10 @@ HELPTEXT;
 	
 	
 	/** 
-	 * @description: get the minimise all button
-	 * @param: string $sidebar type of sidebar (comments, toc, activity)
-	 * @return string $tag
-	 * @todo: 
+	 * Get the minimise all button
 	 *
+	 * @param str $sidebar The type of sidebar (comments, toc, activity)
+	 * @return str $tag The tag
 	 */
 	public function get_minimise_all_button( $sidebar = 'comments' ) {
 	
@@ -1306,10 +1300,9 @@ HELPTEXT;
 	
 	
 	/** 
-	 * @description: get the header minimise button
-	 * @return string $tag
-	 * @todo: 
+	 * Get the header minimise button
 	 *
+	 * @return str $link The markup of the link
 	 */
 	public function get_header_min_link() {
 	
@@ -1325,12 +1318,11 @@ HELPTEXT;
 	
 	
 	/** 
-	 * @description: get an image wrapped in a link
-	 * @param: string $src location of image file
-	 * @param: string $url link target
-	 * @return string $tag
-	 * @todo: 
+	 * Get an image wrapped in a link
 	 *
+	 * @param str $src The location of image file
+	 * @param str $url The link target
+	 * @return string $tag The markup
 	 */
 	public function get_linked_image( $src = '', $url = '' ) {
 	
@@ -1363,10 +1355,9 @@ HELPTEXT;
 	
 	
 	/** 
-	 * @description: got the Wordpress admin page
-	 * @return string $admin_page
-	 * @todo: 
+	 * Got the Wordpress admin page
 	 *
+	 * @return str $admin_page The HTML for the admin page
 	 */
 	public function get_admin_page() {
 	
@@ -1412,9 +1403,9 @@ HELPTEXT;
 	*/
 	
 	/** 
-	 * @description: object initialisation
-	 * @todo:
+	 * Object initialisation
 	 *
+	 * @return void
 	 */
 	function _init() {
 		
@@ -1426,10 +1417,9 @@ HELPTEXT;
 	
 	
 	/** 
-	 * @description: returns the admin form HTML
-	 * @return string $admin_page
-	 * @todo: translation
+	 * Returns the admin form HTML
 	 *
+	 * @return str $admin_page The admin page HTML
 	 */
 	function _get_admin_form() {
 	
@@ -1545,10 +1535,9 @@ $this->_get_options().
 	
 	
 	/** 
-	 * @description: returns the CommentPress Core options for the admin form
-	 * @return string $options
-	 * @todo: 
+	 * Returns the CommentPress Core options for the admin form
 	 *
+	 * @return str $options
 	 */
 	function _get_options() {
 	
@@ -1690,10 +1679,9 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	/** 
-	 * @description: returns optional options, if defined
-	 * @return string $html
-	 * @todo: 
+	 * Returns optional options, if defined
 	 *
+	 * @return str $html
 	 */
 	function _get_optional_options() {
 	
@@ -1805,10 +1793,9 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	/** 
-	 * @description: returns the upgrade details for the admin form
-	 * @return string $upgrade
-	 * @todo: 
+	 * Returns the upgrade details for the admin form
 	 *
+	 * @return str $upgrade
 	 */
 	function _get_upgrade() {
 		
@@ -2160,10 +2147,9 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	/** 
-	 * @description: returns the multisite deactivate button for the admin form
-	 * @return string $html
-	 * @todo: 
+	 * Returns the multisite deactivate button for the admin form
 	 *
+	 * @return str $html
 	 */
 	function _get_deactivate() {
 	
@@ -2175,10 +2161,9 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	/** 
-	 * @description: returns the reset button for the admin form
-	 * @return string $reset
-	 * @todo: 
+	 * Returns the reset button for the admin form
 	 *
+	 * @return str $reset
 	 */
 	function _get_reset() {
 	
@@ -2204,10 +2189,9 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	/** 
-	 * @description: returns the rich text editor button for the admin form
-	 * @return string $editor
-	 * @todo: 
+	 * Returns the rich text editor button for the admin form
 	 *
+	 * @return str $editor
 	 */
 	function _get_editor() {
 		
@@ -2255,10 +2239,9 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	/** 
-	 * @description: returns the TOC options for the admin form
-	 * @return string $editor
-	 * @todo: 
+	 * Returns the TOC options for the admin form
 	 *
+	 * @return str $editor
 	 */
 	function _get_toc() {
 		
@@ -2325,10 +2308,9 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	/** 
-	 * @description: returns the Sidebar options for the admin form
-	 * @return string $editor
-	 * @todo: 
+	 * Returns the Sidebar options for the admin form
 	 *
+	 * @return str $toc
 	 */
 	function _get_sidebar() {
 	
@@ -2367,10 +2349,9 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	/** 
-	 * @description: returns the override paragraph commenting button for the admin form
-	 * @return string $reset
-	 * @todo: 
+	 * Returns the override paragraph commenting button for the admin form
 	 *
+	 * @return str $override
 	 */
 	function _get_override() {
 	
@@ -2393,10 +2374,9 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	/** 
-	 * @description: returns the textblock meta button for the admin form
-	 * @return string $reset
-	 * @todo: 
+	 * Returns the textblock meta button for the admin form
 	 *
+	 * @return str $override
 	 */
 	function _get_textblock_meta() {
 	
@@ -2421,10 +2401,9 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	/** 
-	 * @description: returns the submit button
-	 * @return string $editor
-	 * @todo: 
+	 * Returns the submit button
 	 *
+	 * @return str $submit The submit button HTML
 	 */
 	function _get_submit() {
 	
@@ -2451,9 +2430,9 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	/** 
-	 * @description: get admin javascript, copied from wp-includes/custom-header.php
-	 * @todo: 
+	 * Get admin javascript, copied from wp-includes/custom-header.php
 	 *
+	 * @return void
 	 */
 	function get_admin_js() {
 		
@@ -2548,10 +2527,9 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 	
 	
 	/** 
-	 * @description: return the javascript to init tinyMCE for WP < 3.2
-	 * @return string $js
-	 * @todo: 
+	 * Return the javascript to init TinyMCE for WP < 3.2
 	 *
+	 * @return str $js
 	 */
 	function _get_tinymce_init() {
 	
@@ -2575,9 +2553,7 @@ Below are extra options for changing how the theme looks.', 'commentpress-core' 
 
 
 /** 
- * @description: tinyMCE callback function
- * @todo: 
- *
+ * TinyMCE callback function
  */	
 function br_to_nl( element_id, html, body ) {
 
@@ -2592,9 +2568,7 @@ function br_to_nl( element_id, html, body ) {
 
 
 /** 
- * @description: tinyMCE init
- * @todo: 
- *
+ * TinyMCE init
  */	
 tinyMCEPreInit = {
 

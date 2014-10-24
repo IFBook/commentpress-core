@@ -37,9 +37,9 @@ if ( defined( 'COMMENTPRESS_INFINITE_SCROLL' ) AND COMMENTPRESS_INFINITE_SCROLL 
 
 
 /** 
- * @description: load the next page
- * @todo: 
+ * Load the next page
  *
+ * @return void
  */
 function cpajax_load_next_page() {
 	
@@ -249,9 +249,9 @@ function cpajax_load_next_page() {
 
 
 /** 
- * @description: get context in which to enable this plugin
- * @todo: 
+ * Get context in which to enable this plugin
  *
+ * @return void
  */
 function cpajax_enable_plugin() {
 
@@ -279,9 +279,9 @@ function cpajax_enable_plugin() {
 
 
 /** 
- * @description: get new comments in response to an ajax request
- * @todo: 
+ * Get new comments in response to an ajax request
  *
+ * @return void
  */
 function cpajax_get_new_comments() {
 
@@ -412,9 +412,9 @@ function cpajax_get_new_comments() {
 
 
 /** 
- * @description: get comment depth
- * @todo: 
+ * Get comment depth
  *
+ * @return int $depth The depth of the comment in a thread
  */
 function cpajax_get_comment_depth( $comment, $depth ) {
 	
@@ -440,9 +440,9 @@ function cpajax_get_comment_depth( $comment, $depth ) {
 
 
 /** 
- * @description: add our plugin javascripts
- * @todo: 
+ * Add our plugin javascripts
  *
+ * @return void
  */
 function cpajax_add_javascripts() {
 	
@@ -575,9 +575,9 @@ function cpajax_add_javascripts() {
 
 
 /** 
- * @description: translation
- * @todo: 
+ * Enable translation in the Javascript
  *
+ * @return array $translations The array of translations to pass to the script
  */
 function cpajax_localise() {
 	
@@ -613,9 +613,9 @@ function cpajax_localise() {
 
 
 /** 
- * @description: validate that the plugin can be activated
- * @todo: 
+ * Validate that the plugin can be activated
  *
+ * @return bool $allowed True if the plugin can activate, false otherwise
  */
 function cpajax_plugin_can_activate() {
 
@@ -645,9 +645,11 @@ function cpajax_plugin_can_activate() {
 
 
 /** 
- * @description: get comment depth
- * @todo: 
+ * Add "reassign" button to comment utilities
  *
+ * @param str $edit_button The existing edit button HTML
+ * @param array $comment The comment  this edit button applies to
+ * @return str $edit_button The modified edit button HTML
  */
 function cpajax_add_reassign_button( $edit_button, $comment ) {
 
@@ -692,9 +694,9 @@ function cpajax_add_reassign_button( $edit_button, $comment ) {
 
 
 /** 
- * @description: change a comment's text-signature
- * @todo: 
+ * Change a comment's text-signature
  *
+ * @return void
  */
 function cpajax_reassign_comment() {
 
@@ -747,9 +749,9 @@ function cpajax_reassign_comment() {
 
 
 /** 
- * @description: store text signature for all children of a comment
- * @todo: 
+ * Store text signature for all children of a comment
  *
+ * @return void
  */
 function cpajax_reassign_comment_children( $comment_id, $text_sig, &$comment_ids ) {
 
@@ -783,9 +785,10 @@ function cpajax_reassign_comment_children( $comment_id, $text_sig, &$comment_ids
 
 
 /** 
- * @description: retrieve comment children
- * @todo: 
+ * Retrieve comment children
  *
+ * @param int $comment_id The numeric ID of the comment
+ * @return array $children The array of child comments
  */
 function cpajax_get_children( 
 
