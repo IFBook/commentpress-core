@@ -101,10 +101,8 @@ class CommentpressCoreWorkflow {
 	
 		// switch on, but allow overrides
 		return apply_filters( 
-			
 			'cp_class_commentpress_workflow_enabled', 
 			true
-		
 		);
 		
 	}
@@ -121,10 +119,8 @@ class CommentpressCoreWorkflow {
 	
 		// set label, but allow overrides
 		return apply_filters( 
-			
 			'cp_class_commentpress_workflow_label', 
 			__( 'Enable Translation Workflow', 'commentpress-core' )
-		
 		);
 		
 	}
@@ -149,10 +145,8 @@ class CommentpressCoreWorkflow {
 		
 		// return, but allow overrides
 		return apply_filters( 
-			
 			'cp_class_commentpress_workflow_group_blogtype', 
 			$blog_type
-		
 		);
 		
 	}
@@ -189,15 +183,11 @@ class CommentpressCoreWorkflow {
 		
 		// call the editor
 		wp_editor( 
-		
 			esc_html( stripslashes( $content ) ), 
 			$editor_id, 
 			$settings = array(
-		
 				'media_buttons' => false
-			
 			)
-			
 		);
 		
 		// label
@@ -217,15 +207,11 @@ class CommentpressCoreWorkflow {
 		
 		// call the editor
 		wp_editor( 
-		
 			esc_html( stripslashes( $content ) ), 
 			$editor_id, 
 			$settings = array(
-		
 				'media_buttons' => false
-			
 			)
-			
 		);
 		
 	}
@@ -242,10 +228,8 @@ class CommentpressCoreWorkflow {
 	
 		// set label, but allow overrides
 		return apply_filters( 
-			
 			'cp_class_commentpress_workflow_metabox_title', 
 			__( 'Translations', 'commentpress-core' )
-		
 		);
 		
 	}
@@ -267,8 +251,6 @@ class CommentpressCoreWorkflow {
 		$types = array( 'post', 'page' );
 		if ( ! in_array( $post_obj->post_type, $types ) ) { return; }
 		
-		
-		
 		// authenticate
 		$_nonce = isset( $_POST['commentpress_workflow_nonce'] ) ? $_POST['commentpress_workflow_nonce'] : '';
 		if ( !wp_verify_nonce( $_nonce, 'commentpress_post_workflow_settings' ) ) { return; }
@@ -283,11 +265,7 @@ class CommentpressCoreWorkflow {
 		if ( $post_obj->post_type == 'post' AND !current_user_can( 'edit_posts' ) ) { return; }
 		if ( $post_obj->post_type == 'page' AND !current_user_can( 'edit_pages' ) ) { return; }
 		
-		
-		
 		// OK, we're authenticated
-		
-		
 		
 		// check for revision
 		if ( $post_obj->post_type == 'revision' ) {
@@ -303,8 +281,6 @@ class CommentpressCoreWorkflow {
 			$post = $post_obj;
 		}
 		
-
-
 		// ---------------------------------------------------------------------
 		// Save the content of the two wp_editors
 		// ---------------------------------------------------------------------
@@ -399,9 +375,7 @@ class CommentpressCoreWorkflow {
 		
 		// do we want to create a new revision?
 		if ( $_data == '0' ) { return; }
-
-
-
+		
 		// get original text
 		$original = ( isset( $_POST['cporiginaltext'] ) ) ? $_POST['cporiginaltext'] : '';
 		//print_r( $post ); die();
@@ -436,9 +410,7 @@ class CommentpressCoreWorkflow {
 			}
 			
 		}
-
-
-
+		
 		// get literal translation
 		$literal = ( isset( $_POST['cpliteraltranslation'] ) ) ? $_POST['cpliteraltranslation'] : '';
 		

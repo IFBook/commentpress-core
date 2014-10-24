@@ -265,8 +265,6 @@ function cpajax_enable_plugin() {
 	
 	// we're in the WP back end
 	if ( is_admin() ) { return; }
-		
-	
 	
 	// add our javascripts
 	add_action( 'wp_enqueue_scripts', 'cpajax_add_javascripts', 120 );
@@ -302,9 +300,7 @@ function cpajax_get_new_comments() {
 	
 	// enable Wordpress API on post
 	$GLOBALS['post'] = get_post( $post_id );
-
-
-
+	
 	// get any comments posted since last update time
 	$data['cpajax_new_comments'] = array();
 	
@@ -319,13 +315,9 @@ function cpajax_get_new_comments() {
 	
 	// are there any?
 	if ( $num_to_get > 0 ) {
-	
-		
 		
 		// update comment count since last request
 		$data['cpajax_comment_count'] = (string) $current_comment_count;
-		
-		
 		
 		// set get_comments defaults
 		$defaults = array(
@@ -339,8 +331,6 @@ function cpajax_get_new_comments() {
 	
 		// get them
 		$comments = get_comments( $defaults );
-		
-		
 		
 		// if we get some - again, just to be sure
 		if ( count( $comments ) > 0 ) {
@@ -374,12 +364,10 @@ function cpajax_get_new_comments() {
 				
 				// add comment to array
 				$data['cpajax_new_comment_'.$identifier] = array(
-				
 					'parent' => $_comment->comment_parent,
 					'id' => $_comment->comment_ID,
 					'text_sig' => $_comment->comment_signature,
 					'markup' => $html
-					
 				);
 				
 				// increment
@@ -388,13 +376,9 @@ function cpajax_get_new_comments() {
 			}
 		
 		}
-
-
-
+		
 	}
 	
-
-
 	// set reasonable headers
 	header('Content-type: text/plain'); 
 	header("Cache-Control: no-cache");
@@ -452,8 +436,6 @@ function cpajax_add_javascripts() {
 	// can only now see $post
 	if ( !cpajax_plugin_can_activate() ) { return; }
 	
-	
-	
 	// init vars
 	$vars = array();
 
@@ -481,8 +463,6 @@ function cpajax_add_javascripts() {
 	// get translations array
 	$vars['cpajax_lang'] = cpajax_localise();
 	
-	
-	
 	// default to minified scripts
 	$debug_state = '';
 
@@ -494,31 +474,25 @@ function cpajax_add_javascripts() {
 	
 	}
 	
-	
-	
 	// are we asking for in-page comments?
 	if ( $commentpress_core->db->is_special_page() ) {
 	
 		// add comments in page script
 		wp_enqueue_script( 
-			
 			'cpajax', 
 			plugins_url( 'commentpress-ajax/cp-ajax-comments-page'.$debug_state.'.js', COMMENTPRESS_PLUGIN_FILE ),
 			null, // no dependencies
 			COMMENTPRESS_VERSION // version
-			
 		);
 	
 	} else {
 	
 		// add comments in sidebar script
 		wp_enqueue_script( 
-			
 			'cpajax', 
 			plugins_url( 'commentpress-ajax/cp-ajax-comments'.$debug_state.'.js', COMMENTPRESS_PLUGIN_FILE ),
 			array( 'jquery-ui-droppable', 'jquery-ui-dialog' ), // load droppable and dialog as dependencies
 			COMMENTPRESS_VERSION // version
-			
 		);
 		
 		// add WordPress dialog CSS
@@ -529,8 +503,6 @@ function cpajax_add_javascripts() {
 	// use wp function to localise
 	wp_localize_script( 'cpajax', 'CommentpressAjaxSettings', $vars );
 	
-	
-	
 	// let's disable infinite scroll unless we set a constant
 	if ( defined( 'COMMENTPRESS_INFINITE_SCROLL' ) AND COMMENTPRESS_INFINITE_SCROLL ) {
 
@@ -539,22 +511,18 @@ function cpajax_add_javascripts() {
 	
 			// add waypoints script
 			wp_enqueue_script( 
-			
 				'cpajax-waypoints', 
 				plugins_url( 'commentpress-ajax/assets/js/waypoints'.$debug_state.'.js', COMMENTPRESS_PLUGIN_FILE ),
 				array( 'jquery' ), //dependencies
 				COMMENTPRESS_VERSION // version
-			
 			);
 		
 			// add infinite scroll script
 			wp_enqueue_script( 
-			
 				'cpajax-infinite', 
 				plugins_url( 'commentpress-ajax/assets/js/cp-ajax-infinite'.$debug_state.'.js', COMMENTPRESS_PLUGIN_FILE ),
 				array( 'cpajax', 'cpajax-waypoints' ), //dependencies
 				COMMENTPRESS_VERSION // version
-			
 			);
 		
 			// init vars
@@ -683,8 +651,6 @@ function cpajax_add_reassign_button( $edit_button, $comment ) {
 	
 	// add our assign button
 	$edit_button .= $assign_button;
-	
-	
 	
 	// --<
 	return $edit_button;

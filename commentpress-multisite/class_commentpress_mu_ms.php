@@ -113,13 +113,9 @@ class CommentpressMultisite {
 		// we must be network admin
 		if ( !is_super_admin() ) { return false; }
 		
-		
-	
 		// try and update options
 		$saved = $this->db->options_update();
 		
-
-
 		// always add the admin page to the Settings menu
 		$page = add_submenu_page( 
 		
@@ -159,13 +155,11 @@ class CommentpressMultisite {
 		
 		// add admin css
 		wp_enqueue_style(
-			
 			'cpmu-admin-style', 
 			COMMENTPRESS_PLUGIN_URL . 'commentpress-multisite/assets/css/admin.css',
 			null,
 			COMMENTPRESS_MU_PLUGIN_VERSION,
 			'all' // media
-			
 		);
 		
 	}
@@ -184,22 +178,18 @@ class CommentpressMultisite {
 		
 		// add javascripts
 		wp_enqueue_script( 
-			
 			'cpmu-admin-js', 
 			COMMENTPRESS_PLUGIN_URL . 'commentpress-multisite/assets/js/admin.js' 
-			
 		);
 		*/
 		
 		// add css for signup form
 		wp_enqueue_style( 
-		
 			'cpmu-signup-style', 
 			COMMENTPRESS_PLUGIN_URL . 'commentpress-multisite/assets/css/signup.css',
 			null,
 			COMMENTPRESS_MU_PLUGIN_VERSION,
 			'all' // media
-			
 		);
 		
 		// CBOX theme compat
@@ -207,13 +197,11 @@ class CommentpressMultisite {
 		
 			// add css amends
 			wp_enqueue_style( 
-		
 				'cpmu-cbox-style', 
 				COMMENTPRESS_PLUGIN_URL . 'commentpress-multisite/assets/css/cbox.css',
 				null,
 				COMMENTPRESS_MU_PLUGIN_VERSION,
 				'all' // media
-			
 			);
 		
 		}
@@ -231,8 +219,6 @@ class CommentpressMultisite {
 	
 		// only apply to wordpress signup form (not the BuddyPress one)
 		if ( is_object( $this->parent_obj->bp ) ) { return; }
-
-
 		
 		// get force option
 		$forced = $this->db->option_get( 'cpmu_force_commentpress' );
@@ -268,16 +254,12 @@ class CommentpressMultisite {
 			
 		}
 		
-		
-
 		// get workflow element
 		$workflow_html = $this->_get_workflow();
 	
 		// get blog type element
 		$type_html = $this->_get_blogtype();
-	
-
-
+		
 		// construct form
 		$form = '
 
@@ -493,13 +475,13 @@ class CommentpressMultisite {
 			// show it
 			$type_html = '
 			
-	<div class="dropdown">
-		<label for="cp_blog_type">'.$type['label'].'</label> <select id="cp_blog_type" name="cp_blog_type">
+			<div class="dropdown">
+				<label for="cp_blog_type">'.$type['label'].'</label> <select id="cp_blog_type" name="cp_blog_type">
 		
-		'.$type['element'].'
+				'.$type['element'].'
 		
-		</select>
-	</div>
+				</select>
+			</div>
 
 			';
 		
@@ -529,8 +511,6 @@ class CommentpressMultisite {
 			
 		}
 		
-		
-		
 		//_cpdie( 'here' );
 
 		// show message
@@ -538,33 +518,25 @@ class CommentpressMultisite {
 			echo '<div id="message" class="updated"><p>'.__( 'Options saved.', 'commentpress-core' ).'</p></div>';
 		}
 		
-
-
 		// sanitise admin page url
 		$url = $_SERVER['REQUEST_URI'];
 		$url_array = explode( '&', $url );
 		if ( is_array( $url_array ) ) { $url = $url_array[0]; }
 		
-		
-		
 		// open admin page
 		echo '
-<div class="wrap" id="cpmu_admin_wrapper">
+		<div class="wrap" id="cpmu_admin_wrapper">
 
-<div class="icon32" id="icon-options-general"><br/></div>
+		<div class="icon32" id="icon-options-general"><br/></div>
 
-<h2>'.__( 'CommentPress Network Settings', 'commentpress-core' ).'</h2>
+		<h2>'.__( 'CommentPress Network Settings', 'commentpress-core' ).'</h2>
 
-<form method="post" action="'.htmlentities($url.'&updated=true').'">
+		<form method="post" action="'.htmlentities($url.'&updated=true').'">
 
-'.wp_nonce_field( 'cpmu_admin_action', 'cpmu_nonce', true, false ).'
-'.wp_referer_field( false ).'
+		'.wp_nonce_field( 'cpmu_admin_action', 'cpmu_nonce', true, false ).'
+		'.wp_referer_field( false ).'
 
-
-
-';
-
-
+		';
 		
 		// show multisite options
 		echo '
@@ -573,7 +545,6 @@ class CommentpressMultisite {
 <h3>'.__( 'Multisite Settings', 'commentpress-core' ).'</h3>
 
 <p>'.__( 'Configure how your CommentPress Network behaves. Site-specific options are set on the CommentPress Core Settings page for that site.', 'commentpress-core' ).'</p>';
-		
 		
 		// add global options
 		echo '
@@ -600,7 +571,6 @@ class CommentpressMultisite {
 
 </table>';
 
-
 		/*
 		// add WordPress overrides
 		echo '
@@ -626,13 +596,10 @@ class CommentpressMultisite {
 </table>';
 		*/
 
-
 		// close form
 		echo '
-</div>';
+		</div>';
 
-		
-		
 		/*
 		// title
 		echo '<h3>'.__( 'Title Page Content', 'commentpress-core' ).'</h3>';
@@ -657,27 +624,21 @@ class CommentpressMultisite {
 			
 		);
 		*/
-
-
-
+		
 		// allow plugins to add stuff
 		echo $this->_additional_form_options();
-
-
 		
 		// close admin form
 		echo '
-<p class="submit">
-	<input type="submit" name="cpmu_submit" value="'.__( 'Save Changes', 'commentpress-core' ).'" class="button-primary" />
-</p>
+		<p class="submit">
+			<input type="submit" name="cpmu_submit" value="'.__( 'Save Changes', 'commentpress-core' ).'" class="button-primary" />
+		</p>
 
-</form>
+		</form>
 
-</div>
-'."\n\n\n\n";
-
-
-
+		</div>
+		'."\n\n\n\n";
+		
 	}
 	
 	
@@ -726,20 +687,15 @@ class CommentpressMultisite {
 	
 		// default Multisite options
 		$defaults = array(
-		
 			'cpmu_force_commentpress' => $this->cpmu_force_commentpress,
 			//'cpmu_title_page_content' => $this->cpmu_title_page_content,
 			'cpmu_disable_translation_workflow' => $this->cpmu_disable_translation_workflow
-		
 		);
 		
 		// allow overrides and additions
 		$defaults = apply_filters(
-			
-			// hook
 			'cpmu_multisite_options_get_defaults',
 			$defaults
-			
 		);
 
 		// return options array

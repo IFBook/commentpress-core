@@ -122,8 +122,6 @@ class CommentpressMultisiteLoader {
 		// check for network deactivation
 		add_action( 'deactivated_plugin',  array( $this, '_network_deactivated' ), 10, 2 );
 		
-		
-		
 		// ---------------------------------------------------------------------
 		// load Database Wrapper object 
 		// ---------------------------------------------------------------------
@@ -140,8 +138,6 @@ class CommentpressMultisiteLoader {
 		// init autoload database object
 		$this->db = new CommentpressMultisiteAdmin( $this );
 		
-
-
 		// ---------------------------------------------------------------------
 		// load standard Multisite object 
 		// ---------------------------------------------------------------------
@@ -157,8 +153,6 @@ class CommentpressMultisiteLoader {
 	
 		// init multisite object
 		$this->mu = new CommentpressMultisite( $this );
-		
-
 		
 		// ---------------------------------------------------------------------
 		// load Post Revisions object (merge this into Core as an option)
@@ -176,17 +170,13 @@ class CommentpressMultisiteLoader {
 		// instantiate it
 		$this->revisions = new CommentpressMultisiteRevisions( $this );
 		
-
-
 		// ---------------------------------------------------------------------
 		// call initialise() on admin object 
 		// ---------------------------------------------------------------------
 	
 		// initialise db for multisite
 		$this->db->initialise( 'multisite' );
-
-
-
+		
 		// ---------------------------------------------------------------------
 		// optionally load BuddyPress object 
 		// ---------------------------------------------------------------------
@@ -220,9 +210,7 @@ class CommentpressMultisiteLoader {
 	
 		// init buddypress object
 		$this->bp = new CommentpressMultisiteBuddypress( $this );
-
-
-
+		
 		// ---------------------------------------------------------------------
 		// load Groupblog Workshop renaming object 
 		// ---------------------------------------------------------------------
@@ -239,8 +227,6 @@ class CommentpressMultisiteLoader {
 		// instantiate it
 		$this->workshop = new CommentpressGroupblogWorkshop( $this );
 		
-
-
 		// ---------------------------------------------------------------------
 		// call initialise() on admin object again
 		// ---------------------------------------------------------------------

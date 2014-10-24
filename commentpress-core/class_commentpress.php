@@ -254,8 +254,6 @@ class CommentpressCore {
 		if ( !function_exists( 'bp_is_groups_component' ) ) { return false; }
 		if ( !bp_is_groups_component() ) { return false; }
 		
-		
-		
 		// get groupblog options
 		$options = get_site_option( 'bp_groupblog_blog_defaults_options' );
 		
@@ -449,15 +447,15 @@ class CommentpressCore {
 			// echo inline style
 			echo '
 			
-<style type="text/css">
+			<style type="text/css">
 	
-	#book_header {
-		background: #'.$this->db->option_get_header_bg().';
-	}
+				#book_header {
+					background: #'.$this->db->option_get_header_bg().';
+				}
 
-</style>
+			</style>
 
-';
+			';
 		
 		}
 		
@@ -633,37 +631,14 @@ class CommentpressCore {
 		// reference our post
 		global $post;
 		
-
-
 		// compat with Subscribe to Comments Reloaded
-		if( $this->is_subscribe_to_comments_reloaded_page() ) {
-		
-			// --<
-			return $content;
-			
-		}
-		
-		
+		if( $this->is_subscribe_to_comments_reloaded_page() ) return $content;
 		
 		// compat with Theme My Login
-		if( $this->is_theme_my_login_page() ) {
-		
-			// --<
-			return $content;
-			
-		}
-		
-		
+		if( $this->is_theme_my_login_page() ) return $content;
 		
 		// compat with Members List plugin
-		if( $this->is_members_list_page() ) {
-		
-			// --<
-			return $content;
-			
-		}
-		
-		
+		if( $this->is_members_list_page() ) return $content;
 		
 		// test for buddypress special page (compat with BP Docs)
 		if ( $this->is_buddypress() ) {
@@ -677,9 +652,7 @@ class CommentpressCore {
 			}
 			
 		}
-
-
-				
+		
 		// only parse posts or pages...	
 		if( ( is_single() OR is_page() OR is_attachment() ) AND !$this->db->is_special_page() ) {
 			
@@ -688,13 +661,13 @@ class CommentpressCore {
 			
 		}
 		
-		
-		
-		/*
-		The following fails with JetPack 2.7, which parses content in the head to create content summaries
-		I now can't remember why I was being so cautious about not parsing twice, but since JetPack is
-		so useful and common, I'm commenting this out until I get reports that something odd is happening
-		*/
+		/**
+		 * The following fails with JetPack 2.7, which parses content in the head
+		 * to create content summaries. I now can't remember why I was being so 
+		 * cautious about not parsing twice, but since JetPack is so useful and 
+		 * common, I'm commenting this out until I get reports that something 
+		 * odd is happening
+		 */
 
 		// only parse content once
 		//remove_filter( 'the_content', array( $this, 'the_content' ), 20 );
@@ -717,8 +690,6 @@ class CommentpressCore {
 	
 		// get list option flag
 		$result = $this->db->option_get( 'cp_show_posts_or_pages_in_toc' );
-		
-		
 		
 		// --<
 		return $result;
@@ -755,6 +726,7 @@ class CommentpressCore {
 	
 		// --<
 		return $result;
+		
 	}
 	
 	
@@ -769,8 +741,6 @@ class CommentpressCore {
 		// init text signature
 		$text_sig = '';
 		
-		
-	
 		// get comment ID to reply to from URL query string
 		$reply_to_comment_id = isset($_GET['replytocom']) ? (int) $_GET['replytocom'] : 0;
 		
@@ -794,13 +764,9 @@ class CommentpressCore {
 			}
 		
 		}
-
-	
-	
+		
 		// get list option flag
 		$result = $this->display->get_signature_input( $text_sig );
-		
-		
 		
 		// --<
 		return $result;
@@ -834,8 +800,6 @@ class CommentpressCore {
 			)
 			
 		);
-		
-		
 		
 		// --<
 		return $reserved_names;
@@ -937,12 +901,8 @@ class CommentpressCore {
 		// access post
 		global $post;
 		
-
-
 		// Use nonce for verification
 		wp_nonce_field( 'commentpress_page_settings', 'commentpress_nonce' );
-		
-		
 		
 		// ---------------------------------------------------------------------
 		// Show or Hide Page Title
@@ -967,15 +927,13 @@ class CommentpressCore {
 		
 		// select
 		echo '
-<p>
-<select id="cp_title_visibility" name="cp_title_visibility">
-	<option value="show" '.(($viz == 'show') ? ' selected="selected"' : '').'>'.__('Show page title', 'commentpress-core').'</option>
-	<option value="hide" '.(($viz == 'hide') ? ' selected="selected"' : '').'>'.__('Hide page title', 'commentpress-core').'</option>
-</select>
-</p>
-';
-
-		
+		<p>
+		<select id="cp_title_visibility" name="cp_title_visibility">
+			<option value="show" '.(($viz == 'show') ? ' selected="selected"' : '').'>'.__('Show page title', 'commentpress-core').'</option>
+			<option value="hide" '.(($viz == 'hide') ? ' selected="selected"' : '').'>'.__('Hide page title', 'commentpress-core').'</option>
+		</select>
+		</p>
+		';
 		
 		// ---------------------------------------------------------------------
 		// Show or Hide Page Meta
@@ -1000,15 +958,13 @@ class CommentpressCore {
 		
 		// select
 		echo '
-<p>
-<select id="cp_page_meta_visibility" name="cp_page_meta_visibility">
-	<option value="show" '.(($viz == 'show') ? ' selected="selected"' : '').'>'.__('Show page meta', 'commentpress-core').'</option>
-	<option value="hide" '.(($viz == 'hide') ? ' selected="selected"' : '').'>'.__('Hide page meta', 'commentpress-core').'</option>
-</select>
-</p>
-';
-
-		
+		<p>
+		<select id="cp_page_meta_visibility" name="cp_page_meta_visibility">
+			<option value="show" '.(($viz == 'show') ? ' selected="selected"' : '').'>'.__('Show page meta', 'commentpress-core').'</option>
+			<option value="hide" '.(($viz == 'hide') ? ' selected="selected"' : '').'>'.__('Hide page meta', 'commentpress-core').'</option>
+		</select>
+		</p>
+		';
 		
 		// ---------------------------------------------------------------------
 		// Page Numbering - only shown on first top level page
@@ -1045,17 +1001,15 @@ class CommentpressCore {
 			
 			// select
 			echo '
-<p>
-<select id="cp_number_format" name="cp_number_format">
-	<option value="arabic" '.(($format == 'arabic') ? ' selected="selected"' : '').'>'.__('Arabic numerals', 'commentpress-core' ).'</option>
-	<option value="roman" '.(($format == 'roman') ? ' selected="selected"' : '').'>'.__('Roman numerals', 'commentpress-core' ).'</option>
-</select>
-</p>
-';
+			<p>
+			<select id="cp_number_format" name="cp_number_format">
+				<option value="arabic" '.(($format == 'arabic') ? ' selected="selected"' : '').'>'.__('Arabic numerals', 'commentpress-core' ).'</option>
+				<option value="roman" '.(($format == 'roman') ? ' selected="selected"' : '').'>'.__('Roman numerals', 'commentpress-core' ).'</option>
+			</select>
+			</p>
+			';
 
 		}
-		
-		
 		
 		// ---------------------------------------------------------------------
 		// Page Layout for Title Page -> to allow for Book Cover image
@@ -1083,33 +1037,25 @@ class CommentpressCore {
 			
 			// select
 			echo '
-<p>
-<select id="cp_page_layout" name="cp_page_layout">
-	<option value="text" '.(($value == 'text') ? ' selected="selected"' : '').'>'.__('Standard', 'commentpress-core' ).'</option>
-	<option value="wide" '.(($value == 'wide') ? ' selected="selected"' : '').'>'.__('Wide', 'commentpress-core' ).'</option>
-</select>
-</p>
-';
+			<p>
+			<select id="cp_page_layout" name="cp_page_layout">
+				<option value="text" '.(($value == 'text') ? ' selected="selected"' : '').'>'.__('Standard', 'commentpress-core' ).'</option>
+				<option value="wide" '.(($value == 'wide') ? ' selected="selected"' : '').'>'.__('Wide', 'commentpress-core' ).'</option>
+			</select>
+			</p>
+			';
 
 		}
 		
-
-
 		// get post formatter
 		$this->_get_post_formatter_metabox( $post );
 		
-
-
 		// get default sidebar
 		$this->_get_default_sidebar_metabox( $post );
-		
-		
 		
 		// get starting para number
 		$this->_get_para_numbering_metabox( $post );
 		
-
-
 	}
 	
 	
@@ -1124,12 +1070,8 @@ class CommentpressCore {
 		// access post
 		global $post;
 		
-
-
 		// Use nonce for verification
 		wp_nonce_field( 'commentpress_post_settings', 'commentpress_nonce' );
-		
-		
 		
 		// set key
 		$key = '_cp_newer_version';
@@ -1177,18 +1119,12 @@ class CommentpressCore {
 			
 		}
 		
-		
-		
 		// get post formatter
 		$this->_get_post_formatter_metabox( $post );
 		
-
-
 		// get default sidebar
 		$this->_get_default_sidebar_metabox( $post );
 		
-
-
 	}
 	
 	
@@ -1454,11 +1390,11 @@ class CommentpressCore {
 			// do we have an array?
 			if ( is_array( $special_pages ) ) {
 			
-				/*
-				Data comes in like this:
-				[all] => <a href='edit.php?post_type=page' class="current">All <span class="count">(8)</span></a>
-				[publish] => <a href='edit.php?post_status=publish&amp;post_type=page'>Published <span class="count">(8)</span></a>
-				*/
+				/**
+				 * Data comes in like this:
+				 * [all] => <a href='edit.php?post_type=page' class="current">All <span class="count">(8)</span></a>
+				 * [publish] => <a href='edit.php?post_status=publish&amp;post_type=page'>Published <span class="count">(8)</span></a>
+				 */
 				
 				// capture existing value enclosed in brackets
 				preg_match( '/\((\d+)\)/', $vars['all'], $matches );
@@ -1506,6 +1442,7 @@ class CommentpressCore {
 		
 		}
 		
+		// --<
 		return $vars;
 		
 	}
@@ -1580,8 +1517,6 @@ class CommentpressCore {
 		// init
 		$link = '';
 		
-		
-
 		// get page ID
 		$_page_id = $this->db->option_get( $page_type );
 		
@@ -1646,8 +1581,6 @@ class CommentpressCore {
 		
 		}
 		
-		
-		
 		// --<
 		return $link;
 	
@@ -1666,8 +1599,6 @@ class CommentpressCore {
 		// init
 		$_url = '';
 		
-		
-
 		// get page ID
 		$_page_id = $this->db->option_get( $page_type );
 		
@@ -1681,8 +1612,6 @@ class CommentpressCore {
 			$_url = get_permalink( $_page );
 			
 		}
-		
-		
 		
 		// --<
 		return $_url;
@@ -1704,8 +1633,6 @@ class CommentpressCore {
 		// get link URL
 		$url = $this->db->option_get( 'cp_book_picture_link' );
 		
-
-
 		// --<
 		return $this->display->get_linked_image( $src, $url );
 		
@@ -1725,8 +1652,6 @@ class CommentpressCore {
 		// init
 		$is_signup = false;
 		
-		
-	
 		// if multisite
 		if ( is_multisite() ) { 
 			
@@ -1739,9 +1664,7 @@ class CommentpressCore {
 			}
 			
 		}
-	
-
-
+		
 		// --<
 		return $is_signup;
 
@@ -1776,8 +1699,6 @@ class CommentpressCore {
 			
 		}
 		
-		
-		
 		// --<
 		return false;
 
@@ -1808,8 +1729,6 @@ class CommentpressCore {
 			return true;
 			
 		}
-		
-		
 		
 		// --<
 		return false;
@@ -1842,8 +1761,6 @@ class CommentpressCore {
 			return true;
 			
 		}
-		
-		
 		
 		// --<
 		return false;
@@ -1965,9 +1882,7 @@ class CommentpressCore {
 	
 		// set sensible default
 		$return = 'toc';
-	
-
-
+		
 		// is this a commentable page?
 		if ( !$this->is_commentable() ) {
 		
@@ -1987,15 +1902,11 @@ class CommentpressCore {
 			
 		}
 		
-
-
 		// get CPTs
 		//$_types = $this->_get_commentable_cpts();
 		
 		// testing what we do with CPTs...
 		//if ( is_singular() OR is_singular( $_types ) ) {
-		
-		
 		
 		// is it a commentable page?
 		if ( is_singular() ) {
@@ -2050,8 +1961,6 @@ class CommentpressCore {
 		
 		}
 		
-
-		
 		// not singular... must be either activity or toc
 		if ( $this->db->option_exists( 'cp_sidebar_default' ) ) {
 			
@@ -2062,8 +1971,6 @@ class CommentpressCore {
 			if ( $default != 'comments' ) { $return = $default; }
 			
 		}
-		
-		
 		
 		// --<
 		return $return;
@@ -2106,13 +2013,9 @@ class CommentpressCore {
 	
 		// declare access to globals
 		global $post;
-	
-		
 		
 		// not if we're not on a page/post and especially not if there's no post object
 		if ( !is_singular() OR !is_object( $post ) ) { return false; }
-		
-		
 		
 		// CP Special Pages special pages are not
 		if ( $this->db->is_special_page() ) { return false; }
@@ -2129,8 +2032,6 @@ class CommentpressCore {
 		// Subscribe to Comments Reloaded page is not
 		if ( $this->is_subscribe_to_comments_reloaded_page() ) { return false; }
 
-
-	
 		// --<
 		return apply_filters( 'cp_is_commentable', true );
 		
@@ -2201,8 +2102,6 @@ class CommentpressCore {
 		// init autoload database object
 		$this->db = new CommentpressCoreDatabase( $this );
 		
-
-
 		// ---------------------------------------------------------------------
 		// Display Object
 		// ---------------------------------------------------------------------
@@ -2219,8 +2118,6 @@ class CommentpressCore {
 		// init display object
 		$this->display = new CommentpressCoreDisplay( $this );
 		
-		
-	
 		// ---------------------------------------------------------------------
 		// Navigation Object
 		// ---------------------------------------------------------------------
@@ -2236,9 +2133,7 @@ class CommentpressCore {
 	
 		// init display object
 		$this->nav = new CommentpressCoreNavigator( $this );
-
-
-
+		
 		// ---------------------------------------------------------------------
 		// Parser Object
 		// ---------------------------------------------------------------------
@@ -2255,8 +2150,6 @@ class CommentpressCore {
 		// init parser object
 		$this->parser = new CommentpressCoreParser( $this );
 		
-		
-	
 		// ---------------------------------------------------------------------
 		// Formatter Object
 		// ---------------------------------------------------------------------
@@ -2281,8 +2174,6 @@ class CommentpressCore {
 		// init formatter object
 		$this->formatter = new CommentpressCoreFormatter( $this );
 		
-		
-	
 		// ---------------------------------------------------------------------
 		// Workflow Object
 		// ---------------------------------------------------------------------
@@ -2307,8 +2198,10 @@ class CommentpressCore {
 		// init workflow object
 		$this->workflow = new CommentpressCoreWorkflow( $this );
 		
+		// ---------------------------------------------------------------------
+		// Finally, register hooks
+		// ---------------------------------------------------------------------
 		
-	
 		// register hooks
 		$this->_register_hooks();
 		
@@ -2444,8 +2337,6 @@ class CommentpressCore {
 		// init
 		$_types = false;
 		
-
-
 		// NOTE: exactly how do we support CPTs?
 		$args = array(
 			//'public'   => true,
@@ -2481,8 +2372,7 @@ class CommentpressCore {
 
 		// trace
 		//print_r( $_types ); die();
-
-
+		
 		// --<
 		return $_types;
 

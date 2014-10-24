@@ -142,8 +142,6 @@ class CommentpressCoreDatabase {
 			
 		}
 		
-		
-		
 		// test if we have our version
 		if ( !$this->option_wp_get( 'commentpress_version' ) ) {
 		
@@ -151,8 +149,6 @@ class CommentpressCoreDatabase {
 			$this->option_wp_set( 'commentpress_version', COMMENTPRESS_VERSION );
 		
 		}
-		
-		
 		
 		// test that we aren't reactivating
 		if ( !$this->option_wp_get( 'commentpress_options' ) ) {
@@ -172,8 +168,6 @@ class CommentpressCoreDatabase {
 			
 		}
 		
-		
-		
 		// retrieve data on special pages
 		$special_pages = $this->option_get( 'cp_special_pages', array() );
 
@@ -185,8 +179,6 @@ class CommentpressCoreDatabase {
 		
 		}
 		
-
-
 		// turn comment paging option off
 		$this->_cancel_comment_paging();
 
@@ -206,14 +198,10 @@ class CommentpressCoreDatabase {
 		
 		// init return
 		$result = false;
-
-
-
+		
 		// if we have a commentpress install (or we're forcing)
 		if ( $this->check_upgrade() ) {
-		
-
-
+			
 			// are we missing the commentpress_options option?
 			if ( !$this->option_wp_exists( 'commentpress_options' ) ) {
 			
@@ -222,20 +210,14 @@ class CommentpressCoreDatabase {
 			
 			}
 			
-			
-			
 			// checkboxes send no value if not checked, so use a default
 			$cp_blog_workflow = $this->blog_workflow;
 			
 			// default blog type
 			$cp_blog_type = $this->blog_type;
 			
-			
-			
 			// get variables
 			extract( $_POST );
-			
-			
 			
 			// New in CP 3.5.9 - textblock meta can be hidden
 			if ( !$this->option_exists( 'cp_textblock_meta' ) ) {
@@ -248,8 +230,6 @@ class CommentpressCoreDatabase {
 				
 			}
 			
-			
-			
 			// New in CP 3.5.4 - featured image capabilities
 			if ( !$this->option_exists( 'cp_featured_images' ) ) {
 	
@@ -261,8 +241,6 @@ class CommentpressCoreDatabase {
 				
 			}
 			
-			
-			
 			// Removed in CP 3.4 - do we still have the legacy cp_para_comments_enabled option?
 			if ( $this->option_exists( 'cp_para_comments_enabled' ) ) {
 			
@@ -271,8 +249,6 @@ class CommentpressCoreDatabase {
 				
 			}
 			
-
-
 			// Removed in CP 3.4 - do we still have the legacy cp_minimise_sidebar option?
 			if ( $this->option_exists( 'cp_minimise_sidebar' ) ) {
 			
@@ -281,8 +257,6 @@ class CommentpressCoreDatabase {
 				
 			}
 			
-
-
 			// New in CP 3.4 - has AJAX "live" comment refreshing been migrated?
 			if ( !$this->option_exists( 'cp_para_comments_live' ) ) {
 	
@@ -290,8 +264,6 @@ class CommentpressCoreDatabase {
 				$this->option_set( 'cp_para_comments_live', $this->para_comments_live );
 				
 			}
-			
-			
 			
 			// New in CP 3.3.3 - changed the way the welcome page works
 			if ( $this->option_exists( 'cp_special_pages' ) ) {
@@ -320,8 +292,6 @@ class CommentpressCoreDatabase {
 	
 			}
 			
-
-
 			// New in CP 3.3.3 - are we missing the cp_sidebar_default option?
 			if ( !$this->option_exists( 'cp_sidebar_default' ) ) {
 			
@@ -333,8 +303,6 @@ class CommentpressCoreDatabase {
 				
 			}
 			
-
-
 			// New in CP 3.3.2 - are we missing the cp_page_meta_visibility option?
 			if ( !$this->option_exists( 'cp_page_meta_visibility' ) ) {
 			
@@ -346,8 +314,6 @@ class CommentpressCoreDatabase {
 				
 			}
 			
-
-
 			// New in CP 3.3.1 - are we missing the cp_blog_workflow option?
 			if ( !$this->option_exists( 'cp_blog_workflow' ) ) {
 			
@@ -359,8 +325,6 @@ class CommentpressCoreDatabase {
 				
 			}
 			
-
-
 			// New in CP 3.3.1 - are we missing the cp_blog_type option?
 			if ( !$this->option_exists( 'cp_blog_type' ) ) {
 			
@@ -372,8 +336,6 @@ class CommentpressCoreDatabase {
 				
 			}
 			
-
-
 			// New in CP 3.3 - are we missing the cp_show_extended_toc option?
 			if ( !$this->option_exists( 'cp_show_extended_toc' ) ) {
 			
@@ -385,8 +347,6 @@ class CommentpressCoreDatabase {
 				
 			}
 			
-
-
 			// are we missing the cp_comment_editor option?
 			if ( !$this->option_exists( 'cp_comment_editor' ) ) {
 			
@@ -398,8 +358,6 @@ class CommentpressCoreDatabase {
 				
 			}
 			
-
-
 			// are we missing the cp_promote_reading option?
 			if ( !$this->option_exists( 'cp_promote_reading' ) ) {
 			
@@ -411,8 +369,6 @@ class CommentpressCoreDatabase {
 				
 			}
 			
-
-
 			// are we missing the cp_title_visibility option?
 			if ( !$this->option_exists( 'cp_title_visibility' ) ) {
 			
@@ -424,8 +380,6 @@ class CommentpressCoreDatabase {
 				
 			}
 			
-
-
 			// are we missing the cp_header_bg_colour option?
 			if ( !$this->option_exists( 'cp_header_bg_colour' ) ) {
 			
@@ -447,8 +401,6 @@ class CommentpressCoreDatabase {
 				
 			}
 			
-
-
 			// are we missing the cp_js_scroll_speed option?
 			if ( !$this->option_exists( 'cp_js_scroll_speed' ) ) {
 			
@@ -460,8 +412,6 @@ class CommentpressCoreDatabase {
 				
 			}
 			
-
-
 			// are we missing the cp_min_page_width option?
 			if ( !$this->option_exists( 'cp_min_page_width' ) ) {
 			
@@ -473,8 +423,6 @@ class CommentpressCoreDatabase {
 				
 			}
 			
-
-
 			// do we still have the legacy cp_allow_users_to_minimize option?
 			if ( $this->option_exists( 'cp_allow_users_to_minimize' ) ) {
 			
@@ -483,8 +431,6 @@ class CommentpressCoreDatabase {
 				
 			}
 			
-
-
 			// do we have special pages?
 			if ( $this->option_exists( 'cp_special_pages' ) ) {
 			
@@ -504,8 +450,6 @@ class CommentpressCoreDatabase {
 	
 			}
 			
-
-
 			// save new CommentPress Core options
 			$this->options_save();
 			
@@ -514,8 +458,6 @@ class CommentpressCoreDatabase {
 			
 		}
 		
-		
-
 		// --<
 		return $result;
 	}
@@ -564,8 +506,6 @@ class CommentpressCoreDatabase {
 		// database object
 		global $wpdb;
 		
-
-
 		// include Wordpress upgrade script
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		
@@ -578,8 +518,6 @@ class CommentpressCoreDatabase {
 			
 		);
 		
-
-
 		// --<
 		return $result;
 	}
@@ -632,8 +570,6 @@ class CommentpressCoreDatabase {
 		// init
 		$result = false;
 		
-		
-		
 		// define query
 		$query = "DESCRIBE $wpdb->comments";
 		
@@ -654,8 +590,6 @@ class CommentpressCoreDatabase {
 		
 		}
 		
-
-
 		// --<
 		return $result;
 	}
@@ -688,8 +622,6 @@ class CommentpressCoreDatabase {
 
 		}
 		
-
-
 		// --<
 		return $result;
 
@@ -743,8 +675,6 @@ class CommentpressCoreDatabase {
 		// do we have the option to set the minimum page width?
 		if ( !$this->option_exists( 'cp_min_page_width' ) ) { return true; }
 		
-
-
 		// --<
 		return false;
 
@@ -762,17 +692,11 @@ class CommentpressCoreDatabase {
 		// init result
 		$result = false;
 		
-
-
 	 	// was the form submitted?
 		if( isset( $_POST[ 'commentpress_submit' ] ) ) {
-			
-
-
+		
 			// check that we trust the source of the data
 			check_admin_referer( 'commentpress_admin_action', 'commentpress_nonce' );
-		
-			
 			
 			// init vars
 			$cp_activate = '0';
@@ -789,20 +713,14 @@ class CommentpressCoreDatabase {
 			$cp_featured_images = 'n';
 			$cp_textblock_meta = 'y';
 			
-			
-			
 			// get variables
 			extract( $_POST );
-			
-			
 			
 			// hand off to Multisite first, in case we're deactivating
 			do_action( 'cpmu_deactivate_commentpress' );
 			
 			// is Multisite activating CommentPress Core?
 			if ( $cp_activate == '1' ) { return true; }
-			
-			
 			
 			// did we ask to upgrade CommentPress Core?
 			if ( $cp_upgrade == '1' ) {
@@ -815,8 +733,6 @@ class CommentpressCoreDatabase {
 			
 			}
 			
-			
-			
 			// did we ask to reset?
 			if ( $cp_reset == '1' ) {
 			
@@ -827,8 +743,6 @@ class CommentpressCoreDatabase {
 				return true;
 			
 			}
-
-
 			
 			// did we ask to auto-create special pages?
 			if ( $cp_create_pages == '1' ) {
@@ -841,8 +755,6 @@ class CommentpressCoreDatabase {
 				
 			}
 			
-			
-			
 			// did we ask to delete special pages?
 			if ( $cp_delete_pages == '1' ) {
 			
@@ -850,8 +762,6 @@ class CommentpressCoreDatabase {
 				$this->delete_special_pages();
 
 			}
-			
-			
 			
 			// let's deal with our params now
 
@@ -991,19 +901,13 @@ class CommentpressCoreDatabase {
 			$cp_textblock_meta = esc_sql( $cp_textblock_meta );
 			$this->option_set( 'cp_textblock_meta', $cp_textblock_meta );
 			
-
-
 			// save
 			$this->options_save();
 			
-			
-
 			// set flag
 			$result = true;
 	
 		}
-		
-		
 		
 		// --<
 		return $result;
@@ -1280,8 +1184,6 @@ class CommentpressCoreDatabase {
 		// if not page, kick out
 		if ( $post_obj->post_type != 'page' ) { return; }
 		
-		
-		
 		// authenticate
 		$_nonce = isset( $_POST['commentpress_nonce'] ) ? $_POST['commentpress_nonce'] : '';
 		if ( !wp_verify_nonce( $_nonce, 'commentpress_page_settings' ) ) { return; }
@@ -1292,11 +1194,7 @@ class CommentpressCoreDatabase {
 		// check permissions - 'edit_pages' is available to editor+
 		if ( !current_user_can( 'edit_pages' ) ) { return; }
 		
-
-		
 		// OK, we're authenticated
-		
-		
 		
 		// check for revision
 		if ( $post_obj->post_type == 'revision' ) {
@@ -1312,8 +1210,6 @@ class CommentpressCoreDatabase {
 			$post = $post_obj;
 		}
 		
-
-
 		// ---------------------------------------------------------------------
 		// Show or Hide Page Meta
 		// ---------------------------------------------------------------------
@@ -1349,9 +1245,7 @@ class CommentpressCoreDatabase {
 			add_post_meta( $post->ID, $key, esc_sql( $_data ) );
 			
 		}
-
-
-
+		
 		// ---------------------------------------------------------------------
 		// Show or Hide Page Title
 		// ---------------------------------------------------------------------
@@ -1387,9 +1281,7 @@ class CommentpressCoreDatabase {
 			add_post_meta( $post->ID, $key, esc_sql( $_data ) );
 			
 		}
-
-
-
+		
 		// ---------------------------------------------------------------------
 		// Page Numbering - only first top level page is allowed to send this
 		// ---------------------------------------------------------------------
@@ -1466,8 +1358,6 @@ class CommentpressCoreDatabase {
 			
 		}
 		
-		
-		
 		// ---------------------------------------------------------------------
 		// Page Layout for Title Page -> to allow for Book Cover image
 		// ---------------------------------------------------------------------
@@ -1505,9 +1395,7 @@ class CommentpressCoreDatabase {
 			}
 			
 		}
-
-
-
+		
 		// ---------------------------------------------------------------------
 		// Override post formatter (override blog_type)
 		// ---------------------------------------------------------------------
@@ -1543,9 +1431,7 @@ class CommentpressCoreDatabase {
 			add_post_meta( $post->ID, $key, esc_sql( $_data ) );
 			
 		}
-
-
-
+		
 		// ---------------------------------------------------------------------
 		// Default Sidebar
 		// ---------------------------------------------------------------------
@@ -1588,9 +1474,7 @@ class CommentpressCoreDatabase {
 			}
 			
 		}
-
-
-
+		
 		// ---------------------------------------------------------------------
 		// Starting Paragraph Number - meta only exists when not default value
 		// ---------------------------------------------------------------------
@@ -1635,8 +1519,6 @@ class CommentpressCoreDatabase {
 			
 		}
 		
-
-
 		// ---------------------------------------------------------------------
 		// Workflow
 		// ---------------------------------------------------------------------
@@ -1707,8 +1589,6 @@ class CommentpressCoreDatabase {
 			
 		}
 		
-
-
 	}
 	
 	
@@ -1731,8 +1611,6 @@ class CommentpressCoreDatabase {
 		// if not page, kick out
 		if ( $post_obj->post_type != 'post' ) { return; }
 		
-		
-		
 		// authenticate
 		$_nonce = isset( $_POST['commentpress_nonce'] ) ? $_POST['commentpress_nonce'] : '';
 		if ( !wp_verify_nonce( $_nonce, 'commentpress_post_settings' ) ) { return; }
@@ -1743,11 +1621,7 @@ class CommentpressCoreDatabase {
 		// check permissions - 'edit_posts' is available to contributor+
 		if ( !current_user_can( 'edit_posts', $post_obj->ID ) ) { return; }
 		
-
-		
 		// OK, we're authenticated
-		
-		
 		
 		// check for revision
 		if ( $post_obj->post_type == 'revision' ) {
@@ -1763,8 +1637,6 @@ class CommentpressCoreDatabase {
 			$post = $post_obj;
 		}
 		
-
-
 		// ---------------------------------------------------------------------
 		// Override post formatter (override blog_type)
 		// ---------------------------------------------------------------------
@@ -1800,9 +1672,7 @@ class CommentpressCoreDatabase {
 			add_post_meta( $post->ID, $key, esc_sql( $_formatter ) );
 			
 		}
-
-
-
+		
 		// ---------------------------------------------------------------------
 		// Workflow
 		// ---------------------------------------------------------------------
@@ -1873,8 +1743,6 @@ class CommentpressCoreDatabase {
 			
 		}
 		
-
-
 		// ---------------------------------------------------------------------
 		// Default Sidebar
 		// ---------------------------------------------------------------------
@@ -1917,9 +1785,7 @@ class CommentpressCoreDatabase {
 			}
 			
 		}
-
-
-
+		
 		// ---------------------------------------------------------------------
 		// Create new post with content of current
 		// ---------------------------------------------------------------------
@@ -1949,16 +1815,10 @@ class CommentpressCoreDatabase {
 			return;
 		}
 		
-
-
 		// ---------------------------------------------------------------------
-
-
-
+		
 		// we're through: create it
 		$new_post_id = $this->_create_new_post( $post );
-		
-		
 		
 		// ---------------------------------------------------------------------
 		// Store ID of new version in current version
@@ -1989,9 +1849,7 @@ class CommentpressCoreDatabase {
 			add_post_meta( $post->ID, $key, $new_post_id );
 			
 		}
-
-
-
+		
 		// ---------------------------------------------------------------------
 		// Store incremental version number in new version
 		// ---------------------------------------------------------------------
@@ -2018,8 +1876,6 @@ class CommentpressCoreDatabase {
 		// add the data
 		add_post_meta( $new_post_id, $key, $value );
 		
-		
-		
 		// ---------------------------------------------------------------------
 		// Store formatter in new version
 		// ---------------------------------------------------------------------
@@ -2035,13 +1891,9 @@ class CommentpressCoreDatabase {
 			
 		}
 		
-		
-		
 		// allow plugins to hook into this
 		do_action( 'cp_workflow_save_copy', $new_post_id );
-			
-
-
+		
 		// get the edit post link
 		//$edit_link = get_edit_post_link( $new_post_id );
 		
@@ -2062,8 +1914,6 @@ class CommentpressCoreDatabase {
 		// if no post, kick out
 		if ( !$post_id ) { return; }
 		
-		
-		
 		// if it's our welcome page...
 		if ( $post_id == $this->option_get( 'cp_welcome_page' ) ) {
 		
@@ -2074,8 +1924,6 @@ class CommentpressCoreDatabase {
 			$this->options_save();
 			
 		}
-		
-		
 		
 		// for posts with versions, we need to delete the version data for the previous version
 		
@@ -2123,9 +1971,7 @@ class CommentpressCoreDatabase {
 	
 		// get special pages array, if it's there
 		$special_pages = $this->option_get( 'cp_special_pages', array() );
-	
-
-
+		
 		// create welcome/title page, but don't add to special pages
 		$welcome = $this->_create_title_page();
 		
@@ -2146,9 +1992,7 @@ class CommentpressCoreDatabase {
 		
 		// create TOC page -> a convenience, let's us define a logo as attachment
 		$special_pages[] = $this->_create_toc_page();
-
-
-
+		
 		// store the array of page IDs that were created
 		$this->option_set( 'cp_special_pages', $special_pages );
 		
@@ -2170,13 +2014,9 @@ class CommentpressCoreDatabase {
 		// init
 		$new_id = false;
 		
-		
-	
 		// get special pages array, if it's there
 		$special_pages = $this->option_get( 'cp_special_pages', array() );
-	
-
-
+		
 		// switch by page
 		switch( $_page ) {
 		
@@ -2224,8 +2064,6 @@ class CommentpressCoreDatabase {
 		
 		}
 		
-		
-		
 		// add to special pages
 		$special_pages[] = $new_id;
 
@@ -2234,8 +2072,6 @@ class CommentpressCoreDatabase {
 		
 		// save changes
 		$this->options_save();
-
-
 		
 		// --<
 		return $new_id;
@@ -2254,12 +2090,12 @@ class CommentpressCoreDatabase {
 		// init success flag
 		$success = true;
 		
-
-
-		// only delete special pages if we have one of the CommentPress Core themes active
-		// because other themes may have a totally different way of presenting the
-		// content of the blog
-
+		/**
+		 * only delete special pages if we have one of the CommentPress Core themes active
+		 * because other themes may have a totally different way of presenting the
+		 * content of the blog
+		 */
+		
 		// retrieve data on special pages
 		$special_pages = $this->option_get( 'cp_special_pages', array() );
 		
@@ -2304,9 +2140,7 @@ class CommentpressCoreDatabase {
 			$this->_reset_wordpress_option( 'page_for_posts' );
 	
 		}
-	
-
-
+		
 		// --<
 		return $success;
 
@@ -2325,14 +2159,12 @@ class CommentpressCoreDatabase {
 		// init success flag
 		$success = true;
 		
-
-
-		// only delete a special page if we have one of the CommentPress Core themes active
-		// because other themes may have a totally different way of presenting the
-		// content of the blog
+		/**
+		 * only delete a special page if we have one of the CommentPress Core themes active
+		 * because other themes may have a totally different way of presenting the
+		 * content of the blog
+		 */
 		
-
-
 		// get id of special page
 		switch( $_page ) {
 		
@@ -2389,21 +2221,15 @@ class CommentpressCoreDatabase {
 		
 		}
 		
-
-
 		// get page id
 		$page_id = $this->option_get( $flag );
 		
 		// kick out if it doesn't exist
 		if ( !$page_id ) { return true; }
-
-
-
+		
 		// delete option
 		$this->option_delete( $flag );
-
-
-
+		
 		// bypass trash
 		$force_delete = true;
 	
@@ -2414,9 +2240,7 @@ class CommentpressCoreDatabase {
 			$success = false;
 		
 		}
-	
-
-
+		
 		// retrieve data on special pages
 		$special_pages = $this->option_get( 'cp_special_pages', array() );
 		
@@ -2433,9 +2257,7 @@ class CommentpressCoreDatabase {
 		
 		// save changes
 		$this->options_save();
-
-
-
+		
 		// --<
 		return $success;
 
@@ -2453,8 +2275,6 @@ class CommentpressCoreDatabase {
 		// init flag
 		$is_special_page = false;
 		
-
-
 		// access post object
 		global $post;
 		
@@ -2465,9 +2285,7 @@ class CommentpressCoreDatabase {
 			return $is_special_page;
 			
 		}
-	
-
-
+		
 		// get special pages
 		$special_pages = $this->option_get( 'cp_special_pages', array() );
 	
@@ -2483,9 +2301,7 @@ class CommentpressCoreDatabase {
 			}
 		
 		}
-
-
-
+		
 		// --<
 		return $is_special_page;
 
@@ -2503,8 +2319,6 @@ class CommentpressCoreDatabase {
 		// init return
 		$allowed = false;
 		
-
-
 		// access post object
 		global $post;
 		
@@ -2515,9 +2329,7 @@ class CommentpressCoreDatabase {
 			return $allowed;
 			
 		}
-	
-
-
+		
 		// are comments enabled on this post?
 		if ( $post->comment_status == 'open' ) {
 		
@@ -2525,9 +2337,7 @@ class CommentpressCoreDatabase {
 			$allowed = true;
 			
 		}
-
-
-
+		
 		// --<
 		return $allowed;
 	}
@@ -2544,11 +2354,10 @@ class CommentpressCoreDatabase {
 		
 		// for Wordpress, we use the API
 		$comments = get_approved_comments( $post_ID );
-
-
-
+		
 		// --<
 		return $comments;
+		
 	}
 	
 	
@@ -2577,10 +2386,9 @@ class CommentpressCoreDatabase {
 		// for Wordpress, we use the API
 		$comments = get_comments( 'post_id='.$post_ID.'&order=ASC'.$pings );
 		
-		
-		
 		// --<
 		return $comments;
+		
 	}
 	
 	
@@ -2596,21 +2404,13 @@ class CommentpressCoreDatabase {
 		// database object
 		global $wpdb;
 		
-		
-		
 		// get comments from db
 		$comments = $wpdb->get_results(
-		
 			$wpdb->prepare(
-			
 				"SELECT * FROM $wpdb->comments WHERE comment_post_ID = %d", 
 				$post_ID
-				
 			)
-			
 		);
-		
-
 		
 		// --<
 		return $comments;	
@@ -2630,7 +2430,6 @@ class CommentpressCoreDatabase {
 		// database object
 		global $wpdb;
 		
-		
 		// get text signature
 		$text_signature = ( isset( $_POST['text_signature'] ) ) ? $_POST['text_signature'] : '';
 		
@@ -2642,17 +2441,13 @@ class CommentpressCoreDatabase {
 			
 			// construct query
 			$query = $wpdb->prepare(
-					
 				"UPDATE $wpdb->comments SET comment_signature = %s WHERE comment_ID = %d", 
 				$text_signature, 
 				$comment_ID
-			
 			);
 	
 			//var_dump( $query );
-	
-	
-	
+			
 			// store comment signature
 			$result = $wpdb->query( $query );
 		
@@ -2662,8 +2457,6 @@ class CommentpressCoreDatabase {
 			$result = true;
 		
 		}
-		
-		
 		
 		// --<
 		return $result;
@@ -2733,22 +2526,14 @@ class CommentpressCoreDatabase {
 	
 		// database object
 		global $wpdb;
-
-
 		
 		// query for signature
 		$text_signature = $wpdb->get_var( 
-		
 			$wpdb->prepare(
-			
 				"SELECT comment_signature FROM $wpdb->comments WHERE comment_ID = %s", 
 				$comment_ID
-				
 			) 
-			
 		);
-		
-		
 		
 		// --<
 		return $text_signature;
@@ -2804,8 +2589,6 @@ class CommentpressCoreDatabase {
 		// init return
 		$vars = array();
 		
-		
-	
 		// add comments open
 		global $post;
 		
@@ -2821,8 +2604,6 @@ class CommentpressCoreDatabase {
 			$vars['cp_comments_open'] = ( $post->comment_status == 'open' ) ? 'y' : 'n';
 			
 		}
-		
-		
 		
 		// assume no admin bars
 		$vars['cp_wp_adminbar'] = 'n';
@@ -2985,8 +2766,6 @@ class CommentpressCoreDatabase {
 			
 		}
 		
-
-
 		// add TinyMCE version var
 		$vars['cp_tinymce_version'] = 3;
 
@@ -3000,8 +2779,6 @@ class CommentpressCoreDatabase {
 			$vars['cp_tinymce_version'] = 4;
 
 		}
-		
-		
 		
 		// add rich text editor behaviour
 		$vars['cp_promote_reading'] = 1;
@@ -3095,8 +2872,6 @@ class CommentpressCoreDatabase {
 			$vars['cp_textblock_meta'] = 0;
 			
 		}
-		
-		
 		
 		// --<
 		return $vars;
@@ -3301,12 +3076,8 @@ class CommentpressCoreDatabase {
 		// set post author, but allow overrides
 		$new_post['post_author'] = apply_filters( 'commentpress_new_post_author', $post->post_author );
 		
-		
-		
 		// Insert the post into the database
 		$new_post_id = wp_insert_post( $new_post );
-		
-		
 		
 		// --<
 		return $new_post_id;
@@ -3350,8 +3121,6 @@ class CommentpressCoreDatabase {
 			}
 			
 		}
-		
-		
 		
 		// define welcome/title page
 		$title = array(
@@ -3932,9 +3701,7 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 	
 		// get existing options
 		$old = get_option( 'cp_options', array() );
-		
-		
-		
+
 		// ---------------------------------------------------------------------
 		// retrieve new ones, if they exist, or use defaults otherwise
 		// ---------------------------------------------------------------------
@@ -4016,8 +3783,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 										$old[ 'cp_textblock_meta' ] :
 										$this->textblock_meta;
 		
-
-
 		// ---------------------------------------------------------------------
 		// special pages
 		// ---------------------------------------------------------------------
@@ -4049,8 +3814,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 									$old[ 'cp_toc_page' ] :
 									null;
 		
-
-
 		// init options array
 		$this->commentpress_options = array(
 			
@@ -4075,8 +3838,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 			'cp_textblock_meta' => $this->textblock_meta,
 			
 		);
-			
-		
 		
 		// if we have special pages
 		if ( !is_null( $special_pages ) AND is_array( $special_pages ) ) {
@@ -4097,8 +3858,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 			
 			// merge
 			$this->commentpress_options = array_merge( $this->commentpress_options, $pages );
-			
-			
 			
 			// access old plugin
 			global $commentpress_obj;
@@ -4129,8 +3888,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 			
 		}
 		
-
-
 		// ---------------------------------------------------------------------
 		// welcome page
 		// ---------------------------------------------------------------------
@@ -4158,12 +3915,8 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 			
 		}
 		
-		
-		
 		// add the options to WordPress
 		add_option( 'commentpress_options', $this->commentpress_options );
-		
-		
 		
 		// ---------------------------------------------------------------------
 		// backups
@@ -4183,8 +3936,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 		$page_comments = get_option( 'cp_page_comments' );
 		delete_option( 'cp_page_comments' );
 		add_option( 'commentpress_page_comments', $page_comments );
-		
-		
 		
 		// ---------------------------------------------------------------------
 		// Theme Customizations
@@ -4242,9 +3993,6 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 						
 		}
 		
-		
-		
-
 		// ---------------------------------------------------------------------
 		// deactivate old Commentpress and Commentpress Ajaxified
 		// ---------------------------------------------------------------------

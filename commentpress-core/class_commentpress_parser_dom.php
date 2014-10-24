@@ -121,18 +121,12 @@ class CommentpressCoreParser {
 		// reference our post
 		global $post;
 		
-
-
 		// retrieve all comments and store...
 		// we need this data multiple times and only need to get it once
 		$this->comments_all = $this->parent_obj->db->get_all_comments( $post->ID );
 		
-
-
 		// strip out <!--shortcode--> tags
 		$content = $this->_strip_shortcodes( $content );
-		
-		
 		
 		// check for our quicktag
 		$has_quicktag = $this->_has_comment_block_quicktag( $content );
@@ -211,14 +205,10 @@ class CommentpressCoreParser {
 			}
 			
 		}
-
-
-
+		
 		// store text sigs
 		$this->parent_obj->db->set_text_sigs( $this->text_signatures );
-
-
-
+		
 		// --<
 		return $content;
 	
@@ -300,29 +290,21 @@ class CommentpressCoreParser {
 		$this->comments_sorted = $this->_get_sorted_comments( $post->ID );
 		//print_r( $this->comments_sorted ); die();
 		
-		
-		
 		// parse standalone captioned images
 		$content = $this->_parse_captions( $content );
-		
-		
 		
 		// suppress error bubbling
 		libxml_use_internal_errors( true );
 		
 		// load the markup
 		$this->dom->loadHTML( $content );
-
-
-
+		
 		// init debugger
 		$blah = array();
 		
 		// init lexia tags
 		$lexia = array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'ul',  'ol', 'dl', 'pre' );
-
-
-
+		
 		// init starting paragraph number
 		$start_num = 1;
 		
@@ -339,8 +321,6 @@ class CommentpressCoreParser {
 		
 		// we already have our text signatures, so set flag
 		$sig_key = 0;
-		
-		
 		
 		// init ( array( 'text_signature' => n ), where n is the number of duplicates )
 		$duplicates = array();
@@ -374,8 +354,6 @@ class CommentpressCoreParser {
 				print_r( "\n\n".'-----------------------------'."\n\n" );
 				*/
 				
-				
-				
 				// now get equivalent of innerHTML
 				//$original_content = $element->childNodes;
 				
@@ -391,8 +369,6 @@ class CommentpressCoreParser {
 					$element->removeChild( $node );
 				}
 				*/
-				
-				
 				
 				// our class
 				$our_class = 'textblock';
@@ -410,8 +386,6 @@ class CommentpressCoreParser {
 		
 				// set class
 				$element->setAttribute( 'class', $our_class );
-				
-				
 				
 				// get first character of tag to maintain compatibility with regex parser
 				$text_sig_prefix = substr( $node_name, 0, 1 );
@@ -448,8 +422,6 @@ class CommentpressCoreParser {
 				
 				// add to signatures array
 				$this->text_signatures[] = $text_signature;
-			
-				
 				
 				// construct paragraph number
 				$para_num = $sig_key + $start_num;
@@ -515,9 +487,6 @@ class CommentpressCoreParser {
 				// add icon to lexia
 				$element->appendChild( $para_icon_node );
 				
-				
-				
-				
 				$comment_icon = new CommentPress_DOMDocument;
 				$comment_icon->loadHTML( $comment_icon_markup );
 				$comment_icon_body = $comment_icon->getElementsByTagName( 'body' )->item(0);
@@ -545,8 +514,6 @@ class CommentpressCoreParser {
 				// add icon to lexia
 				$element->appendChild( $comment_icon_node );
 				
-				
-				
 				/*
 				// add original content back to lexia
 				foreach( $original_content AS $node ) {
@@ -556,11 +523,7 @@ class CommentpressCoreParser {
 				//$element->appendChild( $original_text );
 				*/
 				
-				
-				
 			} // end check for lexia
-			
-			
 			
 			// check for inline blockquotes
 			if ( $node_name == 'span' ) {
@@ -574,12 +537,8 @@ class CommentpressCoreParser {
 		
 		//die();
 		
-
-
 		// store text sigs array in global
 		$this->parent_obj->db->set_text_sigs( $this->text_signatures );
-		
-		
 		
 		// output correctly formatted (X)HTML
 		$content = preg_replace(
@@ -587,8 +546,6 @@ class CommentpressCoreParser {
 			'',
 			$this->dom->saveXHTML()
 		);
-		
-		
 		
 		// --<
 		return $content;
@@ -676,27 +633,19 @@ class CommentpressCoreParser {
 			
 		}
 		
-		
-		
 		// reference our post
 		global $post;
-
-
-
+		
 		// get sorted comments and store
 		$this->comments_sorted = $this->_get_sorted_comments( $post->ID );
 		//print_r( $this->comments_sorted ); die();
-	
-
-
+		
 		// we already have our text signatures, so set flag
 		$sig_key = 0;
 		
 		// init our content array
 		$content_array = array();
-	
-
-
+		
 		// run through 'em...
 		foreach( $matches AS $line ) {
 
@@ -774,14 +723,10 @@ class CommentpressCoreParser {
 		//print_r( $duplicates ); die();
 		//print_r( $content_array ); die();
 		//die();
-	
-
 		
 		// rejoin and exclude quicktag
 		$content = implode( '', $content_array );
-	
-
-
+		
 		// --<
 		return $content;
 
@@ -842,8 +787,6 @@ class CommentpressCoreParser {
 		) ); die();
 		*/
 		
-
-
 		// explode by <span>
 		$output_array = explode( '<span class="cp-line">', $content );
 		//print_r( $output_array ); die();
@@ -855,8 +798,6 @@ class CommentpressCoreParser {
 			return array();
 		
 		}
-		
-		
 		
 		// --<
 		return $output_array;
@@ -885,17 +826,11 @@ class CommentpressCoreParser {
 			
 		}
 		
-		
-		
 		// wrap all lines with spans
 		
-
-
 		// parse standalone captioned images
 		$content = $this->_parse_captions( $content );
-				
-
-
+		
 		// explode by <span>
 		$output_array = $this->_get_line_matches( $content );
 		//print_r( $output_array ); die();
@@ -911,8 +846,6 @@ class CommentpressCoreParser {
 			
 		}
 		
-		
-		
 		// reference our post
 		global $post;
 
@@ -921,9 +854,7 @@ class CommentpressCoreParser {
 
 		// init ( array( 'text_signature' => n ), where n is the number of duplicates )
 		$duplicates = array();
-
-
-
+		
 		// run through 'em...
 		foreach( $output_array AS $paragraph ) {
 		
@@ -975,14 +906,10 @@ class CommentpressCoreParser {
 		//print_r( $this->text_signatures ); //die();
 		//print_r( $duplicates ); die();
 		//die();
-	
-
-
+		
 		// store text sigs array in global
 		$this->parent_obj->db->set_text_sigs( $this->text_signatures );
-
-
-
+		
 		// --<
 		return $this->text_signatures;
 
@@ -1013,26 +940,18 @@ class CommentpressCoreParser {
 			
 		}
 		
-		
-		
 		// reference our post
 		global $post;
-
 		
-
 		// get sorted comments and store
 		$this->comments_sorted = $this->_get_sorted_comments( $post->ID );
 		//print_r( $this->comments_sorted ); die();
-	
-
-
+		
 		// we already have our text signatures, so set flag
 		$sig_key = 0;
 		
 		// init content array
 		$content_array = array();
-		
-		
 		
 		// run through 'em...
 		foreach( $matches AS $paragraph ) {
@@ -1091,14 +1010,10 @@ class CommentpressCoreParser {
 
 		//print_r( $this->text_signatures ); //die();
 		//print_r( $duplicates ); die();
-	
-
 		
 		// rejoin and exclude quicktag
 		$content = implode( '', $content_array );
-	
-
-
+		
 		// --<
 		return $content;
 
@@ -1230,8 +1145,6 @@ class CommentpressCoreParser {
 
 		//print_r( array( 'after' => $content ) ); die();
 		
-		
-		
 		// explode by <p> version to temp array
 		$output_array = explode( '<p><'.'!--commentblock--></p>', $content );
 		
@@ -1242,8 +1155,6 @@ class CommentpressCoreParser {
 			return array();
 		
 		}
-		
-		
 		
 		// --<
 		return $output_array;
@@ -1271,13 +1182,9 @@ class CommentpressCoreParser {
 			
 		}
 		
-		
-		
 		// parse standalone captioned images
 		$content = $this->_parse_captions( $content );
-				
-
-
+		
 		// get blocks array
 		$matches = $this->_get_block_matches( $content );
 		
@@ -1323,14 +1230,10 @@ class CommentpressCoreParser {
 
 		//print_r( $this->text_signatures ); die();
 		//print_r( $duplicates ); die();
-	
-
-
+		
 		// store text sigs array in global
 		$this->parent_obj->db->set_text_sigs( $this->text_signatures );
-
-
-
+		
 		// --<
 		return $this->text_signatures;
 
@@ -1349,8 +1252,6 @@ class CommentpressCoreParser {
 		// init
 		$return = false;
 		
-		
-	
 		// look for < !--commentblock--> comment
 		if ( strstr( $content, '<!--commentblock-->' ) !== false ) {
 		
@@ -1358,8 +1259,6 @@ class CommentpressCoreParser {
 			$return = true;
 		
 		}
-		
-		
 		
 		// --<
 		return $return;
@@ -1387,8 +1286,6 @@ class CommentpressCoreParser {
 		
 		}
 		
-		
-		
 		// look for < !--commentblock--> comment
 		if ( preg_match('/<p><'.'!--commentblock--><\/p>/', $content, $matches) ) {
 		
@@ -1399,8 +1296,6 @@ class CommentpressCoreParser {
 			$content = implode( '', $content );
 		
 		}
-		
-		
 		
 		// --<
 		return $content;
@@ -1537,8 +1432,6 @@ class CommentpressCoreParser {
 		
 		}
 		
-		
-		
 		// look for incorrectly placed separated <!--noteaser--> comment
 		if ( preg_match('/<p><'.'!--noteaser--><\/p>/', $content, $matches) ) {
 		
@@ -1550,16 +1443,13 @@ class CommentpressCoreParser {
 		
 		}
 		
-		
-		
 		// this gets the additional text... (not used)
 		if ( !empty($matches[1]) ) {
 			//$more_link_text = strip_tags(wp_kses_no_null(trim($matches[1])));
 		}
 		
 		//print_r( $content ); die();
-
-
+		
 		// --<
 		return $content;
 
@@ -1582,8 +1472,6 @@ class CommentpressCoreParser {
 		// NB: this may be a mistake for poetry, which can use any words in any order
 		$unique_words = array_unique( $words );
 		
-		
-		
 		// init sig
 		$text_signature = null;
 	
@@ -1600,8 +1488,6 @@ class CommentpressCoreParser {
 			if( $key > 250 ) { break; }
 			
 		}
-		
-		
 		
 		// --<
 		return $text_signature;
@@ -1642,8 +1528,6 @@ class CommentpressCoreParser {
 			}
 			
 		}
-		
-		
 		
 		// --<
 		return $content;
@@ -1751,18 +1635,12 @@ class CommentpressCoreParser {
 		// init return
 		$_comments = array();
 		
-		
-	
 		// get all comments
 		$comments = $this->comments_all;
-		
-		
 		
 		// filter out any multipage comments not on this page
 		$comments = $this->_multipage_comment_filter( $comments );
 		//print_r( $comments ); die();
-		
-		
 		
 		// get our signatures
 		$_sigs = $this->parent_obj->db->get_text_sigs();
@@ -1776,9 +1654,7 @@ class CommentpressCoreParser {
 		
 		// we must have text signatures...
 		if ( !empty( $_sigs ) ) {
-		
-
-
+			
 			// if we have any comments on the whole page...
 			if ( isset( $_assigned[ 'WHOLE_PAGE_OR_POST_COMMENTS' ] ) ) {
 		
@@ -1792,8 +1668,6 @@ class CommentpressCoreParser {
 			
 			}
 			
-		
-
 			// then add  in the order of our text signatures
 			foreach( $_sigs AS $text_signature ) {
 			
@@ -1812,8 +1686,6 @@ class CommentpressCoreParser {
 				
 			}
 			
-
-
 			// if we have any pingbacks or trackbacks...
 			if ( isset( $_assigned[ 'PINGS_AND_TRACKS' ] ) ) {
 		
@@ -1827,14 +1699,10 @@ class CommentpressCoreParser {
 			
 			}
 			
-		
-
 		}
 		
-		
-		
 		//print_r( $_comments ); die();
-
+		
 		// --<
 		return $_comments;
 		
@@ -1854,8 +1722,6 @@ class CommentpressCoreParser {
 		global $post, $page, $multipage;
 		//print_r( $comments ); die();
 		
-
-
 	  	// init return
 		$filtered = array();
 
@@ -1866,8 +1732,6 @@ class CommentpressCoreParser {
 			return $filtered;
 		}
 		
-		
-		
 		// kick out if not multipage
 		if( !isset( $multipage ) OR !$multipage ) {
 		
@@ -1875,8 +1739,6 @@ class CommentpressCoreParser {
 			return $comments;
 			
 		}
-		
-		
 		
 		// now add only comments that are on this page or are page-level
 		foreach ( $comments AS $comment ) {
@@ -1912,8 +1774,6 @@ class CommentpressCoreParser {
 		
 		}
 		
-		
-		
 		// --<
 		return $filtered;
 		
@@ -1942,16 +1802,12 @@ class CommentpressCoreParser {
 			return $assigned;
 		}
 		
-		
-		
 		// kick out if no text_signatures
 		if( !is_array( $text_signatures ) OR empty( $text_signatures ) ) {
 		
 			// --<
 			return $assigned;
 		}
-		
-		
 		
 		/*
 		print_r( array( 
@@ -2053,8 +1909,6 @@ class CommentpressCoreParser {
 		
 		// let's have a look
 		//print_r( $assigned ); die();
-		
-		
 		
 		// --<
 		return $assigned;

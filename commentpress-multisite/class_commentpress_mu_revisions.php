@@ -136,8 +136,6 @@ class CommentpressMultisiteRevisions {
 		
 		}
 		
-		
-		
 		// do we already have our suffix in the title?
 		if ( stristr( $title, ' - Draft ' ) === false ) {
 		
@@ -153,8 +151,6 @@ class CommentpressMultisiteRevisions {
 			$title = $title_array[0].' - Draft '.$value;
 			
 		}
-		
-		
 		
 		// --<
 		return $title;

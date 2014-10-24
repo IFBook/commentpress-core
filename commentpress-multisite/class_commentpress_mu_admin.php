@@ -111,13 +111,9 @@ class CommentpressMultisiteAdmin {
 		
 		// init return
 		$result = false;
-
-
-
+		
 		// if we have a commentpress install (or we're forcing)
 		if ( $this->check_upgrade() ) {
-		
-
 			
 			/*
 			--------------------------------------------------------------------
@@ -142,20 +138,14 @@ class CommentpressMultisiteAdmin {
 			}
 			*/
 			
-
-
 			// save new options
 			$this->options_save();
 			
-
-
 			// store new version
 			$this->option_wpms_set( 'cpmu_version', COMMENTPRESS_MU_PLUGIN_VERSION );
 			
 		}
 		
-		
-
 		// --<
 		return $result;
 	}
@@ -222,8 +212,6 @@ class CommentpressMultisiteAdmin {
 
 		}
 		
-
-
 		// --<
 		return $result;
 	}
@@ -280,28 +268,19 @@ class CommentpressMultisiteAdmin {
 		// init result
 		$result = false;
 		
-
-
 	 	// was the form submitted?
 		if( isset( $_POST['cpmu_submit'] ) ) {
 			
-
-
 			// check that we trust the source of the data
 			check_admin_referer( 'cpmu_admin_action', 'cpmu_nonce' );
-		
-			
 			
 			// init vars
 			$cpmu_upgrade = '0';
 			$cpmu_reset = '0';
 			$cpmu_bp_reset = '0';
 			
-
 			// get variables
 			extract( $_POST );
-			
-			
 			
 			// did we ask to upgrade CommentPress Multisite?
 			if ( $cpmu_upgrade == '1' ) {
@@ -314,8 +293,6 @@ class CommentpressMultisiteAdmin {
 			
 			}
 			
-			
-			
 			// did we ask to reset Multisite?
 			if ( $cpmu_reset == '1' ) {
 			
@@ -323,8 +300,6 @@ class CommentpressMultisiteAdmin {
 				$this->options_reset( 'multisite' );
 				
 			}
-
-
 			
 			// did we ask to reset BuddyPress?
 			if ( $cpmu_bp_reset == '1' ) {
@@ -333,8 +308,6 @@ class CommentpressMultisiteAdmin {
 				$this->options_reset( 'buddypress' );
 				
 			}
-
-
 			
 			// did we ask to reset either?
 			if ( $cpmu_reset == '1' OR $cpmu_bp_reset == '1' ) {
@@ -344,24 +317,16 @@ class CommentpressMultisiteAdmin {
 			
 			}
 			
-			
-			
 			// allow other plugins to hook into here
 			do_action( 'cpmu_db_options_update' );
-
-
 			
 			// save
 			$this->options_save();
 			
-			
-
 			// set flag
 			$result = true;
 	
 		}
-		
-		
 		
 		// --<
 		return $result;
@@ -629,8 +594,6 @@ class CommentpressMultisiteAdmin {
 		// activate ajax
 		commentpress_activate_ajax();
 		
-
-
 		/*
 		------------------------------------------------------------------------
 		Configure CommentPress Core based on admin page settings
@@ -644,9 +607,7 @@ class CommentpressMultisiteAdmin {
 	
 		// TOC show extended posts
 		//$commentpress_core->db->option_set( 'cp_show_extended_toc', 1 );
-	
 		
-
 		/*
 		------------------------------------------------------------------------
 		Further CommentPress plugins may define Blog Workflows and Type and
@@ -688,8 +649,6 @@ class CommentpressMultisiteAdmin {
 		
 		}
 		
-
-
 		/*
 		------------------------------------------------------------------------
 		Set WordPress Internal Configuration
@@ -737,8 +696,6 @@ class CommentpressMultisiteAdmin {
 		// run deactivation hook
 		$commentpress_core->deactivate();
 		
-
-
 		/*
 		------------------------------------------------------------------------
 		Reset WordPress Internal Configuration
@@ -882,8 +839,6 @@ class CommentpressMultisiteAdmin {
 		
 		}
 		
-		
-		
 		/**
 		 * Optionally load CommentPress Core
 		 */
@@ -957,13 +912,9 @@ class CommentpressMultisiteAdmin {
 		// check user permissions
 		if ( !current_user_can('manage_options') ) { return; }
 		
-
-
 		// enable CommentPress Core, if applicable
 		$this->_enable_core();
 		
-
-
 		// insert item in relevant menu
 		$this->options_page = add_options_page(
 		
@@ -977,14 +928,10 @@ class CommentpressMultisiteAdmin {
 		
 		//print_r( $this->options_page );die();
 		
-		
-		
 		// add scripts and styles
 		//add_action( 'admin_print_scripts-'.$this->options_page, array( $this, 'admin_js' ) );
 		//add_action( 'admin_print_styles-'.$this->options_page, array( $this, 'admin_css' ) );
 		//add_action( 'admin_head-'.$this->options_page, array( $this, 'admin_head' ), 50 );
-		
-		
 		
 		// test if we have a existing pre-3.4 Commentpress instance
 		if ( commentpress_is_legacy_plugin_active() ) {
@@ -1070,8 +1017,6 @@ class CommentpressMultisiteAdmin {
 		// init
 		$admin_page = '';
 		
-		
-		
 		// open div
 		$admin_page .= '<div class="wrap" id="cpmu_admin_wrapper">'."\n\n";
 	
@@ -1080,8 +1025,6 @@ class CommentpressMultisiteAdmin {
 		
 		// close div
 		$admin_page .= '</div>'."\n\n";
-		
-		
 		
 		// --<
 		return $admin_page;
@@ -1102,7 +1045,6 @@ class CommentpressMultisiteAdmin {
 		$url_array = explode( '&', $url );
 		if ( $url_array ) { $url = $url_array[0]; }
 		
-		
 		// init vars
 		$label = __( 'Activate CommentPress', 'commentpress-core' );
 		$submit = __( 'Save Changes', 'commentpress-core' );
@@ -1116,48 +1058,36 @@ class CommentpressMultisiteAdmin {
 			
 		}
 		
-
-
 		// define admin page
 		$admin_page = '
-<div class="icon32" id="icon-options-general"><br/></div>
+		<div class="icon32" id="icon-options-general"><br/></div>
 
-<h2>'.__( 'CommentPress Core Settings', 'commentpress-core' ).'</h2>
+		<h2>'.__( 'CommentPress Core Settings', 'commentpress-core' ).'</h2>
 
+		<form method="post" action="'.htmlentities( $url.'&updated=true' ).'">
 
+		'.wp_nonce_field( 'commentpress_admin_action', 'commentpress_nonce', true, false ).'
+		'.wp_referer_field( false ).'
+		<input id="cp_activate" name="cp_activate" value="1" type="hidden" />
 
-<form method="post" action="'.htmlentities( $url.'&updated=true' ).'">
+		<h4>'.__( 'Activation', 'commentpress-core' ).'</h4>
 
-'.wp_nonce_field( 'commentpress_admin_action', 'commentpress_nonce', true, false ).'
-'.wp_referer_field( false ).'
-<input id="cp_activate" name="cp_activate" value="1" type="hidden" />
+		<table class="form-table">
 
+			<tr valign="top">
+				<th scope="row"><label for="cp_activate_commentpress">'.$label.'</label></th>
+				<td><input id="cp_activate_commentpress" name="cp_activate_commentpress" value="1" type="checkbox" /></td>
+			</tr>
 
+		</table>
 
-<h4>'.__( 'Activation', 'commentpress-core' ).'</h4>
+		<input type="hidden" name="action" value="update" />
 
-<table class="form-table">
+		<p class="submit">
+			<input type="submit" name="commentpress_submit" value="'.$submit.'" class="button-primary" />
+		</p>
 
-	<tr valign="top">
-		<th scope="row"><label for="cp_activate_commentpress">'.$label.'</label></th>
-		<td><input id="cp_activate_commentpress" name="cp_activate_commentpress" value="1" type="checkbox" /></td>
-	</tr>
-
-</table>
-
-
-
-<input type="hidden" name="action" value="update" />
-
-
-
-<p class="submit">
-	<input type="submit" name="commentpress_submit" value="'.$submit.'" class="button-primary" />
-</p>
-
-</form>'."\n\n\n\n";
-		
-		
+		</form>'."\n\n\n\n";
 		
 		// --<
 		return $admin_page;
@@ -1185,10 +1115,10 @@ class CommentpressMultisiteAdmin {
 			// show it
 			$workflow_html = '
 			
-	<tr valign="top">
-		<th scope="row"><label for="cp_blog_workflow">'.$workflow['label'].'</label></th>
-		<td>'.$workflow['element'].'</td>
-	</tr>
+			<tr valign="top">
+				<th scope="row"><label for="cp_blog_workflow">'.$workflow['label'].'</label></th>
+				<td>'.$workflow['element'].'</td>
+			</tr>
 		
 			';
 		
@@ -1220,20 +1150,18 @@ class CommentpressMultisiteAdmin {
 			// show it
 			$type_html = '
 			
-	<tr valign="top">
-		<th scope="row"><label for="cp_blog_type">'.$type['label'].'</label></th>
-		<td><select id="cp_blog_type" name="cp_blog_type">
+			<tr valign="top">
+				<th scope="row"><label for="cp_blog_type">'.$type['label'].'</label></th>
+				<td><select id="cp_blog_type" name="cp_blog_type">
 		
-		'.$type['element'].'
+				'.$type['element'].'
 		
-		</select></td>
-	</tr>
+				</select></td>
+			</tr>
 
 			';
 		
 		}
-		
-		
 		
 		// --<
 		return $type_html;
@@ -1255,15 +1183,11 @@ class CommentpressMultisiteAdmin {
 		// check that we trust the source of the data
 		check_admin_referer( 'commentpress_admin_action', 'commentpress_nonce' );
 		
-			
-			
 		// init var
 		$cp_activate_commentpress = 0;
 		
 		// get vars
 		extract( $_POST );
-		
-		
 		
 		// did we ask to activate CommentPress Core?
 		if ( $cp_activate_commentpress == '1' ) {
@@ -1292,11 +1216,11 @@ class CommentpressMultisiteAdmin {
 	
 		// define html
 		return '
-	<tr valign="top">
-		<th scope="row"><label for="cp_deactivate_commentpress">'.__( 'Deactivate CommentPress Core', 'commentpress-core' ).'</label></th>
-		<td><input id="cp_deactivate_commentpress" name="cp_deactivate_commentpress" value="1" type="checkbox" /></td>
-	</tr>
-';		
+		<tr valign="top">
+			<th scope="row"><label for="cp_deactivate_commentpress">'.__( 'Deactivate CommentPress Core', 'commentpress-core' ).'</label></th>
+			<td><input id="cp_deactivate_commentpress" name="cp_deactivate_commentpress" value="1" type="checkbox" /></td>
+		</tr>
+		';		
 		
 	}
 	
@@ -1321,8 +1245,6 @@ class CommentpressMultisiteAdmin {
 		// get vars
 		extract( $_POST );
 		
-		
-		
 		// did we ask to deactivate CommentPress Core?
 		if ( $cp_deactivate_commentpress == '1' ) {
 			
@@ -1336,8 +1258,6 @@ class CommentpressMultisiteAdmin {
 			exit();
 		
 		}
-		
-		
 		
 		// --<
 		return;

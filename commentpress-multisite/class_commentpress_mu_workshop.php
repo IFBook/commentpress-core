@@ -225,6 +225,7 @@ class CommentpressGroupblogWorkshop {
 			
 		}
 		
+		// --<
 		return $title;
 	
 	}
@@ -529,22 +530,22 @@ class CommentpressGroupblogWorkshop {
 	
 		// define form element
 		$element = '
-	<tr valign="top">
-		<th scope="row"><label for="cpmu_bp_workshop_nomenclature">'.__( 'Change the name of a Group "Document"?', 'commentpress-core' ).'</label></th>
-		<td><input id="cpmu_bp_workshop_nomenclature" name="cpmu_bp_workshop_nomenclature" value="1" type="checkbox"'.( $this->db->option_get( 'cpmu_bp_workshop_nomenclature' ) == '1' ? ' checked="checked"' : '' ).' /></td>
-	</tr>
+		<tr valign="top">
+			<th scope="row"><label for="cpmu_bp_workshop_nomenclature">'.__( 'Change the name of a Group "Document"?', 'commentpress-core' ).'</label></th>
+			<td><input id="cpmu_bp_workshop_nomenclature" name="cpmu_bp_workshop_nomenclature" value="1" type="checkbox"'.( $this->db->option_get( 'cpmu_bp_workshop_nomenclature' ) == '1' ? ' checked="checked"' : '' ).' /></td>
+		</tr>
 
-	<tr valign="top">
-		<th scope="row"><label for="cpmu_bp_workshop_nomenclature_name">'.__( 'Singular name for a Group "Document"', 'commentpress-core' ).'</label></th>
-		<td><input id="cpmu_bp_workshop_nomenclature_name" name="cpmu_bp_workshop_nomenclature_name" value="'.( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ? $this->cpmu_bp_workshop_nomenclature_name : $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) ).'" type="text" /></td>
-	</tr>
+		<tr valign="top">
+			<th scope="row"><label for="cpmu_bp_workshop_nomenclature_name">'.__( 'Singular name for a Group "Document"', 'commentpress-core' ).'</label></th>
+			<td><input id="cpmu_bp_workshop_nomenclature_name" name="cpmu_bp_workshop_nomenclature_name" value="'.( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ? $this->cpmu_bp_workshop_nomenclature_name : $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) ).'" type="text" /></td>
+		</tr>
 
-	<tr valign="top">
-		<th scope="row"><label for="cpmu_bp_workshop_nomenclature_plural">'.__( 'Plural name for Group "Documents"', 'commentpress-core' ).'</label></th>
-		<td><input id="cpmu_bp_workshop_nomenclature_plural" name="cpmu_bp_workshop_nomenclature_plural" value="'.( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) == '' ? $this->cpmu_bp_workshop_nomenclature_plural : $this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) ).'" type="text" /></td>
-	</tr>
+		<tr valign="top">
+			<th scope="row"><label for="cpmu_bp_workshop_nomenclature_plural">'.__( 'Plural name for Group "Documents"', 'commentpress-core' ).'</label></th>
+			<td><input id="cpmu_bp_workshop_nomenclature_plural" name="cpmu_bp_workshop_nomenclature_plural" value="'.( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) == '' ? $this->cpmu_bp_workshop_nomenclature_plural : $this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) ).'" type="text" /></td>
+		</tr>
 
-';
+		';
 		
 		// --<
 		return $element;
@@ -566,13 +567,9 @@ class CommentpressGroupblogWorkshop {
 		// get variables
 		extract( $_POST );
 		
-		
-		
 		// set on/off option
 		$cpmu_bp_workshop_nomenclature = esc_sql( $cpmu_bp_workshop_nomenclature );
 		$this->db->option_set( 'cpmu_bp_workshop_nomenclature', ( $cpmu_bp_workshop_nomenclature ? 1 : 0 ) );
-		
-		
 		
 		// get name option
 		$cpmu_bp_workshop_nomenclature_name = esc_sql( $cpmu_bp_workshop_nomenclature_name );
@@ -585,8 +582,6 @@ class CommentpressGroupblogWorkshop {
 		// set name option
 		$this->db->option_set( 'cpmu_bp_workshop_nomenclature_name', $cpmu_bp_workshop_nomenclature_name );
 		
-		
-		
 		// get plural option
 		$cpmu_bp_workshop_nomenclature_plural = esc_sql( $cpmu_bp_workshop_nomenclature_plural );
 		
@@ -597,8 +592,6 @@ class CommentpressGroupblogWorkshop {
 
 		// set plural option
 		$this->db->option_set( 'cpmu_bp_workshop_nomenclature_plural', $cpmu_bp_workshop_nomenclature_plural );
-		
-		
 		
 		// set slug option
 		$cpmu_bp_workshop_nomenclature_slug = sanitize_title( $cpmu_bp_workshop_nomenclature_name );

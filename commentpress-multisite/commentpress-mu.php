@@ -65,9 +65,7 @@ function commentpress_mu_find_plugin_by_name( $plugin_name = '' ) {
 
 	// kick out if no param supplied
 	if ( $plugin_name == '' ) { return false; }
-
-
-
+	
 	// init path
 	$path_to_plugin = false;
 	
@@ -90,8 +88,6 @@ function commentpress_mu_find_plugin_by_name( $plugin_name = '' ) {
 		}
 	
 	}
-	
-	
 	
 	// --<
 	return $path_to_plugin;

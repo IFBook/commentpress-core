@@ -182,15 +182,11 @@ class CommentpressCoreFormatter {
 				break;
 			
 		}
-	
-	
-	
+		
 		// --<
 		return apply_filters( 
-			
 			'cp_class_commentpress_formatter_format', 
 			$formatter
-		
 		);
 	
 	}

@@ -159,8 +159,6 @@ class CommentpressCoreNavigator {
 			
 		}
 		
-		
-		
 		// --<
 		return false;
 		
@@ -203,8 +201,6 @@ class CommentpressCoreNavigator {
 			}
 			
 		}
-		
-		
 		
 		// --<
 		return false;
@@ -249,8 +245,6 @@ class CommentpressCoreNavigator {
 		
 		}
 		
-		
-		
 		// --<
 		return false;
 		
@@ -294,8 +288,6 @@ class CommentpressCoreNavigator {
 			
 		}
 		
-		
-		
 		// --<
 		return false;
 		
@@ -334,8 +326,6 @@ class CommentpressCoreNavigator {
 		
 		}
 		
-
-
 		// we got some...
 		return $this->_get_first_child( $kids );
 
@@ -354,8 +344,6 @@ class CommentpressCoreNavigator {
 		// init
 		$all_pages = array();
 		
-		
-		
 		// do we have a nav menu enabled?
 		if ( has_nav_menu( 'toc' ) ) {
 		
@@ -371,8 +359,6 @@ class CommentpressCoreNavigator {
 		
 		//print_r( $all_pages ); die();
 		
-
-
 		// --<
 		return $all_pages;
 
@@ -446,13 +432,9 @@ class CommentpressCoreNavigator {
 			
 		}
 		
-		
-		
 		// apply a filter
 		$num = apply_filters( 'cp_nav_page_num', $num );
-	
-	
-	
+		
 		// --<
 		return $num;
 
@@ -496,8 +478,6 @@ class CommentpressCoreNavigator {
 		// only on pages
 		if ( !is_page() ) { return; }
 		
-		
-		
 		// access post object
 		global $post;
 		
@@ -509,8 +489,6 @@ class CommentpressCoreNavigator {
 			
 		}
 		
-
-
 		// are parent pages viewable?
 		$viewable = ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) == '1' ) ? true : false;
 		
@@ -552,9 +530,11 @@ class CommentpressCoreNavigator {
 	 */
 	function _init() {
 	
-		// is_page() and is_single() are not yet defined, so we init this object when
-		// wp_head() is fired - see initialise() above
-	
+		/**
+		 * is_page() and is_single() are not yet defined, so we init this object when
+		 * wp_head() is fired - see initialise() above
+		 */
+		
 	}
 	
 	
@@ -572,17 +552,11 @@ class CommentpressCoreNavigator {
 		// if we have any pages...
 		if ( count( $all_pages ) > 0 ) {
 		
-
-		
 			// generate page numbers
 			$this->_generate_page_numbers( $all_pages );
-
-
-
+			
 			// access post object
 			global $post;
-			
-			
 			
 			// init the key we want
 			$page_key = false;
@@ -603,8 +577,6 @@ class CommentpressCoreNavigator {
 			
 			}
 			
-
-
 			// if we don't get a key...
 			if ( $page_key === false ) {
 			
@@ -615,8 +587,6 @@ class CommentpressCoreNavigator {
 				return;
 			
 			}
-
-
 			
 			// will there be a next array?
 			if ( isset( $all_pages[$key + 1] ) ) {
@@ -626,8 +596,6 @@ class CommentpressCoreNavigator {
 			
 			}
 			
-
-
 			// will there be a previous array?
 			if ( isset( $all_pages[$key - 1] ) ) {
 			
@@ -635,8 +603,6 @@ class CommentpressCoreNavigator {
 				$this->previous_pages = array_reverse( array_slice( $all_pages, 0, $key ) );
 				
 			}
-			
-			
 			
 		} // end have array check
 		
@@ -662,18 +628,12 @@ class CommentpressCoreNavigator {
 		// get them
 		$all_posts = get_posts( $defaults );
 		
-
-
 		// if we have any posts...
 		if ( count( $all_posts ) > 0 ) {
-
-
-
+			
 			// access post object
 			global $post;
 			
-
-		
 			// loop
 			foreach( $all_posts AS $key => $post_obj ) {
 			
@@ -686,8 +646,6 @@ class CommentpressCoreNavigator {
 				}
 			
 			}
-
-
 			
 			// will there be a next array?
 			if ( isset( $all_posts[$key + 1] ) ) {
@@ -697,8 +655,6 @@ class CommentpressCoreNavigator {
 			
 			}
 			
-
-
 			// will there be a previous array?
 			if ( isset( $all_posts[$key - 1] ) ) {
 			
@@ -706,8 +662,6 @@ class CommentpressCoreNavigator {
 				$this->previous_posts = array_reverse( array_slice( $all_posts, 0, $key ) );
 				
 			}
-			
-			
 			
 		} // end have array check
 		
@@ -728,8 +682,6 @@ class CommentpressCoreNavigator {
 		// init return
 		$subpages = array();
 		
-		
-	
 		// if we have any...
 		if ( count( $pages ) > 0 ) {
 		
@@ -760,9 +712,7 @@ class CommentpressCoreNavigator {
 			}
 
 		} // end have array check
-
-
-
+		
 		// --<
 		return $subpages;
 	
@@ -816,9 +766,7 @@ class CommentpressCoreNavigator {
 			}
 
 		} // end have array check
-
-
-
+		
 		// --<
 		return false;
 	
@@ -969,8 +917,6 @@ class CommentpressCoreNavigator {
 		// init return
 		$clean = array();
 		
-		
-	
 		// if we have any...
 		if ( count( $pages ) > 0 ) {
 		
@@ -988,9 +934,7 @@ class CommentpressCoreNavigator {
 			}
 
 		} // end have array check
-
-
-
+		
 		// --<
 		return $clean;
 	
@@ -1018,8 +962,6 @@ class CommentpressCoreNavigator {
 			return true;
 			
 		}
-		
-		
 		
 		// --<
 		return false;
@@ -1182,8 +1124,6 @@ class CommentpressCoreNavigator {
 		// get them
 		$pages = get_pages( $defaults );
 		
-		
-		
 		// if we have any pages...
 		if ( count( $pages ) > 0 ) {
 
@@ -1209,8 +1149,6 @@ class CommentpressCoreNavigator {
 			}
 			
 		}
-			
-			
 		
 		// --<
 		return $pages;
@@ -1230,8 +1168,6 @@ class CommentpressCoreNavigator {
 		// init return
 		$pages = array();
 		
-		
-	
 		// get menu locations
 		$locations = get_nav_menu_locations();
 		
@@ -1326,9 +1262,7 @@ class CommentpressCoreNavigator {
 			} // end check for menu items
 			
 		} // end check for our menu
-	
-
-
+		
 		// --<
 		return $pages;
 	
@@ -1347,8 +1281,6 @@ class CommentpressCoreNavigator {
 		// init return
 		$sub_items = array();
 		
-		
-	
 		// if we have any...
 		if ( count( $menu_items ) > 0 ) {
 		
@@ -1369,9 +1301,7 @@ class CommentpressCoreNavigator {
 			}
 
 		} // end have array check
-
-
-
+		
 		// --<
 		return $sub_items;
 	
@@ -1391,8 +1321,6 @@ class CommentpressCoreNavigator {
 		// init return
 		$sub_items = array();
 		
-		
-	
 		// if we have any...
 		if ( count( $menu_items ) > 0 ) {
 		
@@ -1410,9 +1338,7 @@ class CommentpressCoreNavigator {
 			}
 
 		} // end have array check
-
-
-
+		
 		// --<
 		return $sub_items;
 	
@@ -1445,9 +1371,7 @@ class CommentpressCoreNavigator {
 			}
 
 		} // end have array check
-
-
-
+		
 		// --<
 		return false;
 	
