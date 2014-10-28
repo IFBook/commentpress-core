@@ -57,14 +57,6 @@ if ( $current_activity->component == 'groups' ) {
 	
 			</div>
 	
-			<?php if ( 'activity_comment' == bp_get_activity_type() ) : ?>
-	
-				<div class="activity-inreplyto">
-					<strong><?php _e( 'In reply to: ', 'commentpress-core' ); ?></strong><?php bp_activity_parent_content(); ?> <a href="<?php bp_activity_thread_permalink(); ?>" class="view" title="<?php _e( 'View Thread / Permalink', 'commentpress-core' ); ?>"><?php _e( 'View', 'commentpress-core' ); ?></a>
-				</div>
-	
-			<?php endif; ?>
-	
 			<?php if ( bp_activity_has_content() ) : ?>
 	
 				<div class="activity-inner">
@@ -77,9 +69,15 @@ if ( $current_activity->component == 'groups' ) {
 	
 			<?php do_action( 'bp_activity_entry_content' ); ?>
 	
-			<?php if ( is_user_logged_in() ) : ?>
+			<div class="activity-meta">
 	
-				<div class="activity-meta">
+				<?php if ( bp_get_activity_type() == 'activity_comment' ) : ?>
+
+					<a href="<?php bp_activity_thread_permalink(); ?>" class="button view bp-secondary-action" title="<?php esc_attr_e( 'View Conversation', 'buddypress' ); ?>"><?php _e( 'View Conversation', 'buddypress' ); ?></a>
+
+				<?php endif; ?>
+
+				<?php if ( is_user_logged_in() ) : ?>
 	
 					<?php if ( bp_activity_can_comment() ) : ?>
 	
@@ -113,27 +111,27 @@ if ( $current_activity->component == 'groups' ) {
 	
 					<?php do_action( 'bp_activity_entry_meta' ); ?>
 	
-				</div>
-	
-			<?php endif; ?>
+				<?php endif; ?>
 
+			</div>
+	
 		</div>
 	
 		<?php do_action( 'bp_before_activity_entry_comments' ); ?>
 	
-		<?php if ( ( is_user_logged_in() AND bp_activity_can_comment() ) || bp_activity_get_comment_count() ) : ?>
-	
+		<?php if ( ( bp_activity_get_comment_count() || bp_activity_can_comment() ) || bp_is_single_activity() ) : ?>
+
 			<div class="activity-comments">
 	
 				<?php bp_activity_comments(); ?>
 	
-				<?php if ( is_user_logged_in() ) : ?>
+				<?php if ( is_user_logged_in() && bp_activity_can_comment() ) : ?>
 	
 					<form action="<?php bp_activity_comment_form_action(); ?>" method="post" id="ac-form-<?php bp_activity_id(); ?>" class="ac-form"<?php bp_activity_comment_form_nojs_display(); ?>>
 						<div class="ac-reply-avatar"><?php bp_loggedin_user_avatar( 'width=' . BP_AVATAR_THUMB_WIDTH . '&height=' . BP_AVATAR_THUMB_HEIGHT ); ?></div>
 						<div class="ac-reply-content">
 							<div class="ac-textarea">
-								<textarea id="ac-input-<?php bp_activity_id(); ?>" class="ac-input" name="ac_input_<?php bp_activity_id(); ?>"></textarea>
+								<textarea id="ac-input-<?php bp_activity_id(); ?>" class="ac-input bp-suggestions" name="ac_input_<?php bp_activity_id(); ?>"></textarea>
 							</div>
 							<input type="submit" name="ac_form_submit" value="<?php _e( 'Post', 'commentpress-core' ); ?>" /> &nbsp; <?php _e( 'or press esc to cancel.', 'commentpress-core' ); ?>
 							<input type="hidden" name="comment_form_id" value="<?php bp_activity_id(); ?>" />
