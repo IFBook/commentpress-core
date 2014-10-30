@@ -1205,7 +1205,7 @@ add_filter( 'register', 'commentpress_add_loginout_id' );
 
 
 
-if ( ! function_exists( 'commentpress_add_link_css' ) ):
+if ( ! function_exists( 'commentpress_convert_link_to_button' ) ):
 /** 
  * @description: utility to add button class to BP 1.9 notification links
  * @todo: 
