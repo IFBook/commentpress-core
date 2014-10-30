@@ -17,9 +17,7 @@ if ( ! function_exists( 'commentpress_admin_header' ) ):
  * @todo: 
  *
  */
-function commentpress_admin_header( 
-	
-) { //-->
+function commentpress_admin_header() {
 
 	// init (same as bg in layout.css and default in class_commentpress_db.php)
 	$colour = '2c2622';
@@ -87,7 +85,7 @@ endif; // commentpress_admin_header
 
 
 
-if ( ! function_exists( 'commentpress_customize_register' ) ) {
+if ( ! function_exists( 'commentpress_customize_register' ) ) :
 /**
  * Implements CommentPress Default Theme options into Theme Customizer
  *
@@ -95,11 +93,7 @@ if ( ! function_exists( 'commentpress_customize_register' ) ) {
  * @return void
  *
  */
-function commentpress_customize_register( 
-
-	$wp_customize 
-
-) { //-->
+function commentpress_customize_register( $wp_customize ) {
 
 	// access plugin
 	global $commentpress_core;
@@ -142,12 +136,12 @@ function commentpress_customize_register(
 	) );
 
 }
-}
+endif; // commentpress_customize_register
 add_action( 'customize_register', 'commentpress_customize_register' );
 
 
 
-if ( ! function_exists( 'commentpress_admin_menu' ) ) {
+if ( ! function_exists( 'commentpress_admin_menu' ) ) :
 /** 
  * @description: adds more prominent menu item
  * @todo:
@@ -165,7 +159,7 @@ function commentpress_admin_menu() {
 	}
 	
 }
-}
+endif; // commentpress_admin_menu
 add_action( 'admin_menu', 'commentpress_admin_menu' );
 
 
@@ -176,11 +170,7 @@ if ( ! function_exists( 'commentpress_fix_bp_core_avatar_url' ) ):
  * @todo: 
  *
  */
-function commentpress_fix_bp_core_avatar_url( 
-
-	$url
-
-) { //-->
+function commentpress_fix_bp_core_avatar_url( $url ) {
 	
 	// if in multisite and on non-root site
 	if ( is_multisite() && !bp_is_root_blog() ) {
@@ -213,9 +203,7 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ):
  * @todo: inform users that header images are using a different method
  *
  */
-function commentpress_get_header_image( 
-	
-) { //-->
+function commentpress_get_header_image() {
 
 	// access plugin
 	global $commentpress_core;
@@ -376,9 +364,7 @@ if ( ! function_exists( 'commentpress_get_body_id' ) ):
  * @todo: 
  *
  */
-function commentpress_get_body_id( 
-	
-) { //-->
+function commentpress_get_body_id() {
 
 	// init
 	$_body_id = '';
@@ -410,11 +396,7 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ):
  * @todo: 
  *
  */
-function commentpress_get_body_classes(
-
-	$raw = false
-	
-) { //-->
+function commentpress_get_body_classes( $raw = false ) {
 
 	// init
 	$_body_classes = '';
@@ -597,7 +579,7 @@ if ( ! function_exists( 'commentpress_site_title' ) ):
  * @todo:
  *
  */
-function commentpress_site_title( $sep = '', $echo = true ){
+function commentpress_site_title( $sep = '', $echo = true ) {
 
 	// is this multisite?
 	if ( is_multisite() ) {
@@ -759,12 +741,7 @@ if ( ! function_exists( 'commentpress_get_children' ) ):
  * @todo: 
  *
  */
-function commentpress_get_children( 
-
-	$comment,
-	$page_or_post
-	
-) { //-->
+function commentpress_get_children( $comment, $page_or_post ) {
 
 	// declare access to globals
 	global $wpdb;
@@ -794,12 +771,7 @@ if ( ! function_exists( 'commentpress_get_comments' ) ):
  * @todo: 
  *
  */
-function commentpress_get_comments( 
-
-	$comments,
-	$page_or_post
-	
-) { //-->
+function commentpress_get_comments( $comments, $page_or_post ) {
 
 	// declare access to globals
 	global $cp_comment_output;
@@ -851,11 +823,7 @@ if ( ! function_exists( 'commentpress_get_user_link' ) ):
  * @todo: 
  *
  */
-function commentpress_get_user_link( 
-
-	&$user
-	
-) { //-->
+function commentpress_get_user_link( &$user ) {
 
 	/**
 	 * In default single install mode, just link to their URL, unless 
@@ -2636,8 +2604,6 @@ add_filter( 'next_posts_link_attributes', 'commentpress_get_link_css' );
 
 
 
-
-
 if ( ! function_exists( 'commentpress_multipage_comment_link' ) ):
 /** 
  * Filter comment permalinks for multipage posts
@@ -3279,9 +3245,6 @@ endif; // commentpress_register_commentblock_button
 
 
 
-
-
-
 if ( ! function_exists( 'commentpress_add_commentblock_tinymce_plugin' ) ):
 /** 
  * Load the TinyMCE plugin : cp_editor_plugin.js
@@ -3717,8 +3680,6 @@ function commentpress_get_post_title_visibility( $post_id ) {
 
 }
 endif; // commentpress_get_post_title_visibility
-
-
 
 
 
