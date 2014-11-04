@@ -29,13 +29,11 @@ if ( !isset( $content_width ) ) { $content_width = 588; }
 
 if ( ! function_exists( 'commentpress_setup' ) ):
 /** 
- * @description: get an ID for the body tag
- * @todo: 
+ * Set up CommentPress Default theme
  *
+ * @return void
  */
-function commentpress_setup( 
-	
-) { //-->
+function commentpress_setup() {
 
 	// add_custom_background function is deprecated in WP 3.4+
 	global $wp_version;
@@ -132,9 +130,9 @@ add_action( 'after_setup_theme', 'commentpress_setup' );
 
 if ( ! function_exists( 'commentpress_enqueue_theme_styles' ) ):
 /** 
- * @description: add buddypress front-end styles
- * @todo:
+ * Add BuddyPress front-end styles
  *
+ * @return void
  */
 function commentpress_enqueue_theme_styles() {
 
@@ -190,9 +188,9 @@ endif; // commentpress_enqueue_theme_styles
 
 if ( ! function_exists( 'commentpress_enqueue_bp_theme_styles' ) ):
 /** 
- * @description: enqueue buddypress front-end styles
- * @todo:
+ * Enqueue BuddyPress front-end styles
  *
+ * @return void
  */
 function commentpress_enqueue_bp_theme_styles() {
 
@@ -209,9 +207,9 @@ add_action( 'bp_setup_globals', 'commentpress_enqueue_theme_styles' );
 
 if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ):
 /** 
- * @description: add front-end print styles
- * @todo:
+ * Add front-end print styles
  *
+ * @return void
  */
 function commentpress_enqueue_scripts_and_styles() {
 
@@ -358,9 +356,9 @@ add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_scripts_and_styles', 100
 
 if ( ! function_exists( 'commentpress_enqueue_print_styles' ) ):
 /** 
- * @description: add front-end print styles
- * @todo:
+ * Add CommentPress print stylesheet
  *
+ * @return void
  */
 function commentpress_enqueue_print_styles() {
 
@@ -397,13 +395,11 @@ add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_print_styles', 101 );
 
 if ( ! function_exists( 'commentpress_header' ) ):
 /** 
- * @description: custom header
- * @todo: 
+ * Custom header
  *
+ * @return void
  */
-function commentpress_header( 
-	
-) { //-->
+function commentpress_header() {
 
 	// init (same as bg in layout.css and default in class_commentpress_db.php)
 	$bg_colour = '2c2622';
@@ -530,9 +526,10 @@ endif; // commentpress_header
 
 if ( ! function_exists( 'commentpress_page_navigation' ) ):
 /** 
- * @description: builds a list of previous and next pages, optionally with comments
- * @todo: 
+ * Builds a list of previous and next pages, optionally with comments
  *
+ * @param bool $with_comments True returns the next page with comments
+ * @return str $nav_list The unordered list of navigation links
  */
 function commentpress_page_navigation( $with_comments = false ) {
 
@@ -632,9 +629,10 @@ endif; // commentpress_page_navigation
 
 if ( ! function_exists( 'commentpress_get_all_comments_content' ) ):
 /** 
- * @description: all-comments page display function
- * @todo: 
+ * All-comments page display function
  *
+ * @param str $page_or_post Retrieve either 'page' or 'post' comments
+ * @return str $html The comments
  */
 function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 
@@ -804,9 +802,9 @@ endif; // commentpress_get_all_comments_content
 
 if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ):
 /** 
- * @description: all-comments page display function
- * @todo: 
+ * All-comments page display function
  *
+ * @return str $_page_content The page content
  */
 function commentpress_get_all_comments_page_content() {
 
@@ -890,9 +888,10 @@ endif; // commentpress_get_all_comments_page_content
 
 if ( ! function_exists( 'commentpress_add_loginout_id' ) ):
 /** 
- * @description: utility to add button css id to login links
- * @todo: 
+ * Utility to add button css id to login links
  *
+ * @param str $link The existing link
+ * @return str $link The modified link
  */
 function commentpress_add_loginout_id( $link ) {
 
