@@ -14,9 +14,6 @@ This class overrides the name of Groupblogs from "Blog" (or "Document") to "Work
 
 
 
-
-
-
 /*
 ================================================================================
 Class Name
@@ -24,17 +21,12 @@ Class Name
 */
 
 class CommentpressGroupblogWorkshop {
-
-
-
-
-
-
-	/*
-	============================================================================
-	Properties
-	============================================================================
-	*/
+	
+	
+	
+	/**
+	 * Properties
+	 */
 	
 	// parent object reference
 	public $parent_obj;
@@ -56,15 +48,11 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: initialises this object
+	 * Initialises this object
+	 *
 	 * @param object $parent_obj a reference to the parent object
 	 * @return object
-	 * @todo: 
-	 *
 	 */
 	function __construct( $parent_obj = null ) {
 	
@@ -84,13 +72,10 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: set up all items associated with this object
-	 * @todo: 
+	 * Set up all items associated with this object
 	 *
+	 * @return void
 	 */
 	public function initialise() {
 	
@@ -98,13 +83,10 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: if needed, destroys all items associated with this object
-	 * @todo: 
+	 * If needed, destroys all items associated with this object
 	 *
+	 * @return void
 	 */
 	public function destroy() {
 	
@@ -112,37 +94,22 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 //##############################################################################
 	
 	
 	
-
-
-
-	/*
-	============================================================================
-	PUBLIC METHODS
-	============================================================================
-	*/
+	/**
+	 * -------------------------------------------------------------------------
+	 * Public Methods
+	 * -------------------------------------------------------------------------
+	 */
 	
 	
-	
-
-
-
-	/*
-	----------------------------------------------------------------------------
-	BuddyPress Groupblog Text Overrides
-	----------------------------------------------------------------------------
-	*/
 	
 	/**
-	 * @description: override the name of the filter item
-	 * @todo: 
+	 * Override the name of the filter item
 	 *
+	 * @return str The name in the groupblog comments label
 	 */
 	public function groupblog_comment_name() { 
 	
@@ -156,13 +123,10 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: override the name of the filter item
-	 * @todo: 
+	 * Override the name of the filter item
 	 *
+	 * @return str The plural name in the groupblog posts label
 	 */
 	public function groupblog_post_name() {
 	
@@ -176,13 +140,10 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: override the name of the filter item
-	 * @todo: 
+	 * Override the name of the filter item
 	 *
+	 * @return str The singular name of the groupblog post
 	 */
 	public function activity_post_name() {
 	
@@ -196,13 +157,10 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: override the name of the sub-nav item
-	 * @todo: 
+	 * Override the name of the sub-nav item
 	 *
+	 * @return str The singular name of the groupblog post
 	 */
 	public function filter_blog_name( $name ) {
 		
@@ -213,13 +171,10 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-	
-	
-	
 	/** 
-	 * @description: override the slug of the sub-nav item
-	 * @todo: 
+	 * Override the slug of the sub-nav item
 	 *
+	 * @return The slug of the sub-nav item
 	 */
 	public function filter_blog_slug( $slug ) {
 	
@@ -230,14 +185,11 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-	
-	
-	
-	
 	/** 
-	 * @description: override the title of the "Recent Comments in..." link
-	 * @todo: 
+	 * Override the title of the "Recent Comments in..." link
 	 *
+	 * @param str $title The title of the Recent Comments heading
+	 * @return str $title The modified title of the Recent Comments heading
 	 */
 	public function activity_tab_recent_title_blog( $title ) {
 	
@@ -273,20 +225,18 @@ class CommentpressGroupblogWorkshop {
 			
 		}
 		
+		// --<
 		return $title;
 	
 	}
 	
 	
 	
-	
-	
-	
-	
 	/** 
-	 * @description: override title on All Comments page
-	 * @todo: 
+	 * Override title on All Comments page
 	 *
+	 * @param str $title The title of the All Comments heading
+	 * @return str $title The modified title of the All Comments heading
 	 */
 	public function page_all_comments_blog_title( $title ) {
 	
@@ -305,13 +255,11 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-	
-	
-
 	/** 
-	 * @description: override title on All Comments page
-	 * @todo: 
+	 * Override title on All Comments page
 	 *
+	 * @param str $title The title of the "Comments on..." heading
+	 * @return str $title The modified title of the "Comments on..." heading
 	 */
 	public function page_all_comments_book_title( $title ) {
 	
@@ -330,13 +278,11 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-	
-	
-
 	/** 
-	 * @description: override title on Activity tab
-	 * @todo: 
+	 * Override title on Activity tab
 	 *
+	 * @param str $title The title of the "Recent Activity in..." heading
+	 * @return str $title The modified title of the "Recent Activity in..." heading
 	 */
 	public function filter_activity_title_all_yours( $title ) {
 	
@@ -358,13 +304,11 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-	
-	
-
 	/** 
-	 * @description: override title on Activity tab
-	 * @todo: 
+	 * Override title on Activity tab
 	 *
+	 * @param str $title The title of the "Recent Activity in..." heading
+	 * @return str $title The modified title of the "Recent Activity in..." heading
 	 */
 	public function filter_activity_title_all_public( $title ) {
 	
@@ -386,13 +330,11 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-	
-	
-
 	/** 
-	 * @description: override CommentPress "Title Page"
-	 * @todo: 
+	 * Override CommentPress "Title Page"
 	 *
+	 * @param str $title The title of the "Groupblog Home Page" heading
+	 * @return str $title The modified title of the "Groupblog Home Page" heading
 	 */
 	public function filter_nav_title_page_title( $title ) {
 	
@@ -414,13 +356,11 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-	
-	
-
 	/** 
-	 * @description: override the BP Sites Directory "visit" button
-	 * @todo: 
+	 * Override the BP Sites Directory "visit" button
 	 *
+	 * @param str $button The title of the "Visit Site" heading
+	 * @return str $title The modified title of the "Visit Site" heading
 	 */
 	public function get_blogs_visit_blog_button( $button ) {
 		
@@ -434,31 +374,22 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-	
-	
-	
 //##############################################################################
 	
 	
 	
-
-
-
-	/*
-	============================================================================
-	PRIVATE METHODS
-	============================================================================
-	*/
+	/**
+	 * -------------------------------------------------------------------------
+	 * Private Methods
+	 * -------------------------------------------------------------------------
+	 */
 	
 	
 	
-
-
-
 	/** 
-	 * @description: object initialisation
-	 * @todo:
+	 * Object initialisation
 	 *
+	 * @return void
 	 */
 	function _init() {
 	
@@ -530,13 +461,10 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: register Wordpress hooks
-	 * @todo: 
+	 * Register Wordpress hooks
 	 *
+	 * @return void
 	 */
 	function _register_hooks() {
 		
@@ -572,13 +500,10 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: add our options to the BuddyPress admin form
-	 * @todo: 
+	 * Add our options to the BuddyPress admin form
 	 *
+	 * @return str $element The admin form element
 	 */
 	function _buddypress_admin_form() {
 	
@@ -605,22 +530,22 @@ class CommentpressGroupblogWorkshop {
 	
 		// define form element
 		$element = '
-	<tr valign="top">
-		<th scope="row"><label for="cpmu_bp_workshop_nomenclature">'.__( 'Change the name of a Group "Document"?', 'commentpress-core' ).'</label></th>
-		<td><input id="cpmu_bp_workshop_nomenclature" name="cpmu_bp_workshop_nomenclature" value="1" type="checkbox"'.( $this->db->option_get( 'cpmu_bp_workshop_nomenclature' ) == '1' ? ' checked="checked"' : '' ).' /></td>
-	</tr>
+		<tr valign="top">
+			<th scope="row"><label for="cpmu_bp_workshop_nomenclature">'.__( 'Change the name of a Group "Document"?', 'commentpress-core' ).'</label></th>
+			<td><input id="cpmu_bp_workshop_nomenclature" name="cpmu_bp_workshop_nomenclature" value="1" type="checkbox"'.( $this->db->option_get( 'cpmu_bp_workshop_nomenclature' ) == '1' ? ' checked="checked"' : '' ).' /></td>
+		</tr>
 
-	<tr valign="top">
-		<th scope="row"><label for="cpmu_bp_workshop_nomenclature_name">'.__( 'Singular name for a Group "Document"', 'commentpress-core' ).'</label></th>
-		<td><input id="cpmu_bp_workshop_nomenclature_name" name="cpmu_bp_workshop_nomenclature_name" value="'.( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ? $this->cpmu_bp_workshop_nomenclature_name : $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) ).'" type="text" /></td>
-	</tr>
+		<tr valign="top">
+			<th scope="row"><label for="cpmu_bp_workshop_nomenclature_name">'.__( 'Singular name for a Group "Document"', 'commentpress-core' ).'</label></th>
+			<td><input id="cpmu_bp_workshop_nomenclature_name" name="cpmu_bp_workshop_nomenclature_name" value="'.( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ? $this->cpmu_bp_workshop_nomenclature_name : $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) ).'" type="text" /></td>
+		</tr>
 
-	<tr valign="top">
-		<th scope="row"><label for="cpmu_bp_workshop_nomenclature_plural">'.__( 'Plural name for Group "Documents"', 'commentpress-core' ).'</label></th>
-		<td><input id="cpmu_bp_workshop_nomenclature_plural" name="cpmu_bp_workshop_nomenclature_plural" value="'.( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) == '' ? $this->cpmu_bp_workshop_nomenclature_plural : $this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) ).'" type="text" /></td>
-	</tr>
+		<tr valign="top">
+			<th scope="row"><label for="cpmu_bp_workshop_nomenclature_plural">'.__( 'Plural name for Group "Documents"', 'commentpress-core' ).'</label></th>
+			<td><input id="cpmu_bp_workshop_nomenclature_plural" name="cpmu_bp_workshop_nomenclature_plural" value="'.( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) == '' ? $this->cpmu_bp_workshop_nomenclature_plural : $this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) ).'" type="text" /></td>
+		</tr>
 
-';
+		';
 		
 		// --<
 		return $element;
@@ -629,13 +554,10 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-	
-	
-	
 	/** 
-	 * @description: hook into Network BuddyPress form update
-	 * @todo: 
+	 * Hook into Network BuddyPress form update
 	 *
+	 * @return void
 	 */
 	function _buddypress_admin_update() {
 	
@@ -645,13 +567,9 @@ class CommentpressGroupblogWorkshop {
 		// get variables
 		extract( $_POST );
 		
-		
-		
 		// set on/off option
 		$cpmu_bp_workshop_nomenclature = esc_sql( $cpmu_bp_workshop_nomenclature );
 		$this->db->option_set( 'cpmu_bp_workshop_nomenclature', ( $cpmu_bp_workshop_nomenclature ? 1 : 0 ) );
-		
-		
 		
 		// get name option
 		$cpmu_bp_workshop_nomenclature_name = esc_sql( $cpmu_bp_workshop_nomenclature_name );
@@ -664,8 +582,6 @@ class CommentpressGroupblogWorkshop {
 		// set name option
 		$this->db->option_set( 'cpmu_bp_workshop_nomenclature_name', $cpmu_bp_workshop_nomenclature_name );
 		
-		
-		
 		// get plural option
 		$cpmu_bp_workshop_nomenclature_plural = esc_sql( $cpmu_bp_workshop_nomenclature_plural );
 		
@@ -677,8 +593,6 @@ class CommentpressGroupblogWorkshop {
 		// set plural option
 		$this->db->option_set( 'cpmu_bp_workshop_nomenclature_plural', $cpmu_bp_workshop_nomenclature_plural );
 		
-		
-		
 		// set slug option
 		$cpmu_bp_workshop_nomenclature_slug = sanitize_title( $cpmu_bp_workshop_nomenclature_name );
 		$this->db->option_set( 'cpmu_bp_workshop_nomenclature_slug', $cpmu_bp_workshop_nomenclature_slug );
@@ -687,13 +601,10 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-	
-	
-	
 	/**
-	 * @description: add our default BuddyPress-related settings
-	 * @todo: 
+	 * Add our default BuddyPress-related settings
 	 *
+	 * @return array $settings The default settings
 	 */
 	function _get_default_settings( $settings ) {
 	
@@ -710,11 +621,10 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/**
-	 * @description: get legacy name when already set
+	 * Get legacy name when already set
+	 *
+	 * @return str $name The legacy singular name of a groupblog
 	 */
 	function _get_legacy_name() {
 	
@@ -725,11 +635,10 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/**
-	 * @description: get legacy plural name when already set
+	 * Get legacy plural name when already set
+	 *
+	 * @return str $name The legacy plural name of a groupblog
 	 */
 	function _get_legacy_plural() {
 	
@@ -740,11 +649,10 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 	/**
-	 * @description: get legacy slug when already set
+	 * Get legacy slug when already set
+	 *
+	 * @return str $name The legacy slug of a groupblog
 	 */
 	function _get_legacy_slug() {
 	
@@ -755,21 +663,11 @@ class CommentpressGroupblogWorkshop {
 	
 	
 	
-
-
-
 //##############################################################################
 	
 	
 	
-
-
-
 } // class ends
-	
-	
-	
-
 
 
 

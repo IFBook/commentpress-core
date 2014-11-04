@@ -15,9 +15,6 @@ or relationship they have been assigned
 
 
 
-
-
-
 /*
 ================================================================================
 Class Name
@@ -25,17 +22,12 @@ Class Name
 */
 
 class CommentpressCoreNavigator {
-
-
-
-
-
-
-	/*
-	============================================================================
-	Properties
-	============================================================================
-	*/
+	
+	
+	
+	/**
+	 * Properties
+	 */
 	
 	// parent object reference
 	public $parent_obj;
@@ -60,18 +52,11 @@ class CommentpressCoreNavigator {
 	
 	
 	
-
-
-
-
-
-
 	/** 
-	 * @description: initialises this object
-	 * @param object $parent_obj a reference to the parent object
-	 * @return object
-	 * @todo: 
+	 * Initialises this object
 	 *
+	 * @param object $parent_obj A reference to the parent object
+	 * @return object
 	 */
 	function __construct( $parent_obj ) {
 	
@@ -85,16 +70,13 @@ class CommentpressCoreNavigator {
 		return $this;
 
 	}
-
-
-
-
-
-
+	
+	
+	
 	/** 
-	 * @description: set up all items associated with this object
-	 * @todo: 
+	 * Set up all items associated with this object
 	 *
+	 * @return void
 	 */
 	public function initialise() {
 	
@@ -115,53 +97,37 @@ class CommentpressCoreNavigator {
 		}
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
-	 * @description: if needed, destroys all items associated with this object
-	 * @todo: 
+	 * If needed, destroys all items associated with this object
 	 *
+	 * @return void
 	 */
 	public function destroy() {
 	
 	}
-
-
-
-
-
-
-
-//##############################################################################
-
-
-
-
-
-
-
-	/*
-	============================================================================
-	PUBLIC METHODS
-	============================================================================
-	*/
 	
-
-
-
-
-
+	
+	
+//##############################################################################
+	
+	
+	
+	/**
+	 * -------------------------------------------------------------------------
+	 * Public Methods
+	 * -------------------------------------------------------------------------
+	 */
+	
+	
+	
 	/** 
-	 * @description: get next page link
-	 * @param boolean $with_comments requested page has comments - default false
-	 * @return object $page_data if successful, boolean false if not
-	 * @todo: 
+	 * Get next page link
 	 *
+	 * @param bool $with_comments The requested page has comments - default false
+	 * @return object $page_data True if successful, boolean false if not
 	 */
 	public function get_next_page( $with_comments = false ) {
 	
@@ -193,25 +159,18 @@ class CommentpressCoreNavigator {
 			
 		}
 		
-		
-		
 		// --<
 		return false;
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
-	 * @description: get previous page link
-	 * @param boolean $with_comments requested page has comments - default false
-	 * @return object $page_data if successful, boolean false if not
-	 * @todo: 
+	 * Get previous page link
 	 *
+	 * @param bool $with_comments The requested page has comments - default false
+	 * @return object $page_data True if successful, boolean false if not
 	 */
 	public function get_previous_page( $with_comments = false ) {
 	
@@ -243,25 +202,18 @@ class CommentpressCoreNavigator {
 			
 		}
 		
-		
-		
 		// --<
 		return false;
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
-	 * @description: get next post link
-	 * @param boolean $with_comments requested post has comments - default false
-	 * @return object $post_data if successful, boolean false if not
-	 * @todo: 
+	 * Get next post link
 	 *
+	 * @param bool $with_comments The requested post has comments - default false
+	 * @return object $post_data True if successful, boolean false if not
 	 */
 	public function get_next_post( $with_comments = false ) {
 	
@@ -293,25 +245,18 @@ class CommentpressCoreNavigator {
 		
 		}
 		
-		
-		
 		// --<
 		return false;
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
-	 * @description: get previous post link
-	 * @param boolean $with_comments requested post has comments - default false
-	 * @return object $post_data if successful, boolean false if not
-	 * @todo: 
+	 * Get previous post link
 	 *
+	 * @param bool $with_comments The requested post has comments - default false
+	 * @return object $post_data True if successful, boolean false if not
 	 */
 	public function get_previous_post( $with_comments = false ) {
 	
@@ -343,25 +288,18 @@ class CommentpressCoreNavigator {
 			
 		}
 		
-		
-		
 		// --<
 		return false;
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
-	 * @description: get first viewable child page
-	 * @param integer $page_id the page ID
-	 * @return integer $first_child ID of the first child page (or false if not found)
-	 * @todo:
+	 * Get first viewable child page
 	 *
+	 * @param int $page_id The page ID
+	 * @return int $first_child The ID of the first child page (or false if not found)
 	 */
 	public function get_first_child( $page_id ) {
 	
@@ -388,32 +326,23 @@ class CommentpressCoreNavigator {
 		
 		}
 		
-
-
 		// we got some...
 		return $this->_get_first_child( $kids );
 
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
-	 * @description: get list of 'book' pages
-	 * @param string $mode either 'structural' or 'readable'
-	 * @return array $pages all 'book' pages
-	 * @todo:
+	 * Get list of 'book' pages
 	 *
+	 * @param str $mode Either 'structural' or 'readable'
+	 * @return array $pages All 'book' pages
 	 */
 	public function get_book_pages( $mode = 'readable' ) {
 	
 		// init
 		$all_pages = array();
-		
-		
 		
 		// do we have a nav menu enabled?
 		if ( has_nav_menu( 'toc' ) ) {
@@ -430,24 +359,17 @@ class CommentpressCoreNavigator {
 		
 		//print_r( $all_pages ); die();
 		
-
-
 		// --<
 		return $all_pages;
 
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
-	 * @description: get first readable 'book' page
-	 * @return integer $id ID of the first page (or false if not found)
-	 * @todo:
+	 * Get first readable 'book' page
 	 *
+	 * @return int $id The ID of the first page (or false if not found)
 	 */
 	public function get_first_page() {
 	
@@ -469,19 +391,14 @@ class CommentpressCoreNavigator {
 		return $id;
 
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
-	 * @description: get page number
-	 * @param integer $page_id the page ID
-	 * @return integer $number number of the page
-	 * @todo:
+	 * Get page number
 	 *
+	 * @param int $page_id The page ID
+	 * @return int $number The number of the page
 	 */
 	public function get_page_number( $page_id ) {
 	
@@ -515,30 +432,21 @@ class CommentpressCoreNavigator {
 			
 		}
 		
-		
-		
 		// apply a filter
 		$num = apply_filters( 'cp_nav_page_num', $num );
-	
-	
-	
+		
 		// --<
 		return $num;
 
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
-	 * @description: get page number
-	 * @param integer $page_id the page ID
-	 * @return integer $number number of the page
-	 * @todo:
+	 * Get page number
 	 *
+	 * @param int $page_id The page ID
+	 * @return int $number The number of the page
 	 */
 	function _get_page_number( $page_id ) {
 	
@@ -557,24 +465,18 @@ class CommentpressCoreNavigator {
 		return $num;
 
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
-	 * @description: redirect to child
-	 * @todo: 
+	 * Redirect to child
 	 *
+	 * @return void
 	 */
 	function redirect_to_child() {
 	
 		// only on pages
 		if ( !is_page() ) { return; }
-		
-		
 		
 		// access post object
 		global $post;
@@ -587,8 +489,6 @@ class CommentpressCoreNavigator {
 			
 		}
 		
-
-
 		// are parent pages viewable?
 		$viewable = ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) == '1' ) ? true : false;
 		
@@ -611,52 +511,38 @@ class CommentpressCoreNavigator {
 	
 	
 	
-	
-	
-
-
-
 //##############################################################################
-
-
-
-
-
-
-
-	/*
-	============================================================================
-	PRIVATE METHODS
-	============================================================================
-	*/
 	
 	
 	
-
-
-
+	/**
+	 * -------------------------------------------------------------------------
+	 * Private Methods
+	 * -------------------------------------------------------------------------
+	 */
+	
+	
+	
 	/** 
-	 * @description: object initialisation
-	 * @todo:
+	 * Object initialisation
 	 *
+	 * @return void
 	 */
 	function _init() {
 	
-		// is_page() and is_single() are not yet defined, so we init this object when
-		// wp_head() is fired - see initialise() above
-	
+		/**
+		 * is_page() and is_single() are not yet defined, so we init this object when
+		 * wp_head() is fired - see initialise() above
+		 */
+		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
-	 * @description: set up page list
-	 * @todo: 
+	 * Set up page list
 	 *
+	 * @return void
 	 */
 	function _init_page_lists() {
 	
@@ -666,17 +552,11 @@ class CommentpressCoreNavigator {
 		// if we have any pages...
 		if ( count( $all_pages ) > 0 ) {
 		
-
-		
 			// generate page numbers
 			$this->_generate_page_numbers( $all_pages );
-
-
-
+			
 			// access post object
 			global $post;
-			
-			
 			
 			// init the key we want
 			$page_key = false;
@@ -697,8 +577,6 @@ class CommentpressCoreNavigator {
 			
 			}
 			
-
-
 			// if we don't get a key...
 			if ( $page_key === false ) {
 			
@@ -709,8 +587,6 @@ class CommentpressCoreNavigator {
 				return;
 			
 			}
-
-
 			
 			// will there be a next array?
 			if ( isset( $all_pages[$key + 1] ) ) {
@@ -720,8 +596,6 @@ class CommentpressCoreNavigator {
 			
 			}
 			
-
-
 			// will there be a previous array?
 			if ( isset( $all_pages[$key - 1] ) ) {
 			
@@ -730,22 +604,16 @@ class CommentpressCoreNavigator {
 				
 			}
 			
-			
-			
 		} // end have array check
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
-	 * @description: set up posts list
-	 * @todo: 
+	 * Set up posts list
 	 *
+	 * @return void
 	 */
 	function _init_posts_lists() {
 	
@@ -760,18 +628,12 @@ class CommentpressCoreNavigator {
 		// get them
 		$all_posts = get_posts( $defaults );
 		
-
-
 		// if we have any posts...
 		if ( count( $all_posts ) > 0 ) {
-
-
-
+			
 			// access post object
 			global $post;
 			
-
-		
 			// loop
 			foreach( $all_posts AS $key => $post_obj ) {
 			
@@ -784,8 +646,6 @@ class CommentpressCoreNavigator {
 				}
 			
 			}
-
-
 			
 			// will there be a next array?
 			if ( isset( $all_posts[$key + 1] ) ) {
@@ -795,8 +655,6 @@ class CommentpressCoreNavigator {
 			
 			}
 			
-
-
 			// will there be a previous array?
 			if ( isset( $all_posts[$key - 1] ) ) {
 			
@@ -805,32 +663,25 @@ class CommentpressCoreNavigator {
 				
 			}
 			
-			
-			
 		} // end have array check
 		
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
-	 * @description: strip out all but lowest level pages
-	 * @param array $pages array of page objects
-	 * @return array $subpages all subpages
-	 * @todo: this only works one level deep?
+	 * Strip out all but lowest level pages
 	 *
+	 * @todo This only works one level deep?
+	 *
+	 * @param array $pages The array of page objects
+	 * @return array $subpages All subpages
 	 */
 	function _filter_chapters( $pages ) {
 	
 		// init return
 		$subpages = array();
 		
-		
-	
 		// if we have any...
 		if ( count( $pages ) > 0 ) {
 		
@@ -861,26 +712,19 @@ class CommentpressCoreNavigator {
 			}
 
 		} // end have array check
-
-
-
+		
 		// --<
 		return $subpages;
 	
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
-	 * @description: get first published child, however deep
-	 * @param array $pages array of page objects
-	 * @return array $subpages all subpages
-	 * @todo: 
+	 * Get first published child, however deep
 	 *
+	 * @param array $pages The array of page objects
+	 * @return array $subpages All subpages
 	 */
 	function _get_first_child( $pages ) {
 	
@@ -922,25 +766,21 @@ class CommentpressCoreNavigator {
 			}
 
 		} // end have array check
-
-
-
+		
 		// --<
 		return false;
 	
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
-	 * @description: generates page numbers
-	 * @param array $pages array of page objects in the 'book'
-	 * @todo: refine by section, page meta value etc
+	 * Generates page numbers
 	 *
+	 * @todo Refine by section, page meta value etc
+	 *
+	 * @param array $pages The array of page objects in the 'book'
+	 * @return void
 	 */
 	function _generate_page_numbers( $pages ) {
 	
@@ -1061,26 +901,22 @@ class CommentpressCoreNavigator {
 		}
 	
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
-	 * @description: utility to remove the Theme My Login page
-	 * @return boolean $success
-	 * @todo: pass the array
+	 * Utility to remove the Theme My Login page
 	 *
+	 * @todo Pass the array?
+	 *
+	 * @param array $pages An array of page objects
+	 * @return bool $success
 	 */
 	function _filter_theme_my_login_page( $pages ) {
 		
 		// init return
 		$clean = array();
 		
-		
-	
 		// if we have any...
 		if ( count( $pages ) > 0 ) {
 		
@@ -1098,9 +934,7 @@ class CommentpressCoreNavigator {
 			}
 
 		} // end have array check
-
-
-
+		
 		// --<
 		return $clean;
 	
@@ -1108,16 +942,11 @@ class CommentpressCoreNavigator {
 	
 	
 	
-	
-	
-	
-	
-
 	/** 
-	 * @description: utility to detect the Theme My Login page
-	 * @return boolean $success
-	 * @todo: 
+	 * Utility to detect the Theme My Login page
 	 *
+	 * @param object $page_obj The WordPress page object
+	 * @return boolean $success True if TML page, false otherwise
 	 */
 	function _detect_login_page( $page_obj ) {
 		
@@ -1134,8 +963,6 @@ class CommentpressCoreNavigator {
 			
 		}
 		
-		
-		
 		// --<
 		return false;
 
@@ -1143,11 +970,6 @@ class CommentpressCoreNavigator {
 	
 	
 	
-	
-	
-	
-	
-
 	/**
 	 * PHP Roman Numeral Library
 	 * 
@@ -1158,10 +980,9 @@ class CommentpressCoreNavigator {
 	 * send a letter to Creative Commons, 559 Nathan Abbott Way, Stanford, California
 	 * 94305, USA.
 	 * 
-	 * @description: utility to convert arabic to roman numerals
-	 * @return boolean $result the roman equivalent
-	 * @todo: 
+	 * Utility to convert arabic to roman numerals
 	 *
+	 * @return boolean $result the roman equivalent
 	 */
 	function _number_to_roman( $arabic ) {
 		
@@ -1200,15 +1021,11 @@ class CommentpressCoreNavigator {
 	
 	
 	
-	
-	
-	
-	
-
 	/** 
-	 * @description: get top parent page id
-	 * @param integer $post_id the queried page id
-	 * @return integer $post_id
+	 * Get top parent page id
+	 *
+	 * @param int $post_id The queried page ID
+	 * @return int $post_id The overridden page ID
 	 */
 	function _get_top_parent_id( $post_id ) {
 		
@@ -1232,13 +1049,11 @@ class CommentpressCoreNavigator {
 	
 	
 	
-	
-	
-	
 	/** 
-	 * @description: parse a WP page list
-	 * @param string $mode either 'structural' or 'readable'
-	 * @return array $pages all 'book' pages
+	 * Parse a WP page list
+	 *
+	 * @param str $mode Either 'structural' or 'readable'
+	 * @return array $pages All 'book' pages
 	 */
 	function _parse_pages( $mode ) {
 	
@@ -1309,8 +1124,6 @@ class CommentpressCoreNavigator {
 		// get them
 		$pages = get_pages( $defaults );
 		
-		
-		
 		// if we have any pages...
 		if ( count( $pages ) > 0 ) {
 
@@ -1336,8 +1149,6 @@ class CommentpressCoreNavigator {
 			}
 			
 		}
-			
-			
 		
 		// --<
 		return $pages;
@@ -1346,21 +1157,17 @@ class CommentpressCoreNavigator {
 	
 	
 	
-	
-	
-	
 	/** 
-	 * @description: parse a WP menu
-	 * @param string $mode either 'structural' or 'readable'
-	 * @return array $pages all 'book' pages
+	 * Parse a WP menu
+	 *
+	 * @param str $mode Either 'structural' or 'readable'
+	 * @return array $pages All 'book' pages
 	 */
 	function _parse_menu( $mode ) {
 	
 		// init return
 		$pages = array();
 		
-		
-	
 		// get menu locations
 		$locations = get_nav_menu_locations();
 		
@@ -1455,32 +1262,25 @@ class CommentpressCoreNavigator {
 			} // end check for menu items
 			
 		} // end check for our menu
-	
-
-
+		
 		// --<
 		return $pages;
 	
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
-	 * @description: strip out all but lowest level menu items
-	 * @param array $menu_items array of menu item objects
-	 * @return array $sub_items all lowest level items
+	 * Strip out all but lowest level menu items
+	 *
+	 * @param array $menu_items An array of menu item objects
+	 * @return array $sub_items All lowest level items
 	 */
 	function _filter_menu( $menu_items ) {
 	
 		// init return
 		$sub_items = array();
 		
-		
-	
 		// if we have any...
 		if ( count( $menu_items ) > 0 ) {
 		
@@ -1501,33 +1301,26 @@ class CommentpressCoreNavigator {
 			}
 
 		} // end have array check
-
-
-
+		
 		// --<
 		return $sub_items;
 	
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
-	 * @description: utility to get children of a menu item
-	 * @param array $menu_items array of menu item objects
-	 * @param obj $menu_obj menu item object
-	 * @return array $sub_items menu item children
+	 * Utility to get children of a menu item
+	 *
+	 * @param array $menu_items An array of menu item objects
+	 * @param obj $menu_obj The menu item object
+	 * @return array $sub_items The menu item children
 	 */
 	function _get_menu_item_children( $menu_items, $menu_obj ) {
 	
 		// init return
 		$sub_items = array();
 		
-		
-	
 		// if we have any...
 		if ( count( $menu_items ) > 0 ) {
 		
@@ -1545,24 +1338,19 @@ class CommentpressCoreNavigator {
 			}
 
 		} // end have array check
-
-
-
+		
 		// --<
 		return $sub_items;
 	
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
-	 * @description: utility to get parent of a menu item
-	 * @param obj $menu_obj menu item object
-	 * @return int $menu_obj the parent menu item
+	 * Utility to get parent of a menu item
+	 *
+	 * @param obj $menu_obj The menu item object
+	 * @return int $menu_obj The parent menu item
 	 */
 	function _get_menu_item_parent( $menu_obj ) {
 	
@@ -1583,24 +1371,19 @@ class CommentpressCoreNavigator {
 			}
 
 		} // end have array check
-
-
-
+		
 		// --<
 		return false;
 	
 	}
-
-
-
-
-
-
-
+	
+	
+	
 	/** 
-	 * @description: get top parent menu item
-	 * @param object $menu_obj the queried menu object
-	 * @return object $parent_obj the parent object or false if
+	 * Get top parent menu item
+	 *
+	 * @param object $menu_obj The queried menu object
+	 * @return object $parent_obj The parent object or false if
 	 */
 	function _get_top_menu_obj( $menu_obj ) {
 		
@@ -1642,21 +1425,11 @@ class CommentpressCoreNavigator {
 	
 	
 	
-	
-	
-	
 //##############################################################################
-
-
-
-
-
-
-
+	
+	
+	
 } // class ends
-
-
-
 
 
 

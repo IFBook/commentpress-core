@@ -17,8 +17,6 @@ Mark James for the icons: http://www.famfamfam.com/lab/icons/silk/
 
 
 
-
-
 // -----------------------------------------------------------------------------
 // No need to edit below this line
 // -----------------------------------------------------------------------------
@@ -39,10 +37,6 @@ if ( !defined( 'COMMENTPRESS_PLUGIN_URL' ) ) {
 if ( !defined( 'COMMENTPRESS_PLUGIN_PATH' ) ) {
 	define( 'COMMENTPRESS_PLUGIN_PATH', plugin_dir_path( COMMENTPRESS_PLUGIN_FILE ) );
 }
-
-
-
-
 
 
 
@@ -108,9 +102,6 @@ if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
 
 
 
-
-
-
 /*
 --------------------------------------------------------------------------------
 Misc Utility Functions
@@ -118,11 +109,10 @@ Misc Utility Functions
 */
 
 /** 
- * @description: utility to check for presence of vital files
+ * Utility to check for presence of vital files
+ *
  * @param string $filename the name of the CommentPress Core Plugin file
  * @return string $filepath absolute path to file
- * @todo: 
- *
  */
 function commentpress_file_is_present( $filename ) {
 
@@ -146,13 +136,10 @@ function commentpress_file_is_present( $filename ) {
 
 
 
-
-
-
 /** 
- * @description: utility to include the core plugin
- * @todo: 
+ * Utility to include the core plugin
  *
+ * @return void
  */
 function commentpress_include_core() {
 	
@@ -174,13 +161,10 @@ function commentpress_include_core() {
 
 
 
-
-
-
 /** 
- * @description: utility to activate the core plugin
- * @todo: 
+ * Utility to activate the core plugin
  *
+ * @return void
  */
 function commentpress_activate_core() {
 	
@@ -199,13 +183,10 @@ function commentpress_activate_core() {
 
 
 
-
-
-
 /** 
- * @description: utility to activate the ajax plugin
- * @todo: 
+ * Utility to activate the ajax plugin
  *
+ * @return void
  */
 function commentpress_activate_ajax() {
 	
@@ -222,11 +203,10 @@ function commentpress_activate_ajax() {
 
 
 
-
-
-
 /**
- * shortcut for debugging
+ * Shortcut for debugging
+ *
+ * @param str The debug string to be sent the the browser
  */
 function _cpdie( $var ) {
 
@@ -239,13 +219,12 @@ function _cpdie( $var ) {
 
 
 
-
-
-
 /** 
- * @description: utility to add link to settings page
- * @todo: 
+ * Utility to add link to settings page
  *
+ * @param array $links The existing links array
+ * @param str $file The name of the plugin file
+ * @return array $links The modified links array
  */
 function commentpress_plugin_action_links( $links, $file ) {
 	
@@ -264,14 +243,12 @@ add_filter( 'plugin_action_links', 'commentpress_plugin_action_links', 10, 2 );
 
 
 
-
-
-
 /** 
- * @description: get WP plugin reference by name (since we never know for sure what the enclosing
+ * Get WP plugin reference by name (since we never know for sure what the enclosing
  * directory is called)
- * @todo: 
  *
+ * @param str $plugin_name The name of the plugin
+ * @return str $path_to_plugin The path to the plugin
  */
 function commentpress_find_plugin_by_name( $plugin_name = '' ) {
 
@@ -312,12 +289,10 @@ function commentpress_find_plugin_by_name( $plugin_name = '' ) {
 
 
 
-
-
 /** 
- * @description: test if the old pre-3.4 Commentpress plugin is active
- * @todo: 
+ * Test if the old pre-3.4 Commentpress plugin is active
  *
+ * @return bool $active True if the legacy plugin is active, false otherwise
  */
 function commentpress_is_legacy_plugin_active() {
 
@@ -348,8 +323,6 @@ function commentpress_is_legacy_plugin_active() {
 
 
 
-
-
 /*
 --------------------------------------------------------------------------------
 NOTE: in multisite, child themes are registered as broken if the plugin is not 
@@ -376,10 +349,6 @@ register_theme_directory( plugin_dir_path( COMMENTPRESS_PLUGIN_FILE ) . 'themes'
 
 
 
-
-
-
-
 /*
 --------------------------------------------------------------------------------
 Include Standalone
@@ -387,9 +356,6 @@ Include Standalone
 */
 
 commentpress_include_core();
-
-
-
 
 
 
@@ -433,8 +399,6 @@ if (
 
 
 
-
-
 /*
 --------------------------------------------------------------------------------
 Init Multisite
@@ -456,8 +420,6 @@ if ( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_sitewide' ) {
 	require_once( $_file_path );
 
 }
-
-
 
 
 

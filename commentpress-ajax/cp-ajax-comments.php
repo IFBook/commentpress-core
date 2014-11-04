@@ -11,8 +11,6 @@ NOTES
 
 
 
-
-
 // enable the plugin at the appropriate point
 add_action( 'wp', 'cpajax_enable_plugin' );
 
@@ -39,9 +37,9 @@ if ( defined( 'COMMENTPRESS_INFINITE_SCROLL' ) AND COMMENTPRESS_INFINITE_SCROLL 
 
 
 /** 
- * @description: load the next page
- * @todo: 
+ * Load the next page
  *
+ * @return void
  */
 function cpajax_load_next_page() {
 	
@@ -250,13 +248,10 @@ function cpajax_load_next_page() {
 
 
 
-
-
-
 /** 
- * @description: get context in which to enable this plugin
- * @todo: 
+ * Get context in which to enable this plugin
  *
+ * @return void
  */
 function cpajax_enable_plugin() {
 
@@ -270,8 +265,6 @@ function cpajax_enable_plugin() {
 	
 	// we're in the WP back end
 	if ( is_admin() ) { return; }
-		
-	
 	
 	// add our javascripts
 	add_action( 'wp_enqueue_scripts', 'cpajax_add_javascripts', 120 );
@@ -283,13 +276,10 @@ function cpajax_enable_plugin() {
 
 
 
-
-
-
 /** 
- * @description: get new comments in response to an ajax request
- * @todo: 
+ * Get new comments in response to an ajax request
  *
+ * @return void
  */
 function cpajax_get_new_comments() {
 
@@ -310,9 +300,7 @@ function cpajax_get_new_comments() {
 	
 	// enable Wordpress API on post
 	$GLOBALS['post'] = get_post( $post_id );
-
-
-
+	
 	// get any comments posted since last update time
 	$data['cpajax_new_comments'] = array();
 	
@@ -327,13 +315,9 @@ function cpajax_get_new_comments() {
 	
 	// are there any?
 	if ( $num_to_get > 0 ) {
-	
-		
 		
 		// update comment count since last request
 		$data['cpajax_comment_count'] = (string) $current_comment_count;
-		
-		
 		
 		// set get_comments defaults
 		$defaults = array(
@@ -347,8 +331,6 @@ function cpajax_get_new_comments() {
 	
 		// get them
 		$comments = get_comments( $defaults );
-		
-		
 		
 		// if we get some - again, just to be sure
 		if ( count( $comments ) > 0 ) {
@@ -382,12 +364,10 @@ function cpajax_get_new_comments() {
 				
 				// add comment to array
 				$data['cpajax_new_comment_'.$identifier] = array(
-				
 					'parent' => $_comment->comment_parent,
 					'id' => $_comment->comment_ID,
 					'text_sig' => $_comment->comment_signature,
 					'markup' => $html
-					
 				);
 				
 				// increment
@@ -396,13 +376,9 @@ function cpajax_get_new_comments() {
 			}
 		
 		}
-
-
-
+		
 	}
 	
-
-
 	// set reasonable headers
 	header('Content-type: text/plain'); 
 	header("Cache-Control: no-cache");
@@ -419,13 +395,10 @@ function cpajax_get_new_comments() {
 
 
 
-
-
-
 /** 
- * @description: get comment depth
- * @todo: 
+ * Get comment depth
  *
+ * @return int $depth The depth of the comment in a thread
  */
 function cpajax_get_comment_depth( $comment, $depth ) {
 	
@@ -450,13 +423,10 @@ function cpajax_get_comment_depth( $comment, $depth ) {
 
 
 
-
-
-
 /** 
- * @description: add our plugin javascripts
- * @todo: 
+ * Add our plugin javascripts
  *
+ * @return void
  */
 function cpajax_add_javascripts() {
 	
@@ -465,8 +435,6 @@ function cpajax_add_javascripts() {
 	
 	// can only now see $post
 	if ( !cpajax_plugin_can_activate() ) { return; }
-	
-	
 	
 	// init vars
 	$vars = array();
@@ -495,8 +463,6 @@ function cpajax_add_javascripts() {
 	// get translations array
 	$vars['cpajax_lang'] = cpajax_localise();
 	
-	
-	
 	// default to minified scripts
 	$debug_state = '';
 
@@ -508,31 +474,25 @@ function cpajax_add_javascripts() {
 	
 	}
 	
-	
-	
 	// are we asking for in-page comments?
 	if ( $commentpress_core->db->is_special_page() ) {
 	
 		// add comments in page script
 		wp_enqueue_script( 
-			
 			'cpajax', 
 			plugins_url( 'commentpress-ajax/cp-ajax-comments-page'.$debug_state.'.js', COMMENTPRESS_PLUGIN_FILE ),
 			null, // no dependencies
 			COMMENTPRESS_VERSION // version
-			
 		);
 	
 	} else {
 	
 		// add comments in sidebar script
 		wp_enqueue_script( 
-			
 			'cpajax', 
 			plugins_url( 'commentpress-ajax/cp-ajax-comments'.$debug_state.'.js', COMMENTPRESS_PLUGIN_FILE ),
 			array( 'jquery-ui-droppable', 'jquery-ui-dialog' ), // load droppable and dialog as dependencies
 			COMMENTPRESS_VERSION // version
-			
 		);
 		
 		// add WordPress dialog CSS
@@ -543,8 +503,6 @@ function cpajax_add_javascripts() {
 	// use wp function to localise
 	wp_localize_script( 'cpajax', 'CommentpressAjaxSettings', $vars );
 	
-	
-	
 	// let's disable infinite scroll unless we set a constant
 	if ( defined( 'COMMENTPRESS_INFINITE_SCROLL' ) AND COMMENTPRESS_INFINITE_SCROLL ) {
 
@@ -553,22 +511,18 @@ function cpajax_add_javascripts() {
 	
 			// add waypoints script
 			wp_enqueue_script( 
-			
 				'cpajax-waypoints', 
 				plugins_url( 'commentpress-ajax/assets/js/waypoints'.$debug_state.'.js', COMMENTPRESS_PLUGIN_FILE ),
 				array( 'jquery' ), //dependencies
 				COMMENTPRESS_VERSION // version
-			
 			);
 		
 			// add infinite scroll script
 			wp_enqueue_script( 
-			
 				'cpajax-infinite', 
 				plugins_url( 'commentpress-ajax/assets/js/cp-ajax-infinite'.$debug_state.'.js', COMMENTPRESS_PLUGIN_FILE ),
 				array( 'cpajax', 'cpajax-waypoints' ), //dependencies
 				COMMENTPRESS_VERSION // version
-			
 			);
 		
 			// init vars
@@ -588,13 +542,10 @@ function cpajax_add_javascripts() {
 
 
 
-
-
-
 /** 
- * @description: translation
- * @todo: 
+ * Enable translation in the Javascript
  *
+ * @return array $translations The array of translations to pass to the script
  */
 function cpajax_localise() {
 	
@@ -629,13 +580,10 @@ function cpajax_localise() {
 
 
 
-
-
-
 /** 
- * @description: validate that the plugin can be activated
- * @todo: 
+ * Validate that the plugin can be activated
  *
+ * @return bool $allowed True if the plugin can activate, false otherwise
  */
 function cpajax_plugin_can_activate() {
 
@@ -664,12 +612,12 @@ function cpajax_plugin_can_activate() {
 
 
 
-
-
 /** 
- * @description: get comment depth
- * @todo: 
+ * Add "reassign" button to comment utilities
  *
+ * @param str $edit_button The existing edit button HTML
+ * @param array $comment The comment  this edit button applies to
+ * @return str $edit_button The modified edit button HTML
  */
 function cpajax_add_reassign_button( $edit_button, $comment ) {
 
@@ -704,8 +652,6 @@ function cpajax_add_reassign_button( $edit_button, $comment ) {
 	// add our assign button
 	$edit_button .= $assign_button;
 	
-	
-	
 	// --<
 	return $edit_button;
 
@@ -713,13 +659,10 @@ function cpajax_add_reassign_button( $edit_button, $comment ) {
 
 
 
-
-
-
 /** 
- * @description: change a comment's text-signature
- * @todo: 
+ * Change a comment's text-signature
  *
+ * @return void
  */
 function cpajax_reassign_comment() {
 
@@ -771,13 +714,10 @@ function cpajax_reassign_comment() {
 
 
 
-
-
-
 /** 
- * @description: store text signature for all children of a comment
- * @todo: 
+ * Store text signature for all children of a comment
  *
+ * @return void
  */
 function cpajax_reassign_comment_children( $comment_id, $text_sig, &$comment_ids ) {
 
@@ -810,12 +750,11 @@ function cpajax_reassign_comment_children( $comment_id, $text_sig, &$comment_ids
 
 
 
-
-
 /** 
- * @description: retrieve comment children
- * @todo: 
+ * Retrieve comment children
  *
+ * @param int $comment_id The numeric ID of the comment
+ * @return array $children The array of child comments
  */
 function cpajax_get_children( 
 
@@ -838,8 +777,6 @@ function cpajax_get_children(
 	return $wpdb->get_results( $query );
 
 }
-
-
 
 
 

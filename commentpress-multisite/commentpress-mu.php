@@ -15,13 +15,8 @@ a unified plugin that covers all situations.
 
 
 
-
-
 // define version
 define( 'COMMENTPRESS_MU_PLUGIN_VERSION', '1.0' );
-
-
-
 
 
 
@@ -53,8 +48,6 @@ if ( !class_exists( 'CommentpressMultisiteLoader' ) ) {
 
 
 
-
-
 /*
 --------------------------------------------------------------------------------
 Misc Utility Functions
@@ -62,18 +55,17 @@ Misc Utility Functions
 */
 
 /** 
- * @description: get WP plugin reference by name (since we never know for sure what the enclosing
+ * Get WP plugin reference by name (since we never know for sure what the enclosing
  * directory is called)
- * @todo: 
  *
+ * @param str $plugin_name The name of the plugin
+ * @param str $path_to_plugin The path to the plugin
  */
 function commentpress_mu_find_plugin_by_name( $plugin_name = '' ) {
 
 	// kick out if no param supplied
 	if ( $plugin_name == '' ) { return false; }
-
-
-
+	
 	// init path
 	$path_to_plugin = false;
 	
@@ -97,14 +89,10 @@ function commentpress_mu_find_plugin_by_name( $plugin_name = '' ) {
 	
 	}
 	
-	
-	
 	// --<
 	return $path_to_plugin;
 	
 }
-
-
 
 
 
@@ -116,12 +104,14 @@ Audited with reference to activate_plugin() with extra commenting inline
 */
 
 /** 
- * @description: Helper to activate a plugin on another site without causing a 
- * fatal error by including the plugin file a second time
- * Based on activate_plugin() in wp-admin/includes/plugin.php
- * $buffer option is used for plugins which send output
- * @todo: 
+ * Helper to activate a plugin on another site without causing a  fatal error by 
+ * including the plugin file a second time
  *
+ * @see Based on activate_plugin() in wp-admin/includes/plugin.php
+ *
+ * @param str $plugin This name of the plugin
+ * @param bool $buffer This option is used for plugins which send output
+ * @return void
  */
 function commentpress_mu_activate_plugin( $plugin, $buffer = false ) {
 	
@@ -161,13 +151,10 @@ function commentpress_mu_activate_plugin( $plugin, $buffer = false ) {
 
 
 
-
-
-
 /** 
- * @description: utility to show theme environment
- * @todo: 
+ * Utility to show theme environment
  *
+ * @return void
  */
 function _commentpress_mu_environment() {
 	
@@ -196,13 +183,10 @@ function _commentpress_mu_environment() {
 
 
 
-
-
-
 /** 
- * @description: utility to show tests
- * @todo: 
+ * Utility to show tests
  *
+ * @return void
  */
 function _commentpress_mu_test() {
 
@@ -212,8 +196,6 @@ function _commentpress_mu_test() {
 }
 
 //add_action( 'wp_head', '_commentpress_mu_test' );
-
-
 
 
 

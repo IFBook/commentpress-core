@@ -14,9 +14,6 @@ This class encapsulates all Multisite compatibility
 
 
 
-
-
-
 /*
 ================================================================================
 Class Name
@@ -24,17 +21,12 @@ Class Name
 */
 
 class CommentpressMultisite {
-
-
-
-
-
-
-	/*
-	============================================================================
-	Properties
-	============================================================================
-	*/
+	
+	
+	
+	/**
+	 * Properties
+	 */
 	
 	// parent object reference
 	public $parent_obj;
@@ -53,15 +45,11 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: initialises this object
-	 * @param object $parent_obj a reference to the parent object
-	 * @return object
-	 * @todo: 
+	 * Initialises this object
 	 *
+	 * @param object $parent_obj A reference to the parent object
+	 * @return object
 	 */
 	function __construct( $parent_obj = null ) {
 	
@@ -81,13 +69,10 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: set up all items associated with this object
-	 * @todo: 
+	 * Set up all items associated with this object
 	 *
+	 * @return void
 	 */
 	public function initialise() {
 	
@@ -95,13 +80,10 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: if needed, destroys all items associated with this object
-	 * @todo: 
+	 * If needed, destroys all items associated with this object
 	 *
+	 * @return void
 	 */
 	public function destroy() {
 	
@@ -109,44 +91,31 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 //##############################################################################
 	
 	
 	
-
-
-
-	/*
-	============================================================================
-	PUBLIC METHODS
-	============================================================================
-	*/
+	/**
+	 * -------------------------------------------------------------------------
+	 * Public Methods
+	 * -------------------------------------------------------------------------
+	 */
 	
 	
 	
-
-
-
 	/** 
-	 * @description: add an admin page for this plugin
-	 * @todo: 
+	 * Add an admin page for this plugin
 	 *
+	 * @return void
 	 */
 	public function add_admin_menu() {
 		
 		// we must be network admin
 		if ( !is_super_admin() ) { return false; }
 		
-		
-	
 		// try and update options
 		$saved = $this->db->options_update();
 		
-
-
 		// always add the admin page to the Settings menu
 		$page = add_submenu_page( 
 		
@@ -167,13 +136,10 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/**
-	 * @description: enqueue any styles and scripts needed by our admin page
-	 * @todo: 
+	 * Enqueue any styles and scripts needed by our admin page
 	 *
+	 * @return void
 	 */
 	public function add_admin_styles() {
 		
@@ -189,26 +155,21 @@ class CommentpressMultisite {
 		
 		// add admin css
 		wp_enqueue_style(
-			
 			'cpmu-admin-style', 
 			COMMENTPRESS_PLUGIN_URL . 'commentpress-multisite/assets/css/admin.css',
 			null,
 			COMMENTPRESS_MU_PLUGIN_VERSION,
 			'all' // media
-			
 		);
 		
 	}
 	
 	
 	
-
-
-
 	/**
-	 * @description: enqueue any styles and scripts needed by our public pages
-	 * @todo: 
+	 * Enqueue any styles and scripts needed by our public pages
 	 *
+	 * @return void
 	 */
 	public function add_frontend_styles() {
 		
@@ -217,22 +178,18 @@ class CommentpressMultisite {
 		
 		// add javascripts
 		wp_enqueue_script( 
-			
 			'cpmu-admin-js', 
 			COMMENTPRESS_PLUGIN_URL . 'commentpress-multisite/assets/js/admin.js' 
-			
 		);
 		*/
 		
 		// add css for signup form
 		wp_enqueue_style( 
-		
 			'cpmu-signup-style', 
 			COMMENTPRESS_PLUGIN_URL . 'commentpress-multisite/assets/css/signup.css',
 			null,
 			COMMENTPRESS_MU_PLUGIN_VERSION,
 			'all' // media
-			
 		);
 		
 		// CBOX theme compat
@@ -240,13 +197,11 @@ class CommentpressMultisite {
 		
 			// add css amends
 			wp_enqueue_style( 
-		
 				'cpmu-cbox-style', 
 				COMMENTPRESS_PLUGIN_URL . 'commentpress-multisite/assets/css/cbox.css',
 				null,
 				COMMENTPRESS_MU_PLUGIN_VERSION,
 				'all' // media
-			
 			);
 		
 		}
@@ -255,20 +210,15 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: hook into the blog signup form
-	 * @todo: 
+	 * Hook into the blog signup form
 	 *
+	 * @return void
 	 */
 	public function signup_blogform( $errors ) {
 	
 		// only apply to wordpress signup form (not the BuddyPress one)
 		if ( is_object( $this->parent_obj->bp ) ) { return; }
-
-
 		
 		// get force option
 		$forced = $this->db->option_get( 'cpmu_force_commentpress' );
@@ -304,16 +254,12 @@ class CommentpressMultisite {
 			
 		}
 		
-		
-
 		// get workflow element
 		$workflow_html = $this->_get_workflow();
 	
 		// get blog type element
 		$type_html = $this->_get_blogtype();
-	
-
-
+		
 		// construct form
 		$form = '
 
@@ -340,13 +286,10 @@ class CommentpressMultisite {
 	
 	
 	
-	
-	
-	
 	/** 
-	 * @description: hook into wpmu_new_blog and target plugins to be activated
-	 * @todo: 
+	 * Hook into wpmu_new_blog and target plugins to be activated
 	 *
+	 * @return void
 	 */
 	public function wpmu_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 	
@@ -360,14 +303,16 @@ class CommentpressMultisite {
 		
 	}
 	
-
-	
-	
 	
 	
 	/**
 	 * Change the greeting in the WordPress Admin Bar
 	 * Props: http://pankajanupam.in
+	 *
+	 * @param str $translated The existing translated string
+	 * @param str $text The existing untranslated string
+	 * @param str $domain The domain for this translation
+	 * @return str $translated The modified translated string
 	 */
 	public function change_admin_greeting( $translated, $text, $domain ) {
 		
@@ -383,34 +328,25 @@ class CommentpressMultisite {
 		return $translated;
 		
 	}
-
-
-
-
-
-
+	
+	
+	
 //##############################################################################
 	
 	
 	
-
-
-
-	/*
-	============================================================================
-	PRIVATE METHODS
-	============================================================================
-	*/
+	/**
+	 * -------------------------------------------------------------------------
+	 * Private Methods
+	 * -------------------------------------------------------------------------
+	 */
 	
 	
 	
-
-
-
 	/** 
-	 * @description: object initialisation
-	 * @todo:
+	 * Object initialisation
 	 *
+	 * @return void
 	 */
 	function _init() {
 	
@@ -421,13 +357,10 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: register Wordpress hooks
-	 * @todo: 
+	 * Register Wordpress hooks
 	 *
+	 * @return void
 	 */
 	function _register_hooks() {
 		
@@ -469,13 +402,10 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: create a blog
-	 * @todo:
+	 * Create a blog
 	 *
+	 * @return void
 	 */
 	function _create_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 	
@@ -492,13 +422,10 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: get workflow form elements
-	 * @return: form html
+	 * Get workflow form elements
 	 *
+	 * @return str $workflow_html The HTML form element
 	 */
 	function _get_workflow() {
 	
@@ -529,12 +456,10 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: get blog type form elements
+	 * Get blog type form elements
 	 *
+	 * @return str $type_html The HTML form element
 	 */
 	function _get_blogtype() {
 	
@@ -550,13 +475,13 @@ class CommentpressMultisite {
 			// show it
 			$type_html = '
 			
-	<div class="dropdown">
-		<label for="cp_blog_type">'.$type['label'].'</label> <select id="cp_blog_type" name="cp_blog_type">
+			<div class="dropdown">
+				<label for="cp_blog_type">'.$type['label'].'</label> <select id="cp_blog_type" name="cp_blog_type">
 		
-		'.$type['element'].'
+				'.$type['element'].'
 		
-		</select>
-	</div>
+				</select>
+			</div>
 
 			';
 		
@@ -571,13 +496,10 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/**
-	 * @description: show our admin page
-	 * @todo: 
+	 * Show our admin page
 	 *
+	 * @return void
 	 */
 	function _network_admin_form() {
 	
@@ -589,8 +511,6 @@ class CommentpressMultisite {
 			
 		}
 		
-		
-		
 		//_cpdie( 'here' );
 
 		// show message
@@ -598,33 +518,25 @@ class CommentpressMultisite {
 			echo '<div id="message" class="updated"><p>'.__( 'Options saved.', 'commentpress-core' ).'</p></div>';
 		}
 		
-
-
 		// sanitise admin page url
 		$url = $_SERVER['REQUEST_URI'];
 		$url_array = explode( '&', $url );
 		if ( is_array( $url_array ) ) { $url = $url_array[0]; }
 		
-		
-		
 		// open admin page
 		echo '
-<div class="wrap" id="cpmu_admin_wrapper">
+		<div class="wrap" id="cpmu_admin_wrapper">
 
-<div class="icon32" id="icon-options-general"><br/></div>
+		<div class="icon32" id="icon-options-general"><br/></div>
 
-<h2>'.__( 'CommentPress Network Settings', 'commentpress-core' ).'</h2>
+		<h2>'.__( 'CommentPress Network Settings', 'commentpress-core' ).'</h2>
 
-<form method="post" action="'.htmlentities($url.'&updated=true').'">
+		<form method="post" action="'.htmlentities($url.'&updated=true').'">
 
-'.wp_nonce_field( 'cpmu_admin_action', 'cpmu_nonce', true, false ).'
-'.wp_referer_field( false ).'
+		'.wp_nonce_field( 'cpmu_admin_action', 'cpmu_nonce', true, false ).'
+		'.wp_referer_field( false ).'
 
-
-
-';
-
-
+		';
 		
 		// show multisite options
 		echo '
@@ -633,7 +545,6 @@ class CommentpressMultisite {
 <h3>'.__( 'Multisite Settings', 'commentpress-core' ).'</h3>
 
 <p>'.__( 'Configure how your CommentPress Network behaves. Site-specific options are set on the CommentPress Core Settings page for that site.', 'commentpress-core' ).'</p>';
-		
 		
 		// add global options
 		echo '
@@ -660,7 +571,6 @@ class CommentpressMultisite {
 
 </table>';
 
-
 		/*
 		// add WordPress overrides
 		echo '
@@ -686,13 +596,10 @@ class CommentpressMultisite {
 </table>';
 		*/
 
-
 		// close form
 		echo '
-</div>';
+		</div>';
 
-		
-		
 		/*
 		// title
 		echo '<h3>'.__( 'Title Page Content', 'commentpress-core' ).'</h3>';
@@ -717,38 +624,29 @@ class CommentpressMultisite {
 			
 		);
 		*/
-
-
-
+		
 		// allow plugins to add stuff
 		echo $this->_additional_form_options();
-
-
 		
 		// close admin form
 		echo '
-<p class="submit">
-	<input type="submit" name="cpmu_submit" value="'.__( 'Save Changes', 'commentpress-core' ).'" class="button-primary" />
-</p>
+		<p class="submit">
+			<input type="submit" name="cpmu_submit" value="'.__( 'Save Changes', 'commentpress-core' ).'" class="button-primary" />
+		</p>
 
-</form>
+		</form>
 
-</div>
-'."\n\n\n\n";
-
-
-
+		</div>
+		'."\n\n\n\n";
+		
 	}
 	
 	
 	
-
-
-
 	/**
-	 * @description: allow other plugins to hook into our multisite admin options
-	 * @todo: 
+	 * Allow other plugins to hook into our multisite admin options
 	 *
+	 * @return str Empty string by default, but may be overridden
 	 */
 	function _additional_multisite_options() {
 	
@@ -762,13 +660,10 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/**
-	 * @description: allow other plugins to hook into our admin form
-	 * @todo: 
+	 * Allow other plugins to hook into our admin form
 	 *
+	 * @return str Empty string by default, but may be overridden
 	 */
 	function _additional_form_options() {
 	
@@ -782,32 +677,25 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/**
-	 * @description: get default Multisite-related settings
-	 * @todo: 
+	 * Get default Multisite-related settings
 	 *
+	 * @param array $existing_options The existing options
+	 * @return array $existing_options The modified options
 	 */
 	function _get_default_settings( $existing_options ) {
 	
 		// default Multisite options
 		$defaults = array(
-		
 			'cpmu_force_commentpress' => $this->cpmu_force_commentpress,
 			//'cpmu_title_page_content' => $this->cpmu_title_page_content,
 			'cpmu_disable_translation_workflow' => $this->cpmu_disable_translation_workflow
-		
 		);
 		
 		// allow overrides and additions
 		$defaults = apply_filters(
-			
-			// hook
 			'cpmu_multisite_options_get_defaults',
 			$defaults
-			
 		);
 
 		// return options array
@@ -817,13 +705,10 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: hook into Network form update
-	 * @todo: 
+	 * Hook into Network form update
 	 *
+	 * @return void
 	 */
 	function _network_admin_update() {
 		
@@ -853,13 +738,10 @@ class CommentpressMultisite {
 	
 	
 	
-	
-	
-	
 	/**
-	 * @description: get workflow enabled setting
-	 * @todo: 
+	 * Get workflow enabled setting
 	 *
+	 * @return bool $disabled True if disabled, false otherwise
 	 */
 	function _get_workflow_enabled() {
 	
@@ -874,13 +756,12 @@ class CommentpressMultisite {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: get default Title Page content, if set
-	 * @todo: enable this when we enable the admin page editor
+	 * Get default Title Page content, if set
+	 * Do we want to enable this when we enable the admin page editor?
 	 *
+	 * @param str $content The existing content
+	 * @return str $content The modified content
 	 */
 	function _get_title_page_content( $content ) {
 		
@@ -902,13 +783,10 @@ class CommentpressMultisite {
 	
 	
 	
-	
-	
-	
 	/** 
-	 * @description: get default Title Page content
-	 * @todo: 
+	 * Get default Title Page content
 	 *
+	 * @return str $content The default Title Page content
 	 */
 	function _get_default_title_page_content() {
 		
@@ -927,20 +805,11 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 	
 	
 	
-	
-	
-	
 //##############################################################################
 	
 	
 	
-
-
-
 } // class ends
-	
-	
-	
 
 
 

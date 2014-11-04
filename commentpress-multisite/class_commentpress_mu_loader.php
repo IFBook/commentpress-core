@@ -14,9 +14,6 @@ This class loads all Multisite compatibility
 
 
 
-
-
-
 /*
 ================================================================================
 Class Name
@@ -24,17 +21,12 @@ Class Name
 */
 
 class CommentpressMultisiteLoader {
-
-
-
-
-
-
-	/*
-	============================================================================
-	Properties
-	============================================================================
-	*/
+	
+	
+	
+	/**
+	 * Properties
+	 */
 	
 	// parent object reference
 	public $parent_obj;
@@ -50,15 +42,11 @@ class CommentpressMultisiteLoader {
 	
 	
 	
-	
-	
-	
 	/** 
-	 * @description: initialises this object
+	 * Initialises this object
+	 *
 	 * @param object $parent_obj a reference to the parent object
 	 * @return object
-	 * @todo: 
-	 *
 	 */
 	function __construct( $parent_obj = null ) {
 	
@@ -75,13 +63,10 @@ class CommentpressMultisiteLoader {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: set up all items associated with this object
-	 * @todo: 
+	 * Set up all items associated with this object
 	 *
+	 * @return void
 	 */
 	public function initialise() {
 	
@@ -89,13 +74,10 @@ class CommentpressMultisiteLoader {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: if needed, destroys all items associated with this object
-	 * @todo: 
+	 * If needed, destroys all items associated with this object
 	 *
+	 * @return void
 	 */
 	public function destroy() {
 	
@@ -103,50 +85,34 @@ class CommentpressMultisiteLoader {
 	
 	
 	
-
-
-
 //##############################################################################
 	
 	
 	
-
-
-
-	/*
-	============================================================================
-	PUBLIC METHODS
-	============================================================================
-	*/
+	/**
+	 * -------------------------------------------------------------------------
+	 * Public Methods
+	 * -------------------------------------------------------------------------
+	 */
 	
 	
 	
-
-
-
-
 //##############################################################################
 	
 	
 	
-
-
-
-	/*
-	============================================================================
-	PRIVATE METHODS
-	============================================================================
-	*/
+	/**
+	 * -------------------------------------------------------------------------
+	 * Private Methods
+	 * -------------------------------------------------------------------------
+	 */
 	
 	
 	
-
-
-
 	/** 
-	 * @description: object initialisation
-	 * @todo:
+	 * Object initialisation
 	 *
+	 * @return void
 	 */
 	function _init() {
 	
@@ -155,8 +121,6 @@ class CommentpressMultisiteLoader {
 		
 		// check for network deactivation
 		add_action( 'deactivated_plugin',  array( $this, '_network_deactivated' ), 10, 2 );
-		
-		
 		
 		// ---------------------------------------------------------------------
 		// load Database Wrapper object 
@@ -174,8 +138,6 @@ class CommentpressMultisiteLoader {
 		// init autoload database object
 		$this->db = new CommentpressMultisiteAdmin( $this );
 		
-
-
 		// ---------------------------------------------------------------------
 		// load standard Multisite object 
 		// ---------------------------------------------------------------------
@@ -191,8 +153,6 @@ class CommentpressMultisiteLoader {
 	
 		// init multisite object
 		$this->mu = new CommentpressMultisite( $this );
-		
-
 		
 		// ---------------------------------------------------------------------
 		// load Post Revisions object (merge this into Core as an option)
@@ -210,17 +170,13 @@ class CommentpressMultisiteLoader {
 		// instantiate it
 		$this->revisions = new CommentpressMultisiteRevisions( $this );
 		
-
-
 		// ---------------------------------------------------------------------
 		// call initialise() on admin object 
 		// ---------------------------------------------------------------------
 	
 		// initialise db for multisite
 		$this->db->initialise( 'multisite' );
-
-
-
+		
 		// ---------------------------------------------------------------------
 		// optionally load BuddyPress object 
 		// ---------------------------------------------------------------------
@@ -232,13 +188,10 @@ class CommentpressMultisiteLoader {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: BuddyPress object initialisation
-	 * @todo:
+	 * BuddyPress object initialisation
 	 *
+	 * @return void
 	 */
 	function _load_buddypress_object() {
 	
@@ -257,9 +210,7 @@ class CommentpressMultisiteLoader {
 	
 		// init buddypress object
 		$this->bp = new CommentpressMultisiteBuddypress( $this );
-
-
-
+		
 		// ---------------------------------------------------------------------
 		// load Groupblog Workshop renaming object 
 		// ---------------------------------------------------------------------
@@ -276,8 +227,6 @@ class CommentpressMultisiteLoader {
 		// instantiate it
 		$this->workshop = new CommentpressGroupblogWorkshop( $this );
 		
-
-
 		// ---------------------------------------------------------------------
 		// call initialise() on admin object again
 		// ---------------------------------------------------------------------
@@ -289,13 +238,10 @@ class CommentpressMultisiteLoader {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: this plugin has been network-activated (does not fire!)!
-	 * @todo:
+	 * This plugin has been network-activated (does not fire!)!
 	 *
+	 * @return void
 	 */
 	function _network_activated( $plugin, $network_wide = null ) {
 	
@@ -317,13 +263,10 @@ class CommentpressMultisiteLoader {
 	
 	
 	
-
-
-
 	/** 
-	 * @description: this plugin has been network-deactivated
-	 * @todo:
+	 * This plugin has been network-deactivated
 	 *
+	 * @return void
 	 */
 	function _network_deactivated( $plugin, $network_wide = null ) {
 	
@@ -347,20 +290,11 @@ class CommentpressMultisiteLoader {
 	
 	
 	
-
-
-
 //##############################################################################
 	
 	
 	
-
-
-
 } // class ends
-	
-	
-	
 
 
 
