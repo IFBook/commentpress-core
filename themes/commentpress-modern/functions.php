@@ -237,15 +237,18 @@ function commentpress_bp_enqueue_scripts() {
 		if ( $commentpress_core->is_buddypress() AND $commentpress_core->is_buddypress_special_page() ) {
 			
 			// construct path to BP default javascript file
+			$bp_js_file = BP_PLUGIN_DIR . 'bp-themes/bp-default/_inc/global.js';
+			
+			// construct URL for BP default javascript file
 			// Eventually use:
-			// $bp_js_file = BP_PLUGIN_URL . 'bp-templates/bp-legacy/js/buddypress.js',
-			$bp_js_file = BP_PLUGIN_URL . 'bp-themes/bp-default/_inc/global.js';
+			// $bp_js_url = BP_PLUGIN_URL . 'bp-templates/bp-legacy/js/buddypress.js',
+			$bp_js_url = BP_PLUGIN_URL . 'bp-themes/bp-default/_inc/global.js';
 	
-			// look for BP AJAX file in default theme directory
+			// look for BP JS file in default theme directory
 			if ( !is_file( $bp_js_file ) ) {
 		
 				// temporarily use our copy
-				$bp_js_file = COMMENTPRESS_PLUGIN_URL . 'commentpress-core/assets/includes/bp-compat/global.js';
+				$bp_js_url = COMMENTPRESS_PLUGIN_URL . 'commentpress-core/assets/includes/bp-compat/global.js';
 		
 			}
 	
@@ -253,7 +256,7 @@ function commentpress_bp_enqueue_scripts() {
 			wp_enqueue_script( 
 	
 				'cp_buddypress_js', 
-				$bp_js_file,
+				$bp_js_url,
 				array( 'jquery' ),
 				COMMENTPRESS_VERSION // version
 
