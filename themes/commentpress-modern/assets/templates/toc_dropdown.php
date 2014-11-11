@@ -14,7 +14,7 @@
 
 <div id="toc_dd_wrapper">
 
-<?php 
+<?php
 
 // if we have the plugin enabled...
 if ( is_object( $commentpress_core ) ) {
@@ -31,7 +31,7 @@ if ( is_object( $commentpress_core ) ) {
 }
 
 ?>
-	
+
 </div><!-- /toc_dd_wrapper -->
 
 

@@ -20,9 +20,9 @@ if ( bp_has_profile( 'profile_group_id=' . bp_get_current_profile_group_id() ) )
 		<?php while ( bp_profile_fields() ) : bp_the_profile_field(); ?>
 
 			<div<?php bp_field_css_class( 'editfield' ) ?>>
-			
+
 				<?php if ( function_exists( 'bp_xprofile_create_field_type' ) ) : ?>
-				
+
 					<?php
 					$field_type = bp_xprofile_create_field_type( bp_get_the_profile_field_type() );
 					$field_type->edit_field_html();

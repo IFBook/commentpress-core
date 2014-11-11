@@ -283,7 +283,7 @@ function bp_dtheme_activity_template_loader() {
  */
 function bp_dtheme_post_update() {
 	$bp = buddypress();
-	
+
 	// Bail if not a POST action
 	if ( 'POST' !== strtoupper( $_SERVER['REQUEST_METHOD'] ) )
 		return;

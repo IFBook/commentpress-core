@@ -23,30 +23,30 @@ Separated this out for inclusion in multiple files.
 
 
 <div id="header">
-	
+
 	<?php do_action( 'commentpress_header_before' ); ?>
 
 	<?php
-	
+
 	// get header image
 	commentpress_get_header_image();
-	
+
 	?>
 	<div id="page_title">
 		<div id="title"><h1><a href="<?php echo home_url(); ?>" title="<?php _e( 'Home', 'commentpress-core' ); ?>"><?php bloginfo('title'); ?></a></h1></div>
 		<div id="tagline"><?php bloginfo('description'); ?></div>
 	</div>
-	
+
 	<?php do_action( 'commentpress_header_after' ); ?>
-	
+
 </div><!-- /header -->
 
 
 
 <div id="switcher">
 	<ul>
-		<li class="navigation-item"><a class="navigation-button" href="#navigation"><?php _e( 'Navigate', 'commentpress-core' ); ?></a></li>			
-		<li class="content-item"><a class="content-button" href="#content"><?php _e( 'Content', 'commentpress-core' ); ?></a></li>			
+		<li class="navigation-item"><a class="navigation-button" href="#navigation"><?php _e( 'Navigate', 'commentpress-core' ); ?></a></li>
+		<li class="content-item"><a class="content-button" href="#content"><?php _e( 'Content', 'commentpress-core' ); ?></a></li>
 		<li class="sidebar-item"><a class="sidebar-button" href="#sidebar"><?php _e( 'Discuss', 'commentpress-core' ); ?></a></li>
 	</ul>
 </div>
@@ -61,7 +61,7 @@ Separated this out for inclusion in multiple files.
 <?php
 
 // until WordPress supports a locate_theme_file() function, use filter
-$include = apply_filters( 
+$include = apply_filters(
 	'cp_template_toc_sidebar',
 	get_template_directory() . '/assets/templates/toc_sidebar.php'
 );

@@ -36,28 +36,28 @@
 	<ul id="groups-list" class="item-list" role="main">
 
 	<?php while ( bp_groups() ) : bp_the_group(); ?>
-	
+
 		<?php
-		
+
 		// init groupblogtype
 		$groupblogtype = '';
-		
+
 		// only add classes when bp-groupblog is active
 		if ( function_exists( 'get_groupblog_group_id' ) ) {
-		
+
 			// get group blogtype
 			$groupblog_type = groups_get_groupmeta( bp_get_group_id(), 'groupblogtype' );
-			
+
 			// did we get one?
 			if ( $groupblog_type ) {
-			
+
 				// add to default
 				$groupblogtype = ' class="'.$groupblog_type.'"';
-			
+
 			}
-			
+
 		}
-		
+
 		?>
 
 		<li<?php echo $groupblogtype; ?>>

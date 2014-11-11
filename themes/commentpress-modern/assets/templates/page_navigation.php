@@ -21,15 +21,15 @@ if ( is_page() ) {
 
 	// get our custom page navigation
 	$cp_page_nav = commentpress_page_navigation();
-	
+
 	// if we get any...
-	if ( $cp_page_nav != '' ) { 
+	if ( $cp_page_nav != '' ) {
 
 		?><ul>
 			<?php echo $cp_page_nav; ?>
 		</ul>
 		<?php
-	
+
 	}
 
 }
@@ -43,7 +43,7 @@ elseif ( is_single() ) {
 		<?php next_post_link('<li class="alignright">%link</li>'); ?>
 		<?php previous_post_link('<li class="alignleft">%link</li>'); ?>
 	</ul>
-	
+
 	<?php
 
 }
@@ -55,17 +55,17 @@ elseif ( is_home() ) {
 
 	$nl = get_next_posts_link($previous_title);
 	$pl = get_previous_posts_link($next_title);
-	
+
 	// did we get either?
 	if ( $nl != '' OR $pl != '' ) { ?>
-	
+
 	<ul class="blog_navigation">
 		<?php if ( $pl != '' ) { ?><li class="alignright"><?php echo $pl; ?></li><?php } ?>
 		<?php if ( $nl != '' ) { ?><li class="alignleft"><?php echo $nl; ?></li><?php } ?>
 	</ul>
-	
+
 	<?php } ?>
-	
+
 	<?php
 
 }
@@ -77,17 +77,17 @@ elseif ( is_day() || is_month() || is_year() ) {
 
 	$nl = get_next_posts_link( $previous_title );
 	$pl = get_previous_posts_link( $next_title );
-	
+
 	// did we get either?
 	if ( $nl != '' OR $pl != '' ) { ?>
-	
+
 	<ul class="blog_navigation">
 		<?php if ( $pl != '' ) { ?><li class="alignright"><?php echo $pl; ?></li><?php } ?>
 		<?php if ( $nl != '' ) { ?><li class="alignleft"><?php echo $nl; ?></li><?php } ?>
 	</ul>
-	
+
 	<?php } ?>
-	
+
 	<?php
 
 }
@@ -99,17 +99,17 @@ elseif ( is_search() ) {
 
 	$nl = get_next_posts_link( __( 'More Results', 'commentpress-core' ) );
 	$pl = get_previous_posts_link( __( 'Previous Results', 'commentpress-core' ) );
-	
+
 	// did we get either?
 	if ( $nl != '' OR $pl != '' ) { ?>
-	
+
 	<ul class="blog_navigation">
 		<?php if ( $nl != '' ) { ?><li class="alignright"><?php echo $nl; ?></li><?php } ?>
 		<?php if ( $pl != '' ) { ?><li class="alignleft"><?php echo $pl; ?></li><?php } ?>
 	</ul>
-	
+
 	<?php } ?>
-	
+
 	<?php
 
 }
@@ -121,17 +121,17 @@ elseif ( is_category() ) {
 
 	$nl = get_next_posts_link( __( 'More Results', 'commentpress-core' ) );
 	$pl = get_previous_posts_link( __( 'Previous Results', 'commentpress-core' ) );
-	
+
 	// did we get either?
 	if ( $nl != '' OR $pl != '' ) { ?>
-	
+
 	<ul class="blog_navigation">
 		<?php if ( $nl != '' ) { ?><li class="alignright"><?php echo $nl; ?></li><?php } ?>
 		<?php if ( $pl != '' ) { ?><li class="alignleft"><?php echo $pl; ?></li><?php } ?>
 	</ul>
-	
+
 	<?php } ?>
-	
+
 	<?php
 
 }
@@ -143,17 +143,17 @@ elseif ( is_tag() ) {
 
 	$nl = get_next_posts_link( __( 'More Results', 'commentpress-core' ) );
 	$pl = get_previous_posts_link( __( 'Previous Results', 'commentpress-core' ) );
-	
+
 	// did we get either?
 	if ( $nl != '' OR $pl != '' ) { ?>
-	
+
 	<ul class="blog_navigation">
 		<?php if ( $nl != '' ) { ?><li class="alignright"><?php echo $nl; ?></li><?php } ?>
 		<?php if ( $pl != '' ) { ?><li class="alignleft"><?php echo $pl; ?></li><?php } ?>
 	</ul>
-	
+
 	<?php } ?>
-	
+
 	<?php
 
 }

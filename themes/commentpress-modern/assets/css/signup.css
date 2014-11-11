@@ -6,7 +6,7 @@ AUTHOR: Christian Wach
 --------------------------------------------------------------------------------
 NOTES
 
-Because we have no control over the signup page markup, we have 
+Because we have no control over the signup page markup, we have
 to override some styles for it to fit with our static header.
 
 --------------------------------------------------------------------------------
@@ -40,12 +40,12 @@ to override some styles for it to fit with our static header.
 		font-weight: bold;
 		line-height: 1.5;
 	}
-	
+
 	#content .mu_register .mu_alert a
 	{
 		text-decoration: underline;
 	}
-	
+
 	#content .mu_register #setupform p.error
 	{
 		border: 1px solid #E1CA82;
@@ -72,7 +72,7 @@ to override some styles for it to fit with our static header.
 		display: block;
 		padding: 5px 10px;
 	}
-	
+
 	#content .mu_register h2
 	{
 		text-transform: uppercase;
@@ -81,33 +81,33 @@ to override some styles for it to fit with our static header.
 		color: #761D19;
 		margin: 8px 0 16px 0;
 	}
-	
+
 	#content .mu_register p
 	{
 		font-size: 1em;
 		line-height: 1.5;
 		padding: 7px 0 11px 0;
 	}
-	
+
 	#content .mu_register #privacy
 	{
 		margin: 12px 0 0 0;
 		padding: 15px;
 		border: 1px solid #DDD;
 	}
-	
-	#content .mu_register #setupform p.privacy-intro	
+
+	#content .mu_register #setupform p.privacy-intro
 	{
 		font-size: 1em;
 		line-height: 1.5;
 		padding: 0;
 	}
-	
+
 	#content .mu_register #setupform p.privacy-intro label
 	{
 		margin: 0;
 	}
-	
+
 	/* existing sites list */
 	#content .mu_register ul
 	{
@@ -118,7 +118,7 @@ to override some styles for it to fit with our static header.
 		background: lightYellow;
 		border: 1px solid #E6DB55;
 	}
-	
+
 	#content .mu_register ul li
 	{
 		font-size: 1em;
@@ -126,13 +126,13 @@ to override some styles for it to fit with our static header.
 		margin: 0 10px;
 		padding: 0px 0 6px 0;
 	}
-	
+
 	#content .mu_register ul#noemail-tips li
 	{
 		font-size: 1em;
 		line-height: 1.5;
 	}
-	
+
 	#content .mu_register ul li a
 	{
 		text-decoration: underline;
@@ -143,12 +143,12 @@ to override some styles for it to fit with our static header.
 		margin: 0;
 		padding: 0;
 	}
-	
+
 	#content .mu_register #setupform p
 	{
 		padding: 30px 0 5px 0;
 	}
-	
+
 	#content .mu_register label
 	{
 		text-transform: uppercase;
@@ -156,14 +156,14 @@ to override some styles for it to fit with our static header.
 		font-size: 1.2em;
 		margin: 20px 0 5px 0;
 	}
-	
-	#setupform .prefix_address 
+
+	#setupform .prefix_address
 	{
 		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 		font-size: 0.9em;
 	}
-	
-	#content .mu_register #setupform #blogname 
+
+	#content .mu_register #setupform #blogname
 	{
 		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 		font-size: 0.9em;
@@ -172,7 +172,7 @@ to override some styles for it to fit with our static header.
 		padding: 5px 2px;
 		margin-bottom: 5px;
 	}
-	
+
 	#content .mu_register #setupform #blog_title,
 	#content .mu_register #setupform #user_name,
 	#content .mu_register #setupform #user_email
@@ -184,31 +184,31 @@ to override some styles for it to fit with our static header.
 		margin-bottom: 5px;
 		width: 90%;
 	}
-	
+
 	#content .mu_register #setupform #blog_title
 	{
 		padding: 5px;
 	}
-	
-	#content .mu_register #cp-multisite-options 
+
+	#content .mu_register #cp-multisite-options
 	{
 		margin-bottom: 11px;
 		padding: 15px;
 		border: 1px solid #DDD;
 	}
-	
+
 	#content .mu_register #cp-multisite-options h3
 	{
 		text-transform: uppercase;
 		color: #761D19;
 		font-size: 1.2em;
 	}
-	
+
 	#content .mu_register #cp-multisite-options p
 	{
 		padding: 5px 0;
 	}
-	
+
 	#content .mu_register label.checkbox
 	{
 		color: #000;
@@ -217,7 +217,7 @@ to override some styles for it to fit with our static header.
 		margin: 0;
 		text-transform: none;
 	}
-	
+
 	#content .mu_register #cp-multisite-options .checkbox label,
 	#content .mu_register #cp-multisite-options .cp-workflow-type label
 	{
@@ -227,14 +227,14 @@ to override some styles for it to fit with our static header.
 		margin: 5px 0;
 		text-transform: none;
 	}
-	
-	#content .mu_register #cp-multisite-options .dropdown label 
+
+	#content .mu_register #cp-multisite-options .dropdown label
 	{
 		text-transform: none;
 		font-size: 1em;
 		color: #761D19;
 	}
-	
+
 	#content .mu_register p.submit
 	{
 		padding: 30px 0 0 0;
@@ -246,7 +246,7 @@ to override some styles for it to fit with our static header.
 	}
 
 
-	
+
 #footer
 {
 	display: none;

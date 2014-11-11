@@ -7,7 +7,7 @@ AUTHOR: Christian Wach <needle@haystack.co.uk>
 NOTES
 =====
 
-Because we have no control over the activate page markup, we have 
+Because we have no control over the activate page markup, we have
 to override some styles for it to fit with our static header.
 
 --------------------------------------------------------------------------------
@@ -46,7 +46,7 @@ body form
 		margin: 8px 0 16px 0;
 		padding: 0 60px 0 77px;
 	}
-	
+
 	#content p
 	{
 		font-size: 1em;
@@ -54,7 +54,7 @@ body form
 		margin: 7px 0 11px 0;
 		padding: 0 60px 0 77px;
 	}
-	
+
 	#content ul
 	{
 		font-size: 1em;
@@ -66,7 +66,7 @@ body form
 		-webkit-border-radius: 10px;
 		border-radius: 10px;
 	}
-	
+
 	#content ul li
 	{
 		font-size: 1.2em;
@@ -74,12 +74,12 @@ body form
 		margin: 0 15px;
 		padding: 0px 0 7px 0;
 	}
-	
+
 	#content a
 	{
 		text-decoration: underline;
 	}
-	
+
 	#content #signup-welcome
 	{
 		padding: 7px;
@@ -90,23 +90,23 @@ body form
 		-webkit-border-radius: 10px;
 		border-radius: 10px;
 	}
-	
+
 		#content #signup-welcome p
 		{
 			padding: 0;
 		}
-		
+
 	#content #activateform label
 	{
 		color: #761D19;
 		font-size: 1.2em;
 	}
-	
+
 	#content #activateform p
 	{
 		padding-top: 30px;
 	}
-	
+
 	#content p.submit input
 	{
 		width: auto;
@@ -121,7 +121,7 @@ body form
 	}
 
 
-	
+
 #footer
 {
 	display: none;

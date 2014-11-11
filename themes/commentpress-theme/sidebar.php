@@ -9,11 +9,11 @@ global $commentpress_core;
 $_tab_order = array( 'comments', 'activity', 'contents' );
 
 // if we have the plugin enabled and the method exists...
-if ( 
+if (
 
-	is_object( $commentpress_core ) AND 
-	method_exists( $commentpress_core, 'get_sidebar_order' ) 
-	
+	is_object( $commentpress_core ) AND
+	method_exists( $commentpress_core, 'get_sidebar_order' )
+
 ) {
 
 	// get order from plugin options
@@ -45,29 +45,29 @@ if (
 foreach( $_tab_order AS $_tab ) {
 
 	switch ( $_tab ) {
-	
-	
-	
+
+
+
 		// Comments Header
 		case 'comments':
 
 
 
 ?><li id="comments_header" class="sidebar_header">
-<h2><a href="#comments_sidebar"><?php 
+<h2><a href="#comments_sidebar"><?php
 
 // set default link name
 $_comments_title = apply_filters(
 
 	// filter name
-	'cp_tab_title_comments', 
-	
+	'cp_tab_title_comments',
+
 	// default value
 	__( 'Comments', 'commentpress-core' )
-	
+
 );
 
-echo $_comments_title; 
+echo $_comments_title;
 
 ?></a></h2>
 <?php
@@ -89,7 +89,7 @@ echo $_min;
 ?>
 </li>
 
-<?php 
+<?php
 
 break;
 
@@ -102,31 +102,31 @@ break;
 
 // do we want to show activity tab?
 if ( commentpress_show_activity_tab() ) {
-	
+
 	// set default link name
 	$_activity_title = apply_filters(
-	
+
 		// filter name
-		'cp_tab_title_activity', 
-		
+		'cp_tab_title_activity',
+
 		// default value
 		__( 'Activity', 'commentpress-core' )
-		
+
 	);
-	
+
 	?>
 	<li id="activity_header" class="sidebar_header">
 	<h2><a href="#activity_sidebar"><?php echo $_activity_title; ?></a></h2>
 	<?php
-	
+
 	// if we have the plugin enabled...
 	if ( is_object( $commentpress_core ) ) {
-	
+
 		// show the minimise all button
 		echo $commentpress_core->get_minimise_all_button( 'activity' );
-	
+
 	}
-	
+
 	?>
 	</li>
 	<?php
@@ -134,7 +134,7 @@ if ( commentpress_show_activity_tab() ) {
 } else {
 
 	// ignore activity
-		
+
 }
 
 break;
@@ -148,31 +148,31 @@ break;
 
 ?>
 <li id="toc_header" class="sidebar_header">
-<h2><a href="#toc_sidebar"><?php 
+<h2><a href="#toc_sidebar"><?php
 
 // set default link name
 $_toc_title = apply_filters(
 
 	// filter name
-	'cp_tab_title_toc', 
-	
+	'cp_tab_title_toc',
+
 	// default value
 	__( 'Contents', 'commentpress-core' )
-	
+
 );
 
-echo $_toc_title; 
+echo $_toc_title;
 
 ?></a></h2>
 </li>
-<?php 
+<?php
 
 break;
 
 
 
 	} // end switch
-	
+
 } // end foreach
 
 
@@ -204,41 +204,41 @@ if ( is_object( $commentpress_core ) ) {
 
 	// is it commentable?
 	if ( $commentable ) {
-	
+
 		// until WordPress supports a locate_theme_file() function, use filter
-		$include = apply_filters( 
+		$include = apply_filters(
 			'cp_template_comments_sidebar',
 			get_template_directory() . '/assets/templates/comments_sidebar.php'
 		);
-		
+
 		// get comments sidebar
 		include( $include );
-		
+
 	}
-	
+
 	// until WordPress supports a locate_theme_file() function, use filter
-	$include = apply_filters( 
+	$include = apply_filters(
 		'cp_template_toc_sidebar',
 		get_template_directory() . '/assets/templates/toc_sidebar.php'
 	);
-	
+
 	// always include TOC
 	include( $include );
-	
+
 	// do we want to show activity tab?
 	if ( commentpress_show_activity_tab() ) {
-		
+
 		// until WordPress supports a locate_theme_file() function, use filter
-		$include = apply_filters( 
+		$include = apply_filters(
 			'cp_template_activity_sidebar',
 			get_template_directory() . '/assets/templates/activity_sidebar.php'
 		);
-		
+
 		// get activity sidebar
 		include( $include );
-		
+
 	}
-	
+
 
 
 } else {
@@ -278,7 +278,7 @@ if ( is_object( $commentpress_core ) ) {
 
 
 
-<?php 
+<?php
 
 } // end check for plugin
 

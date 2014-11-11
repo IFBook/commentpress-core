@@ -14,11 +14,11 @@ NOTES
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 RESET & BASICS
 --------------------------------------------------------------------------------
-Based on Yahoo! User Interface Library: 
+Based on Yahoo! User Interface Library:
 http://yuilibrary.com/yui/docs/cssreset/
 http://yuilibrary.com/yui/docs/cssbase/
 --------------------------------------------------------------------------------
@@ -28,10 +28,10 @@ html
 {
 	color: #000;
 	background-color: #ccc;
-	font-size: 100%; 
-	overflow-y: scroll; 
-	-webkit-text-size-adjust: 100%; 
-	-moz-text-size-adjust: 100%; 
+	font-size: 100%;
+	overflow-y: scroll;
+	-webkit-text-size-adjust: 100%;
+	-moz-text-size-adjust: 100%;
 	-ms-text-size-adjust: 100%;
 }
 
@@ -59,7 +59,7 @@ h1, h2, h3, h4, h5, h6 { font-size: 100%; font-weight: normal; }
 q:before, q:after { content: ''; }
 abbr, acronym { border: 0; font-variant: normal; }
 /* "sub, sup" from https://gist.github.com/unruthless/413930 */
-sub, sup 
+sub, sup
 {
 	font-size: 75%;
 	line-height: 0;
@@ -88,7 +88,7 @@ h1 {
 }
 h2 {
 	/*16px via YUI Fonts CSS foundation*/
-	font-size: 123.1%; 
+	font-size: 123.1%;
 }
 h3 {
 	/*14px via YUI Fonts CSS foundation*/
@@ -100,13 +100,13 @@ h1, h2, h3 {
 }
 h1, h2, h3, h4, h5, h6, strong {
 	/*bringing boldness back to headers and the strong element*/
-	font-weight: bold; 
+	font-weight: bold;
 }
 abbr, acronym {
 	/*indicating to users that more info is available */
 	border-bottom: 1px dotted #000;
 	cursor: help;
-} 
+}
 em {
 	/*bringing italics back to the em element*/
 	font-style: italic;
@@ -121,7 +121,7 @@ ol, ul, dl {
 }
 ol {
 	/*giving OL's LIs generated numbers*/
-	list-style: decimal outside;	
+	list-style: decimal outside;
 }
 ul {
 	/*giving UL's LIs generated disc markers*/
@@ -129,7 +129,7 @@ ul {
 }
 dt {
 	/*bringing boldness back to definition titles*/
-	font-weight: bold; 
+	font-weight: bold;
 }
 dl dd {
 	/*providing spacing for definition terms*/
@@ -177,7 +177,7 @@ tt, code, kbd, samp
 	/*let's not confound people's expectations*/
 	font-family: monospace;
 }
-/* setting a consistent width, 160px; 
+/* setting a consistent width, 160px;
    control of type=file still not possible
    *width is for ie7 (no ie6 fallback) */
 input[type=text], input[type=password], textarea { width: 12.25em; *width: 11.9em; }
@@ -230,14 +230,14 @@ blockquote,
 
 /* for content we want out of the way */
 .off-left
-{ 
-	position: absolute; 
-	left: -9999px; 
+{
+	position: absolute;
+	left: -9999px;
 	width: 900px;
 }
 
 /* skip links */
-a.skip, 
+a.skip,
 a.skip:hover,
 a.skip:visited
 {
@@ -258,7 +258,7 @@ a.skip:visited
 	font-family: sans-serif;
 }
 
-a.skip:active, 
+a.skip:active,
 a.skip:focus
 {
 	color: #fff;
@@ -357,7 +357,7 @@ pre
 }
 
 /* Tables */
-table 
+table
 {
 	border: 0;
 	border-collapse: collapse;
@@ -366,13 +366,13 @@ table
 	width: 100%;
 }
 
-table td 
+table td
 {
 	border: 0;
 	border-top: 1px solid #e6e6e6;
 }
 
-table th 
+table th
 {
 	border: 0;
 	border-top: 1px solid #e6e6e6;
@@ -390,14 +390,14 @@ table th
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
-SCREEN STYLES 
+SCREEN STYLES
 --------------------------------------------------------------------------------
 */
 
-#container 
-{ 
+#container
+{
 	width: 100%;
 	overflow: hidden;
 	background-color: #ccc;
@@ -432,7 +432,7 @@ img.cp_logo_image
 	letter-spacing: 1px;
 }
 
-#header #tagline 
+#header #tagline
 {
 	font-style: normal;
 	font-size: 1em;
@@ -443,7 +443,7 @@ img.cp_logo_image
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Switcher
 --------------------------------------------------------------------------------
@@ -518,7 +518,7 @@ Switcher
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Content
 --------------------------------------------------------------------------------
@@ -580,7 +580,7 @@ body.admin-bar #sidebar
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Shadows and Transitions
 --------------------------------------------------------------------------------
@@ -663,7 +663,7 @@ Shadows and Transitions
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 BASIC LAYOUT
 --------------------------------------------------------------------------------
@@ -855,7 +855,7 @@ BASIC LAYOUT
 	list-style-image: none;
 }
 
-#toc_sidebar .sidebar_minimiser ul li a 
+#toc_sidebar .sidebar_minimiser ul li a
 {
 	display: block;
 	font-family: sans-serif;
@@ -1204,13 +1204,13 @@ p.comment_activity_date
 }
 
 /* YouTube embeds */
-.comment-content iframe 
+.comment-content iframe
 {
 	max-width: 100%;
 }
 
 /* Images in comments */
-.comment-content img 
+.comment-content img
 {
 	max-width: 97%;
 	height: auto;
@@ -1342,7 +1342,7 @@ We could position so that there's a bigger touch area:
 	margin: 0.5em 0 0 0;
 }
 
-#commentform #author_details input, 
+#commentform #author_details input,
 #commentform textarea
 {
 	width: 90%;
@@ -1434,7 +1434,7 @@ div#respond .subscribe_reloaded_insert
 	background-color: transparent;
 }
 
-.notransition 
+.notransition
 {
 	-webkit-transition: none !important;
 	-moz-transition: none !important;
@@ -1528,27 +1528,27 @@ div#respond .subscribe_reloaded_insert
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Search
 --------------------------------------------------------------------------------
 */
 
-#document_search 
+#document_search
 {
 	margin: 0;
 	padding: 4%;
 	background-color: #eee;
 }
 
-#document_search label 
+#document_search label
 {
 	position: absolute;
 	visibility: hidden;
 	clip: rect(0px, 0px, 0px, 0px);
 }
 
-#document_search input#s 
+#document_search input#s
 {
 	width: 95%;
 }
@@ -1556,7 +1556,7 @@ Search
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 BASIC TYPOGRAPHY
 --------------------------------------------------------------------------------
@@ -1571,7 +1571,7 @@ p.hidden_page_url
 h1, h2, h3, h4, h5, h6
 {
 	font-family: sans-serif;
-	text-transform: uppercase; 
+	text-transform: uppercase;
 }
 
 #title h1
@@ -1664,14 +1664,14 @@ div.search_meta p a
 	text-decoration: none;
 }
 
-.post 
+.post
 {
 	position: relative;
 	line-height: 1.6;
 	z-index: 510;
 }
 
-.post span.para_marker 
+.post span.para_marker
 {
 	position: absolute;
 	font-style: normal;
@@ -1682,7 +1682,7 @@ div.search_meta p a
 }
 
 #content .post span.para_marker a,
-.content .post span.para_marker a 
+.content .post span.para_marker a
 {
 	text-decoration: none;
 	font-family: sans-serif;
@@ -1704,7 +1704,7 @@ div.search_meta p a
 	padding-left: 9px;
 }
 
-span.commenticonbox a.para_permalink 
+span.commenticonbox a.para_permalink
 {
 	display: block;
 	float: left;
@@ -1716,17 +1716,17 @@ span.commenticonbox a.para_permalink
 	font-style: normal;
 }
 
-span.commenticonbox a.no_comments 
+span.commenticonbox a.no_comments
 {
 	background: transparent url("../images/icons/comment_add.png") no-repeat;
 }
 
-span.commenticonbox a.has_comments 
+span.commenticonbox a.has_comments
 {
 	background: transparent url("../images/icons/comment.png") no-repeat;
 }
 
-span.commenticonbox small.comment_count 
+span.commenticonbox small.comment_count
 {
 	position: absolute;
 	float: right;
@@ -1735,7 +1735,7 @@ span.commenticonbox small.comment_count
 }
 
 .post ul li.list_commenticon,
-.post ol li.list_commenticon 
+.post ol li.list_commenticon
 {
 	float: left;
 	width: 0;
@@ -1748,7 +1748,7 @@ span.commenticonbox small.comment_count
 	padding-top: 2em;
 	text-align: center;
 	font-family: sans-serif;
-	text-transform: uppercase; 
+	text-transform: uppercase;
 }
 
 
@@ -1757,7 +1757,7 @@ span.commenticonbox small.comment_count
 div.multipager
 {
 	font-family: sans-serif;
-	text-transform: uppercase; 
+	text-transform: uppercase;
 	clear: both;
 	border-top: 1px solid #B5BFB2;
 	border-bottom: 1px dotted #B5BFB2;
@@ -1772,7 +1772,7 @@ div.multipager .multipager_sep
 }
 
 #content div.multipager:after,
-.content div.multipager:after 
+.content div.multipager:after
 {
 	content: "";
 	display: block;
@@ -1813,7 +1813,7 @@ div.multipager.multipager_all span
 
 div.multipager.multipager_all span.multipager_link
 {
-	margin-left: 0.2em; 
+	margin-left: 0.2em;
 	margin-right: 0.2em;
 	padding: 0.5em 0.7em;
 	border: 1px solid #ddd;
@@ -1821,17 +1821,17 @@ div.multipager.multipager_all span.multipager_link
 
 div.multipager.multipager_all a
 {
-	text-decoration: none; 
+	text-decoration: none;
 }
 
 div.multipager.multipager_all a span.multipager_link
 {
-	background: #E8E8E8; 
-	color: #000; 
+	background: #E8E8E8;
+	color: #000;
 	border: none;
 }
 
-div.multipager.multipager_all a:hover span.multipager_link 
+div.multipager.multipager_all a:hover span.multipager_link
 {
 	color: #fff;
 	background: #ccc;
@@ -1840,7 +1840,7 @@ div.multipager.multipager_all a:hover span.multipager_link
 
 
 .post p.search_meta,
-.post p.postmetadata 
+.post p.postmetadata
 {
 	font-size: 80%;
 	font-family: sans-serif;
@@ -1855,11 +1855,11 @@ div.multipager.multipager_all a:hover span.multipager_link
 .post p.postmetadata a
 {
 	color: #000;
-	text-decoration: none; 
+	text-decoration: none;
 }
 
 body.search-results .post p.search_meta,
-body.search-results .post p.postmetadata 
+body.search-results .post p.postmetadata
 {
 	padding-top: 0;
 	margin-bottom: 0;
@@ -1871,13 +1871,13 @@ body.search-results .post p.postmetadata
 
 
 
-.post img 
+.post img
 {
 	max-width: 100%;
 	height: auto;
 }
 
-.post img.alignleft 
+.post img.alignleft
 {
 	margin: 0 0.5em 0.5em 0;
 }
@@ -1891,7 +1891,7 @@ body.search-results .post p.postmetadata
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Captioned Images
 --------------------------------------------------------------------------------
@@ -1900,9 +1900,9 @@ Captioned Images
 span.captioned_image
 {
 	display: block;
-	background: #eee; 
-	margin: 7px 0; 
-	border: 1px solid #B5BFB2; 
+	background: #eee;
+	margin: 7px 0;
+	border: 1px solid #B5BFB2;
 	max-width: 99%;
 	height: auto;
 }
@@ -1910,17 +1910,17 @@ span.captioned_image
 	span.captioned_image.aligncenter
 	{
 		margin: 0 auto;
-		margin-top: 0.5em; 
+		margin-top: 0.5em;
 	}
-	
+
 	span.captioned_image.alignleft
-	{ 
-		margin-right: 0.5em; 
+	{
+		margin-right: 0.5em;
 	}
-	
+
 	span.captioned_image.alignright
-	{ 
-		margin-left: 0.5em; 
+	{
+		margin-left: 0.5em;
 	}
 
 p > span.textblock:first-child > span.captioned_image
@@ -1930,16 +1930,16 @@ p > span.textblock:first-child > span.captioned_image
 	margin-top: 0;
 }
 
-span.wp-caption 
-{ 
+span.wp-caption
+{
 	display: block;
-	text-align: center; 
+	text-align: center;
 	padding: 0;
 	margin: 10px;
 }
 
 .post small.wp-caption-text
-{ 
+{
 	display: block;
 	text-align: center;
 	padding: 0;
@@ -1954,7 +1954,7 @@ span.wp-caption
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 WordPress galleries
 --------------------------------------------------------------------------------
@@ -1976,7 +1976,7 @@ dl.gallery-item
 }
 
 #content ul.image_link,
-.content ul.image_link 
+.content ul.image_link
 {
 	margin: 0;
 	margin-top: 2em;
@@ -1984,16 +1984,16 @@ dl.gallery-item
 	list-style-type: none;
 }
 
-ul.image_link h4 
+ul.image_link h4
 {
 }
 
-ul.image_link .alignright h4 
+ul.image_link .alignright h4
 {
 	text-align: right;
 }
 
-ul.image_link .alignleft h4 
+ul.image_link .alignleft h4
 {
 	text-align: left;
 }
@@ -2044,7 +2044,7 @@ div.image_attachment_caption
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Support for WordPress post formats
 --------------------------------------------------------------------------------
@@ -2073,7 +2073,7 @@ Support for WordPress post formats
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 SPECIAL PAGES
 --------------------------------------------------------------------------------
@@ -2127,7 +2127,7 @@ h3.comments_hl
 	background-color: #ccc;
 }
 
-.all_comments_listing li > h3 img.avatar 
+.all_comments_listing li > h3 img.avatar
 {
 	margin: 0 4px 0 0;
 	vertical-align: middle;
@@ -2169,7 +2169,7 @@ h3.comments_hl
 {
 	font-size: 80%;
 	font-family: sans-serif;
-	text-transform: uppercase; 
+	text-transform: uppercase;
 	color: #666;
 }
 
@@ -2193,7 +2193,7 @@ h3.comments_hl
 {
 	font-size: 80%;
 	font-family: sans-serif;
-	text-transform: uppercase; 
+	text-transform: uppercase;
 }
 
 .archives_by_month h3,
@@ -2227,7 +2227,7 @@ h3.comments_hl
 .archives_by_month ul li a,
 .categories ul li a,
 .tags ul li.no_tags,
-.tags ul li a 
+.tags ul li a
 {
 	display: block;
 	font-family: sans-serif;
@@ -2247,7 +2247,7 @@ h3.comments_hl
 	color: #000;
 }
 
-.tags ul li a 
+.tags ul li a
 {
 	font-size: 80% !important;
 }
@@ -2265,7 +2265,7 @@ h3.comments_hl
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Translation Workflow
 --------------------------------------------------------------------------------
@@ -2308,11 +2308,11 @@ ul#content-tabs li
 		padding: 0;
 		height: 24px;
 	}
-	
+
 	ul#content-tabs li#content_header h2
 	{
 	}
-	
+
 	ul#content-tabs li h2 a
 	{
 		display: block;
@@ -2320,12 +2320,12 @@ ul#content-tabs li
 		text-decoration: none;
 		color: #000;
 		background-color: #bdbdbd;
-	}	
+	}
 
 	ul#content-tabs li h2 a:hover
 	{
 		background-color: #bdbdbd;
-	}	
+	}
 
 	ul#content-tabs li.default-content-tab h2 a
 	{
@@ -2344,12 +2344,12 @@ ul#content-tabs li
 		padding: 0 0;
 	}
 
-	
-	
 
 
 
-/* 
+
+
+/*
 --------------------------------------------------------------------------------
 Post Versioning
 --------------------------------------------------------------------------------
@@ -2430,13 +2430,13 @@ Post Versioning
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Author Page
 --------------------------------------------------------------------------------
 */
 
-h3.author_pages_heading 
+h3.author_pages_heading
 {
 	margin: 2em 0 0 0;
 	padding: 2%;
@@ -2446,7 +2446,7 @@ h3.author_pages_heading
 	background-color: #BDBDBD;
 }
 
-ul.author_pages 
+ul.author_pages
 {
 	margin: 0;
 	padding: 0;
@@ -2458,7 +2458,7 @@ ul.author_pages li
 	list-style-image: none;
 }
 
-ul.author_pages li a 
+ul.author_pages li a
 {
 	display: block;
 	font-family: sans-serif;
@@ -2476,7 +2476,7 @@ ul.author_pages li a:hover
 	color: #000;
 }
 
-ul.author_pages li a 
+ul.author_pages li a
 {
 	font-size: 80% !important;
 }
@@ -2487,7 +2487,7 @@ ul.author_pages li a
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 New Look TOC Sidebar for posts
 --------------------------------------------------------------------------------
@@ -2555,7 +2555,7 @@ New Look TOC Sidebar for posts
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Compatibility with Members List plugin
 --------------------------------------------------------------------------------
@@ -2580,19 +2580,19 @@ Compatibility with Members List plugin
 	border: none;
 }
 
-#tern_members .tern_wp_members_list li 
+#tern_members .tern_wp_members_list li
 {
 	height: auto;
 	padding-top: 0
 }
 
-html>body #tern_members .tern_wp_members_list li 
+html>body #tern_members .tern_wp_members_list li
 {
 	height: auto;
 	min-height: 0;
 }
 
-#tern_members .tern_wp_members_list 
+#tern_members .tern_wp_members_list
 {
 	margin: 0;
 	padding: 0;
@@ -2604,7 +2604,7 @@ html>body #tern_members .tern_wp_members_list li
 	list-style-image: none;
 }
 
-#tern_members .tern_wp_members_list li .tern_wp_member_info a 
+#tern_members .tern_wp_members_list li .tern_wp_member_info a
 {
 	display: block;
 	font-family: sans-serif;
@@ -2622,13 +2622,13 @@ html>body #tern_members .tern_wp_members_list li
 	color: #000;
 }
 
-#tern_members .tern_wp_members_list li .tern_wp_member_info a 
+#tern_members .tern_wp_members_list li .tern_wp_member_info a
 {
 	font-size: 80% !important;
 }
 
 /* alphabet */
-#tern_members .tern_members_alpha span 
+#tern_members .tern_members_alpha span
 {
 	font-size: inherit;
 	font-style: italic;
@@ -2642,7 +2642,7 @@ html>body #tern_members .tern_wp_members_list li
 	border: none;
 }
 
-.tern_members_alpha a 
+.tern_members_alpha a
 {
 	padding: 0 3px;
 	margin-right: 5px;
@@ -2770,7 +2770,7 @@ ol.footnotes,
 }
 
 /* horizontal rule (can be used to divide text from footnotes) */
-.post hr 
+.post hr
 {
 	margin: 20px 0 8px 0;
 	padding-left: 7px;
@@ -2942,7 +2942,7 @@ body > img
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Comment Orphaning
 --------------------------------------------------------------------------------
@@ -3026,7 +3026,7 @@ Feature images
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Compatibility with WordPress 3.8+
 --------------------------------------------------------------------------------
@@ -3044,7 +3044,7 @@ body .wp-dialog
 	html body #wpadminbar {
 		z-index: 99999 !important;
 	}
-	
+
 }
 
 /* allow TinyMCE 4 to go fullscreen */
@@ -3070,12 +3070,12 @@ body.tinymce-4 .mce-toolbar .mce-btn button:hover
 	text-decoration: none;
 }
 
-body.tinymce-4 .wp-editor-container 
+body.tinymce-4 .wp-editor-container
 {
 	border: 1px solid #dedede;
 }
 
-body.tinymce-4 #commentform #wp-comment-wrap textarea 
+body.tinymce-4 #commentform #wp-comment-wrap textarea
 {
 	width: 100%;
 	margin: 0;
@@ -3085,7 +3085,7 @@ body.tinymce-4 #commentform #wp-comment-wrap textarea
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 RESPONSIVENESS
 --------------------------------------------------------------------------------
@@ -3097,123 +3097,123 @@ RESPONSIVENESS
 	{
 		display: block;
 	}
-	
+
 	#content_container
 	{
 		left: 0;
 	}
-	
+
 	#navigation
 	{
 		width: 33%;
 		left: -33%;
 	}
-	
+
 	#wrapper
 	{
 		width: 67%;
 	}
-	
+
 	#sidebar
 	{
 		width: 33%;
 		right: 0;
 	}
-	
+
 	.active-nav #content_container
 	{
 		left: 33%;
 	}
-	
+
 	.active-nav #navigation
 	{
 		left: 0;
 	}
-	
+
 	.active-nav #wrapper
 	{
 		width: 67%;
 	}
-	
+
 	.active-nav #sidebar
 	{
 		right: -33%;
 	}
-	
+
 	.active-sidebar #content_container
 	{
 		left: 0;
 	}
-	
+
 	.active-sidebar #navigation
 	{
 		left: -33%;
 	}
-	
+
 	.active-sidebar #wrapper
 	{
 		width: 67%;
 	}
-	
+
 	.active-sidebar #sidebar
 	{
 		right: 0;
 	}
-	
+
 	#footer
 	{
 		width: 67%;
 		left: 0;
 		margin-bottom: 50px;
 	}
-	
+
 	.active-nav #footer
 	{
 		width: 67%;
 		left: 33%;
 	}
-	
+
 	.active-sidebar #footer
 	{
 		width: 67%;
 		left: 0;
 	}
-	
+
 	h3.activity_heading,
 	h3.nocomments
 	{
 		font-size: 1em;
 		padding: 15px 10px;
 	}
-	
+
 	.comments_container > h3
 	{
 		font-size: 1em;
 	}
-	
-	.comments_container > h3 > span, 
+
+	.comments_container > h3 > span,
 	.comments_container > h3 a
 	{
 		padding: 15px 10px;
 	}
-	
+
 	.comments_container > h3.nocomments > span
 	{
 		padding: 0;
 	}
-	
-	#toc_sidebar .sidebar_minimiser ul li a 
+
+	#toc_sidebar .sidebar_minimiser ul li a
 	{
 		font-size: 100%;
 		padding: 15px 10px;
 	}
-	
+
 	.post,
 	.comment-content
 	{
 		font-size: 120%;
 	}
-	
+
 	/* buddypress content */
 	.activity,
 	#groups-dir-list,
@@ -3222,7 +3222,7 @@ RESPONSIVENESS
 	{
 		font-size: 110%;
 	}
-	
+
 	button,
 	a.button,
 	input[type=submit],
@@ -3235,20 +3235,20 @@ RESPONSIVENESS
 		padding-top: 8px;
 		padding-bottom: 8px;
 	}
-	
+
 	.reply a
 	{
 		font-size: 80%;
 		padding-top: 0.8em;
 		padding-bottom: 0.8em;
 	}
-	
+
 	/* JetPack subscriptions */
 	p.comment-subscription-form
 	{
 		font-size: 75%;
 		margin: 1.5em 0;
-	}	
+	}
 }
 
 
@@ -3261,99 +3261,99 @@ RESPONSIVENESS
 	{
 		text-align: center;
 	}
-	
+
 	#content_container
 	{
 		left: 0;
 	}
-	
-	#navigation 
+
+	#navigation
 	{
 		left: -40%;
 		width: 40%;
 	}
-	
-	#wrapper 
+
+	#wrapper
 	{
 		width: 100%;
 	}
-	
-	#sidebar 
+
+	#sidebar
 	{
 		width: 50%;
 		right: -50%;
-	}		
-			
+	}
+
 	.active-nav #content_container
 	{
 		left: 40%;
 	}
-	
+
 	.active-nav #navigation
 	{
 		left: 0;
 	}
-	
+
 	.active-nav #wrapper
 	{
 		width: 100%;
 	}
-	
+
 	.active-nav #sidebar
 	{
 		right: -50%;
 	}
-	
+
 	.active-sidebar #content_container
 	{
 		left: -50%;
 	}
-	
+
 	.active-sidebar #navigation
 	{
 		left: -100%;
 	}
-	
+
 	.active-sidebar #wrapper
 	{
 		width: 100%;
 	}
-	
+
 	.active-sidebar #sidebar
 	{
 		right: 0;
 	}
-	
+
 	#footer
 	{
 		width: 100%;
 		left: 0;
 	}
-	
+
 	.active-nav #footer
 	{
 		width: 100%;
 		left: 40%;
 	}
-	
+
 	.active-sidebar #footer
 	{
 		width: 100%;
 		left: -50%;
 	}
-	
-	#toc_sidebar .sidebar_minimiser ul li a 
+
+	#toc_sidebar .sidebar_minimiser ul li a
 	{
 		font-size: 1em;
 		padding: 15px 10px;
 	}
-	
+
 	.post,
 	.comment-content
 	{
 		font-size: 120%;
 	}
-	
+
 	/* buddypress content */
 	.activity,
 	#groups-dir-list,
@@ -3362,7 +3362,7 @@ RESPONSIVENESS
 	{
 		font-size: 110%;
 	}
-	
+
 }
 
 
@@ -3380,12 +3380,12 @@ RESPONSIVENESS
 	{
 		left: 0;
 	}
-	
+
 	.active-nav #content_container
 	{
 		left: 70%;
 	}
-	
+
 	.active-sidebar #content_container
 	{
 		left: -70%;
@@ -3395,23 +3395,23 @@ RESPONSIVENESS
 	{
 		right: -70%;
 	}
-	
+
 	.active-sidebar #sidebar
 	{
 		right: 0;
 	}
-	
-	#navigation 
+
+	#navigation
 	{
 		width: 70%;
 		left: -70%;
 	}
-	
-	#wrapper 
+
+	#wrapper
 	{
 		width: 100%;
 	}
-	
+
 	#header,
 	#switcher,
 	.post,
@@ -3419,7 +3419,7 @@ RESPONSIVENESS
 	{
 		font-size: 80%;
 	}
-	
+
 	/* buddypress content */
 	.activity,
 	#groups-dir-list,
@@ -3428,7 +3428,7 @@ RESPONSIVENESS
 	{
 		font-size: 90%;
 	}
-	
+
 	/* box-shadow counts as layout on Android, so remove
 	#switcher
 	{
@@ -3437,14 +3437,14 @@ RESPONSIVENESS
 		-khtml-box-shadow: #888 0 0 10px;
 		box-shadow: #888 0 0 10px;
 	} */
-	
-	#title h1 
+
+	#title h1
 	{
 		margin: 0.8em 0 0 0;
 		font-size: 110%;
 		line-height: 1.8;
 	}
-	
+
 	h2.post_title,
 	.search_result h3
 	{
@@ -3456,19 +3456,19 @@ RESPONSIVENESS
 	{
 		line-height: 1.5;
 	}
-	
-	#switcher ul li 
+
+	#switcher ul li
 	{
 		height: 38px;
 	}
-	
+
 	#switcher ul li a
 	{
 		font-size: 14px;
 		padding: 12px;
 		height: 14px;
 	}
-	
+
 	#toc_sidebar .sidebar_header h2,
 	ul#sidebar_tabs li a
 	{
@@ -3476,46 +3476,46 @@ RESPONSIVENESS
 	}
 
 	#content,
-	.content 
+	.content
 	{
 		padding: 2% 0 6% 0;
 	}
-	
-	.reply a 
+
+	.reply a
 	{
 		font-size: 70%;
 	}
-	
-	#sidebar 
+
+	#sidebar
 	{
 		width: 70%;
 		right: -70%;
-	}		
-	
+	}
+
 	#footer
 	{
 	}
-	
+
 	.active-nav #footer
 	{
 		left: 70%;
 	}
-	
+
 	.active-sidebar #footer
 	{
 		left: -70%;
 	}
-	
+
 	.comments_container > h3 span.source_block
 	{
 		display: block;
 	}
-	
+
 }
 
 
 
-/* Specify orientation styles here, when supported 
+/* Specify orientation styles here, when supported
 @media screen and (orientation:portrait) {
 }
 @media screen and (orientation:landscape) {

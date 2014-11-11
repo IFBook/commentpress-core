@@ -36,49 +36,49 @@ NOTES
 
 
 
-	<h3><?php 
-	
+	<h3><?php
+
 	comments_number(
-		'<span>0</span> general comments', 
-		'<span>1</span> general comment', 
-		'<span>%</span> general comments' 
-	); 
-	
+		'<span>0</span> general comments',
+		'<span>1</span> general comment',
+		'<span>%</span> general comments'
+	);
+
 	?></h3>
-	
-	
-	
+
+
+
 	<?php do_action( 'commentpress_before_scrollable_comments' ); ?>
-	
-	
-	
+
+
+
 	<div class="paragraph_wrapper">
 
 		<ol class="commentlist">
-	
-		<?php 
-		
+
+		<?php
+
 		// get comments for this post in ascending order
 		$comments = get_comments( array(
 			'post_id' => $post->ID,
 			'order' => 'ASC'
 		) );
-		
+
 		wp_list_comments(
-		
+
 			array(
-			
+
 				// list comments params
-				'type'=> 'comment', 
+				'type'=> 'comment',
 				'reply_text' => 'Reply to this comment',
 				'callback' => 'commentpress_comments'
-				
+
 			),
-			
+
 			$comments
-			
+
 		); ?>
-	
+
 		</ol>
 
 	</div><!-- /paragraph_wrapper -->
@@ -113,7 +113,7 @@ NOTES
 <?php
 
 // until WordPress supports a locate_theme_file() function, use filter
-$include = apply_filters( 
+$include = apply_filters(
 	'cp_template_comment_form',
 	get_template_directory() . '/assets/templates/comment_form.php'
 );

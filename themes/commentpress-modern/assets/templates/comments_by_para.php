@@ -53,13 +53,13 @@ if ( isset( $post->ID ) ) {
 
 // because AJAX may be routed via admin or front end
 if ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) {
-	
+
 	// skip
-	
+
 } else {
 
 	// until WordPress supports a locate_theme_file() function, use filter
-	$include = apply_filters( 
+	$include = apply_filters(
 		'cp_template_comment_form',
 		get_template_directory() . '/assets/templates/comment_form.php'
 	);

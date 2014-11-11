@@ -26,7 +26,7 @@ if ( $post->comment_count == 0 ) { $no_comments_class = ' no_comments'; }
 <div class="sidebar_minimiser">
 
 <?php comments_template(); ?>
-	
+
 </div><!-- /sidebar_minimiser -->
 
 

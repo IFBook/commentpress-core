@@ -32,25 +32,25 @@
 
 		<?php do_action( 'template_notices' ); ?>
 
-			<h3><?php 
-			
+			<h3><?php
+
 			// define title
 			$create_title = apply_filters(
-				'cp_register_new_site_page_title', 
+				'cp_register_new_site_page_title',
 				__( 'Create a New Document', 'commentpress-core' )
 			);
-			
+
 			// allow overrides
 			echo apply_filters( 'cp_create_site_page_title', $create_title );
-			
-			?> &nbsp;<a class="button" href="<?php echo trailingslashit( bp_get_root_domain() . '/' . bp_get_blogs_root_slug() ) ?>"><?php 
-			
+
+			?> &nbsp;<a class="button" href="<?php echo trailingslashit( bp_get_root_domain() . '/' . bp_get_blogs_root_slug() ) ?>"><?php
+
 			// define link title
 			$link_title = __( 'Directory', 'commentpress-core' );
-			
+
 			// allow overrides
 			echo apply_filters( 'cp_create_site_page_link_title', $link_title );
-			
+
 			?></a></h3>
 
 		<?php do_action( 'bp_before_create_blog_content' ); ?>

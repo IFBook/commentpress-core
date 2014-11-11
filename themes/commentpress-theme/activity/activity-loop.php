@@ -2,8 +2,8 @@
 
 <?php if ( bp_has_activities( bp_ajax_querystring( 'activity' ) ) ) : ?>
 
-	<?php 
-	
+	<?php
+
 	// do not load in BP2.1+
 	if ( ! function_exists( 'bp_activity_load_more_link' ) ) {
 
@@ -14,10 +14,10 @@
 				<div class="pagination-links"><?php bp_activity_pagination_links(); ?></div>
 			</div>
 		</noscript>
-		<?php 
-		
+		<?php
+
 	}
-	
+
 	?>
 
 	<?php if ( empty( $_POST['page'] ) ) : ?>

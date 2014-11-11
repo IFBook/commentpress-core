@@ -41,30 +41,30 @@ if ( is_object( $commentpress_core ) ) {
 
 	// are we asking for in-page comments?
 	if ( $commentpress_core->db->is_special_page() ) {
-		
+
 		// until WordPress supports a locate_theme_file() function, use filter
-		$include = apply_filters( 
+		$include = apply_filters(
 			'cp_template_comments_in_page',
 			get_template_directory() . '/assets/templates/comments_in_page.php'
 		);
-	
+
 		// include 'comments in page' template
 		include( $include );
 		return;
-	
+
 	// otherwise, comments in sidebar
 	} else {
-	
+
 		// until WordPress supports a locate_theme_file() function, use filter
-		$include = apply_filters( 
+		$include = apply_filters(
 			'cp_template_comments_by_para',
 			get_template_directory() . '/assets/templates/comments_by_para.php'
 		);
-	
+
 		// include comments split by paragraph template
 		include( $include );
 		return;
-		
+
 	}
 
 }
@@ -87,14 +87,14 @@ if ( is_object( $commentpress_core ) ) {
 
 
 
-	<h3 id="para-heading-"><span class="heading-padder"><?php 
-	
+	<h3 id="para-heading-"><span class="heading-padder"><?php
+
 	comments_number(
-		'<span>0</span> comments', 
-		'<span>1</span> comment', 
+		'<span>0</span> comments',
+		'<span>1</span> comment',
 		'<span>%</span> comments'
-	); 
-	
+	);
+
 	?> <?php _e( 'on the whole page', 'commentpress-core' ); ?></span></h3>
 
 
@@ -102,33 +102,33 @@ if ( is_object( $commentpress_core ) ) {
 	<div class="paragraph_wrapper">
 
 		<ol class="commentlist">
-	
+
 		<?php wp_list_comments(
-		
+
 			array(
-			
+
 				// list comments params
-				'type'=> 'comment', 
+				'type'=> 'comment',
 				'reply_text' => 'Reply to this comment',
 				'callback' => 'commentpress_comments'
-				
+
 			)
-			
+
 		); ?>
-	
+
 		</ol>
 
 		<div class="reply_to_para" id="reply_to_para-">
 		<p><a class="reply_to_para" href="<?php the_permalink() ?>?replytopara#respond" onclick="return addComment.moveFormToPara( '', '', '1' )"><?php _e( 'Leave a comment on the whole page', 'commentpress-core' ); ?></a></p>
 		</div>
-		
+
 	</div><!-- /paragraph_wrapper -->
 
 
 
-<?php 
+<?php
 
-else : 
+else :
 // this is displayed if there are no comments so far
 
 ?>
@@ -141,16 +141,16 @@ else :
 		<h3 class="nocomments"><span><?php _e( 'No comments on the whole page', 'commentpress-core' ); ?></span></h3>
 
 		<div class="paragraph_wrapper">
-	
+
 			<div class="reply_to_para" id="reply_to_para-">
 			<p><a class="reply_to_para" href="<?php the_permalink() ?>?replytopara#respond" onclick="return addComment.moveFormToPara( '', '', '1' )"><?php _e( 'Leave a comment on the whole page', 'commentpress-core' ); ?></a></p>
 			</div>
-			
+
 		</div><!-- /paragraph_wrapper -->
-	
-	 <?php 
-	 else : 
-	 // comments are closed 
+
+	 <?php
+	 else :
+	 // comments are closed
 	 ?>
 
 		<!-- comments are closed. -->
@@ -175,7 +175,7 @@ else :
 <?php
 
 // until WordPress supports a locate_theme_file() function, use filter
-$include = apply_filters( 
+$include = apply_filters(
 	'cp_template_comment_form',
 	get_template_directory() . '/assets/templates/comment_form.php'
 );

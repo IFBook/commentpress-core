@@ -24,7 +24,7 @@ Annotate, gloss, workshop, debate: with CommentPress Core you can do all of thes
 
 For further information and instructions please see the [CommentPress site](http://www.futureofthebook.org/commentpress/) or contact the developers by email at [cpdev@futureofthebook.org](mailto:cpdev@futureofthebook.org)
 
-Many thanks to the following for translations: 
+Many thanks to the following for translations:
 
 * French - [Pouhiou](http://wordpress.org/support/profile/pouhiou)
 * Spanish - Andrew Kurtis from [WebHostingHub](http://www.webhostinghub.com/)
@@ -218,7 +218,7 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 
 
-== Changelog == 
+== Changelog ==
 
 
 <h4>3.6.2</h4>
