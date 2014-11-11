@@ -62,7 +62,7 @@ var cp_msie6 = 1;
 
 
 
-<?php 
+<?php
 
 // get body id
 $_body_id = commentpress_get_body_id();
@@ -79,10 +79,10 @@ $_body_classes = commentpress_get_body_classes( true );
 
 
 
-<?php 
+<?php
 
 // until WordPress supports a locate_theme_file() function, use filter
-$include = apply_filters( 
+$include = apply_filters(
 	'cp_template_header_body',
 	get_template_directory() . '/assets/templates/header_body.php'
 );

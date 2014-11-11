@@ -40,33 +40,33 @@
 	<?php /* If this is a paged archive */ } elseif (isset($_GET['paged']) && !empty($_GET['paged'])) { ?>
 	<h3 class="post_title"><?php _e( 'Archives', 'commentpress-core' ); ?></h3>
 	<?php } ?>
-	
+
 	<?php while (have_posts()) : the_post(); ?>
 
 		<div class="search_result">
 
 			<h3 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'commentpress-core' ); ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
-			
+
 			<div class="search_meta">
 				<?php commentpress_echo_post_meta(); ?>
 			</div>
 
 			<?php the_excerpt() ?>
-		
+
 			<p class="search_meta"><?php the_tags( __( 'Tags: ', 'commentpress-core' ), ', ', '<br />'); ?> <?php _e( 'Posted in', 'commentpress-core' ); ?> <?php the_category( ', ' ) ?> | <?php edit_post_link( __( 'Edit', 'commentpress-core' ), '', ' | ' ); ?>  <?php comments_popup_link( __( 'No Comments &#187;', 'commentpress-core' ), __( '1 Comment &#187;', 'commentpress-core' ), __( '% Comments &#187;', 'commentpress-core' ) ); ?></p>
-		
+
 		</div><!-- /archive_item -->
-	
+
 	<?php endwhile; ?>
 
 
-	
+
 <?php else : ?>
 
 	<h2 class="post_title"><?php _e( 'Not Found', 'commentpress-core' ); ?></h2>
 
 	<p><?php _e( "Sorry, but you are looking for something that isn't here.", 'commentpress-core' ); ?></p>
-	
+
 	<?php get_search_form(); ?>
 
 <?php endif; ?>

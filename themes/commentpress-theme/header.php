@@ -47,15 +47,15 @@ var cp_msie6 = 1;
 <link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/assets/css/activate.css" media="screen" />
 <?php }} ?>
 
-<?php 
+<?php
 
 // add custom css file for user-defined theme mods in child theme directory (legacy)
-if( file_exists( get_stylesheet_directory().'/custom.css' )) { 
+if( file_exists( get_stylesheet_directory().'/custom.css' )) {
 
 ?>
 <!-- legacy custom css -->
 <link rel="stylesheet" type="text/css" href="<?php echo get_stylesheet_directory_uri(); ?>/custom.css" media="screen" />
-<?php 
+<?php
 
 } ?>
 
@@ -71,7 +71,7 @@ if( file_exists( get_stylesheet_directory().'/custom.css' )) {
 
 
 
-<?php 
+<?php
 
 // get body id
 $_body_id = commentpress_get_body_id();
@@ -84,10 +84,10 @@ $_body_classes = commentpress_get_body_classes( true );
 
 
 
-<?php 
+<?php
 
 // until WordPress supports a locate_theme_file() function, use filter
-$include = apply_filters( 
+$include = apply_filters(
 	'cp_template_header_body',
 	get_template_directory() . '/assets/templates/header_body.php'
 );

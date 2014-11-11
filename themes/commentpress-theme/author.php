@@ -19,7 +19,7 @@ $authorURL = '';
 
 // do we have an URL for this user?
 if ( $my_author->user_url != '' AND $my_author->user_url != 'http://' ) {
-	
+
 	// set url
 	$authorURL = $my_author->user_url;
 
@@ -27,7 +27,7 @@ if ( $my_author->user_url != '' AND $my_author->user_url != 'http://' ) {
 
 
 
-get_header(); 
+get_header();
 
 ?>
 
@@ -62,7 +62,7 @@ get_header();
 
 <dl>
 
-<?php 
+<?php
 
 /*
 

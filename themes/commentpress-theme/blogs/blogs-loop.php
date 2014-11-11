@@ -31,37 +31,37 @@
 
 	<ul id="blogs-list" class="item-list" role="main">
 
-	<?php while ( bp_blogs() ) : bp_the_blog(); 
-	
+	<?php while ( bp_blogs() ) : bp_the_blog();
+
 	// init as ordinary blog
 	$class = '';
 
 	// is this a groupblog?
 	if ( function_exists( 'get_groupblog_group_id' ) ) {
-		
+
 		// access BP object
 		global $blogs_template;
-	
+
 		// init group blog type
 		$groupblogtype = '';
-		
+
 		// get group ID
 		$group_id = get_groupblog_group_id( $blogs_template->blog->blog_id );
 		if ( is_numeric( $group_id ) ) {
-		
+
 			// get group blogtype
 			$groupblogtype = groups_get_groupmeta( $group_id, 'groupblogtype' );
-			
+
 			// add space before if we have it
 			if ( $groupblogtype ) { $groupblogtype = ' '.$groupblogtype; }
-			
+
 			// yes
 			$class = ' class="bp-groupblog-blog'.$groupblogtype.'"';
-			
+
 		}
-	
+
 	}
-	
+
 	?>
 		<li<?php echo $class; ?>>
 			<div class="item-avatar">

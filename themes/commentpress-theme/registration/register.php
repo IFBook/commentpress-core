@@ -88,7 +88,7 @@
 							<div class="editfield">
 
 								<?php if ( function_exists( 'bp_xprofile_create_field_type' ) ) : ?>
-								
+
 									<?php
 									$field_type = bp_xprofile_create_field_type( bp_get_the_profile_field_type() );
 									$field_type->edit_field_html();
@@ -204,18 +204,18 @@
 								<?php endif; ?>
 
 								<?php do_action( 'bp_custom_profile_edit_fields' ) ?>
-								
+
 								<?php
-								
+
 								// get description
 								$desc = bp_get_the_profile_field_description();
-								
+
 								if ( $desc != '' ) {
 								?>
 								<p class="description"><?php echo $desc; ?></p>
 								<?php
 								}
-								
+
 								?>
 
 							</div>

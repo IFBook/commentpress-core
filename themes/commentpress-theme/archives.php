@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
 Template Name: Archive
 */
@@ -58,35 +58,35 @@ get_header(); ?>
 <h3><?php _e( 'Categories', 'commentpress-core' ); ?></h3>
 
 <ul>
-<?php 
+<?php
 
 // configure
 $defaults = array(
 
-'show_option_all' => '', 
+'show_option_all' => '',
 'orderby' => 'name',
-'order' => 'ASC', 
+'order' => 'ASC',
 'show_last_update' => 0,
-'style' => 'list', 
+'style' => 'list',
 'show_count' => 0,
-'hide_empty' => 1, 
+'hide_empty' => 1,
 'use_desc_for_title' => 1,
-'child_of' => 0, 
-'feed' => '', 
+'child_of' => 0,
+'feed' => '',
 'feed_type' => '',
-'feed_image' => '', 
-'exclude' => '', 
-'exclude_tree' => '', 
+'feed_image' => '',
+'exclude' => '',
+'exclude_tree' => '',
 'current_category' => 0,
-'hierarchical' => true, 
+'hierarchical' => true,
 'title_li' => '',
-'echo' => 1, 
+'echo' => 1,
 'depth' => 0
 
 );
 
 // show them
-wp_list_categories( $defaults ); 
+wp_list_categories( $defaults );
 
 ?>
 </ul>
@@ -99,22 +99,22 @@ wp_list_categories( $defaults );
 
 <h3><?php _e( 'Tags', 'commentpress-core' ); ?></h3>
 
-<?php 
+<?php
 
 //echo get_the_tag_list('<ul><li>','</li><li>','</li></ul>');
 
 $args = array(
 
-	'smallest' => 1, 
+	'smallest' => 1,
 	'largest' => 1,
-	'unit' => 'em', 
-	'number' => 0,  
+	'unit' => 'em',
+	'number' => 0,
 	'format' => 'list',
 	'separator' => '\n',
-	'orderby' => 'name', 
+	'orderby' => 'name',
 	'order' => 'ASC',
-	'link' => 'view', 
-	'taxonomy' => 'post_tag', 
+	'link' => 'view',
+	'taxonomy' => 'post_tag',
 	'echo' => false
 
 );

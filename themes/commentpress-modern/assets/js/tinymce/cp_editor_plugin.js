@@ -1,30 +1,30 @@
 (function() {
 
 	tinymce.create('tinymce.plugins.CommentBlock', {
-	
+
 		init : function(ed, url) {
-		
+
 			var commentblockHTML;
 			commentblockHTML = '<img src="' + url + '/trans.gif" class="mceCommentBlock mceItemNoResize" title="Comment Block" />';
-			
+
 			// add button
 			ed.addButton('commentblock', {
 				title : 'Insert a Comment Block',
 				image : url+'/commentblock.jpg',
 				cmd : 'COMMENTPRESS_CommentBlock'
 			});
-			
+
 			// register commands
 			ed.addCommand('COMMENTPRESS_CommentBlock', function() {
 				ed.execCommand('mceInsertContent', 0, commentblockHTML);
 			});
-			
+
 			// add listeners to handle more break
 			this._handleCommentBlock(ed, url);
-			
+
 			// add keyboard shortcut
 			//ed.addShortcut('alt+shift+0', ed.getLang('wp_more_desc'), 'COMMENTPRESS_CommentBlock');
-			
+
 		},
 
 		getInfo : function() {

@@ -11,7 +11,7 @@ $_page_content = commentpress_get_all_comments_page_content();
 
 
 
-get_header(); 
+get_header();
 
 ?>
 

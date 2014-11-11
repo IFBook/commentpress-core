@@ -105,7 +105,7 @@
 					<?php do_action( 'bp_activity_syndication_options' ); ?>
 
 					<li id="activity-filter-select" class="last">
-						<label for="activity-filter-by"><?php _e( 'Show:', 'commentpress-core' ); ?></label> 
+						<label for="activity-filter-by"><?php _e( 'Show:', 'commentpress-core' ); ?></label>
 						<select id="activity-filter-by">
 							<option value="-1"><?php _e( 'Everything', 'commentpress-core' ); ?></option>
 							<option value="activity_update"><?php _e( 'Updates', 'commentpress-core' ); ?></option>

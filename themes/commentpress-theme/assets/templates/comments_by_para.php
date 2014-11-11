@@ -48,7 +48,7 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) AND 'comments_by_para.php' == basename($
 <?php
 
 // until WordPress supports a locate_theme_file() function, use filter
-$include = apply_filters( 
+$include = apply_filters(
 	'cp_template_comment_form',
 	get_template_directory() . '/assets/templates/comment_form.php'
 );

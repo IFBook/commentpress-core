@@ -34,7 +34,7 @@ if (have_posts()) : ?>
 	<?php while (have_posts()) : the_post(); ?>
 
 		<div class="search_result">
-		
+
 		<div <?php post_class() ?> id="post-<?php the_ID(); ?>">
 
 			<h3><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'commentpress-core' ); ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
@@ -48,19 +48,19 @@ if (have_posts()) : ?>
 			</div>
 
 			<p class="postmetadata"><?php the_tags( __( 'Tags: ', 'commentpress-core' ), ', ', '<br />' ); ?> <?php _e( 'Posted in', 'commentpress-core' ); ?> <?php the_category( ', ' ) ?> | <?php edit_post_link( __( 'Edit', 'commentpress-core' ), '', ' | ' ); ?>  <?php comments_popup_link( __( 'No Comments &#187;', 'commentpress-core' ), __( '1 Comment &#187;', 'commentpress-core' ), __( '% Comments &#187;', 'commentpress-core' ) ); ?></p>
-			
+
 		</div>
 
 		</div><!-- /archive_item -->
-	
+
 	<?php endwhile; ?>
-	
+
 <?php else : ?>
 
 	<h2><?php _e( 'Not Found', 'commentpress-core' ); ?></h2>
-	
+
 	<p><?php _e( "Sorry, but you are looking for something that isn't here.", 'commentpress-core' ); ?></p>
-	
+
 	<?php get_search_form(); ?>
 
 <?php endif; ?>

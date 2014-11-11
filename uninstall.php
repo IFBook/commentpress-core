@@ -20,29 +20,29 @@ if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) { exit(); }
 
 
 
-/** 
+/**
  * @description: restore Wordpress database schema
  * @return boolean $result
- * @todo: 
+ * @todo:
  *
  */
 function commentpress_schema_restore() {
-	
+
 	// database object
 	global $wpdb;
-	
+
 	// include Wordpress install helper script
 	require_once( ABSPATH . 'wp-admin/install-helper.php' );
-	
+
 	// drop the column, if already there
 	$result = maybe_drop_column(
-	
-		$wpdb->comments, 
-		'comment_signature', 
+
+		$wpdb->comments,
+		'comment_signature',
 		"ALTER TABLE `$wpdb->comments` DROP `comment_signature`;"
-		
+
 	);
-	
+
 	// --<
 	return $result;
 }
@@ -66,7 +66,7 @@ if ( is_multisite() ) {
 	// delete multisite options
 	delete_site_option( 'cpmu_options' );
 	delete_site_option( 'cpmu_version' );
-	
+
 }
 
 

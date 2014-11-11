@@ -11,10 +11,10 @@ NOTES
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Import BuddyPress styles
-This is copied and amended from BP Default Theme and overriden @1450 below 
+This is copied and amended from BP Default Theme and overriden @1450 below
 --------------------------------------------------------------------------------
 */
 /**
@@ -1408,7 +1408,7 @@ div.pagination .pagination-links {
 	float: right;
 }
 div.pagination .pagination-links span,
-div.pagination .pagination-links a 
+div.pagination .pagination-links a
 {
 	font-family: sans-serif;
 	font-size: 12px;
@@ -1417,7 +1417,7 @@ div.pagination .pagination-links a
 	color: #888;
 }
 div.pagination .pagination-links span.current,
-div.pagination .pagination-links a:hover 
+div.pagination .pagination-links a:hover
 {
 	font-weight: bold;
 	text-decoration: none;
@@ -1439,14 +1439,14 @@ div#pag-bottom {
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 BuddyPress compatibility and overrides
 --------------------------------------------------------------------------------
 */
 
 /* override links to graphics in bp.css */
-div.item-list-tabs ul li.feed a 
+div.item-list-tabs ul li.feed a
 {
 	background: url( ../images/buddypress/rss.png ) center left no-repeat;
 	margin-left: 5px;
@@ -1501,17 +1501,17 @@ input[type="reset"].loading:hover
 	background: #fff;
 }
 
-div.dir-list 
+div.dir-list
 {
 	background: #fff;
 }
 
-.padder div.pagination 
+.padder div.pagination
 {
 	margin: 0;
 }
 
-.padder div#pag-bottom 
+.padder div#pag-bottom
 {
     margin-top: 0;
 }
@@ -1552,22 +1552,22 @@ div#content.error-404
 
 
 /* buttons */
-/* 
-button, 
-a.button, 
+/*
+button,
+a.button,
 input[type="submit"],
-input[type="button"], 
-input[type="reset"], 
-ul.button-nav li a, 
-div.generic-button a 
+input[type="button"],
+input[type="reset"],
+ul.button-nav li a,
+div.generic-button a
 {
-	color: #761D19; 
+	color: #761D19;
 }
 */
 
 /* link underlining */
-.activity-header a, 
-.comment-meta a, 
+.activity-header a,
+.comment-meta a,
 .acomment-meta a,
 .meta a,
 #groups-list .group-subscription-div a,
@@ -1591,7 +1591,7 @@ body.create-blog #content a
 }
 
 #document_search input#search-submit,
-#document_search input#searchsubmit 
+#document_search input#searchsubmit
 {
 	margin: 1px 0 0 5px;
 	line-height: 10px;
@@ -1599,13 +1599,13 @@ body.create-blog #content a
 	padding: 3px 6px;
 }
 
-#document_search label.accessibly-hidden 
+#document_search label.accessibly-hidden
 {
 	left: -999em;
 	position: absolute;
 }
 
-div.dir-search 
+div.dir-search
 {
 	float: right;
 	margin: -42px 19px 0 0;
@@ -1614,19 +1614,19 @@ div.dir-search
 
 
 /* Buddypress search in page */
-#content .post #search-form 
+#content .post #search-form
 {
 	margin: 0 7px;
 }
 
-#content .post input#search-submit 
+#content .post input#search-submit
 {
 	margin: 1px 0 0 5px;
 	line-height: 10px;
 	color: #777;
 }
 
-#content .post label.accessibly-hidden 
+#content .post label.accessibly-hidden
 {
 	left: -999em;
 	position: absolute;
@@ -1643,7 +1643,7 @@ form#whats-new-form,
 	background-color: #819565;
 }
 
-#item-body form#whats-new-form 
+#item-body form#whats-new-form
 {
 	padding: 24px 36px;
 	margin: 0;
@@ -1652,7 +1652,7 @@ form#whats-new-form,
 	background-color: #CBFFBD;
 }
 
-form#whats-new-form h5 
+form#whats-new-form h5
 {
 	color: #fff;
 	font-weight: normal;
@@ -1687,7 +1687,7 @@ body.directory.logged-in #content form.dir-form h3
 
 
 /* Item Header */
-div#item-header 
+div#item-header
 {
 	background-color: #819565;
 	padding: 19px 19px 0 19px;
@@ -1697,7 +1697,7 @@ div#item-header
 
 /*
 --------------------------------------------------------------------------------
-Menus 
+Menus
 --------------------------------------------------------------------------------
 */
 
@@ -1795,7 +1795,7 @@ div.item-list-tabs ul
 	margin: 0;
 }
 
-div.item-list-tabs ul li 
+div.item-list-tabs ul li
 {
 	float: left;
 	list-style-type: none;
@@ -1806,7 +1806,7 @@ div.item-list-tabs ul li
 	text-transform: uppercase;
 }
 
-div.item-list-tabs ul li:first-child 
+div.item-list-tabs ul li:first-child
 {
 	margin-left: 0;
 }
@@ -1816,8 +1816,8 @@ div.item-list-tabs ul li select
 	text-transform: none;
 }
 
-div.item-list-tabs ul li a, 
-div.item-list-tabs ul li span 
+div.item-list-tabs ul li a,
+div.item-list-tabs ul li span
 {
 	display: block;
 	padding: 5px 8px;
@@ -1831,7 +1831,7 @@ div#object-nav.item-list-tabs ul li a
 	padding: 4px 8px 5px;
 }
 
-div.item-list-tabs#subnav 
+div.item-list-tabs#subnav
 {
 	border-bottom: 1px solid #B5BFB2;
 }
@@ -1842,14 +1842,14 @@ div.item-list-tabs#subnav ul
 }
 
 /* Sub Items */
-div.item-list-tabs#subnav ul li a, 
-div.item-list-tabs#subnav ul li span 
+div.item-list-tabs#subnav ul li a,
+div.item-list-tabs#subnav ul li span
 {
 	color: #222;
 }
 
 /* Active Sub Items */
-div.item-list-tabs#subnav ul li.selected a, 
+div.item-list-tabs#subnav ul li.selected a,
 div.item-list-tabs#subnav ul li.current a
 {
 	color: #555;
@@ -1858,7 +1858,7 @@ div.item-list-tabs#subnav ul li.current a
 
 
 /* RSS */
-div.item-list-tabs ul li.feed a 
+div.item-list-tabs ul li.feed a
 {
 	color: #555;
 }
@@ -1918,12 +1918,12 @@ body.create-blog.buddypress_page #content a.button,
 	float: left;
 }
 
-.standard-form .main-column 
+.standard-form .main-column
 {
 	margin-left: 190px;
 }
 
-.standard-form label, 
+.standard-form label,
 .standard-form span.labe
 {
 	color: #761D19;
@@ -1960,7 +1960,7 @@ div#sidebar table.mceToolbar
 
 
 /* umm... */
-div.dir-search input[type="text"] 
+div.dir-search input[type="text"]
 {
 	padding: 5px 5px 3px 5px;
 }
@@ -1978,12 +1978,12 @@ div.dir-search input[type="text"]
 
 
 /* list items */
-ul.item-list 
+ul.item-list
 {
 	margin: 0;
 }
 
-ul.item-list li 
+ul.item-list li
 {
 	list-style: none;
 	list-style-image: none;
@@ -1993,8 +1993,8 @@ ul.item-list li
 	overflow: visible;
 }
 
-ul.item-list li div.item-title, 
-ul.item-list li h4 
+ul.item-list li div.item-title,
+ul.item-list li h4
 {
 	font-size: 1.2em;
 }
@@ -2006,24 +2006,24 @@ ul.item-list li div.item-meta
 	width: 65%;
 }
 
-ul.item-list li div.item-desc 
+ul.item-list li div.item-desc
 {
 	font-size: 0.9em;
 	width: 75%;
 }
 
-ul.item-list li div.action 
+ul.item-list li div.action
 {
     right: 15px;
     top: 15px;
 }
 
-ul.item-list.activity-list li.load-more 
+ul.item-list.activity-list li.load-more
 {
 	margin: 0 !important;
 }
 
-.activity-list li.load-more a 
+.activity-list li.load-more a
 {
 	font-family: sans-serif;
 	color: #761D19;
@@ -2032,31 +2032,31 @@ ul.item-list.activity-list li.load-more
 	font-size: 0.9em;
 }
 
-#activity-stream 
+#activity-stream
 {
     margin-top: 0;
     padding: 0;
 }
 
-ul.activity-list > li:first-child 
+ul.activity-list > li:first-child
 {
     padding-top: 15px;
 }
 
-.activity-list .activity-content .activity-inner, 
-.activity-list .activity-content blockquote 
+.activity-list .activity-content .activity-inner,
+.activity-list .activity-content blockquote
 {
 	margin: 10px 10px 5px 0;
 	overflow: hidden;
 }
 
-.activity-inner > p 
+.activity-inner > p
 {
 	margin-bottom: 0.5em;
 	line-height: 1.3;
 }
 
-div.activity-meta 
+div.activity-meta
 {
 	margin: 12px 0 0 0;
 }
@@ -2073,7 +2073,7 @@ body.activity-permalink .activity-list > li:first-child .activity-wrapper
 	padding: 30px;
 }
 
-body.activity-permalink ul.activity-list li.has-comments 
+body.activity-permalink ul.activity-list li.has-comments
 {
 }
 
@@ -2082,11 +2082,11 @@ body.activity-permalink .activity-list li .activity-content
 	background-color: #f8f8f8;
 }
 
-body.activity-permalink .activity-list .activity-avatar 
+body.activity-permalink .activity-list .activity-avatar
 {
 }
 
-body.activity-permalink .activity-list li .activity-header > p 
+body.activity-permalink .activity-list li .activity-header > p
 {
 	background: none;
 	height: auto;
@@ -2094,20 +2094,20 @@ body.activity-permalink .activity-list li .activity-header > p
 
 /* activity item content */
 ul.item-list .activity-inner ul,
-ul.item-list .activity-inner ol 
+ul.item-list .activity-inner ol
 {
 	margin: 0 0 0 26px;
 	border: none;
 }
 
 ul.item-list .activity-inner > ul,
-ul.item-list .activity-inner > ol 
+ul.item-list .activity-inner > ol
 {
 	margin: 0 0 8px 26px;
 	border: none;
 }
 
-ul.item-list .activity-inner ul li 
+ul.item-list .activity-inner ul li
 {
 	padding: 0 0 2px 0;
 	list-style-type: disc;
@@ -2116,7 +2116,7 @@ ul.item-list .activity-inner ul li
 	border: none;
 }
 
-ul.item-list .activity-inner ol li 
+ul.item-list .activity-inner ol li
 {
 	padding: 0 0 2px 0;
 	list-style-type: decimal;
@@ -2151,7 +2151,7 @@ ul.item-list.activity-list > li .activity-wrapper
     border-left: 10px solid #ddd;
 }
 
-ul.item-list.activity-list li.has-comments 
+ul.item-list.activity-list li.has-comments
 {
 	padding-bottom: 0;
 }
@@ -2182,7 +2182,7 @@ ul.item-list.activity-list div.activity-comments li
 	padding-bottom: 1px;
 }
 
-div.activity-comments li form.ac-form 
+div.activity-comments li form.ac-form
 {
 	margin-right: 0;
 }
@@ -2249,8 +2249,8 @@ div.blog-button
 	padding: 7px 0 19px 0;
 }
 
-#register-page .standard-form label, 
-#register-page .standard-form span.label 
+#register-page .standard-form label,
+#register-page .standard-form span.label
 {
 	text-transform: uppercase;
 	font-size: 0.9em;
@@ -2276,7 +2276,7 @@ div.blog-button
 	width: 90%;
 }
 
-#register-page .standard-form #blog-details-section input#signup_blog_url 
+#register-page .standard-form #blog-details-section input#signup_blog_url
 {
 	width: 30%;
 }
@@ -2393,7 +2393,7 @@ body.create-blog #content #cp-multisite-options .cp-workflow-type
 	margin: 15px 0 5px 0;
 }
 
-.standard-form#signup_form div.submit 
+.standard-form#signup_form div.submit
 {
 	float: none;
 	text-align: right;
@@ -2495,9 +2495,9 @@ div#message.updated
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
-Private Messages 
+Private Messages
 --------------------------------------------------------------------------------
 */
 
@@ -2508,8 +2508,8 @@ table#message-threads
 	width: auto;
 }
 
-table#message-threads tr td, 
-table#message-threads tr th 
+table#message-threads tr td,
+table#message-threads tr th
 {
 	padding: 10px 5px;
 }
@@ -2546,7 +2546,7 @@ table#message-threads tr td.thread-info p a
 	color: #761D19;
 }
 
-table#message-threads tr td.thread-info p.thread-excerpt 
+table#message-threads tr td.thread-info p.thread-excerpt
 {
 	padding: 6px 0 0 0;
 	font-size: 11px;
@@ -2564,8 +2564,8 @@ form#send_message_form
 	padding-bottom: 19px;
 }
 
-li span.unread-count, 
-tr.unread span.unread-count 
+li span.unread-count,
+tr.unread span.unread-count
 {
 	background: #dd0000;
 	-moz-border-radius: 3px;
@@ -2585,7 +2585,7 @@ tr.unread span.unread-count
 	padding: 19px;
 }
 
-#message-recipients span.highlight 
+#message-recipients span.highlight
 {
 	color: #222;
 }
@@ -2608,7 +2608,7 @@ div#message-thread div.message-box
 }
 
 /* sender's name */
-div#message-thread strong a 
+div#message-thread strong a
 {
 	font-family: sans-serif;
 	text-transform: uppercase;
@@ -2642,7 +2642,7 @@ li.friend-tab span
 	font-size: 12px;
 }
 
-li.friend-tab img.avatar 
+li.friend-tab img.avatar
 {
 	margin-right: 3px;
 	margin-bottom: 3px;
@@ -2664,7 +2664,7 @@ table#groups-notification-settings
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 BuddyPress Typography
 --------------------------------------------------------------------------------
@@ -2790,7 +2790,7 @@ body.directory #content form.dir-form h3
 
 /* Group Name */
 div#item-header h2,
-body.group-admin #content div#item-header h2 
+body.group-admin #content div#item-header h2
 {
 	font-weight: normal;
 	font-family: sans-serif;
@@ -2816,7 +2816,7 @@ div#item-header h2 a,
 }
 
 /* Group Title */
-div#item-header h2 a 
+div#item-header h2 a
 {
 	color: #fff;
 	font-weight: normal;
@@ -2847,15 +2847,15 @@ ul#group-mods li
 	list-style-image: none;
 }
 
-div#item-header div#item-actions h3 
+div#item-header div#item-actions h3
 {
 	font-weight: normal;
 	font-family: sans-serif;
 	color: #fff;
 }
 
-div#item-header ul img.avatar, 
-div#item-header ul.avatars img.avatar 
+div#item-header ul img.avatar,
+div#item-header ul.avatars img.avatar
 {
 	margin: 2px 0 2px 2px;
 }
@@ -2897,7 +2897,7 @@ body.friends #members-list li
 	padding: 15px;
 }
 
-ul#members-list.item-list li div.item-title, 
+ul#members-list.item-list li div.item-title,
 ul#members-list.item-list li div.item-meta
 {
 	width: auto;
@@ -2913,19 +2913,19 @@ ul#members-list.item-list li div.item-title span.activity-read-more a
 
 
 /* BuddyPress 1.9 compatibility */
-table.notifications 
+table.notifications
 {
 	margin: 0;
 	text-align: left;
 }
 
 table.notifications th.icon,
-table.notifications td:first-child 
+table.notifications td:first-child
 {
 	display: none;
 }
 
-table.notifications th.title 
+table.notifications th.title
 {
 	width: 55%;
 }
@@ -2940,7 +2940,7 @@ table.notifications th.title
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Invite Anyone plugin compatibility
 --------------------------------------------------------------------------------
@@ -3018,7 +3018,7 @@ body.groups.invite-anyone .left-menu
 	float: left;
 }
 
-#create-group-form ul.first li 
+#create-group-form ul.first li
 {
 	list-style: none;
 	list-style-image: none;
@@ -3080,7 +3080,7 @@ ol#invite-anyone-steps
 	margin: 0;
 }
 
-ol#invite-anyone-steps li 
+ol#invite-anyone-steps li
 {
 	margin: 20px 0;
 	list-style: none;
@@ -3102,7 +3102,7 @@ ol#invite-anyone-steps #invite-anyone-custom-message
 	padding: 0.5em;
 }
 
-#invite-anyone-by-email .submit 
+#invite-anyone-by-email .submit
 {
 	padding: 20px 0;
 }
@@ -3113,7 +3113,7 @@ ol#invite-anyone-steps #invite-anyone-custom-message
 
 
 /* Highlights */
-span.highlight 
+span.highlight
 {
 	font-weight: normal;
 	font-family: sans-serif;
@@ -3125,8 +3125,8 @@ span.highlight
 }
 
 span.activity,
-.activity-list .activity-content .activity-header, 
-.activity-list .activity-content .comment-header 
+.activity-list .activity-content .activity-header,
+.activity-list .activity-content .comment-header
 {
 	font-family: sans-serif;
 	text-transform: none;
@@ -3150,27 +3150,27 @@ span.activity,
 	margin-top: 2px;
 }
 
-.activity-list .activity-content .activity-header, 
-.activity-list .activity-content .comment-header 
+.activity-list .activity-content .activity-header,
+.activity-list .activity-content .comment-header
 {
 	color: #666;
 	font-size: 0.7em;
 	line-height: 200%;
 }
 
-.activity-list li.mini 
+.activity-list li.mini
 {
 	font-size: inherit;
 }
 
-#item-body .activity-list .activity-content .activity-header p, 
+#item-body .activity-list .activity-content .activity-header p,
 #item-body .activity-list .activity-content .comment-header p
 {
 	padding: 0;
 }
 
 /* Item Meta */
-div#item-header div#item-meta 
+div#item-header div#item-meta
 {
 	font-size: 14px;
 	color: #fff;
@@ -3180,7 +3180,7 @@ div#item-header div#item-meta
 }
 
 body#main_blog div#item-header div#item-meta,
-body.buddypress div#item-header div#item-meta 
+body.buddypress div#item-header div#item-meta
 {
 	font-size: 1em;
 	line-height: 1.2;
@@ -3195,14 +3195,14 @@ body.buddypress div#item-header div#item-meta
 	margin-bottom: 0;
 }
 
-div.activity-comments ul 
+div.activity-comments ul
 {
 	margin-top: 0;
 	margin-bottom: 0;
 	margin-left: 0;
 }
 
-.standard-form div.radio ul li 
+.standard-form div.radio ul li
 {
 	margin-bottom: 5px;
 	list-style: disc;
@@ -3233,11 +3233,11 @@ span.user-nicename {
 	font-family: sans-serif;
 }
 
-.standard-form textarea, 
-.standard-form input[type="text"], 
-.standard-form select, 
-.standard-form input[type="password"], 
-.dir-search input[type="text"] 
+.standard-form textarea,
+.standard-form input[type="text"],
+.standard-form select,
+.standard-form input[type="password"],
+.dir-search input[type="text"]
 {
 	font-family: sans-serif;
 }
@@ -3286,7 +3286,7 @@ span.user-nicename {
 	text-decoration: none;
 }
 
-ul.item-list.activity-list li 
+ul.item-list.activity-list li
 {
 	padding-bottom: 0;
 	clear: left;
@@ -3377,9 +3377,9 @@ ul.button-nav li
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
-Who's Online (activity tab) 
+Who's Online (activity tab)
 --------------------------------------------------------------------------------
 */
 #activity_sidebar ul.item-list.cp-online-members
@@ -3396,8 +3396,8 @@ Who's Online (activity tab)
 	position: static;
 }
 
-#activity_sidebar ul.item-list.cp-online-members li div.item-title, 
-#activity_sidebar ul.item-list.cp-online-members li h4 
+#activity_sidebar ul.item-list.cp-online-members li div.item-title,
+#activity_sidebar ul.item-list.cp-online-members li h4
 {
 	width: auto;
 }
@@ -3417,7 +3417,7 @@ Who's Online (activity tab)
 	padding: 0 10px 0 0;
 }
 
-#activity_sidebar ul.item-list.cp-online-members li img.avatar 
+#activity_sidebar ul.item-list.cp-online-members li img.avatar
 {
 	float: none;
 	margin: 0;
@@ -3428,9 +3428,9 @@ Who's Online (activity tab)
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
-Recently Active (activity tab) 
+Recently Active (activity tab)
 --------------------------------------------------------------------------------
 */
 #activity_sidebar ul.item-list.cp-recently-active
@@ -3447,8 +3447,8 @@ Recently Active (activity tab)
 	position: static;
 }
 
-#activity_sidebar ul.item-list.cp-recently-active li div.item-title, 
-#activity_sidebar ul.item-list.cp-recently-active li h4 
+#activity_sidebar ul.item-list.cp-recently-active li div.item-title,
+#activity_sidebar ul.item-list.cp-recently-active li h4
 {
 	width: auto;
 }
@@ -3468,7 +3468,7 @@ Recently Active (activity tab)
 	padding: 0 10px 0 0;
 }
 
-#activity_sidebar ul.item-list.cp-recently-active li img.avatar 
+#activity_sidebar ul.item-list.cp-recently-active li img.avatar
 {
 	border: none;
 	float: none;
@@ -3480,19 +3480,19 @@ Recently Active (activity tab)
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
-BuddyPress Group Blog compatibility 
+BuddyPress Group Blog compatibility
 --------------------------------------------------------------------------------
 */
 
-ul#groupblog-details li 
+ul#groupblog-details li
 {
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
 
-.standard-form #groupblog-details input[type="text"] 
+.standard-form #groupblog-details input[type="text"]
 {
 	width: 15em !important;
 	-moz-border-radius: 1px;
@@ -3510,7 +3510,7 @@ ul#groupblog-details li
 	padding: 2px;
 }
 
-.standard-form p.description 
+.standard-form p.description
 {
 	font-size: 12px;
 }
@@ -3548,7 +3548,7 @@ ul#groupblog-details li
 	color: #761D19;
 }
 
-#activity_sidebar .workshop_comments_output .comment-identifier p img 
+#activity_sidebar .workshop_comments_output .comment-identifier p img
 {
 	display: none;
 	vertical-align: middle;
@@ -3639,7 +3639,7 @@ Compatibility with BP Group Sites plugin
 
 
 /* Recent Activity (activity tab) */
-#activity_sidebar  .groupsites_comments_output li.groups 
+#activity_sidebar  .groupsites_comments_output li.groups
 {
 	/* override BP Groupblog compatibility for now */
 	border-left: none;
@@ -3663,7 +3663,7 @@ Compatibility with BP Group Sites plugin
 	color: #761D19;
 }
 
-#activity_sidebar .groupsites_comments_output .comment-identifier p img 
+#activity_sidebar .groupsites_comments_output .comment-identifier p img
 {
 	display: none;
 	vertical-align: middle;
@@ -3678,14 +3678,14 @@ Compatibility with BP Group Sites plugin
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
-BuddyPress Docs compatibility 
+BuddyPress Docs compatibility
 --------------------------------------------------------------------------------
 */
 
-table.doctable tr td, 
-table.doctable tr th 
+table.doctable tr td,
+table.doctable tr th
 {
 	padding: 8px;
 	vertical-align: middle;
@@ -3701,12 +3701,12 @@ body.group-create #group-doc-options h3
 	margin-bottom: 0;
 }
 
-table.group-docs-options td 
+table.group-docs-options td
 {
 	padding-top: 10px;
 }
 
-table.group-docs-options td.label 
+table.group-docs-options td.label
 {
 	width: 250px !important;
 	padding-top: 0;
@@ -3716,7 +3716,7 @@ table.group-docs-options td.label
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 BuddyPress Group Announcements compatibility
 --------------------------------------------------------------------------------
@@ -3752,13 +3752,13 @@ body.groups.announcements #item-body #whats-new-form
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
-BuddyPress Group Email Subscription compatibility 
+BuddyPress Group Email Subscription compatibility
 --------------------------------------------------------------------------------
 */
 
-#groups-dir-list .group-subscription-div, 
+#groups-dir-list .group-subscription-div,
 #groups-list .group-subscription-div
 {
 	font-family: sans-serif;
@@ -3773,14 +3773,14 @@ a.group-subscription-options-link
 	text-decoration: underline;
 }
 
-#content #groups-dir-list .group-subscription-options, 
-#content #groups-list .group-subscription-options 
+#content #groups-dir-list .group-subscription-options,
+#content #groups-list .group-subscription-options
 {
 	position: absolute;
 }
 
-#groups-dir-list .group-subscription-div, 
-#groups-list .group-subscription-div 
+#groups-dir-list .group-subscription-div,
+#groups-list .group-subscription-div
 {
 }
 
@@ -3859,8 +3859,8 @@ table#groups-notification-settings.notification-settings
 }
 
 /* for admins in members list */
-ul#admins-list h5 .ass_manage_members_links, 
-ul#mods-list h5 .ass_manage_members_links, 
+ul#admins-list h5 .ass_manage_members_links,
+ul#mods-list h5 .ass_manage_members_links,
 ul#members-list h5 .ass_manage_members_links
 {
 	text-transform: uppercase;
@@ -3869,8 +3869,8 @@ ul#members-list h5 .ass_manage_members_links
 	font-family: sans-serif;
 }
 
-ul#admins-list h5 .ass_manage_members_links a, 
-ul#mods-list h5 .ass_manage_members_links a, 
+ul#admins-list h5 .ass_manage_members_links a,
+ul#mods-list h5 .ass_manage_members_links a,
 ul#members-list h5 .ass_manage_members_links a
 {
 	font-size: 9px;

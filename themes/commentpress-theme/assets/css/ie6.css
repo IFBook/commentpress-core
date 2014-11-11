@@ -3,7 +3,7 @@
 
 
 /* hide vertical content */
-* html, 
+* html,
 * html body
 {
 	height: 100%;
@@ -13,8 +13,8 @@
 
 /* make header static */
 * html div#header,
-* html div#book_header 
-{ 
+* html div#book_header
+{
 	position: absolute !important;
 }
 
@@ -23,16 +23,16 @@
 	display: none;
 }
 
-/* 
-generate scrollbars for the content 
-NOTE: this partially hides the scrollbar under the header 
+/*
+generate scrollbars for the content
+NOTE: this partially hides the scrollbar under the header
 */
-* html div#container 
+* html div#container
 {
 	top: 0;
 }
 
-* html div#main_wrapper 
+* html div#main_wrapper
 {
 	top: 108px;
 	width: 99%;
@@ -43,7 +43,7 @@ NOTE: this partially hides the scrollbar under the header
 }
 
 * html div#footer
-{ 
+{
 	margin-bottom: 118px; /* compensate for container top */
 }
 
@@ -59,7 +59,7 @@ NOTE: this partially hides the scrollbar under the header
 
 
 /* Book search */
-#book_search 
+#book_search
 {
 	padding: 4px 0 0 0;
 }
@@ -200,7 +200,7 @@ li.list_commenticon span.commenticonbox small
 
 /* RH Column Amends */
 * html #sidebar
-{ 
+{
 	position: absolute !important;
 	left: 60%;
 	width: 36%;

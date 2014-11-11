@@ -29,7 +29,7 @@
 		<div class="padder">
 
 		<form action="<?php bp_group_creation_form_action(); ?>" method="post" id="create-group-form" class="standard-form" enctype="multipart/form-data">
-		
+
 			<h3><?php _e( 'Create a Group', 'commentpress-core' ); ?> &nbsp;<a class="button" href="<?php echo trailingslashit( bp_get_root_domain() . '/' . bp_get_groups_root_slug() ); ?>"><?php _e( 'Groups Directory', 'commentpress-core' ); ?></a></h3>
 
 			<?php do_action( 'bp_before_create_group' ); ?>
@@ -50,12 +50,12 @@
 				<?php if ( bp_is_group_creation_step( 'group-details' ) ) : ?>
 
 					<?php do_action( 'bp_before_group_details_creation_step' ); ?>
-					
+
 					<div>
 						<label for="group-name"><?php _e( 'Group Name (required)', 'commentpress-core' ); ?></label>
 						<input type="text" name="group-name" id="group-name" aria-required="true" value="<?php bp_new_group_name(); ?>" />
 					</div>
-					
+
 					<div>
 						<label for="group-desc"><?php _e( 'Group Description (required)', 'commentpress-core' ) ?></label>
 						<textarea name="group-desc" id="group-desc" aria-required="true"><?php bp_new_group_description(); ?></textarea>
@@ -145,7 +145,7 @@
 								</div>
 
 						<?php endif; ?>
-						
+
 					<?php endif; ?>
 
 					<?php do_action( 'bp_after_group_settings_creation_step' ); ?>

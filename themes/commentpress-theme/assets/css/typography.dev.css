@@ -8,26 +8,26 @@ h1, h2, h3, h5, h5, h6 { font-weight: bold }
 
 
 /* definition lists */
-dt 
-{ 
+dt
+{
 	font-weight: bold;
 	padding: 3px 0;
 }
 
-dd 
+dd
 {
 	padding: 0 0 12px 8px;
 }
 
 /* acronyms etc */
-acronym, 
+acronym,
 abbr
 {
 	border-bottom: 1px dotted #B5BFB2;
 	cursor: help;
 }
 
-/* 
+/*
 In an aural stylesheet, we'd add:
 acronym { speak: normal; }
 abbr.initialism { speak: spell-out; }
@@ -92,7 +92,7 @@ div.generic-button a:hover
 }
 
 /* except for Search and User Links */
-#book_search input#search-submit, 
+#book_search input#search-submit,
 #book_search input#searchsubmit,
 #book_header #user_links a.button
 {
@@ -140,7 +140,7 @@ div.generic-button a:hover
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Page heading-related styles
 --------------------------------------------------------------------------------
@@ -151,7 +151,7 @@ Page heading-related styles
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 1.4em;
 	line-height: 1;
-	font-weight: normal;	
+	font-weight: normal;
 	color: #eee;
 	padding-top: 12px;
 }
@@ -184,12 +184,12 @@ ul#toc,
 ul#toc ul,
 ul#toc ul ul
 {
-	margin: 6px 0; 
+	margin: 6px 0;
 }
 
 ul#toc li
 {
-	margin: 0 0 4px 20px; 
+	margin: 0 0 4px 20px;
 	list-style: circle;
 }
 
@@ -220,7 +220,7 @@ ul#toc li a:visited
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Post-related styles
 --------------------------------------------------------------------------------
@@ -235,7 +235,7 @@ Post-related styles
 	padding: 7px 7px 11px 7px;
 }
 
-.post h1 
+.post h1
 {
 	font-family: Georgia, serif;
 	font-size: 1.8em;
@@ -246,7 +246,7 @@ Post-related styles
 	padding-right: 7px;
 }
 
-.post h2 
+.post h2
 {
 	font-family: Georgia, serif;
 	font-size: 1.55em;
@@ -330,7 +330,7 @@ Post-related styles
 
 .post p
 {
-	
+
 	font-size: 1em;
 	line-height: 1.5;
 	padding-left: 7px;
@@ -438,7 +438,7 @@ Post-related styles
 	padding-right: 7px;
 }
 
-.post p.postname 
+.post p.postname
 {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	padding: 0 0 7px 0;
@@ -593,7 +593,7 @@ ol.footnotes,
 }
 
 /* horizontal rule (can be used to divide text from footnotes) */
-.post hr 
+.post hr
 {
 	margin: 20px 0 8px 0;
 	padding-left: 7px;
@@ -628,19 +628,19 @@ samp
 	font-family: monospace;
 }
 
-.post pre, 
-.post xmp, 
-.post plaintext, 
+.post pre,
+.post xmp,
+.post plaintext,
 .post listing
 {
 	padding: 7px 7px 11px 7px;
 }
 
-i, 
-cite, 
-em, 
-var, 
-address, 
+i,
+cite,
+em,
+var,
+address,
 q
 {
 	font-style: italic;
@@ -661,7 +661,7 @@ sup
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Comment container & form styles
 --------------------------------------------------------------------------------
@@ -791,7 +791,7 @@ a#cancel-comment-reply-link:link,
 a#cancel-comment-reply-link:hover,
 a#cancel-comment-reply-link:active,
 a#cancel-comment-reply-link:visited
-{	
+{
 	display: block;
 	padding: 5px 4px;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -816,7 +816,7 @@ a#cancel-comment-reply-link:visited
 /* hover colour */
 a.reply_to_para:hover,
 .reply a:hover
-{	
+{
 	color: #761D19;
 	background: #eee;
 }
@@ -864,11 +864,11 @@ div#respond p a:visited
 div#respond p a:active,
 div#respond p a:hover,
 div#respond p a#cancel-comment-reply-link:hover
-{	
+{
 	color: #761D19;
 }
 
-#commentform #author_details input, 
+#commentform #author_details input,
 #commentform textarea
 {
 	width: 90%;
@@ -903,7 +903,7 @@ div#respond p a#cancel-comment-reply-link:hover
 
 /*
 div#respond p a#cancel-comment-reply-link
-{	
+{
 	border-top: 1px dashed #B5BFB2;
 	border-bottom: 1px dashed #B5BFB2;
 }
@@ -933,13 +933,13 @@ div#respond .subscribe_reloaded_insert p
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Comment content styles
 --------------------------------------------------------------------------------
 */
 
-div#sidebar .comments_container .comment-content 
+div#sidebar .comments_container .comment-content
 {
 	font-size: 95%;
 }
@@ -1099,9 +1099,9 @@ div#sidebar .comments_container .comment-content ol li
 }
 
 div#sidebar .comments_container .comment-content address,
-div#sidebar .comments_container .comment-content pre, 
-div#sidebar .comments_container .comment-content xmp, 
-div#sidebar .comments_container .comment-content plaintext, 
+div#sidebar .comments_container .comment-content pre,
+div#sidebar .comments_container .comment-content xmp,
+div#sidebar .comments_container .comment-content plaintext,
 div#sidebar .comments_container .comment-content listing
 {
 	padding: 0 0 8px 0;
@@ -1116,13 +1116,13 @@ div#sidebar .comments_container .comment-content a
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Comment content styles on Special Pages (in content)
 --------------------------------------------------------------------------------
 */
 
-#comments_in_page_wrapper .comment-content 
+#comments_in_page_wrapper .comment-content
 {
 	font-size: 90%;
 	padding-top: 13px;
@@ -1287,9 +1287,9 @@ Comment content styles on Special Pages (in content)
 }
 
 #comments_in_page_wrapper .comment-content address,
-#comments_in_page_wrapper .comment-content pre, 
-#comments_in_page_wrapper .comment-content xmp, 
-#comments_in_page_wrapper .comment-content plaintext, 
+#comments_in_page_wrapper .comment-content pre,
+#comments_in_page_wrapper .comment-content xmp,
+#comments_in_page_wrapper .comment-content plaintext,
 #comments_in_page_wrapper .comment-content listing
 {
 	padding: 0 0 8px 0;
@@ -1357,7 +1357,7 @@ ul#group_list li
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-#content .search_meta cite 
+#content .search_meta cite
 {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	display: block;
@@ -1477,7 +1477,7 @@ ul.image_link h4
 	padding-bottom: 4px;
 }
 
-#footer p 
+#footer p
 {
 	font-size: 0.8em;
 	color: #fff;
@@ -1546,10 +1546,10 @@ ul.image_link h4
 }
 
 .comment-identifier .comment-upvote a.comment_upvoter,
-.comment-identifier .comment-upvote a.comment_upvoter:link, 
-.comment-identifier .comment-upvote a.comment_upvoter:hover, 
-.comment-identifier .comment-upvote a.comment_upvoter:active, 
-.comment-identifier .comment-upvote a.comment_upvoter:visited 
+.comment-identifier .comment-upvote a.comment_upvoter:link,
+.comment-identifier .comment-upvote a.comment_upvoter:hover,
+.comment-identifier .comment-upvote a.comment_upvoter:active,
+.comment-identifier .comment-upvote a.comment_upvoter:visited
 {
 	display: block;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;

@@ -3,7 +3,7 @@
 
 
 /* text highlighting block */
-.selected_para 
+.selected_para
 {
 	background-color: #CBFFBD;
 	margin: 0;
@@ -26,7 +26,7 @@ body
 	font-size: 100%;
 }
 
-a 
+a
 {
 	color:#222;
 	text-decoration: none;
@@ -38,21 +38,21 @@ a
 }
 
 /* prevents outlines - we set them explicitly for elements that require them */
-a:focus 
+a:focus
 {
 	outline: 0;
 }
 
 /* for content we want out of the way */
 .off-left
-{ 
-	position: absolute; 
-	left: -9999px; 
+{
+	position: absolute;
+	left: -9999px;
 	width: 900px;
 }
 
 /* skip links */
-a.skip, 
+a.skip,
 a.skip:hover,
 a.skip:visited
 {
@@ -73,7 +73,7 @@ a.skip:visited
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-a.skip:active, 
+a.skip:active,
 a.skip:focus
 {
 	color: #fff;
@@ -82,19 +82,19 @@ a.skip:focus
 	left: 1%;
 	width: 58%;
 	text-align: center;
-} 
+}
 
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
-Book Header 
+Book Header
 --------------------------------------------------------------------------------
 */
 
 /* Book Header wraps Logo/Title & Search */
-#book_header 
+#book_header
 {
 	width: 100%;
 	height: 67px;
@@ -111,52 +111,52 @@ Book Header
 			float: left;
 			padding: 0 0 0 16px;
 		}
-			
+
 			#titlewrap img
 			{
 				float: left;
 				padding: 0 20px 0 0;
 			}
-			
+
 			#titlewrap img.cp_group_avatar
 			{
 				float: left;
 				padding: 9px 16px 0 0;
 			}
-			
+
 		#page_title
 		{
 			float: left;
 		}
-		
+
 			#title
 			{
 				float: left;
 			}
-			
+
 			#tagline
 			{
 				float: left;
 				clear: left;
 			}
-		
 
 
 
 
-/* 
+
+/*
 --------------------------------------------------------------------------------
 Wordpress user links
 --------------------------------------------------------------------------------
 */
 
-#user_links 
+#user_links
 {
 	float: right;
 	clear: right;
 	padding: 10px 0 0 0;
 }
-	
+
 	#user_links ul li
 	{
 		float: right;
@@ -165,16 +165,16 @@ Wordpress user links
 		padding: 0;
 	}
 
-	
 
 
 
-/* 
+
+/*
 --------------------------------------------------------------------------------
-Header 
+Header
 --------------------------------------------------------------------------------
 */
-#header 
+#header
 {
 	width: 100%;
 	position: fixed;
@@ -186,7 +186,7 @@ Header
 }
 
 	/* Book Navigation sits within Header */
-	#book_nav 
+	#book_nav
 	{
 		clear: left;
 		float: left;
@@ -195,18 +195,18 @@ Header
 		border-bottom: 2px solid #B5BFB2;
 		height: 30px;
 	}
-	
+
 	#book_nav_wrapper
 	{
 	}
-	
+
 		/* define rollover action */
 		#book_nav ul li a.css_btn:link
 		{
 			overflow: hidden !important; /* hides Mozilla outlines */
 			background-position: top left !important;
 		}
-		
+
 		#book_nav ul li a.css_btn:hover,
 		#book_nav ul li a.css_btn:focus,
 		#book_nav ul li a.css_btn:active
@@ -214,7 +214,7 @@ Header
 			overflow: hidden !important; /* hides Mozilla outlines */
 			background-position: 0 -30px !important;
 		}
-		
+
 
 
 
@@ -225,28 +225,28 @@ Header
 			/* let's not set a width, but give IE zoom: 1 */
 			/* width: 391px; */
 		}
-		
+
 		/* Table of Contents Trigger */
 		#book_nav ul#toc_trigger
 		{
 			float: right;
 			width: 33px;
 		}
-		
+
 		/* Header Minimiser Trigger */
 		#book_nav ul#minimiser_trigger
 		{
 			float: right;
 			width: 33px;
 		}
-		
+
 			#book_nav ul#nav li,
 			#book_nav ul#toc_trigger li,
 			#book_nav ul#minimiser_trigger li
 			{
 				float: left;
 			}
-			
+
 				#book_nav ul#nav li a,
 				#book_nav ul#toc_trigger li a,
 				#book_nav ul#minimiser_trigger li a
@@ -255,7 +255,7 @@ Header
 					text-indent: -9999px;
 					height: 30px;
 				}
-			
+
 
 
 
@@ -267,13 +267,13 @@ Header
 					width: 33px;
 					background: transparent url(../images/buttons/toc.jpg);
 				}
-			
+
 				a#btn_cover
 				{
 					width: 33px;
 					background: transparent url(../images/buttons/cover.jpg);
 				}
-			
+
 				a#btn_home
 				{
 					width: 33px;
@@ -286,7 +286,7 @@ Header
 					width: 33px;
 					background: transparent url(../images/buttons/members.jpg);
 				}
-				
+
 					/* BP Group Sites compatibility - won't work because of sublist...
 					#book_nav ul#nav li a#btn_groupsites
 					{
@@ -298,51 +298,51 @@ Header
 					{
 						padding: 0;
 					}
-					
+
 					#groupsites-list li a.btn_groupsites
 					{
 						width: 33px;
 						background: transparent url(../images/buttons/members.jpg);
 					}
 					*/
-					
+
 				a#btn_general
 				{
 					width: 33px;
 					background: transparent url(../images/buttons/gencomments.jpg);
 				}
-			
+
 				a#btn_allcomments
 				{
 					width: 33px;
 					background: transparent url(../images/buttons/allcomments.jpg);
 				}
-			
+
 				a#btn_members
 				{
 					width: 33px;
 					background: transparent url(../images/buttons/person.jpg);
 				}
-			
+
 				a#btn_blog
 				{
 					width: 33px;
 					background: transparent url(../images/buttons/blog.jpg);
 				}
-			
+
 				a#btn_archive
 				{
 					width: 33px;
 					background: transparent url(../images/buttons/archive.jpg);
 				}
-			
+
 				a#btn_header_min
 				{
 					width: 33px;
 					background: transparent url(../images/buttons/header_min.jpg);
 				}
-			
-			
+
+
 
 
 
@@ -352,34 +352,34 @@ Header
 			float: left;
 			width: 61%;
 		}
-		
+
 		#book_nav div#cp_book_nav ul li a
 		{
 			display: block;
 			text-indent: -9999px;
 			height: 30px;
 		}
-	
+
 			#book_nav div#cp_book_nav ul li a#next_page,
 			#book_nav div#cp_book_nav ul li a#previous_page
 			{
 				height: 30px;
 				width: 41px;
 			}
-		
+
 			#book_nav div#cp_book_nav ul li a#next_page
 			{
 				background: transparent url(../images/page_nav/page_next.jpg);
 			}
-		
+
 			#book_nav div#cp_book_nav ul li a#previous_page
 			{
 				background: transparent url(../images/page_nav/page_prev.jpg);
 			}
-		
 
 
-		
+
+
 			/* blog_navigation */
 			#book_nav div#cp_book_nav ul#blog_navigation li.alignleft a,
 			#book_nav div#cp_book_nav ul#blog_navigation li.alignright a
@@ -387,17 +387,17 @@ Header
 				height: 30px;
 				width: 41px;
 			}
-		
+
 			#book_nav div#cp_book_nav ul#blog_navigation li.alignright a
 			{
 				background: transparent url(../images/page_nav/page_next.jpg);
 			}
-		
+
 			#book_nav div#cp_book_nav ul#blog_navigation li.alignleft a
 			{
 				background: transparent url(../images/page_nav/page_prev.jpg);
 			}
-		
+
 
 
 
@@ -408,7 +408,7 @@ Header
 			height: 30px;
 			margin: 0 41px;
 		}
-		
+
 			#book_nav div#cp_book_info p
 			{
 				text-align: center;
@@ -418,21 +418,21 @@ Header
 				font-size: 12px;
 				color: #5a5b5f;
 			}
-			
-		
-
-		
 
 
 
-/* 
+
+
+
+
+/*
 --------------------------------------------------------------------------------
 Search
 --------------------------------------------------------------------------------
 */
 
 /* Book search */
-#book_search 
+#book_search
 {
 	float: right;
 	text-align: right;
@@ -469,14 +469,14 @@ Search
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Container
 --------------------------------------------------------------------------------
 */
 
 /* contains all page content and wrappers */
-#container 
+#container
 {
 	position: relative;
 	padding: 0;
@@ -487,14 +487,14 @@ Container
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Main Wrapper
 --------------------------------------------------------------------------------
 */
 
 /* Main wrapper contains all page content and wrappers */
-#main_wrapper 
+#main_wrapper
 {
 	position: relative;
 }
@@ -503,7 +503,7 @@ Main Wrapper
 
 
 /* Page wrapper is content column */
-#page_wrapper 
+#page_wrapper
 {
 	width: 58%;
 	padding: 0;
@@ -560,42 +560,42 @@ ul#content-tabs li
 		background: #fff url(../images/icons/information.jpg) no-repeat;
 		background-position: -4px -2px;
 	}
-	
+
 	ul#content-tabs li#content_header h2
 	{
 		background: #fff url(../images/icons/document.jpg) no-repeat;
 		background-position: -3px -2px;
 	}
-	
+
 	ul#content-tabs li h2:hover
 	{
 		overflow: hidden !important; /* hides Mozilla outlines */
 		background-position: -4px -32px !important;
 	}
-	
+
 	ul#content-tabs li#content_header h2:hover
 	{
 		overflow: hidden !important; /* hides Mozilla outlines */
 		background-position: -3px -32px !important;
 	}
-	
+
 	ul#content-tabs li h2 a
 	{
 		color: #761D19;
-	}	
+	}
 
 #main_wrapper.with-content-tabs
 {
 	padding-top: 32px;
 }
 
-	
-	
+
+
 
 
 
 /* Contains post */
-#content 
+#content
 {
 	padding: 0 0 20px 0;
 	margin: 0;
@@ -613,7 +613,7 @@ ul#content-tabs li
 		overflow: hidden;
 		position: relative;
 	}
-	
+
 	body.left-bubbles .post
 	{
 		/* To accomodate our left aligned speech bubbles */
@@ -621,13 +621,13 @@ ul#content-tabs li
 		margin: 0 60px 0 70px;
 		overflow: hidden;
 	}
-	
-	.search_result .post 
+
+	.search_result .post
 	{
 		padding: 25px 0 0 0;
 	}
-	
-	.full_width .post 
+
+	.full_width .post
 	{
 		/* For Title Page, to allow Book Cover image */
 		padding: 45px 0;
@@ -635,25 +635,25 @@ ul#content-tabs li
 		text-align: center;
 		overflow: hidden;
 	}
-	
-	body.blog #content 
+
+	body.blog #content
 	{
 		padding: 7px 0 60px 0;
 	}
-	
-	.general_comments 
+
+	.general_comments
 	{
 		/* To match .post */
 		padding: 45px 0;
 		margin: 0 60px 0 70px;
 		overflow: hidden;
 	}
-	
+
 	.post div.textblock
 	{
 		padding: 0 7px 0 7px;
 	}
-	
+
 	.post .textblock
 	{
 		position: relative;
@@ -664,7 +664,7 @@ ul#content-tabs li
 	{
 		/* display: inline-block; */
 	}
-	
+
 	.post div.textblock p,
 	.post div.textblock ul,
 	.post div.textblock ol,
@@ -674,43 +674,43 @@ ul#content-tabs li
 		padding-left: 0;
 		padding-right: 0;
 	}
-	
+
 	.archive_item
 	{
 		padding: 40px 0 10px 0;
 	}
-	
+
 	div.archives_search_form
 	{
 		padding: 0 0 1em 0;
 	}
-	
+
 	.postmetadata
 	{
 		padding: 8px;
 	}
-	
+
 	/* galleries */
 	.post .gallery-item
 	{
 		width: 30% !important;
 	}
-	
+
 	.post .gallery-caption
 	{
 		font-size: smaller;
 	}
-	
+
 	.hidden_page_url
 	{
 		display: none;
 	}
-	
 
 
 
 
-/* 
+
+/*
 --------------------------------------------------------------------------------
 Paragraph Comment Icon
 --------------------------------------------------------------------------------
@@ -718,7 +718,7 @@ Paragraph Comment Icon
 
 /* right-aligned bubbles */
 .post span.commenticonbox,
-body.right-bubbles .post span.commenticonbox 
+body.right-bubbles .post span.commenticonbox
 {
 	position: absolute;
 	margin-top: 5px;
@@ -727,7 +727,7 @@ body.right-bubbles .post span.commenticonbox
 }
 
 /* left-aligned bubbles */
-body.left-bubbles .post span.commenticonbox 
+body.left-bubbles .post span.commenticonbox
 {
 	position: absolute;
 	margin-left: -40px;
@@ -736,11 +736,11 @@ body.left-bubbles .post span.commenticonbox
 
 .post span.commenticonbox small
 {
-	margin: 0;	
-	padding: 0;	
+	margin: 0;
+	padding: 0;
 }
 
-span.commenticonbox a.para_permalink 
+span.commenticonbox a.para_permalink
 {
 	display: block;
 	float: left;
@@ -755,57 +755,57 @@ span.commenticonbox a.para_permalink
 	{
 		background-color: #CBFFBD;
 	}
-	
-	span.commenticonbox a.no_comments 
+
+	span.commenticonbox a.no_comments
 	{
 		background: transparent url("../images/icons/comment_add.png") no-repeat;
 	}
-	
-	span.commenticonbox a.has_comments 
+
+	span.commenticonbox a.has_comments
 	{
 		background: transparent url("../images/icons/comment.png") no-repeat;
 	}
-	
+
 	span.commenticonbox small.comment_count
 	{
 		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-		font-size: 10px; 
+		font-size: 10px;
 		font-weight: normal;
 		font-style: normal;
-		position: absolute; 
+		position: absolute;
 		float: right;
 		padding: 0 0 0 3px;
 	}
-	
+
 		span.commenticonbox small.zero_comments
 		{
 			visibility: hidden;
 		}
-		
+
 	/* comment icon in blockquote */
-	.post blockquote span.commenticonbox 
+	.post blockquote span.commenticonbox
 	{
 		right: -59px;
 	}
-	
+
 	/* comment icon in span (line-by-line) */
-	span.textblock span.commenticonbox 
+	span.textblock span.commenticonbox
 	{
 		padding-top: 0;
 		right: -51px;
 	}
-	
-	span.textblock.selected_para span.commenticonbox 
+
+	span.textblock.selected_para span.commenticonbox
 	{
 		padding-top: 0;
 		right: -44px;
 	}
-	
-	span.textblock.selected_para 
+
+	span.textblock.selected_para
 	{
-		margin-left: -7px;	
+		margin-left: -7px;
 	}
-	
+
 /* comment icon in lists */
 .post ul li.list_commenticon,
 .post ol li.list_commenticon
@@ -820,7 +820,7 @@ span.commenticonbox a.para_permalink
 
 
 /* left-aligned paragraph marker */
-.post span.para_marker 
+.post span.para_marker
 {
 	position: absolute;
 	/* margin-left: -40px;
@@ -830,20 +830,20 @@ span.commenticonbox a.para_permalink
 }
 
 	/* para marker in blockquote */
-	.post blockquote span.para_marker 
+	.post blockquote span.para_marker
 	{
-		margin-left: -15px;	
+		margin-left: -15px;
 	}
 
 	/* para marker comment icon in comment-block */
 	.post div.textblock span.para_marker
 	{
-		margin-top: 9px;	
+		margin-top: 9px;
 	}
 
-	.post div.textblock span.commenticonbox 
+	.post div.textblock span.commenticonbox
 	{
-		margin-top: 12px;	
+		margin-top: 12px;
 	}
 
 	.post span.para_marker span
@@ -851,7 +851,7 @@ span.commenticonbox a.para_permalink
 		font-size: 11px;
 		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
-	
+
 	#content .post span.para_marker a
 	{
 		text-decoration: none;
@@ -859,29 +859,29 @@ span.commenticonbox a.para_permalink
 		font-size: 16px;
 		font-family: Georgia, serif;
 	}
-	
-	span.textblock span.para_marker 
+
+	span.textblock span.para_marker
 	{
 		left: -39px;
 	}
-	
-	span.textblock.selected_para span.para_marker 
+
+	span.textblock.selected_para span.para_marker
 	{
 		left: -32px;
 	}
-	
+
 	/* enable visual cue for rollovers */
 	#content .post span.para_marker a.js-hover
 	{
 		color: #761D19;
 	}
-	
+
 	#content .post span.para_marker a.js-hover span
 	{
 		font-size: 13px;
 		font-weight: bold;
 	}
-	
+
 	/* both ways */
 	span.commenticonbox small.comment_count.js-hover
 	{
@@ -890,14 +890,14 @@ span.commenticonbox a.para_permalink
 		font-weight: bold;
 		color: #761D19;
 	}
-	
 
 
 
 
 
 
-/* 
+
+/*
 --------------------------------------------------------------------------------
 Captioned Images
 --------------------------------------------------------------------------------
@@ -906,26 +906,26 @@ Captioned Images
 span.captioned_image
 {
 	display: block;
-	background: #ccc; 
-	padding: 10px; 
-	margin: 7px 0; 
-	border: 1px solid #B5BFB2; 
+	background: #ccc;
+	padding: 10px;
+	margin: 7px 0;
+	border: 1px solid #B5BFB2;
 }
 
 	span.captioned_image.aligncenter
 	{
 		margin: 0 auto;
-		margin-top: 7px; 
+		margin-top: 7px;
 	}
-	
+
 	span.captioned_image.alignleft
-	{ 
-		margin-right: 7px; 
+	{
+		margin-right: 7px;
 	}
-	
+
 	span.captioned_image.alignright
-	{ 
-		margin-left: 7px; 
+	{
+		margin-left: 7px;
 	}
 
 p > span.textblock:first-child > span.captioned_image
@@ -935,16 +935,16 @@ p > span.textblock:first-child > span.captioned_image
 	margin-top: 0;
 }
 
-span.wp-caption 
-{ 
+span.wp-caption
+{
 	display: block;
-	text-align: center; 
+	text-align: center;
 	padding: 0;
 	margin: 0;
 }
 
 .post small.wp-caption-text
-{ 
+{
 	display: block;
 	text-align: center;
 	padding: 0;
@@ -956,7 +956,7 @@ span.wp-caption
 
 
 /* page and post navigation links */
-.navigation 
+.navigation
 {
 	padding-top:3px;
 	padding-bottom: 6px;
@@ -969,7 +969,7 @@ span.wp-caption
 	font-weight: normal;
 	font-size: 80%;
 }
-	
+
 .running_header_top
 {
 	margin-top: -50px;
@@ -980,7 +980,7 @@ span.wp-caption
 	color: #888;
 	text-align: center;
 }
-	
+
 .running_header_bottom
 {
 	clear: both;
@@ -992,7 +992,7 @@ span.wp-caption
 	color: #888;
 	text-align: center;
 }
-	
+
 .navigation a:link,
 .navigation a:hover,
 .navigation a:active,
@@ -1003,8 +1003,8 @@ span.wp-caption
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight: normal;
 	font-size: 80%;
-}	
-	
+}
+
 
 
 
@@ -1030,7 +1030,7 @@ div.multipager .multipager_sep
 	visibility: hidden;
 }
 
-#content div.multipager:after 
+#content div.multipager:after
 {
 	content: "";
 	display: block;
@@ -1073,7 +1073,7 @@ div.multipager .multipager_sep
 
 #content div.multipager.multipager_all span.multipager_link
 {
-	margin-left: 0.2em; 
+	margin-left: 0.2em;
 	margin-right: 0.2em;
 	padding: 0.5em 0.7em;
 	border: 1px solid #ddd;
@@ -1081,17 +1081,17 @@ div.multipager .multipager_sep
 
 #content div.multipager.multipager_all a
 {
-	text-decoration: none; 
+	text-decoration: none;
 }
 
 #content div.multipager.multipager_all a span.multipager_link
 {
-	background: #E8E8E8; 
-	color: #000; 
+	background: #E8E8E8;
+	color: #000;
 	border: none;
 }
 
-#content div.multipager.multipager_all a:hover span.multipager_link 
+#content div.multipager.multipager_all a:hover span.multipager_link
 {
 	color: #fff;
 	background: #761D19;
@@ -1109,7 +1109,7 @@ div.multipager .multipager_sep
 	list-style-type: none;
 }
 
-#content ul.image_link:after 
+#content ul.image_link:after
 {
 	content: "";
 	display: block;
@@ -1162,14 +1162,14 @@ form.post_password_form input.post_password_button
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Sidebar
 --------------------------------------------------------------------------------
 */
 
 /* Default sidebar */
-#sidebar 
+#sidebar
 {
 	position: fixed !important;
 	z-index: 2000;
@@ -1200,7 +1200,7 @@ Sidebar
 		border-radius: 8px;
 		*/
 	}
-	
+
 
 
 	/* toc header */
@@ -1210,7 +1210,7 @@ Sidebar
 		height: 30px;
 		z-index: 2020;
 	}
-	
+
 	li.sidebar_header
 	{
 		float: left;
@@ -1222,7 +1222,7 @@ Sidebar
 		margin: 0 6px 0 0;
 		z-index: 2004;
 	}
-	
+
 		li.sidebar_header h2
 		{
 			text-transform: uppercase;
@@ -1232,21 +1232,21 @@ Sidebar
 			width: auto;
 			padding: 7px 6px 0 26px;
 		}
-		
+
 		li.sidebar_header h2 a
 		{
 			color: #761D19;
 		}
-		
-		
-		
+
+
+
 		/* Table of Contents Header */
 		#toc_header.sidebar_header
 		{
 			/* always visible */
 			/* margin-right: 0; */
 		}
-		
+
 		/* when default tab */
 		body.cp_sidebar_toc #toc_header.sidebar_header
 		{
@@ -1259,7 +1259,7 @@ Sidebar
 			background: #fff url(../images/icons/toc.jpg) no-repeat;
 			background-position: -4px -3px;
 		}
-	
+
 		#toc_header.sidebar_header h2:hover,
 		#toc_header.sidebar_header h2:focus,
 		#toc_header.sidebar_header h2:active
@@ -1269,14 +1269,14 @@ Sidebar
 		}
 
 
-		
+
 		/* Activity Header */
 		#activity_header.sidebar_header,
 		body.blog_post #activity_header.sidebar_header
 		{
 			/* always visible */
 		}
-		
+
 		/* when default tab */
 		body.cp_sidebar_activity #activity_header.sidebar_header
 		{
@@ -1289,7 +1289,7 @@ Sidebar
 			background: #fff url(../images/icons/archive.jpg) no-repeat;
 			background-position: -4px -3px;
 		}
-	
+
 		#activity_header.sidebar_header h2:hover,
 		#activity_header.sidebar_header h2:focus,
 		#activity_header.sidebar_header h2:active
@@ -1299,34 +1299,34 @@ Sidebar
 		}
 
 
-		
+
 		/* Comments Header */
 		#comments_header.sidebar_header
 		{
 			display: none;
 		}
-		
+
 		/* when default tab */
 		body.cp_sidebar_comments #comments_header.sidebar_header
 		{
 			display: block;
 			height: 27px;
 		}
-		
+
 		/* when not default, but commentable */
 		body.cp_sidebar_toc.commentable #comments_header.sidebar_header,
 		body.cp_sidebar_activity.commentable #comments_header.sidebar_header
 		{
 			display: block;
 		}
-		
+
 		#comments_header.sidebar_header h2
 		{
 			padding: 7px 0 0 26px;
 			background: #fff url(../images/icons/comment.jpg) no-repeat;
 			background-position: -4px -3px;
 		}
-	
+
 		#comments_header.sidebar_header h2:hover,
 		#comments_header.sidebar_header h2:focus,
 		#comments_header.sidebar_header h2:active
@@ -1334,12 +1334,12 @@ Sidebar
 			overflow: hidden !important; /* hides Mozilla outlines */
 			background-position: -4px -33px !important;
 		}
-	
+
 		#cp_minimise_comments
 		{
 			display: none;
 		}
-	
+
 		/* minimiser buttons */
 		#cp_minimise_all_comments,
 		#cp_minimise_all_activity
@@ -1353,7 +1353,7 @@ Sidebar
 			background: #fff url(../images/icons/min.jpg) no-repeat;
 			background-position: -4px -3px;
 		}
-		
+
 		#cp_minimise_all_comments:hover,
 		#cp_minimise_all_activity:hover
 		{
@@ -1374,7 +1374,7 @@ Sidebar
 			top: 27px;
 			z-index: 2001;
 		}
-			
+
 		#toc_sidebar .sidebar_header,
 		#comments_sidebar .sidebar_header,
 		#activity_sidebar .sidebar_header
@@ -1382,7 +1382,7 @@ Sidebar
 			float: none;
 			display: none;
 		}
-		
+
 		.sidebar_minimiser
 		{
 			padding: 6px 0;
@@ -1396,7 +1396,7 @@ Sidebar
 			height: auto;
 			border: 3px solid #B5BFB2;
 		}
-		
+
 		.sidebar_contents_wrapper
 		{
 			background: #fff;
@@ -1404,7 +1404,7 @@ Sidebar
 			overflow-y: scroll;
 			padding: 0;
 		}
-		
+
 
 
 
@@ -1419,47 +1419,47 @@ Table of Contents sidebar
 #toc_sidebar
 {
 }
-	
+
 body.cp_sidebar_toc #toc_sidebar
 {
 	z-index: 2010;
 }
-	
+
 	#toc_sidebar .sidebar_minimiser
 	{
 	}
-	
+
 	#toc_sidebar .sidebar_minimiser ul
 	{
 		margin: 0;
 		padding: 0;
 	}
-	
+
 	#toc_sidebar .sidebar_minimiser ul#toc_list
 	{
 		margin: 10px;
 		border-bottom: 1px solid #ddd;
 	}
-	
+
 	#toc_sidebar .sidebar_minimiser ul li ul
 	{
 		padding: 0;
 		margin: 0;
 	}
-	
+
 	#toc_sidebar .sidebar_minimiser ul li
 	{
 		padding: 0;
 		margin: 0;
 		border-top: 1px solid #ddd;
 	}
-	
+
 	#toc_sidebar .sidebar_minimiser ul li ul li
 	{
 		padding: 0;
 		margin: 0 0 0 20px;
 	}
-	
+
 	#toc_sidebar .sidebar_minimiser ul li a
 	{
 		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -1470,21 +1470,21 @@ body.cp_sidebar_toc #toc_sidebar
 		background: #fff;
 		margin: 0;
 	}
-	
+
 	#toc_sidebar .sidebar_minimiser ul li a:link,
 	#toc_sidebar .sidebar_minimiser ul li a:active,
 	#toc_sidebar .sidebar_minimiser ul li a:visited
 	{
 		color: #666;
 		text-decoration: none;
-	}	
+	}
 
 	#toc_sidebar .sidebar_minimiser ul li a:hover
 	{
 		color: #761D19;
 		background: #EFEFEF;
 		text-decoration: none;
-	}	
+	}
 
 
 
@@ -1498,38 +1498,38 @@ Activity sidebar
 #activity_sidebar
 {
 }
-	
+
 body.cp_sidebar_activity #activity_sidebar
 {
 	z-index: 2010;
 }
-	
+
 	#activity_sidebar .sidebar_minimiser ul
 	{
 		margin: 10px;
 		padding: 0;
 		border-bottom: 1px solid #ddd;
 	}
-	
+
 	#activity_sidebar .sidebar_minimiser ul li ul
 	{
 		padding: 0 0 0 0;
 		margin: 0 0 0 0;
 	}
-	
+
 	#activity_sidebar .sidebar_minimiser ul li
 	{
 		padding: 0;
 		margin: 0;
 		border-top: 1px solid #ddd;
 	}
-	
+
 	#activity_sidebar .sidebar_minimiser ul li ul li
 	{
 		padding: 0;
 		margin: 0 0 0 20px;
 	}
-	
+
 	#activity_sidebar .sidebar_minimiser ul li a
 	{
 		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -1540,22 +1540,22 @@ body.cp_sidebar_activity #activity_sidebar
 		background: #fff;
 		margin: 0;
 	}
-	
+
 	#activity_sidebar .sidebar_minimiser ul li a:link,
 	#activity_sidebar .sidebar_minimiser ul li a:active,
 	#activity_sidebar .sidebar_minimiser ul li a:visited
 	{
 		color: #666;
 		text-decoration: none;
-	}	
+	}
 
 	#activity_sidebar .sidebar_minimiser ul li a:hover
 	{
 		background: #EFEFEF;
 		text-decoration: none;
-	}	
-	
-	#activity_sidebar .comments_container .comment-content 
+	}
+
+	#activity_sidebar .comments_container .comment-content
 	{
 	}
 
@@ -1573,29 +1573,29 @@ Comments Sidebar
 #comments_sidebar
 {
 }
-	
+
 body.cp_sidebar_comments #comments_sidebar
 {
 	z-index: 2010;
 }
-		
+
 	#comments_sidebar .sidebar_minimiser
 	{
 		clear: left;
 	}
-	
+
 	div.comments_container
 	{
 		padding: 10px;
 		/* border-top: 1px solid #B5BFB2; */
 	}
-	
+
 	/* comments in page */
 	#comments_in_page_wrapper div.comments_container
 	{
 		padding: 0;
 	}
-	
+
 	/* wrapper for all comments for a partcular paragraph */
 	div.paragraph_wrapper
 	{
@@ -1603,7 +1603,7 @@ body.cp_sidebar_comments #comments_sidebar
 		padding: 0;
 		margin: 0;
 	}
-	
+
 	.comment-identifier
 	{
 		margin: 0 0 0 0;
@@ -1611,19 +1611,19 @@ body.cp_sidebar_comments #comments_sidebar
 		padding-bottom: 5px;
 		background: #D2DCCF;
 	}
-	
+
 	.post .comment-identifier
 	{
 		padding: 0 0 5px 0;
 	}
-		
+
 		/* set another colour for authors and admin */
 		.comment-author-admin > div > div > .comment-identifier,
 		.bypostauthor > div > div > .comment-identifier
 		{
 			background: #CFD1DC;
 		}
-	
+
 	.comment-content
 	{
 		clear: left;
@@ -1632,18 +1632,18 @@ body.cp_sidebar_comments #comments_sidebar
 		margin: 0;
 		overflow: hidden;
 	}
-	
+
 	.post .comment-content
 	{
 		padding: 5px;
 		margin: 0 0 0 0;
 	}
-	
+
 	/* reply to a particular paragraph */
 	.reply
 	{
 	}
-	
+
 	a.comment-reply-link
 	{
 		display: block;
@@ -1653,7 +1653,7 @@ body.cp_sidebar_comments #comments_sidebar
 		text-transform: uppercase;
 		color: #761D19;
 	}
-	
+
 	div.reply_to_para
 	{
 		padding: 0;
@@ -1663,7 +1663,7 @@ body.cp_sidebar_comments #comments_sidebar
 		text-transform: uppercase;
 		color: #761D19;
 	}
-	
+
 	/* wrapper for all comments */
 	ol.commentlist
 	{
@@ -1672,15 +1672,15 @@ body.cp_sidebar_comments #comments_sidebar
 		margin: 0;
 		padding: 0;
 	}
-	
+
 	/* wrapper for each comment and its replies */
-	ol.commentlist li 
+	ol.commentlist li
 	{
 		list-style-type: none;
 		padding: 0;
 		margin: 0;
-	}	
-	
+	}
+
 	/* wrapper for comment replies */
 	ol.children,
 	ul.children
@@ -1688,7 +1688,7 @@ body.cp_sidebar_comments #comments_sidebar
 		padding: 0;
 		margin: 0;
 	}
-	
+
 	/* wrapper for each comment reply */
 	ol.children li,
 	ul.children li
@@ -1696,31 +1696,31 @@ body.cp_sidebar_comments #comments_sidebar
 		padding: 0 0 0 20px;
 		margin: 0;
 	}
-	
+
 	/* wrapper for each comment */
 	.comment-wrapper
 	{
 		margin: 0;
 		padding: 0;
 	}
-	
-	.comment-author, 
-	.comment-author .photo, 
+
+	.comment-author,
+	.comment-author .photo,
 	.comment-author cite,
 	.comment-author span
-	
+
 	{
 		margin: 0;
 		padding: 0;
 		vertical-align: middle;
 	}
-	
+
 	div.reply_to_para
 	{
 		background-color: #fff;
 		margin: 0;
 	}
-	
+
 
 
 	/* AJAX highlighting */
@@ -1739,7 +1739,7 @@ body.cp_sidebar_comments #comments_sidebar
 		background-color: transparent;
 	}
 
-	.notransition 
+	.notransition
 	{
 		-webkit-transition: none !important;
 		-moz-transition: none !important;
@@ -1763,7 +1763,7 @@ body.cp_sidebar_comments #comments_sidebar
 		background-color: #EFEFEF;
 	}
 
-	
+
 
 
 	/* wrapper for comment form wrapper */
@@ -1772,7 +1772,7 @@ body.cp_sidebar_comments #comments_sidebar
 		/* margin: 0 20px; */
 		padding: 0;
 	}
-	
+
 	/* comments in page */
 	#content #respond_wrapper
 	{
@@ -1787,7 +1787,7 @@ body.cp_sidebar_comments #comments_sidebar
 		padding: 8px 8px;
 		border-bottom: 1px dashed #B5BFB2;
 	}
-	
+
 		/* need to reset table styles because TinyMCE doesn't do that by default. Doh. */
 		#respond .defaultSkin table,
 		#respond .defaultSkin table tr,
@@ -1797,36 +1797,36 @@ body.cp_sidebar_comments #comments_sidebar
 			margin: 0;
 			padding: 0;
 		}
-		
+
 		#respond .defaultSkin table td,
 		#respond .defaultSkin table
 		{
 			background: none;
 		}
-		
+
 		/* reinstate border */
 		#respond .defaultSkin td.mceToolbar
 		{
 			background: #F0F0EE;
 		}
-		
+
 		/* reinstate header colour */
 		#respond .defaultSkin td.mceToolbar
 		{
 			background: #F0F0EE;
 		}
-		
+
 		/* cancel reply link */
 		#respond .cancel-comment-reply
 		{
 			float: right;
 		}
-		
+
 		#respond .cancel-comment-reply p
 		{
 			text-align: right;
 		}
-		
+
 		#respond .cancel-comment-reply p a
 		{
 			display: block;
@@ -1834,31 +1834,31 @@ body.cp_sidebar_comments #comments_sidebar
 			text-transform: uppercase;
 			font-size: 11px;
 		}
-		
+
 		#cancel-comment-reply-link
 		{
 			display: block;
 		}
-		
+
 		fieldset#comment_details
 		{
 			margin: 0 0 8px 0;
 		}
-		
+
 		/* cancel reply link */
 		#respond_button
 		{
 			padding: 0;
 			margin: 0;
 		}
-		
+
 		.post #respond p,
 		.post #respond ul,
 		.post #respond ol
 		{
 		}
-		
-		
+
+
 	/* comments */
 	textarea#comment {
 		width: 99%;
@@ -1877,19 +1877,19 @@ body.cp_sidebar_comments #comments_sidebar
 		border-bottom: 1px solid #B5BFB2;
 	}
 
-	.post ol.children li, 
-	.post ul.children li 
+	.post ol.children li,
+	.post ul.children li
 	{
 		list-style: none;
 	}
 
 	/* wrapper for each comment and its replies */
-	.post ol.commentlist li 
+	.post ol.commentlist li
 	{
 		padding: 0 0 0 0;
 		margin: 0;
-	}	
-	
+	}
+
 	/* wrapper for each comment reply */
 	.post ol.children li,
 	.post ul.children li
@@ -1897,16 +1897,16 @@ body.cp_sidebar_comments #comments_sidebar
 		padding: 0 0 0 20px;
 		margin: 0;
 	}
-	
 
-	
+
+
 	#comments_in_page_wrapper,
 	#respond_in_page_wrapper
 	{
 		padding-left: 7px;
 		padding-right: 7px;
 	}
-	
+
 	/* wrapper for comment form */
 	#respond_in_page_wrapper div#respond
 	{
@@ -1915,7 +1915,7 @@ body.cp_sidebar_comments #comments_sidebar
 		padding: 10px;
 		background-color: #CBFFBD;
 	}
-	
+
 	/* comments */
 	#respond_in_page_wrapper textarea#comment {
 		width: 99%;
@@ -1926,7 +1926,7 @@ body.cp_sidebar_comments #comments_sidebar
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 New Activity Sidebar
 --------------------------------------------------------------------------------
@@ -1948,10 +1948,10 @@ ol.comment_activity .reply p
 }
 
 ol.comment_activity .reply p a,
-a.comment_activity_link:link, 
-a.comment_activity_link:hover, 
-a.comment_activity_link:active, 
-a.comment_activity_link:visited 
+a.comment_activity_link:link,
+a.comment_activity_link:hover,
+a.comment_activity_link:active,
+a.comment_activity_link:visited
 {
 	display: block;
 	padding: 0 5px;
@@ -1985,7 +1985,7 @@ h3.activity_heading
 }
 */
 
-h3.activity_heading 
+h3.activity_heading
 {
 	padding: 6px 0 6px 20px;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -2003,7 +2003,7 @@ h3.activity_heading
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 New Look TOC Sidebar for posts
 --------------------------------------------------------------------------------
@@ -2081,13 +2081,13 @@ New Look TOC Sidebar for posts
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Footer
 --------------------------------------------------------------------------------
 */
 
-#footer 
+#footer
 {
 	clear: left;
 	margin: 0 0 0 1%;
@@ -2109,13 +2109,13 @@ Footer
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 'All Comments' & 'Comments by Commenter' Pages
 --------------------------------------------------------------------------------
 */
 
-#comments_in_page_wrapper ul.all_comments_listing 
+#comments_in_page_wrapper ul.all_comments_listing
 {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 90%;
@@ -2131,14 +2131,14 @@ Footer
 		margin: 0;
 		padding: 0 0 0 20px;
 	}
-	
+
 	#comments_in_page_wrapper ul.all_comments_listing > ul
 	{
 		list-style-type: none;
 		margin: 0;
 		padding: 0 0 0 10px;
 	}
-	
+
 	/* remove list style */
 	#comments_in_page_wrapper ul.all_comments_listing li.page_li,
 	#comments_in_page_wrapper ul.all_comments_listing li.item_li,
@@ -2148,8 +2148,8 @@ Footer
 		margin: 0;
 		padding: 0;
 	}
-	
-	#comments_in_page_wrapper ul.all_comments_listing li > h3 
+
+	#comments_in_page_wrapper ul.all_comments_listing li > h3
 	{
 		font-size: 1em;
 		color: #761D19;
@@ -2159,30 +2159,30 @@ Footer
 		line-height: 1;
 		border-top: 1px solid #B5BFB2;
 	}
-	
+
 		#comments_in_page_wrapper ul.all_comments_listing li > h3:hover
 		{
 			background: #EFEFEF;
 		}
-		
+
 		#comments_in_page_wrapper ul.all_comments_listing li > h3 img.avatar
 		{
 			margin: 0 4px;
 			vertical-align: middle;
 		}
-		
+
 	#comments_in_page_wrapper ul.all_comments_listing h3 span
 	{
 		font-weight: normal;
 		color: #000;
 	}
-	
-	#comments_in_page_wrapper ul.all_comments_listing div.item_body 
+
+	#comments_in_page_wrapper ul.all_comments_listing div.item_body
 	{
 		padding: 0 0 10px 0;
 		border-top: 1px solid #B5BFB2;
 	}
-	
+
 	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment_wrapper
 	{
 		border-top: 2px solid #B5BFB2;
@@ -2191,8 +2191,8 @@ Footer
 		font-family: Georgia;
 		font-size: 1.1em;
 	}
-	
-	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment_meta 
+
+	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment_meta
 	{
 		font-size: 70%;
 		line-height: 1.4;
@@ -2202,7 +2202,7 @@ Footer
 		padding: 3px;
 		background-color: #f9f9f9;
 	}
-	
+
 	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment_meta a:link,
 	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment_meta a:hover,
 	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment_meta a:active,
@@ -2211,40 +2211,40 @@ Footer
 		color: #666;
 		text-decoration: none;
 	}
-	
-	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment-content 
+
+	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment-content
 	{
 		font-size: 90%;
 		line-height: 1.4;
 	}
-	
+
 	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment-content ul,
 	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment-content ol
 	{
 		margin: 0 0 0 20px;
 	}
-	
+
 	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment-content > ul,
 	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment-content > ol
 	{
 		margin: 0 0 8px 20px;
 	}
-	
+
 	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment-content ul li
 	{
 		list-style-type: disc;
 	}
-	
+
 	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment-content ol li
 	{
 		list-style-type: decimal;
 	}
-	
-	
-	
-	
-	
-/* 
+
+
+
+
+
+/*
 --------------------------------------------------------------------------------
 'Archive' Page
 --------------------------------------------------------------------------------
@@ -2252,7 +2252,7 @@ Footer
 
 #content .post .archives_by_month ul,
 #content .post .categories ul,
-#content .post .tags ul 
+#content .post .tags ul
 {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 90%;
@@ -2270,7 +2270,7 @@ Footer
 		margin: 0;
 		padding: 0 0 0 10px;
 	}
-	
+
 	/* style six levels deep */
 	#content .post .archives_by_month ul ul ul,
 	#content .post .archives_by_month ul ul ul ul,
@@ -2289,7 +2289,7 @@ Footer
 		margin: 0;
 		padding: 0 0 0 20px;
 	}
-	
+
 	/* remove list style */
 	#content .post .archives_by_month ul li,
 	#content .post .archives_by_month ul ul li
@@ -2314,7 +2314,7 @@ Footer
 		margin: 0;
 		padding: 0;
 	}
-	
+
 	#content .post .archives_by_month ul a,
 	#content .post .categories ul a,
 	#content .post .tags ul a
@@ -2329,7 +2329,7 @@ Footer
 		border-top: 1px solid #B5BFB2;
 		text-decoration: none;
 	}
-	
+
 		#content .post .archives_by_month ul a:hover,
 		#content .post .categories ul a:hover,
 		#content .post .tags ul a:hover
@@ -2338,14 +2338,14 @@ Footer
 			text-decoration: none;
 			color: #761D19;
 		}
-		
+
 		#content .post .archives_by_month ul a:visited,
 		#content .post .categories ul a:visited,
 		#content .post .tags ul a:visited
 		{
 			color: #444;
 		}
-		
+
 		#content .post .tags ul li.no_tags
 		{
 			font-size: 1em;
@@ -2355,12 +2355,12 @@ Footer
 			line-height: 1;
 			border-top: 1px solid #B5BFB2;
 		}
-		
-	
-	
-	
-	
-/* 
+
+
+
+
+
+/*
 --------------------------------------------------------------------------------
 Comment Orphaning
 --------------------------------------------------------------------------------
@@ -2403,7 +2403,7 @@ Comment Orphaning
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Theme My Login
 --------------------------------------------------------------------------------
@@ -2414,7 +2414,7 @@ Theme My Login
 	padding: 5px;
 }
 
-.login p.error 
+.login p.error
 {
 	padding: 5px;
 	border: 1px solid #c00;
@@ -2456,7 +2456,7 @@ Theme My Login
 	display: inline;
 }
 
-.login form input[type="text"], 
+.login form input[type="text"],
 .login form input[type="password"]
 {
 	width: 50%;
@@ -2485,8 +2485,8 @@ ul.tml-user-links
 		margin: 0px;
 		padding: 0px;
 	}
-	
-		
+
+
 	ul.tml-action-links li a,
 	ul.tml-user-links li a
 	{
@@ -2503,7 +2503,7 @@ ul.tml-user-links
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Compatibility with Members List plugin
 --------------------------------------------------------------------------------
@@ -2528,19 +2528,19 @@ Compatibility with Members List plugin
 	border: none;
 }
 
-#tern_members .tern_wp_members_list li 
+#tern_members .tern_wp_members_list li
 {
 	height: auto;
 	padding-top: 0
 }
 
-html>/**/body #tern_members .tern_wp_members_list li 
+html>/**/body #tern_members .tern_wp_members_list li
 {
 	height: auto;
 	min-height: 0;
 }
 
-#tern_members .tern_wp_members_list 
+#tern_members .tern_wp_members_list
 {
 	margin: 0;
 	padding: 0;
@@ -2552,7 +2552,7 @@ html>/**/body #tern_members .tern_wp_members_list li
 	list-style-image: none;
 }
 
-#tern_members .tern_wp_members_list li .tern_wp_member_info a 
+#tern_members .tern_wp_members_list li .tern_wp_member_info a
 {
 	display: block;
 	font-family: sans-serif;
@@ -2570,13 +2570,13 @@ html>/**/body #tern_members .tern_wp_members_list li
 	color: #000;
 }
 
-#tern_members .tern_wp_members_list li .tern_wp_member_info a 
+#tern_members .tern_wp_members_list li .tern_wp_member_info a
 {
 	font-size: 80% !important;
 }
 
 /* alphabet */
-#tern_members .tern_members_alpha span 
+#tern_members .tern_members_alpha span
 {
 	font-size: inherit;
 	font-style: italic;
@@ -2590,7 +2590,7 @@ html>/**/body #tern_members .tern_wp_members_list li
 	border: none;
 }
 
-.tern_members_alpha a 
+.tern_members_alpha a
 {
 	padding: 0 3px;
 	margin-right: 5px;
@@ -2698,7 +2698,7 @@ body > img
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Compatibility with WordPress 3.8+
 --------------------------------------------------------------------------------
@@ -2710,7 +2710,7 @@ Compatibility with WordPress 3.8+
 	html body #wpadminbar {
 		z-index: 99999 !important;
 	}
-	
+
 }
 
 /* allow TinyMCE 4 to go fullscreen */
@@ -2731,12 +2731,12 @@ body.tinymce-4 .mce-toolbar .mce-btn button:hover
 	text-decoration: none;
 }
 
-body.tinymce-4 .wp-editor-container 
+body.tinymce-4 .wp-editor-container
 {
 	border: 1px solid #dedede;
 }
 
-body.tinymce-4 #commentform #wp-comment-wrap textarea 
+body.tinymce-4 #commentform #wp-comment-wrap textarea
 {
 	width: 100%;
 	margin: 0;
@@ -2747,7 +2747,7 @@ body.tinymce-4 #commentform #wp-comment-wrap textarea
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Misc
 --------------------------------------------------------------------------------
@@ -2770,19 +2770,19 @@ a.download_link
 }
 
 /* These rather presentational classes are generated by WordPress, so it's useful to have some styles for them. Edit as you see fit. More info: http://codex.wordpress.org/CSS */
-.aligncenter 
-{ 
-	display: block; 
-	margin: 0 auto 
+.aligncenter
+{
+	display: block;
+	margin: 0 auto
 }
 
-.alignleft 
-{ 
+.alignleft
+{
 	float: left;
 }
 
-.alignright 
-{ 
+.alignright
+{
 	float: right;
 }
 
@@ -2822,13 +2822,13 @@ table#matrix tr.odd_row td
 /* You might find the following useful */
 
 /* Use this br class to clear your floated columns */
-br.dirtyLittleTrick 
-{ 
-	clear: both; 
-	display: block; 
-	height: 1px; 
+br.dirtyLittleTrick
+{
+	clear: both;
+	display: block;
+	height: 1px;
 	margin: -1px 0 0 0;
-} 
+}
 
 
 
@@ -2840,26 +2840,26 @@ br.dirtyLittleTrick
 		padding-top: 13px;
 		font-size: 1.2em;
 	}
-	
+
 	#tagline
 	{
 		font-size: 0.8em;
 	}
-	
+
 	li.sidebar_header
 	{
 		margin: 0 2px 0 0;
 	}
-	
+
 	#toc_header.sidebar_header h2,
 	#comments_header.sidebar_header h2,
 	#activity_header.sidebar_header h2
 	{
 		font-size: 10px;
 		line-height: 1.1;
-		padding-right: 4px; 
+		padding-right: 4px;
 	}
-	
+
 }
 
 /* Reduces sizes */
@@ -2875,17 +2875,17 @@ br.dirtyLittleTrick
 		padding-top: 10px;
 		font-size: 1em;
 	}
-	
+
 	#tagline
 	{
 		font-size: 0.6em;
 	}
-	
+
 	li.sidebar_header
 	{
 		margin: 0 2px 0 0;
 	}
-	
+
 	#toc_header.sidebar_header h2,
 	#comments_header.sidebar_header h2,
 	#activity_header.sidebar_header h2
@@ -2895,7 +2895,7 @@ br.dirtyLittleTrick
 		padding-left: 6px;
 		line-height: 1.1;
 	}
-	
+
 }
 
 /* Reduces sizes */
@@ -2911,17 +2911,17 @@ br.dirtyLittleTrick
 		padding-top: 10px;
 		font-size: 1em;
 	}
-	
+
 	#tagline
 	{
 		font-size: 0.6em;
 	}
-	
+
 	li.sidebar_header
 	{
 		margin: 0 1px 0 0;
 	}
-	
+
 	#toc_header.sidebar_header h2,
 	#comments_header.sidebar_header h2,
 	#activity_header.sidebar_header h2
@@ -2929,6 +2929,6 @@ br.dirtyLittleTrick
 		font-size: 9px;
 		line-height: 1.1;
 	}
-	
+
 }
 

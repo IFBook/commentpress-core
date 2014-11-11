@@ -16,7 +16,7 @@
 
 <div class="sidebar_contents_wrapper">
 
-<?php 
+<?php
 
 // declare access to globals
 global $commentpress_core;
@@ -36,7 +36,7 @@ if ( is_object( $commentpress_core ) ) {
 }
 
 ?>
-	
+
 </div><!-- /sidebar_contents_wrapper -->
 
 </div><!-- /sidebar_minimiser -->

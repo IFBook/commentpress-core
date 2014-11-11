@@ -1,6 +1,6 @@
-/* 
+/*
 --------------------------------------------------------------------------------
-Fonts 
+Fonts
 --------------------------------------------------------------------------------
 */
 
@@ -11,7 +11,7 @@ body#main_blog div#item-header div#item-meta
 	font-family: Georgia, Times, serif;
 }
 
-/* 
+/*
 Google Webfont: using "Lato" enqueued in functions.php
 */
 #title h1,
@@ -27,12 +27,12 @@ body.settings.my-account #content h3,
 body.settings.general #content h3,
 body.directory.logged-in #content form.dir-form h3,
 body.directory #content form.dir-form h3,
-body.create-blog #content h3, 
-body.registration #content h2, 
-body.activation.activate #content h2, 
-body.activate #content h3, 
+body.create-blog #content h3,
+body.registration #content h2,
+body.activation.activate #content h2,
+body.activate #content h3,
 body.directory.logged-in #content h3,
-body.directory #content h3, 
+body.directory #content h3,
 body.group-create #content form.standard-form > h3,
 body.create-blog #content #setupform label,
 #register-page #signup_form h2,
@@ -45,7 +45,7 @@ ul#members-list h5,
 span.highlight,
 .item-title a,
 div#message-thread strong a,
-.standard-form label, 
+.standard-form label,
 .standard-form span.label,
 form#send-reply div.message-box .avatar-box strong,
 form#whats-new-form h5
@@ -55,15 +55,15 @@ form#whats-new-form h5
 
 body.create-blog #cp-multisite-options h4,
 body#main_blog.create-blog.buddypress_page #content .padder h3,
-body.registration #content h4, 
-body.group-create #group-create-body h2, 
-body.group-create #group-create-body h3, 
-body.directory.logged-in #content h4, 
-body.group-create #content h4, 
-body.group-admin #group-create-body h2, 
-body.group-admin #group-create-body h3, 
-body.group-admin #content h4, 
-body.group-admin #content h3, 
+body.registration #content h4,
+body.group-create #group-create-body h2,
+body.group-create #group-create-body h3,
+body.directory.logged-in #content h4,
+body.group-create #content h4,
+body.group-admin #group-create-body h2,
+body.group-admin #group-create-body h3,
+body.group-admin #content h4,
+body.group-admin #content h3,
 body.group-admin #content h2,
 body#main_blog div#item-header div#item-actions h3,
 .profile h4,
@@ -91,13 +91,13 @@ body.groups.announcements #item-body h3
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
-Stylistic regularity 
+Stylistic regularity
 --------------------------------------------------------------------------------
 */
 
-#header #tagline 
+#header #tagline
 {
 	color: #999;
 }
@@ -115,13 +115,13 @@ Stylistic regularity
 /* buddypress headings */
 body.directory.logged-in #content form.dir-form h3,
 body.directory #content form.dir-form h3,
-body.create-blog #content h3, 
-body.registration #content h2, 
+body.create-blog #content h3,
+body.registration #content h2,
 #register-page #signup_form h2,
-body.activation.activate #content h2, 
-body.activate #content h3, 
+body.activation.activate #content h2,
+body.activate #content h3,
 body.directory.logged-in #content h3,
-body.directory #content h3, 
+body.directory #content h3,
 body.group-create #content form.standard-form > h3,
 body#main_blog div#item-header div#item-actions h3,
 div#item-header h2,
@@ -131,7 +131,7 @@ ul#mods-list h5,
 ul#members-list h5,
 span.highlight,
 .item-title a,
-.standard-form label, 
+.standard-form label,
 .standard-form span.label,
 form#send-reply div.message-box .avatar-box strong,
 form#settings-form table.notification-settings th.title,
@@ -158,13 +158,13 @@ body.buddypress #content div#item-header h2
 	margin-bottom: 0;
 }
 
-button, 
-a.button, 
-input[type="submit"], 
-input[type="button"], 
-input[type="reset"], 
-ul.button-nav li a, 
-div.generic-button a 
+button,
+a.button,
+input[type="submit"],
+input[type="button"],
+input[type="reset"],
+ul.button-nav li a,
+div.generic-button a
 {
 	color: #777;
 }
@@ -177,7 +177,7 @@ div.generic-button a
 
 .post a,
 #item-body a,
-.standard-form label, 
+.standard-form label,
 .standard-form span.label,
 form#settings-form table.notification-settings th.title,
 table.notifications th
@@ -191,8 +191,8 @@ div#respond .subscribe_reloaded_insert a
 	color: #761D19;
 }
 
-.activity-header a, 
-.comment-meta a, 
+.activity-header a,
+.comment-meta a,
 .acomment-meta a,
 .meta a,
 #groups-list .group-subscription-div a,
@@ -228,7 +228,7 @@ body.create-blog #content a
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 BuddyPress Main Site
 --------------------------------------------------------------------------------
@@ -254,11 +254,11 @@ body#main_blog
 	body.buddypress form.dir-form,
 	body#main_blog div.item-list-tabs,
 	body.buddypress div.item-list-tabs,
-	body#main_blog form#whats-new-form, 
+	body#main_blog form#whats-new-form,
 	body#main_blog .home-page form#whats-new-form,
-	body.buddypress form#whats-new-form, 
+	body.buddypress form#whats-new-form,
 	body.home-page form#whats-new-form,
-	body.directory #content h3, 
+	body.directory #content h3,
 	body.group-create #content form.standard-form > h3,
 	#register-page #signup_form h2,
 	body.activation.activate #content h2,
@@ -268,29 +268,29 @@ body#main_blog
 	{
 		background: #761D19;
 	}
-	
+
 	body#main_blog div.item-list-tabs#subnav
 	{
 		background: #fff;
 	}
-	
+
 	body#main_blog #item-body form#whats-new-form,
 	body.buddypress #item-body form#whats-new-form
 	{
 		background-color: #eee;
 	}
-	
+
 	body#main_blog div#item-header div#item-meta,
-	body.buddypress div#item-header div#item-meta 
+	body.buddypress div#item-header div#item-meta
 	{
 		color: #fff;
 	}
-	
-	
+
+
 
 /***************** List Items ******************/
 
-ul.item-list li div.item-desc 
+ul.item-list li div.item-desc
 {
 	color: #761D19;
 }
@@ -299,9 +299,9 @@ ul.item-list li div.item-desc
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
-Prose 
+Prose
 --------------------------------------------------------------------------------
 */
 
@@ -324,7 +324,7 @@ div#content.groupblogtype-0 div#item-header,
 	background: #312F84;
 }
 
-/* group bg 
+/* group bg
 li.groupblogtype-0
 {
     background: #312F84;
@@ -369,12 +369,12 @@ body.blogtype-0 #content .post.overridden_type-1 div.search_meta
 
 /* prose defaults to right-bubbles */
 
-/* poetry overrides default to left-bubbles 
-body.blogtype-0 .post.overridden_type-1 span.commenticonbox 
+/* poetry overrides default to left-bubbles
+body.blogtype-0 .post.overridden_type-1 span.commenticonbox
 {
 	position: absolute;
 	margin-left: -40px;
-	margin-top: -2px;	
+	margin-top: -2px;
 	padding-right: 20px;
 	right: auto;
 }
@@ -383,7 +383,7 @@ body.blogtype-0 .post.overridden_type-1 span.commenticonbox
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Poetry
 --------------------------------------------------------------------------------
@@ -408,7 +408,7 @@ div#content.groupblogtype-1 div#item-header,
 	background: #2C6D1F;
 }
 
-/* group bg 
+/* group bg
 li.groupblogtype-1
 {
     background: #2C6D1F;
@@ -478,23 +478,23 @@ body.blogtype-1 #content div.search_meta p
 	padding: 0;
 }
 
-/* poetry defaults to left-bubbles 
-body.blogtype-1 .post span.commenticonbox 
+/* poetry defaults to left-bubbles
+body.blogtype-1 .post span.commenticonbox
 {
 	position: absolute;
 	margin-left: -40px;
-	margin-top: -2px;	
+	margin-top: -2px;
 	padding-right: 20px;
 	right: auto;
 }
 */
 
-/* prose overrides default to right-bubbles 
-body.blogtype-1 .post.overridden_type-0 span.commenticonbox 
+/* prose overrides default to right-bubbles
+body.blogtype-1 .post.overridden_type-0 span.commenticonbox
 {
 	position: absolute;
 	margin-left: 0;
-	margin-top: 0;	
+	margin-top: 0;
 	padding-right: 20px;
 	right: 25px;
 }
@@ -504,9 +504,9 @@ body.blogtype-1 .post.overridden_type-0 span.commenticonbox
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
-Translation 
+Translation
 --------------------------------------------------------------------------------
 */
 
@@ -529,7 +529,7 @@ div#content.groupblogtype-2 div#item-header,
 	background: #8A26B1;
 }
 
-/* group bg 
+/* group bg
 li.groupblogtype-2
 {
     background: #8A26B1;
@@ -564,7 +564,7 @@ ul.activity-list li.groupblogtype-2 .activity-wrapper
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Footer
 --------------------------------------------------------------------------------
@@ -582,14 +582,14 @@ Footer
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 BuddyPress Group Email Subscription compatibility
 --------------------------------------------------------------------------------
 */
 
 /* default "get email updates" link on yellow */
-.single-item #content.groupblog .group-subscription-div a 
+.single-item #content.groupblog .group-subscription-div a
 {
 	color: #fff;
 }
@@ -597,7 +597,7 @@ BuddyPress Group Email Subscription compatibility
 /* where a groupblog is set, use grey */
 .single-item #content.groupblog.groupblogtype-0 .group-subscription-div a,
 .single-item #content.groupblog.groupblogtype-1 .group-subscription-div a,
-.single-item #content.groupblog.groupblogtype-2 .group-subscription-div a 
+.single-item #content.groupblog.groupblogtype-2 .group-subscription-div a
 {
 	color: #ccc;
 }

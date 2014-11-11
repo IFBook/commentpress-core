@@ -34,22 +34,22 @@
 
 		<form action="" method="post" id="blogs-directory-form" class="dir-form">
 
-			<h3><?php 
-			
+			<h3><?php
+
 			// define title
 			$page_title = __( 'Sites', 'commentpress-core' );
-			
+
 			// allow overrides
 			echo apply_filters( 'cp_site_directory_page_title', $page_title );
-			
-			?><?php if ( is_user_logged_in() && bp_blog_signup_enabled() ) : ?> &nbsp;<a class="button" href="<?php echo bp_get_root_domain() . '/' . bp_get_blogs_root_slug() . '/create/' ?>"><?php 
-			
+
+			?><?php if ( is_user_logged_in() && bp_blog_signup_enabled() ) : ?> &nbsp;<a class="button" href="<?php echo bp_get_root_domain() . '/' . bp_get_blogs_root_slug() . '/create/' ?>"><?php
+
 			// define title
 			$create_title = __( 'Create a New Document', 'commentpress-core' );
-			
+
 			// allow overrides
 			echo apply_filters( 'cp_site_directory_link_title', $create_title );
-			
+
 			?></a><?php endif; ?></h3>
 
 			<?php do_action( 'bp_before_directory_blogs_content' ); ?>

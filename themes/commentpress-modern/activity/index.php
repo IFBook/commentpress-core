@@ -89,11 +89,11 @@
 						<?php endif; ?>
 
 						<?php if ( function_exists( 'bp_activity_do_mentions' ) AND bp_activity_do_mentions() ) : ?>
-							
+
 							<?php do_action( 'bp_before_activity_type_tab_mentions' ); ?>
 
 							<li id="activity-mentions"><a href="<?php echo bp_loggedin_user_domain() . bp_get_activity_slug() . '/mentions/'; ?>" title="<?php _e( 'Activity that I have been mentioned in.', 'commentpress-core' ); ?>"><?php _e( 'Mentions', 'commentpress-core' ); ?><?php if ( bp_get_total_mention_count_for_user( bp_loggedin_user_id() ) ) : ?> <strong><?php printf( __( '<span>%s new</span>', 'commentpress-core' ), bp_get_total_mention_count_for_user( bp_loggedin_user_id() ) ); ?></strong><?php endif; ?></a></li>
-						
+
 						<?php endif; ?>
 
 					<?php endif; ?>
@@ -109,7 +109,7 @@
 					<?php do_action( 'bp_activity_syndication_options' ); ?>
 
 					<li id="activity-filter-select" class="last">
-						<label for="activity-filter-by"><?php _e( 'Show:', 'commentpress-core' ); ?></label> 
+						<label for="activity-filter-by"><?php _e( 'Show:', 'commentpress-core' ); ?></label>
 						<select id="activity-filter-by">
 							<option value="-1"><?php _e( 'Everything', 'commentpress-core' ); ?></option>
 							<option value="activity_update"><?php _e( 'Updates', 'commentpress-core' ); ?></option>

@@ -28,8 +28,8 @@
 
 
 
-<h3 class="activity_heading"><?php 
-echo apply_filters( 'cp_content_tab_search_title', __( 'Search', 'commentpress-core' ) ); 
+<h3 class="activity_heading"><?php
+echo apply_filters( 'cp_content_tab_search_title', __( 'Search', 'commentpress-core' ) );
 ?></h3>
 
 <div class="paragraph_wrapper search_wrapper">
@@ -42,16 +42,16 @@ echo apply_filters( 'cp_content_tab_search_title', __( 'Search', 'commentpress-c
 
 
 
-<h3 class="activity_heading"><?php 
-echo apply_filters( 'cp_content_tab_special_pages_title', __( 'Special Pages', 'commentpress-core' ) ); 
+<h3 class="activity_heading"><?php
+echo apply_filters( 'cp_content_tab_special_pages_title', __( 'Special Pages', 'commentpress-core' ) );
 ?></h3>
 
 <div class="paragraph_wrapper special_pages_wrapper">
 
-<?php 
+<?php
 
 // until WordPress supports a locate_theme_file() function, use filter
-$include = apply_filters( 
+$include = apply_filters(
 	'cp_template_navigation',
 	get_template_directory() . '/assets/templates/navigation.php'
 );
@@ -63,13 +63,13 @@ include( $include );
 </div>
 
 
-<h3 class="activity_heading"><?php 
-echo apply_filters( 'cp_content_tab_toc_title', __( 'Table of Contents', 'commentpress-core' ) ); 
+<h3 class="activity_heading"><?php
+echo apply_filters( 'cp_content_tab_toc_title', __( 'Table of Contents', 'commentpress-core' ) );
 ?></h3>
 
 <div class="paragraph_wrapper start_open">
 
-<?php 
+<?php
 
 // declare access to globals
 global $commentpress_core;
@@ -89,7 +89,7 @@ if ( is_object( $commentpress_core ) ) {
 }
 
 ?>
-	
+
 </div>
 
 
