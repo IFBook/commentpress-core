@@ -2071,8 +2071,8 @@ class Walker_Comment_Press extends Walker_Comment {
 	 * @param int $depth Depth of comment.
 	 * @param array $args Uses 'style' argument for type of HTML list.
 	 */
-	function start_lvl( &$output, $depth, $args ) {
-	
+	function start_lvl( &$output, $depth = 0, $args = array() ) {
+
 		// if on top level
 		if( $depth === 0 ) {
 			//echo '<h3>New Top Level</h3>'."\n";
