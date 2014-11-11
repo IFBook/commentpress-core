@@ -14,11 +14,11 @@ NOTES
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 RESET & BASICS
 --------------------------------------------------------------------------------
-Based on Yahoo! User Interface Library: 
+Based on Yahoo! User Interface Library:
 http://yuilibrary.com/yui/docs/cssreset/
 http://yuilibrary.com/yui/docs/cssbase/
 --------------------------------------------------------------------------------
@@ -28,10 +28,10 @@ html
 {
 	color: #000;
 	background-color: #fff;
-	font-size: 100%; 
-	overflow-y: scroll; 
-	-webkit-text-size-adjust: 100%; 
-	-moz-text-size-adjust: 100%; 
+	font-size: 100%;
+	overflow-y: scroll;
+	-webkit-text-size-adjust: 100%;
+	-moz-text-size-adjust: 100%;
 	-ms-text-size-adjust: 100%;
 }
 
@@ -66,7 +66,7 @@ h1, h2, h3, h4, h5, h6 { font-size: 100%; font-weight: normal; }
 q:before, q:after { content: ''; }
 abbr, acronym { border: 0; font-variant: normal; }
 /* "sub, sup" from https://gist.github.com/unruthless/413930 */
-sub, sup 
+sub, sup
 {
 	font-size: 75%;
 	line-height: 0;
@@ -95,7 +95,7 @@ h1 {
 }
 h2 {
 	/*16px via YUI Fonts CSS foundation*/
-	font-size: 123.1%; 
+	font-size: 123.1%;
 }
 h3 {
 	/*14px via YUI Fonts CSS foundation*/
@@ -107,13 +107,13 @@ h1, h2, h3 {
 }
 h1, h2, h3, h4, h5, h6, strong {
 	/*bringing boldness back to headers and the strong element*/
-	font-weight: bold; 
+	font-weight: bold;
 }
 abbr, acronym {
 	/*indicating to users that more info is available */
 	border-bottom: 1px dotted #000;
 	cursor: help;
-} 
+}
 em {
 	/*bringing italics back to the em element*/
 	font-style: italic;
@@ -128,7 +128,7 @@ ol, ul, dl {
 }
 ol {
 	/*giving OL's LIs generated numbers*/
-	list-style: decimal outside;	
+	list-style: decimal outside;
 }
 ul {
 	/*giving UL's LIs generated disc markers*/
@@ -136,7 +136,7 @@ ul {
 }
 dt {
 	/*bringing boldness back to definition titles*/
-	font-weight: bold; 
+	font-weight: bold;
 }
 dl dd {
 	/*providing spacing for definition terms*/
@@ -184,14 +184,14 @@ tt, code, kbd, samp
 	/*let's not confound people's expectations*/
 	font-family: monospace;
 }
-/* setting a consistent width, 160px; 
+/* setting a consistent width, 160px;
    control of type=file still not possible */
 input[type=text], input[type=password], textarea { width: 12.25em; *width: 11.9em; }
 
 /* prevents outlines - we set them explicitly for elements that require them */
 a:focus { outline: 0; }
 
-blockquote 
+blockquote
 {
 	margin-left: 0;
 	margin-right: 0;
@@ -267,7 +267,7 @@ pre
 }
 
 /* Tables */
-table 
+table
 {
 	border: 0;
 	border-collapse: collapse;
@@ -276,13 +276,13 @@ table
 	width: 100%;
 }
 
-table td 
+table td
 {
 	border: 0;
 	border-top: 1px solid #e6e6e6;
 }
 
-table th 
+table th
 {
 	border: 0;
 	border-top: 1px solid #e6e6e6;
@@ -294,16 +294,16 @@ table th
 h1, h2, h3, h4, h5, h6
 {
 	font-family: sans-serif;
-	text-transform: uppercase; 
+	text-transform: uppercase;
 }
 
-img 
+img
 {
 	max-width: 100%;
 	height: auto;
 }
 
-img.alignleft 
+img.alignleft
 {
 	margin: 0 0.5em 0.5em 0;
 }
@@ -315,7 +315,7 @@ img.alignright
 
 
 
-/* 
+/*
 --------------------------------------------------------------------------------
 Captioned Images
 --------------------------------------------------------------------------------
@@ -324,9 +324,9 @@ Captioned Images
 span.captioned_image
 {
 	display: block;
-	background: #eee; 
-	margin: 7px 0; 
-	border: 1px solid #B5BFB2; 
+	background: #eee;
+	margin: 7px 0;
+	border: 1px solid #B5BFB2;
 	max-width: 99%;
 	height: auto;
 }
@@ -334,29 +334,29 @@ span.captioned_image
 	span.captioned_image.aligncenter
 	{
 		margin: 0 auto;
-		margin-top: 0.5em; 
-	}
-	
-	span.captioned_image.alignleft
-	{ 
-		margin-right: 0.5em; 
-	}
-	
-	span.captioned_image.alignright
-	{ 
-		margin-left: 0.5em; 
+		margin-top: 0.5em;
 	}
 
-span.wp-caption 
-{ 
+	span.captioned_image.alignleft
+	{
+		margin-right: 0.5em;
+	}
+
+	span.captioned_image.alignright
+	{
+		margin-left: 0.5em;
+	}
+
+span.wp-caption
+{
 	display: block;
-	text-align: center; 
+	text-align: center;
 	padding: 0;
 	margin: 10px;
 }
 
 small.wp-caption-text
-{ 
+{
 	display: block;
 	text-align: center;
 	padding: 0;
@@ -367,7 +367,7 @@ small.wp-caption-text
 
 /* support unfiltered captions */
 dd.wp-caption-dd
-{ 
+{
 	text-align: center;
 	padding: 0;
 	margin-top: 0.2em;
