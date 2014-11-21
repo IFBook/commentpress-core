@@ -204,7 +204,7 @@ echo commentpress_multipager();
 
 
 
-<?php the_tags( '<p class="postmetadata">' . __( 'Tags: ', 'commentpress-core' ), ', ', '</p>'); ?>
+<?php the_tags( '<div class="entry-meta"><p class="postmetadata">' . __( 'Tags: ', 'commentpress-core' ), '<span class="tag-divider">,</span> ', '</p></div>'); ?>
 
 
 
