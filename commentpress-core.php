@@ -25,16 +25,16 @@ Mark James for the icons: http://www.famfamfam.com/lab/icons/silk/
 define( 'COMMENTPRESS_VERSION', '3.6.3' );
 
 // store reference to this file
-if ( !defined( 'COMMENTPRESS_PLUGIN_FILE' ) ) {
+if ( ! defined( 'COMMENTPRESS_PLUGIN_FILE' ) ) {
 	define( 'COMMENTPRESS_PLUGIN_FILE', __FILE__ );
 }
 
 // store URL to this plugin's directory
-if ( !defined( 'COMMENTPRESS_PLUGIN_URL' ) ) {
+if ( ! defined( 'COMMENTPRESS_PLUGIN_URL' ) ) {
 	define( 'COMMENTPRESS_PLUGIN_URL', plugin_dir_url( COMMENTPRESS_PLUGIN_FILE ) );
 }
 // store PATH to this plugin's directory
-if ( !defined( 'COMMENTPRESS_PLUGIN_PATH' ) ) {
+if ( ! defined( 'COMMENTPRESS_PLUGIN_PATH' ) ) {
 	define( 'COMMENTPRESS_PLUGIN_PATH', plugin_dir_path( COMMENTPRESS_PLUGIN_FILE ) );
 }
 
@@ -52,7 +52,7 @@ NOTE: force-activated context is now deprecated
 if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
 
 	// directory-based forced activation
-	if ( !defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
+	if ( ! defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
 		define( 'COMMENTPRESS_PLUGIN_CONTEXT', 'mu_forced' );
 	}
 
@@ -76,14 +76,14 @@ if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
 	if ( isset( $active_plugins[ $this_plugin ] ) ) {
 
 		// yes, network activated
-		if ( !defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
+		if ( ! defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
 			define( 'COMMENTPRESS_PLUGIN_CONTEXT', 'mu_sitewide' );
 		}
 
 	} else {
 
 		// optional activation per blog in multisite
-		if ( !defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
+		if ( ! defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
 			define( 'COMMENTPRESS_PLUGIN_CONTEXT', 'mu_optional' );
 		}
 
@@ -92,7 +92,7 @@ if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
 } else {
 
 	// single user install
-	if ( !defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
+	if ( ! defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
 		define( 'COMMENTPRESS_PLUGIN_CONTEXT', 'standard' );
 	}
 
@@ -120,10 +120,10 @@ function commentpress_file_is_present( $filename ) {
 	$filepath = COMMENTPRESS_PLUGIN_PATH . $filename;
 
 	// is our class definition present?
-	if ( !is_file( $filepath ) ) {
+	if ( ! is_file( $filepath ) ) {
 
 		// oh no!
-		die( 'CommentPress Core Error: file "'.$filepath.'" is missing from the plugin directory.' );
+		die( 'CommentPress Core Error: file "' . $filepath . '" is missing from the plugin directory.' );
 
 	}
 
@@ -144,7 +144,7 @@ function commentpress_file_is_present( $filename ) {
 function commentpress_include_core() {
 
 	// do we have our class?
-	if ( !class_exists( 'CommentpressCore' ) ) {
+	if ( ! class_exists( 'CommentpressCore' ) ) {
 
 		// define filename
 		$_file = 'commentpress-core/class_commentpress.php';
@@ -229,8 +229,8 @@ function _cpdie( $var ) {
 function commentpress_plugin_action_links( $links, $file ) {
 
 	// add settings link
-	if ( $file == plugin_basename( dirname( __FILE__ ).'/commentpress-core.php' ) ) {
-		$links[] = '<a href="options-general.php?page=commentpress_admin">'.__( 'Settings', 'commentpress-core' ).'</a>';
+	if ( $file == plugin_basename( dirname( __FILE__ ) . '/commentpress-core.php' ) ) {
+		$links[] = '<a href="options-general.php?page=commentpress_admin">' . __( 'Settings', 'commentpress-core' ) . '</a>';
 	}
 
 	// --<
@@ -372,7 +372,7 @@ Init Standalone
 if (
 
 	COMMENTPRESS_PLUGIN_CONTEXT == 'standard' OR
-	( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_optional' AND !is_network_admin() )
+	( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_optional' AND ! is_network_admin() )
 
 ) {
 
