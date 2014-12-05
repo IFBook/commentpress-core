@@ -230,7 +230,21 @@ function commentpress_plugin_action_links( $links, $file ) {
 
 	// add settings link
 	if ( $file == plugin_basename( dirname( __FILE__ ) . '/commentpress-core.php' ) ) {
-		$links[] = '<a href="options-general.php?page=commentpress_admin">' . __( 'Settings', 'commentpress-core' ) . '</a>';
+
+		// is this Network Admin?
+		if ( is_network_admin() ) {
+			$link = add_query_arg( array( 'page' => 'cpmu_admin_page' ), network_admin_url( 'settings.php' ) );
+		} else {
+			$link = add_query_arg( array( 'page' => 'commentpress_admin' ), admin_url( 'options-general.php' ) );
+		}
+
+		// add settings link
+		$links[] = '<a href="' . $link . '">' . esc_html__( 'Settings', 'commentpress-core' ) . '</a>';
+
+		// add Paypal link
+		$paypal = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=PZSKM8T5ZP3SC';
+		$links[] = '<a href="' . $paypal . '" target="_blank">Donate!</a>';
+
 	}
 
 	// --<
@@ -238,7 +252,8 @@ function commentpress_plugin_action_links( $links, $file ) {
 
 }
 
-// add filter for the above
+// add filters for the above
+add_filter( 'network_admin_plugin_action_links', 'commentpress_plugin_action_links', 10, 2 );
 add_filter( 'plugin_action_links', 'commentpress_plugin_action_links', 10, 2 );
 
 
