@@ -186,7 +186,7 @@ class CommentpressMultisiteRevisions {
 
 
 	/**
-	 * Register Wordpress hooks
+	 * Register WordPress hooks
 	 *
 	 * @return void
 	 */

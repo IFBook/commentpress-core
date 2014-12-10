@@ -476,7 +476,7 @@ class CommentpressCoreWorkflow {
 
 
 	/**
-	 * Register Wordpress hooks
+	 * Register WordPress hooks
 	 *
 	 * @return void
 	 */

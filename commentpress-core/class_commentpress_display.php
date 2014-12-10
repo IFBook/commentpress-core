@@ -397,7 +397,7 @@ class CommentpressCoreDisplay {
 
 
 	/**
-	 * Get built-in TinyMCE scripts from Wordpress Includes directory
+	 * Get built-in TinyMCE scripts from WordPress Includes directory
 	 *
 	 * @return void
 	 */
@@ -793,7 +793,7 @@ HELPTEXT;
 
 		);
 
-		// use Wordpress function to echo
+		// use WordPress function to echo
 		wp_list_pages( $defaults );
 
 	}
@@ -1324,7 +1324,7 @@ HELPTEXT;
 
 
 	/**
-	 * Got the Wordpress admin page
+	 * Got the WordPress admin page
 	 *
 	 * @return str $admin_page The HTML for the admin page
 	 */

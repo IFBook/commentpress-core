@@ -465,7 +465,7 @@ class CommentpressCoreDatabase {
 
 
 	/**
-	 * Reset Wordpress to prior state, but retain options
+	 * Reset WordPress to prior state, but retain options
 	 *
 	 * @return void
 	 */
@@ -497,7 +497,7 @@ class CommentpressCoreDatabase {
 
 
 	/**
-	 * Update Wordpress database schema
+	 * Update WordPress database schema
 	 *
 	 * @return bool $result True if successful, false otherwise
 	 */
@@ -506,7 +506,7 @@ class CommentpressCoreDatabase {
 		// database object
 		global $wpdb;
 
-		// include Wordpress upgrade script
+		// include WordPress upgrade script
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
 		// add the column, if not already there
@@ -525,7 +525,7 @@ class CommentpressCoreDatabase {
 
 
 	/**
-	 * Upgrade Wordpress database schema
+	 * Upgrade WordPress database schema
 	 *
 	 * @return bool $result True if successful, false otherwise
 	 */
@@ -2134,7 +2134,7 @@ class CommentpressCoreDatabase {
 			// save changes
 			$this->options_save();
 
-			// reset Wordpress internal page references
+			// reset WordPress internal page references
 			$this->_reset_wordpress_option( 'show_on_front' );
 			$this->_reset_wordpress_option( 'page_on_front' );
 			$this->_reset_wordpress_option( 'page_for_posts' );
@@ -2173,7 +2173,7 @@ class CommentpressCoreDatabase {
 				// set flag
 				$flag = 'cp_welcome_page';
 
-				// reset Wordpress internal page references
+				// reset WordPress internal page references
 				$this->_reset_wordpress_option( 'show_on_front' );
 				$this->_reset_wordpress_option( 'page_on_front' );
 
@@ -2202,7 +2202,7 @@ class CommentpressCoreDatabase {
 				// set flag
 				$flag = 'cp_blog_page';
 
-				// reset Wordpress internal page reference
+				// reset WordPress internal page reference
 				$this->_reset_wordpress_option( 'page_for_posts' );
 
 				break;
@@ -2345,14 +2345,14 @@ class CommentpressCoreDatabase {
 
 
 	/**
-	 * Get Wordpress approved comments
+	 * Get WordPress approved comments
 	 *
 	 * @param int $post_id The numeric ID of the post
 	 * @return array $comments The array of comment data
 	 */
 	public function get_approved_comments( $post_ID ) {
 
-		// for Wordpress, we use the API
+		// for WordPress, we use the API
 		$comments = get_approved_comments( $post_ID );
 
 		// --<
@@ -2363,7 +2363,7 @@ class CommentpressCoreDatabase {
 
 
 	/**
-	 * Get all Wordpress comments for a post, unless paged
+	 * Get all WordPress comments for a post, unless paged
 	 *
 	 * @param int $post_ID The numeric ID of the post
 	 * @return array $comments The array of comment data
@@ -2383,7 +2383,7 @@ class CommentpressCoreDatabase {
 
 		}
 
-		// for Wordpress, we use the API
+		// for WordPress, we use the API
 		$comments = get_comments( 'post_id='.$post_ID.'&order=ASC'.$pings );
 
 		// --<
@@ -3107,7 +3107,7 @@ class CommentpressCoreDatabase {
 
 				// got it...
 
-				// we still ought to set Wordpress internal page references
+				// we still ought to set WordPress internal page references
 				$this->_store_wordpress_option( 'show_on_front', 'page' );
 				$this->_store_wordpress_option( 'page_on_front', $page_exists );
 
@@ -3149,9 +3149,9 @@ class CommentpressCoreDatabase {
 
 		'Welcome to your new CommentPress site, which allows your readers to comment paragraph-by-paragraph or line-by-line in the margins of a text. Annotate, gloss, workshop, debate: with CommentPress you can do all of these things on a finer-grained level, turning a document into a conversation.
 
-This is your title page. Edit it to suit your needs. It has been automatically set as your homepage but if you want another page as your homepage, set it in <em>Wordpress</em> &#8594; <em>Settings</em> &#8594; <em>Reading</em>.
+This is your title page. Edit it to suit your needs. It has been automatically set as your homepage but if you want another page as your homepage, set it in <em>WordPress</em> &#8594; <em>Settings</em> &#8594; <em>Reading</em>.
 
-You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings</em> &#8594; <em>CommentPress</em> to make the site work the way you want it to. Use the Theme Customizer to change the way your site looks in <em>Wordpress</em> &#8594; <em>Appearance</em> &#8594; <em>Customize</em>. For help with structuring, formatting and reading text in CommentPress, please refer to the <a href="http://www.futureofthebook.org/commentpress/">CommentPress website</a>.', 'commentpress-core'
+You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings</em> &#8594; <em>CommentPress</em> to make the site work the way you want it to. Use the Theme Customizer to change the way your site looks in <em>WordPress</em> &#8594; <em>Appearance</em> &#8594; <em>Customize</em>. For help with structuring, formatting and reading text in CommentPress, please refer to the <a href="http://www.futureofthebook.org/commentpress/">CommentPress website</a>.', 'commentpress-core'
 
 		);
 
@@ -3170,7 +3170,7 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 		// store the option
 		$this->option_set( 'cp_welcome_page', $title_id );
 
-		// set Wordpress internal page references
+		// set WordPress internal page references
 		$this->_store_wordpress_option( 'show_on_front', 'page' );
 		$this->_store_wordpress_option( 'page_on_front', $title_id );
 
@@ -3378,7 +3378,7 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 		// store the option
 		$this->option_set( 'cp_blog_page', $blog_id );
 
-		// set Wordpress internal page reference
+		// set WordPress internal page reference
 		$this->_store_wordpress_option( 'page_for_posts', $blog_id );
 
 		// --<
@@ -3550,7 +3550,7 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Store Wordpress option
+	 * Store WordPress option
 	 *
 	 * @param str $name The name of the option
 	 * @param mixed $value The value of the option
@@ -3561,7 +3561,7 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 		// set backup option
 		add_option( 'commentpress_'.$name, $this->option_wp_get( $name ) );
 
-		// set the Wordpress option
+		// set the WordPress option
 		$this->option_wp_set( $name, $value );
 
 	}
@@ -3569,14 +3569,14 @@ You can also set a number of options in <em>Wordpress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Reset Wordpress option
+	 * Reset WordPress option
 	 *
 	 * @param str $name The name of the option
 	 * @return void
 	 */
 	function _reset_wordpress_option( $name ) {
 
-		// set the Wordpress option
+		// set the WordPress option
 		$this->option_wp_set( $name, $this->option_wp_get( 'cp_'.$name ) );
 
 		// remove backup option

@@ -1062,7 +1062,7 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 	// declare access to globals
 	global $commentpress_core, $cp_comment_output;
 
-	// enable Wordpress API on comment
+	// enable WordPress API on comment
 	//$GLOBALS['comment'] = $comment;
 
 	// construct link
@@ -1489,7 +1489,7 @@ if ( ! function_exists( 'commentpress_get_comment_activity_item' ) ):
  */
 function commentpress_get_comment_activity_item( $comment ) {
 
-	// enable Wordpress API on comment
+	// enable WordPress API on comment
 	$GLOBALS['comment'] = $comment;
 
 	// declare access to globals
@@ -2309,7 +2309,7 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 	//print_r( $comment );
 	//print_r( $args );
 
-	// enable Wordpress API on comment
+	// enable WordPress API on comment
 	$GLOBALS['comment'] = $comment;
 
 
@@ -2539,7 +2539,7 @@ function commentpress_excerpt_length() {
 	if ( !is_object( $commentpress_core ) ) {
 
 		// --<
-		return 55; // Wordpress default
+		return 55; // WordPress default
 
 	}
 

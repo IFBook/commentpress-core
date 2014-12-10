@@ -462,7 +462,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Register Wordpress hooks
+	 * Register WordPress hooks
 	 *
 	 * @return void
 	 */

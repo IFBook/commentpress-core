@@ -1008,7 +1008,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Get the Wordpress admin page
+	 * Get the WordPress admin page
 	 *
 	 * @return string $admin_page The HTML for the admin page
 	 */
