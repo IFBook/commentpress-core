@@ -268,6 +268,11 @@ function commentpress_find_plugin_by_name( $plugin_name = '' ) {
 	// init path
 	$path_to_plugin = false;
 
+	// ensure function is available
+	if ( ! function_exists( 'get_plugins' ) ) {
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+	}
+
 	// get plugins
 	$plugins = get_plugins();
 
