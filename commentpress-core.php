@@ -70,10 +70,9 @@ if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
 
 	// get sitewide plugins
 	$active_plugins = (array) get_site_option( 'active_sitewide_plugins' );
-	//print_r( ( is_network_admin() ? 'yes' : 'no' ) ); die();
 
 	// is the plugin network activated?
-	if ( isset( $active_plugins[ $this_plugin ] ) ) {
+	if ( isset( $active_plugins[$this_plugin] ) ) {
 
 		// yes, network activated
 		if ( ! defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
@@ -97,8 +96,6 @@ if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
 	}
 
 }
-
-//print_r( COMMENTPRESS_PLUGIN_CONTEXT ); die();
 
 
 
@@ -126,8 +123,6 @@ function commentpress_file_is_present( $filename ) {
 		die( 'CommentPress Core Error: file "' . $filepath . '" is missing from the plugin directory.' );
 
 	}
-
-
 
 	// --<
 	return $filepath;
@@ -268,16 +263,13 @@ add_filter( 'plugin_action_links', 'commentpress_plugin_action_links', 10, 2 );
 function commentpress_find_plugin_by_name( $plugin_name = '' ) {
 
 	// kick out if no param supplied
-	if ( $plugin_name == '' ) { return false; }
-
-
+	if ( $plugin_name == '' ) return false;
 
 	// init path
 	$path_to_plugin = false;
 
 	// get plugins
 	$plugins = get_plugins();
-	//print_r( $plugins ); die();
 
 	// because the key is the path to the plugin file, we have to find the
 	// key by iterating over the values (which are arrays) to find the
@@ -322,7 +314,7 @@ function commentpress_is_legacy_plugin_active() {
 
 		// if we have "special pages", then the plugin must be active on this blog
 		// NB: do we need to check is_plugin_active() as well (or instead)?
-		if ( isset( $old[ 'cp_special_pages' ] ) ) {
+		if ( isset( $old['cp_special_pages'] ) ) {
 
 			// set flag
 			$active = true;
@@ -396,7 +388,6 @@ if (
 
 	// access global
 	global $commentpress_core;
-	//print_r( $commentpress_core ); die();
 
 	// activation
 	register_activation_hook( COMMENTPRESS_PLUGIN_FILE, array( $commentpress_core, 'activate' ) );
