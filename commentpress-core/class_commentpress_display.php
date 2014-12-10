@@ -359,6 +359,9 @@ class CommentpressCoreDisplay {
 	 */
 	public function is_tinymce_allowed() {
 
+		// default to allowed
+		$allowed = true;
+
 		// check option
 		if (
 
@@ -367,25 +370,27 @@ class CommentpressCoreDisplay {
 
 		) {
 
-			// --<
-			return false;
+			// disallow
+			$allowed = false;
 
-		}
+		} else {
 
-		// don't return TinyMCE for touchscreens, mobile phones or tablets
-		if (
-			( isset( $this->db->is_mobile_touch ) AND $this->db->is_mobile_touch ) OR
-			( isset( $this->db->is_mobile ) AND $this->db->is_mobile ) OR
-			( isset( $this->db->is_tablet ) AND $this->db->is_tablet )
-		) {
+			// don't return TinyMCE for touchscreens, mobile phones or tablets
+			if (
+				( isset( $this->db->is_mobile_touch ) AND $this->db->is_mobile_touch ) OR
+				( isset( $this->db->is_mobile ) AND $this->db->is_mobile ) OR
+				( isset( $this->db->is_tablet ) AND $this->db->is_tablet )
+			) {
 
-			// --<
-			return false;
+				// disallow
+				$allowed = false;
+
+			}
 
 		}
 
 		// --<
-		return true;
+		return apply_filters( 'commentpress_is_tinymce_allowed', $allowed );
 
 	}
 
