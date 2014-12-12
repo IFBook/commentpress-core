@@ -2874,7 +2874,7 @@ class CommentpressCoreDatabase {
 		}
 
 		// --<
-		return $vars;
+		return apply_filters( 'commentpress_get_javascript_vars', $vars );
 
 	}
 
