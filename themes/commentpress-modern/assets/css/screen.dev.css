@@ -3134,11 +3134,13 @@ body.fee .cp_feature_image .fee-thumbnail.fee-empty + .cp_featured_title .cp_fea
 }
 
 .fee-url ins,
+body.fee.fee-on .fee-title,
 body.fee.fee-on .fee-content-body
 {
 	background-color: #f4f4f4;
 }
 
+body.fee.fee-on .fee-title.mce-edit-focus,
 body.fee.fee-on .fee-content-body.mce-edit-focus
 {
 	background-color: transparent;
