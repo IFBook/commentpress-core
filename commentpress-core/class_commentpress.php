@@ -46,6 +46,9 @@ class CommentpressCore {
 	// workflow object
 	public $workflow;
 
+	// front-end editor object
+	public $editor;
+
 	// options page
 	public $options_page;
 
@@ -653,8 +656,16 @@ class CommentpressCore {
 
 		}
 
+		// init allowed
+		$allowed = false;
+
 		// only parse posts or pages...
 		if( ( is_single() OR is_page() OR is_attachment() ) AND !$this->db->is_special_page() ) {
+			$allowed = true;
+		}
+
+		// if allowed, parse
+		if ( apply_filters( 'commentpress_force_the_content', $allowed ) ) {
 
 			// delegate to parser
 			$content = $this->parser->the_content( $content );
@@ -2197,6 +2208,30 @@ class CommentpressCore {
 
 		// init workflow object
 		$this->workflow = new CommentpressCoreWorkflow( $this );
+
+		// ---------------------------------------------------------------------
+		// Front-end Editor Object
+		// ---------------------------------------------------------------------
+
+		// define filename
+		$class_file = 'commentpress-core/class_commentpress_editor.php';
+
+		// get path
+		$class_file_path = commentpress_file_is_present( $class_file );
+
+		// allow plugins to override this and supply their own
+		$class_file_path = apply_filters(
+
+			'cp_class_commentpress_editor',
+			$class_file_path
+
+		);
+
+		// we're fine, include class definition
+		require_once( $class_file_path );
+
+		// init workflow object
+		$this->editor = new CommentpressCoreEditor( $this );
 
 		// ---------------------------------------------------------------------
 		// Finally, register hooks

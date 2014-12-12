@@ -643,7 +643,7 @@ cpajax_post_title = document.title;
 			addComment.disableForm();
 
 			// add new comments to the end
-			$('#sidebar .comments_container').replaceWith( comments );
+			$('#comments_sidebar .comments_container').replaceWith( comments );
 
 			// re-enable the comment form
 			addComment.enableForm();

@@ -20,7 +20,7 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 		cp_promote_reading, cp_is_mobile, cp_is_touch, cp_is_tablet, cp_cookie_path,
 		cp_multipage_page, cp_template_dir, cp_plugin_dir, cp_toc_chapter_is_page, cp_show_subpages,
 		cp_default_sidebar, cp_is_signup_page, cp_scroll_speed, cp_min_page_width,
-		cp_textblock_meta;
+		cp_textblock_meta, cp_ajax_url, cp_spinner_url, cp_post_id;
 
 	// set our vars
 	cp_wp_adminbar = CommentpressSettings.cp_wp_adminbar;
@@ -46,6 +46,16 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 	cp_scroll_speed = CommentpressSettings.cp_js_scroll_speed;
 	cp_min_page_width = CommentpressSettings.cp_min_page_width;
 	cp_textblock_meta = CommentpressSettings.cp_textblock_meta;
+
+	// AJAX additions
+	if ( 'undefined' !== typeof CommentpressSettings.cp_ajax_url ) {
+		cp_ajax_url = CommentpressSettings.cp_ajax_url;
+		cp_spinner_url = CommentpressSettings.cp_spinner_url;
+		cp_post_id = CommentpressSettings.cp_post_id;
+		cp_post_id = CommentpressSettings.cp_post_id;
+		cp_post_multipage = CommentpressSettings.cp_post_multipage;
+		cp_post_page = CommentpressSettings.cp_post_page;
+	}
 
 }
 
@@ -1347,11 +1357,14 @@ function cp_scroll_to_anchor_on_load() {
 		anchor_id = url.split('#')[1];
 		//console.log( 'anchor_id: ' + anchor_id );
 
+		// bail if it's WP FEE's custom anchor
+		if ( anchor_id == 'edit=true' ) { return; }
+
 		// locate in DOM
 		anchor = jQuery( '#' + anchor_id );
 
 		// did we get one?
-		if ( anchor ) {
+		if ( anchor.length ) {
 
 			// add class
 			//anchor.addClass( 'selected_para' );
@@ -1453,11 +1466,6 @@ function cp_do_comment_icon_action( text_sig, mode ) {
 
 
 
-	// show comments sidebar
-	cp_activate_sidebar( 'comments' );
-
-
-
 	// define vars
 	var para_wrapper, comment_list, respond, top_level, opening, visible,
 		textblock, post_id, para_id, para_num;
@@ -1467,6 +1475,11 @@ function cp_do_comment_icon_action( text_sig, mode ) {
 	// get para wrapper
 	para_wrapper = jQuery('#para_heading-' + text_sig).next('div.paragraph_wrapper');
 
+	// bail if we don't have the target element
+	if ( para_wrapper.length == 0 ) {
+		return;
+	}
+
 	// get comment list
 	comment_list = jQuery( '#para_wrapper-' + text_sig + ' .commentlist' );
 
@@ -1475,6 +1488,11 @@ function cp_do_comment_icon_action( text_sig, mode ) {
 
 	// is it a direct child of para wrapper?
 	top_level = addComment.getLevel();
+
+
+
+	// show comments sidebar
+	cp_activate_sidebar( 'comments' );
 
 
 
@@ -2178,6 +2196,48 @@ function cp_activate_sidebar( sidebar ) {
 
 
 
+/**
+ * @description: reset all actions
+ *
+ */
+function commentpress_reset_actions() {
+
+	// set up comment headers
+	commentpress_setup_comment_headers();
+
+	// set up comment headers
+	//commentpress_setup_comment_headers();
+
+	// enable animations on clicking comment permalinks
+	commentpress_enable_comment_permalink_clicks();
+
+	// set up comment icons (these used to be paragraph permalinks - now 'add comment')
+	commentpress_setup_para_permalink_icons();
+
+	// set up clicks in the page content:
+	// title
+	// paragraph content
+	// paragraph icons (newly assigned as paragraph permalinks - also 'read comments')
+	commentpress_setup_page_click_actions();
+
+	// set up user-defined links to paragraphs
+	commentpress_setup_para_links();
+
+	// set up activity links
+	cp_enable_context_clicks();
+
+	// set up activity headers
+	commentpress_setup_context_headers();
+
+	// set up footnote plugin compatibility
+	commentpress_setup_footnotes_compatibility();
+
+}
+
+
+
+
+
 // add js class so we can do some contextual styling
 jQuery('html').addClass('js');
 
@@ -2276,35 +2336,9 @@ jQuery(document).ready( function($) {
 
 	setSidebarHeight();
 
-	// set up comment headers
-	commentpress_setup_comment_headers();
+	// reset everything
+	commentpress_reset_actions();
 
-	// set up comment headers
-	commentpress_setup_comment_headers();
-
-	// enable animations on clicking comment permalinks
-	commentpress_enable_comment_permalink_clicks();
-
-	// set up comment icons (these used to be paragraph permalinks - now 'add comment')
-	commentpress_setup_para_permalink_icons();
-
-	// set up clicks in the page content:
-	// title
-	// paragraph content
-	// paragraph icons (newly assigned as paragraph permalinks - also 'read comments')
-	commentpress_setup_page_click_actions();
-
-	// set up user-defined links to paragraphs
-	commentpress_setup_para_links();
-
-	// set up activity links
-	cp_enable_context_clicks();
-
-	// set up activity headers
-	commentpress_setup_context_headers();
-
-	// set up footnote plugin compatibility
-	commentpress_setup_footnotes_compatibility();
 
 
 
@@ -2693,6 +2727,123 @@ jQuery(document).ready( function($) {
 
 		// --<
 		return false;
+
+	});
+
+
+
+
+
+	// put some vars into global scope
+	var cp_comment_form;
+
+	// disable the comment form
+	addComment.disableForm();
+
+	// save comment form
+	cp_comment_form = $('#respond_wrapper').clone();
+
+	/**
+	 * Hook into WordPress Front-end Editor after save
+	 *
+	 */
+	$( document ).on( 'fee-after-save', function( event ) {
+
+	});
+
+	/**
+	 * Hook into WordPress Front-end Editor activation
+	 *
+	 */
+	$( document ).on( 'fee-on', function( event ) {
+
+		//alert( 'fee-on' );
+
+		// hide comments
+		$( '#comments_sidebar .comments_container' ).fadeOut();
+
+	});
+
+	/**
+	 * Hook into WordPress Front-end Editor deactivation
+	 *
+	 */
+	$( document ).on( 'fee-off', function( event ) {
+
+		//alert( 'fee-off' );
+
+		/*
+		// we can use this to log ajax errors from jQuery.post()
+		$(document).ajaxError( function( e, xhr, settings, exception ) {
+			console.log( 'error in: ' + settings.url + ' \n'+'error:\n' + xhr.responseText );
+		});
+		*/
+
+		// use post method
+		$.post(
+
+			// set URL
+			cp_ajax_url,
+
+			// add data
+			{
+
+				// set WordPress method to call
+				action: 'cp_get_comments_container',
+
+				// send post data
+				post_id: cp_post_id,
+				post_multipage: cp_post_multipage,
+				post_page: cp_post_page,
+
+			},
+
+			// callback
+			function( data, textStatus ) {
+
+				var comments;
+
+				console.log( textStatus );
+				console.log( data );
+
+				// if success
+				if ( textStatus == 'success' ) {
+
+					// find comments
+					comments = $( '.comments_container', $(data.comments) );
+
+					// get a copy of the comment form for this post
+					post_comment_form = cp_comment_form.clone();
+
+					// add it to the comments
+					comments.append( post_comment_form );
+
+					// disable the comment form
+					addComment.disableForm();
+
+					// replace comments
+					$( '#comments_sidebar .comments_container' ).replaceWith( comments );
+
+					// re-enable the comment form
+					addComment.enableForm();
+
+					// keep comments hidden
+					$( '#comments_sidebar .comments_container' ).hide();
+
+					// reset everything
+					commentpress_reset_actions();
+
+					// show comments
+					$( '#comments_sidebar .comments_container' ).fadeIn();
+
+				}
+
+			},
+
+			// expected format
+			'json'
+
+		);
 
 	});
 

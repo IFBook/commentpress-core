@@ -3087,6 +3087,70 @@ body.tinymce-4 #commentform #wp-comment-wrap textarea
 
 /*
 --------------------------------------------------------------------------------
+Compatibility with WordPress Front-end Editor
+--------------------------------------------------------------------------------
+*/
+
+body.fee #content
+{
+	padding-top: 3%;
+}
+
+body.fee .cp_feature_image
+{
+}
+
+body.fee-on .fee-thumbnail.fee-empty
+{
+	min-height: 0;
+}
+
+body.fee-on .fee-insert-thumbnail
+{
+	top: 40px;
+	left: 12%;
+}
+
+body.fee .cp_feature_image .fee-thumbnail.fee-empty + .cp_featured_title
+{
+	position: relative;
+	padding: 6% 0 0 0;
+}
+
+body.fee .cp_feature_image .fee-thumbnail.fee-empty + .cp_featured_title .cp_featured_title_inner
+{
+	padding: 0 12%;
+}
+
+body.fee .cp_feature_image .fee-thumbnail.fee-empty + .cp_featured_title .cp_featured_title_inner h2.post_title
+{
+	margin: 1em 0 0 0;
+}
+
+.fee-url
+{
+	font-size: 50%;
+	text-transform: lowercase;
+}
+
+.fee-url ins,
+body.fee.fee-on .fee-content-body
+{
+	background-color: #f4f4f4;
+}
+
+body.fee.fee-on .fee-content-body.mce-edit-focus
+{
+	background-color: transparent;
+}
+
+
+
+
+
+
+/*
+--------------------------------------------------------------------------------
 RESPONSIVENESS
 --------------------------------------------------------------------------------
 */

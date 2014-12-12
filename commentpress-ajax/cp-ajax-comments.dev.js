@@ -1220,6 +1220,29 @@ jQuery(document).ready(function($) {
 	});
 	 */
 
+
+
+	/**
+	 * Hook into WordPress Front-end Editor
+	 *
+	 */
+	$( document ).on( 'fee-after-save', function( event ) {
+
+		// re-enable clicks
+		commentpress_enable_comment_permalink_clicks();
+		commentpress_setup_comment_headers();
+		cpajax_reassign_comments();
+
+		// compatibility with Featured Comments
+		cpajax_reenable_featured_comments();
+
+		// compatibility with Comment Upvoter
+		cpajax_reenable_comment_upvoter();
+
+	});
+
+
+
 }); // end document.ready()
 
 
