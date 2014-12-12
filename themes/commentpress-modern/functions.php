@@ -18,7 +18,7 @@ require_once( COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/includes/them
 
 /**
  * Set the content width based on the theme's design and stylesheet.
- * This seems to be a Wordpress requirement - though rather dumb in the
+ * This seems to be a WordPress requirement - though rather dumb in the
  * context of our theme, which has a percentage-based default width.
  * I have arbitrarily set it to the default content-width when viewing
  * on a 1280px-wide screen.

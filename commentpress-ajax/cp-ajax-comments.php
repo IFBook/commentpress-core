@@ -298,7 +298,7 @@ function cpajax_get_new_comments() {
 	// make it an integer, just to be sure
 	$post_id = (int) $post_id;
 
-	// enable Wordpress API on post
+	// enable WordPress API on post
 	$GLOBALS['post'] = get_post( $post_id );
 
 	// get any comments posted since last update time

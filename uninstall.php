@@ -21,7 +21,7 @@ if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) { exit(); }
 
 
 /**
- * @description: restore Wordpress database schema
+ * @description: restore WordPress database schema
  * @return boolean $result
  * @todo:
  *
@@ -31,7 +31,7 @@ function commentpress_schema_restore() {
 	// database object
 	global $wpdb;
 
-	// include Wordpress install helper script
+	// include WordPress install helper script
 	require_once( ABSPATH . 'wp-admin/install-helper.php' );
 
 	// drop the column, if already there
