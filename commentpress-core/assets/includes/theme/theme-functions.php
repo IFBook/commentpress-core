@@ -13,9 +13,9 @@ NOTES
 
 if ( ! function_exists( 'commentpress_admin_header' ) ):
 /**
- * @description: custom admin header
- * @todo:
+ * Custom admin header
  *
+ * @return void
  */
 function commentpress_admin_header() {
 
@@ -143,9 +143,9 @@ add_action( 'customize_register', 'commentpress_customize_register' );
 
 if ( ! function_exists( 'commentpress_admin_menu' ) ) :
 /**
- * @description: adds more prominent menu item
- * @todo:
+ * Adds more prominent menu item
  *
+ * @return void
  */
 function commentpress_admin_menu() {
 
@@ -166,9 +166,10 @@ add_action( 'admin_menu', 'commentpress_admin_menu' );
 
 if ( ! function_exists( 'commentpress_fix_bp_core_avatar_url' ) ):
 /**
- * @description: filter to fix broken group avatar images in BP 1.7
- * @todo:
+ * Filter to fix broken group avatar images in BP 1.7
  *
+ * @param string $url The existing URL of the avatar
+ * @return string $url The modified URL of the avatar
  */
 function commentpress_fix_bp_core_avatar_url( $url ) {
 
@@ -199,9 +200,11 @@ endif; // commentpress_fix_bp_core_avatar_url
 
 if ( ! function_exists( 'commentpress_get_header_image' ) ):
 /**
- * @description: function that sets a header foreground image (a logo, for example)
- * @todo: inform users that header images are using a different method
+ * Function that sets a header foreground image (a logo, for example)
  *
+ * @todo Inform users that header images are using a different method
+ *
+ * @return void
  */
 function commentpress_get_header_image() {
 
@@ -360,14 +363,14 @@ endif; // commentpress_get_header_image
 
 if ( ! function_exists( 'commentpress_get_body_id' ) ):
 /**
- * @description: get an ID for the body tag
- * @todo:
+ * Get an ID for the body tag
  *
+ * @return string $body_id The ID attribute for the body tag
  */
 function commentpress_get_body_id() {
 
 	// init
-	$_body_id = '';
+	$body_id = '';
 
 	// is this multisite?
 	if ( is_multisite() ) {
@@ -376,14 +379,14 @@ function commentpress_get_body_id() {
 		if ( is_main_site() ) {
 
 			// set main blog id
-			$_body_id = ' id="main_blog"';
+			$body_id = ' id="main_blog"';
 
 		}
 
 	}
 
 	// --<
-	return $_body_id;
+	return $body_id;
 
 }
 endif; // commentpress_get_body_id
@@ -392,9 +395,10 @@ endif; // commentpress_get_body_id
 
 if ( ! function_exists( 'commentpress_get_body_classes' ) ):
 /**
- * @description: get classes for the body tag
- * @todo:
+ * Get classes for the body tag
  *
+ * @param boolean $raw If true, returns the class names, if false, returns the attribute
+ * @return string $_body_classes The class attribute for the body tag
  */
 function commentpress_get_body_classes( $raw = false ) {
 
@@ -575,9 +579,11 @@ endif; // commentpress_get_body_classes
 
 if ( ! function_exists( 'commentpress_site_title' ) ):
 /**
- * @description: disable more link jump - from: http://codex.wordpress.org/Customizing_the_Read_More
- * @todo:
+ * Amend the site title depending on context of blog
  *
+ * @param string $sep The title separator
+ * @param boolean $echo Echo the result or not
+ * @return string $site_name The title of the site
  */
 function commentpress_site_title( $sep = '', $echo = true ) {
 
@@ -613,9 +619,10 @@ endif; // commentpress_site_title
 
 if ( ! function_exists( 'commentpress_remove_more_jump_link' ) ):
 /**
- * @description: disable more link jump - from: http://codex.wordpress.org/Customizing_the_Read_More
- * @todo:
+ * Disable more link jump - from: http://codex.wordpress.org/Customizing_the_Read_More
  *
+ * @param string $link The existing more link
+ * @return string $link The modified more link
  */
 function commentpress_remove_more_jump_link( $link ) {
 
@@ -642,11 +649,14 @@ add_filter( 'the_content_more_link', 'commentpress_remove_more_jump_link' );
 
 if ( ! function_exists( 'commentpress_page_title' ) ):
 /**
- * @description: builds a list of previous and next pages, optionally with comments
- * @todo:
+ * Builds a page title, including parent page titles
  *
+ * The CommentPress Default theme displays a "cookie trail" style title for pages
+ * so we need to build this by inspecting page ancestors
+ *
+ * @return string $_title The page title
  */
-function commentpress_page_title( $with_comments = false ) {
+function commentpress_page_title() {
 
 	// declare access to globals
 	global $commentpress_core, $post;
@@ -704,15 +714,12 @@ endif; // commentpress_page_title
 
 if ( ! function_exists( 'commentpress_has_page_children' ) ):
 /**
- * @description: query whether a given page has children
- * @todo:
+ * Query whether a given page has children
  *
+ * @param object $page_obj The WordPress page object to query
+ * @return boolean True if page has children, false otherwise
  */
-function commentpress_has_page_children(
-
-	$page_obj
-
-) { //-->
+function commentpress_has_page_children( $page_obj ) {
 
 	// init to look for published pages
 	$defaults = array(
@@ -737,9 +744,11 @@ endif; // commentpress_has_page_children
 
 if ( ! function_exists( 'commentpress_get_children' ) ):
 /**
- * @description: retrieve comment children
- * @todo:
+ * Retrieve comment children
  *
+ * @param object $comment The WordPress comment object
+ * @param string $page_or_post The WordPress post type to query
+ * @return array $result The array of child comments
  */
 function commentpress_get_children( $comment, $page_or_post ) {
 
@@ -767,9 +776,14 @@ endif; // commentpress_get_children
 
 if ( ! function_exists( 'commentpress_get_comments' ) ):
 /**
- * @description: generate comments recursively
- * @todo:
+ * Generate comments recursively
  *
+ * This function builds the list into a global called $cp_comment_output for
+ * retrieval elsewhere
+ *
+ * @param array $comments An array of WordPress comment objects
+ * @param string $page_or_post The WordPress post type to query
+ * @return void
  */
 function commentpress_get_comments( $comments, $page_or_post ) {
 
@@ -819,9 +833,10 @@ endif; // commentpress_get_comments
 
 if ( ! function_exists( 'commentpress_get_user_link' ) ):
 /**
- * @description: get user link in vanilla WP scenarios
- * @todo:
+ * Get user link in vanilla WordPress scenarios
  *
+ * @param object $user The WordPress user
+ * @return string $url The URL for the user
  */
 function commentpress_get_user_link( &$user ) {
 
@@ -876,9 +891,9 @@ endif; // commentpress_get_user_link
 
 if ( ! function_exists( 'commentpress_echo_post_meta' ) ):
 /**
- * @description: show user(s) in the loop
- * @todo:
+ * Show user(s) in the loop
  *
+ * @return void
  */
 function commentpress_echo_post_meta() {
 
@@ -968,9 +983,9 @@ endif; // commentpress_echo_post_meta
 
 if ( ! function_exists( 'commentpress_show_source_url' ) ):
 /**
- * @description: show source URL for print
- * @todo:
+ * Show source URL for print
  *
+ * @return void
  */
 function commentpress_show_source_url() {
 
@@ -1642,9 +1657,9 @@ endif; // commentpress_get_comment_activity_item
 
 if ( ! function_exists( 'commentpress_get_comments_by_para' ) ):
 /**
- * @description: get comments delimited by paragraph
- * @todo: translation
+ * Get comments delimited by paragraph
  *
+ * @return void
  */
 function commentpress_get_comments_by_para() {
 

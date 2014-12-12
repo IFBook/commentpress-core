@@ -1293,8 +1293,10 @@ endif; // commentpress_get_feature_image
 
 
 /**
- * @description: utility to test for feature image, because has_post_thumbnail() fails sometimes
+ * Utility to test for feature image, because has_post_thumbnail() fails sometimes
  * @see http://codex.wordpress.org/Function_Reference/has_post_thumbnail
+ *
+ * @return bool True if post has thumbnail, false otherwise
  */
 function commentpress_has_feature_image() {
 

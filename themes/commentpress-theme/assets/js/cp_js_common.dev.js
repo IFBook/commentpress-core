@@ -122,8 +122,9 @@ if ( cp_wp_adminbar == 'y' ) {
 
 
 /**
- * @description: define what happens before the page is ready - avoid flash of content
+ * Perform actions before the page is ready - eg, avoid flash of content
  *
+ * @return void
  */
 function cp_page_setup() {
 
@@ -375,8 +376,9 @@ cp_page_setup();
 
 
 /**
- * @description: page load prodecure
+ * Page load prodecure
  *
+ * @return void
  */
 function commentpress_setup_page_layout() {
 
@@ -401,8 +403,10 @@ function commentpress_setup_page_layout() {
 
 
 	/**
-	 * @description: sets up the main column, if the id exists
+	 * Sets up the main column, if the id exists
 	 *
+	 * @param integer i The number of iterations
+	 * @return void
 	 */
 	target.each( function(i) {
 
@@ -621,8 +625,9 @@ function commentpress_setup_page_layout() {
 
 
 /**
- * @description: get header offset
+ * Get header offset
  *
+ * @return integer offset The target offset in px
  */
 function commentpress_get_header_offset() {
 
@@ -663,8 +668,10 @@ function commentpress_get_header_offset() {
 
 
 /**
- * @description: scroll page to target
+ * Scroll page to target
  *
+ * @param object target The object to scroll to
+ * @return void
  */
 function commentpress_scroll_page( target ) {
 
@@ -712,8 +719,11 @@ function commentpress_scroll_page( target ) {
 
 
 /**
- * @description: scroll page to target with passed duration param
+ * Scroll page to target with passed duration param
  *
+ * @param object target The object to scroll to
+ * @param integer duration The duration of the scroll
+ * @return void
  */
 function cp_quick_scroll_page( target, duration ) {
 
@@ -761,8 +771,11 @@ function cp_quick_scroll_page( target, duration ) {
 
 
 /**
- * @description: scroll page to top
+ * Scroll page to top
  *
+ * @param object target The object to scroll to
+ * @param integer speed The duration of the scroll
+ * @return void
  */
 function commentpress_scroll_to_top( target, speed ) {
 
@@ -790,8 +803,12 @@ function commentpress_scroll_to_top( target, speed ) {
 
 
 /**
- * @description: highlight the comment header
- * @todo: this no longer works in jQuery without a plugin https://github.com/jquery/jquery-color
+ * Highlight the comment header
+ *
+ * @todo This no longer works in jQuery without a plugin https://github.com/jquery/jquery-color
+ *
+ * @param object comment The jQuery comment object
+ * @return void
  */
 function cp_flash_comment_header( comment ) {
 
@@ -826,8 +843,12 @@ function cp_flash_comment_header( comment ) {
 
 
 /**
- * @description: scroll comments to target
+ * Scroll comments to target
  *
+ * @param object target The target to scroll to
+ * @param integer speed The duration of the scroll
+ * @param string flash Whether or not to "flash" the comment
+ * @return void
  */
 function cp_scroll_comments( target, speed, flash ) {
 
@@ -879,8 +900,9 @@ function cp_scroll_comments( target, speed, flash ) {
 
 
 /**
- * @description: set up comment headers
+ * Set up comment headers
  *
+ * @return void
  */
 function commentpress_setup_comment_headers() {
 
@@ -894,8 +916,10 @@ function commentpress_setup_comment_headers() {
 	jQuery('a.comment_block_permalink').css( 'cursor', 'pointer' );
 
 	/**
-	 * @description: comment page headings click
+	 * Comment page headings click
 	 *
+	 * @param object event The clicked object
+	 * @return false
 	 */
 	jQuery('a.comment_block_permalink').click( function( event ) {
 
@@ -1099,8 +1123,10 @@ function commentpress_setup_comment_headers() {
 
 
 /**
- * @description: get text sig by comment id
+ * Get text signature by comment id
  *
+ * @param object cid The CSS ID of the comment
+ * @return string text_sig The text signature
  */
 function cp_get_text_sig_by_comment_id( cid ) {
 
@@ -1148,8 +1174,10 @@ function cp_get_text_sig_by_comment_id( cid ) {
 
 
 /**
- * @description: scroll to textblock
+ * Scroll to textblock
  *
+ * @param string text_sig The text signature to scroll to
+ * @return void
  */
 function commentpress_scroll_page_to_textblock( text_sig ) {
 
@@ -1191,8 +1219,9 @@ function commentpress_scroll_page_to_textblock( text_sig ) {
 
 
 /**
- * @description: clicking on the comment permalink
+ * Clicking on the comment permalink
  *
+ * @return void
  */
 function commentpress_enable_comment_permalink_clicks() {
 
@@ -1260,8 +1289,9 @@ function commentpress_enable_comment_permalink_clicks() {
 
 
 /**
- * @description: set up context headers for "activity" tab
+ * Set up context headers for "activity" tab
  *
+ * @return false
  */
 function commentpress_setup_context_headers() {
 
@@ -1272,8 +1302,9 @@ function commentpress_setup_context_headers() {
 	jQuery('h3.activity_heading').css( 'cursor', 'pointer' );
 
 	/**
-	 * @description: activity column headings click
+	 * Activity column headings click
 	 *
+	 * @return false
 	 */
 	jQuery('h3.activity_heading').click( function( event ) {
 
@@ -1311,8 +1342,9 @@ function commentpress_setup_context_headers() {
 
 
 /**
- * @description: clicking on the "see in context" link
+ * Clicking on the "see in context" link
  *
+ * @return void
  */
 function cp_enable_context_clicks() {
 
@@ -1421,8 +1453,9 @@ function cp_enable_context_clicks() {
 
 
 /**
- * @description: page load prodecure
+ * Page load prodecure
  *
+ * @return void
  */
 function cp_scroll_to_anchor_on_load() {
 
@@ -1558,8 +1591,9 @@ function cp_scroll_to_anchor_on_load() {
 	} else {
 
 		/**
-		 * @description: loop through the paragraph permalinks checking for a match
+		 * Loop through the paragraph permalinks checking for a match
 		 *
+		 * @return void
 		 */
 		jQuery('span.para_marker > a').each( function(i) {
 
@@ -1658,8 +1692,9 @@ function cp_scroll_to_anchor_on_load() {
 
 
 /**
- * @description: page load prodecure for special pages with comments in content
+ * Page load prodecure for special pages with comments in content
  *
+ * @return void
  */
 function cp_scroll_to_comment_on_load() {
 
@@ -1725,8 +1760,9 @@ function cp_scroll_to_comment_on_load() {
 
 
 /**
- * @description: does what a click on a comment icon should do
+ * Does what a click on a comment icon should do
  *
+ * @return void
  */
 function cp_do_comment_icon_action( text_sig, mode ) {
 
@@ -2015,8 +2051,9 @@ function cp_do_comment_icon_action( text_sig, mode ) {
 
 
 /**
- * @description: set up clicks on comment icons attached to comment-blocks in post/page
+ * Set up clicks on comment icons attached to comment-blocks in post/page
  *
+ * @return void
  */
 function commentpress_setup_para_permalink_icons() {
 
@@ -2024,8 +2061,9 @@ function commentpress_setup_para_permalink_icons() {
 	jQuery('a.para_permalink').unbind( 'click' );
 
 	/**
-	 * @description: clicking on the little comment icon
+	 * Clicking on the little comment icon
 	 *
+	 * @return false
 	 */
 	jQuery('a.para_permalink').click( function( event ) {
 
@@ -2052,8 +2090,9 @@ function commentpress_setup_para_permalink_icons() {
 	jQuery('a.para_permalink').unbind( 'mouseleave' );
 
 	/**
-	 * @description: rolling onto the little comment icon
+	 * Rolling onto the little comment icon
 	 *
+	 * @return void
 	 */
 	jQuery('a.para_permalink').mouseenter(
 
@@ -2073,8 +2112,9 @@ function commentpress_setup_para_permalink_icons() {
 	);
 
 	/**
-	 * @description: rolling off the little comment icon
+	 * Rolling off the little comment icon
 	 *
+	 * @return void
 	 */
 	jQuery('a.para_permalink').mouseleave(
 
@@ -2101,8 +2141,9 @@ function commentpress_setup_para_permalink_icons() {
 
 
 /**
- * @description: set up clicks on comment icons attached to comment-blocks in post/page
+ * Set up clicks on comment icons attached to comment-blocks in post/page
  *
+ * @return void
  */
 function commentpress_setup_page_click_actions() {
 
@@ -2110,8 +2151,9 @@ function commentpress_setup_page_click_actions() {
 	jQuery('.post_title a').unbind( 'click' );
 
 	/**
-	 * @description: clicking on the page/post title
+	 * Clicking on the page/post title
 	 *
+	 * @return false
 	 */
 	jQuery('.post_title a').click( function( event ) {
 
@@ -2134,8 +2176,9 @@ function commentpress_setup_page_click_actions() {
 	jQuery('.textblock').unbind( 'click' );
 
 	/**
-	 * @description: clicking on the textblock
+	 * Clicking on the textblock
 	 *
+	 * @return void
 	 */
 	jQuery('.textblock').click( function( event ) {
 
@@ -2158,8 +2201,9 @@ function commentpress_setup_page_click_actions() {
 	jQuery('span.para_marker a').unbind( 'click' );
 
 	/**
-	 * @description: clicking on the little comment icon
+	 * Clicking on the little comment icon
 	 *
+	 * @return false
 	 */
 	jQuery('span.para_marker a').click( function( event ) {
 
@@ -2186,8 +2230,9 @@ function commentpress_setup_page_click_actions() {
 	jQuery('span.para_marker a').unbind( 'mouseleave' );
 
 	/**
-	 * @description: rolling onto the little comment icon
+	 * Rolling onto the little comment icon
 	 *
+	 * @return void
 	 */
 	jQuery('span.para_marker a').mouseenter(
 
@@ -2207,8 +2252,9 @@ function commentpress_setup_page_click_actions() {
 	);
 
 	/**
-	 * @description: rolling off the little comment icon
+	 * Rolling off the little comment icon
 	 *
+	 * @return void
 	 */
 	jQuery('span.para_marker a').mouseleave(
 
@@ -2235,9 +2281,10 @@ function commentpress_setup_page_click_actions() {
 
 
 /**
- * @description: set up paragraph links: cp_para_link is a class writers can use
+ * Set up paragraph links: cp_para_link is a class writers can use
  * in their markup to create nicely scrolling links within their pages
  *
+ * @return void
  */
 function commentpress_setup_para_links() {
 
@@ -2245,8 +2292,9 @@ function commentpress_setup_para_links() {
 	jQuery('a.cp_para_link').unbind( 'click' );
 
 	/**
-	 * @description: clicking on links to paragraphs
+	 * Clicking on links to paragraphs
 	 *
+	 * @return false
 	 */
 	jQuery('a.cp_para_link').click( function( event ) {
 
@@ -2276,8 +2324,9 @@ function commentpress_setup_para_links() {
 
 
 /**
- * @description: set up footnote links for various plugins
+ * Set up footnote links for various plugins
  *
+ * @return void
  */
 function commentpress_setup_footnotes_compatibility() {
 
@@ -2289,8 +2338,9 @@ function commentpress_setup_footnotes_compatibility() {
 	jQuery('span.footnotereverse a, a.footnote-back-link').unbind( 'click' );
 
 	/**
-	 * @description: clicking on reverse links in FD-Footnotes and WP_Footnotes
+	 * Clicking on reverse links in FD-Footnotes and WP_Footnotes
 	 *
+	 * @return false
 	 */
 	jQuery('span.footnotereverse a, a.footnote-back-link').click( function( event ) {
 
@@ -2316,8 +2366,9 @@ function commentpress_setup_footnotes_compatibility() {
 	jQuery('.simple-footnotes ol li > a').unbind( 'click' );
 
 	/**
-	 * @description: clicking on reverse links in Simple Footnotes plugin
+	 * Clicking on reverse links in Simple Footnotes plugin
 	 *
+	 * @return false
 	 */
 	jQuery('.simple-footnotes ol li > a').click( function( event ) {
 
@@ -2355,8 +2406,9 @@ function commentpress_setup_footnotes_compatibility() {
 	jQuery('a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link, a.zp-ZotpressInText').unbind( 'click' );
 
 	/**
-	 * @description: clicking on footnote links in FD-Footnotes, WP-Footnotes, Simple Footnotes and ZotPress
+	 * Clicking on footnote links in FD-Footnotes, WP-Footnotes, Simple Footnotes and ZotPress
 	 *
+	 * @return false
 	 */
 	jQuery('a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link, a.zp-ZotpressInText').click( function( event ) {
 
@@ -2386,8 +2438,10 @@ function commentpress_setup_footnotes_compatibility() {
 
 
 /**
- * @description: bring sidebar to front
+ * Bring sidebar to front
  *
+ * @param string sidebar The sidebar to bring to the front
+ * @return void
  */
 function cp_activate_sidebar( sidebar ) {
 
@@ -2483,8 +2537,9 @@ function cp_activate_sidebar( sidebar ) {
 
 
 /**
- * @description: get top of sidebar
+ * Get top of sidebar
  *
+ * @return integer num The top of the sidebar in pixels
  */
 function cp_get_sidebar_top() {
 
@@ -2499,8 +2554,9 @@ function cp_get_sidebar_top() {
 
 
 /**
- * @description: get border width of sidebar
+ * Get border width of sidebar
  *
+ * @return integer num The border width of the sidebar in pixels
  */
 function cp_get_sidebar_top_border() {
 
@@ -2515,8 +2571,9 @@ function cp_get_sidebar_top_border() {
 
 
 /**
- * @description: open header
+ * Open header
  *
+ * @return void
  */
 function cp_open_header() {
 
@@ -2658,8 +2715,9 @@ function cp_open_header() {
 
 
 /**
- * @description: close header
+ * Close header
  *
+ * @return void
  */
 function cp_close_header() {
 
@@ -2786,8 +2844,9 @@ function cp_close_header() {
 
 
 /**
- * @description: set up header minimiser button
+ * Set up header minimiser button
  *
+ * @return void
  */
 function commentpress_setup_header_minimiser() {
 
@@ -2833,8 +2892,9 @@ function commentpress_setup_header_minimiser() {
 
 
 /**
- * @description: define what happens when the page is ready
+ * Define what happens when the page is ready
  *
+ * @return void
  */
 jQuery(document).ready( function($) {
 
@@ -2926,8 +2986,9 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * @description: clicking on the Contents Header
+	 * Clicking on the Contents Header
 	 *
+	 * @return false
 	 */
 	$('#toc_header h2 a').click( function( event ) {
 
@@ -2943,8 +3004,9 @@ jQuery(document).ready( function($) {
 	});
 
 	/**
-	 * @description: clicking on the Activity Header
+	 * Clicking on the Activity Header
 	 *
+	 * @return false
 	 */
 	$('#activity_header h2 a').click( function( event ) {
 
@@ -2965,8 +3027,9 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * @description: clicking on the Comments Header
+	 * Clicking on the Comments Header
 	 *
+	 * @return false
 	 */
 	$('#comments_header h2 a').click( function( event ) {
 
@@ -2987,8 +3050,9 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * @description: clicking on the paragraph permalink
+	 * Clicking on the paragraph permalink
 	 *
+	 * @return false
 	 */
 	$('a.para_permalink').click( function( event ) {
 
@@ -3006,8 +3070,9 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * @description: clicking on the comment block permalink
+	 * Clicking on the comment block permalink
 	 *
+	 * @return false
 	 */
 	$('a.comment_block_permalink').click( function( event ) {
 
@@ -3020,7 +3085,7 @@ jQuery(document).ready( function($) {
 	});
 
 	/**
-	 * @description: when a comment block permalink comes into focus
+	 * When a comment block permalink comes into focus
 	 * @note: in development for keyboard accessibility
 	 *
 	 */
@@ -3036,7 +3101,7 @@ jQuery(document).ready( function($) {
 	*/
 
 	/**
-	 * @description: when a comment block permalink loses focus
+	 * When a comment block permalink loses focus
 	 * @note: in development for keyboard accessibility
 	 *
 	 */
@@ -3055,8 +3120,9 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * @description: clicking on the contents button
+	 * Clicking on the contents button
 	 *
+	 * @return false
 	 */
 	$('#btn_header_min').click( function( event ) {
 
@@ -3080,8 +3146,9 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * @description: clicking on the minimise comments icon
+	 * Clicking on the minimise comments icon
 	 *
+	 * @return false
 	 */
 	$('#cp_minimise_all_comments').click( function( event ) {
 
@@ -3102,8 +3169,9 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * @description: clicking on the minimise activities icon
+	 * Clicking on the minimise activities icon
 	 *
+	 * @return false
 	 */
 	$('#cp_minimise_all_activity').click( function( event ) {
 
@@ -3121,8 +3189,9 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * @description: chapter page headings click
+	 * Chapter page headings click
 	 *
+	 * @return false
 	 */
 	$("#toc_sidebar .sidebar_contents_wrapper ul#toc_list li a").click( function( event ) {
 
@@ -3164,8 +3233,9 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * @description: workflow tabs and content logic
+	 * Workflow tabs and content logic
 	 *
+	 * @return void
 	 */
 
 	// define vars
@@ -3182,8 +3252,9 @@ jQuery(document).ready( function($) {
 	$('#original .post').css( 'display', 'none' );
 
 	/**
-	 * @description: clicking on the workflow tabs
+	 * Clicking on the workflow tabs
 	 *
+	 * @return false
 	 */
 	$('#content-tabs li h2 a').click( function( event ) {
 
@@ -3250,8 +3321,9 @@ jQuery(document).ready( function($) {
 
 
 /**
- * @description: define what happens when the page is unloaded
+ * Define what happens when the page is unloaded
  *
+ * @return void
  */
 /*
 jQuery(window).unload( function() {

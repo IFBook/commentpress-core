@@ -45,15 +45,19 @@ cpajax_post_title = document.title;
 
 
 /**
- * @description: jQuery wrapper
+ * jQuery wrapper
  *
+ * This wrapper ensures that jQuery can be addressed using the $ shorthand from
+ * anywhere within the script.
  */
 ;( function( $ ) {
 
 
 
 	/**
-	 * @description: define what happens when the page is ready
+	 * Define what happens when the page is ready
+	 *
+	 * @return void
 	 */
 	$(document).ready(function($) {
 
@@ -71,7 +75,9 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: intercept page navigation links
+	 * Intercept page navigation links
+	 *
+	 * @return void
 	 */
 	function cpajax_enable_state_navigation() {
 
@@ -104,7 +110,9 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: copy and store the comment form
+	 * Copy and store the comment form
+	 *
+	 * @return void
 	 */
 	function cpajax_store_comment_form() {
 
@@ -125,7 +133,9 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: store comments (not used)
+	 * Store comments (not used)
+	 *
+	 * @return void
 	 */
 	function cpajax_store_comments() {
 
@@ -146,7 +156,10 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: update the classes on the menu for a given menu_id
+	 * Update the classes on the menu for a given menu_id
+	 *
+	 * @param string item_id The numerical ID of the menu item
+	 * @return void
 	 */
 	function cpajax_update_custom_menu( item_id ) {
 
@@ -163,7 +176,10 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: update the classes on the WP pages menu for a given page_id
+	 * Update the classes on the WP pages menu for a given page_id
+	 *
+	 * @param string item_id The numerical ID of the menu item
+	 * @return void
 	 */
 	function cpajax_update_pages_menu( item_id ) {
 
@@ -180,7 +196,9 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: enable CP stuff
+	 * Refresh all CommentPress listeners and methods
+	 *
+	 * @return void
 	 */
 	function cpajax_refresh_commentpress() {
 
@@ -242,17 +260,23 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: enable waypoints
+	 * Enable waypoints
+	 *
+	 * @return void
 	 */
 	function cpajax_enable_wrapper_waypoints() {
 
 		/**
-		 * @description: define what happens when the bottom of the page is in view
+		 * Define what happens when the bottom of the page is in view
+		 *
+		 * @return void
 		 */
 		$('#wrapper').waypoint(
 
 			/**
-			 * @description: waypoint callback
+			 * Waypoint callback
+			 *
+			 * @return void
 			 */
 			function( direction ) {
 
@@ -288,8 +312,10 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: make an AJAX call to retrieve next post/page
-	 * @param string mode triggered by either 'waypoint' or 'link'
+	 * Make an AJAX call to retrieve next post/page
+	 *
+	 * @param string mode Triggered by either 'waypoint' or 'link'
+	 * @return void
 	 */
 	function cpajax_load_next_page( mode ) {
 
@@ -355,7 +381,11 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: handle data sent back from an AJAX call
+	 * Handle data sent back from an AJAX call
+	 *
+	 * @param object response The data from the AJAX request as jQuery object
+	 * @param string mode The type of data handling to perform
+	 * @return void
 	 */
 	function cpajax_handle_data( response, mode ) {
 
@@ -477,17 +507,21 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: enable waypoints on posts on a per-post basis
+	 * Enable waypoints on posts on a per-post basis
+	 *
+	 * @param int post_id The numeric ID of the WordPress post
+	 * @return int offset The waypoint offset
 	 */
 	function cpajax_enable_post_comments_waypoint( post_id ) {
 
-		/**
-		 * @description: the top of a post has reached the top of the viewport scrolling downwards
-		 */
+		// The top of a post has reached the top of the viewport scrolling downwards
 		$('#post-' + post_id + '.post').parent().parent().waypoint(
 
 			/**
-			 * @description: waypoint callback
+			 * Waypoint callback
+			 *
+			 * @param string direction The direction of scroll
+			 * @return void
 			 */
 			function( direction ) {
 
@@ -538,7 +572,10 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: change content and comments
+	 * Change content and comments
+	 *
+	 * @param object context The jQuery context object
+	 * @return void
 	 */
 	function cpajax_trigger_page_change( context ) {
 
@@ -663,7 +700,9 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: change content and comments
+	 * Change content and comments
+	 *
+	 * @return void
 	 */
 	function cpajax_pushstate() {
 
@@ -672,7 +711,10 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: change content and comments
+	 * Change content and comments
+	 *
+	 * @param object e The state object
+	 * @return void
 	 */
 	window.onpopstate = function( e ) {
 
