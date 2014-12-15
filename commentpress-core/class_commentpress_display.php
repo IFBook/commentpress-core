@@ -1598,6 +1598,8 @@ HELPTEXT;
 
 		'.$this->_get_sidebar().'
 
+		'.apply_filters( 'commentpress_theme_customisation_options', '' ).'
+
 		</table>
 
 
