@@ -227,7 +227,7 @@ function commentpress_get_header_image() {
 			'object' => 'group',
 			'type' => 'full',
 			'alt' => __( 'Group avatar', 'commentpress-core' ),
-			'class' => 'cp_logo_image cp_group_avatar',
+			'class' => 'cp_logo_image',
 			'width' => 48,
 			'height' => 48,
 			'html' => true
