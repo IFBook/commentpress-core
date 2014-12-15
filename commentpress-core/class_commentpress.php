@@ -344,7 +344,7 @@ class CommentpressCore {
 			if ( current_user_can('manage_options') ) {
 
 				// show it
-				echo '<div id="message" class="error"><p>'.__( 'CommentPress Core has been updated. Please visit the ' ).'<a href="options-general.php?page=commentpress_admin">'.__( 'Settings Page', 'commentpress-core' ).'</a>.</p></div>';
+				echo '<div id="message" class="error"><p>' . __( 'CommentPress Core has been updated. Please visit the ' ) . '<a href="options-general.php?page=commentpress_admin">' . __( 'Settings Page', 'commentpress-core' ) . '</a>.</p></div>';
 
 			}
 
@@ -410,9 +410,9 @@ class CommentpressCore {
 				//print_r( $this->options_page );die();
 
 				// add scripts and styles
-				add_action( 'admin_print_scripts-'.$this->options_page, array( $this, 'admin_js' ) );
-				add_action( 'admin_print_styles-'.$this->options_page, array( $this, 'admin_css' ) );
-				add_action( 'admin_head-'.$this->options_page, array( $this, 'admin_head' ), 50 );
+				add_action( 'admin_print_scripts-' . $this->options_page, array( $this, 'admin_js' ) );
+				add_action( 'admin_print_styles-' . $this->options_page, array( $this, 'admin_css' ) );
+				add_action( 'admin_head-' . $this->options_page, array( $this, 'admin_head' ), 50 );
 
 			}
 
@@ -453,7 +453,7 @@ class CommentpressCore {
 			<style type="text/css">
 
 				#book_header {
-					background: #'.$this->db->option_get_header_bg().';
+					background: #' . $this->db->option_get_header_bg() . ';
 				}
 
 			</style>
@@ -940,8 +940,8 @@ class CommentpressCore {
 		echo '
 		<p>
 		<select id="cp_title_visibility" name="cp_title_visibility">
-			<option value="show" '.(($viz == 'show') ? ' selected="selected"' : '').'>'.__('Show page title', 'commentpress-core').'</option>
-			<option value="hide" '.(($viz == 'hide') ? ' selected="selected"' : '').'>'.__('Hide page title', 'commentpress-core').'</option>
+			<option value="show" ' . (($viz == 'show') ? ' selected="selected"' : '') . '>' . __('Show page title', 'commentpress-core') . '</option>
+			<option value="hide" ' . (($viz == 'hide') ? ' selected="selected"' : '') . '>' . __('Hide page title', 'commentpress-core') . '</option>
 		</select>
 		</p>
 		';
@@ -971,8 +971,8 @@ class CommentpressCore {
 		echo '
 		<p>
 		<select id="cp_page_meta_visibility" name="cp_page_meta_visibility">
-			<option value="show" '.(($viz == 'show') ? ' selected="selected"' : '').'>'.__('Show page meta', 'commentpress-core').'</option>
-			<option value="hide" '.(($viz == 'hide') ? ' selected="selected"' : '').'>'.__('Hide page meta', 'commentpress-core').'</option>
+			<option value="show" ' . (($viz == 'show') ? ' selected="selected"' : '') . '>' . __('Show page meta', 'commentpress-core') . '</option>
+			<option value="hide" ' . (($viz == 'hide') ? ' selected="selected"' : '') . '>' . __('Hide page meta', 'commentpress-core') . '</option>
 		</select>
 		</p>
 		';
@@ -1014,8 +1014,8 @@ class CommentpressCore {
 			echo '
 			<p>
 			<select id="cp_number_format" name="cp_number_format">
-				<option value="arabic" '.(($format == 'arabic') ? ' selected="selected"' : '').'>'.__('Arabic numerals', 'commentpress-core' ).'</option>
-				<option value="roman" '.(($format == 'roman') ? ' selected="selected"' : '').'>'.__('Roman numerals', 'commentpress-core' ).'</option>
+				<option value="arabic" ' . (($format == 'arabic') ? ' selected="selected"' : '') . '>' . __('Arabic numerals', 'commentpress-core' ) . '</option>
+				<option value="roman" ' . (($format == 'roman') ? ' selected="selected"' : '') . '>' . __('Roman numerals', 'commentpress-core' ) . '</option>
 			</select>
 			</p>
 			';
@@ -1050,8 +1050,8 @@ class CommentpressCore {
 			echo '
 			<p>
 			<select id="cp_page_layout" name="cp_page_layout">
-				<option value="text" '.(($value == 'text') ? ' selected="selected"' : '').'>'.__('Standard', 'commentpress-core' ).'</option>
-				<option value="wide" '.(($value == 'wide') ? ' selected="selected"' : '').'>'.__('Wide', 'commentpress-core' ).'</option>
+				<option value="text" ' . (($value == 'text') ? ' selected="selected"' : '') . '>' . __('Standard', 'commentpress-core' ) . '</option>
+				<option value="wide" ' . (($value == 'wide') ? ' selected="selected"' : '') . '>' . __('Wide', 'commentpress-core' ) . '</option>
 			</select>
 			</p>
 			';
@@ -1108,7 +1108,7 @@ class CommentpressCore {
 
 			// show link
 			echo '
-			<p><a href="'.$edit_link.'">'.$link.'</a></p>'."\n";
+			<p><a href="' . $edit_link . '">' . $link . '</a></p>' . "\n";
 
 		} else {
 
@@ -1125,8 +1125,8 @@ class CommentpressCore {
 			// show a title
 			echo '
 			<div class="checkbox">
-				<label for="commentpress_new_post"><input type="checkbox" value="1" id="commentpress_new_post" name="commentpress_new_post" /> '.$label.'</label>
-			</div>'."\n";
+				<label for="commentpress_new_post"><input type="checkbox" value="1" id="commentpress_new_post" name="commentpress_new_post" /> ' . $label . '</label>
+			</div>' . "\n";
 
 		}
 
@@ -1167,7 +1167,7 @@ class CommentpressCore {
 		if ($screen == 'commentpress_admin') {
 
 			// get help text
-			$text = '<h5>'.__('CommentPress Core Help', 'commentpress-core' ).'</h5>';
+			$text = '<h5>' . __('CommentPress Core Help', 'commentpress-core' ) . '</h5>';
 			$text .= $this->display->get_help();
 
 		}
@@ -1421,7 +1421,7 @@ class CommentpressCore {
 					$vars['all'] = preg_replace(
 
 						'/\(\d+\)/',
-						'('.$new_count.')',
+						'(' . $new_count . ')',
 						$vars['all']
 
 					);
@@ -1442,7 +1442,7 @@ class CommentpressCore {
 					$vars['publish'] = preg_replace(
 
 						'/\(\d+\)/',
-						'('.$new_count.')',
+						'(' . $new_count . ')',
 						$vars['publish']
 
 					);
@@ -1588,7 +1588,7 @@ class CommentpressCore {
 			$_title = apply_filters( 'commentpress_page_link_title', $_link_title );
 
 			// show link
-			$link = '<li'.$_active.'><a href="'.$_url.'" id="btn_'.$_button.'" class="css_btn" title="'.$_title.'">'.$_title.'</a></li>'."\n";
+			$link = '<li' . $_active . '><a href="' . $_url . '" id="btn_' . $_button . '" class="css_btn" title="' . $_title . '">' . $_title . '</a></li>' . "\n";
 
 		}
 
@@ -1764,7 +1764,7 @@ class CommentpressCore {
 			is_page() AND
 			!$this->db->is_special_page() AND
 			$post->ID == '9999999' AND
-			$post->guid == get_bloginfo('url').'/?page_id=9999999'
+			$post->guid == get_bloginfo('url') . '/?page_id=9999999'
 
 		) {
 
@@ -1873,7 +1873,7 @@ class CommentpressCore {
 			$fc = wp_featured_comments_load();
 
 			// get markup
-			return $editlink.$fc->comment_text( '' );
+			return $editlink . $fc->comment_text( '' );
 
 		}
 
@@ -2446,7 +2446,7 @@ class CommentpressCore {
 				$type_title = apply_filters( 'cp_post_type_override_label', $type_title );
 
 				// label
-				echo '<p><strong><label for="cp_post_type_override">'.$type_title.'</label></strong></p>';
+				echo '<p><strong><label for="cp_post_type_override">' . $type_title . '</label></strong></p>';
 
 				// construct options
 				$type_option_list = array();
@@ -2468,9 +2468,9 @@ class CommentpressCore {
 
 				foreach( $types AS $type ) {
 					if ( $n == $value ) {
-						$type_option_list[] = '<option value="'.$n.'" selected="selected">'.$type.'</option>';
+						$type_option_list[] = '<option value="' . $n . '" selected="selected">' . $type . '</option>';
 					} else {
-						$type_option_list[] = '<option value="'.$n.'">'.$type.'</option>';
+						$type_option_list[] = '<option value="' . $n . '">' . $type . '</option>';
 					}
 					$n++;
 				}
@@ -2482,7 +2482,7 @@ class CommentpressCore {
 				echo '
 				<p>
 				<select id="cp_post_type_override" name="cp_post_type_override">
-					'.$type_options.'
+					' . $type_options . '
 				</select>
 				</p>
 				';
@@ -2531,9 +2531,9 @@ class CommentpressCore {
 			echo '
 <p>
 <select id="cp_sidebar_default" name="cp_sidebar_default">
-	<option value="toc" '.(($_sidebar == 'toc') ? ' selected="selected"' : '').'>'.__('Contents', 'commentpress-core').'</option>
-	<option value="activity" '.(($_sidebar == 'activity') ? ' selected="selected"' : '').'>'.__('Activity', 'commentpress-core').'</option>
-	<option value="comments" '.(($_sidebar == 'comments') ? ' selected="selected"' : '').'>'.__('Comments', 'commentpress-core').'</option>
+	<option value="toc" ' . (($_sidebar == 'toc') ? ' selected="selected"' : '') . '>' . __('Contents', 'commentpress-core') . '</option>
+	<option value="activity" ' . (($_sidebar == 'activity') ? ' selected="selected"' : '') . '>' . __('Activity', 'commentpress-core') . '</option>
+	<option value="comments" ' . (($_sidebar == 'comments') ? ' selected="selected"' : '') . '>' . __('Comments', 'commentpress-core') . '</option>
 </select>
 </p>
 ';
@@ -2572,7 +2572,7 @@ class CommentpressCore {
 		// select
 		echo '
 <p>
-<input type="text" id="cp_starting_para_number" name="cp_starting_para_number" value="'.$_num.'" />
+<input type="text" id="cp_starting_para_number" name="cp_starting_para_number" value="' . $_num . '" />
 </p>
 ';
 

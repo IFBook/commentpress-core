@@ -112,7 +112,7 @@ function cpajax_load_next_page() {
 	ob_end_clean();
 	//*/
 
-	$page_title = get_the_title( $post->ID ).' | '.$page_title;
+	$page_title = get_the_title( $post->ID ) . ' | ' . $page_title;
 
 	// get next page
 	//print_r( array( $post, $post->post_title ) ); die();
@@ -132,7 +132,7 @@ function cpajax_load_next_page() {
 	ob_end_clean();
 
 	// get title
-	$title = '<h2 class="post_title"><a href="'.get_permalink( $post->ID ).'">'.get_the_title( $post->ID ).'</a></h2>';
+	$title = '<h2 class="post_title"><a href="' . get_permalink( $post->ID ) . '">' . get_the_title( $post->ID ) . '</a></h2>';
 
 	// get content
 	$content = apply_filters( 'the_content', $post->post_content );
@@ -146,9 +146,9 @@ function cpajax_load_next_page() {
 
 	// get menu ID, if we have one
 	if ( isset( $new_post->menu_id ) ) {
-		$menu_id = 'wpcustom_menuid-'.$new_post->menu_id;
+		$menu_id = 'wpcustom_menuid-' . $new_post->menu_id;
 	} else {
-		$menu_id = 'wppage_menuid-'.$new_post->ID;
+		$menu_id = 'wppage_menuid-' . $new_post->ID;
 	}
 
 	// init page number html
@@ -161,12 +161,12 @@ function cpajax_load_next_page() {
 		if ( is_numeric( $number ) ) {
 
 			// add page number
-			$page_num = '<div class="running_header_bottom">page '.$number.'</div>';
+			$page_num = '<div class="running_header_bottom">page ' . $number . '</div>';
 
 		} else {
 
 			// add page number
-			$page_num = '<div class="running_header_bottom">page '.strtolower( $number ).'</div>';
+			$page_num = '<div class="running_header_bottom">page ' . strtolower( $number ) . '</div>';
 
 		}
 
@@ -180,7 +180,7 @@ function cpajax_load_next_page() {
 
 	// if we get any...
 	if ( $navigation != '' ) {
-		$navigation = '<div class="page_navigation"><ul>'.$navigation.'</ul></div><!-- /page_navigation -->';
+		$navigation = '<div class="page_navigation"><ul>' . $navigation . '</ul></div><!-- /page_navigation -->';
 	}
 
 	// init upper nav
@@ -195,20 +195,20 @@ function cpajax_load_next_page() {
 	}
 
 	// always show lower nav
-	$lower_navigation = '<div class="page_nav_lower">'.
-							$navigation.
+	$lower_navigation = '<div class="page_nav_lower">' .
+							$navigation .
 						'</div><!-- /page_nav_lower -->';
 
 	// wrap in div
-	$data = '<div class="page_wrapper cp_page_wrapper">'.
-				$feature_image.
-				$upper_navigation.
-				'<div class="content"><div class="post'.commentpress_get_post_css_override( $post->ID ).' '.$menu_id.'" id="post-'.$post->ID.'">'.
-					$title.
-					$content.
-					$page_num.
-				'</div></div>'.
-				$lower_navigation.
+	$data = '<div class="page_wrapper cp_page_wrapper">' .
+				$feature_image .
+				$upper_navigation .
+				'<div class="content"><div class="post' . commentpress_get_post_css_override( $post->ID ) . ' ' . $menu_id . '" id="post-' . $post->ID . '">' .
+					$title .
+					$content .
+					$page_num .
+				'</div></div>' .
+				$lower_navigation .
 			'</div>';
 
 
@@ -220,7 +220,7 @@ function cpajax_load_next_page() {
 	ob_end_clean();
 
 	// wrap in div
-	$comments = '<div class="comments-for-'.$post->ID.'">'.$comments.'</div>';
+	$comments = '<div class="comments-for-' . $post->ID . '">' . $comments . '</div>';
 
 	// construct response
 	$response =  array(
@@ -360,10 +360,10 @@ function cpajax_get_new_comments() {
 				$html = commentpress_get_comment_markup( $_comment, $args, $depth );
 
 				// close li (walker would normally do this)
-				$html .= '</li>'."\n\n\n\n";
+				$html .= '</li>' . "\n\n\n\n";
 
 				// add comment to array
-				$data['cpajax_new_comment_'.$identifier] = array(
+				$data['cpajax_new_comment_' . $identifier] = array(
 					'parent' => $_comment->comment_parent,
 					'id' => $_comment->comment_ID,
 					'text_sig' => $_comment->comment_signature,
@@ -480,7 +480,7 @@ function cpajax_add_javascripts() {
 		// add comments in page script
 		wp_enqueue_script(
 			'cpajax',
-			plugins_url( 'commentpress-ajax/cp-ajax-comments-page'.$debug_state.'.js', COMMENTPRESS_PLUGIN_FILE ),
+			plugins_url( 'commentpress-ajax/cp-ajax-comments-page' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
 			null, // no dependencies
 			COMMENTPRESS_VERSION // version
 		);
@@ -490,7 +490,7 @@ function cpajax_add_javascripts() {
 		// add comments in sidebar script
 		wp_enqueue_script(
 			'cpajax',
-			plugins_url( 'commentpress-ajax/cp-ajax-comments'.$debug_state.'.js', COMMENTPRESS_PLUGIN_FILE ),
+			plugins_url( 'commentpress-ajax/cp-ajax-comments' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
 			array( 'jquery-ui-droppable', 'jquery-ui-dialog' ), // load droppable and dialog as dependencies
 			COMMENTPRESS_VERSION // version
 		);
@@ -512,7 +512,7 @@ function cpajax_add_javascripts() {
 			// add waypoints script
 			wp_enqueue_script(
 				'cpajax-waypoints',
-				plugins_url( 'commentpress-ajax/assets/js/waypoints'.$debug_state.'.js', COMMENTPRESS_PLUGIN_FILE ),
+				plugins_url( 'commentpress-ajax/assets/js/waypoints' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
 				array( 'jquery' ), //dependencies
 				COMMENTPRESS_VERSION // version
 			);
@@ -520,7 +520,7 @@ function cpajax_add_javascripts() {
 			// add infinite scroll script
 			wp_enqueue_script(
 				'cpajax-infinite',
-				plugins_url( 'commentpress-ajax/assets/js/cp-ajax-infinite'.$debug_state.'.js', COMMENTPRESS_PLUGIN_FILE ),
+				plugins_url( 'commentpress-ajax/assets/js/cp-ajax-infinite' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
 				array( 'cpajax', 'cpajax-waypoints' ), //dependencies
 				COMMENTPRESS_VERSION // version
 			);
@@ -645,8 +645,8 @@ function cpajax_add_reassign_button( $edit_button, $comment ) {
 	);
 
 	// construct assign button
-	$assign_button = '<span class="alignright comment-assign" title="'.$_title_text.'" id="cpajax_assign-'.$comment->comment_ID.'">'.
-						$_text.
+	$assign_button = '<span class="alignright comment-assign" title="' . $_title_text . '" id="cpajax_assign-' . $comment->comment_ID . '">' .
+						$_text .
 					 '</span>';
 
 	// add our assign button
@@ -697,7 +697,7 @@ function cpajax_reassign_comment() {
 	}
 
 	// add message
-	$data['msg'] .= 'comments '.implode( ', ', $comment_ids ).' updated'."\n";
+	$data['msg'] .= 'comments ' . implode( ', ', $comment_ids ) . ' updated' . "\n";
 
 	// set reasonable headers
 	header('Content-type: text/plain');

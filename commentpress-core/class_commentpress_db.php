@@ -883,7 +883,7 @@ class CommentpressCoreDatabase {
 					$_blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $cp_blog_type, $cp_blog_workflow );
 
 					// set the type as group meta info
-					groups_update_groupmeta( $group_id, 'groupblogtype', 'groupblogtype-'.$_blog_type );
+					groups_update_groupmeta( $group_id, 'groupblogtype', 'groupblogtype-' . $_blog_type );
 
 				}
 
@@ -1174,9 +1174,9 @@ class CommentpressCoreDatabase {
 	 */
 	public function save_page_meta( $post_obj ) {
 
-		//print_r( 'data: '.$_data ); die();
-		//print_r( '$post_obj->post_type: '.$post_obj->post_type ); die();
-		//print_r( '$post_obj->ID: '.$post_obj->ID ); die();
+		//print_r( 'data: ' . $_data ); die();
+		//print_r( '$post_obj->post_type: ' . $post_obj->post_type ); die();
+		//print_r( '$post_obj->ID: ' . $post_obj->ID ); die();
 
 		// if no post, kick out
 		if ( !$post_obj ) { return; }
@@ -1217,7 +1217,7 @@ class CommentpressCoreDatabase {
 		// find and save the data
 		$_data = ( isset( $_POST['cp_page_meta_visibility'] ) ) ? $_POST['cp_page_meta_visibility'] : 'hide';
 
-		//print_r( '$_data: '.$_data ); die();
+		//print_r( '$_data: ' . $_data ); die();
 		//print_r( $post ); die();
 
 		// set key
@@ -1253,7 +1253,7 @@ class CommentpressCoreDatabase {
 		// find and save the data
 		$_data = ( isset( $_POST['cp_title_visibility'] ) ) ? $_POST['cp_title_visibility'] : 'show';
 
-		//print_r( '$_data: '.$_data ); die();
+		//print_r( '$_data: ' . $_data ); die();
 		//print_r( $post ); die();
 
 		// set key
@@ -1403,7 +1403,7 @@ class CommentpressCoreDatabase {
 		// get the data
 		$_data = ( isset( $_POST['cp_post_type_override'] ) ) ? $_POST['cp_post_type_override'] : '';
 
-		//print_r( '$_data: '.$_data ); die();
+		//print_r( '$_data: ' . $_data ); die();
 		//print_r( $post ); die();
 
 		// set key
@@ -1444,7 +1444,7 @@ class CommentpressCoreDatabase {
 					 $_POST['cp_sidebar_default'] :
 					 $this->db->option_get( 'cp_sidebar_default' );
 
-			//print_r( '$_data: '.$_data ); die();
+			//print_r( '$_data: ' . $_data ); die();
 			//print_r( $post ); die();
 
 			// set key
@@ -1601,9 +1601,9 @@ class CommentpressCoreDatabase {
 	 */
 	public function save_post_meta( $post_obj ) {
 
-		//print_r( 'data: '.$_data ); die();
-		//print_r( '$post_obj->post_type: '.$post_obj->post_type ); die();
-		//print_r( '$post_obj->ID: '.$post_obj->ID ); die();
+		//print_r( 'data: ' . $_data ); die();
+		//print_r( '$post_obj->post_type: ' . $post_obj->post_type ); die();
+		//print_r( '$post_obj->ID: ' . $post_obj->ID ); die();
 
 		// if no post, kick out
 		if ( !$post_obj ) { return; }
@@ -1644,7 +1644,7 @@ class CommentpressCoreDatabase {
 		// get the data
 		$_formatter = ( isset( $_POST['cp_post_type_override'] ) ) ? $_POST['cp_post_type_override'] : '';
 
-		//print_r( '$_data: '.$_data ); die();
+		//print_r( '$_data: ' . $_data ); die();
 		//print_r( $post ); die();
 
 		// set key
@@ -1755,7 +1755,7 @@ class CommentpressCoreDatabase {
 					 $_POST['cp_sidebar_default'] :
 					 $this->db->option_get( 'cp_sidebar_default' );
 
-			//print_r( '$_data: '.$_data ); die();
+			//print_r( '$_data: ' . $_data ); die();
 			//print_r( $post ); die();
 
 			// set key
@@ -2384,7 +2384,7 @@ class CommentpressCoreDatabase {
 		}
 
 		// for WordPress, we use the API
-		$comments = get_comments( 'post_id='.$post_ID.'&order=ASC'.$pings );
+		$comments = get_comments( 'post_id=' . $post_ID . '&order=ASC' . $pings );
 
 		// --<
 		return $comments;
@@ -2829,7 +2829,7 @@ class CommentpressCoreDatabase {
 		$vars['cp_template_dir'] = get_template_directory_uri();
 
 		// add path to plugin directory
-		$vars['cp_plugin_dir'] = WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__));
+		$vars['cp_plugin_dir'] = WP_PLUGIN_URL . '/' . str_replace(basename( __FILE__),"",plugin_basename(__FILE__));
 
 		// are chapters pages?
 		$vars['cp_toc_chapter_is_page'] = $this->option_get( 'cp_toc_chapter_is_page' );
@@ -3065,7 +3065,7 @@ class CommentpressCoreDatabase {
 		$prefix = apply_filters( 'commentpress_new_post_title_prefix', $prefix );
 
 		// set title, but allow overrides
-		$new_post['post_title'] = apply_filters( 'commentpress_new_post_title', $prefix.$post->post_title, $post );
+		$new_post['post_title'] = apply_filters( 'commentpress_new_post_title', $prefix . $post->post_title, $post );
 
 		// set excerpt, but allow overrides
 		$new_post['post_excerpt'] = apply_filters( 'commentpress_new_post_excerpt', $post->post_excerpt );
@@ -3559,7 +3559,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	function _store_wordpress_option( $name, $value ) {
 
 		// set backup option
-		add_option( 'commentpress_'.$name, $this->option_wp_get( $name ) );
+		add_option( 'commentpress_' . $name, $this->option_wp_get( $name ) );
 
 		// set the WordPress option
 		$this->option_wp_set( $name, $value );
@@ -3577,10 +3577,10 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	function _reset_wordpress_option( $name ) {
 
 		// set the WordPress option
-		$this->option_wp_set( $name, $this->option_wp_get( 'cp_'.$name ) );
+		$this->option_wp_set( $name, $this->option_wp_get( 'cp_' . $name ) );
 
 		// remove backup option
-		delete_option( 'commentpress_'.$name );
+		delete_option( 'commentpress_' . $name );
 
 	}
 
@@ -3967,8 +3967,8 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 				if ( strstr( $theme_mods['header_image'], 'style/images/header/caves.jpg' ) !== false ) {
 
 					// point it at the equivalent new version
-					$theme_mods['header_image'] = COMMENTPRESS_PLUGIN_URL.
-												  'themes/commentpress-theme'.
+					$theme_mods['header_image'] = COMMENTPRESS_PLUGIN_URL .
+												  'themes/commentpress-theme' .
 												  '/assets/images/header/caves-green.jpg';
 
 				}
