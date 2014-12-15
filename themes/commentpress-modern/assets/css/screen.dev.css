@@ -1846,8 +1846,8 @@ div.multipager.multipager_all a:hover span.multipager_link
 	font-family: sans-serif;
 	color: #666;
 	margin-top: 1em;
-	padding-top: 2em;
-	padding-bottom: 1em;
+	padding-top: 1em;
+	padding-bottom: 0;
 	border-top: 1px solid #ddd;
 }
 
@@ -1865,6 +1865,26 @@ body.search-results .post p.postmetadata
 	margin-bottom: 0;
 	border-top: none;
 }
+
+/* New style categories */
+.entry-category-meta
+{
+	border-top: 1px solid #ddd;
+	font-size: 80%;
+	font-family: sans-serif;
+	color: #666;
+	margin-top: 1em;
+	padding-top: 1em;
+	padding-bottom: 0;
+}
+
+.post .entry-category-meta p
+{
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+}
+
 
 
 
