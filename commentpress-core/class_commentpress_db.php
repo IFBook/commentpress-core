@@ -1146,7 +1146,7 @@ class CommentpressCoreDatabase {
 	public function save_meta( $post_obj ) {
 
 		// if no post, kick out
-		if ( !$post_obj ) { return; }
+		if ( !$post_obj ) return;
 
 		// if page...
 		if ( $post_obj->post_type == 'page' ) {
@@ -1174,27 +1174,8 @@ class CommentpressCoreDatabase {
 	 */
 	public function save_page_meta( $post_obj ) {
 
-		//print_r( 'data: ' . $_data ); die();
-		//print_r( '$post_obj->post_type: ' . $post_obj->post_type ); die();
-		//print_r( '$post_obj->ID: ' . $post_obj->ID ); die();
-
-		// if no post, kick out
-		if ( !$post_obj ) { return; }
-
-		// if not page, kick out
-		if ( $post_obj->post_type != 'page' ) { return; }
-
-		// authenticate
-		$_nonce = isset( $_POST['commentpress_nonce'] ) ? $_POST['commentpress_nonce'] : '';
-		if ( !wp_verify_nonce( $_nonce, 'commentpress_page_settings' ) ) { return; }
-
-		// is this an auto save routine?
-		if ( defined('DOING_AUTOSAVE') AND DOING_AUTOSAVE ) { return; }
-
-		// check permissions - 'edit_pages' is available to editor+
-		if ( !current_user_can( 'edit_pages' ) ) { return; }
-
-		// OK, we're authenticated
+		// bail if we're not authenticated
+		if ( ! $this->save_page_meta_authenticated( $post_obj ) ) return;
 
 		// check for revision
 		if ( $post_obj->post_type == 'revision' ) {
@@ -1210,45 +1191,76 @@ class CommentpressCoreDatabase {
 			$post = $post_obj;
 		}
 
-		// ---------------------------------------------------------------------
-		// Show or Hide Page Meta
-		// ---------------------------------------------------------------------
+		// save page title visibility
+		$this->save_page_title_visibility( $post );
 
-		// find and save the data
-		$_data = ( isset( $_POST['cp_page_meta_visibility'] ) ) ? $_POST['cp_page_meta_visibility'] : 'hide';
+		// save page meta visibility
+		$this->save_page_meta_visibility( $post );
 
-		//print_r( '$_data: ' . $_data ); die();
-		//print_r( $post ); die();
+		// save page numbering
+		$this->save_page_numbering( $post );
 
-		// set key
-		$key = '_cp_page_meta_visibility';
+		// save page layout for Title Page
+		$this->save_page_layout( $post );
 
-		// if the custom field already has a value...
-		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+		// save post formatter (overrides blog_type)
+		$this->save_formatter( $post );
 
-			// if empty string...
-			if ( $_data === '' ) {
+		// save default sidebar
+		$this->save_default_sidebar( $post );
 
-				// delete the meta_key
-				delete_post_meta( $post->ID, $key );
+		// save starting paragraph number
+		$this->save_starting_paragraph( $post );
 
-			} else {
+		// save workflow meta
+		$this->save_workflow( $post );
 
-				// update the data
-				update_post_meta( $post->ID, $key, esc_sql( $_data ) );
+	}
 
-			}
 
-		} else {
 
-			// add the data
-			add_post_meta( $post->ID, $key, esc_sql( $_data ) );
+	/**
+	 * When a page is saved, this authenticates that our options can be saved
+	 *
+	 * @param object $post_obj The post object
+	 * @return void
+	 */
+	public function save_page_meta_authenticated( $post_obj ) {
 
-		}
+		//print_r( 'data: ' . $_data ); die();
+		//print_r( '$post_obj->post_type: ' . $post_obj->post_type ); die();
+		//print_r( '$post_obj->ID: ' . $post_obj->ID ); die();
 
-		// ---------------------------------------------------------------------
-		// Show or Hide Page Title
-		// ---------------------------------------------------------------------
+		// if no post, kick out
+		if ( !$post_obj ) return false;
+
+		// if not page, kick out
+		if ( $post_obj->post_type != 'page' ) return false;
+
+		// authenticate
+		$_nonce = isset( $_POST['commentpress_nonce'] ) ? $_POST['commentpress_nonce'] : '';
+		if ( ! wp_verify_nonce( $_nonce, 'commentpress_page_settings' ) ) return false;
+
+		// is this an auto save routine?
+		if ( defined( 'DOING_AUTOSAVE' ) AND DOING_AUTOSAVE ) return false;
+
+		// check permissions - 'edit_pages' is available to editor+
+		if ( ! current_user_can( 'edit_pages' ) ) return false;
+
+		// good to go
+		return true;
+
+	}
+
+
+
+	/**
+	 * Save Page Title visibility
+	 *
+	 * @param object $post The post object
+	 * @return void
+	 */
+	public function save_page_title_visibility( $post ) {
 
 		// find and save the data
 		$_data = ( isset( $_POST['cp_title_visibility'] ) ) ? $_POST['cp_title_visibility'] : 'show';
@@ -1262,17 +1274,11 @@ class CommentpressCoreDatabase {
 		// if the custom field already has a value...
 		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
-			// if empty string...
+			// delete the meta_key if empty string...
 			if ( $_data === '' ) {
-
-				// delete the meta_key
 				delete_post_meta( $post->ID, $key );
-
 			} else {
-
-				// update the data
 				update_post_meta( $post->ID, $key, esc_sql( $_data ) );
-
 			}
 
 		} else {
@@ -1282,9 +1288,57 @@ class CommentpressCoreDatabase {
 
 		}
 
-		// ---------------------------------------------------------------------
-		// Page Numbering - only first top level page is allowed to send this
-		// ---------------------------------------------------------------------
+	}
+
+
+
+	/**
+	 * Save Page Meta visibility
+	 *
+	 * @param object $post The post object
+	 * @return void
+	 */
+	public function save_page_meta_visibility( $post ) {
+
+		// find and save the data
+		$_data = ( isset( $_POST['cp_page_meta_visibility'] ) ) ? $_POST['cp_page_meta_visibility'] : 'hide';
+
+		//print_r( '$_data: ' . $_data ); die();
+		//print_r( $post ); die();
+
+		// set key
+		$key = '_cp_page_meta_visibility';
+
+		// if the custom field already has a value...
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+
+			// delete the meta_key if empty string...
+			if ( $_data === '' ) {
+				delete_post_meta( $post->ID, $key );
+			} else {
+				update_post_meta( $post->ID, $key, esc_sql( $_data ) );
+			}
+
+		} else {
+
+			// add the data
+			add_post_meta( $post->ID, $key, esc_sql( $_data ) );
+
+		}
+
+	}
+
+
+
+	/**
+	 * Save Page Numbering format
+	 *
+	 * Only first top-level page is allowed to save this
+	 *
+	 * @param object $post The post object
+	 * @return void
+	 */
+	public function save_page_numbering( $post ) {
 
 		// was the value sent?
 		if ( isset( $_POST['cp_number_format'] ) ) {
@@ -1358,9 +1412,17 @@ class CommentpressCoreDatabase {
 
 		}
 
-		// ---------------------------------------------------------------------
-		// Page Layout for Title Page -> to allow for Book Cover image
-		// ---------------------------------------------------------------------
+	}
+
+
+
+	/**
+	 * Save Page Layout for Title Page -> to allow for Book Cover image
+	 *
+	 * @param object $post The post object
+	 * @return void
+	 */
+	public function save_page_layout( $post ) {
 
 		// is this the title page?
 		if ( $post->ID == $this->option_get( 'cp_welcome_page' ) ) {
@@ -1374,17 +1436,11 @@ class CommentpressCoreDatabase {
 			// if the custom field already has a value...
 			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
-				// if empty string...
+				// delete the meta_key if empty string...
 				if ( $_data === '' ) {
-
-					// delete the meta_key
 					delete_post_meta( $post->ID, $key );
-
 				} else {
-
-					// update the data
 					update_post_meta( $post->ID, $key, esc_sql( $_data ) );
-
 				}
 
 			} else {
@@ -1393,199 +1449,6 @@ class CommentpressCoreDatabase {
 				add_post_meta( $post->ID, $key, esc_sql( $_data ) );
 
 			}
-
-		}
-
-		// ---------------------------------------------------------------------
-		// Override post formatter (override blog_type)
-		// ---------------------------------------------------------------------
-
-		// get the data
-		$_data = ( isset( $_POST['cp_post_type_override'] ) ) ? $_POST['cp_post_type_override'] : '';
-
-		//print_r( '$_data: ' . $_data ); die();
-		//print_r( $post ); die();
-
-		// set key
-		$key = '_cp_post_type_override';
-
-		// if the custom field already has a value...
-		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-			// if empty string...
-			if ( $_data === '' ) {
-
-				// delete the meta_key
-				delete_post_meta( $post->ID, $key );
-
-			} else {
-
-				// update the data
-				update_post_meta( $post->ID, $key, esc_sql( $_data ) );
-
-			}
-
-		} else {
-
-			// add the data
-			add_post_meta( $post->ID, $key, esc_sql( $_data ) );
-
-		}
-
-		// ---------------------------------------------------------------------
-		// Default Sidebar
-		// ---------------------------------------------------------------------
-
-		// do we have the option to choose the default sidebar (new in 3.3.3)?
-		if ( $this->option_exists( 'cp_sidebar_default' ) ) {
-
-			// find and save the data
-			$_data = ( isset( $_POST['cp_sidebar_default'] ) ) ?
-					 $_POST['cp_sidebar_default'] :
-					 $this->db->option_get( 'cp_sidebar_default' );
-
-			//print_r( '$_data: ' . $_data ); die();
-			//print_r( $post ); die();
-
-			// set key
-			$key = '_cp_sidebar_default';
-
-			// if the custom field already has a value...
-			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-				// if empty string...
-				if ( $_data === '' ) {
-
-					// delete the meta_key
-					delete_post_meta( $post->ID, $key );
-
-				} else {
-
-					// update the data
-					update_post_meta( $post->ID, $key, esc_sql( $_data ) );
-
-				}
-
-			} else {
-
-				// add the data
-				add_post_meta( $post->ID, $key, esc_sql( $_data ) );
-
-			}
-
-		}
-
-		// ---------------------------------------------------------------------
-		// Starting Paragraph Number - meta only exists when not default value
-		// ---------------------------------------------------------------------
-
-		// get the data
-		$_data = ( isset( $_POST['cp_starting_para_number'] ) ) ? $_POST['cp_starting_para_number'] : 1;
-
-		// if not numeric, set to default
-		if ( ! is_numeric( $_data ) ) { $_data = 1; }
-
-		// sanitize it
-		$_data = absint( $_data );
-
-		// set key
-		$key = '_cp_starting_para_number';
-
-		// if the custom field already has a value...
-		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-			// if default...
-			if ( $_data === 1 ) {
-
-				// delete the meta_key
-				delete_post_meta( $post->ID, $key );
-
-			} else {
-
-				// update the data
-				update_post_meta( $post->ID, $key, esc_sql( $_data ) );
-
-			}
-
-		} else {
-
-			// if greater than default...
-			if ( $_data > 1 ) {
-
-				// add the data
-				add_post_meta( $post->ID, $key, esc_sql( $_data ) );
-
-			}
-
-		}
-
-		// ---------------------------------------------------------------------
-		// Workflow
-		// ---------------------------------------------------------------------
-
-		// do we have the option to set workflow (new in 3.3.1)?
-		if ( $this->option_exists( 'cp_blog_workflow' ) ) {
-
-			// get workflow setting for the blog
-			$_workflow = $this->option_get( 'cp_blog_workflow' );
-
-			/*
-			// ----------------
-			// WORK IN PROGRESS
-
-			// set key
-			$key = '_cp_blog_workflow_override';
-
-			// if the custom field already has a value...
-			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-				// get existing value
-				$_workflow = get_post_meta( $post->ID, $key, true );
-
-			}
-			// ----------------
-			*/
-
-			// if it's enabled...
-			if ( $_workflow == '1' ) {
-
-				// notify plugins that workflow stuff needs saving
-				do_action( 'cp_workflow_save_page', $post );
-
-			}
-
-			/*
-			// ----------------
-			// WORK IN PROGRESS
-
-			// get the setting for the post (we do this after saving the extra
-			// post data because
-			$_formatter = ( isset( $_POST['cp_post_type_override'] ) ) ? $_POST['cp_post_type_override'] : '';
-
-			// if the custom field already has a value...
-			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-				// if empty string...
-				if ( $_data === '' ) {
-
-					// delete the meta_key
-					delete_post_meta( $post->ID, $key );
-
-				} else {
-
-					// update the data
-					update_post_meta( $post->ID, $key, esc_sql( $_data ) );
-
-				}
-
-			} else {
-
-				// add the data
-				add_post_meta( $post->ID, $key, esc_sql( $_data ) );
-
-			}
-			// ----------------
-			*/
 
 		}
 
@@ -1601,27 +1464,8 @@ class CommentpressCoreDatabase {
 	 */
 	public function save_post_meta( $post_obj ) {
 
-		//print_r( 'data: ' . $_data ); die();
-		//print_r( '$post_obj->post_type: ' . $post_obj->post_type ); die();
-		//print_r( '$post_obj->ID: ' . $post_obj->ID ); die();
-
-		// if no post, kick out
-		if ( !$post_obj ) { return; }
-
-		// if not page, kick out
-		if ( $post_obj->post_type != 'post' ) { return; }
-
-		// authenticate
-		$_nonce = isset( $_POST['commentpress_nonce'] ) ? $_POST['commentpress_nonce'] : '';
-		if ( !wp_verify_nonce( $_nonce, 'commentpress_post_settings' ) ) { return; }
-
-		// is this an auto save routine?
-		if ( defined('DOING_AUTOSAVE') AND DOING_AUTOSAVE ) { return; }
-
-		// check permissions - 'edit_posts' is available to contributor+
-		if ( !current_user_can( 'edit_posts', $post_obj->ID ) ) { return; }
-
-		// OK, we're authenticated
+		// bail if we're not authenticated
+		if ( ! $this->save_post_meta_authenticated( $post_obj ) ) return;
 
 		// check for revision
 		if ( $post_obj->post_type == 'revision' ) {
@@ -1637,154 +1481,14 @@ class CommentpressCoreDatabase {
 			$post = $post_obj;
 		}
 
-		// ---------------------------------------------------------------------
-		// Override post formatter (override blog_type)
-		// ---------------------------------------------------------------------
+		// save post formatter (overrides blog_type)
+		$this->save_formatter( $post );
 
-		// get the data
-		$_formatter = ( isset( $_POST['cp_post_type_override'] ) ) ? $_POST['cp_post_type_override'] : '';
+		// save workflow meta
+		$this->save_workflow( $post );
 
-		//print_r( '$_data: ' . $_data ); die();
-		//print_r( $post ); die();
-
-		// set key
-		$key = '_cp_post_type_override';
-
-		// if the custom field already has a value...
-		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-			// if empty string...
-			if ( $_formatter === '' ) {
-
-				// delete the meta_key
-				delete_post_meta( $post->ID, $key );
-
-			} else {
-
-				// update the data
-				update_post_meta( $post->ID, $key, esc_sql( $_formatter ) );
-
-			}
-
-		} else {
-
-			// add the data
-			add_post_meta( $post->ID, $key, esc_sql( $_formatter ) );
-
-		}
-
-		// ---------------------------------------------------------------------
-		// Workflow
-		// ---------------------------------------------------------------------
-
-		// do we have the option to set workflow (new in 3.3.1)?
-		if ( $this->option_exists( 'cp_blog_workflow' ) ) {
-
-			// get workflow setting for the blog
-			$_workflow = $this->option_get( 'cp_blog_workflow' );
-
-			/*
-			// ----------------
-			// WORK IN PROGRESS
-
-			// set key
-			$key = '_cp_blog_workflow_override';
-
-			// if the custom field already has a value...
-			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-				// get existing value
-				$_workflow = get_post_meta( $post->ID, $key, true );
-
-			}
-			// ----------------
-			*/
-
-			// if it's enabled for the blog or the post...
-			if ( $_workflow == '1' ) {
-
-				// notify plugins that workflow stuff needs saving
-				do_action( 'cp_workflow_save_post', $post );
-
-			}
-
-			/*
-			// ----------------
-			// WORK IN PROGRESS
-
-			// get the setting for the post (we do this after saving the extra
-			// post data because
-			$_formatter = ( isset( $_POST['cp_post_type_override'] ) ) ? $_POST['cp_post_type_override'] : '';
-
-			// if the custom field already has a value...
-			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-				// if empty string...
-				if ( $_data === '' ) {
-
-					// delete the meta_key
-					delete_post_meta( $post->ID, $key );
-
-				} else {
-
-					// update the data
-					update_post_meta( $post->ID, $key, esc_sql( $_data ) );
-
-				}
-
-			} else {
-
-				// add the data
-				add_post_meta( $post->ID, $key, esc_sql( $_data ) );
-
-			}
-			// ----------------
-			*/
-
-		}
-
-		// ---------------------------------------------------------------------
-		// Default Sidebar
-		// ---------------------------------------------------------------------
-
-		// do we have the option to choose the default sidebar (new in 3.3.3)?
-		if ( $this->option_exists( 'cp_sidebar_default' ) ) {
-
-			// find and save the data
-			$_data = ( isset( $_POST['cp_sidebar_default'] ) ) ?
-					 $_POST['cp_sidebar_default'] :
-					 $this->db->option_get( 'cp_sidebar_default' );
-
-			//print_r( '$_data: ' . $_data ); die();
-			//print_r( $post ); die();
-
-			// set key
-			$key = '_cp_sidebar_default';
-
-			// if the custom field already has a value...
-			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-				// if empty string...
-				if ( $_data === '' ) {
-
-					// delete the meta_key
-					delete_post_meta( $post->ID, $key );
-
-				} else {
-
-					// update the data
-					update_post_meta( $post->ID, $key, esc_sql( $_data ) );
-
-				}
-
-			} else {
-
-				// add the data
-				add_post_meta( $post->ID, $key, esc_sql( $_data ) );
-
-			}
-
-		}
+		// save default sidebar
+		$this->save_default_sidebar( $post );
 
 		// ---------------------------------------------------------------------
 		// Create new post with content of current
@@ -1793,17 +1497,8 @@ class CommentpressCoreDatabase {
 		// find and save the data
 		$_data = ( isset( $_POST['commentpress_new_post'] ) ) ? $_POST['commentpress_new_post'] : '0';
 
-		/*
-		print_r( array(
-
-			'$_data' => $_data,
-			'$post ' => $post
-
-		) ); die();
-		*/
-
 		// do we want to create a new revision?
-		if ( $_data == '0' ) { return; }
+		if ( $_data == '0' ) return;
 
 
 
@@ -1830,17 +1525,11 @@ class CommentpressCoreDatabase {
 		// if the custom field already has a value...
 		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
-			// if empty string...
+			// delete the meta_key if empty string...
 			if ( $_data === '' ) {
-
-				// delete the meta_key
 				delete_post_meta( $post->ID, $key );
-
 			} else {
-
-				// update the data
 				update_post_meta( $post->ID, $key, $new_post_id );
-
 			}
 
 		} else {
@@ -1904,6 +1593,245 @@ class CommentpressCoreDatabase {
 
 
 	/**
+	 * When a post is saved, this authenticates that our options can be saved
+	 *
+	 * @param object $post_obj The post object
+	 * @return void
+	 */
+	public function save_post_meta_authenticated( $post_obj ) {
+
+		//print_r( 'data: ' . $_data ); die();
+		//print_r( '$post_obj->post_type: ' . $post_obj->post_type ); die();
+		//print_r( '$post_obj->ID: ' . $post_obj->ID ); die();
+
+		// if no post, kick out
+		if ( !$post_obj ) return false;
+
+		// if not page, kick out
+		if ( $post_obj->post_type != 'post' ) return false;
+
+		// authenticate
+		$_nonce = isset( $_POST['commentpress_nonce'] ) ? $_POST['commentpress_nonce'] : '';
+		if ( ! wp_verify_nonce( $_nonce, 'commentpress_post_settings' ) ) return false;
+
+		// is this an auto save routine?
+		if ( defined( 'DOING_AUTOSAVE' ) AND DOING_AUTOSAVE ) return false;
+
+		// check permissions - 'edit_posts' is available to contributor+
+		if ( ! current_user_can( 'edit_posts', $post_obj->ID ) ) return false;
+
+		// good to go
+		return true;
+
+	}
+
+
+
+	/**
+	 * Override post formatter (override blog_type)
+	 *
+	 * @param object $post The post object
+	 * @return void
+	 */
+	public function save_formatter( $post ) {
+
+		// get the data
+		$_data = ( isset( $_POST['cp_post_type_override'] ) ) ? $_POST['cp_post_type_override'] : '';
+
+		//print_r( '$_data: ' . $_data ); die();
+		//print_r( $post ); die();
+
+		// set key
+		$key = '_cp_post_type_override';
+
+		// if the custom field already has a value...
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+
+			// delete the meta_key if empty string...
+			if ( $_data === '' ) {
+				delete_post_meta( $post->ID, $key );
+			} else {
+				update_post_meta( $post->ID, $key, esc_sql( $_data ) );
+			}
+
+		} else {
+
+			// add the data
+			add_post_meta( $post->ID, $key, esc_sql( $_data ) );
+
+		}
+
+	}
+
+
+
+	/**
+	 * Override default sidebar
+	 *
+	 * @param object $post The post object
+	 * @return void
+	 */
+	public function save_default_sidebar( $post ) {
+
+		// do we have the option to choose the default sidebar (new in 3.3.3)?
+		if ( $this->option_exists( 'cp_sidebar_default' ) ) {
+
+			// find and save the data
+			$_data = ( isset( $_POST['cp_sidebar_default'] ) ) ?
+					 $_POST['cp_sidebar_default'] :
+					 $this->db->option_get( 'cp_sidebar_default' );
+
+			//print_r( '$_data: ' . $_data ); die();
+			//print_r( $post ); die();
+
+			// set key
+			$key = '_cp_sidebar_default';
+
+			// if the custom field already has a value...
+			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+
+				// delete the meta_key if empty string...
+				if ( $_data === '' ) {
+					delete_post_meta( $post->ID, $key );
+				} else {
+					update_post_meta( $post->ID, $key, esc_sql( $_data ) );
+				}
+
+			} else {
+
+				// add the data
+				add_post_meta( $post->ID, $key, esc_sql( $_data ) );
+
+			}
+
+		}
+
+	}
+
+
+
+	/**
+	 * Starting Paragraph Number - meta only exists when not default value
+	 *
+	 * @param object $post The post object
+	 * @return void
+	 */
+	public function save_starting_paragraph( $post ) {
+
+		// get the data
+		$_data = ( isset( $_POST['cp_starting_para_number'] ) ) ? $_POST['cp_starting_para_number'] : 1;
+
+		// if not numeric, set to default
+		if ( ! is_numeric( $_data ) ) { $_data = 1; }
+
+		// sanitize it
+		$_data = absint( $_data );
+
+		// set key
+		$key = '_cp_starting_para_number';
+
+		// if the custom field already has a value...
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+
+			// delete if default...
+			if ( $_data === 1 ) {
+				delete_post_meta( $post->ID, $key );
+			} else {
+				update_post_meta( $post->ID, $key, esc_sql( $_data ) );
+			}
+
+		} else {
+
+			// add the data if greater than default...
+			if ( $_data > 1 ) {
+				add_post_meta( $post->ID, $key, esc_sql( $_data ) );
+			}
+
+		}
+
+	}
+
+
+
+	/**
+	 * Save workflow meta value
+	 *
+	 * @param object $post The post object
+	 * @return void
+	 */
+	public function save_workflow( $post ) {
+
+		// do we have the option to set workflow (new in 3.3.1)?
+		if ( $this->option_exists( 'cp_blog_workflow' ) ) {
+
+			// get workflow setting for the blog
+			$_workflow = $this->option_get( 'cp_blog_workflow' );
+
+			/*
+			// ----------------
+			// WORK IN PROGRESS
+
+			// set key
+			$key = '_cp_blog_workflow_override';
+
+			// if the custom field already has a value...
+			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+
+				// get existing value
+				$_workflow = get_post_meta( $post->ID, $key, true );
+
+			}
+			// ----------------
+			*/
+
+			// if it's enabled...
+			if ( $_workflow == '1' ) {
+
+				// notify plugins that workflow stuff needs saving
+				do_action( 'cp_workflow_save_' . $post->post_type, $post );
+
+			}
+
+			/*
+			// ----------------
+			// WORK IN PROGRESS
+
+			// get the setting for the post (we do this after saving the extra
+			// post data because
+			$_formatter = ( isset( $_POST['cp_post_type_override'] ) ) ? $_POST['cp_post_type_override'] : '';
+
+			// if the custom field already has a value...
+			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+
+				// if empty string...
+				if ( $_data === '' ) {
+
+					// delete the meta_key
+					delete_post_meta( $post->ID, $key );
+
+				} else {
+
+					// update the data
+					update_post_meta( $post->ID, $key, esc_sql( $_data ) );
+
+				}
+
+			} else {
+
+				// add the data
+				add_post_meta( $post->ID, $key, esc_sql( $_data ) );
+
+			}
+			// ----------------
+			*/
+
+		}
+
+	}
+
+
+
+	/**
 	 * When a page is deleted, this makes sure that the CP options are synced
 	 *
 	 * @param object $post_id The post ID
@@ -1912,7 +1840,7 @@ class CommentpressCoreDatabase {
 	public function delete_meta( $post_id ) {
 
 		// if no post, kick out
-		if ( !$post_id ) { return; }
+		if ( !$post_id ) return;
 
 		// if it's our welcome page...
 		if ( $post_id == $this->option_get( 'cp_welcome_page' ) ) {
