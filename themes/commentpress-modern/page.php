@@ -249,18 +249,18 @@
 			// if we get one
 			if ( $num ) {
 
-				// is it arabic?
-				if ( is_numeric( $num ) ) {
-
-					// add page number
-					?><div class="running_header_bottom"><?php echo sprintf( __( 'Page %d', 'commentpress-core' ), $num ); ?></div><?php
-
-				} else {
-
-					// add page number
-					?><div class="running_header_bottom"><?php echo sprintf( __( 'Page %s', 'commentpress-core' ), strtolower( $num ) ); ?></div><?php
-
+				// make lowercase if Roman
+				if ( ! is_numeric( $num ) ) {
+					$num = strtolower( $num );
 				}
+
+				// wrap number
+				$element = '<span class="page_num_bottom">' . $num . '</span>';
+
+				// add page number
+				?><div class="running_header_bottom"><?php
+					echo sprintf( __( 'Page %s', 'commentpress-core' ), $element );
+				?></div><?php
 
 			}
 
