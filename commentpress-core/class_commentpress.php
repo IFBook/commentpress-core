@@ -2513,6 +2513,9 @@ class CommentpressCore {
 	 */
 	function _get_default_sidebar_metabox( $post ) {
 
+		// allow this to be disabled
+		if ( apply_filters( 'commentpress_hide_sidebar_metabox', false ) ) return;
+
 		// ---------------------------------------------------------------------
 		// Override post formatter
 		// ---------------------------------------------------------------------
