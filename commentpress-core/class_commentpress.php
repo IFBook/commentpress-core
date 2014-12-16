@@ -920,7 +920,8 @@ class CommentpressCore {
 		// ---------------------------------------------------------------------
 
 		// show a title
-		echo '<p><strong><label for="cp_title_visibility">' . __( 'Page Title Visibility' , 'commentpress-core' ) . '</label></strong></p>';
+		echo '<div class="cp_title_visibility_wrapper">
+		<p><strong><label for="cp_title_visibility">' . __( 'Page Title Visibility' , 'commentpress-core' ) . '</label></strong></p>';
 
 		// set key
 		$key = '_cp_title_visibility';
@@ -944,6 +945,7 @@ class CommentpressCore {
 			<option value="hide" ' . (($viz == 'hide') ? ' selected="selected"' : '') . '>' . __('Hide page title', 'commentpress-core') . '</option>
 		</select>
 		</p>
+		</div>
 		';
 
 		// ---------------------------------------------------------------------
@@ -951,7 +953,8 @@ class CommentpressCore {
 		// ---------------------------------------------------------------------
 
 		// show a label
-		echo '<p><strong><label for="cp_page_meta_visibility">' . __( 'Page Meta Visibility' , 'commentpress-core' ) . '</label></strong></p>';
+		echo '<div class="cp_page_meta_visibility_wrapper">
+		<p><strong><label for="cp_page_meta_visibility">' . __( 'Page Meta Visibility' , 'commentpress-core' ) . '</label></strong></p>';
 
 		// set key
 		$key = '_cp_page_meta_visibility';
@@ -975,6 +978,7 @@ class CommentpressCore {
 			<option value="hide" ' . (($viz == 'hide') ? ' selected="selected"' : '') . '>' . __('Hide page meta', 'commentpress-core') . '</option>
 		</select>
 		</p>
+		</div>
 		';
 
 		// ---------------------------------------------------------------------
@@ -992,7 +996,8 @@ class CommentpressCore {
 		) { // -->
 
 			// label
-			echo '<p><strong><label for="cp_number_format">' . __('Page Number Format', 'commentpress-core' ) . '</label></strong></p>';
+			echo '<div class="cp_number_format_wrapper">
+			<p><strong><label for="cp_number_format">' . __('Page Number Format', 'commentpress-core' ) . '</label></strong></p>';
 
 			// set key
 			$key = '_cp_number_format';
@@ -1018,6 +1023,7 @@ class CommentpressCore {
 				<option value="roman" ' . (($format == 'roman') ? ' selected="selected"' : '') . '>' . __('Roman numerals', 'commentpress-core' ) . '</option>
 			</select>
 			</p>
+			</div>
 			';
 
 		}
@@ -1030,7 +1036,8 @@ class CommentpressCore {
 		if ( $post->ID == $this->db->option_get( 'cp_welcome_page' ) ) {
 
 			// label
-			echo '<p><strong><label for="cp_page_layout">' . __('Page Layout', 'commentpress-core' ) . '</label></strong></p>';
+			echo '<div class="cp_page_layout_wrapper">
+			<p><strong><label for="cp_page_layout">' . __('Page Layout', 'commentpress-core' ) . '</label></strong></p>';
 
 			// set key
 			$key = '_cp_page_layout';
@@ -1054,6 +1061,7 @@ class CommentpressCore {
 				<option value="wide" ' . (($value == 'wide') ? ' selected="selected"' : '') . '>' . __('Wide', 'commentpress-core' ) . '</option>
 			</select>
 			</p>
+			</div>
 			';
 
 		}
@@ -2446,7 +2454,8 @@ class CommentpressCore {
 				$type_title = apply_filters( 'cp_post_type_override_label', $type_title );
 
 				// label
-				echo '<p><strong><label for="cp_post_type_override">' . $type_title . '</label></strong></p>';
+				echo '<div class="cp_post_type_override_wrapper">
+				<p><strong><label for="cp_post_type_override">' . $type_title . '</label></strong></p>';
 
 				// construct options
 				$type_option_list = array();
@@ -2485,6 +2494,7 @@ class CommentpressCore {
 					' . $type_options . '
 				</select>
 				</p>
+				</div>
 				';
 
 			}
@@ -2511,7 +2521,8 @@ class CommentpressCore {
 		if ( $this->db->option_exists( 'cp_sidebar_default' ) ) {
 
 			// show a title
-			echo '<p><strong><label for="cp_sidebar_default">' . __( 'Default Sidebar' , 'commentpress-core' ) . '</label></strong></p>';
+			echo '<div class="cp_sidebar_default_wrapper">
+			<p><strong><label for="cp_sidebar_default">' . __( 'Default Sidebar' , 'commentpress-core' ) . '</label></strong></p>';
 
 			// set key
 			$key = '_cp_sidebar_default';
@@ -2529,14 +2540,15 @@ class CommentpressCore {
 
 			// select
 			echo '
-<p>
-<select id="cp_sidebar_default" name="cp_sidebar_default">
-	<option value="toc" ' . (($_sidebar == 'toc') ? ' selected="selected"' : '') . '>' . __('Contents', 'commentpress-core') . '</option>
-	<option value="activity" ' . (($_sidebar == 'activity') ? ' selected="selected"' : '') . '>' . __('Activity', 'commentpress-core') . '</option>
-	<option value="comments" ' . (($_sidebar == 'comments') ? ' selected="selected"' : '') . '>' . __('Comments', 'commentpress-core') . '</option>
-</select>
-</p>
-';
+			<p>
+			<select id="cp_sidebar_default" name="cp_sidebar_default">
+				<option value="toc" ' . (($_sidebar == 'toc') ? ' selected="selected"' : '') . '>' . __('Contents', 'commentpress-core') . '</option>
+				<option value="activity" ' . (($_sidebar == 'activity') ? ' selected="selected"' : '') . '>' . __('Activity', 'commentpress-core') . '</option>
+				<option value="comments" ' . (($_sidebar == 'comments') ? ' selected="selected"' : '') . '>' . __('Comments', 'commentpress-core') . '</option>
+			</select>
+			</p>
+			</div>
+			';
 
 		}
 
@@ -2553,7 +2565,8 @@ class CommentpressCore {
 	function _get_para_numbering_metabox( $post ) {
 
 		// show a title
-		echo '<p><strong><label for="cp_starting_para_number">' . __( 'Starting Paragraph Number' , 'commentpress-core' ) . '</label></strong></p>';
+		echo '<div class="cp_starting_para_number_wrapper">
+		<p><strong><label for="cp_starting_para_number">' . __( 'Starting Paragraph Number' , 'commentpress-core' ) . '</label></strong></p>';
 
 		// set key
 		$key = '_cp_starting_para_number';
@@ -2571,10 +2584,11 @@ class CommentpressCore {
 
 		// select
 		echo '
-<p>
-<input type="text" id="cp_starting_para_number" name="cp_starting_para_number" value="' . $_num . '" />
-</p>
-';
+		<p>
+		<input type="text" id="cp_starting_para_number" name="cp_starting_para_number" value="' . $_num . '" />
+		</p>
+		</div>
+		';
 
 	}
 
