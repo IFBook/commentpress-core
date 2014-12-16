@@ -166,8 +166,31 @@ class CommentpressCoreEditor {
 		add_action( 'wp_ajax_cp_get_comments_container', array( $this, 'get_comments_container' ) );
 		add_action( 'wp_ajax_nopriv_cp_get_comments_container', array( $this, 'get_comments_container' ) );
 
+		// add metabox
+		add_action( 'commentpress_after_comments_container', array( $this, 'get_metabox_container' ) );
+
 		// add vars to Javascript
 		add_filter( 'commentpress_get_javascript_vars', array( $this, 'get_javascript_vars' ) );
+
+	}
+
+
+
+	/**
+	 * Get new post metabox container
+	 *
+	 * @return void
+	 */
+	public function get_metabox_container() {
+
+		// open div
+		echo '<div class="metabox_container" style="display: none;">';
+
+		// use common method
+		$this->parent_obj->custom_box_page();
+
+		// close div
+		echo '</div>' . "\n\n";
 
 	}
 

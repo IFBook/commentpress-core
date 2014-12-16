@@ -3166,6 +3166,19 @@ body.fee.fee-on .fee-content-body.mce-edit-focus
 	background-color: transparent;
 }
 
+body.fee .metabox_container
+{
+	font-family: sans-serif;
+	font-size: 80%;
+	padding: 2%;
+	background-color: #dadada;
+	background-color: #f5efcb;
+}
+
+body.fee .metabox_container label
+{
+	text-transform: uppercase;
+}
 
 
 

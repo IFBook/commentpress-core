@@ -2831,7 +2831,13 @@ jQuery(document).ready( function($) {
 		//alert( 'fee-on' );
 
 		// hide comments
-		$( '#comments_sidebar .comments_container' ).fadeOut();
+		$( '#comments_sidebar .comments_container' ).fadeOut(
+
+			function() {
+				$( '#comments_sidebar .metabox_container' ).fadeIn();
+			}
+
+		);
 
 	});
 
@@ -2844,76 +2850,83 @@ jQuery(document).ready( function($) {
 
 		//alert( 'fee-off' );
 
-		/*
-		// we can use this to log ajax errors from jQuery.post()
-		$(document).ajaxError( function( e, xhr, settings, exception ) {
-			console.log( 'error in: ' + settings.url + ' \n'+'error:\n' + xhr.responseText );
-		});
-		*/
+		$( '#comments_sidebar .metabox_container' ).fadeOut(
 
-		// use post method
-		$.post(
+			function() {
 
-			// set URL
-			cp_ajax_url,
+				/*
+				// we can use this to log ajax errors from jQuery.post()
+				$(document).ajaxError( function( e, xhr, settings, exception ) {
+					console.log( 'error in: ' + settings.url + ' \n'+'error:\n' + xhr.responseText );
+				});
+				*/
 
-			// add data
-			{
+				// use post method
+				$.post(
 
-				// set WordPress method to call
-				action: 'cp_get_comments_container',
+					// set URL
+					cp_ajax_url,
 
-				// send post data
-				post_id: cp_post_id,
-				post_multipage: cp_post_multipage,
-				post_page: cp_post_page,
+					// add data
+					{
 
-			},
+						// set WordPress method to call
+						action: 'cp_get_comments_container',
 
-			// callback
-			function( data, textStatus ) {
+						// send post data
+						post_id: cp_post_id,
+						post_multipage: cp_post_multipage,
+						post_page: cp_post_page,
 
-				var comments;
+					},
 
-				console.log( textStatus );
-				console.log( data );
+					// callback
+					function( data, textStatus ) {
 
-				// if success
-				if ( textStatus == 'success' ) {
+						var comments;
 
-					// find comments
-					comments = $( '.comments_container', $(data.comments) );
+						//console.log( textStatus );
+						//console.log( data );
 
-					// get a copy of the comment form for this post
-					post_comment_form = cp_comment_form.clone();
+						// if success
+						if ( textStatus == 'success' ) {
 
-					// add it to the comments
-					comments.append( post_comment_form );
+							// find comments
+							comments = $( '.comments_container', $(data.comments) );
 
-					// disable the comment form
-					addComment.disableForm();
+							// get a copy of the comment form for this post
+							post_comment_form = cp_comment_form.clone();
 
-					// replace comments
-					$( '#comments_sidebar .comments_container' ).replaceWith( comments );
+							// add it to the comments
+							comments.append( post_comment_form );
 
-					// re-enable the comment form
-					addComment.enableForm();
+							// disable the comment form
+							addComment.disableForm();
 
-					// keep comments hidden
-					$( '#comments_sidebar .comments_container' ).hide();
+							// replace comments
+							$( '#comments_sidebar .comments_container' ).replaceWith( comments );
 
-					// reset everything
-					commentpress_reset_actions();
+							// re-enable the comment form
+							addComment.enableForm();
 
-					// show comments
-					$( '#comments_sidebar .comments_container' ).fadeIn();
+							// keep comments hidden
+							$( '#comments_sidebar .comments_container' ).hide();
 
-				}
+							// reset everything
+							commentpress_reset_actions();
 
-			},
+							// show comments
+							$( '#comments_sidebar .comments_container' ).fadeIn();
 
-			// expected format
-			'json'
+						}
+
+					},
+
+					// expected format
+					'json'
+
+				);
+			}
 
 		);
 
