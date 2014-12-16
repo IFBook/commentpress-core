@@ -2065,6 +2065,9 @@ function commentpress_get_comments_by_para() {
 
 	}
 
+	// allow plugins to follow comments
+	do_action( 'commentpress_after_scrollable_comments' );
+
 }
 endif; // commentpress_get_comments_by_para
 
