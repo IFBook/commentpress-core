@@ -1679,7 +1679,7 @@ class CommentpressCoreDatabase {
 			// find and save the data
 			$_data = ( isset( $_POST['cp_sidebar_default'] ) ) ?
 					 $_POST['cp_sidebar_default'] :
-					 $this->db->option_get( 'cp_sidebar_default' );
+					 $this->option_get( 'cp_sidebar_default' );
 
 			//print_r( '$_data: ' . $_data ); die();
 			//print_r( $post ); die();
