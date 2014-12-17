@@ -384,16 +384,8 @@ class CommentpressCoreEditor {
 		$data['page'] = $page;
 		//$data['pages'] = $pages;
 
-		// set reasonable headers
-		header('Content-type: text/plain');
-		header("Cache-Control: no-cache");
-		header("Expires: -1");
-
-		// echo
-		echo json_encode( $data );
-
-		// die!
-		exit();
+		// send to browser
+		$this->_send_json_data( $data );
 
 	}
 
@@ -426,6 +418,31 @@ class CommentpressCoreEditor {
 	 */
 	public function metabox_set_post_title_visibility() {
 
+		// access globals
+		global $post;
+
+		// init return
+		$data = array();
+
+		// set up post
+		if ( $this->_setup_post() ) {
+
+			// save data
+			$this->parent_obj->save_page_title_visibility( $post );
+
+			// construct data to return
+			$data['message'] = __( 'Option saved', 'commentpress-core' );
+
+		} else {
+
+			// define error
+			$data['error'] = __( 'Could not save this option.', 'commentpress-core' );
+
+		}
+
+		// send to browser
+		$this->_send_json_data( $data );
+
 	}
 
 
@@ -436,6 +453,31 @@ class CommentpressCoreEditor {
 	 * @return void
 	 */
 	public function metabox_set_page_meta_visibility() {
+
+		// access globals
+		global $post;
+
+		// init return
+		$data = array();
+
+		// set up post
+		if ( $this->_setup_post() ) {
+
+			// save data
+			$this->db->save_page_meta_visibility( $post );
+
+			// construct data to return
+			$data['message'] = __( 'Option saved', 'commentpress-core' );
+
+		} else {
+
+			// define error
+			$data['error'] = __( 'Could not save this option.', 'commentpress-core' );
+
+		}
+
+		// send to browser
+		$this->_send_json_data( $data );
 
 	}
 
@@ -448,6 +490,39 @@ class CommentpressCoreEditor {
 	 */
 	public function metabox_set_number_format() {
 
+		// access globals
+		global $post;
+
+		// init return
+		$data = array();
+
+		// set up post
+		if ( $this->_setup_post() ) {
+
+			// save data
+			$this->db->save_page_numbering( $post );
+
+			// init list
+			$num = $this->parent_obj->nav->init_page_lists();
+
+			// get page num
+			$num = $this->parent_obj->nav->get_page_number( $post->ID );
+
+			// construct data to return
+			$data['error'] = 'success';
+			$data['message'] = __( 'Option saved', 'commentpress-core' );
+			$data['number'] = $num;
+
+		} else {
+
+			// define error
+			$data['error'] = __( 'Could not save this option.', 'commentpress-core' );
+
+		}
+
+		// send to browser
+		$this->_send_json_data( $data );
+
 	}
 
 
@@ -459,6 +534,31 @@ class CommentpressCoreEditor {
 	 */
 	public function metabox_set_post_type_override() {
 
+		// access globals
+		global $post;
+
+		// init return
+		$data = array();
+
+		// set up post
+		if ( $this->_setup_post() ) {
+
+			// save data
+			$this->db->save_formatter( $post );
+
+			// construct data to return
+			$data['message'] = __( 'Option saved', 'commentpress-core' );
+
+		} else {
+
+			// define error
+			$data['error'] = __( 'Could not save this option.', 'commentpress-core' );
+
+		}
+
+		// send to browser
+		$this->_send_json_data( $data );
+
 	}
 
 
@@ -469,6 +569,31 @@ class CommentpressCoreEditor {
 	 * @return void
 	 */
 	public function metabox_set_starting_para_number() {
+
+		// access globals
+		global $post;
+
+		// init return
+		$data = array();
+
+		// set up post
+		if ( $this->_setup_post() ) {
+
+			// save data
+			$this->db->save_starting_paragraph( $post );
+
+			// construct data to return
+			$data['message'] = __( 'Option saved', 'commentpress-core' );
+
+		} else {
+
+			// define error
+			$data['error'] = __( 'Could not save this option.', 'commentpress-core' );
+
+		}
+
+		// send to browser
+		$this->_send_json_data( $data );
 
 	}
 
@@ -483,6 +608,58 @@ class CommentpressCoreEditor {
 	 * Private Methods
 	 * -------------------------------------------------------------------------
 	 */
+
+
+
+	/**
+	 * Set up post object from passed data
+	 *
+	 * @return bool True if post object set up, false otherwise
+	 */
+	private function _setup_post() {
+
+		// access globals
+		global $post;
+
+		// get post ID
+		$post_id = isset( $_POST['post_id'] ) ? (int) $_POST['post_id'] : NULL;
+
+		// bail if we don't get one
+		if ( is_null( $post_id ) ) return false;
+
+		// bail if we get a non-numeric value
+		if ( ! is_numeric( $post_id ) ) return false;
+
+		// enable WordPress API on post
+		$GLOBALS['post'] = get_post( $post_id );
+		setup_postdata( $post );
+
+		// success
+		return true;
+
+	}
+
+
+
+	/**
+	 * Send data to browser and exit
+	 *
+	 * @return void
+	 */
+	private function _send_json_data( $data ) {
+
+		// set reasonable headers
+		header('Content-type: text/plain');
+		header("Cache-Control: no-cache");
+		header("Expires: -1");
+
+		// echo
+		echo json_encode( $data );
+
+		// die!
+		exit();
+
+	}
 
 
 

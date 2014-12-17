@@ -2962,52 +2962,6 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * Send single data item to server
-	 *
-	 * @param method The WordPress function to call
-	 * @param value The single data item to send
-	 * @return boolean success Whether successful or not
-	 */
-	function cp_send_to_server( method, value ) {
-
-		// send to server
-		$.post(
-
-			// set URL
-			cp_ajax_url,
-
-			// add data
-			{
-
-				// WordPress method to call
-				action: method,
-
-				// send data
-				post_id: cp_post_id,
-				post_data: value,
-
-			},
-
-			// callback
-			function( data, textStatus ) {
-
-				// if success
-				if ( textStatus == 'success' ) {
-
-				}
-
-			},
-
-			// expected format
-			'json'
-
-		);
-
-	}
-
-
-
-	/**
 	 * Metabox element changed: Page Title Visibility dropdown
 	 *
 	 * @return void
@@ -3015,14 +2969,17 @@ jQuery(document).ready( function($) {
 	$( '#cp_title_visibility' ).on( 'change', function( event ) {
 
 		// local vars
-		var success;
+		var method, key, callback;
 
 		console.log( 'cp_title_visibility' );
 		console.log( this.value );
 
+		method = 'cp_set_post_title_visibility';
+		key = 'cp_title_visibility';
+		callback = 'cp_my_callback';
+
 		// send
-		success = cp_send_to_server( 'cp_set_post_title_visibility', this.value );
-		console.log( success );
+		cp_send_to_server( method, key, this.value, callback );
 
 	});
 
@@ -3036,14 +2993,17 @@ jQuery(document).ready( function($) {
 	$( '#cp_page_meta_visibility' ).on( 'change', function( event ) {
 
 		// local vars
-		var success;
+		var method, key, callback;
 
 		console.log( 'cp_page_meta_visibility' );
 		console.log( this.value );
 
+		method = 'cp_set_page_meta_visibility';
+		key = 'cp_page_meta_visibility';
+		callback = 'cp_my_callback';
+
 		// send
-		success = cp_send_to_server( 'cp_set_page_meta_visibility', this.value );
-		console.log( success );
+		cp_send_to_server( method, key, this.value, callback );
 
 	});
 
@@ -3057,14 +3017,17 @@ jQuery(document).ready( function($) {
 	$( '#cp_number_format' ).on( 'change', function( event ) {
 
 		// local vars
-		var success;
+		var method, key, callback;
 
 		console.log( 'cp_number_format' );
 		console.log( this.value );
 
+		method = 'cp_set_number_format';
+		key = 'cp_number_format';
+		callback = 'cp_number_format_changed';
+
 		// send
-		success = cp_send_to_server( 'cp_set_number_format', this.value );
-		console.log( success );
+		cp_send_to_server( method, key, this.value, callback );
 
 	});
 
@@ -3078,14 +3041,17 @@ jQuery(document).ready( function($) {
 	$( '#cp_post_type_override' ).on( 'change', function( event ) {
 
 		// local vars
-		var success;
+		var method, key, callback;
 
 		console.log( 'cp_post_type_override' );
 		console.log( this.value );
 
+		method = 'cp_set_post_type_override';
+		key = 'cp_post_type_override';
+		callback = 'cp_my_callback';
+
 		// send
-		success = cp_send_to_server( 'cp_set_post_type_override', this.value );
-		console.log( success );
+		cp_send_to_server( method, key, this.value, callback );
 
 	});
 
@@ -3099,14 +3065,17 @@ jQuery(document).ready( function($) {
 	$( '#cp_starting_para_number' ).on( 'change', function( event ) {
 
 		// local vars
-		var success;
+		var method, key, callback;
 
 		console.log( 'cp_starting_para_number' );
 		console.log( this.value );
 
+		method = 'cp_set_starting_para_number';
+		key = 'cp_starting_para_number';
+		callback = 'cp_my_callback';
+
 		// send
-		success = cp_send_to_server( 'cp_set_starting_para_number', this.value );
-		console.log( success );
+		cp_send_to_server( method, key, this.value, callback );
 
 	});
 
@@ -3123,3 +3092,88 @@ jQuery(document).ready( function($) {
 	}
 
 });
+
+
+
+/**
+ * Callback for AJAX request
+ *
+ * @param data The data returned by the AJAX call in cp_send_to_server()
+ */
+function cp_my_callback( data ) {
+	console.log( data );
+}
+
+
+
+/**
+ * Callback for AJAX request
+ *
+ * @param data The data returned by the AJAX call in cp_send_to_server()
+ */
+function cp_number_format_changed( data ) {
+
+	console.log( 'callback: cp_number_format_changed' );
+	console.log( data );
+
+	if ( data.error == 'success' ) {
+		jQuery( '.page_num_bottom' ).html( data.number );
+	}
+
+}
+
+
+
+/**
+ * Send single data item to server
+ *
+ * @param method The WordPress function to call
+ * @param value The single data item to send
+ * @return boolean success Whether successful or not
+ */
+function cp_send_to_server( method, key, value, callback ) {
+
+	var data;
+
+	// create data array
+	data = {
+
+		// WordPress method to call
+		action: method,
+
+		// send data
+		post_id: cp_post_id
+
+	};
+
+	// add key/value
+	data[key] = value;
+
+	// send to server
+	jQuery.post(
+
+		// set URL
+		cp_ajax_url,
+
+		// add data
+		data,
+
+		// callback
+		function( data, textStatus ) {
+
+			// if success
+			if ( textStatus == 'success' ) {
+				window[callback]( data );
+			}
+
+		},
+
+		// expected format
+		'json'
+
+	);
+
+}
+
+
+
