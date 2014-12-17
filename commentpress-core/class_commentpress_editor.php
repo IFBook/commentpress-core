@@ -48,7 +48,7 @@ class CommentpressCoreEditor {
 		$this->db = $this->parent_obj->db;
 
 		// kill WP FEE
-		//$this->kill_wp_fee();
+		//$this->wp_fee_prevent_load();
 
 		// intercept toggles
 		add_action( 'plugins_loaded', array( $this, 'initialise' ) );
@@ -102,7 +102,7 @@ class CommentpressCoreEditor {
 	 *
 	 * @return void
 	 */
-	public function kill_wp_fee() {
+	public function wp_fee_prevent_load() {
 
 		// set flag
 		$this->fee = 'killed';
@@ -134,14 +134,14 @@ class CommentpressCoreEditor {
 		if ( isset( $this->fee ) AND $this->fee == 'killed' ) return;
 
 		// intercept toggles
-		add_action( 'init', array( $this, 'intercept_toggle' ) );
+		add_action( 'init', array( $this, 'editor_intercept_toggle' ) );
 
 		// enable editor toggle
-		add_action( 'cp_content_tab_before_search', array( $this, 'show_editor_toggle' ) );
+		add_action( 'cp_content_tab_before_search', array( $this, 'editor_show_toggle' ) );
 
 		// prevent TinyMCE in comment form
-		add_filter( 'cp_override_tinymce', array( $this, 'kill_commentpress_fee' ), 1000, 1 );
-		add_filter( 'commentpress_is_tinymce_allowed', array( $this, 'disallow_commentpress_fee' ), 1000 );
+		add_filter( 'cp_override_tinymce', array( $this, 'commentpress_prevent_tinymce' ), 1000, 1 );
+		add_filter( 'commentpress_is_tinymce_allowed', array( $this, 'commentpress_disallow_tinymce' ), 1000 );
 
 		// test for AJAX
 		if ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) {
@@ -163,11 +163,11 @@ class CommentpressCoreEditor {
 		}
 
 		// add AJAX functionality
-		add_action( 'wp_ajax_cp_get_comments_container', array( $this, 'get_comments_container' ) );
-		add_action( 'wp_ajax_nopriv_cp_get_comments_container', array( $this, 'get_comments_container' ) );
+		add_action( 'wp_ajax_cp_get_comments_container', array( $this, 'comments_get_container' ) );
+		add_action( 'wp_ajax_nopriv_cp_get_comments_container', array( $this, 'comments_get_container' ) );
 
 		// add vars to Javascript
-		add_filter( 'commentpress_get_javascript_vars', array( $this, 'get_javascript_vars' ) );
+		add_filter( 'commentpress_get_javascript_vars', array( $this, 'javascript_get_vars' ) );
 
 		// add metabox
 		add_action( 'commentpress_after_comments_container', array( $this, 'metabox_get_container' ) );
@@ -189,75 +189,120 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * Get new post metabox container
+	 * Prevent TinyMCE from loading in the comment form
 	 *
 	 * @return void
 	 */
-	public function metabox_get_container() {
+	public function commentpress_disallow_tinymce() {
 
-		// open div
-		echo '<div class="metabox_container" style="display: none;">';
-
-		// use common method
-		$this->parent_obj->custom_box_page();
-
-		// close div
-		echo '</div>' . "\n\n";
+		// do not allow
+		return false;
 
 	}
 
 
 
 	/**
-	 * AJAX metabox: set post title visibility
+	 * Prevent TinyMCE from loading in the comment form
 	 *
 	 * @return void
 	 */
-	public function metabox_set_post_title_visibility() {
+	public function commentpress_prevent_tinymce( $var ) {
+
+		// do not show
+		return 0;
 
 	}
 
 
 
 	/**
-	 * AJAX metabox: set page meta visibility
+	 * Intercept editor toggling once plugins are loaded
 	 *
 	 * @return void
 	 */
-	public function metabox_set_page_meta_visibility() {
+	public function editor_intercept_toggle() {
+
+		if (
+			! isset( $_GET['cp_editor_nonce'] ) OR
+			! wp_verify_nonce( $_GET['cp_editor_nonce'], 'editor_toggle' )
+		) {
+
+			// --<
+			return;
+
+		}
+
+		//
 
 	}
 
 
 
 	/**
-	 * AJAX metabox: set number format
+	 * Inject editor toggle link before search in Contents column
 	 *
 	 * @return void
 	 */
-	public function metabox_set_number_format() {
+	public function editor_show_toggle() {
+
+		// bail if not commentable
+		if ( ! $this->parent_obj->is_commentable() ) return;
+
+		// define heading title
+		$heading = apply_filters( 'cp_content_tab_editor_toggle_title', __( 'Mode', 'commentpress-core' ) );
+
+		echo '
+		<h3 class="activity_heading">' . $heading . '</h3>
+
+		<div class="paragraph_wrapper editor_toggle_wrapper">
+
+		<div class="editor_toggle">
+			' . $this->_toggle_link() . '
+		</div><!-- /editor_toggle -->
+
+		</div>
+
+		';
 
 	}
 
 
 
 	/**
-	 * AJAX metabox: set formatter
+	 * Get additional javascript vars
 	 *
-	 * @return void
+	 * @param array $vars The existing variables to pass to our Javascript
+	 * @return array $vars The modified variables to pass to our Javascript
 	 */
-	public function metabox_set_post_type_override() {
+	public function javascript_get_vars( $vars ) {
 
-	}
+		// access globals
+		global $post, $multipage, $page;
 
+		// bail if we don't have a post (like on the 404 page)
+		if ( ! is_object( $post ) ) return $vars;
 
+		// we need to know the url of the AJAX handler
+		$vars['cp_ajax_url'] = admin_url( 'admin-ajax.php' );
 
-	/**
-	 * AJAX metabox: set starting paragraph number
-	 *
-	 * @return void
-	 */
-	public function metabox_set_starting_para_number() {
+		// add the url of the animated loading bar gif
+		$vars['cp_spinner_url'] = plugins_url( 'commentpress-ajax/assets/images/loading.gif', COMMENTPRESS_PLUGIN_FILE );
+
+		// add post ID
+		$vars['cp_post_id'] = $post->ID;
+
+		// add post multipage var
+		$vars['cp_post_multipage'] = $multipage;
+
+		// add post page var
+		$vars['cp_post_page'] = $page;
+
+		// add options title
+		$vars['cp_options_title'] = __( 'Options', 'commentpress-core' );
+
+		// --<
+		return $vars;
 
 	}
 
@@ -268,7 +313,7 @@ class CommentpressCoreEditor {
 	 *
 	 * @return void
 	 */
-	public function get_comments_container() {
+	public function comments_get_container() {
 
 		// init return
 		$data = array();
@@ -355,123 +400,75 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * Get additional javascript vars
+	 * Get new post metabox container
 	 *
-	 * @param array $vars The existing variables to pass to our Javascript
-	 * @return array $vars The modified variables to pass to our Javascript
+	 * @return void
 	 */
-	public function get_javascript_vars( $vars ) {
+	public function metabox_get_container() {
 
-		// access globals
-		global $post, $multipage, $page;
+		// open div
+		echo '<div class="metabox_container" style="display: none;">';
 
-		// bail if we don't have a post (like on the 404 page)
-		if ( ! is_object( $post ) ) return $vars;
+		// use common method
+		$this->parent_obj->custom_box_page();
 
-		// we need to know the url of the Ajax handler
-		$vars['cp_ajax_url'] = admin_url( 'admin-ajax.php' );
-
-		// add the url of the animated loading bar gif
-		$vars['cp_spinner_url'] = plugins_url( 'commentpress-ajax/assets/images/loading.gif', COMMENTPRESS_PLUGIN_FILE );
-
-		// add post ID
-		$vars['cp_post_id'] = $post->ID;
-
-		// add post multipage var
-		$vars['cp_post_multipage'] = $multipage;
-
-		// add post page var
-		$vars['cp_post_page'] = $page;
-
-		// add post ID
-		$vars['cp_options_title'] = __( 'Options', 'commentpress-core' );
-
-		// --<
-		return $vars;
+		// close div
+		echo '</div>' . "\n\n";
 
 	}
 
 
 
 	/**
-	 * Prevent TinyMCE from loading in the comment form
+	 * AJAX metabox: set post title visibility
 	 *
 	 * @return void
 	 */
-	public function disallow_commentpress_fee() {
-
-		// do not allow
-		return false;
+	public function metabox_set_post_title_visibility() {
 
 	}
 
 
 
 	/**
-	 * Prevent TinyMCE from loading in the comment form
+	 * AJAX metabox: set page meta visibility
 	 *
 	 * @return void
 	 */
-	public function kill_commentpress_fee( $var ) {
-
-		//var_dump( $var ); die();
-
-		// do not show
-		return 0;
+	public function metabox_set_page_meta_visibility() {
 
 	}
 
 
 
 	/**
-	 * Intercept editor toggling once plugins are loaded
+	 * AJAX metabox: set number format
 	 *
 	 * @return void
 	 */
-	public function intercept_toggle() {
-
-		if (
-			! isset( $_GET['cp_editor_nonce'] ) OR
-			! wp_verify_nonce( $_GET['cp_editor_nonce'], 'editor_toggle' )
-		) {
-
-			// --<
-			return;
-
-		}
-
-		//
+	public function metabox_set_number_format() {
 
 	}
 
 
 
 	/**
-	 * Inject editor toggle link before search in Contents column
+	 * AJAX metabox: set formatter
 	 *
 	 * @return void
 	 */
-	public function show_editor_toggle() {
+	public function metabox_set_post_type_override() {
 
-		// bail if not commentable
-		if ( ! $this->parent_obj->is_commentable() ) return;
+	}
 
-		// define heading title
-		$heading = apply_filters( 'cp_content_tab_editor_toggle_title', __( 'Mode', 'commentpress-core' ) );
 
-		?>
 
-		<h3 class="activity_heading"><?php echo $heading; ?></h3>
-
-		<div class="paragraph_wrapper editor_toggle_wrapper">
-
-		<div class="editor_toggle">
-			<?php echo $this->toggle_link(); ?>
-		</div><!-- /book_search -->
-
-		</div>
-
-		<?php
+	/**
+	 * AJAX metabox: set starting paragraph number
+	 *
+	 * @return void
+	 */
+	public function metabox_set_starting_para_number() {
 
 	}
 
@@ -494,7 +491,7 @@ class CommentpressCoreEditor {
 	 *
 	 * @return void
 	 */
-	private function toggle_link() {
+	private function _toggle_link() {
 
 		// declare access to globals
 		global $post;
