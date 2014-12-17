@@ -2962,16 +2962,24 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * Hook into WordPress Front-end Editor before save
+	 * Hook into WordPress Front-end Editor before save and add items to be saved
+	 * along with the post data.
 	 *
 	 * @return void
 	 */
 	$( document ).on( 'fee-before-save', function( event ) {
 
+		// add nonce
 		wp.fee.post.commentpress_nonce = function() {
 			return $( '#commentpress_nonce' ).val();
 		};
 
+		// add text parser
+		wp.fee.post.cp_post_type_override = function() {
+			return $( '#cp_post_type_override' ).val();
+		};
+
+		// add starting paragraph number
 		wp.fee.post.cp_starting_para_number = function() {
 			return $( '#cp_starting_para_number' ).val();
 		};
@@ -3058,7 +3066,7 @@ jQuery(document).ready( function($) {
 
 		method = 'cp_set_post_type_override';
 		key = 'cp_post_type_override';
-		callback = 'cp_my_callback';
+		callback = 'cp_text_parser_changed';
 
 		// send
 		cp_send_to_server( method, key, this.value, callback );
@@ -3106,18 +3114,6 @@ jQuery(document).ready( function($) {
 
 
 /**
- * Callback for AJAX request
- *
- * @param data The data returned by the AJAX call in cp_send_to_server()
- */
-function cp_my_callback( data ) {
-	console.log( 'cp_my_callback' );
-	console.log( data );
-}
-
-
-
-/**
  * Callback for AJAX request for Page Title Visibility change
  *
  * @param data The data returned by the AJAX call in cp_send_to_server()
@@ -3151,6 +3147,25 @@ function cp_meta_visibility_changed( data ) {
 		} else {
 			jQuery( '.search_meta' ).hide();
 		}
+	}
+
+}
+
+
+
+/**
+ * Callback for AJAX request for Text Formatting change
+ *
+ * @param data The data returned by the AJAX call in cp_send_to_server()
+ */
+function cp_text_parser_changed( data ) {
+
+	console.log( 'cp_text_parser_changed' );
+	console.log( data );
+
+	// if all went well, update element
+	if ( data.error == 'success' ) {
+		jQuery( '.page_num_bottom' ).html( data.number );
 	}
 
 }

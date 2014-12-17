@@ -1246,7 +1246,6 @@ class CommentpressCoreDatabase {
 
 		// authenticate
 		$_nonce = isset( $_POST['commentpress_nonce'] ) ? $_POST['commentpress_nonce'] : '';
-
 		if ( ! wp_verify_nonce( $_nonce, 'commentpress_page_settings' ) ) return false;
 
 		// is this an auto save routine?
@@ -1652,8 +1651,12 @@ class CommentpressCoreDatabase {
 		// get the data
 		$_data = ( isset( $_POST['cp_post_type_override'] ) ) ? $_POST['cp_post_type_override'] : '';
 
-		//print_r( '$_data: ' . $_data ); die();
-		//print_r( $post ); die();
+		/*
+		print_r( array(
+			'post' => $post,
+			'_data' => $_data,
+		) ); die();
+		*/
 
 		// set key
 		$key = '_cp_post_type_override';
