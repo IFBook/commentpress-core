@@ -151,8 +151,8 @@ function commentpress_setup(
 
 	}
 
-	// no need for default sidebar
-	add_filter( 'commentpress_hide_sidebar_metabox', '__return_true' );
+	// no need for default sidebar in this theme
+	add_filter( 'commentpress_hide_sidebar_option', '__return_true' );
 
 }
 endif; // commentpress_setup

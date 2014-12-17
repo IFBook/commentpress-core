@@ -1478,7 +1478,7 @@ HELPTEXT;
 
 		// define CommentPress Core theme options
 		$options = '
-		<p>' . __( 'When the CommentPress Default Theme (or a valid CommentPress Child Theme) is active, the following options modify its behaviour.', 'commentpress-core' ) . '</p>
+		<p>' . __( 'When a supplied CommentPress theme (or a valid CommentPress child theme) is active, the following options modify its behaviour.', 'commentpress-core' ) . '</p>
 
 
 
@@ -2201,6 +2201,9 @@ HELPTEXT;
 	 * @return str $toc
 	 */
 	function _get_sidebar() {
+
+		// allow this to be disabled
+		if ( apply_filters( 'commentpress_hide_sidebar_option', false ) ) return;
 
 		// define labels
 		$label = __( 'Which sidebar do you want to be active by default? (can be overridden on individual pages)', 'commentpress-core' );

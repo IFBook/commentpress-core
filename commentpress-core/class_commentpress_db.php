@@ -295,11 +295,21 @@ class CommentpressCoreDatabase {
 			// New in CP 3.3.3 - are we missing the cp_sidebar_default option?
 			if ( !$this->option_exists( 'cp_sidebar_default' ) ) {
 
-				// get choice
-				$_choice = esc_sql( $cp_sidebar_default );
+				// does the current theme need this option?
+				if ( ! apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
 
-				// add chosen cp_page_meta_visibility option
-				$this->option_set( 'cp_sidebar_default', $_choice );
+					// yes, get choice
+					$_choice = esc_sql( $cp_sidebar_default );
+
+					// add chosen cp_sidebar_default option
+					$this->option_set( 'cp_sidebar_default', $_choice );
+
+				} else {
+
+					// add default cp_sidebar_default option
+					$this->option_set( 'cp_sidebar_default', $this->sidebar_default );
+
+				}
 
 			}
 
@@ -890,8 +900,10 @@ class CommentpressCoreDatabase {
 			}
 
 			// save default sidebar
-			$cp_sidebar_default = esc_sql( $cp_sidebar_default );
-			$this->option_set( 'cp_sidebar_default', $cp_sidebar_default );
+			if ( ! apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
+				$cp_sidebar_default = esc_sql( $cp_sidebar_default );
+				$this->option_set( 'cp_sidebar_default', $cp_sidebar_default );
+			}
 
 			// save featured images
 			$cp_featured_images = esc_sql( $cp_featured_images );
@@ -1672,6 +1684,9 @@ class CommentpressCoreDatabase {
 	 * @return void
 	 */
 	public function save_default_sidebar( $post ) {
+
+		// allow this to be disabled
+		if ( apply_filters( 'commentpress_hide_sidebar_option', false ) ) return;
 
 		// do we have the option to choose the default sidebar (new in 3.3.3)?
 		if ( $this->option_exists( 'cp_sidebar_default' ) ) {
