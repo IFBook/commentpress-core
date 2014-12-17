@@ -52,9 +52,9 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 		cp_ajax_url = CommentpressSettings.cp_ajax_url;
 		cp_spinner_url = CommentpressSettings.cp_spinner_url;
 		cp_post_id = CommentpressSettings.cp_post_id;
-		cp_post_id = CommentpressSettings.cp_post_id;
 		cp_post_multipage = CommentpressSettings.cp_post_multipage;
 		cp_post_page = CommentpressSettings.cp_post_page;
+		cp_options_title = CommentpressSettings.cp_options_title;
 	}
 
 }
@@ -64,7 +64,7 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 // define vars
 var msie6, cp_header_height, cp_header_animating,
 	cp_toc_on_top, page_highlight, cp_header_minimised, cp_sidebar_minimised,
-	cp_container_top_max, cp_container_top_min;
+	cp_container_top_max, cp_container_top_min, cp_column_title_original;
 
 
 
@@ -2803,6 +2803,14 @@ jQuery(document).ready( function($) {
 
 
 
+	/**
+	 * WordPress Front-end Editor compatibility
+	 *
+	 * The following code relates specifically to WordPress Front-end Editor and
+	 * provides a measure of compatibility with it. WordPress Front-end Editor is
+	 * still in development, so much of this is liable to change.
+	 */
+
 	// put some vars into global scope
 	var cp_comment_form;
 
@@ -2812,6 +2820,11 @@ jQuery(document).ready( function($) {
 	// save comment form
 	cp_comment_form = $('#respond_wrapper').clone();
 
+	// save original comments column heading
+	cp_column_title_original = $( '#comments_header h2 a' ).text();
+
+
+
 	/**
 	 * Hook into WordPress Front-end Editor after save
 	 *
@@ -2820,6 +2833,8 @@ jQuery(document).ready( function($) {
 	$( document ).on( 'fee-after-save', function( event ) {
 
 	});
+
+
 
 	/**
 	 * Hook into WordPress Front-end Editor activation
@@ -2834,12 +2849,20 @@ jQuery(document).ready( function($) {
 		$( '#comments_sidebar .comments_container' ).fadeOut(
 
 			function() {
+
+				// replace column title
+				$( '#comments_header h2 a' ).html( cp_options_title );
+
+				// show metabox
 				$( '#comments_sidebar .metabox_container' ).fadeIn();
+
 			}
 
 		);
 
 	});
+
+
 
 	/**
 	 * Hook into WordPress Front-end Editor deactivation
@@ -2850,9 +2873,13 @@ jQuery(document).ready( function($) {
 
 		//alert( 'fee-off' );
 
+		// hide metabox
 		$( '#comments_sidebar .metabox_container' ).fadeOut(
 
 			function() {
+
+				// replace column title
+				$( '#comments_header h2 a' ).html( cp_column_title_original );
 
 				/*
 				// we can use this to log ajax errors from jQuery.post()
@@ -2861,7 +2888,7 @@ jQuery(document).ready( function($) {
 				});
 				*/
 
-				// use post method
+				// show comments
 				$.post(
 
 					// set URL

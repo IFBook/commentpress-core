@@ -316,6 +316,9 @@ class CommentpressCoreEditor {
 		// add post page var
 		$vars['cp_post_page'] = $page;
 
+		// add post ID
+		$vars['cp_options_title'] = __( 'Options', 'commentpress-core' );
+
 		// --<
 		return $vars;
 
