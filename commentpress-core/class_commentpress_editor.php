@@ -428,10 +428,12 @@ class CommentpressCoreEditor {
 		if ( $this->_setup_post() ) {
 
 			// save data
-			$this->parent_obj->save_page_title_visibility( $post );
+			$result = $this->db->save_page_title_visibility( $post );
 
 			// construct data to return
+			$data['error'] = 'success';
 			$data['message'] = __( 'Option saved', 'commentpress-core' );
+			$data['toggle'] = ( $result == 'show' ) ? 'show' : 'hide';
 
 		} else {
 
@@ -467,6 +469,7 @@ class CommentpressCoreEditor {
 			$this->db->save_page_meta_visibility( $post );
 
 			// construct data to return
+			$data['error'] = 'success';
 			$data['message'] = __( 'Option saved', 'commentpress-core' );
 
 		} else {
@@ -547,6 +550,7 @@ class CommentpressCoreEditor {
 			$this->db->save_formatter( $post );
 
 			// construct data to return
+			$data['error'] = 'success';
 			$data['message'] = __( 'Option saved', 'commentpress-core' );
 
 		} else {
@@ -583,6 +587,7 @@ class CommentpressCoreEditor {
 			$this->db->save_starting_paragraph( $post );
 
 			// construct data to return
+			$data['error'] = 'success';
 			$data['message'] = __( 'Option saved', 'commentpress-core' );
 
 		} else {

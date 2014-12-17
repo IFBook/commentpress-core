@@ -2976,7 +2976,7 @@ jQuery(document).ready( function($) {
 
 		method = 'cp_set_post_title_visibility';
 		key = 'cp_title_visibility';
-		callback = 'cp_my_callback';
+		callback = 'cp_title_visibility_changed';
 
 		// send
 		cp_send_to_server( method, key, this.value, callback );
@@ -3101,21 +3101,43 @@ jQuery(document).ready( function($) {
  * @param data The data returned by the AJAX call in cp_send_to_server()
  */
 function cp_my_callback( data ) {
+	console.log( 'cp_my_callback' );
 	console.log( data );
 }
 
 
 
 /**
- * Callback for AJAX request
+ * Callback for AJAX request for Page Title Visibility change
+ *
+ * @param data The data returned by the AJAX call in cp_send_to_server()
+ */
+function cp_title_visibility_changed( data ) {
+
+	console.log( 'cp_title_visibility_changed' );
+	console.log( data );
+
+	// if all went well, update element
+	if ( data.error == 'success' ) {
+		if ( data.toggle == 'show' ) {
+			jQuery( 'h2.post_title' ).show();
+		} else {
+			jQuery( 'h2.post_title' ).hide();
+		}
+	}
+
+}
+
+
+
+/**
+ * Callback for AJAX request for number format change
  *
  * @param data The data returned by the AJAX call in cp_send_to_server()
  */
 function cp_number_format_changed( data ) {
 
-	console.log( 'callback: cp_number_format_changed' );
-	console.log( data );
-
+	// if all went well, update element
 	if ( data.error == 'success' ) {
 		jQuery( '.page_num_bottom' ).html( data.number );
 	}

@@ -37,39 +37,38 @@ get_header(); ?>
 
 	<?php
 
-	// if we've elected to show the title...
+	// default to hidden
+	$cp_title_visibility = ' style="display: none;"';
+
+	// override if we've elected to show the title...
 	if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
-
-	?>
-	<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
-	<?php
-
+		$cp_title_visibility = '';
 	}
 
 	?>
+	<h2 class="post_title"<?php echo $cp_title_visibility; ?>><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
 
 
 
 	<?php
 
-	// init members-list plugin
-	$members = new tern_members;
+	// if we have the members list plugin
+	if ( class_exists( 'tern_members' ) ) {
 
-	// set options
-	$members->members(
+		// init members-list plugin
+		$members = new tern_members;
 
-		array(
-
+		// set options
+		$members->members( array(
 			'search' => true,
 			'alpha' => true,
 			'pagination' => true,
 			'pagination2' => true,
 			'radius' => false,
 			'sort' => false
+		) );
 
-		)
-
-	);
+	}
 
 	?>
 

@@ -1262,9 +1262,18 @@ function commentpress_get_feature_image() {
 
 				<?php if ( is_page() ) { ?>
 
-					<?php if ( commentpress_get_post_title_visibility( get_the_ID() ) ) { ?>
-					<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
-					<?php } ?>
+					<?php
+
+					// default to hidden
+					$cp_title_visibility = ' style="display: none;"';
+
+					// override if we've elected to show the title...
+					if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
+						$cp_title_visibility = '';
+					}
+
+					?>
+					<h2 class="post_title"<?php echo $cp_title_visibility; ?>><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
 
 					<?php if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) { ?>
 					<div class="search_meta">

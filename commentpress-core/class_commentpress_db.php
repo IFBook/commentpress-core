@@ -1300,6 +1300,9 @@ class CommentpressCoreDatabase {
 
 		}
 
+		// --<
+		return $_data;
+
 	}
 
 

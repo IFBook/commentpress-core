@@ -95,16 +95,16 @@ if ( !commentpress_has_feature_image() ) {
 	// do we have a featured image?
 	if ( !commentpress_has_feature_image() ) {
 
-		// if we've elected to show the title...
+		// default to hidden
+		$cp_title_visibility = ' style="display: none;"';
+
+		// override if we've elected to show the title...
 		if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
-
-		?>
-		<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
-		<?php
-
+			$cp_title_visibility = '';
 		}
 
 		?>
+		<h2 class="post_title"<?php echo $cp_title_visibility; ?>><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
 
 
 
