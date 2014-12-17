@@ -2961,6 +2961,157 @@ jQuery(document).ready( function($) {
 
 
 
+	/**
+	 * Send single data item to server
+	 *
+	 * @param method The WordPress function to call
+	 * @param value The single data item to send
+	 * @return boolean success Whether successful or not
+	 */
+	function cp_send_to_server( method, value ) {
+
+		// send to server
+		$.post(
+
+			// set URL
+			cp_ajax_url,
+
+			// add data
+			{
+
+				// WordPress method to call
+				action: method,
+
+				// send data
+				post_id: cp_post_id,
+				post_data: value,
+
+			},
+
+			// callback
+			function( data, textStatus ) {
+
+				// if success
+				if ( textStatus == 'success' ) {
+
+				}
+
+			},
+
+			// expected format
+			'json'
+
+		);
+
+	}
+
+
+
+	/**
+	 * Metabox element changed: Page Title Visibility dropdown
+	 *
+	 * @return void
+	 */
+	$( '#cp_title_visibility' ).on( 'change', function( event ) {
+
+		// local vars
+		var success;
+
+		console.log( 'cp_title_visibility' );
+		console.log( this.value );
+
+		// send
+		success = cp_send_to_server( 'cp_set_post_title_visibility', this.value );
+		console.log( success );
+
+	});
+
+
+
+	/**
+	 * Metabox element changed: Page Meta Visibility dropdown
+	 *
+	 * @return void
+	 */
+	$( '#cp_page_meta_visibility' ).on( 'change', function( event ) {
+
+		// local vars
+		var success;
+
+		console.log( 'cp_page_meta_visibility' );
+		console.log( this.value );
+
+		// send
+		success = cp_send_to_server( 'cp_set_page_meta_visibility', this.value );
+		console.log( success );
+
+	});
+
+
+
+	/**
+	 * Metabox element changed: Page Number Format dropdown
+	 *
+	 * @return void
+	 */
+	$( '#cp_number_format' ).on( 'change', function( event ) {
+
+		// local vars
+		var success;
+
+		console.log( 'cp_number_format' );
+		console.log( this.value );
+
+		// send
+		success = cp_send_to_server( 'cp_set_number_format', this.value );
+		console.log( success );
+
+	});
+
+
+
+	/**
+	 * Metabox element changed: Text Formatting dropdown
+	 *
+	 * @return void
+	 */
+	$( '#cp_post_type_override' ).on( 'change', function( event ) {
+
+		// local vars
+		var success;
+
+		console.log( 'cp_post_type_override' );
+		console.log( this.value );
+
+		// send
+		success = cp_send_to_server( 'cp_set_post_type_override', this.value );
+		console.log( success );
+
+	});
+
+
+
+	/**
+	 * Metabox element changed: Starting Paragraph Number
+	 *
+	 * @return void
+	 */
+	$( '#cp_starting_para_number' ).on( 'change', function( event ) {
+
+		// local vars
+		var success;
+
+		console.log( 'cp_starting_para_number' );
+		console.log( this.value );
+
+		// send
+		success = cp_send_to_server( 'cp_set_starting_para_number', this.value );
+		console.log( success );
+
+	});
+
+
+
 
 
 

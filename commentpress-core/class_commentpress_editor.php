@@ -166,11 +166,23 @@ class CommentpressCoreEditor {
 		add_action( 'wp_ajax_cp_get_comments_container', array( $this, 'get_comments_container' ) );
 		add_action( 'wp_ajax_nopriv_cp_get_comments_container', array( $this, 'get_comments_container' ) );
 
-		// add metabox
-		add_action( 'commentpress_after_comments_container', array( $this, 'get_metabox_container' ) );
-
 		// add vars to Javascript
 		add_filter( 'commentpress_get_javascript_vars', array( $this, 'get_javascript_vars' ) );
+
+		// add metabox
+		add_action( 'commentpress_after_comments_container', array( $this, 'metabox_get_container' ) );
+
+		// add metabox AJAX functionality
+		add_action( 'wp_ajax_cp_set_post_title_visibility', array( $this, 'metabox_set_post_title_visibility' ) );
+		add_action( 'wp_ajax_nopriv_cp_set_post_title_visibility', array( $this, 'metabox_set_post_title_visibility' ) );
+		add_action( 'wp_ajax_cp_set_page_meta_visibility', array( $this, 'metabox_set_page_meta_visibility' ) );
+		add_action( 'wp_ajax_nopriv_cp_set_page_meta_visibility', array( $this, 'metabox_set_page_meta_visibility' ) );
+		add_action( 'wp_ajax_cp_set_number_format', array( $this, 'metabox_set_number_format' ) );
+		add_action( 'wp_ajax_nopriv_cp_set_number_format', array( $this, 'metabox_set_number_format' ) );
+		add_action( 'wp_ajax_cp_set_post_type_override', array( $this, 'metabox_set_post_type_override' ) );
+		add_action( 'wp_ajax_nopriv_cp_set_post_type_override', array( $this, 'metabox_set_post_type_override' ) );
+		add_action( 'wp_ajax_cp_set_starting_para_number', array( $this, 'metabox_set_starting_para_number' ) );
+		add_action( 'wp_ajax_nopriv_cp_set_starting_para_number', array( $this, 'metabox_set_starting_para_number' ) );
 
 	}
 
@@ -181,7 +193,7 @@ class CommentpressCoreEditor {
 	 *
 	 * @return void
 	 */
-	public function get_metabox_container() {
+	public function metabox_get_container() {
 
 		// open div
 		echo '<div class="metabox_container" style="display: none;">';
@@ -191,6 +203,61 @@ class CommentpressCoreEditor {
 
 		// close div
 		echo '</div>' . "\n\n";
+
+	}
+
+
+
+	/**
+	 * AJAX metabox: set post title visibility
+	 *
+	 * @return void
+	 */
+	public function metabox_set_post_title_visibility() {
+
+	}
+
+
+
+	/**
+	 * AJAX metabox: set page meta visibility
+	 *
+	 * @return void
+	 */
+	public function metabox_set_page_meta_visibility() {
+
+	}
+
+
+
+	/**
+	 * AJAX metabox: set number format
+	 *
+	 * @return void
+	 */
+	public function metabox_set_number_format() {
+
+	}
+
+
+
+	/**
+	 * AJAX metabox: set formatter
+	 *
+	 * @return void
+	 */
+	public function metabox_set_post_type_override() {
+
+	}
+
+
+
+	/**
+	 * AJAX metabox: set starting paragraph number
+	 *
+	 * @return void
+	 */
+	public function metabox_set_starting_para_number() {
 
 	}
 
