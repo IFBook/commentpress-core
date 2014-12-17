@@ -84,7 +84,7 @@ class CommentpressCoreNavigator {
 		if ( is_page() ) {
 
 			// init page lists
-			$this->_init_page_lists();
+			$this->init_page_lists();
 
 		}
 
@@ -92,7 +92,7 @@ class CommentpressCoreNavigator {
 		if( is_single() ) {
 
 			// init posts lists
-			$this->_init_posts_lists();
+			$this->init_posts_lists();
 
 		}
 
@@ -512,40 +512,12 @@ class CommentpressCoreNavigator {
 
 
 
-//##############################################################################
-
-
-
-	/**
-	 * -------------------------------------------------------------------------
-	 * Private Methods
-	 * -------------------------------------------------------------------------
-	 */
-
-
-
-	/**
-	 * Object initialisation
-	 *
-	 * @return void
-	 */
-	function _init() {
-
-		/**
-		 * is_page() and is_single() are not yet defined, so we init this object when
-		 * wp_head() is fired - see initialise() above
-		 */
-
-	}
-
-
-
 	/**
 	 * Set up page list
 	 *
 	 * @return void
 	 */
-	function _init_page_lists() {
+	public function init_page_lists() {
 
 		// get all pages
 		$all_pages = $this->get_book_pages( 'readable' );
@@ -616,7 +588,7 @@ class CommentpressCoreNavigator {
 	 *
 	 * @return void
 	 */
-	function _init_posts_lists() {
+	public function init_posts_lists() {
 
 		// set defaults
 		$defaults = array(
@@ -665,6 +637,34 @@ class CommentpressCoreNavigator {
 			}
 
 		} // end have array check
+
+	}
+
+
+
+//##############################################################################
+
+
+
+	/**
+	 * -------------------------------------------------------------------------
+	 * Private Methods
+	 * -------------------------------------------------------------------------
+	 */
+
+
+
+	/**
+	 * Object initialisation
+	 *
+	 * @return void
+	 */
+	function _init() {
+
+		/**
+		 * is_page() and is_single() are not yet defined, so we init this object when
+		 * wp_head() is fired - see initialise() above
+		 */
 
 	}
 
