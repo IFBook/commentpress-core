@@ -1275,11 +1275,20 @@ function commentpress_get_feature_image() {
 					?>
 					<h2 class="post_title"<?php echo $cp_title_visibility; ?>><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
 
-					<?php if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) { ?>
-					<div class="search_meta">
+					<?php
+
+					// default to hidden
+					$cp_meta_visibility = ' style="display: none;"';
+
+					// overrideif we've elected to show the meta...
+					if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
+						$cp_meta_visibility = '';
+					}
+
+					?>
+					<div class="search_meta"<?php echo $cp_meta_visibility; ?>>
 						<?php commentpress_echo_post_meta(); ?>
 					</div>
-					<?php } ?>
 
 				<?php } else { ?>
 

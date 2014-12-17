@@ -2962,6 +2962,25 @@ jQuery(document).ready( function($) {
 
 
 	/**
+	 * Hook into WordPress Front-end Editor before save
+	 *
+	 * @return void
+	 */
+	$( document ).on( 'fee-before-save', function( event ) {
+
+		wp.fee.post.commentpress_nonce = function() {
+			return $( '#commentpress_nonce' ).val();
+		};
+
+		wp.fee.post.cp_starting_para_number = function() {
+			return $( '#cp_starting_para_number' ).val();
+		};
+
+	});
+
+
+
+	/**
 	 * Metabox element changed: Page Title Visibility dropdown
 	 *
 	 * @return void
@@ -2970,9 +2989,6 @@ jQuery(document).ready( function($) {
 
 		// local vars
 		var method, key, callback;
-
-		console.log( 'cp_title_visibility' );
-		console.log( this.value );
 
 		method = 'cp_set_post_title_visibility';
 		key = 'cp_title_visibility';
@@ -2995,12 +3011,9 @@ jQuery(document).ready( function($) {
 		// local vars
 		var method, key, callback;
 
-		console.log( 'cp_page_meta_visibility' );
-		console.log( this.value );
-
 		method = 'cp_set_page_meta_visibility';
 		key = 'cp_page_meta_visibility';
-		callback = 'cp_my_callback';
+		callback = 'cp_meta_visibility_changed';
 
 		// send
 		cp_send_to_server( method, key, this.value, callback );
@@ -3018,9 +3031,6 @@ jQuery(document).ready( function($) {
 
 		// local vars
 		var method, key, callback;
-
-		console.log( 'cp_number_format' );
-		console.log( this.value );
 
 		method = 'cp_set_number_format';
 		key = 'cp_number_format';
@@ -3114,15 +3124,32 @@ function cp_my_callback( data ) {
  */
 function cp_title_visibility_changed( data ) {
 
-	console.log( 'cp_title_visibility_changed' );
-	console.log( data );
-
 	// if all went well, update element
 	if ( data.error == 'success' ) {
 		if ( data.toggle == 'show' ) {
 			jQuery( 'h2.post_title' ).show();
 		} else {
 			jQuery( 'h2.post_title' ).hide();
+		}
+	}
+
+}
+
+
+
+/**
+ * Callback for AJAX request for Page Meta Visibility change
+ *
+ * @param data The data returned by the AJAX call in cp_send_to_server()
+ */
+function cp_meta_visibility_changed( data ) {
+
+	// if all went well, update element
+	if ( data.error == 'success' ) {
+		if ( data.toggle == 'show' ) {
+			jQuery( '.search_meta' ).show();
+		} else {
+			jQuery( '.search_meta' ).hide();
 		}
 	}
 

@@ -466,11 +466,12 @@ class CommentpressCoreEditor {
 		if ( $this->_setup_post() ) {
 
 			// save data
-			$this->db->save_page_meta_visibility( $post );
+			$result = $this->db->save_page_meta_visibility( $post );
 
 			// construct data to return
 			$data['error'] = 'success';
 			$data['message'] = __( 'Option saved', 'commentpress-core' );
+			$data['toggle'] = ( $result == 'hide' ) ? 'hide' : 'show';
 
 		} else {
 

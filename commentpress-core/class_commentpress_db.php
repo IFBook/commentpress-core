@@ -1162,16 +1162,12 @@ class CommentpressCoreDatabase {
 
 		// if page...
 		if ( $post_obj->post_type == 'page' ) {
-
 			$this->save_page_meta( $post_obj );
-
 		}
 
 		// if post...
 		if ( $post_obj->post_type == 'post' ) {
-
 			$this->save_post_meta( $post_obj );
-
 		}
 
 	}
@@ -1239,7 +1235,6 @@ class CommentpressCoreDatabase {
 	 */
 	public function save_page_meta_authenticated( $post_obj ) {
 
-		//print_r( 'data: ' . $_data ); die();
 		//print_r( '$post_obj->post_type: ' . $post_obj->post_type ); die();
 		//print_r( '$post_obj->ID: ' . $post_obj->ID ); die();
 
@@ -1251,6 +1246,7 @@ class CommentpressCoreDatabase {
 
 		// authenticate
 		$_nonce = isset( $_POST['commentpress_nonce'] ) ? $_POST['commentpress_nonce'] : '';
+
 		if ( ! wp_verify_nonce( $_nonce, 'commentpress_page_settings' ) ) return false;
 
 		// is this an auto save routine?
@@ -1270,7 +1266,7 @@ class CommentpressCoreDatabase {
 	 * Save Page Title visibility
 	 *
 	 * @param object $post The post object
-	 * @return void
+	 * @return string $_data Either 'show' (default) or ''
 	 */
 	public function save_page_title_visibility( $post ) {
 
@@ -1311,7 +1307,7 @@ class CommentpressCoreDatabase {
 	 * Save Page Meta visibility
 	 *
 	 * @param object $post The post object
-	 * @return void
+	 * @return string $_data Either 'hide' (default) or ''
 	 */
 	public function save_page_meta_visibility( $post ) {
 
@@ -1340,6 +1336,9 @@ class CommentpressCoreDatabase {
 			add_post_meta( $post->ID, $key, esc_sql( $_data ) );
 
 		}
+
+		// --<
+		return $_data;
 
 	}
 
