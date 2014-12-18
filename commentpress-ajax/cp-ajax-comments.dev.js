@@ -1048,12 +1048,15 @@ function cpajax_update_para_icon( text_sig, new_comment_count ) {
  */
 function cpajax_initialise_form() {
 
+	// unbind first to allow repeated calls to this function
+	jQuery('#commentform').off( 'submit' );
+
 	/**
 	 * Comment submission method
 	 *
 	 * @return false
 	 */
-	jQuery('#commentform').on('submit', function( event ) {
+	jQuery('#commentform').on( 'submit', function( event ) {
 
 		// define vars
 		var filter;
