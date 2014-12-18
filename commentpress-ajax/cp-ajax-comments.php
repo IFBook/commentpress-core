@@ -555,6 +555,9 @@ function cpajax_get_children(
  */
 function cpajax_infinite_scroll_scripts() {
 
+	// allow this to be disabled
+	if ( apply_filters( 'cpajax_disable_infinite_scroll', false ) ) return;
+
 	// access globals
 	global $post, $commentpress_core;
 

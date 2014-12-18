@@ -131,6 +131,9 @@ class CommentpressCoreEditor {
 		 * that supports WP FEE.
 		 */
 
+		// prevent infinite scroll, if enabled
+		add_filter( 'cpajax_disable_infinite_scroll', '__return_true' );
+
 		// prevent TinyMCE in comment form
 		add_filter( 'cp_override_tinymce', array( $this, 'commentpress_prevent_tinymce' ), 1000, 1 );
 		add_filter( 'commentpress_is_tinymce_allowed', array( $this, 'commentpress_disallow_tinymce' ), 1000 );
@@ -143,14 +146,6 @@ class CommentpressCoreEditor {
 
 			// filter the content during AJAX
 			add_filter( 'the_content', array( $this->parent_obj, 'the_content' ), 20 );
-
-			/*
-			if ( isset( $_POST['post_id'] ) ) {
-				trigger_error( print_r( array(
-					'method' => 'register_hooks',
-				), true ), E_USER_ERROR ); die();
-			}
-			*/
 
 		}
 
@@ -219,7 +214,6 @@ class CommentpressCoreEditor {
 
 		// set property
 		$this->toggle_state = $state;
-		//print_r( $this->toggle_state ); die();
 
 	}
 
@@ -231,8 +225,6 @@ class CommentpressCoreEditor {
 	 * @return void
 	 */
 	public function editor_toggle_intercept() {
-
-		//print_r( $this->db->option_get( 'cp_editor_toggle' ) ); die();
 
 		if (
 			! isset( $_GET['cp_editor_nonce'] ) OR
@@ -442,22 +434,6 @@ class CommentpressCoreEditor {
 
 		// wrap in div
 		$comments = '<div class="comments-for-' . $post->ID . '">' . $comments . '</div>';
-
-		/*
-		if ( isset( $_POST['post_id'] ) ) {
-			trigger_error( print_r( array(
-				'post_id' => $post_id,
-				//'GLOBALS[post]' => $GLOBALS['post'],
-				'post' => $post,
-				'content' => $content,
-				//'comments' => $comments,
-				'multipage' => $multipage,
-				'page_num' => $page_num,
-				'page' => $page,
-				'pages' => $pages,
-			), true ), E_USER_ERROR ); die();
-		}
-		*/
 
 		// add comments column
 		$data['comments'] = $comments;
