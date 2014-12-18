@@ -59,7 +59,7 @@ cpajax_post_title = document.title;
 	 *
 	 * @return void
 	 */
-	$(document).ready(function($) {
+	$( document ).ready( function( $ ) {
 
 		// store comment form
 		cpajax_store_comment_form();
@@ -82,15 +82,15 @@ cpajax_post_title = document.title;
 	function cpajax_enable_state_navigation() {
 
 		// unbind first to allow repeated calls to this function
-		jQuery('.previous_page, .next_page').unbind( 'click' );
+		jQuery( '.previous_page, .next_page' ).unbind( 'click' );
 
 		// only apply when there is a history
 		if ( window.history.length > 0 ) {
 
 			// previous page button
-			$('.previous_page').click( function( e ) {
-				alert('back');
-				if (event.preventDefault) {event.preventDefault();}
+			$( '.previous_page' ).click( function( e ) {
+				alert( 'back' );
+				if ( event.preventDefault ) {event.preventDefault();}
 				window.history.back();
 				return false;
 			});
@@ -98,9 +98,9 @@ cpajax_post_title = document.title;
 		}
 
 		// next page button
-		$('.next_page').click( function( e ) {
-			alert('forward');
-			if (event.preventDefault) {event.preventDefault();}
+		$( '.next_page' ).click( function( e ) {
+			alert( 'forward' );
+			if ( event.preventDefault ) {event.preventDefault();}
 			cpajax_load_next_page( 'link' );
 			return false;
 		});
@@ -120,7 +120,11 @@ cpajax_post_title = document.title;
 		addComment.disableForm();
 
 		// store a copy of the comment form
-		cpajax_comment_form = $('#respond_wrapper').clone();
+		cpajax_comment_form = $( '#respond_wrapper' ).clone();
+
+		// change the form ID so we don't get double submissions
+		$( 'form', cpajax_comment_form ).attr( 'id', 'commentform-disabled' );
+
 		//console.log( 'cpajax_comment_form:' );
 		//console.log( cpajax_comment_form );
 		//console.log( cpajax_comment_form.html() );
@@ -143,7 +147,7 @@ cpajax_post_title = document.title;
 		var post_id;
 
 		// store ID of current post
-		post_id = $('#wrapper .post').prop('id').split('-')[1];
+		post_id = $( '#wrapper .post' ).prop( 'id' ).split( '-' )[1];
 		//cpajax_infinite_posts.push( post_id );
 
 		// add new comments data to our array
@@ -164,12 +168,12 @@ cpajax_post_title = document.title;
 	function cpajax_update_custom_menu( item_id ) {
 
 		// update item
-		$('#toc_list .menu-item').removeClass('current_page_item');
-		$('#menu-item-' + item_id).addClass('current_page_item');
+		$( '#toc_list .menu-item' ).removeClass( 'current_page_item' );
+		$( '#menu-item-' + item_id ).addClass( 'current_page_item' );
 
 		// update ancestors
-		$('#toc_list .menu-item').removeClass('current_page_ancestor');
-		$('#menu-item-' + item_id).parents('li').addClass('current_page_ancestor');
+		$( '#toc_list .menu-item' ).removeClass( 'current_page_ancestor' );
+		$( '#menu-item-' + item_id ).parents( 'li' ).addClass( 'current_page_ancestor' );
 
 	}
 
@@ -184,12 +188,12 @@ cpajax_post_title = document.title;
 	function cpajax_update_pages_menu( item_id ) {
 
 		// update item
-		$('#toc_list .page_item').removeClass('current_page_item');
-		$('.page-item-' + item_id).addClass('current_page_item');
+		$( '#toc_list .page_item' ).removeClass( 'current_page_item' );
+		$( '.page-item-' + item_id ).addClass( 'current_page_item' );
 
 		// update ancestors
-		$('#toc_list .page_item').removeClass('current_page_ancestor');
-		$('.page-item-' + item_id).parents('li').addClass('current_page_ancestor');
+		$( '#toc_list .page_item' ).removeClass( 'current_page_ancestor' );
+		$( '.page-item-' + item_id ).parents( 'li' ).addClass( 'current_page_ancestor' );
 
 	}
 
@@ -271,7 +275,7 @@ cpajax_post_title = document.title;
 		 *
 		 * @return void
 		 */
-		$('#wrapper').waypoint(
+		$( '#wrapper' ).waypoint(
 
 			/**
 			 * Waypoint callback
@@ -301,7 +305,7 @@ cpajax_post_title = document.title;
 			// config options
 			{
 				offset: 'bottom-in-view'
-				//offset: function() { return -$(this).height / 2; }
+				//offset: function() { return -$( this ).height / 2; }
 				//offset: 100
 			}
 
@@ -323,7 +327,7 @@ cpajax_post_title = document.title;
 		var post_id;
 
 		// get ID of last post
-		post_id = $('#main_wrapper .post:last-child').prop('id').split('-')[1];
+		post_id = $( '#main_wrapper .post:last-child' ).prop( 'id' ).split( '-' )[1];
 		//console.log( 'wrapper current_post_id: ' + post_id );
 
 		//console.log( 'WRAPPER GOING DOWN' );
@@ -335,7 +339,7 @@ cpajax_post_title = document.title;
 		//console.log( 'down: ' + post_id );
 
 		// show loading
-		//$('#loading').show();
+		//$( '#loading' ).show();
 
 		// init AJAX spinner
 		$( '#main_wrapper' ).after(
@@ -396,7 +400,7 @@ cpajax_post_title = document.title;
 			post_id;
 
 		// get ID of last post
-		post_id = $('#main_wrapper .post:last-child').prop('id').split('-')[1];
+		post_id = $( '#main_wrapper .post:last-child' ).prop( 'id' ).split( '-' )[1];
 		//console.log( 'wrapper current_post_id: ' + post_id );
 
 		//console.log( response );
@@ -423,18 +427,18 @@ cpajax_post_title = document.title;
 		*/
 
 		// get existing menu item before we append
-		existing_menu_item = $('#main_wrapper .post:last-child').prop('class');
+		existing_menu_item = $( '#main_wrapper .post:last-child' ).prop( 'class' );
 		//console.log( 'LOAD: existing_menu_item: ' + existing_menu_item );
 
 		// find post object
-		new_post_obj = $( '.post', $(response.content) );
+		new_post_obj = $( '.post', $( response.content ) );
 		//console.log( 'NEW post obj: ' + new_post_obj );
 
 		// add new post to the end
-		$('#main_wrapper').append( new_post_obj.parents('.page_wrapper') );
+		$( '#main_wrapper' ).append( new_post_obj.parents( '.page_wrapper' ) );
 
 		// find post ID property
-		new_post_prop = new_post_obj.prop('id');
+		new_post_prop = new_post_obj.prop( 'id' );
 		//console.log( 'NEW post ID: ' + new_post_prop );
 
 		// if we get one...
@@ -444,18 +448,21 @@ cpajax_post_title = document.title;
 			cpajax_infinite_posts.push( post_id );
 
 			// get new post ID
-			new_post_id = new_post_prop.split('-')[1];
+			new_post_id = new_post_prop.split( '-' )[1];
 
 			// find comments
-			new_comments_obj = $( '.comments_container', $(response.comments) );
+			new_comments_obj = $( '.comments_container', $( response.comments ) );
 			//console.log( 'NEW comments obj: ' );
 			//console.log( new_comments_obj );
 
 			// get a copy of th comment form for this post
 			post_comment_form = cpajax_comment_form.clone();
 
+			// change the form ID so we don't get double submissions
+			$( 'form', post_comment_form ).attr( 'id', 'commentform' );
+
 			// update its comment_post_ID
-			$('#comment_post_ID', post_comment_form).val( new_post_id );
+			$( '#comment_post_ID', post_comment_form ).val( new_post_id );
 
 			// replace stored comments data
 			cpajax_infinite_comments = new_comments_obj.append( post_comment_form );
@@ -466,7 +473,7 @@ cpajax_post_title = document.title;
 			if ( existing_menu_item != 'post' ) {
 
 				// get item ID
-				existing_menu_item_id = existing_menu_item.split('-')[1];
+				existing_menu_item_id = existing_menu_item.split( '-' )[1];
 
 				// is it a custom menu?
 				if ( existing_menu_item.match( 'wpcustom_menuid-' ) ) {
@@ -515,7 +522,7 @@ cpajax_post_title = document.title;
 	function cpajax_enable_post_comments_waypoint( post_id ) {
 
 		// The top of a post has reached the top of the viewport scrolling downwards
-		$('#post-' + post_id + '.post').parent().parent().waypoint(
+		$( '#post-' + post_id + '.post' ).parent().parent().waypoint(
 
 			/**
 			 * Waypoint callback
@@ -529,7 +536,7 @@ cpajax_post_title = document.title;
 				if ( direction === 'down' ) {
 
 					// trigger page change
-					cpajax_trigger_page_change( $(this) );
+					cpajax_trigger_page_change( $( this ) );
 
 				}
 
@@ -548,7 +555,7 @@ cpajax_post_title = document.title;
 					var offset;
 
 					// get header offset
-					offset = $('#header').height();
+					offset = $( '#header' ).height();
 
 					// is the admin bar shown?
 					if ( cp_wp_adminbar == 'y' ) {
@@ -585,24 +592,24 @@ cpajax_post_title = document.title;
 		// trace
 		//console.log( 'TOP GOING DOWN (this)' );
 		//console.log( context );
-		//console.log( 'TOP GOING DOWN ' + $('.post', context).prop('id') );
+		//console.log( 'TOP GOING DOWN ' + $( '.post', context ).prop( 'id' ) );
 
 		// get post object
-		post_obj = $('.post', context);
+		post_obj = $( '.post', context );
 
 		// ID of current post that's come into view
-		post_id = post_obj.prop('id').split('-')[1];
+		post_id = post_obj.prop( 'id' ).split( '-' )[1];
 		//console.log( 'DOWN: post_id: ' + post_id );
 
 		// get menu item from class
-		menu_item = post_obj.prop('class');
+		menu_item = post_obj.prop( 'class' );
 		//console.log( 'DOWN: menu_item: ' + menu_item );
 
 		// did we get one of our target ones?
 		if ( menu_item != 'post' ) {
 
 			// got one
-			menu_item_id = menu_item.split('-')[1];
+			menu_item_id = menu_item.split( '-' )[1];
 
 			// direction: DOWN
 			//console.log( 'DOWN: post_id ' + post_id + ' menu_item_id ' + menu_item_id );
@@ -621,10 +628,10 @@ cpajax_post_title = document.title;
 			}
 
 			// disable container waypoint to prevent accidental triggering
-			$('#wrapper').waypoint( 'disable' );
+			$( '#wrapper' ).waypoint( 'disable' );
 
 			// remove item above
-			var container = $('#main_wrapper');
+			var container = $( '#main_wrapper' );
 			var item_above = context.prev();
 
 			// trash waypoints
@@ -632,11 +639,11 @@ cpajax_post_title = document.title;
 			context.waypoint( 'destroy' );
 
 			// set as fixed (remove from document flow)
-			container.css('position', 'fixed');
+			container.css( 'position', 'fixed' );
 
 			// remove item
-			//item_above.css('visibility', 'hidden');
-			//item_above.css('display', 'none');
+			//item_above.css( 'visibility', 'hidden' );
+			//item_above.css( 'display', 'none' );
 			item_above.remove();
 
 			// set document title
@@ -661,13 +668,13 @@ cpajax_post_title = document.title;
 			}
 
 			// scroll to top of page
-			$(document).scrollTop( 0 );
+			$( document ).scrollTop( 0 );
 
 			// set back to relative (add back to document flow)
-			container.css('position', 'relative');
+			container.css( 'position', 'relative' );
 
 			// re-renable container waypoint
-			$('#wrapper').waypoint( 'enable' );
+			$( '#wrapper' ).waypoint( 'enable' );
 
 
 
@@ -680,7 +687,7 @@ cpajax_post_title = document.title;
 			addComment.disableForm();
 
 			// add new comments to the end
-			$('#comments_sidebar .comments_container').replaceWith( comments );
+			$( '#comments_sidebar .comments_container' ).replaceWith( comments );
 
 			// re-enable the comment form
 			addComment.enableForm();
@@ -727,7 +734,7 @@ cpajax_post_title = document.title;
 			document.title = e.state.page_title;
 
 			// set html
-			$('#main_wrapper').prepend( '<div class="page_wrapper cp_page_wrapper">' + e.state.html + '</div>' );
+			$( '#main_wrapper' ).prepend( '<div class="page_wrapper cp_page_wrapper">' + e.state.html + '</div>' );
 
 		}
 	};
