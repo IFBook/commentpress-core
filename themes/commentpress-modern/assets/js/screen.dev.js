@@ -2811,17 +2811,22 @@ jQuery(document).ready( function($) {
 	 * still in development, so much of this is liable to change.
 	 */
 
-	// put some vars into global scope
-	var cp_comment_form;
+	// are comments open?
+	if ( cp_comments_open == 'y' ) {
 
-	// disable the comment form
-	addComment.disableForm();
+		// put some vars into global scope
+		var cp_comment_form;
 
-	// save comment form
-	cp_comment_form = $('#respond_wrapper').clone();
+		// disable the comment form
+		addComment.disableForm();
 
-	// save original comments column heading
-	cp_column_title_original = $( '#comments_header h2 a' ).text();
+		// save comment form
+		cp_comment_form = $('#respond_wrapper').clone();
+
+		// save original comments column heading
+		cp_column_title_original = $( '#comments_header h2 a' ).text();
+
+	}
 
 
 

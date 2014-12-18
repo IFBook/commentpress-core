@@ -3180,6 +3180,11 @@ body.fee .metabox_container label
 	text-transform: uppercase;
 }
 
+.editor_toggle_wrapper
+{
+	padding: 15px 7px;
+}
+
 
 
 
