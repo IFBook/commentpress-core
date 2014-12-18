@@ -624,6 +624,40 @@ add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_print_styles', 999 );
 
 
 
+if ( ! function_exists( 'commentpress_enqueue_wp_fee_js' ) ):
+/**
+ * Add CommentPress WP FEE Javascript
+ *
+ * @return void
+ */
+function commentpress_enqueue_wp_fee_js() {
+
+	// init
+	$dev = '';
+
+	// check for dev
+	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
+		$dev = '.dev';
+	}
+
+	// enqueue accordion-like js
+	wp_enqueue_script(
+
+		'cp_wp_fee_js',
+		get_template_directory_uri() . '/assets/js/wp_fee'.$dev.'.js',
+		array( 'cp_common_js' ), // deps
+		COMMENTPRESS_VERSION // version
+
+	);
+
+}
+endif; // commentpress_enqueue_wp_fee_js
+
+// add a filter for the above, very late so it (hopefully) is last in the queue
+add_action( 'commentpress_editor_include_javascript', 'commentpress_enqueue_wp_fee_js' );
+
+
+
 if ( ! function_exists( 'commentpress_header' ) ):
 /**
  * Custom background colour

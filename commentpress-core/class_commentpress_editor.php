@@ -125,6 +125,12 @@ class CommentpressCoreEditor {
 		// test for flag
 		if ( isset( $this->fee ) AND $this->fee == 'killed' ) return;
 
+		/**
+		 * The following hooks are enabled when WP FEE is enabled because we need
+		 * to suppress TinyMCE for commenting and enable slipstream functionality
+		 * that supports WP FEE.
+		 */
+
 		// prevent TinyMCE in comment form
 		add_filter( 'cp_override_tinymce', array( $this, 'commentpress_prevent_tinymce' ), 1000, 1 );
 		add_filter( 'commentpress_is_tinymce_allowed', array( $this, 'commentpress_disallow_tinymce' ), 1000 );
@@ -170,6 +176,19 @@ class CommentpressCoreEditor {
 		add_action( 'wp_ajax_cp_set_starting_para_number', array( $this, 'metabox_set_starting_para_number' ) );
 		add_action( 'wp_ajax_nopriv_cp_set_starting_para_number', array( $this, 'metabox_set_starting_para_number' ) );
 
+		// add an action to wp_enqueue_scripts that triggers themes to include their WP FEE compatibility script
+		add_action( 'wp_enqueue_scripts', array( $this, 'trigger_script_inclusion' ), 9999 );
+	}
+
+
+
+	/**
+	 * Set editor toggle state if none exists
+	 *
+	 * @return void
+	 */
+	public function trigger_script_inclusion() {
+		do_action( 'commentpress_editor_include_javascript' );
 	}
 
 
