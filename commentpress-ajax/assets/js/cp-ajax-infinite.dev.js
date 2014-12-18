@@ -319,11 +319,11 @@ cpajax_post_title = document.title;
 	 */
 	function cpajax_load_next_page( mode ) {
 
-		// declarte vars
+		// declare vars
 		var post_id;
 
 		// get ID of last post
-		post_id = $('#main_wrapper .post:last').prop('id').split('-')[1];
+		post_id = $('#main_wrapper .post:last-child').prop('id').split('-')[1];
 		//console.log( 'wrapper current_post_id: ' + post_id );
 
 		//console.log( 'WRAPPER GOING DOWN' );
@@ -339,8 +339,8 @@ cpajax_post_title = document.title;
 
 		// init AJAX spinner
 		$( '#main_wrapper' ).after(
-			'<div style="text-align: center">' +
-				'<img src="' + cpajax_spinner_url + '" id="wrapper_loading" alt="' + cpajax_lang[0] + '" />' +
+			'<div class="cp_next_page_loading_wrapper" style="text-align: center">' +
+				'<img src="' + cpajax_spinner_url + '" id="cp_next_page_loading" alt="' + cpajax_lang[0] + '" />' +
 			'</div>'
 		);
 
@@ -369,8 +369,8 @@ cpajax_post_title = document.title;
 				// handle incoming...
 				cpajax_handle_data( data, mode );
 
-				// hide spinner
-				$( '#wrapper_loading' ).hide();
+				// remove spinner
+				$( '.cp_next_page_loading_wrapper' ).remove();
 
 			}
 
@@ -396,7 +396,7 @@ cpajax_post_title = document.title;
 			post_id;
 
 		// get ID of last post
-		post_id = $('#main_wrapper .post:last').prop('id').split('-')[1];
+		post_id = $('#main_wrapper .post:last-child').prop('id').split('-')[1];
 		//console.log( 'wrapper current_post_id: ' + post_id );
 
 		//console.log( response );
@@ -423,7 +423,7 @@ cpajax_post_title = document.title;
 		*/
 
 		// get existing menu item before we append
-		existing_menu_item = $('#main_wrapper .post:last').prop('class');
+		existing_menu_item = $('#main_wrapper .post:last-child').prop('class');
 		//console.log( 'LOAD: existing_menu_item: ' + existing_menu_item );
 
 		// find post object

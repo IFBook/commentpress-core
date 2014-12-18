@@ -559,7 +559,7 @@ body.admin-bar #navigation
 	position: relative;
 	width: 54%;
 	z-index: 500;
-	background-color: #ccc;
+	/* background-color: #ccc; */
 }
 
 #sidebar
@@ -3184,6 +3184,27 @@ body.fee .metabox_container label
 {
 	padding: 15px 7px;
 }
+
+
+
+
+
+/*
+--------------------------------------------------------------------------------
+Compatibility with CommentPress infinite scroll
+--------------------------------------------------------------------------------
+*/
+
+.cp_next_page_loading_wrapper
+{
+	padding: 40px 0;
+}
+
+.page_wrapper + .page_wrapper
+{
+	margin-top: 60px;
+}
+
 
 
 
