@@ -179,6 +179,9 @@ jQuery(document).ready( function($) {
 		// save comment form
 		cp_comment_form = $('#respond_wrapper').clone();
 
+		// change the form ID so we don't get double submissions
+		$( 'form', cp_comment_form ).attr( 'id', 'commentform-clone' );
+
 		// save original comments column heading
 		cp_column_title_original = $( '#comments_header h2 a' ).text();
 
@@ -284,6 +287,9 @@ jQuery(document).ready( function($) {
 
 							// get a copy of the comment form for this post
 							post_comment_form = cp_comment_form.clone();
+
+							// change the form ID so we don't get double submissions
+							$( 'form', post_comment_form ).attr( 'id', 'commentform' );
 
 							// add it to the comments
 							comments.append( post_comment_form );
