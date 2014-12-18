@@ -49,7 +49,7 @@ function cpajax_enable_plugin() {
 	// kick out if...
 
 	// cp is not enabled
-	if ( is_null( $commentpress_core ) OR !is_object( $commentpress_core ) )  { return; }
+	if ( is_null( $commentpress_core ) OR ! is_object( $commentpress_core ) )  { return; }
 
 	// we're in the WP back end
 	if ( is_admin() ) { return; }
@@ -75,7 +75,7 @@ function cpajax_add_javascripts() {
 	global $post, $commentpress_core;
 
 	// can only now see $post
-	if ( !cpajax_plugin_can_activate() ) { return; }
+	if ( ! cpajax_plugin_can_activate() ) { return; }
 
 	// init vars
 	$vars = array();
@@ -200,7 +200,7 @@ function cpajax_plugin_can_activate() {
 	global $post, $commentpress_core;
 
 	// disallow if no post ID (such as 404)
-	if ( !is_object( $post ) )  { return false; }
+	if ( ! is_object( $post ) )  { return false; }
 
 	// it's the Theme My Login page
 	if ( $commentpress_core->is_theme_my_login_page() ) { return false; }
@@ -209,7 +209,7 @@ function cpajax_plugin_can_activate() {
 	$allowed = true;
 
 	// disallow generally if page doesn't allow commenting
-	if ( !$commentpress_core->is_commentable() )  { $allowed = false; }
+	if ( ! $commentpress_core->is_commentable() )  { $allowed = false; }
 
 	// but, allow general comments page
 	if ( $commentpress_core->db->option_get( 'cp_general_comments_page' ) == $post->ID ) { $allowed = true; }
@@ -337,7 +337,7 @@ function cpajax_get_new_comments() {
 	echo json_encode( $data );
 	//print_r( $last_comment_count );
 
-	// die!
+	// die
 	exit();
 
 }
@@ -394,7 +394,7 @@ function cpajax_add_reassign_button( $edit_button, $comment ) {
 	if ( $comment->comment_type == 'trackback' OR $comment->comment_type == 'pingback' ) { return $edit_button; }
 
 	// pass if not orphan
-	//if ( !isset( $comment->orphan ) ) { return $edit_button; }
+	//if ( ! isset( $comment->orphan ) ) { return $edit_button; }
 
 	// set default edit link title text
 	$_title_text = apply_filters(
@@ -471,7 +471,7 @@ function cpajax_reassign_comment() {
 	// echo
 	echo json_encode( $data );
 
-	// die!
+	// die
 	exit();
 
 }
@@ -620,7 +620,7 @@ function cpajax_infinite_scroll_load_next_page() {
 	global $commentpress_core;
 
 	// die if cp is not enabled
-	if ( is_null( $commentpress_core ) OR !is_object( $commentpress_core ) ) { die( 'No CP' ); }
+	if ( is_null( $commentpress_core ) OR ! is_object( $commentpress_core ) ) { die( 'No CP' ); }
 
 	// init data
 	$data = '';
@@ -661,7 +661,7 @@ function cpajax_infinite_scroll_load_next_page() {
 	if ( $page_key === false ) { die( ' No $page_key' ); }
 
 	// die if there is no next item
-	if ( !isset( $all_pages[$page_key + 1] ) ) { die( 'No key in array' ); }
+	if ( ! isset( $all_pages[$page_key + 1] ) ) { die( 'No key in array' ); }
 
 	// get object
 	$new_post = $all_pages[$page_key + 1];
@@ -757,7 +757,7 @@ function cpajax_infinite_scroll_load_next_page() {
 	$upper_navigation = '';
 
 	// do we have a featured image?
-	if ( !commentpress_has_feature_image() ) {
+	if ( ! commentpress_has_feature_image() ) {
 
 		// assign upper page navigation
 		$upper_navigation = $navigation;
@@ -811,7 +811,7 @@ function cpajax_infinite_scroll_load_next_page() {
 	// echo
 	echo json_encode( $response );
 
-	// die!
+	// die
 	exit();
 
 }
