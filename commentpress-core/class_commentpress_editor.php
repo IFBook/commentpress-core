@@ -31,6 +31,12 @@ class CommentpressCoreEditor {
 	// parent object reference
 	public $parent_obj;
 
+	// db object reference
+	public $db;
+
+	// toggle state
+	public $toggle_state;
+
 
 
 	/**
@@ -46,9 +52,6 @@ class CommentpressCoreEditor {
 
 		// store reference to database wrapper (child of calling obj)
 		$this->db = $this->parent_obj->db;
-
-		// kill WP FEE
-		//$this->wp_fee_prevent_load();
 
 		// intercept toggles
 		add_action( 'plugins_loaded', array( $this, 'initialise' ) );
@@ -66,6 +69,12 @@ class CommentpressCoreEditor {
 	 * @return void
 	 */
 	public function initialise() {
+
+		// save default toggle state
+		$this->editor_toggle_set_default();
+
+		// kill WP FEE
+		$this->wp_fee_prevent_tinymce();
 
 		// register hooks
 		$this->register_hooks();
@@ -98,29 +107,6 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * Prevent WordPress Front-end Editor from loading
-	 *
-	 * @return void
-	 */
-	public function wp_fee_prevent_load() {
-
-		// set flag
-		$this->fee = 'killed';
-
-		// define filename
-		$class_file = 'commentpress-core/class_commentpress_fee.php';
-
-		// get path
-		$class_file_path = commentpress_file_is_present( $class_file );
-
-		// we're fine, include class definition
-		require_once( $class_file_path );
-
-	}
-
-
-
-	/**
 	 * Register WordPress hooks
 	 *
 	 * @return void
@@ -130,14 +116,14 @@ class CommentpressCoreEditor {
 		// bail if there's no WP FEE present
 		if ( ! class_exists( 'FEE' ) ) return;
 
-		// test for flag
-		if ( isset( $this->fee ) AND $this->fee == 'killed' ) return;
-
-		// intercept toggles
-		add_action( 'init', array( $this, 'editor_intercept_toggle' ) );
+		// intercept toggles when WP is set up
+		add_action( 'wp', array( $this, 'editor_toggle_intercept' ) );
 
 		// enable editor toggle
-		add_action( 'cp_content_tab_before_search', array( $this, 'editor_show_toggle' ) );
+		add_action( 'cp_content_tab_before_search', array( $this, 'editor_toggle_show' ) );
+
+		// test for flag
+		if ( isset( $this->fee ) AND $this->fee == 'killed' ) return;
 
 		// prevent TinyMCE in comment form
 		add_filter( 'cp_override_tinymce', array( $this, 'commentpress_prevent_tinymce' ), 1000, 1 );
@@ -189,6 +175,135 @@ class CommentpressCoreEditor {
 
 
 	/**
+	 * Set editor toggle state if none exists
+	 *
+	 * @return void
+	 */
+	public function editor_toggle_set_default() {
+
+		// get existing
+		$state = $this->db->option_get( 'cp_editor_toggle', false );
+
+		// well?
+		if ( $state === false ) {
+
+			// default state is 'writing'
+			$state = 'writing';
+
+			// set default
+			$this->db->option_set( 'cp_editor_toggle', $state );
+
+			// save
+			$this->db->options_save();
+
+		}
+
+		// set property
+		$this->toggle_state = $state;
+		//print_r( $this->toggle_state ); die();
+
+	}
+
+
+
+	/**
+	 * Intercept editor toggling once plugins are loaded
+	 *
+	 * @return void
+	 */
+	public function editor_toggle_intercept() {
+
+		//print_r( $this->db->option_get( 'cp_editor_toggle' ) ); die();
+
+		if (
+			! isset( $_GET['cp_editor_nonce'] ) OR
+			! wp_verify_nonce( $_GET['cp_editor_nonce'], 'editor_toggle' )
+		) {
+
+			// --<
+			return;
+
+		}
+
+		// access globals
+		global $post;
+
+		// get existing state
+		$state = $this->db->option_get( 'cp_editor_toggle' );
+
+		// flip the state
+		if ( $state === 'writing' ) {
+			$state = 'commenting';
+		} else {
+			$state = 'writing';
+		}
+
+		// save the new toggle state
+		$this->db->option_set( 'cp_editor_toggle', $state );
+
+		// save
+		$this->db->options_save();
+
+		// redirect
+		wp_redirect( get_permalink( $post->ID ) );
+
+	}
+
+
+
+	/**
+	 * Inject editor toggle link before search in Contents column
+	 *
+	 * @return void
+	 */
+	public function editor_toggle_show() {
+
+		// bail if not commentable
+		if ( ! $this->parent_obj->is_commentable() ) return;
+
+		// define heading title
+		$heading = apply_filters( 'cp_content_tab_editor_toggle_title', __( 'Usage Mode', 'commentpress-core' ) );
+
+		echo '
+		<h3 class="activity_heading">' . $heading . '</h3>
+
+		<div class="paragraph_wrapper editor_toggle_wrapper">
+
+		<div class="editor_toggle">
+			' . $this->_toggle_link() . '
+		</div><!-- /editor_toggle -->
+
+		</div>
+
+		';
+
+	}
+
+
+
+	/**
+	 * Prevent WordPress Front-end Editor from loading
+	 *
+	 * @return void
+	 */
+	public function wp_fee_prevent_tinymce() {
+
+		// what's our toggle state?
+		if ( isset( $this->toggle_state ) AND $this->toggle_state === 'commenting' ) {
+
+			// set flag
+			$this->fee = 'killed';
+
+			global $wordpress_front_end_editor;
+			remove_action( 'init', array( $wordpress_front_end_editor, 'init' ) );
+
+		}
+
+	}
+
+
+
+	/**
 	 * Prevent TinyMCE from loading in the comment form
 	 *
 	 * @return void
@@ -211,59 +326,6 @@ class CommentpressCoreEditor {
 
 		// do not show
 		return 0;
-
-	}
-
-
-
-	/**
-	 * Intercept editor toggling once plugins are loaded
-	 *
-	 * @return void
-	 */
-	public function editor_intercept_toggle() {
-
-		if (
-			! isset( $_GET['cp_editor_nonce'] ) OR
-			! wp_verify_nonce( $_GET['cp_editor_nonce'], 'editor_toggle' )
-		) {
-
-			// --<
-			return;
-
-		}
-
-		//
-
-	}
-
-
-
-	/**
-	 * Inject editor toggle link before search in Contents column
-	 *
-	 * @return void
-	 */
-	public function editor_show_toggle() {
-
-		// bail if not commentable
-		if ( ! $this->parent_obj->is_commentable() ) return;
-
-		// define heading title
-		$heading = apply_filters( 'cp_content_tab_editor_toggle_title', __( 'Mode', 'commentpress-core' ) );
-
-		echo '
-		<h3 class="activity_heading">' . $heading . '</h3>
-
-		<div class="paragraph_wrapper editor_toggle_wrapper">
-
-		<div class="editor_toggle">
-			' . $this->_toggle_link() . '
-		</div><!-- /editor_toggle -->
-
-		</div>
-
-		';
 
 	}
 
@@ -679,20 +741,36 @@ class CommentpressCoreEditor {
 		// declare access to globals
 		global $post;
 
-		// link text
-		$link_text = __( 'Stop writing', 'commentpress-core' );
+		// change text depending on toggle state
+		if ( $this->toggle_state == 'writing' ) {
 
-		// link text
-		$link_title = __( 'Stop writing', 'commentpress-core' );
+			// link text
+			$text = __( 'Switch to Commenting', 'commentpress-core' );
+
+			// link text
+			$title = __( 'Switch to Commenting Mode', 'commentpress-core' );
+
+		} else {
+
+			// link text
+			$text = __( 'Switch to Writing', 'commentpress-core' );
+
+			// link text
+			$title = __( 'Switch to Writing Mode', 'commentpress-core' );
+
+		}
 
 		// link url
-		$link_url = wp_nonce_url( get_permalink( $post->ID ), 'editor_toggle', 'cp_editor_nonce' );
+		$url = wp_nonce_url( get_permalink( $post->ID ), 'editor_toggle', 'cp_editor_nonce' );
+
+		// link class
+		$class = 'button';
 
 		// construct link
-		$link = '<a href="' . $link_url . '" title="' . esc_attr( $link_title ) . '">' . $link_text . '</a>';
+		$link = '<a href="' . $url . '" class="' . $class . '" title="' . esc_attr( $title ) . '">' . $text . '</a>';
 
 		// --<
-		return apply_filters( 'commentpress_editor_toggle_link', $link, $link_text, $link_title, $link_url );
+		return apply_filters( 'commentpress_editor_toggle_link', $link, $text, $title, $url, $class );
 
 	}
 
