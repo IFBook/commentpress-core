@@ -1431,7 +1431,7 @@ function cp_scroll_to_comment_on_load() {
 		comment = jQuery( '#comment-' + comment_id );
 
 		// did we get one?
-		if ( comment ) {
+		if ( comment.length ) {
 
 			// if IE6, then we have to scroll #wrapper
 			if ( msie6 ) {
