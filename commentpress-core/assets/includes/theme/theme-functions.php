@@ -174,7 +174,7 @@ if ( ! function_exists( 'commentpress_fix_bp_core_avatar_url' ) ):
 function commentpress_fix_bp_core_avatar_url( $url ) {
 
 	// if in multisite and on non-root site
-	if ( is_multisite() && !bp_is_root_blog() ) {
+	if ( is_multisite() && ! bp_is_root_blog() ) {
 
 		// switch to root site
 		switch_to_blog( bp_get_root_blog_id() );
@@ -276,13 +276,13 @@ function commentpress_get_header_image() {
 	//print_r( $options ); die();
 
 	// test for our new theme customizer option
-	if ( isset( $options['cp_inline_header_image'] ) AND !empty( $options['cp_inline_header_image'] ) ) {
+	if ( isset( $options['cp_inline_header_image'] ) AND ! empty( $options['cp_inline_header_image'] ) ) {
 
 		// init top padding
 		$style = '';
 
 		// test for top padding
-		if ( isset( $options['cp_inline_header_padding'] ) AND !empty( $options['cp_inline_header_padding'] ) ) {
+		if ( isset( $options['cp_inline_header_padding'] ) AND ! empty( $options['cp_inline_header_padding'] ) ) {
 
 			// override
 			$style = ' style="padding-top: '.$options['cp_inline_header_padding'].'px"';
@@ -538,7 +538,7 @@ function commentpress_get_body_classes( $raw = false ) {
 		$_blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $_type, $_workflow );
 
 		// if it's not the main site, add class
-		if ( is_multisite() AND !is_main_site() ) {
+		if ( is_multisite() AND ! is_main_site() ) {
 			$blog_type = ' blogtype-'.intval( $_blog_type );
 		}
 
@@ -562,7 +562,7 @@ function commentpress_get_body_classes( $raw = false ) {
 	$_body_classes = $sidebar_class.$commentable.$layout_class.$page_type.$groupblog_type.$blog_type.$tinymce_version;
 
 	// if we want them wrapped, do so
-	if ( !$raw ) {
+	if ( ! $raw ) {
 
 		// preserve backwards compat for older child themes
 		$_body_classes = ' class="'.$_body_classes.'"';
@@ -591,7 +591,7 @@ function commentpress_site_title( $sep = '', $echo = true ) {
 	if ( is_multisite() ) {
 
 		// if we're on a sub-blog
-		if ( !is_main_site() ) {
+		if ( ! is_main_site() ) {
 
 			global $current_site;
 
@@ -850,7 +850,7 @@ function commentpress_get_user_link( &$user ) {
 	 */
 
 	// kick out if not a user
-	if ( !is_object( $user ) ) { return false; }
+	if ( ! is_object( $user ) ) { return false; }
 
 	// we're through: the user is on the system
 	global $commentpress_core;
@@ -905,7 +905,7 @@ function commentpress_echo_post_meta() {
 		//print_r( $authors ); die();
 
 		// if we get some
-		if ( !empty( $authors ) ) {
+		if ( ! empty( $authors ) ) {
 
 			// use the Co-Authors format of "name, name, name & name"
 			$author_html = '';
@@ -1002,7 +1002,7 @@ function commentpress_show_source_url() {
 		$server = ( isset( $_SERVER['SERVER_NAME'] ) ) ? $_SERVER['SERVER_NAME'] : '';
 
 		// get protocol, if set
-		$protocol = ( !empty( $_SERVER['HTTPS'] ) ) ? 'https' : 'http';
+		$protocol = ( ! empty( $_SERVER['HTTPS'] ) ) ? 'https' : 'http';
 
 		// construct URL
 		$url = $protocol.'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
@@ -1032,7 +1032,7 @@ function commentpress_echo_post_author( $author_id, $echo = true ) {
 	$user = get_userdata( $author_id );
 
 	// kick out if we don't have a user with that ID
-	if ( !is_object( $user ) ) { return; }
+	if ( ! is_object( $user ) ) { return; }
 
 	// access plugin
 	global $commentpress_core, $post;
@@ -1239,7 +1239,7 @@ function commentpress_get_comments_by_content() {
 	foreach( $all_comments AS $comment ) {
 
 		// add to authors with comments array
-		if ( !in_array( $comment->comment_author_email, $authors_with ) ) {
+		if ( ! in_array( $comment->comment_author_email, $authors_with ) ) {
 			$authors_with[] = $comment->comment_author_email;
 			$name = $comment->comment_author != '' ? $comment->comment_author : __( 'Anonymous', 'commentpress-core' );
 			$author_names[$comment->comment_author_email] = $name;
@@ -1247,7 +1247,7 @@ function commentpress_get_comments_by_content() {
 
 		/*
 		// increment counter
-		if ( !isset( $post_comment_counts[$comment->comment_author_email] ) ) {
+		if ( ! isset( $post_comment_counts[$comment->comment_author_email] ) ) {
 			$post_comment_counts[$comment->comment_author_email] = 1;
 		} else {
 			$post_comment_counts[$comment->comment_author_email]++;
@@ -1372,7 +1372,7 @@ function commentpress_show_activity_tab() {
 			( is_multisite()
 			AND is_main_site()
 			AND $commentpress_core->is_buddypress_special_page() )
-			OR !is_object( $post )
+			OR ! is_object( $post )
 
 		) {
 
@@ -1579,7 +1579,7 @@ function commentpress_get_comment_activity_item( $comment ) {
 			// if it has a text sig
 			if (
 
-				!is_null( $comment->comment_signature )
+				! is_null( $comment->comment_signature )
 				AND $comment->comment_signature != ''
 
 			) {
@@ -1706,7 +1706,7 @@ function commentpress_get_comments_by_para() {
 		$login_to_comment = false;
 
 		// if we have to log in to comment...
-		if ( get_option('comment_registration') AND !is_user_logged_in() ) {
+		if ( get_option('comment_registration') AND ! is_user_logged_in() ) {
 			$login_to_comment = true;
 		}
 
@@ -1714,7 +1714,7 @@ function commentpress_get_comments_by_para() {
 		$comment_type = 'all';
 
 		// if we don't allow pingbacks...
-		if ( !('open' == $post->ping_status) ) {
+		if ( ! ('open' == $post->ping_status) ) {
 
 			// just get comments
 			$comment_type = 'comment';
@@ -2259,7 +2259,7 @@ function commentpress_comment_reply_link( $args = array(), $comment = null, $pos
 	$link = '';
 
 	// if we have to log in to comment...
-	if ( get_option( 'comment_registration' ) AND !is_user_logged_in() ) {
+	if ( get_option( 'comment_registration' ) AND ! is_user_logged_in() ) {
 
 		// construct link
 		$link = '<a rel="nofollow" href="' . site_url('wp-login.php?redirect_to=' . get_permalink()) . '">' . $login_text . '</a>';
@@ -2554,7 +2554,7 @@ function commentpress_excerpt_length() {
 	global $commentpress_core;
 
 	// is the plugin active?
-	if ( !is_object( $commentpress_core ) ) {
+	if ( ! is_object( $commentpress_core ) ) {
 
 		// --<
 		return 55; // WordPress default
@@ -2794,7 +2794,7 @@ function commentpress_add_wp_editor() {
 
 	// kick out if wp_editor doesn't exist
 	// TinyMCE will be handled by including the script using the pre- wp_editor() method
-	if ( !function_exists( 'wp_editor' ) ) {
+	if ( ! function_exists( 'wp_editor' ) ) {
 
 		// --<
 		return false;
@@ -2802,7 +2802,7 @@ function commentpress_add_wp_editor() {
 	}
 
 	// kick out if plugin not active
-	if ( !is_object( $commentpress_core ) ) {
+	if ( ! is_object( $commentpress_core ) ) {
 
 		// --<
 		return false;
@@ -2810,7 +2810,7 @@ function commentpress_add_wp_editor() {
 	}
 
 	// only allow through if plugin says so
-	if ( !$commentpress_core->display->is_tinymce_allowed() ) {
+	if ( ! $commentpress_core->display->is_tinymce_allowed() ) {
 
 		// --<
 		return false;
@@ -2966,7 +2966,7 @@ function commentpress_add_tinymce_styles( $mce_css ) {
 	if ( is_admin() ) { return $mce_css; }
 
 	// add comma if not empty
-	if ( !empty( $mce_css ) ) { $mce_css .= ','; }
+	if ( ! empty( $mce_css ) ) { $mce_css .= ','; }
 
 	// add our editor styles
 	$mce_css .= get_template_directory_uri().'/assets/css/comment-form.css';
@@ -2990,7 +2990,7 @@ add_filter( 'mce_css', 'commentpress_add_tinymce_styles' );
 function commentpress_add_tinymce_nextpage_button( $buttons ) {
 
 	// only on back-end
-	if ( !is_admin() ) { return $buttons; }
+	if ( ! is_admin() ) { return $buttons; }
 
 	// try and place Next Page after More button
 	$pos = array_search( 'wp_more', $buttons, true );
@@ -3431,7 +3431,7 @@ function commentpress_license_widget_compat() {
 
 	// if the widget is not active, (i.e. the plugin is installed but the widget has not been
 	// dragged to a sidebar), then DO NOT display the license in the footer as a default
-	if (!is_active_widget(false, false, 'license-widget', true) ) {
+	if ( ! is_active_widget( false, false, 'license-widget', true ) ) {
 		remove_action( 'wp_footer', 'license_print_license_html' );
 	}
 
@@ -3752,8 +3752,17 @@ endif; // commentpress_get_post_meta_visibility
 function commentpress_sidebars_widgets( $array ) {
 
 	// prevent errors in Theme Customizer
-	if ( !is_array( $array ) ) {
-		$array = array();
+	if ( ! is_array( $array ) ) {
+
+		// this array is based on the array in wp_install_defaults()
+		$array = array(
+			'wp_inactive_widgets' => array(),
+			'sidebar-1' => array(),
+			'sidebar-2' => array(),
+			'sidebar-3' => array(),
+			'array_version' => 3
+		);
+
 	}
 
 	// --<

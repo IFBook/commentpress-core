@@ -3476,8 +3476,14 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// set backup option
 		add_option( 'commentpress_sidebars_widgets', $this->option_wp_get( 'sidebars_widgets' ) );
 
-		// clear them
-		update_option( 'sidebars_widgets', array() );
+		// clear them - this array is based on the array in wp_install_defaults()
+		update_option( 'sidebars_widgets', array(
+			'wp_inactive_widgets' => array(),
+			'sidebar-1' => array(),
+			'sidebar-2' => array(),
+			'sidebar-3' => array(),
+			'array_version' => 3
+		) );
 
 	}
 
@@ -3924,7 +3930,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			}
 
 			/*
-			// if we wanted to clear widgets widgets...
+			// if we wanted to clear widgets...
 			if ( isset( $theme_mods['sidebars_widgets'] ) ) {
 
 				// remove them
