@@ -2826,7 +2826,7 @@ jQuery(document).ready( function($) {
 
 		// add to new URL
 		new_url += '?' + nonce;
-		console.log( new_url );
+		//console.log( new_url );
 
 		// update toggle
 		toggler.attr( 'href', new_url );

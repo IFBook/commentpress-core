@@ -13,6 +13,14 @@ This script enables infinite scroll when the CommentPress theme is active.
 
 
 
+/*
+// do we have pushstate?
+if ( window.history ) {
+	console.log( 'ONLOAD' );
+	console.log( window.history );
+}
+*/
+
 // init vars
 var cpajax_nonce,
 	cpajax_post_url,
@@ -615,7 +623,8 @@ cpajax_post_title = document.title;
 	function cpajax_trigger_page_change( context ) {
 
 		// declare vars
-		var post_obj, post_id, menu_item, new_comments;
+		var post_obj, post_id, menu_item, new_comments, container, item_above,
+			html_to_save, comments_to_save, comments;
 
 		// trace
 		//console.log( 'TOP GOING DOWN (this)' );
@@ -659,8 +668,8 @@ cpajax_post_title = document.title;
 			$( '#wrapper' ).waypoint( 'disable' );
 
 			// remove item above
-			var container = $( '#main_wrapper' );
-			var item_above = context.prev();
+			container = $( '#main_wrapper' );
+			item_above = context.prev();
 
 			// trash waypoints
 			item_above.waypoint( 'destroy' );
@@ -677,16 +686,27 @@ cpajax_post_title = document.title;
 			// set document title
 			document.title = cpajax_post_title;
 
+			// store items as HTML
+			html_to_save = $.trim( context.html() );
+			comments_to_save = $.trim( $( '#comments_sidebar .sidebar_contents_wrapper' ).html() );
+			//console.log( comments_to_save );
+
 			// do we have pushstate?
 			if ( window.history ) {
+
+				//console.log( 'PUSHSTATE' );
+				//console.log( 'page_title: ' + cpajax_post_title );
+				//console.log( $( '#comments_sidebar .sidebar_contents_wrapper' ) );
 
 				// set browser url
 				window.history.pushState(
 
 					{
-						'html': context.html(),
+						'html': html_to_save,
 						'page_title': cpajax_post_title,
-						'post_id': post_id
+						'post_id': post_id,
+						'comments': comments_to_save,
+						'comment_status': cp_comments_open
 					},
 					'',
 					cpajax_post_url
@@ -753,17 +773,6 @@ cpajax_post_title = document.title;
 	/**
 	 * Change content and comments
 	 *
-	 * @return void
-	 */
-	function cpajax_pushstate() {
-
-	}
-
-
-
-	/**
-	 * Change content and comments
-	 *
 	 * @param object e The state object
 	 * @return void
 	 */
@@ -772,7 +781,8 @@ cpajax_post_title = document.title;
 		// did we get a state object?
 		if ( e.state ) {
 
-			console.log( e );
+			//console.log( 'ONPOPSTATE' );
+			//console.log( e );
 
 			// set title
 			document.title = e.state.page_title;
@@ -780,7 +790,11 @@ cpajax_post_title = document.title;
 			// set html
 			$( '#main_wrapper' ).prepend( '<div class="page_wrapper cp_page_wrapper">' + e.state.html + '</div>' );
 
+			// add comments back in
+			$( '#comments_sidebar .comments_container' ).replaceWith( $( e.state.comments ) );
+
 		}
+
 	};
 
 

@@ -428,9 +428,6 @@ jQuery(document).ready( function($) {
 		// local vars
 		var method, key, callback;
 
-		console.log( 'cp_post_type_override' );
-		console.log( this.value );
-
 		method = 'cp_set_post_type_override';
 		key = 'cp_post_type_override';
 		callback = 'cp_text_parser_changed';
@@ -451,9 +448,6 @@ jQuery(document).ready( function($) {
 
 		// local vars
 		var method, key, callback;
-
-		console.log( 'cp_starting_para_number' );
-		console.log( this.value );
 
 		method = 'cp_set_starting_para_number';
 		key = 'cp_starting_para_number';
