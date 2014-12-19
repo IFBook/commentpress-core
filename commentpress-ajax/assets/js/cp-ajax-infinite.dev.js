@@ -19,7 +19,8 @@ var cpajax_nonce,
 	cpajax_post_title,
 	cpajax_infinite_posts,
 	cpajax_infinite_comments,
-	cpajax_comment_form;
+	cpajax_comment_form,
+	cpajax_comments_open;
 
 // test for our localisation object
 if ( 'undefined' !== typeof CommentpressAjaxInfiniteSettings ) {
@@ -125,9 +126,22 @@ cpajax_post_title = document.title;
 		// change the form ID so we don't get double submissions
 		$( 'form', cpajax_comment_form ).attr( 'id', 'commentform-disabled' );
 
+		// remove the extraneous classes
+		if ( $( '#respond_wrapper', cpajax_comment_form ).hasClass( 'cp_force_displayed' ) ) {
+			$( '#respond_wrapper', cpajax_comment_form ).removeClass( 'cp_force_displayed' );
+		}
+		if ( $( '#respond_wrapper', cpajax_comment_form ).hasClass( 'cp_force_closed' ) ) {
+			$( '#respond_wrapper', cpajax_comment_form ).removeClass( 'cp_force_closed' );
+		}
+
 		//console.log( 'cpajax_comment_form:' );
 		//console.log( cpajax_comment_form );
 		//console.log( cpajax_comment_form.html() );
+
+		// optionally remove from DOM if comments disabled
+		if ( $( '#respond_wrapper' ).hasClass( 'cp_force_closed' ) ) {
+			$( '#respond_wrapper' ).remove();
+		}
 
 		// enable the comment form (not necessary, it seems)
 		//addComment.enableForm();
@@ -455,19 +469,30 @@ cpajax_post_title = document.title;
 			//console.log( 'NEW comments obj: ' );
 			//console.log( new_comments_obj );
 
-			// get a copy of th comment form for this post
-			post_comment_form = cpajax_comment_form.clone();
+			// do we have a comment form?
+			if ( cpajax_comment_form !== 0 ) {
 
-			// change the form ID so we don't get double submissions
-			$( 'form', post_comment_form ).attr( 'id', 'commentform' );
+				// get a copy of the comment form for this post
+				post_comment_form = cpajax_comment_form.clone();
 
-			// update its comment_post_ID
-			$( '#comment_post_ID', post_comment_form ).val( new_post_id );
+				// change the form ID so we don't get double submissions
+				$( 'form', post_comment_form ).attr( 'id', 'commentform' );
 
-			// replace stored comments data
-			cpajax_infinite_comments = new_comments_obj.append( post_comment_form );
-			//console.log( 'REPLACE cpajax_infinite_comments:' );
-			//console.log( cpajax_infinite_comments );
+				// update its comment_post_ID
+				$( '#comment_post_ID', post_comment_form ).val( new_post_id );
+
+				// replace stored comments data
+				cpajax_infinite_comments = new_comments_obj.append( post_comment_form );
+				//console.log( 'REPLACE cpajax_infinite_comments:' );
+				//console.log( cpajax_infinite_comments );
+
+				// set global depending on status
+				cpajax_comments_open = 'n';
+				if ( response.comment_status == 'open' ) {
+					cpajax_comments_open = 'y';
+				}
+
+			}
 
 			// does it have a menu item ID reference?
 			if ( existing_menu_item != 'post' ) {
@@ -492,6 +517,9 @@ cpajax_post_title = document.title;
 
 			// add waypoints to new post
 			cpajax_enable_post_comments_waypoint( new_post_id );
+
+			// broadcast
+			$( document ).trigger( 'commentpress-new-post-loaded' );
 
 			// enable CommentPress
 			cpajax_refresh_commentpress();
@@ -683,14 +711,27 @@ cpajax_post_title = document.title;
 			//console.log( 'COMMENTS:' );
 			//console.log( comments );
 
-			// disable the comment form
-			addComment.disableForm();
+			// do we have a comment form?
+			if ( cpajax_comment_form !== 0 ) {
+
+				// disable the comment form
+				addComment.disableForm();
+
+			}
 
 			// add new comments to the end
 			$( '#comments_sidebar .comments_container' ).replaceWith( comments );
 
-			// re-enable the comment form
-			addComment.enableForm();
+			// set global
+			cp_comments_open = cpajax_comments_open;
+
+			// do we have a comment form?
+			if ( cpajax_comment_form !== 0 ) {
+
+				// re-enable the comment form
+				addComment.enableForm();
+
+			}
 
 
 
@@ -699,6 +740,9 @@ cpajax_post_title = document.title;
 
 			// get new waypoint
 			$.waypoints( 'refresh' );
+
+			// broadcast
+			$( document ).trigger( 'commentpress-post-changed' );
 
 		}
 

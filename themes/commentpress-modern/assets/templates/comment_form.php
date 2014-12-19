@@ -20,8 +20,26 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) AND 'comment_form.php' == basename($_SER
 
 
 
-// access post
-global $post;
+// access globals
+global $post, $user_identity;
+
+// check force state
+$cp_force_form = apply_filters( 'commentpress_force_comment_form', false );
+
+// init identifying class
+$forced_class = '';
+
+// optionally override
+if ( $cp_force_form ) {
+
+	// init classes
+	$forced_classes = array( 'cp_force_displayed' );
+	if ( 'open' != $post->comment_status ) $forced_classes[] = 'cp_force_closed';
+
+	// build class attribute
+	$forced_class = ' class="' . implode( ' ', $forced_classes ) . '"';
+
+}
 
 ?>
 
@@ -29,11 +47,11 @@ global $post;
 
 <!-- comment_form.php -->
 
-<?php if ('open' == $post->comment_status) : ?>
+<?php if ( 'open' == $post->comment_status OR $cp_force_form ) : ?>
 
 
 
-<div id="respond_wrapper">
+<div id="respond_wrapper"<?php echo $forced_class; ?>>
 
 
 
@@ -52,7 +70,7 @@ global $post;
 	__( 'Leave a Reply to %s', 'commentpress-core' )
 ); ?></h4>
 
-<?php if ( get_option('comment_registration') AND !$user_ID ) : ?>
+<?php if ( get_option('comment_registration') AND ! is_user_logged_in() ) : ?>
 
 	<p><?php
 
@@ -79,7 +97,7 @@ global $post;
 
 			<legend class="off-left"><?php _e( 'Your details', 'commentpress-core' ); ?></legend>
 
-			<?php if ( $user_ID ) : ?>
+			<?php if ( is_user_logged_in() ) : ?>
 
 				<p class="author_is_logged_in"><?php _e( 'Logged in as', 'commentpress-core' ); ?> <a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php echo $user_identity; ?></a> &rarr; <a href="<?php echo wp_logout_url(get_permalink()); ?>" title="<?php _e( 'Log out of this account', 'commentpress-core' ); ?>"><?php _e( 'Log out', 'commentpress-core' ); ?></a></p>
 
@@ -105,7 +123,7 @@ global $post;
 			<label for="comment" class="off-left"><?php _e( 'Comment', 'commentpress-core' ); ?></label>
 			<?php
 
-			// in functions.php
+			// in theme-functions.php
 			if ( false === commentpress_add_wp_editor() ) {
 
 				?>

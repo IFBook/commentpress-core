@@ -1713,6 +1713,9 @@ HELPTEXT;
 		}
 
 
+		// TODO add infinite scroll switch when ready
+
+
 
 		// --<
 		return $html;

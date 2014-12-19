@@ -25,14 +25,12 @@ add_action( 'wp_ajax_nopriv_cpajax_get_new_comments', 'cpajax_get_new_comments' 
 add_action( 'wp_ajax_cpajax_reassign_comment', 'cpajax_reassign_comment' );
 add_action( 'wp_ajax_nopriv_cpajax_reassign_comment', 'cpajax_reassign_comment' );
 
-// let's disable infinite scroll unless we set a constant
-if ( defined( 'COMMENTPRESS_INFINITE_SCROLL' ) AND COMMENTPRESS_INFINITE_SCROLL ) {
+// prevent infinite scroll by default
+add_filter( 'cpajax_disable_infinite_scroll', '__return_true' );
 
-	// add AJAX infinite scroll functionality
-	add_action( 'wp_ajax_cpajax_load_next_page', 'cpajax_infinite_scroll_load_next_page' );
-	add_action( 'wp_ajax_nopriv_cpajax_load_next_page', 'cpajax_infinite_scroll_load_next_page' );
-
-}
+// add AJAX infinite scroll functionality
+add_action( 'wp_ajax_cpajax_load_next_page', 'cpajax_infinite_scroll_load_next_page' );
+add_action( 'wp_ajax_nopriv_cpajax_load_next_page', 'cpajax_infinite_scroll_load_next_page' );
 
 
 
@@ -558,6 +556,9 @@ function cpajax_infinite_scroll_scripts() {
 	// allow this to be disabled
 	if ( apply_filters( 'cpajax_disable_infinite_scroll', false ) ) return;
 
+	// always load the comment form, even if comments are disabled
+	add_filter( 'commentpress_force_comment_form', '__return_true' );
+
 	// access globals
 	global $post, $commentpress_core;
 
@@ -572,38 +573,33 @@ function cpajax_infinite_scroll_scripts() {
 
 	}
 
-	// let's disable infinite scroll unless we set a constant
-	if ( defined( 'COMMENTPRESS_INFINITE_SCROLL' ) AND COMMENTPRESS_INFINITE_SCROLL ) {
+	// bail if we are we asking for in-page comments
+	if ( $commentpress_core->db->is_special_page() ) return;
 
-		// bail if we are we asking for in-page comments
-		if ( $commentpress_core->db->is_special_page() ) return;
+	// add waypoints script
+	wp_enqueue_script(
+		'cpajax-waypoints',
+		plugins_url( 'commentpress-ajax/assets/js/waypoints' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
+		array( 'jquery' ), //dependencies
+		COMMENTPRESS_VERSION // version
+	);
 
-		// add waypoints script
-		wp_enqueue_script(
-			'cpajax-waypoints',
-			plugins_url( 'commentpress-ajax/assets/js/waypoints' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
-			array( 'jquery' ), //dependencies
-			COMMENTPRESS_VERSION // version
-		);
+	// add infinite scroll script
+	wp_enqueue_script(
+		'cpajax-infinite',
+		plugins_url( 'commentpress-ajax/assets/js/cp-ajax-infinite' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
+		array( 'cpajax', 'cpajax-waypoints' ), //dependencies
+		COMMENTPRESS_VERSION // version
+	);
 
-		// add infinite scroll script
-		wp_enqueue_script(
-			'cpajax-infinite',
-			plugins_url( 'commentpress-ajax/assets/js/cp-ajax-infinite' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
-			array( 'cpajax', 'cpajax-waypoints' ), //dependencies
-			COMMENTPRESS_VERSION // version
-		);
+	// init vars
+	$infinite = array();
 
-		// init vars
-		$infinite = array();
+	// is "live" comment refreshing enabled?
+	$infinite['nonce'] = wp_create_nonce( 'cpajax_infinite_nonce' );
 
-		// is "live" comment refreshing enabled?
-		$infinite['nonce'] = wp_create_nonce( 'cpajax_infinite_nonce' );
-
-		// use wp function to localise
-		wp_localize_script( 'cpajax', 'CommentpressAjaxInfiniteSettings', $infinite );
-
-	}
+	// use wp function to localise
+	wp_localize_script( 'cpajax', 'CommentpressAjaxInfiniteSettings', $infinite );
 
 }
 
@@ -669,34 +665,29 @@ function cpajax_infinite_scroll_load_next_page() {
 	// get object
 	$new_post = $all_pages[$page_key + 1];
 
+	// access post
 	global $post;
 
 	// get page data
 	$post = get_post( $new_post->ID );
 
+	// enable API
 	setup_postdata( $post );
 
-	///*
+
+
 	// get title using buffer
 	ob_start();
 	//wp_title( '|', true, 'right' );
 	bloginfo( 'name' ); commentpress_site_title( '|' );
 	$page_title = ob_get_contents();
 	ob_end_clean();
-	//*/
 
+	// format title
 	$page_title = get_the_title( $post->ID ) . ' | ' . $page_title;
 
 	// get next page
 	//print_r( array( $post, $post->post_title ) ); die();
-
-	// because AJAX may be routed via admin or front end
-	if ( defined( 'DOING_AJAX' ) AND DOING_AJAX AND is_admin() ) {
-
-		// add CP filter to the content when it's on the admin side
-		add_filter( 'the_content', array( $commentpress_core->parser, 'the_content' ), 20 );
-
-	}
 
 	// get feature image
 	ob_start();
@@ -707,8 +698,20 @@ function cpajax_infinite_scroll_load_next_page() {
 	// get title
 	$title = '<h2 class="post_title"><a href="' . get_permalink( $post->ID ) . '">' . get_the_title( $post->ID ) . '</a></h2>';
 
+
+
+	// because AJAX may be routed via admin or front end
+	if ( defined( 'DOING_AJAX' ) AND DOING_AJAX AND is_admin() ) {
+
+		// add CP filter to the content when it's on the admin side
+		add_filter( 'the_content', array( $commentpress_core->parser, 'the_content' ), 20 );
+
+	}
+
 	// get content
 	$content = apply_filters( 'the_content', $post->post_content );
+
+
 
 	// generate page numbers
 	$commentpress_core->nav->_generate_page_numbers( $all_pages );
@@ -744,6 +747,8 @@ function cpajax_infinite_scroll_load_next_page() {
 		}
 
 	}
+
+
 
 	// init nav
 	$commentpress_core->nav->initialise();
@@ -790,6 +795,7 @@ function cpajax_infinite_scroll_load_next_page() {
 			'</div>';
 
 
+
 	// get comments using buffer
 	ob_start();
 	$vars = $commentpress_core->db->get_javascript_vars();
@@ -800,14 +806,17 @@ function cpajax_infinite_scroll_load_next_page() {
 	// wrap in div
 	$comments = '<div class="comments-for-' . $post->ID . '">' . $comments . '</div>';
 
+
+
 	// construct response
 	$response =  array(
 
-		'post_id'     => $post->ID,
-		'url'     => get_permalink( $post->ID ),
-		'title'     => $page_title,
-		'content'     => $data,
-		'comments'     => $comments,
+		'post_id' => $post->ID,
+		'url' => get_permalink( $post->ID ),
+		'title' => $page_title,
+		'content' => $data,
+		'comments' => $comments,
+		'comment_status' => $post->comment_status,
 
 	);
 
