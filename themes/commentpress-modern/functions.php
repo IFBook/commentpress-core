@@ -1282,6 +1282,9 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ):
  */
 function commentpress_get_feature_image() {
 
+	// access post
+	global $post;
+
 	// do we have a featured image?
 	if ( commentpress_has_feature_image() ) {
 
@@ -1294,7 +1297,13 @@ function commentpress_get_feature_image() {
 		<div class="cp_featured_title">
 			<div class="cp_featured_title_inner">
 
-				<?php if ( is_page() ) { ?>
+				<?php
+
+				// when pulling post in via AJAX, is_page() isn't available, so
+				// inspect the post type as well
+				if ( is_page() OR $post->post_type == 'page' ) {
+
+				?>
 
 					<?php
 
@@ -1307,7 +1316,7 @@ function commentpress_get_feature_image() {
 					}
 
 					?>
-					<h2 class="post_title"<?php echo $cp_title_visibility; ?>><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+					<h2 class="post_title page_title"<?php echo $cp_title_visibility; ?>><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
 
 					<?php
 
@@ -1320,7 +1329,7 @@ function commentpress_get_feature_image() {
 					}
 
 					?>
-					<div class="search_meta"<?php echo $cp_meta_visibility; ?>>
+					<div class="search_meta page_search_meta"<?php echo $cp_meta_visibility; ?>>
 						<?php commentpress_echo_post_meta(); ?>
 					</div>
 
