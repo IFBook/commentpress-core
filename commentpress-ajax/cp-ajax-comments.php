@@ -765,6 +765,11 @@ function cpajax_infinite_scroll_load_next_page() {
 		// assign upper page navigation
 		$upper_navigation = $navigation;
 
+	} else {
+
+		// we have a feature image - clear title in main body of content
+		$title = '';
+
 	}
 
 	// always show lower nav
