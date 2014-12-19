@@ -123,7 +123,20 @@ class CommentpressCoreEditor {
 		add_action( 'cp_content_tab_before_search', array( $this, 'editor_toggle_show' ) );
 
 		// test for flag
-		if ( isset( $this->fee ) AND $this->fee == 'killed' ) return;
+		if ( isset( $this->fee ) AND $this->fee == 'killed' ) {
+
+			// amend Edit Page button
+			global $wordpress_front_end_editor;
+			add_action( 'wp_before_admin_bar_render', array( $wordpress_front_end_editor, 'wp_before_admin_bar_render' ) );
+
+			// amend Edit Page link
+			add_filter( 'get_edit_post_link', array( $wordpress_front_end_editor, 'get_edit_post_link' ), 10, 3 );
+			add_filter( 'get_edit_post_link', array( $this, 'get_edit_post_link' ), 100, 3 );
+
+			// bail on further hooks
+			return;
+
+		}
 
 		/**
 		 * The following hooks are enabled when WP FEE is enabled because we need
@@ -226,18 +239,42 @@ class CommentpressCoreEditor {
 	 */
 	public function editor_toggle_intercept() {
 
+		// access globals
+		global $post;
+
+		// don't toggle by default
+		$do_toggle = false;
+
+		// check toggle button
 		if (
-			! isset( $_GET['cp_editor_nonce'] ) OR
-			! wp_verify_nonce( $_GET['cp_editor_nonce'], 'editor_toggle' )
+			isset( $_GET['cp_editor_nonce'] ) AND
+			wp_verify_nonce( $_GET['cp_editor_nonce'], 'editor_toggle' )
 		) {
 
-			// --<
-			return;
+			// yes, toggle
+			$do_toggle = true;
+
+			// plain old permalink
+			$url = get_permalink( $post->ID );
 
 		}
 
-		// access globals
-		global $post;
+		// check "Edit Page" menu link
+		if (
+			isset( $_GET['cp_editor_edit_nonce'] ) AND
+			wp_verify_nonce( $_GET['cp_editor_edit_nonce'], 'editor_edit_toggle' )
+		) {
+
+			// yes, toggle
+			$do_toggle = true;
+
+			// permalink with "force edit" hash
+			$url = get_permalink( $post->ID ) . '#edit=true';
+
+		}
+
+		// bail of not toggling
+		if ( $do_toggle === false ) return;
 
 		// get existing state
 		$state = $this->db->option_get( 'cp_editor_toggle' );
@@ -256,7 +293,7 @@ class CommentpressCoreEditor {
 		$this->db->options_save();
 
 		// redirect
-		wp_redirect( get_permalink( $post->ID ) );
+		wp_redirect( $url );
 
 	}
 
@@ -657,6 +694,34 @@ class CommentpressCoreEditor {
 
 		// send to browser
 		$this->_send_json_data( $data );
+
+	}
+
+
+
+	/**
+	 * Override the "Edit Page" link when WP FEE not active
+	 *
+	 * @param string $link The existing link
+	 * @param int $id The numeric post ID
+	 * @param string $context How to write ampersands. Default 'display' encodes as '&amp;'
+	 * @return string $link The modified link
+	 */
+	function get_edit_post_link( $link, $id, $context ) {
+
+		// test for WP FEE hash
+		if ( $link == '#fee-edit-link' ) {
+
+			// get url including anchor
+			$url = get_permalink( $id ) . $link;
+
+			// get link with nonce attached
+			$link = wp_nonce_url( $url, 'editor_edit_toggle', 'cp_editor_edit_nonce' );
+
+		}
+
+		// --<
+		return $link;
 
 	}
 

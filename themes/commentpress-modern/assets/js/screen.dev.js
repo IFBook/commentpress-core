@@ -1381,6 +1381,7 @@ function cp_scroll_to_anchor_on_load() {
 
 		// bail if it's WP FEE's custom anchor
 		if ( anchor_id == 'edit=true' ) { return; }
+		if ( anchor_id == 'fee-edit-link' ) { return; }
 
 		// locate in DOM
 		anchor = jQuery( '#' + anchor_id );
