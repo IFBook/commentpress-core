@@ -139,6 +139,20 @@ class CommentpressCore {
 
 
 	/**
+	 * Utility that fires an action when CommentPress has loaded
+	 *
+	 * @return void
+	 */
+	public function broadcast() {
+
+		// broadcast
+		do_action( 'commentpress_loaded' );
+
+	}
+
+
+
+	/**
 	 * Loads translation, if present
 	 *
 	 * @return void
@@ -2241,6 +2255,9 @@ class CommentpressCore {
 		// init workflow object
 		$this->editor = new CommentpressCoreEditor( $this );
 
+		// broadcast
+		do_action( 'commentpress_after_includes' );
+
 		// ---------------------------------------------------------------------
 		// Finally, register hooks
 		// ---------------------------------------------------------------------
@@ -2261,6 +2278,9 @@ class CommentpressCore {
 
 		// access version
 		global $wp_version;
+
+		// broadcast that CommentPress is active
+		add_action( 'plugins_loaded', array( $this, 'broadcast' ) );
 
 		// use translation
 		add_action( 'plugins_loaded', array( $this, 'translation' ) );
@@ -2363,6 +2383,9 @@ class CommentpressCore {
 
 		// amend the behaviour of Featured Comments plugin
 		add_action( 'plugins_loaded', array( $this, 'featured_comments_override' ), 1000 );
+
+		// broadcast
+		do_action( 'commentpress_after_hooks' );
 
 	}
 
