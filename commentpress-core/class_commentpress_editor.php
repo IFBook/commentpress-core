@@ -54,7 +54,7 @@ class CommentpressCoreEditor {
 		$this->db = $this->parent_obj->db;
 
 		// intercept toggles
-		add_action( 'plugins_loaded', array( $this, 'initialise' ) );
+		add_action( 'plugins_loaded', array( $this, 'initialise' ), 999 );
 
 		// --<
 		return $this;
@@ -69,6 +69,12 @@ class CommentpressCoreEditor {
 	 * @return void
 	 */
 	public function initialise() {
+
+		// bail if there's no WP FEE present
+		if ( ! class_exists( 'FEE' ) ) return;
+
+		// broadcast
+		do_action( 'commentpress_editor_present' );
 
 		// save default toggle state
 		$this->editor_toggle_set_default();
@@ -113,9 +119,6 @@ class CommentpressCoreEditor {
 	 */
 	public function register_hooks() {
 
-		// bail if there's no WP FEE present
-		if ( ! class_exists( 'FEE' ) ) return;
-
 		// intercept toggles when WP is set up
 		add_action( 'wp', array( $this, 'editor_toggle_intercept' ) );
 
@@ -135,6 +138,9 @@ class CommentpressCoreEditor {
 			// amend Edit Page link
 			add_filter( 'get_edit_post_link', array( $wordpress_front_end_editor, 'get_edit_post_link' ), 10, 3 );
 			add_filter( 'get_edit_post_link', array( $this, 'get_edit_post_link' ), 100, 3 );
+
+			// broadcast
+			do_action( 'commentpress_editor_wp_fee_disabled' );
 
 			// bail on further hooks
 			return;
@@ -189,6 +195,10 @@ class CommentpressCoreEditor {
 
 		// add an action to wp_enqueue_scripts that triggers themes to include their WP FEE compatibility script
 		add_action( 'wp_enqueue_scripts', array( $this, 'trigger_script_inclusion' ), 9999 );
+
+		// broadcast
+		do_action( 'commentpress_editor_wp_fee_enabled' );
+
 	}
 
 
@@ -313,18 +323,28 @@ class CommentpressCoreEditor {
 		if ( ! $this->parent_obj->is_commentable() ) return;
 
 		// define heading title
-		$heading = apply_filters( 'cp_content_tab_editor_toggle_title', __( 'Usage Mode', 'commentpress-core' ) );
+		$heading = apply_filters( 'cp_content_tab_editor_toggle_title', __( 'Document Status', 'commentpress-core' ) );
 
 		echo '
 		<h3 class="activity_heading">' . $heading . '</h3>
 
 		<div class="paragraph_wrapper editor_toggle_wrapper">
 
+		';
+
+		do_action( 'cp_content_tab_editor_toggle_before' );
+
+		echo '
+
 		<div class="editor_toggle">
 			' . $this->_toggle_link() . '
 		</div><!-- /editor_toggle -->
 
-		</div>
+		';
+
+		do_action( 'cp_content_tab_editor_toggle_after' );
+
+		echo '</div>
 
 		';
 
@@ -808,17 +828,17 @@ class CommentpressCoreEditor {
 		if ( $this->toggle_state == 'writing' ) {
 
 			// link text
-			$text = __( 'Switch to Commenting', 'commentpress-core' );
+			$text = __( 'Switch to Commenting Mode', 'commentpress-core' );
 
-			// link text
+			// link title
 			$title = __( 'Switch to Commenting Mode', 'commentpress-core' );
 
 		} else {
 
 			// link text
-			$text = __( 'Switch to Writing', 'commentpress-core' );
+			$text = __( 'Switch to Writing Mode', 'commentpress-core' );
 
-			// link text
+			// link title
 			$title = __( 'Switch to Writing Mode', 'commentpress-core' );
 
 		}
