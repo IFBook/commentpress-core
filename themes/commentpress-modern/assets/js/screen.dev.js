@@ -2794,6 +2794,49 @@ jQuery(document).ready( function($) {
 
 
 
+	/**
+	 * Hook into CommentPress AJAX Infinite Scroll page changed
+	 *
+	 * This hook is present in this file because the WP FEE JS is not loaded
+	 * when WP FEE is active, but we still want to change the URL of the toggle
+	 * button to reflect the page URL change.
+	 *
+	 * @return void
+	 */
+	$( document ).on( 'commentpress-post-changed', function( event ) {
+
+		// declare local vars
+		var toggler, new_url, toggle_url;
+
+		// find new URL
+		new_url = document.location.href;
+
+		// get toggle URL
+		toggler = $( '.editor_toggle a' );
+
+		// bail if not found
+		if ( toggler.length == 0 ) { return; }
+
+		// get toggle URL
+		toggle_url = toggler.attr( 'href' );
+
+		// split on query string
+		nonce = toggle_url.split( '?' )[1];
+
+		// add to new URL
+		new_url += '?' + nonce;
+		console.log( new_url );
+
+		// update toggle
+		toggler.attr( 'href', new_url );
+
+	});
+
+
+
+
+
+
 	// scroll the page on load
 	if ( cp_special_page == '1' ) {
 		cp_scroll_to_comment_on_load();
