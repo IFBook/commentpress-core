@@ -13,14 +13,6 @@ This script enables infinite scroll when the CommentPress theme is active.
 
 
 
-/*
-// do we have pushstate?
-if ( window.history ) {
-	console.log( 'ONLOAD' );
-	console.log( window.history );
-}
-*/
-
 // init vars
 var cpajax_nonce,
 	cpajax_post_url,
@@ -28,7 +20,8 @@ var cpajax_nonce,
 	cpajax_infinite_posts,
 	cpajax_infinite_comments,
 	cpajax_comment_form,
-	cpajax_comments_open;
+	cpajax_comments_open,
+	cpajax_history_supported;
 
 // test for our localisation object
 if ( 'undefined' !== typeof CommentpressAjaxInfiniteSettings ) {
@@ -50,6 +43,17 @@ cpajax_comment_form = 0;
 // page attributes
 cpajax_post_url = document.location.href;
 cpajax_post_title = document.title;
+
+// do we support history?
+cpajax_history_supported = false;
+
+/*
+// do we have pushstate?
+if ( window.history ) {
+	console.log( 'ONLOAD' );
+	console.log( window.history );
+}
+*/
 
 
 
@@ -141,10 +145,6 @@ cpajax_post_title = document.title;
 		if ( $( '#respond_wrapper', cpajax_comment_form ).hasClass( 'cp_force_closed' ) ) {
 			$( '#respond_wrapper', cpajax_comment_form ).removeClass( 'cp_force_closed' );
 		}
-
-		//console.log( 'cpajax_comment_form:' );
-		//console.log( cpajax_comment_form );
-		//console.log( cpajax_comment_form.html() );
 
 		// optionally remove from DOM if comments disabled
 		if ( $( '#respond_wrapper' ).hasClass( 'cp_force_closed' ) ) {
@@ -624,7 +624,7 @@ cpajax_post_title = document.title;
 
 		// declare vars
 		var post_obj, post_id, menu_item, new_comments, container, item_above,
-			html_to_save, comments_to_save, comments;
+			html_to_save, comments;
 
 		// trace
 		//console.log( 'TOP GOING DOWN (this)' );
@@ -686,26 +686,23 @@ cpajax_post_title = document.title;
 			// set document title
 			document.title = cpajax_post_title;
 
-			// store items as HTML
-			html_to_save = $.trim( context.html() );
-			comments_to_save = $.trim( $( '#comments_sidebar .sidebar_contents_wrapper' ).html() );
-			//console.log( comments_to_save );
-
 			// do we have pushstate?
 			if ( window.history ) {
 
 				//console.log( 'PUSHSTATE' );
 				//console.log( 'page_title: ' + cpajax_post_title );
-				//console.log( $( '#comments_sidebar .sidebar_contents_wrapper' ) );
 
-				// set browser url
+				// store items as HTML
+				html_to_save = $.trim( context.html() );
+
+				// create new state object to push to history
 				window.history.pushState(
 
 					{
-						'html': html_to_save,
-						'page_title': cpajax_post_title,
 						'post_id': post_id,
-						'comments': comments_to_save,
+						'post_permalink': cpajax_post_url,
+						'page_title': cpajax_post_title,
+						'html': html_to_save,
 						'comment_status': cp_comments_open
 					},
 					'',
@@ -784,6 +781,19 @@ cpajax_post_title = document.title;
 			//console.log( 'ONPOPSTATE' );
 			//console.log( e );
 
+			/*
+			// test if history supported
+			if ( cpajax_history_supported === false ) {
+
+				alert( 'gah' );
+
+				// refresh from server
+				document.location.reload( true );
+				return;
+
+			}
+			*/
+
 			// set title
 			document.title = e.state.page_title;
 
@@ -791,7 +801,7 @@ cpajax_post_title = document.title;
 			$( '#main_wrapper' ).prepend( '<div class="page_wrapper cp_page_wrapper">' + e.state.html + '</div>' );
 
 			// add comments back in
-			$( '#comments_sidebar .comments_container' ).replaceWith( $( e.state.comments ) );
+			//$( '#comments_sidebar .comments_container' ).replaceWith( $( e.state.comments ) );
 
 		}
 

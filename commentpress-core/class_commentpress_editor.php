@@ -126,7 +126,7 @@ class CommentpressCoreEditor {
 		if ( isset( $this->fee ) AND $this->fee == 'killed' ) {
 
 			// enable infinite scroll
-			add_filter( 'cpajax_disable_infinite_scroll', '__return_false', 11 );
+			//add_filter( 'cpajax_disable_infinite_scroll', '__return_false', 11 );
 
 			// amend Edit Page button
 			global $wordpress_front_end_editor;
