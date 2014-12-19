@@ -120,7 +120,7 @@ class CommentpressCoreEditor {
 		add_action( 'wp', array( $this, 'editor_toggle_intercept' ) );
 
 		// enable editor toggle
-		add_action( 'cp_content_tab_before_search', array( $this, 'editor_toggle_show' ) );
+		add_action( 'cp_content_tab_before_search', array( $this, 'editor_toggle_show' ), 20 );
 
 		// test for flag
 		if ( isset( $this->fee ) AND $this->fee == 'killed' ) {
