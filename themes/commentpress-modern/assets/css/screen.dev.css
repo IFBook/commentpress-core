@@ -3166,6 +3166,8 @@ body.fee.fee-on .fee-content-body.mce-edit-focus
 	background-color: transparent;
 }
 
+
+/* metaboxes */
 body.fee .metabox_container
 {
 	font-family: sans-serif;
@@ -3180,9 +3182,16 @@ body.fee .metabox_container label
 	text-transform: uppercase;
 }
 
+
+/* toggle button */
 .editor_toggle_wrapper
 {
 	padding: 15px 7px;
+}
+
+#container #navigation .paragraph_wrapper.editor_toggle_wrapper
+{
+	display: block;
 }
 
 
