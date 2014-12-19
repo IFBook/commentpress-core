@@ -424,7 +424,7 @@ class CommentpressCoreNavigator {
 			$first_child = $this->get_first_child( $post->ID );
 
 			// if this is a childless page
-			if ( !$first_child ) {
+			if ( ! $first_child ) {
 
 				// get page number from array
 				$num = $this->_get_page_number( $page_id );
@@ -477,13 +477,13 @@ class CommentpressCoreNavigator {
 	function redirect_to_child() {
 
 		// only on pages
-		if ( !is_page() ) { return; }
+		if ( ! is_page() ) { return; }
 
 		// access post object
 		global $post;
 
 		// do we have one?
-		if ( !is_object( $post ) ) {
+		if ( ! is_object( $post ) ) {
 
 			// --<
 			die( 'no post object' );
@@ -497,7 +497,7 @@ class CommentpressCoreNavigator {
 		$first_child = $this->get_first_child( $post->ID );
 
 		// our conditions
-		if ( $first_child AND !$viewable ) {
+		if ( $first_child AND ! $viewable ) {
 
 			// get link
 			$redirect = get_permalink( $first_child );
@@ -752,7 +752,7 @@ class CommentpressCoreNavigator {
 				$kids =& get_children( $defaults );
 
 				// do we have any?
-				if ( !empty( $kids ) ) {
+				if ( ! empty( $kids ) ) {
 
 					// go deeper
 					return $this->_get_first_child( $kids );
@@ -877,7 +877,7 @@ class CommentpressCoreNavigator {
 				} else {
 
 					// if flag not set
-					if ( !isset( $flag ) ) {
+					if ( ! isset( $flag ) ) {
 
 						// reset num
 						$num = 1;
@@ -925,7 +925,7 @@ class CommentpressCoreNavigator {
 			foreach( $pages AS $page_obj ) {
 
 				// do we have any?
-				if ( !$this->_detect_login_page( $page_obj ) ) {
+				if ( ! $this->_detect_login_page( $page_obj ) ) {
 
 					// add to our return array
 					$clean[] = $page_obj;

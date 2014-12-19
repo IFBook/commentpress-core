@@ -27,7 +27,7 @@ Init Multisite plugin
 */
 
 // do we have our class?
-if ( !class_exists( 'CommentpressMultisiteLoader' ) ) {
+if ( ! class_exists( 'CommentpressMultisiteLoader' ) ) {
 
 	// define filename
 	$class_file = 'commentpress-multisite/class_commentpress_mu_loader.php';
@@ -125,7 +125,7 @@ function commentpress_mu_activate_plugin( $plugin, $buffer = false ) {
 	// no need to validate it...
 
 	// check that the plugin isn't already active
-	if ( !in_array( $plugin, $current ) ) {
+	if ( ! in_array( $plugin, $current ) ) {
 
 		// no need to redirect...
 
@@ -163,7 +163,7 @@ function commentpress_mu_activate_plugin( $plugin, $buffer = false ) {
 function _commentpress_mu_environment() {
 
 	// don't show in admin
-	if ( !is_admin() ) {
+	if ( ! is_admin() ) {
 
 		// dump our environment
 		echo '<strong>TEMPLATEPATH</strong><br />' . TEMPLATEPATH . '<br /><br />';

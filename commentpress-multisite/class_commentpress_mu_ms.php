@@ -111,7 +111,7 @@ class CommentpressMultisite {
 	public function add_admin_menu() {
 
 		// we must be network admin
-		if ( !is_super_admin() ) { return false; }
+		if ( ! is_super_admin() ) { return false; }
 
 		// try and update options
 		$saved = $this->db->options_update();
@@ -436,7 +436,7 @@ class CommentpressMultisite {
 		$workflow = $this->db->get_workflow_data();
 
 		// if we have workflow data...
-		if ( !empty( $workflow ) ) {
+		if ( ! empty( $workflow ) ) {
 
 			// show it
 			$workflow_html = '
@@ -470,7 +470,7 @@ class CommentpressMultisite {
 		$type = $this->db->get_blogtype_data();
 
 		// if we have type data...
-		if ( !empty( $type ) ) {
+		if ( ! empty( $type ) ) {
 
 			// show it
 			$type_html = '

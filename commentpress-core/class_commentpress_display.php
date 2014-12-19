@@ -104,7 +104,7 @@ class CommentpressCoreDisplay {
 			if ( $theme->exists() ) {
 
 				// ignore if not allowed
-				//if ( is_multisite() AND !$theme->is_allowed() ) { return; }
+				//if ( is_multisite() AND ! $theme->is_allowed() ) { return; }
 
 				// activate it
 				switch_theme(
@@ -171,7 +171,7 @@ class CommentpressCoreDisplay {
 			if ( $theme->exists() ) {
 
 				// ignore if not allowed
-				//if ( is_multisite() AND !$theme->is_allowed() ) { return; }
+				//if ( is_multisite() AND ! $theme->is_allowed() ) { return; }
 
 				// activate it
 				switch_theme(
@@ -404,7 +404,7 @@ class CommentpressCoreDisplay {
 	public function get_tinymce() {
 
 		// check if we can
-		if ( !$this->is_tinymce_allowed() ) {
+		if ( ! $this->is_tinymce_allowed() ) {
 
 			// --<
 			return;
@@ -536,7 +536,7 @@ HELPTEXT;
 					//print_r( $authors ); die();
 
 					// if we get some
-					if ( !empty( $authors ) ) {
+					if ( ! empty( $authors ) ) {
 
 						// use the Co-Authors format of "name, name, name & name"
 						$author_html = '';
@@ -641,7 +641,7 @@ HELPTEXT;
 		$user = get_userdata( $author_id );
 
 		// kick out if we don't have a user with that ID
-		if ( !is_object( $user ) ) { return; }
+		if ( ! is_object( $user ) ) { return; }
 
 		// access plugin
 		global $commentpress_core, $post;
@@ -762,13 +762,13 @@ HELPTEXT;
 		$exclude = $this->db->option_get( 'cp_special_pages' );
 
 		// do we have any?
-		if ( !$exclude ) { $exclude = array(); }
+		if ( ! $exclude ) { $exclude = array(); }
 
 		// exclude title page, if we have one
 		if ( $welcome_id !== false ) { $exclude[] = $welcome_id; }
 
 		// did we get any passed to us?
-		if ( !empty( $exclude_pages ) ) {
+		if ( ! empty( $exclude_pages ) ) {
 
 			// merge arrays
 			$exclude = array_merge( $exclude, $exclude_pages );
@@ -1633,7 +1633,7 @@ HELPTEXT;
 			$types = apply_filters( 'cp_blog_type_options', $types );
 
 			// if we get some from a plugin, say...
-			if ( !empty( $types ) ) {
+			if ( ! empty( $types ) ) {
 
 				// define title
 				$type_title = __( 'Default Text Format', 'commentpress-core' );
@@ -1735,7 +1735,7 @@ HELPTEXT;
 		$upgrade = '';
 
 		// do we have the option to choose to hide textblock meta (new in 3.5.9)?
-		if ( !$this->db->option_exists( 'cp_textblock_meta' ) ) {
+		if ( ! $this->db->option_exists( 'cp_textblock_meta' ) ) {
 
 			// define labels
 			$label = __( 'Show paragraph meta (Number and Comment Icon)', 'commentpress-core' );
@@ -1758,7 +1758,7 @@ HELPTEXT;
 		}
 
 		// do we have the option to choose featured images (new in 3.5.4)?
-		if ( !$this->db->option_exists( 'cp_featured_images' ) ) {
+		if ( ! $this->db->option_exists( 'cp_featured_images' ) ) {
 
 			// define labels
 			$label = __( 'Enable Featured Images (Note: if you have already implemented this in a child theme, you should choose "No")', 'commentpress-core' );
@@ -1781,7 +1781,7 @@ HELPTEXT;
 		}
 
 		// do we have the option to choose the default sidebar (new in 3.3.3)?
-		if ( !$this->db->option_exists( 'cp_sidebar_default' ) ) {
+		if ( ! $this->db->option_exists( 'cp_sidebar_default' ) ) {
 
 			// define labels
 			$label = __( 'Which sidebar do you want to be active by default? (can be overridden on individual pages)', 'commentpress-core' );
@@ -1806,7 +1806,7 @@ HELPTEXT;
 		}
 
 		// do we have the option to show or hide page meta (new in 3.3.2)?
-		if ( !$this->db->option_exists( 'cp_page_meta_visibility' ) ) {
+		if ( ! $this->db->option_exists( 'cp_page_meta_visibility' ) ) {
 
 			$meta_label = __( 'Show or hide page meta by default', 'commentpress-core' );
 			$meta_show_label = __( 'Show page meta', 'commentpress-core' );
@@ -1827,7 +1827,7 @@ HELPTEXT;
 		}
 
 		// do we have the option to choose blog type (new in 3.3.1)?
-		if ( !$this->db->option_exists( 'cp_blog_type' ) ) {
+		if ( ! $this->db->option_exists( 'cp_blog_type' ) ) {
 
 			// define no types
 			$types = array();
@@ -1836,7 +1836,7 @@ HELPTEXT;
 			$types = apply_filters( 'cp_blog_type_options', $types );
 
 			// if we get some from a plugin, say...
-			if ( !empty( $types ) ) {
+			if ( ! empty( $types ) ) {
 
 				// define title
 				$type_title = __( 'Blog Type', 'commentpress-core' );
@@ -1872,7 +1872,7 @@ HELPTEXT;
 		}
 
 		// do we have the option to choose blog workflow (new in 3.3.1)?
-		if ( !$this->db->option_exists( 'cp_blog_workflow' ) ) {
+		if ( ! $this->db->option_exists( 'cp_blog_workflow' ) ) {
 
 			// off by default
 			$has_workflow = false;
@@ -1903,7 +1903,7 @@ HELPTEXT;
 		}
 
 		// do we have the option to choose the TOC layout (new in 3.3)?
-		if ( !$this->db->option_exists( 'cp_show_extended_toc' ) ) {
+		if ( ! $this->db->option_exists( 'cp_show_extended_toc' ) ) {
 
 			$extended_label = __( 'Appearance of TOC for posts', 'commentpress-core' );
 			$extended_info_label = __( 'Extended information', 'commentpress-core' );
@@ -1925,7 +1925,7 @@ HELPTEXT;
 		}
 
 		// do we have the option to set the comment editor?
-		if ( !$this->db->option_exists( 'cp_comment_editor' ) ) {
+		if ( ! $this->db->option_exists( 'cp_comment_editor' ) ) {
 
 			$editor_label = __( 'Comment form editor', 'commentpress-core' );
 			$rich_label = __( 'Rich-text Editor', 'commentpress-core' );
@@ -1946,7 +1946,7 @@ HELPTEXT;
 		}
 
 		// do we have the option to set the default behaviour?
-		if ( !$this->db->option_exists( 'cp_promote_reading' ) ) {
+		if ( ! $this->db->option_exists( 'cp_promote_reading' ) ) {
 
 			$behaviour_label = __( 'Default comment form behaviour', 'commentpress-core' );
 			$reading_label = __( 'Promote reading', 'commentpress-core' );
@@ -1967,7 +1967,7 @@ HELPTEXT;
 		}
 
 		// do we have the option to show or hide titles?
-		if ( !$this->db->option_exists( 'cp_title_visibility' ) ) {
+		if ( ! $this->db->option_exists( 'cp_title_visibility' ) ) {
 
 			// define labels
 			$titles_label = __( 'Show or hide page titles by default', 'commentpress-core' );
@@ -1989,7 +1989,7 @@ HELPTEXT;
 		}
 
 		// do we have the option to set the header bg colour?
-		if ( !$this->db->option_exists( 'cp_header_bg_colour' ) ) {
+		if ( ! $this->db->option_exists( 'cp_header_bg_colour' ) ) {
 
 			// define labels
 			$colour_label = __( 'Header Background Colour', 'commentpress-core' );
@@ -2008,7 +2008,7 @@ HELPTEXT;
 		}
 
 		// do we have the option to set the scroll speed?
-		if ( !$this->db->option_exists( 'cp_js_scroll_speed' ) ) {
+		if ( ! $this->db->option_exists( 'cp_js_scroll_speed' ) ) {
 
 			// define labels
 			$scroll_label = __( 'Scroll speed', 'commentpress-core' );
@@ -2026,7 +2026,7 @@ HELPTEXT;
 		}
 
 		// do we have the option to set the minimum page width?
-		if ( !$this->db->option_exists( 'cp_min_page_width' ) ) {
+		if ( ! $this->db->option_exists( 'cp_min_page_width' ) ) {
 
 			// define labels
 			$min_label = __( 'Minimum page width', 'commentpress-core' );
@@ -2655,7 +2655,7 @@ HELPTEXT;
 				$val = $v ? 'true' : 'false';
 				$mce_options .= $k . ':' . $val . ', ';
 				continue;
-			} elseif ( !empty($v) && is_string($v) && ( ('{' == $v{0} && '}' == $v{strlen($v) - 1}) || ('[' == $v{0} && ']' == $v{strlen($v) - 1}) || preg_match('/^\(?function ?\(/', $v) ) ) {
+			} elseif ( ! empty($v) && is_string($v) && ( ('{' == $v{0} && '}' == $v{strlen($v) - 1}) || ('[' == $v{0} && ']' == $v{strlen($v) - 1}) || preg_match('/^\(?function ?\(/', $v) ) ) {
 				$mce_options .= $k . ':' . $v . ', ';
 				continue;
 			}

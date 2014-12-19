@@ -197,7 +197,7 @@ class CommentpressGroupblogWorkshop {
 		global $commentpress_core;
 		if (
 
-			!is_null( $commentpress_core )
+			! is_null( $commentpress_core )
 			AND is_object( $commentpress_core )
 			AND $commentpress_core->is_groupblog()
 
@@ -241,7 +241,7 @@ class CommentpressGroupblogWorkshop {
 	public function page_all_comments_blog_title( $title ) {
 
 		// override if groupblog
-		if ( !$this->parent_obj->bp->_is_commentpress_groupblog() ) {
+		if ( ! $this->parent_obj->bp->_is_commentpress_groupblog() ) {
 			return $title;
 		}
 
@@ -264,7 +264,7 @@ class CommentpressGroupblogWorkshop {
 	public function page_all_comments_book_title( $title ) {
 
 		// override if groupblog
-		if ( !$this->parent_obj->bp->_is_commentpress_groupblog() ) {
+		if ( ! $this->parent_obj->bp->_is_commentpress_groupblog() ) {
 			return $title;
 		}
 

@@ -254,14 +254,14 @@ class CommentpressCore {
 	public function get_groupblog_theme() {
 
 		// kick out if not in a group context
-		if ( !function_exists( 'bp_is_groups_component' ) ) { return false; }
-		if ( !bp_is_groups_component() ) { return false; }
+		if ( ! function_exists( 'bp_is_groups_component' ) ) { return false; }
+		if ( ! bp_is_groups_component() ) { return false; }
 
 		// get groupblog options
 		$options = get_site_option( 'bp_groupblog_blog_defaults_options' );
 
 		// get theme setting
-		if ( !empty( $options['theme'] ) ) {
+		if ( ! empty( $options['theme'] ) ) {
 
 			// we have a groupblog theme set
 
@@ -314,7 +314,7 @@ class CommentpressCore {
 	public function is_buddypress_special_page() {
 
 		// kick out if not BP
-		if ( !$this->is_buddypress() ) {
+		if ( ! $this->is_buddypress() ) {
 
 			return false;
 
@@ -380,7 +380,7 @@ class CommentpressCore {
 					if (
 
 						$pagenow == 'options-general.php'
-						AND !empty( $_GET['page'] )
+						AND ! empty( $_GET['page'] )
 						AND 'commentpress_admin' == $_GET['page']
 
 					) {
@@ -660,7 +660,7 @@ class CommentpressCore {
 		$allowed = false;
 
 		// only parse posts or pages...
-		if( ( is_single() OR is_page() OR is_attachment() ) AND !$this->db->is_special_page() ) {
+		if( ( is_single() OR is_page() OR is_attachment() ) AND ! $this->db->is_special_page() ) {
 			$allowed = true;
 		}
 
@@ -990,7 +990,7 @@ class CommentpressCore {
 		if (
 
 			$post->post_parent == '0' AND
-			!$this->db->is_special_page() AND
+			! $this->db->is_special_page() AND
 			$post->ID == $this->nav->get_first_page()
 
 		) { // -->
@@ -1707,7 +1707,7 @@ class CommentpressCore {
 		if(
 
 			is_page() AND
-			!$this->db->is_special_page() AND
+			! $this->db->is_special_page() AND
 			$post->post_name == 'login' AND
 			$post->post_content == '[theme-my-login]'
 
@@ -1739,7 +1739,7 @@ class CommentpressCore {
 		if(
 
 			is_page() AND
-			!$this->db->is_special_page() AND
+			! $this->db->is_special_page() AND
 			( strstr( $post->post_content, '[members-list' ) !== false )
 
 		) {
@@ -1770,7 +1770,7 @@ class CommentpressCore {
 		if(
 
 			is_page() AND
-			!$this->db->is_special_page() AND
+			! $this->db->is_special_page() AND
 			$post->ID == '9999999' AND
 			$post->guid == get_bloginfo('url') . '/?page_id=9999999'
 
@@ -1903,7 +1903,7 @@ class CommentpressCore {
 		$return = 'toc';
 
 		// is this a commentable page?
-		if ( !$this->is_commentable() ) {
+		if ( ! $this->is_commentable() ) {
 
 			// no - we must use either 'activity' or 'toc'
 			if ( $this->db->option_exists( 'cp_sidebar_default' ) ) {
@@ -1936,7 +1936,7 @@ class CommentpressCore {
 			if ( is_object( $this->db ) ) {
 
 				// is it a special page which have comments in page (or are not commentable)?
-				if ( !$this->db->is_special_page() ) {
+				if ( ! $this->db->is_special_page() ) {
 
 					// access page
 					global $post;
@@ -2034,7 +2034,7 @@ class CommentpressCore {
 		global $post;
 
 		// not if we're not on a page/post and especially not if there's no post object
-		if ( !is_singular() OR !is_object( $post ) ) { return false; }
+		if ( ! is_singular() OR ! is_object( $post ) ) { return false; }
 
 		// CP Special Pages special pages are not
 		if ( $this->db->is_special_page() ) { return false; }
@@ -2338,7 +2338,7 @@ class CommentpressCore {
 			add_filter( 'after_signup_form', array( $this, 'after_signup_form' ) );
 
 			// if subdirectory install
-			if ( !is_subdomain_install() ) {
+			if ( ! is_subdomain_install() ) {
 
 				// add filter for reserved commentpress special page names
 				add_filter( 'subdirectory_reserved_names', array( $this, 'add_reserved_names' ) );
@@ -2445,7 +2445,7 @@ class CommentpressCore {
 			$types = apply_filters( 'cp_blog_type_options', $types );
 
 			// if we get some from a plugin, say...
-			if ( !empty( $types ) ) {
+			if ( ! empty( $types ) ) {
 
 				// define title
 				$type_title = __( 'Text Formatting', 'commentpress-core' );

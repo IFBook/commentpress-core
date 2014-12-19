@@ -127,7 +127,7 @@ class CommentpressCoreParser {
 		$has_quicktag = $this->_has_comment_block_quicktag( $content );
 
 		// if it hasn't...
-		if ( !$has_quicktag ) {
+		if ( ! $has_quicktag ) {
 
 			// auto-format content accordingly
 
@@ -149,15 +149,14 @@ class CommentpressCoreParser {
 				case 'line' :
 
 					// set constant - okay, since we never return here
-					if ( !defined( 'COMMENTPRESS_BLOCK' ) )
-						define( 'COMMENTPRESS_BLOCK', 'line' );
+					if ( ! defined( 'COMMENTPRESS_BLOCK' ) ) define( 'COMMENTPRESS_BLOCK', 'line' );
 
 					// generate text signatures array
 					$this->text_signatures = $this->_generate_line_signatures( $content );
 					//print_r( $this->text_signatures ); die();
 
 					// only continue parsing if we have an array of sigs
-					if ( !empty( $this->text_signatures ) ) {
+					if ( ! empty( $this->text_signatures ) ) {
 
 						// filter content by <br> and <br /> tags
 						$content = $this->_parse_lines( $content );
@@ -170,15 +169,14 @@ class CommentpressCoreParser {
 				case 'tag' :
 
 					// set constant
-					if ( !defined( 'COMMENTPRESS_BLOCK' ) )
-						define( 'COMMENTPRESS_BLOCK', 'tag' );
+					if ( ! defined( 'COMMENTPRESS_BLOCK' ) ) define( 'COMMENTPRESS_BLOCK', 'tag' );
 
 					// generate text signatures array
 					$this->text_signatures = $this->_generate_text_signatures( $content, 'p|ul|ol' );
 					//print_r( $this->text_signatures ); die();
 
 					// only continue parsing if we have an array of sigs
-					if ( !empty( $this->text_signatures ) ) {
+					if ( ! empty( $this->text_signatures ) ) {
 
 						// filter content by <p>, <ul> and <ol> tags
 						$content = $this->_parse_content( $content, 'p|ul|ol' );
@@ -192,15 +190,14 @@ class CommentpressCoreParser {
 		} else {
 
 			// set constant
-			if ( !defined( 'COMMENTPRESS_BLOCK' ) )
-				define( 'COMMENTPRESS_BLOCK', 'block' );
+			if ( ! defined( 'COMMENTPRESS_BLOCK' ) ) define( 'COMMENTPRESS_BLOCK', 'block' );
 
 			// generate text signatures array
 			$this->text_signatures = $this->_generate_block_signatures( $content );
 			//print_r( $this->text_signatures ); die();
 
 			// only parse content if we have an array of sigs
-			if ( !empty( $this->text_signatures ) ) {
+			if ( ! empty( $this->text_signatures ) ) {
 
 				// filter content by <!--commentblock--> quicktags
 				$content = $this->_parse_blocks( $content );
@@ -228,7 +225,7 @@ class CommentpressCoreParser {
 	public function get_sorted_comments( $post_ID ) {
 
 		// have we already sorted the comments?
-		if ( !empty( $this->comments_sorted ) ) {
+		if ( ! empty( $this->comments_sorted ) ) {
 
 			// --<
 			return $this->comments_sorted;
@@ -291,7 +288,7 @@ class CommentpressCoreParser {
 		//print_r( $matches ); die();
 
 		// kick out if we don't have any
-		if( !count( $matches ) ) {
+		if( ! count( $matches ) ) {
 
 			// --<
 			return $content;
@@ -597,7 +594,7 @@ class CommentpressCoreParser {
 		//print_r( $matches[0] ); print_r( $matches[1] ); exit();
 
 		// kick out if we don't have any
-		if( !empty($matches[0]) ) {
+		if( ! empty($matches[0]) ) {
 
 			// --<
 			return $matches[0];
@@ -640,7 +637,7 @@ class CommentpressCoreParser {
 		$matches = $this->_get_text_matches( $content, $tag );
 
 		// kick out if we don't have any
-		if( !count( $matches ) ) {
+		if( ! count( $matches ) ) {
 
 			// store text sigs array in global
 			$this->parent_obj->db->set_text_sigs( $this->text_signatures );
@@ -711,7 +708,7 @@ class CommentpressCoreParser {
 		//print_r( $matches ); die();
 
 		// kick out if we don't have any
-		if( !count( $matches ) ) {
+		if( ! count( $matches ) ) {
 
 			// --<
 			return $content;
@@ -1031,7 +1028,7 @@ class CommentpressCoreParser {
 		//print_r( $matches ); die();
 
 		// kick out if we don't have any
-		if( !count( $matches ) ) {
+		if( ! count( $matches ) ) {
 
 			// --<
 			return $content;
@@ -1558,7 +1555,7 @@ class CommentpressCoreParser {
 		}
 
 		// this gets the additional text... (not used)
-		if ( !empty($matches[1]) ) {
+		if ( ! empty($matches[1]) ) {
 			//$more_link_text = strip_tags(wp_kses_no_null(trim($matches[1])));
 		}
 
@@ -1713,7 +1710,7 @@ class CommentpressCoreParser {
 		preg_match_all( '#(<span class="blockquote-in-para">(.*?)</span>)<br />#si', $content, $matches );
 
 		// did we get any?
-		if ( isset( $matches[0] ) AND !empty( $matches[0] ) ) {
+		if ( isset( $matches[0] ) AND ! empty( $matches[0] ) ) {
 
 			$content = str_replace(
 				$matches[0],
@@ -1767,7 +1764,7 @@ class CommentpressCoreParser {
 		// it may be empty...
 
 		// we must have text signatures...
-		if ( !empty( $_sigs ) ) {
+		if ( ! empty( $_sigs ) ) {
 
 			// if we have any comments on the whole page...
 			if ( isset( $_assigned[ 'WHOLE_PAGE_OR_POST_COMMENTS' ] ) ) {
@@ -1840,14 +1837,14 @@ class CommentpressCoreParser {
 		$filtered = array();
 
 		// kick out if no comments
-		if( !is_array( $comments ) OR empty( $comments ) ) {
+		if( ! is_array( $comments ) OR empty( $comments ) ) {
 
 			// --<
 			return $filtered;
 		}
 
 		// kick out if not multipage
-		if( !isset( $multipage ) OR !$multipage ) {
+		if( ! isset( $multipage ) OR ! $multipage ) {
 
 			// --<
 			return $comments;
@@ -1858,7 +1855,7 @@ class CommentpressCoreParser {
 		foreach ( $comments AS $comment ) {
 
 			// if it has a text sig
-			if ( !is_null( $comment->comment_signature ) AND $comment->comment_signature != '' ) {
+			if ( ! is_null( $comment->comment_signature ) AND $comment->comment_signature != '' ) {
 
 				// set key
 				$key = '_cp_comment_page';
@@ -1910,14 +1907,14 @@ class CommentpressCoreParser {
 		$assigned = array();
 
 		// kick out if no comments
-		if( !is_array( $comments ) OR empty( $comments ) ) {
+		if( ! is_array( $comments ) OR empty( $comments ) ) {
 
 			// --<
 			return $assigned;
 		}
 
 		// kick out if no text_signatures
-		if( !is_array( $text_signatures ) OR empty( $text_signatures ) ) {
+		if( ! is_array( $text_signatures ) OR empty( $text_signatures ) ) {
 
 			// --<
 			return $assigned;
@@ -1934,7 +1931,7 @@ class CommentpressCoreParser {
 		foreach( $comments AS $comment ) {
 
 			// test for empty comment text signature
-			if ( !is_null( $comment->comment_signature ) AND $comment->comment_signature != '' ) {
+			if ( ! is_null( $comment->comment_signature ) AND $comment->comment_signature != '' ) {
 
 				// do we have an exact match in the text sigs array?
 				// NB: this will work, because we're already ensuring identical sigs are made unique
@@ -1963,7 +1960,7 @@ class CommentpressCoreParser {
 					//die();
 
 					// did we get any?
-					if ( !empty( $possibles ) ) {
+					if ( ! empty( $possibles ) ) {
 
 						// sort them by score
 						arsort( $possibles );

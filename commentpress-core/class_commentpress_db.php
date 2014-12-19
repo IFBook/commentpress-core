@@ -128,7 +128,7 @@ class CommentpressCoreDatabase {
 		if ( $modified == 'y' ) {
 
 			// upgrade old Commentpress schema to new
-			if ( !$this->schema_upgrade() ) {
+			if ( ! $this->schema_upgrade() ) {
 
 				// kill plugin activation
 				_cpdie( 'CommentPress Core Error: could not upgrade the database' );
@@ -143,7 +143,7 @@ class CommentpressCoreDatabase {
 		}
 
 		// test if we have our version
-		if ( !$this->option_wp_get( 'commentpress_version' ) ) {
+		if ( ! $this->option_wp_get( 'commentpress_version' ) ) {
 
 			// store CommentPress Core version
 			$this->option_wp_set( 'commentpress_version', COMMENTPRESS_VERSION );
@@ -151,7 +151,7 @@ class CommentpressCoreDatabase {
 		}
 
 		// test that we aren't reactivating
-		if ( !$this->option_wp_get( 'commentpress_options' ) ) {
+		if ( ! $this->option_wp_get( 'commentpress_options' ) ) {
 
 			// test if we have a existing pre-3.4 Commentpress instance
 			if ( commentpress_is_legacy_plugin_active() ) {
@@ -203,7 +203,7 @@ class CommentpressCoreDatabase {
 		if ( $this->check_upgrade() ) {
 
 			// are we missing the commentpress_options option?
-			if ( !$this->option_wp_exists( 'commentpress_options' ) ) {
+			if ( ! $this->option_wp_exists( 'commentpress_options' ) ) {
 
 				// upgrade to the single array
 				$this->_options_upgrade();
@@ -220,7 +220,7 @@ class CommentpressCoreDatabase {
 			extract( $_POST );
 
 			// New in CP 3.5.9 - textblock meta can be hidden
-			if ( !$this->option_exists( 'cp_textblock_meta' ) ) {
+			if ( ! $this->option_exists( 'cp_textblock_meta' ) ) {
 
 				// get choice
 				$_choice = esc_sql( $cp_textblock_meta );
@@ -231,7 +231,7 @@ class CommentpressCoreDatabase {
 			}
 
 			// New in CP 3.5.4 - featured image capabilities
-			if ( !$this->option_exists( 'cp_featured_images' ) ) {
+			if ( ! $this->option_exists( 'cp_featured_images' ) ) {
 
 				// get choice
 				$_choice = esc_sql( $cp_featured_images );
@@ -258,7 +258,7 @@ class CommentpressCoreDatabase {
 			}
 
 			// New in CP 3.4 - has AJAX "live" comment refreshing been migrated?
-			if ( !$this->option_exists( 'cp_para_comments_live' ) ) {
+			if ( ! $this->option_exists( 'cp_para_comments_live' ) ) {
 
 				// "live" comment refreshing, off by default
 				$this->option_set( 'cp_para_comments_live', $this->para_comments_live );
@@ -293,7 +293,7 @@ class CommentpressCoreDatabase {
 			}
 
 			// New in CP 3.3.3 - are we missing the cp_sidebar_default option?
-			if ( !$this->option_exists( 'cp_sidebar_default' ) ) {
+			if ( ! $this->option_exists( 'cp_sidebar_default' ) ) {
 
 				// does the current theme need this option?
 				if ( ! apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
@@ -314,7 +314,7 @@ class CommentpressCoreDatabase {
 			}
 
 			// New in CP 3.3.2 - are we missing the cp_page_meta_visibility option?
-			if ( !$this->option_exists( 'cp_page_meta_visibility' ) ) {
+			if ( ! $this->option_exists( 'cp_page_meta_visibility' ) ) {
 
 				// get choice
 				$_choice = esc_sql( $cp_page_meta_visibility );
@@ -325,7 +325,7 @@ class CommentpressCoreDatabase {
 			}
 
 			// New in CP 3.3.1 - are we missing the cp_blog_workflow option?
-			if ( !$this->option_exists( 'cp_blog_workflow' ) ) {
+			if ( ! $this->option_exists( 'cp_blog_workflow' ) ) {
 
 				// get choice
 				$_choice = esc_sql( $cp_blog_workflow );
@@ -336,7 +336,7 @@ class CommentpressCoreDatabase {
 			}
 
 			// New in CP 3.3.1 - are we missing the cp_blog_type option?
-			if ( !$this->option_exists( 'cp_blog_type' ) ) {
+			if ( ! $this->option_exists( 'cp_blog_type' ) ) {
 
 				// get choice
 				$_choice = esc_sql( $cp_blog_type );
@@ -347,7 +347,7 @@ class CommentpressCoreDatabase {
 			}
 
 			// New in CP 3.3 - are we missing the cp_show_extended_toc option?
-			if ( !$this->option_exists( 'cp_show_extended_toc' ) ) {
+			if ( ! $this->option_exists( 'cp_show_extended_toc' ) ) {
 
 				// get choice
 				$_choice = esc_sql( $cp_show_extended_toc );
@@ -358,7 +358,7 @@ class CommentpressCoreDatabase {
 			}
 
 			// are we missing the cp_comment_editor option?
-			if ( !$this->option_exists( 'cp_comment_editor' ) ) {
+			if ( ! $this->option_exists( 'cp_comment_editor' ) ) {
 
 				// get choice
 				$_choice = esc_sql( $cp_comment_editor );
@@ -369,7 +369,7 @@ class CommentpressCoreDatabase {
 			}
 
 			// are we missing the cp_promote_reading option?
-			if ( !$this->option_exists( 'cp_promote_reading' ) ) {
+			if ( ! $this->option_exists( 'cp_promote_reading' ) ) {
 
 				// get choice
 				$_choice = esc_sql( $cp_promote_reading );
@@ -380,7 +380,7 @@ class CommentpressCoreDatabase {
 			}
 
 			// are we missing the cp_title_visibility option?
-			if ( !$this->option_exists( 'cp_title_visibility' ) ) {
+			if ( ! $this->option_exists( 'cp_title_visibility' ) ) {
 
 				// get choice
 				$_choice = esc_sql( $cp_title_visibility );
@@ -391,7 +391,7 @@ class CommentpressCoreDatabase {
 			}
 
 			// are we missing the cp_header_bg_colour option?
-			if ( !$this->option_exists( 'cp_header_bg_colour' ) ) {
+			if ( ! $this->option_exists( 'cp_header_bg_colour' ) ) {
 
 				// get choice
 				$_choice = esc_sql( $cp_header_bg_colour );
@@ -412,7 +412,7 @@ class CommentpressCoreDatabase {
 			}
 
 			// are we missing the cp_js_scroll_speed option?
-			if ( !$this->option_exists( 'cp_js_scroll_speed' ) ) {
+			if ( ! $this->option_exists( 'cp_js_scroll_speed' ) ) {
 
 				// get choice
 				$_choice = esc_sql( $cp_js_scroll_speed );
@@ -423,7 +423,7 @@ class CommentpressCoreDatabase {
 			}
 
 			// are we missing the cp_min_page_width option?
-			if ( !$this->option_exists( 'cp_min_page_width' ) ) {
+			if ( ! $this->option_exists( 'cp_min_page_width' ) ) {
 
 				// get choice
 				$_choice = esc_sql( $cp_min_page_width );
@@ -445,7 +445,7 @@ class CommentpressCoreDatabase {
 			if ( $this->option_exists( 'cp_special_pages' ) ) {
 
 				// if we don't have the toc page...
-				if ( !$this->option_exists( 'cp_toc_page' ) ) {
+				if ( ! $this->option_exists( 'cp_toc_page' ) ) {
 
 					// get special pages array
 					$special_pages = $this->option_get( 'cp_special_pages', array() );
@@ -647,43 +647,43 @@ class CommentpressCoreDatabase {
 	public function check_upgrade_options() {
 
 		// do we have the option to choose to hide textblock meta (new in 3.5.9)?
-		if ( !$this->option_exists( 'cp_textblock_meta' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_textblock_meta' ) ) { return true; }
 
 		// do we have the option to choose featured images (new in 3.5.4)?
-		if ( !$this->option_exists( 'cp_featured_images' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_featured_images' ) ) { return true; }
 
 		// do we have the option to choose the default sidebar (new in 3.3.3)?
-		if ( !$this->option_exists( 'cp_sidebar_default' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_sidebar_default' ) ) { return true; }
 
 		// do we have the option to show or hide page meta (new in 3.3.2)?
-		if ( !$this->option_exists( 'cp_page_meta_visibility' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_page_meta_visibility' ) ) { return true; }
 
 		// do we have the option to choose blog type (new in 3.3.1)?
-		if ( !$this->option_exists( 'cp_blog_type' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_blog_type' ) ) { return true; }
 
 		// do we have the option to choose blog workflow (new in 3.3.1)?
-		if ( !$this->option_exists( 'cp_blog_workflow' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_blog_workflow' ) ) { return true; }
 
 		// do we have the option to choose the TOC layout (new in 3.3)?
-		if ( !$this->option_exists( 'cp_show_extended_toc' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_show_extended_toc' ) ) { return true; }
 
 		// do we have the option to set the comment editor?
-		if ( !$this->option_exists( 'cp_comment_editor' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_comment_editor' ) ) { return true; }
 
 		// do we have the option to set the default behaviour?
-		if ( !$this->option_exists( 'cp_promote_reading' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_promote_reading' ) ) { return true; }
 
 		// do we have the option to show or hide titles?
-		if ( !$this->option_exists( 'cp_title_visibility' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_title_visibility' ) ) { return true; }
 
 		// do we have the option to set the header bg colour?
-		if ( !$this->option_exists( 'cp_header_bg_colour' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_header_bg_colour' ) ) { return true; }
 
 		// do we have the option to set the scroll speed?
-		if ( !$this->option_exists( 'cp_js_scroll_speed' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_js_scroll_speed' ) ) { return true; }
 
 		// do we have the option to set the minimum page width?
-		if ( !$this->option_exists( 'cp_min_page_width' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_min_page_width' ) ) { return true; }
 
 		// --<
 		return false;
@@ -1007,7 +1007,7 @@ class CommentpressCoreDatabase {
 		}
 
 		// test for other than string
-		if ( !is_string( $option_name ) ) {
+		if ( ! is_string( $option_name ) ) {
 
 			// oops
 			die( __( 'You must supply the option as a string to option_set()', 'commentpress-core' ) );
@@ -1158,7 +1158,7 @@ class CommentpressCoreDatabase {
 	public function save_meta( $post_obj ) {
 
 		// if no post, kick out
-		if ( !$post_obj ) return;
+		if ( ! $post_obj ) return;
 
 		// if page...
 		if ( $post_obj->post_type == 'page' ) {
@@ -1239,7 +1239,7 @@ class CommentpressCoreDatabase {
 		//print_r( '$post_obj->ID: ' . $post_obj->ID ); die();
 
 		// if no post, kick out
-		if ( !$post_obj ) return false;
+		if ( ! $post_obj ) return false;
 
 		// if not page, kick out
 		if ( $post_obj->post_type != 'page' ) return false;
@@ -1364,7 +1364,7 @@ class CommentpressCoreDatabase {
 				// do we need to check this, since only the first top level page
 				// can now send this data? doesn't hurt to validate, I guess.
 				$post->post_parent == '0' AND
-				!$this->is_special_page() AND
+				! $this->is_special_page() AND
 				$post->ID == $this->parent_obj->nav->get_first_page()
 
 			) { // -->
@@ -1618,7 +1618,7 @@ class CommentpressCoreDatabase {
 		//print_r( '$post_obj->ID: ' . $post_obj->ID ); die();
 
 		// if no post, kick out
-		if ( !$post_obj ) return false;
+		if ( ! $post_obj ) return false;
 
 		// if not page, kick out
 		if ( $post_obj->post_type != 'post' ) return false;
@@ -1860,7 +1860,7 @@ class CommentpressCoreDatabase {
 	public function delete_meta( $post_id ) {
 
 		// if no post, kick out
-		if ( !$post_id ) return;
+		if ( ! $post_id ) return;
 
 		// if it's our welcome page...
 		if ( $post_id == $this->option_get( 'cp_welcome_page' ) ) {
@@ -2057,7 +2057,7 @@ class CommentpressCoreDatabase {
 				$force_delete = true;
 
 				// try and delete each page...
-				if ( !wp_delete_post( $special_page, $force_delete ) ) {
+				if ( ! wp_delete_post( $special_page, $force_delete ) ) {
 
 					// oops, set success flag to false
 					$success = false;
@@ -2173,7 +2173,7 @@ class CommentpressCoreDatabase {
 		$page_id = $this->option_get( $flag );
 
 		// kick out if it doesn't exist
-		if ( !$page_id ) { return true; }
+		if ( ! $page_id ) { return true; }
 
 		// delete option
 		$this->option_delete( $flag );
@@ -2182,7 +2182,7 @@ class CommentpressCoreDatabase {
 		$force_delete = true;
 
 		// try and delete the page...
-		if ( !wp_delete_post( $page_id, $force_delete ) ) {
+		if ( ! wp_delete_post( $page_id, $force_delete ) ) {
 
 			// oops, set success flag to false
 			$success = false;
@@ -2227,7 +2227,7 @@ class CommentpressCoreDatabase {
 		global $post;
 
 		// do we have one?
-		if ( !is_object( $post ) ) {
+		if ( ! is_object( $post ) ) {
 
 			// --<
 			return $is_special_page;
@@ -2271,7 +2271,7 @@ class CommentpressCoreDatabase {
 		global $post;
 
 		// do we have one?
-		if ( !is_object( $post ) ) {
+		if ( ! is_object( $post ) ) {
 
 			// --<
 			return $allowed;
@@ -2541,7 +2541,7 @@ class CommentpressCoreDatabase {
 		global $post;
 
 		// if we don't have a post (like on the 404 page)
-		if ( !is_object( $post ) ) {
+		if ( ! is_object( $post ) ) {
 
 			// comments must be closed
 			$vars['cp_comments_open'] = 'n';
@@ -2595,7 +2595,7 @@ class CommentpressCoreDatabase {
 			}
 
 			// check for BP versions prior to 1.6 (1.6 uses the WP admin bar instead of a custom one)
-			if ( !function_exists( 'bp_get_version' ) ) {
+			if ( ! function_exists( 'bp_get_version' ) ) {
 
 				// but, this can already be overridden in bp-custom.php
 				if ( defined( 'BP_USE_WP_ADMIN_BAR' ) AND BP_USE_WP_ADMIN_BAR ) {
@@ -2771,7 +2771,7 @@ class CommentpressCoreDatabase {
 
 		// add page
 		global $page;
-		$vars['cp_multipage_page'] = ( !empty( $page ) ) ? $page : 0;
+		$vars['cp_multipage_page'] = ( ! empty( $page ) ) ? $page : 0;
 
 		// add path to template directory
 		$vars['cp_template_dir'] = get_template_directory_uri();
@@ -2868,7 +2868,7 @@ class CommentpressCoreDatabase {
 			}
 
 			// the old Commentpress also includes Mobile_Detect
-			if ( !class_exists( 'Mobile_Detect' ) ) {
+			if ( ! class_exists( 'Mobile_Detect' ) ) {
 
 				// use code from http://code.google.com/p/php-mobile-detect/
 				include_once( COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/includes/mobile-detect/Mobile_Detect.php' );
@@ -2908,7 +2908,7 @@ class CommentpressCoreDatabase {
 	public function is_mobile() {
 
 		// do we have the property?
-		if ( !isset( $this->is_mobile ) ) {
+		if ( ! isset( $this->is_mobile ) ) {
 
 			// get it
 			$this->test_for_mobile();
@@ -2930,7 +2930,7 @@ class CommentpressCoreDatabase {
 	public function is_tablet() {
 
 		// do we have the property?
-		if ( !isset( $this->is_tablet ) ) {
+		if ( ! isset( $this->is_tablet ) ) {
 
 			// get it
 			$this->test_for_mobile();
@@ -2970,7 +2970,7 @@ class CommentpressCoreDatabase {
 		if ( count( $this->commentpress_options ) == 0 ) {
 
 			// if not in backend
-			if ( !is_admin() ) {
+			if ( ! is_admin() ) {
 
 				// init upgrade
 				//die( 'CommentPress Core upgrade required.' );
@@ -3051,7 +3051,7 @@ class CommentpressCoreDatabase {
 			$welcome = get_post( $page_exists );
 
 			// check that the page exists
-			if ( !is_null( $welcome ) ) {
+			if ( ! is_null( $welcome ) ) {
 
 				// got it...
 
@@ -3788,7 +3788,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		);
 
 		// if we have special pages
-		if ( !is_null( $special_pages ) AND is_array( $special_pages ) ) {
+		if ( ! is_null( $special_pages ) AND is_array( $special_pages ) ) {
 
 			// let's have them as well
 			$pages = array(
@@ -3844,7 +3844,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$welcome_page =	isset( $old[ 'cp_welcome_page' ] ) ? $old[ 'cp_welcome_page' ] : null;
 
 		// did we get a welcome page?
-		if ( !is_null( $welcome_page ) ) {
+		if ( ! is_null( $welcome_page ) ) {
 
 			// if the custom field already has a value...
 			if ( get_post_meta( $welcome_page, '_cp_post_type_override', true ) !== '' ) {
@@ -3893,7 +3893,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$theme_settings = get_option( 'cp_theme_settings', array() );
 
 		// did we get any?
-		if ( !empty( $theme_settings ) ) {
+		if ( ! empty( $theme_settings ) ) {
 
 			// migrate them
 			add_option( 'commentpress_theme_settings', $theme_settings );
