@@ -1964,10 +1964,12 @@ class CommentpressCoreParser {
 
 						// sort them by score
 						arsort( $possibles );
-						//print_r( array_keys( $possibles ) ); die();
+
+						// get keys
+						$keys = array_keys( $possibles );
 
 						// let's use the sig with the highest score
-						$highest = array_pop( array_keys( $possibles ) );
+						$highest = array_pop( $keys );
 
 						// assign comment to that key
 						$assigned[ $highest ][] = $comment;
