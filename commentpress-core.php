@@ -4,7 +4,7 @@ Plugin Name: CommentPress Core
 Plugin URI: http://www.futureofthebook.org/commentpress/
 Description: CommentPress allows readers to comment paragraph by paragraph in the margins of a text. You can use it to annotate, gloss, workshop, debate and more!
 Author: Institute for the Future of the Book
-Version: 3.6.2
+Version: 3.6.3
 Author URI: http://www.futureofthebook.org
 Text Domain: commentpress-core
 Domain Path: /languages
@@ -22,19 +22,19 @@ Mark James for the icons: http://www.famfamfam.com/lab/icons/silk/
 // -----------------------------------------------------------------------------
 
 // set version
-define( 'COMMENTPRESS_VERSION', '3.6.2' );
+define( 'COMMENTPRESS_VERSION', '3.6.3' );
 
 // store reference to this file
-if ( !defined( 'COMMENTPRESS_PLUGIN_FILE' ) ) {
+if ( ! defined( 'COMMENTPRESS_PLUGIN_FILE' ) ) {
 	define( 'COMMENTPRESS_PLUGIN_FILE', __FILE__ );
 }
 
 // store URL to this plugin's directory
-if ( !defined( 'COMMENTPRESS_PLUGIN_URL' ) ) {
+if ( ! defined( 'COMMENTPRESS_PLUGIN_URL' ) ) {
 	define( 'COMMENTPRESS_PLUGIN_URL', plugin_dir_url( COMMENTPRESS_PLUGIN_FILE ) );
 }
 // store PATH to this plugin's directory
-if ( !defined( 'COMMENTPRESS_PLUGIN_PATH' ) ) {
+if ( ! defined( 'COMMENTPRESS_PLUGIN_PATH' ) ) {
 	define( 'COMMENTPRESS_PLUGIN_PATH', plugin_dir_path( COMMENTPRESS_PLUGIN_FILE ) );
 }
 
@@ -52,7 +52,7 @@ NOTE: force-activated context is now deprecated
 if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
 
 	// directory-based forced activation
-	if ( !defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
+	if ( ! defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
 		define( 'COMMENTPRESS_PLUGIN_CONTEXT', 'mu_forced' );
 	}
 
@@ -70,20 +70,19 @@ if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
 
 	// get sitewide plugins
 	$active_plugins = (array) get_site_option( 'active_sitewide_plugins' );
-	//print_r( ( is_network_admin() ? 'yes' : 'no' ) ); die();
 
 	// is the plugin network activated?
-	if ( isset( $active_plugins[ $this_plugin ] ) ) {
+	if ( isset( $active_plugins[$this_plugin] ) ) {
 
 		// yes, network activated
-		if ( !defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
+		if ( ! defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
 			define( 'COMMENTPRESS_PLUGIN_CONTEXT', 'mu_sitewide' );
 		}
 
 	} else {
 
 		// optional activation per blog in multisite
-		if ( !defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
+		if ( ! defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
 			define( 'COMMENTPRESS_PLUGIN_CONTEXT', 'mu_optional' );
 		}
 
@@ -92,13 +91,11 @@ if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
 } else {
 
 	// single user install
-	if ( !defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
+	if ( ! defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
 		define( 'COMMENTPRESS_PLUGIN_CONTEXT', 'standard' );
 	}
 
 }
-
-//print_r( COMMENTPRESS_PLUGIN_CONTEXT ); die();
 
 
 
@@ -120,14 +117,12 @@ function commentpress_file_is_present( $filename ) {
 	$filepath = COMMENTPRESS_PLUGIN_PATH . $filename;
 
 	// is our class definition present?
-	if ( !is_file( $filepath ) ) {
+	if ( ! is_file( $filepath ) ) {
 
 		// oh no!
-		die( 'CommentPress Core Error: file "'.$filepath.'" is missing from the plugin directory.' );
+		die( 'CommentPress Core Error: file "' . $filepath . '" is missing from the plugin directory.' );
 
 	}
-
-
 
 	// --<
 	return $filepath;
@@ -144,7 +139,7 @@ function commentpress_file_is_present( $filename ) {
 function commentpress_include_core() {
 
 	// do we have our class?
-	if ( !class_exists( 'CommentpressCore' ) ) {
+	if ( ! class_exists( 'CommentpressCore' ) ) {
 
 		// define filename
 		$_file = 'commentpress-core/class_commentpress.php';
@@ -229,8 +224,22 @@ function _cpdie( $var ) {
 function commentpress_plugin_action_links( $links, $file ) {
 
 	// add settings link
-	if ( $file == plugin_basename( dirname( __FILE__ ).'/commentpress-core.php' ) ) {
-		$links[] = '<a href="options-general.php?page=commentpress_admin">'.__( 'Settings', 'commentpress-core' ).'</a>';
+	if ( $file == plugin_basename( dirname( __FILE__ ) . '/commentpress-core.php' ) ) {
+
+		// is this Network Admin?
+		if ( is_network_admin() ) {
+			$link = add_query_arg( array( 'page' => 'cpmu_admin_page' ), network_admin_url( 'settings.php' ) );
+		} else {
+			$link = add_query_arg( array( 'page' => 'commentpress_admin' ), admin_url( 'options-general.php' ) );
+		}
+
+		// add settings link
+		$links[] = '<a href="' . $link . '">' . esc_html__( 'Settings', 'commentpress-core' ) . '</a>';
+
+		// add Paypal link
+		$paypal = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=PZSKM8T5ZP3SC';
+		$links[] = '<a href="' . $paypal . '" target="_blank">Donate!</a>';
+
 	}
 
 	// --<
@@ -238,7 +247,8 @@ function commentpress_plugin_action_links( $links, $file ) {
 
 }
 
-// add filter for the above
+// add filters for the above
+add_filter( 'network_admin_plugin_action_links', 'commentpress_plugin_action_links', 10, 2 );
 add_filter( 'plugin_action_links', 'commentpress_plugin_action_links', 10, 2 );
 
 
@@ -253,16 +263,18 @@ add_filter( 'plugin_action_links', 'commentpress_plugin_action_links', 10, 2 );
 function commentpress_find_plugin_by_name( $plugin_name = '' ) {
 
 	// kick out if no param supplied
-	if ( $plugin_name == '' ) { return false; }
-
-
+	if ( $plugin_name == '' ) return false;
 
 	// init path
 	$path_to_plugin = false;
 
+	// ensure function is available
+	if ( ! function_exists( 'get_plugins' ) ) {
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+	}
+
 	// get plugins
 	$plugins = get_plugins();
-	//print_r( $plugins ); die();
 
 	// because the key is the path to the plugin file, we have to find the
 	// key by iterating over the values (which are arrays) to find the
@@ -307,7 +319,7 @@ function commentpress_is_legacy_plugin_active() {
 
 		// if we have "special pages", then the plugin must be active on this blog
 		// NB: do we need to check is_plugin_active() as well (or instead)?
-		if ( isset( $old[ 'cp_special_pages' ] ) ) {
+		if ( isset( $old['cp_special_pages'] ) ) {
 
 			// set flag
 			$active = true;
@@ -372,7 +384,7 @@ Init Standalone
 if (
 
 	COMMENTPRESS_PLUGIN_CONTEXT == 'standard' OR
-	( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_optional' AND !is_network_admin() )
+	( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_optional' AND ! is_network_admin() )
 
 ) {
 
@@ -381,7 +393,6 @@ if (
 
 	// access global
 	global $commentpress_core;
-	//print_r( $commentpress_core ); die();
 
 	// activation
 	register_activation_hook( COMMENTPRESS_PLUGIN_FILE, array( $commentpress_core, 'activate' ) );

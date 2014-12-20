@@ -19,7 +19,9 @@ var cpajax_nonce,
 	cpajax_post_title,
 	cpajax_infinite_posts,
 	cpajax_infinite_comments,
-	cpajax_comment_form;
+	cpajax_comment_form,
+	cpajax_comments_open,
+	cpajax_history_supported;
 
 // test for our localisation object
 if ( 'undefined' !== typeof CommentpressAjaxInfiniteSettings ) {
@@ -42,20 +44,35 @@ cpajax_comment_form = 0;
 cpajax_post_url = document.location.href;
 cpajax_post_title = document.title;
 
+// do we support history?
+cpajax_history_supported = false;
+
+/*
+// do we have pushstate?
+if ( window.history ) {
+	console.log( 'ONLOAD' );
+	console.log( window.history );
+}
+*/
+
 
 
 /**
- * @description: jQuery wrapper
+ * jQuery wrapper
  *
+ * This wrapper ensures that jQuery can be addressed using the $ shorthand from
+ * anywhere within the script.
  */
 ;( function( $ ) {
 
 
 
 	/**
-	 * @description: define what happens when the page is ready
+	 * Define what happens when the page is ready
+	 *
+	 * @return void
 	 */
-	$(document).ready(function($) {
+	$( document ).ready( function( $ ) {
 
 		// store comment form
 		cpajax_store_comment_form();
@@ -71,20 +88,22 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: intercept page navigation links
+	 * Intercept page navigation links
+	 *
+	 * @return void
 	 */
 	function cpajax_enable_state_navigation() {
 
 		// unbind first to allow repeated calls to this function
-		jQuery('.previous_page, .next_page').unbind( 'click' );
+		jQuery( '.previous_page, .next_page' ).unbind( 'click' );
 
 		// only apply when there is a history
 		if ( window.history.length > 0 ) {
 
 			// previous page button
-			$('.previous_page').click( function( e ) {
-				alert('back');
-				if (event.preventDefault) {event.preventDefault();}
+			$( '.previous_page' ).click( function( e ) {
+				alert( 'back' );
+				if ( event.preventDefault ) {event.preventDefault();}
 				window.history.back();
 				return false;
 			});
@@ -92,9 +111,9 @@ cpajax_post_title = document.title;
 		}
 
 		// next page button
-		$('.next_page').click( function( e ) {
-			alert('forward');
-			if (event.preventDefault) {event.preventDefault();}
+		$( '.next_page' ).click( function( e ) {
+			alert( 'forward' );
+			if ( event.preventDefault ) {event.preventDefault();}
 			cpajax_load_next_page( 'link' );
 			return false;
 		});
@@ -104,7 +123,9 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: copy and store the comment form
+	 * Copy and store the comment form
+	 *
+	 * @return void
 	 */
 	function cpajax_store_comment_form() {
 
@@ -112,10 +133,23 @@ cpajax_post_title = document.title;
 		addComment.disableForm();
 
 		// store a copy of the comment form
-		cpajax_comment_form = $('#respond_wrapper').clone();
-		//console.log( 'cpajax_comment_form:' );
-		//console.log( cpajax_comment_form );
-		//console.log( cpajax_comment_form.html() );
+		cpajax_comment_form = $( '#respond_wrapper' ).clone();
+
+		// change the form ID so we don't get double submissions
+		$( 'form', cpajax_comment_form ).attr( 'id', 'commentform-disabled' );
+
+		// remove the extraneous classes
+		if ( $( '#respond_wrapper', cpajax_comment_form ).hasClass( 'cp_force_displayed' ) ) {
+			$( '#respond_wrapper', cpajax_comment_form ).removeClass( 'cp_force_displayed' );
+		}
+		if ( $( '#respond_wrapper', cpajax_comment_form ).hasClass( 'cp_force_closed' ) ) {
+			$( '#respond_wrapper', cpajax_comment_form ).removeClass( 'cp_force_closed' );
+		}
+
+		// optionally remove from DOM if comments disabled
+		if ( $( '#respond_wrapper' ).hasClass( 'cp_force_closed' ) ) {
+			$( '#respond_wrapper' ).remove();
+		}
 
 		// enable the comment form (not necessary, it seems)
 		//addComment.enableForm();
@@ -125,7 +159,9 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: store comments (not used)
+	 * Store comments (not used)
+	 *
+	 * @return void
 	 */
 	function cpajax_store_comments() {
 
@@ -133,7 +169,7 @@ cpajax_post_title = document.title;
 		var post_id;
 
 		// store ID of current post
-		post_id = $('#wrapper .post').prop('id').split('-')[1];
+		post_id = $( '#wrapper .post' ).prop( 'id' ).split( '-' )[1];
 		//cpajax_infinite_posts.push( post_id );
 
 		// add new comments data to our array
@@ -146,41 +182,49 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: update the classes on the menu for a given menu_id
+	 * Update the classes on the menu for a given menu_id
+	 *
+	 * @param string item_id The numerical ID of the menu item
+	 * @return void
 	 */
 	function cpajax_update_custom_menu( item_id ) {
 
 		// update item
-		$('#toc_list .menu-item').removeClass('current_page_item');
-		$('#menu-item-' + item_id).addClass('current_page_item');
+		$( '#toc_list .menu-item' ).removeClass( 'current_page_item' );
+		$( '#menu-item-' + item_id ).addClass( 'current_page_item' );
 
 		// update ancestors
-		$('#toc_list .menu-item').removeClass('current_page_ancestor');
-		$('#menu-item-' + item_id).parents('li').addClass('current_page_ancestor');
+		$( '#toc_list .menu-item' ).removeClass( 'current_page_ancestor' );
+		$( '#menu-item-' + item_id ).parents( 'li' ).addClass( 'current_page_ancestor' );
 
 	}
 
 
 
 	/**
-	 * @description: update the classes on the WP pages menu for a given page_id
+	 * Update the classes on the WP pages menu for a given page_id
+	 *
+	 * @param string item_id The numerical ID of the menu item
+	 * @return void
 	 */
 	function cpajax_update_pages_menu( item_id ) {
 
 		// update item
-		$('#toc_list .page_item').removeClass('current_page_item');
-		$('.page-item-' + item_id).addClass('current_page_item');
+		$( '#toc_list .page_item' ).removeClass( 'current_page_item' );
+		$( '.page-item-' + item_id ).addClass( 'current_page_item' );
 
 		// update ancestors
-		$('#toc_list .page_item').removeClass('current_page_ancestor');
-		$('.page-item-' + item_id).parents('li').addClass('current_page_ancestor');
+		$( '#toc_list .page_item' ).removeClass( 'current_page_ancestor' );
+		$( '.page-item-' + item_id ).parents( 'li' ).addClass( 'current_page_ancestor' );
 
 	}
 
 
 
 	/**
-	 * @description: enable CP stuff
+	 * Refresh all CommentPress listeners and methods
+	 *
+	 * @return void
 	 */
 	function cpajax_refresh_commentpress() {
 
@@ -242,17 +286,23 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: enable waypoints
+	 * Enable waypoints
+	 *
+	 * @return void
 	 */
 	function cpajax_enable_wrapper_waypoints() {
 
 		/**
-		 * @description: define what happens when the bottom of the page is in view
+		 * Define what happens when the bottom of the page is in view
+		 *
+		 * @return void
 		 */
-		$('#wrapper').waypoint(
+		$( '#wrapper' ).waypoint(
 
 			/**
-			 * @description: waypoint callback
+			 * Waypoint callback
+			 *
+			 * @return void
 			 */
 			function( direction ) {
 
@@ -277,7 +327,7 @@ cpajax_post_title = document.title;
 			// config options
 			{
 				offset: 'bottom-in-view'
-				//offset: function() { return -$(this).height / 2; }
+				//offset: function() { return -$( this ).height / 2; }
 				//offset: 100
 			}
 
@@ -288,16 +338,18 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: make an AJAX call to retrieve next post/page
-	 * @param string mode triggered by either 'waypoint' or 'link'
+	 * Make an AJAX call to retrieve next post/page
+	 *
+	 * @param string mode Triggered by either 'waypoint' or 'link'
+	 * @return void
 	 */
 	function cpajax_load_next_page( mode ) {
 
-		// declarte vars
+		// declare vars
 		var post_id;
 
 		// get ID of last post
-		post_id = $('#main_wrapper .post:last').prop('id').split('-')[1];
+		post_id = $( '#main_wrapper .post:last-child' ).prop( 'id' ).split( '-' )[1];
 		//console.log( 'wrapper current_post_id: ' + post_id );
 
 		//console.log( 'WRAPPER GOING DOWN' );
@@ -309,12 +361,12 @@ cpajax_post_title = document.title;
 		//console.log( 'down: ' + post_id );
 
 		// show loading
-		//$('#loading').show();
+		//$( '#loading' ).show();
 
 		// init AJAX spinner
 		$( '#main_wrapper' ).after(
-			'<div style="text-align: center">' +
-				'<img src="' + cpajax_spinner_url + '" id="wrapper_loading" alt="' + cpajax_lang[0] + '" />' +
+			'<div class="cp_next_page_loading_wrapper" style="text-align: center">' +
+				'<img src="' + cpajax_spinner_url + '" id="cp_next_page_loading" alt="' + cpajax_lang[0] + '" />' +
 			'</div>'
 		);
 
@@ -343,8 +395,8 @@ cpajax_post_title = document.title;
 				// handle incoming...
 				cpajax_handle_data( data, mode );
 
-				// hide spinner
-				$( '#wrapper_loading' ).hide();
+				// remove spinner
+				$( '.cp_next_page_loading_wrapper' ).remove();
 
 			}
 
@@ -355,7 +407,11 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: handle data sent back from an AJAX call
+	 * Handle data sent back from an AJAX call
+	 *
+	 * @param object response The data from the AJAX request as jQuery object
+	 * @param string mode The type of data handling to perform
+	 * @return void
 	 */
 	function cpajax_handle_data( response, mode ) {
 
@@ -366,7 +422,7 @@ cpajax_post_title = document.title;
 			post_id;
 
 		// get ID of last post
-		post_id = $('#main_wrapper .post:last').prop('id').split('-')[1];
+		post_id = $( '#main_wrapper .post:last-child' ).prop( 'id' ).split( '-' )[1];
 		//console.log( 'wrapper current_post_id: ' + post_id );
 
 		//console.log( response );
@@ -393,18 +449,18 @@ cpajax_post_title = document.title;
 		*/
 
 		// get existing menu item before we append
-		existing_menu_item = $('#main_wrapper .post:last').prop('class');
+		existing_menu_item = $( '#main_wrapper .post:last-child' ).prop( 'class' );
 		//console.log( 'LOAD: existing_menu_item: ' + existing_menu_item );
 
 		// find post object
-		new_post_obj = $( '.post', $(response.content) );
+		new_post_obj = $( '.post', $( response.content ) );
 		//console.log( 'NEW post obj: ' + new_post_obj );
 
 		// add new post to the end
-		$('#main_wrapper').append( new_post_obj.parents('.page_wrapper') );
+		$( '#main_wrapper' ).append( new_post_obj.parents( '.page_wrapper' ) );
 
 		// find post ID property
-		new_post_prop = new_post_obj.prop('id');
+		new_post_prop = new_post_obj.prop( 'id' );
 		//console.log( 'NEW post ID: ' + new_post_prop );
 
 		// if we get one...
@@ -414,29 +470,43 @@ cpajax_post_title = document.title;
 			cpajax_infinite_posts.push( post_id );
 
 			// get new post ID
-			new_post_id = new_post_prop.split('-')[1];
+			new_post_id = new_post_prop.split( '-' )[1];
 
 			// find comments
-			new_comments_obj = $( '.comments_container', $(response.comments) );
+			new_comments_obj = $( '.comments_container', $( response.comments ) );
 			//console.log( 'NEW comments obj: ' );
 			//console.log( new_comments_obj );
 
-			// get a copy of th comment form for this post
-			post_comment_form = cpajax_comment_form.clone();
+			// do we have a comment form?
+			if ( cpajax_comment_form !== 0 ) {
 
-			// update its comment_post_ID
-			$('#comment_post_ID', post_comment_form).val( new_post_id );
+				// get a copy of the comment form for this post
+				post_comment_form = cpajax_comment_form.clone();
 
-			// replace stored comments data
-			cpajax_infinite_comments = new_comments_obj.append( post_comment_form );
-			//console.log( 'REPLACE cpajax_infinite_comments:' );
-			//console.log( cpajax_infinite_comments );
+				// change the form ID so we don't get double submissions
+				$( 'form', post_comment_form ).attr( 'id', 'commentform' );
+
+				// update its comment_post_ID
+				$( '#comment_post_ID', post_comment_form ).val( new_post_id );
+
+				// replace stored comments data
+				cpajax_infinite_comments = new_comments_obj.append( post_comment_form );
+				//console.log( 'REPLACE cpajax_infinite_comments:' );
+				//console.log( cpajax_infinite_comments );
+
+				// set global depending on status
+				cpajax_comments_open = 'n';
+				if ( response.comment_status == 'open' ) {
+					cpajax_comments_open = 'y';
+				}
+
+			}
 
 			// does it have a menu item ID reference?
 			if ( existing_menu_item != 'post' ) {
 
 				// get item ID
-				existing_menu_item_id = existing_menu_item.split('-')[1];
+				existing_menu_item_id = existing_menu_item.split( '-' )[1];
 
 				// is it a custom menu?
 				if ( existing_menu_item.match( 'wpcustom_menuid-' ) ) {
@@ -455,6 +525,9 @@ cpajax_post_title = document.title;
 
 			// add waypoints to new post
 			cpajax_enable_post_comments_waypoint( new_post_id );
+
+			// broadcast
+			$( document ).trigger( 'commentpress-new-post-loaded' );
 
 			// enable CommentPress
 			cpajax_refresh_commentpress();
@@ -477,17 +550,21 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: enable waypoints on posts on a per-post basis
+	 * Enable waypoints on posts on a per-post basis
+	 *
+	 * @param int post_id The numeric ID of the WordPress post
+	 * @return int offset The waypoint offset
 	 */
 	function cpajax_enable_post_comments_waypoint( post_id ) {
 
-		/**
-		 * @description: the top of a post has reached the top of the viewport scrolling downwards
-		 */
-		$('#post-' + post_id + '.post').parent().parent().waypoint(
+		// The top of a post has reached the top of the viewport scrolling downwards
+		$( '#post-' + post_id + '.post' ).parent().parent().waypoint(
 
 			/**
-			 * @description: waypoint callback
+			 * Waypoint callback
+			 *
+			 * @param string direction The direction of scroll
+			 * @return void
 			 */
 			function( direction ) {
 
@@ -495,7 +572,7 @@ cpajax_post_title = document.title;
 				if ( direction === 'down' ) {
 
 					// trigger page change
-					cpajax_trigger_page_change( $(this) );
+					cpajax_trigger_page_change( $( this ) );
 
 				}
 
@@ -514,7 +591,7 @@ cpajax_post_title = document.title;
 					var offset;
 
 					// get header offset
-					offset = $('#header').height();
+					offset = $( '#header' ).height();
 
 					// is the admin bar shown?
 					if ( cp_wp_adminbar == 'y' ) {
@@ -538,34 +615,38 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: change content and comments
+	 * Change content and comments
+	 *
+	 * @param object context The jQuery context object
+	 * @return void
 	 */
 	function cpajax_trigger_page_change( context ) {
 
 		// declare vars
-		var post_obj, post_id, menu_item, new_comments;
+		var post_obj, post_id, menu_item, new_comments, container, item_above,
+			html_to_save, comments;
 
 		// trace
 		//console.log( 'TOP GOING DOWN (this)' );
 		//console.log( context );
-		//console.log( 'TOP GOING DOWN ' + $('.post', context).prop('id') );
+		//console.log( 'TOP GOING DOWN ' + $( '.post', context ).prop( 'id' ) );
 
 		// get post object
-		post_obj = $('.post', context);
+		post_obj = $( '.post', context );
 
 		// ID of current post that's come into view
-		post_id = post_obj.prop('id').split('-')[1];
+		post_id = post_obj.prop( 'id' ).split( '-' )[1];
 		//console.log( 'DOWN: post_id: ' + post_id );
 
 		// get menu item from class
-		menu_item = post_obj.prop('class');
+		menu_item = post_obj.prop( 'class' );
 		//console.log( 'DOWN: menu_item: ' + menu_item );
 
 		// did we get one of our target ones?
 		if ( menu_item != 'post' ) {
 
 			// got one
-			menu_item_id = menu_item.split('-')[1];
+			menu_item_id = menu_item.split( '-' )[1];
 
 			// direction: DOWN
 			//console.log( 'DOWN: post_id ' + post_id + ' menu_item_id ' + menu_item_id );
@@ -584,22 +665,22 @@ cpajax_post_title = document.title;
 			}
 
 			// disable container waypoint to prevent accidental triggering
-			$('#wrapper').waypoint( 'disable' );
+			$( '#wrapper' ).waypoint( 'disable' );
 
 			// remove item above
-			var container = $('#main_wrapper');
-			var item_above = context.prev();
+			container = $( '#main_wrapper' );
+			item_above = context.prev();
 
 			// trash waypoints
 			item_above.waypoint( 'destroy' );
 			context.waypoint( 'destroy' );
 
 			// set as fixed (remove from document flow)
-			container.css('position', 'fixed');
+			container.css( 'position', 'fixed' );
 
 			// remove item
-			//item_above.css('visibility', 'hidden');
-			//item_above.css('display', 'none');
+			//item_above.css( 'visibility', 'hidden' );
+			//item_above.css( 'display', 'none' );
 			item_above.remove();
 
 			// set document title
@@ -608,13 +689,21 @@ cpajax_post_title = document.title;
 			// do we have pushstate?
 			if ( window.history ) {
 
-				// set browser url
+				//console.log( 'PUSHSTATE' );
+				//console.log( 'page_title: ' + cpajax_post_title );
+
+				// store items as HTML
+				html_to_save = $.trim( context.html() );
+
+				// create new state object to push to history
 				window.history.pushState(
 
 					{
-						'html': context.html(),
+						'post_id': post_id,
+						'post_permalink': cpajax_post_url,
 						'page_title': cpajax_post_title,
-						'post_id': post_id
+						'html': html_to_save,
+						'comment_status': cp_comments_open
 					},
 					'',
 					cpajax_post_url
@@ -624,13 +713,13 @@ cpajax_post_title = document.title;
 			}
 
 			// scroll to top of page
-			$(document).scrollTop( 0 );
+			$( document ).scrollTop( 0 );
 
 			// set back to relative (add back to document flow)
-			container.css('position', 'relative');
+			container.css( 'position', 'relative' );
 
 			// re-renable container waypoint
-			$('#wrapper').waypoint( 'enable' );
+			$( '#wrapper' ).waypoint( 'enable' );
 
 
 
@@ -639,14 +728,27 @@ cpajax_post_title = document.title;
 			//console.log( 'COMMENTS:' );
 			//console.log( comments );
 
-			// disable the comment form
-			addComment.disableForm();
+			// do we have a comment form?
+			if ( cpajax_comment_form !== 0 ) {
+
+				// disable the comment form
+				addComment.disableForm();
+
+			}
 
 			// add new comments to the end
-			$('#sidebar .comments_container').replaceWith( comments );
+			$( '#comments_sidebar .comments_container' ).replaceWith( comments );
 
-			// re-enable the comment form
-			addComment.enableForm();
+			// set global
+			cp_comments_open = cpajax_comments_open;
+
+			// do we have a comment form?
+			if ( cpajax_comment_form !== 0 ) {
+
+				// re-enable the comment form
+				addComment.enableForm();
+
+			}
 
 
 
@@ -656,6 +758,9 @@ cpajax_post_title = document.title;
 			// get new waypoint
 			$.waypoints( 'refresh' );
 
+			// broadcast
+			$( document ).trigger( 'commentpress-post-changed' );
+
 		}
 
 	}
@@ -663,31 +768,43 @@ cpajax_post_title = document.title;
 
 
 	/**
-	 * @description: change content and comments
-	 */
-	function cpajax_pushstate() {
-
-	}
-
-
-
-	/**
-	 * @description: change content and comments
+	 * Change content and comments
+	 *
+	 * @param object e The state object
+	 * @return void
 	 */
 	window.onpopstate = function( e ) {
 
 		// did we get a state object?
 		if ( e.state ) {
 
-			console.log( e );
+			//console.log( 'ONPOPSTATE' );
+			//console.log( e );
+
+			/*
+			// test if history supported
+			if ( cpajax_history_supported === false ) {
+
+				alert( 'gah' );
+
+				// refresh from server
+				document.location.reload( true );
+				return;
+
+			}
+			*/
 
 			// set title
 			document.title = e.state.page_title;
 
 			// set html
-			$('#main_wrapper').prepend( '<div class="page_wrapper cp_page_wrapper">' + e.state.html + '</div>' );
+			$( '#main_wrapper' ).prepend( '<div class="page_wrapper cp_page_wrapper">' + e.state.html + '</div>' );
+
+			// add comments back in
+			//$( '#comments_sidebar .comments_container' ).replaceWith( $( e.state.comments ) );
 
 		}
+
 	};
 
 

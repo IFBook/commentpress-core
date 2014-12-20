@@ -27,7 +27,7 @@ Init Multisite plugin
 */
 
 // do we have our class?
-if ( !class_exists( 'CommentpressMultisiteLoader' ) ) {
+if ( ! class_exists( 'CommentpressMultisiteLoader' ) ) {
 
 	// define filename
 	$class_file = 'commentpress-multisite/class_commentpress_mu_loader.php';
@@ -69,9 +69,13 @@ function commentpress_mu_find_plugin_by_name( $plugin_name = '' ) {
 	// init path
 	$path_to_plugin = false;
 
+	// ensure function is available
+	if ( ! function_exists( 'get_plugins' ) ) {
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+	}
+
 	// get plugins
 	$plugins = get_plugins();
-	//print_r( $plugins ); die();
 
 	// because the key is the path to the plugin file, we have to find the
 	// key by iterating over the values (which are arrays) to find the
@@ -121,7 +125,7 @@ function commentpress_mu_activate_plugin( $plugin, $buffer = false ) {
 	// no need to validate it...
 
 	// check that the plugin isn't already active
-	if ( !in_array( $plugin, $current ) ) {
+	if ( ! in_array( $plugin, $current ) ) {
 
 		// no need to redirect...
 
@@ -159,20 +163,20 @@ function commentpress_mu_activate_plugin( $plugin, $buffer = false ) {
 function _commentpress_mu_environment() {
 
 	// don't show in admin
-	if ( !is_admin() ) {
+	if ( ! is_admin() ) {
 
 		// dump our environment
-		echo '<strong>TEMPLATEPATH</strong><br />'.TEMPLATEPATH.'<br /><br />';
-		echo '<strong>STYLESHEETPATH</strong><br />'.STYLESHEETPATH.'<br /><br />';
-		echo '<strong>template_directory</strong><br />'.get_bloginfo('template_directory').'<br /><br />';
-		echo '<strong>stylesheet_directory</strong><br />'.get_bloginfo('stylesheet_directory').'<br /><br />';
-		echo '<strong>template_url</strong><br />'.get_bloginfo('template_url').'<br /><br />';
-		echo '<strong>stylesheet_url</strong><br />'.get_bloginfo('stylesheet_url').'<br /><br />';
-		echo '<strong>get_template_directory</strong><br />'.get_template_directory().'<br /><br />';
-		echo '<strong>get_stylesheet_directory</strong><br />'.get_stylesheet_directory().'<br /><br />';
-		echo '<strong>get_stylesheet_directory_uri</strong><br />'.get_stylesheet_directory_uri().'<br /><br />';
-		echo '<strong>get_template_directory_uri</strong><br />'.get_template_directory_uri().'<br /><br />';
-		echo '<strong>locate_template</strong><br />'.locate_template( array( 'style/js/cp_js_common.js' ), false ).'<br /><br />';
+		echo '<strong>TEMPLATEPATH</strong><br />' . TEMPLATEPATH . '<br /><br />';
+		echo '<strong>STYLESHEETPATH</strong><br />' . STYLESHEETPATH . '<br /><br />';
+		echo '<strong>template_directory</strong><br />' . get_bloginfo( 'template_directory' ) . '<br /><br />';
+		echo '<strong>stylesheet_directory</strong><br />' . get_bloginfo( 'stylesheet_directory' ) . '<br /><br />';
+		echo '<strong>template_url</strong><br />' . get_bloginfo( 'template_url' ) . '<br /><br />';
+		echo '<strong>stylesheet_url</strong><br />' . get_bloginfo( 'stylesheet_url' ) . '<br /><br />';
+		echo '<strong>get_template_directory</strong><br />' . get_template_directory() . '<br /><br />';
+		echo '<strong>get_stylesheet_directory</strong><br />' . get_stylesheet_directory() . '<br /><br />';
+		echo '<strong>get_stylesheet_directory_uri</strong><br />' . get_stylesheet_directory_uri() . '<br /><br />';
+		echo '<strong>get_template_directory_uri</strong><br />' . get_template_directory_uri() . '<br /><br />';
+		echo '<strong>locate_template</strong><br />' . locate_template( array( 'style/js/cp_js_common.js' ), false ) . '<br /><br />';
 		die();
 
 	}
@@ -184,14 +188,14 @@ function _commentpress_mu_environment() {
 
 
 /**
- * Utility to show tests
+ * Utility to show the CommentPress object
  *
  * @return void
  */
 function _commentpress_mu_test() {
 
 	global $commentpress_core;
-	//print_r( $commentpress_core ); die();
+	print_r( $commentpress_core ); die();
 
 }
 

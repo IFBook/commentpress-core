@@ -197,7 +197,7 @@ class CommentpressGroupblogWorkshop {
 		global $commentpress_core;
 		if (
 
-			!is_null( $commentpress_core )
+			! is_null( $commentpress_core )
 			AND is_object( $commentpress_core )
 			AND $commentpress_core->is_groupblog()
 
@@ -241,7 +241,7 @@ class CommentpressGroupblogWorkshop {
 	public function page_all_comments_blog_title( $title ) {
 
 		// override if groupblog
-		if ( !$this->parent_obj->bp->_is_commentpress_groupblog() ) {
+		if ( ! $this->parent_obj->bp->_is_commentpress_groupblog() ) {
 			return $title;
 		}
 
@@ -264,7 +264,7 @@ class CommentpressGroupblogWorkshop {
 	public function page_all_comments_book_title( $title ) {
 
 		// override if groupblog
-		if ( !$this->parent_obj->bp->_is_commentpress_groupblog() ) {
+		if ( ! $this->parent_obj->bp->_is_commentpress_groupblog() ) {
 			return $title;
 		}
 
@@ -462,7 +462,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Register Wordpress hooks
+	 * Register WordPress hooks
 	 *
 	 * @return void
 	 */
@@ -531,18 +531,18 @@ class CommentpressGroupblogWorkshop {
 		// define form element
 		$element = '
 		<tr valign="top">
-			<th scope="row"><label for="cpmu_bp_workshop_nomenclature">'.__( 'Change the name of a Group "Document"?', 'commentpress-core' ).'</label></th>
-			<td><input id="cpmu_bp_workshop_nomenclature" name="cpmu_bp_workshop_nomenclature" value="1" type="checkbox"'.( $this->db->option_get( 'cpmu_bp_workshop_nomenclature' ) == '1' ? ' checked="checked"' : '' ).' /></td>
+			<th scope="row"><label for="cpmu_bp_workshop_nomenclature">' . __( 'Change the name of a Group "Document"?', 'commentpress-core' ) . '</label></th>
+			<td><input id="cpmu_bp_workshop_nomenclature" name="cpmu_bp_workshop_nomenclature" value="1" type="checkbox"' . ( $this->db->option_get( 'cpmu_bp_workshop_nomenclature' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
 		</tr>
 
 		<tr valign="top">
-			<th scope="row"><label for="cpmu_bp_workshop_nomenclature_name">'.__( 'Singular name for a Group "Document"', 'commentpress-core' ).'</label></th>
-			<td><input id="cpmu_bp_workshop_nomenclature_name" name="cpmu_bp_workshop_nomenclature_name" value="'.( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ? $this->cpmu_bp_workshop_nomenclature_name : $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) ).'" type="text" /></td>
+			<th scope="row"><label for="cpmu_bp_workshop_nomenclature_name">' . __( 'Singular name for a Group "Document"', 'commentpress-core' ) . '</label></th>
+			<td><input id="cpmu_bp_workshop_nomenclature_name" name="cpmu_bp_workshop_nomenclature_name" value="' . ( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ? $this->cpmu_bp_workshop_nomenclature_name : $this->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) ) . '" type="text" /></td>
 		</tr>
 
 		<tr valign="top">
-			<th scope="row"><label for="cpmu_bp_workshop_nomenclature_plural">'.__( 'Plural name for Group "Documents"', 'commentpress-core' ).'</label></th>
-			<td><input id="cpmu_bp_workshop_nomenclature_plural" name="cpmu_bp_workshop_nomenclature_plural" value="'.( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) == '' ? $this->cpmu_bp_workshop_nomenclature_plural : $this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) ).'" type="text" /></td>
+			<th scope="row"><label for="cpmu_bp_workshop_nomenclature_plural">' . __( 'Plural name for Group "Documents"', 'commentpress-core' ) . '</label></th>
+			<td><input id="cpmu_bp_workshop_nomenclature_plural" name="cpmu_bp_workshop_nomenclature_plural" value="' . ( $this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) == '' ? $this->cpmu_bp_workshop_nomenclature_plural : $this->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) ) . '" type="text" /></td>
 		</tr>
 
 		';

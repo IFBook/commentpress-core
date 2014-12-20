@@ -10,8 +10,10 @@
 
 
 /**
- * @description: our jQuery plugin
+ * jQuery wrapper
  *
+ * This wrapper ensures that jQuery can be addressed using the $ shorthand from
+ * anywhere within the script.
  */
 ;( function( $ ) {
 
@@ -19,9 +21,9 @@
 	var highlighted_para = '';
 
 	/**
-	 * @description: highlight the current paragraph
-	 * @todo:
+	 * Highlight the current paragraph
 	 *
+	 * @return void
 	 */
 	$.highlight_para = function( element ) {
 
@@ -41,9 +43,9 @@
 
 
 	/**
-	 * @description: unhighlight all text
-	 * @todo:
+	 * Unhighlight all text
 	 *
+	 * @return void
 	 */
 	$.unhighlight_para = function() {
 
@@ -57,9 +59,9 @@
 
 
 	/**
-	 * @description: get the element which is currently highlighted
-	 * @todo:
+	 * Get the element which is currently highlighted
 	 *
+	 * @return string highlighted_para The highlighted paragraph
 	 */
 	$.get_highlighted_para = function() {
 
@@ -71,9 +73,10 @@
 
 
 	/**
-	 * @description: test if the element is currently highlighted
-	 * @todo:
+	 * Test if the element is currently highlighted
 	 *
+	 * @param object element The jQuery element to test
+	 * @return boolean True if highlighted, false otherwise
 	 */
 	$.is_highlighted = function( element ) {
 
@@ -103,9 +106,11 @@
 
 
 	/**
-	 * @description: set height of sidebar minimiser (scrolling element) so that the column fills the viewport
-	 * @todo: in jQuery 1.9, we get a 143px error, related to sidebar.position().top
+	 * Set height of sidebar minimiser (scrolling element) so that the column fills the viewport
 	 *
+	 * @todo In jQuery 1.9, we get a 143px error, related to sidebar.position().top
+	 *
+	 * @return int to_bottom The height of the sidebar in px
 	 */
 	$.set_sidebar_height = function() {
 
@@ -175,9 +180,10 @@
 
 
 	/**
-	 * @description: get height data on element
-	 * @todo:
+	 * Get height data on element
 	 *
+	 * @param object element The element to adjust
+	 * @return integer element_adjust The new height of the element in px
 	 */
 	$.get_element_adjust = function( element ) {
 
@@ -206,9 +212,9 @@
 
 
 	/**
-	 * @description: get visible sidebar minimiser
-	 * @todo:
+	 * Get visible sidebar minimiser
 	 *
+	 * @return object sidebar_pane The jQuery object for the sidebar pane
 	 */
 	$.get_sidebar_pane = function() {
 
@@ -222,9 +228,9 @@
 
 
 	/**
-	 * @description: get visible sidebar
-	 * @todo:
+	 * Get visible sidebar
 	 *
+	 * @return string name The name of the visible sidebar
 	 */
 	$.get_sidebar_name = function() {
 
@@ -260,7 +266,9 @@
 
 
 	/**
-	 * @description: get currently highlighted menu item ID
+	 * Get currently highlighted menu item ID
+	 *
+	 * @return string current_menu_item The numeric ID of the menu item
 	 */
 	$.get_current_menu_item_id = function() {
 
@@ -318,7 +326,12 @@
 
 
 	/**
-	 * @description: utility replacement for PHP's in_array
+	 * Utility replacement for PHP's in_array
+	 *
+	 * @param mixed needle The item to search for
+	 * @param array haystack The array to search
+	 * @param boolean argStrict If true, will take variable type into account
+	 * @return boolean found True if found, false otherwise
 	 */
 	$.in_array = function( needle, haystack, argStrict ) {
 
@@ -343,7 +356,11 @@
 
 
 	/**
-	 * @description: a nifty JS array utility to remove a specified value
+	 * A nifty JS array utility to remove a specified value
+	 *
+	 * @param mixed item The item to remove
+	 * @param array sourceArray The array to remove the item from
+	 * @return array sourceArray The modified array
 	 */
 	$.remove_from_array = function( item, sourceArray ) {
 
@@ -371,9 +388,10 @@
 
 
 	/**
-	 * @description: utility replacement for PHP's is_object
-	 * @todo:
+	 * Utility replacement for PHP's is_object
 	 *
+	 * @param mixed mixed_var The item to test
+	 * @return boolean True if item is object, false otherwise
 	 */
 	$.is_object = function ( mixed_var ) {
 
@@ -394,7 +412,10 @@
 
 
 	/**
-	 * @description: test if a function exists without throwing a Reference Error
+	 * Test if a function exists without throwing a Reference Error
+	 *
+	 * @param string function_name The name of the function
+	 * @return boolean True if the function exists, false otherwise
 	 */
 	$.is_function_defined = function ( function_name ) {
 
@@ -414,9 +435,10 @@
 
 
 	/**
-	 * @description: utility to strip 'px' off css values
-	 * @todo:
+	 * Utility to strip 'px' off css values
 	 *
+	 * @param string pix The CSS string (eg, '20px')
+	 * @return integer px The numeric value (eg, 20)
 	 */
 	$.px_to_num = function( pix ) {
 
@@ -428,9 +450,10 @@
 
 
 	/**
-	 * @description: utility to return zero when css values may be NaN in IE
-	 * @todo:
+	 * Utility to return zero when css values may be NaN in IE
 	 *
+	 * @param mixed strNum A numeric value that we want to modify
+	 * @return integer The numeric value of strNum
 	 */
 	$.css_to_num = function( strNum ) {
 
@@ -460,9 +483,12 @@
 
 
 	/**
-	 * @description: a test
-	 * @todo: remove
+	 * A test!
 	 *
+	 * @todo Remove
+	 *
+	 * @param string message The message to show
+	 * @return void
 	 */
 	$.frivolous = function( message ) {
 

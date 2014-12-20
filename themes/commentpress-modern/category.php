@@ -41,20 +41,18 @@
 
 			<?php
 
-			// if we've elected to show the meta...
+			// default to hidden
+			$cp_meta_visibility = ' style="display: none;"';
+
+			// overrideif we've elected to show the meta...
 			if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
-
-			?>
-			<div class="search_meta">
-
-				<?php commentpress_echo_post_meta(); ?>
-
-			</div>
-			<?php
-
+				$cp_meta_visibility = '';
 			}
 
 			?>
+			<div class="search_meta"<?php echo $cp_meta_visibility; ?>>
+				<?php commentpress_echo_post_meta(); ?>
+			</div>
 
 			<?php the_excerpt() ?>
 

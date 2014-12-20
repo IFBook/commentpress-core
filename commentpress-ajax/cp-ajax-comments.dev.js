@@ -37,9 +37,9 @@ cpajax_submitting = false;
 
 
 /**
- * @description: init
- * @todo:
+ * Init CommentPress AJAX
  *
+ * @return void
  */
 function cpajax_initialise() {
 
@@ -70,7 +70,9 @@ function cpajax_initialise() {
 
 
 /**
- * @description: re-enable Featured Comments plugin functionality
+ * Re-enable Featured Comments plugin functionality
+ *
+ * @return void
  */
 function cpajax_reenable_featured_comments() {
 
@@ -92,7 +94,9 @@ function cpajax_reenable_featured_comments() {
 
 
 /**
- * @description: re-enable Comment Upvoter plugin functionality
+ * Re-enable Comment Upvoter plugin functionality
+ *
+ * @return void
  */
 function cpajax_reenable_comment_upvoter() {
 
@@ -114,8 +118,10 @@ function cpajax_reenable_comment_upvoter() {
 
 
 /**
- * @description: an example ajax callback
+ * An example ajax callback
  *
+ * @param object data The data returned from the AJAX request
+ * @return void
  */
 function cpajax_ajax_callback( data ) {
 
@@ -149,9 +155,13 @@ function cpajax_ajax_callback( data ) {
 
 
 /**
- * @description: add comment to page
- * @todo:
+ * Add comment to page
  *
+ * @param object markup The jQuery object containing the comment
+ * @param string text_sig The text signature
+ * @param string comm_parent The numeric ID of the parent comment
+ * @param string comm_id The numeric ID of the comment
+ * @return void
  */
 function cpajax_add_new_comment( markup, text_sig, comm_parent, comm_id ) {
 
@@ -308,8 +318,9 @@ function cpajax_add_new_comment( markup, text_sig, comm_parent, comm_id ) {
 
 
 /**
- * @description: an example ajax update
+ * An example AJAX update
  *
+ * @return void
  */
 function cpajax_ajax_update() {
 
@@ -369,19 +380,23 @@ function cpajax_ajax_update() {
 
 
 /**
- * @description: an example ajax updater
+ * An example AJAX updater
  *
+ * @param string toggle A boolean determining whether the interval is on or off
+ * @return void
  */
 function cpajax_ajax_updater( toggle ) {
 
 	// if set
 	if ( toggle == '1' ) {
 
-		// NOTE: comment_flood_filter is set to 15000, so that's what we set here. this ain't chat :)
-		// if you want to change this to something more 'chat-like'...
-		// add this to your theme's functions.php or uncomment it in cp-ajax-comment.php:
-		// remove_filter('comment_flood_filter', 'wp_throttle_comment_flood', 10, 3);
-		// use at your own risk - it could be very heavy on the database.
+		/**
+		 * NOTE: comment_flood_filter is set to 15000, so that's what we set here. this ain't chat :)
+		 * if you want to change this to something more 'chat-like'...
+		 * add this to your theme's functions.php or uncomment it in cp-ajax-comment.php:
+		 * remove_filter('comment_flood_filter', 'wp_throttle_comment_flood', 10, 3);
+		 * use at your own risk - it could be very heavy on the database.
+		 */
 
 		// set repeat call
 		CommentpressAjaxSettings.interval = window.setInterval( cpajax_ajax_update, 5000 );
@@ -398,8 +413,9 @@ function cpajax_ajax_updater( toggle ) {
 
 
 /**
- * @description: enable reassignment of comments
+ * Enable reassignment of comments
  *
+ * @return void
  */
 function cpajax_reassign_comments() {
 
@@ -500,8 +516,11 @@ function cpajax_reassign_comments() {
 
 
 /**
- * @description: reassign a comment
+ * Reassign a comment
  *
+ * @param string text_sig The text signature
+ * @param object ui The UI element
+ * @return void
  */
 function cpajax_reassign( text_sig, ui ) {
 
@@ -645,9 +664,9 @@ function cpajax_reassign( text_sig, ui ) {
 
 
 /**
- * @description: reset
- * @todo:
+ * Reset CommentPress AJAX
  *
+ * @return void
  */
 function cpajax_reset() {
 
@@ -671,9 +690,10 @@ function cpajax_reset() {
 
 
 /**
- * @description: add comment to page
- * @todo:
+ * Add comment to page
  *
+ * @param object response The jQuery object containing the result of the AJAX request
+ * @return void
  */
 function cpajax_add_comment( response ) {
 
@@ -825,9 +845,13 @@ function cpajax_add_comment( response ) {
 
 
 /**
- * @description: do comment append
- * @todo:
+ * Do comment append
  *
+ * @param object response The jQuery object from the AJAX request
+ * @param object content The jQuery object containing the content
+ * @param object target The jQuery object in which the content should be placed
+ * @param object last The jQuery object of the last item in the comment list
+ * @return void
  */
 function cpajax_nice_append( response, content, target, last ) {
 
@@ -857,9 +881,13 @@ function cpajax_nice_append( response, content, target, last ) {
 
 
 /**
- * @description: do comment prepend
- * @todo:
+ * Do comment prepend
  *
+ * @param object response The jQuery object from the AJAX request
+ * @param object content The jQuery object containing the content
+ * @param object target The jQuery object in which the content should be placed
+ * @param object last The jQuery object of the last item in the comment list
+ * @return void
  */
 function cpajax_nice_prepend( response, content, target, last ) {
 
@@ -889,9 +917,11 @@ function cpajax_nice_prepend( response, content, target, last ) {
 
 
 /**
- * @description: do comment cleanup
- * @todo:
+ * Do comment cleanup
  *
+ * @param object content The jQuery object containing the content
+ * @param object last The jQuery object of the last item in the comment list
+ * @return void
  */
 function cpajax_cleanup( content, last ) {
 
@@ -947,9 +977,11 @@ function cpajax_cleanup( content, last ) {
 
 
 /**
- * @description: update comments paragraph heading
- * @todo:
+ * Update comments paragraph heading
  *
+ * @param string head_id The CSS ID of the header element
+ * @param int new_comment_count The updated number of comments
+ * @return void
  */
 function cpajax_update_comments_para_heading( head_id, new_comment_count ) {
 
@@ -977,9 +1009,11 @@ function cpajax_update_comments_para_heading( head_id, new_comment_count ) {
 
 
 /**
- * @description: update paragraph comment icon
- * @todo:
+ * Update paragraph comment icon
  *
+ * @param string text_sig The text signature of the paragraph
+ * @param int new_comment_count The updated number of comments
+ * @return void
  */
 function cpajax_update_para_icon( text_sig, new_comment_count ) {
 
@@ -1008,18 +1042,21 @@ function cpajax_update_para_icon( text_sig, new_comment_count ) {
 
 
 /**
- * @description: init comment form
- * @todo:
+ * Init comment form
  *
+ * @return void
  */
 function cpajax_initialise_form() {
 
+	// unbind first to allow repeated calls to this function
+	jQuery('#commentform').off( 'submit' );
+
 	/**
-	 * @description: comment submission method
-	 * @todo:
+	 * Comment submission method
 	 *
+	 * @return false
 	 */
-	jQuery('#commentform').on('submit', function( event ) {
+	jQuery('#commentform').on( 'submit', function( event ) {
 
 		// define vars
 		var filter;
@@ -1177,9 +1214,9 @@ function cpajax_initialise_form() {
 
 
 /**
- * @description: define what happens when the page is ready
- * @todo:
+ * Define what happens when the page is ready
  *
+ * @return void
  */
 jQuery(document).ready(function($) {
 
@@ -1196,8 +1233,7 @@ jQuery(document).ready(function($) {
 	cpajax_initialise_form();
 
 	/**
-	 * @description: ajax comment updating control mechanism?
-	 * @todo:
+	 * AJAX comment updating control mechanism?
 	 *
 	jQuery('#btn_js').toggle( function() {
 
@@ -1220,10 +1256,51 @@ jQuery(document).ready(function($) {
 	});
 	 */
 
+
+
+	/**
+	 * Hook into CommentPress reset
+	 *
+	 * @return void
+	 */
+	$( document ).on( 'commentpress-reset-actions', function( event ) {
+
+		// re-enable AJAX functionality
+		cpajax_reassign_comments();
+
+		// compatibility with Featured Comments
+		cpajax_reenable_featured_comments();
+
+		// compatibility with Comment Upvoter
+		cpajax_reenable_comment_upvoter();
+
+	});
+
+
+
+	/**
+	 * Hook into WordPress Front-end Editor
+	 *
+	 * @return void
+	 */
+	$( document ).on( 'fee-after-save', function( event ) {
+
+		// re-enable clicks
+		commentpress_enable_comment_permalink_clicks();
+		commentpress_setup_comment_headers();
+		cpajax_reassign_comments();
+
+		// compatibility with Featured Comments
+		cpajax_reenable_featured_comments();
+
+		// compatibility with Comment Upvoter
+		cpajax_reenable_comment_upvoter();
+
+	});
+
+
+
 }); // end document.ready()
-
-
-
 
 
 

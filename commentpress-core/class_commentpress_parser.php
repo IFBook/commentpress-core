@@ -127,7 +127,7 @@ class CommentpressCoreParser {
 		$has_quicktag = $this->_has_comment_block_quicktag( $content );
 
 		// if it hasn't...
-		if ( !$has_quicktag ) {
+		if ( ! $has_quicktag ) {
 
 			// auto-format content accordingly
 
@@ -149,15 +149,14 @@ class CommentpressCoreParser {
 				case 'line' :
 
 					// set constant - okay, since we never return here
-					if ( !defined( 'COMMENTPRESS_BLOCK' ) )
-						define( 'COMMENTPRESS_BLOCK', 'line' );
+					if ( ! defined( 'COMMENTPRESS_BLOCK' ) ) define( 'COMMENTPRESS_BLOCK', 'line' );
 
 					// generate text signatures array
 					$this->text_signatures = $this->_generate_line_signatures( $content );
 					//print_r( $this->text_signatures ); die();
 
 					// only continue parsing if we have an array of sigs
-					if ( !empty( $this->text_signatures ) ) {
+					if ( ! empty( $this->text_signatures ) ) {
 
 						// filter content by <br> and <br /> tags
 						$content = $this->_parse_lines( $content );
@@ -170,15 +169,14 @@ class CommentpressCoreParser {
 				case 'tag' :
 
 					// set constant
-					if ( !defined( 'COMMENTPRESS_BLOCK' ) )
-						define( 'COMMENTPRESS_BLOCK', 'tag' );
+					if ( ! defined( 'COMMENTPRESS_BLOCK' ) ) define( 'COMMENTPRESS_BLOCK', 'tag' );
 
 					// generate text signatures array
 					$this->text_signatures = $this->_generate_text_signatures( $content, 'p|ul|ol' );
 					//print_r( $this->text_signatures ); die();
 
 					// only continue parsing if we have an array of sigs
-					if ( !empty( $this->text_signatures ) ) {
+					if ( ! empty( $this->text_signatures ) ) {
 
 						// filter content by <p>, <ul> and <ol> tags
 						$content = $this->_parse_content( $content, 'p|ul|ol' );
@@ -192,15 +190,14 @@ class CommentpressCoreParser {
 		} else {
 
 			// set constant
-			if ( !defined( 'COMMENTPRESS_BLOCK' ) )
-				define( 'COMMENTPRESS_BLOCK', 'block' );
+			if ( ! defined( 'COMMENTPRESS_BLOCK' ) ) define( 'COMMENTPRESS_BLOCK', 'block' );
 
 			// generate text signatures array
 			$this->text_signatures = $this->_generate_block_signatures( $content );
 			//print_r( $this->text_signatures ); die();
 
 			// only parse content if we have an array of sigs
-			if ( !empty( $this->text_signatures ) ) {
+			if ( ! empty( $this->text_signatures ) ) {
 
 				// filter content by <!--commentblock--> quicktags
 				$content = $this->_parse_blocks( $content );
@@ -228,7 +225,7 @@ class CommentpressCoreParser {
 	public function get_sorted_comments( $post_ID ) {
 
 		// have we already sorted the comments?
-		if ( !empty( $this->comments_sorted ) ) {
+		if ( ! empty( $this->comments_sorted ) ) {
 
 			// --<
 			return $this->comments_sorted;
@@ -291,7 +288,7 @@ class CommentpressCoreParser {
 		//print_r( $matches ); die();
 
 		// kick out if we don't have any
-		if( !count( $matches ) ) {
+		if( ! count( $matches ) ) {
 
 			// --<
 			return $content;
@@ -495,7 +492,7 @@ class CommentpressCoreParser {
 					preg_match( '/start="([^"]*)"/i', $paragraph, $matches );
 
 					// construct new tag
-					$tag = 'ol '.$matches[0];
+					$tag = 'ol ' . $matches[0];
 
 					// set start
 					$start = $matches[1];
@@ -505,13 +502,13 @@ class CommentpressCoreParser {
 			}
 
 			// assign icons to paras
-			$pattern = array('#<('.$tag.'[^a^r>]*)>#');
+			$pattern = array('#<(' . $tag . '[^a^r>]*)>#');
 
 			$replace = array(
 
 				$this->parent_obj->display->get_para_tag(
 					$text_signature,
-					$paragraph_icon.$comment_icon,
+					$paragraph_icon . $comment_icon,
 					$tag,
 					$start
 				)
@@ -540,7 +537,7 @@ class CommentpressCoreParser {
 			$content = preg_replace(
 
 				//array($paragraph),
-				'/'.$prepared_para.'/',
+				'/' . $prepared_para . '/',
 				$block,
 				$content,
 				$limit
@@ -592,12 +589,12 @@ class CommentpressCoreParser {
 		 * don't like PHP closing tags, even they are part of a regex and not actually
 		 * closing tags at all)
 		 */
-		//preg_match_all( '/<('.$tag.')[^>]*>(.*?)(<\/('.$tag.')>)/', $content, $matches );
-		preg_match_all( '#<('.$tag.')[^>]*?'.'>(.*?)</('.$tag.')>#si', $content, $matches );
+		//preg_match_all( '/<(' . $tag . ')[^>]*>(.*?)(<\/(' . $tag . ')>)/', $content, $matches );
+		preg_match_all( '#<(' . $tag . ')[^>]*?' . '>(.*?)</(' . $tag . ')>#si', $content, $matches );
 		//print_r( $matches[0] ); print_r( $matches[1] ); exit();
 
 		// kick out if we don't have any
-		if( !empty($matches[0]) ) {
+		if( ! empty($matches[0]) ) {
 
 			// --<
 			return $matches[0];
@@ -640,7 +637,7 @@ class CommentpressCoreParser {
 		$matches = $this->_get_text_matches( $content, $tag );
 
 		// kick out if we don't have any
-		if( !count( $matches ) ) {
+		if( ! count( $matches ) ) {
 
 			// store text sigs array in global
 			$this->parent_obj->db->set_text_sigs( $this->text_signatures );
@@ -676,7 +673,7 @@ class CommentpressCoreParser {
 				}
 
 				// add number to end of text sig
-				$text_signature .= '_'.$duplicates[ $text_signature ];
+				$text_signature .= '_' . $duplicates[ $text_signature ];
 
 			}
 
@@ -711,7 +708,7 @@ class CommentpressCoreParser {
 		//print_r( $matches ); die();
 
 		// kick out if we don't have any
-		if( !count( $matches ) ) {
+		if( ! count( $matches ) ) {
 
 			// --<
 			return $content;
@@ -724,6 +721,20 @@ class CommentpressCoreParser {
 		// get sorted comments and store
 		$this->comments_sorted = $this->_get_sorted_comments( $post->ID );
 		//print_r( $this->comments_sorted ); die();
+
+		// init starting paragraph number
+		$start_num = 1;
+
+		// set key
+		$key = '_cp_starting_para_number';
+
+		// if the custom field already has a value...
+		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
+
+			// get it
+			$start_num = absint( get_post_meta( $post->ID, $key, true ) );
+
+		}
 
 		// we already have our text signatures, so set flag
 		$sig_key = 0;
@@ -752,6 +763,9 @@ class CommentpressCoreParser {
 					// get a signature for the line
 					$text_signature = $this->text_signatures[ $sig_key ];
 
+					// construct paragraph number
+					$para_num = $sig_key + $start_num;
+
 					// increment
 					$sig_key++;
 
@@ -765,7 +779,7 @@ class CommentpressCoreParser {
 						$comment_count,
 						$text_signature,
 						'line',
-						$sig_key
+						$para_num
 
 					);
 
@@ -779,7 +793,7 @@ class CommentpressCoreParser {
 					);
 
 					// assign opening tag markup to line
-					$line = $opening_tag.$line;
+					$line = $opening_tag . $line;
 
 					// get comment icon
 					$comment_icon = $this->parent_obj->display->get_comment_icon(
@@ -787,13 +801,13 @@ class CommentpressCoreParser {
 						$comment_count,
 						$text_signature,
 						'line',
-						$sig_key
+						$para_num
 
 					);
 					//_cpdie( $commenticon );
 
 					// replace inline html comment with comment_icon
-					$line = str_replace( '<!-- line-end -->', ' '.$comment_icon, $line );
+					$line = str_replace( '<!-- line-end -->', ' ' . $comment_icon, $line );
 
 					// add to content array
 					$content_array[] = $line;
@@ -852,9 +866,9 @@ class CommentpressCoreParser {
 			'<!-- line-end --></span><br>',
 			'<!-- line-end --></span><br/>',
 			'<!-- line-end --></span><br />',
-			'<br>'."\n".'<span class="cp-line">',
-			'<br/>'."\n".'<span class="cp-line">',
-			'<br />'."\n".'<span class="cp-line">',
+			'<br>' . "\n" . '<span class="cp-line">',
+			'<br/>' . "\n" . '<span class="cp-line">',
+			'<br />' . "\n" . '<span class="cp-line">',
 			'<p><span class="cp-line">',
 			'<!-- line-end --></span></p>'
 
@@ -971,7 +985,7 @@ class CommentpressCoreParser {
 						}
 
 						// add number to end of text sig
-						$text_signature .= '_'.$duplicates[ $text_signature ];
+						$text_signature .= '_' . $duplicates[ $text_signature ];
 
 					}
 
@@ -1014,7 +1028,7 @@ class CommentpressCoreParser {
 		//print_r( $matches ); die();
 
 		// kick out if we don't have any
-		if( !count( $matches ) ) {
+		if( ! count( $matches ) ) {
 
 			// --<
 			return $content;
@@ -1027,6 +1041,20 @@ class CommentpressCoreParser {
 		// get sorted comments and store
 		$this->comments_sorted = $this->_get_sorted_comments( $post->ID );
 		//print_r( $this->comments_sorted ); die();
+
+		// init starting paragraph number
+		$start_num = 1;
+
+		// set key
+		$key = '_cp_starting_para_number';
+
+		// if the custom field already has a value...
+		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
+
+			// get it
+			$start_num = absint( get_post_meta( $post->ID, $key, true ) );
+
+		}
 
 		// we already have our text signatures, so set flag
 		$sig_key = 0;
@@ -1043,6 +1071,9 @@ class CommentpressCoreParser {
 				// get a signature for the paragraph
 				$text_signature = $this->text_signatures[ $sig_key ];
 
+				// construct paragraph number
+				$para_num = $sig_key + $start_num;
+
 				// increment
 				$sig_key++;
 
@@ -1056,7 +1087,7 @@ class CommentpressCoreParser {
 					$comment_count,
 					$text_signature,
 					'block',
-					$sig_key
+					$para_num
 
 				);
 
@@ -1066,7 +1097,7 @@ class CommentpressCoreParser {
 					$comment_count,
 					$text_signature,
 					'block',
-					$sig_key
+					$para_num
 
 				);
 
@@ -1074,13 +1105,13 @@ class CommentpressCoreParser {
 				$icon_html = $this->parent_obj->display->get_para_tag(
 
 					$text_signature,
-					$paragraph_icon.$comment_icon,
+					$paragraph_icon . $comment_icon,
 					'div'
 
 				);
 
 				// assign icons to blocks
-				$paragraph = $icon_html.$paragraph.'</div>'."\n\n\n\n";
+				$paragraph = $icon_html . $paragraph . '</div>' . "\n\n\n\n";
 
 				// add to content array
 				$content_array[] = $paragraph;
@@ -1123,7 +1154,7 @@ class CommentpressCoreParser {
 		$content = preg_replace(
 
 			'/\s+<!--commentblock-->\s+/',
-			'<p><!--commentblock--></p>'."\n",
+			'<p><!--commentblock--></p>' . "\n",
 			$content
 
 		);
@@ -1133,7 +1164,7 @@ class CommentpressCoreParser {
 		$content = preg_replace(
 
 			'/<p><!--commentblock-->/',
-			'<p><!--commentblock--></p>'."\n".'<p>',
+			'<p><!--commentblock--></p>' . "\n" . '<p>',
 			$content
 
 		);
@@ -1143,7 +1174,7 @@ class CommentpressCoreParser {
 		$content = preg_replace(
 
 			'/<!--commentblock--><\/p>/',
-			'</p>'."\n".'<p><!--commentblock--></p>'."\n",
+			'</p>' . "\n" . '<p><!--commentblock--></p>' . "\n",
 			$content
 
 		);
@@ -1153,7 +1184,7 @@ class CommentpressCoreParser {
 		$content = preg_replace(
 
 			'/<br \/>\s+<!--commentblock--><br \/>\s+/',
-			'</p>'."\n".'<p><!--commentblock--></p>'."\n".'<p>',
+			'</p>' . "\n" . '<p><!--commentblock--></p>' . "\n" . '<p>',
 			$content
 
 		);
@@ -1163,7 +1194,7 @@ class CommentpressCoreParser {
 		$content = preg_replace(
 
 			'/<br \/>\s+<!--commentblock--><\/p>\s+/',
-			'</p>'."\n".'<p><!--commentblock--></p>'."\n",
+			'</p>' . "\n" . '<p><!--commentblock--></p>' . "\n",
 			$content
 
 		);
@@ -1173,7 +1204,7 @@ class CommentpressCoreParser {
 		$content = preg_replace(
 
 			'/<p><!--commentblock--><br \/>\s+/',
-			'<p><!--commentblock--></p>'."\n".'<p>',
+			'<p><!--commentblock--></p>' . "\n" . '<p>',
 			$content
 
 		);
@@ -1226,7 +1257,7 @@ class CommentpressCoreParser {
 		//print_r( array( 'after' => $content ) ); die();
 
 		// explode by <p> version to temp array
-		$output_array = explode( '<p><'.'!--commentblock--></p>', $content );
+		$output_array = explode( '<p><' . '!--commentblock--></p>', $content );
 
 		// kick out if we have an empty array
 		if ( empty( $output_array ) ) {
@@ -1297,7 +1328,7 @@ class CommentpressCoreParser {
 					}
 
 					// add number to end of text sig
-					$text_signature .= '_'.$duplicates[ $text_signature ];
+					$text_signature .= '_' . $duplicates[ $text_signature ];
 
 				}
 
@@ -1356,7 +1387,7 @@ class CommentpressCoreParser {
 	function _strip_comment_block_quicktag( $content ) {
 
 		// look for < !--commentblock--> comment
-		if ( preg_match('/<'.'!--commentblock--><br \/>/', $content, $matches) ) {
+		if ( preg_match('/<' . '!--commentblock--><br \/>/', $content, $matches) ) {
 
 			// derive list
 			$content = explode( $matches[0], $content, 2 );
@@ -1367,7 +1398,7 @@ class CommentpressCoreParser {
 		}
 
 		// look for < !--commentblock--> comment
-		if ( preg_match('/<p><'.'!--commentblock--><\/p>/', $content, $matches) ) {
+		if ( preg_match('/<p><' . '!--commentblock--><\/p>/', $content, $matches) ) {
 
 			// derive list
 			$content = explode( $matches[0], $content, 2 );
@@ -1458,7 +1489,7 @@ class CommentpressCoreParser {
 		//print_r( $content ); die();
 
 		// look for inline <!--more--> span
-		if ( preg_match('/<span id="more-(.*?)?'.'><\/span><br \/>/', $content, $matches) ) {
+		if ( preg_match('/<span id="more-(.*?)?' . '><\/span><br \/>/', $content, $matches) ) {
 
 			// derive list
 			$content = explode( $matches[0], $content, 2 );
@@ -1469,7 +1500,7 @@ class CommentpressCoreParser {
 		}
 
 		// look for separated <!--more--> span
-		if ( preg_match('/<p><span id="more-(.*?)?'.'><\/span><\/p>/', $content, $matches) ) {
+		if ( preg_match('/<p><span id="more-(.*?)?' . '><\/span><\/p>/', $content, $matches) ) {
 
 			// derive list
 			$content = explode( $matches[0], $content, 2 );
@@ -1480,7 +1511,7 @@ class CommentpressCoreParser {
 		}
 
 		// look for inline <!--more--> span correctly followed by <!--noteaser-->
-		if ( preg_match('/<span id="more-(.*?)?'.'><\/span><!--noteaser--><br \/>/', $content, $matches) ) {
+		if ( preg_match('/<span id="more-(.*?)?' . '><\/span><!--noteaser--><br \/>/', $content, $matches) ) {
 
 			// derive list
 			$content = explode( $matches[0], $content, 2 );
@@ -1491,7 +1522,7 @@ class CommentpressCoreParser {
 		}
 
 		// look for separated <!--more--> span correctly followed by <!--noteaser-->
-		if ( preg_match('/<p><span id="more-(.*?)?'.'><\/span><!--noteaser--><\/p>/', $content, $matches) ) {
+		if ( preg_match('/<p><span id="more-(.*?)?' . '><\/span><!--noteaser--><\/p>/', $content, $matches) ) {
 
 			// derive list
 			$content = explode( $matches[0], $content, 2 );
@@ -1502,7 +1533,7 @@ class CommentpressCoreParser {
 		}
 
 		// look for incorrectly placed inline <!--noteaser--> comment
-		if ( preg_match('/<'.'!--noteaser--><br \/>/', $content, $matches) ) {
+		if ( preg_match('/<' . '!--noteaser--><br \/>/', $content, $matches) ) {
 
 			// derive list
 			$content = explode( $matches[0], $content, 2 );
@@ -1513,7 +1544,7 @@ class CommentpressCoreParser {
 		}
 
 		// look for incorrectly placed separated <!--noteaser--> comment
-		if ( preg_match('/<p><'.'!--noteaser--><\/p>/', $content, $matches) ) {
+		if ( preg_match('/<p><' . '!--noteaser--><\/p>/', $content, $matches) ) {
 
 			// derive list
 			$content = explode( $matches[0], $content, 2 );
@@ -1524,7 +1555,7 @@ class CommentpressCoreParser {
 		}
 
 		// this gets the additional text... (not used)
-		if ( !empty($matches[1]) ) {
+		if ( ! empty($matches[1]) ) {
 			//$more_link_text = strip_tags(wp_kses_no_null(trim($matches[1])));
 		}
 
@@ -1591,7 +1622,7 @@ class CommentpressCoreParser {
 		if ( function_exists( 'wp_get_themes' ) ) {
 
 			// look for Embedded Tweet <blockquote>
-			if ( preg_match('#<(blockquote class="twitter-tweet)[^>]*?'.'>(.*?)</(blockquote)>#si', $content, $matches) ) {
+			if ( preg_match('#<(blockquote class="twitter-tweet)[^>]*?' . '>(.*?)</(blockquote)>#si', $content, $matches) ) {
 
 				// derive list
 				$content = explode( $matches[0], $content, 2 );
@@ -1638,8 +1669,8 @@ class CommentpressCoreParser {
 		// define replacements
 		$replace = array(
 
-			"\n".'<p><!-- cp_caption_start -->',
-			'<!-- cp_caption_end --></p>'."\n"
+			"\n" . '<p><!-- cp_caption_start -->',
+			'<!-- cp_caption_end --></p>' . "\n"
 
 		);
 
@@ -1670,8 +1701,8 @@ class CommentpressCoreParser {
 
 		// make sure we strip leading br
 		$content = str_replace(
-			'<br />'."\n".'<span class="blockquote-in-para">',
-			"\n".'<span class="blockquote-in-para">',
+			'<br />' . "\n" . '<span class="blockquote-in-para">',
+			"\n" . '<span class="blockquote-in-para">',
 			$content
 		);
 
@@ -1679,7 +1710,7 @@ class CommentpressCoreParser {
 		preg_match_all( '#(<span class="blockquote-in-para">(.*?)</span>)<br />#si', $content, $matches );
 
 		// did we get any?
-		if ( isset( $matches[0] ) AND !empty( $matches[0] ) ) {
+		if ( isset( $matches[0] ) AND ! empty( $matches[0] ) ) {
 
 			$content = str_replace(
 				$matches[0],
@@ -1733,7 +1764,7 @@ class CommentpressCoreParser {
 		// it may be empty...
 
 		// we must have text signatures...
-		if ( !empty( $_sigs ) ) {
+		if ( ! empty( $_sigs ) ) {
 
 			// if we have any comments on the whole page...
 			if ( isset( $_assigned[ 'WHOLE_PAGE_OR_POST_COMMENTS' ] ) ) {
@@ -1806,14 +1837,14 @@ class CommentpressCoreParser {
 		$filtered = array();
 
 		// kick out if no comments
-		if( !is_array( $comments ) OR empty( $comments ) ) {
+		if( ! is_array( $comments ) OR empty( $comments ) ) {
 
 			// --<
 			return $filtered;
 		}
 
 		// kick out if not multipage
-		if( !isset( $multipage ) OR !$multipage ) {
+		if( ! isset( $multipage ) OR ! $multipage ) {
 
 			// --<
 			return $comments;
@@ -1824,7 +1855,7 @@ class CommentpressCoreParser {
 		foreach ( $comments AS $comment ) {
 
 			// if it has a text sig
-			if ( !is_null( $comment->comment_signature ) AND $comment->comment_signature != '' ) {
+			if ( ! is_null( $comment->comment_signature ) AND $comment->comment_signature != '' ) {
 
 				// set key
 				$key = '_cp_comment_page';
@@ -1876,14 +1907,14 @@ class CommentpressCoreParser {
 		$assigned = array();
 
 		// kick out if no comments
-		if( !is_array( $comments ) OR empty( $comments ) ) {
+		if( ! is_array( $comments ) OR empty( $comments ) ) {
 
 			// --<
 			return $assigned;
 		}
 
 		// kick out if no text_signatures
-		if( !is_array( $text_signatures ) OR empty( $text_signatures ) ) {
+		if( ! is_array( $text_signatures ) OR empty( $text_signatures ) ) {
 
 			// --<
 			return $assigned;
@@ -1900,7 +1931,7 @@ class CommentpressCoreParser {
 		foreach( $comments AS $comment ) {
 
 			// test for empty comment text signature
-			if ( !is_null( $comment->comment_signature ) AND $comment->comment_signature != '' ) {
+			if ( ! is_null( $comment->comment_signature ) AND $comment->comment_signature != '' ) {
 
 				// do we have an exact match in the text sigs array?
 				// NB: this will work, because we're already ensuring identical sigs are made unique
@@ -1920,7 +1951,7 @@ class CommentpressCoreParser {
 						// compare strings...
 						similar_text( $comment->comment_signature, $text_signature, $score );
 
-						//print_r( $score.'<br>' );
+						//print_r( $score . '<br>' );
 
 						// add to possibles array if it passes
 						if( $score >= $confidence ) { $possibles[ $text_signature ] = $score; }
@@ -1929,14 +1960,16 @@ class CommentpressCoreParser {
 					//die();
 
 					// did we get any?
-					if ( !empty( $possibles ) ) {
+					if ( ! empty( $possibles ) ) {
 
 						// sort them by score
 						arsort( $possibles );
-						//print_r( array_keys( $possibles ) ); die();
+
+						// get keys
+						$keys = array_keys( $possibles );
 
 						// let's use the sig with the highest score
-						$highest = array_pop( array_keys( $possibles ) );
+						$highest = array_pop( $keys );
 
 						// assign comment to that key
 						$assigned[ $highest ][] = $comment;

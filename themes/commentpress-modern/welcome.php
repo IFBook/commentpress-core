@@ -95,33 +95,35 @@ if ( !commentpress_has_feature_image() ) {
 	// do we have a featured image?
 	if ( !commentpress_has_feature_image() ) {
 
-		// if we've elected to show the title...
+		// default to hidden
+		$cp_title_visibility = ' style="display: none;"';
+
+		// override if we've elected to show the title...
 		if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
-
-		?>
-		<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
-		<?php
-
+			$cp_title_visibility = '';
 		}
 
 		?>
+		<h2 class="post_title"<?php echo $cp_title_visibility; ?>><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
 
 
 
 		<?php
 
-		// if we've elected to show the meta...
+		// default to hidden
+		$cp_meta_visibility = ' style="display: none;"';
+
+		// overrideif we've elected to show the meta...
 		if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
+			$cp_meta_visibility = '';
+		}
 
 		?>
-		<div class="search_meta">
-
+		<div class="search_meta"<?php echo $cp_meta_visibility; ?>>
 			<?php commentpress_echo_post_meta(); ?>
-
 		</div>
-		<?php
 
-		}
+		<?php
 
 	}
 

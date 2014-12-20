@@ -30,35 +30,33 @@
 
 	<?php
 
-	// if we've elected to show the title...
+	// default to hidden
+	$cp_title_visibility = ' style="display: none;"';
+
+	// override if we've elected to show the title...
 	if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
-
-	?>
-	<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
-	<?php
-
+		$cp_title_visibility = '';
 	}
 
 	?>
+	<h2 class="post_title"<?php echo $cp_title_visibility; ?>><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
 
 
 
 	<?php
 
-	// if we've elected to show the meta...
+	// default to hidden
+	$cp_meta_visibility = ' style="display: none;"';
+
+	// overrideif we've elected to show the meta...
 	if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
-
-	?>
-	<div class="search_meta">
-
-		<?php commentpress_echo_post_meta(); ?>
-
-	</div>
-	<?php
-
+		$cp_meta_visibility = '';
 	}
 
 	?>
+	<div class="search_meta"<?php echo $cp_meta_visibility; ?>>
+		<?php commentpress_echo_post_meta(); ?>
+	</div>
 
 
 
@@ -104,24 +102,25 @@
 		// if we get one
 		if ( $num ) {
 
-			// is it arabic?
-			if ( is_numeric( $num ) ) {
-
-				// add page number
-				?><div class="running_header_bottom"><?php echo sprintf( __( 'Page %d', 'commentpress-core' ), $num ); ?></div><?php
-
-			} else {
-
-				// add page number
-				?><div class="running_header_bottom"><?php echo sprintf( __( 'Page %s', 'commentpress-core' ), strtolower( $num ) ); ?></div><?php
-
+			// make lowercase if Roman
+			if ( ! is_numeric( $num ) ) {
+				$num = strtolower( $num );
 			}
+
+			// wrap number
+			$element = '<span class="page_num_bottom">' . $num . '</span>';
+
+			// add page number
+			?><div class="running_header_bottom"><?php
+				echo sprintf( __( 'Page %s', 'commentpress-core' ), $element );
+			?></div><?php
 
 		}
 
 	}
 
 	?>
+
 
 
 </div><!-- /post -->

@@ -18,7 +18,7 @@ require_once( COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/includes/them
 
 /**
  * Set the content width based on the theme's design and stylesheet.
- * This seems to be a Wordpress requirement - though rather dumb in the
+ * This seems to be a WordPress requirement - though rather dumb in the
  * context of our theme, which has a percentage-based default width.
  * I have arbitrarily set it to the default content-width when viewing
  * on a 1280px-wide screen.
@@ -150,6 +150,9 @@ function commentpress_setup(
 		}
 
 	}
+
+	// no need for default sidebar in this theme
+	add_filter( 'commentpress_hide_sidebar_option', '__return_true' );
 
 }
 endif; // commentpress_setup
@@ -618,6 +621,40 @@ endif; // commentpress_enqueue_print_styles
 
 // add a filter for the above, very late so it (hopefully) is last in the queue
 add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_print_styles', 999 );
+
+
+
+if ( ! function_exists( 'commentpress_enqueue_wp_fee_js' ) ):
+/**
+ * Add CommentPress WP FEE Javascript
+ *
+ * @return void
+ */
+function commentpress_enqueue_wp_fee_js() {
+
+	// init
+	$dev = '';
+
+	// check for dev
+	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
+		$dev = '.dev';
+	}
+
+	// enqueue accordion-like js
+	wp_enqueue_script(
+
+		'cp_wp_fee_js',
+		get_template_directory_uri() . '/assets/js/wp_fee'.$dev.'.js',
+		array( 'cp_common_js' ), // deps
+		COMMENTPRESS_VERSION // version
+
+	);
+
+}
+endif; // commentpress_enqueue_wp_fee_js
+
+// add a filter for the above, very late so it (hopefully) is last in the queue
+add_action( 'commentpress_editor_include_javascript', 'commentpress_enqueue_wp_fee_js' );
 
 
 
@@ -1245,6 +1282,9 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ):
  */
 function commentpress_get_feature_image() {
 
+	// access post
+	global $post;
+
 	// do we have a featured image?
 	if ( commentpress_has_feature_image() ) {
 
@@ -1257,17 +1297,41 @@ function commentpress_get_feature_image() {
 		<div class="cp_featured_title">
 			<div class="cp_featured_title_inner">
 
-				<?php if ( is_page() ) { ?>
+				<?php
 
-					<?php if ( commentpress_get_post_title_visibility( get_the_ID() ) ) { ?>
-					<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
-					<?php } ?>
+				// when pulling post in via AJAX, is_page() isn't available, so
+				// inspect the post type as well
+				if ( is_page() OR $post->post_type == 'page' ) {
 
-					<?php if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) { ?>
-					<div class="search_meta">
+				?>
+
+					<?php
+
+					// default to hidden
+					$cp_title_visibility = ' style="display: none;"';
+
+					// override if we've elected to show the title...
+					if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
+						$cp_title_visibility = '';
+					}
+
+					?>
+					<h2 class="post_title page_title"<?php echo $cp_title_visibility; ?>><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+
+					<?php
+
+					// default to hidden
+					$cp_meta_visibility = ' style="display: none;"';
+
+					// overrideif we've elected to show the meta...
+					if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
+						$cp_meta_visibility = '';
+					}
+
+					?>
+					<div class="search_meta page_search_meta"<?php echo $cp_meta_visibility; ?>>
 						<?php commentpress_echo_post_meta(); ?>
 					</div>
-					<?php } ?>
 
 				<?php } else { ?>
 
@@ -1293,8 +1357,10 @@ endif; // commentpress_get_feature_image
 
 
 /**
- * @description: utility to test for feature image, because has_post_thumbnail() fails sometimes
+ * Utility to test for feature image, because has_post_thumbnail() fails sometimes
  * @see http://codex.wordpress.org/Function_Reference/has_post_thumbnail
+ *
+ * @return bool True if post has thumbnail, false otherwise
  */
 function commentpress_has_feature_image() {
 

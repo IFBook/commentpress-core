@@ -34,6 +34,10 @@ if ( isset( $post->ID ) ) {
 
 
 
+<?php do_action( 'commentpress_before_comments_container' ); ?>
+
+
+
 <div class="comments_container"<?php echo $comments_post_identifier; ?>>
 
 
@@ -50,6 +54,9 @@ if ( isset( $post->ID ) ) {
 
 
 <?php
+
+// allow plugins to precede comment form
+do_action( 'commentpress_before_comment_form' );
 
 // because AJAX may be routed via admin or front end
 if ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) {
@@ -69,11 +76,18 @@ if ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) {
 
 }
 
+// allow plugins to follow comment form
+do_action( 'commentpress_after_comment_form' );
+
 ?>
 
 
 
 </div><!-- /comments_container -->
+
+
+
+<?php do_action( 'commentpress_after_comments_container' ); ?>
 
 
 

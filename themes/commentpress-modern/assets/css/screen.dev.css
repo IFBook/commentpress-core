@@ -559,7 +559,7 @@ body.admin-bar #navigation
 	position: relative;
 	width: 54%;
 	z-index: 500;
-	background-color: #ccc;
+	/* background-color: #ccc; */
 }
 
 #sidebar
@@ -1846,8 +1846,8 @@ div.multipager.multipager_all a:hover span.multipager_link
 	font-family: sans-serif;
 	color: #666;
 	margin-top: 1em;
-	padding-top: 2em;
-	padding-bottom: 1em;
+	padding-top: 1em;
+	padding-bottom: 0;
 	border-top: 1px solid #ddd;
 }
 
@@ -1865,6 +1865,26 @@ body.search-results .post p.postmetadata
 	margin-bottom: 0;
 	border-top: none;
 }
+
+/* New style categories */
+.entry-category-meta
+{
+	border-top: 1px solid #ddd;
+	font-size: 80%;
+	font-family: sans-serif;
+	color: #666;
+	margin-top: 1em;
+	padding-top: 1em;
+	padding-bottom: 0;
+}
+
+.post .entry-category-meta p
+{
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+}
+
 
 
 
@@ -3080,6 +3100,120 @@ body.tinymce-4 #commentform #wp-comment-wrap textarea
 	width: 100%;
 	margin: 0;
 }
+
+
+
+
+
+/*
+--------------------------------------------------------------------------------
+Compatibility with WordPress Front-end Editor
+--------------------------------------------------------------------------------
+*/
+
+body.fee #content
+{
+	padding-top: 3%;
+}
+
+body.fee .cp_feature_image
+{
+}
+
+body.fee-on .fee-thumbnail.fee-empty
+{
+	min-height: 0;
+}
+
+body.fee-on .fee-insert-thumbnail
+{
+	top: 40px;
+	left: 12%;
+}
+
+body.fee .cp_feature_image .fee-thumbnail.fee-empty + .cp_featured_title
+{
+	position: relative;
+	padding: 6% 0 0 0;
+}
+
+body.fee .cp_feature_image .fee-thumbnail.fee-empty + .cp_featured_title .cp_featured_title_inner
+{
+	padding: 0 12%;
+}
+
+body.fee .cp_feature_image .fee-thumbnail.fee-empty + .cp_featured_title .cp_featured_title_inner h2.post_title
+{
+	margin: 1em 0 0 0;
+}
+
+.fee-url
+{
+	font-size: 50%;
+	text-transform: lowercase;
+}
+
+.fee-url ins,
+body.fee.fee-on .fee-title,
+body.fee.fee-on .fee-content-body
+{
+	background-color: #f4f4f4;
+}
+
+body.fee.fee-on .fee-title.mce-edit-focus,
+body.fee.fee-on .fee-content-body.mce-edit-focus
+{
+	background-color: transparent;
+}
+
+
+/* metaboxes */
+body.fee .metabox_container
+{
+	font-family: sans-serif;
+	font-size: 80%;
+	padding: 2%;
+	background-color: #dadada;
+}
+
+body.fee .metabox_container label
+{
+	text-transform: uppercase;
+}
+
+
+/* toggle button */
+#container #navigation .paragraph_wrapper.editor_toggle_wrapper
+{
+	display: block;
+}
+
+.paragraph_wrapper.editor_toggle_wrapper .editor_toggle
+{
+	margin: 0px 4%;
+	padding: 4% 0 5% 0;
+}
+
+
+
+
+
+/*
+--------------------------------------------------------------------------------
+Compatibility with CommentPress infinite scroll
+--------------------------------------------------------------------------------
+*/
+
+.cp_next_page_loading_wrapper
+{
+	padding: 40px 0;
+}
+
+.page_wrapper + .page_wrapper
+{
+	margin-top: 60px;
+}
+
 
 
 

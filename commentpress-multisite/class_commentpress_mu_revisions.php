@@ -140,7 +140,7 @@ class CommentpressMultisiteRevisions {
 		if ( stristr( $title, ' - Draft ' ) === false ) {
 
 			// no, append " - Draft N"
-			$title = $title.' - Draft '.$value;
+			$title = $title . ' - Draft ' . $value;
 
 		} else {
 
@@ -148,7 +148,7 @@ class CommentpressMultisiteRevisions {
 			$title_array = explode( ' - Draft ', $title );
 
 			// append to first part
-			$title = $title_array[0].' - Draft '.$value;
+			$title = $title_array[0] . ' - Draft ' . $value;
 
 		}
 
@@ -186,7 +186,7 @@ class CommentpressMultisiteRevisions {
 
 
 	/**
-	 * Register Wordpress hooks
+	 * Register WordPress hooks
 	 *
 	 * @return void
 	 */

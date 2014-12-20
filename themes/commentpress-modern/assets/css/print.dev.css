@@ -35,7 +35,7 @@ Updated by Christian Wach for CommentPress Core
 	/* Link style */
 	a
 	{
-		color: #000;
+		color: #000 !important;
 		text-decoration: underline;
 	}
 
@@ -193,6 +193,29 @@ Updated by Christian Wach for CommentPress Core
 		-moz-box-shadow: none;
 		-khtml-box-shadow: none;
 		box-shadow: none;
+	}
+
+	/* Feature Images */
+	.cp_feature_image .cp_featured_title .cp_featured_title_inner
+	{
+		margin: 0 !important;
+		padding: 0 0 0 24pt;
+	}
+
+	/* Feature Image Page Title */
+	.cp_featured_title_inner h2.post_title
+	{
+		margin: 0;
+		padding-top: 10pt;
+		padding-bottom: 4pt;
+		padding-left: 0;
+		font-size: 24pt;
+		text-transform: none;
+	}
+
+	.cp_featured_title_inner h2.post_title a
+	{
+		color: #000;
 	}
 
 	#content
@@ -774,17 +797,20 @@ Updated by Christian Wach for CommentPress Core
 		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	}
 
-	#footer a
+	#footer a,
+	#footer_inner p a
 	{
-		color: #aaa;
+		color: #aaa !important;
 		text-decoration: none;
 	}
 
 	/* show url */
-	#footer_inner p.hidden_page_url
+	p.hidden_page_url
 	{
 		display: block;
-		color: #666;
+		color: #aaa !important;
+		background: transparent;
+		text-align: center;
 		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 		font-size: 0.8em;
 	}
@@ -852,6 +878,29 @@ Updated by Christian Wach for CommentPress Core
 	.footnotes li > a:last-child
 	{
 		display: none;
+	}
+
+
+
+	/* WP FEE compatibility */
+	.fee-thumbnail-toolbar,
+	.fee-insert-thumbnail,
+	.fee-content-body,
+	.fee-toolbar,
+	.wp-core-ui
+	{
+		display: none;
+	}
+
+	body.fee .cp_feature_image .fee-thumbnail.fee-empty + .cp_featured_title
+	{
+		padding: 0 !important;
+	}
+
+	body.fee .cp_feature_image .fee-thumbnail.fee-empty + .cp_featured_title .cp_featured_title_inner
+	{
+		margin: 0 !important;
+		padding: 0 0 0 24pt;
 	}
 
 }
