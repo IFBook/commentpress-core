@@ -2280,6 +2280,9 @@ function commentpress_reset_actions() {
 	// set up footnote plugin compatibility
 	commentpress_setup_footnotes_compatibility();
 
+	// broadcast
+	jQuery( document ).trigger( 'commentpress-reset-actions' );
+
 }
 
 

@@ -1259,6 +1259,26 @@ jQuery(document).ready(function($) {
 
 
 	/**
+	 * Hook into CommentPress reset
+	 *
+	 * @return void
+	 */
+	$( document ).on( 'commentpress-reset-actions', function( event ) {
+
+		// re-enable AJAX functionality
+		cpajax_reassign_comments();
+
+		// compatibility with Featured Comments
+		cpajax_reenable_featured_comments();
+
+		// compatibility with Comment Upvoter
+		cpajax_reenable_comment_upvoter();
+
+	});
+
+
+
+	/**
 	 * Hook into WordPress Front-end Editor
 	 *
 	 * @return void

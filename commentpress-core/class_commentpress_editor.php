@@ -484,6 +484,9 @@ class CommentpressCoreEditor {
 		// trigger CommentPress comments collation
 		$content = apply_filters( 'the_content', $content );
 
+		// add move button to the comment meta
+		add_filter( 'cp_comment_edit_link', 'cpajax_add_reassign_button', 20, 2 );
+
 		// get comments using buffer
 		ob_start();
 
