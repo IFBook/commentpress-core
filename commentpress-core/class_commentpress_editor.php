@@ -307,6 +307,7 @@ class CommentpressCoreEditor {
 
 		// redirect
 		wp_redirect( $url );
+		exit();
 
 	}
 
@@ -322,11 +323,17 @@ class CommentpressCoreEditor {
 		// bail if not commentable
 		if ( ! $this->parent_obj->is_commentable() ) return;
 
-		// define heading title
-		$heading = apply_filters( 'cp_content_tab_editor_toggle_title', __( 'Document Status', 'commentpress-core' ) );
+		// change text depending on toggle state
+		if ( $this->toggle_state == 'writing' ) {
+			$heading = __( 'Author Mode: Write', 'commentpress-core' );
+		} else {
+			$heading = __( 'Author Mode: Comment', 'commentpress-core' );
+		}
 
 		echo '
-		<h3 class="activity_heading">' . $heading . '</h3>
+		<h3 class="activity_heading">' .
+			apply_filters( 'cp_content_tab_editor_toggle_title', $heading, $this->toggle_state ) .
+		'</h3>
 
 		<div class="paragraph_wrapper editor_toggle_wrapper">
 
