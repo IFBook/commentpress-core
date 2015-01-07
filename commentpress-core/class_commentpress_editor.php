@@ -73,6 +73,9 @@ class CommentpressCoreEditor {
 		// bail if there's no WP FEE present
 		if ( ! class_exists( 'FEE' ) ) return;
 
+		// bail if not logged in
+		if ( ! is_user_logged_in() ) return;
+
 		// broadcast
 		do_action( 'commentpress_editor_present' );
 
@@ -322,6 +325,15 @@ class CommentpressCoreEditor {
 
 		// bail if not commentable
 		if ( ! $this->parent_obj->is_commentable() ) return;
+
+		// access post
+		global $post;
+
+		// bail if there isn't one
+		if ( ! is_object( $post ) ) return;
+
+		// only show for admins and post authors
+		if ( ! current_user_can( 'edit_post', $post->ID ) ) return;
 
 		// change text depending on toggle state
 		if ( $this->toggle_state == 'writing' ) {
