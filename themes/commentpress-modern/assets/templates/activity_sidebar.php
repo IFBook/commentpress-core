@@ -84,28 +84,6 @@ $_max_members = 10;
 
 
 
-
-
-<?php /* ?>
-<div class="paragraph_wrappers">
-
-<?php
-
-// until WordPress supports a locate_theme_file() function, use filter
-$include = apply_filters(
-	'cp_template_user_links',
-	get_template_directory() . '/assets/templates/user_links.php'
-);
-
-include( $include );
-
-?>
-
-</div>
-<?php */ ?>
-
-
-
 <?php
 
 // allow plugins to add their own activity headings here

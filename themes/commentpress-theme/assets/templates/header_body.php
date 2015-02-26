@@ -43,13 +43,27 @@ Separated this out for inclusion in multiple files.
 
 	<?php
 
-	// until WordPress supports a locate_theme_file() function, use filter
-	$include = apply_filters(
-		'cp_template_user_links',
-		get_template_directory() . '/assets/templates/user_links.php'
-	);
+	// first try to locate using WP method
+	$cp_user_links = locate_template( 'assets/templates/user_links.php' );
 
-	include( $include );
+	// did we find it in the expected location?
+	if ( $cp_user_links != '' ) {
+
+		// load it, but retain filter
+		load_template( apply_filters( 'cp_template_user_links', $cp_user_links ) );
+
+	} else {
+
+		// legacy use of filter
+		$cp_user_links = apply_filters(
+			'cp_template_user_links',
+			get_template_directory() . '/assets/templates/user_links.php'
+		);
+
+		// include
+		include( $cp_user_links );
+
+	}
 
 	?>
 
@@ -61,13 +75,27 @@ Separated this out for inclusion in multiple files.
 
 	<?php
 
-	// until WordPress supports a locate_theme_file() function, use filter
-	$include = apply_filters(
-		'cp_template_navigation',
-		get_template_directory() . '/assets/templates/navigation.php'
-	);
+	// first try to locate using WP method
+	$cp_navigation = locate_template( 'assets/templates/navigation.php' );
 
-	include( $include );
+	// did we find it in the expected location?
+	if ( $cp_navigation != '' ) {
+
+		// load it, but retain filter
+		load_template( apply_filters( 'cp_template_navigation', $cp_navigation ) );
+
+	} else {
+
+		// legacy use of filter
+		$cp_navigation = apply_filters(
+			'cp_template_navigation',
+			get_template_directory() . '/assets/templates/navigation.php'
+		);
+
+		// include
+		include( $cp_navigation );
+
+	}
 
 	?>
 

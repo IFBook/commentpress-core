@@ -42,27 +42,60 @@ if ( is_object( $commentpress_core ) ) {
 	// are we asking for in-page comments?
 	if ( $commentpress_core->db->is_special_page() ) {
 
-		// until WordPress supports a locate_theme_file() function, use filter
-		$include = apply_filters(
-			'cp_template_comments_in_page',
-			get_template_directory() . '/assets/templates/comments_in_page.php'
-		);
-
 		// include 'comments in page' template
-		include( $include );
+
+		// first try to locate using WP method
+		$cp_comments_in_page = locate_template( 'assets/templates/comments_in_page.php' );
+
+		// did we find it in the expected location?
+		if ( $cp_comments_in_page != '' ) {
+
+			// load it, but retain filter
+			load_template( apply_filters( 'cp_template_comments_in_page', $cp_comments_in_page ) );
+
+		} else {
+
+			// legacy use of filter
+			$cp_comments_in_page = apply_filters(
+				'cp_template_comments_in_page',
+				get_template_directory() . '/assets/templates/comments_in_page.php'
+			);
+
+			// include
+			include( $cp_comments_in_page );
+
+		}
+
+		// --<
 		return;
 
-	// otherwise, comments in sidebar
 	} else {
 
-		// until WordPress supports a locate_theme_file() function, use filter
-		$include = apply_filters(
-			'cp_template_comments_by_para',
-			get_template_directory() . '/assets/templates/comments_by_para.php'
-		);
-
 		// include comments split by paragraph template
-		include( $include );
+
+		// first try to locate using WP method
+		$cp_comments_by_para = locate_template( 'assets/templates/comments_by_para.php' );
+
+		// did we find it in the expected location?
+		if ( $cp_comments_by_para != '' ) {
+
+			// load it, but retain filter
+			load_template( apply_filters( 'cp_template_comments_by_para', $cp_comments_by_para ) );
+
+		} else {
+
+			// legacy use of filter
+			$cp_comments_by_para = apply_filters(
+				'cp_template_comments_by_para',
+				get_template_directory() . '/assets/templates/comments_by_para.php'
+			);
+
+			// include
+			include( $cp_comments_by_para );
+
+		}
+
+		// --<
 		return;
 
 	}
@@ -167,13 +200,26 @@ if ( is_object( $commentpress_core ) ) {
 
 <?php
 
-// until WordPress supports a locate_theme_file() function, use filter
-$include = apply_filters(
-	'cp_template_comment_form',
-	get_template_directory() . '/assets/templates/comment_form.php'
-);
+// first try to locate using WP method
+$cp_comment_form = locate_template( 'assets/templates/comment_form.php' );
 
-// include comment form
-include( $include );
+// did we find it in the expected location?
+if ( $cp_comment_form != '' ) {
+
+	// load it, but retain filter
+	load_template( apply_filters( 'cp_template_comment_form', $cp_comment_form ) );
+
+} else {
+
+	// legacy use of filter
+	$cp_comment_form = apply_filters(
+		'cp_template_comment_form',
+		get_template_directory() . '/assets/templates/comment_form.php'
+	);
+
+	// include
+	include( $cp_comment_form );
+
+}
 
 ?>

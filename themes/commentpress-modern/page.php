@@ -142,17 +142,31 @@
 
 	<?php
 
-	// until WordPress supports a locate_theme_file() function, use filter
-	$page_navigation = apply_filters(
-		'cp_template_page_navigation',
-		get_template_directory() . '/assets/templates/page_navigation.php'
-	);
-
 	// do we have a featured image?
 	if ( !commentpress_has_feature_image() ) {
 
-		// always include
-		include( $page_navigation );
+		// first try to locate using WP method
+		$cp_page_navigation = locate_template( 'assets/templates/page_navigation.php' );
+
+		// did we find it in the expected location?
+		if ( $cp_page_navigation != '' ) {
+
+			// load it, but retain filter
+			$cp_page_navigation = apply_filters( 'cp_template_page_navigation', $cp_page_navigation );
+			load_template( $cp_page_navigation );
+
+		} else {
+
+			// legacy use of filter
+			$cp_page_navigation = apply_filters(
+				'cp_template_page_navigation',
+				get_template_directory() . '/assets/templates/page_navigation.php'
+			);
+
+			// include
+			include( $cp_page_navigation );
+
+		}
 
 	}
 
@@ -284,7 +298,7 @@
 	<?php
 
 	// include page_navigation again
-	include( $page_navigation );
+	include( $cp_page_navigation );
 
 	?>
 	</div><!-- /page_nav_lower -->

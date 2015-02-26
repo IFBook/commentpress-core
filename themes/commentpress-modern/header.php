@@ -81,13 +81,27 @@ $_body_classes = commentpress_get_body_classes( true );
 
 <?php
 
-// until WordPress supports a locate_theme_file() function, use filter
-$include = apply_filters(
-	'cp_template_header_body',
-	get_template_directory() . '/assets/templates/header_body.php'
-);
+// first try to locate using WP method
+$cp_header_body = locate_template( 'assets/templates/header_body.php' );
 
-include( $include );
+// did we find it in the expected location?
+if ( $cp_header_body != '' ) {
+
+	// load it, but retain filter
+	load_template( apply_filters( 'cp_template_header_body', $cp_header_body ) );
+
+} else {
+
+	// legacy use of filter
+	$cp_header_body = apply_filters(
+		'cp_template_header_body',
+		get_template_directory() . '/assets/templates/header_body.php'
+	);
+
+	// include
+	include( $cp_header_body );
+
+}
 
 ?>
 

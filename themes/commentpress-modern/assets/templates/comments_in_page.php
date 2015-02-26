@@ -113,13 +113,26 @@ NOTES
 
 <?php
 
-// until WordPress supports a locate_theme_file() function, use filter
-$include = apply_filters(
-	'cp_template_comment_form',
-	get_template_directory() . '/assets/templates/comment_form.php'
-);
+// first try to locate using WP method
+$cp_comment_form = locate_template( 'assets/templates/comment_form.php' );
 
-// include comment form
-include( $include );
+// did we find it in the expected location?
+if ( $cp_comment_form != '' ) {
+
+	// load it, but retain filter
+	load_template( apply_filters( 'cp_template_comment_form', $cp_comment_form ) );
+
+} else {
+
+	// legacy use of filter
+	$cp_comment_form = apply_filters(
+		'cp_template_comment_form',
+		get_template_directory() . '/assets/templates/comment_form.php'
+	);
+
+	// include
+	include( $cp_comment_form );
+
+}
 
 ?>
