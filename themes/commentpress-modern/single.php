@@ -141,29 +141,20 @@ commentpress_get_feature_image();
 
 <?php
 
-// do we have a featured image?
-if ( !commentpress_has_feature_image() ) {
+// first try to locate using WP method
+$cp_page_navigation = apply_filters(
+	'cp_template_page_navigation',
+	locate_template( 'assets/templates/page_navigation.php' )
+);
 
-	// first try to locate using WP method
-	$cp_page_navigation = locate_template( 'assets/templates/page_navigation.php' );
+// do we have a featured image?
+if ( ! commentpress_has_feature_image() ) {
 
 	// did we find it in the expected location?
 	if ( $cp_page_navigation != '' ) {
 
-		// load it, but retain filter
-		$cp_page_navigation = apply_filters( 'cp_template_page_navigation', $cp_page_navigation );
+		// yes, load it
 		load_template( $cp_page_navigation );
-
-	} else {
-
-		// legacy use of filter
-		$cp_page_navigation = apply_filters(
-			'cp_template_page_navigation',
-			get_template_directory() . '/assets/templates/page_navigation.php'
-		);
-
-		// include
-		include( $cp_page_navigation );
 
 	}
 
@@ -184,7 +175,7 @@ if ( !commentpress_has_feature_image() ) {
 <?php
 
 // do we have a featured image?
-if ( !commentpress_has_feature_image() ) {
+if ( ! commentpress_has_feature_image() ) {
 
 	?><h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
 
