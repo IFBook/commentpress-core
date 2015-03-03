@@ -109,7 +109,7 @@ if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation );
 <?php
 
 // include page_navigation again
-load_template( $cp_page_navigation );
+if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation );
 
 ?>
 </div><!-- /page_nav_lower -->
