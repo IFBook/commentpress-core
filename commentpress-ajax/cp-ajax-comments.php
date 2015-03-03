@@ -801,26 +801,13 @@ function cpajax_infinite_scroll_load_next_page() {
 	$vars = $commentpress_core->db->get_javascript_vars();
 
 	// first try to locate using WP method
-	$cp_comments_by_para = locate_template( 'assets/templates/comments_by_para.php' );
+	$cp_comments_by_para = apply_filters(
+		'cp_template_comments_by_para',
+		locate_template( 'assets/templates/comments_by_para.php' )
+	);
 
-	// did we find it in the expected location?
-	if ( $cp_comments_by_para != '' ) {
-
-		// load it, but retain filter
-		load_template( apply_filters( 'cp_template_comments_by_para', $cp_comments_by_para ) );
-
-	} else {
-
-		// legacy use of filter
-		$cp_comments_by_para = apply_filters(
-			'cp_template_comments_by_para',
-			get_template_directory() . '/assets/templates/comments_by_para.php'
-		);
-
-		// include
-		include( $cp_comments_by_para );
-
-	}
+	// load it if we find it
+	if ( $cp_comments_by_para != '' ) load_template( $cp_comments_by_para );
 
 	$comments = ob_get_contents();
 	ob_end_clean();

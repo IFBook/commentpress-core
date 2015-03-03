@@ -66,26 +66,13 @@ if ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) {
 } else {
 
 	// first try to locate using WP method
-	$cp_comment_form = locate_template( 'assets/templates/comment_form.php' );
+	$cp_comment_form = apply_filters(
+		'cp_template_comment_form',
+		locate_template( 'assets/templates/comment_form.php' )
+	);
 
-	// did we find it in the expected location?
-	if ( $cp_comment_form != '' ) {
-
-		// load it, but retain filter
-		load_template( apply_filters( 'cp_template_comment_form', $cp_comment_form ) );
-
-	} else {
-
-		// legacy use of filter
-		$cp_comment_form = apply_filters(
-			'cp_template_comment_form',
-			get_template_directory() . '/assets/templates/comment_form.php'
-		);
-
-		// include
-		include( $cp_comment_form );
-
-	}
+	// load it if we find it
+	if ( $cp_comment_form != '' ) load_template( $cp_comment_form );
 
 }
 

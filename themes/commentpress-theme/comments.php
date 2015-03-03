@@ -45,26 +45,13 @@ if ( is_object( $commentpress_core ) ) {
 		// include 'comments in page' template
 
 		// first try to locate using WP method
-		$cp_comments_in_page = locate_template( 'assets/templates/comments_in_page.php' );
+		$cp_comments_in_page = apply_filters(
+			'cp_template_comments_in_page',
+			locate_template( 'assets/templates/comments_in_page.php' )
+		);
 
-		// did we find it in the expected location?
-		if ( $cp_comments_in_page != '' ) {
-
-			// load it, but retain filter
-			load_template( apply_filters( 'cp_template_comments_in_page', $cp_comments_in_page ) );
-
-		} else {
-
-			// legacy use of filter
-			$cp_comments_in_page = apply_filters(
-				'cp_template_comments_in_page',
-				get_template_directory() . '/assets/templates/comments_in_page.php'
-			);
-
-			// include
-			include( $cp_comments_in_page );
-
-		}
+		// load it if we find it
+		if ( $cp_comments_in_page != '' ) load_template( $cp_comments_in_page );
 
 		// --<
 		return;
@@ -75,26 +62,13 @@ if ( is_object( $commentpress_core ) ) {
 		// include comments split by paragraph template
 
 		// first try to locate using WP method
-		$cp_comments_by_para = locate_template( 'assets/templates/comments_by_para.php' );
+		$cp_comments_by_para = apply_filters(
+			'cp_template_comments_by_para',
+			locate_template( 'assets/templates/comments_by_para.php' )
+		);
 
-		// did we find it in the expected location?
-		if ( $cp_comments_by_para != '' ) {
-
-			// load it, but retain filter
-			load_template( apply_filters( 'cp_template_comments_by_para', $cp_comments_by_para ) );
-
-		} else {
-
-			// legacy use of filter
-			$cp_comments_by_para = apply_filters(
-				'cp_template_comments_by_para',
-				get_template_directory() . '/assets/templates/comments_by_para.php'
-			);
-
-			// include
-			include( $cp_comments_by_para );
-
-		}
+		// load it if we find it
+		if ( $cp_comments_by_para != '' ) load_template( $cp_comments_by_para );
 
 		// --<
 		return;
@@ -209,25 +183,12 @@ else :
 <?php
 
 // first try to locate using WP method
-$cp_comment_form = locate_template( 'assets/templates/comment_form.php' );
+$cp_comment_form = apply_filters(
+	'cp_template_comment_form',
+	locate_template( 'assets/templates/comment_form.php' )
+);
 
-// did we find it in the expected location?
-if ( $cp_comment_form != '' ) {
-
-	// load it, but retain filter
-	load_template( apply_filters( 'cp_template_comment_form', $cp_comment_form ) );
-
-} else {
-
-	// legacy use of filter
-	$cp_comment_form = apply_filters(
-		'cp_template_comment_form',
-		get_template_directory() . '/assets/templates/comment_form.php'
-	);
-
-	// include
-	include( $cp_comment_form );
-
-}
+// load it if we find it
+if ( $cp_comment_form != '' ) load_template( $cp_comment_form );
 
 ?>

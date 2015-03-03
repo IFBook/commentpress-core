@@ -185,26 +185,13 @@ if ( is_object( $commentpress_core ) ) {
 	if ( $commentable ) {
 
 		// first try to locate using WP method
-		$cp_comments_sidebar = locate_template( 'assets/templates/comments_sidebar.php' );
+		$cp_comments_sidebar = apply_filters(
+			'cp_template_comments_sidebar',
+			locate_template( 'assets/templates/comments_sidebar.php' )
+		);
 
-		// did we find it in the expected location?
-		if ( $cp_comments_sidebar != '' ) {
-
-			// load it, but retain filter
-			load_template( apply_filters( 'cp_template_comments_sidebar', $cp_comments_sidebar ) );
-
-		} else {
-
-			// legacy use of filter
-			$cp_comments_sidebar = apply_filters(
-				'cp_template_comments_sidebar',
-				get_template_directory() . '/assets/templates/comments_sidebar.php'
-			);
-
-			// include
-			include( $cp_comments_sidebar );
-
-		}
+		// load it if we find it
+		if ( $cp_comments_sidebar != '' ) load_template( $cp_comments_sidebar );
 
 	}
 
@@ -212,26 +199,13 @@ if ( is_object( $commentpress_core ) ) {
 	if ( commentpress_show_activity_tab() ) {
 
 		// first try to locate using WP method
-		$cp_activity_sidebar = locate_template( 'assets/templates/activity_sidebar.php' );
+		$cp_activity_sidebar = apply_filters(
+			'cp_template_activity_sidebar',
+			locate_template( 'assets/templates/activity_sidebar.php' )
+		);
 
-		// did we find it in the expected location?
-		if ( $cp_activity_sidebar != '' ) {
-
-			// load it, but retain filter
-			load_template( apply_filters( 'cp_template_activity_sidebar', $cp_activity_sidebar ) );
-
-		} else {
-
-			// legacy use of filter
-			$cp_activity_sidebar = apply_filters(
-				'cp_template_activity_sidebar',
-				get_template_directory() . '/assets/templates/activity_sidebar.php'
-			);
-
-			// include
-			include( $cp_activity_sidebar );
-
-		}
+		// load it if we find it
+		if ( $cp_activity_sidebar != '' ) load_template( $cp_activity_sidebar );
 
 	}
 

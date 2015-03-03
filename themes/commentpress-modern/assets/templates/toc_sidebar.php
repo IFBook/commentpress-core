@@ -51,26 +51,13 @@ echo apply_filters( 'cp_content_tab_special_pages_title', __( 'Special Pages', '
 <?php
 
 // first try to locate using WP method
-$cp_navigation = locate_template( 'assets/templates/navigation.php' );
+$cp_navigation = apply_filters(
+	'cp_template_navigation',
+	locate_template( 'assets/templates/navigation.php' )
+);
 
-// did we find it in the expected location?
-if ( $cp_navigation != '' ) {
-
-	// load it, but retain filter
-	load_template( apply_filters( 'cp_template_navigation', $cp_navigation ) );
-
-} else {
-
-	// legacy use of filter
-	$cp_navigation = apply_filters(
-		'cp_template_navigation',
-		get_template_directory() . '/assets/templates/navigation.php'
-	);
-
-	// include
-	include( $cp_navigation );
-
-}
+// load it if we find it
+if ( $cp_navigation != '' ) load_template( $cp_navigation );
 
 ?>
 

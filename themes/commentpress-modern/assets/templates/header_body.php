@@ -61,25 +61,12 @@ Separated this out for inclusion in multiple files.
 <?php
 
 // first try to locate using WP method
-$cp_toc_sidebar = locate_template( 'assets/templates/toc_sidebar.php' );
+$cp_toc_sidebar = apply_filters(
+	'cp_template_toc_sidebar',
+	locate_template( 'assets/templates/toc_sidebar.php' )
+);
 
-// did we find it in the expected location?
-if ( $cp_toc_sidebar != '' ) {
-
-	// load it, but retain filter
-	load_template( apply_filters( 'cp_template_toc_sidebar', $cp_toc_sidebar ) );
-
-} else {
-
-	// legacy use of filter
-	$cp_toc_sidebar = apply_filters(
-		'cp_template_toc_sidebar',
-		get_template_directory() . '/assets/templates/toc_sidebar.php'
-	);
-
-	// include
-	include( $cp_toc_sidebar );
-
-}
+// load it if we find it
+if ( $cp_toc_sidebar != '' ) load_template( $cp_toc_sidebar );
 
 ?>
