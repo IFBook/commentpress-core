@@ -599,12 +599,12 @@ function commentpress_site_title( $sep = '', $echo = true ) {
 			if( $echo ) {
 
 				// add site name
-				echo ' ' . trim($sep) . ' ' . $current_site->site_name;
+				echo ' ' . trim( $sep ) . ' ' . $current_site->site_name;
 
 			} else {
 
 				// add site name
-				return ' ' . trim($sep) . ' ' . $current_site->site_name;
+				return ' ' . trim( $sep ) . ' ' . $current_site->site_name;
 
 			}
 
@@ -626,14 +626,14 @@ if ( ! function_exists( 'commentpress_remove_more_jump_link' ) ):
  */
 function commentpress_remove_more_jump_link( $link ) {
 
-	$offset = strpos($link, '#more-');
+	$offset = strpos( $link, '#more-' );
 
 	if ($offset) {
-		$end = strpos($link, '"',$offset);
+		$end = strpos( $link, '"',$offset );
 	}
 
 	if ($end) {
-		$link = substr_replace($link, '', $offset, $end-$offset);
+		$link = substr_replace( $link, '', $offset, $end - $offset );
 	}
 
 	// --<
@@ -665,21 +665,21 @@ function commentpress_page_title() {
 	$_title = '';
 	$_sep = ' &#8594; ';
 
-	//$_title .= get_bloginfo('name');
+	//$_title .= get_bloginfo( 'name' );
 
 	if ( is_page() OR is_single() OR is_category() ) {
 
-		if (is_page()) {
+		if ( is_page() ) {
 
-			$ancestors = get_post_ancestors($post);
+			$ancestors = get_post_ancestors( $post );
 
-			if ($ancestors) {
-				$ancestors = array_reverse($ancestors);
+			if ( $ancestors ) {
+				$ancestors = array_reverse( $ancestors );
 
  				$_crumb = array();
 
-				foreach ($ancestors as $crumb) {
-					$_crumb[] = get_the_title($crumb);
+				foreach ( $ancestors as $crumb ) {
+					$_crumb[] = get_the_title( $crumb );
 				}
 
 				$_title .= implode( $_sep, $_crumb ) . $_sep;
@@ -687,18 +687,18 @@ function commentpress_page_title() {
 
 		}
 
-		if (is_single()) {
+		if ( is_single() ) {
 			//$category = get_the_category();
 			//$_title .= $_sep . $category[0]->cat_name;
 		}
 
-		if (is_category()) {
+		if ( is_category() ) {
 			$category = get_the_category();
 			$_title .= $category[0]->cat_name . $_sep;
 		}
 
 		// Current page
-		if (is_page() OR is_single()) {
+		if ( is_page() OR is_single() ) {
 			$_title .= get_the_title();
 		}
 
@@ -923,7 +923,7 @@ function commentpress_echo_post_meta() {
 				$sep = ', ';
 
 				// if we're on the penultimate
-				if ( $n == ($author_count - 1) ) {
+				if ( $n == ( $author_count - 1 ) ) {
 
 					// use ampersand
 					$sep = __( ' &amp; ', 'commentpress-core' );
@@ -943,7 +943,7 @@ function commentpress_echo_post_meta() {
 				$n++;
 
 				// yes - are we showing avatars?
-				if ( get_option('show_avatars') ) {
+				if ( get_option( 'show_avatars' ) ) {
 
 					// get avatar
 					echo get_avatar( $author->ID, $size='32' );
@@ -1473,7 +1473,7 @@ function commentpress_get_comment_activity( $scope = 'all' ) {
 		$_title = '';
 
 		// loop
-		foreach ($_data as $comment) {
+		foreach( $_data AS $comment ) {
 
 			// exclude comments from password-protected posts
 			if ( ! post_password_required( $comment->comment_post_ID ) ) {
@@ -1551,7 +1551,7 @@ function commentpress_get_comment_activity_item( $comment ) {
 	}
 
 	// approved comment?
-	if ($comment->comment_approved == '0') {
+	if ( $comment->comment_approved == '0' ) {
 		$comment_text = '<p><em>' . __( 'Comment awaiting moderation', 'commentpress-core' ) . '</em></p>';
 	} else {
 		$comment_text = get_comment_text( $comment->comment_ID );
@@ -1706,7 +1706,7 @@ function commentpress_get_comments_by_para() {
 		$login_to_comment = false;
 
 		// if we have to log in to comment...
-		if ( get_option('comment_registration') AND ! is_user_logged_in() ) {
+		if ( get_option( 'comment_registration' ) AND ! is_user_logged_in() ) {
 			$login_to_comment = true;
 		}
 
@@ -1714,7 +1714,7 @@ function commentpress_get_comments_by_para() {
 		$comment_type = 'all';
 
 		// if we don't allow pingbacks...
-		if ( ! ('open' == $post->ping_status) ) {
+		if ( ! ( 'open' == $post->ping_status ) ) {
 
 			// just get comments
 			$comment_type = 'comment';
@@ -1795,7 +1795,7 @@ function commentpress_get_comments_by_para() {
 
 					// set permalink text
 					$permalink_text = sprintf(
-						__('Permalink for comments on %s', 'commentpress-core' ),
+						__( 'Permalink for comments on %s', 'commentpress-core' ),
 						$paragraph_text
 					);
 
@@ -1906,7 +1906,7 @@ function commentpress_get_comments_by_para() {
 
 					// set permalink text
 					$permalink_text = sprintf(
-						__('Permalink for comments on %s', 'commentpress-core' ),
+						__( 'Permalink for comments on %s', 'commentpress-core' ),
 						$paragraph_text
 					);
 
@@ -2149,10 +2149,10 @@ function commentpress_comment_form_title(
 	global $comment, $commentpress_core;
 
 	// get comment ID to reply to from URL query string
-	$reply_to_comment_id = isset($_GET['replytocom']) ? (int) $_GET['replytocom'] : 0;
+	$reply_to_comment_id = isset( $_GET['replytocom'] ) ? (int) $_GET['replytocom'] : 0;
 
 	// get paragraph number to reply to from URL query string
-	$reply_to_para_id = isset($_GET['replytopara']) ? (int) $_GET['replytopara'] : 0;
+	$reply_to_para_id = isset( $_GET['replytopara'] ) ? (int) $_GET['replytopara'] : 0;
 
 	// if we have no comment ID AND no paragraph ID to reply to
 	if ( $reply_to_comment_id == 0 AND $reply_to_para_id == 0 ) {
@@ -2239,18 +2239,18 @@ function commentpress_comment_reply_link( $args = array(), $comment = null, $pos
 	);
 
 	// parse them
-	$args = wp_parse_args($args, $defaults);
+	$args = wp_parse_args( $args, $defaults );
 
 	if ( 0 == $args['depth'] || $args['max_depth'] <= $args['depth'] ) {
 		return;
 	}
 
 	// convert to vars
-	extract($args, EXTR_SKIP);
+	extract( $args, EXTR_SKIP );
 
 	// get the obvious
-	$comment = get_comment($comment);
-	$post = get_post($post);
+	$comment = get_comment( $comment );
+	$post = get_post( $post );
 
 	// kick out if comments closed
 	if ( 'open' != $post->comment_status ) { return false; }
@@ -2262,7 +2262,7 @@ function commentpress_comment_reply_link( $args = array(), $comment = null, $pos
 	if ( get_option( 'comment_registration' ) AND ! is_user_logged_in() ) {
 
 		// construct link
-		$link = '<a rel="nofollow" href="' . site_url('wp-login.php?redirect_to=' . get_permalink()) . '">' . $login_text . '</a>';
+		$link = '<a rel="nofollow" href="' . site_url( 'wp-login.php?redirect_to=' . get_permalink() ) . '">' . $login_text . '</a>';
 
 	} else {
 
@@ -2361,7 +2361,7 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 
 
 	/*
-	if ($comment->comment_approved == '0') {
+	if ( $comment->comment_approved == '0' ) {
 		$author = '<cite class="fn">' . get_comment_author() . '</cite>';
 	} else {
 		$author = '<cite class="fn">' . get_comment_author_link() . '</cite>';
@@ -2432,7 +2432,7 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 	if (
 		is_user_logged_in()
 	AND
-		current_user_can('edit_posts')
+		current_user_can( 'edit_posts' )
 	AND
 		current_user_can( 'edit_comment', $comment->comment_ID )
 	) {
@@ -2525,10 +2525,10 @@ function commentpress_get_full_name( $forename, $surname ) {
 	$fullname = '';
 
 	// add forename
-	if ($forename != '' ) { $fullname .= $forename; }
+	if ( $forename != '' ) { $fullname .= $forename; }
 
 	// add surname
-	if ($surname != '' ) { $fullname .= ' ' . $surname; }
+	if ( $surname != '' ) { $fullname .= ' ' . $surname; }
 
 	// strip any whitespace
 	$fullname = trim( $fullname );
@@ -2692,12 +2692,12 @@ function commentpress_get_post_multipage_url( $i, $post = '' ) {
 		if ( 1 == $i ) {
 			$url = get_permalink();
 		} else {
-			if ( '' == get_option('permalink_structure') || in_array($post->post_status, array('draft', 'pending')) )
+			if ( '' == get_option( 'permalink_structure' ) || in_array( $post->post_status, array( 'draft', 'pending' ) ) )
 				$url = add_query_arg( 'page', $i, get_permalink() );
-			elseif ( 'page' == get_option('show_on_front') AND get_option('page_on_front') == $post->ID )
-				$url = trailingslashit(get_permalink()) . user_trailingslashit("$wp_rewrite->pagination_base/" . $i, 'single_paged');
+			elseif ( 'page' == get_option( 'show_on_front' ) AND get_option( 'page_on_front' ) == $post->ID )
+				$url = trailingslashit( get_permalink() ) . user_trailingslashit( "$wp_rewrite->pagination_base/" . $i, 'single_paged' );
 			else
-				$url = trailingslashit(get_permalink()) . user_trailingslashit($i, 'single_paged');
+				$url = trailingslashit( get_permalink() ) . user_trailingslashit( $i, 'single_paged' );
 		}
 
 	} else {
@@ -2706,12 +2706,12 @@ function commentpress_get_post_multipage_url( $i, $post = '' ) {
 		if ( 1 == $i ) {
 			$url = get_permalink( $post->ID );
 		} else {
-			if ( '' == get_option('permalink_structure') || in_array($post->post_status, array('draft', 'pending')) )
+			if ( '' == get_option( 'permalink_structure' ) || in_array( $post->post_status, array( 'draft', 'pending' ) ) )
 				$url = add_query_arg( 'page', $i, get_permalink( $post->ID ) );
-			elseif ( 'page' == get_option('show_on_front') AND get_option('page_on_front') == $post->ID )
-				$url = trailingslashit(get_permalink( $post->ID )) . user_trailingslashit("$wp_rewrite->pagination_base/" . $i, 'single_paged');
+			elseif ( 'page' == get_option( 'show_on_front' ) AND get_option( 'page_on_front' ) == $post->ID )
+				$url = trailingslashit( get_permalink( $post->ID ) ) . user_trailingslashit( "$wp_rewrite->pagination_base/" . $i, 'single_paged' );
 			else
-				$url = trailingslashit(get_permalink( $post->ID )) . user_trailingslashit($i, 'single_paged');
+				$url = trailingslashit( get_permalink( $post->ID ) ) . user_trailingslashit( $i, 'single_paged' );
 		}
 
 	}
@@ -2995,7 +2995,7 @@ function commentpress_add_tinymce_nextpage_button( $buttons ) {
 	$pos = array_search( 'wp_more', $buttons, true );
 
 	// is it there?
-	if ($pos !== false) {
+	if ( $pos !== false ) {
 
 		// get array up to that point
 		$tmp_buttons = array_slice( $buttons, 0, $pos + 1 );
@@ -3139,14 +3139,14 @@ function commentpress_image_caption_shortcode( $empty = null, $attr, $content ) 
 	) ); die();
 	*/
 
-	if ( 1 > (int) $width || empty($caption) )
+	if ( 1 > (int) $width || empty( $caption ) )
 		return $content;
 
 	// sanitise id
-	if ( $id ) $id = 'id="' . esc_attr($id) . '" ';
+	if ( $id ) $id = 'id="' . esc_attr( $id ) . '" ';
 
 	// add space prior to alignment
-	$_alignment = ' ' . esc_attr($align);
+	$_alignment = ' ' . esc_attr( $align );
 
 	// get width
 	$_width = (0 + (int) $width);
@@ -3158,7 +3158,7 @@ function commentpress_image_caption_shortcode( $empty = null, $attr, $content ) 
 		array(
 			'em' => array(),
 			'strong' => array(),
-			'a' => array('href')
+			'a' => array( 'href' )
 		)
 
 	);
@@ -3291,7 +3291,7 @@ if ( ! function_exists( 'commentpress_refresh_mce' ) ):
  * @param int $ver The existing TinyMCE version
  * @param int $ver The modified TinyMCE version
  */
-function commentpress_refresh_mce($ver) {
+function commentpress_refresh_mce( $ver ) {
 
 	$ver += 3;
 	return $ver;
@@ -3628,7 +3628,7 @@ function commentpress_get_post_css_override( $post_id ) {
 
 		// default to current blog type
 		$type = $commentpress_core->db->option_get( 'cp_blog_type' );
-		//print_r($type); die();
+		//print_r( $type ); die();
 
 		// set post meta key
 		$key = '_cp_post_type_override';
