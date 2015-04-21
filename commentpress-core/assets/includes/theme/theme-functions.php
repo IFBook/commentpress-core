@@ -2013,7 +2013,7 @@ function commentpress_get_comments_by_para() {
 							$query = remove_query_arg( array( 'replytocom' ) );
 
 							// add param to querystring
-							$query = esc_attr(
+							$query = esc_url(
 								add_query_arg(
 									array( 'replytopara' => $para_num ),
 									$query
@@ -2270,8 +2270,7 @@ function commentpress_comment_reply_link( $args = array(), $comment = null, $pos
 		$query = remove_query_arg( array( 'replytopara' ), get_permalink( $post->ID ) );
 
 		// define query string
-		$addquery = esc_html(
-
+		$addquery = esc_url(
 			add_query_arg(
 
 				array( 'replytocom' => $comment->comment_ID ),
