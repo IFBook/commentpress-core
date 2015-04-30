@@ -2468,6 +2468,9 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 	// if orphaned, add class to identify as such
 	$_comment_orphan = ( isset( $comment->orphan ) ) ? ' comment-orphan' : '';
 
+	// construct permalink
+	$_comment_permalink = sprintf( __( '%1$s at %2$s', 'commentpress-core' ), get_comment_date(), get_comment_time() );
+
 
 
 	// stripped source
@@ -2482,7 +2485,7 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 ' . get_avatar( $comment, $size='32' ) . '
 ' . $editlink . '
 ' . $author . '
-<a class="comment_permalink" href="' . htmlspecialchars( get_comment_link() ) . '">' . get_comment_date() . ' at ' . get_comment_time() . '</a>
+<a class="comment_permalink" href="' . htmlspecialchars( get_comment_link() ) . '">' . $_comment_permalink . '</a>
 </div><!-- /comment-identifier -->
 
 
