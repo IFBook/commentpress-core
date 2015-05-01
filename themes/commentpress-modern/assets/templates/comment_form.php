@@ -21,9 +21,13 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) AND 'comment_form.php' == basename($_SER
 
 
 // access globals
-global $post, $user_identity;
+global $post;
 
-// check force state
+// get user data
+$user = wp_get_current_user();
+$user_identity = $user->exists() ? $user->display_name : '';
+
+// check force state (this is for infinite scroll)
 $cp_force_form = apply_filters( 'commentpress_force_comment_form', false );
 
 // init identifying class

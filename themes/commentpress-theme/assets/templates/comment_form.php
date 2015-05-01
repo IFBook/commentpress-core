@@ -23,6 +23,10 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) AND 'comment_form.php' == basename($_SER
 // access post
 global $post;
 
+// get user data
+$user = wp_get_current_user();
+$user_identity = $user->exists() ? $user->display_name : '';
+
 ?>
 
 
@@ -52,7 +56,7 @@ global $post;
 	__( 'Leave a Reply to %s', 'commentpress-core' )
 ); ?></h4>
 
-<?php if ( get_option('comment_registration') AND !$user_ID ) : ?>
+<?php if ( get_option('comment_registration') AND ! is_user_logged_in() ) : ?>
 
 	<p><?php
 
