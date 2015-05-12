@@ -73,6 +73,9 @@ class CommentpressCoreEditor {
 		// bail if there's no WP FEE present
 		if ( ! class_exists( 'FEE' ) ) return;
 
+		// bail if not logged in
+		if ( ! is_user_logged_in() ) return;
+
 		// broadcast
 		do_action( 'commentpress_editor_present' );
 
@@ -323,6 +326,15 @@ class CommentpressCoreEditor {
 		// bail if not commentable
 		if ( ! $this->parent_obj->is_commentable() ) return;
 
+		// access post
+		global $post;
+
+		// bail if there isn't one
+		if ( ! is_object( $post ) ) return;
+
+		// only show for admins and post authors
+		if ( ! current_user_can( 'edit_post', $post->ID ) ) return;
+
 		// change text depending on toggle state
 		if ( $this->toggle_state == 'writing' ) {
 			$heading = __( 'Author Mode: Write', 'commentpress-core' );
@@ -493,8 +505,14 @@ class CommentpressCoreEditor {
 		// can't remember why we need this
 		$vars = $this->parent_obj->db->get_javascript_vars();
 
-		// include template
-		include_once( get_template_directory() . '/assets/templates/comments_by_para.php' );
+		// first try to locate using WP method
+		$cp_comments_by_para = apply_filters(
+			'cp_template_comments_by_para',
+			locate_template( 'assets/templates/comments_by_para.php' )
+		);
+
+		// load it if we find it
+		if ( $cp_comments_by_para != '' ) load_template( $cp_comments_by_para );
 
 		// get content
 		$comments = ob_get_contents();

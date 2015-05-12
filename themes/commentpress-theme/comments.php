@@ -42,27 +42,35 @@ if ( is_object( $commentpress_core ) ) {
 	// are we asking for in-page comments?
 	if ( $commentpress_core->db->is_special_page() ) {
 
-		// until WordPress supports a locate_theme_file() function, use filter
-		$include = apply_filters(
+		// include 'comments in page' template
+
+		// first try to locate using WP method
+		$cp_comments_in_page = apply_filters(
 			'cp_template_comments_in_page',
-			get_template_directory() . '/assets/templates/comments_in_page.php'
+			locate_template( 'assets/templates/comments_in_page.php' )
 		);
 
-		// include 'comments in page' template
-		include( $include );
+		// load it if we find it
+		if ( $cp_comments_in_page != '' ) load_template( $cp_comments_in_page );
+
+		// --<
 		return;
 
 	// otherwise, comments in sidebar
 	} else {
 
-		// until WordPress supports a locate_theme_file() function, use filter
-		$include = apply_filters(
+		// include comments split by paragraph template
+
+		// first try to locate using WP method
+		$cp_comments_by_para = apply_filters(
 			'cp_template_comments_by_para',
-			get_template_directory() . '/assets/templates/comments_by_para.php'
+			locate_template( 'assets/templates/comments_by_para.php' )
 		);
 
-		// include comments split by paragraph template
-		include( $include );
+		// load it if we find it
+		if ( $cp_comments_by_para != '' ) load_template( $cp_comments_by_para );
+
+		// --<
 		return;
 
 	}
@@ -174,13 +182,13 @@ else :
 
 <?php
 
-// until WordPress supports a locate_theme_file() function, use filter
-$include = apply_filters(
+// first try to locate using WP method
+$cp_comment_form = apply_filters(
 	'cp_template_comment_form',
-	get_template_directory() . '/assets/templates/comment_form.php'
+	locate_template( 'assets/templates/comment_form.php' )
 );
 
-// include comment form
-include( $include );
+// load it if we find it
+if ( $cp_comment_form != '' ) load_template( $cp_comment_form );
 
 ?>

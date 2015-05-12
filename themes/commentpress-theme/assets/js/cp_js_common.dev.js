@@ -2273,6 +2273,33 @@ function commentpress_setup_page_click_actions() {
 
 	);
 
+	// unbind first to allow repeated calls to this function
+	jQuery('.comment_permalink_copy').unbind( 'mouseup' );
+
+	/**
+	 * Mouseup on the copy icon
+	 *
+	 * @return void
+	 */
+	jQuery('.comment_permalink_copy').mouseup( function( event ) {
+
+		// define vars
+		var url;
+
+		// get selection
+		url = jQuery( this ).parent().attr('href');
+		console.log( url );
+
+		// did we get one?
+		if ( url ) {
+
+			// show dialog
+			window.prompt( "Copy this link", url );
+
+		}
+
+	});
+
 }
 
 

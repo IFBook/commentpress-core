@@ -284,6 +284,9 @@ function commentpress_enqueue_scripts_and_styles() {
 
 	);
 
+	// use dashicons
+	wp_enqueue_style( 'dashicons' );
+
 	// -------------------------------------------------------------------------
 	// Javascripts
 	// -------------------------------------------------------------------------

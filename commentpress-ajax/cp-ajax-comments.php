@@ -799,7 +799,16 @@ function cpajax_infinite_scroll_load_next_page() {
 	// get comments using buffer
 	ob_start();
 	$vars = $commentpress_core->db->get_javascript_vars();
-	include_once( get_template_directory() . '/assets/templates/comments_by_para.php' );
+
+	// first try to locate using WP method
+	$cp_comments_by_para = apply_filters(
+		'cp_template_comments_by_para',
+		locate_template( 'assets/templates/comments_by_para.php' )
+	);
+
+	// load it if we find it
+	if ( $cp_comments_by_para != '' ) load_template( $cp_comments_by_para );
+
 	$comments = ob_get_contents();
 	ob_end_clean();
 

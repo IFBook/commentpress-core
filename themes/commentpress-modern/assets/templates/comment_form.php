@@ -21,9 +21,13 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) AND 'comment_form.php' == basename($_SER
 
 
 // access globals
-global $post, $user_identity;
+global $post;
 
-// check force state
+// get user data
+$user = wp_get_current_user();
+$user_identity = $user->exists() ? $user->display_name : '';
+
+// check force state (this is for infinite scroll)
 $cp_force_form = apply_filters( 'commentpress_force_comment_form', false );
 
 // init identifying class
@@ -89,7 +93,15 @@ if ( $cp_force_form ) {
 	$show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 
 	// how did we do?
-	if ( $show_comment_form ) { ?>
+	if ( $show_comment_form ) {
+
+		// get required status
+		$req = get_option( 'require_name_email' );
+
+		// get commenter
+		$commenter = wp_get_current_commenter();
+
+		?>
 
 		<form action="<?php echo site_url( '/wp-comments-post.php' ); ?>" method="post" id="commentform">
 
@@ -104,13 +116,13 @@ if ( $cp_force_form ) {
 			<?php else : ?>
 
 				<p><label for="author"><small><?php _e( 'Name', 'commentpress-core' ); ?><?php if ($req) echo ' <span class="req">('.__( 'required', 'commentpress-core' ).')</span>'; ?></small></label><br />
-				<input type="text" name="author" id="author" value="<?php echo $comment_author; ?>" size="30"<?php if ($req) echo ' aria-required="true"'; ?> /></p>
+				<input type="text" name="author" id="author" value="<?php echo esc_attr( $commenter['comment_author'] ); ?>" size="30"<?php if ($req) echo ' aria-required="true"'; ?> /></p>
 
 				<p><label for="email"><small><?php _e( 'Mail (will not be published)', 'commentpress-core' ); ?><?php if ($req) echo ' <span class="req">('.__( 'required', 'commentpress-core' ).')</span>'; ?></small></label><br />
-				<input type="text" name="email" id="email" value="<?php echo $comment_author_email; ?>" size="30"<?php if ($req) { echo ' aria-required="true"'; } ?> /></p>
+				<input type="text" name="email" id="email" value="<?php echo esc_attr(  $commenter['comment_author_email'] ); ?>" size="30"<?php if ($req) { echo ' aria-required="true"'; } ?> /></p>
 
 				<p class="author_not_logged_in"><label for="url"><small><?php _e( 'Website', 'commentpress-core' ); ?></small></label><br />
-				<input type="text" name="url" id="url" value="<?php echo $comment_author_url; ?>" size="30" /></p>
+				<input type="text" name="url" id="url" value="<?php echo esc_attr( $commenter['comment_author_url'] ); ?>" size="30" /></p>
 
 			<?php endif; ?>
 

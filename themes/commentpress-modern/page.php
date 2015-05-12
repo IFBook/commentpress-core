@@ -142,17 +142,17 @@
 
 	<?php
 
-	// until WordPress supports a locate_theme_file() function, use filter
-	$page_navigation = apply_filters(
+	// first try to locate using WP method
+	$cp_page_navigation = apply_filters(
 		'cp_template_page_navigation',
-		get_template_directory() . '/assets/templates/page_navigation.php'
+		locate_template( 'assets/templates/page_navigation.php' )
 	);
 
 	// do we have a featured image?
-	if ( !commentpress_has_feature_image() ) {
+	if ( ! commentpress_has_feature_image() ) {
 
-		// always include
-		include( $page_navigation );
+		// load it if we find it
+		if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 	}
 
@@ -171,7 +171,7 @@
 		<?php
 
 		// do we have a featured image?
-		if ( !commentpress_has_feature_image() ) {
+		if ( ! commentpress_has_feature_image() ) {
 
 			// default to hidden
 			$cp_title_visibility = ' style="display: none;"';
@@ -284,7 +284,7 @@
 	<?php
 
 	// include page_navigation again
-	include( $page_navigation );
+	if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 	?>
 	</div><!-- /page_nav_lower -->

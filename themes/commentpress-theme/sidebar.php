@@ -205,37 +205,37 @@ if ( is_object( $commentpress_core ) ) {
 	// is it commentable?
 	if ( $commentable ) {
 
-		// until WordPress supports a locate_theme_file() function, use filter
-		$include = apply_filters(
+		// first try to locate using WP method
+		$cp_comments_sidebar = apply_filters(
 			'cp_template_comments_sidebar',
-			get_template_directory() . '/assets/templates/comments_sidebar.php'
+			locate_template( 'assets/templates/comments_sidebar.php' )
 		);
 
-		// get comments sidebar
-		include( $include );
+		// load it if we find it
+		if ( $cp_comments_sidebar != '' ) load_template( $cp_comments_sidebar );
 
 	}
 
-	// until WordPress supports a locate_theme_file() function, use filter
-	$include = apply_filters(
+	// first try to locate using WP method
+	$cp_toc_sidebar = apply_filters(
 		'cp_template_toc_sidebar',
-		get_template_directory() . '/assets/templates/toc_sidebar.php'
+		locate_template( 'assets/templates/toc_sidebar.php' )
 	);
 
-	// always include TOC
-	include( $include );
+	// load it if we find it
+	if ( $cp_toc_sidebar != '' ) load_template( $cp_toc_sidebar );
 
 	// do we want to show activity tab?
 	if ( commentpress_show_activity_tab() ) {
 
-		// until WordPress supports a locate_theme_file() function, use filter
-		$include = apply_filters(
+		// first try to locate using WP method
+		$cp_activity_sidebar = apply_filters(
 			'cp_template_activity_sidebar',
-			get_template_directory() . '/assets/templates/activity_sidebar.php'
+			locate_template( 'assets/templates/activity_sidebar.php' )
 		);
 
-		// get activity sidebar
-		include( $include );
+		// load it if we find it
+		if ( $cp_activity_sidebar != '' ) load_template( $cp_activity_sidebar );
 
 	}
 

@@ -43,13 +43,14 @@ Separated this out for inclusion in multiple files.
 
 	<?php
 
-	// until WordPress supports a locate_theme_file() function, use filter
-	$include = apply_filters(
+	// first try to locate using WP method
+	$cp_user_links = apply_filters(
 		'cp_template_user_links',
-		get_template_directory() . '/assets/templates/user_links.php'
+		locate_template( 'assets/templates/user_links.php' )
 	);
 
-	include( $include );
+	// load it if we find it
+	if ( $cp_user_links != '' ) load_template( $cp_user_links );
 
 	?>
 
@@ -61,13 +62,14 @@ Separated this out for inclusion in multiple files.
 
 	<?php
 
-	// until WordPress supports a locate_theme_file() function, use filter
-	$include = apply_filters(
+	// first try to locate using WP method
+	$cp_navigation = apply_filters(
 		'cp_template_navigation',
-		get_template_directory() . '/assets/templates/navigation.php'
+		locate_template( 'assets/templates/navigation.php' )
 	);
 
-	include( $include );
+	// load it if we find it
+	if ( $cp_navigation != '' ) load_template( $cp_navigation );
 
 	?>
 

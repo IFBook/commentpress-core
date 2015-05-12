@@ -60,13 +60,13 @@ Separated this out for inclusion in multiple files.
 
 <?php
 
-// until WordPress supports a locate_theme_file() function, use filter
-$include = apply_filters(
+// first try to locate using WP method
+$cp_toc_sidebar = apply_filters(
 	'cp_template_toc_sidebar',
-	get_template_directory() . '/assets/templates/toc_sidebar.php'
+	locate_template( 'assets/templates/toc_sidebar.php' )
 );
 
-// always include TOC
-include( $include );
+// load it if we find it
+if ( $cp_toc_sidebar != '' ) load_template( $cp_toc_sidebar );
 
 ?>

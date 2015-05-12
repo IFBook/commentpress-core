@@ -58,7 +58,7 @@ commentpress_get_feature_image();
 <?php
 
 // do we have a featured image?
-if ( !commentpress_has_feature_image() ) {
+if ( ! commentpress_has_feature_image() ) {
 
 	if ( $next_page_html != '' ) { ?>
 		<div class="page_navigation">
@@ -93,7 +93,7 @@ if ( !commentpress_has_feature_image() ) {
 	<?php
 
 	// do we have a featured image?
-	if ( !commentpress_has_feature_image() ) {
+	if ( ! commentpress_has_feature_image() ) {
 
 		// default to hidden
 		$cp_title_visibility = ' style="display: none;"';

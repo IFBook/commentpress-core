@@ -50,13 +50,14 @@ echo apply_filters( 'cp_content_tab_special_pages_title', __( 'Special Pages', '
 
 <?php
 
-// until WordPress supports a locate_theme_file() function, use filter
-$include = apply_filters(
+// first try to locate using WP method
+$cp_navigation = apply_filters(
 	'cp_template_navigation',
-	get_template_directory() . '/assets/templates/navigation.php'
+	locate_template( 'assets/templates/navigation.php' )
 );
 
-include( $include );
+// load it if we find it
+if ( $cp_navigation != '' ) load_template( $cp_navigation );
 
 ?>
 

@@ -44,7 +44,7 @@ function commentpress_admin_header() {
 
 #headimg
 {
-	background-color: #'.$colour.';
+	background-color: #' . $colour . ';
 }
 
 #headimg #name,
@@ -54,7 +54,7 @@ function commentpress_admin_header() {
 	font-family: Helvetica, Arial, sans-serif;
 	font-weight: normal;
 	line-height: 1;
-	color: #'.get_header_textcolor().';
+	color: #' . get_header_textcolor() . ';
 }
 
 #headimg h1
@@ -285,14 +285,14 @@ function commentpress_get_header_image() {
 		if ( isset( $options['cp_inline_header_padding'] ) AND ! empty( $options['cp_inline_header_padding'] ) ) {
 
 			// override
-			$style = ' style="padding-top: '.$options['cp_inline_header_padding'].'px"';
+			$style = ' style="padding-top: ' . $options['cp_inline_header_padding'] . 'px"';
 
 		}
 
 		// show the uploaded image
 		echo apply_filters(
 			'commentpress_header_image',
-			'<img src="'.$options['cp_inline_header_image'].'" class="cp_logo_image"'.$style.' alt="'.__( 'Logo', 'commentpress-core' ).'" />'
+			'<img src="' . $options['cp_inline_header_image'] . '" class="cp_logo_image"' . $style . ' alt="' . __( 'Logo', 'commentpress-core' ) . '" />'
 		);
 
 		// --<
@@ -420,7 +420,7 @@ function commentpress_get_body_classes( $raw = false ) {
 	}
 
 	// set class by sidebar
-	$sidebar_class = 'cp_sidebar_'.$sidebar_flag;
+	$sidebar_class = 'cp_sidebar_' . $sidebar_flag;
 
 	// init commentable class
 	$commentable = '';
@@ -539,7 +539,7 @@ function commentpress_get_body_classes( $raw = false ) {
 
 		// if it's not the main site, add class
 		if ( is_multisite() AND ! is_main_site() ) {
-			$blog_type = ' blogtype-'.intval( $_blog_type );
+			$blog_type = ' blogtype-' . intval( $_blog_type );
 		}
 
 	}
@@ -559,13 +559,13 @@ function commentpress_get_body_classes( $raw = false ) {
 	}
 
 	// construct attribute
-	$_body_classes = $sidebar_class.$commentable.$layout_class.$page_type.$groupblog_type.$blog_type.$tinymce_version;
+	$_body_classes = $sidebar_class . $commentable . $layout_class . $page_type . $groupblog_type . $blog_type . $tinymce_version;
 
 	// if we want them wrapped, do so
 	if ( ! $raw ) {
 
 		// preserve backwards compat for older child themes
-		$_body_classes = ' class="'.$_body_classes.'"';
+		$_body_classes = ' class="' . $_body_classes . '"';
 
 	}
 
@@ -599,12 +599,12 @@ function commentpress_site_title( $sep = '', $echo = true ) {
 			if( $echo ) {
 
 				// add site name
-				echo ' '.trim($sep).' '.$current_site->site_name;
+				echo ' ' . trim( $sep ) . ' ' . $current_site->site_name;
 
 			} else {
 
 				// add site name
-				return ' '.trim($sep).' '.$current_site->site_name;
+				return ' ' . trim( $sep ) . ' ' . $current_site->site_name;
 
 			}
 
@@ -626,14 +626,14 @@ if ( ! function_exists( 'commentpress_remove_more_jump_link' ) ):
  */
 function commentpress_remove_more_jump_link( $link ) {
 
-	$offset = strpos($link, '#more-');
+	$offset = strpos( $link, '#more-' );
 
 	if ($offset) {
-		$end = strpos($link, '"',$offset);
+		$end = strpos( $link, '"',$offset );
 	}
 
 	if ($end) {
-		$link = substr_replace($link, '', $offset, $end-$offset);
+		$link = substr_replace( $link, '', $offset, $end - $offset );
 	}
 
 	// --<
@@ -665,40 +665,40 @@ function commentpress_page_title() {
 	$_title = '';
 	$_sep = ' &#8594; ';
 
-	//$_title .= get_bloginfo('name');
+	//$_title .= get_bloginfo( 'name' );
 
 	if ( is_page() OR is_single() OR is_category() ) {
 
-		if (is_page()) {
+		if ( is_page() ) {
 
-			$ancestors = get_post_ancestors($post);
+			$ancestors = get_post_ancestors( $post );
 
-			if ($ancestors) {
-				$ancestors = array_reverse($ancestors);
+			if ( $ancestors ) {
+				$ancestors = array_reverse( $ancestors );
 
  				$_crumb = array();
 
-				foreach ($ancestors as $crumb) {
-					$_crumb[] = get_the_title($crumb);
+				foreach ( $ancestors as $crumb ) {
+					$_crumb[] = get_the_title( $crumb );
 				}
 
-				$_title .= implode( $_sep, $_crumb ).$_sep;
+				$_title .= implode( $_sep, $_crumb ) . $_sep;
 			}
 
 		}
 
-		if (is_single()) {
+		if ( is_single() ) {
 			//$category = get_the_category();
-			//$_title .= $_sep.$category[0]->cat_name;
+			//$_title .= $_sep . $category[0]->cat_name;
 		}
 
-		if (is_category()) {
+		if ( is_category() ) {
 			$category = get_the_category();
-			$_title .= $category[0]->cat_name.$_sep;
+			$_title .= $category[0]->cat_name . $_sep;
 		}
 
 		// Current page
-		if (is_page() OR is_single()) {
+		if ( is_page() OR is_single() ) {
 			$_title .= get_the_title();
 		}
 
@@ -794,13 +794,13 @@ function commentpress_get_comments( $comments, $page_or_post ) {
 	if( count( $comments ) > 0 ) {
 
 		// open ul
-		$cp_comment_output .= '<ul class="item_ul">'."\n\n";
+		$cp_comment_output .= '<ul class="item_ul">' . "\n\n";
 
 		// produce a checkbox for each
 		foreach( $comments as $comment ) {
 
 			// open li
-			$cp_comment_output .= '<li class="item_li">'."\n\n";
+			$cp_comment_output .= '<li class="item_li">' . "\n\n";
 
 			// format this comment
 			$cp_comment_output .= commentpress_format_comment( $comment );
@@ -817,12 +817,12 @@ function commentpress_get_comments( $comments, $page_or_post ) {
 			}
 
 			// close li
-			$cp_comment_output .= '</li>'."\n\n";
+			$cp_comment_output .= '</li>' . "\n\n";
 
 		}
 
 		// close ul
-		$cp_comment_output .= '</ul>'."\n\n";
+		$cp_comment_output .= '</ul>' . "\n\n";
 
 	}
 
@@ -923,7 +923,7 @@ function commentpress_echo_post_meta() {
 				$sep = ', ';
 
 				// if we're on the penultimate
-				if ( $n == ($author_count - 1) ) {
+				if ( $n == ( $author_count - 1 ) ) {
 
 					// use ampersand
 					$sep = __( ' &amp; ', 'commentpress-core' );
@@ -943,7 +943,7 @@ function commentpress_echo_post_meta() {
 				$n++;
 
 				// yes - are we showing avatars?
-				if ( get_option('show_avatars') ) {
+				if ( get_option( 'show_avatars' ) ) {
 
 					// get avatar
 					echo get_avatar( $author->ID, $size='32' );
@@ -1005,7 +1005,7 @@ function commentpress_show_source_url() {
 		$protocol = ( ! empty( $_SERVER['HTTPS'] ) ) ? 'https' : 'http';
 
 		// construct URL
-		$url = $protocol.'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+		$url = $protocol . '://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
 
 		// echo
 		echo $url;
@@ -1084,7 +1084,7 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 	$_comment_link = get_comment_link( $comment->comment_ID );
 
 	// construct anchor
-	$_comment_anchor = '<a href="'.$_comment_link.'" title="'.esc_attr( __( 'See comment in context', 'commentpress-core' ) ).'">'.__( 'Comment', 'commentpress-core' ).'</a>';
+	$_comment_anchor = '<a href="' . $_comment_link . '" title="' . esc_attr( __( 'See comment in context', 'commentpress-core' ) ) . '">' . __( 'Comment', 'commentpress-core' ) . '</a>';
 
 	// construct date
 	$_comment_date = date( __( 'F jS, Y', 'commentpress-core' ), strtotime( $comment->comment_date ) );
@@ -1109,7 +1109,7 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 				if ( $user_link != '' AND $user_link != 'http://' ) {
 
 					// construct link to user url
-					$_comment_author = '<a href="'.$user_link.'">'.$comment->comment_author.'</a>';
+					$_comment_author = '<a href="' . $user_link . '">' . $comment->comment_author . '</a>';
 
 				} else {
 
@@ -1124,7 +1124,7 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 				if ( $comment->comment_author_url != '' AND $comment->comment_author_url != 'http://' ) {
 
 					// construct link to user url
-					$_comment_author = '<a href="'.$comment->comment_author_url.'">'.$comment->comment_author.'</a>';
+					$_comment_author = '<a href="' . $comment->comment_author_url . '">' . $comment->comment_author . '</a>';
 
 				} else {
 
@@ -1152,7 +1152,7 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 		);
 
 		// wrap comment meta in a div
-		$_comment_meta = '<div class="comment_meta">'.$_comment_meta_content.'</div>'."\n";
+		$_comment_meta = '<div class="comment_meta">' . $_comment_meta_content . '</div>' . "\n";
 
 		// allow filtering by plugins
 		$_comment_meta = apply_filters(
@@ -1171,7 +1171,7 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 		$_page_link = trailingslashit( get_permalink( $comment->comment_post_ID ) );
 
 		// construct page anchor
-		$_page_anchor = '<a href="'.$_page_link.'">'.get_the_title( $comment->comment_post_ID ).'</a>';
+		$_page_anchor = '<a href="' . $_page_link . '">' . get_the_title( $comment->comment_post_ID ) . '</a>';
 
 		// construct comment header content
 		$_comment_meta_content = sprintf(
@@ -1182,7 +1182,7 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 		);
 
 		// wrap comment meta in a div
-		$_comment_meta = '<div class="comment_meta">'.$_comment_meta_content.'</div>'."\n";
+		$_comment_meta = '<div class="comment_meta">' . $_comment_meta_content . '</div>' . "\n";
 
 		// allow filtering by plugins
 		$_comment_meta = apply_filters(
@@ -1197,10 +1197,10 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 	}
 
 	// comment content
-	$_comment_body = '<div class="comment-content">'.apply_filters( 'comment_text', $comment->comment_content ).'</div>'."\n";
+	$_comment_body = '<div class="comment-content">' . apply_filters( 'comment_text', $comment->comment_content ) . '</div>' . "\n";
 
 	// construct comment
-	return '<div class="comment_wrapper">'."\n".$_comment_meta.$_comment_body.'</div>'."\n\n";
+	return '<div class="comment_wrapper">' . "\n" . $_comment_meta . $_comment_body . '</div>' . "\n\n";
 
 }
 endif; // commentpress_format_comment
@@ -1262,22 +1262,22 @@ function commentpress_get_comments_by_content() {
 	if ( count( $authors_with ) == 0 ) return $html;
 
 	// open ul
-	$html .= '<ul class="all_comments_listing">'."\n\n";
+	$html .= '<ul class="all_comments_listing">' . "\n\n";
 
 	// loop through authors
 	foreach( $authors_with AS $author ) {
 
 		// open li
-		$html .= '<li class="author_li"><!-- author li -->'."\n\n";
+		$html .= '<li class="author_li"><!-- author li -->' . "\n\n";
 
 		// add gravatar
-		$html .= '<h3>'.get_avatar( $author, $size='24' ). esc_html( $author_names[$author] ).'</h3>'."\n\n";
+		$html .= '<h3>' . get_avatar( $author, $size='24' ) . esc_html( $author_names[$author] ) . '</h3>' . "\n\n";
 
 		// open comments div
-		$html .= '<div class="item_body">'."\n\n";
+		$html .= '<div class="item_body">' . "\n\n";
 
 		// open ul
-		$html .= '<ul class="item_ul">'."\n\n";
+		$html .= '<ul class="item_ul">' . "\n\n";
 
 		// loop through comments
 		foreach( $all_comments AS $comment ) {
@@ -1286,31 +1286,31 @@ function commentpress_get_comments_by_content() {
 			if ( $author == $comment->comment_author_email ) {
 
 				// open li
-				$html .= '<li class="item_li"><!-- item li -->'."\n\n";
+				$html .= '<li class="item_li"><!-- item li -->' . "\n\n";
 
 				// show the comment
 				$html .= commentpress_format_comment( $comment, 'by' );
 
 				// close li
-				$html .= '</li><!-- /item li -->'."\n\n";
+				$html .= '</li><!-- /item li -->' . "\n\n";
 
 			}
 
 		}
 
 		// close ul
-		$html .= '</ul>'."\n\n";
+		$html .= '</ul>' . "\n\n";
 
 		// close item div
-		$html .= '</div><!-- /item_body -->'."\n\n";
+		$html .= '</div><!-- /item_body -->' . "\n\n";
 
 		// close li
-		$html .= '</li><!-- /.author_li -->'."\n\n\n\n";
+		$html .= '</li><!-- /.author_li -->' . "\n\n\n\n";
 
 	}
 
 	// close ul
-	$html .= '</ul><!-- /.all_comments_listing -->'."\n\n";
+	$html .= '</ul><!-- /.all_comments_listing -->' . "\n\n";
 
 	// --<
 	return $html;
@@ -1338,7 +1338,7 @@ function commentpress_get_comments_by_page_content() {
 	global $commentpress_core;
 
 	// set title
-	$_page_content = '<h2 class="post_title">'.__( 'Comments by Commenter', 'commentpress-core' ).'</h2>'."\n\n";
+	$_page_content = '<h2 class="post_title">' . __( 'Comments by Commenter', 'commentpress-core' ) . '</h2>' . "\n\n";
 
 	// get data
 	$_page_content .= commentpress_get_comments_by_content();
@@ -1467,13 +1467,13 @@ function commentpress_get_comment_activity( $scope = 'all' ) {
 	if ( count( $_data ) > 0 ) {
 
 		// open ul
-		$_page_content .= '<ol class="comment_activity">'."\n\n";
+		$_page_content .= '<ol class="comment_activity">' . "\n\n";
 
 		// init title
 		$_title = '';
 
 		// loop
-		foreach ($_data as $comment) {
+		foreach( $_data AS $comment ) {
 
 			// exclude comments from password-protected posts
 			if ( ! post_password_required( $comment->comment_post_ID ) ) {
@@ -1483,7 +1483,7 @@ function commentpress_get_comment_activity( $scope = 'all' ) {
 		}
 
 		// close ul
-		$_page_content .= '</ol><!-- /comment_activity -->'."\n\n";
+		$_page_content .= '</ol><!-- /comment_activity -->' . "\n\n";
 
 	}
 
@@ -1534,25 +1534,25 @@ function commentpress_get_comment_activity_item( $comment ) {
 		$user_link = commentpress_get_user_link( $user );
 
 		// construct author citation
-		$author = '<cite class="fn"><a href="'.$user_link.'">'.esc_html( $comment->comment_author ).'</a></cite>';
+		$author = '<cite class="fn"><a href="' . $user_link . '">' . esc_html( $comment->comment_author ) . '</a></cite>';
 
 		// construct link to user url
 		$author = ( $user_link != '' AND $user_link != 'http://' ) ?
-					'<cite class="fn"><a href="'.$user_link.'">'.esc_html( $comment->comment_author ).'</a></cite>' :
-					 '<cite class="fn">'.esc_html( $comment->comment_author ).'</cite>';
+					'<cite class="fn"><a href="' . $user_link . '">' . esc_html( $comment->comment_author ) . '</a></cite>' :
+					 '<cite class="fn">' . esc_html( $comment->comment_author ) . '</cite>';
 
 	} else {
 
 		// construct link to commenter url
 		$author = ( $comment->comment_author_url != '' AND $comment->comment_author_url != 'http://' ) ?
-					'<cite class="fn"><a href="'.$comment->comment_author_url.'">'.esc_html( $comment->comment_author ).'</a></cite>' :
-					 '<cite class="fn">'.esc_html( $comment->comment_author ).'</cite>';
+					'<cite class="fn"><a href="' . $comment->comment_author_url . '">' . esc_html( $comment->comment_author ) . '</a></cite>' :
+					 '<cite class="fn">' . esc_html( $comment->comment_author ) . '</cite>';
 
 	}
 
 	// approved comment?
-	if ($comment->comment_approved == '0') {
-		$comment_text = '<p><em>'.__( 'Comment awaiting moderation', 'commentpress-core' ).'</em></p>';
+	if ( $comment->comment_approved == '0' ) {
+		$comment_text = '<p><em>' . __( 'Comment awaiting moderation', 'commentpress-core' ) . '</em></p>';
 	} else {
 		$comment_text = get_comment_text( $comment->comment_ID );
 	}
@@ -1620,32 +1620,32 @@ function commentpress_get_comment_activity_item( $comment ) {
 	}
 
 	// open li
-	$item_html .= '<li><!-- item li -->'."\n\n";
+	$item_html .= '<li><!-- item li -->' . "\n\n";
 
 	// show the comment
 	$item_html .= '
 <div class="comment-wrapper">
 
 <div class="comment-identifier">
-'.get_avatar( $comment, $size='32' ).'
-'.$author.'
-<p class="comment_activity_date"><a class="comment_activity_link'.$is_on_current_post.'" href="'.htmlspecialchars( get_comment_link() ).'">'. sprintf( __( '%1$s at %2$s', 'commentpress-core' ), get_comment_date(), get_comment_time() ).'</a></p>
+' . get_avatar( $comment, $size='32' ) . '
+' . $author . '
+<p class="comment_activity_date"><a class="comment_activity_link' . $is_on_current_post . '" href="' . htmlspecialchars( get_comment_link() ) . '">' . sprintf( __( '%1$s at %2$s', 'commentpress-core' ), get_comment_date(), get_comment_time() ) . '</a></p>
 </div><!-- /comment-identifier -->
 
 
 
 <div class="comment-content">
-'.apply_filters( 'comment_text', $comment_text ).'
+' . apply_filters( 'comment_text', $comment_text ) . '
 </div><!-- /comment-content -->
 
-<div class="reply"><p><a class="comment_activity_link'.$is_on_current_post.'" href="'.htmlspecialchars( get_comment_link() ).'">'.__( 'See in context', 'commentpress-core' ).'</a></p></div><!-- /reply -->
+<div class="reply"><p><a class="comment_activity_link' . $is_on_current_post . '" href="' . htmlspecialchars( get_comment_link() ) . '">' . __( 'See in context', 'commentpress-core' ) . '</a></p></div><!-- /reply -->
 
 </div><!-- /comment-wrapper -->
 
 ';
 
 	// close li
-	$item_html .= '</li><!-- /item li -->'."\n\n";
+	$item_html .= '</li><!-- /item li -->' . "\n\n";
 
 	// --<
 	return $item_html;
@@ -1700,13 +1700,13 @@ function commentpress_get_comments_by_para() {
 	if ( count( $comments_sorted ) > 0 ) {
 
 		// construct redirect link
-		$redirect = site_url( 'wp-login.php?redirect_to='.get_permalink() );
+		$redirect = site_url( 'wp-login.php?redirect_to=' . get_permalink() );
 
 		// init allowed to comment
 		$login_to_comment = false;
 
 		// if we have to log in to comment...
-		if ( get_option('comment_registration') AND ! is_user_logged_in() ) {
+		if ( get_option( 'comment_registration' ) AND ! is_user_logged_in() ) {
 			$login_to_comment = true;
 		}
 
@@ -1714,7 +1714,7 @@ function commentpress_get_comments_by_para() {
 		$comment_type = 'all';
 
 		// if we don't allow pingbacks...
-		if ( ! ('open' == $post->ping_status) ) {
+		if ( ! ( 'open' == $post->ping_status ) ) {
 
 			// just get comments
 			$comment_type = 'comment';
@@ -1795,7 +1795,7 @@ function commentpress_get_comments_by_para() {
 
 					// set permalink text
 					$permalink_text = sprintf(
-						__('Permalink for comments on %s', 'commentpress-core' ),
+						__( 'Permalink for comments on %s', 'commentpress-core' ),
 						$paragraph_text
 					);
 
@@ -1818,7 +1818,7 @@ function commentpress_get_comments_by_para() {
 					), $comment_count );
 
 					// append para text
-					$heading_text .= '<span class="source_block">'.$paragraph_text.'</span>';
+					$heading_text .= '<span class="source_block">' . $paragraph_text . '</span>';
 
 					break;
 
@@ -1853,7 +1853,7 @@ function commentpress_get_comments_by_para() {
 					$permalink_text = __( 'Permalink for pingbacks and trackbacks', 'commentpress-core' );
 
 					// wrap in span
-					$heading_text = '<span>'.$heading_text.'</span>';
+					$heading_text = '<span>' . $heading_text . '</span>';
 
 					break;
 
@@ -1902,11 +1902,11 @@ function commentpress_get_comments_by_para() {
 					}
 
 					// set paragraph text
-					$paragraph_text = $block_name.' '.$para_num;
+					$paragraph_text = $block_name . ' ' . $para_num;
 
 					// set permalink text
 					$permalink_text = sprintf(
-						__('Permalink for comments on %s', 'commentpress-core' ),
+						__( 'Permalink for comments on %s', 'commentpress-core' ),
 						$paragraph_text
 					);
 
@@ -1929,7 +1929,7 @@ function commentpress_get_comments_by_para() {
 					), $comment_count );
 
 					// append para text
-					$heading_text .= '<span class="source_block">'.$paragraph_text.'</span>';
+					$heading_text .= '<span class="source_block">' . $paragraph_text . '</span>';
 
 			} // end switch
 
@@ -1947,24 +1947,24 @@ function commentpress_get_comments_by_para() {
 			} else {
 
 				// show heading
-				echo '<h3 id="para_heading-'.$text_sig.'"'.$no_comments_class.'><a class="comment_block_permalink" title="'.$permalink_text.'" href="#para_heading-'.$text_sig.'">'.$heading_text.'</a></h3>'."\n\n";
+				echo '<h3 id="para_heading-' . $text_sig . '"' . $no_comments_class . '><a class="comment_block_permalink" title="' . $permalink_text . '" href="#para_heading-' . $text_sig . '">' . $heading_text . '</a></h3>' . "\n\n";
 
 				// override if there are no comments (for print stylesheet to hide them)
 				if ( $comment_count == 0 ) { $no_comments_class = ' no_comments'; }
 
 				// open paragraph wrapper
-				echo '<div id="para_wrapper-'.$text_sig.'" class="paragraph_wrapper'.$no_comments_class.'">'."\n\n";
+				echo '<div id="para_wrapper-' . $text_sig . '" class="paragraph_wrapper' . $no_comments_class . '">' . "\n\n";
 
 				// have we already used this text signature?
 				if( in_array( $text_sig, $used_text_sigs ) ) {
 
 					// show some kind of message
 					// should not be necessary now that we ensure unique text sigs
-					echo '<div class="reply_to_para" id="reply_to_para-'.$para_num.'">'."\n".
-							'<p>'.
-								__( 'It appears that this paragraph is a duplicate of a previous one.', 'commentpress-core' ).
-							'</p>'."\n".
-						 '</div>'."\n\n";
+					echo '<div class="reply_to_para" id="reply_to_para-' . $para_num . '">' . "\n" .
+							'<p>' .
+								__( 'It appears that this paragraph is a duplicate of a previous one.', 'commentpress-core' ) .
+							'</p>' . "\n" .
+						 '</div>' . "\n\n";
 
 				} else {
 
@@ -1972,13 +1972,13 @@ function commentpress_get_comments_by_para() {
 					if ( count( $_comments ) > 0 ) {
 
 						// open commentlist
-						echo '<ol class="commentlist">'."\n\n";
+						echo '<ol class="commentlist">' . "\n\n";
 
 						// use WP 2.7+ functionality
 						wp_list_comments( $args, $_comments );
 
 						// close commentlist
-						echo '</ol>'."\n\n";
+						echo '</ol>' . "\n\n";
 
 					}
 
@@ -1992,11 +1992,11 @@ function commentpress_get_comments_by_para() {
 						if ( $login_to_comment ) {
 
 							// leave comment link
-							echo '<div class="reply_to_para" id="reply_to_para-'.$para_num.'">'."\n".
-									'<p><a class="reply_to_para" rel="nofollow" href="'.$redirect.'">'.
-										__( 'Login to leave a comment on ', 'commentpress-core' ).$paragraph_text.
-									'</a></p>'."\n".
-								 '</div>'."\n\n";
+							echo '<div class="reply_to_para" id="reply_to_para-' . $para_num . '">' . "\n" .
+									'<p><a class="reply_to_para" rel="nofollow" href="' . $redirect . '">' .
+										__( 'Login to leave a comment on ', 'commentpress-core' ) . $paragraph_text .
+									'</a></p>' . "\n" .
+								 '</div>' . "\n\n";
 
 						} else {
 
@@ -2006,14 +2006,14 @@ function commentpress_get_comments_by_para() {
 							// construct onclick attribute
 							$onclick = apply_filters(
 								'commentpress_reply_to_para_link_onclick',
-								' onclick="'.$onclick.'"'
+								' onclick="' . $onclick . '"'
 							);
 
 							// just show replytopara
 							$query = remove_query_arg( array( 'replytocom' ) );
 
 							// add param to querystring
-							$query = esc_attr(
+							$query = esc_url(
 								add_query_arg(
 									array( 'replytopara' => $para_num ),
 									$query
@@ -2023,7 +2023,7 @@ function commentpress_get_comments_by_para() {
 							// construct href attribute
 							$href = apply_filters(
 								'commentpress_reply_to_para_link_href',
-								$query.'#respond', // add respond ID
+								$query . '#respond', // add respond ID
 								$text_sig
 							);
 
@@ -2041,11 +2041,11 @@ function commentpress_get_comments_by_para() {
 							);
 
 							// leave comment link
-							echo '<div class="reply_to_para" id="reply_to_para-'.$para_num.'">'."\n".
-									'<p><a class="reply_to_para" href="'.$href.'"'.$onclick.'>'.
-										$link_content.
-									'</a></p>'."\n".
-								 '</div>'."\n\n";
+							echo '<div class="reply_to_para" id="reply_to_para-' . $para_num . '">' . "\n" .
+									'<p><a class="reply_to_para" href="' . $href . '"' . $onclick . '>' .
+										$link_content .
+									'</a></p>' . "\n" .
+								 '</div>' . "\n\n";
 
 						}
 
@@ -2054,7 +2054,7 @@ function commentpress_get_comments_by_para() {
 				}
 
 				// close paragraph wrapper
-				echo '</div>'."\n\n\n\n";
+				echo '</div>' . "\n\n\n\n";
 
 			}
 
@@ -2093,7 +2093,7 @@ class Walker_Comment_Press extends Walker_Comment {
 
 		// if on top level
 		if( $depth === 0 ) {
-			//echo '<h3>New Top Level</h3>'."\n";
+			//echo '<h3>New Top Level</h3>' . "\n";
 		}
 
 		// store depth
@@ -2106,12 +2106,12 @@ class Walker_Comment_Press extends Walker_Comment {
 				break;
 
 			case 'ol':
-				echo '<ol class="children">'."\n";
+				echo '<ol class="children">' . "\n";
 				break;
 
 			default:
 			case 'ul':
-				echo '<ul class="children">'."\n";
+				echo '<ul class="children">' . "\n";
 				break;
 		}
 
@@ -2149,10 +2149,10 @@ function commentpress_comment_form_title(
 	global $comment, $commentpress_core;
 
 	// get comment ID to reply to from URL query string
-	$reply_to_comment_id = isset($_GET['replytocom']) ? (int) $_GET['replytocom'] : 0;
+	$reply_to_comment_id = isset( $_GET['replytocom'] ) ? (int) $_GET['replytocom'] : 0;
 
 	// get paragraph number to reply to from URL query string
-	$reply_to_para_id = isset($_GET['replytopara']) ? (int) $_GET['replytopara'] : 0;
+	$reply_to_para_id = isset( $_GET['replytopara'] ) ? (int) $_GET['replytopara'] : 0;
 
 	// if we have no comment ID AND no paragraph ID to reply to
 	if ( $reply_to_comment_id == 0 AND $reply_to_para_id == 0 ) {
@@ -2191,7 +2191,7 @@ function commentpress_comment_form_title(
 				);
 
 				// construct paragraph
-				$paragraph = '<a href="#para_heading-' . $text_sig . '">'.$para_text.'</a>';
+				$paragraph = '<a href="#para_heading-' . $text_sig . '">' . $para_text . '</a>';
 
 			} else {
 
@@ -2239,18 +2239,18 @@ function commentpress_comment_reply_link( $args = array(), $comment = null, $pos
 	);
 
 	// parse them
-	$args = wp_parse_args($args, $defaults);
+	$args = wp_parse_args( $args, $defaults );
 
 	if ( 0 == $args['depth'] || $args['max_depth'] <= $args['depth'] ) {
 		return;
 	}
 
 	// convert to vars
-	extract($args, EXTR_SKIP);
+	extract( $args, EXTR_SKIP );
 
 	// get the obvious
-	$comment = get_comment($comment);
-	$post = get_post($post);
+	$comment = get_comment( $comment );
+	$post = get_post( $post );
 
 	// kick out if comments closed
 	if ( 'open' != $post->comment_status ) { return false; }
@@ -2262,7 +2262,7 @@ function commentpress_comment_reply_link( $args = array(), $comment = null, $pos
 	if ( get_option( 'comment_registration' ) AND ! is_user_logged_in() ) {
 
 		// construct link
-		$link = '<a rel="nofollow" href="' . site_url('wp-login.php?redirect_to=' . get_permalink()) . '">' . $login_text . '</a>';
+		$link = '<a rel="nofollow" href="' . site_url( 'wp-login.php?redirect_to=' . get_permalink() ) . '">' . $login_text . '</a>';
 
 	} else {
 
@@ -2270,8 +2270,7 @@ function commentpress_comment_reply_link( $args = array(), $comment = null, $pos
 		$query = remove_query_arg( array( 'replytopara' ), get_permalink( $post->ID ) );
 
 		// define query string
-		$addquery = esc_html(
-
+		$addquery = esc_url(
 			add_query_arg(
 
 				array( 'replytocom' => $comment->comment_ID ),
@@ -2345,8 +2344,8 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 
 		// construct author citation
 		$author = ( $user_link != '' AND $user_link != 'http://' ) ?
-					'<cite class="fn"><a href="'.$user_link.'">'.get_comment_author().'</a></cite>' :
-					 '<cite class="fn">'.get_comment_author().'</cite>';
+					'<cite class="fn"><a href="' . $user_link . '">' . get_comment_author() . '</a></cite>' :
+					 '<cite class="fn">' . get_comment_author() . '</cite>';
 
 		//print_r( array( 'a' => $author ) ); die();
 
@@ -2354,25 +2353,25 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 
 		// construct link to commenter url
 		$author = ( $comment->comment_author_url != '' AND $comment->comment_author_url != 'http://' AND $comment->comment_approved != '0' ) ?
-					'<cite class="fn"><a href="'.$comment->comment_author_url.'">'.get_comment_author().'</a></cite>' :
-					 '<cite class="fn">'.get_comment_author().'</cite>';
+					'<cite class="fn"><a href="' . $comment->comment_author_url . '">' . get_comment_author() . '</a></cite>' :
+					 '<cite class="fn">' . get_comment_author() . '</cite>';
 
 	}
 
 
 
 	/*
-	if ($comment->comment_approved == '0') {
-		$author = '<cite class="fn">'.get_comment_author().'</cite>';
+	if ( $comment->comment_approved == '0' ) {
+		$author = '<cite class="fn">' . get_comment_author() . '</cite>';
 	} else {
-		$author = '<cite class="fn">'.get_comment_author_link().'</cite>';
+		$author = '<cite class="fn">' . get_comment_author_link() . '</cite>';
 	}
 	*/
 
 
 
 	if ( $comment->comment_approved == '0' ) {
-		$comment_text = '<p><em>'.__( 'Comment awaiting moderation', 'commentpress-core' ).'</em></p>';
+		$comment_text = '<p><em>' . __( 'Comment awaiting moderation', 'commentpress-core' ) . '</em></p>';
 	} else {
 		$comment_text = get_comment_text();
 	}
@@ -2418,7 +2417,7 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 			);
 
 			// wrap in div
-			$comment_reply = '<div class="reply">'.$comment_reply.'</div><!-- /reply -->';
+			$comment_reply = '<div class="reply">' . $comment_reply . '</div><!-- /reply -->';
 
 		}
 
@@ -2433,7 +2432,7 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 	if (
 		is_user_logged_in()
 	AND
-		current_user_can('edit_posts')
+		current_user_can( 'edit_posts' )
 	AND
 		current_user_can( 'edit_comment', $comment->comment_ID )
 	) {
@@ -2451,7 +2450,7 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 		);
 
 		// get edit comment link
-		$editlink = '<span class="alignright comment-edit"><a class="comment-edit-link" href="'.get_edit_comment_link().'" title="'.$edit_title_text.'">'.$edit_text.'</a></span>';
+		$editlink = '<span class="alignright comment-edit"><a class="comment-edit-link" href="' . get_edit_comment_link() . '" title="' . $edit_title_text . '">' . $edit_text . '</a></span>';
 
 		// add a filter for plugins
 		$editlink = apply_filters( 'cp_comment_edit_link', $editlink, $comment );
@@ -2469,36 +2468,39 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 	// if orphaned, add class to identify as such
 	$_comment_orphan = ( isset( $comment->orphan ) ) ? ' comment-orphan' : '';
 
+	// construct permalink
+	$_comment_permalink = sprintf( __( '%1$s at %2$s', 'commentpress-core' ), get_comment_date(), get_comment_time() );
+
 
 
 	// stripped source
 	$html = '
-<li id="li-comment-'.$comment->comment_ID.'" '.$_comment_class.'>
+<li id="li-comment-' . $comment->comment_ID . '" ' . $_comment_class . '>
 <div class="comment-wrapper">
-<div id="comment-'.$comment->comment_ID.'">
+<div id="comment-' . $comment->comment_ID . '">
 
 
 
-<div class="comment-identifier'.$_comment_orphan.'">
-'.get_avatar( $comment, $size='32' ).'
-'.$editlink.'
-'.$author.'
-<a class="comment_permalink" href="'.htmlspecialchars( get_comment_link() ).'">'.get_comment_date().' at '.get_comment_time().'</a>
+<div class="comment-identifier' . $_comment_orphan . '">
+' . get_avatar( $comment, $size='32' ) . '
+' . $editlink . '
+' . $author . '
+<a class="comment_permalink" href="' . htmlspecialchars( get_comment_link() ) . '"><span class="comment_permalink_copy"></span>' . $_comment_permalink . '</a>
 </div><!-- /comment-identifier -->
 
 
 
-<div class="comment-content'.$_comment_orphan.'">
-'.apply_filters( 'comment_text', $comment_text ).'
+<div class="comment-content' . $_comment_orphan . '">
+' . apply_filters( 'comment_text', $comment_text ) . '
 </div><!-- /comment-content -->
 
 
 
-'.$comment_reply.'
+' . $comment_reply . '
 
 
 
-</div><!-- /comment-'.$comment->comment_ID.' -->
+</div><!-- /comment-' . $comment->comment_ID . ' -->
 </div><!-- /comment-wrapper -->
 ';
 
@@ -2526,10 +2528,10 @@ function commentpress_get_full_name( $forename, $surname ) {
 	$fullname = '';
 
 	// add forename
-	if ($forename != '' ) { $fullname .= $forename; }
+	if ( $forename != '' ) { $fullname .= $forename; }
 
 	// add surname
-	if ($surname != '' ) { $fullname .= ' ' . $surname; }
+	if ( $surname != '' ) { $fullname .= ' ' . $surname; }
 
 	// strip any whitespace
 	$fullname = trim( $fullname );
@@ -2660,7 +2662,7 @@ function commentpress_multipage_comment_link( $link, $comment, $args ) {
 			$comment_path_info = parse_url( $link );
 
 			// set comment path
-			return commentpress_get_post_multipage_url( $page_num, get_post( $comment->comment_post_ID ) ).'#'.$comment_path_info['fragment'];
+			return commentpress_get_post_multipage_url( $page_num, get_post( $comment->comment_post_ID ) ) . '#' . $comment_path_info['fragment'];
 
 		}
 
@@ -2693,12 +2695,12 @@ function commentpress_get_post_multipage_url( $i, $post = '' ) {
 		if ( 1 == $i ) {
 			$url = get_permalink();
 		} else {
-			if ( '' == get_option('permalink_structure') || in_array($post->post_status, array('draft', 'pending')) )
+			if ( '' == get_option( 'permalink_structure' ) || in_array( $post->post_status, array( 'draft', 'pending' ) ) )
 				$url = add_query_arg( 'page', $i, get_permalink() );
-			elseif ( 'page' == get_option('show_on_front') AND get_option('page_on_front') == $post->ID )
-				$url = trailingslashit(get_permalink()) . user_trailingslashit("$wp_rewrite->pagination_base/" . $i, 'single_paged');
+			elseif ( 'page' == get_option( 'show_on_front' ) AND get_option( 'page_on_front' ) == $post->ID )
+				$url = trailingslashit( get_permalink() ) . user_trailingslashit( "$wp_rewrite->pagination_base/" . $i, 'single_paged' );
 			else
-				$url = trailingslashit(get_permalink()) . user_trailingslashit($i, 'single_paged');
+				$url = trailingslashit( get_permalink() ) . user_trailingslashit( $i, 'single_paged' );
 		}
 
 	} else {
@@ -2707,12 +2709,12 @@ function commentpress_get_post_multipage_url( $i, $post = '' ) {
 		if ( 1 == $i ) {
 			$url = get_permalink( $post->ID );
 		} else {
-			if ( '' == get_option('permalink_structure') || in_array($post->post_status, array('draft', 'pending')) )
+			if ( '' == get_option( 'permalink_structure' ) || in_array( $post->post_status, array( 'draft', 'pending' ) ) )
 				$url = add_query_arg( 'page', $i, get_permalink( $post->ID ) );
-			elseif ( 'page' == get_option('show_on_front') AND get_option('page_on_front') == $post->ID )
-				$url = trailingslashit(get_permalink( $post->ID )) . user_trailingslashit("$wp_rewrite->pagination_base/" . $i, 'single_paged');
+			elseif ( 'page' == get_option( 'show_on_front' ) AND get_option( 'page_on_front' ) == $post->ID )
+				$url = trailingslashit( get_permalink( $post->ID ) ) . user_trailingslashit( "$wp_rewrite->pagination_base/" . $i, 'single_paged' );
 			else
-				$url = trailingslashit(get_permalink( $post->ID )) . user_trailingslashit($i, 'single_paged');
+				$url = trailingslashit( get_permalink( $post->ID ) ) . user_trailingslashit( $i, 'single_paged' );
 		}
 
 	}
@@ -2740,8 +2742,8 @@ function commentpress_multipager() {
 		'link_before' => '',
 		'link_after' => '',
 		'next_or_number' => 'next',
-		'nextpagelink' => '<span class="alignright">'.__( 'Next page', 'commentpress-core' ).' &raquo;</span>',
-		'previouspagelink' => '<span class="alignleft">&laquo; '.__( 'Previous page', 'commentpress-core' ).'</span>',
+		'nextpagelink' => '<span class="alignright">' . __( 'Next page', 'commentpress-core' ) . ' &raquo;</span>',
+		'previouspagelink' => '<span class="alignleft">&laquo; ' . __( 'Previous page', 'commentpress-core' ) . '</span>',
 		'pagelink' => '%',
 		'more_file' => '',
 		'echo' => 0
@@ -2918,11 +2920,21 @@ function commentpress_add_wp_editor() {
 
 	// create editor
 	wp_editor(
-
 		'', // initial content
 		'comment', // id of comment textarea
 		$settings
+	);
 
+	// access WP version
+	global $wp_version;
+
+	// add styles
+	wp_enqueue_style(
+		'commentpress-editor-css',
+		wp_admin_css_uri( 'css/edit' ),
+		array( 'dashicons', 'open-sans' ),
+		$wp_version, // version
+		'all' // media
 	);
 
 	// don't show textarea
@@ -2969,7 +2981,7 @@ function commentpress_add_tinymce_styles( $mce_css ) {
 	if ( ! empty( $mce_css ) ) { $mce_css .= ','; }
 
 	// add our editor styles
-	$mce_css .= get_template_directory_uri().'/assets/css/comment-form.css';
+	$mce_css .= get_template_directory_uri() . '/assets/css/comment-form.css';
 
 	// --<
 	return $mce_css;
@@ -2996,7 +3008,7 @@ function commentpress_add_tinymce_nextpage_button( $buttons ) {
 	$pos = array_search( 'wp_more', $buttons, true );
 
 	// is it there?
-	if ($pos !== false) {
+	if ( $pos !== false ) {
 
 		// get array up to that point
 		$tmp_buttons = array_slice( $buttons, 0, $pos + 1 );
@@ -3086,13 +3098,13 @@ function commentpress_comment_post_redirect( $link, $comment ) {
 		if ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' ) {
 
 			// yes, it's AJAX - some browsers cache POST, so invalidate
-			$ajax_token = '?cachebuster='.time();
+			$ajax_token = '?cachebuster=' . time();
 
 			// but, test for pretty permalinks
 			if ( false !== strpos( $page_url, '?' ) ) {
 
 				// pretty permalinks are off...
-				$ajax_token = '&cachebuster='.time();
+				$ajax_token = '&cachebuster=' . time();
 
 			}
 
@@ -3101,7 +3113,7 @@ function commentpress_comment_post_redirect( $link, $comment ) {
 	}
 
 	// construct cachebusting comment redirect
-	$link = $page_url.$ajax_token.'#comment-'.$comment->comment_ID;
+	$link = $page_url . $ajax_token . '#comment-' . $comment->comment_ID;
 
 	// --<
 	return $link;
@@ -3140,14 +3152,14 @@ function commentpress_image_caption_shortcode( $empty = null, $attr, $content ) 
 	) ); die();
 	*/
 
-	if ( 1 > (int) $width || empty($caption) )
+	if ( 1 > (int) $width || empty( $caption ) )
 		return $content;
 
 	// sanitise id
-	if ( $id ) $id = 'id="' . esc_attr($id) . '" ';
+	if ( $id ) $id = 'id="' . esc_attr( $id ) . '" ';
 
 	// add space prior to alignment
-	$_alignment = ' '.esc_attr($align);
+	$_alignment = ' ' . esc_attr( $align );
 
 	// get width
 	$_width = (0 + (int) $width);
@@ -3159,7 +3171,7 @@ function commentpress_image_caption_shortcode( $empty = null, $attr, $content ) 
 		array(
 			'em' => array(),
 			'strong' => array(),
-			'a' => array('href')
+			'a' => array( 'href' )
 		)
 
 	);
@@ -3168,11 +3180,11 @@ function commentpress_image_caption_shortcode( $empty = null, $attr, $content ) 
 	$caption = balanceTags( $caption, true );
 
 	// construct
-	$_caption = '<!-- cp_caption_start -->'.
-				'<span class="captioned_image'.$_alignment.'" style="width: '.$_width.'px">'.
-					'<span '.$id.' class="wp-caption">'.do_shortcode( $content ).'</span>'.
-					'<small class="wp-caption-text">'.$caption.'</small>'.
-				'</span>'.
+	$_caption = '<!-- cp_caption_start -->' .
+				'<span class="captioned_image' . $_alignment . '" style="width: ' . $_width . 'px">' .
+					'<span ' . $id . ' class="wp-caption">' . do_shortcode( $content ) . '</span>' .
+					'<small class="wp-caption-text">' . $caption . '</small>' .
+				'</span>' .
 				'<!-- cp_caption_end -->';
 
 	// --<
@@ -3204,7 +3216,7 @@ function commentpress_audio( $atts, $content = null ) {
         "controls"=> ''
     ), $atts));
 
-    return '<audio src="'.$src.'" autoplay="'.$autoplay.'" preload="'.$preload.'" loop="'.$loop.'" controls="'.$controls.'" autobuffer />';
+    return '<audio src="' . $src . '" autoplay="' . $autoplay . '" preload="' . $preload . '" loop="' . $loop . '" controls="' . $controls . '" autobuffer />';
 
 }
 endif; // commentpress_audio
@@ -3273,7 +3285,7 @@ if ( ! function_exists( 'commentpress_add_commentblock_tinymce_plugin' ) ):
 function commentpress_add_commentblock_tinymce_plugin( $plugin_array ) {
 
 	// add comment block
-	$plugin_array['commentblock'] = get_template_directory_uri().'/assets/js/tinymce/cp_editor_plugin.js';
+	$plugin_array['commentblock'] = get_template_directory_uri() . '/assets/js/tinymce/cp_editor_plugin.js';
 
 	// --<
 	return $plugin_array;
@@ -3292,7 +3304,7 @@ if ( ! function_exists( 'commentpress_refresh_mce' ) ):
  * @param int $ver The existing TinyMCE version
  * @param int $ver The modified TinyMCE version
  */
-function commentpress_refresh_mce($ver) {
+function commentpress_refresh_mce( $ver ) {
 
 	$ver += 3;
 	return $ver;
@@ -3486,12 +3498,12 @@ function commentpress_groupblog_classes() {
 		if ( $groupblog_type ) {
 
 			// add to default
-			$groupblogtype .= ' '.$groupblog_type;
+			$groupblogtype .= ' ' . $groupblog_type;
 
 		}
 
 		// complete
-		$groupblog_class = ' class="'.$groupblogtype.'"';
+		$groupblog_class = ' class="' . $groupblogtype . '"';
 
 	}
 
@@ -3546,7 +3558,7 @@ function commentpress_get_post_version_info( $post ) {
 			$_title = __( 'Newer version', 'commentpress-core' );
 
 			// construct anchor
-			$newer_link = '<a href="'.$_link.'" title="'.$_title.'">'.$_title.' &rarr;</a>';
+			$newer_link = '<a href="' . $_link . '" title="' . $_title . '">' . $_title . ' &rarr;</a>';
 
 		}
 
@@ -3583,7 +3595,7 @@ function commentpress_get_post_version_info( $post ) {
 			$_title = __( 'Older version', 'commentpress-core' );
 
 			// construct anchor
-			$older_link = '<a href="'.$_link.'" title="'.$_title.'">&larr; '.$_title.'</a>';
+			$older_link = '<a href="' . $_link . '" title="' . $_title . '">&larr; ' . $_title . '</a>';
 
 		}
 
@@ -3595,8 +3607,8 @@ function commentpress_get_post_version_info( $post ) {
 		?>
 		<div class="version_info">
 			<ul>
-				<?php if ( $newer_link != '' ) echo '<li class="newer_version">'.$newer_link.'</li>'; ?>
-				<?php if ( $older_link != '' ) echo '<li class="older_version">'.$older_link.'</li>'; ?>
+				<?php if ( $newer_link != '' ) echo '<li class="newer_version">' . $newer_link . '</li>'; ?>
+				<?php if ( $older_link != '' ) echo '<li class="older_version">' . $older_link . '</li>'; ?>
 			</ul>
 		</div>
 		<?php
@@ -3629,7 +3641,7 @@ function commentpress_get_post_css_override( $post_id ) {
 
 		// default to current blog type
 		$type = $commentpress_core->db->option_get( 'cp_blog_type' );
-		//print_r($type); die();
+		//print_r( $type ); die();
 
 		// set post meta key
 		$key = '_cp_post_type_override';
@@ -3643,7 +3655,7 @@ function commentpress_get_post_css_override( $post_id ) {
 			// is it different to the current blog type?
 			if ( $overridden_type != $type ) {
 
-				$type_overridden = ' overridden_type-'.$overridden_type;
+				$type_overridden = ' overridden_type-' . $overridden_type;
 
 			}
 

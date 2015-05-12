@@ -3,8 +3,8 @@ Contributors: needle, commentpress
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZSKM8T5ZP3SC
 Tags: commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
 Requires at least: 3.4
-Tested up to: 4.0
-Stable tag: 3.6.3
+Tested up to: 4.2
+Stable tag: 3.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -221,19 +221,21 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 == Changelog ==
 
 
+<h4>3.7</h4>
+
+* Child theme template auto-discovery
+* Limited compatibility with WP Front End Editor
+
 <h4>3.6.2</h4>
 
 * Update and fix BP compatibility
 * Fix workflow input ID
-
 
 <h4>3.6.1</h4>
 
 * Update compatibility notice
 * Update BP compatibility
 * Remove deprecated function calls
-
-
 
 <h4>3.6</h4>
 
@@ -242,19 +244,13 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 * respect password-protected post comment visibility
 * additional hooks for plugins
 
-
-
 <h4>3.5.7</h4>
 
 * Critical fix to account for the change in the way comments are "walked" in WordPress 3.8
 
-
-
 <h4>3.5.6</h4>
 
 * Restores compatibility with JetPack 2.7 which parses content in the document head
-
-
 
 <h4>3.5.5</h4>
 
@@ -262,20 +258,17 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 * Allows switching between Visual and HTML editor in comment form
 * Introduces featured images to pages and posts
 
-
 <h4>3.4 onwards</h4>
 
 The merged plugins and theme.
 
 * See the [commits on GitHub](https://github.com/IFBook/commentpress-core/commits/master)
 
-
 <h4>Merging 3.3.6 to 3.4</h4>
 
 The merging process for the plugins and theme.
 
 * See the [commits on GitHub](https://github.com/IFBook/commentpress/commits/master)
-
 
 <h4>Up to 3.3.6</h4>
 
