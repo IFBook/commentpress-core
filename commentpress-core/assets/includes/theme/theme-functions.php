@@ -2920,11 +2920,21 @@ function commentpress_add_wp_editor() {
 
 	// create editor
 	wp_editor(
-
 		'', // initial content
 		'comment', // id of comment textarea
 		$settings
+	);
 
+	// access WP version
+	global $wp_version;
+
+	// add styles
+	wp_enqueue_style(
+		'commentpress-editor-css',
+		wp_admin_css_uri( 'css/edit' ),
+		array( 'dashicons', 'open-sans' ),
+		$wp_version, // version
+		'all' // media
 	);
 
 	// don't show textarea
