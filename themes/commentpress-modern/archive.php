@@ -25,7 +25,7 @@ $cp_page_navigation = apply_filters(
 );
 
 // load it if we find it
-if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation );
+if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 ?>
 
@@ -109,7 +109,7 @@ if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation );
 <?php
 
 // include page_navigation again
-if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation );
+if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 ?>
 </div><!-- /page_nav_lower -->

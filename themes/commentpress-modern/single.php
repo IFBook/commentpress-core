@@ -151,7 +151,7 @@ $cp_page_navigation = apply_filters(
 if ( ! commentpress_has_feature_image() ) {
 
 	// load it if we find it
-	if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation );
+	if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 }
 
@@ -380,7 +380,7 @@ if ( $tabs_class != '' ) {
 <?php
 
 // include page_navigation again
-if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation );
+if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 ?>
 </div><!-- /page_nav_lower -->
