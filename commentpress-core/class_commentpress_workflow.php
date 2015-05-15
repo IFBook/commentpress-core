@@ -314,7 +314,7 @@ class CommentpressCoreWorkflow {
 			if ( $original !== '' ) {
 
 				// add the data
-				add_post_meta( $post->ID, $key, esc_sql( $original ) );
+				add_post_meta( $post->ID, $key, $original, true );
 
 			}
 
@@ -348,7 +348,7 @@ class CommentpressCoreWorkflow {
 			if ( $literal !== '' ) {
 
 				// add the data
-				add_post_meta( $post->ID, $key, esc_sql( $literal ) );
+				add_post_meta( $post->ID, $key, $literal, true );
 
 			}
 
@@ -405,7 +405,7 @@ class CommentpressCoreWorkflow {
 			if ( $original != '' ) {
 
 				// add the data
-				add_post_meta( $new_post_id, $key, esc_sql( $original ) );
+				add_post_meta( $new_post_id, $key, $original, true );
 
 			}
 
@@ -439,7 +439,7 @@ class CommentpressCoreWorkflow {
 			if ( $literal != '' ) {
 
 				// add the data
-				add_post_meta( $new_post_id, $key, esc_sql( $literal ) );
+				add_post_meta( $new_post_id, $key, $literal, true );
 
 			}
 
@@ -510,6 +510,13 @@ class CommentpressCoreWorkflow {
 			add_action( 'cp_workflow_save_copy', array( $this, 'workflow_save_copy' ), 21, 1 );
 
 		}
+
+		// create custom filters that mirror 'the_content'
+		add_filter( 'cp_workflow_richtext_content', 'wptexturize' );
+		add_filter( 'cp_workflow_richtext_content', 'convert_smilies' );
+		add_filter( 'cp_workflow_richtext_content', 'convert_chars' );
+		add_filter( 'cp_workflow_richtext_content', 'wpautop' );
+		add_filter( 'cp_workflow_richtext_content', 'shortcode_unautop' );
 
 	}
 

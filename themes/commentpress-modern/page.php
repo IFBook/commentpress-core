@@ -314,7 +314,7 @@
 			);
 		?></h2>
 
-		<?php echo wpautop(convert_chars(wptexturize( stripslashes( $literal ) ))); ?>
+		<?php echo apply_filters( 'cp_workflow_richtext_content', $literal ); ?>
 
 		</div><!-- /post -->
 
@@ -341,7 +341,7 @@
 			);
 		?></h2>
 
-		<?php echo wpautop(convert_chars(wptexturize( stripslashes( $original ) ))); ?>
+		<?php echo apply_filters( 'cp_workflow_richtext_content', $original ); ?>
 
 		</div><!-- /post -->
 
