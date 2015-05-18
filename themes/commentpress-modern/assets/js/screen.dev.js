@@ -2056,7 +2056,7 @@ function commentpress_setup_page_click_actions() {
 
 		// get selection
 		url = jQuery( this ).parent().attr('href');
-		console.log( url );
+		//console.log( url );
 
 		// did we get one?
 		if ( url ) {
