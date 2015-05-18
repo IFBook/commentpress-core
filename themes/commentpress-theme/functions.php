@@ -151,7 +151,7 @@ function commentpress_enqueue_theme_styles() {
 	wp_enqueue_style(
 
 		'cp_buddypress_css',
-		get_template_directory_uri() . '/assets/css/bp-overrides'.$dev.'.css',
+		get_template_directory_uri() . '/assets/css/bp-overrides' . $dev . '.css',
 		array( 'cp_layout_css' ),
 		COMMENTPRESS_VERSION, // version
 		'all' // media
@@ -240,7 +240,7 @@ function commentpress_enqueue_scripts_and_styles() {
 	wp_enqueue_style(
 
 		'cp_typography_css',
-		get_template_directory_uri() . '/assets/css/typography'.$dev.'.css',
+		get_template_directory_uri() . '/assets/css/typography' . $dev . '.css',
 		array( 'cp_reset_css' ),
 		COMMENTPRESS_VERSION, // version
 		'all' // media
@@ -251,7 +251,7 @@ function commentpress_enqueue_scripts_and_styles() {
 	wp_enqueue_style(
 
 		'cp_layout_css',
-		get_template_directory_uri() . '/assets/css/layout'.$dev.'.css',
+		get_template_directory_uri() . '/assets/css/layout' . $dev . '.css',
 		array( 'cp_typography_css' ),
 		COMMENTPRESS_VERSION, // version
 		'all' // media
@@ -277,7 +277,7 @@ function commentpress_enqueue_scripts_and_styles() {
 	wp_enqueue_style(
 
 		'cp_colours_css',
-		get_template_directory_uri() . '/assets/css/colours-01'.$dev.'.css',
+		get_template_directory_uri() . '/assets/css/colours-01' . $dev . '.css',
 		array( 'cp_webfont_css' ),
 		COMMENTPRESS_VERSION, // version
 		'all' // media
@@ -301,7 +301,7 @@ function commentpress_enqueue_scripts_and_styles() {
 		wp_enqueue_script(
 
 			'cp_common_js',
-			get_template_directory_uri() . '/assets/js/cp_js_common'.$dev.'.js',
+			get_template_directory_uri() . '/assets/js/cp_js_common' . $dev . '.js',
 			array( 'jquery_commentpress' ),
 			COMMENTPRESS_VERSION // version
 
@@ -318,7 +318,7 @@ function commentpress_enqueue_scripts_and_styles() {
 			wp_enqueue_script(
 
 				'cp_form',
-				get_template_directory_uri() . '/assets/js/cp_js_form'.$dev.'.js',
+				get_template_directory_uri() . '/assets/js/cp_js_form' . $dev . '.js',
 				array( 'cp_common_js' ),
 				COMMENTPRESS_VERSION // version
 
@@ -381,7 +381,7 @@ function commentpress_enqueue_print_styles() {
 	wp_enqueue_style(
 
 		'cp_print_css',
-		get_template_directory_uri() . '/assets/css/print'.$dev.'.css',
+		get_template_directory_uri() . '/assets/css/print' . $dev . '.css',
 		array( 'cp_layout_css' ),
 		COMMENTPRESS_VERSION, // version
 		'print'
@@ -430,7 +430,7 @@ function commentpress_header() {
 	// do we have a background-image?
 	if ( $header_image ) {
 
-		$bg_image = 'background-image: url("'.$header_image.'");';
+		$bg_image = 'background-image: url("' . $header_image . '");';
 
 	}
 
@@ -449,11 +449,11 @@ function commentpress_header() {
 
 			// if empty, we need to use default
 			if ( $text_color == '' ) {
-				$css = 'color: #'.HEADER_TEXTCOLOR.';';
+				$css = 'color: #' . HEADER_TEXTCOLOR . ';';
 			} else {
 
 				// use the custom one. I know this amounts to the same thing.
-				$css = 'color: #'.$text_color.';';
+				$css = 'color: #' . $text_color . ';';
 			}
 
 		}
@@ -464,7 +464,7 @@ function commentpress_header() {
 		if ( $text_color == 'blank' OR $text_color == '' ) {
 			$css = 'text-indent: -9999px;';
 		} else {
-			$css = 'color: #'.$text_color.';';
+			$css = 'color: #' . $text_color . ';';
 		}
 
 	}
@@ -475,8 +475,8 @@ function commentpress_header() {
 
 #book_header
 {
-	background-color: #'.$bg_colour.';
-	'.$bg_image.'
+	background-color: #' . $bg_colour . ';
+	' . $bg_image . '
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -488,12 +488,12 @@ function commentpress_header() {
 #title h1,
 #title h1 a
 {
-	'.$css.'
+	' . $css . '
 }
 
 #book_header #tagline
 {
-	'.$css.'
+	' . $css . '
 }
 
 </style>
@@ -573,13 +573,13 @@ function commentpress_page_navigation( $with_comments = false ) {
 
 			// set title
 			$title = __( 'Next page with comments', 'commentpress-core' );
-			$img = '<img src="'.get_template_directory_uri().'/assets/images/next.png" />';
+			$img = '<img src="' . get_template_directory_uri() . '/assets/images/next.png" />';
 
 		}
 
 		// define list item
-		$next_page_html = $before_next.
-						  $img.'<a href="'.get_permalink( $next_page->ID ).'" id="next_page" class="css_btn" title="'.esc_attr( $title ).'">'.$title.'</a>'.$after_next;
+		$next_page_html = $before_next .
+						  $img . '<a href="' . get_permalink( $next_page->ID ) . '" id="next_page" class="css_btn" title="' . esc_attr( $title ) . '">' . $title . '</a>' . $after_next;
 
 	}
 
@@ -601,13 +601,13 @@ function commentpress_page_navigation( $with_comments = false ) {
 
 			// set title
 			$title = __( 'Previous page with comments', 'commentpress-core' );
-			$img = '<img src="'.get_template_directory_uri().'/assets/images/prev.png" />';
+			$img = '<img src="' . get_template_directory_uri() . '/assets/images/prev.png" />';
 
 		}
 
 		// define list item
-		$prev_page_html = $before_prev.
-						  $img.'<a href="'.get_permalink( $prev_page->ID ).'" id="previous_page" class="css_btn" title="'.esc_attr( $title ).'">'.$title.'</a>'.$after_prev;
+		$prev_page_html = $before_prev .
+						  $img . '<a href="' . get_permalink( $prev_page->ID ) . '" id="previous_page" class="css_btn" title="' . esc_attr( $title ) . '">' . $title . '</a>' . $after_prev;
 
 	}
 
@@ -618,7 +618,7 @@ function commentpress_page_navigation( $with_comments = false ) {
 	if ( $next_page_html != '' OR $prev_page_html != '' ) {
 
 		// construct nav list items
-		$nav_list = $prev_page_html."\n".$next_page_html."\n";
+		$nav_list = $prev_page_html . "\n" . $next_page_html . "\n";
 
 	}
 
@@ -698,12 +698,12 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 	if ( count( $posts ) == 0 ) return $html;
 
 	// open ul
-	$html .= '<ul class="all_comments_listing">'."\n\n";
+	$html .= '<ul class="all_comments_listing">' . "\n\n";
 
 	foreach( $posts AS $_post ) {
 
 		// open li
-		$html .= '<li class="page_li"><!-- page li -->'."\n\n";
+		$html .= '<li class="page_li"><!-- page li -->' . "\n\n";
 
 		// define comment count
 		$comment_count_text = sprintf( _n(
@@ -724,25 +724,25 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 		), $post_comment_counts[$_post->ID] );
 
 		// show it
-		$html .= '<h3>'.esc_html( $_post->post_title ).' <span>('.$comment_count_text.')</span></h3>'."\n\n";
+		$html .= '<h3>' . esc_html( $_post->post_title ) . ' <span>(' . $comment_count_text . ')</span></h3>' . "\n\n";
 
 		// open comments div
-		$html .= '<div class="item_body">'."\n\n";
+		$html .= '<div class="item_body">' . "\n\n";
 
 		// open ul
-		$html .= '<ul class="item_ul">'."\n\n";
+		$html .= '<ul class="item_ul">' . "\n\n";
 
 		// open li
-		$html .= '<li class="item_li"><!-- item li -->'."\n\n";
+		$html .= '<li class="item_li"><!-- item li -->' . "\n\n";
 
 		// check for password-protected
 		if ( post_password_required( $_post->ID ) ) {
 
 			// construct notice
-			$_comment_body = '<div class="comment-content">'.__( 'Password protected', 'commentpress-core' ).'</div>'."\n";
+			$_comment_body = '<div class="comment-content">' . __( 'Password protected', 'commentpress-core' ) . '</div>' . "\n";
 
 			// add notice
-			$html .= '<div class="comment_wrapper">'."\n".$_comment_body.'</div>'."\n\n";
+			$html .= '<div class="comment_wrapper">' . "\n" . $_comment_body . '</div>' . "\n\n";
 
 		} else {
 
@@ -779,21 +779,21 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 		}
 
 		// close li
-		$html .= '</li><!-- /item li -->'."\n\n";
+		$html .= '</li><!-- /item li -->' . "\n\n";
 
 		// close ul
-		$html .= '</ul>'."\n\n";
+		$html .= '</ul>' . "\n\n";
 
 		// close item div
-		$html .= '</div><!-- /item_body -->'."\n\n";
+		$html .= '</div><!-- /item_body -->' . "\n\n";
 
 		// close li
-		$html .= '</li><!-- /page li -->'."\n\n\n\n";
+		$html .= '</li><!-- /page li -->' . "\n\n\n\n";
 
 	}
 
 	// close ul
-	$html .= '</ul><!-- /all_comments_listing -->'."\n\n";
+	$html .= '</ul><!-- /all_comments_listing -->' . "\n\n";
 
 	// --<
 	return $html;
@@ -827,7 +827,7 @@ function commentpress_get_all_comments_page_content() {
 	);
 
 	// set title
-	$_page_content = '<h2 class="post_title">'.$pagetitle.'</h2>'."\n\n";
+	$_page_content = '<h2 class="post_title">' . $pagetitle . '</h2>' . "\n\n";
 
 	// get page or post
 	$page_or_post = $commentpress_core->get_list_option();
@@ -854,10 +854,10 @@ function commentpress_get_all_comments_page_content() {
 	if ( $_data != '' ) {
 
 		// set title
-		$_page_content .= '<p class="comments_hl">'.$title.'</p>'."\n\n";
+		$_page_content .= '<p class="comments_hl">' . $title . '</p>' . "\n\n";
 
 		// set data
-		$_page_content .= $_data."\n\n";
+		$_page_content .= $_data . "\n\n";
 
 	}
 
@@ -874,10 +874,10 @@ function commentpress_get_all_comments_page_content() {
 	if ( $_data != '' ) {
 
 		// set title
-		$_page_content .= '<p class="comments_hl">'.$title.'</p>'."\n\n";
+		$_page_content .= '<p class="comments_hl">' . $title . '</p>' . "\n\n";
 
 		// set data
-		$_page_content .= $_data."\n\n";
+		$_page_content .= $_data . "\n\n";
 
 	}
 
@@ -922,7 +922,7 @@ function commentpress_add_loginout_id( $link ) {
 	}
 
 	// add css
-	$link = str_replace( '<a ', '<a id="'.$_id.'" class="button" ', $link );
+	$link = str_replace( '<a ', '<a id="' . $_id . '" class="button" ', $link );
 
 	// --<
 	return $link;
