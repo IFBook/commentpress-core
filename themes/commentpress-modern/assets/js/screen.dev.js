@@ -97,7 +97,11 @@ if ( cp_wp_adminbar == 'y' ) {
 
 
 
-// add/remove classes everytime the window resize event fires
+/**
+ * Perform actions when the viewport is resized
+ *
+ * @return void
+ */
 jQuery(window).resize( function() {
 
 	/*
@@ -1480,6 +1484,8 @@ function cp_scroll_to_comment_on_load() {
 /**
  * Does what a click on a comment icon should do
  *
+ * @param string text_sig The text signature to scroll to
+ * @param string mode Flag which determines where to scroll to ('marker' or 'auto')
  * @return void
  */
 function cp_do_comment_icon_action( text_sig, mode ) {
@@ -1963,7 +1969,7 @@ function commentpress_setup_page_click_actions() {
 	jQuery('span.para_marker a').unbind( 'click' );
 
 	/**
-	 * Clicking on the little comment icon
+	 * Clicking on the paragraph icon to the left of a paragraph
 	 *
 	 * @return false
 	 */
@@ -1992,7 +1998,7 @@ function commentpress_setup_page_click_actions() {
 	jQuery('span.para_marker a').unbind( 'mouseleave' );
 
 	/**
-	 * Rolling onto the little comment icon
+	 * Rolling onto the paragraph icon to the left of a paragraph
 	 *
 	 * @return void
 	 */
@@ -2014,7 +2020,7 @@ function commentpress_setup_page_click_actions() {
 	);
 
 	/**
-	 * Rolling off the little comment icon
+	 * Rolling off the paragraph icon to the left of a paragraph
 	 *
 	 * @return void
 	 */
