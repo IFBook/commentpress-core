@@ -1749,6 +1749,23 @@ span.commenticonbox small.comment_count
 	line-height: 1;
 }
 
+/* enable visual cue for rollovers */
+#content .post span.para_marker a.js-hover
+{
+	/* color: #761D19; */
+}
+
+#content .post span.para_marker a.js-hover span
+{
+	font-weight: bold;
+}
+
+/* both ways */
+span.commenticonbox small.comment_count.js-hover
+{
+	font-weight: bold;
+}
+
 .post ul li.list_commenticon,
 .post ol li.list_commenticon
 {
