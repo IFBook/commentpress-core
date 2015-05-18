@@ -1877,11 +1877,11 @@ function commentpress_setup_para_permalink_icons() {
 
 
 /**
- * Set up clicks on comment icons attached to comment-blocks in post/page
+ * Set up actions on the title
  *
  * @return void
  */
-function commentpress_setup_page_click_actions() {
+function commentpress_setup_title_actions() {
 
 	// unbind first to allow repeated calls to this function
 	jQuery('.post_title a').unbind( 'click' );
@@ -1907,6 +1907,17 @@ function commentpress_setup_page_click_actions() {
 		return false;
 
 	});
+
+}
+
+
+
+/**
+ * Set up actions on the textblocks
+ *
+ * @return void
+ */
+function commentpress_setup_textblock_actions() {
 
 	// if mobile, we don't hide textblock meta
 	if ( cp_is_mobile == '0' ) {
@@ -1965,11 +1976,22 @@ function commentpress_setup_page_click_actions() {
 
 	});
 
+}
+
+
+
+/**
+ * Set up actions on the "paragraph" icons to the left of a textblock
+ *
+ * @return void
+ */
+function commentpress_setup_para_marker_actions() {
+
 	// unbind first to allow repeated calls to this function
 	jQuery('span.para_marker a').unbind( 'click' );
 
 	/**
-	 * Clicking on the paragraph icon to the left of a paragraph
+	 * Clicking on the paragraph
 	 *
 	 * @return false
 	 */
@@ -1998,7 +2020,7 @@ function commentpress_setup_page_click_actions() {
 	jQuery('span.para_marker a').unbind( 'mouseleave' );
 
 	/**
-	 * Rolling onto the paragraph icon to the left of a paragraph
+	 * Rolling onto the paragraph icon
 	 *
 	 * @return void
 	 */
@@ -2020,7 +2042,7 @@ function commentpress_setup_page_click_actions() {
 	);
 
 	/**
-	 * Rolling off the paragraph icon to the left of a paragraph
+	 * Rolling off the paragraph icon
 	 *
 	 * @return void
 	 */
@@ -2040,6 +2062,17 @@ function commentpress_setup_page_click_actions() {
 		}
 
 	);
+
+}
+
+
+
+/**
+ * Set up actions on the "paragraph" icons to the left of a textblock
+ *
+ * @return void
+ */
+function commentpress_setup_comment_permalink_copy_actions() {
 
 	// unbind first to allow repeated calls to this function
 	jQuery('.comment_permalink_copy').unbind( 'mouseup' );
@@ -2067,6 +2100,23 @@ function commentpress_setup_page_click_actions() {
 		}
 
 	});
+
+}
+
+
+
+/**
+ * Set up actions on items relating to textblocks in post/page
+ *
+ * @return void
+ */
+function commentpress_setup_page_click_actions() {
+
+	// call all the separate functions
+	commentpress_setup_title_actions();
+	commentpress_setup_textblock_actions();
+	commentpress_setup_para_marker_actions();
+	commentpress_setup_comment_permalink_copy_actions();
 
 }
 
