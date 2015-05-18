@@ -54,7 +54,8 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 // define vars
 var msie6, cp_header_height, cp_header_animating,
 	cp_toc_on_top, page_highlight, cp_header_minimised, cp_sidebar_minimised,
-	cp_container_top_max, cp_container_top_min;
+	cp_container_top_max, cp_container_top_min,
+	cp_textblock_marker_mode;
 
 
 
@@ -94,6 +95,9 @@ if ( cp_wp_adminbar == 'y' ) {
 	//cp_container_top_min = parseInt( cp_container_top_min ) + cp_wp_adminbar_height;
 
 }
+
+// init marker mode
+cp_textblock_marker_mode = 'marker';
 
 
 
@@ -1972,7 +1976,7 @@ function commentpress_setup_textblock_actions() {
 		text_sig = text_sig.split('textblock-')[1];
 
 		// use function
-		cp_do_comment_icon_action( text_sig, 'marker' );
+		cp_do_comment_icon_action( text_sig, cp_textblock_marker_mode );
 
 	});
 
