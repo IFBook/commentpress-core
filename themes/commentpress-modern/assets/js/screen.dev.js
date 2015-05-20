@@ -83,7 +83,7 @@ CommentPress.settings.textblock = new function() {
 		return this.marker_mode;
 	}
 
-} // end CommentPress class
+} // end CommentPress textblock class
 
 
 
@@ -171,8 +171,6 @@ function cp_page_setup() {
 	// init styles
 	styles = '';
 
-
-
 	// wrap with js test
 	if ( document.getElementById ) {
 
@@ -197,12 +195,8 @@ function cp_page_setup() {
 
 		}
 
-
-
 		// avoid flash of all-comments hidden elements
 		styles += 'ul.all_comments_listing div.item_body { display: none; } ';
-
-
 
 		// is the admin bar shown?
 		if ( cp_wp_adminbar == 'y' ) {
@@ -223,8 +217,6 @@ function cp_page_setup() {
 			}
 
 		}
-
-
 
 		// are subpages to be shown?
 		if ( cp_show_subpages == '0' ) {
@@ -295,9 +287,6 @@ cp_page_setup();
 
 
 
-
-
-
 /**
  * Get header offset
  *
@@ -338,9 +327,6 @@ function commentpress_get_header_offset() {
 
 
 
-
-
-
 /**
  * Scroll page to target
  *
@@ -348,52 +334,8 @@ function commentpress_get_header_offset() {
  * @return void
  */
 function commentpress_scroll_page( target ) {
-
-	//console.log( target );
-
-	// bail if we didn't get a valid target
-	if ( typeof target === 'undefined' ) { return; }
-
-	// if IE6, then we have to scroll #wrapper
-	if ( msie6 ) {
-
-		//
-		jQuery(window).scrollTo( 0, 0 );
-
-		// scroll container to title
-		jQuery('#main_wrapper').scrollTo(
-			target,
-			{
-				duration: (cp_scroll_speed * 1.5),
-				axis: 'y',
-				offset: commentpress_get_header_offset()
-			}, function () {
-				// when done, make sure page is ok
-				jQuery(window).scrollTo( 0, 1 );
-			}
-		);
-
-	} else {
-
-		// only scroll if not mobile (but allow tablets)
-		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
-
-			// scroll page
-			jQuery.scrollTo(
-				target,
-				{
-					duration: (cp_scroll_speed * 1.5),
-					axis: 'y',
-					offset: commentpress_get_header_offset()
-				}
-			);
-
-		}
-
-	}
-
+	jQuery.scroll_page( target );
 }
-
 
 
 
@@ -405,50 +347,8 @@ function commentpress_scroll_page( target ) {
  * @return void
  */
 function cp_quick_scroll_page( target, duration ) {
-
-	// bail if we didn't get a valid target
-	if ( typeof target === 'undefined' ) { return; }
-
-	// if IE6, then we have to scroll #wrapper
-	if ( msie6 ) {
-
-		//
-		jQuery(window).scrollTo( 0, 0 );
-
-		// scroll container to title
-		jQuery('#main_wrapper').scrollTo(
-			target,
-			{
-				duration: (duration * 1.5),
-				axis: 'y',
-				offset: commentpress_get_header_offset()
-			}, function () {
-				// when done, make sure page is ok
-				jQuery(window).scrollTo( 0, 1 );
-			}
-		);
-
-	} else {
-
-		// only scroll if not mobile (but allow tablets)
-		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
-
-			// scroll page
-			jQuery.scrollTo(
-				target,
-				{
-					duration: (duration * 1.5),
-					axis: 'y',
-					offset: commentpress_get_header_offset()
-				}
-			);
-
-		}
-
-	}
-
+	jQuery.quick_scroll_page( target, duration );
 }
-
 
 
 
@@ -515,7 +415,6 @@ function commentpress_scroll_to_top( target, speed ) {
 
 
 
-
 /**
  * Highlight the comment
  *
@@ -523,34 +422,8 @@ function commentpress_scroll_to_top( target, speed ) {
  * @return void
  */
 function cp_flash_comment_header( comment ) {
-
-	// add notransition class
-	comment.addClass( 'notransition' );
-
-	// remove existing classes
-	if ( comment.hasClass( 'comment-fade' ) ) {
-		comment.removeClass( 'comment-fade' );
-	}
-	if ( comment.hasClass( 'comment-highlighted' ) ) {
-		comment.removeClass( 'comment-highlighted' );
-	}
-
-	// highlight
-	comment.addClass( 'comment-highlighted' );
-
-	// remove notransition class
-	comment.removeClass( 'notransition' );
-
-	// trigger reflow
-	comment.height();
-
-	// animate to existing bg (from css file)
-	comment.addClass( 'comment-fade' );
-
+	jQuery.highlight_comment( comment );
 }
-
-
-
 
 
 
@@ -563,52 +436,8 @@ function cp_flash_comment_header( comment ) {
  * @return void
  */
 function cp_scroll_comments( target, speed, flash ) {
-
-	// preserve compatibility with older calls
-    switch(arguments.length) {
-        case 2: flash = 'noflash'; break;
-        case 3: break;
-        default: throw new Error('illegal argument count');
-    }
-
-	//console.log( 'scroll: ' + flash );
-
-	// only scroll if not mobile (but allow tablets)
-	if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
-
-		// either flash at the end or not..
-		if ( flash == 'flash' ) {
-
-			//console.log( target.prop( 'id' ).split( '-' )[1] );
-
-			// add highlight class
-			//jQuery( '#li-comment-' + target.prop( 'id' ).split( '-' )[1] ).addClass( 'flash-comment' );
-
-			// scroll to new comment
-			jQuery('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
-				target,
-				{
-					duration: speed,
-					onAfter: function() {
-
-						// highlight header
-						cp_flash_comment_header( target );
-
-					}
-				}
-			);
-
-		} else {
-
-			// scroll comment area to para heading
-			jQuery('#comments_sidebar .sidebar_contents_wrapper').scrollTo( target, {duration: speed} );
-
-		}
-
-	}
-
+	jQuery.scroll_comments( target, speed, flash );
 }
-
 
 
 
@@ -619,258 +448,13 @@ function cp_scroll_comments( target, speed, flash ) {
  */
 function commentpress_setup_comment_headers() {
 
-	// unbind first to allow repeated calls to this function
-	jQuery('.comment-wrapper').unbind( 'mouseenter' );
-	jQuery('.comment-wrapper').unbind( 'mouseleave' );
-
-	/**
-	 * Rolling onto the little comment icon
-	 *
-	 * @return void
-	 */
-	jQuery('.comment-wrapper').mouseenter(
-
-		function( event ) {
-
-			// simulate rollover
-			jQuery(this).addClass( 'background-highlight' );
-
-		}
-
-	);
-
-	/**
-	 * Rolling off the little comment icon
-	 *
-	 * @return void
-	 */
-	jQuery('.comment-wrapper').mouseleave(
-
-		function( event ) {
-
-			// simulate rollout
-			jQuery(this).removeClass( 'background-highlight' );
-
-		}
-
-	);
-
-
-
-	// only carry on past here on normal cp pages
-	if ( cp_special_page == '1' ) { return; }
-
-	// unbind first to allow repeated calls to this function
-	jQuery('a.comment_block_permalink').unbind( 'click' );
-
-	// set pointer
-	jQuery('a.comment_block_permalink').css( 'cursor', 'pointer' );
-
-	/**
-	 * Comment page headings click
-	 *
-	 * @param object event The clicked object
-	 * @return false
-	 */
-	jQuery('a.comment_block_permalink').click( function( event ) {
-
-		// define vars
-		var text_sig, para_wrapper, comment_list, opening, visible, textblock,
-			post_id, para_id, para_num, has_form;
-
-
-		// override event
-		event.preventDefault();
-
-		// get text_sig
-		text_sig = jQuery(this).parent().prop( 'id' ).split('para_heading-')[1];
-		//console.log( 'text_sig: ' + text_sig );
-
-		// get para wrapper
-		para_wrapper = jQuery(this).parent().next('div.paragraph_wrapper');
-
-		// get comment list
-		comment_list = jQuery( '#para_wrapper-' + text_sig ).find('ol.commentlist' );
-
-
-
-		// init
-		opening = false;
-
-		// get visibility
-		visible = para_wrapper.css('display');
-
-		// override
-		if ( visible == 'none' ) { opening = true; }
-
-
-
-		// did we get one at all?
-		if ( 'undefined' !== typeof text_sig ) {
-
-			//console.log( opening );
-			//alert( 'comment_block_permalink click' );
-
-			// if not the whole page or pings...
-			if( text_sig !== '' && text_sig != 'pingbacksandtrackbacks' ) {
-
-				// get text block
-				textblock = jQuery('#textblock-' + text_sig);
-
-				// only if opening
-				if ( opening ) {
-
-					// unhighlight paragraphs
-					jQuery.unhighlight_para();
-
-					// highlight this paragraph
-					jQuery.highlight_para( textblock );
-
-					// scroll page
-					commentpress_scroll_page( textblock );
-
-				} else {
-
-					// if encouraging commenting
-					if ( cp_promote_reading == '0' ) {
-
-						// closing with a comment form
-						if ( jQuery( '#para_wrapper-' + text_sig ).find('#respond' )[0] ) {
-
-							// unhighlight paragraphs
-							jQuery.unhighlight_para();
-
-						} else {
-
-							// if we have no comments, always highlight
-							if ( !comment_list[0] ) {
-
-								// unhighlight paragraphs
-								jQuery.unhighlight_para();
-
-								// highlight this paragraph
-								jQuery.highlight_para( textblock );
-
-								// scroll page
-								commentpress_scroll_page( textblock );
-
-							}
-
-						}
-
-					} else {
-
-						// if ours is highlighted
-						if ( jQuery.is_highlighted( textblock ) ) {
-
-							// unhighlight paragraphs
-							jQuery.unhighlight_para();
-
-						}
-
-					}
-
-				}
-
-			} else {
-
-				// unhighlight paragraphs
-				jQuery.unhighlight_para();
-
-				// only scroll if not pings
-				if ( text_sig != 'pingbacksandtrackbacks' ) {
-
-					// scroll to top
-					commentpress_scroll_to_top( 0, cp_scroll_speed );
-
-					// toggle page highlight flag
-					page_highlight = !page_highlight;
-
-				}
-
-			}
-
-		} // end defined check
-
-
-
-		// if encouraging commenting...
-		if ( cp_promote_reading == '0' && text_sig != 'pingbacksandtrackbacks' ) {
-
-			// are comments open?
-			if ( cp_comments_open == 'y' ) {
-
-				// get comment post ID
-				post_id = jQuery('#comment_post_ID').prop('value');
-				para_id = jQuery('#para_wrapper-' + text_sig + ' .reply_to_para').prop('id');
-				para_num = para_id.split('-')[1];
-
-				// do we have the comment form?
-				has_form = jQuery( '#para_wrapper-' + text_sig ).find( '#respond' )[0];
-
-				// if we have a comment list
-				if ( comment_list.length > 0 && comment_list[0] ) {
-
-					//console.log( 'has' );
-
-					// are we closing with no reply form?
-					if ( !opening && !has_form ) {
-
-						// skip moving form
-
-					} else {
-
-						// move form to para
-						addComment.moveFormToPara( para_num, text_sig, post_id );
-
-					}
-
-				} else {
-
-					// if we have no respond
-					if ( !has_form ) {
-
-						//console.log( 'none' );
-						para_wrapper.css('display','none');
-						opening = true;
-
-					}
-
-					// move form to para
-					addComment.moveFormToPara( para_num, text_sig, post_id );
-
-				}
-
-			}
-
-		}
-
-
-
-		// toggle next paragraph_wrapper
-		para_wrapper.slideToggle( 'slow', function() {
-
-			// only scroll if opening
-			if ( opening ) {
-
-				// scroll comments
-				cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
-
-			}
-
-		});
-
-
-
-		// --<
-		return false;
-
-	});
+	// the modern theme uses a "rollover"
+	jQuery.reset_comment_actions();
+
+	// set up headers
+	jQuery.setup_comment_headers();
 
 }
-
-
-
 
 
 
@@ -881,47 +465,8 @@ function commentpress_setup_comment_headers() {
  * @return string text_sig The text signature
  */
 function cp_get_text_sig_by_comment_id( cid ) {
-
-	// define vars
-	var comment_id, para_wrapper_array, text_sig, item;
-
-	// init
-	text_sig = '';
-
-	// are we passing the full id?
-	if ( cid.match('#comment-' ) ) {
-
-		// get comment ID
-		comment_id = parseInt( cid.split('#comment-')[1] );
-
-	}
-
-	// get array of parent paragraph_wrapper divs
-	para_wrapper_array = jQuery('#comment-' + comment_id)
-								.parents('div.paragraph_wrapper')
-								.map( function () {
-									return this;
-								});
-
-	// did we get one?
-	if ( para_wrapper_array.length > 0 ) {
-
-		// get the item
-		item = jQuery(para_wrapper_array[0]);
-
-		// move form to para
-		text_sig = item.prop('id').split('-')[1];
-
-	}
-
-
-
-	// --<
-	return text_sig;
-
+	return jQuery.get_text_sig_by_comment_id( cid );
 }
-
-
 
 
 
@@ -932,41 +477,8 @@ function cp_get_text_sig_by_comment_id( cid ) {
  * @return void
  */
 function commentpress_scroll_page_to_textblock( text_sig ) {
-
-	// define vars
-	var textblock;
-
-	// if not the whole page...
-	if( text_sig !== '' ) {
-
-		// get text block
-		textblock = jQuery('#textblock-' + text_sig);
-
-		// highlight this paragraph
-		jQuery.highlight_para( textblock );
-
-		// scroll page
-		commentpress_scroll_page( textblock );
-
-	} else {
-
-		// only scroll if page is not highlighted
-		if ( page_highlight === false ) {
-
-			// scroll to top
-			commentpress_scroll_to_top( 0, cp_scroll_speed );
-
-		}
-
-		// toggle page highlight flag
-		page_highlight = !page_highlight;
-
-	}
-
+	jQuery.scroll_page_to_textblock( text_sig );
 }
-
-
-
 
 
 
@@ -976,67 +488,8 @@ function commentpress_scroll_page_to_textblock( text_sig ) {
  * @return void
  */
 function commentpress_enable_comment_permalink_clicks() {
-
-	// unbind first to allow repeated calls to this function
-	jQuery('a.comment_permalink').unbind( 'click' );
-
-	jQuery('a.comment_permalink').click( function( event ) {
-
-		// define vars
-		var comment_id, header_offset, text_sig;
-
-		// override event
-		event.preventDefault();
-
-		// get comment id
-		comment_id = this.href.split('#')[1];
-
-		// if special page
-		if ( cp_special_page == '1' ) {
-
-			// get offset
-			header_offset = commentpress_get_header_offset();
-
-			// scroll to comment
-			jQuery.scrollTo(
-				jQuery('#'+comment_id),
-				{
-					duration: cp_scroll_speed,
-					axis:'y',
-					offset: header_offset
-				}
-			);
-
-		} else {
-
-			// clear other highlights
-			jQuery.unhighlight_para();
-
-			// get text sig
-			text_sig = cp_get_text_sig_by_comment_id( '#'+comment_id );
-
-			// if not a pingback...
-			if ( text_sig != 'pingbacksandtrackbacks' ) {
-
-				// scroll page to it
-				commentpress_scroll_page_to_textblock( text_sig );
-
-			}
-
-			// scroll comments
-			cp_scroll_comments( jQuery('#'+comment_id), cp_scroll_speed );
-
-		}
-
-		// --<
-		return false;
-
-	});
-
+	jQuery.enable_comment_permalink_clicks();
 }
-
-
-
 
 
 
@@ -1046,50 +499,8 @@ function commentpress_enable_comment_permalink_clicks() {
  * @return false
  */
 function commentpress_setup_context_headers() {
-
-	// unbind first to allow repeated calls to this function
-	jQuery('h3.activity_heading').unbind( 'click' );
-
-	// set pointer
-	jQuery('h3.activity_heading').css( 'cursor', 'pointer' );
-
-	/**
-	 * Activity column headings click
-	 *
-	 * @return false
-	 */
-	jQuery('h3.activity_heading').click( function( event ) {
-
-		// define vars
-		var para_wrapper;
-
-		// override event
-		event.preventDefault();
-
-		// get para wrapper
-		para_wrapper = jQuery(this).next('div.paragraph_wrapper');
-		//console.log( para_wrapper );
-
-		// set width to prevent rendering error
-		para_wrapper.css( 'width', jQuery(this).parent().css( 'width' ) );
-
-		// toggle next paragraph_wrapper
-		para_wrapper.slideToggle( 'slow', function() {
-
-			// when finished, reset width to auto
-			para_wrapper.css( 'width', 'auto' );
-
-		} );
-
-		// --<
-		return false;
-
-	});
-
+	jQuery.setup_context_headers();
 }
-
-
-
 
 
 
@@ -1099,109 +510,8 @@ function commentpress_setup_context_headers() {
  * @return void
  */
 function cp_enable_context_clicks() {
-
-	// allow links to work when not on commentable page
-	if ( cp_special_page == '1' ) {
-		return;
-	}
-
-	// unbind first to allow repeated calls to this function
-	jQuery('a.comment_on_post').unbind( 'click' );
-
-	jQuery('a.comment_on_post').click( function( event ) {
-
-		// define vars
-		var comment_id, comment, para_wrapper_array, item, header_offset, text_sig;
-
-		// override event
-		event.preventDefault();
-
-		// show comments sidebar
-		cp_activate_sidebar( 'comments' );
-
-		// get comment id
-		comment_id = this.href.split('#')[1];
-
-		// get comment
-		comment = jQuery('#'+comment_id);
-
-		//console.log( comment );
-
-		// get array of parent paragraph_wrapper divs
-		para_wrapper_array = comment
-									.parents('div.paragraph_wrapper')
-									.map( function () {
-										return this;
-									});
-
-		// did we get one?
-		if ( para_wrapper_array.length > 0 ) {
-
-			// get the item
-			item = jQuery(para_wrapper_array[0]);
-
-			// show block
-			item.show();
-
-			// if special page
-			if ( cp_special_page == '1' ) {
-
-				// get offset
-				header_offset = commentpress_get_header_offset();
-
-				// scroll to comment
-				jQuery.scrollTo(
-					comment,
-					{
-						duration: cp_scroll_speed,
-						axis:'y',
-						offset: header_offset
-					}
-				);
-
-			} else {
-
-				// clear other highlights
-				jQuery.unhighlight_para();
-
-				// highlight para
-				text_sig = item.prop('id').split('-')[1];
-
-				// scroll page to it
-				commentpress_scroll_page_to_textblock( text_sig );
-
-				//console.log( '#li-comment-' + comment_id );
-
-				// add highlight class
-				//jQuery( '#li-comment-' + comment_id ).addClass( 'flash-comment' );
-
-				// scroll to new comment
-				jQuery('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
-					comment,
-					{
-						duration: cp_scroll_speed,
-						onAfter: function() {
-
-							// highlight header
-							cp_flash_comment_header( comment );
-
-						}
-					}
-				);
-
-			}
-
-		}
-
-		// --<
-		return false;
-
-	});
-
+	jQuery.enable_context_clicks();
 }
-
-
-
 
 
 
@@ -1446,74 +756,14 @@ function cp_scroll_to_anchor_on_load() {
 
 
 
-
-
-
 /**
  * Page load prodecure for special pages with comments in content
  *
  * @return void
  */
 function cp_scroll_to_comment_on_load() {
-
-	// define vars
-	var url, comment_id, comment;
-
-	// if there is an anchor in the URL...
-	url = document.location.toString();
-
-	// do we have a comment permalink?
-	if ( url.match( '#comment-' ) ) {
-
-		// get comment ID
-		comment_id = url.split('#comment-')[1];
-
-		// get comment in DOM
-		comment = jQuery( '#comment-' + comment_id );
-
-		// did we get one?
-		if ( comment.length ) {
-
-			// if IE6, then we have to scroll #wrapper
-			if ( msie6 ) {
-
-				// scroll to new comment
-				jQuery('#main_wrapper').scrollTo(
-					comment,
-					{
-						duration: cp_scroll_speed,
-						axis:'y',
-						offset: commentpress_get_header_offset()
-					}
-				);
-
-			} else {
-
-				// only scroll if not mobile (but allow tablets)
-				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
-
-					// scroll to new comment
-					jQuery.scrollTo(
-						comment,
-						{
-							duration: cp_scroll_speed,
-							axis:'y',
-							offset: commentpress_get_header_offset()
-						}
-					);
-
-				}
-
-			}
-
-		}
-
-	}
-
+	jQuery.on_load_scroll_to_comment();
 }
-
-
-
 
 
 
@@ -1819,96 +1069,14 @@ function cp_do_comment_icon_action( text_sig, mode ) {
 
 
 
-
-
-
 /**
  * Set up clicks on comment icons attached to comment-blocks in post/page
  *
  * @return void
  */
 function commentpress_setup_para_permalink_icons() {
-
-	// unbind first to allow repeated calls to this function
-	jQuery('a.para_permalink').unbind( 'click' );
-
-	/**
-	 * Clicking on the little comment icon
-	 *
-	 * @return false
-	 */
-	jQuery('a.para_permalink').click( function( event ) {
-
-		// define vars
-		var text_sig;
-
-		// override event
-		event.preventDefault();
-
-		// get text signature
-		text_sig = jQuery(this).prop('href').split('#')[1];
-		//console.log( text_sig );
-
-		// use function
-		cp_do_comment_icon_action( text_sig, 'auto' );
-
-		// --<
-		return false;
-
-	});
-
-	// unbind first to allow repeated calls to this function
-	jQuery('a.para_permalink').unbind( 'mouseenter' );
-	jQuery('a.para_permalink').unbind( 'mouseleave' );
-
-	/**
-	 * Rolling onto the little comment icon
-	 *
-	 * @return void
-	 */
-	jQuery('a.para_permalink').mouseenter(
-
-		function( event ) {
-
-			// define vars
-			var text_sig;
-
-			// get text signature
-			text_sig = jQuery(this).prop('href').split('#')[1];
-			//console.log( text_sig );
-
-			jQuery('span.para_marker a#' + text_sig).addClass( 'js-hover' );
-
-		}
-
-	);
-
-	/**
-	 * Rolling off the little comment icon
-	 *
-	 * @return void
-	 */
-	jQuery('a.para_permalink').mouseleave(
-
-		function( event ) {
-
-			// define vars
-			var text_sig;
-
-			// get text signature
-			text_sig = jQuery(this).prop('href').split('#')[1];
-			//console.log( text_sig );
-
-			jQuery('span.para_marker a#' + text_sig).removeClass( 'js-hover' );
-
-		}
-
-	);
-
+	jQuery.setup_textblock_comment_icons();
 }
-
-
-
 
 
 
@@ -1918,32 +1086,7 @@ function commentpress_setup_para_permalink_icons() {
  * @return void
  */
 function commentpress_setup_title_actions() {
-
-	// unbind first to allow repeated calls to this function
-	jQuery('.post_title a').unbind( 'click' );
-
-	/**
-	 * Clicking on the page/post title
-	 *
-	 * @return false
-	 */
-	jQuery('.post_title a').click( function( event ) {
-
-		// override event
-		event.preventDefault();
-
-		// get text signature
-		var text_sig = '';
-		//console.log( text_sig );
-
-		// use function
-		cp_do_comment_icon_action( text_sig, 'marker' );
-
-		// --<
-		return false;
-
-	});
-
+	jQuery.setup_title_actions();
 }
 
 
@@ -1954,64 +1097,7 @@ function commentpress_setup_title_actions() {
  * @return void
  */
 function commentpress_setup_textblock_actions() {
-
-	// if mobile, we don't hide textblock meta
-	if ( cp_is_mobile == '0' ) {
-
-		// have we explicitly hidden textblock meta?
-		if ( cp_textblock_meta == '0' ) {
-
-			/**
-			 * Hover over textblock
-			 *
-			 * @return void
-			 */
-			jQuery('.textblock').mouseover(function() {
-
-				jQuery(this).addClass('textblock-in');
-
-			});
-
-			/**
-			 * Move out of textblock
-			 *
-			 * @return void
-			 */
-			jQuery('.textblock').mouseout(function() {
-
-				jQuery(this).removeClass('textblock-in');
-
-			});
-
-		}
-
-	}
-
-	// unbind first to allow repeated calls to this function
-	jQuery('.textblock').unbind( 'click' );
-
-	/**
-	 * Clicking on the textblock
-	 *
-	 * @return void
-	 */
-	jQuery('.textblock').click( function( event ) {
-
-		// define vars
-		var text_sig;
-
-		// get text signature
-		text_sig = jQuery(this).prop('id');
-		//console.log( text_sig );
-
-		// remove leading #
-		text_sig = text_sig.split('textblock-')[1];
-
-		// use function
-		cp_do_comment_icon_action( text_sig, CommentPress.settings.textblock.getMarkerMode() );
-
-	});
-
+	jQuery.setup_textblock_actions();
 }
 
 
@@ -2022,83 +1108,7 @@ function commentpress_setup_textblock_actions() {
  * @return void
  */
 function commentpress_setup_para_marker_actions() {
-
-	// unbind first to allow repeated calls to this function
-	jQuery('span.para_marker a').unbind( 'click' );
-
-	/**
-	 * Clicking on the paragraph
-	 *
-	 * @return false
-	 */
-	jQuery('span.para_marker a').click( function( event ) {
-
-		// override event
-		event.preventDefault();
-
-		// define vars
-		var text_sig;
-
-		// get text signature
-		text_sig = jQuery(this).prop('href').split('#')[1];
-		//console.log( text_sig );
-
-		// use function
-		cp_do_comment_icon_action( text_sig, 'marker' );
-
-		// --<
-		return false;
-
-	});
-
-	// unbind first to allow repeated calls to this function
-	jQuery('span.para_marker a').unbind( 'mouseenter' );
-	jQuery('span.para_marker a').unbind( 'mouseleave' );
-
-	/**
-	 * Rolling onto the paragraph icon
-	 *
-	 * @return void
-	 */
-	jQuery('span.para_marker a').mouseenter(
-
-		function( event ) {
-
-			// define vars
-			var target;
-
-			// get target item
-			target = jQuery(this).parent().next().children('.comment_count');
-			//console.log( target );
-
-			target.addClass( 'js-hover' );
-
-		}
-
-	);
-
-	/**
-	 * Rolling off the paragraph icon
-	 *
-	 * @return void
-	 */
-	jQuery('span.para_marker a').mouseleave(
-
-		function( event ) {
-
-			// define vars
-			var target;
-
-			// get target item
-			target = jQuery(this).parent().next().children('.comment_count');
-			//console.log( target );
-
-			target.removeClass( 'js-hover' );
-
-		}
-
-	);
-
+	jQuery.setup_para_marker_actions();
 }
 
 
@@ -2109,34 +1119,7 @@ function commentpress_setup_para_marker_actions() {
  * @return void
  */
 function commentpress_setup_comment_permalink_copy_actions() {
-
-	// unbind first to allow repeated calls to this function
-	jQuery('.comment_permalink_copy').unbind( 'mouseup' );
-
-	/**
-	 * Mouseup on the copy icon
-	 *
-	 * @return void
-	 */
-	jQuery('.comment_permalink_copy').mouseup( function( event ) {
-
-		// define vars
-		var url;
-
-		// get selection
-		url = jQuery( this ).parent().attr('href');
-		//console.log( url );
-
-		// did we get one?
-		if ( url ) {
-
-			// show dialog
-			window.prompt( "Copy this link", url );
-
-		}
-
-	});
-
+	jQuery.setup_comment_permalink_copy_actions();
 }
 
 
@@ -2158,9 +1141,6 @@ function commentpress_setup_page_click_actions() {
 
 
 
-
-
-
 /**
  * Set up paragraph links: cp_para_link is a class writers can use
  * in their markup to create nicely scrolling links within their pages
@@ -2168,39 +1148,8 @@ function commentpress_setup_page_click_actions() {
  * @return void
  */
 function commentpress_setup_para_links() {
-
-	// unbind first to allow repeated calls to this function
-	jQuery('a.cp_para_link').unbind( 'click' );
-
-	/**
-	 * Clicking on links to paragraphs
-	 *
-	 * @return false
-	 */
-	jQuery('a.cp_para_link').click( function( event ) {
-
-		// define vars
-		var text_sig;
-
-		// override event
-		event.preventDefault();
-
-		// get text signature
-		text_sig = jQuery(this).prop('href').split('#')[1];
-		//console.log(text_sig);
-
-		// use function
-		cp_do_comment_icon_action( text_sig, 'auto' );
-
-		// --<
-		return false;
-
-	});
-
+	jQuery.setup_para_links();
 }
-
-
-
 
 
 
@@ -2210,111 +1159,8 @@ function commentpress_setup_para_links() {
  * @return void
  */
 function commentpress_setup_footnotes_compatibility() {
-
-	// -------------------------------------------------------------------------
-	// Back links
-	// -------------------------------------------------------------------------
-
-	// unbind first to allow repeated calls to this function
-	jQuery('span.footnotereverse a, a.footnote-back-link').unbind( 'click' );
-
-	/**
-	 * Clicking on reverse links in FD-Footnotes and WP_Footnotes
-	 *
-	 * @return false
-	 */
-	jQuery('span.footnotereverse a, a.footnote-back-link').click( function( event ) {
-
-		// define vars
-		var target;
-
-		// override event
-		event.preventDefault();
-
-		// get target
-		target = jQuery(this).prop('href').split('#')[1];
-		//console.log(target);
-
-		// use function for offset
-		cp_quick_scroll_page( '#' + target, 100 );
-
-		// --<
-		return false;
-
-	});
-
-	// unbind first to allow repeated calls to this function
-	jQuery('.simple-footnotes ol li > a').unbind( 'click' );
-
-	/**
-	 * Clicking on reverse links in Simple Footnotes plugin
-	 *
-	 * @return false
-	 */
-	jQuery('.simple-footnotes ol li > a').click( function( event ) {
-
-		// define vars
-		var target;
-
-		// get target
-		target = jQuery(this).prop('href');
-		//console.log(target);
-
-		// is it a backlink?
-		if ( target.match('#return-note-' ) ) {
-
-			// override event
-			event.preventDefault();
-
-			// remove url
-			target = target.split('#')[1];
-
-			// use function for offset
-			cp_quick_scroll_page( '#' + target, 100 );
-
-			// --<
-			return false;
-
-		}
-
-	});
-
-	// -------------------------------------------------------------------------
-	// Footnote links
-	// -------------------------------------------------------------------------
-
-	// unbind first to allow repeated calls to this function
-	jQuery('a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link, a.zp-ZotpressInText').unbind( 'click' );
-
-	/**
-	 * Clicking on footnote links in FD-Footnotes, WP-Footnotes, Simple Footnotes and ZotPress
-	 *
-	 * @return false
-	 */
-	jQuery('a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link, a.zp-ZotpressInText').click( function( event ) {
-
-		// define vars
-		var target;
-
-		// override event
-		event.preventDefault();
-
-		// get target
-		target = jQuery(this).prop('href').split('#')[1];
-		//console.log(target);
-
-		// use function for offset
-		cp_quick_scroll_page( '#' + target, 100 );
-
-		// --<
-		return false;
-
-	});
-
+	jQuery.footnotes_compatibility();
 }
-
-
-
 
 
 
@@ -2328,7 +1174,6 @@ function cp_activate_sidebar( sidebar ) {
 
 	if ( sidebar == 'comments' ) {
 
-		//alert('g');
 		// move to sidebar
 		if ( !jQuery('body').hasClass('active-sidebar') || jQuery('body').hasClass('active-nav') ) {
 			showSidebar();
@@ -2356,9 +1201,6 @@ function cp_activate_sidebar( sidebar ) {
 	}
 
 }
-
-
-
 
 
 
@@ -2406,13 +1248,8 @@ function commentpress_reset_actions() {
 
 
 
-
-
 // add js class so we can do some contextual styling
 jQuery('html').addClass('js');
-
-
-
 
 
 
@@ -2468,8 +1305,6 @@ var setSidebarHeight = function() {
 
 
 
-
-
 // show menu
 var showMenu = function() {
 	jQuery('body').toggleClass('active-nav').removeClass('active-sidebar');
@@ -2493,9 +1328,6 @@ var showSidebar = function() {
 
 
 
-
-
-
 /**
  * Define what happens when the page is ready
  *
@@ -2505,6 +1337,7 @@ jQuery(document).ready( function($) {
 
 
 
+	// init sidebar height
 	setSidebarHeight();
 
 	// reset everything
@@ -2660,9 +1493,6 @@ jQuery(document).ready( function($) {
 
 
 
-
-
-
 	/**
 	 * Clicking on the Comments Header
 	 *
@@ -2683,11 +1513,8 @@ jQuery(document).ready( function($) {
 
 
 
-
-
-
 	/**
-	 * Clicking on the paragraph permalink
+	 * Clicking on the textblock comment icon
 	 *
 	 * @return false
 	 */
@@ -2700,9 +1527,6 @@ jQuery(document).ready( function($) {
 		return false;
 
 	});
-
-
-
 
 
 
@@ -2748,9 +1572,6 @@ jQuery(document).ready( function($) {
 
 
 
-
-
-
 	/**
 	 * Clicking on the minimise activities icon
 	 *
@@ -2765,9 +1586,6 @@ jQuery(document).ready( function($) {
 		$('#activity_sidebar div.paragraph_wrapper').slideUp();
 
 	});
-
-
-
 
 
 
@@ -2812,9 +1630,6 @@ jQuery(document).ready( function($) {
 
 
 
-
-
-
 	/**
 	 * Special Pages menu headings click
 	 *
@@ -2843,9 +1658,6 @@ jQuery(document).ready( function($) {
 		}
 
 	});
-
-
-
 
 
 
@@ -2899,21 +1711,14 @@ jQuery(document).ready( function($) {
 		// show it
 		$('#' + target_id + ' .post').css( 'display', 'block' );
 
-
-
 		// amend css of list items to mimic tabs
 		$('#content-tabs li').removeClass( 'default-content-tab' );
 		$(this).parent().parent().addClass( 'default-content-tab' );
-
-
 
 		// --<
 		return false;
 
 	});
-
-
-
 
 
 
@@ -2957,9 +1762,6 @@ jQuery(document).ready( function($) {
 
 
 
-
-
-
 	// scroll the page on load
 	if ( cp_special_page == '1' ) {
 		cp_scroll_to_comment_on_load();
@@ -2971,3 +1773,16 @@ jQuery(document).ready( function($) {
 
 
 
+/**
+ * Define what happens when the page is unloaded
+ *
+ * @return void
+ */
+/*
+jQuery(window).unload( function() {
+
+	// debug
+	//console.log('Bye now!');
+
+});
+*/
