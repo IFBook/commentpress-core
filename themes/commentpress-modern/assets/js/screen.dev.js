@@ -51,11 +51,46 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 
 
 
+/**
+ * Create global CommentPress namespace
+ */
+var CommentPress = CommentPress || {};
+
+/**
+ * Create settings sub-namespace
+ */
+CommentPress.settings = {};
+
+/**
+ * Create CommentPress textblock object
+ */
+CommentPress.settings.textblock = new function() {
+
+	// init textblock marker mode
+	this.marker_mode = 'marker';
+
+	/**
+	 * Setter for textblock marker mode
+	 */
+	this.setMarkerMode = function( mode ) {
+		this.marker_mode = mode;
+	},
+
+	/**
+	 * Getter for textblock marker mode
+	 */
+	this.getMarkerMode = function() {
+		return this.marker_mode;
+	}
+
+} // end CommentPress class
+
+
+
 // define vars
 var msie6, cp_header_height, cp_header_animating,
 	cp_toc_on_top, page_highlight, cp_header_minimised, cp_sidebar_minimised,
-	cp_container_top_max, cp_container_top_min,
-	cp_textblock_marker_mode;
+	cp_container_top_max, cp_container_top_min;
 
 
 
@@ -95,9 +130,6 @@ if ( cp_wp_adminbar == 'y' ) {
 	//cp_container_top_min = parseInt( cp_container_top_min ) + cp_wp_adminbar_height;
 
 }
-
-// init marker mode
-cp_textblock_marker_mode = 'marker';
 
 
 
@@ -1976,7 +2008,7 @@ function commentpress_setup_textblock_actions() {
 		text_sig = text_sig.split('textblock-')[1];
 
 		// use function
-		cp_do_comment_icon_action( text_sig, cp_textblock_marker_mode );
+		cp_do_comment_icon_action( text_sig, CommentPress.settings.textblock.getMarkerMode() );
 
 	});
 
