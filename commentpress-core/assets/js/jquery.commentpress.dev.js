@@ -1,9 +1,13 @@
 /**
- * @projectDescription CommentPress Core jQuery Plugin
+ * CommentPress Core jQuery Plugin
  *
- * @version 3.0
- * @author Christian Wach/needle@haystack.co.uk
+ * This jQuery Plugin allows us to add numerous methods to jQuery without
+ * polluting the global function namespace.
  *
+ * @package CommentPress Core
+ * @author Christian Wach <needle@haystack.co.uk>
+ *
+ * @since 3.0
  */
 ;
 
@@ -14,6 +18,8 @@
  *
  * This wrapper ensures that jQuery can be addressed using the $ shorthand from
  * anywhere within the script.
+ *
+ * @since 3.0
  */
 ;( function( $ ) {
 
@@ -23,7 +29,7 @@
 	/**
 	 * Highlight the current paragraph
 	 *
-	 * @return void
+	 * @since 3.0
 	 */
 	$.highlight_para = function( element ) {
 
@@ -45,7 +51,7 @@
 	/**
 	 * Unhighlight all text
 	 *
-	 * @return void
+	 * @since 3.0
 	 */
 	$.unhighlight_para = function() {
 
@@ -61,6 +67,8 @@
 	/**
 	 * Get the element which is currently highlighted
 	 *
+	 * @since 3.0
+	 *
 	 * @return string highlighted_para The highlighted paragraph
 	 */
 	$.get_highlighted_para = function() {
@@ -74,6 +82,8 @@
 
 	/**
 	 * Test if the element is currently highlighted
+	 *
+	 * @since 3.0
 	 *
 	 * @param object element The jQuery element to test
 	 * @return boolean True if highlighted, false otherwise
@@ -107,6 +117,8 @@
 
 	/**
 	 * Set height of sidebar minimiser (scrolling element) so that the column fills the viewport
+	 *
+	 * @since 3.0
 	 *
 	 * @todo In jQuery 1.9, we get a 143px error, related to sidebar.position().top
 	 *
@@ -182,8 +194,10 @@
 	/**
 	 * Get height data on element
 	 *
+	 * @since 3.0
+	 *
 	 * @param object element The element to adjust
-	 * @return integer element_adjust The new height of the element in px
+	 * @return int element_adjust The new height of the element in px
 	 */
 	$.get_element_adjust = function( element ) {
 
@@ -201,7 +215,6 @@
 
 		// add 'em up
 		var element_adjust = w_bt + w_bb + w_pad_t + w_pad_b + w_mar_t + w_mar_b;
-
 		//console.log( 'element_adjust: ' + element_adjust );
 
 		// --<
@@ -213,6 +226,8 @@
 
 	/**
 	 * Get visible sidebar minimiser
+	 *
+	 * @since 3.0
 	 *
 	 * @return object sidebar_pane The jQuery object for the sidebar pane
 	 */
@@ -229,6 +244,8 @@
 
 	/**
 	 * Get visible sidebar
+	 *
+	 * @since 3.0
 	 *
 	 * @return string name The name of the visible sidebar
 	 */
@@ -267,6 +284,8 @@
 
 	/**
 	 * Get currently highlighted menu item ID
+	 *
+	 * @since 3.0
 	 *
 	 * @return string current_menu_item The numeric ID of the menu item
 	 */
@@ -328,6 +347,8 @@
 	/**
 	 * Utility replacement for PHP's in_array
 	 *
+	 * @since 3.0
+	 *
 	 * @param mixed needle The item to search for
 	 * @param array haystack The array to search
 	 * @param boolean argStrict If true, will take variable type into account
@@ -357,6 +378,8 @@
 
 	/**
 	 * A nifty JS array utility to remove a specified value
+	 *
+	 * @since 3.0
 	 *
 	 * @param mixed item The item to remove
 	 * @param array sourceArray The array to remove the item from
@@ -390,6 +413,8 @@
 	/**
 	 * Utility replacement for PHP's is_object
 	 *
+	 * @since 3.0
+	 *
 	 * @param mixed mixed_var The item to test
 	 * @return boolean True if item is object, false otherwise
 	 */
@@ -414,6 +439,8 @@
 	/**
 	 * Test if a function exists without throwing a Reference Error
 	 *
+	 * @since 3.0
+	 *
 	 * @param string function_name The name of the function
 	 * @return boolean True if the function exists, false otherwise
 	 */
@@ -437,8 +464,10 @@
 	/**
 	 * Utility to strip 'px' off css values
 	 *
+	 * @since 3.0
+	 *
 	 * @param string pix The CSS string (eg, '20px')
-	 * @return integer px The numeric value (eg, 20)
+	 * @return int px The numeric value (eg, 20)
 	 */
 	$.px_to_num = function( pix ) {
 
@@ -452,8 +481,10 @@
 	/**
 	 * Utility to return zero when css values may be NaN in IE
 	 *
+	 * @since 3.0
+	 *
 	 * @param mixed strNum A numeric value that we want to modify
-	 * @return integer The numeric value of strNum
+	 * @return int The numeric value of strNum
 	 */
 	$.css_to_num = function( strNum ) {
 
@@ -485,10 +516,11 @@
 	/**
 	 * A test!
 	 *
+	 * @since 3.0
+	 *
 	 * @todo Remove
 	 *
 	 * @param string message The message to show
-	 * @return void
 	 */
 	$.frivolous = function( message ) {
 
