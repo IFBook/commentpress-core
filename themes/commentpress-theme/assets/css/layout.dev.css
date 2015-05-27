@@ -3066,6 +3066,24 @@ save-pref-btn:hover
 	border-radius: 0 4px 4px 0;
 }
 
+.btn-left-quote,
+.btn-left-comment
+{
+	padding: 7px 0;
+}
+
+.btn-left-comment
+{
+	padding-right: 10px;
+	border-right: 1px solid #ffffff;
+}
+
+.btn-left-quote
+{
+	padding-left: 10px;
+	border-left: 1px solid #999999;
+}
+
 .inline-highlight
 {
 	background: rgb(249, 248, 204);

@@ -3794,7 +3794,7 @@ add_filter( 'sidebars_widgets', 'commentpress_sidebars_widgets', 1000 );
  */
 function commentpress_highlighter_holder_in_footer() {
 
-	echo '<span class="holder"><div class="share-highlight-btn"><div class="btn-caret"></div><div class="btn-left">' . __( 'Comment on this selection' ) . '</div><div class="btn-right">&times;</div></div></span>';
+	echo '<span class="holder"><div class="share-highlight-btn"><div class="btn-caret"></div><div class="btn-left"><span class="btn-left-comment">' . __( 'Comment' ) . '</span><span class="btn-left-quote">' . __( 'Quote &amp; Comment' ) . '</span></div><div class="btn-right">&times;</div></div></span>';
 
 }
 

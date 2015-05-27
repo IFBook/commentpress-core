@@ -426,11 +426,11 @@ CommentPress.textselector = new function() {
 		});
 
 		/**
-		 * Act on clicks on the holder's left button
+		 * Act on clicks on the holder's "Comment" button
 		 *
 		 * @return void
 		 */
-		jQuery('.btn-left').click( function() {
+		jQuery('.btn-left-comment').click( function() {
 
 			// define vars
 			var id, selection, container, wrap;
@@ -440,16 +440,44 @@ CommentPress.textselector = new function() {
 
 			// get containing textblock
 			id = me.get_container();
-			//console.log( 'container ID retrieved' );
-			//console.log( id );
 
 			// save current selection
 			me.save_selection( id );
 
 			// get selection
 			selection = me.get_selection();
-			//console.log( 'selection made and accepted' );
-			//console.log( selection );
+
+			// scroll to comment form
+			cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
+
+			// wrap selection
+			wrap = jQuery('#' + id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
+
+			return false;
+
+		});
+
+		/**
+		 * Act on clicks on the holder's "Quote and Comment" button
+		 *
+		 * @return void
+		 */
+		jQuery('.btn-left-quote').click( function() {
+
+			// define vars
+			var id, selection, container, wrap;
+
+			// hide popover
+			jQuery('.holder').hide();
+
+			// get containing textblock
+			id = me.get_container();
+
+			// save current selection
+			me.save_selection( id );
+
+			// get selection
+			selection = me.get_selection();
 
 			// test for TinyMCE
 			if ( cp_tinymce == '1' ) {
@@ -468,29 +496,6 @@ CommentPress.textselector = new function() {
 
 			// wrap selection
 			wrap = jQuery('#' + id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
-			//console.log( 'wrapped with' );
-			//console.log( wrap );
-
-			/*
-			// get content
-			var content = jQuery('#' + container).contents();
-			console.log( 'got content' );
-			console.log( content );
-
-			var a = jQuery('#' + container).contents().filter(function() {
-				return this.nodeType == 3;
-			}).text();
-			console.log( 'got a' );
-			console.log( a );
-
-			// did we get a selection?
-			if ( blah.length ) {
-
-				// let's split into an array
-				//var myarray = content.split();
-
-			}
-			*/
 
 			return false;
 
@@ -503,7 +508,7 @@ CommentPress.textselector = new function() {
 		 */
 		jQuery('.btn-right').click( function() {
 			jQuery('.holder').hide();
-			var dummy = {};
+			var dummy = '';
 			me.set_container( dummy );
 			return false;
 		});
