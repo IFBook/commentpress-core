@@ -3788,18 +3788,42 @@ add_filter( 'sidebars_widgets', 'commentpress_sidebars_widgets', 1000 );
 
 
 /**
- * Add the Text Highlighter popover element to the page footer
+ * Filter the comment class to add selection data
  *
- * @return void
+ * @param array $classes An array of comment classes.
+ * @param string $class A comma-separated list of additional classes added to the list.
+ * @param int $comment_id The comment id.
+ * @param object $comment The comment
+ * @param int|WP_Post $post_id The post ID or WP_Post object.
  */
-function commentpress_highlighter_holder_in_footer() {
+function commentpress_add_selection_classes( $classes, $class, $comment_id, $comment, $post_id ) {
 
-	echo '<span class="holder"><div class="share-highlight-btn"><div class="btn-caret"></div><div class="btn-left"><span class="btn-left-comment">' . __( 'Comment' ) . '</span><span class="btn-left-quote">' . __( 'Quote &amp; Comment' ) . '</span></div><div class="btn-right">&times;</div></div></span>';
+	// define key
+	$key = '_cp_comment_selection';
+
+	// get current
+	$data = get_comment_meta( $comment_id, $key, true );
+
+	// if the comment meta already has a value...
+	if ( ! empty( $data ) ) {
+
+		// make into an array
+		$selection = explode( ',', $data );
+
+		// add to classes
+		$classes[] = 'selection-exists';
+		$classes[] = 'sel_start-' . $selection[0];
+		$classes[] = 'sel_end-' . $selection[1];
+
+	}
+
+	// --<
+	return $classes;
 
 }
 
-// add in footer
-add_action( 'wp_footer', 'commentpress_highlighter_holder_in_footer' );
+// add filter for above
+add_filter( 'comment_class', 'commentpress_add_selection_classes', 100, 5 );
 
 
 

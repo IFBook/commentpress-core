@@ -2371,7 +2371,7 @@ class CommentpressCoreDatabase {
 	 * When a comment is saved, this also saves the text signature
 	 *
 	 * @param int $comment_id The numeric ID of the comment
-	 * @return boolean $result True if successful, false otherwose
+	 * @return boolean $result True if successful, false otherwise
 	 */
 	public function save_comment_signature( $comment_ID ) {
 
@@ -2408,6 +2408,70 @@ class CommentpressCoreDatabase {
 
 		// --<
 		return $result;
+
+	}
+
+
+
+	/**
+	 * When a comment is saved, this also saves the text selection
+	 *
+	 * @param int $comment_id The numeric ID of the comment
+	 * @return boolean $result True if successful, false otherwise
+	 */
+	public function save_comment_selection( $comment_id ) {
+
+		// get text selection
+		$text_selection = ( isset( $_POST['text_selection'] ) ) ? $_POST['text_selection'] : '';
+
+		// bail if we didn't get one
+		if ( $text_selection == '' ) return true;
+
+		// sanity check: must have a comma
+		if ( stristr( $text_selection, ',' ) === false ) return true;
+
+		// make into an array
+		$selection = explode( ',', $text_selection );
+
+		// sanity check: must have only two elements
+		if ( count( $selection ) != 2 ) return true;
+
+		// sanity check: both elements must be integers
+		$start_end = array();
+		foreach( $selection AS $item ) {
+
+			// not integer - kick out
+			if ( ! is_numeric( $item ) ) return true;
+
+			// cast as integer and add to array
+			$start_end[] = absint( $item );
+
+		}
+
+		// okay, we're good to go...
+		$selection_data = implode( ',', $start_end );
+
+		// set key
+		$key = '_cp_comment_selection';
+
+		// get current
+		$current = get_comment_meta( $comment_id, $key, true );
+
+		// if the comment meta already has a value...
+		if ( ! empty( $current ) ) {
+
+			// update the data
+			update_comment_meta( $comment_id, $key, $selection_data );
+
+		} else {
+
+			// add the data
+			add_comment_meta( $comment_id, $key, $selection_data, true );
+
+		}
+
+		// --<
+		return true;
 
 	}
 

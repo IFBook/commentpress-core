@@ -1,6 +1,6 @@
 /*
 ================================================================================
-CommentPress Core addComment Javascript
+CommentPress Default Theme addComment Javascript
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
@@ -534,8 +534,19 @@ addComment = {
 			} else {
 
 				// it's a comment on a paragraph
+				var reply_text = jQuery( '#para_wrapper-' + textSig + ' a.reply_to_para' );
+				//console.log( 'TITLE' );
+				//console.log( reply_text );
+
+				/*
+				// test for multiples
+				if ( reply_text.length > 1 ) {
+					reply_text = jQuery( reply_text[0] );
+				}
+				*/
+
 				//title.innerHTML = 'Comment on this paragraph';
-				title.innerHTML = jQuery( '#para_wrapper-' + textSig + ' a.reply_to_para' ).text();
+				title.innerHTML = reply_text.text();
 
 				// get comment list
 				var comment_list = jQuery( '#para_wrapper-' + addComment.text_signature + ' .commentlist' );

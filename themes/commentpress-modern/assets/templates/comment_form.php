@@ -115,10 +115,10 @@ if ( $cp_force_form ) {
 
 			<?php else : ?>
 
-				<p><label for="author"><small><?php _e( 'Name', 'commentpress-core' ); ?><?php if ($req) echo ' <span class="req">('.__( 'required', 'commentpress-core' ).')</span>'; ?></small></label><br />
+				<p><label for="author"><small><?php _e( 'Name', 'commentpress-core' ); ?><?php if ($req) echo ' <span class="req">(' . __( 'required', 'commentpress-core' ) . ')</span>'; ?></small></label><br />
 				<input type="text" name="author" id="author" value="<?php echo esc_attr( $commenter['comment_author'] ); ?>" size="30"<?php if ($req) echo ' aria-required="true"'; ?> /></p>
 
-				<p><label for="email"><small><?php _e( 'Mail (will not be published)', 'commentpress-core' ); ?><?php if ($req) echo ' <span class="req">('.__( 'required', 'commentpress-core' ).')</span>'; ?></small></label><br />
+				<p><label for="email"><small><?php _e( 'Mail (will not be published)', 'commentpress-core' ); ?><?php if ($req) echo ' <span class="req">(' . __( 'required', 'commentpress-core' ) . ')</span>'; ?></small></label><br />
 				<input type="text" name="email" id="email" value="<?php echo esc_attr(  $commenter['comment_author_email'] ); ?>" size="30"<?php if ($req) { echo ' aria-required="true"'; } ?> /></p>
 
 				<p class="author_not_logged_in"><label for="url"><small><?php _e( 'Website', 'commentpress-core' ); ?></small></label><br />
@@ -153,16 +153,19 @@ if ( $cp_force_form ) {
 		// add default wp fields
 		comment_id_fields();
 
-		// get text sig input
+		// is CommentPress active?
 		global $commentpress_core;
 		if ( is_object( $commentpress_core ) ) {
+
+			// get text sig input
 			echo $commentpress_core->get_signature_field();
+
 		}
 
 		// add page for multipage situations
 		global $page;
 		if ( !empty( $page ) ) {
-			echo "\n".'<input type="hidden" name="page" value="'.$page.'" />'."\n";
+			echo "\n" . '<input type="hidden" name="page" value="' . $page . '" />' . "\n";
 		}
 
 		// compatibility with Subscribe to Comments Reloaded

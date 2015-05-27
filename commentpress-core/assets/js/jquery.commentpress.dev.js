@@ -1478,7 +1478,7 @@ CommentPress.settings.textblock = new function() {
 				$.unhighlight_para();
 
 				// get text sig
-				text_sig = cp_get_text_sig_by_comment_id( '#'+comment_id );
+				text_sig = cp_get_text_sig_by_comment_id( '#' + comment_id );
 
 				// if not a pingback...
 				if ( text_sig != 'pingbacksandtrackbacks' ) {
@@ -1595,7 +1595,7 @@ CommentPress.settings.textblock = new function() {
 		text_sig = '';
 
 		// are we passing the full id?
-		if ( cid.match('#comment-' ) ) {
+		if ( cid.match( '#comment-' ) ) {
 
 			// get comment ID
 			comment_id = parseInt( cid.split('#comment-')[1] );

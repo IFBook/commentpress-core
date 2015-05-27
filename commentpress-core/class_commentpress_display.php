@@ -295,6 +295,17 @@ class CommentpressCoreDisplay {
 			COMMENTPRESS_VERSION // version
 		);
 
+		// define popover
+		$popover = '<span class="holder"><div class="share-highlight-btn"><div class="btn-caret"></div><div class="btn-left"><span class="btn-left-comment">' . __( 'Comment', 'commentpress-core' ) . '</span><span class="btn-left-quote">' . __( 'Quote &amp; Comment', 'commentpress-core' ) . '</span></div><div class="btn-right">&times;</div></div></span>';
+
+		// define localisation array
+		$text_vars = array(
+			'popover' => $popover,
+		);
+
+		// localise with wp function
+		wp_localize_script( 'jquery_texthighlighter', 'CommentpressTextSelectorSettings', $text_vars );
+
 		/**
 		 * Prior to WP3.2 (IIRC), jQuery UI has to be added separately, as the
 		 * built in one was not sufficiently up-to-date. This is no longer the

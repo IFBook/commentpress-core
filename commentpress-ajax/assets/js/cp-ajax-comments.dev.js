@@ -416,6 +416,11 @@ CommentPress.ajax.comments = new function() {
 		// compatibility with Comment Upvoter
 		cpajax_reenable_comment_upvoter();
 
+
+
+		// broadcast that we're done and pass new comment ID
+		jQuery( document ).trigger( 'commentpress-ajax-new-comment-added', [ comm_id ] );
+
 	};
 
 
@@ -672,7 +677,7 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Add comment to page
+	 * Add comment to page in response to the comment form being submitted
 	 *
 	 * @param object response The jQuery object containing the result of the AJAX request
 	 * @return void
@@ -681,7 +686,7 @@ CommentPress.ajax.comments = new function() {
 
 		// define vars
 		var text_sig, comm_parent, para_id, head_id, parent_id, child_list,
-			comm_list, comment_num, new_comment_count;
+			comm_list, comment_num, new_comment_count, new_comm_id;
 
 		// get form data
 		text_sig = me.cpajax_form.find( '#text_signature' ).val();
@@ -719,7 +724,7 @@ CommentPress.ajax.comments = new function() {
 			// is there a child list?
 			if ( child_list[0] ) {
 
-				me.nice_append(
+				new_comm_id = me.nice_append(
 					response,
 					parent_id + ' > ol.children:first > li:last',
 					child_list,
@@ -728,7 +733,7 @@ CommentPress.ajax.comments = new function() {
 
 			} else {
 
-				me.nice_append(
+				new_comm_id = me.nice_append(
 					response,
 					parent_id + ' > ol.children:first',
 					parent_id,
@@ -746,7 +751,7 @@ CommentPress.ajax.comments = new function() {
 			// is there a comment list?
 			if ( comm_list[0] ) {
 
-				me.nice_append(
+				new_comm_id = me.nice_append(
 					response,
 					para_id + ' > ol.commentlist:first > li:last',
 					comm_list,
@@ -755,7 +760,7 @@ CommentPress.ajax.comments = new function() {
 
 			} else {
 
-				me.nice_prepend(
+				new_comm_id = me.nice_prepend(
 					response,
 					para_id + ' > ol.commentlist:first',
 					para_id,
@@ -822,6 +827,11 @@ CommentPress.ajax.comments = new function() {
 		// compatibility with Comment Upvoter
 		cpajax_reenable_comment_upvoter();
 
+
+
+		// broadcast that we're done and pass new comment ID
+		jQuery( document ).trigger( 'commentpress-ajax-comment-added', [ new_comm_id ] );
+
 	};
 
 
@@ -836,6 +846,9 @@ CommentPress.ajax.comments = new function() {
 	 * @return void
 	 */
 	this.nice_append = function( response, content, target, last ) {
+
+		// define vars
+		var new_comm_id;
 
 		// test for undefined, which may happen on replies to comments
 		// which have lost their original context
@@ -856,7 +869,10 @@ CommentPress.ajax.comments = new function() {
 				.appendTo(target);
 
 		// clean up
-		me.cleanup( content, last );
+		new_comm_id = me.cleanup( content, last );
+
+		// --<
+		return new_comm_id;
 
 	};
 
@@ -872,6 +888,9 @@ CommentPress.ajax.comments = new function() {
 	 * @return void
 	 */
 	this.nice_prepend = function( response, content, target, last ) {
+
+		// define vars
+		var new_comm_id;
 
 		// test for undefined, which may happen on replies to comments
 		// which have lost their original context
@@ -892,7 +911,10 @@ CommentPress.ajax.comments = new function() {
 				.prependTo(target);
 
 		// clean up
-		me.cleanup( content, last );
+		new_comm_id = me.cleanup( content, last );
+
+		// --<
+		return new_comm_id;
 
 	};
 
@@ -953,6 +975,9 @@ CommentPress.ajax.comments = new function() {
 			}
 
 		); // end slide
+
+		// --<
+		return new_comm_id;
 
 	};
 

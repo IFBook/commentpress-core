@@ -1,6 +1,6 @@
 /*
 ================================================================================
-CommentPress Modern addComment Javascript
+CommentPress Modern Theme addComment Javascript
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
