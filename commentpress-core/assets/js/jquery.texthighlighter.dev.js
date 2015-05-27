@@ -174,9 +174,6 @@ CommentPress.textselector = new function() {
 
 		});
 
-		//console.log( 'built this.selections_by_comment' );
-		//console.log( this.selections_by_comment );
-
 	}
 
 	/**
@@ -187,24 +184,14 @@ CommentPress.textselector = new function() {
 	 */
 	this.selection_save_for_comment = function( comment_id ) {
 
-		//console.log( 'this.selection_save_for_comment' );
-
 		// cast as string
 		var comment_key = '#comment-' + comment_id;
-		//console.log( 'comment_key' );
-		//console.log( comment_key );
-
-		// get text signature
-		//var text_sig = jQuery.get_text_sig_by_comment_id( comment_id );
 
 		// get selection data that was last sent to the editor
 		var selection_data = me.selection_sent;
-		//console.log( 'selection_data' );
-		//console.log( selection_data );
 
 		// add to array, keyed by comment ID
 		this.selections_by_comment[comment_key] = selection_data;
-		//console.log( this.selections_by_comment );
 
 	};
 
@@ -216,35 +203,23 @@ CommentPress.textselector = new function() {
 	 */
 	this.selection_recall_for_comment = function( comment_id ) {
 
-		//console.log( 'recall this.selections_by_comment' );
-
 		// declare vars
 		var item, text_sig, textblock_id, comment_key;
 
 		// cast as string
 		comment_key = '#comment-' + comment_id;
-		//console.log( comment_id );
-		//console.log( comment_key );
-
-		//console.log( this.selections_by_comment );
 
 		// does the comment ID key exist?
 		if ( comment_key in this.selections_by_comment ) {
 
-			//console.log( 'recalling this.selections_by_comment[comment_key]' );
+			// get selection item from array
 			item = this.selections_by_comment[comment_key]
-			//console.log( 'this.selections_by_comment[comment_key]' );
-			//console.log( item );
 
 			// get text signature for this comment
 			text_sig = jQuery.get_text_sig_by_comment_id( comment_key );
-			//console.log( 'text_sig' );
-			//console.log( text_sig );
 
 			// get textblock
 			textblock_id = 'textblock-' + text_sig;
-			//console.log( 'textblock_id' );
-			//console.log( textblock_id );
 
 			// restore the selection
 			me.selection_restore( document.getElementById( textblock_id ), item );
@@ -271,11 +246,6 @@ CommentPress.textselector = new function() {
 		// add selection data to the array
 		this.selections_by_textblock[textblock_id].push( selection_data );
 
-		/*
-		console.log( 'save this.selections_by_textblock' );
-		console.log( this.selections_by_textblock );
-		*/
-
 	};
 
 	/**
@@ -286,16 +256,11 @@ CommentPress.textselector = new function() {
 	 */
 	this.selection_recall_for_textblock = function( textblock_id ) {
 
-		//console.log( 'recall this.selections_by_textblock' );
-		//console.log( this.selections_by_textblock );
-
 		// does the textblock ID key exist?
 		if ( textblock_id in this.selections_by_textblock ) {
 
 			// yes, restore each selection in turn
 			for (var i = 0, item; item = this.selections_by_textblock[textblock_id][i++];) {
-				//console.log( 'recalling this.selections_by_textblock[textblock_id][i]' );
-				//console.log( item );
 				me.selection_restore( document.getElementById( textblock_id ), item );
 				jQuery('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
 			}
@@ -433,25 +398,59 @@ CommentPress.textselector = new function() {
 		selection = me.selection_get();
 
 		// always update text_selection hidden input
-		jQuery( '#text_selection' ).val( selection.start + ',' + selection.end );
+		jQuery('#text_selection').val( selection.start + ',' + selection.end );
 
 		// store the data
 		me.selection_sent = selection;
 
-		// bail if we're not sending text
-		if ( !with_text ) { return; }
+		// if we're sending text
+		if ( with_text ) {
 
-		// test for TinyMCE
-		if ( cp_tinymce == '1' ) {
-			// do we have TinyMCE or QuickTags active?
-			if ( jQuery( '#wp-comment-wrap' ).hasClass( 'html-active' ) ) {
-				me.selection_add_to_textarea( selection.text );
+			// test for TinyMCE
+			if ( cp_tinymce == '1' ) {
+				// do we have TinyMCE or QuickTags active?
+				if ( jQuery('#wp-comment-wrap').hasClass( 'html-active' ) ) {
+					me.selection_add_to_textarea( selection.text, 'replace' );
+				} else {
+					me.selection_add_to_tinymce( selection.text, 'replace' );
+				}
 			} else {
-				me.selection_add_to_tinymce( selection.text );
+				me.selection_add_to_textarea( selection.text, 'replace' );
 			}
+
 		} else {
-			me.selection_add_to_textarea( selection.text );
+
+			// test for TinyMCE
+			if ( cp_tinymce == '1' ) {
+				// do we have TinyMCE or QuickTags active?
+				if ( jQuery('#wp-comment-wrap').hasClass( 'html-active' ) ) {
+					setTimeout(function () {
+						jQuery('#comment').focus();
+					}, 200 );
+				} else {
+					setTimeout(function () {
+						tinymce.activeEditor.focus();
+					}, 200 );
+				}
+			} else {
+				setTimeout(function () {
+					jQuery('#comment').focus();
+				}, 200 );
+			}
+
 		}
+
+	};
+
+	/**
+	 * Clear selection data to comment form
+	 *
+	 * @return void
+	 */
+	this.selection_clear_from_editor = function() {
+
+		// clear text_selection hidden input
+		jQuery('#text_selection').val( '' );
 
 	};
 
@@ -464,18 +463,18 @@ CommentPress.textselector = new function() {
 	 */
 	this.selection_add_to_textarea = function( text, mode ) {
 
-		// either the quicktags editor is active, or we have a simple textarea
-
 		// if prepending
 		if ( mode == 'prepend' ) {
 			// get existing content
-			content = jQuery( '#comment' ).val();
+			content = jQuery('#comment').val();
 		} else {
 			content = '';
 		}
 
+		// add text and focus
 		setTimeout(function () {
-			jQuery( '#comment' ).val( '<strong>[' + text + ']</strong>\n\n' + content );
+			jQuery('#comment').val( '<strong>[' + text + ']</strong>\n\n' + content );
+			jQuery('#comment').focus();
 		}, 200 );
 
 	};
@@ -500,13 +499,11 @@ CommentPress.textselector = new function() {
 		// prepend selection
 		tinymce.activeEditor.setContent( '<p><strong>[' + text + ']</strong></p>' + content, {format : 'html'} );
 
+		// place cursor at the end and focus
 		setTimeout(function () {
-
-			// place cursor at the end and focus
 			tinymce.activeEditor.selection.select(tinymce.activeEditor.getBody(), true);
 			tinymce.activeEditor.selection.collapse(false);
 			tinymce.activeEditor.focus();
-
 		}, 200 );
 
 	};
@@ -538,6 +535,21 @@ CommentPress.textselector = new function() {
 	 */
 	this.highlighter_deactivate = function() {
 		jQuery('.textblock').highlighter('destroy');
+	};
+
+	/**
+	 * Clear text highlights
+	 *
+	 * @return void
+	 */
+	this.highlights_clear = function() {
+
+		// clear all highlights
+		jQuery('.inline-highlight').each( function(i) {
+			var content = jQuery(this).contents();
+			jQuery(this).replaceWith( content );
+		});
+
 	};
 
 
@@ -661,7 +673,7 @@ CommentPress.textselector = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery( '#container' ).on( 'click', '.textblock', function() {
+		jQuery('#container').on( 'click', '.textblock', function() {
 
 			// define vars
 			var clicked_id, stored_id;
@@ -672,13 +684,6 @@ CommentPress.textselector = new function() {
 			// store the clicked on textblock ID
 			clicked_id = jQuery(this).prop('id');
 
-			/*
-			console.log( 'textblock clicked' );
-			console.log( stored_id );
-			console.log( clicked_id );
-			console.log( jQuery(this) );
-			*/
-
 			// is it different?
 			if ( stored_id != clicked_id ) {
 
@@ -686,10 +691,7 @@ CommentPress.textselector = new function() {
 				me.container_set( clicked_id );
 
 				// clear all highlights
-				jQuery('.inline-highlight').each( function(i) {
-					var content = jQuery(this).contents();
-					jQuery(this).replaceWith( content );
-				});
+				me.highlights_clear();
 
 				/*
 				// deactivate highlighter
@@ -709,7 +711,7 @@ CommentPress.textselector = new function() {
 		/**
 		 * Rolling onto a comment
 		 */
-		jQuery( '#comments_sidebar' ).on( 'mouseenter', 'li.comment', function( event ) {
+		jQuery('#comments_sidebar').on( 'mouseenter', 'li.comment.selection-exists', function( event ) {
 
 			// declare vars
 			var item_id, comment_id;
@@ -719,13 +721,11 @@ CommentPress.textselector = new function() {
 
 			// get the current ID
 			item_id = jQuery(this).prop('id');
-			//console.log( 'comment rolled into' );
-			//console.log( item_id );
 
 			// get comment ID
 			comment_id = item_id.split('-')[2];
-			//console.log( comment_id );
 
+			// show the selection for this comment
 			me.selection_recall_for_comment( comment_id );
 
 		});
@@ -733,18 +733,13 @@ CommentPress.textselector = new function() {
 		/**
 		 * Rolling off a comment
 		 */
-		jQuery( '#comments_sidebar' ).on( 'mouseleave', 'li.comment', function( event ) {
-
-			//console.log( 'comment rolled out of' );
+		jQuery('#comments_sidebar').on( 'mouseleave', 'li.comment.selection-exists', function( event ) {
 
 			// we probably need to disable this while there's a selection that
 			// has been sent to the editor
 
 			// clear all highlights
-			jQuery('.inline-highlight').each( function(i) {
-				var content = jQuery(this).contents();
-				jQuery(this).replaceWith( content );
-			});
+			me.highlights_clear();
 
 		});
 
@@ -803,7 +798,7 @@ jQuery(document).ready(function($) {
 	 */
 	$(document).on( 'commentpress-ajax-comment-added', function( event, comment_id ) {
 
-		// are we passing the full id?
+		// have we received the full id?
 		if ( comment_id.match( '#comment-' ) ) {
 
 			// get numeric comment ID
@@ -811,10 +806,25 @@ jQuery(document).ready(function($) {
 
 		}
 
-		//console.log( 'comment_id received: ' + comment_id );
-
 		// reset text selector
 		CommentPress.textselector.selection_save_for_comment( comment_id );
+
+		// reset comment form
+		CommentPress.textselector.selection_clear_from_editor()
+
+	});
+
+	/**
+	 * Hook into CommentPress AJAX new comment added and animation finished
+	 *
+	 * @param object event The event (unused)
+	 * @param int comment_id The new comment ID
+	 * @return void
+	 */
+	$(document).on( 'commentpress-ajax-comment-added-scrolled', function( event ) {
+
+		// clear highlights
+		CommentPress.textselector.highlights_clear();
 
 	});
 

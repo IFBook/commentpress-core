@@ -968,6 +968,9 @@ CommentPress.ajax.comments = new function() {
 							// remove highlight class
 							comment.addClass( 'comment-fade' );
 
+							// broadcast that animation is done
+							jQuery( document ).trigger( 'commentpress-ajax-comment-added-scrolled' );
+
 						}
 					}
 				);
