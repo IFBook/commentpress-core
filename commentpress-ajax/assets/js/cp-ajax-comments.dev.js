@@ -83,7 +83,7 @@ CommentPress.ajax.comments = new function() {
 		me.cpajax_error = jQuery('#cpajax_error_msg');
 
 		// hide error div
-		this.cpajax_error.hide();
+		me.cpajax_error.hide();
 
 	};
 
@@ -416,7 +416,7 @@ CommentPress.ajax.comments = new function() {
 		// compatibility with Comment Upvoter
 		cpajax_reenable_comment_upvoter();
 
-	}
+	};
 
 
 
@@ -519,7 +519,7 @@ CommentPress.ajax.comments = new function() {
 
 		});
 
-	}
+	};
 
 
 
@@ -667,7 +667,7 @@ CommentPress.ajax.comments = new function() {
 
 		);
 
-	}
+	};
 
 
 
@@ -822,7 +822,7 @@ CommentPress.ajax.comments = new function() {
 		// compatibility with Comment Upvoter
 		cpajax_reenable_comment_upvoter();
 
-	}
+	};
 
 
 
@@ -858,7 +858,7 @@ CommentPress.ajax.comments = new function() {
 		// clean up
 		me.cleanup( content, last );
 
-	}
+	};
 
 
 
@@ -894,7 +894,7 @@ CommentPress.ajax.comments = new function() {
 		// clean up
 		me.cleanup( content, last );
 
-	}
+	};
 
 
 
@@ -954,7 +954,7 @@ CommentPress.ajax.comments = new function() {
 
 		); // end slide
 
-	}
+	};
 
 
 
@@ -986,7 +986,7 @@ CommentPress.ajax.comments = new function() {
 
 		}
 
-	}
+	};
 
 
 
@@ -1019,7 +1019,7 @@ CommentPress.ajax.comments = new function() {
 
 		}
 
-	}
+	};
 
 
 
@@ -1130,7 +1130,7 @@ CommentPress.ajax.comments = new function() {
 					me.cpajax_error.html('<span class="error">' + data[1] + '</span>');
 					me.cpajax_error.show();
 
-					CommentPress.ajax.comments.reset();
+					me.reset();
 
 					return false;
 
@@ -1191,7 +1191,7 @@ CommentPress.ajax.comments = new function() {
 
 		}); // end form.submit()
 
-	}
+	};
 
 
 

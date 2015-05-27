@@ -16,83 +16,491 @@ Based loosely on the 'Ajax Comment Posting' WordPress plugin (version 2.0)
 
 
 
-// define vars
-var cpajax_live, cpajax_ajax_url, cpajax_spinner_url, cpajax_post_id, cpajax_submitting,
-	cpajax_lang, cpajax_form, cpajax_error;
-
-// test for our localisation object
-if ( 'undefined' !== typeof CommentpressAjaxSettings ) {
-
-	// reference our object vars
-	cpajax_live = CommentpressAjaxSettings.cpajax_live;
-	cpajax_ajax_url = CommentpressAjaxSettings.cpajax_ajax_url;
-	cpajax_spinner_url = CommentpressAjaxSettings.cpajax_spinner_url;
-	cpajax_post_id = CommentpressAjaxSettings.cpajax_post_id;
-	cpajax_lang = CommentpressAjaxSettings.cpajax_lang;
-
-}
-
-// init submitting flag
-cpajax_submitting = false;
+/**
+ * Create AJAX sub-namespace
+ */
+CommentPress.ajax = {};
 
 
 
 /**
- * Init CommentPress AJAX
- *
- * @return void
+ * Create CommentPress AJAX comments class
  */
-function cpajax_initialise() {
+CommentPress.ajax.comments = new function() {
 
-	// create error container
-	jQuery( '#respond_title' ).after(
-		'<div id="cpajax_error_msg"></div>'
-	);
+	// store object ref
+	var me = this;
 
-	// init AJAX spinner
-	jQuery( '#submit' ).after(
-		'<img src="' + cpajax_spinner_url + '" id="loading" alt="' + cpajax_lang[0] + '" />'
-	);
+	// init form submitting flag
+	this.cpajax_submitting = false;
 
-	// hide spinner
-	jQuery( '#loading' ).hide();
+	// comment form
+	this.cpajax_form = {};
 
-	// store reference to the comment form
-	cpajax_form = jQuery( '#commentform' );
+	// error display element
+	this.cpajax_error = {};
 
-	// store reference to the error div
-	cpajax_error = jQuery( '#cpajax_error_msg' );
+	// test for our localisation object
+	if ( 'undefined' !== typeof CommentpressAjaxSettings ) {
 
-	// hide error div
-	cpajax_error.hide();
+		// reference our localisation object vars
+		this.cpajax_live = CommentpressAjaxSettings.cpajax_live;
+		this.cpajax_ajax_url = CommentpressAjaxSettings.cpajax_ajax_url;
+		this.cpajax_spinner_url = CommentpressAjaxSettings.cpajax_spinner_url;
+		this.cpajax_post_id = CommentpressAjaxSettings.cpajax_post_id;
+		this.cpajax_lang = CommentpressAjaxSettings.cpajax_lang;
 
-}
+	}
 
 
 
-/**
- * Reset CommentPress AJAX
- *
- * @return void
- */
-function cpajax_reset() {
+	/**
+	 * Init CommentPress AJAX
+	 *
+	 * @return void
+	 */
+	this.initialise = function() {
 
-	// hide the spinner
-	jQuery( '#loading' ).hide();
+		// create error container
+		jQuery('#respond_title').after(
+			'<div id="cpajax_error_msg"></div>'
+		);
 
-	// enable submit button
-	jQuery( '#submit' ).removeAttr( 'disabled' );
+		// init AJAX spinner
+		jQuery('#submit').after(
+			'<img src="' + me.cpajax_spinner_url + '" id="loading" alt="' + me.cpajax_lang[0] + '" />'
+		);
 
-	// make it visible
-	jQuery( '#submit' ).show();
+		// hide spinner
+		jQuery('#loading').hide();
 
-	// enable the comment form
-	addComment.enableForm();
+		// store reference to the comment form
+		me.cpajax_form = jQuery('#commentform');
 
-	// set flas to say we're done
-	cpajax_submitting = false;
+		// store reference to the error div
+		me.cpajax_error = jQuery('#cpajax_error_msg');
 
-}
+		// hide error div
+		me.cpajax_error.hide();
+
+	};
+
+
+
+	/**
+	 * Reset CommentPress AJAX
+	 *
+	 * @return void
+	 */
+	this.reset = function() {
+
+		// hide the spinner
+		jQuery('#loading').hide();
+
+		// enable submit button
+		jQuery('#submit').removeAttr( 'disabled' );
+
+		// make it visible
+		jQuery('#submit').show();
+
+		// enable the comment form
+		addComment.enableForm();
+
+		// set flag to say we're done
+		me.cpajax_submitting = false;
+
+	};
+
+
+
+	/**
+	 * Add comment to page
+	 *
+	 * @param object response The jQuery object containing the result of the AJAX request
+	 * @return void
+	 */
+	this.add_comment = function( response ) {
+
+		// define vars
+		var comm_parent, comm_list, parent_id, head;
+
+		// get comment parent
+		comm_parent = me.cpajax_form.find('#comment_parent').val();
+
+		// find the commentlist we want
+		comm_list = jQuery('ol.commentlist:first');
+
+		// if the comment is a reply, append the comment to the children
+		if ( comm_parent != '0' ) {
+
+			// get parent
+			parent_id = '#li-comment-' + comm_parent;
+
+			// find the child list we want
+			child_list = jQuery(parent_id + ' > ol.children:first');
+
+			// is there a child list?
+			if ( child_list[0] ) {
+
+				me.nice_append(
+					response,
+					parent_id + ' > ol.children:first > li:last',
+					child_list,
+					parent_id + ' > ol.children:first > li:last'
+				);
+
+			} else {
+
+				me.nice_append(
+					response,
+					parent_id + ' > ol.children:first',
+					parent_id,
+					parent_id + ' > ol.children:first > li:last'
+				);
+
+			}
+
+		// if not, append the new comment at the bottom
+		} else {
+
+			// is there a comment list?
+			if ( comm_list[0] ) {
+
+				me.nice_append(
+					response,
+					'ol.commentlist:first > li:last',
+					comm_list,
+					'ol.commentlist:first > li:last'
+				);
+
+			} else {
+
+				me.nice_append(
+					response,
+					'ol.commentlist:first',
+					'div.comments_container',
+					'ol.commentlist:first > li:last'
+				);
+
+			}
+
+		}
+
+		// permalink clicks
+		commentpress_enable_comment_permalink_clicks();
+
+		// get head
+		head = response.find('#comments_in_page_wrapper div.comments_container > h3');
+
+		// replace heading
+		jQuery('#comments_in_page_wrapper div.comments_container > h3').replaceWith(head);
+
+		// clear comment form
+		me.cpajax_form.find( '#comment' ).val( '' );
+
+		//me.cpajax_error.html('<span class="success">' + me.cpajax_lang[5] + '</span>');
+
+		// compatibility with Featured Comments
+		cpajax_reenable_featured_comments();
+
+		// compatibility with Comment Upvoter
+		cpajax_reenable_comment_upvoter();
+
+	};
+
+
+
+	/**
+	 * Do comment append
+	 *
+	 * @param object response The jQuery object from the AJAX request
+	 * @param object content The jQuery object containing the content
+	 * @param object target The jQuery object in which the content should be placed
+	 * @param object last The jQuery object of the last item in the comment list
+	 * @return void
+	 */
+	this.nice_append = function( response, content, target, last ) {
+
+		// test for undefined, which may happen on replies to comments
+		// which have lost their original context
+		if ( response === undefined || response === null ) { return; }
+
+		response.find(content)
+				.clone()
+				.hide()
+				.appendTo(target);
+
+		// clean up
+		me.cleanup( content, last );
+
+	};
+
+
+
+	/**
+	 * Do comment prepend
+	 *
+	 * @param object response The jQuery object from the AJAX request
+	 * @param object content The jQuery object containing the content
+	 * @param object target The jQuery object in which the content should be placed
+	 * @param object last The jQuery object of the last item in the comment list
+	 * @return void
+	 */
+	this.nice_prepend = function( response, content, target, last ) {
+
+		// test for undefined, which may happen on replies to comments
+		// which have lost their original context
+		if ( response === undefined || response === null ) { return; }
+
+		response.find(content)
+				.clone()
+				.hide()
+				.prependTo(target);
+
+		// clean up
+		me.cleanup( content, last );
+
+	};
+
+
+
+	/**
+	 * Do comment cleanup
+	 *
+	 * @param object content The jQuery object containing the content
+	 * @param object last The jQuery object of the last item in the comment list
+	 * @return void
+	 */
+	this.cleanup = function( content, last ) {
+
+		// define vars
+		var last_id, new_comm_id, comment;
+
+		// get the id of the last list item
+		last_id = jQuery(last).prop('id');
+
+		/*
+		// IE seems to grab the result from cache despite nocache_headers()
+		// the following is an action of last resort - the cache is being busted in
+		// commentpress_comment_post_redirect() instead
+		if ( typeof last_id == 'undefined' || last_id === null ) {
+			document.location.reload( true );
+			return;
+		}
+		*/
+
+		// construct new comment id
+		new_comm_id = '#comment-' + ( last_id.toString().split('-')[2] );
+		comment = jQuery(new_comm_id);
+
+		addComment.cancelForm();
+
+		// add a couple of classes
+		comment.addClass( 'comment-highlighted' );
+
+		jQuery(content).slideDown( 'slow',
+
+			// animation complete
+			function() {
+
+				// scroll to new comment
+				jQuery.scrollTo(
+					comment,
+					{
+						duration: cp_scroll_speed,
+						axis: 'y',
+						offset: commentpress_get_header_offset(),
+						onAfter: function() {
+
+							// remove highlight class
+							comment.addClass( 'comment-fade' );
+
+						}
+					}
+				);
+
+			}
+
+		); // end slide
+
+	};
+
+
+
+
+	/**
+	 * Init comment form
+	 *
+	 * @return void
+	 */
+	this.initialise_form = function() {
+
+		// unbind first to allow repeated calls to this function
+		jQuery('#commentform').off( 'submit' );
+
+		/**
+		 * Comment submission method
+		 *
+		 * @return false
+		 */
+		jQuery('#commentform').on( 'submit', function( event ) {
+
+			// define vars
+			var filter;
+
+			// set global flag
+			me.cpajax_submitting = true;
+
+			// hide errors
+			me.cpajax_error.hide();
+
+			// if not logged in, validate name and email
+			if ( me.cpajax_form.find( '#author' )[0] ) {
+
+				// check for name
+				if ( me.cpajax_form.find( '#author' ).val() == '' ) {
+					me.cpajax_error.html('<span class="error">' + me.cpajax_lang[1] + '</span>');
+					me.cpajax_error.show();
+					me.cpajax_submitting = false;
+					return false;
+				}
+
+				// check for email
+				if ( me.cpajax_form.find( '#email' ).val() == '' ) {
+					me.cpajax_error.html('<span class="error">' + me.cpajax_lang[2] + '</span>');
+					me.cpajax_error.show();
+					me.cpajax_submitting = false;
+					return false;
+				}
+
+				// validate email
+				filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+				if( !filter.test( me.cpajax_form.find('#email').val() ) ) {
+					me.cpajax_error.html('<span class="error">' + me.cpajax_lang[3] + '</span>');
+					me.cpajax_error.show();
+					if (event.preventDefault) {event.preventDefault();}
+					me.cpajax_submitting = false;
+					return false;
+				}
+
+			} // end if
+
+
+
+			// test for tinyMCE
+			if ( cp_tinymce == '1' ) {
+
+				// set value of comment textarea to content
+				tinyMCE.triggerSave();
+
+				// unload tinyMCE
+				addComment.disableForm();
+
+			}
+
+			// check for comment
+			if ( me.cpajax_form.find( '#comment' ).val() == '' ) {
+				me.cpajax_error.html('<span class="error">' + me.cpajax_lang[4] + '</span>');
+				me.cpajax_error.show();
+				// reload tinyMCE
+				addComment.enableForm();
+				me.cpajax_submitting = false;
+				return false;
+			}
+
+
+
+			// submit the form
+			jQuery(this).ajaxSubmit({
+
+
+
+				beforeSubmit: function() {
+
+					jQuery('#loading').show();
+					jQuery('#submit').prop('disabled','disabled');
+					jQuery('#submit').hide();
+
+				}, // end beforeSubmit
+
+
+
+				error: function(request) {
+
+					// define vars
+					var data;
+
+					me.cpajax_error.empty();
+					data = request.responseText.match(/<p>(.*)<\/p>/);
+					me.cpajax_error.html('<span class="error">' + data[1] + '</span>');
+					me.cpajax_error.show();
+
+					me.reset();
+
+					return false;
+
+				}, // end error()
+
+
+
+				success: function( data ) {
+
+					// declare vars
+					var response;
+
+					// trace
+					//console.log( data );
+
+					// jQuery 1.9 fails to recognise the response as HTML, so
+					// we *must* use parseHTML if it's available...
+					if ( jQuery.parseHTML ) {
+
+						// if our jQuery version is 1.8+, it'll have parseHTML
+						response =  jQuery( jQuery.parseHTML( data ) );
+
+					} else {
+
+						// get our data as object in the basic way
+						response = jQuery(data);
+
+					}
+
+					//console.log( response );
+
+					// avoid errors if we can
+					try {
+
+						// add comment
+						me.add_comment( response );
+						me.reset();
+
+					// oh well...
+					} catch (e) {
+
+						me.reset();
+						alert( me.cpajax_lang[6] + '\n\n' + e );
+						//console.log( data );
+
+					} // end try
+
+				} // end success()
+
+
+
+			}); // end ajaxSubmit()
+
+
+
+			// --<
+			return false;
+
+		}); // end form.submit()
+
+	};
+
+
+
+} // end CommentPress AJAX comments class
 
 
 
@@ -145,376 +553,6 @@ function cpajax_reenable_comment_upvoter() {
 
 
 /**
- * Add comment to page
- *
- * @param object response The jQuery object returned by the AJAX request
- * @return void
- */
-function cpajax_add_comment( response ) {
-
-	// define vars
-	var comm_parent, comm_list, parent_id, head;
-
-	// get comment parent
-	comm_parent = cpajax_form.find('#comment_parent').val();
-
-	// find the commentlist we want
-	comm_list = jQuery('ol.commentlist:first');
-
-	// if the comment is a reply, append the comment to the children
-	if ( comm_parent != '0' ) {
-
-		//console.log( 'comm_parent: ' + comm_parent );
-
-		parent_id = '#li-comment-' + comm_parent;
-
-		// find the child list we want
-		child_list = jQuery(parent_id + ' > ol.children:first');
-
-		// is there a child list?
-		if ( child_list[0] ) {
-
-			cpajax_nice_append(
-				response,
-				parent_id + ' > ol.children:first > li:last',
-				child_list,
-				parent_id + ' > ol.children:first > li:last'
-			);
-
-		} else {
-
-			cpajax_nice_append(
-				response,
-				parent_id + ' > ol.children:first',
-				parent_id,
-				parent_id + ' > ol.children:first > li:last'
-			);
-
-		}
-
-	// if not, append the new comment at the bottom
-	} else {
-
-		// is there a comment list?
-		if ( comm_list[0] ) {
-
-			cpajax_nice_append(
-				response,
-				'ol.commentlist:first > li:last',
-				comm_list,
-				'ol.commentlist:first > li:last'
-			);
-
-		} else {
-
-			cpajax_nice_append(
-				response,
-				'ol.commentlist:first',
-				'div.comments_container',
-				'ol.commentlist:first > li:last'
-			);
-
-		}
-
-	}
-
-	// permalink clicks
-	commentpress_enable_comment_permalink_clicks();
-
-	// get head
-	head = response.find('#comments_in_page_wrapper div.comments_container > h3');
-
-	// replace heading
-	jQuery('#comments_in_page_wrapper div.comments_container > h3').replaceWith(head);
-
-	// clear comment form
-	cpajax_form.find('#comment').val( '' );
-
-	//cpajax_error.html('<span class="success">' + cpajax_lang[5] + '</span>');
-
-	// compatibility with Featured Comments
-	cpajax_reenable_featured_comments();
-
-	// compatibility with Comment Upvoter
-	cpajax_reenable_comment_upvoter();
-
-}
-
-
-
-/**
- * Do comment append
- *
- * @param object response The jQuery object from the AJAX request
- * @param object content The jQuery object containing the content
- * @param object target The jQuery object in which the content should be placed
- * @param object last The jQuery object of the last item in the comment list
- * @return void
- */
-function cpajax_nice_append( response, content, target, last ) {
-
-	// test for undefined, which may happen on replies to comments
-	// which have lost their original context
-	if ( response === undefined || response === null ) { return; }
-
-	response.find(content)
-			.hide()
-			.appendTo(target);
-
-	// clean up
-	cpajax_cleanup( content, last );
-
-}
-
-
-
-/**
- * Do comment prepend
- *
- * @param object response The jQuery object from the AJAX request
- * @param object content The jQuery object containing the content
- * @param object target The jQuery object in which the content should be placed
- * @param object last The jQuery object of the last item in the comment list
- * @return void
- */
-function cpajax_nice_prepend( response, content, target, last ) {
-
-	// test for undefined, which may happen on replies to comments
-	// which have lost their original context
-	if ( response === undefined || response === null ) { return; }
-
-	response.find(content)
-			.hide()
-			.prependTo(target);
-
-	// clean up
-	cpajax_cleanup( content, last );
-
-}
-
-
-
-/**
- * Do comment cleanup
- *
- * @param object content The jQuery object containing the content
- * @param object last The jQuery object of the last item in the comment list
- * @return void
- */
-function cpajax_cleanup( content, last ) {
-
-	// define vars
-	var last_id, new_comm_id, comment;
-
-	// get the id of the last list item
-	last_id = jQuery(last).prop('id');
-
-	// construct new comment id
-	new_comm_id = '#comment-' + last_id.split('-')[2];
-	comment = jQuery(new_comm_id);
-
-	addComment.cancelForm();
-
-	// add a couple of classes
-	comment.addClass( 'comment-highlighted' );
-
-	jQuery(content).slideDown('slow',
-
-		// animation complete
-		function() {
-
-			// scroll to new comment
-			jQuery.scrollTo(
-				comment,
-				{
-					duration: cp_scroll_speed,
-					axis: 'y',
-					offset: commentpress_get_header_offset(),
-					onAfter: function() {
-
-						// remove highlight class
-						comment.addClass( 'comment-fade' );
-
-					}
-				}
-			);
-
-		}
-
-	); // end slide
-
-}
-
-
-
-
-/**
- * Init comment form
- *
- * @return void
- */
-function cpajax_initialise_form() {
-
-	/**
-	 * Comment submission method
-	 *
-	 * @return false
-	 */
-	jQuery('#commentform').on('submit', function( event ) {
-
-		// define vars
-		var filter;
-
-		// set global flag
-		cpajax_submitting = true;
-
-		// hide errors
-		cpajax_error.hide();
-
-		// if not logged in, validate name and email
-		if ( cpajax_form.find( '#author' )[0] ) {
-
-			// check for name
-			if ( cpajax_form.find( '#author' ).val() == '' ) {
-				cpajax_error.html('<span class="error">' + cpajax_lang[1] + '</span>');
-				cpajax_error.show();
-				cpajax_submitting = false;
-				return false;
-			}
-
-			// check for email
-			if ( cpajax_form.find( '#email' ).val() == '' ) {
-				cpajax_error.html('<span class="error">' + cpajax_lang[2] + '</span>');
-				cpajax_error.show();
-				cpajax_submitting = false;
-				return false;
-			}
-
-			// validate email
-			filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-			if( !filter.test( cpajax_form.find('#email').val() ) ) {
-				cpajax_error.html('<span class="error">' + cpajax_lang[3] + '</span>');
-				cpajax_error.show();
-				if (event.preventDefault) {event.preventDefault();}
-				cpajax_submitting = false;
-				return false;
-			}
-
-		} // end if
-
-
-
-		// test for tinyMCE
-		if ( cp_tinymce == '1' ) {
-
-			// set value of comment textarea to content
-			tinyMCE.triggerSave();
-
-			// unload tinyMCE
-			addComment.disableForm();
-
-		}
-
-		// check for comment
-		if ( cpajax_form.find( '#comment' ).val() == '' ) {
-			cpajax_error.html('<span class="error">' + cpajax_lang[4] + '</span>');
-			cpajax_error.show();
-			// reload tinyMCE
-			addComment.enableForm();
-			cpajax_submitting = false;
-			return false;
-		}
-
-
-
-		// submit the form
-		jQuery(this).ajaxSubmit({
-
-
-
-			beforeSubmit: function() {
-
-				jQuery('#loading').show();
-				jQuery('#submit').prop('disabled','disabled');
-				jQuery('#submit').hide();
-
-			}, // end beforeSubmit
-
-
-
-			error: function(request) {
-
-				// define vars
-				var data;
-
-				cpajax_error.empty();
-				data = request.responseText.match(/<p>(.*)<\/p>/);
-				cpajax_error.html('<span class="error">' + data[1] + '</span>');
-				cpajax_error.show();
-
-				cpajax_reset();
-
-				return false;
-
-			}, // end error()
-
-
-
-			success: function( data ) {
-
-				// declare vars
-				var response;
-
-				// trace
-				//console.log( data );
-
-				try {
-
-					// jQuery 1.9 fails to recognise the response as HTML, so
-					// we *must* use parseHTML if it's available...
-					if ( jQuery.parseHTML ) {
-
-						// if our jQuery version is 1.8+, it'll have parseHTML
-						response =  jQuery( jQuery.parseHTML( data ) );
-
-					} else {
-
-						// get our data as object in the basic way
-						response = jQuery( data );
-
-					}
-
-					//console.log( response );
-
-					// add comment
-					cpajax_add_comment( response );
-					cpajax_reset();
-
-				} catch (e) {
-
-					cpajax_reset();
-					alert( cpajax_lang[6] + '\n\n' + e );
-
-				} // end try
-
-			} // end success()
-
-
-
-		}); // end ajaxSubmit()
-
-
-
-		// --<
-		return false;
-
-	}); // end form.submit()
-
-}
-
-
-
-/**
  * Define what happens when the page is ready
  *
  * @return void
@@ -522,10 +560,10 @@ function cpajax_initialise_form() {
 jQuery(document).ready(function($) {
 
 	// initialise plugin
-	cpajax_initialise();
+	CommentPress.ajax.comments.initialise();
 
 	// initialise comment form
-	cpajax_initialise_form();
+	CommentPress.ajax.comments.initialise_form();
 
 }); // end document.ready()
 
