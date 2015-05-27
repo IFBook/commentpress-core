@@ -243,32 +243,56 @@ class CommentpressCoreDisplay {
 
 		// add our javascript plugin and dependencies
 		wp_enqueue_script(
-
 			'jquery_commentpress',
 			plugins_url( 'commentpress-core/assets/js/jquery.commentpress' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
 			array( 'jquery', 'jquery-form', 'jquery-ui-core', 'jquery-ui-resizable' ),
 			COMMENTPRESS_VERSION // version
-
 		);
+
+		// get vars
+		$vars = $this->db->get_javascript_vars();
+
+		// localise with wp function
+		wp_localize_script( 'jquery_commentpress', 'CommentpressSettings', $vars );
 
 		// add jQuery Scroll-To plugin
 		wp_enqueue_script(
-
 			'jquery_scrollto',
 			plugins_url( 'commentpress-core/assets/js/jquery.scrollTo.js', COMMENTPRESS_PLUGIN_FILE ),
 			array( 'jquery_commentpress' ),
 			COMMENTPRESS_VERSION // version
-
 		);
 
 		// add jQuery Cookie plugin (renamed to jquery.biscuit.js because some hosts don't like 'cookie' in the filename)
 		wp_enqueue_script(
-
 			'jquery_cookie',
 			plugins_url( 'commentpress-core/assets/js/jquery.biscuit.js', COMMENTPRESS_PLUGIN_FILE ),
 			array( 'jquery_commentpress' ),
 			COMMENTPRESS_VERSION // version
+		);
 
+		// add jQuery wrapSelection plugin
+		wp_enqueue_script(
+			'jquery_wrapselection',
+			plugins_url( 'commentpress-core/assets/js/jquery.wrap-selection' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
+			array( 'jquery_commentpress' ),
+			COMMENTPRESS_VERSION // version
+		);
+
+		// add jQuery highlighter plugin
+		wp_enqueue_script(
+			'jquery_highlighter',
+			plugins_url( 'commentpress-core/assets/js/jquery.highlighter' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
+			array( 'jquery_wrapselection' ),
+			COMMENTPRESS_VERSION // version
+		);
+
+		// add jQuery text highlighter plugin
+		wp_enqueue_script(
+			'jquery_texthighlighter',
+			plugins_url( 'commentpress-core/assets/js/jquery.texthighlighter' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
+			array( 'jquery_highlighter' ),
+			COMMENTPRESS_VERSION // version
 		);
 
 		/**

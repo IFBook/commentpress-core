@@ -471,13 +471,11 @@ function commentpress_enqueue_scripts_and_styles() {
 
 	// register screen styles
 	wp_register_style(
-
 		'cp_screen_css', // unique id
 		get_template_directory_uri() . '/assets/css/screen' . $dev . '.css', // src
 		array(), // dependencies
 		COMMENTPRESS_VERSION, // version
 		'all' // media
-
 	);
 
 	// -------------------------------------------------------------------------
@@ -486,24 +484,20 @@ function commentpress_enqueue_scripts_and_styles() {
 
 	// add Google Webfont "Lato"
 	wp_enqueue_style(
-
 		'cp_webfont_lato_css',
 		'http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic',
 		array( 'cp_screen_css' ),
 		COMMENTPRESS_VERSION, // version
 		'all' // media
-
 	);
 
 	// add colours css
 	wp_enqueue_style(
-
 		'cp_colours_css',
 		get_template_directory_uri() . '/assets/css/colours-01' . $dev . '.css',
 		array( 'cp_webfont_lato_css' ),
 		COMMENTPRESS_VERSION, // version
 		'all' // media
-
 	);
 
 	// test for a function in BP 1.7+
@@ -524,12 +518,10 @@ function commentpress_enqueue_scripts_and_styles() {
 
 	// enqueue common js
 	wp_enqueue_script(
-
 		'cp_common_js',
 		get_template_directory_uri() . '/assets/js/screen' . $dev . '.js',
 		array( 'jquery_commentpress' ), // deps
 		COMMENTPRESS_VERSION // version
-
 	);
 
 	// access plugin
@@ -547,12 +539,10 @@ function commentpress_enqueue_scripts_and_styles() {
 
 			// enqueue form js
 			wp_enqueue_script(
-
 				'cp_form',
 				get_template_directory_uri() . '/assets/js/cp_js_form' . $dev . '.js',
 				array( 'cp_common_js' ), // deps
 				COMMENTPRESS_VERSION // version
-
 			);
 
 		}
@@ -562,21 +552,13 @@ function commentpress_enqueue_scripts_and_styles() {
 
 			// enqueue accordion-like js
 			wp_enqueue_script(
-
 				'cp_special',
 				get_template_directory_uri() . '/assets/js/cp_js_all_comments.js',
 				array( 'cp_form' ), // deps
 				COMMENTPRESS_VERSION // version
-
 			);
 
 		}
-
-		// get vars
-		$vars = $commentpress_core->db->get_javascript_vars();
-
-		// localise with wp function
-		wp_localize_script( 'cp_common_js', 'CommentpressSettings', $vars );
 
 	}
 

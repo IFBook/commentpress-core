@@ -1,8 +1,9 @@
 /**
- * CommentPress Core jQuery Plugin
+ * CommentPress Core Common Code Library
  *
- * This jQuery Plugin allows us to add numerous methods to jQuery without
- * cluttering the global function namespace.
+ * This code implements some features of a jQuery Plugin, but is mostly used as
+ * a common library for all CommentPress-compatible themes. It allows us to add
+ * numerous methods to jQuery without cluttering the global function namespace.
  *
  * @package CommentPress Core
  * @author Christian Wach <needle@haystack.co.uk>
@@ -10,6 +11,105 @@
  * @since 3.0
  */
 ;
+
+
+
+/**
+ * Create global variables
+ *
+ * These were being defined in each theme, so have been moved to this library to
+ * avoid duplication of code.
+ */
+
+// define global IE var
+var msie_detected = false;
+
+// browser detection via conditional comments in <head>
+if ( 'undefined' !== typeof cp_msie ) {
+	msie_detected = true;
+}
+
+// define global IE6 var
+msie6_detected = false;
+
+// browser detection via conditional comments in <head>
+if ( 'undefined' !== typeof cp_msie6 ) {
+	msie6_detected = true;
+}
+
+// test for our localisation object
+if ( 'undefined' !== typeof CommentpressSettings ) {
+
+	// define our vars
+	var cp_wp_adminbar, cp_wp_adminbar_height, cp_wp_adminbar_expanded, cp_bp_adminbar,
+		cp_comments_open, cp_special_page, cp_tinymce, cp_tinymce_version,
+		cp_promote_reading, cp_is_mobile, cp_is_touch, cp_is_tablet, cp_cookie_path,
+		cp_multipage_page, cp_template_dir, cp_plugin_dir, cp_toc_chapter_is_page, cp_show_subpages,
+		cp_default_sidebar, cp_is_signup_page, cp_scroll_speed, cp_min_page_width,
+		cp_textblock_meta;
+
+	// set our vars
+	cp_wp_adminbar = CommentpressSettings.cp_wp_adminbar;
+	cp_wp_adminbar_height = parseInt( CommentpressSettings.cp_wp_adminbar_height );
+	cp_wp_adminbar_expanded = parseInt( CommentpressSettings.cp_wp_adminbar_expanded );
+	cp_bp_adminbar = CommentpressSettings.cp_bp_adminbar;
+	cp_comments_open = CommentpressSettings.cp_comments_open;
+	cp_special_page = CommentpressSettings.cp_special_page;
+	cp_tinymce = CommentpressSettings.cp_tinymce;
+	cp_tinymce_version = CommentpressSettings.cp_tinymce_version;
+	cp_promote_reading = CommentpressSettings.cp_promote_reading;
+	cp_is_mobile = CommentpressSettings.cp_is_mobile;
+	cp_is_touch = CommentpressSettings.cp_is_touch;
+	cp_is_tablet = CommentpressSettings.cp_is_tablet;
+	cp_cookie_path = CommentpressSettings.cp_cookie_path;
+	cp_multipage_page = CommentpressSettings.cp_multipage_page;
+	cp_template_dir = CommentpressSettings.cp_template_dir;
+	cp_plugin_dir = CommentpressSettings.cp_plugin_dir;
+	cp_toc_chapter_is_page = CommentpressSettings.cp_toc_chapter_is_page;
+	cp_show_subpages = CommentpressSettings.cp_show_subpages;
+	cp_default_sidebar = CommentpressSettings.cp_default_sidebar;
+	cp_is_signup_page = CommentpressSettings.cp_is_signup_page;
+	cp_scroll_speed = CommentpressSettings.cp_js_scroll_speed;
+	cp_min_page_width = CommentpressSettings.cp_min_page_width;
+	cp_textblock_meta = CommentpressSettings.cp_textblock_meta;
+
+}
+
+
+
+/**
+ * Create global CommentPress namespace
+ */
+var CommentPress = CommentPress || {};
+
+/**
+ * Create settings sub-namespace
+ */
+CommentPress.settings = {};
+
+/**
+ * Create CommentPress textblock object
+ */
+CommentPress.settings.textblock = new function() {
+
+	// init textblock marker mode
+	this.marker_mode = 'marker';
+
+	/**
+	 * Setter for textblock marker mode
+	 */
+	this.setMarkerMode = function( mode ) {
+		this.marker_mode = mode;
+	},
+
+	/**
+	 * Getter for textblock marker mode
+	 */
+	this.getMarkerMode = function() {
+		return this.marker_mode;
+	}
+
+} // end CommentPress textblock class
 
 
 
@@ -22,6 +122,8 @@
  * @since 3.0
  */
 ;( function( $ ) {
+
+
 
 	// our currently highlighted paragraph
 	var highlighted_para = '';
@@ -557,7 +659,7 @@
 			if ( comment.length ) {
 
 				// if IE6, then we have to scroll #wrapper
-				if ( msie6 ) {
+				if ( msie6_detected ) {
 
 					// scroll to new comment
 					$('#main_wrapper').scrollTo(
@@ -1566,6 +1668,9 @@
 							// highlight header
 							cp_flash_comment_header( target );
 
+							// broadcast
+							$(document).trigger( 'commentpress-comments-scrolled' );
+
 						}
 					}
 				);
@@ -1573,7 +1678,18 @@
 			} else {
 
 				// scroll comment area to para heading
-				$('#comments_sidebar .sidebar_contents_wrapper').scrollTo( target, {duration: speed} );
+				$('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
+					target,
+					{
+						duration: speed,
+						onAfter: function() {
+
+							// broadcast
+							$(document).trigger( 'commentpress-comments-scrolled' );
+
+						}
+					}
+				);
 
 			}
 
@@ -1596,7 +1712,7 @@
 		if ( typeof target === 'undefined' ) { return; }
 
 		// if IE6, then we have to scroll #wrapper
-		if ( msie6 ) {
+		if ( msie6_detected ) {
 
 			//
 			$(window).scrollTo( 0, 0 );
@@ -1650,7 +1766,7 @@
 		if ( typeof target === 'undefined' ) { return; }
 
 		// if IE6, then we have to scroll #wrapper
-		if ( msie6 ) {
+		if ( msie6_detected ) {
 
 			//
 			$(window).scrollTo( 0, 0 );
@@ -1740,9 +1856,9 @@
 	 */
 	$.footnotes_compatibility = function() {
 
-		// -------------------------------------------------------------------------
+		// ---------------------------------------------------------------------
 		// Back links
-		// -------------------------------------------------------------------------
+		// ---------------------------------------------------------------------
 
 		// unbind first to allow repeated calls to this function
 		$('span.footnotereverse a, a.footnote-back-link').unbind( 'click' );
@@ -1808,9 +1924,9 @@
 
 		});
 
-		// -------------------------------------------------------------------------
+		// ---------------------------------------------------------------------
 		// Footnote links
-		// -------------------------------------------------------------------------
+		// ---------------------------------------------------------------------
 
 		// unbind first to allow repeated calls to this function
 		$('a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link, a.zp-ZotpressInText').unbind( 'click' );
@@ -1845,3 +1961,228 @@
 
 
 })( jQuery );
+
+
+
+/**
+ * Scroll page to target
+ *
+ * @param object target The object to scroll to
+ * @return void
+ */
+function commentpress_scroll_page( target ) {
+	jQuery.scroll_page( target );
+}
+
+/**
+ * Scroll page to target with passed duration param
+ *
+ * @param object target The object to scroll to
+ * @param integer duration The duration of the scroll
+ * @return void
+ */
+function cp_quick_scroll_page( target, duration ) {
+	jQuery.quick_scroll_page( target, duration );
+}
+
+/**
+ * Highlight the comment
+ *
+ * @param object comment The jQuery comment object
+ * @return void
+ */
+function cp_flash_comment_header( comment ) {
+	jQuery.highlight_comment( comment );
+}
+
+/**
+ * Scroll comments to target
+ *
+ * @param object target The target to scroll to
+ * @param integer speed The duration of the scroll
+ * @param string flash Whether or not to "flash" the comment
+ * @return void
+ */
+function cp_scroll_comments( target, speed, flash ) {
+	jQuery.scroll_comments( target, speed, flash );
+}
+
+/**
+ * Get text signature by comment id
+ *
+ * @param object cid The CSS ID of the comment
+ * @return string text_sig The text signature
+ */
+function cp_get_text_sig_by_comment_id( cid ) {
+	return jQuery.get_text_sig_by_comment_id( cid );
+}
+
+/**
+ * Scroll to textblock
+ *
+ * @param string text_sig The text signature to scroll to
+ * @return void
+ */
+function commentpress_scroll_page_to_textblock( text_sig ) {
+	jQuery.scroll_page_to_textblock( text_sig );
+}
+
+/**
+ * Clicking on the comment permalink
+ *
+ * @return void
+ */
+function commentpress_enable_comment_permalink_clicks() {
+	jQuery.enable_comment_permalink_clicks();
+}
+
+/**
+ * Set up context headers for "activity" tab
+ *
+ * @return false
+ */
+function commentpress_setup_context_headers() {
+	jQuery.setup_context_headers();
+}
+
+/**
+ * Clicking on the "see in context" link
+ *
+ * @return void
+ */
+function cp_enable_context_clicks() {
+	jQuery.enable_context_clicks();
+}
+
+/**
+ * Page load prodecure for special pages with comments in content
+ *
+ * @return void
+ */
+function cp_scroll_to_comment_on_load() {
+	jQuery.on_load_scroll_to_comment();
+}
+
+/**
+ * Set up clicks on comment icons attached to comment-blocks in post/page
+ *
+ * @return void
+ */
+function commentpress_setup_para_permalink_icons() {
+	jQuery.setup_textblock_comment_icons();
+}
+
+/**
+ * Set up actions on the title
+ *
+ * @return void
+ */
+function commentpress_setup_title_actions() {
+	jQuery.setup_title_actions();
+}
+
+/**
+ * Set up actions on the textblocks
+ *
+ * @return void
+ */
+function commentpress_setup_textblock_actions() {
+	jQuery.setup_textblock_actions();
+}
+
+/**
+ * Set up actions on the "paragraph" icons to the left of a textblock
+ *
+ * @return void
+ */
+function commentpress_setup_para_marker_actions() {
+	jQuery.setup_para_marker_actions();
+}
+
+/**
+ * Set up actions on the "paragraph" icons to the left of a textblock
+ *
+ * @return void
+ */
+function commentpress_setup_comment_permalink_copy_actions() {
+	jQuery.setup_comment_permalink_copy_actions();
+}
+
+/**
+ * Set up actions on items relating to textblocks in post/page
+ *
+ * @return void
+ */
+function commentpress_setup_page_click_actions() {
+
+	// call all the separate functions
+	commentpress_setup_title_actions();
+	commentpress_setup_textblock_actions();
+	commentpress_setup_para_marker_actions();
+	commentpress_setup_comment_permalink_copy_actions();
+
+}
+
+/**
+ * Set up paragraph links: cp_para_link is a class writers can use
+ * in their markup to create nicely scrolling links within their pages
+ *
+ * @return void
+ */
+function commentpress_setup_para_links() {
+	jQuery.setup_para_links();
+}
+
+/**
+ * Set up footnote links for various plugins
+ *
+ * @return void
+ */
+function commentpress_setup_footnotes_compatibility() {
+	jQuery.footnotes_compatibility();
+}
+
+/**
+ * Reset all actions
+ *
+ * @return void
+ */
+function commentpress_reset_actions() {
+
+	// set up comment headers
+	commentpress_setup_comment_headers();
+
+	// set up comment headers
+	//commentpress_setup_comment_headers();
+
+	// enable animations on clicking comment permalinks
+	commentpress_enable_comment_permalink_clicks();
+
+	// set up comment icons (these used to be paragraph permalinks - now 'add comment')
+	commentpress_setup_para_permalink_icons();
+
+	// set up clicks in the page content:
+	// title
+	// paragraph content
+	// paragraph icons (newly assigned as paragraph permalinks - also 'read comments')
+	commentpress_setup_page_click_actions();
+
+	// set up user-defined links to paragraphs
+	commentpress_setup_para_links();
+
+	// set up activity links
+	cp_enable_context_clicks();
+
+	// set up activity headers
+	commentpress_setup_context_headers();
+
+	// set up footnote plugin compatibility
+	commentpress_setup_footnotes_compatibility();
+
+	// broadcast
+	jQuery( document ).trigger( 'commentpress-reset-actions' );
+
+}
+
+
+

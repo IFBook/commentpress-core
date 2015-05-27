@@ -263,13 +263,13 @@ if ( window.history ) {
 		// AJAX COMMENTS
 
 		// enable comment reassignment
-		cpajax_reassign_comments();
+		CommentPress.ajax.comments.reassign_comments();
 
 		// initialise plugin
-		cpajax_initialise();
+		CommentPress.ajax.comments.initialise();
 
 		// initialise comment form
-		cpajax_initialise_form();
+		CommentPress.ajax.comments.initialise_form();
 
 		// re-enable page nav buttons
 		cpajax_enable_state_navigation();

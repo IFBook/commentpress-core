@@ -219,13 +219,11 @@ function commentpress_enqueue_scripts_and_styles() {
 
 	// register reset
 	wp_register_style(
-
 		'cp_reset_css', // unique id
 		get_template_directory_uri() . '/assets/css/reset.css', // src
 		array(), // dependencies
 		COMMENTPRESS_VERSION, // version
 		'all' // media
-
 	);
 
 	// init
@@ -238,24 +236,20 @@ function commentpress_enqueue_scripts_and_styles() {
 
 	// add typography css
 	wp_enqueue_style(
-
 		'cp_typography_css',
 		get_template_directory_uri() . '/assets/css/typography' . $dev . '.css',
 		array( 'cp_reset_css' ),
 		COMMENTPRESS_VERSION, // version
 		'all' // media
-
 	);
 
 	// add layout css
 	wp_enqueue_style(
-
 		'cp_layout_css',
 		get_template_directory_uri() . '/assets/css/layout' . $dev . '.css',
 		array( 'cp_typography_css' ),
 		COMMENTPRESS_VERSION, // version
 		'all' // media
-
 	);
 
 	// -------------------------------------------------------------------------
@@ -264,24 +258,20 @@ function commentpress_enqueue_scripts_and_styles() {
 
 	// add Google Webfont "Lato"
 	wp_enqueue_style(
-
 		'cp_webfont_css',
 		'http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic',
 		array( 'cp_layout_css' ),
 		null, // no version, thanks
 		null // no media, thanks
-
 	);
 
 	// add colours css
 	wp_enqueue_style(
-
 		'cp_colours_css',
 		get_template_directory_uri() . '/assets/css/colours-01' . $dev . '.css',
 		array( 'cp_webfont_css' ),
 		COMMENTPRESS_VERSION, // version
 		'all' // media
-
 	);
 
 	// use dashicons
@@ -299,12 +289,10 @@ function commentpress_enqueue_scripts_and_styles() {
 
 		// enqueue common js
 		wp_enqueue_script(
-
 			'cp_common_js',
 			get_template_directory_uri() . '/assets/js/cp_js_common' . $dev . '.js',
 			array( 'jquery_commentpress' ),
 			COMMENTPRESS_VERSION // version
-
 		);
 
 		// test for buddypress special page
@@ -316,12 +304,10 @@ function commentpress_enqueue_scripts_and_styles() {
 
 			// enqueue form js
 			wp_enqueue_script(
-
 				'cp_form',
 				get_template_directory_uri() . '/assets/js/cp_js_form' . $dev . '.js',
 				array( 'cp_common_js' ),
 				COMMENTPRESS_VERSION // version
-
 			);
 
 		}
@@ -331,21 +317,13 @@ function commentpress_enqueue_scripts_and_styles() {
 
 			// enqueue accordion-like js
 			wp_enqueue_script(
-
 				'cp_special',
 				get_template_directory_uri() . '/assets/js/cp_js_all_comments.js',
 				array( 'cp_form' ),
 				COMMENTPRESS_VERSION // version
-
 			);
 
 		}
-
-		// get vars
-		$vars = $commentpress_core->db->get_javascript_vars();
-
-		// localise with wp function
-		wp_localize_script( 'cp_common_js', 'CommentpressSettings', $vars );
 
 	}
 
