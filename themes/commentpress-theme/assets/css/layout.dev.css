@@ -2959,7 +2959,127 @@ br.dirtyLittleTrick
 
 
 
-/* Reduces sizes */
+/*
+--------------------------------------------------------------------------------
+Compatibility with CommentPress Text Highlighter
+--------------------------------------------------------------------------------
+*/
+
+.holder
+{
+	position: absolute;
+	z-index: 9999999;
+	display: none;
+}
+
+.share-highlight-btn
+{
+	position: absolute;
+	width: 300px;
+	top: 25px;
+	left: -30px;
+}
+
+.btn-caret
+{
+	background: url("../images/texthighlighter/highlight-caret.png") no-repeat 0px 0px;
+	width: 14px;
+	height: 7px;
+	position: absolute;
+	top: -6px;
+	left: 14px;
+}
+
+.btn-left,
+.btn-right
+{
+	display: inline-block;
+	vertical-align: middle;
+	float: left;
+}
+
+.save-pref-btn
+{
+	width: 100%;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
+.btn-left,
+.btn-right,
+.save-pref-btn
+{
+	padding: 0 10px;
+	border: 1px solid #bbbbbb;
+	border-bottom-width: 2px;
+	cursor: pointer;
+	font: bold 14px/30px "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #444444;
+	text-shadow: white 0 1px 1px;
+	-webkit-box-shadow: rgba(0, 0, 0, .1) 0px 1px 3px;
+	-moz-box-shadow: rgba(0, 0, 0, .1) 0px 1px 3px;
+	box-shadow: rgba(0, 0, 0, .1) 0px 1px 3px;
+}
+
+.btn-left,
+.btn-right,
+button.save-pref-btn
+{
+	background: #cccccc;
+	background: -moz-linear-gradient(top,  #f9f9f9 0%, #cccccc 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f9f9f9), color-stop(100%,#cccccc));
+	background: -webkit-linear-gradient(top,  #f9f9f9 0%,#cccccc 100%);
+	background: -o-linear-gradient(top,  #f9f9f9 0%,#cccccc 100%);
+	background: -ms-linear-gradient(top,  #f9f9f9 0%,#cccccc 100%);
+	background: linear-gradient(to bottom,  #f9f9f9 0%,#cccccc 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', endColorstr='#cccccc',GradientType=0 );
+}
+
+.btn-left:hover,
+.btn-right:hover, .
+save-pref-btn:hover
+{
+	background: #eeeeee;
+	background: -moz-linear-gradient(top,  #f9f9f9 0%, #eeeeee 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f9f9f9), color-stop(100%,#eeeeee));
+	background: -webkit-linear-gradient(top,  #f9f9f9 0%,#eeeeee 100%);
+	background: -o-linear-gradient(top,  #f9f9f9 0%,#eeeeee 100%);
+	background: -ms-linear-gradient(top,  #f9f9f9 0%,#eeeeee 100%);
+	background: linear-gradient(to bottom,  #f9f9f9 0%,#eeeeee 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', endColorstr='#eeeeee',GradientType=0 );
+}
+
+.btn-left
+{
+	border-right-color: #ffffff;
+	-webkit-border-radius: 4px 0 0 4px;
+	-moz-border-radius: 4px 0 0 4px;
+	border-radius: 4px 0 0 4px;
+}
+
+.btn-right
+{
+	border-left-color: #999999;
+	-webkit-border-radius: 0 4px 4px 0;
+	-moz-border-radius: 0 4px 4px 0;
+	border-radius: 0 4px 4px 0;
+}
+
+.inline-highlight
+{
+	background: rgb(249, 248, 204);
+	padding: 4px 0;
+}
+​
+
+
+/*
+--------------------------------------------------------------------------------
+RESPONSIVENESS
+--------------------------------------------------------------------------------
+*/
+
 @media (max-width: 1024px) {
 
 	#title h1

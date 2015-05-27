@@ -3787,3 +3787,19 @@ add_filter( 'sidebars_widgets', 'commentpress_sidebars_widgets', 1000 );
 
 
 
+/**
+ * Add the Text Highlighter popover element to the page footer
+ *
+ * @return void
+ */
+function commentpress_highlighter_holder_in_footer() {
+
+	echo '<span class="holder"><div class="share-highlight-btn"><div class="btn-caret"></div><div class="btn-left">' . __( 'Comment on this selection' ) . '</div><div class="btn-right">&times;</div></div></span>';
+
+}
+
+// add in footer
+add_action( 'wp_footer', 'commentpress_highlighter_holder_in_footer' );
+
+
+
