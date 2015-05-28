@@ -3452,8 +3452,8 @@ button.save-pref-btn
 }
 
 .btn-left:hover,
-.btn-right:hover, .
-save-pref-btn:hover
+.btn-right:hover,
+.save-pref-btn:hover
 {
 	background: #eeeeee;
 	background: -moz-linear-gradient(top,  #f9f9f9 0%, #eeeeee 100%);
@@ -3504,7 +3504,7 @@ save-pref-btn:hover
 	background: rgb(249, 248, 204);
 	padding: 4px 0;
 }
-​
+
 
 
 /*
@@ -3671,6 +3671,7 @@ RESPONSIVENESS
 		font-size: 75%;
 		margin: 1.5em 0;
 	}
+
 }
 
 

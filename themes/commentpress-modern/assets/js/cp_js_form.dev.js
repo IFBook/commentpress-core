@@ -198,7 +198,7 @@ addComment = {
 
 
 
-		// --<
+		// do not bubble
 		return false;
 
 	},
@@ -218,22 +218,16 @@ addComment = {
 		// set paraID
 		var paraID = 'reply_to_para-' + paraNum;
 
-
-
 		// move the form
 		addComment.moveForm(
-
 			paraID,
 			'0',
 			'respond',
 			postID,
 			textSig
-
 		);
 
-
-
-		// --<
+		// do not bubble
 		return false;
 
 	},
@@ -338,6 +332,7 @@ addComment = {
 				// return form to para
 				addComment.moveFormToPara( para_num, text_sig, post_id );
 
+				// do not bubble
 				return false;
 
 			}
@@ -380,19 +375,15 @@ addComment = {
 		// set title
 		addComment.setTitle( '0', text_sig, 'cancel' );
 
-
-
 		// clear text sig
 		this.text_signature = '';
-
-
 
 		// reload tinyMCE
 		addComment.enableForm();
 
 
 
-		// --<
+		// do not bubble
 		return false;
 
 	},

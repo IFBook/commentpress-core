@@ -105,7 +105,6 @@ if ( window.history ) {
 				alert( 'back' );
 				if ( event.preventDefault ) {event.preventDefault();}
 				window.history.back();
-				return false;
 			});
 
 		}
@@ -115,7 +114,6 @@ if ( window.history ) {
 			alert( 'forward' );
 			if ( event.preventDefault ) {event.preventDefault();}
 			cpajax_load_next_page( 'link' );
-			return false;
 		});
 
 	}

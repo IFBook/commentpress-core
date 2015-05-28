@@ -698,6 +698,7 @@ CommentPress.textselector = new function() {
 			// wrap selection
 			wrap = jQuery('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
 
+			// do not bubble
 			return false;
 
 		});
@@ -733,6 +734,7 @@ CommentPress.textselector = new function() {
 			// wrap selection
 			wrap = jQuery('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
 
+			// do not bubble
 			return false;
 
 		});
@@ -743,10 +745,17 @@ CommentPress.textselector = new function() {
 		 * @return void
 		 */
 		jQuery('.btn-right').click( function() {
+
+			// hide popover
 			jQuery('.holder').hide();
+
+			// clear container
 			var dummy = '';
 			me.container_set( dummy );
+
+			// do not bubble
 			return false;
+
 		});
 
 		/**

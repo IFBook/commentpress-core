@@ -1711,9 +1711,6 @@ jQuery(document).ready( function($) {
 		// activate it
 		cp_activate_sidebar('toc');
 
-		// --<
-		return false;
-
 	});
 
 
@@ -1730,9 +1727,6 @@ jQuery(document).ready( function($) {
 
 		// activate it
 		cp_activate_sidebar('activity');
-
-		// --<
-		return false;
 
 	});
 
@@ -1751,9 +1745,6 @@ jQuery(document).ready( function($) {
 		// activate it
 		cp_activate_sidebar('comments');
 
-		// --<
-		return false;
-
 	});
 
 
@@ -1768,9 +1759,6 @@ jQuery(document).ready( function($) {
 		// override event
 		event.preventDefault();
 
-		// --<
-		return false;
-
 	});
 
 
@@ -1784,9 +1772,6 @@ jQuery(document).ready( function($) {
 
 		// override event
 		event.preventDefault();
-
-		// --<
-		return false;
 
 	});
 
@@ -1834,9 +1819,6 @@ jQuery(document).ready( function($) {
 
 		// call function
 		commentpress_setup_header_minimiser();
-
-		// --<
-		return false;
 
 	});
 
@@ -1912,9 +1894,6 @@ jQuery(document).ready( function($) {
 				// override event
 				event.preventDefault();
 
-				// --<
-				return false;
-
 			}
 
 		}
@@ -1982,9 +1961,6 @@ jQuery(document).ready( function($) {
 		// amend css of list items to mimic tabs
 		$('#content-tabs li').removeClass( 'default-content-tab' );
 		$(this).parent().parent().addClass( 'default-content-tab' );
-
-		// --<
-		return false;
 
 	});
 

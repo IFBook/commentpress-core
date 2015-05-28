@@ -725,9 +725,6 @@ CommentPress.settings.textblock = new function() {
 			// use function
 			cp_do_comment_icon_action( text_sig, 'marker' );
 
-			// --<
-			return false;
-
 		});
 
 	}
@@ -831,9 +828,6 @@ CommentPress.settings.textblock = new function() {
 
 			// use function
 			cp_do_comment_icon_action( text_sig, 'marker' );
-
-			// --<
-			return false;
 
 		});
 
@@ -958,9 +952,6 @@ CommentPress.settings.textblock = new function() {
 			// use function
 			cp_do_comment_icon_action( text_sig, 'auto' );
 
-			// --<
-			return false;
-
 		});
 
 	}
@@ -996,9 +987,6 @@ CommentPress.settings.textblock = new function() {
 
 			// use function
 			cp_do_comment_icon_action( text_sig, 'auto' );
-
-			// --<
-			return false;
 
 		});
 
@@ -1094,9 +1082,6 @@ CommentPress.settings.textblock = new function() {
 				para_wrapper.css( 'width', 'auto' );
 
 			} );
-
-			// --<
-			return false;
 
 		});
 
@@ -1204,9 +1189,6 @@ CommentPress.settings.textblock = new function() {
 				}
 
 			}
-
-			// --<
-			return false;
 
 		});
 
@@ -1424,11 +1406,6 @@ CommentPress.settings.textblock = new function() {
 
 			});
 
-
-
-			// --<
-			return false;
-
 		});
 
 	}
@@ -1492,9 +1469,6 @@ CommentPress.settings.textblock = new function() {
 				cp_scroll_comments( $('#'+comment_id), cp_scroll_speed );
 
 			}
-
-			// --<
-			return false;
 
 		});
 
@@ -1883,9 +1857,6 @@ CommentPress.settings.textblock = new function() {
 			// use function for offset
 			cp_quick_scroll_page( '#' + target, 100 );
 
-			// --<
-			return false;
-
 		});
 
 		// unbind first to allow repeated calls to this function
@@ -1917,9 +1888,6 @@ CommentPress.settings.textblock = new function() {
 				// use function for offset
 				cp_quick_scroll_page( '#' + target, 100 );
 
-				// --<
-				return false;
-
 			}
 
 		});
@@ -1950,9 +1918,6 @@ CommentPress.settings.textblock = new function() {
 
 			// use function for offset
 			cp_quick_scroll_page( '#' + target, 100 );
-
-			// --<
-			return false;
 
 		});
 
