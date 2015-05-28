@@ -221,6 +221,10 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 == Changelog ==
 
 
+<h4>3.8</h4>
+
+* New feature! Comment on text selections within paragraphs.
+
 <h4>3.7</h4>
 
 * Child theme template auto-discovery
