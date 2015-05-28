@@ -112,7 +112,7 @@ CommentPress.textselector = new function() {
 		me.selection_active = true;
 
 		// attach a handler to the document body
-		jQuery(document).bind( 'click', this.selection_active_handler );
+		jQuery(document).bind( 'click', me.selection_active_handler );
 
 	};
 
@@ -136,7 +136,7 @@ CommentPress.textselector = new function() {
 		this.selection_active = false;
 
 		// unbind document click handler
-		jQuery(document).unbind( 'click', this.selection_active_handler );
+		jQuery(document).unbind( 'click', me.selection_active_handler );
 
 	};
 
@@ -150,9 +150,22 @@ CommentPress.textselector = new function() {
 		// if the event target is not the comment form
 		if ( !jQuery(event.target).closest( '#commentform' ).length ) {
 
-			// no - clear selection active state
+			// override event
+			//event.preventDefault();
+
+			// prevent bubbling
+			//event.stopPropagation();
+
+			// deactivate highlighter
+			me.highlighter_deactivate();
+
+			// re-activate highlighter
+			me.highlighter_activate();
+
+			// clear selection active state
 			me.selection_active_clear();
 			me.highlights_clear();
+
 		}
 
 	};
@@ -466,6 +479,9 @@ CommentPress.textselector = new function() {
 		// declare vars
 		var selection;
 
+		// unbind popover document click handler
+		jQuery(document).unbind( 'click', me.highlighter_active_handler );
+
 		// get selection
 		selection = me.selection_get();
 
@@ -591,10 +607,11 @@ CommentPress.textselector = new function() {
 
 		// enable highlighter
 		jQuery('.textblock').highlighter({
-			'selector': '.holder',
+			'selector': '.popover-holder',
 			'minWords': 1,
 			'complete': function( selected_text ) {
-				//console.log( 'selected_text: ' + selected_text );
+				// attach a handler to the document body
+				jQuery(document).bind( 'click', me.highlighter_active_handler );
 			}
 		});
 
@@ -607,6 +624,29 @@ CommentPress.textselector = new function() {
 	 */
 	this.highlighter_deactivate = function() {
 		jQuery('.textblock').highlighter('destroy');
+	};
+
+	/**
+	 * Make the jQuery highlighter modal in behaviour
+	 *
+	 * @return void
+	 */
+	this.highlighter_active_handler = function( event ) {
+
+		// if the event target is not the popover
+		if ( !jQuery(event.target).closest( '.popover-holder' ).length ) {
+
+			// unbind document click handler
+			jQuery(document).unbind( 'click', me.highlighter_active_handler );
+
+			// deactivate highlighter
+			me.highlighter_deactivate();
+
+			// re-activate highlighter
+			me.highlighter_activate();
+
+		}
+
 	};
 
 	/**
@@ -663,7 +703,7 @@ CommentPress.textselector = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('.holder').mousedown( function() {
+		jQuery('.popover-holder').mousedown( function() {
 			return false;
 		});
 
@@ -672,13 +712,13 @@ CommentPress.textselector = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('.btn-left-comment').click( function() {
+		jQuery('.popover-holder-btn-left-comment').click( function() {
 
 			// define vars
 			var textblock_id, selection, container, wrap;
 
 			// hide popover
-			jQuery('.holder').hide();
+			jQuery('.popover-holder').hide();
 
 			// set selection active
 			me.selection_active_set();
@@ -708,13 +748,13 @@ CommentPress.textselector = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('.btn-left-quote').click( function() {
+		jQuery('.popover-holder-btn-left-quote').click( function() {
 
 			// define vars
 			var textblock_id, selection, container, wrap;
 
 			// hide popover
-			jQuery('.holder').hide();
+			jQuery('.popover-holder').hide();
 
 			// set selection active
 			me.selection_active_set();
@@ -744,10 +784,10 @@ CommentPress.textselector = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('.btn-right').click( function() {
+		jQuery('.popover-holder-btn-right').click( function() {
 
 			// hide popover
-			jQuery('.holder').hide();
+			jQuery('.popover-holder').hide();
 
 			// clear container
 			var dummy = '';
@@ -819,7 +859,7 @@ CommentPress.textselector = new function() {
 			var item_id, comment_id;
 
 			// kick out if popover is shown
-			if ( jQuery('.holder').css('display') == 'block' ) { return; }
+			if ( jQuery('.popover-holder').css('display') == 'block' ) { return; }
 
 			// kick out while there's a selection that has been sent to the editor
 			if ( me.selection_active_get() ) { return; }
@@ -841,7 +881,7 @@ CommentPress.textselector = new function() {
 		jQuery('#comments_sidebar').on( 'mouseleave', 'li.comment.selection-exists', function( event ) {
 
 			// kick out if popover is shown
-			if ( jQuery('.holder').css('display') == 'block' ) { return; }
+			if ( jQuery('.popover-holder').css('display') == 'block' ) { return; }
 
 			// kick out while there's a selection that has been sent to the editor
 			if ( me.selection_active_get() ) { return; }
@@ -936,6 +976,27 @@ jQuery(document).ready(function($) {
 
 		// clear selection active
 		CommentPress.textselector.selection_active_clear();
+
+	});
+
+	/**
+	 * Hook into CommentPress comment icon clicks
+	 *
+	 * We need to receive callbacks from these clicks to clear the active selection
+	 *
+	 * @param object event The event (unused)
+	 * @return void
+	 */
+	$(document).on( 'commentpress-commenticonbox-clicked', function( event ) {
+
+		// clear highlights
+		CommentPress.textselector.highlights_clear();
+
+		// clear selection active
+		CommentPress.textselector.selection_active_clear();
+
+		// clear selection
+		CommentPress.textselector.selection_clear();
 
 	});
 

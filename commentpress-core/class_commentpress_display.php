@@ -296,7 +296,7 @@ class CommentpressCoreDisplay {
 		);
 
 		// define popover
-		$popover = '<span class="holder"><div class="share-highlight-btn"><div class="btn-caret"></div><div class="btn-left"><span class="btn-left-comment">' . __( 'Comment', 'commentpress-core' ) . '</span><span class="btn-left-quote">' . __( 'Quote &amp; Comment', 'commentpress-core' ) . '</span></div><div class="btn-right">&times;</div></div></span>';
+		$popover = '<span class="popover-holder"><div class="popover-holder-inner"><div class="popover-holder-caret"></div><div class="popover-holder-btn-left"><span class="popover-holder-btn-left-comment">' . __( 'Comment', 'commentpress-core' ) . '</span><span class="popover-holder-btn-left-quote">' . __( 'Quote &amp; Comment', 'commentpress-core' ) . '</span></div><div class="popover-holder-btn-right">&times;</div></div></span>';
 
 		// define localisation array
 		$text_vars = array(

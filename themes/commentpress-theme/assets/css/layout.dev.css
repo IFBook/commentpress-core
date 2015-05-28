@@ -724,6 +724,7 @@ body.right-bubbles .post span.commenticonbox
 	margin-top: 5px;
 	padding-right: 20px;
 	right: -44px;
+	cursor: pointer;
 }
 
 /* left-aligned bubbles */
@@ -2965,120 +2966,89 @@ Compatibility with CommentPress Text Highlighter
 --------------------------------------------------------------------------------
 */
 
-.holder
+.popover-holder
 {
 	position: absolute;
 	z-index: 9999999;
 	display: none;
 }
 
-.share-highlight-btn
+.popover-holder-inner
 {
 	position: absolute;
 	width: 300px;
 	top: 25px;
-	left: -30px;
+	left: -60px;
 }
 
-.btn-caret
+.popover-holder-caret
 {
 	background: url("../images/texthighlighter/highlight-caret.png") no-repeat 0px 0px;
 	width: 14px;
 	height: 7px;
 	position: absolute;
 	top: -6px;
-	left: 14px;
+	left: 44px;
 }
 
-.btn-left,
-.btn-right
+.popover-holder-btn-left,
+.popover-holder-btn-right
 {
 	display: inline-block;
 	vertical-align: middle;
 	float: left;
-}
-
-.save-pref-btn
-{
-	width: 100%;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
-}
-
-.btn-left,
-.btn-right,
-.save-pref-btn
-{
 	padding: 0 10px;
 	border: 1px solid #bbbbbb;
-	border-bottom-width: 2px;
 	cursor: pointer;
-	font: bold 14px/30px "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: sans-serif;
+	font-weight: bold;
 	color: #444444;
-	text-shadow: white 0 1px 1px;
+	font-size: 80%;
+	line-height: 2.6;
 	-webkit-box-shadow: rgba(0, 0, 0, .1) 0px 1px 3px;
 	-moz-box-shadow: rgba(0, 0, 0, .1) 0px 1px 3px;
 	box-shadow: rgba(0, 0, 0, .1) 0px 1px 3px;
+	background: #eee;
 }
 
-.btn-left,
-.btn-right,
-button.save-pref-btn
+.popover-holder-btn-left
 {
-	background: #cccccc;
-	background: -moz-linear-gradient(top,  #f9f9f9 0%, #cccccc 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f9f9f9), color-stop(100%,#cccccc));
-	background: -webkit-linear-gradient(top,  #f9f9f9 0%,#cccccc 100%);
-	background: -o-linear-gradient(top,  #f9f9f9 0%,#cccccc 100%);
-	background: -ms-linear-gradient(top,  #f9f9f9 0%,#cccccc 100%);
-	background: linear-gradient(to bottom,  #f9f9f9 0%,#cccccc 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', endColorstr='#cccccc',GradientType=0 );
-}
-
-.btn-left:hover,
-.btn-right:hover, .
-save-pref-btn:hover
-{
-	background: #eeeeee;
-	background: -moz-linear-gradient(top,  #f9f9f9 0%, #eeeeee 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f9f9f9), color-stop(100%,#eeeeee));
-	background: -webkit-linear-gradient(top,  #f9f9f9 0%,#eeeeee 100%);
-	background: -o-linear-gradient(top,  #f9f9f9 0%,#eeeeee 100%);
-	background: -ms-linear-gradient(top,  #f9f9f9 0%,#eeeeee 100%);
-	background: linear-gradient(to bottom,  #f9f9f9 0%,#eeeeee 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', endColorstr='#eeeeee',GradientType=0 );
-}
-
-.btn-left
-{
-	border-right-color: #ffffff;
 	-webkit-border-radius: 4px 0 0 4px;
 	-moz-border-radius: 4px 0 0 4px;
 	border-radius: 4px 0 0 4px;
+	padding: 0;
 }
 
-.btn-right
+.popover-holder-btn-right
 {
-	border-left-color: #999999;
+	border-left: none;
 	-webkit-border-radius: 0 4px 4px 0;
 	-moz-border-radius: 0 4px 4px 0;
 	border-radius: 0 4px 4px 0;
 }
 
-.btn-left-quote,
-.btn-left-comment
+.popover-holder-btn-left-quote,
+.popover-holder-btn-left-comment
 {
-	padding: 7px 0;
+	padding: 0 10px;
+	padding-top: 0.7em;
+	padding-bottom: 0.7em;
 }
 
-.btn-left-comment
+/* common hover state */
+.popover-holder-btn-right:hover,
+.popover-holder-btn-left-quote:hover,
+.popover-holder-btn-left-comment:hover
+{
+	background: #ddd;
+}
+
+.popover-holder-btn-left-comment
 {
 	padding-right: 10px;
-	border-right: 1px solid #ffffff;
 }
 
-.btn-left-quote
+.popover-holder-btn-left-quote
 {
 	padding-left: 10px;
 	border-left: 1px solid #999999;
@@ -3089,7 +3059,7 @@ save-pref-btn:hover
 	background: rgb(249, 248, 204);
 	padding: 4px 0;
 }
-​
+
 
 
 /*

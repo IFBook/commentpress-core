@@ -793,6 +793,9 @@ CommentPress.settings.textblock = new function() {
 			// use function
 			cp_do_comment_icon_action( text_sig, CommentPress.settings.textblock.getMarkerMode() );
 
+			// broadcast action
+			$( document ).trigger( 'commentpress-textblock-clicked' );
+
 		});
 
 	}
@@ -804,7 +807,7 @@ CommentPress.settings.textblock = new function() {
 	 *
 	 * @return void
 	 */
-	$.setup_para_marker_actions = function() {
+	$.setup_textblock_para_marker_actions = function() {
 
 		// unbind first to allow repeated calls to this function
 		$('span.para_marker a').unbind( 'click' );
@@ -819,15 +822,8 @@ CommentPress.settings.textblock = new function() {
 			// override event
 			event.preventDefault();
 
-			// define vars
-			var text_sig;
-
-			// get text signature
-			text_sig = $(this).prop('href').split('#')[1];
-			//console.log( text_sig );
-
-			// use function
-			cp_do_comment_icon_action( text_sig, 'marker' );
+			// broadcast action
+			$( document ).trigger( 'commentpress-paramarker-clicked' );
 
 		});
 
@@ -966,6 +962,37 @@ CommentPress.settings.textblock = new function() {
 	$.setup_textblock_comment_icons = function() {
 
 		// unbind first to allow repeated calls to this function
+		$('.commenticonbox').unbind( 'click' );
+
+		/**
+		 * Clicking on the little comment icon
+		 *
+		 * @return false
+		 */
+		$('.commenticonbox').click( function( event ) {
+
+			// define vars
+			var text_sig;
+
+			// override event
+			event.preventDefault();
+
+			// prevent bubbling
+			event.stopPropagation();
+
+			// get text signature
+			text_sig = $(this).children('a.para_permalink').prop('href').split('#')[1];
+			//console.log( text_sig );
+
+			// use function
+			cp_do_comment_icon_action( text_sig, 'auto' );
+
+			// broadcast action
+			$( document ).trigger( 'commentpress-commenticonbox-clicked' );
+
+		});
+
+		// unbind first to allow repeated calls to this function
 		$('a.para_permalink').unbind( 'click' );
 
 		/**
@@ -975,18 +1002,8 @@ CommentPress.settings.textblock = new function() {
 		 */
 		$('a.para_permalink').click( function( event ) {
 
-			// define vars
-			var text_sig;
-
 			// override event
 			event.preventDefault();
-
-			// get text signature
-			text_sig = $(this).prop('href').split('#')[1];
-			//console.log( text_sig );
-
-			// use function
-			cp_do_comment_icon_action( text_sig, 'auto' );
 
 		});
 
@@ -2061,7 +2078,7 @@ function commentpress_setup_textblock_actions() {
  * @return void
  */
 function commentpress_setup_para_marker_actions() {
-	jQuery.setup_para_marker_actions();
+	jQuery.setup_textblock_para_marker_actions();
 }
 
 /**
