@@ -33,14 +33,6 @@ var cp_msie = 1;
 </script>
 <![endif]-->
 
-<!--[if IE 6]>
-<script type='text/javascript'>
-/* <![CDATA[ */
-var cp_msie6 = 1;
-/* ]]> */
-</script>
-<![endif]-->
-
 <!--[if lt IE 9]>
 <script src="<?php echo get_template_directory_uri(); ?>/assets/js/html5.js" type="text/javascript"></script>
 <![endif]-->
@@ -58,9 +50,6 @@ var cp_msie6 = 1;
 <?php }} ?>
 
 <!-- IE stylesheets so we can override anything -->
-<!--[if IE 6]>
-<link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/assets/css/ie6.css" media="screen" />
-<![endif]-->
 <!--[if gte IE 7]>
 <link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/assets/css/ie7.css" media="screen" />
 <![endif]-->

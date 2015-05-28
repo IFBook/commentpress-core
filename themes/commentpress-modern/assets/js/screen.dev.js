@@ -221,47 +221,37 @@ function commentpress_scroll_to_top( target, speed ) {
 	// declare vars
 	var post_id;
 
-	// if IE6, then we have to scroll #wrapper
-	if ( msie6_detected ) {
+	// only scroll if not mobile (but allow tablets)
+	if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
-		// scroll wrapper to title
-		jQuery('#main_wrapper').scrollTo( target, {duration: speed} );
+		// let's try and scroll to the title
+		if ( target == 0 ) {
 
-	} else {
+			// parse post ID
+			post_id = jQuery('.comments_container').prop('id');
 
-		// only scroll if not mobile (but allow tablets)
-		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+			// sanity check
+			if ( typeof post_id !== 'undefined' ) {
 
-			// let's try and scroll to the title
-			if ( target == 0 ) {
+				// get target post ID
+				target_id = post_id.split('-')[1];
 
-				// parse post ID
-				post_id = jQuery('.comments_container').prop('id');
-
-				// sanity check
-				if ( typeof post_id !== 'undefined' ) {
-
-					// get target post ID
-					target_id = post_id.split('-')[1];
-
-					// contruct target
-					target = jQuery('#post-' + target_id);
-
-				}
+				// contruct target
+				target = jQuery('#post-' + target_id);
 
 			}
 
-			// scroll
-			jQuery.scrollTo(
-				target,
-				{
-					duration: (speed * 1.5),
-					axis: 'y',
-					offset: commentpress_get_header_offset()
-				}
-			);
-
 		}
+
+		// scroll
+		jQuery.scrollTo(
+			target,
+			{
+				duration: (speed * 1.5),
+				axis: 'y',
+				offset: commentpress_get_header_offset()
+			}
+		);
 
 	}
 
@@ -398,9 +388,6 @@ function cp_scroll_to_anchor_on_load() {
 
 			}
 
-			// if IE6, then we have to scroll the page to the top
-			//if ( msie6_detected ) { jQuery(window).scrollTo( 0, 1 ); }
-
 			// --<
 			return;
 
@@ -449,9 +436,6 @@ function cp_scroll_to_anchor_on_load() {
 
 				// highlight this paragraph
 				jQuery.highlight_para( textblock );
-
-				// if IE6, then we have to scroll the page to the top
-				//if ( msie6_detected ) { jQuery(window).scrollTo( 0, 0 ); }
 
 				// scroll page
 				commentpress_scroll_page( textblock );

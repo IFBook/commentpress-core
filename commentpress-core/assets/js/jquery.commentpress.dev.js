@@ -29,14 +29,6 @@ if ( 'undefined' !== typeof cp_msie ) {
 	msie_detected = true;
 }
 
-// define global IE6 var
-msie6_detected = false;
-
-// browser detection via conditional comments in <head>
-if ( 'undefined' !== typeof cp_msie6 ) {
-	msie6_detected = true;
-}
-
 // test for our localisation object
 if ( 'undefined' !== typeof CommentpressSettings ) {
 
@@ -648,11 +640,11 @@ CommentPress.settings.textblock = new function() {
 			// did we get one?
 			if ( comment.length ) {
 
-				// if IE6, then we have to scroll #wrapper
-				if ( msie6_detected ) {
+				// only scroll if not mobile (but allow tablets)
+				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
 					// scroll to new comment
-					$('#main_wrapper').scrollTo(
+					$.scrollTo(
 						comment,
 						{
 							duration: cp_scroll_speed,
@@ -660,23 +652,6 @@ CommentPress.settings.textblock = new function() {
 							offset: commentpress_get_header_offset()
 						}
 					);
-
-				} else {
-
-					// only scroll if not mobile (but allow tablets)
-					if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
-
-						// scroll to new comment
-						$.scrollTo(
-							comment,
-							{
-								duration: cp_scroll_speed,
-								axis:'y',
-								offset: commentpress_get_header_offset()
-							}
-						);
-
-					}
 
 				}
 
@@ -1659,41 +1634,18 @@ CommentPress.settings.textblock = new function() {
 		// bail if we didn't get a valid target
 		if ( typeof target === 'undefined' ) { return; }
 
-		// if IE6, then we have to scroll #wrapper
-		if ( msie6_detected ) {
+		// only scroll if not mobile (but allow tablets)
+		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
-			//
-			$(window).scrollTo( 0, 0 );
-
-			// scroll container to title
-			$('#main_wrapper').scrollTo(
+			// scroll page
+			$.scrollTo(
 				target,
 				{
 					duration: (cp_scroll_speed * 1.5),
 					axis: 'y',
 					offset: commentpress_get_header_offset()
-				}, function () {
-					// when done, make sure page is ok
-					$(window).scrollTo( 0, 1 );
 				}
 			);
-
-		} else {
-
-			// only scroll if not mobile (but allow tablets)
-			if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
-
-				// scroll page
-				$.scrollTo(
-					target,
-					{
-						duration: (cp_scroll_speed * 1.5),
-						axis: 'y',
-						offset: commentpress_get_header_offset()
-					}
-				);
-
-			}
 
 		}
 
@@ -1713,41 +1665,18 @@ CommentPress.settings.textblock = new function() {
 		// bail if we didn't get a valid target
 		if ( typeof target === 'undefined' ) { return; }
 
-		// if IE6, then we have to scroll #wrapper
-		if ( msie6_detected ) {
+		// only scroll if not mobile (but allow tablets)
+		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
-			// deprecate this?
-			$(window).scrollTo( 0, 0 );
-
-			// scroll container to title
-			$('#main_wrapper').scrollTo(
+			// scroll page
+			$.scrollTo(
 				target,
 				{
 					duration: (duration * 1.5),
 					axis: 'y',
 					offset: commentpress_get_header_offset()
-				}, function () {
-					// when done, make sure page is ok
-					$(window).scrollTo( 0, 1 );
 				}
 			);
-
-		} else {
-
-			// only scroll if not mobile (but allow tablets)
-			if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
-
-				// scroll page
-				$.scrollTo(
-					target,
-					{
-						duration: (duration * 1.5),
-						axis: 'y',
-						offset: commentpress_get_header_offset()
-					}
-				);
-
-			}
 
 		}
 

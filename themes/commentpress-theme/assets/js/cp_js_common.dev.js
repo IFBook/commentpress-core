@@ -580,21 +580,11 @@ function commentpress_scroll_to_top( target, speed ) {
 	// bail if we didn't get a valid target
 	if ( typeof target === 'undefined' ) { return; }
 
-	// if IE6, then we have to scroll #wrapper
-	if ( msie6_detected ) {
+	// only scroll if not mobile (but allow tablets)
+	if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
-		// scroll wrapper to title
-		jQuery('#main_wrapper').scrollTo( target, {duration: speed} );
-
-	} else {
-
-		// only scroll if not mobile (but allow tablets)
-		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
-
-			// scroll
-			jQuery.scrollTo( target, speed );
-
-		}
+		// scroll
+		jQuery.scrollTo( target, speed );
 
 	}
 
@@ -731,9 +721,6 @@ function cp_scroll_to_anchor_on_load() {
 
 			}
 
-			// if IE6, then we have to scroll the page to the top
-			//if ( msie6_detected ) { jQuery(window).scrollTo( 0, 1 ); }
-
 			// --<
 			return;
 
@@ -782,9 +769,6 @@ function cp_scroll_to_anchor_on_load() {
 
 				// highlight this paragraph
 				jQuery.highlight_para( textblock );
-
-				// if IE6, then we have to scroll the page to the top
-				//if ( msie6_detected ) { jQuery(window).scrollTo( 0, 0 ); }
 
 				// scroll page
 				commentpress_scroll_page( textblock );
@@ -1735,9 +1719,6 @@ jQuery(document).ready( function($) {
 		commentpress_setup_header_minimiser();
 
 	});
-
-	// if IE6, then sod it
-	if ( msie6_detected ) { $('#btn_header_min').hide(); }
 
 
 
