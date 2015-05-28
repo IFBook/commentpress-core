@@ -63,30 +63,6 @@ CommentPress.textselector = new function() {
 
 
 	/**
-	 * Init array that stores selections for each textblock element.
-	 *
-	 * There is key in the master array for each textblock ID, whose value is an
-	 * array of selection objects.
-	 *
-	 * This code is based loosely on:
-	 * http://stackoverflow.com/questions/13949059/persisting-the-changes-of-range-objects-after-selection-in-html/13950376#13950376
-	 */
-	this.selections_by_textblock = {};
-
-	/**
-	 * Init array that stores the selection data for comments that have them.
-	 *
-	 * There is key in the master array for each comment ID, whose value is a
-	 * selection object from which we can read the start and end values.
-	 */
-	this.selections_by_comment = {};
-
-	/**
-	 * Init property that stores the selection that was last sent to the editor
-	 */
-	this.selection_sent = {};
-
-	/**
 	 * Get current text selection
 	 *
 	 * @return object selection_obj The selection data
@@ -117,6 +93,84 @@ CommentPress.textselector = new function() {
 		}
 
 	};
+
+
+
+	/**
+	 * Init property that flags the selection must not be cleared
+	 */
+	this.selection_active = false;
+
+	/**
+	 * Set selection as active - and therefore not to be cleared
+	 *
+	 * @return void
+	 */
+	this.selection_active_set = function() {
+
+		// set selection active flag
+		me.selection_active = true;
+
+		// attach a handler to the document body
+		jQuery(document).bind( 'click', this.selection_active_handler );
+
+	};
+
+	/**
+	 * Get selection active state - can it be cleared?
+	 *
+	 * @return bool Whether or not the selection can be cleared
+	 */
+	this.selection_active_get = function() {
+		return this.selection_active;
+	};
+
+	/**
+	 * Get selection active state - can it be cleared?
+	 *
+	 * @return bool Whether or not the selection can be cleared
+	 */
+	this.selection_active_clear = function() {
+
+		// set flag
+		this.selection_active = false;
+
+		// unbind document click handler
+		jQuery(document).unbind( 'click', this.selection_active_handler );
+
+	};
+
+	/**
+	 * Selection active handler - test for clicks outside the comment form
+	 *
+	 * @return void
+	 */
+	this.selection_active_handler = function( event ) {
+
+		// if the event target is not the comment form
+		if ( !jQuery(event.target).closest( '#commentform' ).length ) {
+
+			// no - clear selection active state
+			me.selection_active_clear();
+			me.highlights_clear();
+		}
+
+	};
+
+
+
+	/**
+	 * Init array that stores the selection data for comments that have them.
+	 *
+	 * There is key in the master array for each comment ID, whose value is a
+	 * selection object from which we can read the start and end values.
+	 */
+	this.selections_by_comment = {};
+
+	/**
+	 * Init property that stores the selection that was last sent to the editor
+	 */
+	this.selection_sent = {};
 
 	/**
 	 * Build textselector selections for a comments array
@@ -193,6 +247,9 @@ CommentPress.textselector = new function() {
 		// add to array, keyed by comment ID
 		this.selections_by_comment[comment_key] = selection_data;
 
+		// clear sent selection data
+		me.selection_sent = {};
+
 	};
 
 	/**
@@ -228,6 +285,19 @@ CommentPress.textselector = new function() {
 		}
 
 	};
+
+
+
+	/**
+	 * Init array that stores selections for each textblock element.
+	 *
+	 * There is key in the master array for each textblock ID, whose value is an
+	 * array of selection objects.
+	 *
+	 * This code is based loosely on:
+	 * http://stackoverflow.com/questions/13949059/persisting-the-changes-of-range-objects-after-selection-in-html/13950376#13950376
+	 */
+	this.selections_by_textblock = {};
 
 	/**
 	 * Save textselector selection
@@ -268,6 +338,8 @@ CommentPress.textselector = new function() {
 		}
 
 	};
+
+
 
 	// test browser capability
 	if (window.getSelection && document.createRange) {
@@ -522,7 +594,7 @@ CommentPress.textselector = new function() {
 			'selector': '.holder',
 			'minWords': 1,
 			'complete': function( selected_text ) {
-				//console.log( 'selected_text' );
+				//console.log( 'selected_text: ' + selected_text );
 			}
 		});
 
@@ -586,6 +658,9 @@ CommentPress.textselector = new function() {
 		/**
 		 * Do not act on mousdowns on holder
 		 *
+		 * I presume that this prevents event bubbling from the holder to the
+		 * document body so that clicking elsewhere deactivates the popover.
+		 *
 		 * @return void
 		 */
 		jQuery('.holder').mousedown( function() {
@@ -604,6 +679,9 @@ CommentPress.textselector = new function() {
 
 			// hide popover
 			jQuery('.holder').hide();
+
+			// set selection active
+			me.selection_active_set();
 
 			// get containing textblock
 			textblock_id = me.container_get();
@@ -637,6 +715,9 @@ CommentPress.textselector = new function() {
 			// hide popover
 			jQuery('.holder').hide();
 
+			// set selection active
+			me.selection_active_set();
+
 			// get containing textblock
 			textblock_id = me.container_get();
 
@@ -666,6 +747,18 @@ CommentPress.textselector = new function() {
 			var dummy = '';
 			me.container_set( dummy );
 			return false;
+		});
+
+		/**
+		 * Clear highlights on mousedown on textblock
+		 *
+		 * @return void
+		 */
+		jQuery('#container').on( 'mousedown', '.textblock', function() {
+
+			// clear all highlights
+			//me.highlights_clear();
+
 		});
 
 		/**
@@ -716,8 +809,11 @@ CommentPress.textselector = new function() {
 			// declare vars
 			var item_id, comment_id;
 
-			// we probably need to disable this while there's a selection that
-			// has been sent to the editor
+			// kick out if popover is shown
+			if ( jQuery('.holder').css('display') == 'block' ) { return; }
+
+			// kick out while there's a selection that has been sent to the editor
+			if ( me.selection_active_get() ) { return; }
 
 			// get the current ID
 			item_id = jQuery(this).prop('id');
@@ -735,8 +831,11 @@ CommentPress.textselector = new function() {
 		 */
 		jQuery('#comments_sidebar').on( 'mouseleave', 'li.comment.selection-exists', function( event ) {
 
-			// we probably need to disable this while there's a selection that
-			// has been sent to the editor
+			// kick out if popover is shown
+			if ( jQuery('.holder').css('display') == 'block' ) { return; }
+
+			// kick out while there's a selection that has been sent to the editor
+			if ( me.selection_active_get() ) { return; }
 
 			// clear all highlights
 			me.highlights_clear();
@@ -825,6 +924,9 @@ jQuery(document).ready(function($) {
 
 		// clear highlights
 		CommentPress.textselector.highlights_clear();
+
+		// clear selection active
+		CommentPress.textselector.selection_active_clear();
 
 	});
 
