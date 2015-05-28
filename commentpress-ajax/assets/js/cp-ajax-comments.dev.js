@@ -278,8 +278,6 @@ CommentPress.ajax.comments = new function() {
 		// kick out if we have it already
 		if ( comment_container.find( '#li-comment-' + comm_id )[0] ) { return; }
 
-
-
 		// get useful ids
 		para_id = '#para_wrapper-' + text_sig;
 		head_id = '#para_heading-' + text_sig;
@@ -359,8 +357,6 @@ CommentPress.ajax.comments = new function() {
 
 		}
 
-
-
 		// get current count
 		comment_num = parseInt( jQuery(head_id + ' a span.cp_comment_num').text() );
 
@@ -369,8 +365,6 @@ CommentPress.ajax.comments = new function() {
 
 		// update heading
 		me.update_comments_para_heading( head_id, new_comment_count );
-
-
 
 		// find header and prepare
 		head = jQuery(head_id);
@@ -398,12 +392,8 @@ CommentPress.ajax.comments = new function() {
 		// animate to existing bg (from css file)
 		head.addClass( 'heading-fade' );
 
-
-
 		// update paragraph icon
 		me.update_para_icon( text_sig, new_comment_count );
-
-
 
 		// re-enable clicks
 		commentpress_enable_comment_permalink_clicks();
@@ -415,8 +405,6 @@ CommentPress.ajax.comments = new function() {
 
 		// compatibility with Comment Upvoter
 		cpajax_reenable_comment_upvoter();
-
-
 
 		// broadcast that we're done and pass new comment ID
 		jQuery( document ).trigger( 'commentpress-ajax-new-comment-added', [ comm_id ] );
@@ -449,8 +437,6 @@ CommentPress.ajax.comments = new function() {
 			cursor: 'move'
 
 		});
-
-
 
 		// get all droppable items
 		droppers = jQuery('#content .post .textblock');
@@ -771,7 +757,6 @@ CommentPress.ajax.comments = new function() {
 
 		}
 
-
 		// slide up comment form
 		jQuery('#respond').slideUp( 'fast', function() {
 
@@ -779,8 +764,6 @@ CommentPress.ajax.comments = new function() {
 			addComment.cancelForm();
 
 		});
-
-
 
 		// get existing current count
 		comment_num = parseInt( jQuery(head_id + ' a span.cp_comment_num').text() );
@@ -794,8 +777,6 @@ CommentPress.ajax.comments = new function() {
 		// update paragraph icon
 		me.update_para_icon( text_sig, new_comment_count );
 
-
-
 		// if not the whole page...
 		if( text_sig != '' ) {
 
@@ -808,8 +789,6 @@ CommentPress.ajax.comments = new function() {
 			commentpress_scroll_to_top( 0, cp_scroll_speed );
 
 		}
-
-
 
 		// re-enable clicks
 		commentpress_enable_comment_permalink_clicks();
@@ -826,8 +805,6 @@ CommentPress.ajax.comments = new function() {
 
 		// compatibility with Comment Upvoter
 		cpajax_reenable_comment_upvoter();
-
-
 
 		// broadcast that we're done and pass new comment ID
 		jQuery( document ).trigger( 'commentpress-ajax-comment-added', [ new_comm_id ] );
@@ -1108,8 +1085,6 @@ CommentPress.ajax.comments = new function() {
 
 			} // end if
 
-
-
 			// test for tinyMCE
 			if ( cp_tinymce == '1' ) {
 
@@ -1131,12 +1106,8 @@ CommentPress.ajax.comments = new function() {
 				return false;
 			}
 
-
-
 			// submit the form
 			jQuery(this).ajaxSubmit({
-
-
 
 				beforeSubmit: function() {
 
@@ -1145,8 +1116,6 @@ CommentPress.ajax.comments = new function() {
 					jQuery('#submit').hide();
 
 				}, // end beforeSubmit
-
-
 
 				error: function(request) {
 
@@ -1163,8 +1132,6 @@ CommentPress.ajax.comments = new function() {
 					return false;
 
 				}, // end error()
-
-
 
 				success: function( data ) {
 
@@ -1208,11 +1175,7 @@ CommentPress.ajax.comments = new function() {
 
 				} // end success()
 
-
-
 			}); // end ajaxSubmit()
-
-
 
 			// --<
 			return false;

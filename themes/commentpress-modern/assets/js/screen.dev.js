@@ -83,8 +83,6 @@ function cp_page_setup() {
 		// open style declaration
 		styles += '<style type="text/css" media="screen">';
 
-
-
 		// if mobile, don't hide textblock meta
 		if ( cp_is_mobile == '0' ) {
 
@@ -136,8 +134,6 @@ function cp_page_setup() {
 
 		}
 
-
-
 		// is this the comments sidebar?
 		if ( cp_special_page == '0' ) {
 
@@ -156,25 +152,6 @@ function cp_page_setup() {
 
 		// hide original and literal content when JS-enabled
 		styles += '#original .post, #literal .post { display: none; } ';
-
-
-
-		// show tabs when JS enabled
-		//styles += 'ul#sidebar_tabs, #toc_header.sidebar_header, body.blog_post #activity_header.sidebar_header { display: block; } ';
-
-
-
-		/*
-		// don't set height of sidebar when mobile (but allow tablets)
-		if ( cp_is_mobile == '1' && cp_is_tablet == '0' ) {
-
-			// override css
-			styles += '.sidebar_contents_wrapper { height: auto; } ';
-
-		}
-		*/
-
-
 
 		// close style declaration
 		styles += '</style>';
@@ -221,8 +198,6 @@ function commentpress_get_header_offset() {
 		offset -= cp_wp_adminbar_height;
 
 	}
-
-	//console.log( offset );
 
 	// --<
 	return offset;
@@ -549,13 +524,9 @@ function cp_do_comment_icon_action( text_sig, mode ) {
 		CommentPress.modern.columns.show_discuss();
 	}
 
-
-
 	// define vars
 	var para_wrapper, comment_list, respond, top_level, opening, visible,
 		textblock, post_id, para_id, para_num;
-
-
 
 	// get para wrapper
 	para_wrapper = jQuery('#para_heading-' + text_sig).next('div.paragraph_wrapper');
@@ -574,12 +545,8 @@ function cp_do_comment_icon_action( text_sig, mode ) {
 	// is it a direct child of para wrapper?
 	top_level = addComment.getLevel();
 
-
-
 	// show comments sidebar
 	cp_activate_sidebar( 'comments' );
-
-
 
 	// init
 	opening = false;
@@ -589,8 +556,6 @@ function cp_do_comment_icon_action( text_sig, mode ) {
 
 	// override
 	if ( visible == 'none' ) { opening = true; }
-
-
 
 	// clear other highlights
 	jQuery.unhighlight_para();
@@ -619,8 +584,6 @@ function cp_do_comment_icon_action( text_sig, mode ) {
 
 	}
 
-
-
 	// if encouraging commenting
 	if ( cp_promote_reading == '0' ) {
 
@@ -634,11 +597,7 @@ function cp_do_comment_icon_action( text_sig, mode ) {
 
 		}
 
-
-
 		// Choices, choices...
-
-
 
 		// if it doesn't have the commentform
 		if ( !respond[0] ) {
@@ -785,8 +744,6 @@ function cp_do_comment_icon_action( text_sig, mode ) {
 
 	}
 
-
-
 	// toggle next item_body
 	para_wrapper.slideToggle( 'slow', function () {
 
@@ -829,7 +786,6 @@ function cp_do_comment_icon_action( text_sig, mode ) {
 			}
 
 		}
-
 
 	});
 
@@ -1055,8 +1011,6 @@ CommentPress.modern.viewport.track();
  * @return void
  */
 jQuery(document).ready( function($) {
-
-
 
 	// init sidebar height
 	CommentPress.modern.viewport.set_height();
@@ -1456,8 +1410,6 @@ jQuery(document).ready( function($) {
 
 	// broadcast that we're done
 	jQuery( document ).trigger( 'commentpress-document-ready' );
-
-
 
 });
 

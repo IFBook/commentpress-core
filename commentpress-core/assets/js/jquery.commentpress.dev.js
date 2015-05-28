@@ -135,13 +135,8 @@ CommentPress.settings.textblock = new function() {
 	 */
 	$.highlight_para = function( element ) {
 
-		// test that we have a proper element
-		if ( typeof( element ) != 'object' ) {
-
-			// --<
-			return;
-
-		}
+		// bail if we don't have a proper element
+		if ( typeof( element ) != 'object' ) { return; }
 
 		// amend p tag css
 		element.addClass( 'selected_para' );
@@ -192,13 +187,8 @@ CommentPress.settings.textblock = new function() {
 	 */
 	$.is_highlighted = function( element ) {
 
-		// test that we have a proper element
-		if ( typeof( element ) != 'object' ) {
-
-			// --<
-			return false;
-
-		}
+		// bail if we don't have a proper element
+		if ( typeof( element ) != 'object' ) { return false; }
 
 		// is our item already highlighted?
 		if ( element.hasClass('selected_para') ) {
@@ -836,44 +826,36 @@ CommentPress.settings.textblock = new function() {
 		 *
 		 * @return void
 		 */
-		$('span.para_marker a').mouseenter(
+		$('span.para_marker a').mouseenter( function( event ) {
 
-			function( event ) {
+			// define vars
+			var target;
 
-				// define vars
-				var target;
+			// get target item
+			target = $(this).parent().next().children('.comment_count');
+			//console.log( target );
 
-				// get target item
-				target = $(this).parent().next().children('.comment_count');
-				//console.log( target );
+			target.addClass( 'js-hover' );
 
-				target.addClass( 'js-hover' );
-
-			}
-
-		);
+		});
 
 		/**
 		 * Rolling off the paragraph icon
 		 *
 		 * @return void
 		 */
-		$('span.para_marker a').mouseleave(
+		$('span.para_marker a').mouseleave( function( event ) {
 
-			function( event ) {
+			// define vars
+			var target;
 
-				// define vars
-				var target;
+			// get target item
+			target = $(this).parent().next().children('.comment_count');
+			//console.log( target );
 
-				// get target item
-				target = $(this).parent().next().children('.comment_count');
-				//console.log( target );
+			target.removeClass( 'js-hover' );
 
-				target.removeClass( 'js-hover' );
-
-			}
-
-		);
+		});
 
 	}
 
@@ -1016,44 +998,36 @@ CommentPress.settings.textblock = new function() {
 		 *
 		 * @return void
 		 */
-		$('a.para_permalink').mouseenter(
+		$('a.para_permalink').mouseenter( function( event ) {
 
-			function( event ) {
+			// define vars
+			var text_sig;
 
-				// define vars
-				var text_sig;
+			// get text signature
+			text_sig = $(this).prop('href').split('#')[1];
+			//console.log( text_sig );
 
-				// get text signature
-				text_sig = $(this).prop('href').split('#')[1];
-				//console.log( text_sig );
+			$('span.para_marker a#' + text_sig).addClass( 'js-hover' );
 
-				$('span.para_marker a#' + text_sig).addClass( 'js-hover' );
-
-			}
-
-		);
+		});
 
 		/**
 		 * Rolling off the little comment icon
 		 *
 		 * @return void
 		 */
-		$('a.para_permalink').mouseleave(
+		$('a.para_permalink').mouseleave( function( event ) {
 
-			function( event ) {
+			// define vars
+			var text_sig;
 
-				// define vars
-				var text_sig;
+			// get text signature
+			text_sig = $(this).prop('href').split('#')[1];
+			//console.log( text_sig );
 
-				// get text signature
-				text_sig = $(this).prop('href').split('#')[1];
-				//console.log( text_sig );
+			$('span.para_marker a#' + text_sig).removeClass( 'js-hover' );
 
-				$('span.para_marker a#' + text_sig).removeClass( 'js-hover' );
-
-			}
-
-		);
+		});
 
 	}
 
@@ -1241,7 +1215,6 @@ CommentPress.settings.textblock = new function() {
 			var text_sig, para_wrapper, comment_list, opening, visible, textblock,
 				post_id, para_id, para_num, has_form;
 
-
 			// override event
 			event.preventDefault();
 
@@ -1255,8 +1228,6 @@ CommentPress.settings.textblock = new function() {
 			// get comment list
 			comment_list = $( '#para_wrapper-' + text_sig ).find('ol.commentlist' );
 
-
-
 			// init
 			opening = false;
 
@@ -1265,8 +1236,6 @@ CommentPress.settings.textblock = new function() {
 
 			// override
 			if ( visible == 'none' ) { opening = true; }
-
-
 
 			// did we get one at all?
 			if ( 'undefined' !== typeof text_sig ) {
@@ -1355,8 +1324,6 @@ CommentPress.settings.textblock = new function() {
 
 			} // end defined check
 
-
-
 			// if encouraging commenting...
 			if ( cp_promote_reading == '0' && text_sig != 'pingbacksandtrackbacks' ) {
 
@@ -1407,8 +1374,6 @@ CommentPress.settings.textblock = new function() {
 				}
 
 			}
-
-
 
 			// toggle next paragraph_wrapper
 			para_wrapper.slideToggle( 'slow', function() {
@@ -1507,30 +1472,22 @@ CommentPress.settings.textblock = new function() {
 		/**
 		 * Rolling onto the comment
 		 */
-		$('.comment-wrapper').mouseenter(
+		$('.comment-wrapper').mouseenter( function( event ) {
 
-			function( event ) {
+			// simulate rollover
+			$(this).addClass( 'background-highlight' );
 
-				// simulate rollover
-				$(this).addClass( 'background-highlight' );
-
-			}
-
-		);
+		});
 
 		/**
 		 * Rolling off the comment
 		 */
-		$('.comment-wrapper').mouseleave(
+		$('.comment-wrapper').mouseleave( function( event ) {
 
-			function( event ) {
+			// simulate rollout
+			$(this).removeClass( 'background-highlight' );
 
-				// simulate rollout
-				$(this).removeClass( 'background-highlight' );
-
-			}
-
-		);
+		});
 
 	};
 
@@ -1759,7 +1716,7 @@ CommentPress.settings.textblock = new function() {
 		// if IE6, then we have to scroll #wrapper
 		if ( msie6_detected ) {
 
-			//
+			// deprecate this?
 			$(window).scrollTo( 0, 0 );
 
 			// scroll container to title
@@ -1847,9 +1804,11 @@ CommentPress.settings.textblock = new function() {
 	 */
 	$.footnotes_compatibility = function() {
 
-		// ---------------------------------------------------------------------
-		// Back links
-		// ---------------------------------------------------------------------
+		/**
+		 * ---------------------------------------------------------------------
+		 * Back links
+		 * ---------------------------------------------------------------------
+		 */
 
 		// unbind first to allow repeated calls to this function
 		$('span.footnotereverse a, a.footnote-back-link').unbind( 'click' );
@@ -1909,9 +1868,11 @@ CommentPress.settings.textblock = new function() {
 
 		});
 
-		// ---------------------------------------------------------------------
-		// Footnote links
-		// ---------------------------------------------------------------------
+		/**
+		 * ---------------------------------------------------------------------
+		 * Footnote links
+		 * ---------------------------------------------------------------------
+		 */
 
 		// unbind first to allow repeated calls to this function
 		$('a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link, a.zp-ZotpressInText').unbind( 'click' );

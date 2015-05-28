@@ -106,8 +106,6 @@ function cp_page_setup() {
 		// open style declaration
 		styles += '<style type="text/css" media="screen">';
 
-
-
 		// if mobile, don't hide textblock meta
 		if ( cp_is_mobile == '0' ) {
 
@@ -257,7 +255,6 @@ function cp_page_setup() {
 			cp_page_setup = jQuery.cookie('cp_page_setup');
 
 		}
-
 		*/
 
 		// has the content column changed?
@@ -354,8 +351,6 @@ function commentpress_setup_page_layout() {
 
 	}
 
-
-
 	/**
 	 * Sets up the main column, if the id exists
 	 *
@@ -386,16 +381,6 @@ function commentpress_setup_page_layout() {
 		// calculate gap to sidebar
 		gap = sidebar.offset().left - original_content_width;
 
-		/*
-		// if Opera... (assume this is fixed in 10)
-		if ( jQuery.browser.opera ) {
-
-			// set the position of #content to avoid alsoResize bug
-			content.css( 'position', 'static' );
-
-		}
-		*/
-
 		// make page wrapper resizable
 		me.resizable({
 
@@ -403,8 +388,6 @@ function commentpress_setup_page_layout() {
 			minWidth: cp_min_page_width,
 			alsoResize: '#footer',
 			//grid: 1, // no sub-pixel weirdness please
-
-
 
 			// on stop... (note: this doesn't fire on the first go in Opera 9!)
 			start: function( event, ui ) {
@@ -420,8 +403,6 @@ function commentpress_setup_page_layout() {
 				gap = sidebar.offset().left - original_content_width;
 
 			},
-
-
 
 			// while resizing...
 			resize: function( event, ui ) {
@@ -446,8 +427,6 @@ function commentpress_setup_page_layout() {
 
 			},
 
-
-
 			// on stop... (note: this doesn't fire on the first go in Opera 9!)
 			stop: function( event, ui ) {
 
@@ -456,8 +435,6 @@ function commentpress_setup_page_layout() {
 
 				// viewport width
 				ww = parseFloat(jQuery(window).width() );
-
-
 
 				// get element width
 				width = me.width();
@@ -477,8 +454,6 @@ function commentpress_setup_page_layout() {
 					content.css( 'width', 'auto' );
 				}
 
-
-
 				// get element width
 				width = book_nav.width();
 
@@ -491,8 +466,6 @@ function commentpress_setup_page_layout() {
 
 				// set element width
 				book_nav.css( 'width', book_nav_w + '%' );
-
-
 
 				// get element width
 				width = sidebar.width();
@@ -507,8 +480,6 @@ function commentpress_setup_page_layout() {
 				// set element width
 				sidebar.css( 'width', sidebar_w + '%' );
 
-
-
 				// get element left
 				left = sidebar.position().left;
 
@@ -521,42 +492,32 @@ function commentpress_setup_page_layout() {
 				// set element left
 				sidebar.css( 'left', sidebar_l + '%' );
 
-
-
 				// store this width in cookie
 				jQuery.cookie(
-
 					'cp_container_width',
 					me_w.toString(),
 					{ expires: 28, path: cp_cookie_path }
-
 				);
 
 				// store nav width in cookie
 				jQuery.cookie(
-
 					'cp_book_nav_width',
 					book_nav_w.toString(),
 					{ expires: 28, path: cp_cookie_path }
-
 				);
 
 				// store location of sidebar in cookie
 				jQuery.cookie(
-
 					'cp_sidebar_left',
 					sidebar_l.toString(),
 					{ expires: 28, path: cp_cookie_path }
-
 				);
 
 				// store width of sidebar in cookie
 				jQuery.cookie(
-
 					'cp_sidebar_width',
 					sidebar_w.toString(),
 					{ expires: 28, path: cp_cookie_path }
-
 				);
 
 			}
@@ -599,8 +560,6 @@ function commentpress_get_header_offset() {
 		offset -= cp_wp_adminbar_height;
 
 	}
-
-	//console.log( offset );
 
 	// --<
 	return offset;
@@ -896,13 +855,9 @@ function cp_do_comment_icon_action( text_sig, mode ) {
 	// show comments sidebar
 	cp_activate_sidebar( 'comments' );
 
-
-
 	// define vars
 	var para_wrapper, comment_list, respond, top_level, opening, visible,
 		textblock, post_id, para_id, para_num;
-
-
 
 	// get para wrapper
 	para_wrapper = jQuery('#para_heading-' + text_sig).next('div.paragraph_wrapper');
@@ -921,8 +876,6 @@ function cp_do_comment_icon_action( text_sig, mode ) {
 	// is it a direct child of para wrapper?
 	top_level = addComment.getLevel();
 
-
-
 	// init
 	opening = false;
 
@@ -931,8 +884,6 @@ function cp_do_comment_icon_action( text_sig, mode ) {
 
 	// override
 	if ( visible == 'none' ) { opening = true; }
-
-
 
 	// clear other highlights
 	jQuery.unhighlight_para();
@@ -961,8 +912,6 @@ function cp_do_comment_icon_action( text_sig, mode ) {
 
 	}
 
-
-
 	// if encouraging commenting
 	if ( cp_promote_reading == '0' ) {
 
@@ -976,11 +925,7 @@ function cp_do_comment_icon_action( text_sig, mode ) {
 
 		}
 
-
-
 		// Choices, choices...
-
-
 
 		// if it doesn't have the commentform
 		if ( !respond[0] ) {
@@ -1127,8 +1072,6 @@ function cp_do_comment_icon_action( text_sig, mode ) {
 
 	}
 
-
-
 	// toggle next item_body
 	para_wrapper.slideToggle( 'slow', function () {
 
@@ -1171,7 +1114,6 @@ function cp_do_comment_icon_action( text_sig, mode ) {
 			}
 
 		}
-
 
 	});
 
@@ -1308,13 +1250,9 @@ function cp_open_header() {
 	//console.log( 'open' );
 	// -------------------------------------------------------------------------
 
-
-
 	// define vars
 	var book_nav_h, target_sidebar, target_sidebar_pane, book_header, container,
 		cp_container_top, cp_sidebar_height;
-
-
 
 	// get nav height
 	book_nav_h = jQuery('#book_nav').height();
@@ -1323,8 +1261,6 @@ function cp_open_header() {
 	target_sidebar_pane = jQuery.get_sidebar_pane();
 	book_header = jQuery('#book_header');
 	container = jQuery('#container');
-
-
 
 	// set max height
 	cp_container_top = cp_container_top_max;
@@ -1357,13 +1293,8 @@ function cp_open_header() {
 
 	});
 
-
-
-
 	// is the sidebar minimised?
 	if ( cp_sidebar_minimised == 'n' ) {
-
-
 
 		// get sidebar height
 		cp_sidebar_height = target_sidebar.height() - cp_book_header_height;
@@ -1407,8 +1338,6 @@ function cp_open_header() {
 
 	} else {
 
-
-
 		// animate sidebar
 		target_sidebar.animate({
 
@@ -1449,13 +1378,9 @@ function cp_close_header() {
 	//console.log( 'close' );
 	// -------------------------------------------------------------------------
 
-
-
 	// define vars
 	var book_nav_h, target_sidebar, target_sidebar_pane, book_header, container;
 	var cp_container_top, cp_sidebar_height;
-
-
 
 	// get nav height
 	book_nav_h = jQuery('#book_nav').height();
@@ -1465,12 +1390,8 @@ function cp_close_header() {
 	book_header = jQuery('#book_header');
 	container = jQuery('#container');
 
-
-
 	// slide header
 	book_header.hide();
-
-
 
 	// set min height
 	cp_container_top = cp_container_top_min;
@@ -1489,8 +1410,6 @@ function cp_close_header() {
 		duration: 'fast'
 
 	});
-
-
 
 	// is the sidebar minimised?
 	if ( cp_sidebar_minimised == 'n' ) {
@@ -1575,7 +1494,6 @@ function commentpress_setup_header_minimiser() {
 	if ( cp_header_animating === true ) { return false; }
 	cp_header_animating = true;
 
-
 	// toggle
 	if (
 		cp_header_minimised === undefined ||
@@ -1590,8 +1508,6 @@ function commentpress_setup_header_minimiser() {
 		cp_open_header();
 
 	}
-
-
 
 	// toggle
 	cp_header_minimised = ( cp_header_minimised == 'y' ) ? 'n' : 'y';
@@ -1615,8 +1531,6 @@ function commentpress_setup_header_minimiser() {
  * @return void
  */
 jQuery(document).ready( function($) {
-
-
 
 	// get global book_header top
 	cp_book_header_height = $('#book_header').height();
@@ -1977,8 +1891,6 @@ jQuery(document).ready( function($) {
 
 	// broadcast that we're done
 	jQuery( document ).trigger( 'commentpress-document-ready' );
-
-
 
 });
 
