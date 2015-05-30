@@ -306,9 +306,6 @@ jQuery(document).ready( function($) {
 							// keep comments hidden
 							$( '#comments_sidebar .comments_container' ).hide();
 
-							// reset everything
-							commentpress_reset_actions();
-
 							// show comments
 							$( '#comments_sidebar .comments_container' ).fadeIn();
 

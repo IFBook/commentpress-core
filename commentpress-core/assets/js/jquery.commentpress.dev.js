@@ -74,13 +74,17 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
  */
 var CommentPress = CommentPress || {};
 
+
+
 /**
  * Create settings sub-namespace
  */
 CommentPress.settings = {};
 
+
+
 /**
- * Create CommentPress textblock object
+ * Create CommentPress textblock class
  */
 CommentPress.settings.textblock = new function() {
 
@@ -92,16 +96,1298 @@ CommentPress.settings.textblock = new function() {
 	 */
 	this.setMarkerMode = function( mode ) {
 		this.marker_mode = mode;
-	},
+	};
 
 	/**
 	 * Getter for textblock marker mode
 	 */
 	this.getMarkerMode = function() {
 		return this.marker_mode;
-	}
+	};
 
 } // end CommentPress textblock class
+
+
+
+/**
+ * Create setup sub-namespace
+ */
+CommentPress.setup = {};
+
+
+
+/**
+ * Create CommentPress setup navigation column class
+ */
+CommentPress.setup.navigation = new function() {
+
+	// store object ref
+	var me = this;
+
+
+
+	/**
+	 * Initialise CommentPress setup navigation column.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+		// column headings
+		me.headings();
+
+		// menu behaviour
+		me.menu();
+
+	};
+
+
+
+	/**
+	 * Set up "Contents" column headings
+	 *
+	 * @return false
+	 */
+	this.headings = function() {
+
+		// set pointer
+		jQuery('h3.activity_heading').css( 'cursor', 'pointer' );
+
+		/**
+		 * Activity column headings click
+		 *
+		 * @return void
+		 */
+		jQuery('#toc_sidebar').on( 'click', 'h3.activity_heading', function( event ) {
+
+			// define vars
+			var para_wrapper;
+
+			// override event
+			event.preventDefault();
+
+			// get para wrapper
+			para_wrapper = jQuery(this).next('div.paragraph_wrapper');
+			//console.log( para_wrapper );
+
+			// set width to prevent rendering error
+			para_wrapper.css( 'width', jQuery(this).parent().css( 'width' ) );
+
+			// toggle next paragraph_wrapper
+			para_wrapper.slideToggle( 'slow', function() {
+
+				// when finished, reset width to auto
+				para_wrapper.css( 'width', 'auto' );
+
+			} );
+
+		});
+
+	};
+
+
+
+	/**
+	 * Set up "Contents" column menu behaviour
+	 *
+	 * @return false
+	 */
+	this.menu = function() {
+
+		/**
+		 * Chapter page headings click
+		 *
+		 * @return void
+		 */
+		jQuery('#toc_sidebar').on( 'click', 'ul#toc_list li a', function( event ) {
+
+			// are our chapters pages?
+			if ( cp_toc_chapter_is_page == '0' ) {
+
+				// define vars
+				var myArr;
+
+				// no, find child lists of the enclosing <li>
+				myArr = $(this).parent().find('ul');
+
+				// do we have a child list?
+				if( myArr.length > 0 ) {
+
+					// are subpages to be shown?
+					if ( cp_show_subpages == '0' ) {
+
+						// toggle next list
+						$(this).next('ul').slideToggle();
+
+					}
+
+					// override event
+					event.preventDefault();
+
+				}
+
+			}
+
+		});
+
+	};
+
+} // end CommentPress setup navigation column class
+
+
+
+/**
+ * Create CommentPress setup content class
+ */
+CommentPress.setup.content = new function() {
+
+	// store object ref
+	var me = this;
+
+
+
+	/**
+	 * Initialise CommentPress setup content.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+		// title
+		me.title_links();
+
+		// textblocks
+		me.textblocks();
+
+		// textblock paragraph markers
+		me.para_markers();
+
+		// textblock comment icons
+		me.comment_icons();
+
+		// internal links
+		me.links_in_textblocks();
+
+		// footnotes
+		me.footnotes_compatibility();
+
+	};
+
+
+
+	/**
+	 * Set up actions on the title
+	 *
+	 * @return void
+	 */
+	this.title_links = function() {
+
+		/**
+		 * Clicking on the page/post title
+		 *
+		 * @return false
+		 */
+		jQuery('#container').on( 'click', '.post_title a', function( event ) {
+
+			// override event
+			event.preventDefault();
+
+			// get text signature
+			var text_sig = '';
+			//console.log( text_sig );
+
+			// use function
+			CommentPress.theme.viewport.align_content( text_sig, 'marker' );
+
+		});
+
+	};
+
+
+
+	/**
+	 * Set up actions on the textblocks
+	 *
+	 * @return void
+	 */
+	this.textblocks = function() {
+
+		// if mobile, we don't hide textblock meta
+		if ( cp_is_mobile == '0' ) {
+
+			// have we explicitly hidden textblock meta?
+			if ( cp_textblock_meta == '0' ) {
+
+				/**
+				 * Add a class to the textblock when mouse is over it
+				 *
+				 * @return void
+				 */
+				jQuery('#container').on( 'mouseover', '.textblock', function( event ) {
+					jQuery(this).addClass('textblock-in');
+				});
+
+				/**
+				 * Remove class from the textblock when mouse moves out of it
+				 *
+				 * @return void
+				 */
+				jQuery('#container').on( 'mouseout', '.textblock', function( event ) {
+					jQuery(this).removeClass('textblock-in');
+				});
+
+			}
+
+		}
+
+		/**
+		 * Clicking on the textblock
+		 *
+		 * @return void
+		 */
+		jQuery('#container').on( 'click', '.textblock', function( event ) {
+
+			// define vars
+			var text_sig;
+
+			// get text signature
+			text_sig = jQuery(this).prop('id');
+			//console.log( text_sig );
+
+			// remove leading #
+			text_sig = text_sig.split('textblock-')[1];
+
+			// use function
+			CommentPress.theme.viewport.align_content( text_sig, CommentPress.settings.textblock.getMarkerMode() );
+
+			// broadcast action
+			jQuery(document).trigger( 'commentpress-textblock-clicked' );
+
+		});
+
+	};
+
+
+
+	/**
+	 * Set up actions on the "paragraph" icons to the left of a textblock
+	 *
+	 * @return void
+	 */
+	this.para_markers = function() {
+
+		/**
+		 * Clicking on the paragraph
+		 *
+		 * @return false
+		 */
+		jQuery('#container').on( 'click', 'span.para_marker a', function( event ) {
+
+			// override event
+			event.preventDefault();
+
+			// broadcast action
+			jQuery(document).trigger( 'commentpress-paramarker-clicked' );
+
+		});
+
+		/**
+		 * Rolling onto the paragraph icon
+		 *
+		 * @return void
+		 */
+		jQuery('#container').on( 'mouseenter', 'span.para_marker a', function( event ) {
+
+			// define vars
+			var target;
+
+			// get target item
+			target = jQuery(this).parent().next().children('.comment_count');
+			//console.log( target );
+
+			target.addClass( 'js-hover' );
+
+		});
+
+		/**
+		 * Rolling off the paragraph icon
+		 *
+		 * @return void
+		 */
+		jQuery('#container').on( 'mouseleave', 'span.para_marker a', function( event ) {
+
+			// define vars
+			var target;
+
+			// get target item
+			target = jQuery(this).parent().next().children('.comment_count');
+			//console.log( target );
+
+			target.removeClass( 'js-hover' );
+
+		});
+
+	};
+
+
+
+	/**
+	 * Set up clicks on comment icons attached to comment-blocks in post/page
+	 *
+	 * @return void
+	 */
+	this.comment_icons = function() {
+
+		/**
+		 * Clicking on the little comment icon
+		 *
+		 * @return false
+		 */
+		jQuery('#container').on( 'click', '.commenticonbox', function( event ) {
+
+			// define vars
+			var text_sig;
+
+			// override event
+			event.preventDefault();
+
+			// prevent bubbling
+			event.stopPropagation();
+
+			// get text signature
+			text_sig = jQuery(this).children('a.para_permalink').prop('href').split('#')[1];
+			//console.log( text_sig );
+
+			// use function
+			CommentPress.theme.viewport.align_content( text_sig, 'auto' );
+
+			// broadcast action
+			jQuery(document).trigger( 'commentpress-commenticonbox-clicked' );
+
+		});
+
+		/**
+		 * Clicking on the little comment icon
+		 *
+		 * @return false
+		 */
+		jQuery('#container').on( 'click', 'a.para_permalink', function( event ) {
+
+			// override event
+			event.preventDefault();
+
+		});
+
+		/**
+		 * Rolling onto the little comment icon
+		 *
+		 * @return void
+		 */
+		jQuery('#container').on( 'mouseenter', 'a.para_permalink', function( event ) {
+
+			// define vars
+			var text_sig;
+
+			// get text signature
+			text_sig = jQuery(this).prop('href').split('#')[1];
+			//console.log( text_sig );
+
+			jQuery('span.para_marker a#' + text_sig).addClass( 'js-hover' );
+
+		});
+
+		/**
+		 * Rolling off the little comment icon
+		 *
+		 * @return void
+		 */
+		jQuery('#container').on( 'mouseleave', 'a.para_permalink', function( event ) {
+
+			// define vars
+			var text_sig;
+
+			// get text signature
+			text_sig = jQuery(this).prop('href').split('#')[1];
+			//console.log( text_sig );
+
+			jQuery('span.para_marker a#' + text_sig).removeClass( 'js-hover' );
+
+		});
+
+	};
+
+
+
+	/**
+	 * Set up paragraph links: cp_para_link is a class writers can use
+	 * in their markup to create nicely scrolling links within their pages
+	 *
+	 * @return void
+	 */
+	this.links_in_textblocks = function() {
+
+		/**
+		 * Clicking on links to paragraphs
+		 *
+		 * @return false
+		 */
+		jQuery('#container').on( 'click', 'a.cp_para_link', function( event ) {
+
+			// define vars
+			var text_sig;
+
+			// override event
+			event.preventDefault();
+
+			// get text signature
+			text_sig = jQuery(this).prop('href').split('#')[1];
+			//console.log(text_sig);
+
+			// use function
+			CommentPress.theme.viewport.align_content( text_sig, 'auto' );
+
+		});
+
+	};
+
+
+
+	/**
+	 * Set up footnote links for various plugins
+	 *
+	 * @return void
+	 */
+	this.footnotes_compatibility = function() {
+
+		/**
+		 * ---------------------------------------------------------------------
+		 * Back links
+		 * ---------------------------------------------------------------------
+		 */
+
+		/**
+		 * Clicking on reverse links in FD-Footnotes and WP_Footnotes
+		 *
+		 * @return false
+		 */
+		jQuery('#container').on( 'click', 'span.footnotereverse a, a.footnote-back-link', function( event ) {
+
+			// define vars
+			var target;
+
+			// override event
+			event.preventDefault();
+
+			// get target
+			target = jQuery(this).prop('href').split('#')[1];
+			//console.log(target);
+
+			// use function for offset
+			jQuery.quick_scroll_page( '#' + target, 100 );
+
+		});
+
+		/**
+		 * Clicking on reverse links in Simple Footnotes plugin
+		 *
+		 * @return false
+		 */
+		jQuery('#container').on( 'click', '.simple-footnotes ol li > a', function( event ) {
+
+			// define vars
+			var target;
+
+			// get target
+			target = jQuery(this).prop('href');
+			//console.log(target);
+
+			// is it a backlink?
+			if ( target.match('#return-note-' ) ) {
+
+				// override event
+				event.preventDefault();
+
+				// remove url
+				target = target.split('#')[1];
+
+				// use function for offset
+				jQuery.quick_scroll_page( '#' + target, 100 );
+
+			}
+
+		});
+
+		/**
+		 * ---------------------------------------------------------------------
+		 * Footnote links
+		 * ---------------------------------------------------------------------
+		 */
+
+		/**
+		 * Clicking on footnote links in FD-Footnotes, WP-Footnotes, Simple Footnotes and ZotPress
+		 *
+		 * @return false
+		 */
+		jQuery('#container').on( 'click', 'a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link, a.zp-ZotpressInText', function( event ) {
+
+			// define vars
+			var target;
+
+			// override event
+			event.preventDefault();
+
+			// get target
+			target = jQuery(this).prop('href').split('#')[1];
+			//console.log(target);
+
+			// use function for offset
+			jQuery.quick_scroll_page( '#' + target, 100 );
+
+		});
+
+	};
+
+
+
+	/**
+	 * Workflow tabs
+	 *
+	 * @param str content_min_height The min-height CSS declaration
+	 * @param str content_padding_bottom The content wrapper padding-bottom CSS declaration
+	 * @return void
+	 */
+	this.workflow_tabs = function( content_min_height, content_padding_bottom ) {
+
+		// hide workflow content
+		jQuery('#literal .post').css( 'display', 'none' );
+		jQuery('#original .post').css( 'display', 'none' );
+
+		/**
+		 * Clicking on the workflow tabs
+		 *
+		 * @return false
+		 */
+		jQuery('#container').on( 'click', 'content-tabs li h2 a', function( event ) {
+
+			// define vars
+			var target_id;
+
+			// override event
+			event.preventDefault();
+
+			// hide others and show corresponding item
+
+			// get href
+			target_id = this.href.split('#')[1];
+			//console.log( target_id );
+
+			// hide all
+			jQuery('.post').css( 'display', 'none' );
+
+			// remove content min-height
+			jQuery('.workflow-wrapper').css( 'min-height', '0' );
+
+			// remove bottom padding
+			jQuery('.workflow-wrapper').css( 'padding-bottom', '0' );
+
+			// set min-height of target
+			jQuery('#' + target_id + '.workflow-wrapper').css( 'min-height', content_min_height );
+
+			// set padding-bottom of target
+			jQuery('#' + target_id + '.workflow-wrapper').css( 'padding-bottom', content_padding_bottom );
+
+			// show it
+			jQuery('#' + target_id + ' .post').css( 'display', 'block' );
+
+			// amend css of list items to mimic tabs
+			jQuery('#content-tabs li').removeClass( 'default-content-tab' );
+			jQuery(this).parent().parent().addClass( 'default-content-tab' );
+
+		});
+
+	};
+
+} // end CommentPress setup content class
+
+
+
+/**
+ * Create CommentPress setup comments column class
+ */
+CommentPress.setup.comments = new function() {
+
+	// store object ref
+	var me = this;
+
+
+
+	/**
+	 * Initialise CommentPress setup comments column.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+		// column header
+		me.header();
+
+		// minimiser button
+		me.minimiser();
+
+		// comment block permalinks
+		me.comment_block_permalinks();
+
+		// comment permalinks
+		me.comment_permalinks();
+
+		// comment permalink copy links
+		me.comment_permalink_copy_links();
+
+		// comment rollovers (disabled because only the modern theme uses this)
+		//me.comment_rollovers();
+
+	};
+
+
+
+	/**
+	 * Set up "Comments" tab header
+	 *
+	 * @return false
+	 */
+	this.header = function() {
+
+		/**
+		 * Clicking on the Comments Header
+		 *
+		 * @return false
+		 */
+		jQuery('#sidebar').on( 'click', '#comments_header h2 a', function( event ) {
+
+			// override event
+			event.preventDefault();
+
+			// activate it (this will become a theme method)
+			CommentPress.theme.sidebars.activate_sidebar('comments');
+
+		});
+
+	};
+
+
+
+	/**
+	 * Set up "Comments" tab minimise button
+	 *
+	 * @return false
+	 */
+	this.minimiser = function() {
+
+		/**
+		 * Clicking on the minimise comments icon
+		 *
+		 * @return void
+		 */
+		jQuery('#sidebar').on( 'click', '#cp_minimise_all_comments', function( event ) {
+
+			// override event
+			event.preventDefault();
+
+			// slide all paragraph comment wrappers up
+			jQuery('#comments_sidebar div.paragraph_wrapper').slideUp();
+
+			// unhighlight paragraphs
+			jQuery.unhighlight_para();
+
+		});
+
+	};
+
+
+
+	/**
+	 * Set up "Comments" tab "X Comments on Paragraph Y" links
+	 *
+	 * These links are also permalinks to the "comment block" - i.e. the section
+	 * of the Comments column that holds the comments on a particular textblock.
+	 *
+	 * @return void
+	 */
+	this.comment_block_permalinks = function() {
+
+		// only on normal cp pages
+		if ( cp_special_page == '1' ) { return; }
+
+		// set pointer
+		jQuery('a.comment_block_permalink').css( 'cursor', 'pointer' );
+
+		/**
+		 * Clicks on "Comments" tab "X Comments on Paragraph Y" links
+		 *
+		 * @param object event The clicked object
+		 * @return false
+		 */
+		jQuery('#comments_sidebar').on( 'click', 'a.comment_block_permalink', function( event ) {
+
+			// define vars
+			var text_sig, para_wrapper, comment_list, opening, visible, textblock,
+				post_id, para_id, para_num, has_form;
+
+			// override event
+			event.preventDefault();
+
+			// get text_sig
+			text_sig = jQuery(this).parent().prop( 'id' ).split('para_heading-')[1];
+			//console.log( 'text_sig: ' + text_sig );
+
+			// get para wrapper
+			para_wrapper = jQuery(this).parent().next('div.paragraph_wrapper');
+
+			// get comment list
+			comment_list = jQuery( '#para_wrapper-' + text_sig ).find('ol.commentlist' );
+
+			// init
+			opening = false;
+
+			// get visibility
+			visible = para_wrapper.css('display');
+
+			// override
+			if ( visible == 'none' ) { opening = true; }
+
+			// did we get one at all?
+			if ( 'undefined' !== typeof text_sig ) {
+
+				//console.log( opening );
+				//alert( 'comment_block_permalink click' );
+
+				// if not the whole page or pings...
+				if( text_sig !== '' && text_sig != 'pingbacksandtrackbacks' ) {
+
+					// get text block
+					textblock = jQuery('#textblock-' + text_sig);
+
+					// only if opening
+					if ( opening ) {
+
+						// unhighlight paragraphs
+						jQuery.unhighlight_para();
+
+						// highlight this paragraph
+						jQuery.highlight_para( textblock );
+
+						// scroll page
+						jQuery.scroll_page( textblock );
+
+					} else {
+
+						// if encouraging commenting
+						if ( cp_promote_reading == '0' ) {
+
+							// closing with a comment form
+							if ( jQuery( '#para_wrapper-' + text_sig ).find('#respond' )[0] ) {
+
+								// unhighlight paragraphs
+								jQuery.unhighlight_para();
+
+							} else {
+
+								// if we have no comments, always highlight
+								if ( !comment_list[0] ) {
+
+									// unhighlight paragraphs
+									jQuery.unhighlight_para();
+
+									// highlight this paragraph
+									jQuery.highlight_para( textblock );
+
+									// scroll page
+									jQuery.scroll_page( textblock );
+
+								}
+
+							}
+
+						} else {
+
+							// if ours is highlighted
+							if ( jQuery.is_highlighted( textblock ) ) {
+
+								// unhighlight paragraphs
+								jQuery.unhighlight_para();
+
+							}
+
+						}
+
+					}
+
+				} else {
+
+					// unhighlight paragraphs
+					jQuery.unhighlight_para();
+
+					// only scroll if not pings
+					if ( text_sig != 'pingbacksandtrackbacks' ) {
+
+						// scroll to top
+						CommentPress.theme.viewport.scroll_to_top( 0, cp_scroll_speed );
+
+						// toggle page highlight flag
+						page_highlight = !page_highlight;
+
+					}
+
+				}
+
+			} // end defined check
+
+			// if encouraging commenting...
+			if ( cp_promote_reading == '0' && text_sig != 'pingbacksandtrackbacks' ) {
+
+				// are comments open?
+				if ( cp_comments_open == 'y' ) {
+
+					// get comment post ID
+					post_id = jQuery('#comment_post_ID').prop('value');
+					para_id = jQuery('#para_wrapper-' + text_sig + ' .reply_to_para').prop('id');
+					para_num = para_id.split('-')[1];
+
+					// do we have the comment form?
+					has_form = jQuery( '#para_wrapper-' + text_sig ).find( '#respond' )[0];
+
+					// if we have a comment list
+					if ( comment_list.length > 0 && comment_list[0] ) {
+
+						//console.log( 'has' );
+
+						// are we closing with no reply form?
+						if ( !opening && !has_form ) {
+
+							// skip moving form
+
+						} else {
+
+							// move form to para
+							addComment.moveFormToPara( para_num, text_sig, post_id );
+
+						}
+
+					} else {
+
+						// if we have no respond
+						if ( !has_form ) {
+
+							//console.log( 'none' );
+							para_wrapper.css('display','none');
+							opening = true;
+
+						}
+
+						// move form to para
+						addComment.moveFormToPara( para_num, text_sig, post_id );
+
+					}
+
+				}
+
+			}
+
+			// toggle next paragraph_wrapper
+			para_wrapper.slideToggle( 'slow', function() {
+
+				// only scroll if opening
+				if ( opening ) {
+
+					// scroll comments
+					jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+
+				}
+
+			});
+
+		});
+
+	};
+
+
+
+	/**
+	 * Set up actions on the Comment permalinks
+	 *
+	 * @return void
+	 */
+	this.comment_permalinks = function() {
+
+		/**
+		 * Clicking on the comment permalink
+		 *
+		 * @return void
+		 */
+		jQuery('#comments_sidebar').on( 'click', '.comment_permalink', function( event ) {
+
+			// define vars
+			var comment_id, header_offset, text_sig;
+
+			// override event
+			event.preventDefault();
+
+			// get comment id
+			comment_id = this.href.split('#')[1];
+
+			// if special page
+			if ( cp_special_page == '1' ) {
+
+				// get offset
+				header_offset = CommentPress.theme.header.get_offset();
+
+				// scroll to comment
+				jQuery.scrollTo(
+					jQuery('#'+comment_id),
+					{
+						duration: cp_scroll_speed,
+						axis:'y',
+						offset: header_offset
+					}
+				);
+
+			} else {
+
+				// clear other highlights
+				jQuery.unhighlight_para();
+
+				// get text sig
+				text_sig = jQuery.get_text_sig_by_comment_id( '#' + comment_id );
+
+				// if not a pingback...
+				if ( text_sig != 'pingbacksandtrackbacks' ) {
+
+					// scroll page to it
+					jQuery.scroll_page_to_textblock( text_sig );
+
+				}
+
+				// scroll comments
+				jQuery.scroll_comments( jQuery('#'+comment_id), cp_scroll_speed );
+
+			}
+
+		});
+
+	};
+
+
+
+	/**
+	 * Set up actions on the "Link" icons to the left of a comment permalink
+	 *
+	 * At present, these trigger a Javascript dialog, populated with the comment
+	 * permalink for people to copy. Migrate this to showing the permalink in
+	 * the browser's location bar.
+	 *
+	 * @return void
+	 */
+	this.comment_permalink_copy_links = function() {
+
+		/**
+		 * Click on the copy icon
+		 *
+		 * @return void
+		 */
+		jQuery('#comments_sidebar').on( 'click', '.comment_permalink_copy', function( event ) {
+
+			// define vars
+			var url;
+
+			// get selection
+			url = jQuery( this ).parent().attr('href');
+			//console.log( url );
+
+			// did we get one?
+			if ( url ) {
+
+				// show dialog
+				window.prompt( "Copy this link, then paste into where you need it", url );
+
+			}
+
+		});
+
+	};
+
+
+
+	/**
+	 * Handle comment "rollovers"
+	 *
+	 * @since 3.7
+	 */
+	this.comment_rollovers = function() {
+
+		/**
+		 * Add a class when rolling onto the comment
+		 */
+		jQuery('#comments_sidebar').on( 'mouseenter', '.comment-wrapper', function( event ) {
+			jQuery(this).addClass( 'background-highlight' );
+		});
+
+		/**
+		 * Remove the class when rolling off the comment
+		 */
+		jQuery('#comments_sidebar').on( 'mouseleave', '.comment-wrapper', function( event ) {
+			jQuery(this).removeClass( 'background-highlight' );
+		});
+
+	};
+
+} // end CommentPress setup comments column class
+
+
+
+/**
+ * Create CommentPress setup activity column class
+ */
+CommentPress.setup.activity = new function() {
+
+	// store object ref
+	var me = this;
+
+
+
+	/**
+	 * Initialise CommentPress setup activity column.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+		// column header
+		me.header();
+
+		// minimiser button
+		me.minimiser();
+
+		// column headings
+		me.headings();
+
+		// "see in context" links
+		me.see_in_context_links();
+
+	};
+
+
+
+	/**
+	 * Set up "Activity" tab header
+	 *
+	 * @return false
+	 */
+	this.header = function() {
+
+		/**
+		 * Clicking on the Activity Header
+		 *
+		 * @return false
+		 */
+		jQuery('#sidebar').on( 'click', '#activity_header h2 a', function( event ) {
+
+			// override event
+			event.preventDefault();
+
+			// activate it (this will become a theme method)
+			CommentPress.theme.sidebars.activate_sidebar( 'activity' );
+
+		});
+
+	};
+
+
+
+	/**
+	 * Set up "Activity" tab minimise button
+	 *
+	 * @return false
+	 */
+	this.minimiser = function() {
+
+		/**
+		 * Clicking on the minimise activities icon
+		 *
+		 * @return void
+		 */
+		jQuery('#sidebar').on( 'click', '#cp_minimise_all_activity', function( event ) {
+
+			// override event
+			event.preventDefault();
+
+			// slide all paragraph comment wrappers up
+			jQuery('#activity_sidebar div.paragraph_wrapper').slideUp();
+
+		});
+
+	};
+
+
+
+	/**
+	 * Set up "Activity" tab headings
+	 *
+	 * @return false
+	 */
+	this.headings = function() {
+
+		// set pointer
+		jQuery('h3.activity_heading').css( 'cursor', 'pointer' );
+
+		/**
+		 * Activity column headings click
+		 *
+		 * @return void
+		 */
+		jQuery('#activity_sidebar').on( 'click', 'h3.activity_heading', function( event ) {
+
+			// define vars
+			var para_wrapper;
+
+			// override event
+			event.preventDefault();
+
+			// get para wrapper
+			para_wrapper = jQuery(this).next('div.paragraph_wrapper');
+			//console.log( para_wrapper );
+
+			// set width to prevent rendering error
+			para_wrapper.css( 'width', jQuery(this).parent().css( 'width' ) );
+
+			// toggle next paragraph_wrapper
+			para_wrapper.slideToggle( 'slow', function() {
+
+				// when finished, reset width to auto
+				para_wrapper.css( 'width', 'auto' );
+
+			} );
+
+		});
+
+	};
+
+
+
+	/**
+	 * Set up "Activity" tab "See In Context" links
+	 *
+	 * @return void
+	 */
+	this.see_in_context_links = function() {
+
+		// allow links to work when not on commentable page
+		// NOTE: is this right?
+		if ( cp_special_page == '1' ) { return; }
+
+		/**
+		 * Clicking on the "See In Context" links
+		 *
+		 * @return void
+		 */
+		jQuery('#activity_sidebar').on( 'click', 'a.comment_on_post', function( event ) {
+
+			// define vars
+			var comment_id, comment, para_wrapper_array, item, header_offset, text_sig;
+
+			// override event
+			event.preventDefault();
+
+			// show comments sidebar
+			CommentPress.theme.sidebars.activate_sidebar( 'comments' );
+
+			// get comment id
+			comment_id = this.href.split('#')[1];
+
+			// get comment
+			comment = jQuery('#'+comment_id);
+
+			//console.log( comment );
+
+			// get array of parent paragraph_wrapper divs
+			para_wrapper_array = comment
+										.parents('div.paragraph_wrapper')
+										.map( function () {
+											return this;
+										});
+
+			// did we get one?
+			if ( para_wrapper_array.length > 0 ) {
+
+				// get the item
+				item = jQuery(para_wrapper_array[0]);
+
+				// show block
+				item.show();
+
+				// if special page
+				if ( cp_special_page == '1' ) {
+
+					// get offset
+					header_offset = CommentPress.theme.header.get_offset();
+
+					// scroll to comment
+					jQuery.scrollTo(
+						comment,
+						{
+							duration: cp_scroll_speed,
+							axis:'y',
+							offset: header_offset
+						}
+					);
+
+				} else {
+
+					// clear other highlights
+					jQuery.unhighlight_para();
+
+					// highlight para
+					text_sig = item.prop('id').split('-')[1];
+
+					// scroll page to it
+					jQuery.scroll_page_to_textblock( text_sig );
+
+					//console.log( '#li-comment-' + comment_id );
+
+					// add highlight class
+					//jQuery( '#li-comment-' + comment_id ).addClass( 'flash-comment' );
+
+					// scroll to new comment
+					jQuery('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
+						comment,
+						{
+							duration: cp_scroll_speed,
+							axis: 'y',
+							onAfter: function() {
+
+								// highlight comment
+								jQuery.highlight_comment( comment );
+
+							}
+						}
+					);
+
+				}
+
+			}
+
+		});
+
+	};
+
+} // end CommentPress setup activity column class
 
 
 
@@ -593,7 +1879,7 @@ CommentPress.settings.textblock = new function() {
 		// --<
 		return 0;
 
-	};
+	}
 
 
 
@@ -611,860 +1897,7 @@ CommentPress.settings.textblock = new function() {
 		// do a simple alert
 		alert( message );
 
-	};
-
-
-
-	/**
-	 * Page load prodecure for special pages with comments in content
-	 *
-	 * @return void
-	 */
-	$.on_load_scroll_to_comment = function() {
-
-		// define vars
-		var url, comment_id, comment;
-
-		// if there is an anchor in the URL...
-		url = document.location.toString();
-
-		// do we have a comment permalink?
-		if ( url.match( '#comment-' ) ) {
-
-			// get comment ID
-			comment_id = url.split('#comment-')[1];
-
-			// get comment in DOM
-			comment = $( '#comment-' + comment_id );
-
-			// did we get one?
-			if ( comment.length ) {
-
-				// only scroll if not mobile (but allow tablets)
-				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
-
-					// scroll to new comment
-					$.scrollTo(
-						comment,
-						{
-							duration: cp_scroll_speed,
-							axis:'y',
-							offset: commentpress_get_header_offset()
-						}
-					);
-
-				}
-
-			}
-
-		}
-
 	}
-
-
-
-	/**
-	 * Set up actions on the title
-	 *
-	 * @return void
-	 */
-	$.setup_title_actions = function() {
-
-		// unbind first to allow repeated calls to this function
-		$('.post_title a').unbind( 'click' );
-
-		/**
-		 * Clicking on the page/post title
-		 *
-		 * @return false
-		 */
-		$('.post_title a').click( function( event ) {
-
-			// override event
-			event.preventDefault();
-
-			// get text signature
-			var text_sig = '';
-			//console.log( text_sig );
-
-			// use function
-			cp_do_comment_icon_action( text_sig, 'marker' );
-
-		});
-
-	}
-
-
-
-	/**
-	 * Set up actions on the textblocks
-	 *
-	 * @return void
-	 */
-	$.setup_textblock_actions = function() {
-
-		// if mobile, we don't hide textblock meta
-		if ( cp_is_mobile == '0' ) {
-
-			// have we explicitly hidden textblock meta?
-			if ( cp_textblock_meta == '0' ) {
-
-				/**
-				 * Hover over textblock
-				 *
-				 * @return void
-				 */
-				$('.textblock').mouseover(function() {
-
-					$(this).addClass('textblock-in');
-
-				});
-
-				/**
-				 * Move out of textblock
-				 *
-				 * @return void
-				 */
-				$('.textblock').mouseout(function() {
-
-					$(this).removeClass('textblock-in');
-
-				});
-
-			}
-
-		}
-
-		// unbind first to allow repeated calls to this function
-		$('.textblock').unbind( 'click' );
-
-		/**
-		 * Clicking on the textblock
-		 *
-		 * @return void
-		 */
-		$('.textblock').click( function( event ) {
-
-			// define vars
-			var text_sig;
-
-			// get text signature
-			text_sig = $(this).prop('id');
-			//console.log( text_sig );
-
-			// remove leading #
-			text_sig = text_sig.split('textblock-')[1];
-
-			// use function
-			cp_do_comment_icon_action( text_sig, CommentPress.settings.textblock.getMarkerMode() );
-
-			// broadcast action
-			$( document ).trigger( 'commentpress-textblock-clicked' );
-
-		});
-
-	}
-
-
-
-	/**
-	 * Set up actions on the "paragraph" icons to the left of a textblock
-	 *
-	 * @return void
-	 */
-	$.setup_textblock_para_marker_actions = function() {
-
-		// unbind first to allow repeated calls to this function
-		$('span.para_marker a').unbind( 'click' );
-
-		/**
-		 * Clicking on the paragraph
-		 *
-		 * @return false
-		 */
-		$('span.para_marker a').click( function( event ) {
-
-			// override event
-			event.preventDefault();
-
-			// broadcast action
-			$( document ).trigger( 'commentpress-paramarker-clicked' );
-
-		});
-
-		// unbind first to allow repeated calls to this function
-		$('span.para_marker a').unbind( 'mouseenter' );
-		$('span.para_marker a').unbind( 'mouseleave' );
-
-		/**
-		 * Rolling onto the paragraph icon
-		 *
-		 * @return void
-		 */
-		$('span.para_marker a').mouseenter( function( event ) {
-
-			// define vars
-			var target;
-
-			// get target item
-			target = $(this).parent().next().children('.comment_count');
-			//console.log( target );
-
-			target.addClass( 'js-hover' );
-
-		});
-
-		/**
-		 * Rolling off the paragraph icon
-		 *
-		 * @return void
-		 */
-		$('span.para_marker a').mouseleave( function( event ) {
-
-			// define vars
-			var target;
-
-			// get target item
-			target = $(this).parent().next().children('.comment_count');
-			//console.log( target );
-
-			target.removeClass( 'js-hover' );
-
-		});
-
-	}
-
-
-
-	/**
-	 * Set up actions on the "paragraph" icons to the left of a textblock
-	 *
-	 * @return void
-	 */
-	$.setup_comment_permalink_copy_actions = function() {
-
-		// unbind first to allow repeated calls to this function
-		$('.comment_permalink_copy').unbind( 'mouseup' );
-
-		/**
-		 * Mouseup on the copy icon
-		 *
-		 * @return void
-		 */
-		$('.comment_permalink_copy').mouseup( function( event ) {
-
-			// define vars
-			var url;
-
-			// get selection
-			url = $( this ).parent().attr('href');
-			//console.log( url );
-
-			// did we get one?
-			if ( url ) {
-
-				// show dialog
-				window.prompt( "Copy this link, then paste into where you need it", url );
-
-			}
-
-		});
-
-	}
-
-
-
-	/**
-	 * Set up paragraph links: cp_para_link is a class writers can use
-	 * in their markup to create nicely scrolling links within their pages
-	 *
-	 * @return void
-	 */
-	$.setup_para_links = function() {
-
-		// unbind first to allow repeated calls to this function
-		$('a.cp_para_link').unbind( 'click' );
-
-		/**
-		 * Clicking on links to paragraphs
-		 *
-		 * @return false
-		 */
-		$('a.cp_para_link').click( function( event ) {
-
-			// define vars
-			var text_sig;
-
-			// override event
-			event.preventDefault();
-
-			// get text signature
-			text_sig = $(this).prop('href').split('#')[1];
-			//console.log(text_sig);
-
-			// use function
-			cp_do_comment_icon_action( text_sig, 'auto' );
-
-		});
-
-	}
-
-
-
-	/**
-	 * Set up clicks on comment icons attached to comment-blocks in post/page
-	 *
-	 * @return void
-	 */
-	$.setup_textblock_comment_icons = function() {
-
-		// unbind first to allow repeated calls to this function
-		$('.commenticonbox').unbind( 'click' );
-
-		/**
-		 * Clicking on the little comment icon
-		 *
-		 * @return false
-		 */
-		$('.commenticonbox').click( function( event ) {
-
-			// define vars
-			var text_sig;
-
-			// override event
-			event.preventDefault();
-
-			// prevent bubbling
-			event.stopPropagation();
-
-			// get text signature
-			text_sig = $(this).children('a.para_permalink').prop('href').split('#')[1];
-			//console.log( text_sig );
-
-			// use function
-			cp_do_comment_icon_action( text_sig, 'auto' );
-
-			// broadcast action
-			$( document ).trigger( 'commentpress-commenticonbox-clicked' );
-
-		});
-
-		// unbind first to allow repeated calls to this function
-		$('a.para_permalink').unbind( 'click' );
-
-		/**
-		 * Clicking on the little comment icon
-		 *
-		 * @return false
-		 */
-		$('a.para_permalink').click( function( event ) {
-
-			// override event
-			event.preventDefault();
-
-		});
-
-		// unbind first to allow repeated calls to this function
-		$('a.para_permalink').unbind( 'mouseenter' );
-		$('a.para_permalink').unbind( 'mouseleave' );
-
-		/**
-		 * Rolling onto the little comment icon
-		 *
-		 * @return void
-		 */
-		$('a.para_permalink').mouseenter( function( event ) {
-
-			// define vars
-			var text_sig;
-
-			// get text signature
-			text_sig = $(this).prop('href').split('#')[1];
-			//console.log( text_sig );
-
-			$('span.para_marker a#' + text_sig).addClass( 'js-hover' );
-
-		});
-
-		/**
-		 * Rolling off the little comment icon
-		 *
-		 * @return void
-		 */
-		$('a.para_permalink').mouseleave( function( event ) {
-
-			// define vars
-			var text_sig;
-
-			// get text signature
-			text_sig = $(this).prop('href').split('#')[1];
-			//console.log( text_sig );
-
-			$('span.para_marker a#' + text_sig).removeClass( 'js-hover' );
-
-		});
-
-	}
-
-
-
-	/**
-	 * Set up context headers for "activity" tab
-	 *
-	 * @return false
-	 */
-	$.setup_context_headers = function() {
-
-		// unbind first to allow repeated calls to this function
-		$('h3.activity_heading').unbind( 'click' );
-
-		// set pointer
-		$('h3.activity_heading').css( 'cursor', 'pointer' );
-
-		/**
-		 * Activity column headings click
-		 *
-		 * @return false
-		 */
-		$('h3.activity_heading').click( function( event ) {
-
-			// define vars
-			var para_wrapper;
-
-			// override event
-			event.preventDefault();
-
-			// get para wrapper
-			para_wrapper = $(this).next('div.paragraph_wrapper');
-			//console.log( para_wrapper );
-
-			// set width to prevent rendering error
-			para_wrapper.css( 'width', $(this).parent().css( 'width' ) );
-
-			// toggle next paragraph_wrapper
-			para_wrapper.slideToggle( 'slow', function() {
-
-				// when finished, reset width to auto
-				para_wrapper.css( 'width', 'auto' );
-
-			} );
-
-		});
-
-	}
-
-
-
-	/**
-	 * Clicking on the "see in context" link
-	 *
-	 * @return void
-	 */
-	$.enable_context_clicks = function() {
-
-		// allow links to work when not on commentable page
-		if ( cp_special_page == '1' ) {
-			return;
-		}
-
-		// unbind first to allow repeated calls to this function
-		$('a.comment_on_post').unbind( 'click' );
-
-		$('a.comment_on_post').click( function( event ) {
-
-			// define vars
-			var comment_id, comment, para_wrapper_array, item, header_offset, text_sig;
-
-			// override event
-			event.preventDefault();
-
-			// show comments sidebar
-			cp_activate_sidebar( 'comments' );
-
-			// get comment id
-			comment_id = this.href.split('#')[1];
-
-			// get comment
-			comment = $('#'+comment_id);
-
-			//console.log( comment );
-
-			// get array of parent paragraph_wrapper divs
-			para_wrapper_array = comment
-										.parents('div.paragraph_wrapper')
-										.map( function () {
-											return this;
-										});
-
-			// did we get one?
-			if ( para_wrapper_array.length > 0 ) {
-
-				// get the item
-				item = $(para_wrapper_array[0]);
-
-				// show block
-				item.show();
-
-				// if special page
-				if ( cp_special_page == '1' ) {
-
-					// get offset
-					header_offset = commentpress_get_header_offset();
-
-					// scroll to comment
-					$.scrollTo(
-						comment,
-						{
-							duration: cp_scroll_speed,
-							axis:'y',
-							offset: header_offset
-						}
-					);
-
-				} else {
-
-					// clear other highlights
-					$.unhighlight_para();
-
-					// highlight para
-					text_sig = item.prop('id').split('-')[1];
-
-					// scroll page to it
-					commentpress_scroll_page_to_textblock( text_sig );
-
-					//console.log( '#li-comment-' + comment_id );
-
-					// add highlight class
-					//$( '#li-comment-' + comment_id ).addClass( 'flash-comment' );
-
-					// scroll to new comment
-					$('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
-						comment,
-						{
-							duration: cp_scroll_speed,
-							axis: 'y',
-							onAfter: function() {
-
-								// highlight header
-								cp_flash_comment_header( comment );
-
-							}
-						}
-					);
-
-				}
-
-			}
-
-		});
-
-	}
-
-
-
-	/**
-	 * Set up comment headers
-	 *
-	 * @return void
-	 */
-	$.setup_comment_headers = function() {
-
-		// only on normal cp pages
-		if ( cp_special_page == '1' ) { return; }
-
-		// unbind first to allow repeated calls to this function
-		$('a.comment_block_permalink').unbind( 'click' );
-
-		// set pointer
-		$('a.comment_block_permalink').css( 'cursor', 'pointer' );
-
-		/**
-		 * Comment page headings click
-		 *
-		 * @param object event The clicked object
-		 * @return false
-		 */
-		$('a.comment_block_permalink').click( function( event ) {
-
-			// define vars
-			var text_sig, para_wrapper, comment_list, opening, visible, textblock,
-				post_id, para_id, para_num, has_form;
-
-			// override event
-			event.preventDefault();
-
-			// get text_sig
-			text_sig = $(this).parent().prop( 'id' ).split('para_heading-')[1];
-			//console.log( 'text_sig: ' + text_sig );
-
-			// get para wrapper
-			para_wrapper = $(this).parent().next('div.paragraph_wrapper');
-
-			// get comment list
-			comment_list = $( '#para_wrapper-' + text_sig ).find('ol.commentlist' );
-
-			// init
-			opening = false;
-
-			// get visibility
-			visible = para_wrapper.css('display');
-
-			// override
-			if ( visible == 'none' ) { opening = true; }
-
-			// did we get one at all?
-			if ( 'undefined' !== typeof text_sig ) {
-
-				//console.log( opening );
-				//alert( 'comment_block_permalink click' );
-
-				// if not the whole page or pings...
-				if( text_sig !== '' && text_sig != 'pingbacksandtrackbacks' ) {
-
-					// get text block
-					textblock = $('#textblock-' + text_sig);
-
-					// only if opening
-					if ( opening ) {
-
-						// unhighlight paragraphs
-						$.unhighlight_para();
-
-						// highlight this paragraph
-						$.highlight_para( textblock );
-
-						// scroll page
-						commentpress_scroll_page( textblock );
-
-					} else {
-
-						// if encouraging commenting
-						if ( cp_promote_reading == '0' ) {
-
-							// closing with a comment form
-							if ( $( '#para_wrapper-' + text_sig ).find('#respond' )[0] ) {
-
-								// unhighlight paragraphs
-								$.unhighlight_para();
-
-							} else {
-
-								// if we have no comments, always highlight
-								if ( !comment_list[0] ) {
-
-									// unhighlight paragraphs
-									$.unhighlight_para();
-
-									// highlight this paragraph
-									$.highlight_para( textblock );
-
-									// scroll page
-									commentpress_scroll_page( textblock );
-
-								}
-
-							}
-
-						} else {
-
-							// if ours is highlighted
-							if ( $.is_highlighted( textblock ) ) {
-
-								// unhighlight paragraphs
-								$.unhighlight_para();
-
-							}
-
-						}
-
-					}
-
-				} else {
-
-					// unhighlight paragraphs
-					$.unhighlight_para();
-
-					// only scroll if not pings
-					if ( text_sig != 'pingbacksandtrackbacks' ) {
-
-						// scroll to top
-						commentpress_scroll_to_top( 0, cp_scroll_speed );
-
-						// toggle page highlight flag
-						page_highlight = !page_highlight;
-
-					}
-
-				}
-
-			} // end defined check
-
-			// if encouraging commenting...
-			if ( cp_promote_reading == '0' && text_sig != 'pingbacksandtrackbacks' ) {
-
-				// are comments open?
-				if ( cp_comments_open == 'y' ) {
-
-					// get comment post ID
-					post_id = $('#comment_post_ID').prop('value');
-					para_id = $('#para_wrapper-' + text_sig + ' .reply_to_para').prop('id');
-					para_num = para_id.split('-')[1];
-
-					// do we have the comment form?
-					has_form = $( '#para_wrapper-' + text_sig ).find( '#respond' )[0];
-
-					// if we have a comment list
-					if ( comment_list.length > 0 && comment_list[0] ) {
-
-						//console.log( 'has' );
-
-						// are we closing with no reply form?
-						if ( !opening && !has_form ) {
-
-							// skip moving form
-
-						} else {
-
-							// move form to para
-							addComment.moveFormToPara( para_num, text_sig, post_id );
-
-						}
-
-					} else {
-
-						// if we have no respond
-						if ( !has_form ) {
-
-							//console.log( 'none' );
-							para_wrapper.css('display','none');
-							opening = true;
-
-						}
-
-						// move form to para
-						addComment.moveFormToPara( para_num, text_sig, post_id );
-
-					}
-
-				}
-
-			}
-
-			// toggle next paragraph_wrapper
-			para_wrapper.slideToggle( 'slow', function() {
-
-				// only scroll if opening
-				if ( opening ) {
-
-					// scroll comments
-					cp_scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
-
-				}
-
-			});
-
-		});
-
-	}
-
-
-
-	/**
-	 * Clicking on the comment permalink
-	 *
-	 * @return void
-	 */
-	$.enable_comment_permalink_clicks = function() {
-
-		// unbind first to allow repeated calls to this function
-		$('a.comment_permalink').unbind( 'click' );
-
-		$('a.comment_permalink').click( function( event ) {
-
-			// define vars
-			var comment_id, header_offset, text_sig;
-
-			// override event
-			event.preventDefault();
-
-			// get comment id
-			comment_id = this.href.split('#')[1];
-
-			// if special page
-			if ( cp_special_page == '1' ) {
-
-				// get offset
-				header_offset = commentpress_get_header_offset();
-
-				// scroll to comment
-				$.scrollTo(
-					$('#'+comment_id),
-					{
-						duration: cp_scroll_speed,
-						axis:'y',
-						offset: header_offset
-					}
-				);
-
-			} else {
-
-				// clear other highlights
-				$.unhighlight_para();
-
-				// get text sig
-				text_sig = cp_get_text_sig_by_comment_id( '#' + comment_id );
-
-				// if not a pingback...
-				if ( text_sig != 'pingbacksandtrackbacks' ) {
-
-					// scroll page to it
-					commentpress_scroll_page_to_textblock( text_sig );
-
-				}
-
-				// scroll comments
-				cp_scroll_comments( $('#'+comment_id), cp_scroll_speed );
-
-			}
-
-		});
-
-	}
-
-
-
-	/**
-	 * Handle comment "rollovers"
-	 *
-	 * @since 3.7
-	 */
-	$.reset_comment_actions = function() {
-
-		// unbind first to allow repeated calls to this function
-		$('.comment-wrapper').unbind( 'mouseenter' );
-		$('.comment-wrapper').unbind( 'mouseleave' );
-
-		/**
-		 * Rolling onto the comment
-		 */
-		$('.comment-wrapper').mouseenter( function( event ) {
-
-			// simulate rollover
-			$(this).addClass( 'background-highlight' );
-
-		});
-
-		/**
-		 * Rolling off the comment
-		 */
-		$('.comment-wrapper').mouseleave( function( event ) {
-
-			// simulate rollout
-			$(this).removeClass( 'background-highlight' );
-
-		});
-
-	};
 
 
 
@@ -1551,6 +1984,54 @@ CommentPress.settings.textblock = new function() {
 
 
 	/**
+	 * Page load prodecure for special pages with comments in content
+	 *
+	 * @return void
+	 */
+	$.on_load_scroll_to_comment = function() {
+
+		// define vars
+		var url, comment_id, comment;
+
+		// if there is an anchor in the URL...
+		url = document.location.toString();
+
+		// do we have a comment permalink?
+		if ( url.match( '#comment-' ) ) {
+
+			// get comment ID
+			comment_id = url.split('#comment-')[1];
+
+			// get comment in DOM
+			comment = $( '#comment-' + comment_id );
+
+			// did we get one?
+			if ( comment.length ) {
+
+				// only scroll if not mobile (but allow tablets)
+				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+
+					// scroll to new comment
+					$.scrollTo(
+						comment,
+						{
+							duration: cp_scroll_speed,
+							axis:'y',
+							offset: CommentPress.theme.header.get_offset()
+						}
+					);
+
+				}
+
+			}
+
+		}
+
+	}
+
+
+
+	/**
 	 * Scroll comments to target
 	 *
 	 * @param object target The target to scroll to
@@ -1589,7 +2070,7 @@ CommentPress.settings.textblock = new function() {
 						onAfter: function() {
 
 							// highlight header
-							cp_flash_comment_header( target );
+							jQuery.highlight_comment( target );
 
 							// broadcast
 							$(document).trigger( 'commentpress-comments-scrolled' );
@@ -1643,7 +2124,7 @@ CommentPress.settings.textblock = new function() {
 				{
 					duration: (cp_scroll_speed * 1.5),
 					axis: 'y',
-					offset: commentpress_get_header_offset()
+					offset: CommentPress.theme.header.get_offset()
 				}
 			);
 
@@ -1674,7 +2155,7 @@ CommentPress.settings.textblock = new function() {
 				{
 					duration: (duration * 1.5),
 					axis: 'y',
-					offset: commentpress_get_header_offset()
+					offset: CommentPress.theme.header.get_offset()
 				}
 			);
 
@@ -1705,7 +2186,7 @@ CommentPress.settings.textblock = new function() {
 			$.highlight_para( textblock );
 
 			// scroll page
-			commentpress_scroll_page( textblock );
+			$.scroll_page( textblock );
 
 		} else {
 
@@ -1713,7 +2194,7 @@ CommentPress.settings.textblock = new function() {
 			if ( page_highlight === false ) {
 
 				// scroll to top
-				commentpress_scroll_to_top( 0, cp_scroll_speed );
+				CommentPress.theme.viewport.scroll_to_top( 0, cp_scroll_speed );
 
 			}
 
@@ -1726,335 +2207,47 @@ CommentPress.settings.textblock = new function() {
 
 
 
-	/**
-	 * Set up footnote links for various plugins
-	 *
-	 * @return void
-	 */
-	$.footnotes_compatibility = function() {
-
-		/**
-		 * ---------------------------------------------------------------------
-		 * Back links
-		 * ---------------------------------------------------------------------
-		 */
-
-		// unbind first to allow repeated calls to this function
-		$('span.footnotereverse a, a.footnote-back-link').unbind( 'click' );
-
-		/**
-		 * Clicking on reverse links in FD-Footnotes and WP_Footnotes
-		 *
-		 * @return false
-		 */
-		$('span.footnotereverse a, a.footnote-back-link').click( function( event ) {
-
-			// define vars
-			var target;
-
-			// override event
-			event.preventDefault();
-
-			// get target
-			target = $(this).prop('href').split('#')[1];
-			//console.log(target);
-
-			// use function for offset
-			cp_quick_scroll_page( '#' + target, 100 );
-
-		});
-
-		// unbind first to allow repeated calls to this function
-		$('.simple-footnotes ol li > a').unbind( 'click' );
-
-		/**
-		 * Clicking on reverse links in Simple Footnotes plugin
-		 *
-		 * @return false
-		 */
-		$('.simple-footnotes ol li > a').click( function( event ) {
-
-			// define vars
-			var target;
-
-			// get target
-			target = $(this).prop('href');
-			//console.log(target);
-
-			// is it a backlink?
-			if ( target.match('#return-note-' ) ) {
-
-				// override event
-				event.preventDefault();
-
-				// remove url
-				target = target.split('#')[1];
-
-				// use function for offset
-				cp_quick_scroll_page( '#' + target, 100 );
-
-			}
-
-		});
-
-		/**
-		 * ---------------------------------------------------------------------
-		 * Footnote links
-		 * ---------------------------------------------------------------------
-		 */
-
-		// unbind first to allow repeated calls to this function
-		$('a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link, a.zp-ZotpressInText').unbind( 'click' );
-
-		/**
-		 * Clicking on footnote links in FD-Footnotes, WP-Footnotes, Simple Footnotes and ZotPress
-		 *
-		 * @return false
-		 */
-		$('a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link, a.zp-ZotpressInText').click( function( event ) {
-
-			// define vars
-			var target;
-
-			// override event
-			event.preventDefault();
-
-			// get target
-			target = $(this).prop('href').split('#')[1];
-			//console.log(target);
-
-			// use function for offset
-			cp_quick_scroll_page( '#' + target, 100 );
-
-		});
-
-	}
-
-
-
 })( jQuery );
 
 
 
 /**
- * Scroll page to target
- *
- * @param object target The object to scroll to
- * @return void
- */
-function commentpress_scroll_page( target ) {
-	jQuery.scroll_page( target );
-}
-
-/**
- * Scroll page to target with passed duration param
- *
- * @param object target The object to scroll to
- * @param integer duration The duration of the scroll
- * @return void
- */
-function cp_quick_scroll_page( target, duration ) {
-	jQuery.quick_scroll_page( target, duration );
-}
-
-/**
- * Highlight the comment
- *
- * @param object comment The jQuery comment object
- * @return void
- */
-function cp_flash_comment_header( comment ) {
-	jQuery.highlight_comment( comment );
-}
-
-/**
- * Scroll comments to target
- *
- * @param object target The target to scroll to
- * @param integer speed The duration of the scroll
- * @param string flash Whether or not to "flash" the comment
- * @return void
- */
-function cp_scroll_comments( target, speed, flash ) {
-	jQuery.scroll_comments( target, speed, flash );
-}
-
-/**
- * Get text signature by comment id
- *
- * @param object cid The CSS ID of the comment
- * @return string text_sig The text signature
- */
-function cp_get_text_sig_by_comment_id( cid ) {
-	return jQuery.get_text_sig_by_comment_id( cid );
-}
-
-/**
- * Scroll to textblock
- *
- * @param string text_sig The text signature to scroll to
- * @return void
- */
-function commentpress_scroll_page_to_textblock( text_sig ) {
-	jQuery.scroll_page_to_textblock( text_sig );
-}
-
-/**
- * Clicking on the comment permalink
+ * Initialise all setups
  *
  * @return void
  */
-function commentpress_enable_comment_permalink_clicks() {
-	jQuery.enable_comment_permalink_clicks();
-}
+function commentpress_setup_init() {
 
-/**
- * Set up context headers for "activity" tab
- *
- * @return false
- */
-function commentpress_setup_context_headers() {
-	jQuery.setup_context_headers();
-}
+	// setup navigation
+	CommentPress.setup.navigation.init();
 
-/**
- * Clicking on the "see in context" link
- *
- * @return void
- */
-function cp_enable_context_clicks() {
-	jQuery.enable_context_clicks();
-}
+	// setup content
+	CommentPress.setup.content.init();
 
-/**
- * Page load prodecure for special pages with comments in content
- *
- * @return void
- */
-function cp_scroll_to_comment_on_load() {
-	jQuery.on_load_scroll_to_comment();
-}
+	// setup comments column
+	CommentPress.setup.comments.init();
 
-/**
- * Set up clicks on comment icons attached to comment-blocks in post/page
- *
- * @return void
- */
-function commentpress_setup_para_permalink_icons() {
-	jQuery.setup_textblock_comment_icons();
-}
-
-/**
- * Set up actions on the title
- *
- * @return void
- */
-function commentpress_setup_title_actions() {
-	jQuery.setup_title_actions();
-}
-
-/**
- * Set up actions on the textblocks
- *
- * @return void
- */
-function commentpress_setup_textblock_actions() {
-	jQuery.setup_textblock_actions();
-}
-
-/**
- * Set up actions on the "paragraph" icons to the left of a textblock
- *
- * @return void
- */
-function commentpress_setup_para_marker_actions() {
-	jQuery.setup_textblock_para_marker_actions();
-}
-
-/**
- * Set up actions on the "paragraph" icons to the left of a textblock
- *
- * @return void
- */
-function commentpress_setup_comment_permalink_copy_actions() {
-	jQuery.setup_comment_permalink_copy_actions();
-}
-
-/**
- * Set up actions on items relating to textblocks in post/page
- *
- * @return void
- */
-function commentpress_setup_page_click_actions() {
-
-	// call all the separate functions
-	commentpress_setup_title_actions();
-	commentpress_setup_textblock_actions();
-	commentpress_setup_para_marker_actions();
-	commentpress_setup_comment_permalink_copy_actions();
-
-}
-
-/**
- * Set up paragraph links: cp_para_link is a class writers can use
- * in their markup to create nicely scrolling links within their pages
- *
- * @return void
- */
-function commentpress_setup_para_links() {
-	jQuery.setup_para_links();
-}
-
-/**
- * Set up footnote links for various plugins
- *
- * @return void
- */
-function commentpress_setup_footnotes_compatibility() {
-	jQuery.footnotes_compatibility();
-}
-
-/**
- * Reset all actions
- *
- * @return void
- */
-function commentpress_reset_actions() {
-
-	// set up comment headers
-	commentpress_setup_comment_headers();
-
-	// set up comment headers
-	//commentpress_setup_comment_headers();
-
-	// enable animations on clicking comment permalinks
-	commentpress_enable_comment_permalink_clicks();
-
-	// set up comment icons (these used to be paragraph permalinks - now 'add comment')
-	commentpress_setup_para_permalink_icons();
-
-	// set up clicks in the page content:
-	// title
-	// paragraph content
-	// paragraph icons (newly assigned as paragraph permalinks - also 'read comments')
-	commentpress_setup_page_click_actions();
-
-	// set up user-defined links to paragraphs
-	commentpress_setup_para_links();
-
-	// set up activity links
-	cp_enable_context_clicks();
-
-	// set up activity headers
-	commentpress_setup_context_headers();
-
-	// set up footnote plugin compatibility
-	commentpress_setup_footnotes_compatibility();
+	// setup activity column
+	CommentPress.setup.activity.init();
 
 	// broadcast
-	jQuery( document ).trigger( 'commentpress-reset-actions' );
+	jQuery(document).trigger( 'commentpress-initialised' );
 
 }
+
+
+
+/**
+ * Define what happens when the page is ready
+ *
+ * @return void
+ */
+jQuery(document).ready(function($) {
+
+	// initialise
+	commentpress_setup_init()
+
+}); // end document.ready()
 
 
 

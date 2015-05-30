@@ -186,9 +186,6 @@ CommentPress.ajax.comments = new function() {
 
 		}
 
-		// permalink clicks
-		commentpress_enable_comment_permalink_clicks();
-
 		// get head
 		head = response.find('#comments_in_page_wrapper div.comments_container > h3');
 
@@ -309,7 +306,7 @@ CommentPress.ajax.comments = new function() {
 					{
 						duration: cp_scroll_speed,
 						axis: 'y',
-						offset: commentpress_get_header_offset(),
+						offset: CommentPress.theme.header.get_offset(),
 						onAfter: function() {
 
 							// remove highlight class

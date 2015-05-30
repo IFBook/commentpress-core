@@ -78,6 +78,7 @@ legend { color: #000; }
 /*
 ::-moz-selection { background: #ff0; color: #000; text-shadow: none; }
 ::selection { background: #ff0; color: #000; text-shadow: none; }
+::selection {color: #ea449d;}
 */
 
 

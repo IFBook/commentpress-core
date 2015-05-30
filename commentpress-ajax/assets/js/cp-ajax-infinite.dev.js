@@ -228,35 +228,19 @@ if ( window.history ) {
 
 		// COMMENTPRESS CORE
 
-		// set up comment headers
-		commentpress_setup_comment_headers();
-
-		// set up comment headers
-		commentpress_setup_comment_headers();
-
-		// enable animations on clicking comment permalinks
-		commentpress_enable_comment_permalink_clicks();
-
-		// set up comment icons (these used to be paragraph permalinks - now 'add comment')
-		commentpress_setup_para_permalink_icons();
-
+		/*
 		// set up clicks in the page content:
+
 		// title
+		jQuery.setup_content_title_links();
+
 		// paragraph content
+		jQuery.setup_content_textblock_actions();
+
 		// paragraph icons (newly assigned as paragraph permalinks - also 'read comments')
-		commentpress_setup_page_click_actions();
-
-		// set up user-defined links to paragraphs
-		commentpress_setup_para_links();
-
-		// set up activity links
-		cp_enable_context_clicks();
-
-		// set up activity headers
-		commentpress_setup_context_headers();
-
-		// set up footnote plugin compatibility
-		commentpress_setup_footnotes_compatibility();
+		jQuery.setup_content_textblock_para_marker_actions();
+		jQuery.setup_comment_column_comment_permalink_copy_links();
+		*/
 
 		// AJAX COMMENTS
 
@@ -539,7 +523,7 @@ if ( window.history ) {
 		if ( mode == 'link' ) {
 
 			// scroll to the page
-			commentpress_scroll_page( new_post_obj );
+			jQuery.scroll_page( new_post_obj );
 
 		}
 

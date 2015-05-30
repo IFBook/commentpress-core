@@ -396,8 +396,6 @@ CommentPress.ajax.comments = new function() {
 		me.update_para_icon( text_sig, new_comment_count );
 
 		// re-enable clicks
-		commentpress_enable_comment_permalink_clicks();
-		commentpress_setup_comment_headers();
 		me.reassign_comments();
 
 		// compatibility with Featured Comments
@@ -407,7 +405,7 @@ CommentPress.ajax.comments = new function() {
 		cpajax_reenable_comment_upvoter();
 
 		// broadcast that we're done and pass new comment ID
-		jQuery( document ).trigger( 'commentpress-ajax-new-comment-added', [ comm_id ] );
+		jQuery(document).trigger( 'commentpress-ajax-new-comment-added', [ comm_id ] );
 
 	};
 
@@ -781,18 +779,16 @@ CommentPress.ajax.comments = new function() {
 		if( text_sig != '' ) {
 
 			// scroll page to text block
-			commentpress_scroll_page( jQuery('#textblock-' + text_sig) );
+			jQuery.scroll_page( jQuery('#textblock-' + text_sig) );
 
 		} else {
 
 			// scroll to top
-			commentpress_scroll_to_top( 0, cp_scroll_speed );
+			CommentPress.theme.viewport.scroll_to_top( 0, cp_scroll_speed );
 
 		}
 
 		// re-enable clicks
-		commentpress_enable_comment_permalink_clicks();
-		commentpress_setup_comment_headers();
 		me.reassign_comments();
 
 		// clear comment form
@@ -807,7 +803,7 @@ CommentPress.ajax.comments = new function() {
 		cpajax_reenable_comment_upvoter();
 
 		// broadcast that we're done and pass new comment ID
-		jQuery( document ).trigger( 'commentpress-ajax-comment-added', [ new_comm_id ] );
+		jQuery(document).trigger( 'commentpress-ajax-comment-added', [ new_comm_id ] );
 
 	};
 
@@ -946,7 +942,7 @@ CommentPress.ajax.comments = new function() {
 							comment.addClass( 'comment-fade' );
 
 							// broadcast that animation is done
-							jQuery( document ).trigger( 'commentpress-ajax-comment-added-scrolled' );
+							jQuery(document).trigger( 'commentpress-ajax-comment-added-scrolled' );
 
 						}
 					}
@@ -1259,11 +1255,11 @@ jQuery(document).ready(function($) {
 
 
 	/**
-	 * Hook into CommentPress reset
+	 * Hook into the CommentPress theme "document ready" trigger
 	 *
 	 * @return void
 	 */
-	$( document ).on( 'commentpress-reset-actions', function( event ) {
+	$( document ).on( 'commentpress-document-ready', function( event ) {
 
 		// re-enable AJAX functionality
 		CommentPress.ajax.comments.reassign_comments();
@@ -1284,10 +1280,6 @@ jQuery(document).ready(function($) {
 	 * @return void
 	 */
 	$( document ).on( 'fee-after-save', function( event ) {
-
-		// re-enable CommentPress theme clicks
-		commentpress_enable_comment_permalink_clicks();
-		commentpress_setup_comment_headers();
 
 		// re-enable CommentPress AJAX clicks
 		CommentPress.ajax.comments.reassign_comments();

@@ -241,7 +241,7 @@ CommentPress.textselector = new function() {
 
 		});
 
-	}
+	};
 
 	/**
 	 * Save textselector selection for a comment
@@ -733,7 +733,7 @@ CommentPress.textselector = new function() {
 			me.selection_send_to_editor( false );
 
 			// scroll to comment form
-			cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
+			jQuery.scroll_comments( jQuery('#respond'), cp_scroll_speed );
 
 			// wrap selection
 			wrap = jQuery('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
@@ -769,7 +769,7 @@ CommentPress.textselector = new function() {
 			me.selection_send_to_editor( true );
 
 			// scroll to comment form
-			cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
+			jQuery.scroll_comments( jQuery('#respond'), cp_scroll_speed );
 
 			// wrap selection
 			wrap = jQuery('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );

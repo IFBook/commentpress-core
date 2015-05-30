@@ -3796,7 +3796,7 @@ add_filter( 'sidebars_widgets', 'commentpress_sidebars_widgets', 1000 );
  * @param object $comment The comment
  * @param int|WP_Post $post_id The post ID or WP_Post object.
  */
-function commentpress_add_selection_classes( $classes, $class, $comment_id, $comment, $post_id ) {
+function commentpress_add_selection_classes( $classes, $class, $comment_id, $comment, $post_id = 0 ) {
 
 	// define key
 	$key = '_cp_comment_selection';
@@ -3823,7 +3823,7 @@ function commentpress_add_selection_classes( $classes, $class, $comment_id, $com
 }
 
 // add filter for above
-add_filter( 'comment_class', 'commentpress_add_selection_classes', 100, 5 );
+add_filter( 'comment_class', 'commentpress_add_selection_classes', 100, 4 );
 
 
 
