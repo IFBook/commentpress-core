@@ -1467,7 +1467,7 @@ CommentPress.theme.viewport = new function() {
 				item.show();
 
 				// scroll comments
-				$.scroll_comments( $('#comment-' + comment_id), 1, 'flash' );
+				CommentPress.common.comments.scroll_comments( $('#comment-' + comment_id), 1, 'flash' );
 
 				// if not the whole page...
 				if( text_sig !== '' ) {
@@ -1537,7 +1537,7 @@ CommentPress.theme.viewport = new function() {
 					$('#para_heading-' + text_sig).next('div.paragraph_wrapper').show();
 
 					// scroll comments
-					$.scroll_comments( $('#para_heading-' + text_sig), 1 );
+					CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), 1 );
 
 					// get text block
 					textblock = $('#textblock-' + text_sig);
@@ -1709,19 +1709,19 @@ CommentPress.theme.viewport = new function() {
 					if ( mode == 'marker' ) {
 
 						// scroll comments to header
-						$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+						CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 					} else {
 
 						// scroll comments to comment form
-						$.scroll_comments( $('#respond'), cp_scroll_speed );
+						CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
 
 					}
 
 				} else {
 
 					// scroll comments to header
-					$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+					CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 				}
 
@@ -1739,19 +1739,19 @@ CommentPress.theme.viewport = new function() {
 					if ( mode == 'marker' ) {
 
 						// scroll comments to header
-						$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+						CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 					} else {
 
 						// scroll comments to comment form
-						$.scroll_comments( $('#respond'), cp_scroll_speed );
+						CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
 
 					}
 
 				} else {
 
 					// scroll comments to header
-					$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+					CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 				}
 
@@ -1769,19 +1769,19 @@ CommentPress.theme.viewport = new function() {
 					if ( mode == 'marker' ) {
 
 						// scroll comments to header
-						$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+						CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 					} else {
 
 						// scroll comments to comment form
-						$.scroll_comments( $('#respond'), cp_scroll_speed );
+						CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
 
 					}
 
 				} else {
 
 					// scroll comments to header
-					$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+					CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 				}
 
@@ -1799,19 +1799,19 @@ CommentPress.theme.viewport = new function() {
 					if ( mode == 'marker' ) {
 
 						// scroll comments to header
-						$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+						CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 					} else {
 
 						// scroll comments to comment form
-						$.scroll_comments( $('#respond'), cp_scroll_speed );
+						CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
 
 					}
 
 				} else {
 
 					// scroll comments to header
-					$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+					CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 				}
 
@@ -1840,7 +1840,7 @@ CommentPress.theme.viewport = new function() {
 			if ( cp_promote_reading == '1' && opening ) {
 
 				// scroll comments
-				$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+				CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 			} else {
 
@@ -1854,19 +1854,19 @@ CommentPress.theme.viewport = new function() {
 						if ( mode == 'marker' ) {
 
 							// scroll comments to header
-							$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+							CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 						} else {
 
 							// scroll comments to comment form
-							$.scroll_comments( $('#respond'), cp_scroll_speed );
+							CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
 
 						}
 
 					} else {
 
 						// scroll comments to comment form
-						$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+						CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 					}
 

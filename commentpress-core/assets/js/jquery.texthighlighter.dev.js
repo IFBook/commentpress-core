@@ -112,7 +112,7 @@ CommentPress.textselector = new function() {
 			me.selection_send_to_editor( false );
 
 			// scroll to comment form
-			$.scroll_comments( $('#respond'), cp_scroll_speed );
+			CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
 
 			// wrap selection
 			wrap = $('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
@@ -148,7 +148,7 @@ CommentPress.textselector = new function() {
 			me.selection_send_to_editor( true );
 
 			// scroll to comment form
-			$.scroll_comments( $('#respond'), cp_scroll_speed );
+			CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
 
 			// wrap selection
 			wrap = $('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
