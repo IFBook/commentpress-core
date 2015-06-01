@@ -826,7 +826,7 @@ CommentPress.ajax.comments = new function() {
 
 		// test for undefined, which may happen on replies to comments
 		// which have lost their original context
-		if ( response === undefined || response === null ) { return; }
+		if ( 'undefined' === typeof response || response === null ) { return; }
 
 		/*
 		console.log( 'content' );
@@ -868,7 +868,7 @@ CommentPress.ajax.comments = new function() {
 
 		// test for undefined, which may happen on replies to comments
 		// which have lost their original context
-		if ( response === undefined || response === null ) { return; }
+		if ( 'undefined' === typeof response || response === null ) { return; }
 
 		/*
 		console.log( 'content' );

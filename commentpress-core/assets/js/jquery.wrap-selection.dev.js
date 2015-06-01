@@ -520,7 +520,7 @@
 
 		getNodeOrder: function (myNode, myParent, myOrder) {
 			//checkCurrent should usually only be called recursively
-			if (typeof myParent === 'undefined') {
+			if ('undefined' === typeof myParent) {
 				myParent = document.body;
 			}
 			if (myNode.hasChildNodes()) {

@@ -289,7 +289,7 @@ addComment = {
 				var para_id = jQuery('#para_wrapper-' + text_sig + ' .reply_to_para').attr('id');
 
 				// is there an element for the exact match?
-				if ( para_id === undefined ) {
+				if ( 'undefined' === typeof para_id ) {
 
 					// NO -> crawl up the DOM looking for the wrapper
 					var parent_wrapper = jQuery('#respond').closest('div.paragraph_wrapper');
@@ -488,10 +488,10 @@ addComment = {
 		var title = addComment.I('respond_title');
 
 		// is it a comment reply?
-		if ( parentID === undefined || parentID == '0' ) {
+		if ( 'undefined' === typeof parentID || parentID == '0' ) {
 
 			// NO -> is it a comment on the whole page?
-			if ( textSig === undefined || textSig == '' ) {
+			if ( 'undefined' === typeof textSig || textSig == '' ) {
 
 				// if special page
 				if ( cp_special_page == '1' ) {
@@ -546,7 +546,7 @@ addComment = {
 				if ( ( comment_list[0] && cp_promote_reading == '0' ) || cp_promote_reading == '1' ) {
 
 					// show previous reply to para link
-					if ( addComment.text_signature !== undefined ) {
+					if ( 'undefined' !== typeof addComment.text_signature ) {
 						jQuery( '#para_wrapper-' + addComment.text_signature + ' div.reply_to_para' ).show();
 					}
 
@@ -588,13 +588,13 @@ addComment = {
 				title.innerHTML = unique;
 
 				// sanitise textSig
-				if ( textSig === undefined || textSig == '' ) { textSig == ''; }
+				if ( 'undefined' === typeof textSig || textSig == '' ) { textSig == ''; }
 
 				// if promoting commenting, sort out reply to para links
 				if ( cp_promote_reading == '1' ) {
 
 					// show previous
-					if ( addComment.text_signature !== undefined ) {
+					if ( 'undefined' !== typeof addComment.text_signature ) {
 						jQuery( '#para_wrapper-' + addComment.text_signature + ' div.reply_to_para' ).show();
 					}
 
@@ -693,7 +693,7 @@ addComment = {
 	getLevel : function() {
 
 		// is the comment on the paragraph?
-		if ( this.parentID === undefined || this.parentID === '0' ) {
+		if ( 'undefined' === typeof this.parentID || this.parentID === '0' ) {
 
 			return true;
 

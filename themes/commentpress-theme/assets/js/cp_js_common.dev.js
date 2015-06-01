@@ -88,7 +88,7 @@ CommentPress.theme.settings = new function() {
 
 		// get container original top max
 		this.container_top_max = jQuery.cookie( 'cp_container_top_max' );
-		if ( this.container_top_max === undefined || this.container_top_max === null ) {
+		if ( 'undefined' === typeof this.container_top_max || this.container_top_max === null ) {
 			this.container_top_max = 108;
 		}
 
@@ -139,7 +139,7 @@ CommentPress.theme.settings = new function() {
 
 		// get container original top min
 		this.container_top_min = $.cookie( 'cp_container_top_min' );
-		if ( this.container_top_min === undefined || this.container_top_min === null ) {
+		if ( 'undefined' === typeof this.container_top_min || this.container_top_min === null ) {
 			this.container_top_min = 108;
 		}
 
@@ -967,7 +967,7 @@ CommentPress.theme.sidebars = new function() {
 
 		// get state of sidebar
 		this.sidebar_minimised = jQuery.cookie( 'cp_sidebar_minimised' );
-		if ( this.sidebar_minimised === undefined || this.sidebar_minimised === null ) {
+		if ( 'undefined' === typeof this.sidebar_minimised || this.sidebar_minimised === null ) {
 			this.sidebar_minimised = 'n';
 		}
 
@@ -992,7 +992,7 @@ CommentPress.theme.sidebars = new function() {
 	 */
 	this.is_minimised = function() {
 		if (
-			this.minimised === undefined ||
+			'undefined' === typeof this.minimised ||
 			this.minimised === null ||
 			this.minimised == 'n'
 		) {
@@ -1353,7 +1353,7 @@ CommentPress.theme.viewport = new function() {
 	this.scroll_to_top = function( target, speed ) {
 
 		// bail if we didn't get a valid target
-		if ( typeof target === 'undefined' ) { return; }
+		if ( 'undefined' === typeof target ) { return; }
 
 		// only scroll if not mobile (but allow tablets)
 		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
@@ -1979,7 +1979,7 @@ CommentPress.theme.original.header = new function() {
 
 		// get state of header
 		this.minimised = jQuery.cookie( 'cp_header_minimised' );
-		if ( this.minimised === undefined || this.minimised === null ) {
+		if ( 'undefined' === typeof this.minimised || this.minimised === null ) {
 			this.minimised = 'n';
 		}
 
@@ -2004,7 +2004,7 @@ CommentPress.theme.original.header = new function() {
 	 */
 	this.is_minimised = function() {
 		if (
-			this.minimised === undefined ||
+			 'undefined' === typeof this.minimised ||
 			this.minimised === null ||
 			this.minimised == 'n'
 		) {

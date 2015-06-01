@@ -858,7 +858,7 @@ CommentPress.theme.viewport = new function() {
 	this.scroll_to_top = function( target, speed ) {
 
 		// bail if we didn't get a valid target
-		if ( typeof target === 'undefined' ) { return; }
+		if ( 'undefined' === typeof target ) { return; }
 
 		// declare vars
 		var post_id;
@@ -873,7 +873,7 @@ CommentPress.theme.viewport = new function() {
 				post_id = $('.comments_container').prop('id');
 
 				// sanity check
-				if ( typeof post_id !== 'undefined' ) {
+				if ( 'undefined' !== typeof post_id ) {
 
 					// get target post ID
 					target_id = post_id.split('-')[1];

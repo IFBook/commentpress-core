@@ -1011,7 +1011,7 @@ CommentPress.common.content = new function() {
 		//console.log( target );
 
 		// bail if we didn't get a valid target
-		if ( typeof target === 'undefined' ) { return; }
+		if ( 'undefined' === typeof target ) { return; }
 
 		// only scroll if not mobile (but allow tablets)
 		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
@@ -1041,7 +1041,7 @@ CommentPress.common.content = new function() {
 	this.quick_scroll_page = function( target, duration ) {
 
 		// bail if we didn't get a valid target
-		if ( typeof target === 'undefined' ) { return; }
+		if ( 'undefined' === typeof target ) { return; }
 
 		// only scroll if not mobile (but allow tablets)
 		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
