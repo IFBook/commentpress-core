@@ -23,6 +23,10 @@ CommentPress.ajax = {};
 
 
 
+/* -------------------------------------------------------------------------- */
+
+
+
 /**
  * Create CommentPress AJAX comments class
  */
@@ -56,11 +60,26 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Init CommentPress AJAX
+	 * Initialise CommentPress AJAX.
+	 *
+	 * This method should only be called once.
 	 *
 	 * @return void
 	 */
-	this.initialise = function() {
+	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
 
 		// create error container
 		$('#respond_title').after(
@@ -83,6 +102,9 @@ CommentPress.ajax.comments = new function() {
 
 		// hide error div
 		me.cpajax_error.hide();
+
+		// initialise comment form
+		me.initialise_form();
 
 	};
 
@@ -502,6 +524,10 @@ CommentPress.ajax.comments = new function() {
 
 
 
+/* -------------------------------------------------------------------------- */
+
+
+
 /**
  * Re-enable Featured Comments plugin functionality
  *
@@ -550,6 +576,19 @@ function cpajax_reenable_comment_upvoter() {
 
 
 
+/* -------------------------------------------------------------------------- */
+
+
+
+// do immediate init
+CommentPress.ajax.comments.init();
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
 /**
  * Define what happens when the page is ready
  *
@@ -558,10 +597,7 @@ function cpajax_reenable_comment_upvoter() {
 jQuery(document).ready(function($) {
 
 	// initialise plugin
-	CommentPress.ajax.comments.initialise();
-
-	// initialise comment form
-	CommentPress.ajax.comments.initialise_form();
+	CommentPress.ajax.comments.dom_ready();
 
 }); // end document.ready()
 

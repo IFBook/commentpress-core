@@ -55,11 +55,26 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Init CommentPress AJAX
+	 * Initialise CommentPress AJAX.
+	 *
+	 * This method should only be called once.
 	 *
 	 * @return void
 	 */
-	this.initialise = function() {
+	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
 
 		// trigger repeat calls
 		me.updater( me.cpajax_live );
@@ -85,6 +100,67 @@ CommentPress.ajax.comments = new function() {
 
 		// hide error div
 		me.cpajax_error.hide();
+
+		// initialise comment form
+		me.initialise_form();
+
+		// enable comment reassignment
+		me.reassign_comments();
+
+		// enable listeners
+		me.listeners();
+
+	};
+
+
+
+	/**
+	 * Initialise the jQuery text highlighter listeners.
+	 *
+	 * This method should only be called once. To reset the system, call:
+	 * CommentPress.textselector.reset();
+	 *
+	 * @return void
+	 */
+	this.listeners = function() {
+
+		/**
+		 * Hook into the CommentPress theme "document ready" trigger
+		 *
+		 * @return void
+		 */
+		$( document ).on( 'commentpress-document-ready', function( event ) {
+
+			// re-enable AJAX functionality
+			me.reassign_comments();
+
+			// compatibility with Featured Comments
+			cpajax_reenable_featured_comments();
+
+			// compatibility with Comment Upvoter
+			cpajax_reenable_comment_upvoter();
+
+		});
+
+
+
+		/**
+		 * Hook into WordPress Front-end Editor
+		 *
+		 * @return void
+		 */
+		$( document ).on( 'fee-after-save', function( event ) {
+
+			// re-enable CommentPress AJAX clicks
+			me.reassign_comments();
+
+			// compatibility with Featured Comments
+			cpajax_reenable_featured_comments();
+
+			// compatibility with Comment Upvoter
+			cpajax_reenable_comment_upvoter();
+
+		});
 
 	};
 
@@ -1235,6 +1311,19 @@ function cpajax_reenable_comment_upvoter() {
 
 
 
+/* -------------------------------------------------------------------------- */
+
+
+
+// do immediate init
+CommentPress.ajax.comments.init();
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
 /**
  * Define what happens when the page is ready
  *
@@ -1242,58 +1331,8 @@ function cpajax_reenable_comment_upvoter() {
  */
 jQuery(document).ready(function($) {
 
-
-
-	// initialise plugin
-	CommentPress.ajax.comments.initialise();
-
-	// initialise comment form
-	CommentPress.ajax.comments.initialise_form();
-
-	// enable comment reassignment
-	CommentPress.ajax.comments.reassign_comments();
-
-
-
-	/**
-	 * Hook into the CommentPress theme "document ready" trigger
-	 *
-	 * @return void
-	 */
-	$( document ).on( 'commentpress-document-ready', function( event ) {
-
-		// re-enable AJAX functionality
-		CommentPress.ajax.comments.reassign_comments();
-
-		// compatibility with Featured Comments
-		cpajax_reenable_featured_comments();
-
-		// compatibility with Comment Upvoter
-		cpajax_reenable_comment_upvoter();
-
-	});
-
-
-
-	/**
-	 * Hook into WordPress Front-end Editor
-	 *
-	 * @return void
-	 */
-	$( document ).on( 'fee-after-save', function( event ) {
-
-		// re-enable CommentPress AJAX clicks
-		CommentPress.ajax.comments.reassign_comments();
-
-		// compatibility with Featured Comments
-		cpajax_reenable_featured_comments();
-
-		// compatibility with Comment Upvoter
-		cpajax_reenable_comment_upvoter();
-
-	});
-
-
+	// trigger DOM ready methods
+	CommentPress.ajax.comments.dom_ready();
 
 	/**
 	 * AJAX comment updating control mechanism?
@@ -1318,8 +1357,6 @@ jQuery(document).ready(function($) {
 
 	});
 	 */
-
-
 
 }); // end document.ready()
 
