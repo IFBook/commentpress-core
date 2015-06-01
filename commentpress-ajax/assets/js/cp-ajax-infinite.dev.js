@@ -13,39 +13,15 @@ This script enables infinite scroll when the CommentPress theme is active.
 
 
 
-// init vars
-var cpajax_nonce,
-	cpajax_post_url,
-	cpajax_post_title,
-	cpajax_infinite_posts,
-	cpajax_infinite_comments,
-	cpajax_comment_form,
-	cpajax_comments_open,
-	cpajax_history_supported;
-
-// test for our localisation object
-if ( 'undefined' !== typeof CommentpressAjaxInfiniteSettings ) {
-
-	// reference our object vars
-	cpajax_nonce = CommentpressAjaxInfiniteSettings.nonce;
-
-}
-
-// set defaults
-cpajax_infinite_posts = new Array;
-
-// latest comments
-cpajax_infinite_comments = '';
-
-// comment form
-cpajax_comment_form = 0;
+// init global vars
+var cpajax_infinite_posts = new Array;
+var cpajax_infinite_comments = new Array;
+var cpajax_comment_form = 0;
+var cpajax_comments_open = 'n';
 
 // page attributes
-cpajax_post_url = document.location.href;
-cpajax_post_title = document.title;
-
-// do we support history?
-cpajax_history_supported = false;
+var cpajax_post_url = document.location.href;
+var cpajax_post_title = document.title;
 
 /*
 // do we have pushstate?
@@ -57,213 +33,114 @@ if ( window.history ) {
 
 
 
+/* -------------------------------------------------------------------------- */
+
+
+
 /**
- * jQuery wrapper
- *
- * This wrapper ensures that jQuery can be addressed using the $ shorthand from
- * anywhere within the script.
+ * Create CommentPress Infinite sub-namespace
  */
-;( function( $ ) {
+CommentPress.infinite = {};
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
+/**
+ * Create CommentPress infinite DOM class
+ */
+CommentPress.infinite.DOM = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
 
 
 
 	/**
-	 * Define what happens when the page is ready
+	 * Initialise CommentPress infinite DOM.
+	 *
+	 * This method should only be called once.
 	 *
 	 * @return void
 	 */
-	$( document ).ready( function( $ ) {
+	this.init = function() {
 
-		// store comment form
-		cpajax_store_comment_form();
-
-		// enable waypoints
-		cpajax_enable_wrapper_waypoints();
-
-		// enable history
-		cpajax_enable_state_navigation();
-
-	}); // end document.ready()
+	};
 
 
 
 	/**
-	 * Intercept page navigation links
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
 	 *
 	 * @return void
 	 */
-	function cpajax_enable_state_navigation() {
+	this.dom_ready = function() {
 
-		// unbind first to allow repeated calls to this function
-		jQuery( '.previous_page, .next_page' ).unbind( 'click' );
+		// init waypoints
+		me.init_waypoints();
 
-		// only apply when there is a history
-		if ( window.history.length > 0 ) {
+		// init popstate
+		me.init_popstate();
 
-			// previous page button
-			$( '.previous_page' ).click( function( e ) {
-				alert( 'back' );
-				if ( event.preventDefault ) {event.preventDefault();}
-				window.history.back();
-			});
-
-		}
-
-		// next page button
-		$( '.next_page' ).click( function( e ) {
-			alert( 'forward' );
-			if ( event.preventDefault ) {event.preventDefault();}
-			cpajax_load_next_page( 'link' );
-		});
-
-	}
+	};
 
 
 
 	/**
-	 * Copy and store the comment form
+	 * Enable popstate
 	 *
 	 * @return void
 	 */
-	function cpajax_store_comment_form() {
+	this.init_popstate = function() {
 
-		// disable the comment form
-		addComment.disableForm();
+		/**
+		 * Change content and comments
+		 *
+		 * @param object e The state object
+		 * @return void
+		 */
+		window.onpopstate = function( e ) {
 
-		// store a copy of the comment form
-		cpajax_comment_form = $( '#respond_wrapper' ).clone();
+			// did we get a state object?
+			if ( e.state ) {
 
-		// change the form ID so we don't get double submissions
-		$( 'form', cpajax_comment_form ).attr( 'id', 'commentform-disabled' );
+				//console.log( 'ONPOPSTATE' );
+				//console.log( e );
 
-		// remove the extraneous classes
-		if ( $( '#respond_wrapper', cpajax_comment_form ).hasClass( 'cp_force_displayed' ) ) {
-			$( '#respond_wrapper', cpajax_comment_form ).removeClass( 'cp_force_displayed' );
-		}
-		if ( $( '#respond_wrapper', cpajax_comment_form ).hasClass( 'cp_force_closed' ) ) {
-			$( '#respond_wrapper', cpajax_comment_form ).removeClass( 'cp_force_closed' );
-		}
+				/*
+				var cpajax_history_supported = ???;
 
-		// optionally remove from DOM if comments disabled
-		if ( $( '#respond_wrapper' ).hasClass( 'cp_force_closed' ) ) {
-			$( '#respond_wrapper' ).remove();
-		}
+				// test if history supported
+				if ( cpajax_history_supported === false ) {
 
-		// enable the comment form (not necessary, it seems)
-		//addComment.enableForm();
+					alert( 'gah' );
 
-	}
+					// refresh from server
+					document.location.reload( true );
+					return;
 
+				}
+				*/
 
+				// set title
+				document.title = e.state.page_title;
 
-	/**
-	 * Store comments (not used)
-	 *
-	 * @return void
-	 */
-	function cpajax_store_comments() {
+				// set html
+				$( '#main_wrapper' ).prepend( '<div class="page_wrapper cp_page_wrapper">' + e.state.html + '</div>' );
 
-		// declare vars
-		var post_id;
+				// add comments back in
+				//$( '#comments_sidebar .comments_container' ).replaceWith( $( e.state.comments ) );
 
-		// store ID of current post
-		post_id = $( '#wrapper .post' ).prop( 'id' ).split( '-' )[1];
-		//cpajax_infinite_posts.push( post_id );
+			}
 
-		// add new comments data to our array
-		cpajax_infinite_comments[post_id] = $( '#comments_sidebar .comments_container' );
-		//console.log( 'INIT WITH cpajax_infinite_comments:' );
-		//console.log( cpajax_infinite_comments );
+		};
 
-	}
-
-
-
-	/**
-	 * Update the classes on the menu for a given menu_id
-	 *
-	 * @param string item_id The numerical ID of the menu item
-	 * @return void
-	 */
-	function cpajax_update_custom_menu( item_id ) {
-
-		// update item
-		$( '#toc_list .menu-item' ).removeClass( 'current_page_item' );
-		$( '#menu-item-' + item_id ).addClass( 'current_page_item' );
-
-		// update ancestors
-		$( '#toc_list .menu-item' ).removeClass( 'current_page_ancestor' );
-		$( '#menu-item-' + item_id ).parents( 'li' ).addClass( 'current_page_ancestor' );
-
-	}
-
-
-
-	/**
-	 * Update the classes on the WP pages menu for a given page_id
-	 *
-	 * @param string item_id The numerical ID of the menu item
-	 * @return void
-	 */
-	function cpajax_update_pages_menu( item_id ) {
-
-		// update item
-		$( '#toc_list .page_item' ).removeClass( 'current_page_item' );
-		$( '.page-item-' + item_id ).addClass( 'current_page_item' );
-
-		// update ancestors
-		$( '#toc_list .page_item' ).removeClass( 'current_page_ancestor' );
-		$( '.page-item-' + item_id ).parents( 'li' ).addClass( 'current_page_ancestor' );
-
-	}
-
-
-
-	/**
-	 * Refresh all CommentPress listeners and methods
-	 *
-	 * @return void
-	 */
-	function cpajax_refresh_commentpress() {
-
-		// COMMENTPRESS CORE
-
-		/*
-		// set up clicks in the page content:
-
-		// title
-		jQuery.setup_content_title_links();
-
-		// paragraph content
-		jQuery.setup_content_textblock_actions();
-
-		// paragraph icons (newly assigned as paragraph permalinks - also 'read comments')
-		jQuery.setup_content_textblock_para_marker_actions();
-		jQuery.setup_comment_column_comment_permalink_copy_links();
-		*/
-
-		// AJAX COMMENTS
-
-		// enable comment reassignment
-		CommentPress.ajax.comments.reassign_comments();
-
-		// initialise plugin
-		CommentPress.ajax.comments.initialise();
-
-		// initialise comment form
-		CommentPress.ajax.comments.initialise_form();
-
-		// re-enable page nav buttons
-		cpajax_enable_state_navigation();
-
-		// BP GROUP SITES
-
-		// refresh group sites, if present
-		if ( $.is_function_defined( 'bpgsites_init_elements' ) ) {
-			bpgsites_init_elements();
-		}
-
-	}
+	};
 
 
 
@@ -272,7 +149,7 @@ if ( window.history ) {
 	 *
 	 * @return void
 	 */
-	function cpajax_enable_wrapper_waypoints() {
+	this.init_waypoints = function() {
 
 		/**
 		 * Define what happens when the bottom of the page is in view
@@ -295,7 +172,7 @@ if ( window.history ) {
 					//console.log( 'up: ' + post_id );
 
 					// load next page
-					cpajax_load_next_page( 'waypoint' );
+					CommentPress.infinite.page.load_next( 'waypoint' );
 
 				} else {
 
@@ -320,69 +197,65 @@ if ( window.history ) {
 
 
 	/**
-	 * Make an AJAX call to retrieve next post/page
+	 * Enable waypoints on posts on a per-post basis
 	 *
-	 * @param string mode Triggered by either 'waypoint' or 'link'
-	 * @return void
+	 * @param int post_id The numeric ID of the WordPress post
+	 * @return int offset The waypoint offset
 	 */
-	function cpajax_load_next_page( mode ) {
+	this.init_post_waypoint = function( post_id ) {
 
-		// declare vars
-		var post_id;
+		// The top of a post has reached the top of the viewport scrolling downwards
+		$( '#post-' + post_id + '.post' ).parent().parent().waypoint(
 
-		// get ID of last post
-		post_id = $( '#main_wrapper .post:last-child' ).prop( 'id' ).split( '-' )[1];
-		//console.log( 'wrapper current_post_id: ' + post_id );
+			/**
+			 * Waypoint callback
+			 *
+			 * @param string direction The direction of scroll
+			 * @return void
+			 */
+			function( direction ) {
 
-		//console.log( 'WRAPPER GOING DOWN' );
+				// only look for downward motion
+				if ( direction === 'down' ) {
 
-		// kick out if we've already got this one
-		if ( $.in_array( post_id, cpajax_infinite_posts ) ) { return; }
+					// trigger page change
+					me.update_dom( $( this ) );
 
-		// direction: DOWN
-		//console.log( 'down: ' + post_id );
+				}
 
-		// show loading
-		//$( '#loading' ).show();
-
-		// init AJAX spinner
-		$( '#main_wrapper' ).after(
-			'<div class="cp_next_page_loading_wrapper" style="text-align: center">' +
-				'<img src="' + cpajax_spinner_url + '" id="cp_next_page_loading" alt="' + cpajax_lang[0] + '" />' +
-			'</div>'
-		);
-
-		// call WordPress
-		$.ajax({
-
-			// wp ajax script
-			url: cpajax_ajax_url,
-
-			// method
-			type: 'POST',
-
-			// data expected
-			dataType: 'json',
-
-			// data to send
-			data: {
-				action: 'cpajax_load_next_page',
-				current_post_id: post_id,
-				nonce: cpajax_nonce
 			},
 
-			// ajax callback
-			success: function( data ) {
+			// config options
+			{
 
-				// handle incoming...
-				cpajax_handle_data( data, mode );
+				// only trigger once
+				triggerOnce: true,
 
-				// remove spinner
-				$( '.cp_next_page_loading_wrapper' ).remove();
+				// get offset
+				offset: function() {
+
+					// define vars
+					var offset;
+
+					// get header offset
+					offset = $( '#header' ).height();
+
+					// is the admin bar shown?
+					if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
+
+						// add admin bar height
+						offset += CommentPress.settings.DOM.get_wp_adminbar_height();
+
+					}
+
+					// --<
+					return offset;
+
+				}
 
 			}
 
-		});
+		);
 
 	}
 
@@ -395,7 +268,7 @@ if ( window.history ) {
 	 * @param string mode The type of data handling to perform
 	 * @return void
 	 */
-	function cpajax_handle_data( response, mode ) {
+	this.handle_ajax_data = function( response, mode ) {
 
 		// declare vars
 		var new_post_obj, new_post_prop, new_post_id,
@@ -494,25 +367,25 @@ if ( window.history ) {
 				if ( existing_menu_item.match( 'wpcustom_menuid-' ) ) {
 
 					// update menu: existing_menu_item_id
-					cpajax_update_custom_menu( existing_menu_item_id );
+					CommentPress.infinite.menu.update_custom( existing_menu_item_id );
 
 				} else {
 
-					// cpajax_update_pages_menu
-					cpajax_update_pages_menu( existing_menu_item_id );
+					// update pages menu
+					CommentPress.infinite.menu.update_pages( existing_menu_item_id );
 
 				}
 
 			}
 
 			// add waypoints to new post
-			cpajax_enable_post_comments_waypoint( new_post_id );
+			me.init_post_waypoint( new_post_id );
 
 			// broadcast
 			$( document ).trigger( 'commentpress-new-post-loaded' );
 
 			// enable CommentPress
-			cpajax_refresh_commentpress();
+			me.refresh();
 
 		}
 
@@ -523,7 +396,7 @@ if ( window.history ) {
 		if ( mode == 'link' ) {
 
 			// scroll to the page
-			jQuery.scroll_page( new_post_obj );
+			CommentPress.common.content.scroll_page( new_post_obj );
 
 		}
 
@@ -532,67 +405,31 @@ if ( window.history ) {
 
 
 	/**
-	 * Enable waypoints on posts on a per-post basis
+	 * Refresh all CommentPress listeners and methods
 	 *
-	 * @param int post_id The numeric ID of the WordPress post
-	 * @return int offset The waypoint offset
+	 * @return void
 	 */
-	function cpajax_enable_post_comments_waypoint( post_id ) {
+	this.refresh = function() {
 
-		// The top of a post has reached the top of the viewport scrolling downwards
-		$( '#post-' + post_id + '.post' ).parent().parent().waypoint(
+		// COMMENTPRESS AJAX COMMENTS
 
-			/**
-			 * Waypoint callback
-			 *
-			 * @param string direction The direction of scroll
-			 * @return void
-			 */
-			function( direction ) {
+		// enable comment reassignment
+		CommentPress.ajax.comments.reassign_comments();
 
-				// only look for downward motion
-				if ( direction === 'down' ) {
+		// initialise plugin
+		CommentPress.ajax.comments.initialise();
 
-					// trigger page change
-					cpajax_trigger_page_change( $( this ) );
+		// initialise comment form
+		CommentPress.ajax.comments.initialise_form();
 
-				}
+		// BP GROUP SITES
 
-			},
+		// refresh group sites, if present
+		if ( $.is_function_defined( 'bpgsites_init_elements' ) ) {
+			bpgsites_init_elements();
+		}
 
-			// config options
-			{
-
-				// only trigger once
-				triggerOnce: true,
-
-				// get offset
-				offset: function() {
-
-					// define vars
-					var offset;
-
-					// get header offset
-					offset = $( '#header' ).height();
-
-					// is the admin bar shown?
-					if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
-
-						// add admin bar height
-						offset += CommentPress.settings.DOM.get_wp_adminbar_height();
-
-					}
-
-					// --<
-					return offset;
-
-				}
-
-			}
-
-		);
-
-	}
+	};
 
 
 
@@ -602,7 +439,7 @@ if ( window.history ) {
 	 * @param object context The jQuery context object
 	 * @return void
 	 */
-	function cpajax_trigger_page_change( context ) {
+	this.update_dom = function( context ) {
 
 		// declare vars
 		var post_obj, post_id, menu_item, new_comments, container, item_above,
@@ -637,12 +474,12 @@ if ( window.history ) {
 			if ( menu_item.match( 'wpcustom_menuid-' ) ) {
 
 				// update menu: menu_item_id
-				cpajax_update_custom_menu( menu_item_id );
+				CommentPress.infinite.menu.update_custom( menu_item_id );
 
 			} else {
 
-				// cpajax_update_pages_menu
-				cpajax_update_pages_menu( menu_item_id );
+				// update pages menu
+				CommentPress.infinite.menu.update_pages( menu_item_id );
 
 			}
 
@@ -735,7 +572,7 @@ if ( window.history ) {
 
 
 			// enable CommentPress
-			cpajax_refresh_commentpress();
+			CommentPress.infinite.DOM.refresh();
 
 			// get new waypoint
 			$.waypoints( 'refresh' );
@@ -745,53 +582,451 @@ if ( window.history ) {
 
 		}
 
-	}
+	};
+
+} // end CommentPress infinite DOM class
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
+/**
+ * Create CommentPress infinite page class
+ */
+CommentPress.infinite.page = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
 
 
 
 	/**
-	 * Change content and comments
+	 * Initialise CommentPress infinite page.
 	 *
-	 * @param object e The state object
+	 * This method should only be called once.
+	 *
 	 * @return void
 	 */
-	window.onpopstate = function( e ) {
+	this.init = function() {
 
-		// did we get a state object?
-		if ( e.state ) {
-
-			//console.log( 'ONPOPSTATE' );
-			//console.log( e );
-
-			/*
-			// test if history supported
-			if ( cpajax_history_supported === false ) {
-
-				alert( 'gah' );
-
-				// refresh from server
-				document.location.reload( true );
-				return;
-
-			}
-			*/
-
-			// set title
-			document.title = e.state.page_title;
-
-			// set html
-			$( '#main_wrapper' ).prepend( '<div class="page_wrapper cp_page_wrapper">' + e.state.html + '</div>' );
-
-			// add comments back in
-			//$( '#comments_sidebar .comments_container' ).replaceWith( $( e.state.comments ) );
-
-		}
+		// init nonce
+		me.init_nonce();
 
 	};
 
 
 
-})( jQuery );
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+		// init previous and next buttons
+		me.state_navigation();
+
+	};
+
+
+
+	// init nonce
+	this.cpajax_nonce = '';
+
+	/**
+	 * Init for comment form nonce
+	 */
+	this.init_nonce = function( val ) {
+
+		// get initial value from settings object
+		if ( 'undefined' !== typeof CommentpressAjaxInfiniteSettings ) {
+			this.cpajax_nonce = CommentpressAjaxInfiniteSettings.nonce;
+		}
+
+	};
+
+	/**
+	 * Setter for comment form nonce
+	 */
+	this.set_nonce = function( val ) {
+		this.cpajax_nonce = val;
+	};
+
+	/**
+	 * Getter for comment form nonce
+	 */
+	this.get_nonce = function() {
+		return this.cpajax_nonce;
+	};
+
+
+
+
+	/**
+	 * Intercept page navigation links
+	 *
+	 * @return void
+	 */
+	this.state_navigation = function() {
+
+		// previous page button
+		$('#container').on( 'click', '.previous_page', function( event ) {
+			alert( 'back' );
+			if ( event.preventDefault ) {event.preventDefault();}
+			window.history.back();
+		});
+
+		// next page button
+		$('#container').on( 'click', '.next_page', function( event ) {
+			alert( 'forward' );
+			if ( event.preventDefault ) {event.preventDefault();}
+			me.load_next( 'link' );
+		});
+
+	}
+
+
+
+	/**
+	 * Make an AJAX call to retrieve next post/page
+	 *
+	 * @param string mode Triggered by either 'waypoint' or 'link'
+	 * @return void
+	 */
+	this.load_next = function( mode ) {
+
+		// declare vars
+		var post_id;
+
+		// get ID of last post
+		post_id = $( '#main_wrapper .post:last-child' ).prop( 'id' ).split( '-' )[1];
+		//console.log( 'wrapper current_post_id: ' + post_id );
+
+		//console.log( 'WRAPPER GOING DOWN' );
+
+		// kick out if we've already got this one
+		if ( $.in_array( post_id, cpajax_infinite_posts ) ) { return; }
+
+		// direction: DOWN
+		//console.log( 'down: ' + post_id );
+
+		// show loading
+		//$( '#loading' ).show();
+
+		// init AJAX spinner
+		$( '#main_wrapper' ).after(
+			'<div class="cp_next_page_loading_wrapper" style="text-align: center">' +
+				'<img src="' + cpajax_spinner_url + '" id="cp_next_page_loading" alt="' + cpajax_lang[0] + '" />' +
+			'</div>'
+		);
+
+		// call WordPress
+		$.ajax({
+
+			// wp ajax script
+			url: cpajax_ajax_url,
+
+			// method
+			type: 'POST',
+
+			// data expected
+			dataType: 'json',
+
+			// data to send
+			data: {
+				action: 'cpajax_load_next_page',
+				current_post_id: post_id,
+				nonce: me.get_nonce()
+			},
+
+			// ajax callback
+			success: function( data ) {
+
+				// handle incoming...
+				CommentPress.infinite.DOM.handle_ajax_data( data, mode );
+
+				// remove spinner
+				$( '.cp_next_page_loading_wrapper' ).remove();
+
+			}
+
+		});
+
+	};
+
+} // end CommentPress infinite page class
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
+/**
+ * Create CommentPress infinite menu class
+ */
+CommentPress.infinite.menu = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
+
+
+
+	/**
+	 * Initialise CommentPress infinite menu.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+	};
+
+
+
+	/**
+	 * Update the classes on the menu for a given menu_id
+	 *
+	 * @param string item_id The numerical ID of the menu item
+	 * @return void
+	 */
+	this.update_custom = function( item_id ) {
+
+		// update item
+		$( '#toc_list .menu-item' ).removeClass( 'current_page_item' );
+		$( '#menu-item-' + item_id ).addClass( 'current_page_item' );
+
+		// update ancestors
+		$( '#toc_list .menu-item' ).removeClass( 'current_page_ancestor' );
+		$( '#menu-item-' + item_id ).parents( 'li' ).addClass( 'current_page_ancestor' );
+
+	}
+
+
+
+	/**
+	 * Update the classes on the WP pages menu for a given page_id
+	 *
+	 * @param string item_id The numerical ID of the menu item
+	 * @return void
+	 */
+	this.CommentPress.infinite.menu.update_pages = function( item_id ) {
+
+		// update item
+		$( '#toc_list .page_item' ).removeClass( 'current_page_item' );
+		$( '.page-item-' + item_id ).addClass( 'current_page_item' );
+
+		// update ancestors
+		$( '#toc_list .page_item' ).removeClass( 'current_page_ancestor' );
+		$( '.page-item-' + item_id ).parents( 'li' ).addClass( 'current_page_ancestor' );
+
+	};
+
+} // end CommentPress infinite menu class
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
+/**
+ * Create CommentPress infinite comments class
+ */
+CommentPress.infinite.comments = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
+
+
+
+	/**
+	 * Initialise CommentPress infinite page.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+	};
+
+
+
+	/**
+	 * Store comments (not used)
+	 *
+	 * @return void
+	 */
+	thsi.store = function() {
+
+		// declare vars
+		var post_id;
+
+		// store ID of current post
+		post_id = $( '#wrapper .post' ).prop( 'id' ).split( '-' )[1];
+		//cpajax_infinite_posts.push( post_id );
+
+		// add new comments data to our array
+		cpajax_infinite_comments[post_id] = $( '#comments_sidebar .comments_container' );
+		//console.log( 'INIT WITH cpajax_infinite_comments:' );
+		//console.log( cpajax_infinite_comments );
+
+	};
+
+} // end CommentPress infinite comments class
+
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
+/**
+ * Create CommentPress infinite commentform class
+ */
+CommentPress.infinite.commentform = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
+
+
+
+	/**
+	 * Initialise CommentPress infinite page.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+		//store comment form
+		me.store();
+
+	};
+
+
+
+	/**
+	 * Copy and store the comment form
+	 *
+	 * @return void
+	 */
+	this.store = function() {
+
+		// disable the comment form
+		addComment.disableForm();
+
+		// store a copy of the comment form
+		cpajax_comment_form = $( '#respond_wrapper' ).clone();
+
+		// change the form ID so we don't get double submissions
+		$( 'form', cpajax_comment_form ).attr( 'id', 'commentform-disabled' );
+
+		// remove the extraneous classes
+		if ( $( '#respond_wrapper', cpajax_comment_form ).hasClass( 'cp_force_displayed' ) ) {
+			$( '#respond_wrapper', cpajax_comment_form ).removeClass( 'cp_force_displayed' );
+		}
+		if ( $( '#respond_wrapper', cpajax_comment_form ).hasClass( 'cp_force_closed' ) ) {
+			$( '#respond_wrapper', cpajax_comment_form ).removeClass( 'cp_force_closed' );
+		}
+
+		// optionally remove from DOM if comments disabled
+		if ( $( '#respond_wrapper' ).hasClass( 'cp_force_closed' ) ) {
+			$( '#respond_wrapper' ).remove();
+		}
+
+		// enable the comment form (not necessary, it seems)
+		//addComment.enableForm();
+
+	};
+
+} // end CommentPress infinite comment form class
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
+// do immediate init
+CommentPress.infinite.DOM.init();
+CommentPress.infinite.page.init();
+CommentPress.infinite.menu.init();
+CommentPress.infinite.commentform.init();
+CommentPress.infinite.comments.init();
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
+/**
+ * Define what happens when the page is ready
+ *
+ * @return void
+ */
+jQuery(document).ready(function($) {
+
+	// trigger DOM ready methods
+	CommentPress.infinite.DOM.dom_ready();
+	CommentPress.infinite.page.dom_ready();
+	CommentPress.infinite.menu.dom_ready();
+	CommentPress.infinite.commentform.dom_ready();
+	CommentPress.infinite.comments.dom_ready();
+
+}); // end document.ready()
 
 
 
