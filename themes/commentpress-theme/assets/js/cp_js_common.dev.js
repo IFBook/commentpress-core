@@ -458,9 +458,6 @@ CommentPress.theme.DOM = new function() {
 					// get element width
 					width = item.width();
 
-					// compensate for webkit
-					if ( $.browser.webkit ) { width = width + 1; }
-
 					// get percent to four decimal places
 					item_w = parseFloat( Math.ceil( ( 1000000 * parseFloat( width ) / ww ) ) / 10000 );
 					//console.log(w);
@@ -476,9 +473,6 @@ CommentPress.theme.DOM = new function() {
 					// get element width
 					width = book_nav.width();
 
-					// compensate for webkit
-					if ( $.browser.webkit ) { width = width + 1; }
-
 					// get percent to four decimal places
 					book_nav_w = parseFloat( Math.ceil( ( 1000000 * parseFloat( width ) / ww ) ) / 10000 );
 					//console.log(w);
@@ -489,9 +483,6 @@ CommentPress.theme.DOM = new function() {
 					// get element width
 					width = sidebar.width();
 
-					// compensate for webkit
-					if ( $.browser.webkit ) { width = width + 1; }
-
 					// get percent to four decimal places
 					sidebar_w = parseFloat( Math.ceil( ( 1000000 * parseFloat( width ) / ww ) ) / 10000 );
 					//console.log(w);
@@ -501,9 +492,6 @@ CommentPress.theme.DOM = new function() {
 
 					// get element left
 					left = sidebar.position().left;
-
-					// compensate for webkit
-					if ( $.browser.webkit ) { left = left + 1; }
 
 					// get percent to four decimal places
 					sidebar_l = parseFloat( Math.ceil( ( 1000000 * parseFloat( left ) / ww ) ) / 10000 );
