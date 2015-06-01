@@ -894,15 +894,6 @@ CommentPress.textselector = new function() {
 
 	};
 
-	/**
-	 * Reset the jQuery text highlighter
-	 *
-	 * @return void
-	 */
-	this.reset = function() {
-
-	};
-
 } // end CommentPress textselector class
 
 
@@ -923,18 +914,6 @@ jQuery(document).ready(function($) {
 
 		// initialise text selector
 		CommentPress.textselector.init();
-
-	});
-
-	/**
-	 * Hook into CommentPress reset
-	 *
-	 * @return void
-	 */
-	$(document).on( 'commentpress-reset-actions', function( event ) {
-
-		// reset text selector
-		CommentPress.textselector.reset();
 
 	});
 
