@@ -769,12 +769,18 @@ CommentPress.setup.content = new function() {
 			// override event
 			event.preventDefault();
 
+			// prevent bubbling
+			event.stopPropagation();
+
 			// get text signature
 			text_sig = $(this).prop('href').split('#')[1];
 			//console.log(text_sig);
 
 			// use function
 			CommentPress.theme.viewport.align_content( text_sig, 'auto' );
+
+			// broadcast action
+			$(document).trigger( 'commentpress-link-in-textblock-clicked' );
 
 		});
 

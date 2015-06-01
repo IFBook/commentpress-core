@@ -981,14 +981,14 @@ jQuery(document).ready(function($) {
 	});
 
 	/**
-	 * Hook into CommentPress comment icon clicks
+	 * Hook into CommentPress clicks on items whose events do not bubble.
 	 *
 	 * We need to receive callbacks from these clicks to clear the active selection
 	 *
 	 * @param object event The event (unused)
 	 * @return void
 	 */
-	$(document).on( 'commentpress-commenticonbox-clicked', function( event ) {
+	$(document).on( 'commentpress-commenticonbox-clicked commentpress-link-in-textblock-clicked', function( event ) {
 
 		// clear highlights
 		CommentPress.textselector.highlights_clear();
