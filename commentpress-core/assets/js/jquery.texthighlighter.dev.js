@@ -19,8 +19,8 @@ Implements commenting on text highlights
 CommentPress.textselector = new function() {
 
 	// store object refs
-	var me = this;
-	var $ = jQuery.noConflict();
+	var me = this,
+		$ = jQuery.noConflict();
 
 	// test for our localisation object
 	if ( 'undefined' !== typeof CommentpressTextSelectorSettings ) {

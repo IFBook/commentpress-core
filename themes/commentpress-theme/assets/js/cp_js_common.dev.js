@@ -86,8 +86,8 @@ CommentPress.theme = {};
 CommentPress.theme.DOM = new function() {
 
 	// store object refs
-	var me = this;
-	var $ = jQuery.noConflict();
+	var me = this,
+		$ = jQuery.noConflict();
 
 
 
@@ -545,8 +545,8 @@ CommentPress.theme.DOM = new function() {
 CommentPress.theme.header = new function() {
 
 	// store object refs
-	var me = this;
-	var $ = jQuery.noConflict();
+	var me = this,
+		$ = jQuery.noConflict();
 
 
 
@@ -609,8 +609,8 @@ CommentPress.theme.header = new function() {
 CommentPress.theme.navigation = new function() {
 
 	// store object refs
-	var me = this;
-	var $ = jQuery.noConflict();
+	var me = this,
+		$ = jQuery.noConflict();
 
 
 
@@ -664,8 +664,8 @@ CommentPress.theme.navigation = new function() {
 CommentPress.theme.content = new function() {
 
 	// store object refs
-	var me = this;
-	var $ = jQuery.noConflict();
+	var me = this,
+		$ = jQuery.noConflict();
 
 
 
@@ -723,8 +723,8 @@ CommentPress.theme.content = new function() {
 CommentPress.theme.sidebars = new function() {
 
 	// store object refs
-	var me = this;
-	var $ = jQuery.noConflict();
+	var me = this,
+		$ = jQuery.noConflict();
 
 
 
@@ -867,8 +867,8 @@ CommentPress.theme.sidebars = new function() {
 CommentPress.theme.viewport = new function() {
 
 	// store object refs
-	var me = this;
-	var $ = jQuery.noConflict();
+	var me = this,
+		$ = jQuery.noConflict();
 
 
 
@@ -1439,8 +1439,8 @@ CommentPress.theme.original = {};
 CommentPress.theme.original.header = new function() {
 
 	// store object refs
-	var me = this;
-	var $ = jQuery.noConflict();
+	var me = this,
+		$ = jQuery.noConflict();
 
 
 

@@ -122,8 +122,8 @@ CommentPress.setup = {};
 CommentPress.setup.navigation = new function() {
 
 	// store object refs
-	var me = this;
-	var $ = jQuery.noConflict();
+	var me = this,
+		$ = jQuery.noConflict();
 
 
 
@@ -245,8 +245,8 @@ CommentPress.setup.navigation = new function() {
 CommentPress.setup.content = new function() {
 
 	// store object refs
-	var me = this;
-	var $ = jQuery.noConflict();
+	var me = this,
+		$ = jQuery.noConflict();
 
 
 
@@ -723,8 +723,8 @@ CommentPress.setup.content = new function() {
 CommentPress.setup.comments = new function() {
 
 	// store object refs
-	var me = this;
-	var $ = jQuery.noConflict();
+	var me = this,
+		$ = jQuery.noConflict();
 
 
 
@@ -1159,8 +1159,8 @@ CommentPress.setup.comments = new function() {
 CommentPress.setup.activity = new function() {
 
 	// store object refs
-	var me = this;
-	var $ = jQuery.noConflict();
+	var me = this,
+		$ = jQuery.noConflict();
 
 
 

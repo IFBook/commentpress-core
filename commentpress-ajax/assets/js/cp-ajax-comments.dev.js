@@ -28,8 +28,8 @@ CommentPress.ajax = {};
 CommentPress.ajax.comments = new function() {
 
 	// store object refs
-	var me = this;
-	var $ = jQuery.noConflict();
+	var me = this,
+		$ = jQuery.noConflict();
 
 	// init form submitting flag
 	this.cpajax_submitting = false;
