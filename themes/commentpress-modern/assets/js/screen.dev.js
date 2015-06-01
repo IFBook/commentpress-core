@@ -446,7 +446,7 @@ CommentPress.theme.content = new function() {
 		$('#original .post').css( 'display', 'none' );
 
 		// setup workflow tabs, if present
-		CommentPress.setup.content.workflow_tabs( content_min_height, content_padding_bottom );
+		CommentPress.common.content.workflow_tabs( content_min_height, content_padding_bottom );
 
 	};
 
@@ -1013,7 +1013,7 @@ CommentPress.theme.viewport = new function() {
 					$.highlight_para( textblock );
 
 					// scroll page
-					$.scroll_page( textblock );
+					CommentPress.common.content.scroll_page( textblock );
 
 				} else {
 
@@ -1080,7 +1080,7 @@ CommentPress.theme.viewport = new function() {
 					$.highlight_para( textblock );
 
 					// scroll page
-					$.scroll_page( textblock );
+					CommentPress.common.content.scroll_page( textblock );
 
 					// --<
 					return;
@@ -1123,7 +1123,7 @@ CommentPress.theme.viewport = new function() {
 				//anchor.addClass( 'selected_para' );
 
 				// scroll page
-				$.scroll_page( anchor );
+				CommentPress.common.content.scroll_page( anchor );
 
 			}
 
@@ -1204,7 +1204,7 @@ CommentPress.theme.viewport = new function() {
 				$.highlight_para( textblock );
 
 				// scroll page
-				$.scroll_page( textblock );
+				CommentPress.common.content.scroll_page( textblock );
 
 			}
 
@@ -1470,7 +1470,7 @@ jQuery(document).ready( function($) {
 	CommentPress.theme.viewport.dom_ready();
 
 	// the modern theme uses a "rollover"
-	CommentPress.setup.comments.comment_rollovers();
+	CommentPress.common.comments.comment_rollovers();
 
 
 
@@ -1516,7 +1516,7 @@ jQuery(document).ready( function($) {
 
 	// scroll the page on load
 	if ( cp_special_page == '1' ) {
-		$.on_load_scroll_to_comment();
+		CommentPress.common.content.on_load_scroll_to_comment();
 	} else {
 		CommentPress.theme.viewport.on_load_scroll_to_anchor();
 	}

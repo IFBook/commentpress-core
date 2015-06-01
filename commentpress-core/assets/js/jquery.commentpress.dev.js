@@ -69,6 +69,10 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 
 
 
+/* -------------------------------------------------------------------------- */
+
+
+
 /**
  * Create global CommentPress namespace
  */
@@ -76,10 +80,18 @@ var CommentPress = CommentPress || {};
 
 
 
+/* -------------------------------------------------------------------------- */
+
+
+
 /**
  * Create settings sub-namespace
  */
 CommentPress.settings = {};
+
+
+
+/* -------------------------------------------------------------------------- */
 
 
 
@@ -111,6 +123,19 @@ CommentPress.settings.DOM = new function() {
 
 		// init WordPress adminbar height
 		me.init_wp_adminbar_height();
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
 
 	};
 
@@ -255,6 +280,10 @@ CommentPress.settings.DOM = new function() {
 
 
 
+/* -------------------------------------------------------------------------- */
+
+
+
 /**
  * Create CommentPress page settings class
  */
@@ -274,7 +303,20 @@ CommentPress.settings.page = new function() {
 	 * @return void
 	 */
 	this.init = function() {
-		// nothing yet
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
 	};
 
 
@@ -307,10 +349,46 @@ CommentPress.settings.page = new function() {
 
 
 
+/* -------------------------------------------------------------------------- */
+
+
+
 /**
  * Create CommentPress textblock class
  */
 CommentPress.settings.textblock = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
+
+
+
+	/**
+	 * Initialise CommentPress settings page.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+	};
+
+
 
 	// init textblock marker mode
 	this.marker_mode = 'marker';
@@ -333,17 +411,25 @@ CommentPress.settings.textblock = new function() {
 
 
 
+/* -------------------------------------------------------------------------- */
+
+
+
 /**
- * Create setup sub-namespace
+ * Create common sub-namespace
  */
-CommentPress.setup = {};
+CommentPress.common = {};
+
+
+
+/* -------------------------------------------------------------------------- */
 
 
 
 /**
  * Create CommentPress setup navigation column class
  */
-CommentPress.setup.navigation = new function() {
+CommentPress.common.navigation = new function() {
 
 	// store object refs
 	var me = this,
@@ -359,6 +445,19 @@ CommentPress.setup.navigation = new function() {
 	 * @return void
 	 */
 	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
 
 		// column headings
 		me.headings();
@@ -463,10 +562,14 @@ CommentPress.setup.navigation = new function() {
 
 
 
+/* -------------------------------------------------------------------------- */
+
+
+
 /**
  * Create CommentPress setup content class
  */
-CommentPress.setup.content = new function() {
+CommentPress.common.content = new function() {
 
 	// store object refs
 	var me = this,
@@ -482,6 +585,19 @@ CommentPress.setup.content = new function() {
 	 * @return void
 	 */
 	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
 
 		// title
 		me.title_links();
@@ -819,7 +935,7 @@ CommentPress.setup.content = new function() {
 			//console.log(target);
 
 			// use function for offset
-			$.quick_scroll_page( '#' + target, 100 );
+			me.quick_scroll_page( '#' + target, 100 );
 
 		});
 
@@ -847,7 +963,7 @@ CommentPress.setup.content = new function() {
 				target = target.split('#')[1];
 
 				// use function for offset
-				$.quick_scroll_page( '#' + target, 100 );
+				me.quick_scroll_page( '#' + target, 100 );
 
 			}
 
@@ -877,11 +993,162 @@ CommentPress.setup.content = new function() {
 			//console.log(target);
 
 			// use function for offset
-			$.quick_scroll_page( '#' + target, 100 );
+			me.quick_scroll_page( '#' + target, 100 );
 
 		});
 
 	};
+
+
+
+	/**
+	 * Scroll page to target
+	 *
+	 * @param object target The object to scroll to
+	 */
+	this.scroll_page = function( target ) {
+
+		//console.log( target );
+
+		// bail if we didn't get a valid target
+		if ( typeof target === 'undefined' ) { return; }
+
+		// only scroll if not mobile (but allow tablets)
+		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+
+			// scroll page
+			$.scrollTo(
+				target,
+				{
+					duration: (cp_scroll_speed * 1.5),
+					axis: 'y',
+					offset: CommentPress.theme.header.get_offset()
+				}
+			);
+
+		}
+
+	}
+
+
+
+	/**
+	 * Scroll page to target with passed duration param
+	 *
+	 * @param object target The object to scroll to
+	 * @param integer duration The duration of the scroll
+	 */
+	this.quick_scroll_page = function( target, duration ) {
+
+		// bail if we didn't get a valid target
+		if ( typeof target === 'undefined' ) { return; }
+
+		// only scroll if not mobile (but allow tablets)
+		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+
+			// scroll page
+			$.scrollTo(
+				target,
+				{
+					duration: (duration * 1.5),
+					axis: 'y',
+					offset: CommentPress.theme.header.get_offset()
+				}
+			);
+
+		}
+
+	}
+
+
+
+	/**
+	 * Scroll to textblock
+	 *
+	 * @param string text_sig The text signature to scroll to
+	 * @return void
+	 */
+	this.scroll_page_to_textblock = function( text_sig ) {
+
+		// define vars
+		var textblock;
+
+		// if not the whole page...
+		if( text_sig !== '' ) {
+
+			// get text block
+			textblock = $('#textblock-' + text_sig);
+
+			// highlight this paragraph
+			$.highlight_para( textblock );
+
+			// scroll page
+			me.scroll_page( textblock );
+
+		} else {
+
+			// only scroll if page is not highlighted
+			if ( !CommentPress.settings.page.toggle_highlight() ) {
+
+				// scroll to top
+				CommentPress.theme.viewport.scroll_to_top( 0, cp_scroll_speed );
+
+			}
+
+			// toggle page highlight flag
+			CommentPress.settings.page.toggle_highlight();
+
+		}
+
+	}
+
+
+
+	/**
+	 * Page load prodecure for special pages with comments in content
+	 *
+	 * @return void
+	 */
+	this.on_load_scroll_to_comment = function() {
+
+		// define vars
+		var url, comment_id, comment;
+
+		// if there is an anchor in the URL...
+		url = document.location.toString();
+
+		// do we have a comment permalink?
+		if ( url.match( '#comment-' ) ) {
+
+			// get comment ID
+			comment_id = url.split('#comment-')[1];
+
+			// get comment in DOM
+			comment = $( '#comment-' + comment_id );
+
+			// did we get one?
+			if ( comment.length ) {
+
+				// only scroll if not mobile (but allow tablets)
+				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+
+					// scroll to new comment
+					$.scrollTo(
+						comment,
+						{
+							duration: cp_scroll_speed,
+							axis:'y',
+							offset: CommentPress.theme.header.get_offset()
+						}
+					);
+
+				}
+
+			}
+
+		}
+
+	}
 
 
 
@@ -947,10 +1214,14 @@ CommentPress.setup.content = new function() {
 
 
 
+/* -------------------------------------------------------------------------- */
+
+
+
 /**
  * Create CommentPress setup comments column class
  */
-CommentPress.setup.comments = new function() {
+CommentPress.common.comments = new function() {
 
 	// store object refs
 	var me = this,
@@ -966,6 +1237,19 @@ CommentPress.setup.comments = new function() {
 	 * @return void
 	 */
 	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
 
 		// column header
 		me.header();
@@ -1116,7 +1400,7 @@ CommentPress.setup.comments = new function() {
 						$.highlight_para( textblock );
 
 						// scroll page
-						$.scroll_page( textblock );
+						CommentPress.common.content.scroll_page( textblock );
 
 					} else {
 
@@ -1141,7 +1425,7 @@ CommentPress.setup.comments = new function() {
 									$.highlight_para( textblock );
 
 									// scroll page
-									$.scroll_page( textblock );
+									CommentPress.common.content.scroll_page( textblock );
 
 								}
 
@@ -1239,7 +1523,7 @@ CommentPress.setup.comments = new function() {
 				if ( opening ) {
 
 					// scroll comments
-					$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+					me.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 				}
 
@@ -1302,12 +1586,12 @@ CommentPress.setup.comments = new function() {
 				if ( text_sig != 'pingbacksandtrackbacks' ) {
 
 					// scroll page to it
-					$.scroll_page_to_textblock( text_sig );
+					CommentPress.common.content.scroll_page_to_textblock( text_sig );
 
 				}
 
 				// scroll comments
-				$.scroll_comments( $('#'+comment_id), cp_scroll_speed );
+				me.scroll_comments( $('#'+comment_id), cp_scroll_speed );
 
 			}
 
@@ -1414,14 +1698,90 @@ CommentPress.setup.comments = new function() {
 
 	}
 
+
+
+	/**
+	 * Scroll comments to target
+	 *
+	 * @param object target The target to scroll to
+	 * @param integer speed The duration of the scroll
+	 * @param string flash Whether or not to "flash" the comment
+	 * @return void
+	 */
+	this.scroll_comments = function( target, speed, flash ) {
+
+		// preserve compatibility with older calls
+		switch(arguments.length) {
+			case 2: flash = 'noflash'; break;
+			case 3: break;
+			default: throw new Error('illegal argument count');
+		}
+
+		//console.log( 'scroll: ' + flash );
+
+		// only scroll if not mobile (but allow tablets)
+		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+
+			// either flash at the end or not..
+			if ( flash == 'flash' ) {
+
+				//console.log( target.prop( 'id' ).split( '-' )[1] );
+
+				// add highlight class
+				//$( '#li-comment-' + target.prop( 'id' ).split( '-' )[1] ).addClass( 'flash-comment' );
+
+				// scroll to new comment
+				$('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
+					target,
+					{
+						duration: speed,
+						axis: 'y',
+						onAfter: function() {
+
+							// highlight header
+							CommentPress.common.comments.highlight( target );
+
+							// broadcast
+							$(document).trigger( 'commentpress-comments-scrolled' );
+
+						}
+					}
+				);
+
+			} else {
+
+				// scroll comment area to para heading
+				$('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
+					target,
+					{
+						duration: speed,
+						onAfter: function() {
+
+							// broadcast
+							$(document).trigger( 'commentpress-comments-scrolled' );
+
+						}
+					}
+				);
+
+			}
+
+		}
+
+	};
+
 } // end CommentPress setup comments column class
+
+
+
+/* -------------------------------------------------------------------------- */
 
 
 
 /**
  * Create CommentPress setup activity column class
  */
-CommentPress.setup.activity = new function() {
+CommentPress.common.activity = new function() {
 
 	// store object refs
 	var me = this,
@@ -1437,6 +1797,19 @@ CommentPress.setup.activity = new function() {
 	 * @return void
 	 */
 	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
 
 		// column header
 		me.header();
@@ -1626,7 +1999,7 @@ CommentPress.setup.activity = new function() {
 					text_sig = item.prop('id').split('-')[1];
 
 					// scroll page to it
-					$.scroll_page_to_textblock( text_sig );
+					CommentPress.common.content.scroll_page_to_textblock( text_sig );
 
 					//console.log( '#li-comment-' + comment_id );
 
@@ -1642,7 +2015,7 @@ CommentPress.setup.activity = new function() {
 							onAfter: function() {
 
 								// highlight comment
-								CommentPress.setup.comments.highlight( comment );
+								CommentPress.common.comments.highlight( comment );
 
 							}
 						}
@@ -1660,8 +2033,50 @@ CommentPress.setup.activity = new function() {
 
 
 
-// do pre-page-rendered stuff
-CommentPress.settings.DOM.init();
+/* -------------------------------------------------------------------------- */
+
+
+
+/**
+ * Create viewport class
+ */
+CommentPress.common.viewport = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
+
+
+
+	/**
+	 * Initialise CommentPress theme viewport.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+	};
+
+} // end CommentPress setup viewport class
+
+
+
+/* -------------------------------------------------------------------------- */
 
 
 
@@ -2055,257 +2470,26 @@ CommentPress.settings.DOM.init();
 
 
 
-	/**
-	 * Page load prodecure for special pages with comments in content
-	 *
-	 * @return void
-	 */
-	$.on_load_scroll_to_comment = function() {
-
-		// define vars
-		var url, comment_id, comment;
-
-		// if there is an anchor in the URL...
-		url = document.location.toString();
-
-		// do we have a comment permalink?
-		if ( url.match( '#comment-' ) ) {
-
-			// get comment ID
-			comment_id = url.split('#comment-')[1];
-
-			// get comment in DOM
-			comment = $( '#comment-' + comment_id );
-
-			// did we get one?
-			if ( comment.length ) {
-
-				// only scroll if not mobile (but allow tablets)
-				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
-
-					// scroll to new comment
-					$.scrollTo(
-						comment,
-						{
-							duration: cp_scroll_speed,
-							axis:'y',
-							offset: CommentPress.theme.header.get_offset()
-						}
-					);
-
-				}
-
-			}
-
-		}
-
-	}
-
-
-
-	/**
-	 * Scroll comments to target
-	 *
-	 * @param object target The target to scroll to
-	 * @param integer speed The duration of the scroll
-	 * @param string flash Whether or not to "flash" the comment
-	 * @return void
-	 */
-	$.scroll_comments = function( target, speed, flash ) {
-
-		// preserve compatibility with older calls
-		switch(arguments.length) {
-			case 2: flash = 'noflash'; break;
-			case 3: break;
-			default: throw new Error('illegal argument count');
-		}
-
-		//console.log( 'scroll: ' + flash );
-
-		// only scroll if not mobile (but allow tablets)
-		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
-
-			// either flash at the end or not..
-			if ( flash == 'flash' ) {
-
-				//console.log( target.prop( 'id' ).split( '-' )[1] );
-
-				// add highlight class
-				//$( '#li-comment-' + target.prop( 'id' ).split( '-' )[1] ).addClass( 'flash-comment' );
-
-				// scroll to new comment
-				$('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
-					target,
-					{
-						duration: speed,
-						axis: 'y',
-						onAfter: function() {
-
-							// highlight header
-							CommentPress.setup.comments.highlight( target );
-
-							// broadcast
-							$(document).trigger( 'commentpress-comments-scrolled' );
-
-						}
-					}
-				);
-
-			} else {
-
-				// scroll comment area to para heading
-				$('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
-					target,
-					{
-						duration: speed,
-						onAfter: function() {
-
-							// broadcast
-							$(document).trigger( 'commentpress-comments-scrolled' );
-
-						}
-					}
-				);
-
-			}
-
-		}
-
-	}
-
-
-
-	/**
-	 * Scroll page to target
-	 *
-	 * @param object target The object to scroll to
-	 */
-	$.scroll_page = function( target ) {
-
-		//console.log( target );
-
-		// bail if we didn't get a valid target
-		if ( typeof target === 'undefined' ) { return; }
-
-		// only scroll if not mobile (but allow tablets)
-		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
-
-			// scroll page
-			$.scrollTo(
-				target,
-				{
-					duration: (cp_scroll_speed * 1.5),
-					axis: 'y',
-					offset: CommentPress.theme.header.get_offset()
-				}
-			);
-
-		}
-
-	}
-
-
-
-
-	/**
-	 * Scroll page to target with passed duration param
-	 *
-	 * @param object target The object to scroll to
-	 * @param integer duration The duration of the scroll
-	 */
-	$.quick_scroll_page = function( target, duration ) {
-
-		// bail if we didn't get a valid target
-		if ( typeof target === 'undefined' ) { return; }
-
-		// only scroll if not mobile (but allow tablets)
-		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
-
-			// scroll page
-			$.scrollTo(
-				target,
-				{
-					duration: (duration * 1.5),
-					axis: 'y',
-					offset: CommentPress.theme.header.get_offset()
-				}
-			);
-
-		}
-
-	}
-
-
-
-	/**
-	 * Scroll to textblock
-	 *
-	 * @param string text_sig The text signature to scroll to
-	 * @return void
-	 */
-	$.scroll_page_to_textblock = function( text_sig ) {
-
-		// define vars
-		var textblock;
-
-		// if not the whole page...
-		if( text_sig !== '' ) {
-
-			// get text block
-			textblock = $('#textblock-' + text_sig);
-
-			// highlight this paragraph
-			$.highlight_para( textblock );
-
-			// scroll page
-			$.scroll_page( textblock );
-
-		} else {
-
-			// only scroll if page is not highlighted
-			if ( !CommentPress.settings.page.toggle_highlight() ) {
-
-				// scroll to top
-				CommentPress.theme.viewport.scroll_to_top( 0, cp_scroll_speed );
-
-			}
-
-			// toggle page highlight flag
-			CommentPress.settings.page.toggle_highlight();
-
-		}
-
-	}
-
-
-
 })( jQuery );
 
 
 
-/**
- * Initialise all setups
- *
- * @return void
- */
-function commentpress_setup_init() {
+/* -------------------------------------------------------------------------- */
 
-	// setup navigation
-	CommentPress.setup.navigation.init();
 
-	// setup content
-	CommentPress.setup.content.init();
 
-	// setup comments column
-	CommentPress.setup.comments.init();
+// do immediate init
+CommentPress.settings.DOM.init();
+CommentPress.settings.page.init();
+CommentPress.settings.textblock.init();
+CommentPress.common.navigation.init();
+CommentPress.common.content.init();
+CommentPress.common.comments.init();
+CommentPress.common.activity.init();
 
-	// setup activity column
-	CommentPress.setup.activity.init();
 
-	// broadcast
-	jQuery(document).trigger( 'commentpress-initialised' );
 
-}
+/* -------------------------------------------------------------------------- */
 
 
 
@@ -2316,8 +2500,17 @@ function commentpress_setup_init() {
  */
 jQuery(document).ready(function($) {
 
-	// initialise
-	commentpress_setup_init()
+	// setup dom loaded actions
+	CommentPress.settings.DOM.dom_ready();
+	CommentPress.settings.page.dom_ready();
+	CommentPress.settings.textblock.dom_ready();
+	CommentPress.common.navigation.dom_ready();
+	CommentPress.common.content.dom_ready();
+	CommentPress.common.comments.dom_ready();
+	CommentPress.common.activity.dom_ready();
+
+	// broadcast
+	jQuery(document).trigger( 'commentpress-initialised' );
 
 }); // end document.ready()
 

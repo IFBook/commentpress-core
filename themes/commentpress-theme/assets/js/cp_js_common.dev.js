@@ -1479,7 +1479,7 @@ CommentPress.theme.viewport = new function() {
 					$.highlight_para( textblock );
 
 					// scroll page
-					$.scroll_page( textblock );
+					CommentPress.setup.content.scroll_page( textblock );
 
 				} else {
 
@@ -1546,7 +1546,7 @@ CommentPress.theme.viewport = new function() {
 					$.highlight_para( textblock );
 
 					// scroll page
-					$.scroll_page( textblock );
+					CommentPress.setup.content.scroll_page( textblock );
 
 					// --<
 					return;
@@ -1589,7 +1589,7 @@ CommentPress.theme.viewport = new function() {
 				anchor.addClass('selected_para');
 
 				// scroll page
-				$.scroll_page( anchor );
+				CommentPress.setup.content.scroll_page( anchor );
 
 			}
 
@@ -1665,7 +1665,7 @@ CommentPress.theme.viewport = new function() {
 				$.highlight_para( textblock );
 
 				// scroll page
-				$.scroll_page( textblock );
+				CommentPress.setup.content.scroll_page( textblock );
 
 			}
 
@@ -2409,7 +2409,7 @@ jQuery(document).ready( function($) {
 
 	// scroll the page on load
 	if ( cp_special_page == '1' ) {
-		$.on_load_scroll_to_comment();
+		CommentPress.setup.content.on_load_scroll_to_comment();
 	} else {
 		CommentPress.theme.viewport.on_load_scroll_to_anchor();
 	}

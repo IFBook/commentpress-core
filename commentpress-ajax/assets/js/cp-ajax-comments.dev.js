@@ -780,7 +780,7 @@ CommentPress.ajax.comments = new function() {
 		if( text_sig != '' ) {
 
 			// scroll page to text block
-			$.scroll_page( $('#textblock-' + text_sig) );
+			CommentPress.common.content.scroll_page( $('#textblock-' + text_sig) );
 
 		} else {
 
