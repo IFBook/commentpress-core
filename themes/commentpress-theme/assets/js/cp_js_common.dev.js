@@ -11,72 +11,197 @@ NOTES
 
 
 
-// define vars
-var cp_book_header_height, cp_header_animating,
-	cp_toc_on_top, page_highlight, cp_header_minimised, cp_sidebar_minimised,
-	cp_container_top_max, cp_container_top_min;
-
-// define utility globals
-cp_header_animating = false;
-
-// set toc on top flag
-cp_toc_on_top = 'n';
-
-// page defaults to 'not-highlighted'
-page_highlight = false;
-
-// get state of header
-cp_header_minimised = jQuery.cookie( 'cp_header_minimised' );
-if ( cp_header_minimised === undefined || cp_header_minimised === null ) {
-	cp_header_minimised = 'n';
-}
-
-// get state of sidebar
-cp_sidebar_minimised = jQuery.cookie( 'cp_sidebar_minimised' );
-if ( cp_sidebar_minimised === undefined || cp_sidebar_minimised === null ) {
-	cp_sidebar_minimised = 'n';
-}
-
-// get container original top
-cp_container_top_max = jQuery.cookie( 'cp_container_top_max' );
-if ( cp_container_top_max === undefined || cp_container_top_max === null ) {
-	cp_container_top_max = 108;
-}
-
-// get header offset
-cp_container_top_min = jQuery.cookie( 'cp_container_top_min' );
-if ( cp_container_top_min === undefined || cp_container_top_min === null ) {
-	cp_container_top_min = 108;
-}
-
-// is the buddypress bar shown?
-if ( cp_bp_adminbar == 'y' ) {
-
-	// amend to height of buddypress bar
-	cp_wp_adminbar_height = 25;
-
-	// act as if admin bar were there
-	cp_wp_adminbar = 'y';
-
-	// from here on, things work as if the WP admin bar were functional...
-
-}
-
-// is the admin bar shown?
-if ( cp_wp_adminbar == 'y' ) {
-
-	// bump them up by the height of the admin bar
-	cp_container_top_max = parseInt( cp_container_top_max ) + cp_wp_adminbar_height;
-	cp_container_top_min = parseInt( cp_container_top_min ) + cp_wp_adminbar_height;
-
-}
-
-
-
 /**
  * Create sub-namespace common to all themes
  */
 CommentPress.theme = {};
+
+
+
+/**
+ * Create settings class
+ */
+CommentPress.theme.settings = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
+
+
+
+	/**
+	 * Initialise CommentPress theme DOM.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+		// init container top max
+		me.init_container_top_min();
+
+		// init container top min
+		me.init_container_top_min();
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+		// if we have a cookie
+		if ( $.cookie( 'cp_container_top_min' ) ) {
+
+			// skip -> we only set these values once (or when the cookie expires)
+
+		} else {
+
+			// set container top max and save
+			me.set_container_top_max( $.px_to_num( $('#container').css('top') ) );
+			me.save_container_top_max();
+
+			// set container top min and save
+			me.set_container_top_min( me.get_container_top_max() - CommentPress.theme.original.header.get_height() );
+			me.save_container_top_min();
+
+		}
+
+	};
+
+
+
+	// init container top max
+	this.container_top_min = false;
+
+	/**
+	 * Init for container top max
+	 */
+	this.init_container_top_max = function( val ) {
+
+		// get container original top max
+		this.container_top_max = jQuery.cookie( 'cp_container_top_max' );
+		if ( this.container_top_max === undefined || this.container_top_max === null ) {
+			this.container_top_max = 108;
+		}
+
+		// bump up by the height ff the admin bar is shown
+		if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
+			this.container_top_max = parseInt( this.container_top_max ) + CommentPress.settings.DOM.get_wp_adminbar_height();
+		}
+
+	};
+
+	/**
+	 * Setter for container top max
+	 */
+	this.set_container_top_max = function( val ) {
+		this.container_top_max = val;
+	};
+
+	/**
+	 * Save the container top max value in a cookie
+	 */
+	this.save_container_top_max = function( val ) {
+
+		// set cookie for further loads
+		$.cookie(
+			'cp_container_top_max',
+			me.get_container_top_max().toString(),
+			{ expires: 28, path: cp_cookie_path }
+		);
+
+	};
+
+	/**
+	 * Getter for container top max
+	 */
+	this.get_container_top_max = function() {
+		return this.container_top_max;
+	};
+
+
+
+	// init container top min
+	this.container_top_min = false;
+
+	/**
+	 * Init for container top min
+	 */
+	this.init_container_top_min = function( val ) {
+
+		// get container original top min
+		this.container_top_min = $.cookie( 'cp_container_top_min' );
+		if ( this.container_top_min === undefined || this.container_top_min === null ) {
+			this.container_top_min = 108;
+		}
+
+		// bump up by the height if the admin bar is shown
+		if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
+			this.container_top_min = parseInt( this.container_top_min ) + CommentPress.settings.DOM.get_wp_adminbar_height();
+		}
+
+	};
+
+	/**
+	 * Setter for container top min
+	 */
+	this.set_container_top_min = function( val ) {
+		this.container_top_min = val;
+	};
+
+	/**
+	 * Save the container top min value in a cookie
+	 */
+	this.save_container_top_min = function( val ) {
+
+		// set cookie for further loads
+		$.cookie(
+			'cp_container_top_min',
+			me.get_container_top_min().toString(),
+			{ expires: 28, path: cp_cookie_path }
+		);
+
+	};
+
+	/**
+	 * Getter for container top min
+	 */
+	this.get_container_top_min = function() {
+		return this.container_top_min;
+	};
+
+
+
+	// init toc on top flag
+	this.toc_on_top = 'n';
+
+	/**
+	 * Setter for container top min
+	 */
+	this.set_toc_on_top = function( val ) {
+		this.toc_on_top = val;
+	};
+
+	/**
+	 * Getter for container top min
+	 */
+	this.get_toc_on_top = function() {
+		return this.toc_on_top;
+	};
+
+} // end CommentPress theme settings class
+
+
+
+/* -------------------------------------------------------------------------- */
 
 
 
@@ -102,6 +227,22 @@ CommentPress.theme.DOM = new function() {
 
 		// write styles into <head>
 		me.head();
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+		// setup layout
+		me.layout();
 
 	};
 
@@ -148,19 +289,19 @@ CommentPress.theme.DOM = new function() {
 			styles += 'ul.all_comments_listing div.item_body { display: none; } ';
 
 			// is the admin bar shown?
-			if ( cp_wp_adminbar == 'y' ) {
+			if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
 
 				// move down
-				styles += '#header { top: ' + cp_wp_adminbar_height + 'px; } ';
-				styles += '#book_header { top: ' + (cp_wp_adminbar_height + 32) + 'px; } ';
+				styles += '#header { top: ' + CommentPress.settings.DOM.get_wp_adminbar_height() + 'px; } ';
+				styles += '#book_header { top: ' + (CommentPress.settings.DOM.get_wp_adminbar_height() + 32) + 'px; } ';
 
 				// if we have the responsive admin bar in 3.8+
-				if ( cp_wp_adminbar_height == '32' ) {
+				if ( CommentPress.settings.DOM.get_wp_adminbar_height() == '32' ) {
 
 					// react to responsive admin bar
 					styles += '@media screen and ( max-width: 782px ) { ' +
-								'#header { top: ' + cp_wp_adminbar_expanded + 'px; }' +
-								'#book_header { top: ' + (cp_wp_adminbar_expanded + 32) + 'px; }' +
+								'#header { top: ' + CommentPress.settings.DOM.get_wp_adminbar_expanded() + 'px; }' +
+								'#book_header { top: ' + (CommentPress.settings.DOM.get_wp_adminbar_expanded() + 32) + 'px; }' +
 							' } ';
 
 				}
@@ -176,36 +317,32 @@ CommentPress.theme.DOM = new function() {
 			}
 
 			// has the header been minimised?
-			if (
-				cp_header_minimised === undefined ||
-				cp_header_minimised === null ||
-				cp_header_minimised == 'n'
-			) {
+			if ( CommentPress.theme.original.header.is_minimised() ) {
 
 				// no -> skip
 
 				// set tops of divs
 
 				// adjust for admin bar
-				cp_container_top = cp_container_top_max;
+				cp_container_top = CommentPress.theme.settings.get_container_top_max();
 
 				// is the admin bar shown?
-				if ( cp_wp_adminbar == 'y' ) {
-					cp_container_top = cp_container_top_max - cp_wp_adminbar_height;
+				if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
+					cp_container_top = CommentPress.theme.settings.get_container_top_max() - CommentPress.settings.DOM.get_wp_adminbar_height();
 				}
 
 				styles += '#container { top: ' + cp_container_top + 'px; } ';
-				styles += '#sidebar { top: ' + cp_container_top_max + 'px; } ';
+				styles += '#sidebar { top: ' + CommentPress.theme.settings.get_container_top_max() + 'px; } ';
 
 				// is the admin bar shown?
-				if ( cp_wp_adminbar == 'y' ) {
+				if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
 
 					// if we have the responsive admin bar in 3.8+
-					if ( cp_wp_adminbar_height == '32' ) {
+					if ( CommentPress.settings.DOM.get_wp_adminbar_height() == '32' ) {
 
 						// react to responsive admin bar
 						styles += '@media screen and ( max-width: 782px ) { ' +
-									'#sidebar { top: ' + (cp_container_top + cp_wp_adminbar_expanded) + 'px; }' +
+									'#sidebar { top: ' + (cp_container_top + CommentPress.settings.DOM.get_wp_adminbar_expanded()) + 'px; }' +
 								' } ';
 
 					}
@@ -218,26 +355,26 @@ CommentPress.theme.DOM = new function() {
 				styles += '#book_header { display: none; } ';
 
 				// adjust for admin bar
-				cp_container_top = cp_container_top_min;
+				cp_container_top = CommentPress.theme.settings.get_container_top_min();
 
 				// is the admin bar shown?
-				if ( cp_wp_adminbar == 'y' ) {
-					cp_container_top = cp_container_top_min - cp_wp_adminbar_height;
+				if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
+					cp_container_top = CommentPress.theme.settings.get_container_top_min() - CommentPress.settings.DOM.get_wp_adminbar_height();
 				}
 
 				// set tops of divs
 				styles += '#container { top: ' + cp_container_top + 'px; } ';
-				styles += '#sidebar { top: ' + cp_container_top_min + 'px; } ';
+				styles += '#sidebar { top: ' + CommentPress.theme.settings.get_container_top_min() + 'px; } ';
 
 				// is the admin bar shown?
-				if ( cp_wp_adminbar == 'y' ) {
+				if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
 
 					// if we have the responsive admin bar in 3.8+
-					if ( cp_wp_adminbar_height == '32' ) {
+					if ( CommentPress.settings.DOM.get_wp_adminbar_height() == '32' ) {
 
 						// react to responsive admin bar
 						styles += '@media screen and ( max-width: 782px ) { ' +
-									'#sidebar { top: ' + (cp_container_top + cp_wp_adminbar_expanded) + 'px; }' +
+									'#sidebar { top: ' + (cp_container_top + CommentPress.settings.DOM.get_wp_adminbar_expanded()) + 'px; }' +
 								' } ';
 
 					}
@@ -256,7 +393,7 @@ CommentPress.theme.DOM = new function() {
 				styles += '#respond { display: none; } ';
 
 				// has the sidebar window been minimised?
-				if ( cp_sidebar_minimised == 'y' ) {
+				if ( CommentPress.theme.sidebars.get_minimised() == 'y' ) {
 
 					// set visibility of comments
 					styles += '#comments_sidebar .sidebar_contents_wrapper { display: none; } ';
@@ -539,6 +676,10 @@ CommentPress.theme.DOM = new function() {
 
 
 
+/* -------------------------------------------------------------------------- */
+
+
+
 /**
  * Create header class
  */
@@ -558,6 +699,19 @@ CommentPress.theme.header = new function() {
 	 * @return void
 	 */
 	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
 
 	};
 
@@ -587,10 +741,10 @@ CommentPress.theme.header = new function() {
 		offset = 0 - ( $.px_to_num( $('#container').css('top') ) );
 
 		// is the admin bar shown?
-		if ( cp_wp_adminbar == 'y' ) {
+		if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
 
 			// subtract admin bar height
-			offset -= cp_wp_adminbar_height;
+			offset -= CommentPress.settings.DOM.get_wp_adminbar_height();
 
 		}
 
@@ -600,6 +754,10 @@ CommentPress.theme.header = new function() {
 	};
 
 } // end header class
+
+
+
+/* -------------------------------------------------------------------------- */
 
 
 
@@ -622,6 +780,19 @@ CommentPress.theme.navigation = new function() {
 	 * @return void
 	 */
 	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
 
 		// enable "Special Pages" menu behaviour
 		me.menu();
@@ -648,13 +819,17 @@ CommentPress.theme.navigation = new function() {
 			event.preventDefault();
 
 			// activate it
-			CommentPress.theme.sidebars.activate_sidebar('toc');
+			CommentPress.theme.sidebars.activate_sidebar( 'toc' );
 
 		});
 
 	};
 
 } // end navigation class
+
+
+
+/* -------------------------------------------------------------------------- */
 
 
 
@@ -677,6 +852,19 @@ CommentPress.theme.content = new function() {
 	 * @return void
 	 */
 	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
 
 		// enable "Workflow" tabs
 		me.tabs();
@@ -717,6 +905,10 @@ CommentPress.theme.content = new function() {
 
 
 
+/* -------------------------------------------------------------------------- */
+
+
+
 /**
  * Create sidebars class
  */
@@ -737,6 +929,87 @@ CommentPress.theme.sidebars = new function() {
 	 */
 	this.init = function() {
 
+		// init sidebar minimised flag
+		me.init_minimised();
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+		// don't set height when mobile device (but allow tablets)
+		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+
+			// set sidebar height
+			me.set_height();
+
+		}
+
+	};
+
+
+
+	// init CommentPress sidebar minimised flag
+	this.minimised = 'n';
+
+	/**
+	 * Init for CommentPress sidebar minimised flag
+	 */
+	this.init_minimised = function( val ) {
+
+		// get state of sidebar
+		this.sidebar_minimised = jQuery.cookie( 'cp_sidebar_minimised' );
+		if ( this.sidebar_minimised === undefined || this.sidebar_minimised === null ) {
+			this.sidebar_minimised = 'n';
+		}
+
+	};
+
+	/**
+	 * Setter for CommentPress sidebar minimised flag
+	 */
+	this.set_minimised = function( val ) {
+		this.minimised = val;
+	};
+
+	/**
+	 * Getter for CommentPress sidebar minimised flag
+	 */
+	this.get_minimised = function() {
+		return this.minimised;
+	};
+
+	/**
+	 * Getter for CommentPress sidebar minimised flag
+	 */
+	this.is_minimised = function() {
+		if (
+			this.minimised === undefined ||
+			this.minimised === null ||
+			this.minimised == 'n'
+		) {
+			return 'n';
+		}
+		return this.minimised;
+	};
+
+	/**
+	 * Toggle for CommentPress sidebar minimised flag
+	 */
+	this.toggle_minimised = function() {
+		if ( this.minimised === 'y' ) {
+			this.minimised = 'n';
+		} else {
+			this.minimised = 'y';
+		}
 	};
 
 
@@ -774,7 +1047,7 @@ CommentPress.theme.sidebars = new function() {
 			$('#' + sidebar + '_header.sidebar_header').css( 'height', s_top + 'px' );
 
 			// set flag
-			cp_toc_on_top = 'y';
+			CommentPress.theme.settings.set_toc_on_top( 'y' );
 
 		}
 
@@ -782,7 +1055,7 @@ CommentPress.theme.sidebars = new function() {
 		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
 			// just to make sure...
-			$.set_sidebar_height();
+			me.set_height();
 
 		} else {
 
@@ -857,7 +1130,179 @@ CommentPress.theme.sidebars = new function() {
 		return $.px_to_num( $('.sidebar_minimiser').css('borderTopWidth') );
 	};
 
+
+
+	/**
+	 * Get visible sidebar minimiser
+	 *
+	 * @since 3.0
+	 *
+	 * @return object sidebar_pane The jQuery object for the sidebar pane
+	 */
+	this.get_sidebar_pane = function() {
+
+		// init
+		var name = me.get_sidebar_name();
+
+		// --<
+		return $('#' + name + '_sidebar .sidebar_minimiser');
+
+	}
+
+
+
+	/**
+	 * Get visible sidebar
+	 *
+	 * @since 3.0
+	 *
+	 * @return string name The name of the visible sidebar
+	 */
+	this.get_sidebar_name = function() {
+
+		// init
+		var name = 'toc';
+
+		// if toc, must be toc
+		//if ( cp_default_sidebar == 'toc' ) { name = 'toc'; }
+
+		// if comments
+		if ( cp_default_sidebar == 'comments' ) {
+			name = 'comments';
+			if ( CommentPress.theme.settings.get_toc_on_top() == 'y' ) {
+				//console.log( 'toc on comments_sidebar' );
+				name = 'toc';
+			}
+		}
+
+		// if activity
+		if ( cp_default_sidebar == 'activity' ) {
+			name = 'activity';
+			if ( CommentPress.theme.settings.get_toc_on_top() == 'y' ) {
+				//console.log( 'toc on activity_sidebar' );
+				name = 'toc';
+			}
+		}
+
+		// --<
+		return name;
+
+	}
+
+
+
+	/**
+	 * Get height data on element
+	 *
+	 * @since 3.0
+	 *
+	 * @param object element The element to adjust
+	 * @return int element_adjust The new height of the element in px
+	 */
+	this.get_element_adjust = function( element ) {
+
+		// declare vars
+		var w_bt, w_bb, w_pad_t, w_pad_b, w_mar_t, w_mar_b, element_adjust;
+
+		// get border
+		w_bt = $.css_to_num( $.px_to_num( element.css( 'borderTopWidth' ) ) );
+		w_bb = $.css_to_num( $.px_to_num( element.css( 'borderBottomWidth' ) ) );
+
+		// get padding
+		w_pad_t = $.css_to_num( $.px_to_num( element.css( 'padding-top' ) ) );
+		w_pad_b = $.css_to_num( $.px_to_num( element.css( 'padding-bottom' ) ) );
+
+		// get margin
+		w_mar_t = $.css_to_num( $.px_to_num( element.css( 'margin-top' ) ) );
+		w_mar_b = $.css_to_num( $.px_to_num( element.css( 'margin-bottom' ) ) );
+
+		// add 'em up
+		element_adjust = w_bt + w_bb + w_pad_t + w_pad_b + w_mar_t + w_mar_b;
+
+		// --<
+		return element_adjust;
+
+	}
+
+
+
+	/**
+	 * Set height of sidebar minimiser (scrolling element) so that the column fills the viewport
+	 *
+	 * @since 3.0
+	 *
+	 * @todo In jQuery 1.9, we get a 143px error, related to sidebar.position().top
+	 *
+	 * @return int to_bottom The height of the sidebar in px
+	 */
+	this.set_height = function() {
+
+		var sidebar, sidebar_inner, sidebar_container, header, minimiser,
+			s_top, sidebar_inside_h, sidebar_inner_inside_h, sidebar_diff,
+			sc_top, sc_inside_h, sc_diff,
+			header_diff, minimiser_diff,
+			bottom_margin,
+			viewport_height, viewport_scrolltop, viewport,
+			to_bottom;
+
+		sidebar = $('#sidebar');
+		sidebar_inner = $('#sidebar_inner');
+		sidebar_container = $('#toc_sidebar');
+		header = $('#' + $.get_sidebar_name() + '_sidebar .sidebar_header');
+		minimiser = me.get_sidebar_pane();
+
+		// get data on sidebar element
+		s_top = sidebar.offset().top;
+		sidebar_inside_h = me.get_element_adjust( sidebar );
+		sidebar_inner_inside_h = me.get_element_adjust( sidebar_inner );
+		sidebar_diff = s_top + sidebar_inside_h + sidebar_inner_inside_h;
+
+		// get data on sidebar_container element
+		sc_top = sidebar_container.position().top;
+		sc_inside_h = me.get_element_adjust( sidebar_container );
+		sc_diff = sc_top + sc_inside_h;
+
+		// init header diff
+		header_diff = 0;
+		// if internal header element is displayed
+		if ( header.css('display') != 'none' ) {
+			// get data on header element
+			header_diff = header.height() + me.get_element_adjust( header );
+		}
+
+		// get data on minimiser element
+		minimiser_diff = me.get_element_adjust( minimiser );
+
+		// get bottom margin of main column so sidebar lines up
+		// NOTE: this is NOT why they don't line up - it just so happens that the values match
+		// It seems the clearfix class adds the margin. Sigh.
+		if ( cp_is_signup_page == '1' ) {
+			bottom_margin = $.css_to_num( $.px_to_num( $('#content').css( 'margin-bottom' ) ) );
+		} else {
+			bottom_margin = $.css_to_num( $.px_to_num( $('#page_wrapper').css( 'margin-bottom' ) ) );
+		}
+
+		// get viewport data
+		viewport_height = $(window).height();
+		viewport_scrolltop = $(window).scrollTop();
+		viewport = viewport_height + viewport_scrolltop;
+
+		// calculate the necessary height to reach the bottom of the viewport
+		to_bottom = viewport - ( sidebar_diff + sc_diff + header_diff + minimiser_diff + bottom_margin );
+
+		// now set it
+		$('#sidebar div.sidebar_contents_wrapper').css( 'height', to_bottom + 'px' );
+
+		// --<
+		return to_bottom;
+
+	}
+
 } // end sidebars class
+
+
+
+/* -------------------------------------------------------------------------- */
 
 
 
@@ -881,7 +1326,18 @@ CommentPress.theme.viewport = new function() {
 	 */
 	this.init = function() {
 
-		// nothing
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
 
 	};
 
@@ -1028,7 +1484,7 @@ CommentPress.theme.viewport = new function() {
 				} else {
 
 					// only scroll if page is not highlighted
-					if ( page_highlight === false ) {
+					if ( !CommentPress.settings.page.get_highlight() ) {
 
 						// scroll to top
 						CommentPress.theme.viewport.scroll_to_top( 0, cp_scroll_speed );
@@ -1036,7 +1492,7 @@ CommentPress.theme.viewport = new function() {
 					}
 
 					// toggle page highlight flag
-					page_highlight = !page_highlight;
+					CommentPress.settings.page.toggle_highlight();
 
 				}
 
@@ -1426,6 +1882,10 @@ CommentPress.theme.viewport = new function() {
 
 
 
+/* -------------------------------------------------------------------------- */
+
+
+
 /**
  * Create sub-namespace for default (original) theme
  */
@@ -1440,7 +1900,8 @@ CommentPress.theme.original.header = new function() {
 
 	// store object refs
 	var me = this,
-		$ = jQuery.noConflict();
+		$ = jQuery.noConflict(),
+		header_animating = false;
 
 
 
@@ -1453,9 +1914,114 @@ CommentPress.theme.original.header = new function() {
 	 */
 	this.init = function() {
 
+		// init minimised flag
+		me.minimised();
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+		// init header height
+		me.init_height();
+
 		// enable minimiser button
 		me.minimiser();
 
+	};
+
+
+
+	// init CommentPress header height
+	this.header_height = 0;
+
+	/**
+	 * Init for CommentPress header height
+	 */
+	this.init_height = function( val ) {
+
+		// get global book_header height
+		this.header_height = $('#book_header').height();
+
+	};
+
+	/**
+	 * Setter for CommentPress header height
+	 */
+	this.set_height = function( val ) {
+		this.header_height = val;
+	};
+
+	/**
+	 * Getter for CommentPress header height
+	 */
+	this.get_height = function() {
+		return this.header_height;
+	};
+
+
+
+	// init CommentPress header minimised flag
+	this.minimised = 'n';
+
+	/**
+	 * Init for CommentPress header minimised flag
+	 */
+	this.init_minimised = function( val ) {
+
+		// get state of header
+		this.minimised = jQuery.cookie( 'cp_header_minimised' );
+		if ( this.minimised === undefined || this.minimised === null ) {
+			this.minimised = 'n';
+		}
+
+	};
+
+	/**
+	 * Setter for CommentPress header minimised flag
+	 */
+	this.set_minimised = function( val ) {
+		this.minimised = val;
+	};
+
+	/**
+	 * Getter for CommentPress header minimised flag
+	 */
+	this.get_minimised = function() {
+		return this.minimised;
+	};
+
+	/**
+	 * Getter for CommentPress header minimised flag
+	 */
+	this.is_minimised = function() {
+		if (
+			this.minimised === undefined ||
+			this.minimised === null ||
+			this.minimised == 'n'
+		) {
+			return 'n';
+		}
+		return this.minimised;
+	};
+
+	/**
+	 * Toggle for CommentPress header minimised flag
+	 */
+	this.toggle_minimised = function() {
+		if ( this.minimised === 'y' ) {
+			this.minimised = 'n';
+		} else {
+			this.minimised = 'y';
+		}
 	};
 
 
@@ -1494,31 +2060,23 @@ CommentPress.theme.original.header = new function() {
 	this.toggle = function() {
 
 		// if animating, kick out
-		if ( cp_header_animating === true ) { return false; }
-		cp_header_animating = true;
+		if ( header_animating === true ) { return false; }
+		header_animating = true;
 
 		// toggle
-		if (
-			cp_header_minimised === undefined ||
-			cp_header_minimised === null ||
-			cp_header_minimised == 'n'
-		) {
-
+		if ( me.is_minimised() ) {
 			me.close();
-
 		} else {
-
 			me.open();
-
 		}
 
 		// toggle
-		cp_header_minimised = ( cp_header_minimised == 'y' ) ? 'n' : 'y';
+		me.toggle_minimised();
 
 		// store flag in cookie
 		$.cookie(
 			'cp_header_minimised',
-			cp_header_minimised,
+			me.get_minimised(),
 			{ expires: 28, path: cp_cookie_path }
 		);
 
@@ -1545,18 +2103,18 @@ CommentPress.theme.original.header = new function() {
 		book_nav_h = $('#book_nav').height();
 
 		target_sidebar = $('#sidebar');
-		target_sidebar_pane = $.get_sidebar_pane();
+		target_sidebar_pane = CommentPress.theme.sidebars.get_sidebar_pane();
 		book_header = $('#book_header');
 		container = $('#container');
 
 		// set max height
-		cp_container_top = cp_container_top_max;
+		cp_container_top = CommentPress.theme.settings.get_container_top_max();
 
 		// is the admin bar shown?
-		if ( cp_wp_adminbar == 'y' ) {
+		if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
 
 			// deduct height of admin bar
-			cp_container_top = cp_container_top_max - cp_wp_adminbar_height;
+			cp_container_top = CommentPress.theme.settings.get_container_top_max() - CommentPress.settings.DOM.get_wp_adminbar_height();
 
 		}
 
@@ -1574,22 +2132,22 @@ CommentPress.theme.original.header = new function() {
 			book_header.fadeIn('fast', function() {
 
 				// when done
-				cp_header_animating = false;
+				header_animating = false;
 
 			});
 
 		});
 
 		// is the sidebar minimised?
-		if ( cp_sidebar_minimised == 'n' ) {
+		if ( CommentPress.theme.sidebars.get_minimised() == 'n' ) {
 
 			// get sidebar height
-			cp_sidebar_height = target_sidebar.height() - cp_book_header_height;
+			cp_sidebar_height = target_sidebar.height() - me.get_height();
 
 			// animate main wrapper
 			target_sidebar.animate({
 
-				top: cp_container_top_max + 'px',
+				top: CommentPress.theme.settings.get_container_top_max() + 'px',
 				height: cp_sidebar_height + 'px',
 				duration: 'fast'
 
@@ -1603,7 +2161,7 @@ CommentPress.theme.original.header = new function() {
 			// animate inner
 			target_sidebar_pane.animate({
 
-				height: ( target_sidebar_pane.height() - cp_book_header_height ) + 'px',
+				height: ( target_sidebar_pane.height() - me.get_height() ) + 'px',
 				duration: 'fast'
 
 				}, function() {
@@ -1612,12 +2170,12 @@ CommentPress.theme.original.header = new function() {
 					if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
 						// fit column
-						$.set_sidebar_height();
+						CommentPress.theme.sidebars.set_height();
 
 					}
 
 					// when done
-					cp_header_animating = false;
+					header_animating = false;
 
 				}
 
@@ -1628,19 +2186,19 @@ CommentPress.theme.original.header = new function() {
 			// animate sidebar
 			target_sidebar.animate({
 
-				top: cp_container_top_max + 'px',
+				top: CommentPress.theme.settings.get_container_top_max() + 'px',
 				duration: 'fast'
 
 				}, function() {
 
 					// when done
-					cp_header_animating = false;
+					header_animating = false;
 
 					// don't set height when mobile device (but allow tablets)
 					if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
 						// fit column
-						$.set_sidebar_height();
+						CommentPress.theme.sidebars.set_height();
 
 					}
 
@@ -1673,7 +2231,7 @@ CommentPress.theme.original.header = new function() {
 		book_nav_h = $('#book_nav').height();
 
 		target_sidebar = $('#sidebar');
-		target_sidebar_pane = $.get_sidebar_pane();
+		target_sidebar_pane = CommentPress.theme.sidebars.get_sidebar_pane();
 		book_header = $('#book_header');
 		container = $('#container');
 
@@ -1681,13 +2239,13 @@ CommentPress.theme.original.header = new function() {
 		book_header.hide();
 
 		// set min height
-		cp_container_top = cp_container_top_min;
+		cp_container_top = CommentPress.theme.settings.get_container_top_min();
 
 		// is the admin bar shown?
-		if ( cp_wp_adminbar == 'y' ) {
+		if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
 
 			// deduct height of admin bar
-			cp_container_top = cp_container_top_min - cp_wp_adminbar_height;
+			cp_container_top = CommentPress.theme.settings.get_container_top_min() - CommentPress.settings.DOM.get_wp_adminbar_height();
 
 		}
 
@@ -1699,15 +2257,15 @@ CommentPress.theme.original.header = new function() {
 		});
 
 		// is the sidebar minimised?
-		if ( cp_sidebar_minimised == 'n' ) {
+		if ( CommentPress.theme.sidebars.get_minimised() == 'n' ) {
 
 			// get sidebar height
-			cp_sidebar_height = target_sidebar.height() + cp_book_header_height;
+			cp_sidebar_height = target_sidebar.height() + me.get_height();
 
 			//$('#container').css('top','40px');
 			target_sidebar.animate({
 
-				top: cp_container_top_min + 'px',
+				top: CommentPress.theme.settings.get_container_top_min() + 'px',
 				height: cp_sidebar_height + 'px',
 				duration: 'fast'
 
@@ -1723,7 +2281,7 @@ CommentPress.theme.original.header = new function() {
 			//$('#container').css('top','40px');
 			target_sidebar_pane.animate({
 
-				height: ( target_sidebar_pane.height() + cp_book_header_height ) + 'px',
+				height: ( target_sidebar_pane.height() + me.get_height() ) + 'px',
 				duration: 'fast'
 
 			}, function() {
@@ -1732,12 +2290,12 @@ CommentPress.theme.original.header = new function() {
 				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
 					// fit column
-					$.set_sidebar_height();
+					CommentPress.theme.sidebars.set_height();
 
 				}
 
 				// when done
-				cp_header_animating = false;
+				header_animating = false;
 
 			});
 
@@ -1746,19 +2304,19 @@ CommentPress.theme.original.header = new function() {
 			// animate just sidebar
 			target_sidebar.animate({
 
-				top: cp_container_top_min + 'px',
+				top: CommentPress.theme.settings.get_container_top_min() + 'px',
 				duration: 'fast'
 
 			}, function() {
 
 				// when done
-				cp_header_animating = false;
+				header_animating = false;
 
 				// don't set height when mobile device (but allow tablets)
 				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
 					// fit column
-					$.set_sidebar_height();
+					CommentPress.theme.sidebars.set_height();
 
 				}
 
@@ -1774,8 +2332,23 @@ CommentPress.theme.original.header = new function() {
 
 
 
-// do pre-page-rendered stuff
+/* -------------------------------------------------------------------------- */
+
+
+
+// do immediate init
+CommentPress.theme.settings.init();
 CommentPress.theme.DOM.init();
+CommentPress.theme.header.init();
+CommentPress.theme.navigation.init();
+CommentPress.theme.content.init();
+CommentPress.theme.sidebars.init();
+CommentPress.theme.viewport.init();
+CommentPress.theme.original.header.init();
+
+
+
+/* -------------------------------------------------------------------------- */
 
 
 
@@ -1788,70 +2361,17 @@ jQuery(document).ready( function($) {
 
 
 
-	// get global book_header top
-	cp_book_header_height = $('#book_header').height();
+	// trigger DOM ready methods
+	CommentPress.theme.settings.dom_ready();
+	CommentPress.theme.DOM.dom_ready();
+	CommentPress.theme.header.dom_ready();
+	CommentPress.theme.navigation.dom_ready();
+	CommentPress.theme.content.dom_ready();
+	CommentPress.theme.sidebars.dom_ready();
+	CommentPress.theme.viewport.dom_ready();
 
-	// don't set height when mobile device (but allow tablets)
-	if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
-
-		// set sidebar height
-		$.set_sidebar_height();
-
-	}
-
-
-
-	// if we have a cookie
-	if ( $.cookie( 'cp_container_top_min' ) ) {
-
-		// skip -> we only set these values once (or when the cookie expires)
-
-	} else {
-
-		// set global container top max
-		cp_container_top_max = $.px_to_num( $('#container').css('top') );
-
-		// set global container top min
-		cp_container_top_min = cp_container_top_max - cp_book_header_height;
-
-		// set cookie for further loads
-		$.cookie(
-
-			'cp_container_top_min',
-			cp_container_top_min.toString(),
-			{ expires: 28, path: cp_cookie_path }
-
-		);
-
-		// set cookie for further loads
-		$.cookie(
-
-			'cp_container_top_max',
-			cp_container_top_max.toString(),
-			{ expires: 28, path: cp_cookie_path }
-
-		);
-
-	}
-
-
-	// init header
-	CommentPress.theme.header.init();
-
-	// init navigation
-	CommentPress.theme.navigation.init();
-
-	// init content
-	CommentPress.theme.content.init();
-
-	// init content
-	CommentPress.theme.sidebars.init();
-
-	// init theme header
-	CommentPress.theme.original.header.init();
-
-	// set up page layout
-	CommentPress.theme.DOM.layout();
+	// the default theme implements custom header actions
+	CommentPress.theme.original.header.dom_ready();
 
 
 

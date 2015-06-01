@@ -576,10 +576,10 @@ if ( window.history ) {
 					offset = $( '#header' ).height();
 
 					// is the admin bar shown?
-					if ( cp_wp_adminbar == 'y' ) {
+					if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
 
 						// add admin bar height
-						offset += cp_wp_adminbar_height;
+						offset += CommentPress.settings.DOM.get_wp_adminbar_height();
 
 					}
 

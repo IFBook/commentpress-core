@@ -11,46 +11,53 @@ NOTES
 
 
 
-// define vars
-var cp_header_height, cp_header_animating,
-	cp_toc_on_top, page_highlight, cp_header_minimised, cp_sidebar_minimised,
-	cp_container_top_max, cp_container_top_min;
-
-// define utility globals
-cp_header_height = 70;
-cp_header_animating = false;
-
-// page defaults to 'not-highlighted'
-page_highlight = false;
-
-// is the buddypress bar shown?
-if ( cp_bp_adminbar == 'y' ) {
-
-	// amend to height of buddypress bar
-	cp_wp_adminbar_height = 25;
-
-	// act as if admin bar were there
-	cp_wp_adminbar = 'y';
-
-	// from here on, things work as if the WP admin bar were functional...
-
-}
-
-// is the admin bar shown?
-if ( cp_wp_adminbar == 'y' ) {
-
-	// bump them up by the height of the admin bar
-	//cp_container_top_max = parseInt( cp_container_top_max ) + cp_wp_adminbar_height;
-	//cp_container_top_min = parseInt( cp_container_top_min ) + cp_wp_adminbar_height;
-
-}
-
-
-
 /**
  * Create sub-namespace common to all themes
  */
 CommentPress.theme = {};
+
+
+
+/**
+ * Create settings class
+ */
+CommentPress.theme.settings = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
+
+
+
+	/**
+	 * Initialise CommentPress theme DOM.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+	};
+
+} // end CommentPress theme settings class
+
+
+
+/* -------------------------------------------------------------------------- */
 
 
 
@@ -77,6 +84,22 @@ CommentPress.theme.DOM = new function() {
 		// write styles into <head>
 		me.head();
 
+		// add js class so we can do some contextual styling
+		$('html').addClass( 'js' );
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
 	};
 
 
@@ -91,10 +114,13 @@ CommentPress.theme.DOM = new function() {
 	this.head = function() {
 
 		// define vars
-		var styles, cp_container_top, cp_container_width, cp_book_nav_width;
+		var styles, cp_header_height, cp_container_top, cp_container_width, cp_book_nav_width;
 
 		// init styles
 		styles = '';
+
+		// init header height
+		cp_header_height = 70;
 
 		// wrap with js test
 		if ( document.getElementById ) {
@@ -122,19 +148,19 @@ CommentPress.theme.DOM = new function() {
 			styles += 'ul.all_comments_listing div.item_body { display: none; } ';
 
 			// is the admin bar shown?
-			if ( cp_wp_adminbar == 'y' ) {
+			if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
 
 				// move down
-				styles += 'body.admin-bar #header, #header { top: ' + cp_wp_adminbar_height + 'px; } ';
-				styles += 'body.admin-bar #sidebar, #sidebar, body.admin-bar #navigation, #navigation { top: ' + (cp_wp_adminbar_height + cp_header_height) + 'px; } ';
+				styles += 'body.admin-bar #header, #header { top: ' + CommentPress.settings.DOM.get_wp_adminbar_height() + 'px; } ';
+				styles += 'body.admin-bar #sidebar, #sidebar, body.admin-bar #navigation, #navigation { top: ' + (CommentPress.settings.DOM.get_wp_adminbar_height() + cp_header_height) + 'px; } ';
 
 				// if we have the responsive admin bar in 3.8+
-				if ( cp_wp_adminbar_height == '32' ) {
+				if ( CommentPress.settings.DOM.get_wp_adminbar_height() == '32' ) {
 
 					// react to responsive admin bar
 					styles += '@media screen and ( max-width: 782px ) { ' +
-								'body.admin-bar #header, #header { top: ' + cp_wp_adminbar_expanded + 'px; }' +
-								'body.admin-bar #sidebar, #sidebar, body.admin-bar #navigation, #navigation { top: ' + (cp_wp_adminbar_expanded + cp_header_height) + 'px; }' +
+								'body.admin-bar #header, #header { top: ' + CommentPress.settings.DOM.get_wp_adminbar_expanded() + 'px; }' +
+								'body.admin-bar #sidebar, #sidebar, body.admin-bar #navigation, #navigation { top: ' + (CommentPress.settings.DOM.get_wp_adminbar_expanded() + cp_header_height) + 'px; }' +
 							' } ';
 
 				}
@@ -186,6 +212,10 @@ CommentPress.theme.DOM = new function() {
 
 
 
+/* -------------------------------------------------------------------------- */
+
+
+
 /**
  * Create header class
  */
@@ -205,6 +235,19 @@ CommentPress.theme.header = new function() {
 	 * @return void
 	 */
 	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
 
 	};
 
@@ -234,10 +277,10 @@ CommentPress.theme.header = new function() {
 		offset = 0 - $('#header').height() - $('#sidebar_tabs').height(); // add a few pix for comfort
 
 		// is the admin bar shown?
-		if ( cp_wp_adminbar == 'y' ) {
+		if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
 
 			// subtract admin bar height
-			offset -= cp_wp_adminbar_height;
+			offset -= CommentPress.settings.DOM.get_wp_adminbar_height();
 
 		}
 
@@ -247,6 +290,10 @@ CommentPress.theme.header = new function() {
 	};
 
 } // end header class
+
+
+
+/* -------------------------------------------------------------------------- */
 
 
 
@@ -269,6 +316,19 @@ CommentPress.theme.navigation = new function() {
 	 * @return void
 	 */
 	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
 
 		// enable "Special Pages" menu behaviour
 		me.menu();
@@ -318,6 +378,10 @@ CommentPress.theme.navigation = new function() {
 
 
 
+/* -------------------------------------------------------------------------- */
+
+
+
 /**
  * Create content class
  */
@@ -337,6 +401,19 @@ CommentPress.theme.content = new function() {
 	 * @return void
 	 */
 	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
 
 		// enable "Workflow" tabs
 		me.tabs();
@@ -377,6 +454,10 @@ CommentPress.theme.content = new function() {
 
 
 
+/* -------------------------------------------------------------------------- */
+
+
+
 /**
  * Create sidebars class
  */
@@ -396,6 +477,19 @@ CommentPress.theme.sidebars = new function() {
 	 * @return void
 	 */
 	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
 
 		// enable buttons
 		me.enable_buttons();
@@ -427,7 +521,7 @@ CommentPress.theme.sidebars = new function() {
 		sidebar_header_height = $('#toc_sidebar > .sidebar_header').height();
 
 		// is the admin bar shown?
-		if ( cp_wp_adminbar == 'y' ) {
+		if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
 			wpadminbar_height = $('#wpadminbar').height();
 		} else {
 			wpadminbar_height = 0;
@@ -567,6 +661,10 @@ CommentPress.theme.sidebars = new function() {
 
 
 
+/* -------------------------------------------------------------------------- */
+
+
+
 /**
  * Create viewport class
  */
@@ -586,6 +684,19 @@ CommentPress.theme.viewport = new function() {
 	 * @return void
 	 */
 	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
 
 		// track viewport changes
 		me.track_resize();
@@ -703,7 +814,7 @@ CommentPress.theme.viewport = new function() {
 				} else {
 
 					// is the admin bar shown?
-					if ( cp_wp_adminbar == 'y' ) {
+					if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
 						wpadminbar_height = $('#wpadminbar').height();
 					} else {
 						wpadminbar_height = 0;
@@ -907,7 +1018,7 @@ CommentPress.theme.viewport = new function() {
 				} else {
 
 					// only scroll if page is not highlighted
-					if ( page_highlight === false ) {
+					if ( !CommentPress.settings.page.get_highlight() ) {
 
 						// scroll to top
 						CommentPress.theme.viewport.scroll_to_top( 0, cp_scroll_speed );
@@ -915,7 +1026,7 @@ CommentPress.theme.viewport = new function() {
 					}
 
 					// toggle page highlight flag
-					page_highlight = !page_highlight;
+					CommentPress.settings.page.toggle_highlight();
 
 				}
 
@@ -1310,6 +1421,10 @@ CommentPress.theme.viewport = new function() {
 
 
 
+/* -------------------------------------------------------------------------- */
+
+
+
 /**
  * Create sub-sub-namespace for modern theme
  */
@@ -1317,11 +1432,22 @@ CommentPress.theme.modern = {};
 
 
 
-// do pre-page-rendered stuff
-CommentPress.theme.DOM.init();
+/* -------------------------------------------------------------------------- */
 
-// add js class so we can do some contextual styling
-jQuery('html').addClass( 'js' );
+
+
+// do immediate init
+CommentPress.theme.settings.init();
+CommentPress.theme.DOM.init();
+CommentPress.theme.header.init();
+CommentPress.theme.navigation.init();
+CommentPress.theme.content.init();
+CommentPress.theme.sidebars.init();
+CommentPress.theme.viewport.init();
+
+
+
+/* -------------------------------------------------------------------------- */
 
 
 
@@ -1332,20 +1458,16 @@ jQuery('html').addClass( 'js' );
  */
 jQuery(document).ready( function($) {
 
-	// init header
-	CommentPress.theme.header.init();
 
-	// init navigation
-	CommentPress.theme.navigation.init();
 
-	// init content
-	CommentPress.theme.content.init();
-
-	// init content
-	CommentPress.theme.sidebars.init();
-
-	// init viewport
-	CommentPress.theme.viewport.init();
+	// trigger DOM ready methods
+	CommentPress.theme.settings.dom_ready();
+	CommentPress.theme.DOM.dom_ready();
+	CommentPress.theme.header.dom_ready();
+	CommentPress.theme.navigation.dom_ready();
+	CommentPress.theme.content.dom_ready();
+	CommentPress.theme.sidebars.dom_ready();
+	CommentPress.theme.viewport.dom_ready();
 
 	// the modern theme uses a "rollover"
 	CommentPress.setup.comments.comment_rollovers();

@@ -1,14 +1,18 @@
 /**
+ * -----------------------------------------------------------------------------
  * CommentPress Core Common Code Library
+ * -----------------------------------------------------------------------------
  *
  * This code implements some features of a jQuery Plugin, but is mostly used as
  * a common library for all CommentPress-compatible themes. It allows us to add
  * numerous methods to jQuery without cluttering the global function namespace.
  *
+ * -----------------------------------------------------------------------------
  * @package CommentPress Core
  * @author Christian Wach <needle@haystack.co.uk>
  *
  * @since 3.0
+ * -----------------------------------------------------------------------------
  */
 ;
 
@@ -18,7 +22,8 @@
  * Create global variables
  *
  * These were being defined in each theme, so have been moved to this library to
- * avoid duplication of code.
+ * avoid duplication of code. They are in the porcess of being migrated to class
+ * variables to avoid name collisions.
  */
 
 // define global IE var
@@ -33,18 +38,13 @@ if ( 'undefined' !== typeof cp_msie ) {
 if ( 'undefined' !== typeof CommentpressSettings ) {
 
 	// define our vars
-	var cp_wp_adminbar, cp_wp_adminbar_height, cp_wp_adminbar_expanded, cp_bp_adminbar,
-		cp_comments_open, cp_special_page, cp_tinymce, cp_tinymce_version,
+	var cp_comments_open, cp_special_page, cp_tinymce, cp_tinymce_version,
 		cp_promote_reading, cp_is_mobile, cp_is_touch, cp_is_tablet, cp_cookie_path,
 		cp_multipage_page, cp_template_dir, cp_plugin_dir, cp_toc_chapter_is_page, cp_show_subpages,
 		cp_default_sidebar, cp_is_signup_page, cp_scroll_speed, cp_min_page_width,
 		cp_textblock_meta;
 
 	// set our vars
-	cp_wp_adminbar = CommentpressSettings.cp_wp_adminbar;
-	cp_wp_adminbar_height = parseInt( CommentpressSettings.cp_wp_adminbar_height );
-	cp_wp_adminbar_expanded = parseInt( CommentpressSettings.cp_wp_adminbar_expanded );
-	cp_bp_adminbar = CommentpressSettings.cp_bp_adminbar;
 	cp_comments_open = CommentpressSettings.cp_comments_open;
 	cp_special_page = CommentpressSettings.cp_special_page;
 	cp_tinymce = CommentpressSettings.cp_tinymce;
@@ -80,6 +80,230 @@ var CommentPress = CommentPress || {};
  * Create settings sub-namespace
  */
 CommentPress.settings = {};
+
+
+
+/**
+ * Create CommentPress settings DOM class
+ */
+CommentPress.settings.DOM = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
+
+
+
+	/**
+	 * Initialise CommentPress settings DOM.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+		// init WordPress adminbar
+		me.init_wp_adminbar();
+
+		// init BuddyPress adminbar
+		me.init_bp_adminbar();
+
+		// init WordPress adminbar height
+		me.init_wp_adminbar_height();
+
+	};
+
+
+
+	// init BuddyPress adminbar
+	this.bp_adminbar = 'n';
+
+	/**
+	 * Init for BuddyPress adminbar height
+	 */
+	this.init_bp_adminbar = function( val ) {
+
+		// get initial value from settings object
+		if ( 'undefined' !== typeof CommentpressSettings ) {
+			this.bp_adminbar = CommentpressSettings.cp_bp_adminbar;
+		}
+
+	};
+
+	/**
+	 * Setter for BuddyPress adminbar
+	 */
+	this.set_bp_adminbar = function( val ) {
+		this.bp_adminbar = val;
+	};
+
+	/**
+	 * Getter for BuddyPress adminbar
+	 */
+	this.get_bp_adminbar = function() {
+		return this.bp_adminbar;
+	};
+
+
+
+	// init WordPress adminbar
+	this.wp_adminbar = 'n';
+
+	/**
+	 * Init for WordPress adminbar height
+	 */
+	this.init_wp_adminbar = function( val ) {
+
+		// get initial value from settings object
+		if ( 'undefined' !== typeof CommentpressSettings ) {
+			this.wp_adminbar = CommentpressSettings.cp_wp_adminbar;
+		}
+
+	};
+
+	/**
+	 * Setter for WordPress adminbar
+	 */
+	this.set_wp_adminbar = function( val ) {
+		this.wp_adminbar = val;
+	};
+
+	/**
+	 * Getter for WordPress adminbar
+	 */
+	this.get_wp_adminbar = function() {
+		return this.wp_adminbar;
+	};
+
+
+
+	// init WordPress adminbar height
+	this.wp_adminbar_height = 0;
+
+	/**
+	 * Init for WordPress adminbar height
+	 */
+	this.init_wp_adminbar_height = function( val ) {
+
+		// get initial value from settings object
+		if ( 'undefined' !== typeof CommentpressSettings ) {
+			this.wp_adminbar_height = parseInt( CommentpressSettings.cp_wp_adminbar_height );
+		}
+
+		// support for legacy BuddyPress bar
+		if ( me.get_bp_adminbar() == 'y' ) {
+
+			// amend to height of BuddyPress bar
+			this.wp_adminbar_height = 25;
+
+			// act as if admin bar were there
+			me.set_wp_adminbar( 'y' );
+
+		}
+
+	};
+
+	/**
+	 * Setter for WordPress adminbar height
+	 */
+	this.set_wp_adminbar_height = function( val ) {
+		this.wp_adminbar_height = val;
+	};
+
+	/**
+	 * Getter for WordPress adminbar height
+	 */
+	this.get_wp_adminbar_height = function() {
+		return this.wp_adminbar_height;
+	};
+
+
+
+	// init WordPress adminbar height
+	this.wp_adminbar_height = 0;
+
+	/**
+	 * Init for WordPress adminbar expanded
+	 */
+	this.init_wp_adminbar_expanded = function( val ) {
+
+		// get initial value from settings object
+		if ( 'undefined' !== typeof CommentpressSettings ) {
+			this.wp_adminbar_expanded = parseInt( CommentpressSettings.cp_wp_adminbar_expanded );
+		}
+
+	};
+
+	/**
+	 * Setter for WordPress adminbar expanded
+	 */
+	this.set_wp_adminbar_expanded = function( val ) {
+		this.wp_adminbar_expanded = val;
+	};
+
+	/**
+	 * Getter for WordPress adminbar expanded
+	 */
+	this.get_wp_adminbar_expanded = function() {
+		return this.wp_adminbar_expanded;
+	};
+
+
+
+} // end CommentPress settings DOM class
+
+
+
+/**
+ * Create CommentPress page settings class
+ */
+CommentPress.settings.page = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
+
+
+
+	/**
+	 * Initialise CommentPress settings page.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+		// nothing yet
+	};
+
+
+
+	// init highlight
+	this.highlight = false;
+
+	/**
+	 * Toggle for page highlight
+	 */
+	this.toggle_highlight = function() {
+		this.highlight = !this.highlight;
+	};
+
+	/**
+	 * Setter for page highlight
+	 */
+	this.set_highlight = function( val ) {
+		this.highlight = val;
+	};
+
+	/**
+	 * Getter for page highlight
+	 */
+	this.get_highlight = function() {
+		return this.highlight;
+	};
+
+} // end CommentPress page settings class
 
 
 
@@ -943,7 +1167,7 @@ CommentPress.setup.comments = new function() {
 						CommentPress.theme.viewport.scroll_to_top( 0, cp_scroll_speed );
 
 						// toggle page highlight flag
-						page_highlight = !page_highlight;
+						CommentPress.settings.page.toggle_highlight();
 
 					}
 
@@ -1148,6 +1372,41 @@ CommentPress.setup.comments = new function() {
 		});
 
 	};
+
+
+
+	/**
+	 * Highlight the comment
+	 *
+	 * @param object comment The $ comment object
+	 * @return void
+	 */
+	this.highlight = function( comment ) {
+
+		// add notransition class
+		comment.addClass( 'notransition' );
+
+		// remove existing classes
+		if ( comment.hasClass( 'comment-fade' ) ) {
+			comment.removeClass( 'comment-fade' );
+		}
+		if ( comment.hasClass( 'comment-highlighted' ) ) {
+			comment.removeClass( 'comment-highlighted' );
+		}
+
+		// highlight
+		comment.addClass( 'comment-highlighted' );
+
+		// remove notransition class
+		comment.removeClass( 'notransition' );
+
+		// trigger reflow
+		comment.height();
+
+		// animate to existing bg (from css file)
+		comment.addClass( 'comment-fade' );
+
+	}
 
 } // end CommentPress setup comments column class
 
@@ -1377,7 +1636,7 @@ CommentPress.setup.activity = new function() {
 							onAfter: function() {
 
 								// highlight comment
-								$.highlight_comment( comment );
+								CommentPress.setup.comments.highlight( comment );
 
 							}
 						}
@@ -1392,6 +1651,11 @@ CommentPress.setup.activity = new function() {
 	};
 
 } // end CommentPress setup activity column class
+
+
+
+// do pre-page-rendered stuff
+CommentPress.settings.DOM.init();
 
 
 
@@ -1484,235 +1748,6 @@ CommentPress.setup.activity = new function() {
 			return false;
 
 		}
-
-	}
-
-
-
-	/**
-	 * Set height of sidebar minimiser (scrolling element) so that the column fills the viewport
-	 *
-	 * @since 3.0
-	 *
-	 * @todo In jQuery 1.9, we get a 143px error, related to sidebar.position().top
-	 *
-	 * @return int to_bottom The height of the sidebar in px
-	 */
-	$.set_sidebar_height = function() {
-
-		var sidebar = $('#sidebar');
-		var sidebar_inner = $('#sidebar_inner');
-		var sidebar_container = $('#toc_sidebar');
-		var header = $('#' + $.get_sidebar_name() + '_sidebar .sidebar_header');
-		var minimiser = $.get_sidebar_pane();
-
-		// get data on sidebar element
-		//var s_top = $.css_to_num( $.px_to_num( sidebar.css('top') ) );
-		var s_top = sidebar.offset().top;
-		//console.log( 's_top: ' + s_top );
-		var sidebar_inside_h = $.get_element_adjust( sidebar );
-		var sidebar_inner_inside_h = $.get_element_adjust( sidebar_inner );
-		var sidebar_diff = s_top + sidebar_inside_h + sidebar_inner_inside_h;
-		//console.log( 'sidebar_diff: ' + sidebar_diff );
-
-		// get data on sidebar_container element
-		var sc_top = sidebar_container.position().top;
-		//console.log( 'sc_top: ' + sc_top );
-		var sc_inside_h = $.get_element_adjust( sidebar_container );
-		//console.log( 'sc_inside_h: ' + sc_inside_h );
-		var sc_diff = sc_top + sc_inside_h;
-		//console.log( 'sc_diff: ' + sc_diff );
-
-		// init header diff
-		var header_diff = 0;
-		// if internal header element is displayed
-		if ( header.css('display') != 'none' ) {
-			// get data on header element
-			header_diff = header.height() + $.get_element_adjust( header );
-		}
-		//console.log( 'header_diff: ' + header_diff );
-
-		// get data on minimiser element
-		var minimiser_diff = $.get_element_adjust( minimiser );
-		//console.log( 'minimiser_diff: ' + minimiser_diff );
-
-		// get bottom margin of main column so sidebar lines up
-		// NOTE: this is NOT why they don't line up - it just so happens that the values match
-		// It seems the clearfix class adds the margin. Sigh.
-		if ( cp_is_signup_page == '1' ) {
-			var bottom_margin = $.css_to_num( $.px_to_num( $('#content').css( 'margin-bottom' ) ) );
-		} else {
-			var bottom_margin = $.css_to_num( $.px_to_num( $('#page_wrapper').css( 'margin-bottom' ) ) );
-		}
-		//console.log( 'bottom_margin: ' + bottom_margin );
-
-		// get viewport data
-		var viewport_height = $(window).height();
-		var viewport_scrolltop = $(window).scrollTop();
-		var viewport = viewport_height + viewport_scrolltop;
-		//console.log( 'viewport: ' + viewport );
-
-		// calculate the necessary height to reach the bottom of the viewport
-		var to_bottom = viewport - ( sidebar_diff + sc_diff + header_diff + minimiser_diff + bottom_margin );
-		//console.log( 'to_bottom: ' + to_bottom );
-
-		$('#sidebar div.sidebar_contents_wrapper').css( 'height', to_bottom + 'px' );
-
-		// --<
-		return to_bottom;
-
-	}
-
-
-
-	/**
-	 * Get height data on element
-	 *
-	 * @since 3.0
-	 *
-	 * @param object element The element to adjust
-	 * @return int element_adjust The new height of the element in px
-	 */
-	$.get_element_adjust = function( element ) {
-
-		// get border
-		var w_bt = $.css_to_num( $.px_to_num( element.css( 'borderTopWidth' ) ) );
-		var w_bb = $.css_to_num( $.px_to_num( element.css( 'borderBottomWidth' ) ) );
-
-		// get padding
-		var w_pad_t = $.css_to_num( $.px_to_num( element.css( 'padding-top' ) ) );
-		var w_pad_b = $.css_to_num( $.px_to_num( element.css( 'padding-bottom' ) ) );
-
-		// get margin
-		var w_mar_t = $.css_to_num( $.px_to_num( element.css( 'margin-top' ) ) );
-		var w_mar_b = $.css_to_num( $.px_to_num( element.css( 'margin-bottom' ) ) );
-
-		// add 'em up
-		var element_adjust = w_bt + w_bb + w_pad_t + w_pad_b + w_mar_t + w_mar_b;
-		//console.log( 'element_adjust: ' + element_adjust );
-
-		// --<
-		return element_adjust;
-
-	}
-
-
-
-	/**
-	 * Get visible sidebar minimiser
-	 *
-	 * @since 3.0
-	 *
-	 * @return object sidebar_pane The jQuery object for the sidebar pane
-	 */
-	$.get_sidebar_pane = function() {
-
-		var name = $.get_sidebar_name();
-
-		// --<
-		return $('#' + name + '_sidebar .sidebar_minimiser');
-
-	}
-
-
-
-	/**
-	 * Get visible sidebar
-	 *
-	 * @since 3.0
-	 *
-	 * @return string name The name of the visible sidebar
-	 */
-	$.get_sidebar_name = function() {
-
-		// init
-		var name = 'toc';
-
-		// if toc, must be toc
-		//if ( cp_default_sidebar == 'toc' ) { name = 'toc'; }
-
-		// if comments
-		if ( cp_default_sidebar == 'comments' ) {
-			name = 'comments';
-			if ( cp_toc_on_top == 'y' ) {
-				//console.log( 'toc on comments_sidebar' );
-				name = 'toc';
-			}
-		}
-
-		// if activity
-		if ( cp_default_sidebar == 'activity' ) {
-			name = 'activity';
-			if ( cp_toc_on_top == 'y' ) {
-				//console.log( 'toc on activity_sidebar' );
-				name = 'toc';
-			}
-		}
-
-		// --<
-		return name;
-
-	}
-
-
-
-	/**
-	 * Get currently highlighted menu item ID
-	 *
-	 * @since 3.0
-	 *
-	 * @return string current_menu_item The numeric ID of the menu item
-	 */
-	$.get_current_menu_item_id = function() {
-
-		// declare vars
-		var current_menu_item = 0,
-			current_menu_obj, current_item_id,
-			current_item_classes, current_item_class;
-
-		// get highlighted menu item object
-		current_menu_obj = $('.current_page_item');
-		//console.log( 'current_menu_item:' );
-		//console.log( current_menu_item );
-
-		// did we get one?
-		if ( current_menu_obj.length > 0 ) {
-
-			// get ID, if present
-			current_item_id = current_menu_obj.prop('id');
-			//console.log( 'current_item_id:' );
-			//console.log( current_item_id );
-
-			// if we do have an ID...
-			if ( current_item_id.length > 0 ) {
-
-				// it's a WP custom menu
-				current_menu_item = current_item_id.split('-')[2];
-
-			} else {
-
-				// it's a WP page menu
-				current_item_class = current_menu_obj.prop('class');
-
-				// get classes
-				current_item_classes = current_item_class.split(' ');
-
-				// loop to find the one we want
-				for (var i = 0, item; item = current_item_classes[i++];) {
-					if ( item.match( 'page-item-' ) ) {
-						current_menu_item = item.split('-')[2];
-						break;
-					}
-				}
-
-			}
-
-		}
-
-		//console.log( 'cpajax_current_menu_item: ' + cpajax_current_menu_item );
-
-		// --<
-		return current_menu_item;
 
 	}
 
@@ -1906,35 +1941,62 @@ CommentPress.setup.activity = new function() {
 
 
 	/**
-	 * Highlight the comment
+	 * Get currently highlighted menu item ID
 	 *
-	 * @param object comment The $ comment object
-	 * @return void
+	 * @since 3.0
+	 *
+	 * @return string current_menu_item The numeric ID of the menu item
 	 */
-	$.highlight_comment = function( comment ) {
+	$.get_current_menu_item_id = function() {
 
-		// add notransition class
-		comment.addClass( 'notransition' );
+		// declare vars
+		var current_menu_item = 0,
+			current_menu_obj, current_item_id,
+			current_item_classes, current_item_class;
 
-		// remove existing classes
-		if ( comment.hasClass( 'comment-fade' ) ) {
-			comment.removeClass( 'comment-fade' );
+		// get highlighted menu item object
+		current_menu_obj = $('.current_page_item');
+		//console.log( 'current_menu_item:' );
+		//console.log( current_menu_item );
+
+		// did we get one?
+		if ( current_menu_obj.length > 0 ) {
+
+			// get ID, if present
+			current_item_id = current_menu_obj.prop('id');
+			//console.log( 'current_item_id:' );
+			//console.log( current_item_id );
+
+			// if we do have an ID...
+			if ( current_item_id.length > 0 ) {
+
+				// it's a WP custom menu
+				current_menu_item = current_item_id.split('-')[2];
+
+			} else {
+
+				// it's a WP page menu
+				current_item_class = current_menu_obj.prop('class');
+
+				// get classes
+				current_item_classes = current_item_class.split(' ');
+
+				// loop to find the one we want
+				for (var i = 0, item; item = current_item_classes[i++];) {
+					if ( item.match( 'page-item-' ) ) {
+						current_menu_item = item.split('-')[2];
+						break;
+					}
+				}
+
+			}
+
 		}
-		if ( comment.hasClass( 'comment-highlighted' ) ) {
-			comment.removeClass( 'comment-highlighted' );
-		}
 
-		// highlight
-		comment.addClass( 'comment-highlighted' );
+		//console.log( 'cpajax_current_menu_item: ' + cpajax_current_menu_item );
 
-		// remove notransition class
-		comment.removeClass( 'notransition' );
-
-		// trigger reflow
-		comment.height();
-
-		// animate to existing bg (from css file)
-		comment.addClass( 'comment-fade' );
+		// --<
+		return current_menu_item;
 
 	}
 
@@ -2074,7 +2136,7 @@ CommentPress.setup.activity = new function() {
 						onAfter: function() {
 
 							// highlight header
-							$.highlight_comment( target );
+							CommentPress.setup.comments.highlight( target );
 
 							// broadcast
 							$(document).trigger( 'commentpress-comments-scrolled' );
@@ -2195,7 +2257,7 @@ CommentPress.setup.activity = new function() {
 		} else {
 
 			// only scroll if page is not highlighted
-			if ( page_highlight === false ) {
+			if ( !CommentPress.settings.page.toggle_highlight() ) {
 
 				// scroll to top
 				CommentPress.theme.viewport.scroll_to_top( 0, cp_scroll_speed );
@@ -2203,7 +2265,7 @@ CommentPress.setup.activity = new function() {
 			}
 
 			// toggle page highlight flag
-			page_highlight = !page_highlight;
+			CommentPress.settings.page.toggle_highlight();
 
 		}
 
