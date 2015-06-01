@@ -30,7 +30,7 @@ CommentPress.theme.settings = new function() {
 
 
 	/**
-	 * Initialise CommentPress theme DOM.
+	 * Initialise CommentPress theme settings.
 	 *
 	 * This method should only be called once.
 	 *

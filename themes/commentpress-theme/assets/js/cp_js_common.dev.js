@@ -30,7 +30,7 @@ CommentPress.theme.settings = new function() {
 
 
 	/**
-	 * Initialise CommentPress theme DOM.
+	 * Initialise CommentPress theme settings.
 	 *
 	 * This method should only be called once.
 	 *
@@ -84,7 +84,7 @@ CommentPress.theme.settings = new function() {
 	/**
 	 * Init for container top max
 	 */
-	this.init_container_top_max = function( val ) {
+	this.init_container_top_max = function() {
 
 		// get container original top max
 		this.container_top_max = jQuery.cookie( 'cp_container_top_max' );
@@ -135,7 +135,7 @@ CommentPress.theme.settings = new function() {
 	/**
 	 * Init for container top min
 	 */
-	this.init_container_top_min = function( val ) {
+	this.init_container_top_min = function() {
 
 		// get container original top min
 		this.container_top_min = $.cookie( 'cp_container_top_min' );
@@ -963,7 +963,7 @@ CommentPress.theme.sidebars = new function() {
 	/**
 	 * Init for CommentPress sidebar minimised flag
 	 */
-	this.init_minimised = function( val ) {
+	this.init_minimised = function() {
 
 		// get state of sidebar
 		this.sidebar_minimised = jQuery.cookie( 'cp_sidebar_minimised' );
@@ -1946,7 +1946,7 @@ CommentPress.theme.original.header = new function() {
 	/**
 	 * Init for CommentPress header height
 	 */
-	this.init_height = function( val ) {
+	this.init_height = function() {
 
 		// get global book_header height
 		this.header_height = $('#book_header').height();
@@ -1975,7 +1975,7 @@ CommentPress.theme.original.header = new function() {
 	/**
 	 * Init for CommentPress header minimised flag
 	 */
-	this.init_minimised = function( val ) {
+	this.init_minimised = function() {
 
 		// get state of header
 		this.minimised = jQuery.cookie( 'cp_header_minimised' );
