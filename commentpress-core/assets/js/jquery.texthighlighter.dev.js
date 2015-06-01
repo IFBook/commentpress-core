@@ -42,10 +42,7 @@ CommentPress.textselector = new function() {
 	 */
 	this.init = function() {
 
-		// init listeners
-		me.listeners();
-
-	}
+	};
 
 
 
@@ -57,6 +54,112 @@ CommentPress.textselector = new function() {
 	 * @return void
 	 */
 	this.dom_ready = function() {
+
+		// init listeners
+		me.listeners();
+
+	};
+
+
+
+	/**
+	 * Initialise the jQuery text highlighter listeners.
+	 *
+	 * This method should only be called once. To reset the system, call:
+	 * CommentPress.textselector.reset();
+	 *
+	 * @return void
+	 */
+	this.listeners = function() {
+
+		/**
+		 * Receive callback from the theme's Javascript when it's done loading
+		 *
+		 * @return void
+		 */
+		$(document).on( 'commentpress-document-ready', function( event ) {
+
+			// set up text selector
+			me.setup();
+
+		});
+
+		/**
+		 * Hook into CommentPress AJAX new comment added
+		 *
+		 * @param object event The event (unused)
+		 * @param int comment_id The new comment ID
+		 * @return void
+		 */
+		$(document).on( 'commentpress-ajax-comment-added', function( event, comment_id ) {
+
+			// have we received the full id?
+			if ( comment_id.match( '#comment-' ) ) {
+
+				// get numeric comment ID
+				comment_id = parseInt( comment_id.split('#comment-')[1] );
+
+			}
+
+			// reset text selector
+			me.selection_save_for_comment( comment_id );
+
+			// reset comment form
+			me.selection_clear_from_editor()
+
+		});
+
+		/**
+		 * Hook into CommentPress AJAX new comment added and animation finished
+		 *
+		 * @param object event The event (unused)
+		 * @param int comment_id The new comment ID
+		 * @return void
+		 */
+		$(document).on( 'commentpress-ajax-comment-added-scrolled', function( event ) {
+
+			// clear highlights
+			me.highlights_clear();
+
+			// clear selection active
+			me.selection_active_clear();
+
+		});
+
+		/**
+		 * Hook into CommentPress clicks on items whose events do not bubble.
+		 *
+		 * We need to receive callbacks from these clicks to clear the active selection
+		 *
+		 * @param object event The event (unused)
+		 * @return void
+		 */
+		$(document).on( 'commentpress-commenticonbox-clicked commentpress-link-in-textblock-clicked', function( event ) {
+
+			// clear highlights
+			me.highlights_clear();
+
+			// clear selection active
+			me.selection_active_clear();
+
+			// clear selection
+			me.selection_clear();
+
+		});
+
+	};
+
+
+
+	/**
+	 * Set up the jQuery text highlighter.
+	 *
+	 * This method should only be called once. To reset the system, call:
+	 * CommentPress.textselector.reset();
+	 *
+	 * @return void
+	 */
+	this.setup = function() {
 
 		// declare vars
 		var input;
@@ -267,95 +370,6 @@ CommentPress.textselector = new function() {
 
 			// clear all highlights
 			me.highlights_clear();
-
-		});
-
-	};
-
-
-
-	/**
-	 * Initialise the jQuery text highlighter listeners.
-	 *
-	 * This method should only be called once. To reset the system, call:
-	 * CommentPress.textselector.reset();
-	 *
-	 * @return void
-	 */
-	this.listeners = function() {
-
-		/**
-		 * Receive callback from the theme's Javascript when it's done loading
-		 *
-		 * @return void
-		 */
-		$(document).on( 'commentpress-document-ready', function( event ) {
-
-			// initialise text selector
-			me.init();
-
-		});
-
-		/**
-		 * Hook into CommentPress AJAX new comment added
-		 *
-		 * @param object event The event (unused)
-		 * @param int comment_id The new comment ID
-		 * @return void
-		 */
-		$(document).on( 'commentpress-ajax-comment-added', function( event, comment_id ) {
-
-			// have we received the full id?
-			if ( comment_id.match( '#comment-' ) ) {
-
-				// get numeric comment ID
-				comment_id = parseInt( comment_id.split('#comment-')[1] );
-
-			}
-
-			// reset text selector
-			me.selection_save_for_comment( comment_id );
-
-			// reset comment form
-			me.selection_clear_from_editor()
-
-		});
-
-		/**
-		 * Hook into CommentPress AJAX new comment added and animation finished
-		 *
-		 * @param object event The event (unused)
-		 * @param int comment_id The new comment ID
-		 * @return void
-		 */
-		$(document).on( 'commentpress-ajax-comment-added-scrolled', function( event ) {
-
-			// clear highlights
-			me.highlights_clear();
-
-			// clear selection active
-			me.selection_active_clear();
-
-		});
-
-		/**
-		 * Hook into CommentPress clicks on items whose events do not bubble.
-		 *
-		 * We need to receive callbacks from these clicks to clear the active selection
-		 *
-		 * @param object event The event (unused)
-		 * @return void
-		 */
-		$(document).on( 'commentpress-commenticonbox-clicked commentpress-link-in-textblock-clicked', function( event ) {
-
-			// clear highlights
-			me.highlights_clear();
-
-			// clear selection active
-			me.selection_active_clear();
-
-			// clear selection
-			me.selection_clear();
 
 		});
 
