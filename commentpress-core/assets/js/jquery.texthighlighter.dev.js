@@ -18,8 +18,9 @@ Implements commenting on text highlights
  */
 CommentPress.textselector = new function() {
 
-	// store object ref
+	// store object refs
 	var me = this;
+	var $ = jQuery.noConflict();
 
 	// test for our localisation object
 	if ( 'undefined' !== typeof CommentpressTextSelectorSettings ) {
@@ -112,7 +113,7 @@ CommentPress.textselector = new function() {
 		me.selection_active = true;
 
 		// attach a handler to the document body
-		jQuery(document).bind( 'click', me.selection_active_handler );
+		$(document).bind( 'click', me.selection_active_handler );
 
 	};
 
@@ -136,7 +137,7 @@ CommentPress.textselector = new function() {
 		this.selection_active = false;
 
 		// unbind document click handler
-		jQuery(document).unbind( 'click', me.selection_active_handler );
+		$(document).unbind( 'click', me.selection_active_handler );
 
 	};
 
@@ -148,7 +149,7 @@ CommentPress.textselector = new function() {
 	this.selection_active_handler = function( event ) {
 
 		// if the event target is not the comment form
-		if ( !jQuery(event.target).closest( '#commentform' ).length ) {
+		if ( !$(event.target).closest( '#commentform' ).length ) {
 
 			// override event
 			//event.preventDefault();
@@ -198,7 +199,7 @@ CommentPress.textselector = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('#comments_sidebar li.selection-exists').each( function(i) {
+		$('#comments_sidebar li.selection-exists').each( function(i) {
 
 			// declare vars
 			var item_id, comment_id, comment_key,
@@ -207,7 +208,7 @@ CommentPress.textselector = new function() {
 				selection_data;
 
 			// get the current item ID
-			item_id = jQuery(this).prop('id');
+			item_id = $(this).prop('id');
 
 			// get comment ID
 			comment_id = item_id.split('-')[2];
@@ -216,10 +217,10 @@ CommentPress.textselector = new function() {
 			comment_key = '#comment-' + comment_id
 
 			// get classes
-			class_list = jQuery(this).attr('class').split(/\s+/);
+			class_list = $(this).attr('class').split(/\s+/);
 
 			// find our data class names
-			jQuery.each( class_list, function(index, item) {
+			$.each( class_list, function(index, item) {
 
 				// find our start
 				if ( item.match( 'sel_start-' ) ) {
@@ -286,14 +287,14 @@ CommentPress.textselector = new function() {
 			item = this.selections_by_comment[comment_key]
 
 			// get text signature for this comment
-			text_sig = jQuery.get_text_sig_by_comment_id( comment_key );
+			text_sig = $.get_text_sig_by_comment_id( comment_key );
 
 			// get textblock
 			textblock_id = 'textblock-' + text_sig;
 
 			// restore the selection
 			me.selection_restore( document.getElementById( textblock_id ), item );
-			jQuery('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
+			$('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
 
 		}
 
@@ -345,7 +346,7 @@ CommentPress.textselector = new function() {
 			// yes, restore each selection in turn
 			for (var i = 0, item; item = this.selections_by_textblock[textblock_id][i++];) {
 				me.selection_restore( document.getElementById( textblock_id ), item );
-				jQuery('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
+				$('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
 			}
 
 		}
@@ -480,13 +481,13 @@ CommentPress.textselector = new function() {
 		var selection;
 
 		// unbind popover document click handler
-		jQuery(document).unbind( 'click', me.highlighter_active_handler );
+		$(document).unbind( 'click', me.highlighter_active_handler );
 
 		// get selection
 		selection = me.selection_get();
 
 		// always update text_selection hidden input
-		jQuery('#text_selection').val( selection.start + ',' + selection.end );
+		$('#text_selection').val( selection.start + ',' + selection.end );
 
 		// store the data
 		me.selection_sent = selection;
@@ -497,7 +498,7 @@ CommentPress.textselector = new function() {
 			// test for TinyMCE
 			if ( cp_tinymce == '1' ) {
 				// do we have TinyMCE or QuickTags active?
-				if ( jQuery('#wp-comment-wrap').hasClass( 'html-active' ) ) {
+				if ( $('#wp-comment-wrap').hasClass( 'html-active' ) ) {
 					me.selection_add_to_textarea( selection.text, 'replace' );
 				} else {
 					me.selection_add_to_tinymce( selection.text, 'replace' );
@@ -511,9 +512,9 @@ CommentPress.textselector = new function() {
 			// test for TinyMCE
 			if ( cp_tinymce == '1' ) {
 				// do we have TinyMCE or QuickTags active?
-				if ( jQuery('#wp-comment-wrap').hasClass( 'html-active' ) ) {
+				if ( $('#wp-comment-wrap').hasClass( 'html-active' ) ) {
 					setTimeout(function () {
-						jQuery('#comment').focus();
+						$('#comment').focus();
 					}, 200 );
 				} else {
 					setTimeout(function () {
@@ -522,7 +523,7 @@ CommentPress.textselector = new function() {
 				}
 			} else {
 				setTimeout(function () {
-					jQuery('#comment').focus();
+					$('#comment').focus();
 				}, 200 );
 			}
 
@@ -538,7 +539,7 @@ CommentPress.textselector = new function() {
 	this.selection_clear_from_editor = function() {
 
 		// clear text_selection hidden input
-		jQuery('#text_selection').val( '' );
+		$('#text_selection').val( '' );
 
 	};
 
@@ -554,15 +555,15 @@ CommentPress.textselector = new function() {
 		// if prepending
 		if ( mode == 'prepend' ) {
 			// get existing content
-			content = jQuery('#comment').val();
+			content = $('#comment').val();
 		} else {
 			content = '';
 		}
 
 		// add text and focus
 		setTimeout(function () {
-			jQuery('#comment').val( '<strong>[' + text + ']</strong>\n\n' + content );
-			jQuery('#comment').focus();
+			$('#comment').val( '<strong>[' + text + ']</strong>\n\n' + content );
+			$('#comment').focus();
 		}, 200 );
 
 	};
@@ -606,12 +607,12 @@ CommentPress.textselector = new function() {
 	this.highlighter_activate = function() {
 
 		// enable highlighter
-		jQuery('.textblock').highlighter({
+		$('.textblock').highlighter({
 			'selector': '.popover-holder',
 			'minWords': 1,
 			'complete': function( selected_text ) {
 				// attach a handler to the document body
-				jQuery(document).bind( 'click', me.highlighter_active_handler );
+				$(document).bind( 'click', me.highlighter_active_handler );
 			}
 		});
 
@@ -623,7 +624,7 @@ CommentPress.textselector = new function() {
 	 * @return void
 	 */
 	this.highlighter_deactivate = function() {
-		jQuery('.textblock').highlighter('destroy');
+		$('.textblock').highlighter('destroy');
 	};
 
 	/**
@@ -634,10 +635,10 @@ CommentPress.textselector = new function() {
 	this.highlighter_active_handler = function( event ) {
 
 		// if the event target is not the popover
-		if ( !jQuery(event.target).closest( '.popover-holder' ).length ) {
+		if ( !$(event.target).closest( '.popover-holder' ).length ) {
 
 			// unbind document click handler
-			jQuery(document).unbind( 'click', me.highlighter_active_handler );
+			$(document).unbind( 'click', me.highlighter_active_handler );
 
 			// deactivate highlighter
 			me.highlighter_deactivate();
@@ -657,9 +658,9 @@ CommentPress.textselector = new function() {
 	this.highlights_clear = function() {
 
 		// clear all highlights
-		jQuery('.inline-highlight').each( function(i) {
-			var content = jQuery(this).contents();
-			jQuery(this).replaceWith( content );
+		$('.inline-highlight').each( function(i) {
+			var content = $(this).contents();
+			$(this).replaceWith( content );
 		});
 
 	};
@@ -687,10 +688,10 @@ CommentPress.textselector = new function() {
 
 		// append input to comment form
 		input = '<input type="hidden" name="text_selection" id="text_selection" value="" />';
-		jQuery(input).appendTo( '#commentform' );
+		$(input).appendTo( '#commentform' );
 
 		// append popover to body element
-		jQuery(me.popover).appendTo( 'body' );
+		$(me.popover).appendTo( 'body' );
 
 		// activate highlighter
 		me.highlighter_activate();
@@ -703,7 +704,7 @@ CommentPress.textselector = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('.popover-holder').mousedown( function() {
+		$('.popover-holder').mousedown( function() {
 			return false;
 		});
 
@@ -712,13 +713,13 @@ CommentPress.textselector = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('.popover-holder-btn-left-comment').click( function() {
+		$('.popover-holder-btn-left-comment').click( function() {
 
 			// define vars
 			var textblock_id, selection, container, wrap;
 
 			// hide popover
-			jQuery('.popover-holder').hide();
+			$('.popover-holder').hide();
 
 			// set selection active
 			me.selection_active_set();
@@ -733,10 +734,10 @@ CommentPress.textselector = new function() {
 			me.selection_send_to_editor( false );
 
 			// scroll to comment form
-			jQuery.scroll_comments( jQuery('#respond'), cp_scroll_speed );
+			$.scroll_comments( $('#respond'), cp_scroll_speed );
 
 			// wrap selection
-			wrap = jQuery('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
+			wrap = $('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
 
 			// do not bubble
 			return false;
@@ -748,13 +749,13 @@ CommentPress.textselector = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('.popover-holder-btn-left-quote').click( function() {
+		$('.popover-holder-btn-left-quote').click( function() {
 
 			// define vars
 			var textblock_id, selection, container, wrap;
 
 			// hide popover
-			jQuery('.popover-holder').hide();
+			$('.popover-holder').hide();
 
 			// set selection active
 			me.selection_active_set();
@@ -769,10 +770,10 @@ CommentPress.textselector = new function() {
 			me.selection_send_to_editor( true );
 
 			// scroll to comment form
-			jQuery.scroll_comments( jQuery('#respond'), cp_scroll_speed );
+			$.scroll_comments( $('#respond'), cp_scroll_speed );
 
 			// wrap selection
-			wrap = jQuery('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
+			wrap = $('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
 
 			// do not bubble
 			return false;
@@ -784,10 +785,10 @@ CommentPress.textselector = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('.popover-holder-btn-right').click( function() {
+		$('.popover-holder-btn-right').click( function() {
 
 			// hide popover
-			jQuery('.popover-holder').hide();
+			$('.popover-holder').hide();
 
 			// clear container
 			var dummy = '';
@@ -803,7 +804,7 @@ CommentPress.textselector = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('#container').on( 'mousedown', '.textblock', function() {
+		$('#container').on( 'mousedown', '.textblock', function() {
 
 			// clear all highlights
 			//me.highlights_clear();
@@ -815,7 +816,7 @@ CommentPress.textselector = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('#container').on( 'click', '.textblock', function() {
+		$('#container').on( 'click', '.textblock', function() {
 
 			// define vars
 			var clicked_id, stored_id;
@@ -824,7 +825,7 @@ CommentPress.textselector = new function() {
 			stored_id = me.container_get();
 
 			// store the clicked on textblock ID
-			clicked_id = jQuery(this).prop('id');
+			clicked_id = $(this).prop('id');
 
 			// is it different?
 			if ( stored_id != clicked_id ) {
@@ -853,19 +854,19 @@ CommentPress.textselector = new function() {
 		/**
 		 * Rolling onto a comment
 		 */
-		jQuery('#comments_sidebar').on( 'mouseenter', 'li.comment.selection-exists', function( event ) {
+		$('#comments_sidebar').on( 'mouseenter', 'li.comment.selection-exists', function( event ) {
 
 			// declare vars
 			var item_id, comment_id;
 
 			// kick out if popover is shown
-			if ( jQuery('.popover-holder').css('display') == 'block' ) { return; }
+			if ( $('.popover-holder').css('display') == 'block' ) { return; }
 
 			// kick out while there's a selection that has been sent to the editor
 			if ( me.selection_active_get() ) { return; }
 
 			// get the current ID
-			item_id = jQuery(this).prop('id');
+			item_id = $(this).prop('id');
 
 			// get comment ID
 			comment_id = item_id.split('-')[2];
@@ -878,10 +879,10 @@ CommentPress.textselector = new function() {
 		/**
 		 * Rolling off a comment
 		 */
-		jQuery('#comments_sidebar').on( 'mouseleave', 'li.comment.selection-exists', function( event ) {
+		$('#comments_sidebar').on( 'mouseleave', 'li.comment.selection-exists', function( event ) {
 
 			// kick out if popover is shown
-			if ( jQuery('.popover-holder').css('display') == 'block' ) { return; }
+			if ( $('.popover-holder').css('display') == 'block' ) { return; }
 
 			// kick out while there's a selection that has been sent to the editor
 			if ( me.selection_active_get() ) { return; }

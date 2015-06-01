@@ -59,8 +59,9 @@ CommentPress.theme = {};
  */
 CommentPress.theme.DOM = new function() {
 
-	// store object ref
+	// store object refs
 	var me = this;
+	var $ = jQuery.noConflict();
 
 
 
@@ -190,8 +191,9 @@ CommentPress.theme.DOM = new function() {
  */
 CommentPress.theme.header = new function() {
 
-	// store object ref
+	// store object refs
 	var me = this;
+	var $ = jQuery.noConflict();
 
 
 
@@ -223,13 +225,13 @@ CommentPress.theme.header = new function() {
 
 		// get offset including border
 		offset = 0 - (
-			jQuery.px_to_num( jQuery('#container').css('top') ) +
-			jQuery.px_to_num( jQuery('#page_wrapper').css( 'borderTopWidth' ) )
+			$.px_to_num( $('#container').css('top') ) +
+			$.px_to_num( $('#page_wrapper').css( 'borderTopWidth' ) )
 		);
 		*/
 
 		// get header offset
-		offset = 0 - jQuery('#header').height() - jQuery('#sidebar_tabs').height(); // add a few pix for comfort
+		offset = 0 - $('#header').height() - $('#sidebar_tabs').height(); // add a few pix for comfort
 
 		// is the admin bar shown?
 		if ( cp_wp_adminbar == 'y' ) {
@@ -253,8 +255,9 @@ CommentPress.theme.header = new function() {
  */
 CommentPress.theme.navigation = new function() {
 
-	// store object ref
+	// store object refs
 	var me = this;
+	var $ = jQuery.noConflict();
 
 
 
@@ -288,19 +291,19 @@ CommentPress.theme.navigation = new function() {
 		 *
 		 * @return false
 		 */
-		jQuery('#toc_sidebar').on( 'click', 'ul#nav li a', function( event ) {
+		$('#toc_sidebar').on( 'click', 'ul#nav li a', function( event ) {
 
 			// define vars
 			var myArr;
 
 			// no, find child lists of the enclosing <li>
-			myArr = jQuery(this).parent().find('ul');
+			myArr = $(this).parent().find('ul');
 
 			// do we have a child list?
 			if( myArr.length > 0 ) {
 
 				// toggle next list
-				jQuery(this).next('ul').slideToggle();
+				$(this).next('ul').slideToggle();
 
 				// override event
 				event.preventDefault();
@@ -320,8 +323,9 @@ CommentPress.theme.navigation = new function() {
  */
 CommentPress.theme.content = new function() {
 
-	// store object ref
+	// store object refs
 	var me = this;
+	var $ = jQuery.noConflict();
 
 
 
@@ -355,14 +359,14 @@ CommentPress.theme.content = new function() {
 		var content_min_height, content_padding_bottom;
 
 		// store content min-height on load
-		content_min_height = jQuery('#page_wrapper').css( 'min-height' );
+		content_min_height = $('#page_wrapper').css( 'min-height' );
 
 		// store content padding-bottom on load
-		content_padding_bottom = jQuery('#page_wrapper').css( 'padding-bottom' );
+		content_padding_bottom = $('#page_wrapper').css( 'padding-bottom' );
 
 		// hide workflow content
-		jQuery('#literal .post').css( 'display', 'none' );
-		jQuery('#original .post').css( 'display', 'none' );
+		$('#literal .post').css( 'display', 'none' );
+		$('#original .post').css( 'display', 'none' );
 
 		// setup workflow tabs, if present
 		CommentPress.setup.content.workflow_tabs( content_min_height, content_padding_bottom );
@@ -378,8 +382,9 @@ CommentPress.theme.content = new function() {
  */
 CommentPress.theme.sidebars = new function() {
 
-	// store object ref
+	// store object refs
 	var me = this;
+	var $ = jQuery.noConflict();
 
 
 
@@ -414,16 +419,16 @@ CommentPress.theme.sidebars = new function() {
 			toc_sidebar_height, switcher_display, sidebar_switcher_height, sidebar_height;
 
 		// get window
-		viewport = jQuery(window).height();
+		viewport = $(window).height();
 
 		// get interface elements
-		header_height = jQuery('#header').height();
-		switcher_height = jQuery('#switcher').height();
-		sidebar_header_height = jQuery('#toc_sidebar > .sidebar_header').height();
+		header_height = $('#header').height();
+		switcher_height = $('#switcher').height();
+		sidebar_header_height = $('#toc_sidebar > .sidebar_header').height();
 
 		// is the admin bar shown?
 		if ( cp_wp_adminbar == 'y' ) {
-			wpadminbar_height = jQuery('#wpadminbar').height();
+			wpadminbar_height = $('#wpadminbar').height();
 		} else {
 			wpadminbar_height = 0;
 		}
@@ -432,16 +437,16 @@ CommentPress.theme.sidebars = new function() {
 		toc_sidebar_height = viewport - (header_height + sidebar_header_height + wpadminbar_height);
 
 		// allow for switcher visibility
-		switcher_display = jQuery('#switcher').css('display');
+		switcher_display = $('#switcher').css('display');
 		if (switcher_display === 'block') {
 			toc_sidebar_height = toc_sidebar_height - switcher_height;
 		}
 
 		// set height
-		jQuery('#toc_sidebar .sidebar_contents_wrapper').css( 'height', toc_sidebar_height + 'px' );
+		$('#toc_sidebar .sidebar_contents_wrapper').css( 'height', toc_sidebar_height + 'px' );
 
 		// get sidebar tabs header height instead
-		sidebar_switcher_height = jQuery('#sidebar_tabs').height();
+		sidebar_switcher_height = $('#sidebar_tabs').height();
 		sidebar_height = viewport - (header_height + sidebar_switcher_height + wpadminbar_height);
 
 		// allow for switcher visibility
@@ -450,7 +455,7 @@ CommentPress.theme.sidebars = new function() {
 		}
 
 		// set height
-		jQuery('#sidebar .sidebar_contents_wrapper').css( 'height', sidebar_height + 'px' );
+		$('#sidebar .sidebar_contents_wrapper').css( 'height', sidebar_height + 'px' );
 
 	};
 
@@ -467,7 +472,7 @@ CommentPress.theme.sidebars = new function() {
 		if ( sidebar == 'comments' ) {
 
 			// move to sidebar
-			if ( !jQuery('body').hasClass('active-sidebar') || jQuery('body').hasClass('active-nav') ) {
+			if ( !$('body').hasClass('active-sidebar') || $('body').hasClass('active-nav') ) {
 				CommentPress.theme.sidebars.show_discuss();
 			}
 
@@ -477,18 +482,18 @@ CommentPress.theme.sidebars = new function() {
 		var ontop, s_top, s_top_border;
 
 		// get "visibility" of the requested sidebar
-		ontop = jQuery('#' + sidebar + '_sidebar').css('z-index');
+		ontop = $('#' + sidebar + '_sidebar').css('z-index');
 
 		// is it hidden (ie, does it have a lower z-index)
 		if ( ontop == '2001' ) {
 
 			// hide all
-			jQuery('.sidebar_container').css('z-index','2001');
-			jQuery('#sidebar_tabs h2 a').removeClass('active-tab');
+			$('.sidebar_container').css('z-index','2001');
+			$('#sidebar_tabs h2 a').removeClass('active-tab');
 
 			// show it
-			jQuery('#' + sidebar + '_sidebar').css('z-index','2010');
-			jQuery('#sidebar_tabs #' + sidebar + '_header h2 a').addClass('active-tab');
+			$('#' + sidebar + '_sidebar').css('z-index','2010');
+			$('#sidebar_tabs #' + sidebar + '_header h2 a').addClass('active-tab');
 
 		}
 
@@ -504,19 +509,19 @@ CommentPress.theme.sidebars = new function() {
 	this.enable_buttons = function() {
 
 		// Toggle for navigation
-		jQuery('.navigation-button').click(function(e) {
+		$('.navigation-button').click(function(e) {
 			e.preventDefault();
 			me.show_nav();
 		});
 
 		// Toggle for content
-		jQuery('.content-button').click(function(e) {
+		$('.content-button').click(function(e) {
 			e.preventDefault();
 			me.show_content();
 		});
 
 		// Toggle for sidebar
-		jQuery('.sidebar-button').click(function(e) {
+		$('.sidebar-button').click(function(e) {
 			e.preventDefault();
 			me.show_discuss();
 		});
@@ -531,9 +536,9 @@ CommentPress.theme.sidebars = new function() {
 	 * @return void
 	 */
 	this.show_nav = function() {
-		jQuery('body').toggleClass('active-nav').removeClass('active-sidebar');
-		jQuery('.sidebar-button,.content-button').removeClass('active-button');
-		jQuery('.navigation-button').toggleClass('active-button');
+		$('body').toggleClass('active-nav').removeClass('active-sidebar');
+		$('.sidebar-button,.content-button').removeClass('active-button');
+		$('.navigation-button').toggleClass('active-button');
 	};
 
 	/**
@@ -542,9 +547,9 @@ CommentPress.theme.sidebars = new function() {
 	 * @return void
 	 */
 	this.show_content = function() {
-		jQuery('body').removeClass('active-sidebar').removeClass('active-nav');
-		jQuery('.navigation-button,.sidebar-button').removeClass('active-button');
-		jQuery('.content-button').toggleClass('active-button');
+		$('body').removeClass('active-sidebar').removeClass('active-nav');
+		$('.navigation-button,.sidebar-button').removeClass('active-button');
+		$('.content-button').toggleClass('active-button');
 	};
 
 	/**
@@ -553,9 +558,9 @@ CommentPress.theme.sidebars = new function() {
 	 * @return void
 	 */
 	this.show_discuss = function() {
-		jQuery('body').toggleClass('active-sidebar').removeClass('active-nav');
-		jQuery('.navigation-button,.content-button').removeClass('active-button');
-		jQuery('.sidebar-button').toggleClass('active-button');
+		$('body').toggleClass('active-sidebar').removeClass('active-nav');
+		$('.navigation-button,.content-button').removeClass('active-button');
+		$('.sidebar-button').toggleClass('active-button');
 	};
 
 } // end sidebars class
@@ -567,8 +572,9 @@ CommentPress.theme.sidebars = new function() {
  */
 CommentPress.theme.viewport = new function() {
 
-	// store object ref
+	// store object refs
 	var me = this;
+	var $ = jQuery.noConflict();
 
 
 
@@ -603,7 +609,7 @@ CommentPress.theme.viewport = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery(window).resize( function() {
+		$(window).resize( function() {
 
 			// maintain height of sidebars
 			CommentPress.theme.sidebars.set_height();
@@ -628,7 +634,7 @@ CommentPress.theme.viewport = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery(window).scroll( function() {
+		$(window).scroll( function() {
 
 			// declare vars
 			var viewport, header_height, switcher_height, sidebar_header_height, wpadminbar_height,
@@ -636,7 +642,7 @@ CommentPress.theme.viewport = new function() {
 				header, header_position, header_bottom, sidebar_top;
 
 			// get header
-			header = jQuery('#header');
+			header = $('#header');
 
 			// test for static header
 			position = header.css( 'position' );
@@ -654,36 +660,36 @@ CommentPress.theme.viewport = new function() {
 				if ( parseInt( header_bottom ) > 0 ) {
 
 					// get top of sidebar
-					sidebar_top = jQuery.px_to_num( jQuery('html body #content_container #sidebar').css( 'top' ) );
+					sidebar_top = $.px_to_num( $('html body #content_container #sidebar').css( 'top' ) );
 
 					// bail if already zero
 					if ( sidebar_top == '0' ) { return; }
 					//console.log( sidebar_top );
 
 					// set top of sidebars
-					jQuery('html body #content_container #sidebar,html body #content_container #navigation').css(
+					$('html body #content_container #sidebar,html body #content_container #navigation').css(
 						'top', '0'
 					);
 
 					// get interface elements
-					viewport = jQuery(window).height();
-					switcher_height = jQuery('#switcher').height();
-					sidebar_header_height = jQuery('#toc_sidebar > .sidebar_header').height();
+					viewport = $(window).height();
+					switcher_height = $('#switcher').height();
+					sidebar_header_height = $('#toc_sidebar > .sidebar_header').height();
 
 					// calculate
 					toc_sidebar_height = viewport - sidebar_header_height;
 
 					// allow for switcher visibility
-					switcher_display = jQuery('#switcher').css('display');
+					switcher_display = $('#switcher').css('display');
 					if (switcher_display === 'block') {
 						toc_sidebar_height = toc_sidebar_height - switcher_height;
 					}
 
 					// set height
-					jQuery('#toc_sidebar .sidebar_contents_wrapper').css( 'height', toc_sidebar_height + 'px' );
+					$('#toc_sidebar .sidebar_contents_wrapper').css( 'height', toc_sidebar_height + 'px' );
 
 					// get sidebar tabs header height instead
-					sidebar_switcher_height = jQuery('#sidebar_tabs').height();
+					sidebar_switcher_height = $('#sidebar_tabs').height();
 					sidebar_height = viewport - sidebar_switcher_height;
 
 					// allow for switcher visibility
@@ -692,26 +698,26 @@ CommentPress.theme.viewport = new function() {
 					}
 
 					// set height
-					jQuery('#sidebar .sidebar_contents_wrapper').css( 'height', sidebar_height + 'px' );
+					$('#sidebar .sidebar_contents_wrapper').css( 'height', sidebar_height + 'px' );
 
 				} else {
 
 					// is the admin bar shown?
 					if ( cp_wp_adminbar == 'y' ) {
-						wpadminbar_height = jQuery('#wpadminbar').height();
+						wpadminbar_height = $('#wpadminbar').height();
 					} else {
 						wpadminbar_height = 0;
 					}
 
 					// get top of sidebar
-					sidebar_top = jQuery.px_to_num( jQuery('html body #content_container #sidebar').css( 'top' ) );
+					sidebar_top = $.px_to_num( $('html body #content_container #sidebar').css( 'top' ) );
 
 					// bail if already zero
 					if ( sidebar_top == header_height + wpadminbar_height ) { return; }
 					//console.log( sidebar_top );
 
 					// set top of sidebars
-					jQuery('html body #content_container #sidebar,html body #content_container #navigation').css(
+					$('html body #content_container #sidebar,html body #content_container #navigation').css(
 						'top', ( header_height + wpadminbar_height ) + 'px'
 					);
 
@@ -753,7 +759,7 @@ CommentPress.theme.viewport = new function() {
 			if ( target == 0 ) {
 
 				// parse post ID
-				post_id = jQuery('.comments_container').prop('id');
+				post_id = $('.comments_container').prop('id');
 
 				// sanity check
 				if ( typeof post_id !== 'undefined' ) {
@@ -762,14 +768,14 @@ CommentPress.theme.viewport = new function() {
 					target_id = post_id.split('-')[1];
 
 					// contruct target
-					target = jQuery('#post-' + target_id);
+					target = $('#post-' + target_id);
 
 				}
 
 			}
 
 			// scroll
-			jQuery.scrollTo(
+			$.scrollTo(
 				target,
 				{
 					duration: (speed * 1.5),
@@ -814,7 +820,7 @@ CommentPress.theme.viewport = new function() {
 			comment_id = url.split('#comment-')[1];
 
 			// get array of parent paragraph_wrapper divs
-			para_wrapper_array = jQuery('#comment-' + comment_id)
+			para_wrapper_array = $('#comment-' + comment_id)
 										.parents('div.paragraph_wrapper')
 										.map( function () {
 											return this;
@@ -824,16 +830,16 @@ CommentPress.theme.viewport = new function() {
 			if ( para_wrapper_array.length > 0 ) {
 
 				// get the item
-				item = jQuery(para_wrapper_array[0]);
+				item = $(para_wrapper_array[0]);
 
 				// are comments open?
 				if ( cp_comments_open == 'y' ) {
 
 					// move form to para
 					text_sig = item.prop('id').split('-')[1];
-					para_id = jQuery('#para_wrapper-'+text_sig+' .reply_to_para').prop('id');
+					para_id = $('#para_wrapper-'+text_sig+' .reply_to_para').prop('id');
 					para_num = para_id.split('-')[1];
-					post_id = jQuery('#comment_post_ID').prop('value');
+					post_id = $('#comment_post_ID').prop('value');
 					//console.log(post_id);
 
 					// seems like TinyMCE isn't yet working and that moving the form
@@ -841,7 +847,7 @@ CommentPress.theme.viewport = new function() {
 					if ( cp_tinymce == '1' ) {
 
 						// if we have link text, then a comment reply is allowed...
-						if ( jQuery( '#comment-' + comment_id + ' > .reply' ).text() !== '' ) {
+						if ( $( '#comment-' + comment_id + ' > .reply' ).text() !== '' ) {
 
 							// temporarily override global so that TinyMCE is not
 							// meddled with in any way...
@@ -884,19 +890,19 @@ CommentPress.theme.viewport = new function() {
 				item.show();
 
 				// scroll comments
-				jQuery.scroll_comments( jQuery('#comment-' + comment_id), 1, 'flash' );
+				$.scroll_comments( $('#comment-' + comment_id), 1, 'flash' );
 
 				// if not the whole page...
 				if( text_sig !== '' ) {
 
 					// get text block
-					textblock = jQuery('#textblock-' + text_sig);
+					textblock = $('#textblock-' + text_sig);
 
 					// highlight this paragraph
-					jQuery.highlight_para( textblock );
+					$.highlight_para( textblock );
 
 					// scroll page
-					jQuery.scroll_page( textblock );
+					$.scroll_page( textblock );
 
 				} else {
 
@@ -925,13 +931,13 @@ CommentPress.theme.viewport = new function() {
 			 *
 			 * @return void
 			 */
-			jQuery('span.para_marker > a').each( function(i) {
+			$('span.para_marker > a').each( function(i) {
 
 				// define vars
 				var text_sig, para_id, para_num, post_id, textblock;
 
 				// get text signature
-				text_sig = jQuery(this).prop( 'id' );
+				text_sig = $(this).prop( 'id' );
 				//console.log( 'text_sig: ' + text_sig );
 
 				// do we have a paragraph or comment block permalink?
@@ -943,27 +949,27 @@ CommentPress.theme.viewport = new function() {
 					if ( cp_comments_open == 'y' ) {
 
 						// move form to para
-						para_id = jQuery('#para_wrapper-' + text_sig + ' .reply_to_para').prop('id');
+						para_id = $('#para_wrapper-' + text_sig + ' .reply_to_para').prop('id');
 						para_num = para_id.split('-')[1];
-						post_id = jQuery('#comment_post_ID').prop('value');
+						post_id = $('#comment_post_ID').prop('value');
 						addComment.moveFormToPara( para_num, text_sig, post_id );
 
 					}
 
 					// toggle next item_body
-					jQuery('#para_heading-' + text_sig).next('div.paragraph_wrapper').show();
+					$('#para_heading-' + text_sig).next('div.paragraph_wrapper').show();
 
 					// scroll comments
-					jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), 1 );
+					$.scroll_comments( $('#para_heading-' + text_sig), 1 );
 
 					// get text block
-					textblock = jQuery('#textblock-' + text_sig);
+					textblock = $('#textblock-' + text_sig);
 
 					// highlight this paragraph
-					jQuery.highlight_para( textblock );
+					$.highlight_para( textblock );
 
 					// scroll page
-					jQuery.scroll_page( textblock );
+					$.scroll_page( textblock );
 
 					// --<
 					return;
@@ -978,7 +984,7 @@ CommentPress.theme.viewport = new function() {
 		if ( url.match( '#respond' ) ) {
 
 			// same as clicking on the "whole page" heading
-			jQuery('h3#para_heading- a.comment_block_permalink').click();
+			$('h3#para_heading- a.comment_block_permalink').click();
 
 			// --<
 			return;
@@ -997,7 +1003,7 @@ CommentPress.theme.viewport = new function() {
 			if ( anchor_id == 'fee-edit-link' ) { return; }
 
 			// locate in DOM
-			anchor = jQuery( '#' + anchor_id );
+			anchor = $( '#' + anchor_id );
 
 			// did we get one?
 			if ( anchor.length ) {
@@ -1006,7 +1012,7 @@ CommentPress.theme.viewport = new function() {
 				//anchor.addClass( 'selected_para' );
 
 				// scroll page
-				jQuery.scroll_page( anchor );
+				$.scroll_page( anchor );
 
 			}
 
@@ -1029,7 +1035,7 @@ CommentPress.theme.viewport = new function() {
 	this.align_content = function( text_sig, mode ) {
 
 		// move to sidebar
-		if ( !jQuery('body').hasClass('active-sidebar') || jQuery('body').hasClass('active-nav') ) {
+		if ( !$('body').hasClass('active-sidebar') || $('body').hasClass('active-nav') ) {
 			CommentPress.theme.sidebars.show_discuss();
 		}
 
@@ -1038,7 +1044,7 @@ CommentPress.theme.viewport = new function() {
 			textblock, post_id, para_id, para_num;
 
 		// get para wrapper
-		para_wrapper = jQuery('#para_heading-' + text_sig).next('div.paragraph_wrapper');
+		para_wrapper = $('#para_heading-' + text_sig).next('div.paragraph_wrapper');
 
 		// bail if we don't have the target element
 		if ( para_wrapper.length == 0 ) {
@@ -1046,7 +1052,7 @@ CommentPress.theme.viewport = new function() {
 		}
 
 		// get comment list
-		comment_list = jQuery( '#para_wrapper-' + text_sig + ' .commentlist' );
+		comment_list = $( '#para_wrapper-' + text_sig + ' .commentlist' );
 
 		// get respond
 		respond = para_wrapper.find('#respond');
@@ -1067,13 +1073,13 @@ CommentPress.theme.viewport = new function() {
 		if ( visible == 'none' ) { opening = true; }
 
 		// clear other highlights
-		jQuery.unhighlight_para();
+		$.unhighlight_para();
 
 		// did we get a text_sig?
 		if ( text_sig !== '' ) {
 
 			// get text block
-			textblock = jQuery('#textblock-' + text_sig);
+			textblock = $('#textblock-' + text_sig);
 			//console.log(text_sig);
 
 			// if encouraging reading and closing
@@ -1084,10 +1090,10 @@ CommentPress.theme.viewport = new function() {
 			} else {
 
 				// highlight this paragraph
-				jQuery.highlight_para( textblock );
+				$.highlight_para( textblock );
 
 				// scroll page
-				jQuery.scroll_page( textblock );
+				$.scroll_page( textblock );
 
 			}
 
@@ -1100,8 +1106,8 @@ CommentPress.theme.viewport = new function() {
 			if ( cp_comments_open == 'y' ) {
 
 				// get comment post ID
-				post_id = jQuery('#comment_post_ID').prop('value');
-				para_id = jQuery('#para_wrapper-'+text_sig+' .reply_to_para').prop('id');
+				post_id = $('#comment_post_ID').prop('value');
+				para_id = $('#para_wrapper-'+text_sig+' .reply_to_para').prop('id');
 				para_num = para_id.split('-')[1];
 
 			}
@@ -1131,19 +1137,19 @@ CommentPress.theme.viewport = new function() {
 					if ( mode == 'marker' ) {
 
 						// scroll comments to header
-						jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+						$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 					} else {
 
 						// scroll comments to comment form
-						jQuery.scroll_comments( jQuery('#respond'), cp_scroll_speed );
+						$.scroll_comments( $('#respond'), cp_scroll_speed );
 
 					}
 
 				} else {
 
 					// scroll comments to header
-					jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+					$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 				}
 
@@ -1161,19 +1167,19 @@ CommentPress.theme.viewport = new function() {
 					if ( mode == 'marker' ) {
 
 						// scroll comments to header
-						jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+						$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 					} else {
 
 						// scroll comments to comment form
-						jQuery.scroll_comments( jQuery('#respond'), cp_scroll_speed );
+						$.scroll_comments( $('#respond'), cp_scroll_speed );
 
 					}
 
 				} else {
 
 					// scroll comments to header
-					jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+					$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 				}
 
@@ -1191,19 +1197,19 @@ CommentPress.theme.viewport = new function() {
 					if ( mode == 'marker' ) {
 
 						// scroll comments to header
-						jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+						$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 					} else {
 
 						// scroll comments to comment form
-						jQuery.scroll_comments( jQuery('#respond'), cp_scroll_speed );
+						$.scroll_comments( $('#respond'), cp_scroll_speed );
 
 					}
 
 				} else {
 
 					// scroll comments to header
-					jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+					$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 				}
 
@@ -1221,19 +1227,19 @@ CommentPress.theme.viewport = new function() {
 					if ( mode == 'marker' ) {
 
 						// scroll comments to header
-						jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+						$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 					} else {
 
 						// scroll comments to comment form
-						jQuery.scroll_comments( jQuery('#respond'), cp_scroll_speed );
+						$.scroll_comments( $('#respond'), cp_scroll_speed );
 
 					}
 
 				} else {
 
 					// scroll comments to header
-					jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+					$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 				}
 
@@ -1262,7 +1268,7 @@ CommentPress.theme.viewport = new function() {
 			if ( cp_promote_reading == '1' && opening ) {
 
 				// scroll comments
-				jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+				$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 			} else {
 
@@ -1276,19 +1282,19 @@ CommentPress.theme.viewport = new function() {
 						if ( mode == 'marker' ) {
 
 							// scroll comments to header
-							jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+							$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 						} else {
 
 							// scroll comments to comment form
-							jQuery.scroll_comments( jQuery('#respond'), cp_scroll_speed );
+							$.scroll_comments( $('#respond'), cp_scroll_speed );
 
 						}
 
 					} else {
 
 						// scroll comments to comment form
-						jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+						$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 					}
 

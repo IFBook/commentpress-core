@@ -27,8 +27,9 @@ CommentPress.ajax = {};
  */
 CommentPress.ajax.comments = new function() {
 
-	// store object ref
+	// store object refs
 	var me = this;
+	var $ = jQuery.noConflict();
 
 	// init form submitting flag
 	this.cpajax_submitting = false;
@@ -64,23 +65,23 @@ CommentPress.ajax.comments = new function() {
 		me.updater( me.cpajax_live );
 
 		// create error container
-		jQuery('#respond_title').after(
+		$('#respond_title').after(
 			'<div id="cpajax_error_msg"></div>'
 		);
 
 		// init AJAX spinner
-		jQuery('#submit').after(
+		$('#submit').after(
 			'<img src="' + me.cpajax_spinner_url + '" id="loading" alt="' + me.cpajax_lang[0] + '" />'
 		);
 
 		// hide spinner
-		jQuery('#loading').hide();
+		$('#loading').hide();
 
 		// store reference to the comment form
-		me.cpajax_form = jQuery('#commentform');
+		me.cpajax_form = $('#commentform');
 
 		// store reference to the error div
-		me.cpajax_error = jQuery('#cpajax_error_msg');
+		me.cpajax_error = $('#cpajax_error_msg');
 
 		// hide error div
 		me.cpajax_error.hide();
@@ -97,13 +98,13 @@ CommentPress.ajax.comments = new function() {
 	this.reset = function() {
 
 		// hide the spinner
-		jQuery('#loading').hide();
+		$('#loading').hide();
 
 		// enable submit button
-		jQuery('#submit').removeAttr( 'disabled' );
+		$('#submit').removeAttr( 'disabled' );
 
 		// make it visible
-		jQuery('#submit').show();
+		$('#submit').show();
 
 		// enable the comment form
 		addComment.enableForm();
@@ -166,14 +167,14 @@ CommentPress.ajax.comments = new function() {
 		/**
 		 * Use the following to log ajax errors from jQuery.post():
 		 *
-		 * jQuery(document).ajaxError( function( e, xhr, settings, exception ) {
+		 * $(document).ajaxError( function( e, xhr, settings, exception ) {
 		 *   console.log( 'error in: ' + settings.url + ' \n'+'error:\n' + xhr.responseText );
 		 * });
 		 *
 		 */
 
 		// use post method
-		jQuery.post(
+		$.post(
 
 			// set URL
 			me.cpajax_ajax_url,
@@ -244,7 +245,7 @@ CommentPress.ajax.comments = new function() {
 				comment = eval( 'data.' + 'cpajax_new_comment_' + i );
 
 				// deal with each comment
-				me.add_new_comment( jQuery(comment.markup), comment.text_sig, comment.parent, comment.id );
+				me.add_new_comment( $(comment.markup), comment.text_sig, comment.parent, comment.id );
 
 				// increment global
 				CommentpressAjaxSettings.cpajax_comment_count++;
@@ -273,7 +274,7 @@ CommentPress.ajax.comments = new function() {
 			head, head_array, comment_num, new_comment_count;
 
 		// get container
-		comment_container = jQuery('div.comments_container');
+		comment_container = $('div.comments_container');
 
 		// kick out if we have it already
 		if ( comment_container.find( '#li-comment-' + comm_id )[0] ) { return; }
@@ -283,7 +284,7 @@ CommentPress.ajax.comments = new function() {
 		head_id = '#para_heading-' + text_sig;
 
 		// find the commentlist we want
-		comm_list = jQuery(para_id + ' ol.commentlist:first');
+		comm_list = $(para_id + ' ol.commentlist:first');
 
 		// if the comment is a reply, append the comment to the children
 		if ( comm_parent != '0' ) {
@@ -292,7 +293,7 @@ CommentPress.ajax.comments = new function() {
 			parent_id = '#li-comment-' + comm_parent;
 
 			// find the child list we want
-			child_list = jQuery(parent_id + ' > ol.children:first');
+			child_list = $(parent_id + ' > ol.children:first');
 
 			// is there a child list?
 			if ( child_list[0] ) {
@@ -358,7 +359,7 @@ CommentPress.ajax.comments = new function() {
 		}
 
 		// get current count
-		comment_num = parseInt( jQuery(head_id + ' a span.cp_comment_num').text() );
+		comment_num = parseInt( $(head_id + ' a span.cp_comment_num').text() );
 
 		// increment
 		new_comment_count = comment_num + 1;
@@ -367,7 +368,7 @@ CommentPress.ajax.comments = new function() {
 		me.update_comments_para_heading( head_id, new_comment_count );
 
 		// find header and prepare
-		head = jQuery(head_id);
+		head = $(head_id);
 
 		// add notransition class
 		head.addClass( 'notransition' );
@@ -405,7 +406,7 @@ CommentPress.ajax.comments = new function() {
 		cpajax_reenable_comment_upvoter();
 
 		// broadcast that we're done and pass new comment ID
-		jQuery(document).trigger( 'commentpress-ajax-new-comment-added', [ comm_id ] );
+		$(document).trigger( 'commentpress-ajax-new-comment-added', [ comm_id ] );
 
 	};
 
@@ -422,7 +423,7 @@ CommentPress.ajax.comments = new function() {
 		var draggers, droppers, text_sig, options, alert_text, div;
 
 		// get all draggable items
-		var draggers = jQuery('#comments_sidebar .comment-wrapper .comment-assign');
+		var draggers = $('#comments_sidebar .comment-wrapper .comment-assign');
 
 		// show them
 		draggers.show();
@@ -437,7 +438,7 @@ CommentPress.ajax.comments = new function() {
 		});
 
 		// get all droppable items
-		droppers = jQuery('#content .post .textblock');
+		droppers = $('#content .post .textblock');
 		//console.log( droppers );
 
 		// make textblocks droppable
@@ -451,7 +452,7 @@ CommentPress.ajax.comments = new function() {
 			drop: function( event, ui ) {
 
 				// get id of dropped-on item
-				text_sig = jQuery(this).prop('id').split('-')[1];
+				text_sig = $(this).prop('id').split('-')[1];
 
 				// create options for modal dialog
 				options = {
@@ -465,18 +466,18 @@ CommentPress.ajax.comments = new function() {
 						"Yes": function() {
 
 							// let's do it
-							jQuery(this).dialog( "option", "disabled", true );
+							$(this).dialog( "option", "disabled", true );
 
 							// clear buttons
-							jQuery('.ui-dialog-buttonset').html(
+							$('.ui-dialog-buttonset').html(
 								'<img src="' + me.cpajax_spinner_url + '" id="loading" alt="' + me.cpajax_lang[0] + '" />'
 							);
 
 							// alert title
-							jQuery('.ui-dialog-title').html( me.cpajax_lang[9] );
+							$('.ui-dialog-title').html( me.cpajax_lang[9] );
 
 							// show message
-							jQuery('.cp_alert_text').html( me.cpajax_lang[10] );
+							$('.cp_alert_text').html( me.cpajax_lang[10] );
 
 							// call function
 							me.reassign( text_sig, ui );
@@ -485,9 +486,9 @@ CommentPress.ajax.comments = new function() {
 						"Cancel": function() {
 
 							// cancel
-							jQuery(this).dialog( 'close' );
-							jQuery(this).dialog( 'destroy' );
-							jQuery(this).remove();
+							$(this).dialog( 'close' );
+							$(this).dialog( 'destroy' );
+							$(this).remove();
 
 						}
 
@@ -499,7 +500,7 @@ CommentPress.ajax.comments = new function() {
 				alert_text = me.cpajax_lang[8];
 
 				// create modal dialog
-				div = jQuery('<div><p class="cp_alert_text">' + alert_text + '</p></div>');
+				div = $('<div><p class="cp_alert_text">' + alert_text + '</p></div>');
 				div.prop( 'title', me.cpajax_lang[7] )
 				   .appendTo( 'body' )
 				   .dialog( options );
@@ -525,14 +526,14 @@ CommentPress.ajax.comments = new function() {
 		var comment_id, comment_item, comment_to_move, other_comments, comment_list;
 
 		// get comment id
-		comment_id = jQuery(ui.draggable).prop('id').split('-')[1];
+		comment_id = $(ui.draggable).prop('id').split('-')[1];
 
 		// let's see what params we've got
 		//console.log( 'text_sig: ' + text_sig );
 		//console.log( 'comment id: ' + comment_id );
 
 		// get comment parent li
-		comment_item = jQuery(ui.draggable).closest( 'li.comment' );
+		comment_item = $(ui.draggable).closest( 'li.comment' );
 
 		// assign as comment to move
 		comment_to_move = comment_item;
@@ -552,7 +553,7 @@ CommentPress.ajax.comments = new function() {
 		}
 
 		// slide our comment up
-		jQuery(comment_to_move).slideUp( 'slow',
+		$(comment_to_move).slideUp( 'slow',
 
 			// animation complete
 			function() {
@@ -562,7 +563,7 @@ CommentPress.ajax.comments = new function() {
 				// any possible markup issues, so go with that instead...
 
 				// find target paragraph wrapper
-				var para_wrapper = jQuery('#para_wrapper-' + text_sig);
+				var para_wrapper = $('#para_wrapper-' + text_sig);
 
 				// get nested commentlist
 				var target_list = para_wrapper.children( 'ol.commentlist' );
@@ -607,7 +608,7 @@ CommentPress.ajax.comments = new function() {
 				*/
 
 				// use post
-				jQuery.post(
+				$.post(
 
 					// set URL
 					me.cpajax_ajax_url,
@@ -694,7 +695,7 @@ CommentPress.ajax.comments = new function() {
 		*/
 
 		// we no longer have zero comments
-		jQuery(para_id).removeClass( 'no_comments' );
+		$(para_id).removeClass( 'no_comments' );
 
 		// if the comment is a reply, append the comment to the children
 		if ( comm_parent != '0' ) {
@@ -703,7 +704,7 @@ CommentPress.ajax.comments = new function() {
 			parent_id = '#li-comment-' + comm_parent;
 
 			// find the child list we want
-			child_list = jQuery(parent_id + ' > ol.children:first');
+			child_list = $(parent_id + ' > ol.children:first');
 
 			// is there a child list?
 			if ( child_list[0] ) {
@@ -730,7 +731,7 @@ CommentPress.ajax.comments = new function() {
 		} else {
 
 			// find the commentlist we want
-			comm_list = jQuery(para_id + ' > ol.commentlist:first');
+			comm_list = $(para_id + ' > ol.commentlist:first');
 
 			// is there a comment list?
 			if ( comm_list[0] ) {
@@ -756,7 +757,7 @@ CommentPress.ajax.comments = new function() {
 		}
 
 		// slide up comment form
-		jQuery('#respond').slideUp( 'fast', function() {
+		$('#respond').slideUp( 'fast', function() {
 
 			// after slide
 			addComment.cancelForm();
@@ -764,7 +765,7 @@ CommentPress.ajax.comments = new function() {
 		});
 
 		// get existing current count
-		comment_num = parseInt( jQuery(head_id + ' a span.cp_comment_num').text() );
+		comment_num = parseInt( $(head_id + ' a span.cp_comment_num').text() );
 
 		// increment
 		new_comment_count = comment_num + 1;
@@ -779,7 +780,7 @@ CommentPress.ajax.comments = new function() {
 		if( text_sig != '' ) {
 
 			// scroll page to text block
-			jQuery.scroll_page( jQuery('#textblock-' + text_sig) );
+			$.scroll_page( $('#textblock-' + text_sig) );
 
 		} else {
 
@@ -803,7 +804,7 @@ CommentPress.ajax.comments = new function() {
 		cpajax_reenable_comment_upvoter();
 
 		// broadcast that we're done and pass new comment ID
-		jQuery(document).trigger( 'commentpress-ajax-comment-added', [ new_comm_id ] );
+		$(document).trigger( 'commentpress-ajax-comment-added', [ new_comm_id ] );
 
 	};
 
@@ -906,7 +907,7 @@ CommentPress.ajax.comments = new function() {
 		var last_id, new_comm_id, comment;
 
 		// get the id of the last list item
-		last_id = jQuery(last).prop('id');
+		last_id = $(last).prop('id');
 
 		/*
 		// IE seems to grab the result from cache despite nocache_headers()
@@ -920,18 +921,18 @@ CommentPress.ajax.comments = new function() {
 
 		// construct new comment id
 		new_comm_id = '#comment-' + ( last_id.toString().split('-')[2] );
-		comment = jQuery(new_comm_id);
+		comment = $(new_comm_id);
 
 		// add a couple of classes
 		comment.addClass( 'comment-highlighted' );
 
-		jQuery(content).slideDown( 'slow',
+		$(content).slideDown( 'slow',
 
 			// animation complete
 			function() {
 
 				// scroll to new comment
-				jQuery('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
+				$('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
 					comment,
 					{
 						duration: cp_scroll_speed,
@@ -942,7 +943,7 @@ CommentPress.ajax.comments = new function() {
 							comment.addClass( 'comment-fade' );
 
 							// broadcast that animation is done
-							jQuery(document).trigger( 'commentpress-ajax-comment-added-scrolled' );
+							$(document).trigger( 'commentpress-ajax-comment-added-scrolled' );
 
 						}
 					}
@@ -969,13 +970,13 @@ CommentPress.ajax.comments = new function() {
 	this.update_comments_para_heading = function( head_id, new_comment_count ) {
 
 		// increment
-		jQuery(head_id + ' a span.cp_comment_num').text( new_comment_count.toString() );
+		$(head_id + ' a span.cp_comment_num').text( new_comment_count.toString() );
 
 		// if exactly one comment
 		if ( new_comment_count == 1 ) {
 
 			// update current word
-			jQuery(head_id + ' a span.cp_comment_word').text( me.cpajax_lang[11] );
+			$(head_id + ' a span.cp_comment_word').text( me.cpajax_lang[11] );
 
 		}
 
@@ -983,7 +984,7 @@ CommentPress.ajax.comments = new function() {
 		if ( new_comment_count > 1 ) {
 
 			// update current word
-			jQuery(head_id + ' a span.cp_comment_word').text( me.cpajax_lang[12] );
+			$(head_id + ' a span.cp_comment_word').text( me.cpajax_lang[12] );
 
 		}
 
@@ -1007,16 +1008,16 @@ CommentPress.ajax.comments = new function() {
 		textblock_id = '#textblock-' + text_sig;
 
 		// set comment icon text
-		jQuery(textblock_id + ' span small').text( new_comment_count.toString() );
+		$(textblock_id + ' span small').text( new_comment_count.toString() );
 
 		// if we're changing from 0 to 1...
 		if ( new_comment_count == 1 ) {
 
 			// set comment icon
-			jQuery(textblock_id + ' span.commenticonbox a.para_permalink').addClass( 'has_comments' );
+			$(textblock_id + ' span.commenticonbox a.para_permalink').addClass( 'has_comments' );
 
 			// show comment icon text
-			jQuery(textblock_id + ' span small').css( 'visibility', 'visible' );
+			$(textblock_id + ' span small').css( 'visibility', 'visible' );
 
 		}
 
@@ -1032,14 +1033,14 @@ CommentPress.ajax.comments = new function() {
 	this.initialise_form = function() {
 
 		// unbind first to allow repeated calls to this function
-		jQuery('#commentform').off( 'submit' );
+		$('#commentform').off( 'submit' );
 
 		/**
 		 * Comment submission method
 		 *
 		 * @return false
 		 */
-		jQuery('#commentform').on( 'submit', function( event ) {
+		$('#commentform').on( 'submit', function( event ) {
 
 			// define vars
 			var filter;
@@ -1103,13 +1104,13 @@ CommentPress.ajax.comments = new function() {
 			}
 
 			// submit the form
-			jQuery(this).ajaxSubmit({
+			$(this).ajaxSubmit({
 
 				beforeSubmit: function() {
 
-					jQuery('#loading').show();
-					jQuery('#submit').prop('disabled','disabled');
-					jQuery('#submit').hide();
+					$('#loading').show();
+					$('#submit').prop('disabled','disabled');
+					$('#submit').hide();
 
 				}, // end beforeSubmit
 
@@ -1139,15 +1140,15 @@ CommentPress.ajax.comments = new function() {
 
 					// jQuery 1.9 fails to recognise the response as HTML, so
 					// we *must* use parseHTML if it's available...
-					if ( jQuery.parseHTML ) {
+					if ( $.parseHTML ) {
 
 						// if our jQuery version is 1.8+, it'll have parseHTML
-						response =  jQuery( jQuery.parseHTML( data ) );
+						response =  $( $.parseHTML( data ) );
 
 					} else {
 
 						// get our data as object in the basic way
-						response = jQuery(data);
+						response = $(data);
 
 					}
 
@@ -1297,12 +1298,12 @@ jQuery(document).ready(function($) {
 	/**
 	 * AJAX comment updating control mechanism?
 	 *
-	jQuery('#btn_js').toggle( function() {
+	$('#btn_js').toggle( function() {
 
 		// trigger repeat calls
 		CommentPress.ajax.comments.updater( false );
 
-		jQuery(this).text('Javascript Off');
+		$(this).text('Javascript Off');
 
 		return false;
 
@@ -1311,7 +1312,7 @@ jQuery(document).ready(function($) {
 		// trigger repeat calls
 		CommentPress.ajax.comments.updater( true );
 
-		jQuery(this).text('Javascript On');
+		$(this).text('Javascript On');
 
 		return false;
 

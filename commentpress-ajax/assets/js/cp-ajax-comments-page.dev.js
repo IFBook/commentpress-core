@@ -28,8 +28,9 @@ CommentPress.ajax = {};
  */
 CommentPress.ajax.comments = new function() {
 
-	// store object ref
+	// store object refs
 	var me = this;
+	var $ = jQuery.noConflict();
 
 	// init form submitting flag
 	this.cpajax_submitting = false;
@@ -62,23 +63,23 @@ CommentPress.ajax.comments = new function() {
 	this.initialise = function() {
 
 		// create error container
-		jQuery('#respond_title').after(
+		$('#respond_title').after(
 			'<div id="cpajax_error_msg"></div>'
 		);
 
 		// init AJAX spinner
-		jQuery('#submit').after(
+		$('#submit').after(
 			'<img src="' + me.cpajax_spinner_url + '" id="loading" alt="' + me.cpajax_lang[0] + '" />'
 		);
 
 		// hide spinner
-		jQuery('#loading').hide();
+		$('#loading').hide();
 
 		// store reference to the comment form
-		me.cpajax_form = jQuery('#commentform');
+		me.cpajax_form = $('#commentform');
 
 		// store reference to the error div
-		me.cpajax_error = jQuery('#cpajax_error_msg');
+		me.cpajax_error = $('#cpajax_error_msg');
 
 		// hide error div
 		me.cpajax_error.hide();
@@ -95,13 +96,13 @@ CommentPress.ajax.comments = new function() {
 	this.reset = function() {
 
 		// hide the spinner
-		jQuery('#loading').hide();
+		$('#loading').hide();
 
 		// enable submit button
-		jQuery('#submit').removeAttr( 'disabled' );
+		$('#submit').removeAttr( 'disabled' );
 
 		// make it visible
-		jQuery('#submit').show();
+		$('#submit').show();
 
 		// enable the comment form
 		addComment.enableForm();
@@ -128,7 +129,7 @@ CommentPress.ajax.comments = new function() {
 		comm_parent = me.cpajax_form.find('#comment_parent').val();
 
 		// find the commentlist we want
-		comm_list = jQuery('ol.commentlist:first');
+		comm_list = $('ol.commentlist:first');
 
 		// if the comment is a reply, append the comment to the children
 		if ( comm_parent != '0' ) {
@@ -137,7 +138,7 @@ CommentPress.ajax.comments = new function() {
 			parent_id = '#li-comment-' + comm_parent;
 
 			// find the child list we want
-			child_list = jQuery(parent_id + ' > ol.children:first');
+			child_list = $(parent_id + ' > ol.children:first');
 
 			// is there a child list?
 			if ( child_list[0] ) {
@@ -190,7 +191,7 @@ CommentPress.ajax.comments = new function() {
 		head = response.find('#comments_in_page_wrapper div.comments_container > h3');
 
 		// replace heading
-		jQuery('#comments_in_page_wrapper div.comments_container > h3').replaceWith(head);
+		$('#comments_in_page_wrapper div.comments_container > h3').replaceWith(head);
 
 		// clear comment form
 		me.cpajax_form.find( '#comment' ).val( '' );
@@ -274,7 +275,7 @@ CommentPress.ajax.comments = new function() {
 		var last_id, new_comm_id, comment;
 
 		// get the id of the last list item
-		last_id = jQuery(last).prop('id');
+		last_id = $(last).prop('id');
 
 		/*
 		// IE seems to grab the result from cache despite nocache_headers()
@@ -288,20 +289,20 @@ CommentPress.ajax.comments = new function() {
 
 		// construct new comment id
 		new_comm_id = '#comment-' + ( last_id.toString().split('-')[2] );
-		comment = jQuery(new_comm_id);
+		comment = $(new_comm_id);
 
 		addComment.cancelForm();
 
 		// add a couple of classes
 		comment.addClass( 'comment-highlighted' );
 
-		jQuery(content).slideDown( 'slow',
+		$(content).slideDown( 'slow',
 
 			// animation complete
 			function() {
 
 				// scroll to new comment
-				jQuery.scrollTo(
+				$.scrollTo(
 					comment,
 					{
 						duration: cp_scroll_speed,
@@ -333,14 +334,14 @@ CommentPress.ajax.comments = new function() {
 	this.initialise_form = function() {
 
 		// unbind first to allow repeated calls to this function
-		jQuery('#commentform').off( 'submit' );
+		$('#commentform').off( 'submit' );
 
 		/**
 		 * Comment submission method
 		 *
 		 * @return false
 		 */
-		jQuery('#commentform').on( 'submit', function( event ) {
+		$('#commentform').on( 'submit', function( event ) {
 
 			// define vars
 			var filter;
@@ -408,15 +409,15 @@ CommentPress.ajax.comments = new function() {
 
 
 			// submit the form
-			jQuery(this).ajaxSubmit({
+			$(this).ajaxSubmit({
 
 
 
 				beforeSubmit: function() {
 
-					jQuery('#loading').show();
-					jQuery('#submit').prop('disabled','disabled');
-					jQuery('#submit').hide();
+					$('#loading').show();
+					$('#submit').prop('disabled','disabled');
+					$('#submit').hide();
 
 				}, // end beforeSubmit
 
@@ -450,15 +451,15 @@ CommentPress.ajax.comments = new function() {
 
 					// jQuery 1.9 fails to recognise the response as HTML, so
 					// we *must* use parseHTML if it's available...
-					if ( jQuery.parseHTML ) {
+					if ( $.parseHTML ) {
 
 						// if our jQuery version is 1.8+, it'll have parseHTML
-						response =  jQuery( jQuery.parseHTML( data ) );
+						response =  $( $.parseHTML( data ) );
 
 					} else {
 
 						// get our data as object in the basic way
-						response = jQuery(data);
+						response = $(data);
 
 					}
 

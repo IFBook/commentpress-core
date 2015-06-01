@@ -121,8 +121,9 @@ CommentPress.setup = {};
  */
 CommentPress.setup.navigation = new function() {
 
-	// store object ref
+	// store object refs
 	var me = this;
+	var $ = jQuery.noConflict();
 
 
 
@@ -153,14 +154,14 @@ CommentPress.setup.navigation = new function() {
 	this.headings = function() {
 
 		// set pointer
-		jQuery('h3.activity_heading').css( 'cursor', 'pointer' );
+		$('h3.activity_heading').css( 'cursor', 'pointer' );
 
 		/**
 		 * Activity column headings click
 		 *
 		 * @return void
 		 */
-		jQuery('#toc_sidebar').on( 'click', 'h3.activity_heading', function( event ) {
+		$('#toc_sidebar').on( 'click', 'h3.activity_heading', function( event ) {
 
 			// define vars
 			var para_wrapper;
@@ -169,11 +170,11 @@ CommentPress.setup.navigation = new function() {
 			event.preventDefault();
 
 			// get para wrapper
-			para_wrapper = jQuery(this).next('div.paragraph_wrapper');
+			para_wrapper = $(this).next('div.paragraph_wrapper');
 			//console.log( para_wrapper );
 
 			// set width to prevent rendering error
-			para_wrapper.css( 'width', jQuery(this).parent().css( 'width' ) );
+			para_wrapper.css( 'width', $(this).parent().css( 'width' ) );
 
 			// toggle next paragraph_wrapper
 			para_wrapper.slideToggle( 'slow', function() {
@@ -201,7 +202,7 @@ CommentPress.setup.navigation = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('#toc_sidebar').on( 'click', 'ul#toc_list li a', function( event ) {
+		$('#toc_sidebar').on( 'click', 'ul#toc_list li a', function( event ) {
 
 			// are our chapters pages?
 			if ( cp_toc_chapter_is_page == '0' ) {
@@ -243,8 +244,9 @@ CommentPress.setup.navigation = new function() {
  */
 CommentPress.setup.content = new function() {
 
-	// store object ref
+	// store object refs
 	var me = this;
+	var $ = jQuery.noConflict();
 
 
 
@@ -291,7 +293,7 @@ CommentPress.setup.content = new function() {
 		 *
 		 * @return false
 		 */
-		jQuery('#container').on( 'click', '.post_title a', function( event ) {
+		$('#container').on( 'click', '.post_title a', function( event ) {
 
 			// override event
 			event.preventDefault();
@@ -327,8 +329,8 @@ CommentPress.setup.content = new function() {
 				 *
 				 * @return void
 				 */
-				jQuery('#container').on( 'mouseover', '.textblock', function( event ) {
-					jQuery(this).addClass('textblock-in');
+				$('#container').on( 'mouseover', '.textblock', function( event ) {
+					$(this).addClass('textblock-in');
 				});
 
 				/**
@@ -336,8 +338,8 @@ CommentPress.setup.content = new function() {
 				 *
 				 * @return void
 				 */
-				jQuery('#container').on( 'mouseout', '.textblock', function( event ) {
-					jQuery(this).removeClass('textblock-in');
+				$('#container').on( 'mouseout', '.textblock', function( event ) {
+					$(this).removeClass('textblock-in');
 				});
 
 			}
@@ -349,13 +351,13 @@ CommentPress.setup.content = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('#container').on( 'click', '.textblock', function( event ) {
+		$('#container').on( 'click', '.textblock', function( event ) {
 
 			// define vars
 			var text_sig;
 
 			// get text signature
-			text_sig = jQuery(this).prop('id');
+			text_sig = $(this).prop('id');
 			//console.log( text_sig );
 
 			// remove leading #
@@ -365,7 +367,7 @@ CommentPress.setup.content = new function() {
 			CommentPress.theme.viewport.align_content( text_sig, CommentPress.settings.textblock.getMarkerMode() );
 
 			// broadcast action
-			jQuery(document).trigger( 'commentpress-textblock-clicked' );
+			$(document).trigger( 'commentpress-textblock-clicked' );
 
 		});
 
@@ -385,13 +387,13 @@ CommentPress.setup.content = new function() {
 		 *
 		 * @return false
 		 */
-		jQuery('#container').on( 'click', 'span.para_marker a', function( event ) {
+		$('#container').on( 'click', 'span.para_marker a', function( event ) {
 
 			// override event
 			event.preventDefault();
 
 			// broadcast action
-			jQuery(document).trigger( 'commentpress-paramarker-clicked' );
+			$(document).trigger( 'commentpress-paramarker-clicked' );
 
 		});
 
@@ -400,13 +402,13 @@ CommentPress.setup.content = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('#container').on( 'mouseenter', 'span.para_marker a', function( event ) {
+		$('#container').on( 'mouseenter', 'span.para_marker a', function( event ) {
 
 			// define vars
 			var target;
 
 			// get target item
-			target = jQuery(this).parent().next().children('.comment_count');
+			target = $(this).parent().next().children('.comment_count');
 			//console.log( target );
 
 			target.addClass( 'js-hover' );
@@ -418,13 +420,13 @@ CommentPress.setup.content = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('#container').on( 'mouseleave', 'span.para_marker a', function( event ) {
+		$('#container').on( 'mouseleave', 'span.para_marker a', function( event ) {
 
 			// define vars
 			var target;
 
 			// get target item
-			target = jQuery(this).parent().next().children('.comment_count');
+			target = $(this).parent().next().children('.comment_count');
 			//console.log( target );
 
 			target.removeClass( 'js-hover' );
@@ -447,7 +449,7 @@ CommentPress.setup.content = new function() {
 		 *
 		 * @return false
 		 */
-		jQuery('#container').on( 'click', '.commenticonbox', function( event ) {
+		$('#container').on( 'click', '.commenticonbox', function( event ) {
 
 			// define vars
 			var text_sig;
@@ -459,14 +461,14 @@ CommentPress.setup.content = new function() {
 			event.stopPropagation();
 
 			// get text signature
-			text_sig = jQuery(this).children('a.para_permalink').prop('href').split('#')[1];
+			text_sig = $(this).children('a.para_permalink').prop('href').split('#')[1];
 			//console.log( text_sig );
 
 			// use function
 			CommentPress.theme.viewport.align_content( text_sig, 'auto' );
 
 			// broadcast action
-			jQuery(document).trigger( 'commentpress-commenticonbox-clicked' );
+			$(document).trigger( 'commentpress-commenticonbox-clicked' );
 
 		});
 
@@ -475,7 +477,7 @@ CommentPress.setup.content = new function() {
 		 *
 		 * @return false
 		 */
-		jQuery('#container').on( 'click', 'a.para_permalink', function( event ) {
+		$('#container').on( 'click', 'a.para_permalink', function( event ) {
 
 			// override event
 			event.preventDefault();
@@ -487,16 +489,16 @@ CommentPress.setup.content = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('#container').on( 'mouseenter', 'a.para_permalink', function( event ) {
+		$('#container').on( 'mouseenter', 'a.para_permalink', function( event ) {
 
 			// define vars
 			var text_sig;
 
 			// get text signature
-			text_sig = jQuery(this).prop('href').split('#')[1];
+			text_sig = $(this).prop('href').split('#')[1];
 			//console.log( text_sig );
 
-			jQuery('span.para_marker a#' + text_sig).addClass( 'js-hover' );
+			$('span.para_marker a#' + text_sig).addClass( 'js-hover' );
 
 		});
 
@@ -505,16 +507,16 @@ CommentPress.setup.content = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('#container').on( 'mouseleave', 'a.para_permalink', function( event ) {
+		$('#container').on( 'mouseleave', 'a.para_permalink', function( event ) {
 
 			// define vars
 			var text_sig;
 
 			// get text signature
-			text_sig = jQuery(this).prop('href').split('#')[1];
+			text_sig = $(this).prop('href').split('#')[1];
 			//console.log( text_sig );
 
-			jQuery('span.para_marker a#' + text_sig).removeClass( 'js-hover' );
+			$('span.para_marker a#' + text_sig).removeClass( 'js-hover' );
 
 		});
 
@@ -535,7 +537,7 @@ CommentPress.setup.content = new function() {
 		 *
 		 * @return false
 		 */
-		jQuery('#container').on( 'click', 'a.cp_para_link', function( event ) {
+		$('#container').on( 'click', 'a.cp_para_link', function( event ) {
 
 			// define vars
 			var text_sig;
@@ -544,7 +546,7 @@ CommentPress.setup.content = new function() {
 			event.preventDefault();
 
 			// get text signature
-			text_sig = jQuery(this).prop('href').split('#')[1];
+			text_sig = $(this).prop('href').split('#')[1];
 			//console.log(text_sig);
 
 			// use function
@@ -574,7 +576,7 @@ CommentPress.setup.content = new function() {
 		 *
 		 * @return false
 		 */
-		jQuery('#container').on( 'click', 'span.footnotereverse a, a.footnote-back-link', function( event ) {
+		$('#container').on( 'click', 'span.footnotereverse a, a.footnote-back-link', function( event ) {
 
 			// define vars
 			var target;
@@ -583,11 +585,11 @@ CommentPress.setup.content = new function() {
 			event.preventDefault();
 
 			// get target
-			target = jQuery(this).prop('href').split('#')[1];
+			target = $(this).prop('href').split('#')[1];
 			//console.log(target);
 
 			// use function for offset
-			jQuery.quick_scroll_page( '#' + target, 100 );
+			$.quick_scroll_page( '#' + target, 100 );
 
 		});
 
@@ -596,13 +598,13 @@ CommentPress.setup.content = new function() {
 		 *
 		 * @return false
 		 */
-		jQuery('#container').on( 'click', '.simple-footnotes ol li > a', function( event ) {
+		$('#container').on( 'click', '.simple-footnotes ol li > a', function( event ) {
 
 			// define vars
 			var target;
 
 			// get target
-			target = jQuery(this).prop('href');
+			target = $(this).prop('href');
 			//console.log(target);
 
 			// is it a backlink?
@@ -615,7 +617,7 @@ CommentPress.setup.content = new function() {
 				target = target.split('#')[1];
 
 				// use function for offset
-				jQuery.quick_scroll_page( '#' + target, 100 );
+				$.quick_scroll_page( '#' + target, 100 );
 
 			}
 
@@ -632,7 +634,7 @@ CommentPress.setup.content = new function() {
 		 *
 		 * @return false
 		 */
-		jQuery('#container').on( 'click', 'a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link, a.zp-ZotpressInText', function( event ) {
+		$('#container').on( 'click', 'a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link, a.zp-ZotpressInText', function( event ) {
 
 			// define vars
 			var target;
@@ -641,11 +643,11 @@ CommentPress.setup.content = new function() {
 			event.preventDefault();
 
 			// get target
-			target = jQuery(this).prop('href').split('#')[1];
+			target = $(this).prop('href').split('#')[1];
 			//console.log(target);
 
 			// use function for offset
-			jQuery.quick_scroll_page( '#' + target, 100 );
+			$.quick_scroll_page( '#' + target, 100 );
 
 		});
 
@@ -663,15 +665,15 @@ CommentPress.setup.content = new function() {
 	this.workflow_tabs = function( content_min_height, content_padding_bottom ) {
 
 		// hide workflow content
-		jQuery('#literal .post').css( 'display', 'none' );
-		jQuery('#original .post').css( 'display', 'none' );
+		$('#literal .post').css( 'display', 'none' );
+		$('#original .post').css( 'display', 'none' );
 
 		/**
 		 * Clicking on the workflow tabs
 		 *
 		 * @return false
 		 */
-		jQuery('#container').on( 'click', 'content-tabs li h2 a', function( event ) {
+		$('#container').on( 'click', 'content-tabs li h2 a', function( event ) {
 
 			// define vars
 			var target_id;
@@ -686,26 +688,26 @@ CommentPress.setup.content = new function() {
 			//console.log( target_id );
 
 			// hide all
-			jQuery('.post').css( 'display', 'none' );
+			$('.post').css( 'display', 'none' );
 
 			// remove content min-height
-			jQuery('.workflow-wrapper').css( 'min-height', '0' );
+			$('.workflow-wrapper').css( 'min-height', '0' );
 
 			// remove bottom padding
-			jQuery('.workflow-wrapper').css( 'padding-bottom', '0' );
+			$('.workflow-wrapper').css( 'padding-bottom', '0' );
 
 			// set min-height of target
-			jQuery('#' + target_id + '.workflow-wrapper').css( 'min-height', content_min_height );
+			$('#' + target_id + '.workflow-wrapper').css( 'min-height', content_min_height );
 
 			// set padding-bottom of target
-			jQuery('#' + target_id + '.workflow-wrapper').css( 'padding-bottom', content_padding_bottom );
+			$('#' + target_id + '.workflow-wrapper').css( 'padding-bottom', content_padding_bottom );
 
 			// show it
-			jQuery('#' + target_id + ' .post').css( 'display', 'block' );
+			$('#' + target_id + ' .post').css( 'display', 'block' );
 
 			// amend css of list items to mimic tabs
-			jQuery('#content-tabs li').removeClass( 'default-content-tab' );
-			jQuery(this).parent().parent().addClass( 'default-content-tab' );
+			$('#content-tabs li').removeClass( 'default-content-tab' );
+			$(this).parent().parent().addClass( 'default-content-tab' );
 
 		});
 
@@ -720,8 +722,9 @@ CommentPress.setup.content = new function() {
  */
 CommentPress.setup.comments = new function() {
 
-	// store object ref
+	// store object refs
 	var me = this;
+	var $ = jQuery.noConflict();
 
 
 
@@ -768,7 +771,7 @@ CommentPress.setup.comments = new function() {
 		 *
 		 * @return false
 		 */
-		jQuery('#sidebar').on( 'click', '#comments_header h2 a', function( event ) {
+		$('#sidebar').on( 'click', '#comments_header h2 a', function( event ) {
 
 			// override event
 			event.preventDefault();
@@ -794,16 +797,16 @@ CommentPress.setup.comments = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('#sidebar').on( 'click', '#cp_minimise_all_comments', function( event ) {
+		$('#sidebar').on( 'click', '#cp_minimise_all_comments', function( event ) {
 
 			// override event
 			event.preventDefault();
 
 			// slide all paragraph comment wrappers up
-			jQuery('#comments_sidebar div.paragraph_wrapper').slideUp();
+			$('#comments_sidebar div.paragraph_wrapper').slideUp();
 
 			// unhighlight paragraphs
-			jQuery.unhighlight_para();
+			$.unhighlight_para();
 
 		});
 
@@ -825,7 +828,7 @@ CommentPress.setup.comments = new function() {
 		if ( cp_special_page == '1' ) { return; }
 
 		// set pointer
-		jQuery('a.comment_block_permalink').css( 'cursor', 'pointer' );
+		$('a.comment_block_permalink').css( 'cursor', 'pointer' );
 
 		/**
 		 * Clicks on "Comments" tab "X Comments on Paragraph Y" links
@@ -833,7 +836,7 @@ CommentPress.setup.comments = new function() {
 		 * @param object event The clicked object
 		 * @return false
 		 */
-		jQuery('#comments_sidebar').on( 'click', 'a.comment_block_permalink', function( event ) {
+		$('#comments_sidebar').on( 'click', 'a.comment_block_permalink', function( event ) {
 
 			// define vars
 			var text_sig, para_wrapper, comment_list, opening, visible, textblock,
@@ -843,14 +846,14 @@ CommentPress.setup.comments = new function() {
 			event.preventDefault();
 
 			// get text_sig
-			text_sig = jQuery(this).parent().prop( 'id' ).split('para_heading-')[1];
+			text_sig = $(this).parent().prop( 'id' ).split('para_heading-')[1];
 			//console.log( 'text_sig: ' + text_sig );
 
 			// get para wrapper
-			para_wrapper = jQuery(this).parent().next('div.paragraph_wrapper');
+			para_wrapper = $(this).parent().next('div.paragraph_wrapper');
 
 			// get comment list
-			comment_list = jQuery( '#para_wrapper-' + text_sig ).find('ol.commentlist' );
+			comment_list = $( '#para_wrapper-' + text_sig ).find('ol.commentlist' );
 
 			// init
 			opening = false;
@@ -871,19 +874,19 @@ CommentPress.setup.comments = new function() {
 				if( text_sig !== '' && text_sig != 'pingbacksandtrackbacks' ) {
 
 					// get text block
-					textblock = jQuery('#textblock-' + text_sig);
+					textblock = $('#textblock-' + text_sig);
 
 					// only if opening
 					if ( opening ) {
 
 						// unhighlight paragraphs
-						jQuery.unhighlight_para();
+						$.unhighlight_para();
 
 						// highlight this paragraph
-						jQuery.highlight_para( textblock );
+						$.highlight_para( textblock );
 
 						// scroll page
-						jQuery.scroll_page( textblock );
+						$.scroll_page( textblock );
 
 					} else {
 
@@ -891,10 +894,10 @@ CommentPress.setup.comments = new function() {
 						if ( cp_promote_reading == '0' ) {
 
 							// closing with a comment form
-							if ( jQuery( '#para_wrapper-' + text_sig ).find('#respond' )[0] ) {
+							if ( $( '#para_wrapper-' + text_sig ).find('#respond' )[0] ) {
 
 								// unhighlight paragraphs
-								jQuery.unhighlight_para();
+								$.unhighlight_para();
 
 							} else {
 
@@ -902,13 +905,13 @@ CommentPress.setup.comments = new function() {
 								if ( !comment_list[0] ) {
 
 									// unhighlight paragraphs
-									jQuery.unhighlight_para();
+									$.unhighlight_para();
 
 									// highlight this paragraph
-									jQuery.highlight_para( textblock );
+									$.highlight_para( textblock );
 
 									// scroll page
-									jQuery.scroll_page( textblock );
+									$.scroll_page( textblock );
 
 								}
 
@@ -917,10 +920,10 @@ CommentPress.setup.comments = new function() {
 						} else {
 
 							// if ours is highlighted
-							if ( jQuery.is_highlighted( textblock ) ) {
+							if ( $.is_highlighted( textblock ) ) {
 
 								// unhighlight paragraphs
-								jQuery.unhighlight_para();
+								$.unhighlight_para();
 
 							}
 
@@ -931,7 +934,7 @@ CommentPress.setup.comments = new function() {
 				} else {
 
 					// unhighlight paragraphs
-					jQuery.unhighlight_para();
+					$.unhighlight_para();
 
 					// only scroll if not pings
 					if ( text_sig != 'pingbacksandtrackbacks' ) {
@@ -955,12 +958,12 @@ CommentPress.setup.comments = new function() {
 				if ( cp_comments_open == 'y' ) {
 
 					// get comment post ID
-					post_id = jQuery('#comment_post_ID').prop('value');
-					para_id = jQuery('#para_wrapper-' + text_sig + ' .reply_to_para').prop('id');
+					post_id = $('#comment_post_ID').prop('value');
+					para_id = $('#para_wrapper-' + text_sig + ' .reply_to_para').prop('id');
 					para_num = para_id.split('-')[1];
 
 					// do we have the comment form?
-					has_form = jQuery( '#para_wrapper-' + text_sig ).find( '#respond' )[0];
+					has_form = $( '#para_wrapper-' + text_sig ).find( '#respond' )[0];
 
 					// if we have a comment list
 					if ( comment_list.length > 0 && comment_list[0] ) {
@@ -1006,7 +1009,7 @@ CommentPress.setup.comments = new function() {
 				if ( opening ) {
 
 					// scroll comments
-					jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+					$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 				}
 
@@ -1030,7 +1033,7 @@ CommentPress.setup.comments = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('#comments_sidebar').on( 'click', '.comment_permalink', function( event ) {
+		$('#comments_sidebar').on( 'click', '.comment_permalink', function( event ) {
 
 			// define vars
 			var comment_id, header_offset, text_sig;
@@ -1048,8 +1051,8 @@ CommentPress.setup.comments = new function() {
 				header_offset = CommentPress.theme.header.get_offset();
 
 				// scroll to comment
-				jQuery.scrollTo(
-					jQuery('#'+comment_id),
+				$.scrollTo(
+					$('#'+comment_id),
 					{
 						duration: cp_scroll_speed,
 						axis:'y',
@@ -1060,21 +1063,21 @@ CommentPress.setup.comments = new function() {
 			} else {
 
 				// clear other highlights
-				jQuery.unhighlight_para();
+				$.unhighlight_para();
 
 				// get text sig
-				text_sig = jQuery.get_text_sig_by_comment_id( '#' + comment_id );
+				text_sig = $.get_text_sig_by_comment_id( '#' + comment_id );
 
 				// if not a pingback...
 				if ( text_sig != 'pingbacksandtrackbacks' ) {
 
 					// scroll page to it
-					jQuery.scroll_page_to_textblock( text_sig );
+					$.scroll_page_to_textblock( text_sig );
 
 				}
 
 				// scroll comments
-				jQuery.scroll_comments( jQuery('#'+comment_id), cp_scroll_speed );
+				$.scroll_comments( $('#'+comment_id), cp_scroll_speed );
 
 			}
 
@@ -1100,13 +1103,13 @@ CommentPress.setup.comments = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('#comments_sidebar').on( 'click', '.comment_permalink_copy', function( event ) {
+		$('#comments_sidebar').on( 'click', '.comment_permalink_copy', function( event ) {
 
 			// define vars
 			var url;
 
 			// get selection
-			url = jQuery( this ).parent().attr('href');
+			url = $( this ).parent().attr('href');
 			//console.log( url );
 
 			// did we get one?
@@ -1133,15 +1136,15 @@ CommentPress.setup.comments = new function() {
 		/**
 		 * Add a class when rolling onto the comment
 		 */
-		jQuery('#comments_sidebar').on( 'mouseenter', '.comment-wrapper', function( event ) {
-			jQuery(this).addClass( 'background-highlight' );
+		$('#comments_sidebar').on( 'mouseenter', '.comment-wrapper', function( event ) {
+			$(this).addClass( 'background-highlight' );
 		});
 
 		/**
 		 * Remove the class when rolling off the comment
 		 */
-		jQuery('#comments_sidebar').on( 'mouseleave', '.comment-wrapper', function( event ) {
-			jQuery(this).removeClass( 'background-highlight' );
+		$('#comments_sidebar').on( 'mouseleave', '.comment-wrapper', function( event ) {
+			$(this).removeClass( 'background-highlight' );
 		});
 
 	};
@@ -1155,8 +1158,9 @@ CommentPress.setup.comments = new function() {
  */
 CommentPress.setup.activity = new function() {
 
-	// store object ref
+	// store object refs
 	var me = this;
+	var $ = jQuery.noConflict();
 
 
 
@@ -1197,7 +1201,7 @@ CommentPress.setup.activity = new function() {
 		 *
 		 * @return false
 		 */
-		jQuery('#sidebar').on( 'click', '#activity_header h2 a', function( event ) {
+		$('#sidebar').on( 'click', '#activity_header h2 a', function( event ) {
 
 			// override event
 			event.preventDefault();
@@ -1223,13 +1227,13 @@ CommentPress.setup.activity = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('#sidebar').on( 'click', '#cp_minimise_all_activity', function( event ) {
+		$('#sidebar').on( 'click', '#cp_minimise_all_activity', function( event ) {
 
 			// override event
 			event.preventDefault();
 
 			// slide all paragraph comment wrappers up
-			jQuery('#activity_sidebar div.paragraph_wrapper').slideUp();
+			$('#activity_sidebar div.paragraph_wrapper').slideUp();
 
 		});
 
@@ -1245,14 +1249,14 @@ CommentPress.setup.activity = new function() {
 	this.headings = function() {
 
 		// set pointer
-		jQuery('h3.activity_heading').css( 'cursor', 'pointer' );
+		$('h3.activity_heading').css( 'cursor', 'pointer' );
 
 		/**
 		 * Activity column headings click
 		 *
 		 * @return void
 		 */
-		jQuery('#activity_sidebar').on( 'click', 'h3.activity_heading', function( event ) {
+		$('#activity_sidebar').on( 'click', 'h3.activity_heading', function( event ) {
 
 			// define vars
 			var para_wrapper;
@@ -1261,11 +1265,11 @@ CommentPress.setup.activity = new function() {
 			event.preventDefault();
 
 			// get para wrapper
-			para_wrapper = jQuery(this).next('div.paragraph_wrapper');
+			para_wrapper = $(this).next('div.paragraph_wrapper');
 			//console.log( para_wrapper );
 
 			// set width to prevent rendering error
-			para_wrapper.css( 'width', jQuery(this).parent().css( 'width' ) );
+			para_wrapper.css( 'width', $(this).parent().css( 'width' ) );
 
 			// toggle next paragraph_wrapper
 			para_wrapper.slideToggle( 'slow', function() {
@@ -1297,7 +1301,7 @@ CommentPress.setup.activity = new function() {
 		 *
 		 * @return void
 		 */
-		jQuery('#activity_sidebar').on( 'click', 'a.comment_on_post', function( event ) {
+		$('#activity_sidebar').on( 'click', 'a.comment_on_post', function( event ) {
 
 			// define vars
 			var comment_id, comment, para_wrapper_array, item, header_offset, text_sig;
@@ -1312,7 +1316,7 @@ CommentPress.setup.activity = new function() {
 			comment_id = this.href.split('#')[1];
 
 			// get comment
-			comment = jQuery('#'+comment_id);
+			comment = $('#'+comment_id);
 
 			//console.log( comment );
 
@@ -1327,7 +1331,7 @@ CommentPress.setup.activity = new function() {
 			if ( para_wrapper_array.length > 0 ) {
 
 				// get the item
-				item = jQuery(para_wrapper_array[0]);
+				item = $(para_wrapper_array[0]);
 
 				// show block
 				item.show();
@@ -1339,7 +1343,7 @@ CommentPress.setup.activity = new function() {
 					header_offset = CommentPress.theme.header.get_offset();
 
 					// scroll to comment
-					jQuery.scrollTo(
+					$.scrollTo(
 						comment,
 						{
 							duration: cp_scroll_speed,
@@ -1351,21 +1355,21 @@ CommentPress.setup.activity = new function() {
 				} else {
 
 					// clear other highlights
-					jQuery.unhighlight_para();
+					$.unhighlight_para();
 
 					// highlight para
 					text_sig = item.prop('id').split('-')[1];
 
 					// scroll page to it
-					jQuery.scroll_page_to_textblock( text_sig );
+					$.scroll_page_to_textblock( text_sig );
 
 					//console.log( '#li-comment-' + comment_id );
 
 					// add highlight class
-					//jQuery( '#li-comment-' + comment_id ).addClass( 'flash-comment' );
+					//$( '#li-comment-' + comment_id ).addClass( 'flash-comment' );
 
 					// scroll to new comment
-					jQuery('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
+					$('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
 						comment,
 						{
 							duration: cp_scroll_speed,
@@ -1373,7 +1377,7 @@ CommentPress.setup.activity = new function() {
 							onAfter: function() {
 
 								// highlight comment
-								jQuery.highlight_comment( comment );
+								$.highlight_comment( comment );
 
 							}
 						}
@@ -2070,7 +2074,7 @@ CommentPress.setup.activity = new function() {
 						onAfter: function() {
 
 							// highlight header
-							jQuery.highlight_comment( target );
+							$.highlight_comment( target );
 
 							// broadcast
 							$(document).trigger( 'commentpress-comments-scrolled' );

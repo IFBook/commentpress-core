@@ -85,8 +85,9 @@ CommentPress.theme = {};
  */
 CommentPress.theme.DOM = new function() {
 
-	// store object ref
+	// store object refs
 	var me = this;
+	var $ = jQuery.noConflict();
 
 
 
@@ -270,19 +271,19 @@ CommentPress.theme.DOM = new function() {
 			/*
 			// Note: make into single cookie?
 			// has the page been changed?
-			if ( jQuery.cookie('cp_page_setup') ) {
+			if ( $.cookie('cp_page_setup') ) {
 
 				// get value
-				cp_page_setup = jQuery.cookie('cp_page_setup');
+				cp_page_setup = $.cookie('cp_page_setup');
 
 			}
 			*/
 
 			// has the content column changed?
-			if ( jQuery.cookie('cp_container_width') ) {
+			if ( $.cookie('cp_container_width') ) {
 
 				// get value
-				cp_container_width = jQuery.cookie('cp_container_width');
+				cp_container_width = $.cookie('cp_container_width');
 
 				// set content width
 				if ( cp_is_signup_page == '1' ) {
@@ -297,10 +298,10 @@ CommentPress.theme.DOM = new function() {
 			}
 
 			// has the book nav cookie changed?
-			if ( jQuery.cookie('cp_book_nav_width') ) {
+			if ( $.cookie('cp_book_nav_width') ) {
 
 				// get book nav width
-				cp_book_nav_width = jQuery.cookie('cp_book_nav_width');
+				cp_book_nav_width = $.cookie('cp_book_nav_width');
 
 				// set its width
 				styles += '#book_nav div#cp_book_nav { width: ' + cp_book_nav_width + '%; } ';
@@ -308,18 +309,18 @@ CommentPress.theme.DOM = new function() {
 			}
 
 			// has the sidebar window changed?
-			if ( jQuery.cookie('cp_sidebar_width') ) {
+			if ( $.cookie('cp_sidebar_width') ) {
 
 				// set width of sidebar
-				styles += '#sidebar { width: ' + jQuery.cookie('cp_sidebar_width') + '%; } ';
+				styles += '#sidebar { width: ' + $.cookie('cp_sidebar_width') + '%; } ';
 
 			}
 
 			// has the sidebar window changed?
-			if ( jQuery.cookie('cp_sidebar_left') ) {
+			if ( $.cookie('cp_sidebar_left') ) {
 
 				// set width of sidebar
-				styles += '#sidebar { left: ' + jQuery.cookie('cp_sidebar_left') + '%; } ';
+				styles += '#sidebar { left: ' + $.cookie('cp_sidebar_left') + '%; } ';
 
 			}
 
@@ -360,12 +361,12 @@ CommentPress.theme.DOM = new function() {
 		if ( cp_is_signup_page == '1' ) {
 
 			// target
-			target = jQuery('#content');
+			target = $('#content');
 
 		} else {
 
 			// target
-			target = jQuery('#page_wrapper');
+			target = $('#page_wrapper');
 
 		}
 
@@ -383,14 +384,14 @@ CommentPress.theme.DOM = new function() {
 				original_nav_width, original_sidebar_left, gap;
 
 			// assign vars
-			item = jQuery(this);
-			content = jQuery('#content');
-			sidebar = jQuery('#sidebar');
-			footer = jQuery('#footer');
-			book_header = jQuery('#book_header');
-			book_nav_wrapper = jQuery('#book_nav_wrapper');
-			book_nav = jQuery('#cp_book_nav');
-			book_info = jQuery('#cp_book_info');
+			item = $(this);
+			content = $('#content');
+			sidebar = $('#sidebar');
+			footer = $('#footer');
+			book_header = $('#book_header');
+			book_nav_wrapper = $('#book_nav_wrapper');
+			book_nav = $('#cp_book_nav');
+			book_info = $('#cp_book_info');
 
 			// store original widths
 			original_content_width = item.width();
@@ -452,13 +453,13 @@ CommentPress.theme.DOM = new function() {
 					var ww, width, item_w, book_nav_w, sidebar_w, left, sidebar_l;
 
 					// viewport width
-					ww = parseFloat(jQuery(window).width() );
+					ww = parseFloat($(window).width() );
 
 					// get element width
 					width = item.width();
 
 					// compensate for webkit
-					if ( jQuery.browser.webkit ) { width = width + 1; }
+					if ( $.browser.webkit ) { width = width + 1; }
 
 					// get percent to four decimal places
 					item_w = parseFloat( Math.ceil( ( 1000000 * parseFloat( width ) / ww ) ) / 10000 );
@@ -476,7 +477,7 @@ CommentPress.theme.DOM = new function() {
 					width = book_nav.width();
 
 					// compensate for webkit
-					if ( jQuery.browser.webkit ) { width = width + 1; }
+					if ( $.browser.webkit ) { width = width + 1; }
 
 					// get percent to four decimal places
 					book_nav_w = parseFloat( Math.ceil( ( 1000000 * parseFloat( width ) / ww ) ) / 10000 );
@@ -489,7 +490,7 @@ CommentPress.theme.DOM = new function() {
 					width = sidebar.width();
 
 					// compensate for webkit
-					if ( jQuery.browser.webkit ) { width = width + 1; }
+					if ( $.browser.webkit ) { width = width + 1; }
 
 					// get percent to four decimal places
 					sidebar_w = parseFloat( Math.ceil( ( 1000000 * parseFloat( width ) / ww ) ) / 10000 );
@@ -502,7 +503,7 @@ CommentPress.theme.DOM = new function() {
 					left = sidebar.position().left;
 
 					// compensate for webkit
-					if ( jQuery.browser.webkit ) { left = left + 1; }
+					if ( $.browser.webkit ) { left = left + 1; }
 
 					// get percent to four decimal places
 					sidebar_l = parseFloat( Math.ceil( ( 1000000 * parseFloat( left ) / ww ) ) / 10000 );
@@ -511,28 +512,28 @@ CommentPress.theme.DOM = new function() {
 					sidebar.css( 'left', sidebar_l + '%' );
 
 					// store this width in cookie
-					jQuery.cookie(
+					$.cookie(
 						'cp_container_width',
 						item_w.toString(),
 						{ expires: 28, path: cp_cookie_path }
 					);
 
 					// store nav width in cookie
-					jQuery.cookie(
+					$.cookie(
 						'cp_book_nav_width',
 						book_nav_w.toString(),
 						{ expires: 28, path: cp_cookie_path }
 					);
 
 					// store location of sidebar in cookie
-					jQuery.cookie(
+					$.cookie(
 						'cp_sidebar_left',
 						sidebar_l.toString(),
 						{ expires: 28, path: cp_cookie_path }
 					);
 
 					// store width of sidebar in cookie
-					jQuery.cookie(
+					$.cookie(
 						'cp_sidebar_width',
 						sidebar_w.toString(),
 						{ expires: 28, path: cp_cookie_path }
@@ -555,8 +556,9 @@ CommentPress.theme.DOM = new function() {
  */
 CommentPress.theme.header = new function() {
 
-	// store object ref
+	// store object refs
 	var me = this;
+	var $ = jQuery.noConflict();
 
 
 
@@ -588,13 +590,13 @@ CommentPress.theme.header = new function() {
 
 		// get offset including border
 		offset = 0 - (
-			jQuery.px_to_num( jQuery('#container').css('top') ) +
-			jQuery.px_to_num( jQuery('#page_wrapper').css( 'borderTopWidth' ) )
+			$.px_to_num( $('#container').css('top') ) +
+			$.px_to_num( $('#page_wrapper').css( 'borderTopWidth' ) )
 		);
 		*/
 
 		// get header offset
-		offset = 0 - ( jQuery.px_to_num( jQuery('#container').css('top') ) );
+		offset = 0 - ( $.px_to_num( $('#container').css('top') ) );
 
 		// is the admin bar shown?
 		if ( cp_wp_adminbar == 'y' ) {
@@ -618,8 +620,9 @@ CommentPress.theme.header = new function() {
  */
 CommentPress.theme.navigation = new function() {
 
-	// store object ref
+	// store object refs
 	var me = this;
+	var $ = jQuery.noConflict();
 
 
 
@@ -651,7 +654,7 @@ CommentPress.theme.navigation = new function() {
 		 *
 		 * @return false
 		 */
-		jQuery('#sidebar').on( 'click', '#toc_header h2 a', function( event ) {
+		$('#sidebar').on( 'click', '#toc_header h2 a', function( event ) {
 
 			// override event
 			event.preventDefault();
@@ -672,8 +675,9 @@ CommentPress.theme.navigation = new function() {
  */
 CommentPress.theme.content = new function() {
 
-	// store object ref
+	// store object refs
 	var me = this;
+	var $ = jQuery.noConflict();
 
 
 
@@ -707,14 +711,14 @@ CommentPress.theme.content = new function() {
 		var content_min_height, content_padding_bottom;
 
 		// store content min-height on load
-		content_min_height = jQuery('#content').css( 'min-height' );
+		content_min_height = $('#content').css( 'min-height' );
 
 		// store content padding-bottom on load
-		content_padding_bottom = jQuery('#content').css( 'padding-bottom' );
+		content_padding_bottom = $('#content').css( 'padding-bottom' );
 
 		// hide workflow content
-		jQuery('#literal .post').css( 'display', 'none' );
-		jQuery('#original .post').css( 'display', 'none' );
+		$('#literal .post').css( 'display', 'none' );
+		$('#original .post').css( 'display', 'none' );
 
 		// setup workflow tabs, if present
 		CommentPress.setup.content.workflow_tabs( content_min_height, content_padding_bottom );
@@ -730,8 +734,9 @@ CommentPress.theme.content = new function() {
  */
 CommentPress.theme.sidebars = new function() {
 
-	// store object ref
+	// store object refs
 	var me = this;
+	var $ = jQuery.noConflict();
 
 
 
@@ -760,25 +765,25 @@ CommentPress.theme.sidebars = new function() {
 		var ontop, s_top, s_top_border;
 
 		// get "visibility" of the requested sidebar
-		ontop = jQuery('#' + sidebar + '_sidebar').css('z-index');
+		ontop = $('#' + sidebar + '_sidebar').css('z-index');
 
 		// is it hidden (ie, does it have a lower z-index)
 		if ( ontop == '2001' ) {
 
 			// hide all
-			jQuery('.sidebar_container').css('z-index','2001');
+			$('.sidebar_container').css('z-index','2001');
 
 			// show it
-			jQuery('#' + sidebar + '_sidebar').css('z-index','2010');
+			$('#' + sidebar + '_sidebar').css('z-index','2010');
 
 			s_top = me.get_top();
 			s_top_border = me.get_top_border();
 
 			// set all tabs to min height
-			jQuery('.sidebar_header').css( 'height', ( s_top - s_top_border ) + 'px' );
+			$('.sidebar_header').css( 'height', ( s_top - s_top_border ) + 'px' );
 
 			// set our tab to max height
-			jQuery('#' + sidebar + '_header.sidebar_header').css( 'height', s_top + 'px' );
+			$('#' + sidebar + '_header.sidebar_header').css( 'height', s_top + 'px' );
 
 			// set flag
 			cp_toc_on_top = 'y';
@@ -789,22 +794,22 @@ CommentPress.theme.sidebars = new function() {
 		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
 			// just to make sure...
-			jQuery.set_sidebar_height();
+			$.set_sidebar_height();
 
 		} else {
 
 			// hide all
-			jQuery('.sidebar_container').css('visibility','hidden');
+			$('.sidebar_container').css('visibility','hidden');
 
 			// show it
-			jQuery('#' + sidebar + '_sidebar').css('visibility','visible');
+			$('#' + sidebar + '_sidebar').css('visibility','visible');
 
 			/*
 			// define vars
 			var containers, tallest, this_height;
 
 			// set to height of tallest
-			containers = jQuery('.sidebar_contents_wrapper');
+			containers = $('.sidebar_contents_wrapper');
 			//console.log( containers );
 
 			// did we get any?
@@ -817,7 +822,7 @@ CommentPress.theme.sidebars = new function() {
 				containers.each( function(i) {
 
 					// get height
-					this_height = jQuery(this).height()
+					this_height = $(this).height()
 
 					// is it taller?
 					if ( this_height > tallest ) {
@@ -829,11 +834,11 @@ CommentPress.theme.sidebars = new function() {
 				//alert( tallest );
 
 				// set it to that height
-				jQuery('.sidebar_contents_wrapper').height( tallest );
+				$('.sidebar_contents_wrapper').height( tallest );
 
 				// then make it auto
 				// BUT, this won't allow it to expand in future...
-				//jQuery('#' + sidebar + '_sidebar .sidebar_contents_wrapper').css('height','auto');
+				//$('#' + sidebar + '_sidebar .sidebar_contents_wrapper').css('height','auto');
 
 			}
 			*/
@@ -850,7 +855,7 @@ CommentPress.theme.sidebars = new function() {
 	 * @return integer num The top of the sidebar in pixels
 	 */
 	this.get_top = function() {
-		return jQuery.px_to_num( jQuery('#toc_sidebar').css('top') );
+		return $.px_to_num( $('#toc_sidebar').css('top') );
 	};
 
 
@@ -861,7 +866,7 @@ CommentPress.theme.sidebars = new function() {
 	 * @return integer num The border width of the sidebar in pixels
 	 */
 	this.get_top_border = function() {
-		return jQuery.px_to_num( jQuery('.sidebar_minimiser').css('borderTopWidth') );
+		return $.px_to_num( $('.sidebar_minimiser').css('borderTopWidth') );
 	};
 
 } // end sidebars class
@@ -873,8 +878,9 @@ CommentPress.theme.sidebars = new function() {
  */
 CommentPress.theme.viewport = new function() {
 
-	// store object ref
+	// store object refs
 	var me = this;
+	var $ = jQuery.noConflict();
 
 
 
@@ -909,7 +915,7 @@ CommentPress.theme.viewport = new function() {
 		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
 			// scroll
-			jQuery.scrollTo( target, speed );
+			$.scrollTo( target, speed );
 
 		}
 
@@ -947,7 +953,7 @@ CommentPress.theme.viewport = new function() {
 			comment_id = url.split('#comment-')[1];
 
 			// get array of parent paragraph_wrapper divs
-			para_wrapper_array = jQuery('#comment-' + comment_id)
+			para_wrapper_array = $('#comment-' + comment_id)
 										.parents('div.paragraph_wrapper')
 										.map( function () {
 											return this;
@@ -957,16 +963,16 @@ CommentPress.theme.viewport = new function() {
 			if ( para_wrapper_array.length > 0 ) {
 
 				// get the item
-				item = jQuery(para_wrapper_array[0]);
+				item = $(para_wrapper_array[0]);
 
 				// are comments open?
 				if ( cp_comments_open == 'y' ) {
 
 					// move form to para
 					text_sig = item.prop('id').split('-')[1];
-					para_id = jQuery('#para_wrapper-'+text_sig+' .reply_to_para').prop('id');
+					para_id = $('#para_wrapper-'+text_sig+' .reply_to_para').prop('id');
 					para_num = para_id.split('-')[1];
-					post_id = jQuery('#comment_post_ID').prop('value');
+					post_id = $('#comment_post_ID').prop('value');
 					//console.log(post_id);
 
 					// seems like TinyMCE isn't yet working and that moving the form
@@ -974,7 +980,7 @@ CommentPress.theme.viewport = new function() {
 					if ( cp_tinymce == '1' ) {
 
 						// if we have link text, then a comment reply is allowed...
-						if ( jQuery( '#comment-' + comment_id + ' > .reply' ).text() !== '' ) {
+						if ( $( '#comment-' + comment_id + ' > .reply' ).text() !== '' ) {
 
 							// temporarily override global so that TinyMCE is not
 							// meddled with in any way...
@@ -1017,19 +1023,19 @@ CommentPress.theme.viewport = new function() {
 				item.show();
 
 				// scroll comments
-				jQuery.scroll_comments( jQuery('#comment-' + comment_id), 1, 'flash' );
+				$.scroll_comments( $('#comment-' + comment_id), 1, 'flash' );
 
 				// if not the whole page...
 				if( text_sig !== '' ) {
 
 					// get text block
-					textblock = jQuery('#textblock-' + text_sig);
+					textblock = $('#textblock-' + text_sig);
 
 					// highlight this paragraph
-					jQuery.highlight_para( textblock );
+					$.highlight_para( textblock );
 
 					// scroll page
-					jQuery.scroll_page( textblock );
+					$.scroll_page( textblock );
 
 				} else {
 
@@ -1058,13 +1064,13 @@ CommentPress.theme.viewport = new function() {
 			 *
 			 * @return void
 			 */
-			jQuery('span.para_marker > a').each( function(i) {
+			$('span.para_marker > a').each( function(i) {
 
 				// define vars
 				var text_sig, para_id, para_num, post_id, textblock;
 
 				// get text signature
-				text_sig = jQuery(this).prop( 'id' );
+				text_sig = $(this).prop( 'id' );
 				//console.log( 'text_sig: ' + text_sig );
 
 				// do we have a paragraph or comment block permalink?
@@ -1076,27 +1082,27 @@ CommentPress.theme.viewport = new function() {
 					if ( cp_comments_open == 'y' ) {
 
 						// move form to para
-						para_id = jQuery('#para_wrapper-' + text_sig + ' .reply_to_para').prop('id');
+						para_id = $('#para_wrapper-' + text_sig + ' .reply_to_para').prop('id');
 						para_num = para_id.split('-')[1];
-						post_id = jQuery('#comment_post_ID').prop('value');
+						post_id = $('#comment_post_ID').prop('value');
 						addComment.moveFormToPara( para_num, text_sig, post_id );
 
 					}
 
 					// toggle next item_body
-					jQuery('#para_heading-' + text_sig).next('div.paragraph_wrapper').show();
+					$('#para_heading-' + text_sig).next('div.paragraph_wrapper').show();
 
 					// scroll comments
-					jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), 1 );
+					$.scroll_comments( $('#para_heading-' + text_sig), 1 );
 
 					// get text block
-					textblock = jQuery('#textblock-' + text_sig);
+					textblock = $('#textblock-' + text_sig);
 
 					// highlight this paragraph
-					jQuery.highlight_para( textblock );
+					$.highlight_para( textblock );
 
 					// scroll page
-					jQuery.scroll_page( textblock );
+					$.scroll_page( textblock );
 
 					// --<
 					return;
@@ -1111,7 +1117,7 @@ CommentPress.theme.viewport = new function() {
 		if ( url.match( '#respond' ) ) {
 
 			// same as clicking on the "whole page" heading
-			jQuery('h3#para_heading- a.comment_block_permalink').click();
+			$('h3#para_heading- a.comment_block_permalink').click();
 
 			// --<
 			return;
@@ -1130,7 +1136,7 @@ CommentPress.theme.viewport = new function() {
 			if ( anchor_id == 'fee-edit-link' ) { return; }
 
 			// locate in DOM
-			anchor = jQuery( '#' + anchor_id );
+			anchor = $( '#' + anchor_id );
 
 			// did we get one?
 			if ( anchor.length ) {
@@ -1139,7 +1145,7 @@ CommentPress.theme.viewport = new function() {
 				anchor.addClass('selected_para');
 
 				// scroll page
-				jQuery.scroll_page( anchor );
+				$.scroll_page( anchor );
 
 			}
 
@@ -1169,7 +1175,7 @@ CommentPress.theme.viewport = new function() {
 			textblock, post_id, para_id, para_num;
 
 		// get para wrapper
-		para_wrapper = jQuery('#para_heading-' + text_sig).next('div.paragraph_wrapper');
+		para_wrapper = $('#para_heading-' + text_sig).next('div.paragraph_wrapper');
 
 		// bail if we don't have the target element
 		if ( para_wrapper.length == 0 ) {
@@ -1177,7 +1183,7 @@ CommentPress.theme.viewport = new function() {
 		}
 
 		// get comment list
-		comment_list = jQuery( '#para_wrapper-' + text_sig + ' .commentlist' );
+		comment_list = $( '#para_wrapper-' + text_sig + ' .commentlist' );
 
 		// get respond
 		respond = para_wrapper.find('#respond');
@@ -1195,13 +1201,13 @@ CommentPress.theme.viewport = new function() {
 		if ( visible == 'none' ) { opening = true; }
 
 		// clear other highlights
-		jQuery.unhighlight_para();
+		$.unhighlight_para();
 
 		// did we get a text_sig?
 		if ( text_sig !== '' ) {
 
 			// get text block
-			textblock = jQuery('#textblock-' + text_sig);
+			textblock = $('#textblock-' + text_sig);
 			//console.log(text_sig);
 
 			// if encouraging reading and closing
@@ -1212,10 +1218,10 @@ CommentPress.theme.viewport = new function() {
 			} else {
 
 				// highlight this paragraph
-				jQuery.highlight_para( textblock );
+				$.highlight_para( textblock );
 
 				// scroll page
-				jQuery.scroll_page( textblock );
+				$.scroll_page( textblock );
 
 			}
 
@@ -1228,8 +1234,8 @@ CommentPress.theme.viewport = new function() {
 			if ( cp_comments_open == 'y' ) {
 
 				// get comment post ID
-				post_id = jQuery('#comment_post_ID').prop('value');
-				para_id = jQuery('#para_wrapper-'+text_sig+' .reply_to_para').prop('id');
+				post_id = $('#comment_post_ID').prop('value');
+				para_id = $('#para_wrapper-'+text_sig+' .reply_to_para').prop('id');
 				para_num = para_id.split('-')[1];
 
 			}
@@ -1259,19 +1265,19 @@ CommentPress.theme.viewport = new function() {
 					if ( mode == 'marker' ) {
 
 						// scroll comments to header
-						jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+						$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 					} else {
 
 						// scroll comments to comment form
-						jQuery.scroll_comments( jQuery('#respond'), cp_scroll_speed );
+						$.scroll_comments( $('#respond'), cp_scroll_speed );
 
 					}
 
 				} else {
 
 					// scroll comments to header
-					jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+					$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 				}
 
@@ -1289,19 +1295,19 @@ CommentPress.theme.viewport = new function() {
 					if ( mode == 'marker' ) {
 
 						// scroll comments to header
-						jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+						$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 					} else {
 
 						// scroll comments to comment form
-						jQuery.scroll_comments( jQuery('#respond'), cp_scroll_speed );
+						$.scroll_comments( $('#respond'), cp_scroll_speed );
 
 					}
 
 				} else {
 
 					// scroll comments to header
-					jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+					$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 				}
 
@@ -1319,19 +1325,19 @@ CommentPress.theme.viewport = new function() {
 					if ( mode == 'marker' ) {
 
 						// scroll comments to header
-						jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+						$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 					} else {
 
 						// scroll comments to comment form
-						jQuery.scroll_comments( jQuery('#respond'), cp_scroll_speed );
+						$.scroll_comments( $('#respond'), cp_scroll_speed );
 
 					}
 
 				} else {
 
 					// scroll comments to header
-					jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+					$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 				}
 
@@ -1349,19 +1355,19 @@ CommentPress.theme.viewport = new function() {
 					if ( mode == 'marker' ) {
 
 						// scroll comments to header
-						jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+						$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 					} else {
 
 						// scroll comments to comment form
-						jQuery.scroll_comments( jQuery('#respond'), cp_scroll_speed );
+						$.scroll_comments( $('#respond'), cp_scroll_speed );
 
 					}
 
 				} else {
 
 					// scroll comments to header
-					jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+					$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 				}
 
@@ -1390,7 +1396,7 @@ CommentPress.theme.viewport = new function() {
 			if ( cp_promote_reading == '1' && opening ) {
 
 				// scroll comments
-				jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+				$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 			} else {
 
@@ -1404,19 +1410,19 @@ CommentPress.theme.viewport = new function() {
 						if ( mode == 'marker' ) {
 
 							// scroll comments to header
-							jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+							$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 						} else {
 
 							// scroll comments to comment form
-							jQuery.scroll_comments( jQuery('#respond'), cp_scroll_speed );
+							$.scroll_comments( $('#respond'), cp_scroll_speed );
 
 						}
 
 					} else {
 
 						// scroll comments to comment form
-						jQuery.scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+						$.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 					}
 
@@ -1444,8 +1450,9 @@ CommentPress.theme.original = {};
  */
 CommentPress.theme.original.header = new function() {
 
-	// store object ref
+	// store object refs
 	var me = this;
+	var $ = jQuery.noConflict();
 
 
 
@@ -1477,7 +1484,7 @@ CommentPress.theme.original.header = new function() {
 		 *
 		 * @return false
 		 */
-		jQuery('#header').on( 'click', '#btn_header_min', function( event ) {
+		$('#header').on( 'click', '#btn_header_min', function( event ) {
 
 			// override event
 			event.preventDefault();
@@ -1521,7 +1528,7 @@ CommentPress.theme.original.header = new function() {
 		cp_header_minimised = ( cp_header_minimised == 'y' ) ? 'n' : 'y';
 
 		// store flag in cookie
-		jQuery.cookie(
+		$.cookie(
 			'cp_header_minimised',
 			cp_header_minimised,
 			{ expires: 28, path: cp_cookie_path }
@@ -1547,12 +1554,12 @@ CommentPress.theme.original.header = new function() {
 			cp_container_top, cp_sidebar_height;
 
 		// get nav height
-		book_nav_h = jQuery('#book_nav').height();
+		book_nav_h = $('#book_nav').height();
 
-		target_sidebar = jQuery('#sidebar');
-		target_sidebar_pane = jQuery.get_sidebar_pane();
-		book_header = jQuery('#book_header');
-		container = jQuery('#container');
+		target_sidebar = $('#sidebar');
+		target_sidebar_pane = $.get_sidebar_pane();
+		book_header = $('#book_header');
+		container = $('#container');
 
 		// set max height
 		cp_container_top = cp_container_top_max;
@@ -1617,7 +1624,7 @@ CommentPress.theme.original.header = new function() {
 					if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
 						// fit column
-						jQuery.set_sidebar_height();
+						$.set_sidebar_height();
 
 					}
 
@@ -1645,7 +1652,7 @@ CommentPress.theme.original.header = new function() {
 					if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
 						// fit column
-						jQuery.set_sidebar_height();
+						$.set_sidebar_height();
 
 					}
 
@@ -1675,12 +1682,12 @@ CommentPress.theme.original.header = new function() {
 		var cp_container_top, cp_sidebar_height;
 
 		// get nav height
-		book_nav_h = jQuery('#book_nav').height();
+		book_nav_h = $('#book_nav').height();
 
-		target_sidebar = jQuery('#sidebar');
-		target_sidebar_pane = jQuery.get_sidebar_pane();
-		book_header = jQuery('#book_header');
-		container = jQuery('#container');
+		target_sidebar = $('#sidebar');
+		target_sidebar_pane = $.get_sidebar_pane();
+		book_header = $('#book_header');
+		container = $('#container');
 
 		// slide header
 		book_header.hide();
@@ -1709,7 +1716,7 @@ CommentPress.theme.original.header = new function() {
 			// get sidebar height
 			cp_sidebar_height = target_sidebar.height() + cp_book_header_height;
 
-			//jQuery('#container').css('top','40px');
+			//$('#container').css('top','40px');
 			target_sidebar.animate({
 
 				top: cp_container_top_min + 'px',
@@ -1725,7 +1732,7 @@ CommentPress.theme.original.header = new function() {
 
 			);
 
-			//jQuery('#container').css('top','40px');
+			//$('#container').css('top','40px');
 			target_sidebar_pane.animate({
 
 				height: ( target_sidebar_pane.height() + cp_book_header_height ) + 'px',
@@ -1737,7 +1744,7 @@ CommentPress.theme.original.header = new function() {
 				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
 					// fit column
-					jQuery.set_sidebar_height();
+					$.set_sidebar_height();
 
 				}
 
@@ -1763,7 +1770,7 @@ CommentPress.theme.original.header = new function() {
 				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
 					// fit column
-					jQuery.set_sidebar_height();
+					$.set_sidebar_height();
 
 				}
 
@@ -1807,7 +1814,7 @@ jQuery(document).ready( function($) {
 
 
 	// if we have a cookie
-	if ( jQuery.cookie( 'cp_container_top_min' ) ) {
+	if ( $.cookie( 'cp_container_top_min' ) ) {
 
 		// skip -> we only set these values once (or when the cookie expires)
 
@@ -1870,7 +1877,7 @@ jQuery(document).ready( function($) {
 		$('a.comment_block_permalink').focusin( function(e) {
 
 			// test -> needs refinement
-			//jQuery(this).click();
+			//$(this).click();
 
 		});
 	}
@@ -1885,7 +1892,7 @@ jQuery(document).ready( function($) {
 	$('a.comment_block_permalink').blur( function(e) {
 
 		// test -> needs refinement
-		//jQuery(this).click();
+		//$(this).click();
 
 	});
 	*/
