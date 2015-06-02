@@ -61,7 +61,9 @@
 	-moz-box-shadow: rgba(0, 0, 0, .1) 0px 1px 3px;
 	box-shadow: rgba(0, 0, 0, .1) 0px 1px 3px;
 	color: #000;
-	font: bold 14px sans-serif;
+	font-family: sans-serif;
+	font-size: 70%;
+	font-weight: bold;
 	text-transform: uppercase;
 }
 

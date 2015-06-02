@@ -534,7 +534,8 @@ CommentPress.ajax.comments = new function() {
 				options = {
 
 					resizable: false,
-					height: 160,
+					width: 400,
+					height: 200,
 					zIndex: 3999,
 					modal: true,
 					dialogClass: 'wp-dialog',

@@ -2371,10 +2371,8 @@ Comment Orphaning
 .cp_alert_text
 {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	background-color: whiteSmoke;
-	line-height: 1.4em;
-	font-size: 13px;
-	padding: 10px 14px;
+	line-height: 1.6em;
+	font-size: 90%;
 	color: red;
 }
 
