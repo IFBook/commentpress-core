@@ -409,21 +409,21 @@ CommentPress.settings.textblock = new function() {
 
 
 
-	// init textblock marker mode
-	this.marker_mode = 'marker';
+	// init textblock scroll target
+	this.scroll_target = 'para_heading';
 
 	/**
-	 * Setter for textblock marker mode
+	 * Setter for textblock scroll target
 	 */
-	this.setMarkerMode = function( mode ) {
-		this.marker_mode = mode;
+	this.set_scroll_target = function( scroll_target ) {
+		this.scroll_target = scroll_target;
 	};
 
 	/**
-	 * Getter for textblock marker mode
+	 * Getter for textblock scroll target
 	 */
-	this.getMarkerMode = function() {
-		return this.marker_mode;
+	this.get_scroll_target = function() {
+		return this.scroll_target;
 	};
 
 } // end CommentPress textblock class
@@ -661,8 +661,17 @@ CommentPress.common.content = new function() {
 			var text_sig = '';
 			//console.log( text_sig );
 
-			// use function
-			CommentPress.theme.viewport.align_content( text_sig, 'marker' );
+			// set target to para heading
+			CommentPress.settings.textblock.set_scroll_target( 'para_heading' );
+
+			// broadcast action - allows scroll target to be overridden
+			$(document).trigger( 'commentpress-post-title-pre-align' );
+
+			// pass scroll target to function
+			CommentPress.theme.viewport.align_content( text_sig, CommentPress.settings.textblock.get_scroll_target() );
+
+			// broadcast action - allows scroll target to be reset
+			$(document).trigger( 'commentpress-post-title-clicked' );
 
 		});
 
@@ -722,10 +731,19 @@ CommentPress.common.content = new function() {
 			// remove leading #
 			text_sig = text_sig.split('textblock-')[1];
 
-			// use function
-			CommentPress.theme.viewport.align_content( text_sig, CommentPress.settings.textblock.getMarkerMode() );
+			// set target to para heading
+			CommentPress.settings.textblock.set_scroll_target( 'para_heading' );
 
-			// broadcast action
+			// broadcast action - allows scroll target to be reset
+			$(document).trigger( 'commentpress-post-title-clicked' );
+
+			// broadcast action - allows scroll target to be overridden
+			$(document).trigger( 'commentpress-textblock-pre-align' );
+
+			// pass scroll target to function
+			CommentPress.theme.viewport.align_content( text_sig, CommentPress.settings.textblock.get_scroll_target() );
+
+			// broadcast action - allows scroll target to be reset
 			$(document).trigger( 'commentpress-textblock-clicked' );
 
 		});
@@ -823,10 +841,16 @@ CommentPress.common.content = new function() {
 			text_sig = $(this).children('a.para_permalink').prop('href').split('#')[1];
 			//console.log( text_sig );
 
-			// use function
-			CommentPress.theme.viewport.align_content( text_sig, 'auto' );
+			// set target to comment form
+			CommentPress.settings.textblock.set_scroll_target( 'commentform' );
 
-			// broadcast action
+			// broadcast action - allows scroll target to be overridden
+			$(document).trigger( 'commentpress-commenticonbox-pre-align' );
+
+			// pass scroll target to function
+			CommentPress.theme.viewport.align_content( text_sig, CommentPress.settings.textblock.get_scroll_target() );
+
+			// broadcast action - allows scroll target to be reset
 			$(document).trigger( 'commentpress-commenticonbox-clicked' );
 
 		});
@@ -911,10 +935,16 @@ CommentPress.common.content = new function() {
 			text_sig = $(this).prop('href').split('#')[1];
 			//console.log(text_sig);
 
-			// use function
-			CommentPress.theme.viewport.align_content( text_sig, 'auto' );
+			// set target to comment form
+			CommentPress.settings.textblock.set_scroll_target( 'commentform' );
 
-			// broadcast action
+			// broadcast action - allows scroll target to be overridden
+			$(document).trigger( 'commentpress-link-in-textblock-pre-align' );
+
+			// pass scroll target to function
+			CommentPress.theme.viewport.align_content( text_sig, CommentPress.settings.textblock.get_scroll_target() );
+
+			// broadcast action - allows scroll target to be reset
 			$(document).trigger( 'commentpress-link-in-textblock-clicked' );
 
 		});

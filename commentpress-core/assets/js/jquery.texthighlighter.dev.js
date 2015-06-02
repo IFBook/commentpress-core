@@ -22,14 +22,6 @@ CommentPress.textselector = new function() {
 	var me = this,
 		$ = jQuery.noConflict();
 
-	// test for our localisation object
-	if ( 'undefined' !== typeof CommentpressTextSelectorSettings ) {
-
-		// reference our localisation object vars
-		this.popover = CommentpressTextSelectorSettings.popover;
-
-	}
-
 
 
 	/**
@@ -63,6 +55,14 @@ CommentPress.textselector = new function() {
 
 
 	/**
+	 * Init scroll target variable.
+	 *
+	 * This variable holds a reference to the currently active textblock scroll
+	 * target for resetting after overriding the current value.
+	 */
+	this.saved_scroll_target = '';
+
+	/**
 	 * Initialise the jQuery text highlighter listeners.
 	 *
 	 * This method should only be called once. To reset the system, call:
@@ -77,12 +77,15 @@ CommentPress.textselector = new function() {
 		 *
 		 * @return void
 		 */
-		$(document).on( 'commentpress-document-ready', function( event ) {
+		$(document).on(
+			'commentpress-document-ready',
+			function( event ) {
 
-			// set up text selector
-			me.setup();
+				// set up text selector
+				me.setup();
 
-		});
+			} // end function
+		);
 
 		/**
 		 * Hook into CommentPress AJAX new comment added
@@ -91,23 +94,29 @@ CommentPress.textselector = new function() {
 		 * @param int comment_id The new comment ID
 		 * @return void
 		 */
-		$(document).on( 'commentpress-ajax-comment-added', function( event, comment_id ) {
+		$(document).on(
+			'commentpress-ajax-comment-added',
+			function( event, comment_id ) {
 
-			// have we received the full id?
-			if ( comment_id.match( '#comment-' ) ) {
+				// have we received the full id?
+				if ( comment_id.match( '#comment-' ) ) {
 
-				// get numeric comment ID
-				comment_id = parseInt( comment_id.split('#comment-')[1] );
+					// get numeric comment ID
+					comment_id = parseInt( comment_id.split('#comment-')[1] );
 
-			}
+				}
 
-			// reset text selector
-			me.selection_save_for_comment( comment_id );
+				// save selection for comment
+				CommentPress.textselector.textblocks.selection_save_for_comment( comment_id );
 
-			// reset comment form
-			me.selection_clear_from_editor()
+				// reset comment form
+				CommentPress.textselector.commentform.current_selection_clear()
 
-		});
+				// clear comment form "modal focus"
+				CommentPress.textselector.commentform.focus_clear();
+
+			} // end function
+		);
 
 		/**
 		 * Hook into CommentPress AJAX new comment added and animation finished
@@ -116,15 +125,15 @@ CommentPress.textselector = new function() {
 		 * @param int comment_id The new comment ID
 		 * @return void
 		 */
-		$(document).on( 'commentpress-ajax-comment-added-scrolled', function( event ) {
+		$(document).on(
+			'commentpress-ajax-comment-added-scrolled',
+			function( event ) {
 
-			// clear highlights
-			me.highlights_clear();
+				// clear highlights
+				me.highlights_clear_all();
 
-			// clear selection active
-			me.selection_active_clear();
-
-		});
+			} // end function
+		);
 
 		/**
 		 * Hook into CommentPress clicks on items whose events do not bubble.
@@ -134,18 +143,65 @@ CommentPress.textselector = new function() {
 		 * @param object event The event (unused)
 		 * @return void
 		 */
-		$(document).on( 'commentpress-commenticonbox-clicked commentpress-link-in-textblock-clicked', function( event ) {
+		$(document).on(
+			'commentpress-textblock-pre-align ' +
+			'commentpress-commenticonbox-pre-align ' +
+			'commentpress-link-in-textblock-pre-align',
+			function( event ) {
 
-			// clear highlights
-			me.highlights_clear();
+				// if comment form active and populated
+				if ( CommentPress.textselector.commentform.focus_is_active() ) {
 
-			// clear selection active
-			me.selection_active_clear();
+					//  is it populated?
+					if ( CommentPress.textselector.commentform.comment_content_exists() ) {
 
-			// clear selection
-			me.selection_clear();
+						// save current target
+						me.saved_scroll_target = CommentPress.settings.textblock.get_scroll_target();
 
-		});
+						// set target to comment form
+						CommentPress.settings.textblock.set_scroll_target( 'none' );
+
+					}
+
+				}
+
+			} // end function
+		);
+
+
+
+		/**
+		 * Hook into CommentPress clicks on items whose events do not bubble.
+		 *
+		 * We need to receive callbacks from these clicks to clear the active selection
+		 *
+		 * @param object event The event (unused)
+		 * @return void
+		 */
+		$(document).on(
+			'commentpress-textblock-click ' +
+			'commentpress-commenticonbox-clicked ' +
+			'commentpress-link-in-textblock-clicked',
+			function( event ) {
+
+				// if comment form active and populated
+				if ( CommentPress.textselector.commentform.focus_is_active() ) {
+
+					//  is it populated?
+					if ( CommentPress.textselector.commentform.comment_content_exists() ) {
+
+						// reset target to comment form
+						CommentPress.settings.textblock.set_scroll_target( me.saved_scroll_target );
+
+						// trigger click on document
+						$(document).click();
+
+					}
+
+				}
+
+			} // end function
+		);
 
 	};
 
@@ -161,303 +217,12 @@ CommentPress.textselector = new function() {
 	 */
 	this.setup = function() {
 
-		// build comment data
-		me.selection_build_for_comments();
-
-		// set up popover
-		me.setup_popover();
-
 		// set up textblocks
-		me.setup_textblocks();
+		CommentPress.textselector.textblocks.setup();
 
 		// set up comments
-		me.setup_comments();
+		CommentPress.textselector.comments.setup();
 
-		// set up comment form
-		me.setup_comment_form();
-
-		// activate highlighter
-		me.highlighter_activate();
-
-	};
-
-
-
-	/**
-	 * Set up the jQuery text highlighter popover.
-	 *
-	 * @return void
-	 */
-	this.setup_popover = function() {
-
-		// append popover to body element
-		$(me.popover).appendTo( 'body' );
-
-		/**
-		 * Do not act on mousdowns on holder
-		 *
-		 * I presume that this prevents event bubbling from the holder to the
-		 * document body so that clicking elsewhere deactivates the popover.
-		 *
-		 * @return void
-		 */
-		$('.popover-holder').mousedown( function() {
-			return false;
-		});
-
-		/**
-		 * Act on clicks on the holder's "Comment" button
-		 *
-		 * @return void
-		 */
-		$('.popover-holder-btn-left-comment').click( function() {
-
-			// define vars
-			var textblock_id, selection, container, wrap;
-
-			// hide popover
-			$('.popover-holder').hide();
-
-			// set selection active
-			me.selection_active_set();
-
-			// get containing textblock
-			textblock_id = me.container_get();
-
-			// save current selection
-			me.selection_save_for_textblock( textblock_id );
-
-			// send to editor without text
-			me.selection_send_to_editor( false );
-
-			// scroll to comment form
-			CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
-
-			// wrap selection
-			wrap = $('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
-
-			// do not bubble
-			return false;
-
-		});
-
-		/**
-		 * Act on clicks on the holder's "Quote and Comment" button
-		 *
-		 * @return void
-		 */
-		$('.popover-holder-btn-left-quote').click( function() {
-
-			// define vars
-			var textblock_id, selection, container, wrap;
-
-			// hide popover
-			$('.popover-holder').hide();
-
-			// set selection active
-			me.selection_active_set();
-
-			// get containing textblock
-			textblock_id = me.container_get();
-
-			// save current selection
-			me.selection_save_for_textblock( textblock_id );
-
-			// send to editor with text
-			me.selection_send_to_editor( true );
-
-			// scroll to comment form
-			CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
-
-			// wrap selection
-			wrap = $('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
-
-			// do not bubble
-			return false;
-
-		});
-
-		/**
-		 * Act on clicks on the holder's right button
-		 *
-		 * @return void
-		 */
-		$('.popover-holder-btn-right').click( function() {
-
-			// hide popover
-			$('.popover-holder').hide();
-
-			// clear container
-			var dummy = '';
-			me.container_set( dummy );
-
-			// do not bubble
-			return false;
-
-		});
-
-	};
-
-
-
-	/**
-	 * Set up the jQuery text highlighter textblock actions.
-	 *
-	 * @return void
-	 */
-	this.setup_textblocks = function() {
-
-		/**
-		 * Act on mousedown on textblock
-		 *
-		 * @return void
-		 */
-		$('#container').on( 'mousedown', '.textblock', function() {
-
-			// define vars
-			var start_id;
-
-			// get the beginning textblock ID
-			start_id = $(this).prop('id');
-
-			// store
-			me.container_set( start_id );
-
-			// always enable highlighter
-			me.highlighter_enable();
-
-		});
-
-		/**
-		 * Act on mouseup on textblock
-		 *
-		 * @return void
-		 */
-		$('#container').on( 'mouseup', '.textblock', function() {
-
-			// define vars
-			var start_id, end_id;
-
-			// get the beginning textblock ID
-			start_id = me.container_get();
-
-			// get the ending textblock ID
-			end_id = $(this).prop('id');
-
-			// is it different?
-			if ( start_id != end_id ) {
-
-				// overwrite with empty
-				me.container_set( '' );
-
-				// disable highlighter
-				me.highlighter_disable();
-
-			}
-
-		});
-
-	};
-
-
-
-	/**
-	 * Set up the jQuery text highlighter comment actions.
-	 *
-	 * @return void
-	 */
-	this.setup_comments = function() {
-
-		/**
-		 * Rolling onto a comment
-		 */
-		$('#comments_sidebar').on( 'mouseenter', 'li.comment.selection-exists', function( event ) {
-
-			// declare vars
-			var item_id, comment_id;
-
-			// kick out if popover is shown
-			if ( $('.popover-holder').css('display') == 'block' ) { return; }
-
-			// kick out while there's a selection that has been sent to the editor
-			if ( me.selection_active_get() ) { return; }
-
-			// get the current ID
-			item_id = $(this).prop('id');
-
-			// get comment ID
-			comment_id = item_id.split('-')[2];
-
-			// show the selection for this comment
-			me.selection_recall_for_comment( comment_id );
-
-		});
-
-		/**
-		 * Rolling off a comment
-		 */
-		$('#comments_sidebar').on( 'mouseleave', 'li.comment.selection-exists', function( event ) {
-
-			// kick out if popover is shown
-			if ( $('.popover-holder').css('display') == 'block' ) { return; }
-
-			// kick out while there's a selection that has been sent to the editor
-			if ( me.selection_active_get() ) { return; }
-
-			// clear all highlights
-			me.highlights_clear();
-
-		});
-
-	};
-
-
-
-	/**
-	 * Set up the jQuery text highlighter comment form.
-	 *
-	 * @return void
-	 */
-	this.setup_comment_form = function() {
-
-		// declare vars
-		var input;
-
-		// append input to comment form
-		input = '<input type="hidden" name="text_selection" id="text_selection" value="" />';
-		$(input).appendTo( '#commentform' );
-
-	};
-
-
-
-	/**
-	 * Init container variable.
-	 *
-	 * This variable holds a reference to the currently active textblock and is
-	 * set by the click handler on the .textblock elements.
-	 *
-	 * @see CommentPress.textselector.init()
-	 */
-	this.container = '';
-
-	/**
-	 * Setter for textselector container.
-	 *
-	 * @param string textblock_id The ID of the textblock that was clicked
-	 * @return void
-	 */
-	this.container_set = function( textblock_id ) {
-		this.container = textblock_id;
-	};
-
-	/**
-	 * Getter for textselector container.
-	 *
-	 * @return string container The ID of the textblock that was clicked
-	 */
-	this.container_get = function() {
-		return this.container;
 	};
 
 
@@ -467,10 +232,10 @@ CommentPress.textselector = new function() {
 	 *
 	 * @return object selection_obj The selection data
 	 */
-	this.selection_get = function() {
+	this.selection_get = function( element_id ) {
 
 		// get current selection data
-		return this.selection_get_current( document.getElementById( me.container ) );
+		return me.selection_get_current( document.getElementById( element_id ) );
 
 	};
 
@@ -490,264 +255,6 @@ CommentPress.textselector = new function() {
 			}
 		} else if (document.selection) {  // IE?
 			document.selection.empty();
-		}
-
-	};
-
-
-
-	/**
-	 * Init property that flags the selection must not be cleared
-	 */
-	this.selection_active = false;
-
-	/**
-	 * Set selection as active - and therefore not to be cleared
-	 *
-	 * @return void
-	 */
-	this.selection_active_set = function() {
-
-		// set selection active flag
-		me.selection_active = true;
-
-		// attach a handler to the document body
-		$(document).bind( 'click', me.selection_active_handler );
-
-	};
-
-	/**
-	 * Get selection active state - can it be cleared?
-	 *
-	 * @return bool Whether or not the selection can be cleared
-	 */
-	this.selection_active_get = function() {
-		return this.selection_active;
-	};
-
-	/**
-	 * Get selection active state - can it be cleared?
-	 *
-	 * @return bool Whether or not the selection can be cleared
-	 */
-	this.selection_active_clear = function() {
-
-		// set flag
-		this.selection_active = false;
-
-		// unbind document click handler
-		$(document).unbind( 'click', me.selection_active_handler );
-
-	};
-
-	/**
-	 * Selection active handler - test for clicks outside the comment form
-	 *
-	 * @return void
-	 */
-	this.selection_active_handler = function( event ) {
-
-		// if the event target is not the comment form
-		if ( !$(event.target).closest( '#commentform' ).length ) {
-
-			// override event
-			//event.preventDefault();
-
-			// prevent bubbling
-			//event.stopPropagation();
-
-			// deactivate highlighter
-			me.highlighter_deactivate();
-
-			// re-activate highlighter
-			me.highlighter_activate();
-
-			// clear selection active state
-			me.selection_active_clear();
-			me.highlights_clear();
-
-		}
-
-	};
-
-
-
-	/**
-	 * Init array that stores the selection data for comments that have them.
-	 *
-	 * There is key in the master array for each comment ID, whose value is a
-	 * selection object from which we can read the start and end values.
-	 */
-	this.selections_by_comment = {};
-
-	/**
-	 * Init property that stores the selection that was last sent to the editor
-	 */
-	this.selection_sent = {};
-
-	/**
-	 * Build textselector selections for a comments array
-	 *
-	 * @param string comment_id The numerical comment ID
-	 * @return void
-	 */
-	this.selection_build_for_comments = function() {
-
-		/**
-		 * Target only comments that have a marker class
-		 *
-		 * @return void
-		 */
-		$('#comments_sidebar li.selection-exists').each( function(i) {
-
-			// declare vars
-			var item_id, comment_id, comment_key,
-				class_list,
-				sel_start, sel_end,
-				selection_data;
-
-			// get the current item ID
-			item_id = $(this).prop('id');
-
-			// get comment ID
-			comment_id = item_id.split('-')[2];
-
-			// cast as string
-			comment_key = '#comment-' + comment_id
-
-			// get classes
-			class_list = $(this).attr('class').split(/\s+/);
-
-			// find our data class names
-			$.each( class_list, function(index, item) {
-
-				// find our start
-				if ( item.match( 'sel_start-' ) ) {
-					sel_start = parseInt( item.split('sel_start-')[1] );
-				}
-
-				// find our end
-				if ( item.match( 'sel_end-' ) ) {
-					sel_end = parseInt( item.split('sel_end-')[1] );
-				}
-
-				// create selection data
-				selection_data = { start: sel_start, end: sel_end }
-
-				// add to array, keyed by comment ID
-				me.selections_by_comment[comment_key] = selection_data;
-
-			});
-
-		});
-
-	};
-
-	/**
-	 * Save textselector selection for a comment
-	 *
-	 * @param string comment_id The numerical comment ID
-	 * @return void
-	 */
-	this.selection_save_for_comment = function( comment_id ) {
-
-		// cast as string
-		var comment_key = '#comment-' + comment_id;
-
-		// get selection data that was last sent to the editor
-		var selection_data = me.selection_sent;
-
-		// add to array, keyed by comment ID
-		this.selections_by_comment[comment_key] = selection_data;
-
-		// clear sent selection data
-		me.selection_sent = {};
-
-	};
-
-	/**
-	 * Save textselector selection for a comment
-	 *
-	 * @param int comment_id The numerical comment ID
-	 * @return void
-	 */
-	this.selection_recall_for_comment = function( comment_id ) {
-
-		// declare vars
-		var item, text_sig, textblock_id, comment_key;
-
-		// cast as string
-		comment_key = '#comment-' + comment_id;
-
-		// does the comment ID key exist?
-		if ( comment_key in this.selections_by_comment ) {
-
-			// get selection item from array
-			item = this.selections_by_comment[comment_key]
-
-			// get text signature for this comment
-			text_sig = $.get_text_sig_by_comment_id( comment_key );
-
-			// get textblock
-			textblock_id = 'textblock-' + text_sig;
-
-			// restore the selection
-			me.selection_restore( document.getElementById( textblock_id ), item );
-			$('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
-
-		}
-
-	};
-
-
-
-	/**
-	 * Init array that stores selections for each textblock element.
-	 *
-	 * There is key in the master array for each textblock ID, whose value is an
-	 * array of selection objects.
-	 *
-	 * This code is based loosely on:
-	 * http://stackoverflow.com/questions/13949059/persisting-the-changes-of-range-objects-after-selection-in-html/13950376#13950376
-	 */
-	this.selections_by_textblock = {};
-
-	/**
-	 * Save textselector selection
-	 *
-	 * @param string textblock_id The element ID
-	 * @return void
-	 */
-	this.selection_save_for_textblock = function( textblock_id ) {
-
-		// get selection data
-		var selection_data = me.selection_get_current( document.getElementById( textblock_id ) );
-
-		// create the array, keyed by textblock ID, if it doesn't exist
-		if ( !(textblock_id in this.selections_by_textblock) ) { this.selections_by_textblock[textblock_id] = [] }
-
-		// add selection data to the array
-		this.selections_by_textblock[textblock_id].push( selection_data );
-
-	};
-
-	/**
-	 * Recall all textselector selections
-	 *
-	 * @param string textblock_id The element ID
-	 * @return void
-	 */
-	this.selection_recall_for_textblock = function( textblock_id ) {
-
-		// does the textblock ID key exist?
-		if ( textblock_id in this.selections_by_textblock ) {
-
-			// yes, restore each selection in turn
-			for (var i = 0, item; item = this.selections_by_textblock[textblock_id][i++];) {
-				me.selection_restore( document.getElementById( textblock_id ), item );
-				$('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
-			}
-
 		}
 
 	};
@@ -869,6 +376,374 @@ CommentPress.textselector = new function() {
 
 
 	/**
+	 * Clear text highlights
+	 *
+	 * @return void
+	 */
+	this.highlights_clear_all = function() {
+
+		// clear all highlights
+		$('.inline-highlight').each( function(i) {
+			var content = $(this).contents();
+			$(this).replaceWith( content );
+		});
+
+	};
+
+} // end CommentPress.textselector class
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
+/**
+ * Create CommentPress textselector textblocks class
+ */
+CommentPress.textselector.textblocks = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
+
+	// test for our localisation object
+	if ( 'undefined' !== typeof CommentpressTextSelectorSettings ) {
+
+		// reference our localisation object vars
+		this.popover_textblock = CommentpressTextSelectorSettings.popover_textblock;
+
+	}
+
+
+
+	/**
+	 * Initialise the jQuery textblocks text highlighter.
+	 *
+	 * This method should only be called once. To reset the system, call:
+	 * CommentPress.textselector.reset();
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+	};
+
+
+
+	/**
+	 * Init container variable.
+	 *
+	 * This variable holds a reference to the currently active textblock and is
+	 * set by the click handler on the .textblock elements.
+	 *
+	 * @see CommentPress.textselector.init()
+	 */
+	this.container = '';
+
+	/**
+	 * Setter for textselector container.
+	 *
+	 * @param string textblock_id The ID of the textblock that was clicked
+	 * @return void
+	 */
+	this.container_set = function( textblock_id ) {
+		this.container = textblock_id;
+	};
+
+	/**
+	 * Getter for textselector container.
+	 *
+	 * @return string container The ID of the textblock that was clicked
+	 */
+	this.container_get = function() {
+		return this.container;
+	};
+
+
+
+	/**
+	 * Set up the jQuery text highlighter.
+	 *
+	 * This method should only be called once. To reset the system, call:
+	 * CommentPress.textselector.reset();
+	 *
+	 * @return void
+	 */
+	this.setup = function() {
+
+		// build comment data
+		me.selection_build_for_comments();
+
+		// set up textblock popover
+		me.setup_popover();
+
+		// set up textblock content
+		me.setup_content();
+
+		// set up comment rollovers
+		me.setup_comment_rollovers();
+
+		// set up comment form
+		CommentPress.textselector.commentform.setup();
+
+		// activate highlighter
+		me.highlighter_activate();
+
+	};
+
+
+
+	/**
+	 * Set up the jQuery text highlighter textblock popover.
+	 *
+	 * @return void
+	 */
+	this.setup_popover = function() {
+
+		// append popover to body element
+		$(me.popover_textblock).appendTo( 'body' );
+
+		/**
+		 * Do not act on mousdowns on holder
+		 *
+		 * I presume that this prevents event bubbling from the holder to the
+		 * document body so that clicking elsewhere deactivates the popover.
+		 *
+		 * @return void
+		 */
+		$('.popover-holder').mousedown( function() {
+			return false;
+		});
+
+		/**
+		 * Act on clicks on the holder's "Comment" button
+		 *
+		 * @return void
+		 */
+		$('.popover-holder-btn-left-comment').click( function() {
+
+			// define vars
+			var textblock_id, selection, wrap;
+
+			// hide popover
+			$('.popover-holder').hide();
+
+			// set selection active
+			CommentPress.textselector.commentform.focus_activate();
+
+			// send to editor without text
+			me.selection_send_to_editor( false );
+
+			// scroll to comment form
+			CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
+
+			// get containing textblock
+			textblock_id = me.container_get();
+
+			// wrap selection
+			wrap = $('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
+
+			// save current selection
+			//CommentPress.textselector.selection_save_for_textblock( textblock_id );
+
+			// do not bubble
+			return false;
+
+		});
+
+		/**
+		 * Act on clicks on the holder's "Quote and Comment" button
+		 *
+		 * @return void
+		 */
+		$('.popover-holder-btn-left-quote').click( function() {
+
+			// define vars
+			var textblock_id, selection, wrap;
+
+			// hide popover
+			$('.popover-holder').hide();
+
+			// set selection active
+			CommentPress.textselector.commentform.focus_activate();
+
+			// send to editor with text
+			me.selection_send_to_editor( true );
+
+			// scroll to comment form
+			CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
+
+			// get containing textblock
+			textblock_id = me.container_get();
+
+			// wrap selection
+			wrap = $('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
+
+			// save current selection
+			//me.selection_save_for_textblock( textblock_id );
+
+			// do not bubble
+			return false;
+
+		});
+
+		/**
+		 * Act on clicks on the holder's right button
+		 *
+		 * @return void
+		 */
+		$('.popover-holder-btn-right').click( function() {
+
+			// hide popover
+			$('.popover-holder').hide();
+
+			// clear container
+			var dummy = '';
+			me.container_set( dummy );
+
+			// do not bubble
+			return false;
+
+		});
+
+	};
+
+
+
+	/**
+	 * Set up the jQuery text highlighter textblock actions.
+	 *
+	 * @return void
+	 */
+	this.setup_content = function() {
+
+		/**
+		 * Act on mousedown on textblock
+		 *
+		 * @return void
+		 */
+		$('#container').on( 'mousedown', '.textblock', function() {
+
+			// bail if commentform has focus
+			if ( CommentPress.textselector.commentform.focus_is_active() ) { return; }
+
+			// define vars
+			var start_id;
+
+			// get the beginning textblock ID
+			start_id = $(this).prop('id');
+
+			// store
+			me.container_set( start_id );
+
+			// always enable highlighter
+			me.highlighter_enable();
+
+		});
+
+		/**
+		 * Act on mouseup on textblock
+		 *
+		 * @return void
+		 */
+		$('#container').on( 'mouseup', '.textblock', function() {
+
+			// bail if commentform has focus
+			if ( CommentPress.textselector.commentform.focus_is_active() ) { return; }
+
+			// define vars
+			var start_id, end_id;
+
+			// get the beginning textblock ID
+			start_id = me.container_get();
+
+			// get the ending textblock ID
+			end_id = $(this).prop('id');
+
+			// is it different?
+			if ( start_id != end_id ) {
+
+				// overwrite with empty
+				me.container_set( '' );
+
+				// disable highlighter
+				me.highlighter_disable();
+
+			}
+
+		});
+
+	};
+
+
+
+	/**
+	 * Set up the jQuery text highlighter comment actions.
+	 *
+	 * @return void
+	 */
+	this.setup_comment_rollovers = function() {
+
+		/**
+		 * Rolling onto a comment
+		 */
+		$('#comments_sidebar').on( 'mouseenter', 'li.comment.selection-exists', function( event ) {
+
+			// declare vars
+			var item_id, comment_id;
+
+			// kick out if popover is shown
+			if ( $('.popover-holder').css('display') == 'block' ) { return; }
+
+			// kick out while there's a selection that has been sent to the editor
+			//if ( CommentPress.textselector.commentform.focus_is_active() ) { return; }
+
+			// get the current ID
+			item_id = $(this).prop('id');
+
+			// get comment ID
+			comment_id = item_id.split('-')[2];
+
+			// show the selection for this comment
+			me.selection_recall_for_comment( comment_id );
+
+		});
+
+		/**
+		 * Rolling off a comment
+		 */
+		$('#comments_sidebar').on( 'mouseleave', 'li.comment.selection-exists', function( event ) {
+
+			// kick out if popover is shown
+			if ( $('.popover-holder').css('display') == 'block' ) { return; }
+
+			// kick out while there's a selection that has been sent to the editor
+			//if ( CommentPress.textselector.commentform.focus_is_active() ) { return; }
+
+			// clear all highlights
+			me.highlights_clear_for_comment();
+
+		});
+
+	};
+
+
+
+	/**
 	 * Send selection data to comment form
 	 *
 	 * @param bool with_text Whether to send text or not
@@ -880,16 +755,13 @@ CommentPress.textselector = new function() {
 		var selection;
 
 		// unbind popover document click handler
-		$(document).unbind( 'click', me.highlighter_active_handler );
+		$(document).unbind( 'click', me.highlighter_textblock_handler );
 
 		// get selection
-		selection = me.selection_get();
+		selection = CommentPress.textselector.selection_get( me.container_get() );
 
-		// always update text_selection hidden input
-		$('#text_selection').val( selection.start + ',' + selection.end );
-
-		// store the data
-		me.selection_sent = selection;
+		// update text_selection hidden input
+		CommentPress.textselector.commentform.current_selection_set( selection );
 
 		// if we're sending text
 		if ( with_text ) {
@@ -927,18 +799,6 @@ CommentPress.textselector = new function() {
 			}
 
 		}
-
-	};
-
-	/**
-	 * Clear selection data from comment form
-	 *
-	 * @return void
-	 */
-	this.selection_clear_from_editor = function() {
-
-		// clear text_selection hidden input
-		$('#text_selection').val( '' );
 
 	};
 
@@ -1011,7 +871,7 @@ CommentPress.textselector = new function() {
 			'minWords': 1,
 			'complete': function( selected_text ) {
 				// attach a handler to the document body
-				$(document).bind( 'click', me.highlighter_active_handler );
+				$(document).bind( 'click', me.highlighter_textblock_handler );
 			}
 		});
 
@@ -1028,7 +888,7 @@ CommentPress.textselector = new function() {
 		$('.textblock').highlighter('destroy');
 
 		// unbind document click handler
-		$(document).unbind( 'click', me.highlighter_active_handler );
+		$(document).unbind( 'click', me.highlighter_textblock_handler );
 
 	};
 
@@ -1037,7 +897,7 @@ CommentPress.textselector = new function() {
 	 *
 	 * @return void
 	 */
-	this.highlighter_active_handler = function( event ) {
+	this.highlighter_textblock_handler = function( event ) {
 
 		// if the event target is not the popover
 		if ( !$(event.target).closest( '.popover-holder' ).length ) {
@@ -1059,7 +919,7 @@ CommentPress.textselector = new function() {
 	 */
 	this.highlighter_enable = function() {
 
-		// destroy highlighter
+		// enable highlighter
 		$('.textblock').highlighter('enable');
 
 	};
@@ -1071,27 +931,1044 @@ CommentPress.textselector = new function() {
 	 */
 	this.highlighter_disable = function() {
 
-		// destroy highlighter
+		// disable highlighter
 		$('.textblock').highlighter('disable');
 
 	};
 
 	/**
-	 * Clear text highlights
+	 * Clear text highlights in textblocks
 	 *
 	 * @return void
 	 */
-	this.highlights_clear = function() {
+	this.highlights_clear_content = function() {
 
-		// clear all highlights
-		$('.inline-highlight').each( function(i) {
+		// clear textblock highlights
+		$('.textblock .inline-highlight').each( function(i) {
 			var content = $(this).contents();
 			$(this).replaceWith( content );
 		});
 
 	};
 
-} // end CommentPress textselector class
+	/**
+	 * Clear text highlights from comment rollovers
+	 *
+	 * @return void
+	 */
+	this.highlights_clear_for_comment = function() {
+
+		// clear textblock highlights
+		$('.textblock .inline-highlight-per-comment').each( function(i) {
+			var content = $(this).contents();
+			$(this).replaceWith( content );
+		});
+
+	};
+
+
+
+	/**
+	 * Init array that stores the selection data for comments that have them.
+	 *
+	 * There is key in the master array for each comment ID, whose value is a
+	 * selection object from which we can read the start and end values.
+	 */
+	this.selections_by_comment = {};
+
+	/**
+	 * Build textselector selections for a comments array
+	 *
+	 * @param string comment_id The numerical comment ID
+	 * @return void
+	 */
+	this.selection_build_for_comments = function() {
+
+		/**
+		 * Target only comments that have a special class
+		 *
+		 * @return void
+		 */
+		$('#comments_sidebar li.selection-exists').each( function(i) {
+
+			// declare vars
+			var item_id, comment_id, comment_key,
+				class_list,
+				sel_start, sel_end,
+				selection_data;
+
+			// get the current item ID
+			item_id = $(this).prop('id');
+
+			// get comment ID
+			comment_id = item_id.split('-')[2];
+
+			// cast as string
+			comment_key = '#comment-' + comment_id
+
+			// get classes
+			class_list = $(this).attr('class').split(/\s+/);
+
+			// find our data class names
+			$.each( class_list, function(index, item) {
+
+				// find our start
+				if ( item.match( 'sel_start-' ) ) {
+					sel_start = parseInt( item.split('sel_start-')[1] );
+				}
+
+				// find our end
+				if ( item.match( 'sel_end-' ) ) {
+					sel_end = parseInt( item.split('sel_end-')[1] );
+				}
+
+				// create selection data
+				selection_data = { start: sel_start, end: sel_end }
+
+				// add to array, keyed by comment ID
+				me.selections_by_comment[comment_key] = selection_data;
+
+			});
+
+		});
+
+	};
+
+	/**
+	 * Save textselector selection for a comment
+	 *
+	 * @param string comment_id The numerical comment ID
+	 * @return void
+	 */
+	this.selection_save_for_comment = function( comment_id ) {
+
+		// declare vars
+		var comment_key, selection_data;
+
+		// cast as string
+		comment_key = '#comment-' + comment_id;
+
+		// get selection data that was last sent to the editor
+		selection_data = CommentPress.textselector.commentform.current_selection_get();
+
+		// add to array, keyed by comment ID
+		this.selections_by_comment[comment_key] = selection_data;
+
+		// clear sent selection data
+		CommentPress.textselector.commentform.current_selection_clear();
+
+	};
+
+	/**
+	 * Save textselector selection for a comment
+	 *
+	 * @param int comment_id The numerical comment ID
+	 * @return void
+	 */
+	this.selection_recall_for_comment = function( comment_id ) {
+
+		// declare vars
+		var item, text_sig, textblock_id, comment_key;
+
+		// cast as string
+		comment_key = '#comment-' + comment_id;
+
+		// does the comment ID key exist?
+		if ( comment_key in this.selections_by_comment ) {
+
+			// get selection item from array
+			item = this.selections_by_comment[comment_key]
+
+			// get text signature for this comment
+			text_sig = $.get_text_sig_by_comment_id( comment_key );
+
+			// get textblock
+			textblock_id = 'textblock-' + text_sig;
+
+			// restore the selection
+			CommentPress.textselector.selection_restore( document.getElementById( textblock_id ), item );
+			$('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight-per-comment' );
+
+		}
+
+	};
+
+
+
+	/**
+	 * Init array that stores selections for each textblock element.
+	 *
+	 * There is key in the master array for each textblock ID, whose value is an
+	 * array of selection objects.
+	 *
+	 * This code is based loosely on:
+	 * http://stackoverflow.com/questions/13949059/persisting-the-changes-of-range-objects-after-selection-in-html/13950376#13950376
+	 */
+	this.selections_by_textblock = {};
+
+	/**
+	 * Save textselector selection
+	 *
+	 * @param string textblock_id The element ID
+	 * @return void
+	 */
+	this.selection_save_for_textblock = function( textblock_id ) {
+
+		// get selection data
+		var selection_data = me.selection_get_current( document.getElementById( textblock_id ) );
+
+		// create the array, keyed by textblock ID, if it doesn't exist
+		if ( !(textblock_id in this.selections_by_textblock) ) { this.selections_by_textblock[textblock_id] = [] }
+
+		// add selection data to the array
+		this.selections_by_textblock[textblock_id].push( selection_data );
+
+	};
+
+	/**
+	 * Recall all textselector selections
+	 *
+	 * @param string textblock_id The element ID
+	 * @return void
+	 */
+	this.selection_recall_for_textblock = function( textblock_id ) {
+
+		// does the textblock ID key exist?
+		if ( textblock_id in this.selections_by_textblock ) {
+
+			// yes, restore each selection in turn
+			for (var i = 0, item; item = this.selections_by_textblock[textblock_id][i++];) {
+				CommentPress.textselector.selection_restore( document.getElementById( textblock_id ), item );
+				$('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
+			}
+
+		}
+
+	};
+
+} // end CommentPress.textselector.textblocks class
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
+/**
+ * Create CommentPress textselector commentform class
+ */
+CommentPress.textselector.commentform = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
+
+
+
+	/**
+	 * Initialise the jQuery text highlighter commentform.
+	 *
+	 * This method should only be called once. To reset the system, call:
+	 * CommentPress.textselector.reset();
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+		// init listeners
+		//me.listeners();
+
+	};
+
+
+
+	/**
+	 * Set up the jQuery text highlighter comment form.
+	 *
+	 * @return void
+	 */
+	this.setup = function() {
+
+		// declare vars
+		var input;
+
+		// append input to comment form
+		input = '<input type="hidden" name="text_selection" id="text_selection" value="" />';
+		$(input).appendTo( '#commentform' );
+
+	};
+
+
+
+	/**
+	 * Find out if there is content in the editor
+	 *
+	 * @return bool Whether or not there is a stored selection object
+	 */
+	this.comment_content_exists = function() {
+
+		// test for TinyMCE
+		if ( cp_tinymce == '1' ) {
+			// do we have TinyMCE or QuickTags active?
+			if ( $('#wp-comment-wrap').hasClass( 'html-active' ) ) {
+				content = $('#comment').val();
+			} else {
+				if ( 'undefined' !== typeof tinymce.activeEditor ) {
+					content = tinymce.activeEditor.getContent();
+				} else {
+					content = $('#comment').val();
+				}
+			}
+		} else {
+			content = $('#comment').val();
+		}
+
+		// --<
+		return ( content == '' ) ? false : true;
+
+	};
+
+	/**
+	 * Clear the content in the editor
+	 *
+	 * @return void
+	 */
+	this.comment_content_clear = function() {
+
+		// test for TinyMCE
+		if ( cp_tinymce == '1' ) {
+			// do we have TinyMCE or QuickTags active?
+			if ( $('#wp-comment-wrap').hasClass( 'html-active' ) ) {
+				$('#comment').val( '' );
+			} else {
+				if ( 'undefined' !== typeof tinymce.activeEditor ) {
+					tinymce.activeEditor.setContent( '', {format : 'html'} );
+				} else {
+					$('#comment').val( '' );
+				}
+			}
+		} else {
+			$('#comment').val( '' );
+		}
+
+	};
+
+
+
+	// init the selection that's held in the editor
+	this.selection_in_editor = {};
+
+	/**
+	 * Setter for the selection that's held in the editor
+	 *
+	 * @param object selection The selection object to store
+	 * @return void
+	 */
+	this.current_selection_set = function( selection ) {
+
+		// store selection object
+		this.selection_in_editor = selection;
+
+		// update text_selection hidden input
+		$('#text_selection').val( selection.start + ',' + selection.end );
+
+	};
+
+	/**
+	 * Getter for the selection that's held in the editor
+	 *
+	 * @return object The stored selection object
+	 */
+	this.current_selection_get = function() {
+		return this.selection_in_editor;
+	};
+
+	/**
+	 * Find out if there is a selection that's held in the editor
+	 *
+	 * @return bool Whether or not there is a stored selection object
+	 */
+	this.current_selection_exists = function() {
+		return $.isEmptyObject( this.selection_in_editor ) ? false : true;
+	};
+
+	/**
+	 * Clear the selection that's held in the editor
+	 *
+	 * @return void
+	 */
+	this.current_selection_clear = function() {
+
+		// clear selection object
+		this.selection_in_editor = {};
+
+		// clear text_selection hidden input
+		$('#text_selection').val( '' );
+
+	};
+
+
+
+	/**
+	 * Init property that flags the selection must not be cleared
+	 */
+	this.focus_active = false;
+
+	/**
+	 * Set selection as active - and therefore not to be cleared
+	 *
+	 * @return void
+	 */
+	this.focus_activate = function() {
+
+		// set selection active flag
+		me.focus_active = true;
+
+		// attach a handler to the document body
+		$(document).bind( 'click', me.focus_active_handler );
+
+	};
+
+	/**
+	 * Get selection active state - can it be cleared?
+	 *
+	 * @return bool Whether or not the selection can be cleared
+	 */
+	this.focus_is_active = function() {
+		return this.focus_active;
+	};
+
+	/**
+	 * Get selection active state - can it be cleared?
+	 *
+	 * @return bool Whether or not the selection can be cleared
+	 */
+	this.focus_clear = function() {
+
+		// set flag
+		this.focus_active = false;
+
+		// unbind document click handler
+		$(document).unbind( 'click', me.focus_active_handler );
+
+	};
+
+	/**
+	 * Selection active handler - test for clicks outside the comment form
+	 *
+	 * @return void
+	 */
+	this.focus_active_handler = function( event ) {
+
+		// if the event target is not the comment form
+		if ( !$(event.target).closest( '#commentform' ).length ) {
+
+			console.log( 'the event target is not the comment form' );
+
+			// if the event target is not a comment
+			if ( !$(event.target).closest( '.comment-content' ).length ) {
+
+				console.log( 'the event target is not a comment' );
+
+				// do we have a current selection?
+				if ( me.current_selection_exists() ) {
+
+					console.log( 'we have a selection' );
+
+					// do we have any content?
+					if ( me.comment_content_exists() ) {
+
+						console.log( 'we have comment content' );
+
+						// show modal
+						me.modal();
+
+						// unbind document click handler
+						$(document).unbind( 'click', me.focus_active_handler );
+
+					} else {
+
+						console.log( 'we DO NOT have comment content' );
+
+						// do modal yes
+						me.modal_yes();
+
+					}
+
+				} else {
+
+					console.log( 'we DO NOT have a selection' );
+
+					// do modal yes
+					me.modal_yes();
+
+				}
+
+			}
+
+		}
+
+	};
+
+
+
+	// init modal markup
+	this.modal_markup = {};
+
+	/**
+	 * Selection active handler - test for clicks outside the comment form
+	 *
+	 * @return void
+	 */
+	this.modal = function( event ) {
+
+		// define vars
+		var title_text, alert_text, yes_text, no_text, options;
+
+		// define title
+		title_text = "Are you sure?"; //me.cpajax_lang[8];
+
+		// define message
+		alert_text = "You have not yet submitted your comment. Are you sure you want to discard it?"; //me.cpajax_lang[8];
+
+		// create modal dialog markup
+		me.modal_markup = $('<div id="dialog" title="' + title_text + '"><p class="cp_alert_text">' + alert_text + '</p></div>');
+
+		// define "yes" button text
+		yes_text = "Discard"; //me.cpajax_lang[8];
+
+		// define "no" button text
+		no_text = "Keep"; //me.cpajax_lang[8];
+
+		// create options for modal dialog
+		options = {
+
+			resizable: false,
+			width: 400,
+			height: 200,
+			zIndex: 3999,
+			modal: true,
+			dialogClass: 'wp-dialog',
+			buttons: [
+				{
+					text: yes_text,
+					click : function() {
+
+						// let's do it
+						//$(this).dialog( "option", "disabled", true );
+
+						// do modal yes
+						me.modal_yes();
+
+						// don't close, but destroy instead
+						$(this).dialog( 'destroy' );
+						$(this).remove();
+
+					}
+				},
+				{
+					text: no_text,
+					click : function() {
+
+						// cancel
+						$(this).dialog( 'close' );
+						$(this).dialog( 'destroy' );
+						$(this).remove();
+
+					}
+				}
+
+			],
+			close: function( event, ui ) {
+
+				// once dialog is closed
+				setTimeout(function () {
+
+					// do modal cancel
+					me.modal_cancel();
+
+				}, 5 );
+
+			}
+
+		};
+
+		// show dialog
+		me.modal_markup.appendTo( 'body' );
+		me.modal_markup.dialog( options );
+
+	};
+
+
+
+	/**
+	 * Callback for clicking "Yes" in the dialog box
+	 *
+	 * @return void
+	 */
+	this.modal_yes = function( event ) {
+
+		// clear comment content
+		me.comment_content_clear();
+
+		// clear current selection
+		me.current_selection_clear();
+
+		// deactivate textblocks highlighter
+		CommentPress.textselector.textblocks.highlighter_deactivate();
+
+		// re-activate textblocks highlighter
+		CommentPress.textselector.textblocks.highlighter_activate();
+
+		// clear selection active state
+		me.focus_clear();
+
+		// clear all highlights
+		CommentPress.textselector.highlights_clear_all();
+
+	};
+
+
+
+	/**
+	 * Callback for clicking "Cancel" in the dialog box
+	 *
+	 * @return void
+	 */
+	this.modal_cancel = function( event ) {
+
+		// activate selection active state
+		me.focus_activate();
+
+		// clear any existing selection
+		CommentPress.textselector.selection_clear();
+
+		// disable selection
+		CommentPress.textselector.textblocks.highlighter_disable();
+
+	};
+
+
+
+} // end CommentPress.textselector.commentform class
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
+/**
+ * Create CommentPress textselector comments class
+ */
+CommentPress.textselector.comments = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
+
+	// test for our localisation object
+	if ( 'undefined' !== typeof CommentpressTextSelectorSettings ) {
+
+		// reference our localisation object vars
+		this.popover_comment = CommentpressTextSelectorSettings.popover_comment;
+
+	}
+
+
+
+	/**
+	 * Initialise the jQuery comments text highlighter.
+	 *
+	 * This method should only be called once. To reset the system, call:
+	 * CommentPress.textselector.reset();
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+	};
+
+
+
+	/**
+	 * Init container variable.
+	 *
+	 * This variable holds a reference to the currently active comment and is
+	 * set by the click handler on the .textblock elements.
+	 *
+	 * @see CommentPress.textselector.init()
+	 */
+	this.container = '';
+
+	/**
+	 * Setter for textselector container.
+	 *
+	 * @param string textblock_id The ID of the textblock that was clicked
+	 * @return void
+	 */
+	this.container_set = function( textblock_id ) {
+		this.container = textblock_id;
+	};
+
+	/**
+	 * Getter for textselector container.
+	 *
+	 * @return string container The ID of the textblock that was clicked
+	 */
+	this.container_get = function() {
+		return this.container;
+	};
+
+
+
+	/**
+	 * Set up the jQuery text highlighter comment actions.
+	 *
+	 * @return void
+	 */
+	this.setup = function() {
+
+		// set up comment popover
+		me.setup_popover();
+
+		// set up selection of comment content
+		me.setup_content();
+
+		// activate highlighter
+		me.highlighter_activate();
+
+	};
+
+
+
+	/**
+	 * Set up the jQuery text highlighter comment popover.
+	 *
+	 * @return void
+	 */
+	this.setup_popover = function() {
+
+		// append popover to body element
+		$(me.popover_comment).appendTo( 'body' );
+
+		/**
+		 * Do not act on mousdowns on holder
+		 *
+		 * I presume that this prevents event bubbling from the holder to the
+		 * document body so that clicking elsewhere deactivates the popover.
+		 *
+		 * @return void
+		 */
+		$('.comment-popover-holder').mousedown( function() {
+			return false;
+		});
+
+		/**
+		 * Act on clicks on the holder's "Quote and Comment" button
+		 *
+		 * @return void
+		 */
+		$('.comment-popover-holder-btn-left-quote').click( function() {
+
+			// define vars
+			var comment_id, selection, wrap;
+
+			// hide popover
+			$('.comment-popover-holder').hide();
+
+			// get containing comment
+			comment_id = me.container_get();
+
+			// send to editor with text
+			me.selection_send_to_editor();
+
+			// scroll to comment form
+			CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
+
+			// wrap selection
+			wrap = $('#' + comment_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
+
+			// do not bubble
+			return false;
+
+		});
+
+		/**
+		 * Act on clicks on the holder's right button
+		 *
+		 * @return void
+		 */
+		$('.popover-holder-btn-right').click( function() {
+
+			// hide popover
+			$('.comment-popover-holder').hide();
+
+			// clear container
+			var dummy = '';
+			me.container_set( dummy );
+
+			// do not bubble
+			return false;
+
+		});
+
+	};
+
+
+
+	/**
+	 * Set up the jQuery text highlighter comment actions.
+	 *
+	 * @return void
+	 */
+	this.setup_content = function() {
+
+		/**
+		 * Act on mousedown on textblock
+		 *
+		 * @return void
+		 */
+		$('#comments_sidebar').on( 'mousedown', '.comment-content', function() {
+
+			// define vars
+			var start_id;
+
+			// get the beginning textblock ID
+			start_id = $(this).parent().prop('id');
+
+			// store
+			me.container_set( start_id );
+
+			// always enable highlighter
+			me.highlighter_enable();
+
+		});
+
+		/**
+		 * Act on mouseup on comment content
+		 *
+		 * @return void
+		 */
+		$('#comments_sidebar').on( 'mouseup', '.comment-content', function() {
+
+			// define vars
+			var start_id, end_id;
+
+			// get the beginning textblock ID
+			start_id = me.container_get();
+
+			// get the ending textblock ID
+			end_id = $(this).parent().prop('id');
+
+			// is it different?
+			if ( start_id != end_id ) {
+
+				// overwrite with empty
+				me.container_set( '' );
+
+				// disable highlighter
+				me.highlighter_disable();
+
+			}
+
+		});
+
+	};
+
+
+
+	/**
+	 * Send selection data to comment form
+	 *
+	 * @return void
+	 */
+	this.selection_send_to_editor = function() {
+
+		// declare vars
+		var selection;
+
+		// unbind popover document click handler
+		$(document).unbind( 'click', me.highlighter_comment_handler );
+
+		// get selection
+		selection = CommentPress.textselector.selection_get( me.container_get() );
+
+		// test for TinyMCE
+		if ( cp_tinymce == '1' ) {
+			// do we have TinyMCE or QuickTags active?
+			if ( $('#wp-comment-wrap').hasClass( 'html-active' ) ) {
+				me.selection_add_to_textarea( selection.text );
+			} else {
+				me.selection_add_to_tinymce( selection.text );
+			}
+		} else {
+			me.selection_add_to_textarea( selection.text );
+		}
+
+	};
+
+	/**
+	 * Add text selection to comment textarea
+	 *
+	 * @param string text The plain text
+	 * @return void
+	 */
+	this.selection_add_to_textarea = function( text ) {
+
+		// add link and focus
+		setTimeout(function () {
+			$('#comment').val( $('#comment').val() + '<a href="#">' + text + '</a>' );
+			$('#comment').focus();
+			me.highlights_clear_comment();
+		}, 200 );
+
+	};
+
+	/**
+	 * Add selection to TinyMCE
+	 *
+	 * @param string text The plain text
+	 * @return void
+	 */
+	this.selection_add_to_tinymce = function( text ) {
+
+		// wrap in link
+		text = '<a href="#">' + text + '</a>';
+
+		// add link at cursor
+		tinymce.activeEditor.execCommand('mceInsertContent', false, text);
+
+		// place cursor at the end and focus
+		setTimeout(function () {
+			tinymce.activeEditor.focus();
+			me.highlights_clear_comment();
+		}, 200 );
+
+	};
+
+
+
+	/**
+	 * Activate the jQuery highlighter
+	 *
+	 * @return void
+	 */
+	this.highlighter_activate = function() {
+
+		// enable highlighter
+		$('.comment-content').highlighter({
+			'selector': '.comment-popover-holder',
+			'minWords': 1,
+			'complete': function( selected_text ) {
+				// attach a handler to the document body
+				$(document).bind( 'click', me.highlighter_comment_handler );
+			}
+		});
+
+	};
+
+	/**
+	 * Deactivate the jQuery highlighter
+	 *
+	 * @return void
+	 */
+	this.highlighter_deactivate = function() {
+
+		// destroy highlighter
+		$('.comment-content').highlighter('destroy');
+
+		// unbind document click handler
+		$(document).unbind( 'click', me.highlighter_comment_handler );
+
+	};
+
+	/**
+	 * Make the jQuery highlighter modal in behaviour
+	 *
+	 * @return void
+	 */
+	this.highlighter_comment_handler = function( event ) {
+
+		// if the event target is not the popover
+		if ( !$(event.target).closest( '.comment-popover-holder' ).length ) {
+
+			// deactivate highlighter
+			me.highlighter_deactivate();
+
+			// re-activate highlighter
+			me.highlighter_activate();
+
+		}
+
+	};
+
+	/**
+	 * Enable the jQuery highlighter plugin
+	 *
+	 * @return void
+	 */
+	this.highlighter_enable = function() {
+
+		// enable highlighter
+		$('.comment-content').highlighter('enable');
+
+	};
+
+	/**
+	 * Disable the jQuery highlighter plugin
+	 *
+	 * @return void
+	 */
+	this.highlighter_disable = function() {
+
+		// disable highlighter
+		$('.comment-content').highlighter('disable');
+
+	};
+
+	/**
+	 * Clear comment highlights
+	 *
+	 * @return void
+	 */
+	this.highlights_clear_comment = function() {
+
+		// clear comment highlights
+		$('.comment-content .inline-highlight').each( function(i) {
+			var content = $(this).contents();
+			$(this).replaceWith( content );
+		});
+
+	};
+
+} // end CommentPress.textselector.comments class
 
 
 

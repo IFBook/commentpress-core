@@ -3380,7 +3380,8 @@ Compatibility with CommentPress Text Highlighter
 --------------------------------------------------------------------------------
 */
 
-.popover-holder
+.popover-holder,
+.comment-popover-holder
 {
 	position: absolute;
 	z-index: 9999999;
@@ -3443,7 +3444,8 @@ Compatibility with CommentPress Text Highlighter
 }
 
 .popover-holder-btn-left-quote,
-.popover-holder-btn-left-comment
+.popover-holder-btn-left-comment,
+.comment-popover-holder-btn-left-quote
 {
 	padding: 0 10px;
 	padding-top: 0.7em;
@@ -3453,7 +3455,8 @@ Compatibility with CommentPress Text Highlighter
 /* common hover state */
 .popover-holder-btn-right:hover,
 .popover-holder-btn-left-quote:hover,
-.popover-holder-btn-left-comment:hover
+.popover-holder-btn-left-comment:hover,
+.comment-popover-holder-btn-left-quote:hover
 {
 	background: #ddd;
 }
@@ -3471,7 +3474,13 @@ Compatibility with CommentPress Text Highlighter
 
 .inline-highlight
 {
-	background: rgb(249, 248, 204);
+	background: rgba(255, 252, 105, 0.3);
+	padding: 4px 0;
+}
+
+.inline-highlight-per-comment
+{
+	background: rgba(255, 225, 105, 0.3);
 	padding: 4px 0;
 }
 

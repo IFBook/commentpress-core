@@ -1140,10 +1140,13 @@ CommentPress.theme.viewport = new function() {
 	 * Does what a click on a comment icon should do
 	 *
 	 * @param string text_sig The text signature to scroll to
-	 * @param string mode Flag which determines where to scroll to ('marker' or 'auto')
+	 * @param string scroll_target Where to scroll to ('none', 'para_heading', 'commentform' or 'auto' if empty)
 	 * @return void
 	 */
-	this.align_content = function( text_sig, mode ) {
+	this.align_content = function( text_sig, scroll_target ) {
+
+		// bail if scrool target is 'none'
+		if ( scroll_target == 'none' ) { return; }
 
 		// move to sidebar
 		if ( !$('body').hasClass('active-sidebar') || $('body').hasClass('active-nav') ) {
@@ -1244,8 +1247,8 @@ CommentPress.theme.viewport = new function() {
 					// move comment form
 					addComment.moveFormToPara( para_num, text_sig, post_id );
 
-					// if mode is for markers
-					if ( mode == 'marker' ) {
+					// if scroll_target is for para_headings
+					if ( scroll_target == 'para_heading' ) {
 
 						// scroll comments to header
 						CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
@@ -1274,8 +1277,8 @@ CommentPress.theme.viewport = new function() {
 				// are comments open?
 				if ( cp_comments_open == 'y' ) {
 
-					// if mode is for markers
-					if ( mode == 'marker' ) {
+					// if scroll_target is for para_headings
+					if ( scroll_target == 'para_heading' ) {
 
 						// scroll comments to header
 						CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
@@ -1304,8 +1307,8 @@ CommentPress.theme.viewport = new function() {
 				// are comments open?
 				if ( cp_comments_open == 'y' ) {
 
-					// if mode is for markers
-					if ( mode == 'marker' ) {
+					// if scroll_target is for para_headings
+					if ( scroll_target == 'para_heading' ) {
 
 						// scroll comments to header
 						CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
@@ -1334,8 +1337,8 @@ CommentPress.theme.viewport = new function() {
 				// are comments open?
 				if ( cp_comments_open == 'y' ) {
 
-					// if mode is for markers
-					if ( mode == 'marker' ) {
+					// if scroll_target is for para_headings
+					if ( scroll_target == 'para_heading' ) {
 
 						// scroll comments to header
 						CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
@@ -1389,8 +1392,8 @@ CommentPress.theme.viewport = new function() {
 					// are comments open?
 					if ( cp_comments_open == 'y' ) {
 
-						// if mode is for markers
-						if ( mode == 'marker' ) {
+						// if scroll_target is for para_headings
+						if ( scroll_target == 'para_heading' ) {
 
 							// scroll comments to header
 							CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
