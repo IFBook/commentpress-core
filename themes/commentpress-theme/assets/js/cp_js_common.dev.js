@@ -87,7 +87,7 @@ CommentPress.theme.settings = new function() {
 	this.init_container_top_max = function() {
 
 		// get container original top max
-		this.container_top_max = jQuery.cookie( 'cp_container_top_max' );
+		this.container_top_max = $.cookie( 'cp_container_top_max' );
 		if ( 'undefined' === typeof this.container_top_max || this.container_top_max === null ) {
 			this.container_top_max = 108;
 		}
@@ -897,7 +897,7 @@ CommentPress.theme.content = new function() {
 		$('#original .post').css( 'display', 'none' );
 
 		// setup workflow tabs, if present
-		CommentPress.setup.content.workflow_tabs( content_min_height, content_padding_bottom );
+		CommentPress.common.content.workflow_tabs( content_min_height, content_padding_bottom );
 
 	};
 
@@ -966,7 +966,7 @@ CommentPress.theme.sidebars = new function() {
 	this.init_minimised = function() {
 
 		// get state of sidebar
-		this.sidebar_minimised = jQuery.cookie( 'cp_sidebar_minimised' );
+		this.sidebar_minimised = $.cookie( 'cp_sidebar_minimised' );
 		if ( 'undefined' === typeof this.sidebar_minimised || this.sidebar_minimised === null ) {
 			this.sidebar_minimised = 'n';
 		}
@@ -1248,7 +1248,7 @@ CommentPress.theme.sidebars = new function() {
 		sidebar = $('#sidebar');
 		sidebar_inner = $('#sidebar_inner');
 		sidebar_container = $('#toc_sidebar');
-		header = $('#' + $.get_sidebar_name() + '_sidebar .sidebar_header');
+		header = $('#' + CommentPress.theme.sidebars.get_sidebar_name() + '_sidebar .sidebar_header');
 		minimiser = me.get_sidebar_pane();
 
 		// get data on sidebar element
@@ -1479,7 +1479,7 @@ CommentPress.theme.viewport = new function() {
 					$.highlight_para( textblock );
 
 					// scroll page
-					CommentPress.setup.content.scroll_page( textblock );
+					CommentPress.common.content.scroll_page( textblock );
 
 				} else {
 
@@ -1546,7 +1546,7 @@ CommentPress.theme.viewport = new function() {
 					$.highlight_para( textblock );
 
 					// scroll page
-					CommentPress.setup.content.scroll_page( textblock );
+					CommentPress.common.content.scroll_page( textblock );
 
 					// --<
 					return;
@@ -1589,7 +1589,7 @@ CommentPress.theme.viewport = new function() {
 				anchor.addClass('selected_para');
 
 				// scroll page
-				CommentPress.setup.content.scroll_page( anchor );
+				CommentPress.common.content.scroll_page( anchor );
 
 			}
 
@@ -1668,7 +1668,7 @@ CommentPress.theme.viewport = new function() {
 				$.highlight_para( textblock );
 
 				// scroll page
-				CommentPress.setup.content.scroll_page( textblock );
+				CommentPress.common.content.scroll_page( textblock );
 
 			}
 
@@ -1918,7 +1918,7 @@ CommentPress.theme.original.header = new function() {
 	this.init = function() {
 
 		// init minimised flag
-		me.minimised();
+		me.init_minimised();
 
 	};
 
@@ -1981,7 +1981,7 @@ CommentPress.theme.original.header = new function() {
 	this.init_minimised = function() {
 
 		// get state of header
-		this.minimised = jQuery.cookie( 'cp_header_minimised' );
+		this.minimised = $.cookie( 'cp_header_minimised' );
 		if ( 'undefined' === typeof this.minimised || this.minimised === null ) {
 			this.minimised = 'n';
 		}
@@ -2412,7 +2412,7 @@ jQuery(document).ready( function($) {
 
 	// scroll the page on load
 	if ( cp_special_page == '1' ) {
-		CommentPress.setup.content.on_load_scroll_to_comment();
+		CommentPress.common.content.on_load_scroll_to_comment();
 	} else {
 		CommentPress.theme.viewport.on_load_scroll_to_anchor();
 	}

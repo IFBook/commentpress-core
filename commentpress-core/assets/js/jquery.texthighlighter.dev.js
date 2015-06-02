@@ -1621,26 +1621,24 @@ CommentPress.textselector.comments = new function() {
 	 * Init container variable.
 	 *
 	 * This variable holds a reference to the currently active comment and is
-	 * set by the click handler on the .textblock elements.
-	 *
-	 * @see CommentPress.textselector.init()
+	 * set by the click handler on the .comment-content elements.
 	 */
 	this.container = '';
 
 	/**
 	 * Setter for textselector container.
 	 *
-	 * @param string textblock_id The ID of the textblock that was clicked
+	 * @param string comment_id The ID of the comment that was clicked
 	 * @return void
 	 */
-	this.container_set = function( textblock_id ) {
-		this.container = textblock_id;
+	this.container_set = function( comment_id ) {
+		this.container = comment_id;
 	};
 
 	/**
 	 * Getter for textselector container.
 	 *
-	 * @return string container The ID of the textblock that was clicked
+	 * @return string container The ID of the comment that was clicked
 	 */
 	this.container_get = function() {
 		return this.container;
@@ -1703,14 +1701,14 @@ CommentPress.textselector.comments = new function() {
 			// hide popover
 			$('.comment-popover-holder').hide();
 
-			// get containing comment
-			comment_id = me.container_get();
-
 			// send to editor with text
-			me.selection_send_to_editor();
+			me.selection_send_to_editor( true );
 
 			// scroll to comment form
 			CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
+
+			// get containing comment
+			comment_id = me.container_get();
 
 			// wrap selection
 			wrap = $('#' + comment_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
@@ -1751,7 +1749,7 @@ CommentPress.textselector.comments = new function() {
 	this.setup_content = function() {
 
 		/**
-		 * Act on mousedown on textblock
+		 * Act on mousedown on comment
 		 *
 		 * @return void
 		 */
@@ -1760,7 +1758,7 @@ CommentPress.textselector.comments = new function() {
 			// define vars
 			var start_id;
 
-			// get the beginning textblock ID
+			// get the beginning comment ID
 			start_id = $(this).parent().prop('id');
 
 			// store
@@ -1781,10 +1779,10 @@ CommentPress.textselector.comments = new function() {
 			// define vars
 			var start_id, end_id;
 
-			// get the beginning textblock ID
+			// get the beginning comment ID
 			start_id = me.container_get();
 
-			// get the ending textblock ID
+			// get the ending comment ID
 			end_id = $(this).parent().prop('id');
 
 			// is it different?
@@ -1800,6 +1798,70 @@ CommentPress.textselector.comments = new function() {
 
 		});
 
+		/**
+		 * Act on clicks on comment forward-links
+		 *
+		 * @return void
+		 */
+		$('#comments_sidebar').on( 'click', '.comment-forwardlink', function() {
+
+			// declare vars
+			var target_comment_id, current_comment, current_comment_id, link;
+
+			// get target ID
+			target_comment_id = $(this).prop('href').split('#')[1];
+
+			// get array of parent comment divs
+			parent_comments_array = $(this)
+										.parents('li.comment')
+										.map( function () {
+											return this;
+										});
+
+			// did we get one?
+			if ( parent_comments_array.length > 0 ) {
+
+				// get the item
+				current_comment = $(parent_comments_array[0]);
+				console.log( current_comment );
+
+				// get current ID
+				current_comment_id = current_comment.prop('id').split('-')[2];
+
+				// construct link
+				link = '<a href="#comment-' + current_comment_id + '" class="comment-backlink">BACK</a>';
+
+				// append backlink to target
+				$(link).prependTo('#' + target_comment_id + ' .comment-identifier');
+
+				// scroll to comment
+				CommentPress.common.comments.scroll_comments( $('#' + target_comment_id), 300, 'flash' );
+
+			}
+
+		});
+
+		/**
+		 * Act on clicks on comment forward-links
+		 *
+		 * @return void
+		 */
+		$('#comments_sidebar').on( 'click', '.comment-backlink', function() {
+
+			// declare vars
+			var target_comment_id;
+
+			// get target ID
+			target_comment_id = $(this).prop('href').split('#')[1];
+
+			// scroll to comment
+			CommentPress.common.comments.scroll_comments( $('#' + target_comment_id), 300, 'flash' );
+
+			// remove backlink
+			$(this).remove();
+
+		});
+
 	};
 
 
@@ -1807,9 +1869,10 @@ CommentPress.textselector.comments = new function() {
 	/**
 	 * Send selection data to comment form
 	 *
+	 * @param bool with_text Whether to send text or not
 	 * @return void
 	 */
-	this.selection_send_to_editor = function() {
+	this.selection_send_to_editor = function( with_text ) {
 
 		// declare vars
 		var selection;
@@ -1820,17 +1883,71 @@ CommentPress.textselector.comments = new function() {
 		// get selection
 		selection = CommentPress.textselector.selection_get( me.container_get() );
 
-		// test for TinyMCE
-		if ( cp_tinymce == '1' ) {
-			// do we have TinyMCE or QuickTags active?
-			if ( $('#wp-comment-wrap').hasClass( 'html-active' ) ) {
-				me.selection_add_to_textarea( selection.text );
+		// if we're sending text
+		if ( with_text ) {
+
+			// test for TinyMCE
+			if ( cp_tinymce == '1' ) {
+				// do we have TinyMCE or QuickTags active?
+				if ( $('#wp-comment-wrap').hasClass( 'html-active' ) ) {
+					me.selection_add_to_textarea( selection.text );
+				} else {
+					me.selection_add_to_tinymce( selection.text );
+				}
 			} else {
-				me.selection_add_to_tinymce( selection.text );
+				me.selection_add_to_textarea( selection.text );
 			}
+
 		} else {
-			me.selection_add_to_textarea( selection.text );
+
+			// reference comment somehow
+			//comment_id = me.container_get();
+
+			// test for TinyMCE
+			if ( cp_tinymce == '1' ) {
+				// do we have TinyMCE or QuickTags active?
+				if ( $('#wp-comment-wrap').hasClass( 'html-active' ) ) {
+					setTimeout(function () {
+						$('#comment').focus();
+					}, 200 );
+				} else {
+					setTimeout(function () {
+						if ( 'undefined' !== typeof tinymce.activeEditor ) {
+							tinymce.activeEditor.focus();
+						} else {
+							$('#comment').focus();
+						}
+					}, 200 );
+				}
+			} else {
+				setTimeout(function () {
+					$('#comment').focus();
+				}, 200 );
+			}
+
 		}
+
+	};
+
+	/**
+	 * Get a link to the target comment
+	 *
+	 * @param string text The plain text
+	 * @param string link The HTML link
+	 */
+	this.get_link = function( text ) {
+
+		// declare vars
+		var comment_id, link;
+
+		// get comment ID
+		comment_id = me.container_get();
+
+		// wrap in link
+		link = '<a href="#' + comment_id + '" class="comment-forwardlink">' + text + '</a>';
+
+		// --<
+		return link;
 
 	};
 
@@ -1842,9 +1959,11 @@ CommentPress.textselector.comments = new function() {
 	 */
 	this.selection_add_to_textarea = function( text ) {
 
+		// insert link
+		$('#comment').val( $('#comment').val() + me.get_link( text ) );
+
 		// add link and focus
 		setTimeout(function () {
-			$('#comment').val( $('#comment').val() + '<a href="#">' + text + '</a>' );
 			$('#comment').focus();
 			me.highlights_clear_comment();
 		}, 200 );
@@ -1859,11 +1978,8 @@ CommentPress.textselector.comments = new function() {
 	 */
 	this.selection_add_to_tinymce = function( text ) {
 
-		// wrap in link
-		text = '<a href="#">' + text + '</a>';
-
 		// add link at cursor
-		tinymce.activeEditor.execCommand('mceInsertContent', false, text);
+		tinymce.activeEditor.execCommand( 'mceInsertContent', false, me.get_link( text ) );
 
 		// place cursor at the end and focus
 		setTimeout(function () {

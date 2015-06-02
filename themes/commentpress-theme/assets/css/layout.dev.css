@@ -3067,6 +3067,15 @@ Compatibility with CommentPress Text Highlighter
 	padding: 4px 0;
 }
 
+.comment-backlink
+{
+	font-size: 70%;
+	text-decoration: none;
+	font-family: sans-serif;
+	float: right;
+	margin-left: 2%;
+}
+
 
 
 /*
