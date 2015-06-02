@@ -2902,35 +2902,6 @@ class CommentpressCoreDatabase {
 		// do we have a user agent?
 		if ( isset( $_SERVER["HTTP_USER_AGENT"] ) ) {
 
-			// NOTE: keep an eye on touchphone agents
-
-			// get agent
-			$agent = $_SERVER["HTTP_USER_AGENT"];
-
-			// init touchphone array
-			$touchphones = array(
-				'iPhone',
-				'iPod',
-				'Android',
-				'BlackBerry9530',
-				'LG-TU915 Obigo', // LG touch browser
-				'LGE VX',
-				'webOS', // Palm Pre, etc.
-			);
-
-			// loop through them
-			foreach( $touchphones AS $phone ) {
-
-				// test for its name in the agent string
-				if ( strpos( $agent, $phone ) !== false ) {
-
-					// set flag
-					$this->is_mobile_touch = true;
-
-				}
-
-			}
-
 			// the old Commentpress also includes Mobile_Detect
 			if ( ! class_exists( 'Mobile_Detect' ) ) {
 
@@ -2942,19 +2913,36 @@ class CommentpressCoreDatabase {
 			// init
 			$detect = new Mobile_Detect();
 
+			// init mobile flag
+			$this->is_mobile = false;
+
 			// is it mobile?
 			if ( $detect->isMobile() ) {
 
-				// set flag
+				// overwrite flag
 				$this->is_mobile = true;
 
 			}
 
+			// init tablet flag
+			$this->is_tablet = false;
+
 			// is it a tablet?
 			if ( $detect->isTablet() ) {
 
-				// set flag
+				// overwrite flag
 				$this->is_tablet = true;
+
+			}
+
+			// init touch flag
+			$this->is_mobile_touch = false;
+
+			// to guess at touch devices, we assume *either* phone *or* tablet
+			if ( $detect->isMobile() OR $detect->isTablet() ) {
+
+				// overwrite flag
+				$this->is_mobile_touch = true;
 
 			}
 
@@ -3003,6 +2991,28 @@ class CommentpressCoreDatabase {
 
 		// --<
 		return $this->is_tablet;
+
+	}
+
+
+
+	/**
+	 * Returns class properties for touch devices
+	 *
+	 * @return bool $is_touch True if touch device, false otherwise
+	 */
+	public function is_touch() {
+
+		// do we have the property?
+		if ( ! isset( $this->is_mobile_touch ) ) {
+
+			// get it
+			$this->test_for_mobile();
+
+		}
+
+		// --<
+		return $this->is_mobile_touch;
 
 	}
 

@@ -271,40 +271,45 @@ class CommentpressCoreDisplay {
 			COMMENTPRESS_VERSION // version
 		);
 
-		// add jQuery wrapSelection plugin
-		wp_enqueue_script(
-			'jquery_wrapselection',
-			plugins_url( 'commentpress-core/assets/js/jquery.wrap-selection' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
-			array( 'jquery_commentpress' ),
-			COMMENTPRESS_VERSION // version
-		);
+		// only allow text highlighting on non-touch devices
+		if ( ! $this->db->is_touch() ) {
 
-		// add jQuery highlighter plugin
-		wp_enqueue_script(
-			'jquery_highlighter',
-			plugins_url( 'commentpress-core/assets/js/jquery.highlighter' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
-			array( 'jquery_wrapselection' ),
-			COMMENTPRESS_VERSION // version
-		);
+			// add jQuery wrapSelection plugin
+			wp_enqueue_script(
+				'jquery_wrapselection',
+				plugins_url( 'commentpress-core/assets/js/jquery.wrap-selection' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
+				array( 'jquery_commentpress' ),
+				COMMENTPRESS_VERSION // version
+			);
 
-		// add jQuery text highlighter plugin
-		wp_enqueue_script(
-			'jquery_texthighlighter',
-			plugins_url( 'commentpress-core/assets/js/jquery.texthighlighter' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
-			array( 'jquery_highlighter' ),
-			COMMENTPRESS_VERSION // version
-		);
+			// add jQuery highlighter plugin
+			wp_enqueue_script(
+				'jquery_highlighter',
+				plugins_url( 'commentpress-core/assets/js/jquery.highlighter' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
+				array( 'jquery_wrapselection' ),
+				COMMENTPRESS_VERSION // version
+			);
 
-		// define popover
-		$popover = '<span class="popover-holder"><div class="popover-holder-inner"><div class="popover-holder-caret"></div><div class="popover-holder-btn-left"><span class="popover-holder-btn-left-comment">' . __( 'Comment', 'commentpress-core' ) . '</span><span class="popover-holder-btn-left-quote">' . __( 'Quote &amp; Comment', 'commentpress-core' ) . '</span></div><div class="popover-holder-btn-right">&times;</div></div></span>';
+			// add jQuery text highlighter plugin
+			wp_enqueue_script(
+				'jquery_texthighlighter',
+				plugins_url( 'commentpress-core/assets/js/jquery.texthighlighter' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
+				array( 'jquery_highlighter' ),
+				COMMENTPRESS_VERSION // version
+			);
 
-		// define localisation array
-		$text_vars = array(
-			'popover' => $popover,
-		);
+			// define popover
+			$popover = '<span class="popover-holder"><div class="popover-holder-inner"><div class="popover-holder-caret"></div><div class="popover-holder-btn-left"><span class="popover-holder-btn-left-comment">' . __( 'Comment', 'commentpress-core' ) . '</span><span class="popover-holder-btn-left-quote">' . __( 'Quote &amp; Comment', 'commentpress-core' ) . '</span></div><div class="popover-holder-btn-right">&times;</div></div></span>';
 
-		// localise with wp function
-		wp_localize_script( 'jquery_texthighlighter', 'CommentpressTextSelectorSettings', $text_vars );
+			// define localisation array
+			$text_vars = array(
+				'popover' => $popover,
+			);
+
+			// localise with wp function
+			wp_localize_script( 'jquery_texthighlighter', 'CommentpressTextSelectorSettings', $text_vars );
+
+		}
 
 		/**
 		 * Prior to WP3.2 (IIRC), jQuery UI has to be added separately, as the
