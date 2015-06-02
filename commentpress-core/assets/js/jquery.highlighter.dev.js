@@ -77,6 +77,9 @@
         return x ? x : y;
     }
 
+    // global "enabled" flag
+    var huffpostlabs_highlighter_enabled = true;
+
     var methods = {
         init: function (options) {
 
@@ -101,6 +104,10 @@
                  * some inspiration.
                  */
                 function insertSpanAfterSelection(clicks) {
+
+                	// bail if disabled
+                	if ( huffpostlabs_highlighter_enabled === false ) return;
+
                     var html = "<span class='dummy'></span>";
                     topOffset = 0;
                     leftOffset = 0;
@@ -221,6 +228,12 @@
                 });
 
             });
+        },
+        enable: function () {
+            huffpostlabs_highlighter_enabled = true;
+        },
+        disable: function () {
+            huffpostlabs_highlighter_enabled = false;
         },
         destroy: function (content) {
             return this.each(function () {

@@ -161,21 +161,37 @@ CommentPress.textselector = new function() {
 	 */
 	this.setup = function() {
 
-		// declare vars
-		var input;
-
 		// build comment data
 		me.selection_build_for_comments();
 
-		// append input to comment form
-		input = '<input type="hidden" name="text_selection" id="text_selection" value="" />';
-		$(input).appendTo( '#commentform' );
+		// set up popover
+		me.setup_popover();
 
-		// append popover to body element
-		$(me.popover).appendTo( 'body' );
+		// set up textblocks
+		me.setup_textblocks();
+
+		// set up comments
+		me.setup_comments();
+
+		// set up comment form
+		me.setup_comment_form();
 
 		// activate highlighter
 		me.highlighter_activate();
+
+	};
+
+
+
+	/**
+	 * Set up the jQuery text highlighter popover.
+	 *
+	 * @return void
+	 */
+	this.setup_popover = function() {
+
+		// append popover to body element
+		$(me.popover).appendTo( 'body' );
 
 		/**
 		 * Do not act on mousdowns on holder
@@ -280,57 +296,77 @@ CommentPress.textselector = new function() {
 
 		});
 
+	};
+
+
+
+	/**
+	 * Set up the jQuery text highlighter textblock actions.
+	 *
+	 * @return void
+	 */
+	this.setup_textblocks = function() {
+
 		/**
-		 * Clear highlights on mousedown on textblock
+		 * Act on mousedown on textblock
 		 *
 		 * @return void
 		 */
 		$('#container').on( 'mousedown', '.textblock', function() {
 
-			// clear all highlights
-			//me.highlights_clear();
+			// define vars
+			var start_id;
+
+			// get the beginning textblock ID
+			start_id = $(this).prop('id');
+
+			// store
+			me.container_set( start_id );
+
+			// always enable highlighter
+			me.highlighter_enable();
 
 		});
 
 		/**
-		 * Store last textblock clicked
+		 * Act on mouseup on textblock
 		 *
 		 * @return void
 		 */
-		$('#container').on( 'click', '.textblock', function() {
+		$('#container').on( 'mouseup', '.textblock', function() {
 
 			// define vars
-			var clicked_id, stored_id;
+			var start_id, end_id;
 
-			// get existing ID, if there is one
-			stored_id = me.container_get();
+			// get the beginning textblock ID
+			start_id = me.container_get();
 
-			// store the clicked on textblock ID
-			clicked_id = $(this).prop('id');
+			// get the ending textblock ID
+			end_id = $(this).prop('id');
 
 			// is it different?
-			if ( stored_id != clicked_id ) {
+			if ( start_id != end_id ) {
 
-				// yes, store it
-				me.container_set( clicked_id );
+				// overwrite with empty
+				me.container_set( '' );
 
-				// clear all highlights
-				me.highlights_clear();
-
-				/*
-				// deactivate highlighter
-				me.highlighter_deactivate();
-
-				// reenable current selection
-				me.selection_recall_for_textblock( clicked_id );
-
-				// re-activate highlighter
-				me.highlighter_activate();
-				*/
+				// disable highlighter
+				me.highlighter_disable();
 
 			}
 
 		});
+
+	};
+
+
+
+	/**
+	 * Set up the jQuery text highlighter comment actions.
+	 *
+	 * @return void
+	 */
+	this.setup_comments = function() {
 
 		/**
 		 * Rolling onto a comment
@@ -378,10 +414,28 @@ CommentPress.textselector = new function() {
 
 
 	/**
+	 * Set up the jQuery text highlighter comment form.
+	 *
+	 * @return void
+	 */
+	this.setup_comment_form = function() {
+
+		// declare vars
+		var input;
+
+		// append input to comment form
+		input = '<input type="hidden" name="text_selection" id="text_selection" value="" />';
+		$(input).appendTo( '#commentform' );
+
+	};
+
+
+
+	/**
 	 * Init container variable.
 	 *
 	 * This variable holds a reference to the currently active textblock and is
-	 * set by the click handler on the .textblock elements as defined below.
+	 * set by the click handler on the .textblock elements.
 	 *
 	 * @see CommentPress.textselector.init()
 	 */
@@ -877,7 +931,7 @@ CommentPress.textselector = new function() {
 	};
 
 	/**
-	 * Clear selection data to comment form
+	 * Clear selection data from comment form
 	 *
 	 * @return void
 	 */
@@ -969,7 +1023,13 @@ CommentPress.textselector = new function() {
 	 * @return void
 	 */
 	this.highlighter_deactivate = function() {
+
+		// destroy highlighter
 		$('.textblock').highlighter('destroy');
+
+		// unbind document click handler
+		$(document).unbind( 'click', me.highlighter_active_handler );
+
 	};
 
 	/**
@@ -982,9 +1042,6 @@ CommentPress.textselector = new function() {
 		// if the event target is not the popover
 		if ( !$(event.target).closest( '.popover-holder' ).length ) {
 
-			// unbind document click handler
-			$(document).unbind( 'click', me.highlighter_active_handler );
-
 			// deactivate highlighter
 			me.highlighter_deactivate();
 
@@ -992,6 +1049,30 @@ CommentPress.textselector = new function() {
 			me.highlighter_activate();
 
 		}
+
+	};
+
+	/**
+	 * Enable the jQuery highlighter plugin
+	 *
+	 * @return void
+	 */
+	this.highlighter_enable = function() {
+
+		// destroy highlighter
+		$('.textblock').highlighter('enable');
+
+	};
+
+	/**
+	 * Disable the jQuery highlighter plugin
+	 *
+	 * @return void
+	 */
+	this.highlighter_disable = function() {
+
+		// destroy highlighter
+		$('.textblock').highlighter('disable');
 
 	};
 
