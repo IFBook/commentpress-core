@@ -245,7 +245,7 @@ class CommentpressCoreDisplay {
 		wp_enqueue_script(
 			'jquery_commentpress',
 			plugins_url( 'commentpress-core/assets/js/jquery.commentpress' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
-			array( 'jquery', 'jquery-form', 'jquery-ui-core', 'jquery-ui-resizable' ),
+			array( 'jquery', 'jquery-form', 'jquery-ui-core', 'jquery-ui-resizable', 'jquery-ui-tooltip' ),
 			COMMENTPRESS_VERSION // version
 		);
 

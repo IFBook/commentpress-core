@@ -141,6 +141,25 @@ CommentPress.settings.DOM = new function() {
 
 
 
+	// init original permalink
+	this.original_permalink = document.location.toString();
+
+	/**
+	 * Setter for original permalink
+	 */
+	this.set_permalink = function( val ) {
+		this.original_permalink = val;
+	};
+
+	/**
+	 * Getter for original permalink
+	 */
+	this.get_permalink = function() {
+		return this.original_permalink;
+	};
+
+
+
 	// init BuddyPress adminbar
 	this.bp_adminbar = 'n';
 
@@ -1612,29 +1631,88 @@ CommentPress.common.comments = new function() {
 	 */
 	this.comment_permalink_copy_links = function() {
 
-		/**
+    	/**
+		 * Copy icon tooltip
+		 *
+		 * @return void
+		 */
+		$('.comment_permalink').tooltip({
+
+			// positional behaviour
+			position: {
+
+				// basics
+				my: "left bottom-20",
+				at: "left top",
+
+				// configure arrow
+				using: function( position, feedback ) {
+					$( this ).css( position );
+					$( "<div>" )
+					.addClass( "arrow" )
+					.addClass( feedback.vertical )
+					.addClass( feedback.horizontal )
+					.appendTo( this );
+				}
+
+			}
+		});
+
+    	/**
 		 * Click on the copy icon
 		 *
 		 * @return void
 		 */
-		$('#comments_sidebar').on( 'click', '.comment_permalink_copy', function( event ) {
+		$('#comments_sidebar').on( 'click', '.comment_permalink', function( event ) {
 
 			// define vars
 			var url;
 
 			// get selection
-			url = $( this ).parent().attr('href');
-			//console.log( url );
+			url = $( this ).attr('href');
 
 			// did we get one?
 			if ( url ) {
 
 				// show dialog
-				window.prompt( "Copy this link, then paste into where you need it", url );
+				//window.prompt( "Copy this link, then paste into where you need it", url );
+
+				// do we have pushstate?
+				if ( window.history ) {
+
+					// replace window state
+					window.history.replaceState( {} , '', url );
+
+					// attach a handler to the document body
+					$(document).bind( 'click', me.comment_permalink_handler );
+
+				}
 
 			}
 
 		});
+
+	};
+
+
+
+	/**
+	 * Reset the URL to the page permalink
+	 *
+	 * @return void
+	 */
+	this.comment_permalink_handler = function( event ) {
+
+		// if the event target is not a comment permalink
+		if ( !$(event.target).closest( '.comment_permalink' ).length ) {
+
+			// unbind document click handler
+			$(document).unbind( 'click', me.comment_permalink_handler );
+
+			// replace window state with original
+			window.history.replaceState( {} , '', CommentPress.settings.DOM.get_permalink() );
+
+		}
 
 	};
 

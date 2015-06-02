@@ -2485,7 +2485,7 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 ' . get_avatar( $comment, $size='32' ) . '
 ' . $editlink . '
 ' . $author . '
-<a class="comment_permalink" href="' . htmlspecialchars( get_comment_link() ) . '"><span class="comment_permalink_copy"></span>' . $_comment_permalink . '</a>
+<a class="comment_permalink" href="' . htmlspecialchars( get_comment_link() ) . '" title="' . __( 'Show permalink in location bar', 'commentpress-core' ) . '"><span class="comment_permalink_copy"></span>' . $_comment_permalink . '</a>
 </div><!-- /comment-identifier -->
 
 
