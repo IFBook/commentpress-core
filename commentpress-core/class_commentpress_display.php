@@ -305,13 +305,25 @@ class CommentpressCoreDisplay {
 			$popover_comment = '<span class="comment-popover-holder"><div class="popover-holder-inner"><div class="popover-holder-caret"></div><div class="popover-holder-btn-left"><span class="comment-popover-holder-btn-left-quote">' . __( 'Quote', 'commentpress-core' ) . '</span></div><div class="popover-holder-btn-right">&times;</div></div></span>';
 
 			// define localisation array
-			$text_vars = array(
+			$texthighlighter_vars = array(
 				'popover_textblock' => $popover_textblock,
 				'popover_comment' => $popover_comment,
 			);
 
+			// create translations
+			$texthighlighter_translations = array(
+				'dialog_title' => __( 'Are you sure?', 'commentpress-core' ),
+				'dialog_text' => __( 'You have not yet submitted your comment. Are you sure you want to discard it?', 'commentpress-core' ),
+				'dialog_yes' => __( 'Discard', 'commentpress-core' ),
+				'dialog_no' => __( 'Keep', 'commentpress-core' ),
+				'backlink_text' => __( 'Back', 'commentpress-core' ),
+			);
+
+			// add to vars
+			$texthighlighter_vars['localisation'] = $texthighlighter_translations;
+
 			// localise with wp function
-			wp_localize_script( 'jquery_texthighlighter', 'CommentpressTextSelectorSettings', $text_vars );
+			wp_localize_script( 'jquery_texthighlighter', 'CommentpressTextSelectorSettings', $texthighlighter_vars );
 
 		}
 

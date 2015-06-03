@@ -22,13 +22,48 @@ CommentPress.textselector = new function() {
 	var me = this,
 		$ = jQuery.noConflict();
 
+	/**
+	 * Init localisation variable.
+	 *
+	 * This variable holds all translatable text strings, keyed by a code.
+	 * e.g. ['dialog_title': "My title", 'dialog_content': "Hello World" ]
+	 */
+	this.localisation = new Array;
+
+	// overwrite if we have our localisation object
+	if ( 'undefined' !== typeof CommentpressTextSelectorSettings ) {
+		this.localisation = CommentpressTextSelectorSettings.localisation;
+	}
+
+	/**
+	 * Setter for textselector localisation.
+	 *
+	 * @param array val The new localisation array
+	 * @return void
+	 */
+	this.localisation_set = function( val ) {
+		this.localisation = val;
+	};
+
+	/**
+	 * Getter for textselector localisation.
+	 *
+	 * @param string key the code/key for the localisation string
+	 * @return string localisation The localisation string
+	 */
+	this.localisation_get = function( key ) {
+		if ( key in this.localisation ) {
+			return this.localisation[key];
+		}
+		return '';
+	};
+
 
 
 	/**
 	 * Initialise the jQuery text highlighter.
 	 *
-	 * This method should only be called once. To reset the system, call:
-	 * CommentPress.textselector.reset();
+	 * This method should only be called once.
 	 *
 	 * @return void
 	 */
@@ -1442,20 +1477,20 @@ CommentPress.textselector.commentform = new function() {
 		// define vars
 		var title_text, alert_text, yes_text, no_text, options;
 
-		// define title
-		title_text = "Are you sure?"; //me.cpajax_lang[8];
+		// get title ("Are you sure?")
+		title_text = CommentPress.textselector.localisation_get( 'dialog_title' );
 
-		// define message
-		alert_text = "You have not yet submitted your comment. Are you sure you want to discard it?"; //me.cpajax_lang[8];
+		// get message ("You have not yet submitted your comment. Are you sure you want to discard it?")
+		alert_text = CommentPress.textselector.localisation_get( 'dialog_content' );
 
 		// create modal dialog markup
 		me.modal_markup = $('<div id="dialog" title="' + title_text + '"><p class="cp_alert_text">' + alert_text + '</p></div>');
 
-		// define "yes" button text
-		yes_text = "Discard"; //me.cpajax_lang[8];
+		// define "Discard" button text
+		yes_text = CommentPress.textselector.localisation_get( 'dialog_yes' );
 
-		// define "no" button text
-		no_text = "Keep"; //me.cpajax_lang[8];
+		// define "Keep" button text
+		no_text = CommentPress.textselector.localisation_get( 'dialog_no' );
 
 		// create options for modal dialog
 		options = {
@@ -1519,7 +1554,7 @@ CommentPress.textselector.commentform = new function() {
 
 
 	/**
-	 * Callback for clicking "Yes" in the dialog box
+	 * Callback for clicking "Discard" in the dialog box
 	 *
 	 * @return void
 	 */
@@ -1548,7 +1583,7 @@ CommentPress.textselector.commentform = new function() {
 
 
 	/**
-	 * Callback for clicking "Cancel" in the dialog box
+	 * Callback for clicking "Keep" in the dialog box
 	 *
 	 * @return void
 	 */
@@ -1584,12 +1619,12 @@ CommentPress.textselector.comments = new function() {
 	var me = this,
 		$ = jQuery.noConflict();
 
-	// test for our localisation object
+	// init popver content
+	this.popover_comment = '';
+
+	// overwrite if we have our localisation object
 	if ( 'undefined' !== typeof CommentpressTextSelectorSettings ) {
-
-		// reference our localisation object vars
 		this.popover_comment = CommentpressTextSelectorSettings.popover_comment;
-
 	}
 
 
@@ -1833,7 +1868,10 @@ CommentPress.textselector.comments = new function() {
 		$('#comments_sidebar').on( 'click', '.comment-forwardlink', function( event ) {
 
 			// declare vars
-			var target_comment_id, current_comment, current_comment_id, link;
+			var parent_comments_array,
+				target_comment_id, current_comment, current_comment_id,
+				back_text, link,
+				this_para_wrapper, target_para_wrapper;
 
 			// override event
 			event.preventDefault();
@@ -1842,11 +1880,7 @@ CommentPress.textselector.comments = new function() {
 			target_comment_id = $(this).prop('href').split('#')[1];
 
 			// get array of parent comment divs
-			parent_comments_array = $(this)
-										.parents('li.comment')
-										.map( function () {
-											return this;
-										});
+			parent_comments_array = $(this).parents('li.comment').map( function() { return this; } );
 
 			// did we get one?
 			if ( parent_comments_array.length > 0 ) {
@@ -1858,8 +1892,8 @@ CommentPress.textselector.comments = new function() {
 				// get current ID
 				current_comment_id = current_comment.prop('id').split('-')[2];
 
-				// get link text
-				back_text = "Back"; // TODO: localise!
+				// get link text ("Back")
+				back_text = CommentPress.textselector.localisation_get( 'backlink_text' );
 
 				// construct link
 				link = '<a href="#comment-' + current_comment_id + '" class="comment-backlink">' + back_text + '</a>';
@@ -1895,7 +1929,7 @@ CommentPress.textselector.comments = new function() {
 		$('#comments_sidebar').on( 'click', '.comment-backlink', function( event ) {
 
 			// declare vars
-			var target_comment_id;
+			var target_comment_id, this_para_wrapper, target_para_wrapper;
 
 			// override event
 			event.preventDefault();
