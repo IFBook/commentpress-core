@@ -313,7 +313,7 @@ class CommentpressCoreDisplay {
 			// create translations
 			$texthighlighter_translations = array(
 				'dialog_title' => __( 'Are you sure?', 'commentpress-core' ),
-				'dialog_text' => __( 'You have not yet submitted your comment. Are you sure you want to discard it?', 'commentpress-core' ),
+				'dialog_content' => __( 'You have not yet submitted your comment. Are you sure you want to discard it?', 'commentpress-core' ),
 				'dialog_yes' => __( 'Discard', 'commentpress-core' ),
 				'dialog_no' => __( 'Keep', 'commentpress-core' ),
 				'backlink_text' => __( 'Back', 'commentpress-core' ),
