@@ -1377,8 +1377,8 @@ CommentPress.textselector.commentform = new function() {
 	 */
 	this.focus_active_handler = function( event ) {
 
-		// if the event target is not the comment form
-		if ( !$(event.target).closest( '#commentform' ).length ) {
+		// if the event target is not the comment form container
+		if ( !$(event.target).closest( '#respond' ).length ) {
 
 			//console.log( 'the event target is not the comment form' );
 
