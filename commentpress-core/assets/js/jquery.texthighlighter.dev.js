@@ -1380,22 +1380,22 @@ CommentPress.textselector.commentform = new function() {
 		// if the event target is not the comment form
 		if ( !$(event.target).closest( '#commentform' ).length ) {
 
-			console.log( 'the event target is not the comment form' );
+			//console.log( 'the event target is not the comment form' );
 
 			// if the event target is not a comment
 			if ( !$(event.target).closest( '.comment-content' ).length ) {
 
-				console.log( 'the event target is not a comment' );
+				//console.log( 'the event target is not a comment' );
 
 				// do we have a current selection?
 				if ( me.current_selection_exists() ) {
 
-					console.log( 'we have a selection' );
+					//console.log( 'we have a selection' );
 
 					// do we have any content?
 					if ( me.comment_content_exists() ) {
 
-						console.log( 'we have comment content' );
+						//console.log( 'we have comment content' );
 
 						// show modal
 						me.modal();
@@ -1405,7 +1405,7 @@ CommentPress.textselector.commentform = new function() {
 
 					} else {
 
-						console.log( 'we DO NOT have comment content' );
+						//console.log( 'we DO NOT have comment content' );
 
 						// do modal yes
 						me.modal_yes();
@@ -1414,7 +1414,7 @@ CommentPress.textselector.commentform = new function() {
 
 				} else {
 
-					console.log( 'we DO NOT have a selection' );
+					//console.log( 'we DO NOT have a selection' );
 
 					// do modal yes
 					me.modal_yes();
