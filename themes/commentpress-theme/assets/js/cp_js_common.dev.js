@@ -39,7 +39,7 @@ CommentPress.theme.settings = new function() {
 	this.init = function() {
 
 		// init container top max
-		me.init_container_top_min();
+		me.init_container_top_max();
 
 		// init container top min
 		me.init_container_top_min();
@@ -2004,6 +2004,8 @@ CommentPress.theme.original.header = new function() {
 
 	/**
 	 * Getter for CommentPress header minimised flag
+	 *
+	 * @return bool Whether or not the header is minimised
 	 */
 	this.is_minimised = function() {
 		if (
@@ -2011,9 +2013,9 @@ CommentPress.theme.original.header = new function() {
 			this.minimised === null ||
 			this.minimised == 'n'
 		) {
-			return 'n';
+			return false;
 		}
-		return this.minimised;
+		return true;
 	};
 
 	/**
@@ -2341,13 +2343,16 @@ CommentPress.theme.original.header = new function() {
 
 // do immediate init
 CommentPress.theme.settings.init();
+
+// the default theme needs its header inited before DOM
+CommentPress.theme.original.header.init();
+
 CommentPress.theme.DOM.init();
 CommentPress.theme.header.init();
 CommentPress.theme.navigation.init();
 CommentPress.theme.content.init();
 CommentPress.theme.sidebars.init();
 CommentPress.theme.viewport.init();
-CommentPress.theme.original.header.init();
 
 
 
