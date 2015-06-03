@@ -197,7 +197,7 @@ CommentPress.theme.settings = new function() {
 		return this.toc_on_top;
 	};
 
-} // end CommentPress theme settings class
+}; // end CommentPress theme settings class
 
 
 
@@ -672,7 +672,7 @@ CommentPress.theme.DOM = new function() {
 
 	};
 
-} // end DOM class
+}; // end DOM class
 
 
 
@@ -753,7 +753,7 @@ CommentPress.theme.header = new function() {
 
 	};
 
-} // end header class
+}; // end header class
 
 
 
@@ -825,7 +825,7 @@ CommentPress.theme.navigation = new function() {
 
 	};
 
-} // end navigation class
+}; // end navigation class
 
 
 
@@ -901,7 +901,7 @@ CommentPress.theme.content = new function() {
 
 	};
 
-} // end content class
+}; // end content class
 
 
 
@@ -1298,7 +1298,7 @@ CommentPress.theme.sidebars = new function() {
 
 	}
 
-} // end sidebars class
+}; // end sidebars class
 
 
 
@@ -1881,7 +1881,7 @@ CommentPress.theme.viewport = new function() {
 
 	};
 
-} // end viewport class
+}; // end viewport class
 
 
 
@@ -2331,7 +2331,7 @@ CommentPress.theme.original.header = new function() {
 
 
 
-} // end original.header class
+}; // end original.header class
 
 
 

@@ -145,6 +145,7 @@ CommentPress.textselector = new function() {
 		 */
 		$(document).on(
 			'commentpress-textblock-pre-align ' +
+			'commentpress-comment-block-permalink-pre-align ' +
 			'commentpress-commenticonbox-pre-align ' +
 			'commentpress-link-in-textblock-pre-align',
 			function( event ) {
@@ -180,6 +181,7 @@ CommentPress.textselector = new function() {
 		 */
 		$(document).on(
 			'commentpress-textblock-click ' +
+			'commentpress-comment-block-permalink-clicked ' +
 			'commentpress-commenticonbox-clicked ' +
 			'commentpress-link-in-textblock-clicked',
 			function( event ) {
@@ -390,7 +392,7 @@ CommentPress.textselector = new function() {
 
 	};
 
-} // end CommentPress.textselector class
+}; // end CommentPress.textselector class
 
 
 
@@ -706,8 +708,9 @@ CommentPress.textselector.textblocks = new function() {
 			// declare vars
 			var item_id, comment_id;
 
-			// kick out if popover is shown
+			// kick out if either popover is shown
 			if ( $('.popover-holder').css('display') == 'block' ) { return; }
+			if ( $('.comment-popover-holder').css('display') == 'block' ) { return; }
 
 			// kick out while there's a selection that has been sent to the editor
 			//if ( CommentPress.textselector.commentform.focus_is_active() ) { return; }
@@ -728,8 +731,9 @@ CommentPress.textselector.textblocks = new function() {
 		 */
 		$('#comments_sidebar').on( 'mouseleave', 'li.comment.selection-exists', function( event ) {
 
-			// kick out if popover is shown
+			// kick out if either popover is shown
 			if ( $('.popover-holder').css('display') == 'block' ) { return; }
+			if ( $('.comment-popover-holder').css('display') == 'block' ) { return; }
 
 			// kick out while there's a selection that has been sent to the editor
 			//if ( CommentPress.textselector.commentform.focus_is_active() ) { return; }
@@ -1146,7 +1150,7 @@ CommentPress.textselector.textblocks = new function() {
 
 	};
 
-} // end CommentPress.textselector.textblocks class
+}; // end CommentPress.textselector.textblocks class
 
 
 
@@ -1563,7 +1567,7 @@ CommentPress.textselector.commentform = new function() {
 
 
 
-} // end CommentPress.textselector.commentform class
+}; // end CommentPress.textselector.commentform class
 
 
 
@@ -1794,6 +1798,29 @@ CommentPress.textselector.comments = new function() {
 				// disable highlighter
 				me.highlighter_disable();
 
+			} else {
+
+				// has the quoted comment got the same para heading as the comment form?
+
+				/*
+				// get quoted comment para heading
+				comment_para_heading = $(this).closest( '.paragraph_wrapper' ).prop('id');
+
+				// get comment form para heading
+				form_para_heading = $('#respond').closest( '.paragraph_wrapper' ).prop('id');
+
+				// is it different?
+				if ( comment_para_heading != form_para_heading ) {
+
+					// overwrite with empty
+					me.container_set( '' );
+
+					// disable highlighter
+					me.highlighter_disable();
+
+				}
+				*/
+
 			}
 
 		});
@@ -1803,10 +1830,13 @@ CommentPress.textselector.comments = new function() {
 		 *
 		 * @return void
 		 */
-		$('#comments_sidebar').on( 'click', '.comment-forwardlink', function() {
+		$('#comments_sidebar').on( 'click', '.comment-forwardlink', function( event ) {
 
 			// declare vars
 			var target_comment_id, current_comment, current_comment_id, link;
+
+			// override event
+			event.preventDefault();
 
 			// get target ID
 			target_comment_id = $(this).prop('href').split('#')[1];
@@ -1823,16 +1853,32 @@ CommentPress.textselector.comments = new function() {
 
 				// get the item
 				current_comment = $(parent_comments_array[0]);
-				console.log( current_comment );
+				//console.log( current_comment );
 
 				// get current ID
 				current_comment_id = current_comment.prop('id').split('-')[2];
 
-				// construct link
-				link = '<a href="#comment-' + current_comment_id + '" class="comment-backlink">BACK</a>';
+				// get link text
+				back_text = "Back"; // TODO: localise!
 
-				// append backlink to target
-				$(link).prependTo('#' + target_comment_id + ' .comment-identifier');
+				// construct link
+				link = '<a href="#comment-' + current_comment_id + '" class="comment-backlink">' + back_text + '</a>';
+
+				// append backlink to target if it doesn't exist
+				if ( !$('#' + target_comment_id + ' .comment-identifier .comment-backlink').length ) {
+					$(link).prependTo('#' + target_comment_id + ' .comment-identifier');
+				}
+
+				// get this comment's para wrapper
+				this_para_wrapper = $(this).closest( '.paragraph_wrapper' ).prop('id');
+
+				// get target comment's para wrapper
+				target_para_wrapper = $('#' + target_comment_id).closest( '.paragraph_wrapper' ).prop('id');
+
+				// if different then open
+				if ( this_para_wrapper != target_para_wrapper ) {
+					$('#' + target_para_wrapper).show();
+				}
 
 				// scroll to comment
 				CommentPress.common.comments.scroll_comments( $('#' + target_comment_id), 300, 'flash' );
@@ -1846,13 +1892,27 @@ CommentPress.textselector.comments = new function() {
 		 *
 		 * @return void
 		 */
-		$('#comments_sidebar').on( 'click', '.comment-backlink', function() {
+		$('#comments_sidebar').on( 'click', '.comment-backlink', function( event ) {
 
 			// declare vars
 			var target_comment_id;
 
+			// override event
+			event.preventDefault();
+
 			// get target ID
 			target_comment_id = $(this).prop('href').split('#')[1];
+
+			// get this comment's para wrapper
+			this_para_wrapper = $(this).closest( '.paragraph_wrapper' ).prop('id');
+
+			// get target comment's para wrapper
+			target_para_wrapper = $('#' + target_comment_id).closest( '.paragraph_wrapper' ).prop('id');
+
+			// if different then open
+			if ( this_para_wrapper != target_para_wrapper ) {
+				$('#' + target_para_wrapper).show();
+			}
 
 			// scroll to comment
 			CommentPress.common.comments.scroll_comments( $('#' + target_comment_id), 300, 'flash' );
@@ -2084,7 +2144,7 @@ CommentPress.textselector.comments = new function() {
 
 	};
 
-} // end CommentPress.textselector.comments class
+}; // end CommentPress.textselector.comments class
 
 
 

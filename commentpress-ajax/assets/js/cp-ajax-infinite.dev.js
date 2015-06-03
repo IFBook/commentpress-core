@@ -210,7 +210,7 @@ CommentPress.infinite.settings = new function() {
 		this.comments.push( post_id );
 	};
 
-} // end CommentPress infinite settings class
+}; // end CommentPress infinite settings class
 
 
 
@@ -754,7 +754,7 @@ CommentPress.infinite.DOM = new function() {
 
 	};
 
-} // end CommentPress infinite DOM class
+}; // end CommentPress infinite DOM class
 
 
 
@@ -929,7 +929,7 @@ CommentPress.infinite.page = new function() {
 
 	};
 
-} // end CommentPress infinite page class
+}; // end CommentPress infinite page class
 
 
 
@@ -1012,7 +1012,7 @@ CommentPress.infinite.menu = new function() {
 
 	};
 
-} // end CommentPress infinite menu class
+}; // end CommentPress infinite menu class
 
 
 
@@ -1078,7 +1078,7 @@ CommentPress.infinite.comments = new function() {
 
 	};
 
-} // end CommentPress infinite comments class
+}; // end CommentPress infinite comments class
 
 
 
@@ -1186,7 +1186,7 @@ CommentPress.infinite.commentform = new function() {
 
 	};
 
-} // end CommentPress infinite comment form class
+}; // end CommentPress infinite comment form class
 
 
 

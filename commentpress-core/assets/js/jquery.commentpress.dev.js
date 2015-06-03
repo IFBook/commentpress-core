@@ -295,7 +295,7 @@ CommentPress.settings.DOM = new function() {
 
 
 
-} // end CommentPress settings DOM class
+}; // end CommentPress settings DOM class
 
 
 
@@ -364,7 +364,7 @@ CommentPress.settings.page = new function() {
 		return this.highlight;
 	};
 
-} // end CommentPress page settings class
+}; // end CommentPress page settings class
 
 
 
@@ -426,7 +426,7 @@ CommentPress.settings.textblock = new function() {
 		return this.scroll_target;
 	};
 
-} // end CommentPress textblock class
+}; // end CommentPress textblock class
 
 
 
@@ -577,7 +577,7 @@ CommentPress.common.navigation = new function() {
 
 	};
 
-} // end CommentPress setup navigation column class
+}; // end CommentPress setup navigation column class
 
 
 
@@ -1259,7 +1259,7 @@ CommentPress.common.content = new function() {
 
 	};
 
-} // end CommentPress setup content class
+}; // end CommentPress setup content class
 
 
 
@@ -1407,6 +1407,23 @@ CommentPress.common.comments = new function() {
 
 			// override event
 			event.preventDefault();
+
+			// set target to comment form
+			CommentPress.settings.textblock.set_scroll_target( 'para_heading' );
+
+			// broadcast action - allows scroll target to be overridden
+			$(document).trigger( 'commentpress-comment-block-permalink-pre-align' );
+
+			// did we get an override?
+			if ( 'none' == CommentPress.settings.textblock.get_scroll_target() ) {
+
+				// broadcast action - allows scroll target to be reset
+				$(document).trigger( 'commentpress-comment-block-permalink-clicked' );
+
+				// bail
+				return;
+
+			}
 
 			// get text_sig
 			text_sig = $(this).parent().prop( 'id' ).split('para_heading-')[1];
@@ -1577,6 +1594,9 @@ CommentPress.common.comments = new function() {
 				}
 
 			});
+
+			// broadcast action
+			$(document).trigger( 'commentpress-comment-block-permalink-clicked' );
 
 		});
 
@@ -1878,7 +1898,7 @@ CommentPress.common.comments = new function() {
 
 	};
 
-} // end CommentPress setup comments column class
+}; // end CommentPress setup comments column class
 
 
 
@@ -2137,7 +2157,7 @@ CommentPress.common.activity = new function() {
 
 	};
 
-} // end CommentPress setup activity column class
+}; // end CommentPress setup activity column class
 
 
 
@@ -2180,7 +2200,7 @@ CommentPress.common.viewport = new function() {
 
 	};
 
-} // end CommentPress setup viewport class
+}; // end CommentPress setup viewport class
 
 
 

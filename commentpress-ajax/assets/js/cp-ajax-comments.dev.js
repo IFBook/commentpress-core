@@ -1260,7 +1260,7 @@ CommentPress.ajax.comments = new function() {
 
 
 
-} // end CommentPress AJAX comments class
+}; // end CommentPress AJAX comments class
 
 
 

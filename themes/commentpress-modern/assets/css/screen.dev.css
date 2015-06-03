@@ -982,6 +982,7 @@ ul#sidebar_tabs li a.active-tab
 	overflow-y: scroll;
 	padding: 0;
 	background-color: #ccc;
+	position: relative;
 }
 
 #sidebar .sidebar_container .sidebar_header
@@ -3489,6 +3490,8 @@ Compatibility with CommentPress Text Highlighter
 	font-size: 70%;
 	text-decoration: none;
 	font-family: sans-serif;
+	text-transform: uppercase;
+	color: #761D19;
 	float: right;
 	margin-left: 2%;
 }
