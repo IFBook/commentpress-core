@@ -2127,6 +2127,10 @@ jQuery(document).ready(function($) {
 			// clear comment form "modal focus"
 			CommentPress.texthighlighter.commentform.focus_clear();
 
+			// reset comment quoting
+			CommentPress.texthighlighter.comments.highlighter_deactivate();
+			CommentPress.texthighlighter.comments.highlighter_activate();
+
 		} // end function
 	);
 
