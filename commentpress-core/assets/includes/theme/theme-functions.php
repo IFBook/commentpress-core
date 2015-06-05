@@ -3900,3 +3900,32 @@ add_filter( 'comment_class', 'commentpress_add_selection_classes', 100, 4 );
 
 
 
+/**
+ * Prefixes BuddyPress pages with the div wrappers that CommentPress needs
+ */
+function commentpress_prefix_bp_templates() {
+
+	// prefixed wrappers
+	echo '<div id="wrapper"><div id="main_wrapper" class="clearfix"><div id="page_wrapper">';
+
+}
+
+// add action for above
+add_action( 'bp_before_directory_groupsites_page', 'commentpress_prefix_bp_templates' );
+
+
+
+/**
+ * Suffixes BuddyPress pages with the div wrappers that CommentPress needs
+ */
+function commentpress_suffix_bp_templates() {
+
+	// prefixed wrappers
+	echo '</div><!-- /page_wrapper --></div><!-- /main_wrapper --></div><!-- /wrapper -->';
+
+}
+
+// add action for above
+add_action( 'bp_after_directory_groupsites_page', 'commentpress_suffix_bp_templates' );
+
+

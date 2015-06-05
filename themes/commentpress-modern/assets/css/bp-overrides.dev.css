@@ -487,6 +487,16 @@ div.dir-search input[type=text] {
 div#message {
 	margin: 0 0 15px;
 }
+
+div#message:after
+{
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
 #message.info {
 	margin-bottom: 0;
 }

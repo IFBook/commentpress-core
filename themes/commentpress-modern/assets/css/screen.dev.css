@@ -1809,10 +1809,11 @@ div.multipager .multipager_sep
 #content div.multipager:after,
 .content div.multipager:after
 {
-	content: "";
+	content: ".";
 	display: block;
-	height: 0px;
+	height: 0;
 	clear: both;
+	visibility: hidden;
 }
 
 div.multipager a,
