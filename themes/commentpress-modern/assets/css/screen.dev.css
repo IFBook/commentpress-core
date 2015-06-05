@@ -3009,6 +3009,35 @@ body.buddypress.group-sites #blogs-list li
 	padding: 15px;
 }
 
+.standard-form .bpgsites_group_linkage
+{
+	clear: both;
+	border: 1px solid #eee;
+	padding: 0.2em 1em 0 1em;
+}
+
+.standard-form h5.bpgsites_group_linkage_heading
+{
+	margin: 1em 0;
+}
+
+.standard-form .bpgsites_group_linkages
+{
+	margin: 0 0 1em 0;
+}
+
+.standard-form .bpgsites_linked_group
+{
+	display: block;
+}
+
+.standard-form label.bpgsites_linked_group_label
+{
+	display: inline-block;
+	cursor: pointer;
+	margin: 0;
+}
+
 
 
 
