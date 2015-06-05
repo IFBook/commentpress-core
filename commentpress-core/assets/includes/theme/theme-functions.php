@@ -87,7 +87,7 @@ endif; // commentpress_admin_header
 
 if ( ! function_exists( 'commentpress_customize_register' ) ) :
 /**
- * Implements CommentPress Default Theme options into Theme Customizer
+ * Implements CommentPress Theme options into Theme Customizer
  *
  * @param $wp_customize Theme Customizer object
  * @return void
@@ -101,19 +101,91 @@ function commentpress_customize_register( $wp_customize ) {
 	// kick out if buddypress groupblog...
 	if ( is_object( $commentpress_core ) AND $commentpress_core->is_groupblog() ) return;
 
+	// do we have the WP 4.2 WP_Customize_Media_Control class?
+	if ( class_exists( 'WP_Customize_Media_Control' ) ) {
+
+		/**
+		 * Customize Site Image Control class.
+		 *
+		 * This is incomplete at present, because the labels are not all overridden
+		 * the way we would like them, but it does at least allow us to save the
+		 * attachment ID of the uploaded image instead of the URL to the full size image.
+		 *
+		 * @see WP_Customize_Media_Control
+		 */
+		class WP_Customize_Site_Image_Control extends WP_Customize_Media_Control {
+
+			// properties
+			public $type = 'media';
+			public $mime_type = 'image';
+			public $button_labels = array();
+
+			/**
+			 * Constructor.
+			 *
+			 * @param WP_Customize_Manager $manager
+			 * @param string $id
+			 * @param array  $args
+			 */
+			public function __construct( $manager, $id, $args = array() ) {
+				parent::__construct( $manager, $id, $args );
+
+				$this->button_labels = array(
+					'select'       => __( 'Select Site Image', 'commentpress-core' ),
+					'change'       => __( 'Change Site Image', 'commentpress-core' ),
+					'remove'       => __( 'Remove Site Image', 'commentpress-core' ),
+					'default'      => __( 'Default Site Image', 'commentpress-core' ),
+					'placeholder'  => __( 'No image selected', 'commentpress-core' ),
+					'frame_title'  => __( 'Select Site Image', 'commentpress-core' ),
+					'frame_button' => __( 'Choose Site Image', 'commentpress-core' ),
+				);
+
+			}
+
+		}
+
+		// register control (not needed as yet, but is if we want to fully extend)
+		//$wp_customize->register_control_type( 'WP_Customize_Site_Image_Control' );
+
+		// add customizer section title
+		$wp_customize->add_section( 'cp_site_image', array(
+			'title' => __( 'Site Image', 'commentpress-core' ),
+			'priority' => 25,
+		) );
+
+		// add image setting
+		$wp_customize->add_setting( 'commentpress_theme_settings[cp_site_image]', array(
+			 'default' => '',
+			 'capability' => 'edit_theme_options',
+			 'type' => 'option'
+		));
+
+		// add image control
+		$wp_customize->add_control( new WP_Customize_Site_Image_Control(
+			$wp_customize, 'cp_site_image', array(
+			'label' => __( 'Site Image', 'commentpress-core' ),
+		    'description' => __( 'Choose an image to represent your site', 'commentpress-core' ),
+			'section' => 'cp_site_image',
+			'settings' => 'commentpress_theme_settings[cp_site_image]',
+			'priority'	=>	1
+		)));
+
+	}
+
 	// add customizer section title
 	$wp_customize->add_section( 'cp_inline_header_image', array(
 		'title' => __( 'Site Logo', 'commentpress-core' ),
 		'priority' => 35,
 	) );
 
-	// add image
+	// add image setting
 	$wp_customize->add_setting( 'commentpress_theme_settings[cp_inline_header_image]', array(
 		 'default' => '',
 		 'capability' => 'edit_theme_options',
 		 'type' => 'option'
 	));
 
+	// add image control
 	$wp_customize->add_control( new WP_Customize_Image_Control(
 		$wp_customize, 'cp_inline_header_image', array(
 		'label' => __( 'Logo Image', 'commentpress-core' ),
@@ -122,13 +194,14 @@ function commentpress_customize_register( $wp_customize ) {
 		'priority'	=>	1
 	)));
 
-	// add padding
+	// add padding setting
 	$wp_customize->add_setting( 'commentpress_theme_settings[cp_inline_header_padding]', array(
 		 'default' => '',
 		 'capability' => 'edit_theme_options',
 		 'type' => 'option'
 	));
 
+	// add text control
 	$wp_customize->add_control( 'commentpress_theme_settings[cp_inline_header_padding]', array(
 		'label' => __( 'Top padding in px', 'commentpress-core' ),
 		'section' => 'cp_inline_header_image',
