@@ -128,16 +128,22 @@ function commentpress_customize_register( $wp_customize ) {
 			 * @param array  $args
 			 */
 			public function __construct( $manager, $id, $args = array() ) {
+
+				// call parent constructor
 				parent::__construct( $manager, $id, $args );
 
+				// allow label to be filtered
+				$site_image = apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) );
+
+				// set labels
 				$this->button_labels = array(
-					'select'       => __( 'Select Site Image', 'commentpress-core' ),
-					'change'       => __( 'Change Site Image', 'commentpress-core' ),
-					'remove'       => __( 'Remove Site Image', 'commentpress-core' ),
-					'default'      => __( 'Default Site Image', 'commentpress-core' ),
-					'placeholder'  => __( 'No image selected', 'commentpress-core' ),
-					'frame_title'  => __( 'Select Site Image', 'commentpress-core' ),
-					'frame_button' => __( 'Choose Site Image', 'commentpress-core' ),
+					'select'       => sprintf( __( 'Select %s', 'commentpress-core' ), $site_image ),
+					'change'       => sprintf( __( 'Change %s', 'commentpress-core' ), $site_image ),
+					'remove'       => sprintf( __( 'Remove %s', 'commentpress-core' ), $site_image ),
+					'default'      => sprintf( __( 'Default %s', 'commentpress-core' ), $site_image ),
+					'placeholder'  => sprintf( __( 'No %s selected', 'commentpress-core' ), $site_image ),
+					'frame_title'  => sprintf( __( 'Select %s', 'commentpress-core' ), $site_image ),
+					'frame_button' => sprintf( __( 'Choose %s', 'commentpress-core' ), $site_image ),
 				);
 
 			}
@@ -149,7 +155,7 @@ function commentpress_customize_register( $wp_customize ) {
 
 		// add customizer section title
 		$wp_customize->add_section( 'cp_site_image', array(
-			'title' => __( 'Site Image', 'commentpress-core' ),
+			'title' => apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) ),
 			'priority' => 25,
 		) );
 
@@ -163,8 +169,8 @@ function commentpress_customize_register( $wp_customize ) {
 		// add image control
 		$wp_customize->add_control( new WP_Customize_Site_Image_Control(
 			$wp_customize, 'cp_site_image', array(
-			'label' => __( 'Site Image', 'commentpress-core' ),
-		    'description' => __( 'Choose an image to represent your site', 'commentpress-core' ),
+			'label' => apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) ),
+		    'description' => apply_filters( 'commentpress_customizer_site_image_description', __( 'Choose an image to represent your site', 'commentpress-core' ) ),
 			'section' => 'cp_site_image',
 			'settings' => 'commentpress_theme_settings[cp_site_image]',
 			'priority'	=>	1
