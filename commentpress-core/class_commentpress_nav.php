@@ -700,7 +700,8 @@ class CommentpressCoreNavigator {
 				);
 
 				// get page children
-				$kids =& get_children( $defaults );
+				$children = get_children( $defaults );
+				$kids =& $children;
 
 				// do we have any?
 				if ( empty( $kids ) ) {
