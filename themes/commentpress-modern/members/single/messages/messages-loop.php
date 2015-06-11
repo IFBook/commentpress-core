@@ -38,14 +38,14 @@
 					</td>
 				<?php endif; ?>
 
-				<td width="50%" class="thread-info">
+				<td width="45%" class="thread-info">
 					<p><a href="<?php bp_message_thread_view_link() ?>" title="<?php _e( "View Message", "buddypress" ); ?>"><?php bp_message_thread_subject() ?></a></p>
 					<p class="thread-excerpt"><?php bp_message_thread_excerpt() ?></p>
 				</td>
 
 				<?php do_action( 'bp_messages_inbox_list_item' ) ?>
 
-				<td width="13%" class="thread-options">
+				<td width="18%" class="thread-options">
 					<input type="checkbox" name="message_ids[]" value="<?php bp_message_thread_id() ?>" />
 					<a class="button confirm" href="<?php bp_message_thread_delete_link() ?>" title="<?php _e( "Delete Message", "buddypress" ); ?>"><?php _e( 'Delete', 'commentpress-core' ) ?></a> &nbsp;
 				</td>
