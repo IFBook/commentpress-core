@@ -3009,21 +3009,63 @@ body.buddypress.group-sites #blogs-list li
 	padding: 15px;
 }
 
+body.group-admin.group-sites .standard-form
+{
+	padding: 0;
+}
+
 .standard-form .bpgsites_group_linkage
 {
-	clear: both;
 	border: 1px solid #eee;
-	padding: 0.2em 1em 0 1em;
+	padding: 0;
+	clear: none;
+	float: left;
+	width: 70%;
+	margin-top: 1em;
 }
 
 .standard-form h5.bpgsites_group_linkage_heading
 {
-	margin: 1em 0;
+	padding: 0.5em;
+	line-height: 1;
+	background-color: #fbfbfb;
+	font-size: 80%;
+	color: #666;
 }
 
 .standard-form .bpgsites_group_linkages
 {
-	margin: 0 0 1em 0;
+	margin: 0;
+	padding: 1em;
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+}
+
+body.group-admin.group-sites #blogs-list ol.bpgsites_group_linkages_list li
+{
+	padding: 5px;
+	font-family: sans-serif;
+	font-size: 80%;
+}
+
+.standard-form .bpgsites_group_linkages h6
+{
+	margin-bottom: 0.6em;
+}
+
+.standard-form .bpgsites_group_linkages_invite
+{
+	padding: 1em;
+}
+
+#item-body .bpgsites_group_linkages_invite p
+{
+	margin-top: 0.2em;
+}
+
+#item-body .bpgsites_group_linkages_invite p.bpgsites_invite_actions
+{
+	padding: 0;
 }
 
 .standard-form .bpgsites_linked_group
@@ -3036,6 +3078,60 @@ body.buddypress.group-sites #blogs-list li
 	display: inline-block;
 	cursor: pointer;
 	margin: 0;
+}
+
+#bpgsites-dir-list ul#blogs-list > li
+{
+	padding: 15px;
+}
+
+/* Select2 tweaks */
+.select2-results__option
+{
+	font-family: sans-serif;
+	font-size: 80%;
+}
+
+.select2_results_group_name,
+.select2_results_group_description
+{
+	margin-left: 38px;
+}
+
+.select2_results_group_description
+{
+	color: #666;
+	margin-top: 3px;
+}
+
+.select2-container
+{
+	font-family: sans-serif;
+}
+
+.select2-container .selection
+{
+	font-size: 80%;
+}
+
+/* pending invites */
+body.group-admin.group-sites .standard-form .bpgsites_group_linkages_pending
+{
+	margin: 0;
+	border: none;
+	font-family: sans-serif;
+}
+
+.bpgsites_group_linkages_pending_heading
+{
+	color: #761D19;
+	margin-bottom: 1em;
+}
+
+.bpgsites_invite_received
+{
+	font-size: 80%;
+	margin-right: 1em;
 }
 
 
