@@ -1066,7 +1066,7 @@ CommentPress.common.content = new function() {
 		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
 			// scroll page
-			$.scrollTo(
+			$(window).stop(true).scrollTo(
 				target,
 				{
 					duration: (cp_scroll_speed * 1.5),
@@ -1096,7 +1096,7 @@ CommentPress.common.content = new function() {
 		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
 			// scroll page
-			$.scrollTo(
+			$(window).stop(true).scrollTo(
 				target,
 				{
 					duration: (duration * 1.5),
@@ -1182,7 +1182,7 @@ CommentPress.common.content = new function() {
 				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
 					// scroll to new comment
-					$.scrollTo(
+					$(window).stop(true).scrollTo(
 						comment,
 						{
 							duration: cp_scroll_speed,
@@ -1634,7 +1634,7 @@ CommentPress.common.comments = new function() {
 				header_offset = CommentPress.theme.header.get_offset();
 
 				// scroll to comment
-				$.scrollTo(
+				$(window).stop(true).scrollTo(
 					$('#'+comment_id),
 					{
 						duration: cp_scroll_speed,
@@ -1859,7 +1859,7 @@ CommentPress.common.comments = new function() {
 				//$( '#li-comment-' + target.prop( 'id' ).split( '-' )[1] ).addClass( 'flash-comment' );
 
 				// scroll to new comment
-				$('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
+				$('#comments_sidebar .sidebar_contents_wrapper').stop(true).scrollTo(
 					target,
 					{
 						duration: speed,
@@ -1879,7 +1879,7 @@ CommentPress.common.comments = new function() {
 			} else {
 
 				// scroll comment area to para heading
-				$('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
+				$('#comments_sidebar .sidebar_contents_wrapper').stop(true).scrollTo(
 					target,
 					{
 						duration: speed,
@@ -2109,7 +2109,7 @@ CommentPress.common.activity = new function() {
 					header_offset = CommentPress.theme.header.get_offset();
 
 					// scroll to comment
-					$.scrollTo(
+					$(window).stop(true).scrollTo(
 						comment,
 						{
 							duration: cp_scroll_speed,
@@ -2135,7 +2135,7 @@ CommentPress.common.activity = new function() {
 					//$( '#li-comment-' + comment_id ).addClass( 'flash-comment' );
 
 					// scroll to new comment
-					$('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
+					$('#comments_sidebar .sidebar_contents_wrapper').stop(true).scrollTo(
 						comment,
 						{
 							duration: cp_scroll_speed,

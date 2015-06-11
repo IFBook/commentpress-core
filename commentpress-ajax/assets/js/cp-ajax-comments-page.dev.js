@@ -324,7 +324,7 @@ CommentPress.ajax.comments = new function() {
 			function() {
 
 				// scroll to new comment
-				$.scrollTo(
+				$(window).stop(true).scrollTo(
 					comment,
 					{
 						duration: cp_scroll_speed,

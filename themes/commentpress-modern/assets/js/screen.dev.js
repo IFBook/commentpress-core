@@ -886,7 +886,7 @@ CommentPress.theme.viewport = new function() {
 			}
 
 			// scroll
-			$.scrollTo(
+			$(window).stop(true).scrollTo(
 				target,
 				{
 					duration: (speed * 1.5),

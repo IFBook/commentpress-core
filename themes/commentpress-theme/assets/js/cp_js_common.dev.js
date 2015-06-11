@@ -1359,7 +1359,7 @@ CommentPress.theme.viewport = new function() {
 		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
 			// scroll
-			$.scrollTo( target, speed );
+			$(window).stop(true).scrollTo( target, speed );
 
 		}
 

@@ -1009,7 +1009,7 @@ CommentPress.ajax.comments = new function() {
 			function() {
 
 				// scroll to new comment
-				$('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
+				$('#comments_sidebar .sidebar_contents_wrapper').stop(true).scrollTo(
 					comment,
 					{
 						duration: cp_scroll_speed,
