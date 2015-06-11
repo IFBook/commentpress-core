@@ -130,6 +130,8 @@ $user_identity = $user->exists() ? $user->display_name : '';
 
 		</fieldset>
 
+		<?php do_action('commentpress_comment_form_pre_comment_id_fields', $post->ID); ?>
+
 		<?php
 
 		// add default wp fields
@@ -158,6 +160,8 @@ $user_identity = $user->exists() ? $user->display_name : '';
 		<?php }
 
 		?>
+
+		<?php do_action('commentpress_comment_form_pre_submit', $post->ID); ?>
 
 		<p id="respond_button"><input name="submit" type="submit" id="submit" value="<?php _e( 'Submit Comment', 'commentpress-core' ); ?>" /></p>
 

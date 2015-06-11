@@ -148,6 +148,8 @@ if ( $cp_force_form ) {
 
 		</fieldset>
 
+		<?php do_action('commentpress_comment_form_pre_comment_id_fields', $post->ID); ?>
+
 		<?php
 
 		// add default wp fields
@@ -176,6 +178,8 @@ if ( $cp_force_form ) {
 		<?php }
 
 		?>
+
+		<?php do_action('commentpress_comment_form_pre_submit', $post->ID); ?>
 
 		<p id="respond_button"><input name="submit" type="submit" id="submit" value="<?php _e( 'Submit Comment', 'commentpress-core' ); ?>" /></p>
 
