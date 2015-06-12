@@ -2414,16 +2414,16 @@ jQuery(document).ready( function($) {
 		var comment_border;
 
 		// set highlight colour
-		jQuery('#li-comment-' + parentID + ' > .comment-wrapper').css( 'background-color', '#CBFFBD' );
+		jQuery('#li-comment-' + parent_id + ' > .comment-wrapper').css( 'background-color', '#CBFFBD' );
 
 		// get existing colour
-		comment_border = jQuery('#comment-' + parentID + ' > .comment-content').css( 'border-bottom' );
+		comment_border = jQuery('#comment-' + parent_id + ' > .comment-content').css( 'border-bottom' );
 
 		// save it
 		CommentPress.theme.settings.set_comment_border( comment_border );
 
 		// set highlight
-		jQuery('#comment-' + parentID + ' > .comment-content').css( 'border-bottom', '1px dashed #b8b8b8' );
+		jQuery('#comment-' + parent_id + ' > .comment-content').css( 'border-bottom', '1px dashed #b8b8b8' );
 
 
 	});
