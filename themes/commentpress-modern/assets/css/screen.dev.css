@@ -3016,6 +3016,13 @@ Compatibility with Comment Tagger plugin
 
 /* Select2 styles defined for BP Group Sites plugin below */
 
+.comment_tagger_tags
+{
+	font-size: 70%;
+	text-transform: uppercase;
+	font-family: sans-serif;
+	margin: 0.7em 0;
+}
 
 
 
