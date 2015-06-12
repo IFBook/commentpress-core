@@ -231,13 +231,13 @@ class CommentpressCoreDisplay {
 	public function get_jquery() {
 
 		// default to minified scripts
-		$debug_state = '';
+		$debug_state = '.min';
 
 		// target different scripts when debugging
 		if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
 
 			// use uncompressed scripts
-			$debug_state = '.dev';
+			$debug_state = '';
 
 		}
 

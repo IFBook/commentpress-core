@@ -140,11 +140,11 @@ function commentpress_enqueue_theme_styles() {
 	if ( is_admin() ) { return; }
 
 	// init
-	$dev = '';
+	$dev = '.min';
 
 	// check for dev
 	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
-		$dev = '.dev';
+		$dev = '';
 	}
 
 	// add our own BuddyPress css
@@ -227,11 +227,11 @@ function commentpress_enqueue_scripts_and_styles() {
 	);
 
 	// init
-	$dev = '';
+	$dev = '.min';
 
 	// check for dev
 	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
-		$dev = '.dev';
+		$dev = '';
 	}
 
 	// add typography css
@@ -344,11 +344,11 @@ if ( ! function_exists( 'commentpress_enqueue_print_styles' ) ):
 function commentpress_enqueue_print_styles() {
 
 	// init
-	$dev = '';
+	$dev = '.min';
 
 	// check for dev
 	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
-		$dev = '.dev';
+		$dev = '';
 	}
 
 	// -------------------------------------------------------------------------

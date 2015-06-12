@@ -174,11 +174,11 @@ function commentpress_bp_enqueue_styles() {
 	if ( is_admin() ) { return; }
 
 	// init
-	$dev = '';
+	$dev = '.min';
 
 	// check for dev
 	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
-		$dev = '.dev';
+		$dev = '';
 	}
 
 	// add our own BuddyPress css
@@ -458,11 +458,11 @@ if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ):
 function commentpress_enqueue_scripts_and_styles() {
 
 	// init
-	$dev = '';
+	$dev = '.min';
 
 	// check for dev
 	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
-		$dev = '.dev';
+		$dev = '';
 	}
 
 	// -------------------------------------------------------------------------
@@ -579,11 +579,11 @@ if ( ! function_exists( 'commentpress_enqueue_print_styles' ) ):
 function commentpress_enqueue_print_styles() {
 
 	// init
-	$dev = '';
+	$dev = '.min';
 
 	// check for dev
 	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
-		$dev = '.dev';
+		$dev = '';
 	}
 
 	// -------------------------------------------------------------------------
@@ -618,11 +618,11 @@ if ( ! function_exists( 'commentpress_enqueue_wp_fee_js' ) ):
 function commentpress_enqueue_wp_fee_js() {
 
 	// init
-	$dev = '';
+	$dev = '.min';
 
 	// check for dev
 	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
-		$dev = '.dev';
+		$dev = '';
 	}
 
 	// enqueue accordion-like js

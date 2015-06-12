@@ -1,1 +1,267 @@
-(function(d){d.event.special.tripleclick={setup:function(h,g){var f=this,e=jQuery(f);e.bind("click",jQuery.event.special.tripleclick.handler)},teardown:function(g){var f=this,e=jQuery(f);e.unbind("click",jQuery.event.special.tripleclick.handler)},handler:function(h){var g=this,e=jQuery(g),f=e.data("clicks")||0;f+=1;if(f===3){f=0;h.type="tripleclick";jQuery.event.dispatch.apply(this,arguments)}e.data("clicks",f)}};function c(h){var g=h,e;try{e=h.previousSibling;while(e&&e.nodeType!=1){g=e;e=e.previousSibling}}catch(f){console.log(f);topOffset=-15;return g}return e?e:g}var a=true;var b={init:function(f){var i=d.extend({selector:".highlighter-container",minWords:0,complete:function(){}},f);var h=0;var g=0;var j=0;var e=false;var k;return this.each(function(){function l(x){if(a===false){return}var t="<span class='dummy'></span>";g=0;j=0;if(h!==x){return}var o=(navigator.appName==="Microsoft Internet Explorer");var n,u,w,p;var v;if(window.getSelection){n=window.getSelection();k=n.toString();if(d.trim(k)===""||k.split(" ").length<i.minWords){return}if(n.getRangeAt&&n.rangeCount){u=window.getSelection().getRangeAt(0);w=u.cloneRange();w.collapse(false);var m=document.createElement("div");m.innerHTML=t;var r=document.createElement("span");if(u.startOffset===0&&u.endOffset===0){var y=w.startContainer;var q=c(y);try{w.selectNode(q.lastChild)}catch(s){j=40;g=-15;w.selectNode(q)}w.collapse(false)}else{if(u.endOffset===0){g=-25;j=40}}if(h!==x){return}d(i.selector).hide();if(!o&&d.trim(k)===d.trim(w.startContainer.innerText)){w.startContainer.innerHTML+="<span class='dummy'>&nbsp;</span>";v=d(".dummy").offset();d(".dummy").remove()}else{if(!o&&d.trim(k)===d.trim(w.endContainer.innerText)){w.endContainer.innerHTML+="<span class='dummy'>&nbsp;</span>";v=d(".dummy").offset();d(".dummy").remove()}else{w.insertNode(r);v=d(r).offset();r.parentNode.removeChild(r)}}}}else{if(document.selection&&document.selection.createRange){u=document.selection.createRange();w=u.duplicate();k=w.text;if(d.trim(k)===""||k.split(" ").length<i.minWords){return}u.collapse(false);u.pasteHTML(t);w.setEndPoint("EndToEnd",u);w.select();v=d(".dummy").offset();d(".dummy").remove()}}d(i.selector).css("top",v.top+g+"px");d(i.selector).css("left",v.left+j+"px");d(i.selector).show(300,function(){i.complete(k)})}d(i.selector).hide();d(i.selector).css("position","absolute");d(document).bind("mouseup.highlighter",function(m){if(e){h=1;clicks=0;setTimeout(function(){l(1)},300);e=false}});d(this).bind("mouseup.highlighter",function(m){h=1;clicks=0;setTimeout(function(){l(1)},300)});d(this).bind("tripleclick.highlighter",function(m){h=3;setTimeout(function(){l(3)},200)});d(this).bind("dblclick.highlighter",function(m){h=2;setTimeout(function(){l(2)},300)});d(this).bind("mousedown.highlighter",function(m){d(i.selector).hide();e=true})})},enable:function(){a=true},disable:function(){a=false},destroy:function(e){return this.each(function(){d(document).unbind("mouseup.highlighter");d(this).unbind("mouseup.highlighter");d(this).unbind("tripleclick.highlighter");d(this).unbind("dblclick.highlighter");d(this).unbind("mousedown.highlighter")})}};d.fn.highlighter=function(e){if(b[e]){return b[e].apply(this,Array.prototype.slice.call(arguments,1))}else{if(typeof e==="object"||!e){return b.init.apply(this,arguments)}else{d.error("Method "+e+" does not exist on jQuery.highlighter")}}}})(jQuery);
+/* global jQuery */
+
+/*
+ * Highlighter.js 1.0
+ *
+ * Author: Matthew Conlen <matt.conlen@huffingtonpost.com>
+ *         Huffington Post Labs
+ *
+ * Copyright 2012: Huffington Post Labs
+ *
+ * This program is free software. It comes without any warranty, to
+ * the extent permitted by applicable law. You can redistribute it
+ * and/or modify it under the terms of the WTFPL, Version 2, as
+ * published by Sam Hocevar. See http://sam.zoy.org/wtfpl/
+ * for more details.
+ *
+ * @see https://github.com/huffpostlabs/highlighter.js/blob/master/jQuery.highlighter.js
+ */
+
+(function ($) {
+    /*
+     * Code for triple click from
+     * http://css-tricks.com/snippets/jquery/triple-click-event/
+     */
+    $.event.special.tripleclick = {
+
+        setup: function (data, namespaces) {
+            var elem = this,
+                $elem = jQuery(elem);
+            $elem.bind('click', jQuery.event.special.tripleclick.handler);
+        },
+
+        teardown: function (namespaces) {
+            var elem = this,
+                $elem = jQuery(elem);
+            $elem.unbind('click', jQuery.event.special.tripleclick.handler);
+        },
+
+        handler: function (event) {
+            var elem = this,
+                $elem = jQuery(elem),
+                clicks = $elem.data('clicks') || 0;
+            clicks += 1;
+            if (clicks === 3) {
+                clicks = 0;
+
+                // set event type to "tripleclick"
+                event.type = "tripleclick";
+
+                // let jQuery handle the triggering of "tripleclick" event handlers
+                jQuery.event.dispatch.apply(this, arguments);
+            }
+            $elem.data('clicks', clicks);
+        }
+    };
+
+    /*
+     * Attempt to get the previous sibling
+     * of a container in the event of a triple
+     * click.
+     *
+     * Adapted from http://stackoverflow.com/a/574922
+     */
+    function get_previoussibling(n) {
+        var y = n, x;
+        try {
+            x = n.previousSibling;
+            while (x && x.nodeType != 1) {
+                y = x;
+                x = x.previousSibling;
+            }
+        } catch (err) {
+            console.log(err);
+            topOffset = -15;
+            return y;
+        }
+        return x ? x : y;
+    }
+
+    // global "enabled" flag
+    var huffpostlabs_highlighter_enabled = true;
+
+    var methods = {
+        init: function (options) {
+
+            var settings = $.extend({
+                'selector': '.highlighter-container',
+                'minWords': 0,
+                'complete': function() {}
+            }, options);
+            var numClicks = 0;
+            var topOffset = 0;
+            var leftOffset = 0;
+            var isDown = false;
+
+        	var selText;
+
+            return this.each(function () {
+                /*
+                 * Insert an html <span> after a user selects text.
+                 * We then use the X-Y coordinates of that span
+                 * to place our tooltip.
+                 * Thanks to http://stackoverflow.com/a/3599599 for
+                 * some inspiration.
+                 */
+                function insertSpanAfterSelection(clicks) {
+
+                	// bail if disabled
+                	if ( huffpostlabs_highlighter_enabled === false ) return;
+
+                    var html = "<span class='dummy'></span>";
+                    topOffset = 0;
+                    leftOffset = 0;
+                    if (numClicks !== clicks) return;
+                    var isIE = (navigator.appName === "Microsoft Internet Explorer");
+                    var sel, range, expandedSelRange, node;
+                    var position;
+                    if (window.getSelection) {
+                        sel = window.getSelection();
+                        selText = sel.toString();
+
+                        if ($.trim(selText) === '' || selText.split(' ').length < settings.minWords) return;
+
+                        if (sel.getRangeAt && sel.rangeCount) {
+                            range = window.getSelection().getRangeAt(0);
+
+                            expandedSelRange = range.cloneRange();
+                            expandedSelRange.collapse(false);
+
+                            // Range.createContextualFragment() would be useful here but is
+                            // non-standard and not supported in all browsers (IE9, for one)
+                            var el = document.createElement("div");
+                            el.innerHTML = html;
+                            var dummy = document.createElement("span");
+
+                            if (range.startOffset === 0 && range.endOffset === 0) {
+
+                                var cont = expandedSelRange.startContainer;
+                                var prev = get_previoussibling(cont);
+                                try {
+                                    expandedSelRange.selectNode(prev.lastChild);
+                                } catch (err) {
+                                    leftOffset = 40;
+                                    topOffset = -15;
+                                    expandedSelRange.selectNode(prev);
+                                }
+                                // console.log(expandedSelRange);
+                                expandedSelRange.collapse(false);
+                            } else if(range.endOffset === 0 ) {
+                                topOffset = -25;
+                                leftOffset = 40;
+                            }
+
+
+                            if (numClicks !== clicks) return;
+                            $(settings.selector).hide();
+                            if (!isIE && $.trim(selText) === $.trim(expandedSelRange.startContainer.innerText)) {
+                                expandedSelRange.startContainer.innerHTML += "<span class='dummy'>&nbsp;</span>";
+                                position = $(".dummy").offset();
+                                $(".dummy").remove();
+                            } else if (!isIE && $.trim(selText) === $.trim(expandedSelRange.endContainer.innerText)) {
+                                expandedSelRange.endContainer.innerHTML += "<span class='dummy'>&nbsp;</span>";
+                                position = $(".dummy").offset();
+                                $(".dummy").remove();
+                            } else {
+                                expandedSelRange.insertNode(dummy);
+                                position = $(dummy).offset();
+                                dummy.parentNode.removeChild(dummy);
+                            }
+                        }
+                    } else if (document.selection && document.selection.createRange) {
+                        range = document.selection.createRange();
+                        expandedSelRange = range.duplicate();
+
+                        selText = expandedSelRange.text;
+                        if ($.trim(selText) === '' || selText.split(' ').length < settings.minWords) return;
+
+                        range.collapse(false);
+                        range.pasteHTML(html);
+
+                        expandedSelRange.setEndPoint("EndToEnd", range);
+                        expandedSelRange.select();
+                        position = $(".dummy").offset();
+                        $(".dummy").remove();
+                    }
+
+                    $(settings.selector).css("top", position.top + topOffset + "px");
+                    $(settings.selector).css("left", position.left + leftOffset + "px");
+                    $(settings.selector).show(300, function() {
+                        settings.complete(selText);
+                    });
+                }
+                $(settings.selector).hide();
+                $(settings.selector).css("position", "absolute");
+                $(document).bind('mouseup.highlighter', function (e) {
+                    if (isDown) {
+                        numClicks = 1;
+                        clicks = 0;
+                        setTimeout(function () {
+                            insertSpanAfterSelection(1);
+                        }, 300);
+                        isDown = false;
+                    }
+                });
+                $(this).bind('mouseup.highlighter', function (e) {
+                    numClicks = 1;
+                    clicks = 0;
+                    setTimeout(function () {
+                        insertSpanAfterSelection(1);
+                    }, 300);
+                });
+                $(this).bind('tripleclick.highlighter', function (e) {
+                    numClicks = 3;
+                    setTimeout(function () {
+                        insertSpanAfterSelection(3);
+                    }, 200);
+                });
+
+                $(this).bind('dblclick.highlighter', function (e) {
+                    numClicks = 2;
+                    setTimeout(function () {
+                        insertSpanAfterSelection(2);
+                    }, 300);
+                });
+                $(this).bind('mousedown.highlighter', function (e) {
+                    $(settings.selector).hide();
+                    isDown = true;
+                });
+
+            });
+        },
+        enable: function () {
+            huffpostlabs_highlighter_enabled = true;
+        },
+        disable: function () {
+            huffpostlabs_highlighter_enabled = false;
+        },
+        destroy: function (content) {
+            return this.each(function () {
+                $(document).unbind('mouseup.highlighter');
+                $(this).unbind('mouseup.highlighter');
+                $(this).unbind('tripleclick.highlighter');
+                $(this).unbind('dblclick.highlighter');
+                $(this).unbind('mousedown.highlighter');
+            });
+        }
+    };
+
+    /*
+     * Method calling logic taken from the
+     * jQuery article on best practices for
+     * plugins.
+     *
+     * http://docs.jquery.com/Plugins/Authoring
+     */
+    $.fn.highlighter = function (method) {
+        if (methods[method]) {
+            return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+        } else if (typeof method === 'object' || !method) {
+            return methods.init.apply(this, arguments);
+        } else {
+            $.error('Method ' + method + ' does not exist on jQuery.highlighter');
+        }
+
+    };
+
+})(jQuery);
