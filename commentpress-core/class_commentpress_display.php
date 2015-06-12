@@ -274,6 +274,16 @@ class CommentpressCoreDisplay {
 		// only allow text highlighting on non-touch devices
 		if ( ! $this->db->is_touch() ) {
 
+			// bail if BuddyPress special page
+			if ( $this->parent_obj->is_buddypress() AND $this->parent_obj->is_buddypress_special_page() ) {
+				return;
+			}
+
+			// bail if CommentPress Core special page
+			if ( $this->db->is_special_page() ) {
+				return;
+			}
+
 			// add jQuery wrapSelection plugin
 			wp_enqueue_script(
 				'jquery_wrapselection',

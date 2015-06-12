@@ -210,10 +210,10 @@ CommentPress.ajax.comments = new function() {
 		}
 
 		// get head
-		head = response.find('#comments_in_page_wrapper div.comments_container > h3');
+		head = response.find('#comments_in_page_wrapper div.comments_container > h3.general_comments_header');
 
 		// replace heading
-		$('#comments_in_page_wrapper div.comments_container > h3').replaceWith(head);
+		$('#comments_in_page_wrapper div.comments_container > h3.general_comments_header').replaceWith(head);
 
 		// clear comment form
 		me.cpajax_form.find( '#comment' ).val( '' );
@@ -433,8 +433,6 @@ CommentPress.ajax.comments = new function() {
 			// submit the form
 			$(this).ajaxSubmit({
 
-
-
 				beforeSubmit: function() {
 
 					$('#loading').show();
@@ -442,8 +440,6 @@ CommentPress.ajax.comments = new function() {
 					$('#submit').hide();
 
 				}, // end beforeSubmit
-
-
 
 				error: function(request) {
 
@@ -460,8 +456,6 @@ CommentPress.ajax.comments = new function() {
 					return false;
 
 				}, // end error()
-
-
 
 				success: function( data ) {
 
