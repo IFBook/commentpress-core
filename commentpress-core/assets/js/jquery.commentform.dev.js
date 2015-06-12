@@ -1,6 +1,6 @@
 /*
 ================================================================================
-CommentPress Default Theme addComment Javascript
+CommentPress Common addComment Javascript
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
@@ -624,14 +624,8 @@ addComment = {
 			jQuery( '#comment-' + parentID + ' > .reply' ).css('display', 'none');
 		}
 
-		// highlight comment
-		jQuery( '#li-comment-' + parentID + ' > .comment-wrapper' ).css('background-color', '#CBFFBD');
-
-		// get existing colour
-		addComment.commentBorder = jQuery( '#comment-' + parentID + ' > .comment-content' ).css('border-bottom');
-
-		// set highlight
-		jQuery( '#comment-' + parentID + ' > .comment-content' ).css('border-bottom', '1px dashed #b8b8b8');
+		// trigger theme to highlight comment
+		jQuery( document ).trigger( 'commentpress-comment-highlight', [ parentID ] );
 
 	},
 
@@ -654,8 +648,7 @@ addComment = {
 		}
 
 		// unhighlight comment
-		jQuery( '#li-comment-' + parentID + ' > .comment-wrapper' ).css('background-color', '#fff');
-		jQuery( '#comment-' + parentID + ' > .comment-content' ).css('border-bottom', addComment.commentBorder);
+		jQuery( document ).trigger( 'commentpress-comment-unhighlight', [ parentID ] );
 
 	},
 
@@ -672,8 +665,7 @@ addComment = {
 		jQuery( '.reply' ).css('display', 'block');
 
 		// clear highlight
-		jQuery( '.comment-wrapper' ).css('background-color', '#fff');
-		jQuery( '#comment-' + parentID + ' > .comment-content' ).css('border-bottom', addComment.commentBorder);
+		jQuery( document ).trigger( 'commentpress-comment-highlights-clear' );
 
 	},
 

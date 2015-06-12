@@ -1478,6 +1478,47 @@ jQuery(document).ready( function($) {
 
 
 	/**
+	 * Hook into CommentPress Form comment highlight trigger
+	 *
+	 * @param int parent_id The parent comment ID
+	 * @return void
+	 */
+	$( document ).on( 'commentpress-comment-highlight', function( event, parent_id ) {
+
+		// add highlight class
+		$( '#li-comment-' + parent_id + ' > .comment-wrapper' ).addClass( 'background-highlight' );
+
+	});
+
+	/**
+	 * Hook into CommentPress Form comment unhighlight trigger
+	 *
+	 * @param int parent_id The parent comment ID
+	 * @return void
+	 */
+	$( document ).on( 'commentpress-comment-unhighlight', function( event, parent_id ) {
+
+		// remove highlight class
+		jQuery( '#li-comment-' + parent_id + ' > .comment-wrapper' ).removeClass( 'background-highlight' );
+
+	});
+
+	/**
+	 * Hook into CommentPress Form clear all comment highlights trigger
+	 *
+	 * @return void
+	 */
+	$( document ).on( 'commentpress-comment-highlights-clear', function( event ) {
+
+		// remove highlight class
+		jQuery( '.comment-wrapper' ).removeClass( 'background-highlight' );
+
+
+	});
+
+
+
+	/**
 	 * Hook into CommentPress AJAX Infinite Scroll page changed
 	 *
 	 * This hook is present in this file because the WP FEE JS is not loaded

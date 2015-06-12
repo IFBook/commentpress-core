@@ -197,6 +197,25 @@ CommentPress.theme.settings = new function() {
 		return this.toc_on_top;
 	};
 
+
+
+	// init comment border colour
+	this.comment_border = '';
+
+	/**
+	 * Setter for comment border colour
+	 */
+	this.set_comment_border = function( val ) {
+		this.comment_border = val;
+	};
+
+	/**
+	 * Getter for comment border colour
+	 */
+	this.get_comment_border = function() {
+		return this.comment_border;
+	};
+
 }; // end CommentPress theme settings class
 
 
@@ -2380,6 +2399,73 @@ jQuery(document).ready( function($) {
 
 	// the default theme implements custom header actions
 	CommentPress.theme.original.header.dom_ready();
+
+
+
+	/**
+	 * Hook into CommentPress Form comment highlight trigger
+	 *
+	 * @param int parent_id The parent comment ID
+	 * @return void
+	 */
+	$( document ).on( 'commentpress-comment-highlight', function( event, parent_id ) {
+
+		// declare vars
+		var comment_border;
+
+		// set highlight colour
+		jQuery('#li-comment-' + parentID + ' > .comment-wrapper').css( 'background-color', '#CBFFBD' );
+
+		// get existing colour
+		comment_border = jQuery('#comment-' + parentID + ' > .comment-content').css( 'border-bottom' );
+
+		// save it
+		CommentPress.theme.settings.set_comment_border( comment_border );
+
+		// set highlight
+		jQuery('#comment-' + parentID + ' > .comment-content').css( 'border-bottom', '1px dashed #b8b8b8' );
+
+
+	});
+
+	/**
+	 * Hook into CommentPress Form comment unhighlight trigger
+	 *
+	 * @param int parent_id The parent comment ID
+	 * @return void
+	 */
+	$( document ).on( 'commentpress-comment-unhighlight', function( event, parent_id ) {
+
+		// declare vars
+		var comment_border;
+
+		// get existing colour
+		comment_border = CommentPress.theme.settings.get_comment_border();
+
+		// reset highlight colours
+		jQuery('#li-comment-' + parent_id + ' > .comment-wrapper').css( 'background-color', '#fff' );
+		jQuery('#comment-' + parent_id + ' > .comment-content').css( 'border-bottom', comment_border );
+
+	});
+
+	/**
+	 * Hook into CommentPress Form clear all comment highlights trigger
+	 *
+	 * @return void
+	 */
+	$( document ).on( 'commentpress-comment-highlights-clear', function( event ) {
+
+		// declare vars
+		var comment_border;
+
+		// get existing colour
+		comment_border = CommentPress.theme.settings.get_comment_border();
+
+		// reset highlight colours
+		jQuery('.comment-wrapper').css( 'background-color', '#fff');
+		jQuery('.comment-content').css( 'border-bottom', comment_border );
+
+	});
 
 
 

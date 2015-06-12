@@ -540,7 +540,7 @@ function commentpress_enqueue_scripts_and_styles() {
 			// enqueue form js
 			wp_enqueue_script(
 				'cp_form',
-				get_template_directory_uri() . '/assets/js/cp_js_form' . $dev . '.js',
+				plugins_url( 'commentpress-core/assets/js/jquery.commentform' . $dev . '.js', COMMENTPRESS_PLUGIN_FILE ),
 				array( 'cp_common_js' ), // deps
 				COMMENTPRESS_VERSION // version
 			);
