@@ -3081,6 +3081,35 @@ Compatibility with CommentPress Text Highlighter
 
 /*
 --------------------------------------------------------------------------------
+Compatibility with Comment Tagger plugin
+--------------------------------------------------------------------------------
+*/
+
+.comment_tagger_select2_container
+{
+	padding: 5px 0;
+}
+
+.comment_tagger_select2_container h5
+{
+	font-size: 80%;
+	color: #761D19;
+}
+
+.select2-container
+{
+	z-index: 10000;
+}
+
+.select2-container .selection
+{
+	font-size: 80%;
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
 RESPONSIVENESS
 --------------------------------------------------------------------------------
 */

@@ -3000,6 +3000,29 @@ body > img
 
 /*
 --------------------------------------------------------------------------------
+Compatibility with Comment Tagger plugin
+--------------------------------------------------------------------------------
+*/
+
+.comment_tagger_select2_container
+{
+	padding: 5px 0;
+}
+
+.comment_tagger_select2_container h5
+{
+	font-size: 80%;
+}
+
+/* Select2 styles defined for BP Group Sites plugin below */
+
+
+
+
+
+
+/*
+--------------------------------------------------------------------------------
 Compatibility with BP Group Sites plugin
 --------------------------------------------------------------------------------
 */
