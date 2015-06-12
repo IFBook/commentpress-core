@@ -3106,6 +3106,32 @@ Compatibility with Comment Tagger plugin
 	font-size: 80%;
 }
 
+#commentform .select2-search,
+.select2-container .selection ul li
+{
+	list-style-type: none;
+	margin: 0;
+}
+
+.comment_tagger_tags
+{
+	font-size: 70%;
+	text-transform: uppercase;
+	font-family: sans-serif;
+	  margin: 5px 5px 0 5px;
+}
+
+.comment_tagger_tags p
+{
+	margin: 0;
+}
+
+.comment_tagger_tag_link
+{
+	color: #761D19;
+	text-decoration: none;
+}
+
 
 
 /*
