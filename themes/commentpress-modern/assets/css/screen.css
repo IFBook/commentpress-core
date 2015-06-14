@@ -1301,6 +1301,7 @@ div#respond > p
 #comment_details
 {
 	margin-bottom: 0.6em;
+	margin-top: 0;
 }
 
 .author_is_logged_in

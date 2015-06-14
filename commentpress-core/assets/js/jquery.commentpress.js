@@ -1612,7 +1612,47 @@ CommentPress.common.comments = new function() {
 	this.comment_permalinks = function() {
 
 		/**
-		 * Clicking on the comment permalink
+		 * Clicking on comment permalinks on the General Comments page
+		 *
+		 * @return void
+		 */
+		$('#wrapper').on( 'click', '.comment_permalink', function( event ) {
+
+			// bail if not special page
+			if ( cp_special_page != '1' ) { return; }
+
+			// define vars
+			var comment_id, header_offset, text_sig;
+
+			// override event
+			event.preventDefault();
+
+			// get comment id
+			comment_id = this.href.split('#')[1];
+
+			// get offset
+			header_offset = CommentPress.theme.header.get_offset();
+
+			// scroll to comment
+			$(window).stop(true).scrollTo(
+				$('#'+comment_id),
+				{
+					duration: cp_scroll_speed,
+					axis:'y',
+					offset: header_offset,
+					onAfter: function() {
+
+						// broadcast
+						$(document).trigger( 'commentpress-comments-in-page-scrolled' );
+
+					}
+				}
+			);
+
+		});
+
+		/**
+		 * Clicking on comment permalinks in the Comments column
 		 *
 		 * @return void
 		 */
@@ -1627,42 +1667,22 @@ CommentPress.common.comments = new function() {
 			// get comment id
 			comment_id = this.href.split('#')[1];
 
-			// if special page
-			if ( cp_special_page == '1' ) {
+			// clear other highlights
+			$.unhighlight_para();
 
-				// get offset
-				header_offset = CommentPress.theme.header.get_offset();
+			// get text sig
+			text_sig = $.get_text_sig_by_comment_id( '#' + comment_id );
 
-				// scroll to comment
-				$(window).stop(true).scrollTo(
-					$('#'+comment_id),
-					{
-						duration: cp_scroll_speed,
-						axis:'y',
-						offset: header_offset
-					}
-				);
+			// if not a pingback...
+			if ( text_sig != 'pingbacksandtrackbacks' ) {
 
-			} else {
-
-				// clear other highlights
-				$.unhighlight_para();
-
-				// get text sig
-				text_sig = $.get_text_sig_by_comment_id( '#' + comment_id );
-
-				// if not a pingback...
-				if ( text_sig != 'pingbacksandtrackbacks' ) {
-
-					// scroll page to it
-					CommentPress.common.content.scroll_page_to_textblock( text_sig );
-
-				}
-
-				// scroll comments
-				me.scroll_comments( $('#'+comment_id), cp_scroll_speed );
+				// scroll page to it
+				CommentPress.common.content.scroll_page_to_textblock( text_sig );
 
 			}
+
+			// scroll comments
+			me.scroll_comments( $('#'+comment_id), cp_scroll_speed );
 
 		});
 
@@ -1709,11 +1729,11 @@ CommentPress.common.comments = new function() {
 		});
 
     	/**
-		 * Click on the copy icon
+		 * Click on comment permalink to reveal it in the location bar
 		 *
 		 * @return void
 		 */
-		$('#comments_sidebar').on( 'click', '.comment_permalink', function( event ) {
+		$('#comments_sidebar, #wrapper').on( 'click', '.comment_permalink', function( event ) {
 
 			// define vars
 			var url;
@@ -1724,16 +1744,13 @@ CommentPress.common.comments = new function() {
 			// did we get one?
 			if ( url ) {
 
-				// show dialog
-				//window.prompt( "Copy this link, then paste into where you need it", url );
-
 				// do we have pushstate?
 				if ( window.history ) {
 
 					// replace window state
 					window.history.replaceState( {} , '', url );
 
-					// attach a handler to the document body
+					// attach a reset handler to the document body
 					$(document).bind( 'click', me.comment_permalink_handler );
 
 				}
@@ -1867,7 +1884,7 @@ CommentPress.common.comments = new function() {
 						onAfter: function() {
 
 							// highlight header
-							CommentPress.common.comments.highlight( target );
+							me.highlight( target );
 
 							// broadcast
 							$(document).trigger( 'commentpress-comments-scrolled' );
