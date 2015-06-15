@@ -40,7 +40,7 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 	// define our vars
 	var cp_comments_open, cp_special_page, cp_tinymce, cp_tinymce_version,
 		cp_promote_reading, cp_is_mobile, cp_is_touch, cp_is_tablet, cp_cookie_path,
-		cp_multipage_page, cp_template_dir, cp_plugin_dir, cp_toc_chapter_is_page, cp_show_subpages,
+		cp_multipage_page, cp_toc_chapter_is_page, cp_show_subpages,
 		cp_default_sidebar, cp_is_signup_page, cp_scroll_speed, cp_min_page_width,
 		cp_textblock_meta;
 
@@ -55,8 +55,6 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 	cp_is_tablet = CommentpressSettings.cp_is_tablet;
 	cp_cookie_path = CommentpressSettings.cp_cookie_path;
 	cp_multipage_page = CommentpressSettings.cp_multipage_page;
-	cp_template_dir = CommentpressSettings.cp_template_dir;
-	cp_plugin_dir = CommentpressSettings.cp_plugin_dir;
 	cp_toc_chapter_is_page = CommentpressSettings.cp_toc_chapter_is_page;
 	cp_show_subpages = CommentpressSettings.cp_show_subpages;
 	cp_default_sidebar = CommentpressSettings.cp_default_sidebar;
@@ -143,6 +141,13 @@ CommentPress.settings.DOM = new function() {
 
 	// init original permalink
 	this.original_permalink = document.location.toString();
+
+	// override with the value from our localisation object, if present
+	if ( 'undefined' !== typeof CommentpressSettings ) {
+		if ( CommentpressSettings.cp_permalink != '' ) {
+			this.original_permalink = CommentpressSettings.cp_permalink;
+		}
+	}
 
 	/**
 	 * Setter for original permalink
@@ -438,6 +443,90 @@ CommentPress.settings.textblock = new function() {
  * Create common sub-namespace
  */
 CommentPress.common = {};
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
+/**
+ * Create CommentPress common DOM class
+ */
+CommentPress.common.DOM = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
+
+
+
+	/**
+	 * Initialise CommentPress settings DOM.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+	};
+
+
+
+	/**
+	 * Set the URL to a given link
+	 *
+	 * @param str url The URL to show in the location bar
+	 * @return void
+	 */
+	this.location_set = function( url ) {
+
+		// do we have pushstate?
+		if ( window.history ) {
+
+			// replace window state
+			window.history.replaceState( {} , '', url );
+
+		}
+
+	};
+
+
+
+	/**
+	 * Reset the URL to the page permalink
+	 *
+	 * @return void
+	 */
+	this.location_reset = function() {
+
+		// do we have pushstate?
+		if ( window.history ) {
+
+			// replace window state with original
+			window.history.replaceState( {} , '', CommentPress.settings.DOM.get_permalink() );
+
+		}
+
+	};
+
+
+
+}; // end CommentPress common DOM class
 
 
 
@@ -1195,6 +1284,43 @@ CommentPress.common.content = new function() {
 
 			}
 
+			// set location to page/post permalink
+			CommentPress.common.DOM.location_reset();
+
+			// --<
+			return;
+
+		}
+
+		// do we have a link to the comment form?
+		if ( url.match( '#respond' ) ) {
+
+			// get comment form in DOM
+			comment_form = $('#respond');
+
+			// did we get it?
+			if ( comment_form.length ) {
+
+				// only scroll if not mobile (but allow tablets)
+				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+
+					// scroll to new comment
+					$(window).stop(true).scrollTo(
+						comment_form,
+						{
+							duration: cp_scroll_speed,
+							axis:'y',
+							offset: CommentPress.theme.header.get_offset()
+						}
+					);
+
+				}
+
+			}
+
+			// set location to page/post permalink
+			CommentPress.common.DOM.location_reset();
+
 		}
 
 	}
@@ -1739,21 +1865,16 @@ CommentPress.common.comments = new function() {
 			var url;
 
 			// get selection
-			url = $( this ).attr('href');
+			url = $(this).attr( 'href' );
 
 			// did we get one?
 			if ( url ) {
 
-				// do we have pushstate?
-				if ( window.history ) {
+				// replace window state with comment permalink
+				CommentPress.common.DOM.location_set( url );
 
-					// replace window state
-					window.history.replaceState( {} , '', url );
-
-					// attach a reset handler to the document body
-					$(document).bind( 'click', me.comment_permalink_handler );
-
-				}
+				// attach a reset handler to the document body
+				$(document).bind( 'click', me.comment_permalink_handler );
 
 			}
 
@@ -1777,7 +1898,7 @@ CommentPress.common.comments = new function() {
 			$(document).unbind( 'click', me.comment_permalink_handler );
 
 			// replace window state with original
-			window.history.replaceState( {} , '', CommentPress.settings.DOM.get_permalink() );
+			CommentPress.common.DOM.location_reset();
 
 		}
 

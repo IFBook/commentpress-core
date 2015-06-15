@@ -291,8 +291,6 @@ CommentPress.theme.DOM = new function() {
 			// if mobile, don't hide textblock meta
 			if ( cp_is_mobile == '0' ) {
 
-				//console.log( cp_textblock_meta );
-
 				// have we explicitly hidden textblock meta?
 				if ( cp_textblock_meta == '0' ) {
 
@@ -571,7 +569,6 @@ CommentPress.theme.DOM = new function() {
 					original_content_width = item.width();
 					original_sidebar_width = sidebar.width();
 					original_nav_width = book_nav.width();
-					//console.log(original_sidebar_width);
 
 					// calculate sidebar left
 					original_sidebar_left = sidebar.css( "left" );
@@ -616,7 +613,6 @@ CommentPress.theme.DOM = new function() {
 
 					// get percent to four decimal places
 					item_w = parseFloat( Math.ceil( ( 1000000 * parseFloat( width ) / ww ) ) / 10000 );
-					//console.log(w);
 
 					// set element width
 					item.css("width" , item_w + '%');
@@ -631,7 +627,6 @@ CommentPress.theme.DOM = new function() {
 
 					// get percent to four decimal places
 					book_nav_w = parseFloat( Math.ceil( ( 1000000 * parseFloat( width ) / ww ) ) / 10000 );
-					//console.log(w);
 
 					// set element width
 					book_nav.css( 'width', book_nav_w + '%' );
@@ -641,7 +636,6 @@ CommentPress.theme.DOM = new function() {
 
 					// get percent to four decimal places
 					sidebar_w = parseFloat( Math.ceil( ( 1000000 * parseFloat( width ) / ww ) ) / 10000 );
-					//console.log(w);
 
 					// set element width
 					sidebar.css( 'width', sidebar_w + '%' );
@@ -1090,7 +1084,6 @@ CommentPress.theme.sidebars = new function() {
 
 			// set to height of tallest
 			containers = $('.sidebar_contents_wrapper');
-			//console.log( containers );
 
 			// did we get any?
 			if ( containers.length > 0 ) {
@@ -1110,8 +1103,6 @@ CommentPress.theme.sidebars = new function() {
 					}
 
 				});
-				//console.log( tallest );
-				//alert( tallest );
 
 				// set it to that height
 				$('.sidebar_contents_wrapper').height( tallest );
@@ -1189,7 +1180,6 @@ CommentPress.theme.sidebars = new function() {
 		if ( cp_default_sidebar == 'comments' ) {
 			name = 'comments';
 			if ( CommentPress.theme.settings.get_toc_on_top() == 'y' ) {
-				//console.log( 'toc on comments_sidebar' );
 				name = 'toc';
 			}
 		}
@@ -1198,7 +1188,6 @@ CommentPress.theme.sidebars = new function() {
 		if ( cp_default_sidebar == 'activity' ) {
 			name = 'activity';
 			if ( CommentPress.theme.settings.get_toc_on_top() == 'y' ) {
-				//console.log( 'toc on activity_sidebar' );
 				name = 'toc';
 			}
 		}
@@ -1395,130 +1384,37 @@ CommentPress.theme.viewport = new function() {
 
 		// define vars
 		var text_sig, url, comment_id, para_wrapper_array, item, para_id, para_num,
-			post_id, textblock, anchor_id, anchor;
+			post_id, textblock, anchor_id, anchor, found;
 
 		// init
 		text_sig = '';
+		found = false;
 
 		// if there is an anchor in the URL (only on non-special pages)
 		url = document.location.toString();
-		//console.log( url );
 
 		// do we have a comment permalink?
 		if ( url.match( '#comment-' ) ) {
 
-			// activate comments sidebar
-			CommentPress.theme.sidebars.activate_sidebar('comments');
-
-			// open the matching block
-
 			// get comment ID
-			comment_id = url.split('#comment-')[1];
+			tmp = url.split('#comment-');
 
-			// get array of parent paragraph_wrapper divs
-			para_wrapper_array = $('#comment-' + comment_id)
-										.parents('div.paragraph_wrapper')
-										.map( function () {
-											return this;
-										});
+			// sanity check
+			comment_id = 0;
+			if ( tmp.length == 2 ) {
+				comment_id = parseInt( tmp[1] );
+			}
 
 			// did we get one?
-			if ( para_wrapper_array.length > 0 ) {
-
-				// get the item
-				item = $(para_wrapper_array[0]);
-
-				// are comments open?
-				if ( cp_comments_open == 'y' ) {
-
-					// move form to para
-					text_sig = item.prop('id').split('-')[1];
-					para_id = $('#para_wrapper-'+text_sig+' .reply_to_para').prop('id');
-					para_num = para_id.split('-')[1];
-					post_id = $('#comment_post_ID').prop('value');
-					//console.log(post_id);
-
-					// seems like TinyMCE isn't yet working and that moving the form
-					// prevents it from loading properly
-					if ( cp_tinymce == '1' ) {
-
-						// if we have link text, then a comment reply is allowed...
-						if ( $( '#comment-' + comment_id + ' > .reply' ).text() !== '' ) {
-
-							// temporarily override global so that TinyMCE is not
-							// meddled with in any way...
-							cp_tinymce = '0';
-
-							// move the form
-							addComment.moveForm(
-
-								'comment-' + comment_id,
-								comment_id,
-								'respond',
-								post_id,
-								text_sig
-
-							);
-
-							// restore global
-							cp_tinymce = '1';
-
-						}
-
-					} else {
-
-						// move the form
-						addComment.moveForm(
-
-							'comment-' + comment_id,
-							comment_id,
-							'respond',
-							post_id,
-							text_sig
-
-						);
-
-					}
-
-				}
-
-				// show block
-				item.show();
-
-				// scroll comments
-				CommentPress.common.comments.scroll_comments( $('#comment-' + comment_id), 1, 'flash' );
-
-				// if not the whole page...
-				if( text_sig !== '' ) {
-
-					// get text block
-					textblock = $('#textblock-' + text_sig);
-
-					// highlight this paragraph
-					$.highlight_para( textblock );
-
-					// scroll page
-					CommentPress.common.content.scroll_page( textblock );
-
-				} else {
-
-					// only scroll if page is not highlighted
-					if ( !CommentPress.settings.page.get_highlight() ) {
-
-						// scroll to top
-						CommentPress.theme.viewport.scroll_to_top( 0, cp_scroll_speed );
-
-					}
-
-					// toggle page highlight flag
-					CommentPress.settings.page.toggle_highlight();
-
-				}
-
-				// --<
-				return;
-
+			if ( comment_id !== 0 ) {
+				me.on_load_scroll_to_comment( comment_id );
 			}
+
+			// set location to page/post permalink
+			CommentPress.common.DOM.location_reset();
+
+			// --<
+			return;
 
 		} else {
 
@@ -1534,41 +1430,18 @@ CommentPress.theme.viewport = new function() {
 
 				// get text signature
 				text_sig = $(this).prop( 'id' );
-				//console.log( 'text_sig: ' + text_sig );
 
 				// do we have a paragraph or comment block permalink?
 				if ( url.match( '#' + text_sig ) || url.match( '#para_heading-' + text_sig ) ) {
 
-					//console.log( "we've got a match: " + text_sig );
+					// align content
+					me.align_content( text_sig, 'para_heading' );
 
-					// are comments open?
-					if ( cp_comments_open == 'y' ) {
+					// set location to page/post permalink
+					CommentPress.common.DOM.location_reset();
 
-						// move form to para
-						para_id = $('#para_wrapper-' + text_sig + ' .reply_to_para').prop('id');
-						para_num = para_id.split('-')[1];
-						post_id = $('#comment_post_ID').prop('value');
-						addComment.moveFormToPara( para_num, text_sig, post_id );
-
-					}
-
-					// toggle next item_body
-					$('#para_heading-' + text_sig).next('div.paragraph_wrapper').show();
-
-					// scroll comments
-					CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), 1 );
-
-					// get text block
-					textblock = $('#textblock-' + text_sig);
-
-					// highlight this paragraph
-					$.highlight_para( textblock );
-
-					// scroll page
-					CommentPress.common.content.scroll_page( textblock );
-
-					// --<
-					return;
+					// set flag
+					found = true;
 
 				}
 
@@ -1576,11 +1449,43 @@ CommentPress.theme.viewport = new function() {
 
 		}
 
+		// check flag and bail if already found
+		if ( found === true ) { return; }
+
 		// do we have a link to the comment form?
 		if ( url.match( '#respond' ) ) {
 
-			// same as clicking on the "whole page" heading
-			$('h3#para_heading- a.comment_block_permalink').click();
+			// is this a "Reply to [...]" link
+			if ( url.match( 'replytocom' ) ) {
+
+				// get parent from form
+				comment_parent = parseInt( $('#comment_parent').val() );
+
+				// also same as load procedure
+				me.on_load_scroll_to_comment( comment_parent );
+
+			} else {
+
+				// is this a "Leave Comment on [...]" link
+				if ( url.match( 'replytopara' ) ) {
+
+					// get text sig from form
+					text_sig = $('#text_signature').val();
+
+					// align content
+					me.align_content( text_sig, 'commentform' );
+
+				} else {
+
+					// same as clicking on the "whole page" heading
+					$('h3#para_heading- a.comment_block_permalink').click();
+
+				}
+
+			}
+
+			// set location to page/post permalink
+			CommentPress.common.DOM.location_reset();
 
 			// --<
 			return;
@@ -1592,7 +1497,6 @@ CommentPress.theme.viewport = new function() {
 
 			// get anchor
 			anchor_id = url.split('#')[1];
-			//console.log( 'anchor_id: ' + anchor_id );
 
 			// bail if it's WP FEE's custom anchor
 			if ( anchor_id == 'edit=true' ) { return; }
@@ -1612,8 +1516,129 @@ CommentPress.theme.viewport = new function() {
 
 			}
 
+			// set location to page/post permalink
+			CommentPress.common.DOM.location_reset();
+
 			// --<
 			return;
+
+		}
+
+	};
+
+
+
+	/**
+	 * Scroll to comment on page load
+	 *
+	 * @param int comment_id The ID of the comment to scroll to
+	 * @return void
+	 */
+	this.on_load_scroll_to_comment = function( comment_id ) {
+
+		// define vars
+		var text_sig, para_wrapper_array, item, para_id, para_num,
+			post_id, textblock;
+
+		// activate comments sidebar
+		CommentPress.theme.sidebars.activate_sidebar('comments');
+
+		// open the matching block
+
+		// get array of parent paragraph_wrapper divs
+		para_wrapper_array = $('#comment-' + comment_id)
+									.parents('div.paragraph_wrapper')
+									.map( function () {
+										return this;
+									});
+
+		// did we get one?
+		if ( para_wrapper_array.length > 0 ) {
+
+			// get the item
+			item = $(para_wrapper_array[0]);
+
+			// are comments open?
+			if ( cp_comments_open == 'y' ) {
+
+				// move form to para
+				text_sig = item.prop('id').split('-')[1];
+				para_id = $('#para_wrapper-'+text_sig+' .reply_to_para').prop('id');
+				para_num = para_id.split('-')[1];
+				post_id = $('#comment_post_ID').prop('value');
+
+				// seems like TinyMCE isn't yet working and that moving the form
+				// prevents it from loading properly
+				if ( cp_tinymce == '1' ) {
+
+					// if we have link text, then a comment reply is allowed...
+					if ( $( '#comment-' + comment_id + ' > .reply' ).text() !== '' ) {
+
+						// temporarily override global so that TinyMCE is not
+						// meddled with in any way...
+						cp_tinymce = '0';
+
+						// move the form
+						addComment.moveForm(
+							'comment-' + comment_id,
+							comment_id,
+							'respond',
+							post_id,
+							text_sig
+						);
+
+						// restore global
+						cp_tinymce = '1';
+
+					}
+
+				} else {
+
+					// move the form
+					addComment.moveForm(
+						'comment-' + comment_id,
+						comment_id,
+						'respond',
+						post_id,
+						text_sig
+					);
+
+				}
+
+			}
+
+			// show block
+			item.show();
+
+			// scroll comments
+			CommentPress.common.comments.scroll_comments( $('#comment-' + comment_id), 1, 'flash' );
+
+			// if not the whole page...
+			if( text_sig !== '' ) {
+
+				// get text block
+				textblock = $('#textblock-' + text_sig);
+
+				// highlight this paragraph
+				$.highlight_para( textblock );
+
+				// scroll page
+				CommentPress.common.content.scroll_page( textblock );
+
+			} else {
+
+				// only scroll if page is not highlighted
+				if ( !CommentPress.settings.page.get_highlight() ) {
+
+					// scroll to top
+					CommentPress.theme.viewport.scroll_to_top( 0, cp_scroll_speed );
+
+				}
+
+				// toggle page highlight flag
+				CommentPress.settings.page.toggle_highlight();
+
+			}
 
 		}
 
@@ -1674,7 +1699,6 @@ CommentPress.theme.viewport = new function() {
 
 			// get text block
 			textblock = $('#textblock-' + text_sig);
-			//console.log(text_sig);
 
 			// if encouraging reading and closing
 			if ( cp_promote_reading == '1' && !opening ) {
@@ -1845,7 +1869,6 @@ CommentPress.theme.viewport = new function() {
 			// if closing with no comment list
 			if ( !opening && !comment_list[0] ) {
 
-				//console.log( 'none + closing' );
 				para_wrapper.css( 'display', 'none' );
 				opening = true;
 

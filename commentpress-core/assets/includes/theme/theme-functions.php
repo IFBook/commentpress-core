@@ -2234,7 +2234,7 @@ function commentpress_comment_form_title(
 	$reply_to_para_id = isset( $_GET['replytopara'] ) ? (int) $_GET['replytopara'] : 0;
 
 	// if we have no comment ID AND no paragraph ID to reply to
-	if ( $reply_to_comment_id == 0 AND $reply_to_para_id == 0 ) {
+	if ( $reply_to_comment_id == 0 AND $reply_to_para_id === 0 ) {
 
 		// write default title to page
 		echo $no_reply_text;
@@ -2242,7 +2242,7 @@ function commentpress_comment_form_title(
 	} else {
 
 		// if we have a comment ID AND NO paragraph ID to reply to
-		if ( $reply_to_comment_id != 0 AND $reply_to_para_id == 0 ) {
+		if ( $reply_to_comment_id !== 0 AND $reply_to_para_id === 0 ) {
 
 			// get comment
 			$comment = get_comment( $reply_to_comment_id );

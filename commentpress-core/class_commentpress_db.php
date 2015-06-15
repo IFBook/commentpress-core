@@ -2610,10 +2610,16 @@ class CommentpressCoreDatabase {
 			// comments must be closed
 			$vars['cp_comments_open'] = 'n';
 
+			// set empty permalink
+			$vars['cp_permalink'] = '';
+
 		} else {
 
 			// check for post comment_status
 			$vars['cp_comments_open'] = ( $post->comment_status == 'open' ) ? 'y' : 'n';
+
+			// set post permalink
+			$vars['cp_permalink'] = get_permalink( $post->ID );
 
 		}
 
@@ -2836,12 +2842,6 @@ class CommentpressCoreDatabase {
 		// add page
 		global $page;
 		$vars['cp_multipage_page'] = ( ! empty( $page ) ) ? $page : 0;
-
-		// add path to template directory
-		$vars['cp_template_dir'] = get_template_directory_uri();
-
-		// add path to plugin directory
-		$vars['cp_plugin_dir'] = WP_PLUGIN_URL . '/' . str_replace(basename( __FILE__),"",plugin_basename(__FILE__));
 
 		// are chapters pages?
 		$vars['cp_toc_chapter_is_page'] = $this->option_get( 'cp_toc_chapter_is_page' );
