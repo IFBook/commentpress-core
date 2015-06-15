@@ -1393,6 +1393,12 @@ We could position so that there's a bigger touch area:
 	color: #ca0000;
 }
 
+/* comment form not shown message */
+.commentpress_comment_form_hidden a
+{
+	text-decoration: none;
+}
+
 /* compatibility with Subscribe to Comments Reloaded */
 div#respond .subscribe_reloaded_insert
 {

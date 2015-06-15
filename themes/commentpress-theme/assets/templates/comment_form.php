@@ -1,6 +1,6 @@
 <?php /*
 ================================================================================
-CommentPress Theme Comment Form
+CommentPress Default Theme Comment Form
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
@@ -27,13 +27,18 @@ global $post;
 $user = wp_get_current_user();
 $user_identity = $user->exists() ? $user->display_name : '';
 
+
+
+// allow plugins to override showing the comment form
+$show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
+
 ?>
 
 
 
 <!-- comment_form.php -->
 
-<?php if ('open' == $post->comment_status) : ?>
+<?php if ( 'open' == $post->comment_status ) : ?>
 
 
 
@@ -71,10 +76,7 @@ $user_identity = $user->exists() ? $user->display_name : '';
 
 	<?php
 
-	// allow plugins to override showing the comment form
-	$show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
-
-	// how did we do?
+	// are we showing the comment form?
 	if ( $show_comment_form ) {
 
 		// get required status
@@ -171,7 +173,23 @@ $user_identity = $user->exists() ? $user->display_name : '';
 
 		<?php
 
-	} // end check for plugin overrides
+	} else { // end check for plugin overrides
+
+		?>
+
+		<p class="commentpress_comment_form_hidden"><?php
+			echo apply_filters(
+				'commentpress_comment_form_hidden',
+				sprintf(
+					__( 'You must be <a href="%s">logged in</a> to post a comment.', 'commentpress-core' ),
+					get_option('siteurl') . '/wp-login.php?redirect_to=' . urlencode( get_permalink() )
+				)
+			);
+		?></p>
+
+		<?php
+
+	}
 
 	?>
 

@@ -1923,6 +1923,15 @@ body.cp_sidebar_comments #comments_sidebar
 		margin: 0 0 5px 0;
 	}
 
+	/* comment form not shown message */
+	.commentpress_comment_form_hidden a
+	{
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		text-decoration: none;
+		text-transform: uppercase;
+		color: #761D19;
+}
+
 
 
 
