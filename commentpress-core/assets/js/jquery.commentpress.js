@@ -431,6 +431,25 @@ CommentPress.settings.textblock = new function() {
 		return this.scroll_target;
 	};
 
+
+
+	// init textblock "permalink shown in location bar" flag
+	this.permalink_shown = false;
+
+	/**
+	 * Setter for textblock "permalink shown in location bar" flag
+	 */
+	this.set_permalink_shown = function( permalink_shown ) {
+		this.permalink_shown = permalink_shown;
+	};
+
+	/**
+	 * Getter for textblock "permalink shown in location bar" flag
+	 */
+	this.get_permalink_shown = function() {
+		return this.permalink_shown;
+	};
+
 }; // end CommentPress textblock class
 
 
@@ -716,6 +735,9 @@ CommentPress.common.content = new function() {
 		// textblock paragraph markers
 		me.para_markers();
 
+		// show textblock permalink in location bar
+		me.textblock_permalink_show();
+
 		// textblock comment icons
 		me.comment_icons();
 
@@ -904,7 +926,131 @@ CommentPress.common.content = new function() {
 
 
 	/**
-	 * Set up clicks on comment icons attached to comment-blocks in post/page
+	 * Show the paragraph permalink in the browser's location bar.
+	 *
+	 * @return void
+	 */
+	this.textblock_permalink_show = function() {
+
+    	/**
+		 * Copy icon tooltip
+		 *
+		 * @return void
+		 */
+		$('.textblock_permalink').tooltip({
+
+			// positional behaviour
+			position: {
+
+				// basics
+				my: "left-30 bottom-20",
+				at: "left top",
+
+				// configure arrow
+				using: function( position, feedback ) {
+					$(this).css( position );
+					$('<div>')
+					.addClass( "arrow" )
+					.addClass( feedback.vertical )
+					.addClass( feedback.horizontal )
+					.appendTo( this );
+				}
+
+			}
+		});
+
+    	/**
+		 * Click on paragraph permalink to reveal it in the location bar
+		 *
+		 * @return void
+		 */
+		$('#wrapper').on( 'click', '.textblock_permalink', function( event ) {
+
+			// define vars
+			var url;
+
+			// get selection
+			url = $(this).attr( 'href' );
+
+			// did we get one?
+			if ( url ) {
+
+				// replace window state with para permalink
+				CommentPress.common.DOM.location_set( url );
+
+				// set flag
+				CommentPress.settings.textblock.set_permalink_shown( true );
+
+				// attach a reset handler to the document body
+				$(document).bind( 'click', me.textblock_permalink_handler );
+
+			}
+
+		});
+
+		/**
+		 * Hook into CommentPress clicks on items whose events do not bubble.
+		 *
+		 * We need to receive callbacks from these clicks to clear the location bar
+		 *
+		 * @param object event The event (unused)
+		 * @return void
+		 */
+		$(document).on(
+			'commentpress-textblock-click ' +
+			'commentpress-comment-block-permalink-clicked ' +
+			'commentpress-commenticonbox-clicked ' +
+			'commentpress-link-in-textblock-clicked',
+			function( event ) {
+
+				// test flag
+				if ( CommentPress.settings.textblock.get_permalink_shown() ) {
+
+					// unbind document click handler
+					$(document).unbind( 'click', me.textblock_permalink_handler );
+
+					// set flag
+					CommentPress.settings.textblock.set_permalink_shown( false );
+
+					// replace window state with original
+					CommentPress.common.DOM.location_reset();
+
+				}
+
+			} // end function
+		);
+
+	};
+
+
+
+	/**
+	 * Reset the URL to the page permalink
+	 *
+	 * @return void
+	 */
+	this.textblock_permalink_handler = function( event ) {
+
+		// if the event target is not a para permalink
+		if ( !$(event.target).closest( '.textblock_permalink' ).length ) {
+
+			// unbind document click handler
+			$(document).unbind( 'click', me.textblock_permalink_handler );
+
+			// set flag
+			CommentPress.settings.textblock.set_permalink_shown( false );
+
+			// replace window state with original
+			CommentPress.common.DOM.location_reset();
+
+		}
+
+	};
+
+
+
+	/**
+	 * Set up clicks on comment icons attached to textblocks in post/page
 	 *
 	 * @return void
 	 */
@@ -1438,8 +1584,8 @@ CommentPress.common.comments = new function() {
 		// comment permalinks
 		me.comment_permalinks();
 
-		// comment permalink copy links
-		me.comment_permalink_copy_links();
+		// show comment permalink in location bar
+		me.comment_permalink_show();
 
 		// comment rollovers (disabled because only the modern theme uses this)
 		//me.comment_rollovers();
@@ -1817,15 +1963,11 @@ CommentPress.common.comments = new function() {
 
 
 	/**
-	 * Set up actions on the "Link" icons to the left of a comment permalink
-	 *
-	 * At present, these trigger a Javascript dialog, populated with the comment
-	 * permalink for people to copy. Migrate this to showing the permalink in
-	 * the browser's location bar.
+	 * Show the comment permalink in the browser's location bar.
 	 *
 	 * @return void
 	 */
-	this.comment_permalink_copy_links = function() {
+	this.comment_permalink_show = function() {
 
     	/**
 		 * Copy icon tooltip
@@ -2748,6 +2890,8 @@ CommentPress.common.viewport = new function() {
 CommentPress.settings.DOM.init();
 CommentPress.settings.page.init();
 CommentPress.settings.textblock.init();
+
+CommentPress.common.DOM.init();
 CommentPress.common.navigation.init();
 CommentPress.common.content.init();
 CommentPress.common.comments.init();
@@ -2770,6 +2914,8 @@ jQuery(document).ready(function($) {
 	CommentPress.settings.DOM.dom_ready();
 	CommentPress.settings.page.dom_ready();
 	CommentPress.settings.textblock.dom_ready();
+
+	CommentPress.common.DOM.dom_ready();
 	CommentPress.common.navigation.dom_ready();
 	CommentPress.common.content.dom_ready();
 	CommentPress.common.comments.dom_ready();
