@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
 Requires at least: 3.4
 Tested up to: 4.2
-Stable tag: 3.7
+Stable tag: 3.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,13 +14,13 @@ CommentPress Core allows fine-grained commenting in the margins of a text. Use i
 
 == Description ==
 
-CommentPress Core is an open source theme and plugin for WordPress that allows readers to comment paragraph-by-paragraph, line-by-line or block-by-block in the margins of a text.
+CommentPress Core is an open source theme and plugin for WordPress that allows readers to comment in the margins of a text. Readers may comment paragraph-by-paragraph, line-by-line, block-by-block or by selecting text.
 
 Annotate, gloss, workshop, debate: with CommentPress Core you can do all of these things on a finer-grained level, turning a document into a conversation. It can be applied to a fixed document (paper/essay/book etc.) or to a running blog. Use it in combination with BuddyPress and Groupblogs to create communities around your documents.
 
 **The name has been changed from "CommentPress" to "CommentPress Core" for two reasons:** (a) because it serves as the basis for extending it for your purposes and (b) to safeguard historical installations, which could break if they upgrade. Newer "CommentPress" installations (versions 3.0.x - 3.3.x) can upgrade to the current version.
 
-**Please note:** this plugin comes bundled with two official themes. The new "CommentPress Modern Theme" will be auto-activated when the plugin is first activated. The old "CommentPress Default Theme" is still included for those who wish to stay with it or have built their own child themes for it. If you are upgrading from a previous version of *CommentPress* (3.0.x - 3.3.x), please follow the instructions in the Installation section before doing so.
+**Please note:** this plugin comes bundled with two official themes, one of which must be active for CommentPress Core to function. The new "CommentPress Modern Theme" will be auto-activated when the plugin is first activated. The old "CommentPress Default Theme" is still included for those who wish to stay with it or have built their own child themes for it. If you are upgrading from a previous version of CommentPress (3.0.x - 3.3.x), please follow the instructions in the Installation section before doing so.
 
 For further information and instructions please see the [CommentPress site](http://www.futureofthebook.org/commentpress/) or contact the developers by email at [cpdev@futureofthebook.org](mailto:cpdev@futureofthebook.org)
 
@@ -220,6 +220,10 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+
+<h4>3.8</h4>
+
+* New feature! Comment on text selections within paragraphs.
 
 <h4>3.7</h4>
 

@@ -1,1 +1,2555 @@
-if("undefined"!==typeof CommentpressSettings){var cp_wp_adminbar,cp_wp_adminbar_height,cp_wp_adminbar_expanded,cp_bp_adminbar,cp_comments_open,cp_special_page,cp_tinymce,cp_tinymce_version,cp_promote_reading,cp_is_mobile,cp_is_touch,cp_is_tablet,cp_cookie_path,cp_multipage_page,cp_template_dir,cp_plugin_dir,cp_toc_chapter_is_page,cp_show_subpages,cp_default_sidebar,cp_is_signup_page,cp_scroll_speed,cp_min_page_width;cp_wp_adminbar=CommentpressSettings.cp_wp_adminbar;cp_wp_adminbar_height=parseInt(CommentpressSettings.cp_wp_adminbar_height);cp_wp_adminbar_expanded=parseInt(CommentpressSettings.cp_wp_adminbar_expanded);cp_bp_adminbar=CommentpressSettings.cp_bp_adminbar;cp_comments_open=CommentpressSettings.cp_comments_open;cp_special_page=CommentpressSettings.cp_special_page;cp_tinymce=CommentpressSettings.cp_tinymce;cp_tinymce_version=CommentpressSettings.cp_tinymce_version;cp_promote_reading=CommentpressSettings.cp_promote_reading;cp_is_mobile=CommentpressSettings.cp_is_mobile;cp_is_touch=CommentpressSettings.cp_is_touch;cp_is_tablet=CommentpressSettings.cp_is_tablet;cp_cookie_path=CommentpressSettings.cp_cookie_path;cp_multipage_page=CommentpressSettings.cp_multipage_page;cp_template_dir=CommentpressSettings.cp_template_dir;cp_plugin_dir=CommentpressSettings.cp_plugin_dir;cp_toc_chapter_is_page=CommentpressSettings.cp_toc_chapter_is_page;cp_show_subpages=CommentpressSettings.cp_show_subpages;cp_default_sidebar=CommentpressSettings.cp_default_sidebar;cp_is_signup_page=CommentpressSettings.cp_is_signup_page;cp_scroll_speed=CommentpressSettings.cp_js_scroll_speed;cp_min_page_width=CommentpressSettings.cp_min_page_width}var msie6,cp_book_header_height,cp_header_animating,cp_toc_on_top,page_highlight,cp_header_minimised,cp_sidebar_minimised,cp_container_top_max,cp_container_top_min;msie6=false;if("undefined"!==typeof cp_msie6){msie6=true}cp_header_animating=false;cp_toc_on_top="n";page_highlight=false;cp_header_minimised=jQuery.cookie("cp_header_minimised");if(cp_header_minimised===undefined||cp_header_minimised===null){cp_header_minimised="n"}cp_sidebar_minimised=jQuery.cookie("cp_sidebar_minimised");if(cp_sidebar_minimised===undefined||cp_sidebar_minimised===null){cp_sidebar_minimised="n"}cp_container_top_max=jQuery.cookie("cp_container_top_max");if(cp_container_top_max===undefined||cp_container_top_max===null){cp_container_top_max=108}cp_container_top_min=jQuery.cookie("cp_container_top_min");if(cp_container_top_min===undefined||cp_container_top_min===null){cp_container_top_min=108}if(cp_bp_adminbar=="y"){cp_wp_adminbar_height=25;cp_wp_adminbar="y"}if(cp_wp_adminbar=="y"){cp_container_top_max=parseInt(cp_container_top_max)+cp_wp_adminbar_height;cp_container_top_min=parseInt(cp_container_top_min)+cp_wp_adminbar_height}function cp_page_setup(){var b,c,d,a;b="";if(document.getElementById){b+='<style type="text/css" media="screen">';b+="ul.all_comments_listing div.item_body { display: none; } ";if(cp_wp_adminbar=="y"){b+="#header { top: "+cp_wp_adminbar_height+"px; } ";b+="#book_header { top: "+(cp_wp_adminbar_height+32)+"px; } ";if(cp_wp_adminbar_height=="32"){b+="@media screen and ( max-width: 782px ) { #header { top: "+cp_wp_adminbar_expanded+"px; }#book_header { top: "+(cp_wp_adminbar_expanded+32)+"px; } } "}}if(cp_show_subpages=="0"){b+="#toc_sidebar .sidebar_contents_wrapper ul li ul { display: none; } "}if(cp_header_minimised===undefined||cp_header_minimised===null||cp_header_minimised=="n"){c=cp_container_top_max;if(cp_wp_adminbar=="y"){c=cp_container_top_max-cp_wp_adminbar_height}b+="#container { top: "+c+"px; } ";b+="#sidebar { top: "+cp_container_top_max+"px; } ";if(cp_wp_adminbar=="y"){if(cp_wp_adminbar_height=="32"){b+="@media screen and ( max-width: 782px ) { #sidebar { top: "+(c+cp_wp_adminbar_expanded)+"px; } } "}}}else{b+="#book_header { display: none; } ";c=cp_container_top_min;if(cp_wp_adminbar=="y"){c=cp_container_top_min-cp_wp_adminbar_height}b+="#container { top: "+c+"px; } ";b+="#sidebar { top: "+cp_container_top_min+"px; } ";if(cp_wp_adminbar=="y"){if(cp_wp_adminbar_height=="32"){b+="@media screen and ( max-width: 782px ) { #sidebar { top: "+(c+cp_wp_adminbar_expanded)+"px; } } "}}}if(cp_special_page=="0"){b+=".paragraph_wrapper { display: none; } ";b+="#respond { display: none; } ";if(cp_sidebar_minimised=="y"){b+="#comments_sidebar .sidebar_contents_wrapper { display: none; } "}}b+="#activity_sidebar .paragraph_wrapper { display: none; } ";if(jQuery.cookie("cp_container_width")){d=jQuery.cookie("cp_container_width");if(cp_is_signup_page=="1"){b+="#content { width: "+d+"%; } "}else{b+="#page_wrapper { width: "+d+"%; } "}b+="#footer { width: "+d+"%; } "}if(jQuery.cookie("cp_book_nav_width")){a=jQuery.cookie("cp_book_nav_width");b+="#book_nav div#cp_book_nav { width: "+a+"%; } "}if(jQuery.cookie("cp_sidebar_width")){b+="#sidebar { width: "+jQuery.cookie("cp_sidebar_width")+"%; } "}if(jQuery.cookie("cp_sidebar_left")){b+="#sidebar { left: "+jQuery.cookie("cp_sidebar_left")+"%; } "}b+="ul#sidebar_tabs, #toc_header.sidebar_header, body.blog_post #activity_header.sidebar_header { display: block; } ";if(cp_is_mobile=="1"&&cp_is_tablet=="0"){b+=".sidebar_contents_wrapper { height: auto; } "}b+="</style>"}document.write(b)}cp_page_setup();function commentpress_setup_page_layout(){var a;if(cp_is_signup_page=="1"){a=jQuery("#content")}else{a=jQuery("#page_wrapper")}a.each(function(f){var l,j,b,o,k,c,h,e,n,p,d,g,m;l=jQuery(this);j=jQuery("#content");b=jQuery("#sidebar");o=jQuery("#footer");k=jQuery("#book_header");c=jQuery("#book_nav_wrapper");h=jQuery("#cp_book_nav");e=jQuery("#cp_book_info");n=l.width();p=b.width();m=b.offset().left-n;l.resizable({handles:"e",minWidth:cp_min_page_width,alsoResize:"#footer",start:function(i,q){n=l.width();p=b.width();d=h.width();g=b.css("left");m=b.offset().left-n},resize:function(i,q){var r;l.css("height","auto");o.css("height","auto");b.css("left",(l.width()+m)+"px");r=n-l.width();b.css("width",(p+r)+"px");h.css("width",(d-r)+"px")},stop:function(i,w){var v,q,t,r,x,s,u;v=parseFloat(jQuery(window).width());q=l.width();if(jQuery.browser.webkit){q=q+1}t=parseFloat(Math.ceil((1000000*parseFloat(q)/v))/10000);l.css("width",t+"%");if(cp_is_signup_page=="0"){j.css("width","auto")}q=h.width();if(jQuery.browser.webkit){q=q+1}r=parseFloat(Math.ceil((1000000*parseFloat(q)/v))/10000);h.css("width",r+"%");q=b.width();if(jQuery.browser.webkit){q=q+1}x=parseFloat(Math.ceil((1000000*parseFloat(q)/v))/10000);b.css("width",x+"%");s=b.position().left;if(jQuery.browser.webkit){s=s+1}u=parseFloat(Math.ceil((1000000*parseFloat(s)/v))/10000);b.css("left",u+"%");jQuery.cookie("cp_container_width",t.toString(),{expires:28,path:cp_cookie_path});jQuery.cookie("cp_book_nav_width",r.toString(),{expires:28,path:cp_cookie_path});jQuery.cookie("cp_sidebar_left",u.toString(),{expires:28,path:cp_cookie_path});jQuery.cookie("cp_sidebar_width",x.toString(),{expires:28,path:cp_cookie_path})}})})}function commentpress_get_header_offset(){var a;a=0-(jQuery.px_to_num(jQuery("#container").css("top")));if(cp_wp_adminbar=="y"){a-=cp_wp_adminbar_height}return a}function commentpress_scroll_page(a){if(msie6){jQuery(window).scrollTo(0,0);jQuery("#main_wrapper").scrollTo(a,{duration:(cp_scroll_speed*1.5),axis:"y",offset:commentpress_get_header_offset()},function(){jQuery(window).scrollTo(0,1)})}else{if(cp_is_mobile=="0"||cp_is_tablet=="1"){jQuery.scrollTo(a,{duration:(cp_scroll_speed*1.5),axis:"y",offset:commentpress_get_header_offset()})}}}function cp_quick_scroll_page(b,a){if(msie6){jQuery(window).scrollTo(0,0);jQuery("#main_wrapper").scrollTo(b,{duration:(a*1.5),axis:"y",offset:commentpress_get_header_offset()},function(){jQuery(window).scrollTo(0,1)})}else{if(cp_is_mobile=="0"||cp_is_tablet=="1"){jQuery.scrollTo(b,{duration:(a*1.5),axis:"y",offset:commentpress_get_header_offset()})}}}function commentpress_scroll_to_top(b,a){if(msie6){jQuery("#main_wrapper").scrollTo(b,{duration:a})}else{if(cp_is_mobile=="0"||cp_is_tablet=="1"){jQuery.scrollTo(b,a)}}}function cp_flash_comment_header(a){a.addClass("notransition");if(a.hasClass("comment-fade")){a.removeClass("comment-fade")}if(a.hasClass("comment-highlighted")){a.removeClass("comment-highlighted")}a.addClass("comment-highlighted");a.removeClass("notransition");a.height();a.addClass("comment-fade")}function cp_scroll_comments(c,b,a){switch(arguments.length){case 2:a="noflash";break;case 3:break;default:throw new Error("illegal argument count")}if(cp_is_mobile=="0"||cp_is_tablet=="1"){if(a=="flash"){jQuery("#comments_sidebar .sidebar_contents_wrapper").scrollTo(c,{duration:b,axis:"y",onAfter:function(){cp_flash_comment_header(c)}})}else{jQuery("#comments_sidebar .sidebar_contents_wrapper").scrollTo(c,{duration:b})}}}function commentpress_setup_comment_headers(){if(cp_special_page=="1"){return}jQuery("a.comment_block_permalink").unbind("click");jQuery("a.comment_block_permalink").css("cursor","pointer");jQuery("a.comment_block_permalink").click(function(d){var k,i,b,f,g,c,h,a,j,e;d.preventDefault();k=jQuery(this).parent().prop("id").split("para_heading-")[1];i=jQuery(this).parent().next("div.paragraph_wrapper");b=jQuery("#para_wrapper-"+k).find("ol.commentlist");f=false;g=i.css("display");if(g=="none"){f=true}if("undefined"!==typeof k){if(k!==""&&k!="pingbacksandtrackbacks"){c=jQuery("#textblock-"+k);if(f){jQuery.unhighlight_para();jQuery.highlight_para(c);commentpress_scroll_page(c)}else{if(cp_promote_reading=="0"){if(jQuery("#para_wrapper-"+k).find("#respond")[0]){jQuery.unhighlight_para()}else{if(!b[0]){jQuery.unhighlight_para();jQuery.highlight_para(c);commentpress_scroll_page(c)}}}else{if(jQuery.is_highlighted(c)){jQuery.unhighlight_para()}}}}else{jQuery.unhighlight_para();if(k!="pingbacksandtrackbacks"){commentpress_scroll_to_top(0,cp_scroll_speed);page_highlight=!page_highlight}}}if(cp_promote_reading=="0"&&k!="pingbacksandtrackbacks"){if(cp_comments_open=="y"){h=jQuery("#comment_post_ID").prop("value");a=jQuery("#para_wrapper-"+k+" .reply_to_para").prop("id");j=a.split("-")[1];e=jQuery("#para_wrapper-"+k).find("#respond")[0];if(b.length>0&&b[0]){if(!f&&!e){}else{addComment.moveFormToPara(j,k,h)}}else{if(!e){i.css("display","none");f=true}addComment.moveFormToPara(j,k,h)}}}i.slideToggle("slow",function(){if(f){cp_scroll_comments(jQuery("#para_heading-"+k),cp_scroll_speed)}});return false})}function cp_get_text_sig_by_comment_id(e){var c,a,b,d;b="";if(e.match("#comment-")){c=parseInt(e.split("#comment-")[1])}a=jQuery("#comment-"+c).parents("div.paragraph_wrapper").map(function(){return this});if(a.length>0){d=jQuery(a[0]);b=d.prop("id").split("-")[1]}return b}function commentpress_scroll_page_to_textblock(a){var b;if(a!==""){b=jQuery("#textblock-"+a);jQuery.highlight_para(b);commentpress_scroll_page(b)}else{if(page_highlight===false){commentpress_scroll_to_top(0,cp_scroll_speed)}page_highlight=!page_highlight}}function commentpress_enable_comment_permalink_clicks(){jQuery("a.comment_permalink").unbind("click");jQuery("a.comment_permalink").click(function(d){var c,a,b;d.preventDefault();c=this.href.split("#")[1];if(cp_special_page=="1"){a=commentpress_get_header_offset();jQuery.scrollTo(jQuery("#"+c),{duration:cp_scroll_speed,axis:"y",offset:a})}else{jQuery.unhighlight_para();b=cp_get_text_sig_by_comment_id("#"+c);if(b!="pingbacksandtrackbacks"){commentpress_scroll_page_to_textblock(b)}cp_scroll_comments(jQuery("#"+c),cp_scroll_speed)}return false})}function commentpress_setup_context_headers(){jQuery("h3.activity_heading").unbind("click");jQuery("h3.activity_heading").css("cursor","pointer");jQuery("h3.activity_heading").click(function(b){var a;b.preventDefault();a=jQuery(this).next("div.paragraph_wrapper");a.css("width",jQuery(this).parent().css("width"));a.slideToggle("slow",function(){a.css("width","auto")});return false})}function cp_enable_context_clicks(){if(cp_special_page=="1"){return}jQuery("a.comment_on_post").unbind("click");jQuery("a.comment_on_post").click(function(f){var d,g,a,e,b,c;f.preventDefault();cp_activate_sidebar("comments");d=this.href.split("#")[1];g=jQuery("#"+d);a=g.parents("div.paragraph_wrapper").map(function(){return this});if(a.length>0){e=jQuery(a[0]);e.show();if(cp_special_page=="1"){b=commentpress_get_header_offset();jQuery.scrollTo(g,{duration:cp_scroll_speed,axis:"y",offset:b})}else{jQuery.unhighlight_para();c=e.prop("id").split("-")[1];commentpress_scroll_page_to_textblock(c);jQuery("#comments_sidebar .sidebar_contents_wrapper").scrollTo(g,{duration:cp_scroll_speed,axis:"y",onAfter:function(){cp_flash_comment_header(g)}})}}return false})}function cp_scroll_to_anchor_on_load(){var j,d,e,i,k,a,h,f,c,b,g;j="";d=document.location.toString();if(d.match("#comment-")){cp_activate_sidebar("comments");e=d.split("#comment-")[1];i=jQuery("#comment-"+e).parents("div.paragraph_wrapper").map(function(){return this});if(i.length>0){k=jQuery(i[0]);if(cp_comments_open=="y"){j=k.prop("id").split("-")[1];a=jQuery("#para_wrapper-"+j+" .reply_to_para").prop("id");h=a.split("-")[1];f=jQuery("#comment_post_ID").prop("value");if(cp_tinymce=="1"){if(jQuery("#comment-"+e+" > .reply").text()!==""){cp_tinymce="0";addComment.moveForm("comment-"+e,e,"respond",f,j);cp_tinymce="1"}}else{addComment.moveForm("comment-"+e,e,"respond",f,j)}}k.show();cp_scroll_comments(jQuery("#comment-"+e),0,"flash");if(j!==""){c=jQuery("#textblock-"+j);jQuery.highlight_para(c);commentpress_scroll_page(c)}else{if(page_highlight===false){commentpress_scroll_to_top(0,cp_scroll_speed)}page_highlight=!page_highlight}return}}else{jQuery("span.para_marker > a").each(function(o){var p,m,l,n,q;p=jQuery(this).prop("id");if(d.match("#"+p)||d.match("#para_heading-"+p)){if(cp_comments_open=="y"){m=jQuery("#para_wrapper-"+p+" .reply_to_para").prop("id");l=m.split("-")[1];n=jQuery("#comment_post_ID").prop("value");addComment.moveFormToPara(l,p,n)}jQuery("#para_heading-"+p).next("div.paragraph_wrapper").show();cp_scroll_comments(jQuery("#para_heading-"+p),1);q=jQuery("#textblock-"+p);jQuery.highlight_para(q);commentpress_scroll_page(q);return}})}if(d.match("#respond")){jQuery("h3#para_heading- a.comment_block_permalink").click();return}if(d.match("#")){b=d.split("#")[1];g=jQuery("#"+b);if(g){g.addClass("selected_para");commentpress_scroll_page(g)}return}}function cp_scroll_to_comment_on_load(){var a,b,c;a=document.location.toString();if(a.match("#comment-")){b=a.split("#comment-")[1];c=jQuery("#comment-"+b);if(c){if(msie6){jQuery("#main_wrapper").scrollTo(c,{duration:cp_scroll_speed,axis:"y",offset:commentpress_get_header_offset()})}else{if(cp_is_mobile=="0"||cp_is_tablet=="1"){jQuery.scrollTo(c,{duration:cp_scroll_speed,axis:"y",offset:commentpress_get_header_offset()})}}}}}function cp_do_comment_icon_action(l,i){cp_activate_sidebar("comments");var j,b,d,h,e,g,c,f,a,k;j=jQuery("#para_heading-"+l).next("div.paragraph_wrapper");b=jQuery("#para_wrapper-"+l+" .commentlist");d=j.find("#respond");h=addComment.getLevel();e=false;g=j.css("display");if(g=="none"){e=true}jQuery.unhighlight_para();if(l!==""){c=jQuery("#textblock-"+l);if(cp_promote_reading=="1"&&!e){}else{jQuery.highlight_para(c);commentpress_scroll_page(c)}}if(cp_promote_reading=="0"){if(cp_comments_open=="y"){f=jQuery("#comment_post_ID").prop("value");a=jQuery("#para_wrapper-"+l+" .reply_to_para").prop("id");k=a.split("-")[1]}if(!d[0]){if(cp_comments_open=="y"){addComment.moveFormToPara(k,l,f)}}if(d[0]&&!h){if(cp_comments_open=="y"){addComment.moveFormToPara(k,l,f);if(i=="marker"){cp_scroll_comments(jQuery("#para_heading-"+l),cp_scroll_speed)}else{cp_scroll_comments(jQuery("#respond"),cp_scroll_speed)}}else{cp_scroll_comments(jQuery("#para_heading-"+l),cp_scroll_speed)}return}if(!d[0]&&b[0]&&!e){if(cp_comments_open=="y"){if(i=="marker"){cp_scroll_comments(jQuery("#para_heading-"+l),cp_scroll_speed)}else{cp_scroll_comments(jQuery("#respond"),cp_scroll_speed)}}else{cp_scroll_comments(jQuery("#para_heading-"+l),cp_scroll_speed)}return}if(!e&&b[0]){if(cp_comments_open=="y"){if(i=="marker"){cp_scroll_comments(jQuery("#para_heading-"+l),cp_scroll_speed)}else{cp_scroll_comments(jQuery("#respond"),cp_scroll_speed)}}else{cp_scroll_comments(jQuery("#para_heading-"+l),cp_scroll_speed)}return}if(d[0]&&!b[0]&&!e){if(cp_comments_open=="y"){if(i=="marker"){cp_scroll_comments(jQuery("#para_heading-"+l),cp_scroll_speed)}else{cp_scroll_comments(jQuery("#respond"),cp_scroll_speed)}}else{cp_scroll_comments(jQuery("#para_heading-"+l),cp_scroll_speed)}return}if(!e&&!b[0]){j.css("display","none");e=true}}j.slideToggle("slow",function(){if(cp_promote_reading=="1"&&e){cp_scroll_comments(jQuery("#para_heading-"+l),cp_scroll_speed)}else{if(e){if(cp_comments_open=="y"){if(i=="marker"){cp_scroll_comments(jQuery("#para_heading-"+l),cp_scroll_speed)}else{cp_scroll_comments(jQuery("#respond"),cp_scroll_speed)}}else{cp_scroll_comments(jQuery("#para_heading-"+l),cp_scroll_speed)}}}})}function commentpress_setup_para_permalink_icons(){jQuery("a.para_permalink").unbind("click");jQuery("a.para_permalink").click(function(b){var a;b.preventDefault();a=jQuery(this).prop("href").split("#")[1];cp_do_comment_icon_action(a,"auto");return false});jQuery("a.para_permalink").unbind("mouseenter");jQuery("a.para_permalink").unbind("mouseleave");jQuery("a.para_permalink").mouseenter(function(b){var a;a=jQuery(this).prop("href").split("#")[1];jQuery("span.para_marker a#"+a).addClass("js-hover")});jQuery("a.para_permalink").mouseleave(function(b){var a;a=jQuery(this).prop("href").split("#")[1];jQuery("span.para_marker a#"+a).removeClass("js-hover")})}function commentpress_setup_page_click_actions(){jQuery(".post_title a").unbind("click");jQuery(".post_title a").click(function(b){b.preventDefault();var a="";cp_do_comment_icon_action(a,"marker");return false});jQuery(".textblock").unbind("click");jQuery(".textblock").click(function(b){var a;a=jQuery(this).prop("id");a=a.split("textblock-")[1];cp_do_comment_icon_action(a,"marker")});jQuery("span.para_marker a").unbind("click");jQuery("span.para_marker a").click(function(b){b.preventDefault();var a;a=jQuery(this).prop("href").split("#")[1];cp_do_comment_icon_action(a,"marker");return false});jQuery("span.para_marker a").unbind("mouseenter");jQuery("span.para_marker a").unbind("mouseleave");jQuery("span.para_marker a").mouseenter(function(a){var b;b=jQuery(this).parent().next().children(".comment_count");b.addClass("js-hover")});jQuery("span.para_marker a").mouseleave(function(a){var b;b=jQuery(this).parent().next().children(".comment_count");b.removeClass("js-hover")});jQuery(".comment_permalink_copy").unbind("mouseup");jQuery(".comment_permalink_copy").mouseup(function(b){var a;a=jQuery(this).parent().attr("href");console.log(a);if(a){window.prompt("Copy this link",a)}})}function commentpress_setup_para_links(){jQuery("a.cp_para_link").unbind("click");jQuery("a.cp_para_link").click(function(b){var a;b.preventDefault();a=jQuery(this).prop("href").split("#")[1];cp_do_comment_icon_action(a,"auto");return false})}function commentpress_setup_footnotes_compatibility(){jQuery("span.footnotereverse a, a.footnote-back-link").unbind("click");jQuery("span.footnotereverse a, a.footnote-back-link").click(function(a){var b;a.preventDefault();b=jQuery(this).prop("href").split("#")[1];cp_quick_scroll_page("#"+b,100);return false});jQuery(".simple-footnotes ol li > a").unbind("click");jQuery(".simple-footnotes ol li > a").click(function(a){var b;b=jQuery(this).prop("href");if(b.match("#return-note-")){a.preventDefault();b=b.split("#")[1];cp_quick_scroll_page("#"+b,100);return false}});jQuery("a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link, a.zp-ZotpressInText").unbind("click");jQuery("a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link, a.zp-ZotpressInText").click(function(a){var b;a.preventDefault();b=jQuery(this).prop("href").split("#")[1];cp_quick_scroll_page("#"+b,100);return false})}function cp_activate_sidebar(d){var b,c,a;b=jQuery("#"+d+"_sidebar").css("z-index");if(b=="2001"){jQuery(".sidebar_container").css("z-index","2001");jQuery("#"+d+"_sidebar").css("z-index","2010");c=cp_get_sidebar_top();a=cp_get_sidebar_top_border();jQuery(".sidebar_header").css("height",(c-a)+"px");jQuery("#"+d+"_header.sidebar_header").css("height",c+"px");cp_toc_on_top="y"}if(cp_is_mobile=="0"||cp_is_tablet=="1"){jQuery.set_sidebar_height()}else{jQuery(".sidebar_container").css("visibility","hidden");jQuery("#"+d+"_sidebar").css("visibility","visible")}}function cp_get_sidebar_top(){return jQuery.px_to_num(jQuery("#toc_sidebar").css("top"))}function cp_get_sidebar_top_border(){return jQuery.px_to_num(jQuery(".sidebar_minimiser").css("borderTopWidth"))}function cp_open_header(){var b,a,d,f,c,g,e;b=jQuery("#book_nav").height();a=jQuery("#sidebar");d=jQuery.get_sidebar_pane();f=jQuery("#book_header");c=jQuery("#container");g=cp_container_top_max;if(cp_wp_adminbar=="y"){g=cp_container_top_max-cp_wp_adminbar_height}c.animate({top:g+"px",duration:"fast"},function(){f.fadeIn("fast",function(){cp_header_animating=false})});if(cp_sidebar_minimised=="n"){e=a.height()-cp_book_header_height;a.animate({top:cp_container_top_max+"px",height:e+"px",duration:"fast"},function(){a.css("height","auto")});d.animate({height:(d.height()-cp_book_header_height)+"px",duration:"fast"},function(){if(cp_is_mobile=="0"||cp_is_tablet=="1"){jQuery.set_sidebar_height()}cp_header_animating=false})}else{a.animate({top:cp_container_top_max+"px",duration:"fast"},function(){cp_header_animating=false;if(cp_is_mobile=="0"||cp_is_tablet=="1"){jQuery.set_sidebar_height()}})}}function cp_close_header(){var b,a,d,f,c;var g,e;b=jQuery("#book_nav").height();a=jQuery("#sidebar");d=jQuery.get_sidebar_pane();f=jQuery("#book_header");c=jQuery("#container");f.hide();g=cp_container_top_min;if(cp_wp_adminbar=="y"){g=cp_container_top_min-cp_wp_adminbar_height}c.animate({top:g+"px",duration:"fast"});if(cp_sidebar_minimised=="n"){e=a.height()+cp_book_header_height;a.animate({top:cp_container_top_min+"px",height:e+"px",duration:"fast"},function(){a.css("height","auto")});d.animate({height:(d.height()+cp_book_header_height)+"px",duration:"fast"},function(){if(cp_is_mobile=="0"||cp_is_tablet=="1"){jQuery.set_sidebar_height()}cp_header_animating=false})}else{a.animate({top:cp_container_top_min+"px",duration:"fast"},function(){cp_header_animating=false;if(cp_is_mobile=="0"||cp_is_tablet=="1"){jQuery.set_sidebar_height()}})}}function commentpress_setup_header_minimiser(){if(cp_header_animating===true){return false}cp_header_animating=true;if(cp_header_minimised===undefined||cp_header_minimised===null||cp_header_minimised=="n"){cp_close_header()}else{cp_open_header()}cp_header_minimised=(cp_header_minimised=="y")?"n":"y";jQuery.cookie("cp_header_minimised",cp_header_minimised,{expires:28,path:cp_cookie_path})}jQuery(document).ready(function(b){cp_book_header_height=b("#book_header").height();if(cp_is_mobile=="0"||cp_is_tablet=="1"){b.set_sidebar_height()}if(jQuery.cookie("cp_container_top_min")){}else{cp_container_top_max=b.px_to_num(b("#container").css("top"));cp_container_top_min=cp_container_top_max-cp_book_header_height;b.cookie("cp_container_top_min",cp_container_top_min.toString(),{expires:28,path:cp_cookie_path});b.cookie("cp_container_top_max",cp_container_top_max.toString(),{expires:28,path:cp_cookie_path})}commentpress_setup_page_layout();commentpress_setup_comment_headers();commentpress_enable_comment_permalink_clicks();commentpress_setup_para_permalink_icons();commentpress_setup_page_click_actions();commentpress_setup_para_links();cp_enable_context_clicks();commentpress_setup_context_headers();commentpress_setup_footnotes_compatibility();b("#toc_header h2 a").click(function(d){d.preventDefault();cp_activate_sidebar("toc");return false});b("#activity_header h2 a").click(function(d){d.preventDefault();cp_activate_sidebar("activity");return false});b("#comments_header h2 a").click(function(d){d.preventDefault();cp_activate_sidebar("comments");return false});b("a.para_permalink").click(function(d){d.preventDefault();return false});b("a.comment_block_permalink").click(function(d){d.preventDefault();return false});b("#btn_header_min").click(function(d){d.preventDefault();commentpress_setup_header_minimiser();return false});if(msie6){b("#btn_header_min").hide()}b("#cp_minimise_all_comments").click(function(d){d.preventDefault();b("#comments_sidebar div.paragraph_wrapper").slideUp();b.unhighlight_para()});b("#cp_minimise_all_activity").click(function(d){d.preventDefault();b("#activity_sidebar div.paragraph_wrapper").slideUp()});b("#toc_sidebar .sidebar_contents_wrapper ul#toc_list li a").click(function(e){if(cp_toc_chapter_is_page=="0"){var d;d=b(this).parent().find("ul");if(d.length>0){if(cp_show_subpages=="0"){b(this).next("ul").slideToggle()}e.preventDefault();return false}}});var c,a;c=b("#content").css("min-height");a=b("#content").css("padding-bottom");b("#literal .post").css("display","none");b("#original .post").css("display","none");b("#content-tabs li h2 a").click(function(e){var d;e.preventDefault();d=this.href.split("#")[1];b(".post").css("display","none");b(".workflow-wrapper").css("min-height","0");b(".workflow-wrapper").css("padding-bottom","0");b("#"+d+".workflow-wrapper").css("min-height",c);b("#"+d+".workflow-wrapper").css("padding-bottom",a);b("#"+d+" .post").css("display","block");b("#content-tabs li").removeClass("default-content-tab");b(this).parent().parent().addClass("default-content-tab");return false});if(cp_special_page=="1"){cp_scroll_to_comment_on_load()}else{cp_scroll_to_anchor_on_load()}});
+/*
+================================================================================
+CommentPress Default Common Javascript
+================================================================================
+AUTHOR: Christian Wach <needle@haystack.co.uk>
+--------------------------------------------------------------------------------
+NOTES
+
+--------------------------------------------------------------------------------
+*/
+
+
+
+/**
+ * Create sub-namespace common to all themes
+ */
+CommentPress.theme = {};
+
+
+
+/**
+ * Create settings class
+ */
+CommentPress.theme.settings = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
+
+
+
+	/**
+	 * Initialise CommentPress theme settings.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+		// init container top max
+		me.init_container_top_max();
+
+		// init container top min
+		me.init_container_top_min();
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+		// if we have a cookie
+		if ( $.cookie( 'cp_container_top_min' ) ) {
+
+			// skip -> we only set these values once (or when the cookie expires)
+
+		} else {
+
+			// set container top max and save
+			me.set_container_top_max( $.px_to_num( $('#container').css('top') ) );
+			me.save_container_top_max();
+
+			// set container top min and save
+			me.set_container_top_min( me.get_container_top_max() - CommentPress.theme.original.header.get_height() );
+			me.save_container_top_min();
+
+		}
+
+	};
+
+
+
+	// init container top max
+	this.container_top_min = false;
+
+	/**
+	 * Init for container top max
+	 */
+	this.init_container_top_max = function() {
+
+		// get container original top max
+		this.container_top_max = $.cookie( 'cp_container_top_max' );
+		if ( 'undefined' === typeof this.container_top_max || this.container_top_max === null ) {
+			this.container_top_max = 108;
+		}
+
+		// bump up by the height ff the admin bar is shown
+		if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
+			this.container_top_max = parseInt( this.container_top_max ) + CommentPress.settings.DOM.get_wp_adminbar_height();
+		}
+
+	};
+
+	/**
+	 * Setter for container top max
+	 */
+	this.set_container_top_max = function( val ) {
+		this.container_top_max = val;
+	};
+
+	/**
+	 * Save the container top max value in a cookie
+	 */
+	this.save_container_top_max = function( val ) {
+
+		// set cookie for further loads
+		$.cookie(
+			'cp_container_top_max',
+			me.get_container_top_max().toString(),
+			{ expires: 28, path: cp_cookie_path }
+		);
+
+	};
+
+	/**
+	 * Getter for container top max
+	 */
+	this.get_container_top_max = function() {
+		return this.container_top_max;
+	};
+
+
+
+	// init container top min
+	this.container_top_min = false;
+
+	/**
+	 * Init for container top min
+	 */
+	this.init_container_top_min = function() {
+
+		// get container original top min
+		this.container_top_min = $.cookie( 'cp_container_top_min' );
+		if ( 'undefined' === typeof this.container_top_min || this.container_top_min === null ) {
+			this.container_top_min = 108;
+		}
+
+		// bump up by the height if the admin bar is shown
+		if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
+			this.container_top_min = parseInt( this.container_top_min ) + CommentPress.settings.DOM.get_wp_adminbar_height();
+		}
+
+	};
+
+	/**
+	 * Setter for container top min
+	 */
+	this.set_container_top_min = function( val ) {
+		this.container_top_min = val;
+	};
+
+	/**
+	 * Save the container top min value in a cookie
+	 */
+	this.save_container_top_min = function( val ) {
+
+		// set cookie for further loads
+		$.cookie(
+			'cp_container_top_min',
+			me.get_container_top_min().toString(),
+			{ expires: 28, path: cp_cookie_path }
+		);
+
+	};
+
+	/**
+	 * Getter for container top min
+	 */
+	this.get_container_top_min = function() {
+		return this.container_top_min;
+	};
+
+
+
+	// init toc on top flag
+	this.toc_on_top = 'n';
+
+	/**
+	 * Setter for container top min
+	 */
+	this.set_toc_on_top = function( val ) {
+		this.toc_on_top = val;
+	};
+
+	/**
+	 * Getter for container top min
+	 */
+	this.get_toc_on_top = function() {
+		return this.toc_on_top;
+	};
+
+
+
+	// init comment border colour
+	this.comment_border = '';
+
+	/**
+	 * Setter for comment border colour
+	 */
+	this.set_comment_border = function( val ) {
+		this.comment_border = val;
+	};
+
+	/**
+	 * Getter for comment border colour
+	 */
+	this.get_comment_border = function() {
+		return this.comment_border;
+	};
+
+}; // end CommentPress theme settings class
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
+/**
+ * Create DOM class
+ */
+CommentPress.theme.DOM = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
+
+
+
+	/**
+	 * Initialise CommentPress theme DOM.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+		// write styles into <head>
+		me.head();
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+		// setup layout
+		me.layout();
+
+	};
+
+
+
+	/**
+	 * Perform actions before the page is ready
+	 *
+	 * Writes styles into the document <head> to avoid avoid flash of content
+	 *
+	 * @return void
+	 */
+	this.head = function() {
+
+		// define vars
+		var styles, cp_container_top, cp_container_width, cp_book_nav_width;
+
+		// init styles
+		styles = '';
+
+		// wrap with js test
+		if ( document.getElementById ) {
+
+			// open style declaration
+			styles += '<style type="text/css" media="screen">';
+
+			// if mobile, don't hide textblock meta
+			if ( cp_is_mobile == '0' ) {
+
+				// have we explicitly hidden textblock meta?
+				if ( cp_textblock_meta == '0' ) {
+
+					// avoid flash of textblock meta elements
+					styles += '#content .textblock span.para_marker, #content .textblock span.commenticonbox { display: none; } ';
+					styles += '.content .textblock span.para_marker, .content .textblock span.commenticonbox { display: none; } ';
+
+				}
+
+			}
+
+			// avoid flash of all-comments hidden elements
+			styles += 'ul.all_comments_listing div.item_body { display: none; } ';
+
+			// is the admin bar shown?
+			if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
+
+				// move down
+				styles += '#header { top: ' + CommentPress.settings.DOM.get_wp_adminbar_height() + 'px; } ';
+				styles += '#book_header { top: ' + (CommentPress.settings.DOM.get_wp_adminbar_height() + 32) + 'px; } ';
+
+				// if we have the responsive admin bar in 3.8+
+				if ( CommentPress.settings.DOM.get_wp_adminbar_height() == '32' ) {
+
+					// react to responsive admin bar
+					styles += '@media screen and ( max-width: 782px ) { ' +
+								'#header { top: ' + CommentPress.settings.DOM.get_wp_adminbar_expanded() + 'px; }' +
+								'#book_header { top: ' + (CommentPress.settings.DOM.get_wp_adminbar_expanded() + 32) + 'px; }' +
+							' } ';
+
+				}
+
+			}
+
+			// are subpages to be shown?
+			if ( cp_show_subpages == '0' ) {
+
+				// avoid flash of hidden elements on collapsed items
+				styles += '#toc_sidebar .sidebar_contents_wrapper ul li ul { display: none; } ';
+
+			}
+
+			// has the header been minimised?
+			if ( CommentPress.theme.original.header.is_minimised() ) {
+
+				// no -> skip
+
+				// set tops of divs
+
+				// adjust for admin bar
+				cp_container_top = CommentPress.theme.settings.get_container_top_max();
+
+				// is the admin bar shown?
+				if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
+					cp_container_top = CommentPress.theme.settings.get_container_top_max() - CommentPress.settings.DOM.get_wp_adminbar_height();
+				}
+
+				styles += '#container { top: ' + cp_container_top + 'px; } ';
+				styles += '#sidebar { top: ' + CommentPress.theme.settings.get_container_top_max() + 'px; } ';
+
+				// is the admin bar shown?
+				if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
+
+					// if we have the responsive admin bar in 3.8+
+					if ( CommentPress.settings.DOM.get_wp_adminbar_height() == '32' ) {
+
+						// react to responsive admin bar
+						styles += '@media screen and ( max-width: 782px ) { ' +
+									'#sidebar { top: ' + (cp_container_top + CommentPress.settings.DOM.get_wp_adminbar_expanded()) + 'px; }' +
+								' } ';
+
+					}
+
+				}
+
+			} else {
+
+				// set visibility of comments
+				styles += '#book_header { display: none; } ';
+
+				// adjust for admin bar
+				cp_container_top = CommentPress.theme.settings.get_container_top_min();
+
+				// is the admin bar shown?
+				if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
+					cp_container_top = CommentPress.theme.settings.get_container_top_min() - CommentPress.settings.DOM.get_wp_adminbar_height();
+				}
+
+				// set tops of divs
+				styles += '#container { top: ' + cp_container_top + 'px; } ';
+				styles += '#sidebar { top: ' + CommentPress.theme.settings.get_container_top_min() + 'px; } ';
+
+				// is the admin bar shown?
+				if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
+
+					// if we have the responsive admin bar in 3.8+
+					if ( CommentPress.settings.DOM.get_wp_adminbar_height() == '32' ) {
+
+						// react to responsive admin bar
+						styles += '@media screen and ( max-width: 782px ) { ' +
+									'#sidebar { top: ' + (cp_container_top + CommentPress.settings.DOM.get_wp_adminbar_expanded()) + 'px; }' +
+								' } ';
+
+					}
+
+				}
+
+			}
+
+			// is this the comments sidebar?
+			if ( cp_special_page == '0' ) {
+
+				// avoid flash of hidden comments
+				styles += '.paragraph_wrapper { display: none; } ';
+
+				// avoid flash of hidden comment form
+				styles += '#respond { display: none; } ';
+
+				// has the sidebar window been minimised?
+				if ( CommentPress.theme.sidebars.get_minimised() == 'y' ) {
+
+					// set visibility of comments
+					styles += '#comments_sidebar .sidebar_contents_wrapper { display: none; } ';
+
+				}
+
+			}
+
+			// on global activity sidebar, avoid flash of hidden comments
+			styles += '#activity_sidebar .paragraph_wrapper { display: none; } ';
+
+			/*
+			// Note: make into single cookie?
+			// has the page been changed?
+			if ( $.cookie('cp_page_setup') ) {
+
+				// get value
+				cp_page_setup = $.cookie('cp_page_setup');
+
+			}
+			*/
+
+			// has the content column changed?
+			if ( $.cookie('cp_container_width') ) {
+
+				// get value
+				cp_container_width = $.cookie('cp_container_width');
+
+				// set content width
+				if ( cp_is_signup_page == '1' ) {
+					styles += '#content { width: ' + cp_container_width + '%; } ';
+				} else {
+					styles += '#page_wrapper { width: ' + cp_container_width + '%; } ';
+				}
+
+				// set footer width
+				styles += '#footer { width: ' + cp_container_width + '%; } ';
+
+			}
+
+			// has the book nav cookie changed?
+			if ( $.cookie('cp_book_nav_width') ) {
+
+				// get book nav width
+				cp_book_nav_width = $.cookie('cp_book_nav_width');
+
+				// set its width
+				styles += '#book_nav div#cp_book_nav { width: ' + cp_book_nav_width + '%; } ';
+
+			}
+
+			// has the sidebar window changed?
+			if ( $.cookie('cp_sidebar_width') ) {
+
+				// set width of sidebar
+				styles += '#sidebar { width: ' + $.cookie('cp_sidebar_width') + '%; } ';
+
+			}
+
+			// has the sidebar window changed?
+			if ( $.cookie('cp_sidebar_left') ) {
+
+				// set width of sidebar
+				styles += '#sidebar { left: ' + $.cookie('cp_sidebar_left') + '%; } ';
+
+			}
+
+			// show tabs when JS enabled
+			styles += 'ul#sidebar_tabs, #toc_header.sidebar_header, body.blog_post #activity_header.sidebar_header { display: block; } ';
+
+			// don't set height of sidebar when mobile (but allow tablets)
+			if ( cp_is_mobile == '1' && cp_is_tablet == '0' ) {
+
+				// override css
+				styles += '.sidebar_contents_wrapper { height: auto; } ';
+
+			}
+
+			// close style declaration
+			styles += '</style>';
+
+		}
+
+		// write to page now
+		document.write( styles );
+
+	};
+
+
+
+	/**
+	 * Page load prodecure
+	 *
+	 * @return void
+	 */
+	this.layout = function() {
+
+		// define vars
+		var target;
+
+		// is this the signup page?
+		if ( cp_is_signup_page == '1' ) {
+
+			// target
+			target = $('#content');
+
+		} else {
+
+			// target
+			target = $('#page_wrapper');
+
+		}
+
+		/**
+		 * Sets up the main column, if the id exists
+		 *
+		 * @param integer i The number of iterations
+		 * @return void
+		 */
+		target.each( function(i) {
+
+			// define vars
+			var item, content, sidebar, footer, book_header, book_nav_wrapper, book_nav,
+				book_info, original_content_width, original_sidebar_width,
+				original_nav_width, original_sidebar_left, gap;
+
+			// assign vars
+			item = $(this);
+			content = $('#content');
+			sidebar = $('#sidebar');
+			footer = $('#footer');
+			book_header = $('#book_header');
+			book_nav_wrapper = $('#book_nav_wrapper');
+			book_nav = $('#cp_book_nav');
+			book_info = $('#cp_book_info');
+
+			// store original widths
+			original_content_width = item.width();
+			original_sidebar_width = sidebar.width();
+
+			// calculate gap to sidebar
+			gap = sidebar.offset().left - original_content_width;
+
+			// make page wrapper resizable
+			item.resizable({
+
+				handles: 'e',
+				minWidth: cp_min_page_width,
+				alsoResize: '#footer',
+				//grid: 1, // no sub-pixel weirdness please
+
+				// on stop... (note: this doesn't fire on the first go in Opera 9!)
+				start: function( event, ui ) {
+
+					// store original widths
+					original_content_width = item.width();
+					original_sidebar_width = sidebar.width();
+					original_nav_width = book_nav.width();
+
+					// calculate sidebar left
+					original_sidebar_left = sidebar.css( "left" );
+					gap = sidebar.offset().left - original_content_width;
+
+				},
+
+				// while resizing...
+				resize: function( event, ui ) {
+
+					// define vars
+					var my_diff;
+
+					item.css( 'height', 'auto' );
+					footer.css( 'height', 'auto' );
+
+					// have the sidebar follow
+					sidebar.css( 'left', ( item.width() + gap ) + 'px' );
+
+					// diff
+					my_diff = original_content_width - item.width();
+
+					// have the sidebar right remain static
+					sidebar.css( 'width', ( original_sidebar_width + my_diff ) + 'px' );
+
+					// have the book nav follow
+					book_nav.css( 'width', ( original_nav_width - my_diff ) + 'px' ); // diff in css
+
+				},
+
+				// on stop... (note: this doesn't fire on the first go in Opera 9!)
+				stop: function( event, ui ) {
+
+					// define vars
+					var ww, width, item_w, book_nav_w, sidebar_w, left, sidebar_l;
+
+					// viewport width
+					ww = parseFloat($(window).width() );
+
+					// get element width
+					width = item.width();
+
+					// get percent to four decimal places
+					item_w = parseFloat( Math.ceil( ( 1000000 * parseFloat( width ) / ww ) ) / 10000 );
+
+					// set element width
+					item.css("width" , item_w + '%');
+
+					// set content width to auto so it resizes properly
+					if ( cp_is_signup_page == '0' ) {
+						content.css( 'width', 'auto' );
+					}
+
+					// get element width
+					width = book_nav.width();
+
+					// get percent to four decimal places
+					book_nav_w = parseFloat( Math.ceil( ( 1000000 * parseFloat( width ) / ww ) ) / 10000 );
+
+					// set element width
+					book_nav.css( 'width', book_nav_w + '%' );
+
+					// get element width
+					width = sidebar.width();
+
+					// get percent to four decimal places
+					sidebar_w = parseFloat( Math.ceil( ( 1000000 * parseFloat( width ) / ww ) ) / 10000 );
+
+					// set element width
+					sidebar.css( 'width', sidebar_w + '%' );
+
+					// get element left
+					left = sidebar.position().left;
+
+					// get percent to four decimal places
+					sidebar_l = parseFloat( Math.ceil( ( 1000000 * parseFloat( left ) / ww ) ) / 10000 );
+
+					// set element left
+					sidebar.css( 'left', sidebar_l + '%' );
+
+					// store this width in cookie
+					$.cookie(
+						'cp_container_width',
+						item_w.toString(),
+						{ expires: 28, path: cp_cookie_path }
+					);
+
+					// store nav width in cookie
+					$.cookie(
+						'cp_book_nav_width',
+						book_nav_w.toString(),
+						{ expires: 28, path: cp_cookie_path }
+					);
+
+					// store location of sidebar in cookie
+					$.cookie(
+						'cp_sidebar_left',
+						sidebar_l.toString(),
+						{ expires: 28, path: cp_cookie_path }
+					);
+
+					// store width of sidebar in cookie
+					$.cookie(
+						'cp_sidebar_width',
+						sidebar_w.toString(),
+						{ expires: 28, path: cp_cookie_path }
+					);
+
+				}
+
+			});
+
+		});
+
+	};
+
+}; // end DOM class
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
+/**
+ * Create header class
+ */
+CommentPress.theme.header = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
+
+
+
+	/**
+	 * Initialise CommentPress theme header.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+	};
+
+
+
+	/**
+	 * Get header offset
+	 *
+	 * @return integer offset The target offset in px
+	 */
+	this.get_offset = function() {
+
+		// define vars
+		var offset;
+
+		/*
+		// need to decide whether to use border in offset...
+
+		// get offset including border
+		offset = 0 - (
+			$.px_to_num( $('#container').css('top') ) +
+			$.px_to_num( $('#page_wrapper').css( 'borderTopWidth' ) )
+		);
+		*/
+
+		// get header offset
+		offset = 0 - ( $.px_to_num( $('#container').css('top') ) );
+
+		// is the admin bar shown?
+		if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
+
+			// subtract admin bar height
+			offset -= CommentPress.settings.DOM.get_wp_adminbar_height();
+
+		}
+
+		// --<
+		return offset;
+
+	};
+
+}; // end header class
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
+/**
+ * Create navigation class
+ */
+CommentPress.theme.navigation = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
+
+
+
+	/**
+	 * Initialise CommentPress theme navigation.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+		// enable "Special Pages" menu behaviour
+		me.menu();
+
+	};
+
+
+
+	/**
+	 * Set up the "Contents" sidebar header
+	 *
+	 * @return void
+	 */
+	this.menu = function() {
+
+		/**
+		 * Clicking on the "Contents" sidebar header
+		 *
+		 * @return false
+		 */
+		$('#sidebar').on( 'click', '#toc_header h2 a', function( event ) {
+
+			// override event
+			event.preventDefault();
+
+			// activate it
+			CommentPress.theme.sidebars.activate_sidebar( 'toc' );
+
+		});
+
+	};
+
+}; // end navigation class
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
+/**
+ * Create content class
+ */
+CommentPress.theme.content = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
+
+
+
+	/**
+	 * Initialise CommentPress theme content.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+		// enable "Workflow" tabs
+		me.tabs();
+
+	};
+
+
+
+	/**
+	 * Set up "Workflow" tabs.
+	 *
+	 * Workflow adds "Literal" and "Original" tabs for use by translators.
+	 * Each theme calls the common method with params calculated below.
+	 *
+	 * @return void
+	 */
+	this.tabs = function() {
+
+		// define vars
+		var content_min_height, content_padding_bottom;
+
+		// store content min-height on load
+		content_min_height = $('#content').css( 'min-height' );
+
+		// store content padding-bottom on load
+		content_padding_bottom = $('#content').css( 'padding-bottom' );
+
+		// hide workflow content
+		$('#literal .post').css( 'display', 'none' );
+		$('#original .post').css( 'display', 'none' );
+
+		// setup workflow tabs, if present
+		CommentPress.common.content.workflow_tabs( content_min_height, content_padding_bottom );
+
+	};
+
+}; // end content class
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
+/**
+ * Create sidebars class
+ */
+CommentPress.theme.sidebars = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
+
+
+
+	/**
+	 * Initialise CommentPress theme sidebars.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+		// init sidebar minimised flag
+		me.init_minimised();
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+		// don't set height when mobile device (but allow tablets)
+		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+
+			// set sidebar height
+			me.set_height();
+
+		}
+
+	};
+
+
+
+	// init CommentPress sidebar minimised flag
+	this.minimised = 'n';
+
+	/**
+	 * Init for CommentPress sidebar minimised flag
+	 */
+	this.init_minimised = function() {
+
+		// get state of sidebar
+		this.sidebar_minimised = $.cookie( 'cp_sidebar_minimised' );
+		if ( 'undefined' === typeof this.sidebar_minimised || this.sidebar_minimised === null ) {
+			this.sidebar_minimised = 'n';
+		}
+
+	};
+
+	/**
+	 * Setter for CommentPress sidebar minimised flag
+	 */
+	this.set_minimised = function( val ) {
+		this.minimised = val;
+	};
+
+	/**
+	 * Getter for CommentPress sidebar minimised flag
+	 */
+	this.get_minimised = function() {
+		return this.minimised;
+	};
+
+	/**
+	 * Getter for CommentPress sidebar minimised flag
+	 */
+	this.is_minimised = function() {
+		if (
+			'undefined' === typeof this.minimised ||
+			this.minimised === null ||
+			this.minimised == 'n'
+		) {
+			return 'n';
+		}
+		return this.minimised;
+	};
+
+	/**
+	 * Toggle for CommentPress sidebar minimised flag
+	 */
+	this.toggle_minimised = function() {
+		if ( this.minimised === 'y' ) {
+			this.minimised = 'n';
+		} else {
+			this.minimised = 'y';
+		}
+	};
+
+
+
+	/**
+	 * Bring sidebar to front
+	 *
+	 * @param string sidebar The sidebar to bring to the front
+	 * @return void
+	 */
+	this.activate_sidebar = function( sidebar ) {
+
+		// define vars
+		var ontop, s_top, s_top_border;
+
+		// get "visibility" of the requested sidebar
+		ontop = $('#' + sidebar + '_sidebar').css('z-index');
+
+		// is it hidden (ie, does it have a lower z-index)
+		if ( ontop == '2001' ) {
+
+			// hide all
+			$('.sidebar_container').css('z-index','2001');
+
+			// show it
+			$('#' + sidebar + '_sidebar').css('z-index','2010');
+
+			s_top = me.get_top();
+			s_top_border = me.get_top_border();
+
+			// set all tabs to min height
+			$('.sidebar_header').css( 'height', ( s_top - s_top_border ) + 'px' );
+
+			// set our tab to max height
+			$('#' + sidebar + '_header.sidebar_header').css( 'height', s_top + 'px' );
+
+			// set flag
+			CommentPress.theme.settings.set_toc_on_top( 'y' );
+
+		}
+
+		// set height if not mobile device (but allow tablets)
+		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+
+			// just to make sure...
+			me.set_height();
+
+		} else {
+
+			// hide all
+			$('.sidebar_container').css('visibility','hidden');
+
+			// show it
+			$('#' + sidebar + '_sidebar').css('visibility','visible');
+
+			/*
+			// define vars
+			var containers, tallest, this_height;
+
+			// set to height of tallest
+			containers = $('.sidebar_contents_wrapper');
+
+			// did we get any?
+			if ( containers.length > 0 ) {
+
+				// init
+				tallest = 0;
+
+				// find height of each
+				containers.each( function(i) {
+
+					// get height
+					this_height = $(this).height()
+
+					// is it taller?
+					if ( this_height > tallest ) {
+						tallest = this_height;
+					}
+
+				});
+
+				// set it to that height
+				$('.sidebar_contents_wrapper').height( tallest );
+
+				// then make it auto
+				// BUT, this won't allow it to expand in future...
+				//$('#' + sidebar + '_sidebar .sidebar_contents_wrapper').css('height','auto');
+
+			}
+			*/
+
+		}
+
+	};
+
+
+
+	/**
+	 * Get top of sidebar
+	 *
+	 * @return integer num The top of the sidebar in pixels
+	 */
+	this.get_top = function() {
+		return $.px_to_num( $('#toc_sidebar').css('top') );
+	};
+
+
+
+	/**
+	 * Get border width of sidebar
+	 *
+	 * @return integer num The border width of the sidebar in pixels
+	 */
+	this.get_top_border = function() {
+		return $.px_to_num( $('.sidebar_minimiser').css('borderTopWidth') );
+	};
+
+
+
+	/**
+	 * Get visible sidebar minimiser
+	 *
+	 * @since 3.0
+	 *
+	 * @return object sidebar_pane The jQuery object for the sidebar pane
+	 */
+	this.get_sidebar_pane = function() {
+
+		// init
+		var name = me.get_sidebar_name();
+
+		// --<
+		return $('#' + name + '_sidebar .sidebar_minimiser');
+
+	}
+
+
+
+	/**
+	 * Get visible sidebar
+	 *
+	 * @since 3.0
+	 *
+	 * @return string name The name of the visible sidebar
+	 */
+	this.get_sidebar_name = function() {
+
+		// init
+		var name = 'toc';
+
+		// if toc, must be toc
+		//if ( cp_default_sidebar == 'toc' ) { name = 'toc'; }
+
+		// if comments
+		if ( cp_default_sidebar == 'comments' ) {
+			name = 'comments';
+			if ( CommentPress.theme.settings.get_toc_on_top() == 'y' ) {
+				name = 'toc';
+			}
+		}
+
+		// if activity
+		if ( cp_default_sidebar == 'activity' ) {
+			name = 'activity';
+			if ( CommentPress.theme.settings.get_toc_on_top() == 'y' ) {
+				name = 'toc';
+			}
+		}
+
+		// --<
+		return name;
+
+	}
+
+
+
+	/**
+	 * Get height data on element
+	 *
+	 * @since 3.0
+	 *
+	 * @param object element The element to adjust
+	 * @return int element_adjust The new height of the element in px
+	 */
+	this.get_element_adjust = function( element ) {
+
+		// declare vars
+		var w_bt, w_bb, w_pad_t, w_pad_b, w_mar_t, w_mar_b, element_adjust;
+
+		// get border
+		w_bt = $.css_to_num( $.px_to_num( element.css( 'borderTopWidth' ) ) );
+		w_bb = $.css_to_num( $.px_to_num( element.css( 'borderBottomWidth' ) ) );
+
+		// get padding
+		w_pad_t = $.css_to_num( $.px_to_num( element.css( 'padding-top' ) ) );
+		w_pad_b = $.css_to_num( $.px_to_num( element.css( 'padding-bottom' ) ) );
+
+		// get margin
+		w_mar_t = $.css_to_num( $.px_to_num( element.css( 'margin-top' ) ) );
+		w_mar_b = $.css_to_num( $.px_to_num( element.css( 'margin-bottom' ) ) );
+
+		// add 'em up
+		element_adjust = w_bt + w_bb + w_pad_t + w_pad_b + w_mar_t + w_mar_b;
+
+		// --<
+		return element_adjust;
+
+	}
+
+
+
+	/**
+	 * Set height of sidebar minimiser (scrolling element) so that the column fills the viewport
+	 *
+	 * @since 3.0
+	 *
+	 * @todo In jQuery 1.9, we get a 143px error, related to sidebar.position().top
+	 *
+	 * @return int to_bottom The height of the sidebar in px
+	 */
+	this.set_height = function() {
+
+		var sidebar, sidebar_inner, sidebar_container, header, minimiser,
+			s_top, sidebar_inside_h, sidebar_inner_inside_h, sidebar_diff,
+			sc_top, sc_inside_h, sc_diff,
+			header_diff, minimiser_diff,
+			bottom_margin,
+			viewport_height, viewport_scrolltop, viewport,
+			to_bottom;
+
+		sidebar = $('#sidebar');
+		sidebar_inner = $('#sidebar_inner');
+		sidebar_container = $('#toc_sidebar');
+		header = $('#' + CommentPress.theme.sidebars.get_sidebar_name() + '_sidebar .sidebar_header');
+		minimiser = me.get_sidebar_pane();
+
+		// get data on sidebar element
+		s_top = sidebar.offset().top;
+		sidebar_inside_h = me.get_element_adjust( sidebar );
+		sidebar_inner_inside_h = me.get_element_adjust( sidebar_inner );
+		sidebar_diff = s_top + sidebar_inside_h + sidebar_inner_inside_h;
+
+		// get data on sidebar_container element
+		sc_top = sidebar_container.position().top;
+		sc_inside_h = me.get_element_adjust( sidebar_container );
+		sc_diff = sc_top + sc_inside_h;
+
+		// init header diff
+		header_diff = 0;
+		// if internal header element is displayed
+		if ( header.css('display') != 'none' ) {
+			// get data on header element
+			header_diff = header.height() + me.get_element_adjust( header );
+		}
+
+		// get data on minimiser element
+		minimiser_diff = me.get_element_adjust( minimiser );
+
+		// get bottom margin of main column so sidebar lines up
+		// NOTE: this is NOT why they don't line up - it just so happens that the values match
+		// It seems the clearfix class adds the margin. Sigh.
+		if ( cp_is_signup_page == '1' ) {
+			bottom_margin = $.css_to_num( $.px_to_num( $('#content').css( 'margin-bottom' ) ) );
+		} else {
+			bottom_margin = $.css_to_num( $.px_to_num( $('#page_wrapper').css( 'margin-bottom' ) ) );
+		}
+
+		// get viewport data
+		viewport_height = $(window).height();
+		viewport_scrolltop = $(window).scrollTop();
+		viewport = viewport_height + viewport_scrolltop;
+
+		// calculate the necessary height to reach the bottom of the viewport
+		to_bottom = viewport - ( sidebar_diff + sc_diff + header_diff + minimiser_diff + bottom_margin );
+
+		// now set it
+		$('#sidebar div.sidebar_contents_wrapper').css( 'height', to_bottom + 'px' );
+
+		// --<
+		return to_bottom;
+
+	}
+
+}; // end sidebars class
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
+/**
+ * Create viewport class
+ */
+CommentPress.theme.viewport = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict();
+
+
+
+	/**
+	 * Initialise CommentPress theme viewport.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+	};
+
+
+
+	/**
+	 * Scroll page to top
+	 *
+	 * @param object target The object to scroll to
+	 * @param integer speed The duration of the scroll
+	 * @return void
+	 */
+	this.scroll_to_top = function( target, speed ) {
+
+		// bail if we didn't get a valid target
+		if ( 'undefined' === typeof target ) { return; }
+
+		// only scroll if not mobile (but allow tablets)
+		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+
+			// scroll
+			$(window).stop(true).scrollTo( target, speed );
+
+		}
+
+	};
+
+
+
+	/**
+	 * Page load prodecure
+	 *
+	 * @return void
+	 */
+	this.on_load_scroll_to_anchor = function() {
+
+		// define vars
+		var text_sig, url, comment_id, para_wrapper_array, item, para_id, para_num,
+			post_id, textblock, anchor_id, anchor, found;
+
+		// init
+		text_sig = '';
+		found = false;
+
+		// if there is an anchor in the URL (only on non-special pages)
+		url = document.location.toString();
+
+		// do we have a comment permalink?
+		if ( url.match( '#comment-' ) ) {
+
+			// get comment ID
+			tmp = url.split('#comment-');
+
+			// sanity check
+			comment_id = 0;
+			if ( tmp.length == 2 ) {
+				comment_id = parseInt( tmp[1] );
+			}
+
+			// did we get one?
+			if ( comment_id !== 0 ) {
+				me.on_load_scroll_to_comment( comment_id );
+			}
+
+			// set location to page/post permalink
+			CommentPress.common.DOM.location_reset();
+
+			// --<
+			return;
+
+		} else {
+
+			/**
+			 * Loop through the paragraph permalinks checking for a match
+			 *
+			 * @return void
+			 */
+			$('span.para_marker > a').each( function(i) {
+
+				// define vars
+				var text_sig, para_id, para_num, post_id, textblock;
+
+				// get text signature
+				text_sig = $(this).prop( 'id' );
+
+				// do we have a paragraph or comment block permalink?
+				if ( url.match( '#' + text_sig ) || url.match( '#para_heading-' + text_sig ) ) {
+
+					// align content
+					me.align_content( text_sig, 'para_heading' );
+
+					// set location to page/post permalink
+					CommentPress.common.DOM.location_reset();
+
+					// set flag
+					found = true;
+
+				}
+
+			});
+
+		}
+
+		// check flag and bail if already found
+		if ( found === true ) { return; }
+
+		// do we have a link to the comment form?
+		if ( url.match( '#respond' ) ) {
+
+			// is this a "Reply to [...]" link
+			if ( url.match( 'replytocom' ) ) {
+
+				// get parent from form
+				comment_parent = parseInt( $('#comment_parent').val() );
+
+				// also same as load procedure
+				me.on_load_scroll_to_comment( comment_parent );
+
+			} else {
+
+				// is this a "Leave Comment on [...]" link
+				if ( url.match( 'replytopara' ) ) {
+
+					// get text sig from form
+					text_sig = $('#text_signature').val();
+
+					// align content
+					me.align_content( text_sig, 'commentform' );
+
+				} else {
+
+					// same as clicking on the "whole page" heading
+					$('h3#para_heading- a.comment_block_permalink').click();
+
+				}
+
+			}
+
+			// set location to page/post permalink
+			CommentPress.common.DOM.location_reset();
+
+			// --<
+			return;
+
+		}
+
+		// any other anchors in the .post?
+		if ( url.match( '#' ) ) {
+
+			// get anchor
+			anchor_id = url.split('#')[1];
+
+			// bail if it's WP FEE's custom anchor
+			if ( anchor_id == 'edit=true' ) { return; }
+			if ( anchor_id == 'fee-edit-link' ) { return; }
+
+			// locate in DOM
+			anchor = $( '#' + anchor_id );
+
+			// did we get one?
+			if ( anchor.length ) {
+
+				// add class
+				anchor.addClass('selected_para');
+
+				// scroll page
+				CommentPress.common.content.scroll_page( anchor );
+
+			}
+
+			// set location to page/post permalink
+			CommentPress.common.DOM.location_reset();
+
+			// --<
+			return;
+
+		}
+
+	};
+
+
+
+	/**
+	 * Scroll to comment on page load
+	 *
+	 * @param int comment_id The ID of the comment to scroll to
+	 * @return void
+	 */
+	this.on_load_scroll_to_comment = function( comment_id ) {
+
+		// define vars
+		var text_sig, para_wrapper_array, item, para_id, para_num,
+			post_id, textblock;
+
+		// activate comments sidebar
+		CommentPress.theme.sidebars.activate_sidebar('comments');
+
+		// open the matching block
+
+		// get array of parent paragraph_wrapper divs
+		para_wrapper_array = $('#comment-' + comment_id)
+									.parents('div.paragraph_wrapper')
+									.map( function () {
+										return this;
+									});
+
+		// did we get one?
+		if ( para_wrapper_array.length > 0 ) {
+
+			// get the item
+			item = $(para_wrapper_array[0]);
+
+			// are comments open?
+			if ( cp_comments_open == 'y' ) {
+
+				// move form to para
+				text_sig = item.prop('id').split('-')[1];
+				para_id = $('#para_wrapper-'+text_sig+' .reply_to_para').prop('id');
+				para_num = para_id.split('-')[1];
+				post_id = $('#comment_post_ID').prop('value');
+
+				// seems like TinyMCE isn't yet working and that moving the form
+				// prevents it from loading properly
+				if ( cp_tinymce == '1' ) {
+
+					// if we have link text, then a comment reply is allowed...
+					if ( $( '#comment-' + comment_id + ' > .reply' ).text() !== '' ) {
+
+						// temporarily override global so that TinyMCE is not
+						// meddled with in any way...
+						cp_tinymce = '0';
+
+						// move the form
+						addComment.moveForm(
+							'comment-' + comment_id,
+							comment_id,
+							'respond',
+							post_id,
+							text_sig
+						);
+
+						// restore global
+						cp_tinymce = '1';
+
+					}
+
+				} else {
+
+					// move the form
+					addComment.moveForm(
+						'comment-' + comment_id,
+						comment_id,
+						'respond',
+						post_id,
+						text_sig
+					);
+
+				}
+
+			}
+
+			// show block
+			item.show();
+
+			// scroll comments
+			CommentPress.common.comments.scroll_comments( $('#comment-' + comment_id), 1, 'flash' );
+
+			// if not the whole page...
+			if( text_sig !== '' ) {
+
+				// get text block
+				textblock = $('#textblock-' + text_sig);
+
+				// highlight this paragraph
+				$.highlight_para( textblock );
+
+				// scroll page
+				CommentPress.common.content.scroll_page( textblock );
+
+			} else {
+
+				// only scroll if page is not highlighted
+				if ( !CommentPress.settings.page.get_highlight() ) {
+
+					// scroll to top
+					CommentPress.theme.viewport.scroll_to_top( 0, cp_scroll_speed );
+
+				}
+
+				// toggle page highlight flag
+				CommentPress.settings.page.toggle_highlight();
+
+			}
+
+		}
+
+	};
+
+
+
+	/**
+	 * Does what a click on a comment icon should do
+	 *
+	 * @param string text_sig The text signature to scroll to
+	 * @param string scroll_target Where to scroll to ('none', 'para_heading', 'commentform' or 'auto' if empty)
+	 * @return void
+	 */
+	this.align_content = function( text_sig, scroll_target ) {
+
+		// bail if scrool target is 'none'
+		if ( scroll_target == 'none' ) { return; }
+
+		// show comments sidebar
+		CommentPress.theme.sidebars.activate_sidebar( 'comments' );
+
+		// define vars
+		var para_wrapper, comment_list, respond, top_level, opening, visible,
+			textblock, post_id, para_id, para_num;
+
+		// get para wrapper
+		para_wrapper = $('#para_heading-' + text_sig).next('div.paragraph_wrapper');
+
+		// bail if we don't have the target element
+		if ( para_wrapper.length == 0 ) {
+			return;
+		}
+
+		// get comment list
+		comment_list = $( '#para_wrapper-' + text_sig + ' .commentlist' );
+
+		// get respond
+		respond = para_wrapper.find('#respond');
+
+		// is it a direct child of para wrapper?
+		top_level = addComment.getLevel();
+
+		// init
+		opening = false;
+
+		// get visibility
+		visible = para_wrapper.css('display');
+
+		// override
+		if ( visible == 'none' ) { opening = true; }
+
+		// clear other highlights
+		$.unhighlight_para();
+
+		// did we get a text_sig?
+		if ( text_sig !== '' ) {
+
+			// get text block
+			textblock = $('#textblock-' + text_sig);
+
+			// if encouraging reading and closing
+			if ( cp_promote_reading == '1' && !opening ) {
+
+				// skip the highlight
+
+			} else {
+
+				// highlight this paragraph
+				$.highlight_para( textblock );
+
+				// scroll page
+				CommentPress.common.content.scroll_page( textblock );
+
+			}
+
+		}
+
+		// if encouraging commenting
+		if ( cp_promote_reading == '0' ) {
+
+			// are comments open?
+			if ( cp_comments_open == 'y' ) {
+
+				// get comment post ID
+				post_id = $('#comment_post_ID').prop('value');
+				para_id = $('#para_wrapper-'+text_sig+' .reply_to_para').prop('id');
+				para_num = para_id.split('-')[1];
+
+			}
+
+			// Choices, choices...
+
+			// if it doesn't have the commentform
+			if ( !respond[0] ) {
+
+				// are comments open?
+				if ( cp_comments_open == 'y' ) {
+					addComment.moveFormToPara( para_num, text_sig, post_id );
+				}
+
+			}
+
+			// if it has the commentform but is not top level
+			if ( respond[0] && !top_level ) {
+
+				// are comments open?
+				if ( cp_comments_open == 'y' ) {
+
+					// move comment form
+					addComment.moveFormToPara( para_num, text_sig, post_id );
+
+					// if scroll_target is for para_headings
+					if ( scroll_target == 'para_heading' ) {
+
+						// scroll comments to header
+						CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+
+					} else {
+
+						// scroll comments to comment form
+						CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
+
+					}
+
+				} else {
+
+					// scroll comments to header
+					CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+
+				}
+
+				return;
+
+			}
+
+			// if it doesn't have the commentform but has a comment
+			if ( !respond[0] && comment_list[0] && !opening ) {
+
+				// are comments open?
+				if ( cp_comments_open == 'y' ) {
+
+					// if scroll_target is for para_headings
+					if ( scroll_target == 'para_heading' ) {
+
+						// scroll comments to header
+						CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+
+					} else {
+
+						// scroll comments to comment form
+						CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
+
+					}
+
+				} else {
+
+					// scroll comments to header
+					CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+
+				}
+
+				return;
+
+			}
+
+			// if closing with comment list
+			if ( !opening && comment_list[0] ) {
+
+				// are comments open?
+				if ( cp_comments_open == 'y' ) {
+
+					// if scroll_target is for para_headings
+					if ( scroll_target == 'para_heading' ) {
+
+						// scroll comments to header
+						CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+
+					} else {
+
+						// scroll comments to comment form
+						CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
+
+					}
+
+				} else {
+
+					// scroll comments to header
+					CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+
+				}
+
+				return;
+
+			}
+
+			// if commentform but no comments and closing
+			if ( respond[0] && !comment_list[0] && !opening ) {
+
+				// are comments open?
+				if ( cp_comments_open == 'y' ) {
+
+					// if scroll_target is for para_headings
+					if ( scroll_target == 'para_heading' ) {
+
+						// scroll comments to header
+						CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+
+					} else {
+
+						// scroll comments to comment form
+						CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
+
+					}
+
+				} else {
+
+					// scroll comments to header
+					CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+
+				}
+
+				// --<
+				return;
+
+			}
+
+			// if closing with no comment list
+			if ( !opening && !comment_list[0] ) {
+
+				para_wrapper.css( 'display', 'none' );
+				opening = true;
+
+			}
+
+		}
+
+		// toggle next item_body
+		para_wrapper.slideToggle( 'slow', function () {
+
+			// animation finished
+
+			// are we encouraging reading?
+			if ( cp_promote_reading == '1' && opening ) {
+
+				// scroll comments
+				CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+
+			} else {
+
+				// only if opening
+				if ( opening ) {
+
+					// are comments open?
+					if ( cp_comments_open == 'y' ) {
+
+						// if scroll_target is for para_headings
+						if ( scroll_target == 'para_heading' ) {
+
+							// scroll comments to header
+							CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+
+						} else {
+
+							// scroll comments to comment form
+							CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
+
+						}
+
+					} else {
+
+						// scroll comments to comment form
+						CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
+
+					}
+
+				}
+
+			}
+
+		});
+
+	};
+
+}; // end viewport class
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
+/**
+ * Create sub-namespace for default (original) theme
+ */
+CommentPress.theme.original = {};
+
+
+
+/**
+ * Create header class
+ */
+CommentPress.theme.original.header = new function() {
+
+	// store object refs
+	var me = this,
+		$ = jQuery.noConflict(),
+		header_animating = false;
+
+
+
+	/**
+	 * Initialise CommentPress original header.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.init = function() {
+
+		// init minimised flag
+		me.init_minimised();
+
+	};
+
+
+
+	/**
+	 * Do setup when jQuery reports that the DOM is ready.
+	 *
+	 * This method should only be called once.
+	 *
+	 * @return void
+	 */
+	this.dom_ready = function() {
+
+		// init header height
+		me.init_height();
+
+		// enable minimiser button
+		me.minimiser();
+
+	};
+
+
+
+	// init CommentPress header height
+	this.header_height = 0;
+
+	/**
+	 * Init for CommentPress header height
+	 */
+	this.init_height = function() {
+
+		// get global book_header height
+		this.header_height = $('#book_header').height();
+
+	};
+
+	/**
+	 * Setter for CommentPress header height
+	 */
+	this.set_height = function( val ) {
+		this.header_height = val;
+	};
+
+	/**
+	 * Getter for CommentPress header height
+	 */
+	this.get_height = function() {
+		return this.header_height;
+	};
+
+
+
+	// init CommentPress header minimised flag
+	this.minimised = 'n';
+
+	/**
+	 * Init for CommentPress header minimised flag
+	 */
+	this.init_minimised = function() {
+
+		// get state of header
+		this.minimised = $.cookie( 'cp_header_minimised' );
+		if ( 'undefined' === typeof this.minimised || this.minimised === null ) {
+			this.minimised = 'n';
+		}
+
+	};
+
+	/**
+	 * Setter for CommentPress header minimised flag
+	 */
+	this.set_minimised = function( val ) {
+		this.minimised = val;
+	};
+
+	/**
+	 * Getter for CommentPress header minimised flag
+	 */
+	this.get_minimised = function() {
+		return this.minimised;
+	};
+
+	/**
+	 * Getter for CommentPress header minimised flag
+	 *
+	 * @return bool Whether or not the header is minimised
+	 */
+	this.is_minimised = function() {
+		if (
+			 'undefined' === typeof this.minimised ||
+			this.minimised === null ||
+			this.minimised == 'n'
+		) {
+			return false;
+		}
+		return true;
+	};
+
+	/**
+	 * Toggle for CommentPress header minimised flag
+	 */
+	this.toggle_minimised = function() {
+		if ( this.minimised === 'y' ) {
+			this.minimised = 'n';
+		} else {
+			this.minimised = 'y';
+		}
+	};
+
+
+
+	/**
+	 * Set up Header minimise button
+	 *
+	 * @return false
+	 */
+	this.minimiser = function() {
+
+		/**
+		 * Clicking on the Header Minimiser button
+		 *
+		 * @return false
+		 */
+		$('#header').on( 'click', '#btn_header_min', function( event ) {
+
+			// override event
+			event.preventDefault();
+
+			// call function
+			me.toggle();
+
+		});
+
+	};
+
+
+
+	/**
+	 * Set up header minimiser button
+	 *
+	 * @return void
+	 */
+	this.toggle = function() {
+
+		// if animating, kick out
+		if ( header_animating === true ) { return false; }
+		header_animating = true;
+
+		// toggle
+		if ( me.is_minimised() ) {
+			me.close();
+		} else {
+			me.open();
+		}
+
+		// toggle
+		me.toggle_minimised();
+
+		// store flag in cookie
+		$.cookie(
+			'cp_header_minimised',
+			me.get_minimised(),
+			{ expires: 28, path: cp_cookie_path }
+		);
+
+	};
+
+
+
+	/**
+	 * Open header
+	 *
+	 * @return void
+	 */
+	this.open = function() {
+
+		// -------------------------------------------------------------------------
+		//console.log( 'open' );
+		// -------------------------------------------------------------------------
+
+		// define vars
+		var book_nav_h, target_sidebar, target_sidebar_pane, book_header, container,
+			cp_container_top, cp_sidebar_height;
+
+		// get nav height
+		book_nav_h = $('#book_nav').height();
+
+		target_sidebar = $('#sidebar');
+		target_sidebar_pane = CommentPress.theme.sidebars.get_sidebar_pane();
+		book_header = $('#book_header');
+		container = $('#container');
+
+		// set max height
+		cp_container_top = CommentPress.theme.settings.get_container_top_max();
+
+		// is the admin bar shown?
+		if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
+
+			// deduct height of admin bar
+			cp_container_top = CommentPress.theme.settings.get_container_top_max() - CommentPress.settings.DOM.get_wp_adminbar_height();
+
+		}
+
+		// animate container
+		container.animate({
+
+			top: cp_container_top + 'px',
+			duration: 'fast'
+
+		}, function () {
+
+			//book_header.show();
+
+			// slide book header
+			book_header.fadeIn('fast', function() {
+
+				// when done
+				header_animating = false;
+
+			});
+
+		});
+
+		// is the sidebar minimised?
+		if ( CommentPress.theme.sidebars.get_minimised() == 'n' ) {
+
+			// get sidebar height
+			cp_sidebar_height = target_sidebar.height() - me.get_height();
+
+			// animate main wrapper
+			target_sidebar.animate({
+
+				top: CommentPress.theme.settings.get_container_top_max() + 'px',
+				height: cp_sidebar_height + 'px',
+				duration: 'fast'
+
+			}, function() {
+
+				// when done
+				target_sidebar.css('height','auto');
+
+			});
+
+			// animate inner
+			target_sidebar_pane.animate({
+
+				height: ( target_sidebar_pane.height() - me.get_height() ) + 'px',
+				duration: 'fast'
+
+				}, function() {
+
+					// don't set height when mobile device (but allow tablets - needs testing)
+					if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+
+						// fit column
+						CommentPress.theme.sidebars.set_height();
+
+					}
+
+					// when done
+					header_animating = false;
+
+				}
+
+			);
+
+		} else {
+
+			// animate sidebar
+			target_sidebar.animate({
+
+				top: CommentPress.theme.settings.get_container_top_max() + 'px',
+				duration: 'fast'
+
+				}, function() {
+
+					// when done
+					header_animating = false;
+
+					// don't set height when mobile device (but allow tablets)
+					if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+
+						// fit column
+						CommentPress.theme.sidebars.set_height();
+
+					}
+
+				}
+
+			);
+
+		}
+
+	};
+
+
+
+	/**
+	 * Close header
+	 *
+	 * @return void
+	 */
+	this.close = function() {
+
+		// -------------------------------------------------------------------------
+		//console.log( 'close' );
+		// -------------------------------------------------------------------------
+
+		// define vars
+		var book_nav_h, target_sidebar, target_sidebar_pane, book_header, container;
+		var cp_container_top, cp_sidebar_height;
+
+		// get nav height
+		book_nav_h = $('#book_nav').height();
+
+		target_sidebar = $('#sidebar');
+		target_sidebar_pane = CommentPress.theme.sidebars.get_sidebar_pane();
+		book_header = $('#book_header');
+		container = $('#container');
+
+		// slide header
+		book_header.hide();
+
+		// set min height
+		cp_container_top = CommentPress.theme.settings.get_container_top_min();
+
+		// is the admin bar shown?
+		if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
+
+			// deduct height of admin bar
+			cp_container_top = CommentPress.theme.settings.get_container_top_min() - CommentPress.settings.DOM.get_wp_adminbar_height();
+
+		}
+
+		container.animate({
+
+			top: cp_container_top + 'px',
+			duration: 'fast'
+
+		});
+
+		// is the sidebar minimised?
+		if ( CommentPress.theme.sidebars.get_minimised() == 'n' ) {
+
+			// get sidebar height
+			cp_sidebar_height = target_sidebar.height() + me.get_height();
+
+			//$('#container').css('top','40px');
+			target_sidebar.animate({
+
+				top: CommentPress.theme.settings.get_container_top_min() + 'px',
+				height: cp_sidebar_height + 'px',
+				duration: 'fast'
+
+				}, function() {
+
+					// when done
+					target_sidebar.css('height','auto');
+
+				}
+
+			);
+
+			//$('#container').css('top','40px');
+			target_sidebar_pane.animate({
+
+				height: ( target_sidebar_pane.height() + me.get_height() ) + 'px',
+				duration: 'fast'
+
+			}, function() {
+
+				// don't set height when mobile device (but allow tablets)
+				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+
+					// fit column
+					CommentPress.theme.sidebars.set_height();
+
+				}
+
+				// when done
+				header_animating = false;
+
+			});
+
+		} else {
+
+			// animate just sidebar
+			target_sidebar.animate({
+
+				top: CommentPress.theme.settings.get_container_top_min() + 'px',
+				duration: 'fast'
+
+			}, function() {
+
+				// when done
+				header_animating = false;
+
+				// don't set height when mobile device (but allow tablets)
+				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+
+					// fit column
+					CommentPress.theme.sidebars.set_height();
+
+				}
+
+			});
+
+		}
+
+	};
+
+
+
+}; // end original.header class
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
+// do immediate init
+CommentPress.theme.settings.init();
+
+// the default theme needs its header inited before DOM
+CommentPress.theme.original.header.init();
+
+CommentPress.theme.DOM.init();
+CommentPress.theme.header.init();
+CommentPress.theme.navigation.init();
+CommentPress.theme.content.init();
+CommentPress.theme.sidebars.init();
+CommentPress.theme.viewport.init();
+
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
+/**
+ * Define what happens when the page is ready
+ *
+ * @return void
+ */
+jQuery(document).ready( function($) {
+
+
+
+	// trigger DOM ready methods
+	CommentPress.theme.settings.dom_ready();
+	CommentPress.theme.DOM.dom_ready();
+	CommentPress.theme.header.dom_ready();
+	CommentPress.theme.navigation.dom_ready();
+	CommentPress.theme.content.dom_ready();
+	CommentPress.theme.sidebars.dom_ready();
+	CommentPress.theme.viewport.dom_ready();
+
+	// the default theme implements custom header actions
+	CommentPress.theme.original.header.dom_ready();
+
+
+
+	/**
+	 * Hook into CommentPress Form comment highlight trigger
+	 *
+	 * @param int parent_id The parent comment ID
+	 * @return void
+	 */
+	$( document ).on( 'commentpress-comment-highlight', function( event, parent_id ) {
+
+		// declare vars
+		var comment_border;
+
+		// set highlight colour
+		jQuery('#li-comment-' + parent_id + ' > .comment-wrapper').css( 'background-color', '#CBFFBD' );
+
+		// get existing colour
+		comment_border = jQuery('#comment-' + parent_id + ' > .comment-content').css( 'border-bottom' );
+
+		// save it
+		CommentPress.theme.settings.set_comment_border( comment_border );
+
+		// set highlight
+		jQuery('#comment-' + parent_id + ' > .comment-content').css( 'border-bottom', '1px dashed #b8b8b8' );
+
+
+	});
+
+	/**
+	 * Hook into CommentPress Form comment unhighlight trigger
+	 *
+	 * @param int parent_id The parent comment ID
+	 * @return void
+	 */
+	$( document ).on( 'commentpress-comment-unhighlight', function( event, parent_id ) {
+
+		// declare vars
+		var comment_border;
+
+		// get existing colour
+		comment_border = CommentPress.theme.settings.get_comment_border();
+
+		// reset highlight colours
+		jQuery('#li-comment-' + parent_id + ' > .comment-wrapper').css( 'background-color', '#fff' );
+		jQuery('#comment-' + parent_id + ' > .comment-content').css( 'border-bottom', comment_border );
+
+	});
+
+	/**
+	 * Hook into CommentPress Form clear all comment highlights trigger
+	 *
+	 * @return void
+	 */
+	$( document ).on( 'commentpress-comment-highlights-clear', function( event ) {
+
+		// declare vars
+		var comment_border;
+
+		// get existing colour
+		comment_border = CommentPress.theme.settings.get_comment_border();
+
+		// reset highlight colours
+		jQuery('.comment-wrapper').css( 'background-color', '#fff');
+		jQuery('.comment-content').css( 'border-bottom', comment_border );
+
+	});
+
+
+
+	/**
+	 * When a comment block permalink comes into focus
+	 *
+	 * @note in development for keyboard accessibility
+	 */
+	/*
+	if ( $().jquery >= 1.4 ) {
+		$('a.comment_block_permalink').focusin( function(e) {
+
+			// test -> needs refinement
+			//$(this).click();
+
+		});
+	}
+	*/
+
+	/**
+	 * When a comment block permalink loses focus
+	 *
+	 * @note: in development for keyboard accessibility
+	 */
+	/*
+	$('a.comment_block_permalink').blur( function(e) {
+
+		// test -> needs refinement
+		//$(this).click();
+
+	});
+	*/
+
+
+
+	// scroll the page on load
+	if ( cp_special_page == '1' ) {
+		CommentPress.common.content.on_load_scroll_to_comment();
+	} else {
+		CommentPress.theme.viewport.on_load_scroll_to_anchor();
+	}
+
+
+
+	// broadcast that we're done
+	$( document ).trigger( 'commentpress-document-ready' );
+
+});
+
+
+
+/**
+ * Define what happens when the page is unloaded
+ *
+ * @return void
+ */
+/*
+jQuery(window).unload( function() {
+
+	// debug
+	//console.log('Bye now!');
+
+});
+*/

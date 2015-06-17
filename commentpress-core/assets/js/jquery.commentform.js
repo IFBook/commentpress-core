@@ -1,6 +1,6 @@
 /*
 ================================================================================
-CommentPress Modern addComment Javascript
+CommentPress Common addComment Javascript
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
@@ -198,7 +198,7 @@ addComment = {
 
 
 
-		// --<
+		// do not bubble
 		return false;
 
 	},
@@ -218,22 +218,16 @@ addComment = {
 		// set paraID
 		var paraID = 'reply_to_para-' + paraNum;
 
-
-
 		// move the form
 		addComment.moveForm(
-
 			paraID,
 			'0',
 			'respond',
 			postID,
 			textSig
-
 		);
 
-
-
-		// --<
+		// do not bubble
 		return false;
 
 	},
@@ -295,7 +289,7 @@ addComment = {
 				var para_id = jQuery('#para_wrapper-' + text_sig + ' .reply_to_para').attr('id');
 
 				// is there an element for the exact match?
-				if ( para_id === undefined ) {
+				if ( 'undefined' === typeof para_id ) {
 
 					// NO -> crawl up the DOM looking for the wrapper
 					var parent_wrapper = jQuery('#respond').closest('div.paragraph_wrapper');
@@ -338,6 +332,7 @@ addComment = {
 				// return form to para
 				addComment.moveFormToPara( para_num, text_sig, post_id );
 
+				// do not bubble
 				return false;
 
 			}
@@ -380,19 +375,15 @@ addComment = {
 		// set title
 		addComment.setTitle( '0', text_sig, 'cancel' );
 
-
-
 		// clear text sig
 		this.text_signature = '';
-
-
 
 		// reload tinyMCE
 		addComment.enableForm();
 
 
 
-		// --<
+		// do not bubble
 		return false;
 
 	},
@@ -497,10 +488,10 @@ addComment = {
 		var title = addComment.I('respond_title');
 
 		// is it a comment reply?
-		if ( parentID === undefined || parentID == '0' ) {
+		if ( 'undefined' === typeof parentID || parentID == '0' ) {
 
 			// NO -> is it a comment on the whole page?
-			if ( textSig === undefined || textSig == '' ) {
+			if ( 'undefined' === typeof textSig || textSig == '' ) {
 
 				// if special page
 				if ( cp_special_page == '1' ) {
@@ -555,7 +546,7 @@ addComment = {
 				if ( ( comment_list[0] && cp_promote_reading == '0' ) || cp_promote_reading == '1' ) {
 
 					// show previous reply to para link
-					if ( addComment.text_signature !== undefined ) {
+					if ( 'undefined' !== typeof addComment.text_signature ) {
 						jQuery( '#para_wrapper-' + addComment.text_signature + ' div.reply_to_para' ).show();
 					}
 
@@ -597,13 +588,13 @@ addComment = {
 				title.innerHTML = unique;
 
 				// sanitise textSig
-				if ( textSig === undefined || textSig == '' ) { textSig == ''; }
+				if ( 'undefined' === typeof textSig || textSig == '' ) { textSig == ''; }
 
 				// if promoting commenting, sort out reply to para links
 				if ( cp_promote_reading == '1' ) {
 
 					// show previous
-					if ( addComment.text_signature !== undefined ) {
+					if ( 'undefined' !== typeof addComment.text_signature ) {
 						jQuery( '#para_wrapper-' + addComment.text_signature + ' div.reply_to_para' ).show();
 					}
 
@@ -633,8 +624,8 @@ addComment = {
 			jQuery( '#comment-' + parentID + ' > .reply' ).css('display', 'none');
 		}
 
-		// highlight comment
-		jQuery( '#li-comment-' + parentID + ' > .comment-wrapper' ).addClass('background-highlight');
+		// trigger theme to highlight comment
+		jQuery( document ).trigger( 'commentpress-comment-highlight', [ parentID ] );
 
 	},
 
@@ -657,7 +648,7 @@ addComment = {
 		}
 
 		// unhighlight comment
-		jQuery( '#li-comment-' + parentID + ' > .comment-wrapper' ).removeClass('background-highlight');
+		jQuery( document ).trigger( 'commentpress-comment-unhighlight', [ parentID ] );
 
 	},
 
@@ -674,7 +665,7 @@ addComment = {
 		jQuery( '.reply' ).css('display', 'block');
 
 		// clear highlight
-		jQuery( '.comment-wrapper' ).removeClass('background-highlight');
+		jQuery( document ).trigger( 'commentpress-comment-highlights-clear' );
 
 	},
 
@@ -702,7 +693,7 @@ addComment = {
 	getLevel : function() {
 
 		// is the comment on the paragraph?
-		if ( this.parentID === undefined || this.parentID === '0' ) {
+		if ( 'undefined' === typeof this.parentID || this.parentID === '0' ) {
 
 			return true;
 

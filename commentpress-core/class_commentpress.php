@@ -790,7 +790,7 @@ class CommentpressCore {
 
 		}
 
-		// get list option flag
+		// get constructed hidden input for comment form
 		$result = $this->display->get_signature_input( $text_sig );
 
 		// --<
@@ -1278,6 +1278,9 @@ class CommentpressCore {
 
 		// store our comment signature
 		$result = $this->db->save_comment_signature( $comment_ID );
+
+		// store our comment selection
+		$result = $this->db->save_comment_selection( $comment_ID );
 
 		// in multipage situations, store our comment's page
 		$result = $this->db->save_comment_page( $comment_ID );

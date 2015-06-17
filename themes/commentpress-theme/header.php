@@ -1,7 +1,4 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!--[if IE 6]>
-<html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?> class="ie6">
-<![endif]-->
 <!--[if IE 7]>
 <html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?> class="ie7">
 <![endif]-->
@@ -26,11 +23,10 @@
 <!-- pingbacks -->
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 
-<!--[if IE 6]>
+<!--[if IE]>
 <script type='text/javascript'>
 /* <![CDATA[ */
-// set this before wp_head()
-var cp_msie6 = 1;
+var cp_msie = 1;
 /* ]]> */
 </script>
 <![endif]-->
@@ -60,9 +56,6 @@ if( file_exists( get_stylesheet_directory().'/custom.css' )) {
 } ?>
 
 <!-- IE stylesheets so we can override anything -->
-<!--[if IE 6]>
-<link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/assets/css/ie6.css" media="screen" />
-<![endif]-->
 <!--[if gte IE 7]>
 <link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/assets/css/ie7.css" media="screen" />
 <![endif]-->

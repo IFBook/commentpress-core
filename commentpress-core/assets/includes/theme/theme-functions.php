@@ -87,7 +87,7 @@ endif; // commentpress_admin_header
 
 if ( ! function_exists( 'commentpress_customize_register' ) ) :
 /**
- * Implements CommentPress Default Theme options into Theme Customizer
+ * Implements CommentPress Theme options into Theme Customizer
  *
  * @param $wp_customize Theme Customizer object
  * @return void
@@ -101,19 +101,97 @@ function commentpress_customize_register( $wp_customize ) {
 	// kick out if buddypress groupblog...
 	if ( is_object( $commentpress_core ) AND $commentpress_core->is_groupblog() ) return;
 
+	// do we have the WP 4.2 WP_Customize_Media_Control class?
+	if ( class_exists( 'WP_Customize_Media_Control' ) ) {
+
+		/**
+		 * Customize Site Image Control class.
+		 *
+		 * This is incomplete at present, because the labels are not all overridden
+		 * the way we would like them, but it does at least allow us to save the
+		 * attachment ID of the uploaded image instead of the URL to the full size image.
+		 *
+		 * @see WP_Customize_Media_Control
+		 */
+		class WP_Customize_Site_Image_Control extends WP_Customize_Media_Control {
+
+			// properties
+			public $type = 'media';
+			public $mime_type = 'image';
+			public $button_labels = array();
+
+			/**
+			 * Constructor.
+			 *
+			 * @param WP_Customize_Manager $manager
+			 * @param string $id
+			 * @param array  $args
+			 */
+			public function __construct( $manager, $id, $args = array() ) {
+
+				// call parent constructor
+				parent::__construct( $manager, $id, $args );
+
+				// allow label to be filtered
+				$site_image = apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) );
+
+				// set labels
+				$this->button_labels = array(
+					'select'       => sprintf( __( 'Select %s', 'commentpress-core' ), $site_image ),
+					'change'       => sprintf( __( 'Change %s', 'commentpress-core' ), $site_image ),
+					'remove'       => sprintf( __( 'Remove %s', 'commentpress-core' ), $site_image ),
+					'default'      => sprintf( __( 'Default %s', 'commentpress-core' ), $site_image ),
+					'placeholder'  => sprintf( __( 'No %s selected', 'commentpress-core' ), $site_image ),
+					'frame_title'  => sprintf( __( 'Select %s', 'commentpress-core' ), $site_image ),
+					'frame_button' => sprintf( __( 'Choose %s', 'commentpress-core' ), $site_image ),
+				);
+
+			}
+
+		}
+
+		// register control (not needed as yet, but is if we want to fully extend)
+		//$wp_customize->register_control_type( 'WP_Customize_Site_Image_Control' );
+
+		// add customizer section title
+		$wp_customize->add_section( 'cp_site_image', array(
+			'title' => apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) ),
+			'priority' => 25,
+		) );
+
+		// add image setting
+		$wp_customize->add_setting( 'commentpress_theme_settings[cp_site_image]', array(
+			 'default' => '',
+			 'capability' => 'edit_theme_options',
+			 'type' => 'option'
+		));
+
+		// add image control
+		$wp_customize->add_control( new WP_Customize_Site_Image_Control(
+			$wp_customize, 'cp_site_image', array(
+			'label' => apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) ),
+		    'description' => apply_filters( 'commentpress_customizer_site_image_description', __( 'Choose an image to represent your site', 'commentpress-core' ) ),
+			'section' => 'cp_site_image',
+			'settings' => 'commentpress_theme_settings[cp_site_image]',
+			'priority'	=>	1
+		)));
+
+	}
+
 	// add customizer section title
 	$wp_customize->add_section( 'cp_inline_header_image', array(
 		'title' => __( 'Site Logo', 'commentpress-core' ),
 		'priority' => 35,
 	) );
 
-	// add image
+	// add image setting
 	$wp_customize->add_setting( 'commentpress_theme_settings[cp_inline_header_image]', array(
 		 'default' => '',
 		 'capability' => 'edit_theme_options',
 		 'type' => 'option'
 	));
 
+	// add image control
 	$wp_customize->add_control( new WP_Customize_Image_Control(
 		$wp_customize, 'cp_inline_header_image', array(
 		'label' => __( 'Logo Image', 'commentpress-core' ),
@@ -122,13 +200,14 @@ function commentpress_customize_register( $wp_customize ) {
 		'priority'	=>	1
 	)));
 
-	// add padding
+	// add padding setting
 	$wp_customize->add_setting( 'commentpress_theme_settings[cp_inline_header_padding]', array(
 		 'default' => '',
 		 'capability' => 'edit_theme_options',
 		 'type' => 'option'
 	));
 
+	// add text control
 	$wp_customize->add_control( 'commentpress_theme_settings[cp_inline_header_padding]', array(
 		'label' => __( 'Top padding in px', 'commentpress-core' ),
 		'section' => 'cp_inline_header_image',
@@ -2155,7 +2234,7 @@ function commentpress_comment_form_title(
 	$reply_to_para_id = isset( $_GET['replytopara'] ) ? (int) $_GET['replytopara'] : 0;
 
 	// if we have no comment ID AND no paragraph ID to reply to
-	if ( $reply_to_comment_id == 0 AND $reply_to_para_id == 0 ) {
+	if ( $reply_to_comment_id == 0 AND $reply_to_para_id === 0 ) {
 
 		// write default title to page
 		echo $no_reply_text;
@@ -2163,7 +2242,7 @@ function commentpress_comment_form_title(
 	} else {
 
 		// if we have a comment ID AND NO paragraph ID to reply to
-		if ( $reply_to_comment_id != 0 AND $reply_to_para_id == 0 ) {
+		if ( $reply_to_comment_id !== 0 AND $reply_to_para_id === 0 ) {
 
 			// get comment
 			$comment = get_comment( $reply_to_comment_id );
@@ -2482,10 +2561,12 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 
 
 <div class="comment-identifier' . $_comment_orphan . '">
+' . apply_filters( 'commentpress_comment_identifier_prepend', '', $comment ) . '
 ' . get_avatar( $comment, $size='32' ) . '
 ' . $editlink . '
 ' . $author . '
-<a class="comment_permalink" href="' . htmlspecialchars( get_comment_link() ) . '"><span class="comment_permalink_copy"></span>' . $_comment_permalink . '</a>
+<a class="comment_permalink" href="' . htmlspecialchars( get_comment_link() ) . '" title="' . __( 'Permalink for this comment', 'commentpress-core' ) . '"><span class="comment_permalink_copy"></span>' . $_comment_permalink . '</a>
+' . apply_filters( 'commentpress_comment_identifier_append', '', $comment ) . '
 </div><!-- /comment-identifier -->
 
 
@@ -3785,5 +3866,74 @@ function commentpress_sidebars_widgets( $array ) {
 // add filter for above
 add_filter( 'sidebars_widgets', 'commentpress_sidebars_widgets', 1000 );
 
+
+
+/**
+ * Filter the comment class to add selection data
+ *
+ * @param array $classes An array of comment classes.
+ * @param string $class A comma-separated list of additional classes added to the list.
+ * @param int $comment_id The comment id.
+ * @param object $comment The comment
+ * @param int|WP_Post $post_id The post ID or WP_Post object.
+ */
+function commentpress_add_selection_classes( $classes, $class, $comment_id, $comment, $post_id = 0 ) {
+
+	// define key
+	$key = '_cp_comment_selection';
+
+	// get current
+	$data = get_comment_meta( $comment_id, $key, true );
+
+	// if the comment meta already has a value...
+	if ( ! empty( $data ) ) {
+
+		// make into an array
+		$selection = explode( ',', $data );
+
+		// add to classes
+		$classes[] = 'selection-exists';
+		$classes[] = 'sel_start-' . $selection[0];
+		$classes[] = 'sel_end-' . $selection[1];
+
+	}
+
+	// --<
+	return $classes;
+
+}
+
+// add filter for above
+add_filter( 'comment_class', 'commentpress_add_selection_classes', 100, 4 );
+
+
+
+/**
+ * Prefixes BuddyPress pages with the div wrappers that CommentPress needs
+ */
+function commentpress_prefix_bp_templates() {
+
+	// prefixed wrappers
+	echo '<div id="wrapper"><div id="main_wrapper" class="clearfix"><div id="page_wrapper">';
+
+}
+
+// add action for above
+add_action( 'bp_before_directory_groupsites_page', 'commentpress_prefix_bp_templates' );
+
+
+
+/**
+ * Suffixes BuddyPress pages with the div wrappers that CommentPress needs
+ */
+function commentpress_suffix_bp_templates() {
+
+	// prefixed wrappers
+	echo '</div><!-- /page_wrapper --></div><!-- /main_wrapper --></div><!-- /wrapper -->';
+
+}
+
+// add action for above
+add_action( 'bp_after_directory_groupsites_page', 'commentpress_suffix_bp_templates' );
 
 

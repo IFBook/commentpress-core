@@ -231,45 +231,111 @@ class CommentpressCoreDisplay {
 	public function get_jquery() {
 
 		// default to minified scripts
-		$debug_state = '';
+		$debug_state = '.min';
 
 		// target different scripts when debugging
 		if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
 
 			// use uncompressed scripts
-			$debug_state = '.dev';
+			$debug_state = '';
 
 		}
 
 		// add our javascript plugin and dependencies
 		wp_enqueue_script(
-
 			'jquery_commentpress',
 			plugins_url( 'commentpress-core/assets/js/jquery.commentpress' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
-			array( 'jquery', 'jquery-form', 'jquery-ui-core', 'jquery-ui-resizable' ),
+			array( 'jquery', 'jquery-form', 'jquery-ui-core', 'jquery-ui-resizable', 'jquery-ui-tooltip' ),
 			COMMENTPRESS_VERSION // version
-
 		);
+
+		// get vars
+		$vars = $this->db->get_javascript_vars();
+
+		// localise with wp function
+		wp_localize_script( 'jquery_commentpress', 'CommentpressSettings', $vars );
 
 		// add jQuery Scroll-To plugin
 		wp_enqueue_script(
-
 			'jquery_scrollto',
 			plugins_url( 'commentpress-core/assets/js/jquery.scrollTo.js', COMMENTPRESS_PLUGIN_FILE ),
 			array( 'jquery_commentpress' ),
 			COMMENTPRESS_VERSION // version
-
 		);
 
 		// add jQuery Cookie plugin (renamed to jquery.biscuit.js because some hosts don't like 'cookie' in the filename)
 		wp_enqueue_script(
-
 			'jquery_cookie',
 			plugins_url( 'commentpress-core/assets/js/jquery.biscuit.js', COMMENTPRESS_PLUGIN_FILE ),
 			array( 'jquery_commentpress' ),
 			COMMENTPRESS_VERSION // version
-
 		);
+
+		// only allow text highlighting on non-touch devices (allow testing override)
+		if ( ! $this->db->is_touch() OR ( defined( 'COMMENTPRESS_TOUCH_SELECT' ) AND COMMENTPRESS_TOUCH_SELECT ) {
+
+			// bail if BuddyPress special page
+			if ( $this->parent_obj->is_buddypress() AND $this->parent_obj->is_buddypress_special_page() ) {
+				return;
+			}
+
+			// bail if CommentPress Core special page
+			if ( $this->db->is_special_page() ) {
+				return;
+			}
+
+			// add jQuery wrapSelection plugin
+			wp_enqueue_script(
+				'jquery_wrapselection',
+				plugins_url( 'commentpress-core/assets/js/jquery.wrap-selection' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
+				array( 'jquery_commentpress' ),
+				COMMENTPRESS_VERSION // version
+			);
+
+			// add jQuery highlighter plugin
+			wp_enqueue_script(
+				'jquery_highlighter',
+				plugins_url( 'commentpress-core/assets/js/jquery.highlighter' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
+				array( 'jquery_wrapselection' ),
+				COMMENTPRESS_VERSION // version
+			);
+
+			// add jQuery text highlighter plugin
+			wp_enqueue_script(
+				'jquery_texthighlighter',
+				plugins_url( 'commentpress-core/assets/js/jquery.texthighlighter' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
+				array( 'jquery_highlighter' ),
+				COMMENTPRESS_VERSION // version
+			);
+
+			// define popover for textblocks
+			$popover_textblock = '<span class="popover-holder"><div class="popover-holder-inner"><div class="popover-holder-caret"></div><div class="popover-holder-btn-left"><span class="popover-holder-btn-left-comment">' . __( 'Comment', 'commentpress-core' ) . '</span><span class="popover-holder-btn-left-quote">' . __( 'Quote &amp; Comment', 'commentpress-core' ) . '</span></div><div class="popover-holder-btn-right">&times;</div></div></span>';
+
+			// define popover for comments
+			$popover_comment = '<span class="comment-popover-holder"><div class="popover-holder-inner"><div class="popover-holder-caret"></div><div class="popover-holder-btn-left"><span class="comment-popover-holder-btn-left-quote">' . __( 'Quote', 'commentpress-core' ) . '</span></div><div class="popover-holder-btn-right">&times;</div></div></span>';
+
+			// define localisation array
+			$texthighlighter_vars = array(
+				'popover_textblock' => $popover_textblock,
+				'popover_comment' => $popover_comment,
+			);
+
+			// create translations
+			$texthighlighter_translations = array(
+				'dialog_title' => __( 'Are you sure?', 'commentpress-core' ),
+				'dialog_content' => __( 'You have not yet submitted your comment. Are you sure you want to discard it?', 'commentpress-core' ),
+				'dialog_yes' => __( 'Discard', 'commentpress-core' ),
+				'dialog_no' => __( 'Keep', 'commentpress-core' ),
+				'backlink_text' => __( 'Back', 'commentpress-core' ),
+			);
+
+			// add to vars
+			$texthighlighter_vars['localisation'] = $texthighlighter_translations;
+
+			// localise with wp function
+			wp_localize_script( 'jquery_texthighlighter', 'CommentpressTextSelectorSettings', $texthighlighter_vars );
+
+		}
 
 		/**
 		 * Prior to WP3.2 (IIRC), jQuery UI has to be added separately, as the
@@ -1031,7 +1097,7 @@ HELPTEXT;
 				), $para_num );
 
 				// define paragraph marker
-				$para_marker = '<span class="para_marker"><a id="' . $text_signature . '" href="#' . $text_signature . '" title="' . $permalink_text . '">&para; <span>' . (string) $para_num . '</span></a></span>';
+				$para_marker = '<span class="para_marker"><a class="textblock_permalink" id="' . $text_signature . '" href="#' . $text_signature . '" title="' . $permalink_text . '">&para; <span>' . (string) $para_num . '</span></a></span>';
 
 				break;
 
@@ -1059,7 +1125,7 @@ HELPTEXT;
 				), $para_num );
 
 				// define paragraph marker
-				$para_marker = '<span class="para_marker"><a id="' . $text_signature . '" href="#' . $text_signature . '" title="' . $permalink_text . '">&para; <span>' . (string) $para_num . '</span></a></span>';
+				$para_marker = '<span class="para_marker"><a class="textblock_permalink" id="' . $text_signature . '" href="#' . $text_signature . '" title="' . $permalink_text . '">&para; <span>' . (string) $para_num . '</span></a></span>';
 
 				break;
 
@@ -1088,7 +1154,7 @@ HELPTEXT;
 				), $para_num );
 
 				// define paragraph marker
-				$para_marker = '<span class="para_marker"><a id="' . $text_signature . '" href="#' . $text_signature . '" title="' . $permalink_text . '">&para; <span>' . (string) $para_num . '</span></a></span>';
+				$para_marker = '<span class="para_marker"><a class="textblock_permalink" id="' . $text_signature . '" href="#' . $text_signature . '" title="' . $permalink_text . '">&para; <span>' . (string) $para_num . '</span></a></span>';
 
 				break;
 

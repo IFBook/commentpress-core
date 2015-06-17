@@ -103,13 +103,13 @@ function cpajax_add_javascripts() {
 	$vars['cpajax_lang'] = cpajax_localise();
 
 	// default to minified scripts
-	$debug_state = '';
+	$debug_state = '.min';
 
 	// target different scripts when debugging
 	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
 
 		// use uncompressed scripts
-		$debug_state = '.dev';
+		$debug_state = '';
 
 	}
 
@@ -119,7 +119,7 @@ function cpajax_add_javascripts() {
 		// add comments in page script
 		wp_enqueue_script(
 			'cpajax',
-			plugins_url( 'commentpress-ajax/cp-ajax-comments-page' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
+			plugins_url( 'commentpress-ajax/assets/js/cp-ajax-comments-page' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
 			null, // no dependencies
 			COMMENTPRESS_VERSION // version
 		);
@@ -129,7 +129,7 @@ function cpajax_add_javascripts() {
 		// add comments in sidebar script
 		wp_enqueue_script(
 			'cpajax',
-			plugins_url( 'commentpress-ajax/cp-ajax-comments' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
+			plugins_url( 'commentpress-ajax/assets/js/cp-ajax-comments' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
 			array( 'jquery-ui-droppable', 'jquery-ui-dialog' ), // load droppable and dialog as dependencies
 			COMMENTPRESS_VERSION // version
 		);
@@ -563,13 +563,13 @@ function cpajax_infinite_scroll_scripts() {
 	global $post, $commentpress_core;
 
 	// default to minified scripts
-	$debug_state = '';
+	$debug_state = '.min';
 
 	// target different scripts when debugging
 	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
 
 		// use uncompressed scripts
-		$debug_state = '.dev';
+		$debug_state = '';
 
 	}
 

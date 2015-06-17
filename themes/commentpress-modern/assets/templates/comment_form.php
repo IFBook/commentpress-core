@@ -27,6 +27,8 @@ global $post;
 $user = wp_get_current_user();
 $user_identity = $user->exists() ? $user->display_name : '';
 
+
+
 // check force state (this is for infinite scroll)
 $cp_force_form = apply_filters( 'commentpress_force_comment_form', false );
 
@@ -44,6 +46,11 @@ if ( $cp_force_form ) {
 	$forced_class = ' class="' . implode( ' ', $forced_classes ) . '"';
 
 }
+
+
+
+// allow plugins to override showing the comment form
+$show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 
 ?>
 
@@ -89,10 +96,7 @@ if ( $cp_force_form ) {
 
 	<?php
 
-	// allow plugins to override showing the comment form
-	$show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
-
-	// how did we do?
+	// are we showing the comment form?
 	if ( $show_comment_form ) {
 
 		// get required status
@@ -115,10 +119,10 @@ if ( $cp_force_form ) {
 
 			<?php else : ?>
 
-				<p><label for="author"><small><?php _e( 'Name', 'commentpress-core' ); ?><?php if ($req) echo ' <span class="req">('.__( 'required', 'commentpress-core' ).')</span>'; ?></small></label><br />
+				<p><label for="author"><small><?php _e( 'Name', 'commentpress-core' ); ?><?php if ($req) echo ' <span class="req">(' . __( 'required', 'commentpress-core' ) . ')</span>'; ?></small></label><br />
 				<input type="text" name="author" id="author" value="<?php echo esc_attr( $commenter['comment_author'] ); ?>" size="30"<?php if ($req) echo ' aria-required="true"'; ?> /></p>
 
-				<p><label for="email"><small><?php _e( 'Mail (will not be published)', 'commentpress-core' ); ?><?php if ($req) echo ' <span class="req">('.__( 'required', 'commentpress-core' ).')</span>'; ?></small></label><br />
+				<p><label for="email"><small><?php _e( 'Mail (will not be published)', 'commentpress-core' ); ?><?php if ($req) echo ' <span class="req">(' . __( 'required', 'commentpress-core' ) . ')</span>'; ?></small></label><br />
 				<input type="text" name="email" id="email" value="<?php echo esc_attr(  $commenter['comment_author_email'] ); ?>" size="30"<?php if ($req) { echo ' aria-required="true"'; } ?> /></p>
 
 				<p class="author_not_logged_in"><label for="url"><small><?php _e( 'Website', 'commentpress-core' ); ?></small></label><br />
@@ -148,21 +152,26 @@ if ( $cp_force_form ) {
 
 		</fieldset>
 
+		<?php do_action('commentpress_comment_form_pre_comment_id_fields', $post->ID); ?>
+
 		<?php
 
 		// add default wp fields
 		comment_id_fields();
 
-		// get text sig input
+		// is CommentPress active?
 		global $commentpress_core;
 		if ( is_object( $commentpress_core ) ) {
+
+			// get text sig input
 			echo $commentpress_core->get_signature_field();
+
 		}
 
 		// add page for multipage situations
 		global $page;
 		if ( !empty( $page ) ) {
-			echo "\n".'<input type="hidden" name="page" value="'.$page.'" />'."\n";
+			echo "\n" . '<input type="hidden" name="page" value="' . $page . '" />' . "\n";
 		}
 
 		// compatibility with Subscribe to Comments Reloaded
@@ -174,6 +183,8 @@ if ( $cp_force_form ) {
 
 		?>
 
+		<?php do_action('commentpress_comment_form_pre_submit', $post->ID); ?>
+
 		<p id="respond_button"><input name="submit" type="submit" id="submit" value="<?php _e( 'Submit Comment', 'commentpress-core' ); ?>" /></p>
 
 		<?php do_action('comment_form', $post->ID); ?>
@@ -182,7 +193,23 @@ if ( $cp_force_form ) {
 
 		<?php
 
-	} // end check for plugin overrides
+	} else { // end check for plugin overrides
+
+		?>
+
+		<p class="commentpress_comment_form_hidden"><?php
+			echo apply_filters(
+				'commentpress_comment_form_hidden',
+				sprintf(
+					__( 'You must be <a href="%s">logged in</a> to post a comment.', 'commentpress-core' ),
+					get_option('siteurl') . '/wp-login.php?redirect_to=' . urlencode( get_permalink() )
+				)
+			);
+		?></p>
+
+		<?php
+
+	}
 
 	?>
 
