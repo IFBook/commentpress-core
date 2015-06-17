@@ -514,8 +514,8 @@ CommentPress.common.DOM = new function() {
 	 */
 	this.location_set = function( url ) {
 
-		// do we have pushstate?
-		if ( window.history ) {
+		// do we have replaceState?
+		if ( window.history && window.history.replaceState ) {
 
 			// replace window state
 			window.history.replaceState( {} , '', url );
@@ -533,8 +533,8 @@ CommentPress.common.DOM = new function() {
 	 */
 	this.location_reset = function() {
 
-		// do we have pushstate?
-		if ( window.history ) {
+		// do we have replaceState?
+		if ( window.history && window.history.replaceState ) {
 
 			// replace window state with original
 			window.history.replaceState( {} , '', CommentPress.settings.DOM.get_permalink() );
