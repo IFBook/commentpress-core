@@ -2698,12 +2698,7 @@ class CommentpressCoreDatabase {
 		$vars['cp_tinymce'] = 1;
 
 		// check if users must be logged in to comment
-		if (
-
-			get_option( 'comment_registration' ) == '1' AND
-			! is_user_logged_in()
-
-		) {
+		if ( get_option( 'comment_registration' ) == '1' AND ! is_user_logged_in() ) {
 
 			// don't add rich text editor
 			$vars['cp_tinymce'] = 0;
@@ -2712,10 +2707,8 @@ class CommentpressCoreDatabase {
 
 		// check CP option
 		if (
-
 			$this->option_exists( 'cp_comment_editor' ) AND
 			$this->option_get( 'cp_comment_editor' ) != '1'
-
 		) {
 
 			// don't add rich text editor
@@ -2724,12 +2717,7 @@ class CommentpressCoreDatabase {
 		}
 
 		// if on a public groupblog and user isn't logged in
-		if (
-
-			$this->parent_obj->is_groupblog() AND
-			! is_user_logged_in()
-
-		) {
+		if ( $this->parent_obj->is_groupblog() AND ! is_user_logged_in() ) {
 
 			// don't add rich text editor, because only members can comment
 			$vars['cp_tinymce'] = 0;
@@ -2770,6 +2758,17 @@ class CommentpressCoreDatabase {
 
 		}
 
+		// add touch testing var
+		$vars['cp_touch_testing'] = 0;
+
+		// have we set our testing constant?
+		if ( defined( 'COMMENTPRESS_TOUCH_SELECT' ) AND COMMENTPRESS_TOUCH_SELECT ) {
+
+			// support touch device testing
+			$vars['cp_touch_testing'] = 1;
+
+		}
+
 		// add tablet var
 		$vars['cp_is_tablet'] = 0;
 
@@ -2803,10 +2802,8 @@ class CommentpressCoreDatabase {
 
 		// check option
 		if (
-
 			$this->option_exists( 'cp_promote_reading' ) AND
 			$this->option_get( 'cp_promote_reading' ) != '1'
-
 		) {
 
 			// promote commenting
@@ -2874,10 +2871,8 @@ class CommentpressCoreDatabase {
 
 		// check option
 		if (
-
 			$this->option_exists( 'cp_textblock_meta' ) AND
 			$this->option_get( 'cp_textblock_meta' ) == 'n'
-
 		) {
 
 			// only show textblock meta on rollover

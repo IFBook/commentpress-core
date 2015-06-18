@@ -526,12 +526,32 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 */
 	this.setup_content = function() {
 
+		// declare vars
+		var touchstart = '', touchend = '';
+
+		// support touch device testing
+		if ( cp_is_touch == '1' && cp_touch_testing == '1' ) {
+			touchstart = ' touchstart';
+			touchend = ' touchend';
+		}
+
 		/**
 		 * Act on mousedown on textblock
 		 *
 		 * @return void
 		 */
-		$('#container').on( 'mousedown', '.textblock', function() {
+		$('#container').on( 'mousedown' + touchstart, '.textblock', function() {
+
+			// if we have no comment form
+			if ( CommentPress.texthighlighter.commentform.has_commentform() == 'n' ) {
+
+				// disable highlighter
+				me.highlighter_disable();
+
+				// bail
+				return;
+
+			}
 
 			// bail if commentform has focus
 			if ( CommentPress.texthighlighter.commentform.focus_is_active() ) { return; }
@@ -555,7 +575,10 @@ CommentPress.texthighlighter.textblocks = new function() {
 		 *
 		 * @return void
 		 */
-		$('#container').on( 'mouseup', '.textblock', function() {
+		$('#container').on( 'mouseup' + touchend, '.textblock', function() {
+
+			// bail if we have no comment form
+			if ( CommentPress.texthighlighter.commentform.has_commentform() == 'n' ) { return; }
 
 			// bail if commentform has focus
 			if ( CommentPress.texthighlighter.commentform.focus_is_active() ) { return; }
@@ -1062,6 +1085,25 @@ CommentPress.texthighlighter.commentform = new function() {
 
 
 
+	// init "has commentform" flag
+	this.commentform_exists = 'n';
+
+	/**
+	 * Setter for "has commentform" flag
+	 */
+	this.set_commentform_flag = function( val ) {
+		this.commentform_exists = val;
+	};
+
+	/**
+	 * Getter for "has commentform" flag
+	 */
+	this.has_commentform = function() {
+		return this.commentform_exists;
+	};
+
+
+
 	/**
 	 * Initialise the jQuery text highlighter commentform.
 	 *
@@ -1099,7 +1141,16 @@ CommentPress.texthighlighter.commentform = new function() {
 	this.setup = function() {
 
 		// declare vars
-		var input;
+		var commentform, input;
+
+		// try and locate comment form
+		commentform = $('#commentform');
+
+		// bail if we have no comment form
+		if ( commentform.length == 0 ) { return; }
+
+		// set flag
+		me.set_commentform_flag( 'y' );
 
 		// append input to comment form
 		input = '<input type="hidden" name="text_selection" id="text_selection" value="" />';
@@ -1650,6 +1701,17 @@ CommentPress.texthighlighter.comments = new function() {
 		 */
 		$('#comments_sidebar').on( 'mousedown', '.comment-content', function() {
 
+			// if we have no comment form
+			if ( CommentPress.texthighlighter.commentform.has_commentform() == 'n' ) {
+
+				// disable highlighter
+				me.highlighter_disable();
+
+				// bail
+				return;
+
+			}
+
 			// define vars
 			var start_id;
 
@@ -1670,6 +1732,9 @@ CommentPress.texthighlighter.comments = new function() {
 		 * @return void
 		 */
 		$('#comments_sidebar').on( 'mouseup', '.comment-content', function() {
+
+			// bail if we have no comment form
+			if ( CommentPress.texthighlighter.commentform.has_commentform() == 'n' ) { return; }
 
 			// define vars
 			var start_id, end_id;

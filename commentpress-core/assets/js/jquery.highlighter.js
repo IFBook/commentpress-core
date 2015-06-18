@@ -80,6 +80,15 @@
     // global "enabled" flag
     var huffpostlabs_highlighter_enabled = true;
 
+	// init touch vars
+	var touchstart = '', touchend = '';
+
+	// support touch device testing
+	if ( cp_is_touch == '1' && cp_touch_testing == '1' ) {
+		touchstart = ' touchstart.highlighter';
+		touchend = ' touchend.highlighter';
+	}
+
     var methods = {
         init: function (options) {
 
@@ -192,7 +201,7 @@
                 }
                 $(settings.selector).hide();
                 $(settings.selector).css("position", "absolute");
-                $(document).bind('mouseup.highlighter', function (e) {
+                $(document).bind('mouseup.highlighter' + touchend, function (e) {
                     if (isDown) {
                         numClicks = 1;
                         clicks = 0;
@@ -202,7 +211,7 @@
                         isDown = false;
                     }
                 });
-                $(this).bind('mouseup.highlighter', function (e) {
+                $(this).bind('mouseup.highlighter' + touchend, function (e) {
                     numClicks = 1;
                     clicks = 0;
                     setTimeout(function () {
@@ -222,7 +231,7 @@
                         insertSpanAfterSelection(2);
                     }, 300);
                 });
-                $(this).bind('mousedown.highlighter', function (e) {
+                $(this).bind('mousedown.highlighter' + touchstart, function (e) {
                     $(settings.selector).hide();
                     isDown = true;
                 });
@@ -237,11 +246,11 @@
         },
         destroy: function (content) {
             return this.each(function () {
-                $(document).unbind('mouseup.highlighter');
-                $(this).unbind('mouseup.highlighter');
+                $(document).unbind('mouseup.highlighter' + touchend);
+                $(this).unbind('mouseup.highlighter' + touchend);
                 $(this).unbind('tripleclick.highlighter');
                 $(this).unbind('dblclick.highlighter');
-                $(this).unbind('mousedown.highlighter');
+                $(this).unbind('mousedown.highlighter' + touchstart);
             });
         }
     };

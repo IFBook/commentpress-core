@@ -272,7 +272,7 @@ class CommentpressCoreDisplay {
 		);
 
 		// only allow text highlighting on non-touch devices (allow testing override)
-		if ( ! $this->db->is_touch() OR ( defined( 'COMMENTPRESS_TOUCH_SELECT' ) AND COMMENTPRESS_TOUCH_SELECT ) {
+		if ( ! $this->db->is_touch() OR ( defined( 'COMMENTPRESS_TOUCH_SELECT' ) AND COMMENTPRESS_TOUCH_SELECT ) ) {
 
 			// bail if BuddyPress special page
 			if ( $this->parent_obj->is_buddypress() AND $this->parent_obj->is_buddypress_special_page() ) {
