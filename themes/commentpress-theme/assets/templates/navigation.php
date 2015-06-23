@@ -170,8 +170,8 @@ else {
 			// link to group in multisite groupblog
 			if ( $commentpress_core->is_groupblog() ) {
 
-				global $wpdb;
-				$blog_id = (int)$wpdb->blogid;
+				// get current blog ID
+				$blog_id = get_current_blog_id();
 
 				// check if this blog is a group blog...
 				$group_id = get_groupblog_group_id( $blog_id );

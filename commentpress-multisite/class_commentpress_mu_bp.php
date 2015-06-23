@@ -218,9 +218,8 @@ class CommentpressMultisiteBuddypress {
 		// do we have groupblogs?
 		if ( function_exists( 'get_groupblog_group_id' ) ) {
 
-			// get  blog ID
-			global $wpdb;
-			$blog_id = (int) $wpdb->blogid;
+			// get current blog ID
+			$blog_id = get_current_blog_id();
 
 			// check if this blog is a group blog...
 			$group_id = get_groupblog_group_id( $blog_id );
@@ -337,28 +336,27 @@ class CommentpressMultisiteBuddypress {
 	 */
 	public function is_blog_public( $blog_public_option ) {
 
-		global $wpdb;
-		$blog_id = (int)$wpdb->blogid;
-
 		// do we have groupblogs?
 		if ( function_exists( 'get_groupblog_group_id' ) ) {
+
+			// get current blog ID
+			$blog_id = get_current_blog_id();
 
 			// check if this blog is a group blog...
 			$group_id = get_groupblog_group_id( $blog_id );
 
-		}
+			// when this blog is a groupblog
+			if ( isset( $group_id ) AND is_numeric( $group_id ) ) {
 
-		// when this blog is a groupblog
-		if ( isset( $group_id ) AND is_numeric( $group_id ) ) {
+				// always true - so that activities are registered
+				return 1;
 
-			// always true - so that activities are registered
-			return 1;
-
-		} else {
-
-			return $blog_public_option;
+			}
 
 		}
+
+		// fallback
+		return $blog_public_option;
 
 	}
 
