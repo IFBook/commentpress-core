@@ -3132,6 +3132,11 @@ div#respond .comment_tagger_select2_container p.comment_tagger_select2_descripti
 	margin: 0;
 }
 
+div#respond .select2-container--default .select2-search--inline .select2-search__field
+{
+	-webkit-appearance: textfield;
+}
+
 .comment_tagger_tags
 {
 	font-size: 70%;

@@ -3041,6 +3041,11 @@ Compatibility with Comment Tagger plugin
 	border: 1px solid #dedede;
 }
 
+#respond .select2-container--default .select2-search--inline .select2-search__field
+{
+	-webkit-appearance: textfield;
+}
+
 .comment_tagger_tags
 {
 	font-size: 70%;
