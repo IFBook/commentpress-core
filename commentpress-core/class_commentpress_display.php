@@ -293,6 +293,17 @@ class CommentpressCoreDisplay {
 				return;
 			}
 
+			// default to minified scripts
+			$debug_state = '.min';
+
+			// target different scripts when debugging
+			if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
+
+				// use uncompressed scripts
+				$debug_state = '';
+
+			}
+
 			// add jQuery wrapSelection plugin
 			wp_enqueue_script(
 				'jquery_wrapselection',
