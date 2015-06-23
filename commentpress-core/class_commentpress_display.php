@@ -271,6 +271,20 @@ class CommentpressCoreDisplay {
 			COMMENTPRESS_VERSION // version
 		);
 
+		// optionally get text highlighter
+		$this->get_text_highlighter();
+
+	}
+
+
+
+	/**
+	 * Enqueue our text highlighter script
+	 *
+	 * @return void
+	 */
+	public function get_text_highlighter() {
+
 		// only allow text highlighting on non-touch devices (allow testing override)
 		if ( ! $this->db->is_touch() OR ( defined( 'COMMENTPRESS_TOUCH_SELECT' ) AND COMMENTPRESS_TOUCH_SELECT ) ) {
 
@@ -331,13 +345,6 @@ class CommentpressCoreDisplay {
 			wp_localize_script( 'jquery_texthighlighter', 'CommentpressTextSelectorSettings', $texthighlighter_vars );
 
 		}
-
-		/**
-		 * Prior to WP3.2 (IIRC), jQuery UI has to be added separately, as the
-		 * built in one was not sufficiently up-to-date. This is no longer the
-		 * case, so the independent jQuery UI package has been removed from
-		 * CommentPress Core in favour of the built-in one.
-		 */
 
 	}
 
