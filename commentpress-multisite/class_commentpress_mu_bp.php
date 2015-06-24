@@ -372,6 +372,9 @@ class CommentpressMultisiteBuddypress {
 	 */
 	public function disable_blogforum_comments( $is_disabled ) {
 
+		// don't mess with admin
+		if ( is_admin() ) return $is_disabled;
+
 		// get current blog ID
 		$blog_id = get_current_blog_id();
 
