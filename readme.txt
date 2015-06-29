@@ -14,11 +14,9 @@ CommentPress Core allows fine-grained commenting in the margins of a text. Use i
 
 == Description ==
 
-CommentPress Core is an open source theme and plugin for WordPress that allows readers to comment in the margins of a text. Readers may comment paragraph-by-paragraph, line-by-line, block-by-block or by selecting text.
+CommentPress Core is an open source theme and plugin for WordPress that allows readers to comment in the margins of a text. Readers may comment paragraph-by-paragraph, line-by-line, block-by-block or by selecting text (coming soon to touch devices).
 
 Annotate, gloss, workshop, debate: with CommentPress Core you can do all of these things on a finer-grained level, turning a document into a conversation. It can be applied to a fixed document (paper/essay/book etc.) or to a running blog. Use it in combination with BuddyPress and Groupblogs to create communities around your documents.
-
-**The name has been changed from "CommentPress" to "CommentPress Core" for two reasons:** (a) because it serves as the basis for extending it for your purposes and (b) to safeguard historical installations, which could break if they upgrade. Newer "CommentPress" installations (versions 3.0.x - 3.3.x) can upgrade to the current version.
 
 **Please note:** this plugin comes bundled with two official themes, one of which must be active for CommentPress Core to function. The new "CommentPress Modern Theme" will be auto-activated when the plugin is first activated. The old "CommentPress Default Theme" is still included for those who wish to stay with it or have built their own child themes for it. If you are upgrading from a previous version of CommentPress (3.0.x - 3.3.x), please follow the instructions in the Installation section before doing so.
 
@@ -62,7 +60,7 @@ Base Install:
 Okay, we're ready to install "CommentPress Core":
 
 1. Install and Network Activate "CommentPress Core"
-2. This should have enabled "CommentPress Core" on your main blog
+2. If you want to, you can enable "CommentPress Core" on your main blog
 3. Network Enable the "CommentPress Modern Theme" and/or the "CommentPress Default Theme" UNLESS
 4. You have "CommentPress Core"-compatible child themes you want to use instead:
 5. Network Enable any "CommentPress Core"-compatible child themes you want to use
@@ -104,7 +102,7 @@ Optional Plugins:
 Okay, we're ready to install "CommentPress Core":
 
 1. Install and Network Activate "CommentPress Core"
-2. This should have enabled "CommentPress Core" on your main blog
+2. If you want to, you can enable "CommentPress Core" on your main blog
 3. Network Enable the "CommentPress Modern Theme" and/or the "CommentPress Default Theme" UNLESS
 4. You have "CommentPress Core"-compatible child themes you want to use instead:
 5. Network Enable any "CommentPress Core"-compatible child themes you want to use
@@ -156,6 +154,8 @@ To create a "CommentPress Core"-enabled Groupblog:
 == Other Notes ==
 
 Upgrades from previous versions of "CommentPress" are possible. Please follow the following procedures for your context.
+
+**The name has been changed from "CommentPress" to "CommentPress Core" for two reasons:** (a) because it serves as the basis for extending it for your purposes and (b) to safeguard historical installations, which could break if they upgrade. Newer "CommentPress" installations (versions 3.0.x - 3.3.x) can upgrade to the current version.
 
 
 <h4>Upgrade to CommentPress Core</h4>

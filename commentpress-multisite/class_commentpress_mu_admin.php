@@ -758,7 +758,6 @@ class CommentpressMultisiteAdmin {
 	 * Get blog type form elements
 	 *
 	 * @return array $return Keyed array of form data
-	 *
 	 */
 	public function get_blogtype_data() {
 
@@ -799,6 +798,64 @@ class CommentpressMultisiteAdmin {
 
 		// --<
 		return $return;
+
+	}
+
+
+
+	/**
+	 * Check if blog is CommentPress-enabled
+	 *
+	 * @param int $blog_id The ID of the blog to check
+	 * @return bool $core_active True if CommentPress-enabled, false otherwise
+	 */
+	public function is_commentpress( $blog_id = 0 ) {
+
+		// init return
+		$core_active = false;
+
+		// get current blog ID
+		$current_blog_id = get_current_blog_id();
+
+		// if we have a passed value and it's not this blog
+		if ( $blog_id !== 0  AND $current_blog_id != $blog_id ) {
+
+			// we need to switch to it
+			switch_to_blog( $blog_id );
+
+			// flag
+			$switched = true;
+
+		}
+
+		// TODO: checking for special pages seems a fragile way to test for CP
+
+		// do we have CommentPress Core options?
+		if ( get_option( 'commentpress_options', false ) ) {
+
+			// get them
+			$_commentpress_options = get_option( 'commentpress_options' );
+
+			// if we have "special pages", then the plugin must be active on this blog
+			if ( isset( $_commentpress_options['cp_special_pages'] ) ) {
+
+				// set flag
+				$core_active = true;
+
+			}
+
+		}
+
+		// do we need to switch back?
+		if ( isset( $switched ) AND $switched === true ) {
+
+			// yes, restore
+			restore_current_blog();
+
+		}
+
+		// --<
+		return $core_active;
 
 	}
 
@@ -846,27 +903,8 @@ class CommentpressMultisiteAdmin {
 		// if we're network-enabled
 		if ( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_sitewide' ) {
 
-			// init
-			$core_active = false;
-
-			// do we have CommentPress Core options?
-			if ( get_option( 'commentpress_options', false ) ) {
-
-				// get them
-				$_commentpress_options = get_option( 'commentpress_options' );
-
-				// if we have "special pages", then the plugin must be active on this blog
-				if ( isset( $_commentpress_options['cp_special_pages'] ) ) {
-
-					// set flag
-					$core_active = true;
-
-				}
-
-			}
-
-			// is CommentPress Core active?
-			if ( $core_active ) {
+			// is CommentPress Core active on this blog?
+			if ( $this->is_commentpress() ) {
 
 				// activate core
 				commentpress_activate_core();

@@ -218,9 +218,8 @@ class CommentpressMultisiteBuddypress {
 		// do we have groupblogs?
 		if ( function_exists( 'get_groupblog_group_id' ) ) {
 
-			// get  blog ID
-			global $wpdb;
-			$blog_id = (int) $wpdb->blogid;
+			// get current blog ID
+			$blog_id = get_current_blog_id();
 
 			// check if this blog is a group blog...
 			$group_id = get_groupblog_group_id( $blog_id );
@@ -337,28 +336,53 @@ class CommentpressMultisiteBuddypress {
 	 */
 	public function is_blog_public( $blog_public_option ) {
 
-		global $wpdb;
-		$blog_id = (int)$wpdb->blogid;
-
 		// do we have groupblogs?
 		if ( function_exists( 'get_groupblog_group_id' ) ) {
+
+			// get current blog ID
+			$blog_id = get_current_blog_id();
 
 			// check if this blog is a group blog...
 			$group_id = get_groupblog_group_id( $blog_id );
 
-		}
+			// when this blog is a groupblog
+			if ( isset( $group_id ) AND is_numeric( $group_id ) ) {
 
-		// when this blog is a groupblog
-		if ( isset( $group_id ) AND is_numeric( $group_id ) ) {
+				// always true - so that activities are registered
+				return 1;
 
-			// always true - so that activities are registered
-			return 1;
-
-		} else {
-
-			return $blog_public_option;
+			}
 
 		}
+
+		// fallback
+		return $blog_public_option;
+
+	}
+
+
+
+	/**
+	 * Disable comment sync because parent activity items may not be in the same
+	 * group as the comment. Furthermore, CommentPress comments should be read in
+	 * context rather than appearing as if globally attached to the post or page.
+	 *
+	 * @param bool $is_disabled The BP setting that determines blogforum sync
+	 * @return bool $is_disabled The modified value that determines blogforum sync
+	 */
+	public function disable_blogforum_comments( $is_disabled ) {
+
+		// don't mess with admin
+		if ( is_admin() ) return $is_disabled;
+
+		// get current blog ID
+		$blog_id = get_current_blog_id();
+
+		// if it's CommentPress-enabled, disable sync
+		if ( $this->db->is_commentpress( $blog_id ) ) return 1;
+
+		// pass through
+		return $is_disabled;
 
 	}
 
@@ -1419,6 +1443,9 @@ class CommentpressMultisiteBuddypress {
 
 		// add pages to the post_types that BP records published activity for
 		//add_filter( 'bp_blogs_record_post_post_types', array( $this, 'record_published_pages' ), 10, 1 );
+
+		// make sure "Allow activity stream commenting on blog and forum posts" is disabled
+		add_action( 'bp_disable_blogforum_comments', array( $this, 'disable_blogforum_comments' ), 20, 1 );
 
 		// override "publicness" of groupblogs
 		add_filter( 'bp_is_blog_public', array( $this, 'is_blog_public' ), 20, 1 );
