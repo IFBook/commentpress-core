@@ -1492,7 +1492,7 @@ CommentPress.common.content = new function() {
 		 *
 		 * @return false
 		 */
-		$('#container').on( 'click', 'content-tabs li h2 a', function( event ) {
+		$('#container').on( 'click', '#content-tabs li h2 a', function( event ) {
 
 			// define vars
 			var target_id;
