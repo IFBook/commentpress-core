@@ -1622,7 +1622,7 @@ CommentPress.common.comments = new function() {
 			event.preventDefault();
 
 			// activate it (this will become a theme method)
-			CommentPress.theme.sidebars.activate_sidebar('comments');
+			CommentPress.theme.sidebars.activate_sidebar( 'comments' );
 
 		});
 

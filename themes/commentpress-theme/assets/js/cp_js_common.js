@@ -824,7 +824,7 @@ CommentPress.theme.navigation = new function() {
 		/**
 		 * Clicking on the "Contents" sidebar header
 		 *
-		 * @return false
+		 * @return void
 		 */
 		$('#sidebar').on( 'click', '#toc_header h2 a', function( event ) {
 
@@ -1039,7 +1039,7 @@ CommentPress.theme.sidebars = new function() {
 		var ontop, s_top, s_top_border;
 
 		// get "visibility" of the requested sidebar
-		ontop = $('#' + sidebar + '_sidebar').css('z-index');
+		ontop = $('#' + sidebar + '_sidebar').css( 'z-index' );
 
 		// is it hidden (ie, does it have a lower z-index)
 		if ( ontop == '2001' ) {
@@ -1073,10 +1073,10 @@ CommentPress.theme.sidebars = new function() {
 		} else {
 
 			// hide all
-			$('.sidebar_container').css('visibility','hidden');
+			$('.sidebar_container').css( 'visibility', 'hidden' );
 
 			// show it
-			$('#' + sidebar + '_sidebar').css('visibility','visible');
+			$('#' + sidebar + '_sidebar').css( 'visibility', 'visible' );
 
 			/*
 			// define vars
@@ -1541,7 +1541,7 @@ CommentPress.theme.viewport = new function() {
 			post_id, textblock;
 
 		// activate comments sidebar
-		CommentPress.theme.sidebars.activate_sidebar('comments');
+		CommentPress.theme.sidebars.activate_sidebar( 'comments' );
 
 		// open the matching block
 
