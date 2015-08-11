@@ -1215,6 +1215,9 @@ CommentPress.common.content = new function() {
 			// override event
 			event.preventDefault();
 
+			// prevent bubbling
+			event.stopPropagation();
+
 			// get target
 			target = $(this).prop('href').split('#')[1];
 			//console.log(target);
@@ -1244,6 +1247,9 @@ CommentPress.common.content = new function() {
 				// override event
 				event.preventDefault();
 
+				// prevent bubbling
+				event.stopPropagation();
+
 				// remove url
 				target = target.split('#')[1];
 
@@ -1272,6 +1278,9 @@ CommentPress.common.content = new function() {
 
 			// override event
 			event.preventDefault();
+
+			// prevent bubbling
+			event.stopPropagation();
 
 			// get target
 			target = $(this).prop('href').split('#')[1];
