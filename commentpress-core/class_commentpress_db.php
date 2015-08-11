@@ -521,11 +521,9 @@ class CommentpressCoreDatabase {
 
 		// add the column, if not already there
 		$result = maybe_add_column(
-
 			$wpdb->comments,
 			'comment_signature',
 			"ALTER TABLE `$wpdb->comments` ADD `comment_signature` VARCHAR(255) NULL;"
-
 		);
 
 		// --<
@@ -3618,7 +3616,6 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// init options array
 		$this->commentpress_options = array(
-
 			'cp_show_posts_or_pages_in_toc' => $this->toc_content,
 			'cp_toc_chapter_is_page' => $this->toc_chapter_is_page,
 			'cp_show_subpages' => $this->show_subpages,
@@ -3637,7 +3634,6 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'cp_sidebar_default' => $this->sidebar_default,
 			'cp_featured_images' => $this->featured_images,
 			'cp_textblock_meta' => $this->textblock_meta,
-
 		);
 
 		// Paragraph-level comments enabled by default

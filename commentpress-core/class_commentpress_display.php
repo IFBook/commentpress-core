@@ -381,26 +381,22 @@ class CommentpressCoreDisplay {
 
 			// add our javascript script and dependencies
 			wp_enqueue_script(
-
 				'commentpress_custom_quicktags',
 				plugin_dir_url( COMMENTPRESS_PLUGIN_FILE ) . 'commentpress-core/assets/js/cp_quicktags_3.3.js',
 				array( 'quicktags' ),
 				COMMENTPRESS_VERSION, // version
 				true // in footer
-
 			);
 
 		} else {
 
 			// add our javascript script and dependencies
 			wp_enqueue_script(
-
 				'commentpress_custom_quicktags',
 				plugin_dir_url( COMMENTPRESS_PLUGIN_FILE ) . 'commentpress-core/assets/js/cp_quicktags.js',
 				array( 'quicktags' ),
 				COMMENTPRESS_VERSION, // version
 				false // not in footer (but may need to be in WP 3.3)
-
 			);
 
 		}
@@ -418,13 +414,11 @@ class CommentpressCoreDisplay {
 
 		// add jQuery UI stylesheet -> needed for resizable columns
 		wp_enqueue_style(
-
 			'cp_jquery_ui_base',
 			plugins_url( 'commentpress-core/assets/css/jquery.ui.css', COMMENTPRESS_PLUGIN_FILE ),
 			false,
 			COMMENTPRESS_VERSION, // version
 			'all' // media
-
 		);
 
 	}
@@ -780,7 +774,6 @@ HELPTEXT;
 
 		// set list pages defaults
 		$args = array(
-
 			'sort_column' => 'menu_order, post_title',
 			'menu_class' => 'menu',
 			'include' => '',
@@ -789,7 +782,6 @@ HELPTEXT;
 			'show_home' => false,
 			'link_before' => '',
 			'link_after' => ''
-
 		);
 		*/
 
@@ -798,12 +790,10 @@ HELPTEXT;
 
 			// try and use it
 			wp_nav_menu( array(
-
 				'theme_location' => 'toc',
 				'echo' => true,
 				'container' => '',
 				'items_wrap' => '%3$s',
-
 			) );
 
 			// --<
@@ -856,7 +846,6 @@ HELPTEXT;
 
 		// set list pages defaults
 		$defaults = array(
-
 			'depth' => $depth,
 			'show_date' => '',
 			'date_format' => $this->db->option_get( 'date_format' ),
@@ -868,8 +857,7 @@ HELPTEXT;
 			'sort_column' => 'menu_order, post_title',
 			'link_before' => '',
 			'link_after' => '',
-			'exclude_tree' => ''
-
+			'exclude_tree' => '',
 		);
 
 		// use WordPress function to echo
@@ -925,40 +913,26 @@ HELPTEXT;
 			default:
 
 				// define title text
-				$title_text = sprintf( _n(
-
-					// singular
-					'There is %d comment written for this paragraph',
-
-					// plural
-					'There are %d comments written for this paragraph',
-
-					// number
-					$comment_count,
-
-					// domain
-					'commentpress-core'
-
-				// substitution
-				), $comment_count );
+				$title_text = sprintf(
+					_n(
+						'There is %d comment written for this paragraph', // singular
+						'There are %d comments written for this paragraph', // plural
+						$comment_count, // number
+						'commentpress-core' // domain
+					),
+					$comment_count // substitution
+				);
 
 				// define add comment text
-				$add_text = sprintf( _n(
-
-					// singular
-					'Leave a comment on paragraph %d',
-
-					// plural
-					'Leave a comment on paragraph %d',
-
-					// number
-					$para_num,
-
-					// domain
-					'commentpress-core'
-
-				// substitution
-				), $para_num );
+				$add_text = sprintf(
+					_n(
+						'Leave a comment on paragraph %d', // singular
+						'Leave a comment on paragraph %d', // plural
+						$para_num, // number
+						'commentpress-core' // domain
+					),
+					$para_num // substitution
+				);
 
 				break;
 
@@ -968,40 +942,26 @@ HELPTEXT;
 			case 'line':
 
 				// define title text
-				$title_text = sprintf( _n(
-
-					// singular
-					'There is %d comment written for this line',
-
-					// plural
-					'There are %d comments written for this line',
-
-					// number
-					$comment_count,
-
-					// domain
-					'commentpress-core'
-
-				// substitution
-				), $comment_count );
+				$title_text = sprintf(
+					_n(
+					'There is %d comment written for this line', // singular
+					'There are %d comments written for this line', // plural
+					$comment_count, // number
+					'commentpress-core' // domain
+					),
+					$comment_count // substitution
+				);
 
 				// define add comment text
-				$add_text = sprintf( _n(
-
-					// singular
-					'Leave a comment on line %d',
-
-					// plural
-					'Leave a comment on line %d',
-
-					// number
-					$para_num,
-
-					// domain
-					'commentpress-core'
-
-				// substitution
-				), $para_num );
+				$add_text = sprintf(
+					_n(
+						'Leave a comment on line %d', // singular
+						'Leave a comment on line %d', // plural
+						$para_num, // number
+						'commentpress-core' // domain
+					),
+					$para_num // substitution
+				);
 
 				break;
 
@@ -1012,40 +972,26 @@ HELPTEXT;
 			case 'block':
 
 				// define title text
-				$title_text = sprintf( _n(
-
-					// singular
-					'There is %d comment written for this block',
-
-					// plural
-					'There are %d comments written for this block',
-
-					// number
-					$comment_count,
-
-					// domain
-					'commentpress-core'
-
-				// substitution
-				), $comment_count );
+				$title_text = sprintf(
+					_n(
+						'There is %d comment written for this block', // singular
+						'There are %d comments written for this block', // plural
+						$comment_count, // number
+						'commentpress-core' // domain
+					),
+					$comment_count // substitution
+				);
 
 				// define add comment text
-				$add_text = sprintf( _n(
-
-					// singular
-					'Leave a comment on block %d',
-
-					// plural
-					'Leave a comment on block %d',
-
-					// number
-					$para_num,
-
-					// domain
-					'commentpress-core'
-
-				// substitution
-				), $para_num );
+				$add_text = sprintf(
+					_n(
+						'Leave a comment on block %d', // singular
+						'Leave a comment on block %d', // plural
+						$para_num, // number
+						'commentpress-core' // domain
+					),
+					$para_num // substitution
+				);
 
 				break;
 
@@ -1092,22 +1038,15 @@ HELPTEXT;
 			default:
 
 				// define permalink text
-				$permalink_text = sprintf( _n(
-
-					// singular
-					'Permalink for paragraph %d',
-
-					// plural
-					'Permalink for paragraph %d',
-
-					// number
-					$para_num,
-
-					// domain
-					'commentpress-core'
-
-				// substitution
-				), $para_num );
+				$permalink_text = sprintf(
+					_n(
+						'Permalink for paragraph %d', // singular
+						'Permalink for paragraph %d', // plural
+						$para_num, // number
+						'commentpress-core' // domain
+					),
+					$para_num // substitution
+				);
 
 				// define paragraph marker
 				$para_marker = '<span class="para_marker"><a class="textblock_permalink" id="' . $text_signature . '" href="#' . $text_signature . '" title="' . $permalink_text . '">&para; <span>' . (string) $para_num . '</span></a></span>';
@@ -1120,22 +1059,15 @@ HELPTEXT;
 			case 'line':
 
 				// define permalink text
-				$permalink_text = sprintf( _n(
-
-					// singular
-					'Permalink for line %d',
-
-					// plural
-					'Permalink for line %d',
-
-					// number
-					$para_num,
-
-					// domain
-					'commentpress-core'
-
-				// substitution
-				), $para_num );
+				$permalink_text = sprintf(
+					_n(
+						'Permalink for line %d', // singular
+						'Permalink for line %d', // plural
+						$para_num, // number
+						'commentpress-core' // domain
+					),
+					$para_num // substitution
+				);
 
 				// define paragraph marker
 				$para_marker = '<span class="para_marker"><a class="textblock_permalink" id="' . $text_signature . '" href="#' . $text_signature . '" title="' . $permalink_text . '">&para; <span>' . (string) $para_num . '</span></a></span>';
@@ -1149,22 +1081,15 @@ HELPTEXT;
 			case 'block':
 
 				// define permalink text
-				$permalink_text = sprintf( _n(
-
-					// singular
-					'Permalink for block %d',
-
-					// plural
-					'Permalink for block %d',
-
-					// number
-					$para_num,
-
-					// domain
-					'commentpress-core'
-
-				// substitution
-				), $para_num );
+				$permalink_text = sprintf(
+					_n(
+						'Permalink for block %d', // singular
+						'Permalink for block %d', // plural
+						$para_num, // number
+						'commentpress-core' // domain
+					),
+					$para_num // substitution
+				);
 
 				// define paragraph marker
 				$para_marker = '<span class="para_marker"><a class="textblock_permalink" id="' . $text_signature . '" href="#' . $text_signature . '" title="' . $permalink_text . '">&para; <span>' . (string) $para_num . '</span></a></span>';
@@ -1479,9 +1404,7 @@ HELPTEXT;
 
 			// if there are options
 			if ( $upgrade != '' ) {
-
 				$options_text = __( ' The following options have become available in the new version.', 'commentpress-core' );
-
 			}
 
 			// define admin page

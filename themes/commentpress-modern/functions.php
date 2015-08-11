@@ -43,24 +43,20 @@ function commentpress_setup(
 
 		// allow custom backgrounds
 		add_theme_support( 'custom-background', array(
-
 			'default-color'          => 'ccc',
 			'default-image'          => '',
 			'wp-head-callback'       => 'commentpress_background',
 			'admin-head-callback'    => '',
 			'admin-preview-callback' => ''
-
 		) );
 
 		// allow custom header
 		add_theme_support( 'custom-header', array(
-
 			'default-text-color' => 'eeeeee',
 			'width' => apply_filters( 'cp_header_image_width', 940 ),
 			'height' => apply_filters( 'cp_header_image_height', 67 ),
 			'wp-head-callback' => 'commentpress_header',
 			'admin-head-callback' => 'commentpress_admin_header'
-
 		) );
 
 	} else {
@@ -183,13 +179,11 @@ function commentpress_bp_enqueue_styles() {
 
 	// add our own BuddyPress css
 	wp_enqueue_style(
-
 		'cp_buddypress_css',
 		get_template_directory_uri() . '/assets/css/bp-overrides' . $dev . '.css',
 		array( 'cp_screen_css' ),
 		COMMENTPRESS_VERSION, // version
 		'all' // media
-
 	);
 
 }
@@ -592,13 +586,11 @@ function commentpress_enqueue_print_styles() {
 
 	// add print css
 	wp_enqueue_style(
-
 		'cp_print_css',
 		get_template_directory_uri() . '/assets/css/print' . $dev . '.css',
 		array( 'cp_screen_css' ),
 		COMMENTPRESS_VERSION, // version
 		'print'
-
 	);
 
 }
@@ -625,20 +617,18 @@ function commentpress_enqueue_wp_fee_js() {
 		$dev = '';
 	}
 
-	// enqueue accordion-like js
+	// enqueue support for WP FEE
 	wp_enqueue_script(
-
 		'cp_wp_fee_js',
 		get_template_directory_uri() . '/assets/js/wp_fee' . $dev . '.js',
 		array( 'cp_common_js' ), // deps
 		COMMENTPRESS_VERSION // version
-
 	);
 
 }
 endif; // commentpress_enqueue_wp_fee_js
 
-// add a filter for the above, very late so it (hopefully) is last in the queue
+// add an action to include WP FEE script if detected
 add_action( 'commentpress_editor_include_javascript', 'commentpress_enqueue_wp_fee_js' );
 
 

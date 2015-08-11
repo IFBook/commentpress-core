@@ -65,7 +65,7 @@ CommentPress.theme.settings = new function() {
 		} else {
 
 			// set container top max and save
-			me.set_container_top_max( $.px_to_num( $('#container').css('top') ) );
+			me.set_container_top_max( $.px_to_num( $('#container').css( 'top' ) ) );
 			me.save_container_top_max();
 
 			// set container top min and save
@@ -79,7 +79,7 @@ CommentPress.theme.settings = new function() {
 
 
 	// init container top max
-	this.container_top_min = false;
+	this.container_top_max = false;
 
 	/**
 	 * Init for container top max
@@ -184,14 +184,14 @@ CommentPress.theme.settings = new function() {
 	this.toc_on_top = 'n';
 
 	/**
-	 * Setter for container top min
+	 * Setter for Contents tab "on top" flag
 	 */
 	this.set_toc_on_top = function( val ) {
 		this.toc_on_top = val;
 	};
 
 	/**
-	 * Getter for container top min
+	 * Getter for Contents tab "on top" flag
 	 */
 	this.get_toc_on_top = function() {
 		return this.toc_on_top;
@@ -336,20 +336,22 @@ CommentPress.theme.DOM = new function() {
 			// has the header been minimised?
 			if ( CommentPress.theme.original.header.is_minimised() ) {
 
-				// no -> skip
+				// YES, header is minimised
 
-				// set tops of divs
+				// do not show header
+				styles += '#book_header { display: none; } ';
 
 				// adjust for admin bar
-				cp_container_top = CommentPress.theme.settings.get_container_top_max();
+				cp_container_top = CommentPress.theme.settings.get_container_top_min();
 
 				// is the admin bar shown?
 				if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
-					cp_container_top = CommentPress.theme.settings.get_container_top_max() - CommentPress.settings.DOM.get_wp_adminbar_height();
+					cp_container_top = CommentPress.theme.settings.get_container_top_min() - CommentPress.settings.DOM.get_wp_adminbar_height();
 				}
 
+				// set tops of divs
 				styles += '#container { top: ' + cp_container_top + 'px; } ';
-				styles += '#sidebar { top: ' + CommentPress.theme.settings.get_container_top_max() + 'px; } ';
+				styles += '#sidebar { top: ' + CommentPress.theme.settings.get_container_top_min() + 'px; } ';
 
 				// is the admin bar shown?
 				if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
@@ -368,20 +370,18 @@ CommentPress.theme.DOM = new function() {
 
 			} else {
 
-				// set visibility of comments
-				styles += '#book_header { display: none; } ';
+				// NO, header is NOT minimised
 
 				// adjust for admin bar
-				cp_container_top = CommentPress.theme.settings.get_container_top_min();
+				cp_container_top = CommentPress.theme.settings.get_container_top_max();
 
 				// is the admin bar shown?
 				if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
-					cp_container_top = CommentPress.theme.settings.get_container_top_min() - CommentPress.settings.DOM.get_wp_adminbar_height();
+					cp_container_top = CommentPress.theme.settings.get_container_top_max() - CommentPress.settings.DOM.get_wp_adminbar_height();
 				}
 
-				// set tops of divs
 				styles += '#container { top: ' + cp_container_top + 'px; } ';
-				styles += '#sidebar { top: ' + CommentPress.theme.settings.get_container_top_min() + 'px; } ';
+				styles += '#sidebar { top: ' + CommentPress.theme.settings.get_container_top_max() + 'px; } ';
 
 				// is the admin bar shown?
 				if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
@@ -824,7 +824,7 @@ CommentPress.theme.navigation = new function() {
 		/**
 		 * Clicking on the "Contents" sidebar header
 		 *
-		 * @return false
+		 * @return void
 		 */
 		$('#sidebar').on( 'click', '#toc_header h2 a', function( event ) {
 
@@ -1039,7 +1039,7 @@ CommentPress.theme.sidebars = new function() {
 		var ontop, s_top, s_top_border;
 
 		// get "visibility" of the requested sidebar
-		ontop = $('#' + sidebar + '_sidebar').css('z-index');
+		ontop = $('#' + sidebar + '_sidebar').css( 'z-index' );
 
 		// is it hidden (ie, does it have a lower z-index)
 		if ( ontop == '2001' ) {
@@ -1073,10 +1073,10 @@ CommentPress.theme.sidebars = new function() {
 		} else {
 
 			// hide all
-			$('.sidebar_container').css('visibility','hidden');
+			$('.sidebar_container').css( 'visibility', 'hidden' );
 
 			// show it
-			$('#' + sidebar + '_sidebar').css('visibility','visible');
+			$('#' + sidebar + '_sidebar').css( 'visibility', 'visible' );
 
 			/*
 			// define vars
@@ -1541,7 +1541,7 @@ CommentPress.theme.viewport = new function() {
 			post_id, textblock;
 
 		// activate comments sidebar
-		CommentPress.theme.sidebars.activate_sidebar('comments');
+		CommentPress.theme.sidebars.activate_sidebar( 'comments' );
 
 		// open the matching block
 
@@ -2112,9 +2112,9 @@ CommentPress.theme.original.header = new function() {
 
 		// toggle
 		if ( me.is_minimised() ) {
-			me.close();
-		} else {
 			me.open();
+		} else {
+			me.close();
 		}
 
 		// toggle
@@ -2171,19 +2171,19 @@ CommentPress.theme.original.header = new function() {
 			top: cp_container_top + 'px',
 			duration: 'fast'
 
-		}, function () {
+			}, function () {
 
-			//book_header.show();
+				// slide book header
+				book_header.fadeIn('fast', function() {
 
-			// slide book header
-			book_header.fadeIn('fast', function() {
+					// when done
+					header_animating = false;
 
-				// when done
-				header_animating = false;
+				});
 
-			});
+			}
 
-		});
+		);
 
 		// is the sidebar minimised?
 		if ( CommentPress.theme.sidebars.get_minimised() == 'n' ) {
@@ -2198,12 +2198,14 @@ CommentPress.theme.original.header = new function() {
 				height: cp_sidebar_height + 'px',
 				duration: 'fast'
 
-			}, function() {
+				}, function() {
 
-				// when done
-				target_sidebar.css('height','auto');
+					// when done
+					target_sidebar.css( 'height','auto' );
 
-			});
+				}
+
+			);
 
 			// animate inner
 			target_sidebar_pane.animate({
@@ -2282,7 +2284,7 @@ CommentPress.theme.original.header = new function() {
 		book_header = $('#book_header');
 		container = $('#container');
 
-		// slide header
+		// hide header
 		book_header.hide();
 
 		// set min height
@@ -2319,7 +2321,7 @@ CommentPress.theme.original.header = new function() {
 				}, function() {
 
 					// when done
-					target_sidebar.css('height','auto');
+					target_sidebar.css( 'height','auto' );
 
 				}
 
@@ -2331,20 +2333,22 @@ CommentPress.theme.original.header = new function() {
 				height: ( target_sidebar_pane.height() + me.get_height() ) + 'px',
 				duration: 'fast'
 
-			}, function() {
+				}, function() {
 
-				// don't set height when mobile device (but allow tablets)
-				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+					// don't set height when mobile device (but allow tablets)
+					if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
-					// fit column
-					CommentPress.theme.sidebars.set_height();
+						// fit column
+						CommentPress.theme.sidebars.set_height();
+
+					}
+
+					// when done
+					header_animating = false;
 
 				}
 
-				// when done
-				header_animating = false;
-
-			});
+			);
 
 		} else {
 
@@ -2354,20 +2358,22 @@ CommentPress.theme.original.header = new function() {
 				top: CommentPress.theme.settings.get_container_top_min() + 'px',
 				duration: 'fast'
 
-			}, function() {
+				}, function() {
 
-				// when done
-				header_animating = false;
+					// when done
+					header_animating = false;
 
-				// don't set height when mobile device (but allow tablets)
-				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+					// don't set height when mobile device (but allow tablets)
+					if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
-					// fit column
-					CommentPress.theme.sidebars.set_height();
+						// fit column
+						CommentPress.theme.sidebars.set_height();
+
+					}
 
 				}
 
-			});
+			);
 
 		}
 
@@ -2411,6 +2417,9 @@ jQuery(document).ready( function($) {
 
 
 
+	// the default theme implements custom header actions
+	CommentPress.theme.original.header.dom_ready();
+
 	// trigger DOM ready methods
 	CommentPress.theme.settings.dom_ready();
 	CommentPress.theme.DOM.dom_ready();
@@ -2419,9 +2428,6 @@ jQuery(document).ready( function($) {
 	CommentPress.theme.content.dom_ready();
 	CommentPress.theme.sidebars.dom_ready();
 	CommentPress.theme.viewport.dom_ready();
-
-	// the default theme implements custom header actions
-	CommentPress.theme.original.header.dom_ready();
 
 
 
