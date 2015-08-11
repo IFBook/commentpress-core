@@ -114,7 +114,7 @@ CommentPress.theme.DOM = new function() {
 	this.head = function() {
 
 		// define vars
-		var styles, cp_header_height, cp_container_top, cp_container_width, cp_book_nav_width;
+		var styles, cp_header_height;
 
 		// init styles
 		styles = '';
