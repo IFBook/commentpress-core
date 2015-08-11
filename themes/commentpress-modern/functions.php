@@ -617,7 +617,7 @@ function commentpress_enqueue_wp_fee_js() {
 		$dev = '';
 	}
 
-	// enqueue accordion-like js
+	// enqueue support for WP FEE
 	wp_enqueue_script(
 		'cp_wp_fee_js',
 		get_template_directory_uri() . '/assets/js/wp_fee' . $dev . '.js',
