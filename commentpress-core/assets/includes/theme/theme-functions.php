@@ -3435,6 +3435,55 @@ if ( version_compare( $wp_version, '3.2', '>=' ) ) {
 
 
 
+if ( ! function_exists( 'commentpress_amend_search_query' ) ):
+/**
+ * Restrict search query to pages only
+ *
+ * @param object $query The query object, passed by reference
+ * @return void
+ */
+function commentpress_amend_search_query( &$query ) {
+
+	// restrict to search outside admin (BP does a redirect to the blog page and so $query->is_search is not set)
+	if ( ! is_admin() AND isset( $query->query['s'] ) AND ! empty( $query->query['s'] ) ) {
+
+		// is this a BuddyPress search on the main BP instance?
+		if ( function_exists( 'bp_search_form_type_select' ) AND bp_is_root_blog() ) {
+
+			// search posts and pages
+			$query->set( 'post_type', apply_filters( 'commentpress_amend_search_query_post_types', array( 'post', 'page' ) ) );
+
+			// declare access to globals
+			global $commentpress_core;
+
+			// if we have the plugin enabled...
+			if ( is_object( $commentpress_core ) ) {
+
+				// get special pages array, if it's there
+				$special_pages = $commentpress_core->db->option_get( 'cp_special_pages' );
+
+				// do we have an array?
+				if ( is_array( $special_pages ) ) {
+
+					// exclude them
+					$query->set( 'post__not_in', apply_filters( 'commentpress_amend_search_query_exclusions', $special_pages ) );
+
+				}
+
+			}
+
+		}
+
+	}
+
+}
+endif;
+
+// add filter for search query modification
+add_filter( 'pre_get_posts', 'commentpress_amend_search_query' );
+
+
+
 if ( ! function_exists( 'commentpress_amend_password_form' ) ):
 /**
  * Adds some style to the password form by adding a class to it
