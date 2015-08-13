@@ -633,7 +633,7 @@ add_action( 'commentpress_editor_include_javascript', 'commentpress_enqueue_wp_f
 
 
 
-if ( ! function_exists( 'commentpress_header' ) ):
+if ( ! function_exists( 'commentpress_background' ) ):
 /**
  * Custom background colour
  * @see _custom_background_cb()
