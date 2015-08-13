@@ -123,6 +123,9 @@ CommentPress.settings.DOM = new function() {
 		// init WordPress adminbar height
 		me.init_wp_adminbar_height();
 
+		// init WordPress adminbar expanded height
+		me.init_wp_adminbar_expanded();
+
 	};
 
 
