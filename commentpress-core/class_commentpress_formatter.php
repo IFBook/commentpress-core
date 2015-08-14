@@ -103,10 +103,8 @@ class CommentpressCoreFormatter {
 	public function blog_type_label( $name ) {
 
 		return apply_filters(
-
 			'cp_class_commentpress_formatter_label',
 			__( 'Default Text Format', 'commentpress-core' )
-
 		);
 
 	}
@@ -123,18 +121,14 @@ class CommentpressCoreFormatter {
 
 		// define types
 		$types = array(
-
-			'Prose', // types[0]
-			'Poetry', // types[1]
-
+			__( 'Prose', 'commentpress-core' ), // types[0]
+			__( 'Poetry', 'commentpress-core' ), // types[1]
 		);
 
 		// --<
 		return apply_filters(
-
 			'cp_class_commentpress_formatter_types',
 			$types
-
 		);
 
 	}
