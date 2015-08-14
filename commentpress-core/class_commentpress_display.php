@@ -589,6 +589,9 @@ HELPTEXT;
 			// new-style decorated list
 			// ------------------------
 
+			// access current post
+			global $post;
+
 			// run through them...
 			foreach( $posts AS $item ) {
 
@@ -684,8 +687,16 @@ HELPTEXT;
 
 				}
 
+				// init current post class as empty
+				$current_post = '';
+
+				// if we're on the current post and it's this item...
+				if ( is_singular() AND isset( $post ) AND $post->ID == $item->ID ) {
+					$current_post = ' current_page_item';
+				}
+
 				// write list item
-				echo '<li class="title">
+				echo '<li class="title' . $current_post . '">
 				<div class="post-identifier">
 				' . $_html . '
 				</div>
