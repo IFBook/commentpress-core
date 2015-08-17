@@ -70,8 +70,17 @@ class CommentpressCoreDisplay {
 		// force WordPress to regenerate theme directories
 		search_theme_directories( true );
 
-		// get groupblog-set theme, if we have one
-		$theme = $this->parent_obj->get_groupblog_theme();
+		/**
+		 * Get groupblog-set theme, if we have one
+		 *
+		 * Allow filtering here because plugins may want to override a correctly-set
+		 * CommentPress Core theme for a particular groupblog (or type of groupblog).
+		 *
+		 * If that is the case, then the filter callback must return boolean 'false'
+		 * to prevent the theme being applied and also implement a filter on
+		 * 'cp_forced_theme_slug' below that returns the desired theme slug
+		 */
+		$theme = apply_filters( 'commentpress_get_groupblog_theme', $this->parent_obj->get_groupblog_theme() );
 
 		// did we get a CommentPress Core one?
 		if ( $theme !== false ) {
@@ -94,11 +103,7 @@ class CommentpressCoreDisplay {
 			);
 
 			// get the theme we want
-			$theme = wp_get_theme(
-
-				$target_theme
-
-			);
+			$theme = wp_get_theme( $target_theme );
 
 			// if we get it...
 			if ( $theme->exists() ) {
@@ -118,7 +123,6 @@ class CommentpressCoreDisplay {
 
 			// use pre-3.4 logic
 			$themes = get_themes();
-			//print_r( $themes ); die();
 
 			// get CommentPress Core theme by default, but allow overrides
 			// NB, the key prior to WP 3.4 is the theme's *name*
@@ -161,11 +165,7 @@ class CommentpressCoreDisplay {
 			);
 
 			// get the theme we want
-			$theme = wp_get_theme(
-
-				$target_theme
-
-			);
+			$theme = wp_get_theme( $target_theme );
 
 			// if we get it...
 			if ( $theme->exists() ) {
@@ -185,7 +185,6 @@ class CommentpressCoreDisplay {
 
 			// use pre-3.4 logic
 			$themes = get_themes();
-			//print_r( $themes ); die();
 
 			// get default theme by default, but allow overrides
 			// NB, the key prior to WP 3.4 is the theme's *name*
