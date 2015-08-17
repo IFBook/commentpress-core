@@ -649,6 +649,9 @@ class CommentpressMultisiteAdmin {
 
 		}
 
+		// broadcast
+		do_action( 'commentpress_core_soft_installed' );
+
 		/*
 		------------------------------------------------------------------------
 		Set WordPress Internal Configuration
@@ -695,6 +698,9 @@ class CommentpressMultisiteAdmin {
 
 		// run deactivation hook
 		$commentpress_core->deactivate();
+
+		// broadcast
+		do_action( 'commentpress_core_soft_uninstalled' );
 
 		/*
 		------------------------------------------------------------------------
