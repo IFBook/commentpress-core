@@ -1579,7 +1579,7 @@ class CommentpressCore {
 			}
 
 			// let plugins override titles
-			$_title = apply_filters( 'commentpress_page_link_title', $_link_title );
+			$_title = apply_filters( 'commentpress_page_link_title', $_link_title, $page_type );
 
 			// show link
 			$link = '<li' . $_active . '><a href="' . $_url . '" id="btn_' . $_button . '" class="css_btn" title="' . $_title . '">' . $_title . '</a></li>' . "\n";
