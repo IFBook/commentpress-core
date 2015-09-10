@@ -1446,7 +1446,7 @@ class CommentpressMultisiteBuddypress {
 	public function groupblog_privacy_check() {
 
 		// allow network admins through regardless
-		if ( is_network_admin() ) return;
+		if ( is_super_admin() ) return;
 
 		// check our site option
 		if ( $this->db->option_get( 'cpmu_bp_groupblog_privacy' ) != '1' ) { return; }
