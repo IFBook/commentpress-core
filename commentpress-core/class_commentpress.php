@@ -329,9 +329,7 @@ class CommentpressCore {
 
 		// kick out if not BP
 		if ( ! $this->is_buddypress() ) {
-
 			return false;
-
 		}
 
 		// is it a BP page?
@@ -412,15 +410,12 @@ class CommentpressCore {
 
 				// insert item in relevant menu
 				$this->options_page = add_options_page(
-
 					__( 'CommentPress Core Settings', 'commentpress-core' ),
 					__( 'CommentPress Core', 'commentpress-core' ),
 					'manage_options',
 					'commentpress_admin',
 					array( $this, 'options_page' )
-
 				);
-
 				//print_r( $this->options_page );die();
 
 				// add scripts and styles
@@ -465,11 +460,9 @@ class CommentpressCore {
 			echo '
 
 			<style type="text/css">
-
 				#book_header {
 					background: #' . $this->db->option_get_header_bg() . ';
 				}
-
 			</style>
 
 			';
@@ -492,13 +485,11 @@ class CommentpressCore {
 
 		// add admin stylesheet
 		wp_enqueue_style(
-
 			'commentpress_admin_css',
 			plugins_url( 'commentpress-core/assets/css/admin.css', COMMENTPRESS_PLUGIN_FILE ),
 			false,
 			COMMENTPRESS_VERSION, // version
 			'all' // media
-
 		);
 
 	}
@@ -566,9 +557,7 @@ class CommentpressCore {
 
 		// don't include in admin or wp-login.php
 		if ( is_admin() OR ( isset( $GLOBALS['pagenow'] ) AND 'wp-login.php' == $GLOBALS['pagenow'] ) ) {
-
 			return;
-
 		}
 
 		// test for mobile user agents
@@ -697,8 +686,6 @@ class CommentpressCore {
 		// only parse content once
 		//remove_filter( 'the_content', array( $this, 'the_content' ), 20 );
 
-
-
 		// --<
 		return $content;
 
@@ -718,6 +705,7 @@ class CommentpressCore {
 
 		// --<
 		return $result;
+
 	}
 
 
@@ -735,6 +723,7 @@ class CommentpressCore {
 
 		// --<
 		return $result;
+
 	}
 
 
@@ -795,6 +784,7 @@ class CommentpressCore {
 
 		// --<
 		return $result;
+
 	}
 
 
@@ -809,11 +799,8 @@ class CommentpressCore {
 
 		// get all image attachments to our title page
 		$reserved_names = array_merge(
-
 			$reserved_names,
-
 			array(
-
 				'title-page',
 				'general-comments',
 				'all-comments',
@@ -821,9 +808,7 @@ class CommentpressCore {
 				'table-of-contents',
 				'author', // not currently used
 				'login', // for Theme My Login
-
 			)
-
 		);
 
 		// --<
@@ -856,24 +841,20 @@ class CommentpressCore {
 
 		// add our meta boxes to pages
 		add_meta_box(
-
 			'commentpress_page_options',
 			__( 'CommentPress Core Options', 'commentpress-core' ),
 			array( $this, 'custom_box_page' ),
 			'page',
 			'side'
-
 		);
 
 		// add our meta box to posts
 		add_meta_box(
-
 			'commentpress_post_options',
 			__( 'CommentPress Core Options', 'commentpress-core' ),
 			array( $this, 'custom_box_post' ),
 			'post',
 			'side'
-
 		);
 
 		// get workflow
@@ -890,24 +871,20 @@ class CommentpressCore {
 
 			// add our meta box to posts
 			add_meta_box(
-
 				'commentpress_workflow_fields',
 				$title,
 				array( $this, 'custom_box_workflow' ),
 				'post',
 				'normal'
-
 			);
 
 			// add our meta box to pages
 			add_meta_box(
-
 				'commentpress_workflow_fields',
 				$title,
 				array( $this, 'custom_box_workflow' ),
 				'page',
 				'normal'
-
 			);
 
 		}
@@ -1221,11 +1198,9 @@ class CommentpressCore {
 
 		// add a tab
 		$screen->add_help_tab( array(
-
 			'id'      => 'commentpress-base',
 			'title'   => __('CommentPress Core Help', 'commentpress-core'),
 			'content' => $this->display->get_help(),
-
 		));
 
 		// --<
@@ -1444,11 +1419,9 @@ class CommentpressCore {
 
 					// rebuild 'all' and 'publish' items
 					$vars['all'] = preg_replace(
-
 						'/\(\d+\)/',
 						'(' . $new_count . ')',
 						$vars['all']
-
 					);
 
 				}
@@ -1465,11 +1438,9 @@ class CommentpressCore {
 
 					// rebuild 'all' and 'publish' items
 					$vars['publish'] = preg_replace(
-
 						'/\(\d+\)/',
 						'(' . $new_count . ')',
 						$vars['publish']
-
 					);
 
 				}
@@ -1566,9 +1537,7 @@ class CommentpressCore {
 
 			// is it the current page?
 			if ( isset( $post ) AND $_page->ID == $post->ID ) {
-
 				$_active = ' class="active_page"';
-
 			}
 
 			// get link
@@ -1610,7 +1579,7 @@ class CommentpressCore {
 			}
 
 			// let plugins override titles
-			$_title = apply_filters( 'commentpress_page_link_title', $_link_title );
+			$_title = apply_filters( 'commentpress_page_link_title', $_link_title, $page_type );
 
 			// show link
 			$link = '<li' . $_active . '><a href="' . $_url . '" id="btn_' . $_button . '" class="css_btn" title="' . $_title . '">' . $_title . '</a></li>' . "\n";
@@ -1722,12 +1691,10 @@ class CommentpressCore {
 
 		// compat with Theme My Login
 		if(
-
 			is_page() AND
 			! $this->db->is_special_page() AND
 			$post->post_name == 'login' AND
 			$post->post_content == '[theme-my-login]'
-
 		) {
 
 			// --<
@@ -1754,11 +1721,9 @@ class CommentpressCore {
 
 		// compat with Members List
 		if(
-
 			is_page() AND
 			! $this->db->is_special_page() AND
 			( strstr( $post->post_content, '[members-list' ) !== false )
-
 		) {
 
 			// --<
@@ -1785,12 +1750,10 @@ class CommentpressCore {
 
 		// compat with Subscribe to Comments Reloaded
 		if(
-
 			is_page() AND
 			! $this->db->is_special_page() AND
 			$post->ID == '9999999' AND
 			$post->guid == get_bloginfo('url') . '/?page_id=9999999'
-
 		) {
 
 			// --<
@@ -2024,13 +1987,8 @@ class CommentpressCore {
 
 		// set default but allow overrides
 		$order = apply_filters(
-
-			// hook name
 			'cp_sidebar_tab_order',
-
-			// default order
-			array( 'contents', 'comments', 'activity' )
-
+			array( 'contents', 'comments', 'activity' ) // default order
 		);
 
 		// --<
@@ -2198,10 +2156,8 @@ class CommentpressCore {
 
 		// allow plugins to override this and supply their own
 		$class_file_path = apply_filters(
-
 			'cp_class_commentpress_formatter',
 			$class_file_path
-
 		);
 
 		// we're fine, include class definition
@@ -2222,10 +2178,8 @@ class CommentpressCore {
 
 		// allow plugins to override this and supply their own
 		$class_file_path = apply_filters(
-
 			'cp_class_commentpress_workflow',
 			$class_file_path
-
 		);
 
 		// we're fine, include class definition
@@ -2246,10 +2200,8 @@ class CommentpressCore {
 
 		// allow plugins to override this and supply their own
 		$class_file_path = apply_filters(
-
 			'cp_class_commentpress_editor',
 			$class_file_path
-
 		);
 
 		// we're fine, include class definition
@@ -2421,8 +2373,6 @@ class CommentpressCore {
 		// trace
 		//print_r( $post_types ); die();
 
-
-
 		// did we get any?
 		if ( count( $post_types ) > 0 ) {
 
@@ -2510,8 +2460,6 @@ class CommentpressCore {
 					$n++;
 				}
 				$type_options = implode( "\n", $type_option_list );
-
-
 
 				// select
 				echo '

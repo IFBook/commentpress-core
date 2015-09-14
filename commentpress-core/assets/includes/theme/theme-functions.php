@@ -640,6 +640,9 @@ function commentpress_get_body_classes( $raw = false ) {
 	// construct attribute
 	$_body_classes = $sidebar_class . $commentable . $layout_class . $page_type . $groupblog_type . $blog_type . $tinymce_version;
 
+	// allow filtering
+	$_body_classes = apply_filters( 'commentpress_body_classes', $_body_classes );
+
 	// if we want them wrapped, do so
 	if ( ! $raw ) {
 

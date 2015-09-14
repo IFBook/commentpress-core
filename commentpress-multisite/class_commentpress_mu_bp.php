@@ -1256,6 +1256,109 @@ class CommentpressMultisiteBuddypress {
 
 
 	/**
+	 * Override the name of the type dropdown label
+	 *
+	 * @param str $name The existing name of the label
+	 * @return str $name The modified name of the label
+	 */
+	public function blog_type_label( $name ) {
+
+		return apply_filters(
+			'cp_class_commentpress_formatter_label',
+			__( 'Default Text Format', 'commentpress-core' )
+		);
+
+	}
+
+
+
+	/**
+	 * Define the "types" of groupblog
+	 *
+	 * @param array $existing_options The existing types of groupblog
+	 * @return array $existing_options The modified types of groupblog
+	 */
+	public function blog_type_options( $existing_options ) {
+
+		// define types
+		$types = array(
+			__( 'Prose', 'commentpress-core' ), // types[0]
+			__( 'Poetry', 'commentpress-core' ), // types[1]
+		);
+
+		// --<
+		return apply_filters(
+			'cp_class_commentpress_formatter_types',
+			$types
+		);
+
+	}
+
+
+
+	/**
+	 * Enable workflow
+	 *
+	 * @param bool $exists True if "workflow" is enabled, false otherwise
+	 * @return bool $exists True if "workflow" is enabled, false otherwise
+	 */
+	public function blog_workflow_exists( $exists ) {
+
+		// switch on, but allow overrides
+		return apply_filters(
+			'cp_class_commentpress_workflow_enabled',
+			true
+		);
+
+	}
+
+
+
+	/**
+	 * Override the name of the workflow checkbox label
+	 *
+	 * @param str $name The existing singular name of the label
+	 * @return str $name The modified singular name of the label
+	 */
+	public function blog_workflow_label( $name ) {
+
+		// set label, but allow overrides
+		return apply_filters(
+			'cp_class_commentpress_workflow_label',
+			__( 'Enable Translation Workflow', 'commentpress-core' )
+		);
+
+	}
+
+
+
+	/**
+	 * Amend the group meta if workflow is enabled
+	 *
+	 * @param str $blog_type The existing numerical type of the blog
+	 * @return str $blog_type The modified numerical type of the blog
+	 */
+	public function group_meta_set_blog_type( $blog_type, $blog_workflow ) {
+
+		// if the blog workflow is enabled, then this is a translation group
+		if ( $blog_workflow == '1' ) {
+
+			// translation is type 2
+			$blog_type = '2';
+
+		}
+
+		// return, but allow overrides
+		return apply_filters(
+			'cp_class_commentpress_workflow_group_blogtype',
+			$blog_type
+		);
+
+	}
+
+
+
+	/**
 	 * Hook into the group blog signup form
 	 *
 	 * @return void
@@ -1343,7 +1446,7 @@ class CommentpressMultisiteBuddypress {
 	public function groupblog_privacy_check() {
 
 		// allow network admins through regardless
-		if ( is_network_admin() ) return;
+		if ( is_super_admin() ) return;
 
 		// check our site option
 		if ( $this->db->option_get( 'cpmu_bp_groupblog_privacy' ) != '1' ) { return; }
@@ -1470,6 +1573,37 @@ class CommentpressMultisiteBuddypress {
 		// we can remove groupblogs from the blog list, but cannot update the total_blog_count_for_user
 		// that is displayed on the tab *before* the blog list is built - hence filter disabled for now
 		//add_filter( 'bp_has_blogs', array( $this, 'remove_groupblog_from_loop' ), 20, 2 );
+
+		/**
+		 * Duplicated from 'class_commentpress_formatter.php' because CommentPress need
+		 * not be active on the main blog, but we still need the options to appear
+		 * in the Groupblog Create screen
+		 */
+
+		// set blog type options
+		add_filter( 'cp_blog_type_options', array( $this, 'blog_type_options' ), 21 );
+
+		// set blog type options label
+		add_filter( 'cp_blog_type_label', array( $this, 'blog_type_label' ), 21 );
+
+		// ---------------------------------------------------------------------
+
+		/**
+		 * Duplicated from 'class_commentpress_workflow.php' because CommentPress need
+		 * not be active on the main blog, but we still need the options to appear
+		 * in the Groupblog Create screen
+		 */
+
+		// enable workflow
+		add_filter( 'cp_blog_workflow_exists', array( $this, 'blog_workflow_exists' ), 21 );
+
+		// override label
+		add_filter( 'cp_blog_workflow_label', array( $this, 'blog_workflow_label' ), 21 );
+
+		// override blog type if workflow is on
+		add_filter( 'cp_get_group_meta_for_blog_type', array( $this, 'group_meta_set_blog_type' ), 21, 2 );
+
+		// ---------------------------------------------------------------------
 
 		// add form elements to groupblog form
 		add_action( 'signup_blogform', array( $this, 'signup_blogform' ) );
