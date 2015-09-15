@@ -170,7 +170,7 @@ function commentpress_customize_register( $wp_customize ) {
 		$wp_customize->add_control( new WP_Customize_Site_Image_Control(
 			$wp_customize, 'cp_site_image', array(
 			'label' => apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) ),
-		    'description' => apply_filters( 'commentpress_customizer_site_image_description', __( 'Choose an image to represent your site', 'commentpress-core' ) ),
+		    'description' => apply_filters( 'commentpress_customizer_site_image_description', __( 'Choose an image to represent this site. Other plugins may use this image to illustrate this site - in multisite directory listings, for example.', 'commentpress-core' ) ),
 			'section' => 'cp_site_image',
 			'settings' => 'commentpress_theme_settings[cp_site_image]',
 			'priority'	=>	1
@@ -195,6 +195,7 @@ function commentpress_customize_register( $wp_customize ) {
 	$wp_customize->add_control( new WP_Customize_Image_Control(
 		$wp_customize, 'cp_inline_header_image', array(
 		'label' => __( 'Logo Image', 'commentpress-core' ),
+	    'description' => apply_filters( 'commentpress_customizer_site_logo_description', __( 'You may prefer to display an image instead of text in the header of your site. The image must be a maximum of 70px tall. If it is less tall, then you can adjust the vertical alignment using the "Top padding in px" setting below.', 'commentpress-core' ) ),
 		'section' => 'cp_inline_header_image',
 		'settings' => 'commentpress_theme_settings[cp_inline_header_image]',
 		'priority'	=>	1
