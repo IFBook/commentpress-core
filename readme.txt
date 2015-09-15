@@ -26,6 +26,7 @@ Many thanks to the following for translations:
 
 * French - [Pouhiou](http://wordpress.org/support/profile/pouhiou)
 * Spanish - Andrew Kurtis from [WebHostingHub](http://www.webhostinghub.com/)
+* Dutch - Gerrit Jan Dijkgraaf
 
 
 
