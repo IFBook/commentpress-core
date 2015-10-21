@@ -37,6 +37,9 @@ function commentpress_setup(
 
 ) { //-->
 
+	// add title support: wp_title() is deprecated as of WP 4.4
+	add_theme_support( 'title-tag' );
+
 	// add_custom_background function is deprecated in WP 3.4+
 	global $wp_version;
 	if ( version_compare( $wp_version, '3.4', '>=' ) ) {

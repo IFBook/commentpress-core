@@ -660,6 +660,58 @@ endif; // commentpress_get_body_classes
 
 
 
+if ( ! function_exists( 'commentpress_document_title_parts' ) ):
+/**
+ * Add the root network name when the sub-blog is a group blog
+ *
+ * @param array $parts The existing title parts
+ * @return array $parts The modified title parts
+ */
+function commentpress_document_title_parts( $parts ) {
+
+	global $commentpress_core;
+
+	// if we have the plugin enabled...
+	if ( is_object( $commentpress_core ) ) {
+
+		// if it's a groupblog
+		if ( $commentpress_core->is_groupblog() ) {
+			$parts['site'] .= commentpress_site_title( '|', false );
+		}
+
+	}
+
+	// return filtered array
+	return apply_filters( 'commentpress_document_title_parts', $parts );
+
+}
+endif; // commentpress_document_title_parts
+
+// add a filter for the above
+add_filter( 'document_title_parts', 'commentpress_document_title_parts' );
+
+
+
+if ( ! function_exists( 'commentpress_document_title_separator' ) ):
+/**
+ * Use the separator that CommentPress has always used.
+ *
+ * @param string $sep The existing separator
+ * @return string $sep The modified separator
+ */
+function commentpress_document_title_separator( $sep ) {
+
+	// --<
+	return '|';
+
+}
+endif; // commentpress_document_title_separator
+
+// add a filter for the above
+add_filter( 'document_title_separator', 'commentpress_document_title_separator' );
+
+
+
 if ( ! function_exists( 'commentpress_site_title' ) ):
 /**
  * Amend the site title depending on context of blog
@@ -676,7 +728,7 @@ function commentpress_site_title( $sep = '', $echo = true ) {
 		// if we're on a sub-blog
 		if ( ! is_main_site() ) {
 
-			global $current_site;
+			$current_site = get_current_site();
 
 			// print?
 			if( $echo ) {
