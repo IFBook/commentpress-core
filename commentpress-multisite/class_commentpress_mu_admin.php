@@ -1104,8 +1104,6 @@ class CommentpressMultisiteAdmin {
 
 		// define admin page
 		$admin_page = '
-		<div class="icon32" id="icon-options-general"><br/></div>
-
 		<h2>' . __( 'CommentPress Core Settings', 'commentpress-core' ) . '</h2>
 
 		<form method="post" action="' . htmlentities( $url . '&updated=true' ) . '">

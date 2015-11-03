@@ -491,8 +491,6 @@ class CommentpressMultisite {
 		echo '
 		<div class="wrap" id="cpmu_admin_wrapper">
 
-		<div class="icon32" id="icon-options-general"><br/></div>
-
 		<h2>' . __( 'CommentPress Network Settings', 'commentpress-core' ) . '</h2>
 
 		<form method="post" action="' . htmlentities($url . '&updated=true') . '">
