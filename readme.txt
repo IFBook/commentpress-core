@@ -222,6 +222,12 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 == Changelog ==
 
 
+<h4>3.8.3</h4>
+
+* Add theme support for built-in title tags
+* Bump admin headings to h1
+* Misc minor fixes (see Github commit list)
+
 <h4>3.8.2</h4>
 
 * Fix default theme header minimiser
