@@ -676,7 +676,12 @@ function commentpress_document_title_parts( $parts ) {
 
 		// if it's a groupblog
 		if ( $commentpress_core->is_groupblog() ) {
-			$parts['site'] .= commentpress_site_title( '|', false );
+			if ( ! isset( $parts['site'] ) ) {
+				$parts['title'] .= commentpress_site_title( '|', false );
+				unset( $parts['tagline'] );
+			} else {
+				$parts['site'] .= commentpress_site_title( '|', false );
+			}
 		}
 
 	}
