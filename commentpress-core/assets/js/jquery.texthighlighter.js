@@ -672,13 +672,19 @@ CommentPress.texthighlighter.textblocks = new function() {
 	this.selection_send_to_editor = function( with_text ) {
 
 		// declare vars
-		var selection;
+		var selection, container;
 
 		// unbind popover document click handler
 		$(document).unbind( 'click', me.highlighter_textblock_handler );
 
+		// get container
+		container = me.container_get();
+
 		// get selection
-		selection = CommentPress.texthighlighter.utilities.selection_get( me.container_get() );
+		selection = CommentPress.texthighlighter.utilities.selection_get( container );
+
+		// normalise selection bounds
+		selection = me.selection_normalise_for_commentform( container, selection );
 
 		// update text_selection hidden input
 		CommentPress.texthighlighter.commentform.current_selection_set( selection );
@@ -719,6 +725,40 @@ CommentPress.texthighlighter.textblocks = new function() {
 			}
 
 		}
+
+	};
+
+	/**
+	 * Normalise the selection for a comment before it is sent to the form.
+	 *
+	 * We need to do this because we have to store the selection range based on
+	 * a single digit in the comment count span to preserve the validity of
+	 * existing range data for comments.
+	 *
+	 * @see this.selection_normalise_for_comment()
+	 *
+	 * @param str textblock_id The ID of the textblock
+	 * @param object item The object containing the selection start and end values
+	 * @return object item The normalised selection start and end values
+	 */
+	this.selection_normalise_for_commentform = function( textblock_id, item ) {
+
+		var count;
+
+		// find the number of characters in the comment number
+		count = $('#' + textblock_id + ' .comment_count').html().length;
+
+		// adjust if the count is greater than 1
+		if ( count > 1 ) {
+			return {
+				text: item.text,
+				start: item.start - ( count - 1 ),
+				end: item.end - ( count - 1 )
+			};
+		}
+
+		// --<
+		return item;
 
 	};
 
@@ -1005,11 +1045,46 @@ CommentPress.texthighlighter.textblocks = new function() {
 			// get textblock
 			textblock_id = 'textblock-' + text_sig;
 
+			// normalise selection bounds
+			item = me.selection_normalise_for_comment( textblock_id, item );
+
 			// restore the selection
 			CommentPress.texthighlighter.utilities.selection_restore( document.getElementById( textblock_id ), item );
 			$('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight-per-comment' );
 
 		}
+
+	};
+
+	/**
+	 * Normalise the selection for a comment.
+	 *
+	 * We need to do this because we have stored the selection range based on a
+	 * single digit in the comment count span. But when the number of comments
+	 * reaches 10, the selection is off by one. In the unlikely event that it
+	 * should reach 100, it will be off by two.
+	 *
+	 * @param str textblock_id The ID of the textblock
+	 * @param object item The object containing the selection start and end values
+	 * @return object item The normalised selection start and end values
+	 */
+	this.selection_normalise_for_comment = function( textblock_id, item ) {
+
+		var count;
+
+		// find the number of characters in the comment number
+		count = $('#' + textblock_id + ' .comment_count').html().length;
+
+		// adjust if the count is greater than 1
+		if ( count > 1 ) {
+			return {
+				start: item.start + ( count - 1 ),
+				end: item.end + ( count - 1 )
+			};
+		}
+
+		// --<
+		return item;
 
 	};
 
