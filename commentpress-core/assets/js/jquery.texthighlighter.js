@@ -182,9 +182,9 @@ CommentPress.texthighlighter.utilities = new function() {
 				text: range.toString(),
 				start: start,
 				end: start + range.toString().length
-			}
+			};
 
-		}
+		};
 
 		/**
 		 * Restore texthighlighter selection
@@ -225,7 +225,7 @@ CommentPress.texthighlighter.utilities = new function() {
 			sel = window.getSelection();
 			sel.removeAllRanges();
 			sel.addRange(range);
-		}
+		};
 
 	// test alternative browser capability
 	} else if (document.selection && document.body.createTextRange) {
@@ -249,9 +249,9 @@ CommentPress.texthighlighter.utilities = new function() {
 				text: selectedTextRange.text,
 				start: start,
 				end: start + selectedTextRange.text.length
-			}
+			};
 
-		}
+		};
 
 		/**
 		 * Restore texthighlighter selection
@@ -268,7 +268,7 @@ CommentPress.texthighlighter.utilities = new function() {
 			textRange.moveEnd("character", saved_selection.end);
 			textRange.moveStart("character", saved_selection.start);
 			textRange.select();
-		}
+		};
 
 	};
 
@@ -943,7 +943,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 				}
 
 				// create selection data
-				selection_data = { start: sel_start, end: sel_end }
+				selection_data = { start: sel_start, end: sel_end };
 
 				// add to array, keyed by comment ID
 				me.selections_by_comment[comment_key] = selection_data;
