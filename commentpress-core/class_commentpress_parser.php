@@ -1630,13 +1630,18 @@ class CommentpressCoreParser {
 				// rejoin to exclude from content to be parsed
 				$content = implode( '', $content );
 
-				// also remove twitter script
+				// remove old twitter script
 				$content = str_replace(
-
 					'<p><script src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>',
 					'',
 					$content
+				);
 
+				// remove new twitter script
+				$content = str_replace(
+					'<p><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>',
+					'',
+					$content
 				);
 
 			}
