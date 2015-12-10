@@ -997,7 +997,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 		if ( comment_key in this.selections_by_comment ) {
 
 			// get selection item from array
-			item = this.selections_by_comment[comment_key]
+			item = this.selections_by_comment[comment_key];
 
 			// get text signature for this comment
 			text_sig = $.get_text_sig_by_comment_id( comment_key );

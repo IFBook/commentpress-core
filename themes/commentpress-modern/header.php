@@ -10,8 +10,17 @@
 <!--<![endif]-->
 <head>
 
-<!-- title -->
-<title><?php wp_title( '|', true, 'right' ); bloginfo( 'name' ); commentpress_site_title( '|' ) ?></title>
+<?php
+if ( ! function_exists( '_wp_render_title_tag' ) ) :
+    function commentpress_theme_slug_render_title() {
+	?>
+	<!-- title -->
+	<title><?php wp_title( '|', true, 'right' ); bloginfo( 'name' ); commentpress_site_title( '|' ); ?></title>
+	<?php
+    }
+    add_action( 'wp_head', 'commentpress_theme_slug_render_title' );
+endif;
+?>
 
 <!-- meta -->
 <meta charset="<?php bloginfo( 'charset' ); ?>" />

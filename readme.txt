@@ -3,8 +3,8 @@ Contributors: needle, commentpress
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZSKM8T5ZP3SC
 Tags: commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
 Requires at least: 3.4
-Tested up to: 4.3
-Stable tag: 3.8.2
+Tested up to: 4.4
+Stable tag: 3.8.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,6 +26,7 @@ Many thanks to the following for translations:
 
 * French - [Pouhiou](http://wordpress.org/support/profile/pouhiou)
 * Spanish - Andrew Kurtis from [WebHostingHub](http://www.webhostinghub.com/)
+* Dutch - Gerrit Jan Dijkgraaf
 
 
 
@@ -220,6 +221,12 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+
+<h4>3.8.3</h4>
+
+* Add theme support for built-in title tags
+* Bump admin headings to h1
+* Misc minor fixes (see Github commit list)
 
 <h4>3.8.2</h4>
 

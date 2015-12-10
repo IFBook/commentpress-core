@@ -3352,7 +3352,7 @@ div.activity-comments form textarea
 
 div.profile
 {
-	padding: 0 19px;
+	padding: 0 19px 1px 19px;
 }
 
 table.profile-fields th,
