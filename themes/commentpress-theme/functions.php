@@ -262,7 +262,7 @@ function commentpress_enqueue_scripts_and_styles() {
 	// add Google Webfont "Lato"
 	wp_enqueue_style(
 		'cp_webfont_css',
-		'http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic',
+		set_url_scheme( 'http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' ),
 		array( 'cp_layout_css' ),
 		null, // no version, thanks
 		null // no media, thanks
