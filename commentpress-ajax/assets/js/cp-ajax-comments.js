@@ -863,30 +863,31 @@ CommentPress.ajax.comments = new function() {
 	 * Do comment append
 	 *
 	 * @param object response The jQuery object from the AJAX request
-	 * @param object content The jQuery object containing the content
-	 * @param object target The jQuery object in which the content should be placed
-	 * @param object last The jQuery object of the last item in the comment list
-	 * @return void
+	 * @param string content The jQuery selector that targets the comment content
+	 * @param object target The jQuery object in which the comment should be placed
+	 * @param string last The jQuery selector of the last item in the comment list
+	 * @return string new_comment_id The ID of the new comment
 	 */
 	this.nice_append = function( response, content, target, last ) {
 
 		// define vars
-		var new_comm_id;
+		var new_comment, new_comment_id;
 
 		// test for undefined, which may happen on replies to comments
 		// which have lost their original context
 		if ( 'undefined' === typeof response || response === null ) { return; }
 
-		response.find(content)
-				.clone()
-				.hide()
-				.appendTo(target);
+		// make a copy of the new comment
+		new_comment = response.find(content).clone();
+
+		// hide and append
+		new_comment.appendTo(target).hide();
 
 		// clean up
-		new_comm_id = me.cleanup( content, last );
+		new_comment_id = me.cleanup( content, last );
 
 		// --<
-		return new_comm_id;
+		return new_comment_id;
 
 	};
 
@@ -896,30 +897,31 @@ CommentPress.ajax.comments = new function() {
 	 * Do comment prepend
 	 *
 	 * @param object response The jQuery object from the AJAX request
-	 * @param object content The jQuery object containing the content
-	 * @param object target The jQuery object in which the content should be placed
-	 * @param object last The jQuery object of the last item in the comment list
-	 * @return void
+	 * @param string content The jQuery selector that targets the comment content
+	 * @param object target The jQuery object in which the comment should be placed
+	 * @param string last The jQuery selector of the last item in the comment list
+	 * @return string new_comment_id The ID of the new comment
 	 */
 	this.nice_prepend = function( response, content, target, last ) {
 
 		// define vars
-		var new_comm_id;
+		var new_comment, new_comment_id;
 
 		// test for undefined, which may happen on replies to comments
 		// which have lost their original context
 		if ( 'undefined' === typeof response || response === null ) { return; }
 
-		response.find(content)
-				.clone()
-				.hide()
-				.prependTo(target);
+		// make a copy of the new comment
+		new_comment = response.find(content).clone();
+
+		// hide and prepend
+		new_comment.prependTo(target).hide();
 
 		// clean up
-		new_comm_id = me.cleanup( content, last );
+		new_comment_id = me.cleanup( content, last );
 
 		// --<
-		return new_comm_id;
+		return new_comment_id;
 
 	};
 
@@ -928,9 +930,9 @@ CommentPress.ajax.comments = new function() {
 	/**
 	 * Do comment cleanup
 	 *
-	 * @param object content The jQuery object containing the content
-	 * @param object last The jQuery object of the last item in the comment list
-	 * @return void
+	 * @param string content The jQuery selector that targets the comment content
+	 * @param string last The jQuery selector of the last item in the comment list
+	 * @return string new_comment_id The ID of the new comment
 	 */
 	this.cleanup = function( content, last ) {
 
