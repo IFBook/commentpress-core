@@ -272,9 +272,6 @@ CommentPress.ajax.comments = new function() {
 			// callback
 			function( data, textStatus ) {
 
-				//console.log( data );
-				//console.log( textStatus );
-
 				// if success
 				if ( textStatus == 'success' ) {
 
@@ -365,7 +362,6 @@ CommentPress.ajax.comments = new function() {
 		// if the comment is a reply, append the comment to the children
 		if ( comm_parent != '0' ) {
 
-			//console.log( comm_parent );
 			parent_id = '#li-comment-' + comm_parent;
 
 			// find the child list we want
@@ -515,7 +511,6 @@ CommentPress.ajax.comments = new function() {
 
 		// get all droppable items
 		droppers = $('#content .post .textblock');
-		//console.log( droppers );
 
 		// make textblocks droppable
 		droppers.droppable({
@@ -605,10 +600,6 @@ CommentPress.ajax.comments = new function() {
 		// get comment id
 		comment_id = $(ui.draggable).prop('id').split('-')[1];
 
-		// let's see what params we've got
-		//console.log( 'text_sig: ' + text_sig );
-		//console.log( 'comment id: ' + comment_id );
-
 		// get comment parent li
 		comment_item = $(ui.draggable).closest( 'li.comment' );
 
@@ -678,9 +669,6 @@ CommentPress.ajax.comments = new function() {
 
 					}
 
-					// check
-					//console.log( para_wrapper );
-
 				}
 				*/
 
@@ -706,9 +694,6 @@ CommentPress.ajax.comments = new function() {
 
 					// callback
 					function( data, textStatus ) {
-
-						//console.log( data.msg );
-						//console.log( textStatus );
 
 						// if success
 						if ( textStatus == 'success' ) {
@@ -757,19 +742,6 @@ CommentPress.ajax.comments = new function() {
 		// get useful ids
 		para_id = '#para_wrapper-' + text_sig;
 		head_id = '#para_heading-' + text_sig;
-
-		/*
-		console.log( 'response' );
-		console.log( response );
-		console.log( 'text_sig' );
-		console.log( text_sig );
-		console.log( 'comm_parent' );
-		console.log( comm_parent );
-		console.log( 'para_id' );
-		console.log( para_id );
-		console.log( 'head_id' );
-		console.log( head_id );
-		*/
 
 		// we no longer have zero comments
 		$(para_id).removeClass( 'no_comments' );
@@ -891,39 +863,31 @@ CommentPress.ajax.comments = new function() {
 	 * Do comment append
 	 *
 	 * @param object response The jQuery object from the AJAX request
-	 * @param object content The jQuery object containing the content
-	 * @param object target The jQuery object in which the content should be placed
-	 * @param object last The jQuery object of the last item in the comment list
-	 * @return void
+	 * @param string content The jQuery selector that targets the comment content
+	 * @param object target The jQuery object in which the comment should be placed
+	 * @param string last The jQuery selector of the last item in the comment list
+	 * @return string new_comment_id The ID of the new comment
 	 */
 	this.nice_append = function( response, content, target, last ) {
 
 		// define vars
-		var new_comm_id;
+		var new_comment, new_comment_id;
 
 		// test for undefined, which may happen on replies to comments
 		// which have lost their original context
 		if ( 'undefined' === typeof response || response === null ) { return; }
 
-		/*
-		console.log( 'content' );
-		console.log( content );
-		console.log( 'target' );
-		console.log( target );
-		console.log( 'comment' );
-		console.log( response.find(content) );
-		*/
+		// make a copy of the new comment
+		new_comment = response.find(content).clone();
 
-		response.find(content)
-				.clone()
-				.hide()
-				.appendTo(target);
+		// hide and append
+		new_comment.appendTo(target).hide();
 
 		// clean up
-		new_comm_id = me.cleanup( content, last );
+		new_comment_id = me.cleanup( content, last );
 
 		// --<
-		return new_comm_id;
+		return new_comment_id;
 
 	};
 
@@ -933,39 +897,31 @@ CommentPress.ajax.comments = new function() {
 	 * Do comment prepend
 	 *
 	 * @param object response The jQuery object from the AJAX request
-	 * @param object content The jQuery object containing the content
-	 * @param object target The jQuery object in which the content should be placed
-	 * @param object last The jQuery object of the last item in the comment list
-	 * @return void
+	 * @param string content The jQuery selector that targets the comment content
+	 * @param object target The jQuery object in which the comment should be placed
+	 * @param string last The jQuery selector of the last item in the comment list
+	 * @return string new_comment_id The ID of the new comment
 	 */
 	this.nice_prepend = function( response, content, target, last ) {
 
 		// define vars
-		var new_comm_id;
+		var new_comment, new_comment_id;
 
 		// test for undefined, which may happen on replies to comments
 		// which have lost their original context
 		if ( 'undefined' === typeof response || response === null ) { return; }
 
-		/*
-		console.log( 'content' );
-		console.log( content );
-		console.log( 'target' );
-		console.log( target );
-		console.log( 'comment' );
-		console.log( response.find(content) );
-		*/
+		// make a copy of the new comment
+		new_comment = response.find(content).clone();
 
-		response.find(content)
-				.clone()
-				.hide()
-				.prependTo(target);
+		// hide and prepend
+		new_comment.prependTo(target).hide();
 
 		// clean up
-		new_comm_id = me.cleanup( content, last );
+		new_comment_id = me.cleanup( content, last );
 
 		// --<
-		return new_comm_id;
+		return new_comment_id;
 
 	};
 
@@ -974,9 +930,9 @@ CommentPress.ajax.comments = new function() {
 	/**
 	 * Do comment cleanup
 	 *
-	 * @param object content The jQuery object containing the content
-	 * @param object last The jQuery object of the last item in the comment list
-	 * @return void
+	 * @param string content The jQuery selector that targets the comment content
+	 * @param string last The jQuery selector of the last item in the comment list
+	 * @return string new_comment_id The ID of the new comment
 	 */
 	this.cleanup = function( content, last ) {
 
@@ -1212,9 +1168,6 @@ CommentPress.ajax.comments = new function() {
 					// declare vars
 					var response;
 
-					// trace
-					//console.log( data );
-
 					// jQuery 1.9 fails to recognise the response as HTML, so
 					// we *must* use parseHTML if it's available...
 					if ( $.parseHTML ) {
@@ -1229,8 +1182,6 @@ CommentPress.ajax.comments = new function() {
 
 					}
 
-					//console.log( response );
-
 					// avoid errors if we can
 					try {
 
@@ -1243,7 +1194,6 @@ CommentPress.ajax.comments = new function() {
 
 						me.reset();
 						alert( me.cpajax_lang[6] + '\n\n' + e );
-						//console.log( data );
 
 					} // end try
 
