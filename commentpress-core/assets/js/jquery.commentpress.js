@@ -625,7 +625,6 @@ CommentPress.common.navigation = new function() {
 
 			// get para wrapper
 			para_wrapper = $(this).next('div.paragraph_wrapper');
-			//console.log( para_wrapper );
 
 			// set width to prevent rendering error
 			para_wrapper.css( 'width', $(this).parent().css( 'width' ) );
@@ -774,7 +773,6 @@ CommentPress.common.content = new function() {
 
 			// get text signature
 			var text_sig = '';
-			//console.log( text_sig );
 
 			// set target to para heading
 			CommentPress.settings.textblock.set_scroll_target( 'para_heading' );
@@ -841,7 +839,6 @@ CommentPress.common.content = new function() {
 
 			// get text signature
 			text_sig = $(this).prop('id');
-			//console.log( text_sig );
 
 			// remove leading #
 			text_sig = text_sig.split('textblock-')[1];
@@ -901,7 +898,6 @@ CommentPress.common.content = new function() {
 
 			// get target item
 			target = $(this).parent().next().children('.comment_count');
-			//console.log( target );
 
 			target.addClass( 'js-hover' );
 
@@ -919,7 +915,6 @@ CommentPress.common.content = new function() {
 
 			// get target item
 			target = $(this).parent().next().children('.comment_count');
-			//console.log( target );
 
 			target.removeClass( 'js-hover' );
 
@@ -1078,7 +1073,6 @@ CommentPress.common.content = new function() {
 
 			// get text signature
 			text_sig = $(this).children('a.para_permalink').prop('href').split('#')[1];
-			//console.log( text_sig );
 
 			// set target to comment form
 			CommentPress.settings.textblock.set_scroll_target( 'commentform' );
@@ -1118,7 +1112,6 @@ CommentPress.common.content = new function() {
 
 			// get text signature
 			text_sig = $(this).prop('href').split('#')[1];
-			//console.log( text_sig );
 
 			$('span.para_marker a#' + text_sig).addClass( 'js-hover' );
 
@@ -1136,7 +1129,6 @@ CommentPress.common.content = new function() {
 
 			// get text signature
 			text_sig = $(this).prop('href').split('#')[1];
-			//console.log( text_sig );
 
 			$('span.para_marker a#' + text_sig).removeClass( 'js-hover' );
 
@@ -1172,7 +1164,6 @@ CommentPress.common.content = new function() {
 
 			// get text signature
 			text_sig = $(this).prop('href').split('#')[1];
-			//console.log(text_sig);
 
 			// set target to comment form
 			CommentPress.settings.textblock.set_scroll_target( 'commentform' );
@@ -1223,7 +1214,6 @@ CommentPress.common.content = new function() {
 
 			// get target
 			target = $(this).prop('href').split('#')[1];
-			//console.log(target);
 
 			// use function for offset
 			me.quick_scroll_page( '#' + target, 100 );
@@ -1242,7 +1232,6 @@ CommentPress.common.content = new function() {
 
 			// get target
 			target = $(this).prop('href');
-			//console.log(target);
 
 			// is it a backlink?
 			if ( target.match('#return-note-' ) ) {
@@ -1287,7 +1276,6 @@ CommentPress.common.content = new function() {
 
 			// get target
 			target = $(this).prop('href').split('#')[1];
-			//console.log(target);
 
 			// use function for offset
 			me.quick_scroll_page( '#' + target, 100 );
@@ -1304,8 +1292,6 @@ CommentPress.common.content = new function() {
 	 * @param object target The object to scroll to
 	 */
 	this.scroll_page = function( target ) {
-
-		//console.log( target );
 
 		// bail if we didn't get a valid target
 		if ( 'undefined' === typeof target ) { return; }
@@ -1516,7 +1502,6 @@ CommentPress.common.content = new function() {
 
 			// get href
 			target_id = this.href.split('#')[1];
-			//console.log( target_id );
 
 			// hide all
 			$('.post').css( 'display', 'none' );
@@ -1712,7 +1697,6 @@ CommentPress.common.comments = new function() {
 
 			// get text_sig
 			text_sig = $(this).parent().prop( 'id' ).split('para_heading-')[1];
-			//console.log( 'text_sig: ' + text_sig );
 
 			// get para wrapper
 			para_wrapper = $(this).parent().next('div.paragraph_wrapper');
@@ -1731,9 +1715,6 @@ CommentPress.common.comments = new function() {
 
 			// did we get one at all?
 			if ( 'undefined' !== typeof text_sig ) {
-
-				//console.log( opening );
-				//alert( 'comment_block_permalink click' );
 
 				// if not the whole page or pings...
 				if( text_sig !== '' && text_sig != 'pingbacksandtrackbacks' ) {
@@ -1833,8 +1814,6 @@ CommentPress.common.comments = new function() {
 					// if we have a comment list
 					if ( comment_list.length > 0 && comment_list[0] ) {
 
-						//console.log( 'has' );
-
 						// are we closing with no reply form?
 						if ( !opening && !has_form ) {
 
@@ -1852,7 +1831,6 @@ CommentPress.common.comments = new function() {
 						// if we have no respond
 						if ( !has_form ) {
 
-							//console.log( 'none' );
 							para_wrapper.css('display','none');
 							opening = true;
 
@@ -2138,15 +2116,11 @@ CommentPress.common.comments = new function() {
 			default: throw new Error('illegal argument count');
 		}
 
-		//console.log( 'scroll: ' + flash );
-
 		// only scroll if not mobile (but allow tablets)
 		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
 			// either flash at the end or not..
 			if ( flash == 'flash' ) {
-
-				//console.log( target.prop( 'id' ).split( '-' )[1] );
 
 				// add highlight class
 				//$( '#li-comment-' + target.prop( 'id' ).split( '-' )[1] ).addClass( 'flash-comment' );
@@ -2325,7 +2299,6 @@ CommentPress.common.activity = new function() {
 
 			// get para wrapper
 			para_wrapper = $(this).next('div.paragraph_wrapper');
-			//console.log( para_wrapper );
 
 			// set width to prevent rendering error
 			para_wrapper.css( 'width', $(this).parent().css( 'width' ) );
@@ -2377,8 +2350,6 @@ CommentPress.common.activity = new function() {
 			// get comment
 			comment = $('#'+comment_id);
 
-			//console.log( comment );
-
 			// get array of parent paragraph_wrapper divs
 			para_wrapper_array = comment
 										.parents('div.paragraph_wrapper')
@@ -2421,8 +2392,6 @@ CommentPress.common.activity = new function() {
 
 					// scroll page to it
 					CommentPress.common.content.scroll_page_to_textblock( text_sig );
-
-					//console.log( '#li-comment-' + comment_id );
 
 					// add highlight class
 					//$( '#li-comment-' + comment_id ).addClass( 'flash-comment' );
@@ -2798,16 +2767,12 @@ CommentPress.common.viewport = new function() {
 
 		// get highlighted menu item object
 		current_menu_obj = $('.current_page_item');
-		//console.log( 'current_menu_item:' );
-		//console.log( current_menu_item );
 
 		// did we get one?
 		if ( current_menu_obj.length > 0 ) {
 
 			// get ID, if present
 			current_item_id = current_menu_obj.prop('id');
-			//console.log( 'current_item_id:' );
-			//console.log( current_item_id );
 
 			// if we do have an ID...
 			if ( current_item_id.length > 0 ) {
@@ -2834,8 +2799,6 @@ CommentPress.common.viewport = new function() {
 			}
 
 		}
-
-		//console.log( 'cpajax_current_menu_item: ' + cpajax_current_menu_item );
 
 		// --<
 		return current_menu_item;

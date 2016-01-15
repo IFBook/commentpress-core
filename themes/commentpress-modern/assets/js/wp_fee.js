@@ -276,9 +276,6 @@ jQuery(document).ready( function($) {
 
 						var comments;
 
-						//console.log( textStatus );
-						//console.log( data );
-
 						// if success
 						if ( textStatus == 'success' ) {
 

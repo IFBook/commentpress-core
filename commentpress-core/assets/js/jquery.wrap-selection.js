@@ -93,7 +93,6 @@
 
 		//Creates the range object
 		function setWrapRange(element, newRange) {
-			//console.log('set-Element:', element);
 			if (newRange) {
 				$.fn.range = newRange;
 			}
