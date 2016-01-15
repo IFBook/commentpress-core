@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
 Requires at least: 3.4
 Tested up to: 4.4
-Stable tag: 3.8.3
+Stable tag: 3.8.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -221,6 +221,12 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+
+<h4>3.8.4</h4>
+
+* Fix AJAX commenting under https
+* Fix font URL under https
+* Fix text selection offsets
 
 <h4>3.8.3</h4>
 
