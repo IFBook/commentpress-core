@@ -2079,7 +2079,7 @@ function commentpress_get_comments_by_para() {
 			// override if there are no comments (for print stylesheet to hide them)
 			if ( $comment_count == 0 ) { $no_comments_class = ' class="no_comments"'; }
 
-			// eclude pings if there are none
+			// exclude pings if there are none
 			if ( $comment_count == 0 AND $text_signature == 'PINGS_AND_TRACKS' ) {
 
 				// skip
@@ -2201,7 +2201,7 @@ function commentpress_get_comments_by_para() {
 			// increment signature array counter
 			$sig_counter++;
 
-		}
+		} // end comments-per-para loop
 
 	}
 
