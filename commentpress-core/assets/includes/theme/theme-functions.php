@@ -2193,6 +2193,13 @@ function commentpress_get_comments_by_para() {
 
 				}
 
+				/**
+				 * Allow plugins to append to paragraph wrappers.
+				 *
+				 * @param str $text_sig The text signature of the paragraph
+				 */
+				do_action( 'commentpress_after_paragraph_wrapper', $text_sig );
+
 				// close paragraph wrapper
 				echo '</div>' . "\n\n\n\n";
 
