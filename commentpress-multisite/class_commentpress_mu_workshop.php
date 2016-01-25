@@ -196,11 +196,9 @@ class CommentpressGroupblogWorkshop {
 		// if groupblog...
 		global $commentpress_core;
 		if (
-
-			! is_null( $commentpress_core )
-			AND is_object( $commentpress_core )
-			AND $commentpress_core->is_groupblog()
-
+			! is_null( $commentpress_core ) AND
+			is_object( $commentpress_core ) AND
+			$commentpress_core->is_groupblog()
 		) {
 
 			// override default link name

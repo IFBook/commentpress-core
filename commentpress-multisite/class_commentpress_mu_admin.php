@@ -401,10 +401,7 @@ class CommentpressMultisiteAdmin {
 
 		// test for null
 		if ( $option_name == '' ) {
-
-			// oops
 			die( __( 'You must supply an option to option_exists()', 'commentpress-core' ) );
-
 		}
 
 		// get option with unlikely default
@@ -425,10 +422,7 @@ class CommentpressMultisiteAdmin {
 
 		// test for null
 		if ( $option_name == '' ) {
-
-			// oops
 			die( __( 'You must supply an option to option_get()', 'commentpress-core' ) );
-
 		}
 
 		// get option
@@ -449,18 +443,12 @@ class CommentpressMultisiteAdmin {
 
 		// test for null
 		if ( $option_name == '' ) {
-
-			// oops
 			die( __( 'You must supply an option to option_set()', 'commentpress-core' ) );
-
 		}
 
 		// test for other than string
 		if ( ! is_string( $option_name ) ) {
-
-			// oops
 			die( __( 'You must supply the option as a string to option_set()', 'commentpress-core' ) );
-
 		}
 
 		// set option
@@ -480,10 +468,7 @@ class CommentpressMultisiteAdmin {
 
 		// test for null
 		if ( $option_name == '' ) {
-
-			// oops
 			die( __( 'You must supply an option to option_delete()', 'commentpress-core' ) );
-
 		}
 
 		// unset option
@@ -503,10 +488,7 @@ class CommentpressMultisiteAdmin {
 
 		// test for null
 		if ( $option_name == '' ) {
-
-			// oops
 			die( __( 'You must supply an option to option_wpms_exists()', 'commentpress-core' ) );
-
 		}
 
 		// get option with unlikely default
@@ -537,10 +519,7 @@ class CommentpressMultisiteAdmin {
 
 		// test for null
 		if ( $option_name == '' ) {
-
-			// oops
 			die( __( 'You must supply an option to option_wpms_get()', 'commentpress-core' ) );
-
 		}
 
 		// get option
@@ -561,10 +540,7 @@ class CommentpressMultisiteAdmin {
 
 		// test for null
 		if ( $option_name == '' ) {
-
-			// oops
 			die( __( 'You must supply an option to option_wpms_set()', 'commentpress-core' ) );
-
 		}
 
 		// set option
@@ -919,16 +895,10 @@ class CommentpressMultisiteAdmin {
 				commentpress_activate_ajax();
 
 				// modify CommentPress Core settings page
-				add_filter(
-					'cpmu_deactivate_commentpress_element',
-					array( $this, '_get_deactivate_element' )
-				);
+				add_filter( 'cpmu_deactivate_commentpress_element', array( $this, '_get_deactivate_element' ) );
 
 				// hook into CommentPress Core settings page result
-				add_action(
-					'cpmu_deactivate_commentpress',
-					array( $this, '_disable_core' )
-				);
+				add_action( 'cpmu_deactivate_commentpress', array( $this, '_disable_core' ) );
 
 			} else {
 
@@ -961,13 +931,11 @@ class CommentpressMultisiteAdmin {
 
 		// insert item in relevant menu
 		$this->options_page = add_options_page(
-
 			__( 'CommentPress Core Settings', 'commentpress-core' ),
 			__( 'CommentPress Core', 'commentpress-core' ),
 			'manage_options',
 			'commentpress_admin',
 			array( $this, '_options_page' )
-
 		);
 
 		//print_r( $this->options_page );die();
@@ -985,11 +953,9 @@ class CommentpressMultisiteAdmin {
 
 			// show on pages other than the CP admin page
 			if (
-
-				$pagenow == 'options-general.php'
-				AND ! empty( $_GET['page'] )
-				AND 'commentpress_admin' == $_GET['page']
-
+				$pagenow == 'options-general.php' AND
+				! empty( $_GET['page'] ) AND
+				'commentpress_admin' == $_GET['page']
 			) {
 
 				// we're on our admin page

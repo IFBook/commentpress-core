@@ -116,16 +116,6 @@ class CommentpressMultisiteBuddypress {
 	 */
 	public function add_frontend_styles() {
 
-		/*
-		// EXAMPLES:
-
-		// add css
-		wp_enqueue_style('cpbp-admin-style', CPBP_PLUGIN_URL . 'assets/css/admin.css');
-
-		// add javascripts
-		wp_enqueue_script( 'cpbp-admin-js', CPBP_PLUGIN_URL . 'assets/js/admin.js' );
-		*/
-
 		// dequeue BP Tempate Pack CSS, even if queued
 		wp_dequeue_style( 'bp' );
 
@@ -478,7 +468,6 @@ class CommentpressMultisiteBuddypress {
 
 		// okay, let's get the group object
 		$group = groups_get_group( array( 'group_id' => $group_id ) );
-		//print_r( $group ); die();
 
 		// see if we already have the modified activity for this blog post
 		$id = bp_activity_get_activity_id( array(
@@ -697,8 +686,6 @@ class CommentpressMultisiteBuddypress {
 
 		// only on CP-enabled groupblogs
 		if ( ( false === $this->_is_commentpress_groupblog() ) ) return $activity;
-
-		//print_r( array( 'a1' => $activity ) ); //die();
 
 		// clarify data
 		$blog_id = $activity->item_id;
@@ -1034,10 +1021,7 @@ class CommentpressMultisiteBuddypress {
 		if ( $groupblog_type ) {
 
 			// yes, it's a CommentPress Core-enabled groupblog
-			return apply_filters(
-				'cpmu_bp_groupblog_subnav_item_name',
-				__( 'Document', 'commentpress-core' )
-			);
+			return apply_filters( 'cpmu_bp_groupblog_subnav_item_name', __( 'Document', 'commentpress-core' ) );
 
 		}
 
@@ -1063,10 +1047,7 @@ class CommentpressMultisiteBuddypress {
 		if ( $groupblog_type ) {
 
 			// yes, it's a CommentPress Core-enabled groupblog
-			return apply_filters(
-				'cpmu_bp_groupblog_subnav_item_slug',
-				'document'
-			);
+			return apply_filters( 'cpmu_bp_groupblog_subnav_item_slug', 'document' );
 
 		}
 
@@ -1090,10 +1071,7 @@ class CommentpressMultisiteBuddypress {
 
 		// --<
 		// override default link name
-		return apply_filters(
-			'cpmu_bp_nav_title_page_title',
-			__( 'Document Home Page', 'commentpress-core' )
-		);
+		return apply_filters( 'cpmu_bp_nav_title_page_title', __( 'Document Home Page', 'commentpress-core' ) );
 
 	}
 
@@ -1118,7 +1096,6 @@ class CommentpressMultisiteBuddypress {
 
 				// get group id
 				$group_id = get_groupblog_group_id( $blog->blog_id );
-				//print_r( array( 'g' => $group_id ) );
 
 				// did we get one?
 				if ( is_numeric( $group_id ) ) {
@@ -1136,10 +1113,6 @@ class CommentpressMultisiteBuddypress {
 			}
 
 		}
-
-		//die();
-
-		//print_r( array( 'b' => $b, 'blogs' => $blogs ) ); die();
 
 		/* Renumber the array keys to account for missing items */
 		$blogs_new = array_values( $blogs->blogs );
@@ -1170,7 +1143,6 @@ class CommentpressMultisiteBuddypress {
 		[link_text] => Visit Site
 		[link_title] => Visit Site
 		*/
-		//print_r( $button ); die();
 
 		// init
 		$blogtype = 'blog';
@@ -1263,10 +1235,7 @@ class CommentpressMultisiteBuddypress {
 	 */
 	public function blog_type_label( $name ) {
 
-		return apply_filters(
-			'cp_class_commentpress_formatter_label',
-			__( 'Default Text Format', 'commentpress-core' )
-		);
+		return apply_filters( 'cp_class_commentpress_formatter_label', __( 'Default Text Format', 'commentpress-core' ) );
 
 	}
 
@@ -1287,10 +1256,7 @@ class CommentpressMultisiteBuddypress {
 		);
 
 		// --<
-		return apply_filters(
-			'cp_class_commentpress_formatter_types',
-			$types
-		);
+		return apply_filters( 'cp_class_commentpress_formatter_types', $types );
 
 	}
 
@@ -1305,10 +1271,7 @@ class CommentpressMultisiteBuddypress {
 	public function blog_workflow_exists( $exists ) {
 
 		// switch on, but allow overrides
-		return apply_filters(
-			'cp_class_commentpress_workflow_enabled',
-			true
-		);
+		return apply_filters( 'cp_class_commentpress_workflow_enabled', true );
 
 	}
 
@@ -1323,10 +1286,7 @@ class CommentpressMultisiteBuddypress {
 	public function blog_workflow_label( $name ) {
 
 		// set label, but allow overrides
-		return apply_filters(
-			'cp_class_commentpress_workflow_label',
-			__( 'Enable Translation Workflow', 'commentpress-core' )
-		);
+		return apply_filters( 'cp_class_commentpress_workflow_label', __( 'Enable Translation Workflow', 'commentpress-core' ) );
 
 	}
 
@@ -1349,10 +1309,7 @@ class CommentpressMultisiteBuddypress {
 		}
 
 		// return, but allow overrides
-		return apply_filters(
-			'cp_class_commentpress_workflow_group_blogtype',
-			$blog_type
-		);
+		return apply_filters( 'cp_class_commentpress_workflow_group_blogtype', $blog_type );
 
 	}
 
@@ -1425,10 +1382,7 @@ class CommentpressMultisiteBuddypress {
 	public function user_links_new_site_title() {
 
 		// override default link name
-		return apply_filters(
-			'cpmu_bp_create_new_site_title',
-			__( 'Create a New Site', 'commentpress-core' )
-		);
+		return apply_filters( 'cpmu_bp_create_new_site_title', __( 'Create a New Site', 'commentpress-core' ) );
 
 	}
 
@@ -1732,8 +1686,6 @@ class CommentpressMultisiteBuddypress {
 	 * @param array $activity_allowedtags The modified array of tags allowed in an activity item
 	 */
 	function _activity_allowed_tags( $activity_allowedtags ) {
-
-		//print_r( $activity_allowedtags ); die();
 
 		// lists
 		$activity_allowedtags['ul'] = array();
@@ -2193,11 +2145,9 @@ class CommentpressMultisiteBuddypress {
 		// check if this blog is a CP groupblog
 		global $commentpress_core;
 		if (
-
-			! is_null( $commentpress_core )
-			AND is_object( $commentpress_core )
-			AND $commentpress_core->is_groupblog()
-
+			! is_null( $commentpress_core ) AND
+			is_object( $commentpress_core ) AND
+			$commentpress_core->is_groupblog()
 		) {
 
 			return true;
@@ -2219,10 +2169,8 @@ class CommentpressMultisiteBuddypress {
 
 		// check if this blog is a CP groupsite
 		if (
-
 			function_exists( 'bpgsites_is_groupsite' ) AND
 			bpgsites_is_groupsite( get_current_blog_id() )
-
 		) {
 
 			return true;
@@ -2245,12 +2193,7 @@ class CommentpressMultisiteBuddypress {
 		global $commentpress_core;
 
 		// if we have the plugin
-		if (
-
-			! is_null( $commentpress_core )
-			AND is_object( $commentpress_core )
-
-		) {
+		if ( ! is_null( $commentpress_core ) AND is_object( $commentpress_core ) ) {
 
 			// --<
 			return $commentpress_core->db->option_get( 'cp_blog_type' ) ;
@@ -2358,10 +2301,8 @@ class CommentpressMultisiteBuddypress {
 
 				// is it a CommentPress Groupblog theme?
 				if (
-
 					in_array( 'commentpress', (array) $theme['Tags'] ) AND
 					in_array( 'groupblog', (array) $theme['Tags'] )
-
 				) {
 
 					// is this WP3.4+?
@@ -2443,10 +2384,7 @@ class CommentpressMultisiteBuddypress {
 	function _additional_buddypress_options() {
 
 		// return whatever plugins send back
-		return apply_filters(
-			'cpmu_network_buddypress_options_form',
-			''
-		);
+		return apply_filters( 'cpmu_network_buddypress_options_form', '' );
 
 	}
 
@@ -2473,22 +2411,16 @@ class CommentpressMultisiteBuddypress {
 
 		}
 
-		// define defaults
+		// define buddypress/groupblog defaults
 		$defaults = array(
-
-			// buddypress/groupblog defaults
 			'cpmu_bp_force_commentpress' => $this->cpmu_bp_force_commentpress,
 			'cpmu_bp_groupblog_privacy' => $this->cpmu_bp_groupblog_privacy,
 			'cpmu_bp_require_comment_registration' => $this->cpmu_bp_require_comment_registration,
 			'cpmu_bp_groupblog_theme' => $theme_data
-
 		);
 
 		// return defaults, but allow overrides and additions
-		return apply_filters(
-			'cpmu_buddypress_options_get_defaults',
-			$defaults
-		);
+		return apply_filters( 'cpmu_buddypress_options_get_defaults', $defaults );
 
 	}
 
