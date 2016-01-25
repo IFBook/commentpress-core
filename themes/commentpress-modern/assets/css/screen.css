@@ -3209,6 +3209,67 @@ body.group-admin.group-sites .standard-form .bpgsites_group_linkages_pending
 
 
 
+/*
+--------------------------------------------------------------------------------
+Compatibility with CommentPress JSTOR plugin
+--------------------------------------------------------------------------------
+*/
+
+.commentpress_jstor p.commentpress_jstor_trigger
+{
+	padding: 2%;
+	font-size: 70%;
+	text-transform: uppercase;
+	font-family: sans-serif;
+	margin: 0;
+	background-color: #eee;
+	background-color: #dadada;
+}
+
+.commentpress_jstor p.commentpress_jstor_trigger:hover
+{
+	cursor: pointer;
+	background-color: #eee;
+}
+
+.commentpress_jstor .comment-title a
+{
+	color: #761D19;
+	text-decoration: none;
+	font-family: Lato, 'Trebuchet MS', Helvetica, Arial, sans-serif;
+	font-weight: bold;
+}
+
+.commentpress_jstor .commentpress_jstor_spinner
+{
+	font-size: 70%;
+	margin: 0;
+	padding: 2%;
+	padding-bottom: 1%;
+	background-color: #eee;
+}
+
+.commentpress_jstor ol
+{
+	margin: 0;
+	padding: 0;
+	background-color: #eee;
+}
+
+.commentpress_jstor ol li
+{
+	background-color: #eee;
+	padding: 0;
+}
+
+.commentpress_jstor .comment-content
+{
+	margin-top: 2%;
+}
+
+
+
+
 
 /*
 --------------------------------------------------------------------------------
