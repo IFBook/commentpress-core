@@ -102,7 +102,6 @@ addComment = {
 
 		// set comment_parent hidden input to parentID
 		parent_e.value = parentID;
-		//console.log( 'parent_e.value set: ' + parent_e.value );
 
 		// set text_signature hidden input to text signature
 		if ( sig_e !== '' ) { sig_e.value = textSig; }
@@ -279,8 +278,6 @@ addComment = {
 				text_sig = addComment.I('text_signature').value;
 				addComment.I('text_signature').value = '';
 
-				//console.log('text_sig: '+text_sig);
-
 				// This is a potential source of weakness: if the para text has been changed,
 				// but not by much, then levenshtein will still associate the comment with
 				// a paragraph, but there will be no *exact* reference in the DOM.
@@ -434,8 +431,6 @@ addComment = {
 
 			}
 
-			//console.log( 'control added' );
-
 		}
 
 	},
@@ -464,8 +459,6 @@ addComment = {
 
 			}
 
-			//console.log( 'control removed' );
-
 		}
 
 	},
@@ -481,8 +474,6 @@ addComment = {
 	 * @return void
 	 */
 	setTitle : function( parentID, textSig, mode ) {
-
-		//console.log( 'parentID: '+parentID+' textSig: '+textSig+' mode: ' + mode );
 
 		// get comment form title item
 		var title = addComment.I('respond_title');
@@ -526,8 +517,6 @@ addComment = {
 
 				// it's a comment on a paragraph
 				var reply_text = jQuery( '#para_wrapper-' + textSig + ' a.reply_to_para' );
-				//console.log( 'TITLE' );
-				//console.log( reply_text );
 
 				/*
 				// test for multiples
@@ -572,8 +561,6 @@ addComment = {
 
 			// store
 			//addComment.replyTitle = title.innerHTML;
-			//console.log( jQuery( '#comment-' + parentID + ' > .reply' ) );
-			//console.log( jQuery( '#comment-' + parentID + ' > .reply' ).text() );
 
 			// seems like sometimes we can get an array for the .reply with more than one item...
 			var reply = jQuery( '#comment-' + parentID + ' > .reply' )[0];

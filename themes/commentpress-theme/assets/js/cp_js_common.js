@@ -2138,10 +2138,6 @@ CommentPress.theme.original.header = new function() {
 	 */
 	this.open = function() {
 
-		// -------------------------------------------------------------------------
-		//console.log( 'open' );
-		// -------------------------------------------------------------------------
-
 		// define vars
 		var book_nav_h, target_sidebar, target_sidebar_pane, book_header, container,
 			cp_container_top, cp_sidebar_height;
@@ -2267,10 +2263,6 @@ CommentPress.theme.original.header = new function() {
 	 * @return void
 	 */
 	this.close = function() {
-
-		// -------------------------------------------------------------------------
-		//console.log( 'close' );
-		// -------------------------------------------------------------------------
 
 		// define vars
 		var book_nav_h, target_sidebar, target_sidebar_pane, book_header, container;

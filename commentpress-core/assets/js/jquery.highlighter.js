@@ -153,7 +153,6 @@
                                     topOffset = -15;
                                     expandedSelRange.selectNode(prev);
                                 }
-                                // console.log(expandedSelRange);
                                 expandedSelRange.collapse(false);
                             } else if(range.endOffset === 0 ) {
                                 topOffset = -25;

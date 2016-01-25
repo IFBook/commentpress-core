@@ -1398,22 +1398,14 @@ CommentPress.texthighlighter.commentform = new function() {
 		// if the event target is not the comment form container
 		if ( !$(event.target).closest( '#respond' ).length ) {
 
-			//console.log( 'the event target is not the comment form' );
-
 			// if the event target is not a comment
 			if ( !$(event.target).closest( '.comment-content' ).length ) {
-
-				//console.log( 'the event target is not a comment' );
 
 				// do we have a current selection?
 				if ( me.current_selection_exists() ) {
 
-					//console.log( 'we have a selection' );
-
 					// do we have any content?
 					if ( me.comment_content_exists() ) {
-
-						//console.log( 'we have comment content' );
 
 						// show modal
 						me.modal();
@@ -1423,16 +1415,12 @@ CommentPress.texthighlighter.commentform = new function() {
 
 					} else {
 
-						//console.log( 'we DO NOT have comment content' );
-
 						// do modal yes
 						me.modal_yes();
 
 					}
 
 				} else {
-
-					//console.log( 'we DO NOT have a selection' );
 
 					// do modal yes
 					me.modal_yes();
@@ -1883,7 +1871,6 @@ CommentPress.texthighlighter.comments = new function() {
 
 				// get the item
 				current_comment = $(parent_comments_array[0]);
-				//console.log( current_comment );
 
 				// get current ID
 				current_comment_id = current_comment.prop('id').split('-')[2];
