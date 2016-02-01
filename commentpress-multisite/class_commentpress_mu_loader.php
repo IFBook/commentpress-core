@@ -45,8 +45,9 @@ class CommentpressMultisiteLoader {
 	/**
 	 * Initialises this object
 	 *
+	 * @since 3.0
+	 *
 	 * @param object $parent_obj a reference to the parent object
-	 * @return object
 	 */
 	function __construct( $parent_obj = null ) {
 
@@ -55,9 +56,6 @@ class CommentpressMultisiteLoader {
 
 		// init
 		$this->_init();
-
-		// --<
-		return $this;
 
 	}
 

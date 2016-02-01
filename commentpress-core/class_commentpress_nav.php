@@ -55,8 +55,9 @@ class CommentpressCoreNavigator {
 	/**
 	 * Initialises this object
 	 *
+	 * @since 3.0
+	 *
 	 * @param object $parent_obj A reference to the parent object
-	 * @return object
 	 */
 	function __construct( $parent_obj ) {
 
@@ -65,9 +66,6 @@ class CommentpressCoreNavigator {
 
 		// init
 		$this->_init();
-
-		// --<
-		return $this;
 
 	}
 

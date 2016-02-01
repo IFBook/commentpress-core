@@ -63,7 +63,7 @@ class CommentpressCore {
 	/**
 	 * Initialises this object
 	 *
-	 * @return object
+	 * @since 3.0
 	 */
 	function __construct() {
 
@@ -71,9 +71,6 @@ class CommentpressCore {
 		$this->_init();
 
 		//$this->groupblog_theme_is_set();
-
-		// --<
-		return $this;
 
 	}
 
