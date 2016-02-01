@@ -3267,6 +3267,14 @@ Compatibility with CommentPress JSTOR plugin
 	margin-top: 2%;
 }
 
+.commentpress_jstor .comment-not-found
+{
+	padding: 2%;
+	margin: 0;
+	font-size: 100%;
+	color: #ca0000;
+}
+
 
 
 
