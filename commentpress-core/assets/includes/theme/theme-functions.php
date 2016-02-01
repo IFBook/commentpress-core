@@ -2122,6 +2122,14 @@ function commentpress_get_comments_by_para() {
 
 					}
 
+
+					/**
+					 * Allow plugins to append to paragraph level comments.
+					 *
+					 * @param str $text_sig The text signature of the paragraph
+					 */
+					do_action( 'commentpress_after_paragraph_comments', $text_sig );
+
 					// add to used array
 					$used_text_sigs[] = $text_sig;
 
