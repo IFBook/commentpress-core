@@ -3232,6 +3232,12 @@ Compatibility with CommentPress JSTOR plugin
 	background-color: #97CFEF;
 }
 
+.commentpress_jstor p.commentpress_jstor_triggered:hover
+{
+	cursor: default;
+	background-color: #8FB7D3;
+}
+
 .commentpress_jstor .comment-title a
 {
 	color: #761D19;
