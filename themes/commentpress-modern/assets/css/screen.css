@@ -3222,14 +3222,14 @@ Compatibility with CommentPress JSTOR plugin
 	text-transform: uppercase;
 	font-family: sans-serif;
 	margin: 0;
-	background-color: #eee;
-	background-color: #dadada;
+	background-color: #8FB7D3;
+	color: #fff;
 }
 
 .commentpress_jstor p.commentpress_jstor_trigger:hover
 {
 	cursor: pointer;
-	background-color: #eee;
+	background-color: #97CFEF;
 }
 
 .commentpress_jstor .comment-title a
@@ -3271,8 +3271,11 @@ Compatibility with CommentPress JSTOR plugin
 {
 	padding: 2%;
 	margin: 0;
-	font-size: 100%;
+	font-size: 80%;
 	color: #ca0000;
+	text-transform: uppercase;
+	font-family: sans-serif;
+	background-color: #eee;
 }
 
 
