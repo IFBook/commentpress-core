@@ -96,8 +96,9 @@ class CommentpressCoreDatabase {
 	/**
 	 * Initialises this object
 	 *
+	 * @since 3.0
+	 *
 	 * @param object $parent_obj A reference to the parent object
-	 * @return object
 	 */
 	function __construct( $parent_obj ) {
 
@@ -106,9 +107,6 @@ class CommentpressCoreDatabase {
 
 		// init
 		$this->_init();
-
-		// --<
-		return $this;
 
 	}
 
@@ -916,6 +914,11 @@ class CommentpressCoreDatabase {
 
 			// set flag
 			$result = true;
+
+			/**
+			 * Allow other plugins to hook into the update process.
+			 */
+			do_action( 'commentpress_admin_page_options_updated' );
 
 		}
 

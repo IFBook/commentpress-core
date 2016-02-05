@@ -2079,7 +2079,7 @@ function commentpress_get_comments_by_para() {
 			// override if there are no comments (for print stylesheet to hide them)
 			if ( $comment_count == 0 ) { $no_comments_class = ' class="no_comments"'; }
 
-			// eclude pings if there are none
+			// exclude pings if there are none
 			if ( $comment_count == 0 AND $text_signature == 'PINGS_AND_TRACKS' ) {
 
 				// skip
@@ -2121,6 +2121,14 @@ function commentpress_get_comments_by_para() {
 						echo '</ol>' . "\n\n";
 
 					}
+
+
+					/**
+					 * Allow plugins to append to paragraph level comments.
+					 *
+					 * @param str $text_sig The text signature of the paragraph
+					 */
+					do_action( 'commentpress_after_paragraph_comments', $text_sig );
 
 					// add to used array
 					$used_text_sigs[] = $text_sig;
@@ -2193,6 +2201,13 @@ function commentpress_get_comments_by_para() {
 
 				}
 
+				/**
+				 * Allow plugins to append to paragraph wrappers.
+				 *
+				 * @param str $text_sig The text signature of the paragraph
+				 */
+				do_action( 'commentpress_after_paragraph_wrapper', $text_sig );
+
 				// close paragraph wrapper
 				echo '</div>' . "\n\n\n\n";
 
@@ -2201,7 +2216,7 @@ function commentpress_get_comments_by_para() {
 			// increment signature array counter
 			$sig_counter++;
 
-		}
+		} // end comments-per-para loop
 
 	}
 

@@ -51,8 +51,9 @@ class CommentpressGroupblogWorkshop {
 	/**
 	 * Initialises this object
 	 *
+	 * @since 3.0
+	 *
 	 * @param object $parent_obj a reference to the parent object
-	 * @return object
 	 */
 	function __construct( $parent_obj = null ) {
 
@@ -64,9 +65,6 @@ class CommentpressGroupblogWorkshop {
 
 		// init
 		$this->_init();
-
-		// --<
-		return $this;
 
 	}
 
@@ -196,11 +194,9 @@ class CommentpressGroupblogWorkshop {
 		// if groupblog...
 		global $commentpress_core;
 		if (
-
-			! is_null( $commentpress_core )
-			AND is_object( $commentpress_core )
-			AND $commentpress_core->is_groupblog()
-
+			! is_null( $commentpress_core ) AND
+			is_object( $commentpress_core ) AND
+			$commentpress_core->is_groupblog()
 		) {
 
 			// override default link name

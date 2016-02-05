@@ -39,8 +39,9 @@ class CommentpressCoreDisplay {
 	/**
 	 * Initialises this object
 	 *
+	 * @since 3.0
+	 *
 	 * @param object $parent_obj A reference to the parent object
-	 * @return object
 	 */
 	function __construct( $parent_obj ) {
 
@@ -52,9 +53,6 @@ class CommentpressCoreDisplay {
 
 		// init
 		$this->_init();
-
-		// --<
-		return $this;
 
 	}
 
@@ -1614,8 +1612,8 @@ HELPTEXT;
 
 		';
 
-		// --<
-		return $options;
+		// allow plugins to append form elements
+		return apply_filters( 'commentpress_admin_page_options', $options );
 
 	}
 

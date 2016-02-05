@@ -48,8 +48,9 @@ class CommentpressMultisite {
 	/**
 	 * Initialises this object
 	 *
+	 * @since 3.0
+	 *
 	 * @param object $parent_obj A reference to the parent object
-	 * @return object
 	 */
 	function __construct( $parent_obj = null ) {
 
@@ -61,9 +62,6 @@ class CommentpressMultisite {
 
 		// init
 		$this->_init();
-
-		// --<
-		return $this;
 
 	}
 
@@ -451,8 +449,6 @@ class CommentpressMultisite {
 
 		}
 
-
-
 		// --<
 		return $type_html;
 
@@ -474,8 +470,6 @@ class CommentpressMultisite {
 			wp_die( __( 'You do not have permission to access this page.', 'commentpress-core' ) );
 
 		}
-
-		//_cpdie( 'here' );
 
 		// show message
 		if ( isset( $_GET['updated'] ) ) {
@@ -613,10 +607,7 @@ class CommentpressMultisite {
 	function _additional_multisite_options() {
 
 		// return whatever plugins send
-		return apply_filters(
-			'cpmu_network_multisite_options_form',
-			''
-		);
+		return apply_filters( 'cpmu_network_multisite_options_form', '' );
 
 	}
 
@@ -630,10 +621,7 @@ class CommentpressMultisite {
 	function _additional_form_options() {
 
 		// return whatever plugins send
-		return apply_filters(
-			'cpmu_network_options_form',
-			''
-		);
+		return apply_filters( 'cpmu_network_options_form', '' );
 
 	}
 

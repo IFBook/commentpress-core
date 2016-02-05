@@ -39,8 +39,9 @@ class CommentpressCoreFormatter {
 	/**
 	 * Initialises this object
 	 *
+	 * @since 3.0
+	 *
 	 * @param object $parent_obj A reference to the parent object
-	 * @return object
 	 */
 	function __construct( $parent_obj = null ) {
 
@@ -52,9 +53,6 @@ class CommentpressCoreFormatter {
 
 		// init
 		$this->_init();
-
-		// --<
-		return $this;
 
 	}
 

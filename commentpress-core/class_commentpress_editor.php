@@ -42,8 +42,9 @@ class CommentpressCoreEditor {
 	/**
 	 * Initialises this object
 	 *
+	 * @since 3.0
+	 *
 	 * @param object $parent_obj a reference to the parent object
-	 * @return object
 	 */
 	function __construct( $parent_obj = null ) {
 
@@ -55,9 +56,6 @@ class CommentpressCoreEditor {
 
 		// intercept toggles
 		add_action( 'plugins_loaded', array( $this, 'initialise' ), 999 );
-
-		// --<
-		return $this;
 
 	}
 
