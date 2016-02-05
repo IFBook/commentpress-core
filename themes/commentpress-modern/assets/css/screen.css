@@ -1288,6 +1288,7 @@ ol.children .reply a
 #respond
 {
 	padding: 2%;
+	position: relative;
 }
 
 div#respond > p
