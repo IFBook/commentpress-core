@@ -3590,16 +3590,14 @@ Compatibility with BP Group Sites plugin
 	text-transform: uppercase;
 }
 
-.bpgsites_comment_group_mine,
-.bpgsites_comment_group_linked,
-.bpgsites_comment_group_public
+.bpgsites_comment_group_header
 {
 	font-size: 70%;
 	font-weight: bold;
 	padding: 10px 0 5px 0;
 }
 
-.bpgsites_comment_group_mine
+.bpgsites_comment_group_header:first-child
 {
 	padding-top: 0;
 }
