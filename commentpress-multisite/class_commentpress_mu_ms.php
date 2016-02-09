@@ -46,7 +46,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
 	 * @since 3.0
 	 *
@@ -68,7 +68,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Set up all items associated with this object
+	 * Set up all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -79,7 +79,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * If needed, destroys all items associated with this object
+	 * If needed, destroys all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -102,7 +102,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Add an admin page for this plugin
+	 * Add an admin page for this plugin.
 	 *
 	 * @return void
 	 */
@@ -133,7 +133,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Enqueue any styles and scripts needed by our admin page
+	 * Enqueue any styles and scripts needed by our admin page.
 	 *
 	 * @return void
 	 */
@@ -153,7 +153,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Enqueue any styles and scripts needed by our public pages
+	 * Enqueue any styles and scripts needed by our public pages.
 	 *
 	 * @return void
 	 */
@@ -173,8 +173,9 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Hook into the blog signup form
+	 * Hook into the blog signup form.
 	 *
+	 * @param array $errors The previously encountered errors
 	 * @return void
 	 */
 	public function signup_blogform( $errors ) {
@@ -249,8 +250,14 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Hook into wpmu_new_blog and target plugins to be activated
+	 * Hook into wpmu_new_blog and target plugins to be activated.
 	 *
+	 * @param int $blog_id The numeric ID of the WordPress blog
+	 * @param int $user_id The numeric ID of the WordPress user
+	 * @param str $domain The domain of the WordPress blog
+	 * @param str $path The path of the WordPress blog
+	 * @param int $site_id The numeric ID of the WordPress parent site
+	 * @param array $meta The meta data of the WordPress blog
 	 * @return void
 	 */
 	public function wpmu_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
@@ -268,7 +275,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Change the greeting in the WordPress Admin Bar
+	 * Change the greeting in the WordPress Admin Bar.
 	 * Props: http://pankajanupam.in
 	 *
 	 * @param str $translated The existing translated string
@@ -306,7 +313,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Object initialisation
+	 * Object initialisation.
 	 *
 	 * @return void
 	 */
@@ -320,7 +327,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Register WordPress hooks
+	 * Register WordPress hooks.
 	 *
 	 * @return void
 	 */
@@ -365,8 +372,14 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Create a blog
+	 * Create a blog.
 	 *
+	 * @param int $blog_id The numeric ID of the WordPress blog
+	 * @param int $user_id The numeric ID of the WordPress user
+	 * @param str $domain The domain of the WordPress blog
+	 * @param str $path The path of the WordPress blog
+	 * @param int $site_id The numeric ID of the WordPress parent site
+	 * @param array $meta The meta data of the WordPress blog
 	 * @return void
 	 */
 	function _create_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
@@ -385,7 +398,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Get workflow form elements
+	 * Get workflow form elements.
 	 *
 	 * @return str $workflow_html The HTML form element
 	 */
@@ -419,7 +432,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Get blog type form elements
+	 * Get blog type form elements.
 	 *
 	 * @return str $type_html The HTML form element
 	 */
@@ -457,7 +470,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Show our admin page
+	 * Show our admin page.
 	 *
 	 * @return void
 	 */
@@ -600,7 +613,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Allow other plugins to hook into our multisite admin options
+	 * Allow other plugins to hook into our multisite admin options.
 	 *
 	 * @return str Empty string by default, but may be overridden
 	 */
@@ -614,7 +627,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Allow other plugins to hook into our admin form
+	 * Allow other plugins to hook into our admin form.
 	 *
 	 * @return str Empty string by default, but may be overridden
 	 */
@@ -628,7 +641,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Get default Multisite-related settings
+	 * Get default Multisite-related settings.
 	 *
 	 * @param array $existing_options The existing options
 	 * @return array $existing_options The modified options
@@ -656,7 +669,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Hook into Network form update
+	 * Hook into Network form update.
 	 *
 	 * @return void
 	 */
@@ -689,7 +702,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Get workflow enabled setting
+	 * Get workflow enabled setting.
 	 *
 	 * @return bool $disabled True if disabled, false otherwise
 	 */
@@ -706,7 +719,8 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Get default Title Page content, if set
+	 * Get default Title Page content, if set.
+	 *
 	 * Do we want to enable this when we enable the admin page editor?
 	 *
 	 * @param str $content The existing content
@@ -733,7 +747,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Get default Title Page content
+	 * Get default Title Page content.
 	 *
 	 * @return str $content The default Title Page content
 	 */

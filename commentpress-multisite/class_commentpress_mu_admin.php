@@ -40,7 +40,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
 	 * @since 3.0
 	 *
@@ -59,7 +59,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Set up all options associated with this object
+	 * Set up all options associated with this object.
 	 *
 	 * @param string $component a component identifier, either 'multisite' or 'buddypress'
 	 * @return void
@@ -101,7 +101,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Upgrade plugin from 1.0 options to latest set
+	 * Upgrade plugin from 1.0 options to latest set.
 	 *
 	 * @return boolean $result
 	 */
@@ -151,7 +151,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * If needed, destroys all items associated with this object
+	 * If needed, destroys all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -165,7 +165,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Uninstalls database modifications
+	 * Uninstalls database modifications.
 	 *
 	 * @return void
 	 */
@@ -190,7 +190,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Check for plugin upgrade
+	 * Check for plugin upgrade.
 	 *
 	 * @return boolean $result True if upgrade required, false otherwise
 	 */
@@ -217,7 +217,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Create all plugin options
+	 * Create all plugin options.
 	 *
 	 * @return void
 	 */
@@ -240,7 +240,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Delete all plugin options
+	 * Delete all plugin options.
 	 *
 	 * @return void
 	 */
@@ -257,7 +257,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Save the settings set by the administrator
+	 * Save the settings set by the administrator.
 	 *
 	 * @return boolean True on success, false on failure
 	 */
@@ -334,7 +334,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Save options array as WordPress site option
+	 * Save options array as WordPress site option.
 	 *
 	 * @return boolean $success True if successful, false otherwise
 	 */
@@ -348,7 +348,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Reset options
+	 * Reset options.
 	 *
 	 * @param string $component a component identifier, either 'multisite' or 'buddypress'
 	 * @return void
@@ -390,7 +390,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Return existence of a specified option
+	 * Return existence of a specified option.
 	 *
 	 * @param str $option_name The name of the option
 	 * @return bool True if the option exists, false otherwise
@@ -410,7 +410,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Return a value for a specified option
+	 * Return a value for a specified option.
 	 *
 	 * @param str $option_name The name of the option
 	 * @param mixed $default The default value for the option
@@ -431,7 +431,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Sets a value for a specified option
+	 * Sets a value for a specified option.
 	 *
 	 * @param str $option_name The name of the option
 	 * @param mixed $value The value for the option
@@ -457,7 +457,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Deletes a specified option
+	 * Deletes a specified option.
 	 *
 	 * @param str $option_name The name of the option
 	 * @return void
@@ -477,7 +477,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Return existence of a specified site option
+	 * Return existence of a specified site option.
 	 *
 	 * @param str $option_name The name of the option
 	 * @return bool True if option exists, false otherwise
@@ -507,7 +507,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Return a value for a specified site option
+	 * Return a value for a specified site option.
 	 *
 	 * @param str $option_name The name of the option
 	 * @param mixed $default The default value for the option
@@ -528,7 +528,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Sets a value for a specified site option
+	 * Sets a value for a specified site option.
 	 *
 	 * @param str $option_name The name of the option
 	 * @param mixed $value The value for the option
@@ -549,7 +549,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * CommentPress Core initialisation
+	 * CommentPress Core initialisation.
 	 *
 	 * @param str $context The initialisation context
 	 * @return void
@@ -658,7 +658,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * CommentPress Core deactivation
+	 * CommentPress Core deactivation.
 	 *
 	 * @return void
 	 */
@@ -689,7 +689,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Get workflow form data
+	 * Get workflow form data.
 	 *
 	 * @return array $return Keyed array of form data
 	 */
@@ -735,7 +735,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Get blog type form elements
+	 * Get blog type form elements.
 	 *
 	 * @return array $return Keyed array of form data
 	 */
@@ -784,7 +784,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Check if blog is CommentPress-enabled
+	 * Check if blog is CommentPress-enabled.
 	 *
 	 * @param int $blog_id The ID of the blog to check
 	 * @return bool $core_active True if CommentPress-enabled, false otherwise
@@ -854,7 +854,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Object initialisation
+	 * Object initialisation.
 	 *
 	 * @return void
 	 */
@@ -912,7 +912,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Appends option to admin menu
+	 * Appends option to admin menu.
 	 *
 	 * @return void
 	 */
@@ -972,7 +972,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Utility to add a message to admin pages when migration is required
+	 * Utility to add a message to admin pages when migration is required.
 	 *
 	 * @return void
 	 */
@@ -996,7 +996,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Prints plugin options page
+	 * Prints plugin options page.
 	 *
 	 * @return void
 	 */
@@ -1016,7 +1016,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Get the WordPress admin page
+	 * Get the WordPress admin page.
 	 *
 	 * @return string $admin_page The HTML for the admin page
 	 */
@@ -1042,7 +1042,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Returns the admin form HTML
+	 * Returns the admin form HTML.
 	 *
 	 * @return string $admin_page The HTML for the admin page
 	 */
@@ -1103,7 +1103,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Get workflow form elements
+	 * Get workflow form elements.
 	 *
 	 * @return str The form HTML
 	 */
@@ -1138,7 +1138,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Get blog type form elements
+	 * Get blog type form elements.
 	 *
 	 * @return str $type_html The HTML for the form element
 	 */
@@ -1177,7 +1177,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Enable CommentPress Core
+	 * Enable CommentPress Core.
 	 *
 	 * @return void
 	 */
@@ -1214,7 +1214,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Get deactivation form element
+	 * Get deactivation form element.
 	 *
 	 * @return str The HTML for the form element
 	 */
@@ -1233,7 +1233,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Disable CommentPress Core
+	 * Disable CommentPress Core.
 	 *
 	 * @return void
 	 */

@@ -49,7 +49,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
 	 * @since 3.0
 	 *
@@ -71,7 +71,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Set up all items associated with this object
+	 * Set up all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -82,7 +82,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * If needed, destroys all items associated with this object
+	 * If needed, destroys all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -105,7 +105,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Override the name of the filter item
+	 * Override the name of the filter item.
 	 *
 	 * @return str The name in the groupblog comments label
 	 */
@@ -122,7 +122,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Override the name of the filter item
+	 * Override the name of the filter item.
 	 *
 	 * @return str The plural name in the groupblog posts label
 	 */
@@ -139,7 +139,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Override the name of the filter item
+	 * Override the name of the filter item.
 	 *
 	 * @return str The singular name of the groupblog post
 	 */
@@ -156,7 +156,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Override the name of the sub-nav item
+	 * Override the name of the sub-nav item.
 	 *
 	 * @return str The singular name of the groupblog post
 	 */
@@ -170,7 +170,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Override the slug of the sub-nav item
+	 * Override the slug of the sub-nav item.
 	 *
 	 * @return The slug of the sub-nav item
 	 */
@@ -184,7 +184,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Override the title of the "Recent Comments in..." link
+	 * Override the title of the "Recent Comments in..." link.
 	 *
 	 * @param str $title The title of the Recent Comments heading
 	 * @return str $title The modified title of the Recent Comments heading
@@ -229,7 +229,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Override title on All Comments page
+	 * Override title on All Comments page.
 	 *
 	 * @param str $title The title of the All Comments heading
 	 * @return str $title The modified title of the All Comments heading
@@ -252,7 +252,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Override title on All Comments page
+	 * Override title on All Comments page.
 	 *
 	 * @param str $title The title of the "Comments on..." heading
 	 * @return str $title The modified title of the "Comments on..." heading
@@ -275,7 +275,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Override title on Activity tab
+	 * Override title on Activity tab.
 	 *
 	 * @param str $title The title of the "Recent Activity in..." heading
 	 * @return str $title The modified title of the "Recent Activity in..." heading
@@ -301,7 +301,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Override title on Activity tab
+	 * Override title on Activity tab.
 	 *
 	 * @param str $title The title of the "Recent Activity in..." heading
 	 * @return str $title The modified title of the "Recent Activity in..." heading
@@ -327,7 +327,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Override CommentPress "Title Page"
+	 * Override CommentPress "Title Page".
 	 *
 	 * @param str $title The title of the "Groupblog Home Page" heading
 	 * @return str $title The modified title of the "Groupblog Home Page" heading
@@ -353,7 +353,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Override the BP Sites Directory "visit" button
+	 * Override the BP Sites Directory "visit" button.
 	 *
 	 * @param str $button The title of the "Visit Site" heading
 	 * @return str $title The modified title of the "Visit Site" heading
@@ -383,7 +383,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Object initialisation
+	 * Object initialisation.
 	 *
 	 * @return void
 	 */
@@ -458,7 +458,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Register WordPress hooks
+	 * Register WordPress hooks.
 	 *
 	 * @return void
 	 */
@@ -497,7 +497,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Add our options to the BuddyPress admin form
+	 * Add our options to the BuddyPress admin form.
 	 *
 	 * @return str $element The admin form element
 	 */
@@ -551,7 +551,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Hook into Network BuddyPress form update
+	 * Hook into Network BuddyPress form update.
 	 *
 	 * @return void
 	 */
@@ -598,7 +598,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Add our default BuddyPress-related settings
+	 * Add our default BuddyPress-related settings.
 	 *
 	 * @return array $settings The default settings
 	 */
@@ -618,7 +618,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Get legacy name when already set
+	 * Get legacy name when already set.
 	 *
 	 * @return str $name The legacy singular name of a groupblog
 	 */
@@ -632,7 +632,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Get legacy plural name when already set
+	 * Get legacy plural name when already set.
 	 *
 	 * @return str $name The legacy plural name of a groupblog
 	 */
@@ -646,7 +646,7 @@ class CommentpressGroupblogWorkshop {
 
 
 	/**
-	 * Get legacy slug when already set
+	 * Get legacy slug when already set.
 	 *
 	 * @return str $name The legacy slug of a groupblog
 	 */

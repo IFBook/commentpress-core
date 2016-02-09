@@ -43,7 +43,7 @@ class CommentpressMultisiteLoader {
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
 	 * @since 3.0
 	 *
@@ -62,7 +62,7 @@ class CommentpressMultisiteLoader {
 
 
 	/**
-	 * Set up all items associated with this object
+	 * Set up all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -73,7 +73,7 @@ class CommentpressMultisiteLoader {
 
 
 	/**
-	 * If needed, destroys all items associated with this object
+	 * If needed, destroys all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -108,7 +108,7 @@ class CommentpressMultisiteLoader {
 
 
 	/**
-	 * Object initialisation
+	 * Object initialisation.
 	 *
 	 * @return void
 	 */
@@ -187,7 +187,7 @@ class CommentpressMultisiteLoader {
 
 
 	/**
-	 * BuddyPress object initialisation
+	 * BuddyPress object initialisation.
 	 *
 	 * @return void
 	 */
@@ -237,7 +237,7 @@ class CommentpressMultisiteLoader {
 
 
 	/**
-	 * This plugin has been network-activated (does not fire!)!
+	 * This plugin has been network-activated. (does not fire!)!
 	 *
 	 * @return void
 	 */
@@ -262,7 +262,7 @@ class CommentpressMultisiteLoader {
 
 
 	/**
-	 * This plugin has been network-deactivated
+	 * This plugin has been network-deactivated.
 	 *
 	 * @return void
 	 */

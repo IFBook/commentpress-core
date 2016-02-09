@@ -37,7 +37,7 @@ class CommentpressMultisiteRevisions {
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
 	 * @since 3.0
 	 *
@@ -59,7 +59,7 @@ class CommentpressMultisiteRevisions {
 
 
 	/**
-	 * Set up all items associated with this object
+	 * Set up all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -70,7 +70,7 @@ class CommentpressMultisiteRevisions {
 
 
 	/**
-	 * If needed, destroys all items associated with this object
+	 * If needed, destroys all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -93,8 +93,9 @@ class CommentpressMultisiteRevisions {
 
 
 	/**
-	 * Amend the post title prefix
+	 * Amend the post title prefix.
 	 *
+	 * @param str $prefix The existing post title prefix
 	 * @return str An empty string
 	 */
 	public function new_post_title_prefix( $prefix ) {
@@ -107,7 +108,7 @@ class CommentpressMultisiteRevisions {
 
 
 	/**
-	 * Add suffix " - Draft N", where N is the latest version number
+	 * Add suffix " - Draft N", where N is the latest version number.
 	 *
 	 * @param str $title The existing title of the post
 	 * @param object $post The WordPress post object
@@ -170,7 +171,7 @@ class CommentpressMultisiteRevisions {
 
 
 	/**
-	 * Object initialisation
+	 * Object initialisation.
 	 *
 	 * @return void
 	 */
@@ -184,7 +185,7 @@ class CommentpressMultisiteRevisions {
 
 
 	/**
-	 * Register WordPress hooks
+	 * Register WordPress hooks.
 	 *
 	 * @return void
 	 */
