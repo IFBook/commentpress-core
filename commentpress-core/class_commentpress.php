@@ -534,10 +534,15 @@ class CommentpressCore {
 	/**
 	 * Add scripts needed across all WP admin pages
 	 *
+	 * @param str $hook The requested admin page
 	 * @return void
 	 */
-	public function enqueue_admin_scripts() {
+	public function enqueue_admin_scripts( $hook ) {
 
+		// don't enqueue on comment edit screen
+		if ( 'comment.php' == $hook ) return;
+
+		// there's a new quicktags script in 3.3
 		// add quicktag button to page editor
 		$this->display->get_custom_quicktags();
 
