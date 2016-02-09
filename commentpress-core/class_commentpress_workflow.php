@@ -256,9 +256,6 @@ class CommentpressCoreWorkflow {
 		// is this an auto save routine?
 		if ( defined('DOING_AUTOSAVE') AND DOING_AUTOSAVE ) { return; }
 
-		//print_r( array( 'can' => current_user_can( 'edit_posts' ) ) ); die();
-		//print_r( array( 'can' => current_user_can( 'edit_pages' ) ) ); die();
-
 		// check permissions
 		if ( $post_obj->post_type == 'post' AND ! current_user_can( 'edit_posts' ) ) { return; }
 		if ( $post_obj->post_type == 'page' AND ! current_user_can( 'edit_pages' ) ) { return; }

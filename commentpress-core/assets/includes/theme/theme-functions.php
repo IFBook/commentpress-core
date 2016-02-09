@@ -3376,7 +3376,7 @@ endif; // commentpress_add_commentblock_button
 
 if ( ! function_exists( 'commentpress_register_commentblock_button' ) ):
 /**
- * Add filters for adding our custom TinyMCE button
+ * Add our custom TinyMCE button.
  *
  * @param array $buttons The existing button array
  * @return array $buttons The modified button array

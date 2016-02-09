@@ -918,9 +918,6 @@ class CommentpressMultisiteAdmin {
 	 */
 	function _admin_menu() {
 
-		// sanity check function exists
-		if ( ! function_exists('current_user_can') ) return;
-
 		// check user permissions
 		if ( ! current_user_can('manage_options') ) return;
 
@@ -978,18 +975,11 @@ class CommentpressMultisiteAdmin {
 	 */
 	function _migrate_alert() {
 
-		// sanity check function exists
-		if ( function_exists( 'current_user_can' ) ) {
+		// check user permissions
+		if ( ! current_user_can( 'manage_options' ) ) return;
 
-			// check user permissions
-			if ( current_user_can( 'manage_options' ) ) {
-
-				// show it
-				echo '<div id="message" class="error"><p>' . __( 'CommentPress Core has detected that a previous version of Commentpress is active on this site. Please visit the <a href="options-general.php?page=commentpress_admin">Settings Page</a> to upgrade.', 'commentpress-core' ) . '</p></div>';
-
-			}
-
-		}
+		// show it
+		echo '<div id="message" class="error"><p>' . __( 'CommentPress Core has detected that a previous version of Commentpress is active on this site. Please visit the <a href="options-general.php?page=commentpress_admin">Settings Page</a> to upgrade.', 'commentpress-core' ) . '</p></div>';
 
 	}
 
@@ -1001,9 +991,6 @@ class CommentpressMultisiteAdmin {
 	 * @return void
 	 */
 	function _options_page() {
-
-		// sanity check function exists
-		if ( ! function_exists( 'current_user_can' ) ) return;
 
 		// check user permissions
 		if ( ! current_user_can( 'manage_options' ) ) return;

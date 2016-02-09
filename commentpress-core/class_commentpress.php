@@ -346,18 +346,11 @@ class CommentpressCore {
 	 */
 	public function admin_upgrade_alert() {
 
-		// sanity check function exists
-		if ( function_exists('current_user_can') ) {
+		// check user permissions
+		if ( ! current_user_can( 'manage_options' ) ) return;
 
-			// check user permissions
-			if ( current_user_can('manage_options') ) {
-
-				// show it
-				echo '<div id="message" class="error"><p>' . __( 'CommentPress Core has been updated. Please visit the ' ) . '<a href="options-general.php?page=commentpress_admin">' . __( 'Settings Page', 'commentpress-core' ) . '</a>.</p></div>';
-
-			}
-
-		}
+		// show it
+		echo '<div id="message" class="error"><p>' . __( 'CommentPress Core has been updated. Please visit the ' ) . '<a href="options-general.php?page=commentpress_admin">' . __( 'Settings Page', 'commentpress-core' ) . '</a>.</p></div>';
 
 	}
 
@@ -370,59 +363,51 @@ class CommentpressCore {
 	 */
 	public function admin_menu() {
 
-		// sanity check function exists
-		if ( function_exists('current_user_can') ) {
+		// check user permissions
+		if ( ! current_user_can( 'manage_options' ) ) return;
 
-			// check user permissions
-			if ( current_user_can('manage_options') ) {
+		// try and update options
+		$saved = $this->db->options_update();
 
-				// try and update options
-				$saved = $this->db->options_update();
+		// if upgrade required...
+		if ( $this->db->check_upgrade() ) {
 
-				// if upgrade required...
-				if ( $this->db->check_upgrade() ) {
+			// access globals
+			global $pagenow;
 
-					// access globals
-					global $pagenow;
+			// show on pages other than the CP admin page
+			if (
 
-					// show on pages other than the CP admin page
-					if (
+				$pagenow == 'options-general.php'
+				AND ! empty( $_GET['page'] )
+				AND 'commentpress_admin' == $_GET['page']
 
-						$pagenow == 'options-general.php'
-						AND ! empty( $_GET['page'] )
-						AND 'commentpress_admin' == $_GET['page']
+			) {
 
-					) {
+				// we're on our admin page
 
-						// we're on our admin page
+			} else {
 
-					} else {
-
-						// show message
-						add_action( 'admin_notices', array( $this, 'admin_upgrade_alert' ) );
-
-					}
-
-				}
-
-				// insert item in relevant menu
-				$this->options_page = add_options_page(
-					__( 'CommentPress Core Settings', 'commentpress-core' ),
-					__( 'CommentPress Core', 'commentpress-core' ),
-					'manage_options',
-					'commentpress_admin',
-					array( $this, 'options_page' )
-				);
-				//print_r( $this->options_page );die();
-
-				// add scripts and styles
-				add_action( 'admin_print_scripts-' . $this->options_page, array( $this, 'admin_js' ) );
-				add_action( 'admin_print_styles-' . $this->options_page, array( $this, 'admin_css' ) );
-				add_action( 'admin_head-' . $this->options_page, array( $this, 'admin_head' ), 50 );
+				// show message
+				add_action( 'admin_notices', array( $this, 'admin_upgrade_alert' ) );
 
 			}
 
 		}
+
+		// insert item in relevant menu
+		$this->options_page = add_options_page(
+			__( 'CommentPress Core Settings', 'commentpress-core' ),
+			__( 'CommentPress Core', 'commentpress-core' ),
+			'manage_options',
+			'commentpress_admin',
+			array( $this, 'options_page' )
+		);
+
+		// add scripts and styles
+		add_action( 'admin_print_scripts-' . $this->options_page, array( $this, 'admin_js' ) );
+		add_action( 'admin_print_styles-' . $this->options_page, array( $this, 'admin_css' ) );
+		add_action( 'admin_head-' . $this->options_page, array( $this, 'admin_head' ), 50 );
 
 	}
 
@@ -514,18 +499,11 @@ class CommentpressCore {
 	 */
 	public function options_page() {
 
-		// sanity check function exists
-		if ( function_exists( 'current_user_can' ) ) {
+		// check user permissions
+		if ( ! current_user_can( 'manage_options' ) ) return;
 
-			// check user permissions
-			if ( current_user_can( 'manage_options' ) ) {
-
-				// get our admin options page
-				echo $this->display->get_admin_page();
-
-			}
-
-		}
+		// get our admin options page
+		echo $this->display->get_admin_page();
 
 	}
 
