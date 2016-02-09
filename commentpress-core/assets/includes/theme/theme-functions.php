@@ -2478,31 +2478,22 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ):
  */
 function commentpress_get_comment_markup( $comment, $args, $depth ) {
 
-	//print_r( $comment );
-	//print_r( $args );
-
 	// enable WordPress API on comment
 	$GLOBALS['comment'] = $comment;
-
-
 
 	// was it a registered user?
 	if ( $comment->user_id != '0' ) {
 
 		// get user details
 		$user = get_userdata( $comment->user_id );
-		//print_r( $user->display_name ); die();
 
 		// get user link
 		$user_link = commentpress_get_user_link( $user );
-		//print_r( array( 'u' => $user_link ) ); die();
 
 		// construct author citation
 		$author = ( $user_link != '' AND $user_link != 'http://' ) ?
 					'<cite class="fn"><a href="' . $user_link . '">' . get_comment_author() . '</a></cite>' :
 					 '<cite class="fn">' . get_comment_author() . '</cite>';
-
-		//print_r( array( 'a' => $author ) ); die();
 
 	} else {
 
@@ -2513,25 +2504,12 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 
 	}
 
-
-
-	/*
-	if ( $comment->comment_approved == '0' ) {
-		$author = '<cite class="fn">' . get_comment_author() . '</cite>';
-	} else {
-		$author = '<cite class="fn">' . get_comment_author_link() . '</cite>';
-	}
-	*/
-
-
-
+	// check moderation status
 	if ( $comment->comment_approved == '0' ) {
 		$comment_text = '<p><em>' . __( 'Comment awaiting moderation', 'commentpress-core' ) . '</em></p>';
 	} else {
 		$comment_text = get_comment_text();
 	}
-
-
 
 	// empty reply div by default
 	$comment_reply = '';
@@ -2543,13 +2521,13 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 	if (
 
 		// not if comments are closed
-		$post->comment_status == 'open'
+		$post->comment_status == 'open' AND
 
 		// we don't want reply to on pingbacks
-		AND $comment->comment_type != 'pingback'
+		$comment->comment_type != 'pingback' AND
 
 		// nor on unapproved comments
-		AND $comment->comment_approved == '1'
+		$comment->comment_approved == '1'
 
 	) {
 
@@ -2557,19 +2535,14 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 		if ( get_option( 'thread_comments', false ) ) {
 
 			// custom comment_reply_link
-			$comment_reply = commentpress_comment_reply_link(
-
-				array_merge(
-
-					$args,
-					array(
-						'reply_text' => sprintf( __( 'Reply to %s', 'commentpress-core' ), get_comment_author() ),
-						'depth' => $depth,
-						'max_depth' => $args['max_depth']
-					)
+			$comment_reply = commentpress_comment_reply_link( array_merge(
+				$args,
+				array(
+					'reply_text' => sprintf( __( 'Reply to %s', 'commentpress-core' ), get_comment_author() ),
+					'depth' => $depth,
+					'max_depth' => $args['max_depth']
 				)
-
-			);
+			) );
 
 			// wrap in div
 			$comment_reply = '<div class="reply">' . $comment_reply . '</div><!-- /reply -->';
@@ -2578,17 +2551,12 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 
 	}
 
-
-
 	// init edit link
 	$editlink = '';
 
 	// if logged in and has capability
 	if (
-		is_user_logged_in()
-	AND
-		current_user_can( 'edit_posts' )
-	AND
+		is_user_logged_in() AND
 		current_user_can( 'edit_comment', $comment->comment_ID )
 	) {
 
@@ -2615,8 +2583,6 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 	// add a nopriv filter for plugins
 	$editlink = apply_filters( 'cp_comment_action_links', $editlink, $comment );
 
-
-
 	// get comment class(es)
 	$_comment_class = comment_class( null, $comment->comment_ID, $post->ID, false );
 
@@ -2625,8 +2591,6 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 
 	// construct permalink
 	$_comment_permalink = sprintf( __( '%1$s at %2$s', 'commentpress-core' ), get_comment_date(), get_comment_time() );
-
-
 
 	// stripped source
 	$html = '
@@ -2660,8 +2624,6 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 </div><!-- /comment-' . $comment->comment_ID . ' -->
 </div><!-- /comment-wrapper -->
 ';
-
-
 
 	// --<
 	return $html;
