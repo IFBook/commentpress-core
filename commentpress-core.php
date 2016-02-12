@@ -17,10 +17,6 @@ Mark James for the icons: http://www.famfamfam.com/lab/icons/silk/
 
 
 
-// -----------------------------------------------------------------------------
-// No need to edit below this line
-// -----------------------------------------------------------------------------
-
 // set version
 define( 'COMMENTPRESS_VERSION', '3.8.5' );
 
@@ -99,14 +95,10 @@ if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
 
 
 
-/*
---------------------------------------------------------------------------------
-Misc Utility Functions
---------------------------------------------------------------------------------
-*/
-
 /**
- * Utility to check for presence of vital files
+ * Utility to check for presence of vital files.
+ *
+ * @since 3.0
  *
  * @param string $filename the name of the CommentPress Core Plugin file
  * @return string $filepath absolute path to file
@@ -116,12 +108,12 @@ function commentpress_file_is_present( $filename ) {
 	// define path to our requested file
 	$filepath = COMMENTPRESS_PLUGIN_PATH . $filename;
 
-	// is our class definition present?
+	// die if the file is not present
 	if ( ! is_file( $filepath ) ) {
-
-		// oh no!
-		die( 'CommentPress Core Error: file "' . $filepath . '" is missing from the plugin directory.' );
-
+		wp_die( sprintf(
+			__( 'CommentPress Core Error: file "%s" is missing from the plugin directory.', 'commentpress-core' ),
+			$filepath )
+		);
 	}
 
 	// --<
@@ -132,7 +124,9 @@ function commentpress_file_is_present( $filename ) {
 
 
 /**
- * Utility to include the core plugin
+ * Utility to include the core plugin.
+ *
+ * @since 3.4
  *
  * @return void
  */
@@ -157,7 +151,9 @@ function commentpress_include_core() {
 
 
 /**
- * Utility to activate the core plugin
+ * Utility to activate the core plugin.
+ *
+ * @since 3.4
  *
  * @return void
  */
@@ -179,7 +175,9 @@ function commentpress_activate_core() {
 
 
 /**
- * Utility to activate the ajax plugin
+ * Utility to activate the AJAX commenting plugin.
+ *
+ * @since 3.4
  *
  * @return void
  */
@@ -199,7 +197,9 @@ function commentpress_activate_ajax() {
 
 
 /**
- * Shortcut for debugging
+ * Shortcut for debugging.
+ *
+ * @since 3.0
  *
  * @param str The debug string to be sent the the browser
  */
@@ -215,7 +215,9 @@ function _cpdie( $var ) {
 
 
 /**
- * Utility to add link to settings page
+ * Utility to add link to settings page.
+ *
+ * @since 3.4
  *
  * @param array $links The existing links array
  * @param str $file The name of the plugin file
@@ -238,7 +240,7 @@ function commentpress_plugin_action_links( $links, $file ) {
 
 		// add Paypal link
 		$paypal = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=PZSKM8T5ZP3SC';
-		$links[] = '<a href="' . $paypal . '" target="_blank">Donate!</a>';
+		$links[] = '<a href="' . $paypal . '" target="_blank">' . __( 'Donate!', 'commentpress-core' )  '</a>';
 
 	}
 
@@ -254,8 +256,12 @@ add_filter( 'plugin_action_links', 'commentpress_plugin_action_links', 10, 2 );
 
 
 /**
- * Get WP plugin reference by name (since we never know for sure what the enclosing
- * directory is called)
+ * Get WP plugin reference by name.
+ *
+ * This is required because we never know for sure what the enclosing directory
+ * is called.
+ *
+ * @since 3.4
  *
  * @param str $plugin_name The name of the plugin
  * @return str $path_to_plugin The path to the plugin
@@ -292,8 +298,6 @@ function commentpress_find_plugin_by_name( $plugin_name = '' ) {
 
 	}
 
-
-
 	// --<
 	return $path_to_plugin;
 
@@ -302,7 +306,9 @@ function commentpress_find_plugin_by_name( $plugin_name = '' ) {
 
 
 /**
- * Test if the old pre-3.4 Commentpress plugin is active
+ * Test if the old pre-3.4 Commentpress plugin is active.
+ *
+ * @since 3.4
  *
  * @return bool $active True if the legacy plugin is active, false otherwise
  */
@@ -382,10 +388,8 @@ Init Standalone
 
 // only activate if in standard or mu_optional context
 if (
-
 	COMMENTPRESS_PLUGIN_CONTEXT == 'standard' OR
 	( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_optional' AND ! is_network_admin() )
-
 ) {
 
 	// CommentPress Core
