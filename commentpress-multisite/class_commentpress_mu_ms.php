@@ -1,25 +1,12 @@
-<?php /*
-================================================================================
-Class CommentpressMultisite
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
-=====
+<?php
 
-This class encapsulates all Multisite compatibility
-
---------------------------------------------------------------------------------
-*/
-
-
-
-/*
-================================================================================
-Class Name
-================================================================================
-*/
-
+/**
+ * CommentPress Core Multisite Class.
+ *
+ * This class encapsulates Multisite compatibility.
+ *
+ * @since 3.3
+ */
 class CommentpressMultisite {
 
 
@@ -48,7 +35,7 @@ class CommentpressMultisite {
 	/**
 	 * Initialises this object.
 	 *
-	 * @since 3.0
+	 * @since 3.3
 	 *
 	 * @param object $parent_obj A reference to the parent object
 	 */

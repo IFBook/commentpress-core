@@ -1,25 +1,12 @@
-<?php /*
-================================================================================
-Class CommentpressMultisiteLoader
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
-=====
+<?php
 
-This class loads all Multisite compatibility
-
---------------------------------------------------------------------------------
-*/
-
-
-
-/*
-================================================================================
-Class Name
-================================================================================
-*/
-
+/**
+ * CommentPress Core Multisite Loader Class.
+ *
+ * This class loads all Multisite compatibility.
+ *
+ * @since 3.3
+ */
 class CommentpressMultisiteLoader {
 
 
@@ -45,7 +32,7 @@ class CommentpressMultisiteLoader {
 	/**
 	 * Initialises this object.
 	 *
-	 * @since 3.0
+	 * @since 3.3
 	 *
 	 * @param object $parent_obj a reference to the parent object
 	 */

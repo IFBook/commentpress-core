@@ -1,25 +1,12 @@
-<?php /*
-================================================================================
-Class CommentpressMultisiteRevisions Version 1.0
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
-=====
+<?php
 
-This class overrides the way that new post revisions are named
-
---------------------------------------------------------------------------------
-*/
-
-
-
-/*
-================================================================================
-Class Name
-================================================================================
-*/
-
+/**
+ * CommentPress Core Multisite Revisions Class.
+ *
+ * This class overrides the way that new post revisions are named.
+ *
+ * @since 3.3
+ */
 class CommentpressMultisiteRevisions {
 
 
@@ -39,7 +26,7 @@ class CommentpressMultisiteRevisions {
 	/**
 	 * Initialises this object.
 	 *
-	 * @since 3.0
+	 * @since 3.3
 	 *
 	 * @param object $parent_obj a reference to the parent object
 	 */

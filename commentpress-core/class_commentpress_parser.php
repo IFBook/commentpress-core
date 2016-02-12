@@ -1,30 +1,17 @@
-<?php /*
-================================================================================
-Class CommentpressCoreParser
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
-=====
+<?php
 
-This class is a wrapper for parsing content and comments.
-
-The aim is to migrate parsing of content to DOM parsing instead of regex.
-
-When converted to DOM parsing, the class will two other classes, which help with
-oddities in DOMDocument. These can be found in `inc/dom-helpers`.
-
---------------------------------------------------------------------------------
-*/
-
-
-
-/*
-================================================================================
-Class Name
-================================================================================
-*/
-
+/**
+ * CommentPress Core Parser Class.
+ *
+ * This class is a wrapper for parsing content and comments.
+ *
+ * The aim is to migrate parsing of content to DOM parsing instead of regex.
+ *
+ * When converted to DOM parsing, the class will two other classes, which help
+ * with oddities in DOMDocument. These can be found in `inc/dom-helpers`.
+ *
+ * @since 3.0
+ */
 class CommentpressCoreParser {
 
 

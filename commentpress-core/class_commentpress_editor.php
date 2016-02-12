@@ -1,25 +1,12 @@
-<?php /*
-================================================================================
-Class CommentpressCoreEditor
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
-=====
+<?php
 
-This class provides comatibility between WP Front-end Editor and CommentPress Core.
-
---------------------------------------------------------------------------------
-*/
-
-
-
-/*
-================================================================================
-Class Name
-================================================================================
-*/
-
+/**
+ * CommentPress Core Editor Class.
+ *
+ * A class that handles compatibility with WordPress Front End Editor.
+ *
+ * @since 3.7
+ */
 class CommentpressCoreEditor {
 
 
@@ -42,7 +29,7 @@ class CommentpressCoreEditor {
 	/**
 	 * Initialises this object
 	 *
-	 * @since 3.0
+	 * @since 3.7
 	 *
 	 * @param object $parent_obj a reference to the parent object
 	 */

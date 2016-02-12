@@ -1,26 +1,13 @@
-<?php /*
-================================================================================
-Class CommentpressCoreNavigator
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
-=====
+<?php
 
-This class is a wrapper for navigating pages in whatever hierarchy
-or relationship they have been assigned
-
---------------------------------------------------------------------------------
-*/
-
-
-
-/*
-================================================================================
-Class Name
-================================================================================
-*/
-
+/**
+ * CommentPress Core Navigation Class.
+ *
+ * This class is a wrapper for navigating pages in whatever hierarchy or
+ * relationship they have been assigned.
+ *
+ * @since 3.0
+ */
 class CommentpressCoreNavigator {
 
 

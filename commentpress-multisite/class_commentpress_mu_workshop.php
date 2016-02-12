@@ -1,25 +1,12 @@
-<?php /*
-================================================================================
-Class CommentpressGroupblogWorkshop
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
-=====
+<?php
 
-This class overrides the name of Groupblogs from "Blog" (or "Document") to "Workshop"
-
---------------------------------------------------------------------------------
-*/
-
-
-
-/*
-================================================================================
-Class Name
-================================================================================
-*/
-
+/**
+ * CommentPress Core Groupblog Workshop Class.
+ *
+ * This class overrides the name of Groupblogs from "Blog" (or "Document") to "Workshop".
+ *
+ * @since 3.3
+ */
 class CommentpressGroupblogWorkshop {
 
 
@@ -51,7 +38,7 @@ class CommentpressGroupblogWorkshop {
 	/**
 	 * Initialises this object.
 	 *
-	 * @since 3.0
+	 * @since 3.3
 	 *
 	 * @param object $parent_obj a reference to the parent object
 	 */

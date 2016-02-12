@@ -1,25 +1,12 @@
-<?php /*
-================================================================================
-Class CommentpressCoreFormatter
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
-=====
+<?php
 
-This class provides "Prose" and "Poetry" formatting to CommentPress Core.
-
---------------------------------------------------------------------------------
-*/
-
-
-
-/*
-================================================================================
-Class Name
-================================================================================
-*/
-
+/**
+ * CommentPress Core Formatter Class.
+ *
+ * This class provides "Prose" and "Poetry" formatting to CommentPress Core.
+ *
+ * @since 3.3
+ */
 class CommentpressCoreFormatter {
 
 
@@ -39,7 +26,7 @@ class CommentpressCoreFormatter {
 	/**
 	 * Initialises this object
 	 *
-	 * @since 3.0
+	 * @since 3.3
 	 *
 	 * @param object $parent_obj A reference to the parent object
 	 */

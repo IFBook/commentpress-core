@@ -1,25 +1,12 @@
-<?php /*
-================================================================================
-Class CommentpressCoreDatabase
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
-=====
+<?php
 
-This class is a wrapper for the majority of database operations.
-
---------------------------------------------------------------------------------
-*/
-
-
-
-/*
-================================================================================
-Class Name
-================================================================================
-*/
-
+/**
+ * CommentPress Core Database Class.
+ *
+ * This class is a wrapper for the majority of database operations.
+ *
+ * @since 3.0
+ */
 class CommentpressCoreDatabase {
 
 

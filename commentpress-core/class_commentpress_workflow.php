@@ -1,25 +1,12 @@
-<?php /*
-================================================================================
-Class CommentpressCoreWorkflow
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
-=====
+<?php
 
-This class provides "Translation" workflow to CommentPress Core.
-
---------------------------------------------------------------------------------
-*/
-
-
-
-/*
-================================================================================
-Class Name
-================================================================================
-*/
-
+/**
+ * CommentPress Core Workflow Class.
+ *
+ * This class provides "Translation" workflow to CommentPress Core.
+ *
+ * @since 3.0
+ */
 class CommentpressCoreWorkflow {
 
 

@@ -1,25 +1,12 @@
-<?php /*
-================================================================================
-Class CommentpressMultisiteBuddypress
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
-=====
+<?php
 
-This class encapsulates all BuddyPress compatibility
-
---------------------------------------------------------------------------------
-*/
-
-
-
-/*
-================================================================================
-Class Name
-================================================================================
-*/
-
+/**
+ * CommentPress Core Multisite BuddyPress Class.
+ *
+ * This class encapsulates BuddyPress compatibility.
+ *
+ * @since 3.3
+ */
 class CommentpressMultisiteBuddypress {
 
 
@@ -54,7 +41,7 @@ class CommentpressMultisiteBuddypress {
 	/**
 	 * Initialises this object.
 	 *
-	 * @since 3.0
+	 * @since 3.3
 	 *
 	 * @param object $parent_obj a reference to the parent object
 	 */

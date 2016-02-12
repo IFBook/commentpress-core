@@ -1,25 +1,12 @@
-<?php /*
-================================================================================
-Class CommentpressMultisiteAdmin
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
-=====
+<?php
 
-This class is a wrapper for the majority of database operations.
-
---------------------------------------------------------------------------------
-*/
-
-
-
-/*
-================================================================================
-Class Name
-================================================================================
-*/
-
+/**
+ * CommentPress Core Multisite Admin Class.
+ *
+ * This class is a wrapper for the majority of database operations.
+ *
+ * @since 3.3
+ */
 class CommentpressMultisiteAdmin {
 
 
@@ -42,7 +29,7 @@ class CommentpressMultisiteAdmin {
 	/**
 	 * Initialises this object.
 	 *
-	 * @since 3.0
+	 * @since 3.3
 	 *
 	 * @param object $parent_obj a reference to the parent object
 	 */
