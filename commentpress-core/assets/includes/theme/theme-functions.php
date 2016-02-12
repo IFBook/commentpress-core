@@ -13,7 +13,9 @@ NOTES
 
 if ( ! function_exists( 'commentpress_admin_header' ) ):
 /**
- * Custom admin header
+ * Custom admin header.
+ *
+ * @since 3.0
  *
  * @return void
  */
@@ -87,11 +89,12 @@ endif; // commentpress_admin_header
 
 if ( ! function_exists( 'commentpress_customize_register' ) ) :
 /**
- * Implements CommentPress Theme options into Theme Customizer
+ * Implements CommentPress Theme options into Theme Customizer.
+ *
+ * @since 3.0
  *
  * @param $wp_customize Theme Customizer object
  * @return void
- *
  */
 function commentpress_customize_register( $wp_customize ) {
 
@@ -223,7 +226,9 @@ add_action( 'customize_register', 'commentpress_customize_register' );
 
 if ( ! function_exists( 'commentpress_admin_menu' ) ) :
 /**
- * Adds more prominent menu item
+ * Adds more prominent menu item.
+ *
+ * @since 3.0
  *
  * @return void
  */
@@ -246,7 +251,9 @@ add_action( 'admin_menu', 'commentpress_admin_menu' );
 
 if ( ! function_exists( 'commentpress_fix_bp_core_avatar_url' ) ):
 /**
- * Filter to fix broken group avatar images in BP 1.7
+ * Filter to fix broken group avatar images in BP 1.7.
+ *
+ * @since 3.3
  *
  * @param string $url The existing URL of the avatar
  * @return string $url The modified URL of the avatar
@@ -280,7 +287,9 @@ endif; // commentpress_fix_bp_core_avatar_url
 
 if ( ! function_exists( 'commentpress_get_header_image' ) ):
 /**
- * Function that sets a header foreground image (a logo, for example)
+ * Function that sets a header foreground image. (a logo, for example)
+ *
+ * @since 3.0
  *
  * @todo Inform users that header images are using a different method
  *
@@ -443,7 +452,9 @@ endif; // commentpress_get_header_image
 
 if ( ! function_exists( 'commentpress_get_body_id' ) ):
 /**
- * Get an ID for the body tag
+ * Get an ID for the body tag.
+ *
+ * @since 3.0
  *
  * @return string $body_id The ID attribute for the body tag
  */
@@ -475,7 +486,9 @@ endif; // commentpress_get_body_id
 
 if ( ! function_exists( 'commentpress_get_body_classes' ) ):
 /**
- * Get classes for the body tag
+ * Get classes for the body tag.
+ *
+ * @since 3.3
  *
  * @param boolean $raw If true, returns the class names, if false, returns the attribute
  * @return string $_body_classes The class attribute for the body tag
@@ -662,7 +675,9 @@ endif; // commentpress_get_body_classes
 
 if ( ! function_exists( 'commentpress_document_title_parts' ) ):
 /**
- * Add the root network name when the sub-blog is a group blog
+ * Add the root network name when the sub-blog is a group blog.
+ *
+ * @since 3.8
  *
  * @param array $parts The existing title parts
  * @return array $parts The modified title parts
@@ -701,6 +716,8 @@ if ( ! function_exists( 'commentpress_document_title_separator' ) ):
 /**
  * Use the separator that CommentPress has always used.
  *
+ * @since 3.8
+ *
  * @param string $sep The existing separator
  * @return string $sep The modified separator
  */
@@ -719,7 +736,9 @@ add_filter( 'document_title_separator', 'commentpress_document_title_separator' 
 
 if ( ! function_exists( 'commentpress_site_title' ) ):
 /**
- * Amend the site title depending on context of blog
+ * Amend the site title depending on context of blog.
+ *
+ * @since 3.8
  *
  * @param string $sep The title separator
  * @param boolean $echo Echo the result or not
@@ -759,7 +778,11 @@ endif; // commentpress_site_title
 
 if ( ! function_exists( 'commentpress_remove_more_jump_link' ) ):
 /**
- * Disable more link jump - from: http://codex.wordpress.org/Customizing_the_Read_More
+ * Disable more link jump.
+ *
+ * @see http://codex.wordpress.org/Customizing_the_Read_More
+ *
+ * @since 3.0
  *
  * @param string $link The existing more link
  * @return string $link The modified more link
@@ -789,10 +812,12 @@ add_filter( 'the_content_more_link', 'commentpress_remove_more_jump_link' );
 
 if ( ! function_exists( 'commentpress_page_title' ) ):
 /**
- * Builds a page title, including parent page titles
+ * Builds a page title, including parent page titles.
  *
  * The CommentPress Default theme displays a "cookie trail" style title for pages
  * so we need to build this by inspecting page ancestors
+ *
+ * @since 3.0
  *
  * @return string $_title The page title
  */
@@ -854,7 +879,9 @@ endif; // commentpress_page_title
 
 if ( ! function_exists( 'commentpress_has_page_children' ) ):
 /**
- * Query whether a given page has children
+ * Query whether a given page has children.
+ *
+ * @since 3.3
  *
  * @param object $page_obj The WordPress page object to query
  * @return boolean True if page has children, false otherwise
@@ -863,12 +890,10 @@ function commentpress_has_page_children( $page_obj ) {
 
 	// init to look for published pages
 	$defaults = array(
-
 		'post_parent' => $page_obj->ID,
 		'post_type' => 'page',
 		'numberposts' => -1,
 		'post_status' => 'publish'
-
 	);
 
 	// get page children
@@ -884,7 +909,9 @@ endif; // commentpress_has_page_children
 
 if ( ! function_exists( 'commentpress_get_children' ) ):
 /**
- * Retrieve comment children
+ * Retrieve comment children.
+ *
+ * @since 3.3
  *
  * @param object $comment The WordPress comment object
  * @param string $page_or_post The WordPress post type to query
@@ -916,10 +943,12 @@ endif; // commentpress_get_children
 
 if ( ! function_exists( 'commentpress_get_comments' ) ):
 /**
- * Generate comments recursively
+ * Generate comments recursively.
  *
  * This function builds the list into a global called $cp_comment_output for
- * retrieval elsewhere
+ * retrieval elsewhere.
+ *
+ * @since 3.0
  *
  * @param array $comments An array of WordPress comment objects
  * @param string $page_or_post The WordPress post type to query
@@ -973,21 +1002,18 @@ endif; // commentpress_get_comments
 
 if ( ! function_exists( 'commentpress_get_user_link' ) ):
 /**
- * Get user link in vanilla WordPress scenarios
+ * Get user link in vanilla WordPress scenarios.
+ *
+ * In default single install mode, just link to their URL, unless they are an
+ * author, in which case we link to their author page. In multisite, the same.
+ * When BuddyPress is enabled, always link to their profile.
+ *
+ * @since 3.0
  *
  * @param object $user The WordPress user
  * @return string $url The URL for the user
  */
 function commentpress_get_user_link( &$user ) {
-
-	/**
-	 * In default single install mode, just link to their URL, unless
-	 * they are	an author, in which case we link to their author page.
-	 *
-	 * In multisite, the same.
-	 *
-	 * When BuddyPress is enabled, always link to their profile
-	 */
 
 	// kick out if not a user
 	if ( ! is_object( $user ) ) { return false; }
@@ -1019,8 +1045,6 @@ function commentpress_get_user_link( &$user ) {
 
 	}
 
-
-
 	// --<
 	return $url;
 
@@ -1031,7 +1055,9 @@ endif; // commentpress_get_user_link
 
 if ( ! function_exists( 'commentpress_echo_post_meta' ) ):
 /**
- * Show user(s) in the loop
+ * Show user(s) in the loop.
+ *
+ * @since 3.0
  *
  * @return void
  */
@@ -1042,7 +1068,6 @@ function commentpress_echo_post_meta() {
 
 		// get multiple authors
 		$authors = get_coauthors();
-		//print_r( $authors ); die();
 
 		// if we get some
 		if ( ! empty( $authors ) ) {
@@ -1123,7 +1148,9 @@ endif; // commentpress_echo_post_meta
 
 if ( ! function_exists( 'commentpress_show_source_url' ) ):
 /**
- * Show source URL for print
+ * Show source URL for print.
+ *
+ * @since 3.5
  *
  * @return void
  */
@@ -1162,9 +1189,13 @@ add_action( 'wp_footer', 'commentpress_show_source_url' );
 
 if ( ! function_exists( 'commentpress_echo_post_author' ) ):
 /**
- * Show username (with link) in the loop
- * @todo:
+ * Show username (with link) in the loop.
  *
+ * @since 3.0
+ *
+ * @param int $author_id The numeric ID of the author
+ * @param bool $echo Print or return the linked username
+ * @return str $author The linked username
  */
 function commentpress_echo_post_author( $author_id, $echo = true ) {
 
@@ -1210,7 +1241,13 @@ endif; // commentpress_echo_post_author
 
 if ( ! function_exists( 'commentpress_format_comment' ) ):
 /**
- * Format comment on custom CommentPress comments pages
+ * Format comment on custom CommentPress comments pages.
+ *
+ * @since 3.0
+ *
+ * @param object $comment The comment object
+ * @param str $context Either "all" for all-comments or "by" for comments-by-commenter
+ * @return str The formatted comment HTML
  */
 function commentpress_format_comment( $comment, $context = 'all' ) {
 
@@ -1349,9 +1386,11 @@ endif; // commentpress_format_comment
 
 if ( ! function_exists( 'commentpress_get_comments_by_content' ) ):
 /**
- * Comments-by page display function
+ * Comments-by page display function.
  *
- * @todo: do we want trackbacks?
+ * @todo Do we want trackbacks?
+ *
+ * @since 3.0
  *
  * @return str $html The HTML for the page
  */
@@ -1462,7 +1501,9 @@ endif; // commentpress_get_comments_by_content
 
 if ( ! function_exists( 'commentpress_get_comments_by_page_content' ) ):
 /**
- * Comments-by page display function
+ * Comments-by page display wrapper function.
+ *
+ * @since 3.0
  *
  * @return str $_page_content The page content
  */
@@ -1493,7 +1534,9 @@ endif; // commentpress_get_comments_by_page_content
 
 if ( ! function_exists( 'commentpress_show_activity_tab' ) ):
 /**
- * Decide whether or not to show the Activity Sidebar
+ * Decide whether or not to show the Activity Sidebar.
+ *
+ * @since 3.3
  *
  * @return bool True if we show the activity tab, false otherwise
  */
@@ -1536,6 +1579,8 @@ if ( ! function_exists( 'commentpress_is_commentable' ) ):
 /**
  * Is a post/page commentable?
  *
+ * @since 3.3
+ *
  * @return bool $is_commentable True if page can have comments, false otherwise
  */
 function commentpress_is_commentable() {
@@ -1561,10 +1606,14 @@ endif; // commentpress_is_commentable
 
 if ( ! function_exists( 'commentpress_get_comment_activity' ) ):
 /**
- * Activity sidebar display function
- * @todo: do we want trackbacks?
+ * Activity sidebar display function.
+ *
+ * @todo Do we want trackbacks?
+ *
+ * @since 3.3
  *
  * @param str $scope The scope of the activities
+ * @return str $page_content The HTML output for activities
  */
 function commentpress_get_comment_activity( $scope = 'all' ) {
 
@@ -1578,7 +1627,7 @@ function commentpress_get_comment_activity( $scope = 'all' ) {
 	global $commentpress_core, $post;
 
 	// init page content
-	$_page_content = '';
+	$page_content = '';
 
 	// define defaults
 	$args = array(
@@ -1600,35 +1649,34 @@ function commentpress_get_comment_activity( $scope = 'all' ) {
 	}
 
 	// get 'em
-	$_data = get_comments( $args );
-	//print_r( $_data ); exit();
+	$data = get_comments( $args );
 
 	// did we get any?
-	if ( count( $_data ) > 0 ) {
+	if ( count( $data ) > 0 ) {
 
 		// open ul
-		$_page_content .= '<ol class="comment_activity">' . "\n\n";
+		$page_content .= '<ol class="comment_activity">' . "\n\n";
 
 		// init title
 		$_title = '';
 
 		// loop
-		foreach( $_data AS $comment ) {
+		foreach( $data AS $comment ) {
 
 			// exclude comments from password-protected posts
 			if ( ! post_password_required( $comment->comment_post_ID ) ) {
-				$_page_content .= commentpress_get_comment_activity_item( $comment );
+				$page_content .= commentpress_get_comment_activity_item( $comment );
 			}
 
 		}
 
 		// close ul
-		$_page_content .= '</ol><!-- /comment_activity -->' . "\n\n";
+		$page_content .= '</ol><!-- /comment_activity -->' . "\n\n";
 
 	}
 
 	// --<
-	return $_page_content;
+	return $page_content;
 
 }
 endif; // commentpress_get_comment_activity
@@ -1637,7 +1685,9 @@ endif; // commentpress_get_comment_activity
 
 if ( ! function_exists( 'commentpress_get_comment_activity_item' ) ):
 /**
- * Get comment formatted for the activity sidebar
+ * Get comment formatted for the activity sidebar.
+ *
+ * @since 3.3
  *
  * @param $comment The comment object
  * @return $item_html The modified comment HTML
@@ -1797,7 +1847,9 @@ endif; // commentpress_get_comment_activity_item
 
 if ( ! function_exists( 'commentpress_get_comments_by_para' ) ):
 /**
- * Get comments delimited by paragraph
+ * Get comments delimited by paragraph.
+ *
+ * @since 3.0
  *
  * @return void
  */
@@ -2231,6 +2283,8 @@ endif; // commentpress_get_comments_by_para
 /**
  * Modified HTML comment list class.
  *
+ * @since 3.0
+ *
  * @package WordPress
  * @uses Walker
  * @since unknown
@@ -2278,7 +2332,9 @@ class Walker_Comment_Press extends Walker_Comment {
 
 if ( ! function_exists( 'commentpress_comment_form_title' ) ):
 /**
- * Alternative to the built-in WP function
+ * Alternative to the built-in WP function.
+ *
+ * @since 3.0
  *
  * @param str $no_reply_text
  * @param str $reply_to_comment_text
@@ -2372,7 +2428,9 @@ endif; // commentpress_comment_form_title
 
 if ( ! function_exists( 'commentpress_comment_reply_link' ) ):
 /**
- * Alternative to the built-in WP function
+ * Alternative to the built-in WP function.
+ *
+ * @since 3.0
  *
  * @param array $args The reply links arguments
  * @param object $comment The comment
@@ -2382,7 +2440,6 @@ function commentpress_comment_reply_link( $args = array(), $comment = null, $pos
 
 	// set some defaults
 	$defaults = array(
-
 		'add_below' => 'comment',
 		'respond_id' => 'respond',
 		'reply_text' => __( 'Reply', 'commentpress-core' ),
@@ -2390,7 +2447,6 @@ function commentpress_comment_reply_link( $args = array(), $comment = null, $pos
 		'depth' => 0,
 		'before' => '',
 		'after' => ''
-
 	);
 
 	// parse them
@@ -2427,10 +2483,8 @@ function commentpress_comment_reply_link( $args = array(), $comment = null, $pos
 		// define query string
 		$addquery = esc_url(
 			add_query_arg(
-
 				array( 'replytocom' => $comment->comment_ID ),
 				$query
-
 			)
 
 		);
@@ -2450,7 +2504,9 @@ endif; // commentpress_comment_reply_link
 
 if ( ! function_exists( 'commentpress_comments' ) ):
 /**
- * Custom comments display function
+ * Custom comments display function.
+ *
+ * @since 3.0
  *
  * @param object $comment The comment object
  * @param array $args The comment arguments
@@ -2469,7 +2525,9 @@ endif; // commentpress_comments
 
 if ( ! function_exists( 'commentpress_get_comment_markup' ) ):
 /**
- * Wrap comment in its markup
+ * Wrap comment in its markup.
+ *
+ * @since 3.0
  *
  * @param object $comment The comment object
  * @param array $args The comment arguments
@@ -2635,7 +2693,9 @@ endif; // commentpress_get_comment_markup
 
 if ( ! function_exists( 'commentpress_get_full_name' ) ):
 /**
- * Utility to concatenate names
+ * Utility to concatenate names.
+ *
+ * @since 3.0
  *
  * @param str $forename The WordPress user's first name
  * @param str $surname The WordPress user's last name
@@ -2665,7 +2725,9 @@ endif; // commentpress_get_full_name
 
 if ( ! function_exists( 'commentpress_excerpt_length' ) ):
 /**
- * Utility to define length of excerpt
+ * Utility to define length of excerpt.
+ *
+ * @since 3.0
  *
  * @return int $length The length of the excerpt
  */
@@ -2698,7 +2760,9 @@ add_filter( 'excerpt_length', 'commentpress_excerpt_length' );
 
 if ( ! function_exists( 'commentpress_add_link_css' ) ):
 /**
- * Utility to add button css class to blog nav links
+ * Utility to add button css class to blog nav links.
+ *
+ * @since 3.0
  *
  * @param str $link The existing link
  * @return str $link The link with the custom class attribute added
@@ -2722,7 +2786,9 @@ add_filter( 'next_post_link', 'commentpress_add_link_css' );
 
 if ( ! function_exists( 'commentpress_get_link_css' ) ):
 /**
- * Utility to add button css class to blog nav links
+ * Utility to add button css class to blog nav links.
+ *
+ * @since 3.0
  *
  * @return str $link The custom class attribute
  */
@@ -2745,7 +2811,9 @@ add_filter( 'next_posts_link_attributes', 'commentpress_get_link_css' );
 
 if ( ! function_exists( 'commentpress_multipage_comment_link' ) ):
 /**
- * Filter comment permalinks for multipage posts
+ * Filter comment permalinks for multipage posts.
+ *
+ * @since 3.5
  *
  * @param str $link The existing comment link
  * @param object $comment The comment object
@@ -2798,10 +2866,16 @@ add_filter( 'get_comment_link', 'commentpress_multipage_comment_link', 10, 3 );
 
 
 
+if ( ! function_exists( 'commentpress_get_post_multipage_url' ) ):
 /**
+ * Get the URL fo a page in a multipage context.
+ *
  * Copied from wp-includes/post-template.php _wp_link_page()
- * @param int $i Page number.
- * @return string url.
+ *
+ * @since 3.5
+ *
+ * @param int $i The page number
+ * @return str $url The URL to the subpage
  */
 function commentpress_get_post_multipage_url( $i, $post = '' ) {
 
@@ -2841,21 +2915,22 @@ function commentpress_get_post_multipage_url( $i, $post = '' ) {
 	return esc_url( $url );
 
 }
+endif; // commentpress_get_post_multipage_url
 
 
 
 if ( ! function_exists( 'commentpress_multipager' ) ):
 /**
- * Create sane links between pages
+ * Create sane links between pages.
+ *
+ * @since 3.5
  *
  * @return str $page_links The next page and previous page links
- *
  */
 function commentpress_multipager() {
 
 	// set default behaviour
 	$defaults = array(
-
 		'before' => '<div class="multipager">',
 		'after' => '</div>',
 		'link_before' => '',
@@ -2866,30 +2941,24 @@ function commentpress_multipager() {
 		'pagelink' => '%',
 		'more_file' => '',
 		'echo' => 0
-
 	);
 
 	// get page links
 	$page_links = wp_link_pages( $defaults );
-	//print_r( $page_links ); die();
 
 	// add separator when there are two links
 	$page_links = str_replace(
-
 		'a><a',
 		'a> <span class="multipager_sep">|</span> <a',
 		$page_links
-
 	);
 
 	// get page links
 	$page_links .= wp_link_pages( array(
-
 		'before' => '<div class="multipager multipager_all"><span>' . __( 'Pages: ', 'commentpress-core' ) . '</span>',
 		'after' => '</div>',
 		'pagelink' => '<span class="multipager_link">%</span>',
 		'echo' => 0
-
 	) );
 
 	// --<
@@ -2900,8 +2969,11 @@ endif; // commentpress_multipager
 
 
 
+if ( ! function_exists( 'commentpress_add_wp_editor' ) ):
 /**
- * Adds our styles to the TinyMCE editor
+ * Adds our styles to the TinyMCE editor.
+ *
+ * @since 3.5
  *
  * @param str $mce_css The default TinyMCE stylesheets as set by WordPress
  * @return str $mce_css The list of stylesheets with ours added
@@ -2916,26 +2988,17 @@ function commentpress_add_wp_editor() {
 	// kick out if wp_editor doesn't exist
 	// TinyMCE will be handled by including the script using the pre- wp_editor() method
 	if ( ! function_exists( 'wp_editor' ) ) {
-
-		// --<
 		return false;
-
 	}
 
 	// kick out if plugin not active
 	if ( ! is_object( $commentpress_core ) ) {
-
-		// --<
 		return false;
-
 	}
 
 	// only allow through if plugin says so
 	if ( ! $commentpress_core->display->is_tinymce_allowed() ) {
-
-		// --<
 		return false;
-
 	}
 
 	// add our buttons
@@ -3060,11 +3123,15 @@ function commentpress_add_wp_editor() {
 	return true;
 
 }
+endif; // commentpress_add_wp_editor
 
 
 
+if ( ! function_exists( 'commentpress_assign_default_editor' ) ):
 /**
- * Makes TinyMCE the default editor on the front end
+ * Makes TinyMCE the default editor on the front end.
+ *
+ * @since 3.0
  *
  * @param str $r The default editor as set by WordPress
  * @return str 'tinymce' our overridden default editor
@@ -3080,13 +3147,17 @@ function commentpress_assign_default_editor( $r ) {
 	return 'tinymce';
 
 }
+endif; // commentpress_assign_default_editor
 
 add_filter( 'wp_default_editor', 'commentpress_assign_default_editor', 10, 1 );
 
 
 
+if ( ! function_exists( 'commentpress_add_tinymce_styles' ) ):
 /**
- * Adds our styles to the TinyMCE editor
+ * Adds our styles to the TinyMCE editor.
+ *
+ * @since 3.0
  *
  * @param str $mce_css The default TinyMCE stylesheets as set by WordPress
  * @return str $mce_css The list of stylesheets with ours added
@@ -3106,14 +3177,18 @@ function commentpress_add_tinymce_styles( $mce_css ) {
 	return $mce_css;
 
 }
+endif; // commentpress_add_tinymce_styles
 
 // add filter for the above
 add_filter( 'mce_css', 'commentpress_add_tinymce_styles' );
 
 
 
+if ( ! function_exists( 'commentpress_add_tinymce_nextpage_button' ) ):
 /**
- * Adds the Next Page button to the TinyMCE editor
+ * Adds the Next Page button to the TinyMCE editor.
+ *
+ * @since 3.5
  *
  * @param array $buttons The default TinyMCE buttons as set by WordPress
  * @return array $buttons The buttons with More removed
@@ -3144,14 +3219,18 @@ function commentpress_add_tinymce_nextpage_button( $buttons ) {
 	return $buttons;
 
 }
+endif; // commentpress_add_tinymce_nextpage_button
 
 // add filter for the above
 add_filter( 'mce_buttons', 'commentpress_add_tinymce_nextpage_button' );
 
 
 
+if ( ! function_exists( 'commentpress_assign_editor_buttons' ) ):
 /**
- * Assign our buttons to TinyMCE in teeny mode
+ * Assign our buttons to TinyMCE in teeny mode.
+ *
+ * @since 3.5
  *
  * @param array $buttons The default editor buttons as set by WordPress
  * @return array The overridden editor buttons
@@ -3175,6 +3254,7 @@ function commentpress_assign_editor_buttons( $buttons ) {
 	);
 
 }
+endif; // commentpress_assign_editor_buttons
 
 // access WP version
 global $wp_version;
@@ -3188,7 +3268,9 @@ if ( version_compare( $wp_version, '3.8.9999', '>' ) ) {
 
 if ( ! function_exists( 'commentpress_comment_post_redirect' ) ):
 /**
- * Filter comment post redirects for multipage posts
+ * Filter comment post redirects for multipage posts.
+ *
+ * @since 3.5
  *
  * @param str $link The link to the comment
  * @param object $comment The comment object
@@ -3247,7 +3329,9 @@ add_filter( 'comment_post_redirect', 'commentpress_comment_post_redirect', 4, 2 
 
 if ( ! function_exists( 'commentpress_image_caption_shortcode' ) ):
 /**
- * Rebuild caption shortcode output
+ * Rebuild caption shortcode output.
+ *
+ * @since 3.5
  *
  * @param array $empty WordPress passes '' as the first param!
  * @param array $attr Attributes attributed to the shortcode.
@@ -3263,13 +3347,6 @@ function commentpress_image_caption_shortcode( $empty = null, $attr, $content ) 
 		'width'	=> '',
 		'caption' => ''
 	), $attr));
-
-	/*
-	print_r( array(
-		'content' => $content,
-		'caption' => $caption,
-	) ); die();
-	*/
 
 	if ( 1 > (int) $width || empty( $caption ) )
 		return $content;
@@ -3317,37 +3394,11 @@ add_filter( 'img_caption_shortcode', 'commentpress_image_caption_shortcode', 10,
 
 
 
-if ( ! function_exists( 'commentpress_audio' ) ):
-/**
- * Enable audio shortcode
- *
- * @param array $attr Attributes attributed to the shortcode.
- * @param string $content Optional. Shortcode content.
- * @return string
- */
-function commentpress_audio( $atts, $content = null ) {
-
-    extract(shortcode_atts(array(
-        "src" => '',
-        "autoplay" => '',
-        "preload"=> 'true',
-        "loop" => '',
-        "controls"=> ''
-    ), $atts));
-
-    return '<audio src="' . $src . '" autoplay="' . $autoplay . '" preload="' . $preload . '" loop="' . $loop . '" controls="' . $controls . '" autobuffer />';
-
-}
-endif; // commentpress_audio
-
-// add a shortcode for the above
-//add_shortcode( 'audio', 'commentpress_audio' );
-
-
-
 if ( ! function_exists( 'commentpress_add_commentblock_button' ) ):
 /**
- * Add filters for adding our custom TinyMCE button
+ * Add filters for adding our custom TinyMCE button.
+ *
+ * @since 3.3
  *
  * @return void
  */
@@ -3372,11 +3423,16 @@ function commentpress_add_commentblock_button() {
 }
 endif; // commentpress_add_commentblock_button
 
+// init process for button control
+add_action( 'init', 'commentpress_add_commentblock_button' );
+
 
 
 if ( ! function_exists( 'commentpress_register_commentblock_button' ) ):
 /**
  * Add our custom TinyMCE button.
+ *
+ * @since 3.3
  *
  * @param array $buttons The existing button array
  * @return array $buttons The modified button array
@@ -3398,6 +3454,8 @@ if ( ! function_exists( 'commentpress_add_commentblock_tinymce_plugin' ) ):
 /**
  * Load the TinyMCE plugin : cp_editor_plugin.js
  *
+ * @since 3.3
+ *
  * @param array $plugin_array The existing TinyMCE plugin array
  * @return array $plugin_array The modified TinyMCE plugin array
  */
@@ -3414,34 +3472,11 @@ endif; // commentpress_add_commentblock_tinymce_plugin
 
 
 
-if ( ! function_exists( 'commentpress_refresh_mce' ) ):
-/**
- * Load the TinyMCE plugin : cp_editor_plugin.js
- *
- * Can this be removed? doesn't seem to affect things...
- *
- * @param int $ver The existing TinyMCE version
- * @param int $ver The modified TinyMCE version
- */
-function commentpress_refresh_mce( $ver ) {
-
-	$ver += 3;
-	return $ver;
-
-}
-endif; // commentpress_refresh_mce
-
-// init process for button control
-//add_filter( 'tiny_mce_version', 'commentpress_refresh_mce');
-add_action( 'init', 'commentpress_add_commentblock_button' );
-
-
-
 if ( ! function_exists( 'commentpress_trap_empty_search' ) ):
 /**
- * Trap empty search queries and redirect
+ * Trap empty search queries and redirect.
  *
- * @todo: this isn't ideal, but works - awaiting core updates
+ * @since 3.3
  *
  * @return str $template The path to the search template
  */
@@ -3475,7 +3510,9 @@ if ( version_compare( $wp_version, '3.2', '>=' ) ) {
 
 if ( ! function_exists( 'commentpress_amend_search_query' ) ):
 /**
- * Restrict search query to pages only
+ * Restrict search query to pages only.
+ *
+ * @since 3.3
  *
  * @param object $query The query object, passed by reference
  * @return void
@@ -3515,7 +3552,7 @@ function commentpress_amend_search_query( &$query ) {
 	}
 
 }
-endif;
+endif; // commentpress_amend_search_query
 
 // add filter for search query modification
 add_filter( 'pre_get_posts', 'commentpress_amend_search_query' );
@@ -3524,7 +3561,9 @@ add_filter( 'pre_get_posts', 'commentpress_amend_search_query' );
 
 if ( ! function_exists( 'commentpress_amend_password_form' ) ):
 /**
- * Adds some style to the password form by adding a class to it
+ * Adds some style to the password form by adding a class to it.
+ *
+ * @since 3.3
  *
  * @param str $output The existing password form
  * @return str $output The modified password form
@@ -3553,7 +3592,9 @@ add_filter( 'the_password_form', 'commentpress_amend_password_form' );
 
 if ( ! function_exists( 'commentpress_widgets_init' ) ):
 /**
- * Register our widgets
+ * Register our widgets.
+ *
+ * @since 3.3
  *
  * @return void
  */
@@ -3585,7 +3626,9 @@ add_action( 'widgets_init', 'commentpress_widgets_init' );
 
 if ( ! function_exists( 'commentpress_license_image_css' ) ):
 /**
- * Amend display of license plugin image
+ * Amend display of license plugin image.
+ *
+ * @since 3.3
  *
  * @return str The CSS for amending the license plugin image
  */
@@ -3603,7 +3646,11 @@ add_action( 'license_img_style', 'commentpress_license_image_css' );
 
 if ( ! function_exists( 'commentpress_license_widget_compat' ) ):
 /**
- * Remove license from footer when widget not active - wp_footer() is not inside #footer
+ * Remove license from footer when widget not active.
+ *
+ * This is because wp_footer() is not inside #footer
+ *
+ * @since 3.3
  *
  * @return void
  */
@@ -3625,7 +3672,11 @@ add_action( 'widgets_init', 'commentpress_license_widget_compat', 100 );
 
 if ( ! function_exists( 'commentpress_wplicense_compat' ) ):
 /**
- * Remove license from footer - wp_footer() is not inside #footer
+ * Remove license from footer.
+ *
+ * This is because wp_footer() is not inside #footer
+ *
+ * @since 3.3
  *
  * @return void
  */
@@ -3644,7 +3695,9 @@ add_action( 'init', 'commentpress_wplicense_compat', 100 );
 
 if ( ! function_exists( 'commentpress_groupblog_classes' ) ):
 /**
- * Add classes to #content in BuddyPress, so that we can distinguish different groupblog types
+ * Add classes to #content in BuddyPress, so that we can distinguish different groupblog types.
+ *
+ * @since 3.3
  *
  * @return str $groupblog_class The class for the groupblog
  */
@@ -3687,7 +3740,9 @@ endif; // commentpress_groupblog_classes
 
 if ( ! function_exists( 'commentpress_get_post_version_info' ) ):
 /**
- * Get links to previous and next versions, should they exist
+ * Get links to previous and next versions, should they exist.
+ *
+ * @since 3.3
  *
  * @return void
  */
@@ -3737,11 +3792,9 @@ function commentpress_get_post_version_info( $post ) {
 
 	// get post with this post's ID as their _cp_newer_version meta value
 	$args = array(
-
 		'numberposts' => 1,
 		'meta_key' => '_cp_newer_version',
 		'meta_value' => $post->ID
-
 	);
 
 	// get the array
@@ -3790,7 +3843,9 @@ endif; // commentpress_get_post_version_info
 
 if ( ! function_exists( 'commentpress_get_post_css_override' ) ):
 /**
- * Overrride post type by adding a CSS class
+ * Overrride post type by adding a CSS class.
+ *
+ * @since 3.3
  *
  * @param int $post_id The numeric ID of the post
  * @return str $type_overridden The CSS class
@@ -3802,14 +3857,12 @@ function commentpress_get_post_css_override( $post_id ) {
 
 	// declare access to globals
 	global $commentpress_core;
-	//print_r(array( 'here' )); die();
 
 	// if we have the plugin enabled...
 	if ( is_object( $commentpress_core ) ) {
 
 		// default to current blog type
 		$type = $commentpress_core->db->option_get( 'cp_blog_type' );
-		//print_r( $type ); die();
 
 		// set post meta key
 		$key = '_cp_post_type_override';
@@ -3842,6 +3895,8 @@ endif; // commentpress_get_post_css_override
 if ( ! function_exists( 'commentpress_get_post_title_visibility' ) ):
 /**
  * Do we want to show page/post title?
+ *
+ * @since 3.3
  *
  * @param int $post_id The numeric ID of the post
  * @return bool $hide True if title is shown, false if hidden
@@ -3885,6 +3940,8 @@ if ( ! function_exists( 'commentpress_get_post_meta_visibility' ) ):
 /**
  * Do we want to show page/post meta?
  *
+ * @since 3.3
+ *
  * @param int $post_id The numeric ID of the post
  * @return bool $hide_meta True if meta is shown, false if hidden
  */
@@ -3923,8 +3980,11 @@ endif; // commentpress_get_post_meta_visibility
 
 
 
+if ( ! function_exists( 'commentpress_sidebars_widgets' ) ):
 /**
- * Temporary fix for WP 3.9
+ * Temporary fix for PHP notice in WP 3.9.
+ *
+ * @since 3.6
  *
  * @return array $array Existing widgets array
  * @return array $array Modified widgets array
@@ -3949,14 +4009,18 @@ function commentpress_sidebars_widgets( $array ) {
 	return $array;
 
 }
+endif; // commentpress_sidebars_widgets
 
 // add filter for above
 add_filter( 'sidebars_widgets', 'commentpress_sidebars_widgets', 1000 );
 
 
 
+if ( ! function_exists( 'commentpress_add_selection_classes' ) ):
 /**
- * Filter the comment class to add selection data
+ * Filter the comment class to add selection data.
+ *
+ * @since 3.8
  *
  * @param array $classes An array of comment classes.
  * @param string $class A comma-separated list of additional classes added to the list.
@@ -3989,14 +4053,20 @@ function commentpress_add_selection_classes( $classes, $class, $comment_id, $com
 	return $classes;
 
 }
+endif; // commentpress_add_selection_classes
 
 // add filter for above
 add_filter( 'comment_class', 'commentpress_add_selection_classes', 100, 4 );
 
 
 
+if ( ! function_exists( 'commentpress_prefix_bp_templates' ) ):
 /**
- * Prefixes BuddyPress pages with the div wrappers that CommentPress needs
+ * Prefixes BuddyPress pages with the div wrappers that CommentPress needs.
+ *
+ * @since 3.3
+ *
+ * @return void
  */
 function commentpress_prefix_bp_templates() {
 
@@ -4004,14 +4074,20 @@ function commentpress_prefix_bp_templates() {
 	echo '<div id="wrapper"><div id="main_wrapper" class="clearfix"><div id="page_wrapper">';
 
 }
+endif; // commentpress_prefix_bp_templates
 
 // add action for above
 add_action( 'bp_before_directory_groupsites_page', 'commentpress_prefix_bp_templates' );
 
 
 
+if ( ! function_exists( 'commentpress_suffix_bp_templates' ) ):
 /**
  * Suffixes BuddyPress pages with the div wrappers that CommentPress needs
+ *
+ * @since 3.3
+ *
+ * @return void
  */
 function commentpress_suffix_bp_templates() {
 
@@ -4019,6 +4095,7 @@ function commentpress_suffix_bp_templates() {
 	echo '</div><!-- /page_wrapper --></div><!-- /main_wrapper --></div><!-- /wrapper -->';
 
 }
+endif; // commentpress_suffix_bp_templates
 
 // add action for above
 add_action( 'bp_after_directory_groupsites_page', 'commentpress_suffix_bp_templates' );
