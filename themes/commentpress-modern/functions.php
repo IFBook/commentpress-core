@@ -161,6 +161,28 @@ add_action( 'after_setup_theme', 'commentpress_setup' );
 
 
 
+if ( ! function_exists( 'commentpress_buddypress_support' ) ):
+/**
+ * Enable support for BuddyPress
+ *
+ * @return void
+ */
+function commentpress_buddypress_support() {
+
+	// include bp-overrides when BuddyPress is active
+	add_action( 'wp_enqueue_scripts', 'commentpress_bp_enqueue_styles', 994 );
+
+	// add filter for activity class
+	add_filter( 'bp_get_activity_css_class', 'commentpress_bp_activity_css_class' );
+
+}
+endif; // commentpress_buddypress_support
+
+// add an action for the above (BP hooks this to after_setup_theme with priority 100)
+add_action( 'bp_after_setup_theme', 'commentpress_buddypress_support' );
+
+
+
 if ( ! function_exists( 'commentpress_bp_enqueue_styles' ) ):
 /**
  * Add BuddyPress front-end styles
@@ -194,195 +216,7 @@ endif; // commentpress_bp_enqueue_styles
 
 
 
-if ( ! function_exists( 'commentpress_bp_enqueue_scripts' ) ):
-/**
- * Add BuddyPress front-end scripts
- *
- * @return void
- */
-function commentpress_bp_enqueue_scripts() {
-
-	/**
-	 * -------------------------------------------------------------------------
-	 * Some notes on BuddyPress 2+ theme compatibility
-	 * -------------------------------------------------------------------------
-	 *
-	 * Theme compatibility needs revisiting, because the default theme is being
-	 * removed from BuddyPress core.
-	 *
-	 * All theme markup needs to be adjusted to be compatible with the code in
-	 * `buddypress/bp-templates` instead
-	 *
-	 * -------------------------------------------------------------------------
-	 * Some notes on BuddyPress 1.7 theme compatibility
-	 * -------------------------------------------------------------------------
-	 *
-	 * @see commentpress_enqueue_scripts_and_styles() for dequeuing bp-legacy-css
-	 *
-	 * -------------------------------------------------------------------------
-	 */
-
-	// kick out on admin
-	if ( is_admin() ) { return; }
-
-	// access plugin
-	global $commentpress_core;
-
-	// if we have the plugin enabled...
-	if ( is_object( $commentpress_core ) ) {
-
-		// test for buddypress special page
-		if ( $commentpress_core->is_buddypress() AND $commentpress_core->is_buddypress_special_page() ) {
-
-			// construct path to BP default javascript file
-			$bp_js_file = BP_PLUGIN_DIR . 'bp-themes/bp-default/_inc/global.js';
-
-			// construct URL for BP default javascript file
-			// Eventually use:
-			// $bp_js_url = BP_PLUGIN_URL . 'bp-templates/bp-legacy/js/buddypress.js',
-			$bp_js_url = BP_PLUGIN_URL . 'bp-themes/bp-default/_inc/global.js';
-
-			// look for BP JS file in default theme directory
-			if ( !is_file( $bp_js_file ) ) {
-
-				// temporarily use our copy
-				$bp_js_url = COMMENTPRESS_PLUGIN_URL . 'commentpress-core/assets/includes/bp-compat/global.js';
-
-			}
-
-			// enqueue buddypress js
-			wp_enqueue_script(
-
-				'cp_buddypress_js',
-				$bp_js_url,
-				array( 'jquery' ),
-				COMMENTPRESS_VERSION // version
-
-			);
-
-			// add translation: this needs to be checked against BP_Legacy::enqueue_scripts
-			// from time to time to make sure it's up-to-date
-			$params = array(
-				'accepted'            => __( 'Accepted', 'commentpress-core' ),
-				'close'               => __( 'Close', 'commentpress-core' ),
-				'comments'            => __( 'comments', 'commentpress-core' ),
-				'leave_group_confirm' => __( 'Are you sure you want to leave this group?', 'commentpress-core' ),
-				'mark_as_fav'	      => __( 'Favorite', 'commentpress-core' ),
-				'my_favs'             => __( 'My Favorites', 'commentpress-core' ),
-				'rejected'            => __( 'Rejected', 'commentpress-core' ),
-				'remove_fav'	      => __( 'Remove Favorite', 'commentpress-core' ),
-				'show_all'            => __( 'Show all', 'commentpress-core' ),
-				'show_all_comments'   => __( 'Show all comments for this thread', 'commentpress-core' ),
-				'show_x_comments'     => __( 'Show all %d comments', 'commentpress-core' ),
-				'unsaved_changes'     => __( 'Your profile has unsaved changes. If you leave the page, the changes will be lost.', 'commentpress-core' ),
-				'view'                => __( 'View', 'commentpress-core' ),
-			);
-
-			// localise
-			wp_localize_script( 'cp_buddypress_js', 'BP_DTheme', $params );
-
-		}
-
-	}
-
-}
-endif; // commentpress_bp_enqueue_scripts
-
-
-
-/**
- * Enable compatibility with BuddyPress
- *
- * @return void
- */
-function commentpress_bp_theme_compatibility() {
-
-	// BP 1.7 auto-compatibility - see commentpress_enqueue_theme_styles()
-
-	// if we're using BP Template Pack
-	if ( function_exists( 'bp_tpack_theme_setup' ) ) {
-
-		// assume that BP Template Pack has been activated and set up correctly
-
-	} else {
-
-		// use function cloned from BP Template Pack
-		commentpress_bp_theme_support();
-
-	}
-
-}
-
-
-
-/**
- * Sets up WordPress theme for BuddyPress support - cloned from BP Template Pack
- *
- * @return void
- */
-function commentpress_bp_theme_support() {
-
-	// load the default BuddyPress AJAX functions if it isn't already included
-	if ( ! function_exists( 'bp_dtheme_register_actions' ) ) {
-
-		// construct path to BP default theme AJAX file
-		$ajax_file = BP_PLUGIN_DIR . 'bp-themes/bp-default/_inc/ajax.php';
-
-		// look for BP AJAX file in default theme directory
-		if ( is_file( $ajax_file ) ) {
-
-			// okay, we found it
-			require_once( $ajax_file );
-
-		} else {
-
-			// temporarily use our copy
-			require_once( COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/includes/bp-compat/ajax.php' );
-
-		}
-
-	}
-
-	// call after_setup_theme function directly otherwise it doesn't run: this is
-	// because we're hooking into bp_after_setup_theme which runs with priority 100
-	bp_dtheme_register_actions();
-
-	// tell BP that we support it
-	add_theme_support( 'buddypress' );
-
-	// bail if admin
-	if ( is_admin() ) { return; }
-
-	// register buttons for the relevant component templates
-
-	// friends button
-	if ( bp_is_active( 'friends' ) )
-		add_action( 'bp_member_header_actions',    'bp_add_friend_button' );
-
-	// activity button
-	if ( bp_is_active( 'activity' ) )
-		add_action( 'bp_member_header_actions',    'bp_send_public_message_button' );
-
-	// messages button
-	if ( bp_is_active( 'messages' ) )
-		add_action( 'bp_member_header_actions',    'bp_send_private_message_button' );
-
-	// group buttons
-	if ( bp_is_active( 'groups' ) ) {
-		add_action( 'bp_group_header_actions',     'bp_group_join_button' );
-		add_action( 'bp_group_header_actions',     'bp_group_new_topic_button' );
-		add_action( 'bp_directory_groups_actions', 'bp_group_join_button' );
-	}
-
-	// blog button
-	if ( bp_is_active( 'blogs' ) ) {
-		add_action( 'bp_directory_blogs_actions',  'bp_blogs_visit_blog_button' );
-	}
-
-} // commentpress_bp_theme_support
-
-
-
+if ( ! function_exists( 'commentpress_bp_activity_css_class' ) ):
 /**
  * Update BuddyPress activity CSS class with groupblog type
  *
@@ -417,32 +251,7 @@ function commentpress_bp_activity_css_class( $existing_class ) {
 	return $existing_class . $groupblogtype;
 
 }
-
-
-
-/**
- * Enable support for BuddyPress
- *
- * @return void
- */
-function commentpress_buddypress_support() {
-
-	//print_r( 'commentpress_buddypress_support' );
-
-	// add an action to enable compatibility with BuddyPress
-	add_action( 'after_setup_theme', 'commentpress_bp_theme_compatibility', 101 );
-
-	// include bp-overrides when buddypress is active
-	add_action( 'wp_enqueue_scripts', 'commentpress_bp_enqueue_styles', 994 );
-	add_action( 'wp_enqueue_scripts', 'commentpress_bp_enqueue_scripts', 994 );
-
-	// add filter for activity class
-	add_filter( 'bp_get_activity_css_class', 'commentpress_bp_activity_css_class' );
-
-}
-
-// add an action for the above (BP hooks this to after_setup_theme with priority 100)
-add_action( 'bp_after_setup_theme', 'commentpress_buddypress_support' );
+endif; // commentpress_bp_activity_css_class
 
 
 
@@ -496,15 +305,6 @@ function commentpress_enqueue_scripts_and_styles() {
 		COMMENTPRESS_VERSION, // version
 		'all' // media
 	);
-
-	// test for a function in BP 1.7+
-	if ( function_exists( 'bp_is_network_activated' ) ) {
-
-		// try to remove the legacy stylesheet that BP 1.7 tries to insert...
-		// do it here because, it seems, doing so on bp_setup_globals is too early
-		wp_dequeue_style( 'bp-legacy-css' );
-
-	}
 
 	// use dashicons
 	wp_enqueue_style( 'dashicons' );

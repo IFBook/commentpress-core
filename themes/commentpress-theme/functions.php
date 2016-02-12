@@ -42,10 +42,6 @@ function commentpress_setup() {
 	global $wp_version;
 	if ( version_compare( $wp_version, '3.4', '>=' ) ) {
 
-		// -------------------------
-		// TO DO: test 3.4 features
-		// -------------------------
-
 		// allow custom backgrounds
 		add_theme_support( 'custom-background' );
 
@@ -119,92 +115,11 @@ function commentpress_setup() {
 	// testing the use of wp_nav_menu() - first we need to register it
 	register_nav_menu( 'toc', __( 'Table of Contents', 'commentpress-core' ) );
 
-
-	// ignore BP 1.7 auto-compatibility - see commentpress_enqueue_theme_styles()
-	//add_theme_support( 'buddypress' );
-
 }
 endif; // commentpress_setup
 
 // add after theme setup hook
 add_action( 'after_setup_theme', 'commentpress_setup' );
-
-
-
-if ( ! function_exists( 'commentpress_enqueue_theme_styles' ) ):
-/**
- * Add BuddyPress front-end styles
- *
- * @return void
- */
-function commentpress_enqueue_theme_styles() {
-
-	// kick out on admin
-	if ( is_admin() ) { return; }
-
-	// init
-	$dev = '.min';
-
-	// check for dev
-	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
-		$dev = '';
-	}
-
-	// add our own BuddyPress css
-	wp_enqueue_style(
-
-		'cp_buddypress_css',
-		get_template_directory_uri() . '/assets/css/bp-overrides' . $dev . '.css',
-		array( 'cp_layout_css' ),
-		COMMENTPRESS_VERSION, // version
-		'all' // media
-
-	);
-
-	/*
-	----------------------------------------------------------------------------
-	Some notes on BuddyPress 1.7 theme compatibility
-	----------------------------------------------------------------------------
-
-	(a) see commentpress_enqueue_scripts_and_styles() for dequeuing bp-legacy-css
-
-	(b) CommentPress Core and themes based on it require the inclusion and setup
-	    of the BuddyPress Template Pack plugin, which should have only Javascript
-	    enabled for the main BuddyPress site
-
-	----------------------------------------------------------------------------
-	*/
-
-	/*
-	// enqueue a copy of the legacy buddypress js
-	wp_enqueue_script(
-
-		'cp_buddypress_js',
-		get_template_directory_uri() . '/assets/js/buddypress.js',
-		array( 'cp_common_js' )
-
-	);
-	*/
-
-}
-endif; // commentpress_enqueue_theme_styles
-
-if ( ! function_exists( 'commentpress_enqueue_bp_theme_styles' ) ):
-/**
- * Enqueue BuddyPress front-end styles
- *
- * @return void
- */
-function commentpress_enqueue_bp_theme_styles() {
-
-	// add an action to include bp-overrides when buddypress is active
-	add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_theme_styles', 101 );
-
-}
-endif; // commentpress_enqueue_bp_theme_styles
-
-// add an action for the above
-add_action( 'bp_setup_globals', 'commentpress_enqueue_theme_styles' );
 
 
 
@@ -374,6 +289,58 @@ endif; // commentpress_enqueue_print_styles
 
 // add a filter for the above, very late so it (hopefully) is last in the queue
 add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_print_styles', 101 );
+
+
+
+if ( ! function_exists( 'commentpress_enqueue_bp_theme_styles' ) ):
+/**
+ * Enqueue BuddyPress front-end styles
+ *
+ * @return void
+ */
+function commentpress_enqueue_bp_theme_styles() {
+
+	// add an action to include bp-overrides when buddypress is active
+	add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_theme_styles', 101 );
+
+}
+endif; // commentpress_enqueue_bp_theme_styles
+
+// add an action for the above
+add_action( 'bp_setup_globals', 'commentpress_enqueue_theme_styles' );
+
+
+
+if ( ! function_exists( 'commentpress_enqueue_theme_styles' ) ):
+/**
+ * Add BuddyPress front-end styles
+ *
+ * @return void
+ */
+function commentpress_enqueue_theme_styles() {
+
+	// kick out on admin
+	if ( is_admin() ) { return; }
+
+	// init
+	$dev = '.min';
+
+	// check for dev
+	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
+		$dev = '';
+	}
+
+	// add our own BuddyPress css
+	wp_enqueue_style(
+		'cp_buddypress_css',
+		get_template_directory_uri() . '/assets/css/bp-overrides' . $dev . '.css',
+		array( 'cp_layout_css' ),
+		COMMENTPRESS_VERSION, // version
+		'all' // media
+	);
+
+}
+endif; // commentpress_enqueue_theme_styles
 
 
 
