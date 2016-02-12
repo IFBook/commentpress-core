@@ -240,7 +240,7 @@ function commentpress_plugin_action_links( $links, $file ) {
 
 		// add Paypal link
 		$paypal = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=PZSKM8T5ZP3SC';
-		$links[] = '<a href="' . $paypal . '" target="_blank">' . __( 'Donate!', 'commentpress-core' )  '</a>';
+		$links[] = '<a href="' . $paypal . '" target="_blank">' . __( 'Donate!', 'commentpress-core' ) . '</a>';
 
 	}
 
