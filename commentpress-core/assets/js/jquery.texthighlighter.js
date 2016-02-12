@@ -805,7 +805,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 		}
 
 		// prepend selection
-		tinymce.activeEditor.setContent( '<p><strong>[' + text + ']</strong></p>' + content, {format : 'html'} );
+		tinymce.activeEditor.setContent( '<p><strong>[' + text + ']</strong></p><p></p>' + content, {format : 'html'} );
 
 		// place cursor at the end and focus
 		setTimeout(function () {
