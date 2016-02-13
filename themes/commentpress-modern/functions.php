@@ -161,100 +161,6 @@ add_action( 'after_setup_theme', 'commentpress_setup' );
 
 
 
-if ( ! function_exists( 'commentpress_buddypress_support' ) ):
-/**
- * Enable support for BuddyPress
- *
- * @return void
- */
-function commentpress_buddypress_support() {
-
-	// include bp-overrides when BuddyPress is active
-	add_action( 'wp_enqueue_scripts', 'commentpress_bp_enqueue_styles', 994 );
-
-	// add filter for activity class
-	add_filter( 'bp_get_activity_css_class', 'commentpress_bp_activity_css_class' );
-
-}
-endif; // commentpress_buddypress_support
-
-// add an action for the above (BP hooks this to after_setup_theme with priority 100)
-add_action( 'bp_after_setup_theme', 'commentpress_buddypress_support' );
-
-
-
-if ( ! function_exists( 'commentpress_bp_enqueue_styles' ) ):
-/**
- * Add BuddyPress front-end styles
- *
- * @return void
- */
-function commentpress_bp_enqueue_styles() {
-
-	// kick out on admin
-	if ( is_admin() ) { return; }
-
-	// init
-	$dev = '.min';
-
-	// check for dev
-	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
-		$dev = '';
-	}
-
-	// add our own BuddyPress css
-	wp_enqueue_style(
-		'cp_buddypress_css',
-		get_template_directory_uri() . '/assets/css/bp-overrides' . $dev . '.css',
-		array( 'cp_screen_css' ),
-		COMMENTPRESS_VERSION, // version
-		'all' // media
-	);
-
-}
-endif; // commentpress_bp_enqueue_styles
-
-
-
-if ( ! function_exists( 'commentpress_bp_activity_css_class' ) ):
-/**
- * Update BuddyPress activity CSS class with groupblog type
- *
- * @param str $existing_class The existing class
- * @param str $existing_class The overridden class
- */
-function commentpress_bp_activity_css_class( $existing_class ) {
-
-	// $activities_template->activity->component . ' ' . $activities_template->activity->type . $class
-	//print_r( array( 'existing_class' => $existing_class ) ); die();
-
-	// init group blog type
-	$groupblogtype = '';
-
-	// get current item
-	global $activities_template;
-	$current_activity = $activities_template->activity;
-	//print_r( array( 'a' => $current_activity ) ); die();
-
-	// for group activity...
-	if ( $current_activity->component == 'groups' ) {
-
-		// get group blogtype
-		$groupblogtype = groups_get_groupmeta( $current_activity->item_id, 'groupblogtype' );
-
-		// add space before if we have it
-		if ( $groupblogtype ) { $groupblogtype = ' ' . $groupblogtype; }
-
-	}
-
-	// --<
-	return $existing_class . $groupblogtype;
-
-}
-endif; // commentpress_bp_activity_css_class
-
-
-
 if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ):
 /**
  * Add CommentPress front-end styles
@@ -401,6 +307,178 @@ endif; // commentpress_enqueue_print_styles
 
 // add a filter for the above, very late so it (hopefully) is last in the queue
 add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_print_styles', 999 );
+
+
+
+if ( ! function_exists( 'commentpress_buddypress_support' ) ):
+/**
+ * Enable support for BuddyPress
+ *
+ * @return void
+ */
+function commentpress_buddypress_support() {
+
+	// include bp-overrides when BuddyPress is active
+	add_action( 'wp_enqueue_scripts', 'commentpress_bp_enqueue_styles', 996 );
+
+	// add filter for activity class
+	add_filter( 'bp_get_activity_css_class', 'commentpress_bp_activity_css_class' );
+
+	// add filter for blogs class
+	add_filter( 'bp_get_blog_class', 'commentpress_bp_blog_css_class' );
+
+	// add filter for groups class
+	add_filter( 'bp_get_group_class', 'commentpress_bp_group_css_class' );
+
+}
+endif; // commentpress_buddypress_support
+
+// add an action for the above (BP hooks this to after_setup_theme with priority 100)
+add_action( 'bp_after_setup_theme', 'commentpress_buddypress_support' );
+
+
+
+if ( ! function_exists( 'commentpress_bp_enqueue_styles' ) ):
+/**
+ * Add BuddyPress front-end styles
+ *
+ * @return void
+ */
+function commentpress_bp_enqueue_styles() {
+
+	// kick out on admin
+	if ( is_admin() ) { return; }
+
+	// init
+	$dev = '.min';
+
+	// check for dev
+	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
+		$dev = '';
+	}
+
+	// add our own BuddyPress css
+	wp_enqueue_style(
+		'cp_buddypress_css',
+		get_template_directory_uri() . '/assets/css/bp-overrides' . $dev . '.css',
+		array( 'cp_screen_css' ),
+		COMMENTPRESS_VERSION, // version
+		'all' // media
+	);
+
+}
+endif; // commentpress_bp_enqueue_styles
+
+
+
+if ( ! function_exists( 'commentpress_bp_activity_css_class' ) ):
+/**
+ * Update BuddyPress activity CSS class with groupblog type
+ *
+ * @param str $existing_class The existing class
+ * @param str $existing_class The overridden class
+ */
+function commentpress_bp_activity_css_class( $existing_class ) {
+
+	// init group blog type
+	$groupblogtype = '';
+
+	// get current item
+	global $activities_template;
+	$current_activity = $activities_template->activity;
+
+	// for group activity...
+	if ( $current_activity->component == 'groups' ) {
+
+		// get group blogtype
+		$groupblogtype = groups_get_groupmeta( $current_activity->item_id, 'groupblogtype' );
+
+		// add space before if we have it
+		if ( $groupblogtype ) { $groupblogtype = ' ' . $groupblogtype; }
+
+	}
+
+	// --<
+	return $existing_class . $groupblogtype;
+
+}
+endif; // commentpress_bp_activity_css_class
+
+
+
+if ( ! function_exists( 'commentpress_bp_blog_css_class' ) ):
+/**
+ * Update BuddyPress Sites Directory blog item CSS class with groupblog type
+ *
+ * @param array $classes The existing classes
+ * @param array $classes The overridden classes
+ */
+function commentpress_bp_blog_css_class( $classes ) {
+
+	// is this a groupblog?
+	if ( function_exists( 'get_groupblog_group_id' ) ) {
+
+		// access BP object
+		global $blogs_template;
+
+		// get group ID
+		$group_id = get_groupblog_group_id( $blogs_template->blog->blog_id );
+		if ( is_numeric( $group_id ) ) {
+
+			// get group blogtype
+			$groupblog_type = groups_get_groupmeta( $group_id, 'groupblogtype' );
+
+			// did we get one?
+			if ( $groupblog_type ) {
+
+				// add classes
+				$classes[] = 'bp-groupblog-blog';
+				$classes[] = $groupblogtype;
+
+			}
+
+		}
+
+	}
+
+	// --<
+	return $classes;
+
+}
+endif; // commentpress_bp_blog_css_class
+
+
+
+if ( ! function_exists( 'commentpress_bp_group_css_class' ) ):
+/**
+ * Update BuddyPress Groups Directory group item CSS class with groupblog type
+ *
+ * @param array $classes The existing classes
+ * @param array $classes The overridden classes
+ */
+function commentpress_bp_group_css_class( $classes ) {
+
+	// only add classes when bp-groupblog is active
+	if ( function_exists( 'get_groupblog_group_id' ) ) {
+
+		// get group blogtype
+		$groupblog_type = groups_get_groupmeta( bp_get_group_id(), 'groupblogtype' );
+
+		// did we get one?
+		if ( $groupblog_type ) {
+
+			// add class
+			$classes[] = $groupblog_type;
+
+		}
+
+	}
+
+	// --<
+	return $classes;
+
+}
+endif; // commentpress_bp_group_css_class
 
 
 
