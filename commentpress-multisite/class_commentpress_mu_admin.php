@@ -910,6 +910,25 @@ class CommentpressMultisiteAdmin {
 
 
 
+	/**
+	 * Get deactivation form element.
+	 *
+	 * @return str The HTML for the form element
+	 */
+	public function get_deactivate_element() {
+
+		// define html
+		return '
+		<tr valign="top">
+			<th scope="row"><label for="cp_deactivate_commentpress">' . __( 'Deactivate CommentPress Core', 'commentpress-core' ) . '</label></th>
+			<td><input id="cp_deactivate_commentpress" name="cp_deactivate_commentpress" value="1" type="checkbox" /></td>
+		</tr>
+		';
+
+	}
+
+
+
 //##############################################################################
 
 
@@ -962,7 +981,7 @@ class CommentpressMultisiteAdmin {
 				commentpress_activate_ajax();
 
 				// modify CommentPress Core settings page
-				add_filter( 'cpmu_deactivate_commentpress_element', array( $this, '_get_deactivate_element' ) );
+				add_filter( 'cpmu_deactivate_commentpress_element', array( $this, 'get_deactivate_element' ) );
 
 				// hook into CommentPress Core settings page result
 				add_action( 'cpmu_deactivate_commentpress', array( $this, '_disable_core' ) );
@@ -1173,25 +1192,6 @@ class CommentpressMultisiteAdmin {
 			exit();
 
 		}
-
-	}
-
-
-
-	/**
-	 * Get deactivation form element.
-	 *
-	 * @return str The HTML for the form element
-	 */
-	private function _get_deactivate_element() {
-
-		// define html
-		return '
-		<tr valign="top">
-			<th scope="row"><label for="cp_deactivate_commentpress">' . __( 'Deactivate CommentPress Core', 'commentpress-core' ) . '</label></th>
-			<td><input id="cp_deactivate_commentpress" name="cp_deactivate_commentpress" value="1" type="checkbox" /></td>
-		</tr>
-		';
 
 	}
 

@@ -146,18 +146,6 @@ class CommentpressMultisite {
 	 */
 	public function add_frontend_styles() {
 
-		// disabled
-		return;
-
-		// add css for signup form
-		wp_enqueue_style(
-			'cpmu-signup-style',
-			COMMENTPRESS_PLUGIN_URL . 'commentpress-multisite/assets/css/signup.css',
-			null,
-			COMMENTPRESS_MU_PLUGIN_VERSION,
-			'all' // media
-		);
-
 	}
 
 

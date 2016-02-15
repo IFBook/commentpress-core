@@ -1973,6 +1973,10 @@ class CommentpressCore {
 		// declare access to globals
 		global $post;
 
+		// not on signup pages
+		if ( is_multisite() AND 'wp-signup.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) { return false; }
+		if ( is_multisite() AND 'wp-activate.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) { return false; }
+
 		// not if we're not on a page/post and especially not if there's no post object
 		if ( ! is_singular() OR ! is_object( $post ) ) { return false; }
 
@@ -2275,7 +2279,7 @@ class CommentpressCore {
 		if ( is_multisite() ) {
 
 			// add filter for signup page to include sidebar
-			add_filter( 'after_signup_form', array( $this, 'after_signup_form' ) );
+			add_filter( 'after_signup_form', array( $this, 'after_signup_form' ), 20 );
 
 			// if subdirectory install
 			if ( ! is_subdomain_install() ) {

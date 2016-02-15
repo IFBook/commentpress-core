@@ -12,6 +12,8 @@ body#main_blog div#item-header div#item-meta
 }
 
 /* Google Webfont: using "Lato" enqueued in functions.php */
+
+/* Titles and headings */
 #title h1,
 #title h1 a,
 .post h1,
@@ -20,16 +22,20 @@ body#main_blog div#item-header div#item-meta
 .post h4,
 .post h5,
 .post h6,
-body.create-blog #content #setupform label,
-#register-page #signup_form h2
-{
-	font-family: Lato, 'Trebuchet MS', Helvetica, Arial, sans-serif;
-}
 
-body.create-blog #cp-multisite-options h4,
+/* Signup, Activate and Register pages */
+body.create-blog #content #setupform label,
+#register-page #signup_form h2,
+#content #activateform label
 #content .mu_register h2,
 #content .mu_register label,
+#content #signup-content h2,
+#content #activateform label,
+
+/* CommentPress form inserts */
+body.create-blog #cp-multisite-options h4,
 #content .mu_register #cp-multisite-options h3,
+
 /* Comment form */
 div#respond h4#respond_title
 {
@@ -44,11 +50,25 @@ Stylistic regularity
 --------------------------------------------------------------------------------
 */
 
+/* the all-important highlight state */
+.selected_para
+{
+	color: #ca0000;
+}
+
+/* Site tagline */
 #header #tagline
 {
 	color: #999;
 }
 
+/* Comment reply cancel link */
+#cancel-comment-reply-link
+{
+	color: #000;
+}
+
+/* Headings on page/posts */
 .post h1,
 .post h2,
 .post h3,
@@ -59,36 +79,20 @@ Stylistic regularity
 	/* don't force uppercase */
 }
 
-/* the all-important highlight state */
-.selected_para
-{
-	color: #ca0000;
-}
+/* Links in page/post content */
+.post a,
 
-.post a
-{
-	color: #761D19;
-}
+/* Stray BuddyPress */
+body.create-blog #content a,
 
+/* Links in comment identifiers */
 .comment-content a,
 div#respond .subscribe_reloaded_insert a
-{
-	color: #761D19;
-}
-
 .comment-meta a,
 .acomment-meta a,
 .meta a,
-body.create-blog #content a
-{
-	color: #761D19;
-}
 
-#cancel-comment-reply-link
-{
-	color: #000;
-}
-
+/* Links in comments */
 .comment-identifier .comment-edit a:hover,
 .comment-identifier .comment-assign:hover,
 .comment-identifier cite a:hover,
@@ -96,9 +100,13 @@ body.create-blog #content a
 .comment_permalink:hover,
 .comment_activity_link:hover,
 .author_is_logged_in a:hover,
-#cancel-comment-reply-link:hover
+#cancel-comment-reply-link:hover,
+
+/* Signup, Activate and Register page links */
+#content .mu_register h2 a,
+#content #signup-content a,
+#content #activateform label,
+#content #signup-welcome span.h3
 {
 	color: #761D19;
 }
-
-

@@ -4188,7 +4188,9 @@ if ( ! function_exists( 'commentpress_prefix_bp_templates' ) ):
 function commentpress_prefix_bp_templates() {
 
 	// prefixed wrappers
-	echo '<div id="wrapper"><div id="main_wrapper" class="clearfix"><div id="page_wrapper">';
+	echo '<div id="wrapper">
+		  <div id="main_wrapper" class="clearfix">
+		  <div id="page_wrapper">';
 
 }
 endif; // commentpress_prefix_bp_templates
@@ -4209,12 +4211,62 @@ if ( ! function_exists( 'commentpress_suffix_bp_templates' ) ):
 function commentpress_suffix_bp_templates() {
 
 	// prefixed wrappers
-	echo '</div><!-- /page_wrapper --></div><!-- /main_wrapper --></div><!-- /wrapper -->';
+	echo '</div><!-- /page_wrapper -->
+		  </div><!-- /main_wrapper -->
+		  </div><!-- /wrapper -->';
 
 }
 endif; // commentpress_suffix_bp_templates
 
 // add action for above
 add_action( 'bp_after_directory_groupsites_page', 'commentpress_suffix_bp_templates' );
+
+
+
+if ( ! function_exists( 'commentpress_prefix_signup_template' ) ):
+/**
+ * Prefixes WordPress Signup Page with the div wrappers that CommentPress needs.
+ *
+ * @since 3.8.5
+ *
+ * @return void
+ */
+function commentpress_prefix_signup_template() {
+
+	// prefixed wrappers
+	echo '<div id="wrapper">
+		  <div id="main_wrapper" class="clearfix">
+		  <div id="page_wrapper">
+		  <div id="content">';
+
+}
+endif; // commentpress_prefix_signup_template
+
+// add action for above
+add_action( 'before_signup_form', 'commentpress_prefix_signup_template' );
+
+
+
+if ( ! function_exists( 'commentpress_suffix_signup_template' ) ):
+/**
+ * Suffixes WordPress Signup Page with the div wrappers that CommentPress needs.
+ *
+ * @since 3.8.5
+ *
+ * @return void
+ */
+function commentpress_suffix_signup_template() {
+
+	// prefixed wrappers
+	echo '</div><!-- /content -->
+		  </div><!-- /page_wrapper -->
+		  </div><!-- /main_wrapper -->
+		  </div><!-- /wrapper -->';
+
+}
+endif; // commentpress_suffix_signup_template
+
+// add action for above
+add_action( 'after_signup_form', 'commentpress_suffix_signup_template' );
 
 
