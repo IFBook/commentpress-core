@@ -2295,6 +2295,9 @@ class CommentpressCore {
 		// add BuddyPress functionality (really late, so group object is set up)
 		add_action( 'bp_setup_globals', array( $this, 'buddypress_globals_loaded' ), 1000 );
 
+		// actions to perform on BP loaded
+		add_action( 'bp_loaded', array( $this, 'bp_docs_loaded' ), 20 );
+
 		// actions to perform on BP Docs load
 		add_action( 'bp_docs_load', array( $this, 'bp_docs_loaded' ), 20 );
 

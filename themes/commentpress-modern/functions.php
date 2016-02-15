@@ -381,7 +381,7 @@ if ( ! function_exists( 'commentpress_bp_activity_css_class' ) ):
 function commentpress_bp_activity_css_class( $existing_class ) {
 
 	// init group blog type
-	$groupblogtype = '';
+	$groupblog_type = '';
 
 	// get current item
 	global $activities_template;
@@ -391,15 +391,15 @@ function commentpress_bp_activity_css_class( $existing_class ) {
 	if ( $current_activity->component == 'groups' ) {
 
 		// get group blogtype
-		$groupblogtype = groups_get_groupmeta( $current_activity->item_id, 'groupblogtype' );
+		$groupblog_type = groups_get_groupmeta( $current_activity->item_id, 'groupblogtype' );
 
 		// add space before if we have it
-		if ( $groupblogtype ) { $groupblogtype = ' ' . $groupblogtype; }
+		if ( $groupblog_type ) { $groupblog_type = ' ' . $groupblog_type; }
 
 	}
 
 	// --<
-	return $existing_class . $groupblogtype;
+	return $existing_class . $groupblog_type;
 
 }
 endif; // commentpress_bp_activity_css_class
@@ -433,7 +433,7 @@ function commentpress_bp_blog_css_class( $classes ) {
 
 				// add classes
 				$classes[] = 'bp-groupblog-blog';
-				$classes[] = $groupblogtype;
+				$classes[] = $groupblog_type;
 
 			}
 

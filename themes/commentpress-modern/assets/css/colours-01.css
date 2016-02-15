@@ -21,8 +21,7 @@ body#main_blog div#item-header div#item-meta
 .post h5,
 .post h6,
 body.create-blog #content #setupform label,
-#register-page #signup_form h2,
-span.highlight,
+#register-page #signup_form h2
 {
 	font-family: Lato, 'Trebuchet MS', Helvetica, Arial, sans-serif;
 }
@@ -32,7 +31,7 @@ body.create-blog #cp-multisite-options h4,
 #content .mu_register label,
 #content .mu_register #cp-multisite-options h3,
 /* Comment form */
-div#respond h4#respond_title,
+div#respond h4#respond_title
 {
 	font-family: Lato, 'Trebuchet MS', Helvetica, Arial, sans-serif;
 }
