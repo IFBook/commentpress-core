@@ -4060,6 +4060,123 @@ add_filter( 'comment_class', 'commentpress_add_selection_classes', 100, 4 );
 
 
 
+if ( ! function_exists( 'commentpress_bp_activity_css_class' ) ):
+/**
+ * Update BuddyPress activity CSS class with groupblog type.
+ *
+ * @since 3.3
+ *
+ * @param str $existing_class The existing class
+ * @param str $existing_class The overridden class
+ */
+function commentpress_bp_activity_css_class( $existing_class ) {
+
+	// init group blog type
+	$groupblog_type = '';
+
+	// get current item
+	global $activities_template;
+	$current_activity = $activities_template->activity;
+
+	// for group activity...
+	if ( $current_activity->component == 'groups' ) {
+
+		// get group blogtype
+		$groupblog_type = groups_get_groupmeta( $current_activity->item_id, 'groupblogtype' );
+
+		// add space before if we have it
+		if ( $groupblog_type ) { $groupblog_type = ' ' . $groupblog_type; }
+
+	}
+
+	// --<
+	return $existing_class . $groupblog_type;
+
+}
+endif; // commentpress_bp_activity_css_class
+
+
+
+if ( ! function_exists( 'commentpress_bp_blog_css_class' ) ):
+/**
+ * Update BuddyPress Sites Directory blog item CSS class with groupblog type.
+ *
+ * @since 3.3
+ *
+ * @param array $classes The existing classes
+ * @param array $classes The overridden classes
+ */
+function commentpress_bp_blog_css_class( $classes ) {
+
+	// is this a groupblog?
+	if ( function_exists( 'get_groupblog_group_id' ) ) {
+
+		// access BP object
+		global $blogs_template;
+
+		// get group ID
+		$group_id = get_groupblog_group_id( $blogs_template->blog->blog_id );
+		if ( is_numeric( $group_id ) ) {
+
+			// get group blogtype
+			$groupblog_type = groups_get_groupmeta( $group_id, 'groupblogtype' );
+
+			// did we get one?
+			if ( $groupblog_type ) {
+
+				// add classes
+				$classes[] = 'bp-groupblog-blog';
+				$classes[] = $groupblog_type;
+
+			}
+
+		}
+
+	}
+
+	// --<
+	return $classes;
+
+}
+endif; // commentpress_bp_blog_css_class
+
+
+
+if ( ! function_exists( 'commentpress_bp_group_css_class' ) ):
+/**
+ * Update BuddyPress Groups Directory group item CSS class with groupblog type.
+ *
+ * @since 3.3
+ *
+ * @param array $classes The existing classes
+ * @param array $classes The overridden classes
+ */
+function commentpress_bp_group_css_class( $classes ) {
+
+	// only add classes when bp-groupblog is active
+	if ( function_exists( 'get_groupblog_group_id' ) ) {
+
+		// get group blogtype
+		$groupblog_type = groups_get_groupmeta( bp_get_group_id(), 'groupblogtype' );
+
+		// did we get one?
+		if ( $groupblog_type ) {
+
+			// add class
+			$classes[] = $groupblog_type;
+
+		}
+
+	}
+
+	// --<
+	return $classes;
+
+}
+endif; // commentpress_bp_group_css_class
+
+
+
 if ( ! function_exists( 'commentpress_prefix_bp_templates' ) ):
 /**
  * Prefixes BuddyPress pages with the div wrappers that CommentPress needs.

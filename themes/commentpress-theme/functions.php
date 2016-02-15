@@ -18,10 +18,12 @@ require_once( COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/includes/them
 
 /**
  * Set the content width based on the theme's design and stylesheet.
- * This seems to be a WordPress requirement - though rather dumb in the
- * context of our theme, which has a percentage-based default width.
- * I have arbitrarily set it to the default content-width when viewing
- * on a 1280px-wide screen.
+ *
+ * This seems to be a WordPress requirement - though rather dumb in the context
+ * of our theme, which has a percentage-based default width.
+ *
+ * I have arbitrarily set it to the default content-width when viewing on a
+ * 1280px-wide screen.
  */
 if ( !isset( $content_width ) ) { $content_width = 588; }
 
@@ -29,7 +31,9 @@ if ( !isset( $content_width ) ) { $content_width = 588; }
 
 if ( ! function_exists( 'commentpress_setup' ) ):
 /**
- * Set up CommentPress Default theme
+ * Set up CommentPress Default theme.
+ *
+ * @since 3.0
  *
  * @return void
  */
@@ -47,13 +51,11 @@ function commentpress_setup() {
 
 		// allow custom header
 		add_theme_support( 'custom-header', array(
-
 			'default-text-color' => 'eeeeee',
 			'width' => apply_filters( 'cp_header_image_width', 940 ),
 			'height' => apply_filters( 'cp_header_image_height', 67 ),
 			'wp-head-callback' => 'commentpress_header',
 			'admin-head-callback' => 'commentpress_admin_header'
-
 		) );
 
 	} else {
@@ -125,47 +127,29 @@ add_action( 'after_setup_theme', 'commentpress_setup' );
 
 if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ):
 /**
- * Add front-end print styles
+ * Add CommentPress front-end styles.
+ *
+ * @since 3.0
  *
  * @return void
  */
 function commentpress_enqueue_scripts_and_styles() {
 
-	// -------------------------------------------------------------------------
-	// Stylesheets
-	// -------------------------------------------------------------------------
-
-	// register reset
-	wp_register_style(
-		'cp_reset_css', // unique id
-		get_template_directory_uri() . '/assets/css/reset.css', // src
-		array(), // dependencies
-		COMMENTPRESS_VERSION, // version
-		'all' // media
-	);
-
-	// init
-	$dev = '.min';
-
 	// check for dev
+	$dev = '.min';
 	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
 		$dev = '';
 	}
 
-	// add typography css
-	wp_enqueue_style(
-		'cp_typography_css',
-		get_template_directory_uri() . '/assets/css/typography' . $dev . '.css',
-		array( 'cp_reset_css' ),
-		COMMENTPRESS_VERSION, // version
-		'all' // media
-	);
+	// -------------------------------------------------------------------------
+	// Stylesheets
+	// -------------------------------------------------------------------------
 
 	// add layout css
 	wp_enqueue_style(
 		'cp_layout_css',
-		get_template_directory_uri() . '/assets/css/layout' . $dev . '.css',
-		array( 'cp_typography_css' ),
+		get_template_directory_uri() . '/assets/css/screen-default' . $dev . '.css',
+		array(),
 		COMMENTPRESS_VERSION, // version
 		'all' // media
 	);
@@ -255,33 +239,27 @@ add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_scripts_and_styles', 100
 
 if ( ! function_exists( 'commentpress_enqueue_print_styles' ) ):
 /**
- * Add CommentPress print stylesheet
+ * Add CommentPress print stylesheet.
+ *
+ * @since 3.0
  *
  * @return void
  */
 function commentpress_enqueue_print_styles() {
 
-	// init
-	$dev = '.min';
-
 	// check for dev
+	$dev = '.min';
 	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
 		$dev = '';
 	}
 
-	// -------------------------------------------------------------------------
-	// Print stylesheet included last
-	// -------------------------------------------------------------------------
-
 	// add print css
 	wp_enqueue_style(
-
 		'cp_print_css',
 		get_template_directory_uri() . '/assets/css/print' . $dev . '.css',
 		array( 'cp_layout_css' ),
 		COMMENTPRESS_VERSION, // version
 		'print'
-
 	);
 
 }
@@ -292,55 +270,30 @@ add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_print_styles', 101 );
 
 
 
-if ( ! function_exists( 'commentpress_enqueue_bp_theme_styles' ) ):
+if ( ! function_exists( 'commentpress_buddypress_support' ) ):
 /**
- * Enqueue BuddyPress front-end styles
+ * Enable support for BuddyPress.
+ *
+ * @since 3.3
  *
  * @return void
  */
-function commentpress_enqueue_bp_theme_styles() {
+function commentpress_buddypress_support() {
 
-	// add an action to include bp-overrides when buddypress is active
-	add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_theme_styles', 101 );
+	// add filter for activity class
+	add_filter( 'bp_get_activity_css_class', 'commentpress_bp_activity_css_class' );
+
+	// add filter for blogs class
+	add_filter( 'bp_get_blog_class', 'commentpress_bp_blog_css_class' );
+
+	// add filter for groups class
+	add_filter( 'bp_get_group_class', 'commentpress_bp_group_css_class' );
 
 }
-endif; // commentpress_enqueue_bp_theme_styles
+endif; // commentpress_buddypress_support
 
 // add an action for the above
-add_action( 'bp_setup_globals', 'commentpress_enqueue_theme_styles' );
-
-
-
-if ( ! function_exists( 'commentpress_enqueue_theme_styles' ) ):
-/**
- * Add BuddyPress front-end styles
- *
- * @return void
- */
-function commentpress_enqueue_theme_styles() {
-
-	// kick out on admin
-	if ( is_admin() ) { return; }
-
-	// init
-	$dev = '.min';
-
-	// check for dev
-	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
-		$dev = '';
-	}
-
-	// add our own BuddyPress css
-	wp_enqueue_style(
-		'cp_buddypress_css',
-		get_template_directory_uri() . '/assets/css/bp-overrides' . $dev . '.css',
-		array( 'cp_layout_css' ),
-		COMMENTPRESS_VERSION, // version
-		'all' // media
-	);
-
-}
-endif; // commentpress_enqueue_theme_styles
+add_action( 'bp_setup_globals', 'commentpress_buddypress_support' );
 
 
 
@@ -487,13 +440,8 @@ function commentpress_page_navigation( $with_comments = false ) {
 	// declare access to globals
 	global $commentpress_core;
 
-	// is the plugin active?
-	if ( !is_object( $commentpress_core ) ) {
-
-		// --<
-		return;
-
-	}
+	// bail if the plugin is not active
+	if ( !is_object( $commentpress_core ) ) return;
 
 	// init formatting
 	$before_next = '<li class="alignright">';
@@ -600,7 +548,6 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 		'order' => 'ASC',
 		'post_type' => $page_or_post,
 	) );
-	//print_r( $all_comments ); //die();
 
 	// kick out if none
 	if ( count( $all_comments ) == 0 ) return $html;
@@ -623,12 +570,6 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 		}
 
 	}
-	/*
-	if ( $page_or_post == 'post' ) {
-		print_r( $post_comment_counts ); die();
-		print_r( $posts_with ); die();
-	}
-	*/
 
 	// kick out if none
 	if ( count( $posts_with ) == 0 ) return $html;
@@ -640,7 +581,6 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 		'post_type' => $page_or_post,
 		'include' => $posts_with,
 	) );
-	//print_r( $posts ); die();
 
 	// kick out if none
 	if ( count( $posts ) == 0 ) return $html;
@@ -755,7 +695,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ):
 /**
  * All-comments page display function
  *
- * @return str $_page_content The page content
+ * @return str $page_content The page content
  */
 function commentpress_get_all_comments_page_content() {
 
@@ -769,43 +709,43 @@ function commentpress_get_all_comments_page_content() {
 	global $commentpress_core;
 
 	// set default
-	$pagetitle = apply_filters(
+	$page_title = apply_filters(
 		'cp_page_all_comments_title',
 		__( 'All Comments', 'commentpress-core' )
 	);
 
 	// set title
-	$_page_content = '<h2 class="post_title">' . $pagetitle . '</h2>' . "\n\n";
+	$page_content = '<h2 class="post_title">' . $page_title . '</h2>' . "\n\n";
 
 	// get page or post
 	$page_or_post = $commentpress_core->get_list_option();
 
 	// set default
-	$blogtitle = apply_filters(
+	$blog_title = apply_filters(
 		'cp_page_all_comments_blog_title',
 		__( 'Comments on the Blog', 'commentpress-core' )
 	);
 
 	// set default
-	$booktitle = apply_filters(
+	$book_title = apply_filters(
 		'cp_page_all_comments_book_title',
 		__( 'Comments on the Pages', 'commentpress-core' )
 	);
 
 	// get title
-	$title = ( $page_or_post == 'page' ) ? $booktitle : $blogtitle;
+	$title = ( $page_or_post == 'page' ) ? $book_title : $blog_title;
 
 	// get data
-	$_data = commentpress_get_all_comments_content( $page_or_post );
+	$data = commentpress_get_all_comments_content( $page_or_post );
 
 	// did we get any?
-	if ( $_data != '' ) {
+	if ( $data != '' ) {
 
 		// set title
-		$_page_content .= '<p class="comments_hl">' . $title . '</p>' . "\n\n";
+		$page_content .= '<p class="comments_hl">' . $title . '</p>' . "\n\n";
 
 		// set data
-		$_page_content .= $_data . "\n\n";
+		$page_content .= $data . "\n\n";
 
 	}
 
@@ -813,24 +753,24 @@ function commentpress_get_all_comments_page_content() {
 	$other_type = ( $page_or_post == 'page' ) ? 'post': 'page';
 
 	// get title
-	$title = ( $page_or_post == 'page' ) ? $blogtitle : $booktitle;
+	$title = ( $page_or_post == 'page' ) ? $blog_title : $book_title;
 
 	// get data
-	$_data = commentpress_get_all_comments_content( $other_type );
+	$data = commentpress_get_all_comments_content( $other_type );
 
 	// did we get any?
-	if ( $_data != '' ) {
+	if ( $data != '' ) {
 
 		// set title
-		$_page_content .= '<p class="comments_hl">' . $title . '</p>' . "\n\n";
+		$page_content .= '<p class="comments_hl">' . $title . '</p>' . "\n\n";
 
 		// set data
-		$_page_content .= $_data . "\n\n";
+		$page_content .= $data . "\n\n";
 
 	}
 
 	// --<
-	return $_page_content;
+	return $page_content;
 
 }
 endif; // commentpress_get_all_comments_page_content
@@ -850,7 +790,7 @@ function commentpress_add_loginout_id( $link ) {
 	if ( false !== strstr( $link, admin_url() ) ) {
 
 		// site admin
-		$_id = 'btn_site_admin';
+		$id = 'btn_site_admin';
 
 	} else {
 
@@ -858,19 +798,19 @@ function commentpress_add_loginout_id( $link ) {
 		if ( is_user_logged_in() ) {
 
 			// logout
-			$_id = 'btn_logout';
+			$id = 'btn_logout';
 
 		} else {
 
 			// login
-			$_id = 'btn_login';
+			$id = 'btn_login';
 
 		}
 
 	}
 
 	// add css
-	$link = str_replace( '<a ', '<a id="' . $_id . '" class="button" ', $link );
+	$link = str_replace( '<a ', '<a id="' . $id . '" class="button" ', $link );
 
 	// --<
 	return $link;

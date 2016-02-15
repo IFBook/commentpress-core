@@ -18,10 +18,12 @@ require_once( COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/includes/them
 
 /**
  * Set the content width based on the theme's design and stylesheet.
- * This seems to be a WordPress requirement - though rather dumb in the
- * context of our theme, which has a percentage-based default width.
- * I have arbitrarily set it to the default content-width when viewing
- * on a 1280px-wide screen.
+ *
+ * This seems to be a WordPress requirement - though rather dumb in the context
+ * of our theme, which has a percentage-based default width.
+ *
+ * I have arbitrarily set it to the default content-width when viewing on a
+ * 1280px-wide screen.
  */
 if ( !isset( $content_width ) ) { $content_width = 525; }
 
@@ -29,7 +31,9 @@ if ( !isset( $content_width ) ) { $content_width = 525; }
 
 if ( ! function_exists( 'commentpress_setup' ) ):
 /**
- * Set up CommentPress Modern theme
+ * Set up CommentPress Modern theme.
+ *
+ * @since 3.0
  *
  * @return void
  */
@@ -163,16 +167,16 @@ add_action( 'after_setup_theme', 'commentpress_setup' );
 
 if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ):
 /**
- * Add CommentPress front-end styles
+ * Add CommentPress front-end styles.
+ *
+ * @since 3.0
  *
  * @return void
  */
 function commentpress_enqueue_scripts_and_styles() {
 
-	// init
-	$dev = '.min';
-
 	// check for dev
+	$dev = '.min';
 	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
 		$dev = '';
 	}
@@ -275,23 +279,19 @@ add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_scripts_and_styles', 995
 
 if ( ! function_exists( 'commentpress_enqueue_print_styles' ) ):
 /**
- * Add CommentPress print stylesheet
+ * Add CommentPress print stylesheet.
+ *
+ * @since 3.0
  *
  * @return void
  */
 function commentpress_enqueue_print_styles() {
 
-	// init
-	$dev = '.min';
-
 	// check for dev
+	$dev = '.min';
 	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
 		$dev = '';
 	}
-
-	// -------------------------------------------------------------------------
-	// Print stylesheet included last
-	// -------------------------------------------------------------------------
 
 	// add print css
 	wp_enqueue_style(
@@ -312,7 +312,9 @@ add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_print_styles', 999 );
 
 if ( ! function_exists( 'commentpress_buddypress_support' ) ):
 /**
- * Enable support for BuddyPress
+ * Enable support for BuddyPress.
+ *
+ * @since 3.3
  *
  * @return void
  */
@@ -340,19 +342,19 @@ add_action( 'bp_after_setup_theme', 'commentpress_buddypress_support' );
 
 if ( ! function_exists( 'commentpress_bp_enqueue_styles' ) ):
 /**
- * Add BuddyPress front-end styles
+ * Add BuddyPress front-end styles.
+ *
+ * @since 3.3
  *
  * @return void
  */
 function commentpress_bp_enqueue_styles() {
 
 	// kick out on admin
-	if ( is_admin() ) { return; }
-
-	// init
-	$dev = '.min';
+	if ( is_admin() ) return;
 
 	// check for dev
+	$dev = '.min';
 	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
 		$dev = '';
 	}
@@ -371,129 +373,18 @@ endif; // commentpress_bp_enqueue_styles
 
 
 
-if ( ! function_exists( 'commentpress_bp_activity_css_class' ) ):
-/**
- * Update BuddyPress activity CSS class with groupblog type
- *
- * @param str $existing_class The existing class
- * @param str $existing_class The overridden class
- */
-function commentpress_bp_activity_css_class( $existing_class ) {
-
-	// init group blog type
-	$groupblog_type = '';
-
-	// get current item
-	global $activities_template;
-	$current_activity = $activities_template->activity;
-
-	// for group activity...
-	if ( $current_activity->component == 'groups' ) {
-
-		// get group blogtype
-		$groupblog_type = groups_get_groupmeta( $current_activity->item_id, 'groupblogtype' );
-
-		// add space before if we have it
-		if ( $groupblog_type ) { $groupblog_type = ' ' . $groupblog_type; }
-
-	}
-
-	// --<
-	return $existing_class . $groupblog_type;
-
-}
-endif; // commentpress_bp_activity_css_class
-
-
-
-if ( ! function_exists( 'commentpress_bp_blog_css_class' ) ):
-/**
- * Update BuddyPress Sites Directory blog item CSS class with groupblog type
- *
- * @param array $classes The existing classes
- * @param array $classes The overridden classes
- */
-function commentpress_bp_blog_css_class( $classes ) {
-
-	// is this a groupblog?
-	if ( function_exists( 'get_groupblog_group_id' ) ) {
-
-		// access BP object
-		global $blogs_template;
-
-		// get group ID
-		$group_id = get_groupblog_group_id( $blogs_template->blog->blog_id );
-		if ( is_numeric( $group_id ) ) {
-
-			// get group blogtype
-			$groupblog_type = groups_get_groupmeta( $group_id, 'groupblogtype' );
-
-			// did we get one?
-			if ( $groupblog_type ) {
-
-				// add classes
-				$classes[] = 'bp-groupblog-blog';
-				$classes[] = $groupblog_type;
-
-			}
-
-		}
-
-	}
-
-	// --<
-	return $classes;
-
-}
-endif; // commentpress_bp_blog_css_class
-
-
-
-if ( ! function_exists( 'commentpress_bp_group_css_class' ) ):
-/**
- * Update BuddyPress Groups Directory group item CSS class with groupblog type
- *
- * @param array $classes The existing classes
- * @param array $classes The overridden classes
- */
-function commentpress_bp_group_css_class( $classes ) {
-
-	// only add classes when bp-groupblog is active
-	if ( function_exists( 'get_groupblog_group_id' ) ) {
-
-		// get group blogtype
-		$groupblog_type = groups_get_groupmeta( bp_get_group_id(), 'groupblogtype' );
-
-		// did we get one?
-		if ( $groupblog_type ) {
-
-			// add class
-			$classes[] = $groupblog_type;
-
-		}
-
-	}
-
-	// --<
-	return $classes;
-
-}
-endif; // commentpress_bp_group_css_class
-
-
-
 if ( ! function_exists( 'commentpress_enqueue_wp_fee_js' ) ):
 /**
- * Add CommentPress WP FEE Javascript
+ * Add CommentPress WP FEE Javascript.
+ *
+ * @since 3.7
  *
  * @return void
  */
 function commentpress_enqueue_wp_fee_js() {
 
-	// init
-	$dev = '.min';
-
 	// check for dev
+	$dev = '.min';
 	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
 		$dev = '';
 	}
@@ -516,7 +407,10 @@ add_action( 'commentpress_editor_include_javascript', 'commentpress_enqueue_wp_f
 
 if ( ! function_exists( 'commentpress_background' ) ):
 /**
- * Custom background colour
+ * Custom background colour.
+ *
+ * @since 3.0
+ *
  * @see _custom_background_cb()
  *
  * @return void
@@ -554,7 +448,9 @@ endif; // commentpress_background
 
 if ( ! function_exists( 'commentpress_header' ) ):
 /**
- * Custom header
+ * Custom header.
+ *
+ * @since 3.0
  *
  * @return void
  */
@@ -577,8 +473,6 @@ function commentpress_header() {
 	// allow overrides
 	$bg_colour = apply_filters( 'cp_default_header_bgcolor', $bg_colour );
 
-
-
 	// init background-image
 	$bg_image = '';
 
@@ -592,13 +486,9 @@ function commentpress_header() {
 
 	}
 
-
-
 	// get custom text colour
 	// note: this does NOT retrieve the default if not manually set in the Theme Customizer in WP3.4
 	$text_color = get_header_textcolor();
-
-
 
 	// WP3.4 seems to behave differently.
 	global $wp_version;
@@ -666,32 +556,11 @@ endif; // commentpress_header
 
 
 
-/*
-	// if no custom options for text are set, ignore
-	if ( $text_color == HEADER_TEXTCOLOR ) {
-
-		// set flag
-		$ignore = true;
-
-	}
-
-	// if blank or empty, we're hiding the title
-	if ( $text_color == 'blank' OR $text_color == '' ) {
-
-	}
-
-	// If we get this far, we have custom styles. Let's do this.
-	print_r( ( $text_color ? $text_color : 'nowt<br/>' ) );
-	print_r( HEADER_TEXTCOLOR ); die();
-
-
-*/
-
-
-
 if ( ! function_exists( 'commentpress_page_navigation' ) ):
 /**
- * Builds a list of previous and next pages, optionally with comments
+ * Builds a list of previous and next pages, optionally with comments.
+ *
+ * @since 3.0
  *
  * @param bool $with_comments True returns the next page with comments
  * @return str $nav_list The unordered list of navigation links
@@ -701,13 +570,8 @@ function commentpress_page_navigation( $with_comments = false ) {
 	// declare access to globals
 	global $commentpress_core;
 
-	// is the plugin active?
-	if ( !is_object( $commentpress_core ) ) {
-
-		// --<
-		return;
-
-	}
+	// bail if the plugin is not active
+	if ( !is_object( $commentpress_core ) ) return;
 
 	// init formatting
 	$before_next = '<li class="alignright">';
@@ -720,8 +584,6 @@ function commentpress_page_navigation( $with_comments = false ) {
 
 	// get next page
 	$next_page = $commentpress_core->nav->get_next_page( $with_comments );
-
-	//var_dump( $next_page );
 
 	// did we get a next page?
 	if ( is_object( $next_page ) ) {
@@ -798,7 +660,9 @@ endif; // commentpress_page_navigation
 
 if ( ! function_exists( 'commentpress_get_all_comments_content' ) ):
 /**
- * All-comments page display function
+ * All-comments page display function.
+ *
+ * @since 3.0
  *
  * @param str $page_or_post Retrieve either 'page' or 'post' comments
  * @return str $html The comments
@@ -818,7 +682,6 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 		'order' => 'ASC',
 		'post_type' => $page_or_post,
 	) );
-	//print_r( $all_comments ); //die();
 
 	// kick out if none
 	if ( count( $all_comments ) == 0 ) return $html;
@@ -841,12 +704,6 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 		}
 
 	}
-	/*
-	if ( $page_or_post == 'post' ) {
-		print_r( $post_comment_counts ); die();
-		print_r( $posts_with ); die();
-	}
-	*/
 
 	// kick out if none
 	if ( count( $posts_with ) == 0 ) return $html;
@@ -858,7 +715,6 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 		'post_type' => $page_or_post,
 		'include' => $posts_with,
 	) );
-	//print_r( $posts ); die();
 
 	// kick out if none
 	if ( count( $posts ) == 0 ) return $html;
@@ -971,9 +827,11 @@ endif; // commentpress_get_all_comments_content
 
 if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ):
 /**
- * All-comments page display function
+ * All-comments page display function.
  *
- * @return str $_page_content The page content
+ * @since 3.0
+ *
+ * @return str $page_content The page content
  */
 function commentpress_get_all_comments_page_content() {
 
@@ -987,43 +845,43 @@ function commentpress_get_all_comments_page_content() {
 	global $commentpress_core;
 
 	// set default
-	$pagetitle = apply_filters(
+	$page_title = apply_filters(
 		'cp_page_all_comments_title',
 		__( 'All Comments', 'commentpress-core' )
 	);
 
 	// set title
-	$_page_content = '<h2 class="post_title">' . $pagetitle . '</h2>' . "\n\n";
+	$page_content = '<h2 class="post_title">' . $page_title . '</h2>' . "\n\n";
 
 	// get page or post
 	$page_or_post = $commentpress_core->get_list_option();
 
 	// set default
-	$blogtitle = apply_filters(
+	$blog_title = apply_filters(
 		'cp_page_all_comments_blog_title',
 		__( 'Comments on the Blog', 'commentpress-core' )
 	);
 
 	// set default
-	$booktitle = apply_filters(
+	$book_title = apply_filters(
 		'cp_page_all_comments_book_title',
 		__( 'Comments on the Pages', 'commentpress-core' )
 	);
 
 	// get title
-	$title = ( $page_or_post == 'page' ) ? $booktitle : $blogtitle;
+	$title = ( $page_or_post == 'page' ) ? $book_title : $blog_title;
 
 	// get data
-	$_data = commentpress_get_all_comments_content( $page_or_post );
+	$data = commentpress_get_all_comments_content( $page_or_post );
 
 	// did we get any?
-	if ( $_data != '' ) {
+	if ( $data != '' ) {
 
 		// set title
-		$_page_content .= '<h3 class="comments_hl">' . $title . '</h3>' . "\n\n";
+		$page_content .= '<h3 class="comments_hl">' . $title . '</h3>' . "\n\n";
 
 		// set data
-		$_page_content .= $_data . "\n\n";
+		$page_content .= $data . "\n\n";
 
 	}
 
@@ -1031,19 +889,19 @@ function commentpress_get_all_comments_page_content() {
 	$other_type = ( $page_or_post == 'page' ) ? 'post': 'page';
 
 	// get title
-	$title = ( $page_or_post == 'page' ) ? $blogtitle : $booktitle;
+	$title = ( $page_or_post == 'page' ) ? $blog_title : $book_title;
 
 	// get data
-	$_data = commentpress_get_all_comments_content( $other_type );
+	$data = commentpress_get_all_comments_content( $other_type );
 
 	// did we get any?
-	if ( $_data != '' ) {
+	if ( $data != '' ) {
 
 		// set title
-		$_page_content .= '<h3 class="comments_hl">' . $title . '</h3>' . "\n\n";
+		$page_content .= '<h3 class="comments_hl">' . $title . '</h3>' . "\n\n";
 
 		// set data
-		$_page_content .= $_data . "\n\n";
+		$page_content .= $data . "\n\n";
 
 	}
 
@@ -1057,7 +915,9 @@ endif; // commentpress_get_all_comments_page_content
 
 if ( ! function_exists( 'commentpress_add_loginout_id' ) ):
 /**
- * Utility to add button css id to login links
+ * Utility to add button css id to login links.
+ *
+ * @since 3.0
  *
  * @param str $link The existing link
  * @return str $link The modified link
@@ -1068,7 +928,7 @@ function commentpress_add_loginout_id( $link ) {
 	if ( false !== strstr( $link, admin_url() ) ) {
 
 		// site admin
-		$_id = 'btn_site_admin';
+		$id = 'btn_site_admin';
 
 	} else {
 
@@ -1076,19 +936,19 @@ function commentpress_add_loginout_id( $link ) {
 		if ( is_user_logged_in() ) {
 
 			// logout
-			$_id = 'btn_logout';
+			$id = 'btn_logout';
 
 		} else {
 
 			// login
-			$_id = 'btn_login';
+			$id = 'btn_login';
 
 		}
 
 	}
 
 	// add css
-	$link = str_replace( '<a ', '<a id="' . $_id . '" ', $link );
+	$link = str_replace( '<a ', '<a id="' . $id . '" ', $link );
 
 	// --<
 	return $link;
@@ -1105,7 +965,9 @@ add_filter( 'register', 'commentpress_add_loginout_id' );
 
 if ( ! function_exists( 'commentpress_convert_link_to_button' ) ):
 /**
- * Utility to add button class to BP 1.9 notification links
+ * Utility to add button class to BP 1.9 notification links.
+ *
+ * @since 3.5
  *
  * @param str $link The existing link
  * @return str $link The modified link
@@ -1132,7 +994,9 @@ add_filter( 'bp_get_the_notification_delete_link', 'commentpress_convert_link_to
 
 if ( ! function_exists( 'commentpress_get_feature_image' ) ):
 /**
- * Show feature image
+ * Show feature image.
+ *
+ * @since 3.5
  *
  * @return void
  */
@@ -1213,8 +1077,11 @@ endif; // commentpress_get_feature_image
 
 
 /**
- * Utility to test for feature image, because has_post_thumbnail() fails sometimes
+ * Utility to test for feature image, because has_post_thumbnail() fails sometimes.
+ *
  * @see http://codex.wordpress.org/Function_Reference/has_post_thumbnail
+ *
+ * @since 3.5
  *
  * @return bool True if post has thumbnail, false otherwise
  */
