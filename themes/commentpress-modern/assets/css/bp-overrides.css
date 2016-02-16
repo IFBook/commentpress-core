@@ -1402,6 +1402,35 @@ body.registration #signup_form:after
 
 /*
 --------------------------------------------------------------------------------
+Activation page
+--------------------------------------------------------------------------------
+*/
+body.activation #content h2.post_title
+{
+	background: #761D19;
+	margin: 0;
+	font-size: 1.6em;
+	font-weight: normal;
+	font-family: sans-serif;
+	color: #fff;
+	padding: 21px 19px 15px 19px;
+	color: #fff;
+}
+
+body.activation #content h2.post_title a
+{
+	color: #fff;
+}
+
+#activate-page
+{
+	padding: 19px;
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
 Create Site page
 --------------------------------------------------------------------------------
 */
