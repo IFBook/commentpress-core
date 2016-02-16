@@ -24,24 +24,19 @@ input[type="reset"].loading,
 ul li.loading a
 {
 	background-image: url( ../images/buddypress/ajax-loader.gif );
+	background-repeat: no-repeat;
 }
 
-a.button.loading,
-input[type="submit"].loading,
-input[type="button"].loading,
-input[type="reset"].loading,
-a.button.loading:hover,
-input[type="submit"].loading:hover,
-input[type="button"].loading:hover,
-input[type="reset"].loading:hover
+#buddypress div.item-list-tabs ul li.loading a
 {
-	background-image: url( ../images/buddypress/ajax-loader.gif ), -moz-linear-gradient(top, #ffffff 0%, #e0e0e0 100%); /* FF3.6+ */
-	background-image: url( ../images/buddypress/ajax-loader.gif ), -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e0e0e0)); /* Chrome,Safari4+ */
-	background-image: url( ../images/buddypress/ajax-loader.gif ), -webkit-linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* Chrome10+,Safari5.1+ */
-	background-image: url( ../images/buddypress/ajax-loader.gif ), -o-linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* Opera11.10+ */
-	background-image: url( ../images/buddypress/ajax-loader.gif ), -ms-linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* IE10+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( enabled=0 ); /* IE6-9 */
-	background-image: url( ../images/buddypress/ajax-loader.gif ), linear-gradient(top, #ffffff 0%,#e0e0e0 100%); /* W3C */
+	background-position: 0.5em 0.8em;
+	padding-left: 2em !important;
+}
+
+#buddypress .generic-button
+{
+	display: inline-block;
+	margin-left: 0.5em;
 }
 
 /* add utility classes */
@@ -154,6 +149,7 @@ Buddypress search in top bar
 {
 	font-family: sans-serif;
 	font-size: 80%;
+	line-height: 1.6;
 }
 
 #buddypress li.groups-members-search form
@@ -616,6 +612,12 @@ List items
 	width: 65%;
 	line-height: 1;
 	padding-bottom: 0.4em;
+}
+
+#buddypress ul.item-list li div.item-title span.update
+{
+	display: block;
+	line-height: 1.6;
 }
 
 #buddypress ul.item-list li div.item-meta
@@ -1121,6 +1123,7 @@ body.create-blog #content h2.post_title a
 div.blog-button
 {
 	padding: 0;
+	line-height: 1.6;
 }
 
 #buddypress ul.item-list li div.meta
@@ -1358,7 +1361,14 @@ ul.button-nav li
 	list-style-image: none;
 }
 
+#buddypress p#bp-cover-image-feedback
+{
+	padding: 0.5em;
+	font-family: sans-serif;
+	font-size: 80%;
+}
 
+§
 
 /*
 --------------------------------------------------------------------------------
@@ -2588,6 +2598,12 @@ body.bp-docs p.currently-viewing
 	margin: 0;
 }
 
+body.bp-docs div.doc-content
+{
+	border: none;
+}
+
+/* Documents table */
 table.doctable
 {
 	margin: 0;
@@ -2642,6 +2658,73 @@ table.doctable tr td.groups-cell ul li img.avatar
 {
 	float: left;
 	margin-right: 0.4em;
+}
+
+#buddypress p.no-docs
+{
+	padding: 9px 19px 19px 19px;
+}
+
+#doc-content-textarea
+{
+	width: 99.9%;
+}
+
+#buddypress .toggle-switch,
+#buddypress .entry-content p.toggle-switch
+{
+	font-family: sans-serif;
+	font-size: 80%;
+	font-weight: bold;
+	text-transform: uppercase;
+	line-height: 1.8;
+}
+
+#buddypress .plus-or-minus,
+#buddypress .paperclip-vertical,
+#buddypress .paperclip-jaunty
+{
+	margin-top: 4px;
+}
+
+body.bp-docs span.description
+{
+	font-size: 90%;
+}
+
+body.bp-docs .doc-meta-box table,
+body.bp-docs .doc-meta-box table td
+{
+	border: none;
+}
+
+body.bp-docs .doc-meta-box table td
+{
+	vertical-align: top;
+}
+
+/* cancel button */
+body.bp-docs a.action.safe,
+body.bp-docs a.delete-doc-button
+{
+	font-size: 70%;
+	margin-left: 0.5em;
+	font-family: sans-serif;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+body.single-bp_doc .page_navigation,
+body.single-bp_doc .page_nav_lower
+{
+	display: none;
+}
+
+body.single-bp_doc .doc-meta,
+body.single-bp_doc #doc-meta,
+body.single-bp_doc .docs #comments
+{
+	padding: 19px;
 }
 
 
