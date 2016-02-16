@@ -1617,42 +1617,66 @@ Private Messages
 */
 
 /* Inbox & Sentbox */
-table#message-threads
+#buddypress table#message-threads
 {
 	margin: 0;
 	width: auto;
+	vertical-align: top;
 }
 
-table#message-threads tr td,
-table#message-threads tr th
+#buddypress table#message-threads tr th
+{
+	padding: 0 5px;
+	font-family: sans-serif;
+	text-transform: uppercase;
+	font-size: 80%;
+}
+
+#buddypress table#message-threads tr td
 {
 	padding: 10px 5px;
 }
 
-table#message-threads tr td.thread-from
+#buddypress table#message-threads img.avatar
+{
+	vertical-align: middle;
+}
+
+#buddypress table#message-threads tr td.thread-from
 {
 	font-family: sans-serif;
 	text-transform: uppercase;
-	font-size: 14px;
+	font-size: 1em;
 	font-weight: normal;
+	width: 50%;
 }
 
-table#message-threads tr td.thread-from a
+#buddypress table#message-threads tr td.thread-from a
 {
 	color: #761D19;
 }
 
-table#message-threads tr td.thread-options
+#buddypress table#message-threads tr td.thread-from span.activity
 {
-	width: 14% !important;
+	display: block;
 }
 
-table#message-threads tr td.thread-options a.button
+#buddypress table#message-threads tr td.thread-options
+{
+	width: 20% !important;
+}
+
+#buddypress table#message-threads tr td.thread-options a.button
 {
 	vertical-align: 5%;
 }
 
-table#message-threads tr td.thread-info p
+#buddypress table#message-threads .thread-info
+{
+	width: 30%;
+}
+
+#buddypress table#message-threads tr td.thread-info p
 {
 	font-family: sans-serif;
 	text-transform: uppercase;
@@ -1661,17 +1685,22 @@ table#message-threads tr td.thread-info p
 	margin: 0;
 }
 
-table#message-threads tr td.thread-info p a
+#buddypress table#message-threads tr td.thread-info p a
 {
 	color: #761D19;
 }
 
-table#message-threads tr td.thread-info p.thread-excerpt
+#buddypress table#message-threads tr td.thread-info p.thread-excerpt
 {
-	padding: 6px 0 0 0;
-	font-size: 11px;
 	font-family: Georgia, serif;
 	text-transform: none;
+}
+
+#buddypress table#message-threads tr td.thread-options a
+{
+	font-family: sans-serif;
+	text-transform: uppercase;
+	font-size: 80%;
 }
 
 div.messages-options-nav
@@ -1682,6 +1711,18 @@ div.messages-options-nav
 form#send_message_form
 {
 	padding-bottom: 19px;
+}
+
+form#send_message_form ul
+{
+	margin: 0;
+	padding: 0;
+}
+
+form#send_message_form ul li
+{
+	list-style: none;
+	list-style-image: none;
 }
 
 li span.unread-count,
@@ -1699,6 +1740,7 @@ tr.unread span.unread-count
 }
 
 
+
 /*
 --------------------------------------------------------------------------------
 Message formatting
@@ -1706,7 +1748,7 @@ Message formatting
 */
 #message-thread
 {
-	padding: 19px;
+	margin: 19px;
 }
 
 #message-recipients span.highlight
