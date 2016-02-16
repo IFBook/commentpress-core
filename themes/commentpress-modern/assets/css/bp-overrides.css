@@ -1362,122 +1362,40 @@ ul.button-nav li
 
 /*
 --------------------------------------------------------------------------------
-Activation & Registration pages
+Registration page
 --------------------------------------------------------------------------------
 */
-#register-page p
+body.registration #content h2.post_title
 {
-	font-size: 1em;
-	line-height: 1.5;
-}
-
-#register-page #signup_form,
-#activate-page
-{
-	padding: 0;
-}
-
-#register-page #signup_form p,
-#activate-page p
-{
-	font-size: 1em;
-	line-height: 1.5;
-	padding: 7px 19px 11px 19px;
-}
-
-#activate-page p.submit
-{
-	padding: 7px 0 11px 0;
-}
-
-#details-section-wrapper
-{
-	padding: 7px 19px 19px 19px;
-}
-
-/* don't add padding to paras inside divs */
-#register-page #signup_form .register-section p,
-#register-page #cp-multisite-options p
-{
-	padding: 7px 0 19px 0;
-}
-
-#register-page .standard-form label,
-#register-page .standard-form span.label
-{
-	text-transform: uppercase;
-	font-size: 0.9em;
+	background: #761D19;
+	margin: 0;
+	font-size: 1.6em;
 	font-weight: normal;
 	font-family: sans-serif;
+	color: #fff;
+	padding: 21px 19px 15px 19px;
+	color: #fff;
 }
 
-#register-page .standard-form  #blog-details-section
+body.registration #content h2.post_title a
 {
+	color: #fff;
+}
+
+body.registration #signup_form:after
+{
+	content: "";
+	display: block;
+	height: 0px;
+	clear: both;
+}
+
+#buddypress .standard-form #basic-details-section,
+#buddypress .standard-form #blog-details-section,
+#buddypress .standard-form #profile-details-section
+{
+	float: none;
 	width: auto;
-}
-
-#register-page .standard-form  #blog-details-section p
-{
-	font-size: 14px;
-	font-weight: normal;
-	font-family: sans-serif;
-	text-transform: uppercase;
-}
-
-#register-page .standard-form #basic-details-section input[type="password"]
-{
-	width: 90%;
-}
-
-#register-page .standard-form #blog-details-section input#signup_blog_url
-{
-	width: 30%;
-}
-
-#register-page .standard-form #blog-details > span.label
-{
-	font-size: 1em;
-	font-weight: normal;
-	font-family: Georgia, serif;
-	text-transform: none;
-}
-
-#register-page #cp-multisite-options
-{
-	padding: 2px 0 0 0;
-	clear: left;
-}
-
-#register-page #cp-multisite-options h4
-{
-	font-size: 1em;
-	line-height: 1.5;
-	font-weight: bold;
-	color: #000;
-	padding: 7px 0 7px 0;
-	margin: 0;
-}
-
-#register-page .register-section #cp-multisite-options p
-{
-	padding: 7px 0 0 0;
-	margin: 0;
-	font-size: 1em;
-	font-weight: normal;
-	font-family: Georgia, serif;
-	text-transform: none;
-}
-
-#register-page #cp-multisite-options h4
-{
-	font-family: sans-serif;
-	font-weight: bold;
-	font-size: 1.1em;
-	line-height: 1.5;
-	color: #761D19;
-	padding: 0;
-	margin: 0;
-	text-transform: none;
 }
 
 
@@ -1627,6 +1545,7 @@ body.create-blog #content #setupform p.error
 	display: block;
 	padding: 5px 10px;
 }
+
 
 
 /*
