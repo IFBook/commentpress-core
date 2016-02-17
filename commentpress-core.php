@@ -452,7 +452,7 @@ if ( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_sitewide' ) {
 	// activate multisite plugin
 
 	// define filename
-	$_file = 'commentpress-multisite/commentpress-mu.php';
+	$_file = 'commentpress-multisite/commentpress_mu_loader.php';
 
 	// get path
 	$_file_path = commentpress_file_is_present( $_file );
