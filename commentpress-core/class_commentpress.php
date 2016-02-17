@@ -239,19 +239,8 @@ class Commentpress_Core {
 	 */
 	public function buddypress_globals_loaded() {
 
-		// for bp-groupblog integration
-		if (
-
-			// require multisite
-			is_multisite()
-
-			// and groups
-			AND bp_is_active( 'groups' )
-
-			// and bp-groupblog
-			AND defined( 'BP_GROUPBLOG_IS_INSTALLED' )
-
-		) {
+		// test for a bp-groupblog function
+		if ( function_exists( 'get_groupblog_group_id' ) ) {
 
 			// check if this blog is a group blog
 			$group_id = get_groupblog_group_id( get_current_blog_id() );
@@ -1667,12 +1656,9 @@ class Commentpress_Core {
 		// if multisite
 		if ( is_multisite() ) {
 
-			// test script filename
-			if ( 'wp-signup.php' == basename($_SERVER['SCRIPT_FILENAME']) ) {
-
-				// override
+			// override if script filename matches signup script
+			if ( 'wp-signup.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) {
 				$is_signup = true;
-
 			}
 
 		}
