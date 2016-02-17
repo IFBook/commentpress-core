@@ -269,7 +269,6 @@ class Commentpress_Core_Workflow {
 
 		// get original text
 		$original = ( isset( $_POST['cporiginaltext'] ) ) ? $_POST['cporiginaltext'] : '';
-		//print_r( $post ); die();
 
 		// set key
 		$key = '_cp_original_text';
@@ -360,7 +359,6 @@ class Commentpress_Core_Workflow {
 
 		// get original text
 		$original = ( isset( $_POST['cporiginaltext'] ) ) ? $_POST['cporiginaltext'] : '';
-		//print_r( $post ); die();
 
 		// set key
 		$key = '_cp_original_text';

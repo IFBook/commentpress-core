@@ -211,8 +211,6 @@ class Commentpress_Multisite_Loader {
 	 */
 	public function network_activated( $plugin, $network_wide = null ) {
 
-		//print_r( array( $plugin, $network_wide ) ); die();
-
 		// if it's our plugin...
 		if ( $plugin == plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) {
 
@@ -241,8 +239,6 @@ class Commentpress_Multisite_Loader {
 
 			// was it network deactivated?
 			if ( $network_wide == true ) {
-
-				//print_r( array( $plugin, $network_wide ) ); die();
 
 				// do we want to trigger deactivation_hook for all sub-blogs?
 				// or do we want to convert each instance into a self-contained

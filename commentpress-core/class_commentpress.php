@@ -466,8 +466,8 @@ class Commentpress_Core {
 		global $wp_version;
 		if ( version_compare( $wp_version, '3.2.99999', '>=' ) ) {
 
+			// get screen object
 			$screen = get_current_screen();
-			//print_r( $screen ); die();
 
 			// use method in this class
 			$this->options_help( $screen );
@@ -994,7 +994,6 @@ class Commentpress_Core {
 		// ---------------------------------------------------------------------
 		// Page Numbering - only shown on first top level page
 		// ---------------------------------------------------------------------
-		//print_r( $this->nav->get_first_page() ); die();
 
 		// if page has no parent and it's not a special page and it's the first...
 		if (
@@ -1022,8 +1021,6 @@ class Commentpress_Core {
 				$format = get_post_meta( $post->ID, $key, true );
 
 			}
-
-			//print_r( $format ); die();
 
 			// select
 			echo '
@@ -1205,8 +1202,6 @@ class Commentpress_Core {
 	 */
 	public function options_help( $screen ) {
 
-		//print_r( $screen ); die();
-
 		// is this our screen?
 		if ( $screen->id != $this->options_page ) {
 
@@ -1347,8 +1342,6 @@ class Commentpress_Core {
 	 */
 	public function exclude_special_pages( $excluded_array ) {
 
-		//print_r( $excluded_array ); die();
-
 		// get special pages array, if it's there
 		$special_pages = $this->db->option_get( 'cp_special_pages' );
 
@@ -1374,8 +1367,6 @@ class Commentpress_Core {
 	 * @return void
 	 */
 	public function exclude_special_pages_from_admin( $query ) {
-
-		//print_r( $query ); die();
 
 		global $pagenow, $post_type;
 
@@ -1406,8 +1397,6 @@ class Commentpress_Core {
 	 * @return array $vars The modified list of variables
 	 */
 	public function update_page_counts_in_admin( $vars ) {
-
-		//print_r( $vars ); die();
 
 		global $pagenow, $post_type;
 
@@ -2395,9 +2384,6 @@ class Commentpress_Core {
 		// get post types
 		$post_types = get_post_types( $args, $output, $operator );
 
-		// trace
-		//print_r( $post_types ); die();
-
 		// did we get any?
 		if ( count( $post_types ) > 0 ) {
 
@@ -2413,9 +2399,6 @@ class Commentpress_Core {
 			}
 
 		}
-
-		// trace
-		//print_r( $_types ); die();
 
 		// --<
 		return $_types;
@@ -2610,8 +2593,6 @@ class Commentpress_Core {
 
 			// is it the old Commentpress plugin being deactivated?
 			if ( $plugin == plugin_basename( CP_PLUGIN_FILE ) ) {
-
-				//print_r( array( $plugin, $network_wide ) ); die();
 
 				// only trigger this when not network-wide
 				if ( is_null( $network_wide ) OR $network_wide == false ) {

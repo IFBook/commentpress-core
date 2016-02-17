@@ -379,8 +379,6 @@ class Commentpress_Core_Navigator {
 
 		} // end check for custom menu
 
-		//print_r( $all_pages ); die();
-
 		// --<
 		return $all_pages;
 
@@ -852,11 +850,8 @@ class Commentpress_Core_Navigator {
 					// if we have a custom menu...
 					if ( $has_nav_menu ) {
 
-						//print_r( $page_obj ); die();
-
 						// get top level menu item
 						$top_menu_item = $this->_get_top_menu_obj( $page_obj );
-						//print_r( $top_menu_item ); //die();
 
 						// since this might not be a WP_POST object...
 						if ( isset( $top_menu_item->object_id ) ) {
@@ -919,8 +914,6 @@ class Commentpress_Core_Navigator {
 				$num++;
 
 			}
-
-			//print_r( $this->page_numbers ); die();
 
 		}
 
@@ -1226,7 +1219,6 @@ class Commentpress_Core_Navigator {
 
 			// get the menu objects and store for later
 			$this->menu_objects = wp_get_nav_menu_items( $menu->term_id, $args );
-			//print_r( $this->menu_objects ); die();
 
 			// if we get some
 			if ( $this->menu_objects ) {
@@ -1284,13 +1276,6 @@ class Commentpress_Core_Navigator {
 					}
 
 				}
-
-				/*
-				print_r( array(
-					'menu_items' => $menu_items,
-					'pages' => $pages,
-				) ); die();
-				*/
 
 			} // end check for menu items
 
@@ -1434,12 +1419,8 @@ class Commentpress_Core_Navigator {
 
 		}
 
-		//print_r( $menu_obj ); //die();
-
 		// get parent item
 		$parent_obj = $this->_get_menu_item_parent( $menu_obj );
-
-		//print_r( $parent_obj ); //die();
 
 		// is the top item?
 		if ( $parent_obj->menu_item_parent !== 0 ) {
@@ -1448,8 +1429,6 @@ class Commentpress_Core_Navigator {
 			return $this->_get_top_menu_obj( $parent_obj );
 
 		}
-
-		//print_r( $parent_obj ); die();
 
 		// yes -> return the object
 		return $parent_obj;

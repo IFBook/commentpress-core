@@ -1347,9 +1347,6 @@ class Commentpress_Core_Database {
 	 */
 	public function save_page_meta_authenticated( $post_obj ) {
 
-		//print_r( '$post_obj->post_type: ' . $post_obj->post_type ); die();
-		//print_r( '$post_obj->ID: ' . $post_obj->ID ); die();
-
 		// if no post, kick out
 		if ( ! $post_obj ) return false;
 
@@ -1383,9 +1380,6 @@ class Commentpress_Core_Database {
 
 		// find and save the data
 		$_data = ( isset( $_POST['cp_title_visibility'] ) ) ? $_POST['cp_title_visibility'] : 'show';
-
-		//print_r( '$_data: ' . $_data ); die();
-		//print_r( $post ); die();
 
 		// set key
 		$key = '_cp_title_visibility';
@@ -1424,9 +1418,6 @@ class Commentpress_Core_Database {
 
 		// find and save the data
 		$_data = ( isset( $_POST['cp_page_meta_visibility'] ) ) ? $_POST['cp_page_meta_visibility'] : 'hide';
-
-		//print_r( '$_data: ' . $_data ); die();
-		//print_r( $post ); die();
 
 		// set key
 		$key = '_cp_page_meta_visibility';
@@ -1483,8 +1474,6 @@ class Commentpress_Core_Database {
 
 				// get the data
 				$_data = $_POST['cp_number_format'];
-
-				//print_r( $post->ID ); die();
 
 				// if the custom field already has a value...
 				if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
@@ -1628,7 +1617,6 @@ class Commentpress_Core_Database {
 
 
 		// we need to make sure this only runs once
-		//print_r( $this->saved_post === false ? 'f' : 't' ); die();
 		if ( $this->saved_post === false ) {
 			$this->saved_post = true;
 		} else {
@@ -1725,10 +1713,6 @@ class Commentpress_Core_Database {
 	 */
 	public function save_post_meta_authenticated( $post_obj ) {
 
-		//print_r( 'data: ' . $_data ); die();
-		//print_r( '$post_obj->post_type: ' . $post_obj->post_type ); die();
-		//print_r( '$post_obj->ID: ' . $post_obj->ID ); die();
-
 		// if no post, kick out
 		if ( ! $post_obj ) return false;
 
@@ -1764,13 +1748,6 @@ class Commentpress_Core_Database {
 
 		// get the data
 		$_data = ( isset( $_POST['cp_post_type_override'] ) ) ? $_POST['cp_post_type_override'] : '';
-
-		/*
-		print_r( array(
-			'post' => $post,
-			'_data' => $_data,
-		) ); die();
-		*/
 
 		// set key
 		$key = '_cp_post_type_override';
@@ -1814,9 +1791,6 @@ class Commentpress_Core_Database {
 			$_data = ( isset( $_POST['cp_sidebar_default'] ) ) ?
 					 $_POST['cp_sidebar_default'] :
 					 $this->option_get( 'cp_sidebar_default' );
-
-			//print_r( '$_data: ' . $_data ); die();
-			//print_r( $post ); die();
 
 			// set key
 			$key = '_cp_sidebar_default';
@@ -3190,7 +3164,6 @@ class Commentpress_Core_Database {
 		);
 
 		// add post-specific stuff
-		//print_r( $post ); die();
 
 		// default page title
 		$prefix = __( 'Copy of ', 'commentpress-core' );
@@ -4098,8 +4071,6 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 			// get header background image...
 			if ( isset( $theme_mods['header_image'] ) ) {
-
-				//print_r( 'here' ); die();
 
 				// is it a Commentpress one?
 				if ( strstr( $theme_mods['header_image'], 'style/images/header/caves.jpg' ) !== false ) {

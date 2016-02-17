@@ -553,7 +553,6 @@ HELPTEXT;
 
 		// have we set the option?
 		$list_style = $this->db->option_get( 'cp_show_extended_toc' );
-		//print_r( $list_style ); die();
 
 		// if not set or set to 'off'
 		if ( $list_style === false OR $list_style == '0' ) {
@@ -588,9 +587,6 @@ HELPTEXT;
 				// init output
 				$_html = '';
 
-				//print_r( $item ); die();
-				//setup_postdata( $item );
-
 				// get comment count for that post
 				$count = count( $this->db->get_approved_comments( $item->ID ) );
 
@@ -599,7 +595,6 @@ HELPTEXT;
 
 					// get multiple authors
 					$authors = get_coauthors( $item->ID );
-					//print_r( $authors ); die();
 
 					// if we get some
 					if ( ! empty( $authors ) ) {
@@ -1209,13 +1204,6 @@ HELPTEXT;
 				break;
 
 		}
-
-		/*
-		print_r( array(
-			't' => $text_signature,
-			'p' => $para_tag
-		) );
-		*/
 
 		// --<
 		return $para_tag;

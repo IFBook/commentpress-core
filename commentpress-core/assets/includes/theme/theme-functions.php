@@ -322,8 +322,6 @@ function commentpress_get_header_image() {
 			'html' => true
 		);
 
-		//print_r( $avatar_options ); die();
-
 		// add filter for the function above
 		add_filter( 'bp_core_avatar_url', 'commentpress_fix_bp_core_avatar_url', 10, 1 );
 
@@ -362,7 +360,6 @@ function commentpress_get_header_image() {
 
 	// get the new options
 	$options = get_option( 'commentpress_theme_settings' );
-	//print_r( $options ); die();
 
 	// test for our new theme customizer option
 	if ( isset( $options['cp_inline_header_image'] ) AND ! empty( $options['cp_inline_header_image'] ) ) {
@@ -621,7 +618,6 @@ function commentpress_get_body_classes( $raw = false ) {
 
 		// get type
 		$_type = $commentpress_core->db->option_get( 'cp_blog_type' );
-		//print_r( $_type ); die();
 
 		// get workflow
 		$_workflow = $commentpress_core->db->option_get( 'cp_blog_workflow' );
@@ -1033,7 +1029,6 @@ function commentpress_get_user_link( &$user ) {
 
 		// get author url
 		$url = get_author_posts_url( $user->ID );
-		//print_r( $url ); die();
 
 		// WP sometimes leaves 'http://' or 'https://' in the field
 		if (  $url == 'http://'  OR $url == 'https://' ) {
@@ -1277,7 +1272,6 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 
 				// get user details
 				$user = get_userdata( $comment->user_id );
-				//print_r( $user->display_name ); die();
 
 				// get user link
 				$user_link = commentpress_get_user_link( $user );
@@ -1405,7 +1399,6 @@ function commentpress_get_comments_by_content() {
 		'orderby' => 'comment_author, comment_post_ID, comment_date',
 		'order' => 'ASC',
 	) );
-	//print_r( $all_comments ); //die();
 
 	// kick out if none
 	if ( count( $all_comments ) == 0 ) return $html;
@@ -1434,8 +1427,6 @@ function commentpress_get_comments_by_content() {
 		*/
 
 	}
-	//print_r( $post_comment_counts ); //die();
-	//print_r( $authors_with ); die();
 
 	// kick out if none
 	if ( count( $authors_with ) == 0 ) return $html;
@@ -1718,7 +1709,6 @@ function commentpress_get_comment_activity_item( $comment ) {
 
 		// get user details
 		$user = get_userdata( $comment->user_id );
-		//print_r( $user->display_name ); die();
 
 		// get user link
 		$user_link = commentpress_get_user_link( $user );
@@ -1758,13 +1748,6 @@ function commentpress_get_comment_activity_item( $comment ) {
 
 		// is it the same page, if paged?
 		if ( $multipage ) {
-
-			/*
-			print_r( array(
-				'multipage' => $multipage,
-				'page' => $page
-			) ); die();
-			*/
 
 			// if it has a text sig
 			if (
@@ -1869,7 +1852,6 @@ function commentpress_get_comments_by_para() {
 
 	// get approved comments for this post, sorted comments by text signature
 	$comments_sorted = $commentpress_core->get_sorted_comments( $post->ID );
-	//print_r( $comments_sorted ); die();
 
 	// get text signatures
 	//$text_sigs = $commentpress_core->db->get_text_sigs();
@@ -1974,9 +1956,8 @@ function commentpress_get_comments_by_para() {
 					// define default phrase
 					$paragraph_text = __( 'the whole page', 'commentpress-core' );
 
+					// check post type
 					$current_type = get_post_type();
-					//print_r( $current_type ); die();
-
 					switch( $current_type ) {
 
 						// we can add more of these if needed

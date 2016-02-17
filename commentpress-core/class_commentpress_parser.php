@@ -430,7 +430,6 @@ class Commentpress_Core_Parser {
 				// if we fall through to here, treat it like it's just a <p> tag above.
 				// This will fail if there are custom attributes set in the HTML editor,
 				// but I'm not sure how to handle that without migrating to an XML parser
-				//print_r( $tag ); //die();
 
 			}
 
@@ -523,25 +522,7 @@ class Commentpress_Core_Parser {
 				$limit
 			);
 
-			/*
-			error_log( print_r( array(
-				//'p' => $paragraph,
-				'p' => $prepared_para,
-				'b' => $block,
-				'c' => $content
-			), true ) );
-			*/
-
 		}
-
-		/*
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			//'d' => $duplicates,
-			'text_signatures' => $this->text_signatures,
-			'content' => $content
-		), true ) );
-		*/
 
 		// --<
 		return $content;
@@ -785,11 +766,6 @@ class Commentpress_Core_Parser {
 
 		}
 
-		//print_r( $this->text_signatures ); //die();
-		//print_r( $duplicates ); die();
-		//print_r( $content_array ); die();
-		//die();
-
 		// rejoin and exclude quicktag
 		$content = implode( '', $content_array );
 
@@ -839,12 +815,6 @@ class Commentpress_Core_Parser {
 
 		// do replacement
 		$content = preg_replace( $pattern, $replace, $content );
-
-		/*
-		print_r( array(
-			'content' => $content,
-		) ); die();
-		*/
 
 		// explode by <span>
 		$output_array = explode( '<span class="cp-line">', $content );
@@ -955,10 +925,6 @@ class Commentpress_Core_Parser {
 			}
 
 		}
-
-		//print_r( $this->text_signatures ); //die();
-		//print_r( $duplicates ); die();
-		//die();
 
 		// store text sigs array in global
 		$this->parent_obj->db->set_text_sigs( $this->text_signatures );
@@ -1091,8 +1057,6 @@ class Commentpress_Core_Parser {
 		// wp_texturize() does an okay job with creating paragraphs, but comments tend
 		// to screw things up. let's try and fix...
 
-		//print_r( array( 'before' => $content ) );
-
 		// first, replace all instances of '   <!--commentblock-->   ' with
 		// '<p><!--commentblock--></p>\n'
 		$content = preg_replace(
@@ -1175,8 +1139,6 @@ class Commentpress_Core_Parser {
 			'',
 			$content
 		);
-
-		//print_r( array( 'after' => $content ) ); die();
 
 		// explode by <p> version to temp array
 		$output_array = explode( '<p><' . '!--commentblock--></p>', $content );
@@ -1402,8 +1364,6 @@ class Commentpress_Core_Parser {
 		------------------------------------------------------------------------
 		*/
 
-		//print_r( $content ); die();
-
 		// look for inline <!--more--> span
 		if ( preg_match('/<span id="more-(.*?)?' . '><\/span><br \/>/', $content, $matches) ) {
 
@@ -1474,8 +1434,6 @@ class Commentpress_Core_Parser {
 		if ( ! empty($matches[1]) ) {
 			//$more_link_text = strip_tags(wp_kses_no_null(trim($matches[1])));
 		}
-
-		//print_r( $content ); die();
 
 		// --<
 		return $content;
@@ -1594,13 +1552,6 @@ class Commentpress_Core_Parser {
 		// do replacement
 		$content = preg_replace( $pattern, $replace, $content );
 
-		/*
-		print_r( array(
-			'c' => $content
-		) );
-		die();
-		*/
-
 		// --<
 		return $content;
 
@@ -1637,14 +1588,6 @@ class Commentpress_Core_Parser {
 
 		}
 
-		/*
-		print_r( array(
-			'c' => $content,
-			//'new' => $_content,
-			'm' => $matches,
-		) ); die();
-		*/
-
 		// --<
 		return $content;
 
@@ -1668,11 +1611,9 @@ class Commentpress_Core_Parser {
 
 		// filter out any multipage comments not on this page
 		$comments = $this->_multipage_comment_filter( $comments );
-		//print_r( $comments ); die();
 
 		// get our signatures
 		$_sigs = $this->parent_obj->db->get_text_sigs();
-		//print_r( $_sigs ); die();
 
 		// assign comments to text signatures
 		$_assigned = $this->_assign_comments( $comments, $_sigs );
@@ -1728,8 +1669,6 @@ class Commentpress_Core_Parser {
 			$_comments[ 'PINGS_AND_TRACKS' ] = array();
 
 		}
-
-		//print_r( $_comments ); die();
 
 		// --<
 		return $_comments;
@@ -1821,14 +1760,6 @@ class Commentpress_Core_Parser {
 		if( ! is_array( $comments ) OR empty( $comments ) ) {
 			return $assigned;
 		}
-
-		/*
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'comments' => $comments,
-			'text_signatures' => $this->text_signatures,
-		), true ) );
-		*/
 
 		// run through our comments...
 		foreach( $comments AS $comment ) {

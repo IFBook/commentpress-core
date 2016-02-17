@@ -853,8 +853,6 @@ class Commentpress_Multisite_Admin {
 			array( $this, 'options_page' )
 		);
 
-		//print_r( $this->options_page );die();
-
 		// add scripts and styles
 		//add_action( 'admin_print_scripts-' . $this->options_page, array( $this, 'admin_js' ) );
 		//add_action( 'admin_print_styles-' . $this->options_page, array( $this, 'admin_css' ) );

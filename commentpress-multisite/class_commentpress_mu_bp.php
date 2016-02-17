@@ -201,9 +201,6 @@ class Commentpress_Multisite_Buddypress {
 			// get comment
 			$comment = get_comment( $args[0] );
 
-			//print_r( array( 'comment' => $comment, 'user' => $user_id ) ); die();
-			//print_r( array( 'caps' => $caps, 'cap' => $cap ) ); die();
-
 			// is the user the same as the comment author?
 			if ( $comment->user_id == $user_id ) {
 
@@ -229,8 +226,6 @@ class Commentpress_Multisite_Buddypress {
 	 * @return bool $approved Modified approval value. True if the comment is approved, false otherwise
 	 */
 	public function pre_comment_approved( $approved, $commentdata ) {
-
-		//print_r( $commentdata ); die();
 
 		// do we have groupblogs?
 		if ( function_exists( 'get_groupblog_group_id' ) ) {
@@ -415,9 +410,6 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function group_custom_comment_activity( $activity ) {
 
-		//trigger_error( print_r( array( 'comment activity BEFORE' => $activity ), true ), E_USER_ERROR ); die();
-		//print_r( array( 'comment activity BEFORE' => $activity ) ); //die();
-
 		// only deal with comments
 		if ( ( $activity->type != 'new_blog_comment' ) ) return;
 
@@ -524,11 +516,9 @@ class Commentpress_Multisite_Buddypress {
 
 		// get the comment
 		$comment = get_comment( $activity->secondary_item_id );
-		//print_r( $comment ); //die();
 
 		// get the post
 		$post = get_post( $comment->comment_post_ID );
-		//print_r( $post ); die();
 
 		// was it a registered user?
 		if ($comment->user_id != '0') {
@@ -654,8 +644,6 @@ class Commentpress_Multisite_Buddypress {
 		$activity->type = $type;
 
 		// note: BP seemingly runs content through wp_filter_kses (sad face)
-		//trigger_error( print_r( array( 'comment activity AFTER' => $activity ), true ), E_USER_ERROR ); die();
-		//print_r( array( 'comment activity AFTER' => $activity ) ); //die();
 
 		// prevent from firing again
 		remove_action( 'bp_activity_before_save', array( $this, 'group_custom_comment_activity' ) );
@@ -675,8 +663,6 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function groupblog_custom_comment_meta( $activity ) {
 
-		print_r( array( 'a' => $activity ) );
-
 		// only deal with comments
 		if ( ( $activity->type != 'new_groupblog_comment' ) ) return $activity;
 
@@ -685,10 +671,7 @@ class Commentpress_Multisite_Buddypress {
 
 		// set a meta value for the blog type of the post
 		$meta_value = $this->_get_groupblog_type();
-		print_r( array( 'a' => $activity ) );
-		print_r( array( 'm' => $meta_value ) );
 		$result = bp_activity_update_meta( $activity->id, 'groupblogtype', 'groupblogtype-' . $meta_value );
-		print_r( array( 'r' => ( ( $result === true ) ? 't' : 'f' ) ) ); die();
 
 		// prevent from firing again
 		remove_action( 'bp_activity_after_save', array( $this, 'groupblog_custom_comment_meta' ) );
@@ -769,7 +752,6 @@ class Commentpress_Multisite_Buddypress {
 
 			// get multiple authors
 			$authors = get_coauthors();
-			//print_r( $authors ); die();
 
 			// if we get some
 			if ( ! empty( $authors ) ) {
@@ -858,8 +840,6 @@ class Commentpress_Multisite_Buddypress {
 
 		// CMW: assume groupblog_post is intended
 		$activity->type = 'new_groupblog_post';
-
-		//print_r( array( 'a2' => $activity ) ); die();
 
 		// prevent from firing again
 		remove_action( 'bp_activity_before_save', array( $this, 'groupblog_custom_post_activity' ) );
