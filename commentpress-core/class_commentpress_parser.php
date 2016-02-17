@@ -500,25 +500,24 @@ class CommentpressCoreParser {
 			);
 
 			/*
-			print_r( array(
+			error_log( print_r( array(
 				//'p' => $paragraph,
 				'p' => $prepared_para,
 				'b' => $block,
 				'c' => $content
-			) ); //die();
+			), true ) );
 			*/
 
 		}
 
 		/*
-		print_r( array(
+		error_log( print_r( array(
+			'method' => __METHOD__,
 			//'d' => $duplicates,
-			't' => $this->text_signatures,
-			'c' => $content
-		) );
+			'text_signatures' => $this->text_signatures,
+			'content' => $content
+		), true ) );
 		*/
-		//die();
-		//*/
 
 		// --<
 		return $content;
@@ -1656,21 +1655,21 @@ class CommentpressCoreParser {
 		// NB: $_assigned is an array with sigs as keys and array of comments as value
 		// it may be empty...
 
+		// if we have any comments on the whole page...
+		if ( isset( $_assigned[ 'WHOLE_PAGE_OR_POST_COMMENTS' ] ) ) {
+
+			// add them first
+			$_comments[ 'WHOLE_PAGE_OR_POST_COMMENTS' ] = $_assigned[ 'WHOLE_PAGE_OR_POST_COMMENTS' ];
+
+		} else {
+
+			// append empty array
+			$_comments[ 'WHOLE_PAGE_OR_POST_COMMENTS' ] = array();
+
+		}
+
 		// we must have text signatures...
 		if ( ! empty( $_sigs ) ) {
-
-			// if we have any comments on the whole page...
-			if ( isset( $_assigned[ 'WHOLE_PAGE_OR_POST_COMMENTS' ] ) ) {
-
-				// add them first
-				$_comments[ 'WHOLE_PAGE_OR_POST_COMMENTS' ] = $_assigned[ 'WHOLE_PAGE_OR_POST_COMMENTS' ];
-
-			} else {
-
-				// append empty array
-				$_comments[ 'WHOLE_PAGE_OR_POST_COMMENTS' ] = array();
-
-			}
 
 			// then add  in the order of our text signatures
 			foreach( $_sigs AS $text_signature ) {
@@ -1690,18 +1689,18 @@ class CommentpressCoreParser {
 
 			}
 
-			// if we have any pingbacks or trackbacks...
-			if ( isset( $_assigned[ 'PINGS_AND_TRACKS' ] ) ) {
+		}
 
-				// add them last
-				$_comments[ 'PINGS_AND_TRACKS' ] = $_assigned[ 'PINGS_AND_TRACKS' ];
+		// if we have any pingbacks or trackbacks...
+		if ( isset( $_assigned[ 'PINGS_AND_TRACKS' ] ) ) {
 
-			} else {
+			// add them last
+			$_comments[ 'PINGS_AND_TRACKS' ] = $_assigned[ 'PINGS_AND_TRACKS' ];
 
-				// append empty array
-				$_comments[ 'PINGS_AND_TRACKS' ] = array();
+		} else {
 
-			}
+			// append empty array
+			$_comments[ 'PINGS_AND_TRACKS' ] = array();
 
 		}
 
@@ -1798,16 +1797,12 @@ class CommentpressCoreParser {
 			return $assigned;
 		}
 
-		// kick out if no text_signatures
-		if( ! is_array( $text_signatures ) OR empty( $text_signatures ) ) {
-			return $assigned;
-		}
-
 		/*
-		print_r( array(
+		error_log( print_r( array(
+			'method' => __METHOD__,
 			'comments' => $comments,
-			'sigs' => $text_signatures
-		) ); die();
+			'text_signatures' => $this->text_signatures,
+		), true ) );
 		*/
 
 		// run through our comments...
