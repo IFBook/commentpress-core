@@ -36,7 +36,7 @@ if ( post_password_required() ) { ?>
 // declare access to globals
 global $commentpress_core, $post;
 
-// if we have the plugin enabled...
+// if we have the plugin enabled
 if ( is_object( $commentpress_core ) ) {
 
 	// are we asking for in-page comments?

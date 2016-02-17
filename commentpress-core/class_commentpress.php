@@ -195,7 +195,7 @@ class Commentpress_Core {
 	 */
 	public function translation() {
 
-		// only use, if we have it...
+		// only use, if we have it
 		if( function_exists('load_plugin_textdomain') ) {
 
 			// not used, as there are no translations as yet
@@ -239,7 +239,7 @@ class Commentpress_Core {
 	 */
 	public function buddypress_globals_loaded() {
 
-		// for bp-groupblog integration...
+		// for bp-groupblog integration
 		if (
 
 			// require multisite
@@ -253,7 +253,7 @@ class Commentpress_Core {
 
 		) {
 
-			// check if this blog is a group blog...
+			// check if this blog is a group blog
 			$group_id = get_groupblog_group_id( get_current_blog_id() );
 			if ( is_numeric( $group_id ) ) {
 
@@ -318,7 +318,7 @@ class Commentpress_Core {
 			// split the options
 			list( $stylesheet, $template ) = explode( "|", $options['theme'] );
 
-			// test for WP3.4...
+			// test for WP3.4
 			if ( function_exists( 'wp_get_theme' ) ) {
 
 				// get the registered theme
@@ -371,7 +371,7 @@ class Commentpress_Core {
 		// is it a BP page?
 		$is_bp = ! bp_is_blog_page();
 
-		// let's see...
+		// let's see
 		return apply_filters( 'cp_is_buddypress_special_page', $is_bp );
 
 	}
@@ -408,7 +408,7 @@ class Commentpress_Core {
 		// try and update options
 		$saved = $this->db->options_update();
 
-		// if upgrade required...
+		// if upgrade required
 		if ( $this->db->check_upgrade() ) {
 
 			// access globals
@@ -681,7 +681,7 @@ class Commentpress_Core {
 		// init allowed
 		$allowed = false;
 
-		// only parse posts or pages...
+		// only parse posts or pages
 		if( ( is_single() OR is_page() OR is_attachment() ) AND ! $this->db->is_special_page() ) {
 			$allowed = true;
 		}
@@ -879,7 +879,7 @@ class Commentpress_Core {
 		// get workflow
 		$_workflow = $this->db->option_get( 'cp_blog_workflow' );
 
-		// if it's enabled...
+		// if it's enabled
 		if ( $_workflow == '1' ) {
 
 			// init title
@@ -939,7 +939,7 @@ class Commentpress_Core {
 		// default to show
 		$viz = $this->db->option_get( 'cp_title_visibility' );
 
-		// if the custom field already has a value...
+		// if the custom field already has a value
 		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 			// get it
@@ -972,7 +972,7 @@ class Commentpress_Core {
 		// default to show
 		$viz = $this->db->option_get( 'cp_page_meta_visibility' );
 
-		// if the custom field already has a value...
+		// if the custom field already has a value
 		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 			// get it
@@ -995,7 +995,7 @@ class Commentpress_Core {
 		// Page Numbering - only shown on first top level page
 		// ---------------------------------------------------------------------
 
-		// if page has no parent and it's not a special page and it's the first...
+		// if page has no parent and it's not a special page and it's the first
 		if (
 
 			$post->post_parent == '0' AND
@@ -1014,7 +1014,7 @@ class Commentpress_Core {
 			// default to arabic
 			$format = 'arabic';
 
-			// if the custom field already has a value...
+			// if the custom field already has a value
 			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 				// get it
@@ -1052,7 +1052,7 @@ class Commentpress_Core {
 			// default to text
 			$value = 'text';
 
-			// if the custom field already has a value...
+			// if the custom field already has a value
 			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 				// get it
@@ -1102,7 +1102,7 @@ class Commentpress_Core {
 		// set key
 		$key = '_cp_newer_version';
 
-		// if the custom field already has a value...
+		// if the custom field already has a value
 		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 			// get it
@@ -1911,7 +1911,7 @@ class Commentpress_Core {
 		// get CPTs
 		//$_types = $this->_get_commentable_cpts();
 
-		// testing what we do with CPTs...
+		// testing what we do with CPTs
 		//if ( is_singular() OR is_singular( $_types ) ) {
 
 		// is it a commentable page?
@@ -1945,7 +1945,7 @@ class Commentpress_Core {
 							// check if the post/page has a meta value
 							$key = '_cp_sidebar_default';
 
-							// if the custom field already has a value...
+							// if the custom field already has a value
 							if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 								// get it
@@ -1967,7 +1967,7 @@ class Commentpress_Core {
 
 		}
 
-		// not singular... must be either activity or toc
+		// not singular - must be either activity or toc
 		if ( $this->db->option_exists( 'cp_sidebar_default' ) ) {
 
 			// override
@@ -2333,7 +2333,7 @@ class Commentpress_Core {
 
 		}
 
-		// if BP installed, then the following actions will fire...
+		// if BP installed, then the following actions will fire
 
 		// enable BuddyPress functionality
 		add_action( 'bp_include', array( $this, 'buddypress_init' ) );
@@ -2428,7 +2428,7 @@ class Commentpress_Core {
 			// allow overrides
 			$types = apply_filters( 'cp_blog_type_options', $types );
 
-			// if we get some from a plugin, say...
+			// if we get some from a plugin, for example
 			if ( ! empty( $types ) ) {
 
 				// define title
@@ -2451,7 +2451,7 @@ class Commentpress_Core {
 				// default to current blog type
 				$value = $this->db->option_get( 'cp_blog_type' );
 
-				// but, if the custom field has a value...
+				// but, if the custom field has a value
 				if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 					// get it
@@ -2515,7 +2515,7 @@ class Commentpress_Core {
 			// default to show
 			$_sidebar = $this->db->option_get( 'cp_sidebar_default' );
 
-			// if the custom field already has a value...
+			// if the custom field already has a value
 			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 				// get it
@@ -2559,7 +2559,7 @@ class Commentpress_Core {
 		// default to start with para 1
 		$_num = 1;
 
-		// if the custom field already has a value...
+		// if the custom field already has a value
 		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 			// get it

@@ -348,7 +348,7 @@ class Commentpress_Core_Navigator {
 
 		}
 
-		// we got some...
+		// we got some
 		return $this->_get_first_child( $kids );
 
 	}
@@ -399,7 +399,7 @@ class Commentpress_Core_Navigator {
 		// get all pages including chapters
 		$all_pages = $this->get_book_pages( 'structural' );
 
-		// if we have any pages...
+		// if we have any pages
 		if ( count( $all_pages ) > 0 ) {
 
 			// get first id
@@ -431,7 +431,7 @@ class Commentpress_Core_Navigator {
 		// are parent pages viewable?
 		$viewable = ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) == '1' ) ? true : false;
 
-		// if they are...
+		// if they are
 		if ( $viewable ) {
 
 			// get page number from array
@@ -477,7 +477,7 @@ class Commentpress_Core_Navigator {
 		if ( array_key_exists( $page_id, $this->page_numbers ) ) {
 
 			// get it
-			$num = $this->page_numbers[ $page_id ];
+			$num = $this->page_numbers[$page_id];
 
 		}
 
@@ -541,7 +541,7 @@ class Commentpress_Core_Navigator {
 		// get all pages
 		$all_pages = $this->get_book_pages( 'readable' );
 
-		// if we have any pages...
+		// if we have any pages
 		if ( count( $all_pages ) > 0 ) {
 
 			// generate page numbers
@@ -569,7 +569,7 @@ class Commentpress_Core_Navigator {
 
 			}
 
-			// if we don't get a key...
+			// if we don't get a key
 			if ( $page_key === false ) {
 
 				// the current page is a chapter and is not a page
@@ -620,7 +620,7 @@ class Commentpress_Core_Navigator {
 		// get them
 		$all_posts = get_posts( $defaults );
 
-		// if we have any posts...
+		// if we have any posts
 		if ( count( $all_posts ) > 0 ) {
 
 			// access post object
@@ -702,7 +702,7 @@ class Commentpress_Core_Navigator {
 		// init return
 		$subpages = array();
 
-		// if we have any...
+		// if we have any
 		if ( count( $pages ) > 0 ) {
 
 			// loop
@@ -749,7 +749,7 @@ class Commentpress_Core_Navigator {
 	 */
 	function _get_first_child( $pages ) {
 
-		// if we have any...
+		// if we have any
 		if ( count( $pages ) > 0 ) {
 
 			// loop
@@ -806,7 +806,7 @@ class Commentpress_Core_Navigator {
 	 */
 	function _generate_page_numbers( $pages ) {
 
-		// if we have any...
+		// if we have any
 		if ( count( $pages ) > 0 ) {
 
 			// init with page 1
@@ -815,7 +815,7 @@ class Commentpress_Core_Navigator {
 			// assume no menu
 			$has_nav_menu = false;
 
-			// if we have a custom menu...
+			// if we have a custom menu
 			if ( has_nav_menu( 'toc' ) ) {
 
 				// override
@@ -826,12 +826,15 @@ class Commentpress_Core_Navigator {
 			// loop
 			foreach( $pages AS $page_obj ) {
 
-				// get number format... the way this works in publications is that
-				// only prefaces are numbered with roman numerals. So, we only allow
-				// the first top level page to have the option of roman numerals.
-				// if set, all child pages will be set to roman.
+				/**
+				 * Get number format - the way this works in publications is that
+				 * only prefaces are numbered with Roman numerals. So, we only allow
+				 * the first top level page to have the option of Roman numerals.
+				 *
+				 * If set, all child pages will be set to Roman.
+				 */
 
-				// once we run out of roman numerals, $num is reset to 1
+				// once we run out of Roman numerals, $num is reset to 1
 
 				// default to arabic
 				$format = 'arabic';
@@ -839,7 +842,7 @@ class Commentpress_Core_Navigator {
 				// set key
 				$key = '_cp_number_format';
 
-				// if the custom field already has a value...
+				// if the custom field already has a value
 				if ( get_post_meta( $page_obj->ID, $key, true ) !== '' ) {
 
 					// get it
@@ -847,19 +850,19 @@ class Commentpress_Core_Navigator {
 
 				} else {
 
-					// if we have a custom menu...
+					// if we have a custom menu
 					if ( $has_nav_menu ) {
 
 						// get top level menu item
 						$top_menu_item = $this->_get_top_menu_obj( $page_obj );
 
-						// since this might not be a WP_POST object...
+						// since this might not be a WP_POST object
 						if ( isset( $top_menu_item->object_id ) ) {
 
 							// get ID of top level parent
 							$top_page_id = $top_menu_item->object_id;
 
-							// if the custom field has a value...
+							// if the custom field has a value
 							if ( get_post_meta( $top_page_id, $key, true ) !== '' ) {
 
 								// get it
@@ -874,7 +877,7 @@ class Commentpress_Core_Navigator {
 						// get top level parent
 						$top_page_id = $this->_get_top_parent_id( $page_obj->ID );
 
-						// if the custom field has a value...
+						// if the custom field has a value
 						if ( get_post_meta( $top_page_id, $key, true ) !== '' ) {
 
 							// get it
@@ -890,7 +893,7 @@ class Commentpress_Core_Navigator {
 				if ( $format == 'roman' ) {
 
 					// convert arabic to roman
-					$this->page_numbers[ $page_obj->ID ] = $this->_number_to_roman( $num );
+					$this->page_numbers[$page_obj->ID] = $this->_number_to_roman( $num );
 
 				} else {
 
@@ -906,7 +909,7 @@ class Commentpress_Core_Navigator {
 					}
 
 					// store roman
-					$this->page_numbers[ $page_obj->ID ] = $num;
+					$this->page_numbers[$page_obj->ID] = $num;
 
 				}
 
@@ -934,7 +937,7 @@ class Commentpress_Core_Navigator {
 		// init return
 		$clean = array();
 
-		// if we have any...
+		// if we have any
 		if ( count( $pages ) > 0 ) {
 
 			// loop
@@ -1150,10 +1153,10 @@ class Commentpress_Core_Navigator {
 		// get them
 		$pages = get_pages( $defaults );
 
-		// if we have any pages...
+		// if we have any pages
 		if ( count( $pages ) > 0 ) {
 
-			// if chapters are not pages...
+			// if chapters are not pages
 			if ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
 
 				// do we want all readable pages?
@@ -1166,7 +1169,7 @@ class Commentpress_Core_Navigator {
 
 			}
 
-			// if Theme My Login is present...
+			// if Theme My Login is present
 			if ( defined( 'TML_ABSPATH' ) ) {
 
 				// filter its page out
@@ -1198,10 +1201,10 @@ class Commentpress_Core_Navigator {
 		$locations = get_nav_menu_locations();
 
 		// check menu locations
-		if ( isset( $locations[ 'toc' ] ) ) {
+		if ( isset( $locations['toc'] ) ) {
 
 			// get the menu object
-			$menu = wp_get_nav_menu_object( $locations[ 'toc' ] );
+			$menu = wp_get_nav_menu_object( $locations['toc'] );
 
 			// default args for reference
 			$args = array(
@@ -1223,7 +1226,7 @@ class Commentpress_Core_Navigator {
 			// if we get some
 			if ( $this->menu_objects ) {
 
-				// if chapters are not pages, filter the menu items...
+				// if chapters are not pages, filter the menu items
 				if ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
 
 					// do we want all readable pages?
@@ -1299,7 +1302,7 @@ class Commentpress_Core_Navigator {
 		// init return
 		$sub_items = array();
 
-		// if we have any...
+		// if we have any
 		if ( count( $menu_items ) > 0 ) {
 
 			// loop
@@ -1339,7 +1342,7 @@ class Commentpress_Core_Navigator {
 		// init return
 		$sub_items = array();
 
-		// if we have any...
+		// if we have any
 		if ( count( $menu_items ) > 0 ) {
 
 			// loop
@@ -1372,7 +1375,7 @@ class Commentpress_Core_Navigator {
 	 */
 	function _get_menu_item_parent( $menu_obj ) {
 
-		// if we have any...
+		// if we have any
 		if ( count( $this->menu_objects ) > 0 ) {
 
 			// loop
@@ -1405,11 +1408,13 @@ class Commentpress_Core_Navigator {
 	 */
 	function _get_top_menu_obj( $menu_obj ) {
 
-		// there is little point walking the menu tree because menu items can appear
-		// more than once in the menu...
-
-		// HOWEVER: for instances where people do use the menu sensibly, we should
-		// attempt to walk the tree as best we can
+		/**
+		 * There is little point walking the menu tree because menu items can
+		 * appear more than once in the menu.
+		 *
+		 * HOWEVER: for instances where people do use the menu sensibly, we
+		 * should attempt to walk the tree as best we can.
+		 */
 
 		// is this the top item?
 		if ( $menu_obj->menu_item_parent == 0 ) {

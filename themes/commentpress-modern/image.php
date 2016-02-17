@@ -45,7 +45,7 @@
 
 		</div>
 
-		<?php the_content( '<p>'.__( 'Read the rest of the text &raquo;', 'commentpress-core').'</p>' ); ?>
+		<?php the_content( '<p>' . __( 'Read the rest of the text &raquo;', 'commentpress-core') . '</p>' ); ?>
 
 		<p class="postmetadata" style="clear: left;"><?php
 
@@ -62,7 +62,7 @@
 			$rss_text = __( 'RSS 2.0', 'commentpress-core' );
 
 			// construct RSS link
-			$rss_link = '<a href="'.esc_url( get_post_comments_feed_link() ).'">'.$rss_text.'</a>';
+			$rss_link = '<a href="' . esc_url( get_post_comments_feed_link() ) . '">' . $rss_text . '</a>';
 
 			echo sprintf(
 				__( 'You can follow any comments on this image through the %s feed.', 'commentpress-core' ),
@@ -77,7 +77,7 @@
 				$trackback_text = __( 'trackback', 'commentpress-core' );
 
 				// construct RSS link
-				$trackback_link = '<a href="'.esc_url( get_trackback_url() ).'"rel="trackback">'.$trackback_text.'</a>';
+				$trackback_link = '<a href="' . esc_url( get_trackback_url() ) . '"rel="trackback">' . $trackback_text . '</a>';
 
 				// write out
 				echo sprintf(
@@ -96,7 +96,7 @@
 				$trackback_text = __( 'trackback', 'commentpress-core' );
 
 				// construct RSS link
-				$trackback_link = '<a href="'.esc_url( get_trackback_url() ).'"rel="trackback">'.$trackback_text.'</a>';
+				$trackback_link = '<a href="' . esc_url( get_trackback_url() ) . '"rel="trackback">' . $trackback_text . '</a>';
 
 				// write out
 				echo sprintf(

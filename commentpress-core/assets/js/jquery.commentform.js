@@ -92,7 +92,7 @@ addComment = {
 
 
 
-		// if we have them...
+		// if we have them
 		if ( post_e && postID ) {
 
 			// set comment_post_ID hidden input to postID
@@ -291,7 +291,7 @@ addComment = {
 					// NO -> crawl up the DOM looking for the wrapper
 					var parent_wrapper = jQuery('#respond').closest('div.paragraph_wrapper');
 
-					// if we get it...
+					// if we get it
 					if ( parent_wrapper.length > 0 ) {
 
 						// grab it's id
@@ -499,7 +499,7 @@ addComment = {
 					// get comment list
 					var comment_list = jQuery( '#para_wrapper-' + addComment.text_signature + ' .commentlist' );
 
-					// if we have a comment list...
+					// if we have a comment list
 					if ( comment_list[0] && cp_promote_reading == '0' ) {
 						jQuery( '#para_wrapper-' + addComment.text_signature + ' div.reply_to_para' ).show();
 					}
@@ -531,7 +531,7 @@ addComment = {
 				// get comment list
 				var comment_list = jQuery( '#para_wrapper-' + addComment.text_signature + ' .commentlist' );
 
-				// if we have a comment list and promoting commenting (or promoting reading)...
+				// if we have a comment list and promoting commenting (or promoting reading)
 				if ( ( comment_list[0] && cp_promote_reading == '0' ) || cp_promote_reading == '1' ) {
 
 					// show previous reply to para link
@@ -562,13 +562,13 @@ addComment = {
 			// store
 			//addComment.replyTitle = title.innerHTML;
 
-			// seems like sometimes we can get an array for the .reply with more than one item...
+			// seems like sometimes we can get an array for the .reply with more than one item
 			var reply = jQuery( '#comment-' + parentID + ' > .reply' )[0];
 
 			// get unique
 			var unique = jQuery(reply).text();
 
-			// if we have link text, then a comment reply is allowed...
+			// if we have link text, then a comment reply is allowed
 			if ( unique != '' ) {
 
 				// get reply link text

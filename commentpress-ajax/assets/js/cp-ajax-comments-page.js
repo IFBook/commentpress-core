@@ -467,7 +467,7 @@ CommentPress.ajax.comments = new function() {
 					var response;
 
 					// jQuery 1.9 fails to recognise the response as HTML, so
-					// we *must* use parseHTML if it's available...
+					// we *must* use parseHTML if it's available.
 					if ( $.parseHTML ) {
 
 						// if our jQuery version is 1.8+, it'll have parseHTML
@@ -487,7 +487,7 @@ CommentPress.ajax.comments = new function() {
 						me.add_comment( response );
 						me.reset();
 
-					// oh well...
+					// oh well
 					} catch (e) {
 
 						me.reset();

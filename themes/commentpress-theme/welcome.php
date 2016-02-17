@@ -39,7 +39,7 @@ Template Name: Welcome
 	// default to hidden
 	$cp_title_visibility = ' style="display: none;"';
 
-	// override if we've elected to show the title...
+	// override if we've elected to show the title
 	if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
 		$cp_title_visibility = '';
 	}
@@ -54,7 +54,7 @@ Template Name: Welcome
 	// default to hidden
 	$cp_meta_visibility = ' style="display: none;"';
 
-	// overrideif we've elected to show the meta...
+	// overrideif we've elected to show the meta
 	if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
 		$cp_meta_visibility = '';
 	}

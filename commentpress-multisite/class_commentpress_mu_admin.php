@@ -68,10 +68,10 @@ class Commentpress_Multisite_Admin {
 		// we always get a multisite request
 		if ( $component == 'multisite' ) {
 
-			// if we don't have our version option...
+			// if we don't have our version option
 			if ( ! $this->option_wpms_exists( 'cpmu_version' ) ) {
 
-				// we're activating: add our options...
+				// we're activating: add our options:
 
 				// add options with default values
 				$this->options_create();
@@ -83,10 +83,10 @@ class Commentpress_Multisite_Admin {
 		// if BuddyPress is enabled, we'll get a request for that too
 		if ( $component == 'buddypress' ) {
 
-			// if we don't have one of our buddypress options...
+			// if we don't have one of our buddypress options
 			if ( ! $this->option_exists( 'cpmu_bp_force_commentpress' ) ) {
 
-				// we're activating: add our options...
+				// we're activating: add our options:
 
 				// use reset method
 				$this->options_reset( $component );
@@ -114,7 +114,7 @@ class Commentpress_Multisite_Admin {
 
 			/*
 			--------------------------------------------------------------------
-			Example of how upgrades work...
+			Example of how upgrades work
 			--------------------------------------------------------------------
 
 			// default
@@ -697,7 +697,7 @@ class Commentpress_Multisite_Admin {
 		// allow overrides
 		$has_workflow = apply_filters( 'cp_blog_workflow_exists', $has_workflow );
 
-		// if we have workflow enabled, by a plugin, say...
+		// if we have workflow enabled, by a plugin, say
 		if ( $has_workflow !== false ) {
 
 			// define workflow label
@@ -1109,7 +1109,7 @@ class Commentpress_Multisite_Admin {
 		// get data
 		$workflow = $this->get_workflow_data();
 
-		// if we have workflow data...
+		// if we have workflow data
 		if ( ! empty( $workflow ) ) {
 
 			// show it
@@ -1144,7 +1144,7 @@ class Commentpress_Multisite_Admin {
 		// get data
 		$type = $this->get_blogtype_data();
 
-		// if we have type data...
+		// if we have type data
 		if ( ! empty( $type ) ) {
 
 			// show it

@@ -290,7 +290,7 @@ class Commentpress_Multisite {
 		// look only for default WordPress translations
 		if ('default' != $domain) { return $translated; }
 
-		// catch all instances of 'Howdy'...
+		// catch all instances of 'Howdy'
 		if ( false !== strpos( $translated, 'Howdy' ) ) {
 			return str_replace( 'Howdy', 'Welcome', $translated );
 		}
@@ -412,7 +412,7 @@ class Commentpress_Multisite {
 		// get data
 		$workflow = $this->db->get_workflow_data();
 
-		// if we have workflow data...
+		// if we have workflow data
 		if ( ! empty( $workflow ) ) {
 
 			// show it
@@ -446,7 +446,7 @@ class Commentpress_Multisite {
 		// get data
 		$type = $this->db->get_blogtype_data();
 
-		// if we have type data...
+		// if we have type data
 		if ( ! empty( $type ) ) {
 
 			// show it

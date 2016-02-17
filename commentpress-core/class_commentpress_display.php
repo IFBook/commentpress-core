@@ -84,7 +84,7 @@ class Commentpress_Core_Display {
 
 		}
 
-		// test for WP3.4...
+		// test for WP3.4
 		if ( function_exists( 'wp_get_themes' ) ) {
 
 			// get CommentPress Core theme by default, but allow overrides
@@ -96,7 +96,7 @@ class Commentpress_Core_Display {
 			// get the theme we want
 			$theme = wp_get_theme( $target_theme );
 
-			// if we get it...
+			// if we get it
 			if ( $theme->exists() ) {
 
 				// ignore if not allowed
@@ -123,12 +123,12 @@ class Commentpress_Core_Display {
 			);
 
 			// the key is the theme name
-			if ( isset( $themes[ $target_theme ] ) ) {
+			if ( isset( $themes[$target_theme] ) ) {
 
 				// activate it
 				switch_theme(
-					$themes[ $target_theme ]['Template'],
-					$themes[ $target_theme ]['Stylesheet']
+					$themes[$target_theme]['Template'],
+					$themes[$target_theme]['Stylesheet']
 				);
 
 			}
@@ -146,7 +146,7 @@ class Commentpress_Core_Display {
 	 */
 	public function deactivate() {
 
-		// test for WP3.4...
+		// test for WP3.4
 		if ( function_exists( 'wp_get_theme' ) ) {
 
 			// get CommentPress Core theme by default, but allow overrides
@@ -158,7 +158,7 @@ class Commentpress_Core_Display {
 			// get the theme we want
 			$theme = wp_get_theme( $target_theme );
 
-			// if we get it...
+			// if we get it
 			if ( $theme->exists() ) {
 
 				// ignore if not allowed
@@ -185,12 +185,12 @@ class Commentpress_Core_Display {
 			);
 
 			// the key is the theme name
-			if ( isset( $themes[ $target_theme ] ) ) {
+			if ( isset( $themes[$target_theme] ) ) {
 
 				// activate it
 				switch_theme(
-					$themes[ $target_theme ]['Template'],
-					$themes[ $target_theme ]['Stylesheet']
+					$themes[$target_theme]['Template'],
+					$themes[$target_theme]['Stylesheet']
 				);
 
 			}
@@ -545,7 +545,7 @@ HELPTEXT;
 			// old-style undecorated list
 			// --------------------------
 
-			// run through them...
+			// run through them
 			foreach( $posts AS $item ) {
 
 				// get comment count for that post
@@ -565,7 +565,7 @@ HELPTEXT;
 			// access current post
 			global $post;
 
-			// run through them...
+			// run through them
 			foreach( $posts AS $item ) {
 
 				// init output
@@ -659,7 +659,7 @@ HELPTEXT;
 				// init current post class as empty
 				$current_post = '';
 
-				// if we're on the current post and it's this item...
+				// if we're on the current post and it's this item
 				if ( is_singular() AND isset( $post ) AND $post->ID == $item->ID ) {
 					$current_post = ' current_page_item';
 				}
@@ -868,7 +868,7 @@ HELPTEXT;
 		// reset icon
 		$icon = null;
 
-		// if we have no comments...
+		// if we have no comments
 		if( $comment_count == 0 ) {
 
 			// show add comment icon
@@ -1366,7 +1366,7 @@ HELPTEXT;
 		$url_array = explode( '&', $url );
 		if ( $url_array ) { $url = $url_array[0]; }
 
-		// if we need to upgrade...
+		// if we need to upgrade
 		if ( $this->db->check_upgrade() ) {
 
 			// get upgrade options
@@ -1603,7 +1603,7 @@ HELPTEXT;
 			// allow overrides
 			$types = apply_filters( 'cp_blog_type_options', $types );
 
-			// if we get some from a plugin, say...
+			// if we get some from a plugin, say
 			if ( ! empty( $types ) ) {
 
 				// define title
@@ -1657,7 +1657,7 @@ HELPTEXT;
 			// allow overrides
 			$has_workflow = apply_filters( 'cp_blog_workflow_exists', $has_workflow );
 
-			// if we have workflow enabled, by a plugin, say...
+			// if we have workflow enabled, by a plugin, say
 			if ( $has_workflow !== false ) {
 
 				// define label
@@ -1806,7 +1806,7 @@ HELPTEXT;
 			// allow overrides
 			$types = apply_filters( 'cp_blog_type_options', $types );
 
-			// if we get some from a plugin, say...
+			// if we get some from a plugin, say
 			if ( ! empty( $types ) ) {
 
 				// define title
@@ -1851,7 +1851,7 @@ HELPTEXT;
 			// allow overrides
 			$has_workflow = apply_filters( 'cp_blog_workflow_exists', $has_workflow );
 
-			// if we have workflow enabled, by a plugin, say...
+			// if we have workflow enabled, by a plugin, say
 			if ( $has_workflow !== false ) {
 
 				// define label

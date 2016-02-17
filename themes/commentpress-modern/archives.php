@@ -129,7 +129,7 @@ if ( $tags != '' ) {
 
 } else {
 
-	echo '<ul><li class="no_tags">'.__( 'No tags yet', 'commentpress-core' ).'</li></ul>';
+	echo '<ul><li class="no_tags">' . __( 'No tags yet', 'commentpress-core' ) . '</li></ul>';
 
 }
 

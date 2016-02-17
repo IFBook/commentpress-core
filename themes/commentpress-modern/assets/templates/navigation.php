@@ -42,7 +42,7 @@ global $commentpress_core;
 				// get current blog ID
 				$blog_id = get_current_blog_id();
 
-				// check if this blog is a group blog...
+				// check if this blog is a group blog
 				$group_id = get_groupblog_group_id( $blog_id );
 
 				// when this blog is a groupblog
@@ -140,7 +140,7 @@ global $commentpress_core;
 					);
 
 					// BP uses its own signup page
-					$item = '<li><a href="'.bp_get_root_domain().'/'.bp_get_blogs_root_slug().'/create/" title="'.$_new_site_title.'" id="btn_create">'.$_new_site_title.'</a></li>';
+					$item = '<li><a href="' . bp_get_root_domain() . '/' . bp_get_blogs_root_slug() . '/create/" title="' . $_new_site_title . '" id="btn_create">' . $_new_site_title . '</a></li>';
 
 				} else {
 
@@ -158,7 +158,7 @@ global $commentpress_core;
 				);
 
 				// standard WP multisite
-				$item = '<li><a href="'.network_site_url().'wp-signup.php" title="'.$_new_site_title.'" id="btn_create">'.$_new_site_title.'</a></li>';
+				$item = '<li><a href="' . network_site_url() . 'wp-signup.php" title="' . $_new_site_title . '" id="btn_create">' . $_new_site_title . '</a></li>';
 
 			}
 

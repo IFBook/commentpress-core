@@ -154,8 +154,13 @@ class Commentpress_Multisite_Buddypress {
 		// using publish_posts for now - means author+
 		if ( current_user_can( 'publish_posts' ) ) {
 
-			// remove html filtering on content. Note - this has possible consequences...
-			// see: http://wordpress.org/extend/plugins/unfiltered-mu/
+			/**
+			 * Remove html filtering on content.
+			 *
+			 * Note - this has possible consequences.
+			 *
+			 * @see http://wordpress.org/extend/plugins/unfiltered-mu/
+			 */
 			kses_remove_filters();
 
 		}
@@ -233,7 +238,7 @@ class Commentpress_Multisite_Buddypress {
 			// get current blog ID
 			$blog_id = get_current_blog_id();
 
-			// check if this blog is a group blog...
+			// check if this blog is a group blog
 			$group_id = get_groupblog_group_id( $blog_id );
 
 			// when this blog is a groupblog
@@ -354,7 +359,7 @@ class Commentpress_Multisite_Buddypress {
 			// get current blog ID
 			$blog_id = get_current_blog_id();
 
-			// check if this blog is a group blog...
+			// check if this blog is a group blog
 			$group_id = get_groupblog_group_id( $blog_id );
 
 			// when this blog is a groupblog
@@ -497,7 +502,7 @@ class Commentpress_Multisite_Buddypress {
 			'secondary_item_id' => $activity->secondary_item_id
 		) );
 
-		// if we don't find a modified item...
+		// if we don't find a modified item
 		if ( ! $id ) {
 
 			// see if we have an unmodified activity item
@@ -574,7 +579,7 @@ class Commentpress_Multisite_Buddypress {
 		// set key
 		$key = '_cp_comment_page';
 
-		// if the custom field has a value, we have a subpage comment...
+		// if the custom field has a value, we have a subpage comment
 		if ( get_comment_meta( $comment->comment_ID, $key, true ) != '' ) {
 
 			// get comment's page from meta
@@ -719,7 +724,7 @@ class Commentpress_Multisite_Buddypress {
 			'secondary_item_id' => $activity->secondary_item_id
 		) );
 
-		// if we don't find a modified item...
+		// if we don't find a modified item
 		if ( ! $id ) {
 
 			// see if we have an unmodified activity item
@@ -756,7 +761,7 @@ class Commentpress_Multisite_Buddypress {
 			// if we get some
 			if ( ! empty( $authors ) ) {
 
-				// we only want to override if we have more than one...
+				// we only want to override if we have more than one
 				if ( count( $authors ) > 1 ) {
 
 					// use the Co-Authors format of "name, name, name and name"
@@ -802,7 +807,7 @@ class Commentpress_Multisite_Buddypress {
 
 		}
 
-		// if we're replacing an item, show different message...
+		// if we're replacing an item, show different message
 		if ( $id ) {
 
 			// replace the necessary values to display in group activity stream
@@ -893,7 +898,7 @@ class Commentpress_Multisite_Buddypress {
 				// use BP API
 				$group_id = bp_get_current_group_id();
 
-				// unlikely, but if we don't get one...
+				// unlikely, but if we don't get one
 				if ( empty( $group_id ) ) {
 
 					// try and get ID from BP
@@ -1188,7 +1193,7 @@ class Commentpress_Multisite_Buddypress {
 		} else {
 
 			// TODO: is this blog CommentPress Core-enabled?
-			// we cannot do this without switch_to_blog at the moment...
+			// we cannot do this without switch_to_blog at the moment
 			$blogtype = 'blog';
 
 		}
@@ -1417,7 +1422,7 @@ class Commentpress_Multisite_Buddypress {
 
 		global $blog_id, $current_user;
 
-		// if is not the main blog but we do have a blog ID...
+		// if is not the main blog but we do have a blog ID
 		if( ! is_main_site() AND isset( $blog_id ) AND is_numeric( $blog_id ) ) {
 
 			// do we have groupblog active?
@@ -1426,13 +1431,13 @@ class Commentpress_Multisite_Buddypress {
 				// get group ID for this blog
 				$group_id = get_groupblog_group_id( $blog_id );
 
-				// if we get one...
+				// if we get one
 				if( is_numeric( $group_id ) ) {
 
 					// get the group object
 					$group = new BP_Groups_Group( $group_id );
 
-					// if group is not public...
+					// if group is not public
 					if( $group->status != 'public' ) {
 
 						// is the current user a member of the blog?
@@ -1577,7 +1582,7 @@ class Commentpress_Multisite_Buddypress {
 
 		// activate blog-specific CommentPress Core plugin
 		// added @ priority 20 because BP Groupblog adds its action at the default 10 and
-		// we want it to have done its stuff before we do ours...
+		// we want it to have done its stuff before we do ours
 		add_action( 'wpmu_new_blog', array( $this, 'wpmu_new_blog' ), 20, 6 );
 
 		// register any public styles
@@ -1663,7 +1668,7 @@ class Commentpress_Multisite_Buddypress {
 		// implement our own post activity (with Co-Authors compatibility)
 		add_action( 'bp_activity_before_save', array( $this, 'groupblog_custom_post_activity' ), 20, 1 );
 
-		// CommentPress needs to know the sub-page for a comment, therefore...
+		// CommentPress needs to know the sub-page for a comment, therefore:
 
 		// drop the bp-group-sites comment activity action, if present
 		global $bp_groupsites;
@@ -1680,7 +1685,7 @@ class Commentpress_Multisite_Buddypress {
 		// add our own custom comment activity
 		add_action( 'bp_activity_before_save', array( $this, 'group_custom_comment_activity' ), 20, 1 );
 
-		// these don't seem to fire to allow us to add our meta values for the items...
+		// these don't seem to fire to allow us to add our meta values for the items
 		// instead, I'm trying to store the blog_type as group meta data
 		//add_action( 'bp_activity_after_save', array( $this, 'groupblog_custom_comment_meta' ), 20, 1 );
 		//add_action( 'bp_activity_after_save', array( $this, 'groupblog_custom_post_meta' ), 20, 1 );
@@ -1781,7 +1786,7 @@ class Commentpress_Multisite_Buddypress {
 			// allow overrides
 			$has_workflow = apply_filters( 'cp_blog_workflow_exists', $has_workflow );
 
-			// if we have workflow enabled, by a plugin, say...
+			// if we have workflow enabled, by a plugin, say
 			if ( $has_workflow !== false ) {
 
 				// define workflow label
@@ -1909,7 +1914,7 @@ class Commentpress_Multisite_Buddypress {
 		// TOC = posts
 		$commentpress_core->db->option_set( 'cp_show_posts_or_pages_in_toc', $posts_or_pages );
 
-		// if we opted for posts...
+		// if we opted for posts
 		if ( $posts_or_pages == 'post' ) {
 
 			// TOC shows extended posts by default (may be overridden)
@@ -2036,7 +2041,7 @@ class Commentpress_Multisite_Buddypress {
 		// allow overrides
 		$has_workflow = apply_filters( 'cp_blog_workflow_exists', $has_workflow );
 
-		// if we have workflow enabled, by a plugin, say...
+		// if we have workflow enabled, by a plugin, say
 		if ( $has_workflow !== false ) {
 
 			// define workflow label
@@ -2287,7 +2292,7 @@ class Commentpress_Multisite_Buddypress {
 		// get all themes
 		if ( function_exists( 'wp_get_themes' ) ) {
 
-			// get theme data the WP3.4 way...
+			// get theme data the WP3.4 way
 			$themes = wp_get_themes(
 				false,     // only error-free themes
 				'network', // only network-allowed themes

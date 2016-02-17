@@ -211,7 +211,7 @@ class Commentpress_Multisite_Loader {
 	 */
 	public function network_activated( $plugin, $network_wide = null ) {
 
-		// if it's our plugin...
+		// if it's our plugin
 		if ( $plugin == plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) {
 
 			// was it network deactivated?
@@ -234,7 +234,7 @@ class Commentpress_Multisite_Loader {
 	 */
 	public function network_deactivated( $plugin, $network_wide = null ) {
 
-		// if it's our plugin...
+		// if it's our plugin
 		if ( $plugin == plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) {
 
 			// was it network deactivated?

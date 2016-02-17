@@ -8,7 +8,7 @@ global $commentpress_core;
 // init tab order
 $_tab_order = array( 'comments', 'activity', 'contents' );
 
-// if we have the plugin enabled and the method exists...
+// if we have the plugin enabled and the method exists
 if (
 
 	is_object( $commentpress_core ) AND
@@ -73,7 +73,7 @@ echo $_comments_title;
 // init
 $_min = '';
 
-// if we have the plugin enabled...
+// if we have the plugin enabled
 if ( is_object( $commentpress_core ) ) {
 
 	// show the minimise all button
@@ -117,7 +117,7 @@ if ( commentpress_show_activity_tab() ) {
 	<h2><a href="#activity_sidebar"><?php echo $_activity_title; ?></a></h2>
 	<?php
 
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
 		// show the minimise all button
@@ -192,7 +192,7 @@ break;
 // plugin global
 global $commentpress_core, $post;
 
-// if we have the plugin enabled...
+// if we have the plugin enabled
 if ( is_object( $commentpress_core ) ) {
 
 
@@ -245,7 +245,7 @@ if ( is_object( $commentpress_core ) ) {
 
 
 
-// default sidebar when plugin not active...
+// default sidebar when plugin not active
 ?><div id="toc_sidebar">
 
 

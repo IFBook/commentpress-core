@@ -64,7 +64,7 @@ $_avatar = get_avatar( $my_author->user_email, $size='200' );
 if ( $_avatar != '' ) {
 
 	// show it
-	echo '<p>'.$_avatar.'</p>';
+	echo '<p>' . $_avatar . '</p>';
 
 }
 

@@ -27,7 +27,7 @@ function commentpress_admin_header() {
 	// access plugin
 	global $commentpress_core;
 
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
 		// override
@@ -101,7 +101,7 @@ function commentpress_customize_register( $wp_customize ) {
 	// access plugin
 	global $commentpress_core;
 
-	// kick out if buddypress groupblog...
+	// kick out if buddypress groupblog
 	if ( is_object( $commentpress_core ) AND $commentpress_core->is_groupblog() ) return;
 
 	// do we have the WP 4.2 WP_Customize_Media_Control class?
@@ -408,7 +408,7 @@ function commentpress_get_header_image() {
 	// our fallback is to go with the legacy method that some people might still be using
 	// -------------------------------------------------------------------------
 
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) AND $commentpress_core->db->option_get( 'cp_toc_page' ) ) {
 
 		// set defaults
@@ -421,7 +421,7 @@ function commentpress_get_header_image() {
 
 		);
 
-		// get them...
+		// get them
 		$attachments = get_posts( $args );
 
 		// well?
@@ -501,7 +501,7 @@ function commentpress_get_body_classes( $raw = false ) {
 	// set default sidebar
 	$sidebar_flag = 'toc';
 
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
 		// get sidebar
@@ -515,7 +515,7 @@ function commentpress_get_body_classes( $raw = false ) {
 	// init commentable class
 	$commentable = '';
 
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
 		// set class
@@ -526,7 +526,7 @@ function commentpress_get_body_classes( $raw = false ) {
 	// init layout class
 	$layout_class = '';
 
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
 		// is this the title page?
@@ -545,7 +545,7 @@ function commentpress_get_body_classes( $raw = false ) {
 			// set key
 			$key = '_cp_page_layout';
 
-			// if the custom field already has a value...
+			// if the custom field already has a value
 			if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 
 				// get it
@@ -553,7 +553,7 @@ function commentpress_get_body_classes( $raw = false ) {
 
 			}
 
-			// if wide layout...
+			// if wide layout
 			if ( $layout == 'wide' ) {
 
 				// set layout class
@@ -568,7 +568,7 @@ function commentpress_get_body_classes( $raw = false ) {
 	// set default page type
 	$page_type = '';
 
-	// if blog post...
+	// if blog post
 	if ( is_single() ) {
 
 		// add blog post class
@@ -576,7 +576,7 @@ function commentpress_get_body_classes( $raw = false ) {
 
 	}
 
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
 		// is it a BP special page?
@@ -600,7 +600,7 @@ function commentpress_get_body_classes( $raw = false ) {
 	// set default type
 	$groupblog_type = ' not-groupblog';
 
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
 		// if it's a groupblog
@@ -613,7 +613,7 @@ function commentpress_get_body_classes( $raw = false ) {
 	// set default type
 	$blog_type = '';
 
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
 		// get type
@@ -682,7 +682,7 @@ function commentpress_document_title_parts( $parts ) {
 
 	global $commentpress_core;
 
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
 		// if it's a groupblog
@@ -1017,7 +1017,7 @@ function commentpress_get_user_link( &$user ) {
 	// we're through: the user is on the system
 	global $commentpress_core;
 
-	// if buddypress...
+	// if buddypress
 	if ( is_object( $commentpress_core ) AND $commentpress_core->is_buddypress() ) {
 
 		// buddypress link ($no_anchor = null, $just_link = true)
@@ -1261,7 +1261,7 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 	// construct date
 	$_comment_date = date( __( 'F jS, Y', 'commentpress-core' ), strtotime( $comment->comment_date ) );
 
-	// if context is 'all comments'...
+	// if context is 'all comments'
 	if ( $context == 'all' ) {
 
 		// get author
@@ -1537,7 +1537,7 @@ function commentpress_show_activity_tab() {
 	global $commentpress_core, $post;
 
 	/*
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
 		// is this multisite?
@@ -1579,7 +1579,7 @@ function commentpress_is_commentable() {
 	// declare access to plugin
 	global $commentpress_core;
 
-	// if we have it...
+	// if we have it
 	if ( is_object( $commentpress_core ) ) {
 
 		// return what it reports
@@ -1760,7 +1760,7 @@ function commentpress_get_comment_activity_item( $comment ) {
 				// set key
 				$key = '_cp_comment_page';
 
-				// if the custom field already has a value...
+				// if the custom field already has a value
 				if ( get_comment_meta( $comment->comment_ID, $key, true ) != '' ) {
 
 					// get comment's page from meta
@@ -1862,7 +1862,7 @@ function commentpress_get_comments_by_para() {
 	// set key
 	$key = '_cp_starting_para_number';
 
-	// if the custom field already has a value...
+	// if the custom field already has a value
 	if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 
 		// get it
@@ -1870,7 +1870,7 @@ function commentpress_get_comments_by_para() {
 
 	}
 
-	// if we have any...
+	// if we have any
 	if ( count( $comments_sorted ) > 0 ) {
 
 		// construct redirect link
@@ -1879,7 +1879,7 @@ function commentpress_get_comments_by_para() {
 		// init allowed to comment
 		$login_to_comment = false;
 
-		// if we have to log in to comment...
+		// if we have to log in to comment
 		if ( get_option( 'comment_registration' ) AND ! is_user_logged_in() ) {
 			$login_to_comment = true;
 		}
@@ -1887,7 +1887,7 @@ function commentpress_get_comments_by_para() {
 		// default comment type to get
 		$comment_type = 'all';
 
-		// if we don't allow pingbacks...
+		// if we don't allow pingbacks
 		if ( ! ( 'open' == $post->ping_status ) ) {
 
 			// just get comments
@@ -2141,7 +2141,7 @@ function commentpress_get_comments_by_para() {
 
 				} else {
 
-					// if we have comments...
+					// if we have comments
 					if ( count( $_comments ) > 0 ) {
 
 						// open commentlist
@@ -2169,7 +2169,7 @@ function commentpress_get_comments_by_para() {
 					// only add comment-on-para link if comments are open and it's not the pingback section
 					if ( 'open' == $post->comment_status AND $text_signature != 'PINGS_AND_TRACKS' ) {
 
-						// if we have to log in to comment...
+						// if we have to log in to comment
 						if ( $login_to_comment ) {
 
 							// leave comment link
@@ -2450,7 +2450,7 @@ function commentpress_comment_reply_link( $args = array(), $comment = null, $pos
 	// init link
 	$link = '';
 
-	// if we have to log in to comment...
+	// if we have to log in to comment
 	if ( get_option( 'comment_registration' ) AND ! is_user_logged_in() ) {
 
 		// construct link
@@ -2818,7 +2818,7 @@ function commentpress_multipage_comment_link( $link, $comment, $args ) {
 			// set key
 			$key = '_cp_comment_page';
 
-			// if the custom field already has a value...
+			// if the custom field already has a value
 			if ( get_comment_meta( $comment->comment_ID, $key, true ) != '' ) {
 
 				// get the page number
@@ -3285,7 +3285,7 @@ function commentpress_comment_post_redirect( $link, $comment ) {
 			// but, test for pretty permalinks
 			if ( false !== strpos( $page_url, '?' ) ) {
 
-				// pretty permalinks are off...
+				// pretty permalinks are off
 				$ajax_token = '&cachebuster=' . time();
 
 			}
@@ -3512,7 +3512,7 @@ function commentpress_amend_search_query( &$query ) {
 			// declare access to globals
 			global $commentpress_core;
 
-			// if we have the plugin enabled...
+			// if we have the plugin enabled
 			if ( is_object( $commentpress_core ) ) {
 
 				// get special pages array, if it's there
@@ -3738,7 +3738,7 @@ function commentpress_get_post_version_info( $post ) {
 	// set key
 	$key = '_cp_newer_version';
 
-	// if the custom field already has a value...
+	// if the custom field already has a value
 	if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 		// get it
@@ -3746,7 +3746,7 @@ function commentpress_get_post_version_info( $post ) {
 
 	}
 
-	// if we've got one...
+	// if we've got one
 	if ( $newer_id !== '' ) {
 
 		// get post
@@ -3839,7 +3839,7 @@ function commentpress_get_post_css_override( $post_id ) {
 	// declare access to globals
 	global $commentpress_core;
 
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
 		// default to current blog type
@@ -3848,7 +3848,7 @@ function commentpress_get_post_css_override( $post_id ) {
 		// set post meta key
 		$key = '_cp_post_type_override';
 
-		// but, if the custom field has a value...
+		// but, if the custom field has a value
 		if ( get_post_meta( $post_id, $key, true ) !== '' ) {
 
 			// get it
@@ -3890,7 +3890,7 @@ function commentpress_get_post_title_visibility( $post_id ) {
 	// declare access to globals
 	global $commentpress_core;
 
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
 		// get global hide
@@ -3901,7 +3901,7 @@ function commentpress_get_post_title_visibility( $post_id ) {
 	// set key
 	$key = '_cp_title_visibility';
 
-	//if the custom field already has a value...
+	//if the custom field already has a value
 	if ( get_post_meta( $post_id, $key, true ) != '' ) {
 
 		// get it
@@ -3934,7 +3934,7 @@ function commentpress_get_post_meta_visibility( $post_id ) {
 	// declare access to globals
 	global $commentpress_core;
 
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
 		// get global hide_meta
@@ -3943,7 +3943,7 @@ function commentpress_get_post_meta_visibility( $post_id ) {
 		// set key
 		$key = '_cp_page_meta_visibility';
 
-		// if the custom field already has a value...
+		// if the custom field already has a value
 		if ( get_post_meta( $post_id, $key, true ) != '' ) {
 
 			// override with local value
@@ -4017,7 +4017,7 @@ function commentpress_add_selection_classes( $classes, $class, $comment_id, $com
 	// get current
 	$data = get_comment_meta( $comment_id, $key, true );
 
-	// if the comment meta already has a value...
+	// if the comment meta already has a value
 	if ( ! empty( $data ) ) {
 
 		// make into an array
@@ -4059,7 +4059,7 @@ function commentpress_bp_activity_css_class( $existing_class ) {
 	global $activities_template;
 	$current_activity = $activities_template->activity;
 
-	// for group activity...
+	// for group activity
 	if ( $current_activity->component == 'groups' ) {
 
 		// get group blogtype

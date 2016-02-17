@@ -55,7 +55,7 @@ var cp_msie = 1;
 <?php
 
 // add custom css file for user-defined theme mods in child theme directory (legacy)
-if( file_exists( get_stylesheet_directory().'/custom.css' )) {
+if( file_exists( get_stylesheet_directory() . '/custom.css' )) {
 
 ?>
 <!-- legacy custom css -->

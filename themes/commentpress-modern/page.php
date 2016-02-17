@@ -39,7 +39,7 @@
 			// set key
 			$key = '_cp_original_text';
 
-			// if the custom field already has a value...
+			// if the custom field already has a value
 			if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 
 				// get it
@@ -50,7 +50,7 @@
 			// set key
 			$key = '_cp_literal_translation';
 
-			// if the custom field already has a value...
+			// if the custom field already has a value
 			if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 
 				// get it
@@ -65,10 +65,10 @@
 				$tabs_class = 'with-content-tabs';
 
 				// override tabs classes
-				$tabs_classes = ' class="'.$tabs_class.'"';
+				$tabs_classes = ' class="' . $tabs_class . '"';
 
 				// prefix with space
-				$tabs_class = ' '.$tabs_class;
+				$tabs_class = ' ' . $tabs_class;
 
 			}
 
@@ -176,7 +176,7 @@
 			// default to hidden
 			$cp_title_visibility = ' style="display: none;"';
 
-			// override if we've elected to show the title...
+			// override if we've elected to show the title
 			if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
 				$cp_title_visibility = '';
 			}
@@ -191,7 +191,7 @@
 			// default to hidden
 			$cp_meta_visibility = ' style="display: none;"';
 
-			// overrideif we've elected to show the meta...
+			// overrideif we've elected to show the meta
 			if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
 				$cp_meta_visibility = '';
 			}
@@ -240,7 +240,7 @@
 
 		<?php
 
-		// if we have the plugin enabled...
+		// if we have the plugin enabled
 		if ( is_object( $commentpress_core ) ) {
 
 			// get page num

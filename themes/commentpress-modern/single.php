@@ -37,7 +37,7 @@ if ( is_object( $commentpress_core ) ) {
 		// set key
 		$key = '_cp_original_text';
 
-		// if the custom field already has a value...
+		// if the custom field already has a value
 		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 
 			// get it
@@ -48,7 +48,7 @@ if ( is_object( $commentpress_core ) ) {
 		// set key
 		$key = '_cp_literal_translation';
 
-		// if the custom field already has a value...
+		// if the custom field already has a value
 		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 
 			// get it

@@ -129,7 +129,7 @@ function commentpress_setup(
 
 
 
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	global $commentpress_core;
 	if ( is_object( $commentpress_core ) ) {
 
@@ -231,7 +231,7 @@ function commentpress_enqueue_scripts_and_styles() {
 	// access plugin
 	global $commentpress_core;
 
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
 		// test for buddypress special page
@@ -450,7 +450,7 @@ function commentpress_header() {
 	// access plugin
 	global $commentpress_core;
 
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
 		// override
@@ -580,7 +580,7 @@ function commentpress_page_navigation( $with_comments = false ) {
 		$img = '';
 		$title = __( 'Next page', 'commentpress-core' ); //htmlentities( $next_page->post_title );
 
-		// if we wanted pages with comments...
+		// if we wanted pages with comments
 		if ( $with_comments ) {
 
 			// set title
@@ -610,7 +610,7 @@ function commentpress_page_navigation( $with_comments = false ) {
 		$img = '';
 		$title = __( 'Previous page', 'commentpress-core' ); //htmlentities( $prev_page->post_title );
 
-		// if we wanted pages with comments...
+		// if we wanted pages with comments
 		if ( $with_comments ) {
 
 			// set title
@@ -1018,7 +1018,7 @@ function commentpress_get_feature_image() {
 					// default to hidden
 					$cp_title_visibility = ' style="display: none;"';
 
-					// override if we've elected to show the title...
+					// override if we've elected to show the title
 					if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
 						$cp_title_visibility = '';
 					}
@@ -1031,7 +1031,7 @@ function commentpress_get_feature_image() {
 					// default to hidden
 					$cp_meta_visibility = ' style="display: none;"';
 
-					// overrideif we've elected to show the meta...
+					// overrideif we've elected to show the meta
 					if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
 						$cp_meta_visibility = '';
 					}

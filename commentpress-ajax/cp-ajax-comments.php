@@ -44,12 +44,10 @@ function cpajax_enable_plugin() {
 	// access globals
 	global $commentpress_core;
 
-	// kick out if...
-
-	// cp is not enabled
+	// kick out if cp is not enabled
 	if ( is_null( $commentpress_core ) OR ! is_object( $commentpress_core ) )  { return; }
 
-	// we're in the WP back end
+	// kick out if we're in the WP back end
 	if ( is_admin() ) { return; }
 
 	// add our javascripts
@@ -166,7 +164,7 @@ function cpajax_localise() {
 	$translations[] = __( 'Submitting...', 'commentpress-core' );
 	$translations[] = __( 'Please wait while the comments are reassigned. The page will refresh when this has been done.', 'commentpress-core' );
 
-	// add translations for comment word...
+	// add translations for comment word
 	// singular
 	$translations[] = __( 'Comment', 'commentpress-core' );
 	// plural
@@ -226,13 +224,13 @@ function cpajax_get_new_comments() {
 	$data = array();
 
 	// get incoming data
-	$last_comment_count = isset( $_POST[ 'last_count' ] ) ? $_POST[ 'last_count' ] : NULL;
+	$last_comment_count = isset( $_POST['last_count'] ) ? $_POST['last_count'] : NULL;
 
 	// store incoming unless updated later
 	$data['cpajax_comment_count'] = $last_comment_count;
 
 	// get post ID
-	$post_id = isset( $_POST[ 'post_id' ] ) ? $_POST[ 'post_id' ] : NULL;
+	$post_id = isset( $_POST['post_id'] ) ? $_POST['post_id'] : NULL;
 
 	// make it an integer, just to be sure
 	$post_id = (int) $post_id;
@@ -427,8 +425,8 @@ function cpajax_reassign_comment() {
 	$comment_ids = array();
 
 	// get incoming data
-	$text_sig = isset( $_POST[ 'text_signature' ] ) ? $_POST[ 'text_signature' ] : '';
-	$comment_id = isset( $_POST[ 'comment_id' ] ) ? $_POST[ 'comment_id' ] : '';
+	$text_sig = isset( $_POST['text_signature'] ) ? $_POST['text_signature'] : '';
+	$comment_id = isset( $_POST['comment_id'] ) ? $_POST['comment_id'] : '';
 
 	// sanity check
 	if ( $text_sig !== '' AND $comment_id !== '' ) {
@@ -614,7 +612,7 @@ function cpajax_infinite_scroll_load_next_page() {
 	// get all pages
 	$all_pages = $commentpress_core->nav->get_book_pages( 'readable' );
 
-	// if we have any pages...
+	// if we have any pages
 	if ( count( $all_pages ) == 0 ) { die( 'No $all_pages' ); }
 
 	// init the key we want
@@ -734,7 +732,7 @@ function cpajax_infinite_scroll_load_next_page() {
 	// get page navigation
 	$navigation = commentpress_page_navigation();
 
-	// if we get any...
+	// if we get any
 	if ( $navigation != '' ) {
 		$navigation = '<div class="page_navigation"><ul>' . $navigation . '</ul></div><!-- /page_navigation -->';
 	}

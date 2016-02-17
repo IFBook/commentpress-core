@@ -11,7 +11,7 @@ $_page_comments_output = '';
 // is it commentable?
 $_is_commentable = commentpress_is_commentable();
 
-// if a commentable post...
+// if a commentable post
 if ( $_is_commentable AND ! post_password_required() ) {
 
 	// set default phrase
@@ -169,7 +169,7 @@ if (
 
 ) {
 
-	// check if this blog is a group blog...
+	// check if this blog is a group blog
 	$group_id = get_groupblog_group_id( get_current_blog_id() );
 
 	// when this blog is a groupblog
@@ -299,10 +299,10 @@ if (
 	// get recently active members
 	if ( bp_has_members(
 
-		'user_id=0'.
-		'&type=active'.
-		'&per_page='.$_max_members.
-		'&max='.$_max_members.
+		'user_id=0' .
+		'&type=active' .
+		'&per_page=' . $_max_members .
+		'&max=' . $_max_members .
 		'&populate_extras=1'
 
 	) ) : ?>
@@ -350,10 +350,10 @@ if (
 	// get online members
 	if ( bp_has_members(
 
-		'user_id=0'.
-		'&type=online'.
-		'&per_page='.$_max_members.
-		'&max='.$_max_members.
+		'user_id=0' .
+		'&type=online' .
+		'&per_page=' . $_max_members .
+		'&max=' . $_max_members .
 		'&populate_extras=1'
 
 	) ) : ?>

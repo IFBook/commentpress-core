@@ -273,10 +273,10 @@ class Commentpress_Core_Workflow {
 		// set key
 		$key = '_cp_original_text';
 
-		// if the custom field already has a value...
+		// if the custom field already has a value
 		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
-			// if empty string...
+			// if empty string
 			if ( $original === '' ) {
 
 				// delete the meta_key
@@ -307,10 +307,10 @@ class Commentpress_Core_Workflow {
 		// set key
 		$key = '_cp_literal_translation';
 
-		// if the custom field already has a value...
+		// if the custom field already has a value
 		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
-			// if empty string...
+			// if empty string
 			if ( $literal === '' ) {
 
 				// delete the meta_key
@@ -363,10 +363,10 @@ class Commentpress_Core_Workflow {
 		// set key
 		$key = '_cp_original_text';
 
-		// if the custom field already has a value...
+		// if the custom field already has a value
 		if ( get_post_meta( $new_post_id, $key, true ) !== '' ) {
 
-			// if empty string...
+			// if empty string
 			if ( $original === '' ) {
 
 				// delete the meta_key
@@ -397,10 +397,10 @@ class Commentpress_Core_Workflow {
 		// set key
 		$key = '_cp_literal_translation';
 
-		// if the custom field already has a value...
+		// if the custom field already has a value
 		if ( get_post_meta( $new_post_id, $key, true ) !== '' ) {
 
-			// if empty string...
+			// if empty string
 			if ( $literal === '' ) {
 
 				// delete the meta_key

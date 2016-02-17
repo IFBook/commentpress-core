@@ -58,11 +58,13 @@ if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
 	// check if our plugin is one of those activated sitewide
 	$this_plugin = plugin_basename( COMMENTPRESS_PLUGIN_FILE );
 
-	// unfortunately, is_plugin_active_for_network() is not yet available so
-	// we have to do this manually...
-
-	// also note: during network activation, this plugin is not yet present in
-	// the active_sitewide_plugins array...
+	/**
+	 * Unfortunately, is_plugin_active_for_network() is not yet available so we
+	 * have to do this manually.
+	 *
+	 * Also note: during network activation, this plugin is not yet present in
+	 * the active_sitewide_plugins array.
+	 */
 
 	// get sitewide plugins
 	$active_plugins = (array) get_site_option( 'active_sitewide_plugins' );

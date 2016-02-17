@@ -143,7 +143,7 @@ class Commentpress_Core_Formatter {
 		// default to current blog type
 		$type = $this->db->option_get( 'cp_blog_type' );
 
-		// but, if the custom field has a value...
+		// but, if the custom field has a value
 		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 
 			// get it

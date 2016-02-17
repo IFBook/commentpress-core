@@ -18,8 +18,8 @@ $next_page_html = '';
 if ( $next_page_id != $post->ID ) {
 
 	// set the link
-	$next_page_html = '<a href="'.get_permalink( $next_page_id ).'" id="next_page" class="css_btn" title="'.esc_attr( $title ).'">'.
-							$title.
+	$next_page_html = '<a href="' . get_permalink( $next_page_id ) . '" id="next_page" class="css_btn" title="' . esc_attr( $title ) . '">' .
+							$title .
 					  '</a>';
 }
 
@@ -98,7 +98,7 @@ if ( ! commentpress_has_feature_image() ) {
 		// default to hidden
 		$cp_title_visibility = ' style="display: none;"';
 
-		// override if we've elected to show the title...
+		// override if we've elected to show the title
 		if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
 			$cp_title_visibility = '';
 		}
@@ -113,7 +113,7 @@ if ( ! commentpress_has_feature_image() ) {
 		// default to hidden
 		$cp_meta_visibility = ' style="display: none;"';
 
-		// overrideif we've elected to show the meta...
+		// overrideif we've elected to show the meta
 		if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
 			$cp_meta_visibility = '';
 		}

@@ -503,7 +503,7 @@ CommentPress.ajax.comments = new function() {
 		// make comment reassign button draggable
 		draggers.draggable({
 
-			// a copy thereof...
+			// a copy thereof
 			helper: 'clone',
 			cursor: 'move'
 
@@ -628,7 +628,7 @@ CommentPress.ajax.comments = new function() {
 
 				/*
 				// We could reassign via Javascript, but refreshing the page will clear
-				// any possible markup issues, so go with that instead...
+				// any possible markup issues, so go with that instead
 
 				// find target paragraph wrapper
 				var para_wrapper = $('#para_wrapper-' + text_sig);
@@ -825,7 +825,7 @@ CommentPress.ajax.comments = new function() {
 		// update paragraph icon
 		me.update_para_icon( text_sig, new_comment_count );
 
-		// if not the whole page...
+		// if not the whole page
 		if( text_sig != '' ) {
 
 			// scroll page to text block
@@ -1043,7 +1043,7 @@ CommentPress.ajax.comments = new function() {
 		// set comment icon text
 		$(textblock_id + ' span small').text( new_comment_count.toString() );
 
-		// if we're changing from 0 to 1...
+		// if we're changing from 0 to 1
 		if ( new_comment_count == 1 ) {
 
 			// set comment icon
@@ -1169,7 +1169,7 @@ CommentPress.ajax.comments = new function() {
 					var response;
 
 					// jQuery 1.9 fails to recognise the response as HTML, so
-					// we *must* use parseHTML if it's available...
+					// we *must* use parseHTML if it's available
 					if ( $.parseHTML ) {
 
 						// if our jQuery version is 1.8+, it'll have parseHTML
@@ -1189,7 +1189,7 @@ CommentPress.ajax.comments = new function() {
 						me.add_comment( response );
 						me.reset();
 
-					// oh well...
+					// oh well
 					} catch (e) {
 
 						me.reset();

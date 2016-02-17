@@ -1356,7 +1356,7 @@ CommentPress.common.content = new function() {
 		// define vars
 		var textblock;
 
-		// if not the whole page...
+		// if not the whole page
 		if( text_sig !== '' ) {
 
 			// get text block
@@ -1397,7 +1397,7 @@ CommentPress.common.content = new function() {
 		// define vars
 		var url, comment_id, comment;
 
-		// if there is an anchor in the URL...
+		// if there is an anchor in the URL
 		url = document.location.toString();
 
 		// do we have a comment permalink?
@@ -1716,7 +1716,7 @@ CommentPress.common.comments = new function() {
 			// did we get one at all?
 			if ( 'undefined' !== typeof text_sig ) {
 
-				// if not the whole page or pings...
+				// if not the whole page or pings
 				if( text_sig !== '' && text_sig != 'pingbacksandtrackbacks' ) {
 
 					// get text block
@@ -1797,7 +1797,7 @@ CommentPress.common.comments = new function() {
 
 			} // end defined check
 
-			// if encouraging commenting...
+			// if encouraging commenting
 			if ( cp_promote_reading == '0' && text_sig != 'pingbacksandtrackbacks' ) {
 
 				// are comments open?
@@ -1936,7 +1936,7 @@ CommentPress.common.comments = new function() {
 			// get text sig
 			text_sig = $.get_text_sig_by_comment_id( '#' + comment_id );
 
-			// if not a pingback...
+			// if not a pingback
 			if ( text_sig != 'pingbacksandtrackbacks' ) {
 
 				// scroll page to it
@@ -2774,7 +2774,7 @@ CommentPress.common.viewport = new function() {
 			// get ID, if present
 			current_item_id = current_menu_obj.prop('id');
 
-			// if we do have an ID...
+			// if we do have an ID
 			if ( current_item_id.length > 0 ) {
 
 				// it's a WP custom menu

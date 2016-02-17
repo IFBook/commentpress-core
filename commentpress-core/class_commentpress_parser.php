@@ -6,9 +6,9 @@
  * This class is a wrapper for parsing content and comments.
  *
  * The aim is to migrate parsing of content to DOM parsing instead of regex.
- *
- * When converted to DOM parsing, the class will two other classes, which help
- * with oddities in DOMDocument. These can be found in `inc/dom-helpers`.
+ * When converted to DOM parsing, this class will include two other classes,
+ * which help with oddities in DOMDocument. These can be found in
+ * `inc/dom-helpers` in the dom-parser branch.
  *
  * @since 3.0
  */
@@ -125,7 +125,7 @@ class Commentpress_Core_Parser {
 		// reference our post
 		global $post;
 
-		// retrieve all comments and store...
+		// retrieve all comments and store
 		// we need this data multiple times and only need to get it once
 		$this->comments_all = $this->parent_obj->db->get_all_comments( $post->ID );
 
@@ -135,7 +135,7 @@ class Commentpress_Core_Parser {
 		// check for our quicktag
 		$has_quicktag = $this->_has_comment_block_quicktag( $content );
 
-		// if it hasn't...
+		// if it hasn't
 		if ( ! $has_quicktag ) {
 
 			// auto-format content accordingly
@@ -295,7 +295,7 @@ class Commentpress_Core_Parser {
 		// set key
 		$key = '_cp_starting_para_number';
 
-		// if the custom field already has a value...
+		// if the custom field already has a value
 		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 
 			// get it
@@ -306,11 +306,11 @@ class Commentpress_Core_Parser {
 		// we already have our text signatures, so set flag
 		$sig_key = 0;
 
-		// run through 'em...
+		// run through 'em
 		foreach( $matches AS $paragraph ) {
 
 			// get a signature for the paragraph
-			$text_signature = $this->text_signatures[ $sig_key ];
+			$text_signature = $this->text_signatures[$sig_key];
 
 			// construct paragraph number
 			$para_num = $sig_key + $start_num;
@@ -319,7 +319,7 @@ class Commentpress_Core_Parser {
 			$sig_key++;
 
 			// get comment count
-			$comment_count = count( $this->comments_sorted[ $text_signature ] );
+			$comment_count = count( $this->comments_sorted[$text_signature] );
 
 			// get comment icon
 			$comment_icon = $this->parent_obj->display->get_comment_icon(
@@ -373,7 +373,7 @@ class Commentpress_Core_Parser {
 			// further checks when there's a <p> tag
 			if ( $tag == 'p' ) {
 
-				// set pattern by TinyMCE tag attribute, if we have one...
+				// set pattern by TinyMCE tag attribute, if we have one
 				if ( substr( $paragraph, 0 , 17 ) == '<p style="text-al' ) {
 
 					// test for left
@@ -610,7 +610,7 @@ class Commentpress_Core_Parser {
 		// init ( array( 'text_signature' => n ), where n is the number of duplicates )
 		$duplicates = array();
 
-		// run through 'em...
+		// run through 'em
 		foreach( $matches AS $paragraph ) {
 
 			// get a signature for the paragraph
@@ -623,17 +623,17 @@ class Commentpress_Core_Parser {
 				if ( array_key_exists( $text_signature, $duplicates ) ) {
 
 					// add one
-					$duplicates[ $text_signature ]++;
+					$duplicates[$text_signature]++;
 
 				} else {
 
 					// add it
-					$duplicates[ $text_signature ] = 1;
+					$duplicates[$text_signature] = 1;
 
 				}
 
 				// add number to end of text sig
-				$text_signature .= '_' . $duplicates[ $text_signature ];
+				$text_signature .= '_' . $duplicates[$text_signature];
 
 			}
 
@@ -683,7 +683,7 @@ class Commentpress_Core_Parser {
 		// set key
 		$key = '_cp_starting_para_number';
 
-		// if the custom field already has a value...
+		// if the custom field already has a value
 		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 
 			// get it
@@ -697,7 +697,7 @@ class Commentpress_Core_Parser {
 		// init our content array
 		$content_array = array();
 
-		// run through 'em...
+		// run through 'em
 		foreach( $matches AS $line ) {
 
 			// is there any content?
@@ -716,7 +716,7 @@ class Commentpress_Core_Parser {
 					// line commenting
 
 					// get a signature for the line
-					$text_signature = $this->text_signatures[ $sig_key ];
+					$text_signature = $this->text_signatures[$sig_key];
 
 					// construct paragraph number
 					$para_num = $sig_key + $start_num;
@@ -726,7 +726,7 @@ class Commentpress_Core_Parser {
 
 					// get comment count
 					// NB: the sorted array contains whole page as key 0, so we use the incremented value
-					$comment_count = count( $this->comments_sorted[ $text_signature ] );
+					$comment_count = count( $this->comments_sorted[$text_signature] );
 
 					// get paragraph icon
 					$paragraph_icon = $this->parent_obj->display->get_paragraph_icon(
@@ -878,7 +878,7 @@ class Commentpress_Core_Parser {
 		// init ( array( 'text_signature' => n ), where n is the number of duplicates )
 		$duplicates = array();
 
-		// run through 'em...
+		// run through 'em
 		foreach( $output_array AS $paragraph ) {
 
 			// is there any content?
@@ -903,17 +903,17 @@ class Commentpress_Core_Parser {
 						if ( array_key_exists( $text_signature, $duplicates ) ) {
 
 							// add one
-							$duplicates[ $text_signature ]++;
+							$duplicates[$text_signature]++;
 
 						} else {
 
 							// add it
-							$duplicates[ $text_signature ] = 1;
+							$duplicates[$text_signature] = 1;
 
 						}
 
 						// add number to end of text sig
-						$text_signature .= '_' . $duplicates[ $text_signature ];
+						$text_signature .= '_' . $duplicates[$text_signature];
 
 					}
 
@@ -967,7 +967,7 @@ class Commentpress_Core_Parser {
 		// set key
 		$key = '_cp_starting_para_number';
 
-		// if the custom field already has a value...
+		// if the custom field already has a value
 		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 
 			// get it
@@ -981,14 +981,14 @@ class Commentpress_Core_Parser {
 		// init content array
 		$content_array = array();
 
-		// run through 'em...
+		// run through 'em
 		foreach( $matches AS $paragraph ) {
 
 			// is there any content?
 			if ( $paragraph != '' ) {
 
 				// get a signature for the paragraph
-				$text_signature = $this->text_signatures[ $sig_key ];
+				$text_signature = $this->text_signatures[$sig_key];
 
 				// construct paragraph number
 				$para_num = $sig_key + $start_num;
@@ -998,7 +998,7 @@ class Commentpress_Core_Parser {
 
 				// get comment count
 				// NB: the sorted array contains whole page as key 0, so we use the incremented value
-				$comment_count = count( $this->comments_sorted[ $text_signature ] );
+				$comment_count = count( $this->comments_sorted[$text_signature] );
 
 				// get comment icon
 				$comment_icon = $this->parent_obj->display->get_comment_icon(
@@ -1055,7 +1055,7 @@ class Commentpress_Core_Parser {
 		$content = $this->_filter_twitter_embeds( $content );
 
 		// wp_texturize() does an okay job with creating paragraphs, but comments tend
-		// to screw things up. let's try and fix...
+		// to screw things up. let's try and fix:
 
 		// first, replace all instances of '   <!--commentblock-->   ' with
 		// '<p><!--commentblock--></p>\n'
@@ -1183,7 +1183,7 @@ class Commentpress_Core_Parser {
 		// init ( array( 'text_signature' => n ), where n is the number of duplicates )
 		$duplicates = array();
 
-		// run through 'em...
+		// run through 'em
 		foreach( $matches AS $paragraph ) {
 
 			// is there any content?
@@ -1199,17 +1199,17 @@ class Commentpress_Core_Parser {
 					if ( array_key_exists( $text_signature, $duplicates ) ) {
 
 						// add one
-						$duplicates[ $text_signature ]++;
+						$duplicates[$text_signature]++;
 
 					} else {
 
 						// add it
-						$duplicates[ $text_signature ] = 1;
+						$duplicates[$text_signature] = 1;
 
 					}
 
 					// add number to end of text sig
-					$text_signature .= '_' . $duplicates[ $text_signature ];
+					$text_signature .= '_' . $duplicates[$text_signature];
 
 				}
 
@@ -1306,7 +1306,7 @@ class Commentpress_Core_Parser {
 		Notes added: 08 Mar 2012
 		------------------------------------------------------------------------
 
-		Here's how these quicktags work...
+		Here's how these quicktags work:
 		http://codex.wordpress.org/Customizing_the_Read_More
 
 
@@ -1430,7 +1430,7 @@ class Commentpress_Core_Parser {
 
 		}
 
-		// this gets the additional text... (not used)
+		// this gets the additional text (not used)
 		if ( ! empty($matches[1]) ) {
 			//$more_link_text = strip_tags(wp_kses_no_null(trim($matches[1])));
 		}
@@ -1619,37 +1619,37 @@ class Commentpress_Core_Parser {
 		$_assigned = $this->_assign_comments( $comments, $_sigs );
 
 		// NB: $_assigned is an array with sigs as keys and array of comments as value
-		// it may be empty...
+		// it may be empty:
 
-		// if we have any comments on the whole page...
-		if ( isset( $_assigned[ 'WHOLE_PAGE_OR_POST_COMMENTS' ] ) ) {
+		// if we have any comments on the whole page
+		if ( isset( $_assigned['WHOLE_PAGE_OR_POST_COMMENTS'] ) ) {
 
 			// add them first
-			$_comments[ 'WHOLE_PAGE_OR_POST_COMMENTS' ] = $_assigned[ 'WHOLE_PAGE_OR_POST_COMMENTS' ];
+			$_comments['WHOLE_PAGE_OR_POST_COMMENTS'] = $_assigned['WHOLE_PAGE_OR_POST_COMMENTS'];
 
 		} else {
 
 			// append empty array
-			$_comments[ 'WHOLE_PAGE_OR_POST_COMMENTS' ] = array();
+			$_comments['WHOLE_PAGE_OR_POST_COMMENTS'] = array();
 
 		}
 
-		// we must have text signatures...
+		// we must have text signatures
 		if ( ! empty( $_sigs ) ) {
 
 			// then add  in the order of our text signatures
 			foreach( $_sigs AS $text_signature ) {
 
-				// if we have any assigned...
-				if ( isset( $_assigned[ $text_signature ] ) ) {
+				// if we have any assigned
+				if ( isset( $_assigned[$text_signature] ) ) {
 
 					// append assigned comments
-					$_comments[ $text_signature ] = $_assigned[ $text_signature ];
+					$_comments[$text_signature] = $_assigned[$text_signature];
 
 				} else {
 
 					// append empty array
-					$_comments[ $text_signature ] = array();
+					$_comments[$text_signature] = array();
 
 				}
 
@@ -1657,16 +1657,16 @@ class Commentpress_Core_Parser {
 
 		}
 
-		// if we have any pingbacks or trackbacks...
-		if ( isset( $_assigned[ 'PINGS_AND_TRACKS' ] ) ) {
+		// if we have any pingbacks or trackbacks
+		if ( isset( $_assigned['PINGS_AND_TRACKS'] ) ) {
 
 			// add them last
-			$_comments[ 'PINGS_AND_TRACKS' ] = $_assigned[ 'PINGS_AND_TRACKS' ];
+			$_comments['PINGS_AND_TRACKS'] = $_assigned['PINGS_AND_TRACKS'];
 
 		} else {
 
 			// append empty array
-			$_comments[ 'PINGS_AND_TRACKS' ] = array();
+			$_comments['PINGS_AND_TRACKS'] = array();
 
 		}
 
@@ -1761,7 +1761,7 @@ class Commentpress_Core_Parser {
 			return $assigned;
 		}
 
-		// run through our comments...
+		// run through our comments
 		foreach( $comments AS $comment ) {
 
 			// test for empty comment text signature
@@ -1772,7 +1772,7 @@ class Commentpress_Core_Parser {
 				if ( in_array( $comment->comment_signature, $text_signatures ) ) {
 
 					// yes, assign to that key
-					$assigned[ $comment->comment_signature ][] = $comment;
+					$assigned[$comment->comment_signature][] = $comment;
 
 				} else {
 
@@ -1782,11 +1782,11 @@ class Commentpress_Core_Parser {
 					// find the nearest matching text signature
 					foreach( $text_signatures AS $text_signature ) {
 
-						// compare strings...
+						// compare strings
 						similar_text( $comment->comment_signature, $text_signature, $score );
 
 						// add to possibles array if it passes
-						if( $score >= $confidence ) { $possibles[ $text_signature ] = $score; }
+						if( $score >= $confidence ) { $possibles[$text_signature] = $score; }
 
 					}
 
@@ -1803,7 +1803,7 @@ class Commentpress_Core_Parser {
 						$highest = array_pop( $keys );
 
 						// assign comment to that key
-						$assigned[ $highest ][] = $comment;
+						$assigned[$highest][] = $comment;
 
 					} else {
 
@@ -1817,12 +1817,12 @@ class Commentpress_Core_Parser {
 						if ( $comment->comment_type == 'trackback' OR $comment->comment_type == 'pingback' ) {
 
 							// we have one - assign to pings
-							$assigned[ 'PINGS_AND_TRACKS' ][] = $comment;
+							$assigned['PINGS_AND_TRACKS'][] = $comment;
 
 						} else {
 
 							// we have comment with no text sig - assign to page
-							$assigned[ 'WHOLE_PAGE_OR_POST_COMMENTS' ][] = $comment;
+							$assigned['WHOLE_PAGE_OR_POST_COMMENTS'][] = $comment;
 
 						}
 
@@ -1836,12 +1836,12 @@ class Commentpress_Core_Parser {
 				if ( $comment->comment_type == 'trackback' OR $comment->comment_type == 'pingback' ) {
 
 					// we have one - assign to pings
-					$assigned[ 'PINGS_AND_TRACKS' ][] = $comment;
+					$assigned['PINGS_AND_TRACKS'][] = $comment;
 
 				} else {
 
 					// we have comment with no text sig - assign to page
-					$assigned[ 'WHOLE_PAGE_OR_POST_COMMENTS' ][] = $comment;
+					$assigned['WHOLE_PAGE_OR_POST_COMMENTS'][] = $comment;
 
 				}
 

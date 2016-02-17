@@ -183,7 +183,7 @@ function commentpress_enqueue_scripts_and_styles() {
 	// access plugin
 	global $commentpress_core;
 
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
 		// enqueue common js
@@ -305,7 +305,7 @@ function commentpress_header() {
 	// access plugin
 	global $commentpress_core;
 
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
 		// override
@@ -456,7 +456,7 @@ function commentpress_page_navigation( $with_comments = false ) {
 		$img = '';
 		$title = __( 'Next page', 'commentpress-core' ); //htmlentities( $next_page->post_title );
 
-		// if we wanted pages with comments...
+		// if we wanted pages with comments
 		if ( $with_comments ) {
 
 			// set title
@@ -484,7 +484,7 @@ function commentpress_page_navigation( $with_comments = false ) {
 		$img = '';
 		$title = __( 'Previous page', 'commentpress-core' ); //htmlentities( $prev_page->post_title );
 
-		// if we wanted pages with comments...
+		// if we wanted pages with comments
 		if ( $with_comments ) {
 
 			// set title

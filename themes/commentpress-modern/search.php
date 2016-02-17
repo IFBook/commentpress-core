@@ -46,7 +46,7 @@ if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 	// init
 	$_special_pages = array();
 
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
 		// get special pages
@@ -79,7 +79,7 @@ if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 			// default to hidden
 			$cp_meta_visibility = ' style="display: none;"';
 
-			// overrideif we've elected to show the meta...
+			// overrideif we've elected to show the meta
 			if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
 				$cp_meta_visibility = '';
 			}

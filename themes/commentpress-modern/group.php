@@ -8,9 +8,7 @@ if ( version_compare( $wp_version, '3.1', '>=' ) ) {
 
 	// set args
 	$args = array(
-
-		'orderby' => 'nicename'
-
+		'orderby' => 'nicename',
 	);
 
 	// get users of this blog (blog_id is provided by default)
@@ -61,7 +59,7 @@ get_header(); ?>
 if ( count( $_users ) > 0 ) {
 
 	// open list
-	echo '<ul id="group_list">'."\n";
+	echo '<ul id="group_list">' . "\n";
 
 	// loop
 	foreach( $_users AS $_user ) {
@@ -70,20 +68,20 @@ if ( count( $_users ) > 0 ) {
 		if( $_user->user_id != '1' ) {
 
 			// open item
-			echo '<li>'."\n";
+			echo '<li>' . "\n";
 
 			// show display name
-			echo  '<a href="'.home_url().'/author/'.$_user->user_login.'/">'.$_user->display_name.'</a>';
+			echo  '<a href="' . home_url() . '/author/' . $_user->user_login . '/">' . $_user->display_name . '</a>';
 
 			// close item
-			echo '</li>'."\n\n";
+			echo '</li>' . "\n\n";
 
 		}
 
 	}
 
 	// close list
-	echo '</ul>'."\n\n";
+	echo '</ul>' . "\n\n";
 
 } ?>
 

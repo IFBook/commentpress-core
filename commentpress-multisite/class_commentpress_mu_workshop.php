@@ -178,7 +178,7 @@ class CommentpressGroupblogWorkshop {
 	 */
 	public function activity_tab_recent_title_blog( $title ) {
 
-		// if groupblog...
+		// if groupblog
 		global $commentpress_core;
 		if (
 			! is_null( $commentpress_core ) AND
@@ -197,7 +197,7 @@ class CommentpressGroupblogWorkshop {
 
 		}
 
-		// if main site...
+		// if main site
 		if ( is_multisite() AND is_main_site() ) {
 
 			// override default link name
@@ -557,7 +557,7 @@ class CommentpressGroupblogWorkshop {
 		// get name option
 		$cpmu_bp_workshop_nomenclature_name = esc_sql( $cpmu_bp_workshop_nomenclature_name );
 
-		// revert to default if we didn't get one...
+		// revert to default if we didn't get one
 		if ( $cpmu_bp_workshop_nomenclature_name == '' ) {
 			$cpmu_bp_workshop_nomenclature_name = $this->cpmu_bp_workshop_nomenclature_name;
 		}
@@ -568,7 +568,7 @@ class CommentpressGroupblogWorkshop {
 		// get plural option
 		$cpmu_bp_workshop_nomenclature_plural = esc_sql( $cpmu_bp_workshop_nomenclature_plural );
 
-		// revert to default if we didn't get one...
+		// revert to default if we didn't get one
 		if ( $cpmu_bp_workshop_nomenclature_plural == '' ) {
 			$cpmu_bp_workshop_nomenclature_plural = $this->cpmu_bp_workshop_nomenclature_plural;
 		}

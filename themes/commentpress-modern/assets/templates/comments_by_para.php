@@ -22,7 +22,7 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) AND 'comments_by_para.php' == basename($
 
 // add identifier ID
 if ( isset( $post->ID ) ) {
-	$comments_post_identifier = ' id="comments_post_identifier-'.$post->ID.'"';
+	$comments_post_identifier = ' id="comments_post_identifier-' . $post->ID . '"';
 }
 
 

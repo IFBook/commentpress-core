@@ -112,7 +112,7 @@ class Commentpress_Multisite_Revisions {
 		// get incremental version number of source post
 		$key = '_cp_version_count';
 
-		// if the custom field of our current post has a value...
+		// if the custom field of our current post has a value
 		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 
 			// get current value
