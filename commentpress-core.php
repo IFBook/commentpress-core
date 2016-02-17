@@ -197,6 +197,30 @@ function commentpress_activate_ajax() {
 
 
 /**
+ * Utility to amend filenames when debugging.
+ *
+ * @since 3.8.5
+ *
+ * @return str The debug string to be included in a filename
+ */
+function commentpress_minified() {
+
+	// default to minified scripts
+	$minified = '.min';
+
+	// target unminified scripts when debugging
+	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
+		$minified = '';
+	}
+
+	// --<
+	return $minified;
+
+}
+
+
+
+/**
  * Shortcut for debugging.
  *
  * @since 3.0

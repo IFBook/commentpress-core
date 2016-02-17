@@ -136,10 +136,7 @@ if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ):
 function commentpress_enqueue_scripts_and_styles() {
 
 	// check for dev
-	$dev = '.min';
-	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
-		$dev = '';
-	}
+	$dev = commentpress_minified();
 
 	// -------------------------------------------------------------------------
 	// Stylesheets
@@ -248,10 +245,7 @@ if ( ! function_exists( 'commentpress_enqueue_print_styles' ) ):
 function commentpress_enqueue_print_styles() {
 
 	// check for dev
-	$dev = '.min';
-	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
-		$dev = '';
-	}
+	$dev = commentpress_minified();
 
 	// add print css
 	wp_enqueue_style(

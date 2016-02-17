@@ -221,15 +221,7 @@ class Commentpress_Core_Display {
 	public function get_jquery() {
 
 		// default to minified scripts
-		$debug_state = '.min';
-
-		// target different scripts when debugging
-		if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
-
-			// use uncompressed scripts
-			$debug_state = '';
-
-		}
+		$debug_state = commentpress_minified();
 
 		// add our javascript plugin and dependencies
 		wp_enqueue_script(
@@ -284,15 +276,7 @@ class Commentpress_Core_Display {
 			}
 
 			// default to minified scripts
-			$debug_state = '.min';
-
-			// target different scripts when debugging
-			if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
-
-				// use uncompressed scripts
-				$debug_state = '';
-
-			}
+			$debug_state = commentpress_minified();
 
 			// add jQuery wrapSelection plugin
 			wp_enqueue_script(

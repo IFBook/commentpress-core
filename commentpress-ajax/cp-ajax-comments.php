@@ -103,15 +103,7 @@ function cpajax_add_javascripts() {
 	$vars['cpajax_lang'] = cpajax_localise();
 
 	// default to minified scripts
-	$debug_state = '.min';
-
-	// target different scripts when debugging
-	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
-
-		// use uncompressed scripts
-		$debug_state = '';
-
-	}
+	$debug_state = commentpress_minified();
 
 	// are we asking for in-page comments?
 	if ( $commentpress_core->db->is_special_page() ) {
@@ -560,15 +552,7 @@ function cpajax_infinite_scroll_scripts() {
 	global $post, $commentpress_core;
 
 	// default to minified scripts
-	$debug_state = '.min';
-
-	// target different scripts when debugging
-	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
-
-		// use uncompressed scripts
-		$debug_state = '';
-
-	}
+	$debug_state = commentpress_minified();
 
 	// bail if we are we asking for in-page comments
 	if ( $commentpress_core->db->is_special_page() ) return;
