@@ -2101,6 +2101,12 @@ class Commentpress_Core {
 		// get path
 		$class_file_path = commentpress_file_is_present( $class_file );
 
+		// allow plugins to override this and supply their own
+		$class_file_path = apply_filters(
+			'cp_class_commentpress_db',
+			$class_file_path
+		);
+
 		// we're fine, include class definition
 		require_once( $class_file_path );
 
@@ -2116,6 +2122,12 @@ class Commentpress_Core {
 
 		// get path
 		$class_file_path = commentpress_file_is_present( $class_file );
+
+		// allow plugins to override this and supply their own
+		$class_file_path = apply_filters(
+			'cp_class_commentpress_display',
+			$class_file_path
+		);
 
 		// we're fine, include class definition
 		require_once( $class_file_path );
@@ -2133,6 +2145,12 @@ class Commentpress_Core {
 		// get path
 		$class_file_path = commentpress_file_is_present( $class_file );
 
+		// allow plugins to override this and supply their own
+		$class_file_path = apply_filters(
+			'cp_class_commentpress_nav',
+			$class_file_path
+		);
+
 		// we're fine, include class definition
 		require_once( $class_file_path );
 
@@ -2148,6 +2166,12 @@ class Commentpress_Core {
 
 		// get path
 		$class_file_path = commentpress_file_is_present( $class_file );
+
+		// allow plugins to override this and supply their own
+		$class_file_path = apply_filters(
+			'cp_class_commentpress_parser',
+			$class_file_path
+		);
 
 		// we're fine, include class definition
 		require_once( $class_file_path );

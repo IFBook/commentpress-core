@@ -51,6 +51,15 @@ class Commentpress_Multisite_Loader {
 	public $mu;
 
 	/**
+	 * Revisions object.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var object $revisions The revisions object reference
+	 */
+	public $revisions;
+
+	/**
 	 * BuddyPress compatibility object.
 	 *
 	 * @since 3.3
@@ -58,6 +67,15 @@ class Commentpress_Multisite_Loader {
 	 * @var object $bp The BuddyPress object reference
 	 */
 	public $bp;
+
+	/**
+	 * BuddyPress Groupblog compatibility object.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var object $workshop The workshop object reference
+	 */
+	public $workshop;
 
 
 
@@ -98,6 +116,12 @@ class Commentpress_Multisite_Loader {
 		// get path
 		$class_file_path = commentpress_file_is_present( $class_file );
 
+		// allow plugins to override this and supply their own
+		$class_file_path = apply_filters(
+			'class_commentpress_mu_admin',
+			$class_file_path
+		);
+
 		// we're fine, include class definition
 		require_once( $class_file_path );
 
@@ -114,6 +138,12 @@ class Commentpress_Multisite_Loader {
 		// get path
 		$class_file_path = commentpress_file_is_present( $class_file );
 
+		// allow plugins to override this and supply their own
+		$class_file_path = apply_filters(
+			'class_commentpress_mu_ms',
+			$class_file_path
+		);
+
 		// we're fine, include class definition
 		require_once( $class_file_path );
 
@@ -129,6 +159,12 @@ class Commentpress_Multisite_Loader {
 
 		// get path
 		$_class_file_path = commentpress_file_is_present( $_class_file );
+
+		// allow plugins to override this and supply their own
+		$class_file_path = apply_filters(
+			'class_commentpress_mu_revisions',
+			$class_file_path
+		);
 
 		// we're fine, include class definition
 		require_once( $_class_file_path );
@@ -171,6 +207,12 @@ class Commentpress_Multisite_Loader {
 		// get path
 		$class_file_path = commentpress_file_is_present( $class_file );
 
+		// allow plugins to override this and supply their own
+		$class_file_path = apply_filters(
+			'class_commentpress_mu_bp',
+			$class_file_path
+		);
+
 		// we're fine, include class definition
 		require_once( $class_file_path );
 
@@ -186,6 +228,12 @@ class Commentpress_Multisite_Loader {
 
 		// get path
 		$_class_file_path = commentpress_file_is_present( $_class_file );
+
+		// allow plugins to override this and supply their own
+		$class_file_path = apply_filters(
+			'class_commentpress_mu_workshop',
+			$class_file_path
+		);
 
 		// we're fine, include class definition
 		require_once( $_class_file_path );
