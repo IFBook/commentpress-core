@@ -39,7 +39,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
 	 * @since 3.7
 	 *
@@ -61,7 +61,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * Set up all items associated with this object
+	 * Set up all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -90,7 +90,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * If needed, destroys all items associated with this object
+	 * If needed, destroys all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -113,7 +113,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * Register WordPress hooks
+	 * Register WordPress hooks.
 	 *
 	 * @return void
 	 */
@@ -204,7 +204,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * Set editor toggle state if none exists
+	 * Set editor toggle state if none exists.
 	 *
 	 * @return void
 	 */
@@ -215,7 +215,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * Set editor toggle state if none exists
+	 * Set editor toggle state if none exists.
 	 *
 	 * @return void
 	 */
@@ -246,7 +246,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * Intercept editor toggling once plugins are loaded
+	 * Intercept editor toggling once plugins are loaded.
 	 *
 	 * @return void
 	 */
@@ -314,7 +314,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * Inject editor toggle link before search in Contents column
+	 * Inject editor toggle link before search in Contents column.
 	 *
 	 * @return void
 	 */
@@ -369,7 +369,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * Prevent WordPress Front-end Editor from loading
+	 * Prevent WordPress Front-end Editor from loading.
 	 *
 	 * @return void
 	 */
@@ -391,7 +391,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * Prevent TinyMCE from loading in the comment form
+	 * Prevent TinyMCE from loading in the comment form.
 	 *
 	 * @return void
 	 */
@@ -405,7 +405,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * Prevent TinyMCE from loading in the comment form
+	 * Prevent TinyMCE from loading in the comment form.
 	 *
 	 * @return void
 	 */
@@ -419,7 +419,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * Get additional javascript vars
+	 * Get additional javascript vars.
 	 *
 	 * @param array $vars The existing variables to pass to our Javascript
 	 * @return array $vars The modified variables to pass to our Javascript
@@ -458,7 +458,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * Get new comments container
+	 * Get new comments container.
 	 *
 	 * @return void
 	 */
@@ -534,7 +534,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * Get new post metabox container
+	 * Get new post metabox container.
 	 *
 	 * @return void
 	 */
@@ -554,7 +554,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * AJAX metabox: set post title visibility
+	 * AJAX metabox: set post title visibility.
 	 *
 	 * @return void
 	 */
@@ -592,7 +592,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * AJAX metabox: set page meta visibility
+	 * AJAX metabox: set page meta visibility.
 	 *
 	 * @return void
 	 */
@@ -630,7 +630,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * AJAX metabox: set number format
+	 * AJAX metabox: set number format.
 	 *
 	 * @return void
 	 */
@@ -674,7 +674,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * AJAX metabox: set formatter
+	 * AJAX metabox: set formatter.
 	 *
 	 * @return void
 	 */
@@ -711,7 +711,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * AJAX metabox: set starting paragraph number
+	 * AJAX metabox: set starting paragraph number.
 	 *
 	 * @return void
 	 */
@@ -748,7 +748,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * Override the "Edit Page" link when WP FEE not active
+	 * Override the "Edit Page" link when WP FEE not active.
 	 *
 	 * @param string $link The existing link
 	 * @param int $id The numeric post ID
@@ -788,7 +788,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * Set up post object from passed data
+	 * Set up post object from passed data.
 	 *
 	 * @return bool True if post object set up, false otherwise
 	 */
@@ -818,7 +818,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * Send data to browser and exit
+	 * Send data to browser and exit.
 	 *
 	 * @return void
 	 */
@@ -840,7 +840,7 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * Inject editor toggle before search in Contents column
+	 * Inject editor toggle before search in Contents column.
 	 *
 	 * @return void
 	 */

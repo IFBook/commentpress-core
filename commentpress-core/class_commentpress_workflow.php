@@ -21,7 +21,7 @@ class Commentpress_Core_Workflow {
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
 	 * @since 3.0
 	 *
@@ -43,7 +43,7 @@ class Commentpress_Core_Workflow {
 
 
 	/**
-	 * Set up all items associated with this object
+	 * Set up all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -54,7 +54,7 @@ class Commentpress_Core_Workflow {
 
 
 	/**
-	 * If needed, destroys all items associated with this object
+	 * If needed, destroys all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -77,7 +77,7 @@ class Commentpress_Core_Workflow {
 
 
 	/**
-	 * Enable workflow
+	 * Enable workflow.
 	 *
 	 * @param bool $exists True if "workflow" is enabled, false otherwise
 	 * @return bool $exists True if "workflow" is enabled, false otherwise
@@ -95,7 +95,7 @@ class Commentpress_Core_Workflow {
 
 
 	/**
-	 * Override the name of the workflow checkbox label
+	 * Override the name of the workflow checkbox label.
 	 *
 	 * @param str $name The existing singular name of the label
 	 * @return str $name The modified singular name of the label
@@ -113,7 +113,7 @@ class Commentpress_Core_Workflow {
 
 
 	/**
-	 * Amend the group meta if workflow is enabled
+	 * Amend the group meta if workflow is enabled.
 	 *
 	 * @param str $blog_type The existing numerical type of the blog
 	 * @return str $blog_type The modified numerical type of the blog
@@ -139,7 +139,7 @@ class Commentpress_Core_Workflow {
 
 
 	/**
-	 * Add our metabox if workflow is enabled
+	 * Add our metabox if workflow is enabled.
 	 *
 	 * @return void
 	 */
@@ -204,7 +204,7 @@ class Commentpress_Core_Workflow {
 
 
 	/**
-	 * Amend the workflow metabox title
+	 * Amend the workflow metabox title.
 	 *
 	 * @param str $title The existing title of the metabox
 	 * @return str $title The overridden title of the metabox
@@ -222,7 +222,7 @@ class Commentpress_Core_Workflow {
 
 
 	/**
-	 * Save workflow data based on the state of the metabox
+	 * Save workflow data based on the state of the metabox.
 	 *
 	 * @param object $post_obj The WordPress post object
 	 * @return void
@@ -341,7 +341,7 @@ class Commentpress_Core_Workflow {
 
 
 	/**
-	 * Add the workflow content to the new version
+	 * Add the workflow content to the new version.
 	 *
 	 * @param int $new_post_id The numeric ID of the new WordPress post
 	 * @return void
@@ -444,7 +444,7 @@ class Commentpress_Core_Workflow {
 
 
 	/**
-	 * Object initialisation
+	 * Object initialisation.
 	 *
 	 * @return void
 	 */
@@ -458,7 +458,7 @@ class Commentpress_Core_Workflow {
 
 
 	/**
-	 * Register WordPress hooks
+	 * Register WordPress hooks.
 	 *
 	 * @return void
 	 */

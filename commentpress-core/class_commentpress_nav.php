@@ -76,7 +76,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
 	 * @since 3.0
 	 *
@@ -95,7 +95,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Set up all items associated with this object
+	 * Set up all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -122,7 +122,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * If needed, destroys all items associated with this object
+	 * If needed, destroys all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -145,7 +145,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Get next page link
+	 * Get next page link.
 	 *
 	 * @param bool $with_comments The requested page has comments - default false
 	 * @return object $page_data True if successful, boolean false if not
@@ -188,7 +188,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Get previous page link
+	 * Get previous page link.
 	 *
 	 * @param bool $with_comments The requested page has comments - default false
 	 * @return object $page_data True if successful, boolean false if not
@@ -231,7 +231,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Get next post link
+	 * Get next post link.
 	 *
 	 * @param bool $with_comments The requested post has comments - default false
 	 * @return object $post_data True if successful, boolean false if not
@@ -274,7 +274,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Get previous post link
+	 * Get previous post link.
 	 *
 	 * @param bool $with_comments The requested post has comments - default false
 	 * @return object $post_data True if successful, boolean false if not
@@ -317,7 +317,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Get first viewable child page
+	 * Get first viewable child page.
 	 *
 	 * @param int $page_id The page ID
 	 * @return int $first_child The ID of the first child page (or false if not found)
@@ -356,7 +356,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Get list of 'book' pages
+	 * Get list of 'book' pages.
 	 *
 	 * @param str $mode Either 'structural' or 'readable'
 	 * @return array $pages All 'book' pages
@@ -389,7 +389,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Get first readable 'book' page
+	 * Get first readable 'book' page.
 	 *
 	 * @return int $id The ID of the first page (or false if not found)
 	 */
@@ -417,7 +417,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Get page number
+	 * Get page number.
 	 *
 	 * @param int $page_id The page ID
 	 * @return int $number The number of the page
@@ -465,7 +465,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Get page number
+	 * Get page number.
 	 *
 	 * @param int $page_id The page ID
 	 * @return int $number The number of the page
@@ -491,7 +491,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Redirect to child
+	 * Redirect to child.
 	 *
 	 * @return void
 	 */
@@ -534,7 +534,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Set up page list
+	 * Set up page list.
 	 *
 	 * @return void
 	 */
@@ -605,7 +605,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Set up posts list
+	 * Set up posts list.
 	 *
 	 * @return void
 	 */
@@ -676,7 +676,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Object initialisation
+	 * Object initialisation.
 	 *
 	 * @return void
 	 */
@@ -692,7 +692,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Strip out all but lowest level pages
+	 * Strip out all but lowest level pages.
 	 *
 	 * @todo This only works one level deep?
 	 *
@@ -744,7 +744,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Get first published child, however deep
+	 * Get first published child, however deep.
 	 *
 	 * @param array $pages The array of page objects
 	 * @return array $subpages All subpages
@@ -799,7 +799,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Generates page numbers
+	 * Generates page numbers.
 	 *
 	 * @todo Refine by section, page meta value etc
 	 *
@@ -929,7 +929,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Utility to remove the Theme My Login page
+	 * Utility to remove the Theme My Login page.
 	 *
 	 * @todo Pass the array?
 	 *
@@ -967,7 +967,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Utility to detect the Theme My Login page
+	 * Utility to detect the Theme My Login page.
 	 *
 	 * @param object $page_obj The WordPress page object
 	 * @return boolean $success True if TML page, false otherwise
@@ -995,7 +995,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * PHP Roman Numeral Library
+	 * PHP Roman Numeral Library.
 	 *
 	 * Copyright (c) 2008, reusablecode.blogspot.com; some rights reserved.
 	 *
@@ -1004,9 +1004,10 @@ class Commentpress_Core_Navigator {
 	 * send a letter to Creative Commons, 559 Nathan Abbott Way, Stanford, California
 	 * 94305, USA.
 	 *
-	 * Utility to convert arabic to roman numerals
+	 * Utility to convert arabic to roman numerals.
 	 *
-	 * @return boolean $result the roman equivalent
+	 * @param int $arabic The numeric Arabic value
+	 * @return str $roman The Roman equivalent
 	 */
 	function _number_to_roman( $arabic ) {
 
@@ -1017,26 +1018,34 @@ class Commentpress_Core_Navigator {
 
 		if ( $arabic > 4999 ) {
 
-			// For large numbers (five thousand and above), a bar is placed above a base numeral to indicate multiplication by 1000.
-			// Since it is not possible to illustrate this in plain ASCII, this function will refuse to convert numbers above 4999.
-			die("Cannot represent numbers larger than 4999 in plain ASCII.");
+			/**
+			 * For large numbers (five thousand and above), a bar is placed above
+			 * a base numeral to indicate multiplication by 1000.
+			 *
+			 * Since it is not possible to illustrate this in plain ASCII, this
+			 * function will refuse to convert numbers above 4999.
+			 */
+			wp_die( __( 'Cannot represent numbers larger than 4999 in plain ASCII.', 'commentpress-core' ) );
 
 		} elseif ( $arabic == 0 ) {
 
-			// About 725, Bede or one of his colleagues used the letter N, the initial of nullae,
-			// in a table of epacts, all written in Roman numerals, to indicate zero.
+			/**
+			 * In about 725, Bede or one of his colleagues used the letter N, the
+			 * initial of nullae, in a table of epacts, all written in Roman
+			 * numerals, to indicate zero.
+			 */
 			return "N";
 
 		} else {
 
-			$roman = $thousands[($arabic - fmod($arabic, 1000)) / 1000];
-			$arabic = fmod($arabic, 1000);
-			$roman .= $hundreds[($arabic - fmod($arabic, 100)) / 100];
-			$arabic = fmod($arabic, 100);
-			$roman .= $tens[($arabic - fmod($arabic, 10)) / 10];
-			$arabic = fmod($arabic, 10);
-			$roman .= $ones[($arabic - fmod($arabic, 1)) / 1];
-			$arabic = fmod($arabic, 1);
+			$roman = $thousands[( $arabic - fmod( $arabic, 1000 ) ) / 1000];
+			$arabic = fmod( $arabic, 1000 );
+			$roman .= $hundreds[( $arabic - fmod( $arabic, 100 ) ) / 100];
+			$arabic = fmod( $arabic, 100 );
+			$roman .= $tens[( $arabic - fmod( $arabic, 10 ) ) / 10];
+			$arabic = fmod( $arabic, 10 );
+			$roman .= $ones[( $arabic - fmod( $arabic, 1 ) ) / 1];
+			$arabic = fmod( $arabic, 1 );
 			return $roman;
 
 		}
@@ -1046,7 +1055,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Get top parent page id
+	 * Get top parent page ID.
 	 *
 	 * @param int $post_id The queried page ID
 	 * @return int $post_id The overridden page ID
@@ -1074,7 +1083,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Parse a WP page list
+	 * Parse a WP page list.
 	 *
 	 * @param str $mode Either 'structural' or 'readable'
 	 * @return array $pages All 'book' pages
@@ -1182,7 +1191,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Parse a WP menu
+	 * Parse a WP menu.
 	 *
 	 * @param str $mode Either 'structural' or 'readable'
 	 * @return array $pages All 'book' pages
@@ -1295,7 +1304,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Strip out all but lowest level menu items
+	 * Strip out all but lowest level menu items.
 	 *
 	 * @param array $menu_items An array of menu item objects
 	 * @return array $sub_items All lowest level items
@@ -1334,7 +1343,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Utility to get children of a menu item
+	 * Utility to get children of a menu item.
 	 *
 	 * @param array $menu_items An array of menu item objects
 	 * @param obj $menu_obj The menu item object
@@ -1371,7 +1380,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Utility to get parent of a menu item
+	 * Utility to get parent of a menu item.
 	 *
 	 * @param obj $menu_obj The menu item object
 	 * @return int $menu_obj The parent menu item
@@ -1404,7 +1413,7 @@ class Commentpress_Core_Navigator {
 
 
 	/**
-	 * Get top parent menu item
+	 * Get top parent menu item.
 	 *
 	 * @param object $menu_obj The queried menu object
 	 * @return object $parent_obj The parent object or false if

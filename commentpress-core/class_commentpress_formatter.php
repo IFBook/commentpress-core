@@ -30,7 +30,7 @@ class Commentpress_Core_Formatter {
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
 	 * @since 3.3
 	 *
@@ -52,7 +52,7 @@ class Commentpress_Core_Formatter {
 
 
 	/**
-	 * Set up all items associated with this object
+	 * Set up all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -63,7 +63,7 @@ class Commentpress_Core_Formatter {
 
 
 	/**
-	 * If needed, destroys all items associated with this object
+	 * If needed, destroys all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -86,7 +86,7 @@ class Commentpress_Core_Formatter {
 
 
 	/**
-	 * Override the name of the type dropdown label
+	 * Override the name of the type dropdown label.
 	 *
 	 * @param str $name The existing name of the label
 	 * @return str $name The modified name of the label
@@ -103,7 +103,7 @@ class Commentpress_Core_Formatter {
 
 
 	/**
-	 * Define the "types" of groupblog
+	 * Define the "types" of groupblog.
 	 *
 	 * @param array $existing_options The existing types of groupblog
 	 * @return array $existing_options The modified types of groupblog
@@ -127,7 +127,7 @@ class Commentpress_Core_Formatter {
 
 
 	/**
-	 * Choose content formatter by blog type or post meta value
+	 * Choose content formatter by blog type or post meta value.
 	 *
 	 * @param str $formatter The existing formatter code
 	 * @return str $formatter The existing formatter code
@@ -191,7 +191,7 @@ class Commentpress_Core_Formatter {
 
 
 	/**
-	 * Object initialisation
+	 * Object initialisation.
 	 *
 	 * @return void
 	 */
@@ -205,7 +205,7 @@ class Commentpress_Core_Formatter {
 
 
 	/**
-	 * Register WordPress hooks
+	 * Register WordPress hooks.
 	 *
 	 * @return void
 	 */

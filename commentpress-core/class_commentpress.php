@@ -102,7 +102,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
 	 * @since 3.0
 	 */
@@ -116,7 +116,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * If needed, destroys this object
+	 * If needed, destroys this object.
 	 *
 	 * @return void
 	 */
@@ -141,7 +141,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Runs when plugin is activated
+	 * Runs when plugin is activated.
 	 *
 	 * @return void
 	 */
@@ -158,7 +158,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Runs when plugin is deactivated
+	 * Runs when plugin is deactivated.
 	 *
 	 * @return void
 	 */
@@ -175,7 +175,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Utility that fires an action when CommentPress has loaded
+	 * Utility that fires an action when CommentPress has loaded.
 	 *
 	 * @return void
 	 */
@@ -189,7 +189,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Loads translation, if present
+	 * Loads translation, if present.
 	 *
 	 * @return void
 	 */
@@ -219,7 +219,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Called when BuddyPress is active
+	 * Called when BuddyPress is active.
 	 *
 	 * @return void
 	 */
@@ -233,7 +233,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Configure when BuddyPress is loaded
+	 * Configure when BuddyPress is loaded.
 	 *
 	 * @return void
 	 */
@@ -379,7 +379,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Utility to add a message to admin pages when upgrade required
+	 * Utility to add a message to admin pages when upgrade required.
 	 *
 	 * @return void
 	 */
@@ -396,7 +396,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Appends option to admin menu
+	 * Appends option to admin menu.
 	 *
 	 * @return void
 	 */
@@ -453,7 +453,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Prints plugin options page header
+	 * Prints plugin options page header.
 	 *
 	 * @return void
 	 */
@@ -495,7 +495,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Enqueue plugin options page css
+	 * Enqueue plugin options page css.
 	 *
 	 * @return void
 	 */
@@ -518,7 +518,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Enqueue plugin options page javascript
+	 * Enqueue plugin options page javascript.
 	 *
 	 * @return void
 	 */
@@ -532,7 +532,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Prints plugin options page
+	 * Prints plugin options page.
 	 *
 	 * @return void
 	 */
@@ -549,7 +549,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Add scripts needed across all WP admin pages
+	 * Add scripts needed across all WP admin pages.
 	 *
 	 * @param str $hook The requested admin page
 	 * @return void
@@ -568,7 +568,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Adds script libraries
+	 * Adds script libraries.
 	 *
 	 * @return void
 	 */
@@ -598,7 +598,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Adds CSS
+	 * Adds CSS.
 	 *
 	 * @return void
 	 */
@@ -612,7 +612,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Redirect to child page
+	 * Redirect to child page.
 	 *
 	 * @return void
 	 */
@@ -626,7 +626,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Inserts plugin-specific header items
+	 * Inserts plugin-specific header items.
 	 *
 	 * @param str $headers
 	 * @return void
@@ -646,7 +646,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Parses page/post content
+	 * Parses page/post content.
 	 *
 	 * @param str $content The content of the page/post
 	 * @return str $content The modified content
@@ -699,7 +699,7 @@ class Commentpress_Core {
 		 * to create content summaries. I now can't remember why I was being so
 		 * cautious about not parsing twice, but since JetPack is so useful and
 		 * common, I'm commenting this out until I get reports that something
-		 * odd is happening
+		 * odd is happening.
 		 */
 
 		// only parse content once
@@ -713,7 +713,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Retrieves option for displaying TOC
+	 * Retrieves option for displaying TOC.
 	 *
 	 * @return mixed $result
 	 */
@@ -730,7 +730,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Retrieves minimise all button
+	 * Retrieves minimise all button.
 	 *
 	 * @param str $sidebar The type of sidebar (comments, toc, activity)
 	 * @return str $result The HTML for minimise button
@@ -748,7 +748,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Retrieves header minimise button
+	 * Retrieves header minimise button.
 	 *
 	 * @return str $result The HTML for minimise button
 	 */
@@ -765,7 +765,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Retrieves text_signature hidden input
+	 * Retrieves text_signature hidden input.
 	 *
 	 * @return str $result The HTML input
 	 */
@@ -809,7 +809,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Add reserved names
+	 * Add reserved names.
 	 *
 	 * @param array $reserved_names The existing list of illegal names
 	 * @return array $reserved_names The modified list of illegal names
@@ -838,7 +838,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Add sidebar to signup form
+	 * Add sidebar to signup form.
 	 *
 	 * @return void
 	 */
@@ -852,7 +852,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Adds meta boxes to admin screens
+	 * Adds meta boxes to admin screens.
 	 *
 	 * @return void
 	 */
@@ -913,7 +913,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Adds meta box to page edit screens
+	 * Adds meta box to page edit screens.
 	 *
 	 * @return void
 	 */
@@ -1090,7 +1090,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Adds meta box to post edit screens
+	 * Adds meta box to post edit screens.
 	 *
 	 * @return void
 	 */
@@ -1159,7 +1159,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Adds workflow meta box to post edit screens
+	 * Adds workflow meta box to post edit screens.
 	 *
 	 * @return void
 	 */
@@ -1173,7 +1173,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Adds help copy to admin page in WP <= 3.2
+	 * Adds help copy to admin page in WP <= 3.2.
 	 *
 	 * @param str $text The existing help text
 	 * @return str $text The modified help text
@@ -1198,7 +1198,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Adds help copy to admin page in WP3.3+
+	 * Adds help copy to admin page in WP3.3+.
 	 *
 	 * @param object $screen The existing screen object
 	 * @return object $screen The modified screen object
@@ -1230,7 +1230,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Stores our additional params
+	 * Stores our additional params.
 	 *
 	 * @param int $post_id The numeric ID of the post (or revision)
 	 * @param object $post The post object
@@ -1248,7 +1248,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Check for data integrity of other posts when one is deleted
+	 * Check for data integrity of other posts when one is deleted.
 	 *
 	 * @param int $post_id The numeric ID of the post (or revision)
 	 */
@@ -1262,7 +1262,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Stores our additional param - the text signature
+	 * Stores our additional param - the text signature.
 	 *
 	 * @param int $comment_ID The numeric ID of the comment
 	 * @param str $comment_status The status of the comment
@@ -1292,7 +1292,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Get table of contents
+	 * Get table of contents.
 	 *
 	 * @return void
 	 */
@@ -1316,7 +1316,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Get table of contents list
+	 * Get table of contents list.
 	 *
 	 * @return void
 	 */
@@ -1340,7 +1340,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Exclude special pages from page listings
+	 * Exclude special pages from page listings.
 	 *
 	 * @param array $excluded_array The existing list of excluded pages
 	 * @return array $excluded_array The modified list of excluded pages
@@ -1368,7 +1368,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Exclude special pages from admin page listings
+	 * Exclude special pages from admin page listings.
 	 *
 	 * @param array $query The existing page query
 	 * @return void
@@ -1400,7 +1400,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Page counts still need amending
+	 * Page counts still need amending.
 	 *
 	 * @param array $vars The existing variables
 	 * @return array $vars The modified list of variables
@@ -1422,13 +1422,13 @@ class Commentpress_Core {
 
 				/**
 				 * Data comes in like this:
+				 *
 				 * [all] => <a href='edit.php?post_type=page' class="current">All <span class="count">(8)</span></a>
 				 * [publish] => <a href='edit.php?post_status=publish&amp;post_type=page'>Published <span class="count">(8)</span></a>
 				 */
 
 				// capture existing value enclosed in brackets
 				preg_match( '/\((\d+)\)/', $vars['all'], $matches );
-				//print_r( $matches ); die();
 
 				// did we get a result?
 				if ( isset( $matches[1] ) ) {
@@ -1447,7 +1447,6 @@ class Commentpress_Core {
 
 				// capture existing value enclosed in brackets
 				preg_match( '/\((\d+)\)/', $vars['publish'], $matches );
-				//print_r( $matches ); die();
 
 				// did we get a result?
 				if ( isset( $matches[1] ) ) {
@@ -1476,7 +1475,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Get comments sorted by text signature and paragraph
+	 * Get comments sorted by text signature and paragraph.
 	 *
 	 * @param int $post_ID The numeric ID of the post
 	 * @return array $_comments An array of sorted comment data
@@ -1491,7 +1490,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Get paragraph number for a particular text signature
+	 * Get paragraph number for a particular text signature.
 	 *
 	 * @param str $text_signature The text signature
 	 * @return int $num The position in text signature array
@@ -1509,7 +1508,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Get text signature for a particular paragraph number
+	 * Get text signature for a particular paragraph number.
 	 *
 	 * @param int $para_num The paragraph number in a post
 	 * @return str $text_signature The text signature
@@ -1530,7 +1529,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Get a link to a "special" page
+	 * Get a link to a "special" page.
 	 *
 	 * @param str $page_type The CommentPress Core name of a special page
 	 * @return str $link THe HTML link to that page
@@ -1613,7 +1612,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Get the URL for a "special" page
+	 * Get the URL for a "special" page.
 	 *
 	 * @param str $page_type The CommentPress Core name of a special page
 	 * @return str $_url The URL of that page
@@ -1645,7 +1644,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Get book cover
+	 * Get book cover.
 	 *
 	 * @param str The markup for the "cover"
 	 */
@@ -1665,7 +1664,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Check if we are on the signup page
+	 * Check if we are on the signup page.
 	 *
 	 * @return boolean $is_signup True if signup page, false otherwise
 	 * @todo:
@@ -1697,7 +1696,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Utility to check for presence of Theme My Login
+	 * Utility to check for presence of Theme My Login.
 	 *
 	 * @return bool $success True if TML page, false otherwise
 	 * @todo:
@@ -1729,7 +1728,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Utility to check for presence of Members List
+	 * Utility to check for presence of Members List.
 	 *
 	 * @return bool $success True if is Members List page, false otherwise
 	 */
@@ -1758,7 +1757,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Utility to check for presence of Subscribe to Comments Reloaded
+	 * Utility to check for presence of Subscribe to Comments Reloaded.
 	 *
 	 * @return bool $success True if "Subscribe to Comments Reloaded" page, false otherwise
 	 */
@@ -1788,7 +1787,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Override the comment reply script that BP Docs loads
+	 * Override the comment reply script that BP Docs loads.
 	 *
 	 * @return void
 	 */
@@ -1802,7 +1801,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Override the comment reply script that BP Docs loads
+	 * Override the comment reply script that BP Docs loads.
 	 *
 	 * @return void
 	 */
@@ -1816,7 +1815,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Override the comments tempate for BP Docs
+	 * Override the comments tempate for BP Docs.
 	 *
 	 * @param str $path The existing path to the template
 	 * @param str $original_path The original path to the template
@@ -1840,7 +1839,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Override the Featured Comments behaviour
+	 * Override the Featured Comments behaviour.
 	 *
 	 * @return void
 	 */
@@ -1865,7 +1864,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Get the Featured Comments link markup
+	 * Get the Featured Comments link markup.
 	 *
 	 * @param str $editlink The existing HTML link
 	 * @param array $comment The comment data
@@ -1892,7 +1891,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Return the name of the default sidebar
+	 * Return the name of the default sidebar.
 	 *
 	 * @return str $return The code for the default sidebar
 	 */
@@ -1998,7 +1997,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Get the order of the sidebars
+	 * Get the order of the sidebars.
 	 *
 	 * @return array $order Sidebars in order of display
 	 */
@@ -2018,7 +2017,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Check if a page/post can be commented on
+	 * Check if a page/post can be commented on.
 	 *
 	 * @return bool $is_commentable True if commentable, false otherwise
 	 */
@@ -2057,7 +2056,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Check if user agent is mobile
+	 * Check if user agent is mobile.
 	 *
 	 * @return bool $is_mobile True if mobile OS, false otherwise
 	 */
@@ -2071,7 +2070,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Check if user agent is tablet
+	 * Check if user agent is tablet.
 	 *
 	 * @return boolean $is_tablet True if tablet OS, false otherwise
 	 */
@@ -2097,7 +2096,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Object initialisation
+	 * Object initialisation.
 	 *
 	 * @return void
 	 */
@@ -2248,7 +2247,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Register WordPress hooks
+	 * Register WordPress hooks.
 	 *
 	 * @return void
 	 */
@@ -2373,7 +2372,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Utility to check for commentable CPT
+	 * Utility to check for commentable CPT.
 	 *
 	 * @todo: in development
 	 *
@@ -2426,7 +2425,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Adds the formatter to the page/post metabox
+	 * Adds the formatter to the page/post metabox.
 	 *
 	 * @param object $post The WordPress post object
 	 * @return void
@@ -2506,7 +2505,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Adds the default sidebar preference to the page/post metabox
+	 * Adds the default sidebar preference to the page/post metabox.
 	 *
 	 * @param object $post The WordPress post object
 	 * @return void
@@ -2560,7 +2559,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Adds the paragraph numbering preference to the page/post metabox
+	 * Adds the paragraph numbering preference to the page/post metabox.
 	 *
 	 * @param object $post The WordPress post object
 	 * @return void
@@ -2598,7 +2597,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Deactivate this plugin
+	 * Deactivate this plugin.
 	 *
 	 * @param str $plugin The name of the plugin
 	 * @param bool $network_wide True if the plugin is network-activated, false otherwise

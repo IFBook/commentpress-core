@@ -30,7 +30,7 @@ class Commentpress_Core_Display {
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
 	 * @since 3.0
 	 *
@@ -52,7 +52,7 @@ class Commentpress_Core_Display {
 
 
 	/**
-	 * If needed, sets up this object
+	 * If needed, sets up this object.
 	 *
 	 * @return void
 	 */
@@ -62,14 +62,14 @@ class Commentpress_Core_Display {
 		search_theme_directories( true );
 
 		/**
-		 * Get groupblog-set theme, if we have one
+		 * Get groupblog-set theme, if we have one.
 		 *
 		 * Allow filtering here because plugins may want to override a correctly-set
 		 * CommentPress Core theme for a particular groupblog (or type of groupblog).
 		 *
 		 * If that is the case, then the filter callback must return boolean 'false'
 		 * to prevent the theme being applied and also implement a filter on
-		 * 'cp_forced_theme_slug' below that returns the desired theme slug
+		 * 'cp_forced_theme_slug' below that returns the desired theme slug.
 		 */
 		$theme = apply_filters( 'commentpress_get_groupblog_theme', $this->parent_obj->get_groupblog_theme() );
 
@@ -140,7 +140,7 @@ class Commentpress_Core_Display {
 
 
 	/**
-	 * If needed, destroys this object
+	 * If needed, destroys this object.
 	 *
 	 * @return void
 	 */
@@ -214,7 +214,7 @@ class Commentpress_Core_Display {
 
 
 	/**
-	 * Enqueue jQuery, jQuery UI and plugins
+	 * Enqueue jQuery, jQuery UI and plugins.
 	 *
 	 * @return void
 	 */
@@ -269,7 +269,7 @@ class Commentpress_Core_Display {
 
 
 	/**
-	 * Enqueue our text highlighter script
+	 * Enqueue our text highlighter script.
 	 *
 	 * @return void
 	 */
@@ -352,7 +352,7 @@ class Commentpress_Core_Display {
 
 
 	/**
-	 * Enqueue our quicktags script
+	 * Enqueue our quicktags script.
 	 *
 	 * @return void
 	 */
@@ -396,7 +396,7 @@ class Commentpress_Core_Display {
 
 
 	/**
-	 * Get plugin stylesheets
+	 * Get plugin stylesheets.
 	 *
 	 * @return void
 	 */
@@ -416,7 +416,7 @@ class Commentpress_Core_Display {
 
 
 	/**
-	 * Test if TinyMCE is allowed
+	 * Test if TinyMCE is allowed.
 	 *
 	 * @return bool $allowed
 	 */
@@ -460,7 +460,7 @@ class Commentpress_Core_Display {
 
 
 	/**
-	 * Get built-in TinyMCE scripts from WordPress Includes directory
+	 * Get built-in TinyMCE scripts from WordPress Includes directory.
 	 *
 	 * @return void
 	 */
@@ -517,7 +517,7 @@ class Commentpress_Core_Display {
 
 
 	/**
-	 * Get help text
+	 * Get help text.
 	 *
 	 * @return str $help The hrlp HTML
 	 */
@@ -541,7 +541,7 @@ HELPTEXT;
 
 
 	/**
-	 * Show the posts and their comment count in a list format
+	 * Show the posts and their comment count in a list format.
 	 *
 	 * @param str $params the parameters to list posts by
 	 * @return void
@@ -702,9 +702,9 @@ HELPTEXT;
 
 
 	/**
-	 * Show username (with link)
+	 * Show username (with link).
 	 *
-	 * @todo: remove from theme functions.php?
+	 * @todo Remove from theme functions.php?
 	 *
 	 * @param int $author_id The numeric ID of the author
 	 * @param bool $echo True if link is to be echoed, false if returned
@@ -751,7 +751,7 @@ HELPTEXT;
 
 
 	/**
-	 * Print the posts and their comment count in a list format
+	 * Print the posts and their comment count in a list format.
 	 *
 	 * @return void
 	 */
@@ -869,7 +869,7 @@ HELPTEXT;
 
 
 	/**
-	 * Get the block comment icon
+	 * Get the block comment icon.
 	 *
 	 * @param int $comment_count The number of comments
 	 * @param str $text_signature The comment text signature
@@ -1012,7 +1012,7 @@ HELPTEXT;
 
 
 	/**
-	 * Get the block paragraph icon
+	 * Get the block paragraph icon.
 	 *
 	 * @param int $comment_count The number of comments
 	 * @param str $text_signature The comment text signature
@@ -1110,7 +1110,7 @@ HELPTEXT;
 
 
 	/**
-	 * Get the content comment icon tag
+	 * Get the content comment icon tag.
 	 *
 	 * @param str $text_signature The comment text signature
 	 * @param str $commenticon The comment icon
@@ -1225,7 +1225,7 @@ HELPTEXT;
 
 
 	/**
-	 * Get the text signature input for the comment form
+	 * Get the text signature input for the comment form.
 	 *
 	 * @param str $text_sig The comment text signature
 	 * @return str $input
@@ -1243,7 +1243,7 @@ HELPTEXT;
 
 
 	/**
-	 * Get the minimise all button
+	 * Get the minimise all button.
 	 *
 	 * @param str $sidebar The type of sidebar (comments, toc, activity)
 	 * @return str $tag The tag
@@ -1277,7 +1277,7 @@ HELPTEXT;
 
 
 	/**
-	 * Get the header minimise button
+	 * Get the header minimise button.
 	 *
 	 * @return str $link The markup of the link
 	 */
@@ -1294,7 +1294,7 @@ HELPTEXT;
 
 
 	/**
-	 * Get an image wrapped in a link
+	 * Get an image wrapped in a link.
 	 *
 	 * @param str $src The location of image file
 	 * @param str $url The link target
@@ -1329,7 +1329,7 @@ HELPTEXT;
 
 
 	/**
-	 * Got the WordPress admin page
+	 * Got the WordPress admin page.
 	 *
 	 * @return str $admin_page The HTML for the admin page
 	 */
@@ -1367,15 +1367,15 @@ HELPTEXT;
 
 
 	/**
-	 * Object initialisation
+	 * Object initialisation.
 	 *
 	 * @return void
 	 */
 	function _init() {
 
 		/**
-		 * Moved mobile checks to class_commentpress_db.php so it only loads as needed
-		 * and so that it loads *after* the old Commentpress loads it
+		 * Moved mobile checks to class_commentpress_db.php so it only loads as
+		 * needed and so that it loads *after* the old Commentpress loads it.
 		 */
 
 	}
@@ -1383,7 +1383,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the admin form HTML
+	 * Returns the admin form HTML.
 	 *
 	 * @return str $admin_page The admin page HTML
 	 */
@@ -1469,7 +1469,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the CommentPress Core options for the admin form
+	 * Returns the CommentPress Core options for the admin form.
 	 *
 	 * @return str $options
 	 */
@@ -1613,7 +1613,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns optional options, if defined
+	 * Returns optional options, if defined.
 	 *
 	 * @return str $html
 	 */
@@ -1724,7 +1724,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the upgrade details for the admin form
+	 * Returns the upgrade details for the admin form.
 	 *
 	 * @return str $upgrade
 	 */
@@ -2050,7 +2050,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the multisite deactivate button for the admin form
+	 * Returns the multisite deactivate button for the admin form.
 	 *
 	 * @return str $html
 	 */
@@ -2064,7 +2064,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the reset button for the admin form
+	 * Returns the reset button for the admin form.
 	 *
 	 * @return str $reset
 	 */
@@ -2089,7 +2089,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the rich text editor button for the admin form
+	 * Returns the rich text editor button for the admin form.
 	 *
 	 * @return str $editor
 	 */
@@ -2133,7 +2133,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the TOC options for the admin form
+	 * Returns the TOC options for the admin form.
 	 *
 	 * @return str $editor
 	 */
@@ -2198,7 +2198,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the Sidebar options for the admin form
+	 * Returns the Sidebar options for the admin form.
 	 *
 	 * @return str $toc
 	 */
@@ -2238,7 +2238,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the override paragraph commenting button for the admin form
+	 * Returns the override paragraph commenting button for the admin form.
 	 *
 	 * @return str $override
 	 */
@@ -2263,7 +2263,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the textblock meta button for the admin form
+	 * Returns the textblock meta button for the admin form.
 	 *
 	 * @return str $override
 	 */
@@ -2290,7 +2290,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the submit button
+	 * Returns the submit button.
 	 *
 	 * @return str $submit The submit button HTML
 	 */
@@ -2314,7 +2314,7 @@ HELPTEXT;
 
 
 	/**
-	 * Get admin javascript, copied from wp-includes/custom-header.php
+	 * Get admin javascript, copied from wp-includes/custom-header.php.
 	 *
 	 * @return void
 	 */
@@ -2411,7 +2411,7 @@ HELPTEXT;
 
 
 	/**
-	 * Return the javascript to init TinyMCE for WP < 3.2
+	 * Return the javascript to init TinyMCE for WP < 3.2.
 	 *
 	 * @return str $js
 	 */
@@ -2435,7 +2435,7 @@ HELPTEXT;
 
 
 		/**
-		 * TinyMCE callback function
+		 * TinyMCE callback function.
 		 */
 		function br_to_nl( element_id, html, body ) {
 
@@ -2450,7 +2450,7 @@ HELPTEXT;
 
 
 		/**
-		 * TinyMCE init
+		 * TinyMCE init.
 		 */
 		tinyMCEPreInit = {
 
@@ -2531,7 +2531,8 @@ HELPTEXT;
 
 
 	/**
-	 * Adds the TinyMCE editor to comment textareas in WP > 3.2
+	 * Adds the TinyMCE editor to comment textareas in WP > 3.2.
+	 *
 	 * Adapted from wp_tiny_mce in /wp-admin/includes/post.php
 	 *
 	 * @param mixed $settings optional An array that can add to or overwrite the default TinyMCE settings.
@@ -2627,7 +2628,7 @@ HELPTEXT;
 			$initArray = array_merge($initArray, $settings);
 
 		/**
-		 * For people who really REALLY know what they're doing with TinyMCE
+		 * For people who really REALLY know what they're doing with TinyMCE:
 		 * You can modify initArray to add, remove, change elements of the config before tinyMCE.init
 		 * Setting "valid_elements", "invalid_elements" and "extended_valid_elements" can be done through "cprc_tinymce_before_init".
 		 * Best is to use the default cleanup by not specifying valid_elements, as TinyMCE contains full set of XHTML 1.0.
@@ -2635,7 +2636,7 @@ HELPTEXT;
 		$initArray = apply_filters('cprc_tinymce_before_init', $initArray);
 
 		/**
-		 * Deprecated
+		 * Deprecated.
 		 *
 		 * The tiny_mce_version filter is not needed since external plugins are loaded directly by TinyMCE.
 		 * These plugins can be refreshed by appending query string to the URL passed to mce_external_plugins filter.

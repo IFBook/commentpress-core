@@ -62,7 +62,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
 	 * @since 3.0
 	 *
@@ -81,7 +81,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Set up all items associated with this object
+	 * Set up all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -92,7 +92,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * If needed, destroys all items associated with this object
+	 * If needed, destroys all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -115,7 +115,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Intercept content and modify based on paragraphs, blocks or lines
+	 * Intercept content and modify based on paragraphs, blocks or lines.
 	 *
 	 * @param str $content The existing content
 	 * @return str $content The modified content
@@ -215,7 +215,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Get comments sorted by text signature and paragraph
+	 * Get comments sorted by text signature and paragraph.
 	 *
 	 * @param int $post_ID The numeric ID of the post
 	 * @return array $_comments
@@ -250,7 +250,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Object initialisation
+	 * Object initialisation.
 	 *
 	 * @return void
 	 */
@@ -261,7 +261,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Parses the content by tag
+	 * Parses the content by tag.
 	 *
 	 * @param str $content The post content
 	 * @param str $tag The tag to filter by
@@ -551,7 +551,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Splits the content into an array by tag
+	 * Splits the content into an array by tag.
 	 *
 	 * @param str $content The post content
 	 * @param str $tag The tag to filter by
@@ -563,13 +563,14 @@ class Commentpress_Core_Parser {
 		$content = $this->_filter_twitter_embeds( $content );
 
 		/**
-		 * get our paragraphs (needed to split regex into two strings as some IDEs
-		 * don't like PHP closing tags, even they are part of a regex and not actually
-		 * closing tags at all)
+		 * Get our paragraphs.
+		 *
+		 * This is needed to split regex into two strings since some IDEs don't
+		 * like PHP closing tags, even they are part of a regex and not actually
+		 * closing tags at all.
 		 */
 		//preg_match_all( '/<(' . $tag . ')[^>]*>(.*?)(<\/(' . $tag . ')>)/', $content, $matches );
 		preg_match_all( '#<(' . $tag . ')[^>]*?' . '>(.*?)</(' . $tag . ')>#si', $content, $matches );
-		//print_r( $matches[0] ); print_r( $matches[1] ); exit();
 
 		// kick out if we don't have any
 		if( ! empty($matches[0]) ) {
@@ -589,7 +590,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Parses the content by tag and builds text signatures array
+	 * Parses the content by tag and builds text signatures array.
 	 *
 	 * @param str $content The post content
 	 * @param str $tag The tag to filter by
@@ -671,7 +672,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Parse the content by line (<br />)
+	 * Parse the content by line (<br />).
 	 *
 	 * @param str $content The post content
 	 * @return str $content The parsed content
@@ -800,7 +801,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Splits the content into an array by line
+	 * Splits the content into an array by line.
 	 *
 	 * @param str $content The post content
 	 * @return array $output_array The ordered array of matched items
@@ -861,7 +862,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Parses the content by line (<br />) and builds text signatures array
+	 * Parses the content by line (<br />) and builds text signatures array.
 	 *
 	 * @param str $content The post content
 	 * @return array $text_signatures The ordered array of text signatures
@@ -970,7 +971,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Parses the content by comment block
+	 * Parses the content by comment block.
 	 *
 	 * @param str $content The post content
 	 * @return str $content The parsed content
@@ -1077,7 +1078,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Splits the content into an array by block
+	 * Splits the content into an array by block.
 	 *
 	 * @param str $content The post content
 	 * @return array $output_array The ordered array of matched items
@@ -1193,7 +1194,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Parses the content by comment block and generates text signature array
+	 * Parses the content by comment block and generates text signature array.
 	 *
 	 * @param str $content The post content
 	 * @return array $text_signatures The ordered array of text signatures
@@ -1268,7 +1269,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Utility to check if the content has our custom quicktag
+	 * Utility to check if the content has our custom quicktag.
 	 *
 	 * @param str $content The post content
 	 * @return str $content The modified post content
@@ -1294,7 +1295,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Utility to remove our custom quicktag
+	 * Utility to remove our custom quicktag.
 	 *
 	 * @param str $content The post content
 	 * @return str $content The modified post content
@@ -1331,7 +1332,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Utility to strip out shortcodes from content otherwise they get formatting
+	 * Utility to strip out shortcodes from content otherwise they get formatting.
 	 *
 	 * @param str $content The post content
 	 * @return str $content The modified post content
@@ -1484,7 +1485,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Generates a text signature based on the content of a paragraph
+	 * Generates a text signature based on the content of a paragraph.
 	 *
 	 * @param str $text The text of a paragraph
 	 * @return str $text_signature The generated text signature
@@ -1524,7 +1525,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Removes embedded tweets (new in WP 3.4)
+	 * Removes embedded tweets (new in WP 3.4).
 	 *
 	 * @todo Make these commentable
 	 *
@@ -1571,7 +1572,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Wraps standalone captions (ie, not inside <p> tags) in <p>
+	 * Wraps standalone captions (ie, not inside <p> tags) in <p>.
 	 *
 	 * @param str $content The post content
 	 * @return str $content The filtered post content
@@ -1608,7 +1609,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Removes leading and trailing <br /> tags from embedded quotes
+	 * Removes leading and trailing <br /> tags from embedded quotes.
 	 *
 	 * @param string $content The post content
 	 * @return string $content The filtered post content
@@ -1652,7 +1653,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Get comments sorted by text signature and paragraph
+	 * Get comments sorted by text signature and paragraph.
 	 *
 	 * @param int $post_ID The numeric ID of the post
 	 * @return array $_comments The array of comment data
@@ -1738,7 +1739,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Filter comments to find comments for the current page of a multipage post
+	 * Filter comments to find comments for the current page of a multipage post.
 	 *
 	 * @param array $comments The array of comment objects
 	 * @return array $filtered The array of comments for the current page
@@ -1803,7 +1804,7 @@ class Commentpress_Core_Parser {
 
 
 	/**
-	 * Filter comments by text signature
+	 * Filter comments by text signature.
 	 *
 	 * @param array $comments The array of comment objects
 	 * @param array $text_signatures The array of text signatures

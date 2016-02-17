@@ -205,7 +205,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
 	 * @since 3.0
 	 *
@@ -224,7 +224,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Set up all items associated with this object
+	 * Set up all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -299,7 +299,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Upgrade Commentpress plugin from 3.1 options to latest set
+	 * Upgrade Commentpress plugin from 3.1 options to latest set.
 	 *
 	 * @return boolean $result
 	 */
@@ -584,7 +584,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Reset WordPress to prior state, but retain options
+	 * Reset WordPress to prior state, but retain options.
 	 *
 	 * @return void
 	 */
@@ -616,7 +616,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Update WordPress database schema
+	 * Update WordPress database schema.
 	 *
 	 * @return bool $result True if successful, false otherwise
 	 */
@@ -642,7 +642,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Upgrade WordPress database schema
+	 * Upgrade WordPress database schema.
 	 *
 	 * @return bool $result True if successful, false otherwise
 	 */
@@ -714,7 +714,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Check for plugin upgrade
+	 * Check for plugin upgrade.
 	 *
 	 * @return bool $result True if required, false otherwise
 	 */
@@ -747,7 +747,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Check for options added in this plugin upgrade
+	 * Check for options added in this plugin upgrade.
 	 *
 	 * @return bool $result True if upgrade needed, false otherwise
 	 */
@@ -800,7 +800,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Save the settings set by the administrator
+	 * Save the settings set by the administrator.
 	 *
 	 * @return bool $result True if successful, false otherwise
 	 */
@@ -1041,7 +1041,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Upgrade CommentPress Core options to array
+	 * Upgrade CommentPress Core options to array.
 	 *
 	 * @return array $commentpress_options The plugin options
 	 */
@@ -1055,7 +1055,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Return existence of a specified option
+	 * Return existence of a specified option.
 	 *
 	 * @param str $option_name The name of the option
 	 * @return bool True if the option exists, false otherwise
@@ -1078,7 +1078,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Return a value for a specified option
+	 * Return a value for a specified option.
 	 *
 	 * @param str $option_name The name of the option
 	 * @param mixed $default The default value for the option
@@ -1102,7 +1102,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Sets a value for a specified option
+	 * Sets a value for a specified option.
 	 *
 	 * @param str $option_name The name of the option
 	 * @param mixed $value The value for the option
@@ -1134,7 +1134,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Deletes a specified option
+	 * Deletes a specified option.
 	 *
 	 * @param str $option_name The name of the option
 	 * @return void
@@ -1157,7 +1157,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Return existence of a specified WordPress option
+	 * Return existence of a specified WordPress option.
 	 *
 	 * @param str $option_name The name of the option
 	 * @return bool True if option exists, false otherwise
@@ -1190,7 +1190,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Return a value for a specified WordPress option
+	 * Return a value for a specified WordPress option.
 	 *
 	 * @param str $option_name The name of the option
 	 * @param mixed $default The default value for the option
@@ -1214,7 +1214,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Sets a value for a specified WordPress option
+	 * Sets a value for a specified WordPress option.
 	 *
 	 * @param str $option_name The name of the option
 	 * @param mixed $value The value for the option
@@ -1238,7 +1238,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Get default header bg colour
+	 * Get default header bg colour.
 	 *
 	 * @return str $header_bg_colour The hex value of the header
 	 */
@@ -1262,7 +1262,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * When a page is saved, this also saves the CP options
+	 * When a page is saved, this also saves the CP options.
 	 *
 	 * @param object $post_obj The post object
 	 * @return void
@@ -1287,7 +1287,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * When a page is saved, this also saves the CP options
+	 * When a page is saved, this also saves the CP options.
 	 *
 	 * @param object $post_obj The post object
 	 * @return void
@@ -1340,7 +1340,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * When a page is saved, this authenticates that our options can be saved
+	 * When a page is saved, this authenticates that our options can be saved.
 	 *
 	 * @param object $post_obj The post object
 	 * @return void
@@ -1374,7 +1374,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Save Page Title visibility
+	 * Save Page Title visibility.
 	 *
 	 * @param object $post The post object
 	 * @return string $_data Either 'show' (default) or ''
@@ -1415,7 +1415,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Save Page Meta visibility
+	 * Save Page Meta visibility.
 	 *
 	 * @param object $post The post object
 	 * @return string $_data Either 'hide' (default) or ''
@@ -1456,7 +1456,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Save Page Numbering format
+	 * Save Page Numbering format.
 	 *
 	 * Only first top-level page is allowed to save this
 	 *
@@ -1542,7 +1542,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Save Page Layout for Title Page -> to allow for Book Cover image
+	 * Save Page Layout for Title Page -> to allow for Book Cover image.
 	 *
 	 * @param object $post The post object
 	 * @return void
@@ -1582,7 +1582,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * When a post is saved, this also saves the CP options
+	 * When a post is saved, this also saves the CP options.
 	 *
 	 * @param object $post_obj The post object
 	 * @return void
@@ -1718,7 +1718,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * When a post is saved, this authenticates that our options can be saved
+	 * When a post is saved, this authenticates that our options can be saved.
 	 *
 	 * @param object $post_obj The post object
 	 * @return void
@@ -1753,7 +1753,9 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Override post formatter (override blog_type)
+	 * Override post formatter.
+	 *
+	 * This overrides the "blog_type" for a post.
 	 *
 	 * @param object $post The post object
 	 * @return void
@@ -1795,7 +1797,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Override default sidebar
+	 * Override default sidebar.
 	 *
 	 * @param object $post The post object
 	 * @return void
@@ -1843,7 +1845,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Starting Paragraph Number - meta only exists when not default value
+	 * Starting Paragraph Number - meta only exists when not default value.
 	 *
 	 * @param object $post The post object
 	 * @return void
@@ -1886,7 +1888,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Save workflow meta value
+	 * Save workflow meta value.
 	 *
 	 * @param object $post The post object
 	 * @return void
@@ -1964,7 +1966,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * When a page is deleted, this makes sure that the CP options are synced
+	 * When a page is deleted, this makes sure that the CP options are synced.
 	 *
 	 * @param object $post_id The post ID
 	 * @return void
@@ -2019,7 +2021,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Create all "special" pages
+	 * Create all "special" pages.
 	 *
 	 * @return void
 	 */
@@ -2064,7 +2066,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Create a particular "special" page
+	 * Create a particular "special" page.
 	 *
 	 * @param str $_page The type of special page
 	 * @return mixed $new_id If successful, the numeric ID of the new page, false on failure
@@ -2141,7 +2143,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Delete "special" pages
+	 * Delete "special" pages.
 	 *
 	 * @return bool $success True if page deleted successfully, false otherwise
 	 */
@@ -2151,9 +2153,9 @@ class Commentpress_Core_Database {
 		$success = true;
 
 		/**
-		 * only delete special pages if we have one of the CommentPress Core themes active
-		 * because other themes may have a totally different way of presenting the
-		 * content of the blog
+		 * Only delete special pages if we have one of the CommentPress Core
+		 * themes active because other themes may have a totally different way
+		 * of presenting the content of the blog.
 		 */
 
 		// retrieve data on special pages
@@ -2209,7 +2211,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Delete a particular "special" page
+	 * Delete a particular "special" page.
 	 *
 	 * @param str $_page The type of special page to delete
 	 * @return boolean $success True if succesfully deleted false otherwise
@@ -2220,9 +2222,9 @@ class Commentpress_Core_Database {
 		$success = true;
 
 		/**
-		 * only delete a special page if we have one of the CommentPress Core themes active
-		 * because other themes may have a totally different way of presenting the
-		 * content of the blog
+		 * Only delete a special page if we have one of the CommentPress Core
+		 * themes active because other themes may have a totally different way
+		 * of presenting the content of the blog.
 		 */
 
 		// get id of special page
@@ -2326,7 +2328,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Test if a page is a "special" page
+	 * Test if a page is a "special" page.
 	 *
 	 * @return bool $is_special_page True if a special page, false otherwise
 	 */
@@ -2370,7 +2372,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Check if a post allows comments to be posted
+	 * Check if a post allows comments to be posted.
 	 *
 	 * @return boolean $allowed True if comments enabled, false otherwise
 	 */
@@ -2405,7 +2407,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Get WordPress approved comments
+	 * Get WordPress approved comments.
 	 *
 	 * @param int $post_id The numeric ID of the post
 	 * @return array $comments The array of comment data
@@ -2423,7 +2425,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Get all WordPress comments for a post, unless paged
+	 * Get all WordPress comments for a post, unless paged.
 	 *
 	 * @param int $post_ID The numeric ID of the post
 	 * @return array $comments The array of comment data
@@ -2454,7 +2456,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Get all comments for a post
+	 * Get all comments for a post.
 	 *
 	 * @param int $post_ID The ID of the post
 	 * @return array $comments The array of comment data
@@ -2480,7 +2482,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * When a comment is saved, this also saves the text signature
+	 * When a comment is saved, this also saves the text signature.
 	 *
 	 * @param int $comment_id The numeric ID of the comment
 	 * @return boolean $result True if successful, false otherwise
@@ -2526,7 +2528,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * When a comment is saved, this also saves the text selection
+	 * When a comment is saved, this also saves the text selection.
 	 *
 	 * @param int $comment_id The numeric ID of the comment
 	 * @return boolean $result True if successful, false otherwise
@@ -2590,9 +2592,10 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * When a comment is saved, this also saves the page it was submitted on. this
-	 * allows us to point to the correct page of a multipage post without parsing
-	 * the content every time
+	 * When a comment is saved, this also saves the page it was submitted on.
+	 *
+	 * This allows us to point to the correct page of a multipage post without
+	 * parsing the content every time.
 	 *
 	 * @param int $comment_ID The numeric ID of the comment
 	 * @return void
@@ -2641,7 +2644,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Retrieves text signature by comment ID
+	 * Retrieves text signature by comment ID.
 	 *
 	 * @param int $comment_ID The numeric ID of the comment
 	 * @return str $text_signature The text signature for the comment
@@ -2667,7 +2670,9 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Store text sigs in a global - because some versions of PHP do not save properties!
+	 * Store text sigs in a global.
+	 *
+	 * This is needed because some versions of PHP do not save properties!
 	 *
 	 * @param array $sigs An array of text signatures
 	 * @return void
@@ -2686,7 +2691,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Retrieve text sigs
+	 * Retrieve text sigs.
 	 *
 	 * @return array $text_signatures An array of text signatures
 	 */
@@ -2704,7 +2709,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Get javascript for the plugin, context dependent
+	 * Get javascript for the plugin, context dependent.
 	 *
 	 * @return str $script The Javascript
 	 */
@@ -3000,7 +3005,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Sets class properties for mobile browsers
+	 * Sets class properties for mobile browsers.
 	 *
 	 * @return void
 	 */
@@ -3060,7 +3065,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Returns class properties for mobile browsers
+	 * Returns class properties for mobile browsers.
 	 *
 	 * @return bool $is_mobile True if mobile device, false otherwise
 	 */
@@ -3082,7 +3087,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Returns class properties for tablet browsers
+	 * Returns class properties for tablet browsers.
 	 *
 	 * @return bool $is_tablet True if tablet device, false otherwise
 	 */
@@ -3104,7 +3109,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Returns class properties for touch devices
+	 * Returns class properties for touch devices.
 	 *
 	 * @return bool $is_touch True if touch device, false otherwise
 	 */
@@ -3138,7 +3143,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Object initialisation
+	 * Object initialisation.
 	 *
 	 * @return void
 	 */
@@ -3165,7 +3170,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Create new post with content of existing
+	 * Create new post with content of existing.
 	 *
 	 * @return int $post The WordPress post object to make a copy of
 	 * @return int $new_post_id The numeric ID of the new post
@@ -3216,7 +3221,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Create "title" page
+	 * Create "title" page.
 	 *
 	 * @return int $title_id The numeric ID of the Title Page
 	 */
@@ -3311,7 +3316,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Create "General Comments" page
+	 * Create "General Comments" page.
 	 *
 	 * @return int $general_comments_id The numeric ID of the "General Comments" page
 	 */
@@ -3362,7 +3367,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Create "all comments" page
+	 * Create "all comments" page.
 	 *
 	 * @return int $all_comments_id The numeric ID of the "All Comments" page
 	 */
@@ -3413,7 +3418,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Create "Comments by Author" page
+	 * Create "Comments by Author" page.
 	 *
 	 * @return int $group_id The numeric ID of the "Comments by Author" page
 	 */
@@ -3464,7 +3469,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Create "blog" page
+	 * Create "blog" page.
 	 *
 	 * @return int $blog_id The numeric ID of the "Blog" page
 	 */
@@ -3518,7 +3523,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Create "Blog Archive" page
+	 * Create "Blog Archive" page.
 	 *
 	 * @return int $blog_id The numeric ID of the "Blog Archive" page
 	 */
@@ -3569,7 +3574,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Create "table of contents" page
+	 * Create "table of contents" page.
 	 *
 	 * @todo NOT USED
 	 *
@@ -3620,7 +3625,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Cancels comment paging because CP will not work with comment paging
+	 * Cancels comment paging because CP will not work with comment paging.
 	 *
 	 * @return void
 	 */
@@ -3634,7 +3639,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Resets comment paging option when plugin is deactivated
+	 * Resets comment paging option when plugin is deactivated.
 	 *
 	 * @return void
 	 */
@@ -3648,7 +3653,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Clears widgets for a fresh start
+	 * Clears widgets for a fresh start.
 	 *
 	 * @return void
 	 */
@@ -3671,7 +3676,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Resets widgets when plugin is deactivated
+	 * Resets widgets when plugin is deactivated.
 	 *
 	 * @return void
 	 */
@@ -3685,7 +3690,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Store WordPress option
+	 * Store WordPress option.
 	 *
 	 * @param str $name The name of the option
 	 * @param mixed $value The value of the option
@@ -3704,7 +3709,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Reset WordPress option
+	 * Reset WordPress option.
 	 *
 	 * @param str $name The name of the option
 	 * @return void
@@ -3722,7 +3727,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Create all basic CommentPress Core options
+	 * Create all basic CommentPress Core options.
 	 *
 	 * @return void
 	 */
@@ -3758,7 +3763,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Reset CommentPress Core options
+	 * Reset CommentPress Core options.
 	 *
 	 * @return void
 	 */
@@ -3826,7 +3831,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Migrate all CommentPress Core options from old plugin
+	 * Migrate all CommentPress Core options from old plugin.
 	 *
 	 * @return void
 	 */
@@ -4143,7 +4148,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Upgrade Commentpress options to array (only for pre-CP3.2 upgrades)
+	 * Upgrade Commentpress options to array (only for pre-CP3.2 upgrades).
 	 *
 	 * @return void
 	 */
@@ -4182,7 +4187,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Delete all legacy Commentpress options
+	 * Delete all legacy Commentpress options.
 	 *
 	 * @return void
 	 */
