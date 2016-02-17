@@ -9,19 +9,31 @@
  */
 class Commentpress_Core_Editor {
 
-
-
 	/**
-	 * Properties
+	 * Plugin object.
+	 *
+	 * @since 3.7
+	 * @access public
+	 * @var object $parent_obj The plugin object
 	 */
-
-	// parent object reference
 	public $parent_obj;
 
-	// db object reference
+	/**
+	 * Database interaction object.
+	 *
+	 * @since 3.7
+	 * @access public
+	 * @var object $db The database object
+	 */
 	public $db;
 
-	// toggle state
+	/**
+	 * Editor toggle state.
+	 *
+	 * @since 3.7
+	 * @access public
+	 * @var str $toggle_state The toggle state
+	 */
 	public $toggle_state;
 
 

@@ -9,25 +9,49 @@
  */
 class Commentpress_Multisite {
 
-
-
 	/**
-	 * Properties
+	 * Plugin object.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var object $parent_obj The plugin object
 	 */
-
-	// parent object reference
 	public $parent_obj;
 
-	// admin object reference
+	/**
+	 * Database interaction object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $db The database object
+	 */
 	public $db;
 
-	// MS: CommentPress Core enabled on all sites, default is "false"
+	/**
+	 * CommentPress Core enabled on all sites flag.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var str $cpmu_bp_force_commentpress The enabled on all sites flag ('0' or '1')
+	 */
 	public $cpmu_force_commentpress = '0';
 
-	// MS: default title page content (not yet used)
+	/**
+	 * Default title page content on new sites (not yet used).
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var str $cpmu_title_page_content The default title page content
+	 */
 	//public $cpmu_title_page_content = '';
 
-	// MS: allow translation workflow, default is "off"
+	/**
+	 * Allow translation workflow flag.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var str $cpmu_disable_translation_workflow The translation workflow allowed flag ('0' or '1')
+	 */
 	public $cpmu_disable_translation_workflow = '1';
 
 

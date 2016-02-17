@@ -9,31 +9,67 @@
  */
 class Commentpress_Multisite_Buddypress {
 
-
-
 	/**
-	 * Properties
+	 * Plugin object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $parent_obj The plugin object
 	 */
-
-	// parent object reference
 	public $parent_obj;
 
-	// admin object reference
+	/**
+	 * Database interaction object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $db The database object
+	 */
 	public $db;
 
-	// BP: CommentPress Core enabled on all groupblogs, default is "false"
+	/**
+	 * CommentPress Core enabled on all groupblogs flag.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var str $cpmu_bp_force_commentpress The CommentPress Core enabled on all groupblogs flag
+	 */
 	public $cpmu_bp_force_commentpress = '0';
 
-	// BP: default theme stylesheet for groupblogs (WP3.4+)
+	/**
+	 * Default theme stylesheet for groupblogs (WP3.4+).
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var str $cpmu_bp_groupblog_theme The default theme stylesheet
+	 */
 	public $cpmu_bp_groupblog_theme = 'commentpress-modern';
 
-	// BP: default theme name for groupblogs (pre-WP3.4)
+	/**
+	 * Default theme stylesheet for groupblogs (pre-WP3.4).
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var str $cpmu_bp_groupblog_theme_name The default theme stylesheet
+	 */
 	public $cpmu_bp_groupblog_theme_name = 'CommentPress Default Theme';
 
-	// BP: make groupblogs private by default
+	/**
+	 * Groupblog privacy flag.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var bool $cpmu_bp_groupblog_privacy True if private groups have private groupblogs
+	 */
 	public $cpmu_bp_groupblog_privacy = 1;
 
-	// require comments on groupblogs (commenters must be logged in and members)
+	/**
+	 * Require login to leave comments on groupblogs flag.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var bool $cpmu_bp_require_comment_registration True if login required
+	 */
 	public $cpmu_bp_require_comment_registration = 1;
 
 

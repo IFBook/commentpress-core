@@ -9,40 +9,94 @@
  */
 class Commentpress_Core {
 
-
-
 	/**
-	 * Properties
+	 * Database interaction object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $db The database object
 	 */
-
-	// database object
 	public $db;
 
-	// display object
+	/**
+	 * Display handling object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $display The display object
+	 */
 	public $display;
 
-	// nav object
+	/**
+	 * Navigation handling object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $nav The nav object
+	 */
 	public $nav;
 
-	// parser object
+	/**
+	 * Content parser object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $parser The parser object
+	 */
 	public $parser;
 
-	// formatter object
+	/**
+	 * Formatter object.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var object $formatter The formatter object
+	 */
 	public $formatter;
 
-	// workflow object
+	/**
+	 * Workflow object.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var object $workflow The workflow object
+	 */
 	public $workflow;
 
-	// front-end editor object
+	/**
+	 * WordPress Front End Editor compatibility object.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var object $editor The front-end editor object
+	 */
 	public $editor;
 
-	// options page
+	/**
+	 * Options page reference.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var str $options_page The options page reference
+	 */
 	public $options_page;
 
-	// buddypress present
+	/**
+	 * BuddyPress present flag.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var bool $buddypress True if BuddyPress present, false otherwise
+	 */
 	public $buddypress = false;
 
-	// bp-groupblog present
+	/**
+	 * BP Groupblog flag.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var bool $bp_groupblog True if BP Groupblog present, false otherwise
+	 */
 	public $bp_groupblog = false;
 
 

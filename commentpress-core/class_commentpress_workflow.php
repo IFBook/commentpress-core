@@ -9,13 +9,13 @@
  */
 class Commentpress_Core_Workflow {
 
-
-
 	/**
-	 * Properties
+	 * Plugin object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $parent_obj The plugin object
 	 */
-
-	// parent object reference
 	public $parent_obj;
 
 

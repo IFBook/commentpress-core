@@ -9,19 +9,31 @@
  */
 class Commentpress_Multisite_Admin {
 
-
-
 	/**
-	 * Properties
+	 * Plugin object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $parent_obj The plugin object
 	 */
-
-	// parent object reference
 	public $parent_obj;
 
-	// options page
+	/**
+	 * Options page reference.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var str $options_page The options page reference
+	 */
 	public $options_page;
 
-	// options array
+	/**
+	 * Multisite options array.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var array $cpmu_options The multisite options array
+	 */
 	public $cpmu_options = array();
 
 

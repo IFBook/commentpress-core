@@ -14,25 +14,49 @@
  */
 class Commentpress_Core_Parser {
 
-
-
 	/**
-	 * Properties
+	 * Plugin object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $parent_obj The plugin object
 	 */
-
-	// parent object reference
 	public $parent_obj;
 
-	// init text_signatures
+	/**
+	 * Text signatures array.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var array $text_signatures The text signatures array
+	 */
 	public $text_signatures = array();
 
-	// all comments
+	/**
+	 * All comments array.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var array $comments_all The all comments array
+	 */
 	public $comments_all = array();
 
-	// approved comments
+	/**
+	 * Approved comments array.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var array $comments_approved The approved comments array
+	 */
 	public $comments_approved = array();
 
-	// sorted comments
+	/**
+	 * Sorted comments array.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var array $comments_sorted The sorted comments array
+	 */
 	public $comments_sorted = array();
 
 

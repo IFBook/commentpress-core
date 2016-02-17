@@ -32,22 +32,31 @@ if ( ! class_exists( 'Commentpress_Multisite_Loader' ) ) :
  */
 class Commentpress_Multisite_Loader {
 
-
-
 	/**
-	 * Properties
+	 * Database interaction object.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var object $db The database object
 	 */
-
-	// parent object reference
-	public $parent_obj;
-
-	// admin object reference
 	public $db;
 
-	// multisite object reference
+	/**
+	 * Multisite object.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var object $mu The multisite object reference
+	 */
 	public $mu;
 
-	// buddypress object reference
+	/**
+	 * BuddyPress compatibility object.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var object $bp The BuddyPress object reference
+	 */
 	public $bp;
 
 
@@ -56,13 +65,8 @@ class Commentpress_Multisite_Loader {
 	 * Initialises this object.
 	 *
 	 * @since 3.3
-	 *
-	 * @param object $parent_obj a reference to the parent object
 	 */
-	function __construct( $parent_obj = null ) {
-
-		// store reference to "parent" (calling obj, not OOP parent)
-		$this->parent_obj = $parent_obj;
+	function __construct() {
 
 		// init
 		$this->initialise();

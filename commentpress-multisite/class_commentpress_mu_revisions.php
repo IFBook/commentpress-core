@@ -9,16 +9,22 @@
  */
 class Commentpress_Multisite_Revisions {
 
-
-
 	/**
-	 * Properties
+	 * Plugin object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $parent_obj The plugin object
 	 */
-
-	// parent object reference
 	public $parent_obj;
 
-	// admin object reference
+	/**
+	 * Database interaction object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $db The database object
+	 */
 	public $db;
 
 

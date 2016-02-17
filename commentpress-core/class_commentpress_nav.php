@@ -10,31 +10,67 @@
  */
 class Commentpress_Core_Navigator {
 
-
-
 	/**
-	 * Properties
+	 * Plugin object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $parent_obj The plugin object
 	 */
-
-	// parent object reference
 	public $parent_obj;
 
-	// next pages array
+	/**
+	 * Next pages array.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var array $next_pages The next pages array
+	 */
 	public $next_pages = array();
 
-	// previous pages array
+	/**
+	 * Previous pages array.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var array $previous_pages The previous pages array
+	 */
 	public $previous_pages = array();
 
-	// next posts array
+	/**
+	 * Next posts array.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var array $next_posts The next posts array
+	 */
 	public $next_posts = array();
 
-	// previous posts array
+	/**
+	 * Previous posts array.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var array $previous_posts The previous posts array
+	 */
 	public $previous_posts = array();
 
-	// page numbers array
+	/**
+	 * Page numbers array.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var array $page_numbers The page numbers array
+	 */
 	public $page_numbers = array();
 
-	// menu objects array, when using custom menu
+	/**
+	 * Menu objects array, when using custom menu.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var array $menu_objects The menu objects array
+	 */
 	public $menu_objects = array();
 
 

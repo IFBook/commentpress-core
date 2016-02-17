@@ -9,73 +9,197 @@
  */
 class Commentpress_Core_Database {
 
-
-
 	/**
-	 * Properties
+	 * Plugin object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $parent_obj The plugin object
 	 */
-
-	// parent object reference
 	public $parent_obj;
 
-	// ---------- options ----------
+	/**
+	 * Plugin options array.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var array $commentpress_options The plugin options array
+	 */
 	public $commentpress_options = array();
 
-	// TOC content ('post' or 'page')
+	/**
+	 * Table of Contents content flag.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var str $toc_content The TOC content (either 'post' or 'page')
+	 */
 	public $toc_content = 'page';
 
-	// TOC chapters are pages by default
+	/**
+	 * Table of Contents "chapters are pages" flag.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var bool $toc_chapter_is_page The Table of Contents "chapters are pages" flag
+	 */
 	public $toc_chapter_is_page = 1;
 
-	// Show extended TOC content for posts lists
+	/**
+	 * Extended Table of Contents content for posts lists flag.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var bool $show_extended_toc The extended TOC content for posts lists flag
+	 */
 	public $show_extended_toc = 1;
 
-	// TOC shows subpages by default
+	/**
+	 * Table of Contents show subpages flag.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var bool $show_subpages The Table of Contents shows subpages by default
+	 */
 	public $show_subpages = 1;
 
-	// show page titles by default
+	/**
+	 * Page title visibility flag.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var str $title_visibility Show page titles by default
+	 */
 	public $title_visibility = 'show';
 
-	// hide page meta by default
+	/**
+	 * Page meta visibility flag.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var str $page_meta_visibility Hide page meta by default
+	 */
 	public $page_meta_visibility = 'hide';
 
-	// default editor (tinyMCE)
+	/**
+	 * Default editor flag.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var bool $comment_editor Default to rich text editor (TinyMCE)
+	 */
 	public $comment_editor = 1;
 
-	// promote reading (1) or commenting (0)
+	/**
+	 * Promote reading flag.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var bool $promote_reading Either promote reading (1) or commenting (0)
+	 */
 	public $promote_reading = 0;
 
-	// default excerpt length
+	/**
+	 * Excerpt length.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var bool $excerpt_length The default excerpt length
+	 */
 	public $excerpt_length = 55;
 
-	// default header background colour (hex, same as in layout.css)
+	/**
+	 * Default header background colour (hex, same as in theme stylesheet).
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var bool $header_bg_colour The default header background colour
+	 */
 	public $header_bg_colour = '2c2622';
 
-	// default scroll speed (ms)
+	/**
+	 * Default scroll speed.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var str $js_scroll_speed The scroll speed (in millisecs)
+	 */
 	public $js_scroll_speed = '800';
 
-	// default type of blog - eg, array('0' => 'Poetry','1' => 'Prose')
+	/**
+	 * Default type of blog.
+	 *
+	 * Blog types are built as an array - eg, array('0' => 'Poetry','1' => 'Prose')
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var bool|int $blog_type The default type of blog
+	 */
 	public $blog_type = false;
 
-	// default blog workflow (like translation, for example), off by default
+	/**
+	 * Default blog workflow.
+	 *
+	 * Like "translation", for example, off by default
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var bool $blog_workflow True if blog workflow enabled
+	 */
 	public $blog_workflow = 0;
 
-	// default sidebar ('toc' => Contents tab)
+	/**
+	 * Default sidebar tab.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var str $sidebar_default The default sidebar tab ('toc' == Contents tab)
+	 */
 	public $sidebar_default = 'toc';
 
-	// default minimum page width (px)
+	/**
+	 * Default minimum page width (px).
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var str $min_page_width The default minimum page width in pixels
+	 */
 	public $min_page_width = '447';
 
-	// "live" comment refreshing off by default
+	/**
+	 * "Live" comment refreshing.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var str $para_comments_live The "live" comment refreshing setting (off by default)
+	 */
 	public $para_comments_live = 0;
 
-	// prevent save_post hook firing more than once
+	/**
+	 * Prevent save_post hook firing more than once.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var str $saved_post True if post already saved
+	 */
 	public $saved_post = false;
 
-	// featured images off by default
+	/**
+	 * Featured images flag.
+	 *
+	 * @since 3.5
+	 * @access public
+	 * @var str $featured_images The featured images flag ('y' or 'n')
+	 */
 	public $featured_images = 'n';
 
-	// show textblock meta by default
+	/**
+	 * Textblock meta flag.
+	 *
+	 * @since 3.5
+	 * @access public
+	 * @var str $textblock_meta The textblock meta flag ('y' or 'n')
+	 */
 	public $textblock_meta = 'y';
 
 
