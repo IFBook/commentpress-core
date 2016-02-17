@@ -97,8 +97,6 @@
 		// get page num
 		$num = $commentpress_core->nav->get_page_number( get_the_ID() );
 
-		//print_r( $num ); die();
-
 		// if we get one
 		if ( $num ) {
 

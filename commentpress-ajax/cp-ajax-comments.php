@@ -333,7 +333,6 @@ function cpajax_get_new_comments() {
 
 	// echo
 	echo json_encode( $data );
-	//print_r( $last_comment_count );
 
 	// die
 	exit();
@@ -382,8 +381,6 @@ function cpajax_get_comment_depth( $comment, $depth ) {
  * @return str $edit_button The modified edit button HTML
  */
 function cpajax_add_reassign_button( $edit_button, $comment ) {
-
-	//print_r( $comment ); die();
 
 	// pass if not top level
 	if ( $comment->comment_parent != '0' ) { return $edit_button; }
@@ -632,7 +629,6 @@ function cpajax_infinite_scroll_load_next_page() {
 
 	// get all pages
 	$all_pages = $commentpress_core->nav->get_book_pages( 'readable' );
-	//if ( is_user_logged_in() ) { print_r( $all_pages ); die(); }
 
 	// if we have any pages...
 	if ( count( $all_pages ) == 0 ) { die( 'No $all_pages' ); }
@@ -687,7 +683,6 @@ function cpajax_infinite_scroll_load_next_page() {
 	$page_title = get_the_title( $post->ID ) . ' | ' . $page_title;
 
 	// get next page
-	//print_r( array( $post, $post->post_title ) ); die();
 
 	// get feature image
 	ob_start();
@@ -718,7 +713,6 @@ function cpajax_infinite_scroll_load_next_page() {
 
 	// get page number
 	$number = $commentpress_core->nav->get_page_number( $post->ID );
-	//print_r( $number ); die();
 
 	// get menu ID, if we have one
 	if ( isset( $new_post->menu_id ) ) {

@@ -2482,8 +2482,6 @@ class Commentpress_Core_Database {
 				$comment_ID
 			);
 
-			//var_dump( $query );
-
 			// store comment signature
 			$result = $wpdb->query( $query );
 
@@ -2653,12 +2651,9 @@ class Commentpress_Core_Database {
 	 */
 	public function set_text_sigs( $sigs ) {
 
-		global $ffffff_sigs;
-
 		// store them
+		global $ffffff_sigs;
 		$ffffff_sigs = $sigs;
-
-		//var_dump( $ffffff_sigs );
 
 	}
 
@@ -2671,11 +2666,8 @@ class Commentpress_Core_Database {
 	 */
 	public function get_text_sigs() {
 
-		global $ffffff_sigs;
-
-		//var_dump( $ffffff_sigs );
-
 		// get them
+		global $ffffff_sigs;
 		return $ffffff_sigs;
 
 	}

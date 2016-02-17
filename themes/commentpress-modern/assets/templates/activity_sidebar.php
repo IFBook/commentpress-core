@@ -17,9 +17,8 @@ if ( $_is_commentable AND ! post_password_required() ) {
 	// set default phrase
 	$_paragraph_text = __( 'Recent Comments on this Page', 'commentpress-core' );
 
+	// switch by current post type
 	$_current_type = get_post_type();
-	//print_r( $_current_type ); die();
-
 	switch( $_current_type ) {
 
 		// we can add more of these if needed
@@ -172,7 +171,6 @@ if (
 
 	// check if this blog is a group blog...
 	$group_id = get_groupblog_group_id( get_current_blog_id() );
-	//print_r( $group_id ); die();
 
 	// when this blog is a groupblog
 	if ( !empty( $group_id ) ) {

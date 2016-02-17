@@ -191,8 +191,6 @@ $_pages = new WP_Query( $page_args );
 // proceed only if published pages exist
 if ( $_pages->have_posts() ) {
 
-	//print_r( $pages ); die();
-
 	// init name
 	$_author_name = $my_author->nickname;
 

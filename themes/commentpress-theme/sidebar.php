@@ -21,8 +21,6 @@ if (
 
 }
 
-//print_r( $_tab_order ); die();
-
 
 
 ?><!-- sidebar.php -->

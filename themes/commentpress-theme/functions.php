@@ -455,8 +455,6 @@ function commentpress_page_navigation( $with_comments = false ) {
 	// get next page
 	$next_page = $commentpress_core->nav->get_next_page( $with_comments );
 
-	//var_dump( $next_page );
-
 	// did we get a next page?
 	if ( is_object( $next_page ) ) {
 

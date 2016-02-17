@@ -7,8 +7,6 @@ global $commentpress_core;
 
 // init tab order (only relevant for old default theme)
 $_tab_order = array( 'comments', 'activity' );
-//print_r( $_tab_order ); die();
-
 
 
 
@@ -22,7 +20,6 @@ if ( is_object( $commentpress_core ) ) {
 	$is_commentable = ( $commentpress_core->is_commentable() ) ? true : false;
 
 }
-
 
 
 
