@@ -1,13 +1,13 @@
 <?php
 
 /**
- * CommentPress Core Multisite Class.
+ * CommentPress Core WordPress Multisite Class.
  *
- * This class encapsulates Multisite compatibility.
+ * This class encapsulates WordPress Multisite compatibility.
  *
  * @since 3.3
  */
-class Commentpress_Multisite {
+class Commentpress_Multisite_Wordpress {
 
 	/**
 	 * Plugin object.

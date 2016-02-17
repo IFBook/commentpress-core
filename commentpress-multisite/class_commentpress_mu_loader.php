@@ -48,7 +48,7 @@ class Commentpress_Multisite_Loader {
 	 * @access public
 	 * @var object $mu The multisite object reference
 	 */
-	public $mu;
+	public $multisite;
 
 	/**
 	 * Revisions object.
@@ -148,7 +148,7 @@ class Commentpress_Multisite_Loader {
 		require_once( $class_file_path );
 
 		// init multisite object
-		$this->mu = new Commentpress_Multisite( $this );
+		$this->multisite = new Commentpress_Multisite_Wordpress( $this );
 
 		// ---------------------------------------------------------------------
 		// load Post Revisions object (merge this into Core as an option)
