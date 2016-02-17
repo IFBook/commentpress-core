@@ -239,7 +239,7 @@ class Commentpress_Multisite_Loader {
 		require_once( $_class_file_path );
 
 		// instantiate it
-		$this->workshop = new CommentpressGroupblogWorkshop( $this );
+		$this->workshop = new Commentpress_Multisite_Buddypress_Groupblog( $this );
 
 		// ---------------------------------------------------------------------
 		// call initialise() on admin object again

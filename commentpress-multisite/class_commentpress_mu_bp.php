@@ -32,45 +32,45 @@ class Commentpress_Multisite_Buddypress {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var str $cpmu_bp_force_commentpress The CommentPress Core enabled on all groupblogs flag
+	 * @var str $force_commentpress The CommentPress Core enabled on all groupblogs flag
 	 */
-	public $cpmu_bp_force_commentpress = '0';
+	public $force_commentpress = '0';
 
 	/**
 	 * Default theme stylesheet for groupblogs (WP3.4+).
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var str $cpmu_bp_groupblog_theme The default theme stylesheet
+	 * @var str $groupblog_theme The default theme stylesheet
 	 */
-	public $cpmu_bp_groupblog_theme = 'commentpress-modern';
+	public $groupblog_theme = 'commentpress-modern';
 
 	/**
 	 * Default theme stylesheet for groupblogs (pre-WP3.4).
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var str $cpmu_bp_groupblog_theme_name The default theme stylesheet
+	 * @var str $groupblog_theme_name The default theme stylesheet
 	 */
-	public $cpmu_bp_groupblog_theme_name = 'CommentPress Default Theme';
+	public $groupblog_theme_name = 'CommentPress Default Theme';
 
 	/**
 	 * Groupblog privacy flag.
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var bool $cpmu_bp_groupblog_privacy True if private groups have private groupblogs
+	 * @var bool $groupblog_privacy True if private groups have private groupblogs
 	 */
-	public $cpmu_bp_groupblog_privacy = 1;
+	public $groupblog_privacy = 1;
 
 	/**
 	 * Require login to leave comments on groupblogs flag.
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var bool $cpmu_bp_require_comment_registration True if login required
+	 * @var bool $require_comment_registration True if login required
 	 */
-	public $cpmu_bp_require_comment_registration = 1;
+	public $require_comment_registration = 1;
 
 
 
@@ -1577,9 +1577,6 @@ class Commentpress_Multisite_Buddypress {
 		// add form elements to groupblog form
 		add_action( 'signup_blogform', array( $this, 'signup_blogform' ) );
 
-		// add form elements to signup form
-		add_action( 'cpmu_bp_after_blog_details_fields', array( $this, 'signup_blogform' ) );
-
 		// activate blog-specific CommentPress Core plugin
 		// added @ priority 20 because BP Groupblog adds its action at the default 10 and
 		// we want it to have done its stuff before we do ours
@@ -2425,20 +2422,20 @@ class Commentpress_Multisite_Buddypress {
 		if ( function_exists( 'wp_get_themes' ) ) {
 
 			// use stylesheet as theme data
-			$theme_data = $this->cpmu_bp_groupblog_theme;
+			$theme_data = $this->groupblog_theme;
 
 		} else {
 
 			// use name as theme data
-			$theme_data = $this->cpmu_bp_groupblog_theme_name;
+			$theme_data = $this->groupblog_theme_name;
 
 		}
 
 		// define buddypress/groupblog defaults
 		$defaults = array(
-			'cpmu_bp_force_commentpress' => $this->cpmu_bp_force_commentpress,
-			'cpmu_bp_groupblog_privacy' => $this->cpmu_bp_groupblog_privacy,
-			'cpmu_bp_require_comment_registration' => $this->cpmu_bp_require_comment_registration,
+			'cpmu_bp_force_commentpress' => $this->force_commentpress,
+			'cpmu_bp_groupblog_privacy' => $this->groupblog_privacy,
+			'cpmu_bp_require_comment_registration' => $this->require_comment_registration,
 			'cpmu_bp_groupblog_theme' => $theme_data
 		);
 
