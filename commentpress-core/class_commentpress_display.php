@@ -7,7 +7,7 @@
  *
  * @since 3.0
  */
-class CommentpressCoreDisplay {
+class Commentpress_Core_Display {
 
 
 

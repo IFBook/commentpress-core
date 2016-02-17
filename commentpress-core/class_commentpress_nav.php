@@ -8,7 +8,7 @@
  *
  * @since 3.0
  */
-class CommentpressCoreNavigator {
+class Commentpress_Core_Navigator {
 
 
 

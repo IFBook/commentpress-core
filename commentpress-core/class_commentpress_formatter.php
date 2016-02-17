@@ -7,7 +7,7 @@
  *
  * @since 3.3
  */
-class CommentpressCoreFormatter {
+class Commentpress_Core_Formatter {
 
 
 

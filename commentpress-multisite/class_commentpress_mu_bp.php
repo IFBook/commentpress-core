@@ -7,7 +7,7 @@
  *
  * @since 3.3
  */
-class CommentpressMultisiteBuddypress {
+class Commentpress_Multisite_Buddypress {
 
 
 

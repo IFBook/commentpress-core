@@ -7,7 +7,7 @@
  *
  * @since 3.3
  */
-class CommentpressMultisite {
+class Commentpress_Multisite {
 
 
 

@@ -7,7 +7,7 @@
  *
  * @since 3.3
  */
-class CommentpressMultisiteRevisions {
+class Commentpress_Multisite_Revisions {
 
 
 

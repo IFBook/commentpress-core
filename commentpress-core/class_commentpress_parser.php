@@ -12,7 +12,7 @@
  *
  * @since 3.0
  */
-class CommentpressCoreParser {
+class Commentpress_Core_Parser {
 
 
 

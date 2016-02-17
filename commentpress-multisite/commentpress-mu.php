@@ -21,7 +21,7 @@ define( 'COMMENTPRESS_MU_PLUGIN_VERSION', '1.0' );
 
 
 // sanity check
-if ( ! class_exists( 'CommentpressMultisiteLoader' ) ) :
+if ( ! class_exists( 'Commentpress_Multisite_Loader' ) ) :
 
 /**
  * CommentPress Core Multisite Loader Class.
@@ -30,7 +30,7 @@ if ( ! class_exists( 'CommentpressMultisiteLoader' ) ) :
  *
  * @since 3.3
  */
-class CommentpressMultisiteLoader {
+class Commentpress_Multisite_Loader {
 
 
 
@@ -98,7 +98,7 @@ class CommentpressMultisiteLoader {
 		require_once( $class_file_path );
 
 		// init autoload database object
-		$this->db = new CommentpressMultisiteAdmin( $this );
+		$this->db = new Commentpress_Multisite_Admin( $this );
 
 		// ---------------------------------------------------------------------
 		// load standard Multisite object
@@ -114,7 +114,7 @@ class CommentpressMultisiteLoader {
 		require_once( $class_file_path );
 
 		// init multisite object
-		$this->mu = new CommentpressMultisite( $this );
+		$this->mu = new Commentpress_Multisite( $this );
 
 		// ---------------------------------------------------------------------
 		// load Post Revisions object (merge this into Core as an option)
@@ -130,7 +130,7 @@ class CommentpressMultisiteLoader {
 		require_once( $_class_file_path );
 
 		// instantiate it
-		$this->revisions = new CommentpressMultisiteRevisions( $this );
+		$this->revisions = new Commentpress_Multisite_Revisions( $this );
 
 		// ---------------------------------------------------------------------
 		// call initialise() on admin object
@@ -171,7 +171,7 @@ class CommentpressMultisiteLoader {
 		require_once( $class_file_path );
 
 		// init buddypress object
-		$this->bp = new CommentpressMultisiteBuddypress( $this );
+		$this->bp = new Commentpress_Multisite_Buddypress( $this );
 
 		// ---------------------------------------------------------------------
 		// load Groupblog Workshop renaming object
@@ -266,7 +266,7 @@ endif; // class_exists
 global $commentpress_mu;
 
 // instantiate it
-$commentpress_mu = new CommentpressMultisiteLoader;
+$commentpress_mu = new Commentpress_Multisite_Loader;
 
 
 

@@ -7,7 +7,7 @@
  *
  * @since 3.0
  */
-class CommentpressCoreWorkflow {
+class Commentpress_Core_Workflow {
 
 
 

@@ -7,7 +7,7 @@
  *
  * @since 3.7
  */
-class CommentpressCoreEditor {
+class Commentpress_Core_Editor {
 
 
 

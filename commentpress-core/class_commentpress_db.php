@@ -7,7 +7,7 @@
  *
  * @since 3.0
  */
-class CommentpressCoreDatabase {
+class Commentpress_Core_Database {
 
 
 

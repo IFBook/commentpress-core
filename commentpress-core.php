@@ -133,7 +133,7 @@ function commentpress_file_is_present( $filename ) {
 function commentpress_include_core() {
 
 	// do we have our class?
-	if ( ! class_exists( 'CommentpressCore' ) ) {
+	if ( ! class_exists( 'Commentpress_Core' ) ) {
 
 		// define filename
 		$_file = 'commentpress-core/class_commentpress.php';
@@ -166,7 +166,7 @@ function commentpress_activate_core() {
 	if ( is_null( $commentpress_core ) ) {
 
 		// instantiate it
-		$commentpress_core = new CommentpressCore;
+		$commentpress_core = new Commentpress_Core;
 
 	}
 
