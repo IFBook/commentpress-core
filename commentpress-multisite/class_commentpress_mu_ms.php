@@ -276,32 +276,6 @@ class Commentpress_Multisite_Wordpress {
 
 
 
-	/**
-	 * Change the greeting in the WordPress Admin Bar.
-	 * Props: http://pankajanupam.in
-	 *
-	 * @param str $translated The existing translated string
-	 * @param str $text The existing untranslated string
-	 * @param str $domain The domain for this translation
-	 * @return str $translated The modified translated string
-	 */
-	public function change_admin_greeting( $translated, $text, $domain ) {
-
-		// look only for default WordPress translations
-		if ('default' != $domain) return $translated;
-
-		// catch all instances of 'Howdy'
-		if ( false !== strpos( $translated, 'Howdy' ) ) {
-			return str_replace( 'Howdy', 'Welcome', $translated );
-		}
-
-		// --<
-		return $translated;
-
-	}
-
-
-
 //##############################################################################
 
 
@@ -365,9 +339,6 @@ class Commentpress_Multisite_Wordpress {
 
 		// override Title Page content
 		//add_filter( 'cp_title_page_content', array( $this, '_get_title_page_content' ) );
-
-		// change that infernal howdy
-		add_filter( 'gettext', array( $this, 'change_admin_greeting' ), 40, 3 );
 
 	}
 
