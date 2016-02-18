@@ -138,13 +138,13 @@ function commentpress_include_core() {
 	if ( ! class_exists( 'Commentpress_Core' ) ) {
 
 		// define filename
-		$_file = 'commentpress-core/class_commentpress.php';
+		$file = 'commentpress-core/class_commentpress.php';
 
 		// get path
-		$_file_path = commentpress_file_is_present( $_file );
+		$file_path = commentpress_file_is_present( $file );
 
 		// we're fine, include class definition
-		require_once( $_file_path );
+		require_once( $file_path );
 
 	}
 
@@ -186,13 +186,13 @@ function commentpress_activate_core() {
 function commentpress_activate_ajax() {
 
 	// define filename
-	$_file = 'commentpress-ajax/cp-ajax-comments.php';
+	$file = 'commentpress-ajax/cp-ajax-comments.php';
 
 	// get path
-	$_file_path = commentpress_file_is_present( $_file );
+	$file_path = commentpress_file_is_present( $file );
 
 	// we're fine, include ajax file
-	require_once( $_file_path );
+	require_once( $file_path );
 
 }
 
@@ -452,13 +452,13 @@ if ( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_sitewide' ) {
 	// activate multisite plugin
 
 	// define filename
-	$_file = 'commentpress-multisite/class_commentpress_mu_loader.php';
+	$file = 'commentpress-multisite/class_commentpress_mu_loader.php';
 
 	// get path
-	$_file_path = commentpress_file_is_present( $_file );
+	$file_path = commentpress_file_is_present( $file );
 
 	// we're fine, include class definition
-	require_once( $_file_path );
+	require_once( $file_path );
 
 }
 

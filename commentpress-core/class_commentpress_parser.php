@@ -218,7 +218,7 @@ class Commentpress_Core_Parser {
 	 * Get comments sorted by text signature and paragraph.
 	 *
 	 * @param int $post_ID The numeric ID of the post
-	 * @return array $_comments
+	 * @return array $comments
 	 */
 	public function get_sorted_comments( $post_ID ) {
 
@@ -1599,12 +1599,12 @@ class Commentpress_Core_Parser {
 	 * Get comments sorted by text signature and paragraph.
 	 *
 	 * @param int $post_ID The numeric ID of the post
-	 * @return array $_comments The array of comment data
+	 * @return array $sorted_comments The array of comment data
 	 */
 	function _get_sorted_comments( $post_ID ) {
 
 		// init return
-		$_comments = array();
+		$sorted_comments = array();
 
 		// get all comments
 		$comments = $this->comments_all;
@@ -1613,43 +1613,43 @@ class Commentpress_Core_Parser {
 		$comments = $this->_multipage_comment_filter( $comments );
 
 		// get our signatures
-		$_sigs = $this->parent_obj->db->get_text_sigs();
+		$sigs = $this->parent_obj->db->get_text_sigs();
 
 		// assign comments to text signatures
-		$_assigned = $this->_assign_comments( $comments, $_sigs );
+		$assigned = $this->_assign_comments( $comments, $sigs );
 
-		// NB: $_assigned is an array with sigs as keys and array of comments as value
+		// NB: $assigned is an array with sigs as keys and array of comments as value
 		// it may be empty:
 
 		// if we have any comments on the whole page
-		if ( isset( $_assigned['WHOLE_PAGE_OR_POST_COMMENTS'] ) ) {
+		if ( isset( $assigned['WHOLE_PAGE_OR_POST_COMMENTS'] ) ) {
 
 			// add them first
-			$_comments['WHOLE_PAGE_OR_POST_COMMENTS'] = $_assigned['WHOLE_PAGE_OR_POST_COMMENTS'];
+			$sorted_comments['WHOLE_PAGE_OR_POST_COMMENTS'] = $assigned['WHOLE_PAGE_OR_POST_COMMENTS'];
 
 		} else {
 
 			// append empty array
-			$_comments['WHOLE_PAGE_OR_POST_COMMENTS'] = array();
+			$sorted_comments['WHOLE_PAGE_OR_POST_COMMENTS'] = array();
 
 		}
 
 		// we must have text signatures
-		if ( ! empty( $_sigs ) ) {
+		if ( ! empty( $sigs ) ) {
 
 			// then add  in the order of our text signatures
-			foreach( $_sigs AS $text_signature ) {
+			foreach( $sigs AS $text_signature ) {
 
 				// if we have any assigned
-				if ( isset( $_assigned[$text_signature] ) ) {
+				if ( isset( $assigned[$text_signature] ) ) {
 
 					// append assigned comments
-					$_comments[$text_signature] = $_assigned[$text_signature];
+					$sorted_comments[$text_signature] = $assigned[$text_signature];
 
 				} else {
 
 					// append empty array
-					$_comments[$text_signature] = array();
+					$sorted_comments[$text_signature] = array();
 
 				}
 
@@ -1658,20 +1658,20 @@ class Commentpress_Core_Parser {
 		}
 
 		// if we have any pingbacks or trackbacks
-		if ( isset( $_assigned['PINGS_AND_TRACKS'] ) ) {
+		if ( isset( $assigned['PINGS_AND_TRACKS'] ) ) {
 
 			// add them last
-			$_comments['PINGS_AND_TRACKS'] = $_assigned['PINGS_AND_TRACKS'];
+			$sorted_comments['PINGS_AND_TRACKS'] = $assigned['PINGS_AND_TRACKS'];
 
 		} else {
 
 			// append empty array
-			$_comments['PINGS_AND_TRACKS'] = array();
+			$sorted_comments['PINGS_AND_TRACKS'] = array();
 
 		}
 
 		// --<
-		return $_comments;
+		return $sorted_comments;
 
 	}
 

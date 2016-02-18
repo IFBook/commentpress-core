@@ -56,13 +56,13 @@ if ( is_multisite() ) {
 			if ( is_user_logged_in() ) {
 
 				// set default link name
-				$_new_site_title = apply_filters(
+				$new_site_title = apply_filters(
 					'cp_user_links_new_site_title',
 					__( 'Create a new document', 'commentpress-core' )
 				);
 
 				// BP uses its own signup page
-				?><li><a href="<?php echo bp_get_root_domain() . '/' . bp_get_blogs_root_slug(); ?>/create/" title="<?php echo $_new_site_title; ?>" id="btn_create" class="button"><?php echo $_new_site_title; ?></a></li>
+				?><li><a href="<?php echo bp_get_root_domain() . '/' . bp_get_blogs_root_slug(); ?>/create/" title="<?php echo $new_site_title; ?>" id="btn_create" class="button"><?php echo $new_site_title; ?></a></li>
 				<?php
 
 			} else {
@@ -74,13 +74,13 @@ if ( is_multisite() ) {
 		} else {
 
 			// set default link name
-			$_new_site_title = apply_filters(
+			$new_site_title = apply_filters(
 				'cp_user_links_new_site_title',
 				__( 'Create a new document', 'commentpress-core' )
 			);
 
 			// standard WP multisite
-			?><li><a href="<?php echo network_site_url(); ?>wp-signup.php" title="<?php echo $_new_site_title; ?>" id="btn_create" class="button"><?php echo $_new_site_title; ?></a></li>
+			?><li><a href="<?php echo network_site_url(); ?>wp-signup.php" title="<?php echo $new_site_title; ?>" id="btn_create" class="button"><?php echo $new_site_title; ?></a></li>
 			<?php
 
 		}
@@ -93,13 +93,13 @@ if ( is_multisite() ) {
 	if ( is_user_logged_in() ) {
 
 		// set default link name
-		$_dashboard_title = apply_filters(
+		$dashboard_title = apply_filters(
 			'cp_user_links_dashboard_title',
 			__( 'Dashboard', 'commentpress-core' )
 		);
 
 		?>
-		<li><a href="<?php echo admin_url(); ?>" title="<?php echo $_dashboard_title; ?>" id="btn_dash" class="button"><?php echo $_dashboard_title; ?></a></li>
+		<li><a href="<?php echo admin_url(); ?>" title="<?php echo $dashboard_title; ?>" id="btn_dash" class="button"><?php echo $dashboard_title; ?></a></li>
 		<?php
 
 	}

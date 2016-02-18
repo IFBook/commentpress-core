@@ -332,10 +332,10 @@ class Commentpress_Core_Database {
 			if ( ! $this->option_exists( 'cp_textblock_meta' ) ) {
 
 				// get choice
-				$_choice = esc_sql( $cp_textblock_meta );
+				$choice = esc_sql( $cp_textblock_meta );
 
 				// add chosen featured images option
-				$this->option_set( 'cp_textblock_meta', $_choice );
+				$this->option_set( 'cp_textblock_meta', $choice );
 
 			}
 
@@ -343,10 +343,10 @@ class Commentpress_Core_Database {
 			if ( ! $this->option_exists( 'cp_featured_images' ) ) {
 
 				// get choice
-				$_choice = esc_sql( $cp_featured_images );
+				$choice = esc_sql( $cp_featured_images );
 
 				// add chosen featured images option
-				$this->option_set( 'cp_featured_images', $_choice );
+				$this->option_set( 'cp_featured_images', $choice );
 
 			}
 
@@ -408,10 +408,10 @@ class Commentpress_Core_Database {
 				if ( ! apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
 
 					// yes, get choice
-					$_choice = esc_sql( $cp_sidebar_default );
+					$choice = esc_sql( $cp_sidebar_default );
 
 					// add chosen cp_sidebar_default option
-					$this->option_set( 'cp_sidebar_default', $_choice );
+					$this->option_set( 'cp_sidebar_default', $choice );
 
 				} else {
 
@@ -426,10 +426,10 @@ class Commentpress_Core_Database {
 			if ( ! $this->option_exists( 'cp_page_meta_visibility' ) ) {
 
 				// get choice
-				$_choice = esc_sql( $cp_page_meta_visibility );
+				$choice = esc_sql( $cp_page_meta_visibility );
 
 				// add chosen cp_page_meta_visibility option
-				$this->option_set( 'cp_page_meta_visibility', $_choice );
+				$this->option_set( 'cp_page_meta_visibility', $choice );
 
 			}
 
@@ -437,10 +437,10 @@ class Commentpress_Core_Database {
 			if ( ! $this->option_exists( 'cp_blog_workflow' ) ) {
 
 				// get choice
-				$_choice = esc_sql( $cp_blog_workflow );
+				$choice = esc_sql( $cp_blog_workflow );
 
 				// add chosen cp_blog_workflow option
-				$this->option_set( 'cp_blog_workflow', $_choice );
+				$this->option_set( 'cp_blog_workflow', $choice );
 
 			}
 
@@ -448,10 +448,10 @@ class Commentpress_Core_Database {
 			if ( ! $this->option_exists( 'cp_blog_type' ) ) {
 
 				// get choice
-				$_choice = esc_sql( $cp_blog_type );
+				$choice = esc_sql( $cp_blog_type );
 
 				// add chosen cp_blog_type option
-				$this->option_set( 'cp_blog_type', $_choice );
+				$this->option_set( 'cp_blog_type', $choice );
 
 			}
 
@@ -459,10 +459,10 @@ class Commentpress_Core_Database {
 			if ( ! $this->option_exists( 'cp_show_extended_toc' ) ) {
 
 				// get choice
-				$_choice = esc_sql( $cp_show_extended_toc );
+				$choice = esc_sql( $cp_show_extended_toc );
 
 				// add chosen cp_show_extended_toc option
-				$this->option_set( 'cp_show_extended_toc', $_choice );
+				$this->option_set( 'cp_show_extended_toc', $choice );
 
 			}
 
@@ -470,10 +470,10 @@ class Commentpress_Core_Database {
 			if ( ! $this->option_exists( 'cp_comment_editor' ) ) {
 
 				// get choice
-				$_choice = esc_sql( $cp_comment_editor );
+				$choice = esc_sql( $cp_comment_editor );
 
 				// add chosen cp_comment_editor option
-				$this->option_set( 'cp_comment_editor', $_choice );
+				$this->option_set( 'cp_comment_editor', $choice );
 
 			}
 
@@ -481,10 +481,10 @@ class Commentpress_Core_Database {
 			if ( ! $this->option_exists( 'cp_promote_reading' ) ) {
 
 				// get choice
-				$_choice = esc_sql( $cp_promote_reading );
+				$choice = esc_sql( $cp_promote_reading );
 
 				// add chosen cp_promote_reading option
-				$this->option_set( 'cp_promote_reading', $_choice );
+				$this->option_set( 'cp_promote_reading', $choice );
 
 			}
 
@@ -492,10 +492,10 @@ class Commentpress_Core_Database {
 			if ( ! $this->option_exists( 'cp_title_visibility' ) ) {
 
 				// get choice
-				$_choice = esc_sql( $cp_title_visibility );
+				$choice = esc_sql( $cp_title_visibility );
 
 				// add chosen cp_title_visibility option
-				$this->option_set( 'cp_title_visibility', $_choice );
+				$this->option_set( 'cp_title_visibility', $choice );
 
 			}
 
@@ -503,20 +503,20 @@ class Commentpress_Core_Database {
 			if ( ! $this->option_exists( 'cp_header_bg_colour' ) ) {
 
 				// get choice
-				$_choice = esc_sql( $cp_header_bg_colour );
+				$choice = esc_sql( $cp_header_bg_colour );
 
 				// strip our rgb #
-				if ( stristr( $_choice, '#' ) ) {
-					$_choice = substr( $_choice, 1 );
+				if ( stristr( $choice, '#' ) ) {
+					$choice = substr( $choice, 1 );
 				}
 
 				// reset to default if blank
-				if ( $_choice == '' ) {
-					$_choice = $this->header_bg_colour;
+				if ( $choice == '' ) {
+					$choice = $this->header_bg_colour;
 				}
 
 				// add chosen cp_header_bg_colour option
-				$this->option_set( 'cp_header_bg_colour', $_choice );
+				$this->option_set( 'cp_header_bg_colour', $choice );
 
 			}
 
@@ -524,10 +524,10 @@ class Commentpress_Core_Database {
 			if ( ! $this->option_exists( 'cp_js_scroll_speed' ) ) {
 
 				// get choice
-				$_choice = esc_sql( $cp_js_scroll_speed );
+				$choice = esc_sql( $cp_js_scroll_speed );
 
 				// add chosen cp_js_scroll_speed option
-				$this->option_set( 'cp_js_scroll_speed', $_choice );
+				$this->option_set( 'cp_js_scroll_speed', $choice );
 
 			}
 
@@ -535,10 +535,10 @@ class Commentpress_Core_Database {
 			if ( ! $this->option_exists( 'cp_min_page_width' ) ) {
 
 				// get choice
-				$_choice = esc_sql( $cp_min_page_width );
+				$choice = esc_sql( $cp_min_page_width );
 
 				// add chosen cp_min_page_width option
-				$this->option_set( 'cp_min_page_width', $_choice );
+				$this->option_set( 'cp_min_page_width', $choice );
 
 			}
 
@@ -724,10 +724,10 @@ class Commentpress_Core_Database {
 		$result = false;
 
 		// get installed version cast as string
-		$_version = (string) $this->option_wp_get( 'commentpress_version' );
+		$version = (string) $this->option_wp_get( 'commentpress_version' );
 
 		// if we have a commentpress install and it's lower than this one
-		if ( $_version !== false AND version_compare( COMMENTPRESS_VERSION, $_version, '>' ) ) {
+		if ( $version !== false AND version_compare( COMMENTPRESS_VERSION, $version, '>' ) ) {
 
 			// check whether any options need to be shown
 			if ( $this->check_upgrade_options() ) {
@@ -997,10 +997,10 @@ class Commentpress_Core_Database {
 
 					// allow plugins to override the blog type - for example if workflow is enabled,
 					// it might become a new blog type as far as buddypress is concerned
-					$_blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $cp_blog_type, $cp_blog_workflow );
+					$blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $cp_blog_type, $cp_blog_workflow );
 
 					// set the type as group meta info
-					groups_update_groupmeta( $group_id, 'groupblogtype', 'groupblogtype-' . $_blog_type );
+					groups_update_groupmeta( $group_id, 'groupblogtype', 'groupblogtype-' . $blog_type );
 
 				}
 
@@ -1354,8 +1354,8 @@ class Commentpress_Core_Database {
 		if ( $post_obj->post_type != 'page' ) return false;
 
 		// authenticate
-		$_nonce = isset( $_POST['commentpress_nonce'] ) ? $_POST['commentpress_nonce'] : '';
-		if ( ! wp_verify_nonce( $_nonce, 'commentpress_page_settings' ) ) return false;
+		$nonce = isset( $_POST['commentpress_nonce'] ) ? $_POST['commentpress_nonce'] : '';
+		if ( ! wp_verify_nonce( $nonce, 'commentpress_page_settings' ) ) return false;
 
 		// is this an auto save routine?
 		if ( defined( 'DOING_AUTOSAVE' ) AND DOING_AUTOSAVE ) return false;
@@ -1374,12 +1374,12 @@ class Commentpress_Core_Database {
 	 * Save Page Title visibility.
 	 *
 	 * @param object $post The post object
-	 * @return string $_data Either 'show' (default) or ''
+	 * @return string $data Either 'show' (default) or ''
 	 */
 	public function save_page_title_visibility( $post ) {
 
 		// find and save the data
-		$_data = ( isset( $_POST['cp_title_visibility'] ) ) ? $_POST['cp_title_visibility'] : 'show';
+		$data = ( isset( $_POST['cp_title_visibility'] ) ) ? $_POST['cp_title_visibility'] : 'show';
 
 		// set key
 		$key = '_cp_title_visibility';
@@ -1388,21 +1388,21 @@ class Commentpress_Core_Database {
 		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 			// delete the meta_key if empty string
-			if ( $_data === '' ) {
+			if ( $data === '' ) {
 				delete_post_meta( $post->ID, $key );
 			} else {
-				update_post_meta( $post->ID, $key, esc_sql( $_data ) );
+				update_post_meta( $post->ID, $key, esc_sql( $data ) );
 			}
 
 		} else {
 
 			// add the data
-			add_post_meta( $post->ID, $key, esc_sql( $_data ) );
+			add_post_meta( $post->ID, $key, esc_sql( $data ) );
 
 		}
 
 		// --<
-		return $_data;
+		return $data;
 
 	}
 
@@ -1412,12 +1412,12 @@ class Commentpress_Core_Database {
 	 * Save Page Meta visibility.
 	 *
 	 * @param object $post The post object
-	 * @return string $_data Either 'hide' (default) or ''
+	 * @return string $data Either 'hide' (default) or ''
 	 */
 	public function save_page_meta_visibility( $post ) {
 
 		// find and save the data
-		$_data = ( isset( $_POST['cp_page_meta_visibility'] ) ) ? $_POST['cp_page_meta_visibility'] : 'hide';
+		$data = ( isset( $_POST['cp_page_meta_visibility'] ) ) ? $_POST['cp_page_meta_visibility'] : 'hide';
 
 		// set key
 		$key = '_cp_page_meta_visibility';
@@ -1426,21 +1426,21 @@ class Commentpress_Core_Database {
 		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 			// delete the meta_key if empty string
-			if ( $_data === '' ) {
+			if ( $data === '' ) {
 				delete_post_meta( $post->ID, $key );
 			} else {
-				update_post_meta( $post->ID, $key, esc_sql( $_data ) );
+				update_post_meta( $post->ID, $key, esc_sql( $data ) );
 			}
 
 		} else {
 
 			// add the data
-			add_post_meta( $post->ID, $key, esc_sql( $_data ) );
+			add_post_meta( $post->ID, $key, esc_sql( $data ) );
 
 		}
 
 		// --<
-		return $_data;
+		return $data;
 
 	}
 
@@ -1473,13 +1473,13 @@ class Commentpress_Core_Database {
 			) { // -->
 
 				// get the data
-				$_data = $_POST['cp_number_format'];
+				$data = $_POST['cp_number_format'];
 
 				// if the custom field already has a value
 				if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 					// if empty string
-					if ( $_data === '' ) {
+					if ( $data === '' ) {
 
 						// delete the meta_key
 						delete_post_meta( $post->ID, $key );
@@ -1487,14 +1487,14 @@ class Commentpress_Core_Database {
 					} else {
 
 						// update the data
-						update_post_meta( $post->ID, $key, esc_sql( $_data ) );
+						update_post_meta( $post->ID, $key, esc_sql( $data ) );
 
 					}
 
 				} else {
 
 					// add the data
-					add_post_meta( $post->ID, $key, esc_sql( $_data ) );
+					add_post_meta( $post->ID, $key, esc_sql( $data ) );
 
 				}
 
@@ -1510,13 +1510,13 @@ class Commentpress_Core_Database {
 			if ( count( $all_pages ) > 0 ) {
 
 				// loop
-				foreach( $all_pages AS $_page ) {
+				foreach( $all_pages AS $page ) {
 
 					// exclude first top level page
-					if ( $post->ID != $_page->ID ) {
+					if ( $post->ID != $page->ID ) {
 
 						// delete the meta value
-						delete_post_meta( $_page->ID, $key );
+						delete_post_meta( $page->ID, $key );
 
 					}
 
@@ -1542,7 +1542,7 @@ class Commentpress_Core_Database {
 		if ( $post->ID == $this->option_get( 'cp_welcome_page' ) ) {
 
 			// find and save the data
-			$_data = ( isset( $_POST['cp_page_layout'] ) ) ? $_POST['cp_page_layout'] : 'text';
+			$data = ( isset( $_POST['cp_page_layout'] ) ) ? $_POST['cp_page_layout'] : 'text';
 
 			// set key
 			$key = '_cp_page_layout';
@@ -1551,16 +1551,16 @@ class Commentpress_Core_Database {
 			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 				// delete the meta_key if empty string
-				if ( $_data === '' ) {
+				if ( $data === '' ) {
 					delete_post_meta( $post->ID, $key );
 				} else {
-					update_post_meta( $post->ID, $key, esc_sql( $_data ) );
+					update_post_meta( $post->ID, $key, esc_sql( $data ) );
 				}
 
 			} else {
 
 				// add the data
-				add_post_meta( $post->ID, $key, esc_sql( $_data ) );
+				add_post_meta( $post->ID, $key, esc_sql( $data ) );
 
 			}
 
@@ -1609,10 +1609,10 @@ class Commentpress_Core_Database {
 		// ---------------------------------------------------------------------
 
 		// find and save the data
-		$_data = ( isset( $_POST['commentpress_new_post'] ) ) ? $_POST['commentpress_new_post'] : '0';
+		$data = ( isset( $_POST['commentpress_new_post'] ) ) ? $_POST['commentpress_new_post'] : '0';
 
 		// do we want to create a new revision?
-		if ( $_data == '0' ) return;
+		if ( $data == '0' ) return;
 
 
 
@@ -1639,7 +1639,7 @@ class Commentpress_Core_Database {
 		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 			// delete the meta_key if empty string
-			if ( $_data === '' ) {
+			if ( $data === '' ) {
 				delete_post_meta( $post->ID, $key );
 			} else {
 				update_post_meta( $post->ID, $key, $new_post_id );
@@ -1686,10 +1686,13 @@ class Commentpress_Core_Database {
 		$key = '_cp_post_type_override';
 
 		// if we have one set
-		if ( $_formatter != '' ) {
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+
+			// get current value
+			$formatter = get_post_meta( $post->ID, $key, true );
 
 			// add the data
-			add_post_meta( $new_post_id, $key, esc_sql( $_formatter ) );
+			add_post_meta( $new_post_id, $key, esc_sql( $formatter ) );
 
 		}
 
@@ -1720,8 +1723,8 @@ class Commentpress_Core_Database {
 		if ( $post_obj->post_type != 'post' ) return false;
 
 		// authenticate
-		$_nonce = isset( $_POST['commentpress_nonce'] ) ? $_POST['commentpress_nonce'] : '';
-		if ( ! wp_verify_nonce( $_nonce, 'commentpress_post_settings' ) ) return false;
+		$nonce = isset( $_POST['commentpress_nonce'] ) ? $_POST['commentpress_nonce'] : '';
+		if ( ! wp_verify_nonce( $nonce, 'commentpress_post_settings' ) ) return false;
 
 		// is this an auto save routine?
 		if ( defined( 'DOING_AUTOSAVE' ) AND DOING_AUTOSAVE ) return false;
@@ -1747,7 +1750,7 @@ class Commentpress_Core_Database {
 	public function save_formatter( $post ) {
 
 		// get the data
-		$_data = ( isset( $_POST['cp_post_type_override'] ) ) ? $_POST['cp_post_type_override'] : '';
+		$data = ( isset( $_POST['cp_post_type_override'] ) ) ? $_POST['cp_post_type_override'] : '';
 
 		// set key
 		$key = '_cp_post_type_override';
@@ -1756,16 +1759,16 @@ class Commentpress_Core_Database {
 		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 			// delete the meta_key if empty string
-			if ( $_data === '' ) {
+			if ( $data === '' ) {
 				delete_post_meta( $post->ID, $key );
 			} else {
-				update_post_meta( $post->ID, $key, esc_sql( $_data ) );
+				update_post_meta( $post->ID, $key, esc_sql( $data ) );
 			}
 
 		} else {
 
 			// add the data
-			add_post_meta( $post->ID, $key, esc_sql( $_data ) );
+			add_post_meta( $post->ID, $key, esc_sql( $data ) );
 
 		}
 
@@ -1788,7 +1791,7 @@ class Commentpress_Core_Database {
 		if ( $this->option_exists( 'cp_sidebar_default' ) ) {
 
 			// find and save the data
-			$_data = ( isset( $_POST['cp_sidebar_default'] ) ) ?
+			$data = ( isset( $_POST['cp_sidebar_default'] ) ) ?
 					 $_POST['cp_sidebar_default'] :
 					 $this->option_get( 'cp_sidebar_default' );
 
@@ -1799,16 +1802,16 @@ class Commentpress_Core_Database {
 			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 				// delete the meta_key if empty string
-				if ( $_data === '' ) {
+				if ( $data === '' ) {
 					delete_post_meta( $post->ID, $key );
 				} else {
-					update_post_meta( $post->ID, $key, esc_sql( $_data ) );
+					update_post_meta( $post->ID, $key, esc_sql( $data ) );
 				}
 
 			} else {
 
 				// add the data
-				add_post_meta( $post->ID, $key, esc_sql( $_data ) );
+				add_post_meta( $post->ID, $key, esc_sql( $data ) );
 
 			}
 
@@ -1827,13 +1830,13 @@ class Commentpress_Core_Database {
 	public function save_starting_paragraph( $post ) {
 
 		// get the data
-		$_data = ( isset( $_POST['cp_starting_para_number'] ) ) ? $_POST['cp_starting_para_number'] : 1;
+		$data = ( isset( $_POST['cp_starting_para_number'] ) ) ? $_POST['cp_starting_para_number'] : 1;
 
 		// if not numeric, set to default
-		if ( ! is_numeric( $_data ) ) { $_data = 1; }
+		if ( ! is_numeric( $data ) ) { $data = 1; }
 
 		// sanitize it
-		$_data = absint( $_data );
+		$data = absint( $data );
 
 		// set key
 		$key = '_cp_starting_para_number';
@@ -1842,17 +1845,17 @@ class Commentpress_Core_Database {
 		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 			// delete if default
-			if ( $_data === 1 ) {
+			if ( $data === 1 ) {
 				delete_post_meta( $post->ID, $key );
 			} else {
-				update_post_meta( $post->ID, $key, esc_sql( $_data ) );
+				update_post_meta( $post->ID, $key, esc_sql( $data ) );
 			}
 
 		} else {
 
 			// add the data if greater than default
-			if ( $_data > 1 ) {
-				add_post_meta( $post->ID, $key, esc_sql( $_data ) );
+			if ( $data > 1 ) {
+				add_post_meta( $post->ID, $key, esc_sql( $data ) );
 			}
 
 		}
@@ -1873,7 +1876,7 @@ class Commentpress_Core_Database {
 		if ( $this->option_exists( 'cp_blog_workflow' ) ) {
 
 			// get workflow setting for the blog
-			$_workflow = $this->option_get( 'cp_blog_workflow' );
+			$workflow = $this->option_get( 'cp_blog_workflow' );
 
 			/*
 			// ----------------
@@ -1886,14 +1889,14 @@ class Commentpress_Core_Database {
 			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 				// get existing value
-				$_workflow = get_post_meta( $post->ID, $key, true );
+				$workflow = get_post_meta( $post->ID, $key, true );
 
 			}
 			// ----------------
 			*/
 
 			// if it's enabled
-			if ( $_workflow == '1' ) {
+			if ( $workflow == '1' ) {
 
 				// notify plugins that workflow stuff needs saving
 				do_action( 'cp_workflow_save_' . $post->post_type, $post );
@@ -1906,13 +1909,13 @@ class Commentpress_Core_Database {
 
 			// get the setting for the post (we do this after saving the extra
 			// post data because
-			$_formatter = ( isset( $_POST['cp_post_type_override'] ) ) ? $_POST['cp_post_type_override'] : '';
+			$formatter = ( isset( $_POST['cp_post_type_override'] ) ) ? $_POST['cp_post_type_override'] : '';
 
 			// if the custom field already has a value
 			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 				// if empty string
-				if ( $_data === '' ) {
+				if ( $data === '' ) {
 
 					// delete the meta_key
 					delete_post_meta( $post->ID, $key );
@@ -1920,14 +1923,14 @@ class Commentpress_Core_Database {
 				} else {
 
 					// update the data
-					update_post_meta( $post->ID, $key, esc_sql( $_data ) );
+					update_post_meta( $post->ID, $key, esc_sql( $data ) );
 
 				}
 
 			} else {
 
 				// add the data
-				add_post_meta( $post->ID, $key, esc_sql( $_data ) );
+				add_post_meta( $post->ID, $key, esc_sql( $data ) );
 
 			}
 			// ----------------
@@ -2042,10 +2045,10 @@ class Commentpress_Core_Database {
 	/**
 	 * Create a particular "special" page.
 	 *
-	 * @param str $_page The type of special page
+	 * @param str $page The type of special page
 	 * @return mixed $new_id If successful, the numeric ID of the new page, false on failure
 	 */
-	public function create_special_page( $_page ) {
+	public function create_special_page( $page ) {
 
 		// init
 		$new_id = false;
@@ -2054,7 +2057,7 @@ class Commentpress_Core_Database {
 		$special_pages = $this->option_get( 'cp_special_pages', array() );
 
 		// switch by page
-		switch( $_page ) {
+		switch( $page ) {
 
 			case 'title':
 
@@ -2187,10 +2190,10 @@ class Commentpress_Core_Database {
 	/**
 	 * Delete a particular "special" page.
 	 *
-	 * @param str $_page The type of special page to delete
+	 * @param str $page The type of special page to delete
 	 * @return boolean $success True if succesfully deleted false otherwise
 	 */
-	public function delete_special_page( $_page ) {
+	public function delete_special_page( $page ) {
 
 		// init success flag
 		$success = true;
@@ -2202,7 +2205,7 @@ class Commentpress_Core_Database {
 		 */
 
 		// get id of special page
-		switch( $_page ) {
+		switch( $page ) {
 
 			case 'title':
 
@@ -3238,10 +3241,10 @@ class Commentpress_Core_Database {
 		// add post-specific stuff
 
 		// default page title
-		$_title = __( 'Title Page', 'commentpress-core' );
+		$default_title = __( 'Title Page', 'commentpress-core' );
 
 		// set, but allow overrides
-		$title['post_title'] = apply_filters( 'cp_title_page_title', $_title );
+		$title['post_title'] = apply_filters( 'cp_title_page_title', $default_title );
 
 		// default content
 		$content = __(

@@ -970,13 +970,13 @@ class Commentpress_Multisite_Buddypress {
 	public function groupblog_posts_filter_option() {
 
 		// default name
-		$_name = __( 'CommentPress Posts', 'commentpress-core' );
+		$name = __( 'CommentPress Posts', 'commentpress-core' );
 
 		// allow plugins to override the name of the option
-		$_name = apply_filters( 'cp_groupblog_post_name', $_name );
+		$name = apply_filters( 'cp_groupblog_post_name', $name );
 
 		// construct option
-		$option = '<option value="new_groupblog_post">' . $_name . '</option>' . "\n";
+		$option = '<option value="new_groupblog_post">' . $name . '</option>' . "\n";
 
 		// print
 		echo $option;
@@ -1936,11 +1936,11 @@ class Commentpress_Multisite_Buddypress {
 
 			// allow plugins to override the blog type - for example if workflow is enabled,
 			// it might become a new blog type as far as buddypress is concerned
-			$_blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $cp_blog_type, $cp_blog_workflow );
+			$blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $cp_blog_type, $cp_blog_workflow );
 
 			// set the type as group meta info
 			// we also need to change this when the type is changed from the CP admin page
-			groups_update_groupmeta( $group_id, 'groupblogtype', 'groupblogtype-' . $_blog_type );
+			groups_update_groupmeta( $group_id, 'groupblogtype', 'groupblogtype-' . $blog_type );
 
 		}
 

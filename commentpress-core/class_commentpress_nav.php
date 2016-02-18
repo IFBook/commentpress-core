@@ -1059,18 +1059,18 @@ class Commentpress_Core_Navigator {
 	function _get_top_parent_id( $post_id ) {
 
 		// get page data
-		$_page = get_page( $post_id );
+		$page = get_page( $post_id );
 
 		// is the top page?
-		if ( $_page->post_parent == 0 ) {
+		if ( $page->post_parent == 0 ) {
 
 			// yes -> return the id
-			return $_page->ID;
+			return $page->ID;
 
 		} else {
 
 			// no -> recurse upwards
-			return $this->_get_top_parent_id( $_page->post_parent );
+			return $this->_get_top_parent_id( $page->post_parent );
 
 		}
 

@@ -155,10 +155,10 @@ class Commentpress_Multisite_Loader {
 		// ---------------------------------------------------------------------
 
 		// define filename
-		$_class_file = 'commentpress-multisite/class_commentpress_mu_revisions.php';
+		$class_file = 'commentpress-multisite/class_commentpress_mu_revisions.php';
 
 		// get path
-		$_class_file_path = commentpress_file_is_present( $_class_file );
+		$class_file_path = commentpress_file_is_present( $class_file );
 
 		// allow plugins to override this and supply their own
 		$class_file_path = apply_filters(
@@ -167,7 +167,7 @@ class Commentpress_Multisite_Loader {
 		);
 
 		// we're fine, include class definition
-		require_once( $_class_file_path );
+		require_once( $class_file_path );
 
 		// instantiate it
 		$this->revisions = new Commentpress_Multisite_Revisions( $this );
@@ -224,10 +224,10 @@ class Commentpress_Multisite_Loader {
 		// ---------------------------------------------------------------------
 
 		// define filename
-		$_class_file = 'commentpress-multisite/class_commentpress_mu_workshop.php';
+		$class_file = 'commentpress-multisite/class_commentpress_mu_workshop.php';
 
 		// get path
-		$_class_file_path = commentpress_file_is_present( $_class_file );
+		$class_file_path = commentpress_file_is_present( $class_file );
 
 		// allow plugins to override this and supply their own
 		$class_file_path = apply_filters(
@@ -236,7 +236,7 @@ class Commentpress_Multisite_Loader {
 		);
 
 		// we're fine, include class definition
-		require_once( $_class_file_path );
+		require_once( $class_file_path );
 
 		// instantiate it
 		$this->workshop = new Commentpress_Multisite_Buddypress_Groupblog( $this );

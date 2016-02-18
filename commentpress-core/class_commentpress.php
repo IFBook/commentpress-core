@@ -405,11 +405,9 @@ class Commentpress_Core {
 
 			// show on pages other than the CP admin page
 			if (
-
 				$pagenow == 'options-general.php'
 				AND ! empty( $_GET['page'] )
 				AND 'commentpress_admin' == $_GET['page']
-
 			) {
 
 				// we're on our admin page
@@ -764,7 +762,7 @@ class Commentpress_Core {
 		$text_sig = '';
 
 		// get comment ID to reply to from URL query string
-		$reply_to_comment_id = isset($_GET['replytocom']) ? (int) $_GET['replytocom'] : 0;
+		$reply_to_comment_id = isset( $_GET['replytocom'] ) ? (int) $_GET['replytocom'] : 0;
 
 		// did we get a comment ID?
 		if ( $reply_to_comment_id != 0 ) {
@@ -775,7 +773,7 @@ class Commentpress_Core {
 		} else {
 
 			// do we have a paragraph number in the query string?
-			$reply_to_para_id = isset($_GET['replytopara']) ? (int) $_GET['replytopara'] : 0;
+			$reply_to_para_id = isset( $_GET['replytopara'] ) ? (int) $_GET['replytopara'] : 0;
 
 			// did we get a comment ID?
 			if ( $reply_to_para_id != 0 ) {
@@ -866,10 +864,10 @@ class Commentpress_Core {
 		);
 
 		// get workflow
-		$_workflow = $this->db->option_get( 'cp_blog_workflow' );
+		$workflow = $this->db->option_get( 'cp_blog_workflow' );
 
 		// if it's enabled
-		if ( $_workflow == '1' ) {
+		if ( $workflow == '1' ) {
 
 			// init title
 			$title = __( 'Workflow', 'commentpress-core' );
@@ -1456,7 +1454,7 @@ class Commentpress_Core {
 	 * Get comments sorted by text signature and paragraph.
 	 *
 	 * @param int $post_ID The numeric ID of the post
-	 * @return array $_comments An array of sorted comment data
+	 * @return array $comments An array of sorted comment data
 	 */
 	public function get_sorted_comments( $post_ID ) {
 
@@ -1494,10 +1492,10 @@ class Commentpress_Core {
 	public function get_text_signature( $para_num ) {
 
 		// get text sigs
-		$_sigs = $this->db->get_text_sigs();
+		$sigs = $this->db->get_text_sigs();
 
 		// get value at that position in array
-		$text_sig = ( isset( $_sigs[$para_num-1] ) ) ? $_sigs[$para_num-1] : '';
+		$text_sig = ( isset( $sigs[$para_num - 1] ) ) ? $sigs[$para_num - 1] : '';
 
 		// --<
 		return $text_sig;
@@ -1521,64 +1519,63 @@ class Commentpress_Core {
 		$link = '';
 
 		// get page ID
-		$_page_id = $this->db->option_get( $page_type );
+		$page_id = $this->db->option_get( $page_type );
 
 		// do we have a page?
-		if ( $_page_id != '' ) {
+		if ( $page_id != '' ) {
 
 			// get page
-			$_page = get_post( $_page_id );
-
-			$_active = '';
+			$page = get_post( $page_id );
 
 			// is it the current page?
-			if ( isset( $post ) AND $_page->ID == $post->ID ) {
-				$_active = ' class="active_page"';
+			$active = '';
+			if ( isset( $post ) AND $page->ID == $post->ID ) {
+				$active = ' class="active_page"';
 			}
 
 			// get link
-			$_url = get_permalink( $_page );
+			$url = get_permalink( $page );
 
 			// switch title by type
 			switch( $page_type ) {
 
 				case 'cp_welcome_page':
-					$_link_title = __( 'Title Page', 'commentpress-core' );
-					$_button = 'cover';
+					$link_title = __( 'Title Page', 'commentpress-core' );
+					$button = 'cover';
 					break;
 
 				case 'cp_all_comments_page':
-					$_link_title = __( 'All Comments', 'commentpress-core' );
-					$_button = 'allcomments'; break;
+					$link_title = __( 'All Comments', 'commentpress-core' );
+					$button = 'allcomments'; break;
 
 				case 'cp_general_comments_page':
-					$_link_title = __( 'General Comments', 'commentpress-core' );
-					$_button = 'general'; break;
+					$link_title = __( 'General Comments', 'commentpress-core' );
+					$button = 'general'; break;
 
 				case 'cp_blog_page':
-					$_link_title = __( 'Blog', 'commentpress-core' );
-					if ( is_home() ) { $_active = ' class="active_page"'; }
-					$_button = 'blog'; break;
+					$link_title = __( 'Blog', 'commentpress-core' );
+					if ( is_home() ) { $active = ' class="active_page"'; }
+					$button = 'blog'; break;
 
 				case 'cp_blog_archive_page':
-					$_link_title = __( 'Blog Archive', 'commentpress-core' );
-					$_button = 'archive'; break;
+					$link_title = __( 'Blog Archive', 'commentpress-core' );
+					$button = 'archive'; break;
 
 				case 'cp_comments_by_page':
-					$_link_title = __( 'Comments by Commenter', 'commentpress-core' );
-					$_button = 'members'; break;
+					$link_title = __( 'Comments by Commenter', 'commentpress-core' );
+					$button = 'members'; break;
 
 				default:
-					$_link_title = __( 'Members', 'commentpress-core' );
-					$_button = 'members';
+					$link_title = __( 'Members', 'commentpress-core' );
+					$button = 'members';
 
 			}
 
 			// let plugins override titles
-			$_title = apply_filters( 'commentpress_page_link_title', $_link_title, $page_type );
+			$title = apply_filters( 'commentpress_page_link_title', $link_title, $page_type );
 
 			// show link
-			$link = '<li' . $_active . '><a href="' . $_url . '" id="btn_' . $_button . '" class="css_btn" title="' . $_title . '">' . $_title . '</a></li>' . "\n";
+			$link = '<li' . $active . '><a href="' . $url . '" id="btn_' . $button . '" class="css_btn" title="' . $title . '">' . $title . '</a></li>' . "\n";
 
 		}
 
@@ -1593,29 +1590,29 @@ class Commentpress_Core {
 	 * Get the URL for a "special" page.
 	 *
 	 * @param str $page_type The CommentPress Core name of a special page
-	 * @return str $_url The URL of that page
+	 * @return str $url The URL of that page
 	 */
 	public function get_page_url( $page_type = 'cp_all_comments_page' ) {
 
 		// init
-		$_url = '';
+		$url = '';
 
 		// get page ID
-		$_page_id = $this->db->option_get( $page_type );
+		$page_id = $this->db->option_get( $page_type );
 
 		// do we have a page?
-		if ( $_page_id != '' ) {
+		if ( $page_id != '' ) {
 
 			// get page
-			$_page = get_post( $_page_id );
+			$page = get_post( $page_id );
 
 			// get link
-			$_url = get_permalink( $_page );
+			$url = get_permalink( $page );
 
 		}
 
 		// --<
-		return $_url;
+		return $url;
 
 	}
 
@@ -1895,10 +1892,10 @@ class Commentpress_Core {
 		}
 
 		// get CPTs
-		//$_types = $this->_get_commentable_cpts();
+		//$types = $this->_get_commentable_cpts();
 
 		// testing what we do with CPTs
-		//if ( is_singular() OR is_singular( $_types ) ) {
+		//if ( is_singular() OR is_singular( $types ) ) {
 
 		// is it a commentable page?
 		if ( is_singular() ) {
@@ -2380,7 +2377,7 @@ class Commentpress_Core {
 	function _get_commentable_cpts() {
 
 		// init
-		$_types = false;
+		$types = false;
 
 		// NOTE: exactly how do we support CPTs?
 		$args = array(
@@ -2398,20 +2395,20 @@ class Commentpress_Core {
 		if ( count( $post_types ) > 0 ) {
 
 			// init as array
-			$_types = false;
+			$types = false;
 
 			// loop
 			foreach ($post_types AS $post_type ) {
 
 				// add name to array (is_singular expects this)
-				$_types[] = $post_type;
+				$types[] = $post_type;
 
 			}
 
 		}
 
 		// --<
-		return $_types;
+		return $types;
 
 	}
 
@@ -2523,13 +2520,13 @@ class Commentpress_Core {
 			$key = '_cp_sidebar_default';
 
 			// default to show
-			$_sidebar = $this->db->option_get( 'cp_sidebar_default' );
+			$sidebar = $this->db->option_get( 'cp_sidebar_default' );
 
 			// if the custom field already has a value
 			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 				// get it
-				$_sidebar = get_post_meta( $post->ID, $key, true );
+				$sidebar = get_post_meta( $post->ID, $key, true );
 
 			}
 
@@ -2537,9 +2534,9 @@ class Commentpress_Core {
 			echo '
 			<p>
 			<select id="cp_sidebar_default" name="cp_sidebar_default">
-				<option value="toc" ' . (($_sidebar == 'toc') ? ' selected="selected"' : '') . '>' . __('Contents', 'commentpress-core') . '</option>
-				<option value="activity" ' . (($_sidebar == 'activity') ? ' selected="selected"' : '') . '>' . __('Activity', 'commentpress-core') . '</option>
-				<option value="comments" ' . (($_sidebar == 'comments') ? ' selected="selected"' : '') . '>' . __('Comments', 'commentpress-core') . '</option>
+				<option value="toc" ' . (($sidebar == 'toc') ? ' selected="selected"' : '') . '>' . __('Contents', 'commentpress-core') . '</option>
+				<option value="activity" ' . (($sidebar == 'activity') ? ' selected="selected"' : '') . '>' . __('Activity', 'commentpress-core') . '</option>
+				<option value="comments" ' . (($sidebar == 'comments') ? ' selected="selected"' : '') . '>' . __('Comments', 'commentpress-core') . '</option>
 			</select>
 			</p>
 			</div>
@@ -2567,20 +2564,20 @@ class Commentpress_Core {
 		$key = '_cp_starting_para_number';
 
 		// default to start with para 1
-		$_num = 1;
+		$num = 1;
 
 		// if the custom field already has a value
 		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 			// get it
-			$_num = get_post_meta( $post->ID, $key, true );
+			$num = get_post_meta( $post->ID, $key, true );
 
 		}
 
 		// select
 		echo '
 		<p>
-		<input type="text" id="cp_starting_para_number" name="cp_starting_para_number" value="' . $_num . '" />
+		<input type="text" id="cp_starting_para_number" name="cp_starting_para_number" value="' . $num . '" />
 		</p>
 		</div>
 		';

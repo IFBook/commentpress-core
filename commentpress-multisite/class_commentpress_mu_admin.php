@@ -127,10 +127,10 @@ class Commentpress_Multisite_Admin {
 			if ( ! $this->option_exists( 'cpmu_xxxx' ) ) {
 
 				// get choice
-				$_choice = esc_sql( $cpmu_xxxx );
+				$choice = esc_sql( $cpmu_xxxx );
 
 				// add chosen option
-				$this->option_set( 'cpmu_xxxx', $_choice );
+				$this->option_set( 'cpmu_xxxx', $choice );
 
 			}
 			*/
@@ -199,10 +199,10 @@ class Commentpress_Multisite_Admin {
 		$result = false;
 
 		// get installed version
-		$_version = $this->option_wpms_get( 'cpmu_version' );
+		$version = $this->option_wpms_get( 'cpmu_version' );
 
 		// if we have an install and it's lower than this one
-		if ( $_version !== false AND version_compare( COMMENTPRESS_MU_PLUGIN_VERSION, $_version, '>' ) ) {
+		if ( $version !== false AND version_compare( COMMENTPRESS_MU_PLUGIN_VERSION, $version, '>' ) ) {
 
 			// override
 			$result = true;
@@ -804,10 +804,10 @@ class Commentpress_Multisite_Admin {
 		if ( get_option( 'commentpress_options', false ) ) {
 
 			// get them
-			$_commentpress_options = get_option( 'commentpress_options' );
+			$commentpress_options = get_option( 'commentpress_options' );
 
 			// if we have "special pages", then the plugin must be active on this blog
-			if ( isset( $_commentpress_options['cp_special_pages'] ) ) {
+			if ( isset( $commentpress_options['cp_special_pages'] ) ) {
 
 				// set flag
 				$core_active = true;

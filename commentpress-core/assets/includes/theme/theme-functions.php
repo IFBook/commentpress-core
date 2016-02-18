@@ -488,12 +488,12 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ):
  * @since 3.3
  *
  * @param boolean $raw If true, returns the class names, if false, returns the attribute
- * @return string $_body_classes The class attribute for the body tag
+ * @return string $body_classes The class attribute for the body tag
  */
 function commentpress_get_body_classes( $raw = false ) {
 
 	// init
-	$_body_classes = '';
+	$body_classes = '';
 
 	// access post and plugin
 	global $post, $commentpress_core;
@@ -617,18 +617,18 @@ function commentpress_get_body_classes( $raw = false ) {
 	if ( is_object( $commentpress_core ) ) {
 
 		// get type
-		$_type = $commentpress_core->db->option_get( 'cp_blog_type' );
+		$type = $commentpress_core->db->option_get( 'cp_blog_type' );
 
 		// get workflow
-		$_workflow = $commentpress_core->db->option_get( 'cp_blog_workflow' );
+		$workflow = $commentpress_core->db->option_get( 'cp_blog_workflow' );
 
 		// allow plugins to override the blog type - for example if workflow is enabled,
 		// it might be a new blog type as far as buddypress is concerned
-		$_blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $_type, $_workflow );
+		$blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $type, $workflow );
 
 		// if it's not the main site, add class
 		if ( is_multisite() AND ! is_main_site() ) {
-			$blog_type = ' blogtype-' . intval( $_blog_type );
+			$blog_type = ' blogtype-' . intval( $blog_type );
 		}
 
 	}
@@ -648,21 +648,21 @@ function commentpress_get_body_classes( $raw = false ) {
 	}
 
 	// construct attribute
-	$_body_classes = $sidebar_class . $commentable . $layout_class . $page_type . $groupblog_type . $blog_type . $tinymce_version;
+	$body_classes = $sidebar_class . $commentable . $layout_class . $page_type . $groupblog_type . $blog_type . $tinymce_version;
 
 	// allow filtering
-	$_body_classes = apply_filters( 'commentpress_body_classes', $_body_classes );
+	$body_classes = apply_filters( 'commentpress_body_classes', $body_classes );
 
 	// if we want them wrapped, do so
 	if ( ! $raw ) {
 
 		// preserve backwards compat for older child themes
-		$_body_classes = ' class="' . $_body_classes . '"';
+		$body_classes = ' class="' . $body_classes . '"';
 
 	}
 
 	// --<
-	return $_body_classes;
+	return $body_classes;
 
 }
 endif; // commentpress_get_body_classes
@@ -815,7 +815,7 @@ if ( ! function_exists( 'commentpress_page_title' ) ):
  *
  * @since 3.0
  *
- * @return string $_title The page title
+ * @return string $title The page title
  */
 function commentpress_page_title() {
 
@@ -823,10 +823,10 @@ function commentpress_page_title() {
 	global $commentpress_core, $post;
 
 	// init
-	$_title = '';
-	$_sep = ' &#8594; ';
+	$title = '';
+	$sep = ' &#8594; ';
 
-	//$_title .= get_bloginfo( 'name' );
+	//$title .= get_bloginfo( 'name' );
 
 	if ( is_page() OR is_single() OR is_category() ) {
 
@@ -837,36 +837,36 @@ function commentpress_page_title() {
 			if ( $ancestors ) {
 				$ancestors = array_reverse( $ancestors );
 
- 				$_crumb = array();
+ 				$crumb = array();
 
 				foreach ( $ancestors as $crumb ) {
-					$_crumb[] = get_the_title( $crumb );
+					$crumb[] = get_the_title( $crumb );
 				}
 
-				$_title .= implode( $_sep, $_crumb ) . $_sep;
+				$title .= implode( $sep, $crumb ) . $sep;
 			}
 
 		}
 
 		if ( is_single() ) {
 			//$category = get_the_category();
-			//$_title .= $_sep . $category[0]->cat_name;
+			//$title .= $sep . $category[0]->cat_name;
 		}
 
 		if ( is_category() ) {
 			$category = get_the_category();
-			$_title .= $category[0]->cat_name . $_sep;
+			$title .= $category[0]->cat_name . $sep;
 		}
 
 		// Current page
 		if ( is_page() OR is_single() ) {
-			$_title .= get_the_title();
+			$title .= get_the_title();
 		}
 
 	}
 
 	// --<
-	return $_title;
+	return $title;
 
 }
 endif; // commentpress_page_title
@@ -1253,13 +1253,13 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 	//$GLOBALS['comment'] = $comment;
 
 	// construct link
-	$_comment_link = get_comment_link( $comment->comment_ID );
+	$comment_link = get_comment_link( $comment->comment_ID );
 
 	// construct anchor
-	$_comment_anchor = '<a href="' . $_comment_link . '" title="' . esc_attr( __( 'See comment in context', 'commentpress-core' ) ) . '">' . __( 'Comment', 'commentpress-core' ) . '</a>';
+	$comment_anchor = '<a href="' . $comment_link . '" title="' . esc_attr( __( 'See comment in context', 'commentpress-core' ) ) . '">' . __( 'Comment', 'commentpress-core' ) . '</a>';
 
 	// construct date
-	$_comment_date = date( __( 'F jS, Y', 'commentpress-core' ), strtotime( $comment->comment_date ) );
+	$comment_date = date( __( 'F jS, Y', 'commentpress-core' ), strtotime( $comment->comment_date ) );
 
 	// if context is 'all comments'
 	if ( $context == 'all' ) {
@@ -1280,12 +1280,12 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 				if ( $user_link != '' AND $user_link != 'http://' ) {
 
 					// construct link to user url
-					$_comment_author = '<a href="' . $user_link . '">' . $comment->comment_author . '</a>';
+					$comment_author = '<a href="' . $user_link . '">' . $comment->comment_author . '</a>';
 
 				} else {
 
 					// just show author name
-					$_comment_author = $comment->comment_author;
+					$comment_author = $comment->comment_author;
 
 				}
 
@@ -1295,12 +1295,12 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 				if ( $comment->comment_author_url != '' AND $comment->comment_author_url != 'http://' ) {
 
 					// construct link to user url
-					$_comment_author = '<a href="' . $comment->comment_author_url . '">' . $comment->comment_author . '</a>';
+					$comment_author = '<a href="' . $comment->comment_author_url . '">' . $comment->comment_author . '</a>';
 
 				} else {
 
 					// define context
-					$_comment_author = $comment->comment_author;
+					$comment_author = $comment->comment_author;
 
 				}
 
@@ -1310,68 +1310,68 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 		} else {
 
 			// we don't have a name
-			$_comment_author = __( 'Anonymous', 'commentpress-core' );
+			$comment_author = __( 'Anonymous', 'commentpress-core' );
 
 		}
 
 		// construct comment header content
-		$_comment_meta_content = sprintf(
+		$comment_meta_content = sprintf(
 			__( '%1$s by %2$s on %3$s', 'commentpress-core' ),
-			$_comment_anchor,
-			$_comment_author,
-			$_comment_date
+			$comment_anchor,
+			$comment_author,
+			$comment_date
 		);
 
 		// wrap comment meta in a div
-		$_comment_meta = '<div class="comment_meta">' . $_comment_meta_content . '</div>' . "\n";
+		$comment_meta = '<div class="comment_meta">' . $comment_meta_content . '</div>' . "\n";
 
 		// allow filtering by plugins
-		$_comment_meta = apply_filters(
+		$comment_meta = apply_filters(
 			'commentpress_format_comment_all_meta', // filter name
-			$_comment_meta, // built meta
+			$comment_meta, // built meta
 			$comment,
-			$_comment_anchor,
-			$_comment_author,
-			$_comment_date
+			$comment_anchor,
+			$comment_author,
+			$comment_date
 		);
 
 	// if context is 'by commenter'
 	} elseif ( $context == 'by' ) {
 
 		// construct link
-		$_page_link = trailingslashit( get_permalink( $comment->comment_post_ID ) );
+		$page_link = trailingslashit( get_permalink( $comment->comment_post_ID ) );
 
 		// construct page anchor
-		$_page_anchor = '<a href="' . $_page_link . '">' . get_the_title( $comment->comment_post_ID ) . '</a>';
+		$page_anchor = '<a href="' . $page_link . '">' . get_the_title( $comment->comment_post_ID ) . '</a>';
 
 		// construct comment header content
-		$_comment_meta_content = sprintf(
+		$comment_meta_content = sprintf(
 			__( '%1$s on %2$s on %3$s', 'commentpress-core' ),
-			$_comment_anchor,
-			$_page_anchor,
-			$_comment_date
+			$comment_anchor,
+			$page_anchor,
+			$comment_date
 		);
 
 		// wrap comment meta in a div
-		$_comment_meta = '<div class="comment_meta">' . $_comment_meta_content . '</div>' . "\n";
+		$comment_meta = '<div class="comment_meta">' . $comment_meta_content . '</div>' . "\n";
 
 		// allow filtering by plugins
-		$_comment_meta = apply_filters(
+		$comment_meta = apply_filters(
 			'commentpress_format_comment_by_meta', // filter name
-			$_comment_meta, // built meta
+			$comment_meta, // built meta
 			$comment,
-			$_comment_anchor,
-			$_page_anchor,
-			$_comment_date
+			$comment_anchor,
+			$page_anchor,
+			$comment_date
 		);
 
 	}
 
 	// comment content
-	$_comment_body = '<div class="comment-content">' . apply_filters( 'comment_text', $comment->comment_content ) . '</div>' . "\n";
+	$comment_body = '<div class="comment-content">' . apply_filters( 'comment_text', $comment->comment_content ) . '</div>' . "\n";
 
 	// construct comment
-	return '<div class="comment_wrapper">' . "\n" . $_comment_meta . $_comment_body . '</div>' . "\n\n";
+	return '<div class="comment_wrapper">' . "\n" . $comment_meta . $comment_body . '</div>' . "\n\n";
 
 }
 endif; // commentpress_format_comment
@@ -1496,7 +1496,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_page_content' ) ):
  *
  * @since 3.0
  *
- * @return str $_page_content The page content
+ * @return str $page_content The page content
  */
 function commentpress_get_comments_by_page_content() {
 
@@ -1510,13 +1510,13 @@ function commentpress_get_comments_by_page_content() {
 	global $commentpress_core;
 
 	// set title
-	$_page_content = '<h2 class="post_title">' . __( 'Comments by Commenter', 'commentpress-core' ) . '</h2>' . "\n\n";
+	$page_content = '<h2 class="post_title">' . __( 'Comments by Commenter', 'commentpress-core' ) . '</h2>' . "\n\n";
 
 	// get data
-	$_page_content .= commentpress_get_comments_by_content();
+	$page_content .= commentpress_get_comments_by_content();
 
 	// --<
-	return $_page_content;
+	return $page_content;
 
 }
 endif; // commentpress_get_comments_by_page_content
@@ -1649,7 +1649,7 @@ function commentpress_get_comment_activity( $scope = 'all' ) {
 		$page_content .= '<ol class="comment_activity">' . "\n\n";
 
 		// init title
-		$_title = '';
+		$title = '';
 
 		// loop
 		foreach( $data AS $comment ) {
@@ -1936,10 +1936,10 @@ function commentpress_get_comments_by_para() {
 		$used_text_sigs = array();
 
 		// loop through each paragraph
-		foreach( $comments_sorted AS $text_signature => $_comments ) {
+		foreach( $comments_sorted AS $text_signature => $comments ) {
 
 			// count comments
-			$comment_count = count( $_comments );
+			$comment_count = count( $comments );
 
 			// switch, depending on key
 			switch( $text_signature ) {
@@ -2142,13 +2142,13 @@ function commentpress_get_comments_by_para() {
 				} else {
 
 					// if we have comments
-					if ( count( $_comments ) > 0 ) {
+					if ( count( $comments ) > 0 ) {
 
 						// open commentlist
 						echo '<ol class="commentlist">' . "\n\n";
 
 						// use WP 2.7+ functionality
-						wp_list_comments( $args, $_comments );
+						wp_list_comments( $args, $comments );
 
 						// close commentlist
 						echo '</ol>' . "\n\n";
@@ -2623,34 +2623,34 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 	$editlink = apply_filters( 'cp_comment_action_links', $editlink, $comment );
 
 	// get comment class(es)
-	$_comment_class = comment_class( null, $comment->comment_ID, $post->ID, false );
+	$comment_class = comment_class( null, $comment->comment_ID, $post->ID, false );
 
 	// if orphaned, add class to identify as such
-	$_comment_orphan = ( isset( $comment->orphan ) ) ? ' comment-orphan' : '';
+	$comment_orphan = ( isset( $comment->orphan ) ) ? ' comment-orphan' : '';
 
 	// construct permalink
-	$_comment_permalink = sprintf( __( '%1$s at %2$s', 'commentpress-core' ), get_comment_date(), get_comment_time() );
+	$comment_permalink = sprintf( __( '%1$s at %2$s', 'commentpress-core' ), get_comment_date(), get_comment_time() );
 
 	// stripped source
 	$html = '
-<li id="li-comment-' . $comment->comment_ID . '" ' . $_comment_class . '>
+<li id="li-comment-' . $comment->comment_ID . '" ' . $comment_class . '>
 <div class="comment-wrapper">
 <div id="comment-' . $comment->comment_ID . '">
 
 
 
-<div class="comment-identifier' . $_comment_orphan . '">
+<div class="comment-identifier' . $comment_orphan . '">
 ' . apply_filters( 'commentpress_comment_identifier_prepend', '', $comment ) . '
 ' . get_avatar( $comment, $size='32' ) . '
 ' . $editlink . '
 ' . $author . '
-<a class="comment_permalink" href="' . htmlspecialchars( get_comment_link() ) . '" title="' . __( 'Permalink for this comment', 'commentpress-core' ) . '"><span class="comment_permalink_copy"></span>' . $_comment_permalink . '</a>
+<a class="comment_permalink" href="' . htmlspecialchars( get_comment_link() ) . '" title="' . __( 'Permalink for this comment', 'commentpress-core' ) . '"><span class="comment_permalink_copy"></span>' . $comment_permalink . '</a>
 ' . apply_filters( 'commentpress_comment_identifier_append', '', $comment ) . '
 </div><!-- /comment-identifier -->
 
 
 
-<div class="comment-content' . $_comment_orphan . '">
+<div class="comment-content' . $comment_orphan . '">
 ' . apply_filters( 'comment_text', $comment_text ) . '
 </div><!-- /comment-content -->
 
@@ -3317,7 +3317,7 @@ if ( ! function_exists( 'commentpress_image_caption_shortcode' ) ):
  * @param array $empty WordPress passes '' as the first param!
  * @param array $attr Attributes attributed to the shortcode.
  * @param str $content Optional. Shortcode content.
- * @return str $_caption The modified caption
+ * @return str $caption The modified caption
  */
 function commentpress_image_caption_shortcode( $empty = null, $attr, $content ) {
 
@@ -3336,10 +3336,10 @@ function commentpress_image_caption_shortcode( $empty = null, $attr, $content ) 
 	if ( $id ) $id = 'id="' . esc_attr( $id ) . '" ';
 
 	// add space prior to alignment
-	$_alignment = ' ' . esc_attr( $align );
+	$alignment = ' ' . esc_attr( $align );
 
 	// get width
-	$_width = (0 + (int) $width);
+	$width = (0 + (int) $width);
 
 	// sanitise caption
 	$caption = wp_kses( $caption,
@@ -3357,15 +3357,15 @@ function commentpress_image_caption_shortcode( $empty = null, $attr, $content ) 
 	$caption = balanceTags( $caption, true );
 
 	// construct
-	$_caption = '<!-- cp_caption_start -->' .
-				'<span class="captioned_image' . $_alignment . '" style="width: ' . $_width . 'px">' .
+	$caption = '<!-- cp_caption_start -->' .
+				'<span class="captioned_image' . $alignment . '" style="width: ' . $width . 'px">' .
 					'<span ' . $id . ' class="wp-caption">' . do_shortcode( $content ) . '</span>' .
 					'<small class="wp-caption-text">' . $caption . '</small>' .
 				'</span>' .
 				'<!-- cp_caption_end -->';
 
 	// --<
-	return $_caption;
+	return $caption;
 
 }
 endif; // commentpress_image_caption_shortcode
@@ -3756,13 +3756,13 @@ function commentpress_get_post_version_info( $post ) {
 		if ( $newer_post->post_status == 'publish' ) {
 
 			// get link
-			$_link = get_permalink( $newer_post->ID );
+			$link = get_permalink( $newer_post->ID );
 
 			// define title
-			$_title = __( 'Newer version', 'commentpress-core' );
+			$title = __( 'Newer version', 'commentpress-core' );
 
 			// construct anchor
-			$newer_link = '<a href="' . $_link . '" title="' . $_title . '">' . $_title . ' &rarr;</a>';
+			$newer_link = '<a href="' . $link . '" title="' . $title . '">' . $title . ' &rarr;</a>';
 
 		}
 
@@ -3791,13 +3791,13 @@ function commentpress_get_post_version_info( $post ) {
 		if ( $older_post->post_status == 'publish' ) {
 
 			// get link
-			$_link = get_permalink( $older_post->ID );
+			$link = get_permalink( $older_post->ID );
 
 			// define title
-			$_title = __( 'Older version', 'commentpress-core' );
+			$title = __( 'Older version', 'commentpress-core' );
 
 			// construct anchor
-			$older_link = '<a href="' . $_link . '" title="' . $_title . '">&larr; ' . $_title . '</a>';
+			$older_link = '<a href="' . $link . '" title="' . $title . '">&larr; ' . $title . '</a>';
 
 		}
 

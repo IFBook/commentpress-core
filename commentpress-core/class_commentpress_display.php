@@ -569,7 +569,7 @@ HELPTEXT;
 			foreach( $posts AS $item ) {
 
 				// init output
-				$_html = '';
+				$html = '';
 
 				// get comment count for that post
 				$count = count( $this->db->get_approved_comments( $item->ID ) );
@@ -622,17 +622,17 @@ HELPTEXT;
 							if ( get_option( 'show_avatars' ) ) {
 
 								// get avatar
-								$_html .= get_avatar( $author->ID, $size='32' );
+								$html .= get_avatar( $author->ID, $size='32' );
 
 							}
 
 						}
 
 						// add citation
-						$_html .= '<cite class="fn">' . $author_html . '</cite>' . "\n";
+						$html .= '<cite class="fn">' . $author_html . '</cite>' . "\n";
 
 						// add permalink
-						$_html .= '<p class="post_activity_date">' . esc_html( get_the_time( __( 'l, F jS, Y', 'commentpress-core' ) ), $item->ID ) . '</p>' . "\n";
+						$html .= '<p class="post_activity_date">' . esc_html( get_the_time( __( 'l, F jS, Y', 'commentpress-core' ) ), $item->ID ) . '</p>' . "\n";
 
 					}
 
@@ -644,15 +644,15 @@ HELPTEXT;
 					// are we showing avatars?
 					if ( get_option( 'show_avatars' ) ) {
 
-						$_html .= get_avatar( $author_id, $size='32' );
+						$html .= get_avatar( $author_id, $size='32' );
 
 					}
 
 					// add citation
-					$_html .= '<cite class="fn">' . $this->echo_post_author( $author_id, false ) . '</cite>';
+					$html .= '<cite class="fn">' . $this->echo_post_author( $author_id, false ) . '</cite>';
 
 					// add permalink
-					$_html .= '<p class="post_activity_date">' . esc_html( get_the_time( __( 'l, F jS, Y', 'commentpress-core' ) ), $item->ID ) . '</p>';
+					$html .= '<p class="post_activity_date">' . esc_html( get_the_time( __( 'l, F jS, Y', 'commentpress-core' ) ), $item->ID ) . '</p>';
 
 				}
 
@@ -667,7 +667,7 @@ HELPTEXT;
 				// write list item
 				echo '<li class="title' . $current_post . '">
 				<div class="post-identifier">
-				' . $_html . '
+				' . $html . '
 				</div>
 				<a href="' . get_permalink( $item->ID ) . '" class="post_activity_link">' . get_the_title( $item->ID ) . ' (' . $count . ')</a>
 				</li>' . "\n";
@@ -2390,14 +2390,14 @@ HELPTEXT;
 	function _get_tinymce_init() {
 
 		// base url
-		//$_base = trailingslashit( get_bloginfo('wpurl') ) . 'wp-includes/js/tinymce';
-		$_base = includes_url('js/tinymce');
+		//$base = trailingslashit( get_bloginfo('wpurl') ) . 'wp-includes/js/tinymce';
+		$base = includes_url('js/tinymce');
 
 		// locale
 		$mce_locale = ( '' == get_locale() ) ? 'en' : strtolower( substr(get_locale(), 0, 2) ); // only ISO 639-1
 
 		// content css
-		$_content_css = ''; //trailingslashit( get_bloginfo('wpurl') ) . 'wp-includes/js/tinymce/wordpress.css';
+		$content_css = ''; //trailingslashit( get_bloginfo('wpurl') ) . 'wp-includes/js/tinymce/wordpress.css';
 
 		// define tinyMCE javascript
 		$js = '
@@ -2426,7 +2426,7 @@ HELPTEXT;
 		 */
 		tinyMCEPreInit = {
 
-			base : "' . $_base . '",
+			base : "' . $base . '",
 
 			suffix : "",
 

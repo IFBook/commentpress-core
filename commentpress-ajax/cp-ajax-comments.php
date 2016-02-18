@@ -89,10 +89,10 @@ function cpajax_add_javascripts() {
 	$vars['cpajax_current_time'] = date('Y-m-d H:i:s');
 
 	// get comment count at the time the page is served
-	$_count = get_comment_count( $post->ID );
+	$count = get_comment_count( $post->ID );
 
 	// adding moderation queue as well, since we do show these
-	$vars['cpajax_comment_count'] = $_count['approved']; // + $_count['awaiting_moderation'];
+	$vars['cpajax_comment_count'] = $count['approved']; // + $count['awaiting_moderation'];
 
 	// add post ID
 	$vars['cpajax_post_id'] = $post->ID;
@@ -280,30 +280,30 @@ function cpajax_get_new_comments() {
 			$args['max_depth'] = get_option( 'thread_comments_depth' );
 
 			// loop
-			foreach( $comments AS $_comment ) {
+			foreach( $comments AS $comment ) {
 
 				// assume top level
 				$depth = 1;
 
 				// if no parent
-				if ( $_comment->comment_parent != '0' ) {
+				if ( $comment->comment_parent != '0' ) {
 
 					// override depth
-					$depth = cpajax_get_comment_depth( $_comment, $depth );
+					$depth = cpajax_get_comment_depth( $comment, $depth );
 
 				}
 
 				// get comment markup
-				$html = commentpress_get_comment_markup( $_comment, $args, $depth );
+				$html = commentpress_get_comment_markup( $comment, $args, $depth );
 
 				// close li (walker would normally do this)
 				$html .= '</li>' . "\n\n\n\n";
 
 				// add comment to array
 				$data['cpajax_new_comment_' . $identifier] = array(
-					'parent' => $_comment->comment_parent,
-					'id' => $_comment->comment_ID,
-					'text_sig' => $_comment->comment_signature,
+					'parent' => $comment->comment_parent,
+					'id' => $comment->comment_ID,
+					'text_sig' => $comment->comment_signature,
 					'markup' => $html
 				);
 
@@ -382,20 +382,20 @@ function cpajax_add_reassign_button( $edit_button, $comment ) {
 	//if ( ! isset( $comment->orphan ) ) { return $edit_button; }
 
 	// set default edit link title text
-	$_title_text = apply_filters(
+	$title_text = apply_filters(
 		'cpajax_comment_assign_link_title_text',
 		__( 'Drop on to a text-block to reassign this comment (and any replies) to it', 'commentpress-core' )
 	);
 
 	// set default edit link text
-	$_text = apply_filters(
+	$text = apply_filters(
 		'cp_comment_assign_link_text',
 		__( 'Move', 'commentpress-core' )
 	);
 
 	// construct assign button
-	$assign_button = '<span class="alignright comment-assign" title="' . $_title_text . '" id="cpajax_assign-' . $comment->comment_ID . '">' .
-						$_text .
+	$assign_button = '<span class="alignright comment-assign" title="' . $title_text . '" id="cpajax_assign-' . $comment->comment_ID . '">' .
+						$text .
 					 '</span>';
 
 	// add our assign button
