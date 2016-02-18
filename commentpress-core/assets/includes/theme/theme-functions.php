@@ -21,18 +21,15 @@ if ( ! function_exists( 'commentpress_admin_header' ) ):
  */
 function commentpress_admin_header() {
 
-	// init (same as bg in layout.css and default in class_commentpress_db.php)
-	$colour = '2c2622';
-
 	// access plugin
 	global $commentpress_core;
 
-	// if we have the plugin enabled
+	// init with same colour as theme stylesheets and default in class_commentpress_db.php
+	$colour = '2c2622';
+
+	// override if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
-
-		// override
 		$colour = $commentpress_core->db->option_get_header_bg();
-
 	}
 
 	// try and recreate the look of the theme header

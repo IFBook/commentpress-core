@@ -442,11 +442,11 @@ if ( ! function_exists( 'commentpress_header' ) ):
  */
 function commentpress_header() {
 
-	// init (same as bg in layout.css and default in class_commentpress_db.php)
-	$bg_colour = '2c2622';
-
 	// access plugin
 	global $commentpress_core;
+
+	// init with same colour as theme stylesheets and default in class_commentpress_db.php
+	$bg_colour = '2c2622';
 
 	// override if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
