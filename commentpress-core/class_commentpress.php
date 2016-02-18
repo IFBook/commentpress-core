@@ -91,11 +91,11 @@ class Commentpress_Core {
 	public $buddypress = false;
 
 	/**
-	 * BP Groupblog flag.
+	 * BuddyPress Groupblog flag.
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var bool $bp_groupblog True if BP Groupblog present, false otherwise
+	 * @var bool $bp_groupblog True if BuddyPress Groupblog present, false otherwise
 	 */
 	public $bp_groupblog = false;
 
@@ -272,9 +272,9 @@ class Commentpress_Core {
 
 
 	/**
-	 * Is this blog a BuddyPress Group Blog?
+	 * Is this blog a BuddyPress Groupblog?
 	 *
-	 * @return bool $bp_groupblog True when current blog is a BP Groupblog, false otherwise
+	 * @return bool $bp_groupblog True when current blog is a BuddyPress Groupblog, false otherwise
 	 */
 	public function is_groupblog() {
 
@@ -286,7 +286,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Is a BP Group Blog theme set?
+	 * Is a BuddyPress Groupblog theme set?
 	 *
 	 * @return array $theme An array describing the theme
 	 */
@@ -352,12 +352,12 @@ class Commentpress_Core {
 	 */
 	public function is_buddypress_special_page() {
 
-		// kick out if not BP
+		// kick out if not BuddyPress
 		if ( ! $this->is_buddypress() ) {
 			return false;
 		}
 
-		// is it a BP page?
+		// is it a BuddyPress page?
 		$is_bp = ! bp_is_blog_page();
 
 		// let's see
@@ -644,7 +644,7 @@ class Commentpress_Core {
 		// compat with Members List plugin
 		if( $this->is_members_list_page() ) return $content;
 
-		// test for buddypress special page (compat with BP Docs)
+		// test for BuddyPress special page (compat with BuddyPress Docs)
 		if ( $this->is_buddypress() ) {
 
 			// is it a component homepage?
@@ -1751,13 +1751,13 @@ class Commentpress_Core {
 
 
 	/**
-	 * Override the comment reply script that BP Docs loads.
+	 * Override the comment reply script that BuddyPress Docs loads.
 	 *
 	 * @return void
 	 */
 	public function bp_docs_loaded() {
 
-		// dequeue offending script (after BP Docs runs its enqueuing)
+		// dequeue offending script (after BuddyPress Docs runs its enqueuing)
 		add_action( 'wp_enqueue_scripts', array( $this, 'bp_docs_dequeue_scripts' ), 20 );
 
 	}
@@ -1765,7 +1765,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Override the comment reply script that BP Docs loads.
+	 * Override the comment reply script that BuddyPress Docs loads.
 	 *
 	 * @return void
 	 */
@@ -1779,7 +1779,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Override the comments tempate for BP Docs.
+	 * Override the comments tempate for BuddyPress Docs.
 	 *
 	 * @param str $path The existing path to the template
 	 * @param str $original_path The original path to the template
@@ -1787,7 +1787,7 @@ class Commentpress_Core {
 	 */
 	public function bp_docs_comment_tempate( $path, $original_path ) {
 
-		// if on BP root site
+		// if on BuddyPress root site
 		if ( bp_is_root_blog() ) {
 
 			// override default link name
@@ -2332,7 +2332,7 @@ class Commentpress_Core {
 
 		}
 
-		// if BP installed, then the following actions will fire
+		// if BuddyPress installed, then the following actions will fire
 
 		// enable BuddyPress functionality
 		add_action( 'bp_include', array( $this, 'buddypress_init' ) );
@@ -2340,13 +2340,13 @@ class Commentpress_Core {
 		// add BuddyPress functionality (really late, so group object is set up)
 		add_action( 'bp_setup_globals', array( $this, 'buddypress_globals_loaded' ), 1000 );
 
-		// actions to perform on BP loaded
+		// actions to perform on BuddyPress loaded
 		add_action( 'bp_loaded', array( $this, 'bp_docs_loaded' ), 20 );
 
-		// actions to perform on BP Docs load
+		// actions to perform on BuddyPress Docs load
 		add_action( 'bp_docs_load', array( $this, 'bp_docs_loaded' ), 20 );
 
-		// override BP Docs comment template
+		// override BuddyPress Docs comment template
 		add_filter( 'bp_docs_comment_template_path', array( $this, 'bp_docs_comment_tempate' ), 20, 2 );
 
 		// amend the behaviour of Featured Comments plugin

@@ -183,7 +183,7 @@ class Commentpress_Multisite_Loader {
 		// optionally load BuddyPress object
 		// ---------------------------------------------------------------------
 
-		// load when buddypress is loaded
+		// load when BuddyPress is loaded
 		add_action( 'bp_include', array( $this, 'load_buddypress_object' ) );
 
 	}
@@ -216,7 +216,7 @@ class Commentpress_Multisite_Loader {
 		// we're fine, include class definition
 		require_once( $class_file_path );
 
-		// init buddypress object
+		// init BuddyPress object
 		$this->bp = new Commentpress_Multisite_Buddypress( $this );
 
 		// ---------------------------------------------------------------------
@@ -245,7 +245,7 @@ class Commentpress_Multisite_Loader {
 		// call initialise() on admin object again
 		// ---------------------------------------------------------------------
 
-		// initialise db for buddypress
+		// initialise db for BuddyPress
 		$this->db->initialise( 'buddypress' );
 
 	}

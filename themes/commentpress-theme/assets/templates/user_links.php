@@ -61,7 +61,7 @@ if ( is_multisite() ) {
 					__( 'Create a new document', 'commentpress-core' )
 				);
 
-				// BP uses its own signup page
+				// BuddyPress uses its own signup page
 				?><li><a href="<?php echo bp_get_root_domain() . '/' . bp_get_blogs_root_slug(); ?>/create/" title="<?php echo $new_site_title; ?>" id="btn_create" class="button"><?php echo $new_site_title; ?></a></li>
 				<?php
 

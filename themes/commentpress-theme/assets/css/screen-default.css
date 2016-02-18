@@ -1889,7 +1889,7 @@ Header
 					background: transparent url(../images/buttons/home.jpg);
 				}
 
-				/* BP Group Blog compatibility */
+				/* BuddyPress Groupblog compatibility */
 				a#btn_grouphome
 				{
 					width: 33px;
@@ -4236,7 +4236,7 @@ Compatibility with BP Group Sites plugin
 
 /*
 --------------------------------------------------------------------------------
-Compatibility with BP Docs plugin
+Compatibility with BuddyPress Docs plugin
 --------------------------------------------------------------------------------
 */
 

@@ -76,7 +76,7 @@ class Commentpress_Core_Display {
 		// did we get a CommentPress Core one?
 		if ( $theme !== false ) {
 
-			// we're in a groupblog context: BP Groupblog will already have set
+			// we're in a groupblog context: BuddyPress Groupblog will already have set
 			// the theme because we're adding our wpmu_new_blog action after it
 
 			// --<
@@ -640,7 +640,7 @@ HELPTEXT;
 		// access plugin
 		global $commentpress_core, $post;
 
-		// if we have the plugin enabled and it's BP
+		// if we have the plugin enabled and it's BuddyPress
 		if ( is_object( $post ) AND is_object( $commentpress_core ) AND $commentpress_core->is_buddypress() ) {
 
 			// construct user link

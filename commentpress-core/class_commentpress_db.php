@@ -996,7 +996,7 @@ class Commentpress_Core_Database {
 				if ( is_numeric( $group_id ) ) {
 
 					// allow plugins to override the blog type - for example if workflow is enabled,
-					// it might become a new blog type as far as buddypress is concerned
+					// it might become a new blog type as far as BuddyPress is concerned
 					$blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $cp_blog_type, $cp_blog_workflow );
 
 					// set the type as group meta info
@@ -2750,7 +2750,7 @@ class Commentpress_Core_Database {
 
 			}
 
-			// check for BP versions prior to 1.6 (1.6 uses the WP admin bar instead of a custom one)
+			// check for BuddyPress versions prior to 1.6 (1.6 uses the WP admin bar instead of a custom one)
 			if ( ! function_exists( 'bp_get_version' ) ) {
 
 				// but, this can already be overridden in bp-custom.php

@@ -296,7 +296,7 @@ class Commentpress_Multisite_Buddypress {
 
 
 	/**
-	 * Add pages to the post_types that BP records published activity for.
+	 * Add pages to the post_types that BuddyPress records published activity for.
 	 *
 	 * @param array $post_types The existing array of post types
 	 * @return array $post_types The modified array of post types
@@ -319,7 +319,7 @@ class Commentpress_Multisite_Buddypress {
 
 
 	/**
-	 * Add pages to the post_types that BP records comment activity for.
+	 * Add pages to the post_types that BuddyPress records comment activity for.
 	 *
 	 * @param array $post_types The existing array of post types
 	 * @return array $post_types The modified array of post types
@@ -384,7 +384,7 @@ class Commentpress_Multisite_Buddypress {
 	 * group as the comment. Furthermore, CommentPress comments should be read in
 	 * context rather than appearing as if globally attached to the post or page.
 	 *
-	 * @param bool $is_disabled The BP setting that determines blogforum sync
+	 * @param bool $is_disabled The BuddyPress setting that determines blogforum sync
 	 * @return bool $is_disabled The modified value that determines blogforum sync
 	 */
 	public function disable_blogforum_comments( $is_disabled ) {
@@ -648,7 +648,7 @@ class Commentpress_Multisite_Buddypress {
 		// set unique type
 		$activity->type = $type;
 
-		// note: BP seemingly runs content through wp_filter_kses (sad face)
+		// note: BuddyPress seemingly runs content through wp_filter_kses (sad face)
 
 		// prevent from firing again
 		remove_action( 'bp_activity_before_save', array( $this, 'group_custom_comment_activity' ) );
@@ -749,7 +749,7 @@ class Commentpress_Multisite_Buddypress {
 			__( 'post', 'commentpress-core' )
 		);
 
-		// default to standard BP author
+		// default to standard BuddyPress author
 		$activity_author = bp_core_get_userlink( $post->post_author );
 
 		// compat with Co-Authors Plus
@@ -895,13 +895,13 @@ class Commentpress_Multisite_Buddypress {
 			// did we get a specific group passed in?
 			if ( is_null( $group_id ) ) {
 
-				// use BP API
+				// use BuddyPress API
 				$group_id = bp_get_current_group_id();
 
 				// unlikely, but if we don't get one
 				if ( empty( $group_id ) ) {
 
-					// try and get ID from BP
+					// try and get ID from BuddyPress
 					global $bp;
 
 					if ( isset( $bp->groups->current_group->id ) ) {
@@ -1080,7 +1080,7 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function filter_nav_title_page_title( $title ) {
 
-		// bail if main BP site
+		// bail if main BuddyPress site
 		if ( bp_is_root_blog() ) return $title;
 
 		// override default link name
@@ -1136,7 +1136,7 @@ class Commentpress_Multisite_Buddypress {
 
 
 	/**
-	 * Override the name of the button on the BP "blogs" screen.
+	 * Override the name of the button on the BuddyPress "blogs" screen.
 	 *
 	 * @param array $button The existing blogs button data
 	 * @return array $button The existing blogs button data
@@ -1404,7 +1404,7 @@ class Commentpress_Multisite_Buddypress {
 	 * Check if a non-public group is being accessed by a user who is not a
 	 * member of the group.
 	 *
-	 * Adapted from code in mahype's fork of BP Groupblog plugin, but not
+	 * Adapted from code in mahype's fork of BuddyPress Groupblog plugin, but not
 	 * accepted because there may be cases where private groups have public
 	 * groupblogs. Ours is not such a case.
 	 *
@@ -1510,10 +1510,10 @@ class Commentpress_Multisite_Buddypress {
 		add_filter( 'pre_comment_approved', array( $this, 'pre_comment_approved' ), 99, 2 );
 		//add_action( 'preprocess_comment', 'my_check_comment', 1 );
 
-		// add pages to the post_types that BP records comment activity for
+		// add pages to the post_types that BuddyPress records comment activity for
 		add_filter( 'bp_blogs_record_comment_post_types', array( $this, 'record_comments_on_pages' ), 10, 1 );
 
-		// add pages to the post_types that BP records published activity for
+		// add pages to the post_types that BuddyPress records published activity for
 		//add_filter( 'bp_blogs_record_post_post_types', array( $this, 'record_published_pages' ), 10, 1 );
 
 		// make sure "Allow activity stream commenting on blog and forum posts" is disabled
@@ -1522,7 +1522,7 @@ class Commentpress_Multisite_Buddypress {
 		// override "publicness" of groupblogs
 		add_filter( 'bp_is_blog_public', array( $this, 'is_blog_public' ), 20, 1 );
 
-		// amend BP group activity
+		// amend BuddyPress group activity
 		add_action( 'bp_loaded', array( $this, '_group_activity_mods' ), 30 );
 
 		// get group avatar when listing groupblogs
@@ -1535,7 +1535,7 @@ class Commentpress_Multisite_Buddypress {
 		// override CommentPress "Title Page"
 		add_filter( 'cp_nav_title_page_title', array( $this, 'filter_nav_title_page_title' ), 20 );
 
-		// override the name of the button on the BP "blogs" screen
+		// override the name of the button on the BuddyPress "blogs" screen
 		// to override this, just add the same filter with a priority of 21 or greater
 		add_filter( 'bp_get_blogs_visit_blog_button', array( $this, 'get_blogs_visit_blog_button' ), 20 );
 
@@ -1578,7 +1578,7 @@ class Commentpress_Multisite_Buddypress {
 		add_action( 'signup_blogform', array( $this, 'signup_blogform' ) );
 
 		// activate blog-specific CommentPress Core plugin
-		// added @ priority 20 because BP Groupblog adds its action at the default 10 and
+		// added @ priority 20 because BuddyPress Groupblog adds its action at the default 10 and
 		// we want it to have done its stuff before we do ours
 		add_action( 'wpmu_new_blog', array( $this, 'wpmu_new_blog' ), 20, 6 );
 
@@ -1935,7 +1935,7 @@ class Commentpress_Multisite_Buddypress {
 		if ( isset( $group_id ) ) {
 
 			// allow plugins to override the blog type - for example if workflow is enabled,
-			// it might become a new blog type as far as buddypress is concerned
+			// it might become a new blog type as far as BuddyPress is concerned
 			$blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $cp_blog_type, $cp_blog_workflow );
 
 			// set the type as group meta info
@@ -2239,7 +2239,7 @@ class Commentpress_Multisite_Buddypress {
 
 		<h3>' . __( 'BuddyPress &amp; Groupblog Settings', 'commentpress-core' ) . '</h3>
 
-		<p>' . __( 'Configure how CommentPress interacts with BuddyPress and BP Groupblog.', 'commentpress-core' ) . '</p>
+		<p>' . __( 'Configure how CommentPress interacts with BuddyPress and BuddyPress Groupblog.', 'commentpress-core' ) . '</p>
 
 		<table class="form-table">
 
@@ -2431,7 +2431,7 @@ class Commentpress_Multisite_Buddypress {
 
 		}
 
-		// define buddypress/groupblog defaults
+		// define BuddyPress and BuddyPress Groupblog defaults
 		$defaults = array(
 			'cpmu_bp_force_commentpress' => $this->force_commentpress,
 			'cpmu_bp_groupblog_privacy' => $this->groupblog_privacy,

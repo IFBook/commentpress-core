@@ -139,7 +139,7 @@ global $commentpress_core;
 						__( 'Create a new document', 'commentpress-core' )
 					);
 
-					// BP uses its own signup page
+					// BuddyPress uses its own signup page
 					$item = '<li><a href="' . bp_get_root_domain() . '/' . bp_get_blogs_root_slug() . '/create/" title="' . $new_site_title . '" id="btn_create">' . $new_site_title . '</a></li>';
 
 				} else {

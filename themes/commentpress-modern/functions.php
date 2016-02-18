@@ -234,7 +234,7 @@ function commentpress_enqueue_scripts_and_styles() {
 	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
-		// test for buddypress special page
+		// test for BuddyPress special page
 		if ( $commentpress_core->is_buddypress() AND $commentpress_core->is_buddypress_special_page() ) {
 
 			// skip custom addComment
@@ -329,7 +329,7 @@ function commentpress_buddypress_support() {
 }
 endif; // commentpress_buddypress_support
 
-// add an action for the above (BP hooks this to after_setup_theme with priority 100)
+// add an action for the above (BuddyPress hooks this to after_setup_theme with priority 100)
 add_action( 'bp_after_setup_theme', 'commentpress_buddypress_support' );
 
 
@@ -953,7 +953,7 @@ add_filter( 'register', 'commentpress_add_loginout_id' );
 
 if ( ! function_exists( 'commentpress_convert_link_to_button' ) ):
 /**
- * Utility to add button class to BP 1.9 notification links.
+ * Utility to add button class to BuddyPress 1.9 notification links.
  *
  * @since 3.5
  *

@@ -2442,7 +2442,7 @@ body.groups.announcements #item-body #whats-new-form
 
 /*
 --------------------------------------------------------------------------------
-BuddyPress Group Blog compatibility
+BuddyPress Groupblog compatibility
 --------------------------------------------------------------------------------
 */
 
@@ -2491,7 +2491,7 @@ ul#groupblog-details li
 
 #activity_sidebar .workshop_comments_output .comment-identifier p
 {
-	/* we have to use p instead of cite because that's how BP stores activity meta */
+	/* we have to use p instead of cite because that's how BuddyPress stores activity meta */
 	margin-top: 0;
 	padding: 0;
 	font-size: 70%;
@@ -2594,14 +2594,14 @@ Compatibility with BP Group Sites plugin
 /* Recent Activity (activity tab) */
 #activity_sidebar  .groupsites_comments_output li.groups
 {
-	/* override BP Groupblog compatibility for now */
+	/* override BuddyPress Groupblog compatibility for now */
 	border-left: none;
 	margin-bottom: 0;
 }
 
 #activity_sidebar .groupsites_comments_output .comment-identifier p
 {
-	/* we have to use p instead of cite because that's how BP stores activity meta */
+	/* we have to use p instead of cite because that's how BuddyPress stores activity meta */
 	margin-top: 0;
 	padding: 0;
 	font-size: 70%;
@@ -2807,7 +2807,7 @@ body.single-bp_doc .docs #comments
 
 /*
 --------------------------------------------------------------------------------
-Single BP Doc
+Single BuddyPress Doc
 --------------------------------------------------------------------------------
 */
 
@@ -2883,7 +2883,7 @@ body.bp-docs #buddypress div.doc-permissions
 
 
 
-/* BP Docs Group Options Page */
+/* BuddyPress Docs Group Options Page */
 #group-doc-options
 {
 	padding: 20px 0 0;

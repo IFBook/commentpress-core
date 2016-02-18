@@ -101,7 +101,7 @@ function commentpress_customize_register( $wp_customize ) {
 	// access plugin
 	global $commentpress_core;
 
-	// kick out if buddypress groupblog
+	// kick out if BuddyPress Groupblog
 	if ( is_object( $commentpress_core ) AND $commentpress_core->is_groupblog() ) return;
 
 	// do we have the WP 4.2 WP_Customize_Media_Control class?
@@ -251,7 +251,7 @@ add_action( 'admin_menu', 'commentpress_admin_menu' );
 
 if ( ! function_exists( 'commentpress_fix_bp_core_avatar_url' ) ):
 /**
- * Filter to fix broken group avatar images in BP 1.7.
+ * Filter to fix broken group avatar images in BuddyPress 1.7.
  *
  * @since 3.3
  *
@@ -579,10 +579,10 @@ function commentpress_get_body_classes( $raw = false ) {
 	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
-		// is it a BP special page?
+		// is it a BuddyPress special page?
 		if ( $commentpress_core->is_buddypress_special_page() ) {
 
-			// add buddypress page class
+			// add BuddyPress page class
 			$page_type = ' buddypress_page';
 
 		}
@@ -590,7 +590,7 @@ function commentpress_get_body_classes( $raw = false ) {
 		// is it a CP special page?
 		if ( $commentpress_core->db->is_special_page() ) {
 
-			// add buddypress page class
+			// add BuddyPress page class
 			$page_type = ' commentpress_page';
 
 		}
@@ -623,7 +623,7 @@ function commentpress_get_body_classes( $raw = false ) {
 		$workflow = $commentpress_core->db->option_get( 'cp_blog_workflow' );
 
 		// allow plugins to override the blog type - for example if workflow is enabled,
-		// it might be a new blog type as far as buddypress is concerned
+		// it might be a new blog type as far as BuddyPress is concerned
 		$blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $type, $workflow );
 
 		// if it's not the main site, add class
@@ -1017,10 +1017,10 @@ function commentpress_get_user_link( &$user ) {
 	// we're through: the user is on the system
 	global $commentpress_core;
 
-	// if buddypress
+	// if BuddyPress
 	if ( is_object( $commentpress_core ) AND $commentpress_core->is_buddypress() ) {
 
-		// buddypress link ($no_anchor = null, $just_link = true)
+		// BuddyPress link ($no_anchor = null, $just_link = true)
 		$url = bp_core_get_userlink( $user->ID, null, true );
 
 	} else {
@@ -1203,7 +1203,7 @@ function commentpress_echo_post_author( $author_id, $echo = true ) {
 	// access plugin
 	global $commentpress_core, $post;
 
-	// if we have the plugin enabled and it's BP
+	// if we have the plugin enabled and it's BuddyPress
 	if ( is_object( $post ) AND is_object( $commentpress_core ) AND $commentpress_core->is_buddypress() ) {
 
 		// construct user link
@@ -3499,10 +3499,10 @@ if ( ! function_exists( 'commentpress_amend_search_query' ) ):
  */
 function commentpress_amend_search_query( &$query ) {
 
-	// restrict to search outside admin (BP does a redirect to the blog page and so $query->is_search is not set)
+	// restrict to search outside admin (BuddyPress does a redirect to the blog page and so $query->is_search is not set)
 	if ( ! is_admin() AND isset( $query->query['s'] ) AND ! empty( $query->query['s'] ) ) {
 
-		// is this a BuddyPress search on the main BP instance?
+		// is this a BuddyPress search on the main BuddyPress instance?
 		if ( function_exists( 'bp_search_form_type_select' ) AND bp_is_root_blog() ) {
 
 			// search posts and pages
@@ -4091,7 +4091,7 @@ function commentpress_bp_blog_css_class( $classes ) {
 	// is this a groupblog?
 	if ( function_exists( 'get_groupblog_group_id' ) ) {
 
-		// access BP object
+		// access BuddyPress object
 		global $blogs_template;
 
 		// get group ID

@@ -21,7 +21,7 @@ http://codex.buddypress.org/extending-buddypress/bp-custom-php/
 // Disable the admin bar / buddybar at the top of every screen:
 //define ( 'BP_DISABLE_ADMIN_BAR', true );
 
-// Swap the Buddybar for the WordPress toolbar: (default in buddypress 1.6)
+// Swap the Buddybar for the WordPress toolbar: (default in BuddyPress 1.6)
 define ( 'BP_USE_WP_ADMIN_BAR', true );
 
 /*

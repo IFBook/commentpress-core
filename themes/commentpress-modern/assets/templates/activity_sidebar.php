@@ -148,9 +148,9 @@ do_action( 'commentpress_bp_activity_sidebar_after_all_comments' );
 
 /*
 --------------------------------------------------------------------------------
-This seems not to work because BP returns no values for the combination we want
+This seems not to work because BuddyPress returns no values for the combination we want
 --------------------------------------------------------------------------------
-NOTE: raise a ticket on BP
+NOTE: raise a ticket on BuddyPress
 --------------------------------------------------------------------------------
 Also, need to make this kind of include file properly child-theme adaptable
 --------------------------------------------------------------------------------
@@ -159,7 +159,7 @@ Also, need to make this kind of include file properly child-theme adaptable
 // access plugin
 global $commentpress_core, $post;
 
-// if we have the plugin enabled and it's BP
+// if we have the plugin enabled and it's BuddyPress
 if (
 
 	is_multisite()
@@ -211,7 +211,7 @@ if (
 
 
 
-} // end BP check
+} // end BuddyPress check
 */
 
 
@@ -224,10 +224,10 @@ if (
 // access plugin
 global $commentpress_core, $post, $blog_id;
 
-// if we have the plugin enabled and it's Multisite BP
+// if we have the plugin enabled and it's Multisite BuddyPress
 if (
 
-	// test for multisite buddypress
+	// test for Multisite BuddyPress
 	is_multisite() AND
 	is_object( $commentpress_core ) AND
 	$commentpress_core->is_buddypress()
@@ -237,7 +237,7 @@ if (
 
 
 
-	// if on either groupblog or main BP blog
+	// if on either groupblog or main BuddyPress blog
 	if ( $commentpress_core->is_groupblog() OR bp_is_root_blog() ) {
 
 		// get activities
@@ -404,7 +404,7 @@ if (
 
 
 
-} // end BP check
+} // end BuddyPress check
 
 
 

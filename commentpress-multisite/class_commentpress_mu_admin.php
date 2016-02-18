@@ -83,7 +83,7 @@ class Commentpress_Multisite_Admin {
 		// if BuddyPress is enabled, we'll get a request for that too
 		if ( $component == 'buddypress' ) {
 
-			// if we don't have one of our buddypress options
+			// if we don't have one of our BuddyPress options
 			if ( ! $this->option_exists( 'cpmu_bp_force_commentpress' ) ) {
 
 				// we're activating: add our options:
@@ -365,7 +365,7 @@ class Commentpress_Multisite_Admin {
 
 		}
 
-		// did we get a buddypress request?
+		// did we get a BuddyPress request?
 		if ( $component == 'buddypress' ) {
 
 			// allow plugins to add their own options

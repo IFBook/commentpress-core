@@ -321,7 +321,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	 */
 	public function filter_nav_title_page_title( $title ) {
 
-		// bail if main BP site
+		// bail if main BuddyPress site
 		if ( bp_is_root_blog() ) return $title;
 
 		// bail if not groupblog
@@ -340,7 +340,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 
 
 	/**
-	 * Override the BP Sites Directory "visit" button.
+	 * Override the BuddyPress Sites Directory "visit" button.
 	 *
 	 * @param str $button The title of the "Visit Site" heading
 	 * @return str $title The modified title of the "Visit Site" heading
@@ -468,7 +468,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 		// override with 'workshop'
 		add_filter( 'cp_activity_tab_recent_title_blog', array( $this, 'activity_tab_recent_title_blog' ), 25, 1 );
 
-		// override titles of BP activity filters
+		// override titles of BuddyPress activity filters
 		add_filter( 'cp_groupblog_comment_name', array( $this, 'groupblog_comment_name' ), 25 );
 		add_filter( 'cp_groupblog_post_name', array( $this, 'groupblog_post_name' ), 25 );
 
