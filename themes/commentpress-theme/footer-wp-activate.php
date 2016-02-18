@@ -2,8 +2,20 @@
 
 
 
+<!-- Activate page wrappers -->
+</div><!-- /content -->
+</div><!-- /page_wrapper -->
+</div><!-- /main_wrapper -->
+</div><!-- /wrapper -->
+
+
+
 <?php /* opened in assets/templates/header_body.php */ ?>
 </div><!-- /content_container -->
+
+
+
+<?php get_sidebar(); ?>
 
 
 

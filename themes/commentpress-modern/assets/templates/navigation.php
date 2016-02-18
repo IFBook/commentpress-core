@@ -42,7 +42,7 @@ global $commentpress_core;
 				// get current blog ID
 				$blog_id = get_current_blog_id();
 
-				// check if this blog is a group blog...
+				// check if this blog is a group blog
 				$group_id = get_groupblog_group_id( $blog_id );
 
 				// when this blog is a groupblog
@@ -62,7 +62,7 @@ global $commentpress_core;
 
 		} else {
 
-			// use if blog home is not CP welcome page
+			// use if blog home is not CommentPress Core welcome page
 			if ( $title_id != get_option('page_on_front') ) {
 
 				// set default link name
@@ -121,10 +121,8 @@ global $commentpress_core;
 
 		// multisite signup and blog create
 		if (
-
 			( is_user_logged_in() AND get_site_option( 'registration' ) == 'blog' ) OR
 			get_site_option( 'registration' ) == 'all'
-
 		) {
 
 			// test whether we have BuddyPress
@@ -134,13 +132,13 @@ global $commentpress_core;
 				if ( is_user_logged_in() ) {
 
 					// set default link name
-					$_new_site_title = apply_filters(
+					$new_site_title = apply_filters(
 						'cp_user_links_new_site_title',
 						__( 'Create a new document', 'commentpress-core' )
 					);
 
-					// BP uses its own signup page
-					$item = '<li><a href="'.bp_get_root_domain().'/'.bp_get_blogs_root_slug().'/create/" title="'.$_new_site_title.'" id="btn_create">'.$_new_site_title.'</a></li>';
+					// BuddyPress uses its own signup page
+					$item = '<li><a href="' . bp_get_root_domain() . '/' . bp_get_blogs_root_slug() . '/create/" title="' . $new_site_title . '" id="btn_create">' . $new_site_title . '</a></li>';
 
 				} else {
 
@@ -152,13 +150,13 @@ global $commentpress_core;
 			} else {
 
 				// set default link name
-				$_new_site_title = apply_filters(
+				$new_site_title = apply_filters(
 					'cp_user_links_new_site_title',
 					__( 'Create a new document', 'commentpress-core' )
 				);
 
 				// standard WP multisite
-				$item = '<li><a href="'.network_site_url().'wp-signup.php" title="'.$_new_site_title.'" id="btn_create">'.$_new_site_title.'</a></li>';
+				$item = '<li><a href="' . network_site_url() . 'wp-signup.php" title="' . $new_site_title . '" id="btn_create">' . $new_site_title . '</a></li>';
 
 			}
 
@@ -173,13 +171,13 @@ global $commentpress_core;
 		if ( is_user_logged_in() ) {
 
 			// set default link name
-			$_dashboard_title = apply_filters(
+			$dashboard_title = apply_filters(
 				'cp_user_links_dashboard_title',
 				__( 'Dashboard', 'commentpress-core' )
 			);
 
 			?>
-			<li><a href="<?php echo admin_url(); ?>" title="<?php echo $_dashboard_title; ?>" id="btn_dash"><?php echo $_dashboard_title; ?></a></li>
+			<li><a href="<?php echo admin_url(); ?>" title="<?php echo $dashboard_title; ?>" id="btn_dash"><?php echo $dashboard_title; ?></a></li>
 			<?php
 
 		}

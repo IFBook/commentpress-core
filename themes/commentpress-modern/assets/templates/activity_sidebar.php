@@ -11,15 +11,14 @@ $_page_comments_output = '';
 // is it commentable?
 $_is_commentable = commentpress_is_commentable();
 
-// if a commentable post...
+// if a commentable post
 if ( $_is_commentable AND ! post_password_required() ) {
 
 	// set default phrase
 	$_paragraph_text = __( 'Recent Comments on this Page', 'commentpress-core' );
 
+	// switch by current post type
 	$_current_type = get_post_type();
-	//print_r( $_current_type ); die();
-
 	switch( $_current_type ) {
 
 		// we can add more of these if needed
@@ -149,9 +148,9 @@ do_action( 'commentpress_bp_activity_sidebar_after_all_comments' );
 
 /*
 --------------------------------------------------------------------------------
-This seems not to work because BP returns no values for the combination we want
+This seems not to work because BuddyPress returns no values for the combination we want
 --------------------------------------------------------------------------------
-NOTE: raise a ticket on BP
+NOTE: raise a ticket on BuddyPress
 --------------------------------------------------------------------------------
 Also, need to make this kind of include file properly child-theme adaptable
 --------------------------------------------------------------------------------
@@ -160,19 +159,16 @@ Also, need to make this kind of include file properly child-theme adaptable
 // access plugin
 global $commentpress_core, $post;
 
-// if we have the plugin enabled and it's BP
+// if we have the plugin enabled and it's BuddyPress
 if (
-
-	is_multisite()
-	AND is_object( $commentpress_core )
-	AND $commentpress_core->is_buddypress()
-	AND $commentpress_core->is_groupblog()
-
+	is_multisite() AND
+	is_object( $commentpress_core ) AND
+	$commentpress_core->is_buddypress() AND
+	$commentpress_core->is_groupblog()
 ) {
 
-	// check if this blog is a group blog...
+	// check if this blog is a group blog
 	$group_id = get_groupblog_group_id( get_current_blog_id() );
-	//print_r( $group_id ); die();
 
 	// when this blog is a groupblog
 	if ( !empty( $group_id ) ) {
@@ -213,7 +209,7 @@ if (
 
 
 
-} // end BP check
+} // end BuddyPress check
 */
 
 
@@ -226,20 +222,16 @@ if (
 // access plugin
 global $commentpress_core, $post, $blog_id;
 
-// if we have the plugin enabled and it's Multisite BP
+// if we have the plugin enabled and it's Multisite BuddyPress
 if (
-
-	// test for multisite buddypress
 	is_multisite() AND
 	is_object( $commentpress_core ) AND
 	$commentpress_core->is_buddypress()
-
 ) {
 
 
 
-
-	// if on either groupblog or main BP blog
+	// if on either groupblog or main BuddyPress blog
 	if ( $commentpress_core->is_groupblog() OR bp_is_root_blog() ) {
 
 		// get activities
@@ -301,10 +293,10 @@ if (
 	// get recently active members
 	if ( bp_has_members(
 
-		'user_id=0'.
-		'&type=active'.
-		'&per_page='.$_max_members.
-		'&max='.$_max_members.
+		'user_id=0' .
+		'&type=active' .
+		'&per_page=' . $_max_members .
+		'&max=' . $_max_members .
 		'&populate_extras=1'
 
 	) ) : ?>
@@ -352,10 +344,10 @@ if (
 	// get online members
 	if ( bp_has_members(
 
-		'user_id=0'.
-		'&type=online'.
-		'&per_page='.$_max_members.
-		'&max='.$_max_members.
+		'user_id=0' .
+		'&type=online' .
+		'&per_page=' . $_max_members .
+		'&max=' . $_max_members .
 		'&populate_extras=1'
 
 	) ) : ?>
@@ -406,7 +398,7 @@ if (
 
 
 
-} // end BP check
+} // end BuddyPress check
 
 
 

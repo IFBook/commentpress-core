@@ -33,7 +33,7 @@
 	// default to hidden
 	$cp_title_visibility = ' style="display: none;"';
 
-	// override if we've elected to show the title...
+	// override if we've elected to show the title
 	if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
 		$cp_title_visibility = '';
 	}
@@ -48,7 +48,7 @@
 	// default to hidden
 	$cp_meta_visibility = ' style="display: none;"';
 
-	// overrideif we've elected to show the meta...
+	// override if we've elected to show the meta
 	if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
 		$cp_meta_visibility = '';
 	}
@@ -91,13 +91,11 @@
 
 	<?php
 
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
 		// get page num
 		$num = $commentpress_core->nav->get_page_number( get_the_ID() );
-
-		//print_r( $num ); die();
 
 		// if we get one
 		if ( $num ) {

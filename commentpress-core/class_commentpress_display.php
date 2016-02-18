@@ -1,43 +1,36 @@
-<?php /*
-================================================================================
-Class CommentpressCoreDisplay
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
-=====
+<?php
 
-
-
---------------------------------------------------------------------------------
-*/
-
-
-
-/*
-================================================================================
-Class Name
-================================================================================
-*/
-
-class CommentpressCoreDisplay {
-
-
+/**
+ * CommentPress Core Display Class.
+ *
+ * A class that is intended to encapsulate display handling.
+ *
+ * @since 3.0
+ */
+class Commentpress_Core_Display {
 
 	/**
-	 * Properties
+	 * Plugin object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $parent_obj The plugin object
 	 */
-
-	// parent object reference
 	public $parent_obj;
 
-	// database object
+	/**
+	 * Database interaction object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $db The database object
+	 */
 	public $db;
 
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
 	 * @since 3.0
 	 *
@@ -59,7 +52,7 @@ class CommentpressCoreDisplay {
 
 
 	/**
-	 * If needed, sets up this object
+	 * If needed, sets up this object.
 	 *
 	 * @return void
 	 */
@@ -69,21 +62,21 @@ class CommentpressCoreDisplay {
 		search_theme_directories( true );
 
 		/**
-		 * Get groupblog-set theme, if we have one
+		 * Get groupblog-set theme, if we have one.
 		 *
 		 * Allow filtering here because plugins may want to override a correctly-set
 		 * CommentPress Core theme for a particular groupblog (or type of groupblog).
 		 *
 		 * If that is the case, then the filter callback must return boolean 'false'
 		 * to prevent the theme being applied and also implement a filter on
-		 * 'cp_forced_theme_slug' below that returns the desired theme slug
+		 * 'cp_forced_theme_slug' below that returns the desired theme slug.
 		 */
 		$theme = apply_filters( 'commentpress_get_groupblog_theme', $this->parent_obj->get_groupblog_theme() );
 
 		// did we get a CommentPress Core one?
 		if ( $theme !== false ) {
 
-			// we're in a groupblog context: BP Groupblog will already have set
+			// we're in a groupblog context: BuddyPress Groupblog will already have set
 			// the theme because we're adding our wpmu_new_blog action after it
 
 			// --<
@@ -91,7 +84,7 @@ class CommentpressCoreDisplay {
 
 		}
 
-		// test for WP3.4...
+		// test for WP3.4
 		if ( function_exists( 'wp_get_themes' ) ) {
 
 			// get CommentPress Core theme by default, but allow overrides
@@ -103,11 +96,11 @@ class CommentpressCoreDisplay {
 			// get the theme we want
 			$theme = wp_get_theme( $target_theme );
 
-			// if we get it...
+			// if we get it
 			if ( $theme->exists() ) {
 
 				// ignore if not allowed
-				//if ( is_multisite() AND ! $theme->is_allowed() ) { return; }
+				//if ( is_multisite() AND ! $theme->is_allowed() ) return;
 
 				// activate it
 				switch_theme(
@@ -130,12 +123,12 @@ class CommentpressCoreDisplay {
 			);
 
 			// the key is the theme name
-			if ( isset( $themes[ $target_theme ] ) ) {
+			if ( isset( $themes[$target_theme] ) ) {
 
 				// activate it
 				switch_theme(
-					$themes[ $target_theme ]['Template'],
-					$themes[ $target_theme ]['Stylesheet']
+					$themes[$target_theme]['Template'],
+					$themes[$target_theme]['Stylesheet']
 				);
 
 			}
@@ -147,16 +140,16 @@ class CommentpressCoreDisplay {
 
 
 	/**
-	 * If needed, destroys this object
+	 * If needed, destroys this object.
 	 *
 	 * @return void
 	 */
 	public function deactivate() {
 
-		// test for WP3.4...
+		// test for WP3.4
 		if ( function_exists( 'wp_get_theme' ) ) {
 
-			// get CommentPress Core theme by default, but allow overrides
+			// get WordPress default theme, but allow overrides
 			$target_theme = apply_filters(
 				'cp_restore_theme_slug',
 				WP_DEFAULT_THEME
@@ -165,11 +158,11 @@ class CommentpressCoreDisplay {
 			// get the theme we want
 			$theme = wp_get_theme( $target_theme );
 
-			// if we get it...
+			// if we get it
 			if ( $theme->exists() ) {
 
 				// ignore if not allowed
-				//if ( is_multisite() AND ! $theme->is_allowed() ) { return; }
+				//if ( is_multisite() AND ! $theme->is_allowed() ) return;
 
 				// activate it
 				switch_theme(
@@ -192,12 +185,12 @@ class CommentpressCoreDisplay {
 			);
 
 			// the key is the theme name
-			if ( isset( $themes[ $target_theme ] ) ) {
+			if ( isset( $themes[$target_theme] ) ) {
 
 				// activate it
 				switch_theme(
-					$themes[ $target_theme ]['Template'],
-					$themes[ $target_theme ]['Stylesheet']
+					$themes[$target_theme]['Template'],
+					$themes[$target_theme]['Stylesheet']
 				);
 
 			}
@@ -221,22 +214,14 @@ class CommentpressCoreDisplay {
 
 
 	/**
-	 * Enqueue jQuery, jQuery UI and plugins
+	 * Enqueue jQuery, jQuery UI and plugins.
 	 *
 	 * @return void
 	 */
 	public function get_jquery() {
 
 		// default to minified scripts
-		$debug_state = '.min';
-
-		// target different scripts when debugging
-		if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
-
-			// use uncompressed scripts
-			$debug_state = '';
-
-		}
+		$debug_state = commentpress_minified();
 
 		// add our javascript plugin and dependencies
 		wp_enqueue_script(
@@ -276,7 +261,7 @@ class CommentpressCoreDisplay {
 
 
 	/**
-	 * Enqueue our text highlighter script
+	 * Enqueue our text highlighter script.
 	 *
 	 * @return void
 	 */
@@ -291,15 +276,7 @@ class CommentpressCoreDisplay {
 			}
 
 			// default to minified scripts
-			$debug_state = '.min';
-
-			// target different scripts when debugging
-			if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
-
-				// use uncompressed scripts
-				$debug_state = '';
-
-			}
+			$debug_state = commentpress_minified();
 
 			// add jQuery wrapSelection plugin
 			wp_enqueue_script(
@@ -359,14 +336,14 @@ class CommentpressCoreDisplay {
 
 
 	/**
-	 * Enqueue our quicktags script
+	 * Enqueue our quicktags script.
 	 *
 	 * @return void
 	 */
 	public function get_custom_quicktags() {
 
 		// don't bother if the current user lacks permissions
-		if ( ! current_user_can('edit_posts') AND ! current_user_can('edit_pages') ) {
+		if ( ! current_user_can( 'edit_posts' ) AND ! current_user_can( 'edit_pages' ) ) {
 			return;
 		}
 
@@ -403,7 +380,7 @@ class CommentpressCoreDisplay {
 
 
 	/**
-	 * Get plugin stylesheets
+	 * Get plugin stylesheets.
 	 *
 	 * @return void
 	 */
@@ -423,7 +400,7 @@ class CommentpressCoreDisplay {
 
 
 	/**
-	 * Test if TinyMCE is allowed
+	 * Test if TinyMCE is allowed.
 	 *
 	 * @return bool $allowed
 	 */
@@ -434,10 +411,8 @@ class CommentpressCoreDisplay {
 
 		// check option
 		if (
-
 			$this->db->option_exists( 'cp_comment_editor' ) AND
 			$this->db->option_get( 'cp_comment_editor' ) != '1'
-
 		) {
 
 			// disallow
@@ -467,64 +442,7 @@ class CommentpressCoreDisplay {
 
 
 	/**
-	 * Get built-in TinyMCE scripts from WordPress Includes directory
-	 *
-	 * @return void
-	 */
-	public function get_tinymce() {
-
-		// check if we can
-		if ( ! $this->is_tinymce_allowed() ) {
-
-			// --<
-			return;
-
-		}
-
-		// test for wp_editor()
-		if ( function_exists( 'wp_editor' ) ) {
-
-			// don't include anything - this will be done in the comment form template
-			return;
-
-		} else {
-
-			// test for WordPress version
-			global $wp_version;
-
-			// for WP 3.2+
-			if ( version_compare( $wp_version, '3.2', '>=' ) ) {
-
-				// don't need settings
-				$this->_get_tinymce();
-
-			} else {
-
-				// get site HTTP root
-				$site_http_root = trailingslashit( get_bloginfo('wpurl') );
-
-				// all TinyMCE scripts
-				$scripts .= '<!-- TinyMCE -->
-<script type="text/javascript" src="' . $site_http_root . 'wp-includes/js/tinymce/tiny_mce.js"></script>
-<script type="text/javascript" src="' . $site_http_root . 'wp-includes/js/tinymce/langs/wp-langs-en.js?ver=20081129"></script>
-' . "\n";
-
-				// add our init
-				$scripts .= $this->_get_tinymce_init();
-
-				// out to browser
-				echo $scripts;
-
-			}
-
-		}
-
-	}
-
-
-
-	/**
-	 * Get help text
+	 * Get help text.
 	 *
 	 * @return str $help The hrlp HTML
 	 */
@@ -548,7 +466,7 @@ HELPTEXT;
 
 
 	/**
-	 * Show the posts and their comment count in a list format
+	 * Show the posts and their comment count in a list format.
 	 *
 	 * @param str $params the parameters to list posts by
 	 * @return void
@@ -560,7 +478,6 @@ HELPTEXT;
 
 		// have we set the option?
 		$list_style = $this->db->option_get( 'cp_show_extended_toc' );
-		//print_r( $list_style ); die();
 
 		// if not set or set to 'off'
 		if ( $list_style === false OR $list_style == '0' ) {
@@ -569,7 +486,7 @@ HELPTEXT;
 			// old-style undecorated list
 			// --------------------------
 
-			// run through them...
+			// run through them
 			foreach( $posts AS $item ) {
 
 				// get comment count for that post
@@ -589,14 +506,11 @@ HELPTEXT;
 			// access current post
 			global $post;
 
-			// run through them...
+			// run through them
 			foreach( $posts AS $item ) {
 
 				// init output
-				$_html = '';
-
-				//print_r( $item ); die();
-				//setup_postdata( $item );
+				$html = '';
 
 				// get comment count for that post
 				$count = count( $this->db->get_approved_comments( $item->ID ) );
@@ -606,7 +520,6 @@ HELPTEXT;
 
 					// get multiple authors
 					$authors = get_coauthors( $item->ID );
-					//print_r( $authors ); die();
 
 					// if we get some
 					if ( ! empty( $authors ) ) {
@@ -650,17 +563,17 @@ HELPTEXT;
 							if ( get_option( 'show_avatars' ) ) {
 
 								// get avatar
-								$_html .= get_avatar( $author->ID, $size='32' );
+								$html .= get_avatar( $author->ID, $size='32' );
 
 							}
 
 						}
 
 						// add citation
-						$_html .= '<cite class="fn">' . $author_html . '</cite>' . "\n";
+						$html .= '<cite class="fn">' . $author_html . '</cite>' . "\n";
 
 						// add permalink
-						$_html .= '<p class="post_activity_date">' . esc_html( get_the_time( __( 'l, F jS, Y', 'commentpress-core' ) ), $item->ID ) . '</p>' . "\n";
+						$html .= '<p class="post_activity_date">' . esc_html( get_the_time( __( 'l, F jS, Y', 'commentpress-core' ) ), $item->ID ) . '</p>' . "\n";
 
 					}
 
@@ -672,22 +585,22 @@ HELPTEXT;
 					// are we showing avatars?
 					if ( get_option( 'show_avatars' ) ) {
 
-						$_html .= get_avatar( $author_id, $size='32' );
+						$html .= get_avatar( $author_id, $size='32' );
 
 					}
 
 					// add citation
-					$_html .= '<cite class="fn">' . $this->echo_post_author( $author_id, false ) . '</cite>';
+					$html .= '<cite class="fn">' . $this->echo_post_author( $author_id, false ) . '</cite>';
 
 					// add permalink
-					$_html .= '<p class="post_activity_date">' . esc_html( get_the_time( __( 'l, F jS, Y', 'commentpress-core' ) ), $item->ID ) . '</p>';
+					$html .= '<p class="post_activity_date">' . esc_html( get_the_time( __( 'l, F jS, Y', 'commentpress-core' ) ), $item->ID ) . '</p>';
 
 				}
 
 				// init current post class as empty
 				$current_post = '';
 
-				// if we're on the current post and it's this item...
+				// if we're on the current post and it's this item
 				if ( is_singular() AND isset( $post ) AND $post->ID == $item->ID ) {
 					$current_post = ' current_page_item';
 				}
@@ -695,7 +608,7 @@ HELPTEXT;
 				// write list item
 				echo '<li class="title' . $current_post . '">
 				<div class="post-identifier">
-				' . $_html . '
+				' . $html . '
 				</div>
 				<a href="' . get_permalink( $item->ID ) . '" class="post_activity_link">' . get_the_title( $item->ID ) . ' (' . $count . ')</a>
 				</li>' . "\n";
@@ -709,9 +622,9 @@ HELPTEXT;
 
 
 	/**
-	 * Show username (with link)
+	 * Show username (with link).
 	 *
-	 * @todo: remove from theme functions.php?
+	 * @todo Remove from theme functions.php?
 	 *
 	 * @param int $author_id The numeric ID of the author
 	 * @param bool $echo True if link is to be echoed, false if returned
@@ -722,12 +635,12 @@ HELPTEXT;
 		$user = get_userdata( $author_id );
 
 		// kick out if we don't have a user with that ID
-		if ( ! is_object( $user ) ) { return; }
+		if ( ! is_object( $user ) ) return;
 
 		// access plugin
 		global $commentpress_core, $post;
 
-		// if we have the plugin enabled and it's BP
+		// if we have the plugin enabled and it's BuddyPress
 		if ( is_object( $post ) AND is_object( $commentpress_core ) AND $commentpress_core->is_buddypress() ) {
 
 			// construct user link
@@ -758,7 +671,7 @@ HELPTEXT;
 
 
 	/**
-	 * Print the posts and their comment count in a list format
+	 * Print the posts and their comment count in a list format.
 	 *
 	 * @return void
 	 */
@@ -876,7 +789,7 @@ HELPTEXT;
 
 
 	/**
-	 * Get the block comment icon
+	 * Get the block comment icon.
 	 *
 	 * @param int $comment_count The number of comments
 	 * @param str $text_signature The comment text signature
@@ -896,7 +809,7 @@ HELPTEXT;
 		// reset icon
 		$icon = null;
 
-		// if we have no comments...
+		// if we have no comments
 		if( $comment_count == 0 ) {
 
 			// show add comment icon
@@ -1019,7 +932,7 @@ HELPTEXT;
 
 
 	/**
-	 * Get the block paragraph icon
+	 * Get the block paragraph icon.
 	 *
 	 * @param int $comment_count The number of comments
 	 * @param str $text_signature The comment text signature
@@ -1117,7 +1030,7 @@ HELPTEXT;
 
 
 	/**
-	 * Get the content comment icon tag
+	 * Get the content comment icon tag.
 	 *
 	 * @param str $text_signature The comment text signature
 	 * @param str $commenticon The comment icon
@@ -1217,13 +1130,6 @@ HELPTEXT;
 
 		}
 
-		/*
-		print_r( array(
-			't' => $text_signature,
-			'p' => $para_tag
-		) );
-		*/
-
 		// --<
 		return $para_tag;
 
@@ -1232,7 +1138,7 @@ HELPTEXT;
 
 
 	/**
-	 * Get the text signature input for the comment form
+	 * Get the text signature input for the comment form.
 	 *
 	 * @param str $text_sig The comment text signature
 	 * @return str $input
@@ -1250,7 +1156,7 @@ HELPTEXT;
 
 
 	/**
-	 * Get the minimise all button
+	 * Get the minimise all button.
 	 *
 	 * @param str $sidebar The type of sidebar (comments, toc, activity)
 	 * @return str $tag The tag
@@ -1284,7 +1190,7 @@ HELPTEXT;
 
 
 	/**
-	 * Get the header minimise button
+	 * Get the header minimise button.
 	 *
 	 * @return str $link The markup of the link
 	 */
@@ -1301,7 +1207,7 @@ HELPTEXT;
 
 
 	/**
-	 * Get an image wrapped in a link
+	 * Get an image wrapped in a link.
 	 *
 	 * @param str $src The location of image file
 	 * @param str $url The link target
@@ -1336,7 +1242,7 @@ HELPTEXT;
 
 
 	/**
-	 * Got the WordPress admin page
+	 * Got the WordPress admin page.
 	 *
 	 * @return str $admin_page The HTML for the admin page
 	 */
@@ -1374,15 +1280,15 @@ HELPTEXT;
 
 
 	/**
-	 * Object initialisation
+	 * Object initialisation.
 	 *
 	 * @return void
 	 */
 	function _init() {
 
 		/**
-		 * Moved mobile checks to class_commentpress_db.php so it only loads as needed
-		 * and so that it loads *after* the old Commentpress loads it
+		 * Moved mobile checks to class_commentpress_db.php so it only loads as
+		 * needed and so that it loads *after* the old CommentPress loads it.
 		 */
 
 	}
@@ -1390,7 +1296,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the admin form HTML
+	 * Returns the admin form HTML.
 	 *
 	 * @return str $admin_page The admin page HTML
 	 */
@@ -1401,8 +1307,8 @@ HELPTEXT;
 		$url_array = explode( '&', $url );
 		if ( $url_array ) { $url = $url_array[0]; }
 
-		// if we need to upgrade...
-		if ( $this->db->check_upgrade() ) {
+		// if we need to upgrade
+		if ( $this->db->upgrade_required() ) {
 
 			// get upgrade options
 			$upgrade = $this->_get_upgrade();
@@ -1476,7 +1382,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the CommentPress Core options for the admin form
+	 * Returns the CommentPress Core options for the admin form.
 	 *
 	 * @return str $options
 	 */
@@ -1583,14 +1489,9 @@ HELPTEXT;
 
 		<p>' . __( 'You can set a custom background colour in <em>Appearance &#8594; Background</em>.<br />
 		You can also set a custom header image and header text colour in <em>Appearance &#8594; Header</em>.<br />
-		Below are extra options for changing how the theme looks.', 'commentpress-core' ) . '</p>
+		Below are extra options for changing how the theme functions.', 'commentpress-core' ) . '</p>
 
 		<table class="form-table">
-
-			<tr valign="top" id="cp_header_bg_colour-row">
-				<th scope="row"><label for="cp_header_bg_colour">' . __( 'Header Background Colour', 'commentpress-core' ) . '</label></th>
-				<td><input type="text" name="cp_header_bg_colour" id="cp_header_bg_colour" value="' . $this->db->option_get('cp_header_bg_colour') . '" /><span class="description hide-if-js">' . __( 'If you want to hide header text, add <strong>#blank</strong> as text colour.', 'commentpress-core' ) . '</span><input type="button" class="button hide-if-no-js" value="' . __( 'Select a Colour', 'commentpress-core' ) . '" id="pickcolor" /><div id="color-picker" style="z-index: 100; background:#eee; border:1px solid #ccc; position:absolute; display:none;"></div></td>
-			</tr>
 
 			<tr valign="top">
 				<th scope="row"><label for="cp_js_scroll_speed">' . __( 'Scroll speed', 'commentpress-core' ) . '</label></th>
@@ -1620,7 +1521,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns optional options, if defined
+	 * Returns optional options, if defined.
 	 *
 	 * @return str $html
 	 */
@@ -1638,7 +1539,7 @@ HELPTEXT;
 			// allow overrides
 			$types = apply_filters( 'cp_blog_type_options', $types );
 
-			// if we get some from a plugin, say...
+			// if we get some from a plugin, say
 			if ( ! empty( $types ) ) {
 
 				// define title
@@ -1692,7 +1593,7 @@ HELPTEXT;
 			// allow overrides
 			$has_workflow = apply_filters( 'cp_blog_workflow_exists', $has_workflow );
 
-			// if we have workflow enabled, by a plugin, say...
+			// if we have workflow enabled, by a plugin, say
 			if ( $has_workflow !== false ) {
 
 				// define label
@@ -1731,7 +1632,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the upgrade details for the admin form
+	 * Returns the upgrade details for the admin form.
 	 *
 	 * @return str $upgrade
 	 */
@@ -1841,7 +1742,7 @@ HELPTEXT;
 			// allow overrides
 			$types = apply_filters( 'cp_blog_type_options', $types );
 
-			// if we get some from a plugin, say...
+			// if we get some from a plugin, say
 			if ( ! empty( $types ) ) {
 
 				// define title
@@ -1886,7 +1787,7 @@ HELPTEXT;
 			// allow overrides
 			$has_workflow = apply_filters( 'cp_blog_workflow_exists', $has_workflow );
 
-			// if we have workflow enabled, by a plugin, say...
+			// if we have workflow enabled, by a plugin, say
 			if ( $has_workflow !== false ) {
 
 				// define label
@@ -1994,25 +1895,6 @@ HELPTEXT;
 
 		}
 
-		// do we have the option to set the header bg colour?
-		if ( ! $this->db->option_exists( 'cp_header_bg_colour' ) ) {
-
-			// define labels
-			$colour_label = __( 'Header Background Colour', 'commentpress-core' );
-			$colour_select_text = __( 'If you want to hide header text, add <strong>#blank</strong> as text colour.', 'commentpress-core' );
-			$colour_select_label = __( 'Select a Colour', 'commentpress-core' );
-
-			// define upgrade
-			$upgrade .= '
-			<tr valign="top" id="cp_header_bg_colour-row">
-				<th scope="row"><label for="cp_header_bg_colour">' . $colour_label . '</label></th>
-				<td><input type="text" name="cp_header_bg_colour" id="cp_header_bg_colour" value="' . $this->db->header_bg_colour . '" /><span class="description hide-if-js">' . $colour_select_text . '</span><input type="button" class="button hide-if-no-js" value="' . $colour_select_label . '" id="pickcolor" /><div id="color-picker" style="z-index: 100; background:#eee; border:1px solid #ccc; position:absolute; display:none;"></div></td>
-			</tr>
-
-			';
-
-		}
-
 		// do we have the option to set the scroll speed?
 		if ( ! $this->db->option_exists( 'cp_js_scroll_speed' ) ) {
 
@@ -2057,7 +1939,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the multisite deactivate button for the admin form
+	 * Returns the multisite deactivate button for the admin form.
 	 *
 	 * @return str $html
 	 */
@@ -2071,7 +1953,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the reset button for the admin form
+	 * Returns the reset button for the admin form.
 	 *
 	 * @return str $reset
 	 */
@@ -2096,7 +1978,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the rich text editor button for the admin form
+	 * Returns the rich text editor button for the admin form.
 	 *
 	 * @return str $editor
 	 */
@@ -2140,7 +2022,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the TOC options for the admin form
+	 * Returns the TOC options for the admin form.
 	 *
 	 * @return str $editor
 	 */
@@ -2205,7 +2087,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the Sidebar options for the admin form
+	 * Returns the Sidebar options for the admin form.
 	 *
 	 * @return str $toc
 	 */
@@ -2245,7 +2127,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the override paragraph commenting button for the admin form
+	 * Returns the override paragraph commenting button for the admin form.
 	 *
 	 * @return str $override
 	 */
@@ -2270,7 +2152,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the textblock meta button for the admin form
+	 * Returns the textblock meta button for the admin form.
 	 *
 	 * @return str $override
 	 */
@@ -2297,7 +2179,7 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the submit button
+	 * Returns the submit button.
 	 *
 	 * @return str $submit The submit button HTML
 	 */
@@ -2315,408 +2197,6 @@ HELPTEXT;
 
 		// --<
 		return $submit;
-
-	}
-
-
-
-	/**
-	 * Get admin javascript, copied from wp-includes/custom-header.php
-	 *
-	 * @return void
-	 */
-	function get_admin_js() {
-
-		// print inline js
-		echo '
-		<script type="text/javascript">
-		//<![CDATA[
-			var text_objects = ["#cp_header_bg_colour-row"];
-			var farbtastic;
-			var default_color = "#' . $this->db->option_get_header_bg() . '";
-			var old_color = null;
-
-			function pickColor(color) {
-				jQuery("#cp_header_bg_colour").val(color);
-				farbtastic.setColor(color);
-			}
-
-			function toggle_text(s) {
-				return;
-				if (jQuery(s).attr("id") == "showtext" && jQuery("#cp_header_bg_colour").val() != "blank")
-					return;
-
-				if (jQuery(s).attr("id") == "hidetext" && jQuery("#cp_header_bg_colour").val() == "blank")
-					return;
-
-				if (jQuery("#cp_header_bg_colour").val() == "blank") {
-					//Show text
-					if (old_color == "#blank")
-						old_color = default_color;
-
-					jQuery( text_objects.toString() ).show();
-					jQuery("#cp_header_bg_colour").val(old_color);
-					pickColor(old_color);
-				} else {
-					//Hide text
-					jQuery( text_objects.toString() ).hide();
-					old_color = jQuery("#cp_header_bg_colour").val();
-					jQuery("#cp_header_bg_colour").val("blank");
-				}
-			}
-
-			jQuery(document).ready(function() {
-				jQuery("#pickcolor").click(function() {
-					jQuery("#color-picker").show();
-				});
-
-				jQuery('."'".'input[name="hidetext"]'."'".').click(function() {
-					toggle_text(this);
-				});
-
-				jQuery("#defaultcolor").click(function() {
-					pickColor(default_color);
-					jQuery("#cp_header_bg_colour").val(default_color)
-				});
-
-				jQuery("#cp_header_bg_colour").keyup(function() {
-					var _hex = jQuery("#cp_header_bg_colour").val();
-					var hex = _hex;
-					if ( hex[0] != "#" )
-						hex = "#" + hex;
-					hex = hex.replace(/[^#a-fA-F0-9]+/, "");
-					if ( hex != _hex )
-						jQuery("#cp_header_bg_colour").val(hex);
-					if ( hex.length == 4 || hex.length == 7 )
-						pickColor( hex );
-				});
-
-				jQuery(document).mousedown(function(){
-					jQuery("#color-picker").each( function() {
-						var display = jQuery(this).css("display");
-						if (display == "block")
-							jQuery(this).fadeOut(2);
-					});
-				});
-
-				// test for picker
-				if ( jQuery("#cp_header_bg_colour").length > 0 ) {
-					farbtastic = jQuery.farbtastic("#color-picker", function(color) { pickColor(color); });
-					pickColor("#' . $this->db->option_get_header_bg() . '");
-				}
-
-				' . ( ( 'blank' == $this->db->option_get_header_bg() OR '' == $this->db->option_get_header_bg() ) ? 'toggle_text();' : '' ) . '
-				});
-
-		//]]>
-			</script>
-
-		';
-
-	}
-
-
-
-	/**
-	 * Return the javascript to init TinyMCE for WP < 3.2
-	 *
-	 * @return str $js
-	 */
-	function _get_tinymce_init() {
-
-		// base url
-		//$_base = trailingslashit( get_bloginfo('wpurl') ) . 'wp-includes/js/tinymce';
-		$_base = includes_url('js/tinymce');
-
-		// locale
-		$mce_locale = ( '' == get_locale() ) ? 'en' : strtolower( substr(get_locale(), 0, 2) ); // only ISO 639-1
-
-		// content css
-		$_content_css = ''; //trailingslashit( get_bloginfo('wpurl') ) . 'wp-includes/js/tinymce/wordpress.css';
-
-		// define tinyMCE javascript
-		$js = '
-		<script type="text/javascript">
-		//<![CDATA[
-
-
-
-		/**
-		 * TinyMCE callback function
-		 */
-		function br_to_nl( element_id, html, body ) {
-
-			// replace brs with newlines
-			html = html.replace(/<br\s*\/>/gi, "\n");
-
-			// --<
-			return html;
-
-		}
-
-
-
-		/**
-		 * TinyMCE init
-		 */
-		tinyMCEPreInit = {
-
-			base : "' . $_base . '",
-
-			suffix : "",
-
-			query : "ver=20081129",
-
-			mceInit : {
-				mode : "exact",
-				editor_selector : "comment",
-				width : "100%",
-				theme : "advanced",
-				theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,bullist,numlist,|,link,unlink,|,removeformat,fullscreen",
-				theme_advanced_buttons2 : "",
-				theme_advanced_buttons3 : "",
-				theme_advanced_toolbar_location : "top",
-				theme_advanced_toolbar_align : "left",
-				theme_advanced_statusbar_location : "none",
-				theme_advanced_resizing : "1",
-				theme_advanced_resize_horizontal : false,
-				theme_advanced_disable : "code",
-				force_p_newlines : "1",
-				force_br_newlines : false,
-				forced_root_block : "p",
-				gecko_spellcheck : true,
-				directionality : "ltr",
-				save_callback : "br_to_nl",
-				entity_encoding : "raw",
-				plugins : "safari,fullscreen",
-				extended_valid_elements : "a[name|href|title],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style],blockquote[cite],strike,s,del,div[class|style]",
-				language : "en"
-			},
-
-			go : function() {
-				var t = this, sl = tinymce.ScriptLoader, ln = t.mceInit.language, th = t.mceInit.theme, pl = t.mceInit.plugins;
-
-				sl.markDone(t.base + "/langs/" + ln + ".js");
-				sl.markDone(t.base + "/themes/" + th + "/langs/" + ln + ".js");
-				sl.markDone(t.base + "/themes/" + th + "/langs/" + ln + "_dlg.js");
-
-				tinymce.each(pl.split(","), function(n) {
-					if (n && n.charAt(0) != "-") {
-						sl.markDone(t.base + "/plugins/" + n + "/langs/" + ln + ".js");
-						sl.markDone(t.base + "/plugins/" + n + "/langs/" + ln + "_dlg.js");
-					}
-				});
-			},
-
-			load_ext : function(url,lang) {
-				var sl = tinymce.ScriptLoader;
-
-				sl.markDone(url + "/langs/" + lang + ".js");
-				sl.markDone(url + "/langs/" + lang + "_dlg.js");
-			}
-
-		};
-
-
-
-		// load languages, themes and plugins
-		tinyMCEPreInit.go();
-
-		// init TinyMCE object
-		tinyMCE.init(tinyMCEPreInit.mceInit);
-
-
-
-		//]]>
-		</script>' . "\n\n\n\n";
-
-		// --<
-		return $js;
-
-	}
-
-
-
-	/**
-	 * Adds the TinyMCE editor to comment textareas in WP > 3.2
-	 * Adapted from wp_tiny_mce in /wp-admin/includes/post.php
-	 *
-	 * @param mixed $settings optional An array that can add to or overwrite the default TinyMCE settings.
-	 */
-	function _get_tinymce( $settings = false ) {
-
-		global $tinymce_version;
-
-		$baseurl = includes_url('js/tinymce');
-
-		$mce_locale = ( '' == get_locale() ) ? 'en' : strtolower( substr(get_locale(), 0, 2) ); // only ISO 639-1
-
-		/**
-		 * The following filter allows localization scripts to change the languages
-		 * displayed in the spellchecker's drop-down menu.
-		 * By default it uses Google's spellchecker API, but can be configured to
-		 * use PSpell/ASpell if installed on the server.
-		 * The + sign marks the default language. More information:
-		 * http://wiki.moxiecode.com/index.php/TinyMCE:Plugins/spellchecker
-		 */
-		$mce_spellchecker_languages = apply_filters('cprc_tinymce_spellchecker_languages', '+English=en,Danish=da,Dutch=nl,Finnish=fi,French=fr,German=de,Italian=it,Polish=pl,Portuguese=pt,Spanish=es,Swedish=sv');
-
-		// default plugins
-		$plugins = apply_filters( 'cprc_tinymce_plugins', array( 'spellchecker', 'tabfocus', 'fullscreen', 'safari' ) );
-		$ext_plugins = '';
-
-		// default buttons
-		$mce_buttons = apply_filters( 'cprc_tinymce_buttons', array('bold', 'italic', 'underline', 'strikethrough', '|', 'link', 'unlink', '|', 'spellchecker', 'removeformat', 'fullscreen') );
-		$mce_buttons = implode($mce_buttons, ',');
-
-		// TinyMCE init settings
-		$initArray = array (
-			'mode' => 'specific_textareas',
-			'editor_selector' => 'comment',
-			'width' => '99%',
-			'theme' => 'advanced',
-			'theme_advanced_buttons1' => $mce_buttons,
-			'theme_advanced_buttons2' => '',
-			'theme_advanced_buttons3' => '',
-			'theme_advanced_buttons4' => '',
-			'language' => $mce_locale,
-			'spellchecker_languages' => $mce_spellchecker_languages,
-			'theme_advanced_toolbar_location' => 'top',
-			'theme_advanced_toolbar_align' => 'left',
-			'theme_advanced_statusbar_location' => 'none',
-			'theme_advanced_resizing' => true,
-			'theme_advanced_resize_horizontal' => false,
-			'dialog_type' => 'modal',
-			'formats' => "{
-				alignleft : [
-					{selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li', styles : {textAlign : 'left'}},
-					{selector : 'img,table', classes : 'alignleft'}
-				],
-				aligncenter : [
-					{selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li', styles : {textAlign : 'center'}},
-					{selector : 'img,table', classes : 'aligncenter'}
-				],
-				alignright : [
-					{selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li', styles : {textAlign : 'right'}},
-					{selector : 'img,table', classes : 'alignright'}
-				],
-				strikethrough : {inline : 'del'}
-			}",
-			'relative_urls' => false,
-			'remove_script_host' => false,
-			'convert_urls' => false,
-			'apply_source_formatting' => false,
-			'remove_linebreaks' => true,
-			'gecko_spellcheck' => true,
-			'keep_styles' => false,
-			'entities' => '38,amp,60,lt,62,gt',
-			'accessibility_focus' => true,
-			'tabfocus_elements' => 'major-publishing-actions',
-			'media_strict' => false,
-			'paste_remove_styles' => true,
-			'paste_remove_spans' => true,
-			'paste_strip_class_attributes' => 'all',
-			'paste_text_use_dialog' => true,
-			'extended_valid_elements' => 'a[name|href|title],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style],blockquote[cite],strike,s,del,div[class|style]',
-			'wpeditimage_disable_captions' => '',
-			'wp_fullscreen_content_css' => "$baseurl/plugins/wpfullscreen/css/wp-fullscreen.css",
-			'plugins' => implode( ',', $plugins ),
-		);
-
-		// editor styles - applied via filter
-		$mce_css = '';
-		$mce_css = trim( apply_filters( 'mce_css', $mce_css ), ' ,' );
-
-		if ( ! empty($mce_css) )
-			$initArray['content_css'] = $mce_css;
-
-		if ( is_array($settings) )
-			$initArray = array_merge($initArray, $settings);
-
-		/**
-		 * For people who really REALLY know what they're doing with TinyMCE
-		 * You can modify initArray to add, remove, change elements of the config before tinyMCE.init
-		 * Setting "valid_elements", "invalid_elements" and "extended_valid_elements" can be done through "cprc_tinymce_before_init".
-		 * Best is to use the default cleanup by not specifying valid_elements, as TinyMCE contains full set of XHTML 1.0.
-		 */
-		$initArray = apply_filters('cprc_tinymce_before_init', $initArray);
-
-		/**
-		 * Deprecated
-		 *
-		 * The tiny_mce_version filter is not needed since external plugins are loaded directly by TinyMCE.
-		 * These plugins can be refreshed by appending query string to the URL passed to mce_external_plugins filter.
-		 * If the plugin has a popup dialog, a query string can be added to the button action that opens it (in the plugin's code).
-		 */
-		$version = apply_filters('tiny_mce_version', '');
-		$version = 'ver=' . $tinymce_version . $version;
-
-		$language = $initArray['language'];
-		if ( 'en' != $language )
-			include_once(ABSPATH . WPINC . '/js/tinymce/langs/wp-langs.php');
-
-		$mce_options = '';
-		foreach ( $initArray as $k => $v ) {
-			if ( is_bool($v) ) {
-				$val = $v ? 'true' : 'false';
-				$mce_options .= $k . ':' . $val . ', ';
-				continue;
-			} elseif ( ! empty($v) && is_string($v) && ( ('{' == $v{0} && '}' == $v{strlen($v) - 1}) || ('[' == $v{0} && ']' == $v{strlen($v) - 1}) || preg_match('/^\(?function ?\(/', $v) ) ) {
-				$mce_options .= $k . ':' . $v . ', ';
-				continue;
-			}
-
-			$mce_options .= $k . ':"' . $v . '", ';
-		}
-
-		$mce_options = rtrim( trim($mce_options), '\n\r,' );
-
-		// not needed
-		//do_action('before_wp_tiny_mce', $initArray);
-
-		?>
-
-		<script type="text/javascript">
-		/* <![CDATA[ */
-		tinyMCEPreInit = {
-			base : "<?php echo $baseurl; ?>",
-			suffix : "",
-			query : "<?php echo $version; ?>",
-			mceInit : {<?php echo $mce_options; ?>},
-			load_ext : function(url,lang){var sl=tinymce.ScriptLoader;sl.markDone(url+'/langs/'+lang+'.js');sl.markDone(url+'/langs/'+lang+'_dlg.js');}
-		};
-		/* ]]> */
-		</script>
-
-		<?php
-
-				// ditched compressed version
-				echo "<script type='text/javascript' src='$baseurl/tiny_mce.js?$version'></script>\n";
-
-				if ( 'en' != $language && isset($lang) )
-					echo "<script type='text/javascript'>\n$lang\n</script>\n";
-				else
-					echo "<script type='text/javascript' src='$baseurl/langs/wp-langs-en.js?$version'></script>\n";
-
-		?>
-
-		<script type="text/javascript">
-		/* <![CDATA[ */
-		<?php
-			if ( $ext_plugins )
-				echo "$ext_plugins\n";
-
-		?>
-		(function(){var t=tinyMCEPreInit,sl=tinymce.ScriptLoader,ln=t.mceInit.language,th=t.mceInit.theme,pl=t.mceInit.plugins;sl.markDone(t.base+'/langs/'+ln+'.js');sl.markDone(t.base+'/themes/'+th+'/langs/'+ln+'.js');sl.markDone(t.base+'/themes/'+th+'/langs/'+ln+'_dlg.js');tinymce.each(pl.split(','),function(n){if(n&&n.charAt(0)!='-'){sl.markDone(t.base+'/plugins/'+n+'/langs/'+ln+'.js');sl.markDone(t.base+'/plugins/'+n+'/langs/'+ln+'_dlg.js');}});})();
-
-		tinyMCE.init(tinyMCEPreInit.mceInit);
-		/* ]]> */
-		</script>
-
-		<?php
-
-		// not needed
-		//do_action('after_wp_tiny_mce', $initArray);
 
 	}
 

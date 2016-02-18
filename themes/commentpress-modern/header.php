@@ -58,11 +58,6 @@ var cp_msie = 1;
 <link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/assets/css/activate.css" media="screen" />
 <?php }} ?>
 
-<!-- IE stylesheets so we can override anything -->
-<!--[if gte IE 7]>
-<link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/assets/css/ie7.css" media="screen" />
-<![endif]-->
-
 </head>
 
 

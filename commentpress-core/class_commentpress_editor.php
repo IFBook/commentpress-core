@@ -1,48 +1,47 @@
-<?php /*
-================================================================================
-Class CommentpressCoreEditor
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
-=====
+<?php
 
-This class provides comatibility between WP Front-end Editor and CommentPress Core.
-
---------------------------------------------------------------------------------
-*/
-
-
-
-/*
-================================================================================
-Class Name
-================================================================================
-*/
-
-class CommentpressCoreEditor {
-
-
+/**
+ * CommentPress Core Editor Class.
+ *
+ * A class that handles compatibility with WordPress Front End Editor.
+ *
+ * @since 3.7
+ */
+class Commentpress_Core_Editor {
 
 	/**
-	 * Properties
+	 * Plugin object.
+	 *
+	 * @since 3.7
+	 * @access public
+	 * @var object $parent_obj The plugin object
 	 */
-
-	// parent object reference
 	public $parent_obj;
 
-	// db object reference
+	/**
+	 * Database interaction object.
+	 *
+	 * @since 3.7
+	 * @access public
+	 * @var object $db The database object
+	 */
 	public $db;
 
-	// toggle state
+	/**
+	 * Editor toggle state.
+	 *
+	 * @since 3.7
+	 * @access public
+	 * @var str $toggle_state The toggle state
+	 */
 	public $toggle_state;
 
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
-	 * @since 3.0
+	 * @since 3.7
 	 *
 	 * @param object $parent_obj a reference to the parent object
 	 */
@@ -62,7 +61,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * Set up all items associated with this object
+	 * Set up all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -91,7 +90,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * If needed, destroys all items associated with this object
+	 * If needed, destroys all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -114,7 +113,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * Register WordPress hooks
+	 * Register WordPress hooks.
 	 *
 	 * @return void
 	 */
@@ -205,7 +204,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * Set editor toggle state if none exists
+	 * Set editor toggle state if none exists.
 	 *
 	 * @return void
 	 */
@@ -216,7 +215,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * Set editor toggle state if none exists
+	 * Set editor toggle state if none exists.
 	 *
 	 * @return void
 	 */
@@ -247,7 +246,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * Intercept editor toggling once plugins are loaded
+	 * Intercept editor toggling once plugins are loaded.
 	 *
 	 * @return void
 	 */
@@ -315,7 +314,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * Inject editor toggle link before search in Contents column
+	 * Inject editor toggle link before search in Contents column.
 	 *
 	 * @return void
 	 */
@@ -370,7 +369,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * Prevent WordPress Front-end Editor from loading
+	 * Prevent WordPress Front-end Editor from loading.
 	 *
 	 * @return void
 	 */
@@ -392,7 +391,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * Prevent TinyMCE from loading in the comment form
+	 * Prevent TinyMCE from loading in the comment form.
 	 *
 	 * @return void
 	 */
@@ -406,7 +405,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * Prevent TinyMCE from loading in the comment form
+	 * Prevent TinyMCE from loading in the comment form.
 	 *
 	 * @return void
 	 */
@@ -420,7 +419,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * Get additional javascript vars
+	 * Get additional javascript vars.
 	 *
 	 * @param array $vars The existing variables to pass to our Javascript
 	 * @return array $vars The modified variables to pass to our Javascript
@@ -459,7 +458,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * Get new comments container
+	 * Get new comments container.
 	 *
 	 * @return void
 	 */
@@ -491,7 +490,7 @@ class CommentpressCoreEditor {
 		// override if multipage
 		if ( $multipage ) $content = $pages[($page_num - 1)];
 
-		// trigger CommentPress comments collation
+		// trigger CommentPress Core comments collation
 		$content = apply_filters( 'the_content', $content );
 
 		// add move button to the comment meta
@@ -535,7 +534,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * Get new post metabox container
+	 * Get new post metabox container.
 	 *
 	 * @return void
 	 */
@@ -555,7 +554,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * AJAX metabox: set post title visibility
+	 * AJAX metabox: set post title visibility.
 	 *
 	 * @return void
 	 */
@@ -593,7 +592,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * AJAX metabox: set page meta visibility
+	 * AJAX metabox: set page meta visibility.
 	 *
 	 * @return void
 	 */
@@ -631,7 +630,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * AJAX metabox: set number format
+	 * AJAX metabox: set number format.
 	 *
 	 * @return void
 	 */
@@ -675,7 +674,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * AJAX metabox: set formatter
+	 * AJAX metabox: set formatter.
 	 *
 	 * @return void
 	 */
@@ -712,7 +711,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * AJAX metabox: set starting paragraph number
+	 * AJAX metabox: set starting paragraph number.
 	 *
 	 * @return void
 	 */
@@ -749,7 +748,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * Override the "Edit Page" link when WP FEE not active
+	 * Override the "Edit Page" link when WP FEE not active.
 	 *
 	 * @param string $link The existing link
 	 * @param int $id The numeric post ID
@@ -789,7 +788,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * Set up post object from passed data
+	 * Set up post object from passed data.
 	 *
 	 * @return bool True if post object set up, false otherwise
 	 */
@@ -819,7 +818,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * Send data to browser and exit
+	 * Send data to browser and exit.
 	 *
 	 * @return void
 	 */
@@ -841,7 +840,7 @@ class CommentpressCoreEditor {
 
 
 	/**
-	 * Inject editor toggle before search in Contents column
+	 * Inject editor toggle before search in Contents column.
 	 *
 	 * @return void
 	 */

@@ -31,7 +31,7 @@
 	// init
 	$_special_pages = array();
 
-	// if we have the plugin enabled...
+	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
 		// get special pages

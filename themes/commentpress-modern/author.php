@@ -64,7 +64,7 @@ $_avatar = get_avatar( $my_author->user_email, $size='200' );
 if ( $_avatar != '' ) {
 
 	// show it
-	echo '<p>'.$_avatar.'</p>';
+	echo '<p>' . $_avatar . '</p>';
 
 }
 
@@ -190,8 +190,6 @@ $_pages = new WP_Query( $page_args );
 
 // proceed only if published pages exist
 if ( $_pages->have_posts() ) {
-
-	//print_r( $pages ); die();
 
 	// init name
 	$_author_name = $my_author->nickname;

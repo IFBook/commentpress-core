@@ -1,45 +1,38 @@
-<?php /*
-================================================================================
-Class CommentpressCoreFormatter
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
-=====
+<?php
 
-This class provides "Prose" and "Poetry" formatting to CommentPress Core.
-
---------------------------------------------------------------------------------
-*/
-
-
-
-/*
-================================================================================
-Class Name
-================================================================================
-*/
-
-class CommentpressCoreFormatter {
-
-
+/**
+ * CommentPress Core Formatter Class.
+ *
+ * This class provides "Prose" and "Poetry" formatting to CommentPress Core.
+ *
+ * @since 3.3
+ */
+class Commentpress_Core_Formatter {
 
 	/**
-	 * Properties
+	 * Plugin object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $parent_obj The plugin object
 	 */
-
-	// parent object reference
 	public $parent_obj;
 
-	// database object
+	/**
+	 * Database interaction object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $db The database object
+	 */
 	public $db;
 
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
-	 * @since 3.0
+	 * @since 3.3
 	 *
 	 * @param object $parent_obj A reference to the parent object
 	 */
@@ -59,7 +52,7 @@ class CommentpressCoreFormatter {
 
 
 	/**
-	 * Set up all items associated with this object
+	 * Set up all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -70,7 +63,7 @@ class CommentpressCoreFormatter {
 
 
 	/**
-	 * If needed, destroys all items associated with this object
+	 * If needed, destroys all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -93,7 +86,7 @@ class CommentpressCoreFormatter {
 
 
 	/**
-	 * Override the name of the type dropdown label
+	 * Override the name of the type dropdown label.
 	 *
 	 * @param str $name The existing name of the label
 	 * @return str $name The modified name of the label
@@ -110,7 +103,7 @@ class CommentpressCoreFormatter {
 
 
 	/**
-	 * Define the "types" of groupblog
+	 * Define the "types" of groupblog.
 	 *
 	 * @param array $existing_options The existing types of groupblog
 	 * @return array $existing_options The modified types of groupblog
@@ -134,7 +127,7 @@ class CommentpressCoreFormatter {
 
 
 	/**
-	 * Choose content formatter by blog type or post meta value
+	 * Choose content formatter by blog type or post meta value.
 	 *
 	 * @param str $formatter The existing formatter code
 	 * @return str $formatter The existing formatter code
@@ -150,7 +143,7 @@ class CommentpressCoreFormatter {
 		// default to current blog type
 		$type = $this->db->option_get( 'cp_blog_type' );
 
-		// but, if the custom field has a value...
+		// but, if the custom field has a value
 		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 
 			// get it
@@ -198,7 +191,7 @@ class CommentpressCoreFormatter {
 
 
 	/**
-	 * Object initialisation
+	 * Object initialisation.
 	 *
 	 * @return void
 	 */
@@ -212,7 +205,7 @@ class CommentpressCoreFormatter {
 
 
 	/**
-	 * Register WordPress hooks
+	 * Register WordPress hooks.
 	 *
 	 * @return void
 	 */

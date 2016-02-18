@@ -1,48 +1,47 @@
-<?php /*
-================================================================================
-Class CommentpressMultisiteAdmin
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
-=====
+<?php
 
-This class is a wrapper for the majority of database operations.
-
---------------------------------------------------------------------------------
-*/
-
-
-
-/*
-================================================================================
-Class Name
-================================================================================
-*/
-
-class CommentpressMultisiteAdmin {
-
-
+/**
+ * CommentPress Core Multisite Admin Class.
+ *
+ * This class is a wrapper for the majority of database operations.
+ *
+ * @since 3.3
+ */
+class Commentpress_Multisite_Admin {
 
 	/**
-	 * Properties
+	 * Plugin object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $parent_obj The plugin object
 	 */
-
-	// parent object reference
 	public $parent_obj;
 
-	// options page
+	/**
+	 * Options page reference.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var str $options_page The options page reference
+	 */
 	public $options_page;
 
-	// options array
+	/**
+	 * Multisite options array.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var array $cpmu_options The multisite options array
+	 */
 	public $cpmu_options = array();
 
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
-	 * @since 3.0
+	 * @since 3.3
 	 *
 	 * @param object $parent_obj a reference to the parent object
 	 */
@@ -59,7 +58,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Set up all options associated with this object
+	 * Set up all options associated with this object.
 	 *
 	 * @param string $component a component identifier, either 'multisite' or 'buddypress'
 	 * @return void
@@ -69,10 +68,10 @@ class CommentpressMultisiteAdmin {
 		// we always get a multisite request
 		if ( $component == 'multisite' ) {
 
-			// if we don't have our version option...
+			// if we don't have our version option
 			if ( ! $this->option_wpms_exists( 'cpmu_version' ) ) {
 
-				// we're activating: add our options...
+				// we're activating: add our options:
 
 				// add options with default values
 				$this->options_create();
@@ -84,10 +83,10 @@ class CommentpressMultisiteAdmin {
 		// if BuddyPress is enabled, we'll get a request for that too
 		if ( $component == 'buddypress' ) {
 
-			// if we don't have one of our buddypress options...
+			// if we don't have one of our BuddyPress options
 			if ( ! $this->option_exists( 'cpmu_bp_force_commentpress' ) ) {
 
-				// we're activating: add our options...
+				// we're activating: add our options:
 
 				// use reset method
 				$this->options_reset( $component );
@@ -101,43 +100,17 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Upgrade plugin from 1.0 options to latest set
+	 * Upgrade plugin from 1.0 options to latest set.
 	 *
 	 * @return boolean $result
 	 */
-	public function upgrade() {
+	public function upgrade_options() {
 
 		// init return
 		$result = false;
 
-		// if we have a commentpress install (or we're forcing)
-		if ( $this->check_upgrade() ) {
-
-			/*
-			--------------------------------------------------------------------
-			Example of how upgrades work...
-			--------------------------------------------------------------------
-
-			// default
-			$cpmu_xxxx = '';
-
-			// get variables
-			extract( $_POST );
-
-			// New in CPMU 1.0.1 - are we missing the cpmu_xxxx option?
-			if ( ! $this->option_exists( 'cpmu_xxxx' ) ) {
-
-				// get choice
-				$_choice = esc_sql( $cpmu_xxxx );
-
-				// add chosen option
-				$this->option_set( 'cpmu_xxxx', $_choice );
-
-			}
-			*/
-
-			// save new options
-			$this->options_save();
+		// if we have a CommentPress Core install (or we're forcing)
+		if ( $this->upgrade_required() ) {
 
 			// store new version
 			$this->option_wpms_set( 'cpmu_version', COMMENTPRESS_MU_PLUGIN_VERSION );
@@ -151,7 +124,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * If needed, destroys all items associated with this object
+	 * If needed, destroys all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -165,7 +138,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Uninstalls database modifications
+	 * Uninstalls database modifications.
 	 *
 	 * @return void
 	 */
@@ -190,34 +163,28 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Check for plugin upgrade
+	 * Check for plugin upgrade.
 	 *
-	 * @return boolean $result True if upgrade required, false otherwise
+	 * @return boolean True if upgrade required, false otherwise
 	 */
-	public function check_upgrade() {
-
-		// init
-		$result = false;
+	public function upgrade_required() {
 
 		// get installed version
-		$_version = $this->option_wpms_get( 'cpmu_version' );
+		$version = $this->option_wpms_get( 'cpmu_version' );
 
-		// if we have an install and it's lower than this one
-		if ( $_version !== false AND version_compare( COMMENTPRESS_MU_PLUGIN_VERSION, $_version, '>' ) ) {
-
-			// override
-			$result = true;
-
+		// override if we have an install and it's lower than this one
+		if ( $version !== false AND version_compare( COMMENTPRESS_MU_PLUGIN_VERSION, $version, '>' ) ) {
+			return true;
 		}
 
-		// --<
-		return $result;
+		// fallback
+		return false;
 	}
 
 
 
 	/**
-	 * Create all plugin options
+	 * Create all plugin options.
 	 *
 	 * @return void
 	 */
@@ -232,7 +199,7 @@ class CommentpressMultisiteAdmin {
 		// store options array
 		add_site_option( 'cpmu_options', $this->cpmu_options );
 
-		// store CommentPress Multisite version
+		// store CommentPress Core Multisite version
 		add_site_option( 'cpmu_version', COMMENTPRESS_MU_PLUGIN_VERSION );
 
 	}
@@ -240,16 +207,16 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Delete all plugin options
+	 * Delete all plugin options.
 	 *
 	 * @return void
 	 */
 	public function options_delete() {
 
-		// delete CommentPress Multisite version
+		// delete CommentPress Core Multisite version
 		delete_site_option( 'cpmu_version' );
 
-		// delete CommentPress Multisite options
+		// delete CommentPress Core Multisite options
 		delete_site_option( 'cpmu_options' );
 
 	}
@@ -257,7 +224,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Save the settings set by the administrator
+	 * Save the settings set by the administrator.
 	 *
 	 * @return boolean True on success, false on failure
 	 */
@@ -280,11 +247,11 @@ class CommentpressMultisiteAdmin {
 			// get variables
 			extract( $_POST );
 
-			// did we ask to upgrade CommentPress Multisite?
+			// did we ask to upgrade CommentPress Core Multisite?
 			if ( $cpmu_upgrade == '1' ) {
 
 				// do upgrade
-				$this->upgrade();
+				$this->upgrade_options();
 
 				// --<
 				return true;
@@ -334,7 +301,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Save options array as WordPress site option
+	 * Save options array as WordPress site option.
 	 *
 	 * @return boolean $success True if successful, false otherwise
 	 */
@@ -348,7 +315,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Reset options
+	 * Reset options.
 	 *
 	 * @param string $component a component identifier, either 'multisite' or 'buddypress'
 	 * @return void
@@ -366,7 +333,7 @@ class CommentpressMultisiteAdmin {
 
 		}
 
-		// did we get a buddypress request?
+		// did we get a BuddyPress request?
 		if ( $component == 'buddypress' ) {
 
 			// allow plugins to add their own options
@@ -374,12 +341,9 @@ class CommentpressMultisiteAdmin {
 
 		}
 
-		// loop
+		// loop and set
 		foreach( $options AS $option => $value ) {
-
-			// set it
 			$this->option_set( $option, $value );
-
 		}
 
 		// store it
@@ -390,7 +354,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Return existence of a specified option
+	 * Return existence of a specified option.
 	 *
 	 * @param str $option_name The name of the option
 	 * @return bool True if the option exists, false otherwise
@@ -410,7 +374,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Return a value for a specified option
+	 * Return a value for a specified option.
 	 *
 	 * @param str $option_name The name of the option
 	 * @param mixed $default The default value for the option
@@ -431,7 +395,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Sets a value for a specified option
+	 * Sets a value for a specified option.
 	 *
 	 * @param str $option_name The name of the option
 	 * @param mixed $value The value for the option
@@ -457,7 +421,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Deletes a specified option
+	 * Deletes a specified option.
 	 *
 	 * @param str $option_name The name of the option
 	 * @return void
@@ -477,7 +441,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Return existence of a specified site option
+	 * Return existence of a specified site option.
 	 *
 	 * @param str $option_name The name of the option
 	 * @return bool True if option exists, false otherwise
@@ -491,15 +455,9 @@ class CommentpressMultisiteAdmin {
 
 		// get option with unlikely default
 		if ( $this->option_wpms_get( $option_name, 'fenfgehgejgrkj' ) == 'fenfgehgejgrkj' ) {
-
-			// no
 			return false;
-
 		} else {
-
-			// yes
 			return true;
-
 		}
 
 	}
@@ -507,7 +465,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Return a value for a specified site option
+	 * Return a value for a specified site option.
 	 *
 	 * @param str $option_name The name of the option
 	 * @param mixed $default The default value for the option
@@ -528,7 +486,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Sets a value for a specified site option
+	 * Sets a value for a specified site option.
 	 *
 	 * @param str $option_name The name of the option
 	 * @param mixed $value The value for the option
@@ -549,7 +507,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * CommentPress Core initialisation
+	 * CommentPress Core initialisation.
 	 *
 	 * @param str $context The initialisation context
 	 * @return void
@@ -658,7 +616,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * CommentPress Core deactivation
+	 * CommentPress Core deactivation.
 	 *
 	 * @return void
 	 */
@@ -689,7 +647,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Get workflow form data
+	 * Get workflow form data.
 	 *
 	 * @return array $return Keyed array of form data
 	 */
@@ -707,7 +665,7 @@ class CommentpressMultisiteAdmin {
 		// allow overrides
 		$has_workflow = apply_filters( 'cp_blog_workflow_exists', $has_workflow );
 
-		// if we have workflow enabled, by a plugin, say...
+		// if we have workflow enabled, by a plugin, say
 		if ( $has_workflow !== false ) {
 
 			// define workflow label
@@ -735,7 +693,7 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Get blog type form elements
+	 * Get blog type form elements.
 	 *
 	 * @return array $return Keyed array of form data
 	 */
@@ -784,10 +742,10 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Check if blog is CommentPress-enabled
+	 * Check if blog is CommentPress Core-enabled.
 	 *
 	 * @param int $blog_id The ID of the blog to check
-	 * @return bool $core_active True if CommentPress-enabled, false otherwise
+	 * @return bool $core_active True if CommentPress Core-enabled, false otherwise
 	 */
 	public function is_commentpress( $blog_id = 0 ) {
 
@@ -808,16 +766,16 @@ class CommentpressMultisiteAdmin {
 
 		}
 
-		// TODO: checking for special pages seems a fragile way to test for CP
+		// TODO: checking for special pages seems a fragile way to test for CommentPress Core
 
 		// do we have CommentPress Core options?
 		if ( get_option( 'commentpress_options', false ) ) {
 
 			// get them
-			$_commentpress_options = get_option( 'commentpress_options' );
+			$commentpress_options = get_option( 'commentpress_options' );
 
 			// if we have "special pages", then the plugin must be active on this blog
-			if ( isset( $_commentpress_options['cp_special_pages'] ) ) {
+			if ( isset( $commentpress_options['cp_special_pages'] ) ) {
 
 				// set flag
 				$core_active = true;
@@ -841,6 +799,114 @@ class CommentpressMultisiteAdmin {
 
 
 
+	/**
+	 * Appends option to admin menu.
+	 *
+	 * @return void
+	 */
+	public function admin_menu() {
+
+		// check user permissions
+		if ( ! current_user_can('manage_options') ) return;
+
+		// enable CommentPress Core, if applicable
+		$this->enable_core();
+
+		// insert item in relevant menu
+		$this->options_page = add_options_page(
+			__( 'CommentPress Core Settings', 'commentpress-core' ),
+			__( 'CommentPress Core', 'commentpress-core' ),
+			'manage_options',
+			'commentpress_admin',
+			array( $this, 'options_page' )
+		);
+
+		// add scripts and styles
+		//add_action( 'admin_print_scripts-' . $this->options_page, array( $this, 'admin_js' ) );
+		//add_action( 'admin_print_styles-' . $this->options_page, array( $this, 'admin_css' ) );
+		//add_action( 'admin_head-' . $this->options_page, array( $this, 'admin_head' ), 50 );
+
+		// test if we have a existing pre-3.4 CommentPress instance
+		if ( commentpress_is_legacy_plugin_active() ) {
+
+			// access globals
+			global $pagenow;
+
+			// show on pages other than the CommentPress Core admin page
+			if (
+				$pagenow == 'options-general.php' AND
+				! empty( $_GET['page'] ) AND
+				'commentpress_admin' == $_GET['page']
+			) {
+
+				// we're on our admin page
+
+			} else {
+
+				// show message
+				add_action( 'admin_notices', array( $this, 'migrate_alert' ) );
+
+			}
+
+		}
+
+	}
+
+
+
+	/**
+	 * Prints plugin options page.
+	 *
+	 * @return void
+	 */
+	public function options_page() {
+
+		// check user permissions
+		if ( ! current_user_can( 'manage_options' ) ) return;
+
+		// get our admin options page
+		echo $this->_get_admin_page();
+
+	}
+
+
+
+	/**
+	 * Utility to add a message to admin pages when migration is required.
+	 *
+	 * @return void
+	 */
+	public function migrate_alert() {
+
+		// check user permissions
+		if ( ! current_user_can( 'manage_options' ) ) return;
+
+		// show it
+		echo '<div id="message" class="error"><p>' . __( 'CommentPress Core has detected that a previous version of CommentPress is active on this site. Please visit the <a href="options-general.php?page=commentpress_admin">Settings Page</a> to upgrade.', 'commentpress-core' ) . '</p></div>';
+
+	}
+
+
+
+	/**
+	 * Get deactivation form element.
+	 *
+	 * @return str The HTML for the form element
+	 */
+	public function get_deactivate_element() {
+
+		// define html
+		return '
+		<tr valign="top">
+			<th scope="row"><label for="cp_deactivate_commentpress">' . __( 'Deactivate CommentPress Core', 'commentpress-core' ) . '</label></th>
+			<td><input id="cp_deactivate_commentpress" name="cp_deactivate_commentpress" value="1" type="checkbox" /></td>
+		</tr>
+		';
+
+	}
+
+
+
 //##############################################################################
 
 
@@ -854,11 +920,11 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Object initialisation
+	 * Object initialisation.
 	 *
 	 * @return void
 	 */
-	function _init() {
+	private function _init() {
 
 		// load options array
 		$this->cpmu_options = $this->option_wpms_get( 'cpmu_options', $this->cpmu_options );
@@ -870,7 +936,7 @@ class CommentpressMultisiteAdmin {
 			if ( ! is_admin() ) {
 
 				// init upgrade
-				//die( 'CommentPress Multisite upgrade required.' );
+				//die( 'CommentPress Core Multisite upgrade required.' );
 
 			}
 
@@ -893,15 +959,15 @@ class CommentpressMultisiteAdmin {
 				commentpress_activate_ajax();
 
 				// modify CommentPress Core settings page
-				add_filter( 'cpmu_deactivate_commentpress_element', array( $this, '_get_deactivate_element' ) );
+				add_filter( 'cpmu_deactivate_commentpress_element', array( $this, 'get_deactivate_element' ) );
 
 				// hook into CommentPress Core settings page result
-				add_action( 'cpmu_deactivate_commentpress', array( $this, '_disable_core' ) );
+				add_action( 'cpmu_deactivate_commentpress', array( $this, 'disable_core' ) );
 
 			} else {
 
 				// modify admin menu
-				add_action( 'admin_menu', array( $this, '_admin_menu' ) );
+				add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 
 			}
 
@@ -912,115 +978,11 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Appends option to admin menu
-	 *
-	 * @return void
-	 */
-	function _admin_menu() {
-
-		// sanity check function exists
-		if ( ! function_exists('current_user_can') ) return;
-
-		// check user permissions
-		if ( ! current_user_can('manage_options') ) return;
-
-		// enable CommentPress Core, if applicable
-		$this->_enable_core();
-
-		// insert item in relevant menu
-		$this->options_page = add_options_page(
-			__( 'CommentPress Core Settings', 'commentpress-core' ),
-			__( 'CommentPress Core', 'commentpress-core' ),
-			'manage_options',
-			'commentpress_admin',
-			array( $this, '_options_page' )
-		);
-
-		//print_r( $this->options_page );die();
-
-		// add scripts and styles
-		//add_action( 'admin_print_scripts-' . $this->options_page, array( $this, 'admin_js' ) );
-		//add_action( 'admin_print_styles-' . $this->options_page, array( $this, 'admin_css' ) );
-		//add_action( 'admin_head-' . $this->options_page, array( $this, 'admin_head' ), 50 );
-
-		// test if we have a existing pre-3.4 Commentpress instance
-		if ( commentpress_is_legacy_plugin_active() ) {
-
-			// access globals
-			global $pagenow;
-
-			// show on pages other than the CP admin page
-			if (
-				$pagenow == 'options-general.php' AND
-				! empty( $_GET['page'] ) AND
-				'commentpress_admin' == $_GET['page']
-			) {
-
-				// we're on our admin page
-
-			} else {
-
-				// show message
-				add_action( 'admin_notices', array( $this, '_migrate_alert' ) );
-
-			}
-
-		}
-
-	}
-
-
-
-	/**
-	 * Utility to add a message to admin pages when migration is required
-	 *
-	 * @return void
-	 */
-	function _migrate_alert() {
-
-		// sanity check function exists
-		if ( function_exists( 'current_user_can' ) ) {
-
-			// check user permissions
-			if ( current_user_can( 'manage_options' ) ) {
-
-				// show it
-				echo '<div id="message" class="error"><p>' . __( 'CommentPress Core has detected that a previous version of Commentpress is active on this site. Please visit the <a href="options-general.php?page=commentpress_admin">Settings Page</a> to upgrade.', 'commentpress-core' ) . '</p></div>';
-
-			}
-
-		}
-
-	}
-
-
-
-	/**
-	 * Prints plugin options page
-	 *
-	 * @return void
-	 */
-	function _options_page() {
-
-		// sanity check function exists
-		if ( ! function_exists( 'current_user_can' ) ) return;
-
-		// check user permissions
-		if ( ! current_user_can( 'manage_options' ) ) return;
-
-		// get our admin options page
-		echo $this->_get_admin_page();
-
-	}
-
-
-
-	/**
-	 * Get the WordPress admin page
+	 * Get the WordPress admin page.
 	 *
 	 * @return string $admin_page The HTML for the admin page
 	 */
-	function _get_admin_page() {
+	private function _get_admin_page() {
 
 		// init
 		$admin_page = '';
@@ -1042,11 +1004,11 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Returns the admin form HTML
+	 * Returns the admin form HTML.
 	 *
 	 * @return string $admin_page The HTML for the admin page
 	 */
-	function _get_admin_form() {
+	private function _get_admin_form() {
 
 		// sanitise admin page url
 		$url = $_SERVER['REQUEST_URI'];
@@ -1057,7 +1019,7 @@ class CommentpressMultisiteAdmin {
 		$label = __( 'Activate CommentPress', 'commentpress-core' );
 		$submit = __( 'Save Changes', 'commentpress-core' );
 
-		// test if we have a existing pre-3.4 Commentpress instance
+		// test if we have a existing pre-3.4 CommentPress instance
 		if ( commentpress_is_legacy_plugin_active() ) {
 
 			// override vars
@@ -1103,11 +1065,11 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Get workflow form elements
+	 * Get workflow form elements.
 	 *
 	 * @return str The form HTML
 	 */
-	function _get_workflow() {
+	private function _get_workflow() {
 
 		// init
 		$workflow_html = '';
@@ -1115,7 +1077,7 @@ class CommentpressMultisiteAdmin {
 		// get data
 		$workflow = $this->get_workflow_data();
 
-		// if we have workflow data...
+		// if we have workflow data
 		if ( ! empty( $workflow ) ) {
 
 			// show it
@@ -1138,11 +1100,11 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Get blog type form elements
+	 * Get blog type form elements.
 	 *
 	 * @return str $type_html The HTML for the form element
 	 */
-	function _get_blogtype() {
+	private function _get_blogtype() {
 
 		// init
 		$type_html = '';
@@ -1150,7 +1112,7 @@ class CommentpressMultisiteAdmin {
 		// get data
 		$type = $this->get_blogtype_data();
 
-		// if we have type data...
+		// if we have type data
 		if ( ! empty( $type ) ) {
 
 			// show it
@@ -1177,11 +1139,11 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Enable CommentPress Core
+	 * Enable CommentPress Core.
 	 *
 	 * @return void
 	 */
-	function _enable_core() {
+	public function enable_core() {
 
 	 	// was the form submitted?
 		if( ! isset( $_POST['commentpress_submit'] ) ) return;
@@ -1214,30 +1176,11 @@ class CommentpressMultisiteAdmin {
 
 
 	/**
-	 * Get deactivation form element
-	 *
-	 * @return str The HTML for the form element
-	 */
-	function _get_deactivate_element() {
-
-		// define html
-		return '
-		<tr valign="top">
-			<th scope="row"><label for="cp_deactivate_commentpress">' . __( 'Deactivate CommentPress Core', 'commentpress-core' ) . '</label></th>
-			<td><input id="cp_deactivate_commentpress" name="cp_deactivate_commentpress" value="1" type="checkbox" /></td>
-		</tr>
-		';
-
-	}
-
-
-
-	/**
-	 * Disable CommentPress Core
+	 * Disable CommentPress Core.
 	 *
 	 * @return void
 	 */
-	function _disable_core() {
+	public function disable_core() {
 
 	 	// was the form submitted?
 		if( ! isset( $_POST['commentpress_submit'] ) ) return;
@@ -1272,11 +1215,4 @@ class CommentpressMultisiteAdmin {
 
 
 
-//##############################################################################
-
-
-
 } // class ends
-
-
-

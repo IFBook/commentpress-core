@@ -10,7 +10,7 @@ new edButton('wp_page'
 ,'-1'
 );
 
-// add CommentPress commentblock custom quicktag
+// add CommentPress Core commentblock custom quicktag
 edButtons[edButtons.length] =
 new edButton('commentblock'
 ,'c-block'

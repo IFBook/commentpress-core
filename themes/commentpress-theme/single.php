@@ -37,7 +37,7 @@ if ( is_object( $commentpress_core ) ) {
 		// set key
 		$key = '_cp_original_text';
 
-		// if the custom field already has a value...
+		// if the custom field already has a value
 		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 
 			// get it
@@ -48,7 +48,7 @@ if ( is_object( $commentpress_core ) ) {
 		// set key
 		$key = '_cp_literal_translation';
 
-		// if the custom field already has a value...
+		// if the custom field already has a value
 		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 
 			// get it
@@ -63,10 +63,10 @@ if ( is_object( $commentpress_core ) ) {
 			$tabs_class = 'with-content-tabs';
 
 			// override tabs classes
-			$tabs_classes = ' class="'.$tabs_class.'"';
+			$tabs_classes = ' class="' . $tabs_class . '"';
 
 			// prefix with space
-			$tabs_class = ' '.$tabs_class;
+			$tabs_class = ' ' . $tabs_class;
 
 		}
 
@@ -174,7 +174,7 @@ echo commentpress_multipager();
 	$rss_text = __( 'RSS 2.0', 'commentpress-core' );
 
 	// construct RSS link
-	$rss_link = '<a href="'.esc_url( get_post_comments_feed_link() ).'">'.$rss_text.'</a>';
+	$rss_link = '<a href="' . esc_url( get_post_comments_feed_link() ) . '">' . $rss_text . '</a>';
 
 	// show text
 	echo sprintf(
@@ -194,7 +194,7 @@ echo commentpress_multipager();
 		$trackback_text = __( 'trackback', 'commentpress-core' );
 
 		// construct RSS link
-		$trackback_link = '<a href="'.esc_url( get_trackback_url() ).'"rel="trackback">'.$trackback_text.'</a>';
+		$trackback_link = '<a href="' . esc_url( get_trackback_url() ) . '"rel="trackback">' . $trackback_text . '</a>';
 
 		// write out
 		echo sprintf(
@@ -213,7 +213,7 @@ echo commentpress_multipager();
 		$trackback_text = __( 'trackback', 'commentpress-core' );
 
 		// construct RSS link
-		$trackback_link = '<a href="'.esc_url( get_trackback_url() ).'"rel="trackback">'.$trackback_text.'</a>';
+		$trackback_link = '<a href="' . esc_url( get_trackback_url() ) . '"rel="trackback">' . $trackback_text . '</a>';
 
 		// write out
 		echo sprintf(

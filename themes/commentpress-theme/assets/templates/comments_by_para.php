@@ -1,12 +1,12 @@
 <?php /*
 ================================================================================
-CommentPress Theme Comments
+CommentPress Default Theme Comments
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
 NOTES
 
-Comments template for CommentPress
+Comments template for CommentPress Core
 
 --------------------------------------------------------------------------------
 */

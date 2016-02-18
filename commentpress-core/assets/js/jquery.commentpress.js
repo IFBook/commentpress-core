@@ -4,8 +4,9 @@
  * -----------------------------------------------------------------------------
  *
  * This code implements some features of a jQuery Plugin, but is mostly used as
- * a common library for all CommentPress-compatible themes. It allows us to add
- * numerous methods to jQuery without cluttering the global function namespace.
+ * a common library for all CommentPress Core-compatible themes. It allows us to
+ * add numerous methods to jQuery without cluttering the global function
+ * namespace.
  *
  * -----------------------------------------------------------------------------
  * @package CommentPress Core
@@ -73,7 +74,7 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 
 
 /**
- * Create global CommentPress namespace
+ * Create global CommentPress Core namespace
  */
 var CommentPress = CommentPress || {};
 
@@ -95,7 +96,7 @@ CommentPress.settings = {};
 
 
 /**
- * Create CommentPress settings DOM class
+ * Create CommentPress Core settings DOM class
  */
 CommentPress.settings.DOM = new function() {
 
@@ -106,7 +107,7 @@ CommentPress.settings.DOM = new function() {
 
 
 	/**
-	 * Initialise CommentPress settings DOM.
+	 * Initialise CommentPress Core settings DOM.
 	 *
 	 * This method should only be called once.
 	 *
@@ -304,7 +305,7 @@ CommentPress.settings.DOM = new function() {
 
 
 
-}; // end CommentPress settings DOM class
+}; // end CommentPress Core settings DOM class
 
 
 
@@ -313,7 +314,7 @@ CommentPress.settings.DOM = new function() {
 
 
 /**
- * Create CommentPress page settings class
+ * Create CommentPress Core page settings class
  */
 CommentPress.settings.page = new function() {
 
@@ -324,7 +325,7 @@ CommentPress.settings.page = new function() {
 
 
 	/**
-	 * Initialise CommentPress settings page.
+	 * Initialise CommentPress Core settings page.
 	 *
 	 * This method should only be called once.
 	 *
@@ -373,7 +374,7 @@ CommentPress.settings.page = new function() {
 		return this.highlight;
 	};
 
-}; // end CommentPress page settings class
+}; // end CommentPress Core page settings class
 
 
 
@@ -382,7 +383,7 @@ CommentPress.settings.page = new function() {
 
 
 /**
- * Create CommentPress textblock class
+ * Create CommentPress Core textblock class
  */
 CommentPress.settings.textblock = new function() {
 
@@ -393,7 +394,7 @@ CommentPress.settings.textblock = new function() {
 
 
 	/**
-	 * Initialise CommentPress settings page.
+	 * Initialise CommentPress Core settings page.
 	 *
 	 * This method should only be called once.
 	 *
@@ -454,7 +455,7 @@ CommentPress.settings.textblock = new function() {
 		return this.permalink_shown;
 	};
 
-}; // end CommentPress textblock class
+}; // end CommentPress Core textblock class
 
 
 
@@ -474,7 +475,7 @@ CommentPress.common = {};
 
 
 /**
- * Create CommentPress common DOM class
+ * Create CommentPress Core common DOM class
  */
 CommentPress.common.DOM = new function() {
 
@@ -485,7 +486,7 @@ CommentPress.common.DOM = new function() {
 
 
 	/**
-	 * Initialise CommentPress settings DOM.
+	 * Initialise CommentPress Core settings DOM.
 	 *
 	 * This method should only be called once.
 	 *
@@ -549,7 +550,7 @@ CommentPress.common.DOM = new function() {
 
 
 
-}; // end CommentPress common DOM class
+}; // end CommentPress Core common DOM class
 
 
 
@@ -558,7 +559,7 @@ CommentPress.common.DOM = new function() {
 
 
 /**
- * Create CommentPress setup navigation column class
+ * Create CommentPress Core setup navigation column class
  */
 CommentPress.common.navigation = new function() {
 
@@ -569,7 +570,7 @@ CommentPress.common.navigation = new function() {
 
 
 	/**
-	 * Initialise CommentPress setup navigation column.
+	 * Initialise CommentPress Core setup navigation column.
 	 *
 	 * This method should only be called once.
 	 *
@@ -688,7 +689,7 @@ CommentPress.common.navigation = new function() {
 
 	};
 
-}; // end CommentPress setup navigation column class
+}; // end CommentPress Core setup navigation column class
 
 
 
@@ -697,7 +698,7 @@ CommentPress.common.navigation = new function() {
 
 
 /**
- * Create CommentPress setup content class
+ * Create CommentPress Core setup content class
  */
 CommentPress.common.content = new function() {
 
@@ -708,7 +709,7 @@ CommentPress.common.content = new function() {
 
 
 	/**
-	 * Initialise CommentPress setup content.
+	 * Initialise CommentPress Core setup content.
 	 *
 	 * This method should only be called once.
 	 *
@@ -988,7 +989,7 @@ CommentPress.common.content = new function() {
 		});
 
 		/**
-		 * Hook into CommentPress clicks on items whose events do not bubble.
+		 * Hook into CommentPress Core clicks on items whose events do not bubble.
 		 *
 		 * We need to receive callbacks from these clicks to clear the location bar
 		 *
@@ -1356,7 +1357,7 @@ CommentPress.common.content = new function() {
 		// define vars
 		var textblock;
 
-		// if not the whole page...
+		// if not the whole page
 		if( text_sig !== '' ) {
 
 			// get text block
@@ -1397,7 +1398,7 @@ CommentPress.common.content = new function() {
 		// define vars
 		var url, comment_id, comment;
 
-		// if there is an anchor in the URL...
+		// if there is an anchor in the URL
 		url = document.location.toString();
 
 		// do we have a comment permalink?
@@ -1529,7 +1530,7 @@ CommentPress.common.content = new function() {
 
 	};
 
-}; // end CommentPress setup content class
+}; // end CommentPress Core setup content class
 
 
 
@@ -1538,7 +1539,7 @@ CommentPress.common.content = new function() {
 
 
 /**
- * Create CommentPress setup comments column class
+ * Create CommentPress Core setup comments column class
  */
 CommentPress.common.comments = new function() {
 
@@ -1549,7 +1550,7 @@ CommentPress.common.comments = new function() {
 
 
 	/**
-	 * Initialise CommentPress setup comments column.
+	 * Initialise CommentPress Core setup comments column.
 	 *
 	 * This method should only be called once.
 	 *
@@ -1716,7 +1717,7 @@ CommentPress.common.comments = new function() {
 			// did we get one at all?
 			if ( 'undefined' !== typeof text_sig ) {
 
-				// if not the whole page or pings...
+				// if not the whole page or pings
 				if( text_sig !== '' && text_sig != 'pingbacksandtrackbacks' ) {
 
 					// get text block
@@ -1797,7 +1798,7 @@ CommentPress.common.comments = new function() {
 
 			} // end defined check
 
-			// if encouraging commenting...
+			// if encouraging commenting
 			if ( cp_promote_reading == '0' && text_sig != 'pingbacksandtrackbacks' ) {
 
 				// are comments open?
@@ -1936,7 +1937,7 @@ CommentPress.common.comments = new function() {
 			// get text sig
 			text_sig = $.get_text_sig_by_comment_id( '#' + comment_id );
 
-			// if not a pingback...
+			// if not a pingback
 			if ( text_sig != 'pingbacksandtrackbacks' ) {
 
 				// scroll page to it
@@ -2165,7 +2166,7 @@ CommentPress.common.comments = new function() {
 
 	};
 
-}; // end CommentPress setup comments column class
+}; // end CommentPress Core setup comments column class
 
 
 
@@ -2174,7 +2175,7 @@ CommentPress.common.comments = new function() {
 
 
 /**
- * Create CommentPress setup activity column class
+ * Create CommentPress Core setup activity column class
  */
 CommentPress.common.activity = new function() {
 
@@ -2185,7 +2186,7 @@ CommentPress.common.activity = new function() {
 
 
 	/**
-	 * Initialise CommentPress setup activity column.
+	 * Initialise CommentPress Core setup activity column.
 	 *
 	 * This method should only be called once.
 	 *
@@ -2419,7 +2420,7 @@ CommentPress.common.activity = new function() {
 
 	};
 
-}; // end CommentPress setup activity column class
+}; // end CommentPress Core setup activity column class
 
 
 
@@ -2439,7 +2440,7 @@ CommentPress.common.viewport = new function() {
 
 
 	/**
-	 * Initialise CommentPress theme viewport.
+	 * Initialise CommentPress Core theme viewport.
 	 *
 	 * This method should only be called once.
 	 *
@@ -2462,7 +2463,7 @@ CommentPress.common.viewport = new function() {
 
 	};
 
-}; // end CommentPress setup viewport class
+}; // end CommentPress Core setup viewport class
 
 
 
@@ -2774,7 +2775,7 @@ CommentPress.common.viewport = new function() {
 			// get ID, if present
 			current_item_id = current_menu_obj.prop('id');
 
-			// if we do have an ID...
+			// if we do have an ID
 			if ( current_item_id.length > 0 ) {
 
 				// it's a WP custom menu

@@ -75,7 +75,7 @@ echo apply_filters( 'cp_content_tab_toc_title', __( 'Table of Contents', 'commen
 // declare access to globals
 global $commentpress_core;
 
-// if we have the plugin enabled...
+// if we have the plugin enabled
 if ( is_object( $commentpress_core ) ) {
 
 	?><ul id="toc_list">

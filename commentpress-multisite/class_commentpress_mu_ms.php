@@ -1,54 +1,65 @@
-<?php /*
-================================================================================
-Class CommentpressMultisite
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
-=====
+<?php
 
-This class encapsulates all Multisite compatibility
-
---------------------------------------------------------------------------------
-*/
-
-
-
-/*
-================================================================================
-Class Name
-================================================================================
-*/
-
-class CommentpressMultisite {
-
-
+/**
+ * CommentPress Core WordPress Multisite Class.
+ *
+ * This class encapsulates WordPress Multisite compatibility.
+ *
+ * @since 3.3
+ */
+class Commentpress_Multisite_Wordpress {
 
 	/**
-	 * Properties
+	 * Plugin object.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var object $parent_obj The plugin object
 	 */
-
-	// parent object reference
 	public $parent_obj;
 
-	// admin object reference
+	/**
+	 * Database interaction object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $db The database object
+	 */
 	public $db;
 
-	// MS: CommentPress Core enabled on all sites, default is "false"
+	/**
+	 * CommentPress Core enabled on all sites flag.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var str $cpmu_bp_force_commentpress The enabled on all sites flag ('0' or '1')
+	 */
 	public $cpmu_force_commentpress = '0';
 
-	// MS: default title page content (not yet used)
+	/**
+	 * Default title page content on new sites (not yet used).
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var str $cpmu_title_page_content The default title page content
+	 */
 	//public $cpmu_title_page_content = '';
 
-	// MS: allow translation workflow, default is "off"
+	/**
+	 * Allow translation workflow flag.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var str $cpmu_disable_translation_workflow The translation workflow allowed flag ('0' or '1')
+	 */
 	public $cpmu_disable_translation_workflow = '1';
 
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
-	 * @since 3.0
+	 * @since 3.3
 	 *
 	 * @param object $parent_obj A reference to the parent object
 	 */
@@ -68,7 +79,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Set up all items associated with this object
+	 * Set up all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -79,7 +90,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * If needed, destroys all items associated with this object
+	 * If needed, destroys all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -102,14 +113,14 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Add an admin page for this plugin
+	 * Add an admin page for this plugin.
 	 *
 	 * @return void
 	 */
 	public function add_admin_menu() {
 
 		// we must be network admin
-		if ( ! is_super_admin() ) { return false; }
+		if ( ! is_super_admin() ) return false;
 
 		// try and update options
 		$saved = $this->db->options_update();
@@ -133,7 +144,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Enqueue any styles and scripts needed by our admin page
+	 * Enqueue any styles and scripts needed by our admin page.
 	 *
 	 * @return void
 	 */
@@ -153,34 +164,26 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Enqueue any styles and scripts needed by our public pages
+	 * Enqueue any styles and scripts needed by our public pages.
 	 *
 	 * @return void
 	 */
 	public function add_frontend_styles() {
-
-		// add css for signup form
-		wp_enqueue_style(
-			'cpmu-signup-style',
-			COMMENTPRESS_PLUGIN_URL . 'commentpress-multisite/assets/css/signup.css',
-			null,
-			COMMENTPRESS_MU_PLUGIN_VERSION,
-			'all' // media
-		);
 
 	}
 
 
 
 	/**
-	 * Hook into the blog signup form
+	 * Hook into the blog signup form.
 	 *
+	 * @param array $errors The previously encountered errors
 	 * @return void
 	 */
 	public function signup_blogform( $errors ) {
 
 		// only apply to wordpress signup form (not the BuddyPress one)
-		if ( is_object( $this->parent_obj->bp ) ) { return; }
+		if ( is_object( $this->parent_obj->bp ) ) return;
 
 		// get force option
 		$forced = $this->db->option_get( 'cpmu_force_commentpress' );
@@ -249,8 +252,14 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Hook into wpmu_new_blog and target plugins to be activated
+	 * Hook into wpmu_new_blog and target plugins to be activated.
 	 *
+	 * @param int $blog_id The numeric ID of the WordPress blog
+	 * @param int $user_id The numeric ID of the WordPress user
+	 * @param str $domain The domain of the WordPress blog
+	 * @param str $path The path of the WordPress blog
+	 * @param int $site_id The numeric ID of the WordPress parent site
+	 * @param array $meta The meta data of the WordPress blog
 	 * @return void
 	 */
 	public function wpmu_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
@@ -262,32 +271,6 @@ class CommentpressMultisite {
 			$this->_create_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta );
 
 		}
-
-	}
-
-
-
-	/**
-	 * Change the greeting in the WordPress Admin Bar
-	 * Props: http://pankajanupam.in
-	 *
-	 * @param str $translated The existing translated string
-	 * @param str $text The existing untranslated string
-	 * @param str $domain The domain for this translation
-	 * @return str $translated The modified translated string
-	 */
-	public function change_admin_greeting( $translated, $text, $domain ) {
-
-		// look only for default WordPress translations
-		if ('default' != $domain) { return $translated; }
-
-		// catch all instances of 'Howdy'...
-		if ( false !== strpos( $translated, 'Howdy' ) ) {
-			return str_replace( 'Howdy', 'Welcome', $translated );
-		}
-
-		// --<
-		return $translated;
 
 	}
 
@@ -306,7 +289,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Object initialisation
+	 * Object initialisation.
 	 *
 	 * @return void
 	 */
@@ -320,7 +303,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Register WordPress hooks
+	 * Register WordPress hooks.
 	 *
 	 * @return void
 	 */
@@ -357,16 +340,19 @@ class CommentpressMultisite {
 		// override Title Page content
 		//add_filter( 'cp_title_page_content', array( $this, '_get_title_page_content' ) );
 
-		// change that infernal howdy
-		add_filter( 'gettext', array( $this, 'change_admin_greeting' ), 40, 3 );
-
 	}
 
 
 
 	/**
-	 * Create a blog
+	 * Create a blog.
 	 *
+	 * @param int $blog_id The numeric ID of the WordPress blog
+	 * @param int $user_id The numeric ID of the WordPress user
+	 * @param str $domain The domain of the WordPress blog
+	 * @param str $path The path of the WordPress blog
+	 * @param int $site_id The numeric ID of the WordPress parent site
+	 * @param array $meta The meta data of the WordPress blog
 	 * @return void
 	 */
 	function _create_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
@@ -385,7 +371,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Get workflow form elements
+	 * Get workflow form elements.
 	 *
 	 * @return str $workflow_html The HTML form element
 	 */
@@ -397,7 +383,7 @@ class CommentpressMultisite {
 		// get data
 		$workflow = $this->db->get_workflow_data();
 
-		// if we have workflow data...
+		// if we have workflow data
 		if ( ! empty( $workflow ) ) {
 
 			// show it
@@ -419,7 +405,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Get blog type form elements
+	 * Get blog type form elements.
 	 *
 	 * @return str $type_html The HTML form element
 	 */
@@ -431,7 +417,7 @@ class CommentpressMultisite {
 		// get data
 		$type = $this->db->get_blogtype_data();
 
-		// if we have type data...
+		// if we have type data
 		if ( ! empty( $type ) ) {
 
 			// show it
@@ -457,7 +443,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Show our admin page
+	 * Show our admin page.
 	 *
 	 * @return void
 	 */
@@ -600,7 +586,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Allow other plugins to hook into our multisite admin options
+	 * Allow other plugins to hook into our multisite admin options.
 	 *
 	 * @return str Empty string by default, but may be overridden
 	 */
@@ -614,7 +600,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Allow other plugins to hook into our admin form
+	 * Allow other plugins to hook into our admin form.
 	 *
 	 * @return str Empty string by default, but may be overridden
 	 */
@@ -628,7 +614,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Get default Multisite-related settings
+	 * Get default Multisite-related settings.
 	 *
 	 * @param array $existing_options The existing options
 	 * @return array $existing_options The modified options
@@ -656,7 +642,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Hook into Network form update
+	 * Hook into Network form update.
 	 *
 	 * @return void
 	 */
@@ -689,7 +675,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Get workflow enabled setting
+	 * Get workflow enabled setting.
 	 *
 	 * @return bool $disabled True if disabled, false otherwise
 	 */
@@ -706,7 +692,8 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Get default Title Page content, if set
+	 * Get default Title Page content, if set.
+	 *
 	 * Do we want to enable this when we enable the admin page editor?
 	 *
 	 * @param str $content The existing content
@@ -733,7 +720,7 @@ class CommentpressMultisite {
 
 
 	/**
-	 * Get default Title Page content
+	 * Get default Title Page content.
 	 *
 	 * @return str $content The default Title Page content
 	 */

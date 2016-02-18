@@ -1,59 +1,82 @@
-<?php /*
-================================================================================
-Class CommentpressCoreNavigator
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
-=====
+<?php
 
-This class is a wrapper for navigating pages in whatever hierarchy
-or relationship they have been assigned
-
---------------------------------------------------------------------------------
-*/
-
-
-
-/*
-================================================================================
-Class Name
-================================================================================
-*/
-
-class CommentpressCoreNavigator {
-
-
+/**
+ * CommentPress Core Navigation Class.
+ *
+ * This class is a wrapper for navigating pages in whatever hierarchy or
+ * relationship they have been assigned.
+ *
+ * @since 3.0
+ */
+class Commentpress_Core_Navigator {
 
 	/**
-	 * Properties
+	 * Plugin object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $parent_obj The plugin object
 	 */
-
-	// parent object reference
 	public $parent_obj;
 
-	// next pages array
+	/**
+	 * Next pages array.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var array $next_pages The next pages array
+	 */
 	public $next_pages = array();
 
-	// previous pages array
+	/**
+	 * Previous pages array.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var array $previous_pages The previous pages array
+	 */
 	public $previous_pages = array();
 
-	// next posts array
+	/**
+	 * Next posts array.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var array $next_posts The next posts array
+	 */
 	public $next_posts = array();
 
-	// previous posts array
+	/**
+	 * Previous posts array.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var array $previous_posts The previous posts array
+	 */
 	public $previous_posts = array();
 
-	// page numbers array
+	/**
+	 * Page numbers array.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var array $page_numbers The page numbers array
+	 */
 	public $page_numbers = array();
 
-	// menu objects array, when using custom menu
+	/**
+	 * Menu objects array, when using custom menu.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var array $menu_objects The menu objects array
+	 */
 	public $menu_objects = array();
 
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
 	 * @since 3.0
 	 *
@@ -72,7 +95,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Set up all items associated with this object
+	 * Set up all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -99,7 +122,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * If needed, destroys all items associated with this object
+	 * If needed, destroys all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -122,7 +145,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Get next page link
+	 * Get next page link.
 	 *
 	 * @param bool $with_comments The requested page has comments - default false
 	 * @return object $page_data True if successful, boolean false if not
@@ -165,7 +188,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Get previous page link
+	 * Get previous page link.
 	 *
 	 * @param bool $with_comments The requested page has comments - default false
 	 * @return object $page_data True if successful, boolean false if not
@@ -208,7 +231,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Get next post link
+	 * Get next post link.
 	 *
 	 * @param bool $with_comments The requested post has comments - default false
 	 * @return object $post_data True if successful, boolean false if not
@@ -251,7 +274,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Get previous post link
+	 * Get previous post link.
 	 *
 	 * @param bool $with_comments The requested post has comments - default false
 	 * @return object $post_data True if successful, boolean false if not
@@ -294,7 +317,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Get first viewable child page
+	 * Get first viewable child page.
 	 *
 	 * @param int $page_id The page ID
 	 * @return int $first_child The ID of the first child page (or false if not found)
@@ -325,7 +348,7 @@ class CommentpressCoreNavigator {
 
 		}
 
-		// we got some...
+		// we got some
 		return $this->_get_first_child( $kids );
 
 	}
@@ -333,7 +356,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Get list of 'book' pages
+	 * Get list of 'book' pages.
 	 *
 	 * @param str $mode Either 'structural' or 'readable'
 	 * @return array $pages All 'book' pages
@@ -356,8 +379,6 @@ class CommentpressCoreNavigator {
 
 		} // end check for custom menu
 
-		//print_r( $all_pages ); die();
-
 		// --<
 		return $all_pages;
 
@@ -366,7 +387,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Get first readable 'book' page
+	 * Get first readable 'book' page.
 	 *
 	 * @return int $id The ID of the first page (or false if not found)
 	 */
@@ -378,7 +399,7 @@ class CommentpressCoreNavigator {
 		// get all pages including chapters
 		$all_pages = $this->get_book_pages( 'structural' );
 
-		// if we have any pages...
+		// if we have any pages
 		if ( count( $all_pages ) > 0 ) {
 
 			// get first id
@@ -394,7 +415,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Get page number
+	 * Get page number.
 	 *
 	 * @param int $page_id The page ID
 	 * @return int $number The number of the page
@@ -410,7 +431,7 @@ class CommentpressCoreNavigator {
 		// are parent pages viewable?
 		$viewable = ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) == '1' ) ? true : false;
 
-		// if they are...
+		// if they are
 		if ( $viewable ) {
 
 			// get page number from array
@@ -442,7 +463,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Get page number
+	 * Get page number.
 	 *
 	 * @param int $page_id The page ID
 	 * @return int $number The number of the page
@@ -456,7 +477,7 @@ class CommentpressCoreNavigator {
 		if ( array_key_exists( $page_id, $this->page_numbers ) ) {
 
 			// get it
-			$num = $this->page_numbers[ $page_id ];
+			$num = $this->page_numbers[$page_id];
 
 		}
 
@@ -468,14 +489,14 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Redirect to child
+	 * Redirect to child.
 	 *
 	 * @return void
 	 */
 	function redirect_to_child() {
 
 		// only on pages
-		if ( ! is_page() ) { return; }
+		if ( ! is_page() ) return;
 
 		// access post object
 		global $post;
@@ -511,7 +532,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Set up page list
+	 * Set up page list.
 	 *
 	 * @return void
 	 */
@@ -520,7 +541,7 @@ class CommentpressCoreNavigator {
 		// get all pages
 		$all_pages = $this->get_book_pages( 'readable' );
 
-		// if we have any pages...
+		// if we have any pages
 		if ( count( $all_pages ) > 0 ) {
 
 			// generate page numbers
@@ -548,7 +569,7 @@ class CommentpressCoreNavigator {
 
 			}
 
-			// if we don't get a key...
+			// if we don't get a key
 			if ( $page_key === false ) {
 
 				// the current page is a chapter and is not a page
@@ -582,7 +603,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Set up posts list
+	 * Set up posts list.
 	 *
 	 * @return void
 	 */
@@ -599,7 +620,7 @@ class CommentpressCoreNavigator {
 		// get them
 		$all_posts = get_posts( $defaults );
 
-		// if we have any posts...
+		// if we have any posts
 		if ( count( $all_posts ) > 0 ) {
 
 			// access post object
@@ -653,7 +674,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Object initialisation
+	 * Object initialisation.
 	 *
 	 * @return void
 	 */
@@ -669,7 +690,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Strip out all but lowest level pages
+	 * Strip out all but lowest level pages.
 	 *
 	 * @todo This only works one level deep?
 	 *
@@ -681,7 +702,7 @@ class CommentpressCoreNavigator {
 		// init return
 		$subpages = array();
 
-		// if we have any...
+		// if we have any
 		if ( count( $pages ) > 0 ) {
 
 			// loop
@@ -721,14 +742,14 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Get first published child, however deep
+	 * Get first published child, however deep.
 	 *
 	 * @param array $pages The array of page objects
 	 * @return array $subpages All subpages
 	 */
 	function _get_first_child( $pages ) {
 
-		// if we have any...
+		// if we have any
 		if ( count( $pages ) > 0 ) {
 
 			// loop
@@ -776,7 +797,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Generates page numbers
+	 * Generates page numbers.
 	 *
 	 * @todo Refine by section, page meta value etc
 	 *
@@ -785,7 +806,7 @@ class CommentpressCoreNavigator {
 	 */
 	function _generate_page_numbers( $pages ) {
 
-		// if we have any...
+		// if we have any
 		if ( count( $pages ) > 0 ) {
 
 			// init with page 1
@@ -794,7 +815,7 @@ class CommentpressCoreNavigator {
 			// assume no menu
 			$has_nav_menu = false;
 
-			// if we have a custom menu...
+			// if we have a custom menu
 			if ( has_nav_menu( 'toc' ) ) {
 
 				// override
@@ -805,12 +826,15 @@ class CommentpressCoreNavigator {
 			// loop
 			foreach( $pages AS $page_obj ) {
 
-				// get number format... the way this works in publications is that
-				// only prefaces are numbered with roman numerals. So, we only allow
-				// the first top level page to have the option of roman numerals.
-				// if set, all child pages will be set to roman.
+				/**
+				 * Get number format - the way this works in publications is that
+				 * only prefaces are numbered with Roman numerals. So, we only allow
+				 * the first top level page to have the option of Roman numerals.
+				 *
+				 * If set, all child pages will be set to Roman.
+				 */
 
-				// once we run out of roman numerals, $num is reset to 1
+				// once we run out of Roman numerals, $num is reset to 1
 
 				// default to arabic
 				$format = 'arabic';
@@ -818,7 +842,7 @@ class CommentpressCoreNavigator {
 				// set key
 				$key = '_cp_number_format';
 
-				// if the custom field already has a value...
+				// if the custom field already has a value
 				if ( get_post_meta( $page_obj->ID, $key, true ) !== '' ) {
 
 					// get it
@@ -826,22 +850,19 @@ class CommentpressCoreNavigator {
 
 				} else {
 
-					// if we have a custom menu...
+					// if we have a custom menu
 					if ( $has_nav_menu ) {
-
-						//print_r( $page_obj ); die();
 
 						// get top level menu item
 						$top_menu_item = $this->_get_top_menu_obj( $page_obj );
-						//print_r( $top_menu_item ); //die();
 
-						// since this might not be a WP_POST object...
+						// since this might not be a WP_POST object
 						if ( isset( $top_menu_item->object_id ) ) {
 
 							// get ID of top level parent
 							$top_page_id = $top_menu_item->object_id;
 
-							// if the custom field has a value...
+							// if the custom field has a value
 							if ( get_post_meta( $top_page_id, $key, true ) !== '' ) {
 
 								// get it
@@ -856,7 +877,7 @@ class CommentpressCoreNavigator {
 						// get top level parent
 						$top_page_id = $this->_get_top_parent_id( $page_obj->ID );
 
-						// if the custom field has a value...
+						// if the custom field has a value
 						if ( get_post_meta( $top_page_id, $key, true ) !== '' ) {
 
 							// get it
@@ -872,7 +893,7 @@ class CommentpressCoreNavigator {
 				if ( $format == 'roman' ) {
 
 					// convert arabic to roman
-					$this->page_numbers[ $page_obj->ID ] = $this->_number_to_roman( $num );
+					$this->page_numbers[$page_obj->ID] = $this->_number_to_roman( $num );
 
 				} else {
 
@@ -888,7 +909,7 @@ class CommentpressCoreNavigator {
 					}
 
 					// store roman
-					$this->page_numbers[ $page_obj->ID ] = $num;
+					$this->page_numbers[$page_obj->ID] = $num;
 
 				}
 
@@ -897,8 +918,6 @@ class CommentpressCoreNavigator {
 
 			}
 
-			//print_r( $this->page_numbers ); die();
-
 		}
 
 	}
@@ -906,7 +925,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Utility to remove the Theme My Login page
+	 * Utility to remove the Theme My Login page.
 	 *
 	 * @todo Pass the array?
 	 *
@@ -918,7 +937,7 @@ class CommentpressCoreNavigator {
 		// init return
 		$clean = array();
 
-		// if we have any...
+		// if we have any
 		if ( count( $pages ) > 0 ) {
 
 			// loop
@@ -944,7 +963,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Utility to detect the Theme My Login page
+	 * Utility to detect the Theme My Login page.
 	 *
 	 * @param object $page_obj The WordPress page object
 	 * @return boolean $success True if TML page, false otherwise
@@ -953,10 +972,8 @@ class CommentpressCoreNavigator {
 
 		// compat with Theme My Login
 		if(
-
 			$page_obj->post_name == 'login' AND
 			$page_obj->post_content == '[theme-my-login]'
-
 		) {
 
 			// --<
@@ -972,7 +989,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * PHP Roman Numeral Library
+	 * PHP Roman Numeral Library.
 	 *
 	 * Copyright (c) 2008, reusablecode.blogspot.com; some rights reserved.
 	 *
@@ -981,9 +998,10 @@ class CommentpressCoreNavigator {
 	 * send a letter to Creative Commons, 559 Nathan Abbott Way, Stanford, California
 	 * 94305, USA.
 	 *
-	 * Utility to convert arabic to roman numerals
+	 * Utility to convert arabic to roman numerals.
 	 *
-	 * @return boolean $result the roman equivalent
+	 * @param int $arabic The numeric Arabic value
+	 * @return str $roman The Roman equivalent
 	 */
 	function _number_to_roman( $arabic ) {
 
@@ -994,26 +1012,34 @@ class CommentpressCoreNavigator {
 
 		if ( $arabic > 4999 ) {
 
-			// For large numbers (five thousand and above), a bar is placed above a base numeral to indicate multiplication by 1000.
-			// Since it is not possible to illustrate this in plain ASCII, this function will refuse to convert numbers above 4999.
-			die("Cannot represent numbers larger than 4999 in plain ASCII.");
+			/**
+			 * For large numbers (five thousand and above), a bar is placed above
+			 * a base numeral to indicate multiplication by 1000.
+			 *
+			 * Since it is not possible to illustrate this in plain ASCII, this
+			 * function will refuse to convert numbers above 4999.
+			 */
+			wp_die( __( 'Cannot represent numbers larger than 4999 in plain ASCII.', 'commentpress-core' ) );
 
 		} elseif ( $arabic == 0 ) {
 
-			// About 725, Bede or one of his colleagues used the letter N, the initial of nullae,
-			// in a table of epacts, all written in Roman numerals, to indicate zero.
+			/**
+			 * In about 725, Bede or one of his colleagues used the letter N, the
+			 * initial of nullae, in a table of epacts, all written in Roman
+			 * numerals, to indicate zero.
+			 */
 			return "N";
 
 		} else {
 
-			$roman = $thousands[($arabic - fmod($arabic, 1000)) / 1000];
-			$arabic = fmod($arabic, 1000);
-			$roman .= $hundreds[($arabic - fmod($arabic, 100)) / 100];
-			$arabic = fmod($arabic, 100);
-			$roman .= $tens[($arabic - fmod($arabic, 10)) / 10];
-			$arabic = fmod($arabic, 10);
-			$roman .= $ones[($arabic - fmod($arabic, 1)) / 1];
-			$arabic = fmod($arabic, 1);
+			$roman = $thousands[( $arabic - fmod( $arabic, 1000 ) ) / 1000];
+			$arabic = fmod( $arabic, 1000 );
+			$roman .= $hundreds[( $arabic - fmod( $arabic, 100 ) ) / 100];
+			$arabic = fmod( $arabic, 100 );
+			$roman .= $tens[( $arabic - fmod( $arabic, 10 ) ) / 10];
+			$arabic = fmod( $arabic, 10 );
+			$roman .= $ones[( $arabic - fmod( $arabic, 1 ) ) / 1];
+			$arabic = fmod( $arabic, 1 );
 			return $roman;
 
 		}
@@ -1023,7 +1049,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Get top parent page id
+	 * Get top parent page ID.
 	 *
 	 * @param int $post_id The queried page ID
 	 * @return int $post_id The overridden page ID
@@ -1031,18 +1057,18 @@ class CommentpressCoreNavigator {
 	function _get_top_parent_id( $post_id ) {
 
 		// get page data
-		$_page = get_page( $post_id );
+		$page = get_page( $post_id );
 
 		// is the top page?
-		if ( $_page->post_parent == 0 ) {
+		if ( $page->post_parent == 0 ) {
 
 			// yes -> return the id
-			return $_page->ID;
+			return $page->ID;
 
 		} else {
 
 			// no -> recurse upwards
-			return $this->_get_top_parent_id( $_page->post_parent );
+			return $this->_get_top_parent_id( $page->post_parent );
 
 		}
 
@@ -1051,7 +1077,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Parse a WP page list
+	 * Parse a WP page list.
 	 *
 	 * @param str $mode Either 'structural' or 'readable'
 	 * @return array $pages All 'book' pages
@@ -1125,10 +1151,10 @@ class CommentpressCoreNavigator {
 		// get them
 		$pages = get_pages( $defaults );
 
-		// if we have any pages...
+		// if we have any pages
 		if ( count( $pages ) > 0 ) {
 
-			// if chapters are not pages...
+			// if chapters are not pages
 			if ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
 
 				// do we want all readable pages?
@@ -1141,7 +1167,7 @@ class CommentpressCoreNavigator {
 
 			}
 
-			// if Theme My Login is present...
+			// if Theme My Login is present
 			if ( defined( 'TML_ABSPATH' ) ) {
 
 				// filter its page out
@@ -1159,7 +1185,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Parse a WP menu
+	 * Parse a WP menu.
 	 *
 	 * @param str $mode Either 'structural' or 'readable'
 	 * @return array $pages All 'book' pages
@@ -1173,10 +1199,10 @@ class CommentpressCoreNavigator {
 		$locations = get_nav_menu_locations();
 
 		// check menu locations
-		if ( isset( $locations[ 'toc' ] ) ) {
+		if ( isset( $locations['toc'] ) ) {
 
 			// get the menu object
-			$menu = wp_get_nav_menu_object( $locations[ 'toc' ] );
+			$menu = wp_get_nav_menu_object( $locations['toc'] );
 
 			// default args for reference
 			$args = array(
@@ -1194,12 +1220,11 @@ class CommentpressCoreNavigator {
 
 			// get the menu objects and store for later
 			$this->menu_objects = wp_get_nav_menu_items( $menu->term_id, $args );
-			//print_r( $this->menu_objects ); die();
 
 			// if we get some
 			if ( $this->menu_objects ) {
 
-				// if chapters are not pages, filter the menu items...
+				// if chapters are not pages, filter the menu items
 				if ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
 
 					// do we want all readable pages?
@@ -1253,13 +1278,6 @@ class CommentpressCoreNavigator {
 
 				}
 
-				/*
-				print_r( array(
-					'menu_items' => $menu_items,
-					'pages' => $pages,
-				) ); die();
-				*/
-
 			} // end check for menu items
 
 		} // end check for our menu
@@ -1272,7 +1290,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Strip out all but lowest level menu items
+	 * Strip out all but lowest level menu items.
 	 *
 	 * @param array $menu_items An array of menu item objects
 	 * @return array $sub_items All lowest level items
@@ -1282,7 +1300,7 @@ class CommentpressCoreNavigator {
 		// init return
 		$sub_items = array();
 
-		// if we have any...
+		// if we have any
 		if ( count( $menu_items ) > 0 ) {
 
 			// loop
@@ -1311,7 +1329,7 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Utility to get children of a menu item
+	 * Utility to get children of a menu item.
 	 *
 	 * @param array $menu_items An array of menu item objects
 	 * @param obj $menu_obj The menu item object
@@ -1322,7 +1340,7 @@ class CommentpressCoreNavigator {
 		// init return
 		$sub_items = array();
 
-		// if we have any...
+		// if we have any
 		if ( count( $menu_items ) > 0 ) {
 
 			// loop
@@ -1348,14 +1366,14 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Utility to get parent of a menu item
+	 * Utility to get parent of a menu item.
 	 *
 	 * @param obj $menu_obj The menu item object
 	 * @return int $menu_obj The parent menu item
 	 */
 	function _get_menu_item_parent( $menu_obj ) {
 
-		// if we have any...
+		// if we have any
 		if ( count( $this->menu_objects ) > 0 ) {
 
 			// loop
@@ -1381,18 +1399,20 @@ class CommentpressCoreNavigator {
 
 
 	/**
-	 * Get top parent menu item
+	 * Get top parent menu item.
 	 *
 	 * @param object $menu_obj The queried menu object
 	 * @return object $parent_obj The parent object or false if
 	 */
 	function _get_top_menu_obj( $menu_obj ) {
 
-		// there is little point walking the menu tree because menu items can appear
-		// more than once in the menu...
-
-		// HOWEVER: for instances where people do use the menu sensibly, we should
-		// attempt to walk the tree as best we can
+		/**
+		 * There is little point walking the menu tree because menu items can
+		 * appear more than once in the menu.
+		 *
+		 * HOWEVER: for instances where people do use the menu sensibly, we
+		 * should attempt to walk the tree as best we can.
+		 */
 
 		// is this the top item?
 		if ( $menu_obj->menu_item_parent == 0 ) {
@@ -1402,12 +1422,8 @@ class CommentpressCoreNavigator {
 
 		}
 
-		//print_r( $menu_obj ); //die();
-
 		// get parent item
 		$parent_obj = $this->_get_menu_item_parent( $menu_obj );
-
-		//print_r( $parent_obj ); //die();
 
 		// is the top item?
 		if ( $parent_obj->menu_item_parent !== 0 ) {
@@ -1416,8 +1432,6 @@ class CommentpressCoreNavigator {
 			return $this->_get_top_menu_obj( $parent_obj );
 
 		}
-
-		//print_r( $parent_obj ); die();
 
 		// yes -> return the object
 		return $parent_obj;

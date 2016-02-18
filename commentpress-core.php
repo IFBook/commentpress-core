@@ -10,16 +10,12 @@ Text Domain: commentpress-core
 Domain Path: /languages
 --------------------------------------------------------------------------------
 Special thanks to:
-Eddie Tejeda @ http://www.visudo.com for Commentpress 2.0
+Eddie Tejeda @ http://www.visudo.com for CommentPress 2.0
 Mark James for the icons: http://www.famfamfam.com/lab/icons/silk/
 --------------------------------------------------------------------------------
 */
 
 
-
-// -----------------------------------------------------------------------------
-// No need to edit below this line
-// -----------------------------------------------------------------------------
 
 // set version
 define( 'COMMENTPRESS_VERSION', '3.8.5' );
@@ -62,11 +58,13 @@ if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
 	// check if our plugin is one of those activated sitewide
 	$this_plugin = plugin_basename( COMMENTPRESS_PLUGIN_FILE );
 
-	// unfortunately, is_plugin_active_for_network() is not yet available so
-	// we have to do this manually...
-
-	// also note: during network activation, this plugin is not yet present in
-	// the active_sitewide_plugins array...
+	/**
+	 * Unfortunately, is_plugin_active_for_network() is not yet available so we
+	 * have to do this manually.
+	 *
+	 * Also note: during network activation, this plugin is not yet present in
+	 * the active_sitewide_plugins array.
+	 */
 
 	// get sitewide plugins
 	$active_plugins = (array) get_site_option( 'active_sitewide_plugins' );
@@ -99,14 +97,10 @@ if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
 
 
 
-/*
---------------------------------------------------------------------------------
-Misc Utility Functions
---------------------------------------------------------------------------------
-*/
-
 /**
- * Utility to check for presence of vital files
+ * Utility to check for presence of vital files.
+ *
+ * @since 3.0
  *
  * @param string $filename the name of the CommentPress Core Plugin file
  * @return string $filepath absolute path to file
@@ -116,12 +110,12 @@ function commentpress_file_is_present( $filename ) {
 	// define path to our requested file
 	$filepath = COMMENTPRESS_PLUGIN_PATH . $filename;
 
-	// is our class definition present?
+	// die if the file is not present
 	if ( ! is_file( $filepath ) ) {
-
-		// oh no!
-		die( 'CommentPress Core Error: file "' . $filepath . '" is missing from the plugin directory.' );
-
+		wp_die( sprintf(
+			__( 'CommentPress Core Error: file "%s" is missing from the plugin directory.', 'commentpress-core' ),
+			$filepath )
+		);
 	}
 
 	// --<
@@ -132,23 +126,25 @@ function commentpress_file_is_present( $filename ) {
 
 
 /**
- * Utility to include the core plugin
+ * Utility to include the core plugin.
+ *
+ * @since 3.4
  *
  * @return void
  */
 function commentpress_include_core() {
 
 	// do we have our class?
-	if ( ! class_exists( 'CommentpressCore' ) ) {
+	if ( ! class_exists( 'Commentpress_Core' ) ) {
 
 		// define filename
-		$_file = 'commentpress-core/class_commentpress.php';
+		$file = 'commentpress-core/class_commentpress.php';
 
 		// get path
-		$_file_path = commentpress_file_is_present( $_file );
+		$file_path = commentpress_file_is_present( $file );
 
 		// we're fine, include class definition
-		require_once( $_file_path );
+		require_once( $file_path );
 
 	}
 
@@ -157,7 +153,9 @@ function commentpress_include_core() {
 
 
 /**
- * Utility to activate the core plugin
+ * Utility to activate the core plugin.
+ *
+ * @since 3.4
  *
  * @return void
  */
@@ -170,7 +168,7 @@ function commentpress_activate_core() {
 	if ( is_null( $commentpress_core ) ) {
 
 		// instantiate it
-		$commentpress_core = new CommentpressCore;
+		$commentpress_core = new Commentpress_Core;
 
 	}
 
@@ -179,27 +177,55 @@ function commentpress_activate_core() {
 
 
 /**
- * Utility to activate the ajax plugin
+ * Utility to activate the AJAX commenting plugin.
+ *
+ * @since 3.4
  *
  * @return void
  */
 function commentpress_activate_ajax() {
 
 	// define filename
-	$_file = 'commentpress-ajax/cp-ajax-comments.php';
+	$file = 'commentpress-ajax/cp-ajax-comments.php';
 
 	// get path
-	$_file_path = commentpress_file_is_present( $_file );
+	$file_path = commentpress_file_is_present( $file );
 
 	// we're fine, include ajax file
-	require_once( $_file_path );
+	require_once( $file_path );
 
 }
 
 
 
 /**
- * Shortcut for debugging
+ * Utility to amend filenames when debugging.
+ *
+ * @since 3.8.5
+ *
+ * @return str The debug string to be included in a filename
+ */
+function commentpress_minified() {
+
+	// default to minified scripts
+	$minified = '.min';
+
+	// target unminified scripts when debugging
+	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
+		$minified = '';
+	}
+
+	// --<
+	return $minified;
+
+}
+
+
+
+/**
+ * Shortcut for debugging.
+ *
+ * @since 3.0
  *
  * @param str The debug string to be sent the the browser
  */
@@ -215,7 +241,9 @@ function _cpdie( $var ) {
 
 
 /**
- * Utility to add link to settings page
+ * Utility to add link to settings page.
+ *
+ * @since 3.4
  *
  * @param array $links The existing links array
  * @param str $file The name of the plugin file
@@ -238,7 +266,7 @@ function commentpress_plugin_action_links( $links, $file ) {
 
 		// add Paypal link
 		$paypal = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=PZSKM8T5ZP3SC';
-		$links[] = '<a href="' . $paypal . '" target="_blank">Donate!</a>';
+		$links[] = '<a href="' . $paypal . '" target="_blank">' . __( 'Donate!', 'commentpress-core' ) . '</a>';
 
 	}
 
@@ -254,8 +282,12 @@ add_filter( 'plugin_action_links', 'commentpress_plugin_action_links', 10, 2 );
 
 
 /**
- * Get WP plugin reference by name (since we never know for sure what the enclosing
- * directory is called)
+ * Get WP plugin reference by name.
+ *
+ * This is required because we never know for sure what the enclosing directory
+ * is called.
+ *
+ * @since 3.4
  *
  * @param str $plugin_name The name of the plugin
  * @return str $path_to_plugin The path to the plugin
@@ -292,8 +324,6 @@ function commentpress_find_plugin_by_name( $plugin_name = '' ) {
 
 	}
 
-
-
 	// --<
 	return $path_to_plugin;
 
@@ -302,7 +332,9 @@ function commentpress_find_plugin_by_name( $plugin_name = '' ) {
 
 
 /**
- * Test if the old pre-3.4 Commentpress plugin is active
+ * Test if the old pre-3.4 CommentPress plugin is active.
+ *
+ * @since 3.4
  *
  * @return bool $active True if the legacy plugin is active, false otherwise
  */
@@ -314,7 +346,7 @@ function commentpress_is_legacy_plugin_active() {
 	// get old options
 	$old = get_option( 'cp_options', array() );
 
-	// test if we have a existing pre-3.4 Commentpress instance
+	// test if we have a existing pre-3.4 CommentPress instance
 	if ( is_array( $old ) AND count( $old ) > 0 ) {
 
 		// if we have "special pages", then the plugin must be active on this blog
@@ -382,10 +414,8 @@ Init Standalone
 
 // only activate if in standard or mu_optional context
 if (
-
 	COMMENTPRESS_PLUGIN_CONTEXT == 'standard' OR
 	( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_optional' AND ! is_network_admin() )
-
 ) {
 
 	// CommentPress Core
@@ -422,13 +452,13 @@ if ( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_sitewide' ) {
 	// activate multisite plugin
 
 	// define filename
-	$_file = 'commentpress-multisite/commentpress-mu.php';
+	$file = 'commentpress-multisite/class_commentpress_mu_loader.php';
 
 	// get path
-	$_file_path = commentpress_file_is_present( $_file );
+	$file_path = commentpress_file_is_present( $file );
 
 	// we're fine, include class definition
-	require_once( $_file_path );
+	require_once( $file_path );
 
 }
 

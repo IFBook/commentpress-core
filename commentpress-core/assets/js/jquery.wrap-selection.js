@@ -15,14 +15,14 @@
  * Christian Wach <needle@haystack.co.uk>
  * -----------------------------------------------------------------------------
  * I have merged two versions of this plugin and adapted the result specifically
- * in order for it to work with CommentPress.
+ * in order for it to work with CommentPress Core.
  *
  * The source copies can be found at the following addresses:
  * Karl Fritsche: http://cgit.drupalcode.org/its/tree/its.wrapSelection.js
  * Noe Nieto: https://github.com/tzicatl/jquery.wrapSelection
  *
- * The CommentPress version replaces the deprecated usage of $.browser with a
- * check for a global scope variable that is set via a comditional comment in
+ * The CommentPress Core version replaces the deprecated usage of $.browser with
+ * a check for a global scope variable that is set via a comditional comment in
  * the markup. It is therefore no longer a general-purpose plugin.
  *
  * Regarding licensing... as Noe Nieto observes, the original plugin looks as

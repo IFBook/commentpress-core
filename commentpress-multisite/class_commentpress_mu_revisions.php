@@ -1,45 +1,38 @@
-<?php /*
-================================================================================
-Class CommentpressMultisiteRevisions Version 1.0
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
-=====
+<?php
 
-This class overrides the way that new post revisions are named
-
---------------------------------------------------------------------------------
-*/
-
-
-
-/*
-================================================================================
-Class Name
-================================================================================
-*/
-
-class CommentpressMultisiteRevisions {
-
-
+/**
+ * CommentPress Core Multisite Revisions Class.
+ *
+ * This class overrides the way that new post revisions are named.
+ *
+ * @since 3.3
+ */
+class Commentpress_Multisite_Revisions {
 
 	/**
-	 * Properties
+	 * Plugin object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $parent_obj The plugin object
 	 */
-
-	// parent object reference
 	public $parent_obj;
 
-	// admin object reference
+	/**
+	 * Database interaction object.
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var object $db The database object
+	 */
 	public $db;
 
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
-	 * @since 3.0
+	 * @since 3.3
 	 *
 	 * @param object $parent_obj a reference to the parent object
 	 */
@@ -59,7 +52,7 @@ class CommentpressMultisiteRevisions {
 
 
 	/**
-	 * Set up all items associated with this object
+	 * Set up all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -70,7 +63,7 @@ class CommentpressMultisiteRevisions {
 
 
 	/**
-	 * If needed, destroys all items associated with this object
+	 * If needed, destroys all items associated with this object.
 	 *
 	 * @return void
 	 */
@@ -93,8 +86,9 @@ class CommentpressMultisiteRevisions {
 
 
 	/**
-	 * Amend the post title prefix
+	 * Amend the post title prefix.
 	 *
+	 * @param str $prefix The existing post title prefix
 	 * @return str An empty string
 	 */
 	public function new_post_title_prefix( $prefix ) {
@@ -107,7 +101,7 @@ class CommentpressMultisiteRevisions {
 
 
 	/**
-	 * Add suffix " - Draft N", where N is the latest version number
+	 * Add suffix " - Draft N", where N is the latest version number.
 	 *
 	 * @param str $title The existing title of the post
 	 * @param object $post The WordPress post object
@@ -118,7 +112,7 @@ class CommentpressMultisiteRevisions {
 		// get incremental version number of source post
 		$key = '_cp_version_count';
 
-		// if the custom field of our current post has a value...
+		// if the custom field of our current post has a value
 		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 
 			// get current value
@@ -170,7 +164,7 @@ class CommentpressMultisiteRevisions {
 
 
 	/**
-	 * Object initialisation
+	 * Object initialisation.
 	 *
 	 * @return void
 	 */
@@ -184,7 +178,7 @@ class CommentpressMultisiteRevisions {
 
 
 	/**
-	 * Register WordPress hooks
+	 * Register WordPress hooks.
 	 *
 	 * @return void
 	 */

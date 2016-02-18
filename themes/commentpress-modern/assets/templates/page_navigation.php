@@ -22,7 +22,7 @@ if ( is_page() ) {
 	// get our custom page navigation
 	$cp_page_nav = commentpress_page_navigation();
 
-	// if we get any...
+	// if we get any
 	if ( $cp_page_nav != '' ) {
 
 		?><ul>

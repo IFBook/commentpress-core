@@ -1,13 +1,13 @@
 /*
 ================================================================================
-CommentPress AJAX Comment Submission (in page)
+CommentPress Core AJAX Comment Submission (in page)
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
 NOTES
 
 This script enables AJAX comment posting when the comment list is in the
-main content area and when the CommentPress theme is active.
+main content area and when a CommentPress Core compatible theme is active.
 
 Based loosely on the 'Ajax Comment Posting' WordPress plugin (version 2.0)
 
@@ -28,7 +28,7 @@ CommentPress.ajax = {};
 
 
 /**
- * Create CommentPress AJAX comments class
+ * Create CommentPress Core AJAX comments class
  */
 CommentPress.ajax.comments = new function() {
 
@@ -60,7 +60,7 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Initialise CommentPress AJAX.
+	 * Initialise CommentPress Core AJAX.
 	 *
 	 * This method should only be called once.
 	 *
@@ -111,7 +111,7 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Reset CommentPress AJAX
+	 * Reset CommentPress Core AJAX
 	 *
 	 * @return void
 	 */
@@ -467,7 +467,7 @@ CommentPress.ajax.comments = new function() {
 					var response;
 
 					// jQuery 1.9 fails to recognise the response as HTML, so
-					// we *must* use parseHTML if it's available...
+					// we *must* use parseHTML if it's available.
 					if ( $.parseHTML ) {
 
 						// if our jQuery version is 1.8+, it'll have parseHTML
@@ -487,7 +487,7 @@ CommentPress.ajax.comments = new function() {
 						me.add_comment( response );
 						me.reset();
 
-					// oh well...
+					// oh well
 					} catch (e) {
 
 						me.reset();
@@ -508,7 +508,7 @@ CommentPress.ajax.comments = new function() {
 
 
 
-}; // end CommentPress AJAX comments class
+}; // end CommentPress Core AJAX comments class
 
 
 

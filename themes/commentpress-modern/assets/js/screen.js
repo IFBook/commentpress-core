@@ -262,7 +262,7 @@ CommentPress.theme.header = new function() {
 		var offset;
 
 		/*
-		// need to decide whether to use border in offset...
+		// need to decide whether to use border in offset
 
 		// get offset including border
 		offset = 0 - (
@@ -764,7 +764,7 @@ CommentPress.theme.viewport = new function() {
 				header_position = header.position();
 				header_bottom = window.pageYOffset - ( header_position.top + header_height );
 
-				// when the bottom of the header passes out of the viewport...
+				// when the bottom of the header passes out of the viewport
 				if ( parseInt( header_bottom ) > 0 ) {
 
 					// get top of sidebar
@@ -1089,11 +1089,11 @@ CommentPress.theme.viewport = new function() {
 				// prevents it from loading properly
 				if ( cp_tinymce == '1' ) {
 
-					// if we have link text, then a comment reply is allowed...
+					// if we have link text, then a comment reply is allowed
 					if ( $( '#comment-' + comment_id + ' > .reply' ).text() !== '' ) {
 
 						// temporarily override global so that TinyMCE is not
-						// meddled with in any way...
+						// meddled with in any way
 						cp_tinymce = '0';
 
 						// move the form
@@ -1131,7 +1131,7 @@ CommentPress.theme.viewport = new function() {
 			// scroll comments
 			CommentPress.common.comments.scroll_comments( $('#comment-' + comment_id), 1, 'flash' );
 
-			// if not the whole page...
+			// if not the whole page
 			if( text_sig !== '' ) {
 
 				// get text block
@@ -1253,7 +1253,7 @@ CommentPress.theme.viewport = new function() {
 
 			}
 
-			// Choices, choices...
+			// Choices, choices:
 
 			// if it doesn't have the commentform
 			if ( !respond[0] ) {

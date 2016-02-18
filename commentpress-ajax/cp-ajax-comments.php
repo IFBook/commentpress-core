@@ -1,6 +1,6 @@
 <?php /*
 ================================================================================
-CommentPress AJAX Comments
+CommentPress Core AJAX Comments
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
@@ -44,13 +44,11 @@ function cpajax_enable_plugin() {
 	// access globals
 	global $commentpress_core;
 
-	// kick out if...
+	// kick out if cp is not enabled
+	if ( is_null( $commentpress_core ) OR ! is_object( $commentpress_core ) ) return;
 
-	// cp is not enabled
-	if ( is_null( $commentpress_core ) OR ! is_object( $commentpress_core ) )  { return; }
-
-	// we're in the WP back end
-	if ( is_admin() ) { return; }
+	// kick out if we're in the WP back end
+	if ( is_admin() ) return;
 
 	// add our javascripts
 	add_action( 'wp_enqueue_scripts', 'cpajax_add_javascripts', 120 );
@@ -73,7 +71,7 @@ function cpajax_add_javascripts() {
 	global $post, $commentpress_core;
 
 	// can only now see $post
-	if ( ! cpajax_plugin_can_activate() ) { return; }
+	if ( ! cpajax_plugin_can_activate() ) return;
 
 	// init vars
 	$vars = array();
@@ -91,10 +89,10 @@ function cpajax_add_javascripts() {
 	$vars['cpajax_current_time'] = date('Y-m-d H:i:s');
 
 	// get comment count at the time the page is served
-	$_count = get_comment_count( $post->ID );
+	$count = get_comment_count( $post->ID );
 
 	// adding moderation queue as well, since we do show these
-	$vars['cpajax_comment_count'] = $_count['approved']; // + $_count['awaiting_moderation'];
+	$vars['cpajax_comment_count'] = $count['approved']; // + $count['awaiting_moderation'];
 
 	// add post ID
 	$vars['cpajax_post_id'] = $post->ID;
@@ -103,15 +101,7 @@ function cpajax_add_javascripts() {
 	$vars['cpajax_lang'] = cpajax_localise();
 
 	// default to minified scripts
-	$debug_state = '.min';
-
-	// target different scripts when debugging
-	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
-
-		// use uncompressed scripts
-		$debug_state = '';
-
-	}
+	$debug_state = commentpress_minified();
 
 	// are we asking for in-page comments?
 	if ( $commentpress_core->db->is_special_page() ) {
@@ -174,7 +164,7 @@ function cpajax_localise() {
 	$translations[] = __( 'Submitting...', 'commentpress-core' );
 	$translations[] = __( 'Please wait while the comments are reassigned. The page will refresh when this has been done.', 'commentpress-core' );
 
-	// add translations for comment word...
+	// add translations for comment word
 	// singular
 	$translations[] = __( 'Comment', 'commentpress-core' );
 	// plural
@@ -198,10 +188,10 @@ function cpajax_plugin_can_activate() {
 	global $post, $commentpress_core;
 
 	// disallow if no post ID (such as 404)
-	if ( ! is_object( $post ) )  { return false; }
+	if ( ! is_object( $post ) ) return false;
 
 	// it's the Theme My Login page
-	if ( $commentpress_core->is_theme_my_login_page() ) { return false; }
+	if ( $commentpress_core->is_theme_my_login_page() ) return false;
 
 	// init
 	$allowed = true;
@@ -234,13 +224,13 @@ function cpajax_get_new_comments() {
 	$data = array();
 
 	// get incoming data
-	$last_comment_count = isset( $_POST[ 'last_count' ] ) ? $_POST[ 'last_count' ] : NULL;
+	$last_comment_count = isset( $_POST['last_count'] ) ? $_POST['last_count'] : NULL;
 
 	// store incoming unless updated later
 	$data['cpajax_comment_count'] = $last_comment_count;
 
 	// get post ID
-	$post_id = isset( $_POST[ 'post_id' ] ) ? $_POST[ 'post_id' ] : NULL;
+	$post_id = isset( $_POST['post_id'] ) ? $_POST['post_id'] : NULL;
 
 	// make it an integer, just to be sure
 	$post_id = (int) $post_id;
@@ -290,30 +280,30 @@ function cpajax_get_new_comments() {
 			$args['max_depth'] = get_option( 'thread_comments_depth' );
 
 			// loop
-			foreach( $comments AS $_comment ) {
+			foreach( $comments AS $comment ) {
 
 				// assume top level
 				$depth = 1;
 
 				// if no parent
-				if ( $_comment->comment_parent != '0' ) {
+				if ( $comment->comment_parent != '0' ) {
 
 					// override depth
-					$depth = cpajax_get_comment_depth( $_comment, $depth );
+					$depth = cpajax_get_comment_depth( $comment, $depth );
 
 				}
 
 				// get comment markup
-				$html = commentpress_get_comment_markup( $_comment, $args, $depth );
+				$html = commentpress_get_comment_markup( $comment, $args, $depth );
 
 				// close li (walker would normally do this)
 				$html .= '</li>' . "\n\n\n\n";
 
 				// add comment to array
 				$data['cpajax_new_comment_' . $identifier] = array(
-					'parent' => $_comment->comment_parent,
-					'id' => $_comment->comment_ID,
-					'text_sig' => $_comment->comment_signature,
+					'parent' => $comment->comment_parent,
+					'id' => $comment->comment_ID,
+					'text_sig' => $comment->comment_signature,
 					'markup' => $html
 				);
 
@@ -333,7 +323,6 @@ function cpajax_get_new_comments() {
 
 	// echo
 	echo json_encode( $data );
-	//print_r( $last_comment_count );
 
 	// die
 	exit();
@@ -383,32 +372,30 @@ function cpajax_get_comment_depth( $comment, $depth ) {
  */
 function cpajax_add_reassign_button( $edit_button, $comment ) {
 
-	//print_r( $comment ); die();
-
 	// pass if not top level
-	if ( $comment->comment_parent != '0' ) { return $edit_button; }
+	if ( $comment->comment_parent != '0' ) return $edit_button;
 
 	// pass if pingback or trackback
-	if ( $comment->comment_type == 'trackback' OR $comment->comment_type == 'pingback' ) { return $edit_button; }
+	if ( $comment->comment_type == 'trackback' OR $comment->comment_type == 'pingback' ) return $edit_button;
 
 	// pass if not orphan
-	//if ( ! isset( $comment->orphan ) ) { return $edit_button; }
+	//if ( ! isset( $comment->orphan ) ) return $edit_button;
 
 	// set default edit link title text
-	$_title_text = apply_filters(
+	$title_text = apply_filters(
 		'cpajax_comment_assign_link_title_text',
 		__( 'Drop on to a text-block to reassign this comment (and any replies) to it', 'commentpress-core' )
 	);
 
 	// set default edit link text
-	$_text = apply_filters(
+	$text = apply_filters(
 		'cp_comment_assign_link_text',
 		__( 'Move', 'commentpress-core' )
 	);
 
 	// construct assign button
-	$assign_button = '<span class="alignright comment-assign" title="' . $_title_text . '" id="cpajax_assign-' . $comment->comment_ID . '">' .
-						$_text .
+	$assign_button = '<span class="alignright comment-assign" title="' . $title_text . '" id="cpajax_assign-' . $comment->comment_ID . '">' .
+						$text .
 					 '</span>';
 
 	// add our assign button
@@ -438,8 +425,8 @@ function cpajax_reassign_comment() {
 	$comment_ids = array();
 
 	// get incoming data
-	$text_sig = isset( $_POST[ 'text_signature' ] ) ? $_POST[ 'text_signature' ] : '';
-	$comment_id = isset( $_POST[ 'comment_id' ] ) ? $_POST[ 'comment_id' ] : '';
+	$text_sig = isset( $_POST['text_signature'] ) ? $_POST['text_signature'] : '';
+	$comment_id = isset( $_POST['comment_id'] ) ? $_POST['comment_id'] : '';
 
 	// sanity check
 	if ( $text_sig !== '' AND $comment_id !== '' ) {
@@ -563,15 +550,7 @@ function cpajax_infinite_scroll_scripts() {
 	global $post, $commentpress_core;
 
 	// default to minified scripts
-	$debug_state = '.min';
-
-	// target different scripts when debugging
-	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
-
-		// use uncompressed scripts
-		$debug_state = '';
-
-	}
+	$debug_state = commentpress_minified();
 
 	// bail if we are we asking for in-page comments
 	if ( $commentpress_core->db->is_special_page() ) return;
@@ -619,7 +598,7 @@ function cpajax_infinite_scroll_load_next_page() {
 	global $commentpress_core;
 
 	// die if cp is not enabled
-	if ( is_null( $commentpress_core ) OR ! is_object( $commentpress_core ) ) { die( 'No CP' ); }
+	if ( is_null( $commentpress_core ) OR ! is_object( $commentpress_core ) ) { die( 'No CommentPress Core' ); }
 
 	// init data
 	$data = '';
@@ -632,9 +611,8 @@ function cpajax_infinite_scroll_load_next_page() {
 
 	// get all pages
 	$all_pages = $commentpress_core->nav->get_book_pages( 'readable' );
-	//if ( is_user_logged_in() ) { print_r( $all_pages ); die(); }
 
-	// if we have any pages...
+	// if we have any pages
 	if ( count( $all_pages ) == 0 ) { die( 'No $all_pages' ); }
 
 	// init the key we want
@@ -687,7 +665,6 @@ function cpajax_infinite_scroll_load_next_page() {
 	$page_title = get_the_title( $post->ID ) . ' | ' . $page_title;
 
 	// get next page
-	//print_r( array( $post, $post->post_title ) ); die();
 
 	// get feature image
 	ob_start();
@@ -703,7 +680,7 @@ function cpajax_infinite_scroll_load_next_page() {
 	// because AJAX may be routed via admin or front end
 	if ( defined( 'DOING_AJAX' ) AND DOING_AJAX AND is_admin() ) {
 
-		// add CP filter to the content when it's on the admin side
+		// add CommentPress Core filter to the content when it's on the admin side
 		add_filter( 'the_content', array( $commentpress_core->parser, 'the_content' ), 20 );
 
 	}
@@ -718,7 +695,6 @@ function cpajax_infinite_scroll_load_next_page() {
 
 	// get page number
 	$number = $commentpress_core->nav->get_page_number( $post->ID );
-	//print_r( $number ); die();
 
 	// get menu ID, if we have one
 	if ( isset( $new_post->menu_id ) ) {
@@ -756,7 +732,7 @@ function cpajax_infinite_scroll_load_next_page() {
 	// get page navigation
 	$navigation = commentpress_page_navigation();
 
-	// if we get any...
+	// if we get any
 	if ( $navigation != '' ) {
 		$navigation = '<div class="page_navigation"><ul>' . $navigation . '</ul></div><!-- /page_navigation -->';
 	}

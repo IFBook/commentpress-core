@@ -26,7 +26,7 @@ if ( is_page() ) {
 	// get our custom page navigation
 	$cp_page_nav = commentpress_page_navigation();
 
-	// if we get any...
+	// if we get any
 	if ( $cp_page_nav != '' ) {
 
 		?><ul>
@@ -60,8 +60,8 @@ elseif ( is_single() ) {
 // is this the blog home?
 elseif ( is_home() ) {
 
-	$nl = get_next_posts_link('&laquo; '.$previous_title);
-	$pl = get_previous_posts_link($next_title.' &raquo;');
+	$nl = get_next_posts_link('&laquo; ' . $previous_title);
+	$pl = get_previous_posts_link($next_title . ' &raquo;');
 
 	// did we get either?
 	if ( $nl != '' OR $pl != '' ) { ?>
@@ -83,8 +83,8 @@ elseif ( is_home() ) {
 // archives?
 elseif ( is_day() || is_month() || is_year() ) {
 
-	$nl = get_next_posts_link('&laquo; '.$previous_title);
-	$pl = get_previous_posts_link($next_title.' &raquo;');
+	$nl = get_next_posts_link('&laquo; ' . $previous_title);
+	$pl = get_previous_posts_link($next_title . ' &raquo;');
 
 	// did we get either?
 	if ( $nl != '' OR $pl != '' ) { ?>
@@ -106,8 +106,8 @@ elseif ( is_day() || is_month() || is_year() ) {
 // search?
 elseif ( is_search() ) {
 
-	$nl = get_next_posts_link('&laquo; '.$previous_title);
-	$pl = get_previous_posts_link($next_title.' &raquo;');
+	$nl = get_next_posts_link('&laquo; ' . $previous_title);
+	$pl = get_previous_posts_link($next_title . ' &raquo;');
 
 	// did we get either?
 	if ( $nl != '' OR $pl != '' ) { ?>
@@ -173,7 +173,7 @@ else {
 				// get current blog ID
 				$blog_id = get_current_blog_id();
 
-				// check if this blog is a group blog...
+				// check if this blog is a group blog
 				$group_id = get_groupblog_group_id( $blog_id );
 
 				// when this blog is a groupblog
@@ -193,7 +193,7 @@ else {
 
 		} else {
 
-			// use if blog home is not CP welcome page
+			// use if blog home is not CommentPress Core welcome page
 			if ( $title_id != get_option('page_on_front') ) {
 
 				// set default link name

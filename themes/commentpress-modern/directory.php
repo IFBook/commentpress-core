@@ -40,7 +40,7 @@ get_header(); ?>
 	// default to hidden
 	$cp_title_visibility = ' style="display: none;"';
 
-	// override if we've elected to show the title...
+	// override if we've elected to show the title
 	if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
 		$cp_title_visibility = '';
 	}

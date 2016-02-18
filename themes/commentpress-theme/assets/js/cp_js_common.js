@@ -562,7 +562,7 @@ CommentPress.theme.DOM = new function() {
 				alsoResize: '#footer',
 				//grid: 1, // no sub-pixel weirdness please
 
-				// on stop... (note: this doesn't fire on the first go in Opera 9!)
+				// on stop (note: this doesn't fire on the first go in Opera 9!)
 				start: function( event, ui ) {
 
 					// store original widths
@@ -576,7 +576,7 @@ CommentPress.theme.DOM = new function() {
 
 				},
 
-				// while resizing...
+				// while resizing
 				resize: function( event, ui ) {
 
 					// define vars
@@ -599,7 +599,7 @@ CommentPress.theme.DOM = new function() {
 
 				},
 
-				// on stop... (note: this doesn't fire on the first go in Opera 9!)
+				// on stop (note: this doesn't fire on the first go in Opera 9!)
 				stop: function( event, ui ) {
 
 					// define vars
@@ -741,7 +741,7 @@ CommentPress.theme.header = new function() {
 		var offset;
 
 		/*
-		// need to decide whether to use border in offset...
+		// need to decide whether to use border in offset
 
 		// get offset including border
 		offset = 0 - (
@@ -1067,7 +1067,7 @@ CommentPress.theme.sidebars = new function() {
 		// set height if not mobile device (but allow tablets)
 		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
-			// just to make sure...
+			// just to make sure
 			me.set_height();
 
 		} else {
@@ -1108,7 +1108,7 @@ CommentPress.theme.sidebars = new function() {
 				$('.sidebar_contents_wrapper').height( tallest );
 
 				// then make it auto
-				// BUT, this won't allow it to expand in future...
+				// BUT, this won't allow it to expand in future
 				//$('#' + sidebar + '_sidebar .sidebar_contents_wrapper').css('height','auto');
 
 			}
@@ -1571,11 +1571,11 @@ CommentPress.theme.viewport = new function() {
 				// prevents it from loading properly
 				if ( cp_tinymce == '1' ) {
 
-					// if we have link text, then a comment reply is allowed...
+					// if we have link text, then a comment reply is allowed
 					if ( $( '#comment-' + comment_id + ' > .reply' ).text() !== '' ) {
 
 						// temporarily override global so that TinyMCE is not
-						// meddled with in any way...
+						// meddled with in any way
 						cp_tinymce = '0';
 
 						// move the form
@@ -1613,7 +1613,7 @@ CommentPress.theme.viewport = new function() {
 			// scroll comments
 			CommentPress.common.comments.scroll_comments( $('#comment-' + comment_id), 1, 'flash' );
 
-			// if not the whole page...
+			// if not the whole page
 			if( text_sig !== '' ) {
 
 				// get text block
@@ -1730,7 +1730,7 @@ CommentPress.theme.viewport = new function() {
 
 			}
 
-			// Choices, choices...
+			// Choices, choices:
 
 			// if it doesn't have the commentform
 			if ( !respond[0] ) {

@@ -1,12 +1,13 @@
 /*
 ================================================================================
-CommentPress AJAX Infinite Scroll
+CommentPress Core AJAX Infinite Scroll
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
 NOTES
 
-This script enables infinite scroll when the CommentPress theme is active.
+This script enables infinite scroll when a CommentPress Core compatible theme is
+active. Still in development.
 
 --------------------------------------------------------------------------------
 */
@@ -459,7 +460,7 @@ CommentPress.infinite.DOM = new function() {
 
 		/*
 		// $ 1.9 fails to recognise the response as HTML, so
-		// we *must* use parseHTML if it's available...
+		// we *must* use parseHTML if it's available
 		if ( $.parseHTML ) {
 
 			// if our $ version is 1.8+, it'll have parseHTML
@@ -488,7 +489,7 @@ CommentPress.infinite.DOM = new function() {
 		new_post_prop = new_post_obj.prop( 'id' );
 		//console.log( 'NEW post ID: ' + new_post_prop );
 
-		// if we get one...
+		// if we get one
 		if ( typeof new_post_prop !== 'undefined' ) {
 
 			// add calling post ID to our array
@@ -917,7 +918,7 @@ CommentPress.infinite.page = new function() {
 			// ajax callback
 			success: function( data ) {
 
-				// handle incoming...
+				// handle incoming
 				CommentPress.infinite.DOM.handle_ajax_data( data, mode );
 
 				// remove spinner

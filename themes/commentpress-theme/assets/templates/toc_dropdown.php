@@ -16,7 +16,7 @@
 
 <?php
 
-// if we have the plugin enabled...
+// if we have the plugin enabled
 if ( is_object( $commentpress_core ) ) {
 
 	?><ul id="toc_dd_list">

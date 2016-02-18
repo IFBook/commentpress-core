@@ -1,6 +1,6 @@
 /*
 ================================================================================
-CommentPress WP FEE Compatibility Javascript
+CommentPress Modern WP FEE Compatibility Javascript
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------

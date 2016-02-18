@@ -3,12 +3,10 @@
 
 global $blog_id;
 
-// if this is the main BuddyPress-enabled blog...
+// if this is the main BuddyPress-enabled blog
 if (
-
 	function_exists( 'bp_search_form_type_select' ) AND
 	BP_ROOT_BLOG == $blog_id
-
 ) {
 
 

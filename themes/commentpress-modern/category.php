@@ -44,7 +44,7 @@
 			// default to hidden
 			$cp_meta_visibility = ' style="display: none;"';
 
-			// overrideif we've elected to show the meta...
+			// override if we've elected to show the meta
 			if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
 				$cp_meta_visibility = '';
 			}

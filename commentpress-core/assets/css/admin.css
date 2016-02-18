@@ -1,13 +1,13 @@
 /*
 ================================================================================
-CommentPress Admin Stylesheet
+CommentPress Core Admin Stylesheet
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
 NOTES
 =====
 
-Delete or rename this file if you don't want a formatted back-end
+Delete or rename this file if you don't want a formatted back-end.
 
 --------------------------------------------------------------------------------
 */
@@ -20,7 +20,7 @@ Delete or rename this file if you don't want a formatted back-end
 
 
 /*
-The following are examples of amending the WP back end...
+The following are examples of amending the WP back end:
 
 body,
 #wpcontent
