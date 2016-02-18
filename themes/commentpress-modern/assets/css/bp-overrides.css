@@ -3477,18 +3477,13 @@ body.is-groupblog.blogtype-0
 }
 
 /* group home */
-div#content.groupblogtype-0 div#item-header,
-#content.groupblogtype-0 div.item-list-tabs#object-nav
+body.groups.groupblogtype-0 h2.post_title,
+body.groupblogtype-0 div#item-header,
+body#main_blog.groups.groupblogtype-0 #content div.item-list-tabs#object-nav,
+body#main_blog.groups.groupblogtype-0 div.item-list-tabs
 {
 	background: #312F84;
 }
-
-/* group bg
-li.groupblogtype-0
-{
-    background: #312F84;
-}
-*/
 
 /* group decoration */
 ul.item-list li.groupblogtype-0 .item-title a,
@@ -3526,19 +3521,6 @@ body.blogtype-0 #content .post.overridden_type-1 div.search_meta
 	padding-bottom: 24px;
 }
 
-/* prose defaults to right-bubbles */
-
-/* poetry overrides default to left-bubbles
-body.blogtype-0 .post.overridden_type-1 span.commenticonbox
-{
-	position: absolute;
-	margin-left: -40px;
-	margin-top: -2px;
-	padding-right: 20px;
-	right: auto;
-}
-*/
-
 
 
 /*
@@ -3560,18 +3542,13 @@ body.is-groupblog.blogtype-1
 }
 
 /* group home */
-div#content.groupblogtype-1 div#item-header,
-#content.groupblogtype-1 div.item-list-tabs#object-nav
+body.groups.groupblogtype-1 h2.post_title,
+body.groupblogtype-1 div#item-header,
+body#main_blog.groups.groupblogtype-1 #content div.item-list-tabs#object-nav,
+body#main_blog.groups.groupblogtype-1 div.item-list-tabs
 {
 	background: #2C6D1F;
 }
-
-/* group bg
-li.groupblogtype-1
-{
-    background: #2C6D1F;
-}
-*/
 
 /* group */
 ul.item-list li.groupblogtype-1 .item-title a,
@@ -3636,28 +3613,6 @@ body.blogtype-1 #content div.search_meta p
 	padding: 0;
 }
 
-/* poetry defaults to left-bubbles
-body.blogtype-1 .post span.commenticonbox
-{
-	position: absolute;
-	margin-left: -40px;
-	margin-top: -2px;
-	padding-right: 20px;
-	right: auto;
-}
-*/
-
-/* prose overrides default to right-bubbles
-body.blogtype-1 .post.overridden_type-0 span.commenticonbox
-{
-	position: absolute;
-	margin-left: 0;
-	margin-top: 0;
-	padding-right: 20px;
-	right: 25px;
-}
-*/
-
 
 
 /*
@@ -3679,18 +3634,13 @@ body.is-groupblog.blogtype-2
 }
 
 /* group home */
-div#content.groupblogtype-2 div#item-header,
-#content.groupblogtype-2 div.item-list-tabs#object-nav
+body.groups.groupblogtype-2 h2.post_title,
+body.groupblogtype-2 div#item-header,
+body#main_blog.groups.groupblogtype-2 #content div.item-list-tabs#object-nav,
+body#main_blog.groups.groupblogtype-2 div.item-list-tabs
 {
 	background: #8A26B1;
 }
-
-/* group bg
-li.groupblogtype-2
-{
-    background: #8A26B1;
-}
-*/
 
 /* group */
 ul.item-list li.groupblogtype-2 .item-title a,

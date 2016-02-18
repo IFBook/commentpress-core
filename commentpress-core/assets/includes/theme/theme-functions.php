@@ -688,11 +688,40 @@ function commentpress_get_body_classes( $raw = false ) {
 
 		// allow plugins to override the blog type - for example if workflow is enabled,
 		// it might be a new blog type as far as BuddyPress is concerned
-		$blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $type, $workflow );
+		$current_blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $type, $workflow );
 
 		// if it's not the main site, add class
 		if ( is_multisite() AND ! is_main_site() ) {
-			$blog_type = ' blogtype-' . intval( $blog_type );
+			$blog_type = ' blogtype-' . intval( $current_blog_type );
+		}
+
+	}
+
+	// when viewing a group, set default groupblog type
+	$group_groupblog_type = '';
+
+	// if we have the plugin enabled
+	if ( is_object( $commentpress_core ) ) {
+
+		// is it a BuddyPress group page?
+		if ( function_exists( 'bp_is_groups_component' ) AND bp_is_groups_component() ) {
+
+			// get current group
+			$current_group = groups_get_current_group();
+
+			// sanity check
+			if ( $current_group instanceof BP_Groups_Group ) {
+
+				// get groupblog type
+				$groupblogtype = groups_get_groupmeta( $current_group->id, 'groupblogtype' );
+
+				// set groupblog type if present
+				if ( ! empty( $groupblogtype ) ) {
+					$group_groupblog_type = ' ' . $groupblogtype;
+				}
+
+			}
+
 		}
 
 	}
@@ -711,8 +740,19 @@ function commentpress_get_body_classes( $raw = false ) {
 
 	}
 
+	/*
+	error_log( print_r( array(
+		'function' => __FUNCTION__,
+		'groupblog_type' => $groupblog_type,
+		'blog_type' => $blog_type,
+		'current_group' => $current_group,
+		'group_groupblog_type' => $group_groupblog_type,
+		//'backtrace' => debug_backtrace( 0 ),
+	), true ) );
+	*/
+
 	// construct attribute
-	$body_classes = $sidebar_class . $commentable . $layout_class . $page_type . $groupblog_type . $blog_type . $tinymce_version;
+	$body_classes = $sidebar_class . $commentable . $layout_class . $page_type . $groupblog_type . $blog_type . $group_groupblog_type . $tinymce_version;
 
 	// allow filtering
 	$body_classes = apply_filters( 'commentpress_body_classes', $body_classes );
