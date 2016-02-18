@@ -972,10 +972,8 @@ class Commentpress_Core_Navigator {
 
 		// compat with Theme My Login
 		if(
-
 			$page_obj->post_name == 'login' AND
 			$page_obj->post_content == '[theme-my-login]'
-
 		) {
 
 			// --<

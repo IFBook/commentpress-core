@@ -10,10 +10,8 @@ $_tab_order = array( 'comments', 'activity', 'contents' );
 
 // if we have the plugin enabled and the method exists
 if (
-
 	is_object( $commentpress_core ) AND
 	method_exists( $commentpress_core, 'get_sidebar_order' )
-
 ) {
 
 	// get order from plugin options

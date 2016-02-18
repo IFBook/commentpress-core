@@ -43,10 +43,8 @@ if ( is_multisite() ) {
 
 	// multisite signup and blog create
 	if (
-
 		( is_user_logged_in() AND get_site_option( 'registration' ) == 'blog' ) OR
 		get_site_option( 'registration' ) == 'all'
-
 	) {
 
 		// test whether we have BuddyPress

@@ -1462,15 +1462,13 @@ class Commentpress_Core_Database {
 			// set meta key
 			$key = '_cp_number_format';
 
+			// do we need to check this, since only the first top level page
+			// can now send this data? doesn't hurt to validate, I guess.
 			if (
-
-				// do we need to check this, since only the first top level page
-				// can now send this data? doesn't hurt to validate, I guess.
 				$post->post_parent == '0' AND
 				! $this->is_special_page() AND
 				$post->ID == $this->parent_obj->nav->get_first_page()
-
-			) { // -->
+			) {
 
 				// get the data
 				$data = $_POST['cp_number_format'];
@@ -2417,9 +2415,7 @@ class Commentpress_Core_Database {
 
 		// check what we're allowing
 		if ( is_object( $post ) AND $post->ping_status != 'open' ) {
-
 			$pings = '&type=comment';
-
 		}
 
 		// for WordPress, we use the API
@@ -3950,8 +3946,6 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 			// let's have them as well
 			$pages = array(
-
-				// special pages
 				'cp_special_pages' => $special_pages,
 				'cp_blog_page' => $blog_page,
 				'cp_blog_archive_page' => $blog_archive_page,
@@ -3959,7 +3953,6 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 				'cp_all_comments_page' => $all_comments_page,
 				'cp_comments_by_page' => $comments_by_page,
 				'cp_toc_page' => $toc_page
-
 			);
 
 			// merge

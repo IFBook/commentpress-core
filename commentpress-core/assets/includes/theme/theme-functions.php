@@ -218,6 +218,19 @@ function commentpress_customize_register( $wp_customize ) {
 		'type' => 'text'
 	) );
 
+	// add color picker setting
+	$wp_customize->add_setting( 'commentpress_theme_settings[cp_header_bg_color]', array(
+		'default' => '#2c2622'
+	) );
+
+	// add color picker control
+	$wp_customize->add_control( new WP_Customize_Color_Control(
+		$wp_customize, 'cp_header_bg_color', array(
+		'label' => __( 'Header Background Colour', 'commentpress-core' ),
+		'section' => 'colors',
+		'settings' => 'commentpress_theme_settings[cp_header_bg_color]',
+	) ) );
+
 }
 endif; // commentpress_customize_register
 add_action( 'customize_register', 'commentpress_customize_register' );
@@ -367,12 +380,9 @@ function commentpress_get_header_image() {
 		// init top padding
 		$style = '';
 
-		// test for top padding
+		// override if there is top padding
 		if ( isset( $options['cp_inline_header_padding'] ) AND ! empty( $options['cp_inline_header_padding'] ) ) {
-
-			// override
 			$style = ' style="padding-top: ' . $options['cp_inline_header_padding'] . 'px"';
-
 		}
 
 		// show the uploaded image
@@ -413,31 +423,23 @@ function commentpress_get_header_image() {
 
 		// set defaults
 		$args = array(
-
 			'post_type' => 'attachment',
 			'numberposts' => 1,
 			'post_status' => null,
 			'post_parent' => $commentpress_core->db->option_get( 'cp_toc_page' )
-
 		);
 
 		// get them
 		$attachments = get_posts( $args );
 
-		// well?
+		// we only want the first
 		if ( $attachments ) {
-
-			// we only want the first
 			$attachment = $attachments[0];
-
 		}
 
-		// if we have an image
+		// show it if we have an image
 		if ( isset( $attachment ) ) {
-
-			// show it
 			echo wp_get_attachment_image( $attachment->ID, 'full' );
-
 		}
 
 	}
@@ -531,12 +533,9 @@ function commentpress_get_body_classes( $raw = false ) {
 
 		// is this the title page?
 		if (
-
-			// be more defensive
-			is_object( $post )
-			AND isset( $post->ID )
-			AND $post->ID == $commentpress_core->db->option_get( 'cp_welcome_page' )
-
+			is_object( $post ) AND
+			isset( $post->ID ) AND
+			$post->ID == $commentpress_core->db->option_get( 'cp_welcome_page' )
 		) {
 
 			// init layout
@@ -1542,12 +1541,8 @@ function commentpress_show_activity_tab() {
 
 		// is this multisite?
 		if (
-
-			( is_multisite()
-			AND is_main_site()
-			AND $commentpress_core->is_buddypress_special_page() )
-			OR ! is_object( $post )
-
+			( is_multisite() AND is_main_site() AND $commentpress_core->is_buddypress_special_page() ) OR
+			! is_object( $post )
 		) {
 
 			// ignore activity
@@ -1751,10 +1746,8 @@ function commentpress_get_comment_activity_item( $comment ) {
 
 			// if it has a text sig
 			if (
-
-				! is_null( $comment->comment_signature )
-				AND $comment->comment_signature != ''
-
+				! is_null( $comment->comment_signature ) AND
+				$comment->comment_signature != ''
 			) {
 
 				// set key

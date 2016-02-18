@@ -405,9 +405,9 @@ class Commentpress_Core {
 
 			// show on pages other than the CommentPress admin page
 			if (
-				$pagenow == 'options-general.php'
-				AND ! empty( $_GET['page'] )
-				AND 'commentpress_admin' == $_GET['page']
+				$pagenow == 'options-general.php' AND
+				! empty( $_GET['page'] ) AND
+				'commentpress_admin' == $_GET['page']
 			) {
 
 				// we're on our admin page
@@ -976,12 +976,10 @@ class Commentpress_Core {
 
 		// if page has no parent and it's not a special page and it's the first
 		if (
-
 			$post->post_parent == '0' AND
 			! $this->db->is_special_page() AND
 			$post->ID == $this->nav->get_first_page()
-
-		) { // -->
+		) {
 
 			// label
 			echo '<div class="cp_number_format_wrapper">

@@ -161,12 +161,10 @@ global $commentpress_core, $post;
 
 // if we have the plugin enabled and it's BuddyPress
 if (
-
-	is_multisite()
-	AND is_object( $commentpress_core )
-	AND $commentpress_core->is_buddypress()
-	AND $commentpress_core->is_groupblog()
-
+	is_multisite() AND
+	is_object( $commentpress_core ) AND
+	$commentpress_core->is_buddypress() AND
+	$commentpress_core->is_groupblog()
 ) {
 
 	// check if this blog is a group blog
