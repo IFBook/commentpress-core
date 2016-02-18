@@ -754,43 +754,43 @@ class Commentpress_Core_Database {
 	public function check_upgrade_options() {
 
 		// do we have the option to choose to hide textblock meta (new in 3.5.9)?
-		if ( ! $this->option_exists( 'cp_textblock_meta' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_textblock_meta' ) ) return true;
 
 		// do we have the option to choose featured images (new in 3.5.4)?
-		if ( ! $this->option_exists( 'cp_featured_images' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_featured_images' ) ) return true;
 
 		// do we have the option to choose the default sidebar (new in 3.3.3)?
-		if ( ! $this->option_exists( 'cp_sidebar_default' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_sidebar_default' ) ) return true;
 
 		// do we have the option to show or hide page meta (new in 3.3.2)?
-		if ( ! $this->option_exists( 'cp_page_meta_visibility' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_page_meta_visibility' ) ) return true;
 
 		// do we have the option to choose blog type (new in 3.3.1)?
-		if ( ! $this->option_exists( 'cp_blog_type' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_blog_type' ) ) return true;
 
 		// do we have the option to choose blog workflow (new in 3.3.1)?
-		if ( ! $this->option_exists( 'cp_blog_workflow' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_blog_workflow' ) ) return true;
 
 		// do we have the option to choose the TOC layout (new in 3.3)?
-		if ( ! $this->option_exists( 'cp_show_extended_toc' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_show_extended_toc' ) ) return true;
 
 		// do we have the option to set the comment editor?
-		if ( ! $this->option_exists( 'cp_comment_editor' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_comment_editor' ) ) return true;
 
 		// do we have the option to set the default behaviour?
-		if ( ! $this->option_exists( 'cp_promote_reading' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_promote_reading' ) ) return true;
 
 		// do we have the option to show or hide titles?
-		if ( ! $this->option_exists( 'cp_title_visibility' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_title_visibility' ) ) return true;
 
 		// do we have the option to set the header bg colour?
-		if ( ! $this->option_exists( 'cp_header_bg_colour' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_header_bg_colour' ) ) return true;
 
 		// do we have the option to set the scroll speed?
-		if ( ! $this->option_exists( 'cp_js_scroll_speed' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_js_scroll_speed' ) ) return true;
 
 		// do we have the option to set the minimum page width?
-		if ( ! $this->option_exists( 'cp_min_page_width' ) ) { return true; }
+		if ( ! $this->option_exists( 'cp_min_page_width' ) ) return true;
 
 		// --<
 		return false;
@@ -837,7 +837,7 @@ class Commentpress_Core_Database {
 			do_action( 'cpmu_deactivate_commentpress' );
 
 			// is Multisite activating CommentPress Core?
-			if ( $cp_activate == '1' ) { return true; }
+			if ( $cp_activate == '1' ) return true;
 
 			// did we ask to upgrade CommentPress Core?
 			if ( $cp_upgrade == '1' ) {
@@ -2264,7 +2264,7 @@ class Commentpress_Core_Database {
 		$page_id = $this->option_get( $flag );
 
 		// kick out if it doesn't exist
-		if ( ! $page_id ) { return true; }
+		if ( ! $page_id ) return true;
 
 		// delete option
 		$this->option_delete( $flag );

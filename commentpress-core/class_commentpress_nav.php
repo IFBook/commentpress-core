@@ -496,7 +496,7 @@ class Commentpress_Core_Navigator {
 	function redirect_to_child() {
 
 		// only on pages
-		if ( ! is_page() ) { return; }
+		if ( ! is_page() ) return;
 
 		// access post object
 		global $post;

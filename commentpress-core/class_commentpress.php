@@ -293,8 +293,8 @@ class Commentpress_Core {
 	public function get_groupblog_theme() {
 
 		// kick out if not in a group context
-		if ( ! function_exists( 'bp_is_groups_component' ) ) { return false; }
-		if ( ! bp_is_groups_component() ) { return false; }
+		if ( ! function_exists( 'bp_is_groups_component' ) ) return false;
+		if ( ! bp_is_groups_component() ) return false;
 
 		// get groupblog options
 		$options = get_site_option( 'bp_groupblog_blog_defaults_options' );
@@ -1991,26 +1991,26 @@ class Commentpress_Core {
 		global $post;
 
 		// not on signup pages
-		if ( is_multisite() AND 'wp-signup.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) { return false; }
-		if ( is_multisite() AND 'wp-activate.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) { return false; }
+		if ( is_multisite() AND 'wp-signup.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) return false;
+		if ( is_multisite() AND 'wp-activate.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) return false;
 
 		// not if we're not on a page/post and especially not if there's no post object
-		if ( ! is_singular() OR ! is_object( $post ) ) { return false; }
+		if ( ! is_singular() OR ! is_object( $post ) ) return false;
 
 		// CP Special Pages special pages are not
-		if ( $this->db->is_special_page() ) { return false; }
+		if ( $this->db->is_special_page() ) return false;
 
 		// BuddyPress special pages are not
-		if ( $this->is_buddypress_special_page() ) { return false; }
+		if ( $this->is_buddypress_special_page() ) return false;
 
 		// Theme My Login page is not
-		if ( $this->is_theme_my_login_page() ) { return false; }
+		if ( $this->is_theme_my_login_page() ) return false;
 
 		// Members List page is not
-		if ( $this->is_members_list_page() ) { return false; }
+		if ( $this->is_members_list_page() ) return false;
 
 		// Subscribe to Comments Reloaded page is not
-		if ( $this->is_subscribe_to_comments_reloaded_page() ) { return false; }
+		if ( $this->is_subscribe_to_comments_reloaded_page() ) return false;
 
 		// --<
 		return apply_filters( 'cp_is_commentable', true );

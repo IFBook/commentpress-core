@@ -120,7 +120,7 @@ class Commentpress_Multisite_Wordpress {
 	public function add_admin_menu() {
 
 		// we must be network admin
-		if ( ! is_super_admin() ) { return false; }
+		if ( ! is_super_admin() ) return false;
 
 		// try and update options
 		$saved = $this->db->options_update();
@@ -183,7 +183,7 @@ class Commentpress_Multisite_Wordpress {
 	public function signup_blogform( $errors ) {
 
 		// only apply to wordpress signup form (not the BuddyPress one)
-		if ( is_object( $this->parent_obj->bp ) ) { return; }
+		if ( is_object( $this->parent_obj->bp ) ) return;
 
 		// get force option
 		$forced = $this->db->option_get( 'cpmu_force_commentpress' );
@@ -288,7 +288,7 @@ class Commentpress_Multisite_Wordpress {
 	public function change_admin_greeting( $translated, $text, $domain ) {
 
 		// look only for default WordPress translations
-		if ('default' != $domain) { return $translated; }
+		if ('default' != $domain) return $translated;
 
 		// catch all instances of 'Howdy'
 		if ( false !== strpos( $translated, 'Howdy' ) ) {

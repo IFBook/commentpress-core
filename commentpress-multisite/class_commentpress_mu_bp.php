@@ -1418,7 +1418,7 @@ class Commentpress_Multisite_Buddypress {
 		if ( is_super_admin() ) return;
 
 		// check our site option
-		if ( $this->db->option_get( 'cpmu_bp_groupblog_privacy' ) != '1' ) { return; }
+		if ( $this->db->option_get( 'cpmu_bp_groupblog_privacy' ) != '1' ) return;
 
 		global $blog_id, $current_user;
 

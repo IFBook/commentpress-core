@@ -100,7 +100,7 @@ class Commentpress_Core_Display {
 			if ( $theme->exists() ) {
 
 				// ignore if not allowed
-				//if ( is_multisite() AND ! $theme->is_allowed() ) { return; }
+				//if ( is_multisite() AND ! $theme->is_allowed() ) return;
 
 				// activate it
 				switch_theme(
@@ -162,7 +162,7 @@ class Commentpress_Core_Display {
 			if ( $theme->exists() ) {
 
 				// ignore if not allowed
-				//if ( is_multisite() AND ! $theme->is_allowed() ) { return; }
+				//if ( is_multisite() AND ! $theme->is_allowed() ) return;
 
 				// activate it
 				switch_theme(
@@ -635,7 +635,7 @@ HELPTEXT;
 		$user = get_userdata( $author_id );
 
 		// kick out if we don't have a user with that ID
-		if ( ! is_object( $user ) ) { return; }
+		if ( ! is_object( $user ) ) return;
 
 		// access plugin
 		global $commentpress_core, $post;

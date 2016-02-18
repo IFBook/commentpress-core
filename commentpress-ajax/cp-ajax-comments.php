@@ -45,10 +45,10 @@ function cpajax_enable_plugin() {
 	global $commentpress_core;
 
 	// kick out if cp is not enabled
-	if ( is_null( $commentpress_core ) OR ! is_object( $commentpress_core ) )  { return; }
+	if ( is_null( $commentpress_core ) OR ! is_object( $commentpress_core ) ) return;
 
 	// kick out if we're in the WP back end
-	if ( is_admin() ) { return; }
+	if ( is_admin() ) return;
 
 	// add our javascripts
 	add_action( 'wp_enqueue_scripts', 'cpajax_add_javascripts', 120 );
@@ -71,7 +71,7 @@ function cpajax_add_javascripts() {
 	global $post, $commentpress_core;
 
 	// can only now see $post
-	if ( ! cpajax_plugin_can_activate() ) { return; }
+	if ( ! cpajax_plugin_can_activate() ) return;
 
 	// init vars
 	$vars = array();
@@ -188,10 +188,10 @@ function cpajax_plugin_can_activate() {
 	global $post, $commentpress_core;
 
 	// disallow if no post ID (such as 404)
-	if ( ! is_object( $post ) )  { return false; }
+	if ( ! is_object( $post ) ) return false;
 
 	// it's the Theme My Login page
-	if ( $commentpress_core->is_theme_my_login_page() ) { return false; }
+	if ( $commentpress_core->is_theme_my_login_page() ) return false;
 
 	// init
 	$allowed = true;
@@ -373,13 +373,13 @@ function cpajax_get_comment_depth( $comment, $depth ) {
 function cpajax_add_reassign_button( $edit_button, $comment ) {
 
 	// pass if not top level
-	if ( $comment->comment_parent != '0' ) { return $edit_button; }
+	if ( $comment->comment_parent != '0' ) return $edit_button;
 
 	// pass if pingback or trackback
-	if ( $comment->comment_type == 'trackback' OR $comment->comment_type == 'pingback' ) { return $edit_button; }
+	if ( $comment->comment_type == 'trackback' OR $comment->comment_type == 'pingback' ) return $edit_button;
 
 	// pass if not orphan
-	//if ( ! isset( $comment->orphan ) ) { return $edit_button; }
+	//if ( ! isset( $comment->orphan ) ) return $edit_button;
 
 	// set default edit link title text
 	$title_text = apply_filters(
