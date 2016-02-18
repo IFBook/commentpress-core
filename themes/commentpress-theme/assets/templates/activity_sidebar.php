@@ -148,12 +148,15 @@ if (
 	// if on either groupblog or main BuddyPress blog
 	if ( $commentpress_core->is_groupblog() OR bp_is_root_blog() ) {
 
-		// get activities
-		if ( bp_has_activities( array(
+		// define args
+		$recent_groupblog_activity = array(
 			'scope' => 'groups',
 			'action' => 'new_groupblog_comment,new_groupblog_post',
 			'primary_id' => false,
-		) ) ) :
+		);
+
+		// get activities
+		if ( bp_has_activities( $recent_groupblog_activity ) ) :
 
 			// change header depending on logged in status
 			if ( is_user_logged_in() ) {
@@ -232,14 +235,17 @@ if (
 
 
 
+	// define args
+	$members_recently_active = array(
+		'user_id' => 0,
+		'type' => 'online',
+		'per_page' => $_max_members,
+		'max' => $_max_members,
+		'populate_extras' => 1,
+	);
+
 	// get recently active members
-	if ( bp_has_members(
-		'user_id=0' .
-		'&type=active' .
-		'&per_page=' . $_max_members .
-		'&max=' . $_max_members .
-		'&populate_extras=1'
-	) ) : ?>
+	if ( bp_has_members( $members_recently_active ) ) : ?>
 
 		<h3 class="activity_heading"><?php _e( 'Recently Active Members', 'commentpress-core' ); ?></h3>
 
@@ -281,14 +287,17 @@ if (
 
 	<?php
 
+	// define args
+	$members_online = array(
+		'user_id' => 0,
+		'type' => 'online',
+		'per_page' => $_max_members,
+		'max' => $_max_members,
+		'populate_extras' => 1,
+	);
+
 	// get online members
-	if ( bp_has_members(
-		'user_id=0' .
-		'&type=online' .
-		'&per_page=' . $_max_members .
-		'&max=' . $_max_members .
-		'&populate_extras=1'
-	) ) : ?>
+	if ( bp_has_members( $members_online ) ) : ?>
 
 		<h3 class="activity_heading"><?php _e( "Who's Online", 'commentpress-core' ); ?></h3>
 
