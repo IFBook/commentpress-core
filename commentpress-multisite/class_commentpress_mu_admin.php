@@ -842,7 +842,7 @@ class Commentpress_Multisite_Admin {
 		if ( ! current_user_can('manage_options') ) return;
 
 		// enable CommentPress Core, if applicable
-		$this->_enable_core();
+		$this->enable_core();
 
 		// insert item in relevant menu
 		$this->options_page = add_options_page(
@@ -994,7 +994,7 @@ class Commentpress_Multisite_Admin {
 				add_filter( 'cpmu_deactivate_commentpress_element', array( $this, 'get_deactivate_element' ) );
 
 				// hook into CommentPress Core settings page result
-				add_action( 'cpmu_deactivate_commentpress', array( $this, '_disable_core' ) );
+				add_action( 'cpmu_deactivate_commentpress', array( $this, 'disable_core' ) );
 
 			} else {
 
@@ -1175,7 +1175,7 @@ class Commentpress_Multisite_Admin {
 	 *
 	 * @return void
 	 */
-	private function _enable_core() {
+	public function enable_core() {
 
 	 	// was the form submitted?
 		if( ! isset( $_POST['commentpress_submit'] ) ) return;
@@ -1212,7 +1212,7 @@ class Commentpress_Multisite_Admin {
 	 *
 	 * @return void
 	 */
-	private function _disable_core() {
+	public function disable_core() {
 
 	 	// was the form submitted?
 		if( ! isset( $_POST['commentpress_submit'] ) ) return;
