@@ -104,39 +104,13 @@ class Commentpress_Multisite_Admin {
 	 *
 	 * @return boolean $result
 	 */
-	public function upgrade() {
+	public function upgrade_options() {
 
 		// init return
 		$result = false;
 
 		// if we have a CommentPress Core install (or we're forcing)
 		if ( $this->upgrade_required() ) {
-
-			/*
-			--------------------------------------------------------------------
-			Example of how upgrades work
-			--------------------------------------------------------------------
-
-			// default
-			$cpmu_xxxx = '';
-
-			// get variables
-			extract( $_POST );
-
-			// New in CommentPress Core MU 1.0.1 - are we missing the cpmu_xxxx option?
-			if ( ! $this->option_exists( 'cpmu_xxxx' ) ) {
-
-				// get choice
-				$choice = esc_sql( $cpmu_xxxx );
-
-				// add chosen option
-				$this->option_set( 'cpmu_xxxx', $choice );
-
-			}
-			*/
-
-			// save new options
-			$this->options_save();
 
 			// store new version
 			$this->option_wpms_set( 'cpmu_version', COMMENTPRESS_MU_PLUGIN_VERSION );
@@ -277,7 +251,7 @@ class Commentpress_Multisite_Admin {
 			if ( $cpmu_upgrade == '1' ) {
 
 				// do upgrade
-				$this->upgrade();
+				$this->upgrade_options();
 
 				// --<
 				return true;

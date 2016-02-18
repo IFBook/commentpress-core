@@ -468,11 +468,86 @@ class Commentpress_Core_Database {
 
 
 	/**
+	 * Check for plugin upgrade.
+	 *
+	 * @return bool $result True if required, false otherwise
+	 */
+	public function upgrade_required() {
+
+		// bail if we do not have an outdated version
+		if ( ! $this->version_outdated() ) return false;
+
+		// override if any options need to be shown
+		if ( $this->upgrade_options_check() ) {
+			return true;
+		}
+
+		// fallback
+		return false;
+
+	}
+
+
+
+	/**
+	 * Check for options added in this plugin upgrade.
+	 *
+	 * @return bool $result True if upgrade needed, false otherwise
+	 */
+	public function upgrade_options_check() {
+
+		// do we have the option to choose to hide textblock meta (new in 3.5.9)?
+		if ( ! $this->option_exists( 'cp_textblock_meta' ) ) return true;
+
+		// do we have the option to choose featured images (new in 3.5.4)?
+		if ( ! $this->option_exists( 'cp_featured_images' ) ) return true;
+
+		// do we have the option to choose the default sidebar (new in 3.3.3)?
+		if ( ! $this->option_exists( 'cp_sidebar_default' ) ) return true;
+
+		// do we have the option to show or hide page meta (new in 3.3.2)?
+		if ( ! $this->option_exists( 'cp_page_meta_visibility' ) ) return true;
+
+		// do we have the option to choose blog type (new in 3.3.1)?
+		if ( ! $this->option_exists( 'cp_blog_type' ) ) return true;
+
+		// do we have the option to choose blog workflow (new in 3.3.1)?
+		if ( ! $this->option_exists( 'cp_blog_workflow' ) ) return true;
+
+		// do we have the option to choose the TOC layout (new in 3.3)?
+		if ( ! $this->option_exists( 'cp_show_extended_toc' ) ) return true;
+
+		// do we have the option to set the comment editor?
+		if ( ! $this->option_exists( 'cp_comment_editor' ) ) return true;
+
+		// do we have the option to set the default behaviour?
+		if ( ! $this->option_exists( 'cp_promote_reading' ) ) return true;
+
+		// do we have the option to show or hide titles?
+		if ( ! $this->option_exists( 'cp_title_visibility' ) ) return true;
+
+		// do we have the option to set the header bg colour?
+		if ( ! $this->option_exists( 'cp_header_bg_colour' ) ) return true;
+
+		// do we have the option to set the scroll speed?
+		if ( ! $this->option_exists( 'cp_js_scroll_speed' ) ) return true;
+
+		// do we have the option to set the minimum page width?
+		if ( ! $this->option_exists( 'cp_min_page_width' ) ) return true;
+
+		// --<
+		return false;
+
+	}
+
+
+
+	/**
 	 * Upgrade CommentPress plugin from 3.1 options to CommentPress Core set.
 	 *
 	 * @return boolean $result
 	 */
-	public function upgrade() {
+	public function upgrade_options() {
 
 		// init return
 		$result = false;
@@ -754,84 +829,9 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Check for plugin upgrade.
-	 *
-	 * @return bool $result True if required, false otherwise
-	 */
-	public function upgrade_required() {
-
-		// bail if we do not have an outdated version
-		if ( ! $this->version_outdated() ) return false;
-
-		// override if any options need to be shown
-		if ( $this->upgrade_options_check() ) {
-			return true;
-		}
-
-		// fallback
-		return false;
-
-	}
-
-
-
-	/**
-	 * Check for options added in this plugin upgrade.
-	 *
-	 * @return bool $result True if upgrade needed, false otherwise
-	 */
-	public function upgrade_options_check() {
-
-		// do we have the option to choose to hide textblock meta (new in 3.5.9)?
-		if ( ! $this->option_exists( 'cp_textblock_meta' ) ) return true;
-
-		// do we have the option to choose featured images (new in 3.5.4)?
-		if ( ! $this->option_exists( 'cp_featured_images' ) ) return true;
-
-		// do we have the option to choose the default sidebar (new in 3.3.3)?
-		if ( ! $this->option_exists( 'cp_sidebar_default' ) ) return true;
-
-		// do we have the option to show or hide page meta (new in 3.3.2)?
-		if ( ! $this->option_exists( 'cp_page_meta_visibility' ) ) return true;
-
-		// do we have the option to choose blog type (new in 3.3.1)?
-		if ( ! $this->option_exists( 'cp_blog_type' ) ) return true;
-
-		// do we have the option to choose blog workflow (new in 3.3.1)?
-		if ( ! $this->option_exists( 'cp_blog_workflow' ) ) return true;
-
-		// do we have the option to choose the TOC layout (new in 3.3)?
-		if ( ! $this->option_exists( 'cp_show_extended_toc' ) ) return true;
-
-		// do we have the option to set the comment editor?
-		if ( ! $this->option_exists( 'cp_comment_editor' ) ) return true;
-
-		// do we have the option to set the default behaviour?
-		if ( ! $this->option_exists( 'cp_promote_reading' ) ) return true;
-
-		// do we have the option to show or hide titles?
-		if ( ! $this->option_exists( 'cp_title_visibility' ) ) return true;
-
-		// do we have the option to set the header bg colour?
-		if ( ! $this->option_exists( 'cp_header_bg_colour' ) ) return true;
-
-		// do we have the option to set the scroll speed?
-		if ( ! $this->option_exists( 'cp_js_scroll_speed' ) ) return true;
-
-		// do we have the option to set the minimum page width?
-		if ( ! $this->option_exists( 'cp_min_page_width' ) ) return true;
-
-		// --<
-		return false;
-
-	}
-
-
-
-	/**
 	 * Perform any plugin upgrades that do not have a setting on page load.
 	 *
-	 * Unlike `upgrade()` (which is only called when someone visits the
+	 * Unlike `upgrade_options()` (which is only called when someone visits the
 	 * CommentPress Core settings page), this method is called on every page
 	 * load so that upgrades are performed immediately if required.
 	 *
@@ -935,7 +935,7 @@ class Commentpress_Core_Database {
 			if ( $cp_upgrade == '1' ) {
 
 				// do upgrade
-				$this->upgrade();
+				$this->upgrade_options();
 
 				// --<
 				return true;
