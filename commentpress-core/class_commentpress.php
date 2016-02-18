@@ -572,14 +572,6 @@ class Commentpress_Core {
 		// add jQuery libraries
 		$this->display->get_jquery();
 
-		// if comments are enabled on this post/page
-		if ( $this->db->comments_enabled() ) {
-
-			// add tinyMCE scripts
-			$this->display->get_tinymce();
-
-		}
-
 	}
 
 

@@ -2964,8 +2964,6 @@ function commentpress_add_wp_editor() {
 	// init option
 	$rich_text = false;
 
-	global $commentpress_core;
-
 	// kick out if wp_editor doesn't exist
 	// TinyMCE will be handled by including the script using the pre- wp_editor() method
 	if ( ! function_exists( 'wp_editor' ) ) {
@@ -2973,6 +2971,7 @@ function commentpress_add_wp_editor() {
 	}
 
 	// kick out if plugin not active
+	global $commentpress_core;
 	if ( ! is_object( $commentpress_core ) ) {
 		return false;
 	}
