@@ -550,14 +550,6 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 		// get variables
 		extract( $_POST );
 
-		///*
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'_POST' => $_POST,
-			//'backtrace' => debug_backtrace( 0 ),
-		), true ) );
-		//*/
-
 		// set on/off option
 		$cpmu_bp_groupblog_nomenclature = esc_sql( $cpmu_bp_groupblog_nomenclature );
 		$this->db->option_set( 'cpmu_bp_workshop_nomenclature', ( $cpmu_bp_groupblog_nomenclature ? 1 : 0 ) );

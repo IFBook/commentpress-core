@@ -40,8 +40,6 @@ if ( $_is_commentable AND ! post_password_required() ) {
 
 
 
-
-
 // set default
 $_all_comments_title = apply_filters(
 	'cp_activity_tab_recent_title_blog',
@@ -53,11 +51,8 @@ $_all_comments_output = commentpress_get_comment_activity( 'all' );
 
 
 
-
-
 // set maximum number to show - put into option?
 $_max_members = 10;
-
 
 
 
@@ -117,9 +112,6 @@ do_action( 'commentpress_bp_activity_sidebar_after_page_comments' );
 
 
 
-
-
-
 // show all comments from site if we can
 if ( $_all_comments_output != '' ) {
 
@@ -143,82 +135,6 @@ do_action( 'commentpress_bp_activity_sidebar_after_all_comments' );
 
 
 
-
-
-
-/*
---------------------------------------------------------------------------------
-This seems not to work because BuddyPress returns no values for the combination we want
---------------------------------------------------------------------------------
-NOTE: raise a ticket on BuddyPress
---------------------------------------------------------------------------------
-Also, need to make this kind of include file properly child-theme adaptable
---------------------------------------------------------------------------------
-
-
-// access plugin
-global $commentpress_core, $post;
-
-// if we have the plugin enabled and it's BuddyPress
-if (
-	is_multisite() AND
-	is_object( $commentpress_core ) AND
-	$commentpress_core->is_buddypress() AND
-	$commentpress_core->is_groupblog()
-) {
-
-	// check if this blog is a group blog
-	$group_id = get_groupblog_group_id( get_current_blog_id() );
-
-	// when this blog is a groupblog
-	if ( !empty( $group_id ) ) {
-
-		// get activities for our activities
-		if ( bp_has_activities( array(
-
-			// NO RESULTS!
-			'object' => 'groups',
-			'action' => 'new_groupblog_comment,new_groupblog_post',
-			'primary_id' => $group_id
-			'secondary_id' => $post_id
-
-		) ) ) : ?>
-
-			<h3 class="activity_heading">Recent Activity in this Workshop</h3>
-
-			<div class="paragraph_wrapper">
-
-			<ol class="comment_activity">
-
-			<?php while ( bp_activities() ) : bp_the_activity(); ?>
-
-				<?php locate_template( array( 'activity/groupblog.php' ), true, false ); ?>
-
-			<?php endwhile; ?>
-
-			</ol>
-
-			</div>
-
-		<?php
-
-		endif;
-
-	}
-
-
-
-
-} // end BuddyPress check
-*/
-
-
-?>
-
-<?php
-
-
-
 // access plugin
 global $commentpress_core, $post, $blog_id;
 
@@ -229,8 +145,6 @@ if (
 	$commentpress_core->is_buddypress()
 ) {
 
-
-
 	// if on either groupblog or main BuddyPress blog
 	if ( $commentpress_core->is_groupblog() OR bp_is_root_blog() ) {
 
@@ -238,6 +152,7 @@ if (
 		if ( bp_has_activities( array(
 			'scope' => 'groups',
 			'action' => 'new_groupblog_comment,new_groupblog_post',
+			'primary_id' => false,
 		) ) ) :
 
 			// change header depending on logged in status
@@ -267,69 +182,9 @@ if (
 
 			<?php while ( bp_activities() ) : bp_the_activity(); ?>
 
-				<?php
-
-				// init group blog type
-				$groupblogtype = '';
-
-				// get activity type
-				$type = bp_get_activity_type();
-
-				// init same post
-				$same_post = '';
-
-				// for our types of activity...
-				if ( $type == 'new_groupblog_post' OR $type == 'new_groupblog_comment' ) {
-
-					// get group id first
-					$group_id = bp_get_activity_item_id();
-
-					// get group blogtype
-					$groupblogtype = groups_get_groupmeta( $group_id, 'groupblogtype' );
-
-					// add space before if we have it
-					if ( $groupblogtype ) { $groupblogtype = ' '.$groupblogtype; }
-
-					/*
-					// if it's a groupblog comment
-					if ( $type == 'new_groupblog_comment' ) {
-
-						// get post id of the comment
-						$post_id = bp_get_activity_secondary_item_id();
-
-						// get blog id
-						$blog_id = groups_get_groupmeta( $group_id, 'groupblogtype' );
-
-						// is it the current blog...
-						if ( $blog_id = get_current_blog_id() ) {
-
-							// is it the current post...
-							global $post;
-							if ( is_object( $post ) AND $post_id = $post->ID ) {
-
-								// lastly, check if the comment is on a subpage
-								// OH DEAR, BP doesn't store the ID of the comment :(
-
-								// get comment
-								$comment = get_comment(  );
-
-								// init same post
-								$same_post = ' comment_on_post';
-
-							}
-
-						}
-
-					}
-					*/
-
-				}
-
-				?>
-
 				<?php do_action( 'bp_before_activity_entry' ); ?>
 
-				<li class="<?php bp_activity_css_class(); echo $groupblogtype.$same_post; ?>" id="activity-<?php bp_activity_id(); ?>">
+				<li class="<?php bp_activity_css_class(); ?>" id="activity-<?php bp_activity_id(); ?>">
 
 					<div class="comment-wrapper">
 
