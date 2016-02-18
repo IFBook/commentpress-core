@@ -1,4 +1,21 @@
 /*
+================================================================================
+CommentPress Modern Colours Stylesheet
+================================================================================
+AUTHOR: Christian Wach <needle@haystack.co.uk>
+--------------------------------------------------------------------------------
+NOTES
+
+The intent behind this stylesheet is to gather together key styles so they can
+be easily overridden in child themes. Doing so simply involves copying this file
+to the same relative path in the child theme and amending the values as desired.
+
+--------------------------------------------------------------------------------
+*/
+
+
+
+/*
 --------------------------------------------------------------------------------
 Fonts
 --------------------------------------------------------------------------------
