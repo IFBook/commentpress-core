@@ -109,7 +109,7 @@ class Commentpress_Multisite_Admin {
 		// init return
 		$result = false;
 
-		// if we have a commentpress install (or we're forcing)
+		// if we have a CommentPress install (or we're forcing)
 		if ( $this->check_upgrade() ) {
 
 			/*
@@ -123,7 +123,7 @@ class Commentpress_Multisite_Admin {
 			// get variables
 			extract( $_POST );
 
-			// New in CPMU 1.0.1 - are we missing the cpmu_xxxx option?
+			// New in CommentPress MU 1.0.1 - are we missing the cpmu_xxxx option?
 			if ( ! $this->option_exists( 'cpmu_xxxx' ) ) {
 
 				// get choice
@@ -798,7 +798,7 @@ class Commentpress_Multisite_Admin {
 
 		}
 
-		// TODO: checking for special pages seems a fragile way to test for CP
+		// TODO: checking for special pages seems a fragile way to test for CommentPress
 
 		// do we have CommentPress Core options?
 		if ( get_option( 'commentpress_options', false ) ) {
@@ -858,13 +858,13 @@ class Commentpress_Multisite_Admin {
 		//add_action( 'admin_print_styles-' . $this->options_page, array( $this, 'admin_css' ) );
 		//add_action( 'admin_head-' . $this->options_page, array( $this, 'admin_head' ), 50 );
 
-		// test if we have a existing pre-3.4 Commentpress instance
+		// test if we have a existing pre-3.4 CommentPress instance
 		if ( commentpress_is_legacy_plugin_active() ) {
 
 			// access globals
 			global $pagenow;
 
-			// show on pages other than the CP admin page
+			// show on pages other than the CommentPress admin page
 			if (
 				$pagenow == 'options-general.php' AND
 				! empty( $_GET['page'] ) AND
@@ -914,7 +914,7 @@ class Commentpress_Multisite_Admin {
 		if ( ! current_user_can( 'manage_options' ) ) return;
 
 		// show it
-		echo '<div id="message" class="error"><p>' . __( 'CommentPress Core has detected that a previous version of Commentpress is active on this site. Please visit the <a href="options-general.php?page=commentpress_admin">Settings Page</a> to upgrade.', 'commentpress-core' ) . '</p></div>';
+		echo '<div id="message" class="error"><p>' . __( 'CommentPress Core has detected that a previous version of CommentPress is active on this site. Please visit the <a href="options-general.php?page=commentpress_admin">Settings Page</a> to upgrade.', 'commentpress-core' ) . '</p></div>';
 
 	}
 
@@ -1051,7 +1051,7 @@ class Commentpress_Multisite_Admin {
 		$label = __( 'Activate CommentPress', 'commentpress-core' );
 		$submit = __( 'Save Changes', 'commentpress-core' );
 
-		// test if we have a existing pre-3.4 Commentpress instance
+		// test if we have a existing pre-3.4 CommentPress instance
 		if ( commentpress_is_legacy_plugin_active() ) {
 
 			// override vars

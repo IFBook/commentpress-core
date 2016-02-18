@@ -172,21 +172,21 @@ Upgrades from previous versions of *CommentPress* are possible. Please follow th
 
 ### Upgrade to *CommentPress Core* ###
 
-It is recommended that you upgrade to the latest versions of WordPress as well as the latest versions of the old *Commentpress* plugins and theme before upgrading to *CommentPress Core*, but *CommentPress Core* will do its best if this is not possible. A minimum of WordPress 3.3 is required, but upgrades under WordPress 3.4+ work much better. The old *Commentpress* plugins and theme can all be found on Github:
+It is recommended that you upgrade to the latest versions of WordPress as well as the latest versions of the old *CommentPress* plugins and theme before upgrading to *CommentPress Core*, but *CommentPress Core* will do its best if this is not possible. A minimum of WordPress 3.3 is required, but upgrades under WordPress 3.4+ work much better. The old *CommentPress* plugins and theme can all be found on Github:
 
-1. Get the latest [Commentpress Plugin](https://github.com/IFBook/CommentPressPlugin)
-2. Get the latest [Commentpress for Multisite](https://github.com/IFBook/CommentPressMultisite)
-3. Get the latest [Commentpress Ajaxified](https://github.com/IFBook/CommentPressAjaxified)
-4. Get the latest [Commentpress Theme](https://github.com/IFBook/CommentPressTheme)
+1. Get the latest [CommentPress Plugin](https://github.com/IFBook/CommentPressPlugin)
+2. Get the latest [CommentPress for Multisite](https://github.com/IFBook/CommentPressMultisite)
+3. Get the latest [CommentPress Ajaxified](https://github.com/IFBook/CommentPressAjaxified)
+4. Get the latest [CommentPress Theme](https://github.com/IFBook/CommentPressTheme)
 
 
 ### Upgrade to *CommentPress Core* in WordPress Standalone ###
 
 1. Activate *CommentPress Core* plugin
-2. *CommentPress Core* will try and deactivate the *Commentpress Ajaxified* plugin. Deactivate it if it is still active.
-3. *CommentPress Core* will try and deactivate the *Commentpress* plugin. Deactivate it if it is still active.
-4. Delete *Commentpress Ajaxified* plugin
-5. Delete *Commentpress* plugin
+2. *CommentPress Core* will try and deactivate the *CommentPress Ajaxified* plugin. Deactivate it if it is still active.
+3. *CommentPress Core* will try and deactivate the *CommentPress* plugin. Deactivate it if it is still active.
+4. Delete *CommentPress Ajaxified* plugin
+5. Delete *CommentPress* plugin
 
 
 ### Upgrade to *CommentPress Core* in WordPress Multisite (NOT network-activated) ###
@@ -194,13 +194,13 @@ It is recommended that you upgrade to the latest versions of WordPress as well a
 On each site:
 
 1. Activate *CommentPress Core* plugin
-2. *CommentPress Core* will try and deactivate the *Commentpress Ajaxified* plugin. Deactivate it if it is still active.
-3. *CommentPress Core* will try and deactivate the *Commentpress* plugin. Deactivate it if it is still active.
+2. *CommentPress Core* will try and deactivate the *CommentPress Ajaxified* plugin. Deactivate it if it is still active.
+3. *CommentPress Core* will try and deactivate the *CommentPress* plugin. Deactivate it if it is still active.
 
 When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
-1. Delete *Commentpress Ajaxified* plugin
-2. Delete *Commentpress* plugin
+1. Delete *CommentPress Ajaxified* plugin
+2. Delete *CommentPress* plugin
 
 
 ### Upgrade to *CommentPress Core* (network-activated OR with *BuddyPress Groupblogs*) ###
@@ -208,9 +208,9 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 To upgrade to *CommentPress Core*.
 
 1. Install, but DO NOT activate OR network-activate *CommentPress Core*.
-2. Network Deactivate *Commentpress for Multisite Extras*, if present
-3. Network Deactivate *Commentpress for Multisite*
-4. Network Disable all old *Commentpress* child themes
+2. Network Deactivate *CommentPress for Multisite Extras*, if present
+3. Network Deactivate *CommentPress for Multisite*
+4. Network Disable all old *CommentPress* child themes
 5. Now Network Activate *CommentPress Core*
 
 *CommentPress Core* will now be active on your main site.
@@ -218,15 +218,15 @@ To upgrade to *CommentPress Core*.
 On each site:
 
 1. Activate *CommentPress Core* plugin
-2. *CommentPress Core* will try and deactivate the *Commentpress Ajaxified* plugin. Deactivate it if it is still active.
-3. *CommentPress Core* will try and deactivate the *Commentpress* plugin. Deactivate it if it is still active.
+2. *CommentPress Core* will try and deactivate the *CommentPress Ajaxified* plugin. Deactivate it if it is still active.
+3. *CommentPress Core* will try and deactivate the *CommentPress* plugin. Deactivate it if it is still active.
 
 When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
-1. Delete *Commentpress Ajaxified* plugin
-2. Delete *Commentpress* plugin (NOT *CommentPress Core*!)
-3. Delete *Commentpress for Multisite Extras*, if present
-4. Delete *Commentpress for Multisite*
+1. Delete *CommentPress Ajaxified* plugin
+2. Delete *CommentPress* plugin (NOT *CommentPress Core*!)
+3. Delete *CommentPress for Multisite Extras*, if present
+4. Delete *CommentPress for Multisite*
 
 ---
 

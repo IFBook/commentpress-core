@@ -403,7 +403,7 @@ class Commentpress_Core {
 			// access globals
 			global $pagenow;
 
-			// show on pages other than the CP admin page
+			// show on pages other than the CommentPress admin page
 			if (
 				$pagenow == 'options-general.php'
 				AND ! empty( $_GET['page'] )
@@ -1192,7 +1192,7 @@ class Commentpress_Core {
 		// add a tab
 		$screen->add_help_tab( array(
 			'id'      => 'commentpress-base',
-			'title'   => __('CommentPress Core Help', 'commentpress-core'),
+			'title'   => __( 'CommentPress Core Help', 'commentpress-core' ),
 			'content' => $this->display->get_help(),
 		));
 
@@ -1997,7 +1997,7 @@ class Commentpress_Core {
 		// not if we're not on a page/post and especially not if there's no post object
 		if ( ! is_singular() OR ! is_object( $post ) ) return false;
 
-		// CP Special Pages special pages are not
+		// CommentPress Special Pages special pages are not
 		if ( $this->db->is_special_page() ) return false;
 
 		// BuddyPress special pages are not
@@ -2325,7 +2325,7 @@ class Commentpress_Core {
 			// if subdirectory install
 			if ( ! is_subdomain_install() ) {
 
-				// add filter for reserved commentpress special page names
+				// add filter for reserved CommentPress special page names
 				add_filter( 'subdirectory_reserved_names', array( $this, 'add_reserved_names' ) );
 
 			}
@@ -2587,10 +2587,10 @@ class Commentpress_Core {
 	 */
 	function _plugin_deactivated( $plugin, $network_wide = null ) {
 
-		// is it the old Commentpress plugin still active?
+		// is it the old CommentPress plugin still active?
 		if ( defined( 'CP_PLUGIN_FILE' ) ) {
 
-			// is it the old Commentpress plugin being deactivated?
+			// is it the old CommentPress plugin being deactivated?
 			if ( $plugin == plugin_basename( CP_PLUGIN_FILE ) ) {
 
 				// only trigger this when not network-wide

@@ -37,9 +37,7 @@ if ( ! function_exists( 'commentpress_setup' ) ):
  *
  * @return void
  */
-function commentpress_setup(
-
-) { //-->
+function commentpress_setup() {
 
 	// add title support: wp_title() is deprecated as of WP 4.4
 	add_theme_support( 'title-tag' );

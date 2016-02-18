@@ -193,7 +193,7 @@ else {
 
 		} else {
 
-			// use if blog home is not CP welcome page
+			// use if blog home is not CommentPress welcome page
 			if ( $title_id != get_option('page_on_front') ) {
 
 				// set default link name

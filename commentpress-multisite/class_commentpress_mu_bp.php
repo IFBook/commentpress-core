@@ -346,7 +346,7 @@ class Commentpress_Multisite_Buddypress {
 	 * property of the activity item (post or comment) depending on the group's
 	 * setting.
 	 *
-	 * Do we want to test if they are CP-enabled?
+	 * Do we want to test if they are CommentPress-enabled?
 	 *
 	 * @param bool $blog_public_option True if blog is public, false otherwise
 	 * @return bool $blog_public_option True if blog is public, false otherwise
@@ -426,7 +426,7 @@ class Commentpress_Multisite_Buddypress {
 		// get groupblog status
 		$is_groupblog = $this->_is_commentpress_groupblog();
 
-		// if on a CP-enabled groupblog
+		// if on a CommentPress-enabled groupblog
 		if ( $is_groupblog ) {
 
 			// which blog?
@@ -446,7 +446,7 @@ class Commentpress_Multisite_Buddypress {
 			// get group site status
 			$is_groupsite = $this->_is_commentpress_groupsite();
 
-			// if on a CP-enabled group site
+			// if on a CommentPress-enabled group site
 			if ( $is_groupsite ) {
 
 				// get group ID from POST
@@ -541,7 +541,7 @@ class Commentpress_Multisite_Buddypress {
 
 		}
 
-		// if on a CP-enabled groupblog
+		// if on a CommentPress-enabled groupblog
 		if ( $is_groupblog ) {
 
 			// allow plugins to override the name of the activity item
@@ -552,7 +552,7 @@ class Commentpress_Multisite_Buddypress {
 
 		}
 
-		// if on a CP-enabled group site
+		// if on a CommentPress-enabled group site
 		if ( $is_groupsite ) {
 
 			// respect BP Group Sites filter for the name of the activity item
@@ -564,7 +564,7 @@ class Commentpress_Multisite_Buddypress {
 
 		}
 
-		// if on a CP-enabled working paper
+		// if on a CommentPress-enabled working paper
 		if ( $is_working_paper ) {
 
 			// respect BP Working Papers filter for the name of the activity item
@@ -671,7 +671,7 @@ class Commentpress_Multisite_Buddypress {
 		// only deal with comments
 		if ( ( $activity->type != 'new_groupblog_comment' ) ) return $activity;
 
-		// only do this on CP-enabled groupblogs
+		// only do this on CommentPress-enabled groupblogs
 		if ( ( false === $this->_is_commentpress_groupblog() ) ) return $activity;
 
 		// set a meta value for the blog type of the post
@@ -701,7 +701,7 @@ class Commentpress_Multisite_Buddypress {
 		// only on new blog posts
 		if ( ( $activity->type != 'new_blog_post' ) ) return $activity;
 
-		// only on CP-enabled groupblogs
+		// only on CommentPress-enabled groupblogs
 		if ( ( false === $this->_is_commentpress_groupblog() ) ) return $activity;
 
 		// clarify data
@@ -867,7 +867,7 @@ class Commentpress_Multisite_Buddypress {
 		// only on new blog posts
 		if ( ( $activity->type != 'new_groupblog_post' ) ) return;
 
-		// only on CP-enabled groupblogs
+		// only on CommentPress-enabled groupblogs
 		if ( ( false === $this->_is_commentpress_groupblog() ) ) return;
 
 		// set a meta value for the blog type of the post
@@ -1939,7 +1939,7 @@ class Commentpress_Multisite_Buddypress {
 			$blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $cp_blog_type, $cp_blog_workflow );
 
 			// set the type as group meta info
-			// we also need to change this when the type is changed from the CP admin page
+			// we also need to change this when the type is changed from the CommentPress admin page
 			groups_update_groupmeta( $group_id, 'groupblogtype', 'groupblogtype-' . $blog_type );
 
 		}
@@ -2162,7 +2162,7 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _is_commentpress_groupblog() {
 
-		// check if this blog is a CP groupblog
+		// check if this blog is a CommentPress groupblog
 		global $commentpress_core;
 		if (
 			! is_null( $commentpress_core ) AND
@@ -2187,7 +2187,7 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _is_commentpress_groupsite() {
 
-		// check if this blog is a CP groupsite
+		// check if this blog is a CommentPress groupsite
 		if (
 			function_exists( 'bpgsites_is_groupsite' ) AND
 			bpgsites_is_groupsite( get_current_blog_id() )

@@ -236,7 +236,7 @@ class Commentpress_Core_Database {
 		// if  we have an existing comment_text_signature column
 		if ( $modified == 'y' ) {
 
-			// upgrade old Commentpress schema to new
+			// upgrade old CommentPress schema to new
 			if ( ! $this->schema_upgrade() ) {
 
 				// kill plugin activation
@@ -262,7 +262,7 @@ class Commentpress_Core_Database {
 		// test that we aren't reactivating
 		if ( ! $this->option_wp_get( 'commentpress_options' ) ) {
 
-			// test if we have a existing pre-3.4 Commentpress instance
+			// test if we have a existing pre-3.4 CommentPress instance
 			if ( commentpress_is_legacy_plugin_active() ) {
 
 				// yes: add options with existing values
@@ -299,7 +299,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Upgrade Commentpress plugin from 3.1 options to latest set.
+	 * Upgrade CommentPress plugin from 3.1 options to latest set.
 	 *
 	 * @return boolean $result
 	 */
@@ -308,7 +308,7 @@ class Commentpress_Core_Database {
 		// init return
 		$result = false;
 
-		// if we have a commentpress install (or we're forcing)
+		// if we have a CommentPress install (or we're forcing)
 		if ( $this->check_upgrade() ) {
 
 			// are we missing the commentpress_options option?
@@ -328,7 +328,7 @@ class Commentpress_Core_Database {
 			// get variables
 			extract( $_POST );
 
-			// New in CP 3.5.9 - textblock meta can be hidden
+			// New in CommentPress 3.5.9 - textblock meta can be hidden
 			if ( ! $this->option_exists( 'cp_textblock_meta' ) ) {
 
 				// get choice
@@ -339,7 +339,7 @@ class Commentpress_Core_Database {
 
 			}
 
-			// New in CP 3.5.4 - featured image capabilities
+			// New in CommentPress 3.5.4 - featured image capabilities
 			if ( ! $this->option_exists( 'cp_featured_images' ) ) {
 
 				// get choice
@@ -350,7 +350,7 @@ class Commentpress_Core_Database {
 
 			}
 
-			// Removed in CP 3.4 - do we still have the legacy cp_para_comments_enabled option?
+			// Removed in CommentPress 3.4 - do we still have the legacy cp_para_comments_enabled option?
 			if ( $this->option_exists( 'cp_para_comments_enabled' ) ) {
 
 				// delete old cp_para_comments_enabled option
@@ -358,7 +358,7 @@ class Commentpress_Core_Database {
 
 			}
 
-			// Removed in CP 3.4 - do we still have the legacy cp_minimise_sidebar option?
+			// Removed in CommentPress 3.4 - do we still have the legacy cp_minimise_sidebar option?
 			if ( $this->option_exists( 'cp_minimise_sidebar' ) ) {
 
 				// delete old cp_minimise_sidebar option
@@ -366,7 +366,7 @@ class Commentpress_Core_Database {
 
 			}
 
-			// New in CP 3.4 - has AJAX "live" comment refreshing been migrated?
+			// New in CommentPress 3.4 - has AJAX "live" comment refreshing been migrated?
 			if ( ! $this->option_exists( 'cp_para_comments_live' ) ) {
 
 				// "live" comment refreshing, off by default
@@ -374,7 +374,7 @@ class Commentpress_Core_Database {
 
 			}
 
-			// New in CP 3.3.3 - changed the way the welcome page works
+			// New in CommentPress 3.3.3 - changed the way the welcome page works
 			if ( $this->option_exists( 'cp_special_pages' ) ) {
 
 				// do we have the cp_welcome_page option?
@@ -401,7 +401,7 @@ class Commentpress_Core_Database {
 
 			}
 
-			// New in CP 3.3.3 - are we missing the cp_sidebar_default option?
+			// New in CommentPress 3.3.3 - are we missing the cp_sidebar_default option?
 			if ( ! $this->option_exists( 'cp_sidebar_default' ) ) {
 
 				// does the current theme need this option?
@@ -422,7 +422,7 @@ class Commentpress_Core_Database {
 
 			}
 
-			// New in CP 3.3.2 - are we missing the cp_page_meta_visibility option?
+			// New in CommentPress 3.3.2 - are we missing the cp_page_meta_visibility option?
 			if ( ! $this->option_exists( 'cp_page_meta_visibility' ) ) {
 
 				// get choice
@@ -433,7 +433,7 @@ class Commentpress_Core_Database {
 
 			}
 
-			// New in CP 3.3.1 - are we missing the cp_blog_workflow option?
+			// New in CommentPress 3.3.1 - are we missing the cp_blog_workflow option?
 			if ( ! $this->option_exists( 'cp_blog_workflow' ) ) {
 
 				// get choice
@@ -444,7 +444,7 @@ class Commentpress_Core_Database {
 
 			}
 
-			// New in CP 3.3.1 - are we missing the cp_blog_type option?
+			// New in CommentPress 3.3.1 - are we missing the cp_blog_type option?
 			if ( ! $this->option_exists( 'cp_blog_type' ) ) {
 
 				// get choice
@@ -455,7 +455,7 @@ class Commentpress_Core_Database {
 
 			}
 
-			// New in CP 3.3 - are we missing the cp_show_extended_toc option?
+			// New in CommentPress 3.3 - are we missing the cp_show_extended_toc option?
 			if ( ! $this->option_exists( 'cp_show_extended_toc' ) ) {
 
 				// get choice
@@ -726,7 +726,7 @@ class Commentpress_Core_Database {
 		// get installed version cast as string
 		$version = (string) $this->option_wp_get( 'commentpress_version' );
 
-		// if we have a commentpress install and it's lower than this one
+		// if we have a CommentPress install and it's lower than this one
 		if ( $version !== false AND version_compare( COMMENTPRESS_VERSION, $version, '>' ) ) {
 
 			// check whether any options need to be shown
@@ -1262,7 +1262,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * When a page is saved, this also saves the CP options.
+	 * When a page is saved, this also saves the CommentPress options.
 	 *
 	 * @param object $post_obj The post object
 	 * @return void
@@ -1287,7 +1287,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * When a page is saved, this also saves the CP options.
+	 * When a page is saved, this also saves the CommentPress options.
 	 *
 	 * @param object $post_obj The post object
 	 * @return void
@@ -1571,7 +1571,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * When a post is saved, this also saves the CP options.
+	 * When a post is saved, this also saves the CommentPress options.
 	 *
 	 * @param object $post_obj The post object
 	 * @return void
@@ -1943,7 +1943,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * When a page is deleted, this makes sure that the CP options are synced.
+	 * When a page is deleted, this makes sure that the CommentPress options are synced.
 	 *
 	 * @param object $post_id The post ID
 	 * @return void
@@ -2791,7 +2791,7 @@ class Commentpress_Core_Database {
 
 		}
 
-		// check CP option
+		// check CommentPress option
 		if (
 			$this->option_exists( 'cp_comment_editor' ) AND
 			$this->option_get( 'cp_comment_editor' ) != '1'
@@ -2983,7 +2983,7 @@ class Commentpress_Core_Database {
 		// do we have a user agent?
 		if ( isset( $_SERVER["HTTP_USER_AGENT"] ) ) {
 
-			// the old Commentpress also includes Mobile_Detect
+			// the old CommentPress also includes Mobile_Detect
 			if ( ! class_exists( 'Mobile_Detect' ) ) {
 
 				// use code from http://code.google.com/p/php-mobile-detect/
@@ -3593,7 +3593,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Cancels comment paging because CP will not work with comment paging.
+	 * Cancels comment paging because CommentPress will not work with comment paging.
 	 *
 	 * @return void
 	 */
@@ -3971,7 +3971,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			// did we get it?
 			if ( is_object( $commentpress_obj ) ) {
 
-				// now delete the old Commentpress options
+				// now delete the old CommentPress options
 				$commentpress_obj->db->option_delete( 'cp_special_pages' );
 				$commentpress_obj->db->option_delete( 'cp_blog_page' );
 				$commentpress_obj->db->option_delete( 'cp_blog_archive_page' );
@@ -4067,7 +4067,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			// get header background image
 			if ( isset( $theme_mods['header_image'] ) ) {
 
-				// is it a Commentpress one?
+				// is it a CommentPress one?
 				if ( strstr( $theme_mods['header_image'], 'style/images/header/caves.jpg' ) !== false ) {
 
 					// point it at the equivalent new version
@@ -4098,14 +4098,14 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		}
 
 		// ---------------------------------------------------------------------
-		// deactivate old Commentpress and Commentpress Ajaxified
+		// deactivate old CommentPress and CommentPress Ajaxified
 		// ---------------------------------------------------------------------
 
-		// get old Commentpress Ajaxified
+		// get old CommentPress Ajaxified
 		$cpajax_old = commentpress_find_plugin_by_name( 'Commentpress Ajaxified' );
 		if ( $cpajax_old AND is_plugin_active( $cpajax_old ) ) { deactivate_plugins( $cpajax_old ); }
 
-		// get old Commentpress
+		// get old CommentPress
 		$cp_old = commentpress_find_plugin_by_name( 'Commentpress' );
 		if ( $cp_old AND is_plugin_active( $cp_old ) ) { deactivate_plugins( $cp_old ); }
 
@@ -4114,7 +4114,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Upgrade Commentpress options to array (only for pre-CP3.2 upgrades).
+	 * Upgrade CommentPress options to array (only for pre-CommentPress 3.2 upgrades).
 	 *
 	 * @return void
 	 */
@@ -4153,7 +4153,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Delete all legacy Commentpress options.
+	 * Delete all legacy CommentPress options.
 	 *
 	 * @return void
 	 */

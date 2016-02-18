@@ -587,7 +587,7 @@ function commentpress_get_body_classes( $raw = false ) {
 
 		}
 
-		// is it a CP special page?
+		// is it a CommentPress special page?
 		if ( $commentpress_core->db->is_special_page() ) {
 
 			// add BuddyPress page class

@@ -454,7 +454,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 		// override CommentPress "Title Page"
 		add_filter( 'cp_nav_title_page_title', array( $this, 'filter_nav_title_page_title' ), 25 );
 
-		// override CP title of "view document" button in blog lists
+		// override CommentPress title of "view document" button in blog lists
 		add_filter( 'cp_get_blogs_visit_groupblog_button', array( $this, 'get_blogs_visit_blog_button' ), 25, 1 );
 
 		// filter bp-groupblog defaults

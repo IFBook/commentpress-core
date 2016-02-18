@@ -10,7 +10,7 @@ Text Domain: commentpress-core
 Domain Path: /languages
 --------------------------------------------------------------------------------
 Special thanks to:
-Eddie Tejeda @ http://www.visudo.com for Commentpress 2.0
+Eddie Tejeda @ http://www.visudo.com for CommentPress 2.0
 Mark James for the icons: http://www.famfamfam.com/lab/icons/silk/
 --------------------------------------------------------------------------------
 */
@@ -332,7 +332,7 @@ function commentpress_find_plugin_by_name( $plugin_name = '' ) {
 
 
 /**
- * Test if the old pre-3.4 Commentpress plugin is active.
+ * Test if the old pre-3.4 CommentPress plugin is active.
  *
  * @since 3.4
  *
@@ -346,7 +346,7 @@ function commentpress_is_legacy_plugin_active() {
 	// get old options
 	$old = get_option( 'cp_options', array() );
 
-	// test if we have a existing pre-3.4 Commentpress instance
+	// test if we have a existing pre-3.4 CommentPress instance
 	if ( is_array( $old ) AND count( $old ) > 0 ) {
 
 		// if we have "special pages", then the plugin must be active on this blog

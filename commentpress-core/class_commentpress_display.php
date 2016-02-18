@@ -1288,7 +1288,7 @@ HELPTEXT;
 
 		/**
 		 * Moved mobile checks to class_commentpress_db.php so it only loads as
-		 * needed and so that it loads *after* the old Commentpress loads it.
+		 * needed and so that it loads *after* the old CommentPress loads it.
 		 */
 
 	}
