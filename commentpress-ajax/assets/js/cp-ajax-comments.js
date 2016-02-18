@@ -1,12 +1,13 @@
 /*
 ================================================================================
-CommentPress AJAX Comment Submission
+CommentPress Core AJAX Comment Submission
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
 NOTES
 
-This script enables AJAX comment posting when the CommentPress theme is active.
+This script enables AJAX comment posting when a CommentPress Core compatible
+theme is active.
 
 Based loosely on the 'Ajax Comment Posting' WordPress plugin (version 2.0)
 
@@ -23,7 +24,7 @@ CommentPress.ajax = {};
 
 
 /**
- * Create CommentPress AJAX comments class
+ * Create CommentPress Core AJAX comments class
  */
 CommentPress.ajax.comments = new function() {
 
@@ -55,7 +56,7 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Initialise CommentPress AJAX.
+	 * Initialise CommentPress Core AJAX.
 	 *
 	 * This method should only be called once.
 	 *
@@ -125,7 +126,7 @@ CommentPress.ajax.comments = new function() {
 	this.listeners = function() {
 
 		/**
-		 * Hook into the CommentPress theme "document ready" trigger
+		 * Hook into the CommentPress Core theme "document ready" trigger
 		 *
 		 * @return void
 		 */
@@ -151,7 +152,7 @@ CommentPress.ajax.comments = new function() {
 		 */
 		$( document ).on( 'fee-after-save', function( event ) {
 
-			// re-enable CommentPress AJAX clicks
+			// re-enable CommentPress Core AJAX clicks
 			me.reassign_comments();
 
 			// compatibility with Featured Comments
@@ -167,7 +168,7 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Reset CommentPress AJAX
+	 * Reset CommentPress Core AJAX
 	 *
 	 * @return void
 	 */
@@ -1210,7 +1211,7 @@ CommentPress.ajax.comments = new function() {
 
 
 
-}; // end CommentPress AJAX comments class
+}; // end CommentPress Core AJAX comments class
 
 
 

@@ -127,7 +127,7 @@ add_action( 'after_setup_theme', 'commentpress_setup' );
 
 if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ):
 /**
- * Add CommentPress front-end styles.
+ * Add CommentPress Core front-end styles.
  *
  * @since 3.0
  *
@@ -236,7 +236,7 @@ add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_scripts_and_styles', 100
 
 if ( ! function_exists( 'commentpress_enqueue_print_styles' ) ):
 /**
- * Add CommentPress print stylesheet.
+ * Add CommentPress Core print stylesheet.
  *
  * @since 3.0
  *

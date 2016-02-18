@@ -109,7 +109,7 @@ class Commentpress_Multisite_Admin {
 		// init return
 		$result = false;
 
-		// if we have a CommentPress install (or we're forcing)
+		// if we have a CommentPress Core install (or we're forcing)
 		if ( $this->check_upgrade() ) {
 
 			/*
@@ -123,7 +123,7 @@ class Commentpress_Multisite_Admin {
 			// get variables
 			extract( $_POST );
 
-			// New in CommentPress MU 1.0.1 - are we missing the cpmu_xxxx option?
+			// New in CommentPress Core MU 1.0.1 - are we missing the cpmu_xxxx option?
 			if ( ! $this->option_exists( 'cpmu_xxxx' ) ) {
 
 				// get choice
@@ -231,7 +231,7 @@ class Commentpress_Multisite_Admin {
 		// store options array
 		add_site_option( 'cpmu_options', $this->cpmu_options );
 
-		// store CommentPress Multisite version
+		// store CommentPress Core Multisite version
 		add_site_option( 'cpmu_version', COMMENTPRESS_MU_PLUGIN_VERSION );
 
 	}
@@ -245,10 +245,10 @@ class Commentpress_Multisite_Admin {
 	 */
 	public function options_delete() {
 
-		// delete CommentPress Multisite version
+		// delete CommentPress Core Multisite version
 		delete_site_option( 'cpmu_version' );
 
-		// delete CommentPress Multisite options
+		// delete CommentPress Core Multisite options
 		delete_site_option( 'cpmu_options' );
 
 	}
@@ -279,7 +279,7 @@ class Commentpress_Multisite_Admin {
 			// get variables
 			extract( $_POST );
 
-			// did we ask to upgrade CommentPress Multisite?
+			// did we ask to upgrade CommentPress Core Multisite?
 			if ( $cpmu_upgrade == '1' ) {
 
 				// do upgrade
@@ -774,10 +774,10 @@ class Commentpress_Multisite_Admin {
 
 
 	/**
-	 * Check if blog is CommentPress-enabled.
+	 * Check if blog is CommentPress Core-enabled.
 	 *
 	 * @param int $blog_id The ID of the blog to check
-	 * @return bool $core_active True if CommentPress-enabled, false otherwise
+	 * @return bool $core_active True if CommentPress Core-enabled, false otherwise
 	 */
 	public function is_commentpress( $blog_id = 0 ) {
 
@@ -798,7 +798,7 @@ class Commentpress_Multisite_Admin {
 
 		}
 
-		// TODO: checking for special pages seems a fragile way to test for CommentPress
+		// TODO: checking for special pages seems a fragile way to test for CommentPress Core
 
 		// do we have CommentPress Core options?
 		if ( get_option( 'commentpress_options', false ) ) {
@@ -864,7 +864,7 @@ class Commentpress_Multisite_Admin {
 			// access globals
 			global $pagenow;
 
-			// show on pages other than the CommentPress admin page
+			// show on pages other than the CommentPress Core admin page
 			if (
 				$pagenow == 'options-general.php' AND
 				! empty( $_GET['page'] ) AND
@@ -968,7 +968,7 @@ class Commentpress_Multisite_Admin {
 			if ( ! is_admin() ) {
 
 				// init upgrade
-				//die( 'CommentPress Multisite upgrade required.' );
+				//die( 'CommentPress Core Multisite upgrade required.' );
 
 			}
 

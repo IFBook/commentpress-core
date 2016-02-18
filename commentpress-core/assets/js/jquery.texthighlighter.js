@@ -21,7 +21,7 @@ CommentPress.texthighlighter = {};
 
 
 /**
- * Create CommentPress texthighlighter settings class
+ * Create CommentPress Core texthighlighter settings class
  */
 CommentPress.texthighlighter.utilities = new function() {
 
@@ -298,7 +298,7 @@ CommentPress.texthighlighter.utilities = new function() {
 
 
 /**
- * Create CommentPress texthighlighter textblocks class
+ * Create CommentPress Core texthighlighter textblocks class
  */
 CommentPress.texthighlighter.textblocks = new function() {
 
@@ -1150,7 +1150,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 
 
 /**
- * Create CommentPress texthighlighter commentform class
+ * Create CommentPress Core texthighlighter commentform class
  */
 CommentPress.texthighlighter.commentform = new function() {
 
@@ -1582,7 +1582,7 @@ CommentPress.texthighlighter.commentform = new function() {
 
 
 /**
- * Create CommentPress texthighlighter comments class
+ * Create CommentPress Core texthighlighter comments class
  */
 CommentPress.texthighlighter.comments = new function() {
 
@@ -2210,7 +2210,7 @@ jQuery(document).ready(function($) {
 	);
 
 	/**
-	 * Hook into CommentPress AJAX new comment added and animation finished
+	 * Hook into CommentPress Core AJAX new comment added and animation finished
 	 *
 	 * @param object event The event (unused)
 	 * @param int comment_id The new comment ID
@@ -2227,7 +2227,7 @@ jQuery(document).ready(function($) {
 	);
 
 	/**
-	 * Hook into CommentPress AJAX new comment added
+	 * Hook into CommentPress Core AJAX new comment added
 	 *
 	 * @param object event The event (unused)
 	 * @param int comment_id The new comment ID
@@ -2262,7 +2262,7 @@ jQuery(document).ready(function($) {
 	);
 
 	/**
-	 * Hook into CommentPress clicks on items whose events do not bubble.
+	 * Hook into CommentPress Core clicks on items whose events do not bubble.
 	 *
 	 * We need to receive callbacks from these clicks to clear the active selection
 	 *
@@ -2296,7 +2296,7 @@ jQuery(document).ready(function($) {
 	);
 
 	/**
-	 * Hook into CommentPress clicks on items whose events do not bubble.
+	 * Hook into CommentPress Core clicks on items whose events do not bubble.
 	 *
 	 * We need to receive callbacks from these clicks to clear the active selection
 	 *

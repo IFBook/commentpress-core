@@ -1,12 +1,12 @@
 <?php /*
 ================================================================================
-CommentPress User Links Template
+CommentPress Default User Links Template
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
 NOTES
 
-User links template for CommentPress
+User links template for CommentPress Core
 
 --------------------------------------------------------------------------------
 */

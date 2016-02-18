@@ -346,7 +346,7 @@ class Commentpress_Multisite_Buddypress {
 	 * property of the activity item (post or comment) depending on the group's
 	 * setting.
 	 *
-	 * Do we want to test if they are CommentPress-enabled?
+	 * Do we want to test if they are CommentPress Core-enabled?
 	 *
 	 * @param bool $blog_public_option True if blog is public, false otherwise
 	 * @return bool $blog_public_option True if blog is public, false otherwise
@@ -381,8 +381,9 @@ class Commentpress_Multisite_Buddypress {
 
 	/**
 	 * Disable comment sync because parent activity items may not be in the same
-	 * group as the comment. Furthermore, CommentPress comments should be read in
-	 * context rather than appearing as if globally attached to the post or page.
+	 * group as the comment. Furthermore, CommentPress Core comments should be
+	 * read in context rather than appearing as if globally attached to the post
+	 * or page.
 	 *
 	 * @param bool $is_disabled The BuddyPress setting that determines blogforum sync
 	 * @return bool $is_disabled The modified value that determines blogforum sync
@@ -395,7 +396,7 @@ class Commentpress_Multisite_Buddypress {
 		// get current blog ID
 		$blog_id = get_current_blog_id();
 
-		// if it's CommentPress-enabled, disable sync
+		// if it's CommentPress Core-enabled, disable sync
 		if ( $this->db->is_commentpress( $blog_id ) ) return 1;
 
 		// pass through
@@ -426,7 +427,7 @@ class Commentpress_Multisite_Buddypress {
 		// get groupblog status
 		$is_groupblog = $this->_is_commentpress_groupblog();
 
-		// if on a CommentPress-enabled groupblog
+		// if on a CommentPress Core-enabled groupblog
 		if ( $is_groupblog ) {
 
 			// which blog?
@@ -446,7 +447,7 @@ class Commentpress_Multisite_Buddypress {
 			// get group site status
 			$is_groupsite = $this->_is_commentpress_groupsite();
 
-			// if on a CommentPress-enabled group site
+			// if on a CommentPress Core-enabled group site
 			if ( $is_groupsite ) {
 
 				// get group ID from POST
@@ -541,7 +542,7 @@ class Commentpress_Multisite_Buddypress {
 
 		}
 
-		// if on a CommentPress-enabled groupblog
+		// if on a CommentPress Core-enabled groupblog
 		if ( $is_groupblog ) {
 
 			// allow plugins to override the name of the activity item
@@ -552,7 +553,7 @@ class Commentpress_Multisite_Buddypress {
 
 		}
 
-		// if on a CommentPress-enabled group site
+		// if on a CommentPress Core-enabled group site
 		if ( $is_groupsite ) {
 
 			// respect BP Group Sites filter for the name of the activity item
@@ -564,7 +565,7 @@ class Commentpress_Multisite_Buddypress {
 
 		}
 
-		// if on a CommentPress-enabled working paper
+		// if on a CommentPress Core-enabled working paper
 		if ( $is_working_paper ) {
 
 			// respect BP Working Papers filter for the name of the activity item
@@ -671,7 +672,7 @@ class Commentpress_Multisite_Buddypress {
 		// only deal with comments
 		if ( ( $activity->type != 'new_groupblog_comment' ) ) return $activity;
 
-		// only do this on CommentPress-enabled groupblogs
+		// only do this on CommentPress Core-enabled groupblogs
 		if ( ( false === $this->_is_commentpress_groupblog() ) ) return $activity;
 
 		// set a meta value for the blog type of the post
@@ -701,7 +702,7 @@ class Commentpress_Multisite_Buddypress {
 		// only on new blog posts
 		if ( ( $activity->type != 'new_blog_post' ) ) return $activity;
 
-		// only on CommentPress-enabled groupblogs
+		// only on CommentPress Core-enabled groupblogs
 		if ( ( false === $this->_is_commentpress_groupblog() ) ) return $activity;
 
 		// clarify data
@@ -867,7 +868,7 @@ class Commentpress_Multisite_Buddypress {
 		// only on new blog posts
 		if ( ( $activity->type != 'new_groupblog_post' ) ) return;
 
-		// only on CommentPress-enabled groupblogs
+		// only on CommentPress Core-enabled groupblogs
 		if ( ( false === $this->_is_commentpress_groupblog() ) ) return;
 
 		// set a meta value for the blog type of the post
@@ -882,10 +883,10 @@ class Commentpress_Multisite_Buddypress {
 
 
 	/**
-	 * Check if a group has a CommentPress-enabled groupblog.
+	 * Check if a group has a CommentPress Core-enabled groupblog.
 	 *
 	 * @param int $group_id The numeric ID of the BuddyPress group
-	 * @return boolean True if group has CommentPress groupblog, false otherwise
+	 * @return boolean True if group has CommentPress Core groupblog, false otherwise
 	 */
 	public function group_has_commentpress_groupblog( $group_id = null ) {
 
@@ -1073,7 +1074,7 @@ class Commentpress_Multisite_Buddypress {
 
 
 	/**
-	 * Override CommentPress "Title Page".
+	 * Override CommentPress Core "Title Page".
 	 *
 	 * @param str $title The existing title of a "blog"
 	 * @return str $title The modified title of a "blog"
@@ -1208,7 +1209,7 @@ class Commentpress_Multisite_Buddypress {
 				$button['link_title'] = $label;
 				break;
 
-			// CommentPress sub-site
+			// CommentPress Core sub-site
 			case 'commentpress':
 				$label = __( 'View Document', 'commentpress-core' );
 				$button['link_text'] = apply_filters( 'cp_get_blogs_visit_blog_button', $label );
@@ -1222,7 +1223,7 @@ class Commentpress_Multisite_Buddypress {
 				$button['link_title'] = $label;
 				break;
 
-			// CommentPress sub-site
+			// CommentPress Core sub-site
 			case 'commentpress-groupblog':
 				$label = __( 'View Document', 'commentpress-core' );
 				$button['link_text'] = apply_filters( 'cp_get_blogs_visit_groupblog_button', $label );
@@ -1532,7 +1533,7 @@ class Commentpress_Multisite_Buddypress {
 		add_filter( 'bp_groupblog_subnav_item_name', array( $this, 'filter_blog_name' ), 20 );
 		add_filter( 'bp_groupblog_subnav_item_slug', array( $this, 'filter_blog_slug' ), 20 );
 
-		// override CommentPress "Title Page"
+		// override CommentPress Core "Title Page"
 		add_filter( 'cp_nav_title_page_title', array( $this, 'filter_nav_title_page_title' ), 20 );
 
 		// override the name of the button on the BuddyPress "blogs" screen
@@ -1544,7 +1545,7 @@ class Commentpress_Multisite_Buddypress {
 		//add_filter( 'bp_has_blogs', array( $this, 'remove_groupblog_from_loop' ), 20, 2 );
 
 		/**
-		 * Duplicated from 'class_commentpress_formatter.php' because CommentPress need
+		 * Duplicated from 'class_commentpress_formatter.php' because CommentPress Core need
 		 * not be active on the main blog, but we still need the options to appear
 		 * in the Groupblog Create screen
 		 */
@@ -1558,7 +1559,7 @@ class Commentpress_Multisite_Buddypress {
 		// ---------------------------------------------------------------------
 
 		/**
-		 * Duplicated from 'class_commentpress_workflow.php' because CommentPress need
+		 * Duplicated from 'class_commentpress_workflow.php' because CommentPress Core need
 		 * not be active on the main blog, but we still need the options to appear
 		 * in the Groupblog Create screen
 		 */
@@ -1585,7 +1586,7 @@ class Commentpress_Multisite_Buddypress {
 		// register any public styles
 		add_action( 'wp_enqueue_scripts', array( $this, 'add_frontend_styles' ), 20 );
 
-		// override CommentPress "Create New Document" text
+		// override CommentPress Core "Create New Document" text
 		add_filter( 'cp_user_links_new_site_title', array( $this, 'user_links_new_site_title' ), 21 );
 		add_filter( 'cp_site_directory_link_title', array( $this, 'user_links_new_site_title' ), 21 );
 		add_filter( 'cp_register_new_site_page_title', array( $this, 'user_links_new_site_title' ), 21 );
@@ -1629,7 +1630,7 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _groupblog_filter_options() {
 
-		// kick out if this group does not have a CommentPress groupblog
+		// kick out if this group does not have a CommentPress Core groupblog
 		if ( ! $this->group_has_commentpress_groupblog() ) return;
 
 		// remove bp-groupblog's contradictory option
@@ -1665,7 +1666,7 @@ class Commentpress_Multisite_Buddypress {
 		// implement our own post activity (with Co-Authors compatibility)
 		add_action( 'bp_activity_before_save', array( $this, 'groupblog_custom_post_activity' ), 20, 1 );
 
-		// CommentPress needs to know the sub-page for a comment, therefore:
+		// CommentPress Core needs to know the sub-page for a comment, therefore:
 
 		// drop the bp-group-sites comment activity action, if present
 		global $bp_groupsites;
@@ -1939,7 +1940,7 @@ class Commentpress_Multisite_Buddypress {
 			$blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $cp_blog_type, $cp_blog_workflow );
 
 			// set the type as group meta info
-			// we also need to change this when the type is changed from the CommentPress admin page
+			// we also need to change this when the type is changed from the CommentPress Core admin page
 			groups_update_groupmeta( $group_id, 'groupblogtype', 'groupblogtype-' . $blog_type );
 
 		}
@@ -2156,13 +2157,13 @@ class Commentpress_Multisite_Buddypress {
 	 * Utility to wrap is_groupblog().
 	 *
 	 * Note that this only tests the current blog and cannot be used to discover
-	 * if a specific blog is a CommentPress groupblog.
+	 * if a specific blog is a CommentPress Core groupblog.
 	 *
-	 * @return bool True if current blog is CommentPress-enabled, false otherwise
+	 * @return bool True if current blog is CommentPress Core-enabled, false otherwise
 	 */
 	function _is_commentpress_groupblog() {
 
-		// check if this blog is a CommentPress groupblog
+		// check if this blog is a CommentPress Core groupblog
 		global $commentpress_core;
 		if (
 			! is_null( $commentpress_core ) AND
@@ -2187,7 +2188,7 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _is_commentpress_groupsite() {
 
-		// check if this blog is a CommentPress groupsite
+		// check if this blog is a CommentPress Core groupsite
 		if (
 			function_exists( 'bpgsites_is_groupsite' ) AND
 			bpgsites_is_groupsite( get_current_blog_id() )
@@ -2319,7 +2320,7 @@ class Commentpress_Multisite_Buddypress {
 			// loop
 			foreach( $themes AS $theme ) {
 
-				// is it a CommentPress Groupblog theme?
+				// is it a CommentPress Core Groupblog theme?
 				if (
 					in_array( 'commentpress', (array) $theme['Tags'] ) AND
 					in_array( 'groupblog', (array) $theme['Tags'] )

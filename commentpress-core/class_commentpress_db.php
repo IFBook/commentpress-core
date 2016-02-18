@@ -299,7 +299,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Upgrade CommentPress plugin from 3.1 options to latest set.
+	 * Upgrade CommentPress plugin from 3.1 options to CommentPress Core set.
 	 *
 	 * @return boolean $result
 	 */
@@ -328,7 +328,7 @@ class Commentpress_Core_Database {
 			// get variables
 			extract( $_POST );
 
-			// New in CommentPress 3.5.9 - textblock meta can be hidden
+			// New in CommentPress Core 3.5.9 - textblock meta can be hidden
 			if ( ! $this->option_exists( 'cp_textblock_meta' ) ) {
 
 				// get choice
@@ -339,7 +339,7 @@ class Commentpress_Core_Database {
 
 			}
 
-			// New in CommentPress 3.5.4 - featured image capabilities
+			// New in CommentPress Core 3.5.4 - featured image capabilities
 			if ( ! $this->option_exists( 'cp_featured_images' ) ) {
 
 				// get choice
@@ -350,7 +350,7 @@ class Commentpress_Core_Database {
 
 			}
 
-			// Removed in CommentPress 3.4 - do we still have the legacy cp_para_comments_enabled option?
+			// Removed in CommentPress Core 3.4 - do we still have the legacy cp_para_comments_enabled option?
 			if ( $this->option_exists( 'cp_para_comments_enabled' ) ) {
 
 				// delete old cp_para_comments_enabled option
@@ -358,7 +358,7 @@ class Commentpress_Core_Database {
 
 			}
 
-			// Removed in CommentPress 3.4 - do we still have the legacy cp_minimise_sidebar option?
+			// Removed in CommentPress Core 3.4 - do we still have the legacy cp_minimise_sidebar option?
 			if ( $this->option_exists( 'cp_minimise_sidebar' ) ) {
 
 				// delete old cp_minimise_sidebar option
@@ -366,7 +366,7 @@ class Commentpress_Core_Database {
 
 			}
 
-			// New in CommentPress 3.4 - has AJAX "live" comment refreshing been migrated?
+			// New in CommentPress Core 3.4 - has AJAX "live" comment refreshing been migrated?
 			if ( ! $this->option_exists( 'cp_para_comments_live' ) ) {
 
 				// "live" comment refreshing, off by default
@@ -579,6 +579,7 @@ class Commentpress_Core_Database {
 
 		// --<
 		return $result;
+
 	}
 
 
@@ -726,7 +727,7 @@ class Commentpress_Core_Database {
 		// get installed version cast as string
 		$version = (string) $this->option_wp_get( 'commentpress_version' );
 
-		// if we have a CommentPress install and it's lower than this one
+		// if we have a CommentPress Core install and it's lower than this one
 		if ( $version !== false AND version_compare( COMMENTPRESS_VERSION, $version, '>' ) ) {
 
 			// check whether any options need to be shown
@@ -1262,7 +1263,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * When a page is saved, this also saves the CommentPress options.
+	 * When a page is saved, this also saves the CommentPress Core options.
 	 *
 	 * @param object $post_obj The post object
 	 * @return void
@@ -1287,7 +1288,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * When a page is saved, this also saves the CommentPress options.
+	 * When a page is saved, this also saves the CommentPress Core options.
 	 *
 	 * @param object $post_obj The post object
 	 * @return void
@@ -1569,7 +1570,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * When a post is saved, this also saves the CommentPress options.
+	 * When a post is saved, this also saves the CommentPress Core options.
 	 *
 	 * @param object $post_obj The post object
 	 * @return void
@@ -1941,7 +1942,7 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * When a page is deleted, this makes sure that the CommentPress options are synced.
+	 * When a page is deleted, this makes sure that the CommentPress Core options are synced.
 	 *
 	 * @param object $post_id The post ID
 	 * @return void
@@ -2787,7 +2788,7 @@ class Commentpress_Core_Database {
 
 		}
 
-		// check CommentPress option
+		// check CommentPress Core option
 		if (
 			$this->option_exists( 'cp_comment_editor' ) AND
 			$this->option_get( 'cp_comment_editor' ) != '1'
@@ -3589,7 +3590,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 	/**
-	 * Cancels comment paging because CommentPress will not work with comment paging.
+	 * Cancels comment paging because CommentPress Core will not work with comment paging.
 	 *
 	 * @return void
 	 */

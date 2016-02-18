@@ -62,7 +62,7 @@ global $commentpress_core;
 
 		} else {
 
-			// use if blog home is not CommentPress welcome page
+			// use if blog home is not CommentPress Core welcome page
 			if ( $title_id != get_option('page_on_front') ) {
 
 				// set default link name

@@ -1,12 +1,13 @@
 /*
 ================================================================================
-CommentPress AJAX Infinite Scroll
+CommentPress Core AJAX Infinite Scroll
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
 NOTES
 
-This script enables infinite scroll when the CommentPress theme is active.
+This script enables infinite scroll when a CommentPress Core compatible theme is
+active. Still in development.
 
 --------------------------------------------------------------------------------
 */

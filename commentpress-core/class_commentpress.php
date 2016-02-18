@@ -175,7 +175,7 @@ class Commentpress_Core {
 
 
 	/**
-	 * Utility that fires an action when CommentPress has loaded.
+	 * Utility that fires an action when CommentPress Core has loaded.
 	 *
 	 * @return void
 	 */
@@ -403,7 +403,7 @@ class Commentpress_Core {
 			// access globals
 			global $pagenow;
 
-			// show on pages other than the CommentPress admin page
+			// show on pages other than the CommentPress Core admin page
 			if (
 				$pagenow == 'options-general.php' AND
 				! empty( $_GET['page'] ) AND
@@ -1995,7 +1995,7 @@ class Commentpress_Core {
 		// not if we're not on a page/post and especially not if there's no post object
 		if ( ! is_singular() OR ! is_object( $post ) ) return false;
 
-		// CommentPress Special Pages special pages are not
+		// CommentPress Core Special Pages special pages are not
 		if ( $this->db->is_special_page() ) return false;
 
 		// BuddyPress special pages are not
@@ -2242,7 +2242,7 @@ class Commentpress_Core {
 		// access version
 		global $wp_version;
 
-		// broadcast that CommentPress is active
+		// broadcast that CommentPress Core is active
 		add_action( 'plugins_loaded', array( $this, 'broadcast' ) );
 
 		// use translation
@@ -2323,7 +2323,7 @@ class Commentpress_Core {
 			// if subdirectory install
 			if ( ! is_subdomain_install() ) {
 
-				// add filter for reserved CommentPress special page names
+				// add filter for reserved CommentPress Core special page names
 				add_filter( 'subdirectory_reserved_names', array( $this, 'add_reserved_names' ) );
 
 			}

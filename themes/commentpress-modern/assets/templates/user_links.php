@@ -6,7 +6,7 @@ AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
 NOTES
 
-User links template for CommentPress
+User links template for CommentPress Core
 
 --------------------------------------------------------------------------------
 */

@@ -6,7 +6,7 @@ AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
 NOTES
 
-Comment form template for CommentPress
+Comment form template for CommentPress Core
 
 --------------------------------------------------------------------------------
 */
@@ -139,7 +139,7 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 		// add default wp fields
 		comment_id_fields();
 
-		// is CommentPress active?
+		// is CommentPress Core active?
 		global $commentpress_core;
 		if ( is_object( $commentpress_core ) ) {
 

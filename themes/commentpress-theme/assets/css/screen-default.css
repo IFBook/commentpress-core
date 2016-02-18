@@ -3965,7 +3965,7 @@ Signup Form Styles
 --------------------------------------------------------------------------------
 */
 
-/* CommentPress theme compatibility */
+/* CommentPress Core theme compatibility */
 body.commentpress_page #cp-multisite-options h3
 {
 	color: #761D19;
@@ -4520,7 +4520,7 @@ br.dirtyLittleTrick
 
 /*
 --------------------------------------------------------------------------------
-Compatibility with CommentPress Text Highlighter
+Compatibility with CommentPress Core Text Highlighter
 --------------------------------------------------------------------------------
 */
 

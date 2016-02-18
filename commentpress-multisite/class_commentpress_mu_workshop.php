@@ -314,7 +314,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 
 
 	/**
-	 * Override CommentPress "Title Page".
+	 * Override CommentPress Core "Title Page".
 	 *
 	 * @param str $title The title of the "Groupblog Home Page" heading
 	 * @return str $title The modified title of the "Groupblog Home Page" heading
@@ -451,10 +451,10 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	 */
 	function _register_hooks() {
 
-		// override CommentPress "Title Page"
+		// override CommentPress Core "Title Page"
 		add_filter( 'cp_nav_title_page_title', array( $this, 'filter_nav_title_page_title' ), 25 );
 
-		// override CommentPress title of "view document" button in blog lists
+		// override CommentPress Core title of "view document" button in blog lists
 		add_filter( 'cp_get_blogs_visit_groupblog_button', array( $this, 'get_blogs_visit_blog_button' ), 25, 1 );
 
 		// filter bp-groupblog defaults

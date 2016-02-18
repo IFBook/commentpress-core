@@ -1,6 +1,6 @@
 <?php /*
 ================================================================================
-CommentPress AJAX Comments
+CommentPress Core AJAX Comments
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
@@ -598,7 +598,7 @@ function cpajax_infinite_scroll_load_next_page() {
 	global $commentpress_core;
 
 	// die if cp is not enabled
-	if ( is_null( $commentpress_core ) OR ! is_object( $commentpress_core ) ) { die( 'No CommentPress' ); }
+	if ( is_null( $commentpress_core ) OR ! is_object( $commentpress_core ) ) { die( 'No CommentPress Core' ); }
 
 	// init data
 	$data = '';
@@ -680,7 +680,7 @@ function cpajax_infinite_scroll_load_next_page() {
 	// because AJAX may be routed via admin or front end
 	if ( defined( 'DOING_AJAX' ) AND DOING_AJAX AND is_admin() ) {
 
-		// add CommentPress filter to the content when it's on the admin side
+		// add CommentPress Core filter to the content when it's on the admin side
 		add_filter( 'the_content', array( $commentpress_core->parser, 'the_content' ), 20 );
 
 	}

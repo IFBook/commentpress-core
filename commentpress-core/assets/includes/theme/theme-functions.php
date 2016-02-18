@@ -1,6 +1,6 @@
 <?php /*
 ================================================================================
-CommentPress Common Theme Functions
+CommentPress Core Common Theme Functions
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
@@ -89,7 +89,7 @@ endif; // commentpress_admin_header
 
 if ( ! function_exists( 'commentpress_customize_register' ) ) :
 /**
- * Implements CommentPress Theme options into Theme Customizer.
+ * Implements CommentPress Core Theme options in the Theme Customizer.
  *
  * @since 3.0
  *
@@ -586,7 +586,7 @@ function commentpress_get_body_classes( $raw = false ) {
 
 		}
 
-		// is it a CommentPress special page?
+		// is it a CommentPress Core special page?
 		if ( $commentpress_core->db->is_special_page() ) {
 
 			// add BuddyPress page class
@@ -709,7 +709,7 @@ add_filter( 'document_title_parts', 'commentpress_document_title_parts' );
 
 if ( ! function_exists( 'commentpress_document_title_separator' ) ):
 /**
- * Use the separator that CommentPress has always used.
+ * Use the separator that CommentPress Core has always used.
  *
  * @since 3.8
  *
@@ -809,8 +809,8 @@ if ( ! function_exists( 'commentpress_page_title' ) ):
 /**
  * Builds a page title, including parent page titles.
  *
- * The CommentPress Default theme displays a "cookie trail" style title for pages
- * so we need to build this by inspecting page ancestors
+ * The CommentPress Core Default theme displays a "cookie trail" style title for
+ * pages so we need to build this by inspecting page ancestors.
  *
  * @since 3.0
  *
@@ -1235,7 +1235,7 @@ endif; // commentpress_echo_post_author
 
 if ( ! function_exists( 'commentpress_format_comment' ) ):
 /**
- * Format comment on custom CommentPress comments pages.
+ * Format comment on custom CommentPress Core comments pages.
  *
  * @since 3.0
  *
@@ -4152,7 +4152,7 @@ endif; // commentpress_bp_group_css_class
 
 if ( ! function_exists( 'commentpress_prefix_bp_templates' ) ):
 /**
- * Prefixes BuddyPress pages with the div wrappers that CommentPress needs.
+ * Prefixes BuddyPress pages with the div wrappers that CommentPress Core needs.
  *
  * @since 3.3
  *
@@ -4175,7 +4175,7 @@ add_action( 'bp_before_directory_groupsites_page', 'commentpress_prefix_bp_templ
 
 if ( ! function_exists( 'commentpress_suffix_bp_templates' ) ):
 /**
- * Suffixes BuddyPress pages with the div wrappers that CommentPress needs
+ * Suffixes BuddyPress pages with the div wrappers that CommentPress Core needs.
  *
  * @since 3.3
  *
@@ -4198,7 +4198,7 @@ add_action( 'bp_after_directory_groupsites_page', 'commentpress_suffix_bp_templa
 
 if ( ! function_exists( 'commentpress_prefix_signup_template' ) ):
 /**
- * Prefixes WordPress Signup Page with the div wrappers that CommentPress needs.
+ * Prefixes WordPress Signup Page with the div wrappers that CommentPress Core needs.
  *
  * @since 3.8.5
  *
@@ -4222,7 +4222,7 @@ add_action( 'before_signup_form', 'commentpress_prefix_signup_template' );
 
 if ( ! function_exists( 'commentpress_suffix_signup_template' ) ):
 /**
- * Suffixes WordPress Signup Page with the div wrappers that CommentPress needs.
+ * Suffixes WordPress Signup Page with the div wrappers that CommentPress Core needs.
  *
  * @since 3.8.5
  *

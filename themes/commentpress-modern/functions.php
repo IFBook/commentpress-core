@@ -165,7 +165,7 @@ add_action( 'after_setup_theme', 'commentpress_setup' );
 
 if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ):
 /**
- * Add CommentPress front-end styles.
+ * Add CommentPress Core front-end styles.
  *
  * @since 3.0
  *
@@ -274,7 +274,7 @@ add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_scripts_and_styles', 995
 
 if ( ! function_exists( 'commentpress_enqueue_print_styles' ) ):
 /**
- * Add CommentPress print stylesheet.
+ * Add CommentPress Core print stylesheet.
  *
  * @since 3.0
  *
@@ -364,7 +364,7 @@ endif; // commentpress_bp_enqueue_styles
 
 if ( ! function_exists( 'commentpress_enqueue_wp_fee_js' ) ):
 /**
- * Add CommentPress WP FEE Javascript.
+ * Add CommentPress Modern WP FEE Javascript.
  *
  * @since 3.7
  *

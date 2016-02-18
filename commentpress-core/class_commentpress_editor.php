@@ -490,7 +490,7 @@ class Commentpress_Core_Editor {
 		// override if multipage
 		if ( $multipage ) $content = $pages[($page_num - 1)];
 
-		// trigger CommentPress comments collation
+		// trigger CommentPress Core comments collation
 		$content = apply_filters( 'the_content', $content );
 
 		// add move button to the comment meta
