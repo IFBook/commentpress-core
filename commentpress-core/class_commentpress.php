@@ -398,7 +398,7 @@ class Commentpress_Core {
 		$saved = $this->db->options_update();
 
 		// if upgrade required
-		if ( $this->db->check_upgrade() ) {
+		if ( $this->db->upgrade_required() ) {
 
 			// access globals
 			global $pagenow;
@@ -446,9 +446,6 @@ class Commentpress_Core {
 	 */
 	public function admin_head() {
 
-		// get admin javascript
-		echo $this->display->get_admin_js();
-
 		// there's a new screen object for help in 3.3
 		global $wp_version;
 		if ( version_compare( $wp_version, '3.2.99999', '>=' ) ) {
@@ -461,35 +458,16 @@ class Commentpress_Core {
 
 		}
 
-		// do we have a custom header bg colour?
-		if ( $this->db->option_get_header_bg() != $this->db->header_bg_colour ) {
-
-			// echo inline style
-			echo '
-
-			<style type="text/css">
-				#book_header {
-					background: #' . $this->db->option_get_header_bg() . ';
-				}
-			</style>
-
-			';
-
-		}
-
 	}
 
 
 
 	/**
-	 * Enqueue plugin options page css.
+	 * Enqueue Settings page CSS.
 	 *
 	 * @return void
 	 */
 	public function admin_css() {
-
-		// enqueue farbtastic
-		wp_enqueue_style( 'farbtastic' );
 
 		// add admin stylesheet
 		wp_enqueue_style(
@@ -505,14 +483,11 @@ class Commentpress_Core {
 
 
 	/**
-	 * Enqueue plugin options page javascript.
+	 * Enqueue Settings page Javascript.
 	 *
 	 * @return void
 	 */
 	public function admin_js() {
-
-		// enqueue farbtastic
-		wp_enqueue_script( 'farbtastic' );
 
 	}
 

@@ -110,7 +110,7 @@ class Commentpress_Multisite_Admin {
 		$result = false;
 
 		// if we have a CommentPress Core install (or we're forcing)
-		if ( $this->check_upgrade() ) {
+		if ( $this->upgrade_required() ) {
 
 			/*
 			--------------------------------------------------------------------
@@ -191,26 +191,20 @@ class Commentpress_Multisite_Admin {
 	/**
 	 * Check for plugin upgrade.
 	 *
-	 * @return boolean $result True if upgrade required, false otherwise
+	 * @return boolean True if upgrade required, false otherwise
 	 */
-	public function check_upgrade() {
-
-		// init
-		$result = false;
+	public function upgrade_required() {
 
 		// get installed version
 		$version = $this->option_wpms_get( 'cpmu_version' );
 
-		// if we have an install and it's lower than this one
+		// override if we have an install and it's lower than this one
 		if ( $version !== false AND version_compare( COMMENTPRESS_MU_PLUGIN_VERSION, $version, '>' ) ) {
-
-			// override
-			$result = true;
-
+			return true;
 		}
 
-		// --<
-		return $result;
+		// fallback
+		return false;
 	}
 
 

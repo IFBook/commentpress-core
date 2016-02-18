@@ -98,88 +98,134 @@ if ( ! function_exists( 'commentpress_customize_register' ) ) :
  */
 function commentpress_customize_register( $wp_customize ) {
 
-	// access plugin
+	// kick out if plugin not active
 	global $commentpress_core;
+	if ( ! is_object( $commentpress_core ) ) return;
+
+	// add "Site Image"
+	commentpress_customize_site_image( $wp_customize );
+
+	// add "Site Logo"
+	commentpress_customize_site_logo( $wp_customize );
+
+	// add "Header Background Colour"
+	commentpress_customize_header_bg_color( $wp_customize );
+
+}
+endif; // commentpress_customize_register
+add_action( 'customize_register', 'commentpress_customize_register' );
+
+
+
+if ( ! function_exists( 'commentpress_customize_site_image' ) ) :
+/**
+ * Implements CommentPress Core "Site Image" in the Theme Customizer.
+ *
+ * @since 3.8.5
+ *
+ * @param $wp_customize Theme Customizer object
+ * @return void
+ */
+function commentpress_customize_site_image( $wp_customize ) {
 
 	// kick out if BuddyPress Groupblog
-	if ( is_object( $commentpress_core ) AND $commentpress_core->is_groupblog() ) return;
+	global $commentpress_core;
+	if ( $commentpress_core->is_groupblog() ) return;
 
-	// do we have the WP 4.2 WP_Customize_Media_Control class?
-	if ( class_exists( 'WP_Customize_Media_Control' ) ) {
+	// kick out if we do not have the WP 4.2 WP_Customize_Media_Control class
+	if ( ! class_exists( 'WP_Customize_Media_Control' ) ) return;
+
+	/**
+	 * Customize Site Image Control class.
+	 *
+	 * This is incomplete at present, because the labels are not all overridden
+	 * the way we would like them, but it does at least allow us to save the
+	 * attachment ID of the uploaded image instead of the URL to the full size image.
+	 *
+	 * @see WP_Customize_Media_Control
+	 */
+	class WP_Customize_Site_Image_Control extends WP_Customize_Media_Control {
+
+		// properties
+		public $type = 'media';
+		public $mime_type = 'image';
+		public $button_labels = array();
 
 		/**
-		 * Customize Site Image Control class.
+		 * Constructor.
 		 *
-		 * This is incomplete at present, because the labels are not all overridden
-		 * the way we would like them, but it does at least allow us to save the
-		 * attachment ID of the uploaded image instead of the URL to the full size image.
-		 *
-		 * @see WP_Customize_Media_Control
+		 * @param WP_Customize_Manager $manager
+		 * @param string $id
+		 * @param array  $args
 		 */
-		class WP_Customize_Site_Image_Control extends WP_Customize_Media_Control {
+		public function __construct( $manager, $id, $args = array() ) {
 
-			// properties
-			public $type = 'media';
-			public $mime_type = 'image';
-			public $button_labels = array();
+			// call parent constructor
+			parent::__construct( $manager, $id, $args );
 
-			/**
-			 * Constructor.
-			 *
-			 * @param WP_Customize_Manager $manager
-			 * @param string $id
-			 * @param array  $args
-			 */
-			public function __construct( $manager, $id, $args = array() ) {
+			// allow label to be filtered
+			$site_image = apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) );
 
-				// call parent constructor
-				parent::__construct( $manager, $id, $args );
-
-				// allow label to be filtered
-				$site_image = apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) );
-
-				// set labels
-				$this->button_labels = array(
-					'select'       => sprintf( __( 'Select %s', 'commentpress-core' ), $site_image ),
-					'change'       => sprintf( __( 'Change %s', 'commentpress-core' ), $site_image ),
-					'remove'       => sprintf( __( 'Remove %s', 'commentpress-core' ), $site_image ),
-					'default'      => sprintf( __( 'Default %s', 'commentpress-core' ), $site_image ),
-					'placeholder'  => sprintf( __( 'No %s selected', 'commentpress-core' ), $site_image ),
-					'frame_title'  => sprintf( __( 'Select %s', 'commentpress-core' ), $site_image ),
-					'frame_button' => sprintf( __( 'Choose %s', 'commentpress-core' ), $site_image ),
-				);
-
-			}
+			// set labels
+			$this->button_labels = array(
+				'select'       => sprintf( __( 'Select %s', 'commentpress-core' ), $site_image ),
+				'change'       => sprintf( __( 'Change %s', 'commentpress-core' ), $site_image ),
+				'remove'       => sprintf( __( 'Remove %s', 'commentpress-core' ), $site_image ),
+				'default'      => sprintf( __( 'Default %s', 'commentpress-core' ), $site_image ),
+				'placeholder'  => sprintf( __( 'No %s selected', 'commentpress-core' ), $site_image ),
+				'frame_title'  => sprintf( __( 'Select %s', 'commentpress-core' ), $site_image ),
+				'frame_button' => sprintf( __( 'Choose %s', 'commentpress-core' ), $site_image ),
+			);
 
 		}
 
-		// register control (not needed as yet, but is if we want to fully extend)
-		//$wp_customize->register_control_type( 'WP_Customize_Site_Image_Control' );
-
-		// add customizer section title
-		$wp_customize->add_section( 'cp_site_image', array(
-			'title' => apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) ),
-			'priority' => 25,
-		) );
-
-		// add image setting
-		$wp_customize->add_setting( 'commentpress_theme_settings[cp_site_image]', array(
-			 'default' => '',
-			 'capability' => 'edit_theme_options',
-			 'type' => 'option'
-		));
-
-		// add image control
-		$wp_customize->add_control( new WP_Customize_Site_Image_Control(
-			$wp_customize, 'cp_site_image', array(
-			'label' => apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) ),
-		    'description' => apply_filters( 'commentpress_customizer_site_image_description', __( 'Choose an image to represent this site. Other plugins may use this image to illustrate this site - in multisite directory listings, for example.', 'commentpress-core' ) ),
-			'section' => 'cp_site_image',
-			'settings' => 'commentpress_theme_settings[cp_site_image]',
-			'priority'	=>	1
-		)));
-
 	}
+
+	// register control (not needed as yet, but is if we want to fully extend)
+	//$wp_customize->register_control_type( 'WP_Customize_Site_Image_Control' );
+
+	// add customizer section title
+	$wp_customize->add_section( 'cp_site_image', array(
+		'title' => apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) ),
+		'priority' => 25,
+	) );
+
+	// add image setting
+	$wp_customize->add_setting( 'commentpress_theme_settings[cp_site_image]', array(
+		 'default' => '',
+		 'capability' => 'edit_theme_options',
+		 'type' => 'option'
+	));
+
+	// add image control
+	$wp_customize->add_control( new WP_Customize_Site_Image_Control(
+		$wp_customize, 'cp_site_image', array(
+		'label' => apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) ),
+		'description' => apply_filters( 'commentpress_customizer_site_image_description', __( 'Choose an image to represent this site. Other plugins may use this image to illustrate this site - in multisite directory listings, for example.', 'commentpress-core' ) ),
+		'section' => 'cp_site_image',
+		'settings' => 'commentpress_theme_settings[cp_site_image]',
+		'priority'	=>	1
+	)));
+
+}
+endif; // commentpress_customize_site_image
+
+
+
+if ( ! function_exists( 'commentpress_customize_site_logo' ) ) :
+/**
+ * Implements CommentPress Core "Site Logo" in the Theme Customizer.
+ *
+ * @since 3.8.5
+ *
+ * @param $wp_customize Theme Customizer object
+ * @return void
+ */
+function commentpress_customize_site_logo( $wp_customize ) {
+
+	// kick out if BuddyPress Groupblog
+	global $commentpress_core;
+	if ( $commentpress_core->is_groupblog() ) return;
 
 	// add customizer section title
 	$wp_customize->add_section( 'cp_inline_header_image', array(
@@ -218,22 +264,41 @@ function commentpress_customize_register( $wp_customize ) {
 		'type' => 'text'
 	) );
 
+}
+endif; // commentpress_customize_site_logo
+
+
+
+if ( ! function_exists( 'commentpress_customize_header_bg_color' ) ) :
+/**
+ * Implements CommentPress Core "Header Background Colour" in the Theme Customizer.
+ *
+ * @since 3.8.5
+ *
+ * @param $wp_customize Theme Customizer object
+ * @return void
+ */
+function commentpress_customize_header_bg_color( $wp_customize ) {
+
+	global $commentpress_core;
+
 	// add color picker setting
-	$wp_customize->add_setting( 'commentpress_theme_settings[cp_header_bg_color]', array(
-		'default' => '#2c2622'
+	$wp_customize->add_setting( 'commentpress_header_bg_color', array(
+		'default' => '#' . $commentpress_core->db->header_bg_colour,
+		 //'capability' => 'edit_theme_options',
+		 //'type' => 'option',
 	) );
 
 	// add color picker control
 	$wp_customize->add_control( new WP_Customize_Color_Control(
-		$wp_customize, 'cp_header_bg_color', array(
+		$wp_customize, 'commentpress_header_bg_color', array(
 		'label' => __( 'Header Background Colour', 'commentpress-core' ),
 		'section' => 'colors',
-		'settings' => 'commentpress_theme_settings[cp_header_bg_color]',
+		'settings' => 'commentpress_header_bg_color',
 	) ) );
 
 }
-endif; // commentpress_customize_register
-add_action( 'customize_register', 'commentpress_customize_register' );
+endif; // commentpress_customize_header_bg_color
 
 
 

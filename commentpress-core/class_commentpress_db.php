@@ -217,7 +217,24 @@ class Commentpress_Core_Database {
 		$this->parent_obj = $parent_obj;
 
 		// init
-		$this->_init();
+		$this->initialise();
+
+	}
+
+
+
+	/**
+	 * Object initialisation.
+	 *
+	 * @return void
+	 */
+	function initialise() {
+
+		// load options array
+		$this->commentpress_options = $this->option_wp_get( 'commentpress_options', $this->commentpress_options );
+
+		// do immediate upgrades after the theme has loaded
+		add_action( 'after_setup_theme', array( $this, 'upgrade_immediately' ) );
 
 	}
 
@@ -299,6 +316,158 @@ class Commentpress_Core_Database {
 
 
 	/**
+	 * Reset WordPress to prior state, but retain options.
+	 *
+	 * @return void
+	 */
+	public function deactivate() {
+
+		// reset comment paging option
+		$this->_reset_comment_paging();
+
+		// restore widgets
+		$this->_reset_widgets();
+
+		// always remove special pages
+		$this->delete_special_pages();
+
+	}
+
+
+
+//##############################################################################
+
+
+
+	/**
+	 * -------------------------------------------------------------------------
+	 * Public Methods
+	 * -------------------------------------------------------------------------
+	 */
+
+
+
+	/**
+	 * Update WordPress database schema.
+	 *
+	 * @return bool $result True if successful, false otherwise
+	 */
+	public function schema_update() {
+
+		// database object
+		global $wpdb;
+
+		// include WordPress upgrade script
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+		// add the column, if not already there
+		$result = maybe_add_column(
+			$wpdb->comments,
+			'comment_signature',
+			"ALTER TABLE `$wpdb->comments` ADD `comment_signature` VARCHAR(255) NULL;"
+		);
+
+		// --<
+		return $result;
+	}
+
+
+
+	/**
+	 * Upgrade WordPress database schema.
+	 *
+	 * @return bool $result True if successful, false otherwise
+	 */
+	public function schema_upgrade() {
+
+		// database object
+		global $wpdb;
+
+		// init
+		$return = false;
+
+		// construct query
+		$query = "ALTER TABLE `$wpdb->comments` CHANGE `comment_text_signature` `comment_signature` VARCHAR(255) NULL;";
+
+		// do the query to rename the column
+		$wpdb->query( $query );
+
+		// test if we now have the correct column name
+		if ( $this->db_is_modified( 'comment_signature' ) ) {
+
+			// yes
+			$result = true;
+
+		}
+
+		// --<
+		return $result;
+	}
+
+
+
+	/**
+	 * Do we have a column in the comments table?
+	 *
+	 * @return bool $result True if modified, false otherwise
+	 */
+	public function db_is_modified( $column_name ) {
+
+		// database object
+		global $wpdb;
+
+		// init
+		$result = false;
+
+		// define query
+		$query = "DESCRIBE $wpdb->comments";
+
+		// get columns
+		$cols = $wpdb->get_results( $query );
+
+		// loop
+		foreach( $cols AS $col ) {
+
+			// is it our desired column?
+			if ( $col->Field == $column_name ) {
+
+				// we got it
+				$result = true;
+				break;
+
+			}
+
+		}
+
+		// --<
+		return $result;
+	}
+
+
+
+	/**
+	 * Check for an outdated plugin version.
+	 *
+	 * @return bool $result True if outdated, false otherwise
+	 */
+	public function version_outdated() {
+
+		// get installed version cast as string
+		$version = (string) $this->option_wp_get( 'commentpress_version' );
+
+		// override if we have a CommentPress Core install and it's lower than this one
+		if ( $version !== false AND version_compare( COMMENTPRESS_VERSION, $version, '>' ) ) {
+			return true;
+		}
+
+		// fallback
+		return false;
+
+	}
+
+
+
+	/**
 	 * Upgrade CommentPress plugin from 3.1 options to CommentPress Core set.
 	 *
 	 * @return boolean $result
@@ -309,7 +478,7 @@ class Commentpress_Core_Database {
 		$result = false;
 
 		// if we have a CommentPress install (or we're forcing)
-		if ( $this->check_upgrade() ) {
+		if ( $this->upgrade_required() ) {
 
 			// are we missing the commentpress_options option?
 			if ( ! $this->option_wp_exists( 'commentpress_options' ) ) {
@@ -505,7 +674,7 @@ class Commentpress_Core_Database {
 				// get choice
 				$choice = esc_sql( $cp_header_bg_colour );
 
-				// strip our rgb #
+				// strip our hex # char
 				if ( stristr( $choice, '#' ) ) {
 					$choice = substr( $choice, 1 );
 				}
@@ -585,163 +754,22 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Reset WordPress to prior state, but retain options.
-	 *
-	 * @return void
-	 */
-	public function deactivate() {
-
-		// reset comment paging option
-		$this->_reset_comment_paging();
-
-		// restore widgets
-		$this->_reset_widgets();
-
-		// always remove special pages
-		$this->delete_special_pages();
-
-	}
-
-
-
-//##############################################################################
-
-
-
-	/**
-	 * -------------------------------------------------------------------------
-	 * Public Methods
-	 * -------------------------------------------------------------------------
-	 */
-
-
-
-	/**
-	 * Update WordPress database schema.
-	 *
-	 * @return bool $result True if successful, false otherwise
-	 */
-	public function schema_update() {
-
-		// database object
-		global $wpdb;
-
-		// include WordPress upgrade script
-		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-
-		// add the column, if not already there
-		$result = maybe_add_column(
-			$wpdb->comments,
-			'comment_signature',
-			"ALTER TABLE `$wpdb->comments` ADD `comment_signature` VARCHAR(255) NULL;"
-		);
-
-		// --<
-		return $result;
-	}
-
-
-
-	/**
-	 * Upgrade WordPress database schema.
-	 *
-	 * @return bool $result True if successful, false otherwise
-	 */
-	public function schema_upgrade() {
-
-		// database object
-		global $wpdb;
-
-		// init
-		$return = false;
-
-		// construct query
-		$query = "ALTER TABLE `$wpdb->comments` CHANGE `comment_text_signature` `comment_signature` VARCHAR(255) NULL;";
-
-		// do the query to rename the column
-		$wpdb->query( $query );
-
-		// test if we now have the correct column name
-		if ( $this->db_is_modified( 'comment_signature' ) ) {
-
-			// yes
-			$result = true;
-
-		}
-
-		// --<
-		return $result;
-	}
-
-
-
-	/**
-	 * Do we have a column in the comments table?
-	 *
-	 * @return bool $result True if modified, false otherwise
-	 */
-	public function db_is_modified( $column_name ) {
-
-		// database object
-		global $wpdb;
-
-		// init
-		$result = false;
-
-		// define query
-		$query = "DESCRIBE $wpdb->comments";
-
-		// get columns
-		$cols = $wpdb->get_results( $query );
-
-		// loop
-		foreach( $cols AS $col ) {
-
-			// is it our desired column?
-			if ( $col->Field == $column_name ) {
-
-				// we got it
-				$result = true;
-				break;
-
-			}
-
-		}
-
-		// --<
-		return $result;
-	}
-
-
-
-	/**
 	 * Check for plugin upgrade.
 	 *
 	 * @return bool $result True if required, false otherwise
 	 */
-	public function check_upgrade() {
+	public function upgrade_required() {
 
-		// init
-		$result = false;
+		// bail if we do not have an outdated version
+		if ( ! $this->version_outdated() ) return false;
 
-		// get installed version cast as string
-		$version = (string) $this->option_wp_get( 'commentpress_version' );
-
-		// if we have a CommentPress Core install and it's lower than this one
-		if ( $version !== false AND version_compare( COMMENTPRESS_VERSION, $version, '>' ) ) {
-
-			// check whether any options need to be shown
-			if ( $this->check_upgrade_options() ) {
-
-				// override
-				$result = true;
-
-			}
-
+		// override if any options need to be shown
+		if ( $this->upgrade_options_check() ) {
+			return true;
 		}
 
-		// --<
-		return $result;
+		// fallback
+		return false;
 
 	}
 
@@ -752,7 +780,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @return bool $result True if upgrade needed, false otherwise
 	 */
-	public function check_upgrade_options() {
+	public function upgrade_options_check() {
 
 		// do we have the option to choose to hide textblock meta (new in 3.5.9)?
 		if ( ! $this->option_exists( 'cp_textblock_meta' ) ) return true;
@@ -795,6 +823,69 @@ class Commentpress_Core_Database {
 
 		// --<
 		return false;
+
+	}
+
+
+
+	/**
+	 * Perform any plugin upgrades that do not have a setting on page load.
+	 *
+	 * Unlike `upgrade()` (which is only called when someone visits the
+	 * CommentPress Core settings page), this method is called on every page
+	 * load so that upgrades are performed immediately if required.
+	 *
+	 * @return void
+	 */
+	public function upgrade_immediately() {
+
+		// bail if we do not have an outdated version
+		if ( ! $this->version_outdated() ) return;
+
+		// maybe upgrade theme mods
+		$this->upgrade_theme_mods();
+
+	}
+
+
+
+	/**
+	 * Check for theme mods added in this plugin upgrade.
+	 *
+	 * @return bool $result True if upgraded, false otherwise
+	 */
+	public function upgrade_theme_mods() {
+
+		// get header background colour set via customizer (new in 3.8.5)
+		$colour = get_theme_mod( 'commentpress_header_bg_color', false );
+
+		// if we have no existing one
+		if ( $colour === false ) {
+
+			// set to default
+			$colour = $this->header_bg_colour;
+
+			// check for existing option
+			if ( $this->option_exists( 'cp_header_bg_colour' ) ) {
+
+				// get current value
+				$value = $this->option_get( 'cp_header_bg_colour' );
+
+				// override colour if not yet deprecated
+				if ( $value !== 'deprecated' ) {
+					$colour = $value;
+				}
+
+			}
+
+			// apply theme mod setting
+			set_theme_mod( 'commentpress_header_bg_color', '#' . $colour );
+
+			// set option to deprecated
+			$this->option_set( 'cp_header_bg_colour', 'deprecated' );
+			$this->options_save();
+
+		}
 
 	}
 
@@ -956,22 +1047,6 @@ class Commentpress_Core_Database {
 			// page meta visibility
 			$cp_page_meta_visibility = esc_sql( $cp_page_meta_visibility );
 			$this->option_set( 'cp_page_meta_visibility', $cp_page_meta_visibility );
-
-			// header background colour
-
-			// strip our rgb #
-			if ( stristr( $cp_header_bg_colour, '#' ) ) {
-				$cp_header_bg_colour = substr( $cp_header_bg_colour, 1 );
-			}
-
-			// reset to default if blank
-			if ( $cp_header_bg_colour == '' ) {
-				$cp_header_bg_colour = $this->header_bg_colour;
-			}
-
-			// save it
-			$cp_header_bg_colour = esc_sql( $cp_header_bg_colour );
-			$this->option_set( 'cp_header_bg_colour', $cp_header_bg_colour );
 
 			// save scroll speed
 			$cp_js_scroll_speed = esc_sql( $cp_js_scroll_speed );
@@ -1239,24 +1314,35 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Get default header bg colour.
+	 * Get current header background colour.
 	 *
 	 * @return str $header_bg_colour The hex value of the header
 	 */
 	public function option_get_header_bg() {
 
-		// test for option
+		// do we have one set via the Customizer?
+		$colour = get_theme_mod( 'commentpress_header_bg_color', false );
+
+		// return it if we do
+		if ( ! empty( $colour ) ) {
+			return substr( $colour, 1 );
+		}
+
+		// check if legacy option exists
 		if ( $this->option_exists( 'cp_header_bg_colour' ) ) {
 
-			// --<
-			return $this->option_get( 'cp_header_bg_colour' );
+			// get the option
+			$colour = $this->option_get( 'cp_header_bg_colour' );
 
-		} else {
-
-			// --<
-			return $this->header_bg_colour;
+			// return it if it is not yet deprecated
+			if ( $colour !== 'deprecated' ) {
+				return $colour;
+			}
 
 		}
+
+		// fallback to default
+		return $this->header_bg_colour;
 
 	}
 
@@ -3109,33 +3195,6 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Object initialisation.
-	 *
-	 * @return void
-	 */
-	function _init() {
-
-		// load options array
-		$this->commentpress_options = $this->option_wp_get( 'commentpress_options', $this->commentpress_options );
-
-		// if we don't have one
-		if ( count( $this->commentpress_options ) == 0 ) {
-
-			// if not in backend
-			if ( ! is_admin() ) {
-
-				// init upgrade
-				//die( 'CommentPress Core upgrade required.' );
-
-			}
-
-		}
-
-	}
-
-
-
-	/**
 	 * Create new post with content of existing.
 	 *
 	 * @return int $post The WordPress post object to make a copy of
@@ -3706,7 +3765,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'cp_show_extended_toc' => $this->show_extended_toc,
 			'cp_title_visibility' => $this->title_visibility,
 			'cp_page_meta_visibility' => $this->page_meta_visibility,
-			'cp_header_bg_colour' => $this->header_bg_colour,
+			'cp_header_bg_colour' => 'deprecated',
 			'cp_js_scroll_speed' => $this->js_scroll_speed,
 			'cp_min_page_width' => $this->min_page_width,
 			'cp_comment_editor' => $this->comment_editor,
@@ -3759,7 +3818,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$this->option_set( 'cp_page_meta_visibility', $this->page_meta_visibility );
 
 		// header background colour
-		$this->option_set( 'cp_header_bg_colour', $this->header_bg_colour );
+		$this->option_set( 'cp_header_bg_colour', 'deprecated' );
 
 		// js scroll speed
 		$this->option_set( 'cp_js_scroll_speed', $this->js_scroll_speed );
@@ -3919,15 +3978,13 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// init options array
 		$this->commentpress_options = array(
-
-			// basic options
 			'cp_show_posts_or_pages_in_toc' => $this->toc_content,
 			'cp_toc_chapter_is_page' => $this->toc_chapter_is_page,
 			'cp_show_subpages' => $this->show_subpages,
 			'cp_show_extended_toc' => $this->show_extended_toc,
 			'cp_title_visibility' => $this->title_visibility,
 			'cp_page_meta_visibility' => $this->page_meta_visibility,
-			'cp_header_bg_colour' => $header_bg_colour,
+			'cp_header_bg_colour' => 'deprecated',
 			'cp_js_scroll_speed' => $this->js_scroll_speed,
 			'cp_min_page_width' => $this->min_page_width,
 			'cp_comment_editor' => $this->comment_editor,
@@ -3939,7 +3996,6 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'cp_sidebar_default' => $this->sidebar_default,
 			'cp_featured_images' => $this->featured_images,
 			'cp_textblock_meta' => $this->textblock_meta,
-
 		);
 
 		// if we have special pages
@@ -4086,10 +4142,19 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			$this->_clear_widgets();
 			*/
 
+			// get current theme
+			$theme = wp_get_theme();
+
+			// get current theme slug
+			$theme_slug = $theme->get_stylesheet();
+
 			// update theme mods (will create if it doesn't exist)
-			update_option( 'theme_mods_commentpress-theme', $theme_mods );
+			update_option( 'theme_mods_' . $theme_slug, $theme_mods );
 
 		}
+
+		// update header background colour
+		set_theme_mod( 'commentpress_header_bg_color', '#' . $header_bg_colour );
 
 		// ---------------------------------------------------------------------
 		// deactivate old CommentPress and CommentPress Ajaxified

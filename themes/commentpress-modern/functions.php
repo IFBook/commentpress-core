@@ -448,12 +448,9 @@ function commentpress_header() {
 	// access plugin
 	global $commentpress_core;
 
-	// if we have the plugin enabled
+	// override if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
-
-		// override
 		$bg_colour = $commentpress_core->db->option_get_header_bg();
-
 	}
 
 	// allow overrides
@@ -467,9 +464,7 @@ function commentpress_header() {
 
 	// do we have a background-image?
 	if ( $header_image ) {
-
 		$bg_image = 'background-image: url("' . $header_image . '");';
-
 	}
 
 	// get custom text colour

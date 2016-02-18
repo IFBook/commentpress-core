@@ -149,7 +149,7 @@ class Commentpress_Core_Display {
 		// test for WP3.4
 		if ( function_exists( 'wp_get_theme' ) ) {
 
-			// get CommentPress Core theme by default, but allow overrides
+			// get WordPress default theme, but allow overrides
 			$target_theme = apply_filters(
 				'cp_restore_theme_slug',
 				WP_DEFAULT_THEME
@@ -1308,7 +1308,7 @@ HELPTEXT;
 		if ( $url_array ) { $url = $url_array[0]; }
 
 		// if we need to upgrade
-		if ( $this->db->check_upgrade() ) {
+		if ( $this->db->upgrade_required() ) {
 
 			// get upgrade options
 			$upgrade = $this->_get_upgrade();
@@ -1489,14 +1489,9 @@ HELPTEXT;
 
 		<p>' . __( 'You can set a custom background colour in <em>Appearance &#8594; Background</em>.<br />
 		You can also set a custom header image and header text colour in <em>Appearance &#8594; Header</em>.<br />
-		Below are extra options for changing how the theme looks.', 'commentpress-core' ) . '</p>
+		Below are extra options for changing how the theme functions.', 'commentpress-core' ) . '</p>
 
 		<table class="form-table">
-
-			<tr valign="top" id="cp_header_bg_colour-row">
-				<th scope="row"><label for="cp_header_bg_colour">' . __( 'Header Background Colour', 'commentpress-core' ) . '</label></th>
-				<td><input type="text" name="cp_header_bg_colour" id="cp_header_bg_colour" value="' . $this->db->option_get('cp_header_bg_colour') . '" /><span class="description hide-if-js">' . __( 'If you want to hide header text, add <strong>#blank</strong> as text colour.', 'commentpress-core' ) . '</span><input type="button" class="button hide-if-no-js" value="' . __( 'Select a Colour', 'commentpress-core' ) . '" id="pickcolor" /><div id="color-picker" style="z-index: 100; background:#eee; border:1px solid #ccc; position:absolute; display:none;"></div></td>
-			</tr>
 
 			<tr valign="top">
 				<th scope="row"><label for="cp_js_scroll_speed">' . __( 'Scroll speed', 'commentpress-core' ) . '</label></th>
@@ -1900,25 +1895,6 @@ HELPTEXT;
 
 		}
 
-		// do we have the option to set the header bg colour?
-		if ( ! $this->db->option_exists( 'cp_header_bg_colour' ) ) {
-
-			// define labels
-			$colour_label = __( 'Header Background Colour', 'commentpress-core' );
-			$colour_select_text = __( 'If you want to hide header text, add <strong>#blank</strong> as text colour.', 'commentpress-core' );
-			$colour_select_label = __( 'Select a Colour', 'commentpress-core' );
-
-			// define upgrade
-			$upgrade .= '
-			<tr valign="top" id="cp_header_bg_colour-row">
-				<th scope="row"><label for="cp_header_bg_colour">' . $colour_label . '</label></th>
-				<td><input type="text" name="cp_header_bg_colour" id="cp_header_bg_colour" value="' . $this->db->header_bg_colour . '" /><span class="description hide-if-js">' . $colour_select_text . '</span><input type="button" class="button hide-if-no-js" value="' . $colour_select_label . '" id="pickcolor" /><div id="color-picker" style="z-index: 100; background:#eee; border:1px solid #ccc; position:absolute; display:none;"></div></td>
-			</tr>
-
-			';
-
-		}
-
 		// do we have the option to set the scroll speed?
 		if ( ! $this->db->option_exists( 'cp_js_scroll_speed' ) ) {
 
@@ -2221,103 +2197,6 @@ HELPTEXT;
 
 		// --<
 		return $submit;
-
-	}
-
-
-
-	/**
-	 * Get admin javascript, copied from wp-includes/custom-header.php.
-	 *
-	 * @return void
-	 */
-	function get_admin_js() {
-
-		// print inline js
-		echo '
-		<script type="text/javascript">
-		//<![CDATA[
-			var text_objects = ["#cp_header_bg_colour-row"];
-			var farbtastic;
-			var default_color = "#' . $this->db->option_get_header_bg() . '";
-			var old_color = null;
-
-			function pickColor(color) {
-				jQuery("#cp_header_bg_colour").val(color);
-				farbtastic.setColor(color);
-			}
-
-			function toggle_text(s) {
-				return;
-				if (jQuery(s).attr("id") == "showtext" && jQuery("#cp_header_bg_colour").val() != "blank")
-					return;
-
-				if (jQuery(s).attr("id") == "hidetext" && jQuery("#cp_header_bg_colour").val() == "blank")
-					return;
-
-				if (jQuery("#cp_header_bg_colour").val() == "blank") {
-					//Show text
-					if (old_color == "#blank")
-						old_color = default_color;
-
-					jQuery( text_objects.toString() ).show();
-					jQuery("#cp_header_bg_colour").val(old_color);
-					pickColor(old_color);
-				} else {
-					//Hide text
-					jQuery( text_objects.toString() ).hide();
-					old_color = jQuery("#cp_header_bg_colour").val();
-					jQuery("#cp_header_bg_colour").val("blank");
-				}
-			}
-
-			jQuery(document).ready(function() {
-				jQuery("#pickcolor").click(function() {
-					jQuery("#color-picker").show();
-				});
-
-				jQuery('."'".'input[name="hidetext"]'."'".').click(function() {
-					toggle_text(this);
-				});
-
-				jQuery("#defaultcolor").click(function() {
-					pickColor(default_color);
-					jQuery("#cp_header_bg_colour").val(default_color)
-				});
-
-				jQuery("#cp_header_bg_colour").keyup(function() {
-					var _hex = jQuery("#cp_header_bg_colour").val();
-					var hex = _hex;
-					if ( hex[0] != "#" )
-						hex = "#" + hex;
-					hex = hex.replace(/[^#a-fA-F0-9]+/, "");
-					if ( hex != _hex )
-						jQuery("#cp_header_bg_colour").val(hex);
-					if ( hex.length == 4 || hex.length == 7 )
-						pickColor( hex );
-				});
-
-				jQuery(document).mousedown(function(){
-					jQuery("#color-picker").each( function() {
-						var display = jQuery(this).css("display");
-						if (display == "block")
-							jQuery(this).fadeOut(2);
-					});
-				});
-
-				// test for picker
-				if ( jQuery("#cp_header_bg_colour").length > 0 ) {
-					farbtastic = jQuery.farbtastic("#color-picker", function(color) { pickColor(color); });
-					pickColor("#' . $this->db->option_get_header_bg() . '");
-				}
-
-				' . ( ( 'blank' == $this->db->option_get_header_bg() OR '' == $this->db->option_get_header_bg() ) ? 'toggle_text();' : '' ) . '
-				});
-
-		//]]>
-			</script>
-
-		';
 
 	}
 
