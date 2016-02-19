@@ -128,11 +128,15 @@ class Commentpress_Core_Workflow {
 
 		}
 
-		// return, but allow overrides
-		return apply_filters(
-			'cp_class_commentpress_workflow_group_blogtype',
-			$blog_type
-		);
+		/**
+		 * Allow plugins to override the blog type - for example if workflow
+		 * is enabled, it might become a new blog type as far as BuddyPress
+		 * is concerned.
+		 *
+		 * @param int $blog_type The numeric blog type
+		 * @param bool $blog_workflow True if workflow enabled, false otherwise
+		 */
+		return apply_filters( 'cp_class_commentpress_workflow_group_blogtype', $blog_type, $blog_workflow );
 
 	}
 

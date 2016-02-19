@@ -1407,8 +1407,15 @@ class Commentpress_Multisite_Buddypress {
 
 		}
 
-		// return, but allow overrides
-		return apply_filters( 'cp_class_commentpress_workflow_group_blogtype', $blog_type );
+		/**
+		 * Allow plugins to override the blog type - for example if workflow
+		 * is enabled, it might become a new blog type as far as BuddyPress
+		 * is concerned.
+		 *
+		 * @param int $blog_type The numeric blog type
+		 * @param bool $blog_workflow True if workflow enabled, false otherwise
+		 */
+		return apply_filters( 'cp_class_commentpress_workflow_group_blogtype', $blog_type, $blog_workflow );
 
 	}
 
@@ -2000,25 +2007,15 @@ class Commentpress_Multisite_Buddypress {
 
 		// TODO: create admin page settings for WordPress options
 
-		// show posts by default (may be overridden)
-		$posts_or_pages = 'post';
-
-		// allow plugin overrides
-		$posts_or_pages = apply_filters( 'cp_posts_or_pages_in_toc', $posts_or_pages );
-
-		// TOC = posts
+		// show posts by default (allow plugin overrides)
+		$posts_or_pages = apply_filters( 'cp_posts_or_pages_in_toc', 'post' );
 		$commentpress_core->db->option_set( 'cp_show_posts_or_pages_in_toc', $posts_or_pages );
 
 		// if we opted for posts
 		if ( $posts_or_pages == 'post' ) {
 
-			// TOC shows extended posts by default (may be overridden)
-			$extended_toc = 1;
-
-			// allow plugin overrides
-			$extended_toc = apply_filters( 'cp_extended_toc', $extended_toc );
-
-			// TOC shows extended posts
+			// TOC shows extended posts by default (allow plugin overrides)
+			$extended_toc = apply_filters( 'cp_extended_toc', 1 );
 			$commentpress_core->db->option_set( 'cp_show_extended_toc', $extended_toc );
 
 		}
@@ -2032,8 +2029,14 @@ class Commentpress_Multisite_Buddypress {
 		// did we get a group id before we switched blogs?
 		if ( isset( $group_id ) ) {
 
-			// allow plugins to override the blog type - for example if workflow is enabled,
-			// it might become a new blog type as far as BuddyPress is concerned
+			/**
+			 * Allow plugins to override the blog type - for example if workflow
+			 * is enabled, it might become a new blog type as far as BuddyPress
+			 * is concerned.
+			 *
+			 * @param int $cp_blog_type The numeric blog type
+			 * @param bool $cp_blog_workflow True if workflow enabled, false otherwise
+			 */
 			$blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $cp_blog_type, $cp_blog_workflow );
 
 			// set the type as group meta info
@@ -2052,11 +2055,14 @@ class Commentpress_Multisite_Buddypress {
 		// get commenting option
 		$anon_comments = $this->db->option_get( 'cpmu_bp_require_comment_registration' ) == '1' ? 1 : 0;
 
-		// anonymous commenting (may be overridden by admin option)
-		$anon_comments = apply_filters(
-			'cp_require_comment_registration',
-			$anon_comments
-		);
+		/**
+		 * Allow overrides for anonymous commenting.
+		 *
+		 * This may be overridden by an option in the Network Admin settings screen.
+		 *
+		 * @param bool $anon_comments Value of 1 requires registration, 0 does not
+		 */
+		$anon_comments = apply_filters( 'cp_require_comment_registration', $anon_comments );
 
 		// update wp option
 		update_option( 'comment_registration', $anon_comments );

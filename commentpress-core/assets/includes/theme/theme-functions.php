@@ -698,8 +698,14 @@ function commentpress_get_body_classes( $raw = false ) {
 		// get workflow
 		$workflow = $commentpress_core->db->option_get( 'cp_blog_workflow' );
 
-		// allow plugins to override the blog type - for example if workflow is enabled,
-		// it might be a new blog type as far as BuddyPress is concerned
+		/**
+		 * Allow plugins to override the blog type - for example if workflow
+		 * is enabled, it might become a new blog type as far as BuddyPress
+		 * is concerned.
+		 *
+		 * @param int $type The numeric blog type
+		 * @param bool $workflow True if workflow enabled, false otherwise
+		 */
 		$current_blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $type, $workflow );
 
 		// if it's not the main site, add class
