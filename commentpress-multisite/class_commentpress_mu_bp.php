@@ -1528,12 +1528,17 @@ class Commentpress_Multisite_Buddypress {
 					// if group is not public
 					if( $group->status != 'public' ) {
 
-						// is the current user a member of the blog?
-						if ( ! is_user_member_of_blog( $current_user->ID, $blog_id ) ) {
+						// is the groupblog CommentPress Core enabled?
+						if ( $this->group_has_commentpress_groupblog( $group->id ) ) {
 
-							// no - redirect to network home, but allow overrides
-							wp_redirect( apply_filters( 'bp_groupblog_privacy_redirect_url', network_site_url() ) );
-							exit;
+							// is the current user a member of the blog?
+							if ( ! is_user_member_of_blog( $current_user->ID, $blog_id ) ) {
+
+								// no - redirect to network home, but allow overrides
+								wp_redirect( apply_filters( 'bp_groupblog_privacy_redirect_url', network_site_url() ) );
+								exit;
+
+							}
 
 						}
 
