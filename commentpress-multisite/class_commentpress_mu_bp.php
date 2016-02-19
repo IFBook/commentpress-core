@@ -690,9 +690,16 @@ class Commentpress_Multisite_Buddypress {
 
 
 	/**
-	 * Record the blog post activity for the group - by Luiz Armesto.
+	 * Record the blog post activity for the group.
 	 *
-	 * @see bp_groupblog_set_group_to_post_activity ( $activity )
+	 * Adapted from code by Luiz Armesto.
+	 *
+	 * Since the updates to BP Groupblog, a second argument is passed to this
+	 * method which, if present, means that we don't need to check for an
+	 * existing activity item. This code needs to be streamlined in the light
+	 * of the changes.
+	 *
+	 * @see bp_groupblog_set_group_to_post_activity( $activity )
 	 *
 	 * @param object $activity The existing activity object
 	 * @param array $args {
@@ -703,6 +710,9 @@ class Commentpress_Multisite_Buddypress {
 	 * @return object $activity The modified activity object
 	 */
 	public function groupblog_custom_post_activity( $activity, $args = array() ) {
+
+		// sanity check
+		if ( ! bp_is_active( 'groups' ) ) return $activity;
 
 		// only on new blog posts
 		if ( ( $activity->type != 'new_blog_post' ) ) return $activity;
