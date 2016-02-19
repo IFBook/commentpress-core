@@ -1949,16 +1949,17 @@ body.search-results .post p.postmetadata
 	padding-bottom: 0;
 }
 
-.post .entry-category-meta p
+.post .entry-category-meta p,
+body.blogtype-1 #content .post .entry-category-meta p.category-meta,
+body.blogtype-1 #content .post .entry-category-meta p.category-meta,
+body.blogtype-2 #content .post .entry-category-meta p.category-meta,
+body.blogtype-3 #content .post .entry-category-meta p.category-meta,
+body.blogtype-4 #content .post .entry-category-meta p.category-meta
 {
 	display: inline-block;
 	margin: 0;
 	padding: 0;
 }
-
-
-
-
 
 
 
@@ -1977,8 +1978,6 @@ body.search-results .post p.postmetadata
 {
 	margin: 0 0 0.5em 0.5em;
 }
-
-
 
 
 
@@ -2038,10 +2037,6 @@ span.wp-caption
 	margin-top: 0.2em;
 	font-family: sans-serif;
 }
-
-
-
-
 
 
 
@@ -2131,10 +2126,6 @@ div.image_attachment_caption
 
 
 
-
-
-
-
 /*
 --------------------------------------------------------------------------------
 Support for WordPress post formats
@@ -2159,18 +2150,11 @@ Support for WordPress post formats
 
 
 
-
-
-
-
-
 /*
 --------------------------------------------------------------------------------
 SPECIAL PAGES
 --------------------------------------------------------------------------------
 */
-
-
 
 /* comments-by and comments-all pages */
 h3.comments_hl
@@ -2271,8 +2255,6 @@ h3.comments_hl
 
 
 
-
-
 /* blog archive page */
 .archives_search_form
 {
@@ -2347,12 +2329,6 @@ h3.comments_hl
 {
 	margin-left: 2em;
 }
-
-
-
-
-
-
 
 
 
@@ -2437,9 +2413,6 @@ ul#content-tabs li
 
 
 
-
-
-
 /*
 --------------------------------------------------------------------------------
 Post Versioning
@@ -2518,9 +2491,6 @@ Post Versioning
 
 
 
-
-
-
 /*
 --------------------------------------------------------------------------------
 Author Page
@@ -2571,10 +2541,6 @@ ul.author_pages li a
 {
 	font-size: 80% !important;
 }
-
-
-
-
 
 
 
@@ -2641,8 +2607,6 @@ New Look TOC Sidebar for posts
 {
 	border-bottom: 6px solid #ccc;
 }
-
-
 
 
 
@@ -2750,9 +2714,6 @@ html>body #tern_members .tern_wp_members_list li
 
 
 
-
-
-
 /*
 --------------------------------------------------------------------------------
 Compatibility with ZotPress plugin
@@ -2772,9 +2733,6 @@ Compatibility with ZotPress plugin
 	line-height: 1.6;
 	font-size: 80%;
 }
-
-
-
 
 
 
@@ -2874,9 +2832,6 @@ ol.footnotes,
 
 
 
-
-
-
 /*
 --------------------------------------------------------------------------------
 Compatibility with JetPack plugin
@@ -2899,15 +2854,13 @@ p.comment-subscription-form
 
 
 
-
-
-
 /*
 --------------------------------------------------------------------------------
 Compatibility with Featured Comments plugin
 --------------------------------------------------------------------------------
 */
 
+.feature-bury-comments,
 .feature-burry-comments
 {
 	float: right;
@@ -2916,12 +2869,14 @@ Compatibility with Featured Comments plugin
 	margin-left: 2%;
 }
 
+#comments_in_page_wrapper .feature-bury-comments,
 #comments_in_page_wrapper .feature-burry-comments
 {
 	line-height: 0.8;
 	margin-left: 2%;
 }
 
+.feature-bury-comments a.feature-comments,
 .feature-burry-comments a.feature-comments
 {
 	padding: 0;
@@ -2932,12 +2887,11 @@ Compatibility with Featured Comments plugin
 	text-decoration: none;
 }
 
+.feature-bury-comments a.feature-comments:hover,
 .feature-burry-comments a.feature-comments:hover
 {
 	color: #761D19;
 }
-
-
 
 
 
@@ -2999,8 +2953,6 @@ Best used with Simple Taxonomy plugin
 
 
 
-
-
 /*
 --------------------------------------------------------------------------------
 Compatibility with BuddyPress Docs plugin
@@ -3014,9 +2966,6 @@ Compatibility with BuddyPress Docs plugin
 
 
 
-
-
-
 /*
 --------------------------------------------------------------------------------
 Compatibility with Cookies for Comments plugin
@@ -3027,9 +2976,6 @@ body > img
 {
 	float: left;
 }
-
-
-
 
 
 
@@ -3092,8 +3038,6 @@ Compatibility with Comment Tagger plugin
 	color: #761D19;
 	text-decoration: none;
 }
-
-
 
 
 
@@ -3235,8 +3179,6 @@ body.group-admin.group-sites .standard-form .bpgsites_group_linkages_pending
 
 
 
-
-
 /*
 --------------------------------------------------------------------------------
 Compatibility with CommentPress JSTOR plugin
@@ -3314,8 +3256,6 @@ Compatibility with CommentPress JSTOR plugin
 
 
 
-
-
 /*
 --------------------------------------------------------------------------------
 Comment Orphaning
@@ -3345,9 +3285,6 @@ Comment Orphaning
 {
 	background-color: #F5B0A6 !important;
 }
-
-
-
 
 
 
@@ -3393,8 +3330,6 @@ Feature images
 	margin-top: 0;
 	margin-bottom: 0.3em;
 }
-
-
 
 
 
@@ -3986,8 +3921,6 @@ RESPONSIVENESS
 
 
 
-
-
 @media all and (max-width: 1020px) {
 
 	#footer
@@ -4097,8 +4030,6 @@ RESPONSIVENESS
 	}
 
 }
-
-
 
 
 

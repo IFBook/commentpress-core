@@ -753,7 +753,8 @@ ul.item-list.activity-list li.has-comments
 	padding-bottom: 0;
 }
 
-ul.item-list.activity-list li.load-more
+ul.item-list.activity-list li.load-more,
+ul.item-list.activity-list li.load-newest
 {
 	margin: 0 !important;
 }
@@ -770,7 +771,8 @@ ul.item-list.activity-list li.load-more
 	overflow: hidden;
 }
 
-#buddypress .activity-list li.load-more a
+#buddypress .activity-list li.load-more a,
+#buddypress .activity-list li.load-newest a
 {
 	font-family: sans-serif;
 	color: #761D19;
@@ -782,7 +784,8 @@ ul.item-list.activity-list li.load-more
 	margin: 0 auto;
 }
 
-#buddypress .activity-list li.load-more.loading a
+#buddypress .activity-list li.load-more.loading a,
+#buddypress .activity-list li.load-newest.loading a
 {
 	background-repeat: no-repeat;
 	background-position: 0 0.3em;
@@ -901,7 +904,8 @@ Activity Stream Comments
     margin-bottom: 0;
 }
 
-#buddypress ul.item-list.activity-list li.load-more
+#buddypress ul.item-list.activity-list li.load-more,
+#buddypress ul.item-list.activity-list li.load-newest
 {
 	padding-left: 0;
     border-left: 0;
@@ -3515,10 +3519,15 @@ body.blogtype-0 #content .post.overridden_type-1 p
 	padding-bottom: 24px;
 }
 
+body.blogtype-0 #content .post.overridden_type-1 p.category-meta,
+body.blogtype-0 #content .post.overridden_type-1 p.postmetadata
+{
+	padding-bottom: 0;
+}
+
 /* make some space after search_meta for overridden */
 body.blogtype-0 #content .post.overridden_type-1 div.search_meta
 {
-	padding-bottom: 24px;
 }
 
 
