@@ -2091,6 +2091,17 @@ class Commentpress_Multisite_Buddypress {
 
 		}
 
+		/**
+		 * Allow plugins to add their own config.
+		 *
+		 * @since 3.8.5
+		 *
+		 * @param int $blog_id The numeric ID of the WordPress blog
+		 * @param int $cp_blog_type The numeric blog type
+		 * @param bool $cp_blog_workflow True if workflow enabled, false otherwise
+		 */
+		do_action( 'cp_new_groupblog_created', $blog_id, $cp_blog_type, $cp_blog_workflow );
+
 		// switch back
 		restore_current_blog();
 
