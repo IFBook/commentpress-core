@@ -695,9 +695,14 @@ class Commentpress_Multisite_Buddypress {
 	 * @see bp_groupblog_set_group_to_post_activity ( $activity )
 	 *
 	 * @param object $activity The existing activity object
+	 * @param array $args {
+	 *     Optional. Handy if you've already parsed the blog post and group ID.
+	 *     @type WP_Post $post The WP post object.
+	 *     @type int $group_id The group ID.
+	 * }
 	 * @return object $activity The modified activity object
 	 */
-	public function groupblog_custom_post_activity( $activity ) {
+	public function groupblog_custom_post_activity( $activity, $args = array() ) {
 
 		// only on new blog posts
 		if ( ( $activity->type != 'new_blog_post' ) ) return $activity;
@@ -850,8 +855,80 @@ class Commentpress_Multisite_Buddypress {
 		// prevent from firing again
 		remove_action( 'bp_activity_before_save', array( $this, 'groupblog_custom_post_activity' ) );
 
+		// using this function outside BP's save routine requires us to manually save
+		if ( ! empty( $args['post'] ) ) {
+			$activity->save();
+		}
+
 		// --<
 		return $activity;
+
+	}
+
+
+
+	/**
+	 * Detects a post edit and modifies the activity entry if found.
+	 *
+	 * This is needed for BuddyPress 2.2+. Older versions of BuddyPress continue
+	 * to use the {@link bp_groupblog_set_group_to_post_activity()} function.
+	 *
+	 * This is copied from BP Groupblog and amended to suit.
+	 *
+	 * @see bp_groupblog_catch_transition_post_type_status()
+	 *
+	 * @since 3.8.5
+	 *
+	 * @param str $new_status New status for the post.
+	 * @param str $old_status Old status for the post.
+	 * @param object $post The post data.
+	 * @return void
+	 */
+	public function transition_post_type_status( $new_status, $old_status, $post ) {
+
+		// only needed for >= BP 2.2
+		if ( ! function_exists( 'bp_activity_post_type_update' ) ) return;
+
+		// bail if not a blog post
+		if ( 'post' !== $post->post_type ) return;
+
+		// is this an edit?
+		if ( $new_status === $old_status ) {
+
+			// an edit of an existing post should update the existing activity item
+			if ( $new_status == 'publish' ) {
+
+				// get group ID
+				$group_id = get_groupblog_group_id( get_current_blog_id() );
+
+				// get existing activity ID
+				$id = bp_activity_get_activity_id( array(
+					'component'         => 'groups',
+					'type'              => 'new_groupblog_post',
+					'item_id'           => $group_id,
+					'secondary_item_id' => $post->ID
+				) );
+
+				// bail if we don't have one
+				if ( empty( $id ) ) return;
+
+				// retrieve activity item and modify some properties
+				$activity = new BP_Activity_Activity( $id );
+				$activity->content = $post->post_content;
+				$activity->date_recorded = bp_core_current_time();
+
+				// we currently have to fool `$this->groupblog_custom_post_activity()`
+				$activity->type = 'new_blog_post';
+
+				// pass activity to our edit function
+				$this->groupblog_custom_post_activity( $activity, array(
+					'group_id' => $group_id,
+					'post'     => $post,
+				) );
+
+			}
+
+		}
 
 	}
 
@@ -1523,8 +1600,8 @@ class Commentpress_Multisite_Buddypress {
 		// override "publicness" of groupblogs
 		add_filter( 'bp_is_blog_public', array( $this, 'is_blog_public' ), 20, 1 );
 
-		// amend BuddyPress group activity
-		add_action( 'bp_loaded', array( $this, '_group_activity_mods' ), 30 );
+		// amend BuddyPress group activity (after class Commentpress_Core does)
+		add_action( 'bp_setup_globals', array( $this, '_group_activity_mods' ), 1001 );
 
 		// get group avatar when listing groupblogs
 		add_filter( 'bp_get_blog_avatar', array( $this, 'get_blog_avatar' ), 20, 3 );
@@ -1657,14 +1734,19 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _group_activity_mods() {
 
+		// don't mess with hooks unless the blog is CommentPress Core-enabled
+		if ( ( false === $this->_is_commentpress_groupblog() ) ) return;
+
 		// allow lists in activity content
 		add_action( 'bp_activity_allowed_tags', array( $this, '_activity_allowed_tags' ), 20, 1 );
 
-		// drop the bp-groupblog post activity action
+		// drop the bp-groupblog post activity actions
 		remove_action( 'bp_activity_before_save', 'bp_groupblog_set_group_to_post_activity' );
+		remove_action( 'transition_post_status', 'bp_groupblog_catch_transition_post_type_status' );
 
 		// implement our own post activity (with Co-Authors compatibility)
 		add_action( 'bp_activity_before_save', array( $this, 'groupblog_custom_post_activity' ), 20, 1 );
+		add_action( 'transition_post_status', array( $this, 'transition_post_type_status' ), 20, 3 );
 
 		// CommentPress Core needs to know the sub-page for a comment, therefore:
 
@@ -2158,6 +2240,9 @@ class Commentpress_Multisite_Buddypress {
 	 *
 	 * Note that this only tests the current blog and cannot be used to discover
 	 * if a specific blog is a CommentPress Core groupblog.
+	 *
+	 * Also note that this method only functions after 'bp_setup_globals' has
+	 * fired with priority 1000.
 	 *
 	 * @return bool True if current blog is CommentPress Core-enabled, false otherwise
 	 */
