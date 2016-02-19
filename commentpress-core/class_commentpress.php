@@ -1604,35 +1604,6 @@ class Commentpress_Core {
 
 
 	/**
-	 * Check if we are on the signup page.
-	 *
-	 * @return boolean $is_signup True if signup page, false otherwise
-	 * @todo:
-	 *
-	 */
-	public function is_signup_page() {
-
-		// init
-		$is_signup = false;
-
-		// if multisite
-		if ( is_multisite() ) {
-
-			// override if script filename matches signup script
-			if ( 'wp-signup.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) {
-				$is_signup = true;
-			}
-
-		}
-
-		// --<
-		return $is_signup;
-
-	}
-
-
-
-	/**
 	 * Utility to check for presence of Theme My Login.
 	 *
 	 * @return bool $success True if TML page, false otherwise

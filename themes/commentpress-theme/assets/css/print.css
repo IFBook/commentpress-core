@@ -107,6 +107,8 @@ Updated by Christian Wach for CommentPress Core
 	.cp_logo_image,
 	.comment-identifier span.comment-edit,
 	.comment-identifier span.comment-assign,
+	.comment-popover-holder,
+	.popover-holder,
 
 	/* JetPack sharing */
 	div.sharedaddy,

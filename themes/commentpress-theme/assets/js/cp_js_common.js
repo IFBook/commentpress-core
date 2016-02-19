@@ -440,11 +440,7 @@ CommentPress.theme.DOM = new function() {
 				cp_container_width = $.cookie('cp_container_width');
 
 				// set content width
-				if ( cp_is_signup_page == '1' ) {
-					styles += '#content { width: ' + cp_container_width + '%; } ';
-				} else {
-					styles += '#page_wrapper { width: ' + cp_container_width + '%; } ';
-				}
+				styles += '#page_wrapper { width: ' + cp_container_width + '%; } ';
 
 				// set footer width
 				styles += '#footer { width: ' + cp_container_width + '%; } ';
@@ -511,18 +507,8 @@ CommentPress.theme.DOM = new function() {
 		// define vars
 		var target;
 
-		// is this the signup page?
-		if ( cp_is_signup_page == '1' ) {
-
-			// target
-			target = $('#content');
-
-		} else {
-
-			// target
-			target = $('#page_wrapper');
-
-		}
+		// target
+		target = $('#page_wrapper');
 
 		/**
 		 * Sets up the main column, if the id exists
@@ -618,9 +604,7 @@ CommentPress.theme.DOM = new function() {
 					item.css("width" , item_w + '%');
 
 					// set content width to auto so it resizes properly
-					if ( cp_is_signup_page == '0' ) {
-						content.css( 'width', 'auto' );
-					}
+					content.css( 'width', 'auto' );
 
 					// get element width
 					width = book_nav.width();
@@ -1284,11 +1268,7 @@ CommentPress.theme.sidebars = new function() {
 		// get bottom margin of main column so sidebar lines up
 		// NOTE: this is NOT why they don't line up - it just so happens that the values match
 		// It seems the clearfix class adds the margin. Sigh.
-		if ( cp_is_signup_page == '1' ) {
-			bottom_margin = $.css_to_num( $.px_to_num( $('#content').css( 'margin-bottom' ) ) );
-		} else {
-			bottom_margin = $.css_to_num( $.px_to_num( $('#page_wrapper').css( 'margin-bottom' ) ) );
-		}
+		bottom_margin = $.css_to_num( $.px_to_num( $('#page_wrapper').css( 'margin-bottom' ) ) );
 
 		// get viewport data
 		viewport_height = $(window).height();

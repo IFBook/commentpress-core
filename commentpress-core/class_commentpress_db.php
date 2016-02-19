@@ -3024,17 +3024,6 @@ class Commentpress_Core_Database {
 		// set min page width
 		$vars['cp_min_page_width'] = $this->option_get( 'cp_min_page_width' );
 
-		// set signup flag
-		$vars['cp_is_signup_page'] = '0';
-
-		// test for signup
-		if ( $this->parent_obj->is_signup_page() ) {
-
-			// set flag
-			$vars['cp_is_signup_page'] = '1';
-
-		}
-
 		// default to showing textblock meta
 		$vars['cp_textblock_meta'] = 1;
 

@@ -42,7 +42,7 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 	var cp_comments_open, cp_special_page, cp_tinymce, cp_tinymce_version,
 		cp_promote_reading, cp_is_mobile, cp_is_touch, cp_is_tablet, cp_cookie_path,
 		cp_multipage_page, cp_toc_chapter_is_page, cp_show_subpages,
-		cp_default_sidebar, cp_is_signup_page, cp_scroll_speed, cp_min_page_width,
+		cp_default_sidebar, cp_scroll_speed, cp_min_page_width,
 		cp_textblock_meta, cp_touch_testing;
 
 	// set our vars
@@ -60,7 +60,6 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 	cp_toc_chapter_is_page = CommentpressSettings.cp_toc_chapter_is_page;
 	cp_show_subpages = CommentpressSettings.cp_show_subpages;
 	cp_default_sidebar = CommentpressSettings.cp_default_sidebar;
-	cp_is_signup_page = CommentpressSettings.cp_is_signup_page;
 	cp_scroll_speed = CommentpressSettings.cp_js_scroll_speed;
 	cp_min_page_width = CommentpressSettings.cp_min_page_width;
 	cp_textblock_meta = CommentpressSettings.cp_textblock_meta;
