@@ -12,7 +12,7 @@ Updated by Christian Wach for CommentPress Core
 --------------------------------------------------------------------------------
 */
 
-/* @media print { */
+@media print {
 
 	div, h1, h2, h3, h4, h5, h6, p, ol, ul, li
 	{
@@ -722,6 +722,11 @@ Updated by Christian Wach for CommentPress Core
 		text-decoration: none;
 	}
 
+	.comment_permalink_copy:before
+	{
+		display: none;
+	}
+
 	/* comment elements to hide */
 	div#comments_sidebar .comments_container .reply
 	{
@@ -946,4 +951,4 @@ Updated by Christian Wach for CommentPress Core
 		padding: 0 0 0 24pt;
 	}
 
-/* } */
+}
