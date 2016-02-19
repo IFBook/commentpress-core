@@ -107,6 +107,9 @@ Updated by Christian Wach for CommentPress Core
 	.comment-identifier span.comment-assign,
 	.comment-popover-holder,
 	.popover-holder,
+	div.ui-helper-hidden-accessible,
+	div.ui-helper-hidden-accessible div,
+	div.ui-tooltip,
 
 	/* responsive additions */
 	#header img,
@@ -348,9 +351,9 @@ Updated by Christian Wach for CommentPress Core
 		line-height: 1.5;
 	}
 
-	p.selected_para
+	.selected_para
 	{
-		color: #000;
+		color: #000 !important;
 	}
 
 	.post ul,
