@@ -1718,6 +1718,11 @@ div.search_meta p a
 	z-index: 510;
 }
 
+body.single-post .post
+{
+	padding-bottom: 2em;
+}
+
 .post span.para_marker
 {
 	position: absolute;

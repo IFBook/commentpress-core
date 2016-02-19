@@ -12,7 +12,7 @@ Updated by Christian Wach for CommentPress Core
 --------------------------------------------------------------------------------
 */
 
-@media print {
+/* @media print { */
 
 	div, h1, h2, h3, h4, h5, h6, p, ol, ul, li
 	{
@@ -24,14 +24,24 @@ Updated by Christian Wach for CommentPress Core
 	}
 
 	/* Set sensible defaults */
-	*
+	*, *:before, *:after
 	{
+		-webkit-transition: none !important;
+		-moz-transition: none !important;
+		transition: none !important;
 		background: white !important;
+		box-sizing: inherit;
 	}
 
-	body
+	body,
+	body.is-groupblog.blogtype-0,
+	body.is-groupblog.blogtype-1,
+	body.is-groupblog.blogtype-2,
+	body.is-groupblog.blogtype-3,
+	body.is-groupblog.blogtype-4
 	{
-		background: white;
+		background: white !important;
+		background-color: white !important;
 		color: #000;
 		font-size: 9pt;
 		/* Text should be "readable" */
@@ -77,6 +87,8 @@ Updated by Christian Wach for CommentPress Core
 	#user_links,
 	span.commenticonbox,
 	p.postmetadata,
+	.entry-meta,
+	.entry-category-meta,
 	div.ui-resizable-handle,
 	ul#sidebar_tabs,
 	div#activity_sidebar,
@@ -93,22 +105,27 @@ Updated by Christian Wach for CommentPress Core
 	.cp_logo_image,
 	.comment-identifier span.comment-edit,
 	.comment-identifier span.comment-assign,
+
 	/* responsive additions */
 	#header img,
 	#navigation,
 	.page_navigation,
 	#switcher,
+
 	/* JetPack sharing */
 	div.sharedaddy,
 	#content div.sharedaddy,
 	#main div.sharedaddy,
+
 	/* Featured Comments */
 	div.feature-burry-comments,
+	div.feature-bury-comments,
+
 	/* Comment Upvoter */
-	.comment-upvote
-	{
-		display: none !important;
-	}
+	.comment-upvote,
+
+	/* WordPress */
+	#wpadminbar,
 
 	/* force comment form to be hidden */
 	#respond
@@ -173,6 +190,9 @@ Updated by Christian Wach for CommentPress Core
 		position: static !important;
 		top: auto !important;
 		background: white;
+		width: auto !important;
+		padding: 0 !important;
+		margin: 0 !important;
 	}
 
 	/* Remove borders */
@@ -203,6 +223,14 @@ Updated by Christian Wach for CommentPress Core
 		box-shadow: none;
 	}
 
+	/* Google Chrome requires max-width and min-width */
+	#wrapper
+	{
+		z-index: auto;
+		max-width: 100% !important;
+		min-width: 100% !important;
+	}
+
 	/* Feature Images */
 	.cp_feature_image .cp_featured_title .cp_featured_title_inner
 	{
@@ -213,9 +241,9 @@ Updated by Christian Wach for CommentPress Core
 	/* Feature Image Page Title */
 	.cp_featured_title_inner h2.post_title
 	{
-		margin: 0;
-		padding-top: 10pt;
-		padding-bottom: 4pt;
+		padding: 0;
+		margin-top: 10pt;
+		margin-bottom: 4pt;
 		padding-left: 0;
 		font-size: 24pt;
 		text-transform: none;
@@ -251,12 +279,12 @@ Updated by Christian Wach for CommentPress Core
 	/* Page Title */
 	.post h2.post_title
 	{
-		margin: 0;
-		padding-top: 10pt;
-		padding-bottom: 4pt;
-		padding-left: 0;
+		padding: 0;
+		margin-top: 10pt;
+		margin-bottom: 4pt;
 		font-size: 24pt;
 		text-transform: none;
+		line-height: 1.5;
 	}
 
 	.post h2.post_title a
@@ -265,13 +293,6 @@ Updated by Christian Wach for CommentPress Core
 	}
 
 	/* post meta */
-	#content .post .search_meta
-	{
-		margin: 0 0 1em 0;
-		padding: 0;
-		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	}
-
 	#content .post .search_meta,
 	#content .post .search_meta cite,
 	#content .post .search_meta p
@@ -279,8 +300,16 @@ Updated by Christian Wach for CommentPress Core
 		margin: 0;
 		padding: 0;
 		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-		font-size: 90%;
+		font-size: 110%;
 		color: #aaa;
+		text-transform: none;
+	}
+
+	#content .post .search_meta
+	{
+		margin: -2pt 0 24pt 0;
+		padding: 0;
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	}
 
 	#content .post .search_meta cite a,
@@ -305,6 +334,7 @@ Updated by Christian Wach for CommentPress Core
 	.post .textblock
 	{
 		position: relative !important;
+		background: transparent !important;
 	}
 
 	.post p,
@@ -419,6 +449,7 @@ Updated by Christian Wach for CommentPress Core
 		position: absolute !important;
 		width: auto !important;
 		margin-left: 0;
+		left: -32px !important;
 		color: #ccc !important;
 		background-color: transparent;
 	}
@@ -540,6 +571,8 @@ Updated by Christian Wach for CommentPress Core
 	{
 		position: static !important;
 		width: auto !important;
+		max-width: 100% !important;
+		min-width: 100% !important;
 		height: auto !important;
 		top: auto !important;
 		left: auto !important;
@@ -781,6 +814,8 @@ Updated by Christian Wach for CommentPress Core
 		-moz-box-shadow: 0 0 0 #fff;
 		-khtml-box-shadow: 0 0 0 #fff;
 		box-shadow: 0 0 0 #fff;
+		max-width: 100% !important;
+		min-width: 100% !important;
 	}
 
 	#footer_inner
@@ -911,4 +946,4 @@ Updated by Christian Wach for CommentPress Core
 		padding: 0 0 0 24pt;
 	}
 
-}
+/* } */
