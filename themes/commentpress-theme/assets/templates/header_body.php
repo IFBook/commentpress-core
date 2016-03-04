@@ -25,16 +25,18 @@ Separated this out for inclusion in multiple files.
 <div id="book_header">
 
 	<div id="titlewrap">
-		<?php
 
-		// get header image
-		commentpress_get_header_image();
+		<?php do_action( 'commentpress_header_before' ); ?>
 
-		?>
+		<?php commentpress_get_header_image(); ?>
+
 		<div id="page_title">
-		<div id="title"><h1><a href="<?php echo home_url(); ?>" title="<?php _e( 'Home', 'commentpress-core' ); ?>"><?php bloginfo('title'); ?></a></h1></div>
-		<div id="tagline"><?php bloginfo('description'); ?></div>
+			<div id="title"><h1><a href="<?php echo home_url(); ?>" title="<?php _e( 'Home', 'commentpress-core' ); ?>"><?php bloginfo('title'); ?></a></h1></div>
+			<div id="tagline"><?php bloginfo('description'); ?></div>
 		</div>
+
+		<?php do_action( 'commentpress_header_after' ); ?>
+
 	</div>
 
 	<div id="book_search">
