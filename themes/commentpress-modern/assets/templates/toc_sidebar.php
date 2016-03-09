@@ -28,7 +28,7 @@
 
 
 
-<h3 class="activity_heading"><?php
+<h3 class="activity_heading search_heading"><?php
 echo apply_filters( 'cp_content_tab_search_title', __( 'Search', 'commentpress-core' ) );
 ?></h3>
 
@@ -42,7 +42,7 @@ echo apply_filters( 'cp_content_tab_search_title', __( 'Search', 'commentpress-c
 
 
 
-<h3 class="activity_heading"><?php
+<h3 class="activity_heading special_pages_heading"><?php
 echo apply_filters( 'cp_content_tab_special_pages_title', __( 'Special Pages', 'commentpress-core' ) );
 ?></h3>
 
@@ -64,7 +64,7 @@ if ( $cp_navigation != '' ) load_template( $cp_navigation );
 </div>
 
 
-<h3 class="activity_heading"><?php
+<h3 class="activity_heading toc_heading"><?php
 echo apply_filters( 'cp_content_tab_toc_title', __( 'Table of Contents', 'commentpress-core' ) );
 ?></h3>
 

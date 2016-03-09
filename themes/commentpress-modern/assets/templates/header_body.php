@@ -26,12 +26,8 @@ Separated this out for inclusion in multiple files.
 
 	<?php do_action( 'commentpress_header_before' ); ?>
 
-	<?php
+	<?php commentpress_get_header_image(); ?>
 
-	// get header image
-	commentpress_get_header_image();
-
-	?>
 	<div id="page_title">
 		<div id="title"><h1><a href="<?php echo home_url(); ?>" title="<?php _e( 'Home', 'commentpress-core' ); ?>"><?php bloginfo('title'); ?></a></h1></div>
 		<div id="tagline"><?php bloginfo('description'); ?></div>

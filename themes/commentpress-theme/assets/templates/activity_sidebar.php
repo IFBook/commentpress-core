@@ -17,7 +17,7 @@ if ( $_is_commentable AND ! post_password_required() ) {
 	// set default phrase
 	$_paragraph_text = __( 'Recent Comments on this Page', 'commentpress-core' );
 
-	// switch by post type
+	// switch by current post type
 	$_current_type = get_post_type();
 	switch( $_current_type ) {
 
@@ -40,8 +40,6 @@ if ( $_is_commentable AND ! post_password_required() ) {
 
 
 
-
-
 // set default
 $_all_comments_title = apply_filters(
 	'cp_activity_tab_recent_title_blog',
@@ -53,11 +51,8 @@ $_all_comments_output = commentpress_get_comment_activity( 'all' );
 
 
 
-
-
 // set maximum number to show - put into option?
 $_max_members = 10;
-
 
 
 
@@ -117,9 +112,6 @@ do_action( 'commentpress_bp_activity_sidebar_after_page_comments' );
 
 
 
-
-
-
 // show all comments from site if we can
 if ( $_all_comments_output != '' ) {
 
@@ -143,108 +135,28 @@ do_action( 'commentpress_bp_activity_sidebar_after_all_comments' );
 
 
 
-
-
-
-/*
---------------------------------------------------------------------------------
-This seems not to work because BuddyPress returns no values for the combination we want
---------------------------------------------------------------------------------
-NOTE: raise a ticket on BuddyPress
---------------------------------------------------------------------------------
-Also, need to make this kind of include file properly child-theme adaptable
---------------------------------------------------------------------------------
-
-
-// access plugin
-global $commentpress_core, $post;
-
-// if we have the plugin enabled and it's BuddyPress
-if (
-	is_multisite() AND
-	is_object( $commentpress_core ) AND
-	$commentpress_core->is_buddypress() AND
-	$commentpress_core->is_groupblog()
-) {
-
-	// check if this blog is a group blog
-	$group_id = get_groupblog_group_id( get_current_blog_id() );
-
-	// when this blog is a groupblog
-	if ( !empty( $group_id ) ) {
-
-		// get activities for our activities
-		if ( bp_has_activities( array(
-
-			// NO RESULTS!
-			'object' => 'groups',
-			'action' => 'new_groupblog_comment,new_groupblog_post',
-			'primary_id' => $group_id
-			'secondary_id' => $post_id
-
-		) ) ) : ?>
-
-			<h3 class="activity_heading">Recent Activity in this Workshop</h3>
-
-			<div class="paragraph_wrapper">
-
-			<ol class="comment_activity">
-
-			<?php while ( bp_activities() ) : bp_the_activity(); ?>
-
-				<?php locate_template( array( 'activity/groupblog.php' ), true, false ); ?>
-
-			<?php endwhile; ?>
-
-			</ol>
-
-			</div>
-
-		<?php
-
-		endif;
-
-	}
-
-
-
-
-} // end BuddyPress check
-*/
-
-
-?>
-
-<?php
-
-
-
 // access plugin
 global $commentpress_core, $post, $blog_id;
 
 // if we have the plugin enabled and it's Multisite BuddyPress
 if (
-
-	// test for Multisite BuddyPress
 	is_multisite() AND
 	is_object( $commentpress_core ) AND
 	$commentpress_core->is_buddypress()
-
 ) {
-
-
-
 
 	// if on either groupblog or main BuddyPress blog
 	if ( $commentpress_core->is_groupblog() OR bp_is_root_blog() ) {
 
-		// get activities
-		if ( bp_has_activities( array(
-
+		// define args
+		$recent_groupblog_activity = array(
 			'scope' => 'groups',
 			'action' => 'new_groupblog_comment,new_groupblog_post',
+			'primary_id' => false,
+		);
 
-		) ) ) :
+		// get activities
+		if ( bp_has_activities( $recent_groupblog_activity ) ) :
 
 			// change header depending on logged in status
 			if ( is_user_logged_in() ) {
@@ -273,7 +185,36 @@ if (
 
 			<?php while ( bp_activities() ) : bp_the_activity(); ?>
 
-				<?php locate_template( array( 'activity/groupblog.php' ), true, false ); ?>
+				<?php do_action( 'bp_before_activity_entry' ); ?>
+
+				<li class="<?php bp_activity_css_class(); ?>" id="activity-<?php bp_activity_id(); ?>">
+
+					<div class="comment-wrapper">
+
+						<div class="comment-identifier">
+
+							<a href="<?php bp_activity_user_link(); ?>"><?php bp_activity_avatar( 'width=32&height=32' ); ?></a>
+							<?php bp_activity_action(); ?>
+
+						</div>
+
+						<div class="comment-content">
+
+							<?php if ( bp_activity_has_content() ) : ?>
+
+								<?php bp_activity_content_body(); ?>
+
+							<?php endif; ?>
+
+							<?php do_action( 'bp_activity_entry_content' ); ?>
+
+						</div>
+
+					</div>
+
+				</li>
+
+				<?php do_action( 'bp_after_activity_entry' ); ?>
 
 			<?php endwhile; ?>
 
@@ -294,16 +235,17 @@ if (
 
 
 
+	// define args
+	$members_recently_active = array(
+		'user_id' => 0,
+		'type' => 'online',
+		'per_page' => $_max_members,
+		'max' => $_max_members,
+		'populate_extras' => 1,
+	);
+
 	// get recently active members
-	if ( bp_has_members(
-
-		'user_id=0' .
-		'&type=active' .
-		'&per_page=' . $_max_members .
-		'&max=' . $_max_members .
-		'&populate_extras=1'
-
-	) ) : ?>
+	if ( bp_has_members( $members_recently_active ) ) : ?>
 
 		<h3 class="activity_heading"><?php _e( 'Recently Active Members', 'commentpress-core' ); ?></h3>
 
@@ -345,16 +287,17 @@ if (
 
 	<?php
 
+	// define args
+	$members_online = array(
+		'user_id' => 0,
+		'type' => 'online',
+		'per_page' => $_max_members,
+		'max' => $_max_members,
+		'populate_extras' => 1,
+	);
+
 	// get online members
-	if ( bp_has_members(
-
-		'user_id=0' .
-		'&type=online' .
-		'&per_page=' . $_max_members .
-		'&max=' . $_max_members .
-		'&populate_extras=1'
-
-	) ) : ?>
+	if ( bp_has_members( $members_online ) ) : ?>
 
 		<h3 class="activity_heading"><?php _e( "Who's Online", 'commentpress-core' ); ?></h3>
 

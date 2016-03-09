@@ -24,14 +24,24 @@ Updated by Christian Wach for CommentPress Core
 	}
 
 	/* Set sensible defaults */
-	*
+	*, *:before, *:after
 	{
-		background: white;
+		-webkit-transition: none !important;
+		-moz-transition: none !important;
+		transition: none !important;
+		background: white !important;
+		box-sizing: inherit;
 	}
 
-	body
+	body,
+	body.is-groupblog.blogtype-0,
+	body.is-groupblog.blogtype-1,
+	body.is-groupblog.blogtype-2,
+	body.is-groupblog.blogtype-3,
+	body.is-groupblog.blogtype-4
 	{
-		background: white;
+		background: white !important;
+		background-color: white !important;
 		color: #000;
 		font-size: 9pt;
 		/* Text should be "readable" */
@@ -43,7 +53,7 @@ Updated by Christian Wach for CommentPress Core
 	/* Link style */
 	a
 	{
-		color: #000;
+		color: #000 !important;
 		text-decoration: underline;
 	}
 
@@ -79,6 +89,8 @@ Updated by Christian Wach for CommentPress Core
 	#header,
 	span.commenticonbox,
 	p.postmetadata,
+	.entry-meta,
+	.entry-category-meta,
 	div.ui-resizable-handle,
 	ul#sidebar_tabs,
 	div#activity_sidebar,
@@ -95,17 +107,26 @@ Updated by Christian Wach for CommentPress Core
 	.cp_logo_image,
 	.comment-identifier span.comment-edit,
 	.comment-identifier span.comment-assign,
+	.comment-popover-holder,
+	.popover-holder,
+	div.ui-helper-hidden-accessible,
+	div.ui-helper-hidden-accessible div,
+	div.ui-tooltip,
+
 	/* JetPack sharing */
 	div.sharedaddy,
 	#content div.sharedaddy,
 	#main div.sharedaddy,
+
 	/* Featured Comments */
 	div.feature-burry-comments,
+	div.feature-bury-comments,
+
 	/* Comment Upvoter */
-	.comment-upvote
-	{
-		display: none !important;
-	}
+	.comment-upvote,
+
+	/* WordPress */
+	#wpadminbar,
 
 	/* force comment form to be hidden */
 	#respond
@@ -120,6 +141,7 @@ Updated by Christian Wach for CommentPress Core
 	#titlewrap
 	{
 		position: static !important;
+		top: auto;
 		height: auto;
 		border: none;
 		margin: 0;
@@ -205,6 +227,7 @@ Updated by Christian Wach for CommentPress Core
 	{
 		padding: 0 0 20pt 24pt;
 		font-size: 100%;
+		border: none;
 		border-bottom: 2px solid #ccc;
 	}
 
@@ -270,6 +293,7 @@ Updated by Christian Wach for CommentPress Core
 	.post .textblock
 	{
 		position: relative !important;
+		background: transparent !important;
 	}
 
 	.post p,
@@ -281,9 +305,9 @@ Updated by Christian Wach for CommentPress Core
 		line-height: 1.5;
 	}
 
-	p.selected_para
+	.selected_para
 	{
-		color: #000;
+		color: #000 !important;
 	}
 
 	.post ul,
@@ -310,6 +334,36 @@ Updated by Christian Wach for CommentPress Core
 	{
 		line-height: 1.5;
 	}
+
+	.post pre
+	{
+		padding: 1em;
+		white-space: pre-wrap;
+		overflow: visible;
+	}
+
+	/*
+	// would be nice, but makes the page width wider than the paper
+	.post a[href]:after
+	{
+		content: " (" attr(href) ")";
+	}
+
+	// don't show certain link content
+	.post span.para_marker a:after,
+	.post span.commenticonbox a:after,
+	a[href^="javascript:"]:after,
+	a[href^="#"]:after
+	{
+		content: "";
+	}
+
+	.post acronym[title]:after,
+	.post abbr[title]:after
+	{
+		content: " (" attr(title) ")";
+	}
+	*/
 
 	span.captioned_image
 	{
@@ -353,8 +407,20 @@ Updated by Christian Wach for CommentPress Core
 		position: absolute !important;
 		width: auto !important;
 		margin-left: 0;
+		left: -32px !important;
 		color: #ccc !important;
 		background-color: transparent;
+	}
+
+	blockquote p span.para_marker
+	{
+		margin-left: -10pt;
+	}
+
+	ul span.para_marker,
+	ol span.para_marker
+	{
+		margin-left: -2em;
 	}
 
 	#content .post span.para_marker a,
@@ -379,8 +445,10 @@ Updated by Christian Wach for CommentPress Core
 
 
 	/* special pages */
-	#comments_in_page_wrapper
+	#comments_in_page_wrapper,
+	#comments_in_page_wrapper .comments_container
 	{
+		width: 100%;
 		margin: 0;
 		padding: 0;
 	}
@@ -461,6 +529,8 @@ Updated by Christian Wach for CommentPress Core
 	{
 		position: static !important;
 		width: auto !important;
+		max-width: 100% !important;
+		min-width: 100% !important;
 		height: auto !important;
 		top: auto !important;
 		left: auto !important;
@@ -502,6 +572,7 @@ Updated by Christian Wach for CommentPress Core
 	/* para headers */
 	div#comments_sidebar .comments_container > h3
 	{
+		text-transform: none;
 		color: #000;
 		margin: 1em 0;
 		padding: 0 0 0.2em 0;
@@ -512,6 +583,7 @@ Updated by Christian Wach for CommentPress Core
 
 	div#comments_sidebar .comments_container > h3 a
 	{
+		text-transform: none;
 		display: inline;
 		color: #000;
 		margin: 0;
@@ -526,18 +598,22 @@ Updated by Christian Wach for CommentPress Core
 	}
 
 	ol.commentlist li,
-	.post ol.commentlist li
+	.post ol.commentlist li,
+	ol.commentlist li.comment,
+	.post ol.commentlist li.comment
 	{
 		list-style: decimal;
-		margin: 0 0 0 12pt;
+		margin: 0 0 0 20pt;
 		padding: 0;
 	}
 
 	ol.children li,
-	.post ol.children li
+	.post ol.children li,
+	ol.children li.comment,
+	.post ol.children li.comment
 	{
 		list-style: decimal;
-		margin: 0 0 0 12pt;
+		margin: 0 0 0 20pt;
 		padding: 0;
 	}
 
@@ -552,7 +628,7 @@ Updated by Christian Wach for CommentPress Core
 	div#comments_sidebar .comments_container .comment-content
 	{
 		font-size: 100%;
-		padding: 0.2em 0 1em 0;
+		padding: 0.2em 0 0.5em 0;
 		border: none !important;
 	}
 
@@ -571,12 +647,15 @@ Updated by Christian Wach for CommentPress Core
 	.comment-identifier cite,
 	.comment-identifier a.comment_permalink
 	{
+		text-transform: none;
 		letter-spacing: 0;
 		color: #aaa !important;
 		display: inline;
 		font-size: 7pt;
 		margin: 0;
 		padding: 0;
+		font-weight: bold;
+		color: #222;
 	}
 
 	.comment-identifier cite
@@ -597,6 +676,11 @@ Updated by Christian Wach for CommentPress Core
 	{
 		color: #aaa;
 		text-decoration: none;
+	}
+
+	.comment_permalink_copy:before
+	{
+		display: none;
 	}
 
 	/* comment elements to hide */
@@ -691,6 +775,8 @@ Updated by Christian Wach for CommentPress Core
 		-moz-box-shadow: 0 0 0 #fff;
 		-khtml-box-shadow: 0 0 0 #fff;
 		box-shadow: 0 0 0 #fff;
+		max-width: 100% !important;
+		min-width: 100% !important;
 	}
 
 	#footer_inner
@@ -717,7 +803,7 @@ Updated by Christian Wach for CommentPress Core
 
 	#footer a
 	{
-		color: #aaa;
+		color: #aaa !important;
 		text-decoration: none;
 	}
 
@@ -725,7 +811,9 @@ Updated by Christian Wach for CommentPress Core
 	#footer_inner p.hidden_page_url
 	{
 		display: block;
-		color: #666;
+		color: #aaa !important;
+		background: transparent;
+		text-align: center;
 		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 		font-size: 0.8em;
 	}

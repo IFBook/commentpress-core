@@ -21,18 +21,15 @@ if ( ! function_exists( 'commentpress_admin_header' ) ):
  */
 function commentpress_admin_header() {
 
-	// init (same as bg in layout.css and default in class_commentpress_db.php)
-	$colour = '2c2622';
-
 	// access plugin
 	global $commentpress_core;
 
-	// if we have the plugin enabled
+	// init with same colour as theme stylesheets and default in class_commentpress_db.php
+	$colour = '2c2622';
+
+	// override if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
-
-		// override
 		$colour = $commentpress_core->db->option_get_header_bg();
-
 	}
 
 	// try and recreate the look of the theme header
@@ -559,41 +556,41 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ):
  */
 function commentpress_get_body_classes( $raw = false ) {
 
-	// init
-	$body_classes = '';
+	// init the array that holds our custom classes
+	$classes = array();
 
 	// access post and plugin
 	global $post, $commentpress_core;
 
-	// set default sidebar
+	// -------------------- default sidebar --------------------
+
+	// set default sidebar but override if we have the plugin enabled
 	$sidebar_flag = 'toc';
-
-	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
-
-		// get sidebar
 		$sidebar_flag = $commentpress_core->get_default_sidebar();
-
 	}
 
-	// set class by sidebar
+	// set class per sidebar
 	$sidebar_class = 'cp_sidebar_' . $sidebar_flag;
 
-	// init commentable class
+	// add to array
+	$classes[] = $sidebar_class;
+
+	// -------------------- commentable --------------------
+
+	// init commentable class but override if we have the plugin enabled
 	$commentable = '';
-
-	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
-
-		// set class
-		$commentable = ( $commentpress_core->is_commentable() ) ? ' commentable' : ' not_commentable';
-
+		$commentable = ( $commentpress_core->is_commentable() ) ? 'commentable' : 'not_commentable';
 	}
 
-	// init layout class
-	$layout_class = '';
+	// add to array
+	if ( ! empty( $commentable ) ) $classes[] = $commentable;
 
-	// if we have the plugin enabled
+	// -------------------- layout --------------------
+
+	// init layout class but if we have the plugin enabled
+	$layout_class = '';
 	if ( is_object( $commentpress_core ) ) {
 
 		// is this the title page?
@@ -621,13 +618,18 @@ function commentpress_get_body_classes( $raw = false ) {
 			if ( $layout == 'wide' ) {
 
 				// set layout class
-				$layout_class = ' full_width';
+				$layout_class = 'full_width';
 
 			}
 
 		}
 
 	}
+
+	// add to array
+	if ( ! empty( $layout_class ) ) $classes[] = $layout_class;
+
+	// -------------------- page type --------------------
 
 	// set default page type
 	$page_type = '';
@@ -636,7 +638,7 @@ function commentpress_get_body_classes( $raw = false ) {
 	if ( is_single() ) {
 
 		// add blog post class
-		$page_type = ' blog_post';
+		$page_type = 'blog_post';
 
 	}
 
@@ -647,7 +649,7 @@ function commentpress_get_body_classes( $raw = false ) {
 		if ( $commentpress_core->is_buddypress_special_page() ) {
 
 			// add BuddyPress page class
-			$page_type = ' buddypress_page';
+			$page_type = 'buddypress_page';
 
 		}
 
@@ -655,24 +657,34 @@ function commentpress_get_body_classes( $raw = false ) {
 		if ( $commentpress_core->db->is_special_page() ) {
 
 			// add BuddyPress page class
-			$page_type = ' commentpress_page';
+			$page_type = 'commentpress_page';
 
 		}
 
 	}
 
+	// add to array
+	if ( ! empty( $page_type ) ) $classes[] = $page_type;
+
+	// -------------------- is groupblog --------------------
+
 	// set default type
-	$groupblog_type = ' not-groupblog';
+	$is_groupblog = 'not-groupblog';
 
 	// if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
 
 		// if it's a groupblog
 		if ( $commentpress_core->is_groupblog() ) {
-			$groupblog_type = ' is-groupblog';
+			$is_groupblog = 'is-groupblog';
 		}
 
 	}
+
+	// add to array
+	if ( ! empty( $is_groupblog ) ) $classes[] = $is_groupblog;
+
+	// -------------------- blog type --------------------
 
 	// set default type
 	$blog_type = '';
@@ -686,19 +698,64 @@ function commentpress_get_body_classes( $raw = false ) {
 		// get workflow
 		$workflow = $commentpress_core->db->option_get( 'cp_blog_workflow' );
 
-		// allow plugins to override the blog type - for example if workflow is enabled,
-		// it might be a new blog type as far as BuddyPress is concerned
-		$blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $type, $workflow );
+		/**
+		 * Allow plugins to override the blog type - for example if workflow
+		 * is enabled, it might become a new blog type as far as BuddyPress
+		 * is concerned.
+		 *
+		 * @param int $type The numeric blog type
+		 * @param bool $workflow True if workflow enabled, false otherwise
+		 */
+		$current_blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $type, $workflow );
 
 		// if it's not the main site, add class
 		if ( is_multisite() AND ! is_main_site() ) {
-			$blog_type = ' blogtype-' . intval( $blog_type );
+			$blog_type = 'blogtype-' . intval( $current_blog_type );
 		}
 
 	}
 
+	// add to array
+	if ( ! empty( $blog_type ) ) $classes[] = $blog_type;
+
+	// -------------------- group groupblog type --------------------
+
+	// when viewing a group, set default groupblog type
+	$group_groupblog_type = '';
+
+	// if we have the plugin enabled
+	if ( is_object( $commentpress_core ) ) {
+
+		// is it a BuddyPress group page?
+		if ( function_exists( 'bp_is_groups_component' ) AND bp_is_groups_component() ) {
+
+			// get current group
+			$current_group = groups_get_current_group();
+
+			// sanity check
+			if ( $current_group instanceof BP_Groups_Group ) {
+
+				// get groupblog type
+				$groupblogtype = groups_get_groupmeta( $current_group->id, 'groupblogtype' );
+
+				// set groupblog type if present
+				if ( ! empty( $groupblogtype ) ) {
+					$group_groupblog_type = $groupblogtype;
+				}
+
+			}
+
+		}
+
+	}
+
+	// add to array
+	if ( ! empty( $group_groupblog_type ) ) $classes[] = $group_groupblog_type;
+
+	// -------------------- TinyMCE version --------------------
+
 	// init TinyMCE class
-	$tinymce_version = ' tinymce-3';
+	$tinymce_version = 'tinymce-3';
 
 	// access WP version
 	global $wp_version;
@@ -707,15 +764,17 @@ function commentpress_get_body_classes( $raw = false ) {
 	if ( version_compare( $wp_version, '3.8.9999', '>' ) ) {
 
 		// override TinyMCE class
-		$tinymce_version = ' tinymce-4';
+		$tinymce_version = 'tinymce-4';
 
 	}
 
-	// construct attribute
-	$body_classes = $sidebar_class . $commentable . $layout_class . $page_type . $groupblog_type . $blog_type . $tinymce_version;
+	// add to array
+	if ( ! empty( $tinymce_version ) ) $classes[] = $tinymce_version;
 
-	// allow filtering
-	$body_classes = apply_filters( 'commentpress_body_classes', $body_classes );
+	// -------------------- process --------------------
+
+	// construct attribute but allow filtering
+	$body_classes = apply_filters( 'commentpress_body_classes', implode( ' ', $classes ) );
 
 	// if we want them wrapped, do so
 	if ( ! $raw ) {

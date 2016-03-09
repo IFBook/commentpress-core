@@ -525,7 +525,12 @@ CommentPress.theme.sidebars = new function() {
 			wpadminbar_height = 0;
 		}
 
-		// calculate
+		// set top of sidebars
+		$('html body #content_container #sidebar,html body #content_container #navigation').css(
+			'top', ( header_height + wpadminbar_height ) + 'px'
+		);
+
+		// calculate TOC sidebar height
 		toc_sidebar_height = viewport - (header_height + sidebar_header_height + wpadminbar_height);
 
 		// allow for switcher visibility
@@ -832,10 +837,11 @@ CommentPress.theme.viewport = new function() {
 
 				}
 
+			} else {
 
+				// fixed header
 
 			}
-			//*/
 
 		});
 

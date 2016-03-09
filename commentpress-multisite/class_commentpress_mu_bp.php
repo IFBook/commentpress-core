@@ -690,14 +690,29 @@ class Commentpress_Multisite_Buddypress {
 
 
 	/**
-	 * Record the blog post activity for the group - by Luiz Armesto.
+	 * Record the blog post activity for the group.
 	 *
-	 * @see bp_groupblog_set_group_to_post_activity ( $activity )
+	 * Adapted from code by Luiz Armesto.
+	 *
+	 * Since the updates to BP Groupblog, a second argument is passed to this
+	 * method which, if present, means that we don't need to check for an
+	 * existing activity item. This code needs to be streamlined in the light
+	 * of the changes.
+	 *
+	 * @see bp_groupblog_set_group_to_post_activity( $activity )
 	 *
 	 * @param object $activity The existing activity object
+	 * @param array $args {
+	 *     Optional. Handy if you've already parsed the blog post and group ID.
+	 *     @type WP_Post $post The WP post object.
+	 *     @type int $group_id The group ID.
+	 * }
 	 * @return object $activity The modified activity object
 	 */
-	public function groupblog_custom_post_activity( $activity ) {
+	public function groupblog_custom_post_activity( $activity, $args = array() ) {
+
+		// sanity check
+		if ( ! bp_is_active( 'groups' ) ) return $activity;
 
 		// only on new blog posts
 		if ( ( $activity->type != 'new_blog_post' ) ) return $activity;
@@ -850,8 +865,80 @@ class Commentpress_Multisite_Buddypress {
 		// prevent from firing again
 		remove_action( 'bp_activity_before_save', array( $this, 'groupblog_custom_post_activity' ) );
 
+		// using this function outside BP's save routine requires us to manually save
+		if ( ! empty( $args['post'] ) ) {
+			$activity->save();
+		}
+
 		// --<
 		return $activity;
+
+	}
+
+
+
+	/**
+	 * Detects a post edit and modifies the activity entry if found.
+	 *
+	 * This is needed for BuddyPress 2.2+. Older versions of BuddyPress continue
+	 * to use the {@link bp_groupblog_set_group_to_post_activity()} function.
+	 *
+	 * This is copied from BP Groupblog and amended to suit.
+	 *
+	 * @see bp_groupblog_catch_transition_post_type_status()
+	 *
+	 * @since 3.8.5
+	 *
+	 * @param str $new_status New status for the post.
+	 * @param str $old_status Old status for the post.
+	 * @param object $post The post data.
+	 * @return void
+	 */
+	public function transition_post_type_status( $new_status, $old_status, $post ) {
+
+		// only needed for >= BP 2.2
+		if ( ! function_exists( 'bp_activity_post_type_update' ) ) return;
+
+		// bail if not a blog post
+		if ( 'post' !== $post->post_type ) return;
+
+		// is this an edit?
+		if ( $new_status === $old_status ) {
+
+			// an edit of an existing post should update the existing activity item
+			if ( $new_status == 'publish' ) {
+
+				// get group ID
+				$group_id = get_groupblog_group_id( get_current_blog_id() );
+
+				// get existing activity ID
+				$id = bp_activity_get_activity_id( array(
+					'component'         => 'groups',
+					'type'              => 'new_groupblog_post',
+					'item_id'           => $group_id,
+					'secondary_item_id' => $post->ID
+				) );
+
+				// bail if we don't have one
+				if ( empty( $id ) ) return;
+
+				// retrieve activity item and modify some properties
+				$activity = new BP_Activity_Activity( $id );
+				$activity->content = $post->post_content;
+				$activity->date_recorded = bp_core_current_time();
+
+				// we currently have to fool `$this->groupblog_custom_post_activity()`
+				$activity->type = 'new_blog_post';
+
+				// pass activity to our edit function
+				$this->groupblog_custom_post_activity( $activity, array(
+					'group_id' => $group_id,
+					'post'     => $post,
+				) );
+
+			}
+
+		}
 
 	}
 
@@ -1320,8 +1407,15 @@ class Commentpress_Multisite_Buddypress {
 
 		}
 
-		// return, but allow overrides
-		return apply_filters( 'cp_class_commentpress_workflow_group_blogtype', $blog_type );
+		/**
+		 * Allow plugins to override the blog type - for example if workflow
+		 * is enabled, it might become a new blog type as far as BuddyPress
+		 * is concerned.
+		 *
+		 * @param int $blog_type The numeric blog type
+		 * @param bool $blog_workflow True if workflow enabled, false otherwise
+		 */
+		return apply_filters( 'cp_class_commentpress_workflow_group_blogtype', $blog_type, $blog_workflow );
 
 	}
 
@@ -1441,12 +1535,17 @@ class Commentpress_Multisite_Buddypress {
 					// if group is not public
 					if( $group->status != 'public' ) {
 
-						// is the current user a member of the blog?
-						if ( ! is_user_member_of_blog( $current_user->ID, $blog_id ) ) {
+						// is the groupblog CommentPress Core enabled?
+						if ( $this->group_has_commentpress_groupblog( $group->id ) ) {
 
-							// no - redirect to network home, but allow overrides
-							wp_redirect( apply_filters( 'bp_groupblog_privacy_redirect_url', network_site_url() ) );
-							exit;
+							// is the current user a member of the blog?
+							if ( ! is_user_member_of_blog( $current_user->ID, $blog_id ) ) {
+
+								// no - redirect to network home, but allow overrides
+								wp_redirect( apply_filters( 'bp_groupblog_privacy_redirect_url', network_site_url() ) );
+								exit;
+
+							}
 
 						}
 
@@ -1523,8 +1622,8 @@ class Commentpress_Multisite_Buddypress {
 		// override "publicness" of groupblogs
 		add_filter( 'bp_is_blog_public', array( $this, 'is_blog_public' ), 20, 1 );
 
-		// amend BuddyPress group activity
-		add_action( 'bp_loaded', array( $this, '_group_activity_mods' ), 30 );
+		// amend BuddyPress group activity (after class Commentpress_Core does)
+		add_action( 'bp_setup_globals', array( $this, '_group_activity_mods' ), 1001 );
 
 		// get group avatar when listing groupblogs
 		add_filter( 'bp_get_blog_avatar', array( $this, 'get_blog_avatar' ), 20, 3 );
@@ -1657,14 +1756,19 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _group_activity_mods() {
 
+		// don't mess with hooks unless the blog is CommentPress Core-enabled
+		if ( ( false === $this->_is_commentpress_groupblog() ) ) return;
+
 		// allow lists in activity content
 		add_action( 'bp_activity_allowed_tags', array( $this, '_activity_allowed_tags' ), 20, 1 );
 
-		// drop the bp-groupblog post activity action
+		// drop the bp-groupblog post activity actions
 		remove_action( 'bp_activity_before_save', 'bp_groupblog_set_group_to_post_activity' );
+		remove_action( 'transition_post_status', 'bp_groupblog_catch_transition_post_type_status' );
 
 		// implement our own post activity (with Co-Authors compatibility)
 		add_action( 'bp_activity_before_save', array( $this, 'groupblog_custom_post_activity' ), 20, 1 );
+		add_action( 'transition_post_status', array( $this, 'transition_post_type_status' ), 20, 3 );
 
 		// CommentPress Core needs to know the sub-page for a comment, therefore:
 
@@ -1903,25 +2007,15 @@ class Commentpress_Multisite_Buddypress {
 
 		// TODO: create admin page settings for WordPress options
 
-		// show posts by default (may be overridden)
-		$posts_or_pages = 'post';
-
-		// allow plugin overrides
-		$posts_or_pages = apply_filters( 'cp_posts_or_pages_in_toc', $posts_or_pages );
-
-		// TOC = posts
+		// show posts by default (allow plugin overrides)
+		$posts_or_pages = apply_filters( 'cp_posts_or_pages_in_toc', 'post' );
 		$commentpress_core->db->option_set( 'cp_show_posts_or_pages_in_toc', $posts_or_pages );
 
 		// if we opted for posts
 		if ( $posts_or_pages == 'post' ) {
 
-			// TOC shows extended posts by default (may be overridden)
-			$extended_toc = 1;
-
-			// allow plugin overrides
-			$extended_toc = apply_filters( 'cp_extended_toc', $extended_toc );
-
-			// TOC shows extended posts
+			// TOC shows extended posts by default (allow plugin overrides)
+			$extended_toc = apply_filters( 'cp_extended_toc', 1 );
 			$commentpress_core->db->option_set( 'cp_show_extended_toc', $extended_toc );
 
 		}
@@ -1935,8 +2029,14 @@ class Commentpress_Multisite_Buddypress {
 		// did we get a group id before we switched blogs?
 		if ( isset( $group_id ) ) {
 
-			// allow plugins to override the blog type - for example if workflow is enabled,
-			// it might become a new blog type as far as BuddyPress is concerned
+			/**
+			 * Allow plugins to override the blog type - for example if workflow
+			 * is enabled, it might become a new blog type as far as BuddyPress
+			 * is concerned.
+			 *
+			 * @param int $cp_blog_type The numeric blog type
+			 * @param bool $cp_blog_workflow True if workflow enabled, false otherwise
+			 */
 			$blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $cp_blog_type, $cp_blog_workflow );
 
 			// set the type as group meta info
@@ -1955,11 +2055,14 @@ class Commentpress_Multisite_Buddypress {
 		// get commenting option
 		$anon_comments = $this->db->option_get( 'cpmu_bp_require_comment_registration' ) == '1' ? 1 : 0;
 
-		// anonymous commenting (may be overridden by admin option)
-		$anon_comments = apply_filters(
-			'cp_require_comment_registration',
-			$anon_comments
-		);
+		/**
+		 * Allow overrides for anonymous commenting.
+		 *
+		 * This may be overridden by an option in the Network Admin settings screen.
+		 *
+		 * @param bool $anon_comments Value of 1 requires registration, 0 does not
+		 */
+		$anon_comments = apply_filters( 'cp_require_comment_registration', $anon_comments );
 
 		// update wp option
 		update_option( 'comment_registration', $anon_comments );
@@ -1987,6 +2090,17 @@ class Commentpress_Multisite_Buddypress {
 			}
 
 		}
+
+		/**
+		 * Allow plugins to add their own config.
+		 *
+		 * @since 3.8.5
+		 *
+		 * @param int $blog_id The numeric ID of the WordPress blog
+		 * @param int $cp_blog_type The numeric blog type
+		 * @param bool $cp_blog_workflow True if workflow enabled, false otherwise
+		 */
+		do_action( 'cp_new_groupblog_created', $blog_id, $cp_blog_type, $cp_blog_workflow );
 
 		// switch back
 		restore_current_blog();
@@ -2158,6 +2272,9 @@ class Commentpress_Multisite_Buddypress {
 	 *
 	 * Note that this only tests the current blog and cannot be used to discover
 	 * if a specific blog is a CommentPress Core groupblog.
+	 *
+	 * Also note that this method only functions after 'bp_setup_globals' has
+	 * fired with priority 1000.
 	 *
 	 * @return bool True if current blog is CommentPress Core-enabled, false otherwise
 	 */

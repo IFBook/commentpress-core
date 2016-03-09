@@ -1071,8 +1071,14 @@ class Commentpress_Core_Database {
 				$group_id = get_groupblog_group_id( get_current_blog_id() );
 				if ( is_numeric( $group_id ) ) {
 
-					// allow plugins to override the blog type - for example if workflow is enabled,
-					// it might become a new blog type as far as BuddyPress is concerned
+					/**
+					 * Allow plugins to override the blog type - for example if workflow
+					 * is enabled, it might become a new blog type as far as BuddyPress
+					 * is concerned.
+					 *
+					 * @param int $cp_blog_type The numeric blog type
+					 * @param bool $cp_blog_workflow True if workflow enabled, false otherwise
+					 */
 					$blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $cp_blog_type, $cp_blog_workflow );
 
 					// set the type as group meta info
@@ -3023,17 +3029,6 @@ class Commentpress_Core_Database {
 
 		// set min page width
 		$vars['cp_min_page_width'] = $this->option_get( 'cp_min_page_width' );
-
-		// set signup flag
-		$vars['cp_is_signup_page'] = '0';
-
-		// test for signup
-		if ( $this->parent_obj->is_signup_page() ) {
-
-			// set flag
-			$vars['cp_is_signup_page'] = '1';
-
-		}
 
 		// default to showing textblock meta
 		$vars['cp_textblock_meta'] = 1;

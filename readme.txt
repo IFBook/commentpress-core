@@ -221,6 +221,13 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+<h4>3.8.5</h4>
+
+* Fix print layout in Chrome
+* Remove BuddyPress templates and provide compatibility via CSS
+* Update Groupblog compatibility
+* Update Multisite compatibility
+* Drop support for IE7 and under
 
 <h4>3.8.4</h4>
 
