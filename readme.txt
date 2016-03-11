@@ -212,6 +212,10 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+<h4>3.8.7</h4>
+
+* Fix illegal character in BuddyPress stylesheet
+
 <h4>3.8.6</h4>
 
 * Remove BuddyPress templates from Plugin Directory repo
