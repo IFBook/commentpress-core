@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
 Requires at least: 3.4
 Tested up to: 4.4
-Stable tag: 3.8.5
+Stable tag: 3.8.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,7 +90,6 @@ Essential Plugins:
 
 1. Install, Network Activate and configure "BuddyPress" (**Please note:** "CommentPress Core" has not been tested with the Forums component)
 2. Download and Network Activate the latest version of "BuddyPress Groupblog" greater than 1.8.3
-4. Install and DO NOT Network Activate "BuddyPress Template Pack"
 
 Optional Plugins:
 
@@ -107,14 +106,6 @@ Okay, we're ready to install "CommentPress Core":
 3. Network Enable the "CommentPress Modern Theme" and/or the "CommentPress Default Theme" UNLESS
 4. You have "CommentPress Core"-compatible child themes you want to use instead:
 5. Network Enable any "CommentPress Core"-compatible child themes you want to use
-
-Go to your main blog's Dashboard:
-
-1. Activate "BuddyPress Template Pack"
-2. Go to the "BP Compatibility" page
-3. Click "Finish"
-4. Tick "Disable BP Template Pack CSS"
-5. Click "Save Settings"
 6. Optionally, activate your chosen "CommentPress Core"-compatible child theme
 
 Go to your "Groupblog Setup" page under "Settings" in "Network Admin":
@@ -148,11 +139,11 @@ To create a "CommentPress Core"-enabled Groupblog:
 6. To go to the groupblog, click "Blog" (or "Workshop" if you have chosen that naming scheme)
 7. Start your group blogging!
 
-**For sites hosted in the European Union, please note:** the "CommentPress Default Theme" makes use of cookies, but for presentational purposes only. If you intend to use the "CommentPress Default Theme" on a public site, you may need to inform visitors of this.
-
 
 
 == Other Notes ==
+
+**For sites hosted in the European Union, please note:** the "CommentPress Default Theme" makes use of cookies, but for presentational purposes only. If you intend to use the "CommentPress Default Theme" on a public site, you may need to inform visitors of this.
 
 Upgrades from previous versions of "CommentPress" are possible. Please follow the following procedures for your context.
 
@@ -220,6 +211,14 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 
 == Changelog ==
+
+<h4>3.8.7</h4>
+
+* Fix illegal character in BuddyPress stylesheet
+
+<h4>3.8.6</h4>
+
+* Remove BuddyPress templates from Plugin Directory repo
 
 <h4>3.8.5</h4>
 
