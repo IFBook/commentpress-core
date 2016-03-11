@@ -220,7 +220,6 @@ form#whats-new-form,
 {
 	padding: 36px;
 	margin: 0;
-	background-color: #819565;
 }
 
 #buddypress #item-body form#whats-new-form
@@ -289,7 +288,6 @@ Directory forms
 */
 form.dir-form
 {
-	background-color: #819565;
 	padding: 0;
 }
 
@@ -1177,6 +1175,10 @@ body.group-create #buddypress #group-create-body p
 	margin: 0.7em 0;
 }
 
+#buddypress #item-body p.warning,
+#buddypress #item-body div.bp-avatar-status p.success,
+#buddypress #item-body div.bp-cover-image-status p.success,
+#buddypress #item-body div.bp-avatar-status p#bp-avatar-feedback,
 body.group-create #buddypress #group-create-body p#bp-avatar-feedback,
 body.group-create #buddypress #group-create-body .bp-avatar-status p,
 body.group-create #buddypress #group-create-body .bp-cover-image-status p
@@ -1977,7 +1979,6 @@ body.create-blog.buddypress_page #content h3,
 	font-family: sans-serif;
 	color: #fff;
 	padding: 21px 19px 15px 19px;
-	background-color: #819565;
 	margin: 0;
 }
 
