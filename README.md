@@ -103,7 +103,6 @@ Essential Plugins:
 
 1. Install, Network Activate and configure *BuddyPress* (**Please note:** *CommentPress Core* has not been tested with the Forums component)
 2. Download and Network Activate the latest version of *BuddyPress Groupblog* greater than 1.8.3
-4. Install and DO NOT Network Activate *BuddyPress Template Pack*
 
 Optional Plugins:
 
@@ -120,14 +119,6 @@ Okay, we're ready to install *CommentPress Core*:
 3. Network Enable the *CommentPress Modern Theme* and/or the *CommentPress Default Theme* UNLESS
 4. You have *CommentPress Core*-compatible child themes you want to use instead:
 5. Network Enable any *CommentPress Core*-compatible child themes you want to use
-
-Go to your main blog's Dashboard:
-
-1. Activate *BuddyPress Template Pack*
-2. Go to the "BP Compatibility" page
-3. Click "Finish"
-4. Tick "Disable BP Template Pack CSS"
-5. Click "Save Settings"
 6. Optionally, activate your chosen *CommentPress Core*-compatible child theme
 
 Go to your "Groupblog Setup" page under "Network Admin" -> "Settings":
