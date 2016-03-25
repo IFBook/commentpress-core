@@ -380,6 +380,8 @@ Post-related styles
 .post img
 {
 	vertical-align: top;
+	max-width: 100%;
+	height: auto;
 }
 
 .post img.alignleft
@@ -2501,6 +2503,8 @@ span.captioned_image
 	padding: 10px;
 	margin: 7px 0;
 	border: 1px solid #B5BFB2;
+	max-width: 96%;
+	height: auto;
 }
 
 	span.captioned_image.aligncenter
