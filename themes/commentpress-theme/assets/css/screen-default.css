@@ -2298,21 +2298,94 @@ ul#content-tabs li
 		padding: 8px;
 	}
 
-	/* galleries */
-	.post .gallery-item
-	{
-		width: 30% !important;
-	}
-
-	.post .gallery-caption
-	{
-		font-size: smaller;
-	}
-
 	.hidden_page_url
 	{
 		display: none;
 	}
+
+
+
+
+/*
+--------------------------------------------------------------------------------
+WordPress galleries
+--------------------------------------------------------------------------------
+*/
+
+dl.gallery-item
+{
+	margin-left: 0;
+	margin-right: 0;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.gallery .wp-caption-text
+{
+	margin-top: 0.3em;
+	font-size: 80%;
+	line-height: 1.3;
+	text-align: center;
+	font-family: sans-serif;
+}
+
+#content ul.image_link,
+.content ul.image_link
+{
+	margin: 0;
+	margin-top: 2em;
+	padding: 0;
+	list-style-type: none;
+}
+
+ul.image_link h4
+{
+}
+
+ul.image_link .alignright h4
+{
+	text-align: right;
+}
+
+ul.image_link .alignleft h4
+{
+	text-align: left;
+}
+
+.image_attachment h2.post_title span
+{
+	display: block;
+}
+
+/* back to gallery */
+#content p.back_button a.button
+{
+	text-decoration: none;
+	font: normal 12px/20px Arial, Tahoma, Verdana, sans-serif;
+}
+
+div.the_image_attachment
+{
+	margin: 1em 0 1em 0;
+	padding: 3em 0 2em 0;
+	background-color: #f8f8f8;
+	border: 1px solid #eee;
+}
+
+p.image_attachment_wrap
+{
+	text-align: center;
+	margin: 0;
+	padding: 0;
+}
+
+div.image_attachment_caption
+{
+	text-align: center;
+	margin: 0 3em;
+	padding: 0.5em 0 0 0;
+	font-family: sans-serif;
+}
 
 
 
