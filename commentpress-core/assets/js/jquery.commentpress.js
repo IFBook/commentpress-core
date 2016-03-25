@@ -1196,7 +1196,7 @@ CommentPress.common.content = new function() {
 			text_sig = $(this).prop('href').split('#')[1];
 
 			// set target to comment form
-			CommentPress.settings.textblock.set_scroll_target( 'commentform' );
+			CommentPress.settings.textblock.set_scroll_target( 'para_heading' );
 
 			// broadcast action - allows scroll target to be overridden
 			$(document).trigger( 'commentpress-link-in-textblock-pre-align' );
