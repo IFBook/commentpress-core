@@ -144,7 +144,7 @@ div.generic-button a:hover
 #book_search input#searchsubmit,
 #book_header #user_links a.button
 {
-	margin-top: 1px
+	margin-top: 1px;
 	margin-left: 5px;
 	line-height: 10px;
 	color: #777;
@@ -153,7 +153,7 @@ div.generic-button a:hover
 
 #book_header #user_links a.button
 {
-	margin-top: 1px
+	margin-top: 1px;
 	line-height: 10px;
 	color: #777;
 	padding: 1px 6px;
@@ -4111,7 +4111,7 @@ Compatibility with Members List plugin
 #tern_members .tern_wp_members_list li
 {
 	height: auto;
-	padding-top: 0
+	padding-top: 0;
 }
 
 html>/**/body #tern_members .tern_wp_members_list li
@@ -4230,6 +4230,123 @@ Compatibility with BP Group Sites plugin
 #bpgsites-post-in-box select
 {
 	font-size: 70%;
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
+Compatibility with BuddyPress plugin
+--------------------------------------------------------------------------------
+*/
+
+/* BuddyPress clearer div */
+.clear
+{
+	clear: left;
+}
+
+#activity_sidebar span.activity
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 70%;
+	color: #666;
+}
+
+
+
+/* Who's Online (activity tab) */
+#activity_sidebar ul.item-list.cp-online-members
+{
+	margin: 0;
+	padding: 0;
+	border-bottom: none;
+}
+
+#activity_sidebar ul.item-list.cp-online-members li
+{
+	padding: 10px;
+	border-top: none;
+	border-bottom: 1px dashed #B5BFB2;
+	position: static;
+}
+
+#activity_sidebar ul.item-list.cp-online-members li div.item-title,
+#activity_sidebar ul.item-list.cp-online-members li h4
+{
+	width: auto;
+}
+
+#activity_sidebar ul.item-list.cp-online-members li a
+{
+	display: inline;
+	padding: 0;
+	color: #761D19;
+	font-size: 110%;
+	background: transparent;
+}
+
+#activity_sidebar ul.item-list.cp-online-members li .item-avatar
+{
+	float: left;
+	padding: 0 10px 0 0;
+}
+
+#activity_sidebar ul.item-list.cp-online-members li img.avatar
+{
+	float: none;
+	margin: 0;
+}
+
+
+
+/* Recently Active (activity tab) */
+#activity_sidebar ul.item-list.cp-recently-active
+{
+	margin: 0;
+	padding: 0;
+	border-bottom: none;
+}
+
+#activity_sidebar ul.item-list.cp-recently-active li
+{
+	padding: 10px;
+	border-top: none;
+	border-bottom: 1px dashed #B5BFB2;
+	position: static;
+}
+
+#activity_sidebar ul.item-list.cp-recently-active li:last-child
+{
+	border-bottom: none;
+}
+
+#activity_sidebar ul.item-list.cp-recently-active li div.item-title,
+#activity_sidebar ul.item-list.cp-recently-active li h4
+{
+	width: auto;
+}
+
+#activity_sidebar ul.item-list.cp-recently-active li a
+{
+	display: inline;
+	padding: 0;
+	color: #761D19;
+	font-size: 110%;
+	background: transparent;
+}
+
+#activity_sidebar ul.item-list.cp-recently-active li .item-avatar
+{
+	float: left;
+	padding: 0 10px 0 0;
+}
+
+#activity_sidebar ul.item-list.cp-recently-active li img.avatar
+{
+	border: none;
+	float: none;
+	margin: 0;
 }
 
 
