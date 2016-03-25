@@ -2753,16 +2753,20 @@ ol.footnotes,
 	font-family: sans-serif;
 }
 
-ol.footnotes
+.post ol.footnotes
 {
-	font-size: 0.8em;
+	font-size: inherit;
+	color: inherit;
 }
+
+/* see colours-01.css for colouring WP Footnotes when selected */
 
 .simple-footnotes
 {
 	font-family: sans-serif;
 }
 
+.post ol.footnotes li:not(.list_commenticon),
 .footnotes ol li:not(.list_commenticon),
 .simple-footnotes ol li:not(.list_commenticon)
 {
@@ -2793,8 +2797,7 @@ ol.footnotes
 #content a.simple-footnote sup,
 .content a.simple-footnote sup,
 #content sup.footnote a,
-.content sup.footnote a,
-.footnote-link.footnote-back-link
+.content sup.footnote a
 {
 	padding: 3px 5px;
 	background-color: #fdd;
@@ -2808,13 +2811,13 @@ ol.footnotes
 }
 
 .footnotereverse a,
-.simple-footnotes li > a
+.simple-footnotes li > a,
+.footnote-link.footnote-back-link
 {
 	text-decoration: none;
 }
 
 .footnotereverse a,
-.footnote-link.footnote-back-link,
 .simple-footnotes li > a
 {
 	vertical-align: top;
