@@ -960,13 +960,13 @@ function commentpress_page_title() {
 			if ( $ancestors ) {
 				$ancestors = array_reverse( $ancestors );
 
- 				$crumb = array();
+				$crumbs = array();
 
 				foreach ( $ancestors as $crumb ) {
-					$crumb[] = get_the_title( $crumb );
+					$crumbs[] = get_the_title( $crumb );
 				}
 
-				$title .= implode( $sep, $crumb ) . $sep;
+				$title .= implode( $sep, $crumbs ) . $sep;
 			}
 
 		}
