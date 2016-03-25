@@ -1489,6 +1489,11 @@ body.create-blog #setupform
 	padding: 7px 19px 19px 19px;
 }
 
+body.create-blog #content .post
+{
+	padding-bottom: 1px;
+}
+
 body.create-blog #content p
 {
 	font-size: 1em;
