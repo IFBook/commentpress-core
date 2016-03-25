@@ -302,6 +302,8 @@ Post-related styles
 	font-size: 2em;
 	margin: 15px 0 5px 0;
 	padding 7px;
+	-ms-word-wrap: break-word;
+	word-wrap: break-word;
 }
 
 .post h2 a:link,
@@ -2626,7 +2628,32 @@ span.wp-caption
 	display: block;
 	text-align: center;
 	padding: 0;
-	margin: 0;
+	margin: 10px;
+	margin-bottom: 0;
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
+Support for WordPress post formats
+--------------------------------------------------------------------------------
+*/
+
+/* audio shortcode */
+.wp-audio-shortcode
+{
+	margin: 7px auto 11px auto;
+}
+
+.single.single-format-chat .post p
+{
+	font-family: monospace;
+}
+
+.single.single-format-chat .post p.postmetadata
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 

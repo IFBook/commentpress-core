@@ -1638,6 +1638,8 @@ h2.post_title,
 {
 	font-size: 2em;
 	line-height: 1.2;
+	-ms-word-wrap: break-word;
+	word-wrap: break-word;
 }
 
 h2.post_title a,
@@ -1645,7 +1647,6 @@ h2.post_title a,
 {
 	color: #000;
 	text-decoration: none;
-	word-wrap: break-word;
 }
 
 div.search_meta
@@ -2638,7 +2639,7 @@ Compatibility with Members List plugin
 #tern_members .tern_wp_members_list li
 {
 	height: auto;
-	padding-top: 0
+	padding-top: 0;
 }
 
 html>body #tern_members .tern_wp_members_list li
