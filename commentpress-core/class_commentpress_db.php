@@ -2503,16 +2503,8 @@ class Commentpress_Core_Database {
 		// access post
 		global $post;
 
-		// get all by default
-		$pings = '';
-
-		// check what we're allowing
-		if ( is_object( $post ) AND $post->ping_status != 'open' ) {
-			$pings = '&type=comment';
-		}
-
 		// for WordPress, we use the API
-		$comments = get_comments( 'post_id=' . $post_ID . '&order=ASC' . $pings );
+		$comments = get_comments( 'post_id=' . $post_ID . '&order=ASC' );
 
 		// --<
 		return $comments;
