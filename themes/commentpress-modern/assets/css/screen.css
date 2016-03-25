@@ -1728,6 +1728,7 @@ body.single-post .post
 {
 	position: absolute;
 	font-style: normal;
+	font-weight: normal;
 	left: -36px;
 	margin-top: 0;
 	width: 36px;
@@ -1753,6 +1754,7 @@ body.single-post .post
 	color: #000;
 	font-size: 1em;
 	font-style: normal;
+	font-weight: normal;
 	width: 17px;
 	padding-left: 9px;
 	cursor: pointer;
@@ -2749,21 +2751,28 @@ ol.footnotes,
 .simple-footnotes ol
 {
 	font-family: sans-serif;
+}
+
+ol.footnotes,
+.footnotes ol
+{
 	font-size: 0.8em;
-	color: #666;
 }
 
 .simple-footnotes
 {
 	font-family: sans-serif;
-	color: #666;
+}
+
+.simple-footnotes ol li:not(.list_commenticon)
+{
+	font-size: 0.8em;
 }
 
 .simple-footnotes p.notes
 {
 	font-size: 1em;
 	font-weight: bold;
-	color: #666;
 }
 
 #content sup a.footnote-link,
@@ -2786,8 +2795,7 @@ ol.footnotes,
 #content sup.footnote a,
 .content sup.footnote a,
 .footnotereverse a,
-.footnote-link.footnote-back-link,
-.simple-footnotes li > a
+.footnote-link.footnote-back-link
 {
 	padding: 3px 5px;
 	background-color: #fdd;
@@ -2799,6 +2807,20 @@ ol.footnotes,
 	-webkit-border-radius: 6px;
 	border-radius: 6px;
 }
+
+/*
+.simple-footnotes li > a
+{
+	padding: 3px 5px;
+	background-color: #fdd;
+	text-decoration: none;
+	font-weight: bold;
+	-moz-border-radius: 6px;
+	-khtml-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+}
+*/
 
 .footnotereverse a,
 .footnote-link.footnote-back-link,
