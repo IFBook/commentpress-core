@@ -729,6 +729,9 @@ CommentPress.common.content = new function() {
 	 */
 	this.dom_ready = function() {
 
+		// generic links
+		me.generic_links();
+
 		// title
 		me.title_links();
 
@@ -749,6 +752,33 @@ CommentPress.common.content = new function() {
 
 		// footnotes
 		me.footnotes_compatibility();
+
+	};
+
+
+
+	/**
+	 * Set up actions on generic linkss in textblocks
+	 *
+	 * @return void
+	 */
+	this.generic_links = function() {
+
+		/**
+		 * Clicking on generic links in textblocks.
+		 *
+		 * We don't want the event to bubble on links that are not CommentPress-
+		 * specific, causing the columns to animate. Most generic links point to
+		 * external pages and there's a class available for internal links.
+		 *
+		 * @return false
+		 */
+		$('#container').on( 'click', '.textblock a:not([class])', function( event ) {
+
+			// prevent bubbling
+			event.stopPropagation();
+
+		});
 
 	};
 
@@ -963,7 +993,7 @@ CommentPress.common.content = new function() {
 		 *
 		 * @return void
 		 */
-		$('#wrapper').on( 'click', '.textblock_permalink', function( event ) {
+		$('#container').on( 'click', '.textblock_permalink', function( event ) {
 
 			// define vars
 			var url;
