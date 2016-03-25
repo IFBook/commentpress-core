@@ -2753,8 +2753,7 @@ ol.footnotes,
 	font-family: sans-serif;
 }
 
-ol.footnotes,
-.footnotes ol
+ol.footnotes
 {
 	font-size: 0.8em;
 }
@@ -2764,6 +2763,7 @@ ol.footnotes,
 	font-family: sans-serif;
 }
 
+.footnotes ol li:not(.list_commenticon),
 .simple-footnotes ol li:not(.list_commenticon)
 {
 	font-size: 0.8em;
@@ -2794,7 +2794,6 @@ ol.footnotes,
 .content a.simple-footnote sup,
 #content sup.footnote a,
 .content sup.footnote a,
-.footnotereverse a,
 .footnote-link.footnote-back-link
 {
 	padding: 3px 5px;
@@ -2808,19 +2807,11 @@ ol.footnotes,
 	border-radius: 6px;
 }
 
-/*
+.footnotereverse a,
 .simple-footnotes li > a
 {
-	padding: 3px 5px;
-	background-color: #fdd;
 	text-decoration: none;
-	font-weight: bold;
-	-moz-border-radius: 6px;
-	-khtml-border-radius: 6px;
-	-webkit-border-radius: 6px;
-	border-radius: 6px;
 }
-*/
 
 .footnotereverse a,
 .footnote-link.footnote-back-link,
