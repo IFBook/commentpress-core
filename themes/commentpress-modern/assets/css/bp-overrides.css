@@ -2187,6 +2187,7 @@ Who's Online (activity tab)
 {
 	padding: 10px;
 	border-top: none;
+	border-bottom: 1px solid #eee;
 	position: static;
 }
 
@@ -2235,6 +2236,7 @@ Recently Active (activity tab)
 {
 	padding: 10px;
 	border-top: none;
+	border-bottom: 1px solid #eee;
 	position: static;
 }
 
