@@ -499,6 +499,17 @@ Post-related styles
 	padding-right: 7px;
 }
 
+.post p.postmetadata a:focus
+{
+	background: #eee;
+}
+
+.post p.postmetadata a,
+.post p.postmetadata a:active
+{
+	background: transparent;
+}
+
 .post p.postname
 {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -1480,13 +1491,25 @@ Search Results Page
 	font-style: normal;
 }
 
-#content .search_meta a
+#content .search_meta a:focus
+{
+	text-decoration: underline;
+}
+
+#content .search_meta a,
+#content .search_meta a:active
 {
 	color: #222;
 	text-decoration: none;
 }
 
-#content .search_meta cite a
+#content .search_meta cite a:active
+{
+	text-decoration: underline;
+}
+
+#content .search_meta cite a,
+#content .search_meta cite a:active
 {
 	color: #761D19;
 	text-decoration: none;
@@ -2984,6 +3007,11 @@ Sidebar
 			line-height: 1;
 			width: auto;
 			padding: 7px 6px 0 26px;
+		}
+
+		li.sidebar_header h2 a:focus
+		{
+			color: #CD0018;
 		}
 
 		li.sidebar_header h2 a,

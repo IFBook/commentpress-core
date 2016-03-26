@@ -1798,7 +1798,13 @@ div.search_meta cite
 	line-height: 1.5;
 }
 
-div.search_meta cite a
+div.search_meta cite a:focus
+{
+	text-decoration: underline;
+}
+
+div.search_meta cite a,
+div.search_meta cite a:active
 {
 	color: #000;
 	text-decoration: none;
@@ -1809,7 +1815,13 @@ div.search_meta p
 	margin: 0;
 }
 
-div.search_meta p a
+div.search_meta p a:focus
+{
+	text-decoration: underline;
+}
+
+div.search_meta p a,
+div.search_meta p a:active
 {
 	display: block;
 	color: #000;
@@ -1971,13 +1983,17 @@ div.multipager .multipager_sep
 }
 
 div.multipager a,
-div.multipager a:link,
 div.multipager a:hover,
 div.multipager a:active,
 div.multipager a:visited
 {
 	color: #666;
 	text-decoration: none;
+}
+
+div.multipager a:focus span
+{
+	text-decoration: underline;
 }
 
 div.multipager a:hover
@@ -2009,12 +2025,20 @@ div.multipager.multipager_all span.multipager_link
 	border: 1px solid #ddd;
 }
 
-div.multipager.multipager_all a
+div.multipager.multipager_all a,
+div.multipager.multipager_all a:active
 {
 	text-decoration: none;
 }
 
-div.multipager.multipager_all a span.multipager_link
+div.multipager.multipager_all a:focus span.multipager_link
+{
+	color: #fff;
+	background: #ccc;
+}
+
+div.multipager.multipager_all a span.multipager_link,
+div.multipager.multipager_all a:active span.multipager_link
 {
 	background: #E8E8E8;
 	color: #000;
@@ -2041,10 +2065,17 @@ div.multipager.multipager_all a:hover span.multipager_link
 	border-top: 1px solid #ddd;
 }
 
-.post p.search_meta a,
-.post p.postmetadata a
+.post p.search_meta a:focus,
+.post p.postmetadata a:focus
 {
-	color: #000;
+	text-decoration: underline;
+}
+
+.post p.search_meta a,
+.post p.search_meta a:active,
+.post p.postmetadata a,
+.post p.postmetadata a:active
+{
 	text-decoration: none;
 }
 
@@ -2080,7 +2111,16 @@ body.blogtype-4 #content .post .entry-category-meta p.category-meta
 	padding: 0;
 }
 
+.entry-category-meta a:focus
+{
+	text-decoration: underline;
+}
 
+.entry-category-meta a,
+.entry-category-meta a:active
+{
+	text-decoration: none;
+}
 
 .post img
 {
