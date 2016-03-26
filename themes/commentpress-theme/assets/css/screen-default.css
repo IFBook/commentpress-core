@@ -115,9 +115,21 @@ div.generic-button a
 	line-height: 14px;
 }
 
+button:focus,
+a.button:focus,
+input[type=submit]:focus,
+input[type=button]:focus,
+input[type=reset]:focus,
+ul.button-nav li a:focus,
+div.generic-button a:focus
+{
+	border-color: #5b9dd9;
+	-webkit-box-shadow: 0 0 3px rgba( 0, 115, 170, .8 );
+	box-shadow: 0 0 3px rgba( 0, 115, 170, .8 );
+}
+
 button:hover,
 a.button:hover,
-a.button:focus,
 input[type=submit]:hover,
 input[type=button]:hover,
 input[type=reset]:hover,
@@ -137,6 +149,8 @@ div.generic-button a:hover
 	color: #555;
 	outline: none;
 	text-decoration: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
 }
 
 /* except for Search and User Links */
@@ -199,14 +213,16 @@ Page heading-related styles
 	padding-top: 12px;
 }
 
-#title h1 a
-{
-	color: #eee;
-}
-
 #title h1 a:focus
 {
-	background-color: #9AAB84;
+	text-decoration: underline;
+}
+
+#title h1 a,
+#title h1 a:active
+{
+	color: #eee;
+	text-decoration: none;
 }
 
 #tagline
@@ -306,18 +322,19 @@ Post-related styles
 	word-wrap: break-word;
 }
 
-.post h2 a:link,
+.post h2 a:focus,
+.post h3 a:focus
+{
+	text-decoration: underline;
+}
+
+.post h2 a,
 .post h2 a:hover,
+.post h2 a:active,
 .post h2 a:visited
 {
 	color: #761D19;
 	text-decoration: none;
-}
-
-.post h2 a:active,
-.post h2 a:focus
-{
-	background-color: #CBFFBD;
 }
 
 .post h3
@@ -330,7 +347,7 @@ Post-related styles
 	padding-right: 7px;
 }
 
-.post h3 a:link,
+.post h3 a,
 .post h3 a:hover,
 .post h3 a:active,
 .post h3 a:visited
@@ -732,12 +749,18 @@ div#comments_sidebar .comments_container > h3
 }
 
 	/* comment_block_permalink */
+	div#comments_sidebar .comments_container > h3 a:focus
+	{
+		background: #ddd;
+	}
+
 	div#comments_sidebar .comments_container > h3 a
 	{
 		display: block;
 		padding: 6px 0 6px 20px;
 		color: #761D19;
 		text-decoration: none;
+		background: none;
 	}
 
 /* no comments header */
@@ -749,7 +772,12 @@ h3.nocomments
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-a.comment-edit-link:link,
+a.comment-edit-link:focus
+{
+	text-decoration: underline;
+}
+
+a.comment-edit-link,
 a.comment-edit-link:hover,
 a.comment-edit-link:active,
 a.comment-edit-link:visited
@@ -795,6 +823,11 @@ a.comment-edit-link:hover
 	vertical-align: middle;
 }
 
+.comment-identifier cite a:focus
+{
+	text-decoration: underline;
+}
+
 .comment-identifier cite a,
 .comment-identifier cite a:hover,
 .comment-identifier cite a:active,
@@ -806,7 +839,12 @@ a.comment-edit-link:hover
 	text-decoration: none;
 }
 
-a.comment_permalink:link,
+a.comment_permalink:focus
+{
+	text-decoration: underline;
+}
+
+a.comment_permalink,
 a.comment_permalink:hover,
 a.comment_permalink:active,
 a.comment_permalink:visited
@@ -879,11 +917,21 @@ a#cancel-comment-reply-link:visited
 	text-align: right;
 	text-transform: uppercase;
 	color: #761D19;
+	background: none;
+}
+
+a.reply_to_para:focus,
+.reply a:focus
+{
+	color: #761D19;
+	background: #eee;
 }
 
 /* hover colour */
 a.reply_to_para:hover,
-.reply a:hover
+a.reply_to_para:active,
+.reply a:hover,
+.reply a:active
 {
 	color: #761D19;
 	background: #eee;
@@ -919,7 +967,12 @@ div#respond p
 	line-height: 1.6;
 }
 
-div#respond p a:link,
+div#respond p a:focus
+{
+	text-decoration: underline;
+}
+
+div#respond p a,
 div#respond p a:hover,
 div#respond p a:active,
 div#respond p a:visited
@@ -1173,7 +1226,14 @@ div#sidebar .comments_container .comment-content listing
 	padding: 0 0 8px 0;
 }
 
-div#sidebar .comments_container .comment-content a
+div#sidebar .comments_container .comment-content a:focus
+{
+	color: #761D19;
+	text-decoration: none;
+}
+
+div#sidebar .comments_container .comment-content a,
+div#sidebar .comments_container .comment-content a:active
 {
 	text-decoration: underline;
 }
@@ -1685,31 +1745,32 @@ a.skip:hover,
 a.skip:visited
 {
 	position: absolute;
-	left: 0px;
-	top: -999px;
+	left: -1000em;
+	top: -1000em;
+	height: 1px;
+	width: 1px;
 	overflow: hidden;
-	z-index: 2000;
-	font-size: 1.55em;
-	border: 5px solid #B5BFB2;
-	margin: 0;
-	padding: 10px 0;
-	background: #9AAB84;
-	-moz-border-radius: 22px;
-	-khtml-border-radius: 22px;
-	-webkit-border-radius: 22px;
-	border-radius: 22px;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 a.skip:active,
 a.skip:focus
 {
-	color: #fff;
-	position: absolute;
-	top: 36px;
-	left: 1%;
-	width: 58%;
-	text-align: center;
+	left: 6px;
+	top: 7px;
+	height: auto;
+	width: auto;
+	display: block;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 15px 23px 14px;
+	background: #f1f1f1;
+	color: #0073aa;
+	z-index: 100000;
+	line-height: normal;
+	text-decoration: none;
+	-webkit-box-shadow: 0 0 2px 2px rgba(0,0,0,.6);
+	box-shadow: 0 0 2px 2px rgba(0,0,0,.6);
 }
 
 
@@ -2925,9 +2986,11 @@ Sidebar
 			padding: 7px 6px 0 26px;
 		}
 
-		li.sidebar_header h2 a
+		li.sidebar_header h2 a,
+		li.sidebar_header h2 a:active
 		{
 			color: #761D19;
+			text-decoration: none;
 		}
 
 
@@ -3158,11 +3221,18 @@ body.cp_sidebar_toc #toc_sidebar
 		margin: 0;
 	}
 
-	#toc_sidebar .sidebar_minimiser ul li a:link,
+	#toc_sidebar .sidebar_minimiser ul li a:focus
+	{
+		background: #EFEFEF;
+		text-decoration: none;
+	}
+
+	#toc_sidebar .sidebar_minimiser ul li a,
 	#toc_sidebar .sidebar_minimiser ul li a:active,
 	#toc_sidebar .sidebar_minimiser ul li a:visited
 	{
 		color: #666;
+		background: transparent;
 		text-decoration: none;
 	}
 
@@ -3633,8 +3703,13 @@ ol.comment_activity .reply p
 	padding: 0;
 }
 
+a.comment_activity_link:focus
+{
+	text-decoration: underline;
+}
+
 ol.comment_activity .reply p a,
-a.comment_activity_link:link,
+a.comment_activity_link,
 a.comment_activity_link:hover,
 a.comment_activity_link:active,
 a.comment_activity_link:visited
