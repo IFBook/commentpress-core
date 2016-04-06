@@ -2076,7 +2076,7 @@ CommentPress.texthighlighter.comments = new function() {
 	this.highlighter_activate = function() {
 
 		// enable highlighter
-		$('.comment-content').highlighter({
+		$('#comments_sidebar .comment-content').highlighter({
 			'selector': '.comment-popover-holder',
 			'minWords': 1,
 			'complete': function( selected_text ) {
@@ -2095,7 +2095,7 @@ CommentPress.texthighlighter.comments = new function() {
 	this.highlighter_deactivate = function() {
 
 		// destroy highlighter
-		$('.comment-content').highlighter('destroy');
+		$('#comments_sidebar .comment-content').highlighter('destroy');
 
 		// unbind document click handler
 		$(document).unbind( 'click', me.highlighter_comment_handler );
@@ -2130,7 +2130,7 @@ CommentPress.texthighlighter.comments = new function() {
 	this.highlighter_enable = function() {
 
 		// enable highlighter
-		$('.comment-content').highlighter('enable');
+		$('#comments_sidebar .comment-content').highlighter('enable');
 
 	};
 
@@ -2142,7 +2142,7 @@ CommentPress.texthighlighter.comments = new function() {
 	this.highlighter_disable = function() {
 
 		// disable highlighter
-		$('.comment-content').highlighter('disable');
+		$('#comments_sidebar .comment-content').highlighter('disable');
 
 	};
 
@@ -2154,7 +2154,7 @@ CommentPress.texthighlighter.comments = new function() {
 	this.highlights_clear_comment = function() {
 
 		// clear comment highlights
-		$('.comment-content .inline-highlight').each( function(i) {
+		$('#comments_sidebar .comment-content .inline-highlight').each( function(i) {
 			var content = $(this).contents();
 			$(this).replaceWith( content );
 		});
