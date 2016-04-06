@@ -3232,7 +3232,7 @@ body.buddypress.group-sites #blogs-list li
 	padding: 15px;
 }
 
-body.group-admin.group-sites .standard-form
+body.group-admin.group-sites #buddypress .standard-form
 {
 	padding: 0;
 }
