@@ -87,14 +87,14 @@ CommentPress.theme.settings = new function() {
 	this.init_container_top_max = function() {
 
 		// get container original top max
-		this.container_top_max = $.cookie( 'cp_container_top_max' );
-		if ( 'undefined' === typeof this.container_top_max || this.container_top_max === null ) {
-			this.container_top_max = 108;
+		me.container_top_max = $.cookie( 'cp_container_top_max' );
+		if ( 'undefined' === typeof me.container_top_max || me.container_top_max === null ) {
+			me.container_top_max = 108;
 		}
 
 		// bump up by the height ff the admin bar is shown
 		if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
-			this.container_top_max = parseInt( this.container_top_max ) + CommentPress.settings.DOM.get_wp_adminbar_height();
+			me.container_top_max = parseInt( me.container_top_max ) + CommentPress.settings.DOM.get_wp_adminbar_height();
 		}
 
 	};
@@ -103,7 +103,7 @@ CommentPress.theme.settings = new function() {
 	 * Setter for container top max
 	 */
 	this.set_container_top_max = function( val ) {
-		this.container_top_max = val;
+		me.container_top_max = val;
 	};
 
 	/**
@@ -124,7 +124,7 @@ CommentPress.theme.settings = new function() {
 	 * Getter for container top max
 	 */
 	this.get_container_top_max = function() {
-		return this.container_top_max;
+		return me.container_top_max;
 	};
 
 
@@ -138,14 +138,14 @@ CommentPress.theme.settings = new function() {
 	this.init_container_top_min = function() {
 
 		// get container original top min
-		this.container_top_min = $.cookie( 'cp_container_top_min' );
-		if ( 'undefined' === typeof this.container_top_min || this.container_top_min === null ) {
-			this.container_top_min = 108;
+		me.container_top_min = $.cookie( 'cp_container_top_min' );
+		if ( 'undefined' === typeof me.container_top_min || me.container_top_min === null ) {
+			me.container_top_min = 108;
 		}
 
 		// bump up by the height if the admin bar is shown
 		if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
-			this.container_top_min = parseInt( this.container_top_min ) + CommentPress.settings.DOM.get_wp_adminbar_height();
+			me.container_top_min = parseInt( me.container_top_min ) + CommentPress.settings.DOM.get_wp_adminbar_height();
 		}
 
 	};
@@ -154,7 +154,7 @@ CommentPress.theme.settings = new function() {
 	 * Setter for container top min
 	 */
 	this.set_container_top_min = function( val ) {
-		this.container_top_min = val;
+		me.container_top_min = val;
 	};
 
 	/**
@@ -175,7 +175,7 @@ CommentPress.theme.settings = new function() {
 	 * Getter for container top min
 	 */
 	this.get_container_top_min = function() {
-		return this.container_top_min;
+		return me.container_top_min;
 	};
 
 
@@ -187,14 +187,14 @@ CommentPress.theme.settings = new function() {
 	 * Setter for Contents tab "on top" flag
 	 */
 	this.set_toc_on_top = function( val ) {
-		this.toc_on_top = val;
+		me.toc_on_top = val;
 	};
 
 	/**
 	 * Getter for Contents tab "on top" flag
 	 */
 	this.get_toc_on_top = function() {
-		return this.toc_on_top;
+		return me.toc_on_top;
 	};
 
 
@@ -206,14 +206,14 @@ CommentPress.theme.settings = new function() {
 	 * Setter for comment border colour
 	 */
 	this.set_comment_border = function( val ) {
-		this.comment_border = val;
+		me.comment_border = val;
 	};
 
 	/**
 	 * Getter for comment border colour
 	 */
 	this.get_comment_border = function() {
-		return this.comment_border;
+		return me.comment_border;
 	};
 
 }; // end CommentPress theme settings class
@@ -963,9 +963,9 @@ CommentPress.theme.sidebars = new function() {
 	this.init_minimised = function() {
 
 		// get state of sidebar
-		this.sidebar_minimised = $.cookie( 'cp_sidebar_minimised' );
-		if ( 'undefined' === typeof this.sidebar_minimised || this.sidebar_minimised === null ) {
-			this.sidebar_minimised = 'n';
+		me.sidebar_minimised = $.cookie( 'cp_sidebar_minimised' );
+		if ( 'undefined' === typeof me.sidebar_minimised || me.sidebar_minimised === null ) {
+			me.sidebar_minimised = 'n';
 		}
 
 	};
@@ -974,14 +974,14 @@ CommentPress.theme.sidebars = new function() {
 	 * Setter for CommentPress sidebar minimised flag
 	 */
 	this.set_minimised = function( val ) {
-		this.minimised = val;
+		me.minimised = val;
 	};
 
 	/**
 	 * Getter for CommentPress sidebar minimised flag
 	 */
 	this.get_minimised = function() {
-		return this.minimised;
+		return me.minimised;
 	};
 
 	/**
@@ -989,23 +989,23 @@ CommentPress.theme.sidebars = new function() {
 	 */
 	this.is_minimised = function() {
 		if (
-			'undefined' === typeof this.minimised ||
-			this.minimised === null ||
-			this.minimised == 'n'
+			'undefined' === typeof me.minimised ||
+			me.minimised === null ||
+			me.minimised == 'n'
 		) {
 			return 'n';
 		}
-		return this.minimised;
+		return me.minimised;
 	};
 
 	/**
 	 * Toggle for CommentPress sidebar minimised flag
 	 */
 	this.toggle_minimised = function() {
-		if ( this.minimised === 'y' ) {
-			this.minimised = 'n';
+		if ( me.minimised === 'y' ) {
+			me.minimised = 'n';
 		} else {
-			this.minimised = 'y';
+			me.minimised = 'y';
 		}
 	};
 
@@ -1974,7 +1974,7 @@ CommentPress.theme.original.header = new function() {
 	this.init_height = function() {
 
 		// get global book_header height
-		this.header_height = $('#book_header').height();
+		me.header_height = $('#book_header').height();
 
 	};
 
@@ -1982,14 +1982,14 @@ CommentPress.theme.original.header = new function() {
 	 * Setter for CommentPress header height
 	 */
 	this.set_height = function( val ) {
-		this.header_height = val;
+		me.header_height = val;
 	};
 
 	/**
 	 * Getter for CommentPress header height
 	 */
 	this.get_height = function() {
-		return this.header_height;
+		return me.header_height;
 	};
 
 
@@ -2003,9 +2003,9 @@ CommentPress.theme.original.header = new function() {
 	this.init_minimised = function() {
 
 		// get state of header
-		this.minimised = $.cookie( 'cp_header_minimised' );
-		if ( 'undefined' === typeof this.minimised || this.minimised === null ) {
-			this.minimised = 'n';
+		me.minimised = $.cookie( 'cp_header_minimised' );
+		if ( 'undefined' === typeof me.minimised || me.minimised === null ) {
+			me.minimised = 'n';
 		}
 
 	};
@@ -2014,14 +2014,14 @@ CommentPress.theme.original.header = new function() {
 	 * Setter for CommentPress header minimised flag
 	 */
 	this.set_minimised = function( val ) {
-		this.minimised = val;
+		me.minimised = val;
 	};
 
 	/**
 	 * Getter for CommentPress header minimised flag
 	 */
 	this.get_minimised = function() {
-		return this.minimised;
+		return me.minimised;
 	};
 
 	/**
@@ -2031,9 +2031,9 @@ CommentPress.theme.original.header = new function() {
 	 */
 	this.is_minimised = function() {
 		if (
-			 'undefined' === typeof this.minimised ||
-			this.minimised === null ||
-			this.minimised == 'n'
+			 'undefined' === typeof me.minimised ||
+			me.minimised === null ||
+			me.minimised == 'n'
 		) {
 			return false;
 		}
@@ -2044,10 +2044,10 @@ CommentPress.theme.original.header = new function() {
 	 * Toggle for CommentPress header minimised flag
 	 */
 	this.toggle_minimised = function() {
-		if ( this.minimised === 'y' ) {
-			this.minimised = 'n';
+		if ( me.minimised === 'y' ) {
+			me.minimised = 'n';
 		} else {
-			this.minimised = 'y';
+			me.minimised = 'y';
 		}
 	};
 

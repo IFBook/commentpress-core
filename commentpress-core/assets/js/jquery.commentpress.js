@@ -149,7 +149,7 @@ CommentPress.settings.DOM = new function() {
 	// override with the value from our localisation object, if present
 	if ( 'undefined' !== typeof CommentpressSettings ) {
 		if ( CommentpressSettings.cp_permalink != '' ) {
-			this.original_permalink = CommentpressSettings.cp_permalink;
+			me.original_permalink = CommentpressSettings.cp_permalink;
 		}
 	}
 
@@ -157,14 +157,14 @@ CommentPress.settings.DOM = new function() {
 	 * Setter for original permalink
 	 */
 	this.set_permalink = function( val ) {
-		this.original_permalink = val;
+		me.original_permalink = val;
 	};
 
 	/**
 	 * Getter for original permalink
 	 */
 	this.get_permalink = function() {
-		return this.original_permalink;
+		return me.original_permalink;
 	};
 
 
@@ -179,7 +179,7 @@ CommentPress.settings.DOM = new function() {
 
 		// get initial value from settings object
 		if ( 'undefined' !== typeof CommentpressSettings ) {
-			this.bp_adminbar = CommentpressSettings.cp_bp_adminbar;
+			me.bp_adminbar = CommentpressSettings.cp_bp_adminbar;
 		}
 
 	};
@@ -188,14 +188,14 @@ CommentPress.settings.DOM = new function() {
 	 * Setter for BuddyPress adminbar
 	 */
 	this.set_bp_adminbar = function( val ) {
-		this.bp_adminbar = val;
+		me.bp_adminbar = val;
 	};
 
 	/**
 	 * Getter for BuddyPress adminbar
 	 */
 	this.get_bp_adminbar = function() {
-		return this.bp_adminbar;
+		return me.bp_adminbar;
 	};
 
 
@@ -210,7 +210,7 @@ CommentPress.settings.DOM = new function() {
 
 		// get initial value from settings object
 		if ( 'undefined' !== typeof CommentpressSettings ) {
-			this.wp_adminbar = CommentpressSettings.cp_wp_adminbar;
+			me.wp_adminbar = CommentpressSettings.cp_wp_adminbar;
 		}
 
 	};
@@ -219,14 +219,14 @@ CommentPress.settings.DOM = new function() {
 	 * Setter for WordPress adminbar
 	 */
 	this.set_wp_adminbar = function( val ) {
-		this.wp_adminbar = val;
+		me.wp_adminbar = val;
 	};
 
 	/**
 	 * Getter for WordPress adminbar
 	 */
 	this.get_wp_adminbar = function() {
-		return this.wp_adminbar;
+		return me.wp_adminbar;
 	};
 
 
@@ -241,14 +241,14 @@ CommentPress.settings.DOM = new function() {
 
 		// get initial value from settings object
 		if ( 'undefined' !== typeof CommentpressSettings ) {
-			this.wp_adminbar_height = parseInt( CommentpressSettings.cp_wp_adminbar_height );
+			me.wp_adminbar_height = parseInt( CommentpressSettings.cp_wp_adminbar_height );
 		}
 
 		// support for legacy BuddyPress bar
 		if ( me.get_bp_adminbar() == 'y' ) {
 
 			// amend to height of BuddyPress bar
-			this.wp_adminbar_height = 25;
+			me.wp_adminbar_height = 25;
 
 			// act as if admin bar were there
 			me.set_wp_adminbar( 'y' );
@@ -261,14 +261,14 @@ CommentPress.settings.DOM = new function() {
 	 * Setter for WordPress adminbar height
 	 */
 	this.set_wp_adminbar_height = function( val ) {
-		this.wp_adminbar_height = val;
+		me.wp_adminbar_height = val;
 	};
 
 	/**
 	 * Getter for WordPress adminbar height
 	 */
 	this.get_wp_adminbar_height = function() {
-		return this.wp_adminbar_height;
+		return me.wp_adminbar_height;
 	};
 
 
@@ -283,7 +283,7 @@ CommentPress.settings.DOM = new function() {
 
 		// get initial value from settings object
 		if ( 'undefined' !== typeof CommentpressSettings ) {
-			this.wp_adminbar_expanded = parseInt( CommentpressSettings.cp_wp_adminbar_expanded );
+			me.wp_adminbar_expanded = parseInt( CommentpressSettings.cp_wp_adminbar_expanded );
 		}
 
 	};
@@ -292,14 +292,14 @@ CommentPress.settings.DOM = new function() {
 	 * Setter for WordPress adminbar expanded
 	 */
 	this.set_wp_adminbar_expanded = function( val ) {
-		this.wp_adminbar_expanded = val;
+		me.wp_adminbar_expanded = val;
 	};
 
 	/**
 	 * Getter for WordPress adminbar expanded
 	 */
 	this.get_wp_adminbar_expanded = function() {
-		return this.wp_adminbar_expanded;
+		return me.wp_adminbar_expanded;
 	};
 
 
@@ -356,21 +356,21 @@ CommentPress.settings.page = new function() {
 	 * Toggle for page highlight
 	 */
 	this.toggle_highlight = function() {
-		this.highlight = !this.highlight;
+		me.highlight = !me.highlight;
 	};
 
 	/**
 	 * Setter for page highlight
 	 */
 	this.set_highlight = function( val ) {
-		this.highlight = val;
+		me.highlight = val;
 	};
 
 	/**
 	 * Getter for page highlight
 	 */
 	this.get_highlight = function() {
-		return this.highlight;
+		return me.highlight;
 	};
 
 }; // end CommentPress Core page settings class
@@ -425,14 +425,14 @@ CommentPress.settings.textblock = new function() {
 	 * Setter for textblock scroll target
 	 */
 	this.set_scroll_target = function( scroll_target ) {
-		this.scroll_target = scroll_target;
+		me.scroll_target = scroll_target;
 	};
 
 	/**
 	 * Getter for textblock scroll target
 	 */
 	this.get_scroll_target = function() {
-		return this.scroll_target;
+		return me.scroll_target;
 	};
 
 
@@ -444,14 +444,14 @@ CommentPress.settings.textblock = new function() {
 	 * Setter for textblock "permalink shown in location bar" flag
 	 */
 	this.set_permalink_shown = function( permalink_shown ) {
-		this.permalink_shown = permalink_shown;
+		me.permalink_shown = permalink_shown;
 	};
 
 	/**
 	 * Getter for textblock "permalink shown in location bar" flag
 	 */
 	this.get_permalink_shown = function() {
-		return this.permalink_shown;
+		return me.permalink_shown;
 	};
 
 }; // end CommentPress Core textblock class

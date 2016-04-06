@@ -39,7 +39,7 @@ CommentPress.texthighlighter.utilities = new function() {
 
 	// overwrite if we have our localisation object
 	if ( 'undefined' !== typeof CommentpressTextSelectorSettings ) {
-		this.localisation = CommentpressTextSelectorSettings.localisation;
+		me.localisation = CommentpressTextSelectorSettings.localisation;
 	}
 
 	/**
@@ -49,7 +49,7 @@ CommentPress.texthighlighter.utilities = new function() {
 	 * @return void
 	 */
 	this.localisation_set = function( val ) {
-		this.localisation = val;
+		me.localisation = val;
 	};
 
 	/**
@@ -59,8 +59,8 @@ CommentPress.texthighlighter.utilities = new function() {
 	 * @return string localisation The localisation string
 	 */
 	this.localisation_get = function( key ) {
-		if ( key in this.localisation ) {
-			return this.localisation[key];
+		if ( key in me.localisation ) {
+			return me.localisation[key];
 		}
 		return '';
 	};
@@ -82,7 +82,7 @@ CommentPress.texthighlighter.utilities = new function() {
 	 * @return void
 	 */
 	this.saved_scroll_target_set = function( val ) {
-		this.saved_scroll_target = val;
+		me.saved_scroll_target = val;
 	};
 
 	/**
@@ -91,7 +91,7 @@ CommentPress.texthighlighter.utilities = new function() {
 	 * @return string saved_scroll_target The saved_scroll_target string
 	 */
 	this.saved_scroll_target_get = function( key ) {
-		return this.saved_scroll_target;
+		return me.saved_scroll_target;
 	};
 
 
@@ -310,7 +310,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 	if ( 'undefined' !== typeof CommentpressTextSelectorSettings ) {
 
 		// reference our localisation object vars
-		this.popover_textblock = CommentpressTextSelectorSettings.popover_textblock;
+		me.popover_textblock = CommentpressTextSelectorSettings.popover_textblock;
 
 	}
 
@@ -357,7 +357,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 * @return void
 	 */
 	this.container_set = function( textblock_id ) {
-		this.container = textblock_id;
+		me.container = textblock_id;
 	};
 
 	/**
@@ -366,7 +366,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 * @return string container The ID of the textblock that was clicked
 	 */
 	this.container_get = function() {
-		return this.container;
+		return me.container;
 	};
 
 
@@ -1012,7 +1012,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 		selection_data = CommentPress.texthighlighter.commentform.current_selection_get();
 
 		// add to array, keyed by comment ID
-		this.selections_by_comment[comment_key] = selection_data;
+		me.selections_by_comment[comment_key] = selection_data;
 
 		// clear sent selection data
 		CommentPress.texthighlighter.commentform.current_selection_clear();
@@ -1034,10 +1034,10 @@ CommentPress.texthighlighter.textblocks = new function() {
 		comment_key = '#comment-' + comment_id;
 
 		// does the comment ID key exist?
-		if ( comment_key in this.selections_by_comment ) {
+		if ( comment_key in me.selections_by_comment ) {
 
 			// get selection item from array
-			item = this.selections_by_comment[comment_key];
+			item = me.selections_by_comment[comment_key];
 
 			// get text signature for this comment
 			text_sig = $.get_text_sig_by_comment_id( comment_key );
@@ -1113,10 +1113,10 @@ CommentPress.texthighlighter.textblocks = new function() {
 		var selection_data = me.selection_get_current( document.getElementById( textblock_id ) );
 
 		// create the array, keyed by textblock ID, if it doesn't exist
-		if ( !(textblock_id in this.selections_by_textblock) ) { this.selections_by_textblock[textblock_id] = [] }
+		if ( !(textblock_id in me.selections_by_textblock) ) { me.selections_by_textblock[textblock_id] = [] }
 
 		// add selection data to the array
-		this.selections_by_textblock[textblock_id].push( selection_data );
+		me.selections_by_textblock[textblock_id].push( selection_data );
 
 	};
 
@@ -1129,10 +1129,10 @@ CommentPress.texthighlighter.textblocks = new function() {
 	this.selection_recall_for_textblock = function( textblock_id ) {
 
 		// does the textblock ID key exist?
-		if ( textblock_id in this.selections_by_textblock ) {
+		if ( textblock_id in me.selections_by_textblock ) {
 
 			// yes, restore each selection in turn
-			for (var i = 0, item; item = this.selections_by_textblock[textblock_id][i++];) {
+			for (var i = 0, item; item = me.selections_by_textblock[textblock_id][i++];) {
 				CommentPress.texthighlighter.utilities.selection_restore( document.getElementById( textblock_id ), item );
 				$('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
 			}
@@ -1167,14 +1167,14 @@ CommentPress.texthighlighter.commentform = new function() {
 	 * Setter for "has commentform" flag
 	 */
 	this.set_commentform_flag = function( val ) {
-		this.commentform_exists = val;
+		me.commentform_exists = val;
 	};
 
 	/**
 	 * Getter for "has commentform" flag
 	 */
 	this.has_commentform = function() {
-		return this.commentform_exists;
+		return me.commentform_exists;
 	};
 
 
@@ -1302,7 +1302,7 @@ CommentPress.texthighlighter.commentform = new function() {
 	this.current_selection_set = function( selection ) {
 
 		// store selection object
-		this.selection_in_editor = selection;
+		me.selection_in_editor = selection;
 
 		// update text_selection hidden input
 		$('#text_selection').val( selection.start + ',' + selection.end );
@@ -1315,7 +1315,7 @@ CommentPress.texthighlighter.commentform = new function() {
 	 * @return object The stored selection object
 	 */
 	this.current_selection_get = function() {
-		return this.selection_in_editor;
+		return me.selection_in_editor;
 	};
 
 	/**
@@ -1324,7 +1324,7 @@ CommentPress.texthighlighter.commentform = new function() {
 	 * @return bool Whether or not there is a stored selection object
 	 */
 	this.current_selection_exists = function() {
-		return $.isEmptyObject( this.selection_in_editor ) ? false : true;
+		return $.isEmptyObject( me.selection_in_editor ) ? false : true;
 	};
 
 	/**
@@ -1335,7 +1335,7 @@ CommentPress.texthighlighter.commentform = new function() {
 	this.current_selection_clear = function() {
 
 		// clear selection object
-		this.selection_in_editor = {};
+		me.selection_in_editor = {};
 
 		// clear text_selection hidden input
 		$('#text_selection').val( '' );
@@ -1370,7 +1370,7 @@ CommentPress.texthighlighter.commentform = new function() {
 	 * @return bool Whether or not the selection can be cleared
 	 */
 	this.focus_is_active = function() {
-		return this.focus_active;
+		return me.focus_active;
 	};
 
 	/**
@@ -1381,7 +1381,7 @@ CommentPress.texthighlighter.commentform = new function() {
 	this.focus_clear = function() {
 
 		// set flag
-		this.focus_active = false;
+		me.focus_active = false;
 
 		// unbind document click handler
 		$(document).unbind( 'click', me.focus_active_handler );
@@ -1595,7 +1595,7 @@ CommentPress.texthighlighter.comments = new function() {
 
 	// overwrite if we have our localisation object
 	if ( 'undefined' !== typeof CommentpressTextSelectorSettings ) {
-		this.popover_comment = CommentpressTextSelectorSettings.popover_comment;
+		me.popover_comment = CommentpressTextSelectorSettings.popover_comment;
 	}
 
 
@@ -1641,7 +1641,7 @@ CommentPress.texthighlighter.comments = new function() {
 	 * @return void
 	 */
 	this.container_set = function( comment_id ) {
-		this.container = comment_id;
+		me.container = comment_id;
 	};
 
 	/**
@@ -1650,7 +1650,7 @@ CommentPress.texthighlighter.comments = new function() {
 	 * @return string container The ID of the comment that was clicked
 	 */
 	this.container_get = function() {
-		return this.container;
+		return me.container;
 	};
 
 
