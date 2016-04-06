@@ -212,6 +212,12 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+<h4>3.8.8</h4>
+
+* Keyboard accessibility refinements
+* Upgrade support for footnotes plugins
+* Better styling of images in default theme
+
 <h4>3.8.7</h4>
 
 * Fix illegal character in BuddyPress stylesheet
