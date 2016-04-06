@@ -73,6 +73,12 @@ Stylistic regularity
 	color: #ca0000;
 }
 
+/* WP Footnotes adds an inline colour *sigh* */
+ol.footnotes.selected_para
+{
+	color: #ca0000;
+}
+
 /* Site tagline */
 #header #tagline
 {

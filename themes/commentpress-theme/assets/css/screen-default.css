@@ -115,9 +115,21 @@ div.generic-button a
 	line-height: 14px;
 }
 
+button:focus,
+a.button:focus,
+input[type=submit]:focus,
+input[type=button]:focus,
+input[type=reset]:focus,
+ul.button-nav li a:focus,
+div.generic-button a:focus
+{
+	border-color: #5b9dd9;
+	-webkit-box-shadow: 0 0 3px rgba( 0, 115, 170, .8 );
+	box-shadow: 0 0 3px rgba( 0, 115, 170, .8 );
+}
+
 button:hover,
 a.button:hover,
-a.button:focus,
 input[type=submit]:hover,
 input[type=button]:hover,
 input[type=reset]:hover,
@@ -137,6 +149,8 @@ div.generic-button a:hover
 	color: #555;
 	outline: none;
 	text-decoration: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
 }
 
 /* except for Search and User Links */
@@ -144,7 +158,7 @@ div.generic-button a:hover
 #book_search input#searchsubmit,
 #book_header #user_links a.button
 {
-	margin-top: 1px
+	margin-top: 1px;
 	margin-left: 5px;
 	line-height: 10px;
 	color: #777;
@@ -153,7 +167,7 @@ div.generic-button a:hover
 
 #book_header #user_links a.button
 {
-	margin-top: 1px
+	margin-top: 1px;
 	line-height: 10px;
 	color: #777;
 	padding: 1px 6px;
@@ -199,14 +213,16 @@ Page heading-related styles
 	padding-top: 12px;
 }
 
-#title h1 a
-{
-	color: #eee;
-}
-
 #title h1 a:focus
 {
-	background-color: #9AAB84;
+	text-decoration: underline;
+}
+
+#title h1 a,
+#title h1 a:active
+{
+	color: #eee;
+	text-decoration: none;
 }
 
 #tagline
@@ -302,20 +318,23 @@ Post-related styles
 	font-size: 2em;
 	margin: 15px 0 5px 0;
 	padding 7px;
+	-ms-word-wrap: break-word;
+	word-wrap: break-word;
 }
 
-.post h2 a:link,
+.post h2 a:focus,
+.post h3 a:focus
+{
+	text-decoration: underline;
+}
+
+.post h2 a,
 .post h2 a:hover,
+.post h2 a:active,
 .post h2 a:visited
 {
 	color: #761D19;
 	text-decoration: none;
-}
-
-.post h2 a:active,
-.post h2 a:focus
-{
-	background-color: #CBFFBD;
 }
 
 .post h3
@@ -328,7 +347,7 @@ Post-related styles
 	padding-right: 7px;
 }
 
-.post h3 a:link,
+.post h3 a,
 .post h3 a:hover,
 .post h3 a:active,
 .post h3 a:visited
@@ -380,6 +399,8 @@ Post-related styles
 .post img
 {
 	vertical-align: top;
+	max-width: 100%;
+	height: auto;
 }
 
 .post img.alignleft
@@ -476,6 +497,17 @@ Post-related styles
 	color: #666;
 	padding-left: 7px;
 	padding-right: 7px;
+}
+
+.post p.postmetadata a:focus
+{
+	background: #eee;
+}
+
+.post p.postmetadata a,
+.post p.postmetadata a:active
+{
+	background: transparent;
 }
 
 .post p.postname
@@ -676,6 +708,16 @@ samp
 	padding: 7px 7px 11px 7px;
 }
 
+.post pre
+{
+	font-family: monospace;
+	overflow: auto;
+	background-color: #f8f8f8;
+	border: 1px solid #eee;
+	padding: 0.6em;
+	line-height: 1.4em;
+}
+
 i,
 cite,
 em,
@@ -718,12 +760,18 @@ div#comments_sidebar .comments_container > h3
 }
 
 	/* comment_block_permalink */
+	div#comments_sidebar .comments_container > h3 a:focus
+	{
+		background: #ddd;
+	}
+
 	div#comments_sidebar .comments_container > h3 a
 	{
 		display: block;
 		padding: 6px 0 6px 20px;
 		color: #761D19;
 		text-decoration: none;
+		background: none;
 	}
 
 /* no comments header */
@@ -735,7 +783,12 @@ h3.nocomments
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-a.comment-edit-link:link,
+a.comment-edit-link:focus
+{
+	text-decoration: underline;
+}
+
+a.comment-edit-link,
 a.comment-edit-link:hover,
 a.comment-edit-link:active,
 a.comment-edit-link:visited
@@ -781,6 +834,11 @@ a.comment-edit-link:hover
 	vertical-align: middle;
 }
 
+.comment-identifier cite a:focus
+{
+	text-decoration: underline;
+}
+
 .comment-identifier cite a,
 .comment-identifier cite a:hover,
 .comment-identifier cite a:active,
@@ -792,7 +850,12 @@ a.comment-edit-link:hover
 	text-decoration: none;
 }
 
-a.comment_permalink:link,
+a.comment_permalink:focus
+{
+	text-decoration: underline;
+}
+
+a.comment_permalink,
 a.comment_permalink:hover,
 a.comment_permalink:active,
 a.comment_permalink:visited
@@ -865,11 +928,21 @@ a#cancel-comment-reply-link:visited
 	text-align: right;
 	text-transform: uppercase;
 	color: #761D19;
+	background: none;
+}
+
+a.reply_to_para:focus,
+.reply a:focus
+{
+	color: #761D19;
+	background: #eee;
 }
 
 /* hover colour */
 a.reply_to_para:hover,
-.reply a:hover
+a.reply_to_para:active,
+.reply a:hover,
+.reply a:active
 {
 	color: #761D19;
 	background: #eee;
@@ -905,7 +978,12 @@ div#respond p
 	line-height: 1.6;
 }
 
-div#respond p a:link,
+div#respond p a:focus
+{
+	text-decoration: underline;
+}
+
+div#respond p a,
 div#respond p a:hover,
 div#respond p a:active,
 div#respond p a:visited
@@ -1159,7 +1237,14 @@ div#sidebar .comments_container .comment-content listing
 	padding: 0 0 8px 0;
 }
 
-div#sidebar .comments_container .comment-content a
+div#sidebar .comments_container .comment-content a:focus
+{
+	color: #761D19;
+	text-decoration: none;
+}
+
+div#sidebar .comments_container .comment-content a,
+div#sidebar .comments_container .comment-content a:active
 {
 	text-decoration: underline;
 }
@@ -1406,13 +1491,25 @@ Search Results Page
 	font-style: normal;
 }
 
-#content .search_meta a
+#content .search_meta a:focus
+{
+	text-decoration: underline;
+}
+
+#content .search_meta a,
+#content .search_meta a:active
 {
 	color: #222;
 	text-decoration: none;
 }
 
-#content .search_meta cite a
+#content .search_meta cite a:active
+{
+	text-decoration: underline;
+}
+
+#content .search_meta cite a,
+#content .search_meta cite a:active
 {
 	color: #761D19;
 	text-decoration: none;
@@ -1671,31 +1768,32 @@ a.skip:hover,
 a.skip:visited
 {
 	position: absolute;
-	left: 0px;
-	top: -999px;
+	left: -1000em;
+	top: -1000em;
+	height: 1px;
+	width: 1px;
 	overflow: hidden;
-	z-index: 2000;
-	font-size: 1.55em;
-	border: 5px solid #B5BFB2;
-	margin: 0;
-	padding: 10px 0;
-	background: #9AAB84;
-	-moz-border-radius: 22px;
-	-khtml-border-radius: 22px;
-	-webkit-border-radius: 22px;
-	border-radius: 22px;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 a.skip:active,
 a.skip:focus
 {
-	color: #fff;
-	position: absolute;
-	top: 36px;
-	left: 1%;
-	width: 58%;
-	text-align: center;
+	left: 6px;
+	top: 7px;
+	height: auto;
+	width: auto;
+	display: block;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 15px 23px 14px;
+	background: #f1f1f1;
+	color: #0073aa;
+	z-index: 100000;
+	line-height: normal;
+	text-decoration: none;
+	-webkit-box-shadow: 0 0 2px 2px rgba(0,0,0,.6);
+	box-shadow: 0 0 2px 2px rgba(0,0,0,.6);
 }
 
 
@@ -2286,21 +2384,94 @@ ul#content-tabs li
 		padding: 8px;
 	}
 
-	/* galleries */
-	.post .gallery-item
-	{
-		width: 30% !important;
-	}
-
-	.post .gallery-caption
-	{
-		font-size: smaller;
-	}
-
 	.hidden_page_url
 	{
 		display: none;
 	}
+
+
+
+
+/*
+--------------------------------------------------------------------------------
+WordPress galleries
+--------------------------------------------------------------------------------
+*/
+
+dl.gallery-item
+{
+	margin-left: 0;
+	margin-right: 0;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.gallery .wp-caption-text
+{
+	margin-top: 0.3em;
+	font-size: 80%;
+	line-height: 1.3;
+	text-align: center;
+	font-family: sans-serif;
+}
+
+#content ul.image_link,
+.content ul.image_link
+{
+	margin: 0;
+	margin-top: 2em;
+	padding: 0;
+	list-style-type: none;
+}
+
+ul.image_link h4
+{
+}
+
+ul.image_link .alignright h4
+{
+	text-align: right;
+}
+
+ul.image_link .alignleft h4
+{
+	text-align: left;
+}
+
+.image_attachment h2.post_title span
+{
+	display: block;
+}
+
+/* back to gallery */
+#content p.back_button a.button
+{
+	text-decoration: none;
+	font: normal 12px/20px Arial, Tahoma, Verdana, sans-serif;
+}
+
+div.the_image_attachment
+{
+	margin: 1em 0 1em 0;
+	padding: 3em 0 2em 0;
+	background-color: #f8f8f8;
+	border: 1px solid #eee;
+}
+
+p.image_attachment_wrap
+{
+	text-align: center;
+	margin: 0;
+	padding: 0;
+}
+
+div.image_attachment_caption
+{
+	text-align: center;
+	margin: 0 3em;
+	padding: 0.5em 0 0 0;
+	font-family: sans-serif;
+}
 
 
 
@@ -2501,6 +2672,8 @@ span.captioned_image
 	padding: 10px;
 	margin: 7px 0;
 	border: 1px solid #B5BFB2;
+	max-width: 96%;
+	height: auto;
 }
 
 	span.captioned_image.aligncenter
@@ -2539,7 +2712,32 @@ span.wp-caption
 	display: block;
 	text-align: center;
 	padding: 0;
-	margin: 0;
+	margin: 10px;
+	margin-bottom: 0;
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
+Support for WordPress post formats
+--------------------------------------------------------------------------------
+*/
+
+/* audio shortcode */
+.wp-audio-shortcode
+{
+	margin: 7px auto 11px auto;
+}
+
+.single.single-format-chat .post p
+{
+	font-family: monospace;
+}
+
+.single.single-format-chat .post p.postmetadata
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 
@@ -2811,9 +3009,16 @@ Sidebar
 			padding: 7px 6px 0 26px;
 		}
 
-		li.sidebar_header h2 a
+		li.sidebar_header h2 a:focus
+		{
+			color: #CD0018;
+		}
+
+		li.sidebar_header h2 a,
+		li.sidebar_header h2 a:active
 		{
 			color: #761D19;
+			text-decoration: none;
 		}
 
 
@@ -3044,11 +3249,18 @@ body.cp_sidebar_toc #toc_sidebar
 		margin: 0;
 	}
 
-	#toc_sidebar .sidebar_minimiser ul li a:link,
+	#toc_sidebar .sidebar_minimiser ul li a:focus
+	{
+		background: #EFEFEF;
+		text-decoration: none;
+	}
+
+	#toc_sidebar .sidebar_minimiser ul li a,
 	#toc_sidebar .sidebar_minimiser ul li a:active,
 	#toc_sidebar .sidebar_minimiser ul li a:visited
 	{
 		color: #666;
+		background: transparent;
 		text-decoration: none;
 	}
 
@@ -3519,8 +3731,13 @@ ol.comment_activity .reply p
 	padding: 0;
 }
 
+a.comment_activity_link:focus
+{
+	text-decoration: underline;
+}
+
 ol.comment_activity .reply p a,
-a.comment_activity_link:link,
+a.comment_activity_link,
 a.comment_activity_link:hover,
 a.comment_activity_link:active,
 a.comment_activity_link:visited
@@ -4111,7 +4328,7 @@ Compatibility with Members List plugin
 #tern_members .tern_wp_members_list li
 {
 	height: auto;
-	padding-top: 0
+	padding-top: 0;
 }
 
 html>/**/body #tern_members .tern_wp_members_list li
@@ -4236,6 +4453,123 @@ Compatibility with BP Group Sites plugin
 
 /*
 --------------------------------------------------------------------------------
+Compatibility with BuddyPress plugin
+--------------------------------------------------------------------------------
+*/
+
+/* BuddyPress clearer div */
+.clear
+{
+	clear: left;
+}
+
+#activity_sidebar span.activity
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 70%;
+	color: #666;
+}
+
+
+
+/* Who's Online (activity tab) */
+#activity_sidebar ul.item-list.cp-online-members
+{
+	margin: 0;
+	padding: 0;
+	border-bottom: none;
+}
+
+#activity_sidebar ul.item-list.cp-online-members li
+{
+	padding: 10px;
+	border-top: none;
+	border-bottom: 1px dashed #B5BFB2;
+	position: static;
+}
+
+#activity_sidebar ul.item-list.cp-online-members li div.item-title,
+#activity_sidebar ul.item-list.cp-online-members li h4
+{
+	width: auto;
+}
+
+#activity_sidebar ul.item-list.cp-online-members li a
+{
+	display: inline;
+	padding: 0;
+	color: #761D19;
+	font-size: 110%;
+	background: transparent;
+}
+
+#activity_sidebar ul.item-list.cp-online-members li .item-avatar
+{
+	float: left;
+	padding: 0 10px 0 0;
+}
+
+#activity_sidebar ul.item-list.cp-online-members li img.avatar
+{
+	float: none;
+	margin: 0;
+}
+
+
+
+/* Recently Active (activity tab) */
+#activity_sidebar ul.item-list.cp-recently-active
+{
+	margin: 0;
+	padding: 0;
+	border-bottom: none;
+}
+
+#activity_sidebar ul.item-list.cp-recently-active li
+{
+	padding: 10px;
+	border-top: none;
+	border-bottom: 1px dashed #B5BFB2;
+	position: static;
+}
+
+#activity_sidebar ul.item-list.cp-recently-active li:last-child
+{
+	border-bottom: none;
+}
+
+#activity_sidebar ul.item-list.cp-recently-active li div.item-title,
+#activity_sidebar ul.item-list.cp-recently-active li h4
+{
+	width: auto;
+}
+
+#activity_sidebar ul.item-list.cp-recently-active li a
+{
+	display: inline;
+	padding: 0;
+	color: #761D19;
+	font-size: 110%;
+	background: transparent;
+}
+
+#activity_sidebar ul.item-list.cp-recently-active li .item-avatar
+{
+	float: left;
+	padding: 0 10px 0 0;
+}
+
+#activity_sidebar ul.item-list.cp-recently-active li img.avatar
+{
+	border: none;
+	float: none;
+	margin: 0;
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
 Compatibility with BuddyPress Docs plugin
 --------------------------------------------------------------------------------
 */
@@ -4243,6 +4577,116 @@ Compatibility with BuddyPress Docs plugin
 .single-bp_doc #respond
 {
 	margin-top: 0;
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
+Compatibility with BP Group Sites plugin
+--------------------------------------------------------------------------------
+*/
+
+#bpgsites-post-in-box
+{
+	margin: 0.4em;
+}
+
+#bpgsites-post-in-box span,
+.bpgsites_comment_group
+{
+	font-family: sans-serif;
+	text-transform: uppercase;
+}
+
+.bpgsites_comment_group_header
+{
+	font-size: 70%;
+	font-weight: bold;
+	padding: 10px 0 5px 0;
+}
+
+.bpgsites_comment_group_header:first-child
+{
+	padding-top: 0;
+}
+
+#bpgsites-post-in-box span,
+.bpgsites_comment_group_label
+{
+	font-size: 70%;
+}
+
+#bpgsites-post-in-box select
+{
+	font-size: 70%;
+}
+
+#comments_in_page_wrapper .comments_container h3.bpgsites_group_filter_heading
+{
+	padding: 0;
+	background-color: #d6d6d6;
+}
+
+#comments_in_page_wrapper .comments_container h3.bpgsites_group_filter_heading:hover
+{
+	background-color: #ccc;
+}
+
+#comments_in_page_wrapper .comments_container #bpgsites_group_filter
+{
+	background-color: #dfdfdf;
+}
+
+@media all and (max-width: 1200px) {
+
+	.bpgsites_comment_group
+	{
+		padding: 5px;
+	}
+
+	.bpgsites_comment_group_label
+	{
+		padding: 5px;
+		font-size: 100%;
+	}
+
+}
+
+/* Recent Activity (activity tab) */
+#activity_sidebar  .groupsites_comments_output li.groups
+{
+	/* override BuddyPress Groupblog compatibility for now */
+	border-left: none;
+	margin-bottom: 0;
+}
+
+#activity_sidebar .groupsites_comments_output .comment-identifier p
+{
+	/* we have to use p instead of cite because that's how BuddyPress stores activity meta */
+	margin-top: 0;
+	padding: 0;
+	font-size: 70%;
+	font-style: normal;
+	font-family: sans-serif;
+	color: #222;
+	line-height: 1.3;
+}
+
+#activity_sidebar .groupsites_comments_output .comment-identifier p a
+{
+	color: #761D19;
+}
+
+#activity_sidebar .groupsites_comments_output .comment-identifier p img
+{
+	display: none;
+	vertical-align: middle;
+}
+
+#activity_sidebar .groupsites_comments_output .comment-content
+{
+	border-bottom: none;
 }
 
 
