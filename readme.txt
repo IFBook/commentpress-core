@@ -20,7 +20,7 @@ Annotate, gloss, workshop, debate: with CommentPress Core you can do all of thes
 
 **Please note:** this plugin comes bundled with two official themes, one of which must be active for CommentPress Core to function. The new "CommentPress Modern Theme" will be auto-activated when the plugin is first activated. The old "CommentPress Default Theme" is still included for those who wish to stay with it or have built their own child themes for it. If you are upgrading from a previous version of CommentPress (3.0.x - 3.3.x), please follow the instructions in the Installation section before doing so.
 
-For further information and instructions please see the [CommentPress site](http://www.futureofthebook.org/commentpress/) or contact the developers by email at [cpdev@futureofthebook.org](mailto:cpdev@futureofthebook.org)
+For further information and instructions please see the [CommentPress website](http://www.futureofthebook.org/commentpress/) or visit the plugin's [GitHub repository](https://github.com/christianwach/civicrm-wp-member-sync). Contact the developers by email at [cpdev@futureofthebook.org](mailto:cpdev@futureofthebook.org).
 
 Many thanks to the following for translations:
 
