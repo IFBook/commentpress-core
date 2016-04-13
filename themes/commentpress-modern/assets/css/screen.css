@@ -3232,7 +3232,7 @@ body.buddypress.group-sites #blogs-list li
 	padding: 15px;
 }
 
-body.group-admin.group-sites .standard-form
+body.group-admin.group-sites #buddypress .standard-form
 {
 	padding: 0;
 }
@@ -3696,6 +3696,55 @@ body.tinymce-4 #commentform #wp-comment-wrap textarea
 	padding: 1px 2px;
 	color: #a00;
 	font-size: 13px;
+}
+
+
+
+/* Link autocomplete field (new in WordPress 4.5) */
+div.wp-link-input input.ui-autocomplete-input
+{
+	font-family: "Open Sans", sans-serif;
+	font-size: 100%;
+	width: 250px;
+	padding: 4px;
+	border: 1px solid #ddd;
+	-webkit-box-shadow: inset 0 1px 2px rgba( 0, 0, 0, 0.07 );
+	box-shadow: inset 0 1px 2px rgba( 0, 0, 0, 0.07 );
+	background-color: #fff;
+	color: #32373c;
+	outline: none;
+	-webkit-transition: 0.05s border-color ease-in-out;
+	transition: 0.05s border-color ease-in-out;
+}
+
+div.wp-link-input input:focus
+{
+	border-color: #5b9dd9;
+	-webkit-box-shadow: 0 0 2px rgba( 30, 140, 190, 0.8 );
+	box-shadow: 0 0 2px rgba( 30, 140, 190, 0.8 );
+}
+
+.wplink-autocomplete li
+{
+	font-family: "Open Sans", sans-serif;
+	font-size: 80%;
+	color: #444;
+}
+
+@media screen and (max-width: 782px) {
+	.mce-container div.wp-link-input
+	{
+		width: auto;
+		max-width: none;
+	}
+	div.wp-link-input input.ui-autocomplete-input
+	{
+		font-size: 20px;
+	}
+	.wplink-autocomplete li
+	{
+		font-size: 20px;
+	}
 }
 
 
