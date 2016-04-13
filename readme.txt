@@ -212,6 +212,10 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+<h4>3.8.9</h4>
+
+* Fix appearance on link autocomplete popover in comment form
+
 <h4>3.8.8</h4>
 
 * Keyboard accessibility refinements
