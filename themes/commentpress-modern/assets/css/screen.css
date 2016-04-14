@@ -4088,7 +4088,8 @@ RESPONSIVENESS
 	}
 
 	.comments_container > h3 > span,
-	.comments_container > h3 a
+	.comments_container > h3 a,
+	.comments_container > h3 a:active
 	{
 		padding: 15px 10px;
 	}
