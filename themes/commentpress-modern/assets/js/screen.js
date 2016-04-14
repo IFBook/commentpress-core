@@ -507,11 +507,25 @@ CommentPress.theme.sidebars = new function() {
 	this.set_height = function() {
 
 		// define vars
-		var viewport, header_height, switcher_height, sidebar_header_height, wpadminbar_height,
-			toc_sidebar_height, switcher_display, sidebar_switcher_height, sidebar_height;
+		var viewport, header_height, switcher_height, sidebar_header_height,
+			wpadminbar_height, toc_sidebar_height, switcher_display,
+			sidebar_switcher_height, sidebar_height, window_inner;
 
-		// get window
+		// get viewport height
 		viewport = $(window).height();
+
+		// iOS9 Safari falsely reports the height when the URL bar shrinks
+		if ( cp_is_mobile == '1' || cp_is_tablet == '1' ) {
+
+			// get window innerHeight
+			window_inner = window.innerHeight;
+
+			// override if different
+			if ( viewport < window_inner ) {
+				viewport = window_inner;
+			}
+
+		}
 
 		// get interface elements
 		header_height = $('#header').height();
@@ -840,6 +854,15 @@ CommentPress.theme.viewport = new function() {
 			} else {
 
 				// fixed header
+
+				// mobile browsers often reduce the size of the screen chrome on
+				// page scroll - so let's try and update the sidebar height
+				if ( cp_is_mobile == '1' || cp_is_tablet == '1' ) {
+
+					// set sidebar height
+					CommentPress.theme.sidebars.set_height();
+
+				}
 
 			}
 
