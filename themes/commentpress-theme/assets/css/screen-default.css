@@ -317,7 +317,7 @@ Post-related styles
 {
 	font-size: 2em;
 	margin: 15px 0 5px 0;
-	padding 7px;
+	padding: 7px;
 	-ms-word-wrap: break-word;
 	word-wrap: break-word;
 }
@@ -1452,6 +1452,13 @@ Search Results Page
 	font-size: 2em;
 	margin: 15px 0 5px 0;
 	padding: 0 7px;
+}
+
+/* JetPack Sharing header */
+#content .search_result h3.sd-title
+{
+	font-size: 0.8em;
+	margin: 0 0 1em 0;
 }
 
 #content div.search_meta
