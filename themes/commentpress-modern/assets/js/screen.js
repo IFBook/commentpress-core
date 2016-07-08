@@ -191,7 +191,7 @@ CommentPress.theme.DOM = new function() {
 			styles += '#sidebar .paragraph_wrapper.start_open { display: block; } ';
 			styles += '#navigation .paragraph_wrapper.start_open { display: block; } ';
 			styles += '.commentpress_page #navigation .paragraph_wrapper.special_pages_wrapper { display: block; } ';
-			//styles += '#sidebar .paragraph_wrapper { display: none; } ';
+			styles += '.cp_sidebar_activity #comments_sidebar { display: none; } ';
 
 			// hide original and literal content when JS-enabled
 			styles += '#original .post, #literal .post { display: none; } ';
@@ -603,7 +603,7 @@ CommentPress.theme.sidebars = new function() {
 			$('#sidebar_tabs h2 a').removeClass('active-tab');
 
 			// show it
-			$('#' + sidebar + '_sidebar').css('z-index','2010');
+			$('#' + sidebar + '_sidebar').css('z-index','2010').css('display','block');
 			$('#sidebar_tabs #' + sidebar + '_header h2 a').addClass('active-tab');
 
 		}

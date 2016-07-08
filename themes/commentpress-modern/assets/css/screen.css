@@ -958,6 +958,16 @@ h3.activity_heading
 	z-index: 2010;
 }
 
+.cp_sidebar_activity #comments_sidebar
+{
+	z-index: 2001;
+}
+
+.cp_sidebar_activity #activity_sidebar
+{
+	z-index: 2010;
+}
+
 
 
 ul#sidebar_tabs
@@ -965,6 +975,7 @@ ul#sidebar_tabs
 	margin: 0;
 	padding: 0;
 	height: 50px;
+	background-color: #ccc;
 }
 
 ul#sidebar_tabs h2
