@@ -976,7 +976,7 @@ class Commentpress_Core_Database {
 			$cp_show_extended_toc = 0;
 			$cp_blog_type = 0;
 			$cp_blog_workflow = 0;
-			$cp_sidebar_default = 'comments';
+			$cp_sidebar_default = 'toc';
 			$cp_featured_images = 'n';
 			$cp_textblock_meta = 'y';
 			$cp_page_nav_enabled = 'y';
