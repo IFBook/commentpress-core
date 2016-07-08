@@ -2219,8 +2219,8 @@ HELPTEXT;
 		<tr valign="top">
 			<th scope="row"><label for="cp_do_not_parse">' . __( 'Disable CommentPress on entries with no comments. (can be overridden on individual entries)', 'commentpress-core' ) . '</label></th>
 			<td><select id="cp_do_not_parse" name="cp_do_not_parse">
-					<option value="y" ' . (($this->db->option_get('cp_do_not_parse', 'y') == 'y') ? ' selected="selected"' : '') . '>' . __( 'Yes', 'commentpress-core' ) . '</option>
-					<option value="n" ' . (($this->db->option_get('cp_do_not_parse', 'y') == 'n') ? ' selected="selected"' : '') . '>' . __( 'No', 'commentpress-core' ) . '</option>
+					<option value="y" ' . (($this->db->option_get('cp_do_not_parse', 'n') == 'y') ? ' selected="selected"' : '') . '>' . __( 'Yes', 'commentpress-core' ) . '</option>
+					<option value="n" ' . (($this->db->option_get('cp_do_not_parse', 'n') == 'n') ? ' selected="selected"' : '') . '>' . __( 'No', 'commentpress-core' ) . '</option>
 				</select>
 				<p>' . $description . '</p>
 			</td>
