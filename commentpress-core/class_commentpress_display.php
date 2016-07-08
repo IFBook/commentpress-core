@@ -1440,6 +1440,8 @@ HELPTEXT;
 				</td>
 			</tr>
 
+		' . $this->_get_page_nav_enabled() . '
+
 			<tr valign="top">
 				<th scope="row"><label for="cp_title_visibility">' . __( 'Default page title visibility (can be overridden on individual pages)', 'commentpress-core' ) . '</label></th>
 				<td><select id="cp_title_visibility" name="cp_title_visibility">
@@ -1640,6 +1642,29 @@ HELPTEXT;
 
 		// init
 		$upgrade = '';
+
+		// do we have the option to choose to disable page navigation (new in 3.8.10)?
+		if ( ! $this->db->option_exists( 'cp_page_nav_enabled' ) ) {
+
+			// define labels
+			$label = __( 'Enable automatic page navigation (controls appearance of page numbering and navigation arrows on hierarchical pages). Previous default was "Yes".', 'commentpress-core' );
+			$yes_label = __( 'Yes', 'commentpress-core' );
+			$no_label = __( 'No', 'commentpress-core' );
+
+			// define upgrade
+			$upgrade .= '
+			<tr valign="top">
+				<th scope="row"><label for="cp_page_nav_enabled">' . $label . '</label></th>
+				<td><select id="cp_page_nav_enabled" name="cp_page_nav_enabled">
+						<option value="y" selected="selected">' . $yes_label . '</option>
+						<option value="n">' . $no_label . '</option>
+					</select>
+				</td>
+			</tr>
+
+			';
+
+		}
 
 		// do we have the option to choose to hide textblock meta (new in 3.5.9)?
 		if ( ! $this->db->option_exists( 'cp_textblock_meta' ) ) {
@@ -2146,6 +2171,35 @@ HELPTEXT;
 
 		// --<
 		return $override;
+
+	}
+
+
+
+	/**
+	 * Returns the page navigation enabled button for the admin form.
+	 *
+	 * @since 3.8.10
+	 *
+	 * @return str $html The markup for the button
+	 */
+	function _get_page_nav_enabled() {
+
+		// define override
+		$html = '
+		<tr valign="top">
+			<th scope="row"><label for="cp_page_nav_enabled">' . __( 'Enable automatic page navigation (controls appearance of page numbering and navigation arrows on hierarchical pages)', 'commentpress-core' ) . '</label></th>
+			<td><select id="cp_page_nav_enabled" name="cp_page_nav_enabled">
+					<option value="y" ' . (($this->db->option_get('cp_page_nav_enabled', 'y') == 'y') ? ' selected="selected"' : '') . '>' . __( 'Yes', 'commentpress-core' ) . '</option>
+					<option value="n" ' . (($this->db->option_get('cp_page_nav_enabled', 'y') == 'n') ? ' selected="selected"' : '') . '>' . __( 'No', 'commentpress-core' ) . '</option>
+				</select>
+			</td>
+		</tr>
+
+		';
+
+		// --<
+		return $html;
 
 	}
 

@@ -202,6 +202,20 @@ class Commentpress_Core_Database {
 	 */
 	public $textblock_meta = 'y';
 
+	/**
+	 * Page navigation enabled flag.
+	 *
+	 * By default, CommentPress creates "book-like" navigation for the built-in
+	 * "page" post type. This is what CommentPress was built for in the first
+	 * place - to create a "document" from hierarchically-organised pages. This
+	 * is not always the desired behaviour.
+	 *
+	 * @since 3.8.10
+	 * @access public
+	 * @var str $page_nav_enabled The page navigation flag ('y' or 'n')
+	 */
+	public $page_nav_enabled = 'y';
+
 
 
 	/**
@@ -496,6 +510,9 @@ class Commentpress_Core_Database {
 	 */
 	public function upgrade_options_check() {
 
+		// do we have the option to choose to disable page navigation (new in 3.8.10)?
+		if ( ! $this->option_exists( 'cp_page_nav_enabled' ) ) return true;
+
 		// do we have the option to choose to hide textblock meta (new in 3.5.9)?
 		if ( ! $this->option_exists( 'cp_textblock_meta' ) ) return true;
 
@@ -571,6 +588,17 @@ class Commentpress_Core_Database {
 
 			// get variables
 			extract( $_POST );
+
+			// New in CommentPress Core 3.8.10 - page navigation can be disabled
+			if ( ! $this->option_exists( 'cp_page_nav_enabled' ) ) {
+
+				// get choice
+				$choice = esc_sql( $cp_page_nav_enabled );
+
+				// add chosen featured images option
+				$this->option_set( 'cp_page_nav_enabled', $choice );
+
+			}
 
 			// New in CommentPress Core 3.5.9 - textblock meta can be hidden
 			if ( ! $this->option_exists( 'cp_textblock_meta' ) ) {
@@ -921,6 +949,7 @@ class Commentpress_Core_Database {
 			$cp_sidebar_default = 'comments';
 			$cp_featured_images = 'n';
 			$cp_textblock_meta = 'y';
+			$cp_page_nav_enabled = 'y';
 
 			// get variables
 			extract( $_POST );
@@ -1101,6 +1130,10 @@ class Commentpress_Core_Database {
 			// save textblock meta
 			$cp_textblock_meta = esc_sql( $cp_textblock_meta );
 			$this->option_set( 'cp_textblock_meta', $cp_textblock_meta );
+
+			// save page navigation enabled flag
+			$cp_page_nav_enabled = esc_sql( $cp_page_nav_enabled );
+			$this->option_set( 'cp_page_nav_enabled', $cp_page_nav_enabled );
 
 			// save
 			$this->options_save();
@@ -3036,6 +3069,20 @@ class Commentpress_Core_Database {
 
 		}
 
+		// default to page navigation enabled
+		$vars['cp_page_nav_enabled'] = 1;
+
+		// check option
+		if (
+			$this->option_exists( 'cp_page_nav_enabled' ) AND
+			$this->option_get( 'cp_page_nav_enabled' ) == 'n'
+		) {
+
+			// disable page navigation
+			$vars['cp_page_nav_enabled'] = 0;
+
+		}
+
 		// --<
 		return apply_filters( 'commentpress_get_javascript_vars', $vars );
 
@@ -3764,6 +3811,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'cp_sidebar_default' => $this->sidebar_default,
 			'cp_featured_images' => $this->featured_images,
 			'cp_textblock_meta' => $this->textblock_meta,
+			'cp_page_nav_enabled' => $this->page_nav_enabled,
 		);
 
 		// Paragraph-level comments enabled by default
@@ -3833,6 +3881,9 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// textblock meta
 		$this->option_set( 'cp_textblock_meta', $this->textblock_meta );
+
+		// page navigation enabled
+		$this->option_set( 'cp_page_nav_enabled', $this->page_nav_enabled );
 
 		// store it
 		$this->options_save();
@@ -3932,6 +3983,10 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 										$old['cp_textblock_meta'] :
 										$this->textblock_meta;
 
+		$this->page_nav_enabled =		 	isset( $old['cp_page_nav_enabled'] ) ?
+										$old['cp_page_nav_enabled'] :
+										$this->page_nav_enabled;
+
 		// ---------------------------------------------------------------------
 		// special pages
 		// ---------------------------------------------------------------------
@@ -3983,6 +4038,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'cp_sidebar_default' => $this->sidebar_default,
 			'cp_featured_images' => $this->featured_images,
 			'cp_textblock_meta' => $this->textblock_meta,
+			'cp_page_nav_enabled' => $this->page_nav_enabled,
 		);
 
 		// if we have special pages

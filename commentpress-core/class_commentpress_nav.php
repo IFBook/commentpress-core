@@ -73,6 +73,15 @@ class Commentpress_Core_Navigator {
 	 */
 	public $menu_objects = array();
 
+	/**
+	 * Page navigation enabled flag.
+	 *
+	 * @since 3.8.10
+	 * @access public
+	 * @var bool $nav_enabled True if page navigation is enabled, false otherwise
+	 */
+	public $nav_enabled = true;
+
 
 
 	/**
@@ -104,6 +113,19 @@ class Commentpress_Core_Navigator {
 		// if we're navigating pages
 		if ( is_page() ) {
 
+			// check page navigation flag
+			if ( $this->parent_obj->db->option_exists( 'cp_page_nav_enabled' ) ) {
+				if ( $this->parent_obj->db->option_get( 'cp_page_nav_enabled', 'y' ) == 'n' ) {
+
+					// remove page arrows via filter
+					add_filter( 'cp_template_page_navigation', array( $this, 'page_nav_disable' ), 100, 1 );
+
+					// save flag
+					$this->nav_enabled = false;
+
+				}
+			}
+
 			// init page lists
 			$this->init_page_lists();
 
@@ -127,6 +149,23 @@ class Commentpress_Core_Navigator {
 	 * @return void
 	 */
 	public function destroy() {
+
+	}
+
+
+
+	/**
+	 * Disable page navigation when on a "page".
+	 *
+	 * @since 3.8.10
+	 *
+	 * @param str $template The existing path to the navigation template
+	 * @return str $template An empty path to disable navigation
+	 */
+	public function page_nav_disable( $template ) {
+
+		// disable for page post type
+		return '';
 
 	}
 
@@ -421,6 +460,9 @@ class Commentpress_Core_Navigator {
 	 * @return int $number The number of the page
 	 */
 	public function get_page_number( $page_id ) {
+
+		// bail if page nav is disabled
+		if ( $this->nav_enabled === false ) return;
 
 		// init
 		$num = 0;
