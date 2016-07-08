@@ -216,6 +216,22 @@ class Commentpress_Core_Database {
 	 */
 	public $page_nav_enabled = 'y';
 
+	/**
+	 * Do Not Parse flag.
+	 *
+	 * When comments are closed on an entry and there are no comments on that
+	 * entry, if this is set then the content will not be parsed for paragraphs,
+	 * lines or blocks. Comments will also not be parsed, meaning that the entry
+	 * behaves the same as content which is not commentable. This allows, for
+	 * example, the rendering of the comment column to be skipped in these
+	 * circumstances.
+	 *
+	 * @since 3.8.10
+	 * @access public
+	 * @var str $do_not_parse The flag indicating if content is to parsed ('y' or 'n')
+	 */
+	public $do_not_parse = 'n';
+
 
 
 	/**
@@ -510,6 +526,9 @@ class Commentpress_Core_Database {
 	 */
 	public function upgrade_options_check() {
 
+		// do we have the option to choose not to parse content (new in 3.8.10)?
+		if ( ! $this->option_exists( 'cp_do_not_parse' ) ) return true;
+
 		// do we have the option to choose to disable page navigation (new in 3.8.10)?
 		if ( ! $this->option_exists( 'cp_page_nav_enabled' ) ) return true;
 
@@ -589,13 +608,24 @@ class Commentpress_Core_Database {
 			// get variables
 			extract( $_POST );
 
+			// New in CommentPress Core 3.8.10 - parsing can be prevented
+			if ( ! $this->option_exists( 'cp_do_not_parse' ) ) {
+
+				// get choice
+				$choice = esc_sql( $cp_do_not_parse );
+
+				// add chosen parsing option
+				$this->option_set( 'cp_do_not_parse', $choice );
+
+			}
+
 			// New in CommentPress Core 3.8.10 - page navigation can be disabled
 			if ( ! $this->option_exists( 'cp_page_nav_enabled' ) ) {
 
 				// get choice
 				$choice = esc_sql( $cp_page_nav_enabled );
 
-				// add chosen featured images option
+				// add chosen page navigation option
 				$this->option_set( 'cp_page_nav_enabled', $choice );
 
 			}
@@ -606,7 +636,7 @@ class Commentpress_Core_Database {
 				// get choice
 				$choice = esc_sql( $cp_textblock_meta );
 
-				// add chosen featured images option
+				// add chosen textblock meta option
 				$this->option_set( 'cp_textblock_meta', $choice );
 
 			}
@@ -950,6 +980,7 @@ class Commentpress_Core_Database {
 			$cp_featured_images = 'n';
 			$cp_textblock_meta = 'y';
 			$cp_page_nav_enabled = 'y';
+			$cp_do_not_parse = 'y';
 
 			// get variables
 			extract( $_POST );
@@ -1134,6 +1165,10 @@ class Commentpress_Core_Database {
 			// save page navigation enabled flag
 			$cp_page_nav_enabled = esc_sql( $cp_page_nav_enabled );
 			$this->option_set( 'cp_page_nav_enabled', $cp_page_nav_enabled );
+
+			// save do not parse flag
+			$cp_do_not_parse = esc_sql( $cp_do_not_parse );
+			$this->option_set( 'cp_do_not_parse', $cp_do_not_parse );
 
 			// save
 			$this->options_save();
@@ -3083,6 +3118,20 @@ class Commentpress_Core_Database {
 
 		}
 
+		// default to parsing content and comments
+		$vars['cp_do_not_parse'] = 0;
+
+		// check option
+		if (
+			$this->option_exists( 'cp_do_not_parse' ) AND
+			$this->option_get( 'cp_do_not_parse' ) == 'y'
+		) {
+
+			// do not parse
+			$vars['cp_do_not_parse'] = 1;
+
+		}
+
 		// --<
 		return apply_filters( 'commentpress_get_javascript_vars', $vars );
 
@@ -3812,6 +3861,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'cp_featured_images' => $this->featured_images,
 			'cp_textblock_meta' => $this->textblock_meta,
 			'cp_page_nav_enabled' => $this->page_nav_enabled,
+			'cp_do_not_parse' => $this->do_not_parse,
 		);
 
 		// Paragraph-level comments enabled by default
@@ -3884,6 +3934,9 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// page navigation enabled
 		$this->option_set( 'cp_page_nav_enabled', $this->page_nav_enabled );
+
+		// do not parse flag
+		$this->option_set( 'cp_do_not_parse', $this->do_not_parse );
 
 		// store it
 		$this->options_save();
@@ -3987,6 +4040,10 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 										$old['cp_page_nav_enabled'] :
 										$this->page_nav_enabled;
 
+		$this->do_not_parse =		 	isset( $old['cp_do_not_parse'] ) ?
+										$old['cp_do_not_parse'] :
+										$this->do_not_parse;
+
 		// ---------------------------------------------------------------------
 		// special pages
 		// ---------------------------------------------------------------------
@@ -4039,6 +4096,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'cp_featured_images' => $this->featured_images,
 			'cp_textblock_meta' => $this->textblock_meta,
 			'cp_page_nav_enabled' => $this->page_nav_enabled,
+			'cp_do_not_parse' => $this->do_not_parse,
 		);
 
 		// if we have special pages

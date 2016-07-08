@@ -59,6 +59,16 @@ class Commentpress_Core_Parser {
 	 */
 	public $comments_sorted = array();
 
+	/**
+	 * Do Not Parse flag.
+	 *
+	 * @see Commentpress_Core_Database->do_not_parse
+	 * @since 3.8.10
+	 * @access public
+	 * @var bool $do_not_parse False if content is parsed, true disables parsing
+	 */
+	public $do_not_parse = false;
+
 
 
 	/**
@@ -73,8 +83,8 @@ class Commentpress_Core_Parser {
 		// store reference to parent
 		$this->parent_obj = $parent_obj;
 
-		// init
-		$this->_init();
+		// initialise via 'wp' hook
+		add_action( 'wp', array( $this, 'initialise' ) );
 
 	}
 
@@ -86,6 +96,27 @@ class Commentpress_Core_Parser {
 	 * @return void
 	 */
 	public function initialise() {
+
+		global $post;
+
+		// are we skipping parsing?
+		if (
+			! is_object( $post ) OR
+			(
+				$this->parent_obj->db->option_exists( 'cp_do_not_parse' ) AND
+				$this->parent_obj->db->option_get( 'cp_do_not_parse' ) == 'y' AND
+				$post->comment_status == 'closed' AND
+				empty( $post->comment_count )
+			)
+		) {
+
+			// store for later reference
+			$this->do_not_parse = true;
+
+			// filter commentable status
+			add_filter( 'cp_is_commentable', '__return_false' );
+
+		}
 
 	}
 
@@ -128,6 +159,14 @@ class Commentpress_Core_Parser {
 		// retrieve all comments and store
 		// we need this data multiple times and only need to get it once
 		$this->comments_all = $this->parent_obj->db->get_all_comments( $post->ID );
+
+		// are we skipping parsing?
+		if ( $this->do_not_parse ) {
+
+			// return content unparsed
+			return $content;
+
+		}
 
 		// strip out <!--shortcode--> tags
 		$content = $this->_strip_shortcodes( $content );

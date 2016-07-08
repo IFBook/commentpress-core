@@ -1406,6 +1406,8 @@ HELPTEXT;
 
 		' . $this->_get_optional_options() . '
 
+		' . $this->_get_do_not_parse() . '
+
 		</table>
 
 
@@ -1642,6 +1644,31 @@ HELPTEXT;
 
 		// init
 		$upgrade = '';
+
+		// do we have the option to choose to disable parsing (new in 3.8.10)?
+		if ( ! $this->db->option_exists( 'cp_do_not_parse' ) ) {
+
+			// define labels
+			$description = __( 'Note: when comments are closed on an entry and there are no comments on that entry, if this option is set to "Yes" then the content will not be parsed for paragraphs, lines or blocks. Comments will also not be parsed, meaning that the entry behaves the same as content which is not commentable. Default prior to 3.8.10 was "No" - all content was always parsed.', 'commentpress-core' );
+			$label = __( 'Disable CommentPress on entries with no comments.', 'commentpress-core' );
+			$yes_label = __( 'Yes', 'commentpress-core' );
+			$no_label = __( 'No', 'commentpress-core' );
+
+			// define upgrade
+			$upgrade .= '
+			<tr valign="top">
+				<th scope="row"><label for="cp_do_not_parse">' . $label . '</label></th>
+				<td><select id="cp_do_not_parse" name="cp_do_not_parse">
+						<option value="y">' . $yes_label . '</option>
+						<option value="n" selected="selected">' . $no_label . '</option>
+					</select>
+					<p>' . $description . '</p>
+				</td>
+			</tr>
+
+			';
+
+		}
 
 		// do we have the option to choose to disable page navigation (new in 3.8.10)?
 		if ( ! $this->db->option_exists( 'cp_page_nav_enabled' ) ) {
@@ -2171,6 +2198,38 @@ HELPTEXT;
 
 		// --<
 		return $override;
+
+	}
+
+
+
+	/**
+	 * Returns the disable parsing section for the admin form.
+	 *
+	 * @since 3.8.10
+	 *
+	 * @return str $html The markup for the button
+	 */
+	function _get_do_not_parse() {
+
+			$description = __( 'Note: when comments are closed on an entry and there are no comments on that entry, if this option is set to "Yes" then the content will not be parsed for paragraphs, lines or blocks. Comments will also not be parsed, meaning that the entry behaves the same as content which is not commentable. Default prior to 3.8.10 was "No" - all content was always parsed.', 'commentpress-core' );
+
+		// define override
+		$html = '
+		<tr valign="top">
+			<th scope="row"><label for="cp_do_not_parse">' . __( 'Disable CommentPress on entries with no comments. (can be overridden on individual entries)', 'commentpress-core' ) . '</label></th>
+			<td><select id="cp_do_not_parse" name="cp_do_not_parse">
+					<option value="y" ' . (($this->db->option_get('cp_do_not_parse', 'y') == 'y') ? ' selected="selected"' : '') . '>' . __( 'Yes', 'commentpress-core' ) . '</option>
+					<option value="n" ' . (($this->db->option_get('cp_do_not_parse', 'y') == 'n') ? ' selected="selected"' : '') . '>' . __( 'No', 'commentpress-core' ) . '</option>
+				</select>
+				<p>' . $description . '</p>
+			</td>
+		</tr>
+
+		';
+
+		// --<
+		return $html;
 
 	}
 

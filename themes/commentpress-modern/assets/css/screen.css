@@ -1014,6 +1014,19 @@ ul#sidebar_tabs li a.active-tab
 	background-color: #ccc;
 }
 
+/* grey out Comments when not commentable */
+.not_commentable ul#sidebar_tabs li#comments_header a,
+.not_commentable ul#sidebar_tabs li#comments_header a:link,
+.not_commentable ul#sidebar_tabs li#comments_header a:visited,
+.not_commentable ul#sidebar_tabs li#comments_header a:hover,
+.not_commentable ul#sidebar_tabs li#comments_header a:focus,
+.not_commentable ul#sidebar_tabs li#comments_header a:active
+{
+	color: #d6d6d6;
+	background-color: #ddd;
+	cursor: default;
+}
+
 .sidebar_contents_wrapper
 {
 	height: 520px;
