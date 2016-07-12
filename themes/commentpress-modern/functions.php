@@ -552,7 +552,7 @@ function commentpress_page_navigation( $with_comments = false ) {
 	global $commentpress_core;
 
 	// bail if the plugin is not active
-	if ( !is_object( $commentpress_core ) ) return;
+	if ( ! is_object( $commentpress_core ) ) return;
 
 	// init formatting
 	$before_next = '<li class="alignright">';

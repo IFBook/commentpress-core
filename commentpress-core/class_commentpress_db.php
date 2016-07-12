@@ -2875,8 +2875,6 @@ class Commentpress_Core_Database {
 			// check for a WP 3.8+ function
 			if ( function_exists( 'wp_admin_bar_sidebar_toggle' ) ) {
 
-				//die('here');
-
 				// the 3.8+ admin bar is taller
 				$vars['cp_wp_adminbar_height'] = '32';
 

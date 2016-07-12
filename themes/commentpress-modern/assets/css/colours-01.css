@@ -54,7 +54,10 @@ body.create-blog #cp-multisite-options h4,
 #content .mu_register #cp-multisite-options h3,
 
 /* Comment form */
-div#respond h4#respond_title
+div#respond h4#respond_title,
+
+/* CommentPress JSTOR plugin support */
+.commentpress_jstor .comment-title a
 {
 	font-family: Lato, 'Trebuchet MS', Helvetica, Arial, sans-serif;
 }

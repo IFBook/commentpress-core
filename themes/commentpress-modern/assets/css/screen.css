@@ -610,6 +610,7 @@ Shadows and Transitions
 */
 
 /* 10px outer shadow */
+.outer-shadow-ten-px,
 #header
 {
 	-webkit-box-shadow: #888 0 0 10px;
@@ -628,6 +629,7 @@ Shadows and Transitions
 }
 
 /* 15px outer shadows */
+.outer-shadow-fifteen-px,
 #page_wrapper,
 .page_wrapper
 {
@@ -1780,6 +1782,7 @@ h2.post_title a:active,
 {
 	color: #000;
 	text-decoration: none;
+	word-wrap: break-word;
 }
 
 div.search_meta
@@ -3416,7 +3419,6 @@ Compatibility with CommentPress JSTOR plugin
 {
 	color: #761D19;
 	text-decoration: none;
-	font-family: Lato, 'Trebuchet MS', Helvetica, Arial, sans-serif;
 	font-weight: bold;
 }
 
