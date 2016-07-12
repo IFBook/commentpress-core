@@ -1946,6 +1946,185 @@ endif; // commentpress_get_comment_activity_item
 
 
 
+if ( ! function_exists( 'commentpress_comments_by_para_format_whole' ) ):
+/**
+ * Format the markup for the "whole page" section of comments.
+ *
+ * @since 3.8.10
+ *
+ * @param str $post_type_name The singular name of the post type
+ * @param int $comment_count The number of comments on the block
+ * @return array $return Data array containing the translated strings
+ */
+function commentpress_comments_by_para_format_whole( $post_type_name, $comment_count ) {
+
+	// init return
+	$return = array();
+
+	// construct entity text
+	$return['entity_text'] = sprintf(
+		__( 'the whole %s', 'commentpress-core' ),
+		$post_type_name
+	);
+
+	// construct permalink text
+	$return['permalink_text'] = sprintf(
+		__( 'Permalink for comments on the whole %s', 'commentpress-core' ),
+		$post_type_name
+	);
+
+	// construct comment count
+	$return['comment_text'] = sprintf(
+		_n(
+			'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span>', // singular
+			'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span>', // plural
+			$comment_count, // number
+			'commentpress-core' // domain
+		),
+		$comment_count // substitution
+	);
+
+	// construct heading text
+	$return['heading_text'] = sprintf(
+		__( '%1$s on <span class="source_block">the whole %2$s</span>', 'commentpress-core' ),
+		$return['comment_text'],
+		$post_type_name
+	);
+
+	// --<
+	return $return;
+
+}
+endif; // commentpress_comments_by_para_format_whole
+
+
+
+if ( ! function_exists( 'commentpress_comments_by_para_format_pings' ) ):
+/**
+ * Format the markup for the "pingbacks and trackbacks" section of comments.
+ *
+ * @since 3.8.10
+ *
+ * @param int $comment_count The number of comments on the block
+ * @return array $return Data array containing the translated strings
+ */
+function commentpress_comments_by_para_format_pings( $comment_count ) {
+
+	// init return
+	$return = array();
+
+	// construct entity text
+	$return['entity_text'] = __( 'pingback or trackback', 'commentpress-core' );
+
+	// construct permalink text
+	$return['permalink_text'] = __( 'Permalink for pingbacks and trackbacks', 'commentpress-core' );
+
+	// construct comment count
+	$return['comment_text'] = sprintf(
+		_n(
+			'<span>%d</span> Pingback or trackback', // singular
+			'<span>%d</span> Pingbacks and trackbacks', // plural
+			$comment_count, // number
+			'commentpress-core' // domain
+		),
+		$comment_count // substitution
+	);
+
+	// construct heading text
+	$return['heading_text'] = sprintf( '<span>%s</span>', $return['comment_text'] );
+
+	// --<
+	return $return;
+
+}
+endif; // commentpress_comments_by_para_format_pings
+
+
+
+if ( ! function_exists( 'commentpress_comments_by_para_format_block' ) ):
+/**
+ * Format the markup for "comments by block" section of comments.
+ *
+ * @since 3.8.10
+ *
+ * @param int $comment_count The number of comments on the block
+ * @param int $para_num The sequential number of the block
+ * @return array $return Data array containing the translated strings
+ */
+function commentpress_comments_by_para_format_block( $comment_count, $para_num ) {
+
+	// init return
+	$return = array();
+
+	// init block name
+	$block_name = __( 'paragraph', 'commentpress-core' );
+
+	// which parsing method?
+	if ( defined( 'COMMENTPRESS_BLOCK' ) ) {
+
+		// override block identifier
+		switch ( COMMENTPRESS_BLOCK ) {
+
+			case 'tag' :
+				$block_name = __( 'paragraph', 'commentpress-core' );
+				break;
+
+			case 'block' :
+				$block_name = __( 'block', 'commentpress-core' );
+				break;
+
+			case 'line' :
+				$block_name = __( 'line', 'commentpress-core' );
+				break;
+
+		}
+
+	}
+
+	// allow filtering
+	$block_name = apply_filters( 'commentpress_lexia_block_name', $block_name );
+
+	// construct entity text
+	$return['entity_text'] = sprintf(
+		__( '%1$s %2$s', 'commentpress-core' ),
+		$block_name,
+		$para_num
+	);
+
+	// construct permalink text
+	$return['permalink_text'] = sprintf(
+		__( 'Permalink for comments on %1$s %2$s', 'commentpress-core' ),
+		$block_name,
+		$para_num
+	);
+
+	// construct comment count
+	$return['comment_text'] = sprintf(
+		_n(
+			'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span>', // singular
+			'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span>', // plural
+			$comment_count, // number
+			'commentpress-core' // domain
+		),
+		$comment_count // substitution
+	);
+
+	// construct heading text
+	$return['heading_text'] = sprintf(
+		__( '%1$s on <span class="source_block">%2$s %3$s</span>', 'commentpress-core' ),
+		$return['comment_text'],
+		$block_name,
+		$para_num
+	);
+
+	// --<
+	return $return;
+
+}
+endif; // commentpress_comments_by_para_format_block
+
+
+
 if ( ! function_exists( 'commentpress_get_comments_by_para' ) ):
 /**
  * Get comments delimited by paragraph.
@@ -1971,21 +2150,15 @@ function commentpress_get_comments_by_para() {
 	// get approved comments for this post, sorted comments by text signature
 	$comments_sorted = $commentpress_core->get_sorted_comments( $post->ID );
 
-	// get text signatures
-	//$text_sigs = $commentpress_core->db->get_text_sigs();
-
-	// init starting paragraph number
-	$start_num = 1;
-
-	// set key
+	// key for starting paragraph number
 	$key = '_cp_starting_para_number';
 
-	// if the custom field already has a value
+	// default starting paragraph number
+	$start_num = 1;
+
+	// override if the custom field already has a value
 	if ( get_post_meta( $post->ID, $key, true ) != '' ) {
-
-		// get it
 		$start_num = absint( get_post_meta( $post->ID, $key, true ) );
-
 	}
 
 	// if we have any
@@ -2011,12 +2184,9 @@ function commentpress_get_comments_by_para() {
 			// Walker_Comment has changed to buffered output, so define args without
 			// our custom walker. The built in walker works just fine now.
 			$args = array(
-
-				// list comments params
 				'style'=> 'ol',
 				'type'=> $comment_type,
 				'callback' => 'commentpress_comments'
-
 			);
 
 		} else {
@@ -2028,16 +2198,27 @@ function commentpress_get_comments_by_para() {
 
 			// define args
 			$args = array(
-
-				// list comments params
 				'walker' => $walker,
 				'style'=> 'ol',
 				'type'=> $comment_type,
 				'callback' => 'commentpress_comments'
-
 			);
 
 		}
+
+		// get singular post type label
+		$current_type = get_post_type();
+		$post_type = get_post_type_object( $current_type );
+
+		/**
+		 * Assign name of post type.
+		 *
+		 * @since 3.8.10
+		 *
+		 * @param str $singular_name The singular label for this post type
+		 * @return str $singular_name The modified label for this post type
+		 */
+		$post_type_name = apply_filters( 'commentpress_lexia_post_type_name', $post_type->labels->singular_name );
 
 		// init counter for text_signatures array
 		$sig_counter = 0;
@@ -2063,45 +2244,8 @@ function commentpress_get_comments_by_para() {
 					// clear the paragraph number
 					$para_num = '';
 
-					// define default phrase
-					$paragraph_text = __( 'the whole page', 'commentpress-core' );
-
-					// check post type
-					$current_type = get_post_type();
-					switch( $current_type ) {
-
-						// we can add more of these if needed
-						case 'post': $paragraph_text = __( 'the whole post', 'commentpress-core' ); break;
-						case 'page': $paragraph_text = __( 'the whole page', 'commentpress-core' ); break;
-
-					}
-
-					// set permalink text
-					$permalink_text = sprintf(
-						__( 'Permalink for comments on %s', 'commentpress-core' ),
-						$paragraph_text
-					);
-
-					// define heading text
-					$heading_text = sprintf( _n(
-
-						// singular
-						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span> on ',
-
-						// plural
-						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span> on ',
-
-						// number
-						$comment_count,
-
-						// domain
-						'commentpress-core'
-
-					// substitution
-					), $comment_count );
-
-					// append para text
-					$heading_text .= '<span class="source_block">' . $paragraph_text . '</span>';
+					// get the markup we need for this
+					$markup = commentpress_comments_by_para_format_whole( $post_type_name, $comment_count );
 
 					break;
 
@@ -2114,29 +2258,8 @@ function commentpress_get_comments_by_para() {
 					// clear the paragraph number
 					$para_num = '';
 
-					// define heading text
-					$heading_text = sprintf( _n(
-
-						// singular
-						'<span>%d</span> Pingback or trackback',
-
-						// plural
-						'<span>%d</span> Pingbacks and trackbacks',
-
-						// number
-						$comment_count,
-
-						// domain
-						'commentpress-core'
-
-					// substitution
-					), $comment_count );
-
-					// set permalink text
-					$permalink_text = __( 'Permalink for pingbacks and trackbacks', 'commentpress-core' );
-
-					// wrap in span
-					$heading_text = '<span>' . $heading_text . '</span>';
+					// get the markup we need for this
+					$markup = commentpress_comments_by_para_format_pings( $comment_count );
 
 					break;
 
@@ -2149,70 +2272,8 @@ function commentpress_get_comments_by_para() {
 					// paragraph number
 					$para_num = $sig_counter + ( $start_num - 1 );
 
-					// which parsing method?
-					if ( defined( 'COMMENTPRESS_BLOCK' ) ) {
-
-						switch ( COMMENTPRESS_BLOCK ) {
-
-							case 'tag' :
-
-								// set block identifier
-								$block_name = __( 'paragraph', 'commentpress-core' );
-
-								break;
-
-							case 'block' :
-
-								// set block identifier
-								$block_name = __( 'block', 'commentpress-core' );
-
-								break;
-
-							case 'line' :
-
-								// set block identifier
-								$block_name = __( 'line', 'commentpress-core' );
-
-								break;
-
-						}
-
-					} else {
-
-						// set block identifier
-						$block_name = __( 'paragraph', 'commentpress-core' );
-
-					}
-
-					// set paragraph text
-					$paragraph_text = $block_name . ' ' . $para_num;
-
-					// set permalink text
-					$permalink_text = sprintf(
-						__( 'Permalink for comments on %s', 'commentpress-core' ),
-						$paragraph_text
-					);
-
-					// define heading text
-					$heading_text = sprintf( _n(
-
-						// singular
-						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span> on ',
-
-						// plural
-						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span> on ',
-
-						// number
-						$comment_count,
-
-						// domain
-						'commentpress-core'
-
-					// substitution
-					), $comment_count );
-
-					// append para text
-					$heading_text .= '<span class="source_block">' . $paragraph_text . '</span>';
+					// get the markup we need for this
+					$markup = commentpress_comments_by_para_format_block( $comment_count, $para_num );
 
 			} // end switch
 
@@ -2230,10 +2291,12 @@ function commentpress_get_comments_by_para() {
 			} else {
 
 				// show heading
-				echo '<h3 id="para_heading-' . $text_sig . '"' . $no_comments_class . '><a class="comment_block_permalink" title="' . $permalink_text . '" href="#para_heading-' . $text_sig . '">' . $heading_text . '</a></h3>' . "\n\n";
+				echo '<h3 id="para_heading-' . $text_sig . '"' . $no_comments_class . '><a class="comment_block_permalink" title="' . $markup['permalink_text'] . '" href="#para_heading-' . $text_sig . '">' . $markup['heading_text'] . '</a></h3>' . "\n\n";
 
 				// override if there are no comments (for print stylesheet to hide them)
-				if ( $comment_count == 0 ) { $no_comments_class = ' no_comments'; }
+				if ( $comment_count == 0 ) {
+					$no_comments_class = ' no_comments';
+				}
 
 				// open paragraph wrapper
 				echo '<div id="para_wrapper-' . $text_sig . '" class="paragraph_wrapper' . $no_comments_class . '">' . "\n\n";
@@ -2265,7 +2328,6 @@ function commentpress_get_comments_by_para() {
 
 					}
 
-
 					/**
 					 * Allow plugins to append to paragraph level comments.
 					 *
@@ -2285,7 +2347,10 @@ function commentpress_get_comments_by_para() {
 							// leave comment link
 							echo '<div class="reply_to_para" id="reply_to_para-' . $para_num . '">' . "\n" .
 									'<p><a class="reply_to_para" rel="nofollow" href="' . $redirect . '">' .
-										__( 'Login to leave a comment on ', 'commentpress-core' ) . $paragraph_text .
+										sprintf(
+											__( 'Login to leave a comment on %s', 'commentpress-core' ),
+											$markup['entity_text']
+										) .
 									'</a></p>' . "\n" .
 								 '</div>' . "\n\n";
 
@@ -2321,14 +2386,14 @@ function commentpress_get_comments_by_para() {
 							// construct link content
 							$link_content = sprintf(
 								__( 'Leave a comment on %s', 'commentpress-core' ),
-								$paragraph_text
+								$markup['entity_text']
 							);
 
 							// allow overrides
 							$link_content = apply_filters(
 								'commentpress_reply_to_para_link_text',
 								$link_content,
-								$paragraph_text
+								$markup['entity_text']
 							);
 
 							// leave comment link
