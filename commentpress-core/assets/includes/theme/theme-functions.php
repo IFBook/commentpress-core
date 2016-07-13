@@ -3833,6 +3833,9 @@ if ( ! function_exists( 'commentpress_widget_title' ) ):
  * enclosing markup for the sub-section is split between the 'after_title' and
  * 'after_widget' substitutions in the theme register_sidebar() declarations.
  *
+ * Note: #footer widget titles are hidden via CSS. Override this in your child
+ * theme to show them collectively or individually.
+ *
  * @since 3.8.10
  *
  * @param str $title The possibly-empty widget title

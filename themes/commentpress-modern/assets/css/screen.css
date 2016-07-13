@@ -4010,6 +4010,14 @@ Widgets & Widget Areas
 --------------------------------------------------------------------------------
 */
 
+/* Footer widget titles are hidden here */
+#footer .widget .widget-title
+{
+	display: none;
+}
+
+
+
 /* generic sidebar widget area font */
 .sidebar_container .widget
 {
