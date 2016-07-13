@@ -84,29 +84,21 @@ CommentPress Colour Scheme
 --------------------------------------------------------------------------------
 */
 
-/* the all-important highlight state */
+/* The all-important highlight state */
 .selected_para
 {
 	color: #ca0000;
 }
 
-/* WP Footnotes adds an inline colour *sigh* */
-ol.footnotes.selected_para
-{
-	color: #ca0000;
-}
 
-/* Site tagline */
+
+/* Site Tagline */
 #header #tagline
 {
 	color: #999;
 }
 
-/* Comment reply cancel link */
-#cancel-comment-reply-link
-{
-	color: #000;
-}
+
 
 /* Links in page/post content */
 .post a,
@@ -171,3 +163,20 @@ body.commentpress_page #cp-multisite-options h3,
 {
 	color: #761D19;
 }
+
+
+
+/* Comment reply cancel link */
+#cancel-comment-reply-link
+{
+	color: #000;
+}
+
+
+
+/* WP Footnotes adds an inline colour *sigh* */
+ol.footnotes.selected_para
+{
+	color: #ca0000;
+}
+

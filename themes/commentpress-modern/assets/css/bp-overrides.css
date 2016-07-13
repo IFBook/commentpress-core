@@ -1369,7 +1369,6 @@ body.bp-user h2.post_title
 	margin: 0;
 	color: #fff;
 	padding: 21px 19px 15px 19px;
-	color: #fff;
 	line-height: 1;
 }
 
@@ -3969,6 +3968,9 @@ ul.item-list li div.item-desc,
 	color: #761D19;
 }
 
+
+
+/* Titles */
 body.activity h2.post_title,
 body.groups h2.post_title,
 body.blogs h2.post_title,
@@ -3978,6 +3980,7 @@ body.registration #content h2.post_title,
 body.activation #content h2.post_title,
 body.bp-docs h2.post_title,
 
+/* Content */
 body#main_blog.create-blog.buddypress_page #content .padder h3,
 body#main_blog form.dir-form,
 body.buddypress form.dir-form,
@@ -3998,12 +4001,17 @@ div#item-header,
 	background: #761D19;
 }
 
+
+
+/* Group Types */
 #activity_sidebar li.groups
 {
     border-left: 10px solid #761D19;
 }
 
-/* cover image default background */
+
+
+/* Cover Image default background */
 #buddypress #header-cover-image
 {
 	background-color: #eee;
