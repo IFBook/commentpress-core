@@ -1708,7 +1708,6 @@ Signup Form Styles
 /* CommentPress Core theme compatibility */
 body.commentpress_page #cp-multisite-options h3
 {
-	color: #761D19;
 	font-size: 1.2em;
 	margin: 30px 0 5px 0;
 }
@@ -2665,7 +2664,6 @@ Post Versioning
 	font-weight: normal;
 	display: block;
 	line-height: 1;
-	color: #761D19;
 	text-decoration: none;
 	text-transform: uppercase;
 }
@@ -2969,7 +2967,6 @@ ol.footnotes,
 #content sup.footnote,
 .content sup.footnote
 {
-	color: #761D19;
 	font-weight: bold;
 	font-family: sans-serif;
 	text-decoration: none;
@@ -3091,7 +3088,7 @@ Compatibility with Featured Comments plugin
 .feature-bury-comments a.feature-comments:hover,
 .feature-burry-comments a.feature-comments:hover
 {
-	color: #761D19;
+	/* see colours-01.css */
 }
 
 
@@ -3242,7 +3239,6 @@ Compatibility with Comment Tagger plugin
 .comment_tagger_tag_link,
 .comment_tagger_tag_link:active
 {
-	color: #761D19;
 	text-decoration: none;
 }
 
@@ -3374,7 +3370,6 @@ body.group-admin.group-sites .standard-form .bpgsites_group_linkages_pending
 
 .bpgsites_group_linkages_pending_heading
 {
-	color: #761D19;
 	margin-bottom: 1em;
 }
 
@@ -3417,7 +3412,6 @@ Compatibility with CommentPress JSTOR plugin
 
 .commentpress_jstor .comment-title a
 {
-	color: #761D19;
 	text-decoration: none;
 	font-weight: bold;
 }
@@ -4000,7 +3994,6 @@ Compatibility with CommentPress Core Text Highlighter
 	text-decoration: none;
 	font-family: sans-serif;
 	text-transform: uppercase;
-	color: #761D19;
 	float: right;
 	margin-left: 2%;
 }
