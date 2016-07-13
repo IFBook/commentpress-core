@@ -410,7 +410,7 @@ function commentpress_background() {
 	// bail if we don't have one
 	if ( ! $color ) return;
 
-	$style = $color ? "background-color: #$color !important;" : '';
+	$style = $color ? "background-color: #$color;" : '';
 
 	echo '
 <style type="text/css" id="custom-background-css">
