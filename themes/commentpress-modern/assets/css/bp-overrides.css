@@ -3730,6 +3730,7 @@ Widgets & Widget Areas
 
 /* BuddyPress Widgets that need padding */
 .sidebar_container .widget_bp_core_members_widget .widget_wrapper,
+.sidebar_container .widget_bp_groups_widget .widget_wrapper,
 .sidebar_container .widget_bp_core_login_widget .widget_wrapper,
 .sidebar_container .widget_bp_core_whos_online_widget .widget_wrapper
 {
@@ -3739,21 +3740,56 @@ Widgets & Widget Areas
 
 
 /* BuddyPress Members Widget */
-.widget.buddypress div.item-options
+.widget.widget_bp_core_members_widget div.item-options
 {
 	padding: 0;
 }
 
-.widget.buddypress div.item-options a:focus
+.widget.widget_bp_core_members_widget div.item-options a:focus
 {
 	text-decoration: underline;
 }
 
-.widget.buddypress div.item-options a,
-.widget.buddypress div.item-options a:active
+.widget.widget_bp_core_members_widget div.item-options a,
+.widget.widget_bp_core_members_widget div.item-options a:active
 {
 	color: #333;
 	text-decoration: none;
+}
+
+#activity_sidebar .widget.widget_bp_core_members_widget span.activity
+{
+	font-size: 11px; /* reset to BuddyPress default */
+}
+
+
+
+/* BuddyPress Groups Widget */
+.widget.widget_bp_groups_widget div.item-options
+{
+	padding: 0;
+}
+
+.widget.widget_bp_groups_widget div.item-options a:focus
+{
+	text-decoration: underline;
+}
+
+.widget.widget_bp_groups_widget div.item-options a,
+.widget.widget_bp_groups_widget div.item-options a:active
+{
+	color: #333;
+	text-decoration: none;
+}
+
+#activity_sidebar .widget.widget_bp_groups_widget li
+{
+	border: none;
+}
+
+#activity_sidebar .widget.widget_bp_groups_widget span.activity
+{
+	font-size: 11px; /* reset to BuddyPress default */
 }
 
 

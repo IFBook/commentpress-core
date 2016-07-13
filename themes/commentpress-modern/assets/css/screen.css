@@ -4063,7 +4063,7 @@ Widgets & Widget Areas
 	display: block;
 	font-family: sans-serif;
 	font-weight: normal;
-	font-size: 100%;
+	font-size: 80%;
 	padding: 8px 10px;
 	text-decoration: none;
 	background-color: transparent;
@@ -4086,7 +4086,6 @@ Widgets & Widget Areas
 {
 	list-style: none;
 	list-style-image: none;
-	border-bottom: 1px dotted #888;
 }
 
 .sidebar_container .widget.widget_categories ul li a
@@ -4100,7 +4099,6 @@ Widgets & Widget Areas
 {
 	list-style: none;
 	list-style-image: none;
-	border-bottom: 1px dotted #888;
 }
 
 .sidebar_container .widget.widget_archive ul li a
