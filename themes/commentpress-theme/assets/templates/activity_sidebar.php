@@ -14,18 +14,22 @@ $_is_commentable = commentpress_is_commentable();
 // if a commentable post
 if ( $_is_commentable AND ! post_password_required() ) {
 
-	// set default phrase
-	$_paragraph_text = __( 'Recent Comments on this Page', 'commentpress-core' );
+	// get singular post type label
+	$current_type = get_post_type();
+	$post_type = get_post_type_object( $current_type );
 
-	// switch by current post type
-	$_current_type = get_post_type();
-	switch( $_current_type ) {
+	/**
+	 * Assign name of post type.
+	 *
+	 * @since 3.8.10
+	 *
+	 * @param str $singular_name The singular label for this post type
+	 * @return str $singular_name The modified label for this post type
+	 */
+	$post_type_name = apply_filters( 'commentpress_lexia_post_type_name', $post_type->labels->singular_name );
 
-		// we can add more of these if needed
-		case 'post': $_paragraph_text = __( 'Recent Comments on this Post', 'commentpress-core' ); break;
-		case 'page': $_paragraph_text = __( 'Recent Comments on this Page', 'commentpress-core' ); break;
-
-	}
+	// construct recent comments phrase
+	$_paragraph_text = sprintf( __( 'Recent Comments on this %s', 'commentpress-core' ), $post_type_name );
 
 	// set default
 	$page_comments_title = apply_filters(
