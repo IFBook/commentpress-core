@@ -2056,33 +2056,14 @@ function commentpress_comments_by_para_format_block( $comment_count, $para_num )
 	// init return
 	$return = array();
 
-	// init block name
+	// access plugin
+	global $commentpress_core;
+
+	// get block name
 	$block_name = __( 'paragraph', 'commentpress-core' );
-
-	// which parsing method?
-	if ( defined( 'COMMENTPRESS_BLOCK' ) ) {
-
-		// override block identifier
-		switch ( COMMENTPRESS_BLOCK ) {
-
-			case 'tag' :
-				$block_name = __( 'paragraph', 'commentpress-core' );
-				break;
-
-			case 'block' :
-				$block_name = __( 'block', 'commentpress-core' );
-				break;
-
-			case 'line' :
-				$block_name = __( 'line', 'commentpress-core' );
-				break;
-
-		}
-
+	if ( is_object( $commentpress_core ) ) {
+		$block_name = $commentpress_core->parser->lexia_get();
 	}
-
-	// allow filtering
-	$block_name = apply_filters( 'commentpress_lexia_block_name', $block_name );
 
 	// construct entity text
 	$return['entity_text'] = sprintf(
@@ -2553,7 +2534,8 @@ function commentpress_comment_form_title(
 
 				// construct link text
 				$para_text = sprintf(
-					__( 'Paragraph %s', 'commentpress-core' ),
+					_x( '%s %s', 'The first substitution is the block name e.g. "paragraph". The second is the numeric comment count.', 'commentpress-core' ),
+					ucfirst( $commentpress_core->parser->lexia_get() ),
 					$reply_to_para_id
 				);
 
@@ -2564,7 +2546,8 @@ function commentpress_comment_form_title(
 
 				// construct paragraph without link
 				$paragraph = sprintf(
-					__( 'Paragraph %s', 'commentpress-core' ),
+					_x( '%s %s', 'The first substitution is the block name e.g. "paragraph". The second is the numeric comment count.', 'commentpress-core' ),
+					ucfirst( $commentpress_core->parser->lexia_get() ),
 					$para_num
 				);
 

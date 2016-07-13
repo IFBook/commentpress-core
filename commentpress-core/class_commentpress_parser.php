@@ -69,6 +69,24 @@ class Commentpress_Core_Parser {
 	 */
 	public $do_not_parse = false;
 
+	/**
+	 * Formatter flag.
+	 *
+	 * @since 3.8.10
+	 * @access public
+	 * @var str $formatter The type of formatter ('tag', 'line' or 'block')
+	 */
+	public $formatter = 'tag';
+
+	/**
+	 * Block name.
+	 *
+	 * @since 3.8.10
+	 * @access public
+	 * @var str $block_name The name of the block (e.g. "paragraph", "line" etc)
+	 */
+	public $block_name = '';
+
 
 
 	/**
@@ -174,72 +192,80 @@ class Commentpress_Core_Parser {
 		// check for our quicktag
 		$has_quicktag = $this->_has_comment_block_quicktag( $content );
 
-		// if it hasn't
+		// determine formatter
 		if ( ! $has_quicktag ) {
 
-			// auto-format content accordingly
+			// auto-format content
 
-			// get action to take (default to 'tag')
-			$action = apply_filters( 'cp_select_content_formatter', 'tag' );
+			// get action to take (defaults to 'tag')
+			$this->formatter = apply_filters( 'cp_select_content_formatter', 'tag' );
 
-			// act on it
-			switch( $action ) {
-
-				// for poetry, for example, line by line commenting formatter is better
-				case 'line' :
-
-					// set constant - okay, since we never return here
-					if ( ! defined( 'COMMENTPRESS_BLOCK' ) ) define( 'COMMENTPRESS_BLOCK', 'line' );
-
-					// generate text signatures array
-					$this->text_signatures = $this->_generate_line_signatures( $content );
-
-					// only continue parsing if we have an array of sigs
-					if ( ! empty( $this->text_signatures ) ) {
-
-						// filter content by <br> and <br /> tags
-						$content = $this->_parse_lines( $content );
-
-					}
-
-					break;
-
-				// for general prose, existing formatter is fine
-				case 'tag' :
-
-					// set constant
-					if ( ! defined( 'COMMENTPRESS_BLOCK' ) ) define( 'COMMENTPRESS_BLOCK', 'tag' );
-
-					// generate text signatures array
-					$this->text_signatures = $this->_generate_text_signatures( $content, 'p|ul|ol' );
-
-					// only continue parsing if we have an array of sigs
-					if ( ! empty( $this->text_signatures ) ) {
-
-						// filter content by <p>, <ul> and <ol> tags
-						$content = $this->_parse_content( $content, 'p|ul|ol' );
-
-					}
-
-					break;
-
-			}
+			// set constant
+			if ( ! defined( 'COMMENTPRESS_BLOCK' ) ) define( 'COMMENTPRESS_BLOCK', $this->formatter );
 
 		} else {
+
+			// set action to take
+			$this->formatter = 'block';
 
 			// set constant
 			if ( ! defined( 'COMMENTPRESS_BLOCK' ) ) define( 'COMMENTPRESS_BLOCK', 'block' );
 
-			// generate text signatures array
-			$this->text_signatures = $this->_generate_block_signatures( $content );
+		}
 
-			// only parse content if we have an array of sigs
-			if ( ! empty( $this->text_signatures ) ) {
+		// determine "lexia" names
+		$this->lexia_set( $this->formatter );
 
-				// filter content by <!--commentblock--> quicktags
-				$content = $this->_parse_blocks( $content );
+		// act on formatter
+		switch( $this->formatter ) {
 
-			}
+			// for poetry
+			case 'line' :
+
+				// generate text signatures array
+				$this->text_signatures = $this->_generate_line_signatures( $content );
+
+				// only continue parsing if we have an array of sigs
+				if ( ! empty( $this->text_signatures ) ) {
+
+					// filter content by <br> and <br /> tags
+					$content = $this->_parse_lines( $content );
+
+				}
+
+				break;
+
+			// for general prose
+			case 'tag' :
+
+				// generate text signatures array
+				$this->text_signatures = $this->_generate_text_signatures( $content, 'p|ul|ol' );
+
+				// only continue parsing if we have an array of sigs
+				if ( ! empty( $this->text_signatures ) ) {
+
+					// filter content by <p>, <ul> and <ol> tags
+					$content = $this->_parse_content( $content, 'p|ul|ol' );
+
+				}
+
+				break;
+
+			// for blocks
+			case 'block' :
+
+				// generate text signatures array
+				$this->text_signatures = $this->_generate_block_signatures( $content );
+
+				// only parse content if we have an array of sigs
+				if ( ! empty( $this->text_signatures ) ) {
+
+					// filter content by <!--commentblock--> quicktags
+					$content = $this->_parse_blocks( $content );
+
+				}
+
+				break;
 
 		}
 
@@ -271,6 +297,64 @@ class Commentpress_Core_Parser {
 
 		// --<
 		return $this->_get_sorted_comments( $post_ID );
+
+	}
+
+
+
+	/**
+	 * Store the name of the "block" for paragraphs, blocks or lines.
+	 *
+	 * @since 3.8.10
+	 *
+	 * @param str $formatter The formatter
+	 */
+	public function lexia_set( $formatter ) {
+
+		// set block identifier
+		switch ( $formatter ) {
+
+			case 'block' :
+				$block_name = __( 'block', 'commentpress-core' );
+				break;
+
+			case 'line' :
+				$block_name = __( 'line', 'commentpress-core' );
+				break;
+
+			case 'tag' :
+			default:
+				$block_name = __( 'paragraph', 'commentpress-core' );
+				break;
+
+		}
+
+		/**
+		 * Allow filtering of block name by formatter.
+		 *
+		 * @since 3.8.10
+		 *
+		 * @param str $block_name The existing name of the block
+		 * @param str $block_name The type of block
+		 * @return str $block_name The modified name of the block
+		 */
+		$this->block_name = apply_filters( 'commentpress_lexia_block_name', $block_name, $formatter );
+
+	}
+
+
+
+	/**
+	 * Get the name of the "block" for paragraphs, blocks or lines.
+	 *
+	 * @since 3.8.10
+	 *
+	 * @return str $block_name The name of the block
+	 */
+	public function lexia_get() {
+
+		// return existing property
+		return $this->block_name;
 
 	}
 

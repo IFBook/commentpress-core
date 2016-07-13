@@ -836,23 +836,27 @@ HELPTEXT;
 				// define title text
 				$title_text = sprintf(
 					_n(
-						'There is %d comment written for this paragraph', // singular
-						'There are %d comments written for this paragraph', // plural
+						'There is %d comment written for this %s', // singular
+						'There are %d comments written for this %s', // plural
 						$comment_count, // number
 						'commentpress-core' // domain
 					),
-					$comment_count // substitution
+					// substitutions
+					$comment_count,
+					$this->parent_obj->parser->lexia_get()
 				);
 
 				// define add comment text
 				$add_text = sprintf(
 					_n(
-						'Leave a comment on paragraph %d', // singular
-						'Leave a comment on paragraph %d', // plural
+						'Leave a comment on %s %d', // singular
+						'Leave a comment on %s %d', // plural
 						$para_num, // number
 						'commentpress-core' // domain
 					),
-					$para_num // substitution
+					// substitutions
+					$this->parent_obj->parser->lexia_get(),
+					$para_num
 				);
 
 				break;
@@ -865,23 +869,27 @@ HELPTEXT;
 				// define title text
 				$title_text = sprintf(
 					_n(
-					'There is %d comment written for this line', // singular
-					'There are %d comments written for this line', // plural
+					'There is %d comment written for this %s', // singular
+					'There are %d comments written for this %s', // plural
 					$comment_count, // number
 					'commentpress-core' // domain
 					),
-					$comment_count // substitution
+					// substitutions
+					$comment_count,
+					$this->parent_obj->parser->lexia_get()
 				);
 
 				// define add comment text
 				$add_text = sprintf(
 					_n(
-						'Leave a comment on line %d', // singular
-						'Leave a comment on line %d', // plural
+						'Leave a comment on %s %d', // singular
+						'Leave a comment on %s %d', // plural
 						$para_num, // number
 						'commentpress-core' // domain
 					),
-					$para_num // substitution
+					// substitutions
+					$this->parent_obj->parser->lexia_get(),
+					$para_num
 				);
 
 				break;
@@ -895,23 +903,27 @@ HELPTEXT;
 				// define title text
 				$title_text = sprintf(
 					_n(
-						'There is %d comment written for this block', // singular
-						'There are %d comments written for this block', // plural
+						'There is %d comment written for this %s', // singular
+						'There are %d comments written for this %s', // plural
 						$comment_count, // number
 						'commentpress-core' // domain
 					),
-					$comment_count // substitution
+					// substitutions
+					$comment_count,
+					$this->parent_obj->parser->lexia_get()
 				);
 
 				// define add comment text
 				$add_text = sprintf(
 					_n(
-						'Leave a comment on block %d', // singular
-						'Leave a comment on block %d', // plural
+						'Leave a comment on %s %d', // singular
+						'Leave a comment on %s %d', // plural
 						$para_num, // number
 						'commentpress-core' // domain
 					),
-					$para_num // substitution
+					// substitutions
+					$this->parent_obj->parser->lexia_get(),
+					$para_num
 				);
 
 				break;
@@ -961,12 +973,14 @@ HELPTEXT;
 				// define permalink text
 				$permalink_text = sprintf(
 					_n(
-						'Permalink for paragraph %d', // singular
-						'Permalink for paragraph %d', // plural
+						'Permalink for %s %d', // singular
+						'Permalink for %s %d', // plural
 						$para_num, // number
 						'commentpress-core' // domain
 					),
-					$para_num // substitution
+					// substitutions
+					$this->parent_obj->parser->lexia_get(),
+					$para_num
 				);
 
 				// define paragraph marker
@@ -982,12 +996,14 @@ HELPTEXT;
 				// define permalink text
 				$permalink_text = sprintf(
 					_n(
-						'Permalink for line %d', // singular
-						'Permalink for line %d', // plural
+						'Permalink for %s %d', // singular
+						'Permalink for %s %d', // plural
 						$para_num, // number
 						'commentpress-core' // domain
 					),
-					$para_num // substitution
+					// substitutions
+					$this->parent_obj->parser->lexia_get(),
+					$para_num
 				);
 
 				// define paragraph marker
@@ -1004,12 +1020,14 @@ HELPTEXT;
 				// define permalink text
 				$permalink_text = sprintf(
 					_n(
-						'Permalink for block %d', // singular
-						'Permalink for block %d', // plural
+						'Permalink for %s %d', // singular
+						'Permalink for %s %d', // plural
 						$para_num, // number
 						'commentpress-core' // domain
 					),
-					$para_num // substitution
+					// substitutions
+					$this->parent_obj->parser->lexia_get(),
+					$para_num
 				);
 
 				// define paragraph marker
