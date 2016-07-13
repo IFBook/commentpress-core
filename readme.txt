@@ -212,6 +212,13 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+<h4>3.9</h4>
+
+* Introduce new parent theme
+* Add widget areas to themes
+* Introduce option to skip parsing entries with no comments
+* Introduce option to disable auto-navigation on pages
+
 <h4>3.8.9</h4>
 
 * Fix appearance on link autocomplete popover in comment form
