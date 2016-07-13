@@ -3825,6 +3825,38 @@ add_action( 'init', 'commentpress_wplicense_compat', 100 );
 
 
 
+if ( ! function_exists( 'commentpress_widget_title' ) ):
+/**
+ * Ensure that widget title is not empty.
+ *
+ * Empty widget titles break the layout of the theme at present, because the
+ * enclosing markup for the sub-section is split between the 'after_title' and
+ * 'after_widget' substitutions in the theme register_sidebar() declarations.
+ *
+ * @since 3.8.10
+ *
+ * @param str $title The possibly-empty widget title
+ * @param str $id_base The widget ID base
+ * @return str $title The non-empty title
+ */
+function commentpress_widget_title( $title, $id_base ) {
+
+	// set default title if none present
+	if ( empty( $title ) ) {
+		$title = __( 'Untitled Widget', 'commentpress-core' );
+	}
+
+	// --<
+	return $title;
+
+}
+endif; // commentpress_widget_title
+
+// make sure widget title is not empty
+add_filter( 'widget_title', 'commentpress_widget_title', 10, 2 );
+
+
+
 if ( ! function_exists( 'commentpress_groupblog_classes' ) ):
 /**
  * Add classes to #content in BuddyPress, so that we can distinguish different groupblog types.
