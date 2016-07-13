@@ -84,6 +84,9 @@ $_max_members = 10;
 
 <?php
 
+// allow widgets to be placed above activity
+dynamic_sidebar( 'cp-activity-top' );
+
 // allow plugins to add their own activity headings here
 do_action( 'commentpress_bp_activity_sidebar_before_activity' );
 
@@ -355,6 +358,9 @@ if (
 
 // allow plugins to add their own activity headings here
 do_action( 'commentpress_bp_activity_sidebar_after_activity' );
+
+// allow widgets to be placed below activity
+dynamic_sidebar( 'cp-activity-bottom' );
 
 
 

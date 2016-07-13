@@ -3733,34 +3733,25 @@ add_filter( 'the_password_form', 'commentpress_amend_password_form' );
 
 if ( ! function_exists( 'commentpress_widgets_init' ) ):
 /**
- * Register our widgets.
+ * Register CommentPress widgets.
+ *
+ * Widget areas (dynamic sidebars) are defined on a per-theme basis in their
+ * functions.php file or similar.
  *
  * @since 3.3
- *
- * @return void
  */
 function commentpress_widgets_init() {
 
-	// define an area where a widget may be placed
-	register_sidebar( array(
-		'name' => __( 'CommentPress Footer', 'commentpress-core' ),
-		'id' => 'cp-license-8',
-		'description' => __( 'An optional widget area in the page footer of the CommentPress theme', 'commentpress-core' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget' => "</div>",
-		'before_title' => '<h3 class="widget-title">',
-		'after_title' => '</h3>',
-	) );
+	// load license widget definition
+	require( COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/widgets/widget-license.php' );
 
-	// widget definitions
-	require( get_template_directory() . '/assets/widgets/widgets.php' );
-
-	// and the widget
+	// register license widget
 	register_widget( 'Commentpress_License_Widget' );
 
 }
 endif; // commentpress_widgets_init
 
+// add action for the above
 add_action( 'widgets_init', 'commentpress_widgets_init' );
 
 

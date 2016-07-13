@@ -24,6 +24,13 @@
 
 
 
+<?php
+
+// allow widgets to be placed above navigation
+dynamic_sidebar( 'cp-nav-top' );
+
+?>
+
 <?php do_action( 'cp_content_tab_before_search' ); ?>
 
 
@@ -92,6 +99,15 @@ if ( is_object( $commentpress_core ) ) {
 ?>
 
 </div>
+
+
+
+<?php
+
+// allow widgets to be placed below navigation
+dynamic_sidebar( 'cp-nav-bottom' );
+
+?>
 
 
 

@@ -1080,3 +1080,73 @@ function commentpress_has_feature_image() {
 
 
 
+/**
+ * Register widget areas for this theme.
+ *
+ * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
+ *
+ * @since 3.8.10
+ */
+function commentpress_register_widget_areas() {
+
+	// define an area where a widget may be placed
+	register_sidebar( array(
+		'name' => __( 'CommentPress Footer', 'commentpress-core' ),
+		'id' => 'cp-license-8',
+		'description' => __( 'An optional widget area in the footer of a CommentPress theme', 'commentpress-core' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => "</div>",
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	) );
+
+	// define an area where a widget may be placed
+	register_sidebar( array(
+		'name' => __( 'Navigation Top', 'commentpress-core' ),
+		'id' => 'cp-nav-top',
+		'description' => __( 'An optional widget area at the top of the Navigation Column', 'commentpress-core' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => "</div></div></div>",
+		'before_title' => '<h3 class="widget-title activity_heading">',
+		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
+	) );
+
+	// define an area where a widget may be placed
+	register_sidebar( array(
+		'name' => __( 'Navigation Bottom', 'commentpress-core' ),
+		'id' => 'cp-nav-bottom',
+		'description' => __( 'An optional widget area at the bottom of the Navigation Column', 'commentpress-core' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => "</div></div></div>",
+		'before_title' => '<h3 class="widget-title activity_heading">',
+		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
+	) );
+
+	// define an area where a widget may be placed
+	register_sidebar( array(
+		'name' => __( 'Activity Top', 'commentpress-core' ),
+		'id' => 'cp-activity-top',
+		'description' => __( 'An optional widget area at the top of the Activity Column', 'commentpress-core' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => "</div></div></div>",
+		'before_title' => '<h3 class="widget-title activity_heading">',
+		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
+	) );
+
+	// define an area where a widget may be placed
+	register_sidebar( array(
+		'name' => __( 'Activity Bottom', 'commentpress-core' ),
+		'id' => 'cp-activity-bottom',
+		'description' => __( 'An optional widget area at the bottom of the Activity Column', 'commentpress-core' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => "</div></div></div>",
+		'before_title' => '<h3 class="widget-title activity_heading">',
+		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
+	) );
+
+}
+
+add_action( 'widgets_init', 'commentpress_register_widget_areas' );
+
+
+
