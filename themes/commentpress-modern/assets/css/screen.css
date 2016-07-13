@@ -909,6 +909,7 @@ BASIC LAYOUT
 {
 	background-color: #fff;
 	color: #000;
+	font-weight: normal;
 }
 
 #toc_sidebar .sidebar_minimiser ul#toc_list li.current_page_ancestor > a,
@@ -3589,7 +3590,10 @@ body.tinymce-4 #commentform #wp-comment-wrap textarea
 }
 
 /* copied from /wp-admin/css/common.css to hide text on media close button */
-.screen-reader-text, .screen-reader-text span, .ui-helper-hidden-accessible
+.screen-reader-text,
+.screen-reader-text span,
+.ui-helper-hidden-accessible,
+.accessibly-hidden
 {
 	position: absolute;
 	margin: -1px;
@@ -4002,6 +4006,270 @@ Compatibility with CommentPress Core Text Highlighter
 
 /*
 --------------------------------------------------------------------------------
+Widgets & Widget Areas
+--------------------------------------------------------------------------------
+*/
+
+/* generic sidebar widget area font */
+.sidebar_container .widget
+{
+	font-family: sans-serif;
+}
+
+
+
+/* Widgets that need padding when placed in Sidebar */
+.sidebar_container .widget_calendar .widget_wrapper,
+.sidebar_container .widget_search .widget_wrapper,
+.sidebar_container .widget_text .widget_wrapper
+{
+	margin: 10px;
+}
+
+
+
+/* Widgets in Sidebar that have lists */
+.sidebar_container .widget.widget_categories ul,
+.sidebar_container .widget.widget_archive ul,
+.sidebar_container .widget.widget_meta ul,
+.sidebar_container .widget.widget_pages ul
+{
+	margin: 0;
+	padding: 0;
+}
+
+.sidebar_container .widget.widget_categories ul li a:hover,
+.sidebar_container .widget.widget_categories ul li a:focus,
+.sidebar_container .widget.widget_archive ul li a:hover,
+.sidebar_container .widget.widget_archive ul li a:focus,
+.sidebar_container .widget.widget_meta ul li a:hover,
+.sidebar_container .widget.widget_meta ul li a:focus,
+.sidebar_container .widget.widget_pages ul li a:hover,
+.sidebar_container .widget.widget_pages ul li a:focus
+{
+	background-color: #fff;
+	color: #333;
+}
+
+.sidebar_container .widget.widget_categories ul li a,
+.sidebar_container .widget.widget_categories ul li a:active,
+.sidebar_container .widget.widget_archive ul li a,
+.sidebar_container .widget.widget_archive ul li a:active,
+.sidebar_container .widget.widget_meta ul li a,
+.sidebar_container .widget.widget_meta ul li a:active,
+.sidebar_container .widget.widget_pages ul li a,
+.sidebar_container .widget.widget_pages ul li a:active
+{
+	display: block;
+	font-family: sans-serif;
+	font-weight: normal;
+	font-size: 100%;
+	padding: 8px 10px;
+	text-decoration: none;
+	background-color: transparent;
+	color: #333;
+}
+
+
+
+/* Categories and Archives may have a dropdown */
+.sidebar_container .widget.widget_categories select,
+.sidebar_container .widget.widget_archive select
+{
+	margin: 10px;
+}
+
+
+
+/* Categories widget in Sidebar */
+.sidebar_container .widget.widget_categories ul li
+{
+	list-style: none;
+	list-style-image: none;
+	border-bottom: 1px dotted #888;
+}
+
+.sidebar_container .widget.widget_categories ul li a
+{
+}
+
+
+
+/* Archives widget in Sidebar */
+.sidebar_container .widget.widget_archive ul li
+{
+	list-style: none;
+	list-style-image: none;
+	border-bottom: 1px dotted #888;
+}
+
+.sidebar_container .widget.widget_archive ul li a
+{
+}
+
+
+
+/* Recent Entries in Sidebar */
+.sidebar_container .widget.widget_recent_entries ul
+{
+	margin: 0;
+	padding: 0;
+}
+
+.sidebar_container .widget.widget_recent_entries ul li
+{
+	padding: 8px 10px;
+}
+
+.sidebar_container .widget.widget_recent_entries .post-date
+{
+	font-size: 80%;
+	padding: 0 1em;
+}
+
+.sidebar_container .widget.widget_recent_entries a:hover,
+.sidebar_container .widget.widget_recent_entries a:focus
+{
+	text-decoration: underline;
+}
+
+.sidebar_container .widget.widget_recent_entries a,
+.sidebar_container .widget.widget_recent_entries a:active
+{
+	color: #333;
+	text-decoration: none;
+}
+
+
+
+/* Recent Comments in Sidebar */
+.sidebar_container .widget.widget_recent_comments ul
+{
+	margin: 0;
+	padding: 0;
+}
+
+.sidebar_container .widget.widget_recent_comments ul li
+{
+	padding: 8px 10px;
+}
+
+.sidebar_container .widget.widget_recent_comments ul li a:hover,
+.sidebar_container .widget.widget_recent_comments ul li a:focus
+{
+	text-decoration: underline;
+	background-color: transparent;
+}
+
+.sidebar_container .widget.widget_recent_comments ul li a,
+.sidebar_container .widget.widget_recent_comments ul li a:active
+{
+	font-family: sans-serif;
+	font-weight: normal;
+	font-size: 100%;
+	text-decoration: none;
+	background-color: transparent;
+	color: #333;
+}
+
+
+
+/* Custom Menu in Sidebar */
+.sidebar_container .widget ul.menu,
+.sidebar_container .widget ul.menu
+{
+	margin: 0;
+	padding: 0;
+}
+
+.sidebar_container .widget ul.menu li a:hover,
+.sidebar_container .widget ul.menu li a:focus,
+.sidebar_container .widget ul.menu li a:hover,
+.sidebar_container .widget ul.menu li a:focus
+{
+	background-color: #fff;
+	color: #333;
+}
+
+.sidebar_container .widget ul.menu li a,
+.sidebar_container .widget ul.menu li a:active,
+.sidebar_container .widget ul.menu li a,
+.sidebar_container .widget ul.menu li a:active
+{
+	display: block;
+	font-family: sans-serif;
+	font-weight: normal;
+	font-size: 100%;
+	padding: 8px 10px;
+	text-decoration: none;
+	background-color: transparent;
+	color: #333;
+}
+
+
+
+/* Custom Menu in Footer */
+#footer .widget_nav_menu
+{
+	text-align: center;
+}
+
+#footer .widget_nav_menu ul.menu
+{
+	list-style: none;
+	margin: 1.25em 0;
+	padding: 0;
+	line-height: 1.8;
+}
+
+#footer .widget_nav_menu ul.menu li
+{
+	list-style: none;
+	display: inline-block;
+	padding-right: 5px;
+}
+
+#footer .widget_nav_menu ul.menu li:after
+{
+	content: "|";
+	display: inline;
+	padding-left: 10px;
+}
+
+#footer .widget_nav_menu ul.menu li:last-child:after
+{
+	display: none;
+}
+
+#footer .widget_nav_menu ul.menu a:focus
+{
+	text-decoration: underline;
+}
+
+#footer .widget_nav_menu ul.menu a,
+#footer .widget_nav_menu ul.menu a:active
+{
+	text-decoration: none;
+}
+
+
+
+/* CommentPress-supplied text widget in Footer */
+#footer .commentpress_widget
+{
+	margin: 1em 0;
+}
+
+#footer .commentpress_widget
+{
+	margin: 1.25em 0;
+	line-height: 1.8;
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
 RESPONSIVENESS
 --------------------------------------------------------------------------------
 */
@@ -4351,6 +4619,7 @@ RESPONSIVENESS
 		box-shadow: #888 0 0 10px;
 	} */
 
+	/* site name */
 	#title h1
 	{
 		margin: 0.8em 0 0 0;
