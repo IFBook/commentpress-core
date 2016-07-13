@@ -68,7 +68,7 @@ $_max_members = 10;
 
 <div class="sidebar_header">
 
-<h2>Activity</h2>
+<h2><?php _e( 'Activity', 'commentpress-core' ); ?></h2>
 
 </div>
 
