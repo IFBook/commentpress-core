@@ -3738,6 +3738,15 @@ Widgets & Widget Areas
 }
 
 
+/* BuddyPress "loading" spinner */
+.widget.buddypress div.item-options a.loading
+{
+	padding-right: 16px;
+	background-position-x: right;
+	background-position-y: 2px;
+}
+
+
 
 /* BuddyPress Members Widget */
 .widget.widget_bp_core_members_widget div.item-options
