@@ -4096,10 +4096,6 @@ Widgets & Widget Areas
 	list-style-image: none;
 }
 
-.sidebar_container .widget.widget_categories ul li a
-{
-}
-
 
 
 /* Archives widget in Sidebar */
@@ -4107,10 +4103,6 @@ Widgets & Widget Areas
 {
 	list-style: none;
 	list-style-image: none;
-}
-
-.sidebar_container .widget.widget_archive ul li a
-{
 }
 
 
@@ -4125,11 +4117,12 @@ Widgets & Widget Areas
 .sidebar_container .widget.widget_recent_entries ul li
 {
 	padding: 8px 10px;
+	font-size: 80%;
 }
 
 .sidebar_container .widget.widget_recent_entries .post-date
 {
-	font-size: 80%;
+	font-style: italic;
 	padding: 0 1em;
 }
 
@@ -4158,6 +4151,8 @@ Widgets & Widget Areas
 .sidebar_container .widget.widget_recent_comments ul li
 {
 	padding: 8px 10px;
+	font-size: 80%;
+	color: #000;
 }
 
 .sidebar_container .widget.widget_recent_comments ul li a:hover,
@@ -4172,7 +4167,6 @@ Widgets & Widget Areas
 {
 	font-family: sans-serif;
 	font-weight: normal;
-	font-size: 100%;
 	text-decoration: none;
 	background-color: transparent;
 	color: #333;
@@ -4188,8 +4182,12 @@ Widgets & Widget Areas
 	padding: 0;
 }
 
-.sidebar_container .widget ul.menu li a:hover,
-.sidebar_container .widget ul.menu li a:focus,
+.sidebar_container .widget ul.menu li
+{
+	list-style: none;
+	list-style-image: none;
+}
+
 .sidebar_container .widget ul.menu li a:hover,
 .sidebar_container .widget ul.menu li a:focus
 {
@@ -4198,18 +4196,23 @@ Widgets & Widget Areas
 }
 
 .sidebar_container .widget ul.menu li a,
-.sidebar_container .widget ul.menu li a:active,
-.sidebar_container .widget ul.menu li a,
 .sidebar_container .widget ul.menu li a:active
 {
 	display: block;
 	font-family: sans-serif;
 	font-weight: normal;
-	font-size: 100%;
-	padding: 8px 10px;
+	font-size: 80%;
+	padding: 6px 6px;
 	text-decoration: none;
-	background-color: transparent;
+	background-color: #eee;
 	color: #333;
+}
+
+/* Sub-menus */
+.sidebar_container .widget ul.sub-menu
+{
+	margin: 0 0 0 1.2em;
+	padding: 0;
 }
 
 
@@ -4392,7 +4395,12 @@ RESPONSIVENESS
 		padding: 0;
 	}
 
-	#toc_sidebar .sidebar_minimiser ul li a
+	#toc_sidebar .sidebar_minimiser ul li a,
+	.sidebar_container .widget.widget_categories ul li a,
+	.sidebar_container .widget.widget_archive ul li a,
+	.sidebar_container .widget ul.menu li a,
+	.sidebar_container .widget.widget_recent_comments ul li,
+	.sidebar_container .widget.widget_recent_entries ul li
 	{
 		font-size: 100%;
 		padding: 15px 10px;
