@@ -57,8 +57,8 @@ elseif ( is_single() ) {
 }
 
 
-// is this the blog home?
-elseif ( is_home() ) {
+// is this the posts archive or a CPT archive?
+elseif ( is_home() OR is_post_type_archive() ) {
 
 	$nl = get_next_posts_link('&laquo; ' . $previous_title);
 	$pl = get_previous_posts_link($next_title . ' &raquo;');
