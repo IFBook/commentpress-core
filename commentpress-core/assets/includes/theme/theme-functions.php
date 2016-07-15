@@ -3842,7 +3842,7 @@ if ( ! function_exists( 'commentpress_widget_title' ) ):
  * @param str $id_base The widget ID base
  * @return str $title The non-empty title
  */
-function commentpress_widget_title( $title, $id_base ) {
+function commentpress_widget_title( $title ) {
 
 	// set default title if none present
 	if ( empty( $title ) ) {
@@ -3856,7 +3856,7 @@ function commentpress_widget_title( $title, $id_base ) {
 endif; // commentpress_widget_title
 
 // make sure widget title is not empty
-add_filter( 'widget_title', 'commentpress_widget_title', 10, 2 );
+add_filter( 'widget_title', 'commentpress_widget_title', 10, 1 );
 
 
 
