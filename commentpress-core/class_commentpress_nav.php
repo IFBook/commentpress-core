@@ -184,6 +184,33 @@ class Commentpress_Core_Navigator {
 
 
 	/**
+	 * Check if page navigation is disabled when on a "page".
+	 *
+	 * @since 3.9
+	 *
+	 * @return bool True if navigation is disabled, fasle otherwise
+	 */
+	public function page_nav_is_disabled() {
+
+		// check page navigation option
+		if (
+			$this->parent_obj->db->option_exists( 'cp_page_nav_enabled' ) AND
+			$this->parent_obj->db->option_get( 'cp_page_nav_enabled', 'y' ) == 'n'
+		) {
+
+			// overwrite flag
+			$this->nav_enabled = false;
+
+		}
+
+		// --<
+		return $this->nav_enabled;
+
+	}
+
+
+
+	/**
 	 * Get next page link.
 	 *
 	 * @param bool $with_comments The requested page has comments - default false
