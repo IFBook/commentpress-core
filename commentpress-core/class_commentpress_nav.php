@@ -191,13 +191,6 @@ class Commentpress_Core_Navigator {
 	 */
 	public function get_next_page( $with_comments = false ) {
 
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			//'next_pages' => $this->next_pages,
-			'next_pages titles' => array_map( function( $id ) { return get_the_title( $id ); }, $this->next_pages ),
-			//'backtrace' => debug_backtrace( 0 ),
-		), true ) );
-
 		// do we have any next pages?
 		if ( count( $this->next_pages ) > 0 ) {
 
