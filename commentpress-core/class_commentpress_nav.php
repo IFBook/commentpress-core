@@ -191,6 +191,13 @@ class Commentpress_Core_Navigator {
 	 */
 	public function get_next_page( $with_comments = false ) {
 
+		error_log( print_r( array(
+			'method' => __METHOD__,
+			//'next_pages' => $this->next_pages,
+			'next_pages titles' => array_map( function( $id ) { return get_the_title( $id ); }, $this->next_pages ),
+			//'backtrace' => debug_backtrace( 0 ),
+		), true ) );
+
 		// do we have any next pages?
 		if ( count( $this->next_pages ) > 0 ) {
 
@@ -216,6 +223,18 @@ class Commentpress_Core_Navigator {
 				return $this->next_pages[0];
 
 			}
+
+		}
+
+		// check if the supplied title page is the homepage and this is it
+		$title_id = $this->is_title_page_the_homepage();
+		if ( $title_id !== false AND is_front_page() ) {
+
+			// get the first readable page
+			$first_id = $this->get_first_page();
+
+			// return the post object
+			return get_post( $first_id );
 
 		}
 
@@ -266,7 +285,7 @@ class Commentpress_Core_Navigator {
 
 		// we still need to check if the supplied title page is the homepage
 		$title_id = $this->is_title_page_the_homepage();
-		if ( $title_id !== false ) {
+		if ( $title_id !== false AND ! is_front_page() ) {
 			return get_post( $title_id );
 		}
 
