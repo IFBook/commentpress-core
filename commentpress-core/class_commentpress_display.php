@@ -708,8 +708,14 @@ HELPTEXT;
 			// allow overrides
 			$title_page_title = apply_filters( 'cp_title_page_title', $title_page_title );
 
+			// set current item class if viewing front page
+			$is_active = '';
+			if ( is_front_page() ) {
+				$is_active = ' current_page_item';
+			}
+
 			// echo list item
-			echo '<li class="page_item page-item-' . $welcome_id . '"><a href="' . get_permalink( $welcome_id ) . '">' . $title_page_title . '</a></li>';
+			echo '<li class="page_item page-item-' . $welcome_id . $is_active .'"><a href="' . get_permalink( $welcome_id ) . '">' . $title_page_title . '</a></li>';
 
 		}
 
