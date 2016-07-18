@@ -13,8 +13,8 @@ $next_page_id = $commentpress_core->nav->get_first_page();
 // init
 $next_page_html = '';
 
-// test if the link points to this page
-if ( $next_page_id != $post->ID ) {
+// if the link does not point to this page and we're allowing page nav
+if ( $next_page_id != $post->ID AND true === $commentpress_core->nav->page_nav_is_disabled() ) {
 
 	// get page attributes
 	$title = get_the_title( $next_page_id );
