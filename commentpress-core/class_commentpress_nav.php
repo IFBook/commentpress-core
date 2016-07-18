@@ -114,16 +114,14 @@ class Commentpress_Core_Navigator {
 		if ( is_page() ) {
 
 			// check page navigation flag
-			if ( $this->parent_obj->db->option_exists( 'cp_page_nav_enabled' ) ) {
-				if ( $this->parent_obj->db->option_get( 'cp_page_nav_enabled', 'y' ) == 'n' ) {
+			if ( $this->page_nav_is_disabled() ) {
 
-					// remove page arrows via filter
-					add_filter( 'cp_template_page_navigation', array( $this, 'page_nav_disable' ), 100, 1 );
+				// remove page arrows via filter
+				add_filter( 'cp_template_page_navigation', array( $this, 'page_nav_disable' ), 100, 1 );
 
-					// save flag
-					$this->nav_enabled = false;
+				// save flag
+				$this->nav_enabled = false;
 
-				}
 			}
 
 			// init page lists
