@@ -1644,7 +1644,7 @@ HELPTEXT;
 			$label = __( 'Post Types on which CommentPress Core is enabled.', 'commentpress-core' );
 
 			// get post types that support the editor
-			$capable_post_types = $this->db->get_post_types_with_editor();
+			$capable_post_types = $this->db->get_supported_post_types();
 
 			// init outputs
 			$output = array();
@@ -2309,7 +2309,7 @@ HELPTEXT;
 	public function _get_post_type_options() {
 
 		// get post types that support the editor
-		$capable_post_types = $this->db->get_post_types_with_editor();
+		$capable_post_types = $this->db->get_supported_post_types();
 
 		// init outputs
 		$output = array();

@@ -620,7 +620,7 @@ class Commentpress_Core_Database {
 
 			// we don't receive disabled post types in $_POST, so let's default
 			// to all post types being enabled
-			$cp_post_types_enabled = $this->get_post_types_with_editor();
+			$cp_post_types_enabled = $this->get_supported_post_types();
 
 			// default blog type
 			$cp_blog_type = $this->blog_type;
@@ -635,7 +635,7 @@ class Commentpress_Core_Database {
 				$enabled_types = array_map( 'esc_sql', $cp_post_types_enabled );
 
 				// exclude the selected post types
-				$disabled_types = array_diff( $this->get_post_types_with_editor(), $enabled_types );
+				$disabled_types = array_diff( $this->get_supported_post_types(), $enabled_types );
 
 				// add option
 				$this->option_set( 'cp_post_types_disabled', $disabled_types );
@@ -1017,7 +1017,7 @@ class Commentpress_Core_Database {
 			$cp_do_not_parse = 'y';
 
 			// assume all post types are enabled
-			$cp_post_types_enabled = $this->get_post_types_with_editor();
+			$cp_post_types_enabled = $this->get_supported_post_types();
 
 			// get variables
 			extract( $_POST );
@@ -1214,7 +1214,7 @@ class Commentpress_Core_Database {
 				$enabled_types = array_map( 'esc_sql', $cp_post_types_enabled );
 
 				// exclude the selected post types
-				$disabled_types = array_diff( $this->get_post_types_with_editor(), $enabled_types );
+				$disabled_types = array_diff( $this->get_supported_post_types(), $enabled_types );
 
 				// save skipped post types
 				$this->option_set( 'cp_post_types_disabled', $disabled_types );
@@ -2559,13 +2559,13 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Get WordPress post types that support the editor.
+	 * Get WordPress post types that CommentPress supports.
 	 *
 	 * @since 3.9
 	 *
 	 * @return array $supported_post_types Array of post types that have an editor
 	 */
-	public function get_post_types_with_editor() {
+	public function get_supported_post_types() {
 
 		// only parse post types once
 		static $supported_post_types = array();
@@ -2588,6 +2588,9 @@ class Commentpress_Core_Database {
 				$supported_post_types[] = $post_type;
 			}
 		}
+
+		// built-in media descriptions are also supported
+		$supported_post_types[] = 'attachment';
 
 		// --<
 		return $supported_post_types;
