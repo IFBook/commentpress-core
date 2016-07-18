@@ -2281,10 +2281,9 @@ ul.image_link .alignleft h4
 	display: block;
 }
 
-/* back to gallery - hidden */
+/* back to gallery */
 p.back_button
 {
-	display: none;
 	margin-top: -1em;
 	margin-bottom: 2em;
 }
