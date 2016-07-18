@@ -14,7 +14,7 @@ $next_page_id = $commentpress_core->nav->get_first_page();
 $next_page_html = '';
 
 // if the link does not point to this page and we're allowing page nav
-if ( $next_page_id != $post->ID AND true === $commentpress_core->nav->page_nav_is_disabled() ) {
+if ( $next_page_id != $post->ID AND false === $commentpress_core->nav->page_nav_is_disabled() ) {
 
 	// get page attributes
 	$title = get_the_title( $next_page_id );

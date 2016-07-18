@@ -201,8 +201,8 @@ class Commentpress_Core_Navigator {
 
 		}
 
-		// --<
-		return $this->nav_enabled;
+		// return the opposite
+		return $this->nav_enabled ? false : true;
 
 	}
 
