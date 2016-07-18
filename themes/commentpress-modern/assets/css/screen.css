@@ -2271,14 +2271,20 @@ ul.image_link .alignleft h4
 	text-align: left;
 }
 
+.image_attachment h2.post_title > a
+{
+	font-size: 60%;
+}
+
 .image_attachment h2.post_title span
 {
 	display: block;
 }
 
-/* back to gallery */
+/* back to gallery - hidden */
 p.back_button
 {
+	display: none;
 	margin-top: -1em;
 	margin-bottom: 2em;
 }
@@ -2290,10 +2296,8 @@ p.back_button a.button
 
 div.the_image_attachment
 {
-	margin: 1em 0 1em 0;
-	padding: 3em 0 2em 0;
-	background-color: #f8f8f8;
-	border: 1px solid #eee;
+	margin: 1em 0 1.3em 0;
+	padding: 0;
 }
 
 p.image_attachment_wrap
@@ -2301,14 +2305,21 @@ p.image_attachment_wrap
 	text-align: center;
 	margin: 0;
 	padding: 0;
+	line-height: 0;
 }
 
 div.image_attachment_caption
 {
 	text-align: center;
 	margin: 0 3em;
-	padding: 0.5em 0 0 0;
+	padding: 0 0 0.5em 0;
 	font-family: sans-serif;
+}
+
+div.image_attachment_caption p
+{
+	margin: 0.3em 0 0.5em 0;
+	line-height: 1.5;
 }
 
 

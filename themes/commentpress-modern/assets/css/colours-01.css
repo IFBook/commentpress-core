@@ -60,7 +60,10 @@ div#respond h4#respond_title,
 .commentpress_jstor .comment-title a,
 
 /* Sidebar Widgets */
-.sidebar_container .widget
+.sidebar_container .widget,
+
+/* Image captions */
+div.image_attachment_caption p
 {
 	font-family: Lato, 'Trebuchet MS', Helvetica, Arial, sans-serif;
 }
