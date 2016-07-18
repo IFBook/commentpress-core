@@ -518,7 +518,7 @@ class Commentpress_Core_Database {
 	public function upgrade_required() {
 
 		// bail if we do not have an outdated version
-		//if ( ! $this->version_outdated() ) return false;
+		if ( ! $this->version_outdated() ) return false;
 
 		// override if any options need to be shown
 		if ( $this->upgrade_options_check() ) {
