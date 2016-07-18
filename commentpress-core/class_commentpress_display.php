@@ -677,39 +677,10 @@ HELPTEXT;
 	 */
 	public function list_pages( $exclude_pages = array() ) {
 
-		/*
-		Question: do we want to use WP menus? And if so, how?
-
-		Currently, we're using wp_list_pages(), so let's try wp_page_menu() first
-
-
-
-		// If we set the theme to use wp_nav_menu(), we need to register it
-		register_nav_menu( 'primary', __( 'Primary Menu', 'commentpress-core' ) );
-
-		Our navigation menu. If one isn't filled out, wp_nav_menu falls back to
-		wp_page_menu. The menu assiged to the primary position is the one used. If
-		none is assigned, the menu with the lowest ID is used.
-
-		//wp_nav_menu( array( 'theme_location' => 'primary' ) );
-
-		// set list pages defaults
-		$args = array(
-			'sort_column' => 'menu_order, post_title',
-			'menu_class' => 'menu',
-			'include' => '',
-			'exclude' => '',
-			'echo' => true,
-			'show_home' => false,
-			'link_before' => '',
-			'link_after' => ''
-		);
-		*/
-
 		// test for custom menu
 		if ( has_nav_menu( 'toc' ) ) {
 
-			// try and use it
+			// display menu
 			wp_nav_menu( array(
 				'theme_location' => 'toc',
 				'echo' => true,

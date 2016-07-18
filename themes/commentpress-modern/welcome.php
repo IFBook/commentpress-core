@@ -9,7 +9,6 @@ global $post;
 
 // "Title Page" always points to the first readable page, unless it is itself
 $next_page_id = $commentpress_core->nav->get_first_page();
-$title = get_the_title( $next_page_id );
 
 // init
 $next_page_html = '';
@@ -17,10 +16,13 @@ $next_page_html = '';
 // test if the link points to this page
 if ( $next_page_id != $post->ID ) {
 
+	// get page attributes
+	$title = get_the_title( $next_page_id );
+	$target = get_permalink( $next_page_id );
+
 	// set the link
-	$next_page_html = '<a href="' . get_permalink( $next_page_id ) . '" id="next_page" class="css_btn" title="' . esc_attr( $title ) . '">' .
-							$title .
-					  '</a>';
+	$next_page_html = '<a href="' . $target . '" id="next_page" class="css_btn" title="' . esc_attr( $title ) . '">' . $title . '</a>';
+
 }
 
 
@@ -58,27 +60,19 @@ commentpress_get_feature_image();
 <?php
 
 // do we have a featured image?
-if ( ! commentpress_has_feature_image() ) {
+if ( ! commentpress_has_feature_image() ) :
 
-	if ( $next_page_html != '' ) { ?>
+	if ( $next_page_html != '' ) : ?>
 		<div class="page_navigation">
-
-		<ul>
-		<li class="alignright">
-
-		<?php
-
-		echo $next_page_html;
-
-		?>
-		</li>
-		</ul>
-
+			<ul>
+				<li class="alignright">
+					<?php echo $next_page_html; ?>
+				</li>
+			</ul>
 		</div><!-- /page_navigation -->
-	<?php
-	}
+	<?php endif;
 
-} ?>
+endif; ?>
 
 
 
@@ -177,19 +171,17 @@ if ( ! commentpress_has_feature_image() ) {
 
 
 
-<?php if ( $next_page_html != '' ) { ?>
-<div class="page_nav_lower">
-
-<div class="page_navigation">
-
-<ul>
-<li class="alignright"><?php echo $next_page_html; ?></li>
-</ul>
-
-</div><!-- /page_navigation -->
-
-</div><!-- /page_nav_lower -->
-<?php } ?>
+<?php if ( $next_page_html != '' ) : ?>
+	<div class="page_nav_lower">
+		<div class="page_navigation">
+			<ul>
+				<li class="alignright">
+					<?php echo $next_page_html; ?>
+				</li>
+			</ul>
+		</div><!-- /page_navigation -->
+	</div><!-- /page_nav_lower -->
+<?php endif; ?>
 
 
 
