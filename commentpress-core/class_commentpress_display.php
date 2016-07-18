@@ -1422,6 +1422,8 @@ HELPTEXT;
 
 		' . $this->_get_reset() . '
 
+		' . $this->_get_post_type_options() . '
+
 		' . $this->_get_optional_options() . '
 
 		' . $this->_get_do_not_parse() . '
@@ -1662,6 +1664,50 @@ HELPTEXT;
 
 		// init
 		$upgrade = '';
+
+		// do we have the option to choose which post types to skip (new in 3.9)?
+		if ( ! $this->db->option_exists( 'cp_post_types_disabled' ) ) {
+
+			// define labels
+			$description = __( 'Choose the Post Types on which CommentPress Core is enabled. Disabling a post type will mean that paragraph-level commenting will not be enabled on any entries of that post type. Default prior to 3.9 was that all post types were enabled.', 'commentpress-core' );
+			$label = __( 'Post Types on which CommentPress Core is enabled.', 'commentpress-core' );
+
+			// get post types that support the editor
+			$capable_post_types = $this->db->get_post_types_with_editor();
+
+			// init outputs
+			$output = array();
+			$options = '';
+
+			// sanity check
+			if ( count( $capable_post_types ) > 0 ) {
+
+				// construct checkbox for each post type
+				foreach( $capable_post_types AS $post_type ) {
+
+					// add checked checkbox
+					$output[] = '<input type="checkbox" class="settings-checkbox" name="cp_post_types_enabled[]" value="' . $post_type . '" checked="checked" /> <label class="commentpress_settings_label" for="cp_post_types_enabled">' . $post_type . '</label><br>';
+
+				}
+
+				// implode
+				$options = implode( "\n", $output );
+
+			}
+
+			// define upgrade
+			$upgrade .= '
+			<tr valign="top">
+				<th scope="row"><label for="cp_post_types_enabled">' . $label . '</label></th>
+				<td>
+					<p>' . $description . '</p>
+					<p>' . $options . '</p>
+				</td>
+			</tr>
+
+			';
+
+		}
 
 		// do we have the option to choose to disable parsing (new in 3.8.10)?
 		if ( ! $this->db->option_exists( 'cp_do_not_parse' ) ) {
@@ -2270,6 +2316,62 @@ HELPTEXT;
 					<option value="y" ' . (($this->db->option_get('cp_page_nav_enabled', 'y') == 'y') ? ' selected="selected"' : '') . '>' . __( 'Yes', 'commentpress-core' ) . '</option>
 					<option value="n" ' . (($this->db->option_get('cp_page_nav_enabled', 'y') == 'n') ? ' selected="selected"' : '') . '>' . __( 'No', 'commentpress-core' ) . '</option>
 				</select>
+			</td>
+		</tr>
+
+		';
+
+		// --<
+		return $html;
+
+	}
+
+
+
+	/**
+	 * Get post type options.
+	 *
+	 * @since 3.9
+	 *
+	 * @return str $html The markup for the post type options
+	 */
+	public function _get_post_type_options() {
+
+		// get post types that support the editor
+		$capable_post_types = $this->db->get_post_types_with_editor();
+
+		// init outputs
+		$output = array();
+		$options = '';
+
+		// get chosen post types
+		$selected_types = $this->db->option_get( 'cp_post_types_disabled', array() );
+
+		// sanity check
+		if ( count( $capable_post_types ) > 0 ) {
+
+			// construct checkbox for each post type
+			foreach( $capable_post_types AS $post_type ) {
+
+				$checked = '';
+				if ( ! in_array( $post_type, $selected_types ) ) $checked = ' checked="checked"';
+
+				// add checkbox
+				$output[] = '<input type="checkbox" class="settings-checkbox" name="cp_post_types_enabled[]" value="' . $post_type . '"' . $checked . ' /> <label class="commentpress_settings_label" for="cp_post_types_enabled">' . $post_type . '</label><br>';
+
+			}
+
+			// implode
+			$options = implode( "\n", $output );
+
+		}
+
+		// construct option
+		$html = '
+		<tr valign="top">
+			<th scope="row"><label for="cp_post_types_enabled">' . __( 'Post Types on which CommentPress Core is enabled', 'commentpress-core' ) . '</label></th>
+			<td>
+				<p>' . $options . '</p>
 			</td>
 		</tr>
 

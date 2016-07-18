@@ -119,13 +119,24 @@ class Commentpress_Core_Parser {
 
 		// are we skipping parsing?
 		if (
-			! is_object( $post ) OR
-			(
+
+			// no need to parse 404s etc
+			! is_object( $post ) OR (
+
+				// post types can be skipped:
+				$this->parent_obj->db->option_exists( 'cp_post_types_disabled' ) AND
+				in_array( $post->post_type, $this->parent_obj->db->option_get( 'cp_post_types_disabled' ) )
+
+			) OR (
+
+				// individual entries can have parsing skipped when:
 				$this->parent_obj->db->option_exists( 'cp_do_not_parse' ) AND
 				$this->parent_obj->db->option_get( 'cp_do_not_parse' ) == 'y' AND
 				$post->comment_status == 'closed' AND
 				empty( $post->comment_count )
+
 			)
+
 		) {
 
 			// store for later reference

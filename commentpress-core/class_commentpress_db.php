@@ -232,6 +232,19 @@ class Commentpress_Core_Database {
 	 */
 	public $do_not_parse = 'n';
 
+	/**
+	 * Skipped Post Types.
+	 *
+	 * By default all post types are parsed by CommentPress. Post Types in this
+	 * array will not be parsed. This effectively batch sets $do_not_parse for
+	 * the Post Type.
+	 *
+	 * @since 3.9
+	 * @access public
+	 * @var str $post_types_disabled The post types not to be parsed
+	 */
+	public $post_types_disabled = array();
+
 
 
 	/**
@@ -505,7 +518,7 @@ class Commentpress_Core_Database {
 	public function upgrade_required() {
 
 		// bail if we do not have an outdated version
-		if ( ! $this->version_outdated() ) return false;
+		//if ( ! $this->version_outdated() ) return false;
 
 		// override if any options need to be shown
 		if ( $this->upgrade_options_check() ) {
@@ -525,6 +538,9 @@ class Commentpress_Core_Database {
 	 * @return bool $result True if upgrade needed, false otherwise
 	 */
 	public function upgrade_options_check() {
+
+		// do we have the option to choose which post types are supported (new in 3.9)?
+		if ( ! $this->option_exists( 'cp_post_types_disabled' ) ) return true;
 
 		// do we have the option to choose not to parse content (new in 3.8.10)?
 		if ( ! $this->option_exists( 'cp_do_not_parse' ) ) return true;
@@ -602,11 +618,29 @@ class Commentpress_Core_Database {
 			// checkboxes send no value if not checked, so use a default
 			$cp_blog_workflow = $this->blog_workflow;
 
+			// we don't receive disabled post types in $_POST, so let's default
+			// to all post types being enabled
+			$cp_post_types_enabled = $this->get_post_types_with_editor();
+
 			// default blog type
 			$cp_blog_type = $this->blog_type;
 
 			// get variables
 			extract( $_POST );
+
+			// New in CommentPress Core 3.9 - post types can be excluded
+			if ( ! $this->option_exists( 'cp_post_types_disabled' ) ) {
+
+				// get selected post types
+				$enabled_types = array_map( 'esc_sql', $cp_post_types_enabled );
+
+				// exclude the selected post types
+				$disabled_types = array_diff( $this->get_post_types_with_editor(), $enabled_types );
+
+				// add option
+				$this->option_set( 'cp_post_types_disabled', $disabled_types );
+
+			}
 
 			// New in CommentPress Core 3.8.10 - parsing can be prevented
 			if ( ! $this->option_exists( 'cp_do_not_parse' ) ) {
@@ -982,6 +1016,9 @@ class Commentpress_Core_Database {
 			$cp_page_nav_enabled = 'y';
 			$cp_do_not_parse = 'y';
 
+			// assume all post types are enabled
+			$cp_post_types_enabled = $this->get_post_types_with_editor();
+
 			// get variables
 			extract( $_POST );
 
@@ -1169,6 +1206,20 @@ class Commentpress_Core_Database {
 			// save do not parse flag
 			$cp_do_not_parse = esc_sql( $cp_do_not_parse );
 			$this->option_set( 'cp_do_not_parse', $cp_do_not_parse );
+
+			// do we have the post types option?
+			if ( $this->option_exists( 'cp_post_types_disabled' ) ) {
+
+				// get selected post types
+				$enabled_types = array_map( 'esc_sql', $cp_post_types_enabled );
+
+				// exclude the selected post types
+				$disabled_types = array_diff( $this->get_post_types_with_editor(), $enabled_types );
+
+				// save skipped post types
+				$this->option_set( 'cp_post_types_disabled', $disabled_types );
+
+			}
 
 			// save
 			$this->options_save();
@@ -2506,6 +2557,42 @@ class Commentpress_Core_Database {
 	}
 
 
+
+	/**
+	 * Get WordPress post types that support the editor.
+	 *
+	 * @since 3.9
+	 *
+	 * @return array $supported_post_types Array of post types that have an editor
+	 */
+	public function get_post_types_with_editor() {
+
+		// only parse post types once
+		static $supported_post_types = array();
+		if ( ! empty( $supported_post_types ) ) {
+			return $supported_post_types;
+		}
+
+		// get only post types with an admin UI
+		$args = array(
+			'public' => true,
+			'show_ui' => true,
+		);
+
+		// get post types
+		$post_types = get_post_types( $args );
+
+		// include only those which have an editor
+		foreach ( $post_types AS $post_type ) {
+			if ( post_type_supports( $post_type, 'editor' ) ) {
+				$supported_post_types[] = $post_type;
+			}
+		}
+
+		// --<
+		return $supported_post_types;
+
+	}
 
 	/**
 	 * Check if a post allows comments to be posted.
@@ -3860,6 +3947,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'cp_textblock_meta' => $this->textblock_meta,
 			'cp_page_nav_enabled' => $this->page_nav_enabled,
 			'cp_do_not_parse' => $this->do_not_parse,
+			'cp_post_types_disabled' => $this->post_types_disabled,
 		);
 
 		// Paragraph-level comments enabled by default
@@ -3935,6 +4023,9 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// do not parse flag
 		$this->option_set( 'cp_do_not_parse', $this->do_not_parse );
+
+		// skipped post types
+		$this->option_set( 'cp_post_types_disabled', $this->post_types_disabled );
 
 		// store it
 		$this->options_save();
@@ -4042,6 +4133,10 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 										$old['cp_do_not_parse'] :
 										$this->do_not_parse;
 
+		$this->post_types_disabled = 	isset( $old['cp_post_types_disabled'] ) ?
+										$old['cp_post_types_disabled'] :
+										$this->post_types_disabled;
+
 		// ---------------------------------------------------------------------
 		// special pages
 		// ---------------------------------------------------------------------
@@ -4095,6 +4190,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'cp_textblock_meta' => $this->textblock_meta,
 			'cp_page_nav_enabled' => $this->page_nav_enabled,
 			'cp_do_not_parse' => $this->do_not_parse,
+			'cp_post_types_disabled' => $this->post_types_disabled,
 		);
 
 		// if we have special pages
