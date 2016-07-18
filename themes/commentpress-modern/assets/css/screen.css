@@ -4258,6 +4258,7 @@ Widgets & Widget Areas
 #footer .widget_nav_menu ul.menu a,
 #footer .widget_nav_menu ul.menu a:active
 {
+	color: #333;
 	text-decoration: none;
 }
 
