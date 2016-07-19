@@ -43,7 +43,7 @@ echo apply_filters( 'cp_content_tab_search_title', __( 'Search', 'commentpress-c
 
 <div id="document_search">
 	<?php get_search_form(); ?>
-</div><!-- /book_search -->
+</div><!-- /document_search -->
 
 </div>
 
