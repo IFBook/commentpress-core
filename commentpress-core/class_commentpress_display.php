@@ -846,10 +846,10 @@ HELPTEXT;
 				// define title text
 				$title_text = sprintf(
 					_n(
-					'There is %d comment written for this %s', // singular
-					'There are %d comments written for this %s', // plural
-					$comment_count, // number
-					'commentpress-core' // domain
+						'There is %d comment written for this %s', // singular
+						'There are %d comments written for this %s', // plural
+						$comment_count, // number
+						'commentpress-core' // domain
 					),
 					// substitutions
 					$comment_count,
