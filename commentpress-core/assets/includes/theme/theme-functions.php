@@ -1946,6 +1946,106 @@ endif; // commentpress_get_comment_activity_item
 
 
 
+if ( ! function_exists( 'commentpress_lexia_support_mime' ) ):
+/**
+ * The "media" post type needs more granular naming support.
+ *
+ * @since 3.9
+ *
+ * @param str $post_type_name The existing singular name of the post type
+ * @param str $post_type The post type identifier
+ * @return str $post_type_name The modified singular name of the post type
+ */
+function commentpress_lexia_support_mime( $post_type_name, $post_type ) {
+
+	// only handle media
+	if ( $post_type != 'attachment' ) return $post_type_name;
+
+	// get mime type
+	$mime_type = get_post_mime_type( get_the_ID() );
+
+	// use different name for each
+	switch ( $mime_type ) {
+
+		// image
+		case 'image/jpeg':
+		case 'image/png':
+		case 'image/gif':
+			$mime_type_name = __( 'Image', 'commentpress-core' );
+			break;
+
+		// video
+		case 'video/mpeg':
+		case 'video/mp4':
+		case 'video/quicktime':
+			$mime_type_name = __( 'Video', 'commentpress-core' );
+			break;
+
+		// file
+		case 'text/csv':
+		case 'text/plain':
+		case 'text/xml':
+		default:
+			$mime_type_name = __( 'File', 'commentpress-core' );
+			break;
+
+	}
+
+	/**
+	 * Allow this name to be filtered.
+	 *
+	 * @since 3.9
+	 *
+	 * @param str $mime_type_name The name for this mime type
+	 * @param str $mime_type The mime type
+	 * @return str $mime_type_name The modified name for this mime type
+	 */
+	$mime_type_name = apply_filters( 'commentpress_lexia_mime_type_name', $mime_type_name, $mime_type );
+
+	// --<
+	return $mime_type_name;
+
+}
+endif; // commentpress_lexia_support_mime
+
+// add filter for the above
+add_filter( 'commentpress_lexia_post_type_name', 'commentpress_lexia_support_mime', 10, 2 );
+
+
+
+if ( ! function_exists( 'commentpress_lexia_modify_entity_text' ) ):
+/**
+ * The "media" post type needs more granular naming support.
+ *
+ * @since 3.9
+ *
+ * @param str $entity_text The current entity text
+ * @param str $post_type_name The singular name of the post type
+ * @param str $post_type The post type identifier
+ * @return str $entity_text The modified entity text
+ */
+function commentpress_lexia_modify_entity_text( $entity_text, $post_type_name, $post_type ) {
+
+	// only handle media
+	if ( $post_type != 'attachment' ) return $entity_text;
+
+	// override entity text
+	$entity_text = sprintf(
+		__( 'the %s', 'commentpress-core' ),
+		$post_type_name
+	);
+
+	// --<
+	return $entity_text;
+
+}
+endif; // commentpress_lexia_modify_entity_text
+
+// add filter for the above
+add_filter( 'commentpress_lexia_whole_entity_text', 'commentpress_lexia_modify_entity_text', 10, 3 );
+
+
+
 if ( ! function_exists( 'commentpress_comments_by_para_format_whole' ) ):
 /**
  * Format the markup for the "whole page" section of comments.
@@ -1953,10 +2053,11 @@ if ( ! function_exists( 'commentpress_comments_by_para_format_whole' ) ):
  * @since 3.8.10
  *
  * @param str $post_type_name The singular name of the post type
+ * @param str $post_type The post type identifier
  * @param int $comment_count The number of comments on the block
  * @return array $return Data array containing the translated strings
  */
-function commentpress_comments_by_para_format_whole( $post_type_name, $comment_count ) {
+function commentpress_comments_by_para_format_whole( $post_type_name, $post_type, $comment_count ) {
 
 	// init return
 	$return = array();
@@ -1967,10 +2068,29 @@ function commentpress_comments_by_para_format_whole( $post_type_name, $comment_c
 		$post_type_name
 	);
 
+	/**
+	 * Allow "the whole entity" text to be filtered.
+	 *
+	 * This is primarily for "media", where it makes little sense the comment on
+	 * "the whole image", for example.
+	 *
+	 * @since 3.9
+	 *
+	 * @param str $entity_text The current entity text
+	 * @param str $post_type_name The singular name of the post type
+	 * @return str $entity_text The modified entity text
+	 */
+	$return['entity_text'] = apply_filters(
+		'commentpress_lexia_whole_entity_text',
+		$return['entity_text'],
+		$post_type_name,
+		$post_type
+	);
+
 	// construct permalink text
 	$return['permalink_text'] = sprintf(
-		__( 'Permalink for comments on the whole %s', 'commentpress-core' ),
-		$post_type_name
+		__( 'Permalink for comments on %s', 'commentpress-core' ),
+		$return['entity_text']
 	);
 
 	// construct comment count
@@ -1986,9 +2106,9 @@ function commentpress_comments_by_para_format_whole( $post_type_name, $comment_c
 
 	// construct heading text
 	$return['heading_text'] = sprintf(
-		__( '%1$s on <span class="source_block">the whole %2$s</span>', 'commentpress-core' ),
+		__( '%1$s on <span class="source_block">%2$s</span>', 'commentpress-core' ),
 		$return['comment_text'],
-		$post_type_name
+		$return['entity_text']
 	);
 
 	// --<
@@ -2197,9 +2317,10 @@ function commentpress_get_comments_by_para() {
 		 * @since 3.8.10
 		 *
 		 * @param str $singular_name The singular label for this post type
+		 * @param str $current_type The post type identifier
 		 * @return str $singular_name The modified label for this post type
 		 */
-		$post_type_name = apply_filters( 'commentpress_lexia_post_type_name', $post_type->labels->singular_name );
+		$post_type_name = apply_filters( 'commentpress_lexia_post_type_name', $post_type->labels->singular_name, $current_type );
 
 		// init counter for text_signatures array
 		$sig_counter = 0;
@@ -2226,7 +2347,7 @@ function commentpress_get_comments_by_para() {
 					$para_num = '';
 
 					// get the markup we need for this
-					$markup = commentpress_comments_by_para_format_whole( $post_type_name, $comment_count );
+					$markup = commentpress_comments_by_para_format_whole( $post_type_name, $current_type, $comment_count );
 
 					break;
 
