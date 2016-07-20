@@ -948,6 +948,9 @@ class Commentpress_Core_Database {
 	 */
 	public function upgrade_theme_mods() {
 
+		// bail if option is already deprecated
+		if ( 'deprecated' == $this->option_get( 'cp_header_bg_colour' ) ) return;
+
 		// get header background colour set via customizer (new in 3.8.5)
 		$colour = get_theme_mod( 'commentpress_header_bg_color', false );
 
