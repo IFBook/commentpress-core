@@ -25,7 +25,7 @@ require_once( COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/includes/them
  * I have arbitrarily set it to the default content-width when viewing on a
  * 1280px-wide screen.
  */
-if ( !isset( $content_width ) ) { $content_width = 525; }
+if ( !isset( $content_width ) ) { $content_width = 1024; }
 
 
 
