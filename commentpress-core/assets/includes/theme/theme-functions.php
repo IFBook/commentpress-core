@@ -1181,6 +1181,9 @@ if ( ! function_exists( 'commentpress_echo_post_meta' ) ):
  */
 function commentpress_echo_post_meta() {
 
+	// bail if this is a BuddyPress page
+	if ( is_buddypress() ) return;
+
 	// compat with Co-Authors Plus
 	if ( function_exists( 'get_coauthors' ) ) {
 
