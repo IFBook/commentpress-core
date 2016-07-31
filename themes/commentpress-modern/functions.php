@@ -992,7 +992,19 @@ function commentpress_get_feature_image() {
 		// show it
 		echo '<div class="cp_feature_image">';
 
-		echo get_the_post_thumbnail( get_the_ID(), 'commentpress-feature' );
+		/**
+		 * Filter the feature image.
+		 *
+		 * @since 3.9
+		 *
+		 * @param str The HTML for showing the image
+		 * @param WP_Post The current WordPress post object
+		 */
+		echo apply_filters(
+			'commentpress_get_feature_image',
+			get_the_post_thumbnail( get_the_ID(), 'commentpress-feature' ),
+			$post
+		);
 
 		?>
 		<div class="cp_featured_title">
@@ -1068,13 +1080,22 @@ endif; // commentpress_get_feature_image
  */
 function commentpress_has_feature_image() {
 
+	// init return
+	$has_feature_image = false;
+
 	// replacement check
 	if ( '' != get_the_post_thumbnail() ) {
-		return true;
+		$has_feature_image = true;
 	}
 
-	// --<
-	return false;
+	/**
+	 * Allow this test to be overridden.
+	 *
+	 * @since 3.9
+	 *
+	 * @param bool $has_feature_image True if the post has a feature image, false otherwise
+	 */
+	return apply_filters( 'commentpress_has_feature_image', $has_feature_image );
 
 }
 
