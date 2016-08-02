@@ -2274,17 +2274,11 @@ function commentpress_get_comments_by_para() {
 			$registration = true;
 		}
 
-		// if we've got registration
+		// maybe redirect to BuddyPress sign-up
 		if ( $registration ) {
-
-			// redirect to BuddyPress sign-up
 			$redirect = bp_get_signup_page();
-
 		} else {
-
-			// basic redirect
 			$redirect = wp_login_url( get_permalink() );
-
 		}
 
 		// init allowed to comment
@@ -2596,11 +2590,6 @@ class Walker_Comment_Press extends Walker_Comment {
 	 * @param array $args Uses 'style' argument for type of HTML list.
 	 */
 	function start_lvl( &$output, $depth = 0, $args = array() ) {
-
-		// if on top level
-		if( $depth === 0 ) {
-			//echo '<h3>New Top Level</h3>' . "\n";
-		}
 
 		// store depth
 		$GLOBALS['comment_depth'] = $depth + 1;
@@ -3642,12 +3631,12 @@ if ( ! function_exists( 'commentpress_image_caption_shortcode' ) ):
 function commentpress_image_caption_shortcode( $empty = null, $attr, $content ) {
 
 	// get our shortcode vars
-	extract(shortcode_atts(array(
+	extract( shortcode_atts( array(
 		'id'	=> '',
 		'align'	=> 'alignnone',
 		'width'	=> '',
 		'caption' => ''
-	), $attr));
+	), $attr ) );
 
 	if ( 1 > (int) $width || empty( $caption ) )
 		return $content;
@@ -4055,8 +4044,6 @@ function commentpress_groupblog_classes() {
 
 	}
 
-
-
 	// --<
 	return $groupblog_class;
 
@@ -4202,9 +4189,7 @@ function commentpress_get_post_css_override( $post_id ) {
 
 			// is it different to the current blog type?
 			if ( $overridden_type != $type ) {
-
 				$type_overridden = ' overridden_type-' . $overridden_type;
-
 			}
 
 		}
@@ -4236,23 +4221,17 @@ function commentpress_get_post_title_visibility( $post_id ) {
 	// declare access to globals
 	global $commentpress_core;
 
-	// if we have the plugin enabled
+	// get global hide if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
-
-		// get global hide
 		$hide = $commentpress_core->db->option_get( 'cp_title_visibility' );;
-
 	}
 
 	// set key
 	$key = '_cp_title_visibility';
 
-	//if the custom field already has a value
+	// get value if the custom field already has one
 	if ( get_post_meta( $post_id, $key, true ) != '' ) {
-
-		// get it
 		$hide = get_post_meta( $post_id, $key, true );
-
 	}
 
 	// --<
@@ -4289,12 +4268,9 @@ function commentpress_get_post_meta_visibility( $post_id ) {
 		// set key
 		$key = '_cp_page_meta_visibility';
 
-		// if the custom field already has a value
+		// override with local value if the custom field already has one
 		if ( get_post_meta( $post_id, $key, true ) != '' ) {
-
-			// override with local value
 			$hide_meta = get_post_meta( $post_id, $key, true );
-
 		}
 
 	}
