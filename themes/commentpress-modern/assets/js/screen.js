@@ -1202,7 +1202,7 @@ CommentPress.theme.viewport = new function() {
 	 */
 	this.align_content = function( text_sig, scroll_target ) {
 
-		// bail if scrool target is 'none'
+		// bail if scroll target is 'none'
 		if ( scroll_target == 'none' ) { return; }
 
 		// move to sidebar
