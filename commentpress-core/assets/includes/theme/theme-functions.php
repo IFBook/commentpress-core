@@ -2268,8 +2268,24 @@ function commentpress_get_comments_by_para() {
 	// if we have any
 	if ( count( $comments_sorted ) > 0 ) {
 
-		// construct redirect link
-		$redirect = site_url( 'wp-login.php?redirect_to=' . get_permalink() );
+		// allow for BuddyPress registration
+		$registration = false;
+		if ( function_exists( 'bp_get_signup_allowed' ) AND bp_get_signup_allowed() ) {
+			$registration = true;
+		}
+
+		// if we've got registration
+		if ( $registration ) {
+
+			// redirect to BuddyPress sign-up
+			$redirect = bp_get_signup_page();
+
+		} else {
+
+			// basic redirect
+			$redirect = wp_login_url( get_permalink() );
+
+		}
 
 		// init allowed to comment
 		$login_to_comment = false;
@@ -2449,13 +2465,33 @@ function commentpress_get_comments_by_para() {
 						// if we have to log in to comment
 						if ( $login_to_comment ) {
 
+							// the link text depending on whether we've got registration
+							if ( $registration ) {
+								$prompt = sprintf(
+									__( 'Create an account to leave a comment on %s', 'commentpress-core' ),
+									$markup['entity_text']
+								);
+							} else {
+								$prompt = sprintf(
+									__( 'Login to leave a comment on %s', 'commentpress-core' ),
+									$markup['entity_text']
+								);
+							}
+
+							/**
+							 * Filter the prompt text.
+							 *
+							 * @since 3.9
+							 *
+							 * @param str $prompt The link text when login is required
+							 * @param bool $registration True if registration is open, false otherwise
+							 */
+							$prompt = apply_filters( 'commentpress_reply_to_prompt_text', $prompt, $registration );
+
 							// leave comment link
 							echo '<div class="reply_to_para" id="reply_to_para-' . $para_num . '">' . "\n" .
 									'<p><a class="reply_to_para" rel="nofollow" href="' . $redirect . '">' .
-										sprintf(
-											__( 'Login to leave a comment on %s', 'commentpress-core' ),
-											$markup['entity_text']
-										) .
+										$prompt .
 									'</a></p>' . "\n" .
 								 '</div>' . "\n\n";
 
