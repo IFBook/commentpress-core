@@ -796,7 +796,7 @@ CommentPress.common.content = new function() {
 		 *
 		 * @return false
 		 */
-		$('#container').on( 'click', '.post_title a', function( event ) {
+		$('.single #container').on( 'click', '.post_title a', function( event ) {
 
 			// override event
 			event.preventDefault();
