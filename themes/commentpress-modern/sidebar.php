@@ -49,9 +49,9 @@ foreach( $_tab_order AS $_tab ) {
 
 
 
-// add class if commentable?
+// add active class
 $active_class = '';
-if ( $is_commentable ) {
+if ( in_array( $commentpress_core->get_default_sidebar(), array( 'comments', 'toc' ) ) ) {
 	$active_class = ' class="active-tab"';
 }
 
@@ -103,9 +103,9 @@ break;
 // do we want to show activity tab?
 if ( commentpress_show_activity_tab() ) {
 
-	// add class if commentable?
+	// add class if not commentable
 	$active_class = '';
-	if ( !$is_commentable ) {
+	if ( ! $is_commentable OR 'activity' == $commentpress_core->get_default_sidebar() ) {
 		$active_class = ' class="active-tab"';
 	}
 

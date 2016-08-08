@@ -22,13 +22,13 @@
 
 	<div class="post image_attachment" id="post-<?php the_ID(); ?>">
 
-		<h2 class="post_title"><a href="<?php echo get_permalink( $post->post_parent ); ?>" rev="attachment" title="<?php _e( 'Back to gallery', 'commentpress-core' ) ?>"><?php echo get_the_title( $post->post_parent ); ?></a> <span>&raquo; <a href="<?php the_permalink(); ?>" class="attachment_permalink" title="<?php _e( 'Permalink for this image', 'commentpress-core' ) ?>"><?php the_title(); ?></a></span></h2>
+		<h2 class="post_title"><a href="<?php echo get_permalink( $post->post_parent ); ?>" rev="attachment" title="<?php _e( 'Back to gallery', 'commentpress-core' ) ?>"><?php echo get_the_title( $post->post_parent ); ?></a> <span><a href="<?php the_permalink(); ?>" class="attachment_permalink" title="<?php _e( 'Permalink for this image', 'commentpress-core' ) ?>"><?php the_title(); ?></a></span></h2>
 
 		<p class="back_button"><a class="button" href="<?php echo get_permalink( $post->post_parent ); ?>" rev="attachment" title="<?php _e( 'Back to gallery', 'commentpress-core' ) ?>"><?php _e( 'Back to gallery', 'commentpress-core' ); ?></a></p>
 
 		<div class="the_image_attachment">
 
-			<p class="image_attachment_wrap"><a class="image_attachment_link" href="<?php echo wp_get_attachment_url( $post->ID ); ?>"><?php echo wp_get_attachment_image( $post->ID, 'medium' ); ?></a></p>
+			<p class="image_attachment_wrap"><a class="image_attachment_link" href="<?php echo wp_get_attachment_url( $post->ID ); ?>"><?php echo wp_get_attachment_image( $post->ID, 'large' ); ?></a></p>
 
 			<div class="image_attachment_caption">
 			<?php

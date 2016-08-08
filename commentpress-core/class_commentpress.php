@@ -1847,38 +1847,28 @@ class Commentpress_Core {
 					// access page
 					global $post;
 
-					// is it our title page?
-					if ( $post->ID == $this->db->option_get( 'cp_welcome_page' ) ) {
+					// either 'comments', 'activity' or 'toc'
+					if ( $this->db->option_exists( 'cp_sidebar_default' ) ) {
 
-						// use 'toc', but should this be a special case?
-						return 'toc';
+						// get global option
+						$return = $this->db->option_get( 'cp_sidebar_default' );
 
-					} else {
+						// check if the post/page has a meta value
+						$key = '_cp_sidebar_default';
 
-						// either 'comments', 'activity' or 'toc'
-						if ( $this->db->option_exists( 'cp_sidebar_default' ) ) {
+						// if the custom field already has a value
+						if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
-							// get global option
-							$return = $this->db->option_get( 'cp_sidebar_default' );
-
-							// check if the post/page has a meta value
-							$key = '_cp_sidebar_default';
-
-							// if the custom field already has a value
-							if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-								// get it
-								$return = get_post_meta( $post->ID, $key, true );
-
-							}
-
+							// get it
+							$return = get_post_meta( $post->ID, $key, true );
 
 						}
 
-						// --<
-						return $return;
 
 					}
+
+					// --<
+					return $return;
 
 				}
 

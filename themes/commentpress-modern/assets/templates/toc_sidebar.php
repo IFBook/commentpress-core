@@ -24,6 +24,13 @@
 
 
 
+<?php
+
+// allow widgets to be placed above navigation
+dynamic_sidebar( 'cp-nav-top' );
+
+?>
+
 <?php do_action( 'cp_content_tab_before_search' ); ?>
 
 
@@ -36,32 +43,35 @@ echo apply_filters( 'cp_content_tab_search_title', __( 'Search', 'commentpress-c
 
 <div id="document_search">
 	<?php get_search_form(); ?>
-</div><!-- /book_search -->
+</div><!-- /document_search -->
 
 </div>
 
 
 
-<h3 class="activity_heading special_pages_heading"><?php
-echo apply_filters( 'cp_content_tab_special_pages_title', __( 'Special Pages', 'commentpress-core' ) );
-?></h3>
+<?php if ( apply_filters( 'cp_content_tab_special_pages_visible', true ) ) : ?>
+	<h3 class="activity_heading special_pages_heading"><?php
+	echo apply_filters( 'cp_content_tab_special_pages_title', __( 'Special Pages', 'commentpress-core' ) );
+	?></h3>
 
-<div class="paragraph_wrapper special_pages_wrapper">
+	<div class="paragraph_wrapper special_pages_wrapper">
 
-<?php
+	<?php
 
-// first try to locate using WP method
-$cp_navigation = apply_filters(
-	'cp_template_navigation',
-	locate_template( 'assets/templates/navigation.php' )
-);
+	// first try to locate using WP method
+	$cp_navigation = apply_filters(
+		'cp_template_navigation',
+		locate_template( 'assets/templates/navigation.php' )
+	);
 
-// load it if we find it
-if ( $cp_navigation != '' ) load_template( $cp_navigation );
+	// load it if we find it
+	if ( $cp_navigation != '' ) load_template( $cp_navigation );
 
-?>
+	?>
 
-</div>
+	</div>
+<?php endif; ?>
+
 
 
 <h3 class="activity_heading toc_heading"><?php
@@ -92,6 +102,15 @@ if ( is_object( $commentpress_core ) ) {
 ?>
 
 </div>
+
+
+
+<?php
+
+// allow widgets to be placed below navigation
+dynamic_sidebar( 'cp-nav-bottom' );
+
+?>
 
 
 

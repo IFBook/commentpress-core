@@ -33,6 +33,15 @@ Updated by Christian Wach for CommentPress Core
 		box-sizing: inherit;
 	}
 
+	html
+	{
+		background: white !important;
+		background-color: white !important;
+		color: #000;
+		margin: 0;
+		padding: 0;
+	}
+
 	body,
 	body.is-groupblog.blogtype-0,
 	body.is-groupblog.blogtype-1,

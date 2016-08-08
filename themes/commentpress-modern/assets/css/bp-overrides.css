@@ -132,7 +132,7 @@ body.create-blog #content a
 
 /*
 --------------------------------------------------------------------------------
-Buddypress search in top bar
+BuddyPress search in top bar
 --------------------------------------------------------------------------------
 */
 #document_search input#search-terms
@@ -186,7 +186,7 @@ Buddypress search in top bar
 
 /*
 --------------------------------------------------------------------------------
-Buddypress search in page
+BuddyPress search in page
 --------------------------------------------------------------------------------
 */
 #content .post #search-form
@@ -536,7 +536,7 @@ body.create-blog.buddypress_page #content a.button,
 }
 
 .standard-form label,
-.standard-form span.labe
+.standard-form span.label
 {
 	color: #761D19;
 	font-family: sans-serif;
@@ -696,7 +696,6 @@ Activity Stream
 */
 body.activity h2.post_title
 {
-	background: #761D19;
 	margin: 0;
 	font-size: 1.6em;
 	font-weight: normal;
@@ -1364,14 +1363,13 @@ Member Pages
 body.members h2.post_title,
 body.bp-user h2.post_title
 {
-	background: #761D19;
-	margin: 0;
 	font-size: 1.6em;
 	font-weight: normal;
 	font-family: sans-serif;
+	margin: 0;
 	color: #fff;
 	padding: 21px 19px 15px 19px;
-	color: #fff;
+	line-height: 1;
 }
 
 body.members h2.post_title a,
@@ -1469,6 +1467,11 @@ ul.button-nav li
 	padding: 0.5em;
 	font-family: sans-serif;
 	font-size: 80%;
+}
+
+#buddypress #header-cover-image
+{
+	background-position: center center;
 }
 
 
@@ -2175,7 +2178,6 @@ ul#mods-list h5 a,
 ul#members-list h5 a
 {
 	font-size: 1.2em;
-	color: #761D19;
 	text-decoration: none;
 }
 
@@ -3319,97 +3321,6 @@ body.my-account #bbpress-forums .bbp-user-section p
 
 
 /*
-================================================================================
-Below is what used to be in colours.css
-================================================================================
-*/
-
-
-
-/*
---------------------------------------------------------------------------------
-Fonts
---------------------------------------------------------------------------------
-*/
-
-/* Georgia */
-body#main_blog div#item-header div#item-meta
-{
-	font-family: Georgia, Times, serif;
-}
-
-/* Google Webfont: using "Lato" enqueued in functions.php */
-body.settings #content h3,
-body.settings.my-account #content h3,
-body.settings.general #content h3,
-body.directory.logged-in #content form.dir-form h3,
-body.directory #content form.dir-form h3,
-body.create-blog #content h3,
-body.registration #content h2,
-body.activation.activate #content h2,
-body.activate #content h3,
-body.directory.logged-in #content h3,
-body.directory #content h3,
-body.group-create #content form.standard-form > h3,
-div#item-header h2,
-body.group-admin #content div#item-header h2,
-ul#member-list h5,
-ul#admins-list h5,
-ul#mods-list h5,
-ul#members-list h5,
-.item-title a,
-div#message-thread strong a,
-.standard-form label,
-.standard-form span.label,
-form#send-reply div.message-box .avatar-box strong,
-form#whats-new-form h5,
-#buddypress form#whats-new-form p.activity-greeting,
-
-body#main_blog.create-blog.buddypress_page #content .padder h3,
-body.registration #content h4,
-body.group-create #group-create-body h2,
-body.group-create #group-create-body h3,
-body.directory.logged-in #content h4,
-body.group-create #content h4,
-body.group-admin #group-create-body h2,
-body.group-admin #group-create-body h3,
-body.group-admin #content h4,
-body.group-admin #content h3,
-body.group-admin #content h2,
-body#main_blog div#item-header div#item-actions h3,
-#buddypress .profile h4,
-#buddypress span.highlight,
-
-/* BuddyPress Directories */
-body.blogs h2.post_title a,
-body.groups h2.post_title a,
-body.members h2.post_title a,
-
-/* BuddyPress Messages */
-h3#message-subject,
-table#message-threads tr td.thread-from,
-table#message-threads tr td.thread-info p,
-form#settings-form table.notification-settings th.title,
-table.notifications th,
-
-/* BuddyPress Group Email Subscription compatibility */
-h3.activity-subscription-settings-title,
-
-/* BuddyPress Group Announcements compatibility */
-body.groups.announcements #item-body h3,
-
-/* bbPress */
-body.my-account #bbpress-forums h2.entry-title,
-
-/* Invite Anyone */
-body.sent-invites ul#invite-anyone-clear-links li
-{
-	font-family: Lato, 'Trebuchet MS', Helvetica, Arial, sans-serif;
-}
-
-
-
-/*
 --------------------------------------------------------------------------------
 Stylistic regularity
 --------------------------------------------------------------------------------
@@ -3460,6 +3371,8 @@ body.buddypress #content #buddypress div#item-header h2.user-nicename
 	font-size: 1.6em;
 	margin-bottom: 0.6em;
 	line-height: 1.6;
+	text-transform: none;
+	text-shadow: 0 0 9px #666;
 }
 
 #register-page #cp-multisite-options h4
@@ -3809,3 +3722,359 @@ Footer
 
 
 
+/*
+--------------------------------------------------------------------------------
+Widgets & Widget Areas
+--------------------------------------------------------------------------------
+*/
+
+/* BuddyPress Widgets that need padding */
+.sidebar_container .widget_bp_core_members_widget .widget_wrapper,
+.sidebar_container .widget_bp_groups_widget .widget_wrapper,
+.sidebar_container .widget_bp_core_login_widget .widget_wrapper,
+.sidebar_container .widget_bp_core_whos_online_widget .widget_wrapper
+{
+	padding: 10px;
+}
+
+
+/* BuddyPress "loading" spinner */
+.widget.buddypress div.item-options a.loading
+{
+	padding-right: 16px;
+	background-position-x: right;
+	background-position-y: 2px;
+}
+
+
+
+/* BuddyPress Members Widget */
+.widget.widget_bp_core_members_widget div.item-options
+{
+	padding: 0;
+}
+
+.widget.widget_bp_core_members_widget div.item-options a:focus
+{
+	text-decoration: underline;
+}
+
+.widget.widget_bp_core_members_widget div.item-options a,
+.widget.widget_bp_core_members_widget div.item-options a:active
+{
+	color: #333;
+	text-decoration: none;
+}
+
+#activity_sidebar .widget.widget_bp_core_members_widget span.activity
+{
+	font-size: 11px; /* reset to BuddyPress default */
+}
+
+
+
+/* BuddyPress Groups Widget */
+.widget.widget_bp_groups_widget div.item-options
+{
+	padding: 0;
+}
+
+.widget.widget_bp_groups_widget div.item-options a:focus
+{
+	text-decoration: underline;
+}
+
+.widget.widget_bp_groups_widget div.item-options a,
+.widget.widget_bp_groups_widget div.item-options a:active
+{
+	color: #333;
+	text-decoration: none;
+}
+
+#activity_sidebar .widget.widget_bp_groups_widget li
+{
+	border: none;
+}
+
+#activity_sidebar .widget.widget_bp_groups_widget span.activity
+{
+	font-size: 11px; /* reset to BuddyPress default */
+}
+
+
+
+/* BuddyPress Login Widget */
+.bp-login-widget-user-avatar img.avatar
+{
+	height: 50px;
+	width: 50px;
+	vertical-align: middle;
+}
+
+.sidebar_container .widget.buddypress .bp-login-widget-user-links > div
+{
+	margin: 0;
+}
+
+.sidebar_container .widget.buddypress .bp-login-widget-user-links > div.bp-login-widget-user-link a:focus
+{
+	text-decoration: underline;
+}
+
+.sidebar_container .widget.buddypress .bp-login-widget-user-links > div.bp-login-widget-user-link a,
+.sidebar_container .widget.buddypress .bp-login-widget-user-links > div.bp-login-widget-user-link a:active
+{
+	display: inline;
+	padding: 0;
+	font-size: 110%;
+	background: transparent;
+	text-transform: uppercase;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+.widget.buddypress .bp-login-widget-user-logout a:focus
+{
+	color: #761D19;
+	text-decoration: underline;
+}
+
+.widget.buddypress .bp-login-widget-user-logout a,
+.widget.buddypress .bp-login-widget-user-logout a:active
+{
+	color: #000;
+	font-size: 90%;
+	text-decoration: none;
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
+Fonts
+--------------------------------------------------------------------------------
+*/
+
+/* Georgia */
+body#main_blog div#item-header div#item-meta
+{
+	font-family: Georgia, Times, serif;
+}
+
+/* Google Webfont: using "Lato" enqueued in functions.php */
+body.settings #content h3,
+body.settings.my-account #content h3,
+body.settings.general #content h3,
+body.directory.logged-in #content form.dir-form h3,
+body.directory #content form.dir-form h3,
+body.create-blog #content h3,
+body.registration #content h2,
+body.activation.activate #content h2,
+body.activate #content h3,
+body.directory.logged-in #content h3,
+body.directory #content h3,
+body.group-create #content form.standard-form > h3,
+div#item-header h2,
+body.group-admin #content div#item-header h2,
+ul#member-list h5,
+ul#admins-list h5,
+ul#mods-list h5,
+ul#members-list h5,
+.item-title a,
+div#message-thread strong a,
+.standard-form label,
+.standard-form span.label,
+form#send-reply div.message-box .avatar-box strong,
+form#whats-new-form h5,
+#buddypress form#whats-new-form p.activity-greeting,
+
+body#main_blog.create-blog.buddypress_page #content .padder h3,
+body.registration #content h4,
+body.group-create #group-create-body h2,
+body.group-create #group-create-body h3,
+body.directory.logged-in #content h4,
+body.group-create #content h4,
+body.group-admin #group-create-body h2,
+body.group-admin #group-create-body h3,
+body.group-admin #content h4,
+body.group-admin #content h3,
+body.group-admin #content h2,
+body#main_blog div#item-header div#item-actions h3,
+#buddypress .profile h4,
+#buddypress span.highlight,
+
+/* BuddyPress Directories */
+body.blogs h2.post_title a,
+body.groups h2.post_title a,
+body.members h2.post_title a,
+
+/* BuddyPress Messages */
+h3#message-subject,
+table#message-threads tr td.thread-from,
+table#message-threads tr td.thread-info p,
+form#settings-form table.notification-settings th.title,
+table.notifications th,
+
+/* BuddyPress Group Email Subscription compatibility */
+h3.activity-subscription-settings-title,
+
+/* BuddyPress Group Announcements compatibility */
+body.groups.announcements #item-body h3,
+
+/* bbPress */
+body.my-account #bbpress-forums h2.entry-title,
+
+/* Invite Anyone */
+body.sent-invites ul#invite-anyone-clear-links li,
+
+/* BP Login Widget */
+.widget.buddypress .bp-login-widget-user-links > div.bp-login-widget-user-link a,
+.widget.buddypress .bp-login-widget-user-logout a
+{
+	font-family: Lato, 'Trebuchet MS', Helvetica, Arial, sans-serif;
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
+BuddyPress Colour Scheme
+--------------------------------------------------------------------------------
+*/
+
+.standard-form label,
+.standard-form span.label,
+.activity-header a,
+.activity-header a.activity-time-since,
+#buddypress .acomment-options a,
+#buddypress .activity-list li.load-more a,
+#buddypress .activity-list li.load-more a:active,
+#buddypress .activity-list li.load-newest a
+#buddypress .activity-list li.load-newest a:active,
+body.create-blog #content #setupform label,
+body.create-blog #content #cp-multisite-options .cp-workflow-type label,
+body.create-blog #cp-multisite-options h4,
+#buddypress table#message-threads tr td.thread-from a,
+#buddypress table#message-threads tr td.thread-info p a,
+#message-recipients span.highlight a,
+div#message-thread strong a,
+body.settings #content h3,
+body.settings.my-account #content h3,
+body.settings.general #content h3,
+body.create-blog #content h3,
+body.registration #content h2,
+body.directory.logged-in #content h3,
+h3#message-subject,
+body.registration #content h4,
+body.group-create #group-create-body h2,
+body.group-create #group-create-body h3,
+body.directory.logged-in #content h4,
+body.group-create #content h4,
+body.group-admin #content #group-settings-form h2,
+body.group-admin #group-create-body h2,
+body.group-admin #group-create-body h3,
+body.group-admin #content #item-body h4,
+body.group-admin #content #item-body h3,
+body.group-admin.group-blog #group-settings-form h2,
+#register-page #cp-multisite-options h4,
+div.profile h4,
+div#item-header h2 a,
+.item-title a,
+ul#member-list h5,
+ul#admins-list h5,
+ul#mods-list h5,
+ul#members-list h5,
+ul#member-list h5 a,
+ul#admins-list h5 a,
+ul#mods-list h5 a,
+ul#members-list h5 a,
+#activity_sidebar ul.item-list.cp-online-members li a,
+#activity_sidebar ul.item-list.cp-recently-active li a,
+#ass-email-subscriptions-options-page h3,
+body.groups.announcements #item-body h3,
+#activity_sidebar .workshop_comments_output .comment-identifier p a,
+#activity_sidebar .groupsites_comments_output .comment-identifier p a,
+table.doctable tr td a,
+body.groups.invite-anyone #invite-anyone-invite-list h4 a,
+#invite-anyone-by-email h4,
+body.sent-invites h4,
+body.my-account #bbpress-forums h2.entry-title,
+#item-body a,
+.standard-form label,
+.standard-form span.label,
+form#settings-form table.notification-settings th.title,
+table.notifications th,
+#buddypress .activity-header a,
+#groups-list .group-subscription-div a,
+body.create-blog #content a,
+ul.item-list li div.item-desc,
+.widget.buddypress .bp-login-widget-user-links > div.bp-login-widget-user-link a
+{
+	color: #761D19;
+}
+
+
+
+/* Titles */
+body.activity h2.post_title,
+body.groups h2.post_title,
+body.blogs h2.post_title,
+body.members h2.post_title,
+body.bp-user h2.post_title,
+body.registration #content h2.post_title,
+body.activation #content h2.post_title,
+body.bp-docs h2.post_title,
+
+/* Content */
+body#main_blog.create-blog.buddypress_page #content .padder h3,
+body#main_blog form.dir-form,
+body.buddypress form.dir-form,
+body#main_blog div.item-list-tabs,
+body.buddypress div.item-list-tabs,
+body#main_blog form#whats-new-form,
+body#main_blog .home-page form#whats-new-form,
+body.buddypress form#whats-new-form,
+body.home-page form#whats-new-form,
+body.directory #content h3,
+body.group-create #content form.standard-form > h3,
+#register-page #signup_form h2,
+body.activation.activate #content h2,
+body.activation.activate #content h3,
+div#item-header,
+#content div.item-list-tabs#object-nav
+{
+	background: #761D19;
+}
+
+
+
+/* Group Types */
+#activity_sidebar li.groups
+{
+    border-left: 10px solid #761D19;
+}
+
+
+
+/* Cover Image default background */
+#buddypress #header-cover-image
+{
+	background-color: #eee;
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
+Responsiveness
+--------------------------------------------------------------------------------
+*/
+
+@media all and (max-width: 600px) {
+
+	body.buddypress #content #buddypress div#item-header h2.user-nicename
+	{
+		margin-bottom: 0;
+	}
+
+}

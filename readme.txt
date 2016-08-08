@@ -3,8 +3,8 @@ Contributors: needle, commentpress
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZSKM8T5ZP3SC
 Tags: commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
 Requires at least: 3.4
-Tested up to: 4.5
-Stable tag: 3.8.10
+Tested up to: 4.6
+Stable tag: 3.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,7 @@ Many thanks to the following for translations:
 * French - [Pouhiou](http://wordpress.org/support/profile/pouhiou)
 * Spanish - Andrew Kurtis from [WebHostingHub](http://www.webhostinghub.com/)
 * Dutch - Gerrit Jan Dijkgraaf
+* German - Chris Witte
 
 
 
@@ -211,6 +212,13 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 
 == Changelog ==
+
+<h4>3.9</h4>
+
+* Introduce new parent theme
+* Add widget areas to themes
+* Introduce option to skip parsing entries with no comments
+* Introduce option to disable auto-navigation on pages
 
 <h4>3.8.9</h4>
 

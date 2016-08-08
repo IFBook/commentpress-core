@@ -202,6 +202,49 @@ class Commentpress_Core_Database {
 	 */
 	public $textblock_meta = 'y';
 
+	/**
+	 * Page navigation enabled flag.
+	 *
+	 * By default, CommentPress creates "book-like" navigation for the built-in
+	 * "page" post type. This is what CommentPress was built for in the first
+	 * place - to create a "document" from hierarchically-organised pages. This
+	 * is not always the desired behaviour.
+	 *
+	 * @since 3.8.10
+	 * @access public
+	 * @var str $page_nav_enabled The page navigation flag ('y' or 'n')
+	 */
+	public $page_nav_enabled = 'y';
+
+	/**
+	 * Do Not Parse flag.
+	 *
+	 * When comments are closed on an entry and there are no comments on that
+	 * entry, if this is set then the content will not be parsed for paragraphs,
+	 * lines or blocks. Comments will also not be parsed, meaning that the entry
+	 * behaves the same as content which is not commentable. This allows, for
+	 * example, the rendering of the comment column to be skipped in these
+	 * circumstances.
+	 *
+	 * @since 3.8.10
+	 * @access public
+	 * @var str $do_not_parse The flag indicating if content is to parsed ('y' or 'n')
+	 */
+	public $do_not_parse = 'n';
+
+	/**
+	 * Skipped Post Types.
+	 *
+	 * By default all post types are parsed by CommentPress. Post Types in this
+	 * array will not be parsed. This effectively batch sets $do_not_parse for
+	 * the Post Type.
+	 *
+	 * @since 3.9
+	 * @access public
+	 * @var str $post_types_disabled The post types not to be parsed
+	 */
+	public $post_types_disabled = array();
+
 
 
 	/**
@@ -496,6 +539,15 @@ class Commentpress_Core_Database {
 	 */
 	public function upgrade_options_check() {
 
+		// do we have the option to choose which post types are supported (new in 3.9)?
+		if ( ! $this->option_exists( 'cp_post_types_disabled' ) ) return true;
+
+		// do we have the option to choose not to parse content (new in 3.8.10)?
+		if ( ! $this->option_exists( 'cp_do_not_parse' ) ) return true;
+
+		// do we have the option to choose to disable page navigation (new in 3.8.10)?
+		if ( ! $this->option_exists( 'cp_page_nav_enabled' ) ) return true;
+
 		// do we have the option to choose to hide textblock meta (new in 3.5.9)?
 		if ( ! $this->option_exists( 'cp_textblock_meta' ) ) return true;
 
@@ -566,11 +618,51 @@ class Commentpress_Core_Database {
 			// checkboxes send no value if not checked, so use a default
 			$cp_blog_workflow = $this->blog_workflow;
 
+			// we don't receive disabled post types in $_POST, so let's default
+			// to all post types being enabled
+			$cp_post_types_enabled = $this->get_supported_post_types();
+
 			// default blog type
 			$cp_blog_type = $this->blog_type;
 
 			// get variables
 			extract( $_POST );
+
+			// New in CommentPress Core 3.9 - post types can be excluded
+			if ( ! $this->option_exists( 'cp_post_types_disabled' ) ) {
+
+				// get selected post types
+				$enabled_types = array_map( 'esc_sql', $cp_post_types_enabled );
+
+				// exclude the selected post types
+				$disabled_types = array_diff( $this->get_supported_post_types(), $enabled_types );
+
+				// add option
+				$this->option_set( 'cp_post_types_disabled', $disabled_types );
+
+			}
+
+			// New in CommentPress Core 3.8.10 - parsing can be prevented
+			if ( ! $this->option_exists( 'cp_do_not_parse' ) ) {
+
+				// get choice
+				$choice = esc_sql( $cp_do_not_parse );
+
+				// add chosen parsing option
+				$this->option_set( 'cp_do_not_parse', $choice );
+
+			}
+
+			// New in CommentPress Core 3.8.10 - page navigation can be disabled
+			if ( ! $this->option_exists( 'cp_page_nav_enabled' ) ) {
+
+				// get choice
+				$choice = esc_sql( $cp_page_nav_enabled );
+
+				// add chosen page navigation option
+				$this->option_set( 'cp_page_nav_enabled', $choice );
+
+			}
 
 			// New in CommentPress Core 3.5.9 - textblock meta can be hidden
 			if ( ! $this->option_exists( 'cp_textblock_meta' ) ) {
@@ -578,7 +670,7 @@ class Commentpress_Core_Database {
 				// get choice
 				$choice = esc_sql( $cp_textblock_meta );
 
-				// add chosen featured images option
+				// add chosen textblock meta option
 				$this->option_set( 'cp_textblock_meta', $choice );
 
 			}
@@ -856,6 +948,9 @@ class Commentpress_Core_Database {
 	 */
 	public function upgrade_theme_mods() {
 
+		// bail if option is already deprecated
+		if ( 'deprecated' == $this->option_get( 'cp_header_bg_colour' ) ) return;
+
 		// get header background colour set via customizer (new in 3.8.5)
 		$colour = get_theme_mod( 'commentpress_header_bg_color', false );
 
@@ -918,9 +1013,14 @@ class Commentpress_Core_Database {
 			$cp_show_extended_toc = 0;
 			$cp_blog_type = 0;
 			$cp_blog_workflow = 0;
-			$cp_sidebar_default = 'comments';
+			$cp_sidebar_default = 'toc';
 			$cp_featured_images = 'n';
 			$cp_textblock_meta = 'y';
+			$cp_page_nav_enabled = 'y';
+			$cp_do_not_parse = 'y';
+
+			// assume all post types are enabled
+			$cp_post_types_enabled = $this->get_supported_post_types();
 
 			// get variables
 			extract( $_POST );
@@ -1101,6 +1201,28 @@ class Commentpress_Core_Database {
 			// save textblock meta
 			$cp_textblock_meta = esc_sql( $cp_textblock_meta );
 			$this->option_set( 'cp_textblock_meta', $cp_textblock_meta );
+
+			// save page navigation enabled flag
+			$cp_page_nav_enabled = esc_sql( $cp_page_nav_enabled );
+			$this->option_set( 'cp_page_nav_enabled', $cp_page_nav_enabled );
+
+			// save do not parse flag
+			$cp_do_not_parse = esc_sql( $cp_do_not_parse );
+			$this->option_set( 'cp_do_not_parse', $cp_do_not_parse );
+
+			// do we have the post types option?
+			if ( $this->option_exists( 'cp_post_types_disabled' ) ) {
+
+				// get selected post types
+				$enabled_types = array_map( 'esc_sql', $cp_post_types_enabled );
+
+				// exclude the selected post types
+				$disabled_types = array_diff( $this->get_supported_post_types(), $enabled_types );
+
+				// save skipped post types
+				$this->option_set( 'cp_post_types_disabled', $disabled_types );
+
+			}
 
 			// save
 			$this->options_save();
@@ -2440,6 +2562,45 @@ class Commentpress_Core_Database {
 
 
 	/**
+	 * Get WordPress post types that CommentPress supports.
+	 *
+	 * @since 3.9
+	 *
+	 * @return array $supported_post_types Array of post types that have an editor
+	 */
+	public function get_supported_post_types() {
+
+		// only parse post types once
+		static $supported_post_types = array();
+		if ( ! empty( $supported_post_types ) ) {
+			return $supported_post_types;
+		}
+
+		// get only post types with an admin UI
+		$args = array(
+			'public' => true,
+			'show_ui' => true,
+		);
+
+		// get post types
+		$post_types = get_post_types( $args );
+
+		// include only those which have an editor
+		foreach ( $post_types AS $post_type ) {
+			if ( post_type_supports( $post_type, 'editor' ) ) {
+				$supported_post_types[] = $post_type;
+			}
+		}
+
+		// built-in media descriptions are also supported
+		$supported_post_types[] = 'attachment';
+
+		// --<
+		return $supported_post_types;
+
+	}
+
+	/**
 	 * Check if a post allows comments to be posted.
 	 *
 	 * @return boolean $allowed True if comments enabled, false otherwise
@@ -2807,8 +2968,6 @@ class Commentpress_Core_Database {
 			// check for a WP 3.8+ function
 			if ( function_exists( 'wp_admin_bar_sidebar_toggle' ) ) {
 
-				//die('here');
-
 				// the 3.8+ admin bar is taller
 				$vars['cp_wp_adminbar_height'] = '32';
 
@@ -3033,6 +3192,34 @@ class Commentpress_Core_Database {
 
 			// only show textblock meta on rollover
 			$vars['cp_textblock_meta'] = 0;
+
+		}
+
+		// default to page navigation enabled
+		$vars['cp_page_nav_enabled'] = 1;
+
+		// check option
+		if (
+			$this->option_exists( 'cp_page_nav_enabled' ) AND
+			$this->option_get( 'cp_page_nav_enabled' ) == 'n'
+		) {
+
+			// disable page navigation
+			$vars['cp_page_nav_enabled'] = 0;
+
+		}
+
+		// default to parsing content and comments
+		$vars['cp_do_not_parse'] = 0;
+
+		// check option
+		if (
+			$this->option_exists( 'cp_do_not_parse' ) AND
+			$this->option_get( 'cp_do_not_parse' ) == 'y'
+		) {
+
+			// do not parse
+			$vars['cp_do_not_parse'] = 1;
 
 		}
 
@@ -3764,6 +3951,9 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'cp_sidebar_default' => $this->sidebar_default,
 			'cp_featured_images' => $this->featured_images,
 			'cp_textblock_meta' => $this->textblock_meta,
+			'cp_page_nav_enabled' => $this->page_nav_enabled,
+			'cp_do_not_parse' => $this->do_not_parse,
+			'cp_post_types_disabled' => $this->post_types_disabled,
 		);
 
 		// Paragraph-level comments enabled by default
@@ -3833,6 +4023,15 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// textblock meta
 		$this->option_set( 'cp_textblock_meta', $this->textblock_meta );
+
+		// page navigation enabled
+		$this->option_set( 'cp_page_nav_enabled', $this->page_nav_enabled );
+
+		// do not parse flag
+		$this->option_set( 'cp_do_not_parse', $this->do_not_parse );
+
+		// skipped post types
+		$this->option_set( 'cp_post_types_disabled', $this->post_types_disabled );
 
 		// store it
 		$this->options_save();
@@ -3932,6 +4131,18 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 										$old['cp_textblock_meta'] :
 										$this->textblock_meta;
 
+		$this->page_nav_enabled =		 	isset( $old['cp_page_nav_enabled'] ) ?
+										$old['cp_page_nav_enabled'] :
+										$this->page_nav_enabled;
+
+		$this->do_not_parse =		 	isset( $old['cp_do_not_parse'] ) ?
+										$old['cp_do_not_parse'] :
+										$this->do_not_parse;
+
+		$this->post_types_disabled = 	isset( $old['cp_post_types_disabled'] ) ?
+										$old['cp_post_types_disabled'] :
+										$this->post_types_disabled;
+
 		// ---------------------------------------------------------------------
 		// special pages
 		// ---------------------------------------------------------------------
@@ -3983,6 +4194,9 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'cp_sidebar_default' => $this->sidebar_default,
 			'cp_featured_images' => $this->featured_images,
 			'cp_textblock_meta' => $this->textblock_meta,
+			'cp_page_nav_enabled' => $this->page_nav_enabled,
+			'cp_do_not_parse' => $this->do_not_parse,
+			'cp_post_types_disabled' => $this->post_types_disabled,
 		);
 
 		// if we have special pages

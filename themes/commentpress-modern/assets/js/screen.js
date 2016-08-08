@@ -191,7 +191,7 @@ CommentPress.theme.DOM = new function() {
 			styles += '#sidebar .paragraph_wrapper.start_open { display: block; } ';
 			styles += '#navigation .paragraph_wrapper.start_open { display: block; } ';
 			styles += '.commentpress_page #navigation .paragraph_wrapper.special_pages_wrapper { display: block; } ';
-			//styles += '#sidebar .paragraph_wrapper { display: none; } ';
+			styles += '.cp_sidebar_activity #comments_sidebar { display: none; } ';
 
 			// hide original and literal content when JS-enabled
 			styles += '#original .post, #literal .post { display: none; } ';
@@ -507,11 +507,25 @@ CommentPress.theme.sidebars = new function() {
 	this.set_height = function() {
 
 		// define vars
-		var viewport, header_height, switcher_height, sidebar_header_height, wpadminbar_height,
-			toc_sidebar_height, switcher_display, sidebar_switcher_height, sidebar_height;
+		var viewport, header_height, switcher_height, sidebar_header_height,
+			wpadminbar_height, toc_sidebar_height, switcher_display,
+			sidebar_switcher_height, sidebar_height, window_inner;
 
-		// get window
+		// get viewport height
 		viewport = $(window).height();
+
+		// iOS9 Safari falsely reports the height when the URL bar shrinks
+		if ( cp_is_mobile == '1' || cp_is_tablet == '1' ) {
+
+			// get window innerHeight
+			window_inner = window.innerHeight;
+
+			// override if different
+			if ( viewport < window_inner ) {
+				viewport = window_inner;
+			}
+
+		}
 
 		// get interface elements
 		header_height = $('#header').height();
@@ -589,7 +603,7 @@ CommentPress.theme.sidebars = new function() {
 			$('#sidebar_tabs h2 a').removeClass('active-tab');
 
 			// show it
-			$('#' + sidebar + '_sidebar').css('z-index','2010');
+			$('#' + sidebar + '_sidebar').css('z-index','2010').css('display','block');
 			$('#sidebar_tabs #' + sidebar + '_header h2 a').addClass('active-tab');
 
 		}
@@ -840,6 +854,15 @@ CommentPress.theme.viewport = new function() {
 			} else {
 
 				// fixed header
+
+				// mobile browsers often reduce the size of the screen chrome on
+				// page scroll - so let's try and update the sidebar height
+				if ( cp_is_mobile == '1' || cp_is_tablet == '1' ) {
+
+					// set sidebar height
+					CommentPress.theme.sidebars.set_height();
+
+				}
 
 			}
 
@@ -1179,7 +1202,7 @@ CommentPress.theme.viewport = new function() {
 	 */
 	this.align_content = function( text_sig, scroll_target ) {
 
-		// bail if scrool target is 'none'
+		// bail if scroll target is 'none'
 		if ( scroll_target == 'none' ) { return; }
 
 		// move to sidebar

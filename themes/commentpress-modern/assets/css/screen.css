@@ -610,6 +610,7 @@ Shadows and Transitions
 */
 
 /* 10px outer shadow */
+.outer-shadow-ten-px,
 #header
 {
 	-webkit-box-shadow: #888 0 0 10px;
@@ -628,6 +629,7 @@ Shadows and Transitions
 }
 
 /* 15px outer shadows */
+.outer-shadow-fifteen-px,
 #page_wrapper,
 .page_wrapper
 {
@@ -907,6 +909,7 @@ BASIC LAYOUT
 {
 	background-color: #fff;
 	color: #000;
+	font-weight: normal;
 }
 
 #toc_sidebar .sidebar_minimiser ul#toc_list li.current_page_ancestor > a,
@@ -958,6 +961,16 @@ h3.activity_heading
 	z-index: 2010;
 }
 
+.cp_sidebar_activity #comments_sidebar
+{
+	z-index: 2001;
+}
+
+.cp_sidebar_activity #activity_sidebar
+{
+	z-index: 2010;
+}
+
 
 
 ul#sidebar_tabs
@@ -965,6 +978,7 @@ ul#sidebar_tabs
 	margin: 0;
 	padding: 0;
 	height: 50px;
+	background-color: #ccc;
 }
 
 ul#sidebar_tabs h2
@@ -1012,6 +1026,19 @@ ul#sidebar_tabs li a:active
 ul#sidebar_tabs li a.active-tab
 {
 	background-color: #ccc;
+}
+
+/* grey out Comments when not commentable */
+.not_commentable ul#sidebar_tabs li#comments_header a,
+.not_commentable ul#sidebar_tabs li#comments_header a:link,
+.not_commentable ul#sidebar_tabs li#comments_header a:visited,
+.not_commentable ul#sidebar_tabs li#comments_header a:hover,
+.not_commentable ul#sidebar_tabs li#comments_header a:focus,
+.not_commentable ul#sidebar_tabs li#comments_header a:active
+{
+	color: #d6d6d6;
+	background-color: #ddd;
+	cursor: default;
 }
 
 .sidebar_contents_wrapper
@@ -1682,7 +1709,6 @@ Signup Form Styles
 /* CommentPress Core theme compatibility */
 body.commentpress_page #cp-multisite-options h3
 {
-	color: #761D19;
 	font-size: 1.2em;
 	margin: 30px 0 5px 0;
 }
@@ -1756,6 +1782,7 @@ h2.post_title a:active,
 {
 	color: #000;
 	text-decoration: none;
+	word-wrap: break-word;
 }
 
 div.search_meta
@@ -2244,6 +2271,11 @@ ul.image_link .alignleft h4
 	text-align: left;
 }
 
+.image_attachment h2.post_title > a
+{
+	font-size: 60%;
+}
+
 .image_attachment h2.post_title span
 {
 	display: block;
@@ -2263,10 +2295,8 @@ p.back_button a.button
 
 div.the_image_attachment
 {
-	margin: 1em 0 1em 0;
-	padding: 3em 0 2em 0;
-	background-color: #f8f8f8;
-	border: 1px solid #eee;
+	margin: 1em 0 1.3em 0;
+	padding: 0;
 }
 
 p.image_attachment_wrap
@@ -2274,14 +2304,21 @@ p.image_attachment_wrap
 	text-align: center;
 	margin: 0;
 	padding: 0;
+	line-height: 0;
 }
 
 div.image_attachment_caption
 {
 	text-align: center;
 	margin: 0 3em;
-	padding: 0.5em 0 0 0;
+	padding: 0 0 0.5em 0;
 	font-family: sans-serif;
+}
+
+div.image_attachment_caption p
+{
+	margin: 0.3em 0 0.5em 0;
+	line-height: 1.5;
 }
 
 
@@ -2638,7 +2675,6 @@ Post Versioning
 	font-weight: normal;
 	display: block;
 	line-height: 1;
-	color: #761D19;
 	text-decoration: none;
 	text-transform: uppercase;
 }
@@ -2942,7 +2978,6 @@ ol.footnotes,
 #content sup.footnote,
 .content sup.footnote
 {
-	color: #761D19;
 	font-weight: bold;
 	font-family: sans-serif;
 	text-decoration: none;
@@ -3064,7 +3099,7 @@ Compatibility with Featured Comments plugin
 .feature-bury-comments a.feature-comments:hover,
 .feature-burry-comments a.feature-comments:hover
 {
-	color: #761D19;
+	/* see colours-01.css */
 }
 
 
@@ -3215,7 +3250,6 @@ Compatibility with Comment Tagger plugin
 .comment_tagger_tag_link,
 .comment_tagger_tag_link:active
 {
-	color: #761D19;
 	text-decoration: none;
 }
 
@@ -3347,7 +3381,6 @@ body.group-admin.group-sites .standard-form .bpgsites_group_linkages_pending
 
 .bpgsites_group_linkages_pending_heading
 {
-	color: #761D19;
 	margin-bottom: 1em;
 }
 
@@ -3390,9 +3423,7 @@ Compatibility with CommentPress JSTOR plugin
 
 .commentpress_jstor .comment-title a
 {
-	color: #761D19;
 	text-decoration: none;
-	font-family: Lato, 'Trebuchet MS', Helvetica, Arial, sans-serif;
 	font-weight: bold;
 }
 
@@ -3569,7 +3600,10 @@ body.tinymce-4 #commentform #wp-comment-wrap textarea
 }
 
 /* copied from /wp-admin/css/common.css to hide text on media close button */
-.screen-reader-text, .screen-reader-text span, .ui-helper-hidden-accessible
+.screen-reader-text,
+.screen-reader-text span,
+.ui-helper-hidden-accessible,
+.accessibly-hidden
 {
 	position: absolute;
 	margin: -1px;
@@ -3974,9 +4008,282 @@ Compatibility with CommentPress Core Text Highlighter
 	text-decoration: none;
 	font-family: sans-serif;
 	text-transform: uppercase;
-	color: #761D19;
 	float: right;
 	margin-left: 2%;
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
+Widgets & Widget Areas
+--------------------------------------------------------------------------------
+*/
+
+/* Footer widget titles are hidden here */
+#footer .widget .widget-title
+{
+	display: none;
+}
+
+
+
+/* generic sidebar widget area font */
+.sidebar_container .widget
+{
+	font-family: sans-serif;
+}
+
+
+
+/* Widgets that need padding when placed in Sidebar */
+.sidebar_container .widget_calendar .widget_wrapper,
+.sidebar_container .widget_search .widget_wrapper,
+.sidebar_container .widget_text .widget_wrapper
+{
+	margin: 10px;
+}
+
+
+
+/* Widgets in Sidebar that have lists */
+.sidebar_container .widget.widget_categories ul,
+.sidebar_container .widget.widget_archive ul,
+.sidebar_container .widget.widget_meta ul,
+.sidebar_container .widget.widget_pages ul
+{
+	margin: 0;
+	padding: 0;
+}
+
+.sidebar_container .widget.widget_categories ul li a:hover,
+.sidebar_container .widget.widget_categories ul li a:focus,
+.sidebar_container .widget.widget_archive ul li a:hover,
+.sidebar_container .widget.widget_archive ul li a:focus,
+.sidebar_container .widget.widget_meta ul li a:hover,
+.sidebar_container .widget.widget_meta ul li a:focus,
+.sidebar_container .widget.widget_pages ul li a:hover,
+.sidebar_container .widget.widget_pages ul li a:focus
+{
+	background-color: #fff;
+	color: #333;
+}
+
+.sidebar_container .widget.widget_categories ul li a,
+.sidebar_container .widget.widget_categories ul li a:active,
+.sidebar_container .widget.widget_archive ul li a,
+.sidebar_container .widget.widget_archive ul li a:active,
+.sidebar_container .widget.widget_meta ul li a,
+.sidebar_container .widget.widget_meta ul li a:active,
+.sidebar_container .widget.widget_pages ul li a,
+.sidebar_container .widget.widget_pages ul li a:active
+{
+	display: block;
+	font-family: sans-serif;
+	font-weight: normal;
+	font-size: 80%;
+	padding: 8px 10px;
+	text-decoration: none;
+	background-color: transparent;
+	color: #333;
+}
+
+
+
+/* Categories and Archives may have a dropdown */
+.sidebar_container .widget.widget_categories select,
+.sidebar_container .widget.widget_archive select
+{
+	margin: 10px;
+}
+
+
+
+/* Categories widget in Sidebar */
+.sidebar_container .widget.widget_categories ul li
+{
+	list-style: none;
+	list-style-image: none;
+}
+
+
+
+/* Archives widget in Sidebar */
+.sidebar_container .widget.widget_archive ul li
+{
+	list-style: none;
+	list-style-image: none;
+}
+
+
+
+/* Recent Entries in Sidebar */
+.sidebar_container .widget.widget_recent_entries ul
+{
+	margin: 0;
+	padding: 0;
+}
+
+.sidebar_container .widget.widget_recent_entries ul li
+{
+	padding: 8px 10px;
+	font-size: 80%;
+}
+
+.sidebar_container .widget.widget_recent_entries .post-date
+{
+	font-style: italic;
+	padding: 0 1em;
+}
+
+.sidebar_container .widget.widget_recent_entries a:hover,
+.sidebar_container .widget.widget_recent_entries a:focus
+{
+	text-decoration: underline;
+}
+
+.sidebar_container .widget.widget_recent_entries a,
+.sidebar_container .widget.widget_recent_entries a:active
+{
+	color: #333;
+	text-decoration: none;
+}
+
+
+
+/* Recent Comments in Sidebar */
+.sidebar_container .widget.widget_recent_comments ul
+{
+	margin: 0;
+	padding: 0;
+}
+
+.sidebar_container .widget.widget_recent_comments ul li
+{
+	padding: 8px 10px;
+	font-size: 80%;
+	color: #000;
+}
+
+.sidebar_container .widget.widget_recent_comments ul li a:hover,
+.sidebar_container .widget.widget_recent_comments ul li a:focus
+{
+	text-decoration: underline;
+	background-color: transparent;
+}
+
+.sidebar_container .widget.widget_recent_comments ul li a,
+.sidebar_container .widget.widget_recent_comments ul li a:active
+{
+	font-family: sans-serif;
+	font-weight: normal;
+	text-decoration: none;
+	background-color: transparent;
+	color: #333;
+}
+
+
+
+/* Custom Menu in Sidebar */
+.sidebar_container .widget ul.menu,
+.sidebar_container .widget ul.menu
+{
+	margin: 0;
+	padding: 0;
+}
+
+.sidebar_container .widget ul.menu li
+{
+	list-style: none;
+	list-style-image: none;
+}
+
+.sidebar_container .widget ul.menu li a:hover,
+.sidebar_container .widget ul.menu li a:focus
+{
+	background-color: #fff;
+	color: #333;
+}
+
+.sidebar_container .widget ul.menu li a,
+.sidebar_container .widget ul.menu li a:active
+{
+	display: block;
+	font-family: sans-serif;
+	font-weight: normal;
+	font-size: 80%;
+	padding: 6px 6px;
+	text-decoration: none;
+	background-color: #eee;
+	color: #333;
+}
+
+/* Sub-menus */
+.sidebar_container .widget ul.sub-menu
+{
+	margin: 0 0 0 1.2em;
+	padding: 0;
+}
+
+
+
+/* Custom Menu in Footer */
+#footer .widget_nav_menu
+{
+	text-align: center;
+}
+
+#footer .widget_nav_menu ul.menu
+{
+	list-style: none;
+	margin: 1.25em 0;
+	padding: 0;
+	line-height: 1.8;
+}
+
+#footer .widget_nav_menu ul.menu li
+{
+	list-style: none;
+	display: inline-block;
+	padding-right: 5px;
+}
+
+#footer .widget_nav_menu ul.menu li:after
+{
+	content: "|";
+	display: inline;
+	padding-left: 10px;
+}
+
+#footer .widget_nav_menu ul.menu li:last-child:after
+{
+	display: none;
+}
+
+#footer .widget_nav_menu ul.menu a:focus
+{
+	text-decoration: underline;
+}
+
+#footer .widget_nav_menu ul.menu a,
+#footer .widget_nav_menu ul.menu a:active
+{
+	color: #333;
+	text-decoration: none;
+}
+
+
+
+/* CommentPress-supplied text widget in Footer */
+#footer .commentpress_widget
+{
+	margin: 1em 0;
+}
+
+#footer .commentpress_widget
+{
+	margin: 1.25em 0;
+	line-height: 1.8;
 }
 
 
@@ -4088,7 +4395,8 @@ RESPONSIVENESS
 	}
 
 	.comments_container > h3 > span,
-	.comments_container > h3 a
+	.comments_container > h3 a,
+	.comments_container > h3 a:active
 	{
 		padding: 15px 10px;
 	}
@@ -4098,7 +4406,12 @@ RESPONSIVENESS
 		padding: 0;
 	}
 
-	#toc_sidebar .sidebar_minimiser ul li a
+	#toc_sidebar .sidebar_minimiser ul li a,
+	.sidebar_container .widget.widget_categories ul li a,
+	.sidebar_container .widget.widget_archive ul li a,
+	.sidebar_container .widget ul.menu li a,
+	.sidebar_container .widget.widget_recent_comments ul li,
+	.sidebar_container .widget.widget_recent_entries ul li
 	{
 		font-size: 100%;
 		padding: 15px 10px;
@@ -4331,6 +4644,7 @@ RESPONSIVENESS
 		box-shadow: #888 0 0 10px;
 	} */
 
+	/* site name */
 	#title h1
 	{
 		margin: 0.8em 0 0 0;

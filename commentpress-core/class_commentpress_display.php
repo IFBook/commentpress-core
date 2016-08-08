@@ -677,39 +677,10 @@ HELPTEXT;
 	 */
 	public function list_pages( $exclude_pages = array() ) {
 
-		/*
-		Question: do we want to use WP menus? And if so, how?
-
-		Currently, we're using wp_list_pages(), so let's try wp_page_menu() first
-
-
-
-		// If we set the theme to use wp_nav_menu(), we need to register it
-		register_nav_menu( 'primary', __( 'Primary Menu', 'commentpress-core' ) );
-
-		Our navigation menu. If one isn't filled out, wp_nav_menu falls back to
-		wp_page_menu. The menu assiged to the primary position is the one used. If
-		none is assigned, the menu with the lowest ID is used.
-
-		//wp_nav_menu( array( 'theme_location' => 'primary' ) );
-
-		// set list pages defaults
-		$args = array(
-			'sort_column' => 'menu_order, post_title',
-			'menu_class' => 'menu',
-			'include' => '',
-			'exclude' => '',
-			'echo' => true,
-			'show_home' => false,
-			'link_before' => '',
-			'link_after' => ''
-		);
-		*/
-
 		// test for custom menu
 		if ( has_nav_menu( 'toc' ) ) {
 
-			// try and use it
+			// display menu
 			wp_nav_menu( array(
 				'theme_location' => 'toc',
 				'echo' => true,
@@ -737,8 +708,14 @@ HELPTEXT;
 			// allow overrides
 			$title_page_title = apply_filters( 'cp_title_page_title', $title_page_title );
 
+			// set current item class if viewing front page
+			$is_active = '';
+			if ( is_front_page() ) {
+				$is_active = ' current_page_item';
+			}
+
 			// echo list item
-			echo '<li class="page_item page-item-' . $welcome_id . '"><a href="' . get_permalink( $welcome_id ) . '">' . $title_page_title . '</a></li>';
+			echo '<li class="page_item page-item-' . $welcome_id . $is_active .'"><a href="' . get_permalink( $welcome_id ) . '">' . $title_page_title . '</a></li>';
 
 		}
 
@@ -836,23 +813,27 @@ HELPTEXT;
 				// define title text
 				$title_text = sprintf(
 					_n(
-						'There is %d comment written for this paragraph', // singular
-						'There are %d comments written for this paragraph', // plural
+						'There is %d comment written for this %s', // singular
+						'There are %d comments written for this %s', // plural
 						$comment_count, // number
 						'commentpress-core' // domain
 					),
-					$comment_count // substitution
+					// substitutions
+					$comment_count,
+					$this->parent_obj->parser->lexia_get()
 				);
 
 				// define add comment text
 				$add_text = sprintf(
 					_n(
-						'Leave a comment on paragraph %d', // singular
-						'Leave a comment on paragraph %d', // plural
+						'Leave a comment on %s %d', // singular
+						'Leave a comment on %s %d', // plural
 						$para_num, // number
 						'commentpress-core' // domain
 					),
-					$para_num // substitution
+					// substitutions
+					$this->parent_obj->parser->lexia_get(),
+					$para_num
 				);
 
 				break;
@@ -865,23 +846,27 @@ HELPTEXT;
 				// define title text
 				$title_text = sprintf(
 					_n(
-					'There is %d comment written for this line', // singular
-					'There are %d comments written for this line', // plural
-					$comment_count, // number
-					'commentpress-core' // domain
+						'There is %d comment written for this %s', // singular
+						'There are %d comments written for this %s', // plural
+						$comment_count, // number
+						'commentpress-core' // domain
 					),
-					$comment_count // substitution
+					// substitutions
+					$comment_count,
+					$this->parent_obj->parser->lexia_get()
 				);
 
 				// define add comment text
 				$add_text = sprintf(
 					_n(
-						'Leave a comment on line %d', // singular
-						'Leave a comment on line %d', // plural
+						'Leave a comment on %s %d', // singular
+						'Leave a comment on %s %d', // plural
 						$para_num, // number
 						'commentpress-core' // domain
 					),
-					$para_num // substitution
+					// substitutions
+					$this->parent_obj->parser->lexia_get(),
+					$para_num
 				);
 
 				break;
@@ -895,23 +880,27 @@ HELPTEXT;
 				// define title text
 				$title_text = sprintf(
 					_n(
-						'There is %d comment written for this block', // singular
-						'There are %d comments written for this block', // plural
+						'There is %d comment written for this %s', // singular
+						'There are %d comments written for this %s', // plural
 						$comment_count, // number
 						'commentpress-core' // domain
 					),
-					$comment_count // substitution
+					// substitutions
+					$comment_count,
+					$this->parent_obj->parser->lexia_get()
 				);
 
 				// define add comment text
 				$add_text = sprintf(
 					_n(
-						'Leave a comment on block %d', // singular
-						'Leave a comment on block %d', // plural
+						'Leave a comment on %s %d', // singular
+						'Leave a comment on %s %d', // plural
 						$para_num, // number
 						'commentpress-core' // domain
 					),
-					$para_num // substitution
+					// substitutions
+					$this->parent_obj->parser->lexia_get(),
+					$para_num
 				);
 
 				break;
@@ -961,12 +950,14 @@ HELPTEXT;
 				// define permalink text
 				$permalink_text = sprintf(
 					_n(
-						'Permalink for paragraph %d', // singular
-						'Permalink for paragraph %d', // plural
+						'Permalink for %s %d', // singular
+						'Permalink for %s %d', // plural
 						$para_num, // number
 						'commentpress-core' // domain
 					),
-					$para_num // substitution
+					// substitutions
+					$this->parent_obj->parser->lexia_get(),
+					$para_num
 				);
 
 				// define paragraph marker
@@ -982,12 +973,14 @@ HELPTEXT;
 				// define permalink text
 				$permalink_text = sprintf(
 					_n(
-						'Permalink for line %d', // singular
-						'Permalink for line %d', // plural
+						'Permalink for %s %d', // singular
+						'Permalink for %s %d', // plural
 						$para_num, // number
 						'commentpress-core' // domain
 					),
-					$para_num // substitution
+					// substitutions
+					$this->parent_obj->parser->lexia_get(),
+					$para_num
 				);
 
 				// define paragraph marker
@@ -1004,12 +997,14 @@ HELPTEXT;
 				// define permalink text
 				$permalink_text = sprintf(
 					_n(
-						'Permalink for block %d', // singular
-						'Permalink for block %d', // plural
+						'Permalink for %s %d', // singular
+						'Permalink for %s %d', // plural
 						$para_num, // number
 						'commentpress-core' // domain
 					),
-					$para_num // substitution
+					// substitutions
+					$this->parent_obj->parser->lexia_get(),
+					$para_num
 				);
 
 				// define paragraph marker
@@ -1404,7 +1399,11 @@ HELPTEXT;
 
 		' . $this->_get_reset() . '
 
+		' . $this->_get_post_type_options() . '
+
 		' . $this->_get_optional_options() . '
+
+		' . $this->_get_do_not_parse() . '
 
 		</table>
 
@@ -1439,6 +1438,8 @@ HELPTEXT;
 					</select>
 				</td>
 			</tr>
+
+		' . $this->_get_page_nav_enabled() . '
 
 			<tr valign="top">
 				<th scope="row"><label for="cp_title_visibility">' . __( 'Default page title visibility (can be overridden on individual pages)', 'commentpress-core' ) . '</label></th>
@@ -1640,6 +1641,98 @@ HELPTEXT;
 
 		// init
 		$upgrade = '';
+
+		// do we have the option to choose which post types to skip (new in 3.9)?
+		if ( ! $this->db->option_exists( 'cp_post_types_disabled' ) ) {
+
+			// define labels
+			$description = __( 'Choose the Post Types on which CommentPress Core is enabled. Disabling a post type will mean that paragraph-level commenting will not be enabled on any entries of that post type. Default prior to 3.9 was that all post types were enabled.', 'commentpress-core' );
+			$label = __( 'Post Types on which CommentPress Core is enabled.', 'commentpress-core' );
+
+			// get post types that support the editor
+			$capable_post_types = $this->db->get_supported_post_types();
+
+			// init outputs
+			$output = array();
+			$options = '';
+
+			// sanity check
+			if ( count( $capable_post_types ) > 0 ) {
+
+				// construct checkbox for each post type
+				foreach( $capable_post_types AS $post_type ) {
+
+					// add checked checkbox
+					$output[] = '<input type="checkbox" class="settings-checkbox" name="cp_post_types_enabled[]" value="' . $post_type . '" checked="checked" /> <label class="commentpress_settings_label" for="cp_post_types_enabled">' . $post_type . '</label><br>';
+
+				}
+
+				// implode
+				$options = implode( "\n", $output );
+
+			}
+
+			// define upgrade
+			$upgrade .= '
+			<tr valign="top">
+				<th scope="row"><label for="cp_post_types_enabled">' . $label . '</label></th>
+				<td>
+					<p>' . $description . '</p>
+					<p>' . $options . '</p>
+				</td>
+			</tr>
+
+			';
+
+		}
+
+		// do we have the option to choose to disable parsing (new in 3.8.10)?
+		if ( ! $this->db->option_exists( 'cp_do_not_parse' ) ) {
+
+			// define labels
+			$description = __( 'Note: when comments are closed on an entry and there are no comments on that entry, if this option is set to "Yes" then the content will not be parsed for paragraphs, lines or blocks. Comments will also not be parsed, meaning that the entry behaves the same as content which is not commentable. Default prior to 3.8.10 was "No" - all content was always parsed.', 'commentpress-core' );
+			$label = __( 'Disable CommentPress on entries with no comments.', 'commentpress-core' );
+			$yes_label = __( 'Yes', 'commentpress-core' );
+			$no_label = __( 'No', 'commentpress-core' );
+
+			// define upgrade
+			$upgrade .= '
+			<tr valign="top">
+				<th scope="row"><label for="cp_do_not_parse">' . $label . '</label></th>
+				<td><select id="cp_do_not_parse" name="cp_do_not_parse">
+						<option value="y">' . $yes_label . '</option>
+						<option value="n" selected="selected">' . $no_label . '</option>
+					</select>
+					<p>' . $description . '</p>
+				</td>
+			</tr>
+
+			';
+
+		}
+
+		// do we have the option to choose to disable page navigation (new in 3.8.10)?
+		if ( ! $this->db->option_exists( 'cp_page_nav_enabled' ) ) {
+
+			// define labels
+			$label = __( 'Enable automatic page navigation (controls appearance of page numbering and navigation arrows on hierarchical pages). Previous default was "Yes".', 'commentpress-core' );
+			$yes_label = __( 'Yes', 'commentpress-core' );
+			$no_label = __( 'No', 'commentpress-core' );
+
+			// define upgrade
+			$upgrade .= '
+			<tr valign="top">
+				<th scope="row"><label for="cp_page_nav_enabled">' . $label . '</label></th>
+				<td><select id="cp_page_nav_enabled" name="cp_page_nav_enabled">
+						<option value="y" selected="selected">' . $yes_label . '</option>
+						<option value="n">' . $no_label . '</option>
+					</select>
+				</td>
+			</tr>
+
+			';
+
+		}
 
 		// do we have the option to choose to hide textblock meta (new in 3.5.9)?
 		if ( ! $this->db->option_exists( 'cp_textblock_meta' ) ) {
@@ -2146,6 +2239,123 @@ HELPTEXT;
 
 		// --<
 		return $override;
+
+	}
+
+
+
+	/**
+	 * Returns the disable parsing section for the admin form.
+	 *
+	 * @since 3.8.10
+	 *
+	 * @return str $html The markup for the button
+	 */
+	function _get_do_not_parse() {
+
+			$description = __( 'Note: when comments are closed on an entry and there are no comments on that entry, if this option is set to "Yes" then the content will not be parsed for paragraphs, lines or blocks. Comments will also not be parsed, meaning that the entry behaves the same as content which is not commentable. Default prior to 3.8.10 was "No" - all content was always parsed.', 'commentpress-core' );
+
+		// define override
+		$html = '
+		<tr valign="top">
+			<th scope="row"><label for="cp_do_not_parse">' . __( 'Disable CommentPress on entries with no comments. (can be overridden on individual entries)', 'commentpress-core' ) . '</label></th>
+			<td><select id="cp_do_not_parse" name="cp_do_not_parse">
+					<option value="y" ' . (($this->db->option_get('cp_do_not_parse', 'n') == 'y') ? ' selected="selected"' : '') . '>' . __( 'Yes', 'commentpress-core' ) . '</option>
+					<option value="n" ' . (($this->db->option_get('cp_do_not_parse', 'n') == 'n') ? ' selected="selected"' : '') . '>' . __( 'No', 'commentpress-core' ) . '</option>
+				</select>
+				<p>' . $description . '</p>
+			</td>
+		</tr>
+
+		';
+
+		// --<
+		return $html;
+
+	}
+
+
+
+	/**
+	 * Returns the page navigation enabled button for the admin form.
+	 *
+	 * @since 3.8.10
+	 *
+	 * @return str $html The markup for the button
+	 */
+	function _get_page_nav_enabled() {
+
+		// define override
+		$html = '
+		<tr valign="top">
+			<th scope="row"><label for="cp_page_nav_enabled">' . __( 'Enable automatic page navigation (controls appearance of page numbering and navigation arrows on hierarchical pages)', 'commentpress-core' ) . '</label></th>
+			<td><select id="cp_page_nav_enabled" name="cp_page_nav_enabled">
+					<option value="y" ' . (($this->db->option_get('cp_page_nav_enabled', 'y') == 'y') ? ' selected="selected"' : '') . '>' . __( 'Yes', 'commentpress-core' ) . '</option>
+					<option value="n" ' . (($this->db->option_get('cp_page_nav_enabled', 'y') == 'n') ? ' selected="selected"' : '') . '>' . __( 'No', 'commentpress-core' ) . '</option>
+				</select>
+			</td>
+		</tr>
+
+		';
+
+		// --<
+		return $html;
+
+	}
+
+
+
+	/**
+	 * Get post type options.
+	 *
+	 * @since 3.9
+	 *
+	 * @return str $html The markup for the post type options
+	 */
+	public function _get_post_type_options() {
+
+		// get post types that support the editor
+		$capable_post_types = $this->db->get_supported_post_types();
+
+		// init outputs
+		$output = array();
+		$options = '';
+
+		// get chosen post types
+		$selected_types = $this->db->option_get( 'cp_post_types_disabled', array() );
+
+		// sanity check
+		if ( count( $capable_post_types ) > 0 ) {
+
+			// construct checkbox for each post type
+			foreach( $capable_post_types AS $post_type ) {
+
+				$checked = '';
+				if ( ! in_array( $post_type, $selected_types ) ) $checked = ' checked="checked"';
+
+				// add checkbox
+				$output[] = '<input type="checkbox" class="settings-checkbox" name="cp_post_types_enabled[]" value="' . $post_type . '"' . $checked . ' /> <label class="commentpress_settings_label" for="cp_post_types_enabled">' . $post_type . '</label><br>';
+
+			}
+
+			// implode
+			$options = implode( "\n", $output );
+
+		}
+
+		// construct option
+		$html = '
+		<tr valign="top">
+			<th scope="row"><label for="cp_post_types_enabled">' . __( 'Post Types on which CommentPress Core is enabled', 'commentpress-core' ) . '</label></th>
+			<td>
+				<p>' . $options . '</p>
+			</td>
+		</tr>
+
+		';
+
+		// --<
+		return $html;
 
 	}
 

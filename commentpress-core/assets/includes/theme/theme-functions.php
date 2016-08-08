@@ -1129,10 +1129,11 @@ if ( ! function_exists( 'commentpress_get_user_link' ) ):
  *
  * @since 3.0
  *
- * @param object $user The WordPress user
+ * @param object $user The WordPress user object
+ * @param object $comment The WordPress comment object
  * @return string $url The URL for the user
  */
-function commentpress_get_user_link( &$user ) {
+function commentpress_get_user_link( $user, $comment = null ) {
 
 	// kick out if not a user
 	if ( ! is_object( $user ) ) return false;
@@ -1164,7 +1165,7 @@ function commentpress_get_user_link( &$user ) {
 	}
 
 	// --<
-	return $url;
+	return apply_filters( 'commentpress_get_user_link', $url, $user, $comment );
 
 }
 endif; // commentpress_get_user_link
@@ -1180,6 +1181,9 @@ if ( ! function_exists( 'commentpress_echo_post_meta' ) ):
  * @return void
  */
 function commentpress_echo_post_meta() {
+
+	// bail if this is a BuddyPress page
+	if ( function_exists( 'is_buddypress' ) AND is_buddypress() ) return;
 
 	// compat with Co-Authors Plus
 	if ( function_exists( 'get_coauthors' ) ) {
@@ -1372,7 +1376,7 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 	// declare access to globals
 	global $commentpress_core, $cp_comment_output;
 
-	// enable WordPress API on comment
+	// TODO enable WordPress API on comment?
 	//$GLOBALS['comment'] = $comment;
 
 	// construct link
@@ -1397,7 +1401,7 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 				$user = get_userdata( $comment->user_id );
 
 				// get user link
-				$user_link = commentpress_get_user_link( $user );
+				$user_link = commentpress_get_user_link( $user, $comment );
 
 				// did we get one?
 				if ( $user_link != '' AND $user_link != 'http://' ) {
@@ -1831,22 +1835,22 @@ function commentpress_get_comment_activity_item( $comment ) {
 		$user = get_userdata( $comment->user_id );
 
 		// get user link
-		$user_link = commentpress_get_user_link( $user );
+		$user_link = commentpress_get_user_link( $user, $comment );
 
 		// construct author citation
-		$author = '<cite class="fn"><a href="' . $user_link . '">' . esc_html( $comment->comment_author ) . '</a></cite>';
+		$author = '<cite class="fn"><a href="' . $user_link . '">' . get_comment_author() . '</a></cite>';
 
 		// construct link to user url
 		$author = ( $user_link != '' AND $user_link != 'http://' ) ?
-					'<cite class="fn"><a href="' . $user_link . '">' . esc_html( $comment->comment_author ) . '</a></cite>' :
-					 '<cite class="fn">' . esc_html( $comment->comment_author ) . '</cite>';
+					'<cite class="fn"><a href="' . $user_link . '">' . get_comment_author() . '</a></cite>' :
+					 '<cite class="fn">' . get_comment_author() . '</cite>';
 
 	} else {
 
 		// construct link to commenter url
 		$author = ( $comment->comment_author_url != '' AND $comment->comment_author_url != 'http://' ) ?
-					'<cite class="fn"><a href="' . $comment->comment_author_url . '">' . esc_html( $comment->comment_author ) . '</a></cite>' :
-					 '<cite class="fn">' . esc_html( $comment->comment_author ) . '</cite>';
+					'<cite class="fn"><a href="' . $comment->comment_author_url . '">' . get_comment_author() . '</a></cite>' :
+					 '<cite class="fn">' . get_comment_author() . '</cite>';
 
 	}
 
@@ -1946,6 +1950,286 @@ endif; // commentpress_get_comment_activity_item
 
 
 
+if ( ! function_exists( 'commentpress_lexia_support_mime' ) ):
+/**
+ * The "media" post type needs more granular naming support.
+ *
+ * @since 3.9
+ *
+ * @param str $post_type_name The existing singular name of the post type
+ * @param str $post_type The post type identifier
+ * @return str $post_type_name The modified singular name of the post type
+ */
+function commentpress_lexia_support_mime( $post_type_name, $post_type ) {
+
+	// only handle media
+	if ( $post_type != 'attachment' ) return $post_type_name;
+
+	// get mime type
+	$mime_type = get_post_mime_type( get_the_ID() );
+
+	// use different name for each
+	switch ( $mime_type ) {
+
+		// image
+		case 'image/jpeg':
+		case 'image/png':
+		case 'image/gif':
+			$mime_type_name = __( 'Image', 'commentpress-core' );
+			break;
+
+		// video
+		case 'video/mpeg':
+		case 'video/mp4':
+		case 'video/quicktime':
+			$mime_type_name = __( 'Video', 'commentpress-core' );
+			break;
+
+		// file
+		case 'text/csv':
+		case 'text/plain':
+		case 'text/xml':
+		default:
+			$mime_type_name = __( 'File', 'commentpress-core' );
+			break;
+
+	}
+
+	/**
+	 * Allow this name to be filtered.
+	 *
+	 * @since 3.9
+	 *
+	 * @param str $mime_type_name The name for this mime type
+	 * @param str $mime_type The mime type
+	 * @return str $mime_type_name The modified name for this mime type
+	 */
+	$mime_type_name = apply_filters( 'commentpress_lexia_mime_type_name', $mime_type_name, $mime_type );
+
+	// --<
+	return $mime_type_name;
+
+}
+endif; // commentpress_lexia_support_mime
+
+// add filter for the above
+add_filter( 'commentpress_lexia_post_type_name', 'commentpress_lexia_support_mime', 10, 2 );
+
+
+
+if ( ! function_exists( 'commentpress_lexia_modify_entity_text' ) ):
+/**
+ * The "media" post type needs more granular naming support.
+ *
+ * @since 3.9
+ *
+ * @param str $entity_text The current entity text
+ * @param str $post_type_name The singular name of the post type
+ * @param str $post_type The post type identifier
+ * @return str $entity_text The modified entity text
+ */
+function commentpress_lexia_modify_entity_text( $entity_text, $post_type_name, $post_type ) {
+
+	// only handle media
+	if ( $post_type != 'attachment' ) return $entity_text;
+
+	// override entity text
+	$entity_text = sprintf(
+		__( 'the %s', 'commentpress-core' ),
+		$post_type_name
+	);
+
+	// --<
+	return $entity_text;
+
+}
+endif; // commentpress_lexia_modify_entity_text
+
+// add filter for the above
+add_filter( 'commentpress_lexia_whole_entity_text', 'commentpress_lexia_modify_entity_text', 10, 3 );
+
+
+
+if ( ! function_exists( 'commentpress_comments_by_para_format_whole' ) ):
+/**
+ * Format the markup for the "whole page" section of comments.
+ *
+ * @since 3.8.10
+ *
+ * @param str $post_type_name The singular name of the post type
+ * @param str $post_type The post type identifier
+ * @param int $comment_count The number of comments on the block
+ * @return array $return Data array containing the translated strings
+ */
+function commentpress_comments_by_para_format_whole( $post_type_name, $post_type, $comment_count ) {
+
+	// init return
+	$return = array();
+
+	// construct entity text
+	$return['entity_text'] = sprintf(
+		__( 'the whole %s', 'commentpress-core' ),
+		$post_type_name
+	);
+
+	/**
+	 * Allow "the whole entity" text to be filtered.
+	 *
+	 * This is primarily for "media", where it makes little sense the comment on
+	 * "the whole image", for example.
+	 *
+	 * @since 3.9
+	 *
+	 * @param str $entity_text The current entity text
+	 * @param str $post_type_name The singular name of the post type
+	 * @return str $entity_text The modified entity text
+	 */
+	$return['entity_text'] = apply_filters(
+		'commentpress_lexia_whole_entity_text',
+		$return['entity_text'],
+		$post_type_name,
+		$post_type
+	);
+
+	// construct permalink text
+	$return['permalink_text'] = sprintf(
+		__( 'Permalink for comments on %s', 'commentpress-core' ),
+		$return['entity_text']
+	);
+
+	// construct comment count
+	$return['comment_text'] = sprintf(
+		_n(
+			'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span>', // singular
+			'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span>', // plural
+			$comment_count, // number
+			'commentpress-core' // domain
+		),
+		$comment_count // substitution
+	);
+
+	// construct heading text
+	$return['heading_text'] = sprintf(
+		__( '%1$s on <span class="source_block">%2$s</span>', 'commentpress-core' ),
+		$return['comment_text'],
+		$return['entity_text']
+	);
+
+	// --<
+	return $return;
+
+}
+endif; // commentpress_comments_by_para_format_whole
+
+
+
+if ( ! function_exists( 'commentpress_comments_by_para_format_pings' ) ):
+/**
+ * Format the markup for the "pingbacks and trackbacks" section of comments.
+ *
+ * @since 3.8.10
+ *
+ * @param int $comment_count The number of comments on the block
+ * @return array $return Data array containing the translated strings
+ */
+function commentpress_comments_by_para_format_pings( $comment_count ) {
+
+	// init return
+	$return = array();
+
+	// construct entity text
+	$return['entity_text'] = __( 'pingback or trackback', 'commentpress-core' );
+
+	// construct permalink text
+	$return['permalink_text'] = __( 'Permalink for pingbacks and trackbacks', 'commentpress-core' );
+
+	// construct comment count
+	$return['comment_text'] = sprintf(
+		_n(
+			'<span>%d</span> Pingback or trackback', // singular
+			'<span>%d</span> Pingbacks and trackbacks', // plural
+			$comment_count, // number
+			'commentpress-core' // domain
+		),
+		$comment_count // substitution
+	);
+
+	// construct heading text
+	$return['heading_text'] = sprintf( '<span>%s</span>', $return['comment_text'] );
+
+	// --<
+	return $return;
+
+}
+endif; // commentpress_comments_by_para_format_pings
+
+
+
+if ( ! function_exists( 'commentpress_comments_by_para_format_block' ) ):
+/**
+ * Format the markup for "comments by block" section of comments.
+ *
+ * @since 3.8.10
+ *
+ * @param int $comment_count The number of comments on the block
+ * @param int $para_num The sequential number of the block
+ * @return array $return Data array containing the translated strings
+ */
+function commentpress_comments_by_para_format_block( $comment_count, $para_num ) {
+
+	// init return
+	$return = array();
+
+	// access plugin
+	global $commentpress_core;
+
+	// get block name
+	$block_name = __( 'paragraph', 'commentpress-core' );
+	if ( is_object( $commentpress_core ) ) {
+		$block_name = $commentpress_core->parser->lexia_get();
+	}
+
+	// construct entity text
+	$return['entity_text'] = sprintf(
+		__( '%1$s %2$s', 'commentpress-core' ),
+		$block_name,
+		$para_num
+	);
+
+	// construct permalink text
+	$return['permalink_text'] = sprintf(
+		__( 'Permalink for comments on %1$s %2$s', 'commentpress-core' ),
+		$block_name,
+		$para_num
+	);
+
+	// construct comment count
+	$return['comment_text'] = sprintf(
+		_n(
+			'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span>', // singular
+			'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span>', // plural
+			$comment_count, // number
+			'commentpress-core' // domain
+		),
+		$comment_count // substitution
+	);
+
+	// construct heading text
+	$return['heading_text'] = sprintf(
+		__( '%1$s on <span class="source_block">%2$s %3$s</span>', 'commentpress-core' ),
+		$return['comment_text'],
+		$block_name,
+		$para_num
+	);
+
+	// --<
+	return $return;
+
+}
+endif; // commentpress_comments_by_para_format_block
+
+
+
 if ( ! function_exists( 'commentpress_get_comments_by_para' ) ):
 /**
  * Get comments delimited by paragraph.
@@ -1971,28 +2255,32 @@ function commentpress_get_comments_by_para() {
 	// get approved comments for this post, sorted comments by text signature
 	$comments_sorted = $commentpress_core->get_sorted_comments( $post->ID );
 
-	// get text signatures
-	//$text_sigs = $commentpress_core->db->get_text_sigs();
-
-	// init starting paragraph number
-	$start_num = 1;
-
-	// set key
+	// key for starting paragraph number
 	$key = '_cp_starting_para_number';
 
-	// if the custom field already has a value
+	// default starting paragraph number
+	$start_num = 1;
+
+	// override if the custom field already has a value
 	if ( get_post_meta( $post->ID, $key, true ) != '' ) {
-
-		// get it
 		$start_num = absint( get_post_meta( $post->ID, $key, true ) );
-
 	}
 
 	// if we have any
 	if ( count( $comments_sorted ) > 0 ) {
 
-		// construct redirect link
-		$redirect = site_url( 'wp-login.php?redirect_to=' . get_permalink() );
+		// allow for BuddyPress registration
+		$registration = false;
+		if ( function_exists( 'bp_get_signup_allowed' ) AND bp_get_signup_allowed() ) {
+			$registration = true;
+		}
+
+		// maybe redirect to BuddyPress sign-up
+		if ( $registration ) {
+			$redirect = bp_get_signup_page();
+		} else {
+			$redirect = wp_login_url( get_permalink() );
+		}
 
 		// init allowed to comment
 		$login_to_comment = false;
@@ -2011,12 +2299,9 @@ function commentpress_get_comments_by_para() {
 			// Walker_Comment has changed to buffered output, so define args without
 			// our custom walker. The built in walker works just fine now.
 			$args = array(
-
-				// list comments params
 				'style'=> 'ol',
 				'type'=> $comment_type,
 				'callback' => 'commentpress_comments'
-
 			);
 
 		} else {
@@ -2028,16 +2313,28 @@ function commentpress_get_comments_by_para() {
 
 			// define args
 			$args = array(
-
-				// list comments params
 				'walker' => $walker,
 				'style'=> 'ol',
 				'type'=> $comment_type,
 				'callback' => 'commentpress_comments'
-
 			);
 
 		}
+
+		// get singular post type label
+		$current_type = get_post_type();
+		$post_type = get_post_type_object( $current_type );
+
+		/**
+		 * Assign name of post type.
+		 *
+		 * @since 3.8.10
+		 *
+		 * @param str $singular_name The singular label for this post type
+		 * @param str $current_type The post type identifier
+		 * @return str $singular_name The modified label for this post type
+		 */
+		$post_type_name = apply_filters( 'commentpress_lexia_post_type_name', $post_type->labels->singular_name, $current_type );
 
 		// init counter for text_signatures array
 		$sig_counter = 0;
@@ -2063,45 +2360,8 @@ function commentpress_get_comments_by_para() {
 					// clear the paragraph number
 					$para_num = '';
 
-					// define default phrase
-					$paragraph_text = __( 'the whole page', 'commentpress-core' );
-
-					// check post type
-					$current_type = get_post_type();
-					switch( $current_type ) {
-
-						// we can add more of these if needed
-						case 'post': $paragraph_text = __( 'the whole post', 'commentpress-core' ); break;
-						case 'page': $paragraph_text = __( 'the whole page', 'commentpress-core' ); break;
-
-					}
-
-					// set permalink text
-					$permalink_text = sprintf(
-						__( 'Permalink for comments on %s', 'commentpress-core' ),
-						$paragraph_text
-					);
-
-					// define heading text
-					$heading_text = sprintf( _n(
-
-						// singular
-						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span> on ',
-
-						// plural
-						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span> on ',
-
-						// number
-						$comment_count,
-
-						// domain
-						'commentpress-core'
-
-					// substitution
-					), $comment_count );
-
-					// append para text
-					$heading_text .= '<span class="source_block">' . $paragraph_text . '</span>';
+					// get the markup we need for this
+					$markup = commentpress_comments_by_para_format_whole( $post_type_name, $current_type, $comment_count );
 
 					break;
 
@@ -2114,29 +2374,8 @@ function commentpress_get_comments_by_para() {
 					// clear the paragraph number
 					$para_num = '';
 
-					// define heading text
-					$heading_text = sprintf( _n(
-
-						// singular
-						'<span>%d</span> Pingback or trackback',
-
-						// plural
-						'<span>%d</span> Pingbacks and trackbacks',
-
-						// number
-						$comment_count,
-
-						// domain
-						'commentpress-core'
-
-					// substitution
-					), $comment_count );
-
-					// set permalink text
-					$permalink_text = __( 'Permalink for pingbacks and trackbacks', 'commentpress-core' );
-
-					// wrap in span
-					$heading_text = '<span>' . $heading_text . '</span>';
+					// get the markup we need for this
+					$markup = commentpress_comments_by_para_format_pings( $comment_count );
 
 					break;
 
@@ -2149,70 +2388,8 @@ function commentpress_get_comments_by_para() {
 					// paragraph number
 					$para_num = $sig_counter + ( $start_num - 1 );
 
-					// which parsing method?
-					if ( defined( 'COMMENTPRESS_BLOCK' ) ) {
-
-						switch ( COMMENTPRESS_BLOCK ) {
-
-							case 'tag' :
-
-								// set block identifier
-								$block_name = __( 'paragraph', 'commentpress-core' );
-
-								break;
-
-							case 'block' :
-
-								// set block identifier
-								$block_name = __( 'block', 'commentpress-core' );
-
-								break;
-
-							case 'line' :
-
-								// set block identifier
-								$block_name = __( 'line', 'commentpress-core' );
-
-								break;
-
-						}
-
-					} else {
-
-						// set block identifier
-						$block_name = __( 'paragraph', 'commentpress-core' );
-
-					}
-
-					// set paragraph text
-					$paragraph_text = $block_name . ' ' . $para_num;
-
-					// set permalink text
-					$permalink_text = sprintf(
-						__( 'Permalink for comments on %s', 'commentpress-core' ),
-						$paragraph_text
-					);
-
-					// define heading text
-					$heading_text = sprintf( _n(
-
-						// singular
-						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span> on ',
-
-						// plural
-						'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span> on ',
-
-						// number
-						$comment_count,
-
-						// domain
-						'commentpress-core'
-
-					// substitution
-					), $comment_count );
-
-					// append para text
-					$heading_text .= '<span class="source_block">' . $paragraph_text . '</span>';
+					// get the markup we need for this
+					$markup = commentpress_comments_by_para_format_block( $comment_count, $para_num );
 
 			} // end switch
 
@@ -2230,10 +2407,12 @@ function commentpress_get_comments_by_para() {
 			} else {
 
 				// show heading
-				echo '<h3 id="para_heading-' . $text_sig . '"' . $no_comments_class . '><a class="comment_block_permalink" title="' . $permalink_text . '" href="#para_heading-' . $text_sig . '">' . $heading_text . '</a></h3>' . "\n\n";
+				echo '<h3 id="para_heading-' . $text_sig . '"' . $no_comments_class . '><a class="comment_block_permalink" title="' . $markup['permalink_text'] . '" href="#para_heading-' . $text_sig . '">' . $markup['heading_text'] . '</a></h3>' . "\n\n";
 
 				// override if there are no comments (for print stylesheet to hide them)
-				if ( $comment_count == 0 ) { $no_comments_class = ' no_comments'; }
+				if ( $comment_count == 0 ) {
+					$no_comments_class = ' no_comments';
+				}
 
 				// open paragraph wrapper
 				echo '<div id="para_wrapper-' . $text_sig . '" class="paragraph_wrapper' . $no_comments_class . '">' . "\n\n";
@@ -2265,7 +2444,6 @@ function commentpress_get_comments_by_para() {
 
 					}
 
-
 					/**
 					 * Allow plugins to append to paragraph level comments.
 					 *
@@ -2282,10 +2460,33 @@ function commentpress_get_comments_by_para() {
 						// if we have to log in to comment
 						if ( $login_to_comment ) {
 
+							// the link text depending on whether we've got registration
+							if ( $registration ) {
+								$prompt = sprintf(
+									__( 'Create an account to leave a comment on %s', 'commentpress-core' ),
+									$markup['entity_text']
+								);
+							} else {
+								$prompt = sprintf(
+									__( 'Login to leave a comment on %s', 'commentpress-core' ),
+									$markup['entity_text']
+								);
+							}
+
+							/**
+							 * Filter the prompt text.
+							 *
+							 * @since 3.9
+							 *
+							 * @param str $prompt The link text when login is required
+							 * @param bool $registration True if registration is open, false otherwise
+							 */
+							$prompt = apply_filters( 'commentpress_reply_to_prompt_text', $prompt, $registration );
+
 							// leave comment link
 							echo '<div class="reply_to_para" id="reply_to_para-' . $para_num . '">' . "\n" .
 									'<p><a class="reply_to_para" rel="nofollow" href="' . $redirect . '">' .
-										__( 'Login to leave a comment on ', 'commentpress-core' ) . $paragraph_text .
+										$prompt .
 									'</a></p>' . "\n" .
 								 '</div>' . "\n\n";
 
@@ -2321,14 +2522,14 @@ function commentpress_get_comments_by_para() {
 							// construct link content
 							$link_content = sprintf(
 								__( 'Leave a comment on %s', 'commentpress-core' ),
-								$paragraph_text
+								$markup['entity_text']
 							);
 
 							// allow overrides
 							$link_content = apply_filters(
 								'commentpress_reply_to_para_link_text',
 								$link_content,
-								$paragraph_text
+								$markup['entity_text']
 							);
 
 							// leave comment link
@@ -2390,11 +2591,6 @@ class Walker_Comment_Press extends Walker_Comment {
 	 * @param array $args Uses 'style' argument for type of HTML list.
 	 */
 	function start_lvl( &$output, $depth = 0, $args = array() ) {
-
-		// if on top level
-		if( $depth === 0 ) {
-			//echo '<h3>New Top Level</h3>' . "\n";
-		}
 
 		// store depth
 		$GLOBALS['comment_depth'] = $depth + 1;
@@ -2488,7 +2684,8 @@ function commentpress_comment_form_title(
 
 				// construct link text
 				$para_text = sprintf(
-					__( 'Paragraph %s', 'commentpress-core' ),
+					_x( '%s %s', 'The first substitution is the block name e.g. "paragraph". The second is the numeric comment count.', 'commentpress-core' ),
+					ucfirst( $commentpress_core->parser->lexia_get() ),
 					$reply_to_para_id
 				);
 
@@ -2499,7 +2696,8 @@ function commentpress_comment_form_title(
 
 				// construct paragraph without link
 				$paragraph = sprintf(
-					__( 'Paragraph %s', 'commentpress-core' ),
+					_x( '%s %s', 'The first substitution is the block name e.g. "paragraph". The second is the numeric comment count.', 'commentpress-core' ),
+					ucfirst( $commentpress_core->parser->lexia_get() ),
 					$para_num
 				);
 
@@ -2637,7 +2835,7 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 		$user = get_userdata( $comment->user_id );
 
 		// get user link
-		$user_link = commentpress_get_user_link( $user );
+		$user_link = commentpress_get_user_link( $user, $comment );
 
 		// construct author citation
 		$author = ( $user_link != '' AND $user_link != 'http://' ) ?
@@ -2646,10 +2844,16 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 
 	} else {
 
-		// construct link to commenter url
-		$author = ( $comment->comment_author_url != '' AND $comment->comment_author_url != 'http://' AND $comment->comment_approved != '0' ) ?
-					'<cite class="fn"><a href="' . $comment->comment_author_url . '">' . get_comment_author() . '</a></cite>' :
-					 '<cite class="fn">' . get_comment_author() . '</cite>';
+		// construct link to commenter url for unregistered users
+		if (
+			$comment->comment_author_url != '' AND
+			$comment->comment_author_url != 'http://' AND
+			$comment->comment_approved != '0'
+		) {
+			$author = '<cite class="fn"><a href="' . $comment->comment_author_url . '">' . get_comment_author() . '</a></cite>';
+		} else {
+			$author = '<cite class="fn">' . get_comment_author() . '</cite>';
+		}
 
 	}
 
@@ -3434,12 +3638,12 @@ if ( ! function_exists( 'commentpress_image_caption_shortcode' ) ):
 function commentpress_image_caption_shortcode( $empty = null, $attr, $content ) {
 
 	// get our shortcode vars
-	extract(shortcode_atts(array(
+	extract( shortcode_atts( array(
 		'id'	=> '',
 		'align'	=> 'alignnone',
 		'width'	=> '',
 		'caption' => ''
-	), $attr));
+	), $attr ) );
 
 	if ( 1 > (int) $width || empty( $caption ) )
 		return $content;
@@ -3685,34 +3889,25 @@ add_filter( 'the_password_form', 'commentpress_amend_password_form' );
 
 if ( ! function_exists( 'commentpress_widgets_init' ) ):
 /**
- * Register our widgets.
+ * Register CommentPress widgets.
+ *
+ * Widget areas (dynamic sidebars) are defined on a per-theme basis in their
+ * functions.php file or similar.
  *
  * @since 3.3
- *
- * @return void
  */
 function commentpress_widgets_init() {
 
-	// define an area where a widget may be placed
-	register_sidebar( array(
-		'name' => __( 'CommentPress Footer', 'commentpress-core' ),
-		'id' => 'cp-license-8',
-		'description' => __( 'An optional widget area in the page footer of the CommentPress theme', 'commentpress-core' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget' => "</div>",
-		'before_title' => '<h3 class="widget-title">',
-		'after_title' => '</h3>',
-	) );
+	// load license widget definition
+	require( COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/widgets/widget-license.php' );
 
-	// widget definitions
-	require( get_template_directory() . '/assets/widgets/widgets.php' );
-
-	// and the widget
+	// register license widget
 	register_widget( 'Commentpress_License_Widget' );
 
 }
 endif; // commentpress_widgets_init
 
+// add action for the above
 add_action( 'widgets_init', 'commentpress_widgets_init' );
 
 
@@ -3786,6 +3981,41 @@ add_action( 'init', 'commentpress_wplicense_compat', 100 );
 
 
 
+if ( ! function_exists( 'commentpress_widget_title' ) ):
+/**
+ * Ensure that widget title is not empty.
+ *
+ * Empty widget titles break the layout of the theme at present, because the
+ * enclosing markup for the sub-section is split between the 'after_title' and
+ * 'after_widget' substitutions in the theme register_sidebar() declarations.
+ *
+ * Note: #footer widget titles are hidden via CSS. Override this in your child
+ * theme to show them collectively or individually.
+ *
+ * @since 3.8.10
+ *
+ * @param str $title The possibly-empty widget title
+ * @param str $id_base The widget ID base
+ * @return str $title The non-empty title
+ */
+function commentpress_widget_title( $title ) {
+
+	// set default title if none present
+	if ( empty( $title ) ) {
+		$title = __( 'Untitled Widget', 'commentpress-core' );
+	}
+
+	// --<
+	return $title;
+
+}
+endif; // commentpress_widget_title
+
+// make sure widget title is not empty
+add_filter( 'widget_title', 'commentpress_widget_title', 10, 1 );
+
+
+
 if ( ! function_exists( 'commentpress_groupblog_classes' ) ):
 /**
  * Add classes to #content in BuddyPress, so that we can distinguish different groupblog types.
@@ -3820,8 +4050,6 @@ function commentpress_groupblog_classes() {
 		$groupblog_class = ' class="' . $groupblogtype . '"';
 
 	}
-
-
 
 	// --<
 	return $groupblog_class;
@@ -3968,9 +4196,7 @@ function commentpress_get_post_css_override( $post_id ) {
 
 			// is it different to the current blog type?
 			if ( $overridden_type != $type ) {
-
 				$type_overridden = ' overridden_type-' . $overridden_type;
-
 			}
 
 		}
@@ -4002,23 +4228,17 @@ function commentpress_get_post_title_visibility( $post_id ) {
 	// declare access to globals
 	global $commentpress_core;
 
-	// if we have the plugin enabled
+	// get global hide if we have the plugin enabled
 	if ( is_object( $commentpress_core ) ) {
-
-		// get global hide
 		$hide = $commentpress_core->db->option_get( 'cp_title_visibility' );;
-
 	}
 
 	// set key
 	$key = '_cp_title_visibility';
 
-	//if the custom field already has a value
+	// get value if the custom field already has one
 	if ( get_post_meta( $post_id, $key, true ) != '' ) {
-
-		// get it
 		$hide = get_post_meta( $post_id, $key, true );
-
 	}
 
 	// --<
@@ -4055,12 +4275,9 @@ function commentpress_get_post_meta_visibility( $post_id ) {
 		// set key
 		$key = '_cp_page_meta_visibility';
 
-		// if the custom field already has a value
+		// override with local value if the custom field already has one
 		if ( get_post_meta( $post_id, $key, true ) != '' ) {
-
-			// override with local value
 			$hide_meta = get_post_meta( $post_id, $key, true );
-
 		}
 
 	}

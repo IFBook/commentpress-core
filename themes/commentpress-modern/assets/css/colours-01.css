@@ -54,41 +54,18 @@ body.create-blog #cp-multisite-options h4,
 #content .mu_register #cp-multisite-options h3,
 
 /* Comment form */
-div#respond h4#respond_title
+div#respond h4#respond_title,
+
+/* CommentPress JSTOR plugin support */
+.commentpress_jstor .comment-title a,
+
+/* Sidebar Widgets */
+.sidebar_container .widget,
+
+/* Image captions */
+div.image_attachment_caption p
 {
 	font-family: Lato, 'Trebuchet MS', Helvetica, Arial, sans-serif;
-}
-
-
-
-/*
---------------------------------------------------------------------------------
-Stylistic regularity
---------------------------------------------------------------------------------
-*/
-
-/* the all-important highlight state */
-.selected_para
-{
-	color: #ca0000;
-}
-
-/* WP Footnotes adds an inline colour *sigh* */
-ol.footnotes.selected_para
-{
-	color: #ca0000;
-}
-
-/* Site tagline */
-#header #tagline
-{
-	color: #999;
-}
-
-/* Comment reply cancel link */
-#cancel-comment-reply-link
-{
-	color: #000;
 }
 
 /* Headings on page/posts */
@@ -101,6 +78,30 @@ ol.footnotes.selected_para
 {
 	/* don't force uppercase */
 }
+
+
+
+/*
+--------------------------------------------------------------------------------
+CommentPress Colour Scheme
+--------------------------------------------------------------------------------
+*/
+
+/* The all-important highlight state */
+.selected_para
+{
+	color: #ca0000;
+}
+
+
+
+/* Site Tagline */
+#header #tagline
+{
+	color: #999;
+}
+
+
 
 /* Links in page/post content */
 .post a,
@@ -129,7 +130,56 @@ div#respond .subscribe_reloaded_insert a
 #content .mu_register h2 a,
 #content #signup-content a,
 #content #activateform label,
-#content #signup-welcome span.h3
+#content #signup-welcome span.h3,
+
+/* Signup Form Styles */
+body.commentpress_page #cp-multisite-options h3,
+
+/* Post version info */
+#content div.version_info a,
+.content div.version_info a,
+
+/* Footnotes */
+#content sup a.footnote-link,
+.content sup a.footnote-link,
+#content a.simple-footnote,
+.content a.simple-footnote,
+#content sup.footnote,
+.content sup.footnote,
+
+/* Feature Comments compat */
+.feature-bury-comments a.feature-comments:hover,
+.feature-burry-comments a.feature-comments:hover,
+
+/* Comment Tagger compat */
+.comment_tagger_tag_link,
+.comment_tagger_tag_link:active,
+
+/* BP Group Sites */
+.bpgsites_group_linkages_pending_heading,
+
+/* JSTOR plugin compat */
+.commentpress_jstor .comment-title a,
+
+/* CommentPress Text Highlighter */
+.comment-backlink
 {
 	color: #761D19;
 }
+
+
+
+/* Comment reply cancel link */
+#cancel-comment-reply-link
+{
+	color: #000;
+}
+
+
+
+/* WP Footnotes adds an inline colour *sigh* */
+ol.footnotes.selected_para
+{
+	color: #ca0000;
+}
+

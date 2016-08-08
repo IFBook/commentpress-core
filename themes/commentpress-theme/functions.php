@@ -812,3 +812,29 @@ add_filter( 'register', 'commentpress_add_loginout_id' );
 
 
 
+/**
+ * Register widget areas for this theme.
+ *
+ * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
+ *
+ * @since 3.8.10
+ */
+function commentpress_register_widget_areas() {
+
+	// define an area where a widget may be placed
+	register_sidebar( array(
+		'name' => __( 'CommentPress Footer', 'commentpress-core' ),
+		'id' => 'cp-license-8',
+		'description' => __( 'An optional widget area in the footer of a CommentPress theme', 'commentpress-core' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => "</div>",
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	) );
+
+}
+
+add_action( 'widgets_init', 'commentpress_register_widget_areas' );
+
+
+

@@ -25,7 +25,7 @@ require_once( COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/includes/them
  * I have arbitrarily set it to the default content-width when viewing on a
  * 1280px-wide screen.
  */
-if ( !isset( $content_width ) ) { $content_width = 525; }
+if ( !isset( $content_width ) ) { $content_width = 1024; }
 
 
 
@@ -153,7 +153,7 @@ function commentpress_setup() {
 	}
 
 	// no need for default sidebar in this theme
-	add_filter( 'commentpress_hide_sidebar_option', '__return_true' );
+	//add_filter( 'commentpress_hide_sidebar_option', '__return_true' );
 
 }
 endif; // commentpress_setup
@@ -410,7 +410,7 @@ function commentpress_background() {
 	// bail if we don't have one
 	if ( ! $color ) return;
 
-	$style = $color ? "background-color: #$color !important;" : '';
+	$style = $color ? "background-color: #$color;" : '';
 
 	echo '
 <style type="text/css" id="custom-background-css">
@@ -552,7 +552,7 @@ function commentpress_page_navigation( $with_comments = false ) {
 	global $commentpress_core;
 
 	// bail if the plugin is not active
-	if ( !is_object( $commentpress_core ) ) return;
+	if ( ! is_object( $commentpress_core ) ) return;
 
 	// init formatting
 	$before_next = '<li class="alignright">';
@@ -992,7 +992,19 @@ function commentpress_get_feature_image() {
 		// show it
 		echo '<div class="cp_feature_image">';
 
-		echo get_the_post_thumbnail( get_the_ID(), 'commentpress-feature' );
+		/**
+		 * Filter the feature image.
+		 *
+		 * @since 3.9
+		 *
+		 * @param str The HTML for showing the image
+		 * @param WP_Post The current WordPress post object
+		 */
+		echo apply_filters(
+			'commentpress_get_feature_image',
+			get_the_post_thumbnail( get_the_ID(), 'commentpress-feature' ),
+			$post
+		);
 
 		?>
 		<div class="cp_featured_title">
@@ -1068,15 +1080,94 @@ endif; // commentpress_get_feature_image
  */
 function commentpress_has_feature_image() {
 
+	// init return
+	$has_feature_image = false;
+
 	// replacement check
 	if ( '' != get_the_post_thumbnail() ) {
-		return true;
+		$has_feature_image = true;
 	}
 
-	// --<
-	return false;
+	/**
+	 * Allow this test to be overridden.
+	 *
+	 * @since 3.9
+	 *
+	 * @param bool $has_feature_image True if the post has a feature image, false otherwise
+	 */
+	return apply_filters( 'commentpress_has_feature_image', $has_feature_image );
 
 }
+
+
+
+/**
+ * Register widget areas for this theme.
+ *
+ * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
+ *
+ * @since 3.8.10
+ */
+function commentpress_register_widget_areas() {
+
+	// define an area where a widget may be placed
+	register_sidebar( array(
+		'name' => __( 'CommentPress Footer', 'commentpress-core' ),
+		'id' => 'cp-license-8',
+		'description' => __( 'An optional widget area in the footer of a CommentPress theme', 'commentpress-core' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => "</div>",
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	) );
+
+	// define an area where a widget may be placed
+	register_sidebar( array(
+		'name' => __( 'Navigation Top', 'commentpress-core' ),
+		'id' => 'cp-nav-top',
+		'description' => __( 'An optional widget area at the top of the Navigation Column', 'commentpress-core' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => "</div></div></div>",
+		'before_title' => '<h3 class="widget-title activity_heading">',
+		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
+	) );
+
+	// define an area where a widget may be placed
+	register_sidebar( array(
+		'name' => __( 'Navigation Bottom', 'commentpress-core' ),
+		'id' => 'cp-nav-bottom',
+		'description' => __( 'An optional widget area at the bottom of the Navigation Column', 'commentpress-core' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => "</div></div></div>",
+		'before_title' => '<h3 class="widget-title activity_heading">',
+		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
+	) );
+
+	// define an area where a widget may be placed
+	register_sidebar( array(
+		'name' => __( 'Activity Top', 'commentpress-core' ),
+		'id' => 'cp-activity-top',
+		'description' => __( 'An optional widget area at the top of the Activity Column', 'commentpress-core' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => "</div></div></div>",
+		'before_title' => '<h3 class="widget-title activity_heading">',
+		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
+	) );
+
+	// define an area where a widget may be placed
+	register_sidebar( array(
+		'name' => __( 'Activity Bottom', 'commentpress-core' ),
+		'id' => 'cp-activity-bottom',
+		'description' => __( 'An optional widget area at the bottom of the Activity Column', 'commentpress-core' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => "</div></div></div>",
+		'before_title' => '<h3 class="widget-title activity_heading">',
+		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
+	) );
+
+}
+
+add_action( 'widgets_init', 'commentpress_register_widget_areas' );
 
 
 

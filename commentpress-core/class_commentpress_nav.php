@@ -73,6 +73,15 @@ class Commentpress_Core_Navigator {
 	 */
 	public $menu_objects = array();
 
+	/**
+	 * Page navigation enabled flag.
+	 *
+	 * @since 3.8.10
+	 * @access public
+	 * @var bool $nav_enabled True if page navigation is enabled, false otherwise
+	 */
+	public $nav_enabled = true;
+
 
 
 	/**
@@ -103,6 +112,17 @@ class Commentpress_Core_Navigator {
 
 		// if we're navigating pages
 		if ( is_page() ) {
+
+			// check page navigation flag
+			if ( $this->page_nav_is_disabled() ) {
+
+				// remove page arrows via filter
+				add_filter( 'cp_template_page_navigation', array( $this, 'page_nav_disable' ), 100, 1 );
+
+				// save flag
+				$this->nav_enabled = false;
+
+			}
 
 			// init page lists
 			$this->init_page_lists();
@@ -145,6 +165,50 @@ class Commentpress_Core_Navigator {
 
 
 	/**
+	 * Disable page navigation when on a "page".
+	 *
+	 * @since 3.8.10
+	 *
+	 * @param str $template The existing path to the navigation template
+	 * @return str $template An empty path to disable navigation
+	 */
+	public function page_nav_disable( $template ) {
+
+		// disable for page post type
+		return '';
+
+	}
+
+
+
+	/**
+	 * Check if page navigation is disabled when on a "page".
+	 *
+	 * @since 3.9
+	 *
+	 * @return bool True if navigation is disabled, fasle otherwise
+	 */
+	public function page_nav_is_disabled() {
+
+		// check page navigation option
+		if (
+			$this->parent_obj->db->option_exists( 'cp_page_nav_enabled' ) AND
+			$this->parent_obj->db->option_get( 'cp_page_nav_enabled', 'y' ) == 'n'
+		) {
+
+			// overwrite flag
+			$this->nav_enabled = false;
+
+		}
+
+		// return the opposite
+		return $this->nav_enabled ? false : true;
+
+	}
+
+
+
+	/**
 	 * Get next page link.
 	 *
 	 * @param bool $with_comments The requested page has comments - default false
@@ -177,6 +241,18 @@ class Commentpress_Core_Navigator {
 				return $this->next_pages[0];
 
 			}
+
+		}
+
+		// check if the supplied title page is the homepage and this is it
+		$title_id = $this->is_title_page_the_homepage();
+		if ( $title_id !== false AND is_front_page() ) {
+
+			// get the first readable page
+			$first_id = $this->get_first_page();
+
+			// return the post object
+			return get_post( $first_id );
 
 		}
 
@@ -221,6 +297,14 @@ class Commentpress_Core_Navigator {
 
 			}
 
+		}
+
+		// this must be the first page
+
+		// we still need to check if the supplied title page is the homepage
+		$title_id = $this->is_title_page_the_homepage();
+		if ( $title_id !== false AND ! is_front_page() ) {
+			return get_post( $title_id );
 		}
 
 		// --<
@@ -326,14 +410,12 @@ class Commentpress_Core_Navigator {
 
 		// init to look for published pages
 		$defaults = array(
-
 			'post_parent' => $page_id,
 			'post_type' => 'page',
 			'numberposts' => -1,
 			'post_status' => 'publish',
-			'orderby' => 'menu_order',
+			'orderby' => 'menu_order, post_title',
 			'order' => 'ASC'
-
 		);
 
 		// get page children
@@ -422,6 +504,9 @@ class Commentpress_Core_Navigator {
 	 */
 	public function get_page_number( $page_id ) {
 
+		// bail if page nav is disabled
+		if ( $this->nav_enabled === false ) return;
+
 		// init
 		$num = 0;
 
@@ -501,13 +586,8 @@ class Commentpress_Core_Navigator {
 		// access post object
 		global $post;
 
-		// do we have one?
-		if ( ! is_object( $post ) ) {
-
-			// --<
-			die( 'no post object' );
-
-		}
+		// sanity check
+		if ( ! is_object( $post ) ) return;
 
 		// are parent pages viewable?
 		$viewable = ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) == '1' ) ? true : false;
@@ -611,10 +691,8 @@ class Commentpress_Core_Navigator {
 
 		// set defaults
 		$defaults = array(
-
 			'numberposts' => -1,
 			'orderby' => 'date'
-
 		);
 
 		// get them
@@ -757,15 +835,12 @@ class Commentpress_Core_Navigator {
 
 				// init to look for published pages
 				$defaults = array(
-
 					'post_parent' => $page_obj->ID,
 					'post_type' => 'page',
 					'numberposts' => -1,
 					'post_status' => 'publish',
-					'orderby' => 'menu_order',
+					'orderby' => 'menu_order, post_title',
 					'order' => 'ASC'
-					//sort_column=menu_order,post_title
-
 				);
 
 				// get page children
@@ -1097,15 +1172,28 @@ class Commentpress_Core_Navigator {
 		// init excluded array with "special pages"
 		$excluded_pages = $this->parent_obj->db->option_get( 'cp_special_pages' );
 
+		// if the supplied title page is the homepage
+		$title_id = $this->is_title_page_the_homepage();
+		if ( $title_id !== false ) {
+
+			// it will already have been shown at the top of the page list
+			$excluded_pages[] = $title_id;
+
+		}
+
 		// are we in a BuddyPress scenario?
 		if ( $this->parent_obj->is_buddypress() ) {
 
-			// BuddyPress creates its own registration page at /register and
-			// redirects ordinary WP registration page requests to it. It also
-			// seems to exclude it from wp_list_pages(), see: $cp->display->list_pages()
+			/**
+			 * BuddyPress creates its own registration page and redirects ordinary
+			 * WordPress registration page requests to it. It also seems to exclude
+			 * it from wp_list_pages()
+			 *
+			 * @see Commentpress_Core_Display::list_pages()
+			 */
 
 			// check if registration is allowed
-			if ( '1' == get_option('users_can_register') AND is_main_site() ) {
+			if ( '1' == get_option( 'users_can_register' ) AND is_main_site() ) {
 
 				// find the registration page by its slug
 				$reg_page = get_page_by_path( 'register' );
@@ -1185,6 +1273,45 @@ class Commentpress_Core_Navigator {
 
 
 	/**
+	 * Check if the CommentPress "Title Page" is the homepage.
+	 *
+	 * @return bool|int $is_home False if not homepage, page ID if true
+	 */
+	public function is_title_page_the_homepage() {
+
+		// only need to parse this once
+		static $is_home = null;
+		if ( ! is_null( $is_home ) ) {
+			return $is_home;
+		}
+
+		// get welcome page ID
+		$welcome_id = $this->parent_obj->db->option_get( 'cp_welcome_page' );
+
+		// get front page
+		$page_on_front = $this->parent_obj->db->option_wp_get( 'page_on_front' );
+
+		// if the CommentPress title page exists and it's the front page
+		if ( $welcome_id !== false AND $page_on_front == $welcome_id ) {
+
+			// set to page ID
+			$is_home = $welcome_id;
+
+		} else {
+
+			// not home page
+			$is_home = false;
+
+		}
+
+		// --<
+		return $is_home;
+
+	}
+
+
+
+	/**
 	 * Parse a WP menu.
 	 *
 	 * @param str $mode Either 'structural' or 'readable'
@@ -1206,7 +1333,6 @@ class Commentpress_Core_Navigator {
 
 			// default args for reference
 			$args = array(
-
 				'order' => 'ASC',
 				'orderby' => 'menu_order',
 				'post_type' => 'nav_menu_item',
@@ -1215,7 +1341,6 @@ class Commentpress_Core_Navigator {
 				'output_key' => 'menu_order',
 				'nopaging' => true,
 				'update_post_term_cache' => false
-
 			);
 
 			// get the menu objects and store for later
