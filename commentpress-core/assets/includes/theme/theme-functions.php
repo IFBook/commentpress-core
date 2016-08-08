@@ -1129,10 +1129,11 @@ if ( ! function_exists( 'commentpress_get_user_link' ) ):
  *
  * @since 3.0
  *
- * @param object $user The WordPress user
+ * @param object $user The WordPress user object
+ * @param object $comment The WordPress comment object
  * @return string $url The URL for the user
  */
-function commentpress_get_user_link( &$user ) {
+function commentpress_get_user_link( $user, $comment = null ) {
 
 	// kick out if not a user
 	if ( ! is_object( $user ) ) return false;
@@ -1164,7 +1165,7 @@ function commentpress_get_user_link( &$user ) {
 	}
 
 	// --<
-	return $url;
+	return apply_filters( 'commentpress_get_user_link', $url, $user, $comment );
 
 }
 endif; // commentpress_get_user_link
@@ -1182,7 +1183,7 @@ if ( ! function_exists( 'commentpress_echo_post_meta' ) ):
 function commentpress_echo_post_meta() {
 
 	// bail if this is a BuddyPress page
-	if ( is_buddypress() ) return;
+	if ( function_exists( 'is_buddypress' ) AND is_buddypress() ) return;
 
 	// compat with Co-Authors Plus
 	if ( function_exists( 'get_coauthors' ) ) {
@@ -1375,7 +1376,7 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 	// declare access to globals
 	global $commentpress_core, $cp_comment_output;
 
-	// enable WordPress API on comment
+	// TODO enable WordPress API on comment?
 	//$GLOBALS['comment'] = $comment;
 
 	// construct link
@@ -1400,7 +1401,7 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 				$user = get_userdata( $comment->user_id );
 
 				// get user link
-				$user_link = commentpress_get_user_link( $user );
+				$user_link = commentpress_get_user_link( $user, $comment );
 
 				// did we get one?
 				if ( $user_link != '' AND $user_link != 'http://' ) {
@@ -1834,22 +1835,22 @@ function commentpress_get_comment_activity_item( $comment ) {
 		$user = get_userdata( $comment->user_id );
 
 		// get user link
-		$user_link = commentpress_get_user_link( $user );
+		$user_link = commentpress_get_user_link( $user, $comment );
 
 		// construct author citation
-		$author = '<cite class="fn"><a href="' . $user_link . '">' . esc_html( $comment->comment_author ) . '</a></cite>';
+		$author = '<cite class="fn"><a href="' . $user_link . '">' . get_comment_author() . '</a></cite>';
 
 		// construct link to user url
 		$author = ( $user_link != '' AND $user_link != 'http://' ) ?
-					'<cite class="fn"><a href="' . $user_link . '">' . esc_html( $comment->comment_author ) . '</a></cite>' :
-					 '<cite class="fn">' . esc_html( $comment->comment_author ) . '</cite>';
+					'<cite class="fn"><a href="' . $user_link . '">' . get_comment_author() . '</a></cite>' :
+					 '<cite class="fn">' . get_comment_author() . '</cite>';
 
 	} else {
 
 		// construct link to commenter url
 		$author = ( $comment->comment_author_url != '' AND $comment->comment_author_url != 'http://' ) ?
-					'<cite class="fn"><a href="' . $comment->comment_author_url . '">' . esc_html( $comment->comment_author ) . '</a></cite>' :
-					 '<cite class="fn">' . esc_html( $comment->comment_author ) . '</cite>';
+					'<cite class="fn"><a href="' . $comment->comment_author_url . '">' . get_comment_author() . '</a></cite>' :
+					 '<cite class="fn">' . get_comment_author() . '</cite>';
 
 	}
 
@@ -2834,7 +2835,7 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 		$user = get_userdata( $comment->user_id );
 
 		// get user link
-		$user_link = commentpress_get_user_link( $user );
+		$user_link = commentpress_get_user_link( $user, $comment );
 
 		// construct author citation
 		$author = ( $user_link != '' AND $user_link != 'http://' ) ?
@@ -2843,10 +2844,16 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 
 	} else {
 
-		// construct link to commenter url
-		$author = ( $comment->comment_author_url != '' AND $comment->comment_author_url != 'http://' AND $comment->comment_approved != '0' ) ?
-					'<cite class="fn"><a href="' . $comment->comment_author_url . '">' . get_comment_author() . '</a></cite>' :
-					 '<cite class="fn">' . get_comment_author() . '</cite>';
+		// construct link to commenter url for unregistered users
+		if (
+			$comment->comment_author_url != '' AND
+			$comment->comment_author_url != 'http://' AND
+			$comment->comment_approved != '0'
+		) {
+			$author = '<cite class="fn"><a href="' . $comment->comment_author_url . '">' . get_comment_author() . '</a></cite>';
+		} else {
+			$author = '<cite class="fn">' . get_comment_author() . '</cite>';
+		}
 
 	}
 
