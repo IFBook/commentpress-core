@@ -8,6 +8,9 @@
  * add numerous methods to jQuery without cluttering the global function
  * namespace.
  *
+ * The code has been present since 3.0 but was completely refactored in 3.8, so
+ * most methods are marked as being since 3.8.
+ *
  * -----------------------------------------------------------------------------
  * @package CommentPress Core
  * @author Christian Wach <needle@haystack.co.uk>
@@ -20,11 +23,13 @@
 
 
 /**
- * Create global variables
+ * Create global variables.
  *
  * These were being defined in each theme, so have been moved to this library to
  * avoid duplication of code. They are in the porcess of being migrated to class
  * variables to avoid name collisions.
+ *
+ * @since 3.0
  */
 
 // define global IE var
@@ -73,7 +78,9 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 
 
 /**
- * Create global CommentPress Core namespace
+ * Create global CommentPress Core namespace.
+ *
+ * @since 3.8
  */
 var CommentPress = CommentPress || {};
 
@@ -84,7 +91,9 @@ var CommentPress = CommentPress || {};
 
 
 /**
- * Create settings sub-namespace
+ * Create settings sub-namespace.
+ *
+ * @since 3.8
  */
 CommentPress.settings = {};
 
@@ -95,7 +104,9 @@ CommentPress.settings = {};
 
 
 /**
- * Create CommentPress Core settings DOM class
+ * Create CommentPress Core settings DOM class.
+ *
+ * @since 3.8
  */
 CommentPress.settings.DOM = new function() {
 
@@ -110,7 +121,7 @@ CommentPress.settings.DOM = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -135,7 +146,7 @@ CommentPress.settings.DOM = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -154,14 +165,18 @@ CommentPress.settings.DOM = new function() {
 	}
 
 	/**
-	 * Setter for original permalink
+	 * Setter for original permalink.
+	 *
+	 * @since 3.8
 	 */
 	this.set_permalink = function( val ) {
 		me.original_permalink = val;
 	};
 
 	/**
-	 * Getter for original permalink
+	 * Getter for original permalink.
+	 *
+	 * @since 3.8
 	 */
 	this.get_permalink = function() {
 		return me.original_permalink;
@@ -173,7 +188,9 @@ CommentPress.settings.DOM = new function() {
 	this.bp_adminbar = 'n';
 
 	/**
-	 * Init for BuddyPress adminbar height
+	 * Init for BuddyPress adminbar height.
+	 *
+	 * @since 3.8
 	 */
 	this.init_bp_adminbar = function( val ) {
 
@@ -185,14 +202,18 @@ CommentPress.settings.DOM = new function() {
 	};
 
 	/**
-	 * Setter for BuddyPress adminbar
+	 * Setter for BuddyPress adminbar.
+	 *
+	 * @since 3.8
 	 */
 	this.set_bp_adminbar = function( val ) {
 		me.bp_adminbar = val;
 	};
 
 	/**
-	 * Getter for BuddyPress adminbar
+	 * Getter for BuddyPress adminbar.
+	 *
+	 * @since 3.8
 	 */
 	this.get_bp_adminbar = function() {
 		return me.bp_adminbar;
@@ -204,7 +225,9 @@ CommentPress.settings.DOM = new function() {
 	this.wp_adminbar = 'n';
 
 	/**
-	 * Init for WordPress adminbar height
+	 * Init for WordPress adminbar height.
+	 *
+	 * @since 3.8
 	 */
 	this.init_wp_adminbar = function( val ) {
 
@@ -216,14 +239,18 @@ CommentPress.settings.DOM = new function() {
 	};
 
 	/**
-	 * Setter for WordPress adminbar
+	 * Setter for WordPress adminbar.
+	 *
+	 * @since 3.8
 	 */
 	this.set_wp_adminbar = function( val ) {
 		me.wp_adminbar = val;
 	};
 
 	/**
-	 * Getter for WordPress adminbar
+	 * Getter for WordPress adminbar.
+	 *
+	 * @since 3.8
 	 */
 	this.get_wp_adminbar = function() {
 		return me.wp_adminbar;
@@ -235,7 +262,9 @@ CommentPress.settings.DOM = new function() {
 	this.wp_adminbar_height = 0;
 
 	/**
-	 * Init for WordPress adminbar height
+	 * Init for WordPress adminbar height.
+	 *
+	 * @since 3.8
 	 */
 	this.init_wp_adminbar_height = function( val ) {
 
@@ -258,14 +287,18 @@ CommentPress.settings.DOM = new function() {
 	};
 
 	/**
-	 * Setter for WordPress adminbar height
+	 * Setter for WordPress adminbar height.
+	 *
+	 * @since 3.8
 	 */
 	this.set_wp_adminbar_height = function( val ) {
 		me.wp_adminbar_height = val;
 	};
 
 	/**
-	 * Getter for WordPress adminbar height
+	 * Getter for WordPress adminbar height.
+	 *
+	 * @since 3.8
 	 */
 	this.get_wp_adminbar_height = function() {
 		return me.wp_adminbar_height;
@@ -277,7 +310,9 @@ CommentPress.settings.DOM = new function() {
 	this.wp_adminbar_expanded = 0;
 
 	/**
-	 * Init for WordPress adminbar expanded
+	 * Init for WordPress adminbar expanded.
+	 *
+	 * @since 3.8
 	 */
 	this.init_wp_adminbar_expanded = function( val ) {
 
@@ -289,14 +324,18 @@ CommentPress.settings.DOM = new function() {
 	};
 
 	/**
-	 * Setter for WordPress adminbar expanded
+	 * Setter for WordPress adminbar expanded.
+	 *
+	 * @since 3.8
 	 */
 	this.set_wp_adminbar_expanded = function( val ) {
 		me.wp_adminbar_expanded = val;
 	};
 
 	/**
-	 * Getter for WordPress adminbar expanded
+	 * Getter for WordPress adminbar expanded.
+	 *
+	 * @since 3.8
 	 */
 	this.get_wp_adminbar_expanded = function() {
 		return me.wp_adminbar_expanded;
@@ -313,7 +352,9 @@ CommentPress.settings.DOM = new function() {
 
 
 /**
- * Create CommentPress Core page settings class
+ * Create CommentPress Core page settings class.
+ *
+ * @since 3.8
  */
 CommentPress.settings.page = new function() {
 
@@ -328,7 +369,7 @@ CommentPress.settings.page = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -341,7 +382,7 @@ CommentPress.settings.page = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -353,21 +394,27 @@ CommentPress.settings.page = new function() {
 	this.highlight = false;
 
 	/**
-	 * Toggle for page highlight
+	 * Toggle for page highlight.
+	 *
+	 * @since 3.8
 	 */
 	this.toggle_highlight = function() {
 		me.highlight = !me.highlight;
 	};
 
 	/**
-	 * Setter for page highlight
+	 * Setter for page highlight.
+	 *
+	 * @since 3.8
 	 */
 	this.set_highlight = function( val ) {
 		me.highlight = val;
 	};
 
 	/**
-	 * Getter for page highlight
+	 * Getter for page highlight.
+	 *
+	 * @since 3.8
 	 */
 	this.get_highlight = function() {
 		return me.highlight;
@@ -382,7 +429,9 @@ CommentPress.settings.page = new function() {
 
 
 /**
- * Create CommentPress Core textblock class
+ * Create CommentPress Core textblock class.
+ *
+ * @since 3.8
  */
 CommentPress.settings.textblock = new function() {
 
@@ -397,7 +446,7 @@ CommentPress.settings.textblock = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -410,7 +459,7 @@ CommentPress.settings.textblock = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -422,14 +471,18 @@ CommentPress.settings.textblock = new function() {
 	this.scroll_target = 'para_heading';
 
 	/**
-	 * Setter for textblock scroll target
+	 * Setter for textblock scroll target.
+	 *
+	 * @since 3.8
 	 */
 	this.set_scroll_target = function( scroll_target ) {
 		me.scroll_target = scroll_target;
 	};
 
 	/**
-	 * Getter for textblock scroll target
+	 * Getter for textblock scroll target.
+	 *
+	 * @since 3.8
 	 */
 	this.get_scroll_target = function() {
 		return me.scroll_target;
@@ -441,14 +494,18 @@ CommentPress.settings.textblock = new function() {
 	this.permalink_shown = false;
 
 	/**
-	 * Setter for textblock "permalink shown in location bar" flag
+	 * Setter for textblock "permalink shown in location bar" flag.
+	 *
+	 * @since 3.8
 	 */
 	this.set_permalink_shown = function( permalink_shown ) {
 		me.permalink_shown = permalink_shown;
 	};
 
 	/**
-	 * Getter for textblock "permalink shown in location bar" flag
+	 * Getter for textblock "permalink shown in location bar" flag.
+	 *
+	 * @since 3.8
 	 */
 	this.get_permalink_shown = function() {
 		return me.permalink_shown;
@@ -463,7 +520,9 @@ CommentPress.settings.textblock = new function() {
 
 
 /**
- * Create common sub-namespace
+ * Create common sub-namespace.
+ *
+ * @since 3.8
  */
 CommentPress.common = {};
 
@@ -474,7 +533,9 @@ CommentPress.common = {};
 
 
 /**
- * Create CommentPress Core common DOM class
+ * Create CommentPress Core common DOM class.
+ *
+ * @since 3.8
  */
 CommentPress.common.DOM = new function() {
 
@@ -489,7 +550,7 @@ CommentPress.common.DOM = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -502,7 +563,7 @@ CommentPress.common.DOM = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -511,10 +572,11 @@ CommentPress.common.DOM = new function() {
 
 
 	/**
-	 * Set the URL to a given link
+	 * Set the URL to a given link.
+	 *
+	 * @since 3.8
 	 *
 	 * @param str url The URL to show in the location bar
-	 * @return void
 	 */
 	this.location_set = function( url ) {
 
@@ -531,9 +593,9 @@ CommentPress.common.DOM = new function() {
 
 
 	/**
-	 * Reset the URL to the page permalink
+	 * Reset the URL to the page permalink.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.location_reset = function() {
 
@@ -558,7 +620,9 @@ CommentPress.common.DOM = new function() {
 
 
 /**
- * Create CommentPress Core setup navigation column class
+ * Create CommentPress Core setup navigation column class.
+ *
+ * @since 3.8
  */
 CommentPress.common.navigation = new function() {
 
@@ -573,7 +637,7 @@ CommentPress.common.navigation = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -586,7 +650,7 @@ CommentPress.common.navigation = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -601,7 +665,9 @@ CommentPress.common.navigation = new function() {
 
 
 	/**
-	 * Set up "Contents" column headings
+	 * Set up "Contents" column headings.
+	 *
+	 * @since 3.8
 	 *
 	 * @return false
 	 */
@@ -644,16 +710,16 @@ CommentPress.common.navigation = new function() {
 
 
 	/**
-	 * Set up "Contents" column menu behaviour
+	 * Set up "Contents" column menu behaviour.
 	 *
-	 * @return false
+	 * @since 3.8
 	 */
 	this.menu = function() {
 
 		/**
-		 * Chapter page headings click
+		 * Chapter page headings click.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#toc_sidebar').on( 'click', 'ul#toc_list li a', function( event ) {
 
@@ -697,7 +763,9 @@ CommentPress.common.navigation = new function() {
 
 
 /**
- * Create CommentPress Core setup content class
+ * Create CommentPress Core setup content class.
+ *
+ * @since 3.8
  */
 CommentPress.common.content = new function() {
 
@@ -712,7 +780,7 @@ CommentPress.common.content = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -725,7 +793,7 @@ CommentPress.common.content = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -758,9 +826,9 @@ CommentPress.common.content = new function() {
 
 
 	/**
-	 * Set up actions on generic linkss in textblocks
+	 * Set up actions on generic linkss in textblocks.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.generic_links = function() {
 
@@ -771,7 +839,7 @@ CommentPress.common.content = new function() {
 		 * specific, causing the columns to animate. Most generic links point to
 		 * external pages and there's a class available for internal links.
 		 *
-		 * @return false
+		 * @since 3.8
 		 */
 		$('#container').on( 'click', '.textblock a:not([class])', function( event ) {
 
@@ -785,16 +853,16 @@ CommentPress.common.content = new function() {
 
 
 	/**
-	 * Set up actions on the title
+	 * Set up actions on the title.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.title_links = function() {
 
 		/**
-		 * Clicking on the page/post title
+		 * Clicking on the page/post title.
 		 *
-		 * @return false
+		 * @since 3.8
 		 */
 		$('.single #container, .page #container').on( 'click', '.post_title a', function( event ) {
 
@@ -823,9 +891,9 @@ CommentPress.common.content = new function() {
 
 
 	/**
-	 * Set up actions on the textblocks
+	 * Set up actions on the textblocks.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.textblocks = function() {
 
@@ -836,18 +904,18 @@ CommentPress.common.content = new function() {
 			if ( cp_textblock_meta == '0' ) {
 
 				/**
-				 * Add a class to the textblock when mouse is over it
+				 * Add a class to the textblock when mouse is over it.
 				 *
-				 * @return void
+				 * @since 3.8
 				 */
 				$('#container').on( 'mouseover', '.textblock', function( event ) {
 					$(this).addClass('textblock-in');
 				});
 
 				/**
-				 * Remove class from the textblock when mouse moves out of it
+				 * Remove class from the textblock when mouse moves out of it.
 				 *
-				 * @return void
+				 * @since 3.8
 				 */
 				$('#container').on( 'mouseout', '.textblock', function( event ) {
 					$(this).removeClass('textblock-in');
@@ -858,9 +926,9 @@ CommentPress.common.content = new function() {
 		}
 
 		/**
-		 * Clicking on the textblock
+		 * Clicking on the textblock.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#container').on( 'click', '.textblock', function( event ) {
 
@@ -895,16 +963,16 @@ CommentPress.common.content = new function() {
 
 
 	/**
-	 * Set up actions on the "paragraph" icons to the left of a textblock
+	 * Set up actions on the "paragraph" icons to the left of a textblock.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.para_markers = function() {
 
 		/**
-		 * Clicking on the paragraph
+		 * Clicking on the paragraph.
 		 *
-		 * @return false
+		 * @since 3.8
 		 */
 		$('#container').on( 'click', 'span.para_marker a', function( event ) {
 
@@ -917,9 +985,9 @@ CommentPress.common.content = new function() {
 		});
 
 		/**
-		 * Rolling onto the paragraph icon
+		 * Rolling onto the paragraph icon.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#container').on( 'mouseenter', 'span.para_marker a', function( event ) {
 
@@ -934,9 +1002,9 @@ CommentPress.common.content = new function() {
 		});
 
 		/**
-		 * Rolling off the paragraph icon
+		 * Rolling off the paragraph icon.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#container').on( 'mouseleave', 'span.para_marker a', function( event ) {
 
@@ -957,14 +1025,14 @@ CommentPress.common.content = new function() {
 	/**
 	 * Show the paragraph permalink in the browser's location bar.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.textblock_permalink_show = function() {
 
     	/**
-		 * Copy icon tooltip
+		 * Copy icon tooltip.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('.textblock_permalink').tooltip({
 
@@ -989,9 +1057,9 @@ CommentPress.common.content = new function() {
 		});
 
     	/**
-		 * Click on paragraph permalink to reveal it in the location bar
+		 * Click on paragraph permalink to reveal it in the location bar.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#container').on( 'click', '.textblock_permalink', function( event ) {
 
@@ -1020,10 +1088,11 @@ CommentPress.common.content = new function() {
 		/**
 		 * Hook into CommentPress Core clicks on items whose events do not bubble.
 		 *
-		 * We need to receive callbacks from these clicks to clear the location bar
+		 * We need to receive callbacks from these clicks to clear the location bar.
+		 *
+		 * @since 3.8
 		 *
 		 * @param object event The event (unused)
-		 * @return void
 		 */
 		$(document).on(
 			'commentpress-textblock-click ' +
@@ -1054,9 +1123,9 @@ CommentPress.common.content = new function() {
 
 
 	/**
-	 * Reset the URL to the page permalink
+	 * Reset the URL to the page permalink.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.textblock_permalink_handler = function( event ) {
 
@@ -1079,16 +1148,16 @@ CommentPress.common.content = new function() {
 
 
 	/**
-	 * Set up clicks on comment icons attached to textblocks in post/page
+	 * Set up clicks on comment icons attached to textblocks in post/page.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.comment_icons = function() {
 
 		/**
-		 * Clicking on the little comment icon
+		 * Clicking on the little comment icon.
 		 *
-		 * @return false
+		 * @since 3.8
 		 */
 		$('#container').on( 'click', '.commenticonbox', function( event ) {
 
@@ -1119,9 +1188,9 @@ CommentPress.common.content = new function() {
 		});
 
 		/**
-		 * Clicking on the little comment icon
+		 * Clicking on the little comment icon.
 		 *
-		 * @return false
+		 * @since 3.8
 		 */
 		$('#container').on( 'click', 'a.para_permalink', function( event ) {
 
@@ -1131,9 +1200,9 @@ CommentPress.common.content = new function() {
 		});
 
 		/**
-		 * Rolling onto the little comment icon
+		 * Rolling onto the little comment icon.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#container').on( 'mouseenter', 'a.para_permalink', function( event ) {
 
@@ -1148,9 +1217,9 @@ CommentPress.common.content = new function() {
 		});
 
 		/**
-		 * Rolling off the little comment icon
+		 * Rolling off the little comment icon.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#container').on( 'mouseleave', 'a.para_permalink', function( event ) {
 
@@ -1170,16 +1239,16 @@ CommentPress.common.content = new function() {
 
 	/**
 	 * Set up paragraph links: cp_para_link is a class writers can use
-	 * in their markup to create nicely scrolling links within their pages
+	 * in their markup to create nicely scrolling links within their pages.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.links_in_textblocks = function() {
 
 		/**
-		 * Clicking on links to paragraphs
+		 * Clicking on links to paragraphs.
 		 *
-		 * @return false
+		 * @since 3.8
 		 */
 		$('#container').on( 'click', 'a.cp_para_link', function( event ) {
 
@@ -1214,9 +1283,9 @@ CommentPress.common.content = new function() {
 
 
 	/**
-	 * Set up footnote links for various plugins
+	 * Set up footnote links for various plugins.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.footnotes_compatibility = function() {
 
@@ -1227,9 +1296,9 @@ CommentPress.common.content = new function() {
 		 */
 
 		/**
-		 * Clicking on reverse links in FD-Footnotes and WP_Footnotes
+		 * Clicking on reverse links in FD-Footnotes and WP_Footnotes.
 		 *
-		 * @return false
+		 * @since 3.8
 		 */
 		$('#container').on( 'click', 'span.footnotereverse a, a.footnote-back-link', function( event ) {
 
@@ -1251,9 +1320,9 @@ CommentPress.common.content = new function() {
 		});
 
 		/**
-		 * Clicking on reverse links in Simple Footnotes plugin
+		 * Clicking on reverse links in Simple Footnotes plugin.
 		 *
-		 * @return false
+		 * @since 3.8
 		 */
 		$('#container').on( 'click', '.simple-footnotes ol li > a', function( event ) {
 
@@ -1289,9 +1358,10 @@ CommentPress.common.content = new function() {
 		 */
 
 		/**
-		 * Clicking on footnote links in FD-Footnotes, WP-Footnotes, Simple Footnotes and ZotPress
+		 * Clicking on footnote links in FD-Footnotes, WP-Footnotes, Simple
+		 * Footnotes and ZotPress.
 		 *
-		 * @return false
+		 * @since 3.8
 		 */
 		$('#container').on( 'click', 'a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link, a.zp-ZotpressInText', function( event ) {
 
@@ -1317,7 +1387,9 @@ CommentPress.common.content = new function() {
 
 
 	/**
-	 * Scroll page to target
+	 * Scroll page to target.
+	 *
+	 * @since 3.8
 	 *
 	 * @param object target The object to scroll to
 	 */
@@ -1346,7 +1418,9 @@ CommentPress.common.content = new function() {
 
 
 	/**
-	 * Scroll page to target with passed duration param
+	 * Scroll page to target with passed duration param.
+	 *
+	 * @since 3.8
 	 *
 	 * @param object target The object to scroll to
 	 * @param integer duration The duration of the scroll
@@ -1376,10 +1450,11 @@ CommentPress.common.content = new function() {
 
 
 	/**
-	 * Scroll to textblock
+	 * Scroll to textblock.
+	 *
+	 * @since 3.8
 	 *
 	 * @param string text_sig The text signature to scroll to
-	 * @return void
 	 */
 	this.scroll_page_to_textblock = function( text_sig ) {
 
@@ -1418,9 +1493,9 @@ CommentPress.common.content = new function() {
 
 
 	/**
-	 * Page load prodecure for special pages with comments in content
+	 * Page load prodecure for special pages with comments in content.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.on_load_scroll_to_comment = function() {
 
@@ -1503,11 +1578,12 @@ CommentPress.common.content = new function() {
 
 
 	/**
-	 * Workflow tabs
+	 * Workflow tabs.
+	 *
+	 * @since 3.8
 	 *
 	 * @param str content_min_height The min-height CSS declaration
 	 * @param str content_padding_bottom The content wrapper padding-bottom CSS declaration
-	 * @return void
 	 */
 	this.workflow_tabs = function( content_min_height, content_padding_bottom ) {
 
@@ -1516,9 +1592,9 @@ CommentPress.common.content = new function() {
 		$('#original .post').css( 'display', 'none' );
 
 		/**
-		 * Clicking on the workflow tabs
+		 * Clicking on the workflow tabs.
 		 *
-		 * @return false
+		 * @since 3.8
 		 */
 		$('#container').on( 'click', '#content-tabs li h2 a', function( event ) {
 
@@ -1568,7 +1644,9 @@ CommentPress.common.content = new function() {
 
 
 /**
- * Create CommentPress Core setup comments column class
+ * Create CommentPress Core setup comments column class.
+ *
+ * @since 3.8
  */
 CommentPress.common.comments = new function() {
 
@@ -1583,7 +1661,7 @@ CommentPress.common.comments = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -1596,7 +1674,7 @@ CommentPress.common.comments = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -1623,16 +1701,16 @@ CommentPress.common.comments = new function() {
 
 
 	/**
-	 * Set up "Comments" tab header
+	 * Set up "Comments" tab header.
 	 *
-	 * @return false
+	 * @since 3.8
 	 */
 	this.header = function() {
 
 		/**
-		 * Clicking on the Comments Header
+		 * Clicking on the Comments Header.
 		 *
-		 * @return false
+		 * @since 3.8
 		 */
 		$('#sidebar').on( 'click', '#comments_header h2 a', function( event ) {
 
@@ -1649,16 +1727,16 @@ CommentPress.common.comments = new function() {
 
 
 	/**
-	 * Set up "Comments" tab minimise button
+	 * Set up "Comments" tab minimise button.
 	 *
-	 * @return false
+	 * @since 3.8
 	 */
 	this.minimiser = function() {
 
 		/**
-		 * Clicking on the minimise comments icon
+		 * Clicking on the minimise comments icon.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#sidebar').on( 'click', '#cp_minimise_all_comments', function( event ) {
 
@@ -1678,12 +1756,12 @@ CommentPress.common.comments = new function() {
 
 
 	/**
-	 * Set up "Comments" tab "X Comments on Paragraph Y" links
+	 * Set up "Comments" tab "X Comments on Paragraph Y" links.
 	 *
 	 * These links are also permalinks to the "comment block" - i.e. the section
 	 * of the Comments column that holds the comments on a particular textblock.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.comment_block_permalinks = function() {
 
@@ -1694,10 +1772,11 @@ CommentPress.common.comments = new function() {
 		$('a.comment_block_permalink').css( 'cursor', 'pointer' );
 
 		/**
-		 * Clicks on "Comments" tab "X Comments on Paragraph Y" links
+		 * Clicks on "Comments" tab "X Comments on Paragraph Y" links.
+		 *
+		 * @since 3.8
 		 *
 		 * @param object event The clicked object
-		 * @return false
 		 */
 		$('#comments_sidebar').on( 'click', 'a.comment_block_permalink', function( event ) {
 
@@ -1898,16 +1977,16 @@ CommentPress.common.comments = new function() {
 
 
 	/**
-	 * Set up actions on the Comment permalinks
+	 * Set up actions on the Comment permalinks.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.comment_permalinks = function() {
 
 		/**
-		 * Clicking on comment permalinks on the General Comments page
+		 * Clicking on comment permalinks on the General Comments page.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#wrapper').on( 'click', '.comment_permalink', function( event ) {
 
@@ -1945,9 +2024,9 @@ CommentPress.common.comments = new function() {
 		});
 
 		/**
-		 * Clicking on comment permalinks in the Comments column
+		 * Clicking on comment permalinks in the Comments column.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#comments_sidebar').on( 'click', '.comment_permalink', function( event ) {
 
@@ -1986,14 +2065,14 @@ CommentPress.common.comments = new function() {
 	/**
 	 * Show the comment permalink in the browser's location bar.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.comment_permalink_show = function() {
 
     	/**
-		 * Copy icon tooltip
+		 * Copy icon tooltip.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('.comment_permalink').tooltip({
 
@@ -2018,9 +2097,9 @@ CommentPress.common.comments = new function() {
 		});
 
     	/**
-		 * Click on comment permalink to reveal it in the location bar
+		 * Click on comment permalink to reveal it in the location bar.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#comments_sidebar, #wrapper').on( 'click', '.comment_permalink', function( event ) {
 
@@ -2048,9 +2127,9 @@ CommentPress.common.comments = new function() {
 
 
 	/**
-	 * Reset the URL to the page permalink
+	 * Reset the URL to the page permalink.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.comment_permalink_handler = function( event ) {
 
@@ -2070,9 +2149,9 @@ CommentPress.common.comments = new function() {
 
 
 	/**
-	 * Handle comment "rollovers"
+	 * Handle comment "rollovers".
 	 *
-	 * @since 3.7
+	 * @since 3.8
 	 */
 	this.comment_rollovers = function() {
 
@@ -2095,10 +2174,11 @@ CommentPress.common.comments = new function() {
 
 
 	/**
-	 * Highlight the comment
+	 * Highlight the comment.
+	 *
+	 * @since 3.8
 	 *
 	 * @param object comment The $ comment object
-	 * @return void
 	 */
 	this.highlight = function( comment ) {
 
@@ -2130,12 +2210,13 @@ CommentPress.common.comments = new function() {
 
 
 	/**
-	 * Scroll comments to target
+	 * Scroll comments to target.
+	 *
+	 * @since 3.8
 	 *
 	 * @param object target The target to scroll to
 	 * @param integer speed The duration of the scroll
 	 * @param string flash Whether or not to "flash" the comment
-	 * @return void
 	 */
 	this.scroll_comments = function( target, speed, flash ) {
 
@@ -2204,7 +2285,9 @@ CommentPress.common.comments = new function() {
 
 
 /**
- * Create CommentPress Core setup activity column class
+ * Create CommentPress Core setup activity column class.
+ *
+ * @since 3.8
  */
 CommentPress.common.activity = new function() {
 
@@ -2219,7 +2302,7 @@ CommentPress.common.activity = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -2232,7 +2315,7 @@ CommentPress.common.activity = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -2253,9 +2336,9 @@ CommentPress.common.activity = new function() {
 
 
 	/**
-	 * Set up "Activity" tab header
+	 * Set up "Activity" tab header.
 	 *
-	 * @return false
+	 * @since 3.8
 	 */
 	this.header = function() {
 
@@ -2279,9 +2362,9 @@ CommentPress.common.activity = new function() {
 
 
 	/**
-	 * Set up "Activity" tab minimise button
+	 * Set up "Activity" tab minimise button.
 	 *
-	 * @return false
+	 * @since 3.8
 	 */
 	this.minimiser = function() {
 
@@ -2305,9 +2388,9 @@ CommentPress.common.activity = new function() {
 
 
 	/**
-	 * Set up "Activity" tab headings
+	 * Set up "Activity" tab headings.
 	 *
-	 * @return false
+	 * @since 3.8
 	 */
 	this.headings = function() {
 
@@ -2315,9 +2398,9 @@ CommentPress.common.activity = new function() {
 		$('h3.activity_heading').css( 'cursor', 'pointer' );
 
 		/**
-		 * Activity column headings click
+		 * Activity column headings click.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#activity_sidebar').on( 'click', 'h3.activity_heading', function( event ) {
 
@@ -2348,9 +2431,9 @@ CommentPress.common.activity = new function() {
 
 
 	/**
-	 * Set up "Activity" tab "See In Context" links
+	 * Set up "Activity" tab "See In Context" links.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.see_in_context_links = function() {
 
@@ -2359,9 +2442,9 @@ CommentPress.common.activity = new function() {
 		if ( cp_special_page == '1' ) { return; }
 
 		/**
-		 * Clicking on the "See In Context" links
+		 * Clicking on the "See In Context" links.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#activity_sidebar').on( 'click', 'a.comment_on_post', function( event ) {
 
@@ -2458,7 +2541,9 @@ CommentPress.common.activity = new function() {
 
 
 /**
- * Create viewport class
+ * Create viewport class.
+ *
+ * @since 3.8
  */
 CommentPress.common.viewport = new function() {
 
@@ -2473,7 +2558,7 @@ CommentPress.common.viewport = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -2486,7 +2571,7 @@ CommentPress.common.viewport = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -2501,7 +2586,7 @@ CommentPress.common.viewport = new function() {
 
 
 /**
- * jQuery wrapper
+ * jQuery wrapper.
  *
  * This wrapper ensures that jQuery can be addressed using the $ shorthand from
  * anywhere within the script.
@@ -2516,7 +2601,7 @@ CommentPress.common.viewport = new function() {
 	var highlighted_para = '';
 
 	/**
-	 * Highlight the current paragraph
+	 * Highlight the current paragraph.
 	 *
 	 * @since 3.0
 	 */
@@ -2533,7 +2618,7 @@ CommentPress.common.viewport = new function() {
 
 
 	/**
-	 * Unhighlight all text
+	 * Unhighlight all text.
 	 *
 	 * @since 3.0
 	 */
@@ -2549,7 +2634,7 @@ CommentPress.common.viewport = new function() {
 
 
 	/**
-	 * Get the element which is currently highlighted
+	 * Get the element which is currently highlighted.
 	 *
 	 * @since 3.0
 	 *
@@ -2565,7 +2650,7 @@ CommentPress.common.viewport = new function() {
 
 
 	/**
-	 * Test if the element is currently highlighted
+	 * Test if the element is currently highlighted.
 	 *
 	 * @since 3.0
 	 *
@@ -2595,7 +2680,7 @@ CommentPress.common.viewport = new function() {
 
 
 	/**
-	 * Utility replacement for PHP's in_array
+	 * Utility replacement for PHP's in_array.
 	 *
 	 * @since 3.0
 	 *
@@ -2627,7 +2712,7 @@ CommentPress.common.viewport = new function() {
 
 
 	/**
-	 * A nifty JS array utility to remove a specified value
+	 * A nifty JS array utility to remove a specified value.
 	 *
 	 * @since 3.0
 	 *
@@ -2661,7 +2746,7 @@ CommentPress.common.viewport = new function() {
 
 
 	/**
-	 * Utility replacement for PHP's is_object
+	 * Utility replacement for PHP's is_object.
 	 *
 	 * @since 3.0
 	 *
@@ -2687,7 +2772,7 @@ CommentPress.common.viewport = new function() {
 
 
 	/**
-	 * Test if a function exists without throwing a Reference Error
+	 * Test if a function exists without throwing a Reference Error.
 	 *
 	 * @since 3.0
 	 *
@@ -2712,7 +2797,7 @@ CommentPress.common.viewport = new function() {
 
 
 	/**
-	 * Utility to strip 'px' off css values
+	 * Utility to strip 'px' off css values.
 	 *
 	 * @since 3.0
 	 *
@@ -2729,7 +2814,7 @@ CommentPress.common.viewport = new function() {
 
 
 	/**
-	 * Utility to return zero when css values may be NaN in IE
+	 * Utility to return zero when css values may be NaN in IE.
 	 *
 	 * @since 3.0
 	 *
@@ -2782,7 +2867,7 @@ CommentPress.common.viewport = new function() {
 
 
 	/**
-	 * Get currently highlighted menu item ID
+	 * Get currently highlighted menu item ID.
 	 *
 	 * @since 3.0
 	 *
@@ -2838,7 +2923,7 @@ CommentPress.common.viewport = new function() {
 
 
 	/**
-	 * Get text signature by comment id
+	 * Get text signature by comment id.
 	 *
 	 * @param object cid The CSS ID of the comment
 	 * @return string text_sig The text signature
@@ -2910,9 +2995,9 @@ CommentPress.common.activity.init();
 
 
 /**
- * Define what happens when the page is ready
+ * Define what happens when the page is ready.
  *
- * @return void
+ * @since 3.0
  */
 jQuery(document).ready(function($) {
 
