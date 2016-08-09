@@ -1,0 +1,95 @@
+/*
+================================================================================
+CommentPress Flat Multisite Activate Page Stylesheet
+================================================================================
+AUTHOR: Christian Wach <needle@haystack.co.uk>
+--------------------------------------------------------------------------------
+NOTES
+=====
+
+Because we have no control over the activate page markup, we have to override
+some styles for it to fit with our static header.
+
+--------------------------------------------------------------------------------
+*/
+
+/* override inline style */
+body form
+{
+	margin: 0;
+}
+
+/* content */
+#content h2
+{
+	text-transform: uppercase;
+	font-size: 2em;
+	line-height: 1.2;
+	color: #000;
+	margin: 1em 0;
+}
+
+#content p
+{
+	font-size: 100%;
+	line-height: 1.6;
+}
+
+#content p.view
+{
+	margin-top: 2em;
+}
+
+#content ul
+{
+	font-size: 1em;
+	line-height: 1.45;
+	padding: 7px 0 4px 0;
+	background-color: #CBFFBD;
+}
+
+#content ul li
+{
+	font-size: 1.2em;
+	line-height: 1.45;
+	margin: 0 15px;
+	padding: 0px 0 7px 0;
+}
+
+#content a
+{
+	text-decoration: underline;
+}
+
+#content #signup-welcome
+{
+	padding: 0.7em 0.5em 0.5em 0.5em;
+	margin: 0;
+	background-color: lightYellow;
+}
+
+#content #signup-welcome p
+{
+	padding: 0;
+	margin: 0.5em 0;
+}
+
+#content #signup-welcome span.h3
+{
+	text-transform: uppercase;
+	font-size: 1.2em;
+	line-height: 1.2;
+}
+
+#content #activateform label
+{
+	text-transform: uppercase;
+	font-size: 1.2em;
+	margin: 20px 0 5px 0;
+}
+
+#content p.submit input
+{
+	width: auto;
+	font-size: 90%;
+}
