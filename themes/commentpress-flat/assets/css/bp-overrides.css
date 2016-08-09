@@ -3921,6 +3921,15 @@ Widgets & Widget Areas
 	margin-top: 0.3rem;
 }
 
+.widget.buddypress #bp-login-widget-form #bp-login-widget-user-login,
+.widget.buddypress #bp-login-widget-form #bp-login-widget-user-pass
+{
+	padding: 8px;
+	border: 1px solid #ccc;
+	width: 90%;
+	letter-spacing: 0.3px;
+}
+
 .widget.buddypress #bp-login-widget-form .forgetmenot
 {
 	padding-bottom: 0.4rem;
