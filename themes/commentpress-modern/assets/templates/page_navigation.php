@@ -40,8 +40,8 @@ if ( is_page() ) {
 elseif ( is_single() ) {
 
 	?><ul class="blog_navigation">
-		<?php next_post_link('<li class="alignright">%link</li>'); ?>
-		<?php previous_post_link('<li class="alignleft">%link</li>'); ?>
+		<?php next_post_link( '<li class="alignright">%link</li>' ); ?>
+		<?php previous_post_link( '<li class="alignleft">%link</li>' ); ?>
 	</ul>
 
 	<?php
@@ -53,8 +53,8 @@ elseif ( is_single() ) {
 // is this the posts archive or a CPT archive?
 elseif ( is_home() OR is_post_type_archive() ) {
 
-	$nl = get_next_posts_link($previous_title);
-	$pl = get_previous_posts_link($next_title);
+	$nl = get_next_posts_link( $previous_title );
+	$pl = get_previous_posts_link( $next_title );
 
 	// did we get either?
 	if ( $nl != '' OR $pl != '' ) { ?>
@@ -138,8 +138,8 @@ elseif ( is_category() ) {
 
 
 
-// tag archives
-elseif ( is_tag() ) {
+// tag archives or custom taxonomy archives
+elseif ( is_tag() OR is_tax() ) {
 
 	$nl = get_next_posts_link( __( 'More Results', 'commentpress-core' ) );
 	$pl = get_previous_posts_link( __( 'Previous Results', 'commentpress-core' ) );
