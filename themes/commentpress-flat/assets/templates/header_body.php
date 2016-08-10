@@ -22,16 +22,11 @@ Separated this out for inclusion in multiple files.
 
 
 
-<div id="header">
+<div id="header" class="clearfix">
 
 	<?php do_action( 'commentpress_header_before' ); ?>
 
 	<?php commentpress_get_header_image(); ?>
-
-	<div id="page_title">
-		<div id="title"><h1><a href="<?php echo home_url(); ?>" title="<?php _e( 'Home', 'commentpress-core' ); ?>"><?php bloginfo('title'); ?></a></h1></div>
-		<div id="tagline"><?php bloginfo('description'); ?></div>
-	</div>
 
 	<div id="switcher">
 		<ul>
@@ -39,6 +34,11 @@ Separated this out for inclusion in multiple files.
 			<li class="sidebar-item comments-item"><a class="comments-button" href="#comments_sidebar"><?php _e( 'Comments', 'commentpress-core' ); ?></a></li>
 			<li class="sidebar-item activity-item"><a class="activity-button" href="#activity_sidebar"><?php _e( 'Activity', 'commentpress-core' ); ?></a></li>
 		</ul>
+	</div>
+
+	<div id="page_title">
+		<div id="title"><h1><a href="<?php echo home_url(); ?>" title="<?php _e( 'Home', 'commentpress-core' ); ?>"><?php bloginfo('title'); ?></a></h1></div>
+		<div id="tagline"><?php bloginfo('description'); ?></div>
 	</div>
 
 	<?php do_action( 'commentpress_header_after' ); ?>
