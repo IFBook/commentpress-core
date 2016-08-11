@@ -141,6 +141,9 @@ Updated by Christian Wach for CommentPress Core
 	/* WordPress */
 	#wpadminbar,
 
+	/* Footer menu */
+	#footer .menu,
+
 	/* force comment form to be hidden */
 	#respond
 	{
@@ -159,6 +162,7 @@ Updated by Christian Wach for CommentPress Core
 		border: none;
 		margin: 0;
 		padding: 0;
+		min-height: 0;
 	}
 
 	#page_title,
@@ -177,6 +181,9 @@ Updated by Christian Wach for CommentPress Core
 	#header #title h1 a:active,
 	#header #title h1 a:visited
 	{
+		display: block;
+		width: auto;
+		height: auto;
 		letter-spacing: 0;
 		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 		font-size: 11pt;
@@ -246,14 +253,15 @@ Updated by Christian Wach for CommentPress Core
 	}
 
 	/* Feature Images */
-	.cp_feature_image .cp_featured_title .cp_featured_title_inner
+	.cp_feature_image .cp_featured_title .cp_featured_title_inner,
+	#container .cp_feature_image .cp_featured_title .cp_featured_title_inner
 	{
 		margin: 0 !important;
-		padding: 0 0 0 24pt;
+		padding: 0;
 	}
 
 	/* Feature Image Page Title */
-	.cp_featured_title_inner h2.post_title
+	#container .cp_featured_title_inner h2.post_title
 	{
 		padding: 0;
 		margin-top: 10pt;
@@ -262,12 +270,13 @@ Updated by Christian Wach for CommentPress Core
 		font-size: 24pt;
 		text-transform: none;
 	}
-
+	
 	.cp_featured_title_inner h2.post_title a
 	{
 		color: #000;
 	}
 
+	#container #content,
 	#content
 	{
 		padding: 0;
@@ -285,7 +294,8 @@ Updated by Christian Wach for CommentPress Core
 		border-bottom: 1px solid #ccc;
 	}
 
-	body.commentpress_page .post
+	body.commentpress_page .post,
+	body.not_commentable .post
 	{
 		padding: 0 0 20pt 0;
 	}
@@ -601,6 +611,7 @@ Updated by Christian Wach for CommentPress Core
 		width: auto !important;
 		border-bottom: 1px solid #ccc;
 		padding-bottom: 16pt;
+		padding-left: 24pt;
 	}
 
 	#sidebar .sidebar_container .sidebar_header
