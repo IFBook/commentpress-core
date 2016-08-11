@@ -199,7 +199,8 @@ Updated by Christian Wach for CommentPress Core
 		padding-left: 24pt;
 	}
 
-	body.commentpress_page #header #title h1
+	body.commentpress_page #header #title h1,
+	body.not_commentable #header #title h1
 	{
 		padding-left: 0;
 	}
@@ -253,6 +254,12 @@ Updated by Christian Wach for CommentPress Core
 	}
 
 	/* Feature Images */
+	.cp_feature_image,
+	#container .cp_feature_image
+	{
+		padding-top: 6pt;
+	}
+
 	.cp_feature_image .cp_featured_title .cp_featured_title_inner,
 	#container .cp_feature_image .cp_featured_title .cp_featured_title_inner
 	{
