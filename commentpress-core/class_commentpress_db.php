@@ -3237,6 +3237,15 @@ class Commentpress_Core_Database {
 	 */
 	public function test_for_mobile() {
 
+		// init mobile flag
+		$this->is_mobile = false;
+
+		// init tablet flag
+		$this->is_tablet = false;
+
+		// init touch flag
+		$this->is_mobile_touch = false;
+
 		// do we have a user agent?
 		if ( isset( $_SERVER["HTTP_USER_AGENT"] ) ) {
 
@@ -3251,37 +3260,19 @@ class Commentpress_Core_Database {
 			// init
 			$detect = new Mobile_Detect();
 
-			// init mobile flag
-			$this->is_mobile = false;
-
-			// is it mobile?
+			// overwrite flag if mobile
 			if ( $detect->isMobile() ) {
-
-				// overwrite flag
 				$this->is_mobile = true;
-
 			}
 
-			// init tablet flag
-			$this->is_tablet = false;
-
-			// is it a tablet?
+			// overwrite flag if tablet
 			if ( $detect->isTablet() ) {
-
-				// overwrite flag
 				$this->is_tablet = true;
-
 			}
-
-			// init touch flag
-			$this->is_mobile_touch = false;
 
 			// to guess at touch devices, we assume *either* phone *or* tablet
-			if ( $detect->isMobile() OR $detect->isTablet() ) {
-
-				// overwrite flag
+			if ( $this->is_mobile OR $this->is_tablet ) {
 				$this->is_mobile_touch = true;
-
 			}
 
 		}
