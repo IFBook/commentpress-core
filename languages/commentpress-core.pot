@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CommentPress Core 3.9\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/commentpress-core\n"
-"POT-Creation-Date: 2016-09-10 14:53:03+00:00\n"
+"POT-Creation-Date: 2016-09-10 16:10:10+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -216,12 +216,12 @@ msgid "Comments by Commenter"
 msgstr ""
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:1859
-#: commentpress-core/assets/includes/theme/theme-functions.php:2862
+#: commentpress-core/assets/includes/theme/theme-functions.php:2878
 msgid "Comment awaiting moderation"
 msgstr ""
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:1927
-#: commentpress-core/assets/includes/theme/theme-functions.php:2949
+#: commentpress-core/assets/includes/theme/theme-functions.php:2965
 msgid "%1$s at %2$s"
 msgstr ""
 
@@ -282,60 +282,60 @@ msgstr ""
 msgid "%1$s on <span class=\"source_block\">%2$s %3$s</span>"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2427
+#: commentpress-core/assets/includes/theme/theme-functions.php:2443
 msgid "It appears that this paragraph is a duplicate of a previous one."
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2466
+#: commentpress-core/assets/includes/theme/theme-functions.php:2482
 msgid "Create an account to leave a comment on %s"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2471
+#: commentpress-core/assets/includes/theme/theme-functions.php:2487
 msgid "Login to leave a comment on %s"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2524
+#: commentpress-core/assets/includes/theme/theme-functions.php:2540
 msgid "Leave a comment on %s"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2642
+#: commentpress-core/assets/includes/theme/theme-functions.php:2658
 msgid "Leave a Reply"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2643
+#: commentpress-core/assets/includes/theme/theme-functions.php:2659
 #: themes/commentpress-flat/assets/templates/comment_form.php:81
 #: themes/commentpress-modern/assets/templates/comment_form.php:81
 #: themes/commentpress-theme/assets/templates/comment_form.php:61
 msgid "Leave a Reply to %s"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2644
+#: commentpress-core/assets/includes/theme/theme-functions.php:2660
 msgid "Leave a Comment on %s"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2687
-#: commentpress-core/assets/includes/theme/theme-functions.php:2699
+#: commentpress-core/assets/includes/theme/theme-functions.php:2703
+#: commentpress-core/assets/includes/theme/theme-functions.php:2715
 msgctxt "The first substitution is the block name e.g. \"paragraph\". The second is the numeric comment count."
 msgid "%s %s"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2734
+#: commentpress-core/assets/includes/theme/theme-functions.php:2750
 msgid "Reply"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2735
+#: commentpress-core/assets/includes/theme/theme-functions.php:2751
 msgid "Log in to Reply"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2897
+#: commentpress-core/assets/includes/theme/theme-functions.php:2913
 msgid "Reply to %s"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2922
+#: commentpress-core/assets/includes/theme/theme-functions.php:2938
 msgid "Edit this comment"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2928
+#: commentpress-core/assets/includes/theme/theme-functions.php:2944
 #: themes/commentpress-flat/archive.php:82 themes/commentpress-flat/blog.php:51
 #: themes/commentpress-flat/category.php:59
 #: themes/commentpress-flat/index.php:56 themes/commentpress-flat/search.php:94
@@ -352,37 +352,37 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2964
+#: commentpress-core/assets/includes/theme/theme-functions.php:2980
 msgid "Permalink for this comment"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:3237
+#: commentpress-core/assets/includes/theme/theme-functions.php:3253
 #: themes/commentpress-flat/functions.php:505
 #: themes/commentpress-modern/functions.php:574
 #: themes/commentpress-theme/functions.php:452
 msgid "Next page"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:3238
+#: commentpress-core/assets/includes/theme/theme-functions.php:3254
 #: themes/commentpress-flat/functions.php:535
 #: themes/commentpress-modern/functions.php:604
 #: themes/commentpress-theme/functions.php:480
 msgid "Previous page"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:3256
+#: commentpress-core/assets/includes/theme/theme-functions.php:3272
 msgid "Pages: "
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:4005
+#: commentpress-core/assets/includes/theme/theme-functions.php:4021
 msgid "Untitled Widget"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:4102
+#: commentpress-core/assets/includes/theme/theme-functions.php:4118
 msgid "Newer version"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:4137
+#: commentpress-core/assets/includes/theme/theme-functions.php:4153
 msgid "Older version"
 msgstr ""
 
