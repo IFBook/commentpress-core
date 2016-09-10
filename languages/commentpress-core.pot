@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CommentPress Core 3.9\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/commentpress-core\n"
-"POT-Creation-Date: 2016-08-09 10:45:06+00:00\n"
+"POT-Creation-Date: 2016-09-10 14:53:03+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -71,7 +71,7 @@ msgstr ""
 #: commentpress-core/class_commentpress_display.php:1790
 #: commentpress-core/class_commentpress_display.php:2196
 #: themes/commentpress-flat/assets/templates/comments_sidebar.php:20
-#: themes/commentpress-flat/assets/templates/header_body.php:39
+#: themes/commentpress-flat/assets/templates/header_body.php:34
 #: themes/commentpress-flat/sidebar.php:68
 #: themes/commentpress-modern/assets/templates/comments_sidebar.php:20
 #: themes/commentpress-modern/sidebar.php:68
@@ -211,7 +211,7 @@ msgstr ""
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:1640
 #: commentpress-core/class_commentpress.php:1530
-#: commentpress-core/class_commentpress_db.php:3642
+#: commentpress-core/class_commentpress_db.php:3633
 msgid "Comments by Commenter"
 msgstr ""
 
@@ -513,15 +513,15 @@ msgid "This comment has been marked as spam. Please contact a site administrator
 msgstr ""
 
 #: commentpress-core/class_commentpress.php:1508
-#: commentpress-core/class_commentpress_db.php:3474
+#: commentpress-core/class_commentpress_db.php:3465
 #: themes/commentpress-flat/assets/templates/navigation.php:82
 #: themes/commentpress-modern/assets/templates/navigation.php:82
-#: themes/commentpress-theme/assets/templates/navigation.php:213
+#: themes/commentpress-theme/assets/templates/navigation.php:237
 msgid "Title Page"
 msgstr ""
 
 #: commentpress-core/class_commentpress.php:1513
-#: commentpress-core/class_commentpress_db.php:3591
+#: commentpress-core/class_commentpress_db.php:3582
 #: themes/commentpress-flat/functions.php:762
 #: themes/commentpress-modern/functions.php:831
 #: themes/commentpress-theme/functions.php:701
@@ -529,7 +529,7 @@ msgid "All Comments"
 msgstr ""
 
 #: commentpress-core/class_commentpress.php:1517
-#: commentpress-core/class_commentpress_db.php:3540
+#: commentpress-core/class_commentpress_db.php:3531
 #: themes/commentpress-flat/comments-general.php:34
 #: themes/commentpress-modern/comments-general.php:34
 #: themes/commentpress-theme/comments-general.php:33
@@ -537,13 +537,13 @@ msgid "General Comments"
 msgstr ""
 
 #: commentpress-core/class_commentpress.php:1521
-#: commentpress-core/class_commentpress_db.php:3693
-#: themes/commentpress-theme/assets/templates/navigation.php:76
+#: commentpress-core/class_commentpress_db.php:3684
+#: themes/commentpress-theme/assets/templates/navigation.php:77
 msgid "Blog"
 msgstr ""
 
 #: commentpress-core/class_commentpress.php:1526
-#: commentpress-core/class_commentpress_db.php:3747
+#: commentpress-core/class_commentpress_db.php:3738
 msgid "Blog Archive"
 msgstr ""
 
@@ -572,7 +572,7 @@ msgstr ""
 #: commentpress-core/class_commentpress_display.php:1789
 #: commentpress-core/class_commentpress_display.php:2195
 #: themes/commentpress-flat/assets/templates/activity_sidebar.php:72
-#: themes/commentpress-flat/assets/templates/header_body.php:40
+#: themes/commentpress-flat/assets/templates/header_body.php:35
 #: themes/commentpress-flat/sidebar.php:119
 #: themes/commentpress-modern/assets/templates/activity_sidebar.php:72
 #: themes/commentpress-modern/sidebar.php:119
@@ -622,11 +622,11 @@ msgstr ""
 msgid "You must supply an option to option_wp_set()"
 msgstr ""
 
-#: commentpress-core/class_commentpress_db.php:3394
+#: commentpress-core/class_commentpress_db.php:3385
 msgid "Copy of "
 msgstr ""
 
-#: commentpress-core/class_commentpress_db.php:3480
+#: commentpress-core/class_commentpress_db.php:3471
 #: commentpress-multisite/class_commentpress_mu_ms.php:730
 msgid ""
 "Welcome to your new CommentPress site, which allows your readers to comment paragraph-by-paragraph or line-by-line in the margins of a text. Annotate, gloss, workshop, debate: with CommentPress you can do all of these things on a finer-grained level, turning a document into a conversation.\n"
@@ -636,16 +636,16 @@ msgid ""
 "You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings</em> &#8594; <em>CommentPress</em> to make the site work the way you want it to. Use the Theme Customizer to change the way your site looks in <em>WordPress</em> &#8594; <em>Appearance</em> &#8594; <em>Customize</em>. For help with structuring, formatting and reading text in CommentPress, please refer to the <a href=\"http://www.futureofthebook.org/commentpress/\">CommentPress website</a>."
 msgstr ""
 
-#: commentpress-core/class_commentpress_db.php:3546
-#: commentpress-core/class_commentpress_db.php:3597
-#: commentpress-core/class_commentpress_db.php:3648
-#: commentpress-core/class_commentpress_db.php:3699
-#: commentpress-core/class_commentpress_db.php:3753
-#: commentpress-core/class_commentpress_db.php:3804
+#: commentpress-core/class_commentpress_db.php:3537
+#: commentpress-core/class_commentpress_db.php:3588
+#: commentpress-core/class_commentpress_db.php:3639
+#: commentpress-core/class_commentpress_db.php:3690
+#: commentpress-core/class_commentpress_db.php:3744
+#: commentpress-core/class_commentpress_db.php:3795
 msgid "Do not delete this page. Page content is generated with a custom template."
 msgstr ""
 
-#: commentpress-core/class_commentpress_db.php:3798
+#: commentpress-core/class_commentpress_db.php:3789
 #: commentpress-core/class_commentpress_display.php:1414
 #: themes/commentpress-flat/assets/templates/toc_dropdown.php:9
 #: themes/commentpress-flat/assets/templates/toc_sidebar.php:78
@@ -1710,32 +1710,32 @@ msgstr ""
 msgid "Skip to Table of Contents"
 msgstr ""
 
-#: themes/commentpress-flat/assets/templates/header_body.php:32
+#: themes/commentpress-flat/assets/templates/header_body.php:33
+#: themes/commentpress-modern/assets/templates/header_body.php:44
+msgid "Navigate"
+msgstr ""
+
+#: themes/commentpress-flat/assets/templates/header_body.php:40
 #: themes/commentpress-modern/assets/templates/header_body.php:32
 #: themes/commentpress-theme/assets/templates/header_body.php:34
 msgid "Home"
 msgstr ""
 
-#: themes/commentpress-flat/assets/templates/header_body.php:38
-#: themes/commentpress-modern/assets/templates/header_body.php:44
-msgid "Navigate"
-msgstr ""
-
 #: themes/commentpress-flat/assets/templates/navigation.php:31
 #: themes/commentpress-modern/assets/templates/navigation.php:31
-#: themes/commentpress-theme/assets/templates/navigation.php:162
+#: themes/commentpress-theme/assets/templates/navigation.php:186
 msgid "Site Home Page"
 msgstr ""
 
 #: themes/commentpress-flat/assets/templates/navigation.php:55
 #: themes/commentpress-modern/assets/templates/navigation.php:55
-#: themes/commentpress-theme/assets/templates/navigation.php:186
+#: themes/commentpress-theme/assets/templates/navigation.php:210
 msgid "Group Home Page"
 msgstr ""
 
 #: themes/commentpress-flat/assets/templates/navigation.php:69
 #: themes/commentpress-modern/assets/templates/navigation.php:69
-#: themes/commentpress-theme/assets/templates/navigation.php:200
+#: themes/commentpress-theme/assets/templates/navigation.php:224
 msgid "Home Page"
 msgstr ""
 
@@ -1778,6 +1778,8 @@ msgstr ""
 #: themes/commentpress-modern/assets/templates/page_navigation.php:100
 #: themes/commentpress-modern/assets/templates/page_navigation.php:122
 #: themes/commentpress-modern/assets/templates/page_navigation.php:144
+#: themes/commentpress-theme/assets/templates/navigation.php:110
+#: themes/commentpress-theme/assets/templates/navigation.php:133
 msgid "More Results"
 msgstr ""
 
@@ -1787,6 +1789,8 @@ msgstr ""
 #: themes/commentpress-modern/assets/templates/page_navigation.php:101
 #: themes/commentpress-modern/assets/templates/page_navigation.php:123
 #: themes/commentpress-modern/assets/templates/page_navigation.php:145
+#: themes/commentpress-theme/assets/templates/navigation.php:111
+#: themes/commentpress-theme/assets/templates/navigation.php:134
 msgid "Previous Results"
 msgstr ""
 
@@ -2252,7 +2256,7 @@ msgstr ""
 msgid "Abstract Violet"
 msgstr ""
 
-#: themes/commentpress-theme/assets/templates/navigation.php:99
+#: themes/commentpress-theme/assets/templates/navigation.php:100
 msgid "Blog Archives: "
 msgstr ""
 
