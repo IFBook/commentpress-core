@@ -1072,10 +1072,15 @@ body.buddypress div#item-header div#item-meta
 
 
 /* Comments on Activity Stream Items */
+#buddypress #activity-stream div.acomment-avatar img
+{
+	margin-right: 14px;
+}
+
 #buddypress div.activity-comments div.acomment-content
 {
-	font-size: 100%;
 	padding: 1px;
+	margin-right: 5px;
 }
 
 div.activity-comments div.acomment-content p
@@ -1085,7 +1090,7 @@ div.activity-comments div.acomment-content p
 
 #buddypress div.activity-comments div.acomment-meta
 {
-	font-size: 0.7em;
+	font-size: 0.6em;
 	font-family: sans-serif;
 }
 
