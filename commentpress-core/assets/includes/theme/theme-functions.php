@@ -2240,6 +2240,22 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ):
  */
 function commentpress_get_comments_by_para() {
 
+	/**
+	 * Overwrite the content width for the comments column.
+	 *
+	 * This is set to an arbitrary width that *sort of* works for the comments
+	 * column for all CommentPress themes. It can be overridden by this filter
+	 * if a particular theme or child theme wants to do so. The content width
+	 * determines the default width for oEmbedded content.
+	 *
+	 * @since 3.9
+	 *
+	 * @param int $content_width An general content width for all themes
+	 * @return int $content_width A specific content width for a specific theme
+	 */
+	global $content_width;
+	$content_width = apply_filters( 'commentpress_comments_content_width', 380 );
+
 	// allow oEmbed in comments
 	global $wp_embed;
 	if ( $wp_embed instanceof WP_Embed ) {

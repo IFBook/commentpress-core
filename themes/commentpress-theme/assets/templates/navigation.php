@@ -47,8 +47,8 @@ if ( is_page() ) {
 elseif ( is_single() ) {
 
 	?><ul id="blog_navigation">
-		<?php next_post_link('<li class="alignright">%link</li>'); ?>
-		<?php previous_post_link('<li class="alignleft">%link</li>'); ?>
+		<?php next_post_link( '<li class="alignright">%link</li>' ); ?>
+		<?php previous_post_link( '<li class="alignleft">%link</li>' ); ?>
 	</ul>
 
 	<div id="cp_book_info"><p><?php echo commentpress_page_title(); ?></p></div>
@@ -57,11 +57,12 @@ elseif ( is_single() ) {
 }
 
 
+
 // is this the posts archive or a CPT archive?
 elseif ( is_home() OR is_post_type_archive() ) {
 
-	$nl = get_next_posts_link('&laquo; ' . $previous_title);
-	$pl = get_previous_posts_link($next_title . ' &raquo;');
+	$nl = get_next_posts_link( '&laquo; ' . $previous_title );
+	$pl = get_previous_posts_link( $next_title . ' &raquo;' );
 
 	// did we get either?
 	if ( $nl != '' OR $pl != '' ) { ?>
@@ -83,8 +84,8 @@ elseif ( is_home() OR is_post_type_archive() ) {
 // archives?
 elseif ( is_day() || is_month() || is_year() ) {
 
-	$nl = get_next_posts_link('&laquo; ' . $previous_title);
-	$pl = get_previous_posts_link($next_title . ' &raquo;');
+	$nl = get_next_posts_link( '&laquo; ' . $previous_title );
+	$pl = get_previous_posts_link( $next_title . ' &raquo;' );
 
 	// did we get either?
 	if ( $nl != '' OR $pl != '' ) { ?>
@@ -106,8 +107,31 @@ elseif ( is_day() || is_month() || is_year() ) {
 // search?
 elseif ( is_search() ) {
 
-	$nl = get_next_posts_link('&laquo; ' . $previous_title);
-	$pl = get_previous_posts_link($next_title . ' &raquo;');
+	$nl = get_next_posts_link( '&laquo; ' .  __( 'More Results', 'commentpress-core' ) );
+	$pl = get_previous_posts_link( __( 'Previous Results', 'commentpress-core' ) . ' &raquo;' );
+
+	// did we get either?
+	if ( $nl != '' OR $pl != '' ) { ?>
+
+	<ul id="blog_navigation">
+		<?php if ( $nl != '' ) { ?><li class="alignright"><?php echo $nl; ?></li><?php } ?>
+		<?php if ( $pl != '' ) { ?><li class="alignleft"><?php echo $pl; ?></li><?php } ?>
+	</ul>
+
+	<?php } ?>
+
+	<div id="cp_book_info"><p><?php wp_title(''); ?></p></div>
+	<?php
+
+}
+
+
+
+// category, tag & custom taxonomy archives, including qmt
+elseif ( is_category() OR is_tag() OR is_tax() ) {
+
+	$nl = get_next_posts_link( '&laquo; ' .  __( 'More Results', 'commentpress-core' ) );
+	$pl = get_previous_posts_link( __( 'Previous Results', 'commentpress-core' ) . ' &raquo;' );
 
 	// did we get either?
 	if ( $nl != '' OR $pl != '' ) { ?>

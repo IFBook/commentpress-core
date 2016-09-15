@@ -18,9 +18,9 @@ CommentPress Core is an open source theme and plugin for WordPress that allows r
 
 Annotate, gloss, workshop, debate: with CommentPress Core you can do all of these things on a finer-grained level, turning a document into a conversation. It can be applied to a fixed document (paper/essay/book etc.) or to a running blog. Use it in combination with BuddyPress and Groupblogs to create communities around your documents.
 
-**Please note:** this plugin comes bundled with two official themes, one of which must be active for CommentPress Core to function. The new "CommentPress Modern Theme" will be auto-activated when the plugin is first activated. The old "CommentPress Default Theme" is still included for those who wish to stay with it or have built their own child themes for it. If you are upgrading from a previous version of CommentPress (3.0.x - 3.3.x), please follow the instructions in the Installation section before doing so.
+**Please note:** this plugin comes bundled with three official themes, one of which must be active for CommentPress Core to function. The "CommentPress Modern Theme" will be auto-activated when the plugin is first activated. The old "CommentPress Default Theme" is still included for those who wish to stay with it or have built their own child themes for it. Since version 3.9 a new "CommentPress Flat Theme" is included for those who want an alternative layout. If you are upgrading from a previous version of CommentPress (3.0.x - 3.3.x), please follow the instructions in the Installation section before doing so.
 
-For further information and instructions please see the [CommentPress website](http://www.futureofthebook.org/commentpress/) or visit the plugin's [GitHub repository](https://github.com/christianwach/civicrm-wp-member-sync). Contact the developers by email at [cpdev@futureofthebook.org](mailto:cpdev@futureofthebook.org).
+For further information and instructions please see the [CommentPress website](http://www.futureofthebook.org/commentpress/) or visit the plugin's [GitHub repository](https://github.com/IFBook/commentpress-core). Contact the developers by email at [cpdev@futureofthebook.org](mailto:cpdev@futureofthebook.org).
 
 Many thanks to the following for translations:
 
@@ -63,7 +63,7 @@ Okay, we're ready to install "CommentPress Core":
 
 1. Install and Network Activate "CommentPress Core"
 2. If you want to, you can enable "CommentPress Core" on your main blog
-3. Network Enable the "CommentPress Modern Theme" and/or the "CommentPress Default Theme" UNLESS
+3. Network Enable the "CommentPress Modern Theme", "CommentPress Flat Theme" and/or the "CommentPress Default Theme" UNLESS
 4. You have "CommentPress Core"-compatible child themes you want to use instead:
 5. Network Enable any "CommentPress Core"-compatible child themes you want to use
 
@@ -104,7 +104,7 @@ Okay, we're ready to install "CommentPress Core":
 
 1. Install and Network Activate "CommentPress Core"
 2. If you want to, you can enable "CommentPress Core" on your main blog
-3. Network Enable the "CommentPress Modern Theme" and/or the "CommentPress Default Theme" UNLESS
+3. Network Enable the "CommentPress Modern Theme", "CommentPress Flat Theme" and/or the "CommentPress Default Theme" UNLESS
 4. You have "CommentPress Core"-compatible child themes you want to use instead:
 5. Network Enable any "CommentPress Core"-compatible child themes you want to use
 6. Optionally, activate your chosen "CommentPress Core"-compatible child theme
@@ -215,7 +215,7 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 <h4>3.9</h4>
 
-* Introduce new parent theme
+* Introduce new "CommentPress Flat" parent theme
 * Add widget areas to themes
 * Introduce option to skip parsing entries with no comments
 * Introduce option to disable auto-navigation on pages

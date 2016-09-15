@@ -67,11 +67,14 @@ class Commentpress_Core_Editor {
 	 */
 	public function initialise() {
 
+		// bail if not logged in
+		if ( ! is_user_logged_in() ) return;
+
 		// bail if there's no WP FEE present
 		if ( ! class_exists( 'FEE' ) ) return;
 
-		// bail if not logged in
-		if ( ! is_user_logged_in() ) return;
+		// try and find the global
+		if ( ! isset( $GLOBALS['wp_front_end_editor'] ) ) return;
 
 		// broadcast
 		do_action( 'commentpress_editor_present' );
@@ -132,11 +135,10 @@ class Commentpress_Core_Editor {
 			//add_filter( 'cpajax_disable_infinite_scroll', '__return_false', 11 );
 
 			// amend Edit Page button
-			global $wordpress_front_end_editor;
-			add_action( 'wp_before_admin_bar_render', array( $wordpress_front_end_editor, 'wp_before_admin_bar_render' ) );
+			add_action( 'wp_before_admin_bar_render', array( $GLOBALS['wp_front_end_editor'], 'wp_before_admin_bar_render' ) );
 
 			// amend Edit Page link
-			add_filter( 'get_edit_post_link', array( $wordpress_front_end_editor, 'get_edit_post_link' ), 10, 3 );
+			add_filter( 'get_edit_post_link', array( $GLOBALS['wp_front_end_editor'], 'get_edit_post_link' ), 10, 3 );
 			add_filter( 'get_edit_post_link', array( $this, 'get_edit_post_link' ), 100, 3 );
 
 			// broadcast
@@ -381,8 +383,8 @@ class Commentpress_Core_Editor {
 			// set flag
 			$this->fee = 'killed';
 
-			global $wordpress_front_end_editor;
-			remove_action( 'init', array( $wordpress_front_end_editor, 'init' ) );
+			// do not allow FEE to init
+			remove_action( 'init', array( $GLOBALS['wp_front_end_editor'], 'init' ) );
 
 		}
 

@@ -1,0 +1,370 @@
+/*
+================================================================================
+CommentPress Flat Colours Stylesheet
+================================================================================
+AUTHOR: Christian Wach <needle@haystack.co.uk>
+--------------------------------------------------------------------------------
+NOTES
+
+The intent behind this stylesheet is to gather together key styles so they can
+be easily overridden in child themes. Doing so simply involves copying this file
+to the same relative path in the child theme and amending the values as desired.
+
+--------------------------------------------------------------------------------
+*/
+
+
+
+/*
+--------------------------------------------------------------------------------
+Fonts
+--------------------------------------------------------------------------------
+*/
+
+/* Georgia */
+#header #tagline,
+body#main_blog div#item-header div#item-meta
+{
+	font-family: Georgia, Times, serif;
+}
+
+/* Google Webfont: using "Lato" enqueued in functions.php */
+
+/* Content is serif by default */
+.post,
+.comment-content,
+
+/* Titles and headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+#title h1,
+#title h1 a,
+.post h1,
+.post h2,
+.post h3,
+.post h4,
+.post h5,
+.post h6,
+
+/* Signup, Activate and Register pages */
+body.create-blog #content #setupform label,
+#register-page #signup_form h2,
+#content #activateform label
+#content .mu_register h2,
+#content .mu_register label,
+#content #signup-content h2,
+#content #activateform label,
+
+/* CommentPress Core form inserts */
+body.create-blog #cp-multisite-options h4,
+#content .mu_register #cp-multisite-options h3,
+
+/* Comment form */
+div#respond h4#respond_title,
+
+/* CommentPress JSTOR plugin support */
+.commentpress_jstor .comment-title a,
+
+/* Sidebar Widgets */
+.sidebar_container .widget
+{
+	font-family: Lato, 'Trebuchet MS', Helvetica, Arial, sans-serif;
+}
+
+/* Headings on page/posts */
+.post h1,
+.post h2,
+.post h3,
+.post h4,
+.post h5,
+.post h6
+{
+	/* don't force uppercase */
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
+CommentPress Colour Scheme
+--------------------------------------------------------------------------------
+*/
+
+/* The all-important highlight state */
+.selected_para
+{
+	color: #ca0000;
+}
+
+/* paragraph markers */
+#content .post span.para_marker a,
+.content .post span.para_marker a,
+.post span.commenticonbox
+{
+	color: #ccc;
+}
+
+
+/* Structural Items */
+html,
+body,
+body#main_blog,
+#container
+{
+	background: #F7F7EF;
+	background-color: #F7F7EF;
+}
+
+#wrapper
+{
+	background-color: transparent;
+}
+
+#main_wrapper
+{
+	width: 100%;
+	margin: 0 auto;
+}
+
+#comments_sidebar,
+#activity_sidebar
+{
+	background-color: #f7f7ef;
+}
+
+
+
+/* Site Tagline */
+#header #tagline
+{
+	color: #999;
+}
+
+
+
+/* 404 page title must have no background */
+body.error404 .post h2.post_title
+{
+	color: #333;
+	background: transparent;
+}
+
+
+
+/* Links in page/post content */
+.post a,
+
+/* Stray BuddyPress */
+body.create-blog #content a,
+
+/* Links in comment identifiers */
+.comment-content a,
+div#respond .subscribe_reloaded_insert a
+.comment-meta a,
+.acomment-meta a,
+.meta a,
+
+/* Links in comments */
+.comment-identifier .comment-edit a:hover,
+.comment-identifier .comment-assign:hover,
+.comment-identifier cite a:hover,
+.reply a:hover,
+.comment_permalink:hover,
+.comment_activity_link:hover,
+.author_is_logged_in a:hover,
+#cancel-comment-reply-link:hover,
+
+/* Signup, Activate and Register page links */
+#content .mu_register h2 a,
+#content #signup-content a,
+#content #activateform label,
+#content #signup-welcome span.h3,
+
+/* Signup Form Styles */
+body.commentpress_page #cp-multisite-options h3,
+
+/* Post version info */
+#content div.version_info a,
+.content div.version_info a,
+
+/* Footnotes */
+#content sup a.footnote-link,
+.content sup a.footnote-link,
+#content a.simple-footnote,
+.content a.simple-footnote,
+#content sup.footnote,
+.content sup.footnote,
+
+/* Feature Comments compat */
+.feature-bury-comments a.feature-comments:hover,
+.feature-burry-comments a.feature-comments:hover,
+
+/* Comment Tagger compat */
+.comment_tagger_tag_link,
+.comment_tagger_tag_link:active,
+
+/* BP Group Sites */
+.bpgsites_group_linkages_pending_heading,
+
+/* JSTOR plugin compat */
+.commentpress_jstor .comment-title a,
+
+/* CommentPress Text Highlighter */
+.comment-backlink
+{
+	color: #761D19;
+}
+
+
+
+/* Switcher buttons */
+#switcher ul li a
+{
+	background: #C1C3A9;
+	background-color: #C1C3A9;
+}
+
+#switcher ul li a:focus,
+#switcher ul li a:hover,
+#switcher ul li a:active
+{
+	color: #fff;
+	background-color: #afb290;
+}
+
+
+
+/* Sidebar Section headings */
+.comments_container > h3,
+.comments_container > h3 > span,
+.comments_container > h3 a,
+.comments_container > h3 a:active
+{
+	background-color: transparent;
+}
+
+h3.activity_heading:hover,
+.comments_container > h3:hover
+{
+	background-color: #afb290;
+}
+
+
+
+/* Navigation menu items */
+#toc_sidebar .sidebar_minimiser ul li a
+{
+	background: #EAE9DB;
+	background-color: #EAE9DB;
+}
+
+#toc_sidebar .sidebar_minimiser ul#toc_list li.current_page_ancestor > a,
+#toc_sidebar .sidebar_minimiser ul#toc_list li.current_page_item > a,
+#toc_sidebar .sidebar_minimiser ul#nav li.active_page > a
+{
+	background-color: #fff;
+}
+
+#toc_sidebar .sidebar_minimiser ul#toc_list li.current_page_ancestor > .post-identifier,
+#toc_sidebar .sidebar_minimiser ul#toc_list li.current_page_item > .post-identifier,
+#toc_sidebar .sidebar_minimiser ul#nav li.active_page > .post-identifier
+{
+	background-color: #fff;
+}
+
+#toc_sidebar .post-identifier,
+#toc_sidebar .sidebar_minimiser ul li a.post_activity_link
+{
+	background: transparent;
+	border-bottom: none;
+}
+
+#toc_sidebar .post-identifier
+{
+	padding-top: 8px;
+}
+
+#toc_sidebar .sidebar_minimiser ul li a.post_activity_link
+{
+	padding-top: 5px;
+	padding-bottom: 8px;
+}
+
+
+
+/* Translation tabs */
+ul#content-tabs li h2 a
+{
+	border-bottom: 1px solid #aaa;
+}
+
+ul#content-tabs li h2 a:hover
+{
+	background-color: #eee;
+}
+
+ul#content-tabs li.default-content-tab h2 a
+{
+	border: 1px solid #aaa;
+	border-bottom: none;
+}
+
+ul#content-tabs li.default-content-tab h2 a:hover
+{
+	background-color: #fff;
+}
+
+
+
+/* Content */
+.cp_feature_image .cp_featured_title .cp_featured_title_inner h2.post_title
+{
+	padding: 0;
+}
+
+
+
+/* Comments Sidebar */
+@media all and (max-width: 1400px) {
+	.comment-content
+	{
+		font-size: 90%;
+	}
+}
+
+/* Section headings */
+.comments_container > h3 a:hover,
+.comments_container > h3 a:focus,
+.comments_container > h3.nocomments:hover,
+.comments_container > h3.nocomments:hover span
+{
+	background-color: #EAE9DB;
+}
+
+/* Comment reply cancel link */
+#cancel-comment-reply-link
+{
+	color: #000;
+}
+
+
+
+/* Activity Sidebar */
+h3.activity_heading
+{
+	color: #fff;
+	background-color: #C1C3A9;
+}
+
+
+
+/* WP Footnotes adds an inline colour *sigh* */
+ol.footnotes.selected_para
+{
+	color: #ca0000;
+}
+

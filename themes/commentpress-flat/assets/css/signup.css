@@ -1,0 +1,245 @@
+/*
+================================================================================
+CommentPress Flat Multisite Signup Page Stylesheet
+================================================================================
+AUTHOR: Christian Wach
+--------------------------------------------------------------------------------
+NOTES
+
+Because we have no control over the signup page markup, we have to override some
+styles for it to fit with our static header.
+
+--------------------------------------------------------------------------------
+*/
+
+#content .mu_register
+{
+	width: auto;
+	margin: 0;
+	padding: 0;
+}
+
+#content .mu_register .mu_alert
+{
+	margin: 2em 0;
+	font-size: 90%;
+	font-family: sans-serif;
+	line-height: 1.6;
+}
+
+#content .mu_register .mu_alert a
+{
+	text-decoration: underline;
+}
+
+#content .mu_register #setupform p.error
+{
+	border: 1px solid #E1CA82;
+	font-weight: normal;
+	font-family: sans-serif;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	text-decoration: none;
+	background: none;
+	background-color: #F37F6D;
+	border-color: #A71A1A;
+	clear: left;
+	color: #fff;
+	font-size: 90%;
+	display: block;
+	padding: 0.5em;
+}
+
+#content .mu_register h2
+{
+	text-transform: uppercase;
+	font-size: 2em;
+	line-height: 1.2;
+	color: #000;
+	margin: 1em 0;
+}
+
+#content .mu_register p
+{
+	font-size: 1em;
+	line-height: 1.5;
+}
+
+#content .mu_register #privacy
+{
+	margin: 36px 0 0 0;
+	padding: 15px;
+	border: 1px solid #DDD;
+}
+
+#content .mu_register #setupform p.privacy-intro
+{
+	font-size: 1em;
+	line-height: 1.5;
+	padding: 0;
+	margin: 0;
+}
+
+#content .mu_register #setupform p.privacy-intro label
+{
+	margin: 0;
+}
+
+/* existing sites list */
+#content .mu_register ul
+{
+	font-size: 1em;
+	line-height: 1.5;
+	padding: 6px 0 0 0;
+	margin: 0 0 4px 0;
+	background: lightYellow;
+	border: 1px solid #E6DB55;
+}
+
+#content .mu_register ul li
+{
+	font-size: 90%;
+	font-family: sans-serif;
+	line-height: 1.6;
+	margin: 0 1em;
+	padding: 0 0 0.5em 0;
+	list-style: none;
+	list-style-image: none;
+}
+
+/* No email tips */
+#content .mu_register ul#noemail-tips
+{
+	margin: 0.7em 0;
+	padding: 0 0.7em;
+}
+
+#content .mu_register ul#noemail-tips li
+{
+	font-size: 1em;
+	line-height: 1.5;
+	padding: 0;
+	margin: 0.7em 0;
+	font-family: sans-serif;
+	font-size: 90%;
+}
+
+#content .mu_register ul#noemail-tips li p
+{
+	margin: 0.7em 0;
+	padding: 0;
+}
+
+#content .mu_register ul li a
+{
+	text-decoration: underline;
+}
+
+#content .mu_register #setupform
+{
+	margin: 0;
+	padding: 0;
+}
+
+#content .mu_register #setupform p
+{
+	padding: 30px 0 5px 0;
+}
+
+#content .mu_register label
+{
+	text-transform: uppercase;
+	color: #761D19;
+	font-size: 1.2em;
+	margin: 20px 0 5px 0;
+}
+
+#setupform .prefix_address
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.9em;
+}
+
+#content .mu_register #setupform #blogname
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.9em;
+	width: 50%;
+	margin: 0;
+	padding: 5px 2px;
+	margin-bottom: 5px;
+}
+
+#content .mu_register #setupform #blog_title,
+#content .mu_register #setupform #user_name,
+#content .mu_register #setupform #user_email
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 1em;
+	margin: 0;
+	padding: 5px 2px;
+	margin-bottom: 5px;
+	width: 90%;
+}
+
+#content .mu_register #setupform #blog_title
+{
+	padding: 5px;
+}
+
+#content .mu_register #cp-multisite-options
+{
+	margin-bottom: 11px;
+	padding: 15px;
+	border: 1px solid #DDD;
+}
+
+#content .mu_register #cp-multisite-options h3
+{
+	text-transform: uppercase;
+	color: #761D19;
+	font-size: 1.2em;
+	margin: 0.2em 0 0 0;
+}
+
+#content .mu_register #cp-multisite-options p
+{
+	padding: 5px 0;
+}
+
+#content .mu_register label.checkbox
+{
+	color: #000;
+	font-size: 1em;
+	padding: 0 10px 0 0;
+	margin: 0;
+	text-transform: none;
+}
+
+#content .mu_register #cp-multisite-options .checkbox label,
+#content .mu_register #cp-multisite-options .cp-workflow-type label
+{
+	color: #000;
+	font-size: 1em;
+	font-weight: bold;
+	margin: 5px 0;
+	text-transform: none;
+}
+
+#content .mu_register #cp-multisite-options .dropdown label
+{
+	text-transform: none;
+	font-size: 1em;
+	color: #761D19;
+}
+
+#content .mu_register p.submit
+{
+	padding: 30px 0 0 0;
+}
+
+#content .mu_register p.submit input
+{
+	width: auto;
+	font-size: 90%;
+}
