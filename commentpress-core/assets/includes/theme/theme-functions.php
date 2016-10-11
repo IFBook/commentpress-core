@@ -4596,3 +4596,38 @@ endif; // commentpress_suffix_signup_template
 add_action( 'after_signup_form', 'commentpress_suffix_signup_template' );
 
 
+
+if ( ! function_exists( 'commentpress_unwrap_buddypress_button' ) ):
+/**
+ * Removes the default wrapping of buttons in the directory nav.
+ *
+ * The BP_Button class was refactored in BuddyPress 2.7 and all buttons are
+ * wrapped in <div class="generic-button"></div> by default. This causes the
+ * link to pick up the style of a button, which breaks the nav menu layout.
+ * This filter unwraps the link so it appears the same as in BuddyPress 2.6.n.
+ *
+ * @since 3.9.1
+ *
+ * @param array $button_args The existing params used to define the button
+ * @return array $button_args The modified params used to define the button
+ */
+function commentpress_unwrap_buddypress_button( $button_args ) {
+
+	// bail if not BP 2.7.x
+	if ( ! function_exists( 'bp_core_filter_wp_query' ) ) return $button_args;
+
+	// remove parent element
+	$button_args['parent_element'] = '';
+
+	// --<
+	return $button_args;
+
+}
+endif; // commentpress_unwrap_buddypress_button
+
+// add filters for the above
+add_filter( 'bp_get_group_create_button', 'commentpress_unwrap_buddypress_button' );
+add_filter( 'bp_get_blog_create_button', 'commentpress_unwrap_buddypress_button' );
+
+
+
