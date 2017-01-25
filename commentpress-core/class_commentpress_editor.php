@@ -53,8 +53,8 @@ class Commentpress_Core_Editor {
 		// store reference to database wrapper (child of calling obj)
 		$this->db = $this->parent_obj->db;
 
-		// intercept toggles
-		add_action( 'plugins_loaded', array( $this, 'initialise' ), 999 );
+		// init this class
+		add_action( 'init', array( $this, 'initialise' ), 999 );
 
 	}
 

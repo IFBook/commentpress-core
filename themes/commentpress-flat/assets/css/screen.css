@@ -430,7 +430,7 @@ SCREEN STYLES
 img.cp_logo_image
 {
 	float: left;
-	padding: 12px 10px 0 10px;
+	padding: 12px 10px 0 72px;
 }
 
 #title h1
@@ -4708,7 +4708,7 @@ RESPONSIVENESS
 	/* site name */
 	#title h1
 	{
-		line-height: 1.5;
+		line-height: 1.2;
 	}
 
 	/* site tagline */
@@ -4716,6 +4716,7 @@ RESPONSIVENESS
 	{
 		font-size: 0.9em;
 		padding-top: 0;
+		padding-bottom: 8px;
 	}
 
 	h2.post_title,

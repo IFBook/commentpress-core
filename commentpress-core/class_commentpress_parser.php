@@ -1666,6 +1666,11 @@ class Commentpress_Core_Parser {
 	/**
 	 * Wraps standalone captions (ie, not inside <p> tags) in <p>.
 	 *
+	 * Previously, there was a weakness in the means by which standalone captions
+	 * were detected: it was assumed that standalones were always preceded by a
+	 * newline, but this is not always true. When they are the first element of
+	 * the post content, they can be standalone too. Props: Ralph Bloch.
+	 *
 	 * @param str $content The post content
 	 * @return str $content The filtered post content
 	 */
@@ -1685,6 +1690,11 @@ class Commentpress_Core_Parser {
 
 		// do replacement
 		$content = preg_replace( $pattern, $replace, $content );
+
+		// check for captions at the very beginning of content
+		if ( substr( $content, 0, 25 ) == '<!-- cp_caption_start -->' ) {
+			$content = '<p>' . $content;
+		}
 
 		// --<
 		return $content;
