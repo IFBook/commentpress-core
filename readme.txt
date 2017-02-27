@@ -213,6 +213,10 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+<h4>3.9.2</h4>
+
+* Javascript enhancement to allow hiding of comment sections with no comments
+
 <h4>3.9.1</h4>
 
 * Fix markup when captioned image is first element of content
