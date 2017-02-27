@@ -746,6 +746,7 @@ CommentPress.ajax.comments = new function() {
 
 		// we no longer have zero comments
 		$(para_id).removeClass( 'no_comments' );
+		$(head_id).removeClass( 'no_comments' );
 
 		// if the comment is a reply, append the comment to the children
 		if ( comm_parent != '0' ) {
@@ -1048,6 +1049,7 @@ CommentPress.ajax.comments = new function() {
 		if ( new_comment_count == 1 ) {
 
 			// set comment icon
+			$(textblock_id + ' span.commenticonbox a.para_permalink').removeClass( 'no_comments' );
 			$(textblock_id + ' span.commenticonbox a.para_permalink').addClass( 'has_comments' );
 
 			// show comment icon text
