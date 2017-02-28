@@ -1962,6 +1962,28 @@ span.commenticonbox small.comment_count.js-hover
 	font-weight: bold;
 }
 
+/*
+Comment icons in line-by-line commenting need special handling when preceded
+by audio or video shortcodes.
+*/
+.blogtype-1 .post p,
+.post.overridden_type-1 p
+{
+	position: relative;
+}
+
+.blogtype-1 .post .wp-video,
+.post.overridden_type-1 .wp-video
+{
+	display: inline-block;
+}
+
+span.cp-audio-shortcode + .commenticonbox,
+span.cp-video-shortcode + .commenticonbox
+{
+	top: 0;
+}
+
 .post ul li.list_commenticon,
 .post ol li.list_commenticon
 {

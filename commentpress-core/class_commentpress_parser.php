@@ -145,6 +145,12 @@ class Commentpress_Core_Parser {
 			// filter commentable status
 			add_filter( 'cp_is_commentable', '__return_false' );
 
+		} else {
+
+			// filter shortcodes at source
+			add_filter( 'wp_audio_shortcode', array( $this, '_parse_audio_shortcode' ), 10, 5 );
+			add_filter( 'wp_video_shortcode', array( $this, '_parse_video_shortcode' ), 10, 5 );
+
 		}
 
 	}
@@ -1698,6 +1704,54 @@ class Commentpress_Core_Parser {
 
 		// --<
 		return $content;
+
+	}
+
+
+
+	/**
+	 * Wraps processed audio shortcodes in a paragraph tag.
+	 *
+	 * @since 3.9.3
+	 *
+     * @param string $html Shortcode HTML output.
+     * @param array $atts Array of shortcode attributes.
+     * @param string $file Media file.
+     * @param int $post_id Post ID.
+     * @param string $library Media library used for the shortcode.
+	 */
+	function _parse_audio_shortcode( $html, $atts, $file, $post_id, $library ) {
+
+		// replace enclosing div with span
+		$html = str_replace( '<div', '<span', $html );
+		$html = str_replace( '</div', '</span', $html );
+
+		// wrap
+		return '<p><span class="cp-audio-shortcode">' . $html . '</span></p>';
+
+	}
+
+
+
+	/**
+	 * Wraps processed video shortcodes in a paragraph tag.
+	 *
+	 * @since 3.9.3
+	 *
+     * @param string $html Shortcode HTML output.
+     * @param array $atts Array of shortcode attributes.
+     * @param string $file Media file.
+     * @param int $post_id Post ID.
+     * @param string $library Media library used for the shortcode.
+	 */
+	function _parse_video_shortcode( $html, $atts, $file, $post_id, $library ) {
+
+		// replace enclosing div with span
+		$html = str_replace( '<div', '<span', $html );
+		$html = str_replace( '</div', '</span', $html );
+
+		// wrap
+		return '<p><span class="cp-video-shortcode"><span></span>' . $html . '</span></p>';
 
 	}
 
