@@ -1722,10 +1722,6 @@ class Commentpress_Core_Parser {
 	 */
 	function _parse_audio_shortcode( $html, $atts, $file, $post_id, $library ) {
 
-		// replace enclosing div with span
-		$html = str_replace( '<div', '<span', $html );
-		$html = str_replace( '</div', '</span', $html );
-
 		// wrap
 		return '<p><span class="cp-audio-shortcode">' . $html . '</span></p>';
 
