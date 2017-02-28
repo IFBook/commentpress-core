@@ -2674,6 +2674,43 @@ span.commenticonbox a.para_permalink
 		color: #761D19;
 	}
 
+	/*
+	Comment icons in line-by-line commenting need special handling when preceded
+	by audio or video shortcodes.
+	*/
+	.blogtype-1 .post p,
+	.post.overridden_type-1 p
+	{
+		position: relative;
+	}
+
+	.blogtype-1 .post span.textblock,
+	.post.overridden_type-1 span.textblock
+	{
+		position: initial;
+	}
+
+	.blogtype-1 .post .wp-video,
+	.post.overridden_type-1 .wp-video
+	{
+		display: inline-block;
+	}
+
+	/* this doesn't work very well but is better than without */
+	.blogtype-1 .post .selected_para .cp-audio-shortcode,
+	.post.overridden_type-1 .selected_para .cp-audio-shortcode
+	{
+		width: 98%;
+		float: left;
+		margin: -9px;
+	}
+
+	span.cp-audio-shortcode + .commenticonbox,
+	span.cp-video-shortcode + .commenticonbox
+	{
+		top: 0;
+	}
+
 
 
 /*
