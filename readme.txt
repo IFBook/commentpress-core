@@ -213,6 +213,10 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+<h4>3.9.3</h4>
+
+* Fix markup when using audio or video shortcodes in line-by-line context
+
 <h4>3.9.2</h4>
 
 * Javascript enhancement to allow hiding of comment sections with no comments
