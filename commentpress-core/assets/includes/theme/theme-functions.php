@@ -3163,7 +3163,7 @@ function commentpress_multipage_comment_link( $link, $comment, $args ) {
 			$comment_path_info = parse_url( $link );
 
 			// set comment path
-			return commentpress_get_post_multipage_url( $page_num, get_post( $comment->comment_post_ID ) ) . '#' . $comment_path_info['fragment'];
+			$link = commentpress_get_post_multipage_url( $page_num, get_post( $comment->comment_post_ID ) ) . '#' . $comment_path_info['fragment'];
 
 		}
 
