@@ -587,7 +587,7 @@ class Commentpress_Multisite_Buddypress {
 			$page_num = get_comment_meta( $comment->comment_ID, $key, true );
 
 			// get the url for the comment
-			$link = commentpress_get_post_multipage_url( $page_num ) . '#comment-' . $comment->comment_ID;
+			$link = commentpress_get_post_multipage_url( $page_num, $post ) . '#comment-' . $comment->comment_ID;
 
 			// amend the primary link
 			$activity->primary_link = $link;
