@@ -1029,7 +1029,7 @@ CommentPress.common.content = new function() {
 	 */
 	this.textblock_permalink_show = function() {
 
-    	/**
+		/**
 		 * Copy icon tooltip.
 		 *
 		 * @since 3.8
@@ -1056,7 +1056,7 @@ CommentPress.common.content = new function() {
 			}
 		});
 
-    	/**
+		/**
 		 * Click on paragraph permalink to reveal it in the location bar.
 		 *
 		 * @since 3.8
@@ -2069,7 +2069,7 @@ CommentPress.common.comments = new function() {
 	 */
 	this.comment_permalink_show = function() {
 
-    	/**
+		/**
 		 * Copy icon tooltip.
 		 *
 		 * @since 3.8
@@ -2096,7 +2096,7 @@ CommentPress.common.comments = new function() {
 			}
 		});
 
-    	/**
+		/**
 		 * Click on comment permalink to reveal it in the location bar.
 		 *
 		 * @since 3.8
@@ -2104,13 +2104,19 @@ CommentPress.common.comments = new function() {
 		$('#comments_sidebar, #wrapper').on( 'click', '.comment_permalink', function( event ) {
 
 			// define vars
-			var url;
+			var url, hide;
 
 			// get selection
 			url = $(this).attr( 'href' );
 
 			// did we get one?
 			if ( url ) {
+
+				// close tooltip immediately
+				hide = $('.comment_permalink').tooltip( 'option', 'hide' );
+				$('.comment_permalink').tooltip( 'option', 'hide', false );
+				$('.comment_permalink').tooltip( 'close' );
+				$('.comment_permalink').tooltip( 'option', 'hide', hide );
 
 				// replace window state with comment permalink
 				CommentPress.common.DOM.location_set( url );
