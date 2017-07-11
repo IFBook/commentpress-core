@@ -1105,11 +1105,13 @@ CommentPress.theme.viewport = new function() {
 			// get the item
 			item = $(para_wrapper_array[0]);
 
+			// get the text sig
+			text_sig = item.prop('id').split('-')[1];
+
 			// are comments open?
 			if ( cp_comments_open == 'y' ) {
 
 				// move form to para
-				text_sig = item.prop('id').split('-')[1];
 				para_id = $('#para_wrapper-'+text_sig+' .reply_to_para').prop('id');
 				para_num = para_id.split('-')[1];
 				post_id = $('#comment_post_ID').prop('value');
@@ -1567,7 +1569,6 @@ jQuery(document).ready( function($) {
 
 		// remove highlight class
 		jQuery( '.comment-wrapper' ).removeClass( 'background-highlight' );
-
 
 	});
 
