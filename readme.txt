@@ -22,6 +22,8 @@ Annotate, gloss, workshop, debate: with CommentPress Core you can do all of thes
 
 For further information and instructions please see the [CommentPress website](http://www.futureofthebook.org/commentpress/) or visit the plugin's [GitHub repository](https://github.com/IFBook/commentpress-core). Contact the developers by email at [cpdev@futureofthebook.org](mailto:cpdev@futureofthebook.org).
 
+**For sites hosted in the European Union, please note:** the "CommentPress Default Theme" makes use of cookies, but for presentational purposes only. If you intend to use the "CommentPress Default Theme" on a public site, you may need to inform visitors of this.
+
 Many thanks to the following for translations:
 
 * French - [Pouhiou](http://wordpress.org/support/profile/pouhiou)
@@ -140,11 +142,9 @@ To create a "CommentPress Core"-enabled Groupblog:
 6. To go to the groupblog, click "Blog" (or "Workshop" if you have chosen that naming scheme)
 7. Start your group blogging!
 
+<hr>
 
-
-== Other Notes ==
-
-**For sites hosted in the European Union, please note:** the "CommentPress Default Theme" makes use of cookies, but for presentational purposes only. If you intend to use the "CommentPress Default Theme" on a public site, you may need to inform visitors of this.
+<h3>Upgrades</h3>
 
 Upgrades from previous versions of "CommentPress" are possible. Please follow the following procedures for your context.
 
