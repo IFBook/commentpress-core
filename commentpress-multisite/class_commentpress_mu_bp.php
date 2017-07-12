@@ -1694,6 +1694,9 @@ class Commentpress_Multisite_Buddypress {
 		add_filter( 'cp_forced_theme_slug', array( $this, '_get_groupblog_theme' ), 20, 1 );
 		add_filter( 'cp_forced_theme_name', array( $this, '_get_groupblog_theme' ), 20, 1 );
 
+		// filter the AJAX query string to add "action"
+		add_filter( 'bp_ajax_querystring', array( $this, '_groupblog_querystring' ), 20, 2 );
+
 		// is this the back end?
 		if ( is_admin() ) {
 
@@ -1791,6 +1794,57 @@ class Commentpress_Multisite_Buddypress {
 		// instead, I'm trying to store the blog_type as group meta data
 		//add_action( 'bp_activity_after_save', array( $this, 'groupblog_custom_comment_meta' ), 20, 1 );
 		//add_action( 'bp_activity_after_save', array( $this, 'groupblog_custom_post_meta' ), 20, 1 );
+
+	}
+
+
+
+	/**
+	 * Modify the AJAX query string.
+	 *
+	 * @since 3.9.3
+	 *
+	 * @param string $qs The query string for the BP loop
+	 * @param string $object The current object for the query string
+	 * @return string Modified query string
+	 */
+	public function _groupblog_querystring( $qs, $object ) {
+
+		// bail if not an activity object
+		if ( $object != 'activity' ) return $qs;
+
+		// parse query string into an array
+		$r = wp_parse_args( $qs );
+
+		// bail if no type is set
+		if ( empty( $r['type'] ) ) return $qs;
+
+		// bail if not a type that we're looking for
+		if ( 'new_groupblog_post' !== $r['type'] AND 'new_groupblog_comment' !== $r['type'] ) {
+			return $qs;
+		}
+
+		// add the 'new_groupblog_post' type if it doesn't exist
+		if ( 'new_groupblog_post' === $r['type'] ) {
+			if ( ! isset( $r['action'] ) OR false === strpos( $r['action'], 'new_groupblog_post' ) ) {
+				// 'action' filters activity items by the 'type' column
+				$r['action'] = 'new_groupblog_post';
+			}
+		}
+
+		// add the 'new_groupblog_comment' type if it doesn't exist
+		if ( 'new_groupblog_comment' === $r['type'] ) {
+			if ( ! isset( $r['action'] ) OR false === strpos( $r['action'], 'new_groupblog_comment' ) ) {
+				// 'action' filters activity items by the 'type' column
+				$r['action'] = 'new_groupblog_comment';
+			}
+		}
+
+		// 'type' isn't used anywhere internally
+		unset( $r['type'] );
+
+		// return a querystring
+		return build_query( $r );
 
 	}
 
