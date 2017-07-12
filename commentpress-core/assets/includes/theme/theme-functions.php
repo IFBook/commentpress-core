@@ -16,8 +16,6 @@ if ( ! function_exists( 'commentpress_admin_header' ) ):
  * Custom admin header.
  *
  * @since 3.0
- *
- * @return void
  */
 function commentpress_admin_header() {
 
@@ -91,7 +89,6 @@ if ( ! function_exists( 'commentpress_customize_register' ) ) :
  * @since 3.0
  *
  * @param $wp_customize Theme Customizer object
- * @return void
  */
 function commentpress_customize_register( $wp_customize ) {
 
@@ -121,7 +118,6 @@ if ( ! function_exists( 'commentpress_customize_site_image' ) ) :
  * @since 3.8.5
  *
  * @param $wp_customize Theme Customizer object
- * @return void
  */
 function commentpress_customize_site_image( $wp_customize ) {
 
@@ -216,7 +212,6 @@ if ( ! function_exists( 'commentpress_customize_site_logo' ) ) :
  * @since 3.8.5
  *
  * @param $wp_customize Theme Customizer object
- * @return void
  */
 function commentpress_customize_site_logo( $wp_customize ) {
 
@@ -273,7 +268,6 @@ if ( ! function_exists( 'commentpress_customize_header_bg_color' ) ) :
  * @since 3.8.5
  *
  * @param $wp_customize Theme Customizer object
- * @return void
  */
 function commentpress_customize_header_bg_color( $wp_customize ) {
 
@@ -304,8 +298,6 @@ if ( ! function_exists( 'commentpress_admin_menu' ) ) :
  * Adds more prominent menu item.
  *
  * @since 3.0
- *
- * @return void
  */
 function commentpress_admin_menu() {
 
@@ -367,8 +359,6 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ):
  * @since 3.0
  *
  * @todo Inform users that header images are using a different method
- *
- * @return void
  */
 function commentpress_get_header_image() {
 
@@ -1071,7 +1061,6 @@ if ( ! function_exists( 'commentpress_get_comments' ) ):
  *
  * @param array $comments An array of WordPress comment objects
  * @param string $page_or_post The WordPress post type to query
- * @return void
  */
 function commentpress_get_comments( $comments, $page_or_post ) {
 
@@ -1177,8 +1166,6 @@ if ( ! function_exists( 'commentpress_echo_post_meta' ) ):
  * Show user(s) in the loop.
  *
  * @since 3.0
- *
- * @return void
  */
 function commentpress_echo_post_meta() {
 
@@ -1273,8 +1260,6 @@ if ( ! function_exists( 'commentpress_show_source_url' ) ):
  * Show source URL for print.
  *
  * @since 3.5
- *
- * @return void
  */
 function commentpress_show_source_url() {
 
@@ -2235,8 +2220,6 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ):
  * Get comments delimited by paragraph.
  *
  * @since 3.0
- *
- * @return void
  */
 function commentpress_get_comments_by_para() {
 
@@ -2643,7 +2626,6 @@ if ( ! function_exists( 'commentpress_comment_form_title' ) ):
  * @param str $reply_to_comment_text
  * @param str $reply_to_para_text
  * @param str $link_to_parent
- * @return void
  */
 function commentpress_comment_form_title(
 
@@ -2816,7 +2798,6 @@ if ( ! function_exists( 'commentpress_comments' ) ):
  * @param object $comment The comment object
  * @param array $args The comment arguments
  * @param int $depth The comment depth
- * @return void
  */
 function commentpress_comments( $comment, $args, $depth ) {
 
@@ -3712,8 +3693,6 @@ if ( ! function_exists( 'commentpress_add_commentblock_button' ) ):
  * Add filters for adding our custom TinyMCE button.
  *
  * @since 3.3
- *
- * @return void
  */
 function commentpress_add_commentblock_button() {
 
@@ -3828,7 +3807,6 @@ if ( ! function_exists( 'commentpress_amend_search_query' ) ):
  * @since 3.3
  *
  * @param object $query The query object, passed by reference
- * @return void
  */
 function commentpress_amend_search_query( &$query ) {
 
@@ -3955,8 +3933,6 @@ if ( ! function_exists( 'commentpress_license_widget_compat' ) ):
  * This is because wp_footer() is not inside #footer
  *
  * @since 3.3
- *
- * @return void
  */
 function commentpress_license_widget_compat() {
 
@@ -3981,8 +3957,6 @@ if ( ! function_exists( 'commentpress_wplicense_compat' ) ):
  * This is because wp_footer() is not inside #footer
  *
  * @since 3.3
- *
- * @return void
  */
 function commentpress_wplicense_compat() {
 
@@ -4081,7 +4055,7 @@ if ( ! function_exists( 'commentpress_get_post_version_info' ) ):
  *
  * @since 3.3
  *
- * @return void
+ * @param WP_Post $post The WordPress post object
  */
 function commentpress_get_post_version_info( $post ) {
 
@@ -4508,8 +4482,6 @@ if ( ! function_exists( 'commentpress_prefix_bp_templates' ) ):
  * Prefixes BuddyPress pages with the div wrappers that CommentPress Core needs.
  *
  * @since 3.3
- *
- * @return void
  */
 function commentpress_prefix_bp_templates() {
 
@@ -4531,8 +4503,6 @@ if ( ! function_exists( 'commentpress_suffix_bp_templates' ) ):
  * Suffixes BuddyPress pages with the div wrappers that CommentPress Core needs.
  *
  * @since 3.3
- *
- * @return void
  */
 function commentpress_suffix_bp_templates() {
 
@@ -4554,8 +4524,6 @@ if ( ! function_exists( 'commentpress_prefix_signup_template' ) ):
  * Prefixes WordPress Signup Page with the div wrappers that CommentPress Core needs.
  *
  * @since 3.8.5
- *
- * @return void
  */
 function commentpress_prefix_signup_template() {
 
@@ -4578,8 +4546,6 @@ if ( ! function_exists( 'commentpress_suffix_signup_template' ) ):
  * Suffixes WordPress Signup Page with the div wrappers that CommentPress Core needs.
  *
  * @since 3.8.5
- *
- * @return void
  */
 function commentpress_suffix_signup_template() {
 
