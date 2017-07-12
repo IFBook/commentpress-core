@@ -319,6 +319,36 @@ class Commentpress_Multisite_Buddypress {
 
 
 	/**
+	 * Register "page" as a post_type that BuddyPress records comment activity for.
+	 *
+	 * @since 3.9.3
+	 */
+	public function register_comment_tracking_on_pages() {
+
+		// amend "page" post type
+		add_post_type_support( 'page', 'buddypress-activity' );
+
+		// define tracking args
+		bp_activity_set_post_type_tracking_args( 'page', array(
+			'action_id' => 'new_page',
+			'bp_activity_admin_filter' => __( 'Published a new page', 'commentpress-core' ),
+			'bp_activity_front_filter' => __( 'Pages', 'commentpress-core' ),
+			'bp_activity_new_post' => __( '%1$s posted a new <a href="%2$s">page</a>', 'commentpress-core' ),
+			'bp_activity_new_post_ms' => __( '%1$s posted a new <a href="%2$s">page</a>, on the site %3$s', 'commentpress-core' ),
+			'contexts' => array( 'activity', 'member' ),
+			'comment_action_id' => 'new_blog_comment',
+			'bp_activity_comments_admin_filter' => __( 'Commented on a page', 'commentpress-core' ),
+			'bp_activity_comments_front_filter' => __( 'Comments', 'commentpress-core' ),
+			'bp_activity_new_comment' => __( '%1$s commented on the <a href="%2$s">page</a>', 'commentpress-core' ),
+			'bp_activity_new_comment_ms' => __( '%1$s commented on the <a href="%2$s">page</a>, on the site %3$s', 'commentpress-core' ),
+			'position' => 100,
+		) );
+
+	}
+
+
+
+	/**
 	 * Add pages to the post_types that BuddyPress records comment activity for.
 	 *
 	 * @param array $post_types The existing array of post types
@@ -1609,6 +1639,9 @@ class Commentpress_Multisite_Buddypress {
 		// amend comment activity
 		add_filter( 'pre_comment_approved', array( $this, 'pre_comment_approved' ), 99, 2 );
 		//add_action( 'preprocess_comment', 'my_check_comment', 1 );
+
+		// register "page" as a post_type that BuddyPress records comment activity for
+		add_action( 'init', array( $this, 'register_comment_tracking_on_pages' ), 100 );
 
 		// add pages to the post_types that BuddyPress records comment activity for
 		add_filter( 'bp_blogs_record_comment_post_types', array( $this, 'record_comments_on_pages' ), 10, 1 );
