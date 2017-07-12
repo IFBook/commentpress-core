@@ -213,6 +213,12 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+<h4>3.9.4</h4>
+
+* Fix BuddyPress comment tracking on pages
+* Fix BuddyPress activity stream filtering functionality
+* Fix BuddyPress activity item target link when editing comments in WordPress admin
+
 <h4>3.9.3</h4>
 
 * Fix markup when using audio or video shortcodes in line-by-line context
