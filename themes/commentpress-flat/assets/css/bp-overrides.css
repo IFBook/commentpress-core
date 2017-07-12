@@ -1353,7 +1353,8 @@ body.group-admin.delete-group #buddypress .standard-form
 	text-transform: uppercase;
 }
 
-#buddypress div#item-header div#item-actions h3
+body.buddypress #buddypress div#item-header div#item-actions h2,
+body.buddypress #buddypress div#item-header div#item-actions h3
 {
 	font-size: 80%;
 	line-height: 1;
@@ -1647,7 +1648,7 @@ body.create-blog #content #setupform label
 	font-weight: bold;
 	text-transform: uppercase;
 	color: #761D19;
-	margin: 0;
+	margin: 0 0.5em 0 0;
 	padding: 0;
 }
 
@@ -2071,6 +2072,7 @@ body.group-admin #content #item-body h4,
 body.group-admin #content #item-body h3,
 body.group-admin.group-blog #group-settings-form h2,
 #register-page #cp-multisite-options h4,
+#register-page #signup_form h2,
 div.profile h4
 {
 	font-size: 1.3em;
@@ -2113,7 +2115,6 @@ body.group-create #content form.standard-form > h3,
 /* Title when on BuddyPress Registration page */
 body.create-blog.buddypress_page #content h3,
 /* Title when on BuddyPress Sign-up page */
-#register-page #signup_form h2,
 #activate-page h2,
 #activate-page h3
 {
@@ -2126,7 +2127,6 @@ body.create-blog.buddypress_page #content h3,
 }
 
 body.create-blog.buddypress_page #content h3,
-#register-page #signup_form h2,
 #activate-page h2,
 #activate-page h3
 {
@@ -3523,7 +3523,6 @@ body.buddypress form#whats-new-form,
 body.home-page form#whats-new-form,
 body.directory #content h3,
 body.group-create #content form.standard-form > h3,
-#register-page #signup_form h2,
 body.activation.activate #content h2,
 body.activation.activate #content h3,
 div#item-header,
@@ -3551,220 +3550,6 @@ body.buddypress div#item-header div#item-meta
 ul.item-list li div.item-desc
 {
 	color: #761D19;
-}
-
-
-
-/*
---------------------------------------------------------------------------------
-Prose
---------------------------------------------------------------------------------
-*/
-
-/* body (allow Theme Customizer to set colour for non-groupblogs) */
-body.blogtype-0
-{
-    background: #312F84;
-}
-
-/* body (do not allow Theme Customizer to set colour for groupblogs) */
-body.is-groupblog.blogtype-0
-{
-    background: #312F84 !important;
-}
-
-/* group home */
-body.groups.groupblogtype-0 h2.post_title,
-body.groupblogtype-0 div#item-header,
-body#main_blog.groups.groupblogtype-0 #content div.item-list-tabs#object-nav,
-body#main_blog.groups.groupblogtype-0 div.item-list-tabs
-{
-	background: #312F84;
-}
-
-/* group decoration */
-ul.item-list li.groupblogtype-0 .item-title a,
-ul.item-list li.groupblogtype-0 .item-desc,
-ul.item-list li.groupblogtype-0 .item-desc p,
-ul.item-list li.groupblogtype-0 .item-desc a
-{
-    color: #312F84;
-}
-
-/* groups, blogs & activities lists */
-#buddypress ul#groups-list li.groupblogtype-0,
-#buddypress ul#blogs-list li.groupblogtype-0,
-#buddypress ul.activity-list li.groupblogtype-0
-{
-    border-left: 10px solid #312F84;
-}
-
-/* activity tab */
-#activity_sidebar li.groupblogtype-0
-{
-    border-left: 10px solid #312F84;
-}
-
-/* revert overridden posts to poetry */
-body.blogtype-0 #content .post.overridden_type-1 p
-{
-	line-height: 1.5;
-	padding-bottom: 24px;
-}
-
-body.blogtype-0 #content .post.overridden_type-1 p.category-meta,
-body.blogtype-0 #content .post.overridden_type-1 p.postmetadata
-{
-	padding-bottom: 0;
-}
-
-/* make some space after search_meta for overridden */
-body.blogtype-0 #content .post.overridden_type-1 div.search_meta
-{
-}
-
-
-
-/*
---------------------------------------------------------------------------------
-Poetry
---------------------------------------------------------------------------------
-*/
-
-/* body (allow Theme Customizer to set colour for non-groupblogs) */
-body.blogtype-1
-{
-	background: #2C6D1F;
-}
-
-/* body (do not allow Theme Customizer to set colour for groupblogs) */
-body.is-groupblog.blogtype-1
-{
-	background: #2C6D1F !important;
-}
-
-/* group home */
-body.groups.groupblogtype-1 h2.post_title,
-body.groupblogtype-1 div#item-header,
-body#main_blog.groups.groupblogtype-1 #content div.item-list-tabs#object-nav,
-body#main_blog.groups.groupblogtype-1 div.item-list-tabs
-{
-	background: #2C6D1F;
-}
-
-/* group */
-ul.item-list li.groupblogtype-1 .item-title a,
-ul.item-list li.groupblogtype-1 div.item-desc,
-ul.item-list li.groupblogtype-1 div.item-desc p,
-ul.item-list li.groupblogtype-1 div.item-desc a
-{
-	color: #2C6D1F;
-}
-
-/* groups, blogs & activities lists */
-#buddypress ul#groups-list li.groupblogtype-1,
-#buddypress ul#blogs-list li.groupblogtype-1,
-#buddypress ul.activity-list li.groupblogtype-1
-{
-    border-left: 10px solid #2C6D1F;
-}
-
-/* activity tab */
-#activity_sidebar li.groupblogtype-1
-{
-    border-left: 10px solid #2C6D1F;
-}
-
-/* content formatting for poetry */
-body.blogtype-1 #content .post p
-{
-	line-height: 1.5;
-	padding-bottom: 24px;
-}
-
-/* revert overridden posts to prose */
-body.blogtype-1 #content .post.overridden_type-0 p,
-body.commentpress_page.blogtype-1 #content .post p
-{
-	line-height: 1.5;
-	padding-bottom: 11px;
-}
-
-/* allow for comment form */
-body.commentpress_page.blogtype-1 #content #respond p
-{
-	padding-bottom: 0;
-}
-
-/* make some space after search_meta */
-body.blogtype-1 #content div.search_meta
-{
-	padding-bottom: 24px;
-}
-
-/* remove space before overridden posts */
-body.blogtype-1 #content .post.overridden_type-0 div.search_meta
-{
-	padding-bottom: 7px;
-}
-
-/* unfortunately, we need to reset search */
-body.blogtype-1 #content div.search_meta p
-{
-	margin: 0;
-	padding: 0;
-}
-
-
-
-/*
---------------------------------------------------------------------------------
-Translation
---------------------------------------------------------------------------------
-*/
-
-/* body (allow Theme Customizer to set colour for non-groupblogs) */
-body.blogtype-2
-{
-    background: #8A26B1;
-}
-
-/* body (do not allow Theme Customizer to set colour for groupblogs) */
-body.is-groupblog.blogtype-2
-{
-    background: #8A26B1 !important;
-}
-
-/* group home */
-body.groups.groupblogtype-2 h2.post_title,
-body.groupblogtype-2 div#item-header,
-body#main_blog.groups.groupblogtype-2 #content div.item-list-tabs#object-nav,
-body#main_blog.groups.groupblogtype-2 div.item-list-tabs
-{
-	background: #8A26B1;
-}
-
-/* group */
-ul.item-list li.groupblogtype-2 .item-title a,
-ul.item-list li.groupblogtype-2 .item-desc,
-ul.item-list li.groupblogtype-2 .item-desc p,
-ul.item-list li.groupblogtype-2 .item-desc a
-{
-    color: #8A26B1;
-}
-
-/* groups, blogs & activities lists */
-#buddypress ul#groups-list li.groupblogtype-2,
-#buddypress ul#blogs-list li.groupblogtype-2,
-#buddypress ul.activity-list li.groupblogtype-2
-{
-    border-left: 10px solid #8A26B1;
-}
-
-/* activity tab */
-#activity_sidebar li.groupblogtype-2
-{
-    border-left: 10px solid #8A26B1;
 }
 
 
@@ -4143,7 +3928,6 @@ body.buddypress form#whats-new-form,
 body.home-page form#whats-new-form,
 body.directory #content h3,
 body.group-create #content form.standard-form > h3,
-#register-page #signup_form h2,
 body.activation.activate #content h2,
 body.activation.activate #content h3,
 div#item-header,
@@ -4166,6 +3950,292 @@ div#item-header,
 #buddypress #header-cover-image
 {
 	background-color: #CCCBBF;
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
+Prose
+--------------------------------------------------------------------------------
+*/
+
+/* body (allow Theme Customizer to set colour for non-groupblogs) */
+body.blogtype-0
+{
+    background: #C0D5BF;
+}
+
+/* body (do not allow Theme Customizer to set colour for groupblogs) */
+body.is-groupblog.blogtype-0,
+body.is-groupblog.blogtype-0 #container,
+body.is-groupblog.blogtype-0 #comments_sidebar,
+body.is-groupblog.blogtype-0 #activity_sidebar
+{
+    background: #C0D5BF !important;
+}
+
+/* group home */
+body.groups.groupblogtype-0 h2.post_title,
+body.groupblogtype-0 div#item-header,
+body#main_blog.groups.groupblogtype-0 #content div.item-list-tabs#object-nav,
+body#main_blog.groups.groupblogtype-0 div.item-list-tabs
+{
+	background: #a1c19f;
+}
+
+/* group decoration */
+ul.item-list li.groupblogtype-0 .item-title a,
+ul.item-list li.groupblogtype-0 .item-desc,
+ul.item-list li.groupblogtype-0 .item-desc p,
+ul.item-list li.groupblogtype-0 .item-desc a
+{
+    color: #a1c19f;
+}
+
+/* groups, blogs & activities lists */
+#buddypress ul#groups-list li.groupblogtype-0,
+#buddypress ul#blogs-list li.groupblogtype-0,
+#buddypress ul.activity-list li.groupblogtype-0
+{
+    border-left: 10px solid #a1c19f;
+}
+
+/* activity tab */
+#activity_sidebar li.groupblogtype-0
+{
+    border-left: 10px solid #a1c19f;
+}
+
+/* blogs and groupblogs */
+body.blogtype-0 #activity_sidebar .comments_container
+{
+	background-color: #F7F7EF;
+}
+
+body.blogtype-0 h3.activity_heading
+{
+	background-color: #a1c19f;
+}
+
+body.blogtype-0 h3.activity_heading:hover
+{
+	background-color: #83ad7f;
+}
+
+body.blogtype-0 #activity_sidebar .workshop_comments_output .comment-identifier p a
+{
+	color: #761D19;
+}
+
+/* revert overridden posts to poetry */
+body.blogtype-0 #content .post.overridden_type-1 p
+{
+	line-height: 1.5;
+	padding-bottom: 24px;
+}
+
+body.blogtype-0 #content .post.overridden_type-1 p.category-meta,
+body.blogtype-0 #content .post.overridden_type-1 p.postmetadata
+{
+	padding-bottom: 0;
+}
+
+/* make some space after search_meta for overridden */
+body.blogtype-0 #content .post.overridden_type-1 div.search_meta
+{
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
+Poetry
+--------------------------------------------------------------------------------
+*/
+
+/* body (allow Theme Customizer to set colour for non-groupblogs) */
+body.blogtype-1
+{
+	background: #A2BDAF;
+}
+
+/* body (do not allow Theme Customizer to set colour for groupblogs) */
+body.is-groupblog.blogtype-1,
+body.is-groupblog.blogtype-1 #container,
+body.is-groupblog.blogtype-1 #comments_sidebar,
+body.is-groupblog.blogtype-1 #activity_sidebar
+{
+	background: #A2BDAF !important;
+}
+
+/* group home */
+body.groups.groupblogtype-1 h2.post_title,
+body.groupblogtype-1 div#item-header,
+body#main_blog.groups.groupblogtype-1 #content div.item-list-tabs#object-nav,
+body#main_blog.groups.groupblogtype-1 div.item-list-tabs
+{
+	background: #85a896;
+}
+
+/* group */
+ul.item-list li.groupblogtype-1 .item-title a,
+ul.item-list li.groupblogtype-1 div.item-desc,
+ul.item-list li.groupblogtype-1 div.item-desc p,
+ul.item-list li.groupblogtype-1 div.item-desc a
+{
+	color: #85a896;
+}
+
+/* groups, blogs & activities lists */
+#buddypress ul#groups-list li.groupblogtype-1,
+#buddypress ul#blogs-list li.groupblogtype-1,
+#buddypress ul.activity-list li.groupblogtype-1
+{
+    border-left: 10px solid #85a896;
+}
+
+/* activity tab */
+#activity_sidebar li.groupblogtype-1
+{
+    border-left: 10px solid #85a896;
+}
+
+/* blogs and groupblogs */
+body.blogtype-1 #activity_sidebar .comments_container
+{
+	background-color: #F7F7EF;
+}
+
+body.blogtype-1 h3.activity_heading
+{
+	background-color: #85a896;
+}
+
+body.blogtype-1 h3.activity_heading:hover
+{
+	background-color: #68927c;
+}
+
+body.blogtype-1 #activity_sidebar .workshop_comments_output .comment-identifier p a
+{
+	color: #761D19;
+}
+
+/* content formatting for poetry */
+body.blogtype-1 #content .post p
+{
+	line-height: 1.5;
+	padding-bottom: 24px;
+}
+
+/* revert overridden posts to prose */
+body.blogtype-1 #content .post.overridden_type-0 p,
+body.commentpress_page.blogtype-1 #content .post p
+{
+	line-height: 1.5;
+	padding-bottom: 11px;
+}
+
+/* allow for comment form */
+body.commentpress_page.blogtype-1 #content #respond p
+{
+	padding-bottom: 0;
+}
+
+/* make some space after search_meta */
+body.blogtype-1 #content div.search_meta
+{
+	padding-bottom: 24px;
+}
+
+/* remove space before overridden posts */
+body.blogtype-1 #content .post.overridden_type-0 div.search_meta
+{
+	padding-bottom: 7px;
+}
+
+/* unfortunately, we need to reset search */
+body.blogtype-1 #content div.search_meta p
+{
+	margin: 0;
+	padding: 0;
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
+Translation
+--------------------------------------------------------------------------------
+*/
+
+/* body (allow Theme Customizer to set colour for non-groupblogs) */
+body.blogtype-2
+{
+    background: #cbd5b4;
+}
+
+/* body (do not allow Theme Customizer to set colour for groupblogs) */
+body.is-groupblog.blogtype-2,
+body.is-groupblog.blogtype-2 #container,
+body.is-groupblog.blogtype-2 #comments_sidebar,
+body.is-groupblog.blogtype-2 #activity_sidebar
+{
+    background: #cbd5b4 !important;
+}
+
+/* group home */
+body.groups.groupblogtype-2 h2.post_title,
+body.groupblogtype-2 div#item-header,
+body#main_blog.groups.groupblogtype-2 #content div.item-list-tabs#object-nav,
+body#main_blog.groups.groupblogtype-2 div.item-list-tabs
+{
+	background: #b4c293;
+}
+
+/* group */
+ul.item-list li.groupblogtype-2 .item-title a,
+ul.item-list li.groupblogtype-2 .item-desc,
+ul.item-list li.groupblogtype-2 .item-desc p,
+ul.item-list li.groupblogtype-2 .item-desc a
+{
+    color: #b4c293;
+}
+
+/* groups, blogs & activities lists */
+#buddypress ul#groups-list li.groupblogtype-2,
+#buddypress ul#blogs-list li.groupblogtype-2,
+#buddypress ul.activity-list li.groupblogtype-2
+{
+    border-left: 10px solid #b4c293;
+}
+
+/* activity tab */
+#activity_sidebar li.groupblogtype-2
+{
+    border-left: 10px solid #b4c293;
+}
+
+/* blogs and groupblogs */
+body.blogtype-2 #activity_sidebar .comments_container
+{
+	background-color: #F7F7EF;
+}
+
+body.blogtype-2 h3.activity_heading
+{
+	background-color: #b4c293;
+}
+
+body.blogtype-2 h3.activity_heading:hover
+{
+	background-color: #9eb073;
+}
+
+body.blogtype-2 #activity_sidebar .workshop_comments_output .comment-identifier p a
+{
+	color: #761D19;
 }
 
 
