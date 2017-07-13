@@ -213,6 +213,10 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+<h4>3.9.5</h4>
+
+* Fix deployment to WordPress plugin repo
+
 <h4>3.9.4</h4>
 
 * Fix BuddyPress comment tracking on pages
