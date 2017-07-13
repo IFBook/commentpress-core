@@ -99,7 +99,7 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Set up all items associated with this object.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function initialise() {
 
@@ -110,7 +110,7 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * If needed, destroys all items associated with this object.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function destroy() {
 
@@ -133,7 +133,7 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Enqueue any styles and scripts needed by our public page.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function add_frontend_styles() {
 
@@ -147,7 +147,7 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Allow HTML comments and content in Multisite blogs.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function allow_html_content() {
 
