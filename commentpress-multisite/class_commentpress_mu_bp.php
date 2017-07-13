@@ -99,7 +99,7 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Set up all items associated with this object.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function initialise() {
 
@@ -110,7 +110,7 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * If needed, destroys all items associated with this object.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function destroy() {
 
@@ -133,7 +133,7 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Enqueue any styles and scripts needed by our public page.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function add_frontend_styles() {
 
@@ -147,7 +147,7 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Allow HTML comments and content in Multisite blogs.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function allow_html_content() {
 
@@ -313,6 +313,36 @@ class Commentpress_Multisite_Buddypress {
 
 		// --<
 		return $post_types;
+
+	}
+
+
+
+	/**
+	 * Register "page" as a post_type that BuddyPress records comment activity for.
+	 *
+	 * @since 3.9.3
+	 */
+	public function register_comment_tracking_on_pages() {
+
+		// amend "page" post type
+		add_post_type_support( 'page', 'buddypress-activity' );
+
+		// define tracking args
+		bp_activity_set_post_type_tracking_args( 'page', array(
+			'action_id' => 'new_page',
+			'bp_activity_admin_filter' => __( 'Published a new page', 'commentpress-core' ),
+			'bp_activity_front_filter' => __( 'Pages', 'commentpress-core' ),
+			'bp_activity_new_post' => __( '%1$s posted a new <a href="%2$s">page</a>', 'commentpress-core' ),
+			'bp_activity_new_post_ms' => __( '%1$s posted a new <a href="%2$s">page</a>, on the site %3$s', 'commentpress-core' ),
+			'contexts' => array( 'activity', 'member' ),
+			'comment_action_id' => 'new_blog_comment',
+			'bp_activity_comments_admin_filter' => __( 'Commented on a page', 'commentpress-core' ),
+			'bp_activity_comments_front_filter' => __( 'Comments', 'commentpress-core' ),
+			'bp_activity_new_comment' => __( '%1$s commented on the <a href="%2$s">page</a>', 'commentpress-core' ),
+			'bp_activity_new_comment_ms' => __( '%1$s commented on the <a href="%2$s">page</a>, on the site %3$s', 'commentpress-core' ),
+			'position' => 100,
+		) );
 
 	}
 
@@ -587,7 +617,7 @@ class Commentpress_Multisite_Buddypress {
 			$page_num = get_comment_meta( $comment->comment_ID, $key, true );
 
 			// get the url for the comment
-			$link = commentpress_get_post_multipage_url( $page_num ) . '#comment-' . $comment->comment_ID;
+			$link = commentpress_get_post_multipage_url( $page_num, $post ) . '#comment-' . $comment->comment_ID;
 
 			// amend the primary link
 			$activity->primary_link = $link;
@@ -1610,6 +1640,9 @@ class Commentpress_Multisite_Buddypress {
 		add_filter( 'pre_comment_approved', array( $this, 'pre_comment_approved' ), 99, 2 );
 		//add_action( 'preprocess_comment', 'my_check_comment', 1 );
 
+		// register "page" as a post_type that BuddyPress records comment activity for
+		add_action( 'init', array( $this, 'register_comment_tracking_on_pages' ), 100 );
+
 		// add pages to the post_types that BuddyPress records comment activity for
 		add_filter( 'bp_blogs_record_comment_post_types', array( $this, 'record_comments_on_pages' ), 10, 1 );
 
@@ -1693,6 +1726,9 @@ class Commentpress_Multisite_Buddypress {
 		// override groupblog theme, if the bp-groupblog default theme is not a CommentPress Core one
 		add_filter( 'cp_forced_theme_slug', array( $this, '_get_groupblog_theme' ), 20, 1 );
 		add_filter( 'cp_forced_theme_name', array( $this, '_get_groupblog_theme' ), 20, 1 );
+
+		// filter the AJAX query string to add "action"
+		add_filter( 'bp_ajax_querystring', array( $this, '_groupblog_querystring' ), 20, 2 );
 
 		// is this the back end?
 		if ( is_admin() ) {
@@ -1791,6 +1827,57 @@ class Commentpress_Multisite_Buddypress {
 		// instead, I'm trying to store the blog_type as group meta data
 		//add_action( 'bp_activity_after_save', array( $this, 'groupblog_custom_comment_meta' ), 20, 1 );
 		//add_action( 'bp_activity_after_save', array( $this, 'groupblog_custom_post_meta' ), 20, 1 );
+
+	}
+
+
+
+	/**
+	 * Modify the AJAX query string.
+	 *
+	 * @since 3.9.3
+	 *
+	 * @param string $qs The query string for the BP loop
+	 * @param string $object The current object for the query string
+	 * @return string Modified query string
+	 */
+	public function _groupblog_querystring( $qs, $object ) {
+
+		// bail if not an activity object
+		if ( $object != 'activity' ) return $qs;
+
+		// parse query string into an array
+		$r = wp_parse_args( $qs );
+
+		// bail if no type is set
+		if ( empty( $r['type'] ) ) return $qs;
+
+		// bail if not a type that we're looking for
+		if ( 'new_groupblog_post' !== $r['type'] AND 'new_groupblog_comment' !== $r['type'] ) {
+			return $qs;
+		}
+
+		// add the 'new_groupblog_post' type if it doesn't exist
+		if ( 'new_groupblog_post' === $r['type'] ) {
+			if ( ! isset( $r['action'] ) OR false === strpos( $r['action'], 'new_groupblog_post' ) ) {
+				// 'action' filters activity items by the 'type' column
+				$r['action'] = 'new_groupblog_post';
+			}
+		}
+
+		// add the 'new_groupblog_comment' type if it doesn't exist
+		if ( 'new_groupblog_comment' === $r['type'] ) {
+			if ( ! isset( $r['action'] ) OR false === strpos( $r['action'], 'new_groupblog_comment' ) ) {
+				// 'action' filters activity items by the 'type' column
+				$r['action'] = 'new_groupblog_comment';
+			}
+		}
+
+		// 'type' isn't used anywhere internally
+		unset( $r['type'] );
+
+		// return a querystring
+		return build_query( $r );
 
 	}
 

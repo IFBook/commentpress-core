@@ -138,6 +138,9 @@ Updated by Christian Wach for CommentPress Core
 	/* Comment Upvoter */
 	.comment-upvote,
 
+	/* Facebook */
+	div.fb_reset,
+
 	/* WordPress */
 	#wpadminbar,
 
@@ -277,7 +280,7 @@ Updated by Christian Wach for CommentPress Core
 		font-size: 24pt;
 		text-transform: none;
 	}
-	
+
 	.cp_featured_title_inner h2.post_title a
 	{
 		color: #000;

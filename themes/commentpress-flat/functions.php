@@ -66,8 +66,9 @@ function commentpress_setup() {
 	// style the visual editor with editor-style.css to match the theme style
 	add_editor_style();
 
-	// testing the use of wp_nav_menu() - first we need to register it
+	// allow the use of wp_nav_menu() - first we need to register them
 	register_nav_menu( 'toc', __( 'Table of Contents', 'commentpress-core' ) );
+	register_nav_menu( 'footer', __( 'Footer', 'commentpress-core' ) );
 
 
 
@@ -78,7 +79,7 @@ function commentpress_setup() {
 		// get the option
 		$featured_images = $commentpress_core->db->option_get( 'cp_featured_images', 'n' );
 
-		// do we have the featured imaegs option enabled?
+		// do we have the featured images option enabled?
 		if ( $featured_images == 'y' ) {
 
 			// use Featured Images (also known as post thumbnails)

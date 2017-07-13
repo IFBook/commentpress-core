@@ -3,8 +3,8 @@ Contributors: needle, commentpress
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZSKM8T5ZP3SC
 Tags: commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
 Requires at least: 3.4
-Tested up to: 4.7
-Stable tag: 3.9.3
+Tested up to: 4.8
+Stable tag: 3.9.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,8 @@ Annotate, gloss, workshop, debate: with CommentPress Core you can do all of thes
 **Please note:** this plugin comes bundled with three official themes, one of which must be active for CommentPress Core to function. The "CommentPress Modern Theme" will be auto-activated when the plugin is first activated. The old "CommentPress Default Theme" is still included for those who wish to stay with it or have built their own child themes for it. Since version 3.9 a new "CommentPress Flat Theme" is included for those who want an alternative layout. If you are upgrading from a previous version of CommentPress (3.0.x - 3.3.x), please follow the instructions in the Installation section before doing so.
 
 For further information and instructions please see the [CommentPress website](http://www.futureofthebook.org/commentpress/) or visit the plugin's [GitHub repository](https://github.com/IFBook/commentpress-core). Contact the developers by email at [cpdev@futureofthebook.org](mailto:cpdev@futureofthebook.org).
+
+**For sites hosted in the European Union, please note:** the "CommentPress Default Theme" makes use of cookies, but for presentational purposes only. If you intend to use the "CommentPress Default Theme" on a public site, you may need to inform visitors of this.
 
 Many thanks to the following for translations:
 
@@ -140,11 +142,9 @@ To create a "CommentPress Core"-enabled Groupblog:
 6. To go to the groupblog, click "Blog" (or "Workshop" if you have chosen that naming scheme)
 7. Start your group blogging!
 
+<hr>
 
-
-== Other Notes ==
-
-**For sites hosted in the European Union, please note:** the "CommentPress Default Theme" makes use of cookies, but for presentational purposes only. If you intend to use the "CommentPress Default Theme" on a public site, you may need to inform visitors of this.
+<h3>Upgrades</h3>
 
 Upgrades from previous versions of "CommentPress" are possible. Please follow the following procedures for your context.
 
@@ -212,6 +212,16 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 
 == Changelog ==
+
+<h4>3.9.5</h4>
+
+* Fix deployment to WordPress plugin repo
+
+<h4>3.9.4</h4>
+
+* Fix BuddyPress comment tracking on pages
+* Fix BuddyPress activity stream filtering functionality
+* Fix BuddyPress activity item target link when editing comments in WordPress admin
 
 <h4>3.9.3</h4>
 

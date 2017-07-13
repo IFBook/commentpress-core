@@ -3849,6 +3849,7 @@ body.fee #content
 
 body.fee .cp_feature_image
 {
+	min-height: 150px;
 }
 
 body.fee-on .fee-thumbnail.fee-empty
@@ -4278,12 +4279,14 @@ Widgets & Widget Areas
 
 
 
-/* Custom Menu in Footer */
+/* Custom Menu & Custom Menu Widget in Footer */
+#footer div.commentpress-footer-nav-menu,
 #footer .widget_nav_menu
 {
 	text-align: center;
 }
 
+#footer div.commentpress-footer-nav-menu ul.menu,
 #footer .widget_nav_menu ul.menu
 {
 	list-style: none;
@@ -4292,6 +4295,7 @@ Widgets & Widget Areas
 	line-height: 1.8;
 }
 
+#footer div.commentpress-footer-nav-menu ul.menu li,
 #footer .widget_nav_menu ul.menu li
 {
 	list-style: none;
@@ -4299,6 +4303,7 @@ Widgets & Widget Areas
 	padding-right: 5px;
 }
 
+#footer div.commentpress-footer-nav-menu ul.menu li:after,
 #footer .widget_nav_menu ul.menu li:after
 {
 	content: "|";
@@ -4306,17 +4311,22 @@ Widgets & Widget Areas
 	padding-left: 10px;
 }
 
+#footer div.commentpress-footer-nav-menu ul.menu li:last-child:after,
 #footer .widget_nav_menu ul.menu li:last-child:after
 {
 	display: none;
 }
 
+#footer div.commentpress-footer-nav-menu ul.menu a:hover,
+#footer div.commentpress-footer-nav-menu ul.menu a:focus,
 #footer .widget_nav_menu ul.menu a:hover,
 #footer .widget_nav_menu ul.menu a:focus
 {
 	text-decoration: underline;
 }
 
+#footer div.commentpress-footer-nav-menu ul.menu a,
+#footer div.commentpress-footer-nav-menu ul.menu a:active,
 #footer .widget_nav_menu ul.menu a,
 #footer .widget_nav_menu ul.menu a:active
 {
