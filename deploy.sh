@@ -64,9 +64,6 @@ echo
 echo "Creating local copy of SVN repo ..."
 svn co $SVNURL $SVNPATH
 
-echo "Clearing svn repo so we can overwrite it"
-svn rm $SVNPATH/trunk/*
-
 echo "Exporting the HEAD of master from git to the trunk of SVN"
 git checkout-index -a -f --prefix=$SVNPATH/trunk/
 
