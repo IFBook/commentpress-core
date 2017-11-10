@@ -218,7 +218,7 @@ CommentPress.ajax.comments = new function() {
 			 */
 
 			// set repeat call
-			CommentpressAjaxSettings.interval = window.setInterval( me.update, 5000 );
+			CommentpressAjaxSettings.interval = window.setInterval( me.update, CommentpressAjaxSettings.cpajax_comment_refresh_interval );
 
 		} else {
 

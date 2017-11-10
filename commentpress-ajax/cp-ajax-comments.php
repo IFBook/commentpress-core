@@ -100,6 +100,13 @@ function cpajax_add_javascripts() {
 	// get translations array
 	$vars['cpajax_lang'] = cpajax_localise();
 
+	/**
+	 * Comment refresh interval, in milliseconds.
+	 *
+	 * @param int $interval Default is 5000.
+	 */
+	$vars['cpajax_comment_refresh_interval'] = apply_filters( 'cpajax_comment_refresh_interval', 5000 );
+
 	// default to minified scripts
 	$debug_state = commentpress_minified();
 
