@@ -50,6 +50,7 @@ CommentPress.ajax.comments = new function() {
 		this.cpajax_spinner_url = CommentpressAjaxSettings.cpajax_spinner_url;
 		this.cpajax_post_id = CommentpressAjaxSettings.cpajax_post_id;
 		this.cpajax_lang = CommentpressAjaxSettings.cpajax_lang;
+		this.cpajax_interval = CommentpressAjaxSettings.cpajax_comment_refresh_interval;
 
 	}
 
@@ -206,7 +207,7 @@ CommentPress.ajax.comments = new function() {
 		// if set
 		if ( toggle == '1' ) {
 
-			/**
+			/*
 			 * NOTE: comment_flood_filter is set to 15000, so that's what we set
 			 * here. This ain't chat :) If you want to change this to something
 			 * more 'chat-like', add this to your theme's functions.php or
@@ -218,7 +219,7 @@ CommentPress.ajax.comments = new function() {
 			 */
 
 			// set repeat call
-			CommentpressAjaxSettings.interval = window.setInterval( me.update, CommentpressAjaxSettings.cpajax_comment_refresh_interval );
+			CommentpressAjaxSettings.interval = window.setInterval( me.update, me.cpajax_interval );
 
 		} else {
 
@@ -241,13 +242,12 @@ CommentPress.ajax.comments = new function() {
 		// kick out if submitting a comment
 		if ( me.cpajax_submitting ) { return; }
 
-		/**
+		/*
 		 * Use the following to log ajax errors from jQuery.post():
 		 *
 		 * $(document).ajaxError( function( e, xhr, settings, exception ) {
 		 *   console.log( 'error in: ' + settings.url + ' \n'+'error:\n' + xhr.responseText );
 		 * });
-		 *
 		 */
 
 		// use post method
