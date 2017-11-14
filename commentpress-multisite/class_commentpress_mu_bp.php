@@ -14,7 +14,7 @@ class Commentpress_Multisite_Buddypress {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $parent_obj The plugin object
+	 * @var object $parent_obj The plugin object.
 	 */
 	public $parent_obj;
 
@@ -23,7 +23,7 @@ class Commentpress_Multisite_Buddypress {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $db The database object
+	 * @var object $db The database object.
 	 */
 	public $db;
 
@@ -32,7 +32,7 @@ class Commentpress_Multisite_Buddypress {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var str $force_commentpress The CommentPress Core enabled on all groupblogs flag
+	 * @var str $force_commentpress The CommentPress Core enabled on all groupblogs flag.
 	 */
 	public $force_commentpress = '0';
 
@@ -41,7 +41,7 @@ class Commentpress_Multisite_Buddypress {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var str $groupblog_theme The default theme stylesheet
+	 * @var str $groupblog_theme The default theme stylesheet.
 	 */
 	public $groupblog_theme = 'commentpress-modern';
 
@@ -50,7 +50,7 @@ class Commentpress_Multisite_Buddypress {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var str $groupblog_theme_name The default theme stylesheet
+	 * @var str $groupblog_theme_name The default theme stylesheet.
 	 */
 	public $groupblog_theme_name = 'CommentPress Default Theme';
 
@@ -59,7 +59,7 @@ class Commentpress_Multisite_Buddypress {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var bool $groupblog_privacy True if private groups have private groupblogs
+	 * @var bool $groupblog_privacy True if private groups have private groupblogs.
 	 */
 	public $groupblog_privacy = 1;
 
@@ -68,7 +68,7 @@ class Commentpress_Multisite_Buddypress {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var bool $require_comment_registration True if login required
+	 * @var bool $require_comment_registration True if login required.
 	 */
 	public $require_comment_registration = 1;
 
@@ -79,7 +79,7 @@ class Commentpress_Multisite_Buddypress {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $parent_obj a reference to the parent object
+	 * @param object $parent_obj a reference to the parent object.
 	 */
 	function __construct( $parent_obj = null ) {
 
@@ -154,7 +154,7 @@ class Commentpress_Multisite_Buddypress {
 		// using publish_posts for now - means author+
 		if ( current_user_can( 'publish_posts' ) ) {
 
-			/**
+			/*
 			 * Remove html filtering on content.
 			 *
 			 * Note - this has possible consequences.
@@ -172,8 +172,10 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Allow HTML in Activity items.
 	 *
-	 * @param array $activity_allowedtags The existing array of allowed tags
-	 * @return array $activity_allowedtags The modified array of allowed tags
+	 * @since 3.3
+	 *
+	 * @param array $activity_allowedtags The existing array of allowed tags.
+	 * @return array $activity_allowedtags The modified array of allowed tags.
 	 */
 	public function activity_allowed_tags( $activity_allowedtags ) {
 
@@ -192,11 +194,13 @@ class Commentpress_Multisite_Buddypress {
 	 *
 	 * @see: http://scribu.net/wordpress/prevent-blog-authors-from-editing-comments.html
 	 *
-	 * @param array $caps The existing capabilities array for the WordPress user
-	 * @param str $cap The capability in question
-	 * @param int $user_id The numerical ID of the WordPress user
-	 * @param array $args The additional arguments
-	 * @return array $caps The modified capabilities array for the WordPress user
+	 * @since 3.3
+	 *
+	 * @param array $caps The existing capabilities array for the WordPress user.
+	 * @param str $cap The capability in question.
+	 * @param int $user_id The numerical ID of the WordPress user.
+	 * @param array $args The additional arguments.
+	 * @return array $caps The modified capabilities array for the WordPress user.
 	 */
 	public function enable_comment_editing( $caps, $cap, $user_id, $args ) {
 
@@ -226,9 +230,11 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Override capability to comment based on group membership.
 	 *
-	 * @param bool $approved True if the comment is approved, false otherwise
-	 * @param array $commentdata The comment data
-	 * @return bool $approved Modified approval value. True if the comment is approved, false otherwise
+	 * @since 3.3
+	 *
+	 * @param bool $approved True if the comment is approved, false otherwise.
+	 * @param array $commentdata The comment data.
+	 * @return bool $approved Modified approval value. True if the comment is approved, false otherwise.
 	 */
 	public function pre_comment_approved( $approved, $commentdata ) {
 
@@ -298,8 +304,10 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Add pages to the post_types that BuddyPress records published activity for.
 	 *
-	 * @param array $post_types The existing array of post types
-	 * @return array $post_types The modified array of post types
+	 * @since 3.3
+	 *
+	 * @param array $post_types The existing array of post types.
+	 * @return array $post_types The modified array of post types.
 	 */
 	public function record_published_pages( $post_types ) {
 
@@ -351,8 +359,10 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Add pages to the post_types that BuddyPress records comment activity for.
 	 *
-	 * @param array $post_types The existing array of post types
-	 * @return array $post_types The modified array of post types
+	 * @since 3.3
+	 *
+	 * @param array $post_types The existing array of post types.
+	 * @return array $post_types The modified array of post types.
 	 */
 	public function record_comments_on_pages( $post_types ) {
 
@@ -378,8 +388,10 @@ class Commentpress_Multisite_Buddypress {
 	 *
 	 * Do we want to test if they are CommentPress Core-enabled?
 	 *
-	 * @param bool $blog_public_option True if blog is public, false otherwise
-	 * @return bool $blog_public_option True if blog is public, false otherwise
+	 * @since 3.3
+	 *
+	 * @param bool $blog_public_option True if blog is public, false otherwise.
+	 * @return bool $blog_public_option True if blog is public, false otherwise.
 	 */
 	public function is_blog_public( $blog_public_option ) {
 
@@ -415,8 +427,10 @@ class Commentpress_Multisite_Buddypress {
 	 * read in context rather than appearing as if globally attached to the post
 	 * or page.
 	 *
-	 * @param bool $is_disabled The BuddyPress setting that determines blogforum sync
-	 * @return bool $is_disabled The modified value that determines blogforum sync
+	 * @since 3.3
+	 *
+	 * @param bool $is_disabled The BuddyPress setting that determines blogforum sync.
+	 * @return bool $is_disabled The modified value that determines blogforum sync.
 	 */
 	public function disable_blogforum_comments( $is_disabled ) {
 
@@ -441,8 +455,10 @@ class Commentpress_Multisite_Buddypress {
 	 *
 	 * Amended from bp_groupblog_set_group_to_post_activity()
 	 *
-	 * @param object $activity The existing activity object
-	 * @return object $activity The modified activity object
+	 * @since 3.3
+	 *
+	 * @param object $activity The existing activity object.
+	 * @return object $activity The modified activity object.
 	 */
 	public function group_custom_comment_activity( $activity ) {
 
@@ -694,8 +710,10 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Add some meta for the activity item - bp_activity_after_save doesn't seem to fire.
 	 *
-	 * @param object $activity The existing activity object
-	 * @return object $activity The modified activity object
+	 * @since 3.3
+	 *
+	 * @param object $activity The existing activity object.
+	 * @return object $activity The modified activity object.
 	 */
 	public function groupblog_custom_comment_meta( $activity ) {
 
@@ -731,13 +749,15 @@ class Commentpress_Multisite_Buddypress {
 	 *
 	 * @see bp_groupblog_set_group_to_post_activity( $activity )
 	 *
-	 * @param object $activity The existing activity object
+	 * @since 3.3
+	 *
+	 * @param object $activity The existing activity object.
 	 * @param array $args {
 	 *     Optional. Handy if you've already parsed the blog post and group ID.
 	 *     @type WP_Post $post The WP post object.
 	 *     @type int $group_id The group ID.
 	 * }
-	 * @return object $activity The modified activity object
+	 * @return object $activity The modified activity object.
 	 */
 	public function groupblog_custom_post_activity( $activity, $args = array() ) {
 
@@ -922,7 +942,6 @@ class Commentpress_Multisite_Buddypress {
 	 * @param str $new_status New status for the post.
 	 * @param str $old_status Old status for the post.
 	 * @param object $post The post data.
-	 * @return void
 	 */
 	public function transition_post_type_status( $new_status, $old_status, $post ) {
 
@@ -977,8 +996,10 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Add some meta for the activity item. (DISABLED)
 	 *
-	 * @param object $activity The existing activity object
-	 * @return object $activity The modified activity object
+	 * @since 3.3
+	 *
+	 * @param object $activity The existing activity object.
+	 * @return object $activity The modified activity object.
 	 */
 	public function groupblog_custom_post_meta( $activity ) {
 
@@ -1002,8 +1023,10 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Check if a group has a CommentPress Core-enabled groupblog.
 	 *
-	 * @param int $group_id The numeric ID of the BuddyPress group
-	 * @return boolean True if group has CommentPress Core groupblog, false otherwise
+	 * @since 3.3
+	 *
+	 * @param int $group_id The numeric ID of the BuddyPress group.
+	 * @return boolean True if group has CommentPress Core groupblog, false otherwise.
 	 */
 	public function group_has_commentpress_groupblog( $group_id = null ) {
 
@@ -1060,7 +1083,7 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Add a filter option to the filter select box on group activity pages.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function groupblog_comments_filter_option() {
 
@@ -1083,7 +1106,7 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Override the name of the filter item.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function groupblog_posts_filter_option() {
 
@@ -1106,10 +1129,12 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * For group blogs, override the avatar with that of the group.
 	 *
-	 * @param str $avatar The existing HTML for displaying an avatar
-	 * @param int $blog_id The numeric ID of the WordPress blog
-	 * @param array $args Additional arguments
-	 * @return str $avatar The modified HTML for displaying an avatar
+	 * @since 3.3
+	 *
+	 * @param str $avatar The existing HTML for displaying an avatar.
+	 * @param int $blog_id The numeric ID of the WordPress blog.
+	 * @param array $args Additional arguments.
+	 * @return str $avatar The modified HTML for displaying an avatar.
 	 */
 	public function get_blog_avatar( $avatar, $blog_id = '', $args ){
 
@@ -1141,8 +1166,10 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Override the name of the sub-nav item.
 	 *
-	 * @param str $name The existing name of a "blog"
-	 * @return str $name The modified name of a "blog"
+	 * @since 3.3
+	 *
+	 * @param str $name The existing name of a "blog".
+	 * @return str $name The modified name of a "blog".
 	 */
 	public function filter_blog_name( $name ) {
 
@@ -1167,8 +1194,10 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Override the slug of the sub-nav item.
 	 *
-	 * @param str $slug The existing slug of a "blog"
-	 * @return str $slug The modified slug of a "blog"
+	 * @since 3.3
+	 *
+	 * @param str $slug The existing slug of a "blog".
+	 * @return str $slug The modified slug of a "blog".
 	 */
 	public function filter_blog_slug( $slug ) {
 
@@ -1193,8 +1222,10 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Override CommentPress Core "Title Page".
 	 *
-	 * @param str $title The existing title of a "blog"
-	 * @return str $title The modified title of a "blog"
+	 * @since 3.3
+	 *
+	 * @param str $title The existing title of a "blog".
+	 * @return str $title The modified title of a "blog".
 	 */
 	public function filter_nav_title_page_title( $title ) {
 
@@ -1211,9 +1242,11 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Remove group blogs from blog list.
 	 *
-	 * @param bool $b True if there are blogs, false otherwise
-	 * @param object $blogs The existing blogs object
-	 * @return object $blogs The modified blogs object
+	 * @since 3.3
+	 *
+	 * @param bool $b True if there are blogs, false otherwise.
+	 * @param object $blogs The existing blogs object.
+	 * @return object $blogs The modified blogs object.
 	 */
 	public function remove_groupblog_from_loop( $b, $blogs ) {
 
@@ -1256,8 +1289,10 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Override the name of the button on the BuddyPress "blogs" screen.
 	 *
-	 * @param array $button The existing blogs button data
-	 * @return array $button The existing blogs button data
+	 * @since 3.3
+	 *
+	 * @param array $button The existing blogs button data.
+	 * @return array $button The existing blogs button data.
 	 */
 	public function get_blogs_visit_blog_button( $button ) {
 
@@ -1359,8 +1394,10 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Override the name of the type dropdown label.
 	 *
-	 * @param str $name The existing name of the label
-	 * @return str $name The modified name of the label
+	 * @since 3.3
+	 *
+	 * @param str $name The existing name of the label.
+	 * @return str $name The modified name of the label.
 	 */
 	public function blog_type_label( $name ) {
 
@@ -1373,8 +1410,10 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Define the "types" of groupblog.
 	 *
-	 * @param array $existing_options The existing types of groupblog
-	 * @return array $existing_options The modified types of groupblog
+	 * @since 3.3
+	 *
+	 * @param array $existing_options The existing types of groupblog.
+	 * @return array $existing_options The modified types of groupblog.
 	 */
 	public function blog_type_options( $existing_options ) {
 
@@ -1394,8 +1433,10 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Enable workflow.
 	 *
-	 * @param bool $exists True if "workflow" is enabled, false otherwise
-	 * @return bool $exists True if "workflow" is enabled, false otherwise
+	 * @since 3.3
+	 *
+	 * @param bool $exists True if "workflow" is enabled, false otherwise.
+	 * @return bool $exists True if "workflow" is enabled, false otherwise.
 	 */
 	public function blog_workflow_exists( $exists ) {
 
@@ -1409,8 +1450,10 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Override the name of the workflow checkbox label.
 	 *
-	 * @param str $name The existing singular name of the label
-	 * @return str $name The modified singular name of the label
+	 * @since 3.3
+	 *
+	 * @param str $name The existing singular name of the label.
+	 * @return str $name The modified singular name of the label.
 	 */
 	public function blog_workflow_label( $name ) {
 
@@ -1424,8 +1467,10 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Amend the group meta if workflow is enabled.
 	 *
-	 * @param str $blog_type The existing numerical type of the blog
-	 * @return str $blog_type The modified numerical type of the blog
+	 * @since 3.3
+	 *
+	 * @param str $blog_type The existing numerical type of the blog.
+	 * @return str $blog_type The modified numerical type of the blog.
 	 */
 	public function group_meta_set_blog_type( $blog_type, $blog_workflow ) {
 
@@ -1442,8 +1487,10 @@ class Commentpress_Multisite_Buddypress {
 		 * is enabled, it might become a new blog type as far as BuddyPress
 		 * is concerned.
 		 *
-		 * @param int $blog_type The numeric blog type
-		 * @param bool $blog_workflow True if workflow enabled, false otherwise
+		 * @since 3.3
+		 *
+		 * @param int $blog_type The numeric blog type.
+		 * @param bool $blog_workflow True if workflow enabled, false otherwise.
 		 */
 		return apply_filters( 'cp_class_commentpress_workflow_group_blogtype', $blog_type, $blog_workflow );
 
@@ -1454,8 +1501,9 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Hook into the group blog signup form.
 	 *
-	 * @param array $errors The errors generated previously
-	 * @return void
+	 * @since 3.3
+	 *
+	 * @param array $errors The errors generated previously.
 	 */
 	public function signup_blogform( $errors ) {
 
@@ -1479,13 +1527,14 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Hook into wpmu_new_blog and target plugins to be activated.
 	 *
-	 * @param int $blog_id The numeric ID of the WordPress blog
-	 * @param int $user_id The numeric ID of the WordPress user
-	 * @param str $domain The domain of the WordPress blog
-	 * @param str $path The path of the WordPress blog
-	 * @param int $site_id The numeric ID of the WordPress parent site
-	 * @param array $meta The meta data of the WordPress blog
-	 * @return void
+	 * @since 3.3
+	 *
+	 * @param int $blog_id The numeric ID of the WordPress blog.
+	 * @param int $user_id The numeric ID of the WordPress user.
+	 * @param str $domain The domain of the WordPress blog.
+	 * @param str $path The path of the WordPress blog.
+	 * @param int $site_id The numeric ID of the WordPress parent site.
+	 * @param array $meta The meta data of the WordPress blog.
 	 */
 	public function wpmu_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 
@@ -1514,7 +1563,9 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Override the title of the "Create a new document" link.
 	 *
-	 * @return str Ther overridden name of the link
+	 * @since 3.3
+	 *
+	 * @return str Ther overridden name of the link.
 	 */
 	public function user_links_new_site_title() {
 
@@ -1535,7 +1586,7 @@ class Commentpress_Multisite_Buddypress {
 	 *
 	 * @see groupblog_privacy_check()
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function groupblog_privacy_check() {
 
@@ -1606,7 +1657,7 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Object initialisation.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	function _init() {
 
@@ -1620,7 +1671,7 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Register WordPress hooks.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	function _register_hooks() {
 
@@ -1676,7 +1727,7 @@ class Commentpress_Multisite_Buddypress {
 		// that is displayed on the tab *before* the blog list is built - hence filter disabled for now
 		//add_filter( 'bp_has_blogs', array( $this, 'remove_groupblog_from_loop' ), 20, 2 );
 
-		/**
+		/*
 		 * Duplicated from 'class_commentpress_formatter.php' because CommentPress Core need
 		 * not be active on the main blog, but we still need the options to appear
 		 * in the Groupblog Create screen
@@ -1690,7 +1741,7 @@ class Commentpress_Multisite_Buddypress {
 
 		// ---------------------------------------------------------------------
 
-		/**
+		/*
 		 * Duplicated from 'class_commentpress_workflow.php' because CommentPress Core need
 		 * not be active on the main blog, but we still need the options to appear
 		 * in the Groupblog Create screen
@@ -1761,7 +1812,7 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Add a filter actions once BuddyPress is loaded.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	function _groupblog_filter_options() {
 
@@ -1788,7 +1839,7 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Amend Activity methods once BuddyPress is loaded.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	function _group_activity_mods() {
 
@@ -1837,9 +1888,9 @@ class Commentpress_Multisite_Buddypress {
 	 *
 	 * @since 3.9.3
 	 *
-	 * @param string $qs The query string for the BP loop
-	 * @param string $object The current object for the query string
-	 * @return string Modified query string
+	 * @param string $qs The query string for the BP loop.
+	 * @param string $object The current object for the query string.
+	 * @return string Modified query string.
 	 */
 	public function _groupblog_querystring( $qs, $object ) {
 
@@ -1886,8 +1937,10 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Allow our TinyMCE comment markup in activity content.
 	 *
-	 * @param array $activity_allowedtags The array of tags allowed in an activity item
-	 * @param array $activity_allowedtags The modified array of tags allowed in an activity item
+	 * @since 3.3
+	 *
+	 * @param array $activity_allowedtags The array of tags allowed in an activity item.
+	 * @param array $activity_allowedtags The modified array of tags allowed in an activity item.
 	 */
 	function _activity_allowed_tags( $activity_allowedtags ) {
 
@@ -1915,7 +1968,7 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Hook into the groupblog create screen.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	function _create_groupblog_options() {
 
@@ -2039,20 +2092,13 @@ class Commentpress_Multisite_Buddypress {
 
 			// construct form
 			$form = '
-
 			<br />
 			<div id="cp-multisite-options">
-
 				<h3>' . __( 'CommentPress Options', 'commentpress-core' ) . '</h3>
-
 				<p>' . $text . '</p>
-
 				' . $forced_html . '
-
 				' . $workflow_html . '
-
 				' . $type_html . '
-
 			</div>
 
 			';
@@ -2068,13 +2114,14 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Create a blog that is a groupblog.
 	 *
-	 * @param int $blog_id The numeric ID of the WordPress blog
-	 * @param int $user_id The numeric ID of the WordPress user
-	 * @param str $domain The domain of the WordPress blog
-	 * @param str $path The path of the WordPress blog
-	 * @param int $site_id The numeric ID of the WordPress parent site
-	 * @param array $meta The meta data of the WordPress blog
-	 * @return void
+	 * @since 3.3
+	 *
+	 * @param int $blog_id The numeric ID of the WordPress blog.
+	 * @param int $user_id The numeric ID of the WordPress user.
+	 * @param str $domain The domain of the WordPress blog.
+	 * @param str $path The path of the WordPress blog.
+	 * @param int $site_id The numeric ID of the WordPress parent site.
+	 * @param array $meta The meta data of the WordPress blog.
 	 */
 	function _create_groupblog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 
@@ -2199,7 +2246,7 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Hook into the blog create screen on registration page.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	function _create_blog_options() {
 
@@ -2331,13 +2378,14 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Create a blog that is not a groupblog.
 	 *
-	 * @param int $blog_id The numeric ID of the WordPress blog
-	 * @param int $user_id The numeric ID of the WordPress user
-	 * @param str $domain The domain of the WordPress blog
-	 * @param str $path The path of the WordPress blog
-	 * @param int $site_id The numeric ID of the WordPress parent site
-	 * @param array $meta The meta data of the WordPress blog
-	 * @return void
+	 * @since 3.3
+	 *
+	 * @param int $blog_id The numeric ID of the WordPress blog.
+	 * @param int $user_id The numeric ID of the WordPress user.
+	 * @param str $domain The domain of the WordPress blog.
+	 * @param str $path The path of the WordPress blog.
+	 * @param int $site_id The numeric ID of the WordPress parent site.
+	 * @param array $meta The meta data of the WordPress blog.
 	 */
 	function _create_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 
@@ -2363,7 +2411,9 @@ class Commentpress_Multisite_Buddypress {
 	 * Also note that this method only functions after 'bp_setup_globals' has
 	 * fired with priority 1000.
 	 *
-	 * @return bool True if current blog is CommentPress Core-enabled, false otherwise
+	 * @since 3.3
+	 *
+	 * @return bool True if current blog is CommentPress Core-enabled, false otherwise.
 	 */
 	function _is_commentpress_groupblog() {
 
@@ -2388,7 +2438,9 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Utility to discover if this is a BP Group Site.
 	 *
-	 * @return bool True if current blog is a BP Group Site, false otherwise
+	 * @since 3.8
+	 *
+	 * @return bool True if current blog is a BP Group Site, false otherwise.
 	 */
 	function _is_commentpress_groupsite() {
 
@@ -2411,7 +2463,9 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Utility to get blog_type.
 	 *
-	 * @return mixed String if there is a blog type, false otherwise
+	 * @since 3.3
+	 *
+	 * @return mixed String if there is a blog type, false otherwise.
 	 */
 	function _get_groupblog_type() {
 
@@ -2434,7 +2488,7 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Add our options to the network admin form.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	function _network_admin_form() {
 
@@ -2486,6 +2540,8 @@ class Commentpress_Multisite_Buddypress {
 
 	/**
 	 * Get all CommentPress Core themes.
+	 *
+	 * @since 3.3
 	 *
 	 * @return str $element The HTML form element
 	 */
@@ -2586,8 +2642,10 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Get Groupblog theme as defined in Network BuddyPress admin.
 	 *
-	 * @param str $default_theme The existing theme
-	 * @return str $theme The modified theme
+	 * @since 3.3
+	 *
+	 * @param str $default_theme The existing theme.
+	 * @return str $theme The modified theme.
 	 */
 	function _get_groupblog_theme( $default_theme ) {
 
@@ -2604,7 +2662,9 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Allow other plugins to hook into our multisite admin options.
 	 *
-	 * @return str Empty string, but plugins may send content back
+	 * @since 3.3
+	 *
+	 * @return str Empty string, but plugins may send content back.
 	 */
 	function _additional_buddypress_options() {
 
@@ -2618,8 +2678,10 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Get default BuddyPress-related settings.
 	 *
-	 * @param array $existing_options The existing options data aray
-	 * @return array $options The modified options data aray
+	 * @since 3.3
+	 *
+	 * @param array $existing_options The existing options data array.
+	 * @return array $options The modified options data array.
 	 */
 	function _get_default_settings( $existing_options ) {
 
@@ -2654,7 +2716,7 @@ class Commentpress_Multisite_Buddypress {
 	/**
 	 * Hook into Network BuddyPress form update.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	function _buddypress_admin_update() {
 

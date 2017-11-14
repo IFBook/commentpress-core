@@ -14,7 +14,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $parent_obj The plugin object
+	 * @var object $parent_obj The plugin object.
 	 */
 	public $parent_obj;
 
@@ -23,7 +23,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $commentpress_options The plugin options array
+	 * @var array $commentpress_options The plugin options array.
 	 */
 	public $commentpress_options = array();
 
@@ -32,7 +32,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var str $toc_content The TOC content (either 'post' or 'page')
+	 * @var str $toc_content The TOC content - either 'post' or 'page'.
 	 */
 	public $toc_content = 'page';
 
@@ -41,7 +41,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var bool $toc_chapter_is_page The Table of Contents "chapters are pages" flag
+	 * @var bool $toc_chapter_is_page The Table of Contents "chapters are pages" flag.
 	 */
 	public $toc_chapter_is_page = 1;
 
@@ -50,7 +50,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var bool $show_extended_toc The extended TOC content for posts lists flag
+	 * @var bool $show_extended_toc The extended TOC content for posts lists flag.
 	 */
 	public $show_extended_toc = 1;
 
@@ -59,7 +59,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var bool $show_subpages The Table of Contents shows subpages by default
+	 * @var bool $show_subpages The Table of Contents shows subpages by default.
 	 */
 	public $show_subpages = 1;
 
@@ -68,7 +68,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var str $title_visibility Show page titles by default
+	 * @var str $title_visibility Show page titles by default.
 	 */
 	public $title_visibility = 'show';
 
@@ -77,7 +77,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var str $page_meta_visibility Hide page meta by default
+	 * @var str $page_meta_visibility Hide page meta by default.
 	 */
 	public $page_meta_visibility = 'hide';
 
@@ -86,7 +86,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var bool $comment_editor Default to rich text editor (TinyMCE)
+	 * @var bool $comment_editor Default to rich text editor (TinyMCE).
 	 */
 	public $comment_editor = 1;
 
@@ -95,7 +95,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var bool $promote_reading Either promote reading (1) or commenting (0)
+	 * @var bool $promote_reading Either promote reading (1) or commenting (0).
 	 */
 	public $promote_reading = 0;
 
@@ -104,7 +104,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var bool $excerpt_length The default excerpt length
+	 * @var bool $excerpt_length The default excerpt length.
 	 */
 	public $excerpt_length = 55;
 
@@ -113,7 +113,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var bool $header_bg_colour The default header background colour
+	 * @var bool $header_bg_colour The default header background colour.
 	 */
 	public $header_bg_colour = '2c2622';
 
@@ -122,7 +122,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var str $js_scroll_speed The scroll speed (in millisecs)
+	 * @var str $js_scroll_speed The scroll speed (in millisecs).
 	 */
 	public $js_scroll_speed = '800';
 
@@ -133,18 +133,18 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var bool|int $blog_type The default type of blog
+	 * @var bool|int $blog_type The default type of blog.
 	 */
 	public $blog_type = false;
 
 	/**
 	 * Default blog workflow.
 	 *
-	 * Like "translation", for example, off by default
+	 * Like "translation", for example, off by default.
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var bool $blog_workflow True if blog workflow enabled
+	 * @var bool $blog_workflow True if blog workflow enabled.
 	 */
 	public $blog_workflow = 0;
 
@@ -153,7 +153,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var str $sidebar_default The default sidebar tab ('toc' == Contents tab)
+	 * @var str $sidebar_default The default sidebar tab ('toc' == Contents tab).
 	 */
 	public $sidebar_default = 'toc';
 
@@ -162,7 +162,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var str $min_page_width The default minimum page width in pixels
+	 * @var str $min_page_width The default minimum page width in pixels.
 	 */
 	public $min_page_width = '447';
 
@@ -171,7 +171,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var str $para_comments_live The "live" comment refreshing setting (off by default)
+	 * @var str $para_comments_live The "live" comment refreshing setting (off by default).
 	 */
 	public $para_comments_live = 0;
 
@@ -180,7 +180,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var str $saved_post True if post already saved
+	 * @var str $saved_post True if post already saved.
 	 */
 	public $saved_post = false;
 
@@ -189,7 +189,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.5
 	 * @access public
-	 * @var str $featured_images The featured images flag ('y' or 'n')
+	 * @var str $featured_images The featured images flag ('y' or 'n').
 	 */
 	public $featured_images = 'n';
 
@@ -198,7 +198,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.5
 	 * @access public
-	 * @var str $textblock_meta The textblock meta flag ('y' or 'n')
+	 * @var str $textblock_meta The textblock meta flag ('y' or 'n').
 	 */
 	public $textblock_meta = 'y';
 
@@ -212,7 +212,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.8.10
 	 * @access public
-	 * @var str $page_nav_enabled The page navigation flag ('y' or 'n')
+	 * @var str $page_nav_enabled The page navigation flag ('y' or 'n').
 	 */
 	public $page_nav_enabled = 'y';
 
@@ -228,7 +228,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.8.10
 	 * @access public
-	 * @var str $do_not_parse The flag indicating if content is to parsed ('y' or 'n')
+	 * @var str $do_not_parse The flag indicating if content is to parsed ('y' or 'n').
 	 */
 	public $do_not_parse = 'n';
 
@@ -241,7 +241,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.9
 	 * @access public
-	 * @var str $post_types_disabled The post types not to be parsed
+	 * @var str $post_types_disabled The post types not to be parsed.
 	 */
 	public $post_types_disabled = array();
 
@@ -252,7 +252,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $parent_obj A reference to the parent object
+	 * @param object $parent_obj A reference to the parent object.
 	 */
 	function __construct( $parent_obj ) {
 
@@ -269,7 +269,7 @@ class Commentpress_Core_Database {
 	/**
 	 * Object initialisation.
 	 *
-	 * @return void
+	 * @since 3.0
 	 */
 	function initialise() {
 
@@ -286,7 +286,7 @@ class Commentpress_Core_Database {
 	/**
 	 * Set up all items associated with this object.
 	 *
-	 * @return void
+	 * @since 3.0
 	 */
 	public function activate() {
 
@@ -361,7 +361,7 @@ class Commentpress_Core_Database {
 	/**
 	 * Reset WordPress to prior state, but retain options.
 	 *
-	 * @return void
+	 * @since 3.0
 	 */
 	public function deactivate() {
 
@@ -393,7 +393,9 @@ class Commentpress_Core_Database {
 	/**
 	 * Update WordPress database schema.
 	 *
-	 * @return bool $result True if successful, false otherwise
+	 * @since 3.0
+	 *
+	 * @return bool $result True if successful, false otherwise.
 	 */
 	public function schema_update() {
 
@@ -419,7 +421,9 @@ class Commentpress_Core_Database {
 	/**
 	 * Upgrade WordPress database schema.
 	 *
-	 * @return bool $result True if successful, false otherwise
+	 * @since 3.0
+	 *
+	 * @return bool $result True if successful, false otherwise.
 	 */
 	public function schema_upgrade() {
 
@@ -452,7 +456,9 @@ class Commentpress_Core_Database {
 	/**
 	 * Do we have a column in the comments table?
 	 *
-	 * @return bool $result True if modified, false otherwise
+	 * @since 3.0
+	 *
+	 * @return bool $result True if modified, false otherwise.
 	 */
 	public function db_is_modified( $column_name ) {
 
@@ -491,7 +497,9 @@ class Commentpress_Core_Database {
 	/**
 	 * Check for an outdated plugin version.
 	 *
-	 * @return bool $result True if outdated, false otherwise
+	 * @since 3.0
+	 *
+	 * @return bool $result True if outdated, false otherwise.
 	 */
 	public function version_outdated() {
 
@@ -513,7 +521,9 @@ class Commentpress_Core_Database {
 	/**
 	 * Check for plugin upgrade.
 	 *
-	 * @return bool $result True if required, false otherwise
+	 * @since 3.0
+	 *
+	 * @return bool $result True if required, false otherwise.
 	 */
 	public function upgrade_required() {
 
@@ -535,7 +545,9 @@ class Commentpress_Core_Database {
 	/**
 	 * Check for options added in this plugin upgrade.
 	 *
-	 * @return bool $result True if upgrade needed, false otherwise
+	 * @since 3.0
+	 *
+	 * @return bool $result True if upgrade needed, false otherwise.
 	 */
 	public function upgrade_options_check() {
 
@@ -596,6 +608,8 @@ class Commentpress_Core_Database {
 
 	/**
 	 * Upgrade CommentPress plugin from 3.1 options to CommentPress Core set.
+	 *
+	 * @since 3.0
 	 *
 	 * @return boolean $result
 	 */
@@ -927,7 +941,7 @@ class Commentpress_Core_Database {
 	 * CommentPress Core settings page), this method is called on every page
 	 * load so that upgrades are performed immediately if required.
 	 *
-	 * @return void
+	 * @since 3.0
 	 */
 	public function upgrade_immediately() {
 
@@ -944,7 +958,9 @@ class Commentpress_Core_Database {
 	/**
 	 * Check for theme mods added in this plugin upgrade.
 	 *
-	 * @return bool $result True if upgraded, false otherwise
+	 * @since 3.4
+	 *
+	 * @return bool $result True if upgraded, false otherwise.
 	 */
 	public function upgrade_theme_mods() {
 
@@ -989,7 +1005,9 @@ class Commentpress_Core_Database {
 	/**
 	 * Save the settings set by the administrator.
 	 *
-	 * @return bool $result True if successful, false otherwise
+	 * @since 3.0
+	 *
+	 * @return bool $result True if successful, false otherwise.
 	 */
 	public function options_update() {
 
@@ -1247,7 +1265,9 @@ class Commentpress_Core_Database {
 	/**
 	 * Upgrade CommentPress Core options to array.
 	 *
-	 * @return array $commentpress_options The plugin options
+	 * @since 3.0
+	 *
+	 * @return array $commentpress_options The plugin options.
 	 */
 	public function options_save() {
 
@@ -1261,8 +1281,10 @@ class Commentpress_Core_Database {
 	/**
 	 * Return existence of a specified option.
 	 *
-	 * @param str $option_name The name of the option
-	 * @return bool True if the option exists, false otherwise
+	 * @since 3.0
+	 *
+	 * @param str $option_name The name of the option.
+	 * @return bool True if the option exists, false otherwise.
 	 */
 	public function option_exists( $option_name = '' ) {
 
@@ -1284,9 +1306,11 @@ class Commentpress_Core_Database {
 	/**
 	 * Return a value for a specified option.
 	 *
-	 * @param str $option_name The name of the option
-	 * @param mixed $default The default value for the option
-	 * @return mixed The value of the option if it exists, $default otherwise
+	 * @since 3.0
+	 *
+	 * @param str $option_name The name of the option.
+	 * @param mixed $default The default value for the option.
+	 * @return mixed The value of the option if it exists, $default otherwise.
 	 */
 	public function option_get( $option_name = '', $default = false ) {
 
@@ -1308,9 +1332,10 @@ class Commentpress_Core_Database {
 	/**
 	 * Sets a value for a specified option.
 	 *
-	 * @param str $option_name The name of the option
-	 * @param mixed $value The value for the option
-	 * @return void
+	 * @since 3.0
+	 *
+	 * @param str $option_name The name of the option.
+	 * @param mixed $value The value for the option.
 	 */
 	public function option_set( $option_name = '', $value = '' ) {
 
@@ -1340,8 +1365,9 @@ class Commentpress_Core_Database {
 	/**
 	 * Deletes a specified option.
 	 *
-	 * @param str $option_name The name of the option
-	 * @return void
+	 * @since 3.0
+	 *
+	 * @param str $option_name The name of the optio
 	 */
 	public function option_delete( $option_name = '' ) {
 
@@ -1363,8 +1389,10 @@ class Commentpress_Core_Database {
 	/**
 	 * Return existence of a specified WordPress option.
 	 *
-	 * @param str $option_name The name of the option
-	 * @return bool True if option exists, false otherwise
+	 * @since 3.0
+	 *
+	 * @param str $option_name The name of the option.
+	 * @return bool True if option exists, false otherwise.
 	 */
 	public function option_wp_exists( $option_name = '' ) {
 
@@ -1396,9 +1424,11 @@ class Commentpress_Core_Database {
 	/**
 	 * Return a value for a specified WordPress option.
 	 *
-	 * @param str $option_name The name of the option
-	 * @param mixed $default The default value for the option
-	 * @return mixed The value of the option if it exists, $default otherwise
+	 * @since 3.0
+	 *
+	 * @param str $option_name The name of the option.
+	 * @param mixed $default The default value for the option.
+	 * @return mixed The value of the option if it exists, $default otherwise.
 	 */
 	public function option_wp_get( $option_name = '', $default = false ) {
 
@@ -1420,9 +1450,10 @@ class Commentpress_Core_Database {
 	/**
 	 * Sets a value for a specified WordPress option.
 	 *
-	 * @param str $option_name The name of the option
-	 * @param mixed $value The value for the option
-	 * @return void
+	 * @since 3.0
+	 *
+	 * @param str $option_name The name of the option.
+	 * @param mixed $value The value for the option.
 	 */
 	public function option_wp_set( $option_name = '', $value = null ) {
 
@@ -1444,7 +1475,9 @@ class Commentpress_Core_Database {
 	/**
 	 * Get current header background colour.
 	 *
-	 * @return str $header_bg_colour The hex value of the header
+	 * @since 3.0
+	 *
+	 * @return str $header_bg_colour The hex value of the header.
 	 */
 	public function option_get_header_bg() {
 
@@ -1479,8 +1512,9 @@ class Commentpress_Core_Database {
 	/**
 	 * When a page is saved, this also saves the CommentPress Core options.
 	 *
-	 * @param object $post_obj The post object
-	 * @return void
+	 * @since 3.4
+	 *
+	 * @param object $post_obj The post object.
 	 */
 	public function save_meta( $post_obj ) {
 
@@ -1504,8 +1538,9 @@ class Commentpress_Core_Database {
 	/**
 	 * When a page is saved, this also saves the CommentPress Core options.
 	 *
-	 * @param object $post_obj The post object
-	 * @return void
+	 * @since 3.4
+	 *
+	 * @param object $post_obj The post object.
 	 */
 	public function save_page_meta( $post_obj ) {
 
@@ -1557,8 +1592,9 @@ class Commentpress_Core_Database {
 	/**
 	 * When a page is saved, this authenticates that our options can be saved.
 	 *
-	 * @param object $post_obj The post object
-	 * @return void
+	 * @since 3.4
+	 *
+	 * @param object $post_obj The post object.
 	 */
 	public function save_page_meta_authenticated( $post_obj ) {
 
@@ -1588,8 +1624,10 @@ class Commentpress_Core_Database {
 	/**
 	 * Save Page Title visibility.
 	 *
-	 * @param object $post The post object
-	 * @return string $data Either 'show' (default) or ''
+	 * @since 3.4
+	 *
+	 * @param object $post The post object.
+	 * @return string $data Either 'show' (default) or ''.
 	 */
 	public function save_page_title_visibility( $post ) {
 
@@ -1626,8 +1664,10 @@ class Commentpress_Core_Database {
 	/**
 	 * Save Page Meta visibility.
 	 *
-	 * @param object $post The post object
-	 * @return string $data Either 'hide' (default) or ''
+	 * @since 3.4
+	 *
+	 * @param object $post The post object.
+	 * @return string $data Either 'hide' (default) or ''.
 	 */
 	public function save_page_meta_visibility( $post ) {
 
@@ -1664,10 +1704,11 @@ class Commentpress_Core_Database {
 	/**
 	 * Save Page Numbering format.
 	 *
-	 * Only first top-level page is allowed to save this
+	 * @since 3.4
 	 *
-	 * @param object $post The post object
-	 * @return void
+	 * Only first top-level page is allowed to save this.
+	 *
+	 * @param object $post The post object.
 	 */
 	public function save_page_numbering( $post ) {
 
@@ -1746,8 +1787,9 @@ class Commentpress_Core_Database {
 	/**
 	 * Save Page Layout for Title Page -> to allow for Book Cover image.
 	 *
-	 * @param object $post The post object
-	 * @return void
+	 * @since 3.0
+	 *
+	 * @param object $post The post object.
 	 */
 	public function save_page_layout( $post ) {
 
@@ -1786,8 +1828,9 @@ class Commentpress_Core_Database {
 	/**
 	 * When a post is saved, this also saves the CommentPress Core options.
 	 *
-	 * @param object $post_obj The post object
-	 * @return void
+	 * @since 3.0
+	 *
+	 * @param object $post_obj The post object.
 	 */
 	public function save_post_meta( $post_obj ) {
 
@@ -1924,8 +1967,9 @@ class Commentpress_Core_Database {
 	/**
 	 * When a post is saved, this authenticates that our options can be saved.
 	 *
-	 * @param object $post_obj The post object
-	 * @return void
+	 * @since 3.4
+	 *
+	 * @param object $post_obj The post object.
 	 */
 	public function save_post_meta_authenticated( $post_obj ) {
 
@@ -1957,8 +2001,9 @@ class Commentpress_Core_Database {
 	 *
 	 * This overrides the "blog_type" for a post.
 	 *
-	 * @param object $post The post object
-	 * @return void
+	 * @since 3.4
+	 *
+	 * @param object $post The post object.
 	 */
 	public function save_formatter( $post ) {
 
@@ -1992,8 +2037,9 @@ class Commentpress_Core_Database {
 	/**
 	 * Override default sidebar.
 	 *
-	 * @param object $post The post object
-	 * @return void
+	 * @since 3.4
+	 *
+	 * @param object $post The post object.
 	 */
 	public function save_default_sidebar( $post ) {
 
@@ -2037,8 +2083,9 @@ class Commentpress_Core_Database {
 	/**
 	 * Starting Paragraph Number - meta only exists when not default value.
 	 *
-	 * @param object $post The post object
-	 * @return void
+	 * @since 3.4
+	 *
+	 * @param object $post The post object.
 	 */
 	public function save_starting_paragraph( $post ) {
 
@@ -2080,8 +2127,9 @@ class Commentpress_Core_Database {
 	/**
 	 * Save workflow meta value.
 	 *
-	 * @param object $post The post object
-	 * @return void
+	 * @since 3.4
+	 *
+	 * @param object $post The post object.
 	 */
 	public function save_workflow( $post ) {
 
@@ -2158,8 +2206,9 @@ class Commentpress_Core_Database {
 	/**
 	 * When a page is deleted, this makes sure that the CommentPress Core options are synced.
 	 *
-	 * @param object $post_id The post ID
-	 * @return void
+	 * @since 3.4
+	 *
+	 * @param object $post_id The post ID.
 	 */
 	public function delete_meta( $post_id ) {
 
@@ -2213,7 +2262,7 @@ class Commentpress_Core_Database {
 	/**
 	 * Create all "special" pages.
 	 *
-	 * @return void
+	 * @since 3.4
 	 */
 	public function create_special_pages() {
 
@@ -2258,8 +2307,10 @@ class Commentpress_Core_Database {
 	/**
 	 * Create a particular "special" page.
 	 *
-	 * @param str $page The type of special page
-	 * @return mixed $new_id If successful, the numeric ID of the new page, false on failure
+	 * @since 3.4
+	 *
+	 * @param str $page The type of special page.
+	 * @return mixed $new_id If successful, the numeric ID of the new page, false on failure.
 	 */
 	public function create_special_page( $page ) {
 
@@ -2335,14 +2386,16 @@ class Commentpress_Core_Database {
 	/**
 	 * Delete "special" pages.
 	 *
-	 * @return bool $success True if page deleted successfully, false otherwise
+	 * @since 3.4
+	 *
+	 * @return bool $success True if page deleted successfully, false otherwise.
 	 */
 	public function delete_special_pages() {
 
 		// init success flag
 		$success = true;
 
-		/**
+		/*
 		 * Only delete special pages if we have one of the CommentPress Core
 		 * themes active because other themes may have a totally different way
 		 * of presenting the content of the blog.
@@ -2403,15 +2456,17 @@ class Commentpress_Core_Database {
 	/**
 	 * Delete a particular "special" page.
 	 *
-	 * @param str $page The type of special page to delete
-	 * @return boolean $success True if succesfully deleted false otherwise
+	 * @since 3.4
+	 *
+	 * @param str $page The type of special page to delete.
+	 * @return boolean $success True if succesfully deleted false otherwise.
 	 */
 	public function delete_special_page( $page ) {
 
 		// init success flag
 		$success = true;
 
-		/**
+		/*
 		 * Only delete a special page if we have one of the CommentPress Core
 		 * themes active because other themes may have a totally different way
 		 * of presenting the content of the blog.
@@ -2520,7 +2575,9 @@ class Commentpress_Core_Database {
 	/**
 	 * Test if a page is a "special" page.
 	 *
-	 * @return bool $is_special_page True if a special page, false otherwise
+	 * @since 3.4
+	 *
+	 * @return bool $is_special_page True if a special page, false otherwise.
 	 */
 	public function is_special_page() {
 
@@ -2566,7 +2623,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.9
 	 *
-	 * @return array $supported_post_types Array of post types that have an editor
+	 * @return array $supported_post_types Array of post types that have an editor.
 	 */
 	public function get_supported_post_types() {
 
@@ -2600,10 +2657,14 @@ class Commentpress_Core_Database {
 
 	}
 
+
+
 	/**
 	 * Check if a post allows comments to be posted.
 	 *
-	 * @return boolean $allowed True if comments enabled, false otherwise
+	 * @since 3.4
+	 *
+	 * @return boolean $allowed True if comments enabled, false otherwise.
 	 */
 	public function comments_enabled() {
 
@@ -2638,8 +2699,10 @@ class Commentpress_Core_Database {
 	/**
 	 * Get WordPress approved comments.
 	 *
-	 * @param int $post_id The numeric ID of the post
-	 * @return array $comments The array of comment data
+	 * @since 3.4
+	 *
+	 * @param int $post_id The numeric ID of the post.
+	 * @return array $comments The array of comment data.
 	 */
 	public function get_approved_comments( $post_ID ) {
 
@@ -2656,8 +2719,10 @@ class Commentpress_Core_Database {
 	/**
 	 * Get all WordPress comments for a post, unless paged.
 	 *
-	 * @param int $post_ID The numeric ID of the post
-	 * @return array $comments The array of comment data
+	 * @since 3.4
+	 *
+	 * @param int $post_ID The numeric ID of the post.
+	 * @return array $comments The array of comment data.
 	 */
 	public function get_all_comments( $post_ID ) {
 
@@ -2677,8 +2742,10 @@ class Commentpress_Core_Database {
 	/**
 	 * Get all comments for a post.
 	 *
-	 * @param int $post_ID The ID of the post
-	 * @return array $comments The array of comment data
+	 * @since 3.4
+	 *
+	 * @param int $post_ID The ID of the post.
+	 * @return array $comments The array of comment data.
 	 */
 	public function get_comments( $post_ID ) {
 
@@ -2703,8 +2770,10 @@ class Commentpress_Core_Database {
 	/**
 	 * When a comment is saved, this also saves the text signature.
 	 *
-	 * @param int $comment_id The numeric ID of the comment
-	 * @return boolean $result True if successful, false otherwise
+	 * @since 3.0
+	 *
+	 * @param int $comment_id The numeric ID of the comment.
+	 * @return boolean $result True if successful, false otherwise.
 	 */
 	public function save_comment_signature( $comment_ID ) {
 
@@ -2747,8 +2816,10 @@ class Commentpress_Core_Database {
 	/**
 	 * When a comment is saved, this also saves the text selection.
 	 *
-	 * @param int $comment_id The numeric ID of the comment
-	 * @return boolean $result True if successful, false otherwise
+	 * @since 3.9
+	 *
+	 * @param int $comment_id The numeric ID of the comment.
+	 * @return boolean $result True if successful, false otherwise.
 	 */
 	public function save_comment_selection( $comment_id ) {
 
@@ -2814,8 +2885,9 @@ class Commentpress_Core_Database {
 	 * This allows us to point to the correct page of a multipage post without
 	 * parsing the content every time.
 	 *
-	 * @param int $comment_ID The numeric ID of the comment
-	 * @return void
+	 * @since 3.4
+	 *
+	 * @param int $comment_ID The numeric ID of the comment.
 	 */
 	public function save_comment_page( $comment_ID ) {
 
@@ -2863,8 +2935,10 @@ class Commentpress_Core_Database {
 	/**
 	 * Retrieves text signature by comment ID.
 	 *
-	 * @param int $comment_ID The numeric ID of the comment
-	 * @return str $text_signature The text signature for the comment
+	 * @since 3.4
+	 *
+	 * @param int $comment_ID The numeric ID of the comment.
+	 * @return str $text_signature The text signature for the comment.
 	 */
 	public function get_text_signature_by_comment_id( $comment_ID ) {
 
@@ -2891,8 +2965,9 @@ class Commentpress_Core_Database {
 	 *
 	 * This is needed because some versions of PHP do not save properties!
 	 *
-	 * @param array $sigs An array of text signatures
-	 * @return void
+	 * @since 3.4
+	 *
+	 * @param array $sigs An array of text signatures.
 	 */
 	public function set_text_sigs( $sigs ) {
 
@@ -2907,7 +2982,9 @@ class Commentpress_Core_Database {
 	/**
 	 * Retrieve text sigs.
 	 *
-	 * @return array $text_signatures An array of text signatures
+	 * @since 3.4
+	 *
+	 * @return array $text_signatures An array of text signatures.
 	 */
 	public function get_text_sigs() {
 
@@ -2920,9 +2997,11 @@ class Commentpress_Core_Database {
 
 
 	/**
-	 * Get javascript for the plugin, context dependent.
+	 * Get Javascript params for the plugin, context dependent.
 	 *
-	 * @return str $script The Javascript
+	 * @since 3.4
+	 *
+	 * @return array $vars The Javascript setup params.
 	 */
 	public function get_javascript_vars() {
 
@@ -3233,7 +3312,7 @@ class Commentpress_Core_Database {
 	/**
 	 * Sets class properties for mobile browsers.
 	 *
-	 * @return void
+	 * @since 3.4
 	 */
 	public function test_for_mobile() {
 
@@ -3284,7 +3363,9 @@ class Commentpress_Core_Database {
 	/**
 	 * Returns class properties for mobile browsers.
 	 *
-	 * @return bool $is_mobile True if mobile device, false otherwise
+	 * @since 3.4
+	 *
+	 * @return bool $is_mobile True if mobile device, false otherwise.
 	 */
 	public function is_mobile() {
 
@@ -3306,7 +3387,9 @@ class Commentpress_Core_Database {
 	/**
 	 * Returns class properties for tablet browsers.
 	 *
-	 * @return bool $is_tablet True if tablet device, false otherwise
+	 * @since 3.4
+	 *
+	 * @return bool $is_tablet True if tablet device, false otherwise.
 	 */
 	public function is_tablet() {
 
@@ -3328,7 +3411,9 @@ class Commentpress_Core_Database {
 	/**
 	 * Returns class properties for touch devices.
 	 *
-	 * @return bool $is_touch True if touch device, false otherwise
+	 * @since 3.4
+	 *
+	 * @return bool $is_touch True if touch device, false otherwise.
 	 */
 	public function is_touch() {
 
@@ -3362,8 +3447,10 @@ class Commentpress_Core_Database {
 	/**
 	 * Create new post with content of existing.
 	 *
-	 * @return int $post The WordPress post object to make a copy of
-	 * @return int $new_post_id The numeric ID of the new post
+	 * @since 3.4
+	 *
+	 * @return int $post The WordPress post object to make a copy of.
+	 * @return int $new_post_id The numeric ID of the new post.
 	 */
 	function _create_new_post( $post ) {
 
@@ -3412,7 +3499,9 @@ class Commentpress_Core_Database {
 	/**
 	 * Create "title" page.
 	 *
-	 * @return int $title_id The numeric ID of the Title Page
+	 * @since 3.4
+	 *
+	 * @return int $title_id The numeric ID of the Title Page.
 	 */
 	function _create_title_page() {
 
@@ -3507,7 +3596,9 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	/**
 	 * Create "General Comments" page.
 	 *
-	 * @return int $general_comments_id The numeric ID of the "General Comments" page
+	 * @since 3.4
+	 *
+	 * @return int $general_comments_id The numeric ID of the "General Comments" page.
 	 */
 	function _create_general_comments_page() {
 
@@ -3558,7 +3649,9 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	/**
 	 * Create "all comments" page.
 	 *
-	 * @return int $all_comments_id The numeric ID of the "All Comments" page
+	 * @since 3.4
+	 *
+	 * @return int $all_comments_id The numeric ID of the "All Comments" page.
 	 */
 	function _create_all_comments_page() {
 
@@ -3609,7 +3702,9 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	/**
 	 * Create "Comments by Author" page.
 	 *
-	 * @return int $group_id The numeric ID of the "Comments by Author" page
+	 * @since 3.4
+	 *
+	 * @return int $group_id The numeric ID of the "Comments by Author" page.
 	 */
 	function _create_comments_by_author_page() {
 
@@ -3660,7 +3755,9 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	/**
 	 * Create "blog" page.
 	 *
-	 * @return int $blog_id The numeric ID of the "Blog" page
+	 * @since 3.4
+	 *
+	 * @return int $blog_id The numeric ID of the "Blog" page.
 	 */
 	function _create_blog_page() {
 
@@ -3714,7 +3811,9 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	/**
 	 * Create "Blog Archive" page.
 	 *
-	 * @return int $blog_id The numeric ID of the "Blog Archive" page
+	 * @since 3.4
+	 *
+	 * @return int $blog_id The numeric ID of the "Blog Archive" page.
 	 */
 	function _create_blog_archive_page() {
 
@@ -3765,9 +3864,11 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	/**
 	 * Create "table of contents" page.
 	 *
-	 * @todo NOT USED
+	 * PLease note: this is NOT USED.
 	 *
-	 * @return int $toc_id The numeric ID of the "Table of Contents" page
+	 * @since 3.4
+	 *
+	 * @return int $toc_id The numeric ID of the "Table of Contents" page.
 	 */
 	function _create_toc_page() {
 
@@ -3816,7 +3917,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	/**
 	 * Cancels comment paging because CommentPress Core will not work with comment paging.
 	 *
-	 * @return void
+	 * @since 3.4
 	 */
 	function _cancel_comment_paging() {
 
@@ -3830,7 +3931,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	/**
 	 * Resets comment paging option when plugin is deactivated.
 	 *
-	 * @return void
+	 * @since 3.4
 	 */
 	function _reset_comment_paging() {
 
@@ -3844,7 +3945,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	/**
 	 * Clears widgets for a fresh start.
 	 *
-	 * @return void
+	 * @since 3.4
 	 */
 	function _clear_widgets() {
 
@@ -3867,7 +3968,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	/**
 	 * Resets widgets when plugin is deactivated.
 	 *
-	 * @return void
+	 * @since 3.4
 	 */
 	function _reset_widgets() {
 
@@ -3881,9 +3982,10 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	/**
 	 * Store WordPress option.
 	 *
-	 * @param str $name The name of the option
-	 * @param mixed $value The value of the option
-	 * @return void
+	 * @since 3.4
+	 *
+	 * @param str $name The name of the option.
+	 * @param mixed $value The value of the option.
 	 */
 	function _store_wordpress_option( $name, $value ) {
 
@@ -3900,8 +4002,9 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	/**
 	 * Reset WordPress option.
 	 *
-	 * @param str $name The name of the option
-	 * @return void
+	 * @since 3.4
+	 *
+	 * @param str $name The name of the option.
 	 */
 	function _reset_wordpress_option( $name ) {
 
@@ -3918,7 +4021,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	/**
 	 * Create all basic CommentPress Core options.
 	 *
-	 * @return void
+	 * @since 3.4
 	 */
 	function _options_create() {
 
@@ -3957,7 +4060,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	/**
 	 * Reset CommentPress Core options.
 	 *
-	 * @return void
+	 * @since 3.4
 	 */
 	function _options_reset() {
 
@@ -4034,7 +4137,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	/**
 	 * Migrate all CommentPress Core options from old plugin.
 	 *
-	 * @return void
+	 * @since 3.4
 	 */
 	function _options_migrate() {
 
@@ -4367,7 +4470,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	/**
 	 * Upgrade CommentPress options to array (only for pre-CommentPress 3.2 upgrades).
 	 *
-	 * @return void
+	 * @since 3.4
 	 */
 	function _options_upgrade() {
 
@@ -4406,7 +4509,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	/**
 	 * Delete all legacy CommentPress options.
 	 *
-	 * @return void
+	 * @since 3.4
 	 */
 	function _options_delete_legacy() {
 

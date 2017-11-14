@@ -14,7 +14,7 @@ class Commentpress_Multisite_Revisions {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $parent_obj The plugin object
+	 * @var object $parent_obj The plugin object.
 	 */
 	public $parent_obj;
 
@@ -23,7 +23,7 @@ class Commentpress_Multisite_Revisions {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $db The database object
+	 * @var object $db The database object.
 	 */
 	public $db;
 
@@ -34,7 +34,7 @@ class Commentpress_Multisite_Revisions {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $parent_obj a reference to the parent object
+	 * @param object $parent_obj The reference to the parent object.
 	 */
 	function __construct( $parent_obj = null ) {
 
@@ -54,7 +54,7 @@ class Commentpress_Multisite_Revisions {
 	/**
 	 * Set up all items associated with this object.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function initialise() {
 
@@ -65,7 +65,7 @@ class Commentpress_Multisite_Revisions {
 	/**
 	 * If needed, destroys all items associated with this object.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function destroy() {
 
@@ -88,8 +88,10 @@ class Commentpress_Multisite_Revisions {
 	/**
 	 * Amend the post title prefix.
 	 *
-	 * @param str $prefix The existing post title prefix
-	 * @return str An empty string
+	 * @since 3.3
+	 *
+	 * @param str $prefix The existing post title prefix.
+	 * @return str An empty string.
 	 */
 	public function new_post_title_prefix( $prefix ) {
 
@@ -103,9 +105,11 @@ class Commentpress_Multisite_Revisions {
 	/**
 	 * Add suffix " - Draft N", where N is the latest version number.
 	 *
-	 * @param str $title The existing title of the post
-	 * @param object $post The WordPress post object
-	 * @return str $title The modified title of the post
+	 * @since 3.3
+	 *
+	 * @param str $title The existing title of the post.
+	 * @param object $post The WordPress post object.
+	 * @return str $title The modified title of the post.
 	 */
 	public function new_post_title( $title, $post ) {
 
@@ -166,7 +170,7 @@ class Commentpress_Multisite_Revisions {
 	/**
 	 * Object initialisation.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	function _init() {
 
@@ -180,7 +184,7 @@ class Commentpress_Multisite_Revisions {
 	/**
 	 * Register WordPress hooks.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	function _register_hooks() {
 

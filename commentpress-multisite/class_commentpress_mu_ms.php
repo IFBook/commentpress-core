@@ -14,7 +14,7 @@ class Commentpress_Multisite_Wordpress {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $parent_obj The plugin object
+	 * @var object $parent_obj The plugin object.
 	 */
 	public $parent_obj;
 
@@ -23,7 +23,7 @@ class Commentpress_Multisite_Wordpress {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $db The database object
+	 * @var object $db The database object.
 	 */
 	public $db;
 
@@ -32,7 +32,7 @@ class Commentpress_Multisite_Wordpress {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var str $cpmu_bp_force_commentpress The enabled on all sites flag ('0' or '1')
+	 * @var str $cpmu_bp_force_commentpress The enabled on all sites flag ('0' or '1').
 	 */
 	public $cpmu_force_commentpress = '0';
 
@@ -41,7 +41,7 @@ class Commentpress_Multisite_Wordpress {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var str $cpmu_title_page_content The default title page content
+	 * @var str $cpmu_title_page_content The default title page content.
 	 */
 	//public $cpmu_title_page_content = '';
 
@@ -50,7 +50,7 @@ class Commentpress_Multisite_Wordpress {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var str $cpmu_disable_translation_workflow The translation workflow allowed flag ('0' or '1')
+	 * @var str $cpmu_disable_translation_workflow The translation workflow allowed flag ('0' or '1').
 	 */
 	public $cpmu_disable_translation_workflow = '1';
 
@@ -61,7 +61,7 @@ class Commentpress_Multisite_Wordpress {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $parent_obj A reference to the parent object
+	 * @param object $parent_obj A reference to the parent object.
 	 */
 	function __construct( $parent_obj = null ) {
 
@@ -81,7 +81,7 @@ class Commentpress_Multisite_Wordpress {
 	/**
 	 * Set up all items associated with this object.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function initialise() {
 
@@ -92,7 +92,7 @@ class Commentpress_Multisite_Wordpress {
 	/**
 	 * If needed, destroys all items associated with this object.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function destroy() {
 
@@ -115,7 +115,7 @@ class Commentpress_Multisite_Wordpress {
 	/**
 	 * Add an admin page for this plugin.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function add_admin_menu() {
 
@@ -146,7 +146,7 @@ class Commentpress_Multisite_Wordpress {
 	/**
 	 * Enqueue any styles and scripts needed by our admin page.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function add_admin_styles() {
 
@@ -166,7 +166,7 @@ class Commentpress_Multisite_Wordpress {
 	/**
 	 * Enqueue any styles and scripts needed by our public pages.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function add_frontend_styles() {
 
@@ -177,8 +177,9 @@ class Commentpress_Multisite_Wordpress {
 	/**
 	 * Hook into the blog signup form.
 	 *
-	 * @param array $errors The previously encountered errors
-	 * @return void
+	 * @since 3.3
+	 *
+	 * @param array $errors The previously encountered errors.
 	 */
 	public function signup_blogform( $errors ) {
 
@@ -254,13 +255,14 @@ class Commentpress_Multisite_Wordpress {
 	/**
 	 * Hook into wpmu_new_blog and target plugins to be activated.
 	 *
-	 * @param int $blog_id The numeric ID of the WordPress blog
-	 * @param int $user_id The numeric ID of the WordPress user
-	 * @param str $domain The domain of the WordPress blog
-	 * @param str $path The path of the WordPress blog
-	 * @param int $site_id The numeric ID of the WordPress parent site
-	 * @param array $meta The meta data of the WordPress blog
-	 * @return void
+	 * @since 3.3
+	 *
+	 * @param int $blog_id The numeric ID of the WordPress blog.
+	 * @param int $user_id The numeric ID of the WordPress user.
+	 * @param str $domain The domain of the WordPress blog.
+	 * @param str $path The path of the WordPress blog.
+	 * @param int $site_id The numeric ID of the WordPress parent site.
+	 * @param array $meta The meta data of the WordPress blog.
 	 */
 	public function wpmu_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 
@@ -291,7 +293,7 @@ class Commentpress_Multisite_Wordpress {
 	/**
 	 * Object initialisation.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	function _init() {
 
@@ -305,7 +307,7 @@ class Commentpress_Multisite_Wordpress {
 	/**
 	 * Register WordPress hooks.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	function _register_hooks() {
 
@@ -347,13 +349,14 @@ class Commentpress_Multisite_Wordpress {
 	/**
 	 * Create a blog.
 	 *
-	 * @param int $blog_id The numeric ID of the WordPress blog
-	 * @param int $user_id The numeric ID of the WordPress user
-	 * @param str $domain The domain of the WordPress blog
-	 * @param str $path The path of the WordPress blog
-	 * @param int $site_id The numeric ID of the WordPress parent site
-	 * @param array $meta The meta data of the WordPress blog
-	 * @return void
+	 * @since 3.3
+	 *
+	 * @param int $blog_id The numeric ID of the WordPress blog.
+	 * @param int $user_id The numeric ID of the WordPress user.
+	 * @param str $domain The domain of the WordPress blog.
+	 * @param str $path The path of the WordPress blog.
+	 * @param int $site_id The numeric ID of the WordPress parent site.
+	 * @param array $meta The meta data of the WordPress blog.
 	 */
 	function _create_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 
@@ -373,7 +376,9 @@ class Commentpress_Multisite_Wordpress {
 	/**
 	 * Get workflow form elements.
 	 *
-	 * @return str $workflow_html The HTML form element
+	 * @since 3.3
+	 *
+	 * @return str $workflow_html The HTML form element.
 	 */
 	function _get_workflow() {
 
@@ -407,7 +412,9 @@ class Commentpress_Multisite_Wordpress {
 	/**
 	 * Get blog type form elements.
 	 *
-	 * @return str $type_html The HTML form element
+	 * @since 3.3
+	 *
+	 * @return str $type_html The HTML form element.
 	 */
 	function _get_blogtype() {
 
@@ -445,7 +452,7 @@ class Commentpress_Multisite_Wordpress {
 	/**
 	 * Show our admin page.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	function _network_admin_form() {
 
@@ -555,15 +562,11 @@ class Commentpress_Multisite_Wordpress {
 
 		// call the editor
 		wp_editor(
-
 			$content,
 			'cpmu_title_page_content',
 			$settings = array(
-
 				'media_buttons' => false
-
 			)
-
 		);
 		*/
 
@@ -588,7 +591,9 @@ class Commentpress_Multisite_Wordpress {
 	/**
 	 * Allow other plugins to hook into our multisite admin options.
 	 *
-	 * @return str Empty string by default, but may be overridden
+	 * @since 3.3
+	 *
+	 * @return str Empty string by default, but may be overridden.
 	 */
 	function _additional_multisite_options() {
 
@@ -602,7 +607,9 @@ class Commentpress_Multisite_Wordpress {
 	/**
 	 * Allow other plugins to hook into our admin form.
 	 *
-	 * @return str Empty string by default, but may be overridden
+	 * @since 3.3
+	 *
+	 * @return str Empty string by default, but may be overridden.
 	 */
 	function _additional_form_options() {
 
@@ -616,8 +623,10 @@ class Commentpress_Multisite_Wordpress {
 	/**
 	 * Get default Multisite-related settings.
 	 *
-	 * @param array $existing_options The existing options
-	 * @return array $existing_options The modified options
+	 * @since 3.3
+	 *
+	 * @param array $existing_options The existing options.
+	 * @return array $existing_options The modified options.
 	 */
 	function _get_default_settings( $existing_options ) {
 
@@ -628,11 +637,15 @@ class Commentpress_Multisite_Wordpress {
 			'cpmu_disable_translation_workflow' => $this->cpmu_disable_translation_workflow
 		);
 
-		// allow overrides and additions
-		$defaults = apply_filters(
-			'cpmu_multisite_options_get_defaults',
-			$defaults
-		);
+		/**
+		 * Allow overrides and additions.
+		 *
+		 * @since 3.3
+		 *
+		 * @param array $defaults The existing array of defaults.
+		 * @return array $defaults The modified array of defaults.
+		 */
+		$defaults = apply_filters( 'cpmu_multisite_options_get_defaults', $defaults );
 
 		// return options array
 		return array_merge( $existing_options, $defaults );
@@ -644,7 +657,7 @@ class Commentpress_Multisite_Wordpress {
 	/**
 	 * Hook into Network form update.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	function _network_admin_update() {
 
@@ -677,7 +690,9 @@ class Commentpress_Multisite_Wordpress {
 	/**
 	 * Get workflow enabled setting.
 	 *
-	 * @return bool $disabled True if disabled, false otherwise
+	 * @since 3.3
+	 *
+	 * @return bool $disabled True if disabled, false otherwise.
 	 */
 	function _get_workflow_enabled() {
 
@@ -696,8 +711,10 @@ class Commentpress_Multisite_Wordpress {
 	 *
 	 * Do we want to enable this when we enable the admin page editor?
 	 *
-	 * @param str $content The existing content
-	 * @return str $content The modified content
+	 * @since 3.3
+	 *
+	 * @param str $content The existing content.
+	 * @return str $content The modified content.
 	 */
 	function _get_title_page_content( $content ) {
 
@@ -722,7 +739,9 @@ class Commentpress_Multisite_Wordpress {
 	/**
 	 * Get default Title Page content.
 	 *
-	 * @return str $content The default Title Page content
+	 * @since 3.3
+	 *
+	 * @return str $content The default Title Page content.
 	 */
 	function _get_default_title_page_content() {
 

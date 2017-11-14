@@ -19,7 +19,7 @@ class Commentpress_Core_Parser {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $parent_obj The plugin object
+	 * @var object $parent_obj The plugin object.
 	 */
 	public $parent_obj;
 
@@ -28,7 +28,7 @@ class Commentpress_Core_Parser {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $text_signatures The text signatures array
+	 * @var array $text_signatures The text signatures array.
 	 */
 	public $text_signatures = array();
 
@@ -37,7 +37,7 @@ class Commentpress_Core_Parser {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $comments_all The all comments array
+	 * @var array $comments_all The all comments array.
 	 */
 	public $comments_all = array();
 
@@ -46,7 +46,7 @@ class Commentpress_Core_Parser {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $comments_approved The approved comments array
+	 * @var array $comments_approved The approved comments array.
 	 */
 	public $comments_approved = array();
 
@@ -55,7 +55,7 @@ class Commentpress_Core_Parser {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $comments_sorted The sorted comments array
+	 * @var array $comments_sorted The sorted comments array.
 	 */
 	public $comments_sorted = array();
 
@@ -65,7 +65,7 @@ class Commentpress_Core_Parser {
 	 * @see Commentpress_Core_Database->do_not_parse
 	 * @since 3.8.10
 	 * @access public
-	 * @var bool $do_not_parse False if content is parsed, true disables parsing
+	 * @var bool $do_not_parse False if content is parsed, true disables parsing.
 	 */
 	public $do_not_parse = false;
 
@@ -74,7 +74,7 @@ class Commentpress_Core_Parser {
 	 *
 	 * @since 3.8.10
 	 * @access public
-	 * @var str $formatter The type of formatter ('tag', 'line' or 'block')
+	 * @var str $formatter The type of formatter ('tag', 'line' or 'block').
 	 */
 	public $formatter = 'tag';
 
@@ -83,7 +83,7 @@ class Commentpress_Core_Parser {
 	 *
 	 * @since 3.8.10
 	 * @access public
-	 * @var str $block_name The name of the block (e.g. "paragraph", "line" etc)
+	 * @var str $block_name The name of the block (e.g. "paragraph", "line" etc).
 	 */
 	public $block_name = '';
 
@@ -94,7 +94,7 @@ class Commentpress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $parent_obj a reference to the parent object
+	 * @param object $parent_obj a reference to the parent object.
 	 */
 	function __construct( $parent_obj ) {
 
@@ -111,7 +111,7 @@ class Commentpress_Core_Parser {
 	/**
 	 * Set up all items associated with this object.
 	 *
-	 * @return void
+	 * @since 3.0
 	 */
 	public function initialise() {
 
@@ -160,7 +160,7 @@ class Commentpress_Core_Parser {
 	/**
 	 * If needed, destroys all items associated with this object.
 	 *
-	 * @return void
+	 * @since 3.0
 	 */
 	public function destroy() {
 
@@ -183,8 +183,10 @@ class Commentpress_Core_Parser {
 	/**
 	 * Intercept content and modify based on paragraphs, blocks or lines.
 	 *
-	 * @param str $content The existing content
-	 * @return str $content The modified content
+	 * @since 3.0
+	 *
+	 * @param str $content The existing content.
+	 * @return str $content The modified content.
 	 */
 	public function the_content( $content ) {
 
@@ -299,8 +301,10 @@ class Commentpress_Core_Parser {
 	/**
 	 * Get comments sorted by text signature and paragraph.
 	 *
-	 * @param int $post_ID The numeric ID of the post
-	 * @return array $comments
+	 * @since 3.0
+	 *
+	 * @param int $post_ID The numeric ID of the post.
+	 * @return array $comments The sorted comments array.
 	 */
 	public function get_sorted_comments( $post_ID ) {
 
@@ -324,7 +328,7 @@ class Commentpress_Core_Parser {
 	 *
 	 * @since 3.8.10
 	 *
-	 * @param str $formatter The formatter
+	 * @param str $formatter The formatter.
 	 */
 	public function lexia_set( $formatter ) {
 
@@ -366,7 +370,7 @@ class Commentpress_Core_Parser {
 	 *
 	 * @since 3.8.10
 	 *
-	 * @return str $block_name The name of the block
+	 * @return str $block_name The name of the block.
 	 */
 	public function lexia_get() {
 
@@ -392,7 +396,7 @@ class Commentpress_Core_Parser {
 	/**
 	 * Object initialisation.
 	 *
-	 * @return void
+	 * @since 3.0
 	 */
 	function _init() {
 
@@ -403,9 +407,11 @@ class Commentpress_Core_Parser {
 	/**
 	 * Parses the content by tag.
 	 *
-	 * @param str $content The post content
-	 * @param str $tag The tag to filter by
-	 * @return str $content the parsed content
+	 * @since 3.0
+	 *
+	 * @param str $content The post content.
+	 * @param str $tag The tag to filter by.
+	 * @return str $content the parsed content.
 	 */
 	function _parse_content( $content, $tag = 'p|ul|ol' ) {
 
@@ -674,9 +680,11 @@ class Commentpress_Core_Parser {
 	/**
 	 * Splits the content into an array by tag.
 	 *
-	 * @param str $content The post content
-	 * @param str $tag The tag to filter by
-	 * @return array $matches The ordered array of matched items
+	 * @since 3.0
+	 *
+	 * @param str $content The post content.
+	 * @param str $tag The tag to filter by.
+	 * @return array $matches The ordered array of matched items.
 	 */
 	function _get_text_matches( $content, $tag = 'p|ul|ol' ) {
 
@@ -713,9 +721,11 @@ class Commentpress_Core_Parser {
 	/**
 	 * Parses the content by tag and builds text signatures array.
 	 *
-	 * @param str $content The post content
-	 * @param str $tag The tag to filter by
-	 * @return array $text_signatures The ordered array of text signatures
+	 * @since 3.0
+	 *
+	 * @param str $content The post content.
+	 * @param str $tag The tag to filter by.
+	 * @return array $text_signatures The ordered array of text signatures.
 	 */
 	function _generate_text_signatures( $content, $tag = 'p|ul|ol' ) {
 
@@ -795,8 +805,10 @@ class Commentpress_Core_Parser {
 	/**
 	 * Parse the content by line (<br />).
 	 *
-	 * @param str $content The post content
-	 * @return str $content The parsed content
+	 * @since 3.0
+	 *
+	 * @param str $content The post content.
+	 * @return str $content The parsed content.
 	 */
 	function _parse_lines( $content ) {
 
@@ -919,8 +931,10 @@ class Commentpress_Core_Parser {
 	/**
 	 * Splits the content into an array by line.
 	 *
-	 * @param str $content The post content
-	 * @return array $output_array The ordered array of matched items
+	 * @since 3.0
+	 *
+	 * @param str $content The post content.
+	 * @return array $output_array The ordered array of matched items.
 	 */
 	function _get_line_matches( $content ) {
 
@@ -974,8 +988,10 @@ class Commentpress_Core_Parser {
 	/**
 	 * Parses the content by line (<br />) and builds text signatures array.
 	 *
-	 * @param str $content The post content
-	 * @return array $text_signatures The ordered array of text signatures
+	 * @since 3.0
+	 *
+	 * @param str $content The post content.
+	 * @return array $text_signatures The ordered array of text signatures.
 	 */
 	function _generate_line_signatures( $content ) {
 
@@ -1079,8 +1095,10 @@ class Commentpress_Core_Parser {
 	/**
 	 * Parses the content by comment block.
 	 *
-	 * @param str $content The post content
-	 * @return str $content The parsed content
+	 * @since 3.0
+	 *
+	 * @param str $content The post content.
+	 * @return str $content The parsed content.
 	 */
 	function _parse_blocks( $content ) {
 
@@ -1186,8 +1204,10 @@ class Commentpress_Core_Parser {
 	/**
 	 * Splits the content into an array by block.
 	 *
-	 * @param str $content The post content
-	 * @return array $output_array The ordered array of matched items
+	 * @since 3.0
+	 *
+	 * @param str $content The post content.
+	 * @return array $output_array The ordered array of matched items.
 	 */
 	function _get_block_matches( $content ) {
 
@@ -1298,8 +1318,10 @@ class Commentpress_Core_Parser {
 	/**
 	 * Parses the content by comment block and generates text signature array.
 	 *
-	 * @param str $content The post content
-	 * @return array $text_signatures The ordered array of text signatures
+	 * @since 3.0
+	 *
+	 * @param str $content The post content.
+	 * @return array $text_signatures The ordered array of text signatures.
 	 */
 	function _generate_block_signatures( $content ) {
 
@@ -1373,8 +1395,10 @@ class Commentpress_Core_Parser {
 	/**
 	 * Utility to check if the content has our custom quicktag.
 	 *
-	 * @param str $content The post content
-	 * @return str $content The modified post content
+	 * @since 3.0
+	 *
+	 * @param str $content The post content.
+	 * @return str $content The modified post content.
 	 */
 	function _has_comment_block_quicktag( $content ) {
 
@@ -1399,8 +1423,10 @@ class Commentpress_Core_Parser {
 	/**
 	 * Utility to remove our custom quicktag.
 	 *
-	 * @param str $content The post content
-	 * @return str $content The modified post content
+	 * @since 3.0
+	 *
+	 * @param str $content The post content.
+	 * @return str $content The modified post content.
 	 */
 	function _strip_comment_block_quicktag( $content ) {
 
@@ -1436,8 +1462,10 @@ class Commentpress_Core_Parser {
 	/**
 	 * Utility to strip out shortcodes from content otherwise they get formatting.
 	 *
-	 * @param str $content The post content
-	 * @return str $content The modified post content
+	 * @since 3.0
+	 *
+	 * @param str $content The post content.
+	 * @return str $content The modified post content.
 	 */
 	function _strip_shortcodes( $content ) {
 
@@ -1585,8 +1613,10 @@ class Commentpress_Core_Parser {
 	/**
 	 * Generates a text signature based on the content of a paragraph.
 	 *
-	 * @param str $text The text of a paragraph
-	 * @return str $text_signature The generated text signature
+	 * @since 3.0
+	 *
+	 * @param str $text The text of a paragraph.
+	 * @return str $text_signature The generated text signature.
 	 *
 	 */
 	function _generate_text_signature( $text ) {
@@ -1627,8 +1657,10 @@ class Commentpress_Core_Parser {
 	 *
 	 * @todo Make these commentable
 	 *
-	 * @param str $content The post content
-	 * @return str $content The filtered post content
+	 * @since 3.0
+	 *
+	 * @param str $content The post content.
+	 * @return str $content The filtered post content.
 	 */
 	function _filter_twitter_embeds( $content ) {
 
@@ -1677,8 +1709,10 @@ class Commentpress_Core_Parser {
 	 * newline, but this is not always true. When they are the first element of
 	 * the post content, they can be standalone too. Props: Ralph Bloch.
 	 *
-	 * @param str $content The post content
-	 * @return str $content The filtered post content
+	 * @since 3.8
+	 *
+	 * @param str $content The post content.
+	 * @return str $content The filtered post content.
 	 */
 	function _parse_captions( $content ) {
 
@@ -1756,8 +1790,10 @@ class Commentpress_Core_Parser {
 	/**
 	 * Removes leading and trailing <br /> tags from embedded quotes.
 	 *
-	 * @param string $content The post content
-	 * @return string $content The filtered post content
+	 * @since 3.0
+	 *
+	 * @param string $content The post content.
+	 * @return string $content The filtered post content.
 	 */
 	function _parse_blockquotes_in_paras( $content ) {
 
@@ -1792,8 +1828,10 @@ class Commentpress_Core_Parser {
 	/**
 	 * Get comments sorted by text signature and paragraph.
 	 *
-	 * @param int $post_ID The numeric ID of the post
-	 * @return array $sorted_comments The array of comment data
+	 * @since 3.0
+	 *
+	 * @param int $post_ID The numeric ID of the post.
+	 * @return array $sorted_comments The array of comment data.
 	 */
 	function _get_sorted_comments( $post_ID ) {
 
@@ -1874,8 +1912,10 @@ class Commentpress_Core_Parser {
 	/**
 	 * Filter comments to find comments for the current page of a multipage post.
 	 *
-	 * @param array $comments The array of comment objects
-	 * @return array $filtered The array of comments for the current page
+	 * @since 3.4
+	 *
+	 * @param array $comments The array of comment objects.
+	 * @return array $filtered The array of comments for the current page.
 	 */
 	function _multipage_comment_filter( $comments ) {
 
@@ -1939,10 +1979,12 @@ class Commentpress_Core_Parser {
 	/**
 	 * Filter comments by text signature.
 	 *
-	 * @param array $comments The array of comment objects
-	 * @param array $text_signatures The array of text signatures
-	 * @param integer $confidence The confidence level of paragraph identity - default 90%
-	 * @return array $assigned The array with text signatures as keys and array of comments as values
+	 * @since 3.0
+	 *
+	 * @param array $comments The array of comment objects.
+	 * @param array $text_signatures The array of text signatures.
+	 * @param integer $confidence The confidence level of paragraph identity - default 90%.
+	 * @return array $assigned The array with text signatures as keys and array of comments as values.
 	 */
 	function _assign_comments( $comments, $text_signatures, $confidence = 90 ) {
 

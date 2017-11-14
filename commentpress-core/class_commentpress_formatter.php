@@ -12,7 +12,7 @@ class Commentpress_Core_Formatter {
 	/**
 	 * Plugin object.
 	 *
-	 * @since 3.0
+	 * @since 3.3
 	 * @access public
 	 * @var object $parent_obj The plugin object
 	 */
@@ -21,7 +21,7 @@ class Commentpress_Core_Formatter {
 	/**
 	 * Database interaction object.
 	 *
-	 * @since 3.0
+	 * @since 3.3
 	 * @access public
 	 * @var object $db The database object
 	 */
@@ -54,7 +54,7 @@ class Commentpress_Core_Formatter {
 	/**
 	 * Set up all items associated with this object.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function initialise() {
 
@@ -65,7 +65,7 @@ class Commentpress_Core_Formatter {
 	/**
 	 * If needed, destroys all items associated with this object.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function destroy() {
 
@@ -88,8 +88,10 @@ class Commentpress_Core_Formatter {
 	/**
 	 * Override the name of the type dropdown label.
 	 *
-	 * @param str $name The existing name of the label
-	 * @return str $name The modified name of the label
+	 * @since 3.3
+	 *
+	 * @param str $name The existing name of the label.
+	 * @return str $name The modified name of the label.
 	 */
 	public function blog_type_label( $name ) {
 
@@ -105,8 +107,10 @@ class Commentpress_Core_Formatter {
 	/**
 	 * Define the "types" of groupblog.
 	 *
-	 * @param array $existing_options The existing types of groupblog
-	 * @return array $existing_options The modified types of groupblog
+	 * @since 3.3
+	 *
+	 * @param array $existing_options The existing types of groupblog.
+	 * @return array $existing_options The modified types of groupblog.
 	 */
 	public function blog_type_options( $existing_options ) {
 
@@ -129,8 +133,10 @@ class Commentpress_Core_Formatter {
 	/**
 	 * Choose content formatter by blog type or post meta value.
 	 *
-	 * @param str $formatter The existing formatter code
-	 * @return str $formatter The existing formatter code
+	 * @since 3.3
+	 *
+	 * @param str $formatter The existing formatter code.
+	 * @return str $formatter The existing formatter code.
 	 */
 	public function content_formatter( $formatter ) {
 
@@ -193,7 +199,7 @@ class Commentpress_Core_Formatter {
 	/**
 	 * Object initialisation.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	function _init() {
 
@@ -207,7 +213,7 @@ class Commentpress_Core_Formatter {
 	/**
 	 * Register WordPress hooks.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	function _register_hooks() {
 

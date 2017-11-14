@@ -9,28 +9,58 @@
  */
 class Commentpress_Multisite_Buddypress_Groupblog {
 
-
-
 	/**
-	 * Properties
+	 * Plugin object.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var object $parent_obj The plugin object.
 	 */
-
-	// parent object reference
 	public $parent_obj;
 
-	// admin object reference
+	/**
+	 * Database interaction object.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var object $db The database object.
+	 */
 	public $db;
 
-	// default to "off"
+	/**
+	 * Flag whether or not to rename a groupblog.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var object $groupblog_nomenclature Flag whether or not to rename a groupblog - default to "off".
+	 */
 	public $groupblog_nomenclature = 0;
 
-	// default name to "Document"
+	/**
+	 * Default name of a groupblog.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var object $groupblog_nomenclature_name Default name of a groupblog.
+	 */
 	public $groupblog_nomenclature_name = 'Document';
 
-	// default plural to "Documents"
+	/**
+	 * Default plural name of a groupblog.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var object $groupblog_nomenclature_plural Default plural name of a groupblog.
+	 */
 	public $groupblog_nomenclature_plural = 'Documents';
 
-	// default slug to "document"
+	/**
+	 * Default slug of a groupblog.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var object $groupblog_nomenclature_slug Default slug of a groupblog.
+	 */
 	public $groupblog_nomenclature_slug = 'document';
 
 
@@ -40,7 +70,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $parent_obj a reference to the parent object
+	 * @param object $parent_obj a reference to the parent object.
 	 */
 	function __construct( $parent_obj = null ) {
 
@@ -60,7 +90,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * Set up all items associated with this object.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function initialise() {
 
@@ -71,7 +101,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * If needed, destroys all items associated with this object.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function destroy() {
 
@@ -94,7 +124,9 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * Override the name of the filter item.
 	 *
-	 * @return str The name in the groupblog comments label
+	 * @since 3.3
+	 *
+	 * @return str The name in the groupblog comments label.
 	 */
 	public function groupblog_comment_name() {
 
@@ -111,7 +143,9 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * Override the name of the filter item.
 	 *
-	 * @return str The plural name in the groupblog posts label
+	 * @since 3.3
+	 *
+	 * @return str The plural name in the groupblog posts label.
 	 */
 	public function groupblog_post_name() {
 
@@ -128,7 +162,9 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * Override the name of the filter item.
 	 *
-	 * @return str The singular name of the groupblog post
+	 * @since 3.3
+	 *
+	 * @return str The singular name of the groupblog post.
 	 */
 	public function activity_post_name() {
 
@@ -145,7 +181,9 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * Override the name of the sub-nav item.
 	 *
-	 * @return str The singular name of the groupblog post
+	 * @since 3.3
+	 *
+	 * @return str The singular name of the groupblog post.
 	 */
 	public function filter_blog_name( $name ) {
 
@@ -159,7 +197,9 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * Override the slug of the sub-nav item.
 	 *
-	 * @return The slug of the sub-nav item
+	 * @since 3.3
+	 *
+	 * @return The slug of the sub-nav item.
 	 */
 	public function filter_blog_slug( $slug ) {
 
@@ -173,8 +213,10 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * Override the title of the "Recent Comments in..." link.
 	 *
-	 * @param str $title The title of the Recent Comments heading
-	 * @return str $title The modified title of the Recent Comments heading
+	 * @since 3.3
+	 *
+	 * @param str $title The title of the Recent Comments heading.
+	 * @return str $title The modified title of the Recent Comments heading.
 	 */
 	public function activity_tab_recent_title_blog( $title ) {
 
@@ -218,8 +260,10 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * Override title on All Comments page.
 	 *
-	 * @param str $title The title of the All Comments heading
-	 * @return str $title The modified title of the All Comments heading
+	 * @since 3.3
+	 *
+	 * @param str $title The title of the All Comments heading.
+	 * @return str $title The modified title of the All Comments heading.
 	 */
 	public function page_all_comments_blog_title( $title ) {
 
@@ -241,8 +285,10 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * Override title on All Comments page.
 	 *
-	 * @param str $title The title of the "Comments on..." heading
-	 * @return str $title The modified title of the "Comments on..." heading
+	 * @since 3.3
+	 *
+	 * @param str $title The title of the "Comments on..." heading.
+	 * @return str $title The modified title of the "Comments on..." heading.
 	 */
 	public function page_all_comments_book_title( $title ) {
 
@@ -264,8 +310,10 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * Override title on Activity tab.
 	 *
-	 * @param str $title The title of the "Recent Activity in..." heading
-	 * @return str $title The modified title of the "Recent Activity in..." heading
+	 * @since 3.3
+	 *
+	 * @param str $title The title of the "Recent Activity in..." heading.
+	 * @return str $title The modified title of the "Recent Activity in..." heading.
 	 */
 	public function filter_activity_title_all_yours( $title ) {
 
@@ -290,8 +338,10 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * Override title on Activity tab.
 	 *
-	 * @param str $title The title of the "Recent Activity in..." heading
-	 * @return str $title The modified title of the "Recent Activity in..." heading
+	 * @since 3.3
+	 *
+	 * @param str $title The title of the "Recent Activity in..." heading.
+	 * @return str $title The modified title of the "Recent Activity in..." heading.
 	 */
 	public function filter_activity_title_all_public( $title ) {
 
@@ -316,8 +366,10 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * Override CommentPress Core "Title Page".
 	 *
-	 * @param str $title The title of the "Groupblog Home Page" heading
-	 * @return str $title The modified title of the "Groupblog Home Page" heading
+	 * @since 3.3
+	 *
+	 * @param str $title The title of the "Groupblog Home Page" heading.
+	 * @return str $title The modified title of the "Groupblog Home Page" heading.
 	 */
 	public function filter_nav_title_page_title( $title ) {
 
@@ -342,8 +394,10 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * Override the BuddyPress Sites Directory "visit" button.
 	 *
-	 * @param str $button The title of the "Visit Site" heading
-	 * @return str $title The modified title of the "Visit Site" heading
+	 * @since 3.3
+	 *
+	 * @param str $button The title of the "Visit Site" heading.
+	 * @return str $title The modified title of the "Visit Site" heading.
 	 */
 	public function get_blogs_visit_blog_button( $button ) {
 
@@ -372,7 +426,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * Object initialisation.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	function _init() {
 
@@ -447,7 +501,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * Register WordPress hooks.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	function _register_hooks() {
 
@@ -486,7 +540,9 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * Add our options to the BuddyPress admin form.
 	 *
-	 * @return str $element The admin form element
+	 * @since 3.3
+	 *
+	 * @return str $element The admin form element.
 	 */
 	function _buddypress_admin_form() {
 
@@ -540,7 +596,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * Hook into Network BuddyPress form update.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	function _buddypress_admin_update() {
 
@@ -587,7 +643,9 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * Add our default BuddyPress-related settings.
 	 *
-	 * @return array $settings The default settings
+	 * @since 3.3
+	 *
+	 * @return array $settings The default settings.
 	 */
 	function _get_default_settings( $settings ) {
 
@@ -607,7 +665,9 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * Get legacy name when already set.
 	 *
-	 * @return str $name The legacy singular name of a groupblog
+	 * @since 3.3
+	 *
+	 * @return str $name The legacy singular name of a groupblog.
 	 */
 	function _get_legacy_name() {
 
@@ -621,7 +681,9 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * Get legacy plural name when already set.
 	 *
-	 * @return str $name The legacy plural name of a groupblog
+	 * @since 3.3
+	 *
+	 * @return str $name The legacy plural name of a groupblog.
 	 */
 	function _get_legacy_plural() {
 
@@ -635,7 +697,9 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	/**
 	 * Get legacy slug when already set.
 	 *
-	 * @return str $name The legacy slug of a groupblog
+	 * @since 3.3
+	 *
+	 * @return str $name The legacy slug of a groupblog.
 	 */
 	function _get_legacy_slug() {
 

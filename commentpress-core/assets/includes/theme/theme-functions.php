@@ -88,7 +88,7 @@ if ( ! function_exists( 'commentpress_customize_register' ) ) :
  *
  * @since 3.0
  *
- * @param $wp_customize Theme Customizer object
+ * @param $wp_customize Theme Customizer object.
  */
 function commentpress_customize_register( $wp_customize ) {
 
@@ -117,7 +117,7 @@ if ( ! function_exists( 'commentpress_customize_site_image' ) ) :
  *
  * @since 3.8.5
  *
- * @param $wp_customize Theme Customizer object
+ * @param $wp_customize Theme Customizer object.
  */
 function commentpress_customize_site_image( $wp_customize ) {
 
@@ -211,7 +211,7 @@ if ( ! function_exists( 'commentpress_customize_site_logo' ) ) :
  *
  * @since 3.8.5
  *
- * @param $wp_customize Theme Customizer object
+ * @param $wp_customize Theme Customizer object.
  */
 function commentpress_customize_site_logo( $wp_customize ) {
 
@@ -267,7 +267,7 @@ if ( ! function_exists( 'commentpress_customize_header_bg_color' ) ) :
  *
  * @since 3.8.5
  *
- * @param $wp_customize Theme Customizer object
+ * @param $wp_customize Theme Customizer object.
  */
 function commentpress_customize_header_bg_color( $wp_customize ) {
 
@@ -322,8 +322,8 @@ if ( ! function_exists( 'commentpress_fix_bp_core_avatar_url' ) ):
  *
  * @since 3.3
  *
- * @param string $url The existing URL of the avatar
- * @return string $url The modified URL of the avatar
+ * @param string $url The existing URL of the avatar.
+ * @return string $url The modified URL of the avatar.
  */
 function commentpress_fix_bp_core_avatar_url( $url ) {
 
@@ -358,7 +358,7 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ):
  *
  * @since 3.0
  *
- * @todo Inform users that header images are using a different method
+ * @todo Inform users that header images are using a different method.
  */
 function commentpress_get_header_image() {
 
@@ -507,7 +507,7 @@ if ( ! function_exists( 'commentpress_get_body_id' ) ):
  *
  * @since 3.0
  *
- * @return string $body_id The ID attribute for the body tag
+ * @return string $body_id The ID attribute for the body tag.
  */
 function commentpress_get_body_id() {
 
@@ -541,8 +541,8 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ):
  *
  * @since 3.3
  *
- * @param boolean $raw If true, returns the class names, if false, returns the attribute
- * @return string $body_classes The class attribute for the body tag
+ * @param boolean $raw If true, returns the class names, if false, returns the attribute.
+ * @return string $body_classes The class attribute for the body tag.
  */
 function commentpress_get_body_classes( $raw = false ) {
 
@@ -693,8 +693,10 @@ function commentpress_get_body_classes( $raw = false ) {
 		 * is enabled, it might become a new blog type as far as BuddyPress
 		 * is concerned.
 		 *
-		 * @param int $type The numeric blog type
-		 * @param bool $workflow True if workflow enabled, false otherwise
+		 * @since 3.3
+		 *
+		 * @param int $type The numeric blog type.
+		 * @param bool $workflow True if workflow enabled, false otherwise.
 		 */
 		$current_blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $type, $workflow );
 
@@ -788,8 +790,8 @@ if ( ! function_exists( 'commentpress_document_title_parts' ) ):
  *
  * @since 3.8
  *
- * @param array $parts The existing title parts
- * @return array $parts The modified title parts
+ * @param array $parts The existing title parts.
+ * @return array $parts The modified title parts.
  */
 function commentpress_document_title_parts( $parts ) {
 
@@ -827,8 +829,8 @@ if ( ! function_exists( 'commentpress_document_title_separator' ) ):
  *
  * @since 3.8
  *
- * @param string $sep The existing separator
- * @return string $sep The modified separator
+ * @param string $sep The existing separator.
+ * @return string $sep The modified separator.
  */
 function commentpress_document_title_separator( $sep ) {
 
@@ -849,9 +851,9 @@ if ( ! function_exists( 'commentpress_site_title' ) ):
  *
  * @since 3.8
  *
- * @param string $sep The title separator
- * @param boolean $echo Echo the result or not
- * @return string $site_name The title of the site
+ * @param string $sep The title separator.
+ * @param boolean $echo Echo the result or not.
+ * @return string $site_name The title of the site.
  */
 function commentpress_site_title( $sep = '', $echo = true ) {
 
@@ -893,8 +895,8 @@ if ( ! function_exists( 'commentpress_remove_more_jump_link' ) ):
  *
  * @since 3.0
  *
- * @param string $link The existing more link
- * @return string $link The modified more link
+ * @param string $link The existing more link.
+ * @return string $link The modified more link.
  */
 function commentpress_remove_more_jump_link( $link ) {
 
@@ -928,7 +930,7 @@ if ( ! function_exists( 'commentpress_page_title' ) ):
  *
  * @since 3.0
  *
- * @return string $title The page title
+ * @return string $title The page title.
  */
 function commentpress_page_title() {
 
@@ -992,8 +994,8 @@ if ( ! function_exists( 'commentpress_has_page_children' ) ):
  *
  * @since 3.3
  *
- * @param object $page_obj The WordPress page object to query
- * @return boolean True if page has children, false otherwise
+ * @param object $page_obj The WordPress page object to query.
+ * @return boolean True if page has children, false otherwise.
  */
 function commentpress_has_page_children( $page_obj ) {
 
@@ -1022,9 +1024,9 @@ if ( ! function_exists( 'commentpress_get_children' ) ):
  *
  * @since 3.3
  *
- * @param object $comment The WordPress comment object
- * @param string $page_or_post The WordPress post type to query
- * @return array $result The array of child comments
+ * @param object $comment The WordPress comment object.
+ * @param string $page_or_post The WordPress post type to query.
+ * @return array $result The array of child comments.
  */
 function commentpress_get_children( $comment, $page_or_post ) {
 
@@ -1059,8 +1061,8 @@ if ( ! function_exists( 'commentpress_get_comments' ) ):
  *
  * @since 3.0
  *
- * @param array $comments An array of WordPress comment objects
- * @param string $page_or_post The WordPress post type to query
+ * @param array $comments An array of WordPress comment objects.
+ * @param string $page_or_post The WordPress post type to query.
  */
 function commentpress_get_comments( $comments, $page_or_post ) {
 
@@ -1118,9 +1120,9 @@ if ( ! function_exists( 'commentpress_get_user_link' ) ):
  *
  * @since 3.0
  *
- * @param object $user The WordPress user object
- * @param object $comment The WordPress comment object
- * @return string $url The URL for the user
+ * @param object $user The WordPress user object.
+ * @param object $comment The WordPress comment object.
+ * @return string $url The URL for the user.
  */
 function commentpress_get_user_link( $user, $comment = null ) {
 
@@ -1300,9 +1302,9 @@ if ( ! function_exists( 'commentpress_echo_post_author' ) ):
  *
  * @since 3.0
  *
- * @param int $author_id The numeric ID of the author
- * @param bool $echo Print or return the linked username
- * @return str $author The linked username
+ * @param int $author_id The numeric ID of the author.
+ * @param bool $echo Print or return the linked username.
+ * @return str $author The linked username.
  */
 function commentpress_echo_post_author( $author_id, $echo = true ) {
 
@@ -1352,9 +1354,9 @@ if ( ! function_exists( 'commentpress_format_comment' ) ):
  *
  * @since 3.0
  *
- * @param object $comment The comment object
- * @param str $context Either "all" for all-comments or "by" for comments-by-commenter
- * @return str The formatted comment HTML
+ * @param object $comment The comment object.
+ * @param str $context Either "all" for all-comments or "by" for comments-by-commenter.
+ * @return str The formatted comment HTML.
  */
 function commentpress_format_comment( $comment, $context = 'all' ) {
 
@@ -1498,7 +1500,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_content' ) ):
  *
  * @since 3.0
  *
- * @return str $html The HTML for the page
+ * @return str $html The HTML for the page.
  */
 function commentpress_get_comments_by_content() {
 
@@ -1608,7 +1610,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_page_content' ) ):
  *
  * @since 3.0
  *
- * @return str $page_content The page content
+ * @return str $page_content The page content.
  */
 function commentpress_get_comments_by_page_content() {
 
@@ -1641,7 +1643,7 @@ if ( ! function_exists( 'commentpress_show_activity_tab' ) ):
  *
  * @since 3.3
  *
- * @return bool True if we show the activity tab, false otherwise
+ * @return bool True if we show the activity tab, false otherwise.
  */
 function commentpress_show_activity_tab() {
 
@@ -1680,7 +1682,7 @@ if ( ! function_exists( 'commentpress_is_commentable' ) ):
  *
  * @since 3.3
  *
- * @return bool $is_commentable True if page can have comments, false otherwise
+ * @return bool $is_commentable True if page can have comments, false otherwise.
  */
 function commentpress_is_commentable() {
 
@@ -1711,8 +1713,8 @@ if ( ! function_exists( 'commentpress_get_comment_activity' ) ):
  *
  * @since 3.3
  *
- * @param str $scope The scope of the activities
- * @return str $page_content The HTML output for activities
+ * @param str $scope The scope of the activities.
+ * @return str $page_content The HTML output for activities.
  */
 function commentpress_get_comment_activity( $scope = 'all' ) {
 
@@ -1788,8 +1790,8 @@ if ( ! function_exists( 'commentpress_get_comment_activity_item' ) ):
  *
  * @since 3.3
  *
- * @param $comment The comment object
- * @return $item_html The modified comment HTML
+ * @param $comment The comment object.
+ * @return $item_html The modified comment HTML.
  */
 function commentpress_get_comment_activity_item( $comment ) {
 
@@ -1941,9 +1943,9 @@ if ( ! function_exists( 'commentpress_lexia_support_mime' ) ):
  *
  * @since 3.9
  *
- * @param str $post_type_name The existing singular name of the post type
- * @param str $post_type The post type identifier
- * @return str $post_type_name The modified singular name of the post type
+ * @param str $post_type_name The existing singular name of the post type.
+ * @param str $post_type The post type identifier.
+ * @return str $post_type_name The modified singular name of the post type.
  */
 function commentpress_lexia_support_mime( $post_type_name, $post_type ) {
 
@@ -1985,9 +1987,9 @@ function commentpress_lexia_support_mime( $post_type_name, $post_type ) {
 	 *
 	 * @since 3.9
 	 *
-	 * @param str $mime_type_name The name for this mime type
-	 * @param str $mime_type The mime type
-	 * @return str $mime_type_name The modified name for this mime type
+	 * @param str $mime_type_name The name for this mime type.
+	 * @param str $mime_type The mime type.
+	 * @return str $mime_type_name The modified name for this mime type.
 	 */
 	$mime_type_name = apply_filters( 'commentpress_lexia_mime_type_name', $mime_type_name, $mime_type );
 
@@ -2008,10 +2010,10 @@ if ( ! function_exists( 'commentpress_lexia_modify_entity_text' ) ):
  *
  * @since 3.9
  *
- * @param str $entity_text The current entity text
- * @param str $post_type_name The singular name of the post type
- * @param str $post_type The post type identifier
- * @return str $entity_text The modified entity text
+ * @param str $entity_text The current entity text.
+ * @param str $post_type_name The singular name of the post type.
+ * @param str $post_type The post type identifier.
+ * @return str $entity_text The modified entity text.
  */
 function commentpress_lexia_modify_entity_text( $entity_text, $post_type_name, $post_type ) {
 
@@ -2041,10 +2043,10 @@ if ( ! function_exists( 'commentpress_comments_by_para_format_whole' ) ):
  *
  * @since 3.8.10
  *
- * @param str $post_type_name The singular name of the post type
- * @param str $post_type The post type identifier
- * @param int $comment_count The number of comments on the block
- * @return array $return Data array containing the translated strings
+ * @param str $post_type_name The singular name of the post type.
+ * @param str $post_type The post type identifier.
+ * @param int $comment_count The number of comments on the block.
+ * @return array $return Data array containing the translated strings.
  */
 function commentpress_comments_by_para_format_whole( $post_type_name, $post_type, $comment_count ) {
 
@@ -2065,9 +2067,9 @@ function commentpress_comments_by_para_format_whole( $post_type_name, $post_type
 	 *
 	 * @since 3.9
 	 *
-	 * @param str $entity_text The current entity text
-	 * @param str $post_type_name The singular name of the post type
-	 * @return str $entity_text The modified entity text
+	 * @param str $entity_text The current entity text.
+	 * @param str $post_type_name The singular name of the post type.
+	 * @return str $entity_text The modified entity text.
 	 */
 	$return['entity_text'] = apply_filters(
 		'commentpress_lexia_whole_entity_text',
@@ -2114,8 +2116,8 @@ if ( ! function_exists( 'commentpress_comments_by_para_format_pings' ) ):
  *
  * @since 3.8.10
  *
- * @param int $comment_count The number of comments on the block
- * @return array $return Data array containing the translated strings
+ * @param int $comment_count The number of comments on the block.
+ * @return array $return Data array containing the translated strings.
  */
 function commentpress_comments_by_para_format_pings( $comment_count ) {
 
@@ -2156,9 +2158,9 @@ if ( ! function_exists( 'commentpress_comments_by_para_format_block' ) ):
  *
  * @since 3.8.10
  *
- * @param int $comment_count The number of comments on the block
- * @param int $para_num The sequential number of the block
- * @return array $return Data array containing the translated strings
+ * @param int $comment_count The number of comments on the block.
+ * @param int $para_num The sequential number of the block.
+ * @return array $return Data array containing the translated strings.
  */
 function commentpress_comments_by_para_format_block( $comment_count, $para_num ) {
 
@@ -2233,8 +2235,8 @@ function commentpress_get_comments_by_para() {
 	 *
 	 * @since 3.9
 	 *
-	 * @param int $content_width An general content width for all themes
-	 * @return int $content_width A specific content width for a specific theme
+	 * @param int $content_width An general content width for all themes.
+	 * @return int $content_width A specific content width for a specific theme.
 	 */
 	global $content_width;
 	$content_width = apply_filters( 'commentpress_comments_content_width', 380 );
@@ -2329,9 +2331,9 @@ function commentpress_get_comments_by_para() {
 		 *
 		 * @since 3.8.10
 		 *
-		 * @param str $singular_name The singular label for this post type
-		 * @param str $current_type The post type identifier
-		 * @return str $singular_name The modified label for this post type
+		 * @param str $singular_name The singular label for this post type.
+		 * @param str $current_type The post type identifier.
+		 * @return str $singular_name The modified label for this post type.
 		 */
 		$post_type_name = apply_filters( 'commentpress_lexia_post_type_name', $post_type->labels->singular_name, $current_type );
 
@@ -2446,7 +2448,7 @@ function commentpress_get_comments_by_para() {
 					/**
 					 * Allow plugins to append to paragraph level comments.
 					 *
-					 * @param str $text_sig The text signature of the paragraph
+					 * @param str $text_sig The text signature of the paragraph.
 					 */
 					do_action( 'commentpress_after_paragraph_comments', $text_sig );
 
@@ -2477,8 +2479,8 @@ function commentpress_get_comments_by_para() {
 							 *
 							 * @since 3.9
 							 *
-							 * @param str $prompt The link text when login is required
-							 * @param bool $registration True if registration is open, false otherwise
+							 * @param str $prompt The link text when login is required.
+							 * @param bool $registration True if registration is open, false otherwise.
 							 */
 							$prompt = apply_filters( 'commentpress_reply_to_prompt_text', $prompt, $registration );
 
@@ -2547,7 +2549,7 @@ function commentpress_get_comments_by_para() {
 				/**
 				 * Allow plugins to append to paragraph wrappers.
 				 *
-				 * @param str $text_sig The text signature of the paragraph
+				 * @param str $text_sig The text signature of the paragraph.
 				 */
 				do_action( 'commentpress_after_paragraph_wrapper', $text_sig );
 
@@ -2719,9 +2721,9 @@ if ( ! function_exists( 'commentpress_comment_reply_link' ) ):
  *
  * @since 3.0
  *
- * @param array $args The reply links arguments
- * @param object $comment The comment
- * @param object $post The post
+ * @param array $args The reply links arguments.
+ * @param object $comment The comment.
+ * @param object $post The post.
  */
 function commentpress_comment_reply_link( $args = array(), $comment = null, $post = null ) {
 
@@ -2795,9 +2797,9 @@ if ( ! function_exists( 'commentpress_comments' ) ):
  *
  * @since 3.0
  *
- * @param object $comment The comment object
- * @param array $args The comment arguments
- * @param int $depth The comment depth
+ * @param object $comment The comment object.
+ * @param array $args The comment arguments.
+ * @param int $depth The comment depth.
  */
 function commentpress_comments( $comment, $args, $depth ) {
 
@@ -2815,10 +2817,10 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ):
  *
  * @since 3.0
  *
- * @param object $comment The comment object
- * @param array $args The comment arguments
- * @param int $depth The comment depth
- * @return str $html The comment markup
+ * @param object $comment The comment object.
+ * @param array $args The comment arguments.
+ * @param int $depth The comment depth.
+ * @return str $html The comment markup.
  */
 function commentpress_get_comment_markup( $comment, $args, $depth ) {
 
@@ -2992,9 +2994,9 @@ if ( ! function_exists( 'commentpress_get_full_name' ) ):
  *
  * @since 3.0
  *
- * @param str $forename The WordPress user's first name
- * @param str $surname The WordPress user's last name
- * @param str $fullname The WordPress user's full name
+ * @param str $forename The WordPress user's first name.
+ * @param str $surname The WordPress user's last name.
+ * @param str $fullname The WordPress user's full name.
  */
 function commentpress_get_full_name( $forename, $surname ) {
 
@@ -3024,7 +3026,7 @@ if ( ! function_exists( 'commentpress_excerpt_length' ) ):
  *
  * @since 3.0
  *
- * @return int $length The length of the excerpt
+ * @return int $length The length of the excerpt.
  */
 function commentpress_excerpt_length() {
 
@@ -3059,8 +3061,8 @@ if ( ! function_exists( 'commentpress_add_link_css' ) ):
  *
  * @since 3.0
  *
- * @param str $link The existing link
- * @return str $link The link with the custom class attribute added
+ * @param str $link The existing link.
+ * @return str $link The link with the custom class attribute added.
  */
 function commentpress_add_link_css( $link ) {
 
@@ -3085,7 +3087,7 @@ if ( ! function_exists( 'commentpress_get_link_css' ) ):
  *
  * @since 3.0
  *
- * @return str $link The custom class attribute
+ * @return str $link The custom class attribute.
  */
 function commentpress_get_link_css() {
 
@@ -3110,10 +3112,10 @@ if ( ! function_exists( 'commentpress_multipage_comment_link' ) ):
  *
  * @since 3.5
  *
- * @param str $link The existing comment link
- * @param object $comment The comment object
- * @param array $args An array of extra arguments
- * @return str $link The modified comment link
+ * @param str $link The existing comment link.
+ * @param object $comment The comment object.
+ * @param array $args An array of extra arguments.
+ * @return str $link The modified comment link.
  */
 function commentpress_multipage_comment_link( $link, $comment, $args ) {
 
@@ -3169,8 +3171,8 @@ if ( ! function_exists( 'commentpress_get_post_multipage_url' ) ):
  *
  * @since 3.5
  *
- * @param int $i The page number
- * @return str $url The URL to the subpage
+ * @param int $i The page number.
+ * @return str $url The URL to the subpage.
  */
 function commentpress_get_post_multipage_url( $i, $post = '' ) {
 
@@ -3220,7 +3222,7 @@ if ( ! function_exists( 'commentpress_multipager' ) ):
  *
  * @since 3.5
  *
- * @return str $page_links The next page and previous page links
+ * @return str $page_links The next page and previous page links.
  */
 function commentpress_multipager() {
 
@@ -3270,8 +3272,8 @@ if ( ! function_exists( 'commentpress_add_wp_editor' ) ):
  *
  * @since 3.5
  *
- * @param str $mce_css The default TinyMCE stylesheets as set by WordPress
- * @return str $mce_css The list of stylesheets with ours added
+ * @param str $mce_css The default TinyMCE stylesheets as set by WordPress.
+ * @return str $mce_css The list of stylesheets with ours added.
  */
 function commentpress_add_wp_editor() {
 
@@ -3427,8 +3429,8 @@ if ( ! function_exists( 'commentpress_assign_default_editor' ) ):
  *
  * @since 3.0
  *
- * @param str $r The default editor as set by WordPress
- * @return str 'tinymce' our overridden default editor
+ * @param str $r The default editor as set by WordPress.
+ * @return str 'tinymce' our overridden default editor.
  */
 function commentpress_assign_default_editor( $r ) {
 
@@ -3453,8 +3455,8 @@ if ( ! function_exists( 'commentpress_add_tinymce_styles' ) ):
  *
  * @since 3.0
  *
- * @param str $mce_css The default TinyMCE stylesheets as set by WordPress
- * @return str $mce_css The list of stylesheets with ours added
+ * @param str $mce_css The default TinyMCE stylesheets as set by WordPress.
+ * @return str $mce_css The list of stylesheets with ours added.
  */
 function commentpress_add_tinymce_styles( $mce_css ) {
 
@@ -3484,8 +3486,8 @@ if ( ! function_exists( 'commentpress_add_tinymce_nextpage_button' ) ):
  *
  * @since 3.5
  *
- * @param array $buttons The default TinyMCE buttons as set by WordPress
- * @return array $buttons The buttons with More removed
+ * @param array $buttons The default TinyMCE buttons as set by WordPress.
+ * @return array $buttons The buttons with More removed.
  */
 function commentpress_add_tinymce_nextpage_button( $buttons ) {
 
@@ -3526,8 +3528,8 @@ if ( ! function_exists( 'commentpress_assign_editor_buttons' ) ):
  *
  * @since 3.5
  *
- * @param array $buttons The default editor buttons as set by WordPress
- * @return array The overridden editor buttons
+ * @param array $buttons The default editor buttons as set by WordPress.
+ * @return array The overridden editor buttons.
  */
 function commentpress_assign_editor_buttons( $buttons ) {
 
@@ -3566,8 +3568,8 @@ if ( ! function_exists( 'commentpress_comment_post_redirect' ) ):
  *
  * @since 3.5
  *
- * @param str $link The link to the comment
- * @param object $comment The comment object
+ * @param str $link The link to the comment.
+ * @param object $comment The comment object.
  */
 function commentpress_comment_post_redirect( $link, $comment ) {
 
@@ -3726,8 +3728,8 @@ if ( ! function_exists( 'commentpress_register_commentblock_button' ) ):
  *
  * @since 3.3
  *
- * @param array $buttons The existing button array
- * @return array $buttons The modified button array
+ * @param array $buttons The existing button array.
+ * @return array $buttons The modified button array.
  */
 function commentpress_register_commentblock_button( $buttons ) {
 
@@ -3748,8 +3750,8 @@ if ( ! function_exists( 'commentpress_add_commentblock_tinymce_plugin' ) ):
  *
  * @since 3.3
  *
- * @param array $plugin_array The existing TinyMCE plugin array
- * @return array $plugin_array The modified TinyMCE plugin array
+ * @param array $plugin_array The existing TinyMCE plugin array.
+ * @return array $plugin_array The modified TinyMCE plugin array.
  */
 function commentpress_add_commentblock_tinymce_plugin( $plugin_array ) {
 
@@ -3770,7 +3772,7 @@ if ( ! function_exists( 'commentpress_trap_empty_search' ) ):
  *
  * @since 3.3
  *
- * @return str $template The path to the search template
+ * @return str $template The path to the search template.
  */
 function commentpress_trap_empty_search() {
 
@@ -3806,7 +3808,7 @@ if ( ! function_exists( 'commentpress_amend_search_query' ) ):
  *
  * @since 3.3
  *
- * @param object $query The query object, passed by reference
+ * @param object $query The query object, passed by reference.
  */
 function commentpress_amend_search_query( &$query ) {
 
@@ -3856,8 +3858,8 @@ if ( ! function_exists( 'commentpress_amend_password_form' ) ):
  *
  * @since 3.3
  *
- * @param str $output The existing password form
- * @return str $output The modified password form
+ * @param str $output The existing password form.
+ * @return str $output The modified password form.
  */
 function commentpress_amend_password_form( $output ) {
 
@@ -3912,7 +3914,7 @@ if ( ! function_exists( 'commentpress_license_image_css' ) ):
  *
  * @since 3.3
  *
- * @return str The CSS for amending the license plugin image
+ * @return str The CSS for amending the license plugin image.
  */
 function commentpress_license_image_css() {
 
@@ -3930,7 +3932,7 @@ if ( ! function_exists( 'commentpress_license_widget_compat' ) ):
 /**
  * Remove license from footer when widget not active.
  *
- * This is because wp_footer() is not inside #footer
+ * This is because wp_footer() is not inside #footer.
  *
  * @since 3.3
  */
@@ -3954,7 +3956,7 @@ if ( ! function_exists( 'commentpress_wplicense_compat' ) ):
 /**
  * Remove license from footer.
  *
- * This is because wp_footer() is not inside #footer
+ * This is because wp_footer() is not inside #footer.
  *
  * @since 3.3
  */
@@ -3984,9 +3986,9 @@ if ( ! function_exists( 'commentpress_widget_title' ) ):
  *
  * @since 3.8.10
  *
- * @param str $title The possibly-empty widget title
- * @param str $id_base The widget ID base
- * @return str $title The non-empty title
+ * @param str $title The possibly-empty widget title.
+ * @param str $id_base The widget ID base.
+ * @return str $title The non-empty title.
  */
 function commentpress_widget_title( $title ) {
 
@@ -4012,7 +4014,7 @@ if ( ! function_exists( 'commentpress_groupblog_classes' ) ):
  *
  * @since 3.3
  *
- * @return str $groupblog_class The class for the groupblog
+ * @return str $groupblog_class The class for the groupblog.
  */
 function commentpress_groupblog_classes() {
 
@@ -4055,7 +4057,7 @@ if ( ! function_exists( 'commentpress_get_post_version_info' ) ):
  *
  * @since 3.3
  *
- * @param WP_Post $post The WordPress post object
+ * @param WP_Post $post The WordPress post object.
  */
 function commentpress_get_post_version_info( $post ) {
 
@@ -4158,8 +4160,8 @@ if ( ! function_exists( 'commentpress_get_post_css_override' ) ):
  *
  * @since 3.3
  *
- * @param int $post_id The numeric ID of the post
- * @return str $type_overridden The CSS class
+ * @param int $post_id The numeric ID of the post.
+ * @return str $type_overridden The CSS class.
  */
 function commentpress_get_post_css_override( $post_id ) {
 
@@ -4207,8 +4209,8 @@ if ( ! function_exists( 'commentpress_get_post_title_visibility' ) ):
  *
  * @since 3.3
  *
- * @param int $post_id The numeric ID of the post
- * @return bool $hide True if title is shown, false if hidden
+ * @param int $post_id The numeric ID of the post.
+ * @return bool $hide True if title is shown, false if hidden.
  */
 function commentpress_get_post_title_visibility( $post_id ) {
 
@@ -4245,8 +4247,8 @@ if ( ! function_exists( 'commentpress_get_post_meta_visibility' ) ):
  *
  * @since 3.3
  *
- * @param int $post_id The numeric ID of the post
- * @return bool $hide_meta True if meta is shown, false if hidden
+ * @param int $post_id The numeric ID of the post.
+ * @return bool $hide_meta True if meta is shown, false if hidden.
  */
 function commentpress_get_post_meta_visibility( $post_id ) {
 
@@ -4286,8 +4288,8 @@ if ( ! function_exists( 'commentpress_sidebars_widgets' ) ):
  *
  * @since 3.6
  *
- * @return array $array Existing widgets array
- * @return array $array Modified widgets array
+ * @return array $array Existing widgets array.
+ * @return array $array Modified widgets array.
  */
 function commentpress_sidebars_widgets( $array ) {
 
@@ -4325,7 +4327,7 @@ if ( ! function_exists( 'commentpress_add_selection_classes' ) ):
  * @param array $classes An array of comment classes.
  * @param string $class A comma-separated list of additional classes added to the list.
  * @param int $comment_id The comment id.
- * @param object $comment The comment
+ * @param object $comment The comment.
  * @param int|WP_Post $post_id The post ID or WP_Post object.
  */
 function commentpress_add_selection_classes( $classes, $class, $comment_id, $comment, $post_id = 0 ) {
@@ -4366,8 +4368,8 @@ if ( ! function_exists( 'commentpress_bp_activity_css_class' ) ):
  *
  * @since 3.3
  *
- * @param str $existing_class The existing class
- * @param str $existing_class The overridden class
+ * @param str $existing_class The existing class.
+ * @param str $existing_class The overridden class.
  */
 function commentpress_bp_activity_css_class( $existing_class ) {
 
@@ -4403,8 +4405,8 @@ if ( ! function_exists( 'commentpress_bp_blog_css_class' ) ):
  *
  * @since 3.3
  *
- * @param array $classes The existing classes
- * @param array $classes The overridden classes
+ * @param array $classes The existing classes.
+ * @param array $classes The overridden classes.
  */
 function commentpress_bp_blog_css_class( $classes ) {
 
@@ -4448,8 +4450,8 @@ if ( ! function_exists( 'commentpress_bp_group_css_class' ) ):
  *
  * @since 3.3
  *
- * @param array $classes The existing classes
- * @param array $classes The overridden classes
+ * @param array $classes The existing classes.
+ * @param array $classes The overridden classes.
  */
 function commentpress_bp_group_css_class( $classes ) {
 
@@ -4574,8 +4576,8 @@ if ( ! function_exists( 'commentpress_unwrap_buddypress_button' ) ):
  *
  * @since 3.9.1
  *
- * @param array $button_args The existing params used to define the button
- * @return array $button_args The modified params used to define the button
+ * @param array $button_args The existing params used to define the button.
+ * @return array $button_args The modified params used to define the button.
  */
 function commentpress_unwrap_buddypress_button( $button_args ) {
 
