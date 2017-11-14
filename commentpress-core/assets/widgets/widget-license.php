@@ -49,8 +49,8 @@ class Commentpress_License_Widget extends WP_Widget {
 	 *
 	 * @since 3.4
 	 *
-	 * @param array $args An array of standard parameters for widgets in this theme
-	 * @param array $instance An array of settings for this widget instance
+	 * @param array $args An array of standard parameters for widgets in this theme.
+	 * @param array $instance An array of settings for this widget instance.
 	 */
 	public function widget( $args, $instance ) {
 

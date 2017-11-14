@@ -14,7 +14,7 @@ class Commentpress_Core_Editor {
 	 *
 	 * @since 3.7
 	 * @access public
-	 * @var object $parent_obj The plugin object
+	 * @var object $parent_obj The plugin object.
 	 */
 	public $parent_obj;
 
@@ -23,7 +23,7 @@ class Commentpress_Core_Editor {
 	 *
 	 * @since 3.7
 	 * @access public
-	 * @var object $db The database object
+	 * @var object $db The database object.
 	 */
 	public $db;
 
@@ -32,7 +32,7 @@ class Commentpress_Core_Editor {
 	 *
 	 * @since 3.7
 	 * @access public
-	 * @var str $toggle_state The toggle state
+	 * @var str $toggle_state The toggle state.
 	 */
 	public $toggle_state;
 
@@ -43,7 +43,7 @@ class Commentpress_Core_Editor {
 	 *
 	 * @since 3.7
 	 *
-	 * @param object $parent_obj a reference to the parent object
+	 * @param object $parent_obj a reference to the parent object.
 	 */
 	function __construct( $parent_obj = null ) {
 
@@ -63,7 +63,7 @@ class Commentpress_Core_Editor {
 	/**
 	 * Set up all items associated with this object.
 	 *
-	 * @return void
+	 * @since 3.7
 	 */
 	public function initialise() {
 
@@ -95,7 +95,7 @@ class Commentpress_Core_Editor {
 	/**
 	 * If needed, destroys all items associated with this object.
 	 *
-	 * @return void
+	 * @since 3.7
 	 */
 	public function destroy() {
 
@@ -118,7 +118,7 @@ class Commentpress_Core_Editor {
 	/**
 	 * Register WordPress hooks.
 	 *
-	 * @return void
+	 * @since 3.7
 	 */
 	public function register_hooks() {
 
@@ -149,7 +149,7 @@ class Commentpress_Core_Editor {
 
 		}
 
-		/**
+		/*
 		 * The following hooks are enabled when WP FEE is enabled because we need
 		 * to suppress TinyMCE for commenting and enable slipstream functionality
 		 * that supports WP FEE.
@@ -208,7 +208,7 @@ class Commentpress_Core_Editor {
 	/**
 	 * Set editor toggle state if none exists.
 	 *
-	 * @return void
+	 * @since 3.7
 	 */
 	public function trigger_script_inclusion() {
 		do_action( 'commentpress_editor_include_javascript' );
@@ -219,7 +219,7 @@ class Commentpress_Core_Editor {
 	/**
 	 * Set editor toggle state if none exists.
 	 *
-	 * @return void
+	 * @since 3.7
 	 */
 	public function editor_toggle_set_default() {
 
@@ -250,7 +250,7 @@ class Commentpress_Core_Editor {
 	/**
 	 * Intercept editor toggling once plugins are loaded.
 	 *
-	 * @return void
+	 * @since 3.7
 	 */
 	public function editor_toggle_intercept() {
 
@@ -318,7 +318,7 @@ class Commentpress_Core_Editor {
 	/**
 	 * Inject editor toggle link before search in Contents column.
 	 *
-	 * @return void
+	 * @since 3.7
 	 */
 	public function editor_toggle_show() {
 
@@ -373,7 +373,7 @@ class Commentpress_Core_Editor {
 	/**
 	 * Prevent WordPress Front-end Editor from loading.
 	 *
-	 * @return void
+	 * @since 3.7
 	 */
 	public function wp_fee_prevent_tinymce() {
 
@@ -393,9 +393,11 @@ class Commentpress_Core_Editor {
 
 
 	/**
-	 * Prevent TinyMCE from loading in the comment form.
+	 * Disallow TinyMCE from loading in the comment form.
 	 *
-	 * @return void
+	 * @since 3.7
+	 *
+	 * @return bool False to disallow loading.
 	 */
 	public function commentpress_disallow_tinymce() {
 
@@ -409,7 +411,9 @@ class Commentpress_Core_Editor {
 	/**
 	 * Prevent TinyMCE from loading in the comment form.
 	 *
-	 * @return void
+	 * @since 3.7
+	 *
+	 * @return int Zero prevents loading.
 	 */
 	public function commentpress_prevent_tinymce( $var ) {
 
@@ -423,8 +427,10 @@ class Commentpress_Core_Editor {
 	/**
 	 * Get additional javascript vars.
 	 *
-	 * @param array $vars The existing variables to pass to our Javascript
-	 * @return array $vars The modified variables to pass to our Javascript
+	 * @since 3.7
+	 *
+	 * @param array $vars The existing variables to pass to our Javascript.
+	 * @return array $vars The modified variables to pass to our Javascript.
 	 */
 	public function javascript_get_vars( $vars ) {
 
@@ -462,7 +468,7 @@ class Commentpress_Core_Editor {
 	/**
 	 * Get new comments container.
 	 *
-	 * @return void
+	 * @since 3.7
 	 */
 	public function comments_get_container() {
 
@@ -538,7 +544,7 @@ class Commentpress_Core_Editor {
 	/**
 	 * Get new post metabox container.
 	 *
-	 * @return void
+	 * @since 3.7
 	 */
 	public function metabox_get_container() {
 
@@ -558,7 +564,7 @@ class Commentpress_Core_Editor {
 	/**
 	 * AJAX metabox: set post title visibility.
 	 *
-	 * @return void
+	 * @since 3.7
 	 */
 	public function metabox_set_post_title_visibility() {
 
@@ -596,7 +602,7 @@ class Commentpress_Core_Editor {
 	/**
 	 * AJAX metabox: set page meta visibility.
 	 *
-	 * @return void
+	 * @since 3.7
 	 */
 	public function metabox_set_page_meta_visibility() {
 
@@ -634,7 +640,7 @@ class Commentpress_Core_Editor {
 	/**
 	 * AJAX metabox: set number format.
 	 *
-	 * @return void
+	 * @since 3.7
 	 */
 	public function metabox_set_number_format() {
 
@@ -678,7 +684,7 @@ class Commentpress_Core_Editor {
 	/**
 	 * AJAX metabox: set formatter.
 	 *
-	 * @return void
+	 * @since 3.7
 	 */
 	public function metabox_set_post_type_override() {
 
@@ -715,7 +721,7 @@ class Commentpress_Core_Editor {
 	/**
 	 * AJAX metabox: set starting paragraph number.
 	 *
-	 * @return void
+	 * @since 3.7
 	 */
 	public function metabox_set_starting_para_number() {
 
@@ -752,10 +758,12 @@ class Commentpress_Core_Editor {
 	/**
 	 * Override the "Edit Page" link when WP FEE not active.
 	 *
-	 * @param string $link The existing link
-	 * @param int $id The numeric post ID
-	 * @param string $context How to write ampersands. Default 'display' encodes as '&amp;'
-	 * @return string $link The modified link
+	 * @since 3.7
+	 *
+	 * @param string $link The existing link.
+	 * @param int $id The numeric post ID.
+	 * @param string $context How to write ampersands. Default 'display' encodes as '&amp;'.
+	 * @return string $link The modified link.
 	 */
 	function get_edit_post_link( $link, $id, $context ) {
 
@@ -792,6 +800,8 @@ class Commentpress_Core_Editor {
 	/**
 	 * Set up post object from passed data.
 	 *
+	 * @since 3.7
+	 *
 	 * @return bool True if post object set up, false otherwise
 	 */
 	private function _setup_post() {
@@ -822,7 +832,7 @@ class Commentpress_Core_Editor {
 	/**
 	 * Send data to browser and exit.
 	 *
-	 * @return void
+	 * @since 3.7
 	 */
 	private function _send_json_data( $data ) {
 
@@ -844,7 +854,9 @@ class Commentpress_Core_Editor {
 	/**
 	 * Inject editor toggle before search in Contents column.
 	 *
-	 * @return void
+	 * @since 3.7
+	 *
+	 * @return str $link The link markup.
 	 */
 	private function _toggle_link() {
 

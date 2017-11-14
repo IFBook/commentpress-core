@@ -14,7 +14,7 @@ class Commentpress_Core_Workflow {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $parent_obj The plugin object
+	 * @var object $parent_obj The plugin object.
 	 */
 	public $parent_obj;
 
@@ -25,7 +25,7 @@ class Commentpress_Core_Workflow {
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $parent_obj a reference to the parent object
+	 * @param object $parent_obj a reference to the parent object.
 	 */
 	function __construct( $parent_obj = null ) {
 
@@ -45,7 +45,7 @@ class Commentpress_Core_Workflow {
 	/**
 	 * Set up all items associated with this object.
 	 *
-	 * @return void
+	 * @since 3.0
 	 */
 	public function initialise() {
 
@@ -56,7 +56,7 @@ class Commentpress_Core_Workflow {
 	/**
 	 * If needed, destroys all items associated with this object.
 	 *
-	 * @return void
+	 * @since 3.0
 	 */
 	public function destroy() {
 
@@ -79,8 +79,10 @@ class Commentpress_Core_Workflow {
 	/**
 	 * Enable workflow.
 	 *
-	 * @param bool $exists True if "workflow" is enabled, false otherwise
-	 * @return bool $exists True if "workflow" is enabled, false otherwise
+	 * @since 3.0
+	 *
+	 * @param bool $exists True if "workflow" is enabled, false otherwise.
+	 * @return bool $exists True if "workflow" is enabled, false otherwise.
 	 */
 	public function blog_workflow_exists( $exists ) {
 
@@ -97,8 +99,10 @@ class Commentpress_Core_Workflow {
 	/**
 	 * Override the name of the workflow checkbox label.
 	 *
-	 * @param str $name The existing singular name of the label
-	 * @return str $name The modified singular name of the label
+	 * @since 3.0
+	 *
+	 * @param str $name The existing singular name of the label.
+	 * @return str $name The modified singular name of the label.
 	 */
 	public function blog_workflow_label( $name ) {
 
@@ -115,8 +119,10 @@ class Commentpress_Core_Workflow {
 	/**
 	 * Amend the group meta if workflow is enabled.
 	 *
-	 * @param str $blog_type The existing numerical type of the blog
-	 * @return str $blog_type The modified numerical type of the blog
+	 * @since 3.0
+	 *
+	 * @param str $blog_type The existing numerical type of the blog.
+	 * @return str $blog_type The modified numerical type of the blog.
 	 */
 	public function group_meta_set_blog_type( $blog_type, $blog_workflow ) {
 
@@ -133,8 +139,10 @@ class Commentpress_Core_Workflow {
 		 * is enabled, it might become a new blog type as far as BuddyPress
 		 * is concerned.
 		 *
-		 * @param int $blog_type The numeric blog type
-		 * @param bool $blog_workflow True if workflow enabled, false otherwise
+		 * @since 3.0
+		 *
+		 * @param int $blog_type The numeric blog type.
+		 * @param bool $blog_workflow True if workflow enabled, false otherwise.
 		 */
 		return apply_filters( 'cp_class_commentpress_workflow_group_blogtype', $blog_type, $blog_workflow );
 
@@ -145,7 +153,7 @@ class Commentpress_Core_Workflow {
 	/**
 	 * Add our metabox if workflow is enabled.
 	 *
-	 * @return void
+	 * @since 3.0
 	 */
 	public function workflow_metabox() {
 
@@ -210,8 +218,10 @@ class Commentpress_Core_Workflow {
 	/**
 	 * Amend the workflow metabox title.
 	 *
-	 * @param str $title The existing title of the metabox
-	 * @return str $title The overridden title of the metabox
+	 * @since 3.0
+	 *
+	 * @param str $title The existing title of the metabox.
+	 * @return str $title The overridden title of the metabox.
 	 */
 	public function workflow_metabox_title( $title ) {
 
@@ -228,8 +238,9 @@ class Commentpress_Core_Workflow {
 	/**
 	 * Save workflow data based on the state of the metabox.
 	 *
-	 * @param object $post_obj The WordPress post object
-	 * @return void
+	 * @since 3.0
+	 *
+	 * @param object $post_obj The WordPress post object.
 	 */
 	public function workflow_save_post( $post_obj ) {
 
@@ -346,8 +357,9 @@ class Commentpress_Core_Workflow {
 	/**
 	 * Add the workflow content to the new version.
 	 *
-	 * @param int $new_post_id The numeric ID of the new WordPress post
-	 * @return void
+	 * @since 3.0
+	 *
+	 * @param int $new_post_id The numeric ID of the new WordPress post.
 	 */
 	public function workflow_save_copy( $new_post_id ) {
 
@@ -448,7 +460,7 @@ class Commentpress_Core_Workflow {
 	/**
 	 * Object initialisation.
 	 *
-	 * @return void
+	 * @since 3.0
 	 */
 	function _init() {
 
@@ -462,7 +474,7 @@ class Commentpress_Core_Workflow {
 	/**
 	 * Register WordPress hooks.
 	 *
-	 * @return void
+	 * @since 3.0
 	 */
 	function _register_hooks() {
 

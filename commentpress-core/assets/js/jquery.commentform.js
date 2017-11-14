@@ -36,20 +36,20 @@ method for details of the latter.
 
 
 /**
- * Comment area handler object
+ * Comment area handler object.
  */
 addComment = {
 
 
 
 	/**
-	 * Method for moving the comment form
+	 * Method for moving the comment form.
 	 *
-	 * @param string commentID The CSS ID of the comment
-	 * @param string parentID The CSS ID of the parent comment
-	 * @param string respondID The CSS ID of the comment form
-	 * @param string postID The ID of the WordPress post
-	 * @param string textSig The target text signature
+	 * @param {String} commentID The CSS ID of the comment.
+	 * @param {String} parentID The CSS ID of the parent comment.
+	 * @param {String} respondID The CSS ID of the comment form.
+	 * @param {String} postID The ID of the WordPress post.
+	 * @param {String} textSig The target text signature.
 	 * @return false
 	 */
 	moveForm : function( commentID, parentID, respondID, postID, textSig ) {
@@ -146,9 +146,9 @@ addComment = {
 
 
 		/**
-		 * Method for cancel button
+		 * Method for cancel button.
 		 *
-		 * @return false
+		 * @return {Boolean} false.
 		 */
 		cancel_e.onclick = function() {
 
@@ -203,12 +203,12 @@ addComment = {
 
 
 	/**
-	 * Method for moving the comment form to a paragraph block
+	 * Method for moving the comment form to a paragraph block.
 	 *
-	 * @param string paraNum The paragraph number
-	 * @param string textSig The target text signature
-	 * @param string postID The ID of the WordPress post
-	 * @return false
+	 * @param {String} paraNum The paragraph number.
+	 * @param {String} textSig The target text signature.
+	 * @param {String} postID The ID of the WordPress post.
+	 * @return {Boolean} false
 	 */
 	moveFormToPara : function( paraNum, textSig, postID ) {
 
@@ -232,9 +232,9 @@ addComment = {
 
 
 	/**
-	 * Reset the comment form
+	 * Reset the comment form.
 	 *
-	 * @return false
+	 * @return {Boolean} false
 	 */
 	cancelForm : function() {
 
@@ -386,10 +386,10 @@ addComment = {
 
 
 	/**
-	 * Get element ID
+	 * Get element ID.
 	 *
-	 * @param string e The element to find
-	 * @return object The DOM element's ID
+	 * @param {String} e The element to find.
+	 * @return {Object} The DOM element's ID.
 	 */
 	I : function(e) {
 
@@ -401,7 +401,7 @@ addComment = {
 
 
 	/**
-	 * Enable the comment form
+	 * Enable the comment form.
 	 *
 	 * @return void
 	 */
@@ -435,7 +435,7 @@ addComment = {
 
 
 	/**
-	 * Disable the comment form
+	 * Disable the comment form.
 	 *
 	 * @return void
 	 */
@@ -464,12 +464,11 @@ addComment = {
 
 
 	/**
-	 * Set the comment form title
+	 * Set the comment form title.
 	 *
-	 * @param string parentID The CSS ID of the parent element
-	 * @param string textSig The text signature
-	 * @param string mode The mode (eg, 'cancel')
-	 * @return void
+	 * @param {String} parentID The CSS ID of the parent element.
+	 * @param {String} textSig The text signature.
+	 * @param {String} mode The mode (eg, 'cancel').
 	 */
 	setTitle : function( parentID, textSig, mode ) {
 
@@ -597,10 +596,9 @@ addComment = {
 
 
 	/**
-	 * Highlight a comment
+	 * Highlight a comment.
 	 *
-	 * @param parentID The enclosing list item's CSS ID
-	 * @return void
+	 * @param {String} parentID The enclosing list item's CSS ID.
 	 */
 	highlightComment : function( parentID ) {
 
@@ -617,10 +615,9 @@ addComment = {
 
 
 	/**
-	 * Clear a comment highlight
+	 * Clear a comment highlight.
 	 *
-	 * @param parentID The enclosing list item's CSS ID
-	 * @return void
+	 * @param {Integer} parentID The enclosing list item's CSS ID.
 	 */
 	clearCommentHighlight : function( parentID ) {
 
@@ -640,7 +637,7 @@ addComment = {
 
 
 	/**
-	 * Clear all comment highlights
+	 * Clear all comment highlights.
 	 *
 	 * @return void
 	 */
@@ -657,9 +654,9 @@ addComment = {
 
 
 	/**
-	 * Get stored text signature
+	 * Get stored text signature.
 	 *
-	 * @return string text_signature The text signature
+	 * @return {String} text_signature The text signature.
 	 */
 	getTextSig : function() {
 
@@ -671,9 +668,9 @@ addComment = {
 
 
 	/**
-	 * Find out if a comment is top level or not
+	 * Find out if a comment is top level or not.
 	 *
-	 * @return boolean True if comment is top level, false otherwise
+	 * @return {Boolean} True if comment is top level, false otherwise.
 	 */
 	getLevel : function() {
 

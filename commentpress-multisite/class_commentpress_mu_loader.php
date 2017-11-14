@@ -37,7 +37,7 @@ class Commentpress_Multisite_Loader {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $db The database object
+	 * @var object $db The database object.
 	 */
 	public $db;
 
@@ -46,7 +46,7 @@ class Commentpress_Multisite_Loader {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $mu The multisite object reference
+	 * @var object $mu The multisite object reference.
 	 */
 	public $multisite;
 
@@ -55,7 +55,7 @@ class Commentpress_Multisite_Loader {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $revisions The revisions object reference
+	 * @var object $revisions The revisions object reference.
 	 */
 	public $revisions;
 
@@ -64,7 +64,7 @@ class Commentpress_Multisite_Loader {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $bp The BuddyPress object reference
+	 * @var object $bp The BuddyPress object reference.
 	 */
 	public $bp;
 
@@ -73,7 +73,7 @@ class Commentpress_Multisite_Loader {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $workshop The workshop object reference
+	 * @var object $workshop The workshop object reference.
 	 */
 	public $workshop;
 
@@ -96,7 +96,7 @@ class Commentpress_Multisite_Loader {
 	/**
 	 * Set up all items associated with this object.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function initialise() {
 
@@ -193,7 +193,7 @@ class Commentpress_Multisite_Loader {
 	/**
 	 * BuddyPress object initialisation.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function load_buddypress_object() {
 
@@ -255,7 +255,7 @@ class Commentpress_Multisite_Loader {
 	/**
 	 * This plugin has been network-activated. (does not fire!)!
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function network_activated( $plugin, $network_wide = null ) {
 
@@ -278,7 +278,7 @@ class Commentpress_Multisite_Loader {
 	/**
 	 * This plugin has been network-deactivated.
 	 *
-	 * @return void
+	 * @since 3.3
 	 */
 	public function network_deactivated( $plugin, $network_wide = null ) {
 

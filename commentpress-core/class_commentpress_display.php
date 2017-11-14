@@ -14,7 +14,7 @@ class Commentpress_Core_Display {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $parent_obj The plugin object
+	 * @var object $parent_obj The plugin object.
 	 */
 	public $parent_obj;
 
@@ -23,7 +23,7 @@ class Commentpress_Core_Display {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $db The database object
+	 * @var object $db The database object.
 	 */
 	public $db;
 
@@ -34,7 +34,7 @@ class Commentpress_Core_Display {
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $parent_obj A reference to the parent object
+	 * @param object $parent_obj A reference to the parent object.
 	 */
 	function __construct( $parent_obj ) {
 
@@ -54,7 +54,7 @@ class Commentpress_Core_Display {
 	/**
 	 * If needed, sets up this object.
 	 *
-	 * @return void
+	 * @since 3.0
 	 */
 	public function activate() {
 
@@ -70,6 +70,11 @@ class Commentpress_Core_Display {
 		 * If that is the case, then the filter callback must return boolean 'false'
 		 * to prevent the theme being applied and also implement a filter on
 		 * 'cp_forced_theme_slug' below that returns the desired theme slug.
+		 *
+		 * @since 3.4
+		 *
+		 * @param array The existing array containing the stylesheet and template paths.
+		 * @return array The modified array containing the stylesheet and template paths.
 		 */
 		$theme = apply_filters( 'commentpress_get_groupblog_theme', $this->parent_obj->get_groupblog_theme() );
 
@@ -87,11 +92,15 @@ class Commentpress_Core_Display {
 		// test for WP3.4
 		if ( function_exists( 'wp_get_themes' ) ) {
 
-			// get CommentPress Core theme by default, but allow overrides
-			$target_theme = apply_filters(
-				'cp_forced_theme_slug',
-				'commentpress-modern'
-			);
+			/**
+			 * Get CommentPress Core theme by default, but allow overrides.
+			 *
+			 * @since 3.4
+			 *
+			 * @param str The default slug of the theme.
+			 * @return str The modified slug of the theme.
+			 */
+			$target_theme = apply_filters( 'cp_forced_theme_slug', 'commentpress-modern' );
 
 			// get the theme we want
 			$theme = wp_get_theme( $target_theme );
@@ -115,12 +124,14 @@ class Commentpress_Core_Display {
 			// use pre-3.4 logic
 			$themes = get_themes();
 
-			// get CommentPress Core theme by default, but allow overrides
-			// NB, the key prior to WP 3.4 is the theme's *name*
-			$target_theme = apply_filters(
-				'cp_forced_theme_name',
-				'CommentPress Default Theme'
-			);
+			/**
+			 * Get CommentPress Core theme by default, but allow overrides.
+			 *
+			 * NB, the key prior to WP 3.4 is the theme's *name*.
+			 *
+			 * @since 3.4
+			 */
+			$target_theme = apply_filters( 'cp_forced_theme_name', 'CommentPress Default Theme' );
 
 			// the key is the theme name
 			if ( isset( $themes[$target_theme] ) ) {
@@ -142,18 +153,22 @@ class Commentpress_Core_Display {
 	/**
 	 * If needed, destroys this object.
 	 *
-	 * @return void
+	 * @since 3.0
 	 */
 	public function deactivate() {
 
 		// test for WP3.4
 		if ( function_exists( 'wp_get_theme' ) ) {
 
-			// get WordPress default theme, but allow overrides
-			$target_theme = apply_filters(
-				'cp_restore_theme_slug',
-				WP_DEFAULT_THEME
-			);
+			/**
+			 * Get WordPress default theme, but allow overrides.
+			 *
+			 * @since 3.4
+			 *
+			 * @param str The slug of the default theme to switch to.
+			 * @return str The modified slug of the default theme to switch to.
+			 */
+			$target_theme = apply_filters( 'cp_restore_theme_slug', WP_DEFAULT_THEME );
 
 			// get the theme we want
 			$theme = wp_get_theme( $target_theme );
@@ -177,12 +192,17 @@ class Commentpress_Core_Display {
 			// use pre-3.4 logic
 			$themes = get_themes();
 
-			// get default theme by default, but allow overrides
-			// NB, the key prior to WP 3.4 is the theme's *name*
-			$target_theme = apply_filters(
-				'cp_restore_theme_name',
-				WP_DEFAULT_THEME
-			);
+			/**
+			 * Get default theme by default, but allow overrides.
+			 *
+			 * NB, the key prior to WP 3.4 is the theme's *name*.
+			 *
+			 * @since 3.4
+			 *
+			 * @param str The key of the default theme to switch to.
+			 * @return str The modified key of the default theme to switch to.
+			 */
+			$target_theme = apply_filters( 'cp_restore_theme_name', WP_DEFAULT_THEME );
 
 			// the key is the theme name
 			if ( isset( $themes[$target_theme] ) ) {
@@ -216,7 +236,7 @@ class Commentpress_Core_Display {
 	/**
 	 * Enqueue jQuery, jQuery UI and plugins.
 	 *
-	 * @return void
+	 * @since 3.4
 	 */
 	public function get_jquery() {
 
@@ -263,7 +283,7 @@ class Commentpress_Core_Display {
 	/**
 	 * Enqueue our text highlighter script.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	public function get_text_highlighter() {
 
@@ -338,7 +358,7 @@ class Commentpress_Core_Display {
 	/**
 	 * Enqueue our quicktags script.
 	 *
-	 * @return void
+	 * @since 3.4
 	 */
 	public function get_custom_quicktags() {
 
@@ -382,7 +402,7 @@ class Commentpress_Core_Display {
 	/**
 	 * Get plugin stylesheets.
 	 *
-	 * @return void
+	 * @since 3.0
 	 */
 	public function get_frontend_styles() {
 
@@ -402,7 +422,9 @@ class Commentpress_Core_Display {
 	/**
 	 * Test if TinyMCE is allowed.
 	 *
-	 * @return bool $allowed
+	 * @since 3.4
+	 *
+	 * @return bool $allowed True if TinyMCE is allowed, false otherwise.
 	 */
 	public function is_tinymce_allowed() {
 
@@ -444,7 +466,9 @@ class Commentpress_Core_Display {
 	/**
 	 * Get help text.
 	 *
-	 * @return str $help The hrlp HTML
+	 * @since 3.4
+	 *
+	 * @return str $help The help text formatted as HTML.
 	 */
 	public function get_help() {
 
@@ -468,8 +492,9 @@ HELPTEXT;
 	/**
 	 * Show the posts and their comment count in a list format.
 	 *
-	 * @param str $params the parameters to list posts by
-	 * @return void
+	 * @since 3.4
+	 *
+	 * @param str $params the parameters to list posts by.
 	 */
 	public function list_posts( $params = 'numberposts=-1&order=DESC' ) {
 
@@ -624,10 +649,10 @@ HELPTEXT;
 	/**
 	 * Show username (with link).
 	 *
-	 * @todo Remove from theme functions.php?
+	 * @since 3.4
 	 *
-	 * @param int $author_id The numeric ID of the author
-	 * @param bool $echo True if link is to be echoed, false if returned
+	 * @param int $author_id The numeric ID of the author.
+	 * @param bool $echo True if link is to be echoed, false if returned.
 	 */
 	public function echo_post_author( $author_id, $echo = true ) {
 
@@ -673,7 +698,7 @@ HELPTEXT;
 	/**
 	 * Print the posts and their comment count in a list format.
 	 *
-	 * @return void
+	 * @since 3.4
 	 */
 	public function list_pages( $exclude_pages = array() ) {
 
@@ -768,20 +793,15 @@ HELPTEXT;
 	/**
 	 * Get the block comment icon.
 	 *
-	 * @param int $comment_count The number of comments
-	 * @param str $text_signature The comment text signature
-	 * @param str $block_type Either 'auto', 'line' or 'block'
-	 * @param int $para_num Sequential commentable block number
-	 * @return str $comment_icon
+	 * @since 3.4
+	 *
+	 * @param int $comment_count The number of comments.
+	 * @param str $text_signature The comment text signature.
+	 * @param str $block_type Either 'auto', 'line' or 'block'.
+	 * @param int $para_num Sequential commentable block number.
+	 * @return str $comment_icon The comment icon formatted as HTML.
 	 */
-	public function get_comment_icon(
-
-		$comment_count,
-		$text_signature,
-		$block_type = 'auto',
-		$para_num = 1
-
-	) { // -->
+	public function get_comment_icon( $comment_count, $text_signature, $block_type = 'auto', $para_num = 1 ) {
 
 		// reset icon
 		$icon = null;
@@ -923,20 +943,15 @@ HELPTEXT;
 	/**
 	 * Get the block paragraph icon.
 	 *
-	 * @param int $comment_count The number of comments
-	 * @param str $text_signature The comment text signature
-	 * @param str $block_type Either 'auto', 'line' or 'block'
-	 * @param int $para_num The sequential commentable block number
-	 * @return str $comment_icon
+	 * @since 3.4
+	 *
+	 * @param int $comment_count The number of comments.
+	 * @param str $text_signature The comment text signature.
+	 * @param str $block_type Either 'auto', 'line' or 'block'.
+	 * @param int $para_num The sequential commentable block number.
+	 * @return str $paragraph_icon The paragraph icon formatted as HTML.
 	 */
-	public function get_paragraph_icon(
-
-		$comment_count,
-		$text_signature,
-		$block_type = 'auto',
-		$para_num = 1
-
-	) { // -->
+	public function get_paragraph_icon( $comment_count, $text_signature, $block_type = 'auto', $para_num = 1 ) {
 
 		// define block title by block type
 		switch ( $block_type ) {
@@ -1027,11 +1042,13 @@ HELPTEXT;
 	/**
 	 * Get the content comment icon tag.
 	 *
-	 * @param str $text_signature The comment text signature
-	 * @param str $commenticon The comment icon
-	 * @param str $tag The tag
-	 * @param str $start The ordered list start value
-	 * @return str $para_tag
+	 * @since 3.4
+	 *
+	 * @param str $text_signature The comment text signature.
+	 * @param str $commenticon The comment icon.
+	 * @param str $tag The tag.
+	 * @param str $start The ordered list start value.
+	 * @return str $para_tag The tag formatted as HTML.
 	 */
 	public function get_para_tag( $text_signature, $commenticon, $tag = 'p', $start = 0 ) {
 
@@ -1135,8 +1152,10 @@ HELPTEXT;
 	/**
 	 * Get the text signature input for the comment form.
 	 *
-	 * @param str $text_sig The comment text signature
-	 * @return str $input
+	 * @since 3.4
+	 *
+	 * @param str $text_sig The comment text signature.
+	 * @return str $input The HTML input element.
 	 */
 	public function get_signature_input( $text_sig = '' ) {
 
@@ -1153,8 +1172,10 @@ HELPTEXT;
 	/**
 	 * Get the minimise all button.
 	 *
-	 * @param str $sidebar The type of sidebar (comments, toc, activity)
-	 * @return str $tag The tag
+	 * @since 3.4
+	 *
+	 * @param str $sidebar The type of sidebar (comments, toc, activity).
+	 * @return str $tag The tag.
 	 */
 	public function get_minimise_all_button( $sidebar = 'comments' ) {
 
@@ -1187,7 +1208,9 @@ HELPTEXT;
 	/**
 	 * Get the header minimise button.
 	 *
-	 * @return str $link The markup of the link
+	 * @since 3.4
+	 *
+	 * @return str $link The markup of the link.
 	 */
 	public function get_header_min_link() {
 
@@ -1204,9 +1227,11 @@ HELPTEXT;
 	/**
 	 * Get an image wrapped in a link.
 	 *
-	 * @param str $src The location of image file
-	 * @param str $url The link target
-	 * @return string $tag The markup
+	 * @since 3.4
+	 *
+	 * @param str $src The location of image file.
+	 * @param str $url The link target.
+	 * @return string $tag The markup.
 	 */
 	public function get_linked_image( $src = '', $url = '' ) {
 
@@ -1239,7 +1264,9 @@ HELPTEXT;
 	/**
 	 * Got the WordPress admin page.
 	 *
-	 * @return str $admin_page The HTML for the admin page
+	 * @since 3.4
+	 *
+	 * @return str $admin_page The HTML for the admin page.
 	 */
 	public function get_admin_page() {
 
@@ -1277,7 +1304,7 @@ HELPTEXT;
 	/**
 	 * Object initialisation.
 	 *
-	 * @return void
+	 * @since 3.0
 	 */
 	function _init() {
 
@@ -1293,7 +1320,9 @@ HELPTEXT;
 	/**
 	 * Returns the admin form HTML.
 	 *
-	 * @return str $admin_page The admin page HTML
+	 * @since 3.4
+	 *
+	 * @return str $admin_page The admin page HTML.
 	 */
 	function _get_admin_form() {
 
@@ -1379,7 +1408,9 @@ HELPTEXT;
 	/**
 	 * Returns the CommentPress Core options for the admin form.
 	 *
-	 * @return str $options
+	 * @since 3.4
+	 *
+	 * @return str $options The options markup.
 	 */
 	function _get_options() {
 
@@ -1524,7 +1555,9 @@ HELPTEXT;
 	/**
 	 * Returns optional options, if defined.
 	 *
-	 * @return str $html
+	 * @since 3.4
+	 *
+	 * @return str $html The markup.
 	 */
 	function _get_optional_options() {
 
@@ -1635,7 +1668,9 @@ HELPTEXT;
 	/**
 	 * Returns the upgrade details for the admin form.
 	 *
-	 * @return str $upgrade
+	 * @since 3.4
+	 *
+	 * @return str $upgrade The upgrade markup.
 	 */
 	function _get_upgrade() {
 
@@ -2034,7 +2069,9 @@ HELPTEXT;
 	/**
 	 * Returns the multisite deactivate button for the admin form.
 	 *
-	 * @return str $html
+	 * @since 3.4
+	 *
+	 * @return str $html The multisite markup, default is empty.
 	 */
 	function _get_deactivate() {
 
@@ -2048,7 +2085,9 @@ HELPTEXT;
 	/**
 	 * Returns the reset button for the admin form.
 	 *
-	 * @return str $reset
+	 * @since 3.4
+	 *
+	 * @return str $reset The reset button markup.
 	 */
 	function _get_reset() {
 
@@ -2071,9 +2110,11 @@ HELPTEXT;
 
 
 	/**
-	 * Returns the rich text editor button for the admin form.
+	 * Returns the Rich Text Editor button for the admin form.
 	 *
-	 * @return str $editor
+	 * @since 3.4
+	 *
+	 * @return str $editor The editor option markup.
 	 */
 	function _get_editor() {
 
@@ -2117,7 +2158,9 @@ HELPTEXT;
 	/**
 	 * Returns the TOC options for the admin form.
 	 *
-	 * @return str $editor
+	 * @since 3.4
+	 *
+	 * @return str $editor The markup.
 	 */
 	function _get_toc() {
 
@@ -2182,7 +2225,9 @@ HELPTEXT;
 	/**
 	 * Returns the Sidebar options for the admin form.
 	 *
-	 * @return str $toc
+	 * @since 3.4
+	 *
+	 * @return str $toc The markup.
 	 */
 	function _get_sidebar() {
 
@@ -2222,7 +2267,9 @@ HELPTEXT;
 	/**
 	 * Returns the override paragraph commenting button for the admin form.
 	 *
-	 * @return str $override
+	 * @since 3.4
+	 *
+	 * @return str $override The markup.
 	 */
 	function _get_override() {
 
@@ -2249,7 +2296,7 @@ HELPTEXT;
 	 *
 	 * @since 3.8.10
 	 *
-	 * @return str $html The markup for the button
+	 * @return str $html The markup for the button.
 	 */
 	function _get_do_not_parse() {
 
@@ -2281,7 +2328,7 @@ HELPTEXT;
 	 *
 	 * @since 3.8.10
 	 *
-	 * @return str $html The markup for the button
+	 * @return str $html The markup for the button.
 	 */
 	function _get_page_nav_enabled() {
 
@@ -2310,7 +2357,7 @@ HELPTEXT;
 	 *
 	 * @since 3.9
 	 *
-	 * @return str $html The markup for the post type options
+	 * @return str $html The markup for the post type options.
 	 */
 	public function _get_post_type_options() {
 
@@ -2364,7 +2411,9 @@ HELPTEXT;
 	/**
 	 * Returns the textblock meta button for the admin form.
 	 *
-	 * @return str $override
+	 * @since 3.4
+	 *
+	 * @return str $override The markup.
 	 */
 	function _get_textblock_meta() {
 
@@ -2391,7 +2440,9 @@ HELPTEXT;
 	/**
 	 * Returns the submit button.
 	 *
-	 * @return str $submit The submit button HTML
+	 * @since 3.4
+	 *
+	 * @return str $submit The submit button HTML.
 	 */
 	function _get_submit() {
 

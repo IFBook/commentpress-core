@@ -4,7 +4,7 @@ Plugin Name: CommentPress Core
 Plugin URI: http://www.futureofthebook.org/commentpress/
 Description: CommentPress allows readers to comment in the margins of a text. You can use it to annotate, gloss, workshop, debate and more!
 Author: Institute for the Future of the Book
-Version: 3.9.6
+Version: 3.9.7
 Author URI: http://www.futureofthebook.org
 Text Domain: commentpress-core
 Domain Path: /languages
@@ -18,7 +18,7 @@ Mark James for the icons: http://www.famfamfam.com/lab/icons/silk/
 
 
 // set version
-define( 'COMMENTPRESS_VERSION', '3.9.6' );
+define( 'COMMENTPRESS_VERSION', '3.9.7' );
 
 // store reference to this file
 if ( ! defined( 'COMMENTPRESS_PLUGIN_FILE' ) ) {
@@ -37,12 +37,12 @@ if ( ! defined( 'COMMENTPRESS_PLUGIN_PATH' ) ) {
 
 
 /*
---------------------------------------------------------------------------------
-Begin by establishing Plugin Context
---------------------------------------------------------------------------------
-NOTE: force-activated context is now deprecated
---------------------------------------------------------------------------------
-*/
+ * -----------------------------------------------------------------------------
+ * Begin by establishing Plugin Context
+ * -----------------------------------------------------------------------------
+ * NOTE: force-activated context is now deprecated
+ * -----------------------------------------------------------------------------
+ */
 
 // test for multisite location
 if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
@@ -58,7 +58,7 @@ if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
 	// check if our plugin is one of those activated sitewide
 	$this_plugin = plugin_basename( COMMENTPRESS_PLUGIN_FILE );
 
-	/**
+	/*
 	 * Unfortunately, is_plugin_active_for_network() is not yet available so we
 	 * have to do this manually.
 	 *
@@ -102,8 +102,8 @@ if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
  *
  * @since 3.0
  *
- * @param string $filename the name of the CommentPress Core Plugin file
- * @return string $filepath absolute path to file
+ * @param string $filename the name of the CommentPress Core Plugin file.
+ * @return string $filepath absolute path to file.
  */
 function commentpress_file_is_present( $filename ) {
 
@@ -129,8 +129,6 @@ function commentpress_file_is_present( $filename ) {
  * Utility to include the core plugin.
  *
  * @since 3.4
- *
- * @return void
  */
 function commentpress_include_core() {
 
@@ -156,8 +154,6 @@ function commentpress_include_core() {
  * Utility to activate the core plugin.
  *
  * @since 3.4
- *
- * @return void
  */
 function commentpress_activate_core() {
 
@@ -180,8 +176,6 @@ function commentpress_activate_core() {
  * Utility to activate the AJAX commenting plugin.
  *
  * @since 3.4
- *
- * @return void
  */
 function commentpress_activate_ajax() {
 
@@ -203,7 +197,7 @@ function commentpress_activate_ajax() {
  *
  * @since 3.8.5
  *
- * @return str The debug string to be included in a filename
+ * @return str The debug string to be included in a filename.
  */
 function commentpress_minified() {
 
@@ -227,7 +221,7 @@ function commentpress_minified() {
  *
  * @since 3.0
  *
- * @param str The debug string to be sent the the browser
+ * @param str The debug string to be sent the the browser.
  */
 function _cpdie( $var ) {
 
@@ -245,9 +239,9 @@ function _cpdie( $var ) {
  *
  * @since 3.4
  *
- * @param array $links The existing links array
- * @param str $file The name of the plugin file
- * @return array $links The modified links array
+ * @param array $links The existing links array.
+ * @param str $file The name of the plugin file.
+ * @return array $links The modified links array.
  */
 function commentpress_plugin_action_links( $links, $file ) {
 
@@ -289,8 +283,8 @@ add_filter( 'plugin_action_links', 'commentpress_plugin_action_links', 10, 2 );
  *
  * @since 3.4
  *
- * @param str $plugin_name The name of the plugin
- * @return str $path_to_plugin The path to the plugin
+ * @param str $plugin_name The name of the plugin.
+ * @return str $path_to_plugin The path to the plugin.
  */
 function commentpress_find_plugin_by_name( $plugin_name = '' ) {
 
@@ -336,7 +330,7 @@ function commentpress_find_plugin_by_name( $plugin_name = '' ) {
  *
  * @since 3.4
  *
- * @return bool $active True if the legacy plugin is active, false otherwise
+ * @return bool $active True if the legacy plugin is active, false otherwise.
  */
 function commentpress_is_legacy_plugin_active() {
 
@@ -368,25 +362,25 @@ function commentpress_is_legacy_plugin_active() {
 
 
 /*
---------------------------------------------------------------------------------
-NOTE: in multisite, child themes are registered as broken if the plugin is not
-network-enabled. Make sure child themes have instructions.
---------------------------------------------------------------------------------
-There are further complex issues when in Multisite:
-
-First scenario:
-* if the plugin is NOT initially network-enabled
-* but it IS enabled on one or more blogs on the network
-* and the plugin in THEN network-enabled
-
-Second scenario:
-* if the plugin IS initially network-enabled
-* and it IS activated on one or more blogs on the network
-* and the plugin in THEN network-disabled
-
-If installs stick to one or the other, then all works as expected.
---------------------------------------------------------------------------------
-*/
+ * -----------------------------------------------------------------------------
+ * NOTE: in multisite, child themes are registered as broken if the plugin
+ * is not network-enabled. Make sure child themes have instructions.
+ * -----------------------------------------------------------------------------
+ * There are further complex issues when in Multisite:
+ *
+ * First scenario:
+ * if the plugin is NOT initially network-enabled
+ * but it IS enabled on one or more blogs on the network
+ * and the plugin in THEN network-enabled
+ *
+ * Second scenario:
+ * if the plugin IS initially network-enabled
+ * and it IS activated on one or more blogs on the network
+ * and the plugin in THEN network-disabled
+ *
+ * If installs stick to one or the other, then all works as expected.
+ * -----------------------------------------------------------------------------
+ */
 
 // register our themes directory
 register_theme_directory( plugin_dir_path( COMMENTPRESS_PLUGIN_FILE ) . 'themes' );
