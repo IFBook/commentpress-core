@@ -1244,7 +1244,6 @@ class Commentpress_Core {
 	 *
 	 * @param int $comment_ID The numeric ID of the comment.
 	 * @param str $comment_status The status of the comment.
-	 * @return void
 	 */
 	public function save_comment( $comment_ID, $comment_status ) {
 

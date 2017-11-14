@@ -14,7 +14,7 @@ class Commentpress_Core_Formatter {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $parent_obj The plugin object
+	 * @var object $parent_obj The plugin object.
 	 */
 	public $parent_obj;
 
@@ -23,7 +23,7 @@ class Commentpress_Core_Formatter {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $db The database object
+	 * @var object $db The database object.
 	 */
 	public $db;
 
@@ -34,7 +34,7 @@ class Commentpress_Core_Formatter {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $parent_obj A reference to the parent object
+	 * @param object $parent_obj A reference to the parent object.
 	 */
 	function __construct( $parent_obj = null ) {
 

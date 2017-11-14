@@ -415,7 +415,6 @@ class Commentpress_Multisite_Admin {
 	 *
 	 * @param str $option_name The name of the option.
 	 * @param mixed $value The value for the option.
-	 * @return void
 	 */
 	public function option_set( $option_name = '', $value = '' ) {
 
