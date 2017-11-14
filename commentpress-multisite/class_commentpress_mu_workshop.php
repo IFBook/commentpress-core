@@ -37,13 +37,13 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	public $groupblog_nomenclature = 0;
 
 	/**
-	 * Default name of a groupblog.
+	 * Default singular name of a groupblog.
 	 *
 	 * @since 3.3
 	 * @access public
 	 * @var object $groupblog_nomenclature_name Default name of a groupblog.
 	 */
-	public $groupblog_nomenclature_name = 'Document';
+	public $groupblog_nomenclature_name = '';
 
 	/**
 	 * Default plural name of a groupblog.
@@ -52,7 +52,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	 * @access public
 	 * @var object $groupblog_nomenclature_plural Default plural name of a groupblog.
 	 */
-	public $groupblog_nomenclature_plural = 'Documents';
+	public $groupblog_nomenclature_plural = '';
 
 	/**
 	 * Default slug of a groupblog.
@@ -61,7 +61,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	 * @access public
 	 * @var object $groupblog_nomenclature_slug Default slug of a groupblog.
 	 */
-	public $groupblog_nomenclature_slug = 'document';
+	public $groupblog_nomenclature_slug = '';
 
 
 
@@ -79,6 +79,11 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 
 		// store reference to database wrapper (child of calling obj)
 		$this->db = $this->parent_obj->db;
+
+		// make properties translatable
+		$this->groupblog_nomenclature_name = __( 'Document', 'commentpress-core' );
+		$this->groupblog_nomenclature_plural = __( 'Documents', 'commentpress-core' );
+		$this->groupblog_nomenclature_slug = __( 'document', 'commentpress-core' );
 
 		// init
 		$this->_init();
