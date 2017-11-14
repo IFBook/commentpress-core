@@ -213,6 +213,10 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+<h4>3.9.6</h4>
+
+* Introduce AJAX javascript setup filter
+
 <h4>3.9.5</h4>
 
 * Fix deployment to WordPress plugin repo
