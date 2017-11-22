@@ -333,6 +333,9 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function register_comment_tracking_on_pages() {
 
+		// bail if Activity Component is not active
+		if ( ! function_exists( 'bp_activity_set_post_type_tracking_args' ) ) return;
+
 		// amend "page" post type
 		add_post_type_support( 'page', 'buddypress-activity' );
 
