@@ -164,7 +164,7 @@ if (
 		);
 
 		// get activities
-		if ( bp_has_activities( $recent_groupblog_activity ) ) :
+		if ( function_exists( 'bp_has_activities' ) AND bp_has_activities( $recent_groupblog_activity ) ) :
 
 			// change header depending on logged in status
 			if ( is_user_logged_in() ) {
