@@ -213,6 +213,10 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+<h4>3.9.7</h4>
+
+* Fixes error when BuddyPress Activity component is not active
+
 <h4>3.9.6</h4>
 
 * Introduce AJAX javascript setup filter
