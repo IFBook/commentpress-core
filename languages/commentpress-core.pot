@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the CommentPress Core package.
 msgid ""
 msgstr ""
-"Project-Id-Version: CommentPress Core 3.9.6\n"
+"Project-Id-Version: CommentPress Core 3.9.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/commentpress-core\n"
-"POT-Creation-Date: 2017-11-14 13:13:40+00:00\n"
+"POT-Creation-Date: 2017-11-22 17:14:32+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -70,7 +70,7 @@ msgstr ""
 #: commentpress-core/class_commentpress.php:2532
 #: commentpress-core/class_commentpress_display.php:1825
 #: commentpress-core/class_commentpress_display.php:2241
-#: commentpress-multisite/class_commentpress_mu_bp.php:349
+#: commentpress-multisite/class_commentpress_mu_bp.php:352
 #: themes/commentpress-flat/assets/templates/comments_sidebar.php:20
 #: themes/commentpress-flat/assets/templates/header_body.php:34
 #: themes/commentpress-flat/sidebar.php:68
@@ -158,7 +158,7 @@ msgstr ""
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:1205
 #: commentpress-core/class_commentpress_display.php:571
-#: commentpress-multisite/class_commentpress_mu_bp.php:852
+#: commentpress-multisite/class_commentpress_mu_bp.php:855
 msgid " &amp; "
 msgstr ""
 
@@ -198,7 +198,7 @@ msgstr ""
 #: commentpress-core/assets/includes/theme/theme-functions.php:1427
 #: commentpress-core/assets/includes/theme/theme-functions.php:1530
 #: commentpress-core/assets/includes/theme/theme-functions.php:1814
-#: commentpress-multisite/class_commentpress_mu_bp.php:587
+#: commentpress-multisite/class_commentpress_mu_bp.php:590
 msgid "Anonymous"
 msgstr ""
 
@@ -826,7 +826,7 @@ msgstr ""
 
 #: commentpress-core/class_commentpress_display.php:1580
 #: commentpress-core/class_commentpress_formatter.php:100
-#: commentpress-multisite/class_commentpress_mu_bp.php:1404
+#: commentpress-multisite/class_commentpress_mu_bp.php:1407
 msgid "Default Text Format"
 msgstr ""
 
@@ -837,8 +837,8 @@ msgstr ""
 #: commentpress-core/class_commentpress_display.php:1634
 #: commentpress-core/class_commentpress_display.php:1922
 #: commentpress-multisite/class_commentpress_mu_admin.php:696
-#: commentpress-multisite/class_commentpress_mu_bp.php:2035
-#: commentpress-multisite/class_commentpress_mu_bp.php:2294
+#: commentpress-multisite/class_commentpress_mu_bp.php:2038
+#: commentpress-multisite/class_commentpress_mu_bp.php:2297
 msgid "Enable Custom Workflow"
 msgstr ""
 
@@ -954,7 +954,7 @@ msgstr ""
 
 #: commentpress-core/class_commentpress_display.php:2170
 #: commentpress-core/class_commentpress_display.php:2173
-#: commentpress-multisite/class_commentpress_mu_bp.php:343
+#: commentpress-multisite/class_commentpress_mu_bp.php:346
 msgid "Pages"
 msgstr ""
 
@@ -1027,12 +1027,12 @@ msgid "Switch to Writing Mode"
 msgstr ""
 
 #: commentpress-core/class_commentpress_formatter.php:119
-#: commentpress-multisite/class_commentpress_mu_bp.php:1422
+#: commentpress-multisite/class_commentpress_mu_bp.php:1425
 msgid "Prose"
 msgstr ""
 
 #: commentpress-core/class_commentpress_formatter.php:120
-#: commentpress-multisite/class_commentpress_mu_bp.php:1423
+#: commentpress-multisite/class_commentpress_mu_bp.php:1426
 msgid "Poetry"
 msgstr ""
 
@@ -1049,7 +1049,7 @@ msgid "line"
 msgstr ""
 
 #: commentpress-core/class_commentpress_workflow.php:112
-#: commentpress-multisite/class_commentpress_mu_bp.php:1461
+#: commentpress-multisite/class_commentpress_mu_bp.php:1464
 msgid "Enable Translation Workflow"
 msgstr ""
 
@@ -1100,8 +1100,8 @@ msgid "You must supply an option to option_wpms_set()"
 msgstr ""
 
 #: commentpress-multisite/class_commentpress_mu_admin.php:741
-#: commentpress-multisite/class_commentpress_mu_bp.php:2064
-#: commentpress-multisite/class_commentpress_mu_bp.php:2323
+#: commentpress-multisite/class_commentpress_mu_bp.php:2067
+#: commentpress-multisite/class_commentpress_mu_bp.php:2326
 msgid "Document Type"
 msgstr ""
 
@@ -1125,141 +1125,141 @@ msgstr ""
 msgid "Activation"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:342
+#: commentpress-multisite/class_commentpress_mu_bp.php:345
 msgid "Published a new page"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:344
+#: commentpress-multisite/class_commentpress_mu_bp.php:347
 msgid "%1$s posted a new <a href=\"%2$s\">page</a>"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:345
+#: commentpress-multisite/class_commentpress_mu_bp.php:348
 msgid "%1$s posted a new <a href=\"%2$s\">page</a>, on the site %3$s"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:348
+#: commentpress-multisite/class_commentpress_mu_bp.php:351
 msgid "Commented on a page"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:350
+#: commentpress-multisite/class_commentpress_mu_bp.php:353
 msgid "%1$s commented on the <a href=\"%2$s\">page</a>"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:351
+#: commentpress-multisite/class_commentpress_mu_bp.php:354
 msgid "%1$s commented on the <a href=\"%2$s\">page</a>, on the site %3$s"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:597
-#: commentpress-multisite/class_commentpress_mu_bp.php:608
-#: commentpress-multisite/class_commentpress_mu_bp.php:620
-#: commentpress-multisite/class_commentpress_mu_bp.php:815
+#: commentpress-multisite/class_commentpress_mu_bp.php:600
+#: commentpress-multisite/class_commentpress_mu_bp.php:611
+#: commentpress-multisite/class_commentpress_mu_bp.php:623
+#: commentpress-multisite/class_commentpress_mu_bp.php:818
 msgid "post"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:656
+#: commentpress-multisite/class_commentpress_mu_bp.php:659
 msgid "comment"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:661
+#: commentpress-multisite/class_commentpress_mu_bp.php:664
 msgid "%s left a %s on a %s %s in the group %s:"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:881
+#: commentpress-multisite/class_commentpress_mu_bp.php:884
 msgid "%s updated a %s %s in the group %s:"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:892
+#: commentpress-multisite/class_commentpress_mu_bp.php:895
 msgid "%s wrote a new %s %s in the group %s:"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:1091
+#: commentpress-multisite/class_commentpress_mu_bp.php:1094
 msgid "CommentPress Comments"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:1114
+#: commentpress-multisite/class_commentpress_mu_bp.php:1117
 msgid "CommentPress Posts"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:1183
+#: commentpress-multisite/class_commentpress_mu_bp.php:1186
 #: commentpress-multisite/class_commentpress_mu_workshop.php:84
 msgid "Document"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:1236
+#: commentpress-multisite/class_commentpress_mu_bp.php:1239
 msgid "Document Home Page"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:1359
+#: commentpress-multisite/class_commentpress_mu_bp.php:1362
 msgid "View Site"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:1366
-#: commentpress-multisite/class_commentpress_mu_bp.php:1380
+#: commentpress-multisite/class_commentpress_mu_bp.php:1369
+#: commentpress-multisite/class_commentpress_mu_bp.php:1383
 msgid "View Document"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:1373
+#: commentpress-multisite/class_commentpress_mu_bp.php:1376
 msgid "View Group Blog"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:1573
+#: commentpress-multisite/class_commentpress_mu_bp.php:1576
 msgid "Create a New Site"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:2002
+#: commentpress-multisite/class_commentpress_mu_bp.php:2005
 msgid "Select the options for your new CommentPress-enabled blog. Note: if you choose an existing blog as a group blog, setting these options will have no effect."
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:2010
-#: commentpress-multisite/class_commentpress_mu_bp.php:2272
+#: commentpress-multisite/class_commentpress_mu_bp.php:2013
+#: commentpress-multisite/class_commentpress_mu_bp.php:2275
 #: commentpress-multisite/class_commentpress_mu_ms.php:211
 msgid "Enable CommentPress"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:2017
+#: commentpress-multisite/class_commentpress_mu_bp.php:2020
 msgid "When you create a group blog, you can choose to enable it as a CommentPress blog. This is a \"one time only\" option because you cannot disable CommentPress from here once the group blog is created. Note: if you choose an existing blog as a group blog, setting this option will have no effect."
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:2097
-#: commentpress-multisite/class_commentpress_mu_bp.php:2358
+#: commentpress-multisite/class_commentpress_mu_bp.php:2100
+#: commentpress-multisite/class_commentpress_mu_bp.php:2361
 msgid "CommentPress Options"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:2265
+#: commentpress-multisite/class_commentpress_mu_bp.php:2268
 #: commentpress-multisite/class_commentpress_mu_ms.php:203
 msgid "Select the options for your new CommentPress document."
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:2277
+#: commentpress-multisite/class_commentpress_mu_bp.php:2280
 #: commentpress-multisite/class_commentpress_mu_ms.php:218
 msgid "Do you want to make the new site a CommentPress document?"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:2499
+#: commentpress-multisite/class_commentpress_mu_bp.php:2502
 msgid "BuddyPress &amp; Groupblog Settings"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:2501
+#: commentpress-multisite/class_commentpress_mu_bp.php:2504
 msgid "Configure how CommentPress interacts with BuddyPress and BuddyPress Groupblog."
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:2506
+#: commentpress-multisite/class_commentpress_mu_bp.php:2509
 msgid "Reset BuddyPress settings"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:2511
+#: commentpress-multisite/class_commentpress_mu_bp.php:2514
 msgid "Make all new Groupblogs CommentPress-enabled"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:2518
+#: commentpress-multisite/class_commentpress_mu_bp.php:2521
 msgid "Private Groups must have Private Groupblogs"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:2523
+#: commentpress-multisite/class_commentpress_mu_bp.php:2526
 msgid "Require user login to post comments on Groupblogs"
 msgstr ""
 
-#: commentpress-multisite/class_commentpress_mu_bp.php:2622
+#: commentpress-multisite/class_commentpress_mu_bp.php:2625
 msgid "Select theme for CommentPress Groupblogs"
 msgstr ""
 
