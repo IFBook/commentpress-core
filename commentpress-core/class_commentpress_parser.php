@@ -589,9 +589,9 @@ class Commentpress_Core_Parser {
 			won't use nested lists. However, the severity is such that I'm contemplating migrating to
 			a DOM parser such as:
 
-			phpQuery <https://github.com/TobiaszCudnik/phpquery>
-			Simple HTML DOM <http://sourceforge.net/projects/simplehtmldom/>
-			Others <http://stackoverflow.com/questions/3577641/how-to-parse-and-process-html-with-php>
+			phpQuery <https://github.com/c-harris/phpquery>
+			QueryPath <https://github.com/technosophos/querypath>
+			QuipXml <https://github.com/wittiws/quipxml>
 
 			There are so many examples of people saying "don't use regex with HTML" that this probably
 			ought to be done when time allows.
