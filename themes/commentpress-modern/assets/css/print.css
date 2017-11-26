@@ -131,6 +131,9 @@ Updated by Christian Wach for CommentPress Core
 	#content div.sharedaddy,
 	#main div.sharedaddy,
 
+	/* JetPack contact form */
+	form.contact-form,
+
 	/* Featured Comments */
 	div.feature-burry-comments,
 	div.feature-bury-comments,
@@ -138,8 +141,14 @@ Updated by Christian Wach for CommentPress Core
 	/* Comment Upvoter */
 	.comment-upvote,
 
+	/* Facebook */
+	div.fb_reset,
+
 	/* WordPress */
 	#wpadminbar,
+
+	/* Footer menu */
+	#footer .menu,
 
 	/* force comment form to be hidden */
 	#respond
@@ -159,6 +168,7 @@ Updated by Christian Wach for CommentPress Core
 		border: none;
 		margin: 0;
 		padding: 0;
+		min-height: 0;
 	}
 
 	#page_title,
@@ -177,6 +187,9 @@ Updated by Christian Wach for CommentPress Core
 	#header #title h1 a:active,
 	#header #title h1 a:visited
 	{
+		display: block;
+		width: auto;
+		height: auto;
 		letter-spacing: 0;
 		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 		font-size: 11pt;
@@ -192,7 +205,8 @@ Updated by Christian Wach for CommentPress Core
 		padding-left: 24pt;
 	}
 
-	body.commentpress_page #header #title h1
+	body.commentpress_page #header #title h1,
+	body.not_commentable #header #title h1
 	{
 		padding-left: 0;
 	}
@@ -268,6 +282,7 @@ Updated by Christian Wach for CommentPress Core
 		color: #000;
 	}
 
+	#container #content,
 	#content
 	{
 		padding: 0;
@@ -285,7 +300,8 @@ Updated by Christian Wach for CommentPress Core
 		border-bottom: 1px solid #ccc;
 	}
 
-	body.commentpress_page .post
+	body.commentpress_page .post,
+	body.not_commentable .post
 	{
 		padding: 0 0 20pt 0;
 	}
@@ -396,6 +412,27 @@ Updated by Christian Wach for CommentPress Core
 		padding: 1em;
 		white-space: pre-wrap;
 		overflow: visible;
+	}
+
+	.post .fluid-width-video-wrapper
+	{
+		width: auto !important;
+		height: auto !important;
+		min-height: 0 !important;
+		color: #000;
+		position: static !important;
+		padding: 0 !important;
+	}
+
+	.post .fluid-width-video-wrapper iframe,
+	.post .fluid-width-video-wrapper object,
+	.post .fluid-width-video-wrapper embed
+	{
+		width: auto !important;
+		height: auto !important;
+		min-height: 0 !important;
+		color: #000;
+		position: static !important;
 	}
 
 	/*
