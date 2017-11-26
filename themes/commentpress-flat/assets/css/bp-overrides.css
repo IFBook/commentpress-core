@@ -3580,7 +3580,8 @@ Widgets & Widget Areas
 .sidebar_container .widget_bp_core_members_widget .widget_wrapper,
 .sidebar_container .widget_bp_groups_widget .widget_wrapper,
 .sidebar_container .widget_bp_core_login_widget .widget_wrapper,
-.sidebar_container .widget_bp_core_whos_online_widget .widget_wrapper
+.sidebar_container .widget_bp_core_whos_online_widget .widget_wrapper,
+.sidebar_container .widget_bp_core_recently_active_widget .widget_wrapper
 {
 	padding: 10px;
 }
