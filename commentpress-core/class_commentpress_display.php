@@ -2173,6 +2173,8 @@ HELPTEXT;
 		$chapter_pages_label = __( 'Pages', 'commentpress-core' );
 		$chapter_headings_label = __( 'Headings', 'commentpress-core' );
 
+		$sub_pages_label = __( 'Show Sub-Pages', 'commentpress-core' );
+
 		$extended_label = __( 'Appearance of TOC for posts', 'commentpress-core' );
 		$extended_info_label = __( 'Extended information', 'commentpress-core' );
 		$extended_title_label = __( 'Just the title', 'commentpress-core' );
@@ -2200,7 +2202,7 @@ HELPTEXT;
 
 		' . (($this->db->option_get('cp_show_posts_or_pages_in_toc') == 'page' AND $this->db->option_get('cp_toc_chapter_is_page') == '0') ? '
 		<tr valign="top">
-			<th scope="row"><label for="cp_show_subpages">Show Sub-Pages</label></th>
+			<th scope="row"><label for="cp_show_subpages">' . $sub_pages_label . '</label></th>
 			<td><input id="cp_show_subpages" name="cp_show_subpages" value="1"  type="checkbox" ' . ( $this->db->option_get('cp_show_subpages') ? ' checked="checked"' : ''  ) . ' /></td>
 		</tr>' : '' ) . '
 
