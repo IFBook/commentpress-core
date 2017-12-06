@@ -598,7 +598,7 @@ HELPTEXT;
 						$html .= '<cite class="fn">' . $author_html . '</cite>' . "\n";
 
 						// add permalink
-						$html .= '<p class="post_activity_date">' . esc_html( get_the_time( __( 'l, F jS, Y', 'commentpress-core' ) ), $item->ID ) . '</p>' . "\n";
+						$html .= '<p class="post_activity_date">' . esc_html( get_the_time( __( 'l, F jS, Y', 'commentpress-core' ), $item->ID ) ) . '</p>' . "\n";
 
 					}
 
@@ -618,7 +618,7 @@ HELPTEXT;
 					$html .= '<cite class="fn">' . $this->echo_post_author( $author_id, false ) . '</cite>';
 
 					// add permalink
-					$html .= '<p class="post_activity_date">' . esc_html( get_the_time( __( 'l, F jS, Y', 'commentpress-core' ) ), $item->ID ) . '</p>';
+					$html .= '<p class="post_activity_date">' . esc_html( get_the_time( __( 'l, F jS, Y', 'commentpress-core' ), $item->ID ) ) . '</p>';
 
 				}
 
