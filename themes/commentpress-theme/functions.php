@@ -838,3 +838,22 @@ add_action( 'widgets_init', 'commentpress_register_widget_areas' );
 
 
 
+/**
+ * Filter the default sidebar before modifications.
+ *
+ * @since 3.9.8
+ *
+ * @param str $sidebar The default sidebar before any contextual modifications.
+ * @return str $sidebar The modified sidebar before any contextual modifications.
+ */
+function commentpress_default_theme_default_sidebar( $sidebar ) {
+
+	// this theme has three sidebars and it makes sense for the TOC to be default
+	return 'toc';
+
+}
+
+add_filter( 'commentpress_default_sidebar', 'commentpress_default_theme_default_sidebar' );
+
+
+

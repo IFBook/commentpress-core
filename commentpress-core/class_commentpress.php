@@ -1857,8 +1857,15 @@ class Commentpress_Core {
 	 */
 	public function get_default_sidebar() {
 
-		// set sensible default
-		$return = 'toc';
+		/**
+		 * Set sensible default sidebar, but allow overrides.
+		 *
+		 * @since 3.9.8
+		 *
+		 * @param str The default sidebar before any contextual modifications.
+		 * @return str The modified sidebar before any contextual modifications.
+		 */
+		$return = apply_filters( 'commentpress_default_sidebar', 'activity' );
 
 		// is this a commentable page?
 		if ( ! $this->is_commentable() ) {
@@ -1916,8 +1923,15 @@ class Commentpress_Core {
 
 						}
 
-
 					}
+
+					$e = new Exception;
+					$trace = $e->getTraceAsString();
+					error_log( print_r( array(
+						'method' => __METHOD__,
+						'return' => $return,
+						'backtrace' => $trace,
+					), true ) );
 
 					// --<
 					return $return;
