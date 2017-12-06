@@ -7,51 +7,23 @@ msgstr ""
 "Project-Id-Version: commentpress-core-de_DE\n"
 "Language: de-DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1\n"
-"POT-Creation-Date: 2017-11-27 10:30+0000\n"
-"PO-Revision-Date: 2017-11-27 10:53+0000\n"
+"POT-Creation-Date: 2017-12-06 11:18+0000\n"
+"PO-Revision-Date: 2017-12-06 11:25+0000\n"
 "Last-Translator: Site Admin <needle@haystack.co.uk>\n"
 "Language-Team: German\n"
 "Report-Msgid-Bugs-To: "
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:1965
-msgid "Image"
-msgstr "Bild"
-
 #: commentpress-core/assets/includes/theme/theme-functions.php:1972
 msgid "Video"
-msgstr ""
-
-#: commentpress-core/assets/includes/theme/theme-functions.php:1980
-msgid "File"
-msgstr ""
+msgstr "Video"
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:2025
 msgid "the %s"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2058
-msgid "the whole %s"
-msgstr ""
-
-#: commentpress-core/assets/includes/theme/theme-functions.php:2100
-msgid "%1$s on <span class=\"source_block\">%2$s</span>"
-msgstr ""
-
-#: commentpress-core/assets/includes/theme/theme-functions.php:2128
-msgid "pingback or trackback"
-msgstr "Pingback oder Trackback"
-
 #: commentpress-core/assets/includes/theme/theme-functions.php:2181
 msgid "%1$s %2$s"
-msgstr ""
-
-#: commentpress-core/assets/includes/theme/theme-functions.php:2188
-msgid "Permalink for comments on %1$s %2$s"
-msgstr ""
-
-#: commentpress-core/assets/includes/theme/theme-functions.php:2206
-msgid "%1$s on <span class=\"source_block\">%2$s %3$s</span>"
-msgstr ""
+msgstr "%1$s %2$s"
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:2467
 msgid "Create an account to leave a comment on %s"
@@ -59,7 +31,7 @@ msgstr ""
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:2472
 msgid "Login to leave a comment on %s"
-msgstr ""
+msgstr "Anmelden um ein Kommentar auf %s zu schrieben"
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:2687
 #: commentpress-core/assets/includes/theme/theme-functions.php:2699
@@ -83,7 +55,7 @@ msgstr ""
 #: commentpress-core/assets/widgets/widget-license.php:40
 #: themes/commentpress-flat/assets/widgets/widgets.php:40
 msgid "CommentPress Footer Text"
-msgstr ""
+msgstr "CommentPress Fusszeile"
 
 #: commentpress-core/class_commentpress_display.php:1684
 msgid ""
@@ -147,34 +119,27 @@ msgstr ""
 
 #: commentpress-multisite/class_commentpress_mu_bp.php:351
 msgid "Commented on a page"
-msgstr ""
+msgstr "Kommentierte auf einer Seite"
 
 #: commentpress-multisite/class_commentpress_mu_bp.php:353
 msgid "%1$s commented on the <a href=\"%2$s\">page</a>"
-msgstr ""
+msgstr "%1$s kommentierte auf der <a href=\"%2$s\">Seite</a>"
 
 #: commentpress-multisite/class_commentpress_mu_bp.php:354
 msgid "%1$s commented on the <a href=\"%2$s\">page</a>, on the site %3$s"
 msgstr ""
-
-#: commentpress-multisite/class_commentpress_mu_workshop.php:85
-msgid "Documents"
-msgstr "Dokumente"
-
-#: commentpress-multisite/class_commentpress_mu_workshop.php:86
-msgid "document"
-msgstr "Dokument"
+"%1$s kommentierte auf der <a href=\"%2$s\">Seite</a>, auf dem Site %3$s"
 
 #: themes/commentpress-flat/assets/templates/activity_sidebar.php:33
 #: themes/commentpress-modern/assets/templates/activity_sidebar.php:33
 #: themes/commentpress-theme/assets/templates/activity_sidebar.php:33
 msgid "Recent Comments on this %s"
-msgstr ""
+msgstr "Neueste Kommentare über diese %s"
 
 #: themes/commentpress-flat/functions.php:71
 #: themes/commentpress-modern/functions.php:127
 msgid "Footer"
-msgstr ""
+msgstr "Fußzeile"
 
 #: themes/commentpress-flat/functions.php:1069
 #: themes/commentpress-modern/functions.php:1118
@@ -185,7 +150,7 @@ msgstr ""
 #: themes/commentpress-flat/functions.php:1078
 #: themes/commentpress-modern/functions.php:1127
 msgid "Navigation Top"
-msgstr ""
+msgstr "Navigation oben"
 
 #: themes/commentpress-flat/functions.php:1080
 #: themes/commentpress-modern/functions.php:1129
@@ -195,26 +160,16 @@ msgstr ""
 #: themes/commentpress-flat/functions.php:1089
 #: themes/commentpress-modern/functions.php:1138
 msgid "Navigation Bottom"
-msgstr ""
+msgstr "Navigation untem"
 
 #: themes/commentpress-flat/functions.php:1091
 #: themes/commentpress-modern/functions.php:1140
 msgid "An optional widget area at the bottom of the Navigation Column"
 msgstr ""
 
-#: themes/commentpress-flat/functions.php:1100
-#: themes/commentpress-modern/functions.php:1149
-msgid "Activity Top"
-msgstr ""
-
 #: themes/commentpress-flat/functions.php:1102
 #: themes/commentpress-modern/functions.php:1151
 msgid "An optional widget area at the top of the Activity Column"
-msgstr ""
-
-#: themes/commentpress-flat/functions.php:1111
-#: themes/commentpress-modern/functions.php:1160
-msgid "Activity Bottom"
 msgstr ""
 
 #: themes/commentpress-flat/functions.php:1113
@@ -464,9 +419,29 @@ msgstr "%1$s bei %2$s"
 msgid "See in context"
 msgstr "Siehe in Zusammenhang"
 
+#: commentpress-core/assets/includes/theme/theme-functions.php:1965
+msgid "Image"
+msgstr "Bild"
+
+#: commentpress-core/assets/includes/theme/theme-functions.php:1980
+msgid "File"
+msgstr "Datum"
+
+#: commentpress-core/assets/includes/theme/theme-functions.php:2058
+msgid "the whole %s"
+msgstr "das ganze %s"
+
 #: commentpress-core/assets/includes/theme/theme-functions.php:2083
 msgid "Permalink for comments on %s"
 msgstr "Permalink für Kommentare zu %s"
+
+#: commentpress-core/assets/includes/theme/theme-functions.php:2100
+msgid "%1$s on <span class=\"source_block\">%2$s</span>"
+msgstr "%1$s auf <span class=\"source_block\">%2$s</span>"
+
+#: commentpress-core/assets/includes/theme/theme-functions.php:2128
+msgid "pingback or trackback"
+msgstr "Pingback oder Trackback"
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:2131
 msgid "Permalink for pingbacks and trackbacks"
@@ -476,6 +451,14 @@ msgstr "Permalink für Pingbacks und Trackbacks"
 #: commentpress-core/class_commentpress_parser.php:348
 msgid "paragraph"
 msgstr "Absatz"
+
+#: commentpress-core/assets/includes/theme/theme-functions.php:2188
+msgid "Permalink for comments on %1$s %2$s"
+msgstr "Permalink für Kommentare auf %1$s %2$s"
+
+#: commentpress-core/assets/includes/theme/theme-functions.php:2206
+msgid "%1$s on <span class=\"source_block\">%2$s %3$s</span>"
+msgstr "%1$s auf <span class=\"source_block\">%2$s %3$s</span>"
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:2428
 msgid "It appears that this paragraph is a duplicate of a previous one."
@@ -826,17 +809,17 @@ msgstr ""
 "\n"
 "Dies ist Ihre Titelseite. Bearbeiten Sie es an Ihre Bedürfnisse anpassen. Es "
 "wurde als Ihre Homepage automatisch eingestellt, aber wenn Sie eine andere "
-"Seite als Startseite wollen, setzen Sie ihn in <em> Wordpress </ em> & # "
-"8594; <Em> Einstellungen </ em> & # 8594; <Em> Lesen </ em>.\n"
+"Seite als Startseite wollen, setzen Sie ihn in <em>Wordpress</em> &#8594; "
+"<em>Einstellungen</em> &#8594; <em>Lesen</em>.\n"
 "\n"
-"Sie können auch eine Reihe von Optionen in <em> Wordpress </ em> & # 8594 "
-"festgelegt; <Em> Einstellungen </ em> & # 8594; <Em> CommentPress </ em> auf "
-"der Seite machen die Art und Weise arbeiten Sie es wollen. Verwenden Sie das "
-"Theme Customizer, um die Art und Weise ändern, um Ihre Website sieht in <em> "
-"Wordpress </ em> & # 8594; <Em> Aussehen </ em> & # 8594; <Em> Anpassen </ "
-"em>. Für Hilfe bei der Strukturierung, Formatierung und das Lesen von Text "
-"in CommentPress, finden Sie in der <a href=\"http://www.futureofthebook."
-"org/commentpress/\"> CommentPress Website </a>."
+"Sie können auch eine Reihe von Optionen in <em>Wordpress</em> &#8594; "
+"festgelegt; <em>Einstellungen</em> &#8594; <em>CommentPress</em> auf der "
+"Seite machen die Art und Weise arbeiten Sie es wollen. Verwenden Sie das "
+"Theme Customizer, um die Art und Weise ändern, um Ihre Website sieht in <em>"
+"Wordpress</em> &#8594; <em>Aussehen</em> &#8594; <em>Anpassen</em>. Für "
+"Hilfe bei der Strukturierung, Formatierung und das Lesen von Text in "
+"CommentPress, finden Sie in der <a href=\"http://www.futureofthebook."
+"org/commentpress/\">CommentPress Website</a>."
 
 #: commentpress-core/class_commentpress_db.php:3628
 #: commentpress-core/class_commentpress_db.php:3681
@@ -950,9 +933,9 @@ msgid ""
 msgstr ""
 "Wählen Sie, wie Sie Ihre Inhaltsverzeichnis erscheinen und Funktion soll. "
 "<br />\n"
-"<Strong style = \"color: red;\">! HINWEIS </ strong> Wenn die Kapitel Seiten "
-"sind, wird der TOC immer auf Unterseiten zeigen, da die TOC kollabiert in "
-"dieser Situation keinen Sinn macht."
+"<strong style=\"color: red;\">HINWEIS!</strong> Wenn die Kapitel Seiten sind,"
+" wird der TOC immer auf Unterseiten zeigen, da die TOC kollabiert in dieser "
+"Situation keinen Sinn macht."
 
 #: commentpress-core/class_commentpress_display.php:1460
 msgid "Page Display Options"
@@ -1031,10 +1014,10 @@ msgid ""
 "Appearance &#8594; Header</em>.<br />\n"
 "\t\tBelow are extra options for changing how the theme functions."
 msgstr ""
-"Sie können eine benutzerdefinierte Hintergrundfarbe in <em> Erscheinungsbild "
-"& # 8594 festgelegt; Hintergrund </ em>. <br />\n"
+"Sie können eine benutzerdefinierte Hintergrundfarbe in <em>"
+"Erscheinungsbild</em> &#8594; <em>Hintergrund</em>. <br />\n"
 "Sie können auch einen benutzerdefinierten Header-Bild und Kopftextfarbe in "
-"<em> Erscheinungsbild & # 8594 festgelegt; Header </ em>. <br />\n"
+"<em>Erscheinungsbild</em> &#8594; <em>Header</em>. <br />\n"
 "Im Folgenden finden Sie zusätzliche Optionen für die Änderung, wie das Thema "
 "Funktionen."
 
@@ -1074,7 +1057,7 @@ msgstr " (Kann auf einzelne Seiten überschrieben werden)"
 #: commentpress-multisite/class_commentpress_mu_bp.php:2038
 #: commentpress-multisite/class_commentpress_mu_bp.php:2297
 msgid "Enable Custom Workflow"
-msgstr "Custom-Workflow aktivieren "
+msgstr "Custom-Workflow aktivieren"
 
 #: commentpress-core/class_commentpress_display.php:1776
 #: commentpress-core/class_commentpress_display.php:2423
@@ -1325,7 +1308,7 @@ msgid ""
 msgstr ""
 "CommentPress Core hat erkannt, dass eine frühere Version von CommentPress "
 "auf dieser Seite aktiv ist. Bitte besuchen Sie die <a href=\"options-general."
-"php?page=commentpress_admin\"> Einstellungen Seite </a> zu aktualisieren."
+"php?page=commentpress_admin\">Einstellungen Seite</a> zu aktualisieren."
 
 #: commentpress-multisite/class_commentpress_mu_admin.php:931
 msgid "Deactivate CommentPress Core"
@@ -1527,6 +1510,14 @@ msgid ""
 msgstr ""
 "Deaktivieren Sie Übersetzungs-Workflow (empfohlen, da es immer noch sehr "
 "experimentell ist)"
+
+#: commentpress-multisite/class_commentpress_mu_workshop.php:85
+msgid "Documents"
+msgstr "Dokumente"
+
+#: commentpress-multisite/class_commentpress_mu_workshop.php:86
+msgid "document"
+msgstr "Dokument"
 
 #: commentpress-multisite/class_commentpress_mu_workshop.php:140
 msgid "%s Comments"
@@ -1868,7 +1859,7 @@ msgstr "Schreiben Sie einen Kommentar"
 #: themes/commentpress-theme/assets/templates/comment_form.php:69
 #: themes/commentpress-theme/assets/templates/comment_form.php:184
 msgid "You must be <a href=\"%s\">logged in</a> to post a comment."
-msgstr "Du musst <a href=\"%s\"> angemeldet sein </a> um zu kommentieren."
+msgstr "Du musst <a href=\"%s\">angemeldet sein</a> um zu kommentieren."
 
 #: themes/commentpress-flat/assets/templates/comment_form.php:114
 #: themes/commentpress-modern/assets/templates/comment_form.php:114
@@ -2157,6 +2148,16 @@ msgstr "Kommentare zu den Seiten"
 #: themes/commentpress-theme/functions.php:826
 msgid "CommentPress Footer"
 msgstr "CommentPress Footer"
+
+#: themes/commentpress-flat/functions.php:1100
+#: themes/commentpress-modern/functions.php:1149
+msgid "Activity Top"
+msgstr "Activität Oben"
+
+#: themes/commentpress-flat/functions.php:1111
+#: themes/commentpress-modern/functions.php:1160
+msgid "Activity Bottom"
+msgstr "Activität Unten"
 
 #: themes/commentpress-flat/group.php:52
 #: themes/commentpress-modern/group.php:52
