@@ -168,6 +168,8 @@ CommentPress.theme.DOM = new function() {
 
 				// show current item and ancestors
 				styles += '#toc_sidebar .sidebar_contents_wrapper ul li.current_page_ancestor > ul { display: block; } ';
+				styles += '#toc_sidebar .sidebar_contents_wrapper ul li.current-menu-ancestor > ul { display: block; } ';
+				styles += '#toc_sidebar .sidebar_contents_wrapper ul li.current_page_item > ul { display: block; } ';
 				//styles += '#toc_sidebar .sidebar_contents_wrapper ul li.current_page_item { display: block; } ';
 
 			}
@@ -729,26 +731,26 @@ CommentPress.theme.sidebars = new function() {
 	this.enable_buttons = function() {
 
 		// toggle for navigation
-		$('.navigation-button').click( function(e) {
+		$('#switcher .navigation-button').click( function(e) {
 			e.preventDefault();
 			me.show_nav();
 		});
 
 		// toggle for content (we don't have one of these in this theme!)
-		$('.content-button').click( function(e) {
+		$('#switcher .content-button').click( function(e) {
 			e.preventDefault();
 			me.show_content();
 		});
 
 		// toggle for comments sidebar
-		$('.comments-button').click( function(e) {
+		$('#switcher .comments-button').click( function(e) {
 			e.preventDefault();
 			me.show_comments();
 			me.activate_sidebar( 'comments' );
 		});
 
 		// toggle for activity sidebar
-		$('.activity-button').click( function(e) {
+		$('#switcher .activity-button').click( function(e) {
 			e.preventDefault();
 			me.show_activity();
 			me.activate_sidebar( 'activity' );

@@ -131,6 +131,9 @@ Updated by Christian Wach for CommentPress Core
 	#content div.sharedaddy,
 	#main div.sharedaddy,
 
+	/* JetPack contact form */
+	form.contact-form,
+
 	/* Featured Comments */
 	div.feature-burry-comments,
 	div.feature-bury-comments,
@@ -416,6 +419,27 @@ Updated by Christian Wach for CommentPress Core
 		padding: 1em;
 		white-space: pre-wrap;
 		overflow: visible;
+	}
+
+	.post .fluid-width-video-wrapper
+	{
+		width: auto !important;
+		height: auto !important;
+		min-height: 0 !important;
+		color: #000;
+		position: static !important;
+		padding: 0 !important;
+	}
+
+	.post .fluid-width-video-wrapper iframe,
+	.post .fluid-width-video-wrapper object,
+	.post .fluid-width-video-wrapper embed
+	{
+		width: auto !important;
+		height: auto !important;
+		min-height: 0 !important;
+		color: #000;
+		position: static !important;
 	}
 
 	/*

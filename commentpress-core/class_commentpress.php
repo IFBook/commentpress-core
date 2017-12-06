@@ -622,6 +622,12 @@ class Commentpress_Core {
 		// reference our post
 		global $post;
 
+		// JetPack 2.7 or greater parses the content in the head to create
+		// content summaries so prevent parsing unless this is the main content
+		if ( is_admin() OR ! in_the_loop() OR ! is_main_query() ) {
+			return $content;
+		}
+
 		// compat with Subscribe to Comments Reloaded
 		if( $this->is_subscribe_to_comments_reloaded_page() ) return $content;
 
@@ -659,17 +665,6 @@ class Commentpress_Core {
 			$content = $this->parser->the_content( $content );
 
 		}
-
-		/*
-		 * The following fails with JetPack 2.7, which parses content in the head
-		 * to create content summaries. I now can't remember why I was being so
-		 * cautious about not parsing twice, but since JetPack is so useful and
-		 * common, I'm commenting this out until I get reports that something
-		 * odd is happening.
-		 */
-
-		// only parse content once
-		//remove_filter( 'the_content', array( $this, 'the_content' ), 20 );
 
 		// --<
 		return $content;
@@ -1862,8 +1857,15 @@ class Commentpress_Core {
 	 */
 	public function get_default_sidebar() {
 
-		// set sensible default
-		$return = 'toc';
+		/**
+		 * Set sensible default sidebar, but allow overrides.
+		 *
+		 * @since 3.9.8
+		 *
+		 * @param str The default sidebar before any contextual modifications.
+		 * @return str The modified sidebar before any contextual modifications.
+		 */
+		$return = apply_filters( 'commentpress_default_sidebar', 'activity' );
 
 		// is this a commentable page?
 		if ( ! $this->is_commentable() ) {
@@ -1920,7 +1922,6 @@ class Commentpress_Core {
 							$return = get_post_meta( $post->ID, $key, true );
 
 						}
-
 
 					}
 

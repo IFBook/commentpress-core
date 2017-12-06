@@ -598,7 +598,7 @@ HELPTEXT;
 						$html .= '<cite class="fn">' . $author_html . '</cite>' . "\n";
 
 						// add permalink
-						$html .= '<p class="post_activity_date">' . esc_html( get_the_time( __( 'l, F jS, Y', 'commentpress-core' ) ), $item->ID ) . '</p>' . "\n";
+						$html .= '<p class="post_activity_date">' . esc_html( get_the_time( __( 'l, F jS, Y', 'commentpress-core' ), $item->ID ) ) . '</p>' . "\n";
 
 					}
 
@@ -618,7 +618,7 @@ HELPTEXT;
 					$html .= '<cite class="fn">' . $this->echo_post_author( $author_id, false ) . '</cite>';
 
 					// add permalink
-					$html .= '<p class="post_activity_date">' . esc_html( get_the_time( __( 'l, F jS, Y', 'commentpress-core' ) ), $item->ID ) . '</p>';
+					$html .= '<p class="post_activity_date">' . esc_html( get_the_time( __( 'l, F jS, Y', 'commentpress-core' ), $item->ID ) ) . '</p>';
 
 				}
 
@@ -1695,10 +1695,10 @@ HELPTEXT;
 			if ( count( $capable_post_types ) > 0 ) {
 
 				// construct checkbox for each post type
-				foreach( $capable_post_types AS $post_type ) {
+				foreach( $capable_post_types AS $post_type => $label ) {
 
 					// add checked checkbox
-					$output[] = '<input type="checkbox" class="settings-checkbox" name="cp_post_types_enabled[]" value="' . $post_type . '" checked="checked" /> <label class="commentpress_settings_label" for="cp_post_types_enabled">' . $post_type . '</label><br>';
+					$output[] = '<input type="checkbox" class="settings-checkbox" name="cp_post_types_enabled[]" value="' . $post_type . '" checked="checked" /> <label class="commentpress_settings_label" for="cp_post_types_enabled">' . $label . '</label><br>';
 
 				}
 
@@ -2173,6 +2173,8 @@ HELPTEXT;
 		$chapter_pages_label = __( 'Pages', 'commentpress-core' );
 		$chapter_headings_label = __( 'Headings', 'commentpress-core' );
 
+		$sub_pages_label = __( 'Show Sub-Pages', 'commentpress-core' );
+
 		$extended_label = __( 'Appearance of TOC for posts', 'commentpress-core' );
 		$extended_info_label = __( 'Extended information', 'commentpress-core' );
 		$extended_title_label = __( 'Just the title', 'commentpress-core' );
@@ -2200,7 +2202,7 @@ HELPTEXT;
 
 		' . (($this->db->option_get('cp_show_posts_or_pages_in_toc') == 'page' AND $this->db->option_get('cp_toc_chapter_is_page') == '0') ? '
 		<tr valign="top">
-			<th scope="row"><label for="cp_show_subpages">Show Sub-Pages</label></th>
+			<th scope="row"><label for="cp_show_subpages">' . $sub_pages_label . '</label></th>
 			<td><input id="cp_show_subpages" name="cp_show_subpages" value="1"  type="checkbox" ' . ( $this->db->option_get('cp_show_subpages') ? ' checked="checked"' : ''  ) . ' /></td>
 		</tr>' : '' ) . '
 
@@ -2375,13 +2377,13 @@ HELPTEXT;
 		if ( count( $capable_post_types ) > 0 ) {
 
 			// construct checkbox for each post type
-			foreach( $capable_post_types AS $post_type ) {
+			foreach( $capable_post_types AS $post_type => $label ) {
 
 				$checked = '';
 				if ( ! in_array( $post_type, $selected_types ) ) $checked = ' checked="checked"';
 
 				// add checkbox
-				$output[] = '<input type="checkbox" class="settings-checkbox" name="cp_post_types_enabled[]" value="' . $post_type . '"' . $checked . ' /> <label class="commentpress_settings_label" for="cp_post_types_enabled">' . $post_type . '</label><br>';
+				$output[] = '<input type="checkbox" class="settings-checkbox" name="cp_post_types_enabled[]" value="' . $post_type . '"' . $checked . ' /> <label class="commentpress_settings_label" for="cp_post_types_enabled">' . $label . '</label><br>';
 
 			}
 

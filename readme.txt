@@ -213,6 +213,12 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+<h4>3.9.8</h4>
+
+* Fixes date display when displaying Table of Contents as posts
+* Fixes menu expansion on page load with unusual hierarchies
+* German translation fixes
+
 <h4>3.9.7</h4>
 
 * Fixes error when BuddyPress Activity component is not active

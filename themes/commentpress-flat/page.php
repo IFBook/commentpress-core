@@ -148,13 +148,8 @@
 		locate_template( 'assets/templates/page_navigation.php' )
 	);
 
-	// do we have a featured image?
-	if ( ! commentpress_has_feature_image() ) {
-
-		// load it if we find it
-		if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
-
-	}
+	// load it if we find it
+	if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 	?>
 

@@ -2200,6 +2200,11 @@ body.blogtype-4 #content .post .entry-category-meta p.category-meta
 	text-decoration: none;
 }
 
+.entry-meta
+{
+    clear: both;
+}
+
 .post img
 {
 	max-width: 100%;
@@ -3592,6 +3597,11 @@ Feature images
 {
 	margin-top: 0;
 	margin-bottom: 0.3em;
+}
+
+.cp_feature_image + .page_navigation
+{
+	position: relative;
 }
 
 
