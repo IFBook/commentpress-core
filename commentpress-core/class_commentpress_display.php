@@ -1695,10 +1695,10 @@ HELPTEXT;
 			if ( count( $capable_post_types ) > 0 ) {
 
 				// construct checkbox for each post type
-				foreach( $capable_post_types AS $post_type ) {
+				foreach( $capable_post_types AS $post_type => $label ) {
 
 					// add checked checkbox
-					$output[] = '<input type="checkbox" class="settings-checkbox" name="cp_post_types_enabled[]" value="' . $post_type . '" checked="checked" /> <label class="commentpress_settings_label" for="cp_post_types_enabled">' . $post_type . '</label><br>';
+					$output[] = '<input type="checkbox" class="settings-checkbox" name="cp_post_types_enabled[]" value="' . $post_type . '" checked="checked" /> <label class="commentpress_settings_label" for="cp_post_types_enabled">' . $label . '</label><br>';
 
 				}
 
@@ -2377,13 +2377,13 @@ HELPTEXT;
 		if ( count( $capable_post_types ) > 0 ) {
 
 			// construct checkbox for each post type
-			foreach( $capable_post_types AS $post_type ) {
+			foreach( $capable_post_types AS $post_type => $label ) {
 
 				$checked = '';
 				if ( ! in_array( $post_type, $selected_types ) ) $checked = ' checked="checked"';
 
 				// add checkbox
-				$output[] = '<input type="checkbox" class="settings-checkbox" name="cp_post_types_enabled[]" value="' . $post_type . '"' . $checked . ' /> <label class="commentpress_settings_label" for="cp_post_types_enabled">' . $post_type . '</label><br>';
+				$output[] = '<input type="checkbox" class="settings-checkbox" name="cp_post_types_enabled[]" value="' . $post_type . '"' . $checked . ' /> <label class="commentpress_settings_label" for="cp_post_types_enabled">' . $label . '</label><br>';
 
 			}
 
