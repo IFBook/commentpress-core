@@ -1925,14 +1925,6 @@ class Commentpress_Core {
 
 					}
 
-					$e = new Exception;
-					$trace = $e->getTraceAsString();
-					error_log( print_r( array(
-						'method' => __METHOD__,
-						'return' => $return,
-						'backtrace' => $trace,
-					), true ) );
-
 					// --<
 					return $return;
 
