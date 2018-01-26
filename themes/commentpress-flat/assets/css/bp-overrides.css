@@ -2889,7 +2889,8 @@ body.bp-docs h2.post_title a
 	color: #fff;
 }
 
-body.directory.bp-docs h2.directory-title
+body.directory.bp-docs h2.directory-title,
+body.groups.docs h2.directory-title
 {
 	display: none;
 }
@@ -2910,9 +2911,26 @@ body.bp-docs p.currently-viewing
 	margin: 0;
 }
 
-body.bp-docs div.doc-content
+body.bp-docs div.folder-action-links
 {
-	border: none;
+	padding: 12px 12px 0 12px;
+}
+
+body.bp-docs div.folder-action-links
+{
+	padding: 12px 12px 0 12px;
+}
+
+body.bp-docs div.create-new-folder
+{
+	margin: 0;
+	padding: 0 19px 19px 19px;
+}
+
+body.bp-docs .docs-folder-manage
+{
+	margin: 0;
+	padding: 0 19px;
 }
 
 /* Documents table */
