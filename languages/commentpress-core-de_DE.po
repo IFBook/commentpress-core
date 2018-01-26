@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: commentpress-core-de_DE\n"
 "Language: de-DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1\n"
-"POT-Creation-Date: 2018-01-26 14:38+0000\n"
-"PO-Revision-Date: 2018-01-26 14:42+0000\n"
+"POT-Creation-Date: 2018-01-26 14:57+0000\n"
+"PO-Revision-Date: 2018-01-26 15:18+0000\n"
 "Last-Translator: Site Admin <needle@haystack.co.uk>\n"
 "Language-Team: German\n"
 "Report-Msgid-Bugs-To: "
@@ -16,14 +16,6 @@ msgstr ""
 #: commentpress-core/assets/includes/theme/theme-functions.php:2452
 msgid "Create an account to leave a comment on %s"
 msgstr ""
-
-#: commentpress-core/assets/includes/theme/theme-functions.php:2672
-#: commentpress-core/assets/includes/theme/theme-functions.php:2684
-msgctxt ""
-"The first substitution is the block name e.g. \"paragraph\". The second is "
-"the numeric comment count."
-msgid "%1$s %2$s"
-msgstr "%1$s %2$s"
 
 #: commentpress-core/assets/widgets/widget-license.php:34
 #: themes/commentpress-flat/assets/widgets/widgets.php:34
@@ -79,31 +71,6 @@ msgid ""
 "Enable automatic page navigation (controls appearance of page numbering and "
 "navigation arrows on hierarchical pages)"
 msgstr ""
-
-#: commentpress-multisite/class_commentpress_mu_bp.php:345
-msgid "Published a new page"
-msgstr "Hat eine neue Seite veröffentlicht"
-
-#: commentpress-multisite/class_commentpress_mu_bp.php:347
-msgid "%1$s posted a new <a href=\"%2$s\">page</a>"
-msgstr "%1$s schrieb eine neue <a href=\"%2$s\">Seite</a>"
-
-#: commentpress-multisite/class_commentpress_mu_bp.php:348
-msgid "%1$s posted a new <a href=\"%2$s\">page</a>, on the site %3$s"
-msgstr ""
-"%1$s schrieb eine neue <a href=\"%2$s\">Seite</a>, auf der Webseite %3$s"
-
-#: commentpress-multisite/class_commentpress_mu_bp.php:664
-msgid "%1$s left a %2$s on a %3$s %4$s in the group %5$s:"
-msgstr "%1$s hinterließ %2$s auf einem %3$s %4$s in der Gruppe %5$s:"
-
-#: commentpress-multisite/class_commentpress_mu_bp.php:884
-msgid "%1$s updated a %2$s %3$s in the group %4$s:"
-msgstr "%1$s aktualisierte %2$s %3$s in der Gruppe %4$s:"
-
-#: commentpress-multisite/class_commentpress_mu_bp.php:895
-msgid "%1$s wrote a new %2$s %3$s in the group %4$s:"
-msgstr "%1$s hat einen neuen %2$s %3$s in der Gruppe %s:"
 
 #: themes/commentpress-flat/functions.php:1057
 #: themes/commentpress-modern/functions.php:1106
@@ -447,6 +414,14 @@ msgstr "Antworten"
 #: commentpress-core/assets/includes/theme/theme-functions.php:2628
 msgid "Leave a reply to %s"
 msgstr "Hinterlasse eine Antwort auf %s"
+
+#: commentpress-core/assets/includes/theme/theme-functions.php:2672
+#: commentpress-core/assets/includes/theme/theme-functions.php:2684
+msgctxt ""
+"The first substitution is the block name e.g. \"paragraph\". The second is "
+"the numeric comment count."
+msgid "%1$s %2$s"
+msgstr "%1$s %2$s"
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:2719
 msgid "Reply"
@@ -823,7 +798,7 @@ msgstr "Inhaltsverzeichnis"
 
 #: commentpress-core/class_commentpress_display.php:326
 msgid "Quote &amp; Comment"
-msgstr "Zitat & amp; Kommentar"
+msgstr "Zitat &amp; Kommentar"
 
 #: commentpress-core/class_commentpress_display.php:329
 msgid "Quote"
@@ -1331,6 +1306,19 @@ msgstr "Upgrade auf CommentPress Core"
 msgid "Activation"
 msgstr "Aktivierung"
 
+#: commentpress-multisite/class_commentpress_mu_bp.php:345
+msgid "Published a new page"
+msgstr "Hat eine neue Seite veröffentlicht"
+
+#: commentpress-multisite/class_commentpress_mu_bp.php:347
+msgid "%1$s posted a new <a href=\"%2$s\">page</a>"
+msgstr "%1$s schrieb eine neue <a href=\"%2$s\">Seite</a>"
+
+#: commentpress-multisite/class_commentpress_mu_bp.php:348
+msgid "%1$s posted a new <a href=\"%2$s\">page</a>, on the site %3$s"
+msgstr ""
+"%1$s schrieb eine neue <a href=\"%2$s\">Seite</a>, auf der Webseite %3$s"
+
 #: commentpress-multisite/class_commentpress_mu_bp.php:351
 msgid "Commented on a page"
 msgstr "Kommentierte auf einer Seite"
@@ -1354,6 +1342,18 @@ msgstr "Veröffentlichen"
 #: commentpress-multisite/class_commentpress_mu_bp.php:659
 msgid "comment"
 msgstr "Kommentar"
+
+#: commentpress-multisite/class_commentpress_mu_bp.php:664
+msgid "%1$s left a %2$s on a %3$s %4$s in the group %5$s:"
+msgstr "%1$s hinterließ %2$s auf einem %3$s %4$s in der Gruppe %5$s:"
+
+#: commentpress-multisite/class_commentpress_mu_bp.php:884
+msgid "%1$s updated a %2$s %3$s in the group %4$s:"
+msgstr "%1$s aktualisierte %2$s %3$s in der Gruppe %4$s:"
+
+#: commentpress-multisite/class_commentpress_mu_bp.php:895
+msgid "%1$s wrote a new %2$s %3$s in the group %4$s:"
+msgstr "%1$s hat einen neuen %2$s %3$s in der Gruppe %s:"
 
 #: commentpress-multisite/class_commentpress_mu_bp.php:1094
 msgid "CommentPress Comments"
