@@ -581,22 +581,10 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 		$html .= '<li class="page_li"><!-- page li -->' . "\n\n";
 
 		// define comment count
-		$comment_count_text = sprintf( _n(
-
-			// singular
-			'<span class="cp_comment_count">%d</span> comment',
-
-			// plural
-			'<span class="cp_comment_count">%d</span> comments',
-
-			// number
-			$post_comment_counts[$post->ID],
-
-			// domain
-			'commentpress-core'
-
-		// substitution
-		), $post_comment_counts[$post->ID] );
+		$comment_count_text = sprintf(
+			_n( '<span class="cp_comment_count">%d</span> comment', '<span class="cp_comment_count">%d</span> comments', $post_comment_counts[$post->ID], 'commentpress-core' ),
+			$post_comment_counts[$post->ID]
+		);
 
 		// show it
 		$html .= '<h3>' . esc_html( $post->post_title ) . ' <span>(' . $comment_count_text . ')</span></h3>' . "\n\n";

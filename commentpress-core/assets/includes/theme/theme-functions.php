@@ -1230,7 +1230,7 @@ function commentpress_echo_post_meta() {
 
 			?><cite class="fn"><?php echo $author_html; ?></cite>
 
-			<p><a href="<?php the_permalink() ?>"><?php echo esc_html( get_the_date( __( 'l, F jS, Y', 'commentpress-core' ) ) ); ?></a></p>
+			<p><a href="<?php the_permalink() ?>"><?php echo esc_html( get_the_date( get_option( 'date_format' ) ) ); ?></a></p>
 
 			<?php
 
@@ -1246,7 +1246,7 @@ function commentpress_echo_post_meta() {
 
 		<cite class="fn"><?php commentpress_echo_post_author( $author_id ) ?></cite>
 
-		<p><a href="<?php the_permalink() ?>"><?php echo esc_html( get_the_date( __( 'l, F jS, Y', 'commentpress-core' ) ) ); ?></a></p>
+		<p><a href="<?php the_permalink() ?>"><?php echo esc_html( get_the_date( get_option( 'date_format' ) ) ); ?></a></p>
 
 		<?php
 
@@ -1373,7 +1373,7 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 	$comment_anchor = '<a href="' . $comment_link . '" title="' . esc_attr( __( 'See comment in context', 'commentpress-core' ) ) . '">' . __( 'Comment', 'commentpress-core' ) . '</a>';
 
 	// construct date
-	$comment_date = date( __( 'F jS, Y', 'commentpress-core' ), strtotime( $comment->comment_date ) );
+	$comment_date = date_i18n( get_option( 'date_format' ), strtotime( $comment->comment_date ) );
 
 	// if context is 'all comments'
 	if ( $context == 'all' ) {
@@ -2086,12 +2086,7 @@ function commentpress_comments_by_para_format_whole( $post_type_name, $post_type
 
 	// construct comment count
 	$return['comment_text'] = sprintf(
-		_n(
-			'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span>', // singular
-			'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span>', // plural
-			$comment_count, // number
-			'commentpress-core' // domain
-		),
+		_n( '<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span>', '<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span>', $comment_count, 'commentpress-core' ),
 		$comment_count // substitution
 	);
 
@@ -2132,12 +2127,7 @@ function commentpress_comments_by_para_format_pings( $comment_count ) {
 
 	// construct comment count
 	$return['comment_text'] = sprintf(
-		_n(
-			'<span>%d</span> Pingback or trackback', // singular
-			'<span>%d</span> Pingbacks and trackbacks', // plural
-			$comment_count, // number
-			'commentpress-core' // domain
-		),
+		_n( '<span>%d</span> Pingback or trackback', '<span>%d</span> Pingbacks and trackbacks', $comment_count, 'commentpress-core' ),
 		$comment_count // substitution
 	);
 
@@ -2192,12 +2182,7 @@ function commentpress_comments_by_para_format_block( $comment_count, $para_num )
 
 	// construct comment count
 	$return['comment_text'] = sprintf(
-		_n(
-			'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span>', // singular
-			'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span>', // plural
-			$comment_count, // number
-			'commentpress-core' // domain
-		),
+		_n( '<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span>', '<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span>', $comment_count, 'commentpress-core' ),
 		$comment_count // substitution
 	);
 
@@ -2639,9 +2624,9 @@ function commentpress_comment_form_title(
 ) {
 
 	// sanity checks
-	if ( $no_reply_text == '' ) { $no_reply_text = __( 'Leave a Reply', 'commentpress-core' ); }
-	if ( $reply_to_comment_text == '' ) { $reply_to_comment_text = __( 'Leave a Reply to %s', 'commentpress-core' ); }
-	if ( $reply_to_para_text == '' ) { $reply_to_para_text = __( 'Leave a Comment on %s', 'commentpress-core' ); }
+	if ( $no_reply_text == '' ) { $no_reply_text = __( 'Leave a reply', 'commentpress-core' ); }
+	if ( $reply_to_comment_text == '' ) { $reply_to_comment_text = __( 'Leave a reply to %s', 'commentpress-core' ); }
+	if ( $reply_to_para_text == '' ) { $reply_to_para_text = __( 'Leave a comment on %s', 'commentpress-core' ); }
 
 	// declare access to globals
 	global $comment, $commentpress_core;
@@ -2684,7 +2669,7 @@ function commentpress_comment_form_title(
 
 				// construct link text
 				$para_text = sprintf(
-					_x( '%s %s', 'The first substitution is the block name e.g. "paragraph". The second is the numeric comment count.', 'commentpress-core' ),
+					_x( '%1$s %2$s', 'The first substitution is the block name e.g. "paragraph". The second is the numeric comment count.', 'commentpress-core' ),
 					ucfirst( $commentpress_core->parser->lexia_get() ),
 					$reply_to_para_id
 				);
@@ -2696,7 +2681,7 @@ function commentpress_comment_form_title(
 
 				// construct paragraph without link
 				$paragraph = sprintf(
-					_x( '%s %s', 'The first substitution is the block name e.g. "paragraph". The second is the numeric comment count.', 'commentpress-core' ),
+					_x( '%1$s %2$s', 'The first substitution is the block name e.g. "paragraph". The second is the numeric comment count.', 'commentpress-core' ),
 					ucfirst( $commentpress_core->parser->lexia_get() ),
 					$para_num
 				);

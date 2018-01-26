@@ -242,7 +242,7 @@ echo commentpress_multipager();
 
 		// write out
 		echo sprintf(
-			__( 'You can leave a comment, or %s from your own site.' ),
+			__( 'You can leave a comment, or %s from your own site.', 'commentpress-core' ),
 			$trackback_link
 		);
 
