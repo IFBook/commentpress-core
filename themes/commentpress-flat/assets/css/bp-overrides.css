@@ -1817,7 +1817,7 @@ Messages
 
 #buddypress div#message p
 {
-	margin-top: 0;
+	margin-top: 0.7em;
 	border: none;
 }
 
@@ -2889,6 +2889,11 @@ body.bp-docs h2.post_title a
 	color: #fff;
 }
 
+body.directory.bp-docs h2.directory-title
+{
+	display: none;
+}
+
 body.bp-docs div.docs-info-header
 {
 	margin: 0;
@@ -2914,6 +2919,13 @@ body.bp-docs div.doc-content
 table.doctable
 {
 	margin: 0;
+}
+
+table.doctable tr td.date-cell
+{
+	font-family: sans-serif;
+	font-size: 85%;
+	line-height: 1.8;
 }
 
 table.doctable tr td a
@@ -3019,6 +3031,7 @@ body.bp-docs a.delete-doc-button
 	font-family: sans-serif;
 	text-transform: uppercase;
 	text-decoration: none;
+	margin-top: 0.6em;
 }
 
 body.single-bp_doc .page_navigation,
@@ -3032,6 +3045,44 @@ body.single-bp_doc #doc-meta,
 body.single-bp_doc .docs #comments
 {
 	padding: 19px;
+}
+
+body.single-bp_doc #doc-permissions-details ul,
+body.single-bp_doc #doc-permissions-summary > strong
+{
+	text-transform: none;
+}
+
+.bp-docs #doc-permissions-edit
+{
+	font-size: 12px;
+}
+
+.bp-docs #bp-create-doc-button
+{
+	margin: 4px 19px 0;
+}
+
+@media all and (max-width: 1200px) {
+	.bp-docs #bp-create-doc-button
+	{
+		clear: left;
+		float: left;
+		margin-left: 0.5em;
+		margin-bottom: 0.7em;
+	}
+}
+
+#buddypress .bp-docs div#subnav.item-list-tabs ul li a:hover,
+#buddypress .bp-docs div#subnav.item-list-tabs ul li a:focus
+{
+	text-decoration: underline;
+}
+
+#buddypress .bp-docs div#subnav.item-list-tabs ul li a,
+#buddypress .bp-docs div#subnav.item-list-tabs ul li a:active
+{
+	text-decoration: none;
 }
 
 
