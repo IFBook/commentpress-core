@@ -236,7 +236,7 @@ function commentpress_customize_site_logo( $wp_customize ) {
 	$wp_customize->add_control( new WP_Customize_Image_Control(
 		$wp_customize, 'cp_inline_header_image', array(
 		'label' => __( 'Logo Image', 'commentpress-core' ),
-	    'description' => apply_filters( 'commentpress_customizer_site_logo_description', __( 'You may prefer to display an image instead of text in the header of your site. The image must be a maximum of 70px tall. If it is less tall, then you can adjust the vertical alignment using the "Top padding in px" setting below.', 'commentpress-core' ) ),
+		'description' => apply_filters( 'commentpress_customizer_site_logo_description', __( 'You may prefer to display an image instead of text in the header of your site. The image must be a maximum of 70px tall. If it is less tall, then you can adjust the vertical alignment using the "Top padding in px" setting below.', 'commentpress-core' ) ),
 		'section' => 'cp_inline_header_image',
 		'settings' => 'commentpress_theme_settings[cp_inline_header_image]',
 		'priority'	=>	1
@@ -390,11 +390,11 @@ function commentpress_get_header_image() {
 		// add filter for the function above
 		add_filter( 'bp_core_avatar_url', 'commentpress_fix_bp_core_avatar_url', 10, 1 );
 
-        // show group avatar
-        echo bp_core_fetch_avatar( $avatar_options );
+		// show group avatar
+		echo bp_core_fetch_avatar( $avatar_options );
 
-        // remove filter
-        remove_filter( 'bp_core_avatar_url', 'commentpress_fix_bp_core_avatar_url' );
+		// remove filter
+		remove_filter( 'bp_core_avatar_url', 'commentpress_fix_bp_core_avatar_url' );
 
 		// --<
 		return;
