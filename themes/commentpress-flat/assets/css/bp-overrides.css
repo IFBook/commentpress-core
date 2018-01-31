@@ -3103,6 +3103,11 @@ body.single-bp_doc #doc-permissions-summary > strong
 	text-decoration: none;
 }
 
+#buddypress .bp-docs ul#tags-list
+{
+	margin: 0;
+}
+
 
 
 /*
