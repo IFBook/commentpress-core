@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CommentPress Core 3.9.9\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/commentpress-core\n"
-"POT-Creation-Date: 2018-01-26 14:37:10+00:00\n"
+"POT-Creation-Date: 2018-01-31 16:20:07+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -68,8 +68,8 @@ msgstr ""
 
 #: commentpress-ajax/cp-ajax-comments.php:186
 #: commentpress-core/class_commentpress.php:2533
-#: commentpress-core/class_commentpress_display.php:1777
-#: commentpress-core/class_commentpress_display.php:2195
+#: commentpress-core/class_commentpress_display.php:1771
+#: commentpress-core/class_commentpress_display.php:2189
 #: commentpress-multisite/class_commentpress_mu_bp.php:352
 #: themes/commentpress-flat/assets/templates/comments_sidebar.php:20
 #: themes/commentpress-flat/assets/templates/header_body.php:34
@@ -403,7 +403,7 @@ msgid "Settings Page"
 msgstr ""
 
 #: commentpress-core/class_commentpress.php:434
-#: commentpress-core/class_commentpress_display.php:1334
+#: commentpress-core/class_commentpress_display.php:1328
 #: commentpress-multisite/class_commentpress_mu_admin.php:845
 #: commentpress-multisite/class_commentpress_mu_admin.php:1067
 msgid "CommentPress Core Settings"
@@ -440,14 +440,14 @@ msgid "Page Meta Visibility"
 msgstr ""
 
 #: commentpress-core/class_commentpress.php:958
-#: commentpress-core/class_commentpress_display.php:1439
-#: commentpress-core/class_commentpress_display.php:1799
+#: commentpress-core/class_commentpress_display.php:1433
+#: commentpress-core/class_commentpress_display.php:1793
 msgid "Show page meta"
 msgstr ""
 
 #: commentpress-core/class_commentpress.php:959
-#: commentpress-core/class_commentpress_display.php:1440
-#: commentpress-core/class_commentpress_display.php:1800
+#: commentpress-core/class_commentpress_display.php:1434
+#: commentpress-core/class_commentpress_display.php:1794
 msgid "Hide page meta"
 msgstr ""
 
@@ -548,8 +548,8 @@ msgid "Default Sidebar"
 msgstr ""
 
 #: commentpress-core/class_commentpress.php:2531
-#: commentpress-core/class_commentpress_display.php:1775
-#: commentpress-core/class_commentpress_display.php:2193
+#: commentpress-core/class_commentpress_display.php:1769
+#: commentpress-core/class_commentpress_display.php:2187
 #: themes/commentpress-flat/assets/templates/toc_sidebar.php:15
 #: themes/commentpress-modern/assets/templates/toc_sidebar.php:15
 #: themes/commentpress-theme/sidebar.php:156
@@ -557,8 +557,8 @@ msgid "Contents"
 msgstr ""
 
 #: commentpress-core/class_commentpress.php:2532
-#: commentpress-core/class_commentpress_display.php:1776
-#: commentpress-core/class_commentpress_display.php:2194
+#: commentpress-core/class_commentpress_display.php:1770
+#: commentpress-core/class_commentpress_display.php:2188
 #: themes/commentpress-flat/assets/templates/activity_sidebar.php:72
 #: themes/commentpress-flat/assets/templates/header_body.php:35
 #: themes/commentpress-flat/sidebar.php:119
@@ -634,7 +634,7 @@ msgid "Do not delete this page. Page content is generated with a custom template
 msgstr ""
 
 #: commentpress-core/class_commentpress_db.php:3891
-#: commentpress-core/class_commentpress_display.php:1397
+#: commentpress-core/class_commentpress_display.php:1391
 #: themes/commentpress-flat/assets/templates/toc_dropdown.php:9
 #: themes/commentpress-flat/assets/templates/toc_sidebar.php:78
 #: themes/commentpress-flat/functions.php:70
@@ -671,12 +671,6 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:601
-#: commentpress-core/class_commentpress_display.php:621
-#: themes/commentpress-theme/author.php:138
-msgid "l, F jS, Y"
-msgstr ""
-
 #: commentpress-core/class_commentpress_display.php:835
 #: commentpress-core/class_commentpress_display.php:856
 #: commentpress-core/class_commentpress_display.php:878
@@ -691,314 +685,315 @@ msgstr[1] ""
 msgid "Leave a comment on %s %d"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:954
-#: commentpress-core/class_commentpress_display.php:972
+#: commentpress-core/class_commentpress_display.php:931
+#: commentpress-core/class_commentpress_display.php:948
+#: commentpress-core/class_commentpress_display.php:966
 msgid "Permalink for %s %d"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1138
+#: commentpress-core/class_commentpress_display.php:1132
 msgid "Minimise all Comment Sections"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1143
+#: commentpress-core/class_commentpress_display.php:1137
 msgid "Minimise all Activity Sections"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1148
+#: commentpress-core/class_commentpress_display.php:1142
 msgid "Minimise all Contents Sections"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1170
+#: commentpress-core/class_commentpress_display.php:1164
 msgid "Minimise Header"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1297
+#: commentpress-core/class_commentpress_display.php:1291
 msgid " The following options have become available in the new version."
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1302
+#: commentpress-core/class_commentpress_display.php:1296
 msgid "CommentPress Core Upgrade"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1312
+#: commentpress-core/class_commentpress_display.php:1306
 msgid "Please upgrade CommentPress Core"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1314
+#: commentpress-core/class_commentpress_display.php:1308
 msgid "It looks like you are running an older version of CommentPress Core."
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1325
+#: commentpress-core/class_commentpress_display.php:1319
 #: commentpress-multisite/class_commentpress_mu_admin.php:1061
 msgid "Upgrade"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1371
+#: commentpress-core/class_commentpress_display.php:1365
 msgid "When a supplied CommentPress theme (or a valid CommentPress child theme) is active, the following options modify its behaviour."
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1377
+#: commentpress-core/class_commentpress_display.php:1371
 #: commentpress-multisite/class_commentpress_mu_ms.php:500
 msgid "Global Options"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1399
+#: commentpress-core/class_commentpress_display.php:1393
 msgid ""
 "Choose how you want your Table of Contents to appear and function.<br />\n"
 "\t\t<strong style=\"color: red;\">NOTE!</strong> When Chapters are Pages, the TOC will always show Sub-Pages, since collapsing the TOC makes no sense in that situation."
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1412
+#: commentpress-core/class_commentpress_display.php:1406
 msgid "Page Display Options"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1417
-#: commentpress-core/class_commentpress_display.php:1751
+#: commentpress-core/class_commentpress_display.php:1411
+#: commentpress-core/class_commentpress_display.php:1745
 msgid "Enable Featured Images (Note: if you have already implemented this in a child theme, you should choose \"No\")"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1419
-#: commentpress-core/class_commentpress_display.php:1682
-#: commentpress-core/class_commentpress_display.php:1706
-#: commentpress-core/class_commentpress_display.php:1752
-#: commentpress-core/class_commentpress_display.php:2264
-#: commentpress-core/class_commentpress_display.php:2294
+#: commentpress-core/class_commentpress_display.php:1413
+#: commentpress-core/class_commentpress_display.php:1676
+#: commentpress-core/class_commentpress_display.php:1700
+#: commentpress-core/class_commentpress_display.php:1746
+#: commentpress-core/class_commentpress_display.php:2258
+#: commentpress-core/class_commentpress_display.php:2288
 msgid "Yes"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1420
-#: commentpress-core/class_commentpress_display.php:1683
-#: commentpress-core/class_commentpress_display.php:1707
-#: commentpress-core/class_commentpress_display.php:1753
-#: commentpress-core/class_commentpress_display.php:2265
-#: commentpress-core/class_commentpress_display.php:2295
+#: commentpress-core/class_commentpress_display.php:1414
+#: commentpress-core/class_commentpress_display.php:1677
+#: commentpress-core/class_commentpress_display.php:1701
+#: commentpress-core/class_commentpress_display.php:1747
+#: commentpress-core/class_commentpress_display.php:2259
+#: commentpress-core/class_commentpress_display.php:2289
 msgid "No"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1428
+#: commentpress-core/class_commentpress_display.php:1422
 msgid "Default page title visibility (can be overridden on individual pages)"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1430
-#: commentpress-core/class_commentpress_display.php:1961
+#: commentpress-core/class_commentpress_display.php:1424
+#: commentpress-core/class_commentpress_display.php:1955
 msgid "Show page titles"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1431
-#: commentpress-core/class_commentpress_display.php:1962
+#: commentpress-core/class_commentpress_display.php:1425
+#: commentpress-core/class_commentpress_display.php:1956
 msgid "Hide page titles"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1437
+#: commentpress-core/class_commentpress_display.php:1431
 msgid "Default page meta visibility (can be overridden on individual pages)"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1448
+#: commentpress-core/class_commentpress_display.php:1442
 msgid "Blog excerpt length"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1449
+#: commentpress-core/class_commentpress_display.php:1443
 msgid "words"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1458
+#: commentpress-core/class_commentpress_display.php:1452
 msgid "Commenting Options"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1472
+#: commentpress-core/class_commentpress_display.php:1466
 msgid "Theme Customisation"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1474
+#: commentpress-core/class_commentpress_display.php:1468
 msgid ""
 "You can set a custom background colour in <em>Appearance &#8594; Background</em>.<br />\n"
 "\t\tYou can also set a custom header image and header text colour in <em>Appearance &#8594; Header</em>.<br />\n"
 "\t\tBelow are extra options for changing how the theme functions."
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1481
-#: commentpress-core/class_commentpress_display.php:1982
+#: commentpress-core/class_commentpress_display.php:1475
+#: commentpress-core/class_commentpress_display.php:1976
 msgid "Scroll speed"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1482
-#: commentpress-core/class_commentpress_display.php:1983
+#: commentpress-core/class_commentpress_display.php:1476
+#: commentpress-core/class_commentpress_display.php:1977
 msgid "milliseconds"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1486
-#: commentpress-core/class_commentpress_display.php:2000
+#: commentpress-core/class_commentpress_display.php:1480
+#: commentpress-core/class_commentpress_display.php:1994
 msgid "Minimum page width"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1487
-#: commentpress-core/class_commentpress_display.php:2001
+#: commentpress-core/class_commentpress_display.php:1481
+#: commentpress-core/class_commentpress_display.php:1995
 msgid "pixels"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1532
+#: commentpress-core/class_commentpress_display.php:1526
 #: commentpress-core/class_commentpress_formatter.php:100
 #: commentpress-multisite/class_commentpress_mu_bp.php:1407
 msgid "Default Text Format"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1538
+#: commentpress-core/class_commentpress_display.php:1532
 msgid " (can be overridden on individual pages)"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1586
-#: commentpress-core/class_commentpress_display.php:1874
+#: commentpress-core/class_commentpress_display.php:1580
+#: commentpress-core/class_commentpress_display.php:1868
 #: commentpress-multisite/class_commentpress_mu_admin.php:696
 #: commentpress-multisite/class_commentpress_mu_bp.php:2038
 #: commentpress-multisite/class_commentpress_mu_bp.php:2297
 msgid "Enable Custom Workflow"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1636
+#: commentpress-core/class_commentpress_display.php:1630
 msgid "Choose the Post Types on which CommentPress Core is enabled. Disabling a post type will mean that paragraph-level commenting will not be enabled on any entries of that post type. Default prior to 3.9 was that all post types were enabled."
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1637
+#: commentpress-core/class_commentpress_display.php:1631
 msgid "Post Types on which CommentPress Core is enabled."
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1680
-#: commentpress-core/class_commentpress_display.php:2257
+#: commentpress-core/class_commentpress_display.php:1674
+#: commentpress-core/class_commentpress_display.php:2251
 msgid "Note: when comments are closed on an entry and there are no comments on that entry, if this option is set to \"Yes\" then the content will not be parsed for paragraphs, lines or blocks. Comments will also not be parsed, meaning that the entry behaves the same as content which is not commentable. Default prior to 3.8.10 was \"No\" - all content was always parsed."
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1681
+#: commentpress-core/class_commentpress_display.php:1675
 msgid "Disable CommentPress on entries with no comments."
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1705
+#: commentpress-core/class_commentpress_display.php:1699
 msgid "Enable automatic page navigation (controls appearance of page numbering and navigation arrows on hierarchical pages). Previous default was \"Yes\"."
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1728
-#: commentpress-core/class_commentpress_display.php:2377
+#: commentpress-core/class_commentpress_display.php:1722
+#: commentpress-core/class_commentpress_display.php:2371
 msgid "Show paragraph meta (Number and Comment Icon)"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1729
-#: commentpress-core/class_commentpress_display.php:2379
+#: commentpress-core/class_commentpress_display.php:1723
+#: commentpress-core/class_commentpress_display.php:2373
 msgid "Always"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1730
-#: commentpress-core/class_commentpress_display.php:2380
+#: commentpress-core/class_commentpress_display.php:1724
+#: commentpress-core/class_commentpress_display.php:2374
 msgid "On rollover"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1774
-#: commentpress-core/class_commentpress_display.php:2192
+#: commentpress-core/class_commentpress_display.php:1768
+#: commentpress-core/class_commentpress_display.php:2186
 msgid "Which sidebar do you want to be active by default? (can be overridden on individual pages)"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1798
+#: commentpress-core/class_commentpress_display.php:1792
 msgid "Show or hide page meta by default"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1829
+#: commentpress-core/class_commentpress_display.php:1823
 msgid "Blog Type"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1895
-#: commentpress-core/class_commentpress_display.php:2130
+#: commentpress-core/class_commentpress_display.php:1889
+#: commentpress-core/class_commentpress_display.php:2124
 msgid "Appearance of TOC for posts"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1896
-#: commentpress-core/class_commentpress_display.php:2131
+#: commentpress-core/class_commentpress_display.php:1890
+#: commentpress-core/class_commentpress_display.php:2125
 msgid "Extended information"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1897
-#: commentpress-core/class_commentpress_display.php:2132
+#: commentpress-core/class_commentpress_display.php:1891
+#: commentpress-core/class_commentpress_display.php:2126
 msgid "Just the title"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1917
-#: commentpress-core/class_commentpress_display.php:2074
+#: commentpress-core/class_commentpress_display.php:1911
+#: commentpress-core/class_commentpress_display.php:2068
 msgid "Comment form editor"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1918
-#: commentpress-core/class_commentpress_display.php:2075
+#: commentpress-core/class_commentpress_display.php:1912
+#: commentpress-core/class_commentpress_display.php:2069
 msgid "Rich-text Editor"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1919
-#: commentpress-core/class_commentpress_display.php:2076
+#: commentpress-core/class_commentpress_display.php:1913
+#: commentpress-core/class_commentpress_display.php:2070
 msgid "Plain-text Editor"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1938
-#: commentpress-core/class_commentpress_display.php:2078
+#: commentpress-core/class_commentpress_display.php:1932
+#: commentpress-core/class_commentpress_display.php:2072
 msgid "Default comment form behaviour"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1939
-#: commentpress-core/class_commentpress_display.php:2079
+#: commentpress-core/class_commentpress_display.php:1933
+#: commentpress-core/class_commentpress_display.php:2073
 msgid "Promote reading"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1940
-#: commentpress-core/class_commentpress_display.php:2080
+#: commentpress-core/class_commentpress_display.php:1934
+#: commentpress-core/class_commentpress_display.php:2074
 msgid "Promote commenting"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:1960
+#: commentpress-core/class_commentpress_display.php:1954
 msgid "Show or hide page titles by default"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:2047
+#: commentpress-core/class_commentpress_display.php:2041
 msgid "Reset options to plugin defaults"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:2120
+#: commentpress-core/class_commentpress_display.php:2114
 msgid "Table of Contents contains"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:2121
+#: commentpress-core/class_commentpress_display.php:2115
 msgid "Posts"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:2122
-#: commentpress-core/class_commentpress_display.php:2125
+#: commentpress-core/class_commentpress_display.php:2116
+#: commentpress-core/class_commentpress_display.php:2119
 #: commentpress-multisite/class_commentpress_mu_bp.php:346
 msgid "Pages"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:2124
+#: commentpress-core/class_commentpress_display.php:2118
 msgid "Chapters are"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:2126
+#: commentpress-core/class_commentpress_display.php:2120
 msgid "Headings"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:2128
+#: commentpress-core/class_commentpress_display.php:2122
 msgid "Show Sub-Pages"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:2231
+#: commentpress-core/class_commentpress_display.php:2225
 msgid "Enable \"live\" comment refreshing (Please note: may cause heavy load on your server)"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:2262
+#: commentpress-core/class_commentpress_display.php:2256
 msgid "Disable CommentPress on entries with no comments. (can be overridden on individual entries)"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:2292
+#: commentpress-core/class_commentpress_display.php:2286
 msgid "Enable automatic page navigation (controls appearance of page numbering and navigation arrows on hierarchical pages)"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:2350
+#: commentpress-core/class_commentpress_display.php:2344
 msgid "Post Types on which CommentPress Core is enabled"
 msgstr ""
 
-#: commentpress-core/class_commentpress_display.php:2404
+#: commentpress-core/class_commentpress_display.php:2398
 #: commentpress-multisite/class_commentpress_mu_admin.php:1054
 #: commentpress-multisite/class_commentpress_mu_ms.php:579
 msgid "Save Changes"
@@ -1435,9 +1430,7 @@ msgid "Archive for"
 msgstr ""
 
 #: themes/commentpress-flat/archive.php:48
-#: themes/commentpress-flat/author.php:166
 #: themes/commentpress-modern/archive.php:48
-#: themes/commentpress-modern/author.php:166
 #: themes/commentpress-theme/archive.php:33
 msgid "F jS, Y"
 msgstr ""
