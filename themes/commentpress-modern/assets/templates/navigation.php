@@ -125,8 +125,8 @@ global $commentpress_core;
 			get_site_option( 'registration' ) == 'all'
 		) {
 
-			// test whether we have BuddyPress
-			if ( function_exists( 'bp_get_root_domain' ) ) {
+			// test whether we have BuddyPress Site Tracking active
+			if ( function_exists( 'bp_get_blogs_root_slug' ) ) {
 
 				// different behaviour when logged in or not
 				if ( is_user_logged_in() ) {
