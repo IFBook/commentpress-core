@@ -3566,6 +3566,7 @@ Feature images
 {
 	position: relative;
 	line-height: 0;
+	overflow: hidden;
 }
 
 .cp_feature_image img.wp-post-image
@@ -4727,15 +4728,6 @@ RESPONSIVENESS
 	.comment-content
 	{
 		font-size: 80%;
-	}
-
-	/* buddypress content */
-	.activity,
-	#groups-dir-list,
-	#members-dir-list,
-	#blogs-dir-list
-	{
-		font-size: 90%;
 	}
 
 	/* box-shadow counts as layout on Android, so remove
