@@ -164,6 +164,10 @@ echo commentpress_multipager();
 
 
 
+<?php commentpress_geomashup_map_get(); ?>
+
+
+
 <?php the_tags( '<p class="postmetadata">' . __( 'Tags: ', 'commentpress-core' ), ', ', '</p>'); ?>
 
 
