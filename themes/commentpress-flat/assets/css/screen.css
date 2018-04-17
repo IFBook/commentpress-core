@@ -2165,6 +2165,18 @@ body.search-results .post p.postmetadata
 	border-top: none;
 }
 
+/* New style tags */
+.entry-meta
+{
+	clear: both;
+}
+
+.post .entry-meta p.postmetadata
+{
+	margin: 1em 0 0 0;
+	padding: 1em 0 0 0;
+}
+
 /* New style categories */
 .entry-category-meta
 {
@@ -2200,11 +2212,7 @@ body.blogtype-4 #content .post .entry-category-meta p.category-meta
 	text-decoration: none;
 }
 
-.entry-meta
-{
-	clear: both;
-}
-
+/* Images in posts */
 .post img
 {
 	max-width: 100%;
@@ -3115,6 +3123,26 @@ p.comment-subscription-form
 	margin: 0.5em 0;
 	font-family: sans-serif;
 	text-transform: uppercase;
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
+Compatibility with GeoMashup plugin
+--------------------------------------------------------------------------------
+*/
+
+.post .geomap
+{
+	border-top: 1px solid #ddd;
+	margin: 0.7em 0 0 0;
+	padding: 1em 0 0 0;
+}
+
+.post .geomap .gm-map
+{
+	width: 100% !important;
 }
 
 

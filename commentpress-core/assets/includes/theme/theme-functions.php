@@ -4584,3 +4584,26 @@ add_filter( 'bp_get_blog_create_button', 'commentpress_unwrap_buddypress_button'
 
 
 
+if ( ! function_exists( 'commentpress_geomashup_map_get' ) ):
+/**
+ * Show the map for a post.
+ *
+ * Does not work in non-global loops, such as those made via WP_Query.
+ *
+ * @since 3.9.9
+ */
+function commentpress_geomashup_map_get() {
+
+	// bail if Geo Mashup not active
+	if ( ! class_exists( 'GeoMashup' ) ) return;
+
+	// bail if post has no location
+	if ( empty( GeoMashup::current_location( null, 'post' ) ) ) return;
+
+	// show map
+	echo '<div class="geomap">' . GeoMashup::map() . '</div>';
+
+}
+endif;
+
+

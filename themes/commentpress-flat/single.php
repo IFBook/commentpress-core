@@ -213,6 +213,10 @@ echo commentpress_multipager();
 
 
 
+<?php commentpress_geomashup_map_get(); ?>
+
+
+
 <p class="postmetadata"><?php
 
 	// define RSS text
