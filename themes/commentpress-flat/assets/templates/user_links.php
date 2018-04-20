@@ -1,6 +1,6 @@
 <?php /*
 ================================================================================
-CommentPress Modern Theme User Links Template
+CommentPress Flat Theme User Links Template
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
