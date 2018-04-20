@@ -2605,7 +2605,6 @@ ul#content-tabs
 	padding: 0;
 	height: 32px;
 	z-index: 1000;
-	background-color: #bdbdbd;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -2646,18 +2645,6 @@ ul#content-tabs li
 		display: block;
 		padding: 8px 0;
 		text-decoration: none;
-		color: #000;
-		background-color: #bdbdbd;
-	}
-
-	ul#content-tabs li h2 a:hover
-	{
-		background-color: #bdbdbd;
-	}
-
-	ul#content-tabs li.default-content-tab h2 a
-	{
-		background-color: #fff;
 	}
 
 #page_wrapper.with-content-tabs

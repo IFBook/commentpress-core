@@ -4670,20 +4670,46 @@ class CommentPress_Theme_Tabs {
 
 
 	/**
+	 * Returns a single instance of this object when called.
+	 *
+	 * @since 3.9.9
+	 *
+	 * @return object $instance Comment_Tagger instance.
+	 */
+	public static function instance() {
+
+		// store the instance locally to avoid private static replication
+		static $instance = null;
+
+		// instantiate if need be
+		if ( null === $instance ) {
+			$instance = new CommentPress_Theme_Tabs;
+		}
+
+		// always return instance
+		return $instance;
+
+	}
+
+
+
+	/**
 	 * Initialise required data.
 	 *
 	 * @since 3.9.9
 	 */
 	public function initialise() {
 
+		// bail if already initialised
+		static $initialised = false;
+		if ( $initialised ) return;
+
 		// bail if plugin not present
+		global $commentpress_core;
 		if ( ! is_object( $commentpress_core ) ) return;
 
-		// get workflow
-		$_workflow = $commentpress_core->db->option_get( 'cp_blog_workflow' );
-
-		// bail if not enabled
-		if ( $_workflow != '1' ) return;
+		// bail if workflow not enabled
+		if ( '1' != $commentpress_core->db->option_get( 'cp_blog_workflow' ) ) return;
 
 		// okay, let's get our data
 
@@ -4693,23 +4719,17 @@ class CommentPress_Theme_Tabs {
 		// set key
 		$key = '_cp_original_text';
 
-		// if the custom field already has a value
+		// if the custom field already has a value, get it
 		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
-
-			// get it
 			$this->original = get_post_meta( $post->ID, $key, true );
-
 		}
 
 		// set key
 		$key = '_cp_literal_translation';
 
-		// if the custom field already has a value
+		// if the custom field already has a value, get it
 		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
-
-			// get it
 			$this->literal = get_post_meta( $post->ID, $key, true );
-
 		}
 
 		// did we get either type of workflow content?
@@ -4725,6 +4745,9 @@ class CommentPress_Theme_Tabs {
 			$this->tabs_class = ' ' . $this->tabs_class;
 
 		}
+
+		// flag as initialised
+		$initialised = true;
 
 	}
 
@@ -4799,7 +4822,7 @@ class CommentPress_Theme_Tabs {
 							__( 'Literal Translation', 'commentpress-core' )
 						);
 					?></h2>
-					<?php echo apply_filters( 'cp_workflow_richtext_content', $literal ); ?>
+					<?php echo apply_filters( 'cp_workflow_richtext_content', $this->literal ); ?>
 				</div><!-- /post -->
 			</div><!-- /literal -->
 			<?php
@@ -4807,7 +4830,7 @@ class CommentPress_Theme_Tabs {
 		}
 
 		// did we get original?
-		if ( $original != '' ) {
+		if ( $this->original != '' ) {
 
 			?>
 			<div id="original" class="workflow-wrapper">
@@ -4818,7 +4841,7 @@ class CommentPress_Theme_Tabs {
 							__( 'Original Text', 'commentpress-core' )
 						);
 					?></h2>
-					<?php echo apply_filters( 'cp_workflow_richtext_content', $original ); ?>
+					<?php echo apply_filters( 'cp_workflow_richtext_content', $this->original ); ?>
 				</div><!-- /post -->
 			</div><!-- /original -->
 			<?php
@@ -4838,23 +4861,50 @@ class CommentPress_Theme_Tabs {
  *
  * @since 3.9.9
  *
- * @return object CommentPress_Theme_Tabs The Theme Tabs object.
+ * @return object CommentPress_Theme_Tabs The Theme Tabs instance.
  */
 function commentpress_theme_tabs() {
-
-	// init class
-	global $commentpress_theme_tabs;
-	if ( ! isset( $commentpress_theme_tabs ) ) {
-		$commentpress_theme_tabs = new CommentPress_Theme_Tabs();
-	}
-
-	// --<
-	return $commentpress_theme_tabs;
-
+	return CommentPress_Theme_Tabs::instance();
 }
 
 // init the above
 commentpress_theme_tabs();
+
+
+
+/**
+ * Render Theme Tabs.
+ *
+ * @since 3.9.9
+ */
+function commentpress_theme_tabs_render() {
+
+	// get object and maybe init
+	$tabs = commentpress_theme_tabs();
+	$tabs->initialise();
+
+	// print to screen
+	$tabs->tabs();
+
+}
+
+
+
+/**
+ * Render Theme Tabs Content.
+ *
+ * @since 3.9.9
+ */
+function commentpress_theme_tabs_content_render() {
+
+	// get object and maybe init
+	$tabs = commentpress_theme_tabs();
+	$tabs->initialise();
+
+	// print to screen
+	$tabs->tabs_content();
+
+}
 
 
 
@@ -4867,8 +4917,9 @@ commentpress_theme_tabs();
  */
 function commentpress_theme_tabs_class_get() {
 
-	// get object
+	// get object and maybe init
 	$tabs = commentpress_theme_tabs();
+	$tabs->initialise();
 
 	// --<
 	return $tabs->tabs_class;
@@ -4886,8 +4937,9 @@ function commentpress_theme_tabs_class_get() {
  */
 function commentpress_theme_tabs_classes_get() {
 
-	// get object
+	// get object and maybe init
 	$tabs = commentpress_theme_tabs();
+	$tabs->initialise();
 
 	// --<
 	return $tabs->tabs_classes;

@@ -297,22 +297,23 @@ h3.activity_heading:hover,
 
 
 /* Translation tabs */
+ul#content-tabs
+{
+    background-color: #f7f7ef;
+}
+
 ul#content-tabs li h2 a
 {
-	border-bottom: 1px solid #aaa;
+    color: #000;
+    background-color: #f7f7ef;
 }
 
 ul#content-tabs li h2 a:hover
 {
-	background-color: #eee;
+	background-color: #eae9dc;
 }
 
-ul#content-tabs li.default-content-tab h2 a
-{
-	border: 1px solid #aaa;
-	border-bottom: none;
-}
-
+ul#content-tabs li.default-content-tab h2 a,
 ul#content-tabs li.default-content-tab h2 a:hover
 {
 	background-color: #fff;
