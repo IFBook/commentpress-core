@@ -2165,6 +2165,18 @@ body.search-results .post p.postmetadata
 	border-top: none;
 }
 
+/* New style tags */
+.entry-meta
+{
+	clear: both;
+}
+
+.post .entry-meta p.postmetadata
+{
+	margin: 1em 0 0 0;
+	padding: 1em 0 0 0;
+}
+
 /* New style categories */
 .entry-category-meta
 {
@@ -2200,11 +2212,7 @@ body.blogtype-4 #content .post .entry-category-meta p.category-meta
 	text-decoration: none;
 }
 
-.entry-meta
-{
-    clear: both;
-}
-
+/* Images in posts */
 .post img
 {
 	max-width: 100%;
@@ -2597,7 +2605,6 @@ ul#content-tabs
 	padding: 0;
 	height: 32px;
 	z-index: 1000;
-	background-color: #bdbdbd;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -2638,18 +2645,6 @@ ul#content-tabs li
 		display: block;
 		padding: 8px 0;
 		text-decoration: none;
-		color: #000;
-		background-color: #bdbdbd;
-	}
-
-	ul#content-tabs li h2 a:hover
-	{
-		background-color: #bdbdbd;
-	}
-
-	ul#content-tabs li.default-content-tab h2 a
-	{
-		background-color: #fff;
 	}
 
 #page_wrapper.with-content-tabs
@@ -3121,6 +3116,26 @@ p.comment-subscription-form
 
 /*
 --------------------------------------------------------------------------------
+Compatibility with GeoMashup plugin
+--------------------------------------------------------------------------------
+*/
+
+.post .geomap
+{
+	border-top: 1px solid #ddd;
+	margin: 0.7em 0 0 0;
+	padding: 1em 0 0 0;
+}
+
+.post .geomap .gm-map
+{
+	width: 100% !important;
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
 Compatibility with Featured Comments plugin
 --------------------------------------------------------------------------------
 */
@@ -3566,6 +3581,7 @@ Feature images
 {
 	position: relative;
 	line-height: 0;
+	overflow: hidden;
 }
 
 .cp_feature_image img.wp-post-image
@@ -4727,15 +4743,6 @@ RESPONSIVENESS
 	.comment-content
 	{
 		font-size: 80%;
-	}
-
-	/* buddypress content */
-	.activity,
-	#groups-dir-list,
-	#members-dir-list,
-	#blogs-dir-list
-	{
-		font-size: 90%;
 	}
 
 	/* box-shadow counts as layout on Android, so remove

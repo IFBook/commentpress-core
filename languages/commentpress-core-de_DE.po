@@ -1,122 +1,18 @@
 msgid ""
 msgstr ""
+"Project-Id-Version: CommentPress Core 3.9.9\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/commentpress-"
+"core\n"
+"POT-Creation-Date: 2018-04-20 15:45:16+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Loco - https://localise.biz/\n"
-"Project-Id-Version: commentpress-core-de_DE\n"
-"Language: de-DE\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
-"POT-Creation-Date: 2017-12-06 12:22+0000\n"
-"PO-Revision-Date: 2017-12-06 12:23+0000\n"
+"PO-Revision-Date: 2018-04-20 15:58+0000\n"
 "Last-Translator: Site Admin <needle@haystack.co.uk>\n"
-"Language-Team: German\n"
-"Report-Msgid-Bugs-To: "
-
-#: commentpress-core/assets/includes/theme/theme-functions.php:2025
-msgid "the %s"
-msgstr ""
-
-#: commentpress-core/assets/includes/theme/theme-functions.php:2467
-msgid "Create an account to leave a comment on %s"
-msgstr ""
-
-#: commentpress-core/assets/includes/theme/theme-functions.php:2687
-#: commentpress-core/assets/includes/theme/theme-functions.php:2699
-msgctxt ""
-"The first substitution is the block name e.g. \"paragraph\". The second is "
-"the numeric comment count."
-msgid "%s %s"
-msgstr ""
-
-#: commentpress-core/assets/widgets/widget-license.php:34
-#: themes/commentpress-flat/assets/widgets/widgets.php:34
-msgid ""
-"This widget is supplied by CommentPress Core for placing HTML in the page "
-"footer - for example, copyright or licensing information."
-msgstr ""
-
-#: commentpress-core/class_commentpress_display.php:1684
-msgid ""
-"Choose the Post Types on which CommentPress Core is enabled. Disabling a "
-"post type will mean that paragraph-level commenting will not be enabled on "
-"any entries of that post type. Default prior to 3.9 was that all post types "
-"were enabled."
-msgstr ""
-
-#: commentpress-core/class_commentpress_display.php:1728
-#: commentpress-core/class_commentpress_display.php:2305
-msgid ""
-"Note: when comments are closed on an entry and there are no comments on that "
-"entry, if this option is set to \"Yes\" then the content will not be parsed "
-"for paragraphs, lines or blocks. Comments will also not be parsed, meaning "
-"that the entry behaves the same as content which is not commentable. Default "
-"prior to 3.8.10 was \"No\" - all content was always parsed."
-msgstr ""
-
-#: commentpress-core/class_commentpress_display.php:1729
-msgid "Disable CommentPress on entries with no comments."
-msgstr ""
-
-#: commentpress-core/class_commentpress_display.php:1753
-msgid ""
-"Enable automatic page navigation (controls appearance of page numbering and "
-"navigation arrows on hierarchical pages). Previous default was \"Yes\"."
-msgstr ""
-
-#: commentpress-core/class_commentpress_display.php:2176
-msgid "Show Sub-Pages"
-msgstr "Unterseiten anzeigen"
-
-#: commentpress-core/class_commentpress_display.php:2310
-msgid ""
-"Disable CommentPress on entries with no comments. (can be overridden on "
-"individual entries)"
-msgstr ""
-
-#: commentpress-core/class_commentpress_display.php:2340
-msgid ""
-"Enable automatic page navigation (controls appearance of page numbering and "
-"navigation arrows on hierarchical pages)"
-msgstr ""
-
-#: commentpress-multisite/class_commentpress_mu_bp.php:345
-msgid "Published a new page"
-msgstr ""
-
-#: commentpress-multisite/class_commentpress_mu_bp.php:347
-msgid "%1$s posted a new <a href=\"%2$s\">page</a>"
-msgstr ""
-
-#: commentpress-multisite/class_commentpress_mu_bp.php:348
-msgid "%1$s posted a new <a href=\"%2$s\">page</a>, on the site %3$s"
-msgstr ""
-
-#: themes/commentpress-flat/functions.php:1069
-#: themes/commentpress-modern/functions.php:1118
-#: themes/commentpress-theme/functions.php:828
-msgid "An optional widget area in the footer of a CommentPress theme"
-msgstr ""
-
-#: themes/commentpress-flat/functions.php:1080
-#: themes/commentpress-modern/functions.php:1129
-msgid "An optional widget area at the top of the Navigation Column"
-msgstr ""
-
-#: themes/commentpress-flat/functions.php:1091
-#: themes/commentpress-modern/functions.php:1140
-msgid "An optional widget area at the bottom of the Navigation Column"
-msgstr ""
-
-#: themes/commentpress-flat/functions.php:1102
-#: themes/commentpress-modern/functions.php:1151
-msgid "An optional widget area at the top of the Activity Column"
-msgstr ""
-
-#: themes/commentpress-flat/functions.php:1113
-#: themes/commentpress-modern/functions.php:1162
-msgid "An optional widget area at the bottom of the Activity Column"
-msgstr ""
+"Language-Team: Deutsch\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Loco https://localise.biz/"
 
 #: commentpress-ajax/cp-ajax-comments.php:168
 msgid "Loading..."
@@ -181,9 +77,9 @@ msgid "Comment"
 msgstr "Kommentar"
 
 #: commentpress-ajax/cp-ajax-comments.php:186
-#: commentpress-core/class_commentpress.php:2541
-#: commentpress-core/class_commentpress_display.php:1825
-#: commentpress-core/class_commentpress_display.php:2243
+#: commentpress-core/class_commentpress.php:2533
+#: commentpress-core/class_commentpress_display.php:1771
+#: commentpress-core/class_commentpress_display.php:2189
 #: commentpress-multisite/class_commentpress_mu_bp.php:352
 #: themes/commentpress-flat/assets/templates/comments_sidebar.php:20
 #: themes/commentpress-flat/assets/templates/header_body.php:34
@@ -219,11 +115,11 @@ msgstr "Wähle %s"
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:165
 msgid "Change %s"
-msgstr "Änderungen"
+msgstr "%s ändern"
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:166
 msgid "Remove %s"
-msgstr "Entfernen %s"
+msgstr "%s entfernen"
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:167
 msgid "Default %s"
@@ -231,7 +127,7 @@ msgstr "Standard %s"
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:168
 msgid "No %s selected"
-msgstr "Keine %s ausgewählt"
+msgstr "Kein %s ausgewählt"
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:170
 msgid "Choose %s"
@@ -276,7 +172,7 @@ msgstr "Header-Hintergrundfarbe"
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:309
 msgid "Customize"
-msgstr "modifizieren"
+msgstr "Modifizieren"
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:383
 msgid "Group avatar"
@@ -290,18 +186,7 @@ msgstr "Logo"
 #: commentpress-core/class_commentpress_display.php:571
 #: commentpress-multisite/class_commentpress_mu_bp.php:855
 msgid " &amp; "
-msgstr " &amp;"
-
-#: commentpress-core/assets/includes/theme/theme-functions.php:1233
-#: commentpress-core/assets/includes/theme/theme-functions.php:1249
-#: commentpress-core/class_commentpress_display.php:601
-#: commentpress-core/class_commentpress_display.php:621
-#: themes/commentpress-flat/image.php:54
-#: themes/commentpress-modern/image.php:54
-#: themes/commentpress-theme/author.php:138
-#: themes/commentpress-theme/image.php:54
-msgid "l, F jS, Y"
-msgstr "l, d. F Y"
+msgstr " &amp; "
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:1272
 msgid "Source: "
@@ -310,27 +195,18 @@ msgstr "Quelle:"
 #: commentpress-core/assets/includes/theme/theme-functions.php:1332
 #: commentpress-core/class_commentpress_display.php:680
 msgid "Posts by %s"
-msgstr "Beitrag von %s"
+msgstr "Beiträge von %s"
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:1373
 msgid "See comment in context"
 msgstr "Siehe Kommentar in Zusammenhang"
-
-#: commentpress-core/assets/includes/theme/theme-functions.php:1376
-#: themes/commentpress-flat/archive.php:48
-#: themes/commentpress-flat/author.php:166
-#: themes/commentpress-modern/archive.php:48
-#: themes/commentpress-modern/author.php:166
-#: themes/commentpress-theme/archive.php:33
-msgid "F jS, Y"
-msgstr "F jS, Y"
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:1427
 #: commentpress-core/assets/includes/theme/theme-functions.php:1530
 #: commentpress-core/assets/includes/theme/theme-functions.php:1814
 #: commentpress-multisite/class_commentpress_mu_bp.php:590
 msgid "Anonymous"
-msgstr "Unbekannt"
+msgstr "Anonym"
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:1433
 msgid "%1$s by %2$s on %3$s"
@@ -338,7 +214,7 @@ msgstr "%1$s von %2$s auf %3$s"
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:1463
 msgid "%1$s on %2$s on %3$s"
-msgstr "%2 zu %2$ auf %3$"
+msgstr "%1$s zu %2$s auf %3$s"
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:1627
 #: commentpress-core/class_commentpress.php:1568
@@ -347,14 +223,14 @@ msgid "Comments by Commenter"
 msgstr "Kommentar von Kommentator"
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:1846
-#: commentpress-core/assets/includes/theme/theme-functions.php:2861
+#: commentpress-core/assets/includes/theme/theme-functions.php:2846
 msgid "Comment awaiting moderation"
 msgstr "Kommentar auf Moderation wart"
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:1914
-#: commentpress-core/assets/includes/theme/theme-functions.php:2948
+#: commentpress-core/assets/includes/theme/theme-functions.php:2933
 msgid "%1$s at %2$s"
-msgstr "%1$s bei %2$s"
+msgstr "%1$s um %2$s"
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:1923
 msgid "See in context"
@@ -372,6 +248,10 @@ msgstr "Video"
 msgid "File"
 msgstr "Datum"
 
+#: commentpress-core/assets/includes/theme/theme-functions.php:2025
+msgid "the %s"
+msgstr "der %s"
+
 #: commentpress-core/assets/includes/theme/theme-functions.php:2058
 msgid "the whole %s"
 msgstr "das ganze %s"
@@ -380,128 +260,187 @@ msgstr "das ganze %s"
 msgid "Permalink for comments on %s"
 msgstr "Permalink für Kommentare zu %s"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2100
+#: commentpress-core/assets/includes/theme/theme-functions.php:2089
+#: commentpress-core/assets/includes/theme/theme-functions.php:2185
+msgid ""
+"<span class=\"cp_comment_num\">%d</span> <span class=\"cp_comment_word\">"
+"Comment</span>"
+msgid_plural ""
+"<span class=\"cp_comment_num\">%d</span> <span class=\"cp_comment_word\">"
+"Comments</span>"
+msgstr[0] ""
+"<span class=\"cp_comment_num\">%d</span> <span class=\"cp_comment_word\">"
+"Kommentar</span>"
+msgstr[1] ""
+"<span class=\"cp_comment_num\">%d</span> <span class=\"cp_comment_word\">"
+"Kommentare</span>"
+
+#: commentpress-core/assets/includes/theme/theme-functions.php:2095
 msgid "%1$s on <span class=\"source_block\">%2$s</span>"
 msgstr "%1$s auf <span class=\"source_block\">%2$s</span>"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2128
+#: commentpress-core/assets/includes/theme/theme-functions.php:2123
 msgid "pingback or trackback"
 msgstr "Pingback oder Trackback"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2131
+#: commentpress-core/assets/includes/theme/theme-functions.php:2126
 msgid "Permalink for pingbacks and trackbacks"
 msgstr "Permalink für Pingbacks und Trackbacks"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2174
+#: commentpress-core/assets/includes/theme/theme-functions.php:2130
+msgid "<span>%d</span> Pingback or trackback"
+msgid_plural "<span>%d</span> Pingbacks and trackbacks"
+msgstr[0] "<span>%d</span> Pingback oder trackback"
+msgstr[1] "<span>%d</span> Pingbacks und trackbacks"
+
+#: commentpress-core/assets/includes/theme/theme-functions.php:2164
 #: commentpress-core/class_commentpress_parser.php:348
 msgid "paragraph"
 msgstr "Absatz"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2181
+#: commentpress-core/assets/includes/theme/theme-functions.php:2171
 msgid "%1$s %2$s"
 msgstr "%1$s %2$s"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2188
+#: commentpress-core/assets/includes/theme/theme-functions.php:2178
 msgid "Permalink for comments on %1$s %2$s"
 msgstr "Permalink für Kommentare auf %1$s %2$s"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2206
+#: commentpress-core/assets/includes/theme/theme-functions.php:2191
 msgid "%1$s on <span class=\"source_block\">%2$s %3$s</span>"
 msgstr "%1$s auf <span class=\"source_block\">%2$s %3$s</span>"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2428
+#: commentpress-core/assets/includes/theme/theme-functions.php:2413
 msgid "It appears that this paragraph is a duplicate of a previous one."
 msgstr "Es scheint, dass dieser Absatz ein Duplikat eines vorherige."
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2472
+#: commentpress-core/assets/includes/theme/theme-functions.php:2452
+msgid "Create an account to leave a comment on %s"
+msgstr "Erstellen Sie ein Konto, um einen Kommentar zu %s zu schreiben"
+
+#: commentpress-core/assets/includes/theme/theme-functions.php:2457
 msgid "Login to leave a comment on %s"
 msgstr "Anmelden um ein Kommentar auf %s zu schrieben"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2525
+#: commentpress-core/assets/includes/theme/theme-functions.php:2510
+#: commentpress-core/assets/includes/theme/theme-functions.php:2629
 msgid "Leave a comment on %s"
 msgstr "Kommentar schreiben zu %s"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2642
-msgid "Leave a Reply"
+#: commentpress-core/assets/includes/theme/theme-functions.php:2627
+msgid "Leave a reply"
 msgstr "Antworten"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2643
-#: themes/commentpress-flat/assets/templates/comment_form.php:81
-#: themes/commentpress-modern/assets/templates/comment_form.php:81
-#: themes/commentpress-theme/assets/templates/comment_form.php:61
-msgid "Leave a Reply to %s"
+#: commentpress-core/assets/includes/theme/theme-functions.php:2628
+msgid "Leave a reply to %s"
 msgstr "Hinterlasse eine Antwort auf %s"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2644
-msgid "Leave a Comment on %s"
-msgstr "Kommentar schreiben zu %s"
+#: commentpress-core/assets/includes/theme/theme-functions.php:2672
+#: commentpress-core/assets/includes/theme/theme-functions.php:2684
+msgctxt ""
+"The first substitution is the block name e.g. \"paragraph\". The second is "
+"the numeric comment count."
+msgid "%1$s %2$s"
+msgstr "%1$s %2$s"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2734
+#: commentpress-core/assets/includes/theme/theme-functions.php:2719
 msgid "Reply"
 msgstr "Antwort"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2735
+#: commentpress-core/assets/includes/theme/theme-functions.php:2720
 msgid "Log in to Reply"
 msgstr "Zum Kommentieren anmelden"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2896
+#: commentpress-core/assets/includes/theme/theme-functions.php:2881
 msgid "Reply to %s"
 msgstr "Antwort an %s"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2921
+#: commentpress-core/assets/includes/theme/theme-functions.php:2906
 msgid "Edit this comment"
 msgstr "Diesen Kommentar bearbeiten"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2927
+#: commentpress-core/assets/includes/theme/theme-functions.php:2912
 #: themes/commentpress-flat/archive.php:82 themes/commentpress-flat/blog.php:51
 #: themes/commentpress-flat/category.php:59
-#: themes/commentpress-flat/index.php:56 themes/commentpress-flat/search.php:94
+#: themes/commentpress-flat/index.php:54 themes/commentpress-flat/search.php:94
 #: themes/commentpress-modern/archive.php:82
 #: themes/commentpress-modern/blog.php:51
 #: themes/commentpress-modern/category.php:59
-#: themes/commentpress-modern/index.php:56
+#: themes/commentpress-modern/index.php:54
 #: themes/commentpress-modern/search.php:94
 #: themes/commentpress-theme/archive.php:56
 #: themes/commentpress-theme/blog.php:50
 #: themes/commentpress-theme/category.php:48
-#: themes/commentpress-theme/index.php:41
-#: themes/commentpress-theme/search.php:70
+#: themes/commentpress-theme/index.php:39
+#: themes/commentpress-theme/search.php:68
 msgid "Edit"
 msgstr "﻿Bearbeiten"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:2963
+#: commentpress-core/assets/includes/theme/theme-functions.php:2948
 msgid "Permalink for this comment"
 msgstr "Permalink für diesen Kommentar"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:3236
-#: themes/commentpress-flat/functions.php:506
-#: themes/commentpress-modern/functions.php:575
-#: themes/commentpress-theme/functions.php:452
+#: commentpress-core/assets/includes/theme/theme-functions.php:3221
+#: themes/commentpress-flat/functions.php:490
+#: themes/commentpress-modern/functions.php:559
+#: themes/commentpress-theme/functions.php:444
 msgid "Next page"
 msgstr "Nächste Seite"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:3237
-#: themes/commentpress-flat/functions.php:536
-#: themes/commentpress-modern/functions.php:605
-#: themes/commentpress-theme/functions.php:480
+#: commentpress-core/assets/includes/theme/theme-functions.php:3222
+#: themes/commentpress-flat/functions.php:520
+#: themes/commentpress-modern/functions.php:589
+#: themes/commentpress-theme/functions.php:472
 msgid "Previous page"
 msgstr "Vorherige Seite"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:3255
+#: commentpress-core/assets/includes/theme/theme-functions.php:3240
 msgid "Pages: "
 msgstr "Seiten:"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:3997
+#: commentpress-core/assets/includes/theme/theme-functions.php:3982
 msgid "Untitled Widget"
 msgstr "Unerkannt Widget"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:4094
+#: commentpress-core/assets/includes/theme/theme-functions.php:4079
 msgid "Newer version"
 msgstr "Neuere Version"
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:4129
+#: commentpress-core/assets/includes/theme/theme-functions.php:4114
 msgid "Older version"
 msgstr "Ältere Version"
+
+#: commentpress-core/assets/includes/theme/theme-functions.php:4774
+#: themes/commentpress-modern/assets/templates/header_body.php:45
+msgid "Content"
+msgstr "Inhalt"
+
+#: commentpress-core/assets/includes/theme/theme-functions.php:4781
+msgid "Literal"
+msgstr "wörtlich"
+
+#: commentpress-core/assets/includes/theme/theme-functions.php:4789
+msgid "Original"
+msgstr "Original"
+
+#: commentpress-core/assets/includes/theme/theme-functions.php:4822
+#: commentpress-core/class_commentpress_workflow.php:193
+msgid "Literal Translation"
+msgstr "Wörtliche Übersetzung"
+
+#: commentpress-core/assets/includes/theme/theme-functions.php:4841
+#: commentpress-core/class_commentpress_workflow.php:169
+msgid "Original Text"
+msgstr "Original Text"
+
+#: commentpress-core/assets/widgets/widget-license.php:34
+#: themes/commentpress-flat/assets/widgets/widgets.php:34
+msgid ""
+"This widget is supplied by CommentPress Core for placing HTML in the page "
+"footer - for example, copyright or licensing information."
+msgstr ""
+"Dieses Widget wird von CommentPress Core bereitgestellt, um HTML in den "
+"Seitenfuß zu platzieren - zum Beispiel Copyright- oder Lizenzinformationen."
 
 #: commentpress-core/assets/widgets/widget-license.php:40
 #: themes/commentpress-flat/assets/widgets/widgets.php:40
@@ -527,7 +466,7 @@ msgid "Settings Page"
 msgstr "Einstellungen"
 
 #: commentpress-core/class_commentpress.php:434
-#: commentpress-core/class_commentpress_display.php:1382
+#: commentpress-core/class_commentpress_display.php:1328
 #: commentpress-multisite/class_commentpress_mu_admin.php:845
 #: commentpress-multisite/class_commentpress_mu_admin.php:1067
 msgid "CommentPress Core Settings"
@@ -565,14 +504,14 @@ msgid "Page Meta Visibility"
 msgstr "Seite Meta Sichtbarkeit"
 
 #: commentpress-core/class_commentpress.php:958
-#: commentpress-core/class_commentpress_display.php:1487
-#: commentpress-core/class_commentpress_display.php:1847
+#: commentpress-core/class_commentpress_display.php:1433
+#: commentpress-core/class_commentpress_display.php:1793
 msgid "Show page meta"
 msgstr "Zeige Seite meta"
 
 #: commentpress-core/class_commentpress.php:959
-#: commentpress-core/class_commentpress_display.php:1488
-#: commentpress-core/class_commentpress_display.php:1848
+#: commentpress-core/class_commentpress_display.php:1434
+#: commentpress-core/class_commentpress_display.php:1794
 msgid "Hide page meta"
 msgstr "Ausblenden Seite meta"
 
@@ -638,9 +577,9 @@ msgstr "Titelseite"
 
 #: commentpress-core/class_commentpress.php:1551
 #: commentpress-core/class_commentpress_db.php:3676
-#: themes/commentpress-flat/functions.php:763
-#: themes/commentpress-modern/functions.php:832
-#: themes/commentpress-theme/functions.php:701
+#: themes/commentpress-flat/functions.php:735
+#: themes/commentpress-modern/functions.php:804
+#: themes/commentpress-theme/functions.php:681
 msgid "All Comments"
 msgstr "Alle Kommentare"
 
@@ -667,26 +606,26 @@ msgstr "Blogarchiv"
 msgid "Members"
 msgstr "Anmeldungen"
 
-#: commentpress-core/class_commentpress.php:2443
+#: commentpress-core/class_commentpress.php:2435
 msgid "Text Formatting"
 msgstr "Textformatierung"
 
-#: commentpress-core/class_commentpress.php:2519
+#: commentpress-core/class_commentpress.php:2511
 msgid "Default Sidebar"
 msgstr "Standardseitenleiste"
 
-#: commentpress-core/class_commentpress.php:2539
-#: commentpress-core/class_commentpress_display.php:1823
-#: commentpress-core/class_commentpress_display.php:2241
+#: commentpress-core/class_commentpress.php:2531
+#: commentpress-core/class_commentpress_display.php:1769
+#: commentpress-core/class_commentpress_display.php:2187
 #: themes/commentpress-flat/assets/templates/toc_sidebar.php:15
 #: themes/commentpress-modern/assets/templates/toc_sidebar.php:15
 #: themes/commentpress-theme/sidebar.php:156
 msgid "Contents"
 msgstr "Inhalt"
 
-#: commentpress-core/class_commentpress.php:2540
-#: commentpress-core/class_commentpress_display.php:1824
-#: commentpress-core/class_commentpress_display.php:2242
+#: commentpress-core/class_commentpress.php:2532
+#: commentpress-core/class_commentpress_display.php:1770
+#: commentpress-core/class_commentpress_display.php:2188
 #: themes/commentpress-flat/assets/templates/activity_sidebar.php:72
 #: themes/commentpress-flat/assets/templates/header_body.php:35
 #: themes/commentpress-flat/sidebar.php:119
@@ -697,7 +636,7 @@ msgstr "Inhalt"
 msgid "Activity"
 msgstr "Aktivität"
 
-#: commentpress-core/class_commentpress.php:2564
+#: commentpress-core/class_commentpress.php:2556
 msgid "Starting Paragraph Number"
 msgstr "Ab Absatznummer"
 
@@ -796,22 +735,22 @@ msgstr ""
 "benutzerdefinierten Vorlage erzeugt."
 
 #: commentpress-core/class_commentpress_db.php:3891
-#: commentpress-core/class_commentpress_display.php:1445
+#: commentpress-core/class_commentpress_display.php:1391
 #: themes/commentpress-flat/assets/templates/toc_dropdown.php:9
 #: themes/commentpress-flat/assets/templates/toc_sidebar.php:78
-#: themes/commentpress-flat/functions.php:70
+#: themes/commentpress-flat/functions.php:68
 #: themes/commentpress-modern/assets/templates/toc_dropdown.php:9
 #: themes/commentpress-modern/assets/templates/toc_sidebar.php:78
-#: themes/commentpress-modern/functions.php:126
+#: themes/commentpress-modern/functions.php:124
 #: themes/commentpress-theme/assets/templates/toc_dropdown.php:9
 #: themes/commentpress-theme/assets/templates/toc_sidebar.php:9
-#: themes/commentpress-theme/functions.php:118
+#: themes/commentpress-theme/functions.php:116
 msgid "Table of Contents"
 msgstr "Inhaltsverzeichnis"
 
 #: commentpress-core/class_commentpress_display.php:326
 msgid "Quote &amp; Comment"
-msgstr "Zitat & amp; Kommentar"
+msgstr "Zitat &amp; Kommentar"
 
 #: commentpress-core/class_commentpress_display.php:329
 msgid "Quote"
@@ -836,44 +775,64 @@ msgstr "Behalte"
 msgid "Back"
 msgstr "Zurück"
 
-#: commentpress-core/class_commentpress_display.php:1186
+#: commentpress-core/class_commentpress_display.php:835
+#: commentpress-core/class_commentpress_display.php:856
+#: commentpress-core/class_commentpress_display.php:878
+msgid "There is %d comment written for this %s"
+msgid_plural "There are %d comments written for this %s"
+msgstr[0] "Es gibt %d Kommentar für diese %s"
+msgstr[1] "Es gibt %d Kommentare für diese %s"
+
+#: commentpress-core/class_commentpress_display.php:842
+#: commentpress-core/class_commentpress_display.php:863
+#: commentpress-core/class_commentpress_display.php:885
+msgid "Leave a comment on %s %d"
+msgstr "Kommentar schreiben zu %s %d"
+
+#: commentpress-core/class_commentpress_display.php:931
+#: commentpress-core/class_commentpress_display.php:948
+#: commentpress-core/class_commentpress_display.php:966
+msgid "Permalink for %s %d"
+msgstr "Permalink für %s %d"
+
+#: commentpress-core/class_commentpress_display.php:1132
 msgid "Minimise all Comment Sections"
 msgstr "Minimieren Sie alle Kommentare Abschnitte"
 
-#: commentpress-core/class_commentpress_display.php:1191
+#: commentpress-core/class_commentpress_display.php:1137
 msgid "Minimise all Activity Sections"
 msgstr "Minimieren Sie alle Aktivität Abschnitte"
 
-#: commentpress-core/class_commentpress_display.php:1196
+#: commentpress-core/class_commentpress_display.php:1142
 msgid "Minimise all Contents Sections"
 msgstr "Minimieren Sie alle Inhalte Abschnitte"
 
-#: commentpress-core/class_commentpress_display.php:1218
+#: commentpress-core/class_commentpress_display.php:1164
 msgid "Minimise Header"
 msgstr "Header minimieren"
 
-#: commentpress-core/class_commentpress_display.php:1345
+#: commentpress-core/class_commentpress_display.php:1291
 msgid " The following options have become available in the new version."
 msgstr " Die folgenden Optionen sind in der neuen Version verfügbar."
 
-#: commentpress-core/class_commentpress_display.php:1350
+#: commentpress-core/class_commentpress_display.php:1296
 msgid "CommentPress Core Upgrade"
 msgstr "CommentPress Core Upgrade"
 
-#: commentpress-core/class_commentpress_display.php:1360
+#: commentpress-core/class_commentpress_display.php:1306
 msgid "Please upgrade CommentPress Core"
 msgstr "Bitte aktualisieren Sie CommentPress Core"
 
-#: commentpress-core/class_commentpress_display.php:1362
+#: commentpress-core/class_commentpress_display.php:1308
 msgid "It looks like you are running an older version of CommentPress Core."
 msgstr "Sie benutzen eine ältere Version von CommentPress-Core."
 
-#: commentpress-core/class_commentpress_display.php:1373
+#: commentpress-core/class_commentpress_display.php:1319
 #: commentpress-multisite/class_commentpress_mu_admin.php:1061
 msgid "Upgrade"
 msgstr "Upgrade"
 
-#: commentpress-core/class_commentpress_display.php:1419
+#: commentpress-core/class_commentpress_display.php:1365
 msgid ""
 "When a supplied CommentPress theme (or a valid CommentPress child theme) is "
 "active, the following options modify its behaviour."
@@ -881,12 +840,12 @@ msgstr ""
 "Wenn ein CommentPress Theme (oder eine gültige CommentPress Child-Theme) "
 "aktiv ist, ändern Sie die folgenden Optionen dessen Verhalten."
 
-#: commentpress-core/class_commentpress_display.php:1425
+#: commentpress-core/class_commentpress_display.php:1371
 #: commentpress-multisite/class_commentpress_mu_ms.php:500
 msgid "Global Options"
 msgstr "Globale Optionen"
 
-#: commentpress-core/class_commentpress_display.php:1447
+#: commentpress-core/class_commentpress_display.php:1393
 msgid ""
 "Choose how you want your Table of Contents to appear and function.<br />\n"
 "\t\t<strong style=\"color: red;\">NOTE!</strong> When Chapters are Pages, "
@@ -899,12 +858,12 @@ msgstr ""
 " wird der TOC immer auf Unterseiten zeigen, da die TOC kollabiert in dieser "
 "Situation keinen Sinn macht."
 
-#: commentpress-core/class_commentpress_display.php:1460
+#: commentpress-core/class_commentpress_display.php:1406
 msgid "Page Display Options"
 msgstr "Seite Anzeigeoptionen"
 
-#: commentpress-core/class_commentpress_display.php:1465
-#: commentpress-core/class_commentpress_display.php:1799
+#: commentpress-core/class_commentpress_display.php:1411
+#: commentpress-core/class_commentpress_display.php:1745
 msgid ""
 "Enable Featured Images (Note: if you have already implemented this in a "
 "child theme, you should choose \"No\")"
@@ -912,63 +871,63 @@ msgstr ""
 "Aktivieren Besondere Aufnahmen (Hinweis: Wenn Sie dies bereits bei einem "
 "Kind Thema umgesetzt haben, sollten Sie \"Nein\")"
 
-#: commentpress-core/class_commentpress_display.php:1467
-#: commentpress-core/class_commentpress_display.php:1730
-#: commentpress-core/class_commentpress_display.php:1754
-#: commentpress-core/class_commentpress_display.php:1800
-#: commentpress-core/class_commentpress_display.php:2312
-#: commentpress-core/class_commentpress_display.php:2342
+#: commentpress-core/class_commentpress_display.php:1413
+#: commentpress-core/class_commentpress_display.php:1676
+#: commentpress-core/class_commentpress_display.php:1700
+#: commentpress-core/class_commentpress_display.php:1746
+#: commentpress-core/class_commentpress_display.php:2258
+#: commentpress-core/class_commentpress_display.php:2288
 msgid "Yes"
 msgstr "﻿Ja"
 
-#: commentpress-core/class_commentpress_display.php:1468
-#: commentpress-core/class_commentpress_display.php:1731
-#: commentpress-core/class_commentpress_display.php:1755
-#: commentpress-core/class_commentpress_display.php:1801
-#: commentpress-core/class_commentpress_display.php:2313
-#: commentpress-core/class_commentpress_display.php:2343
+#: commentpress-core/class_commentpress_display.php:1414
+#: commentpress-core/class_commentpress_display.php:1677
+#: commentpress-core/class_commentpress_display.php:1701
+#: commentpress-core/class_commentpress_display.php:1747
+#: commentpress-core/class_commentpress_display.php:2259
+#: commentpress-core/class_commentpress_display.php:2289
 msgid "No"
 msgstr "﻿Nein"
 
-#: commentpress-core/class_commentpress_display.php:1476
+#: commentpress-core/class_commentpress_display.php:1422
 msgid "Default page title visibility (can be overridden on individual pages)"
 msgstr ""
 "Standardseite Titel Sichtbarkeit (kann auf einzelnen Seiten außer Kraft "
 "gesetzt werden)"
 
-#: commentpress-core/class_commentpress_display.php:1478
-#: commentpress-core/class_commentpress_display.php:2009
+#: commentpress-core/class_commentpress_display.php:1424
+#: commentpress-core/class_commentpress_display.php:1955
 msgid "Show page titles"
 msgstr "Seitentitel anzeigen"
 
-#: commentpress-core/class_commentpress_display.php:1479
-#: commentpress-core/class_commentpress_display.php:2010
+#: commentpress-core/class_commentpress_display.php:1425
+#: commentpress-core/class_commentpress_display.php:1956
 msgid "Hide page titles"
 msgstr "Seitentitel ausblenden"
 
-#: commentpress-core/class_commentpress_display.php:1485
+#: commentpress-core/class_commentpress_display.php:1431
 msgid "Default page meta visibility (can be overridden on individual pages)"
 msgstr ""
 "Standardseite Information Sichtbarkeit (kann auf einzelnen Seiten außer "
 "Kraft gesetzt werden)"
 
-#: commentpress-core/class_commentpress_display.php:1496
+#: commentpress-core/class_commentpress_display.php:1442
 msgid "Blog excerpt length"
 msgstr "Blog-Ausschnitt Länge"
 
-#: commentpress-core/class_commentpress_display.php:1497
+#: commentpress-core/class_commentpress_display.php:1443
 msgid "words"
 msgstr "Wörter"
 
-#: commentpress-core/class_commentpress_display.php:1506
+#: commentpress-core/class_commentpress_display.php:1452
 msgid "Commenting Options"
 msgstr "Kommentar-Optionen"
 
-#: commentpress-core/class_commentpress_display.php:1520
+#: commentpress-core/class_commentpress_display.php:1466
 msgid "Theme Customisation"
 msgstr "Theme Anpassung"
 
-#: commentpress-core/class_commentpress_display.php:1522
+#: commentpress-core/class_commentpress_display.php:1468
 msgid ""
 "You can set a custom background colour in <em>Appearance &#8594; "
 "Background</em>.<br />\n"
@@ -983,65 +942,106 @@ msgstr ""
 "Im Folgenden finden Sie zusätzliche Optionen für die Änderung, wie das Thema "
 "Funktionen."
 
-#: commentpress-core/class_commentpress_display.php:1529
-#: commentpress-core/class_commentpress_display.php:2030
+#: commentpress-core/class_commentpress_display.php:1475
+#: commentpress-core/class_commentpress_display.php:1976
 msgid "Scroll speed"
 msgstr "Scrollgeschwindigkeit"
 
-#: commentpress-core/class_commentpress_display.php:1530
-#: commentpress-core/class_commentpress_display.php:2031
+#: commentpress-core/class_commentpress_display.php:1476
+#: commentpress-core/class_commentpress_display.php:1977
 msgid "milliseconds"
 msgstr "Millisekunden"
 
-#: commentpress-core/class_commentpress_display.php:1534
-#: commentpress-core/class_commentpress_display.php:2048
+#: commentpress-core/class_commentpress_display.php:1480
+#: commentpress-core/class_commentpress_display.php:1994
 msgid "Minimum page width"
 msgstr "Mindestseitenbreite"
 
-#: commentpress-core/class_commentpress_display.php:1535
-#: commentpress-core/class_commentpress_display.php:2049
+#: commentpress-core/class_commentpress_display.php:1481
+#: commentpress-core/class_commentpress_display.php:1995
 msgid "pixels"
 msgstr "Pixeln"
 
-#: commentpress-core/class_commentpress_display.php:1580
+#: commentpress-core/class_commentpress_display.php:1526
 #: commentpress-core/class_commentpress_formatter.php:100
 #: commentpress-multisite/class_commentpress_mu_bp.php:1407
 msgid "Default Text Format"
 msgstr "Standard-Text-Format"
 
-#: commentpress-core/class_commentpress_display.php:1586
+#: commentpress-core/class_commentpress_display.php:1532
 msgid " (can be overridden on individual pages)"
 msgstr " (Kann auf einzelne Seiten überschrieben werden)"
 
-#: commentpress-core/class_commentpress_display.php:1634
-#: commentpress-core/class_commentpress_display.php:1922
+#: commentpress-core/class_commentpress_display.php:1580
+#: commentpress-core/class_commentpress_display.php:1868
 #: commentpress-multisite/class_commentpress_mu_admin.php:696
 #: commentpress-multisite/class_commentpress_mu_bp.php:2038
 #: commentpress-multisite/class_commentpress_mu_bp.php:2297
 msgid "Enable Custom Workflow"
 msgstr "Custom-Workflow aktivieren"
 
-#: commentpress-core/class_commentpress_display.php:1685
+#: commentpress-core/class_commentpress_display.php:1630
+msgid ""
+"Choose the Post Types on which CommentPress Core is enabled. Disabling a "
+"post type will mean that paragraph-level commenting will not be enabled on "
+"any entries of that post type. Default prior to 3.9 was that all post types "
+"were enabled."
+msgstr ""
+"Wählen Sie die Post-Typen aus, auf denen CommentPress Core aktiviert ist. "
+"Wenn Sie einen Post-Typ deaktivieren, wird das Kommentieren auf Absatzebene "
+"für Einträge dieses Post-Typs nicht aktiviert. Standard vor 3.9 war, dass "
+"alle Post-Typen aktiviert waren."
+
+#: commentpress-core/class_commentpress_display.php:1631
 msgid "Post Types on which CommentPress Core is enabled."
 msgstr "Beitragstypen, auf denen CommentPress Core aktiviert ist."
 
-#: commentpress-core/class_commentpress_display.php:1776
-#: commentpress-core/class_commentpress_display.php:2425
+#: commentpress-core/class_commentpress_display.php:1674
+#: commentpress-core/class_commentpress_display.php:2251
+msgid ""
+"Note: when comments are closed on an entry and there are no comments on that "
+"entry, if this option is set to \"Yes\" then the content will not be parsed "
+"for paragraphs, lines or blocks. Comments will also not be parsed, meaning "
+"that the entry behaves the same as content which is not commentable. Default "
+"prior to 3.8.10 was \"No\" - all content was always parsed."
+msgstr ""
+"Hinweis: Wenn Kommentare zu einem Eintrag geschlossen sind und zu diesem "
+"Eintrag keine Kommentare vorhanden sind, wird der Inhalt für Absätze, Zeilen "
+"oder Blöcke nicht analysiert, wenn diese Option auf \"Ja\" gesetzt ist. "
+"Kommentare werden auch nicht analysiert, was bedeutet, dass sich der Eintrag "
+"genauso verhält wie Inhalt, der nicht kommentierbar ist. Standard vor 3.8.10 "
+"war \"Nein\" - alle Inhalte wurden immer analysiert."
+
+#: commentpress-core/class_commentpress_display.php:1675
+msgid "Disable CommentPress on entries with no comments."
+msgstr "CommentPress deaktivieren für Einträge ohne Kommentare."
+
+#: commentpress-core/class_commentpress_display.php:1699
+msgid ""
+"Enable automatic page navigation (controls appearance of page numbering and "
+"navigation arrows on hierarchical pages). Previous default was \"Yes\"."
+msgstr ""
+"Aktivieren Sie die automatische Seitennavigation (steuert das "
+"Erscheinungsbild der Seitennummerierung und Navigationspfeile auf "
+"hierarchischen Seiten). Der vorherige Standardwert war \"Ja\"."
+
+#: commentpress-core/class_commentpress_display.php:1722
+#: commentpress-core/class_commentpress_display.php:2371
 msgid "Show paragraph meta (Number and Comment Icon)"
 msgstr "Zeige Absatz Informationen (Nummer und Kommentar-Symbol)"
 
-#: commentpress-core/class_commentpress_display.php:1777
-#: commentpress-core/class_commentpress_display.php:2427
+#: commentpress-core/class_commentpress_display.php:1723
+#: commentpress-core/class_commentpress_display.php:2373
 msgid "Always"
 msgstr "Immer"
 
-#: commentpress-core/class_commentpress_display.php:1778
-#: commentpress-core/class_commentpress_display.php:2428
+#: commentpress-core/class_commentpress_display.php:1724
+#: commentpress-core/class_commentpress_display.php:2374
 msgid "On rollover"
 msgstr "On rollover"
 
-#: commentpress-core/class_commentpress_display.php:1822
-#: commentpress-core/class_commentpress_display.php:2240
+#: commentpress-core/class_commentpress_display.php:1768
+#: commentpress-core/class_commentpress_display.php:2186
 msgid ""
 "Which sidebar do you want to be active by default? (can be overridden on "
 "individual pages)"
@@ -1049,90 +1049,94 @@ msgstr ""
 "Welche Sidebar soll standardmäßig aktiv sein? (Kann auf einzelne Seiten "
 "überschrieben werden)"
 
-#: commentpress-core/class_commentpress_display.php:1846
+#: commentpress-core/class_commentpress_display.php:1792
 msgid "Show or hide page meta by default"
 msgstr "Seiten Information standardmäßig ein- oder ausblenden"
 
-#: commentpress-core/class_commentpress_display.php:1877
+#: commentpress-core/class_commentpress_display.php:1823
 msgid "Blog Type"
 msgstr "Blog-Typ"
 
-#: commentpress-core/class_commentpress_display.php:1943
-#: commentpress-core/class_commentpress_display.php:2178
+#: commentpress-core/class_commentpress_display.php:1889
+#: commentpress-core/class_commentpress_display.php:2124
 msgid "Appearance of TOC for posts"
 msgstr "Aussehen des Inhaltsverzeichnisses für Beiträge"
 
-#: commentpress-core/class_commentpress_display.php:1944
-#: commentpress-core/class_commentpress_display.php:2179
+#: commentpress-core/class_commentpress_display.php:1890
+#: commentpress-core/class_commentpress_display.php:2125
 msgid "Extended information"
 msgstr "Erweiterte Informationen"
 
-#: commentpress-core/class_commentpress_display.php:1945
-#: commentpress-core/class_commentpress_display.php:2180
+#: commentpress-core/class_commentpress_display.php:1891
+#: commentpress-core/class_commentpress_display.php:2126
 msgid "Just the title"
 msgstr "Nur der Titel"
 
-#: commentpress-core/class_commentpress_display.php:1965
-#: commentpress-core/class_commentpress_display.php:2122
+#: commentpress-core/class_commentpress_display.php:1911
+#: commentpress-core/class_commentpress_display.php:2068
 msgid "Comment form editor"
 msgstr "Kommentar Formular-Editor"
 
-#: commentpress-core/class_commentpress_display.php:1966
-#: commentpress-core/class_commentpress_display.php:2123
+#: commentpress-core/class_commentpress_display.php:1912
+#: commentpress-core/class_commentpress_display.php:2069
 msgid "Rich-text Editor"
 msgstr "Rich-Text-Editor"
 
-#: commentpress-core/class_commentpress_display.php:1967
-#: commentpress-core/class_commentpress_display.php:2124
+#: commentpress-core/class_commentpress_display.php:1913
+#: commentpress-core/class_commentpress_display.php:2070
 msgid "Plain-text Editor"
 msgstr "Plain-Text-Editor"
 
-#: commentpress-core/class_commentpress_display.php:1986
-#: commentpress-core/class_commentpress_display.php:2126
+#: commentpress-core/class_commentpress_display.php:1932
+#: commentpress-core/class_commentpress_display.php:2072
 msgid "Default comment form behaviour"
 msgstr "Standardkommentarverhalten"
 
-#: commentpress-core/class_commentpress_display.php:1987
-#: commentpress-core/class_commentpress_display.php:2127
+#: commentpress-core/class_commentpress_display.php:1933
+#: commentpress-core/class_commentpress_display.php:2073
 msgid "Promote reading"
 msgstr "Lesen bewerben"
 
-#: commentpress-core/class_commentpress_display.php:1988
-#: commentpress-core/class_commentpress_display.php:2128
+#: commentpress-core/class_commentpress_display.php:1934
+#: commentpress-core/class_commentpress_display.php:2074
 msgid "Promote commenting"
 msgstr "Kommentieren bewerben"
 
-#: commentpress-core/class_commentpress_display.php:2008
+#: commentpress-core/class_commentpress_display.php:1954
 msgid "Show or hide page titles by default"
 msgstr "Seitentitel standardmäßig ein- oder ausblenden"
 
-#: commentpress-core/class_commentpress_display.php:2095
+#: commentpress-core/class_commentpress_display.php:2041
 msgid "Reset options to plugin defaults"
 msgstr "Plugin Einstellungen zurücksetzen"
 
-#: commentpress-core/class_commentpress_display.php:2168
+#: commentpress-core/class_commentpress_display.php:2114
 msgid "Table of Contents contains"
 msgstr "Inhaltsverzeichnis enthält"
 
-#: commentpress-core/class_commentpress_display.php:2169
+#: commentpress-core/class_commentpress_display.php:2115
 msgid "Posts"
 msgstr "Beiträge"
 
-#: commentpress-core/class_commentpress_display.php:2170
-#: commentpress-core/class_commentpress_display.php:2173
+#: commentpress-core/class_commentpress_display.php:2116
+#: commentpress-core/class_commentpress_display.php:2119
 #: commentpress-multisite/class_commentpress_mu_bp.php:346
 msgid "Pages"
 msgstr "Seite"
 
-#: commentpress-core/class_commentpress_display.php:2172
+#: commentpress-core/class_commentpress_display.php:2118
 msgid "Chapters are"
 msgstr "Die Kapitel sind"
 
-#: commentpress-core/class_commentpress_display.php:2174
+#: commentpress-core/class_commentpress_display.php:2120
 msgid "Headings"
 msgstr "Überschriften"
 
-#: commentpress-core/class_commentpress_display.php:2279
+#: commentpress-core/class_commentpress_display.php:2122
+msgid "Show Sub-Pages"
+msgstr "Unterseiten anzeigen"
+
+#: commentpress-core/class_commentpress_display.php:2225
 msgid ""
 "Enable \"live\" comment refreshing (Please note: may cause heavy load on "
 "your server)"
@@ -1140,11 +1144,27 @@ msgstr ""
 "Aktivieren Sie \"live\" Kommentar erfrischend (Bitte beachten Sie: "
 "verursachen schwere Last auf dem Server)"
 
-#: commentpress-core/class_commentpress_display.php:2398
+#: commentpress-core/class_commentpress_display.php:2256
+msgid ""
+"Disable CommentPress on entries with no comments. (can be overridden on "
+"individual entries)"
+msgstr ""
+"CommentPress deaktivieren für Einträge ohne Kommentare. (kann bei einzelnen "
+"Einträgen überschrieben werden)"
+
+#: commentpress-core/class_commentpress_display.php:2286
+msgid ""
+"Enable automatic page navigation (controls appearance of page numbering and "
+"navigation arrows on hierarchical pages)"
+msgstr ""
+"Automatische Seitennavigation aktivieren (steuert das Aussehen der "
+"Seitennummerierung und Navigationspfeile auf hierarchischen Seiten)"
+
+#: commentpress-core/class_commentpress_display.php:2344
 msgid "Post Types on which CommentPress Core is enabled"
 msgstr "Beitragstypen, auf denen CommentPress Core aktiviert ist"
 
-#: commentpress-core/class_commentpress_display.php:2452
+#: commentpress-core/class_commentpress_display.php:2398
 #: commentpress-multisite/class_commentpress_mu_admin.php:1054
 #: commentpress-multisite/class_commentpress_mu_ms.php:579
 msgid "Save Changes"
@@ -1198,7 +1218,7 @@ msgstr "Prosa"
 msgid "Poetry"
 msgstr "Poesie"
 
-#: commentpress-core/class_commentpress_nav.php:1122
+#: commentpress-core/class_commentpress_nav.php:1129
 msgid "Cannot represent numbers larger than 4999 in plain ASCII."
 msgstr ""
 "Zahlen größer als 4999 können in einfachen ASCII nicht dargestellt werden."
@@ -1215,24 +1235,6 @@ msgstr "Linie"
 #: commentpress-multisite/class_commentpress_mu_bp.php:1464
 msgid "Enable Translation Workflow"
 msgstr "Übersetzungs-Workflow aktivieren"
-
-#: commentpress-core/class_commentpress_workflow.php:169
-#: themes/commentpress-flat/page.php:333
-#: themes/commentpress-flat/single.php:350
-#: themes/commentpress-modern/page.php:338
-#: themes/commentpress-modern/single.php:355
-#: themes/commentpress-theme/single.php:306
-msgid "Original Text"
-msgstr "Original Text"
-
-#: commentpress-core/class_commentpress_workflow.php:193
-#: themes/commentpress-flat/page.php:306
-#: themes/commentpress-flat/single.php:323
-#: themes/commentpress-modern/page.php:311
-#: themes/commentpress-modern/single.php:328
-#: themes/commentpress-theme/single.php:279
-msgid "Literal Translation"
-msgstr "Wörtliche Übersetzung"
 
 #: commentpress-core/class_commentpress_workflow.php:231
 msgid "Translations"
@@ -1296,6 +1298,19 @@ msgstr "Upgrade auf CommentPress Core"
 msgid "Activation"
 msgstr "Aktivierung"
 
+#: commentpress-multisite/class_commentpress_mu_bp.php:345
+msgid "Published a new page"
+msgstr "Hat eine neue Seite veröffentlicht"
+
+#: commentpress-multisite/class_commentpress_mu_bp.php:347
+msgid "%1$s posted a new <a href=\"%2$s\">page</a>"
+msgstr "%1$s schrieb eine neue <a href=\"%2$s\">Seite</a>"
+
+#: commentpress-multisite/class_commentpress_mu_bp.php:348
+msgid "%1$s posted a new <a href=\"%2$s\">page</a>, on the site %3$s"
+msgstr ""
+"%1$s schrieb eine neue <a href=\"%2$s\">Seite</a>, auf der Webseite %3$s"
+
 #: commentpress-multisite/class_commentpress_mu_bp.php:351
 msgid "Commented on a page"
 msgstr "Kommentierte auf einer Seite"
@@ -1321,16 +1336,16 @@ msgid "comment"
 msgstr "Kommentar"
 
 #: commentpress-multisite/class_commentpress_mu_bp.php:664
-msgid "%s left a %s on a %s %s in the group %s:"
-msgstr "%s hinterließ %s auf einem %s %s in der Gruppe %s:"
+msgid "%1$s left a %2$s on a %3$s %4$s in the group %5$s:"
+msgstr "%1$s hinterließ %2$s auf einem %3$s %4$s in der Gruppe %5$s:"
 
 #: commentpress-multisite/class_commentpress_mu_bp.php:884
-msgid "%s updated a %s %s in the group %s:"
-msgstr "%s aktualisierte %s %s in der Gruppe %s:"
+msgid "%1$s updated a %2$s %3$s in the group %4$s:"
+msgstr "%1$s aktualisierte %2$s %3$s in der Gruppe %4$s:"
 
 #: commentpress-multisite/class_commentpress_mu_bp.php:895
-msgid "%s wrote a new %s %s in the group %s:"
-msgstr "%s hat einen neuen %s %s in der Gruppe %s:"
+msgid "%1$s wrote a new %2$s %3$s in the group %4$s:"
+msgstr "%1$s hat einen neuen %2$s %3$s in der Gruppe %s:"
 
 #: commentpress-multisite/class_commentpress_mu_bp.php:1094
 msgid "CommentPress Comments"
@@ -1568,15 +1583,15 @@ msgstr "Workshops"
 
 #: themes/commentpress-flat/404.php:23
 #: themes/commentpress-flat/directory.php:87
-#: themes/commentpress-flat/page.php:377
+#: themes/commentpress-flat/page.php:160
 #: themes/commentpress-flat/welcome.php:158
 #: themes/commentpress-modern/404.php:23
 #: themes/commentpress-modern/directory.php:87
-#: themes/commentpress-modern/page.php:382
+#: themes/commentpress-modern/page.php:165
 #: themes/commentpress-modern/welcome.php:158
 #: themes/commentpress-theme/404.php:23
 #: themes/commentpress-theme/directory.php:87
-#: themes/commentpress-theme/page.php:134
+#: themes/commentpress-theme/page.php:127
 #: themes/commentpress-theme/welcome.php:93
 msgid "Page Not Found"
 msgstr "Seite nicht gefunden"
@@ -1607,6 +1622,12 @@ msgstr "Posts Tagged"
 #: themes/commentpress-theme/archive.php:37
 msgid "Archive for"
 msgstr "Archiv für "
+
+#: themes/commentpress-flat/archive.php:48
+#: themes/commentpress-modern/archive.php:48
+#: themes/commentpress-theme/archive.php:33
+msgid "F jS, Y"
+msgstr "F jS, Y"
 
 #: themes/commentpress-flat/archive.php:50
 #: themes/commentpress-modern/archive.php:50
@@ -1656,88 +1677,88 @@ msgstr "Permalink zu"
 
 #: themes/commentpress-flat/archive.php:82 themes/commentpress-flat/blog.php:51
 #: themes/commentpress-flat/category.php:59
-#: themes/commentpress-flat/index.php:56 themes/commentpress-flat/page.php:227
+#: themes/commentpress-flat/index.php:54 themes/commentpress-flat/page.php:93
 #: themes/commentpress-flat/search.php:94
-#: themes/commentpress-flat/single.php:202
+#: themes/commentpress-flat/single.php:68
 #: themes/commentpress-modern/archive.php:82
 #: themes/commentpress-modern/blog.php:51
 #: themes/commentpress-modern/category.php:59
-#: themes/commentpress-modern/index.php:56
-#: themes/commentpress-modern/page.php:232
+#: themes/commentpress-modern/index.php:54
+#: themes/commentpress-modern/page.php:98
 #: themes/commentpress-modern/search.php:94
-#: themes/commentpress-modern/single.php:207
+#: themes/commentpress-modern/single.php:73
 #: themes/commentpress-theme/archive.php:56
 #: themes/commentpress-theme/blog.php:50
 #: themes/commentpress-theme/category.php:48
-#: themes/commentpress-theme/index.php:41 themes/commentpress-theme/page.php:73
-#: themes/commentpress-theme/search.php:70
-#: themes/commentpress-theme/single.php:167
+#: themes/commentpress-theme/index.php:39 themes/commentpress-theme/page.php:61
+#: themes/commentpress-theme/search.php:68
+#: themes/commentpress-theme/single.php:45
 msgid "Tags: "
 msgstr "Tags: "
 
 #: themes/commentpress-flat/archive.php:82 themes/commentpress-flat/blog.php:51
 #: themes/commentpress-flat/category.php:59
-#: themes/commentpress-flat/index.php:56 themes/commentpress-flat/page.php:227
+#: themes/commentpress-flat/index.php:54 themes/commentpress-flat/page.php:93
 #: themes/commentpress-flat/search.php:94
 #: themes/commentpress-modern/archive.php:82
 #: themes/commentpress-modern/blog.php:51
 #: themes/commentpress-modern/category.php:59
-#: themes/commentpress-modern/index.php:56
-#: themes/commentpress-modern/page.php:232
+#: themes/commentpress-modern/index.php:54
+#: themes/commentpress-modern/page.php:98
 #: themes/commentpress-modern/search.php:94
 #: themes/commentpress-theme/archive.php:56
 #: themes/commentpress-theme/blog.php:50
 #: themes/commentpress-theme/category.php:48
-#: themes/commentpress-theme/index.php:41 themes/commentpress-theme/page.php:73
-#: themes/commentpress-theme/search.php:70
+#: themes/commentpress-theme/index.php:39 themes/commentpress-theme/page.php:61
+#: themes/commentpress-theme/search.php:68
 msgid "Posted in"
 msgstr "Gepostet in"
 
 #: themes/commentpress-flat/archive.php:82 themes/commentpress-flat/blog.php:51
 #: themes/commentpress-flat/category.php:59
-#: themes/commentpress-flat/index.php:56 themes/commentpress-flat/search.php:94
+#: themes/commentpress-flat/index.php:54 themes/commentpress-flat/search.php:94
 #: themes/commentpress-modern/archive.php:82
 #: themes/commentpress-modern/blog.php:51
 #: themes/commentpress-modern/category.php:59
-#: themes/commentpress-modern/index.php:56
+#: themes/commentpress-modern/index.php:54
 #: themes/commentpress-modern/search.php:94
 #: themes/commentpress-theme/archive.php:56
 #: themes/commentpress-theme/blog.php:50
 #: themes/commentpress-theme/category.php:48
-#: themes/commentpress-theme/index.php:41
-#: themes/commentpress-theme/search.php:70
+#: themes/commentpress-theme/index.php:39
+#: themes/commentpress-theme/search.php:68
 msgid "No Comments &#187;"
 msgstr "Keine Kommentare &#187;"
 
 #: themes/commentpress-flat/archive.php:82 themes/commentpress-flat/blog.php:51
 #: themes/commentpress-flat/category.php:59
-#: themes/commentpress-flat/index.php:56 themes/commentpress-flat/search.php:94
+#: themes/commentpress-flat/index.php:54 themes/commentpress-flat/search.php:94
 #: themes/commentpress-modern/archive.php:82
 #: themes/commentpress-modern/blog.php:51
 #: themes/commentpress-modern/category.php:59
-#: themes/commentpress-modern/index.php:56
+#: themes/commentpress-modern/index.php:54
 #: themes/commentpress-modern/search.php:94
 #: themes/commentpress-theme/archive.php:56
 #: themes/commentpress-theme/blog.php:50
 #: themes/commentpress-theme/category.php:48
-#: themes/commentpress-theme/index.php:41
-#: themes/commentpress-theme/search.php:70
+#: themes/commentpress-theme/index.php:39
+#: themes/commentpress-theme/search.php:68
 msgid "1 Comment &#187;"
 msgstr "Ein Kommentar &#187;"
 
 #: themes/commentpress-flat/archive.php:82 themes/commentpress-flat/blog.php:51
 #: themes/commentpress-flat/category.php:59
-#: themes/commentpress-flat/index.php:56 themes/commentpress-flat/search.php:94
+#: themes/commentpress-flat/index.php:54 themes/commentpress-flat/search.php:94
 #: themes/commentpress-modern/archive.php:82
 #: themes/commentpress-modern/blog.php:51
 #: themes/commentpress-modern/category.php:59
-#: themes/commentpress-modern/index.php:56
+#: themes/commentpress-modern/index.php:54
 #: themes/commentpress-modern/search.php:94
 #: themes/commentpress-theme/archive.php:56
 #: themes/commentpress-theme/blog.php:50
 #: themes/commentpress-theme/category.php:48
-#: themes/commentpress-theme/index.php:41
-#: themes/commentpress-theme/search.php:70
+#: themes/commentpress-theme/index.php:39
+#: themes/commentpress-theme/search.php:68
 msgid "% Comments &#187;"
 msgstr "% Kommentare &#187;"
 
@@ -1758,19 +1779,19 @@ msgstr "Seite nicht gefunden"
 #: themes/commentpress-flat/archive.php:94 themes/commentpress-flat/blog.php:63
 #: themes/commentpress-flat/category.php:71
 #: themes/commentpress-flat/directory.php:89
-#: themes/commentpress-flat/page.php:379
+#: themes/commentpress-flat/page.php:161
 #: themes/commentpress-flat/welcome.php:160
 #: themes/commentpress-modern/archive.php:94
 #: themes/commentpress-modern/blog.php:63
 #: themes/commentpress-modern/category.php:71
 #: themes/commentpress-modern/directory.php:89
-#: themes/commentpress-modern/page.php:384
+#: themes/commentpress-modern/page.php:166
 #: themes/commentpress-modern/welcome.php:160
 #: themes/commentpress-theme/archive.php:68
 #: themes/commentpress-theme/blog.php:62
 #: themes/commentpress-theme/category.php:60
 #: themes/commentpress-theme/directory.php:89
-#: themes/commentpress-theme/page.php:136
+#: themes/commentpress-theme/page.php:128
 #: themes/commentpress-theme/welcome.php:95
 msgid "Sorry, but you are looking for something that isn't here."
 msgstr "Leider nicht gefunden."
@@ -1840,6 +1861,12 @@ msgstr "Wer ist online"
 #: themes/commentpress-theme/assets/templates/comment_form.php:60
 msgid "Leave a Comment"
 msgstr "Schreiben Sie einen Kommentar"
+
+#: themes/commentpress-flat/assets/templates/comment_form.php:81
+#: themes/commentpress-modern/assets/templates/comment_form.php:81
+#: themes/commentpress-theme/assets/templates/comment_form.php:61
+msgid "Leave a Reply to %s"
+msgstr "Hinterlasse eine Antwort auf %s"
 
 #: themes/commentpress-flat/assets/templates/comment_form.php:89
 #: themes/commentpress-flat/assets/templates/comment_form.php:204
@@ -2102,66 +2129,100 @@ msgstr "Website-Content"
 msgid "All rights reserved."
 msgstr "Alle Rechte vorbehalten."
 
-#: themes/commentpress-flat/functions.php:71
-#: themes/commentpress-modern/functions.php:127
+#: themes/commentpress-flat/functions.php:69
+#: themes/commentpress-modern/functions.php:125
 msgid "Footer"
 msgstr "Fußzeile"
 
-#: themes/commentpress-flat/functions.php:512
-#: themes/commentpress-modern/functions.php:581
-#: themes/commentpress-theme/functions.php:458
+#: themes/commentpress-flat/functions.php:496
+#: themes/commentpress-modern/functions.php:565
+#: themes/commentpress-theme/functions.php:450
 msgid "Next page with comments"
 msgstr "Nächste Seite mit Kommentaren"
 
-#: themes/commentpress-flat/functions.php:542
-#: themes/commentpress-modern/functions.php:611
-#: themes/commentpress-theme/functions.php:486
+#: themes/commentpress-flat/functions.php:526
+#: themes/commentpress-modern/functions.php:595
+#: themes/commentpress-theme/functions.php:478
 msgid "Previous page with comments"
 msgstr "Vorherige Seite mit Kommentaren"
 
-#: themes/commentpress-flat/functions.php:677
-#: themes/commentpress-modern/functions.php:746
-#: themes/commentpress-theme/functions.php:617
+#: themes/commentpress-flat/functions.php:629
+#: themes/commentpress-modern/functions.php:698
+#: themes/commentpress-theme/functions.php:577
+msgid "<span class=\"cp_comment_count\">%d</span> comment"
+msgid_plural "<span class=\"cp_comment_count\">%d</span> comments"
+msgstr[0] "<span class=\"cp_comment_count\">%d</span> Kommentar"
+msgstr[1] "<span class=\"cp_comment_count\">%d</span> Kommentare"
+
+#: themes/commentpress-flat/functions.php:649
+#: themes/commentpress-modern/functions.php:718
+#: themes/commentpress-theme/functions.php:597
 msgid "Password protected"
 msgstr "Passwortgeschützt"
 
-#: themes/commentpress-flat/functions.php:775
-#: themes/commentpress-modern/functions.php:844
-#: themes/commentpress-theme/functions.php:713
+#: themes/commentpress-flat/functions.php:747
+#: themes/commentpress-modern/functions.php:816
+#: themes/commentpress-theme/functions.php:693
 msgid "Comments on the Blog"
 msgstr "Kommentare zum Blog"
 
-#: themes/commentpress-flat/functions.php:781
-#: themes/commentpress-modern/functions.php:850
-#: themes/commentpress-theme/functions.php:719
+#: themes/commentpress-flat/functions.php:753
+#: themes/commentpress-modern/functions.php:822
+#: themes/commentpress-theme/functions.php:699
 msgid "Comments on the Pages"
 msgstr "Kommentare zu den Seiten"
 
-#: themes/commentpress-flat/functions.php:1067
-#: themes/commentpress-modern/functions.php:1116
-#: themes/commentpress-theme/functions.php:826
+#: themes/commentpress-flat/functions.php:1037
+#: themes/commentpress-modern/functions.php:1086
+#: themes/commentpress-theme/functions.php:806
 msgid "CommentPress Footer"
 msgstr "CommentPress Footer"
 
-#: themes/commentpress-flat/functions.php:1078
-#: themes/commentpress-modern/functions.php:1127
+#: themes/commentpress-flat/functions.php:1039
+#: themes/commentpress-modern/functions.php:1088
+#: themes/commentpress-theme/functions.php:808
+msgid "An optional widget area in the footer of a CommentPress theme"
+msgstr "Ein optionaler Widgetbereich in der Fußzeile vom CommentPress Theme"
+
+#: themes/commentpress-flat/functions.php:1048
+#: themes/commentpress-modern/functions.php:1097
 msgid "Navigation Top"
-msgstr "Navigation oben"
+msgstr "Navigation Oben"
 
-#: themes/commentpress-flat/functions.php:1089
-#: themes/commentpress-modern/functions.php:1138
+#: themes/commentpress-flat/functions.php:1050
+#: themes/commentpress-modern/functions.php:1099
+msgid "An optional widget area at the top of the Navigation Column"
+msgstr "Ein optionaler Widgetbereich am oberen Rand der Navigationsrubrik"
+
+#: themes/commentpress-flat/functions.php:1059
+#: themes/commentpress-modern/functions.php:1108
 msgid "Navigation Bottom"
-msgstr "Navigation untem"
+msgstr "Navigation Unten"
 
-#: themes/commentpress-flat/functions.php:1100
-#: themes/commentpress-modern/functions.php:1149
+#: themes/commentpress-flat/functions.php:1061
+#: themes/commentpress-modern/functions.php:1110
+msgid "An optional widget area at the bottom of the Navigation Column"
+msgstr "Ein optionaler Widgetbereich am unteren Rand der Navigationsrubrik"
+
+#: themes/commentpress-flat/functions.php:1070
+#: themes/commentpress-modern/functions.php:1119
 msgid "Activity Top"
 msgstr "Activität Oben"
 
-#: themes/commentpress-flat/functions.php:1111
-#: themes/commentpress-modern/functions.php:1160
+#: themes/commentpress-flat/functions.php:1072
+#: themes/commentpress-modern/functions.php:1121
+msgid "An optional widget area at the top of the Activity Column"
+msgstr "Ein optionaler Widgetbereich am oberen Rand der Aktivitätsrubrik"
+
+#: themes/commentpress-flat/functions.php:1081
+#: themes/commentpress-modern/functions.php:1130
 msgid "Activity Bottom"
 msgstr "Activität Unten"
+
+#: themes/commentpress-flat/functions.php:1083
+#: themes/commentpress-modern/functions.php:1132
+msgid "An optional widget area at the bottom of the Activity Column"
+msgstr "Ein optionaler Widgetbereich am unteren Rand der Aktivitätsrubrik"
 
 #: themes/commentpress-flat/group.php:52
 #: themes/commentpress-modern/group.php:52
@@ -2202,12 +2263,11 @@ msgid "This image was posted on %1$s at %2$s and is filed under %3$s."
 msgstr ""
 "Dieses Bild wurde auf %1$ in %2$ veröffentlicht und wurde unter %3$ abgelegt."
 
-#: themes/commentpress-flat/image.php:62
-#: themes/commentpress-flat/single.php:219
+#: themes/commentpress-flat/image.php:62 themes/commentpress-flat/single.php:83
 #: themes/commentpress-modern/image.php:62
-#: themes/commentpress-modern/single.php:224
+#: themes/commentpress-modern/single.php:88
 #: themes/commentpress-theme/image.php:62
-#: themes/commentpress-theme/single.php:174
+#: themes/commentpress-theme/single.php:50
 msgid "RSS 2.0"
 msgstr "RSS 2.0"
 
@@ -2218,16 +2278,16 @@ msgid "You can follow any comments on this image through the %s feed."
 msgstr "Sie können alle Kommentare zu diesem Bild mit dem Feed %s folgen."
 
 #: themes/commentpress-flat/image.php:77 themes/commentpress-flat/image.php:96
-#: themes/commentpress-flat/single.php:238
-#: themes/commentpress-flat/single.php:257
+#: themes/commentpress-flat/single.php:102
+#: themes/commentpress-flat/single.php:121
 #: themes/commentpress-modern/image.php:77
 #: themes/commentpress-modern/image.php:96
-#: themes/commentpress-modern/single.php:243
-#: themes/commentpress-modern/single.php:262
+#: themes/commentpress-modern/single.php:107
+#: themes/commentpress-modern/single.php:126
 #: themes/commentpress-theme/image.php:77
 #: themes/commentpress-theme/image.php:96
-#: themes/commentpress-theme/single.php:194
-#: themes/commentpress-theme/single.php:213
+#: themes/commentpress-theme/single.php:70
+#: themes/commentpress-theme/single.php:89
 msgid "trackback"
 msgstr "Trackback"
 
@@ -2238,42 +2298,42 @@ msgid "You are welcome to leave a comment, or %s from your own site."
 msgstr "Schreiben Sie einen Kommentar oder %s auf Ihrer eigenen Seite."
 
 #: themes/commentpress-flat/image.php:103
-#: themes/commentpress-flat/single.php:264
+#: themes/commentpress-flat/single.php:128
 #: themes/commentpress-modern/image.php:103
-#: themes/commentpress-modern/single.php:269
+#: themes/commentpress-modern/single.php:133
 #: themes/commentpress-theme/image.php:103
-#: themes/commentpress-theme/single.php:220
+#: themes/commentpress-theme/single.php:96
 msgid "Comments are currently closed, but you can %s from your own site."
 msgstr ""
 "Kommentare sind derzeit geschlossen, aber Sie können %s aus Ihrer eigenen "
 "Website."
 
 #: themes/commentpress-flat/image.php:113
-#: themes/commentpress-flat/single.php:274
+#: themes/commentpress-flat/single.php:138
 #: themes/commentpress-modern/image.php:113
-#: themes/commentpress-modern/single.php:279
+#: themes/commentpress-modern/single.php:143
 #: themes/commentpress-theme/image.php:113
-#: themes/commentpress-theme/single.php:230
+#: themes/commentpress-theme/single.php:106
 msgid "You can leave a comment. Pinging is currently not allowed."
 msgstr ""
 "Sie können einen Kommentar hinterlassen. Pingen ist im Augenblick nicht "
 "erlaubt."
 
 #: themes/commentpress-flat/image.php:121
-#: themes/commentpress-flat/single.php:282
+#: themes/commentpress-flat/single.php:146
 #: themes/commentpress-modern/image.php:121
-#: themes/commentpress-modern/single.php:287
+#: themes/commentpress-modern/single.php:151
 #: themes/commentpress-theme/image.php:121
-#: themes/commentpress-theme/single.php:238
+#: themes/commentpress-theme/single.php:114
 msgid "Both comments and pings are currently closed."
 msgstr "Kommentare und Pings sind derzeit geschlossen."
 
 #: themes/commentpress-flat/image.php:129
-#: themes/commentpress-flat/single.php:290
+#: themes/commentpress-flat/single.php:154
 #: themes/commentpress-modern/image.php:129
-#: themes/commentpress-modern/single.php:295
+#: themes/commentpress-modern/single.php:159
 #: themes/commentpress-theme/image.php:129
-#: themes/commentpress-theme/single.php:246
+#: themes/commentpress-theme/single.php:122
 msgid "Edit this entry"
 msgstr "Eintrag bearbeiten"
 
@@ -2295,27 +2355,27 @@ msgstr "&laquo; Vorheriges Bild"
 msgid "Sorry, no attachments matched your criteria."
 msgstr "Tut mir leid, kein Anhang passt zu deinen Kriterien."
 
-#: themes/commentpress-flat/index.php:64
-#: themes/commentpress-modern/index.php:64
-#: themes/commentpress-theme/index.php:49
+#: themes/commentpress-flat/index.php:62
+#: themes/commentpress-modern/index.php:62
+#: themes/commentpress-theme/index.php:47
 msgid "No blog posts found"
 msgstr "Keine Blog-Beiträge gefunden"
 
-#: themes/commentpress-flat/index.php:66
-#: themes/commentpress-modern/index.php:66
-#: themes/commentpress-theme/index.php:51
+#: themes/commentpress-flat/index.php:64
+#: themes/commentpress-modern/index.php:64
+#: themes/commentpress-theme/index.php:49
 msgid "There are no blog posts yet."
 msgstr "Es gibt keine Blog-Beiträge."
 
-#: themes/commentpress-flat/index.php:72
-#: themes/commentpress-modern/index.php:72
-#: themes/commentpress-theme/index.php:57
+#: themes/commentpress-flat/index.php:70
+#: themes/commentpress-modern/index.php:70
+#: themes/commentpress-theme/index.php:55
 msgid "Go to your dashboard to add one."
 msgstr "Gehen Sie zu Ihrem Dashboard."
 
-#: themes/commentpress-flat/index.php:78
-#: themes/commentpress-modern/index.php:78
-#: themes/commentpress-theme/index.php:63
+#: themes/commentpress-flat/index.php:76
+#: themes/commentpress-modern/index.php:76
+#: themes/commentpress-theme/index.php:61
 msgid ""
 "If you were looking for something that hasn't been found, try using the "
 "search form below."
@@ -2328,33 +2388,9 @@ msgstr ""
 msgid "Links:"
 msgstr "Links:"
 
-#: themes/commentpress-flat/page.php:100 themes/commentpress-flat/single.php:99
-#: themes/commentpress-modern/assets/templates/header_body.php:45
-#: themes/commentpress-modern/page.php:100
-#: themes/commentpress-modern/single.php:99
-#: themes/commentpress-theme/single.php:99
-msgid "Content"
-msgstr "Inhalt"
-
-#: themes/commentpress-flat/page.php:107
-#: themes/commentpress-flat/single.php:106
-#: themes/commentpress-modern/page.php:107
-#: themes/commentpress-modern/single.php:106
-#: themes/commentpress-theme/single.php:106
-msgid "Literal"
-msgstr "wörtlich"
-
-#: themes/commentpress-flat/page.php:115
-#: themes/commentpress-flat/single.php:114
-#: themes/commentpress-modern/page.php:115
-#: themes/commentpress-modern/single.php:114
-#: themes/commentpress-theme/single.php:114
-msgid "Original"
-msgstr "Original"
-
-#: themes/commentpress-flat/page.php:257
-#: themes/commentpress-modern/page.php:262
-#: themes/commentpress-theme/page.php:113
+#: themes/commentpress-flat/page.php:121
+#: themes/commentpress-modern/page.php:126
+#: themes/commentpress-theme/page.php:97
 msgid "Page %s"
 msgstr "Seite %s"
 
@@ -2366,13 +2402,13 @@ msgstr "Suchergebnisse für "
 
 #: themes/commentpress-flat/search.php:112
 #: themes/commentpress-modern/search.php:112
-#: themes/commentpress-theme/search.php:88
+#: themes/commentpress-theme/search.php:86
 msgid "Nothing found for"
 msgstr "Nichts gefunden"
 
 #: themes/commentpress-flat/search.php:114
 #: themes/commentpress-modern/search.php:114
-#: themes/commentpress-theme/search.php:90
+#: themes/commentpress-theme/search.php:88
 msgid "Try a different search?"
 msgstr "Versuchen Sie eine andere Suche?"
 
@@ -2385,33 +2421,33 @@ msgstr "Versuchen Sie eine andere Suche?"
 msgid "Search for:"
 msgstr "Suche nach:"
 
-#: themes/commentpress-flat/single.php:208
-#: themes/commentpress-modern/single.php:213
+#: themes/commentpress-flat/single.php:72
+#: themes/commentpress-modern/single.php:77
 msgid "Categories:"
 msgstr "Kategorien"
 
-#: themes/commentpress-flat/single.php:226
-#: themes/commentpress-modern/single.php:231
+#: themes/commentpress-flat/single.php:90
+#: themes/commentpress-modern/single.php:95
 msgid "You can follow any comments on this entry through the %s feed."
 msgstr "Sie können alle Kommentare zu diesem Eintrag über den Feed %s folgen."
 
-#: themes/commentpress-flat/single.php:245
-#: themes/commentpress-modern/single.php:250
-#: themes/commentpress-theme/single.php:201
+#: themes/commentpress-flat/single.php:109
+#: themes/commentpress-modern/single.php:114
+#: themes/commentpress-theme/single.php:77
 msgid "You can leave a comment, or %s from your own site."
 msgstr ""
 "Sie können einen Kommentar hinterlassen, oder %s von Ihrer Website hierher "
 "setzen."
 
-#: themes/commentpress-flat/single.php:411
-#: themes/commentpress-modern/single.php:416
-#: themes/commentpress-theme/single.php:356
+#: themes/commentpress-flat/single.php:188
+#: themes/commentpress-modern/single.php:193
+#: themes/commentpress-theme/single.php:147
 msgid "Post Not Found"
 msgstr "Dieser Beitrag konnte nicht gefunden werden."
 
-#: themes/commentpress-flat/single.php:413
-#: themes/commentpress-modern/single.php:418
-#: themes/commentpress-theme/single.php:358
+#: themes/commentpress-flat/single.php:189
+#: themes/commentpress-modern/single.php:194
+#: themes/commentpress-theme/single.php:148
 msgid "Sorry, no posts matched your criteria."
 msgstr "Sorry, es gibt keinen Beitrag, der deinen Suchkriterien entspricht."
 
@@ -2443,26 +2479,26 @@ msgid "Discuss"
 msgstr "Diskutieren"
 
 #. translators: header image description
-#: themes/commentpress-modern/functions.php:96
-#: themes/commentpress-theme/functions.php:88
+#: themes/commentpress-modern/functions.php:94
+#: themes/commentpress-theme/functions.php:86
 msgid "Abstract Green"
 msgstr "Abstract Green"
 
 #. translators: header image description
-#: themes/commentpress-modern/functions.php:102
-#: themes/commentpress-theme/functions.php:94
+#: themes/commentpress-modern/functions.php:100
+#: themes/commentpress-theme/functions.php:92
 msgid "Abstract Red"
 msgstr "Abstract Red"
 
 #. translators: header image description
-#: themes/commentpress-modern/functions.php:108
-#: themes/commentpress-theme/functions.php:100
+#: themes/commentpress-modern/functions.php:106
+#: themes/commentpress-theme/functions.php:98
 msgid "Abstract Blue"
 msgstr "Abstract Blue"
 
 #. translators: header image description
-#: themes/commentpress-modern/functions.php:114
-#: themes/commentpress-theme/functions.php:106
+#: themes/commentpress-modern/functions.php:112
+#: themes/commentpress-theme/functions.php:104
 msgid "Abstract Violet"
 msgstr "Abstrakt Violet"
 
@@ -2503,7 +2539,7 @@ msgstr "Permanenter Link:"
 msgid "No posts by this author."
 msgstr "Keine Einträge dieses Autors."
 
-#: themes/commentpress-theme/single.php:181
+#: themes/commentpress-theme/single.php:57
 msgid ""
 "This entry is filed under %1$s. You can follow any comments on this entry "
 "through the %2$s feed."

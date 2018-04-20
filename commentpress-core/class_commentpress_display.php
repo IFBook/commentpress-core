@@ -598,7 +598,7 @@ HELPTEXT;
 						$html .= '<cite class="fn">' . $author_html . '</cite>' . "\n";
 
 						// add permalink
-						$html .= '<p class="post_activity_date">' . esc_html( get_the_time( __( 'l, F jS, Y', 'commentpress-core' ), $item->ID ) ) . '</p>' . "\n";
+						$html .= '<p class="post_activity_date">' . esc_html( get_the_time( get_option( 'date_format' ), $item->ID ) ) . '</p>' . "\n";
 
 					}
 
@@ -618,7 +618,7 @@ HELPTEXT;
 					$html .= '<cite class="fn">' . $this->echo_post_author( $author_id, false ) . '</cite>';
 
 					// add permalink
-					$html .= '<p class="post_activity_date">' . esc_html( get_the_time( __( 'l, F jS, Y', 'commentpress-core' ), $item->ID ) ) . '</p>';
+					$html .= '<p class="post_activity_date">' . esc_html( get_the_time( get_option( 'date_format' ), $item->ID ) ) . '</p>';
 
 				}
 
@@ -832,26 +832,14 @@ HELPTEXT;
 
 				// define title text
 				$title_text = sprintf(
-					_n(
-						'There is %d comment written for this %s', // singular
-						'There are %d comments written for this %s', // plural
-						$comment_count, // number
-						'commentpress-core' // domain
-					),
-					// substitutions
+					_n( 'There is %d comment written for this %s', 'There are %d comments written for this %s', $comment_count, 'commentpress-core' ),
 					$comment_count,
 					$this->parent_obj->parser->lexia_get()
 				);
 
 				// define add comment text
 				$add_text = sprintf(
-					_n(
-						'Leave a comment on %s %d', // singular
-						'Leave a comment on %s %d', // plural
-						$para_num, // number
-						'commentpress-core' // domain
-					),
-					// substitutions
+					__( 'Leave a comment on %s %d', 'commentpress-core' ),
 					$this->parent_obj->parser->lexia_get(),
 					$para_num
 				);
@@ -865,26 +853,14 @@ HELPTEXT;
 
 				// define title text
 				$title_text = sprintf(
-					_n(
-						'There is %d comment written for this %s', // singular
-						'There are %d comments written for this %s', // plural
-						$comment_count, // number
-						'commentpress-core' // domain
-					),
-					// substitutions
+					_n( 'There is %d comment written for this %s', 'There are %d comments written for this %s', $comment_count, 'commentpress-core' ),
 					$comment_count,
 					$this->parent_obj->parser->lexia_get()
 				);
 
 				// define add comment text
 				$add_text = sprintf(
-					_n(
-						'Leave a comment on %s %d', // singular
-						'Leave a comment on %s %d', // plural
-						$para_num, // number
-						'commentpress-core' // domain
-					),
-					// substitutions
+					__( 'Leave a comment on %s %d', 'commentpress-core' ),
 					$this->parent_obj->parser->lexia_get(),
 					$para_num
 				);
@@ -899,26 +875,14 @@ HELPTEXT;
 
 				// define title text
 				$title_text = sprintf(
-					_n(
-						'There is %d comment written for this %s', // singular
-						'There are %d comments written for this %s', // plural
-						$comment_count, // number
-						'commentpress-core' // domain
-					),
-					// substitutions
+					_n( 'There is %d comment written for this %s', 'There are %d comments written for this %s', $comment_count, 'commentpress-core' ),
 					$comment_count,
 					$this->parent_obj->parser->lexia_get()
 				);
 
 				// define add comment text
 				$add_text = sprintf(
-					_n(
-						'Leave a comment on %s %d', // singular
-						'Leave a comment on %s %d', // plural
-						$para_num, // number
-						'commentpress-core' // domain
-					),
-					// substitutions
+					__( 'Leave a comment on %s %d', 'commentpress-core' ),
 					$this->parent_obj->parser->lexia_get(),
 					$para_num
 				);
@@ -964,13 +928,7 @@ HELPTEXT;
 
 				// define permalink text
 				$permalink_text = sprintf(
-					_n(
-						'Permalink for %s %d', // singular
-						'Permalink for %s %d', // plural
-						$para_num, // number
-						'commentpress-core' // domain
-					),
-					// substitutions
+					__( 'Permalink for %s %d', 'commentpress-core' ),
 					$this->parent_obj->parser->lexia_get(),
 					$para_num
 				);
@@ -987,13 +945,7 @@ HELPTEXT;
 
 				// define permalink text
 				$permalink_text = sprintf(
-					_n(
-						'Permalink for %s %d', // singular
-						'Permalink for %s %d', // plural
-						$para_num, // number
-						'commentpress-core' // domain
-					),
-					// substitutions
+					__( 'Permalink for %s %d', 'commentpress-core' ),
 					$this->parent_obj->parser->lexia_get(),
 					$para_num
 				);
@@ -1011,13 +963,7 @@ HELPTEXT;
 
 				// define permalink text
 				$permalink_text = sprintf(
-					_n(
-						'Permalink for %s %d', // singular
-						'Permalink for %s %d', // plural
-						$para_num, // number
-						'commentpress-core' // domain
-					),
-					// substitutions
+					__( 'Permalink for %s %d', 'commentpress-core' ),
 					$this->parent_obj->parser->lexia_get(),
 					$para_num
 				);

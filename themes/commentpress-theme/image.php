@@ -51,7 +51,7 @@
 
 			echo sprintf(
 				__( 'This image was posted on %1$s at %2$s and is filed under %3$s.', 'commentpress-core' ),
-				esc_html( get_the_date( __( 'l, F jS, Y', 'commentpress-core' ) ) ),
+				esc_html( get_the_date( get_option( 'date_format' ) ) ),
 				get_the_time(),
 				get_the_category_list( ', ' )
 			);
@@ -81,7 +81,7 @@
 
 				// write out
 				echo sprintf(
-					__( 'You are welcome to leave a comment, or %s from your own site.' ),
+					__( 'You are welcome to leave a comment, or %s from your own site.', 'commentpress-core' ),
 					$trackback_link
 				);
 

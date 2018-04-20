@@ -236,7 +236,7 @@ function commentpress_customize_site_logo( $wp_customize ) {
 	$wp_customize->add_control( new WP_Customize_Image_Control(
 		$wp_customize, 'cp_inline_header_image', array(
 		'label' => __( 'Logo Image', 'commentpress-core' ),
-	    'description' => apply_filters( 'commentpress_customizer_site_logo_description', __( 'You may prefer to display an image instead of text in the header of your site. The image must be a maximum of 70px tall. If it is less tall, then you can adjust the vertical alignment using the "Top padding in px" setting below.', 'commentpress-core' ) ),
+		'description' => apply_filters( 'commentpress_customizer_site_logo_description', __( 'You may prefer to display an image instead of text in the header of your site. The image must be a maximum of 70px tall. If it is less tall, then you can adjust the vertical alignment using the "Top padding in px" setting below.', 'commentpress-core' ) ),
 		'section' => 'cp_inline_header_image',
 		'settings' => 'commentpress_theme_settings[cp_inline_header_image]',
 		'priority'	=>	1
@@ -390,11 +390,11 @@ function commentpress_get_header_image() {
 		// add filter for the function above
 		add_filter( 'bp_core_avatar_url', 'commentpress_fix_bp_core_avatar_url', 10, 1 );
 
-        // show group avatar
-        echo bp_core_fetch_avatar( $avatar_options );
+		// show group avatar
+		echo bp_core_fetch_avatar( $avatar_options );
 
-        // remove filter
-        remove_filter( 'bp_core_avatar_url', 'commentpress_fix_bp_core_avatar_url' );
+		// remove filter
+		remove_filter( 'bp_core_avatar_url', 'commentpress_fix_bp_core_avatar_url' );
 
 		// --<
 		return;
@@ -1230,7 +1230,7 @@ function commentpress_echo_post_meta() {
 
 			?><cite class="fn"><?php echo $author_html; ?></cite>
 
-			<p><a href="<?php the_permalink() ?>"><?php echo esc_html( get_the_date( __( 'l, F jS, Y', 'commentpress-core' ) ) ); ?></a></p>
+			<p><a href="<?php the_permalink() ?>"><?php echo esc_html( get_the_date( get_option( 'date_format' ) ) ); ?></a></p>
 
 			<?php
 
@@ -1246,7 +1246,7 @@ function commentpress_echo_post_meta() {
 
 		<cite class="fn"><?php commentpress_echo_post_author( $author_id ) ?></cite>
 
-		<p><a href="<?php the_permalink() ?>"><?php echo esc_html( get_the_date( __( 'l, F jS, Y', 'commentpress-core' ) ) ); ?></a></p>
+		<p><a href="<?php the_permalink() ?>"><?php echo esc_html( get_the_date( get_option( 'date_format' ) ) ); ?></a></p>
 
 		<?php
 
@@ -1373,7 +1373,7 @@ function commentpress_format_comment( $comment, $context = 'all' ) {
 	$comment_anchor = '<a href="' . $comment_link . '" title="' . esc_attr( __( 'See comment in context', 'commentpress-core' ) ) . '">' . __( 'Comment', 'commentpress-core' ) . '</a>';
 
 	// construct date
-	$comment_date = date( __( 'F jS, Y', 'commentpress-core' ), strtotime( $comment->comment_date ) );
+	$comment_date = date_i18n( get_option( 'date_format' ), strtotime( $comment->comment_date ) );
 
 	// if context is 'all comments'
 	if ( $context == 'all' ) {
@@ -2086,12 +2086,7 @@ function commentpress_comments_by_para_format_whole( $post_type_name, $post_type
 
 	// construct comment count
 	$return['comment_text'] = sprintf(
-		_n(
-			'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span>', // singular
-			'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span>', // plural
-			$comment_count, // number
-			'commentpress-core' // domain
-		),
+		_n( '<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span>', '<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span>', $comment_count, 'commentpress-core' ),
 		$comment_count // substitution
 	);
 
@@ -2132,12 +2127,7 @@ function commentpress_comments_by_para_format_pings( $comment_count ) {
 
 	// construct comment count
 	$return['comment_text'] = sprintf(
-		_n(
-			'<span>%d</span> Pingback or trackback', // singular
-			'<span>%d</span> Pingbacks and trackbacks', // plural
-			$comment_count, // number
-			'commentpress-core' // domain
-		),
+		_n( '<span>%d</span> Pingback or trackback', '<span>%d</span> Pingbacks and trackbacks', $comment_count, 'commentpress-core' ),
 		$comment_count // substitution
 	);
 
@@ -2192,12 +2182,7 @@ function commentpress_comments_by_para_format_block( $comment_count, $para_num )
 
 	// construct comment count
 	$return['comment_text'] = sprintf(
-		_n(
-			'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span>', // singular
-			'<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span>', // plural
-			$comment_count, // number
-			'commentpress-core' // domain
-		),
+		_n( '<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span>', '<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span>', $comment_count, 'commentpress-core' ),
 		$comment_count // substitution
 	);
 
@@ -2639,9 +2624,9 @@ function commentpress_comment_form_title(
 ) {
 
 	// sanity checks
-	if ( $no_reply_text == '' ) { $no_reply_text = __( 'Leave a Reply', 'commentpress-core' ); }
-	if ( $reply_to_comment_text == '' ) { $reply_to_comment_text = __( 'Leave a Reply to %s', 'commentpress-core' ); }
-	if ( $reply_to_para_text == '' ) { $reply_to_para_text = __( 'Leave a Comment on %s', 'commentpress-core' ); }
+	if ( $no_reply_text == '' ) { $no_reply_text = __( 'Leave a reply', 'commentpress-core' ); }
+	if ( $reply_to_comment_text == '' ) { $reply_to_comment_text = __( 'Leave a reply to %s', 'commentpress-core' ); }
+	if ( $reply_to_para_text == '' ) { $reply_to_para_text = __( 'Leave a comment on %s', 'commentpress-core' ); }
 
 	// declare access to globals
 	global $comment, $commentpress_core;
@@ -2684,7 +2669,7 @@ function commentpress_comment_form_title(
 
 				// construct link text
 				$para_text = sprintf(
-					_x( '%s %s', 'The first substitution is the block name e.g. "paragraph". The second is the numeric comment count.', 'commentpress-core' ),
+					_x( '%1$s %2$s', 'The first substitution is the block name e.g. "paragraph". The second is the numeric comment count.', 'commentpress-core' ),
 					ucfirst( $commentpress_core->parser->lexia_get() ),
 					$reply_to_para_id
 				);
@@ -2696,7 +2681,7 @@ function commentpress_comment_form_title(
 
 				// construct paragraph without link
 				$paragraph = sprintf(
-					_x( '%s %s', 'The first substitution is the block name e.g. "paragraph". The second is the numeric comment count.', 'commentpress-core' ),
+					_x( '%1$s %2$s', 'The first substitution is the block name e.g. "paragraph". The second is the numeric comment count.', 'commentpress-core' ),
 					ucfirst( $commentpress_core->parser->lexia_get() ),
 					$para_num
 				);
@@ -4597,5 +4582,368 @@ endif; // commentpress_unwrap_buddypress_button
 add_filter( 'bp_get_group_create_button', 'commentpress_unwrap_buddypress_button' );
 add_filter( 'bp_get_blog_create_button', 'commentpress_unwrap_buddypress_button' );
 
+
+
+if ( ! function_exists( 'commentpress_geomashup_map_get' ) ):
+/**
+ * Show the map for a post.
+ *
+ * Does not work in non-global loops, such as those made via WP_Query.
+ *
+ * @since 3.9.9
+ */
+function commentpress_geomashup_map_get() {
+
+	// bail if Geo Mashup not active
+	if ( ! class_exists( 'GeoMashup' ) ) return;
+
+	// bail if post has no location
+	if ( empty( GeoMashup::current_location( null, 'post' ) ) ) return;
+
+	// show map
+	echo '<div class="geomap">' . GeoMashup::map() . '</div>';
+
+}
+endif;
+
+
+
+/**
+ * Theme Tabs Class.
+ *
+ * A class that encapsulates functionality of theme-specific Workflow tabs.
+ * Does not work in non-global loops, such as those made via WP_Query.
+ *
+ * @since 3.9.9
+ */
+class CommentPress_Theme_Tabs {
+
+	/**
+	 * Tabs Class.
+	 *
+	 * @since 3.9.9
+	 * @access public
+	 * @var str $tabs_class The Tabs Class.
+	 */
+	public $tabs_class = '';
+
+	/**
+	 * Tabs Classes.
+	 *
+	 * @since 3.9.9
+	 * @access public
+	 * @var str $tabs_classes The Tabs Classes.
+	 */
+	public $tabs_classes = '';
+
+	/**
+	 * Original Content.
+	 *
+	 * @since 3.9.9
+	 * @access public
+	 * @var str $original The Original Content.
+	 */
+	public $original = '';
+
+	/**
+	 * Literal Content.
+	 *
+	 * @since 3.9.9
+	 * @access public
+	 * @var str $literal The Literal Content.
+	 */
+	public $literal = '';
+
+
+
+	/**
+	 * Constructor.
+	 *
+	 * @since 3.9.9
+	 */
+	public function __construct() {
+
+		// nothing
+
+	}
+
+
+
+	/**
+	 * Returns a single instance of this object when called.
+	 *
+	 * @since 3.9.9
+	 *
+	 * @return object $instance Comment_Tagger instance.
+	 */
+	public static function instance() {
+
+		// store the instance locally to avoid private static replication
+		static $instance = null;
+
+		// instantiate if need be
+		if ( null === $instance ) {
+			$instance = new CommentPress_Theme_Tabs;
+		}
+
+		// always return instance
+		return $instance;
+
+	}
+
+
+
+	/**
+	 * Initialise required data.
+	 *
+	 * @since 3.9.9
+	 */
+	public function initialise() {
+
+		// bail if already initialised
+		static $initialised = false;
+		if ( $initialised ) return;
+
+		// bail if plugin not present
+		global $commentpress_core;
+		if ( ! is_object( $commentpress_core ) ) return;
+
+		// bail if workflow not enabled
+		if ( '1' != $commentpress_core->db->option_get( 'cp_blog_workflow' ) ) return;
+
+		// okay, let's get our data
+
+		// access post
+		global $post;
+
+		// set key
+		$key = '_cp_original_text';
+
+		// if the custom field already has a value, get it
+		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
+			$this->original = get_post_meta( $post->ID, $key, true );
+		}
+
+		// set key
+		$key = '_cp_literal_translation';
+
+		// if the custom field already has a value, get it
+		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
+			$this->literal = get_post_meta( $post->ID, $key, true );
+		}
+
+		// did we get either type of workflow content?
+		if ( $this->literal != '' OR $this->original != '' ) {
+
+			// override tabs class
+			$this->tabs_class = 'with-content-tabs';
+
+			// override tabs classes
+			$this->tabs_classes = ' class="' . $this->tabs_class . '"';
+
+			// prefix with space
+			$this->tabs_class = ' ' . $this->tabs_class;
+
+		}
+
+		// flag as initialised
+		$initialised = true;
+
+	}
+
+
+
+	/**
+	 * Echo Tabs.
+	 *
+	 * @since 3.9.9
+	 */
+	public function tabs() {
+
+		// bail if we have no tabs
+		if ( empty( $this->tabs_class ) ) return;
+
+		// bail if we get neither type of workflow content
+		if ( empty( $this->literal ) AND empty( $this->original ) ) return;
+
+		?>
+		<ul id="content-tabs">
+			<li id="content_header" class="default-content-tab"><h2><a href="#content"><?php
+				echo apply_filters(
+					'commentpress_content_tab_content',
+					__( 'Content', 'commentpress-core' )
+				);
+			?></a></h2></li>
+			<?php if ( $this->literal != '' ) { ?>
+			<li id="literal_header"><h2><a href="#literal"><?php
+				echo apply_filters(
+					'commentpress_content_tab_literal',
+					__( 'Literal', 'commentpress-core' )
+				);
+			?></a></h2></li>
+			<?php } ?>
+			<?php if ( $this->original != '' ) { ?>
+			<li id="original_header"><h2><a href="#original"><?php
+				echo apply_filters(
+					'commentpress_content_tab_original',
+					__( 'Original', 'commentpress-core' )
+				);
+			?></a></h2></li>
+			<?php } ?>
+		</ul>
+		<?php
+
+	}
+
+
+
+	/**
+	 * Echo Tabs Content.
+	 *
+	 * @since 3.9.9
+	 */
+	public function tabs_content() {
+
+		// bail if we have no tabs
+		if ( empty( $this->tabs_class ) ) return;
+
+		// bail if we get neither type of workflow content
+		if ( empty( $this->literal ) AND empty( $this->original ) ) return;
+
+		// did we get literal?
+		if ( $this->literal != '' ) {
+
+			?>
+			<div id="literal" class="workflow-wrapper">
+				<div class="post">
+					<h2 class="post_title"><?php
+						echo apply_filters(
+							'commentpress_literal_title',
+							__( 'Literal Translation', 'commentpress-core' )
+						);
+					?></h2>
+					<?php echo apply_filters( 'cp_workflow_richtext_content', $this->literal ); ?>
+				</div><!-- /post -->
+			</div><!-- /literal -->
+			<?php
+
+		}
+
+		// did we get original?
+		if ( $this->original != '' ) {
+
+			?>
+			<div id="original" class="workflow-wrapper">
+				<div class="post">
+					<h2 class="post_title"><?php
+						echo apply_filters(
+							'commentpress_original_title',
+							__( 'Original Text', 'commentpress-core' )
+						);
+					?></h2>
+					<?php echo apply_filters( 'cp_workflow_richtext_content', $this->original ); ?>
+				</div><!-- /post -->
+			</div><!-- /original -->
+			<?php
+
+		}
+
+	}
+
+
+
+} // class ends
+
+
+
+/**
+ * Init Theme Tabs.
+ *
+ * @since 3.9.9
+ *
+ * @return object CommentPress_Theme_Tabs The Theme Tabs instance.
+ */
+function commentpress_theme_tabs() {
+	return CommentPress_Theme_Tabs::instance();
+}
+
+// init the above
+commentpress_theme_tabs();
+
+
+
+/**
+ * Render Theme Tabs.
+ *
+ * @since 3.9.9
+ */
+function commentpress_theme_tabs_render() {
+
+	// get object and maybe init
+	$tabs = commentpress_theme_tabs();
+	$tabs->initialise();
+
+	// print to screen
+	$tabs->tabs();
+
+}
+
+
+
+/**
+ * Render Theme Tabs Content.
+ *
+ * @since 3.9.9
+ */
+function commentpress_theme_tabs_content_render() {
+
+	// get object and maybe init
+	$tabs = commentpress_theme_tabs();
+	$tabs->initialise();
+
+	// print to screen
+	$tabs->tabs_content();
+
+}
+
+
+
+/**
+ * Get Theme Tabs Class.
+ *
+ * @since 3.9.9
+ *
+ * @return str $tabs_class The tabs class.
+ */
+function commentpress_theme_tabs_class_get() {
+
+	// get object and maybe init
+	$tabs = commentpress_theme_tabs();
+	$tabs->initialise();
+
+	// --<
+	return $tabs->tabs_class;
+
+}
+
+
+
+/**
+ * Get Theme Tabs Classes.
+ *
+ * @since 3.9.9
+ *
+ * @return str $tabs_classes The tabs classes.
+ */
+function commentpress_theme_tabs_classes_get() {
+
+	// get object and maybe init
+	$tabs = commentpress_theme_tabs();
+	$tabs->initialise();
+
+	// --<
+	return $tabs->tabs_classes;
+
+}
 
 

@@ -37,6 +37,8 @@ method for details of the latter.
 
 /**
  * Comment area handler object.
+ *
+ * @since 3.8
  */
 addComment = {
 
@@ -44,6 +46,8 @@ addComment = {
 
 	/**
 	 * Method for moving the comment form.
+	 *
+	 * @since 3.8
 	 *
 	 * @param {String} commentID The CSS ID of the comment.
 	 * @param {String} parentID The CSS ID of the parent comment.
@@ -148,6 +152,8 @@ addComment = {
 		/**
 		 * Method for cancel button.
 		 *
+		 * @since 3.8
+		 *
 		 * @return {Boolean} false.
 		 */
 		cancel_e.onclick = function() {
@@ -205,6 +211,8 @@ addComment = {
 	/**
 	 * Method for moving the comment form to a paragraph block.
 	 *
+	 * @since 3.8
+	 *
 	 * @param {String} paraNum The paragraph number.
 	 * @param {String} textSig The target text signature.
 	 * @param {String} postID The ID of the WordPress post.
@@ -233,6 +241,8 @@ addComment = {
 
 	/**
 	 * Reset the comment form.
+	 *
+	 * @since 3.8
 	 *
 	 * @return {Boolean} false
 	 */
@@ -388,6 +398,8 @@ addComment = {
 	/**
 	 * Get element ID.
 	 *
+	 * @since 3.8
+	 *
 	 * @param {String} e The element to find.
 	 * @return {Object} The DOM element's ID.
 	 */
@@ -403,7 +415,7 @@ addComment = {
 	/**
 	 * Enable the comment form.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	enableForm : function() {
 
@@ -437,7 +449,7 @@ addComment = {
 	/**
 	 * Disable the comment form.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	disableForm : function() {
 
@@ -465,6 +477,8 @@ addComment = {
 
 	/**
 	 * Set the comment form title.
+	 *
+	 * @since 3.8
 	 *
 	 * @param {String} parentID The CSS ID of the parent element.
 	 * @param {String} textSig The text signature.
@@ -598,6 +612,8 @@ addComment = {
 	/**
 	 * Highlight a comment.
 	 *
+	 * @since 3.8
+	 *
 	 * @param {String} parentID The enclosing list item's CSS ID.
 	 */
 	highlightComment : function( parentID ) {
@@ -616,6 +632,8 @@ addComment = {
 
 	/**
 	 * Clear a comment highlight.
+	 *
+	 * @since 3.8
 	 *
 	 * @param {Integer} parentID The enclosing list item's CSS ID.
 	 */
@@ -639,7 +657,7 @@ addComment = {
 	/**
 	 * Clear all comment highlights.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	clearAllCommentHighlights : function() {
 
@@ -656,6 +674,8 @@ addComment = {
 	/**
 	 * Get stored text signature.
 	 *
+	 * @since 3.8
+	 *
 	 * @return {String} text_signature The text signature.
 	 */
 	getTextSig : function() {
@@ -669,6 +689,8 @@ addComment = {
 
 	/**
 	 * Find out if a comment is top level or not.
+	 *
+	 * @since 3.8
 	 *
 	 * @return {Boolean} True if comment is top level, false otherwise.
 	 */

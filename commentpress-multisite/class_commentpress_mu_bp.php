@@ -661,7 +661,7 @@ class Commentpress_Multisite_Buddypress {
 
 		// Replace the necessary values to display in group activity stream
 		$activity->action = sprintf(
-			__( '%s left a %s on a %s %s in the group %s:', 'commentpress-core' ),
+			__( '%1$s left a %2$s on a %3$s %4$s in the group %5$s:', 'commentpress-core' ),
 			$user_link,
 			$comment_link,
 			$activity_name,
@@ -881,7 +881,7 @@ class Commentpress_Multisite_Buddypress {
 
 			// replace the necessary values to display in group activity stream
 			$activity->action = sprintf(
-				__( '%s updated a %s %s in the group %s:', 'commentpress-core' ),
+				__( '%1$s updated a %2$s %3$s in the group %4$s:', 'commentpress-core' ),
 				$activity_author,
 				$activity_name,
 				'<a href="' . get_permalink( $post->ID ) . '">' . esc_attr( $post->post_title ) . '</a>',
@@ -892,7 +892,7 @@ class Commentpress_Multisite_Buddypress {
 
 			// replace the necessary values to display in group activity stream
 			$activity->action = sprintf(
-				__( '%s wrote a new %s %s in the group %s:', 'commentpress-core' ),
+				__( '%1$s wrote a new %2$s %3$s in the group %4$s:', 'commentpress-core' ),
 				$activity_author,
 				$activity_name,
 				'<a href="' . get_permalink( $post->ID ) . '">' . esc_attr( $post->post_title ) . '</a>',

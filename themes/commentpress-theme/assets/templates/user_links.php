@@ -48,7 +48,7 @@ if ( is_multisite() ) {
 	) {
 
 		// test whether we have BuddyPress
-		if ( function_exists( 'bp_get_root_domain' ) ) {
+		if ( function_exists( 'bp_get_blogs_root_slug' ) ) {
 
 			// different behaviour when logged in or not
 			if ( is_user_logged_in() ) {

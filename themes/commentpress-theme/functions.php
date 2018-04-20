@@ -34,8 +34,6 @@ if ( ! function_exists( 'commentpress_setup' ) ):
  * Set up CommentPress Default theme.
  *
  * @since 3.0
- *
- * @return void
  */
 function commentpress_setup() {
 
@@ -130,8 +128,6 @@ if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ):
  * Add CommentPress Core front-end styles.
  *
  * @since 3.0
- *
- * @return void
  */
 function commentpress_enqueue_scripts_and_styles() {
 
@@ -239,8 +235,6 @@ if ( ! function_exists( 'commentpress_enqueue_print_styles' ) ):
  * Add CommentPress Core print stylesheet.
  *
  * @since 3.0
- *
- * @return void
  */
 function commentpress_enqueue_print_styles() {
 
@@ -269,8 +263,6 @@ if ( ! function_exists( 'commentpress_buddypress_support' ) ):
  * Enable support for BuddyPress.
  *
  * @since 3.3
- *
- * @return void
  */
 function commentpress_buddypress_support() {
 
@@ -295,7 +287,7 @@ if ( ! function_exists( 'commentpress_header' ) ):
 /**
  * Custom header
  *
- * @return void
+ * @since 3.0
  */
 function commentpress_header() {
 
@@ -581,22 +573,10 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 		$html .= '<li class="page_li"><!-- page li -->' . "\n\n";
 
 		// define comment count
-		$comment_count_text = sprintf( _n(
-
-			// singular
-			'<span class="cp_comment_count">%d</span> comment',
-
-			// plural
-			'<span class="cp_comment_count">%d</span> comments',
-
-			// number
-			$post_comment_counts[$post->ID],
-
-			// domain
-			'commentpress-core'
-
-		// substitution
-		), $post_comment_counts[$post->ID] );
+		$comment_count_text = sprintf(
+			_n( '<span class="cp_comment_count">%d</span> comment', '<span class="cp_comment_count">%d</span> comments', $post_comment_counts[$post->ID], 'commentpress-core' ),
+			$post_comment_counts[$post->ID]
+		);
 
 		// show it
 		$html .= '<h3>' . esc_html( $post->post_title ) . ' <span>(' . $comment_count_text . ')</span></h3>' . "\n\n";

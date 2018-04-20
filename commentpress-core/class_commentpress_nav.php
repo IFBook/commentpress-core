@@ -601,6 +601,13 @@ class Commentpress_Core_Navigator {
 		// only on pages
 		if ( ! is_page() ) return;
 
+		// bail if this is a BuddyPress page
+		if ( $this->parent_obj->is_buddypress_special_page() ) return;
+
+		// bail if we have a custom menu
+		// TODO: we need to parse the menu to find the viewable child
+		if ( has_nav_menu( 'toc' ) ) return;
+
 		// access post object
 		global $post;
 

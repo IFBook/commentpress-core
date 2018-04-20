@@ -6,7 +6,10 @@ AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
 NOTES
 
-These styles amend the WP themed TinyMCE editor when applied to the comment form
+These styles amend the WP-themed TinyMCE editor.
+
+This stylesheet is also included whenever TinyMCE is included on the front-end
+e.g. by BuddyPress Docs.
 
 --------------------------------------------------------------------------------
 */
@@ -26,6 +29,14 @@ ol
 	font-size: 14px;
 	margin: 0;
 	padding: 7px 0 7px 0;
+}
+
+.post-type-bp_doc.wp-editor p,
+.post-type-bp_doc.wp-editor ul,
+.post-type-bp_doc.wp-editor ol
+{
+	font-size: 16px;
+	line-height: 1.5;
 }
 
 ul li

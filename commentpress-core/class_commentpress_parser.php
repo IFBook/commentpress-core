@@ -1748,11 +1748,11 @@ class Commentpress_Core_Parser {
 	 *
 	 * @since 3.9.3
 	 *
-     * @param string $html Shortcode HTML output.
-     * @param array $atts Array of shortcode attributes.
-     * @param string $file Media file.
-     * @param int $post_id Post ID.
-     * @param string $library Media library used for the shortcode.
+	 * @param string $html Shortcode HTML output.
+	 * @param array $atts Array of shortcode attributes.
+	 * @param string $file Media file.
+	 * @param int $post_id Post ID.
+	 * @param string $library Media library used for the shortcode.
 	 */
 	function _parse_audio_shortcode( $html, $atts, $file, $post_id, $library ) {
 
@@ -1768,11 +1768,11 @@ class Commentpress_Core_Parser {
 	 *
 	 * @since 3.9.3
 	 *
-     * @param string $html Shortcode HTML output.
-     * @param array $atts Array of shortcode attributes.
-     * @param string $file Media file.
-     * @param int $post_id Post ID.
-     * @param string $library Media library used for the shortcode.
+	 * @param string $html Shortcode HTML output.
+	 * @param array $atts Array of shortcode attributes.
+	 * @param string $file Media file.
+	 * @param int $post_id Post ID.
+	 * @param string $library Media library used for the shortcode.
 	 */
 	function _parse_video_shortcode( $html, $atts, $file, $post_id, $library ) {
 

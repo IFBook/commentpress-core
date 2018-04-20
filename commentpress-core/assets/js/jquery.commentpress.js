@@ -677,9 +677,9 @@ CommentPress.common.navigation = new function() {
 		$('h3.activity_heading').css( 'cursor', 'pointer' );
 
 		/**
-		 * Activity column headings click
+		 * Activity column headings click.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#toc_sidebar').on( 'click', 'h3.activity_heading', function( event ) {
 
@@ -1582,8 +1582,8 @@ CommentPress.common.content = new function() {
 	 *
 	 * @since 3.8
 	 *
-	 * @param str content_min_height The min-height CSS declaration
-	 * @param str content_padding_bottom The content wrapper padding-bottom CSS declaration
+	 * @param str content_min_height The min-height CSS declaration.
+	 * @param str content_padding_bottom The content wrapper padding-bottom CSS declaration.
 	 */
 	this.workflow_tabs = function( content_min_height, content_padding_bottom ) {
 
@@ -1776,7 +1776,7 @@ CommentPress.common.comments = new function() {
 		 *
 		 * @since 3.8
 		 *
-		 * @param object event The clicked object
+		 * @param object event The clicked object.
 		 */
 		$('#comments_sidebar').on( 'click', 'a.comment_block_permalink', function( event ) {
 
@@ -2184,7 +2184,7 @@ CommentPress.common.comments = new function() {
 	 *
 	 * @since 3.8
 	 *
-	 * @param object comment The $ comment object
+	 * @param object comment The $ comment object.
 	 */
 	this.highlight = function( comment ) {
 
@@ -2220,9 +2220,9 @@ CommentPress.common.comments = new function() {
 	 *
 	 * @since 3.8
 	 *
-	 * @param object target The target to scroll to
-	 * @param integer speed The duration of the scroll
-	 * @param string flash Whether or not to "flash" the comment
+	 * @param object target The target to scroll to.
+	 * @param integer speed The duration of the scroll.
+	 * @param string flash Whether or not to "flash" the comment.
 	 */
 	this.scroll_comments = function( target, speed, flash ) {
 
@@ -2349,7 +2349,9 @@ CommentPress.common.activity = new function() {
 	this.header = function() {
 
 		/**
-		 * Clicking on the Activity Header
+		 * Clicking on the Activity Header.
+		 *
+		 * @since 3.8
 		 *
 		 * @return false
 		 */
@@ -2375,9 +2377,9 @@ CommentPress.common.activity = new function() {
 	this.minimiser = function() {
 
 		/**
-		 * Clicking on the minimise activities icon
+		 * Clicking on the minimise activities icon.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#sidebar').on( 'click', '#cp_minimise_all_activity', function( event ) {
 
@@ -2644,7 +2646,7 @@ CommentPress.common.viewport = new function() {
 	 *
 	 * @since 3.0
 	 *
-	 * @return string highlighted_para The highlighted paragraph
+	 * @return string highlighted_para The highlighted paragraph.
 	 */
 	$.get_highlighted_para = function() {
 
@@ -2660,8 +2662,8 @@ CommentPress.common.viewport = new function() {
 	 *
 	 * @since 3.0
 	 *
-	 * @param object element The jQuery element to test
-	 * @return boolean True if highlighted, false otherwise
+	 * @param object element The jQuery element to test.
+	 * @return boolean True if highlighted, false otherwise.
 	 */
 	$.is_highlighted = function( element ) {
 
@@ -2690,10 +2692,10 @@ CommentPress.common.viewport = new function() {
 	 *
 	 * @since 3.0
 	 *
-	 * @param mixed needle The item to search for
-	 * @param array haystack The array to search
-	 * @param boolean argStrict If true, will take variable type into account
-	 * @return boolean found True if found, false otherwise
+	 * @param mixed needle The item to search for.
+	 * @param array haystack The array to search.
+	 * @param boolean argStrict If true, will take variable type into account.
+	 * @return boolean found True if found, false otherwise.
 	 */
 	$.in_array = function( needle, haystack, argStrict ) {
 
@@ -2722,9 +2724,9 @@ CommentPress.common.viewport = new function() {
 	 *
 	 * @since 3.0
 	 *
-	 * @param mixed item The item to remove
-	 * @param array sourceArray The array to remove the item from
-	 * @return array sourceArray The modified array
+	 * @param mixed item The item to remove.
+	 * @param array sourceArray The array to remove the item from.
+	 * @return array sourceArray The modified array.
 	 */
 	$.remove_from_array = function( item, sourceArray ) {
 
@@ -2756,8 +2758,8 @@ CommentPress.common.viewport = new function() {
 	 *
 	 * @since 3.0
 	 *
-	 * @param mixed mixed_var The item to test
-	 * @return boolean True if item is object, false otherwise
+	 * @param mixed mixed_var The item to test.
+	 * @return boolean True if item is object, false otherwise.
 	 */
 	$.is_object = function ( mixed_var ) {
 
@@ -2782,8 +2784,8 @@ CommentPress.common.viewport = new function() {
 	 *
 	 * @since 3.0
 	 *
-	 * @param string function_name The name of the function
-	 * @return boolean True if the function exists, false otherwise
+	 * @param string function_name The name of the function.
+	 * @return boolean True if the function exists, false otherwise.
 	 */
 	$.is_function_defined = function ( function_name ) {
 
@@ -2807,8 +2809,8 @@ CommentPress.common.viewport = new function() {
 	 *
 	 * @since 3.0
 	 *
-	 * @param string pix The CSS string (eg, '20px')
-	 * @return int px The numeric value (eg, 20)
+	 * @param string pix The CSS string (eg, '20px').
+	 * @return int px The numeric value (eg, 20).
 	 */
 	$.px_to_num = function( pix ) {
 
@@ -2824,8 +2826,8 @@ CommentPress.common.viewport = new function() {
 	 *
 	 * @since 3.0
 	 *
-	 * @param mixed strNum A numeric value that we want to modify
-	 * @return int The numeric value of strNum
+	 * @param mixed strNum A numeric value that we want to modify.
+	 * @return int The numeric value of strNum.
 	 */
 	$.css_to_num = function( strNum ) {
 
@@ -2861,7 +2863,7 @@ CommentPress.common.viewport = new function() {
 	 *
 	 * @todo Remove
 	 *
-	 * @param string message The message to show
+	 * @param string message The message to show.
 	 */
 	$.frivolous = function( message ) {
 
@@ -2877,7 +2879,7 @@ CommentPress.common.viewport = new function() {
 	 *
 	 * @since 3.0
 	 *
-	 * @return string current_menu_item The numeric ID of the menu item
+	 * @return string current_menu_item The numeric ID of the menu item.
 	 */
 	$.get_current_menu_item_id = function() {
 
@@ -2931,8 +2933,10 @@ CommentPress.common.viewport = new function() {
 	/**
 	 * Get text signature by comment id.
 	 *
-	 * @param object cid The CSS ID of the comment
-	 * @return string text_sig The text signature
+	 * @since 3.0
+	 *
+	 * @param object cid The CSS ID of the comment.
+	 * @return string text_sig The text signature.
 	 */
 	$.get_text_sig_by_comment_id = function( cid ) {
 
