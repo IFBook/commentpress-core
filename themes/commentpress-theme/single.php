@@ -25,9 +25,7 @@
 					<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
 
 					<div class="search_meta">
-
 						<?php commentpress_echo_post_meta(); ?>
-
 					</div>
 
 					<?php commentpress_get_post_version_info( $post ); ?>
