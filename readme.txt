@@ -213,6 +213,13 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+<h4>3.9.9</h4>
+
+* Prevents fatal error when BuddyPress Site Tracking component is not active
+* Adds GeoMashup compatibility
+* Better BuddyPress Docs compatibility
+* Translation improvements
+
 <h4>3.9.8</h4>
 
 * Fixes date display when displaying Table of Contents as posts
