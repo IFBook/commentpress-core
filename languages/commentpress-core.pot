@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CommentPress Core 3.9.9\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/commentpress-core\n"
-"POT-Creation-Date: 2018-01-31 16:20:07+00:00\n"
+"POT-Creation-Date: 2018-04-20 15:45:16+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -326,17 +326,17 @@ msgstr ""
 #: commentpress-core/assets/includes/theme/theme-functions.php:2912
 #: themes/commentpress-flat/archive.php:82 themes/commentpress-flat/blog.php:51
 #: themes/commentpress-flat/category.php:59
-#: themes/commentpress-flat/index.php:56 themes/commentpress-flat/search.php:94
+#: themes/commentpress-flat/index.php:54 themes/commentpress-flat/search.php:94
 #: themes/commentpress-modern/archive.php:82
 #: themes/commentpress-modern/blog.php:51
 #: themes/commentpress-modern/category.php:59
-#: themes/commentpress-modern/index.php:56
+#: themes/commentpress-modern/index.php:54
 #: themes/commentpress-modern/search.php:94
 #: themes/commentpress-theme/archive.php:56
 #: themes/commentpress-theme/blog.php:50
 #: themes/commentpress-theme/category.php:48
-#: themes/commentpress-theme/index.php:41
-#: themes/commentpress-theme/search.php:70
+#: themes/commentpress-theme/index.php:39
+#: themes/commentpress-theme/search.php:68
 msgid "Edit"
 msgstr ""
 
@@ -345,16 +345,16 @@ msgid "Permalink for this comment"
 msgstr ""
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:3221
-#: themes/commentpress-flat/functions.php:506
-#: themes/commentpress-modern/functions.php:575
-#: themes/commentpress-theme/functions.php:452
+#: themes/commentpress-flat/functions.php:490
+#: themes/commentpress-modern/functions.php:559
+#: themes/commentpress-theme/functions.php:444
 msgid "Next page"
 msgstr ""
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:3222
-#: themes/commentpress-flat/functions.php:536
-#: themes/commentpress-modern/functions.php:605
-#: themes/commentpress-theme/functions.php:480
+#: themes/commentpress-flat/functions.php:520
+#: themes/commentpress-modern/functions.php:589
+#: themes/commentpress-theme/functions.php:472
 msgid "Previous page"
 msgstr ""
 
@@ -372,6 +372,29 @@ msgstr ""
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:4114
 msgid "Older version"
+msgstr ""
+
+#: commentpress-core/assets/includes/theme/theme-functions.php:4774
+#: themes/commentpress-modern/assets/templates/header_body.php:45
+msgid "Content"
+msgstr ""
+
+#: commentpress-core/assets/includes/theme/theme-functions.php:4781
+msgid "Literal"
+msgstr ""
+
+#: commentpress-core/assets/includes/theme/theme-functions.php:4789
+msgid "Original"
+msgstr ""
+
+#: commentpress-core/assets/includes/theme/theme-functions.php:4822
+#: commentpress-core/class_commentpress_workflow.php:193
+msgid "Literal Translation"
+msgstr ""
+
+#: commentpress-core/assets/includes/theme/theme-functions.php:4841
+#: commentpress-core/class_commentpress_workflow.php:169
+msgid "Original Text"
 msgstr ""
 
 #: commentpress-core/assets/widgets/widget-license.php:34
@@ -510,9 +533,9 @@ msgstr ""
 
 #: commentpress-core/class_commentpress.php:1551
 #: commentpress-core/class_commentpress_db.php:3676
-#: themes/commentpress-flat/functions.php:751
-#: themes/commentpress-modern/functions.php:820
-#: themes/commentpress-theme/functions.php:689
+#: themes/commentpress-flat/functions.php:735
+#: themes/commentpress-modern/functions.php:804
+#: themes/commentpress-theme/functions.php:681
 msgid "All Comments"
 msgstr ""
 
@@ -637,13 +660,13 @@ msgstr ""
 #: commentpress-core/class_commentpress_display.php:1391
 #: themes/commentpress-flat/assets/templates/toc_dropdown.php:9
 #: themes/commentpress-flat/assets/templates/toc_sidebar.php:78
-#: themes/commentpress-flat/functions.php:70
+#: themes/commentpress-flat/functions.php:68
 #: themes/commentpress-modern/assets/templates/toc_dropdown.php:9
 #: themes/commentpress-modern/assets/templates/toc_sidebar.php:78
-#: themes/commentpress-modern/functions.php:126
+#: themes/commentpress-modern/functions.php:124
 #: themes/commentpress-theme/assets/templates/toc_dropdown.php:9
 #: themes/commentpress-theme/assets/templates/toc_sidebar.php:9
-#: themes/commentpress-theme/functions.php:118
+#: themes/commentpress-theme/functions.php:116
 msgid "Table of Contents"
 msgstr ""
 
@@ -1047,7 +1070,7 @@ msgstr ""
 msgid "Poetry"
 msgstr ""
 
-#: commentpress-core/class_commentpress_nav.php:1122
+#: commentpress-core/class_commentpress_nav.php:1129
 msgid "Cannot represent numbers larger than 4999 in plain ASCII."
 msgstr ""
 
@@ -1062,24 +1085,6 @@ msgstr ""
 #: commentpress-core/class_commentpress_workflow.php:112
 #: commentpress-multisite/class_commentpress_mu_bp.php:1464
 msgid "Enable Translation Workflow"
-msgstr ""
-
-#: commentpress-core/class_commentpress_workflow.php:169
-#: themes/commentpress-flat/page.php:333
-#: themes/commentpress-flat/single.php:350
-#: themes/commentpress-modern/page.php:338
-#: themes/commentpress-modern/single.php:355
-#: themes/commentpress-theme/single.php:306
-msgid "Original Text"
-msgstr ""
-
-#: commentpress-core/class_commentpress_workflow.php:193
-#: themes/commentpress-flat/page.php:306
-#: themes/commentpress-flat/single.php:323
-#: themes/commentpress-modern/page.php:311
-#: themes/commentpress-modern/single.php:328
-#: themes/commentpress-theme/single.php:279
-msgid "Literal Translation"
 msgstr ""
 
 #: commentpress-core/class_commentpress_workflow.php:231
@@ -1389,15 +1394,15 @@ msgstr ""
 
 #: themes/commentpress-flat/404.php:23
 #: themes/commentpress-flat/directory.php:87
-#: themes/commentpress-flat/page.php:377
+#: themes/commentpress-flat/page.php:160
 #: themes/commentpress-flat/welcome.php:158
 #: themes/commentpress-modern/404.php:23
 #: themes/commentpress-modern/directory.php:87
-#: themes/commentpress-modern/page.php:382
+#: themes/commentpress-modern/page.php:165
 #: themes/commentpress-modern/welcome.php:158
 #: themes/commentpress-theme/404.php:23
 #: themes/commentpress-theme/directory.php:87
-#: themes/commentpress-theme/page.php:134
+#: themes/commentpress-theme/page.php:127
 #: themes/commentpress-theme/welcome.php:93
 msgid "Page Not Found"
 msgstr ""
@@ -1483,88 +1488,88 @@ msgstr ""
 
 #: themes/commentpress-flat/archive.php:82 themes/commentpress-flat/blog.php:51
 #: themes/commentpress-flat/category.php:59
-#: themes/commentpress-flat/index.php:56 themes/commentpress-flat/page.php:227
+#: themes/commentpress-flat/index.php:54 themes/commentpress-flat/page.php:93
 #: themes/commentpress-flat/search.php:94
-#: themes/commentpress-flat/single.php:202
+#: themes/commentpress-flat/single.php:68
 #: themes/commentpress-modern/archive.php:82
 #: themes/commentpress-modern/blog.php:51
 #: themes/commentpress-modern/category.php:59
-#: themes/commentpress-modern/index.php:56
-#: themes/commentpress-modern/page.php:232
+#: themes/commentpress-modern/index.php:54
+#: themes/commentpress-modern/page.php:98
 #: themes/commentpress-modern/search.php:94
-#: themes/commentpress-modern/single.php:207
+#: themes/commentpress-modern/single.php:73
 #: themes/commentpress-theme/archive.php:56
 #: themes/commentpress-theme/blog.php:50
 #: themes/commentpress-theme/category.php:48
-#: themes/commentpress-theme/index.php:41 themes/commentpress-theme/page.php:73
-#: themes/commentpress-theme/search.php:70
-#: themes/commentpress-theme/single.php:167
+#: themes/commentpress-theme/index.php:39 themes/commentpress-theme/page.php:61
+#: themes/commentpress-theme/search.php:68
+#: themes/commentpress-theme/single.php:45
 msgid "Tags: "
 msgstr ""
 
 #: themes/commentpress-flat/archive.php:82 themes/commentpress-flat/blog.php:51
 #: themes/commentpress-flat/category.php:59
-#: themes/commentpress-flat/index.php:56 themes/commentpress-flat/page.php:227
+#: themes/commentpress-flat/index.php:54 themes/commentpress-flat/page.php:93
 #: themes/commentpress-flat/search.php:94
 #: themes/commentpress-modern/archive.php:82
 #: themes/commentpress-modern/blog.php:51
 #: themes/commentpress-modern/category.php:59
-#: themes/commentpress-modern/index.php:56
-#: themes/commentpress-modern/page.php:232
+#: themes/commentpress-modern/index.php:54
+#: themes/commentpress-modern/page.php:98
 #: themes/commentpress-modern/search.php:94
 #: themes/commentpress-theme/archive.php:56
 #: themes/commentpress-theme/blog.php:50
 #: themes/commentpress-theme/category.php:48
-#: themes/commentpress-theme/index.php:41 themes/commentpress-theme/page.php:73
-#: themes/commentpress-theme/search.php:70
+#: themes/commentpress-theme/index.php:39 themes/commentpress-theme/page.php:61
+#: themes/commentpress-theme/search.php:68
 msgid "Posted in"
 msgstr ""
 
 #: themes/commentpress-flat/archive.php:82 themes/commentpress-flat/blog.php:51
 #: themes/commentpress-flat/category.php:59
-#: themes/commentpress-flat/index.php:56 themes/commentpress-flat/search.php:94
+#: themes/commentpress-flat/index.php:54 themes/commentpress-flat/search.php:94
 #: themes/commentpress-modern/archive.php:82
 #: themes/commentpress-modern/blog.php:51
 #: themes/commentpress-modern/category.php:59
-#: themes/commentpress-modern/index.php:56
+#: themes/commentpress-modern/index.php:54
 #: themes/commentpress-modern/search.php:94
 #: themes/commentpress-theme/archive.php:56
 #: themes/commentpress-theme/blog.php:50
 #: themes/commentpress-theme/category.php:48
-#: themes/commentpress-theme/index.php:41
-#: themes/commentpress-theme/search.php:70
+#: themes/commentpress-theme/index.php:39
+#: themes/commentpress-theme/search.php:68
 msgid "No Comments &#187;"
 msgstr ""
 
 #: themes/commentpress-flat/archive.php:82 themes/commentpress-flat/blog.php:51
 #: themes/commentpress-flat/category.php:59
-#: themes/commentpress-flat/index.php:56 themes/commentpress-flat/search.php:94
+#: themes/commentpress-flat/index.php:54 themes/commentpress-flat/search.php:94
 #: themes/commentpress-modern/archive.php:82
 #: themes/commentpress-modern/blog.php:51
 #: themes/commentpress-modern/category.php:59
-#: themes/commentpress-modern/index.php:56
+#: themes/commentpress-modern/index.php:54
 #: themes/commentpress-modern/search.php:94
 #: themes/commentpress-theme/archive.php:56
 #: themes/commentpress-theme/blog.php:50
 #: themes/commentpress-theme/category.php:48
-#: themes/commentpress-theme/index.php:41
-#: themes/commentpress-theme/search.php:70
+#: themes/commentpress-theme/index.php:39
+#: themes/commentpress-theme/search.php:68
 msgid "1 Comment &#187;"
 msgstr ""
 
 #: themes/commentpress-flat/archive.php:82 themes/commentpress-flat/blog.php:51
 #: themes/commentpress-flat/category.php:59
-#: themes/commentpress-flat/index.php:56 themes/commentpress-flat/search.php:94
+#: themes/commentpress-flat/index.php:54 themes/commentpress-flat/search.php:94
 #: themes/commentpress-modern/archive.php:82
 #: themes/commentpress-modern/blog.php:51
 #: themes/commentpress-modern/category.php:59
-#: themes/commentpress-modern/index.php:56
+#: themes/commentpress-modern/index.php:54
 #: themes/commentpress-modern/search.php:94
 #: themes/commentpress-theme/archive.php:56
 #: themes/commentpress-theme/blog.php:50
 #: themes/commentpress-theme/category.php:48
-#: themes/commentpress-theme/index.php:41
-#: themes/commentpress-theme/search.php:70
+#: themes/commentpress-theme/index.php:39
+#: themes/commentpress-theme/search.php:68
 msgid "% Comments &#187;"
 msgstr ""
 
@@ -1585,19 +1590,19 @@ msgstr ""
 #: themes/commentpress-flat/archive.php:94 themes/commentpress-flat/blog.php:63
 #: themes/commentpress-flat/category.php:71
 #: themes/commentpress-flat/directory.php:89
-#: themes/commentpress-flat/page.php:379
+#: themes/commentpress-flat/page.php:161
 #: themes/commentpress-flat/welcome.php:160
 #: themes/commentpress-modern/archive.php:94
 #: themes/commentpress-modern/blog.php:63
 #: themes/commentpress-modern/category.php:71
 #: themes/commentpress-modern/directory.php:89
-#: themes/commentpress-modern/page.php:384
+#: themes/commentpress-modern/page.php:166
 #: themes/commentpress-modern/welcome.php:160
 #: themes/commentpress-theme/archive.php:68
 #: themes/commentpress-theme/blog.php:62
 #: themes/commentpress-theme/category.php:60
 #: themes/commentpress-theme/directory.php:89
-#: themes/commentpress-theme/page.php:136
+#: themes/commentpress-theme/page.php:128
 #: themes/commentpress-theme/welcome.php:95
 msgid "Sorry, but you are looking for something that isn't here."
 msgstr ""
@@ -1935,98 +1940,98 @@ msgstr ""
 msgid "All rights reserved."
 msgstr ""
 
-#: themes/commentpress-flat/functions.php:71
-#: themes/commentpress-modern/functions.php:127
+#: themes/commentpress-flat/functions.php:69
+#: themes/commentpress-modern/functions.php:125
 msgid "Footer"
 msgstr ""
 
-#: themes/commentpress-flat/functions.php:512
-#: themes/commentpress-modern/functions.php:581
-#: themes/commentpress-theme/functions.php:458
+#: themes/commentpress-flat/functions.php:496
+#: themes/commentpress-modern/functions.php:565
+#: themes/commentpress-theme/functions.php:450
 msgid "Next page with comments"
 msgstr ""
 
-#: themes/commentpress-flat/functions.php:542
-#: themes/commentpress-modern/functions.php:611
-#: themes/commentpress-theme/functions.php:486
+#: themes/commentpress-flat/functions.php:526
+#: themes/commentpress-modern/functions.php:595
+#: themes/commentpress-theme/functions.php:478
 msgid "Previous page with comments"
 msgstr ""
 
-#: themes/commentpress-flat/functions.php:645
-#: themes/commentpress-modern/functions.php:714
-#: themes/commentpress-theme/functions.php:585
+#: themes/commentpress-flat/functions.php:629
+#: themes/commentpress-modern/functions.php:698
+#: themes/commentpress-theme/functions.php:577
 msgid "<span class=\"cp_comment_count\">%d</span> comment"
 msgid_plural "<span class=\"cp_comment_count\">%d</span> comments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: themes/commentpress-flat/functions.php:665
-#: themes/commentpress-modern/functions.php:734
-#: themes/commentpress-theme/functions.php:605
+#: themes/commentpress-flat/functions.php:649
+#: themes/commentpress-modern/functions.php:718
+#: themes/commentpress-theme/functions.php:597
 msgid "Password protected"
 msgstr ""
 
-#: themes/commentpress-flat/functions.php:763
-#: themes/commentpress-modern/functions.php:832
-#: themes/commentpress-theme/functions.php:701
+#: themes/commentpress-flat/functions.php:747
+#: themes/commentpress-modern/functions.php:816
+#: themes/commentpress-theme/functions.php:693
 msgid "Comments on the Blog"
 msgstr ""
 
-#: themes/commentpress-flat/functions.php:769
-#: themes/commentpress-modern/functions.php:838
-#: themes/commentpress-theme/functions.php:707
+#: themes/commentpress-flat/functions.php:753
+#: themes/commentpress-modern/functions.php:822
+#: themes/commentpress-theme/functions.php:699
 msgid "Comments on the Pages"
 msgstr ""
 
-#: themes/commentpress-flat/functions.php:1055
-#: themes/commentpress-modern/functions.php:1104
-#: themes/commentpress-theme/functions.php:814
+#: themes/commentpress-flat/functions.php:1037
+#: themes/commentpress-modern/functions.php:1086
+#: themes/commentpress-theme/functions.php:806
 msgid "CommentPress Footer"
 msgstr ""
 
-#: themes/commentpress-flat/functions.php:1057
-#: themes/commentpress-modern/functions.php:1106
-#: themes/commentpress-theme/functions.php:816
+#: themes/commentpress-flat/functions.php:1039
+#: themes/commentpress-modern/functions.php:1088
+#: themes/commentpress-theme/functions.php:808
 msgid "An optional widget area in the footer of a CommentPress theme"
 msgstr ""
 
-#: themes/commentpress-flat/functions.php:1066
-#: themes/commentpress-modern/functions.php:1115
+#: themes/commentpress-flat/functions.php:1048
+#: themes/commentpress-modern/functions.php:1097
 msgid "Navigation Top"
 msgstr ""
 
-#: themes/commentpress-flat/functions.php:1068
-#: themes/commentpress-modern/functions.php:1117
+#: themes/commentpress-flat/functions.php:1050
+#: themes/commentpress-modern/functions.php:1099
 msgid "An optional widget area at the top of the Navigation Column"
 msgstr ""
 
-#: themes/commentpress-flat/functions.php:1077
-#: themes/commentpress-modern/functions.php:1126
+#: themes/commentpress-flat/functions.php:1059
+#: themes/commentpress-modern/functions.php:1108
 msgid "Navigation Bottom"
 msgstr ""
 
-#: themes/commentpress-flat/functions.php:1079
-#: themes/commentpress-modern/functions.php:1128
+#: themes/commentpress-flat/functions.php:1061
+#: themes/commentpress-modern/functions.php:1110
 msgid "An optional widget area at the bottom of the Navigation Column"
 msgstr ""
 
-#: themes/commentpress-flat/functions.php:1088
-#: themes/commentpress-modern/functions.php:1137
+#: themes/commentpress-flat/functions.php:1070
+#: themes/commentpress-modern/functions.php:1119
 msgid "Activity Top"
 msgstr ""
 
-#: themes/commentpress-flat/functions.php:1090
-#: themes/commentpress-modern/functions.php:1139
+#: themes/commentpress-flat/functions.php:1072
+#: themes/commentpress-modern/functions.php:1121
 msgid "An optional widget area at the top of the Activity Column"
 msgstr ""
 
-#: themes/commentpress-flat/functions.php:1099
-#: themes/commentpress-modern/functions.php:1148
+#: themes/commentpress-flat/functions.php:1081
+#: themes/commentpress-modern/functions.php:1130
 msgid "Activity Bottom"
 msgstr ""
 
-#: themes/commentpress-flat/functions.php:1101
-#: themes/commentpress-modern/functions.php:1150
+#: themes/commentpress-flat/functions.php:1083
+#: themes/commentpress-modern/functions.php:1132
 msgid "An optional widget area at the bottom of the Activity Column"
 msgstr ""
 
@@ -2068,12 +2073,11 @@ msgstr ""
 msgid "This image was posted on %1$s at %2$s and is filed under %3$s."
 msgstr ""
 
-#: themes/commentpress-flat/image.php:62
-#: themes/commentpress-flat/single.php:219
+#: themes/commentpress-flat/image.php:62 themes/commentpress-flat/single.php:83
 #: themes/commentpress-modern/image.php:62
-#: themes/commentpress-modern/single.php:224
+#: themes/commentpress-modern/single.php:88
 #: themes/commentpress-theme/image.php:62
-#: themes/commentpress-theme/single.php:174
+#: themes/commentpress-theme/single.php:50
 msgid "RSS 2.0"
 msgstr ""
 
@@ -2084,16 +2088,16 @@ msgid "You can follow any comments on this image through the %s feed."
 msgstr ""
 
 #: themes/commentpress-flat/image.php:77 themes/commentpress-flat/image.php:96
-#: themes/commentpress-flat/single.php:238
-#: themes/commentpress-flat/single.php:257
+#: themes/commentpress-flat/single.php:102
+#: themes/commentpress-flat/single.php:121
 #: themes/commentpress-modern/image.php:77
 #: themes/commentpress-modern/image.php:96
-#: themes/commentpress-modern/single.php:243
-#: themes/commentpress-modern/single.php:262
+#: themes/commentpress-modern/single.php:107
+#: themes/commentpress-modern/single.php:126
 #: themes/commentpress-theme/image.php:77
 #: themes/commentpress-theme/image.php:96
-#: themes/commentpress-theme/single.php:194
-#: themes/commentpress-theme/single.php:213
+#: themes/commentpress-theme/single.php:70
+#: themes/commentpress-theme/single.php:89
 msgid "trackback"
 msgstr ""
 
@@ -2104,38 +2108,38 @@ msgid "You are welcome to leave a comment, or %s from your own site."
 msgstr ""
 
 #: themes/commentpress-flat/image.php:103
-#: themes/commentpress-flat/single.php:264
+#: themes/commentpress-flat/single.php:128
 #: themes/commentpress-modern/image.php:103
-#: themes/commentpress-modern/single.php:269
+#: themes/commentpress-modern/single.php:133
 #: themes/commentpress-theme/image.php:103
-#: themes/commentpress-theme/single.php:220
+#: themes/commentpress-theme/single.php:96
 msgid "Comments are currently closed, but you can %s from your own site."
 msgstr ""
 
 #: themes/commentpress-flat/image.php:113
-#: themes/commentpress-flat/single.php:274
+#: themes/commentpress-flat/single.php:138
 #: themes/commentpress-modern/image.php:113
-#: themes/commentpress-modern/single.php:279
+#: themes/commentpress-modern/single.php:143
 #: themes/commentpress-theme/image.php:113
-#: themes/commentpress-theme/single.php:230
+#: themes/commentpress-theme/single.php:106
 msgid "You can leave a comment. Pinging is currently not allowed."
 msgstr ""
 
 #: themes/commentpress-flat/image.php:121
-#: themes/commentpress-flat/single.php:282
+#: themes/commentpress-flat/single.php:146
 #: themes/commentpress-modern/image.php:121
-#: themes/commentpress-modern/single.php:287
+#: themes/commentpress-modern/single.php:151
 #: themes/commentpress-theme/image.php:121
-#: themes/commentpress-theme/single.php:238
+#: themes/commentpress-theme/single.php:114
 msgid "Both comments and pings are currently closed."
 msgstr ""
 
 #: themes/commentpress-flat/image.php:129
-#: themes/commentpress-flat/single.php:290
+#: themes/commentpress-flat/single.php:154
 #: themes/commentpress-modern/image.php:129
-#: themes/commentpress-modern/single.php:295
+#: themes/commentpress-modern/single.php:159
 #: themes/commentpress-theme/image.php:129
-#: themes/commentpress-theme/single.php:246
+#: themes/commentpress-theme/single.php:122
 msgid "Edit this entry"
 msgstr ""
 
@@ -2157,27 +2161,27 @@ msgstr ""
 msgid "Sorry, no attachments matched your criteria."
 msgstr ""
 
-#: themes/commentpress-flat/index.php:64
-#: themes/commentpress-modern/index.php:64
-#: themes/commentpress-theme/index.php:49
+#: themes/commentpress-flat/index.php:62
+#: themes/commentpress-modern/index.php:62
+#: themes/commentpress-theme/index.php:47
 msgid "No blog posts found"
 msgstr ""
 
-#: themes/commentpress-flat/index.php:66
-#: themes/commentpress-modern/index.php:66
-#: themes/commentpress-theme/index.php:51
+#: themes/commentpress-flat/index.php:64
+#: themes/commentpress-modern/index.php:64
+#: themes/commentpress-theme/index.php:49
 msgid "There are no blog posts yet."
 msgstr ""
 
-#: themes/commentpress-flat/index.php:72
-#: themes/commentpress-modern/index.php:72
-#: themes/commentpress-theme/index.php:57
+#: themes/commentpress-flat/index.php:70
+#: themes/commentpress-modern/index.php:70
+#: themes/commentpress-theme/index.php:55
 msgid "Go to your dashboard to add one."
 msgstr ""
 
-#: themes/commentpress-flat/index.php:78
-#: themes/commentpress-modern/index.php:78
-#: themes/commentpress-theme/index.php:63
+#: themes/commentpress-flat/index.php:76
+#: themes/commentpress-modern/index.php:76
+#: themes/commentpress-theme/index.php:61
 msgid "If you were looking for something that hasn't been found, try using the search form below."
 msgstr ""
 
@@ -2187,33 +2191,9 @@ msgstr ""
 msgid "Links:"
 msgstr ""
 
-#: themes/commentpress-flat/page.php:100 themes/commentpress-flat/single.php:99
-#: themes/commentpress-modern/assets/templates/header_body.php:45
-#: themes/commentpress-modern/page.php:100
-#: themes/commentpress-modern/single.php:99
-#: themes/commentpress-theme/single.php:99
-msgid "Content"
-msgstr ""
-
-#: themes/commentpress-flat/page.php:107
-#: themes/commentpress-flat/single.php:106
-#: themes/commentpress-modern/page.php:107
-#: themes/commentpress-modern/single.php:106
-#: themes/commentpress-theme/single.php:106
-msgid "Literal"
-msgstr ""
-
-#: themes/commentpress-flat/page.php:115
-#: themes/commentpress-flat/single.php:114
-#: themes/commentpress-modern/page.php:115
-#: themes/commentpress-modern/single.php:114
-#: themes/commentpress-theme/single.php:114
-msgid "Original"
-msgstr ""
-
-#: themes/commentpress-flat/page.php:257
-#: themes/commentpress-modern/page.php:262
-#: themes/commentpress-theme/page.php:113
+#: themes/commentpress-flat/page.php:121
+#: themes/commentpress-modern/page.php:126
+#: themes/commentpress-theme/page.php:97
 msgid "Page %s"
 msgstr ""
 
@@ -2225,13 +2205,13 @@ msgstr ""
 
 #: themes/commentpress-flat/search.php:112
 #: themes/commentpress-modern/search.php:112
-#: themes/commentpress-theme/search.php:88
+#: themes/commentpress-theme/search.php:86
 msgid "Nothing found for"
 msgstr ""
 
 #: themes/commentpress-flat/search.php:114
 #: themes/commentpress-modern/search.php:114
-#: themes/commentpress-theme/search.php:90
+#: themes/commentpress-theme/search.php:88
 msgid "Try a different search?"
 msgstr ""
 
@@ -2244,31 +2224,31 @@ msgstr ""
 msgid "Search for:"
 msgstr ""
 
-#: themes/commentpress-flat/single.php:208
-#: themes/commentpress-modern/single.php:213
+#: themes/commentpress-flat/single.php:72
+#: themes/commentpress-modern/single.php:77
 msgid "Categories:"
 msgstr ""
 
-#: themes/commentpress-flat/single.php:226
-#: themes/commentpress-modern/single.php:231
+#: themes/commentpress-flat/single.php:90
+#: themes/commentpress-modern/single.php:95
 msgid "You can follow any comments on this entry through the %s feed."
 msgstr ""
 
-#: themes/commentpress-flat/single.php:245
-#: themes/commentpress-modern/single.php:250
-#: themes/commentpress-theme/single.php:201
+#: themes/commentpress-flat/single.php:109
+#: themes/commentpress-modern/single.php:114
+#: themes/commentpress-theme/single.php:77
 msgid "You can leave a comment, or %s from your own site."
 msgstr ""
 
-#: themes/commentpress-flat/single.php:411
-#: themes/commentpress-modern/single.php:416
-#: themes/commentpress-theme/single.php:356
+#: themes/commentpress-flat/single.php:188
+#: themes/commentpress-modern/single.php:193
+#: themes/commentpress-theme/single.php:147
 msgid "Post Not Found"
 msgstr ""
 
-#: themes/commentpress-flat/single.php:413
-#: themes/commentpress-modern/single.php:418
-#: themes/commentpress-theme/single.php:358
+#: themes/commentpress-flat/single.php:189
+#: themes/commentpress-modern/single.php:194
+#: themes/commentpress-theme/single.php:148
 msgid "Sorry, no posts matched your criteria."
 msgstr ""
 
@@ -2301,29 +2281,29 @@ msgstr ""
 
 #. translators: header image description
 
-#: themes/commentpress-modern/functions.php:96
-#: themes/commentpress-theme/functions.php:88
+#: themes/commentpress-modern/functions.php:94
+#: themes/commentpress-theme/functions.php:86
 msgid "Abstract Green"
 msgstr ""
 
 #. translators: header image description
 
-#: themes/commentpress-modern/functions.php:102
-#: themes/commentpress-theme/functions.php:94
+#: themes/commentpress-modern/functions.php:100
+#: themes/commentpress-theme/functions.php:92
 msgid "Abstract Red"
 msgstr ""
 
 #. translators: header image description
 
-#: themes/commentpress-modern/functions.php:108
-#: themes/commentpress-theme/functions.php:100
+#: themes/commentpress-modern/functions.php:106
+#: themes/commentpress-theme/functions.php:98
 msgid "Abstract Blue"
 msgstr ""
 
 #. translators: header image description
 
-#: themes/commentpress-modern/functions.php:114
-#: themes/commentpress-theme/functions.php:106
+#: themes/commentpress-modern/functions.php:112
+#: themes/commentpress-theme/functions.php:104
 msgid "Abstract Violet"
 msgstr ""
 
@@ -2364,7 +2344,7 @@ msgstr ""
 msgid "No posts by this author."
 msgstr ""
 
-#: themes/commentpress-theme/single.php:181
+#: themes/commentpress-theme/single.php:57
 msgid "This entry is filed under %1$s. You can follow any comments on this entry through the %2$s feed."
 msgstr ""
 #. Plugin Name of the plugin/theme
