@@ -1030,7 +1030,7 @@ function commentpress_get_feature_image() {
 				<?php } else {
 
 					// construct title
-					$title = '<h2 class="post_title"' . $cp_title_visibility . '>' .
+					$title = '<h2 class="post_title">' .
 								'<a href="' . get_permalink() . '">' . get_the_title() . '</a>' .
 							 '</h2>';
 
