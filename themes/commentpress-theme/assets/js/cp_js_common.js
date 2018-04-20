@@ -12,14 +12,18 @@ NOTES
 
 
 /**
- * Create sub-namespace common to all themes
+ * Create sub-namespace common to all themes.
+ *
+ * @since 3.8
  */
 CommentPress.theme = {};
 
 
 
 /**
- * Create settings class
+ * Create settings class.
+ *
+ * @since 3.8
  */
 CommentPress.theme.settings = new function() {
 
@@ -34,7 +38,7 @@ CommentPress.theme.settings = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -52,8 +56,8 @@ CommentPress.theme.settings = new function() {
 	 * Do setup when jQuery reports that the DOM is ready.
 	 *
 	 * This method should only be called once.
-	 *
-	 * @return void
+ *
+ * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -82,7 +86,9 @@ CommentPress.theme.settings = new function() {
 	this.container_top_max = false;
 
 	/**
-	 * Init for container top max
+	 * Init for container top max.
+	 *
+	 * @since 3.8
 	 */
 	this.init_container_top_max = function() {
 
@@ -100,14 +106,18 @@ CommentPress.theme.settings = new function() {
 	};
 
 	/**
-	 * Setter for container top max
+	 * Setter for container top max.
+	 *
+	 * @since 3.8
 	 */
 	this.set_container_top_max = function( val ) {
 		me.container_top_max = val;
 	};
 
 	/**
-	 * Save the container top max value in a cookie
+	 * Save the container top max value in a cookie.
+	 *
+	 * @since 3.8
 	 */
 	this.save_container_top_max = function( val ) {
 
@@ -121,7 +131,9 @@ CommentPress.theme.settings = new function() {
 	};
 
 	/**
-	 * Getter for container top max
+	 * Getter for container top max.
+	 *
+	 * @since 3.8
 	 */
 	this.get_container_top_max = function() {
 		return me.container_top_max;
@@ -133,7 +145,9 @@ CommentPress.theme.settings = new function() {
 	this.container_top_min = false;
 
 	/**
-	 * Init for container top min
+	 * Init for container top min.
+	 *
+	 * @since 3.8
 	 */
 	this.init_container_top_min = function() {
 
@@ -151,14 +165,18 @@ CommentPress.theme.settings = new function() {
 	};
 
 	/**
-	 * Setter for container top min
+	 * Setter for container top min.
+	 *
+	 * @since 3.8
 	 */
 	this.set_container_top_min = function( val ) {
 		me.container_top_min = val;
 	};
 
 	/**
-	 * Save the container top min value in a cookie
+	 * Save the container top min value in a cookie.
+	 *
+	 * @since 3.8
 	 */
 	this.save_container_top_min = function( val ) {
 
@@ -172,7 +190,9 @@ CommentPress.theme.settings = new function() {
 	};
 
 	/**
-	 * Getter for container top min
+	 * Getter for container top min.
+	 *
+	 * @since 3.8
 	 */
 	this.get_container_top_min = function() {
 		return me.container_top_min;
@@ -184,14 +204,18 @@ CommentPress.theme.settings = new function() {
 	this.toc_on_top = 'n';
 
 	/**
-	 * Setter for Contents tab "on top" flag
+	 * Setter for Contents tab "on top" flag.
+	 *
+	 * @since 3.8
 	 */
 	this.set_toc_on_top = function( val ) {
 		me.toc_on_top = val;
 	};
 
 	/**
-	 * Getter for Contents tab "on top" flag
+	 * Getter for Contents tab "on top" flag.
+	 *
+	 * @since 3.8
 	 */
 	this.get_toc_on_top = function() {
 		return me.toc_on_top;
@@ -203,14 +227,18 @@ CommentPress.theme.settings = new function() {
 	this.comment_border = '';
 
 	/**
-	 * Setter for comment border colour
+	 * Setter for comment border colour.
+	 *
+	 * @since 3.8
 	 */
 	this.set_comment_border = function( val ) {
 		me.comment_border = val;
 	};
 
 	/**
-	 * Getter for comment border colour
+	 * Getter for comment border colour.
+	 *
+	 * @since 3.8
 	 */
 	this.get_comment_border = function() {
 		return me.comment_border;
@@ -225,7 +253,9 @@ CommentPress.theme.settings = new function() {
 
 
 /**
- * Create DOM class
+ * Create DOM class.
+ *
+ * @since 3.8
  */
 CommentPress.theme.DOM = new function() {
 
@@ -240,7 +270,7 @@ CommentPress.theme.DOM = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -256,7 +286,7 @@ CommentPress.theme.DOM = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -268,11 +298,11 @@ CommentPress.theme.DOM = new function() {
 
 
 	/**
-	 * Perform actions before the page is ready
+	 * Perform actions before the page is ready.
 	 *
-	 * Writes styles into the document <head> to avoid avoid flash of content
+	 * Writes styles into the document <head> to avoid avoid flash of content.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.head = function() {
 
@@ -498,9 +528,9 @@ CommentPress.theme.DOM = new function() {
 
 
 	/**
-	 * Page load prodecure
+	 * Page load prodecure.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.layout = function() {
 
@@ -511,10 +541,11 @@ CommentPress.theme.DOM = new function() {
 		target = $('#page_wrapper');
 
 		/**
-		 * Sets up the main column, if the id exists
+		 * Sets up the main column, if the id exists.
 		 *
-		 * @param integer i The number of iterations
-		 * @return void
+		 * @since 3.8
+		 *
+		 * @param integer i The number of iterations.
 		 */
 		target.each( function(i) {
 
@@ -678,7 +709,9 @@ CommentPress.theme.DOM = new function() {
 
 
 /**
- * Create header class
+ * Create header class.
+ *
+ * @since 3.8
  */
 CommentPress.theme.header = new function() {
 
@@ -693,7 +726,7 @@ CommentPress.theme.header = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -706,7 +739,7 @@ CommentPress.theme.header = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -715,9 +748,11 @@ CommentPress.theme.header = new function() {
 
 
 	/**
-	 * Get header offset
+	 * Get header offset.
 	 *
-	 * @return integer offset The target offset in px
+	 * @since 3.8
+	 *
+	 * @return integer offset The target offset in px.
 	 */
 	this.get_offset = function() {
 
@@ -759,7 +794,9 @@ CommentPress.theme.header = new function() {
 
 
 /**
- * Create navigation class
+ * Create navigation class.
+ *
+ * @since 3.8
  */
 CommentPress.theme.navigation = new function() {
 
@@ -774,7 +811,7 @@ CommentPress.theme.navigation = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -787,7 +824,7 @@ CommentPress.theme.navigation = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -799,16 +836,16 @@ CommentPress.theme.navigation = new function() {
 
 
 	/**
-	 * Set up the "Contents" sidebar header
+	 * Set up the "Contents" sidebar header.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.menu = function() {
 
 		/**
-		 * Clicking on the "Contents" sidebar header
+		 * Clicking on the "Contents" sidebar header.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#sidebar').on( 'click', '#toc_header h2 a', function( event ) {
 
@@ -831,7 +868,9 @@ CommentPress.theme.navigation = new function() {
 
 
 /**
- * Create content class
+ * Create content class.
+ *
+ * @since 3.8
  */
 CommentPress.theme.content = new function() {
 
@@ -846,7 +885,7 @@ CommentPress.theme.content = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -859,7 +898,7 @@ CommentPress.theme.content = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -876,7 +915,7 @@ CommentPress.theme.content = new function() {
 	 * Workflow adds "Literal" and "Original" tabs for use by translators.
 	 * Each theme calls the common method with params calculated below.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.tabs = function() {
 
@@ -907,7 +946,9 @@ CommentPress.theme.content = new function() {
 
 
 /**
- * Create sidebars class
+ * Create sidebars class.
+ *
+ * @since 3.8
  */
 CommentPress.theme.sidebars = new function() {
 
@@ -922,7 +963,7 @@ CommentPress.theme.sidebars = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -938,7 +979,7 @@ CommentPress.theme.sidebars = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -958,7 +999,9 @@ CommentPress.theme.sidebars = new function() {
 	this.minimised = 'n';
 
 	/**
-	 * Init for CommentPress sidebar minimised flag
+	 * Init for CommentPress sidebar minimised flag.
+	 *
+	 * @since 3.8
 	 */
 	this.init_minimised = function() {
 
@@ -971,21 +1014,27 @@ CommentPress.theme.sidebars = new function() {
 	};
 
 	/**
-	 * Setter for CommentPress sidebar minimised flag
+	 * Setter for CommentPress sidebar minimised flag.
+	 *
+	 * @since 3.8
 	 */
 	this.set_minimised = function( val ) {
 		me.minimised = val;
 	};
 
 	/**
-	 * Getter for CommentPress sidebar minimised flag
+	 * Getter for CommentPress sidebar minimised flag.
+	 *
+	 * @since 3.8
 	 */
 	this.get_minimised = function() {
 		return me.minimised;
 	};
 
 	/**
-	 * Getter for CommentPress sidebar minimised flag
+	 * Getter for CommentPress sidebar minimised flag.
+	 *
+	 * @since 3.8
 	 */
 	this.is_minimised = function() {
 		if (
@@ -999,7 +1048,9 @@ CommentPress.theme.sidebars = new function() {
 	};
 
 	/**
-	 * Toggle for CommentPress sidebar minimised flag
+	 * Toggle for CommentPress sidebar minimised flag.
+	 *
+	 * @since 3.8
 	 */
 	this.toggle_minimised = function() {
 		if ( me.minimised === 'y' ) {
@@ -1012,10 +1063,11 @@ CommentPress.theme.sidebars = new function() {
 
 
 	/**
-	 * Bring sidebar to front
+	 * Bring sidebar to front.
 	 *
-	 * @param string sidebar The sidebar to bring to the front
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string sidebar The sidebar to bring to the front.
 	 */
 	this.activate_sidebar = function( sidebar ) {
 
@@ -1105,9 +1157,11 @@ CommentPress.theme.sidebars = new function() {
 
 
 	/**
-	 * Get top of sidebar
+	 * Get top of sidebar.
 	 *
-	 * @return integer num The top of the sidebar in pixels
+	 * @since 3.8
+	 *
+	 * @return integer num The top of the sidebar in pixels.
 	 */
 	this.get_top = function() {
 		return $.px_to_num( $('#toc_sidebar').css('top') );
@@ -1116,9 +1170,11 @@ CommentPress.theme.sidebars = new function() {
 
 
 	/**
-	 * Get border width of sidebar
+	 * Get border width of sidebar.
 	 *
-	 * @return integer num The border width of the sidebar in pixels
+	 * @since 3.8
+	 *
+	 * @return integer num The border width of the sidebar in pixels.
 	 */
 	this.get_top_border = function() {
 		return $.px_to_num( $('.sidebar_minimiser').css('borderTopWidth') );
@@ -1127,11 +1183,11 @@ CommentPress.theme.sidebars = new function() {
 
 
 	/**
-	 * Get visible sidebar minimiser
+	 * Get visible sidebar minimiser.
 	 *
 	 * @since 3.0
 	 *
-	 * @return object sidebar_pane The jQuery object for the sidebar pane
+	 * @return object sidebar_pane The jQuery object for the sidebar pane.
 	 */
 	this.get_sidebar_pane = function() {
 
@@ -1146,11 +1202,11 @@ CommentPress.theme.sidebars = new function() {
 
 
 	/**
-	 * Get visible sidebar
+	 * Get visible sidebar.
 	 *
 	 * @since 3.0
 	 *
-	 * @return string name The name of the visible sidebar
+	 * @return string name The name of the visible sidebar.
 	 */
 	this.get_sidebar_name = function() {
 
@@ -1184,12 +1240,12 @@ CommentPress.theme.sidebars = new function() {
 
 
 	/**
-	 * Get height data on element
+	 * Get height data on element.
 	 *
 	 * @since 3.0
 	 *
-	 * @param object element The element to adjust
-	 * @return int element_adjust The new height of the element in px
+	 * @param object element The element to adjust.
+	 * @return int element_adjust The new height of the element in px.
 	 */
 	this.get_element_adjust = function( element ) {
 
@@ -1219,13 +1275,13 @@ CommentPress.theme.sidebars = new function() {
 
 
 	/**
-	 * Set height of sidebar minimiser (scrolling element) so that the column fills the viewport
+	 * Set height of sidebar minimiser (scrolling element) so that the column fills the viewport.
 	 *
 	 * @since 3.0
 	 *
-	 * @todo In jQuery 1.9, we get a 143px error, related to sidebar.position().top
+	 * @todo In jQuery 1.9, we get a 143px error, related to sidebar.position().top.
 	 *
-	 * @return int to_bottom The height of the sidebar in px
+	 * @return int to_bottom The height of the sidebar in px.
 	 */
 	this.set_height = function() {
 
@@ -1295,7 +1351,9 @@ CommentPress.theme.sidebars = new function() {
 
 
 /**
- * Create viewport class
+ * Create viewport class.
+ *
+ * @since 3.8
  */
 CommentPress.theme.viewport = new function() {
 
@@ -1310,7 +1368,7 @@ CommentPress.theme.viewport = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -1323,7 +1381,7 @@ CommentPress.theme.viewport = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -1332,11 +1390,12 @@ CommentPress.theme.viewport = new function() {
 
 
 	/**
-	 * Scroll page to top
+	 * Scroll page to top.
 	 *
-	 * @param object target The object to scroll to
-	 * @param integer speed The duration of the scroll
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param object target The object to scroll to.
+	 * @param integer speed The duration of the scroll.
 	 */
 	this.scroll_to_top = function( target, speed ) {
 
@@ -1356,9 +1415,9 @@ CommentPress.theme.viewport = new function() {
 
 
 	/**
-	 * Page load prodecure
+	 * Page load prodecure.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.on_load_scroll_to_anchor = function() {
 
@@ -1399,9 +1458,9 @@ CommentPress.theme.viewport = new function() {
 		} else {
 
 			/**
-			 * Loop through the paragraph permalinks checking for a match
+			 * Loop through the paragraph permalinks checking for a match.
 			 *
-			 * @return void
+			 * @since 3.8
 			 */
 			$('span.para_marker > a').each( function(i) {
 
@@ -1509,10 +1568,11 @@ CommentPress.theme.viewport = new function() {
 
 
 	/**
-	 * Scroll to comment on page load
+	 * Scroll to comment on page load.
 	 *
-	 * @param int comment_id The ID of the comment to scroll to
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param int comment_id The ID of the comment to scroll to.
 	 */
 	this.on_load_scroll_to_comment = function( comment_id ) {
 
@@ -1629,11 +1689,12 @@ CommentPress.theme.viewport = new function() {
 
 
 	/**
-	 * Does what a click on a comment icon should do
+	 * Does what a click on a comment icon should do.
 	 *
-	 * @param string text_sig The text signature to scroll to
-	 * @param string scroll_target Where to scroll to ('none', 'para_heading', 'commentform' or 'auto' if empty)
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string text_sig The text signature to scroll to.
+	 * @param string scroll_target Where to scroll to ('none', 'para_heading', 'commentform' or 'auto' if empty).
 	 */
 	this.align_content = function( text_sig, scroll_target ) {
 
@@ -1914,14 +1975,18 @@ CommentPress.theme.viewport = new function() {
 
 
 /**
- * Create sub-namespace for default (original) theme
+ * Create sub-namespace for default (original) theme.
+ *
+ * @since 3.8
  */
 CommentPress.theme.original = {};
 
 
 
 /**
- * Create header class
+ * Create header class.
+ *
+ * @since 3.8
  */
 CommentPress.theme.original.header = new function() {
 
@@ -1937,7 +2002,7 @@ CommentPress.theme.original.header = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -1953,7 +2018,7 @@ CommentPress.theme.original.header = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -1971,7 +2036,9 @@ CommentPress.theme.original.header = new function() {
 	this.header_height = 0;
 
 	/**
-	 * Init for CommentPress header height
+	 * Init for CommentPress header height.
+	 *
+	 * @since 3.8
 	 */
 	this.init_height = function() {
 
@@ -1981,14 +2048,18 @@ CommentPress.theme.original.header = new function() {
 	};
 
 	/**
-	 * Setter for CommentPress header height
+	 * Setter for CommentPress header height.
+	 *
+	 * @since 3.8
 	 */
 	this.set_height = function( val ) {
 		me.header_height = val;
 	};
 
 	/**
-	 * Getter for CommentPress header height
+	 * Getter for CommentPress header height.
+	 *
+	 * @since 3.8
 	 */
 	this.get_height = function() {
 		return me.header_height;
@@ -2000,7 +2071,9 @@ CommentPress.theme.original.header = new function() {
 	this.minimised = 'n';
 
 	/**
-	 * Init for CommentPress header minimised flag
+	 * Init for CommentPress header minimised flag.
+	 *
+	 * @since 3.8
 	 */
 	this.init_minimised = function() {
 
@@ -2013,23 +2086,29 @@ CommentPress.theme.original.header = new function() {
 	};
 
 	/**
-	 * Setter for CommentPress header minimised flag
+	 * Setter for CommentPress header minimised flag.
+	 *
+	 * @since 3.8
 	 */
 	this.set_minimised = function( val ) {
 		me.minimised = val;
 	};
 
 	/**
-	 * Getter for CommentPress header minimised flag
+	 * Getter for CommentPress header minimised flag.
+	 *
+	 * @since 3.8
 	 */
 	this.get_minimised = function() {
 		return me.minimised;
 	};
 
 	/**
-	 * Getter for CommentPress header minimised flag
+	 * Getter for CommentPress header minimised flag.
 	 *
-	 * @return bool Whether or not the header is minimised
+	 * @since 3.8
+	 *
+	 * @return bool Whether or not the header is minimised.
 	 */
 	this.is_minimised = function() {
 		if (
@@ -2043,7 +2122,9 @@ CommentPress.theme.original.header = new function() {
 	};
 
 	/**
-	 * Toggle for CommentPress header minimised flag
+	 * Toggle for CommentPress header minimised flag.
+	 *
+	 * @since 3.8
 	 */
 	this.toggle_minimised = function() {
 		if ( me.minimised === 'y' ) {
@@ -2056,7 +2137,9 @@ CommentPress.theme.original.header = new function() {
 
 
 	/**
-	 * Set up Header minimise button
+	 * Set up Header minimise button.
+	 *
+	 * @since 3.8
 	 *
 	 * @return false
 	 */
@@ -2082,9 +2165,9 @@ CommentPress.theme.original.header = new function() {
 
 
 	/**
-	 * Set up header minimiser button
+	 * Set up header minimiser button.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.toggle = function() {
 
@@ -2114,9 +2197,9 @@ CommentPress.theme.original.header = new function() {
 
 
 	/**
-	 * Open header
+	 * Open header.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.open = function() {
 
@@ -2240,9 +2323,9 @@ CommentPress.theme.original.header = new function() {
 
 
 	/**
-	 * Close header
+	 * Close header.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.close = function() {
 
@@ -2383,9 +2466,9 @@ CommentPress.theme.viewport.init();
 
 
 /**
- * Define what happens when the page is ready
+ * Define what happens when the page is ready.
  *
- * @return void
+ * @since 3.8
  */
 jQuery(document).ready( function($) {
 
@@ -2406,10 +2489,11 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * Hook into CommentPress Form comment highlight trigger
+	 * Hook into CommentPress Form comment highlight trigger.
 	 *
-	 * @param int parent_id The parent comment ID
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param int parent_id The parent comment ID.
 	 */
 	$( document ).on( 'commentpress-comment-highlight', function( event, parent_id ) {
 
@@ -2432,10 +2516,11 @@ jQuery(document).ready( function($) {
 	});
 
 	/**
-	 * Hook into CommentPress Form comment unhighlight trigger
+	 * Hook into CommentPress Form comment unhighlight trigger.
 	 *
-	 * @param int parent_id The parent comment ID
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param int parent_id The parent comment ID.
 	 */
 	$( document ).on( 'commentpress-comment-unhighlight', function( event, parent_id ) {
 
@@ -2452,9 +2537,9 @@ jQuery(document).ready( function($) {
 	});
 
 	/**
-	 * Hook into CommentPress Form clear all comment highlights trigger
+	 * Hook into CommentPress Form clear all comment highlights trigger.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	$( document ).on( 'commentpress-comment-highlights-clear', function( event ) {
 
@@ -2473,9 +2558,9 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * When a comment block permalink comes into focus
+	 * When a comment block permalink comes into focus.
 	 *
-	 * @note in development for keyboard accessibility
+	 * @note in development for keyboard accessibility.
 	 */
 	/*
 	if ( $().jquery >= 1.4 ) {
@@ -2489,9 +2574,9 @@ jQuery(document).ready( function($) {
 	*/
 
 	/**
-	 * When a comment block permalink loses focus
+	 * When a comment block permalink loses focus.
 	 *
-	 * @note: in development for keyboard accessibility
+	 * @note: in development for keyboard accessibility.
 	 */
 	/*
 	$('a.comment_block_permalink').blur( function(e) {
@@ -2521,9 +2606,9 @@ jQuery(document).ready( function($) {
 
 
 /**
- * Define what happens when the page is unloaded
+ * Define what happens when the page is unloaded.
  *
- * @return void
+ * @since 3.8
  */
 /*
 jQuery(window).unload( function() {

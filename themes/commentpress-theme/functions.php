@@ -34,8 +34,6 @@ if ( ! function_exists( 'commentpress_setup' ) ):
  * Set up CommentPress Default theme.
  *
  * @since 3.0
- *
- * @return void
  */
 function commentpress_setup() {
 
@@ -130,8 +128,6 @@ if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ):
  * Add CommentPress Core front-end styles.
  *
  * @since 3.0
- *
- * @return void
  */
 function commentpress_enqueue_scripts_and_styles() {
 
@@ -239,8 +235,6 @@ if ( ! function_exists( 'commentpress_enqueue_print_styles' ) ):
  * Add CommentPress Core print stylesheet.
  *
  * @since 3.0
- *
- * @return void
  */
 function commentpress_enqueue_print_styles() {
 
@@ -269,8 +263,6 @@ if ( ! function_exists( 'commentpress_buddypress_support' ) ):
  * Enable support for BuddyPress.
  *
  * @since 3.3
- *
- * @return void
  */
 function commentpress_buddypress_support() {
 
@@ -295,7 +287,7 @@ if ( ! function_exists( 'commentpress_header' ) ):
 /**
  * Custom header
  *
- * @return void
+ * @since 3.0
  */
 function commentpress_header() {
 

@@ -17,7 +17,9 @@ Based loosely on the 'Ajax Comment Posting' WordPress plugin (version 2.0)
 
 
 /**
- * Create AJAX sub-namespace
+ * Create AJAX sub-namespace.
+ *
+ * @since 3.8
  */
 CommentPress.ajax = {};
 
@@ -28,7 +30,9 @@ CommentPress.ajax = {};
 
 
 /**
- * Create CommentPress Core AJAX comments class
+ * Create CommentPress Core AJAX comments class.
+ *
+ * @since 3.8
  */
 CommentPress.ajax.comments = new function() {
 
@@ -64,7 +68,7 @@ CommentPress.ajax.comments = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -77,7 +81,7 @@ CommentPress.ajax.comments = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -111,9 +115,9 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Reset CommentPress Core AJAX
+	 * Reset CommentPress Core AJAX.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.reset = function() {
 
@@ -137,10 +141,11 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Add comment to page
+	 * Add comment to page.
 	 *
-	 * @param object response The jQuery object containing the result of the AJAX request
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param object response The jQuery object containing the result of the AJAX request.
 	 */
 	this.add_comment = function( response ) {
 
@@ -231,13 +236,15 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Do comment append
+	 * Do comment append.
 	 *
-	 * @param object response The jQuery object from the AJAX request
-	 * @param string content The jQuery selector that targets the comment content
-	 * @param object target The jQuery object in which the comment should be placed
-	 * @param string last The jQuery selector of the last item in the comment list
-	 * @return string new_comment_id The ID of the new comment
+	 * @since 3.8
+	 *
+	 * @param object response The jQuery object from the AJAX request.
+	 * @param string content The jQuery selector that targets the comment content.
+	 * @param object target The jQuery object in which the comment should be placed.
+	 * @param string last The jQuery selector of the last item in the comment list.
+	 * @return string new_comment_id The ID of the new comment.
 	 */
 	this.nice_append = function( response, content, target, last ) {
 
@@ -262,13 +269,15 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Do comment prepend
+	 * Do comment prepend.
 	 *
-	 * @param object response The jQuery object from the AJAX request
-	 * @param string content The jQuery selector that targets the comment content
-	 * @param object target The jQuery object in which the comment should be placed
-	 * @param string last The jQuery selector of the last item in the comment list
-	 * @return string new_comment_id The ID of the new comment
+	 * @since 3.8
+	 *
+	 * @param object response The jQuery object from the AJAX request.
+	 * @param string content The jQuery selector that targets the comment content.
+	 * @param object target The jQuery object in which the comment should be placed.
+	 * @param string last The jQuery selector of the last item in the comment list.
+	 * @return string new_comment_id The ID of the new comment.
 	 */
 	this.nice_prepend = function( response, content, target, last ) {
 
@@ -293,11 +302,12 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Do comment cleanup
+	 * Do comment cleanup.
 	 *
-	 * @param string content The jQuery selector that targets the comment content
-	 * @param string last The jQuery selector of the last item in the comment list
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string content The jQuery selector that targets the comment content.
+	 * @param string last The jQuery selector of the last item in the comment list.
 	 */
 	this.cleanup = function( content, last ) {
 
@@ -357,9 +367,9 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Init comment form
+	 * Init comment form.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.initialise_form = function() {
 
@@ -517,9 +527,9 @@ CommentPress.ajax.comments = new function() {
 
 
 /**
- * Re-enable Featured Comments plugin functionality
+ * Re-enable Featured Comments plugin functionality.
  *
- * @return void
+ * @since 3.8
  */
 function cpajax_reenable_featured_comments() {
 
@@ -541,9 +551,9 @@ function cpajax_reenable_featured_comments() {
 
 
 /**
- * Re-enable Comment Upvoter plugin functionality
+ * Re-enable Comment Upvoter plugin functionality.
  *
- * @return void
+ * @since 3.8
  */
 function cpajax_reenable_comment_upvoter() {
 
@@ -578,9 +588,9 @@ CommentPress.ajax.comments.init();
 
 
 /**
- * Define what happens when the page is ready
+ * Define what happens when the page is ready.
  *
- * @return void
+ * @since 3.8
  */
 jQuery(document).ready(function($) {
 

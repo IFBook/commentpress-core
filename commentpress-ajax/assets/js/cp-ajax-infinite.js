@@ -15,7 +15,9 @@ active. Still in development.
 
 
 /**
- * Create CommentPress Infinite sub-namespace
+ * Create CommentPress Infinite sub-namespace.
+ *
+ * @since 3.8
  */
 CommentPress.infinite = {};
 
@@ -26,7 +28,9 @@ CommentPress.infinite = {};
 
 
 /**
- * Create settings class
+ * Create settings class.
+ *
+ * @since 3.8
  */
 CommentPress.infinite.settings = new function() {
 
@@ -41,7 +45,7 @@ CommentPress.infinite.settings = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -68,7 +72,7 @@ CommentPress.infinite.settings = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -80,28 +84,36 @@ CommentPress.infinite.settings = new function() {
 	this.posts = new Array;
 
 	/**
-	 * Setter for posts array
+	 * Setter for posts array.
+	 *
+	 * @since 3.8
 	 */
 	this.set_posts = function( val ) {
 		this.posts = val;
 	};
 
 	/**
-	 * Getter for posts array
+	 * Getter for posts array.
+	 *
+	 * @since 3.8
 	 */
 	this.get_posts = function() {
 		return this.posts;
 	};
 
 	/**
-	 * Test if post is in posts array
+	 * Test if post is in posts array.
+	 *
+	 * @since 3.8
 	 */
 	this.in_posts = function( post_id ) {
 		return $.in_array( post_id, this.posts );
 	};
 
 	/**
-	 * Add to posts array
+	 * Add to posts array.
+	 *
+	 * @since 3.8
 	 */
 	this.add_to_posts = function( post_id ) {
 		this.posts.push( post_id );
@@ -113,7 +125,9 @@ CommentPress.infinite.settings = new function() {
 	this.post_url = '';
 
 	/**
-	 * Init for post url
+	 * Init for post url.
+	 *
+	 * @since 3.8
 	 */
 	this.init_post_url = function() {
 
@@ -123,14 +137,18 @@ CommentPress.infinite.settings = new function() {
 	};
 
 	/**
-	 * Setter for post url
+	 * Setter for post url.
+	 *
+	 * @since 3.8
 	 */
 	this.set_post_url = function( val ) {
 		this.post_url = val;
 	};
 
 	/**
-	 * Getter for post url
+	 * Getter for post url.
+	 *
+	 * @since 3.8
 	 */
 	this.get_post_url = function() {
 		return this.post_url;
@@ -142,7 +160,9 @@ CommentPress.infinite.settings = new function() {
 	this.post_title = '';
 
 	/**
-	 * Init for post title
+	 * Init for post title.
+	 *
+	 * @since 3.8
 	 */
 	this.init_post_title = function() {
 
@@ -152,14 +172,18 @@ CommentPress.infinite.settings = new function() {
 	};
 
 	/**
-	 * Setter for post title
+	 * Setter for post title.
+	 *
+	 * @since 3.8
 	 */
 	this.set_post_title = function( val ) {
 		this.post_title = val;
 	};
 
 	/**
-	 * Getter for post title
+	 * Getter for post title.
+	 *
+	 * @since 3.8
 	 */
 	this.get_post_title = function() {
 		return this.post_title;
@@ -171,14 +195,18 @@ CommentPress.infinite.settings = new function() {
 	this.post_comments_open = 'n';
 
 	/**
-	 * Setter for post "comments open" setting
+	 * Setter for post "comments open" setting.
+	 *
+	 * @since 3.8
 	 */
 	this.set_post_comments_open = function( val ) {
 		this.post_comments_open = val;
 	};
 
 	/**
-	 * Getter for post "comments open" setting
+	 * Getter for post "comments open" setting.
+	 *
+	 * @since 3.8
 	 */
 	this.get_post_comments_open = function() {
 		return this.post_comments_open;
@@ -190,21 +218,27 @@ CommentPress.infinite.settings = new function() {
 	this.comments = new Array;
 
 	/**
-	 * Setter for comments array
+	 * Setter for comments array.
+	 *
+	 * @since 3.8
 	 */
 	this.set_comments = function( val ) {
 		this.comments = val;
 	};
 
 	/**
-	 * Getter for comments array
+	 * Getter for comments array.
+	 *
+	 * @since 3.8
 	 */
 	this.get_comments = function() {
 		return this.comments;
 	};
 
 	/**
-	 * Add to comments array
+	 * Add to comments array.
+	 *
+	 * @since 3.8
 	 */
 	this.add_to_comments = function( post_id, val ) {
 		this.comments[post_id] = val;
@@ -220,7 +254,9 @@ CommentPress.infinite.settings = new function() {
 
 
 /**
- * Create CommentPress infinite DOM class
+ * Create CommentPress infinite DOM class.
+ *
+ * @since 3.8
  */
 CommentPress.infinite.DOM = new function() {
 
@@ -235,7 +271,7 @@ CommentPress.infinite.DOM = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -248,7 +284,7 @@ CommentPress.infinite.DOM = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -263,17 +299,18 @@ CommentPress.infinite.DOM = new function() {
 
 
 	/**
-	 * Enable popstate
+	 * Enable popstate.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init_popstate = function() {
 
 		/**
-		 * Change content and comments
+		 * Change content and comments.
 		 *
-		 * @param object e The state object
-		 * @return void
+		 * @since 3.8
+		 *
+		 * @param object e The state object.
 		 */
 		window.onpopstate = function( e ) {
 
@@ -316,23 +353,23 @@ CommentPress.infinite.DOM = new function() {
 
 
 	/**
-	 * Enable waypoints
+	 * Enable waypoints.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init_waypoints = function() {
 
 		/**
-		 * Define what happens when the bottom of the page is in view
+		 * Define what happens when the bottom of the page is in view.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$( '#wrapper' ).waypoint(
 
 			/**
-			 * Waypoint callback
+			 * Waypoint callback.
 			 *
-			 * @return void
+			 * @since 3.8
 			 */
 			function( direction ) {
 
@@ -368,10 +405,12 @@ CommentPress.infinite.DOM = new function() {
 
 
 	/**
-	 * Enable waypoints on posts on a per-post basis
+	 * Enable waypoints on posts on a per-post basis.
 	 *
-	 * @param int post_id The numeric ID of the WordPress post
-	 * @return int offset The waypoint offset
+	 * @since 3.8
+	 *
+	 * @param int post_id The numeric ID of the WordPress post.
+	 * @return int offset The waypoint offset.
 	 */
 	this.init_post_waypoint = function( post_id ) {
 
@@ -379,10 +418,11 @@ CommentPress.infinite.DOM = new function() {
 		$( '#post-' + post_id + '.post' ).parent().parent().waypoint(
 
 			/**
-			 * Waypoint callback
+			 * Waypoint callback.
 			 *
-			 * @param string direction The direction of scroll
-			 * @return void
+			 * @since 3.8
+			 *
+			 * @param string direction The direction of scroll.
 			 */
 			function( direction ) {
 
@@ -433,11 +473,12 @@ CommentPress.infinite.DOM = new function() {
 
 
 	/**
-	 * Handle data sent back from an AJAX call
+	 * Handle data sent back from an AJAX call.
 	 *
-	 * @param object response The data from the AJAX request as jQuery object
-	 * @param string mode The type of data handling to perform
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param object response The data from the AJAX request as jQuery object.
+	 * @param string mode The type of data handling to perform.
 	 */
 	this.handle_ajax_data = function( response, mode ) {
 
@@ -576,9 +617,9 @@ CommentPress.infinite.DOM = new function() {
 
 
 	/**
-	 * Refresh all CommentPress listeners and methods
+	 * Refresh all CommentPress listeners and methods.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.refresh = function() {
 
@@ -605,10 +646,11 @@ CommentPress.infinite.DOM = new function() {
 
 
 	/**
-	 * Change content and comments
+	 * Change content and comments.
 	 *
-	 * @param object context The jQuery context object
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param object context The jQuery context object.
 	 */
 	this.update_dom = function( context ) {
 
@@ -764,7 +806,9 @@ CommentPress.infinite.DOM = new function() {
 
 
 /**
- * Create CommentPress infinite page class
+ * Create CommentPress infinite page class.
+ *
+ * @since 3.8
  */
 CommentPress.infinite.page = new function() {
 
@@ -779,7 +823,7 @@ CommentPress.infinite.page = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -795,7 +839,7 @@ CommentPress.infinite.page = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -810,7 +854,9 @@ CommentPress.infinite.page = new function() {
 	this.cpajax_nonce = '';
 
 	/**
-	 * Init for comment form nonce
+	 * Init for comment form nonce.
+	 *
+	 * @since 3.8
 	 */
 	this.init_nonce = function() {
 
@@ -822,14 +868,18 @@ CommentPress.infinite.page = new function() {
 	};
 
 	/**
-	 * Setter for comment form nonce
+	 * Setter for comment form nonce.
+	 *
+	 * @since 3.8
 	 */
 	this.set_nonce = function( val ) {
 		this.cpajax_nonce = val;
 	};
 
 	/**
-	 * Getter for comment form nonce
+	 * Getter for comment form nonce.
+	 *
+	 * @since 3.8
 	 */
 	this.get_nonce = function() {
 		return this.cpajax_nonce;
@@ -839,9 +889,9 @@ CommentPress.infinite.page = new function() {
 
 
 	/**
-	 * Intercept page navigation links
+	 * Intercept page navigation links.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.state_navigation = function() {
 
@@ -864,10 +914,11 @@ CommentPress.infinite.page = new function() {
 
 
 	/**
-	 * Make an AJAX call to retrieve next post/page
+	 * Make an AJAX call to retrieve next post/page.
 	 *
-	 * @param string mode Triggered by either 'waypoint' or 'link'
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string mode Triggered by either 'waypoint' or 'link'.
 	 */
 	this.load_next = function( mode ) {
 
@@ -939,7 +990,9 @@ CommentPress.infinite.page = new function() {
 
 
 /**
- * Create CommentPress infinite menu class
+ * Create CommentPress infinite menu class.
+ *
+ * @since 3.8
  */
 CommentPress.infinite.menu = new function() {
 
@@ -954,7 +1007,7 @@ CommentPress.infinite.menu = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -967,7 +1020,7 @@ CommentPress.infinite.menu = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -976,10 +1029,11 @@ CommentPress.infinite.menu = new function() {
 
 
 	/**
-	 * Update the classes on the menu for a given menu_id
+	 * Update the classes on the menu for a given menu_id.
 	 *
-	 * @param string item_id The numerical ID of the menu item
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string item_id The numerical ID of the menu item.
 	 */
 	this.update_custom = function( item_id ) {
 
@@ -996,10 +1050,11 @@ CommentPress.infinite.menu = new function() {
 
 
 	/**
-	 * Update the classes on the WP pages menu for a given page_id
+	 * Update the classes on the WP pages menu for a given page_id.
 	 *
-	 * @param string item_id The numerical ID of the menu item
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string item_id The numerical ID of the menu item.
 	 */
 	this.CommentPress.infinite.menu.update_pages = function( item_id ) {
 
@@ -1022,7 +1077,9 @@ CommentPress.infinite.menu = new function() {
 
 
 /**
- * Create CommentPress infinite comments class
+ * Create CommentPress infinite comments class.
+ *
+ * @since 3.8
  */
 CommentPress.infinite.comments = new function() {
 
@@ -1037,7 +1094,7 @@ CommentPress.infinite.comments = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -1050,7 +1107,7 @@ CommentPress.infinite.comments = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -1059,9 +1116,9 @@ CommentPress.infinite.comments = new function() {
 
 
 	/**
-	 * Store comments (not used)
+	 * Store comments. (not used)
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.store = function() {
 
@@ -1089,7 +1146,9 @@ CommentPress.infinite.comments = new function() {
 
 
 /**
- * Create CommentPress infinite commentform class
+ * Create CommentPress infinite commentform class.
+ *
+ * @since 3.8
  */
 CommentPress.infinite.commentform = new function() {
 
@@ -1104,7 +1163,7 @@ CommentPress.infinite.commentform = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -1117,7 +1176,7 @@ CommentPress.infinite.commentform = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -1132,14 +1191,18 @@ CommentPress.infinite.commentform = new function() {
 	this.comments_form = 0;
 
 	/**
-	 * Setter for comments form
+	 * Setter for comments form.
+	 *
+	 * @since 3.8
 	 */
 	this.set_comments_form = function( val ) {
 		this.comments_form = val;
 	};
 
 	/**
-	 * Getter for comments form
+	 * Getter for comments form.
+	 *
+	 * @since 3.8
 	 */
 	this.get_comments_form = function() {
 		return this.comments_form;
@@ -1148,9 +1211,9 @@ CommentPress.infinite.commentform = new function() {
 
 
 	/**
-	 * Copy and store the comment form
+	 * Copy and store the comment form.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.store = function() {
 
@@ -1210,9 +1273,9 @@ CommentPress.infinite.comments.init();
 
 
 /**
- * Define what happens when the page is ready
+ * Define what happens when the page is ready.
  *
- * @return void
+ * @since 3.8
  */
 jQuery(document).ready(function($) {
 

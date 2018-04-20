@@ -34,11 +34,13 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 
 
 /**
- * Send single data item to server
+ * Send single data item to server.
  *
- * @param method The WordPress function to call
- * @param value The single data item to send
- * @return boolean success Whether successful or not
+ * @since 3.8
+ *
+ * @param method The WordPress function to call.
+ * @param value The single data item to send.
+ * @return boolean success Whether successful or not.
  */
 function cp_send_to_server( method, key, value, callback ) {
 
@@ -87,9 +89,11 @@ function cp_send_to_server( method, key, value, callback ) {
 
 
 /**
- * Callback for AJAX request for Page Title Visibility change
+ * Callback for AJAX request for Page Title Visibility change.
  *
- * @param data The data returned by the AJAX call in cp_send_to_server()
+ * @since 3.8
+ *
+ * @param data The data returned by the AJAX call in cp_send_to_server().
  */
 function cp_title_visibility_changed( data ) {
 
@@ -107,9 +111,11 @@ function cp_title_visibility_changed( data ) {
 
 
 /**
- * Callback for AJAX request for Page Meta Visibility change
+ * Callback for AJAX request for Page Meta Visibility change.
  *
- * @param data The data returned by the AJAX call in cp_send_to_server()
+ * @since 3.8
+ *
+ * @param data The data returned by the AJAX call in cp_send_to_server().
  */
 function cp_meta_visibility_changed( data ) {
 
@@ -127,9 +133,11 @@ function cp_meta_visibility_changed( data ) {
 
 
 /**
- * Callback for AJAX request for Text Formatting change
+ * Callback for AJAX request for Text Formatting change.
  *
- * @param data The data returned by the AJAX call in cp_send_to_server()
+ * @since 3.8
+ *
+ * @param data The data returned by the AJAX call in cp_send_to_server().
  */
 function cp_text_parser_changed( data ) {
 
@@ -143,9 +151,11 @@ function cp_text_parser_changed( data ) {
 
 
 /**
- * Callback for AJAX request for number format change
+ * Callback for AJAX request for number format change.
  *
- * @param data The data returned by the AJAX call in cp_send_to_server()
+ * @since 3.8
+ *
+ * @param data The data returned by the AJAX call in cp_send_to_server().
  */
 function cp_number_format_changed( data ) {
 
@@ -159,9 +169,9 @@ function cp_number_format_changed( data ) {
 
 
 /**
- * Define what happens when the page is ready
+ * Define what happens when the page is ready.
  *
- * @return void
+ * @since 3.8
  */
 jQuery(document).ready( function($) {
 
@@ -190,9 +200,9 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * Hook into WordPress Front-end Editor after save
+	 * Hook into WordPress Front-end Editor after save.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	$( document ).on( 'fee-after-save', function( event ) {
 
@@ -201,9 +211,9 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * Hook into WordPress Front-end Editor activation
+	 * Hook into WordPress Front-end Editor activation.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	$( document ).on( 'fee-on', function( event ) {
 
@@ -229,9 +239,9 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * Hook into WordPress Front-end Editor deactivation
+	 * Hook into WordPress Front-end Editor deactivation.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	$( document ).on( 'fee-off', function( event ) {
 
@@ -326,7 +336,7 @@ jQuery(document).ready( function($) {
 	 * Hook into WordPress Front-end Editor before save and add items to be saved
 	 * along with the post data.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	$( document ).on( 'fee-before-save', function( event ) {
 
@@ -350,9 +360,9 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * Metabox element changed: Page Title Visibility dropdown
+	 * Metabox element changed: Page Title Visibility dropdown.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	$( '#cp_title_visibility' ).on( 'change', function( event ) {
 
@@ -371,9 +381,9 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * Metabox element changed: Page Meta Visibility dropdown
+	 * Metabox element changed: Page Meta Visibility dropdown.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	$( '#cp_page_meta_visibility' ).on( 'change', function( event ) {
 
@@ -392,9 +402,9 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * Metabox element changed: Page Number Format dropdown
+	 * Metabox element changed: Page Number Format dropdown.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	$( '#cp_number_format' ).on( 'change', function( event ) {
 
@@ -413,9 +423,9 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * Metabox element changed: Text Formatting dropdown
+	 * Metabox element changed: Text Formatting dropdown.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	$( '#cp_post_type_override' ).on( 'change', function( event ) {
 
@@ -434,9 +444,9 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * Metabox element changed: Starting Paragraph Number
+	 * Metabox element changed: Starting Paragraph Number.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	$( '#cp_starting_para_number' ).on( 'change', function( event ) {
 

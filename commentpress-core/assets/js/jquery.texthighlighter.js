@@ -14,14 +14,18 @@ Implements commenting on text highlights
 
 
 /**
- * Create texthighlighter sub-namespace
+ * Create texthighlighter sub-namespace.
+ *
+ * @since 3.8
  */
 CommentPress.texthighlighter = {};
 
 
 
 /**
- * Create CommentPress Core texthighlighter settings class
+ * Create CommentPress Core texthighlighter settings class.
+ *
+ * @since 3.8
  */
 CommentPress.texthighlighter.utilities = new function() {
 
@@ -34,6 +38,8 @@ CommentPress.texthighlighter.utilities = new function() {
 	 *
 	 * This variable holds all translatable text strings, keyed by a code.
 	 * e.g. ['dialog_title': "My title", 'dialog_content': "Hello World" ]
+	 *
+	 * @since 3.8
 	 */
 	this.localisation = new Array;
 
@@ -45,8 +51,9 @@ CommentPress.texthighlighter.utilities = new function() {
 	/**
 	 * Setter for texthighlighter localisation.
 	 *
-	 * @param array val The new localisation array
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param array val The new localisation array.
 	 */
 	this.localisation_set = function( val ) {
 		me.localisation = val;
@@ -54,6 +61,8 @@ CommentPress.texthighlighter.utilities = new function() {
 
 	/**
 	 * Getter for texthighlighter localisation.
+	 *
+	 * @since 3.8
 	 *
 	 * @param string key the code/key for the localisation string
 	 * @return string localisation The localisation string
@@ -72,14 +81,17 @@ CommentPress.texthighlighter.utilities = new function() {
 	 *
 	 * This variable holds a reference to the currently active textblock scroll
 	 * target for resetting after overriding the current value.
+	 *
+	 * @since 3.8
 	 */
 	this.saved_scroll_target = '';
 
 	/**
 	 * Setter for texthighlighter saved scroll target.
 	 *
-	 * @param string val The new saved_scroll_target
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string val The new saved_scroll_target.
 	 */
 	this.saved_scroll_target_set = function( val ) {
 		me.saved_scroll_target = val;
@@ -87,6 +99,8 @@ CommentPress.texthighlighter.utilities = new function() {
 
 	/**
 	 * Getter for texthighlighter saved scroll target.
+	 *
+	 * @since 3.8
 	 *
 	 * @return string saved_scroll_target The saved_scroll_target string
 	 */
@@ -101,7 +115,7 @@ CommentPress.texthighlighter.utilities = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -116,7 +130,7 @@ CommentPress.texthighlighter.utilities = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -127,9 +141,11 @@ CommentPress.texthighlighter.utilities = new function() {
 
 
 	/**
-	 * Get current text selection
+	 * Get current text selection.
 	 *
-	 * @return object selection_obj The selection data
+	 * @since 3.8
+	 *
+	 * @return object selection_obj The selection data.
 	 */
 	this.selection_get = function( element_id ) {
 
@@ -139,9 +155,9 @@ CommentPress.texthighlighter.utilities = new function() {
 	};
 
 	/**
-	 * Clear text selection
+	 * Clear text selection.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.selection_clear = function() {
 
@@ -164,10 +180,12 @@ CommentPress.texthighlighter.utilities = new function() {
 	if (window.getSelection && document.createRange) {
 
 		/**
-		 * Get current texthighlighter selection
+		 * Get current texthighlighter selection.
 		 *
-		 * @param object textblock_el The containing DOM element
-		 * @return object Selection start and end data
+		 * @since 3.8
+		 *
+		 * @param object textblock_el The containing DOM element.
+		 * @return object Selection start and end data.
 		 */
 		this.selection_get_current = function( textblock_el ) {
 
@@ -187,11 +205,12 @@ CommentPress.texthighlighter.utilities = new function() {
 		};
 
 		/**
-		 * Restore texthighlighter selection
+		 * Restore texthighlighter selection.
 		 *
-		 * @param object textblock_el The containing DOM element
-		 * @param object saved_selection Selection start and end data
-		 * @return void
+		 * @since 3.8
+		 *
+		 * @param object textblock_el The containing DOM element.
+		 * @param object saved_selection Selection start and end data.
 		 */
 		this.selection_restore = function( textblock_el, saved_selection ) {
 			var charIndex = 0,
@@ -231,10 +250,12 @@ CommentPress.texthighlighter.utilities = new function() {
 	} else if (document.selection && document.body.createTextRange) {
 
 		/**
-		 * Store texthighlighter selection
+		 * Store texthighlighter selection.
 		 *
-		 * @param object textblock_el The DOM element
-		 * @return object Selection start and end data
+		 * @since 3.8
+		 *
+		 * @param object textblock_el The DOM element.
+		 * @return object Selection start and end data.
 		 */
 		this.selection_get_current = function( textblock_el ) {
 
@@ -254,11 +275,12 @@ CommentPress.texthighlighter.utilities = new function() {
 		};
 
 		/**
-		 * Restore texthighlighter selection
+		 * Restore texthighlighter selection.
 		 *
-		 * @param object textblock_el The DOM element
-		 * @param object saved_selection Selection start and end data
-		 * @return void
+		 * @since 3.8
+		 *
+		 * @param object textblock_el The DOM element.
+		 * @param object saved_selection Selection start and end data.
 		 */
 		this.selection_restore = function( textblock_el, saved_selection ) {
 			var textRange;
@@ -275,9 +297,9 @@ CommentPress.texthighlighter.utilities = new function() {
 
 
 	/**
-	 * Clear text highlights
+	 * Clear text highlights.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.highlights_clear_all = function() {
 
@@ -298,7 +320,9 @@ CommentPress.texthighlighter.utilities = new function() {
 
 
 /**
- * Create CommentPress Core texthighlighter textblocks class
+ * Create CommentPress Core texthighlighter textblocks class.
+ *
+ * @since 3.8
  */
 CommentPress.texthighlighter.textblocks = new function() {
 
@@ -321,7 +345,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -334,7 +358,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -347,14 +371,17 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 *
 	 * This variable holds a reference to the currently active textblock and is
 	 * set by the click handler on the .textblock elements.
+	 *
+	 * @since 3.8
 	 */
 	this.container = '';
 
 	/**
 	 * Setter for texthighlighter container.
 	 *
-	 * @param string textblock_id The ID of the textblock that was clicked
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string textblock_id The ID of the textblock that was clicked.
 	 */
 	this.container_set = function( textblock_id ) {
 		me.container = textblock_id;
@@ -363,7 +390,9 @@ CommentPress.texthighlighter.textblocks = new function() {
 	/**
 	 * Getter for texthighlighter container.
 	 *
-	 * @return string container The ID of the textblock that was clicked
+	 * @since 3.8
+	 *
+	 * @return string container The ID of the textblock that was clicked.
 	 */
 	this.container_get = function() {
 		return me.container;
@@ -376,7 +405,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.setup = function() {
 
@@ -405,7 +434,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 	/**
 	 * Set up the jQuery text highlighter textblock popover.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.setup_popover = function() {
 
@@ -413,21 +442,21 @@ CommentPress.texthighlighter.textblocks = new function() {
 		$(me.popover_textblock).appendTo( 'body' );
 
 		/**
-		 * Do not act on mousdowns on holder
+		 * Do not act on mousdowns on holder.
 		 *
 		 * I presume that this prevents event bubbling from the holder to the
 		 * document body so that clicking elsewhere deactivates the popover.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('.popover-holder').mousedown( function() {
 			return false;
 		});
 
 		/**
-		 * Act on clicks on the holder's "Comment" button
+		 * Act on clicks on the holder's "Comment" button.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('.popover-holder-btn-left-comment').click( function() {
 
@@ -461,9 +490,9 @@ CommentPress.texthighlighter.textblocks = new function() {
 		});
 
 		/**
-		 * Act on clicks on the holder's "Quote and Comment" button
+		 * Act on clicks on the holder's "Quote and Comment" button.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('.popover-holder-btn-left-quote').click( function() {
 
@@ -497,9 +526,9 @@ CommentPress.texthighlighter.textblocks = new function() {
 		});
 
 		/**
-		 * Act on clicks on the holder's right button
+		 * Act on clicks on the holder's right button.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('.popover-holder-btn-right').click( function() {
 
@@ -522,7 +551,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 	/**
 	 * Set up the jQuery text highlighter textblock actions.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.setup_content = function() {
 
@@ -536,9 +565,9 @@ CommentPress.texthighlighter.textblocks = new function() {
 		}
 
 		/**
-		 * Act on mousedown on textblock
+		 * Act on mousedown on textblock.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#container').on( 'mousedown' + touchstart, '.textblock', function() {
 
@@ -571,9 +600,9 @@ CommentPress.texthighlighter.textblocks = new function() {
 		});
 
 		/**
-		 * Act on mouseup on textblock
+		 * Act on mouseup on textblock.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#container').on( 'mouseup' + touchend, '.textblock', function() {
 
@@ -612,12 +641,14 @@ CommentPress.texthighlighter.textblocks = new function() {
 	/**
 	 * Set up the jQuery text highlighter comment actions.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.setup_comment_rollovers = function() {
 
 		/**
-		 * Rolling onto a comment
+		 * Rolling onto a comment.
+		 *
+		 * @since 3.8
 		 */
 		$('#comments_sidebar').on( 'mouseenter', 'li.comment.selection-exists', function( event ) {
 
@@ -643,7 +674,9 @@ CommentPress.texthighlighter.textblocks = new function() {
 		});
 
 		/**
-		 * Rolling off a comment
+		 * Rolling off a comment.
+		 *
+		 * @since 3.8
 		 */
 		$('#comments_sidebar').on( 'mouseleave', 'li.comment.selection-exists', function( event ) {
 
@@ -664,10 +697,11 @@ CommentPress.texthighlighter.textblocks = new function() {
 
 
 	/**
-	 * Send selection data to comment form
+	 * Send selection data to comment form.
 	 *
-	 * @param bool with_text Whether to send text or not
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param bool with_text Whether to send text or not.
 	 */
 	this.selection_send_to_editor = function( with_text ) {
 
@@ -737,9 +771,11 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 *
 	 * @see this.selection_normalise_for_comment()
 	 *
-	 * @param str textblock_id The ID of the textblock
-	 * @param object item The object containing the selection start and end values
-	 * @return object item The normalised selection start and end values
+	 * @since 3.8
+	 *
+	 * @param str textblock_id The ID of the textblock.
+	 * @param object item The object containing the selection start and end values.
+	 * @return object item The normalised selection start and end values.
 	 */
 	this.selection_normalise_for_commentform = function( textblock_id, item ) {
 
@@ -763,11 +799,12 @@ CommentPress.texthighlighter.textblocks = new function() {
 	};
 
 	/**
-	 * Add text selection to comment textarea
+	 * Add text selection to comment textarea.
 	 *
-	 * @param string text The plain text
-	 * @param string mode The mode in which to add (prepend|replace)
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string text The plain text.
+	 * @param string mode The mode in which to add (prepend|replace).
 	 */
 	this.selection_add_to_textarea = function( text, mode ) {
 
@@ -788,11 +825,12 @@ CommentPress.texthighlighter.textblocks = new function() {
 	};
 
 	/**
-	 * Add selection to TinyMCE
+	 * Add selection to TinyMCE.
 	 *
-	 * @param string text The plain text
-	 * @param string mode The mode in which to add (prepend|replace)
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string text The plain text.
+	 * @param string mode The mode in which to add (prepend|replace).
 	 */
 	this.selection_add_to_tinymce = function( text, mode ) {
 
@@ -819,9 +857,9 @@ CommentPress.texthighlighter.textblocks = new function() {
 
 
 	/**
-	 * Activate the jQuery highlighter
+	 * Activate the jQuery highlighter.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.highlighter_activate = function() {
 
@@ -838,9 +876,9 @@ CommentPress.texthighlighter.textblocks = new function() {
 	};
 
 	/**
-	 * Deactivate the jQuery highlighter
+	 * Deactivate the jQuery highlighter.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.highlighter_deactivate = function() {
 
@@ -853,9 +891,9 @@ CommentPress.texthighlighter.textblocks = new function() {
 	};
 
 	/**
-	 * Make the jQuery highlighter modal in behaviour
+	 * Make the jQuery highlighter modal in behaviour.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.highlighter_textblock_handler = function( event ) {
 
@@ -873,9 +911,9 @@ CommentPress.texthighlighter.textblocks = new function() {
 	};
 
 	/**
-	 * Enable the jQuery highlighter plugin
+	 * Enable the jQuery highlighter plugin.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.highlighter_enable = function() {
 
@@ -885,9 +923,9 @@ CommentPress.texthighlighter.textblocks = new function() {
 	};
 
 	/**
-	 * Disable the jQuery highlighter plugin
+	 * Disable the jQuery highlighter plugin.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.highlighter_disable = function() {
 
@@ -897,9 +935,9 @@ CommentPress.texthighlighter.textblocks = new function() {
 	};
 
 	/**
-	 * Clear text highlights in textblocks
+	 * Clear text highlights in textblocks.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.highlights_clear_content = function() {
 
@@ -912,9 +950,9 @@ CommentPress.texthighlighter.textblocks = new function() {
 	};
 
 	/**
-	 * Clear text highlights from comment rollovers
+	 * Clear text highlights from comment rollovers.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.highlights_clear_for_comment = function() {
 
@@ -933,21 +971,24 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 *
 	 * There is key in the master array for each comment ID, whose value is a
 	 * selection object from which we can read the start and end values.
+	 *
+	 * @since 3.8
 	 */
 	this.selections_by_comment = {};
 
 	/**
-	 * Build texthighlighter selections for a comments array
+	 * Build texthighlighter selections for a comments array.
 	 *
-	 * @param string comment_id The numerical comment ID
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string comment_id The numerical comment ID.
 	 */
 	this.selection_build_for_comments = function() {
 
 		/**
-		 * Target only comments that have a special class
+		 * Target only comments that have a special class.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#comments_sidebar li.selection-exists').each( function(i) {
 
@@ -995,10 +1036,11 @@ CommentPress.texthighlighter.textblocks = new function() {
 	};
 
 	/**
-	 * Save texthighlighter selection for a comment
+	 * Save texthighlighter selection for a comment.
 	 *
-	 * @param string comment_id The numerical comment ID
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string comment_id The numerical comment ID.
 	 */
 	this.selection_save_for_comment = function( comment_id ) {
 
@@ -1020,10 +1062,11 @@ CommentPress.texthighlighter.textblocks = new function() {
 	};
 
 	/**
-	 * Save texthighlighter selection for a comment
+	 * Save texthighlighter selection for a comment.
 	 *
-	 * @param int comment_id The numerical comment ID
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param int comment_id The numerical comment ID.
 	 */
 	this.selection_recall_for_comment = function( comment_id ) {
 
@@ -1064,9 +1107,11 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 * reaches 10, the selection is off by one. In the unlikely event that it
 	 * should reach 100, it will be off by two.
 	 *
-	 * @param str textblock_id The ID of the textblock
-	 * @param object item The object containing the selection start and end values
-	 * @return object item The normalised selection start and end values
+	 * @since 3.8
+	 *
+	 * @param str textblock_id The ID of the textblock.
+	 * @param object item The object containing the selection start and end values.
+	 * @return object item The normalised selection start and end values.
 	 */
 	this.selection_normalise_for_comment = function( textblock_id, item ) {
 
@@ -1098,14 +1143,17 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 *
 	 * This code is based loosely on:
 	 * http://stackoverflow.com/questions/13949059/persisting-the-changes-of-range-objects-after-selection-in-html/13950376#13950376
+	 *
+	 * @since 3.8
 	 */
 	this.selections_by_textblock = {};
 
 	/**
-	 * Save texthighlighter selection
+	 * Save texthighlighter selection.
 	 *
-	 * @param string textblock_id The element ID
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string textblock_id The element ID.
 	 */
 	this.selection_save_for_textblock = function( textblock_id ) {
 
@@ -1121,10 +1169,11 @@ CommentPress.texthighlighter.textblocks = new function() {
 	};
 
 	/**
-	 * Recall all texthighlighter selections
+	 * Recall all texthighlighter selections.
 	 *
-	 * @param string textblock_id The element ID
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string textblock_id The element ID.
 	 */
 	this.selection_recall_for_textblock = function( textblock_id ) {
 
@@ -1150,7 +1199,9 @@ CommentPress.texthighlighter.textblocks = new function() {
 
 
 /**
- * Create CommentPress Core texthighlighter commentform class
+ * Create CommentPress Core texthighlighter commentform class.
+ *
+ * @since 3.8
  */
 CommentPress.texthighlighter.commentform = new function() {
 
@@ -1164,14 +1215,18 @@ CommentPress.texthighlighter.commentform = new function() {
 	this.commentform_exists = 'n';
 
 	/**
-	 * Setter for "has commentform" flag
+	 * Setter for "has commentform" flag.
+	 *
+	 * @since 3.8
 	 */
 	this.set_commentform_flag = function( val ) {
 		me.commentform_exists = val;
 	};
 
 	/**
-	 * Getter for "has commentform" flag
+	 * Getter for "has commentform" flag.
+	 *
+	 * @since 3.8
 	 */
 	this.has_commentform = function() {
 		return me.commentform_exists;
@@ -1184,7 +1239,7 @@ CommentPress.texthighlighter.commentform = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -1197,7 +1252,7 @@ CommentPress.texthighlighter.commentform = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -1211,7 +1266,7 @@ CommentPress.texthighlighter.commentform = new function() {
 	/**
 	 * Set up the jQuery text highlighter comment form.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.setup = function() {
 
@@ -1236,9 +1291,11 @@ CommentPress.texthighlighter.commentform = new function() {
 
 
 	/**
-	 * Find out if there is content in the editor
+	 * Find out if there is content in the editor.
 	 *
-	 * @return bool Whether or not there is a stored selection object
+	 * @since 3.8
+	 *
+	 * @return bool Whether or not there is a stored selection object.
 	 */
 	this.comment_content_exists = function() {
 
@@ -1264,9 +1321,9 @@ CommentPress.texthighlighter.commentform = new function() {
 	};
 
 	/**
-	 * Clear the content in the editor
+	 * Clear the content in the editor.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.comment_content_clear = function() {
 
@@ -1294,10 +1351,11 @@ CommentPress.texthighlighter.commentform = new function() {
 	this.selection_in_editor = {};
 
 	/**
-	 * Setter for the selection that's held in the editor
+	 * Setter for the selection that's held in the editor.
 	 *
-	 * @param object selection The selection object to store
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param object selection The selection object to store.
 	 */
 	this.current_selection_set = function( selection ) {
 
@@ -1310,27 +1368,31 @@ CommentPress.texthighlighter.commentform = new function() {
 	};
 
 	/**
-	 * Getter for the selection that's held in the editor
+	 * Getter for the selection that's held in the editor.
 	 *
-	 * @return object The stored selection object
+	 * @since 3.8
+	 *
+	 * @return object The stored selection object.
 	 */
 	this.current_selection_get = function() {
 		return me.selection_in_editor;
 	};
 
 	/**
-	 * Find out if there is a selection that's held in the editor
+	 * Find out if there is a selection that's held in the editor.
 	 *
-	 * @return bool Whether or not there is a stored selection object
+	 * @since 3.8
+	 *
+	 * @return bool Whether or not there is a stored selection object.
 	 */
 	this.current_selection_exists = function() {
 		return $.isEmptyObject( me.selection_in_editor ) ? false : true;
 	};
 
 	/**
-	 * Clear the selection that's held in the editor
+	 * Clear the selection that's held in the editor.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.current_selection_clear = function() {
 
@@ -1345,14 +1407,16 @@ CommentPress.texthighlighter.commentform = new function() {
 
 
 	/**
-	 * Init property that flags the selection must not be cleared
+	 * Init property that flags the selection must not be cleared.
+	 *
+	 * @since 3.8
 	 */
 	this.focus_active = false;
 
 	/**
-	 * Set selection as active - and therefore not to be cleared
+	 * Set selection as active - and therefore not to be cleared.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.focus_activate = function() {
 
@@ -1367,7 +1431,9 @@ CommentPress.texthighlighter.commentform = new function() {
 	/**
 	 * Get selection active state - can it be cleared?
 	 *
-	 * @return bool Whether or not the selection can be cleared
+	 * @since 3.8
+	 *
+	 * @return bool Whether or not the selection can be cleared.
 	 */
 	this.focus_is_active = function() {
 		return me.focus_active;
@@ -1376,7 +1442,9 @@ CommentPress.texthighlighter.commentform = new function() {
 	/**
 	 * Get selection active state - can it be cleared?
 	 *
-	 * @return bool Whether or not the selection can be cleared
+	 * @since 3.8
+	 *
+	 * @return bool Whether or not the selection can be cleared.
 	 */
 	this.focus_clear = function() {
 
@@ -1389,9 +1457,9 @@ CommentPress.texthighlighter.commentform = new function() {
 	};
 
 	/**
-	 * Selection active handler - test for clicks outside the comment form
+	 * Selection active handler - test for clicks outside the comment form.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.focus_active_handler = function( event ) {
 
@@ -1439,9 +1507,9 @@ CommentPress.texthighlighter.commentform = new function() {
 	this.modal_markup = {};
 
 	/**
-	 * Selection active handler - test for clicks outside the comment form
+	 * Selection active handler - test for clicks outside the comment form.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.modal = function( event ) {
 
@@ -1525,9 +1593,9 @@ CommentPress.texthighlighter.commentform = new function() {
 
 
 	/**
-	 * Callback for clicking "Discard" in the dialog box
+	 * Callback for clicking "Discard" in the dialog box.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.modal_yes = function( event ) {
 
@@ -1554,9 +1622,9 @@ CommentPress.texthighlighter.commentform = new function() {
 
 
 	/**
-	 * Callback for clicking "Keep" in the dialog box
+	 * Callback for clicking "Keep" in the dialog box.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.modal_cancel = function( event ) {
 
@@ -1582,7 +1650,9 @@ CommentPress.texthighlighter.commentform = new function() {
 
 
 /**
- * Create CommentPress Core texthighlighter comments class
+ * Create CommentPress Core texthighlighter comments class.
+ *
+ * @since 3.8
  */
 CommentPress.texthighlighter.comments = new function() {
 
@@ -1605,7 +1675,7 @@ CommentPress.texthighlighter.comments = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -1618,7 +1688,7 @@ CommentPress.texthighlighter.comments = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -1631,14 +1701,17 @@ CommentPress.texthighlighter.comments = new function() {
 	 *
 	 * This variable holds a reference to the currently active comment and is
 	 * set by the click handler on the .comment-content elements.
+	 *
+	 * @since 3.8
 	 */
 	this.container = '';
 
 	/**
 	 * Setter for texthighlighter container.
 	 *
-	 * @param string comment_id The ID of the comment that was clicked
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string comment_id The ID of the comment that was clicked.
 	 */
 	this.container_set = function( comment_id ) {
 		me.container = comment_id;
@@ -1647,7 +1720,9 @@ CommentPress.texthighlighter.comments = new function() {
 	/**
 	 * Getter for texthighlighter container.
 	 *
-	 * @return string container The ID of the comment that was clicked
+	 * @since 3.8
+	 *
+	 * @return string container The ID of the comment that was clicked.
 	 */
 	this.container_get = function() {
 		return me.container;
@@ -1658,7 +1733,7 @@ CommentPress.texthighlighter.comments = new function() {
 	/**
 	 * Set up the jQuery text highlighter comment actions.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.setup = function() {
 
@@ -1678,7 +1753,7 @@ CommentPress.texthighlighter.comments = new function() {
 	/**
 	 * Set up the jQuery text highlighter comment popover.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.setup_popover = function() {
 
@@ -1686,21 +1761,21 @@ CommentPress.texthighlighter.comments = new function() {
 		$(me.popover_comment).appendTo( 'body' );
 
 		/**
-		 * Do not act on mousdowns on holder
+		 * Do not act on mousdowns on holder.
 		 *
 		 * I presume that this prevents event bubbling from the holder to the
 		 * document body so that clicking elsewhere deactivates the popover.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('.comment-popover-holder').mousedown( function() {
 			return false;
 		});
 
 		/**
-		 * Act on clicks on the holder's "Quote and Comment" button
+		 * Act on clicks on the holder's "Quote and Comment" button.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('.comment-popover-holder-btn-left-quote').click( function() {
 
@@ -1728,9 +1803,9 @@ CommentPress.texthighlighter.comments = new function() {
 		});
 
 		/**
-		 * Act on clicks on the holder's right button
+		 * Act on clicks on the holder's right button.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('.popover-holder-btn-right').click( function() {
 
@@ -1753,14 +1828,14 @@ CommentPress.texthighlighter.comments = new function() {
 	/**
 	 * Set up the jQuery text highlighter comment actions.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.setup_content = function() {
 
 		/**
-		 * Act on mousedown on comment
+		 * Act on mousedown on comment.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#comments_sidebar').on( 'mousedown', '.comment-content', function() {
 
@@ -1790,9 +1865,9 @@ CommentPress.texthighlighter.comments = new function() {
 		});
 
 		/**
-		 * Act on mouseup on comment content
+		 * Act on mouseup on comment content.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#comments_sidebar').on( 'mouseup', '.comment-content', function() {
 
@@ -1845,9 +1920,9 @@ CommentPress.texthighlighter.comments = new function() {
 		});
 
 		/**
-		 * Act on clicks on comment forward-links
+		 * Act on clicks on comment forward-links.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#comments_sidebar').on( 'click', '.comment-forwardlink', function( event ) {
 
@@ -1905,9 +1980,9 @@ CommentPress.texthighlighter.comments = new function() {
 		});
 
 		/**
-		 * Act on clicks on comment forward-links
+		 * Act on clicks on comment back-links.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$('#comments_sidebar').on( 'click', '.comment-backlink', function( event ) {
 
@@ -1944,10 +2019,11 @@ CommentPress.texthighlighter.comments = new function() {
 
 
 	/**
-	 * Send selection data to comment form
+	 * Send selection data to comment form.
 	 *
-	 * @param bool with_text Whether to send text or not
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param bool with_text Whether to send text or not.
 	 */
 	this.selection_send_to_editor = function( with_text ) {
 
@@ -2007,10 +2083,12 @@ CommentPress.texthighlighter.comments = new function() {
 	};
 
 	/**
-	 * Get a link to the target comment
+	 * Get a link to the target comment.
 	 *
-	 * @param string text The plain text
-	 * @param string link The HTML link
+	 * @since 3.8
+	 *
+	 * @param string text The plain text.
+	 * @param string link The HTML link.
 	 */
 	this.get_link = function( text ) {
 
@@ -2029,10 +2107,11 @@ CommentPress.texthighlighter.comments = new function() {
 	};
 
 	/**
-	 * Add text selection to comment textarea
+	 * Add text selection to comment textarea.
 	 *
-	 * @param string text The plain text
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string text The plain text.
 	 */
 	this.selection_add_to_textarea = function( text ) {
 
@@ -2048,10 +2127,11 @@ CommentPress.texthighlighter.comments = new function() {
 	};
 
 	/**
-	 * Add selection to TinyMCE
+	 * Add selection to TinyMCE.
 	 *
-	 * @param string text The plain text
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string text The plain text.
 	 */
 	this.selection_add_to_tinymce = function( text ) {
 
@@ -2069,9 +2149,9 @@ CommentPress.texthighlighter.comments = new function() {
 
 
 	/**
-	 * Activate the jQuery highlighter
+	 * Activate the jQuery highlighter.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.highlighter_activate = function() {
 
@@ -2088,9 +2168,9 @@ CommentPress.texthighlighter.comments = new function() {
 	};
 
 	/**
-	 * Deactivate the jQuery highlighter
+	 * Deactivate the jQuery highlighter.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.highlighter_deactivate = function() {
 
@@ -2103,9 +2183,9 @@ CommentPress.texthighlighter.comments = new function() {
 	};
 
 	/**
-	 * Make the jQuery highlighter modal in behaviour
+	 * Make the jQuery highlighter modal in behaviour.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.highlighter_comment_handler = function( event ) {
 
@@ -2123,9 +2203,9 @@ CommentPress.texthighlighter.comments = new function() {
 	};
 
 	/**
-	 * Enable the jQuery highlighter plugin
+	 * Enable the jQuery highlighter plugin.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.highlighter_enable = function() {
 
@@ -2135,9 +2215,9 @@ CommentPress.texthighlighter.comments = new function() {
 	};
 
 	/**
-	 * Disable the jQuery highlighter plugin
+	 * Disable the jQuery highlighter plugin.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.highlighter_disable = function() {
 
@@ -2147,9 +2227,9 @@ CommentPress.texthighlighter.comments = new function() {
 	};
 
 	/**
-	 * Clear comment highlights
+	 * Clear comment highlights.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.highlights_clear_comment = function() {
 
@@ -2179,9 +2259,9 @@ CommentPress.texthighlighter.utilities.init();
 
 
 /**
- * Define what happens when the page is ready
+ * Define what happens when the page is ready.
  *
- * @return void
+ * @since 3.8
  */
 jQuery(document).ready(function($) {
 
@@ -2189,9 +2269,9 @@ jQuery(document).ready(function($) {
 	//CommentPress.texthighlighter.utilities.dom_ready();
 
 	/**
-	 * Receive callback from the theme's Javascript when it's done loading
+	 * Receive callback from the theme's Javascript when it's done loading.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	$(document).on(
 		'commentpress-document-ready',
@@ -2210,11 +2290,12 @@ jQuery(document).ready(function($) {
 	);
 
 	/**
-	 * Hook into CommentPress Core AJAX new comment added and animation finished
+	 * Hook into CommentPress Core AJAX new comment added and animation finished.
 	 *
-	 * @param object event The event (unused)
-	 * @param int comment_id The new comment ID
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param object event The event. (unused)
+	 * @param int comment_id The new comment ID.
 	 */
 	$(document).on(
 		'commentpress-ajax-comment-added-scrolled',
@@ -2227,11 +2308,12 @@ jQuery(document).ready(function($) {
 	);
 
 	/**
-	 * Hook into CommentPress Core AJAX new comment added
+	 * Hook into CommentPress Core AJAX new comment added.
 	 *
-	 * @param object event The event (unused)
-	 * @param int comment_id The new comment ID
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param object event The event. (unused)
+	 * @param int comment_id The new comment ID.
 	 */
 	$(document).on(
 		'commentpress-ajax-comment-added',
@@ -2264,10 +2346,11 @@ jQuery(document).ready(function($) {
 	/**
 	 * Hook into CommentPress Core clicks on items whose events do not bubble.
 	 *
-	 * We need to receive callbacks from these clicks to clear the active selection
+	 * We need to receive callbacks from these clicks to clear the active selection.
 	 *
-	 * @param object event The event (unused)
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param object event The event. (unused)
 	 */
 	$(document).on(
 		'commentpress-textblock-pre-align ' +
@@ -2298,10 +2381,11 @@ jQuery(document).ready(function($) {
 	/**
 	 * Hook into CommentPress Core clicks on items whose events do not bubble.
 	 *
-	 * We need to receive callbacks from these clicks to clear the active selection
+	 * We need to receive callbacks from these clicks to clear the active selection.
 	 *
-	 * @param object event The event (unused)
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param object event The event. (unused)
 	 */
 	$(document).on(
 		'commentpress-textblock-click ' +

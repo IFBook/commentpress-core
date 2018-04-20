@@ -12,14 +12,18 @@ NOTES
 
 
 /**
- * Create sub-namespace common to all themes
+ * Create sub-namespace common to all themes.
+ *
+ * @since 3.8
  */
 CommentPress.theme = {};
 
 
 
 /**
- * Create settings class
+ * Create settings class.
+ *
+ * @since 3.8
  */
 CommentPress.theme.settings = new function() {
 
@@ -34,7 +38,7 @@ CommentPress.theme.settings = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -47,7 +51,7 @@ CommentPress.theme.settings = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -62,7 +66,9 @@ CommentPress.theme.settings = new function() {
 
 
 /**
- * Create DOM class
+ * Create DOM class.
+ *
+ * @since 3.8
  */
 CommentPress.theme.DOM = new function() {
 
@@ -77,7 +83,7 @@ CommentPress.theme.DOM = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -96,7 +102,7 @@ CommentPress.theme.DOM = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -105,11 +111,11 @@ CommentPress.theme.DOM = new function() {
 
 
 	/**
-	 * Perform actions before the page is ready
+	 * Perform actions before the page is ready.
 	 *
-	 * Writes styles into the document <head> to avoid avoid flash of content
+	 * Writes styles into the document <head> to avoid avoid flash of content.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.head = function() {
 
@@ -215,7 +221,9 @@ CommentPress.theme.DOM = new function() {
 
 
 /**
- * Create header class
+ * Create header class.
+ *
+ * @since 3.8
  */
 CommentPress.theme.header = new function() {
 
@@ -230,7 +238,7 @@ CommentPress.theme.header = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -243,7 +251,7 @@ CommentPress.theme.header = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -252,9 +260,11 @@ CommentPress.theme.header = new function() {
 
 
 	/**
-	 * Get header offset
+	 * Get header offset.
 	 *
-	 * @return integer offset The target offset in px
+	 * @since 3.8
+	 *
+	 * @return integer offset The target offset in px.
 	 */
 	this.get_offset = function() {
 
@@ -296,7 +306,9 @@ CommentPress.theme.header = new function() {
 
 
 /**
- * Create navigation class
+ * Create navigation class.
+ *
+ * @since 3.8
  */
 CommentPress.theme.navigation = new function() {
 
@@ -311,7 +323,7 @@ CommentPress.theme.navigation = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -324,7 +336,7 @@ CommentPress.theme.navigation = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -336,16 +348,18 @@ CommentPress.theme.navigation = new function() {
 
 
 	/**
-	 * Set up "Contents" column "Special Pages" menu behaviour
+	 * Set up "Contents" column "Special Pages" menu behaviour.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.menu = function() {
 
 		/**
-		 * Clicks on "Special Pages" menu items
+		 * Clicks on "Special Pages" menu items.
 		 *
-		 * This is unique to this theme, so is not included in the setup class
+		 * This is unique to this theme, so is not included in the setup class.
+		 *
+		 * @since 3.8
 		 *
 		 * @return false
 		 */
@@ -381,7 +395,9 @@ CommentPress.theme.navigation = new function() {
 
 
 /**
- * Create content class
+ * Create content class.
+ *
+ * @since 3.8
  */
 CommentPress.theme.content = new function() {
 
@@ -396,7 +412,7 @@ CommentPress.theme.content = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -409,7 +425,7 @@ CommentPress.theme.content = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -426,7 +442,7 @@ CommentPress.theme.content = new function() {
 	 * Workflow adds "Literal" and "Original" tabs for use by translators.
 	 * Each theme calls the common method with params calculated below.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.tabs = function() {
 
@@ -457,7 +473,9 @@ CommentPress.theme.content = new function() {
 
 
 /**
- * Create sidebars class
+ * Create sidebars class.
+ *
+ * @since 3.8
  */
 CommentPress.theme.sidebars = new function() {
 
@@ -472,7 +490,7 @@ CommentPress.theme.sidebars = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -485,7 +503,7 @@ CommentPress.theme.sidebars = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -500,9 +518,9 @@ CommentPress.theme.sidebars = new function() {
 
 
 	/**
-	 * Set height of sidebars
+	 * Set height of sidebars.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.set_height = function() {
 
@@ -573,10 +591,11 @@ CommentPress.theme.sidebars = new function() {
 
 
 	/**
-	 * Bring sidebar to front
+	 * Bring sidebar to front.
 	 *
-	 * @param string sidebar The sidebar to bring to the front
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string sidebar The sidebar to bring to the front.
 	 */
 	this.activate_sidebar = function( sidebar ) {
 
@@ -613,9 +632,9 @@ CommentPress.theme.sidebars = new function() {
 
 
 	/**
-	 * Enable buttons
+	 * Enable buttons.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.enable_buttons = function() {
 
@@ -642,9 +661,9 @@ CommentPress.theme.sidebars = new function() {
 
 
 	/**
-	 * Show navigate column
+	 * Show navigate column.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.show_nav = function() {
 		$('body').toggleClass('active-nav').removeClass('active-sidebar');
@@ -653,9 +672,9 @@ CommentPress.theme.sidebars = new function() {
 	};
 
 	/**
-	 * Show content column
+	 * Show content column.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.show_content = function() {
 		$('body').removeClass('active-sidebar').removeClass('active-nav');
@@ -664,9 +683,9 @@ CommentPress.theme.sidebars = new function() {
 	};
 
 	/**
-	 * Show discuss column
+	 * Show discuss column.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.show_discuss = function() {
 		$('body').toggleClass('active-sidebar').removeClass('active-nav');
@@ -683,7 +702,9 @@ CommentPress.theme.sidebars = new function() {
 
 
 /**
- * Create viewport class
+ * Create viewport class.
+ *
+ * @since 3.8
  */
 CommentPress.theme.viewport = new function() {
 
@@ -698,7 +719,7 @@ CommentPress.theme.viewport = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -711,7 +732,7 @@ CommentPress.theme.viewport = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -726,16 +747,16 @@ CommentPress.theme.viewport = new function() {
 
 
 	/**
-	 * Track viewport changes
+	 * Track viewport changes.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.track_resize = function() {
 
 		/**
-		 * Perform actions when the viewport is resized
+		 * Perform actions when the viewport is resized.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$(window).resize( function() {
 
@@ -749,18 +770,18 @@ CommentPress.theme.viewport = new function() {
 
 
 	/**
-	 * Track window scrolling
+	 * Track window scrolling.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.track_scrolling = function() {
 
 		/**
-		 * Track scrolling
+		 * Track scrolling.
 		 *
-		 * @todo Rationalise this code as much of it is duplicated
+		 * @todo Rationalise this code as much of it is duplicated.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$(window).scroll( function() {
 
@@ -873,11 +894,12 @@ CommentPress.theme.viewport = new function() {
 
 
 	/**
-	 * Scroll page to top
+	 * Scroll page to top.
 	 *
-	 * @param object target The object to scroll to
-	 * @param integer speed The duration of the scroll
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param object target The object to scroll to.
+	 * @param integer speed The duration of the scroll.
 	 */
 	this.scroll_to_top = function( target, speed ) {
 
@@ -926,9 +948,9 @@ CommentPress.theme.viewport = new function() {
 
 
 	/**
-	 * Page load prodecure
+	 * Page load prodecure.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.on_load_scroll_to_anchor = function() {
 
@@ -969,9 +991,9 @@ CommentPress.theme.viewport = new function() {
 		} else {
 
 			/**
-			 * Loop through the paragraph permalinks checking for a match
+			 * Loop through the paragraph permalinks checking for a match.
 			 *
-			 * @return void
+			 * @since 3.8
 			 */
 			$('span.para_marker > a').each( function(i) {
 
@@ -1076,10 +1098,11 @@ CommentPress.theme.viewport = new function() {
 
 
 	/**
-	 * Scroll to comment on page load
+	 * Scroll to comment on page load.
 	 *
-	 * @param int comment_id The ID of the comment to scroll to
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param int comment_id The ID of the comment to scroll to.
 	 */
 	this.on_load_scroll_to_comment = function( comment_id ) {
 
@@ -1196,11 +1219,12 @@ CommentPress.theme.viewport = new function() {
 
 
 	/**
-	 * Does what a click on a comment icon should do
+	 * Does what a click on a comment icon should do.
 	 *
-	 * @param string text_sig The text signature to scroll to
-	 * @param string scroll_target Where to scroll to ('none', 'para_heading', 'commentform' or 'auto' if empty)
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string text_sig The text signature to scroll to.
+	 * @param string scroll_target Where to scroll to ('none', 'para_heading', 'commentform' or 'auto' if empty).
 	 */
 	this.align_content = function( text_sig, scroll_target ) {
 
@@ -1486,7 +1510,9 @@ CommentPress.theme.viewport = new function() {
 
 
 /**
- * Create sub-sub-namespace for modern theme
+ * Create sub-sub-namespace for modern theme.
+ *
+ * @since 3.8
  */
 CommentPress.theme.modern = {};
 
@@ -1512,9 +1538,9 @@ CommentPress.theme.viewport.init();
 
 
 /**
- * Define what happens when the page is ready
+ * Define what happens when the page is ready.
  *
- * @return void
+ * @since 3.8
  */
 jQuery(document).ready( function($) {
 
@@ -1535,10 +1561,11 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * Hook into CommentPress Form comment highlight trigger
+	 * Hook into CommentPress Form comment highlight trigger.
 	 *
-	 * @param int parent_id The parent comment ID
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param int parent_id The parent comment ID.
 	 */
 	$( document ).on( 'commentpress-comment-highlight', function( event, parent_id ) {
 
@@ -1548,10 +1575,11 @@ jQuery(document).ready( function($) {
 	});
 
 	/**
-	 * Hook into CommentPress Form comment unhighlight trigger
+	 * Hook into CommentPress Form comment unhighlight trigger.
 	 *
-	 * @param int parent_id The parent comment ID
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param int parent_id The parent comment ID.
 	 */
 	$( document ).on( 'commentpress-comment-unhighlight', function( event, parent_id ) {
 
@@ -1561,9 +1589,9 @@ jQuery(document).ready( function($) {
 	});
 
 	/**
-	 * Hook into CommentPress Form clear all comment highlights trigger
+	 * Hook into CommentPress Form clear all comment highlights trigger.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	$( document ).on( 'commentpress-comment-highlights-clear', function( event ) {
 
@@ -1575,13 +1603,13 @@ jQuery(document).ready( function($) {
 
 
 	/**
-	 * Hook into CommentPress AJAX Infinite Scroll page changed
+	 * Hook into CommentPress AJAX Infinite Scroll page changed.
 	 *
 	 * This hook is present in this file because the WP FEE JS is not loaded
 	 * when WP FEE is active, but we still want to change the URL of the toggle
 	 * button to reflect the page URL change.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	$( document ).on( 'commentpress-post-changed', function( event ) {
 
@@ -1630,9 +1658,9 @@ jQuery(document).ready( function($) {
 
 
 /**
- * Define what happens when the page is unloaded
+ * Define what happens when the page is unloaded.
  *
- * @return void
+ * @since 3.8
  */
 /*
 jQuery(window).unload( function() {

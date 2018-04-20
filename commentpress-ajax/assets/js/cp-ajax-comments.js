@@ -17,14 +17,18 @@ Based loosely on the 'Ajax Comment Posting' WordPress plugin (version 2.0)
 
 
 /**
- * Create AJAX sub-namespace
+ * Create AJAX sub-namespace.
+ *
+ * @since 3.8
  */
 CommentPress.ajax = {};
 
 
 
 /**
- * Create CommentPress Core AJAX comments class
+ * Create CommentPress Core AJAX comments class.
+ *
+ * @since 3.8
  */
 CommentPress.ajax.comments = new function() {
 
@@ -61,7 +65,7 @@ CommentPress.ajax.comments = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.init = function() {
 
@@ -74,7 +78,7 @@ CommentPress.ajax.comments = new function() {
 	 *
 	 * This method should only be called once.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.dom_ready = function() {
 
@@ -122,14 +126,14 @@ CommentPress.ajax.comments = new function() {
 	 * This method should only be called once. To reset the system, call:
 	 * CommentPress.textselector.reset();
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.listeners = function() {
 
 		/**
-		 * Hook into the CommentPress Core theme "document ready" trigger
+		 * Hook into the CommentPress Core theme "document ready" trigger.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$( document ).on( 'commentpress-document-ready', function( event ) {
 
@@ -147,9 +151,9 @@ CommentPress.ajax.comments = new function() {
 
 
 		/**
-		 * Hook into WordPress Front-end Editor
+		 * Hook into WordPress Front-end Editor.
 		 *
-		 * @return void
+		 * @since 3.8
 		 */
 		$( document ).on( 'fee-after-save', function( event ) {
 
@@ -169,9 +173,9 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Reset CommentPress Core AJAX
+	 * Reset CommentPress Core AJAX.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.reset = function() {
 
@@ -195,12 +199,13 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * AJAX updater which toggles periodic calls to the server to update comments
+	 * AJAX updater which toggles periodic calls to the server to update comments.
 	 *
 	 * @see CommentPress.ajax.comments.update()
 	 *
-	 * @param string toggle Whether to switch the interval on or off
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string toggle Whether to switch the interval on or off.
 	 */
 	this.updater = function( toggle ) {
 
@@ -233,9 +238,9 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Perform an AJAX request to update the comments on a post
+	 * Perform an AJAX request to update the comments on a post.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.update = function() {
 
@@ -293,13 +298,14 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * AJAX callback method
+	 * AJAX callback method.
 	 *
 	 * This method gets called when data has been recieved from the server via
 	 * an AJAX request.
 	 *
-	 * @param object data The data returned from the AJAX request
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param object data The data returned from the AJAX request.
 	 */
 	this.callback = function( data ) {
 
@@ -333,13 +339,14 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Add comment to page
+	 * Add comment to page.
 	 *
-	 * @param object markup The jQuery object containing the comment
-	 * @param string text_sig The text signature
-	 * @param string comm_parent The numeric ID of the parent comment
-	 * @param string comm_id The numeric ID of the comment
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param object markup The jQuery object containing the comment.
+	 * @param string text_sig The text signature.
+	 * @param string comm_parent The numeric ID of the parent comment.
+	 * @param string comm_id The numeric ID of the comment.
 	 */
 	this.add_new_comment = function( markup, text_sig, comm_parent, comm_id ) {
 
@@ -486,9 +493,9 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Enable reassignment of comments
+	 * Enable reassignment of comments.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.reassign_comments = function() {
 
@@ -587,11 +594,12 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Reassign a comment
+	 * Reassign a comment.
 	 *
-	 * @param string text_sig The text signature
-	 * @param object ui The UI element
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string text_sig The text signature.
+	 * @param object ui The UI element.
 	 */
 	this.reassign = function( text_sig, ui ) {
 
@@ -725,10 +733,11 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Add comment to page in response to the comment form being submitted
+	 * Add comment to page in response to the comment form being submitted.
 	 *
-	 * @param object response The jQuery object containing the result of the AJAX request
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param object response The jQuery object containing the result of the AJAX request.
 	 */
 	this.add_comment = function( response ) {
 
@@ -862,13 +871,15 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Do comment append
+	 * Do comment append.
 	 *
-	 * @param object response The jQuery object from the AJAX request
-	 * @param string content The jQuery selector that targets the comment content
-	 * @param object target The jQuery object in which the comment should be placed
-	 * @param string last The jQuery selector of the last item in the comment list
-	 * @return string new_comment_id The ID of the new comment
+	 * @since 3.8
+	 *
+	 * @param object response The jQuery object from the AJAX request.
+	 * @param string content The jQuery selector that targets the comment content.
+	 * @param object target The jQuery object in which the comment should be placed.
+	 * @param string last The jQuery selector of the last item in the comment list.
+	 * @return string new_comment_id The ID of the new comment.
 	 */
 	this.nice_append = function( response, content, target, last ) {
 
@@ -896,13 +907,15 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Do comment prepend
+	 * Do comment prepend.
 	 *
-	 * @param object response The jQuery object from the AJAX request
-	 * @param string content The jQuery selector that targets the comment content
-	 * @param object target The jQuery object in which the comment should be placed
-	 * @param string last The jQuery selector of the last item in the comment list
-	 * @return string new_comment_id The ID of the new comment
+	 * @since 3.8
+	 *
+	 * @param object response The jQuery object from the AJAX request.
+	 * @param string content The jQuery selector that targets the comment content.
+	 * @param object target The jQuery object in which the comment should be placed.
+	 * @param string last The jQuery selector of the last item in the comment list.
+	 * @return string new_comment_id The ID of the new comment.
 	 */
 	this.nice_prepend = function( response, content, target, last ) {
 
@@ -930,11 +943,13 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Do comment cleanup
+	 * Do comment cleanup.
 	 *
-	 * @param string content The jQuery selector that targets the comment content
-	 * @param string last The jQuery selector of the last item in the comment list
-	 * @return string new_comment_id The ID of the new comment
+	 * @since 3.8
+	 *
+	 * @param string content The jQuery selector that targets the comment content.
+	 * @param string last The jQuery selector of the last item in the comment list.
+	 * @return string new_comment_id The ID of the new comment.
 	 */
 	this.cleanup = function( content, last ) {
 
@@ -996,11 +1011,12 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Update comments paragraph heading
+	 * Update comments paragraph heading.
 	 *
-	 * @param string head_id The CSS ID of the header element
-	 * @param int new_comment_count The updated number of comments
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string head_id The CSS ID of the header element.
+	 * @param int new_comment_count The updated number of comments.
 	 */
 	this.update_comments_para_heading = function( head_id, new_comment_count ) {
 
@@ -1028,11 +1044,12 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Update paragraph comment icon
+	 * Update paragraph comment icon.
 	 *
-	 * @param string text_sig The text signature of the paragraph
-	 * @param int new_comment_count The updated number of comments
-	 * @return void
+	 * @since 3.8
+	 *
+	 * @param string text_sig The text signature of the paragraph.
+	 * @param int new_comment_count The updated number of comments.
 	 */
 	this.update_para_icon = function( text_sig, new_comment_count ) {
 
@@ -1062,9 +1079,9 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Init comment form
+	 * Init comment form.
 	 *
-	 * @return void
+	 * @since 3.8
 	 */
 	this.initialise_form = function() {
 
@@ -1072,7 +1089,9 @@ CommentPress.ajax.comments = new function() {
 		$('#commentform').off( 'submit' );
 
 		/**
-		 * Comment submission method
+		 * Comment submission method.
+		 *
+		 * @since 3.8
 		 *
 		 * @return false
 		 */
@@ -1218,9 +1237,9 @@ CommentPress.ajax.comments = new function() {
 
 
 /**
- * Re-enable Featured Comments plugin functionality
+ * Re-enable Featured Comments plugin functionality.
  *
- * @return void
+ * @since 3.8
  */
 function cpajax_reenable_featured_comments() {
 
@@ -1242,9 +1261,9 @@ function cpajax_reenable_featured_comments() {
 
 
 /**
- * Re-enable Comment Upvoter plugin functionality
+ * Re-enable Comment Upvoter plugin functionality.
  *
- * @return void
+ * @since 3.8
  */
 function cpajax_reenable_comment_upvoter() {
 
@@ -1279,9 +1298,9 @@ CommentPress.ajax.comments.init();
 
 
 /**
- * Define what happens when the page is ready
+ * Define what happens when the page is ready.
  *
- * @return void
+ * @since 3.8
  */
 jQuery(document).ready(function($) {
 
