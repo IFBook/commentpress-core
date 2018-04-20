@@ -4607,3 +4607,291 @@ function commentpress_geomashup_map_get() {
 endif;
 
 
+
+/**
+ * Theme Tabs Class.
+ *
+ * A class that encapsulates functionality of theme-specific Workflow tabs.
+ * Does not work in non-global loops, such as those made via WP_Query.
+ *
+ * @since 3.9.9
+ */
+class CommentPress_Theme_Tabs {
+
+	/**
+	 * Tabs Class.
+	 *
+	 * @since 3.9.9
+	 * @access public
+	 * @var str $tabs_class The Tabs Class.
+	 */
+	public $tabs_class = '';
+
+	/**
+	 * Tabs Classes.
+	 *
+	 * @since 3.9.9
+	 * @access public
+	 * @var str $tabs_classes The Tabs Classes.
+	 */
+	public $tabs_classes = '';
+
+	/**
+	 * Original Content.
+	 *
+	 * @since 3.9.9
+	 * @access public
+	 * @var str $original The Original Content.
+	 */
+	public $original = '';
+
+	/**
+	 * Literal Content.
+	 *
+	 * @since 3.9.9
+	 * @access public
+	 * @var str $literal The Literal Content.
+	 */
+	public $literal = '';
+
+
+
+	/**
+	 * Constructor.
+	 *
+	 * @since 3.9.9
+	 */
+	public function __construct() {
+
+		// nothing
+
+	}
+
+
+
+	/**
+	 * Initialise required data.
+	 *
+	 * @since 3.9.9
+	 */
+	public function initialise() {
+
+		// bail if plugin not present
+		if ( ! is_object( $commentpress_core ) ) return;
+
+		// get workflow
+		$_workflow = $commentpress_core->db->option_get( 'cp_blog_workflow' );
+
+		// bail if not enabled
+		if ( $_workflow != '1' ) return;
+
+		// okay, let's get our data
+
+		// access post
+		global $post;
+
+		// set key
+		$key = '_cp_original_text';
+
+		// if the custom field already has a value
+		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
+
+			// get it
+			$this->original = get_post_meta( $post->ID, $key, true );
+
+		}
+
+		// set key
+		$key = '_cp_literal_translation';
+
+		// if the custom field already has a value
+		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
+
+			// get it
+			$this->literal = get_post_meta( $post->ID, $key, true );
+
+		}
+
+		// did we get either type of workflow content?
+		if ( $this->literal != '' OR $this->original != '' ) {
+
+			// override tabs class
+			$this->tabs_class = 'with-content-tabs';
+
+			// override tabs classes
+			$this->tabs_classes = ' class="' . $this->tabs_class . '"';
+
+			// prefix with space
+			$this->tabs_class = ' ' . $this->tabs_class;
+
+		}
+
+	}
+
+
+
+	/**
+	 * Echo Tabs.
+	 *
+	 * @since 3.9.9
+	 */
+	public function tabs() {
+
+		// bail if we have no tabs
+		if ( empty( $this->tabs_class ) ) return;
+
+		// bail if we get neither type of workflow content
+		if ( empty( $this->literal ) AND empty( $this->original ) ) return;
+
+		?>
+		<ul id="content-tabs">
+			<li id="content_header" class="default-content-tab"><h2><a href="#content"><?php
+				echo apply_filters(
+					'commentpress_content_tab_content',
+					__( 'Content', 'commentpress-core' )
+				);
+			?></a></h2></li>
+			<?php if ( $this->literal != '' ) { ?>
+			<li id="literal_header"><h2><a href="#literal"><?php
+				echo apply_filters(
+					'commentpress_content_tab_literal',
+					__( 'Literal', 'commentpress-core' )
+				);
+			?></a></h2></li>
+			<?php } ?>
+			<?php if ( $this->original != '' ) { ?>
+			<li id="original_header"><h2><a href="#original"><?php
+				echo apply_filters(
+					'commentpress_content_tab_original',
+					__( 'Original', 'commentpress-core' )
+				);
+			?></a></h2></li>
+			<?php } ?>
+		</ul>
+		<?php
+
+	}
+
+
+
+	/**
+	 * Echo Tabs Content.
+	 *
+	 * @since 3.9.9
+	 */
+	public function tabs_content() {
+
+		// bail if we have no tabs
+		if ( empty( $this->tabs_class ) ) return;
+
+		// bail if we get neither type of workflow content
+		if ( empty( $this->literal ) AND empty( $this->original ) ) return;
+
+		// did we get literal?
+		if ( $this->literal != '' ) {
+
+			?>
+			<div id="literal" class="workflow-wrapper">
+				<div class="post">
+					<h2 class="post_title"><?php
+						echo apply_filters(
+							'commentpress_literal_title',
+							__( 'Literal Translation', 'commentpress-core' )
+						);
+					?></h2>
+					<?php echo apply_filters( 'cp_workflow_richtext_content', $literal ); ?>
+				</div><!-- /post -->
+			</div><!-- /literal -->
+			<?php
+
+		}
+
+		// did we get original?
+		if ( $original != '' ) {
+
+			?>
+			<div id="original" class="workflow-wrapper">
+				<div class="post">
+					<h2 class="post_title"><?php
+						echo apply_filters(
+							'commentpress_original_title',
+							__( 'Original Text', 'commentpress-core' )
+						);
+					?></h2>
+					<?php echo apply_filters( 'cp_workflow_richtext_content', $original ); ?>
+				</div><!-- /post -->
+			</div><!-- /original -->
+			<?php
+
+		}
+
+	}
+
+
+
+} // class ends
+
+
+
+/**
+ * Init Theme Tabs.
+ *
+ * @since 3.9.9
+ *
+ * @return object CommentPress_Theme_Tabs The Theme Tabs object.
+ */
+function commentpress_theme_tabs() {
+
+	// init class
+	global $commentpress_theme_tabs;
+	if ( ! isset( $commentpress_theme_tabs ) ) {
+		$commentpress_theme_tabs = new CommentPress_Theme_Tabs();
+	}
+
+	// --<
+	return $commentpress_theme_tabs;
+
+}
+
+// init the above
+commentpress_theme_tabs();
+
+
+
+/**
+ * Get Theme Tabs Class.
+ *
+ * @since 3.9.9
+ *
+ * @return str $tabs_class The tabs class.
+ */
+function commentpress_theme_tabs_class_get() {
+
+	// get object
+	$tabs = commentpress_theme_tabs();
+
+	// --<
+	return $tabs->tabs_class;
+
+}
+
+
+
+/**
+ * Get Theme Tabs Classes.
+ *
+ * @since 3.9.9
+ *
+ * @return str $tabs_classes The tabs classes.
+ */
+function commentpress_theme_tabs_classes_get() {
+
+	// get object
+	$tabs = commentpress_theme_tabs();
+
+	// --<
+	return $tabs->tabs_classes;
+
+}
+
+
