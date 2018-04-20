@@ -930,10 +930,20 @@ function commentpress_get_feature_image() {
 						$cp_title_visibility = '';
 					}
 
-					?>
-					<h2 class="post_title page_title"<?php echo $cp_title_visibility; ?>><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+					// construct title
+					$title = '<h2 class="post_title page_title"' . $cp_title_visibility . '>' .
+								'<a href="' . get_permalink() . '">' . get_the_title() . '</a>' .
+							 '</h2>';
 
-					<?php
+					/**
+					 * Filter the page/post title when there is a feature image.
+					 *
+					 * @since 3.9.10
+					 *
+					 * @param str The HTML for showing the image.
+					 * @param WP_Post The current WordPress post object.
+					 */
+					echo apply_filters( 'commentpress_get_feature_image_title', $title, $post );
 
 					// default to hidden
 					$cp_meta_visibility = ' style="display: none;"';
@@ -948,9 +958,24 @@ function commentpress_get_feature_image() {
 						<?php commentpress_echo_post_meta(); ?>
 					</div>
 
-				<?php } else { ?>
+				<?php } else {
 
-					<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+					// construct title
+					$title = '<h2 class="post_title"' . $cp_title_visibility . '>' .
+								'<a href="' . get_permalink() . '">' . get_the_title() . '</a>' .
+							 '</h2>';
+
+					/**
+					 * Filter the page/post title when there is a feature image.
+					 *
+					 * @since 3.9.10
+					 *
+					 * @param str The HTML for showing the image.
+					 * @param WP_Post The current WordPress post object.
+					 */
+					echo apply_filters( 'commentpress_get_feature_image_title', $title, $post );
+
+					?>
 
 					<div class="search_meta">
 						<?php commentpress_echo_post_meta(); ?>
