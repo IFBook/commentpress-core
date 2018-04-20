@@ -53,8 +53,6 @@
 						?>
 						<h2 class="post_title"<?php echo $cp_title_visibility; ?>><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
 
-
-
 						<?php
 
 						// default to hidden
