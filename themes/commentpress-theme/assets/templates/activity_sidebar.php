@@ -23,9 +23,9 @@ if ( $_is_commentable AND ! post_password_required() ) {
 	 *
 	 * @since 3.8.10
 	 *
-	 * @param str $singular_name The singular label for this post type
-	 * @param str $current_type The post type identifier
-	 * @return str $singular_name The modified label for this post type
+	 * @param str $singular_name The singular label for this post type.
+	 * @param str $current_type The post type identifier.
+	 * @return str $singular_name The modified label for this post type.
 	 */
 	$post_type_name = apply_filters( 'commentpress_lexia_post_type_name', $post_type->labels->singular_name, $current_type );
 

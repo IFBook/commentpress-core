@@ -21,9 +21,9 @@ if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) { exit(); }
 
 
 /**
- * Restore WordPress database schema
+ * Restore WordPress database schema.
  *
- * @return boolean $result The result of the database operation
+ * @return boolean $result The result of the database operation.
  */
 function commentpress_schema_restore() {
 

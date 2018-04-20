@@ -285,7 +285,7 @@ add_action( 'bp_setup_globals', 'commentpress_buddypress_support' );
 
 if ( ! function_exists( 'commentpress_header' ) ):
 /**
- * Custom header
+ * Custom header.
  *
  * @since 3.0
  */
@@ -411,10 +411,10 @@ endif; // commentpress_header
 
 if ( ! function_exists( 'commentpress_page_navigation' ) ):
 /**
- * Builds a list of previous and next pages, optionally with comments
+ * Builds a list of previous and next pages, optionally with comments.
  *
- * @param bool $with_comments True returns the next page with comments
- * @return str $nav_list The unordered list of navigation links
+ * @param bool $with_comments True returns the next page with comments.
+ * @return str $nav_list The unordered list of navigation links.
  */
 function commentpress_page_navigation( $with_comments = false ) {
 
@@ -507,10 +507,10 @@ endif; // commentpress_page_navigation
 
 if ( ! function_exists( 'commentpress_get_all_comments_content' ) ):
 /**
- * All-comments page display function
+ * All-comments page display function.
  *
- * @param str $page_or_post Retrieve either 'page' or 'post' comments
- * @return str $html The comments
+ * @param str $page_or_post Retrieve either 'page' or 'post' comments.
+ * @return str $html The comments.
  */
 function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 
@@ -660,9 +660,9 @@ endif; // commentpress_get_all_comments_content
 
 if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ):
 /**
- * All-comments page display function
+ * All-comments page display function.
  *
- * @return str $page_content The page content
+ * @return str $page_content The page content.
  */
 function commentpress_get_all_comments_page_content() {
 
@@ -746,10 +746,10 @@ endif; // commentpress_get_all_comments_page_content
 
 if ( ! function_exists( 'commentpress_add_loginout_id' ) ):
 /**
- * Utility to add button css id to login links
+ * Utility to add button css id to login links.
  *
- * @param str $link The existing link
- * @return str $link The modified link
+ * @param str $link The existing link.
+ * @return str $link The modified link.
  */
 function commentpress_add_loginout_id( $link ) {
 

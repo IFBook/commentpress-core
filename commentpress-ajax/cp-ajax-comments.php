@@ -193,7 +193,7 @@ function cpajax_localise() {
 
 
 /**
- * Validate that the plugin can be activated
+ * Validate that the plugin can be activated.
  *
  * @return bool $allowed True if the plugin can activate, false otherwise.
  */

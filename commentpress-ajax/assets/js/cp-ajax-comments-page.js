@@ -377,7 +377,7 @@ CommentPress.ajax.comments = new function() {
 		$('#commentform').off( 'submit' );
 
 		/**
-		 * Comment submission method
+		 * Comment submission method.
 		 *
 		 * @return false
 		 */

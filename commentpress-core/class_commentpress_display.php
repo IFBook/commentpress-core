@@ -494,7 +494,7 @@ HELPTEXT;
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $params the parameters to list posts by.
+	 * @param str $params The parameters to list posts by.
 	 */
 	public function list_posts( $params = 'numberposts=-1&order=DESC' ) {
 
