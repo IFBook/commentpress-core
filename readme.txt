@@ -213,6 +213,10 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+<h4>3.9.10</h4>
+
+* Prevents fatal error on some versions of PHP
+
 <h4>3.9.9</h4>
 
 * Prevents fatal error when BuddyPress Site Tracking component is not active
