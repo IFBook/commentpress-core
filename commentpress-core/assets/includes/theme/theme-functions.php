@@ -4598,7 +4598,8 @@ function commentpress_geomashup_map_get() {
 	if ( ! class_exists( 'GeoMashup' ) ) return;
 
 	// bail if post has no location
-	if ( empty( GeoMashup::current_location( null, 'post' ) ) ) return;
+	$location = GeoMashup::current_location( null, 'post' );
+	if ( empty( $location ) ) return;
 
 	// show map
 	echo '<div class="geomap">' . GeoMashup::map() . '</div>';
