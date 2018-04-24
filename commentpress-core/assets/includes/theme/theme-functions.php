@@ -900,12 +900,20 @@ function commentpress_header_meta_description() {
 	// distinguish single items from archives
 	if ( is_singular() ) {
 
-		// use excerpt if the item has one
+		// maybe use excerpt
 		$excerpt = get_the_excerpt();
 		if ( ! empty( $excerpt ) ) {
 			$description = esc_attr( $excerpt );
 		} else {
-			$description = single_post_title( '', false );
+
+			// maybe use trimmed content
+			$content = get_the_content();
+			if ( ! empty( $content ) ) {
+				$description = esc_attr( wp_trim_words( $content, 30 ) );
+			} else {
+				$description = single_post_title( '', false );
+			}
+
 		}
 
 	} else {
