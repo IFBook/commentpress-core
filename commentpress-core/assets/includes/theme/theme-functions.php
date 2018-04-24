@@ -905,7 +905,7 @@ function commentpress_header_meta_description() {
 		if ( ! empty( $excerpt ) ) {
 			$description = esc_attr( $excerpt );
 		} else {
-			$description = single_post_title( '' );
+			$description = single_post_title( '', false );
 		}
 
 	} else {
