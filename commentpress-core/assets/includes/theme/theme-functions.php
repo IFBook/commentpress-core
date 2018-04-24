@@ -887,6 +887,49 @@ endif; // commentpress_site_title
 
 
 
+if ( ! function_exists( 'commentpress_header_meta_description' ) ) :
+/**
+ * Construct the content of the meta description tag.
+ *
+ * @since 3.9.10
+ *
+ * @return str $description The content of the meta description tag.
+ */
+function commentpress_header_meta_description() {
+
+	// distinguish single items from archives
+	if ( is_singular() ) {
+
+		// use excerpt if the item has one
+		$excerpt = get_the_excerpt();
+		if ( ! empty( $excerpt ) ) {
+			$description = esc_attr( $excerpt );
+		} else {
+			$description = single_post_title( '' );
+		}
+
+	} else {
+		$description = get_bloginfo( 'name' ) . ' - ' . get_bloginfo( 'description' );
+	}
+
+	/**
+	 * Allow the meta description to be filtered.
+	 *
+	 * @since 3.9.10
+	 *
+	 * @param str $description The existing meta description.
+	 * @return str $description The modified meta description.
+	 */
+	$description = apply_filters( 'commentpress_header_meta_description', $description );
+
+	// --<
+	return $description;
+
+}
+endif; // commentpress_header_meta_description
+
+
+
 if ( ! function_exists( 'commentpress_remove_more_jump_link' ) ):
 /**
  * Disable more link jump.
