@@ -900,20 +900,31 @@ function commentpress_header_meta_description() {
 	// distinguish single items from archives
 	if ( is_singular() ) {
 
-		// maybe use excerpt
-		$excerpt = get_the_excerpt();
-		if ( ! empty( $excerpt ) ) {
-			$description = esc_attr( $excerpt );
-		} else {
+		// get queried object
+		$queried_post = get_queried_object();
 
-			// maybe use trimmed content
-			$content = get_the_content();
-			if ( ! empty( $content ) ) {
-				$description = esc_attr( wp_trim_words( $content, 30 ) );
+		// do we have one?
+		if ( $queried_post instanceOf WP_Post ) {
+
+			// maybe use excerpt
+			$excerpt = strip_tags( $queried_post->post_excerpt );
+			if ( ! empty( $excerpt ) ) {
+				$description = esc_attr( $excerpt );
 			} else {
-				$description = single_post_title( '', false );
+
+				// maybe use trimmed content
+				$content = strip_tags( $queried_post->post_content );
+				if ( ! empty( $content ) ) {
+					$description = esc_attr( wp_trim_words( $content, 35 ) );
+				}
+
 			}
 
+		}
+
+		// fall back to title
+		if ( empty( $description ) ) {
+			$description = single_post_title( '', false );
 		}
 
 	} else {
