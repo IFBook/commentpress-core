@@ -244,7 +244,7 @@ class Commentpress_Core {
 
 			// check if this blog is a group blog
 			$group_id = get_groupblog_group_id( get_current_blog_id() );
-			if ( is_numeric( $group_id ) ) {
+			if ( is_numeric( $group_id ) AND $group_id > 0 ) {
 
 				// okay, we're properly configured
 				$this->bp_groupblog = true;
