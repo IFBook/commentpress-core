@@ -1302,7 +1302,7 @@ div.blog-button
 
 #buddypress ul.item-list li div.meta
 {
-	margin-top: 0;
+	margin-top: 0.4em;
 	font-size: 75%;
 }
 
@@ -4592,7 +4592,7 @@ Responsiveness
 		top: auto;
 		left: auto;
 		right: auto;
-		margin-top: 8px;
+		margin-top: 15px;
 		margin-left: 90px;
 		text-align: left;
 		clear: none;
