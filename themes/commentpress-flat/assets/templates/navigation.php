@@ -46,7 +46,7 @@ global $commentpress_core;
 				$group_id = get_groupblog_group_id( $blog_id );
 
 				// when this blog is a groupblog
-				if ( !empty( $group_id ) ) {
+				if ( isset( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
 					$group = groups_get_group( array( 'group_id' => $group_id ) );
 					$group_url = bp_get_group_permalink( $group );

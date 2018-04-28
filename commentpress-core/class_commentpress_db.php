@@ -1187,7 +1187,7 @@ class Commentpress_Core_Database {
 
 				// get the group's id
 				$group_id = get_groupblog_group_id( get_current_blog_id() );
-				if ( is_numeric( $group_id ) ) {
+				if ( isset( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
 					/**
 					 * Allow plugins to override the blog type - for example if workflow

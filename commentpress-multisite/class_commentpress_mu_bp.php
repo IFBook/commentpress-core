@@ -248,7 +248,7 @@ class Commentpress_Multisite_Buddypress {
 			$group_id = get_groupblog_group_id( $blog_id );
 
 			// when this blog is a groupblog
-			if ( isset( $group_id ) AND is_numeric( $group_id ) ) {
+			if ( isset( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
 				// is this user a member?
 				if ( groups_is_user_member( $commentdata['user_id'], $group_id ) ) {
@@ -408,7 +408,7 @@ class Commentpress_Multisite_Buddypress {
 			$group_id = get_groupblog_group_id( $blog_id );
 
 			// when this blog is a groupblog
-			if ( isset( $group_id ) AND is_numeric( $group_id ) ) {
+			if ( isset( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
 				// always true - so that activities are registered
 				return 1;
@@ -486,7 +486,7 @@ class Commentpress_Multisite_Buddypress {
 			$group_id = get_groupblog_group_id( $blog_id );
 
 			// kick out if not groupblog
-			if ( ! $group_id ) return $activity;
+			if ( empty( $group_id ) ) return $activity;
 
 			// set activity type
 			$type = 'new_groupblog_comment';
@@ -780,7 +780,7 @@ class Commentpress_Multisite_Buddypress {
 
 		// get group id
 		$group_id = get_groupblog_group_id( $blog_id );
-		if ( ! $group_id ) return $activity;
+		if ( empty( $group_id ) ) return $activity;
 
 		// get group
 		$group = groups_get_group( array( 'group_id' => $group_id ) );
@@ -1057,7 +1057,7 @@ class Commentpress_Multisite_Buddypress {
 			}
 
 			// yes, is this blog a groupblog?
-			if ( ! empty( $group_id ) AND is_numeric( $group_id ) ) {
+			if ( ! empty( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
 				// is it CommentPress Core-enabled?
 
@@ -1150,7 +1150,7 @@ class Commentpress_Multisite_Buddypress {
 		}
 
 		// did we get a group for which this is the group blog?
-		if ( isset( $group_id ) ) {
+		if ( isset( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
 			// --<
 			return bp_core_fetch_avatar( array( 'item_id' => $group_id, 'object' => 'group' ) );
@@ -1263,7 +1263,7 @@ class Commentpress_Multisite_Buddypress {
 				$group_id = get_groupblog_group_id( $blog->blog_id );
 
 				// did we get one?
-				if ( is_numeric( $group_id ) ) {
+				if ( isset( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
 					// exclude
 					unset( $blogs->blogs[$key] );
@@ -1324,7 +1324,7 @@ class Commentpress_Multisite_Buddypress {
 			$group_id = get_groupblog_group_id( $blogs_template->blog->blog_id );
 
 			// yes, is this blog a groupblog?
-			if ( is_numeric( $group_id ) ) {
+			if ( isset( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
 				// is it CommentPress Core-enabled?
 
@@ -1611,7 +1611,7 @@ class Commentpress_Multisite_Buddypress {
 				$group_id = get_groupblog_group_id( $blog_id );
 
 				// if we get one
-				if( is_numeric( $group_id ) ) {
+				if ( isset( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
 					// get the group object
 					$group = new BP_Groups_Group( $group_id );

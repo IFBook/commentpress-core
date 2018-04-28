@@ -4465,7 +4465,7 @@ function commentpress_bp_blog_css_class( $classes ) {
 
 		// get group ID
 		$group_id = get_groupblog_group_id( $blogs_template->blog->blog_id );
-		if ( is_numeric( $group_id ) ) {
+		if ( isset( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
 			// get group blogtype
 			$groupblog_type = groups_get_groupmeta( $group_id, 'groupblogtype' );
