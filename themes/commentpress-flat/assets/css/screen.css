@@ -2325,6 +2325,11 @@ ul.image_link h4
 {
 }
 
+ul.image_link li.alignright
+{
+	text-align: right;
+}
+
 ul.image_link .alignright h4
 {
 	text-align: right;
@@ -4840,6 +4845,34 @@ RESPONSIVENESS
 }
 
 
+
+@media all and (max-width: 420px) {
+
+	.page_navigation ul li
+	{
+		width: 46px;
+	}
+
+	.page_navigation ul li.alignright a,
+	.page_navigation ul li.alignleft a,
+	.page_nav_lower .page_navigation ul li.alignleft a,
+	.page_nav_lower .page_navigation ul li.alignright a
+	{
+		background-size: 100%;
+		width: 46px;
+		height: 46px;
+	}
+
+	.page_navigation ul li a:hover,
+	.page_navigation ul li a:focus,
+	.page_navigation ul li a:active
+	{
+		overflow: hidden !important; /* hides Mozilla outlines */
+		background-position: left -49px !important;
+		background-repeat: no-repeat;
+	}
+
+}
 
 /* Specify orientation styles here, when supported
 @media screen and (orientation:portrait) {

@@ -2463,6 +2463,11 @@ ul.image_link h4
 {
 }
 
+ul.image_link .alignright
+{
+	text-align: right;
+}
+
 ul.image_link .alignright h4
 {
 	text-align: right;

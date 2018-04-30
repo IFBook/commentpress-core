@@ -1187,15 +1187,15 @@ class Commentpress_Core_Database {
 
 				// get the group's id
 				$group_id = get_groupblog_group_id( get_current_blog_id() );
-				if ( is_numeric( $group_id ) ) {
+				if ( isset( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
 					/**
 					 * Allow plugins to override the blog type - for example if workflow
 					 * is enabled, it might become a new blog type as far as BuddyPress
 					 * is concerned.
 					 *
-					 * @param int $cp_blog_type The numeric blog type
-					 * @param bool $cp_blog_workflow True if workflow enabled, false otherwise
+					 * @param int $cp_blog_type The numeric blog type.
+					 * @param bool $cp_blog_workflow True if workflow enabled, false otherwise.
 					 */
 					$blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $cp_blog_type, $cp_blog_workflow );
 
@@ -1367,7 +1367,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $option_name The name of the optio
+	 * @param str $option_name The name of the option.
 	 */
 	public function option_delete( $option_name = '' ) {
 

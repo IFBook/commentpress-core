@@ -459,8 +459,8 @@ if ( ! function_exists( 'commentpress_page_navigation' ) ):
  *
  * @since 3.0
  *
- * @param bool $with_comments True returns the next page with comments
- * @return str $nav_list The unordered list of navigation links
+ * @param bool $with_comments True returns the next page with comments.
+ * @return str $nav_list The unordered list of navigation links.
  */
 function commentpress_page_navigation( $with_comments = false ) {
 
@@ -562,7 +562,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ):
  * @since 3.0
  *
  * @param str $page_or_post Retrieve either 'page' or 'post' comments
- * @return str $html The comments
+ * @return str $html The comments.
  */
 function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 
@@ -804,8 +804,8 @@ if ( ! function_exists( 'commentpress_add_loginout_id' ) ):
  *
  * @since 3.0
  *
- * @param str $link The existing link
- * @return str $link The modified link
+ * @param str $link The existing link.
+ * @return str $link The modified link.
  */
 function commentpress_add_loginout_id( $link ) {
 
@@ -854,8 +854,8 @@ if ( ! function_exists( 'commentpress_convert_link_to_button' ) ):
  *
  * @since 3.5
  *
- * @param str $link The existing link
- * @return str $link The modified link
+ * @param str $link The existing link.
+ * @return str $link The modified link.
  */
 function commentpress_convert_link_to_button( $link ) {
 
@@ -899,8 +899,8 @@ function commentpress_get_feature_image() {
 		 *
 		 * @since 3.9
 		 *
-		 * @param str The HTML for showing the image
-		 * @param WP_Post The current WordPress post object
+		 * @param str The HTML for showing the image.
+		 * @param WP_Post The current WordPress post object.
 		 */
 		echo apply_filters(
 			'commentpress_get_feature_image',
@@ -930,10 +930,20 @@ function commentpress_get_feature_image() {
 						$cp_title_visibility = '';
 					}
 
-					?>
-					<h2 class="post_title page_title"<?php echo $cp_title_visibility; ?>><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+					// construct title
+					$title = '<h2 class="post_title page_title"' . $cp_title_visibility . '>' .
+								'<a href="' . get_permalink() . '">' . get_the_title() . '</a>' .
+							 '</h2>';
 
-					<?php
+					/**
+					 * Filter the page/post title when there is a feature image.
+					 *
+					 * @since 3.9.10
+					 *
+					 * @param str The HTML for showing the image.
+					 * @param WP_Post The current WordPress post object.
+					 */
+					echo apply_filters( 'commentpress_get_feature_image_title', $title, $post );
 
 					// default to hidden
 					$cp_meta_visibility = ' style="display: none;"';
@@ -948,9 +958,24 @@ function commentpress_get_feature_image() {
 						<?php commentpress_echo_post_meta(); ?>
 					</div>
 
-				<?php } else { ?>
+				<?php } else {
 
-					<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+					// construct title
+					$title = '<h2 class="post_title">' .
+								'<a href="' . get_permalink() . '">' . get_the_title() . '</a>' .
+							 '</h2>';
+
+					/**
+					 * Filter the page/post title when there is a feature image.
+					 *
+					 * @since 3.9.10
+					 *
+					 * @param str The HTML for showing the image.
+					 * @param WP_Post The current WordPress post object.
+					 */
+					echo apply_filters( 'commentpress_get_feature_image_title', $title, $post );
+
+					?>
 
 					<div class="search_meta">
 						<?php commentpress_echo_post_meta(); ?>
@@ -978,7 +1003,7 @@ endif; // commentpress_get_feature_image
  *
  * @since 3.5
  *
- * @return bool True if post has thumbnail, false otherwise
+ * @return bool True if post has thumbnail, false otherwise.
  */
 function commentpress_has_feature_image() {
 
@@ -995,7 +1020,7 @@ function commentpress_has_feature_image() {
 	 *
 	 * @since 3.9
 	 *
-	 * @param bool $has_feature_image True if the post has a feature image, false otherwise
+	 * @param bool $has_feature_image True if the post has a feature image, false otherwise.
 	 */
 	return apply_filters( 'commentpress_has_feature_image', $has_feature_image );
 
@@ -1006,8 +1031,8 @@ function commentpress_has_feature_image() {
 /**
  * Override default column.
  *
- * @param str $body_classes The existing body classes
- * @return str $body_classes The modified body classes
+ * @param str $body_classes The existing body classes.
+ * @return str $body_classes The modified body classes.
  */
 function commentpress_flat_body_classes( $body_classes ) {
 

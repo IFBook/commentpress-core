@@ -576,7 +576,7 @@ CommentPress.common.DOM = new function() {
 	 *
 	 * @since 3.8
 	 *
-	 * @param str url The URL to show in the location bar
+	 * @param str url The URL to show in the location bar.
 	 */
 	this.location_set = function( url ) {
 
@@ -1092,7 +1092,7 @@ CommentPress.common.content = new function() {
 		 *
 		 * @since 3.8
 		 *
-		 * @param object event The event (unused)
+		 * @param object event The event (unused).
 		 */
 		$(document).on(
 			'commentpress-textblock-click ' +
@@ -1391,7 +1391,7 @@ CommentPress.common.content = new function() {
 	 *
 	 * @since 3.8
 	 *
-	 * @param object target The object to scroll to
+	 * @param object target The object to scroll to.
 	 */
 	this.scroll_page = function( target ) {
 
@@ -1422,8 +1422,8 @@ CommentPress.common.content = new function() {
 	 *
 	 * @since 3.8
 	 *
-	 * @param object target The object to scroll to
-	 * @param integer duration The duration of the scroll
+	 * @param object target The object to scroll to.
+	 * @param integer duration The duration of the scroll.
 	 */
 	this.quick_scroll_page = function( target, duration ) {
 
@@ -1454,7 +1454,7 @@ CommentPress.common.content = new function() {
 	 *
 	 * @since 3.8
 	 *
-	 * @param string text_sig The text signature to scroll to
+	 * @param string text_sig The text signature to scroll to.
 	 */
 	this.scroll_page_to_textblock = function( text_sig ) {
 

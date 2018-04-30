@@ -64,8 +64,8 @@ CommentPress.texthighlighter.utilities = new function() {
 	 *
 	 * @since 3.8
 	 *
-	 * @param string key the code/key for the localisation string
-	 * @return string localisation The localisation string
+	 * @param string key the code/key for the localisation string.
+	 * @return string localisation The localisation string.
 	 */
 	this.localisation_get = function( key ) {
 		if ( key in me.localisation ) {
@@ -102,7 +102,7 @@ CommentPress.texthighlighter.utilities = new function() {
 	 *
 	 * @since 3.8
 	 *
-	 * @return string saved_scroll_target The saved_scroll_target string
+	 * @return string saved_scroll_target The saved_scroll_target string.
 	 */
 	this.saved_scroll_target_get = function( key ) {
 		return me.saved_scroll_target;

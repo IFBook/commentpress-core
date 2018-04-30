@@ -887,6 +887,68 @@ endif; // commentpress_site_title
 
 
 
+if ( ! function_exists( 'commentpress_header_meta_description' ) ) :
+/**
+ * Construct the content of the meta description tag.
+ *
+ * @since 3.9.10
+ *
+ * @return str $description The content of the meta description tag.
+ */
+function commentpress_header_meta_description() {
+
+	// distinguish single items from archives
+	if ( is_singular() ) {
+
+		// get queried object
+		$queried_post = get_queried_object();
+
+		// do we have one?
+		if ( $queried_post instanceOf WP_Post ) {
+
+			// maybe use excerpt
+			$excerpt = strip_tags( $queried_post->post_excerpt );
+			if ( ! empty( $excerpt ) ) {
+				$description = esc_attr( $excerpt );
+			} else {
+
+				// maybe use trimmed content
+				$content = strip_tags( $queried_post->post_content );
+				if ( ! empty( $content ) ) {
+					$description = esc_attr( wp_trim_words( $content, 35 ) );
+				}
+
+			}
+
+		}
+
+		// fall back to title
+		if ( empty( $description ) ) {
+			$description = single_post_title( '', false );
+		}
+
+	} else {
+		$description = get_bloginfo( 'name' ) . ' - ' . get_bloginfo( 'description' );
+	}
+
+	/**
+	 * Allow the meta description to be filtered.
+	 *
+	 * @since 3.9.10
+	 *
+	 * @param str $description The existing meta description.
+	 * @return str $description The modified meta description.
+	 */
+	$description = apply_filters( 'commentpress_header_meta_description', $description );
+
+	// --<
+	return $description;
+
+}
+endif; // commentpress_header_meta_description
+
+
+
 if ( ! function_exists( 'commentpress_remove_more_jump_link' ) ):
 /**
  * Disable more link jump.
@@ -4403,7 +4465,7 @@ function commentpress_bp_blog_css_class( $classes ) {
 
 		// get group ID
 		$group_id = get_groupblog_group_id( $blogs_template->blog->blog_id );
-		if ( is_numeric( $group_id ) ) {
+		if ( isset( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
 			// get group blogtype
 			$groupblog_type = groups_get_groupmeta( $group_id, 'groupblogtype' );
@@ -4598,7 +4660,8 @@ function commentpress_geomashup_map_get() {
 	if ( ! class_exists( 'GeoMashup' ) ) return;
 
 	// bail if post has no location
-	if ( empty( GeoMashup::current_location( null, 'post' ) ) ) return;
+	$location = GeoMashup::current_location( null, 'post' );
+	if ( empty( $location ) ) return;
 
 	// show map
 	echo '<div class="geomap">' . GeoMashup::map() . '</div>';

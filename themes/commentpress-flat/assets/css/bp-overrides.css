@@ -91,6 +91,27 @@ div.dir-list
 	text-transform: none;
 }
 
+#buddypress div.pagination .pagination-links
+{
+	line-height: 1.7;
+}
+
+#buddypress div.pagination .pagination-links span,
+#buddypress div.pagination .pagination-links a
+{
+	padding: 3px 5px;
+	background: #fff;
+	border: 1px solid #ccc;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+#buddypress div.pagination .pagination-links .page-numbers.dots
+{
+	background: transparent;
+	border: 1px solid #f4f4f4;
+}
+
 #buddypress div#pag-bottom
 {
 	margin-top: 0;
@@ -1281,7 +1302,7 @@ div.blog-button
 
 #buddypress ul.item-list li div.meta
 {
-	margin-top: 0;
+	margin-top: 0.4em;
 	font-size: 75%;
 }
 
@@ -2349,6 +2370,21 @@ body.following #buddypress #members-list li
 {
 	overflow: auto;
 	padding: 15px;
+}
+
+/* site members list */
+body.directory #buddypress #members-list li:after,
+/* friends lists */
+body.friends #buddypress #members-list li:after,
+/* BuddyPress Follow */
+body.followers #buddypress #members-list li:after,
+body.following #buddypress #members-list li:after,
+body #buddypress #member-list li:after
+{
+	content: "";
+	display: block;
+	height: 0px;
+	clear: both;
 }
 
 ul#members-list.item-list li div.item-title,
@@ -4556,7 +4592,7 @@ Responsiveness
 		top: auto;
 		left: auto;
 		right: auto;
-		margin-top: 8px;
+		margin-top: 15px;
 		margin-left: 90px;
 		text-align: left;
 		clear: none;
