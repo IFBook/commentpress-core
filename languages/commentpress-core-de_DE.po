@@ -186,7 +186,7 @@ msgstr "Logo"
 #: commentpress-core/class_commentpress_display.php:571
 #: commentpress-multisite/class_commentpress_mu_bp.php:855
 msgid " &amp; "
-msgstr " &amp; "
+msgstr " &amp; "
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:1272
 msgid "Source: "
@@ -813,7 +813,7 @@ msgstr "Header minimieren"
 
 #: commentpress-core/class_commentpress_display.php:1291
 msgid " The following options have become available in the new version."
-msgstr " Die folgenden Optionen sind in der neuen Version verfügbar."
+msgstr " Die folgenden Optionen sind in der neuen Version verfügbar."
 
 #: commentpress-core/class_commentpress_display.php:1296
 msgid "CommentPress Core Upgrade"
@@ -970,7 +970,7 @@ msgstr "Standard-Text-Format"
 
 #: commentpress-core/class_commentpress_display.php:1532
 msgid " (can be overridden on individual pages)"
-msgstr " (Kann auf einzelne Seiten überschrieben werden)"
+msgstr " (Kann auf einzelne Seiten überschrieben werden)"
 
 #: commentpress-core/class_commentpress_display.php:1580
 #: commentpress-core/class_commentpress_display.php:1868
