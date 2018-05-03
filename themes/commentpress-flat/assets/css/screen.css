@@ -1677,6 +1677,11 @@ Footer
 	background-color: transparent;
 }
 
+#footer_inner .footer_widgets .widget
+{
+	margin: 1.25em 0;
+}
+
 #footer_inner p
 {
 	margin: 0;
