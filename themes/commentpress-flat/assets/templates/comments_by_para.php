@@ -6,21 +6,21 @@ AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
 NOTES
 
-Comments template for CommentPress Core
+Comments template for CommentPress Core.
 
 --------------------------------------------------------------------------------
 */
 
 
 
-// Do not delete these lines
-if (!empty($_SERVER['SCRIPT_FILENAME']) AND 'comments_by_para.php' == basename($_SERVER['SCRIPT_FILENAME'])) {
-	die ('Please do not load this page directly. Thanks!');
+// Do not delete these lines.
+if ( ! empty( $_SERVER['SCRIPT_FILENAME'] ) AND 'comments_by_para.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) {
+	die( 'Please do not load this page directly. Thanks!' );
 }
 
 
 
-// add identifier ID
+// Add identifier ID.
 if ( isset( $post->ID ) ) {
 	$comments_post_identifier = ' id="comments_post_identifier-' . $post->ID . '"';
 }
@@ -55,28 +55,43 @@ if ( isset( $post->ID ) ) {
 
 <?php
 
-// allow plugins to precede comment form
+/**
+ * Allow plugins to precede comment form.
+ *
+ * @since 3.4
+ */
 do_action( 'commentpress_before_comment_form' );
 
-// because AJAX may be routed via admin or front end
+// Because AJAX may be routed via admin or front end.
 if ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) {
 
-	// skip
+	// Skip.
 
 } else {
 
-	// first try to locate using WP method
+	/**
+	 * Try to locate template using WP method.
+	 *
+	 * @since 3.4
+	 *
+	 * @param str The existing path returned by WordPress.
+	 * @return str The modified path.
+	 */
 	$cp_comment_form = apply_filters(
 		'cp_template_comment_form',
 		locate_template( 'assets/templates/comment_form.php' )
 	);
 
-	// load it if we find it
+	// Load it if we find it.
 	if ( $cp_comment_form != '' ) load_template( $cp_comment_form );
 
 }
 
-// allow plugins to follow comment form
+/**
+ * Allow plugins to follow comment form.
+ *
+ * @since 3.4
+ */
 do_action( 'commentpress_after_comment_form' );
 
 ?>

@@ -48,10 +48,10 @@
 
 		<p><?php _e( 'There are no blog posts yet.', 'commentpress-core' ); ?> <?php
 
-		// if logged in
+		// If logged in.
 		if ( is_user_logged_in() ) {
 
-			// add a suggestion
+			// Add a suggestion.
 			?> <a href="<?php admin_url(); ?>"><?php _e( 'Go to your dashboard to add one.', 'commentpress-core' ); ?></a><?php
 
 		}

@@ -2,15 +2,15 @@
 
 
 /**
- * Enqueue accordion script
+ * Enqueue accordion script.
  */
 function my_js_needed() {
-	// enqueue accordion-like js
+	// Enqueue accordion-like Javascript.
 	wp_enqueue_script(
 		'cp_special',
 		get_template_directory_uri() . '/assets/js/cp_js_all_comments.js',
-		null, // deps
-		COMMENTPRESS_VERSION // version
+		null, // Dependencies.
+		COMMENTPRESS_VERSION // Version.
 	);
 }
 
@@ -18,7 +18,7 @@ add_action( 'wp_enqueue_scripts', 'my_js_needed' );
 
 
 
-// get HTML for this template
+// Get HTML for this template.
 $html = commentpress_get_tagged_comments_content();
 
 

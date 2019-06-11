@@ -38,13 +38,13 @@ class Commentpress_Core_Formatter {
 	 */
 	function __construct( $parent_obj = null ) {
 
-		// store reference to "parent" (calling obj, not OOP parent)
+		// Store reference to "parent" (calling obj, not OOP parent).
 		$this->parent_obj = $parent_obj;
 
-		// store reference to database wrapper (child of calling obj)
+		// Store reference to database wrapper (child of calling obj).
 		$this->db = $this->parent_obj->db;
 
-		// init
+		// Init.
 		$this->_init();
 
 	}
@@ -114,10 +114,10 @@ class Commentpress_Core_Formatter {
 	 */
 	public function blog_type_options( $existing_options ) {
 
-		// define types
+		// Define types.
 		$types = array(
-			__( 'Prose', 'commentpress-core' ), // types[0]
-			__( 'Poetry', 'commentpress-core' ), // types[1]
+			__( 'Prose', 'commentpress-core' ), // Types[0]
+			__( 'Poetry', 'commentpress-core' ), // Types[1]
 		);
 
 		// --<
@@ -140,33 +140,33 @@ class Commentpress_Core_Formatter {
 	 */
 	public function content_formatter( $formatter ) {
 
-		// access globals
+		// Access globals.
 		global $post;
 
-		// set post meta key
+		// Set post meta key.
 		$key = '_cp_post_type_override';
 
-		// default to current blog type
+		// Default to current blog type.
 		$type = $this->db->option_get( 'cp_blog_type' );
 
-		// but, if the custom field has a value
+		// But, if the custom field has a value.
 		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 
-			// get it
+			// Get it.
 			$type = get_post_meta( $post->ID, $key, true );
 
 		}
 
-		// act on it
+		// Act on it.
 		switch ( $type ) {
 
-			// prose
+			// Prose.
 			case '0' :
 
 				$formatter = 'tag';
 				break;
 
-			// poetry
+			// Poetry.
 			case '1' :
 
 				$formatter = 'line';
@@ -203,7 +203,7 @@ class Commentpress_Core_Formatter {
 	 */
 	function _init() {
 
-		// register hooks
+		// Register hooks.
 		$this->_register_hooks();
 
 	}
@@ -217,16 +217,16 @@ class Commentpress_Core_Formatter {
 	 */
 	function _register_hooks() {
 
-		// set blog type options
+		// Set blog type options.
 		add_filter( 'cp_blog_type_options', array( $this, 'blog_type_options' ), 21 );
 
-		// set blog type options label
+		// Set blog type options label.
 		add_filter( 'cp_blog_type_label', array( $this, 'blog_type_label' ), 21 );
 
-		// add filter for CommentPress Core formatter
+		// Add filter for CommentPress Core formatter.
 		add_filter( 'cp_select_content_formatter', array( $this, 'content_formatter' ), 21, 1 );
 
-		// is this the back end?
+		// Is this the back end?
 		if ( is_admin() ) {
 
 		}
@@ -239,7 +239,7 @@ class Commentpress_Core_Formatter {
 
 
 
-} // class ends
+} // Class ends.
 
 
 

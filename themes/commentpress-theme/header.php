@@ -54,7 +54,7 @@ var cp_msie = 1;
 
 <?php
 
-// add custom css file for user-defined theme mods in child theme directory (legacy)
+// Add custom css file for user-defined theme mods in child theme directory (legacy).
 if( file_exists( get_stylesheet_directory() . '/custom.css' )) {
 
 ?>
@@ -75,26 +75,33 @@ if( file_exists( get_stylesheet_directory() . '/custom.css' )) {
 
 <?php
 
-// get body id
+// Get body ID.
 $_body_id = commentpress_get_body_id();
 
-// get body classes
+// Get body classes.
 $_body_classes = commentpress_get_body_classes( true );
 
-// BODY starts here
+// BODY starts here.
 ?><body<?php echo $_body_id; ?> <?php body_class( $_body_classes ); ?>>
 
 
 
 <?php
 
-// first try to locate using WP method
+/**
+ * Try to locate template using WP method.
+ *
+ * @since 3.4
+ *
+ * @param str The existing path returned by WordPress.
+ * @return str The modified path.
+ */
 $cp_header_body = apply_filters(
 	'cp_template_header_body',
 	locate_template( 'assets/templates/header_body.php' )
 );
 
-// load it if we find it
+// Load it if we find it.
 if ( $cp_header_body != '' ) load_template( $cp_header_body );
 
 ?>

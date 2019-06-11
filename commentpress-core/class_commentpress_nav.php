@@ -93,10 +93,10 @@ class Commentpress_Core_Navigator {
 	 */
 	function __construct( $parent_obj ) {
 
-		// store reference to parent
+		// Store reference to parent.
 		$this->parent_obj = $parent_obj;
 
-		// init
+		// Init.
 		$this->_init();
 
 	}
@@ -110,29 +110,29 @@ class Commentpress_Core_Navigator {
 	 */
 	public function initialise() {
 
-		// if we're navigating pages
+		// If we're navigating pages.
 		if ( is_page() ) {
 
-			// check page navigation flag
+			// Check page navigation flag.
 			if ( $this->page_nav_is_disabled() ) {
 
-				// remove page arrows via filter
+				// Remove page arrows via filter.
 				add_filter( 'cp_template_page_navigation', array( $this, 'page_nav_disable' ), 100, 1 );
 
-				// save flag
+				// Save flag.
 				$this->nav_enabled = false;
 
 			}
 
-			// init page lists
+			// Init page lists.
 			$this->init_page_lists();
 
 		}
 
-		// if we're navigating posts
+		// If we're navigating posts.
 		if( is_single() ) {
 
-			// init posts lists
+			// Init posts lists.
 			$this->init_posts_lists();
 
 		}
@@ -174,7 +174,7 @@ class Commentpress_Core_Navigator {
 	 */
 	public function page_nav_disable( $template ) {
 
-		// disable for page post type
+		// Disable for page post type.
 		return '';
 
 	}
@@ -190,18 +190,18 @@ class Commentpress_Core_Navigator {
 	 */
 	public function page_nav_is_disabled() {
 
-		// check page navigation option
+		// Check page navigation option.
 		if (
 			$this->parent_obj->db->option_exists( 'cp_page_nav_enabled' ) AND
 			$this->parent_obj->db->option_get( 'cp_page_nav_enabled', 'y' ) == 'n'
 		) {
 
-			// overwrite flag
+			// Overwrite flag.
 			$this->nav_enabled = false;
 
 		}
 
-		// return the opposite
+		// Return the opposite.
 		return $this->nav_enabled ? false : true;
 
 	}
@@ -218,16 +218,16 @@ class Commentpress_Core_Navigator {
 	 */
 	public function get_next_page( $with_comments = false ) {
 
-		// do we have any next pages?
+		// Do we have any next pages?
 		if ( count( $this->next_pages ) > 0 ) {
 
-			// are we asking for comments?
+			// Are we asking for comments?
 			if ( $with_comments ) {
 
-				// loop
+				// Loop.
 				foreach( $this->next_pages AS $next_page ) {
 
-					// does it have comments?
+					// Does it have comments?
 					if ( $next_page->comment_count > 0 ) {
 
 						// --<
@@ -246,14 +246,14 @@ class Commentpress_Core_Navigator {
 
 		}
 
-		// check if the supplied title page is the homepage and this is it
+		// Check if the supplied title page is the homepage and this is it.
 		$title_id = $this->is_title_page_the_homepage();
 		if ( $title_id !== false AND is_front_page() ) {
 
-			// get the first readable page
+			// Get the first readable page.
 			$first_id = $this->get_first_page();
 
-			// return the post object
+			// Return the post object.
 			return get_post( $first_id );
 
 		}
@@ -275,16 +275,16 @@ class Commentpress_Core_Navigator {
 	 */
 	public function get_previous_page( $with_comments = false ) {
 
-		// do we have any previous pages?
+		// Do we have any previous pages?
 		if ( count( $this->previous_pages ) > 0 ) {
 
-			// are we asking for comments?
+			// Are we asking for comments?
 			if ( $with_comments ) {
 
-				// loop
+				// Loop.
 				foreach( $this->previous_pages AS $previous_page ) {
 
-					// does it have comments?
+					// Does it have comments?
 					if ( $previous_page->comment_count > 0 ) {
 
 						// --<
@@ -303,9 +303,9 @@ class Commentpress_Core_Navigator {
 
 		}
 
-		// this must be the first page
+		// This must be the first page.
 
-		// we still need to check if the supplied title page is the homepage
+		// We still need to check if the supplied title page is the homepage.
 		$title_id = $this->is_title_page_the_homepage();
 		if ( $title_id !== false AND ! is_front_page() ) {
 			return get_post( $title_id );
@@ -328,16 +328,16 @@ class Commentpress_Core_Navigator {
 	 */
 	public function get_next_post( $with_comments = false ) {
 
-		// do we have any next posts?
+		// Do we have any next posts?
 		if ( count( $this->next_posts ) > 0 ) {
 
-			// are we asking for comments?
+			// Are we asking for comments?
 			if ( $with_comments ) {
 
-				// loop
+				// Loop.
 				foreach( $this->next_posts AS $next_post ) {
 
-					// does it have comments?
+					// Does it have comments?
 					if ( $next_post->comment_count > 0 ) {
 
 						// --<
@@ -373,16 +373,16 @@ class Commentpress_Core_Navigator {
 	 */
 	public function get_previous_post( $with_comments = false ) {
 
-		// do we have any previous posts?
+		// Do we have any previous posts?
 		if ( count( $this->previous_posts ) > 0 ) {
 
-			// are we asking for comments?
+			// Are we asking for comments?
 			if ( $with_comments ) {
 
-				// loop
+				// Loop.
 				foreach( $this->previous_posts AS $previous_post ) {
 
-					// does it have comments?
+					// Does it have comments?
 					if ( $previous_post->comment_count > 0 ) {
 
 						// --<
@@ -418,7 +418,7 @@ class Commentpress_Core_Navigator {
 	 */
 	public function get_first_child( $page_id ) {
 
-		// init to look for published pages
+		// Init to look for published pages.
 		$defaults = array(
 			'post_parent' => $page_id,
 			'post_type' => 'page',
@@ -428,19 +428,19 @@ class Commentpress_Core_Navigator {
 			'order' => 'ASC'
 		);
 
-		// get page children
+		// Get page children.
 		$children = get_children( $defaults );
 		$kids =& $children;
 
-		// do we have any?
+		// Do we have any?
 		if ( empty( $kids ) ) {
 
-			// no children
+			// No children.
 			return false;
 
 		}
 
-		// we got some
+		// We got some
 		return $this->_get_first_child( $kids );
 
 	}
@@ -457,21 +457,21 @@ class Commentpress_Core_Navigator {
 	 */
 	public function get_book_pages( $mode = 'readable' ) {
 
-		// init
+		// Init.
 		$all_pages = array();
 
-		// do we have a nav menu enabled?
+		// Do we have a nav menu enabled?
 		if ( has_nav_menu( 'toc' ) ) {
 
-			// parse menu
+			// Parse menu.
 			$all_pages = $this->_parse_menu( $mode );
 
 		} else {
 
-			// parse page order
+			// Parse page order.
 			$all_pages = $this->_parse_pages( $mode );
 
-		} // end check for custom menu
+		} // End check for custom menu.
 
 		// --<
 		return $all_pages;
@@ -489,16 +489,16 @@ class Commentpress_Core_Navigator {
 	 */
 	public function get_first_page() {
 
-		// init
+		// Init.
 		$id = false;
 
-		// get all pages including chapters
+		// Get all pages including chapters.
 		$all_pages = $this->get_book_pages( 'structural' );
 
-		// if we have any pages
+		// If we have any pages.
 		if ( count( $all_pages ) > 0 ) {
 
-			// get first id
+			// Get first ID.
 			$id = $all_pages[0]->ID;
 
 		}
@@ -520,40 +520,40 @@ class Commentpress_Core_Navigator {
 	 */
 	public function get_page_number( $page_id ) {
 
-		// bail if page nav is disabled
+		// Bail if page nav is disabled.
 		if ( $this->nav_enabled === false ) return;
 
-		// init
+		// Init.
 		$num = 0;
 
-		// access post
+		// Access post.
 		global $post;
 
-		// are parent pages viewable?
+		// Are parent pages viewable?
 		$viewable = ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) == '1' ) ? true : false;
 
-		// if they are
+		// If they are.
 		if ( $viewable ) {
 
-			// get page number from array
+			// Get page number from array.
 			$num = $this->_get_page_number( $page_id );
 
 		} else {
 
-			// get id of first viewable child
+			// Get id of first viewable child.
 			$first_child = $this->get_first_child( $post->ID );
 
-			// if this is a childless page
+			// If this is a childless page.
 			if ( ! $first_child ) {
 
-				// get page number from array
+				// Get page number from array.
 				$num = $this->_get_page_number( $page_id );
 
 			}
 
 		}
 
-		// apply a filter
+		// Apply a filter.
 		$num = apply_filters( 'cp_nav_page_num', $num );
 
 		// --<
@@ -573,13 +573,13 @@ class Commentpress_Core_Navigator {
 	 */
 	function _get_page_number( $page_id ) {
 
-		// init
+		// Init.
 		$num = 0;
 
-		// get from array
+		// Get from array.
 		if ( array_key_exists( $page_id, $this->page_numbers ) ) {
 
-			// get it
+			// Get it.
 			$num = $this->page_numbers[$page_id];
 
 		}
@@ -598,35 +598,35 @@ class Commentpress_Core_Navigator {
 	 */
 	function redirect_to_child() {
 
-		// only on pages
+		// Only on pages.
 		if ( ! is_page() ) return;
 
-		// bail if this is a BuddyPress page
+		// Bail if this is a BuddyPress page.
 		if ( $this->parent_obj->is_buddypress_special_page() ) return;
 
-		// bail if we have a custom menu
+		// Bail if we have a custom menu.
 		// TODO: we need to parse the menu to find the viewable child
 		if ( has_nav_menu( 'toc' ) ) return;
 
-		// access post object
+		// Access post object.
 		global $post;
 
-		// sanity check
+		// Sanity check.
 		if ( ! is_object( $post ) ) return;
 
-		// are parent pages viewable?
+		// Are parent pages viewable?
 		$viewable = ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) == '1' ) ? true : false;
 
-		// get id of first child
+		// Get id of first child.
 		$first_child = $this->get_first_child( $post->ID );
 
-		// our conditions
+		// Our conditions.
 		if ( $first_child AND ! $viewable ) {
 
-			// get link
+			// Get link.
 			$redirect = get_permalink( $first_child );
 
-			// do the redirect
+			// Do the redirect.
 			//header( "HTTP/1.1 301 Moved Permanently" );
 			header( "Location: $redirect" );
 
@@ -643,41 +643,41 @@ class Commentpress_Core_Navigator {
 	 */
 	public function init_page_lists() {
 
-		// get all pages
+		// Get all pages.
 		$all_pages = $this->get_book_pages( 'readable' );
 
-		// if we have any pages
+		// If we have any pages.
 		if ( count( $all_pages ) > 0 ) {
 
-			// generate page numbers
+			// Generate page numbers.
 			$this->_generate_page_numbers( $all_pages );
 
-			// access post object
+			// Access post object.
 			global $post;
 
-			// init the key we want
+			// Init the key we want.
 			$page_key = false;
 
-			// loop
+			// Loop.
 			foreach( $all_pages AS $key => $page_obj ) {
 
-				// is it the currently viewed page?
+				// Is it the currently viewed page?
 				if ( $page_obj->ID == $post->ID ) {
 
-					// set page key
+					// Set page key.
 					$page_key = $key;
 
-					// kick out to preserve key
+					// Kick out to preserve key.
 					break;
 
 				}
 
 			}
 
-			// if we don't get a key
+			// If we don't get a key.
 			if ( $page_key === false ) {
 
-				// the current page is a chapter and is not a page
+				// The current page is a chapter and is not a page.
 				$this->next_pages = array();
 
 				// --<
@@ -685,23 +685,23 @@ class Commentpress_Core_Navigator {
 
 			}
 
-			// will there be a next array?
+			// Will there be a next array?
 			if ( isset( $all_pages[$key + 1] ) ) {
 
-				// get all subsequent pages
+				// Get all subsequent pages.
 				$this->next_pages = array_slice( $all_pages, $key + 1 );
 
 			}
 
-			// will there be a previous array?
+			// Will there be a previous array?
 			if ( isset( $all_pages[$key - 1] ) ) {
 
-				// get all previous pages
+				// Get all previous pages.
 				$this->previous_pages = array_reverse( array_slice( $all_pages, 0, $key ) );
 
 			}
 
-		} // end have array check
+		} // End have array check.
 
 	}
 
@@ -714,51 +714,51 @@ class Commentpress_Core_Navigator {
 	 */
 	public function init_posts_lists() {
 
-		// set defaults
+		// Set defaults.
 		$defaults = array(
 			'numberposts' => -1,
 			'orderby' => 'date'
 		);
 
-		// get them
+		// Get them.
 		$all_posts = get_posts( $defaults );
 
-		// if we have any posts
+		// If we have any posts.
 		if ( count( $all_posts ) > 0 ) {
 
-			// access post object
+			// Access post object.
 			global $post;
 
-			// loop
+			// Loop.
 			foreach( $all_posts AS $key => $post_obj ) {
 
-				// is it ours?
+				// Is it ours?
 				if ( $post_obj->ID == $post->ID ) {
 
-					// kick out to preserve key
+					// Kick out to preserve key.
 					break;
 
 				}
 
 			}
 
-			// will there be a next array?
+			// Will there be a next array?
 			if ( isset( $all_posts[$key + 1] ) ) {
 
-				// get all subsequent posts
+				// Get all subsequent posts.
 				$this->next_posts = array_slice( $all_posts, $key + 1 );
 
 			}
 
-			// will there be a previous array?
+			// Will there be a previous array?
 			if ( isset( $all_posts[$key - 1] ) ) {
 
-				// get all previous posts
+				// Get all previous posts.
 				$this->previous_posts = array_reverse( array_slice( $all_posts, 0, $key ) );
 
 			}
 
-		} // end have array check
+		} // End have array check
 
 	}
 
@@ -804,16 +804,16 @@ class Commentpress_Core_Navigator {
 	 */
 	function _filter_chapters( $pages ) {
 
-		// init return
+		// Init return.
 		$subpages = array();
 
-		// if we have any
+		// If we have any.
 		if ( count( $pages ) > 0 ) {
 
-			// loop
+			// Loop.
 			foreach( $pages AS $key => $page_obj ) {
 
-				// init to look for published pages
+				// Init to look for published pages.
 				$defaults = array(
 					'post_parent' => $page_obj->ID,
 					'post_type' => 'page',
@@ -821,21 +821,21 @@ class Commentpress_Core_Navigator {
 					'post_status' => 'publish'
 				);
 
-				// get page children
+				// Get page children.
 				$children = get_children( $defaults );
 				$kids =& $children;
 
-				// do we have any?
+				// Do we have any?
 				if ( empty( $kids ) ) {
 
-					// add to our return array
+					// Add to our return array.
 					$subpages[] = $page_obj;
 
 				}
 
 			}
 
-		} // end have array check
+		} // End have array check.
 
 		// --<
 		return $subpages;
@@ -854,13 +854,13 @@ class Commentpress_Core_Navigator {
 	 */
 	function _get_first_child( $pages ) {
 
-		// if we have any
+		// If we have any.
 		if ( count( $pages ) > 0 ) {
 
-			// loop
+			// Loop.
 			foreach( $pages AS $key => $page_obj ) {
 
-				// init to look for published pages
+				// Init to look for published pages.
 				$defaults = array(
 					'post_parent' => $page_obj->ID,
 					'post_type' => 'page',
@@ -870,26 +870,26 @@ class Commentpress_Core_Navigator {
 					'order' => 'ASC'
 				);
 
-				// get page children
+				// Get page children.
 				$children = get_children( $defaults );
 				$kids =& $children;
 
-				// do we have any?
+				// Do we have any?
 				if ( ! empty( $kids ) ) {
 
-					// go deeper
+					// Go deeper.
 					return $this->_get_first_child( $kids );
 
 				} else {
 
-					// return first
+					// Return first.
 					return $page_obj->ID;
 
 				}
 
 			}
 
-		} // end have array check
+		} // End have array check
 
 		// --<
 		return false;
@@ -909,24 +909,24 @@ class Commentpress_Core_Navigator {
 	 */
 	function _generate_page_numbers( $pages ) {
 
-		// if we have any
+		// If we have any.
 		if ( count( $pages ) > 0 ) {
 
-			// init with page 1
+			// Init with page 1.
 			$num = 1;
 
-			// assume no menu
+			// Assume no menu.
 			$has_nav_menu = false;
 
-			// if we have a custom menu
+			// If we have a custom menu.
 			if ( has_nav_menu( 'toc' ) ) {
 
-				// override
+				// Override.
 				$has_nav_menu = true;
 
 			}
 
-			// loop
+			// Loop.
 			foreach( $pages AS $page_obj ) {
 
 				/**
@@ -937,38 +937,38 @@ class Commentpress_Core_Navigator {
 				 * If set, all child pages will be set to Roman.
 				 */
 
-				// once we run out of Roman numerals, $num is reset to 1
+				// Once we run out of Roman numerals, $num is reset to 1.
 
-				// default to arabic
+				// Default to arabic.
 				$format = 'arabic';
 
-				// set key
+				// Set key.
 				$key = '_cp_number_format';
 
-				// if the custom field already has a value
+				// If the custom field already has a value.
 				if ( get_post_meta( $page_obj->ID, $key, true ) !== '' ) {
 
-					// get it
+					// Get it.
 					$format = get_post_meta( $page_obj->ID, $key, true );
 
 				} else {
 
-					// if we have a custom menu
+					// If we have a custom menu.
 					if ( $has_nav_menu ) {
 
-						// get top level menu item
+						// Get top level menu item.
 						$top_menu_item = $this->_get_top_menu_obj( $page_obj );
 
-						// since this might not be a WP_POST object
+						// Since this might not be a WP_POST object.
 						if ( isset( $top_menu_item->object_id ) ) {
 
-							// get ID of top level parent
+							// Get ID of top level parent.
 							$top_page_id = $top_menu_item->object_id;
 
-							// if the custom field has a value
+							// If the custom field has a value.
 							if ( get_post_meta( $top_page_id, $key, true ) !== '' ) {
 
-								// get it
+								// Get it.
 								$format = get_post_meta( $top_page_id, $key, true );
 
 							}
@@ -977,13 +977,13 @@ class Commentpress_Core_Navigator {
 
 					} else {
 
-						// get top level parent
+						// Get top level parent.
 						$top_page_id = $this->_get_top_parent_id( $page_obj->ID );
 
-						// if the custom field has a value
+						// If the custom field has a value.
 						if ( get_post_meta( $top_page_id, $key, true ) !== '' ) {
 
-							// get it
+							// Get it.
 							$format = get_post_meta( $top_page_id, $key, true );
 
 						}
@@ -992,31 +992,31 @@ class Commentpress_Core_Navigator {
 
 				}
 
-				// if it's roman
+				// If it's roman.
 				if ( $format == 'roman' ) {
 
-					// convert arabic to roman
+					// Convert arabic to roman.
 					$this->page_numbers[$page_obj->ID] = $this->_number_to_roman( $num );
 
 				} else {
 
-					// if flag not set
+					// If flag not set.
 					if ( ! isset( $flag ) ) {
 
-						// reset num
+						// Reset num.
 						$num = 1;
 
-						// set flag
+						// Set flag.
 						$flag = true;
 
 					}
 
-					// store roman
+					// Store roman.
 					$this->page_numbers[$page_obj->ID] = $num;
 
 				}
 
-				// increment
+				// Increment.
 				$num++;
 
 			}
@@ -1037,26 +1037,26 @@ class Commentpress_Core_Navigator {
 	 */
 	function _filter_theme_my_login_page( $pages ) {
 
-		// init return
+		// Init return.
 		$clean = array();
 
-		// if we have any
+		// If we have any.
 		if ( count( $pages ) > 0 ) {
 
-			// loop
+			// Loop.
 			foreach( $pages AS $page_obj ) {
 
-				// do we have any?
+				// Do we have any?
 				if ( ! $this->_detect_login_page( $page_obj ) ) {
 
-					// add to our return array
+					// Add to our return array.
 					$clean[] = $page_obj;
 
 				}
 
 			}
 
-		} // end have array check
+		} // End have array check.
 
 		// --<
 		return $clean;
@@ -1075,7 +1075,7 @@ class Commentpress_Core_Navigator {
 	 */
 	function _detect_login_page( $page_obj ) {
 
-		// compat with Theme My Login
+		// Compat with Theme My Login.
 		if(
 			$page_obj->post_name == 'login' AND
 			$page_obj->post_content == '[theme-my-login]'
@@ -1119,7 +1119,7 @@ class Commentpress_Core_Navigator {
 
 		if ( $arabic > 4999 ) {
 
-			/**
+			/*
 			 * For large numbers (five thousand and above), a bar is placed above
 			 * a base numeral to indicate multiplication by 1000.
 			 *
@@ -1130,7 +1130,7 @@ class Commentpress_Core_Navigator {
 
 		} elseif ( $arabic == 0 ) {
 
-			/**
+			/*
 			 * In about 725, Bede or one of his colleagues used the letter N, the
 			 * initial of nullae, in a table of epacts, all written in Roman
 			 * numerals, to indicate zero.
@@ -1165,18 +1165,18 @@ class Commentpress_Core_Navigator {
 	 */
 	function _get_top_parent_id( $post_id ) {
 
-		// get page data
+		// Get page data.
 		$page = get_page( $post_id );
 
-		// is the top page?
+		// Is the top page?
 		if ( $page->post_parent == 0 ) {
 
-			// yes -> return the id
+			// Yes -> return the ID.
 			return $page->ID;
 
 		} else {
 
-			// no -> recurse upwards
+			// No -> recurse upwards.
 			return $this->_get_top_parent_id( $page->post_parent );
 
 		}
@@ -1195,29 +1195,29 @@ class Commentpress_Core_Navigator {
 	 */
 	function _parse_pages( $mode ) {
 
-		// init return
+		// Init return.
 		$pages = array();
 
 		// -----------------------------------------------------------------
-		// construct "book" navigation based on pages
+		// Construct "book" navigation based on pages
 		// -----------------------------------------------------------------
 
-		// default to no excludes
+		// Default to no excludes.
 		$excludes = '';
 
-		// init excluded array with "special pages"
+		// Init excluded array with "special pages".
 		$excluded_pages = $this->parent_obj->db->option_get( 'cp_special_pages' );
 
-		// if the supplied title page is the homepage
+		// If the supplied title page is the homepage.
 		$title_id = $this->is_title_page_the_homepage();
 		if ( $title_id !== false ) {
 
-			// it will already have been shown at the top of the page list
+			// It will already have been shown at the top of the page list.
 			$excluded_pages[] = $title_id;
 
 		}
 
-		// are we in a BuddyPress scenario?
+		// Are we in a BuddyPress scenario?
 		if ( $this->parent_obj->is_buddypress() ) {
 
 			/*
@@ -1228,16 +1228,16 @@ class Commentpress_Core_Navigator {
 			 * @see Commentpress_Core_Display::list_pages()
 			 */
 
-			// check if registration is allowed
+			// Check if registration is allowed.
 			if ( '1' == get_option( 'users_can_register' ) AND is_main_site() ) {
 
-				// find the registration page by its slug
+				// Find the registration page by its slug.
 				$reg_page = get_page_by_path( 'register' );
 
-				// did we get one?
+				// Did we get one?
 				if ( is_object( $reg_page ) AND isset( $reg_page->ID ) ) {
 
-					// yes - exclude it as well
+					// Yes - exclude it as well.
 					$excluded_pages[] = $reg_page->ID;
 
 				}
@@ -1246,18 +1246,18 @@ class Commentpress_Core_Navigator {
 
 		}
 
-		// allow plugins to filter
+		// Allow plugins to filter.
 		$excluded_pages = apply_filters( 'cp_exclude_pages_from_nav', $excluded_pages );
 
-		// are there any?
+		// Are there any?
 		if ( is_array( $excluded_pages ) AND count( $excluded_pages ) > 0 ) {
 
-			// format them for the exclude param
+			// Format them for the exclude param
 			$excludes = implode( ',', $excluded_pages );
 
 		}
 
-		// set list pages defaults
+		// Set list pages defaults.
 		$defaults = array(
 			'child_of' => 0,
 			'sort_order' => 'ASC',
@@ -1272,29 +1272,29 @@ class Commentpress_Core_Navigator {
 			'exclude_tree' => ''
 		);
 
-		// get them
+		// Get them.
 		$pages = get_pages( $defaults );
 
-		// if we have any pages
+		// If we have any pages.
 		if ( count( $pages ) > 0 ) {
 
-			// if chapters are not pages
+			// If chapters are not pages.
 			if ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
 
-				// do we want all readable pages?
+				// Do we want all readable pages?
 				if ( $mode == 'readable' ) {
 
-					// filter chapters out
+					// Filter chapters out.
 					$pages = $this->_filter_chapters( $pages );
 
 				}
 
 			}
 
-			// if Theme My Login is present
+			// If Theme My Login is present.
 			if ( defined( 'TML_ABSPATH' ) ) {
 
-				// filter its page out
+				// Filter its page out.
 				$pages = $this->_filter_theme_my_login_page( $pages );
 
 			}
@@ -1317,27 +1317,27 @@ class Commentpress_Core_Navigator {
 	 */
 	public function is_title_page_the_homepage() {
 
-		// only need to parse this once
+		// Only need to parse this once.
 		static $is_home = null;
 		if ( ! is_null( $is_home ) ) {
 			return $is_home;
 		}
 
-		// get welcome page ID
+		// Get welcome page ID.
 		$welcome_id = $this->parent_obj->db->option_get( 'cp_welcome_page' );
 
-		// get front page
+		// Get front page.
 		$page_on_front = $this->parent_obj->db->option_wp_get( 'page_on_front' );
 
-		// if the CommentPress title page exists and it's the front page
+		// If the CommentPress title page exists and it's the front page.
 		if ( $welcome_id !== false AND $page_on_front == $welcome_id ) {
 
-			// set to page ID
+			// Set to page ID.
 			$is_home = $welcome_id;
 
 		} else {
 
-			// not home page
+			// Not home page.
 			$is_home = false;
 
 		}
@@ -1359,19 +1359,19 @@ class Commentpress_Core_Navigator {
 	 */
 	function _parse_menu( $mode ) {
 
-		// init return
+		// Init return.
 		$pages = array();
 
-		// get menu locations
+		// Get menu locations.
 		$locations = get_nav_menu_locations();
 
-		// check menu locations
+		// Check menu locations.
 		if ( isset( $locations['toc'] ) ) {
 
-			// get the menu object
+			// Get the menu object.
 			$menu = wp_get_nav_menu_object( $locations['toc'] );
 
-			// default args for reference
+			// Default args for reference.
 			$args = array(
 				'order' => 'ASC',
 				'orderby' => 'menu_order',
@@ -1383,69 +1383,69 @@ class Commentpress_Core_Navigator {
 				'update_post_term_cache' => false
 			);
 
-			// get the menu objects and store for later
+			// Get the menu objects and store for later.
 			$this->menu_objects = wp_get_nav_menu_items( $menu->term_id, $args );
 
-			// if we get some
+			// If we get some.
 			if ( $this->menu_objects ) {
 
-				// if chapters are not pages, filter the menu items
+				// If chapters are not pages, filter the menu items.
 				if ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
 
-					// do we want all readable pages?
+					// Do we want all readable pages?
 					if ( $mode == 'readable' ) {
 
-						// filter chapters out
+						// Filter chapters out.
 						$menu_items = $this->_filter_menu( $this->menu_objects );
 
 					} else {
 
-						// structural - use a copy of the raw menu data
+						// Structural - use a copy of the raw menu data.
 						$menu_items = $this->menu_objects;
 
 					}
 
 				} else {
 
-					// use a copy of the raw menu data
+					// Use a copy of the raw menu data.
 					$menu_items = $this->menu_objects;
 
 				}
 
-				// init
+				// Init.
 				$pages_to_get = array();
 
-				// convert to array of pages
+				// Convert to array of pages.
 				foreach ( $menu_items AS $menu_item ) {
 
-					// is it a WP item?
+					// Is it a WP item?
 					if ( isset( $menu_item->object_id ) ) {
 
-						// init pseudo WP_POST object
+						// Init pseudo WP_POST object.
 						$pseudo_post = new stdClass;
 
-						// add post ID
+						// Add post ID.
 						$pseudo_post->ID = $menu_item->object_id;
 
-						// add menu ID (for filtering below)
+						// Add menu ID (for filtering below).
 						$pseudo_post->menu_id = $menu_item->ID;
 
-						// add menu item parent ID (for finding parent below)
+						// Add menu item parent ID (for finding parent below).
 						$pseudo_post->menu_item_parent = $menu_item->menu_item_parent;
 
-						// add comment count for possible calls for "next with comments"
+						// Add comment count for possible calls for "next with comments".
 						$pseudo_post->comment_count = $menu_item->comment_count;
 
-						// add to array of WP pages in menu
+						// Add to array of WP pages in menu.
 						$pages[] = $pseudo_post;
 
 					}
 
 				}
 
-			} // end check for menu items
+			} // End check for menu items.
 
-		} // end check for our menu
+		} // End check for our menu.
 
 		// --<
 		return $pages;
@@ -1464,29 +1464,29 @@ class Commentpress_Core_Navigator {
 	 */
 	function _filter_menu( $menu_items ) {
 
-		// init return
+		// Init return.
 		$sub_items = array();
 
-		// if we have any
+		// If we have any.
 		if ( count( $menu_items ) > 0 ) {
 
-			// loop
+			// Loop.
 			foreach( $menu_items AS $key => $menu_obj ) {
 
-				// get item children
+				// Get item children.
 				$kids = $this->_get_menu_item_children( $menu_items, $menu_obj );
 
-				// do we have any?
+				// Do we have any?
 				if ( empty( $kids ) ) {
 
-					// add to our return array
+					// Add to our return array.
 					$sub_items[] = $menu_obj;
 
 				}
 
 			}
 
-		} // end have array check
+		} // End have array check.
 
 		// --<
 		return $sub_items;
@@ -1506,26 +1506,26 @@ class Commentpress_Core_Navigator {
 	 */
 	function _get_menu_item_children( $menu_items, $menu_obj ) {
 
-		// init return
+		// Init return.
 		$sub_items = array();
 
-		// if we have any
+		// If we have any.
 		if ( count( $menu_items ) > 0 ) {
 
-			// loop
+			// Loop.
 			foreach( $menu_items AS $key => $menu_item ) {
 
-				// is this item a child of the passed in menu object?
+				// Is this item a child of the passed in menu object?
 				if ( $menu_item->menu_item_parent == $menu_obj->ID ) {
 
-					// add to our return array
+					// Add to our return array.
 					$sub_items[] = $menu_item;
 
 				}
 
 			}
 
-		} // end have array check
+		} // End have array check.
 
 		// --<
 		return $sub_items;
@@ -1544,13 +1544,13 @@ class Commentpress_Core_Navigator {
 	 */
 	function _get_menu_item_parent( $menu_obj ) {
 
-		// if we have any
+		// If we have any.
 		if ( count( $this->menu_objects ) > 0 ) {
 
-			// loop
+			// Loop.
 			foreach( $this->menu_objects AS $key => $menu_item ) {
 
-				// is this item the first parent of the passed in menu object?
+				// Is this item the first parent of the passed in menu object?
 				if ( $menu_item->ID == $menu_obj->menu_item_parent ) {
 
 					// --<
@@ -1560,7 +1560,7 @@ class Commentpress_Core_Navigator {
 
 			}
 
-		} // end have array check
+		} // End have array check.
 
 		// --<
 		return false;
@@ -1587,26 +1587,26 @@ class Commentpress_Core_Navigator {
 		 * should attempt to walk the tree as best we can.
 		 */
 
-		// is this the top item?
+		// Is this the top item?
 		if ( $menu_obj->menu_item_parent == 0 ) {
 
-			// yes -> return the object
+			// Yes -> return the object.
 			return $menu_obj;
 
 		}
 
-		// get parent item
+		// Get parent item.
 		$parent_obj = $this->_get_menu_item_parent( $menu_obj );
 
-		// is the top item?
+		// Is the top item?
 		if ( $parent_obj->menu_item_parent !== 0 ) {
 
-			// no -> recurse upwards
+			// No -> recurse upwards.
 			return $this->_get_top_menu_obj( $parent_obj );
 
 		}
 
-		// yes -> return the object
+		// Yes -> return the object.
 		return $parent_obj;
 
 	}
@@ -1617,7 +1617,7 @@ class Commentpress_Core_Navigator {
 
 
 
-} // class ends
+} // Class ends.
 
 
 

@@ -18,13 +18,20 @@
 
 <?php
 
-// first try to locate using WP method
+/**
+ * Try to locate template using WP method.
+ *
+ * @since 3.4
+ *
+ * @param str The existing path returned by WordPress.
+ * @return str The modified path.
+ */
 $cp_page_navigation = apply_filters(
 	'cp_template_page_navigation',
 	locate_template( 'assets/templates/page_navigation.php' )
 );
 
-// load it if we find it
+// Load it if we find it.
 if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 ?>
@@ -63,10 +70,10 @@ if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 		<p><?php _e( 'There are no blog posts yet.', 'commentpress-core' ); ?> <?php
 
-		// if logged in
+		// If logged in.
 		if ( is_user_logged_in() ) {
 
-			// add a suggestion
+			// Add a suggestion.
 			?> <a href="<?php admin_url(); ?>"><?php _e( 'Go to your dashboard to add one.', 'commentpress-core' ); ?></a><?php
 
 		}
@@ -90,7 +97,7 @@ if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 <div class="page_nav_lower">
 <?php
 
-// include page_navigation again
+// Include page_navigation again.
 if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 ?>

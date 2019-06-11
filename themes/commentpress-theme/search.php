@@ -28,29 +28,29 @@
 
 	global $commentpres_obj;
 
-	// init
+	// Init.
 	$_special_pages = array();
 
-	// if we have the plugin enabled
+	// If we have the plugin enabled.
 	if ( is_object( $commentpress_core ) ) {
 
-		// get special pages
+		// Get special pages.
 		$special_pages = $commentpress_core->db->option_get( 'cp_special_pages' );
 
-		// do we have a special page array?
+		// Do we have a special page array?
 		if ( is_array( $special_pages ) AND count( $special_pages ) > 0 ) {
 
-			// override
+			// Override.
 			$_special_pages = $special_pages;
 
 		}
 
 	}
 
-	// loop
+	// Loop.
 	while (have_posts()) : the_post();
 
-	// exclude if CommentPress Core Special Page
+	// Exclude if CommentPress Core Special Page.
 	if ( !in_array( get_the_ID(), $_special_pages ) ) {
 
 	?>
@@ -71,9 +71,9 @@
 
 	<?php
 
-	} // end check for special page
+	} // End check for special page.
 
-	endwhile; // end loop
+	endwhile; // End loop.
 
 	?>
 

@@ -11,7 +11,7 @@ NOTES
 
 
 
-// always include our common theme functions file
+// Always include our common theme functions file.
 require_once( COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/includes/theme/theme-functions.php' );
 
 
@@ -25,7 +25,7 @@ require_once( COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/includes/them
  * I have arbitrarily set it to the default content-width when viewing on a
  * 1280px-wide screen.
  */
-if ( !isset( $content_width ) ) { $content_width = 1024; }
+if ( ! isset( $content_width ) ) { $content_width = 1024; }
 
 
 
@@ -37,14 +37,14 @@ if ( ! function_exists( 'commentpress_setup' ) ):
  */
 function commentpress_setup() {
 
-	// add title support: wp_title() is deprecated as of WP 4.4
+	// Add title support: wp_title() is deprecated as of WP 4.4.
 	add_theme_support( 'title-tag' );
 
-	// add_custom_background function is deprecated in WP 3.4+
+	// Add_custom_background function is deprecated in WP 3.4+
 	global $wp_version;
 	if ( version_compare( $wp_version, '3.4', '>=' ) ) {
 
-		// allow custom backgrounds
+		// Allow custom backgrounds.
 		add_theme_support( 'custom-background', array(
 			'default-color'          => 'ccc',
 			'default-image'          => '',
@@ -53,7 +53,7 @@ function commentpress_setup() {
 			'admin-preview-callback' => ''
 		) );
 
-		// allow custom header
+		// Allow custom header.
 		add_theme_support( 'custom-header', array(
 			'default-text-color' => 'eeeeee',
 			'width' => apply_filters( 'cp_header_image_width', 940 ),
@@ -64,26 +64,28 @@ function commentpress_setup() {
 
 	} else {
 
-		// retain old declarations for earlier versions
+		// Retain old declarations for earlier versions.
 		add_custom_background();
 
-		// header text colour
+		// Header text colour.
 		define( 'HEADER_TEXTCOLOR', 'eeeeee' );
 
-		// set height and width
+		// Set height and width.
 		define( 'HEADER_IMAGE_WIDTH', apply_filters( 'cp_header_image_width', 940 ) );
 		define( 'HEADER_IMAGE_HEIGHT', apply_filters( 'cp_header_image_height', 67 ) );
 
-		// allow custom header images
+		// Allow custom header images.
 		add_custom_image_header( 'commentpress_header', 'commentpress_admin_header' );
 
 	}
 
 	/**
 	 * Default custom headers packaged with the theme (see Twenty Eleven)
+	 *
 	 * A nice side-effect of supplying a default header image is that it triggers the
-	 * "Header Image" option in the Theme Customizer
-	 * %s is a placeholder for the theme template directory URI
+	 * "Header Image" option in the Theme Customizer.
+	 *
+	 * %s is a placeholder for the theme template directory URI.
 	 */
 	register_default_headers(
 		array(
@@ -114,50 +116,50 @@ function commentpress_setup() {
 		)
 	);
 
-	// auto feed links
+	// Auto feed links.
 	add_theme_support( 'automatic-feed-links' );
 
-	// style the visual editor with editor-style.css to match the theme style
+	// Style the visual editor with editor-style.css to match the theme style.
 	add_editor_style();
 
-	// allow the use of wp_nav_menu() - first we need to register them
+	// Allow the use of wp_nav_menu() - first we need to register them.
 	register_nav_menu( 'toc', __( 'Table of Contents', 'commentpress-core' ) );
 	register_nav_menu( 'footer', __( 'Footer', 'commentpress-core' ) );
 
 
 
-	// if we have the plugin enabled
+	// If we have the plugin enabled.
 	global $commentpress_core;
 	if ( is_object( $commentpress_core ) ) {
 
-		// get the option
+		// Get the option.
 		$featured_images = $commentpress_core->db->option_get( 'cp_featured_images', 'n' );
 
-		// do we have the featured images option enabled?
+		// Do we have the featured images option enabled?
 		if ( $featured_images == 'y' ) {
 
-			// use Featured Images (also known as post thumbnails)
+			// Use Featured Images (also known as post thumbnails)
 			add_theme_support( 'post-thumbnails' );
 
-			// define a custom image size, cropped to fit
+			// Define a custom image size, cropped to fit.
 			add_image_size(
 				'commentpress-feature',
 				apply_filters( 'cp_feature_image_width', 1200 ),
 				apply_filters( 'cp_feature_image_height', 600 ),
-				true // crop
+				true // Crop.
 			);
 
 		}
 
 	}
 
-	// no need for default sidebar in this theme
+	// No need for default sidebar in this theme.
 	//add_filter( 'commentpress_hide_sidebar_option', '__return_true' );
 
 }
-endif; // commentpress_setup
+endif; // End commentpress_setup.
 
-// add after theme setup hook
+// Add after theme setup hook.
 add_action( 'after_setup_theme', 'commentpress_setup' );
 
 
@@ -170,91 +172,91 @@ if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ):
  */
 function commentpress_enqueue_scripts_and_styles() {
 
-	// check for dev
+	// Check for dev.
 	$dev = commentpress_minified();
 
 	// -------------------------------------------------------------------------
 	// Stylesheets
 	// -------------------------------------------------------------------------
 
-	// register screen styles
+	// Register screen styles.
 	wp_register_style(
-		'cp_screen_css', // unique id
-		get_template_directory_uri() . '/assets/css/screen' . $dev . '.css', // src
-		array(), // dependencies
-		COMMENTPRESS_VERSION, // version
-		'all' // media
+		'cp_screen_css', // Unique id
+		get_template_directory_uri() . '/assets/css/screen' . $dev . '.css', // Src
+		array(), // Dependencies.
+		COMMENTPRESS_VERSION, // Version.
+		'all' // Media.
 	);
 
 	// -------------------------------------------------------------------------
 	// Overrides for styles - for child themes, dequeue these and add you own
 	// -------------------------------------------------------------------------
 
-	// add Google Webfont "Lato"
+	// Add Google Webfont "Lato"
 	wp_enqueue_style(
 		'cp_webfont_lato_css',
 		set_url_scheme( 'http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' ),
 		array( 'cp_screen_css' ),
-		COMMENTPRESS_VERSION, // version
-		'all' // media
+		COMMENTPRESS_VERSION, // Version.
+		'all' // Media.
 	);
 
-	// add colours css
+	// Add colours CSS.
 	wp_enqueue_style(
 		'cp_colours_css',
 		get_template_directory_uri() . '/assets/css/colours-01' . $dev . '.css',
 		array( 'cp_webfont_lato_css' ),
-		COMMENTPRESS_VERSION, // version
-		'all' // media
+		COMMENTPRESS_VERSION, // Version.
+		'all' // Media.
 	);
 
-	// use dashicons
+	// Use dashicons.
 	wp_enqueue_style( 'dashicons' );
 
 	// -------------------------------------------------------------------------
-	// Javascripts
+	// Javascripts.
 	// -------------------------------------------------------------------------
 
-	// enqueue common js
+	// Enqueue common Javascript.
 	wp_enqueue_script(
 		'cp_common_js',
 		get_template_directory_uri() . '/assets/js/screen' . $dev . '.js',
-		array( 'jquery_commentpress' ), // deps
-		COMMENTPRESS_VERSION // version
+		array( 'jquery_commentpress' ), // Dependencies.
+		COMMENTPRESS_VERSION // Version.
 	);
 
-	// access plugin
+	// Access plugin.
 	global $commentpress_core;
 
-	// if we have the plugin enabled
+	// If we have the plugin enabled.
 	if ( is_object( $commentpress_core ) ) {
 
-		// test for BuddyPress special page
+		// Test for BuddyPress special page.
 		if ( $commentpress_core->is_buddypress() AND $commentpress_core->is_buddypress_special_page() ) {
 
-			// skip custom addComment
+			// Skip custom addComment.
 
 		} else {
 
-			// enqueue form js
+			// Enqueue form Javascript.
 			wp_enqueue_script(
 				'cp_form',
 				plugins_url( 'commentpress-core/assets/js/jquery.commentform' . $dev . '.js', COMMENTPRESS_PLUGIN_FILE ),
-				array( 'cp_common_js' ), // deps
-				COMMENTPRESS_VERSION // version
+				array( 'cp_common_js' ), // Dependencies.
+				COMMENTPRESS_VERSION // Version.
 			);
 
 		}
 
-		// test for CommentPress Core special page
+		// Test for CommentPress Core special page.
 		if ( $commentpress_core->db->is_special_page() ) {
 
-			// enqueue accordion-like js
+			// Enqueue accordion-like Javascript.
 			wp_enqueue_script(
 				'cp_special',
 				get_template_directory_uri() . '/assets/js/cp_js_all_comments.js',
-				array( 'cp_form' ), // deps
-				COMMENTPRESS_VERSION // version
+				array( 'cp_form' ), // Dependencies.
+				COMMENTPRESS_VERSION // Version.
 			);
 
 		}
@@ -262,9 +264,9 @@ function commentpress_enqueue_scripts_and_styles() {
 	}
 
 }
-endif; // commentpress_enqueue_scripts_and_styles
+endif; // End commentpress_enqueue_scripts_and_styles
 
-// add a filter for the above, very late so it (hopefully) is last in the queue
+// Add a filter for the above, very late so it (hopefully) is last in the queue.
 add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_scripts_and_styles', 995 );
 
 
@@ -277,22 +279,22 @@ if ( ! function_exists( 'commentpress_enqueue_print_styles' ) ):
  */
 function commentpress_enqueue_print_styles() {
 
-	// check for dev
+	// Check for dev.
 	$dev = commentpress_minified();
 
-	// add print css
+	// Add print CSS.
 	wp_enqueue_style(
 		'cp_print_css',
 		get_template_directory_uri() . '/assets/css/print' . $dev . '.css',
 		array( 'cp_screen_css' ),
-		COMMENTPRESS_VERSION, // version
+		COMMENTPRESS_VERSION, // Version.
 		'print'
 	);
 
 }
-endif; // commentpress_enqueue_print_styles
+endif; // End commentpress_enqueue_print_styles
 
-// add a filter for the above, very late so it (hopefully) is last in the queue
+// Add a filter for the above, very late so it (hopefully) is last in the queue.
 add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_print_styles', 999 );
 
 
@@ -305,22 +307,22 @@ if ( ! function_exists( 'commentpress_buddypress_support' ) ):
  */
 function commentpress_buddypress_support() {
 
-	// include bp-overrides when BuddyPress is active
+	// Include bp-overrides when BuddyPress is active.
 	add_action( 'wp_enqueue_scripts', 'commentpress_bp_enqueue_styles', 996 );
 
-	// add filter for activity class
+	// Add filter for activity class.
 	add_filter( 'bp_get_activity_css_class', 'commentpress_bp_activity_css_class' );
 
-	// add filter for blogs class
+	// Add filter for blogs class.
 	add_filter( 'bp_get_blog_class', 'commentpress_bp_blog_css_class' );
 
-	// add filter for groups class
+	// Add filter for groups class.
 	add_filter( 'bp_get_group_class', 'commentpress_bp_group_css_class' );
 
 }
-endif; // commentpress_buddypress_support
+endif; // End commentpress_buddypress_support
 
-// add an action for the above (BuddyPress hooks this to after_setup_theme with priority 100)
+// Add an action for the above (BuddyPress hooks this to after_setup_theme with priority 100).
 add_action( 'bp_after_setup_theme', 'commentpress_buddypress_support' );
 
 
@@ -333,23 +335,23 @@ if ( ! function_exists( 'commentpress_bp_enqueue_styles' ) ):
  */
 function commentpress_bp_enqueue_styles() {
 
-	// kick out on admin
+	// Kick out on admin.
 	if ( is_admin() ) return;
 
-	// check for dev
+	// Check for dev.
 	$dev = commentpress_minified();
 
-	// add our own BuddyPress css
+	// Add our own BuddyPress CSS.
 	wp_enqueue_style(
 		'cp_buddypress_css',
 		get_template_directory_uri() . '/assets/css/bp-overrides' . $dev . '.css',
 		array( 'cp_screen_css' ),
-		COMMENTPRESS_VERSION, // version
-		'all' // media
+		COMMENTPRESS_VERSION, // Version.
+		'all' // Media.
 	);
 
 }
-endif; // commentpress_bp_enqueue_styles
+endif; // Commentpress_bp_enqueue_styles
 
 
 
@@ -361,21 +363,21 @@ if ( ! function_exists( 'commentpress_enqueue_wp_fee_js' ) ):
  */
 function commentpress_enqueue_wp_fee_js() {
 
-	// check for dev
+	// Check for dev.
 	$dev = commentpress_minified();
 
-	// enqueue support for WP FEE
+	// Enqueue support for WP FEE.
 	wp_enqueue_script(
 		'cp_wp_fee_js',
 		get_template_directory_uri() . '/assets/js/wp_fee' . $dev . '.js',
-		array( 'cp_common_js' ), // deps
-		COMMENTPRESS_VERSION // version
+		array( 'cp_common_js' ), // Dependencies.
+		COMMENTPRESS_VERSION // Version.
 	);
 
 }
-endif; // commentpress_enqueue_wp_fee_js
+endif; // End commentpress_enqueue_wp_fee_js
 
-// add an action to include WP FEE script if detected
+// Add an action to include WP FEE script if detected.
 add_action( 'commentpress_editor_include_javascript', 'commentpress_enqueue_wp_fee_js' );
 
 
@@ -394,7 +396,7 @@ function commentpress_background() {
 	// A default has to be specified in style.css. It will not be printed here.
 	$color = get_theme_mod( 'background_color' );
 
-	// bail if we don't have one
+	// Bail if we don't have one.
 	if ( ! $color ) return;
 
 	$style = $color ? "background-color: #$color;" : '';
@@ -415,7 +417,7 @@ function commentpress_background() {
 	';
 
 }
-endif; // commentpress_background
+endif; // End commentpress_background
 
 
 
@@ -427,50 +429,50 @@ if ( ! function_exists( 'commentpress_header' ) ):
  */
 function commentpress_header() {
 
-	// access plugin
+	// Access plugin.
 	global $commentpress_core;
 
-	// init with same colour as theme stylesheets and default in class_commentpress_db.php
+	// Init with same colour as theme stylesheets and default in class_commentpress_db.php.
 	$bg_colour = '2c2622';
 
-	// override if we have the plugin enabled
+	// Override if we have the plugin enabled.
 	if ( is_object( $commentpress_core ) ) {
 		$bg_colour = $commentpress_core->db->option_get_header_bg();
 	}
 
-	// allow overrides
+	// Allow overrides.
 	$bg_colour = apply_filters( 'cp_default_header_bgcolor', $bg_colour );
 
-	// init background-image
+	// Init background-image.
 	$bg_image = '';
 
-	// get header image
+	// Get header image.
 	$header_image = get_header_image();
 
-	// do we have a background-image?
+	// Do we have a background-image?
 	if ( $header_image ) {
 		$bg_image = 'background-image: url("' . $header_image . '");';
 	}
 
-	// get custom text colour
-	// note: this does NOT retrieve the default if not manually set in the Theme Customizer in WP3.4
+	// Get custom text colour.
+	// Note: this does NOT retrieve the default if not manually set in the Theme Customizer in WP3.4
 	$text_color = get_header_textcolor();
 
 	// WP3.4 seems to behave differently.
 	global $wp_version;
 	if ( version_compare( $wp_version, '3.4', '>=' ) ) {
 
-		// if blank, we're hiding the title
+		// If blank, we're hiding the title.
 		if ( $text_color == 'blank' ) {
 			$css = 'text-indent: -9999px;';
 		} else {
 
-			// if empty, we need to use default
+			// If empty, we need to use default.
 			if ( $text_color == '' ) {
 				$css = 'color: #' . HEADER_TEXTCOLOR . ';';
 			} else {
 
-				// use the custom one. I know this amounts to the same thing.
+				// Use the custom one. I know this amounts to the same thing.
 				$css = 'color: #' . $text_color . ';';
 			}
 
@@ -478,7 +480,7 @@ function commentpress_header() {
 
 	} else {
 
-		// use previous logic
+		// Use previous logic.
 		if ( $text_color == 'blank' OR $text_color == '' ) {
 			$css = 'text-indent: -9999px;';
 		} else {
@@ -487,7 +489,7 @@ function commentpress_header() {
 
 	}
 
-	// build inline styles
+	// Build inline styles.
 	echo '
 <style type="text/css">
 
@@ -518,7 +520,7 @@ function commentpress_header() {
 	';
 
 }
-endif; // commentpress_header
+endif; // End commentpress_header
 
 
 
@@ -533,41 +535,41 @@ if ( ! function_exists( 'commentpress_page_navigation' ) ):
  */
 function commentpress_page_navigation( $with_comments = false ) {
 
-	// declare access to globals
+	// Declare access to globals.
 	global $commentpress_core;
 
-	// bail if the plugin is not active
+	// Bail if the plugin is not active.
 	if ( ! is_object( $commentpress_core ) ) return;
 
-	// init formatting
+	// Init formatting.
 	$before_next = '<li class="alignright">';
 	$after_next = ' </li>';
 	$before_prev = '<li class="alignleft">';
 	$after_prev = '</li>';
 
-	// init
+	// Init.
 	$next_page_html = '';
 
-	// get next page
+	// Get next page.
 	$next_page = $commentpress_core->nav->get_next_page( $with_comments );
 
-	// did we get a next page?
+	// Did we get a next page?
 	if ( is_object( $next_page ) ) {
 
-		// init title
+		// Init title.
 		$img = '';
 		$title = __( 'Next page', 'commentpress-core' ); //htmlentities( $next_page->post_title );
 
-		// if we wanted pages with comments
+		// If we wanted pages with comments.
 		if ( $with_comments ) {
 
-			// set title
+			// Set title.
 			$title = __( 'Next page with comments', 'commentpress-core' );
 			$img = '<img src="' . get_template_directory_uri() . '/assets/images/next.png" />';
 
 		}
 
-		// define list item
+		// Define list item.
 		$next_page_html = $before_next .
 						  $img .
 						  '<a href="' . get_permalink( $next_page->ID ) . '" class="next_page" title="' . esc_attr( $title ) . '">' . $title . '</a>' .
@@ -575,29 +577,29 @@ function commentpress_page_navigation( $with_comments = false ) {
 
 	}
 
-	// init
+	// Init.
 	$prev_page_html = '';
 
-	// get next page
+	// Get next page.
 	$prev_page = $commentpress_core->nav->get_previous_page( $with_comments );
 
-	// did we get a next page?
+	// Did we get a next page?
 	if ( is_object( $prev_page ) ) {
 
-		// init title
+		// Init title.
 		$img = '';
 		$title = __( 'Previous page', 'commentpress-core' ); //htmlentities( $prev_page->post_title );
 
-		// if we wanted pages with comments
+		// If we wanted pages with comments.
 		if ( $with_comments ) {
 
-			// set title
+			// Set title.
 			$title = __( 'Previous page with comments', 'commentpress-core' );
 			$img = '<img src="' . get_template_directory_uri() . '/assets/images/prev.png" />';
 
 		}
 
-		// define list item
+		// Define list item.
 		$prev_page_html = $before_prev .
 						  $img .
 						  '<a href="' . get_permalink( $prev_page->ID ) . '" class="previous_page" title="' . esc_attr( $title ) . '">' . $title . '</a>' .
@@ -605,13 +607,13 @@ function commentpress_page_navigation( $with_comments = false ) {
 
 	}
 
-	// init return
+	// Init return.
 	$nav_list = '';
 
-	// did we get either?
+	// Did we get either?
 	if ( $next_page_html != '' OR $prev_page_html != '' ) {
 
-		// construct nav list items
+		// Construct nav list items.
 		$nav_list = $prev_page_html . "\n" . $next_page_html . "\n";
 
 	}
@@ -620,7 +622,7 @@ function commentpress_page_navigation( $with_comments = false ) {
 	return $nav_list;
 
 }
-endif; // commentpress_page_navigation
+endif; // End commentpress_page_navigation
 
 
 
@@ -635,13 +637,13 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ):
  */
 function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 
-	// declare access to globals
+	// Declare access to globals.
 	global $commentpress_core, $cp_comment_output;
 
-	// init output
+	// Init output.
 	$html = '';
 
-	// get all approved comments
+	// Get all approved comments.
 	$all_comments = get_comments( array(
 		'status' => 'approve',
 		'orderby' => 'comment_post_ID,comment_date',
@@ -649,20 +651,20 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 		'post_type' => $page_or_post,
 	) );
 
-	// kick out if none
+	// Kick out if none.
 	if ( count( $all_comments ) == 0 ) return $html;
 
-	// build list of posts to which they are attached
+	// Build list of posts to which they are attached.
 	$posts_with = array();
 	$post_comment_counts = array();
 	foreach( $all_comments AS $comment ) {
 
-		// add to posts with comments array
+		// Add to posts with comments array.
 		if ( !in_array( $comment->comment_post_ID, $posts_with ) ) {
 			$posts_with[] = $comment->comment_post_ID;
 		}
 
-		// increment counter
+		// Increment counter.
 		if ( !isset( $post_comment_counts[$comment->comment_post_ID] ) ) {
 			$post_comment_counts[$comment->comment_post_ID] = 1;
 		} else {
@@ -671,10 +673,10 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 
 	}
 
-	// kick out if none
+	// Kick out if none.
 	if ( count( $posts_with ) == 0 ) return $html;
 
-	// get those posts
+	// Get those posts.
 	$posts = get_posts( array(
 		'orderby' => 'comment_count',
 		'order' => 'DESC',
@@ -682,42 +684,42 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 		'include' => $posts_with,
 	) );
 
-	// kick out if none
+	// Kick out if none.
 	if ( count( $posts ) == 0 ) return $html;
 
-	// open ul
+	// Open ul.
 	$html .= '<ul class="all_comments_listing">' . "\n\n";
 
 	foreach( $posts AS $post ) {
 
-		// open li
+		// Open li.
 		$html .= '<li class="page_li"><!-- page li -->' . "\n\n";
 
-		// define comment count
+		// Define comment count.
 		$comment_count_text = sprintf(
 			_n( '<span class="cp_comment_count">%d</span> comment', '<span class="cp_comment_count">%d</span> comments', $post_comment_counts[$post->ID], 'commentpress-core' ),
 			$post_comment_counts[$post->ID]
 		);
 
-		// show it
+		// Show it.
 		$html .= '<h4>' . esc_html( $post->post_title ) . ' <span>(' . $comment_count_text . ')</span></h4>' . "\n\n";
 
-		// open comments div
+		// Open comments div.
 		$html .= '<div class="item_body">' . "\n\n";
 
-		// open ul
+		// Open ul.
 		$html .= '<ul class="item_ul">' . "\n\n";
 
-		// open li
+		// Open li.
 		$html .= '<li class="item_li"><!-- item li -->' . "\n\n";
 
-		// check for password-protected
+		// Check for password-protected.
 		if ( post_password_required( $post->ID ) ) {
 
-			// construct notice
+			// Construct notice.
 			$comment_body = '<div class="comment-content">' . __( 'Password protected', 'commentpress-core' ) . '</div>' . "\n";
 
-			// add notice
+			// Add notice.
 			$html .= '<div class="comment_wrapper">' . "\n" . $comment_body . '</div>' . "\n\n";
 
 		} else {
@@ -726,23 +728,23 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 
 				if ( $comment->comment_post_ID == $post->ID ) {
 
-					// show the comment
+					// Show the comment.
 					$html .= commentpress_format_comment( $comment );
 
 					/*
-					// get comment children
+					// Get comment children.
 					$children = commentpress_get_children( $comment, $page_or_post );
 
-					// do we have any?
+					// Do we have any?
 					if( count( $children ) > 0 ) {
 
-						// recurse
+						// Recurse.
 						commentpress_get_comments( $children, $page_or_post );
 
-						// show them
+						// Show them.
 						$html .= $cp_comment_output;
 
-						// clear global comment output
+						// Clear global comment output.
 						$cp_comment_output = '';
 
 					}
@@ -754,28 +756,28 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 
 		}
 
-		// close li
+		// Close li.
 		$html .= '</li><!-- /item li -->' . "\n\n";
 
-		// close ul
+		// Close ul.
 		$html .= '</ul>' . "\n\n";
 
-		// close item div
+		// Close item div.
 		$html .= '</div><!-- /item_body -->' . "\n\n";
 
-		// close li
+		// Close li.
 		$html .= '</li><!-- /page li -->' . "\n\n\n\n";
 
 	}
 
-	// close ul
+	// Close ul.
 	$html .= '</ul><!-- /all_comments_listing -->' . "\n\n";
 
 	// --<
 	return $html;
 
 }
-endif; // commentpress_get_all_comments_content
+endif; // End commentpress_get_all_comments_content
 
 
 
@@ -789,72 +791,72 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ):
  */
 function commentpress_get_all_comments_page_content() {
 
-	// allow oEmbed in comments
+	// Allow oEmbed in comments.
 	global $wp_embed;
 	if ( $wp_embed instanceof WP_Embed ) {
 		add_filter( 'comment_text', array( $wp_embed, 'autoembed' ), 1 );
 	}
 
-	// declare access to globals
+	// Declare access to globals.
 	global $commentpress_core;
 
-	// set default
+	// Set default.
 	$page_title = apply_filters(
 		'cp_page_all_comments_title',
 		__( 'All Comments', 'commentpress-core' )
 	);
 
-	// set title
+	// Set title.
 	$page_content = '<h2 class="post_title">' . $page_title . '</h2>' . "\n\n";
 
-	// get page or post
+	// Get page or post.
 	$page_or_post = $commentpress_core->get_list_option();
 
-	// set default
+	// Set default.
 	$blog_title = apply_filters(
 		'cp_page_all_comments_blog_title',
 		__( 'Comments on the Blog', 'commentpress-core' )
 	);
 
-	// set default
+	// Set default.
 	$book_title = apply_filters(
 		'cp_page_all_comments_book_title',
 		__( 'Comments on the Pages', 'commentpress-core' )
 	);
 
-	// get title
+	// Get title.
 	$title = ( $page_or_post == 'page' ) ? $book_title : $blog_title;
 
-	// get data
+	// Get data.
 	$data = commentpress_get_all_comments_content( $page_or_post );
 
-	// did we get any?
+	// Did we get any?
 	if ( $data != '' ) {
 
-		// set title
+		// Set title.
 		$page_content .= '<h3 class="comments_hl">' . $title . '</h3>' . "\n\n";
 
-		// set data
+		// Set data.
 		$page_content .= $data . "\n\n";
 
 	}
 
-	// get data for other page type
+	// Get data for other page type.
 	$other_type = ( $page_or_post == 'page' ) ? 'post': 'page';
 
-	// get title
+	// Get title.
 	$title = ( $page_or_post == 'page' ) ? $blog_title : $book_title;
 
-	// get data
+	// Get data.
 	$data = commentpress_get_all_comments_content( $other_type );
 
-	// did we get any?
+	// Did we get any?
 	if ( $data != '' ) {
 
-		// set title
+		// Set title.
 		$page_content .= '<h3 class="comments_hl">' . $title . '</h3>' . "\n\n";
 
-		// set data
+		// Set data.
 		$page_content .= $data . "\n\n";
 
 	}
@@ -863,7 +865,7 @@ function commentpress_get_all_comments_page_content() {
 	return $page_content;
 
 }
-endif; // commentpress_get_all_comments_page_content
+endif; // End commentpress_get_all_comments_page_content
 
 
 
@@ -878,39 +880,39 @@ if ( ! function_exists( 'commentpress_add_loginout_id' ) ):
  */
 function commentpress_add_loginout_id( $link ) {
 
-	// site admin link?
+	// Site admin link?
 	if ( false !== strstr( $link, admin_url() ) ) {
 
-		// site admin
+		// Site admin.
 		$id = 'btn_site_admin';
 
 	} else {
 
-		// if logged in
+		// If logged in.
 		if ( is_user_logged_in() ) {
 
-			// logout
+			// Logout.
 			$id = 'btn_logout';
 
 		} else {
 
-			// login
+			// Login.
 			$id = 'btn_login';
 
 		}
 
 	}
 
-	// add css
+	// Add CSS.
 	$link = str_replace( '<a ', '<a id="' . $id . '" ', $link );
 
 	// --<
 	return $link;
 
 }
-endif; // commentpress_add_loginout_id
+endif; // End commentpress_add_loginout_id
 
-// add filters for WordPress admin links
+// Add filters for WordPress admin links.
 add_filter( 'loginout', 'commentpress_add_link_css' );
 add_filter( 'loginout', 'commentpress_add_loginout_id' );
 add_filter( 'register', 'commentpress_add_loginout_id' );
@@ -928,7 +930,7 @@ if ( ! function_exists( 'commentpress_convert_link_to_button' ) ):
  */
 function commentpress_convert_link_to_button( $link ) {
 
-	// add css
+	// Add CSS.
 	$link = str_replace( 'class="mark-unread', 'class="button mark-unread', $link );
 	$link = str_replace( 'class="mark-read', 'class="button mark-read', $link );
 	$link = str_replace( 'class="delete', 'class="button delete', $link );
@@ -937,9 +939,9 @@ function commentpress_convert_link_to_button( $link ) {
 	return $link;
 
 }
-endif; // commentpress_convert_link_to_button
+endif; // End commentpress_convert_link_to_button
 
-// add filters for the above
+// Add filters for the above.
 add_filter( 'bp_get_the_notification_mark_unread_link', 'commentpress_convert_link_to_button' );
 add_filter( 'bp_get_the_notification_mark_read_link', 'commentpress_convert_link_to_button' );
 add_filter( 'bp_get_the_notification_delete_link', 'commentpress_convert_link_to_button' );
@@ -954,13 +956,13 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ):
  */
 function commentpress_get_feature_image() {
 
-	// access post
+	// Access post.
 	global $post;
 
-	// do we have a featured image?
+	// Do we have a featured image?
 	if ( commentpress_has_feature_image() ) {
 
-		// show it
+		// Show it.
 		echo '<div class="cp_feature_image">';
 
 		/**
@@ -983,23 +985,23 @@ function commentpress_get_feature_image() {
 
 				<?php
 
-				// when pulling post in via AJAX, is_page() isn't available, so
-				// inspect the post type as well
+				// When pulling post in via AJAX, is_page() isn't available, so
+				// inspect the post type as well.
 				if ( is_page() OR $post->post_type == 'page' ) {
 
 				?>
 
 					<?php
 
-					// default to hidden
+					// Default to hidden.
 					$cp_title_visibility = ' style="display: none;"';
 
-					// override if we've elected to show the title
+					// Override if we've elected to show the title.
 					if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
 						$cp_title_visibility = '';
 					}
 
-					// construct title
+					// Construct title.
 					$title = '<h2 class="post_title page_title"' . $cp_title_visibility . '>' .
 								'<a href="' . get_permalink() . '">' . get_the_title() . '</a>' .
 							 '</h2>';
@@ -1014,10 +1016,10 @@ function commentpress_get_feature_image() {
 					 */
 					echo apply_filters( 'commentpress_get_feature_image_title', $title, $post );
 
-					// default to hidden
+					// Default to hidden.
 					$cp_meta_visibility = ' style="display: none;"';
 
-					// override if we've elected to show the meta
+					// Override if we've elected to show the meta.
 					if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
 						$cp_meta_visibility = '';
 					}
@@ -1029,7 +1031,7 @@ function commentpress_get_feature_image() {
 
 				<?php } else {
 
-					// construct title
+					// Construct title.
 					$title = '<h2 class="post_title">' .
 								'<a href="' . get_permalink() . '">' . get_the_title() . '</a>' .
 							 '</h2>';
@@ -1061,7 +1063,7 @@ function commentpress_get_feature_image() {
 	}
 
 }
-endif; // commentpress_get_feature_image
+endif; // End commentpress_get_feature_image
 
 
 
@@ -1076,10 +1078,10 @@ endif; // commentpress_get_feature_image
  */
 function commentpress_has_feature_image() {
 
-	// init return
+	// Init return.
 	$has_feature_image = false;
 
-	// replacement check
+	// Replacement check.
 	if ( '' != get_the_post_thumbnail() ) {
 		$has_feature_image = true;
 	}
@@ -1106,7 +1108,7 @@ function commentpress_has_feature_image() {
  */
 function commentpress_register_widget_areas() {
 
-	// define an area where a widget may be placed
+	// Define an area where a widget may be placed.
 	register_sidebar( array(
 		'name' => __( 'CommentPress Footer', 'commentpress-core' ),
 		'id' => 'cp-license-8',
@@ -1117,7 +1119,7 @@ function commentpress_register_widget_areas() {
 		'after_title' => '</h3>',
 	) );
 
-	// define an area where a widget may be placed
+	// Define an area where a widget may be placed.
 	register_sidebar( array(
 		'name' => __( 'Navigation Top', 'commentpress-core' ),
 		'id' => 'cp-nav-top',
@@ -1128,7 +1130,7 @@ function commentpress_register_widget_areas() {
 		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
 	) );
 
-	// define an area where a widget may be placed
+	// Define an area where a widget may be placed.
 	register_sidebar( array(
 		'name' => __( 'Navigation Bottom', 'commentpress-core' ),
 		'id' => 'cp-nav-bottom',
@@ -1139,7 +1141,7 @@ function commentpress_register_widget_areas() {
 		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
 	) );
 
-	// define an area where a widget may be placed
+	// Define an area where a widget may be placed.
 	register_sidebar( array(
 		'name' => __( 'Activity Top', 'commentpress-core' ),
 		'id' => 'cp-activity-top',
@@ -1150,7 +1152,7 @@ function commentpress_register_widget_areas() {
 		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
 	) );
 
-	// define an area where a widget may be placed
+	// Define an area where a widget may be placed.
 	register_sidebar( array(
 		'name' => __( 'Activity Bottom', 'commentpress-core' ),
 		'id' => 'cp-activity-bottom',

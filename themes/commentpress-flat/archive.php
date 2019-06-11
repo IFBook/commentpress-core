@@ -18,13 +18,17 @@
 
 <?php
 
-// first try to locate using WP method
+/**
+ * Try to locate template using WP method but allow overrides.
+ *
+ * @since 3.4
+ */
 $cp_page_navigation = apply_filters(
 	'cp_template_page_navigation',
 	locate_template( 'assets/templates/page_navigation.php' )
 );
 
-// load it if we find it
+// Load it if we find it.
 if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 ?>
@@ -64,10 +68,10 @@ if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 			<?php
 
-			// default to hidden
+			// Default to hidden.
 			$cp_meta_visibility = ' style="display: none;"';
 
-			// override if we've elected to show the meta
+			// Override if we've elected to show the meta.
 			if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
 				$cp_meta_visibility = '';
 			}
@@ -108,7 +112,7 @@ if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 <div class="page_nav_lower">
 <?php
 
-// include page_navigation again
+// Include page_navigation again.
 if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 ?>

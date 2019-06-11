@@ -18,13 +18,20 @@
 
 <?php
 
-// first try to locate using WP method
+/**
+ * Try to locate template using WP method.
+ *
+ * @since 3.4
+ *
+ * @param str The existing path returned by WordPress.
+ * @return str The modified path.
+ */
 $cp_page_navigation = apply_filters(
 	'cp_template_page_navigation',
 	locate_template( 'assets/templates/page_navigation.php' )
 );
 
-// load it if we find it
+// Load it if we find it.
 if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 ?>
@@ -43,29 +50,29 @@ if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 	global $commentpres_obj;
 
-	// init
+	// Init.
 	$_special_pages = array();
 
-	// if we have the plugin enabled
+	// If we have the plugin enabled.
 	if ( is_object( $commentpress_core ) ) {
 
-		// get special pages
+		// Get special pages.
 		$special_pages = $commentpress_core->db->option_get( 'cp_special_pages' );
 
-		// do we have a special page array?
+		// Do we have a special page array?
 		if ( is_array( $special_pages ) AND count( $special_pages ) > 0 ) {
 
-			// override
+			// Override.
 			$_special_pages = $special_pages;
 
 		}
 
 	}
 
-	// loop
+	// Loop.
 	while (have_posts()) : the_post();
 
-	// exclude if CommentPress Core Special Page
+	// Exclude if CommentPress Core Special Page.
 	if ( !in_array( get_the_ID(), $_special_pages ) ) {
 
 	?>
@@ -76,10 +83,10 @@ if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 			<?php
 
-			// default to hidden
+			// Default to hidden.
 			$cp_meta_visibility = ' style="display: none;"';
 
-			// override if we've elected to show the meta
+			// Override if we've elected to show the meta.
 			if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
 				$cp_meta_visibility = '';
 			}
@@ -97,9 +104,9 @@ if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 	<?php
 
-	} // end check for special page
+	} // End check for special page.
 
-	endwhile; // end loop
+	endwhile; // End loop.
 
 	?>
 
@@ -126,7 +133,7 @@ if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 <div class="page_nav_lower">
 <?php
 
-// include page_navigation again
+// Include page_navigation again.
 if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 ?>

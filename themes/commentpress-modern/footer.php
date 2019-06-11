@@ -13,7 +13,7 @@
 
 	<?php if ( has_nav_menu( 'footer' ) ) : ?>
 		<?php
-		// show footer menu if assigned
+		// Show footer menu if assigned.
 		wp_nav_menu( array(
 			'theme_location' => 'footer',
 			'container_class' => 'commentpress-footer-nav-menu',
@@ -29,7 +29,7 @@
 		<p><?php echo sprintf(
 			__( 'Website content &copy; %1$s %2$s. All rights reserved.', 'commentpress-core' ),
 			'<a href="' . home_url() . '">' . get_bloginfo( 'name' ) . '</a>',
-			date('Y')
+			date( 'Y' )
 		); ?></p>
 	<?php endif; ?>
 

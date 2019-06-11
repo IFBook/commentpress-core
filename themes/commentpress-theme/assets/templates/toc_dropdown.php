@@ -16,13 +16,13 @@
 
 <?php
 
-// if we have the plugin enabled
+// If we have the plugin enabled.
 if ( is_object( $commentpress_core ) ) {
 
 	?><ul id="toc_dd_list">
 	<?php
 
-	// show the TOC
+	// Show the TOC.
 	echo $commentpress_core->get_toc_list();
 
 	?></ul>

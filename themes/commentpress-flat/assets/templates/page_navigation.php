@@ -10,19 +10,19 @@ global $commentpress_core;
 
 <?php
 
-// set default link names
+// Set default link names.
 $previous_title = apply_filters( 'cp_nav_previous_link_title', __( 'Older Entries', 'commentpress-core' ) );
 $next_title = apply_filters( 'cp_nav_next_link_title', __( 'Newer Entries', 'commentpress-core' ) );
 
 
 
-// is it a page?
+// Is it a page?
 if ( is_page() ) {
 
-	// get our custom page navigation
+	// Get our custom page navigation.
 	$cp_page_nav = commentpress_page_navigation();
 
-	// if we get any
+	// If we get any.
 	if ( $cp_page_nav != '' ) {
 
 		?><ul>
@@ -36,7 +36,7 @@ if ( is_page() ) {
 
 
 
-// is it a post?
+// Is it a post?
 elseif ( is_single() ) {
 
 	?><ul class="blog_navigation">
@@ -50,13 +50,13 @@ elseif ( is_single() ) {
 
 
 
-// is this the posts archive or a CPT archive?
+// Is this the posts archive or a CPT archive?
 elseif ( is_home() OR is_post_type_archive() ) {
 
 	$nl = get_next_posts_link( $previous_title );
 	$pl = get_previous_posts_link( $next_title );
 
-	// did we get either?
+	// Did we get either?
 	if ( $nl != '' OR $pl != '' ) { ?>
 
 	<ul class="blog_navigation">
@@ -72,13 +72,13 @@ elseif ( is_home() OR is_post_type_archive() ) {
 
 
 
-// archives?
+// Archives?
 elseif ( is_day() || is_month() || is_year() ) {
 
 	$nl = get_next_posts_link( $previous_title );
 	$pl = get_previous_posts_link( $next_title );
 
-	// did we get either?
+	// Did we get either?
 	if ( $nl != '' OR $pl != '' ) { ?>
 
 	<ul class="blog_navigation">
@@ -94,13 +94,13 @@ elseif ( is_day() || is_month() || is_year() ) {
 
 
 
-// search?
+// Search?
 elseif ( is_search() ) {
 
 	$nl = get_next_posts_link( __( 'More Results', 'commentpress-core' ) );
 	$pl = get_previous_posts_link( __( 'Previous Results', 'commentpress-core' ) );
 
-	// did we get either?
+	// Did we get either?
 	if ( $nl != '' OR $pl != '' ) { ?>
 
 	<ul class="blog_navigation">
@@ -116,13 +116,13 @@ elseif ( is_search() ) {
 
 
 
-// category archives, including qmt
+// Category archives, including qmt.
 elseif ( is_category() ) {
 
 	$nl = get_next_posts_link( __( 'More Results', 'commentpress-core' ) );
 	$pl = get_previous_posts_link( __( 'Previous Results', 'commentpress-core' ) );
 
-	// did we get either?
+	// Did we get either?
 	if ( $nl != '' OR $pl != '' ) { ?>
 
 	<ul class="blog_navigation">
@@ -138,13 +138,13 @@ elseif ( is_category() ) {
 
 
 
-// tag archives or custom taxonomy archives
+// Tag archives or custom taxonomy archives.
 elseif ( is_tag() OR is_tax() ) {
 
 	$nl = get_next_posts_link( __( 'More Results', 'commentpress-core' ) );
 	$pl = get_previous_posts_link( __( 'Previous Results', 'commentpress-core' ) );
 
-	// did we get either?
+	// Did we get either?
 	if ( $nl != '' OR $pl != '' ) { ?>
 
 	<ul class="blog_navigation">

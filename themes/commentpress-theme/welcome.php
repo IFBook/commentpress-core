@@ -36,10 +36,10 @@ Template Name: Welcome
 
 	<?php
 
-	// default to hidden
+	// Default to hidden.
 	$cp_title_visibility = ' style="display: none;"';
 
-	// override if we've elected to show the title
+	// Override if we've elected to show the title.
 	if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
 		$cp_title_visibility = '';
 	}
@@ -51,10 +51,10 @@ Template Name: Welcome
 
 	<?php
 
-	// default to hidden
+	// Default to hidden.
 	$cp_meta_visibility = ' style="display: none;"';
 
-	// override if we've elected to show the meta
+	// Override if we've elected to show the meta.
 	if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
 		$cp_meta_visibility = '';
 	}

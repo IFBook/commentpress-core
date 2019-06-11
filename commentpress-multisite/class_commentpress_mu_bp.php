@@ -83,13 +83,13 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function __construct( $parent_obj = null ) {
 
-		// store reference to "parent" (calling obj, not OOP parent)
+		// Store reference to "parent" (calling obj, not OOP parent).
 		$this->parent_obj = $parent_obj;
 
-		// store reference to database wrapper (child of calling obj)
+		// Store reference to database wrapper (child of calling obj).
 		$this->db = $this->parent_obj->db;
 
-		// init
+		// Init.
 		$this->_init();
 
 	}
@@ -137,7 +137,7 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function add_frontend_styles() {
 
-		// dequeue BP Tempate Pack CSS, even if queued
+		// Dequeue BP Tempate Pack CSS, even if queued.
 		wp_dequeue_style( 'bp' );
 
 	}
@@ -151,7 +151,7 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function allow_html_content() {
 
-		// using publish_posts for now - means author+
+		// Using publish_posts for now - means author+.
 		if ( current_user_can( 'publish_posts' ) ) {
 
 			/*
@@ -179,7 +179,7 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function activity_allowed_tags( $activity_allowedtags ) {
 
-		// pretty pointless not to allow p tags when we encourage the use of TinyMCE!
+		// Pretty pointless not to allow p tags when we encourage the use of TinyMCE!
 		$activity_allowedtags['p'] = array();
 
 		// --<
@@ -204,13 +204,13 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function enable_comment_editing( $caps, $cap, $user_id, $args ) {
 
-		// only apply this to queries for edit_comment cap
+		// Only apply this to queries for edit_comment cap.
 		if ( 'edit_comment' == $cap ) {
 
-			// get comment
+			// Get comment.
 			$comment = get_comment( $args[0] );
 
-			// is the user the same as the comment author?
+			// Is the user the same as the comment author?
 			if ( $comment->user_id == $user_id ) {
 
 				//$caps[] = 'moderate_comments';
@@ -238,22 +238,22 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function pre_comment_approved( $approved, $commentdata ) {
 
-		// do we have groupblogs?
+		// Do we have groupblogs?
 		if ( function_exists( 'get_groupblog_group_id' ) ) {
 
-			// get current blog ID
+			// Get current blog ID.
 			$blog_id = get_current_blog_id();
 
-			// check if this blog is a group blog
+			// Check if this blog is a group blog.
 			$group_id = get_groupblog_group_id( $blog_id );
 
-			// when this blog is a groupblog
+			// When this blog is a groupblog.
 			if ( isset( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
-				// is this user a member?
+				// Is this user a member?
 				if ( groups_is_user_member( $commentdata['user_id'], $group_id ) ) {
 
-					// allow un-moderated commenting
+					// Allow un-moderated commenting.
 					return 1;
 
 				}
@@ -262,7 +262,7 @@ class Commentpress_Multisite_Buddypress {
 
 		}
 
-		// pass through
+		// Pass through.
 		return $approved;
 
 	}
@@ -270,7 +270,7 @@ class Commentpress_Multisite_Buddypress {
 
 
 	/*
-	// a nicer way?
+	// A nicer way?
 	add_action( 'preprocess_comment', 'my_check_comment', 1 );
 
 	public function my_check_comment( $commentdata ) {
@@ -311,10 +311,10 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function record_published_pages( $post_types ) {
 
-		// if not in the array already
+		// If not in the array already.
 		if ( ! in_array( 'page', $post_types ) ) {
 
-			// add page post_type
+			// Add page post_type.
 			$post_types[] = 'page';
 
 		}
@@ -333,13 +333,13 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function register_comment_tracking_on_pages() {
 
-		// bail if Activity Component is not active
+		// Bail if Activity Component is not active.
 		if ( ! function_exists( 'bp_activity_set_post_type_tracking_args' ) ) return;
 
-		// amend "page" post type
+		// Amend "page" post type.
 		add_post_type_support( 'page', 'buddypress-activity' );
 
-		// define tracking args
+		// Define tracking args.
 		bp_activity_set_post_type_tracking_args( 'page', array(
 			'action_id' => 'new_page',
 			'bp_activity_admin_filter' => __( 'Published a new page', 'commentpress-core' ),
@@ -369,10 +369,10 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function record_comments_on_pages( $post_types ) {
 
-		// if not in the array already
+		// If not in the array already.
 		if ( ! in_array( 'page', $post_types ) ) {
 
-			// add page post_type
+			// Add page post_type.
 			$post_types[] = 'page';
 
 		}
@@ -398,26 +398,26 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function is_blog_public( $blog_public_option ) {
 
-		// do we have groupblogs?
+		// Do we have groupblogs?
 		if ( function_exists( 'get_groupblog_group_id' ) ) {
 
-			// get current blog ID
+			// Get current blog ID.
 			$blog_id = get_current_blog_id();
 
-			// check if this blog is a group blog
+			// Check if this blog is a group blog.
 			$group_id = get_groupblog_group_id( $blog_id );
 
-			// when this blog is a groupblog
+			// When this blog is a groupblog.
 			if ( isset( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
-				// always true - so that activities are registered
+				// Always true - so that activities are registered.
 				return 1;
 
 			}
 
 		}
 
-		// fallback
+		// Fallback.
 		return $blog_public_option;
 
 	}
@@ -437,16 +437,16 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function disable_blogforum_comments( $is_disabled ) {
 
-		// don't mess with admin
+		// Don't mess with admin.
 		if ( is_admin() ) return $is_disabled;
 
-		// get current blog ID
+		// Get current blog ID.
 		$blog_id = get_current_blog_id();
 
-		// if it's CommentPress Core-enabled, disable sync
+		// If it's CommentPress Core-enabled, disable sync.
 		if ( $this->db->is_commentpress( $blog_id ) ) return 1;
 
-		// pass through
+		// Pass through.
 		return $is_disabled;
 
 	}
@@ -465,71 +465,71 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function group_custom_comment_activity( $activity ) {
 
-		// only deal with comments
+		// Only deal with comments.
 		if ( ( $activity->type != 'new_blog_comment' ) ) return;
 
-		// init vars
+		// Init vars.
 		$is_groupblog = false;
 		$is_groupsite = false;
 		$is_working_paper = false;
 
-		// get groupblog status
+		// Get groupblog status.
 		$is_groupblog = $this->_is_commentpress_groupblog();
 
-		// if on a CommentPress Core-enabled groupblog
+		// If on a CommentPress Core-enabled groupblog.
 		if ( $is_groupblog ) {
 
-			// which blog?
+			// Which blog?
 			$blog_id = $activity->item_id;
 
-			// get the group ID
+			// Get the group ID.
 			$group_id = get_groupblog_group_id( $blog_id );
 
-			// kick out if not groupblog
+			// Kick out if not groupblog
 			if ( empty( $group_id ) ) return $activity;
 
-			// set activity type
+			// Set activity type.
 			$type = 'new_groupblog_comment';
 
 		} else {
 
-			// get group site status
+			// Get group site status.
 			$is_groupsite = $this->_is_commentpress_groupsite();
 
-			// if on a CommentPress Core-enabled group site
+			// If on a CommentPress Core-enabled group site.
 			if ( $is_groupsite ) {
 
-				// get group ID from POST
+				// Get group ID from POST.
 				global $bp_groupsites;
 				$group_id = $bp_groupsites->activity->get_group_id_from_comment_form();
 
-				// kick out if not a comment in a group
+				// Kick out if not a comment in a group.
 				if ( false === $group_id ) return $activity;
 
-				// set activity type
+				// Set activity type.
 				$type = 'new_groupsite_comment';
 
 			} else {
 
-				// do we have the function we need to call?
+				// Do we have the function we need to call?
 				if ( function_exists( 'bpwpapers_is_working_paper' ) ) {
 
-					// which blog?
+					// Which blog?
 					$blog_id = $activity->item_id;
 
-					// only on working papers
+					// Only on working papers.
 					if ( ! bpwpapers_is_working_paper( $blog_id ) ) return $activity;
 
-					// get the group ID for this blog
+					// Get the group ID for this blog.
 					$group_id = bpwpapers_get_group_by_blog_id( $blog_id );
 
-					// sanity check
+					// Sanity check.
 					if ( $group_id === false ) return $activity;
 
-					// set activity type
+					// Set activity type.
 					$type = 'new_working_paper_comment';
 
-					// working paper is active
+					// Working paper is active.
 					$is_working_paper = true;
 
 				}
@@ -538,13 +538,13 @@ class Commentpress_Multisite_Buddypress {
 
 		}
 
-		// sanity check
+		// Sanity check.
 		if ( ! $is_groupblog AND ! $is_groupsite AND ! $is_working_paper ) return $activity;
 
-		// okay, let's get the group object
+		// Okay, let's get the group object.
 		$group = groups_get_group( array( 'group_id' => $group_id ) );
 
-		// see if we already have the modified activity for this blog post
+		// See if we already have the modified activity for this blog post.
 		$id = bp_activity_get_activity_id( array(
 			'user_id' => $activity->user_id,
 			'type' => $type,
@@ -552,10 +552,10 @@ class Commentpress_Multisite_Buddypress {
 			'secondary_item_id' => $activity->secondary_item_id
 		) );
 
-		// if we don't find a modified item
+		// If we don't find a modified item.
 		if ( ! $id ) {
 
-			// see if we have an unmodified activity item
+			// See if we have an unmodified activity item.
 			$id = bp_activity_get_activity_id( array(
 				'user_id' => $activity->user_id,
 				'type' => $activity->type,
@@ -566,35 +566,35 @@ class Commentpress_Multisite_Buddypress {
 		}
 
 		// If we found an activity for this blog comment then overwrite that to avoid having
-		// multiple activities for every blog comment edit
+		// multiple activities for every blog comment edit.
 		if ( $id ) $activity->id = $id;
 
-		// get the comment
+		// Get the comment.
 		$comment = get_comment( $activity->secondary_item_id );
 
-		// get the post
+		// Get the post.
 		$post = get_post( $comment->comment_post_ID );
 
-		// was it a registered user?
+		// Was it a registered user?
 		if ($comment->user_id != '0') {
 
-			// get user details
+			// Get user details.
 			$user = get_userdata( $comment->user_id );
 
-			// construct user link
+			// Construct user link.
 			$user_link = bp_core_get_userlink( $activity->user_id );
 
 		} else {
 
-			// show anonymous user
+			// Show anonymous user.
 			$user_link = '<span class="anon-commenter">' . __( 'Anonymous', 'commentpress-core' ) . '</span>';
 
 		}
 
-		// if on a CommentPress Core-enabled groupblog
+		// If on a CommentPress Core-enabled groupblog.
 		if ( $is_groupblog ) {
 
-			// allow plugins to override the name of the activity item
+			// Allow plugins to override the name of the activity item.
 			$activity_name = apply_filters(
 				'cp_activity_post_name',
 				__( 'post', 'commentpress-core' )
@@ -602,10 +602,10 @@ class Commentpress_Multisite_Buddypress {
 
 		}
 
-		// if on a CommentPress Core-enabled group site
+		// If on a CommentPress Core-enabled group site.
 		if ( $is_groupsite ) {
 
-			// respect BP Group Sites filter for the name of the activity item
+			// Respect BP Group Sites filter for the name of the activity item.
 			$activity_name = apply_filters(
 				'bpgsites_activity_post_name',
 				__( 'post', 'commentpress-core' ),
@@ -614,10 +614,10 @@ class Commentpress_Multisite_Buddypress {
 
 		}
 
-		// if on a CommentPress Core-enabled working paper
+		// If on a CommentPress Core-enabled working paper.
 		if ( $is_working_paper ) {
 
-			// respect BP Working Papers filter for the name of the activity item
+			// Respect BP Working Papers filter for the name of the activity item.
 			$activity_name = apply_filters(
 				'bpwpapers_activity_post_name',
 				__( 'post', 'commentpress-core' ),
@@ -626,40 +626,40 @@ class Commentpress_Multisite_Buddypress {
 
 		}
 
-		// set key
+		// Set key.
 		$key = '_cp_comment_page';
 
-		// if the custom field has a value, we have a subpage comment
+		// If the custom field has a value, we have a subpage comment.
 		if ( get_comment_meta( $comment->comment_ID, $key, true ) != '' ) {
 
-			// get comment's page from meta
+			// Get comment's page from meta.
 			$page_num = get_comment_meta( $comment->comment_ID, $key, true );
 
-			// get the url for the comment
+			// Get the url for the comment.
 			$link = commentpress_get_post_multipage_url( $page_num, $post ) . '#comment-' . $comment->comment_ID;
 
-			// amend the primary link
+			// Amend the primary link.
 			$activity->primary_link = $link;
 
-			// init target link
+			// Init target link.
 			$target_post_link = '<a href="' . commentpress_get_post_multipage_url( $page_num, $post ) . '">' .
 									esc_html( $post->post_title ) .
 								'</a>';
 
 		} else {
 
-			// init target link
+			// Init target link.
 			$target_post_link = '<a href="' . get_permalink( $post->ID ) . '">' .
 									esc_html( $post->post_title ) .
 								'</a>';
 
 		}
 
-		// construct links
+		// Construct links.
 		$comment_link = '<a href="' . $activity->primary_link . '">' . __( 'comment', 'commentpress-core' ) . '</a>';
 		$group_link = '<a href="' . bp_get_group_permalink( $group ) . '">' . esc_html( $group->name ) . '</a>';
 
-		// Replace the necessary values to display in group activity stream
+		// Replace the necessary values to display in group activity stream.
 		$activity->action = sprintf(
 			__( '%1$s left a %2$s on a %3$s %4$s in the group %5$s:', 'commentpress-core' ),
 			$user_link,
@@ -669,10 +669,10 @@ class Commentpress_Multisite_Buddypress {
 			$group_link
 		);
 
-		// allow plugins to override this
+		// Allow plugins to override this.
 		$activity->action = apply_filters(
-			'commentpress_comment_activity_action', // hook
-			$activity->action, // default
+			'commentpress_comment_activity_action', // Hook.
+			$activity->action, // Default.
 			$activity,
 			$user_link,
 			$comment_link,
@@ -681,13 +681,13 @@ class Commentpress_Multisite_Buddypress {
 			$group_link
 		);
 
-		// apply group id
+		// Apply group id.
 		$activity->item_id = (int)$group_id;
 
-		// change to groups component
+		// Change to groups component.
 		$activity->component = 'groups';
 
-		// having marked all groupblogs as public, we need to hide activity from them if the group is private
+		// Having marked all groupblogs as public, we need to hide activity from them if the group is private
 		// or hidden, so they don't show up in sitewide activity feeds.
 		if ( 'public' != $group->status ) {
 			$activity->hide_sitewide = true;
@@ -695,12 +695,12 @@ class Commentpress_Multisite_Buddypress {
 			$activity->hide_sitewide = false;
 		}
 
-		// set unique type
+		// Set unique type
 		$activity->type = $type;
 
-		// note: BuddyPress seemingly runs content through wp_filter_kses (sad face)
+		// Note: BuddyPress seemingly runs content through wp_filter_kses. (sad face)
 
-		// prevent from firing again
+		// Prevent from firing again.
 		remove_action( 'bp_activity_before_save', array( $this, 'group_custom_comment_activity' ) );
 
 		// --<
@@ -720,17 +720,17 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function groupblog_custom_comment_meta( $activity ) {
 
-		// only deal with comments
+		// Only deal with comments.
 		if ( ( $activity->type != 'new_groupblog_comment' ) ) return $activity;
 
-		// only do this on CommentPress Core-enabled groupblogs
+		// Only do this on CommentPress Core-enabled groupblogs.
 		if ( ( false === $this->_is_commentpress_groupblog() ) ) return $activity;
 
-		// set a meta value for the blog type of the post
+		// Set a meta value for the blog type of the post.
 		$meta_value = $this->_get_groupblog_type();
 		$result = bp_activity_update_meta( $activity->id, 'groupblogtype', 'groupblogtype-' . $meta_value );
 
-		// prevent from firing again
+		// Prevent from firing again.
 		remove_action( 'bp_activity_after_save', array( $this, 'groupblog_custom_comment_meta' ) );
 
 		// --<
@@ -764,28 +764,28 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function groupblog_custom_post_activity( $activity, $args = array() ) {
 
-		// sanity check
+		// Sanity check.
 		if ( ! bp_is_active( 'groups' ) ) return $activity;
 
-		// only on new blog posts
+		// Only on new blog posts.
 		if ( ( $activity->type != 'new_blog_post' ) ) return $activity;
 
-		// only on CommentPress Core-enabled groupblogs
+		// Only on CommentPress Core-enabled groupblogs.
 		if ( ( false === $this->_is_commentpress_groupblog() ) ) return $activity;
 
-		// clarify data
+		// Clarify data.
 		$blog_id = $activity->item_id;
 		$post_id = $activity->secondary_item_id;
 		$post = get_post( $post_id );
 
-		// get group id
+		// Get group ID.
 		$group_id = get_groupblog_group_id( $blog_id );
 		if ( empty( $group_id ) ) return $activity;
 
-		// get group
+		// Get group.
 		$group = groups_get_group( array( 'group_id' => $group_id ) );
 
-		// see if we already have the modified activity for this blog post
+		// See if we already have the modified activity for this blog post.
 		$id = bp_activity_get_activity_id( array(
 			'user_id' => $activity->user_id,
 			'type' => 'new_groupblog_post',
@@ -793,10 +793,10 @@ class Commentpress_Multisite_Buddypress {
 			'secondary_item_id' => $activity->secondary_item_id
 		) );
 
-		// if we don't find a modified item
+		// If we don't find a modified item.
 		if ( ! $id ) {
 
-			// see if we have an unmodified activity item
+			// See if we have an unmodified activity item.
 			$id = bp_activity_get_activity_id( array(
 				'user_id' => $activity->user_id,
 				'type' => $activity->type,
@@ -807,65 +807,65 @@ class Commentpress_Multisite_Buddypress {
 		}
 
 		// If we found an activity for this blog post then overwrite that to avoid
-		// having multiple activities for every blog post edit
+		// having multiple activities for every blog post edit.
 		if ( $id ) {
 			$activity->id = $id;
 		}
 
-		// allow plugins to override the name of the activity item
+		// Allow plugins to override the name of the activity item.
 		$activity_name = apply_filters(
 			'cp_activity_post_name',
 			__( 'post', 'commentpress-core' )
 		);
 
-		// default to standard BuddyPress author
+		// Default to standard BuddyPress author.
 		$activity_author = bp_core_get_userlink( $post->post_author );
 
-		// compat with Co-Authors Plus
+		// Compat with Co-Authors Plus.
 		if ( function_exists( 'get_coauthors' ) ) {
 
-			// get multiple authors
+			// Get multiple authors.
 			$authors = get_coauthors();
 
-			// if we get some
+			// If we get some.
 			if ( ! empty( $authors ) ) {
 
-				// we only want to override if we have more than one
+				// We only want to override if we have more than one.
 				if ( count( $authors ) > 1 ) {
 
-					// use the Co-Authors format of "name, name, name and name"
+					// Use the Co-Authors format of "name, name, name and name".
 					$activity_author = '';
 
-					// init counter
+					// Init counter.
 					$n = 1;
 
-					// find out how many author we have
+					// Find out how many author we have.
 					$author_count = count( $authors );
 
-					// loop
+					// Loop.
 					foreach( $authors AS $author ) {
 
-						// default to comma
+						// Default to comma.
 						$sep = ', ';
 
-						// if we're on the penultimate
+						// If we're on the penultimate.
 						if ( $n == ($author_count - 1) ) {
 
-							// use ampersand
+							// Use ampersand.
 							$sep = __( ' &amp; ', 'commentpress-core' );
 
 						}
 
-						// if we're on the last, don't add
+						// If we're on the last, don't add.
 						if ( $n == $author_count ) { $sep = ''; }
 
-						// add name
+						// Add name.
 						$activity_author .= bp_core_get_userlink( $author->ID );
 
-						// and separator
+						// Add separator.
 						$activity_author .= $sep;
 
-						// increment
+						// Increment.
 						$n++;
 
 					}
@@ -876,10 +876,10 @@ class Commentpress_Multisite_Buddypress {
 
 		}
 
-		// if we're replacing an item, show different message
+		// If we're replacing an item, show different message.
 		if ( $id ) {
 
-			// replace the necessary values to display in group activity stream
+			// Replace the necessary values to display in group activity stream.
 			$activity->action = sprintf(
 				__( '%1$s updated a %2$s %3$s in the group %4$s:', 'commentpress-core' ),
 				$activity_author,
@@ -890,7 +890,7 @@ class Commentpress_Multisite_Buddypress {
 
 		} else {
 
-			// replace the necessary values to display in group activity stream
+			// Replace the necessary values to display in group activity stream.
 			$activity->action = sprintf(
 				__( '%1$s wrote a new %2$s %3$s in the group %4$s:', 'commentpress-core' ),
 				$activity_author,
@@ -904,7 +904,7 @@ class Commentpress_Multisite_Buddypress {
 		$activity->item_id = (int)$group_id;
 		$activity->component = 'groups';
 
-		// having marked all groupblogs as public, we need to hide activity from them if the group is private
+		// Having marked all groupblogs as public, we need to hide activity from them if the group is private
 		// or hidden, so they don't show up in sitewide activity feeds.
 		if ( 'public' != $group->status ) {
 			$activity->hide_sitewide = true;
@@ -912,13 +912,13 @@ class Commentpress_Multisite_Buddypress {
 			$activity->hide_sitewide = false;
 		}
 
-		// CMW: assume groupblog_post is intended
+		// CMW: assume groupblog_post is intended.
 		$activity->type = 'new_groupblog_post';
 
-		// prevent from firing again
+		// Prevent from firing again.
 		remove_action( 'bp_activity_before_save', array( $this, 'groupblog_custom_post_activity' ) );
 
-		// using this function outside BP's save routine requires us to manually save
+		// Using this function outside BP's save routine requires us to manually save.
 		if ( ! empty( $args['post'] ) ) {
 			$activity->save();
 		}
@@ -948,22 +948,22 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function transition_post_type_status( $new_status, $old_status, $post ) {
 
-		// only needed for >= BP 2.2
+		// Only needed for >= BP 2.2.
 		if ( ! function_exists( 'bp_activity_post_type_update' ) ) return;
 
-		// bail if not a blog post
+		// Bail if not a blog post.
 		if ( 'post' !== $post->post_type ) return;
 
-		// is this an edit?
+		// Is this an edit?
 		if ( $new_status === $old_status ) {
 
-			// an edit of an existing post should update the existing activity item
+			// An edit of an existing post should update the existing activity item.
 			if ( $new_status == 'publish' ) {
 
-				// get group ID
+				// Get group ID.
 				$group_id = get_groupblog_group_id( get_current_blog_id() );
 
-				// get existing activity ID
+				// Get existing activity ID.
 				$id = bp_activity_get_activity_id( array(
 					'component'         => 'groups',
 					'type'              => 'new_groupblog_post',
@@ -971,18 +971,18 @@ class Commentpress_Multisite_Buddypress {
 					'secondary_item_id' => $post->ID
 				) );
 
-				// bail if we don't have one
+				// Bail if we don't have one.
 				if ( empty( $id ) ) return;
 
-				// retrieve activity item and modify some properties
+				// Retrieve activity item and modify some properties.
 				$activity = new BP_Activity_Activity( $id );
 				$activity->content = $post->post_content;
 				$activity->date_recorded = bp_core_current_time();
 
-				// we currently have to fool `$this->groupblog_custom_post_activity()`
+				// We currently have to fool `$this->groupblog_custom_post_activity()`.
 				$activity->type = 'new_blog_post';
 
-				// pass activity to our edit function
+				// Pass activity to our edit function.
 				$this->groupblog_custom_post_activity( $activity, array(
 					'group_id' => $group_id,
 					'post'     => $post,
@@ -1006,13 +1006,13 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function groupblog_custom_post_meta( $activity ) {
 
-		// only on new blog posts
+		// Only on new blog posts.
 		if ( ( $activity->type != 'new_groupblog_post' ) ) return;
 
-		// only on CommentPress Core-enabled groupblogs
+		// Only on CommentPress Core-enabled groupblogs.
 		if ( ( false === $this->_is_commentpress_groupblog() ) ) return;
 
-		// set a meta value for the blog type of the post
+		// Set a meta value for the blog type of the post.
 		$meta_value = $this->_get_groupblog_type();
 		bp_activity_update_meta( $activity->id, 'groupblogtype', 'groupblogtype-' . $meta_value );
 
@@ -1033,19 +1033,19 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function group_has_commentpress_groupblog( $group_id = null ) {
 
-		// do we have groupblogs enabled?
+		// Do we have groupblogs enabled?
 		if ( function_exists( 'get_groupblog_group_id' ) ) {
 
-			// did we get a specific group passed in?
+			// Did we get a specific group passed in?
 			if ( is_null( $group_id ) ) {
 
-				// use BuddyPress API
+				// Use BuddyPress API.
 				$group_id = bp_get_current_group_id();
 
-				// unlikely, but if we don't get one
+				// Unlikely, but if we don't get one.
 				if ( empty( $group_id ) ) {
 
-					// try and get ID from BuddyPress
+					// Try and get ID from BuddyPress.
 					global $bp;
 
 					if ( isset( $bp->groups->current_group->id ) ) {
@@ -1056,18 +1056,18 @@ class Commentpress_Multisite_Buddypress {
 
 			}
 
-			// yes, is this blog a groupblog?
+			// Yes, is this blog a groupblog?
 			if ( ! empty( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
-				// is it CommentPress Core-enabled?
+				// Is it CommentPress Core-enabled?
 
-				// get group blogtype
+				// Get group blogtype.
 				$groupblog_type = groups_get_groupmeta( $group_id, 'groupblogtype' );
 
-				// did we get one?
+				// Did we get one?
 				if ( $groupblog_type ) {
 
-					// yes
+					// Yes.
 					return true;
 
 				}
@@ -1090,16 +1090,16 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function groupblog_comments_filter_option() {
 
-		// default name
+		// Default name.
 		$comment_name = __( 'CommentPress Comments', 'commentpress-core' );
 
-		// allow plugins to override the name of the option
+		// Allow plugins to override the name of the option.
 		$comment_name = apply_filters( 'cp_groupblog_comment_name', $comment_name );
 
-		// construct option
+		// Construct option.
 		$option = '<option value="new_groupblog_comment">' . $comment_name . '</option>' . "\n";
 
-		// print
+		// Print
 		echo $option;
 
 	}
@@ -1113,16 +1113,16 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function groupblog_posts_filter_option() {
 
-		// default name
+		// Default name.
 		$name = __( 'CommentPress Posts', 'commentpress-core' );
 
-		// allow plugins to override the name of the option
+		// Allow plugins to override the name of the option.
 		$name = apply_filters( 'cp_groupblog_post_name', $name );
 
-		// construct option
+		// Construct option.
 		$option = '<option value="new_groupblog_post">' . $name . '</option>' . "\n";
 
-		// print
+		// Print
 		echo $option;
 
 	}
@@ -1141,15 +1141,15 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function get_blog_avatar( $avatar, $blog_id = '', $args ){
 
-		// do we have groupblogs?
+		// Do we have groupblogs?
 		if ( function_exists( 'get_groupblog_group_id' ) ) {
 
-			// get the group id
+			// Get the group ID.
 			$group_id = get_groupblog_group_id( $blog_id );
 
 		}
 
-		// did we get a group for which this is the group blog?
+		// Did we get a group for which this is the group blog?
 		if ( isset( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
 			// --<
@@ -1176,13 +1176,13 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function filter_blog_name( $name ) {
 
-		// get group blogtype
+		// Get group blogtype.
 		$groupblog_type = groups_get_groupmeta( bp_get_current_group_id(), 'groupblogtype' );
 
-		// did we get one?
+		// Did we get one?
 		if ( $groupblog_type ) {
 
-			// yes, it's a CommentPress Core-enabled groupblog
+			// Yes, it's a CommentPress Core-enabled groupblog
 			return apply_filters( 'cpmu_bp_groupblog_subnav_item_name', __( 'Document', 'commentpress-core' ) );
 
 		}
@@ -1204,13 +1204,13 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function filter_blog_slug( $slug ) {
 
-		// get group blogtype
+		// Get group blogtype.
 		$groupblog_type = groups_get_groupmeta( bp_get_current_group_id(), 'groupblogtype' );
 
-		// did we get one?
+		// Did we get one?
 		if ( $groupblog_type ) {
 
-			// yes, it's a CommentPress Core-enabled groupblog
+			// Yes, it's a CommentPress Core-enabled groupblog
 			return apply_filters( 'cpmu_bp_groupblog_subnav_item_slug', 'document' );
 
 		}
@@ -1232,10 +1232,10 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function filter_nav_title_page_title( $title ) {
 
-		// bail if main BuddyPress site
+		// Bail if main BuddyPress site.
 		if ( bp_is_root_blog() ) return $title;
 
-		// override default link name
+		// Override default link name.
 		return apply_filters( 'cpmu_bp_nav_title_page_title', __( 'Document Home Page', 'commentpress-core' ) );
 
 	}
@@ -1253,22 +1253,22 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function remove_groupblog_from_loop( $b, $blogs ) {
 
-		// loop through them
+		// Loop through them.
 		foreach ( $blogs->blogs as $key => $blog ) {
 
-			// exclude if it's a group blog
+			// Exclude if it's a group blog
 			if ( function_exists( 'groupblog_group_id' ) ) {
 
-				// get group id
+				// Get group ID.
 				$group_id = get_groupblog_group_id( $blog->blog_id );
 
-				// did we get one?
+				// Did we get one?
 				if ( isset( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
-					// exclude
+					// Exclude.
 					unset( $blogs->blogs[$key] );
 
-					// recalculate global values
+					// Recalculate global values.
 					$blogs->blog_count = $blogs->blog_count - 1;
 					$blogs->total_blog_count = $blogs->total_blog_count - 1;
 					$blogs->pag_num = $blogs->pag_num - 1;
@@ -1279,10 +1279,11 @@ class Commentpress_Multisite_Buddypress {
 
 		}
 
-		// renumber the array keys to account for missing items
+		// Renumber the array keys to account for missing items.
 		$blogs_new = array_values( $blogs->blogs );
 		$blogs->blogs = $blogs_new;
 
+		// --<
 		return $blogs;
 
 	}
@@ -1311,35 +1312,35 @@ class Commentpress_Multisite_Buddypress {
 		[link_title] => Visit Site
 		*/
 
-		// init
+		// Init.
 		$blogtype = 'blog';
 
-		// access global
+		// Access global.
 		global $blogs_template;
 
-		// do we have groupblogs enabled?
+		// Do we have groupblogs enabled?
 		if ( function_exists( 'get_groupblog_group_id' ) ) {
 
-			// get group id
+			// Get group ID.
 			$group_id = get_groupblog_group_id( $blogs_template->blog->blog_id );
 
-			// yes, is this blog a groupblog?
+			// Yes, is this blog a groupblog?
 			if ( isset( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
-				// is it CommentPress Core-enabled?
+				// Is it CommentPress Core-enabled?
 
-				// get group blogtype
+				// Get group blogtype.
 				$groupblog_type = groups_get_groupmeta( $group_id, 'groupblogtype' );
 
-				// did we get one?
+				// Did we get one?
 				if ( $groupblog_type ) {
 
-					// yes
+					// Yes.
 					$blogtype = 'commentpress-groupblog';
 
 				} else {
 
-					// standard groupblog
+					// Standard groupblog.
 					$blogtype = 'groupblog';
 
 				}
@@ -1349,36 +1350,36 @@ class Commentpress_Multisite_Buddypress {
 		} else {
 
 			// TODO: is this blog CommentPress Core-enabled?
-			// we cannot do this without switch_to_blog at the moment
+			// We cannot do this without switch_to_blog at the moment.
 			$blogtype = 'blog';
 
 		}
 
-		// switch by blogtype
+		// Switch by blogtype.
 		switch ( $blogtype ) {
 
-			// standard sub-site
+			// Standard sub-site.
 			case 'blog':
 				$label = __( 'View Site', 'commentpress-core' );
 				$button['link_text'] = $label;
 				$button['link_title'] = $label;
 				break;
 
-			// CommentPress Core sub-site
+			// CommentPress Core sub-site.
 			case 'commentpress':
 				$label = __( 'View Document', 'commentpress-core' );
 				$button['link_text'] = apply_filters( 'cp_get_blogs_visit_blog_button', $label );
 				$button['link_title'] = apply_filters( 'cp_get_blogs_visit_blog_button', $label );
 				break;
 
-			// standard groupblog
+			// Standard groupblog.
 			case 'groupblog':
 				$label = __( 'View Group Blog', 'commentpress-core' );
 				$button['link_text'] = $label;
 				$button['link_title'] = $label;
 				break;
 
-			// CommentPress Core sub-site
+			// CommentPress Core sub-site.
 			case 'commentpress-groupblog':
 				$label = __( 'View Document', 'commentpress-core' );
 				$button['link_text'] = apply_filters( 'cp_get_blogs_visit_groupblog_button', $label );
@@ -1420,10 +1421,10 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function blog_type_options( $existing_options ) {
 
-		// define types
+		// Define types.
 		$types = array(
-			__( 'Prose', 'commentpress-core' ), // types[0]
-			__( 'Poetry', 'commentpress-core' ), // types[1]
+			__( 'Prose', 'commentpress-core' ), // Types[0]
+			__( 'Poetry', 'commentpress-core' ), // Types[1]
 		);
 
 		// --<
@@ -1443,7 +1444,7 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function blog_workflow_exists( $exists ) {
 
-		// switch on, but allow overrides
+		// Switch on, but allow overrides.
 		return apply_filters( 'cp_class_commentpress_workflow_enabled', true );
 
 	}
@@ -1460,7 +1461,7 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function blog_workflow_label( $name ) {
 
-		// set label, but allow overrides
+		// Set label, but allow overrides.
 		return apply_filters( 'cp_class_commentpress_workflow_label', __( 'Enable Translation Workflow', 'commentpress-core' ) );
 
 	}
@@ -1477,10 +1478,10 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function group_meta_set_blog_type( $blog_type, $blog_workflow ) {
 
-		// if the blog workflow is enabled, then this is a translation group
+		// If the blog workflow is enabled, then this is a translation group.
 		if ( $blog_workflow == '1' ) {
 
-			// translation is type 2
+			// Translation is type 2.
 			$blog_type = '2';
 
 		}
@@ -1510,15 +1511,15 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function signup_blogform( $errors ) {
 
-		// apply to group blog signup form?
+		// Apply to group blog signup form?
 		if ( bp_is_groups_component() ) {
 
-			// hand off to private method
+			// Hand off to private method.
 			$this->_create_groupblog_options();
 
 		} else {
 
-			// hand off to private method
+			// Hand off to private method.
 			$this->_create_blog_options();
 
 		}
@@ -1541,18 +1542,18 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function wpmu_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 
-		// test for presence of our checkbox variable in _POST
+		// Test for presence of our checkbox variable in _POST.
 		if ( isset( $_POST['cpbp-groupblog'] ) AND $_POST['cpbp-groupblog'] == '1' ) {
 
-			// hand off to private method
+			// Hand off to private method.
 			$this->_create_groupblog( $blog_id, $user_id, $domain, $path, $site_id, $meta );
 
 		} else {
 
-			// test for presence of our checkbox variable in _POST
+			// Test for presence of our checkbox variable in _POST.
 			if ( isset( $_POST['cpbp-new-blog'] ) AND $_POST['cpbp-new-blog'] == '1' ) {
 
-				// hand off to private method
+				// Hand off to private method.
 				$this->_create_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta );
 
 			}
@@ -1572,7 +1573,7 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function user_links_new_site_title() {
 
-		// override default link name
+		// Override default link name.
 		return apply_filters( 'cpmu_bp_create_new_site_title', __( 'Create a New Site', 'commentpress-core' ) );
 
 	}
@@ -1593,39 +1594,39 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function groupblog_privacy_check() {
 
-		// allow network admins through regardless
+		// Allow network admins through regardless.
 		if ( is_super_admin() ) return;
 
-		// check our site option
+		// Check our site option.
 		if ( $this->db->option_get( 'cpmu_bp_groupblog_privacy' ) != '1' ) return;
 
 		global $blog_id, $current_user;
 
-		// if is not the main blog but we do have a blog ID
+		// If is not the main blog but we do have a blog ID.
 		if( ! is_main_site() AND isset( $blog_id ) AND is_numeric( $blog_id ) ) {
 
-			// do we have groupblog active?
+			// Do we have groupblog active?
 			if ( function_exists( 'get_groupblog_group_id' ) ) {
 
-				// get group ID for this blog
+				// Get group ID for this blog.
 				$group_id = get_groupblog_group_id( $blog_id );
 
-				// if we get one
+				// If we get one.
 				if ( isset( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
-					// get the group object
+					// Get the group object.
 					$group = new BP_Groups_Group( $group_id );
 
-					// if group is not public
+					// If group is not public.
 					if( $group->status != 'public' ) {
 
-						// is the groupblog CommentPress Core enabled?
+						// Is the groupblog CommentPress Core enabled?
 						if ( $this->group_has_commentpress_groupblog( $group->id ) ) {
 
-							// is the current user a member of the blog?
+							// Is the current user a member of the blog?
 							if ( ! is_user_member_of_blog( $current_user->ID, $blog_id ) ) {
 
-								// no - redirect to network home, but allow overrides
+								// No - redirect to network home, but allow overrides.
 								wp_redirect( apply_filters( 'bp_groupblog_privacy_redirect_url', network_site_url() ) );
 								exit;
 
@@ -1664,7 +1665,7 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _init() {
 
-		// register hooks
+		// Register hooks.
 		$this->_register_hooks();
 
 	}
@@ -1678,68 +1679,68 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _register_hooks() {
 
-		// enable html comments and content for authors
+		// Enable html comments and content for authors.
 		add_action( 'init', array( $this, 'allow_html_content' ) );
 
-		// check for the privacy of a groupblog
+		// Check for the privacy of a groupblog.
 		add_action( 'init', array( $this, 'groupblog_privacy_check' ) );
 
-		// add some tags to the allowed tags in activities
+		// Add some tags to the allowed tags in activities.
 		add_filter( 'bp_activity_allowed_tags', array( $this, 'activity_allowed_tags' ), 20 );
 
-		// allow comment authors to edit their own comments
+		// Allow comment authors to edit their own comments.
 		add_filter( 'map_meta_cap', array( $this, 'enable_comment_editing' ), 10, 4 );
 
-		// amend comment activity
+		// Amend comment activity.
 		add_filter( 'pre_comment_approved', array( $this, 'pre_comment_approved' ), 99, 2 );
 		//add_action( 'preprocess_comment', 'my_check_comment', 1 );
 
-		// register "page" as a post_type that BuddyPress records comment activity for
+		// Register "page" as a post_type that BuddyPress records comment activity for.
 		add_action( 'init', array( $this, 'register_comment_tracking_on_pages' ), 100 );
 
-		// add pages to the post_types that BuddyPress records comment activity for
+		// Add pages to the post_types that BuddyPress records comment activity for.
 		add_filter( 'bp_blogs_record_comment_post_types', array( $this, 'record_comments_on_pages' ), 10, 1 );
 
-		// add pages to the post_types that BuddyPress records published activity for
+		// Add pages to the post_types that BuddyPress records published activity for.
 		//add_filter( 'bp_blogs_record_post_post_types', array( $this, 'record_published_pages' ), 10, 1 );
 
-		// make sure "Allow activity stream commenting on blog and forum posts" is disabled
+		// Make sure "Allow activity stream commenting on blog and forum posts" is disabled.
 		add_action( 'bp_disable_blogforum_comments', array( $this, 'disable_blogforum_comments' ), 20, 1 );
 
-		// override "publicness" of groupblogs
+		// Override "publicness" of groupblogs.
 		add_filter( 'bp_is_blog_public', array( $this, 'is_blog_public' ), 20, 1 );
 
-		// amend BuddyPress group activity (after class Commentpress_Core does)
+		// Amend BuddyPress group activity (after class Commentpress_Core does).
 		add_action( 'bp_setup_globals', array( $this, '_group_activity_mods' ), 1001 );
 
-		// get group avatar when listing groupblogs
+		// Get group avatar when listing groupblogs.
 		add_filter( 'bp_get_blog_avatar', array( $this, 'get_blog_avatar' ), 20, 3 );
 
-		// filter bp-groupblog defaults
+		// Filter bp-groupblog defaults.
 		add_filter( 'bp_groupblog_subnav_item_name', array( $this, 'filter_blog_name' ), 20 );
 		add_filter( 'bp_groupblog_subnav_item_slug', array( $this, 'filter_blog_slug' ), 20 );
 
-		// override CommentPress Core "Title Page"
+		// Override CommentPress Core "Title Page".
 		add_filter( 'cp_nav_title_page_title', array( $this, 'filter_nav_title_page_title' ), 20 );
 
-		// override the name of the button on the BuddyPress "blogs" screen
-		// to override this, just add the same filter with a priority of 21 or greater
+		// Override the name of the button on the BuddyPress "blogs" screen.
+		// To override this, just add the same filter with a priority of 21 or greater.
 		add_filter( 'bp_get_blogs_visit_blog_button', array( $this, 'get_blogs_visit_blog_button' ), 20 );
 
-		// we can remove groupblogs from the blog list, but cannot update the total_blog_count_for_user
-		// that is displayed on the tab *before* the blog list is built - hence filter disabled for now
+		// We can remove groupblogs from the blog list, but cannot update the total_blog_count_for_user
+		// that is displayed on the tab *before* the blog list is built - hence filter disabled for now.
 		//add_filter( 'bp_has_blogs', array( $this, 'remove_groupblog_from_loop' ), 20, 2 );
 
 		/*
 		 * Duplicated from 'class_commentpress_formatter.php' because CommentPress Core need
 		 * not be active on the main blog, but we still need the options to appear
-		 * in the Groupblog Create screen
+		 * in the Groupblog Create screen.
 		 */
 
-		// set blog type options
+		// Set blog type options.
 		add_filter( 'cp_blog_type_options', array( $this, 'blog_type_options' ), 21 );
 
-		// set blog type options label
+		// Set blog type options label.
 		add_filter( 'cp_blog_type_label', array( $this, 'blog_type_label' ), 21 );
 
 		// ---------------------------------------------------------------------
@@ -1747,63 +1748,63 @@ class Commentpress_Multisite_Buddypress {
 		/*
 		 * Duplicated from 'class_commentpress_workflow.php' because CommentPress Core need
 		 * not be active on the main blog, but we still need the options to appear
-		 * in the Groupblog Create screen
+		 * in the Groupblog Create screen.
 		 */
 
-		// enable workflow
+		// Enable workflow.
 		add_filter( 'cp_blog_workflow_exists', array( $this, 'blog_workflow_exists' ), 21 );
 
-		// override label
+		// Override label.
 		add_filter( 'cp_blog_workflow_label', array( $this, 'blog_workflow_label' ), 21 );
 
-		// override blog type if workflow is on
+		// Override blog type if workflow is on.
 		add_filter( 'cp_get_group_meta_for_blog_type', array( $this, 'group_meta_set_blog_type' ), 21, 2 );
 
 		// ---------------------------------------------------------------------
 
-		// add form elements to groupblog form
+		// Add form elements to groupblog form.
 		add_action( 'signup_blogform', array( $this, 'signup_blogform' ) );
 
-		// activate blog-specific CommentPress Core plugin
-		// added @ priority 20 because BuddyPress Groupblog adds its action at the default 10 and
-		// we want it to have done its stuff before we do ours
+		// Activate blog-specific CommentPress Core plugin.
+		// Added @ priority 20 because BuddyPress Groupblog adds its action at the default 10 and
+		// we want it to have done its stuff before we do ours.
 		add_action( 'wpmu_new_blog', array( $this, 'wpmu_new_blog' ), 20, 6 );
 
-		// register any public styles
+		// Register any public styles.
 		add_action( 'wp_enqueue_scripts', array( $this, 'add_frontend_styles' ), 20 );
 
-		// override CommentPress Core "Create New Document" text
+		// Override CommentPress Core "Create New Document" text.
 		add_filter( 'cp_user_links_new_site_title', array( $this, 'user_links_new_site_title' ), 21 );
 		add_filter( 'cp_site_directory_link_title', array( $this, 'user_links_new_site_title' ), 21 );
 		add_filter( 'cp_register_new_site_page_title', array( $this, 'user_links_new_site_title' ), 21 );
 
-		// override groupblog theme, if the bp-groupblog default theme is not a CommentPress Core one
+		// Override groupblog theme, if the bp-groupblog default theme is not a CommentPress Core one.
 		add_filter( 'cp_forced_theme_slug', array( $this, '_get_groupblog_theme' ), 20, 1 );
 		add_filter( 'cp_forced_theme_name', array( $this, '_get_groupblog_theme' ), 20, 1 );
 
-		// filter the AJAX query string to add "action"
+		// Filter the AJAX query string to add "action".
 		add_filter( 'bp_ajax_querystring', array( $this, '_groupblog_querystring' ), 20, 2 );
 
-		// is this the back end?
+		// Is this the back end?
 		if ( is_admin() ) {
 
-			// anything specifically for WP Admin
+			// Anything specifically for WP Admin.
 
-			// add options to network settings form
+			// Add options to network settings form.
 			add_filter( 'cpmu_network_options_form', array( $this, '_network_admin_form' ), 20 );
 
-			// add options to reset array
+			// Add options to reset array.
 			add_filter( 'cpmu_db_bp_options_get_defaults', array( $this, '_get_default_settings' ), 20, 1 );
 
-			// hook into Network BuddyPress form update
+			// Hook into Network BuddyPress form update.
 			add_action( 'cpmu_db_options_update', array( $this, '_buddypress_admin_update' ), 20 );
 
 		} else {
 
-			// anything specifically for Front End
+			// Anything specifically for Front End.
 
-			// add filter options for the post and comment activities as late as we can
-			// so that bp-groupblog's action can be removed
+			// Add filter options for the post and comment activities as late as we can
+			// so that bp-groupblog's action can be removed.
 			add_action( 'bp_setup_globals', array( $this, '_groupblog_filter_options' ) );
 
 		}
@@ -1819,18 +1820,18 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _groupblog_filter_options() {
 
-		// kick out if this group does not have a CommentPress Core groupblog
+		// Kick out if this group does not have a CommentPress Core groupblog.
 		if ( ! $this->group_has_commentpress_groupblog() ) return;
 
-		// remove bp-groupblog's contradictory option
+		// Remove bp-groupblog's contradictory option.
 		remove_action( 'bp_group_activity_filter_options', 'bp_groupblog_posts' );
 
-		// add our consistent one
+		// Add our consistent one.
 		add_action( 'bp_activity_filter_options', array( $this, 'groupblog_posts_filter_option' ) );
 		add_action( 'bp_group_activity_filter_options', array( $this, 'groupblog_posts_filter_option' ) );
 		add_action( 'bp_member_activity_filter_options', array( $this, 'groupblog_posts_filter_option' ) );
 
-		// add our comments
+		// Add our comments.
 		add_action( 'bp_activity_filter_options', array( $this, 'groupblog_comments_filter_option' ) );
 		add_action( 'bp_group_activity_filter_options', array( $this, 'groupblog_comments_filter_option' ) );
 		add_action( 'bp_member_activity_filter_options', array( $this, 'groupblog_comments_filter_option' ) );
@@ -1846,39 +1847,39 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _group_activity_mods() {
 
-		// don't mess with hooks unless the blog is CommentPress Core-enabled
+		// Don't mess with hooks unless the blog is CommentPress Core-enabled.
 		if ( ( false === $this->_is_commentpress_groupblog() ) ) return;
 
-		// allow lists in activity content
+		// Allow lists in activity content.
 		add_action( 'bp_activity_allowed_tags', array( $this, '_activity_allowed_tags' ), 20, 1 );
 
-		// drop the bp-groupblog post activity actions
+		// Drop the bp-groupblog post activity actions.
 		remove_action( 'bp_activity_before_save', 'bp_groupblog_set_group_to_post_activity' );
 		remove_action( 'transition_post_status', 'bp_groupblog_catch_transition_post_type_status' );
 
-		// implement our own post activity (with Co-Authors compatibility)
+		// Implement our own post activity (with Co-Authors compatibility).
 		add_action( 'bp_activity_before_save', array( $this, 'groupblog_custom_post_activity' ), 20, 1 );
 		add_action( 'transition_post_status', array( $this, 'transition_post_type_status' ), 20, 3 );
 
 		// CommentPress Core needs to know the sub-page for a comment, therefore:
 
-		// drop the bp-group-sites comment activity action, if present
+		// Drop the bp-group-sites comment activity action, if present.
 		global $bp_groupsites;
 		if ( ! is_null( $bp_groupsites ) AND is_object( $bp_groupsites ) ) {
 			remove_action( 'bp_activity_before_save', array( $bp_groupsites->activity, 'custom_comment_activity' ) );
 		}
 
-		// drop the bp-working-papers comment activity action, if present
+		// Drop the bp-working-papers comment activity action, if present.
 		global $bp_working_papers;
 		if ( ! is_null( $bp_working_papers ) AND is_object( $bp_working_papers ) ) {
 			remove_action( 'bp_activity_before_save', array( $bp_working_papers->activity, 'custom_comment_activity' ) );
 		}
 
-		// add our own custom comment activity
+		// Add our own custom comment activity.
 		add_action( 'bp_activity_before_save', array( $this, 'group_custom_comment_activity' ), 20, 1 );
 
-		// these don't seem to fire to allow us to add our meta values for the items
-		// instead, I'm trying to store the blog_type as group meta data
+		// These don't seem to fire to allow us to add our meta values for the items.
+		// Instead, I'm trying to store the blog_type as group meta data.
 		//add_action( 'bp_activity_after_save', array( $this, 'groupblog_custom_comment_meta' ), 20, 1 );
 		//add_action( 'bp_activity_after_save', array( $this, 'groupblog_custom_post_meta' ), 20, 1 );
 
@@ -1897,40 +1898,40 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	public function _groupblog_querystring( $qs, $object ) {
 
-		// bail if not an activity object
+		// Bail if not an activity object.
 		if ( $object != 'activity' ) return $qs;
 
-		// parse query string into an array
+		// Parse query string into an array.
 		$r = wp_parse_args( $qs );
 
-		// bail if no type is set
+		// Bail if no type is set.
 		if ( empty( $r['type'] ) ) return $qs;
 
-		// bail if not a type that we're looking for
+		// Bail if not a type that we're looking for.
 		if ( 'new_groupblog_post' !== $r['type'] AND 'new_groupblog_comment' !== $r['type'] ) {
 			return $qs;
 		}
 
-		// add the 'new_groupblog_post' type if it doesn't exist
+		// Add the 'new_groupblog_post' type if it doesn't exist.
 		if ( 'new_groupblog_post' === $r['type'] ) {
 			if ( ! isset( $r['action'] ) OR false === strpos( $r['action'], 'new_groupblog_post' ) ) {
-				// 'action' filters activity items by the 'type' column
+				// 'action' filters activity items by the 'type' column.
 				$r['action'] = 'new_groupblog_post';
 			}
 		}
 
-		// add the 'new_groupblog_comment' type if it doesn't exist
+		// Add the 'new_groupblog_comment' type if it doesn't exist.
 		if ( 'new_groupblog_comment' === $r['type'] ) {
 			if ( ! isset( $r['action'] ) OR false === strpos( $r['action'], 'new_groupblog_comment' ) ) {
-				// 'action' filters activity items by the 'type' column
+				// 'action' filters activity items by the 'type' column.
 				$r['action'] = 'new_groupblog_comment';
 			}
 		}
 
-		// 'type' isn't used anywhere internally
+		// 'type' isn't used anywhere internally.
 		unset( $r['type'] );
 
-		// return a querystring
+		// Return a querystring.
 		return build_query( $r );
 
 	}
@@ -1947,18 +1948,18 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _activity_allowed_tags( $activity_allowedtags ) {
 
-		// lists
+		// Lists.
 		$activity_allowedtags['ul'] = array();
 		$activity_allowedtags['ol'] = array();
 		$activity_allowedtags['li'] = array();
 
-		// bold
+		// Bold.
 		$activity_allowedtags['strong'] = array();
 
-		// italic
+		// Italic.
 		$activity_allowedtags['em'] = array();
 
-		// underline
+		// Underline.
 		$activity_allowedtags['span']['style'] = array();
 
 		// --<
@@ -1981,25 +1982,25 @@ class Commentpress_Multisite_Buddypress {
 
 		if ( ! $groupblog_create_screen && $blog_id != '' ) {
 
-			// existing blog and group - do we need to present any options?
+			// Existing blog and group - do we need to present any options?
 
 		} else {
 
-			// creating a new group - no groupblog exists yet
-			// NOTE: need to check that our context is right
+			// Creating a new group - no groupblog exists yet
+			// NOTE: need to check that our context is right.
 
-			// get force option
+			// Get force option.
 			$forced = $this->db->option_get( 'cpmu_bp_force_commentpress' );
 
-			// are we force-enabling CommentPress Core?
+			// Are we force-enabling CommentPress Core?
 			if ( $forced ) {
 
-				// set hidden element
+				// Set hidden element.
 				$forced_html = '
 				<input type="hidden" value="1" id="cpbp-groupblog" name="cpbp-groupblog" />
 				';
 
-				// define text, but allow overrides
+				// Define text, but allow overrides.
 				$text = apply_filters(
 					'cp_groupblog_options_signup_text_forced',
 					__( 'Select the options for your new CommentPress-enabled blog. Note: if you choose an existing blog as a group blog, setting these options will have no effect.', 'commentpress-core' )
@@ -2007,14 +2008,14 @@ class Commentpress_Multisite_Buddypress {
 
 			} else {
 
-				// set checkbox
+				// Set checkbox.
 				$forced_html = '
 				<div class="checkbox">
 					<label for="cpbp-groupblog"><input type="checkbox" value="1" id="cpbp-groupblog" name="cpbp-groupblog" /> ' . __( 'Enable CommentPress', 'commentpress-core' ) . '</label>
 				</div>
 				';
 
-				// define text, but allow overrides
+				// Define text, but allow overrides.
 				$text = apply_filters(
 					'cp_groupblog_options_signup_text',
 					__( 'When you create a group blog, you can choose to enable it as a CommentPress blog. This is a "one time only" option because you cannot disable CommentPress from here once the group blog is created. Note: if you choose an existing blog as a group blog, setting this option will have no effect.', 'commentpress-core' )
@@ -2022,25 +2023,25 @@ class Commentpress_Multisite_Buddypress {
 
 			}
 
-			// off by default
+			// Off by default.
 			$has_workflow = false;
 
-			// init output
+			// Init output.
 			$workflow_html = '';
 
-			// allow overrides
+			// Allow overrides.
 			$has_workflow = apply_filters( 'cp_blog_workflow_exists', $has_workflow );
 
-			// if we have workflow enabled, by a plugin, say
+			// If we have workflow enabled, by a plugin, say.
 			if ( $has_workflow !== false ) {
 
-				// define workflow label
+				// Define workflow label.
 				$workflow_label = __( 'Enable Custom Workflow', 'commentpress-core' );
 
-				// allow overrides
+				// Allow overrides.
 				$workflow_label = apply_filters( 'cp_blog_workflow_label', $workflow_label );
 
-				// show it
+				// Show it.
 				$workflow_html = '
 
 				<div class="checkbox">
@@ -2051,25 +2052,25 @@ class Commentpress_Multisite_Buddypress {
 
 			}
 
-			// assume no types
+			// Assume no types.
 			$types = array();
 
-			// init output
+			// Init output.
 			$type_html = '';
 
-			// but allow overrides for plugins to supply some
+			// But allow overrides for plugins to supply some.
 			$types = apply_filters( 'cp_blog_type_options', $types );
 
-			// if we got any, use them
+			// If we got any, use them.
 			if ( ! empty( $types ) ) {
 
-				// define blog type label
+				// Define blog type label.
 				$type_label = __( 'Document Type', 'commentpress-core' );
 
-				// allow overrides
+				// Allow overrides.
 				$type_label = apply_filters( 'cp_blog_type_label', $type_label );
 
-				// construct options
+				// Construct options.
 				$type_option_list = array();
 				$n = 0;
 				foreach( $types AS $type ) {
@@ -2078,7 +2079,7 @@ class Commentpress_Multisite_Buddypress {
 				}
 				$type_options = implode( "\n", $type_option_list );
 
-				// show it
+				// Show it.
 				$type_html = '
 
 				<div class="dropdown">
@@ -2093,7 +2094,7 @@ class Commentpress_Multisite_Buddypress {
 
 			}
 
-			// construct form
+			// Construct form.
 			$form = '
 			<br />
 			<div id="cp-multisite-options">
@@ -2128,42 +2129,42 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _create_groupblog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 
-		// get group id before switch
+		// Get group id before switch.
 		$group_id = isset( $_COOKIE['bp_new_group_id'] )
 					? $_COOKIE['bp_new_group_id']
 					: bp_get_current_group_id();
 
-		// wpmu_new_blog calls this *after* restore_current_blog, so we need to do it again
+		// Wpmu_new_blog calls this *after* restore_current_blog, so we need to do it again.
 		switch_to_blog( $blog_id );
 
-		// activate CommentPress Core
+		// Activate CommentPress Core.
 		$this->db->install_commentpress();
 
-		// access core
+		// Access core.
 		global $commentpress_core;
 
-		// TODO: create admin page settings for WordPress options
+		// TODO: create admin page settings for WordPress options.
 
-		// show posts by default (allow plugin overrides)
+		// Show posts by default (allow plugin overrides).
 		$posts_or_pages = apply_filters( 'cp_posts_or_pages_in_toc', 'post' );
 		$commentpress_core->db->option_set( 'cp_show_posts_or_pages_in_toc', $posts_or_pages );
 
-		// if we opted for posts
+		// If we opted for posts.
 		if ( $posts_or_pages == 'post' ) {
 
-			// TOC shows extended posts by default (allow plugin overrides)
+			// TOC shows extended posts by default (allow plugin overrides).
 			$extended_toc = apply_filters( 'cp_extended_toc', 1 );
 			$commentpress_core->db->option_set( 'cp_show_extended_toc', $extended_toc );
 
 		}
 
-		// get blog type (saved already)
+		// Get blog type (saved already).
 		$cp_blog_type = $commentpress_core->db->option_get( 'cp_blog_type' );
 
-		// get workflow (saved already)
+		// Get workflow (saved already).
 		$cp_blog_workflow = $commentpress_core->db->option_get( 'cp_blog_workflow' );
 
-		// did we get a group id before we switched blogs?
+		// Did we get a group id before we switched blogs?
 		if ( isset( $group_id ) ) {
 
 			/**
@@ -2176,20 +2177,20 @@ class Commentpress_Multisite_Buddypress {
 			 */
 			$blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $cp_blog_type, $cp_blog_workflow );
 
-			// set the type as group meta info
-			// we also need to change this when the type is changed from the CommentPress Core admin page
+			// Set the type as group meta info.
+			// We also need to change this when the type is changed from the CommentPress Core admin page.
 			groups_update_groupmeta( $group_id, 'groupblogtype', 'groupblogtype-' . $blog_type );
 
 		}
 
-		// save
+		// Save.
 		$commentpress_core->db->options_save();
 
 		// ---------------------------------------------------------------------
-		// WordPress Internal Configuration
+		// WordPress Internal Configuration.
 		// ---------------------------------------------------------------------
 
-		// get commenting option
+		// Get commenting option.
 		$anon_comments = $this->db->option_get( 'cpmu_bp_require_comment_registration' ) == '1' ? 1 : 0;
 
 		/**
@@ -2201,25 +2202,25 @@ class Commentpress_Multisite_Buddypress {
 		 */
 		$anon_comments = apply_filters( 'cp_require_comment_registration', $anon_comments );
 
-		// update wp option
+		// Update WordPress option.
 		update_option( 'comment_registration', $anon_comments );
 
-		// get all network-activated plugins
+		// Get all network-activated plugins.
 		$active_sitewide_plugins = maybe_unserialize( get_site_option( 'active_sitewide_plugins' ) );
 
-		// did we get any?
+		// Did we get any?
 		if ( is_array( $active_sitewide_plugins ) AND count( $active_sitewide_plugins ) > 0 ) {
 
-			// loop through them
+			// Loop through them.
 			foreach( $active_sitewide_plugins AS $plugin_path => $plugin_data ) {
 
-				// if we've got BuddyPress Group Email Subscription network-installed
+				// If we've got BuddyPress Group Email Subscription network-installed.
 				if ( false !== strstr( $plugin_path, 'bp-activity-subscription.php' ) ) {
 
-					// switch comments_notify off
+					// Switch comments_notify off.
 					update_option( 'comments_notify', 0 );
 
-					// no need to carry on
+					// No need to carry on.
 					break;
 
 				}
@@ -2239,7 +2240,7 @@ class Commentpress_Multisite_Buddypress {
 		 */
 		do_action( 'cp_new_groupblog_created', $blog_id, $cp_blog_type, $cp_blog_workflow );
 
-		// switch back
+		// Switch back.
 		restore_current_blog();
 
 	}
@@ -2253,53 +2254,53 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _create_blog_options() {
 
-		// get force option
+		// Get force option.
 		$forced = $this->db->option_get( 'cpmu_force_commentpress' );
 
-		// are we force-enabling CommentPress Core?
+		// Are we force-enabling CommentPress Core?
 		if ( $forced ) {
 
-			// set hidden element
+			// Set hidden element.
 			$forced_html = '
 			<input type="hidden" value="1" id="cpbp-new-blog" name="cpbp-new-blog" />
 			';
 
-			// define text
+			// Define text.
 			$text = __( 'Select the options for your new CommentPress document.', 'commentpress-core' );
 
 		} else {
 
-			// set checkbox
+			// Set checkbox.
 			$forced_html = '
 			<div class="checkbox">
 				<label for="cpbp-new-blog"><input type="checkbox" value="1" id="cpbp-new-blog" name="cpbp-new-blog" /> ' . __( 'Enable CommentPress', 'commentpress-core' ) . '</label>
 			</div>
 			';
 
-			// define text
+			// Define text.
 			$text = __( 'Do you want to make the new site a CommentPress document?', 'commentpress-core' );
 
 		}
 
-		// off by default
+		// Off by default.
 		$has_workflow = false;
 
-		// init output
+		// Init output.
 		$workflow_html = '';
 
-		// allow overrides
+		// Allow overrides.
 		$has_workflow = apply_filters( 'cp_blog_workflow_exists', $has_workflow );
 
-		// if we have workflow enabled, by a plugin, say
+		// If we have workflow enabled, by a plugin, say.
 		if ( $has_workflow !== false ) {
 
-			// define workflow label
+			// Define workflow label.
 			$workflow_label = __( 'Enable Custom Workflow', 'commentpress-core' );
 
-			// allow overrides
+			// Allow overrides.
 			$workflow_label = apply_filters( 'cp_blog_workflow_label', $workflow_label );
 
-			// show it
+			// Show it.
 			$workflow_html = '
 
 			<div class="checkbox">
@@ -2310,25 +2311,25 @@ class Commentpress_Multisite_Buddypress {
 
 		}
 
-		// assume no types
+		// Assume no types.
 		$types = array();
 
-		// init output
+		// Init output.
 		$type_html = '';
 
-		// but allow overrides for plugins to supply some
+		// But allow overrides for plugins to supply some.
 		$types = apply_filters( 'cp_blog_type_options', $types );
 
-		// if we got any, use them
+		// If we got any, use them.
 		if ( ! empty( $types ) ) {
 
-			// define blog type label
+			// Define blog type label.
 			$type_label = __( 'Document Type', 'commentpress-core' );
 
-			// allow overrides
+			// Allow overrides.
 			$type_label = apply_filters( 'cp_blog_type_label', $type_label );
 
-			// construct options
+			// Construct options.
 			$type_option_list = array();
 			$n = 0;
 			foreach( $types AS $type ) {
@@ -2337,7 +2338,7 @@ class Commentpress_Multisite_Buddypress {
 			}
 			$type_options = implode( "\n", $type_option_list );
 
-			// show it
+			// Show it.
 			$type_html = '
 
 			<div class="dropdown cp-workflow-type">
@@ -2352,7 +2353,7 @@ class Commentpress_Multisite_Buddypress {
 
 		}
 
-		// construct form
+		// Construct form.
 		$form = '
 
 		<br />
@@ -2392,13 +2393,13 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _create_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 
-		// wpmu_new_blog calls this *after* restore_current_blog, so we need to do it again
+		// Wpmu_new_blog calls this *after* restore_current_blog, so we need to do it again.
 		switch_to_blog( $blog_id );
 
-		// activate CommentPress Core
+		// Activate CommentPress Core.
 		$this->db->install_commentpress();
 
-		// switch back
+		// Switch back.
 		restore_current_blog();
 
 	}
@@ -2420,7 +2421,7 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _is_commentpress_groupblog() {
 
-		// check if this blog is a CommentPress Core groupblog
+		// Check if this blog is a CommentPress Core groupblog.
 		global $commentpress_core;
 		if (
 			! is_null( $commentpress_core ) AND
@@ -2447,7 +2448,7 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _is_commentpress_groupsite() {
 
-		// check if this blog is a CommentPress Core groupsite
+		// Check if this blog is a CommentPress Core groupsite.
 		if (
 			function_exists( 'bpgsites_is_groupsite' ) AND
 			bpgsites_is_groupsite( get_current_blog_id() )
@@ -2474,7 +2475,7 @@ class Commentpress_Multisite_Buddypress {
 
 		global $commentpress_core;
 
-		// if we have the plugin
+		// If we have the plugin.
 		if ( ! is_null( $commentpress_core ) AND is_object( $commentpress_core ) ) {
 
 			// --<
@@ -2495,7 +2496,7 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _network_admin_form() {
 
-		// define admin page
+		// Define admin page.
 		$admin_page = '
 		<div id="cpmu_bp_admin_options">
 
@@ -2550,75 +2551,75 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _get_commentpress_themes() {
 
-		// get all themes
+		// Get all themes.
 		if ( function_exists( 'wp_get_themes' ) ) {
 
-			// get theme data the WP3.4 way
+			// Get theme data the WP3.4 way.
 			$themes = wp_get_themes(
-				false,     // only error-free themes
-				'network', // only network-allowed themes
-				0          // use current blog as reference
+				false,     // Only error-free themes.
+				'network', // Only network-allowed themes.
+				0          // Use current blog as reference.
 			);
 
-			// get currently selected theme
+			// Get currently selected theme.
 			$current_theme = $this->db->option_get('cpmu_bp_groupblog_theme');
 
 		} else {
 
-			// pre WP3.4 functions
+			// Pre WP3.4 functions.
 			$themes = get_themes();
 
-			// get currently selected theme
+			// Get currently selected theme.
 			$current_theme = $this->db->option_get('cpmu_bp_groupblog_theme_name');
 
 		}
 
-		// init
+		// Init.
 		$options = array();
 		$element = '';
 
-		// we must get *at least* one (the Default), but let's be safe
+		// We must get *at least* one (the Default), but let's be safe.
 		if ( ! empty( $themes ) ) {
 
-			// loop
+			// Loop.
 			foreach( $themes AS $theme ) {
 
-				// is it a CommentPress Core Groupblog theme?
+				// Is it a CommentPress Core Groupblog theme?
 				if (
 					in_array( 'commentpress', (array) $theme['Tags'] ) AND
 					in_array( 'groupblog', (array) $theme['Tags'] )
 				) {
 
-					// is this WP3.4+?
+					// Is this WP3.4+?
 					if ( function_exists( 'wp_get_themes' ) ) {
 
-						// use stylesheet as theme data
+						// Use stylesheet as theme data.
 						$theme_data = $theme->get_stylesheet();
 
 					} else {
 
-						// use name as theme data
+						// Use name as theme data.
 						$theme_data = $theme['Title'];
 
 					}
 
-					// is it the currently selected theme?
+					// Is it the currently selected theme?
 					$selected = ( $current_theme == $theme_data ) ? ' selected="selected"' : '';
 
-					// add to array
+					// Add to array.
 					$options[] = '<option value="' . $theme_data . '" ' . $selected . '>' . $theme['Title'] . '</option>';
 
 				}
 
 			}
 
-			// did we get any?
+			// Did we get any?
 			if ( ! empty( $options ) ) {
 
-				// implode
+				// Implode.
 				$opts = implode( "\n", $options );
 
-				// define element
+				// Define element.
 				$element = '
 
 				<tr valign="top">
@@ -2652,7 +2653,7 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _get_groupblog_theme( $default_theme ) {
 
-		// get the theme we've defined as the default for groupblogs
+		// Get the theme we've defined as the default for groupblogs.
 		$theme = $this->db->option_get( 'cpmu_bp_groupblog_theme' );
 
 		// --<
@@ -2671,7 +2672,7 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _additional_buddypress_options() {
 
-		// return whatever plugins send back
+		// Return whatever plugins send back.
 		return apply_filters( 'cpmu_network_buddypress_options_form', '' );
 
 	}
@@ -2688,20 +2689,20 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _get_default_settings( $existing_options ) {
 
-		// is this WP3.4+?
+		// Is this WP3.4+?
 		if ( function_exists( 'wp_get_themes' ) ) {
 
-			// use stylesheet as theme data
+			// Use stylesheet as theme data.
 			$theme_data = $this->groupblog_theme;
 
 		} else {
 
-			// use name as theme data
+			// Use name as theme data.
 			$theme_data = $this->groupblog_theme_name;
 
 		}
 
-		// define BuddyPress and BuddyPress Groupblog defaults
+		// Define BuddyPress and BuddyPress Groupblog defaults.
 		$defaults = array(
 			'cpmu_bp_force_commentpress' => $this->force_commentpress,
 			'cpmu_bp_groupblog_privacy' => $this->groupblog_privacy,
@@ -2709,7 +2710,7 @@ class Commentpress_Multisite_Buddypress {
 			'cpmu_bp_groupblog_theme' => $theme_data
 		);
 
-		// return defaults, but allow overrides and additions
+		// Return defaults, but allow overrides and additions.
 		return apply_filters( 'cpmu_buddypress_options_get_defaults', $defaults );
 
 	}
@@ -2723,27 +2724,27 @@ class Commentpress_Multisite_Buddypress {
 	 */
 	function _buddypress_admin_update() {
 
-		// init
+		// Init.
 		$cpmu_bp_force_commentpress = '0';
 		$cpmu_bp_groupblog_privacy = '0';
 		$cpmu_bp_require_comment_registration = '0';
 
-		// get variables
+		// Get variables.
 		extract( $_POST );
 
-		// force CommentPress Core to be enabled on all groupblogs
+		// Force CommentPress Core to be enabled on all groupblogs.
 		$cpmu_bp_force_commentpress = esc_sql( $cpmu_bp_force_commentpress );
 		$this->db->option_set( 'cpmu_bp_force_commentpress', ( $cpmu_bp_force_commentpress ? 1 : 0 ) );
 
-		// groupblog privacy synced to group privacy
+		// Groupblog privacy synced to group privacy.
 		$cpmu_bp_groupblog_privacy = esc_sql( $cpmu_bp_groupblog_privacy );
 		$this->db->option_set( 'cpmu_bp_groupblog_privacy', ( $cpmu_bp_groupblog_privacy ? 1 : 0 ) );
 
-		// default groupblog theme
+		// Default groupblog theme.
 		$cpmu_bp_groupblog_theme = esc_sql( $cpmu_bp_groupblog_theme );
 		$this->db->option_set( 'cpmu_bp_groupblog_theme', $cpmu_bp_groupblog_theme );
 
-		// anon comments on groupblogs
+		// Anon comments on groupblogs.
 		$cpmu_bp_require_comment_registration = esc_sql( $cpmu_bp_require_comment_registration );
 		$this->db->option_set( 'cpmu_bp_require_comment_registration', ( $cpmu_bp_require_comment_registration ? 1 : 0 ) );
 
@@ -2755,7 +2756,7 @@ class Commentpress_Multisite_Buddypress {
 
 
 
-} // class ends
+} // Class ends.
 
 
 

@@ -28,17 +28,17 @@ class Commentpress_License_Widget extends WP_Widget {
 	 */
 	public function __construct() {
 
-		// widget settings
+		// Widget settings.
 		$widget_options = array(
 			'classname' => 'commentpress_widget',
 			'description' => __( 'This widget is supplied by CommentPress Core for placing HTML in the page footer - for example, copyright or licensing information.', 'commentpress-core' )
 		);
 
-		// instantiate parent
+		// Instantiate parent.
 		parent::__construct(
-			'commentpress_text', // base ID
-			__( 'CommentPress Footer Text', 'commentpress-core' ), // name
-			$widget_options // options
+			'commentpress_text', // Base ID.
+			__( 'CommentPress Footer Text', 'commentpress-core' ), // Name.
+			$widget_options // Options.
 		);
 
 	}
@@ -56,13 +56,13 @@ class Commentpress_License_Widget extends WP_Widget {
 
 		extract( $args );
 
-		// get data
+		// Get data.
 		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
 		$text = apply_filters( 'commentpress_widget', empty( $instance['text'] ) ? '' : $instance['text'], $instance );
 
 		echo $before_widget;
 
-		// show title
+		// Show title.
 		if ( ! empty( $title ) ) {
 			echo $before_title . $title . $after_title;
 		}
@@ -90,17 +90,17 @@ class Commentpress_License_Widget extends WP_Widget {
 	 */
 	public function update( $new_instance, $old_instance ) {
 
-		// store old instance
+		// Store old instance.
 		$instance = $old_instance;
 
-		// sanitise title
+		// Sanitise title.
 		$instance['title'] = strip_tags( $new_instance['title'] );
 
-		// maybe allow HTML
+		// Maybe allow HTML.
 		if ( current_user_can( 'unfiltered_html' ) ) {
 			$instance['text'] =  $new_instance['text'];
 		} else {
-			// wp_filter_post_kses() expects slashed
+			// Wp_filter_post_kses() expects slashed.
 			$instance['text'] = stripslashes( wp_filter_post_kses( addslashes( $new_instance['text'] ) ) );
 		}
 
@@ -142,7 +142,7 @@ class Commentpress_License_Widget extends WP_Widget {
 
 
 
-} // ends class Commentpress_License_Widget
+} // Ends class Commentpress_License_Widget
 
 
 

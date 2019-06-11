@@ -13,7 +13,7 @@ User links template for CommentPress Core
 
 
 
-// acces plugin global
+// Access plugin global.
 global $commentpress_core;
 
 
@@ -25,59 +25,59 @@ global $commentpress_core;
 <ul>
 <?php
 
-// login/logout
+// Login/logout.
 ?><li><?php wp_loginout(); ?></li>
 <?php
 
-// is this multisite?
+// Is this multisite?
 if ( is_multisite() ) {
 
-	// can users register?
+	// Can users register?
 	if ( get_option( 'users_can_register' ) ) {
 
-		// this works for get_site_option( 'registration' ) == 'none' and 'user'
+		// This works for get_site_option( 'registration' ) == 'none' and 'user'
 		?><li><?php wp_register(' ' , ' '); ?></li>
 		<?php
 
 	}
 
-	// multisite signup and blog create
+	// Multisite signup and blog create.
 	if (
 		( is_user_logged_in() AND get_site_option( 'registration' ) == 'blog' ) OR
 		get_site_option( 'registration' ) == 'all'
 	) {
 
-		// test whether we have BuddyPress
+		// Test whether we have BuddyPress.
 		if ( function_exists( 'bp_get_blogs_root_slug' ) ) {
 
-			// different behaviour when logged in or not
+			// Different behaviour when logged in or not.
 			if ( is_user_logged_in() ) {
 
-				// set default link name
+				// Set default link name.
 				$new_site_title = apply_filters(
 					'cp_user_links_new_site_title',
 					__( 'Create a new document', 'commentpress-core' )
 				);
 
-				// BuddyPress uses its own signup page
+				// BuddyPress uses its own signup page.
 				?><li><a href="<?php echo bp_get_root_domain() . '/' . bp_get_blogs_root_slug(); ?>/create/" title="<?php echo $new_site_title; ?>" id="btn_create" class="button"><?php echo $new_site_title; ?></a></li>
 				<?php
 
 			} else {
 
-				// not directly allowed - done through signup form
+				// Not directly allowed - done through signup form.
 
 			}
 
 		} else {
 
-			// set default link name
+			// Set default link name.
 			$new_site_title = apply_filters(
 				'cp_user_links_new_site_title',
 				__( 'Create a new document', 'commentpress-core' )
 			);
 
-			// standard WP multisite
+			// Standard WordPress multisite.
 			?><li><a href="<?php echo network_site_url(); ?>wp-signup.php" title="<?php echo $new_site_title; ?>" id="btn_create" class="button"><?php echo $new_site_title; ?></a></li>
 			<?php
 
@@ -87,10 +87,10 @@ if ( is_multisite() ) {
 
 } else {
 
-	// if logged in
+	// If logged in.
 	if ( is_user_logged_in() ) {
 
-		// set default link name
+		// Set default link name.
 		$dashboard_title = apply_filters(
 			'cp_user_links_dashboard_title',
 			__( 'Dashboard', 'commentpress-core' )
@@ -103,7 +103,7 @@ if ( is_multisite() ) {
 	}
 
 	/*
-	// testing JS
+	// Testing JS.
 	?>
 	<li><a href="#" title="Javascript" id="btn_js">Javascript</a></li>
 	<?php

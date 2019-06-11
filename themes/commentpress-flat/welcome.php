@@ -7,20 +7,20 @@ Template Name: Welcome
 
 global $post;
 
-// "Title Page" always points to the first readable page, unless it is itself
+// "Title Page" always points to the first readable page, unless it is itself.
 $next_page_id = $commentpress_core->nav->get_first_page();
 
-// init
+// Init.
 $next_page_html = '';
 
-// if the link does not point to this page and we're allowing page nav
+// If the link does not point to this page and we're allowing page nav.
 if ( $next_page_id != $post->ID AND false === $commentpress_core->nav->page_nav_is_disabled() ) {
 
-	// get page attributes
+	// Get page attributes.
 	$title = get_the_title( $next_page_id );
 	$target = get_permalink( $next_page_id );
 
-	// set the link
+	// Set the link.
 	$next_page_html = '<a href="' . $target . '" id="next_page" class="css_btn" title="' . esc_attr( $title ) . '">' . $title . '</a>';
 
 }
@@ -50,7 +50,7 @@ get_header(); ?>
 
 <?php
 
-// show feature image
+// Show feature image.
 commentpress_get_feature_image();
 
 ?>
@@ -59,7 +59,7 @@ commentpress_get_feature_image();
 
 <?php
 
-// do we have a featured image?
+// Do we have a featured image?
 if ( ! commentpress_has_feature_image() ) :
 
 	if ( $next_page_html != '' ) : ?>
@@ -86,13 +86,13 @@ endif; ?>
 
 	<?php
 
-	// do we have a featured image?
+	// Do we have a featured image?
 	if ( ! commentpress_has_feature_image() ) {
 
-		// default to hidden
+		// Default to hidden.
 		$cp_title_visibility = ' style="display: none;"';
 
-		// override if we've elected to show the title
+		// Override if we've elected to show the title.
 		if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
 			$cp_title_visibility = '';
 		}
@@ -104,10 +104,10 @@ endif; ?>
 
 		<?php
 
-		// default to hidden
+		// Default to hidden.
 		$cp_meta_visibility = ' style="display: none;"';
 
-		// override if we've elected to show the meta
+		// Override if we've elected to show the meta.
 		if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
 			$cp_meta_visibility = '';
 		}
