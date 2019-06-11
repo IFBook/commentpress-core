@@ -36,23 +36,23 @@ CommentPress.ajax = {};
  */
 CommentPress.ajax.comments = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
-	// init form submitting flag
+	// Init form submitting flag.
 	this.cpajax_submitting = false;
 
-	// comment form
+	// Comment form.
 	this.cpajax_form = {};
 
-	// error display element
+	// Error display element.
 	this.cpajax_error = {};
 
-	// test for our localisation object
+	// Test for our localisation object.
 	if ( 'undefined' !== typeof CommentpressAjaxSettings ) {
 
-		// reference our localisation object vars
+		// Reference our localisation object vars.
 		this.cpajax_live = CommentpressAjaxSettings.cpajax_live;
 		this.cpajax_ajax_url = CommentpressAjaxSettings.cpajax_ajax_url;
 		this.cpajax_spinner_url = CommentpressAjaxSettings.cpajax_spinner_url;
@@ -85,29 +85,29 @@ CommentPress.ajax.comments = new function() {
 	 */
 	this.dom_ready = function() {
 
-		// create error container
+		// Create error container.
 		$('#respond_title').after(
 			'<div id="cpajax_error_msg"></div>'
 		);
 
-		// init AJAX spinner
+		// Init AJAX spinner.
 		$('#submit').after(
 			'<img src="' + me.cpajax_spinner_url + '" id="loading" alt="' + me.cpajax_lang[0] + '" />'
 		);
 
-		// hide spinner
+		// Hide spinner.
 		$('#loading').hide();
 
-		// store reference to the comment form
+		// Store reference to the comment form.
 		me.cpajax_form = $('#commentform');
 
-		// store reference to the error div
+		// Store reference to the error div.
 		me.cpajax_error = $('#cpajax_error_msg');
 
-		// hide error div
+		// Hide error div.
 		me.cpajax_error.hide();
 
-		// initialise comment form
+		// Initialise comment form.
 		me.initialise_form();
 
 	};
@@ -121,19 +121,19 @@ CommentPress.ajax.comments = new function() {
 	 */
 	this.reset = function() {
 
-		// hide the spinner
+		// Hide the spinner.
 		$('#loading').hide();
 
-		// enable submit button
+		// Enable submit button.
 		$('#submit').removeAttr( 'disabled' );
 
-		// make it visible
+		// Make it visible.
 		$('#submit').show();
 
-		// enable the comment form
+		// Enable the comment form.
 		addComment.enableForm();
 
-		// set flag to say we're done
+		// Set flag to say we're done.
 		me.cpajax_submitting = false;
 
 	};
@@ -149,25 +149,25 @@ CommentPress.ajax.comments = new function() {
 	 */
 	this.add_comment = function( response ) {
 
-		// define vars
+		// Define vars.
 		var comm_parent, comm_list, parent_id, head;
 
-		// get comment parent
+		// Get comment parent.
 		comm_parent = me.cpajax_form.find('#comment_parent').val();
 
-		// find the commentlist we want
+		// Find the commentlist we want.
 		comm_list = $('ol.commentlist:first');
 
-		// if the comment is a reply, append the comment to the children
+		// If the comment is a reply, append the comment to the children.
 		if ( comm_parent != '0' ) {
 
-			// get parent
+			// Get parent.
 			parent_id = '#li-comment-' + comm_parent;
 
-			// find the child list we want
+			// Find the child list we want.
 			child_list = $(parent_id + ' > ol.children:first');
 
-			// is there a child list?
+			// Is there a child list?
 			if ( child_list[0] ) {
 
 				me.nice_append(
@@ -188,10 +188,10 @@ CommentPress.ajax.comments = new function() {
 
 			}
 
-		// if not, append the new comment at the bottom
+		// If not, append the new comment at the bottom.
 		} else {
 
-			// is there a comment list?
+			// Is there a comment list?
 			if ( comm_list[0] ) {
 
 				me.nice_append(
@@ -214,21 +214,21 @@ CommentPress.ajax.comments = new function() {
 
 		}
 
-		// get head
+		// Get head.
 		head = response.find('#comments_in_page_wrapper div.comments_container > h3.general_comments_header');
 
-		// replace heading
+		// Replace heading.
 		$('#comments_in_page_wrapper div.comments_container > h3.general_comments_header').replaceWith(head);
 
-		// clear comment form
+		// Clear comment form.
 		me.cpajax_form.find( '#comment' ).val( '' );
 
 		//me.cpajax_error.html('<span class="success">' + me.cpajax_lang[5] + '</span>');
 
-		// compatibility with Featured Comments
+		// Compatibility with Featured Comments.
 		cpajax_reenable_featured_comments();
 
-		// compatibility with Comment Upvoter
+		// Compatibility with Comment Upvoter.
 		cpajax_reenable_comment_upvoter();
 
 	};
@@ -248,20 +248,20 @@ CommentPress.ajax.comments = new function() {
 	 */
 	this.nice_append = function( response, content, target, last ) {
 
-		// define vars
+		// Define vars.
 		var new_comment;
 
-		// test for undefined, which may happen on replies to comments
-		// which have lost their original context
+		// Test for undefined, which may happen on replies to comments
+		// which have lost their original context.
 		if ( 'undefined' === typeof response || response === null ) { return; }
 
-		// make a copy of the new comment
+		// Make a copy of the new comment.
 		new_comment = response.find(content).clone();
 
-		// hide and append
+		// Hide and append.
 		new_comment.appendTo(target).hide();
 
-		// clean up
+		// Clean up.
 		me.cleanup( content, last );
 
 	};
@@ -281,20 +281,20 @@ CommentPress.ajax.comments = new function() {
 	 */
 	this.nice_prepend = function( response, content, target, last ) {
 
-		// define vars
+		// Define vars.
 		var new_comment;
 
-		// test for undefined, which may happen on replies to comments
-		// which have lost their original context
+		// Test for undefined, which may happen on replies to comments
+		// which have lost their original context.
 		if ( 'undefined' === typeof response || response === null ) { return; }
 
-		// make a copy of the new comment
+		// Make a copy of the new comment.
 		new_comment = response.find(content).clone();
 
-		// hide and prepend
+		// Hide and prepend.
 		new_comment.prependTo(target).hide();
 
-		// clean up
+		// Clean up.
 		me.cleanup( content, last );
 
 	};
@@ -311,37 +311,37 @@ CommentPress.ajax.comments = new function() {
 	 */
 	this.cleanup = function( content, last ) {
 
-		// define vars
+		// Define vars.
 		var last_id, new_comm_id, comment;
 
-		// get the id of the last list item
+		// Get the id of the last list item.
 		last_id = $(last).prop('id');
 
 		/*
 		// IE seems to grab the result from cache despite nocache_headers()
-		// the following is an action of last resort - the cache is being busted in
-		// commentpress_comment_post_redirect() instead
+		// The following is an action of last resort - the cache is being busted in
+		// commentpress_comment_post_redirect() instead.
 		if ( typeof last_id == 'undefined' || last_id === null ) {
 			document.location.reload( true );
 			return;
 		}
 		*/
 
-		// construct new comment id
+		// Construct new comment id.
 		new_comm_id = '#comment-' + ( last_id.toString().split('-')[2] );
 		comment = $(new_comm_id);
 
 		addComment.cancelForm();
 
-		// add a couple of classes
+		// Add a couple of classes.
 		comment.addClass( 'comment-highlighted' );
 
 		$(content).slideDown( 'slow',
 
-			// animation complete
+			// Animation complete.
 			function() {
 
-				// scroll to new comment
+				// Scroll to new comment.
 				$(window).stop(true).scrollTo(
 					comment,
 					{
@@ -350,7 +350,7 @@ CommentPress.ajax.comments = new function() {
 						offset: CommentPress.theme.header.get_offset(),
 						onAfter: function() {
 
-							// remove highlight class
+							// Remove highlight class.
 							comment.addClass( 'comment-fade' );
 
 						}
@@ -359,7 +359,7 @@ CommentPress.ajax.comments = new function() {
 
 			}
 
-		); // end slide
+		); // End slide.
 
 	};
 
@@ -373,7 +373,7 @@ CommentPress.ajax.comments = new function() {
 	 */
 	this.initialise_form = function() {
 
-		// unbind first to allow repeated calls to this function
+		// Unbind first to allow repeated calls to this function.
 		$('#commentform').off( 'submit' );
 
 		/**
@@ -383,19 +383,19 @@ CommentPress.ajax.comments = new function() {
 		 */
 		$('#commentform').on( 'submit', function( event ) {
 
-			// define vars
+			// Define vars.
 			var filter;
 
-			// set global flag
+			// Set global flag.
 			me.cpajax_submitting = true;
 
-			// hide errors
+			// Hide errors.
 			me.cpajax_error.hide();
 
-			// if not logged in, validate name and email
+			// If not logged in, validate name and email.
 			if ( me.cpajax_form.find( '#author' )[0] ) {
 
-				// check for name
+				// Check for name.
 				if ( me.cpajax_form.find( '#author' ).val() == '' ) {
 					me.cpajax_error.html('<span class="error">' + me.cpajax_lang[1] + '</span>');
 					me.cpajax_error.show();
@@ -403,7 +403,7 @@ CommentPress.ajax.comments = new function() {
 					return false;
 				}
 
-				// check for email
+				// Check for email.
 				if ( me.cpajax_form.find( '#email' ).val() == '' ) {
 					me.cpajax_error.html('<span class="error">' + me.cpajax_lang[2] + '</span>');
 					me.cpajax_error.show();
@@ -411,7 +411,7 @@ CommentPress.ajax.comments = new function() {
 					return false;
 				}
 
-				// validate email
+				// Validate email.
 				filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 				if( !filter.test( me.cpajax_form.find('#email').val() ) ) {
 					me.cpajax_error.html('<span class="error">' + me.cpajax_lang[3] + '</span>');
@@ -421,30 +421,30 @@ CommentPress.ajax.comments = new function() {
 					return false;
 				}
 
-			} // end if
+			} // End if.
 
-			// test for tinyMCE
+			// Test for tinyMCE.
 			if ( cp_tinymce == '1' ) {
 
-				// set value of comment textarea to content
+				// Set value of comment textarea to content.
 				tinyMCE.triggerSave();
 
-				// unload tinyMCE
+				// Unload tinyMCE.
 				addComment.disableForm();
 
 			}
 
-			// check for comment
+			// Check for comment.
 			if ( me.cpajax_form.find( '#comment' ).val() == '' ) {
 				me.cpajax_error.html('<span class="error">' + me.cpajax_lang[4] + '</span>');
 				me.cpajax_error.show();
-				// reload tinyMCE
+				// Reload tinyMCE.
 				addComment.enableForm();
 				me.cpajax_submitting = false;
 				return false;
 			}
 
-			// submit the form
+			// Submit the form.
 			$(this).ajaxSubmit({
 
 				beforeSubmit: function() {
@@ -453,11 +453,11 @@ CommentPress.ajax.comments = new function() {
 					$('#submit').prop('disabled','disabled');
 					$('#submit').hide();
 
-				}, // end beforeSubmit
+				}, // End beforeSubmit.
 
 				error: function(request) {
 
-					// define vars
+					// Define vars.
 					var data;
 
 					me.cpajax_error.empty();
@@ -469,56 +469,56 @@ CommentPress.ajax.comments = new function() {
 
 					return false;
 
-				}, // end error()
+				}, // End error()
 
 				success: function( data ) {
 
-					// declare vars
+					// Declare vars.
 					var response;
 
 					// jQuery 1.9 fails to recognise the response as HTML, so
 					// we *must* use parseHTML if it's available.
 					if ( $.parseHTML ) {
 
-						// if our jQuery version is 1.8+, it'll have parseHTML
+						// If our jQuery version is 1.8+, it'll have parseHTML.
 						response =  $( $.parseHTML( data ) );
 
 					} else {
 
-						// get our data as object in the basic way
+						// Get our data as object in the basic way.
 						response = $(data);
 
 					}
 
-					// avoid errors if we can
+					// Avoid errors if we can.
 					try {
 
-						// add comment
+						// Add comment.
 						me.add_comment( response );
 						me.reset();
 
-					// oh well
+					// Oh well
 					} catch (e) {
 
 						me.reset();
 						alert( me.cpajax_lang[6] + '\n\n' + e );
 
-					} // end try
+					} // End try.
 
-				} // end success()
+				} // End success()
 
-			}); // end ajaxSubmit()
+			}); // End ajaxSubmit()
 
 			// --<
 			return false;
 
-		}); // end form.submit()
+		}); // End form.submit()
 
 	};
 
 
 
-}; // end CommentPress Core AJAX comments class
+}; // End CommentPress Core AJAX comments class.
 
 
 
@@ -533,13 +533,13 @@ CommentPress.ajax.comments = new function() {
  */
 function cpajax_reenable_featured_comments() {
 
-	// test for the Featured Comments localisation object
+	// Test for the Featured Comments localisation object.
 	if ( 'undefined' !== typeof featured_comments ) {
 
-		// we've got it, test for function existence
+		// We've got it, test for function existence.
 		if ( jQuery.is_function_defined( 'featured_comments_click' ) ) {
 
-			// call function
+			// Call function.
 			featured_comments_click();
 
 		}
@@ -557,13 +557,13 @@ function cpajax_reenable_featured_comments() {
  */
 function cpajax_reenable_comment_upvoter() {
 
-	// test for the Comment Upvoter localisation object
+	// Test for the Comment Upvoter localisation object.
 	if ( 'undefined' !== typeof comment_upvoter ) {
 
-		// we've got it, test for function existence
+		// We've got it, test for function existence.
 		if ( jQuery.is_function_defined( 'comment_upvoter_click' ) ) {
 
-			// call function
+			// Call function.
 			comment_upvoter_click();
 
 		}
@@ -578,7 +578,7 @@ function cpajax_reenable_comment_upvoter() {
 
 
 
-// do immediate init
+// Do immediate init.
 CommentPress.ajax.comments.init();
 
 
@@ -594,10 +594,10 @@ CommentPress.ajax.comments.init();
  */
 jQuery(document).ready(function($) {
 
-	// trigger DOM ready methods
+	// Trigger DOM ready methods.
 	CommentPress.ajax.comments.dom_ready();
 
-}); // end document.ready()
+}); // End document.ready()
 
 
 

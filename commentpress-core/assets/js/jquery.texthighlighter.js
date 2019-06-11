@@ -29,7 +29,7 @@ CommentPress.texthighlighter = {};
  */
 CommentPress.texthighlighter.utilities = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -43,7 +43,7 @@ CommentPress.texthighlighter.utilities = new function() {
 	 */
 	this.localisation = new Array;
 
-	// overwrite if we have our localisation object
+	// Overwrite if we have our localisation object.
 	if ( 'undefined' !== typeof CommentpressTextSelectorSettings ) {
 		me.localisation = CommentpressTextSelectorSettings.localisation;
 	}
@@ -149,7 +149,7 @@ CommentPress.texthighlighter.utilities = new function() {
 	 */
 	this.selection_get = function( element_id ) {
 
-		// get current selection data
+		// Get current selection data.
 		return me.selection_get_current( document.getElementById( element_id ) );
 
 	};
@@ -161,11 +161,11 @@ CommentPress.texthighlighter.utilities = new function() {
 	 */
 	this.selection_clear = function() {
 
-		// clear selection
+		// Clear selection.
 		if (window.getSelection) {
-			if (window.getSelection().empty) {  // Chrome
+			if (window.getSelection().empty) {  // Chrome.
 				window.getSelection().empty();
-			} else if (window.getSelection().removeAllRanges) {  // Firefox
+			} else if (window.getSelection().removeAllRanges) {  // Firefox.
 				window.getSelection().removeAllRanges();
 			}
 		} else if (document.selection) {  // IE?
@@ -176,7 +176,7 @@ CommentPress.texthighlighter.utilities = new function() {
 
 
 
-	// test browser capability
+	// Test browser capability.
 	if (window.getSelection && document.createRange) {
 
 		/**
@@ -189,7 +189,7 @@ CommentPress.texthighlighter.utilities = new function() {
 		 */
 		this.selection_get_current = function( textblock_el ) {
 
-			// get selection data
+			// Get selection data.
 			var range, preSelectionRange, start;
 			range = window.getSelection().getRangeAt(0);
 			preSelectionRange = range.cloneRange();
@@ -246,7 +246,7 @@ CommentPress.texthighlighter.utilities = new function() {
 			sel.addRange(range);
 		};
 
-	// test alternative browser capability
+	// Test alternative browser capability.
 	} else if (document.selection && document.body.createTextRange) {
 
 		/**
@@ -259,7 +259,7 @@ CommentPress.texthighlighter.utilities = new function() {
 		 */
 		this.selection_get_current = function( textblock_el ) {
 
-			// get selection data
+			// Get selection data.
 			var selectedTextRange, preSelectionTextRange, start;
 			selectedTextRange = document.selection.createRange();
 			preSelectionTextRange = document.body.createTextRange();
@@ -303,7 +303,7 @@ CommentPress.texthighlighter.utilities = new function() {
 	 */
 	this.highlights_clear_all = function() {
 
-		// clear all highlights
+		// Clear all highlights.
 		$('.inline-highlight').each( function(i) {
 			var content = $(this).contents();
 			$(this).replaceWith( content );
@@ -311,7 +311,7 @@ CommentPress.texthighlighter.utilities = new function() {
 
 	};
 
-}; // end CommentPress.texthighlighter.utilities class
+}; // End CommentPress.texthighlighter.utilities class.
 
 
 
@@ -326,14 +326,14 @@ CommentPress.texthighlighter.utilities = new function() {
  */
 CommentPress.texthighlighter.textblocks = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
-	// test for our localisation object
+	// Test for our localisation object.
 	if ( 'undefined' !== typeof CommentpressTextSelectorSettings ) {
 
-		// reference our localisation object vars
+		// Reference our localisation object vars.
 		me.popover_textblock = CommentpressTextSelectorSettings.popover_textblock;
 
 	}
@@ -409,22 +409,22 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 */
 	this.setup = function() {
 
-		// build comment data
+		// Build comment data.
 		me.selection_build_for_comments();
 
-		// set up textblock popover
+		// Set up textblock popover.
 		me.setup_popover();
 
-		// set up textblock content
+		// Set up textblock content.
 		me.setup_content();
 
-		// set up comment rollovers
+		// Set up comment rollovers.
 		me.setup_comment_rollovers();
 
-		// set up comment form
+		// Set up comment form.
 		CommentPress.texthighlighter.commentform.setup();
 
-		// activate highlighter
+		// Activate highlighter.
 		me.highlighter_activate();
 
 	};
@@ -438,7 +438,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 */
 	this.setup_popover = function() {
 
-		// append popover to body element
+		// Append popover to body element
 		$(me.popover_textblock).appendTo( 'body' );
 
 		/**
@@ -460,31 +460,31 @@ CommentPress.texthighlighter.textblocks = new function() {
 		 */
 		$('.popover-holder-btn-left-comment').click( function() {
 
-			// define vars
+			// Define vars.
 			var textblock_id, selection, wrap;
 
-			// hide popover
+			// Hide popover.
 			$('.popover-holder').hide();
 
-			// set selection active
+			// Set selection active.
 			CommentPress.texthighlighter.commentform.focus_activate();
 
-			// send to editor without text
+			// Send to editor without text.
 			me.selection_send_to_editor( false );
 
-			// scroll to comment form
+			// Scroll to comment form.
 			CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
 
-			// get containing textblock
+			// Get containing textblock.
 			textblock_id = me.container_get();
 
-			// wrap selection
+			// Wrap selection.
 			wrap = $('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
 
-			// save current selection
+			// Save current selection.
 			//CommentPress.texthighlighter.selection_save_for_textblock( textblock_id );
 
-			// do not bubble
+			// Do not bubble.
 			return false;
 
 		});
@@ -496,31 +496,31 @@ CommentPress.texthighlighter.textblocks = new function() {
 		 */
 		$('.popover-holder-btn-left-quote').click( function() {
 
-			// define vars
+			// Define vars.
 			var textblock_id, selection, wrap;
 
-			// hide popover
+			// Hide popover.
 			$('.popover-holder').hide();
 
-			// set selection active
+			// Set selection active.
 			CommentPress.texthighlighter.commentform.focus_activate();
 
-			// send to editor with text
+			// Send to editor with text.
 			me.selection_send_to_editor( true );
 
-			// scroll to comment form
+			// Scroll to comment form.
 			CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
 
-			// get containing textblock
+			// Get containing textblock.
 			textblock_id = me.container_get();
 
-			// wrap selection
+			// Wrap selection.
 			wrap = $('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
 
-			// save current selection
+			// Save current selection.
 			//me.selection_save_for_textblock( textblock_id );
 
-			// do not bubble
+			// Do not bubble.
 			return false;
 
 		});
@@ -532,14 +532,14 @@ CommentPress.texthighlighter.textblocks = new function() {
 		 */
 		$('.popover-holder-btn-right').click( function() {
 
-			// hide popover
+			// Hide popover.
 			$('.popover-holder').hide();
 
-			// clear container
+			// Clear container.
 			var dummy = '';
 			me.container_set( dummy );
 
-			// do not bubble
+			// Do not bubble.
 			return false;
 
 		});
@@ -555,10 +555,10 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 */
 	this.setup_content = function() {
 
-		// declare vars
+		// Declare vars.
 		var touchstart = '', touchend = '';
 
-		// support touch device testing
+		// Support touch device testing.
 		if ( cp_is_touch == '1' && cp_touch_testing == '1' ) {
 			touchstart = ' touchstart';
 			touchend = ' touchend';
@@ -571,30 +571,30 @@ CommentPress.texthighlighter.textblocks = new function() {
 		 */
 		$('#container').on( 'mousedown' + touchstart, '.textblock', function() {
 
-			// if we have no comment form
+			// If we have no comment form.
 			if ( CommentPress.texthighlighter.commentform.has_commentform() == 'n' ) {
 
-				// disable highlighter
+				// Disable highlighter.
 				me.highlighter_disable();
 
-				// bail
+				// Bail.
 				return;
 
 			}
 
-			// bail if commentform has focus
+			// Bail if commentform has focus.
 			if ( CommentPress.texthighlighter.commentform.focus_is_active() ) { return; }
 
-			// define vars
+			// Define vars.
 			var start_id;
 
-			// get the beginning textblock ID
+			// Get the beginning textblock ID.
 			start_id = $(this).prop('id');
 
-			// store
+			// Store.
 			me.container_set( start_id );
 
-			// always enable highlighter
+			// Always enable highlighter.
 			me.highlighter_enable();
 
 		});
@@ -606,28 +606,28 @@ CommentPress.texthighlighter.textblocks = new function() {
 		 */
 		$('#container').on( 'mouseup' + touchend, '.textblock', function() {
 
-			// bail if we have no comment form
+			// Bail if we have no comment form.
 			if ( CommentPress.texthighlighter.commentform.has_commentform() == 'n' ) { return; }
 
-			// bail if commentform has focus
+			// Bail if commentform has focus.
 			if ( CommentPress.texthighlighter.commentform.focus_is_active() ) { return; }
 
-			// define vars
+			// Define vars.
 			var start_id, end_id;
 
-			// get the beginning textblock ID
+			// Get the beginning textblock ID.
 			start_id = me.container_get();
 
-			// get the ending textblock ID
+			// Get the ending textblock ID.
 			end_id = $(this).prop('id');
 
-			// is it different?
+			// Is it different?
 			if ( start_id != end_id ) {
 
-				// overwrite with empty
+				// Overwrite with empty.
 				me.container_set( '' );
 
-				// disable highlighter
+				// Disable highlighter.
 				me.highlighter_disable();
 
 			}
@@ -652,23 +652,23 @@ CommentPress.texthighlighter.textblocks = new function() {
 		 */
 		$('#comments_sidebar').on( 'mouseenter', 'li.comment.selection-exists', function( event ) {
 
-			// declare vars
+			// Declare vars.
 			var item_id, comment_id;
 
-			// kick out if either popover is shown
+			// Kick out if either popover is shown.
 			if ( $('.popover-holder').css('display') == 'block' ) { return; }
 			if ( $('.comment-popover-holder').css('display') == 'block' ) { return; }
 
-			// kick out while there's a selection that has been sent to the editor
+			// Kick out while there's a selection that has been sent to the editor.
 			//if ( CommentPress.texthighlighter.commentform.focus_is_active() ) { return; }
 
-			// get the current ID
+			// Get the current ID.
 			item_id = $(this).prop('id');
 
-			// get comment ID
+			// Get comment ID.
 			comment_id = item_id.split('-')[2];
 
-			// show the selection for this comment
+			// Show the selection for this comment.
 			me.selection_recall_for_comment( comment_id );
 
 		});
@@ -680,14 +680,14 @@ CommentPress.texthighlighter.textblocks = new function() {
 		 */
 		$('#comments_sidebar').on( 'mouseleave', 'li.comment.selection-exists', function( event ) {
 
-			// kick out if either popover is shown
+			// Kick out if either popover is shown.
 			if ( $('.popover-holder').css('display') == 'block' ) { return; }
 			if ( $('.comment-popover-holder').css('display') == 'block' ) { return; }
 
-			// kick out while there's a selection that has been sent to the editor
+			// Kick out while there's a selection that has been sent to the editor.
 			//if ( CommentPress.texthighlighter.commentform.focus_is_active() ) { return; }
 
-			// clear all highlights
+			// Clear all highlights.
 			me.highlights_clear_for_comment();
 
 		});
@@ -705,30 +705,30 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 */
 	this.selection_send_to_editor = function( with_text ) {
 
-		// declare vars
+		// Declare vars.
 		var selection, container;
 
-		// unbind popover document click handler
+		// Unbind popover document click handler.
 		$(document).unbind( 'click', me.highlighter_textblock_handler );
 
-		// get container
+		// Get container.
 		container = me.container_get();
 
-		// get selection
+		// Get selection.
 		selection = CommentPress.texthighlighter.utilities.selection_get( container );
 
-		// normalise selection bounds
+		// Normalise selection bounds.
 		selection = me.selection_normalise_for_commentform( container, selection );
 
-		// update text_selection hidden input
+		// Update text_selection hidden input.
 		CommentPress.texthighlighter.commentform.current_selection_set( selection );
 
-		// if we're sending text
+		// If we're sending text.
 		if ( with_text ) {
 
-			// test for TinyMCE
+			// Test for TinyMCE.
 			if ( cp_tinymce == '1' ) {
-				// do we have TinyMCE or QuickTags active?
+				// Do we have TinyMCE or QuickTags active?
 				if ( $('#wp-comment-wrap').hasClass( 'html-active' ) ) {
 					me.selection_add_to_textarea( selection.text, 'replace' );
 				} else {
@@ -740,9 +740,9 @@ CommentPress.texthighlighter.textblocks = new function() {
 
 		} else {
 
-			// test for TinyMCE
+			// Test for TinyMCE.
 			if ( cp_tinymce == '1' ) {
-				// do we have TinyMCE or QuickTags active?
+				// Do we have TinyMCE or QuickTags active?
 				if ( $('#wp-comment-wrap').hasClass( 'html-active' ) ) {
 					setTimeout(function () {
 						$('#comment').focus();
@@ -781,10 +781,10 @@ CommentPress.texthighlighter.textblocks = new function() {
 
 		var count;
 
-		// find the number of characters in the comment number
+		// Find the number of characters in the comment number.
 		count = $('#' + textblock_id + ' .comment_count').html().length;
 
-		// adjust if the count is greater than 1
+		// Adjust if the count is greater than 1.
 		if ( count > 1 ) {
 			return {
 				text: item.text,
@@ -808,15 +808,15 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 */
 	this.selection_add_to_textarea = function( text, mode ) {
 
-		// if prepending
+		// If prepending.
 		if ( mode == 'prepend' ) {
-			// get existing content
+			// Get existing content.
 			content = $('#comment').val();
 		} else {
 			content = '';
 		}
 
-		// add text and focus
+		// Add text and focus.
 		setTimeout(function () {
 			$('#comment').val( '<strong>[' + text + ']</strong>\n\n' + content );
 			$('#comment').focus();
@@ -834,18 +834,18 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 */
 	this.selection_add_to_tinymce = function( text, mode ) {
 
-		// if prepending
+		// If prepending.
 		if ( mode == 'prepend' ) {
-			// get existing content
+			// Get existing content.
 			content = tinymce.activeEditor.getContent();
 		} else {
 			content = '';
 		}
 
-		// prepend selection
+		// Prepend selection.
 		tinymce.activeEditor.setContent( '<p><strong>[' + text + ']</strong></p><p></p>' + content, {format : 'html'} );
 
-		// place cursor at the end and focus
+		// Place cursor at the end and focus.
 		setTimeout(function () {
 			tinymce.activeEditor.selection.select(tinymce.activeEditor.getBody(), true);
 			tinymce.activeEditor.selection.collapse(false);
@@ -863,12 +863,12 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 */
 	this.highlighter_activate = function() {
 
-		// enable highlighter
+		// Enable highlighter.
 		$('.textblock').highlighter({
 			'selector': '.popover-holder',
 			'minWords': 1,
 			'complete': function( selected_text ) {
-				// attach a handler to the document body
+				// Attach a handler to the document body.
 				$(document).bind( 'click', me.highlighter_textblock_handler );
 			}
 		});
@@ -882,10 +882,10 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 */
 	this.highlighter_deactivate = function() {
 
-		// destroy highlighter
+		// Destroy highlighter.
 		$('.textblock').highlighter('destroy');
 
-		// unbind document click handler
+		// Unbind document click handler.
 		$(document).unbind( 'click', me.highlighter_textblock_handler );
 
 	};
@@ -897,13 +897,13 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 */
 	this.highlighter_textblock_handler = function( event ) {
 
-		// if the event target is not the popover
+		// If the event target is not the popover
 		if ( !$(event.target).closest( '.popover-holder' ).length ) {
 
-			// deactivate highlighter
+			// Deactivate highlighter.
 			me.highlighter_deactivate();
 
-			// re-activate highlighter
+			// Re-activate highlighter.
 			me.highlighter_activate();
 
 		}
@@ -917,7 +917,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 */
 	this.highlighter_enable = function() {
 
-		// enable highlighter
+		// Enable highlighter.
 		$('.textblock').highlighter('enable');
 
 	};
@@ -929,7 +929,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 */
 	this.highlighter_disable = function() {
 
-		// disable highlighter
+		// Disable highlighter.
 		$('.textblock').highlighter('disable');
 
 	};
@@ -941,7 +941,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 */
 	this.highlights_clear_content = function() {
 
-		// clear textblock highlights
+		// Clear textblock highlights.
 		$('.textblock .inline-highlight').each( function(i) {
 			var content = $(this).contents();
 			$(this).replaceWith( content );
@@ -956,7 +956,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 */
 	this.highlights_clear_for_comment = function() {
 
-		// clear textblock highlights
+		// Clear textblock highlights.
 		$('.textblock .inline-highlight-per-comment').each( function(i) {
 			var content = $(this).contents();
 			$(this).replaceWith( content );
@@ -992,41 +992,41 @@ CommentPress.texthighlighter.textblocks = new function() {
 		 */
 		$('#comments_sidebar li.selection-exists').each( function(i) {
 
-			// declare vars
+			// Declare vars.
 			var item_id, comment_id, comment_key,
 				class_list,
 				sel_start, sel_end,
 				selection_data;
 
-			// get the current item ID
+			// Get the current item ID.
 			item_id = $(this).prop('id');
 
-			// get comment ID
+			// Get comment ID.
 			comment_id = item_id.split('-')[2];
 
-			// cast as string
-			comment_key = '#comment-' + comment_id
+			// Cast as string.
+			comment_key = '#comment-' + comment_id;
 
-			// get classes
+			// Get classes.
 			class_list = $(this).attr('class').split(/\s+/);
 
-			// find our data class names
+			// Find our data class names.
 			$.each( class_list, function(index, item) {
 
-				// find our start
+				// Find our start.
 				if ( item.match( 'sel_start-' ) ) {
 					sel_start = parseInt( item.split('sel_start-')[1] );
 				}
 
-				// find our end
+				// Find our end.
 				if ( item.match( 'sel_end-' ) ) {
 					sel_end = parseInt( item.split('sel_end-')[1] );
 				}
 
-				// create selection data
+				// Create selection data.
 				selection_data = { start: sel_start, end: sel_end };
 
-				// add to array, keyed by comment ID
+				// Add to array, keyed by comment ID.
 				me.selections_by_comment[comment_key] = selection_data;
 
 			});
@@ -1044,19 +1044,19 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 */
 	this.selection_save_for_comment = function( comment_id ) {
 
-		// declare vars
+		// Declare vars.
 		var comment_key, selection_data;
 
-		// cast as string
+		// Cast as string.
 		comment_key = '#comment-' + comment_id;
 
-		// get selection data that was last sent to the editor
+		// Get selection data that was last sent to the editor.
 		selection_data = CommentPress.texthighlighter.commentform.current_selection_get();
 
-		// add to array, keyed by comment ID
+		// Add to array, keyed by comment ID.
 		me.selections_by_comment[comment_key] = selection_data;
 
-		// clear sent selection data
+		// Clear sent selection data.
 		CommentPress.texthighlighter.commentform.current_selection_clear();
 
 	};
@@ -1070,28 +1070,28 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 */
 	this.selection_recall_for_comment = function( comment_id ) {
 
-		// declare vars
+		// Declare vars.
 		var item, text_sig, textblock_id, comment_key;
 
-		// cast as string
+		// Cast as string.
 		comment_key = '#comment-' + comment_id;
 
-		// does the comment ID key exist?
+		// Does the comment ID key exist?
 		if ( comment_key in me.selections_by_comment ) {
 
-			// get selection item from array
+			// Get selection item from array.
 			item = me.selections_by_comment[comment_key];
 
-			// get text signature for this comment
+			// Get text signature for this comment.
 			text_sig = $.get_text_sig_by_comment_id( comment_key );
 
-			// get textblock
+			// Get textblock.
 			textblock_id = 'textblock-' + text_sig;
 
-			// normalise selection bounds
+			// Normalise selection bounds.
 			item = me.selection_normalise_for_comment( textblock_id, item );
 
-			// restore the selection
+			// Restore the selection.
 			CommentPress.texthighlighter.utilities.selection_restore( document.getElementById( textblock_id ), item );
 			$('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight-per-comment' );
 
@@ -1117,10 +1117,10 @@ CommentPress.texthighlighter.textblocks = new function() {
 
 		var count;
 
-		// find the number of characters in the comment number
+		// Find the number of characters in the comment number.
 		count = $('#' + textblock_id + ' .comment_count').html().length;
 
-		// adjust if the count is greater than 1
+		// Adjust if the count is greater than 1.
 		if ( count > 1 ) {
 			return {
 				start: item.start + ( count - 1 ),
@@ -1157,13 +1157,13 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 */
 	this.selection_save_for_textblock = function( textblock_id ) {
 
-		// get selection data
+		// Get selection data.
 		var selection_data = me.selection_get_current( document.getElementById( textblock_id ) );
 
-		// create the array, keyed by textblock ID, if it doesn't exist
+		// Create the array, keyed by textblock ID, if it doesn't exist.
 		if ( !(textblock_id in me.selections_by_textblock) ) { me.selections_by_textblock[textblock_id] = [] }
 
-		// add selection data to the array
+		// Add selection data to the array.
 		me.selections_by_textblock[textblock_id].push( selection_data );
 
 	};
@@ -1177,10 +1177,10 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 */
 	this.selection_recall_for_textblock = function( textblock_id ) {
 
-		// does the textblock ID key exist?
+		// Does the textblock ID key exist?
 		if ( textblock_id in me.selections_by_textblock ) {
 
-			// yes, restore each selection in turn
+			// Yes, restore each selection in turn.
 			for (var i = 0, item; item = me.selections_by_textblock[textblock_id][i++];) {
 				CommentPress.texthighlighter.utilities.selection_restore( document.getElementById( textblock_id ), item );
 				$('#' + textblock_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
@@ -1190,7 +1190,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 
 	};
 
-}; // end CommentPress.texthighlighter.textblocks class
+}; // End CommentPress.texthighlighter.textblocks class.
 
 
 
@@ -1205,13 +1205,13 @@ CommentPress.texthighlighter.textblocks = new function() {
  */
 CommentPress.texthighlighter.commentform = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
 
 
-	// init "has commentform" flag
+	// Init "has commentform" flag.
 	this.commentform_exists = 'n';
 
 	/**
@@ -1256,7 +1256,7 @@ CommentPress.texthighlighter.commentform = new function() {
 	 */
 	this.dom_ready = function() {
 
-		// init listeners
+		// Init listeners.
 		//me.listeners();
 
 	};
@@ -1270,19 +1270,19 @@ CommentPress.texthighlighter.commentform = new function() {
 	 */
 	this.setup = function() {
 
-		// declare vars
+		// Declare vars.
 		var commentform, input;
 
-		// try and locate comment form
+		// Try and locate comment form.
 		commentform = $('#commentform');
 
-		// bail if we have no comment form
+		// Bail if we have no comment form.
 		if ( commentform.length == 0 ) { return; }
 
-		// set flag
+		// Set flag.
 		me.set_commentform_flag( 'y' );
 
-		// append input to comment form
+		// Append input to comment form.
 		input = '<input type="hidden" name="text_selection" id="text_selection" value="" />';
 		$(input).appendTo( '#commentform' );
 
@@ -1299,9 +1299,9 @@ CommentPress.texthighlighter.commentform = new function() {
 	 */
 	this.comment_content_exists = function() {
 
-		// test for TinyMCE
+		// Test for TinyMCE.
 		if ( cp_tinymce == '1' ) {
-			// do we have TinyMCE or QuickTags active?
+			// Do we have TinyMCE or QuickTags active?
 			if ( $('#wp-comment-wrap').hasClass( 'html-active' ) ) {
 				content = $('#comment').val();
 			} else {
@@ -1327,9 +1327,9 @@ CommentPress.texthighlighter.commentform = new function() {
 	 */
 	this.comment_content_clear = function() {
 
-		// test for TinyMCE
+		// Test for TinyMCE.
 		if ( cp_tinymce == '1' ) {
-			// do we have TinyMCE or QuickTags active?
+			// Do we have TinyMCE or QuickTags active?
 			if ( $('#wp-comment-wrap').hasClass( 'html-active' ) ) {
 				$('#comment').val( '' );
 			} else {
@@ -1347,7 +1347,7 @@ CommentPress.texthighlighter.commentform = new function() {
 
 
 
-	// init the selection that's held in the editor
+	// Init the selection that's held in the editor
 	this.selection_in_editor = {};
 
 	/**
@@ -1359,10 +1359,10 @@ CommentPress.texthighlighter.commentform = new function() {
 	 */
 	this.current_selection_set = function( selection ) {
 
-		// store selection object
+		// Store selection object.
 		me.selection_in_editor = selection;
 
-		// update text_selection hidden input
+		// Update text_selection hidden input.
 		$('#text_selection').val( selection.start + ',' + selection.end );
 
 	};
@@ -1396,10 +1396,10 @@ CommentPress.texthighlighter.commentform = new function() {
 	 */
 	this.current_selection_clear = function() {
 
-		// clear selection object
+		// Clear selection object.
 		me.selection_in_editor = {};
 
-		// clear text_selection hidden input
+		// Clear text_selection hidden input.
 		$('#text_selection').val( '' );
 
 	};
@@ -1420,10 +1420,10 @@ CommentPress.texthighlighter.commentform = new function() {
 	 */
 	this.focus_activate = function() {
 
-		// set selection active flag
+		// Set selection active flag.
 		me.focus_active = true;
 
-		// attach a handler to the document body
+		// Attach a handler to the document body.
 		$(document).bind( 'click', me.focus_active_handler );
 
 	};
@@ -1448,10 +1448,10 @@ CommentPress.texthighlighter.commentform = new function() {
 	 */
 	this.focus_clear = function() {
 
-		// set flag
+		// Set flag.
 		me.focus_active = false;
 
-		// unbind document click handler
+		// Unbind document click handler.
 		$(document).unbind( 'click', me.focus_active_handler );
 
 	};
@@ -1463,34 +1463,34 @@ CommentPress.texthighlighter.commentform = new function() {
 	 */
 	this.focus_active_handler = function( event ) {
 
-		// if the event target is not the comment form container
+		// If the event target is not the comment form container.
 		if ( !$(event.target).closest( '#respond' ).length ) {
 
-			// if the event target is not a comment
+			// If the event target is not a comment.
 			if ( !$(event.target).closest( '.comment-content' ).length ) {
 
-				// do we have a current selection?
+				// Do we have a current selection?
 				if ( me.current_selection_exists() ) {
 
-					// do we have any content?
+					// Do we have any content?
 					if ( me.comment_content_exists() ) {
 
-						// show modal
+						// Show modal.
 						me.modal();
 
-						// unbind document click handler
+						// Unbind document click handler.
 						$(document).unbind( 'click', me.focus_active_handler );
 
 					} else {
 
-						// do modal yes
+						// Do modal yes.
 						me.modal_yes();
 
 					}
 
 				} else {
 
-					// do modal yes
+					// Do modal yes.
 					me.modal_yes();
 
 				}
@@ -1503,7 +1503,7 @@ CommentPress.texthighlighter.commentform = new function() {
 
 
 
-	// init modal markup
+	// Init modal markup.
 	this.modal_markup = {};
 
 	/**
@@ -1513,25 +1513,25 @@ CommentPress.texthighlighter.commentform = new function() {
 	 */
 	this.modal = function( event ) {
 
-		// define vars
+		// Define vars.
 		var title_text, alert_text, yes_text, no_text, options;
 
-		// get title ("Are you sure?")
+		// Get title ("Are you sure?")
 		title_text = CommentPress.texthighlighter.utilities.localisation_get( 'dialog_title' );
 
-		// get message ("You have not yet submitted your comment. Are you sure you want to discard it?")
+		// Get message ("You have not yet submitted your comment. Are you sure you want to discard it?")
 		alert_text = CommentPress.texthighlighter.utilities.localisation_get( 'dialog_content' );
 
-		// create modal dialog markup
+		// Create modal dialog markup.
 		me.modal_markup = $('<div id="dialog" title="' + title_text + '"><p class="cp_alert_text">' + alert_text + '</p></div>');
 
-		// define "Discard" button text
+		// Define "Discard" button text.
 		yes_text = CommentPress.texthighlighter.utilities.localisation_get( 'dialog_yes' );
 
-		// define "Keep" button text
+		// Define "Keep" button text.
 		no_text = CommentPress.texthighlighter.utilities.localisation_get( 'dialog_no' );
 
-		// create options for modal dialog
+		// Create options for modal dialog.
 		options = {
 
 			resizable: false,
@@ -1545,13 +1545,13 @@ CommentPress.texthighlighter.commentform = new function() {
 					text: yes_text,
 					click : function() {
 
-						// let's do it
+						// Let's do it.
 						//$(this).dialog( "option", "disabled", true );
 
-						// do modal yes
+						// Do modal yes.
 						me.modal_yes();
 
-						// don't close, but destroy instead
+						// Don't close, but destroy instead.
 						$(this).dialog( 'destroy' );
 						$(this).remove();
 
@@ -1561,7 +1561,7 @@ CommentPress.texthighlighter.commentform = new function() {
 					text: no_text,
 					click : function() {
 
-						// cancel
+						// Cancel
 						$(this).dialog( 'close' );
 						$(this).dialog( 'destroy' );
 						$(this).remove();
@@ -1572,10 +1572,10 @@ CommentPress.texthighlighter.commentform = new function() {
 			],
 			close: function( event, ui ) {
 
-				// once dialog is closed
+				// Once dialog is closed.
 				setTimeout(function () {
 
-					// do modal cancel
+					// Do modal cancel.
 					me.modal_cancel();
 
 				}, 5 );
@@ -1584,7 +1584,7 @@ CommentPress.texthighlighter.commentform = new function() {
 
 		};
 
-		// show dialog
+		// Show dialog.
 		me.modal_markup.appendTo( 'body' );
 		me.modal_markup.dialog( options );
 
@@ -1599,22 +1599,22 @@ CommentPress.texthighlighter.commentform = new function() {
 	 */
 	this.modal_yes = function( event ) {
 
-		// clear comment content
+		// Clear comment content.
 		me.comment_content_clear();
 
-		// clear current selection
+		// Clear current selection.
 		me.current_selection_clear();
 
-		// deactivate textblocks highlighter
+		// Deactivate textblocks highlighter.
 		CommentPress.texthighlighter.textblocks.highlighter_deactivate();
 
-		// re-activate textblocks highlighter
+		// Re-activate textblocks highlighter.
 		CommentPress.texthighlighter.textblocks.highlighter_activate();
 
-		// clear selection active state
+		// Clear selection active state.
 		me.focus_clear();
 
-		// clear all highlights
+		// Clear all highlights.
 		CommentPress.texthighlighter.utilities.highlights_clear_all();
 
 	};
@@ -1628,20 +1628,20 @@ CommentPress.texthighlighter.commentform = new function() {
 	 */
 	this.modal_cancel = function( event ) {
 
-		// activate selection active state
+		// Activate selection active state.
 		me.focus_activate();
 
-		// clear any existing selection
+		// Clear any existing selection.
 		CommentPress.texthighlighter.utilities.selection_clear();
 
-		// disable selection
+		// Disable selection.
 		CommentPress.texthighlighter.textblocks.highlighter_disable();
 
 	};
 
 
 
-}; // end CommentPress.texthighlighter.commentform class
+}; // End CommentPress.texthighlighter.commentform class
 
 
 
@@ -1656,14 +1656,14 @@ CommentPress.texthighlighter.commentform = new function() {
  */
 CommentPress.texthighlighter.comments = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
-	// init popver content
+	// Init popover content.
 	this.popover_comment = '';
 
-	// overwrite if we have our localisation object
+	// Overwrite if we have our localisation object.
 	if ( 'undefined' !== typeof CommentpressTextSelectorSettings ) {
 		me.popover_comment = CommentpressTextSelectorSettings.popover_comment;
 	}
@@ -1737,13 +1737,13 @@ CommentPress.texthighlighter.comments = new function() {
 	 */
 	this.setup = function() {
 
-		// set up comment popover
+		// Set up comment popover.
 		me.setup_popover();
 
-		// set up selection of comment content
+		// Set up selection of comment content.
 		me.setup_content();
 
-		// activate highlighter
+		// Activate highlighter.
 		me.highlighter_activate();
 
 	};
@@ -1757,7 +1757,7 @@ CommentPress.texthighlighter.comments = new function() {
 	 */
 	this.setup_popover = function() {
 
-		// append popover to body element
+		// Append popover to body element.
 		$(me.popover_comment).appendTo( 'body' );
 
 		/**
@@ -1779,25 +1779,25 @@ CommentPress.texthighlighter.comments = new function() {
 		 */
 		$('.comment-popover-holder-btn-left-quote').click( function() {
 
-			// define vars
+			// Define vars.
 			var comment_id, selection, wrap;
 
-			// hide popover
+			// Hide popover.
 			$('.comment-popover-holder').hide();
 
-			// send to editor with text
+			// Send to editor with text.
 			me.selection_send_to_editor( true );
 
-			// scroll to comment form
+			// Scroll to comment form.
 			CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
 
-			// get containing comment
+			// Get containing comment.
 			comment_id = me.container_get();
 
-			// wrap selection
+			// Wrap selection.
 			wrap = $('#' + comment_id).wrapSelection({fitToWord: false}).addClass( 'inline-highlight' );
 
-			// do not bubble
+			// Do not bubble.
 			return false;
 
 		});
@@ -1809,14 +1809,14 @@ CommentPress.texthighlighter.comments = new function() {
 		 */
 		$('.popover-holder-btn-right').click( function() {
 
-			// hide popover
+			// Hide popover.
 			$('.comment-popover-holder').hide();
 
-			// clear container
+			// Clear container.
 			var dummy = '';
 			me.container_set( dummy );
 
-			// do not bubble
+			// Do not bubble.
 			return false;
 
 		});
@@ -1839,27 +1839,27 @@ CommentPress.texthighlighter.comments = new function() {
 		 */
 		$('#comments_sidebar').on( 'mousedown', '.comment-content', function() {
 
-			// if we have no comment form
+			// If we have no comment form.
 			if ( CommentPress.texthighlighter.commentform.has_commentform() == 'n' ) {
 
-				// disable highlighter
+				// Disable highlighter.
 				me.highlighter_disable();
 
-				// bail
+				// Bail.
 				return;
 
 			}
 
-			// define vars
+			// Define vars.
 			var start_id;
 
-			// get the beginning comment ID
+			// Get the beginning comment ID.
 			start_id = $(this).parent().prop('id');
 
-			// store
+			// Store.
 			me.container_set( start_id );
 
-			// always enable highlighter
+			// Always enable highlighter.
 			me.highlighter_enable();
 
 		});
@@ -1871,45 +1871,45 @@ CommentPress.texthighlighter.comments = new function() {
 		 */
 		$('#comments_sidebar').on( 'mouseup', '.comment-content', function() {
 
-			// bail if we have no comment form
+			// Bail if we have no comment form.
 			if ( CommentPress.texthighlighter.commentform.has_commentform() == 'n' ) { return; }
 
-			// define vars
+			// Define vars.
 			var start_id, end_id;
 
-			// get the beginning comment ID
+			// Get the beginning comment ID.
 			start_id = me.container_get();
 
-			// get the ending comment ID
+			// Get the ending comment ID.
 			end_id = $(this).parent().prop('id');
 
-			// is it different?
+			// Is it different?
 			if ( start_id != end_id ) {
 
-				// overwrite with empty
+				// Overwrite with empty.
 				me.container_set( '' );
 
-				// disable highlighter
+				// Disable highlighter.
 				me.highlighter_disable();
 
 			} else {
 
-				// has the quoted comment got the same para heading as the comment form?
+				// Has the quoted comment got the same para heading as the comment form?
 
 				/*
-				// get quoted comment para heading
+				// Get quoted comment para heading.
 				comment_para_heading = $(this).closest( '.paragraph_wrapper' ).prop('id');
 
-				// get comment form para heading
+				// Get comment form para heading.
 				form_para_heading = $('#respond').closest( '.paragraph_wrapper' ).prop('id');
 
-				// is it different?
+				// Is it different?
 				if ( comment_para_heading != form_para_heading ) {
 
-					// overwrite with empty
+					// Overwrite with empty.
 					me.container_set( '' );
 
-					// disable highlighter
+					// Disable highlighter.
 					me.highlighter_disable();
 
 				}
@@ -1926,53 +1926,53 @@ CommentPress.texthighlighter.comments = new function() {
 		 */
 		$('#comments_sidebar').on( 'click', '.comment-forwardlink', function( event ) {
 
-			// declare vars
+			// Declare vars.
 			var parent_comments_array,
 				target_comment_id, current_comment, current_comment_id,
 				back_text, link,
 				this_para_wrapper, target_para_wrapper;
 
-			// override event
+			// Override event.
 			event.preventDefault();
 
-			// get target ID
+			// Get target ID.
 			target_comment_id = $(this).prop('href').split('#')[1];
 
-			// get array of parent comment divs
+			// Get array of parent comment divs.
 			parent_comments_array = $(this).parents('li.comment').map( function() { return this; } );
 
-			// did we get one?
+			// Did we get one?
 			if ( parent_comments_array.length > 0 ) {
 
-				// get the item
+				// Get the item.
 				current_comment = $(parent_comments_array[0]);
 
-				// get current ID
+				// Get current ID.
 				current_comment_id = current_comment.prop('id').split('-')[2];
 
-				// get link text ("Back")
+				// Get link text ("Back")
 				back_text = CommentPress.texthighlighter.utilities.localisation_get( 'backlink_text' );
 
-				// construct link
+				// Construct link.
 				link = '<a href="#comment-' + current_comment_id + '" class="comment-backlink">' + back_text + '</a>';
 
-				// append backlink to target if it doesn't exist
+				// Append backlink to target if it doesn't exist.
 				if ( !$('#' + target_comment_id + ' .comment-identifier .comment-backlink').length ) {
 					$(link).prependTo('#' + target_comment_id + ' .comment-identifier');
 				}
 
-				// get this comment's para wrapper
+				// Get this comment's para wrapper.
 				this_para_wrapper = $(this).closest( '.paragraph_wrapper' ).prop('id');
 
-				// get target comment's para wrapper
+				// Get target comment's para wrapper.
 				target_para_wrapper = $('#' + target_comment_id).closest( '.paragraph_wrapper' ).prop('id');
 
-				// if different then open
+				// If different then open.
 				if ( this_para_wrapper != target_para_wrapper ) {
 					$('#' + target_para_wrapper).show();
 				}
 
-				// scroll to comment
+				// Scroll to comment.
 				CommentPress.common.comments.scroll_comments( $('#' + target_comment_id), 300, 'flash' );
 
 			}
@@ -1986,30 +1986,30 @@ CommentPress.texthighlighter.comments = new function() {
 		 */
 		$('#comments_sidebar').on( 'click', '.comment-backlink', function( event ) {
 
-			// declare vars
+			// Declare vars.
 			var target_comment_id, this_para_wrapper, target_para_wrapper;
 
-			// override event
+			// Override event.
 			event.preventDefault();
 
-			// get target ID
+			// Get target ID.
 			target_comment_id = $(this).prop('href').split('#')[1];
 
-			// get this comment's para wrapper
+			// Get this comment's para wrapper.
 			this_para_wrapper = $(this).closest( '.paragraph_wrapper' ).prop('id');
 
-			// get target comment's para wrapper
+			// Get target comment's para wrapper.
 			target_para_wrapper = $('#' + target_comment_id).closest( '.paragraph_wrapper' ).prop('id');
 
-			// if different then open
+			// If different then open.
 			if ( this_para_wrapper != target_para_wrapper ) {
 				$('#' + target_para_wrapper).show();
 			}
 
-			// scroll to comment
+			// Scroll to comment.
 			CommentPress.common.comments.scroll_comments( $('#' + target_comment_id), 300, 'flash' );
 
-			// remove backlink
+			// Remove backlink.
 			$(this).remove();
 
 		});
@@ -2027,21 +2027,21 @@ CommentPress.texthighlighter.comments = new function() {
 	 */
 	this.selection_send_to_editor = function( with_text ) {
 
-		// declare vars
+		// Declare vars.
 		var selection;
 
-		// unbind popover document click handler
+		// Unbind popover document click handler.
 		$(document).unbind( 'click', me.highlighter_comment_handler );
 
-		// get selection
+		// Get selection.
 		selection = CommentPress.texthighlighter.utilities.selection_get( me.container_get() );
 
-		// if we're sending text
+		// If we're sending text.
 		if ( with_text ) {
 
-			// test for TinyMCE
+			// Test for TinyMCE.
 			if ( cp_tinymce == '1' ) {
-				// do we have TinyMCE or QuickTags active?
+				// Do we have TinyMCE or QuickTags active?
 				if ( $('#wp-comment-wrap').hasClass( 'html-active' ) ) {
 					me.selection_add_to_textarea( selection.text );
 				} else {
@@ -2053,12 +2053,12 @@ CommentPress.texthighlighter.comments = new function() {
 
 		} else {
 
-			// reference comment somehow
+			// Reference comment somehow.
 			//comment_id = me.container_get();
 
-			// test for TinyMCE
+			// Test for TinyMCE.
 			if ( cp_tinymce == '1' ) {
-				// do we have TinyMCE or QuickTags active?
+				// Do we have TinyMCE or QuickTags active?
 				if ( $('#wp-comment-wrap').hasClass( 'html-active' ) ) {
 					setTimeout(function () {
 						$('#comment').focus();
@@ -2092,13 +2092,13 @@ CommentPress.texthighlighter.comments = new function() {
 	 */
 	this.get_link = function( text ) {
 
-		// declare vars
+		// Declare vars.
 		var comment_id, link;
 
-		// get comment ID
+		// Get comment ID.
 		comment_id = me.container_get();
 
-		// wrap in link
+		// Wrap in link.
 		link = '<a href="#' + comment_id + '" class="comment-forwardlink">' + text + '</a>';
 
 		// --<
@@ -2115,10 +2115,10 @@ CommentPress.texthighlighter.comments = new function() {
 	 */
 	this.selection_add_to_textarea = function( text ) {
 
-		// insert link
+		// Insert link.
 		$('#comment').val( $('#comment').val() + me.get_link( text ) );
 
-		// add link and focus
+		// Add link and focus.
 		setTimeout(function () {
 			$('#comment').focus();
 			me.highlights_clear_comment();
@@ -2135,10 +2135,10 @@ CommentPress.texthighlighter.comments = new function() {
 	 */
 	this.selection_add_to_tinymce = function( text ) {
 
-		// add link at cursor
+		// Add link at cursor.
 		tinymce.activeEditor.execCommand( 'mceInsertContent', false, me.get_link( text ) );
 
-		// place cursor at the end and focus
+		// Place cursor at the end and focus.
 		setTimeout(function () {
 			tinymce.activeEditor.focus();
 			me.highlights_clear_comment();
@@ -2155,12 +2155,12 @@ CommentPress.texthighlighter.comments = new function() {
 	 */
 	this.highlighter_activate = function() {
 
-		// enable highlighter
+		// Enable highlighter.
 		$('#comments_sidebar .comment-content').highlighter({
 			'selector': '.comment-popover-holder',
 			'minWords': 1,
 			'complete': function( selected_text ) {
-				// attach a handler to the document body
+				// Attach a handler to the document body.
 				$(document).bind( 'click', me.highlighter_comment_handler );
 			}
 		});
@@ -2174,10 +2174,10 @@ CommentPress.texthighlighter.comments = new function() {
 	 */
 	this.highlighter_deactivate = function() {
 
-		// destroy highlighter
+		// Destroy highlighter.
 		$('#comments_sidebar .comment-content').highlighter('destroy');
 
-		// unbind document click handler
+		// Unbind document click handler.
 		$(document).unbind( 'click', me.highlighter_comment_handler );
 
 	};
@@ -2189,13 +2189,13 @@ CommentPress.texthighlighter.comments = new function() {
 	 */
 	this.highlighter_comment_handler = function( event ) {
 
-		// if the event target is not the popover
+		// If the event target is not the popover.
 		if ( !$(event.target).closest( '.comment-popover-holder' ).length ) {
 
-			// deactivate highlighter
+			// Deactivate highlighter.
 			me.highlighter_deactivate();
 
-			// re-activate highlighter
+			// Re-activate highlighter.
 			me.highlighter_activate();
 
 		}
@@ -2209,7 +2209,7 @@ CommentPress.texthighlighter.comments = new function() {
 	 */
 	this.highlighter_enable = function() {
 
-		// enable highlighter
+		// Enable highlighter.
 		$('#comments_sidebar .comment-content').highlighter('enable');
 
 	};
@@ -2221,7 +2221,7 @@ CommentPress.texthighlighter.comments = new function() {
 	 */
 	this.highlighter_disable = function() {
 
-		// disable highlighter
+		// Disable highlighter.
 		$('#comments_sidebar .comment-content').highlighter('disable');
 
 	};
@@ -2233,7 +2233,7 @@ CommentPress.texthighlighter.comments = new function() {
 	 */
 	this.highlights_clear_comment = function() {
 
-		// clear comment highlights
+		// Clear comment highlights.
 		$('#comments_sidebar .comment-content .inline-highlight').each( function(i) {
 			var content = $(this).contents();
 			$(this).replaceWith( content );
@@ -2241,7 +2241,7 @@ CommentPress.texthighlighter.comments = new function() {
 
 	};
 
-}; // end CommentPress.texthighlighter.comments class
+}; // End CommentPress.texthighlighter.comments class.
 
 
 
@@ -2249,7 +2249,7 @@ CommentPress.texthighlighter.comments = new function() {
 
 
 
-// initialise text selector
+// Initialise text selector.
 CommentPress.texthighlighter.utilities.init();
 
 
@@ -2265,7 +2265,7 @@ CommentPress.texthighlighter.utilities.init();
  */
 jQuery(document).ready(function($) {
 
-	// set up text selector
+	// Set up text selector.
 	//CommentPress.texthighlighter.utilities.dom_ready();
 
 	/**
@@ -2277,16 +2277,16 @@ jQuery(document).ready(function($) {
 		'commentpress-document-ready',
 		function( event ) {
 
-			// set up text selector
+			// Set up text selector.
 			//CommentPress.texthighlighter.utilities.setup();
 
-			// set up textblocks
+			// Set up textblocks.
 			CommentPress.texthighlighter.textblocks.setup();
 
-			// set up comments
+			// Set up comments.
 			CommentPress.texthighlighter.comments.setup();
 
-		} // end function
+		} // End function.
 	);
 
 	/**
@@ -2301,10 +2301,10 @@ jQuery(document).ready(function($) {
 		'commentpress-ajax-comment-added-scrolled',
 		function( event ) {
 
-			// clear highlights
+			// Clear highlights.
 			CommentPress.texthighlighter.utilities.highlights_clear_all();
 
-		} // end function
+		} // End function.
 	);
 
 	/**
@@ -2319,28 +2319,28 @@ jQuery(document).ready(function($) {
 		'commentpress-ajax-comment-added',
 		function( event, comment_id ) {
 
-			// have we received the full id?
+			// Have we received the full id?
 			if ( comment_id.match( '#comment-' ) ) {
 
-				// get numeric comment ID
+				// Get numeric comment ID.
 				comment_id = parseInt( comment_id.split('#comment-')[1] );
 
 			}
 
-			// save selection for comment
+			// Save selection for comment.
 			CommentPress.texthighlighter.textblocks.selection_save_for_comment( comment_id );
 
-			// reset comment form
+			// Reset comment form.
 			CommentPress.texthighlighter.commentform.current_selection_clear()
 
-			// clear comment form "modal focus"
+			// Clear comment form "modal focus".
 			CommentPress.texthighlighter.commentform.focus_clear();
 
-			// reset comment quoting
+			// Reset comment quoting.
 			CommentPress.texthighlighter.comments.highlighter_deactivate();
 			CommentPress.texthighlighter.comments.highlighter_activate();
 
-		} // end function
+		} // End function.
 	);
 
 	/**
@@ -2359,23 +2359,23 @@ jQuery(document).ready(function($) {
 		'commentpress-link-in-textblock-pre-align',
 		function( event ) {
 
-			// if comment form active and populated
+			// If comment form active and populated.
 			if ( CommentPress.texthighlighter.commentform.focus_is_active() ) {
 
 				//  is it populated?
 				if ( CommentPress.texthighlighter.commentform.comment_content_exists() ) {
 
-					// save current target
+					// Save current target.
 					CommentPress.texthighlighter.utilities.saved_scroll_target_set( CommentPress.settings.textblock.get_scroll_target() );
 
-					// set target to comment form
+					// Set target to comment form.
 					CommentPress.settings.textblock.set_scroll_target( 'none' );
 
 				}
 
 			}
 
-		} // end function
+		} // End function.
 	);
 
 	/**
@@ -2394,26 +2394,26 @@ jQuery(document).ready(function($) {
 		'commentpress-link-in-textblock-clicked',
 		function( event ) {
 
-			// if comment form active and populated
+			// If comment form active and populated.
 			if ( CommentPress.texthighlighter.commentform.focus_is_active() ) {
 
 				//  is it populated?
 				if ( CommentPress.texthighlighter.commentform.comment_content_exists() ) {
 
-					// reset target to comment form
+					// Reset target to comment form.
 					CommentPress.settings.textblock.set_scroll_target( CommentPress.texthighlighter.utilities.saved_scroll_target_get() );
 
-					// trigger click on document
+					// Trigger click on document.
 					$(document).click();
 
 				}
 
 			}
 
-		} // end function
+		} // End function.
 	);
 
-}); // end document.ready()
+}); // End document.ready()
 
 
 
