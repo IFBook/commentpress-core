@@ -72,6 +72,13 @@ $_body_classes = commentpress_get_body_classes( true );
 
 // BODY starts here.
 ?><body<?php echo $_body_id; ?> <?php body_class( $_body_classes ); ?>>
+<?php
+if ( function_exists( 'wp_body_open' ) ) {
+    wp_body_open();
+} else {
+    do_action( 'wp_body_open' );
+}
+?>
 
 
 
