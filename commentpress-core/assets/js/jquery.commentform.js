@@ -32,9 +32,6 @@ method for details of the latter.
 
 
 
-
-
-
 /**
  * Comment area handler object.
  *
@@ -58,12 +55,8 @@ addComment = {
 	 */
 	moveForm : function( commentID, parentID, respondID, postID, textSig ) {
 
-
-
 		// Unload tinyMCE.
 		this.disableForm();
-
-
 
 		// Properties.
 		var div_e;
@@ -79,8 +72,6 @@ addComment = {
 			var sig_e = '';
 		}
 
-
-
 		// Sanity check.
 		if ( !comm_e || !respond_e || !cancel_e || !parent_e ) {
 
@@ -92,7 +83,8 @@ addComment = {
 
 		}
 
-
+		// Maybe reset from comment edit format.
+		addComment.commentEditResetForm();
 
 		// If we have them.
 		if ( post_e && postID ) {
@@ -114,8 +106,6 @@ addComment = {
 		// Set title.
 		addComment.setTitle( parentID, textSig, 'set' );
 
-
-
 		// Do we have a temp div?
 		if ( !this.I('wp-temp-form-div') ) {
 
@@ -127,12 +117,8 @@ addComment = {
 
 		}
 
-
-
 		// Insert comment response area.
 		comm_e.parentNode.insertBefore( respond_e, comm_e.nextSibling );
-
-
 
 		// If not special page and we encouraging commenting and not a reply.
 		if ( cp_special_page != '1' && cp_promote_reading == '0' && parentID == '0' ) {
@@ -147,8 +133,6 @@ addComment = {
 
 		}
 
-
-
 		/**
 		 * Method for cancel button.
 		 *
@@ -162,8 +146,6 @@ addComment = {
 			return addComment.cancelForm();
 
 		}
-
-
 
 		// Test for tinyMCE.
 		if ( cp_tinymce == '1' ) {
@@ -180,12 +162,8 @@ addComment = {
 
 		}
 
-
-
 		// Show respond element.
 		respond_e.style.display = 'block';
-
-
 
 		// Clear comment highlight.
 		addComment.clearCommentHighlight( this.parentID );
@@ -193,13 +171,22 @@ addComment = {
 		// Highlight.
 		addComment.highlightComment( parentID );
 
-
-
 		// Store text sig.
 		this.text_signature = textSig;
 		this.parentID = parentID;
 
+		// Collapse params into a data array.
+		var data = [ commentID, parentID, respondID, postID, textSig ];
 
+		/**
+		 * Broadcast that we're done and pass data.
+		 *
+		 * @since 3.9.12
+		 *
+		 * @param {String} An identifier.
+		 * @param {Array} data The params passed in to this method.
+		 */
+		$(document).trigger( 'commentpress-commentform-moved', [ 'add', data ] );
 
 		// Do not bubble.
 		return false;
@@ -240,6 +227,242 @@ addComment = {
 
 
 	/**
+	 * Method for moving the comment form for editing comments.
+	 *
+	 * @since 3.9.12
+	 *
+	 * @param {String} commentID The CSS ID of the comment.
+	 * @param {String} parentID The CSS ID of the parent comment.
+	 * @param {String} respondID The CSS ID of the comment form.
+	 * @param {String} postID The ID of the WordPress post.
+	 * @param {String} textSig The target text signature.
+	 * @param {String} commentContent The content of the comment.
+	 * @param {String} nonce The nonce for the form.
+	 * @return false
+	 */
+	moveFormToEdit : function( commentID, parentID, respondID, postID, textSig, commentContent, nonce ) {
+
+		// Unload tinyMCE.
+		this.disableForm();
+
+		// Properties.
+		var div_e;
+		var comm_e = this.I(commentID);
+		var respond_e = this.I(respondID);
+		var cancel_e = this.I('cancel-comment-reply-link');
+		var parent_e = this.I('comment_parent');
+		var post_e = this.I('comment_post_ID');
+		// Get comment text signature item.
+		if ( this.I('text_signature') ) {
+			var sig_e = this.I('text_signature');
+		} else {
+			var sig_e = '';
+		}
+
+		// Sanity check.
+		if ( !comm_e || !respond_e || !cancel_e || !parent_e ) {
+
+			// Reload tinyMCE.
+			this.enableForm();
+
+			// --<
+			return;
+
+		}
+
+		// Maybe reset from comment edit format.
+		addComment.commentEditResetForm();
+
+		// Store commentEditMode.
+		this.commentEditMode = 'y';
+
+		// Append an identifying input to the comment form.
+		var input = '<input type="hidden" name="cp_edit_comment" id="cp_edit_comment" value="y" />';
+		$(input).appendTo( '#commentform' );
+
+		// Append an input with the comment ID to the comment form.
+		var comment_id_num = commentID.split('-')[1];
+		var comment_id = '<input type="hidden" name="comment_ID" id="comment_ID" value="' + comment_id_num + '" />';
+		$(comment_id).appendTo( '#commentform' );
+
+		// Append nonce to the comment form.
+		var nonce = '<input type="hidden" name="cpajax_comment_nonce" id="cpajax_comment_nonce" value="' + nonce + '" />';
+		$(nonce).appendTo( '#commentform' );
+
+		// Set comment_post_ID hidden input to postID if we have them.
+		if ( post_e && postID ) {
+			post_e.value = postID;
+		}
+
+		// Set comment_parent hidden input to parentID.
+		parent_e.value = parentID;
+
+		// Set text_signature hidden input to text signature.
+		if ( sig_e !== '' ) {
+			sig_e.value = textSig;
+		}
+
+		// Store respondID for cancel method to access.
+		this.respondID = respondID;
+
+		// Store previous content of form title.
+		this.previousTitle = $('#respond_title').text();
+
+		// Alter content of form title.
+		$('#respond_title').text( CommentPress_Form.localisation['edit_title'] );
+
+		// Hide comment form author details.
+		$('#author_details').hide();
+
+		// Show all comment content blocks.
+		$( '.comment-content' ).css( 'display', 'block' );
+
+		// Hide this comment content.
+		$('#' + commentID + ' .comment-content').hide();
+
+		// Store previous content of submit button.
+		this.previousSubmit = $('#submit').attr( 'value' );
+
+		// Alter content of comment form submit button.
+		$('#submit').attr( 'value', CommentPress_Form.localisation['submit'] );
+
+		// Insert content into unrendered comment form.
+		$('#comment').val( commentContent );
+
+		// Do we have a temp div?
+		if ( !this.I('wp-temp-form-div') ) {
+
+			// Create one.
+			div_e = document.createElement('div');
+			div_e.id = 'wp-temp-form-div';
+			div_e.style.display = 'none';
+			respond_e.parentNode.insertBefore( div_e, respond_e );
+
+		}
+
+		// Insert comment response area.
+		comm_e.parentNode.insertBefore( respond_e, comm_e.nextSibling );
+
+		// If not special page and we encouraging commenting and not a reply.
+		if ( cp_special_page != '1' && cp_promote_reading == '0' && parentID == '0' ) {
+
+			// Hide cancel link.
+			cancel_e.style.display = 'none';
+
+		} else {
+
+			// Show cancel link.
+			cancel_e.style.display = '';
+
+		}
+
+		/**
+		 * Method for cancel button.
+		 *
+		 * @since 3.9.12
+		 *
+		 * @return {Boolean} false.
+		 */
+		cancel_e.onclick = function() {
+
+			// Unload tinyMCE.
+			addComment.disableForm();
+
+			// Maybe reset from comment edit format.
+			addComment.commentEditResetForm();
+
+			// --<
+			return addComment.cancelForm();
+
+		}
+
+		// Test for tinyMCE.
+		if ( cp_tinymce == '1' ) {
+
+			// Reload tinyMCE.
+			this.enableForm();
+
+		} else {
+
+			// Try and give focus to textarea - disabled since we use tinyMCE
+			// except for on mobile devices, where we don't want to auto-focus.
+			//try { this.I('comment').focus(); }
+			//catch(e) {}
+
+		}
+
+		// Show respond element.
+		respond_e.style.display = 'block';
+
+		// Clear comment highlight.
+		addComment.clearCommentHighlight( this.parentID );
+
+		// Highlight.
+		addComment.highlightComment( parentID );
+
+		// Store text sig.
+		this.text_signature = textSig;
+		this.parentID = parentID;
+
+		// Collapse params into a data array.
+		var data = [ commentID, parentID, respondID, postID, textSig, commentContent ];
+
+		/**
+		 * Broadcast that we're done and pass data.
+		 *
+		 * @since 3.9.12
+		 *
+		 * @param {String} An identifier.
+		 * @param {Array} data The params passed in to this method.
+		 */
+		$(document).trigger( 'commentpress-commentform-moved', [ 'edit', data ] );
+
+		// Do not bubble.
+		return false;
+
+	},
+
+
+
+	/**
+	 * Reset the response markup from comment edit form format.
+	 *
+	 * @since 3.9.12
+	 */
+	commentEditResetForm : function() {
+
+		// Alter content of form title.
+		$('#respond_title').text( this.previousTitle );
+
+		// Show author details.
+		$('#author_details').show();
+
+		// Show all comment content blocks.
+		$('.comment-content').css( 'display', 'block' );
+
+		// Clear comment form.
+		$('#comment').val( '' );
+
+		// Alter content of comment form submit button.
+		$('#submit').attr( 'value', this.previousSubmit );
+
+		// Reset commentEditMode.
+		this.commentEditMode = 'n';
+
+		// Remove identifying input from the comment form.
+		$('#cp_edit_comment').remove();
+
+		// Remove comment ID input.
+		$('#comment_ID').remove();
+
+		// Remove nonce input from the comment form.
+		$('#cpajax_comment_nonce').remove();
+
+	},
+
+
+
+	/**
 	 * Reset the comment form.
 	 *
 	 * @since 3.8
@@ -265,12 +488,8 @@ addComment = {
 
 		}
 
-
-
 		// Clear comment highlight.
 		addComment.clearCommentHighlight( this.parentID );
-
-
 
 		// If not special page.
 		if ( cp_special_page != '1' ) {
@@ -291,13 +510,13 @@ addComment = {
 				// a paragraph, but there will be no *exact* reference in the DOM.
 
 				// Find para num.
-				var para_id = jQuery('#para_wrapper-' + text_sig + ' .reply_to_para').attr('id');
+				var para_id = $('#para_wrapper-' + text_sig + ' .reply_to_para').attr('id');
 
 				// Is there an element for the exact match?
 				if ( 'undefined' === typeof para_id ) {
 
 					// NO -> crawl up the DOM looking for the wrapper.
-					var parent_wrapper = jQuery('#respond').closest('div.paragraph_wrapper');
+					var parent_wrapper = $('#respond').closest('div.paragraph_wrapper');
 
 					// If we get it.
 					if ( parent_wrapper.length > 0 ) {
@@ -306,7 +525,7 @@ addComment = {
 						var parent_wrapper_id = parent_wrapper.attr('id');
 
 						// Proceed with this instead.
-						var para_id = jQuery( '#' + parent_wrapper_id + ' .reply_to_para').attr('id');
+						var para_id = $( '#' + parent_wrapper_id + ' .reply_to_para').attr('id');
 
 					}
 
@@ -316,8 +535,6 @@ addComment = {
 				para_num = para_id.split('-')[1];
 
 			}
-
-
 
 			// Are we encouraging reading?
 			if ( cp_promote_reading == '1' ) {
@@ -348,12 +565,8 @@ addComment = {
 
 		}
 
-
-
 		// Unload tinyMCE.
 		addComment.disableForm();
-
-
 
 		// Get comment post ID.
 		var parent_id = addComment.I('comment_parent').value;
@@ -361,13 +574,9 @@ addComment = {
 		// Unset comment parent value.
 		addComment.I('comment_parent').value = '0';
 
-
-
 		// DOM manipulation.
 		temp_e.parentNode.insertBefore( respond_e, temp_e );
 		temp_e.parentNode.removeChild( temp_e );
-
-
 
 		// Hide cancel link.
 		cancel_e.style.display = 'none';
@@ -375,18 +584,30 @@ addComment = {
 		// Disable this until next run.
 		cancel_e.onclick = null;
 
-
-
 		// Set title.
 		addComment.setTitle( '0', text_sig, 'cancel' );
 
 		// Clear text sig.
 		this.text_signature = '';
 
+		// Clear comment form.
+		$('#comment').val( '' );
+
 		// Reload tinyMCE.
 		addComment.enableForm();
 
+		// Empty data array.
+		var data = [];
 
+		/**
+		 * Broadcast that we're done and pass data.
+		 *
+		 * @since 3.9.12
+		 *
+		 * @param {String} An identifier.
+		 * @param {Array} data The params passed in to this method.
+		 */
+		$(document).trigger( 'commentpress-commentform-moved', [ 'cancel', data ] );
 
 		// Do not bubble.
 		return false;
@@ -499,27 +720,27 @@ addComment = {
 				if ( cp_special_page == '1' ) {
 
 					// Restore.
-					title.innerHTML = 'Leave a comment';
+					title.innerHTML = CommentPress_Form.localisation['title'];
 
 				} else {
 
 					// Restore.
 					//title.innerHTML = 'Comment on the page';
-					title.innerHTML = jQuery( '#para_wrapper-' + textSig + ' a.reply_to_para' ).text();
+					title.innerHTML = $( '#para_wrapper-' + textSig + ' a.reply_to_para' ).text();
 
 					// Get comment list.
-					var comment_list = jQuery( '#para_wrapper-' + addComment.text_signature + ' .commentlist' );
+					var comment_list = $( '#para_wrapper-' + addComment.text_signature + ' .commentlist' );
 
 					// If we have a comment list.
 					if ( comment_list[0] && cp_promote_reading == '0' ) {
-						jQuery( '#para_wrapper-' + addComment.text_signature + ' div.reply_to_para' ).show();
+						$( '#para_wrapper-' + addComment.text_signature + ' div.reply_to_para' ).show();
 					}
 
 					// If we're cancelling, show all reply to links.
 					if ( mode == 'cancel' && cp_promote_reading == '1' ) {
-						jQuery( 'div.reply_to_para' ).show();
+						$( 'div.reply_to_para' ).show();
 					} else {
-						jQuery( '#para_wrapper-' + textSig + ' div.reply_to_para' ).hide();
+						$( '#para_wrapper-' + textSig + ' div.reply_to_para' ).hide();
 					}
 
 				}
@@ -527,12 +748,12 @@ addComment = {
 			} else {
 
 				// It's a comment on a paragraph.
-				var reply_text = jQuery( '#para_wrapper-' + textSig + ' a.reply_to_para' );
+				var reply_text = $( '#para_wrapper-' + textSig + ' a.reply_to_para' );
 
 				/*
 				// Test for multiples.
 				if ( reply_text.length > 1 ) {
-					reply_text = jQuery( reply_text[0] );
+					reply_text = $( reply_text[0] );
 				}
 				*/
 
@@ -540,27 +761,27 @@ addComment = {
 				title.innerHTML = reply_text.text();
 
 				// Get comment list.
-				var comment_list = jQuery( '#para_wrapper-' + addComment.text_signature + ' .commentlist' );
+				var comment_list = $( '#para_wrapper-' + addComment.text_signature + ' .commentlist' );
 
 				// If we have a comment list and promoting commenting - or promoting reading.
 				if ( ( comment_list[0] && cp_promote_reading == '0' ) || cp_promote_reading == '1' ) {
 
 					// Show previous reply to para link.
 					if ( 'undefined' !== typeof addComment.text_signature ) {
-						jQuery( '#para_wrapper-' + addComment.text_signature + ' div.reply_to_para' ).show();
+						$( '#para_wrapper-' + addComment.text_signature + ' div.reply_to_para' ).show();
 					}
 
 				}
 
 				// Sort out reply to para links.
 				if ( cp_promote_reading == '0' ) {
-					jQuery( '#para_wrapper-' + textSig + ' div.reply_to_para' ).hide();
+					$( '#para_wrapper-' + textSig + ' div.reply_to_para' ).hide();
 				} else {
 					// If we're cancelling, show all reply to links.
 					if ( mode == 'cancel' ) {
-						jQuery( 'div.reply_to_para' ).show();
+						$( 'div.reply_to_para' ).show();
 					} else {
-						jQuery( '#para_wrapper-' + textSig + ' div.reply_to_para' ).toggle();
+						$( '#para_wrapper-' + textSig + ' div.reply_to_para' ).toggle();
 					}
 				}
 
@@ -574,10 +795,10 @@ addComment = {
 			//addComment.replyTitle = title.innerHTML;
 
 			// Seems like sometimes we can get an array for the .reply with more than one item.
-			var reply = jQuery( '#comment-' + parentID + ' > .reply' )[0];
+			var reply = $( '#comment-' + parentID + ' > .reply' )[0];
 
 			// Get unique.
-			var unique = jQuery(reply).text();
+			var unique = $(reply).text();
 
 			// If we have link text, then a comment reply is allowed.
 			if ( unique != '' ) {
@@ -593,11 +814,11 @@ addComment = {
 
 					// Show previous.
 					if ( 'undefined' !== typeof addComment.text_signature ) {
-						jQuery( '#para_wrapper-' + addComment.text_signature + ' div.reply_to_para' ).show();
+						$( '#para_wrapper-' + addComment.text_signature + ' div.reply_to_para' ).show();
 					}
 
 					// Show current.
-					jQuery( '#para_wrapper-' + textSig + ' div.reply_to_para' ).show();
+					$( '#para_wrapper-' + textSig + ' div.reply_to_para' ).show();
 
 				}
 
@@ -620,11 +841,11 @@ addComment = {
 
 		// Hide this reply link.
 		if ( parentID != '0' ) {
-			jQuery( '#comment-' + parentID + ' > .reply' ).css('display', 'none');
+			$( '#comment-' + parentID + ' > .reply' ).css('display', 'none');
 		}
 
 		// Trigger theme to highlight comment.
-		jQuery( document ).trigger( 'commentpress-comment-highlight', [ parentID ] );
+		$( document ).trigger( 'commentpress-comment-highlight', [ parentID ] );
 
 	},
 
@@ -643,12 +864,12 @@ addComment = {
 		if ( parentID != '0' ) {
 
 			// Show reply link.
-			jQuery( '#comment-' + parentID + ' > .reply' ).css('display', 'block');
+			$( '#comment-' + parentID + ' > .reply' ).css('display', 'block');
 
 		}
 
 		// Unhighlight comment.
-		jQuery( document ).trigger( 'commentpress-comment-unhighlight', [ parentID ] );
+		$( document ).trigger( 'commentpress-comment-unhighlight', [ parentID ] );
 
 	},
 
@@ -662,10 +883,10 @@ addComment = {
 	clearAllCommentHighlights : function() {
 
 		// Show all reply links.
-		jQuery( '.reply' ).css('display', 'block');
+		$( '.reply' ).css('display', 'block');
 
 		// Clear highlight.
-		jQuery( document ).trigger( 'commentpress-comment-highlights-clear' );
+		$( document ).trigger( 'commentpress-comment-highlights-clear' );
 
 	},
 
@@ -706,4 +927,6 @@ addComment = {
 	}
 
 }
+
+
 

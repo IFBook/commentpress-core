@@ -27,7 +27,7 @@ get_header(); ?>
 
 
 
-<!-- taxonomy-classification.php -->
+<!-- taxonomy-comment_tags.php -->
 
 <div id="wrapper">
 
@@ -51,6 +51,8 @@ get_header(); ?>
 	echo sprintf( __( 'Comments Tagged &#8216;%s&#8217;', 'commentpress-core' ), single_cat_title( '', false ) )
 ?></h3>
 
+<div id="comments_in_page_wrapper">
+
 <?php if ( ! empty( $html ) ) : ?>
 
 	<?php echo $html; ?>
@@ -64,6 +66,8 @@ get_header(); ?>
 	<?php get_search_form(); ?>
 
 <?php endif; ?>
+
+</div>
 
 
 

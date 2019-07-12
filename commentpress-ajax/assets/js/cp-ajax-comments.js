@@ -113,6 +113,9 @@ CommentPress.ajax.comments = new function() {
 		// Enable comment reassignment.
 		me.reassign_comments();
 
+		// Enable AJAX comment editing.
+		me.edit_comments_setup();
+
 		// Enable listeners.
 		me.listeners();
 
@@ -140,6 +143,9 @@ CommentPress.ajax.comments = new function() {
 			// Re-enable AJAX functionality.
 			me.reassign_comments();
 
+			// Re-enable AJAX comment editing.
+			me.edit_comments_setup();
+
 			// Compatibility with Featured Comments.
 			cpajax_reenable_featured_comments();
 
@@ -159,6 +165,9 @@ CommentPress.ajax.comments = new function() {
 
 			// Re-enable CommentPress Core AJAX clicks.
 			me.reassign_comments();
+
+			// Re-enable AJAX comment editing.
+			me.edit_comments_setup();
 
 			// Compatibility with Featured Comments.
 			cpajax_reenable_featured_comments();
@@ -478,6 +487,9 @@ CommentPress.ajax.comments = new function() {
 
 		// Re-enable clicks.
 		me.reassign_comments();
+
+		// Re-enable AJAX comment editing.
+		me.edit_comments_setup();
 
 		// Compatibility with Featured Comments.
 		cpajax_reenable_featured_comments();
@@ -857,6 +869,9 @@ CommentPress.ajax.comments = new function() {
 
 		//me.cpajax_error.html('<span class="success">' + me.cpajax_lang[5] + '</span>');
 
+		// Re-enable AJAX comment editing.
+		me.edit_comments_setup();
+
 		// Compatibility with Featured Comments.
 		cpajax_reenable_featured_comments();
 
@@ -949,7 +964,7 @@ CommentPress.ajax.comments = new function() {
 	 *
 	 * @param string content The jQuery selector that targets the comment content.
 	 * @param string last The jQuery selector of the last item in the comment list.
-	 * @return string new_comment_id The ID of the new comment.
+	 * @return string new_comm_id The ID of the new comment.
 	 */
 	this.cleanup = function( content, last ) {
 
@@ -1158,6 +1173,15 @@ CommentPress.ajax.comments = new function() {
 				return false;
 			}
 
+			// Check for comment edit mode.
+			if ( me.cpajax_form.find( '#cp_edit_comment' ).val() == 'y' ) {
+
+				// Skip submission and call method.
+				if ( event.preventDefault ) { event.preventDefault(); }
+				return me.edit_comment( $(this) );
+
+			}
+
 			// Submit the form.
 			$(this).ajaxSubmit({
 
@@ -1227,6 +1251,261 @@ CommentPress.ajax.comments = new function() {
 			return false;
 
 		}); // End form.submit()
+
+	};
+
+
+
+	/**
+	 * Enable AJAX editing of comments.
+	 *
+	 * @since 3.9.12
+	 */
+	this.edit_comments_setup = function() {
+
+		// Unbind first to allow repeated calls to this function.
+		$('#comments_sidebar').off( 'click', '.comment-edit-link' );
+
+		/**
+		 * Clicking on comment edit links in the Comments column.
+		 *
+		 * @since 3.9.12
+		 */
+		$('#comments_sidebar').on( 'click', '.comment-edit-link', function( event ) {
+
+			// Define vars.
+			var comment_id;
+
+			// Override event.
+			event.preventDefault();
+
+			// Get comment ID.
+			comment_id = parseInt( this.href.split('c=')[1] );
+
+			// Get comment data.
+			me.get_comment( comment_id );
+
+		});
+
+	};
+
+
+
+	/**
+	 * Perform an AJAX request to get the data for a comment.
+	 *
+	 * @since 3.9.12
+	 *
+	 * @param int comment_id The numeric ID of the comment.
+	 */
+	this.get_comment = function( comment_id ) {
+
+		// Kick out if submitting a comment.
+		if ( me.cpajax_submitting ) {
+			return;
+		}
+
+		// Set global flag.
+		me.cpajax_submitting = true;
+
+		/*
+		 * Use the following to log ajax errors from jQuery.post():
+		 *
+		 * $(document).ajaxError( function( e, xhr, settings, exception ) {
+		 *   console.log( 'error in: ' + settings.url + ' \n'+'error:\n' + xhr.responseText );
+		 * });
+		 */
+
+		// Use post method.
+		$.post(
+
+			// Set URL.
+			me.cpajax_ajax_url,
+
+			// Add data.
+			{
+
+				// Set WordPress method to call.
+				action: 'cpajax_get_comment',
+
+				// Send comment ID.
+				comment_id: comment_id
+
+			},
+
+			// Callback.
+			function( data, textStatus ) {
+
+				// If success.
+				if ( textStatus == 'success' ) {
+
+					// Pass to callback function.
+					me.get_comment_callback( data );
+
+				} else {
+
+					// Reset global flag.
+					me.cpajax_submitting = false;
+
+				}
+
+			},
+
+			// Expected format.
+			'json'
+
+		);
+
+	};
+
+
+
+	/**
+	 * AJAX callback method.
+	 *
+	 * This method gets called when data has been received from the server via
+	 * the AJAX request in this.get_comment().
+	 *
+	 * @since 3.9.12
+	 *
+	 * @param object data The data returned from the AJAX request.
+	 */
+	this.get_comment_callback = function( data ) {
+
+		// Update text_selection hidden input if there's a selection.
+		if ( parseInt( data.sel_start ) !== 0 && parseInt( data.sel_end ) !== 0 ) {
+			CommentPress.texthighlighter.commentform.current_selection_set({
+				start: parseInt( data.sel_start ),
+				end: parseInt( data.sel_end )
+			});
+		} else {
+			CommentPress.texthighlighter.commentform.current_selection_clear();
+		}
+
+		// Move form into place for editing.
+		addComment.moveFormToEdit(
+			'comment-' + data.id, data.id, 'respond', data.post_id, data.text_sig, data.content, data.nonce
+		);
+
+		// Broadcast that we're done and pass data.
+		$(document).trigger( 'commentpress-ajax-comment-callback', [ data ] );
+
+		// Reset global flag.
+		me.cpajax_submitting = false;
+
+	};
+
+
+
+	/**
+	 * Perform an AJAX request to update a comment.
+	 *
+	 * @since 3.9.12
+	 *
+	 * @param {Object} form The form.
+	 */
+	this.edit_comment = function( form ) {
+
+		// Set global flag.
+		me.cpajax_submitting = true;
+
+		// Submit the form.
+		form.ajaxSubmit({
+
+			// Override URL.
+			url: me.cpajax_ajax_url,
+
+			// Set WordPress method to call.
+			data: { action: 'cpajax_edit_comment' },
+
+			beforeSubmit: function() {
+
+				$('#loading').show();
+				$('#submit').prop( 'disabled', 'disabled' );
+				$('#submit').hide();
+
+			}, // End beforeSubmit.
+
+			error: function( response ) {
+
+				// Simply bail for now.
+				me.reset();
+				console.log( 'edit_comment failed', response );
+				return false;
+
+			}, // End error()
+
+			success: function( response ) {
+
+				// Declare vars.
+				var top, data, comment;
+
+				// Convert response string to JSON.
+				data = JSON.parse( response );
+
+				// Slide up comment form.
+				$('#respond').slideUp( 'fast', function() {
+
+					// After slide.
+					addComment.commentEditResetForm();
+					addComment.cancelForm();
+					$('#respond').show();
+
+				});
+
+				// Get edited comment.
+				comment = $('#comment-' + data.id);
+
+				// Add a couple of classes.
+				comment.addClass( 'comment-highlighted' );
+
+				// Replace comment content.
+				$('#comment-' + data.id + ' .comment-content').html( data.content );
+
+				/**
+				 * Notify plugins that a comment has been edited.
+				 *
+				 * @since 3.9.12
+				 *
+				 * @param {Object} data The edited comment data.
+				 */
+				$(document).trigger( 'commentpress-ajax-comment-edited', [ data ] );
+
+				// Show it.
+				$('#comment-' + data.id + ' .comment-content').slideDown( 'fast',
+
+					// Animation complete.
+					function() {
+
+						// Scroll to edited comment.
+						$(window).stop(true).scrollTo(
+							comment,
+							{
+								duration: cp_scroll_speed,
+								axis: 'y',
+								offset: CommentPress.theme.header.get_offset(),
+								onAfter: function() {
+
+									// Remove highlight class.
+									comment.addClass( 'comment-fade' );
+
+								}
+							}
+						);
+
+					}
+
+				); // End slide.
+
+				// Reset.
+				me.reset();
+
+			} // End success()
+
+		}); // End ajaxSubmit()
+
+		// --<
+		return false;
 
 	};
 

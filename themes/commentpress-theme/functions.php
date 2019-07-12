@@ -209,6 +209,22 @@ function commentpress_enqueue_scripts_and_styles() {
 				COMMENTPRESS_VERSION // Version.
 			);
 
+			// Localisation array.
+			$vars = array(
+				'localisation' => array(
+					'submit' => __( 'Edit Comment', 'commentpress-core' ),
+					'title' => __( 'Leave a comment', 'commentpress-core' ),
+					'edit_title' => __( 'Edit comment', 'commentpress-core' ),
+				),
+			);
+
+			// Localise with wp function.
+			wp_localize_script(
+				'cp_form',
+				'CommentPress_Form',
+				$vars
+			);
+
 		}
 
 		// Test for CommentPress Core special page.
@@ -679,14 +695,8 @@ function commentpress_get_all_comments_page_content() {
 	// Declare access to globals.
 	global $commentpress_core;
 
-	// Set default.
-	$page_title = apply_filters(
-		'cp_page_all_comments_title',
-		__( 'All Comments', 'commentpress-core' )
-	);
-
-	// Set title.
-	$page_content = '<h2 class="post_title">' . $page_title . '</h2>' . "\n\n";
+	// Init page content.
+	$page_content = '';
 
 	// Get page or post.
 	$page_or_post = $commentpress_core->get_list_option();

@@ -1685,11 +1685,8 @@ function commentpress_get_comments_by_page_content() {
 	// Declare access to globals.
 	global $commentpress_core;
 
-	// Set title.
-	$page_content = '<h2 class="post_title">' . __( 'Comments by Commenter', 'commentpress-core' ) . '</h2>' . "\n\n";
-
 	// Get data.
-	$page_content .= commentpress_get_comments_by_content();
+	$page_content = commentpress_get_comments_by_content();
 
 	// --<
 	return $page_content;
@@ -2965,8 +2962,20 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 			__( 'Edit', 'commentpress-core' )
 		);
 
+		// Construct inline Javascript for edit link.
+		$edit_js = 'return addComment.moveFormToEdit(' .
+						"'comment-" . $comment->comment_ID . "'" . ', ' .
+						"'" . $comment->comment_ID . "'" . ', ' .
+						"'respond'" . ', ' .
+						"'" . $post->ID . "'" . ', ' .
+						"'" . $comment->comment_signature . "'" .
+					');';
+
+		$edit_js = ' onclick="' . $edit_js . '"';
+		$edit_js = '';
+
 		// Get edit comment link.
-		$editlink = '<span class="alignright comment-edit"><a class="comment-edit-link" href="' . get_edit_comment_link() . '" title="' . $edit_title_text . '">' . $edit_text . '</a></span>';
+		$editlink = '<span class="alignright comment-edit"><a class="comment-edit-link" href="' . get_edit_comment_link() . '" title="' . $edit_title_text . '"' . $edit_js . '>' . $edit_text . '</a></span>';
 
 		// Add a filter for plugins.
 		$editlink = apply_filters( 'cp_comment_edit_link', $editlink, $comment );

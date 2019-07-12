@@ -18,6 +18,10 @@ add_action( 'wp', 'cpajax_enable_plugin' );
 add_action( 'wp_ajax_cpajax_get_new_comments', 'cpajax_get_new_comments' );
 add_action( 'wp_ajax_nopriv_cpajax_get_new_comments', 'cpajax_get_new_comments' );
 
+// Add AJAX edit comment functionality.
+add_action( 'wp_ajax_cpajax_get_comment', 'cpajax_get_comment' );
+add_action( 'wp_ajax_cpajax_edit_comment', 'cpajax_edit_comment' );
+
 // Remove comment flood filter if you want more 'chat-like' functionality.
 //remove_filter('comment_flood_filter', 'wp_throttle_comment_flood', 10, 3);
 
@@ -219,6 +223,191 @@ function cpajax_plugin_can_activate() {
 
 	// --<
 	return $allowed;
+
+}
+
+
+
+//##############################################################################
+
+
+
+/**
+ * Get a comment in response to an AJAX request.
+ *
+ * @since 3.9.12
+ */
+function cpajax_get_comment() {
+
+	// Init return.
+	$data = array();
+
+	// Get incoming data.
+	$comment_id = isset( $_POST['comment_id'] ) ? absint( $_POST['comment_id'] ) : NULL;
+
+	// Sanity check.
+	if ( ! is_null( $comment_id ) ) {
+
+		// Get comment.
+		$comment = get_comment( $comment_id );
+
+		// Add comment data to array.
+		$data = array(
+			'id' => $comment->comment_ID,
+			'parent' => $comment->comment_parent,
+			'text_sig' => $comment->comment_signature,
+			'post_id' => $comment->comment_post_ID,
+			'content' => $comment->comment_content,
+		);
+
+		// Get selection data.
+		$selection_data = get_comment_meta( $comment_id, '_cp_comment_selection', true );
+
+		// If there is selection data.
+		if ( ! empty( $selection_data ) ) {
+
+			// Make into an array.
+			$selection = explode( ',', $selection_data );
+
+			// Add to data.
+			$data['sel_start'] = $selection[0];
+			$data['sel_end'] = $selection[1];
+
+		} else {
+
+			// Add default data.
+			$data['sel_start'] = 0;
+			$data['sel_end'] = 0;
+
+		}
+
+		// Add nonce or verification.
+		$data['nonce'] = wp_create_nonce( 'cpajax_comment_nonce' );
+
+	}
+
+	/**
+	 * Filter the data returned to the calling script.
+	 *
+	 * @since 3.9.12
+	 *
+	 * @param array $data The array of comment data.
+	 * @return array $data The modified array of comment data.
+	 */
+	$data = apply_filters( 'commentpress_ajax_get_comment', $data );
+
+	// Set reasonable headers.
+	header('Content-type: text/plain');
+	header("Cache-Control: no-cache");
+	header("Expires: -1");
+
+	// Echo.
+	echo json_encode( $data );
+
+	// Die.
+	exit();
+
+}
+
+
+
+/**
+ * Edit a comment in response to an AJAX request.
+ *
+ * @since 3.9.12
+ */
+function cpajax_edit_comment() {
+
+	// Init return.
+	$data = array();
+
+	// Authenticate.
+	$nonce = isset( $_POST['cpajax_comment_nonce'] ) ? $_POST['cpajax_comment_nonce'] : '';
+	if ( ! wp_verify_nonce( $nonce, 'cpajax_comment_nonce' ) ) {
+
+		// Skip.
+
+	} else {
+
+		// Get incoming comment ID.
+		$comment_id = isset( $_POST['comment_ID'] ) ? absint( $_POST['comment_ID'] ) : NULL;
+
+		// Sanity check.
+		if ( ! is_null( $comment_id ) ) {
+
+			// Construct comment data.
+			$comment_data = array(
+				'comment_ID' => $comment_id,
+				'comment_content' => isset( $_POST['comment'] ) ? sanitize_textarea_field( $_POST['comment'] ) : '',
+				'comment_post_ID' => isset( $_POST['comment_post_ID'] ) ? absint( $_POST['comment_post_ID'] ) : '',
+			);
+
+			// Update the comment.
+			wp_update_comment( $comment_data );
+
+			// Get the fresh comment data.
+			$comment = get_comment( $comment_data['comment_ID'] );
+
+			// Access plugin.
+			global $commentpress_core;
+
+			// Get text signature.
+			$comment_signature = $commentpress_core->db->get_text_signature_by_comment_id( $comment->comment_ID );
+
+			// Add comment data to array.
+			$data = array(
+				'id' => $comment->comment_ID,
+				'parent' => $comment->comment_parent,
+				'text_sig' => $comment_signature,
+				'post_id' => $comment->comment_post_ID,
+				'content' => apply_filters( 'comment_text', $comment->comment_content ),
+			);
+
+			// Get selection data.
+			$selection_data = get_comment_meta( $comment_id, '_cp_comment_selection', true );
+
+			// If there is selection data.
+			if ( ! empty( $selection_data ) ) {
+
+				// Make into an array.
+				$selection = explode( ',', $selection_data );
+
+				// Add to data.
+				$data['sel_start'] = $selection[0];
+				$data['sel_end'] = $selection[1];
+
+			} else {
+
+				// Add default data.
+				$data['sel_start'] = 0;
+				$data['sel_end'] = 0;
+
+			}
+
+		} // End check for comment ID.
+
+		/**
+		 * Filter the data returned to the calling script.
+		 *
+		 * @since 3.9.12
+		 *
+		 * @param array $data The array of comment data.
+		 * @return array $data The modified array of comment data.
+		 */
+		$data = apply_filters( 'commentpress_ajax_edited_comment', $data );
+
+	} // End nonce check.
+
+	// Set reasonable headers.
+	header('Content-type: text/plain');
+	header("Cache-Control: no-cache");
+	header("Expires: -1");
+
+	// Echo.
+	echo json_encode( $data );
+
+	// Die.
+	exit();
 
 }
 

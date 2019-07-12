@@ -69,7 +69,8 @@ NOTES
 			array(
 				'type'=> 'comment',
 				'reply_text' => __( 'Reply to this comment', 'commentpress-core' ),
-				'callback' => 'commentpress_comments'
+				'callback' => 'commentpress_comments',
+				'style'=> 'ol',
 			),
 			$comments
 		); ?>

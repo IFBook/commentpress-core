@@ -10,9 +10,7 @@ $_page_content = commentpress_get_comments_by_page_content();
 
 
 
-get_header();
-
-?>
+get_header(); ?>
 
 
 
@@ -36,13 +34,11 @@ get_header();
 
 <div class="post">
 
-
+<h2 class="post_title"><?php _e( 'Comments by Commenter', 'commentpress-core' ); ?></h2>
 
 <div id="comments_in_page_wrapper">
 <?php echo $_page_content; ?>
 </div>
-
-
 
 </div><!-- /post -->
 

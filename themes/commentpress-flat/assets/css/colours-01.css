@@ -248,7 +248,9 @@ body.commentpress_page #cp-multisite-options h3,
 }
 
 h3.activity_heading:hover,
-.comments_container > h3:hover
+.comments_container > h3:hover,
+#comments_in_page_wrapper h3.general_comments_header:hover,
+#comments_in_page_wrapper h3.nocomments:hover
 {
 	background-color: #afb290;
 }
@@ -329,6 +331,15 @@ ul#content-tabs li.default-content-tab h2 a:hover
 
 
 
+/* General Comments, All Comments & Comments By */
+#comments_in_page_wrapper .comments_container,
+#comments_in_page_wrapper .all_comments_listing
+{
+	background-color: #f7f7ef;
+}
+
+
+
 /* Comments Sidebar */
 @media all and (max-width: 1400px) {
 	.comment-content
@@ -355,7 +366,9 @@ ul#content-tabs li.default-content-tab h2 a:hover
 
 
 /* Activity Sidebar */
-h3.activity_heading
+h3.activity_heading,
+#comments_in_page_wrapper h3.general_comments_header,
+#comments_in_page_wrapper h3.nocomments
 {
 	color: #fff;
 	background-color: #C1C3A9;
