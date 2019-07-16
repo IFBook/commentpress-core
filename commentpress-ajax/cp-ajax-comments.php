@@ -360,7 +360,7 @@ function cpajax_edit_comment() {
 				'parent' => $comment->comment_parent,
 				'text_sig' => $comment_signature,
 				'post_id' => $comment->comment_post_ID,
-				'content' => apply_filters( 'comment_text', $comment->comment_content ),
+				'content' => apply_filters( 'comment_text', get_comment_text( $comment->comment_ID ) ),
 			);
 
 			// Get selection data.
