@@ -428,11 +428,6 @@ addComment = {
 	 */
 	commentEditResetForm : function() {
 
-		// Bail if not in commentEditMode.
-		if ( this.commentEditMode === 'n' ) {
-			return;
-		}
-
 		// Reset commentEditMode.
 		this.commentEditMode = 'n';
 
