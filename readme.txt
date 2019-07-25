@@ -213,6 +213,11 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+<h4>3.9.12</h4>
+
+* Introduces front-end AJAXified comment editing
+* Supports "wp_body_open" function and action
+
 <h4>3.9.11</h4>
 
 * Restore compatibility with BP Groupblog plugin
