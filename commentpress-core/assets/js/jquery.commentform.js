@@ -186,7 +186,7 @@ addComment = {
 		 * @param {String} An identifier.
 		 * @param {Array} data The params passed in to this method.
 		 */
-		$(document).trigger( 'commentpress-commentform-moved', [ 'add', data ] );
+		jQuery(document).trigger( 'commentpress-commentform-moved', [ 'add', data ] );
 
 		// Do not bubble.
 		return false;
@@ -278,16 +278,16 @@ addComment = {
 
 		// Append an identifying input to the comment form.
 		var input = '<input type="hidden" name="cp_edit_comment" id="cp_edit_comment" value="y" />';
-		$(input).appendTo( '#commentform' );
+		jQuery(input).appendTo( '#commentform' );
 
 		// Append an input with the comment ID to the comment form.
 		var comment_id_num = commentID.split('-')[1];
 		var comment_id = '<input type="hidden" name="comment_ID" id="comment_ID" value="' + comment_id_num + '" />';
-		$(comment_id).appendTo( '#commentform' );
+		jQuery(comment_id).appendTo( '#commentform' );
 
 		// Append nonce to the comment form.
 		var nonce = '<input type="hidden" name="cpajax_comment_nonce" id="cpajax_comment_nonce" value="' + nonce + '" />';
-		$(nonce).appendTo( '#commentform' );
+		jQuery(nonce).appendTo( '#commentform' );
 
 		// Set comment_post_ID hidden input to postID if we have them.
 		if ( post_e && postID ) {
@@ -306,28 +306,28 @@ addComment = {
 		this.respondID = respondID;
 
 		// Store previous content of form title.
-		this.previousTitle = $('#respond_title').text();
+		this.previousTitle = jQuery('#respond_title').text();
 
 		// Alter content of form title.
-		$('#respond_title').text( CommentPress_Form.localisation['edit_title'] );
+		jQuery('#respond_title').text( CommentPress_Form.localisation['edit_title'] );
 
 		// Hide comment form author details.
-		$('#author_details').hide();
+		jQuery('#author_details').hide();
 
 		// Show all comment content blocks.
-		$( '.comment-content' ).css( 'display', 'block' );
+		jQuery( '.comment-content' ).css( 'display', 'block' );
 
 		// Hide this comment content.
-		$('#' + commentID + ' .comment-content').hide();
+		jQuery('#' + commentID + ' .comment-content').hide();
 
 		// Store previous content of submit button.
-		this.previousSubmit = $('#submit').attr( 'value' );
+		this.previousSubmit = jQuery('#submit').attr( 'value' );
 
 		// Alter content of comment form submit button.
-		$('#submit').attr( 'value', CommentPress_Form.localisation['submit'] );
+		jQuery('#submit').attr( 'value', CommentPress_Form.localisation['submit'] );
 
 		// Insert content into unrendered comment form.
-		$('#comment').val( commentContent );
+		jQuery('#comment').val( commentContent );
 
 		// Do we have a temp div?
 		if ( !this.I('wp-temp-form-div') ) {
@@ -415,7 +415,7 @@ addComment = {
 		 * @param {String} An identifier.
 		 * @param {Array} data The params passed in to this method.
 		 */
-		$(document).trigger( 'commentpress-commentform-moved', [ 'edit', data ] );
+		jQuery(document).trigger( 'commentpress-commentform-moved', [ 'edit', data ] );
 
 		// Do not bubble.
 		return false;
@@ -432,31 +432,31 @@ addComment = {
 	commentEditResetForm : function() {
 
 		// Alter content of form title.
-		$('#respond_title').text( this.previousTitle );
+		jQuery('#respond_title').text( this.previousTitle );
 
 		// Show author details.
-		$('#author_details').show();
+		jQuery('#author_details').show();
 
 		// Show all comment content blocks.
-		$('.comment-content').css( 'display', 'block' );
+		jQuery('.comment-content').css( 'display', 'block' );
 
 		// Clear comment form.
-		$('#comment').val( '' );
+		jQuery('#comment').val( '' );
 
 		// Alter content of comment form submit button.
-		$('#submit').attr( 'value', this.previousSubmit );
+		jQuery('#submit').attr( 'value', this.previousSubmit );
 
 		// Reset commentEditMode.
 		this.commentEditMode = 'n';
 
 		// Remove identifying input from the comment form.
-		$('#cp_edit_comment').remove();
+		jQuery('#cp_edit_comment').remove();
 
 		// Remove comment ID input.
-		$('#comment_ID').remove();
+		jQuery('#comment_ID').remove();
 
 		// Remove nonce input from the comment form.
-		$('#cpajax_comment_nonce').remove();
+		jQuery('#cpajax_comment_nonce').remove();
 
 	},
 
@@ -510,13 +510,13 @@ addComment = {
 				// a paragraph, but there will be no *exact* reference in the DOM.
 
 				// Find para num.
-				var para_id = $('#para_wrapper-' + text_sig + ' .reply_to_para').attr('id');
+				var para_id = jQuery('#para_wrapper-' + text_sig + ' .reply_to_para').attr('id');
 
 				// Is there an element for the exact match?
 				if ( 'undefined' === typeof para_id ) {
 
 					// NO -> crawl up the DOM looking for the wrapper.
-					var parent_wrapper = $('#respond').closest('div.paragraph_wrapper');
+					var parent_wrapper = jQuery('#respond').closest('div.paragraph_wrapper');
 
 					// If we get it.
 					if ( parent_wrapper.length > 0 ) {
@@ -525,7 +525,7 @@ addComment = {
 						var parent_wrapper_id = parent_wrapper.attr('id');
 
 						// Proceed with this instead.
-						var para_id = $( '#' + parent_wrapper_id + ' .reply_to_para').attr('id');
+						var para_id = jQuery( '#' + parent_wrapper_id + ' .reply_to_para').attr('id');
 
 					}
 
@@ -591,7 +591,7 @@ addComment = {
 		this.text_signature = '';
 
 		// Clear comment form.
-		$('#comment').val( '' );
+		jQuery('#comment').val( '' );
 
 		// Reload tinyMCE.
 		addComment.enableForm();
@@ -607,7 +607,7 @@ addComment = {
 		 * @param {String} An identifier.
 		 * @param {Array} data The params passed in to this method.
 		 */
-		$(document).trigger( 'commentpress-commentform-moved', [ 'cancel', data ] );
+		jQuery(document).trigger( 'commentpress-commentform-moved', [ 'cancel', data ] );
 
 		// Do not bubble.
 		return false;
@@ -726,21 +726,21 @@ addComment = {
 
 					// Restore.
 					//title.innerHTML = 'Comment on the page';
-					title.innerHTML = $( '#para_wrapper-' + textSig + ' a.reply_to_para' ).text();
+					title.innerHTML = jQuery( '#para_wrapper-' + textSig + ' a.reply_to_para' ).text();
 
 					// Get comment list.
-					var comment_list = $( '#para_wrapper-' + addComment.text_signature + ' .commentlist' );
+					var comment_list = jQuery( '#para_wrapper-' + addComment.text_signature + ' .commentlist' );
 
 					// If we have a comment list.
 					if ( comment_list[0] && cp_promote_reading == '0' ) {
-						$( '#para_wrapper-' + addComment.text_signature + ' div.reply_to_para' ).show();
+						jQuery( '#para_wrapper-' + addComment.text_signature + ' div.reply_to_para' ).show();
 					}
 
 					// If we're cancelling, show all reply to links.
 					if ( mode == 'cancel' && cp_promote_reading == '1' ) {
-						$( 'div.reply_to_para' ).show();
+						jQuery( 'div.reply_to_para' ).show();
 					} else {
-						$( '#para_wrapper-' + textSig + ' div.reply_to_para' ).hide();
+						jQuery( '#para_wrapper-' + textSig + ' div.reply_to_para' ).hide();
 					}
 
 				}
@@ -748,12 +748,12 @@ addComment = {
 			} else {
 
 				// It's a comment on a paragraph.
-				var reply_text = $( '#para_wrapper-' + textSig + ' a.reply_to_para' );
+				var reply_text = jQuery( '#para_wrapper-' + textSig + ' a.reply_to_para' );
 
 				/*
 				// Test for multiples.
 				if ( reply_text.length > 1 ) {
-					reply_text = $( reply_text[0] );
+					reply_text = jQuery( reply_text[0] );
 				}
 				*/
 
@@ -761,27 +761,27 @@ addComment = {
 				title.innerHTML = reply_text.text();
 
 				// Get comment list.
-				var comment_list = $( '#para_wrapper-' + addComment.text_signature + ' .commentlist' );
+				var comment_list = jQuery( '#para_wrapper-' + addComment.text_signature + ' .commentlist' );
 
 				// If we have a comment list and promoting commenting - or promoting reading.
 				if ( ( comment_list[0] && cp_promote_reading == '0' ) || cp_promote_reading == '1' ) {
 
 					// Show previous reply to para link.
 					if ( 'undefined' !== typeof addComment.text_signature ) {
-						$( '#para_wrapper-' + addComment.text_signature + ' div.reply_to_para' ).show();
+						jQuery( '#para_wrapper-' + addComment.text_signature + ' div.reply_to_para' ).show();
 					}
 
 				}
 
 				// Sort out reply to para links.
 				if ( cp_promote_reading == '0' ) {
-					$( '#para_wrapper-' + textSig + ' div.reply_to_para' ).hide();
+					jQuery( '#para_wrapper-' + textSig + ' div.reply_to_para' ).hide();
 				} else {
 					// If we're cancelling, show all reply to links.
 					if ( mode == 'cancel' ) {
-						$( 'div.reply_to_para' ).show();
+						jQuery( 'div.reply_to_para' ).show();
 					} else {
-						$( '#para_wrapper-' + textSig + ' div.reply_to_para' ).toggle();
+						jQuery( '#para_wrapper-' + textSig + ' div.reply_to_para' ).toggle();
 					}
 				}
 
@@ -795,10 +795,10 @@ addComment = {
 			//addComment.replyTitle = title.innerHTML;
 
 			// Seems like sometimes we can get an array for the .reply with more than one item.
-			var reply = $( '#comment-' + parentID + ' > .reply' )[0];
+			var reply = jQuery( '#comment-' + parentID + ' > .reply' )[0];
 
 			// Get unique.
-			var unique = $(reply).text();
+			var unique = jQuery(reply).text();
 
 			// If we have link text, then a comment reply is allowed.
 			if ( unique != '' ) {
@@ -814,11 +814,11 @@ addComment = {
 
 					// Show previous.
 					if ( 'undefined' !== typeof addComment.text_signature ) {
-						$( '#para_wrapper-' + addComment.text_signature + ' div.reply_to_para' ).show();
+						jQuery( '#para_wrapper-' + addComment.text_signature + ' div.reply_to_para' ).show();
 					}
 
 					// Show current.
-					$( '#para_wrapper-' + textSig + ' div.reply_to_para' ).show();
+					jQuery( '#para_wrapper-' + textSig + ' div.reply_to_para' ).show();
 
 				}
 
@@ -841,11 +841,11 @@ addComment = {
 
 		// Hide this reply link.
 		if ( parentID != '0' ) {
-			$( '#comment-' + parentID + ' > .reply' ).css('display', 'none');
+			jQuery( '#comment-' + parentID + ' > .reply' ).css('display', 'none');
 		}
 
 		// Trigger theme to highlight comment.
-		$( document ).trigger( 'commentpress-comment-highlight', [ parentID ] );
+		jQuery( document ).trigger( 'commentpress-comment-highlight', [ parentID ] );
 
 	},
 
@@ -864,12 +864,12 @@ addComment = {
 		if ( parentID != '0' ) {
 
 			// Show reply link.
-			$( '#comment-' + parentID + ' > .reply' ).css('display', 'block');
+			jQuery( '#comment-' + parentID + ' > .reply' ).css('display', 'block');
 
 		}
 
 		// Unhighlight comment.
-		$( document ).trigger( 'commentpress-comment-unhighlight', [ parentID ] );
+		jQuery( document ).trigger( 'commentpress-comment-unhighlight', [ parentID ] );
 
 	},
 
@@ -883,10 +883,10 @@ addComment = {
 	clearAllCommentHighlights : function() {
 
 		// Show all reply links.
-		$( '.reply' ).css('display', 'block');
+		jQuery( '.reply' ).css('display', 'block');
 
 		// Clear highlight.
-		$( document ).trigger( 'commentpress-comment-highlights-clear' );
+		jQuery( document ).trigger( 'commentpress-comment-highlights-clear' );
 
 	},
 
