@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CommentPress Core 3.9.12\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/commentpress-core\n"
-"POT-Creation-Date: 2019-07-25 16:05:33+00:00\n"
+"POT-Creation-Date: 2019-07-25 17:00:46+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,52 +12,52 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: commentpress-ajax/cp-ajax-comments.php:172
+#: commentpress-ajax/cp-ajax-comments.php:175
 msgid "Loading..."
 msgstr ""
 
-#: commentpress-ajax/cp-ajax-comments.php:173
+#: commentpress-ajax/cp-ajax-comments.php:176
 msgid "Please enter your name."
 msgstr ""
 
-#: commentpress-ajax/cp-ajax-comments.php:174
+#: commentpress-ajax/cp-ajax-comments.php:177
 msgid "Please enter your email address."
 msgstr ""
 
-#: commentpress-ajax/cp-ajax-comments.php:175
+#: commentpress-ajax/cp-ajax-comments.php:178
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: commentpress-ajax/cp-ajax-comments.php:176
+#: commentpress-ajax/cp-ajax-comments.php:179
 msgid "Please enter your comment."
 msgstr ""
 
-#: commentpress-ajax/cp-ajax-comments.php:177
+#: commentpress-ajax/cp-ajax-comments.php:180
 msgid "Your comment has been added."
 msgstr ""
 
-#: commentpress-ajax/cp-ajax-comments.php:178
+#: commentpress-ajax/cp-ajax-comments.php:181
 msgid "AJAX error!"
 msgstr ""
 
-#: commentpress-ajax/cp-ajax-comments.php:181
+#: commentpress-ajax/cp-ajax-comments.php:184
 #: commentpress-core/class_commentpress_display.php:339
 msgid "Are you sure?"
 msgstr ""
 
-#: commentpress-ajax/cp-ajax-comments.php:182
+#: commentpress-ajax/cp-ajax-comments.php:185
 msgid "Are you sure you want to assign the comment and its replies to the textblock? This action cannot be undone."
 msgstr ""
 
-#: commentpress-ajax/cp-ajax-comments.php:183
+#: commentpress-ajax/cp-ajax-comments.php:186
 msgid "Submitting..."
 msgstr ""
 
-#: commentpress-ajax/cp-ajax-comments.php:184
+#: commentpress-ajax/cp-ajax-comments.php:187
 msgid "Please wait while the comments are reassigned. The page will refresh when this has been done."
 msgstr ""
 
-#: commentpress-ajax/cp-ajax-comments.php:188
+#: commentpress-ajax/cp-ajax-comments.php:191
 #: commentpress-core/assets/includes/theme/theme-functions.php:1435
 #: commentpress-core/class_commentpress_display.php:326
 #: themes/commentpress-flat/assets/templates/comment_form.php:143
@@ -66,7 +66,7 @@ msgstr ""
 msgid "Comment"
 msgstr ""
 
-#: commentpress-ajax/cp-ajax-comments.php:190
+#: commentpress-ajax/cp-ajax-comments.php:193
 #: commentpress-core/class_commentpress.php:2533
 #: commentpress-core/class_commentpress_display.php:1772
 #: commentpress-core/class_commentpress_display.php:2190
@@ -81,15 +81,15 @@ msgstr ""
 msgid "Comments"
 msgstr ""
 
-#: commentpress-ajax/cp-ajax-comments.php:601
+#: commentpress-ajax/cp-ajax-comments.php:604
 msgid "Drop on to a text-block to reassign this comment (and any replies) to it"
 msgstr ""
 
-#: commentpress-ajax/cp-ajax-comments.php:607
+#: commentpress-ajax/cp-ajax-comments.php:610
 msgid "Move"
 msgstr ""
 
-#: commentpress-ajax/cp-ajax-comments.php:814
+#: commentpress-ajax/cp-ajax-comments.php:817
 msgid "No CommentPress Core"
 msgstr ""
 
@@ -200,7 +200,7 @@ msgid "Comment awaiting moderation"
 msgstr ""
 
 #: commentpress-core/assets/includes/theme/theme-functions.php:1968
-#: commentpress-core/assets/includes/theme/theme-functions.php:2995
+#: commentpress-core/assets/includes/theme/theme-functions.php:2983
 msgid "%1$s at %2$s"
 msgstr ""
 
@@ -339,59 +339,59 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:3010
+#: commentpress-core/assets/includes/theme/theme-functions.php:2998
 msgid "Permalink for this comment"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:3283
+#: commentpress-core/assets/includes/theme/theme-functions.php:3271
 #: themes/commentpress-flat/functions.php:506
 #: themes/commentpress-modern/functions.php:577
 #: themes/commentpress-theme/functions.php:464
 msgid "Next page"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:3284
+#: commentpress-core/assets/includes/theme/theme-functions.php:3272
 #: themes/commentpress-flat/functions.php:536
 #: themes/commentpress-modern/functions.php:607
 #: themes/commentpress-theme/functions.php:492
 msgid "Previous page"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:3302
+#: commentpress-core/assets/includes/theme/theme-functions.php:3290
 msgid "Pages: "
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:4044
+#: commentpress-core/assets/includes/theme/theme-functions.php:4032
 msgid "Untitled Widget"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:4141
+#: commentpress-core/assets/includes/theme/theme-functions.php:4129
 msgid "Newer version"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:4176
+#: commentpress-core/assets/includes/theme/theme-functions.php:4164
 msgid "Older version"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:4837
+#: commentpress-core/assets/includes/theme/theme-functions.php:4825
 #: themes/commentpress-modern/assets/templates/header_body.php:45
 msgid "Content"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:4844
+#: commentpress-core/assets/includes/theme/theme-functions.php:4832
 msgid "Literal"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:4852
+#: commentpress-core/assets/includes/theme/theme-functions.php:4840
 msgid "Original"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:4885
+#: commentpress-core/assets/includes/theme/theme-functions.php:4873
 #: commentpress-core/class_commentpress_workflow.php:192
 msgid "Literal Translation"
 msgstr ""
 
-#: commentpress-core/assets/includes/theme/theme-functions.php:4904
+#: commentpress-core/assets/includes/theme/theme-functions.php:4892
 #: commentpress-core/class_commentpress_workflow.php:168
 msgid "Original Text"
 msgstr ""
