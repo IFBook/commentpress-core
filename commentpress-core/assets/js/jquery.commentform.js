@@ -311,9 +311,6 @@ addComment = {
 		// Alter content of form title.
 		jQuery('#respond_title').text( CommentPress_Form.localisation['edit_title'] );
 
-		// Hide comment form author details.
-		jQuery('#author_details').hide();
-
 		// Show all comment content blocks.
 		jQuery( '.comment-content' ).css( 'display', 'block' );
 
@@ -433,9 +430,6 @@ addComment = {
 
 		// Alter content of form title.
 		jQuery('#respond_title').text( this.previousTitle );
-
-		// Show author details.
-		jQuery('#author_details').show();
 
 		// Show all comment content blocks.
 		jQuery('.comment-content').css( 'display', 'block' );
