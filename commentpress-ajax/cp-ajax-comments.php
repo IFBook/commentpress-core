@@ -101,6 +101,9 @@ function cpajax_add_javascripts() {
 	// Add post ID.
 	$vars['cpajax_post_id'] = $post->ID;
 
+	// Add post comment status.
+	$vars['cpajax_post_comment_status'] = $post->comment_status;
+
 	// Get translations array.
 	$vars['cpajax_lang'] = cpajax_localise();
 

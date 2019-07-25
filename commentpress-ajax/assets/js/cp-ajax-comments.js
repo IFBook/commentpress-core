@@ -53,6 +53,7 @@ CommentPress.ajax.comments = new function() {
 		this.cpajax_ajax_url = CommentpressAjaxSettings.cpajax_ajax_url;
 		this.cpajax_spinner_url = CommentpressAjaxSettings.cpajax_spinner_url;
 		this.cpajax_post_id = CommentpressAjaxSettings.cpajax_post_id;
+		this.cpajax_post_comment_status = CommentpressAjaxSettings.cpajax_post_comment_status;
 		this.cpajax_lang = CommentpressAjaxSettings.cpajax_lang;
 		this.cpajax_interval = CommentpressAjaxSettings.cpajax_comment_refresh_interval;
 
@@ -1262,6 +1263,11 @@ CommentPress.ajax.comments = new function() {
 	 * @since 3.9.12
 	 */
 	this.edit_comments_setup = function() {
+
+		// Bail if comments are closed, since there's no TinyMCE.
+		if ( this.cpajax_post_comment_status !== 'open' ) {
+			return;
+		}
 
 		// Unbind first to allow repeated calls to this function.
 		$('#comments_sidebar').off( 'click', '.comment-edit-link' );
