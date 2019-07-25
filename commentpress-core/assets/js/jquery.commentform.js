@@ -306,7 +306,7 @@ addComment = {
 		this.respondID = respondID;
 
 		// Store previous content of form title.
-		this.previousTitle = jQuery('#respond_title').text();
+		addComment.previousTitle = jQuery('#respond_title').text();
 
 		// Alter content of form title.
 		jQuery('#respond_title').text( CommentPress_Form.localisation['edit_title'] );
@@ -428,8 +428,13 @@ addComment = {
 	 */
 	commentEditResetForm : function() {
 
-		// Alter content of form title.
-		jQuery('#respond_title').text( this.previousTitle );
+		// Bail if not in commentEditMode.
+		if ( this.commentEditMode === 'n' ) {
+			return;
+		}
+
+		// Reset commentEditMode.
+		this.commentEditMode = 'n';
 
 		// Show all comment content blocks.
 		jQuery('.comment-content').css( 'display', 'block' );
@@ -440,8 +445,10 @@ addComment = {
 		// Alter content of comment form submit button.
 		jQuery('#submit').attr( 'value', this.previousSubmit );
 
-		// Reset commentEditMode.
-		this.commentEditMode = 'n';
+		// Alter content of form title.
+		if ( 'undefined' !== typeof addComment.previousTitle && addComment.previousTitle != '' ) {
+			jQuery('#respond_title').text( addComment.previousTitle );
+		}
 
 		// Remove identifying input from the comment form.
 		jQuery('#cp_edit_comment').remove();
@@ -719,7 +726,6 @@ addComment = {
 				} else {
 
 					// Restore.
-					//title.innerHTML = 'Comment on the page';
 					title.innerHTML = jQuery( '#para_wrapper-' + textSig + ' a.reply_to_para' ).text();
 
 					// Get comment list.
