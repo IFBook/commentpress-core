@@ -345,14 +345,8 @@ function cpajax_edit_comment() {
 				'comment_post_ID' => isset( $_POST['comment_post_ID'] ) ? absint( $_POST['comment_post_ID'] ) : '',
 			);
 
-			// Filter the comment content.
-			add_filter( 'comment_save_pre', 'wp_filter_kses' );
-
 			// Update the comment.
 			wp_update_comment( $comment_data );
-
-			// Remove the comment content filter.
-			remove_filter( 'comment_save_pre', 'wp_filter_kses' );
 
 			// Get the fresh comment data.
 			$comment = get_comment( $comment_data['comment_ID'] );
