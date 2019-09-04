@@ -15,12 +15,12 @@ a unified plugin that covers all situations.
 
 
 
-// define version
+// Define version
 define( 'COMMENTPRESS_MU_PLUGIN_VERSION', '1.0' );
 
 
 
-// sanity check
+// Sanity check.
 if ( ! class_exists( 'Commentpress_Multisite_Loader' ) ) :
 
 /**
@@ -86,7 +86,7 @@ class Commentpress_Multisite_Loader {
 	 */
 	function __construct() {
 
-		// init
+		// Init.
 		$this->initialise();
 
 	}
@@ -100,90 +100,90 @@ class Commentpress_Multisite_Loader {
 	 */
 	public function initialise() {
 
-		// check for network activation
+		// Check for network activation.
 		//add_action( 'activated_plugin',  array( $this, 'network_activated' ), 10, 2 );
 
-		// check for network deactivation
+		// Check for network deactivation.
 		add_action( 'deactivated_plugin',  array( $this, 'network_deactivated' ), 10, 2 );
 
 		// ---------------------------------------------------------------------
-		// load Database Wrapper object
+		// Load Database Wrapper object
 		// ---------------------------------------------------------------------
 
-		// define filename
+		// Define filename.
 		$class_file = 'commentpress-multisite/class_commentpress_mu_admin.php';
 
-		// get path
+		// Get path.
 		$class_file_path = commentpress_file_is_present( $class_file );
 
-		// allow plugins to override this and supply their own
+		// Allow plugins to override this and supply their own.
 		$class_file_path = apply_filters(
 			'class_commentpress_mu_admin',
 			$class_file_path
 		);
 
-		// we're fine, include class definition
+		// We're fine, include class definition.
 		require_once( $class_file_path );
 
-		// init autoload database object
+		// Init autoload database object.
 		$this->db = new Commentpress_Multisite_Admin( $this );
 
 		// ---------------------------------------------------------------------
-		// load standard Multisite object
+		// Load standard Multisite object.
 		// ---------------------------------------------------------------------
 
-		// define filename
+		// Define filename.
 		$class_file = 'commentpress-multisite/class_commentpress_mu_ms.php';
 
-		// get path
+		// Get path.
 		$class_file_path = commentpress_file_is_present( $class_file );
 
-		// allow plugins to override this and supply their own
+		// Allow plugins to override this and supply their own.
 		$class_file_path = apply_filters(
 			'class_commentpress_mu_ms',
 			$class_file_path
 		);
 
-		// we're fine, include class definition
+		// We're fine, include class definition.
 		require_once( $class_file_path );
 
-		// init multisite object
+		// Init multisite object
 		$this->multisite = new Commentpress_Multisite_Wordpress( $this );
 
 		// ---------------------------------------------------------------------
-		// load Post Revisions object (merge this into Core as an option)
+		// Load Post Revisions object (merge this into Core as an option).
 		// ---------------------------------------------------------------------
 
-		// define filename
+		// Define filename.
 		$class_file = 'commentpress-multisite/class_commentpress_mu_revisions.php';
 
-		// get path
+		// Get path.
 		$class_file_path = commentpress_file_is_present( $class_file );
 
-		// allow plugins to override this and supply their own
+		// Allow plugins to override this and supply their own.
 		$class_file_path = apply_filters(
 			'class_commentpress_mu_revisions',
 			$class_file_path
 		);
 
-		// we're fine, include class definition
+		// We're fine, include class definition.
 		require_once( $class_file_path );
 
-		// instantiate it
+		// Instantiate it.
 		$this->revisions = new Commentpress_Multisite_Revisions( $this );
 
 		// ---------------------------------------------------------------------
-		// call initialise() on admin object
+		// Call initialise() on admin object.
 		// ---------------------------------------------------------------------
 
-		// initialise db for multisite
+		// Initialise db for multisite.
 		$this->db->initialise( 'multisite' );
 
 		// ---------------------------------------------------------------------
-		// optionally load BuddyPress object
+		// Optionally load BuddyPress object.
 		// ---------------------------------------------------------------------
 
-		// load when BuddyPress is loaded
+		// Load when BuddyPress is loaded.
 		add_action( 'bp_include', array( $this, 'load_buddypress_object' ) );
 
 	}
@@ -198,54 +198,54 @@ class Commentpress_Multisite_Loader {
 	public function load_buddypress_object() {
 
 		// ---------------------------------------------------------------------
-		// load BuddyPress object
+		// Load BuddyPress object.
 		// ---------------------------------------------------------------------
 
-		// define filename
+		// Define filename.
 		$class_file = 'commentpress-multisite/class_commentpress_mu_bp.php';
 
-		// get path
+		// Get path.
 		$class_file_path = commentpress_file_is_present( $class_file );
 
-		// allow plugins to override this and supply their own
+		// Allow plugins to override this and supply their own.
 		$class_file_path = apply_filters(
 			'class_commentpress_mu_bp',
 			$class_file_path
 		);
 
-		// we're fine, include class definition
+		// We're fine, include class definition.
 		require_once( $class_file_path );
 
-		// init BuddyPress object
+		// Init BuddyPress object.
 		$this->bp = new Commentpress_Multisite_Buddypress( $this );
 
 		// ---------------------------------------------------------------------
-		// load Groupblog Workshop renaming object
+		// Load Groupblog Workshop renaming object.
 		// ---------------------------------------------------------------------
 
-		// define filename
+		// Define filename.
 		$class_file = 'commentpress-multisite/class_commentpress_mu_workshop.php';
 
-		// get path
+		// Get path.
 		$class_file_path = commentpress_file_is_present( $class_file );
 
-		// allow plugins to override this and supply their own
+		// Allow plugins to override this and supply their own.
 		$class_file_path = apply_filters(
 			'class_commentpress_mu_workshop',
 			$class_file_path
 		);
 
-		// we're fine, include class definition
+		// We're fine, include class definition.
 		require_once( $class_file_path );
 
-		// instantiate it
+		// Instantiate it.
 		$this->workshop = new Commentpress_Multisite_Buddypress_Groupblog( $this );
 
 		// ---------------------------------------------------------------------
-		// call initialise() on admin object again
+		// Call initialise() on admin object again.
 		// ---------------------------------------------------------------------
 
-		// initialise db for BuddyPress
+		// Initialise db for BuddyPress.
 		$this->db->initialise( 'buddypress' );
 
 	}
@@ -259,13 +259,13 @@ class Commentpress_Multisite_Loader {
 	 */
 	public function network_activated( $plugin, $network_wide = null ) {
 
-		// if it's our plugin
+		// If it's our plugin.
 		if ( $plugin == plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) {
 
-			// was it network deactivated?
+			// Was it network deactivated?
 			if ( $network_wide == true ) {
 
-				// if upgrading, we need to migrate each existing instance into a CommentPress Core blog
+				// If upgrading, we need to migrate each existing instance into a CommentPress Core blog.
 
 			}
 
@@ -282,14 +282,14 @@ class Commentpress_Multisite_Loader {
 	 */
 	public function network_deactivated( $plugin, $network_wide = null ) {
 
-		// if it's our plugin
+		// If it's our plugin.
 		if ( $plugin == plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) {
 
-			// was it network deactivated?
+			// Was it network deactivated?
 			if ( $network_wide == true ) {
 
-				// do we want to trigger deactivation_hook for all sub-blogs?
-				// or do we want to convert each instance into a self-contained
+				// Do we want to trigger deactivation_hook for all sub-blogs?
+				// Or do we want to convert each instance into a self-contained
 				// CommentPress Core blog?
 
 			}
@@ -304,16 +304,16 @@ class Commentpress_Multisite_Loader {
 
 
 
-} // class ends
+} // Class ends.
 
-endif; // class_exists
+endif; // Class_exists.
 
 
 
-// define as global
+// Define as global.
 global $commentpress_mu;
 
-// instantiate it
+// Instantiate it.
 $commentpress_mu = new Commentpress_Multisite_Loader;
 
 

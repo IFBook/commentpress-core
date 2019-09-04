@@ -2,9 +2,10 @@
 /*
 Template Name: General Comments
 */
-?>
 
-<?php get_header(); ?>
+
+
+get_header(); ?>
 
 
 

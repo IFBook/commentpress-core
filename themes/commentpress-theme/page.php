@@ -24,10 +24,10 @@
 
 					<?php
 
-					// default to hidden
+					// Default to hidden.
 					$cp_title_visibility = ' style="display: none;"';
 
-					// override if we've elected to show the title
+					// Override if we've elected to show the title.
 					if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
 						$cp_title_visibility = '';
 					}
@@ -37,10 +37,10 @@
 
 					<?php
 
-					// default to hidden
+					// Default to hidden.
 					$cp_meta_visibility = ' style="display: none;"';
 
-					// override if we've elected to show the meta
+					// Override if we've elected to show the meta.
 					if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
 						$cp_meta_visibility = '';
 					}
@@ -54,7 +54,7 @@
 
 					<?php
 
-					// test for "Post Tags and Categories for Pages" plugin
+					// Test for "Post Tags and Categories for Pages" plugin.
 					if ( class_exists( 'PTCFP' ) ) {
 
 					?>
@@ -75,24 +75,24 @@
 
 					<?php
 
-					// if we have the plugin enabled
+					// If we have the plugin enabled.
 					if ( is_object( $commentpress_core ) ) {
 
-						// get page num
+						// Get page num.
 						$num = $commentpress_core->nav->get_page_number( get_the_ID() );
 
-						// if we get one
+						// If we get one.
 						if ( $num ) {
 
-							// make lowercase if Roman
+							// Make lowercase if Roman.
 							if ( ! is_numeric( $num ) ) {
 								$num = strtolower( $num );
 							}
 
-							// wrap number
+							// Wrap number.
 							$element = '<span class="page_num_bottom">' . $num . '</span>';
 
-							// add page number
+							// Add page number.
 							?><div class="running_header_bottom"><?php
 								echo sprintf( __( 'Page %s', 'commentpress-core' ), $element );
 							?></div><?php

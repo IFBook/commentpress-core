@@ -60,9 +60,8 @@ get_header(); ?>
 <ul>
 <?php
 
-// configure
+// Configure.
 $defaults = array(
-
 	'show_option_all' => '',
 	'orderby' => 'name',
 	'order' => 'ASC',
@@ -81,11 +80,10 @@ $defaults = array(
 	'hierarchical' => true,
 	'title_li' => '',
 	'echo' => 1,
-	'depth' => 0
-
+	'depth' => 0,
 );
 
-// show them
+// Show them.
 wp_list_categories( $defaults );
 
 ?>
@@ -103,8 +101,8 @@ wp_list_categories( $defaults );
 
 //echo get_the_tag_list('<ul><li>','</li><li>','</li></ul>');
 
+// Configure.
 $args = array(
-
 	'smallest' => 1,
 	'largest' => 1,
 	'unit' => 'em',
@@ -115,22 +113,17 @@ $args = array(
 	'order' => 'ASC',
 	'link' => 'view',
 	'taxonomy' => 'post_tag',
-	'echo' => false
-
+	'echo' => false,
 );
 
-// get them
+// Get them.
 $tags = wp_tag_cloud( $args );
 
-// did we get any?
+// Did we get any?
 if ( $tags != '' ) {
-
 	echo $tags;
-
 } else {
-
 	echo '<ul><li class="no_tags">' . __( 'No tags yet', 'commentpress-core' ) . '</li></ul>';
-
 }
 
 ?>

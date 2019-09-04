@@ -13,10 +13,8 @@ NOTES
 
 
 
-// kick out if uninstall not called from WordPress
-if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) { exit(); }
-
-
+// Kick out if uninstall not called from WordPress.
+if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) { exit(); }
 
 
 
@@ -27,19 +25,17 @@ if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) { exit(); }
  */
 function commentpress_schema_restore() {
 
-	// database object
+	// Database object.
 	global $wpdb;
 
-	// include WordPress install helper script
+	// Include WordPress install helper script.
 	require_once( ABSPATH . 'wp-admin/install-helper.php' );
 
-	// drop the column, if already there
+	// Drop the column, if already there.
 	$result = maybe_drop_column(
-
 		$wpdb->comments,
 		'comment_signature',
 		"ALTER TABLE `$wpdb->comments` DROP `comment_signature`;"
-
 	);
 
 	// --<
@@ -48,27 +44,23 @@ function commentpress_schema_restore() {
 
 
 
-
-
-// delete standalone options
+// Delete standalone options.
 delete_option( 'commentpress_version' );
 delete_option( 'commentpress_options' );
 
-// restore database schema
+// Restore database schema.
 $success = commentpress_schema_restore();
-// do we care about the result?
+// Do we care about the result?
 
 
-// are we deleting in multisite?
+// Are we deleting in multisite?
 if ( is_multisite() ) {
 
-	// delete multisite options
+	// Delete multisite options.
 	delete_site_option( 'cpmu_options' );
 	delete_site_option( 'cpmu_version' );
 
 }
-
-
 
 
 

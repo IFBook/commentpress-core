@@ -26,7 +26,7 @@
 
 <?php
 
-// allow widgets to be placed above navigation
+// Allow widgets to be placed above navigation.
 dynamic_sidebar( 'cp-nav-top' );
 
 ?>
@@ -58,13 +58,20 @@ echo apply_filters( 'cp_content_tab_search_title', __( 'Search', 'commentpress-c
 
 	<?php
 
-	// first try to locate using WP method
+	/**
+	 * Try to locate template using WP method.
+	 *
+	 * @since 3.4
+	 *
+	 * @param str The existing path returned by WordPress.
+	 * @return str The modified path.
+	 */
 	$cp_navigation = apply_filters(
 		'cp_template_navigation',
 		locate_template( 'assets/templates/navigation.php' )
 	);
 
-	// load it if we find it
+	// Load it if we find it.
 	if ( $cp_navigation != '' ) load_template( $cp_navigation );
 
 	?>
@@ -82,16 +89,16 @@ echo apply_filters( 'cp_content_tab_toc_title', __( 'Table of Contents', 'commen
 
 <?php
 
-// declare access to globals
+// Declare access to globals.
 global $commentpress_core;
 
-// if we have the plugin enabled
+// If we have the plugin enabled.
 if ( is_object( $commentpress_core ) ) {
 
 	?><ul id="toc_list">
 	<?php
 
-	// show the TOC
+	// Show the TOC.
 	echo $commentpress_core->get_toc_list();
 
 	?></ul>
@@ -107,7 +114,7 @@ if ( is_object( $commentpress_core ) ) {
 
 <?php
 
-// allow widgets to be placed below navigation
+// Allow widgets to be placed below navigation.
 dynamic_sidebar( 'cp-nav-bottom' );
 
 ?>

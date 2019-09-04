@@ -32,25 +32,25 @@
  * @since 3.0
  */
 
-// define global IE var
+// Define global IE var.
 var msie_detected = false;
 
-// browser detection via conditional comments in <head>
+// Browser detection via conditional comments in <head>.
 if ( 'undefined' !== typeof cp_msie ) {
 	msie_detected = true;
 }
 
-// test for our localisation object
+// Test for our localisation object.
 if ( 'undefined' !== typeof CommentpressSettings ) {
 
-	// define our vars
+	// Define our vars.
 	var cp_comments_open, cp_special_page, cp_tinymce, cp_tinymce_version,
 		cp_promote_reading, cp_is_mobile, cp_is_touch, cp_is_tablet, cp_cookie_path,
 		cp_multipage_page, cp_toc_chapter_is_page, cp_show_subpages,
 		cp_default_sidebar, cp_scroll_speed, cp_min_page_width,
 		cp_textblock_meta, cp_touch_testing;
 
-	// set our vars
+	// Set our vars.
 	cp_comments_open = CommentpressSettings.cp_comments_open;
 	cp_special_page = CommentpressSettings.cp_special_page;
 	cp_tinymce = CommentpressSettings.cp_tinymce;
@@ -110,7 +110,7 @@ CommentPress.settings = {};
  */
 CommentPress.settings.DOM = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -125,16 +125,16 @@ CommentPress.settings.DOM = new function() {
 	 */
 	this.init = function() {
 
-		// init WordPress adminbar
+		// Init WordPress adminbar.
 		me.init_wp_adminbar();
 
-		// init BuddyPress adminbar
+		// Init BuddyPress adminbar.
 		me.init_bp_adminbar();
 
-		// init WordPress adminbar height
+		// Init WordPress adminbar height.
 		me.init_wp_adminbar_height();
 
-		// init WordPress adminbar expanded height
+		// Init WordPress adminbar expanded height.
 		me.init_wp_adminbar_expanded();
 
 	};
@@ -154,10 +154,10 @@ CommentPress.settings.DOM = new function() {
 
 
 
-	// init original permalink
+	// Init original permalink.
 	this.original_permalink = document.location.toString();
 
-	// override with the value from our localisation object, if present
+	// Override with the value from our localisation object, if present.
 	if ( 'undefined' !== typeof CommentpressSettings ) {
 		if ( CommentpressSettings.cp_permalink != '' ) {
 			me.original_permalink = CommentpressSettings.cp_permalink;
@@ -184,7 +184,7 @@ CommentPress.settings.DOM = new function() {
 
 
 
-	// init BuddyPress adminbar
+	// Init BuddyPress adminbar.
 	this.bp_adminbar = 'n';
 
 	/**
@@ -194,7 +194,7 @@ CommentPress.settings.DOM = new function() {
 	 */
 	this.init_bp_adminbar = function( val ) {
 
-		// get initial value from settings object
+		// Get initial value from settings object.
 		if ( 'undefined' !== typeof CommentpressSettings ) {
 			me.bp_adminbar = CommentpressSettings.cp_bp_adminbar;
 		}
@@ -221,7 +221,7 @@ CommentPress.settings.DOM = new function() {
 
 
 
-	// init WordPress adminbar
+	// Init WordPress adminbar.
 	this.wp_adminbar = 'n';
 
 	/**
@@ -231,7 +231,7 @@ CommentPress.settings.DOM = new function() {
 	 */
 	this.init_wp_adminbar = function( val ) {
 
-		// get initial value from settings object
+		// Get initial value from settings object.
 		if ( 'undefined' !== typeof CommentpressSettings ) {
 			me.wp_adminbar = CommentpressSettings.cp_wp_adminbar;
 		}
@@ -258,7 +258,7 @@ CommentPress.settings.DOM = new function() {
 
 
 
-	// init WordPress adminbar height
+	// Init WordPress adminbar height.
 	this.wp_adminbar_height = 0;
 
 	/**
@@ -268,18 +268,18 @@ CommentPress.settings.DOM = new function() {
 	 */
 	this.init_wp_adminbar_height = function( val ) {
 
-		// get initial value from settings object
+		// Get initial value from settings object.
 		if ( 'undefined' !== typeof CommentpressSettings ) {
 			me.wp_adminbar_height = parseInt( CommentpressSettings.cp_wp_adminbar_height );
 		}
 
-		// support for legacy BuddyPress bar
+		// Support for legacy BuddyPress bar.
 		if ( me.get_bp_adminbar() == 'y' ) {
 
-			// amend to height of BuddyPress bar
+			// Amend to height of BuddyPress bar.
 			me.wp_adminbar_height = 25;
 
-			// act as if admin bar were there
+			// Act as if admin bar were there.
 			me.set_wp_adminbar( 'y' );
 
 		}
@@ -306,7 +306,7 @@ CommentPress.settings.DOM = new function() {
 
 
 
-	// init WordPress adminbar expanded height
+	// Init WordPress adminbar expanded height
 	this.wp_adminbar_expanded = 0;
 
 	/**
@@ -316,7 +316,7 @@ CommentPress.settings.DOM = new function() {
 	 */
 	this.init_wp_adminbar_expanded = function( val ) {
 
-		// get initial value from settings object
+		// Get initial value from settings object.
 		if ( 'undefined' !== typeof CommentpressSettings ) {
 			me.wp_adminbar_expanded = parseInt( CommentpressSettings.cp_wp_adminbar_expanded );
 		}
@@ -343,7 +343,7 @@ CommentPress.settings.DOM = new function() {
 
 
 
-}; // end CommentPress Core settings DOM class
+}; // End CommentPress Core settings DOM class.
 
 
 
@@ -358,7 +358,7 @@ CommentPress.settings.DOM = new function() {
  */
 CommentPress.settings.page = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -390,7 +390,7 @@ CommentPress.settings.page = new function() {
 
 
 
-	// init highlight
+	// Init highlight
 	this.highlight = false;
 
 	/**
@@ -420,7 +420,7 @@ CommentPress.settings.page = new function() {
 		return me.highlight;
 	};
 
-}; // end CommentPress Core page settings class
+}; // End CommentPress Core page settings class.
 
 
 
@@ -435,7 +435,7 @@ CommentPress.settings.page = new function() {
  */
 CommentPress.settings.textblock = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -467,7 +467,7 @@ CommentPress.settings.textblock = new function() {
 
 
 
-	// init textblock scroll target
+	// Init textblock scroll target.
 	this.scroll_target = 'para_heading';
 
 	/**
@@ -490,7 +490,7 @@ CommentPress.settings.textblock = new function() {
 
 
 
-	// init textblock "permalink shown in location bar" flag
+	// Init textblock "permalink shown in location bar" flag.
 	this.permalink_shown = false;
 
 	/**
@@ -511,7 +511,7 @@ CommentPress.settings.textblock = new function() {
 		return me.permalink_shown;
 	};
 
-}; // end CommentPress Core textblock class
+}; // End CommentPress Core textblock class.
 
 
 
@@ -539,7 +539,7 @@ CommentPress.common = {};
  */
 CommentPress.common.DOM = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -580,10 +580,10 @@ CommentPress.common.DOM = new function() {
 	 */
 	this.location_set = function( url ) {
 
-		// do we have replaceState?
+		// Do we have replaceState?
 		if ( window.history && window.history.replaceState ) {
 
-			// replace window state
+			// Replace window state.
 			window.history.replaceState( {} , '', url );
 
 		}
@@ -599,10 +599,10 @@ CommentPress.common.DOM = new function() {
 	 */
 	this.location_reset = function() {
 
-		// do we have replaceState?
+		// Do we have replaceState?
 		if ( window.history && window.history.replaceState ) {
 
-			// replace window state with original
+			// Replace window state with original.
 			window.history.replaceState( {} , '', CommentPress.settings.DOM.get_permalink() );
 
 		}
@@ -611,7 +611,7 @@ CommentPress.common.DOM = new function() {
 
 
 
-}; // end CommentPress Core common DOM class
+}; // End CommentPress Core common DOM class.
 
 
 
@@ -626,7 +626,7 @@ CommentPress.common.DOM = new function() {
  */
 CommentPress.common.navigation = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -654,10 +654,10 @@ CommentPress.common.navigation = new function() {
 	 */
 	this.dom_ready = function() {
 
-		// column headings
+		// Column headings.
 		me.headings();
 
-		// menu behaviour
+		// Menu behaviour.
 		me.menu();
 
 	};
@@ -673,7 +673,7 @@ CommentPress.common.navigation = new function() {
 	 */
 	this.headings = function() {
 
-		// set pointer
+		// Set pointer.
 		$('h3.activity_heading').css( 'cursor', 'pointer' );
 
 		/**
@@ -683,22 +683,22 @@ CommentPress.common.navigation = new function() {
 		 */
 		$('#toc_sidebar').on( 'click', 'h3.activity_heading', function( event ) {
 
-			// define vars
+			// Define vars.
 			var para_wrapper;
 
-			// override event
+			// Override event.
 			event.preventDefault();
 
-			// get para wrapper
+			// Get para wrapper.
 			para_wrapper = $(this).next('div.paragraph_wrapper');
 
-			// set width to prevent rendering error
+			// Set width to prevent rendering error.
 			para_wrapper.css( 'width', $(this).parent().css( 'width' ) );
 
-			// toggle next paragraph_wrapper
+			// Toggle next paragraph_wrapper.
 			para_wrapper.slideToggle( 'slow', function() {
 
-				// when finished, reset width to auto
+				// When finished, reset width to auto.
 				para_wrapper.css( 'width', 'auto' );
 
 			} );
@@ -723,27 +723,27 @@ CommentPress.common.navigation = new function() {
 		 */
 		$('#toc_sidebar').on( 'click', 'ul#toc_list li a', function( event ) {
 
-			// are our chapters pages?
+			// Are our chapters pages?
 			if ( cp_toc_chapter_is_page == '0' ) {
 
-				// define vars
+				// Define vars.
 				var myArr;
 
-				// no, find child lists of the enclosing <li>
+				// No, find child lists of the enclosing <li>.
 				myArr = $(this).parent().find('ul');
 
-				// do we have a child list?
+				// Do we have a child list?
 				if( myArr.length > 0 ) {
 
-					// are subpages to be shown?
+					// Are subpages to be shown?
 					if ( cp_show_subpages == '0' ) {
 
-						// toggle next list
+						// Toggle next list.
 						$(this).next('ul').slideToggle();
 
 					}
 
-					// override event
+					// Override event.
 					event.preventDefault();
 
 				}
@@ -754,7 +754,7 @@ CommentPress.common.navigation = new function() {
 
 	};
 
-}; // end CommentPress Core setup navigation column class
+}; // End CommentPress Core setup navigation column class.
 
 
 
@@ -769,7 +769,7 @@ CommentPress.common.navigation = new function() {
  */
 CommentPress.common.content = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -797,28 +797,28 @@ CommentPress.common.content = new function() {
 	 */
 	this.dom_ready = function() {
 
-		// generic links
+		// Generic links.
 		me.generic_links();
 
-		// title
+		// Title.
 		me.title_links();
 
-		// textblocks
+		// Textblocks.
 		me.textblocks();
 
-		// textblock paragraph markers
+		// Textblock paragraph markers.
 		me.para_markers();
 
-		// show textblock permalink in location bar
+		// Show textblock permalink in location bar.
 		me.textblock_permalink_show();
 
-		// textblock comment icons
+		// Textblock comment icons.
 		me.comment_icons();
 
-		// internal links
+		// Internal links.
 		me.links_in_textblocks();
 
-		// footnotes
+		// Footnotes.
 		me.footnotes_compatibility();
 
 	};
@@ -843,7 +843,7 @@ CommentPress.common.content = new function() {
 		 */
 		$('#container').on( 'click', '.textblock a:not([class])', function( event ) {
 
-			// prevent bubbling
+			// Prevent bubbling.
 			event.stopPropagation();
 
 		});
@@ -866,22 +866,22 @@ CommentPress.common.content = new function() {
 		 */
 		$('.single #container, .page #container').on( 'click', '.post_title a', function( event ) {
 
-			// override event
+			// Override event.
 			event.preventDefault();
 
-			// get text signature
+			// Get text signature.
 			var text_sig = '';
 
-			// set target to para heading
+			// Set target to para heading.
 			CommentPress.settings.textblock.set_scroll_target( 'para_heading' );
 
-			// broadcast action - allows scroll target to be overridden
+			// Broadcast action - allows scroll target to be overridden.
 			$(document).trigger( 'commentpress-post-title-pre-align' );
 
-			// pass scroll target to function
+			// Pass scroll target to function.
 			CommentPress.theme.viewport.align_content( text_sig, CommentPress.settings.textblock.get_scroll_target() );
 
-			// broadcast action - allows scroll target to be reset
+			// Broadcast action - allows scroll target to be reset.
 			$(document).trigger( 'commentpress-post-title-clicked' );
 
 		});
@@ -897,10 +897,10 @@ CommentPress.common.content = new function() {
 	 */
 	this.textblocks = function() {
 
-		// if mobile, we don't hide textblock meta
+		// If mobile, we don't hide textblock meta.
 		if ( cp_is_mobile == '0' ) {
 
-			// have we explicitly hidden textblock meta?
+			// Have we explicitly hidden textblock meta?
 			if ( cp_textblock_meta == '0' ) {
 
 				/**
@@ -932,28 +932,28 @@ CommentPress.common.content = new function() {
 		 */
 		$('#container').on( 'click', '.textblock', function( event ) {
 
-			// define vars
+			// Define vars.
 			var text_sig;
 
-			// get text signature
+			// Get text signature.
 			text_sig = $(this).prop('id');
 
-			// remove leading #
+			// Remove leading #
 			text_sig = text_sig.split('textblock-')[1];
 
-			// set target to para heading
+			// Set target to para heading.
 			CommentPress.settings.textblock.set_scroll_target( 'para_heading' );
 
-			// broadcast action - allows scroll target to be reset
+			// Broadcast action - allows scroll target to be reset.
 			$(document).trigger( 'commentpress-post-title-clicked' );
 
-			// broadcast action - allows scroll target to be overridden
+			// Broadcast action - allows scroll target to be overridden.
 			$(document).trigger( 'commentpress-textblock-pre-align' );
 
-			// pass scroll target to function
+			// Pass scroll target to function.
 			CommentPress.theme.viewport.align_content( text_sig, CommentPress.settings.textblock.get_scroll_target() );
 
-			// broadcast action - allows scroll target to be reset
+			// Broadcast action - allows scroll target to be reset.
 			$(document).trigger( 'commentpress-textblock-clicked' );
 
 		});
@@ -976,10 +976,10 @@ CommentPress.common.content = new function() {
 		 */
 		$('#container').on( 'click', 'span.para_marker a', function( event ) {
 
-			// override event
+			// Override event.
 			event.preventDefault();
 
-			// broadcast action
+			// Broadcast action.
 			$(document).trigger( 'commentpress-paramarker-clicked' );
 
 		});
@@ -991,10 +991,10 @@ CommentPress.common.content = new function() {
 		 */
 		$('#container').on( 'mouseenter', 'span.para_marker a', function( event ) {
 
-			// define vars
+			// Define vars.
 			var target;
 
-			// get target item
+			// Get target item.
 			target = $(this).parent().next().children('.comment_count');
 
 			target.addClass( 'js-hover' );
@@ -1008,10 +1008,10 @@ CommentPress.common.content = new function() {
 		 */
 		$('#container').on( 'mouseleave', 'span.para_marker a', function( event ) {
 
-			// define vars
+			// Define vars.
 			var target;
 
-			// get target item
+			// Get target item.
 			target = $(this).parent().next().children('.comment_count');
 
 			target.removeClass( 'js-hover' );
@@ -1036,14 +1036,14 @@ CommentPress.common.content = new function() {
 		 */
 		$('.textblock_permalink').tooltip({
 
-			// positional behaviour
+			// Positional behaviour.
 			position: {
 
-				// basics
+				// Basics.
 				my: "left-30 bottom-20",
 				at: "left top",
 
-				// configure arrow
+				// Configure arrow.
 				using: function( position, feedback ) {
 					$(this).css( position );
 					$('<div>')
@@ -1063,22 +1063,22 @@ CommentPress.common.content = new function() {
 		 */
 		$('#container').on( 'click', '.textblock_permalink', function( event ) {
 
-			// define vars
+			// Define vars.
 			var url;
 
-			// get selection
+			// Get selection.
 			url = $(this).attr( 'href' );
 
-			// did we get one?
+			// Did we get one?
 			if ( url ) {
 
-				// replace window state with para permalink
+				// Replace window state with para permalink.
 				CommentPress.common.DOM.location_set( url );
 
-				// set flag
+				// Set flag.
 				CommentPress.settings.textblock.set_permalink_shown( true );
 
-				// attach a reset handler to the document body
+				// Attach a reset handler to the document body.
 				$(document).bind( 'click', me.textblock_permalink_handler );
 
 			}
@@ -1101,21 +1101,21 @@ CommentPress.common.content = new function() {
 			'commentpress-link-in-textblock-clicked',
 			function( event ) {
 
-				// test flag
+				// Test flag.
 				if ( CommentPress.settings.textblock.get_permalink_shown() ) {
 
-					// unbind document click handler
+					// Unbind document click handler.
 					$(document).unbind( 'click', me.textblock_permalink_handler );
 
-					// set flag
+					// Set flag.
 					CommentPress.settings.textblock.set_permalink_shown( false );
 
-					// replace window state with original
+					// Replace window state with original.
 					CommentPress.common.DOM.location_reset();
 
 				}
 
-			} // end function
+			} // End function.
 		);
 
 	};
@@ -1129,16 +1129,16 @@ CommentPress.common.content = new function() {
 	 */
 	this.textblock_permalink_handler = function( event ) {
 
-		// if the event target is not a para permalink
+		// If the event target is not a para permalink
 		if ( !$(event.target).closest( '.textblock_permalink' ).length ) {
 
-			// unbind document click handler
+			// Unbind document click handler.
 			$(document).unbind( 'click', me.textblock_permalink_handler );
 
-			// set flag
+			// Set flag.
 			CommentPress.settings.textblock.set_permalink_shown( false );
 
-			// replace window state with original
+			// Replace window state with original.
 			CommentPress.common.DOM.location_reset();
 
 		}
@@ -1161,28 +1161,28 @@ CommentPress.common.content = new function() {
 		 */
 		$('#container').on( 'click', '.commenticonbox', function( event ) {
 
-			// define vars
+			// Define vars.
 			var text_sig;
 
-			// override event
+			// Override event.
 			event.preventDefault();
 
-			// prevent bubbling
+			// Prevent bubbling.
 			event.stopPropagation();
 
-			// get text signature
+			// Get text signature.
 			text_sig = $(this).children('a.para_permalink').prop('href').split('#')[1];
 
-			// set target to comment form
+			// Set target to comment form.
 			CommentPress.settings.textblock.set_scroll_target( 'commentform' );
 
-			// broadcast action - allows scroll target to be overridden
+			// Broadcast action - allows scroll target to be overridden.
 			$(document).trigger( 'commentpress-commenticonbox-pre-align' );
 
-			// pass scroll target to function
+			// Pass scroll target to function.
 			CommentPress.theme.viewport.align_content( text_sig, CommentPress.settings.textblock.get_scroll_target() );
 
-			// broadcast action - allows scroll target to be reset
+			// Broadcast action - allows scroll target to be reset.
 			$(document).trigger( 'commentpress-commenticonbox-clicked' );
 
 		});
@@ -1194,7 +1194,7 @@ CommentPress.common.content = new function() {
 		 */
 		$('#container').on( 'click', 'a.para_permalink', function( event ) {
 
-			// override event
+			// Override event.
 			event.preventDefault();
 
 		});
@@ -1206,10 +1206,10 @@ CommentPress.common.content = new function() {
 		 */
 		$('#container').on( 'mouseenter', 'a.para_permalink', function( event ) {
 
-			// define vars
+			// Define vars.
 			var text_sig;
 
-			// get text signature
+			// Get text signature.
 			text_sig = $(this).prop('href').split('#')[1];
 
 			$('span.para_marker a#' + text_sig).addClass( 'js-hover' );
@@ -1223,10 +1223,10 @@ CommentPress.common.content = new function() {
 		 */
 		$('#container').on( 'mouseleave', 'a.para_permalink', function( event ) {
 
-			// define vars
+			// Define vars.
 			var text_sig;
 
-			// get text signature
+			// Get text signature.
 			text_sig = $(this).prop('href').split('#')[1];
 
 			$('span.para_marker a#' + text_sig).removeClass( 'js-hover' );
@@ -1252,28 +1252,28 @@ CommentPress.common.content = new function() {
 		 */
 		$('#container').on( 'click', 'a.cp_para_link', function( event ) {
 
-			// define vars
+			// Define vars.
 			var text_sig;
 
-			// override event
+			// Override event.
 			event.preventDefault();
 
-			// prevent bubbling
+			// Prevent bubbling.
 			event.stopPropagation();
 
-			// get text signature
+			// Get text signature.
 			text_sig = $(this).prop('href').split('#')[1];
 
-			// set target to comment form
+			// Set target to comment form.
 			CommentPress.settings.textblock.set_scroll_target( 'para_heading' );
 
-			// broadcast action - allows scroll target to be overridden
+			// Broadcast action - allows scroll target to be overridden.
 			$(document).trigger( 'commentpress-link-in-textblock-pre-align' );
 
-			// pass scroll target to function
+			// Pass scroll target to function.
 			CommentPress.theme.viewport.align_content( text_sig, CommentPress.settings.textblock.get_scroll_target() );
 
-			// broadcast action - allows scroll target to be reset
+			// Broadcast action - allows scroll target to be reset.
 			$(document).trigger( 'commentpress-link-in-textblock-clicked' );
 
 		});
@@ -1302,19 +1302,19 @@ CommentPress.common.content = new function() {
 		 */
 		$('#container').on( 'click', 'span.footnotereverse a, a.footnote-back-link', function( event ) {
 
-			// define vars
+			// Define vars.
 			var target;
 
-			// override event
+			// Override event.
 			event.preventDefault();
 
-			// prevent bubbling
+			// Prevent bubbling.
 			event.stopPropagation();
 
-			// get target
+			// Get target.
 			target = $(this).prop('href').split('#')[1];
 
-			// use function for offset
+			// Use function for offset.
 			me.quick_scroll_page( '#' + target, 100 );
 
 		});
@@ -1326,25 +1326,25 @@ CommentPress.common.content = new function() {
 		 */
 		$('#container').on( 'click', '.simple-footnotes ol li > a', function( event ) {
 
-			// define vars
+			// Define vars.
 			var target;
 
-			// get target
+			// Get target.
 			target = $(this).prop('href');
 
-			// is it a backlink?
+			// Is it a backlink?
 			if ( target.match('#return-note-' ) ) {
 
-				// override event
+				// Override event.
 				event.preventDefault();
 
-				// prevent bubbling
+				// Prevent bubbling.
 				event.stopPropagation();
 
-				// remove url
+				// Remove URL.
 				target = target.split('#')[1];
 
-				// use function for offset
+				// Use function for offset.
 				me.quick_scroll_page( '#' + target, 100 );
 
 			}
@@ -1365,19 +1365,19 @@ CommentPress.common.content = new function() {
 		 */
 		$('#container').on( 'click', 'a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link, a.zp-ZotpressInText', function( event ) {
 
-			// define vars
+			// Define vars.
 			var target;
 
-			// override event
+			// Override event.
 			event.preventDefault();
 
-			// prevent bubbling
+			// Prevent bubbling.
 			event.stopPropagation();
 
-			// get target
+			// Get target.
 			target = $(this).prop('href').split('#')[1];
 
-			// use function for offset
+			// Use function for offset.
 			me.quick_scroll_page( '#' + target, 100 );
 
 		});
@@ -1395,13 +1395,13 @@ CommentPress.common.content = new function() {
 	 */
 	this.scroll_page = function( target ) {
 
-		// bail if we didn't get a valid target
+		// Bail if we didn't get a valid target.
 		if ( 'undefined' === typeof target ) { return; }
 
-		// only scroll if not mobile (but allow tablets)
+		// Only scroll if not mobile - but allow tablets.
 		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
-			// scroll page
+			// Scroll page.
 			$(window).stop(true).scrollTo(
 				target,
 				{
@@ -1427,13 +1427,13 @@ CommentPress.common.content = new function() {
 	 */
 	this.quick_scroll_page = function( target, duration ) {
 
-		// bail if we didn't get a valid target
+		// Bail if we didn't get a valid target.
 		if ( 'undefined' === typeof target ) { return; }
 
-		// only scroll if not mobile (but allow tablets)
+		// Only scroll if not mobile - but allow tablets.
 		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
-			// scroll page
+			// Scroll page.
 			$(window).stop(true).scrollTo(
 				target,
 				{
@@ -1458,32 +1458,32 @@ CommentPress.common.content = new function() {
 	 */
 	this.scroll_page_to_textblock = function( text_sig ) {
 
-		// define vars
+		// Define vars.
 		var textblock;
 
-		// if not the whole page
+		// If not the whole page.
 		if( text_sig !== '' ) {
 
-			// get text block
+			// Get text block.
 			textblock = $('#textblock-' + text_sig);
 
-			// highlight this paragraph
+			// Highlight this paragraph.
 			$.highlight_para( textblock );
 
-			// scroll page
+			// Scroll page.
 			me.scroll_page( textblock );
 
 		} else {
 
-			// only scroll if page is not highlighted
+			// Only scroll if page is not highlighted.
 			if ( !CommentPress.settings.page.toggle_highlight() ) {
 
-				// scroll to top
+				// Scroll to top.
 				CommentPress.theme.viewport.scroll_to_top( 0, cp_scroll_speed );
 
 			}
 
-			// toggle page highlight flag
+			// Toggle page highlight flag.
 			CommentPress.settings.page.toggle_highlight();
 
 		}
@@ -1499,28 +1499,28 @@ CommentPress.common.content = new function() {
 	 */
 	this.on_load_scroll_to_comment = function() {
 
-		// define vars
+		// Define vars.
 		var url, comment_id, comment;
 
-		// if there is an anchor in the URL
+		// If there is an anchor in the URL
 		url = document.location.toString();
 
-		// do we have a comment permalink?
+		// Do we have a comment permalink?
 		if ( url.match( '#comment-' ) ) {
 
-			// get comment ID
+			// Get comment ID.
 			comment_id = url.split('#comment-')[1];
 
-			// get comment in DOM
+			// Get comment in DOM.
 			comment = $( '#comment-' + comment_id );
 
-			// did we get one?
+			// Did we get one?
 			if ( comment.length ) {
 
-				// only scroll if not mobile (but allow tablets)
+				// Only scroll if not mobile - but allow tablets.
 				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
-					// scroll to new comment
+					// Scroll to new comment.
 					$(window).stop(true).scrollTo(
 						comment,
 						{
@@ -1534,7 +1534,7 @@ CommentPress.common.content = new function() {
 
 			}
 
-			// set location to page/post permalink
+			// Set location to page/post permalink.
 			CommentPress.common.DOM.location_reset();
 
 			// --<
@@ -1542,19 +1542,19 @@ CommentPress.common.content = new function() {
 
 		}
 
-		// do we have a link to the comment form?
+		// Do we have a link to the comment form?
 		if ( url.match( '#respond' ) ) {
 
-			// get comment form in DOM
+			// Get comment form in DOM.
 			comment_form = $('#respond');
 
-			// did we get it?
+			// Did we get it?
 			if ( comment_form.length ) {
 
-				// only scroll if not mobile (but allow tablets)
+				// Only scroll if not mobile - but allow tablets.
 				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
-					// scroll to new comment
+					// Scroll to new comment.
 					$(window).stop(true).scrollTo(
 						comment_form,
 						{
@@ -1568,7 +1568,7 @@ CommentPress.common.content = new function() {
 
 			}
 
-			// set location to page/post permalink
+			// Set location to page/post permalink.
 			CommentPress.common.DOM.location_reset();
 
 		}
@@ -1587,7 +1587,7 @@ CommentPress.common.content = new function() {
 	 */
 	this.workflow_tabs = function( content_min_height, content_padding_bottom ) {
 
-		// hide workflow content
+		// Hide workflow content.
 		$('#literal .post').css( 'display', 'none' );
 		$('#original .post').css( 'display', 'none' );
 
@@ -1598,36 +1598,36 @@ CommentPress.common.content = new function() {
 		 */
 		$('#container').on( 'click', '#content-tabs li h2 a', function( event ) {
 
-			// define vars
+			// Define vars.
 			var target_id;
 
-			// override event
+			// Override event.
 			event.preventDefault();
 
-			// hide others and show corresponding item
+			// Hide others and show corresponding item.
 
-			// get href
+			// Get href.
 			target_id = this.href.split('#')[1];
 
-			// hide all
+			// Hide all.
 			$('.post').css( 'display', 'none' );
 
-			// remove content min-height
+			// Remove content min-height.
 			$('.workflow-wrapper').css( 'min-height', '0' );
 
-			// remove bottom padding
+			// Remove bottom padding.
 			$('.workflow-wrapper').css( 'padding-bottom', '0' );
 
-			// set min-height of target
+			// Set min-height of target.
 			$('#' + target_id + '.workflow-wrapper').css( 'min-height', content_min_height );
 
-			// set padding-bottom of target
+			// Set padding-bottom of target.
 			$('#' + target_id + '.workflow-wrapper').css( 'padding-bottom', content_padding_bottom );
 
-			// show it
+			// Show it.
 			$('#' + target_id + ' .post').css( 'display', 'block' );
 
-			// amend css of list items to mimic tabs
+			// Amend CSS of list items to mimic tabs.
 			$('#content-tabs li').removeClass( 'default-content-tab' );
 			$(this).parent().parent().addClass( 'default-content-tab' );
 
@@ -1635,7 +1635,7 @@ CommentPress.common.content = new function() {
 
 	};
 
-}; // end CommentPress Core setup content class
+}; // End CommentPress Core setup content class.
 
 
 
@@ -1650,7 +1650,7 @@ CommentPress.common.content = new function() {
  */
 CommentPress.common.comments = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -1678,22 +1678,22 @@ CommentPress.common.comments = new function() {
 	 */
 	this.dom_ready = function() {
 
-		// column header
+		// Column header.
 		me.header();
 
-		// minimiser button
+		// Minimiser button.
 		me.minimiser();
 
-		// comment block permalinks
+		// Comment block permalinks.
 		me.comment_block_permalinks();
 
-		// comment permalinks
+		// Comment permalinks.
 		me.comment_permalinks();
 
-		// show comment permalink in location bar
+		// Show comment permalink in location bar.
 		me.comment_permalink_show();
 
-		// comment rollovers (disabled because only the modern theme uses this)
+		// Comment rollovers (disabled because only the modern theme uses this)
 		//me.comment_rollovers();
 
 	};
@@ -1714,10 +1714,10 @@ CommentPress.common.comments = new function() {
 		 */
 		$('#sidebar').on( 'click', '#comments_header h2 a', function( event ) {
 
-			// override event
+			// Override event.
 			event.preventDefault();
 
-			// activate it (this will become a theme method)
+			// Activate it - this will become a theme method.
 			CommentPress.theme.sidebars.activate_sidebar( 'comments' );
 
 		});
@@ -1740,13 +1740,13 @@ CommentPress.common.comments = new function() {
 		 */
 		$('#sidebar').on( 'click', '#cp_minimise_all_comments', function( event ) {
 
-			// override event
+			// Override event.
 			event.preventDefault();
 
-			// slide all paragraph comment wrappers up
+			// Slide all paragraph comment wrappers up.
 			$('#comments_sidebar div.paragraph_wrapper').slideUp();
 
-			// unhighlight paragraphs
+			// Unhighlight paragraphs.
 			$.unhighlight_para();
 
 		});
@@ -1765,10 +1765,10 @@ CommentPress.common.comments = new function() {
 	 */
 	this.comment_block_permalinks = function() {
 
-		// only on normal cp pages
+		// Only on normal CommentPress pages.
 		if ( cp_special_page == '1' ) { return; }
 
-		// set pointer
+		// Set pointer.
 		$('a.comment_block_permalink').css( 'cursor', 'pointer' );
 
 		/**
@@ -1780,92 +1780,92 @@ CommentPress.common.comments = new function() {
 		 */
 		$('#comments_sidebar').on( 'click', 'a.comment_block_permalink', function( event ) {
 
-			// define vars
+			// Define vars.
 			var text_sig, para_wrapper, comment_list, opening, visible, textblock,
 				post_id, para_id, para_num, has_form;
 
-			// override event
+			// Override event.
 			event.preventDefault();
 
-			// set target to comment form
+			// Set target to comment form.
 			CommentPress.settings.textblock.set_scroll_target( 'para_heading' );
 
-			// broadcast action - allows scroll target to be overridden
+			// Broadcast action - allows scroll target to be overridden.
 			$(document).trigger( 'commentpress-comment-block-permalink-pre-align' );
 
-			// did we get an override?
+			// Did we get an override?
 			if ( 'none' == CommentPress.settings.textblock.get_scroll_target() ) {
 
-				// broadcast action - allows scroll target to be reset
+				// Broadcast action - allows scroll target to be reset.
 				$(document).trigger( 'commentpress-comment-block-permalink-clicked' );
 
-				// bail
+				// Bail.
 				return;
 
 			}
 
-			// get text_sig
+			// Get text_sig.
 			text_sig = $(this).parent().prop( 'id' ).split('para_heading-')[1];
 
-			// get para wrapper
+			// Get para wrapper.
 			para_wrapper = $(this).parent().next('div.paragraph_wrapper');
 
-			// get comment list
+			// Get comment list.
 			comment_list = $( '#para_wrapper-' + text_sig ).find('ol.commentlist' );
 
-			// init
+			// Init.
 			opening = false;
 
-			// get visibility
+			// Get visibility.
 			visible = para_wrapper.css('display');
 
-			// override
+			// Override.
 			if ( visible == 'none' ) { opening = true; }
 
-			// did we get one at all?
+			// Did we get one at all?
 			if ( 'undefined' !== typeof text_sig ) {
 
-				// if not the whole page or pings
+				// If not the whole page or pings.
 				if( text_sig !== '' && text_sig != 'pingbacksandtrackbacks' ) {
 
-					// get text block
+					// Get text block.
 					textblock = $('#textblock-' + text_sig);
 
-					// only if opening
+					// Only if opening.
 					if ( opening ) {
 
-						// unhighlight paragraphs
+						// Unhighlight paragraphs.
 						$.unhighlight_para();
 
-						// highlight this paragraph
+						// Highlight this paragraph.
 						$.highlight_para( textblock );
 
-						// scroll page
+						// Scroll page.
 						CommentPress.common.content.scroll_page( textblock );
 
 					} else {
 
-						// if encouraging commenting
+						// If encouraging commenting.
 						if ( cp_promote_reading == '0' ) {
 
-							// closing with a comment form
+							// Closing with a comment form.
 							if ( $( '#para_wrapper-' + text_sig ).find('#respond' )[0] ) {
 
-								// unhighlight paragraphs
+								// Unhighlight paragraphs.
 								$.unhighlight_para();
 
 							} else {
 
-								// if we have no comments, always highlight
+								// If we have no comments, always highlight.
 								if ( !comment_list[0] ) {
 
-									// unhighlight paragraphs
+									// Unhighlight paragraphs.
 									$.unhighlight_para();
 
-									// highlight this paragraph
+									// Highlight this paragraph.
 									$.highlight_para( textblock );
 
-									// scroll page
+									// Scroll page.
 									CommentPress.common.content.scroll_page( textblock );
 
 								}
@@ -1874,10 +1874,10 @@ CommentPress.common.comments = new function() {
 
 						} else {
 
-							// if ours is highlighted
+							// If ours is highlighted.
 							if ( $.is_highlighted( textblock ) ) {
 
-								// unhighlight paragraphs
+								// Unhighlight paragraphs.
 								$.unhighlight_para();
 
 							}
@@ -1888,56 +1888,56 @@ CommentPress.common.comments = new function() {
 
 				} else {
 
-					// unhighlight paragraphs
+					// Unhighlight paragraphs.
 					$.unhighlight_para();
 
-					// only scroll if not pings
+					// Only scroll if not pings.
 					if ( text_sig != 'pingbacksandtrackbacks' ) {
 
-						// scroll to top
+						// Scroll to top.
 						CommentPress.theme.viewport.scroll_to_top( 0, cp_scroll_speed );
 
-						// toggle page highlight flag
+						// Toggle page highlight flag.
 						CommentPress.settings.page.toggle_highlight();
 
 					}
 
 				}
 
-			} // end defined check
+			} // End defined check.
 
-			// if encouraging commenting
+			// If encouraging commenting.
 			if ( cp_promote_reading == '0' && text_sig != 'pingbacksandtrackbacks' ) {
 
-				// are comments open?
+				// Are comments open?
 				if ( cp_comments_open == 'y' ) {
 
-					// get comment post ID
+					// Get comment post ID.
 					post_id = $('#comment_post_ID').prop('value');
 					para_id = $('#para_wrapper-' + text_sig + ' .reply_to_para').prop('id');
 					para_num = para_id.split('-')[1];
 
-					// do we have the comment form?
+					// Do we have the comment form?
 					has_form = $( '#para_wrapper-' + text_sig ).find( '#respond' )[0];
 
-					// if we have a comment list
+					// If we have a comment list.
 					if ( comment_list.length > 0 && comment_list[0] ) {
 
-						// are we closing with no reply form?
+						// Are we closing with no reply form?
 						if ( !opening && !has_form ) {
 
-							// skip moving form
+							// Skip moving form.
 
 						} else {
 
-							// move form to para
+							// Move form to para.
 							addComment.moveFormToPara( para_num, text_sig, post_id );
 
 						}
 
 					} else {
 
-						// if we have no respond
+						// If we have no respond.
 						if ( !has_form ) {
 
 							para_wrapper.css('display','none');
@@ -1945,7 +1945,7 @@ CommentPress.common.comments = new function() {
 
 						}
 
-						// move form to para
+						// Move form to para.
 						addComment.moveFormToPara( para_num, text_sig, post_id );
 
 					}
@@ -1954,20 +1954,20 @@ CommentPress.common.comments = new function() {
 
 			}
 
-			// toggle next paragraph_wrapper
+			// Toggle next paragraph_wrapper.
 			para_wrapper.slideToggle( 'slow', function() {
 
-				// only scroll if opening
+				// Only scroll if opening.
 				if ( opening ) {
 
-					// scroll comments
+					// Scroll comments.
 					me.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 				}
 
 			});
 
-			// broadcast action
+			// Broadcast action.
 			$(document).trigger( 'commentpress-comment-block-permalink-clicked' );
 
 		});
@@ -1990,22 +1990,22 @@ CommentPress.common.comments = new function() {
 		 */
 		$('#wrapper').on( 'click', '.comment_permalink', function( event ) {
 
-			// bail if not special page
+			// Bail if not special page.
 			if ( cp_special_page != '1' ) { return; }
 
-			// define vars
+			// Define vars.
 			var comment_id, header_offset, text_sig;
 
-			// override event
+			// Override event.
 			event.preventDefault();
 
-			// get comment id
+			// Get comment ID.
 			comment_id = this.href.split('#')[1];
 
-			// get offset
+			// Get offset.
 			header_offset = CommentPress.theme.header.get_offset();
 
-			// scroll to comment
+			// Scroll to comment.
 			$(window).stop(true).scrollTo(
 				$('#'+comment_id),
 				{
@@ -2014,7 +2014,7 @@ CommentPress.common.comments = new function() {
 					offset: header_offset,
 					onAfter: function() {
 
-						// broadcast
+						// Broadcast.
 						$(document).trigger( 'commentpress-comments-in-page-scrolled' );
 
 					}
@@ -2030,30 +2030,30 @@ CommentPress.common.comments = new function() {
 		 */
 		$('#comments_sidebar').on( 'click', '.comment_permalink', function( event ) {
 
-			// define vars
+			// Define vars.
 			var comment_id, header_offset, text_sig;
 
-			// override event
+			// Override event.
 			event.preventDefault();
 
-			// get comment id
+			// Get comment ID.
 			comment_id = this.href.split('#')[1];
 
-			// clear other highlights
+			// Clear other highlights.
 			$.unhighlight_para();
 
-			// get text sig
+			// Get text sig.
 			text_sig = $.get_text_sig_by_comment_id( '#' + comment_id );
 
-			// if not a pingback
+			// If not a pingback.
 			if ( text_sig != 'pingbacksandtrackbacks' ) {
 
-				// scroll page to it
+				// Scroll page to it.
 				CommentPress.common.content.scroll_page_to_textblock( text_sig );
 
 			}
 
-			// scroll comments
+			// Scroll comments.
 			me.scroll_comments( $('#'+comment_id), cp_scroll_speed );
 
 		});
@@ -2076,14 +2076,14 @@ CommentPress.common.comments = new function() {
 		 */
 		$('.comment_permalink').tooltip({
 
-			// positional behaviour
+			// Positional behaviour.
 			position: {
 
-				// basics
+				// Basics.
 				my: "left bottom-20",
 				at: "left top",
 
-				// configure arrow
+				// Configure arrow.
 				using: function( position, feedback ) {
 					$( this ).css( position );
 					$( "<div>" )
@@ -2103,25 +2103,25 @@ CommentPress.common.comments = new function() {
 		 */
 		$('#comments_sidebar, #wrapper').on( 'click', '.comment_permalink', function( event ) {
 
-			// define vars
+			// Define vars.
 			var url, hide;
 
-			// get selection
+			// Get selection.
 			url = $(this).attr( 'href' );
 
-			// did we get one?
+			// Did we get one?
 			if ( url ) {
 
-				// close tooltip immediately
+				// Close tooltip immediately.
 				hide = $('.comment_permalink').tooltip( 'option', 'hide' );
 				$('.comment_permalink').tooltip( 'option', 'hide', false );
 				$('.comment_permalink').tooltip( 'close' );
 				$('.comment_permalink').tooltip( 'option', 'hide', hide );
 
-				// replace window state with comment permalink
+				// Replace window state with comment permalink.
 				CommentPress.common.DOM.location_set( url );
 
-				// attach a reset handler to the document body
+				// Attach a reset handler to the document body.
 				$(document).bind( 'click', me.comment_permalink_handler );
 
 			}
@@ -2139,13 +2139,13 @@ CommentPress.common.comments = new function() {
 	 */
 	this.comment_permalink_handler = function( event ) {
 
-		// if the event target is not a comment permalink
+		// If the event target is not a comment permalink.
 		if ( !$(event.target).closest( '.comment_permalink' ).length ) {
 
-			// unbind document click handler
+			// Unbind document click handler.
 			$(document).unbind( 'click', me.comment_permalink_handler );
 
-			// replace window state with original
+			// Replace window state with original.
 			CommentPress.common.DOM.location_reset();
 
 		}
@@ -2162,14 +2162,14 @@ CommentPress.common.comments = new function() {
 	this.comment_rollovers = function() {
 
 		/**
-		 * Add a class when rolling onto the comment
+		 * Add a class when rolling onto the comment.
 		 */
 		$('#comments_sidebar').on( 'mouseenter', '.comment-wrapper', function( event ) {
 			$(this).addClass( 'background-highlight' );
 		});
 
 		/**
-		 * Remove the class when rolling off the comment
+		 * Remove the class when rolling off the comment.
 		 */
 		$('#comments_sidebar').on( 'mouseleave', '.comment-wrapper', function( event ) {
 			$(this).removeClass( 'background-highlight' );
@@ -2188,10 +2188,10 @@ CommentPress.common.comments = new function() {
 	 */
 	this.highlight = function( comment ) {
 
-		// add notransition class
+		// Add notransition class.
 		comment.addClass( 'notransition' );
 
-		// remove existing classes
+		// Remove existing classes.
 		if ( comment.hasClass( 'comment-fade' ) ) {
 			comment.removeClass( 'comment-fade' );
 		}
@@ -2199,16 +2199,16 @@ CommentPress.common.comments = new function() {
 			comment.removeClass( 'comment-highlighted' );
 		}
 
-		// highlight
+		// Highlight.
 		comment.addClass( 'comment-highlighted' );
 
-		// remove notransition class
+		// Remove notransition class.
 		comment.removeClass( 'notransition' );
 
-		// trigger reflow
+		// Trigger reflow.
 		comment.height();
 
-		// animate to existing bg (from css file)
+		// Animate to existing bg-color from CSS file.
 		comment.addClass( 'comment-fade' );
 
 	}
@@ -2226,23 +2226,23 @@ CommentPress.common.comments = new function() {
 	 */
 	this.scroll_comments = function( target, speed, flash ) {
 
-		// preserve compatibility with older calls
+		// Preserve compatibility with older calls.
 		switch(arguments.length) {
 			case 2: flash = 'noflash'; break;
 			case 3: break;
 			default: throw new Error('illegal argument count');
 		}
 
-		// only scroll if not mobile (but allow tablets)
+		// Only scroll if not mobile - but allow tablets.
 		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
-			// either flash at the end or not..
+			// Either flash at the end or not..
 			if ( flash == 'flash' ) {
 
-				// add highlight class
+				// Add highlight class.
 				//$( '#li-comment-' + target.prop( 'id' ).split( '-' )[1] ).addClass( 'flash-comment' );
 
-				// scroll to new comment
+				// Scroll to new comment.
 				$('#comments_sidebar .sidebar_contents_wrapper').stop(true).scrollTo(
 					target,
 					{
@@ -2250,10 +2250,10 @@ CommentPress.common.comments = new function() {
 						axis: 'y',
 						onAfter: function() {
 
-							// highlight header
+							// Highlight header.
 							me.highlight( target );
 
-							// broadcast
+							// Broadcast.
 							$(document).trigger( 'commentpress-comments-scrolled' );
 
 						}
@@ -2262,14 +2262,14 @@ CommentPress.common.comments = new function() {
 
 			} else {
 
-				// scroll comment area to para heading
+				// Scroll comment area to para heading.
 				$('#comments_sidebar .sidebar_contents_wrapper').stop(true).scrollTo(
 					target,
 					{
 						duration: speed,
 						onAfter: function() {
 
-							// broadcast
+							// Broadcast.
 							$(document).trigger( 'commentpress-comments-scrolled' );
 
 						}
@@ -2282,7 +2282,7 @@ CommentPress.common.comments = new function() {
 
 	};
 
-}; // end CommentPress Core setup comments column class
+}; // End CommentPress Core setup comments column class.
 
 
 
@@ -2297,7 +2297,7 @@ CommentPress.common.comments = new function() {
  */
 CommentPress.common.activity = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -2325,16 +2325,16 @@ CommentPress.common.activity = new function() {
 	 */
 	this.dom_ready = function() {
 
-		// column header
+		// Column header.
 		me.header();
 
-		// minimiser button
+		// Minimiser button.
 		me.minimiser();
 
-		// column headings
+		// Column headings.
 		me.headings();
 
-		// "see in context" links
+		// "see in context" links.
 		me.see_in_context_links();
 
 	};
@@ -2357,10 +2357,10 @@ CommentPress.common.activity = new function() {
 		 */
 		$('#sidebar').on( 'click', '#activity_header h2 a', function( event ) {
 
-			// override event
+			// Override event.
 			event.preventDefault();
 
-			// activate it (this will become a theme method)
+			// Activate it - this will become a theme method.
 			CommentPress.theme.sidebars.activate_sidebar( 'activity' );
 
 		});
@@ -2383,10 +2383,10 @@ CommentPress.common.activity = new function() {
 		 */
 		$('#sidebar').on( 'click', '#cp_minimise_all_activity', function( event ) {
 
-			// override event
+			// Override event.
 			event.preventDefault();
 
-			// slide all paragraph comment wrappers up
+			// Slide all paragraph comment wrappers up.
 			$('#activity_sidebar div.paragraph_wrapper').slideUp();
 
 		});
@@ -2402,7 +2402,7 @@ CommentPress.common.activity = new function() {
 	 */
 	this.headings = function() {
 
-		// set pointer
+		// Set pointer.
 		$('h3.activity_heading').css( 'cursor', 'pointer' );
 
 		/**
@@ -2412,22 +2412,22 @@ CommentPress.common.activity = new function() {
 		 */
 		$('#activity_sidebar').on( 'click', 'h3.activity_heading', function( event ) {
 
-			// define vars
+			// Define vars.
 			var para_wrapper;
 
-			// override event
+			// Override event.
 			event.preventDefault();
 
-			// get para wrapper
+			// Get para wrapper.
 			para_wrapper = $(this).next('div.paragraph_wrapper');
 
-			// set width to prevent rendering error
+			// Set width to prevent rendering error.
 			para_wrapper.css( 'width', $(this).parent().css( 'width' ) );
 
-			// toggle next paragraph_wrapper
+			// Toggle next paragraph_wrapper.
 			para_wrapper.slideToggle( 'slow', function() {
 
-				// when finished, reset width to auto
+				// When finished, reset width to auto.
 				para_wrapper.css( 'width', 'auto' );
 
 			} );
@@ -2445,7 +2445,7 @@ CommentPress.common.activity = new function() {
 	 */
 	this.see_in_context_links = function() {
 
-		// allow links to work when not on commentable page
+		// Allow links to work when not on commentable page.
 		// NOTE: is this right?
 		if ( cp_special_page == '1' ) { return; }
 
@@ -2456,44 +2456,44 @@ CommentPress.common.activity = new function() {
 		 */
 		$('#activity_sidebar').on( 'click', 'a.comment_on_post', function( event ) {
 
-			// define vars
+			// Define vars.
 			var comment_id, comment, para_wrapper_array, item, header_offset, text_sig;
 
-			// override event
+			// Override event.
 			event.preventDefault();
 
-			// show comments sidebar
+			// Show comments sidebar.
 			CommentPress.theme.sidebars.activate_sidebar( 'comments' );
 
-			// get comment id
+			// Get comment ID.
 			comment_id = this.href.split('#')[1];
 
-			// get comment
+			// Get comment.
 			comment = $('#'+comment_id);
 
-			// get array of parent paragraph_wrapper divs
+			// Get array of parent paragraph_wrapper divs.
 			para_wrapper_array = comment
 										.parents('div.paragraph_wrapper')
 										.map( function () {
 											return this;
 										});
 
-			// did we get one?
+			// Did we get one?
 			if ( para_wrapper_array.length > 0 ) {
 
-				// get the item
+				// Get the item.
 				item = $(para_wrapper_array[0]);
 
-				// show block
+				// Show block.
 				item.show();
 
-				// if special page
+				// If special page.
 				if ( cp_special_page == '1' ) {
 
-					// get offset
+					// Get offset.
 					header_offset = CommentPress.theme.header.get_offset();
 
-					// scroll to comment
+					// Scroll to comment.
 					$(window).stop(true).scrollTo(
 						comment,
 						{
@@ -2505,19 +2505,19 @@ CommentPress.common.activity = new function() {
 
 				} else {
 
-					// clear other highlights
+					// Clear other highlights.
 					$.unhighlight_para();
 
-					// highlight para
+					// Highlight para.
 					text_sig = item.prop('id').split('-')[1];
 
-					// scroll page to it
+					// Scroll page to it.
 					CommentPress.common.content.scroll_page_to_textblock( text_sig );
 
-					// add highlight class
+					// Add highlight class.
 					//$( '#li-comment-' + comment_id ).addClass( 'flash-comment' );
 
-					// scroll to new comment
+					// Scroll to new comment.
 					$('#comments_sidebar .sidebar_contents_wrapper').stop(true).scrollTo(
 						comment,
 						{
@@ -2525,7 +2525,7 @@ CommentPress.common.activity = new function() {
 							axis: 'y',
 							onAfter: function() {
 
-								// highlight comment
+								// Highlight comment.
 								CommentPress.common.comments.highlight( comment );
 
 							}
@@ -2540,7 +2540,7 @@ CommentPress.common.activity = new function() {
 
 	};
 
-}; // end CommentPress Core setup activity column class
+}; // End CommentPress Core setup activity column class.
 
 
 
@@ -2555,7 +2555,7 @@ CommentPress.common.activity = new function() {
  */
 CommentPress.common.viewport = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -2585,7 +2585,7 @@ CommentPress.common.viewport = new function() {
 
 	};
 
-}; // end CommentPress Core setup viewport class
+}; // End CommentPress Core setup viewport class.
 
 
 
@@ -2605,7 +2605,7 @@ CommentPress.common.viewport = new function() {
 
 
 
-	// our currently highlighted paragraph
+	// Our currently highlighted paragraph.
 	var highlighted_para = '';
 
 	/**
@@ -2615,10 +2615,10 @@ CommentPress.common.viewport = new function() {
 	 */
 	$.highlight_para = function( element ) {
 
-		// bail if we don't have a proper element
+		// Bail if we don't have a proper element.
 		if ( typeof( element ) != 'object' ) { return; }
 
-		// amend p tag css
+		// Amend <p> tag CSS.
 		element.addClass( 'selected_para' );
 
 	}
@@ -2634,7 +2634,7 @@ CommentPress.common.viewport = new function() {
 
 		var highlighted_paras = $('.textblock');
 
-		// remove class from all
+		// Remove class from all.
 		highlighted_paras.removeClass( 'selected_para' );
 
 	}
@@ -2667,10 +2667,10 @@ CommentPress.common.viewport = new function() {
 	 */
 	$.is_highlighted = function( element ) {
 
-		// bail if we don't have a proper element
+		// Bail if we don't have a proper element.
 		if ( typeof( element ) != 'object' ) { return false; }
 
-		// is our item already highlighted?
+		// Is our item already highlighted?
 		if ( element.hasClass('selected_para') ) {
 
 			// --<
@@ -2699,7 +2699,7 @@ CommentPress.common.viewport = new function() {
 	 */
 	$.in_array = function( needle, haystack, argStrict ) {
 
-		// http://kevin.vanzonneveld.net
+		// @see http://kevin.vanzonneveld.net
 		// +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
 		// *     example 1: in_array('van', ['Kevin', 'van', 'Zonneveld']);
 		// *     returns 1: true
@@ -2730,16 +2730,16 @@ CommentPress.common.viewport = new function() {
 	 */
 	$.remove_from_array = function( item, sourceArray ) {
 
-		// loop through the array
+		// Loop through the array.
 		for ( var i = 0; i < sourceArray.length; i++ ) {
 
-			// remove our item
+			// Remove our item.
 			if ( item === sourceArray[i] ) {
 
-				// splice it at that point
+				// Splice it at that point.
 				sourceArray.splice(i, 1);
 
-				// kick out
+				// Kick out.
 				break;
 
 			}
@@ -2761,17 +2761,17 @@ CommentPress.common.viewport = new function() {
 	 * @param mixed mixed_var The item to test.
 	 * @return boolean True if item is object, false otherwise.
 	 */
-	$.is_object = function ( mixed_var ) {
+	$.is_object = function( mixed_var ) {
 
-		// distiguish between arrays and objects
+		// Distiguish between arrays and objects.
 		if( mixed_var instanceof Array ) {
 
-			// is an array
+			// Is an array.
 			return false;
 
 		} else {
 
-			// not null and is object
+			// Not null and is object.
 			return ( mixed_var !== null ) && ( typeof( mixed_var ) == 'object' );
 		}
 
@@ -2787,9 +2787,9 @@ CommentPress.common.viewport = new function() {
 	 * @param string function_name The name of the function.
 	 * @return boolean True if the function exists, false otherwise.
 	 */
-	$.is_function_defined = function ( function_name ) {
+	$.is_function_defined = function( function_name ) {
 
-		// use eval
+		// Use eval.
 		if ( eval( 'typeof(' + function_name + ') == typeof(Function)' ) ) {
 
 			// --<
@@ -2831,8 +2831,8 @@ CommentPress.common.viewport = new function() {
 	 */
 	$.css_to_num = function( strNum ) {
 
-		// http://mattstark.blogspot.com/2009/05/javascript-jquery-plugin-to-fade.html
-		if (strNum && strNum != "") {
+		// @see http://mattstark.blogspot.com/2009/05/javascript-jquery-plugin-to-fade.html
+		if ( strNum && strNum != "" ) {
 
 			var i = parseFloat(strNum);
 			if (i.toString() == "NaN") {
@@ -2867,7 +2867,7 @@ CommentPress.common.viewport = new function() {
 	 */
 	$.frivolous = function( message ) {
 
-		// do a simple alert
+		// Do a simple alert.
 		alert( message );
 
 	}
@@ -2883,35 +2883,35 @@ CommentPress.common.viewport = new function() {
 	 */
 	$.get_current_menu_item_id = function() {
 
-		// declare vars
+		// Declare vars.
 		var current_menu_item = 0,
 			current_menu_obj, current_item_id,
 			current_item_classes, current_item_class;
 
-		// get highlighted menu item object
+		// Get highlighted menu item object.
 		current_menu_obj = $('.current_page_item');
 
-		// did we get one?
+		// Did we get one?
 		if ( current_menu_obj.length > 0 ) {
 
-			// get ID, if present
+			// Get ID, if present.
 			current_item_id = current_menu_obj.prop('id');
 
-			// if we do have an ID
+			// If we do have an ID.
 			if ( current_item_id.length > 0 ) {
 
-				// it's a WP custom menu
+				// It's a WP custom menu.
 				current_menu_item = current_item_id.split('-')[2];
 
 			} else {
 
-				// it's a WP page menu
+				// It's a WP page menu.
 				current_item_class = current_menu_obj.prop('class');
 
-				// get classes
+				// Get classes.
 				current_item_classes = current_item_class.split(' ');
 
-				// loop to find the one we want
+				// Loop to find the one we want.
 				for (var i = 0, item; item = current_item_classes[i++];) {
 					if ( item.match( 'page-item-' ) ) {
 						current_menu_item = item.split('-')[2];
@@ -2940,34 +2940,34 @@ CommentPress.common.viewport = new function() {
 	 */
 	$.get_text_sig_by_comment_id = function( cid ) {
 
-		// define vars
+		// Define vars.
 		var comment_id, para_wrapper_array, text_sig, item;
 
-		// init
+		// Init.
 		text_sig = '';
 
-		// are we passing the full id?
+		// Are we passing the full ID?
 		if ( cid.match( '#comment-' ) ) {
 
-			// get comment ID
+			// Get comment ID.
 			comment_id = parseInt( cid.split('#comment-')[1] );
 
 		}
 
-		// get array of parent paragraph_wrapper divs
+		// Get array of parent paragraph_wrapper divs.
 		para_wrapper_array = $('#comment-' + comment_id)
 									.parents('div.paragraph_wrapper')
 									.map( function () {
 										return this;
 									});
 
-		// did we get one?
+		// Did we get one?
 		if ( para_wrapper_array.length > 0 ) {
 
-			// get the item
+			// Get the item.
 			item = $(para_wrapper_array[0]);
 
-			// move form to para
+			// Move form to para.
 			text_sig = item.prop('id').split('-')[1];
 
 		}
@@ -2987,7 +2987,7 @@ CommentPress.common.viewport = new function() {
 
 
 
-// do immediate init
+// Do immediate init.
 CommentPress.settings.DOM.init();
 CommentPress.settings.page.init();
 CommentPress.settings.textblock.init();
@@ -3011,7 +3011,7 @@ CommentPress.common.activity.init();
  */
 jQuery(document).ready(function($) {
 
-	// setup dom loaded actions
+	// Setup dom loaded actions.
 	CommentPress.settings.DOM.dom_ready();
 	CommentPress.settings.page.dom_ready();
 	CommentPress.settings.textblock.dom_ready();
@@ -3022,10 +3022,10 @@ jQuery(document).ready(function($) {
 	CommentPress.common.comments.dom_ready();
 	CommentPress.common.activity.dom_ready();
 
-	// broadcast
+	// Broadcast.
 	jQuery(document).trigger( 'commentpress-initialised' );
 
-}); // end document.ready()
+}); // End document.ready()
 
 
 

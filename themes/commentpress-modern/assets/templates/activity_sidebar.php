@@ -1,20 +1,20 @@
 <?php
 
-// access globals
+// Access globals.
 global $post, $commentpress_core;
 
 
 
-// init output
+// Init output.
 $_page_comments_output = '';
 
-// is it commentable?
+// Is it commentable?
 $_is_commentable = commentpress_is_commentable();
 
-// if a commentable post
+// If a commentable post.
 if ( $_is_commentable AND ! post_password_required() ) {
 
-	// get singular post type label
+	// Get singular post type label.
 	$current_type = get_post_type();
 	$post_type = get_post_type_object( $current_type );
 
@@ -29,34 +29,42 @@ if ( $_is_commentable AND ! post_password_required() ) {
 	 */
 	$post_type_name = apply_filters( 'commentpress_lexia_post_type_name', $post_type->labels->singular_name, $current_type );
 
-	// construct recent comments phrase
+	// Construct recent comments phrase.
 	$_paragraph_text = sprintf( __( 'Recent Comments on this %s', 'commentpress-core' ), $post_type_name );
 
-	// set default
+	/**
+	 * Allow plugins to set their own title here.
+	 *
+	 * @since 3.4
+	 */
 	$page_comments_title = apply_filters(
 		'cp_activity_tab_recent_title_page',
 		$_paragraph_text
 	);
 
-	// get page comments
+	// Get page comments.
 	$_page_comments_output = commentpress_get_comment_activity( 'post' );
 
 }
 
 
 
-// set default
+/**
+ * Allow plugins to set their own title here.
+ *
+ * @since 3.4
+ */
 $_all_comments_title = apply_filters(
 	'cp_activity_tab_recent_title_blog',
 	__( 'Recent Comments in this Document', 'commentpress-core' )
 );
 
-// get all comments
+// Get all comments.
 $_all_comments_output = commentpress_get_comment_activity( 'all' );
 
 
 
-// set maximum number to show - put into option?
+// Set maximum number to show - put into option?
 $_max_members = 10;
 
 
@@ -85,10 +93,14 @@ $_max_members = 10;
 
 <?php
 
-// allow widgets to be placed above activity
+// Allow widgets to be placed above activity.
 dynamic_sidebar( 'cp-activity-top' );
 
-// allow plugins to add their own activity headings here
+/**
+ * Allow plugins to add their own activity headings here.
+ *
+ * @since 3.4.8
+ */
 do_action( 'commentpress_bp_activity_sidebar_before_activity' );
 
 ?>
@@ -97,10 +109,14 @@ do_action( 'commentpress_bp_activity_sidebar_before_activity' );
 
 <?php
 
-// show page comments if we can
+// Show page comments if we can.
 if ( $_is_commentable AND $_page_comments_output != '' ) {
 
-// allow plugins to add their own activity heading here
+/**
+ * Allow plugins to add their own activity heading here.
+ *
+ * @since 3.4.8
+ */
 do_action( 'commentpress_bp_activity_sidebar_before_page_comments' );
 
 ?><h3 class="activity_heading"><?php echo $page_comments_title; ?></h3>
@@ -113,17 +129,25 @@ do_action( 'commentpress_bp_activity_sidebar_before_page_comments' );
 
 <?php
 
-// allow plugins to add their own activity heading here
+/**
+ * Allow plugins to add their own activity heading here.
+ *
+ * @since 3.4.8
+ */
 do_action( 'commentpress_bp_activity_sidebar_after_page_comments' );
 
-} // end commentable post/page check
+} // End commentable post/page check.
 
 
 
-// show all comments from site if we can
+// Show all comments from site if we can
 if ( $_all_comments_output != '' ) {
 
-// allow plugins to add their own activity heading here
+/**
+ * Allow plugins to add their own activity heading here.
+ *
+ * @since 3.4.8
+ */
 do_action( 'commentpress_bp_activity_sidebar_before_all_comments' );
 
 ?><h3 class="activity_heading"><?php echo $_all_comments_title; ?></h3>
@@ -136,40 +160,48 @@ do_action( 'commentpress_bp_activity_sidebar_before_all_comments' );
 
 <?php
 
-// allow plugins to add their own activity heading here
+/**
+ * Allow plugins to add their own activity heading here.
+ *
+ * @since 3.4.8
+ */
 do_action( 'commentpress_bp_activity_sidebar_after_all_comments' );
 
-} // end comments from site check
+} // End comments from site check.
 
 
 
-// access plugin
+// Access plugin
 global $commentpress_core, $post, $blog_id;
 
-// if we have the plugin enabled and it's Multisite BuddyPress
+// If we have the plugin enabled and it's Multisite BuddyPress.
 if (
 	is_multisite() AND
 	is_object( $commentpress_core ) AND
 	$commentpress_core->is_buddypress()
 ) {
 
-	// if on either groupblog or main BuddyPress blog
+	// If on either groupblog or main BuddyPress blog.
 	if ( $commentpress_core->is_groupblog() OR bp_is_root_blog() ) {
 
-		// define args
+		// Define args.
 		$recent_groupblog_activity = array(
 			'scope' => 'groups',
 			'action' => 'new_groupblog_comment,new_groupblog_post',
 			'primary_id' => false,
 		);
 
-		// get activities
+		// Get activities.
 		if ( function_exists( 'bp_has_activities' ) AND bp_has_activities( $recent_groupblog_activity ) ) :
 
-			// change header depending on logged in status
+			// Change header depending on logged in status.
 			if ( is_user_logged_in() ) {
 
-				// set default
+				/**
+				 * Allow plugins to set their own title here.
+				 *
+				 * @since 3.4.8
+				 */
 				$_section_header_text = apply_filters(
 					'cp_activity_tab_recent_title_all_yours',
 					__( 'Recent Activity in your Documents', 'commentpress-core' )
@@ -177,7 +209,11 @@ if (
 
 			} else {
 
-				// set default
+				/**
+				 * Allow plugins to set their own title here.
+				 *
+				 * @since 3.4.8
+				 */
 				$_section_header_text = apply_filters(
 					'cp_activity_tab_recent_title_all_public',
 					__( 'Recent Activity in Public Documents', 'commentpress-core' )
@@ -234,16 +270,20 @@ if (
 
 		<?php
 
-	} // end groupblog check
+	} // End groupblog check.
 
 
 
-	// allow plugins to add their own activity headings here
+	/**
+	 * Allow plugins to add their own activity headings here.
+	 *
+	 * @since 3.4.8
+	 */
 	do_action( 'commentpress_bp_activity_sidebar_before_members' );
 
 
 
-	// define args
+	// Define args.
 	$members_recently_active = array(
 		'user_id' => 0,
 		'type' => 'online',
@@ -252,7 +292,7 @@ if (
 		'populate_extras' => 1,
 	);
 
-	// get recently active members
+	// Get recently active members.
 	if ( bp_has_members( $members_recently_active ) ) : ?>
 
 		<h3 class="activity_heading"><?php _e( 'Recently Active Members', 'commentpress-core' ); ?></h3>
@@ -295,7 +335,7 @@ if (
 
 	<?php
 
-	// define args
+	// Define args.
 	$members_online = array(
 		'user_id' => 0,
 		'type' => 'online',
@@ -304,7 +344,7 @@ if (
 		'populate_extras' => 1,
 	);
 
-	// get online members
+	// Get online members.
 	if ( bp_has_members( $members_online ) ) : ?>
 
 		<h3 class="activity_heading"><?php _e( "Who's Online", 'commentpress-core' ); ?></h3>
@@ -348,19 +388,27 @@ if (
 
 
 
-	// allow plugins to add their own activity headings here
+	/**
+	 * Allow plugins to add their own activity headings here.
+	 *
+	 * @since 3.4.8
+	 */
 	do_action( 'commentpress_bp_activity_sidebar_after_members' );
 
 
 
-} // end BuddyPress check
+} // End BuddyPress check.
 
 
 
-// allow plugins to add their own activity headings here
+/**
+ * Allow plugins to add their own activity headings here.
+ *
+ * @since 3.4.8
+ */
 do_action( 'commentpress_bp_activity_sidebar_after_activity' );
 
-// allow widgets to be placed below activity
+// Allow widgets to be placed below activity.
 dynamic_sidebar( 'cp-activity-bottom' );
 
 
@@ -372,9 +420,9 @@ dynamic_sidebar( 'cp-activity-bottom' );
 <?php
 
 /*
-// prepare for ShareThis integration
+// Prepare for ShareThis integration.
 if ( function_exists( 'sharethis_button' ) ) {
-	// wrap in identifier
+	// Wrap in identifier.
 	echo '<h3 class="activity_heading">Share with ShareThis</h3>';
 	echo '<div class="paragraph_wrapper">';
 	echo '<p class="cp_share_this_buttons" style="padding: 10px 18px;">';

@@ -4286,12 +4286,14 @@ body.blogtype-0 #activity_sidebar .comments_container
 	background-color: #F7F7EF;
 }
 
-body.blogtype-0 h3.activity_heading
+body.blogtype-0 h3.activity_heading,
+body.blogtype-0 h3.general_comments_header
 {
 	background-color: #a1c19f;
 }
 
-body.blogtype-0 h3.activity_heading:hover
+body.blogtype-0 h3.activity_heading:hover,
+body.blogtype-0 h3.general_comments_header:hover
 {
 	background-color: #83ad7f;
 }
@@ -4380,12 +4382,14 @@ body.blogtype-1 #activity_sidebar .comments_container
 	background-color: #F7F7EF;
 }
 
-body.blogtype-1 h3.activity_heading
+body.blogtype-1 h3.activity_heading,
+body.blogtype-1 h3.general_comments_header
 {
 	background-color: #85a896;
 }
 
-body.blogtype-1 h3.activity_heading:hover
+body.blogtype-1 h3.activity_heading:hover,
+body.blogtype-1 h3.general_comments_header:hover
 {
 	background-color: #68927c;
 }
@@ -4496,12 +4500,14 @@ body.blogtype-2 #activity_sidebar .comments_container
 	background-color: #F7F7EF;
 }
 
-body.blogtype-2 h3.activity_heading
+body.blogtype-2 h3.activity_heading,
+body.blogtype-2 h3.general_comments_header
 {
 	background-color: #b4c293;
 }
 
-body.blogtype-2 h3.activity_heading:hover
+body.blogtype-2 h3.activity_heading:hover,
+body.blogtype-2 h3.general_comments_header:hover
 {
 	background-color: #9eb073;
 }

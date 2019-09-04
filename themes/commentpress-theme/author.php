@@ -5,24 +5,19 @@ Template Name: Author
 
 
 
-// get author info
+// Get author info.
 if ( isset( $_GET['author_name'] ) ) {
 	$my_author = get_userdatabylogin( $author_name );
 } else {
-	$my_author = get_userdata(intval($author));
+	$my_author = get_userdata( intval( $author ) );
 }
 
-
-
-// init url (because it can be 'http://' -> doh!)
+// Init url (because it can be 'http://' -> doh!)
 $authorURL = '';
 
-// do we have an URL for this user?
+// Do we have an URL for this user?
 if ( $my_author->user_url != '' AND $my_author->user_url != 'http://' ) {
-
-	// set url
 	$authorURL = $my_author->user_url;
-
 }
 
 
@@ -71,7 +66,7 @@ get_header();
 <dt>Gravatar</dt>
 <dd><?php echo get_avatar( $my_author->user_email, $size='128' ); ?></dd>
 
-// get full name
+// Get full name.
 $my_name = commentpress_get_full_name( $my_author->first_name, $my_author->last_name );
 
 if ( $my_name != '' ) { ?>

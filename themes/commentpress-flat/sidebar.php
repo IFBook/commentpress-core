@@ -1,22 +1,22 @@
 <?php
 
-// declare access to globals
+// Declare access to globals.
 global $commentpress_core;
 
 
 
-// init tab order (only relevant for old default theme)
+// Init tab order (only relevant for old default theme)
 $_tab_order = array( 'comments', 'activity' );
 
 
 
-// init commentable as true by default
+// Init commentable as true by default.
 $is_commentable = true;
 
-// if we have the plugin enabled
+// If we have the plugin enabled.
 if ( is_object( $commentpress_core ) ) {
 
-	// override
+	// Override.
 	$is_commentable = ( $commentpress_core->is_commentable() ) ? true : false;
 
 }
@@ -36,7 +36,7 @@ if ( is_object( $commentpress_core ) ) {
 <?php
 
 // -----------------------------------------------------------------------------
-// SIDEBAR HEADERS
+// SIDEBAR HEADERS.
 // -----------------------------------------------------------------------------
 
 
@@ -44,12 +44,12 @@ foreach( $_tab_order AS $_tab ) {
 
 	switch ( $_tab ) {
 
-		// Comments Header
+		// Comments Header.
 		case 'comments':
 
 
 
-// add active class
+// Add active class.
 $active_class = '';
 if ( in_array( $commentpress_core->get_default_sidebar(), array( 'comments', 'toc' ) ) ) {
 	$active_class = ' class="active-tab"';
@@ -58,13 +58,13 @@ if ( in_array( $commentpress_core->get_default_sidebar(), array( 'comments', 'to
 ?><li id="comments_header" class="sidebar_header">
 <h2><a href="#comments_sidebar"<?php echo $active_class; ?>><?php
 
-// set default link name
+// Set default link name.
 $_comments_title = apply_filters(
 
-	// filter name
+	// Filter name.
 	'cp_tab_title_comments',
 
-	// default value
+	// Default value.
 	__( 'Comments', 'commentpress-core' )
 
 );
@@ -74,18 +74,18 @@ echo $_comments_title;
 ?></a></h2>
 <?php
 
-// init
+// Init.
 $_min = '';
 
-// if we have the plugin enabled
+// If we have the plugin enabled.
 if ( is_object( $commentpress_core ) ) {
 
-	// show the minimise all button
+	// Show the minimise all button.
 	$_min = $commentpress_core->get_minimise_all_button( 'comments' );
 
 }
 
-// show the minimise all button
+// Show the minimise all button.
 echo $_min;
 
 ?>
@@ -97,25 +97,25 @@ break;
 
 
 
-		// Activity Header
+		// Activity Header.
 		case 'activity':
 
-// do we want to show activity tab?
+// Do we want to show activity tab?
 if ( commentpress_show_activity_tab() ) {
 
-	// add class if not commentable
+	// Add class if not commentable.
 	$active_class = '';
 	if ( ! $is_commentable OR 'activity' == $commentpress_core->get_default_sidebar() ) {
 		$active_class = ' class="active-tab"';
 	}
 
-	// set default link name
+	// Set default link name.
 	$_activity_title = apply_filters(
 
-		// filter name
+		// Filter name.
 		'cp_tab_title_activity',
 
-		// default value
+		// Default value.
 		__( 'Activity', 'commentpress-core' )
 
 	);
@@ -125,10 +125,10 @@ if ( commentpress_show_activity_tab() ) {
 	<h2><a href="#activity_sidebar"<?php echo $active_class; ?>><?php echo $_activity_title; ?></a></h2>
 	<?php
 
-	// if we have the plugin enabled
+	// If we have the plugin enabled.
 	if ( is_object( $commentpress_core ) ) {
 
-		// show the minimise all button
+		// Show the minimise all button.
 		echo $commentpress_core->get_minimise_all_button( 'activity' );
 
 	}
@@ -139,7 +139,7 @@ if ( commentpress_show_activity_tab() ) {
 
 } else {
 
-	// ignore activity
+	// Ignore activity.
 
 }
 
@@ -147,9 +147,9 @@ break;
 
 
 
-	} // end switch
+	} // End switch.
 
-} // end foreach
+} // End foreach.
 
 
 ?>
@@ -164,44 +164,58 @@ break;
 
 
 // -----------------------------------------------------------------------------
-// THE SIDEBARS THEMSELVES
+// THE SIDEBARS THEMSELVES.
 // -----------------------------------------------------------------------------
 
-// plugin global
+// Access globals.
 global $commentpress_core, $post;
 
-// if we have the plugin enabled
+// If we have the plugin enabled.
 if ( is_object( $commentpress_core ) ) {
 
 
 
-	// check commentable status
+	// Check commentable status.
 	$commentable = $commentpress_core->is_commentable();
 
-	// is it commentable?
+	// Is it commentable?
 	if ( $commentable ) {
 
-		// first try to locate using WP method
+		/**
+		 * Try to locate template using WP method.
+		 *
+		 * @since 3.4
+		 *
+		 * @param str The existing path returned by WordPress.
+		 * @return str The modified path.
+		 */
 		$cp_comments_sidebar = apply_filters(
 			'cp_template_comments_sidebar',
 			locate_template( 'assets/templates/comments_sidebar.php' )
 		);
 
-		// load it if we find it
+		// Load it if we find it.
 		if ( $cp_comments_sidebar != '' ) load_template( $cp_comments_sidebar );
 
 	}
 
-	// do we want to show activity tab?
+	// Do we want to show activity tab?
 	if ( commentpress_show_activity_tab() ) {
 
-		// first try to locate using WP method
+		/**
+		 * Try to locate template using WP method.
+		 *
+		 * @since 3.4
+		 *
+		 * @param str The existing path returned by WordPress.
+		 * @return str The modified path.
+		 */
 		$cp_activity_sidebar = apply_filters(
 			'cp_template_activity_sidebar',
 			locate_template( 'assets/templates/activity_sidebar.php' )
 		);
 
-		// load it if we find it
+		// Load it if we find it.
 		if ( $cp_activity_sidebar != '' ) load_template( $cp_activity_sidebar );
 
 	}
@@ -214,7 +228,7 @@ if ( is_object( $commentpress_core ) ) {
 
 
 
-// default sidebar when plugin not active
+// Default sidebar when plugin not active.
 ?><div id="toc_sidebar">
 
 
@@ -247,7 +261,7 @@ if ( is_object( $commentpress_core ) ) {
 
 <?php
 
-} // end check for plugin
+} // End check for plugin
 
 ?>
 

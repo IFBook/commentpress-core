@@ -11,14 +11,14 @@ NOTES
 
 
 
-// Do not delete these lines
-if (!empty($_SERVER['SCRIPT_FILENAME']) && 'comments.php' == basename($_SERVER['SCRIPT_FILENAME'])) {
-	die ('Please do not load this page directly. Thanks!');
+// Do not delete these lines.
+if ( ! empty( $_SERVER['SCRIPT_FILENAME'] ) AND 'comments.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) {
+	die( 'Please do not load this page directly. Thanks!' );
 }
 
 
 
-// first, test for password protection
+// First, test for password protection
 if ( post_password_required() ) { ?>
 
 <div class="sidebar_contents_wrapper">
@@ -33,24 +33,31 @@ if ( post_password_required() ) { ?>
 
 
 
-// declare access to globals
+// Declare access to globals.
 global $commentpress_core, $post;
 
-// if we have the plugin enabled
+// If we have the plugin enabled.
 if ( is_object( $commentpress_core ) ) {
 
-	// are we asking for in-page comments?
+	// Are we asking for in-page comments?
 	if ( $commentpress_core->db->is_special_page() ) {
 
-		// include 'comments in page' template
+		// Include 'comments in page' template
 
-		// first try to locate using WP method
+		/**
+		 * Try to locate template using WP method.
+		 *
+		 * @since 3.4
+		 *
+		 * @param str The existing path returned by WordPress.
+		 * @return str The modified path.
+		 */
 		$cp_comments_in_page = apply_filters(
 			'cp_template_comments_in_page',
 			locate_template( 'assets/templates/comments_in_page.php' )
 		);
 
-		// load it if we find it
+		// Load it if we find it.
 		if ( $cp_comments_in_page != '' ) load_template( $cp_comments_in_page );
 
 		// --<
@@ -58,15 +65,22 @@ if ( is_object( $commentpress_core ) ) {
 
 	} else {
 
-		// include comments split by paragraph template
+		// Include comments split by paragraph template
 
-		// first try to locate using WP method
+		/**
+		 * Try to locate template using WP method.
+		 *
+		 * @since 3.4
+		 *
+		 * @param str The existing path returned by WordPress.
+		 * @return str The modified path.
+		 */
 		$cp_comments_by_para = apply_filters(
 			'cp_template_comments_by_para',
 			locate_template( 'assets/templates/comments_by_para.php' )
 		);
 
-		// load it if we find it
+		// Load it if we find it.
 		if ( $cp_comments_by_para != '' ) load_template( $cp_comments_by_para );
 
 		// --<
@@ -78,7 +92,7 @@ if ( is_object( $commentpress_core ) ) {
 
 
 
-// fallback
+// Fallback.
 ?>
 <!-- comments.php -->
 
@@ -110,18 +124,11 @@ if ( is_object( $commentpress_core ) ) {
 
 		<ol class="commentlist">
 
-		<?php wp_list_comments(
-
-			array(
-
-				// list comments params
-				'type'=> 'comment',
-				'reply_text' => 'Reply to this comment',
-				'callback' => 'commentpress_comments'
-
-			)
-
-		); ?>
+		<?php wp_list_comments( array(
+			'type'=> 'comment',
+			'reply_text' => __( 'Reply to this comment', 'commentpress-core' ),
+			'callback' => 'commentpress_comments',
+		) ); ?>
 
 		</ol>
 
@@ -133,11 +140,11 @@ if ( is_object( $commentpress_core ) ) {
 
 
 
-<?php else : // this is displayed if there are no comments so far ?>
+<?php else : // This is displayed if there are no comments so far. ?>
 
 
 
-	<?php if ('open' == $post->comment_status) : ?>
+	<?php if ( 'open' == $post->comment_status ) : ?>
 
 		<!-- comments are open, but there are no comments. -->
 		<h3 class="nocomments"><span><?php _e( 'No comments on the whole page', 'commentpress-core' ); ?></span></h3>
@@ -150,8 +157,7 @@ if ( is_object( $commentpress_core ) ) {
 
 		</div><!-- /paragraph_wrapper -->
 
-	 <?php else : // comments are closed
-	 ?>
+	<?php else : // Comments are closed. ?>
 
 		<!-- comments are closed. -->
 		<h3 class="nocomments comments-closed"><span><?php _e( 'Comments are closed.', 'commentpress-core' ); ?></span></h3>
@@ -174,13 +180,20 @@ if ( is_object( $commentpress_core ) ) {
 
 <?php
 
-// first try to locate using WP method
+/**
+ * Try to locate template using WP method.
+ *
+ * @since 3.4
+ *
+ * @param str The existing path returned by WordPress.
+ * @return str The modified path.
+ */
 $cp_comment_form = apply_filters(
 	'cp_template_comment_form',
 	locate_template( 'assets/templates/comment_form.php' )
 );
 
-// load it if we find it
+// Load it if we find it.
 if ( $cp_comment_form != '' ) load_template( $cp_comment_form );
 
 ?>

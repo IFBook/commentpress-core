@@ -11,37 +11,27 @@
 
 <div id="footer_inner">
 
-	<?php
-
-	// show footer menu if assigned
-	if ( has_nav_menu( 'footer' ) ) {
+	<?php if ( has_nav_menu( 'footer' ) ) : ?>
+		<?php
+		// Show footer menu if assigned.
 		wp_nav_menu( array(
 			'theme_location' => 'footer',
 			'container_class' => 'commentpress-footer-nav-menu',
 		) );
-	}
+		?>
+	<?php endif; ?>
 
-	// are we using the page footer widget?
-	if ( ! dynamic_sidebar( 'cp-license-8' ) ) {
-
-		// no - make other provision here
-
-		// compat with wplicense plugin
-		if ( function_exists( 'isLicensed' ) AND isLicensed() ) {
-
-			// show the license from wpLicense
-			cc_showLicenseHtml();
-
-		} else {
-
-			// show copyright
-			?><p><?php _e( 'Website content', 'commentpress-core' ); ?> &copy; <a href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a> <?php echo date('Y'); ?>. <?php _e( 'All rights reserved.', 'commentpress-core' ); ?></p><?php
-
-		}
-
-	}
-
-	?>
+	<?php if ( is_active_sidebar( 'cp-license-8' ) ) : ?>
+		<div class="footer_widgets">
+			<?php dynamic_sidebar( 'cp-license-8' ); ?>
+		</div>
+	<?php else : ?>
+		<p><?php echo sprintf(
+			__( 'Website content &copy; %1$s %2$s. All rights reserved.', 'commentpress-core' ),
+			'<a href="' . home_url() . '">' . get_bloginfo( 'name' ) . '</a>',
+			date( 'Y' )
+		); ?></p>
+	<?php endif; ?>
 
 </div><!-- /footer_inner -->
 

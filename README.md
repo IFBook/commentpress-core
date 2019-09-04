@@ -7,6 +7,8 @@ CommentPress Core
 
 Annotate, gloss, workshop, debate: with *CommentPress Core* you can do all of these things on a finer-grained level, turning a document into a conversation. It can be applied to a fixed document (paper/essay/book etc.) or to a running blog. Use it in combination with *BuddyPress* and *BuddyPress Groupblog* to create communities around your documents.
 
+**Please note:** for the time-being, this plugin works best when the Gutenberg editor is *disabled*. If you want the simplest CommentPress experience in WordPress 5.x please install the *Classic Editor* or *Gutenberg Ramp* plugin to manage the post types on which the Gutenberg editor is enabled.
+
 **Please note:** this plugin comes bundled with three official themes, one of which must be active for *CommentPress Core* to function. The *CommentPress Modern Theme* will be auto-activated when the plugin is first activated. The old *CommentPress Default Theme* is still included for those who wish to stay with it or have built their own child themes for it. Since version 3.9 a new "CommentPress Flat Theme" is included for those who want an alternative layout. If you are upgrading from a previous version of *CommentPress* (3.0.x - 3.3.x), please follow the instructions in the Installation section before doing so.
 
 **For sites hosted in the European Union, please note:** the *CommentPress Default Theme* makes use of cookies, but for presentational purposes only. If you intend to use the *CommentPress Default Theme* on a public site, you may need to inform visitors of this.

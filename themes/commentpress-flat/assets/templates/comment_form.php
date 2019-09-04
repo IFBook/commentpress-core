@@ -6,50 +6,54 @@ AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
 NOTES
 
-Comment form template for CommentPress Core
+Comment form template for CommentPress Core.
 
 --------------------------------------------------------------------------------
 */
 
 
 
-// Do not delete these lines
-if (!empty($_SERVER['SCRIPT_FILENAME']) AND 'comment_form.php' == basename($_SERVER['SCRIPT_FILENAME'])) {
-	die ('Please do not load this page directly. Thanks!');
+// Do not delete these lines.
+if ( ! empty( $_SERVER['SCRIPT_FILENAME'] ) AND 'comment_form.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) {
+	die( 'Please do not load this page directly. Thanks!' );
 }
 
 
 
-// access globals
+// Access globals.
 global $post;
 
-// get user data
+// Get user data.
 $user = wp_get_current_user();
 $user_identity = $user->exists() ? $user->display_name : '';
 
 
 
-// check force state (this is for infinite scroll)
+// Check force state (this is for infinite scroll).
 $cp_force_form = apply_filters( 'commentpress_force_comment_form', false );
 
-// init identifying class
+// Init identifying class.
 $forced_class = '';
 
-// optionally override
+// Optionally override.
 if ( $cp_force_form ) {
 
-	// init classes
+	// Init classes.
 	$forced_classes = array( 'cp_force_displayed' );
 	if ( 'open' != $post->comment_status ) $forced_classes[] = 'cp_force_closed';
 
-	// build class attribute
+	// Build class attribute.
 	$forced_class = ' class="' . implode( ' ', $forced_classes ) . '"';
 
 }
 
 
 
-// allow plugins to override showing the comment form
+/**
+ * Allow plugins to override showing the comment form.
+ *
+ * @since 3.8
+ */
 $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 
 ?>
@@ -96,13 +100,13 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 
 	<?php
 
-	// are we showing the comment form?
+	// Are we showing the comment form?
 	if ( $show_comment_form ) {
 
-		// get required status
+		// Get required status.
 		$req = get_option( 'require_name_email' );
 
-		// get commenter
+		// Get commenter.
 		$commenter = wp_get_current_commenter();
 
 		?>
@@ -139,7 +143,7 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 			<label for="comment" class="off-left"><?php _e( 'Comment', 'commentpress-core' ); ?></label>
 			<?php
 
-			// in theme-functions.php
+			// In theme-functions.php
 			if ( false === commentpress_add_wp_editor() ) {
 
 				?>
@@ -156,25 +160,25 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 
 		<?php
 
-		// add default wp fields
+		// Add default wp fields.
 		comment_id_fields();
 
-		// is CommentPress Core active?
+		// Is CommentPress Core active?
 		global $commentpress_core;
 		if ( is_object( $commentpress_core ) ) {
 
-			// get text sig input
+			// Get text sig input.
 			echo $commentpress_core->get_signature_field();
 
 		}
 
-		// add page for multipage situations
+		// Add page for multipage situations.
 		global $page;
 		if ( !empty( $page ) ) {
 			echo "\n" . '<input type="hidden" name="page" value="' . $page . '" />' . "\n";
 		}
 
-		// compatibility with Subscribe to Comments Reloaded
+		// Compatibility with Subscribe to Comments Reloaded.
 		if ( function_exists( 'subscribe_reloaded_show' ) ) { ?>
 			<div class="subscribe_reloaded_insert">
 			<?php subscribe_reloaded_show(); ?>
@@ -193,7 +197,7 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 
 		<?php
 
-	} else { // end check for plugin overrides
+	} else { // End check for plugin overrides.
 
 		?>
 
@@ -213,7 +217,7 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 
 	?>
 
-<?php endif; // If registration required and not logged in ?>
+<?php endif; // If registration required and not logged in. ?>
 
 
 
@@ -225,7 +229,7 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 
 
 
-<?php endif; // end open comment status check ?>
+<?php endif; // End open comment status check. ?>
 
 
 

@@ -29,13 +29,13 @@ class Commentpress_Core_Workflow {
 	 */
 	function __construct( $parent_obj = null ) {
 
-		// store reference to "parent" (calling obj, not OOP parent)
+		// Store reference to "parent" (calling obj, not OOP parent).
 		$this->parent_obj = $parent_obj;
 
-		// store reference to database wrapper (child of calling obj)
+		// Store reference to database wrapper (child of calling obj).
 		$this->db = $this->parent_obj->db;
 
-		// init
+		// Init.
 		$this->_init();
 
 	}
@@ -86,7 +86,7 @@ class Commentpress_Core_Workflow {
 	 */
 	public function blog_workflow_exists( $exists ) {
 
-		// switch on, but allow overrides
+		// Switch on, but allow overrides.
 		return apply_filters(
 			'cp_class_commentpress_workflow_enabled',
 			true
@@ -106,7 +106,7 @@ class Commentpress_Core_Workflow {
 	 */
 	public function blog_workflow_label( $name ) {
 
-		// set label, but allow overrides
+		// Set label, but allow overrides.
 		return apply_filters(
 			'cp_class_commentpress_workflow_label',
 			__( 'Enable Translation Workflow', 'commentpress-core' )
@@ -126,10 +126,10 @@ class Commentpress_Core_Workflow {
 	 */
 	public function group_meta_set_blog_type( $blog_type, $blog_workflow ) {
 
-		// if the blog workflow is enabled, then this is a translation group
+		// If the blog workflow is enabled, then this is a translation group.
 		if ( $blog_workflow == '1' ) {
 
-			// translation is type 2
+			// Translation is type 2
 			$blog_type = '2';
 
 		}
@@ -159,26 +159,25 @@ class Commentpress_Core_Workflow {
 
 		global $post;
 
-		// Use nonce for verification
+		// Use nonce for verification.
 		wp_nonce_field( 'commentpress_post_workflow_settings', 'commentpress_workflow_nonce' );
 
-		// label
-		// label
+		// Label.
 		echo '<h3>' . apply_filters(
 			'commentpress_original_title',
 			__( 'Original Text', 'commentpress-core' )
 		) . '</h3>';
 
-		// set key
+		// Set key.
 		$key = '_cp_original_text';
 
-		// get content
+		// Get content.
 		$content = get_post_meta( $post->ID, $key, true );
 
-		// set editor ID (sucks that it can't use - and _)
+		// Set editor ID (sucks that it can't use - and _).
 		$editor_id = 'cporiginaltext';
 
-		// call the editor
+		// Call the editor.
 		wp_editor(
 			esc_html( stripslashes( $content ) ),
 			$editor_id,
@@ -187,22 +186,22 @@ class Commentpress_Core_Workflow {
 			)
 		);
 
-		// label
+		// Label.
 		echo '<h3>' . apply_filters(
 			'commentpress_literal_title',
 			__( 'Literal Translation', 'commentpress-core' )
 		) . '</h3>';
 
-		// set key
+		// Set key.
 		$key = '_cp_literal_translation';
 
-		// get content
+		// Get content.
 		$content = get_post_meta( $post->ID, $key, true );
 
-		// set editor ID (sucks that it can't use - and _)
+		// Set editor ID (sucks that it can't use - and _).
 		$editor_id = 'cpliteraltranslation';
 
-		// call the editor
+		// Call the editor.
 		wp_editor(
 			esc_html( stripslashes( $content ) ),
 			$editor_id,
@@ -225,7 +224,7 @@ class Commentpress_Core_Workflow {
 	 */
 	public function workflow_metabox_title( $title ) {
 
-		// set label, but allow overrides
+		// Set label, but allow overrides.
 		return apply_filters(
 			'cp_class_commentpress_workflow_metabox_title',
 			__( 'Translations', 'commentpress-core' )
@@ -244,30 +243,30 @@ class Commentpress_Core_Workflow {
 	 */
 	public function workflow_save_post( $post_obj ) {
 
-		// if no post, kick out
+		// If no post, kick out.
 		if ( ! $post_obj ) return;
 
-		// if not post or page, kick out
+		// If not post or page, kick out.
 		$types = array( 'post', 'page' );
 		if ( ! in_array( $post_obj->post_type, $types ) ) return;
 
-		// authenticate
+		// Authenticate.
 		$nonce = isset( $_POST['commentpress_workflow_nonce'] ) ? $_POST['commentpress_workflow_nonce'] : '';
 		if ( ! wp_verify_nonce( $nonce, 'commentpress_post_workflow_settings' ) ) return;
 
-		// is this an auto save routine?
+		// Is this an auto save routine?
 		if ( defined('DOING_AUTOSAVE') AND DOING_AUTOSAVE ) return;
 
-		// check permissions
+		// Check permissions.
 		if ( $post_obj->post_type == 'post' AND ! current_user_can( 'edit_posts' ) ) return;
 		if ( $post_obj->post_type == 'page' AND ! current_user_can( 'edit_pages' ) ) return;
 
-		// OK, we're authenticated
+		// OK, we're authenticated.
 
-		// check for revision
+		// Check for revision.
 		if ( $post_obj->post_type == 'revision' ) {
 
-			// get parent
+			// Get parent.
 			if ( $post_obj->post_parent != 0 ) {
 				$post = get_post( $post_obj->post_parent );
 			} else {
@@ -279,71 +278,71 @@ class Commentpress_Core_Workflow {
 		}
 
 		// ---------------------------------------------------------------------
-		// Save the content of the two wp_editors
+		// Save the content of the two wp_editors.
 		// ---------------------------------------------------------------------
 
-		// get original text
+		// Get original text.
 		$original = ( isset( $_POST['cporiginaltext'] ) ) ? $_POST['cporiginaltext'] : '';
 
-		// set key
+		// Set key.
 		$key = '_cp_original_text';
 
-		// if the custom field already has a value
+		// If the custom field already has a value.
 		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
-			// if empty string
+			// If empty string.
 			if ( $original === '' ) {
 
-				// delete the meta_key
+				// Delete the meta_key.
 				delete_post_meta( $post->ID, $key );
 
 			} else {
 
-				// update the data
+				// Update the data.
 				update_post_meta( $post->ID, $key, $original );
 
 			}
 
 		} else {
 
-			// only add meta if we have field data
+			// Only add meta if we have field data.
 			if ( $original !== '' ) {
 
-				// add the data
+				// Add the data.
 				add_post_meta( $post->ID, $key, $original, true );
 
 			}
 
 		}
 
-		// get literal translation
+		// Get literal translation.
 		$literal = ( isset( $_POST['cpliteraltranslation'] ) ) ? $_POST['cpliteraltranslation'] : '';
 
-		// set key
+		// Set key.
 		$key = '_cp_literal_translation';
 
-		// if the custom field already has a value
+		// If the custom field already has a value.
 		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
-			// if empty string
+			// If empty string.
 			if ( $literal === '' ) {
 
-				// delete the meta_key
+				// Delete the meta_key.
 				delete_post_meta( $post->ID, $key );
 
 			} else {
 
-				// update the data
+				// Update the data.
 				update_post_meta( $post->ID, $key, $literal );
 
 			}
 
 		} else {
 
-			// only add meta if we have field data
+			// Only add meta if we have field data.
 			if ( $literal !== '' ) {
 
-				// add the data
+				// Add the data.
 				add_post_meta( $post->ID, $key, $literal, true );
 
 			}
@@ -367,74 +366,74 @@ class Commentpress_Core_Workflow {
 		// If we are making a copy of the current version, also save meta
 		// ---------------------------------------------------------------------
 
-		// find and save the data
+		// Find and save the data.
 		$data = ( isset( $_POST['commentpress_new_post'] ) ) ? $_POST['commentpress_new_post'] : '0';
 
-		// do we want to create a new revision?
+		// Do we want to create a new revision?
 		if ( $data == '0' ) return;
 
-		// get original text
+		// Get original text.
 		$original = ( isset( $_POST['cporiginaltext'] ) ) ? $_POST['cporiginaltext'] : '';
 
-		// set key
+		// Set key.
 		$key = '_cp_original_text';
 
-		// if the custom field already has a value
+		// If the custom field already has a value.
 		if ( get_post_meta( $new_post_id, $key, true ) !== '' ) {
 
-			// if empty string
+			// If empty string.
 			if ( $original === '' ) {
 
-				// delete the meta_key
+				// Delete the meta_key.
 				delete_post_meta( $post->ID, $key );
 
 			} else {
 
-				// update the data
+				// Update the data.
 				update_post_meta( $post->ID, $key, $original );
 
 			}
 
 		} else {
 
-			// only add meta if we have field data
+			// Only add meta if we have field data.
 			if ( $original != '' ) {
 
-				// add the data
+				// Add the data.
 				add_post_meta( $new_post_id, $key, $original, true );
 
 			}
 
 		}
 
-		// get literal translation
+		// Get literal translation.
 		$literal = ( isset( $_POST['cpliteraltranslation'] ) ) ? $_POST['cpliteraltranslation'] : '';
 
-		// set key
+		// Set key.
 		$key = '_cp_literal_translation';
 
-		// if the custom field already has a value
+		// If the custom field already has a value.
 		if ( get_post_meta( $new_post_id, $key, true ) !== '' ) {
 
-			// if empty string
+			// If empty string.
 			if ( $literal === '' ) {
 
-				// delete the meta_key
+				// Delete the meta_key.
 				delete_post_meta( $post->ID, $key );
 
 			} else {
 
-				// update the data
+				// Update the data.
 				update_post_meta( $post->ID, $key, $literal );
 
 			}
 
 		} else {
 
-			// only add meta if we have field data
+			// Only add meta if we have field data.
 			if ( $literal != '' ) {
 
-				// add the data
+				// Add the data.
 				add_post_meta( $new_post_id, $key, $literal, true );
 
 			}
@@ -464,7 +463,7 @@ class Commentpress_Core_Workflow {
 	 */
 	function _init() {
 
-		// register hooks
+		// Register hooks.
 		$this->_register_hooks();
 
 	}
@@ -478,36 +477,36 @@ class Commentpress_Core_Workflow {
 	 */
 	function _register_hooks() {
 
-		// enable workflow
+		// Enable workflow.
 		add_filter( 'cp_blog_workflow_exists', array( $this, 'blog_workflow_exists' ), 21 );
 
-		// override label
+		// Override label.
 		add_filter( 'cp_blog_workflow_label', array( $this, 'blog_workflow_label' ), 21 );
 
-		// override blog type if workflow is on
+		// Override blog type if workflow is on.
 		add_filter( 'cp_get_group_meta_for_blog_type', array( $this, 'group_meta_set_blog_type' ), 21, 2 );
 
-		// is this the back end?
+		// Is this the back end?
 		if ( is_admin() ) {
 
-			// add meta box for translation workflow
+			// Add meta box for translation workflow.
 			add_action( 'cp_workflow_metabox', array( $this, 'workflow_metabox' ), 10, 2 );
 
-			// override meta box title for translation workflow
+			// Override meta box title for translation workflow.
 			add_filter( 'cp_workflow_metabox_title', array( $this, 'workflow_metabox_title' ), 21, 1 );
 
-			// save post with translation workflow
+			// Save post with translation workflow.
 			add_action( 'cp_workflow_save_post', array( $this, 'workflow_save_post' ), 21, 1 );
 
-			// save page with translation workflow
+			// Save page with translation workflow.
 			add_action( 'cp_workflow_save_page', array( $this, 'workflow_save_post' ), 21, 1 );
 
-			// save translation workflow for copied posts
+			// Save translation workflow for copied posts.
 			add_action( 'cp_workflow_save_copy', array( $this, 'workflow_save_copy' ), 21, 1 );
 
 		}
 
-		// create custom filters that mirror 'the_content'
+		// Create custom filters that mirror 'the_content'.
 		add_filter( 'cp_workflow_richtext_content', 'wptexturize' );
 		add_filter( 'cp_workflow_richtext_content', 'convert_smilies' );
 		add_filter( 'cp_workflow_richtext_content', 'convert_chars' );
@@ -522,7 +521,7 @@ class Commentpress_Core_Workflow {
 
 
 
-} // class ends
+} // Class ends.
 
 
 

@@ -34,7 +34,7 @@ CommentPress.infinite = {};
  */
 CommentPress.infinite.settings = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -50,17 +50,17 @@ CommentPress.infinite.settings = new function() {
 	this.init = function() {
 
 		/*
-		// do we have pushstate?
+		// Do we have pushstate?
 		if ( window.history ) {
 			console.log( 'ONLOAD' );
 			console.log( window.history );
 		}
 		*/
 
-		// init post url
+		// Init post URL.
 		me.init_post_url();
 
-		// init post title
+		// Init post title.
 		me.init_post_title();
 
 	};
@@ -80,7 +80,7 @@ CommentPress.infinite.settings = new function() {
 
 
 
-	// init posts array
+	// Init posts array
 	this.posts = new Array;
 
 	/**
@@ -121,7 +121,7 @@ CommentPress.infinite.settings = new function() {
 
 
 
-	// init post url
+	// Init post URL.
 	this.post_url = '';
 
 	/**
@@ -131,7 +131,7 @@ CommentPress.infinite.settings = new function() {
 	 */
 	this.init_post_url = function() {
 
-		// get initial value
+		// Get initial value.
 		this.post_url = document.location.href;
 
 	};
@@ -156,7 +156,7 @@ CommentPress.infinite.settings = new function() {
 
 
 
-	// init post title
+	// Init post title.
 	this.post_title = '';
 
 	/**
@@ -166,7 +166,7 @@ CommentPress.infinite.settings = new function() {
 	 */
 	this.init_post_title = function() {
 
-		// get initial value
+		// Get initial value.
 		this.post_title = document.title;
 
 	};
@@ -191,7 +191,7 @@ CommentPress.infinite.settings = new function() {
 
 
 
-	// init post "comments open" setting
+	// Init post "comments open" setting
 	this.post_comments_open = 'n';
 
 	/**
@@ -214,7 +214,7 @@ CommentPress.infinite.settings = new function() {
 
 
 
-	// init comments array
+	// Init comments array
 	this.comments = new Array;
 
 	/**
@@ -245,7 +245,7 @@ CommentPress.infinite.settings = new function() {
 		this.comments.push( post_id );
 	};
 
-}; // end CommentPress infinite settings class
+}; // End CommentPress infinite settings class.
 
 
 
@@ -260,7 +260,7 @@ CommentPress.infinite.settings = new function() {
  */
 CommentPress.infinite.DOM = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -288,10 +288,10 @@ CommentPress.infinite.DOM = new function() {
 	 */
 	this.dom_ready = function() {
 
-		// init waypoints
+		// Init waypoints.
 		me.init_waypoints();
 
-		// init popstate
+		// Init popstate.
 		me.init_popstate();
 
 	};
@@ -314,7 +314,7 @@ CommentPress.infinite.DOM = new function() {
 		 */
 		window.onpopstate = function( e ) {
 
-			// did we get a state object?
+			// Did we get a state object?
 			if ( e.state ) {
 
 				//console.log( 'ONPOPSTATE' );
@@ -323,25 +323,25 @@ CommentPress.infinite.DOM = new function() {
 				/*
 				var cpajax_history_supported = ???;
 
-				// test if history supported
+				// Test if history supported.
 				if ( cpajax_history_supported === false ) {
 
 					alert( 'gah' );
 
-					// refresh from server
+					// Refresh from server.
 					document.location.reload( true );
 					return;
 
 				}
 				*/
 
-				// set title
+				// Set title.
 				document.title = e.state.page_title;
 
-				// set html
+				// Set HTML.
 				$( '#main_wrapper' ).prepend( '<div class="page_wrapper cp_page_wrapper">' + e.state.html + '</div>' );
 
-				// add comments back in
+				// Add comments back in.
 				//$( '#comments_sidebar .comments_container' ).replaceWith( $( e.state.comments ) );
 
 			}
@@ -373,25 +373,25 @@ CommentPress.infinite.DOM = new function() {
 			 */
 			function( direction ) {
 
-				// only look for downward motion
+				// Only look for downward motion.
 				if ( direction === 'down' ) {
 
-					// direction: UP
+					// Direction: UP.
 					//console.log( 'up: ' + post_id );
 
-					// load next page
+					// Load next page.
 					CommentPress.infinite.page.load_next( 'waypoint' );
 
 				} else {
 
-					// direction: UP
+					// Direction: UP.
 					//console.log( 'up: ' + post_id );
 
 				}
 
 			},
 
-			// config options
+			// Config options
 			{
 				offset: 'bottom-in-view'
 				//offset: function() { return -$( this ).height / 2; }
@@ -414,7 +414,7 @@ CommentPress.infinite.DOM = new function() {
 	 */
 	this.init_post_waypoint = function( post_id ) {
 
-		// The top of a post has reached the top of the viewport scrolling downwards
+		// The top of a post has reached the top of the viewport scrolling downwards.
 		$( '#post-' + post_id + '.post' ).parent().parent().waypoint(
 
 			/**
@@ -426,35 +426,35 @@ CommentPress.infinite.DOM = new function() {
 			 */
 			function( direction ) {
 
-				// only look for downward motion
+				// Only look for downward motion.
 				if ( direction === 'down' ) {
 
-					// trigger page change
+					// Trigger page change.
 					me.update_dom( $( this ) );
 
 				}
 
 			},
 
-			// config options
+			// Config options.
 			{
 
-				// only trigger once
+				// Only trigger once.
 				triggerOnce: true,
 
-				// get offset
+				// Get offset.
 				offset: function() {
 
-					// define vars
+					// Define vars.
 					var offset;
 
-					// get header offset
+					// Get header offset.
 					offset = $( '#header' ).height();
 
-					// is the admin bar shown?
+					// Is the admin bar shown?
 					if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
 
-						// add admin bar height
+						// Add admin bar height.
 						offset += CommentPress.settings.DOM.get_wp_adminbar_height();
 
 					}
@@ -482,86 +482,86 @@ CommentPress.infinite.DOM = new function() {
 	 */
 	this.handle_ajax_data = function( response, mode ) {
 
-		// declare vars
+		// Declare vars.
 		var new_post_obj, new_post_prop, new_post_id,
 			existing_menu_item, existing_menu_item_id,
 			new_comments_obj, post_comment_form,
 			post_id;
 
-		// get ID of last post
+		// Get ID of last post.
 		post_id = $( '#main_wrapper .post:last-child' ).prop( 'id' ).split( '-' )[1];
 		//console.log( 'wrapper current_post_id: ' + post_id );
 
 		//console.log( response );
 		//return;
 
-		// store page data
+		// Store page data.
 		CommentPress.infinite.settings.set_post_url( response.url );
 		CommentPress.infinite.settings.set_post_title( response.title );
 
 		/*
 		// $ 1.9 fails to recognise the response as HTML, so
-		// we *must* use parseHTML if it's available
+		// se *must* use parseHTML if it's available.
 		if ( $.parseHTML ) {
 
-			// if our $ version is 1.8+, it'll have parseHTML
+			// If our $ version is 1.8+, it'll have parseHTML.
 			response =  $( $.parseHTML( data ) );
 
 		} else {
 
-			// get our data as object in the basic way
+			// Get our data as object in the basic way.
 			response = $( data );
 
 		}
 		*/
 
-		// get existing menu item before we append
+		// Get existing menu item before we append.
 		existing_menu_item = $( '#main_wrapper .post:last-child' ).prop( 'class' );
 		//console.log( 'LOAD: existing_menu_item: ' + existing_menu_item );
 
-		// find post object
+		// Find post object.
 		new_post_obj = $( '.post', $( response.content ) );
 		//console.log( 'NEW post obj: ' + new_post_obj );
 
-		// add new post to the end
+		// Add new post to the end.
 		$( '#main_wrapper' ).append( new_post_obj.parents( '.page_wrapper' ) );
 
-		// find post ID property
+		// Find post ID property.
 		new_post_prop = new_post_obj.prop( 'id' );
 		//console.log( 'NEW post ID: ' + new_post_prop );
 
-		// if we get one
+		// If we get one.
 		if ( typeof new_post_prop !== 'undefined' ) {
 
-			// add calling post ID to our array
+			// Add calling post ID to our array.
 			CommentPress.infinite.settings.add_to_posts( post_id );
 
-			// get new post ID
+			// Get new post ID.
 			new_post_id = new_post_prop.split( '-' )[1];
 
-			// find comments
+			// Find comments.
 			new_comments_obj = $( '.comments_container', $( response.comments ) );
 			//console.log( 'NEW comments obj: ' );
 			//console.log( new_comments_obj );
 
-			// do we have a comment form?
+			// Do we have a comment form?
 			if ( CommentPress.infinite.commentform.get_comments_form() !== 0 ) {
 
-				// get a copy of the comment form for this post
+				// Get a copy of the comment form for this post.
 				post_comment_form = CommentPress.infinite.commentform.get_comments_form().clone();
 
-				// change the form ID so we don't get double submissions
+				// Change the form ID so we don't get double submissions.
 				$( 'form', post_comment_form ).attr( 'id', 'commentform' );
 
-				// update its comment_post_ID
+				// Update its comment_post_ID.
 				$( '#comment_post_ID', post_comment_form ).val( new_post_id );
 
-				// replace stored comments data
+				// Replace stored comments data.
 				CommentPress.infinite.settings.set_comments( new_comments_obj.append( post_comment_form ) );
 				//console.log( 'REPLACE CommentPress.infinite.settings.comments:' );
 				//console.log( CommentPress.infinite.settings.get_comments() );
 
-				// set global depending on status
+				// Set global depending on status.
 				CommentPress.infinite.settings.set_post_comments_open( 'n' );
 				if ( response.comment_status == 'open' ) {
 					CommentPress.infinite.settings.set_post_comments_open( 'y' );
@@ -569,45 +569,45 @@ CommentPress.infinite.DOM = new function() {
 
 			}
 
-			// does it have a menu item ID reference?
+			// Does it have a menu item ID reference?
 			if ( existing_menu_item != 'post' ) {
 
-				// get item ID
+				// Get item ID.
 				existing_menu_item_id = existing_menu_item.split( '-' )[1];
 
-				// is it a custom menu?
+				// Is it a custom menu?
 				if ( existing_menu_item.match( 'wpcustom_menuid-' ) ) {
 
-					// update menu: existing_menu_item_id
+					// Update menu: existing_menu_item_id.
 					CommentPress.infinite.menu.update_custom( existing_menu_item_id );
 
 				} else {
 
-					// update pages menu
+					// Update pages menu.
 					CommentPress.infinite.menu.update_pages( existing_menu_item_id );
 
 				}
 
 			}
 
-			// add waypoints to new post
+			// Add waypoints to new post.
 			me.init_post_waypoint( new_post_id );
 
-			// broadcast
+			// Broadcast.
 			$( document ).trigger( 'commentpress-new-post-loaded' );
 
-			// enable CommentPress
+			// Enable CommentPress.
 			me.refresh();
 
 		}
 
-		// get new waypoint
+		// Get new waypoint.
 		$.waypoints( 'refresh' );
 
-		// if waypoint
+		// If waypoint.
 		if ( mode == 'link' ) {
 
-			// scroll to the page
+			// Scroll to the page.
 			CommentPress.common.content.scroll_page( new_post_obj );
 
 		}
@@ -625,18 +625,18 @@ CommentPress.infinite.DOM = new function() {
 
 		// COMMENTPRESS AJAX COMMENTS
 
-		// enable comment reassignment
+		// Enable comment reassignment.
 		CommentPress.ajax.comments.reassign_comments();
 
-		// initialise plugin
+		// Initialise plugin.
 		CommentPress.ajax.comments.initialise();
 
-		// initialise comment form
+		// Initialise comment form.
 		CommentPress.ajax.comments.initialise_form();
 
 		// BP GROUP SITES
 
-		// refresh group sites, if present
+		// Refresh group sites, if present.
 		if ( $.is_function_defined( 'bpgsites_init_elements' ) ) {
 			bpgsites_init_elements();
 		}
@@ -654,80 +654,80 @@ CommentPress.infinite.DOM = new function() {
 	 */
 	this.update_dom = function( context ) {
 
-		// declare vars
+		// Declare vars.
 		var post_obj, post_id, menu_item, new_comments, container, item_above,
 			html_to_save, comments;
 
-		// trace
+		// Trace.
 		//console.log( 'TOP GOING DOWN (this)' );
 		//console.log( context );
 		//console.log( 'TOP GOING DOWN ' + $( '.post', context ).prop( 'id' ) );
 
-		// get post object
+		// Get post object.
 		post_obj = $( '.post', context );
 
-		// ID of current post that's come into view
+		// ID of current post that's come into view.
 		post_id = post_obj.prop( 'id' ).split( '-' )[1];
 		//console.log( 'DOWN: post_id: ' + post_id );
 
-		// get menu item from class
+		// Get menu item from class.
 		menu_item = post_obj.prop( 'class' );
 		//console.log( 'DOWN: menu_item: ' + menu_item );
 
-		// did we get one of our target ones?
+		// Did we get one of our target ones?
 		if ( menu_item != 'post' ) {
 
-			// got one
+			// Got one.
 			menu_item_id = menu_item.split( '-' )[1];
 
-			// direction: DOWN
+			// Direction: DOWN.
 			//console.log( 'DOWN: post_id ' + post_id + ' menu_item_id ' + menu_item_id );
 
-			// is it a custom menu?
+			// Is it a custom menu?
 			if ( menu_item.match( 'wpcustom_menuid-' ) ) {
 
-				// update menu: menu_item_id
+				// Update menu: menu_item_id.
 				CommentPress.infinite.menu.update_custom( menu_item_id );
 
 			} else {
 
-				// update pages menu
+				// Update pages menu.
 				CommentPress.infinite.menu.update_pages( menu_item_id );
 
 			}
 
-			// disable container waypoint to prevent accidental triggering
+			// Disable container waypoint to prevent accidental triggering.
 			$( '#wrapper' ).waypoint( 'disable' );
 
-			// remove item above
+			// Remove item above.
 			container = $( '#main_wrapper' );
 			item_above = context.prev();
 
-			// trash waypoints
+			// Trash waypoints.
 			item_above.waypoint( 'destroy' );
 			context.waypoint( 'destroy' );
 
-			// set as fixed (remove from document flow)
+			// Set as fixed - remove from document flow.
 			container.css( 'position', 'fixed' );
 
-			// remove item
+			// Remove item.
 			//item_above.css( 'visibility', 'hidden' );
 			//item_above.css( 'display', 'none' );
 			item_above.remove();
 
-			// set document title
+			// Set document title.
 			document.title = CommentPress.infinite.settings.get_post_title();
 
-			// do we have pushstate?
+			// Do we have pushstate?
 			if ( window.history ) {
 
 				//console.log( 'PUSHSTATE' );
 				//console.log( 'page_title: ' + CommentPress.infinite.settings.get_post_title() );
 
-				// store items as HTML
+				// Store items as HTML.
 				html_to_save = $.trim( context.html() );
 
-				// create new state object to push to history
+				// Create new state object to push to history.
 				window.history.pushState(
 
 					{
@@ -744,60 +744,60 @@ CommentPress.infinite.DOM = new function() {
 
 			}
 
-			// scroll to top of page
+			// Scroll to top of page.
 			$( document ).scrollTop( 0 );
 
-			// set back to relative (add back to document flow)
+			// Set back to relative - add back to document flow.
 			container.css( 'position', 'relative' );
 
-			// re-renable container waypoint
+			// Re-renable container waypoint.
 			$( '#wrapper' ).waypoint( 'enable' );
 
 
 
-			// get comments
+			// Get comments.
 			comments = CommentPress.infinite.settings.get_comments();
 			//console.log( 'COMMENTS:' );
 			//console.log( comments );
 
-			// do we have a comment form?
+			// Do we have a comment form?
 			if ( CommentPress.infinite.commentform.get_comments_form() !== 0 ) {
 
-				// disable the comment form
+				// Disable the comment form.
 				addComment.disableForm();
 
 			}
 
-			// add new comments to the end
+			// Add new comments to the end.
 			$( '#comments_sidebar .comments_container' ).replaceWith( comments );
 
-			// set global
+			// Set global.
 			cp_comments_open = CommentPress.infinite.settings.get_post_comments_open();
 
-			// do we have a comment form?
+			// Do we have a comment form?
 			if ( CommentPress.infinite.commentform.get_comments_form() !== 0 ) {
 
-				// re-enable the comment form
+				// Re-enable the comment form.
 				addComment.enableForm();
 
 			}
 
 
 
-			// enable CommentPress
+			// Enable CommentPress.
 			CommentPress.infinite.DOM.refresh();
 
-			// get new waypoint
+			// Get new waypoint.
 			$.waypoints( 'refresh' );
 
-			// broadcast
+			// Broadcast.
 			$( document ).trigger( 'commentpress-post-changed' );
 
 		}
 
 	};
 
-}; // end CommentPress infinite DOM class
+}; // End CommentPress infinite DOM class
 
 
 
@@ -812,7 +812,7 @@ CommentPress.infinite.DOM = new function() {
  */
 CommentPress.infinite.page = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -827,7 +827,7 @@ CommentPress.infinite.page = new function() {
 	 */
 	this.init = function() {
 
-		// init nonce
+		// Init nonce.
 		me.init_nonce();
 
 	};
@@ -843,14 +843,14 @@ CommentPress.infinite.page = new function() {
 	 */
 	this.dom_ready = function() {
 
-		// init previous and next buttons
+		// Init previous and next buttons.
 		me.state_navigation();
 
 	};
 
 
 
-	// init nonce
+	// Init nonce.
 	this.cpajax_nonce = '';
 
 	/**
@@ -860,7 +860,7 @@ CommentPress.infinite.page = new function() {
 	 */
 	this.init_nonce = function() {
 
-		// get initial value from settings object
+		// Get initial value from settings object.
 		if ( 'undefined' !== typeof CommentpressAjaxInfiniteSettings ) {
 			this.cpajax_nonce = CommentpressAjaxInfiniteSettings.nonce;
 		}
@@ -895,14 +895,14 @@ CommentPress.infinite.page = new function() {
 	 */
 	this.state_navigation = function() {
 
-		// previous page button
+		// Previous page button.
 		$('#container').on( 'click', '.previous_page', function( event ) {
 			alert( 'back' );
 			if ( event.preventDefault ) {event.preventDefault();}
 			window.history.back();
 		});
 
-		// next page button
+		// Next page button.
 		$('#container').on( 'click', '.next_page', function( event ) {
 			alert( 'forward' );
 			if ( event.preventDefault ) {event.preventDefault();}
@@ -922,57 +922,57 @@ CommentPress.infinite.page = new function() {
 	 */
 	this.load_next = function( mode ) {
 
-		// declare vars
+		// Declare vars.
 		var post_id;
 
-		// get ID of last post
+		// Get ID of last post.
 		post_id = $( '#main_wrapper .post:last-child' ).prop( 'id' ).split( '-' )[1];
 		//console.log( 'wrapper current_post_id: ' + post_id );
 
 		//console.log( 'WRAPPER GOING DOWN' );
 
-		// kick out if we've already got this one
+		// Kick out if we've already got this one.
 		if ( CommentPress.infinite.settings.in_posts( post_id ) ) { return; }
 
-		// direction: DOWN
+		// Direction: DOWN.
 		//console.log( 'down: ' + post_id );
 
-		// show loading
+		// Show loading.
 		//$( '#loading' ).show();
 
-		// init AJAX spinner
+		// Init AJAX spinner.
 		$( '#main_wrapper' ).after(
 			'<div class="cp_next_page_loading_wrapper" style="text-align: center">' +
 				'<img src="' + cpajax_spinner_url + '" id="cp_next_page_loading" alt="' + cpajax_lang[0] + '" />' +
 			'</div>'
 		);
 
-		// call WordPress
+		// Call WordPress.
 		$.ajax({
 
-			// wp ajax script
+			// WordPress AJAX script.
 			url: cpajax_ajax_url,
 
-			// method
+			// Method.
 			type: 'POST',
 
-			// data expected
+			// Data expected.
 			dataType: 'json',
 
-			// data to send
+			// Data to send.
 			data: {
 				action: 'cpajax_load_next_page',
 				current_post_id: post_id,
 				nonce: me.get_nonce()
 			},
 
-			// ajax callback
+			// AJAX callback.
 			success: function( data ) {
 
-				// handle incoming
+				// Handle incoming.
 				CommentPress.infinite.DOM.handle_ajax_data( data, mode );
 
-				// remove spinner
+				// Remove spinner.
 				$( '.cp_next_page_loading_wrapper' ).remove();
 
 			}
@@ -981,7 +981,7 @@ CommentPress.infinite.page = new function() {
 
 	};
 
-}; // end CommentPress infinite page class
+}; // End CommentPress infinite page class.
 
 
 
@@ -996,7 +996,7 @@ CommentPress.infinite.page = new function() {
  */
 CommentPress.infinite.menu = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -1037,11 +1037,11 @@ CommentPress.infinite.menu = new function() {
 	 */
 	this.update_custom = function( item_id ) {
 
-		// update item
+		// Update item.
 		$( '#toc_list .menu-item' ).removeClass( 'current_page_item' );
 		$( '#menu-item-' + item_id ).addClass( 'current_page_item' );
 
-		// update ancestors
+		// Update ancestors.
 		$( '#toc_list .menu-item' ).removeClass( 'current_page_ancestor' );
 		$( '#menu-item-' + item_id ).parents( 'li' ).addClass( 'current_page_ancestor' );
 
@@ -1058,17 +1058,17 @@ CommentPress.infinite.menu = new function() {
 	 */
 	this.CommentPress.infinite.menu.update_pages = function( item_id ) {
 
-		// update item
+		// Update item.
 		$( '#toc_list .page_item' ).removeClass( 'current_page_item' );
 		$( '.page-item-' + item_id ).addClass( 'current_page_item' );
 
-		// update ancestors
+		// Update ancestors.
 		$( '#toc_list .page_item' ).removeClass( 'current_page_ancestor' );
 		$( '.page-item-' + item_id ).parents( 'li' ).addClass( 'current_page_ancestor' );
 
 	};
 
-}; // end CommentPress infinite menu class
+}; // End CommentPress infinite menu class.
 
 
 
@@ -1083,7 +1083,7 @@ CommentPress.infinite.menu = new function() {
  */
 CommentPress.infinite.comments = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -1122,21 +1122,21 @@ CommentPress.infinite.comments = new function() {
 	 */
 	this.store = function() {
 
-		// declare vars
+		// Declare vars.
 		var post_id;
 
-		// store ID of current post
+		// Store ID of current post.
 		post_id = $( '#wrapper .post' ).prop( 'id' ).split( '-' )[1];
 		//CommentPress.infinite.settings.add_to_posts( post_id );
 
-		// add new comments data to our array
+		// Add new comments data to our array.
 		CommentPress.infinite.settings_add_to_comments( post_id, $( '#comments_sidebar .comments_container' ) );
 		//console.log( 'INIT WITH CommentPress.infinite.settings.comments:' );
 		//console.log( CommentPress.infinite.settings.get_comments() );
 
 	};
 
-}; // end CommentPress infinite comments class
+}; // End CommentPress infinite comments class.
 
 
 
@@ -1152,7 +1152,7 @@ CommentPress.infinite.comments = new function() {
  */
 CommentPress.infinite.commentform = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -1180,14 +1180,14 @@ CommentPress.infinite.commentform = new function() {
 	 */
 	this.dom_ready = function() {
 
-		//store comment form
+		// Store comment form.
 		me.store();
 
 	};
 
 
 
-	// init comments form
+	// Init comments form
 	this.comments_form = 0;
 
 	/**
@@ -1217,22 +1217,22 @@ CommentPress.infinite.commentform = new function() {
 	 */
 	this.store = function() {
 
-		// declare vars
+		// Declare vars.
 		var new_form;
 
-		// disable the comment form
+		// Disable the comment form.
 		addComment.disableForm();
 
-		// store a copy of the comment form
+		// Store a copy of the comment form.
 		me.set_comments_form( $( '#respond_wrapper' ).clone() );
 
-		// get new form
+		// Get new form.
 		new_form = me.get_comments_form();
 
-		// change the form ID so we don't get double submissions
+		// Change the form ID so we don't get double submissions.
 		$( 'form', new_form ).attr( 'id', 'commentform-disabled' );
 
-		// remove the extraneous classes
+		// Remove the extraneous classes.
 		if ( $( '#respond_wrapper', new_form ).hasClass( 'cp_force_displayed' ) ) {
 			$( '#respond_wrapper', new_form ).removeClass( 'cp_force_displayed' );
 		}
@@ -1240,17 +1240,17 @@ CommentPress.infinite.commentform = new function() {
 			$( '#respond_wrapper', new_form ).removeClass( 'cp_force_closed' );
 		}
 
-		// optionally remove from DOM if comments disabled
+		// Optionally remove from DOM if comments disabled.
 		if ( $( '#respond_wrapper' ).hasClass( 'cp_force_closed' ) ) {
 			$( '#respond_wrapper' ).remove();
 		}
 
-		// enable the comment form (not necessary, it seems)
+		// Enable the comment form - not necessary, it seems.
 		//addComment.enableForm();
 
 	};
 
-}; // end CommentPress infinite comment form class
+}; // End CommentPress infinite comment form class.
 
 
 
@@ -1258,7 +1258,7 @@ CommentPress.infinite.commentform = new function() {
 
 
 
-// do immediate init
+// Do immediate init.
 CommentPress.infinite.settings.init();
 CommentPress.infinite.DOM.init();
 CommentPress.infinite.page.init();
@@ -1279,7 +1279,7 @@ CommentPress.infinite.comments.init();
  */
 jQuery(document).ready(function($) {
 
-	// trigger DOM ready methods
+	// Trigger DOM ready methods.
 	CommentPress.infinite.settings.dom_ready();
 	CommentPress.infinite.DOM.dom_ready();
 	CommentPress.infinite.page.dom_ready();
@@ -1287,7 +1287,7 @@ jQuery(document).ready(function($) {
 	CommentPress.infinite.commentform.dom_ready();
 	CommentPress.infinite.comments.dom_ready();
 
-}); // end document.ready()
+}); // End document.ready()
 
 
 

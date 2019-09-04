@@ -1,12 +1,12 @@
 <?php
 
-// declare access to globals
+// Declare access to globals.
 global $post;
 
-// init no comment class
+// Init no comment class.
 $no_comments_class = '';
 
-// override if there are no comments (for print stylesheet to hide title)
+// Override if there are no comments (for print stylesheet to hide title).
 if ( $post->comment_count == 0 ) { $no_comments_class = ' no_comments'; }
 
 ?><!-- comments_sidebar.php -->

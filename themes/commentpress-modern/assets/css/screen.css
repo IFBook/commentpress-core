@@ -1401,6 +1401,7 @@ div#respond > p
 {
 	margin-bottom: 0.6em;
 	margin-top: 0;
+	clear: both;
 }
 
 .author_is_logged_in
@@ -1650,6 +1651,11 @@ Footer
 	text-align: center;
 	font-family: sans-serif;
 	background-color: #ccc;
+}
+
+#footer_inner .footer_widgets .widget
+{
+	margin: 1.25em 0;
 }
 
 #footer_inner p

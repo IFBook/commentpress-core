@@ -2,15 +2,15 @@
 
 
 /**
- * Enqueue accordion script
+ * Enqueue accordion script.
  */
 function my_js_needed() {
-	// enqueue accordion-like js
+	// Enqueue accordion-like Javascript.
 	wp_enqueue_script(
 		'cp_special',
 		get_template_directory_uri() . '/assets/js/cp_js_all_comments.js',
-		null, // deps
-		COMMENTPRESS_VERSION // version
+		null, // Dependencies.
+		COMMENTPRESS_VERSION // Version.
 	);
 }
 
@@ -18,7 +18,7 @@ add_action( 'wp_enqueue_scripts', 'my_js_needed' );
 
 
 
-// get HTML for this template
+// Get HTML for this template.
 $html = commentpress_get_tagged_comments_content();
 
 
@@ -27,7 +27,7 @@ get_header(); ?>
 
 
 
-<!-- taxonomy-classification.php -->
+<!-- taxonomy-comment_tags.php -->
 
 <div id="wrapper">
 
@@ -51,6 +51,8 @@ get_header(); ?>
 	echo sprintf( __( 'Comments Tagged &#8216;%s&#8217;', 'commentpress-core' ), single_cat_title( '', false ) )
 ?></h3>
 
+<div id="comments_in_page_wrapper">
+
 <?php if ( ! empty( $html ) ) : ?>
 
 	<?php echo $html; ?>
@@ -64,6 +66,8 @@ get_header(); ?>
 	<?php get_search_form(); ?>
 
 <?php endif; ?>
+
+</div>
 
 
 

@@ -3,7 +3,7 @@
 
 global $blog_id;
 
-// if this is the main BuddyPress-enabled blog...
+// If this is the main BuddyPress-enabled blog.
 if (
 	function_exists( 'bp_search_form_type_select' ) AND
 	BP_ROOT_BLOG == $blog_id
@@ -12,7 +12,7 @@ if (
 
 
 // -----------------------------------------------------------------------------
-// BuddyPress
+// BuddyPress.
 // -----------------------------------------------------------------------------
 
 ?><form action="<?php echo bp_search_form_action() ?>" method="post" id="search-form">
@@ -36,7 +36,7 @@ if (
 
 
 // -----------------------------------------------------------------------------
-// WordPress
+// WordPress.
 // -----------------------------------------------------------------------------
 
 ?><form method="get" id="searchform" action="<?php echo site_url(); ?>/">

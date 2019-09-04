@@ -27,7 +27,7 @@ CommentPress.theme = {};
  */
 CommentPress.theme.settings = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -57,7 +57,7 @@ CommentPress.theme.settings = new function() {
 
 	};
 
-}; // end CommentPress theme settings class
+}; // End CommentPress theme settings class.
 
 
 
@@ -72,7 +72,7 @@ CommentPress.theme.settings = new function() {
  */
 CommentPress.theme.DOM = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -87,10 +87,10 @@ CommentPress.theme.DOM = new function() {
 	 */
 	this.init = function() {
 
-		// write styles into <head>
+		// Write styles into <head>.
 		me.head();
 
-		// add js class so we can do some contextual styling
+		// Add js class so we can do some contextual styling.
 		$('html').addClass( 'js' );
 
 	};
@@ -119,28 +119,28 @@ CommentPress.theme.DOM = new function() {
 	 */
 	this.head = function() {
 
-		// define vars
+		// Define vars.
 		var styles, cp_header_height;
 
-		// init styles
+		// Init styles.
 		styles = '';
 
-		// init header height
+		// Init header height.
 		cp_header_height = 70;
 
-		// wrap with js test
+		// Wrap with js test.
 		if ( document.getElementById ) {
 
-			// open style declaration
+			// Open style declaration.
 			styles += '<style type="text/css" media="screen">';
 
-			// if mobile, don't hide textblock meta
+			// If mobile, don't hide textblock meta.
 			if ( cp_is_mobile == '0' ) {
 
-				// have we explicitly hidden textblock meta?
+				// Have we explicitly hidden textblock meta?
 				if ( cp_textblock_meta == '0' ) {
 
-					// avoid flash of textblock meta elements
+					// Avoid flash of textblock meta elements.
 					styles += '#content .textblock span.para_marker, #content .textblock span.commenticonbox { display: none; } ';
 					styles += '.content .textblock span.para_marker, .content .textblock span.commenticonbox { display: none; } ';
 
@@ -148,16 +148,16 @@ CommentPress.theme.DOM = new function() {
 
 			}
 
-			// avoid flash of all-comments hidden elements
+			// Avoid flash of all-comments hidden elements.
 			styles += 'ul.all_comments_listing div.item_body { display: none; } ';
 
-			// is the admin bar shown?
+			// Is the admin bar shown?
 			if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
 
-				// if we have the responsive admin bar in 3.8+
+				// If we have the responsive admin bar in 3.8+
 				if ( CommentPress.settings.DOM.get_wp_adminbar_height() == '32' ) {
 
-					// react to responsive admin bar
+					// React to responsive admin bar.
 					styles += '@media screen and ( max-width: 782px ) { ' +
 								'body.admin-bar #sidebar, #sidebar, body.admin-bar #navigation, #navigation { top: ' + CommentPress.settings.DOM.get_wp_adminbar_expanded() + 'px; } ' +
 							' } ';
@@ -166,13 +166,13 @@ CommentPress.theme.DOM = new function() {
 
 			}
 
-			// are subpages to be shown?
+			// Are subpages to be shown?
 			if ( cp_show_subpages == '0' ) {
 
-				// avoid flash of hidden elements on collapsed items
+				// Avoid flash of hidden elements on collapsed items.
 				styles += '#toc_sidebar .sidebar_contents_wrapper ul li ul { display: none; } ';
 
-				// show current item and ancestors
+				// Show current item and ancestors.
 				styles += '#toc_sidebar .sidebar_contents_wrapper ul li.current_page_ancestor > ul { display: block; } ';
 				styles += '#toc_sidebar .sidebar_contents_wrapper ul li.current-menu-ancestor > ul { display: block; } ';
 				styles += '#toc_sidebar .sidebar_contents_wrapper ul li.current_page_item > ul { display: block; } ';
@@ -180,15 +180,15 @@ CommentPress.theme.DOM = new function() {
 
 			}
 
-			// is this the comments sidebar?
+			// Is this the comments sidebar?
 			if ( cp_special_page == '0' ) {
 
-				// avoid flash of hidden comment form
+				// Avoid flash of hidden comment form.
 				styles += '#respond { display: none; } ';
 
 			}
 
-			// on global activity sidebar, avoid flash of hidden comments
+			// On global activity sidebar, avoid flash of hidden comments.
 			styles += '#sidebar .paragraph_wrapper { display: none; } ';
 			styles += '#navigation .paragraph_wrapper { display: none; } ';
 			styles += '#sidebar .paragraph_wrapper.start_open { display: block; } ';
@@ -196,20 +196,20 @@ CommentPress.theme.DOM = new function() {
 			styles += '.commentpress_page #navigation .paragraph_wrapper.special_pages_wrapper { display: block; } ';
 			styles += '.cp_sidebar_activity #comments_sidebar { display: none; } ';
 
-			// hide original and literal content when JS-enabled
+			// Hide original and literal content when JS-enabled.
 			styles += '#original .post, #literal .post { display: none; } ';
 
-			// close style declaration
+			// Close style declaration.
 			styles += '</style>';
 
 		}
 
-		// write to page now
+		// Write to page now.
 		document.write( styles );
 
 	};
 
-}; // end DOM class
+}; // End DOM class.
 
 
 
@@ -224,7 +224,7 @@ CommentPress.theme.DOM = new function() {
  */
 CommentPress.theme.header = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -265,16 +265,16 @@ CommentPress.theme.header = new function() {
 	 */
 	this.get_offset = function() {
 
-		// define vars
+		// Define vars.
 		var offset;
 
-		// get header offset
-		offset = -72; // allow space for switcher buttons
+		// Get header offset.
+		offset = -72; // Allow space for switcher buttons.
 
-		// is the admin bar shown?
+		// Is the admin bar shown?
 		if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
 
-			// subtract admin bar height
+			// Subtract admin bar height.
 			offset -= CommentPress.settings.DOM.get_wp_adminbar_height();
 
 		}
@@ -284,7 +284,7 @@ CommentPress.theme.header = new function() {
 
 	};
 
-}; // end header class
+}; // End header class.
 
 
 
@@ -302,7 +302,7 @@ CommentPress.theme.header = new function() {
  */
 CommentPress.theme.switcher = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -317,7 +317,7 @@ CommentPress.theme.switcher = new function() {
 	 */
 	this.init = function() {
 
-		// init state
+		// Init state.
 		me.init_active();
 
 	};
@@ -333,7 +333,7 @@ CommentPress.theme.switcher = new function() {
 	 */
 	this.dom_ready = function() {
 
-		// init discuss
+		// Init discuss.
 		me.init_discuss();
 
 	};
@@ -405,7 +405,7 @@ CommentPress.theme.switcher = new function() {
 	 */
 	this.init_discuss = function() {
 
-		// override discuss sidebar if activity is active
+		// Override discuss sidebar if activity is active.
 		if ( $('body').hasClass( 'cp_sidebar_activity' ) ) {
 			me.set_discuss( 'activity' );
 		}
@@ -434,7 +434,7 @@ CommentPress.theme.switcher = new function() {
 		me.discuss = identifier;
 	};
 
-}; // end switcher class
+}; // End switcher class.
 
 
 
@@ -449,7 +449,7 @@ CommentPress.theme.switcher = new function() {
  */
 CommentPress.theme.navigation = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -477,7 +477,7 @@ CommentPress.theme.navigation = new function() {
 	 */
 	this.dom_ready = function() {
 
-		// enable "Special Pages" menu behaviour
+		// Enable "Special Pages" menu behaviour.
 		me.menu();
 
 	};
@@ -502,19 +502,19 @@ CommentPress.theme.navigation = new function() {
 		 */
 		$('#toc_sidebar').on( 'click', 'ul#nav li a', function( event ) {
 
-			// define vars
+			// Define vars.
 			var myArr;
 
-			// no, find child lists of the enclosing <li>
+			// No, find child lists of the enclosing <li>.
 			myArr = $(this).parent().find('ul');
 
-			// do we have a child list?
+			// Do we have a child list?
 			if( myArr.length > 0 ) {
 
-				// toggle next list
+				// Toggle next list.
 				$(this).next('ul').slideToggle();
 
-				// override event
+				// Override event.
 				event.preventDefault();
 
 			}
@@ -523,7 +523,7 @@ CommentPress.theme.navigation = new function() {
 
 	};
 
-}; // end navigation class
+}; // End navigation class.
 
 
 
@@ -538,7 +538,7 @@ CommentPress.theme.navigation = new function() {
  */
 CommentPress.theme.content = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -566,7 +566,7 @@ CommentPress.theme.content = new function() {
 	 */
 	this.dom_ready = function() {
 
-		// enable "Workflow" tabs
+		// Enable "Workflow" tabs.
 		me.tabs();
 
 	};
@@ -583,25 +583,25 @@ CommentPress.theme.content = new function() {
 	 */
 	this.tabs = function() {
 
-		// define vars
+		// Define vars.
 		var content_min_height, content_padding_bottom;
 
-		// store content min-height on load
+		// Store content min-height on load.
 		content_min_height = $('#page_wrapper').css( 'min-height' );
 
-		// store content padding-bottom on load
+		// Store content padding-bottom on load.
 		content_padding_bottom = $('#page_wrapper').css( 'padding-bottom' );
 
-		// hide workflow content
+		// Hide workflow content.
 		$('#literal .post').css( 'display', 'none' );
 		$('#original .post').css( 'display', 'none' );
 
-		// setup workflow tabs, if present
+		// Setup workflow tabs, if present.
 		CommentPress.common.content.workflow_tabs( content_min_height, content_padding_bottom );
 
 	};
 
-}; // end content class
+}; // End content class.
 
 
 
@@ -616,7 +616,7 @@ CommentPress.theme.content = new function() {
  */
 CommentPress.theme.sidebars = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -644,10 +644,10 @@ CommentPress.theme.sidebars = new function() {
 	 */
 	this.dom_ready = function() {
 
-		// enable buttons
+		// Enable buttons.
 		me.enable_buttons();
 
-		// set height of sidebars
+		// Set height of sidebars.
 		me.set_height();
 
 	};
@@ -661,48 +661,48 @@ CommentPress.theme.sidebars = new function() {
 	 */
 	this.set_height = function() {
 
-		// define vars
+		// Define vars.
 		var viewport, switcher_height, wpadminbar_height, minimiser_margin, top_margin, bottom_margin,
 			toc_sidebar_height, switcher_display, sidebar_switcher_height, sidebar_height;
 
-		// get viewport height
+		// Get viewport height.
 		viewport = $(window).height();
 
-		// iOS9 Safari falsely reports the height when the URL bar shrinks
+		// iOS9 Safari falsely reports the height when the URL bar shrinks.
 		if ( cp_is_mobile == '1' || cp_is_tablet == '1' ) {
 
-			// get window innerHeight
+			// Get window innerHeight.
 			window_inner = window.innerHeight;
 
-			// override if different
+			// Override if different.
 			if ( viewport < window_inner ) {
 				viewport = window_inner;
 			}
 
 		}
 
-		// is the admin bar shown?
+		// Is the admin bar shown?
 		if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
 			wpadminbar_height = $('#wpadminbar').height();
 		} else {
 			wpadminbar_height = 0;
 		}
 
-		// set top of sidebars
+		// Set top of sidebars.
 		$('html body #content_container #sidebar,html body #content_container #navigation').css(
 			'top', ( wpadminbar_height ) + 'px'
 		);
 
-		// calculate TOC sidebar height
+		// Calculate TOC sidebar height.
 		toc_sidebar_height = viewport - wpadminbar_height;
 
-		// set height
+		// Set height.
 		$('#toc_sidebar .sidebar_contents_wrapper').css( 'height', toc_sidebar_height + 'px' );
 
-		// get sidebar tabs header height instead
+		// Get sidebar tabs header height instead.
 		sidebar_height = viewport - wpadminbar_height;
 
-		// set height
+		// Set height.
 		$('#sidebar .sidebar_contents_wrapper').css( 'height', sidebar_height + 'px' );
 
 	};
@@ -720,20 +720,20 @@ CommentPress.theme.sidebars = new function() {
 	 */
 	this.activate_sidebar = function( sidebar ) {
 
-		// define vars
+		// Define vars.
 		var ontop, s_top, s_top_border;
 
-		// get "visibility" of the requested sidebar
+		// Get "visibility" of the requested sidebar.
 		ontop = $('#' + sidebar + '_sidebar').css('z-index');
 
-		// is it hidden (ie, does it have a lower z-index)
+		// Is it hidden - i.e. does it have a lower z-index?
 		if ( ontop == '2001' ) {
 
-			// hide all
+			// Hide all.
 			$('.sidebar_container').css('z-index','2001');
 			$('#sidebar_tabs h2 a').removeClass('active-tab');
 
-			// show it
+			// Show it.
 			$('#' + sidebar + '_sidebar').css('z-index','2010').css('display','block');
 			$('#sidebar_tabs #' + sidebar + '_header h2 a').addClass('active-tab');
 
@@ -750,26 +750,26 @@ CommentPress.theme.sidebars = new function() {
 	 */
 	this.enable_buttons = function() {
 
-		// toggle for navigation
+		// Toggle for navigation.
 		$('#switcher .navigation-button').click( function(e) {
 			e.preventDefault();
 			me.show_nav();
 		});
 
-		// toggle for content (we don't have one of these in this theme!)
+		// Toggle for content - we don't have one of these in this theme!
 		$('#switcher .content-button').click( function(e) {
 			e.preventDefault();
 			me.show_content();
 		});
 
-		// toggle for comments sidebar
+		// Toggle for comments sidebar.
 		$('#switcher .comments-button').click( function(e) {
 			e.preventDefault();
 			me.show_comments();
 			me.activate_sidebar( 'comments' );
 		});
 
-		// toggle for activity sidebar
+		// Toggle for activity sidebar.
 		$('#switcher .activity-button').click( function(e) {
 			e.preventDefault();
 			me.show_activity();
@@ -787,10 +787,10 @@ CommentPress.theme.sidebars = new function() {
 	 */
 	this.show_nav = function() {
 
-		// set appropriate classes
+		// Set appropriate classes.
 		$('body').toggleClass( 'active-nav' ).removeClass( 'active-sidebar' );
 
-		// set switcher state
+		// Set switcher state.
 		if ( $('body').hasClass( 'active-nav' ) ) {
 			CommentPress.theme.switcher.set_active( 'nav' );
 		} else {
@@ -806,10 +806,10 @@ CommentPress.theme.sidebars = new function() {
 	 */
 	this.show_content = function() {
 
-		// set appropriate classes
+		// Set appropriate classes.
 		$('body').removeClass( 'active-sidebar' ).removeClass( 'active-nav' );
 
-		// set switcher state
+		// Set switcher state.
 		CommentPress.theme.switcher.set_active( 'content' );
 
 	};
@@ -823,10 +823,10 @@ CommentPress.theme.sidebars = new function() {
 	 */
 	this.show_discuss = function() {
 
-		// set appropriate classes
+		// Set appropriate classes.
 		$('body').toggleClass( 'active-sidebar' ).removeClass( 'active-nav' );
 
-		// set switcher state
+		// Set switcher state.
 		CommentPress.theme.switcher.set_active( 'discuss' );
 
 	};
@@ -838,7 +838,7 @@ CommentPress.theme.sidebars = new function() {
 	 */
 	this.show_comments = function() {
 
-		// set appropriate classes
+		// Set appropriate classes.
 		if ( 'discuss' != CommentPress.theme.switcher.get_active() ) {
 			me.show_discuss();
 			me.activate_sidebar( 'comments' );
@@ -850,7 +850,7 @@ CommentPress.theme.sidebars = new function() {
 			}
 		}
 
-		// set switcher discuss state
+		// Set switcher discuss state.
 		CommentPress.theme.switcher.set_discuss( 'comments' );
 
 	};
@@ -862,7 +862,7 @@ CommentPress.theme.sidebars = new function() {
 	 */
 	this.show_activity = function() {
 
-		// set appropriate classes
+		// Set appropriate classes.
 		if ( 'discuss' != CommentPress.theme.switcher.get_active() ) {
 			me.show_discuss();
 			me.activate_sidebar( 'activity' );
@@ -874,12 +874,12 @@ CommentPress.theme.sidebars = new function() {
 			}
 		}
 
-		// set switcher discuss state
+		// Set switcher discuss state.
 		CommentPress.theme.switcher.set_discuss( 'activity' );
 
 	};
 
-}; // end sidebars class
+}; // End sidebars class.
 
 
 
@@ -894,7 +894,7 @@ CommentPress.theme.sidebars = new function() {
  */
 CommentPress.theme.viewport = new function() {
 
-	// store object refs
+	// Store object refs.
 	var me = this,
 		$ = jQuery.noConflict();
 
@@ -922,10 +922,10 @@ CommentPress.theme.viewport = new function() {
 	 */
 	this.dom_ready = function() {
 
-		// track viewport changes
+		// Track viewport changes.
 		me.track_resize();
 
-		// track scrolling
+		// Track scrolling.
 		me.track_scrolling();
 
 	};
@@ -946,20 +946,20 @@ CommentPress.theme.viewport = new function() {
 		 */
 		$(window).resize( function() {
 
-			// maintain height of sidebars
+			// Maintain height of sidebars.
 			CommentPress.theme.sidebars.set_height();
 
-			// is the WordPress admin bar shown?
+			// Is the WordPress admin bar shown?
 			if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
 
-				// set top of switcher
+				// Set top of switcher.
 				$('html body #switcher').css(
 					'top', ( $('#wpadminbar').height() ) + 'px'
 				);
 
 			} else {
 
-				// set top of switcher
+				// Set top of switcher.
 				$('html body #switcher').css(
 					'top', '0px'
 				);
@@ -988,109 +988,109 @@ CommentPress.theme.viewport = new function() {
 		 */
 		$(window).scroll( function() {
 
-			// declare vars
+			// Declare vars.
 			var viewport, header_height, toc_sidebar_height, sidebar_height,
 				header, header_position, header_bottom, sidebar_top;
 
-			// is the WordPress admin bar shown?
+			// Is the WordPress admin bar shown?
 			if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
 
-				// get header
+				// Get header.
 				header = $('#wpadminbar');
 
-				// test for static header
+				// Test for static header.
 				position = header.css( 'position' );
 
 			} else {
 
-				// only check mobile
+				// Only check mobile.
 				position = 'static';
 
 			}
 
-			// only do this if header is absolutely positioned
+			// Only do this if header is absolutely positioned.
 			if ( position == 'absolute' ) {
 
-				// get interface elements
+				// Get interface elements.
 				header_height = header.height();
 				header_position = header.position();
 				header_bottom = window.pageYOffset - ( header_position.top + header_height );
 
-				// when the bottom of the header passes out of the viewport
+				// When the bottom of the header passes out of the viewport.
 				if ( parseInt( header_bottom ) > 0 ) {
 
-					// get top of sidebar
+					// Get top of sidebar.
 					sidebar_top = $.px_to_num( $('html body #content_container #sidebar').css( 'top' ) );
 
-					// bail if already zero
+					// Bail if already zero.
 					if ( sidebar_top == '0' ) { return; }
 
-					// set top of sidebars
+					// Set top of sidebars.
 					$('html body #content_container #sidebar,html body #content_container #navigation').css(
 						'top', '0'
 					);
 
-					// set top of switcher
+					// Set top of switcher.
 					$('html body #switcher').css(
 						'top', '0'
 					);
 
-					// get interface elements
+					// Get interface elements.
 					viewport = $(window).height();
 
-					// set heights
+					// Set heights.
 					$('#toc_sidebar .sidebar_contents_wrapper').css( 'height', viewport + 'px' );
 					$('#sidebar .sidebar_contents_wrapper').css( 'height', viewport + 'px' );
 
 				} else {
 
-					// get top of sidebar
+					// Get top of sidebar.
 					sidebar_top = $.px_to_num( $('html body #content_container #sidebar').css( 'top' ) );
 
-					// bail if already the same as the adminbar
+					// Bail if already the same as the adminbar
 					if ( sidebar_top == header_height ) { return; }
 
-					// set top of sidebars
+					// Set top of sidebars.
 					$('html body #content_container #sidebar,html body #content_container #navigation').css(
 						'top', ( header_height ) + 'px'
 					);
 
-					// set top of switcher
+					// Set top of switcher.
 					$('html body #switcher').css(
 						'top', ( header_height ) + 'px'
 					);
 
-					// set sidebar height
+					// Set sidebar height.
 					CommentPress.theme.sidebars.set_height();
 
 				}
 
 			} else {
 
-				// static header
+				// Static header.
 
-				// mobile browsers often reduce the size of the screen chrome on
-				// page scroll - so let's try and update the sidebar height
+				// Mobile browsers often reduce the size of the screen chrome on
+				// page scroll - so let's try and update the sidebar height.
 				if ( cp_is_mobile == '1' || cp_is_tablet == '1' ) {
 
-					// is the WordPress admin bar shown?
+					// Is the WordPress admin bar shown?
 					if ( CommentPress.settings.DOM.get_wp_adminbar() == 'y' ) {
 
-						// set top of switcher
+						// Set top of switcher.
 						$('html body #switcher').css(
 							'top', ( header.height() ) + 'px'
 						);
 
 					} else {
 
-						// set top of switcher
+						// Set top of switcher.
 						$('html body #switcher').css(
 							'top', '0px'
 						);
 
 					}
 
-					// set sidebar height
+					// Set sidebar height.
 					CommentPress.theme.sidebars.set_height();
 
 				}
@@ -1113,35 +1113,35 @@ CommentPress.theme.viewport = new function() {
 	 */
 	this.scroll_to_top = function( target, speed ) {
 
-		// bail if we didn't get a valid target
+		// Bail if we didn't get a valid target.
 		if ( 'undefined' === typeof target ) { return; }
 
-		// declare vars
+		// Declare vars.
 		var post_id;
 
-		// only scroll if not mobile (but allow tablets)
+		// Only scroll if not mobile - but allow tablets.
 		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 
-			// let's try and scroll to the title
+			// Let's try and scroll to the title.
 			if ( target == 0 ) {
 
-				// parse post ID
+				// Parse post ID.
 				post_id = $('.comments_container').prop('id');
 
-				// sanity check
+				// Sanity check.
 				if ( 'undefined' !== typeof post_id ) {
 
-					// get target post ID
+					// Get target post ID.
 					target_id = post_id.split('-')[1];
 
-					// contruct target
+					// Contruct target.
 					target = $('#post-' + target_id);
 
 				}
 
 			}
 
-			// scroll
+			// Scroll.
 			$(window).stop(true).scrollTo(
 				target,
 				{
@@ -1164,35 +1164,35 @@ CommentPress.theme.viewport = new function() {
 	 */
 	this.on_load_scroll_to_anchor = function() {
 
-		// define vars
+		// Define vars.
 		var text_sig, url, comment_id, para_wrapper_array, item, para_id, para_num,
 			post_id, textblock, anchor_id, anchor, found;
 
-		// init
+		// Init.
 		text_sig = '';
 		found = false;
 
-		// if there is an anchor in the URL (only on non-special pages)
+		// If there is an anchor in the URL - only on non-special pages.
 		url = document.location.toString();
 
-		// do we have a comment permalink?
+		// Do we have a comment permalink?
 		if ( url.match( '#comment-' ) ) {
 
-			// get comment ID
+			// Get comment ID.
 			tmp = url.split('#comment-');
 
-			// sanity check
+			// Sanity check.
 			comment_id = 0;
 			if ( tmp.length == 2 ) {
 				comment_id = parseInt( tmp[1] );
 			}
 
-			// did we get one?
+			// Did we get one?
 			if ( comment_id !== 0 ) {
 				me.on_load_scroll_to_comment( comment_id );
 			}
 
-			// set location to page/post permalink
+			// Set location to page/post permalink.
 			CommentPress.common.DOM.location_reset();
 
 			// --<
@@ -1207,22 +1207,22 @@ CommentPress.theme.viewport = new function() {
 			 */
 			$('span.para_marker > a').each( function(i) {
 
-				// define vars
+				// Define vars.
 				var text_sig, para_id, para_num, post_id, textblock;
 
-				// get text signature
+				// Get text signature.
 				text_sig = $(this).prop( 'id' );
 
-				// do we have a paragraph or comment block permalink?
+				// Do we have a paragraph or comment block permalink?
 				if ( url.match( '#' + text_sig ) || url.match( '#para_heading-' + text_sig ) ) {
 
-					// align content
+					// Align content.
 					me.align_content( text_sig, 'para_heading' );
 
-					// set location to page/post permalink
+					// Set location to page/post permalink.
 					CommentPress.common.DOM.location_reset();
 
-					// set flag
+					// Set flag.
 					found = true;
 
 				}
@@ -1231,45 +1231,45 @@ CommentPress.theme.viewport = new function() {
 
 		}
 
-		// check flag and bail if already found
+		// Check flag and bail if already found.
 		if ( found === true ) { return; }
 
-		// do we have a link to the comment form?
+		// Do we have a link to the comment form?
 		if ( url.match( '#respond' ) ) {
 
-			// show comments column
+			// Show comments column.
 			CommentPress.theme.sidebars.show_comments();
 
-			// is this a "Reply to [...]" link
+			// Is this a "Reply to [...]" link?
 			if ( url.match( 'replytocom' ) ) {
 
-				// get parent from form
+				// Get parent from form.
 				comment_parent = parseInt( $('#comment_parent').val() );
 
-				// also same as load procedure
+				// Also same as load procedure.
 				me.on_load_scroll_to_comment( comment_parent );
 
 			} else {
 
-				// is this a "Leave Comment on [...]" link
+				// Is this a "Leave Comment on [...]" link.
 				if ( url.match( 'replytopara' ) ) {
 
-					// get text sig from form
+					// Get text sig from form.
 					text_sig = $('#text_signature').val();
 
-					// align content
+					// Align content.
 					me.align_content( text_sig, 'commentform' );
 
 				} else {
 
-					// same as clicking on the "whole page" heading
+					// Same as clicking on the "whole page" heading.
 					$('h3#para_heading- a.comment_block_permalink').click();
 
 				}
 
 			}
 
-			// set location to page/post permalink
+			// Set location to page/post permalink.
 			CommentPress.common.DOM.location_reset();
 
 			// --<
@@ -1277,28 +1277,28 @@ CommentPress.theme.viewport = new function() {
 
 		}
 
-		// any other anchors in the .post?
+		// Any other anchors in the .post?
 		if ( url.match( '#' ) ) {
 
-			// get anchor
+			// Get anchor.
 			anchor_id = url.split('#')[1];
 
-			// bail if it's WP FEE's custom anchor
+			// Bail if it's WP FEE's custom anchor.
 			if ( anchor_id == 'edit=true' ) { return; }
 			if ( anchor_id == 'fee-edit-link' ) { return; }
 
-			// locate in DOM
+			// Locate in DOM.
 			anchor = $( '#' + anchor_id );
 
-			// did we get one?
+			// Did we get one?
 			if ( anchor.length ) {
 
-				// scroll page
+				// Scroll page.
 				CommentPress.common.content.scroll_page( anchor );
 
 			}
 
-			// set location to page/post permalink
+			// Set location to page/post permalink.
 			CommentPress.common.DOM.location_reset();
 
 			// --<
@@ -1319,51 +1319,51 @@ CommentPress.theme.viewport = new function() {
 	 */
 	this.on_load_scroll_to_comment = function( comment_id ) {
 
-		// define vars
+		// Define vars.
 		var text_sig, para_wrapper_array, item, para_id, para_num,
 			post_id, textblock;
 
-		// activate comments sidebar
+		// Activate comments sidebar.
 		CommentPress.theme.sidebars.show_comments();
 
-		// open the matching block
+		// Open the matching block.
 
-		// get array of parent paragraph_wrapper divs
+		// Get array of parent paragraph_wrapper divs.
 		para_wrapper_array = $('#comment-' + comment_id)
 									.parents('div.paragraph_wrapper')
 									.map( function () {
 										return this;
 									});
 
-		// did we get one?
+		// Did we get one?
 		if ( para_wrapper_array.length > 0 ) {
 
-			// get the item
+			// Get the item.
 			item = $(para_wrapper_array[0]);
 
-			// get the text sig
+			// Get the text sig.
 			text_sig = item.prop('id').split('-')[1];
 
-			// are comments open?
+			// Are comments open?
 			if ( cp_comments_open == 'y' ) {
 
-				// move form to para
+				// Move form to para.
 				para_id = $('#para_wrapper-'+text_sig+' .reply_to_para').prop('id');
 				para_num = para_id.split('-')[1];
 				post_id = $('#comment_post_ID').prop('value');
 
-				// seems like TinyMCE isn't yet working and that moving the form
-				// prevents it from loading properly
+				// Seems like TinyMCE isn't yet working and that moving the form
+				// prevents it from loading properly.
 				if ( cp_tinymce == '1' ) {
 
-					// if we have link text, then a comment reply is allowed
+					// If we have link text, then a comment reply is allowed.
 					if ( $( '#comment-' + comment_id + ' > .reply' ).text() !== '' ) {
 
-						// temporarily override global so that TinyMCE is not
-						// meddled with in any way
+						// Temporarily override global so that TinyMCE is not
+						// meddled with in any way.
 						cp_tinymce = '0';
 
-						// move the form
+						// Move the form.
 						addComment.moveForm(
 							'comment-' + comment_id,
 							comment_id,
@@ -1372,14 +1372,14 @@ CommentPress.theme.viewport = new function() {
 							text_sig
 						);
 
-						// restore global
+						// Restore global.
 						cp_tinymce = '1';
 
 					}
 
 				} else {
 
-					// move the form
+					// Move the form.
 					addComment.moveForm(
 						'comment-' + comment_id,
 						comment_id,
@@ -1392,35 +1392,35 @@ CommentPress.theme.viewport = new function() {
 
 			}
 
-			// show block
+			// Show block.
 			item.show();
 
-			// scroll comments
+			// Scroll comments.
 			CommentPress.common.comments.scroll_comments( $('#comment-' + comment_id), 1, 'flash' );
 
-			// if not the whole page
+			// If not the whole page.
 			if( text_sig !== '' ) {
 
-				// get text block
+				// Get text block.
 				textblock = $('#textblock-' + text_sig);
 
-				// highlight this paragraph
+				// Highlight this paragraph.
 				$.highlight_para( textblock );
 
-				// scroll page
+				// Scroll page.
 				CommentPress.common.content.scroll_page( textblock );
 
 			} else {
 
-				// only scroll if page is not highlighted
+				// Only scroll if page is not highlighted.
 				if ( !CommentPress.settings.page.get_highlight() ) {
 
-					// scroll to top
+					// Scroll to top.
 					CommentPress.theme.viewport.scroll_to_top( 0, cp_scroll_speed );
 
 				}
 
-				// toggle page highlight flag
+				// Toggle page highlight flag.
 				CommentPress.settings.page.toggle_highlight();
 
 			}
@@ -1441,75 +1441,75 @@ CommentPress.theme.viewport = new function() {
 	 */
 	this.align_content = function( text_sig, scroll_target ) {
 
-		// bail if scroll target is 'none'
+		// Bail if scroll target is 'none'.
 		if ( scroll_target == 'none' ) { return; }
 
-		// move to sidebar
+		// Move to sidebar.
 		CommentPress.theme.sidebars.show_comments();
 
-		// define vars
+		// Define vars.
 		var para_wrapper, comment_list, respond, top_level, opening, visible,
 			textblock, post_id, para_id, para_num;
 
-		// get para wrapper
+		// Get para wrapper.
 		para_wrapper = $('#para_heading-' + text_sig).next('div.paragraph_wrapper');
 
-		// bail if we don't have the target element
+		// Bail if we don't have the target element.
 		if ( para_wrapper.length == 0 ) {
 			return;
 		}
 
-		// get comment list
+		// Get comment list.
 		comment_list = $( '#para_wrapper-' + text_sig + ' .commentlist' );
 
-		// get respond
+		// Get respond.
 		respond = para_wrapper.find('#respond');
 
-		// is it a direct child of para wrapper?
+		// Is it a direct child of para wrapper?
 		top_level = addComment.getLevel();
 
-		// init
+		// Init.
 		opening = false;
 
-		// get visibility
+		// Get visibility.
 		visible = para_wrapper.css('display');
 
-		// override
+		// Override.
 		if ( visible == 'none' ) { opening = true; }
 
-		// clear other highlights
+		// Clear other highlights.
 		$.unhighlight_para();
 
-		// did we get a text_sig?
+		// Did we get a text_sig?
 		if ( text_sig !== '' ) {
 
-			// get text block
+			// Get text block.
 			textblock = $('#textblock-' + text_sig);
 
-			// if encouraging reading and closing
+			// If encouraging reading and closing.
 			if ( cp_promote_reading == '1' && !opening ) {
 
-				// skip the highlight
+				// Skip the highlight.
 
 			} else {
 
-				// highlight this paragraph
+				// Highlight this paragraph.
 				$.highlight_para( textblock );
 
-				// scroll page
+				// Scroll page.
 				CommentPress.common.content.scroll_page( textblock );
 
 			}
 
 		}
 
-		// if encouraging commenting
+		// If encouraging commenting.
 		if ( cp_promote_reading == '0' ) {
 
-			// are comments open?
+			// Are comments open?
 			if ( cp_comments_open == 'y' ) {
 
-				// get comment post ID
+				// Get comment post ID.
 				post_id = $('#comment_post_ID').prop('value');
 				para_id = $('#para_wrapper-'+text_sig+' .reply_to_para').prop('id');
 				para_num = para_id.split('-')[1];
@@ -1518,41 +1518,41 @@ CommentPress.theme.viewport = new function() {
 
 			// Choices, choices:
 
-			// if it doesn't have the commentform
+			// If it doesn't have the commentform.
 			if ( !respond[0] ) {
 
-				// are comments open?
+				// Are comments open?
 				if ( cp_comments_open == 'y' ) {
 					addComment.moveFormToPara( para_num, text_sig, post_id );
 				}
 
 			}
 
-			// if it has the commentform but is not top level
+			// If it has the commentform but is not top level.
 			if ( respond[0] && !top_level ) {
 
-				// are comments open?
+				// Are comments open?
 				if ( cp_comments_open == 'y' ) {
 
-					// move comment form
+					// Move comment form.
 					addComment.moveFormToPara( para_num, text_sig, post_id );
 
-					// if scroll_target is for para_headings
+					// If scroll_target is for para_headings.
 					if ( scroll_target == 'para_heading' ) {
 
-						// scroll comments to header
+						// Scroll comments to header.
 						CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 					} else {
 
-						// scroll comments to comment form
+						// Scroll comments to comment form.
 						CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
 
 					}
 
 				} else {
 
-					// scroll comments to header
+					// Scroll comments to header.
 					CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 				}
@@ -1561,28 +1561,28 @@ CommentPress.theme.viewport = new function() {
 
 			}
 
-			// if it doesn't have the commentform but has a comment
+			// If it doesn't have the commentform but has a comment.
 			if ( !respond[0] && comment_list[0] && !opening ) {
 
-				// are comments open?
+				// Are comments open?
 				if ( cp_comments_open == 'y' ) {
 
-					// if scroll_target is for para_headings
+					// If scroll_target is for para_headings.
 					if ( scroll_target == 'para_heading' ) {
 
-						// scroll comments to header
+						// Scroll comments to header.
 						CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 					} else {
 
-						// scroll comments to comment form
+						// Scroll comments to comment form.
 						CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
 
 					}
 
 				} else {
 
-					// scroll comments to header
+					// Scroll comments to header.
 					CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 				}
@@ -1591,28 +1591,28 @@ CommentPress.theme.viewport = new function() {
 
 			}
 
-			// if closing with comment list
+			// If closing with comment list.
 			if ( !opening && comment_list[0] ) {
 
-				// are comments open?
+				// Are comments open?
 				if ( cp_comments_open == 'y' ) {
 
-					// if scroll_target is for para_headings
+					// If scroll_target is for para_headings.
 					if ( scroll_target == 'para_heading' ) {
 
-						// scroll comments to header
+						// Scroll comments to header.
 						CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 					} else {
 
-						// scroll comments to comment form
+						// Scroll comments to comment form.
 						CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
 
 					}
 
 				} else {
 
-					// scroll comments to header
+					// Scroll comments to header.
 					CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 				}
@@ -1621,28 +1621,28 @@ CommentPress.theme.viewport = new function() {
 
 			}
 
-			// if commentform but no comments and closing
+			// If commentform but no comments and closing.
 			if ( respond[0] && !comment_list[0] && !opening ) {
 
-				// are comments open?
+				// Are comments open?
 				if ( cp_comments_open == 'y' ) {
 
-					// if scroll_target is for para_headings
+					// If scroll_target is for para_headings.
 					if ( scroll_target == 'para_heading' ) {
 
-						// scroll comments to header
+						// Scroll comments to header.
 						CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 					} else {
 
-						// scroll comments to comment form
+						// Scroll comments to comment form.
 						CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
 
 					}
 
 				} else {
 
-					// scroll comments to header
+					// Scroll comments to header.
 					CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 				}
@@ -1652,7 +1652,7 @@ CommentPress.theme.viewport = new function() {
 
 			}
 
-			// if closing with no comment list
+			// If closing with no comment list.
 			if ( !opening && !comment_list[0] ) {
 
 				para_wrapper.css( 'display', 'none' );
@@ -1662,41 +1662,41 @@ CommentPress.theme.viewport = new function() {
 
 		}
 
-		// toggle next item_body
+		// Toggle next item_body.
 		para_wrapper.slideToggle( 'slow', function () {
 
-			// animation finished
+			// Animation finished.
 
-			// are we encouraging reading?
+			// Are we encouraging reading?
 			if ( cp_promote_reading == '1' && opening ) {
 
-				// scroll comments
+				// Scroll comments.
 				CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 			} else {
 
-				// only if opening
+				// Only if opening.
 				if ( opening ) {
 
-					// are comments open?
+					// Are comments open?
 					if ( cp_comments_open == 'y' ) {
 
-						// if scroll_target is for para_headings
+						// If scroll_target is for para_headings.
 						if ( scroll_target == 'para_heading' ) {
 
-							// scroll comments to header
+							// Scroll comments to header.
 							CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 						} else {
 
-							// scroll comments to comment form
+							// Scroll comments to comment form.
 							CommentPress.common.comments.scroll_comments( $('#respond'), cp_scroll_speed );
 
 						}
 
 					} else {
 
-						// scroll comments to comment form
+						// Scroll comments to comment form.
 						CommentPress.common.comments.scroll_comments( $('#para_heading-' + text_sig), cp_scroll_speed );
 
 					}
@@ -1709,7 +1709,7 @@ CommentPress.theme.viewport = new function() {
 
 	};
 
-}; // end viewport class
+}; // End viewport class.
 
 
 
@@ -1730,7 +1730,7 @@ CommentPress.theme.flat = {};
 
 
 
-// do immediate init
+// Do immediate init.
 CommentPress.theme.settings.init();
 CommentPress.theme.DOM.init();
 CommentPress.theme.header.init();
@@ -1755,7 +1755,7 @@ jQuery(document).ready( function($) {
 
 
 
-	// trigger DOM ready methods
+	// Trigger DOM ready methods.
 	CommentPress.theme.settings.dom_ready();
 	CommentPress.theme.DOM.dom_ready();
 	CommentPress.theme.header.dom_ready();
@@ -1765,7 +1765,7 @@ jQuery(document).ready( function($) {
 	CommentPress.theme.sidebars.dom_ready();
 	CommentPress.theme.viewport.dom_ready();
 
-	// the flat theme uses a "rollover"
+	// The flat theme uses a "rollover".
 	CommentPress.common.comments.comment_rollovers();
 
 
@@ -1779,7 +1779,7 @@ jQuery(document).ready( function($) {
 	 */
 	$( document ).on( 'commentpress-comment-highlight', function( event, parent_id ) {
 
-		// add highlight class
+		// Add highlight class.
 		$( '#li-comment-' + parent_id + ' > .comment-wrapper' ).addClass( 'background-highlight' );
 
 	});
@@ -1793,7 +1793,7 @@ jQuery(document).ready( function($) {
 	 */
 	$( document ).on( 'commentpress-comment-unhighlight', function( event, parent_id ) {
 
-		// remove highlight class
+		// Remove highlight class.
 		jQuery( '#li-comment-' + parent_id + ' > .comment-wrapper' ).removeClass( 'background-highlight' );
 
 	});
@@ -1805,7 +1805,7 @@ jQuery(document).ready( function($) {
 	 */
 	$( document ).on( 'commentpress-comment-highlights-clear', function( event ) {
 
-		// remove highlight class
+		// Remove highlight class.
 		jQuery( '.comment-wrapper' ).removeClass( 'background-highlight' );
 
 	});
@@ -1823,35 +1823,35 @@ jQuery(document).ready( function($) {
 	 */
 	$( document ).on( 'commentpress-post-changed', function( event ) {
 
-		// declare local vars
+		// Declare local vars.
 		var toggler, new_url, toggle_url;
 
-		// find new URL
+		// Find new URL.
 		new_url = document.location.href;
 
-		// get toggle URL
+		// Get toggle URL.
 		toggler = $( '.editor_toggle a' );
 
-		// bail if not found
+		// Bail if not found.
 		if ( toggler.length == 0 ) { return; }
 
-		// get toggle URL
+		// Get toggle URL.
 		toggle_url = toggler.attr( 'href' );
 
-		// split on query string
+		// Split on query string.
 		nonce = toggle_url.split( '?' )[1];
 
-		// add to new URL
+		// Add to new URL.
 		new_url += '?' + nonce;
 
-		// update toggle
+		// Update toggle.
 		toggler.attr( 'href', new_url );
 
 	});
 
 
 
-	// scroll the page on load
+	// Scroll the page on load.
 	if ( cp_special_page == '1' ) {
 		setTimeout( function() {
 			CommentPress.common.content.on_load_scroll_to_comment();
@@ -1864,7 +1864,7 @@ jQuery(document).ready( function($) {
 
 
 
-	// broadcast that we're done
+	// Broadcast that we're done.
 	$( document ).trigger( 'commentpress-document-ready' );
 
 });
@@ -1879,7 +1879,7 @@ jQuery(document).ready( function($) {
 /*
 jQuery(window).unload( function() {
 
-	// debug
+	// Debug.
 	//console.log('Bye now!');
 
 });

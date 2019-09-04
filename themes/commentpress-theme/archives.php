@@ -60,32 +60,30 @@ get_header(); ?>
 <ul>
 <?php
 
-// configure
+// Configure.
 $defaults = array(
-
-'show_option_all' => '',
-'orderby' => 'name',
-'order' => 'ASC',
-'show_last_update' => 0,
-'style' => 'list',
-'show_count' => 0,
-'hide_empty' => 1,
-'use_desc_for_title' => 1,
-'child_of' => 0,
-'feed' => '',
-'feed_type' => '',
-'feed_image' => '',
-'exclude' => '',
-'exclude_tree' => '',
-'current_category' => 0,
-'hierarchical' => true,
-'title_li' => '',
-'echo' => 1,
-'depth' => 0
-
+	'show_option_all' => '',
+	'orderby' => 'name',
+	'order' => 'ASC',
+	'show_last_update' => 0,
+	'style' => 'list',
+	'show_count' => 0,
+	'hide_empty' => 1,
+	'use_desc_for_title' => 1,
+	'child_of' => 0,
+	'feed' => '',
+	'feed_type' => '',
+	'feed_image' => '',
+	'exclude' => '',
+	'exclude_tree' => '',
+	'current_category' => 0,
+	'hierarchical' => true,
+	'title_li' => '',
+	'echo' => 1,
+	'depth' => 0,
 );
 
-// show them
+// Show them.
 wp_list_categories( $defaults );
 
 ?>
@@ -101,10 +99,8 @@ wp_list_categories( $defaults );
 
 <?php
 
-//echo get_the_tag_list('<ul><li>','</li><li>','</li></ul>');
-
+// Configure.
 $args = array(
-
 	'smallest' => 1,
 	'largest' => 1,
 	'unit' => 'em',
@@ -115,22 +111,17 @@ $args = array(
 	'order' => 'ASC',
 	'link' => 'view',
 	'taxonomy' => 'post_tag',
-	'echo' => false
-
+	'echo' => false,
 );
 
-// get them
+// Get them.
 $tags = wp_tag_cloud( $args );
 
-// did we get any?
+// Did we get any?
 if ( $tags != '' ) {
-
 	echo $tags;
-
 } else {
-
 	echo '<ul><li class="no_tags">' . __( 'No tags yet', 'commentpress-core' ) . '</li></ul>';
-
 }
 
 ?>

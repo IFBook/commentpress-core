@@ -65,13 +65,13 @@ class Commentpress_Multisite_Wordpress {
 	 */
 	function __construct( $parent_obj = null ) {
 
-		// store reference to "parent" (calling obj, not OOP parent)
+		// Store reference to "parent" (calling obj, not OOP parent).
 		$this->parent_obj = $parent_obj;
 
-		// store reference to database wrapper (child of calling obj)
+		// Store reference to database wrapper (child of calling obj).
 		$this->db = $this->parent_obj->db;
 
-		// init
+		// Init.
 		$this->_init();
 
 	}
@@ -119,13 +119,13 @@ class Commentpress_Multisite_Wordpress {
 	 */
 	public function add_admin_menu() {
 
-		// we must be network admin
+		// We must be network admin.
 		if ( ! is_super_admin() ) return false;
 
-		// try and update options
+		// Try and update options.
 		$saved = $this->db->options_update();
 
-		// always add the admin page to the Settings menu
+		// Always add the admin page to the Settings menu.
 		$page = add_submenu_page(
 			'settings.php',
 			__( 'CommentPress', 'commentpress-core' ),
@@ -135,7 +135,7 @@ class Commentpress_Multisite_Wordpress {
 			array( $this, '_network_admin_form' )
 		);
 
-		// add styles only on our admin page, see:
+		// Add styles only on our admin page, see:
 		// http://codex.wordpress.org/Function_Reference/wp_enqueue_script#Load_scripts_only_on_plugin_pages
 		add_action( 'admin_print_styles-' . $page, array( $this, 'add_admin_styles' ) );
 
@@ -150,13 +150,13 @@ class Commentpress_Multisite_Wordpress {
 	 */
 	public function add_admin_styles() {
 
-		// add admin css
+		// Add admin CSS.
 		wp_enqueue_style(
 			'cpmu-admin-style',
 			COMMENTPRESS_PLUGIN_URL . 'commentpress-multisite/assets/css/admin.css',
 			null,
-			COMMENTPRESS_MU_PLUGIN_VERSION,
-			'all' // media
+			COMMENTPRESS_MU_PLUGIN_VERSION, // Version.
+			'all' // Media.
 		);
 
 	}
@@ -183,21 +183,21 @@ class Commentpress_Multisite_Wordpress {
 	 */
 	public function signup_blogform( $errors ) {
 
-		// only apply to wordpress signup form (not the BuddyPress one)
+		// Only apply to wordpress signup form (not the BuddyPress one).
 		if ( is_object( $this->parent_obj->bp ) ) return;
 
-		// get force option
+		// Get force option.
 		$forced = $this->db->option_get( 'cpmu_force_commentpress' );
 
-		// are we force-enabling CommentPress Core?
+		// Are we force-enabling CommentPress Core?
 		if ( $forced ) {
 
-			// set hidden element
+			// Set hidden element.
 			$forced_html = '
 			<input type="hidden" value="1" id="cpmu-new-blog" name="cpmu-new-blog" />
 			';
 
-			// define text, but allow overrides
+			// Define text, but allow overrides.
 			$text = apply_filters(
 				'cp_multisite_options_signup_text_forced',
 				__( 'Select the options for your new CommentPress document.', 'commentpress-core' )
@@ -205,14 +205,14 @@ class Commentpress_Multisite_Wordpress {
 
 		} else {
 
-			// set checkbox
+			// Set checkbox.
 			$forced_html = '
 			<div class="checkbox">
 				<label for="cpmu-new-blog"><input type="checkbox" value="1" id="cpmu-new-blog" name="cpmu-new-blog" /> ' . __( 'Enable CommentPress', 'commentpress-core' ) . '</label>
 			</div>
 			';
 
-			// define text, but allow overrides
+			// Define text, but allow overrides.
 			$text = apply_filters(
 				'cp_multisite_options_signup_text',
 				__( 'Do you want to make the new site a CommentPress document?', 'commentpress-core' )
@@ -220,13 +220,13 @@ class Commentpress_Multisite_Wordpress {
 
 		}
 
-		// get workflow element
+		// Get workflow element.
 		$workflow_html = $this->_get_workflow();
 
-		// get blog type element
+		// Get blog type element.
 		$type_html = $this->_get_blogtype();
 
-		// construct form
+		// Construct form.
 		$form = '
 
 		<br />
@@ -266,10 +266,10 @@ class Commentpress_Multisite_Wordpress {
 	 */
 	public function wpmu_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 
-		// test for presence of our checkbox variable in _POST
+		// Test for presence of our checkbox variable in _POST.
 		if ( isset( $_POST['cpmu-new-blog'] ) AND $_POST['cpmu-new-blog'] == '1' ) {
 
-			// hand off to private method
+			// Hand off to private method.
 			$this->_create_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta );
 
 		}
@@ -297,7 +297,7 @@ class Commentpress_Multisite_Wordpress {
 	 */
 	function _init() {
 
-		// register hooks
+		// Register hooks.
 		$this->_register_hooks();
 
 	}
@@ -311,35 +311,35 @@ class Commentpress_Multisite_Wordpress {
 	 */
 	function _register_hooks() {
 
-		// add form elements to signup form
+		// Add form elements to signup form.
 		add_action( 'signup_blogform', array( $this, 'signup_blogform' ) );
 
-		// activate blog-specific CommentPress Core plugin
+		// Activate blog-specific CommentPress Core plugin.
 		add_action( 'wpmu_new_blog', array( $this, 'wpmu_new_blog' ), 12, 6 );
 
-		// enable/disable workflow sitewide
+		// Enable/disable workflow sitewide.
 		add_filter( 'cp_class_commentpress_workflow_enabled', array( $this, '_get_workflow_enabled' ) );
 
-		// is this the back end?
+		// Is this the back end?
 		if ( is_admin() ) {
 
-			// add menu to Network submenu
+			// Add menu to Network submenu.
 			add_action( 'network_admin_menu', array( $this, 'add_admin_menu' ), 30 );
 
-			// add options to reset array
+			// Add options to reset array.
 			add_filter( 'cpmu_db_options_get_defaults', array( $this, '_get_default_settings' ), 20, 1 );
 
-			// hook into Network BuddyPress form update
+			// Hook into Network BuddyPress form update.
 			add_action( 'cpmu_db_options_update', array( $this, '_network_admin_update' ), 20 );
 
 		} else {
 
-			// register any public styles
+			// Register any public styles.
 			add_action( 'wp_enqueue_scripts', array( $this, 'add_frontend_styles' ), 20 );
 
 		}
 
-		// override Title Page content
+		// Override Title Page content.
 		//add_filter( 'cp_title_page_content', array( $this, '_get_title_page_content' ) );
 
 	}
@@ -360,13 +360,13 @@ class Commentpress_Multisite_Wordpress {
 	 */
 	function _create_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 
-		// wpmu_new_blog calls this *after* restore_current_blog, so we need to do it again
+		// Wpmu_new_blog calls this *after* restore_current_blog, so we need to do it again.
 		switch_to_blog( $blog_id );
 
-		// activate CommentPress Core
+		// Activate CommentPress Core.
 		$this->db->install_commentpress();
 
-		// switch back
+		// Switch back.
 		restore_current_blog();
 
 	}
@@ -382,16 +382,16 @@ class Commentpress_Multisite_Wordpress {
 	 */
 	function _get_workflow() {
 
-		// init
+		// Init.
 		$workflow_html = '';
 
-		// get data
+		// Get data.
 		$workflow = $this->db->get_workflow_data();
 
-		// if we have workflow data
+		// If we have workflow data.
 		if ( ! empty( $workflow ) ) {
 
-			// show it
+			// Show it.
 			$workflow_html = '
 
 			<div class="checkbox">
@@ -418,16 +418,16 @@ class Commentpress_Multisite_Wordpress {
 	 */
 	function _get_blogtype() {
 
-		// init
+		// Init.
 		$type_html = '';
 
-		// get data
+		// Get data.
 		$type = $this->db->get_blogtype_data();
 
-		// if we have type data
+		// If we have type data
 		if ( ! empty( $type ) ) {
 
-			// show it
+			// Show it.
 			$type_html = '
 
 			<div class="dropdown">
@@ -456,25 +456,25 @@ class Commentpress_Multisite_Wordpress {
 	 */
 	function _network_admin_form() {
 
-		// only allow network admins through
+		// Only allow network admins through.
 		if( is_super_admin() == false ) {
 
-			// disallow
+			// Disallow.
 			wp_die( __( 'You do not have permission to access this page.', 'commentpress-core' ) );
 
 		}
 
-		// show message
+		// Show message.
 		if ( isset( $_GET['updated'] ) ) {
 			echo '<div id="message" class="updated"><p>' . __( 'Options saved.', 'commentpress-core' ) . '</p></div>';
 		}
 
-		// sanitise admin page url
+		// Sanitise admin page URL.
 		$url = $_SERVER['REQUEST_URI'];
 		$url_array = explode( '&', $url );
 		if ( is_array( $url_array ) ) { $url = $url_array[0]; }
 
-		// open admin page
+		// Open admin page.
 		echo '
 		<div class="wrap" id="cpmu_admin_wrapper">
 
@@ -487,7 +487,7 @@ class Commentpress_Multisite_Wordpress {
 
 		';
 
-		// show multisite options
+		// Show multisite options.
 		echo '
 <div id="cpmu_admin_options">
 
@@ -495,7 +495,7 @@ class Commentpress_Multisite_Wordpress {
 
 <p>' . __( 'Configure how your CommentPress Network behaves. Site-specific options are set on the CommentPress Core Settings page for that site.', 'commentpress-core' ) . '</p>';
 
-		// add global options
+		// Add global options.
 		echo '
 <h4>' . __( 'Global Options', 'commentpress-core' ) . '</h4>
 
@@ -521,7 +521,7 @@ class Commentpress_Multisite_Wordpress {
 </table>';
 
 		/*
-		// add WordPress overrides
+		// Add WordPress overrides.
 		echo '
 <h4>' . __( 'Override WordPress behaviour', 'commentpress-core' ) . '</h4>
 
@@ -545,22 +545,22 @@ class Commentpress_Multisite_Wordpress {
 </table>';
 		*/
 
-		// close form
+		// Close form.
 		echo '
 		</div>';
 
 		/*
-		// title
+		// Title
 		echo '<h3>' . __( 'Title Page Content', 'commentpress-core' ) . '</h3>';
 
-		// explanation
+		// Explanation
 		echo '<p>' . __( 'The following is the content of the Title Page for each new CommentPress site. Edit it if you want to show something else on the Title Page.', 'commentpress-core' ) . '</p>';
 
-		// get content
+		// Get content.
 		$content = stripslashes( $this->db->option_get( 'cpmu_title_page_content' ) );
 		//_cpdie( $content );
 
-		// call the editor
+		// Call the editor
 		wp_editor(
 			$content,
 			'cpmu_title_page_content',
@@ -570,10 +570,10 @@ class Commentpress_Multisite_Wordpress {
 		);
 		*/
 
-		// allow plugins to add stuff
+		// Allow plugins to add stuff.
 		echo $this->_additional_form_options();
 
-		// close admin form
+		// Close admin form.
 		echo '
 		<p class="submit">
 			<input type="submit" name="cpmu_submit" value="' . __( 'Save Changes', 'commentpress-core' ) . '" class="button-primary" />
@@ -597,7 +597,7 @@ class Commentpress_Multisite_Wordpress {
 	 */
 	function _additional_multisite_options() {
 
-		// return whatever plugins send
+		// Return whatever plugins send.
 		return apply_filters( 'cpmu_network_multisite_options_form', '' );
 
 	}
@@ -613,7 +613,7 @@ class Commentpress_Multisite_Wordpress {
 	 */
 	function _additional_form_options() {
 
-		// return whatever plugins send
+		// Return whatever plugins send.
 		return apply_filters( 'cpmu_network_options_form', '' );
 
 	}
@@ -630,7 +630,7 @@ class Commentpress_Multisite_Wordpress {
 	 */
 	function _get_default_settings( $existing_options ) {
 
-		// default Multisite options
+		// Default Multisite options.
 		$defaults = array(
 			'cpmu_force_commentpress' => $this->cpmu_force_commentpress,
 			//'cpmu_title_page_content' => $this->cpmu_title_page_content,
@@ -647,7 +647,7 @@ class Commentpress_Multisite_Wordpress {
 		 */
 		$defaults = apply_filters( 'cpmu_multisite_options_get_defaults', $defaults );
 
-		// return options array
+		// Return options array.
 		return array_merge( $existing_options, $defaults );
 
 	}
@@ -661,25 +661,25 @@ class Commentpress_Multisite_Wordpress {
 	 */
 	function _network_admin_update() {
 
-		// init
+		// Init.
 		$cpmu_force_commentpress = '0';
-		//$cpmu_title_page_content = ''; // replace with content from _get_default_title_page_content()
+		//$cpmu_title_page_content = ''; // Replace with content from _get_default_title_page_content()
 		$cpmu_disable_translation_workflow = '0';
 
-		// get variables
+		// Get variables.
 		extract( $_POST );
 
-		// force all new sites to be CommentPress Core-enabled
+		// Force all new sites to be CommentPress Core-enabled.
 		$cpmu_force_commentpress = esc_sql( $cpmu_force_commentpress );
 		$this->db->option_set( 'cpmu_force_commentpress', ( $cpmu_force_commentpress ? 1 : 0 ) );
 
 		/*
-		// default title page content
+		// Default title page content.
 		$cpmu_title_page_content = esc_sql( $cpmu_title_page_content );
 		$this->db->option_set( 'cpmu_title_page_content', $cpmu_title_page_content );
 		*/
 
-		// allow translation workflow
+		// Allow translation workflow.
 		$cpmu_disable_translation_workflow = esc_sql( $cpmu_disable_translation_workflow );
 		$this->db->option_set( 'cpmu_disable_translation_workflow', ( $cpmu_disable_translation_workflow ? 1 : 0 ) );
 
@@ -696,10 +696,10 @@ class Commentpress_Multisite_Wordpress {
 	 */
 	function _get_workflow_enabled() {
 
-		// get option
+		// Get option.
 		$disabled = $this->db->option_get( 'cpmu_disable_translation_workflow' ) == '1' ? false : true;
 
-		// return whatever option is set
+		// Return whatever option is set.
 		return $disabled;
 
 	}
@@ -718,13 +718,13 @@ class Commentpress_Multisite_Wordpress {
 	 */
 	function _get_title_page_content( $content ) {
 
-		// get content
+		// Get content.
 		$overridden_content = stripslashes( $this->db->option_get( 'cpmu_title_page_content' ) );
 
-		// is it different to what's been passed?
+		// Is it different to what's been passed?
 		if ( $content != $overridden_content ) {
 
-			// override
+			// Override.
 			$content = $overridden_content;
 
 		}
@@ -764,7 +764,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 
 
-} // class ends
+} // Class ends.
 
 
 

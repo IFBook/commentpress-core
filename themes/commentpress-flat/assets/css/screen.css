@@ -1426,6 +1426,7 @@ div#respond > p
 {
 	margin-bottom: 0.6em;
 	margin-top: 0;
+	clear: both;
 }
 
 .author_is_logged_in
@@ -1627,12 +1628,7 @@ div#respond .subscribe_reloaded_insert
 #comments_in_page_wrapper .comments_container > h3.nocomments
 {
 	padding: 6px;
-	color: #222;
-}
-
-#comments_in_page_wrapper .comments_container > h3.general_comments_header:hover
-{
-	background-color: #BDBDBD;
+	color: #fff;
 }
 
 /* general comments title number */
@@ -1640,6 +1636,7 @@ div#respond .subscribe_reloaded_insert
 {
 	display: inline;
 	padding: 0;
+	color: #fff;
 }
 
 /*
@@ -1656,7 +1653,7 @@ div#respond .subscribe_reloaded_insert
 
 .post.general_comments #respond_wrapper
 {
-	background-color: #eee;
+	background-color: #f7f7ef;
 }
 
 
@@ -1675,6 +1672,11 @@ Footer
 	text-align: center;
 	font-family: sans-serif;
 	background-color: transparent;
+}
+
+#footer_inner .footer_widgets .widget
+{
+	margin: 1.25em 0;
 }
 
 #footer_inner p
@@ -2491,7 +2493,7 @@ h3.comments_hl
 	list-style: none;
 	list-style-image: none;
 	padding: 0;
-	background-color: #eee;
+	background-color: transparent;
 }
 
 .all_comments_listing ul.item_ul .comment_wrapper

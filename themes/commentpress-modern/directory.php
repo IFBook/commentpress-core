@@ -27,7 +27,7 @@ get_header(); ?>
 
 
 
-<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
 
 
@@ -37,10 +37,10 @@ get_header(); ?>
 
 	<?php
 
-	// default to hidden
+	// Default to hidden.
 	$cp_title_visibility = ' style="display: none;"';
 
-	// override if we've elected to show the title
+	// Override if we've elected to show the title.
 	if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
 		$cp_title_visibility = '';
 	}
@@ -52,13 +52,13 @@ get_header(); ?>
 
 	<?php
 
-	// if we have the members list plugin
+	// If we have the members list plugin.
 	if ( class_exists( 'tern_members' ) ) {
 
-		// init members-list plugin
+		// Init members-list plugin.
 		$members = new tern_members;
 
-		// set options
+		// Set options
 		$members->members( array(
 			'search' => true,
 			'alpha' => true,

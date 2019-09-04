@@ -58,26 +58,21 @@ NOTES
 
 		<?php
 
-		// get comments for this post in ascending order
+		// Get comments for this post in ascending order.
 		$comments = get_comments( array(
 			'post_id' => $post->ID,
 			'order' => 'ASC'
 		) );
 
+		// List comments.
 		wp_list_comments(
-
 			array(
-
-				// list comments params
 				'type'=> 'comment',
+				'reply_text' => __( 'Reply to this comment', 'commentpress-core' ),
+				'callback' => 'commentpress_comments',
 				'style'=> 'ol',
-				'reply_text' => 'Reply to this comment',
-				'callback' => 'commentpress_comments'
-
 			),
-
 			$comments
-
 		); ?>
 
 		</ol>
@@ -86,7 +81,7 @@ NOTES
 
 
 
-<?php else : // this is displayed if there are no comments so far ?>
+<?php else : // This is displayed if there are no comments so far. ?>
 
 
 
@@ -113,13 +108,20 @@ NOTES
 
 <?php
 
-// first try to locate using WP method
+/**
+ * Try to locate template using WP method.
+ *
+ * @since 3.4
+ *
+ * @param str The existing path returned by WordPress.
+ * @return str The modified path.
+ */
 $cp_comment_form = apply_filters(
 	'cp_template_comment_form',
 	locate_template( 'assets/templates/comment_form.php' )
 );
 
-// load it if we find it
+// Load it if we find it.
 if ( $cp_comment_form != '' ) load_template( $cp_comment_form );
 
 ?>

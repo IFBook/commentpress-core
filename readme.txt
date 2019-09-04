@@ -3,8 +3,8 @@ Contributors: needle, commentpress
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZSKM8T5ZP3SC
 Tags: commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
 Requires at least: 3.4
-Tested up to: 4.9
-Stable tag: 3.9.11
+Tested up to: 5.2
+Stable tag: 3.9.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,6 +17,8 @@ CommentPress Core allows fine-grained commenting in the margins of a text. Use i
 CommentPress Core is an open source theme and plugin for WordPress that allows readers to comment in the margins of a text. Readers may comment paragraph-by-paragraph, line-by-line, block-by-block or by selecting text (coming soon to touch devices).
 
 Annotate, gloss, workshop, debate: with CommentPress Core you can do all of these things on a finer-grained level, turning a document into a conversation. It can be applied to a fixed document (paper/essay/book etc.) or to a running blog. Use it in combination with BuddyPress and Groupblogs to create communities around your documents.
+
+**Please note:** for the time-being, this plugin works best when the Gutenberg editor is *disabled*. If you want the simplest CommentPress experience in WordPress 5.x please install the *Classic Editor* or *Gutenberg Ramp* plugin to manage the post types on which the Gutenberg editor is enabled.
 
 **Please note:** this plugin comes bundled with three official themes, one of which must be active for CommentPress Core to function. The "CommentPress Modern Theme" will be auto-activated when the plugin is first activated. The old "CommentPress Default Theme" is still included for those who wish to stay with it or have built their own child themes for it. Since version 3.9 a new "CommentPress Flat Theme" is included for those who want an alternative layout. If you are upgrading from a previous version of CommentPress (3.0.x - 3.3.x), please follow the instructions in the Installation section before doing so.
 
@@ -212,6 +214,11 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 
 == Changelog ==
+
+<h4>3.9.12</h4>
+
+* Introduces front-end AJAXified comment editing
+* Supports "wp_body_open" function and action
 
 <h4>3.9.11</h4>
 

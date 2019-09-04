@@ -38,13 +38,13 @@ class Commentpress_Core_Display {
 	 */
 	function __construct( $parent_obj ) {
 
-		// store reference to parent
+		// Store reference to parent.
 		$this->parent_obj = $parent_obj;
 
-		// store reference to database wrapper (child of calling obj)
+		// Store reference to database wrapper (child of calling obj).
 		$this->db = $this->parent_obj->db;
 
-		// init
+		// Init.
 		$this->_init();
 
 	}
@@ -58,7 +58,7 @@ class Commentpress_Core_Display {
 	 */
 	public function activate() {
 
-		// force WordPress to regenerate theme directories
+		// Force WordPress to regenerate theme directories.
 		search_theme_directories( true );
 
 		/**
@@ -78,18 +78,18 @@ class Commentpress_Core_Display {
 		 */
 		$theme = apply_filters( 'commentpress_get_groupblog_theme', $this->parent_obj->get_groupblog_theme() );
 
-		// did we get a CommentPress Core one?
+		// Did we get a CommentPress Core one?
 		if ( $theme !== false ) {
 
-			// we're in a groupblog context: BuddyPress Groupblog will already have set
-			// the theme because we're adding our wpmu_new_blog action after it
+			// We're in a groupblog context: BuddyPress Groupblog will already have set
+			// the theme because we're adding our wpmu_new_blog action after it.
 
 			// --<
 			return;
 
 		}
 
-		// test for WP3.4
+		// Test for WP3.4.
 		if ( function_exists( 'wp_get_themes' ) ) {
 
 			/**
@@ -102,16 +102,16 @@ class Commentpress_Core_Display {
 			 */
 			$target_theme = apply_filters( 'cp_forced_theme_slug', 'commentpress-modern' );
 
-			// get the theme we want
+			// Get the theme we want.
 			$theme = wp_get_theme( $target_theme );
 
-			// if we get it
+			// If we get it.
 			if ( $theme->exists() ) {
 
-				// ignore if not allowed
+				// Ignore if not allowed.
 				//if ( is_multisite() AND ! $theme->is_allowed() ) return;
 
-				// activate it
+				// Activate it.
 				switch_theme(
 					$theme->get_template(),
 					$theme->get_stylesheet()
@@ -121,7 +121,7 @@ class Commentpress_Core_Display {
 
 		} else {
 
-			// use pre-3.4 logic
+			// Use pre-3.4 logic.
 			$themes = get_themes();
 
 			/**
@@ -133,10 +133,10 @@ class Commentpress_Core_Display {
 			 */
 			$target_theme = apply_filters( 'cp_forced_theme_name', 'CommentPress Default Theme' );
 
-			// the key is the theme name
+			// The key is the theme name.
 			if ( isset( $themes[$target_theme] ) ) {
 
-				// activate it
+				// Activate it.
 				switch_theme(
 					$themes[$target_theme]['Template'],
 					$themes[$target_theme]['Stylesheet']
@@ -157,7 +157,7 @@ class Commentpress_Core_Display {
 	 */
 	public function deactivate() {
 
-		// test for WP3.4
+		// Test for WP3.4.
 		if ( function_exists( 'wp_get_theme' ) ) {
 
 			/**
@@ -170,16 +170,16 @@ class Commentpress_Core_Display {
 			 */
 			$target_theme = apply_filters( 'cp_restore_theme_slug', WP_DEFAULT_THEME );
 
-			// get the theme we want
+			// Get the theme we want.
 			$theme = wp_get_theme( $target_theme );
 
-			// if we get it
+			// If we get it.
 			if ( $theme->exists() ) {
 
-				// ignore if not allowed
+				// Ignore if not allowed.
 				//if ( is_multisite() AND ! $theme->is_allowed() ) return;
 
-				// activate it
+				// Activate it.
 				switch_theme(
 					$theme->get_template(),
 					$theme->get_stylesheet()
@@ -189,7 +189,7 @@ class Commentpress_Core_Display {
 
 		} else {
 
-			// use pre-3.4 logic
+			// Use pre-3.4 logic.
 			$themes = get_themes();
 
 			/**
@@ -204,10 +204,10 @@ class Commentpress_Core_Display {
 			 */
 			$target_theme = apply_filters( 'cp_restore_theme_name', WP_DEFAULT_THEME );
 
-			// the key is the theme name
+			// The key is the theme name.
 			if ( isset( $themes[$target_theme] ) ) {
 
-				// activate it
+				// Activate it.
 				switch_theme(
 					$themes[$target_theme]['Template'],
 					$themes[$target_theme]['Stylesheet']
@@ -240,40 +240,40 @@ class Commentpress_Core_Display {
 	 */
 	public function get_jquery() {
 
-		// default to minified scripts
+		// Default to minified scripts.
 		$debug_state = commentpress_minified();
 
-		// add our javascript plugin and dependencies
+		// Add our javascript plugin and dependencies.
 		wp_enqueue_script(
 			'jquery_commentpress',
 			plugins_url( 'commentpress-core/assets/js/jquery.commentpress' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
 			array( 'jquery', 'jquery-form', 'jquery-ui-core', 'jquery-ui-resizable', 'jquery-ui-tooltip' ),
-			COMMENTPRESS_VERSION // version
+			COMMENTPRESS_VERSION // Version.
 		);
 
-		// get vars
+		// Get vars.
 		$vars = $this->db->get_javascript_vars();
 
-		// localise with wp function
+		// Localise the WordPress way.
 		wp_localize_script( 'jquery_commentpress', 'CommentpressSettings', $vars );
 
-		// add jQuery Scroll-To plugin
+		// Add jQuery Scroll-To plugin.
 		wp_enqueue_script(
 			'jquery_scrollto',
 			plugins_url( 'commentpress-core/assets/js/jquery.scrollTo.js', COMMENTPRESS_PLUGIN_FILE ),
 			array( 'jquery_commentpress' ),
-			COMMENTPRESS_VERSION // version
+			COMMENTPRESS_VERSION // Version.
 		);
 
-		// add jQuery Cookie plugin (renamed to jquery.biscuit.js because some hosts don't like 'cookie' in the filename)
+		// Add jQuery Cookie plugin (renamed to jquery.biscuit.js because some hosts don't like 'cookie' in the filename).
 		wp_enqueue_script(
 			'jquery_cookie',
 			plugins_url( 'commentpress-core/assets/js/jquery.biscuit.js', COMMENTPRESS_PLUGIN_FILE ),
 			array( 'jquery_commentpress' ),
-			COMMENTPRESS_VERSION // version
+			COMMENTPRESS_VERSION // Version.
 		);
 
-		// optionally get text highlighter
+		// Optionally get text highlighter.
 		$this->get_text_highlighter();
 
 	}
@@ -287,54 +287,54 @@ class Commentpress_Core_Display {
 	 */
 	public function get_text_highlighter() {
 
-		// only allow text highlighting on non-touch devices (allow testing override)
+		// Only allow text highlighting on non-touch devices (allow testing override).
 		if ( ! $this->db->is_touch() OR ( defined( 'COMMENTPRESS_TOUCH_SELECT' ) AND COMMENTPRESS_TOUCH_SELECT ) ) {
 
-			// bail if not a commentable page/post
+			// Bail if not a commentable page/post.
 			if ( ! $this->parent_obj->is_commentable() ) {
 				return;
 			}
 
-			// default to minified scripts
+			// Default to minified scripts.
 			$debug_state = commentpress_minified();
 
-			// add jQuery wrapSelection plugin
+			// Add jQuery wrapSelection plugin.
 			wp_enqueue_script(
 				'jquery_wrapselection',
 				plugins_url( 'commentpress-core/assets/js/jquery.wrap-selection' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
 				array( 'jquery_commentpress' ),
-				COMMENTPRESS_VERSION // version
+				COMMENTPRESS_VERSION // Version.
 			);
 
-			// add jQuery highlighter plugin
+			// Add jQuery highlighter plugin.
 			wp_enqueue_script(
 				'jquery_highlighter',
 				plugins_url( 'commentpress-core/assets/js/jquery.highlighter' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
 				array( 'jquery_wrapselection' ),
-				COMMENTPRESS_VERSION // version
+				COMMENTPRESS_VERSION // Version.
 			);
 
-			// add jQuery text highlighter plugin
+			// Add jQuery text highlighter plugin.
 			wp_enqueue_script(
 				'jquery_texthighlighter',
 				plugins_url( 'commentpress-core/assets/js/jquery.texthighlighter' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
 				array( 'jquery_highlighter' ),
-				COMMENTPRESS_VERSION // version
+				COMMENTPRESS_VERSION // Version.
 			);
 
-			// define popover for textblocks
+			// Define popover for textblocks.
 			$popover_textblock = '<span class="popover-holder"><div class="popover-holder-inner"><div class="popover-holder-caret"></div><div class="popover-holder-btn-left"><span class="popover-holder-btn-left-comment">' . __( 'Comment', 'commentpress-core' ) . '</span><span class="popover-holder-btn-left-quote">' . __( 'Quote &amp; Comment', 'commentpress-core' ) . '</span></div><div class="popover-holder-btn-right">&times;</div></div></span>';
 
-			// define popover for comments
+			// Define popover for comments.
 			$popover_comment = '<span class="comment-popover-holder"><div class="popover-holder-inner"><div class="popover-holder-caret"></div><div class="popover-holder-btn-left"><span class="comment-popover-holder-btn-left-quote">' . __( 'Quote', 'commentpress-core' ) . '</span></div><div class="popover-holder-btn-right">&times;</div></div></span>';
 
-			// define localisation array
+			// Define localisation array.
 			$texthighlighter_vars = array(
 				'popover_textblock' => $popover_textblock,
 				'popover_comment' => $popover_comment,
 			);
 
-			// create translations
+			// Create translations.
 			$texthighlighter_translations = array(
 				'dialog_title' => __( 'Are you sure?', 'commentpress-core' ),
 				'dialog_content' => __( 'You have not yet submitted your comment. Are you sure you want to discard it?', 'commentpress-core' ),
@@ -343,10 +343,10 @@ class Commentpress_Core_Display {
 				'backlink_text' => __( 'Back', 'commentpress-core' ),
 			);
 
-			// add to vars
+			// Add to vars.
 			$texthighlighter_vars['localisation'] = $texthighlighter_translations;
 
-			// localise with wp function
+			// Localise the WordPress way.
 			wp_localize_script( 'jquery_texthighlighter', 'CommentpressTextSelectorSettings', $texthighlighter_vars );
 
 		}
@@ -362,35 +362,35 @@ class Commentpress_Core_Display {
 	 */
 	public function get_custom_quicktags() {
 
-		// don't bother if the current user lacks permissions
+		// Don't bother if the current user lacks permissions.
 		if ( ! current_user_can( 'edit_posts' ) AND ! current_user_can( 'edit_pages' ) ) {
 			return;
 		}
 
-		// need access to WP version
+		// Need access to WP version.
 		global $wp_version;
 
-		// there's a new quicktags script in 3.3
+		// There's a new quicktags script in 3.3.
 		if ( version_compare( $wp_version, '3.2.99999', '>=' ) ) {
 
-			// add our javascript script and dependencies
+			// Add our javascript script and dependencies.
 			wp_enqueue_script(
 				'commentpress_custom_quicktags',
 				plugin_dir_url( COMMENTPRESS_PLUGIN_FILE ) . 'commentpress-core/assets/js/cp_quicktags_3.3.js',
 				array( 'quicktags' ),
-				COMMENTPRESS_VERSION, // version
-				true // in footer
+				COMMENTPRESS_VERSION, // Version.
+				true // In footer
 			);
 
 		} else {
 
-			// add our javascript script and dependencies
+			// Add our javascript script and dependencies.
 			wp_enqueue_script(
 				'commentpress_custom_quicktags',
 				plugin_dir_url( COMMENTPRESS_PLUGIN_FILE ) . 'commentpress-core/assets/js/cp_quicktags.js',
 				array( 'quicktags' ),
-				COMMENTPRESS_VERSION, // version
-				false // not in footer (but may need to be in WP 3.3)
+				COMMENTPRESS_VERSION, // Version.
+				false // Not in footer (but may need to be in WP 3.3)
 			);
 
 		}
@@ -406,13 +406,13 @@ class Commentpress_Core_Display {
 	 */
 	public function get_frontend_styles() {
 
-		// add jQuery UI stylesheet -> needed for resizable columns
+		// Add jQuery UI stylesheet -> needed for resizable columns.
 		wp_enqueue_style(
 			'cp_jquery_ui_base',
 			plugins_url( 'commentpress-core/assets/css/jquery.ui.css', COMMENTPRESS_PLUGIN_FILE ),
 			false,
-			COMMENTPRESS_VERSION, // version
-			'all' // media
+			COMMENTPRESS_VERSION, // Version.
+			'all' // Media.
 		);
 
 	}
@@ -428,28 +428,28 @@ class Commentpress_Core_Display {
 	 */
 	public function is_tinymce_allowed() {
 
-		// default to allowed
+		// Default to allowed.
 		$allowed = true;
 
-		// check option
+		// Check option.
 		if (
 			$this->db->option_exists( 'cp_comment_editor' ) AND
 			$this->db->option_get( 'cp_comment_editor' ) != '1'
 		) {
 
-			// disallow
+			// Disallow.
 			$allowed = false;
 
 		} else {
 
-			// don't return TinyMCE for touchscreens, mobile phones or tablets
+			// Don't return TinyMCE for touchscreens, mobile phones or tablets
 			if (
 				( isset( $this->db->is_mobile_touch ) AND $this->db->is_mobile_touch ) OR
 				( isset( $this->db->is_mobile ) AND $this->db->is_mobile ) OR
 				( isset( $this->db->is_tablet ) AND $this->db->is_tablet )
 			) {
 
-				// disallow
+				// Disallow.
 				$allowed = false;
 
 			}
@@ -498,26 +498,26 @@ HELPTEXT;
 	 */
 	public function list_posts( $params = 'numberposts=-1&order=DESC' ) {
 
-		// get all posts
+		// Get all posts.
 		$posts = get_posts( $params );
 
-		// have we set the option?
+		// Have we set the option?
 		$list_style = $this->db->option_get( 'cp_show_extended_toc' );
 
-		// if not set or set to 'off'
+		// If not set or set to 'off'.
 		if ( $list_style === false OR $list_style == '0' ) {
 
 			// --------------------------
-			// old-style undecorated list
+			// Old-style undecorated list.
 			// --------------------------
 
-			// run through them
+			// Run through them
 			foreach( $posts AS $item ) {
 
-				// get comment count for that post
+				// Get comment count for that post.
 				$count = count( $this->db->get_approved_comments( $item->ID ) );
 
-				// write list item
+				// Write list item.
 				echo '<li class="title"><a href="' . get_permalink( $item->ID ) . '">' . get_the_title( $item->ID ) . ' (' . $count . ')</a></li>' . "\n";
 
 			}
@@ -525,112 +525,112 @@ HELPTEXT;
 		} else {
 
 			// ------------------------
-			// new-style decorated list
+			// New-style decorated list.
 			// ------------------------
 
-			// access current post
+			// Access current post.
 			global $post;
 
-			// run through them
+			// Run through them.
 			foreach( $posts AS $item ) {
 
-				// init output
+				// Init output.
 				$html = '';
 
-				// get comment count for that post
+				// Get comment count for that post.
 				$count = count( $this->db->get_approved_comments( $item->ID ) );
 
-				// compat with Co-Authors Plus
+				// Compat with Co-Authors Plus.
 				if ( function_exists( 'get_coauthors' ) ) {
 
-					// get multiple authors
+					// Get multiple authors.
 					$authors = get_coauthors( $item->ID );
 
-					// if we get some
+					// If we get some.
 					if ( ! empty( $authors ) ) {
 
-						// use the Co-Authors format of "name, name, name & name"
+						// Use the Co-Authors format of "name, name, name & name".
 						$author_html = '';
 
-						// init counter
+						// Init counter.
 						$n = 1;
 
-						// find out how many author we have
+						// Find out how many author we have.
 						$author_count = count( $authors );
 
-						// loop
+						// Loop.
 						foreach( $authors AS $author ) {
 
-							// default to comma
+							// Default to comma.
 							$sep = ', ';
 
-							// if we're on the penultimate
+							// If we're on the penultimate.
 							if ( $n == ($author_count - 1) ) {
 
-								// use ampersand
+								// Use ampersand.
 								$sep = __( ' &amp; ', 'commentpress-core' );
 
 							}
 
-							// if we're on the last, don't add
+							// If we're on the last, don't add.
 							if ( $n == $author_count ) { $sep = ''; }
 
-							// get name
+							// Get name.
 							$author_html .= $this->echo_post_author( $author->ID, false );
 
-							// and separator
+							// Add separator.
 							$author_html .= $sep;
 
-							// increment
+							// Increment.
 							$n++;
 
-							// are we showing avatars?
+							// Are we showing avatars?
 							if ( get_option( 'show_avatars' ) ) {
 
-								// get avatar
+								// Get avatar.
 								$html .= get_avatar( $author->ID, $size='32' );
 
 							}
 
 						}
 
-						// add citation
+						// Add citation
 						$html .= '<cite class="fn">' . $author_html . '</cite>' . "\n";
 
-						// add permalink
+						// Add permalink
 						$html .= '<p class="post_activity_date">' . esc_html( get_the_time( get_option( 'date_format' ), $item->ID ) ) . '</p>' . "\n";
 
 					}
 
 				} else {
 
-					// get avatar
+					// Get avatar.
 					$author_id = $item->post_author;
 
-					// are we showing avatars?
+					// Are we showing avatars?
 					if ( get_option( 'show_avatars' ) ) {
 
 						$html .= get_avatar( $author_id, $size='32' );
 
 					}
 
-					// add citation
+					// Add citation.
 					$html .= '<cite class="fn">' . $this->echo_post_author( $author_id, false ) . '</cite>';
 
-					// add permalink
+					// Add permalink.
 					$html .= '<p class="post_activity_date">' . esc_html( get_the_time( get_option( 'date_format' ), $item->ID ) ) . '</p>';
 
 				}
 
-				// init current post class as empty
+				// Init current post class as empty.
 				$current_post = '';
 
-				// if we're on the current post and it's this item
+				// If we're on the current post and it's this item.
 				if ( is_singular() AND isset( $post ) AND $post->ID == $item->ID ) {
 					$current_post = ' current_page_item';
 				}
 
-				// write list item
+				// Write list item.
 				echo '<li class="title' . $current_post . '">
 				<div class="post-identifier">
 				' . $html . '
@@ -656,24 +656,24 @@ HELPTEXT;
 	 */
 	public function echo_post_author( $author_id, $echo = true ) {
 
-		// get author details
+		// Get author details.
 		$user = get_userdata( $author_id );
 
-		// kick out if we don't have a user with that ID
+		// Kick out if we don't have a user with that ID.
 		if ( ! is_object( $user ) ) return;
 
-		// access plugin
+		// Access plugin.
 		global $commentpress_core, $post;
 
-		// if we have the plugin enabled and it's BuddyPress
+		// If we have the plugin enabled. and it's BuddyPress.
 		if ( is_object( $post ) AND is_object( $commentpress_core ) AND $commentpress_core->is_buddypress() ) {
 
-			// construct user link
+			// Construct user link.
 			$author = bp_core_get_userlink( $user->ID );
 
 		} else {
 
-			// link to theme's author page
+			// Link to theme's author page.
 			$link = sprintf(
 				'<a href="%1$s" title="%2$s" rel="author">%3$s</a>',
 				get_author_posts_url( $user->ID, $user->user_nicename ),
@@ -684,7 +684,7 @@ HELPTEXT;
 
 		}
 
-		// if we're echoing
+		// If we're echoing.
 		if ( $echo ) {
 			echo $author;
 		} else {
@@ -702,10 +702,10 @@ HELPTEXT;
 	 */
 	public function list_pages( $exclude_pages = array() ) {
 
-		// test for custom menu
+		// Test for custom menu.
 		if ( has_nav_menu( 'toc' ) ) {
 
-			// display menu
+			// Display menu.
 			wp_nav_menu( array(
 				'theme_location' => 'toc',
 				'echo' => true,
@@ -718,56 +718,56 @@ HELPTEXT;
 
 		}
 
-		// get welcome page ID
+		// Get welcome page ID.
 		$welcome_id = $this->db->option_get( 'cp_welcome_page' );
 
-		// get front page
+		// Get front page.
 		$page_on_front = $this->db->option_wp_get( 'page_on_front' );
 
-		// print link to title page, if we have one and it's the front page
+		// Print link to title page, if we have one and it's the front page.
 		if ( $welcome_id !== false AND $page_on_front == $welcome_id ) {
 
-			// define title page
+			// Define title page.
 			$title_page_title = get_the_title( $welcome_id );
 
-			// allow overrides
+			// Allow overrides.
 			$title_page_title = apply_filters( 'cp_title_page_title', $title_page_title );
 
-			// set current item class if viewing front page
+			// Set current item class if viewing front page.
 			$is_active = '';
 			if ( is_front_page() ) {
 				$is_active = ' current_page_item';
 			}
 
-			// echo list item
+			// Echo list item.
 			echo '<li class="page_item page-item-' . $welcome_id . $is_active .'"><a href="' . get_permalink( $welcome_id ) . '">' . $title_page_title . '</a></li>';
 
 		}
 
-		// get page display option
+		// Get page display option.
 		//$depth = $this->db->option_get( 'cp_show_subpages' );
 
-		// ALWAYS write subpages into page, even if they aren't displayed
+		// ALWAYS write subpages into page, even if they aren't displayed.
 		$depth = 0;
 
-		// get pages to exclude
+		// Get pages to exclude.
 		$exclude = $this->db->option_get( 'cp_special_pages' );
 
-		// do we have any?
+		// Do we have any?
 		if ( ! $exclude ) { $exclude = array(); }
 
-		// exclude title page, if we have one
+		// Exclude title page, if we have one.
 		if ( $welcome_id !== false ) { $exclude[] = $welcome_id; }
 
-		// did we get any passed to us?
+		// Did we get any passed to us?
 		if ( ! empty( $exclude_pages ) ) {
 
-			// merge arrays
+			// Merge arrays.
 			$exclude = array_merge( $exclude, $exclude_pages );
 
 		}
 
-		// set list pages defaults
+		// Set list pages defaults.
 		$defaults = array(
 			'depth' => $depth,
 			'show_date' => '',
@@ -783,7 +783,7 @@ HELPTEXT;
 			'exclude_tree' => '',
 		);
 
-		// use WordPress function to echo
+		// Use WordPress function to echo.
 		wp_list_pages( $defaults );
 
 	}
@@ -803,41 +803,41 @@ HELPTEXT;
 	 */
 	public function get_comment_icon( $comment_count, $text_signature, $block_type = 'auto', $para_num = 1 ) {
 
-		// reset icon
+		// Reset icon.
 		$icon = null;
 
-		// if we have no comments
+		// If we have no comments.
 		if( $comment_count == 0 ) {
 
-			// show add comment icon
+			// Show add comment icon.
 			$icon = 'comment_add.png';
 			$class = ' no_comments';
 
 		} elseif( $comment_count > 0 ) {
 
-			// show comments present icon
+			// Show comments present icon.
 			$icon = 'comment.png';
 			$class = ' has_comments';
 
 		}
 
-		// define block title by block type
+		// Define block title by block type.
 		switch ( $block_type ) {
 
 			// ----------------------------
-			// auto-formatted
+			// Auto-formatted.
 			// ----------------------------
 			case 'auto':
 			default:
 
-				// define title text
+				// Define title text.
 				$title_text = sprintf(
 					_n( 'There is %d comment written for this %s', 'There are %d comments written for this %s', $comment_count, 'commentpress-core' ),
 					$comment_count,
 					$this->parent_obj->parser->lexia_get()
 				);
 
-				// define add comment text
+				// Define add comment text.
 				$add_text = sprintf(
 					__( 'Leave a comment on %s %d', 'commentpress-core' ),
 					$this->parent_obj->parser->lexia_get(),
@@ -847,18 +847,18 @@ HELPTEXT;
 				break;
 
 			// ----------------------------
-			// line-by-line, eg poetry
+			// Line-by-line, eg poetry.
 			// ----------------------------
 			case 'line':
 
-				// define title text
+				// Define title text.
 				$title_text = sprintf(
 					_n( 'There is %d comment written for this %s', 'There are %d comments written for this %s', $comment_count, 'commentpress-core' ),
 					$comment_count,
 					$this->parent_obj->parser->lexia_get()
 				);
 
-				// define add comment text
+				// Define add comment text.
 				$add_text = sprintf(
 					__( 'Leave a comment on %s %d', 'commentpress-core' ),
 					$this->parent_obj->parser->lexia_get(),
@@ -869,18 +869,18 @@ HELPTEXT;
 
 
 			// ----------------------------
-			// comment-blocks
+			// Comment-blocks.
 			// ----------------------------
 			case 'block':
 
-				// define title text
+				// Define title text.
 				$title_text = sprintf(
 					_n( 'There is %d comment written for this %s', 'There are %d comments written for this %s', $comment_count, 'commentpress-core' ),
 					$comment_count,
 					$this->parent_obj->parser->lexia_get()
 				);
 
-				// define add comment text
+				// Define add comment text.
 				$add_text = sprintf(
 					__( 'Leave a comment on %s %d', 'commentpress-core' ),
 					$this->parent_obj->parser->lexia_get(),
@@ -891,10 +891,10 @@ HELPTEXT;
 
 		}
 
-		// define small
+		// Define small.
 		$small = '<small class="comment_count" title="' . $title_text . '">' . (string) $comment_count . '</small>';
 
-		// define HTML for comment icon
+		// Define HTML for comment icon.
 		$comment_icon = '<span class="commenticonbox"><a class="para_permalink' . $class . '" href="#' . $text_signature . '" title="' . $add_text . '">' . $add_text . '</a> ' . $small . '</span>' . "\n";
 
 		// --<
@@ -917,65 +917,65 @@ HELPTEXT;
 	 */
 	public function get_paragraph_icon( $comment_count, $text_signature, $block_type = 'auto', $para_num = 1 ) {
 
-		// define block title by block type
+		// Define block title by block type.
 		switch ( $block_type ) {
 
 			// ----------------------------
-			// auto-formatted
+			// Auto-formatted.
 			// ----------------------------
 			case 'auto':
 			default:
 
-				// define permalink text
+				// Define permalink text.
 				$permalink_text = sprintf(
 					__( 'Permalink for %s %d', 'commentpress-core' ),
 					$this->parent_obj->parser->lexia_get(),
 					$para_num
 				);
 
-				// define paragraph marker
+				// Define paragraph marker.
 				$para_marker = '<span class="para_marker"><a class="textblock_permalink" id="' . $text_signature . '" href="#' . $text_signature . '" title="' . $permalink_text . '">&para; <span>' . (string) $para_num . '</span></a></span>';
 
 				break;
 
 			// ----------------------------
-			// line-by-line, eg poetry
+			// Line-by-line, eg poetry.
 			// ----------------------------
 			case 'line':
 
-				// define permalink text
+				// Define permalink text.
 				$permalink_text = sprintf(
 					__( 'Permalink for %s %d', 'commentpress-core' ),
 					$this->parent_obj->parser->lexia_get(),
 					$para_num
 				);
 
-				// define paragraph marker
+				// Define paragraph marker.
 				$para_marker = '<span class="para_marker"><a class="textblock_permalink" id="' . $text_signature . '" href="#' . $text_signature . '" title="' . $permalink_text . '">&para; <span>' . (string) $para_num . '</span></a></span>';
 
 				break;
 
 
 			// ----------------------------
-			// comment-blocks
+			// Comment-blocks.
 			// ----------------------------
 			case 'block':
 
-				// define permalink text
+				// Define permalink text.
 				$permalink_text = sprintf(
 					__( 'Permalink for %s %d', 'commentpress-core' ),
 					$this->parent_obj->parser->lexia_get(),
 					$para_num
 				);
 
-				// define paragraph marker
+				// Define paragraph marker.
 				$para_marker = '<span class="para_marker"><a class="textblock_permalink" id="' . $text_signature . '" href="#' . $text_signature . '" title="' . $permalink_text . '">&para; <span>' . (string) $para_num . '</span></a></span>';
 
 				break;
 
 		}
 
-		// define HTML for paragraph icon
+		// Define HTML for paragraph icon.
 		$paragraph_icon = $para_marker . "\n";
 
 		// --<
@@ -998,35 +998,35 @@ HELPTEXT;
 	 */
 	public function get_para_tag( $text_signature, $commenticon, $tag = 'p', $start = 0 ) {
 
-		// return different stuff for different tags
+		// Return different stuff for different tags.
 		switch( $tag ) {
 
 			case 'ul':
 
-				// define list tag
+				// Define list tag.
 				$para_tag = '<' . $tag . ' class="textblock" id="textblock-' . $text_signature . '">' .
 							'<li class="list_commenticon">' . $commenticon . '</li>';
 				break;
 
 			case 'ol':
 
-				// define list tag
+				// Define list tag.
 				$para_tag = '<' . $tag . ' class="textblock" id="textblock-' . $text_signature . '" start="0">' .
 							'<li class="list_commenticon">' . $commenticon . '</li>';
 				break;
 
-			// compat with WP Footnotes
+			// Compat with WP Footnotes.
 			case 'ol class="footnotes"':
 
-				// define list tag
+				// Define list tag
 				$para_tag = '<ol class="footnotes textblock" id="textblock-' . $text_signature . '" start="0">' .
 							'<li class="list_commenticon">' . $commenticon . '</li>';
 				break;
 
-			// compat with WP Footnotes
+			// Compat with WP Footnotes.
 			case ( substr( $tag, 0 , 10 ) == 'ol start="' ):
 
-				// define list tag
+				// Define list tag.
 				$para_tag = '<ol class="textblock" id="textblock-' . $text_signature . '" start="' . ($start - 1) . '">' .
 							'<li class="list_commenticon">' . $commenticon . '</li>';
 				break;
@@ -1037,7 +1037,7 @@ HELPTEXT;
 			case 'p style="text-align: left"':
 			case 'p style="text-align: left;"':
 
-				// define para tag
+				// Define para tag.
 				$para_tag = '<' . $tag . ' class="textblock" id="textblock-' . $text_signature . '">' . $commenticon;
 				break;
 
@@ -1046,7 +1046,7 @@ HELPTEXT;
 			case 'p style="text-align: right"':
 			case 'p style="text-align: right;"':
 
-				// define para tag
+				// Define para tag.
 				$para_tag = '<' . $tag . ' class="textblock textblock-right" id="textblock-' . $text_signature . '">' . $commenticon;
 				break;
 
@@ -1055,7 +1055,7 @@ HELPTEXT;
 			case 'p style="text-align: center"':
 			case 'p style="text-align: center;"':
 
-				// define para tag
+				// Define para tag.
 				$para_tag = '<' . $tag . ' class="textblock textblock-center" id="textblock-' . $text_signature . '">' . $commenticon;
 				break;
 
@@ -1064,25 +1064,25 @@ HELPTEXT;
 			case 'p style="text-align: justify"':
 			case 'p style="text-align: justify;"':
 
-				// define para tag
+				// Define para tag.
 				$para_tag = '<' . $tag . ' class="textblock textblock-justify" id="textblock-' . $text_signature . '">' . $commenticon;
 				break;
 
 			case 'p class="notes"':
 
-				// define para tag
+				// Define para tag.
 				$para_tag = '<p class="notes textblock" id="textblock-' . $text_signature . '">' . $commenticon;
 				break;
 
 			case 'div':
 
-				// define opening tag (we'll close it later)
+				// Define opening tag (we'll close it later).
 				$para_tag = '<div class="textblock" id="textblock-' . $text_signature . '">' . $commenticon;
 				break;
 
 			case 'span':
 
-				// define opening tag (we'll close it later)
+				// Define opening tag (we'll close it later).
 				$para_tag = '<span class="textblock" id="textblock-' . $text_signature . '">' . $commenticon;
 				break;
 
@@ -1105,7 +1105,7 @@ HELPTEXT;
 	 */
 	public function get_signature_input( $text_sig = '' ) {
 
-		// define input tag
+		// Define input tag.
 		$input = '<input type="hidden" name="text_signature" value="' . $text_sig . '" id="text_signature" />';
 
 		// --<
@@ -1128,17 +1128,17 @@ HELPTEXT;
 		switch( $sidebar ) {
 
 			case 'comments':
-				// define minimise button
+				// Define minimise button.
 				$tag = '<span id="cp_minimise_all_comments" title="' . __( 'Minimise all Comment Sections', 'commentpress-core' ) . '"></span>';
 				break;
 
 			case 'activity':
-				// define minimise button
+				// Define minimise button.
 				$tag = '<span id="cp_minimise_all_activity" title="' . __( 'Minimise all Activity Sections', 'commentpress-core' ) . '"></span>';
 				break;
 
 			case 'toc':
-				// define minimise button
+				// Define minimise button.
 				$tag = '<span id="cp_minimise_all_contents" title="' . __( 'Minimise all Contents Sections', 'commentpress-core' ) . '"></span>';
 				break;
 
@@ -1160,7 +1160,7 @@ HELPTEXT;
 	 */
 	public function get_header_min_link() {
 
-		// define minimise button
+		// Define minimise button.
 		$link = '<li><a href="#" id="btn_header_min" class="css_btn" title="' . __( 'Minimise Header', 'commentpress-core' ) . '">' . __( 'Minimise Header', 'commentpress-core' ) . '</a></li>' . "\n";
 
 		// --<
@@ -1181,21 +1181,21 @@ HELPTEXT;
 	 */
 	public function get_linked_image( $src = '', $url = '' ) {
 
-		// init html
+		// Init html
 		$html = '';
 
-		// do we have an image?
+		// Do we have an image?
 		if ( $src != '' ) {
 
-			// construct link
+			// Construct link.
 			$html .= '<img src="' . $src . '" />';
 
 		}
 
-		// do we have one?
+		// Do we have one?
 		if ( $url != '' ) {
 
-			// construct link around image
+			// Construct link around image.
 			$html .= '<a href="' . $url . '">' . $html . '</a>';
 
 		}
@@ -1216,16 +1216,16 @@ HELPTEXT;
 	 */
 	public function get_admin_page() {
 
-		// init
+		// Init.
 		$admin_page = '';
 
-		// open div
+		// Open div.
 		$admin_page .= '<div class="wrap" id="commentpress_admin_wrapper">' . "\n\n";
 
-		// get our form
+		// Get our form.
 		$admin_page .= $this->_get_admin_form();
 
-		// close div
+		// Close div.
 		$admin_page .= '</div>' . "\n\n";
 
 		// --<
@@ -1272,26 +1272,26 @@ HELPTEXT;
 	 */
 	function _get_admin_form() {
 
-		// sanitise admin page url
+		// Sanitise admin page URL.
 		$url = $_SERVER['REQUEST_URI'];
 		$url_array = explode( '&', $url );
 		if ( $url_array ) { $url = $url_array[0]; }
 
-		// if we need to upgrade
+		// If we need to upgrade.
 		if ( $this->db->upgrade_required() ) {
 
-			// get upgrade options
+			// Get upgrade options.
 			$upgrade = $this->_get_upgrade();
 
-			// init text
+			// Init text.
 			$options_text = '';
 
-			// if there are options
+			// If there are options.
 			if ( $upgrade != '' ) {
 				$options_text = __( ' The following options have become available in the new version.', 'commentpress-core' );
 			}
 
-			// define admin page
+			// Define admin page.
 			$admin_page = '
 			<h1>' . __( 'CommentPress Core Upgrade', 'commentpress-core' ) . '</h1>
 
@@ -1323,7 +1323,7 @@ HELPTEXT;
 
 		} else {
 
-			// define admin page
+			// Define admin page.
 			$admin_page = '
 			<h1>' . __( 'CommentPress Core Settings', 'commentpress-core' ) . '</h1>
 
@@ -1360,7 +1360,7 @@ HELPTEXT;
 	 */
 	function _get_options() {
 
-		// define CommentPress Core theme options
+		// Define CommentPress Core theme options.
 		$options = '
 		<p>' . __( 'When a supplied CommentPress theme (or a valid CommentPress child theme) is active, the following options modify its behaviour.', 'commentpress-core' ) . '</p>
 
@@ -1491,7 +1491,7 @@ HELPTEXT;
 
 		';
 
-		// allow plugins to append form elements
+		// Allow plugins to append form elements.
 		return apply_filters( 'commentpress_admin_page_options', $options );
 
 	}
@@ -1507,35 +1507,35 @@ HELPTEXT;
 	 */
 	function _get_optional_options() {
 
-		// init
+		// Init.
 		$html = '';
 
-		// do we have the option to choose blog type (new in 3.3.1)?
+		// Do we have the option to choose blog type (new in 3.3.1)?
 		if ( $this->db->option_exists( 'cp_blog_type' ) ) {
 
-			// define no types
+			// Define no types.
 			$types = array();
 
-			// allow overrides
+			// Allow overrides.
 			$types = apply_filters( 'cp_blog_type_options', $types );
 
-			// if we get some from a plugin, say
+			// If we get some from a plugin, say.
 			if ( ! empty( $types ) ) {
 
-				// define title
+				// Define title.
 				$type_title = __( 'Default Text Format', 'commentpress-core' );
 
-				// allow overrides
+				// Allow overrides.
 				$type_title = apply_filters( 'cp_blog_type_label', $type_title );
 
-				// add extra message
+				// Add extra message.
 				$type_title .= __( ' (can be overridden on individual pages)', 'commentpress-core' );
 
-				// construct options
+				// Construct options.
 				$type_option_list = array();
 				$n = 0;
 
-				// get existing
+				// Get existing.
 				$blog_type = $this->db->option_get( 'cp_blog_type' );
 
 				foreach( $types AS $type ) {
@@ -1548,7 +1548,7 @@ HELPTEXT;
 				}
 				$type_options = implode( "\n", $type_option_list );
 
-				// define upgrade
+				// Define upgrade.
 				$html .= '
 				<tr valign="top">
 					<th scope="row"><label for="cp_blog_type">' . $type_title . '</label></th>
@@ -1564,28 +1564,28 @@ HELPTEXT;
 
 		}
 
-		// do we have the option to choose blog workflow (new in 3.3.1)?
+		// Do we have the option to choose blog workflow (new in 3.3.1)?
 		if ( $this->db->option_exists( 'cp_blog_workflow' ) ) {
 
-			// off by default
+			// Off by default.
 			$has_workflow = false;
 
-			// allow overrides
+			// Allow overrides.
 			$has_workflow = apply_filters( 'cp_blog_workflow_exists', $has_workflow );
 
-			// if we have workflow enabled, by a plugin, say
+			// If we have workflow enabled, by a plugin, say.
 			if ( $has_workflow !== false ) {
 
-				// define label
+				// Define label.
 				$workflow_label = __( 'Enable Custom Workflow', 'commentpress-core' );
 
-				// define label
+				// Define label.
 				$workflow_label = apply_filters( 'cp_blog_workflow_label', $workflow_label );
 
-				// add extra message
+				// Add extra message.
 				$workflow_label .= ' (Not recommended because it is still very experimental)';
 
-				// define upgrade
+				// Define upgrade.
 				$html .= '
 				<tr valign="top">
 					<th scope="row"><label for="cp_blog_workflow">' . $workflow_label . '</label></th>
@@ -1600,7 +1600,8 @@ HELPTEXT;
 		}
 
 
-		// TODO add infinite scroll switch when ready
+
+		// TODO add infinite scroll switch when ready.
 
 
 
@@ -1620,40 +1621,40 @@ HELPTEXT;
 	 */
 	function _get_upgrade() {
 
-		// init
+		// Init.
 		$upgrade = '';
 
-		// do we have the option to choose which post types to skip (new in 3.9)?
+		// Do we have the option to choose which post types to skip (new in 3.9)?
 		if ( ! $this->db->option_exists( 'cp_post_types_disabled' ) ) {
 
-			// define labels
+			// Define labels.
 			$description = __( 'Choose the Post Types on which CommentPress Core is enabled. Disabling a post type will mean that paragraph-level commenting will not be enabled on any entries of that post type. Default prior to 3.9 was that all post types were enabled.', 'commentpress-core' );
 			$label = __( 'Post Types on which CommentPress Core is enabled.', 'commentpress-core' );
 
-			// get post types that support the editor
+			// Get post types that support the editor.
 			$capable_post_types = $this->db->get_supported_post_types();
 
-			// init outputs
+			// Init outputs.
 			$output = array();
 			$options = '';
 
-			// sanity check
+			// Sanity check.
 			if ( count( $capable_post_types ) > 0 ) {
 
-				// construct checkbox for each post type
+				// Construct checkbox for each post type.
 				foreach( $capable_post_types AS $post_type => $label ) {
 
-					// add checked checkbox
+					// Add checked checkbox.
 					$output[] = '<input type="checkbox" class="settings-checkbox" name="cp_post_types_enabled[]" value="' . $post_type . '" checked="checked" /> <label class="commentpress_settings_label" for="cp_post_types_enabled">' . $label . '</label><br>';
 
 				}
 
-				// implode
+				// Implode.
 				$options = implode( "\n", $output );
 
 			}
 
-			// define upgrade
+			// Define upgrade.
 			$upgrade .= '
 			<tr valign="top">
 				<th scope="row"><label for="cp_post_types_enabled">' . $label . '</label></th>
@@ -1667,16 +1668,16 @@ HELPTEXT;
 
 		}
 
-		// do we have the option to choose to disable parsing (new in 3.8.10)?
+		// Do we have the option to choose to disable parsing (new in 3.8.10)?
 		if ( ! $this->db->option_exists( 'cp_do_not_parse' ) ) {
 
-			// define labels
+			// Define labels.
 			$description = __( 'Note: when comments are closed on an entry and there are no comments on that entry, if this option is set to "Yes" then the content will not be parsed for paragraphs, lines or blocks. Comments will also not be parsed, meaning that the entry behaves the same as content which is not commentable. Default prior to 3.8.10 was "No" - all content was always parsed.', 'commentpress-core' );
 			$label = __( 'Disable CommentPress on entries with no comments.', 'commentpress-core' );
 			$yes_label = __( 'Yes', 'commentpress-core' );
 			$no_label = __( 'No', 'commentpress-core' );
 
-			// define upgrade
+			// Define upgrade.
 			$upgrade .= '
 			<tr valign="top">
 				<th scope="row"><label for="cp_do_not_parse">' . $label . '</label></th>
@@ -1692,15 +1693,15 @@ HELPTEXT;
 
 		}
 
-		// do we have the option to choose to disable page navigation (new in 3.8.10)?
+		// Do we have the option to choose to disable page navigation (new in 3.8.10)?
 		if ( ! $this->db->option_exists( 'cp_page_nav_enabled' ) ) {
 
-			// define labels
+			// Define labels.
 			$label = __( 'Enable automatic page navigation (controls appearance of page numbering and navigation arrows on hierarchical pages). Previous default was "Yes".', 'commentpress-core' );
 			$yes_label = __( 'Yes', 'commentpress-core' );
 			$no_label = __( 'No', 'commentpress-core' );
 
-			// define upgrade
+			// Define upgrade.
 			$upgrade .= '
 			<tr valign="top">
 				<th scope="row"><label for="cp_page_nav_enabled">' . $label . '</label></th>
@@ -1715,15 +1716,15 @@ HELPTEXT;
 
 		}
 
-		// do we have the option to choose to hide textblock meta (new in 3.5.9)?
+		// Do we have the option to choose to hide textblock meta (new in 3.5.9)?
 		if ( ! $this->db->option_exists( 'cp_textblock_meta' ) ) {
 
-			// define labels
+			// Define labels.
 			$label = __( 'Show paragraph meta (Number and Comment Icon)', 'commentpress-core' );
 			$yes_label = __( 'Always', 'commentpress-core' );
 			$no_label = __( 'On rollover', 'commentpress-core' );
 
-			// define upgrade
+			// Define upgrade.
 			$upgrade .= '
 			<tr valign="top">
 				<th scope="row"><label for="cp_textblock_meta">' . $label . '</label></th>
@@ -1738,15 +1739,15 @@ HELPTEXT;
 
 		}
 
-		// do we have the option to choose featured images (new in 3.5.4)?
+		// Do we have the option to choose featured images (new in 3.5.4)?
 		if ( ! $this->db->option_exists( 'cp_featured_images' ) ) {
 
-			// define labels
+			// Define labels.
 			$label = __( 'Enable Featured Images (Note: if you have already implemented this in a child theme, you should choose "No")', 'commentpress-core' );
 			$yes_label = __( 'Yes', 'commentpress-core' );
 			$no_label = __( 'No', 'commentpress-core' );
 
-			// define upgrade
+			// Define upgrade.
 			$upgrade .= '
 			<tr valign="top">
 				<th scope="row"><label for="cp_featured_images">' . $label . '</label></th>
@@ -1761,16 +1762,16 @@ HELPTEXT;
 
 		}
 
-		// do we have the option to choose the default sidebar (new in 3.3.3)?
+		// Do we have the option to choose the default sidebar (new in 3.3.3)?
 		if ( ! $this->db->option_exists( 'cp_sidebar_default' ) ) {
 
-			// define labels
+			// Define labels.
 			$label = __( 'Which sidebar do you want to be active by default? (can be overridden on individual pages)', 'commentpress-core' );
 			$contents_label = __( 'Contents', 'commentpress-core' );
 			$activity_label = __( 'Activity', 'commentpress-core' );
 			$comments_label = __( 'Comments', 'commentpress-core' );
 
-			// define upgrade
+			// Define upgrade.
 			$upgrade .= '
 			<tr valign="top">
 				<th scope="row"><label for="cp_sidebar_default">' . $label . '</label></th>
@@ -1786,14 +1787,14 @@ HELPTEXT;
 
 		}
 
-		// do we have the option to show or hide page meta (new in 3.3.2)?
+		// Do we have the option to show or hide page meta (new in 3.3.2)?
 		if ( ! $this->db->option_exists( 'cp_page_meta_visibility' ) ) {
 
 			$meta_label = __( 'Show or hide page meta by default', 'commentpress-core' );
 			$meta_show_label = __( 'Show page meta', 'commentpress-core' );
 			$meta_hide_label = __( 'Hide page meta', 'commentpress-core' );
 
-			// define upgrade
+			// Define upgrade.
 			$upgrade .= '
 			<tr valign="top">
 				<th scope="row"><label for="cp_page_meta_visibility">' . $meta_label . '</label></th>
@@ -1807,25 +1808,25 @@ HELPTEXT;
 
 		}
 
-		// do we have the option to choose blog type (new in 3.3.1)?
+		// Do we have the option to choose blog type (new in 3.3.1)?
 		if ( ! $this->db->option_exists( 'cp_blog_type' ) ) {
 
-			// define no types
+			// Define no types.
 			$types = array();
 
-			// allow overrides
+			// Allow overrides.
 			$types = apply_filters( 'cp_blog_type_options', $types );
 
-			// if we get some from a plugin, say
+			// If we get some from a plugin, say.
 			if ( ! empty( $types ) ) {
 
-				// define title
+				// Define title.
 				$type_title = __( 'Blog Type', 'commentpress-core' );
 
-				// allow overrides
+				// Allow overrides.
 				$type_title = apply_filters( 'cp_blog_type_label', $type_title );
 
-				// construct options
+				// Construct options.
 				$type_option_list = array();
 				$n = 0;
 				foreach( $types AS $type ) {
@@ -1836,7 +1837,7 @@ HELPTEXT;
 
 
 
-				// define upgrade
+				// Define upgrade.
 				$upgrade .= '
 				<tr valign="top">
 					<th scope="row"><label for="cp_blog_type">' . $type_title . '</label></th>
@@ -1852,25 +1853,25 @@ HELPTEXT;
 
 		}
 
-		// do we have the option to choose blog workflow (new in 3.3.1)?
+		// Do we have the option to choose blog workflow (new in 3.3.1)?
 		if ( ! $this->db->option_exists( 'cp_blog_workflow' ) ) {
 
-			// off by default
+			// Off by default.
 			$has_workflow = false;
 
-			// allow overrides
+			// Allow overrides.
 			$has_workflow = apply_filters( 'cp_blog_workflow_exists', $has_workflow );
 
-			// if we have workflow enabled, by a plugin, say
+			// If we have workflow enabled, by a plugin, say.
 			if ( $has_workflow !== false ) {
 
-				// define label
+				// Define label.
 				$workflow_label = __( 'Enable Custom Workflow', 'commentpress-core' );
 
-				// define label
+				// Define label.
 				$workflow_label = apply_filters( 'cp_blog_workflow_label', $workflow_label );
 
-				// define upgrade
+				// Define upgrade.
 				$upgrade .= '
 				<tr valign="top">
 					<th scope="row"><label for="cp_blog_workflow">' . $workflow_label . '</label></th>
@@ -1883,14 +1884,14 @@ HELPTEXT;
 
 		}
 
-		// do we have the option to choose the TOC layout (new in 3.3)?
+		// Do we have the option to choose the TOC layout (new in 3.3)?
 		if ( ! $this->db->option_exists( 'cp_show_extended_toc' ) ) {
 
 			$extended_label = __( 'Appearance of TOC for posts', 'commentpress-core' );
 			$extended_info_label = __( 'Extended information', 'commentpress-core' );
 			$extended_title_label = __( 'Just the title', 'commentpress-core' );
 
-			// define upgrade
+			// Define upgrade.
 			$upgrade .= '
 			<tr valign="top">
 				<th scope="row"><label for="cp_show_extended_toc">' . $extended_label . '</label></th>
@@ -1905,14 +1906,14 @@ HELPTEXT;
 
 		}
 
-		// do we have the option to set the comment editor?
+		// Do we have the option to set the comment editor?
 		if ( ! $this->db->option_exists( 'cp_comment_editor' ) ) {
 
 			$editor_label = __( 'Comment form editor', 'commentpress-core' );
 			$rich_label = __( 'Rich-text Editor', 'commentpress-core' );
 			$plain_label = __( 'Plain-text Editor', 'commentpress-core' );
 
-			// define upgrade
+			// Define upgrade.
 			$upgrade .= '
 			<tr valign="top">
 				<th scope="row"><label for="cp_comment_editor">' . $editor_label . '</label></th>
@@ -1926,14 +1927,14 @@ HELPTEXT;
 
 		}
 
-		// do we have the option to set the default behaviour?
+		// Do we have the option to set the default behaviour?
 		if ( ! $this->db->option_exists( 'cp_promote_reading' ) ) {
 
 			$behaviour_label = __( 'Default comment form behaviour', 'commentpress-core' );
 			$reading_label = __( 'Promote reading', 'commentpress-core' );
 			$commenting_label = __( 'Promote commenting', 'commentpress-core' );
 
-			// define upgrade
+			// Define upgrade.
 			$upgrade .= '
 			<tr valign="top">
 				<th scope="row"><label for="cp_promote_reading">' . $behaviour_label . '</label></th>
@@ -1947,15 +1948,15 @@ HELPTEXT;
 
 		}
 
-		// do we have the option to show or hide titles?
+		// Do we have the option to show or hide titles?
 		if ( ! $this->db->option_exists( 'cp_title_visibility' ) ) {
 
-			// define labels
+			// Define labels.
 			$titles_label = __( 'Show or hide page titles by default', 'commentpress-core' );
 			$titles_select_show = __( 'Show page titles', 'commentpress-core' );
 			$titles_select_hide = __( 'Hide page titles', 'commentpress-core' );
 
-			// define upgrade
+			// Define upgrade.
 			$upgrade .= '
 			<tr valign="top">
 				<th scope="row"><label for="cp_title_visibility">' . $titles_label . '</label></th>
@@ -1969,14 +1970,14 @@ HELPTEXT;
 
 		}
 
-		// do we have the option to set the scroll speed?
+		// Do we have the option to set the scroll speed?
 		if ( ! $this->db->option_exists( 'cp_js_scroll_speed' ) ) {
 
-			// define labels
+			// Define labels.
 			$scroll_label = __( 'Scroll speed', 'commentpress-core' );
 			$scroll_ms_label = __( 'milliseconds', 'commentpress-core' );
 
-			// define upgrade
+			// Define upgrade.
 			$upgrade .= '
 			<tr valign="top">
 				<th scope="row"><label for="cp_js_scroll_speed">' . $scroll_label . '</label></th>
@@ -1987,14 +1988,14 @@ HELPTEXT;
 
 		}
 
-		// do we have the option to set the minimum page width?
+		// Do we have the option to set the minimum page width?
 		if ( ! $this->db->option_exists( 'cp_min_page_width' ) ) {
 
-			// define labels
+			// Define labels.
 			$min_label = __( 'Minimum page width', 'commentpress-core' );
 			$min_pix_label = __( 'pixels', 'commentpress-core' );
 
-			// define upgrade
+			// Define upgrade.
 			$upgrade .= '
 			<tr valign="top">
 				<th scope="row"><label for="cp_min_page_width"></label></th>
@@ -2021,7 +2022,7 @@ HELPTEXT;
 	 */
 	function _get_deactivate() {
 
-		// do this via a filter, so only the Multisite object returns anything
+		// Do this via a filter, so only the Multisite object returns anything.
 		return apply_filters( 'cpmu_deactivate_commentpress_element', '' );
 
 	}
@@ -2037,10 +2038,10 @@ HELPTEXT;
 	 */
 	function _get_reset() {
 
-		// define label
+		// Define label.
 		$label = __( 'Reset options to plugin defaults', 'commentpress-core' );
 
-		// define reset
+		// Define reset.
 		$reset = '
 		<tr valign="top">
 			<th scope="row"><label for="cp_reset">' . $label . '</label></th>
@@ -2064,7 +2065,7 @@ HELPTEXT;
 	 */
 	function _get_editor() {
 
-		// define labels
+		// Define labels.
 		$editor_label = __( 'Comment form editor', 'commentpress-core' );
 		$rich_label = __( 'Rich-text Editor', 'commentpress-core' );
 		$plain_label = __( 'Plain-text Editor', 'commentpress-core' );
@@ -2073,7 +2074,7 @@ HELPTEXT;
 		$reading_label = __( 'Promote reading', 'commentpress-core' );
 		$commenting_label = __( 'Promote commenting', 'commentpress-core' );
 
-		// define editor
+		// Define editor.
 		$editor = '
 		<tr valign="top">
 			<th scope="row"><label for="cp_comment_editor">' . $editor_label . '</label></th>
@@ -2110,7 +2111,7 @@ HELPTEXT;
 	 */
 	function _get_toc() {
 
-		// define labels
+		// Define labels.
 		$toc_label = __( 'Table of Contents contains', 'commentpress-core' );
 		$posts_label = __( 'Posts', 'commentpress-core' );
 		$pages_label = __( 'Pages', 'commentpress-core' );
@@ -2125,7 +2126,7 @@ HELPTEXT;
 		$extended_info_label = __( 'Extended information', 'commentpress-core' );
 		$extended_title_label = __( 'Just the title', 'commentpress-core' );
 
-		// define table of contents options
+		// Define table of contents options.
 		$toc = '
 		<tr valign="top">
 			<th scope="row"><label for="cp_show_posts_or_pages_in_toc">' . $toc_label . '</label></th>
@@ -2179,19 +2180,19 @@ HELPTEXT;
 	 */
 	function _get_sidebar() {
 
-		// allow this to be disabled
+		// Allow this to be disabled.
 		if ( apply_filters( 'commentpress_hide_sidebar_option', false ) ) return;
 
-		// define labels
+		// Define labels.
 		$label = __( 'Which sidebar do you want to be active by default? (can be overridden on individual pages)', 'commentpress-core' );
 		$contents_label = __( 'Contents', 'commentpress-core' );
 		$activity_label = __( 'Activity', 'commentpress-core' );
 		$comments_label = __( 'Comments', 'commentpress-core' );
 
-		// get option (but if we haven't got a value, use comments)
+		// Get option (but if we haven't got a value, use comments)
 		$default = $this->db->option_get( 'cp_sidebar_default', 'comments' );
 
-		// define table of contents options
+		// Define table of contents options.
 		$toc = '
 		<tr valign="top">
 			<th scope="row"><label for="cp_sidebar_default">' . $label . '</label></th>
@@ -2221,10 +2222,10 @@ HELPTEXT;
 	 */
 	function _get_override() {
 
-		// define label
+		// Define label.
 		$label = __( 'Enable "live" comment refreshing (Please note: may cause heavy load on your server)', 'commentpress-core' );
 
-		// define override
+		// Define override.
 		$override = '
 		<tr valign="top">
 			<th scope="row"><label for="cp_para_comments_live">' . $label . '</label></th>
@@ -2250,7 +2251,7 @@ HELPTEXT;
 
 			$description = __( 'Note: when comments are closed on an entry and there are no comments on that entry, if this option is set to "Yes" then the content will not be parsed for paragraphs, lines or blocks. Comments will also not be parsed, meaning that the entry behaves the same as content which is not commentable. Default prior to 3.8.10 was "No" - all content was always parsed.', 'commentpress-core' );
 
-		// define override
+		// Define override.
 		$html = '
 		<tr valign="top">
 			<th scope="row"><label for="cp_do_not_parse">' . __( 'Disable CommentPress on entries with no comments. (can be overridden on individual entries)', 'commentpress-core' ) . '</label></th>
@@ -2280,7 +2281,7 @@ HELPTEXT;
 	 */
 	function _get_page_nav_enabled() {
 
-		// define override
+		// Define override.
 		$html = '
 		<tr valign="top">
 			<th scope="row"><label for="cp_page_nav_enabled">' . __( 'Enable automatic page navigation (controls appearance of page numbering and navigation arrows on hierarchical pages)', 'commentpress-core' ) . '</label></th>
@@ -2309,36 +2310,36 @@ HELPTEXT;
 	 */
 	public function _get_post_type_options() {
 
-		// get post types that support the editor
+		// Get post types that support the editor
 		$capable_post_types = $this->db->get_supported_post_types();
 
-		// init outputs
+		// Init outputs.
 		$output = array();
 		$options = '';
 
-		// get chosen post types
+		// Get chosen post types.
 		$selected_types = $this->db->option_get( 'cp_post_types_disabled', array() );
 
-		// sanity check
+		// Sanity check.
 		if ( count( $capable_post_types ) > 0 ) {
 
-			// construct checkbox for each post type
+			// Construct checkbox for each post type.
 			foreach( $capable_post_types AS $post_type => $label ) {
 
 				$checked = '';
 				if ( ! in_array( $post_type, $selected_types ) ) $checked = ' checked="checked"';
 
-				// add checkbox
+				// Add checkbox.
 				$output[] = '<input type="checkbox" class="settings-checkbox" name="cp_post_types_enabled[]" value="' . $post_type . '"' . $checked . ' /> <label class="commentpress_settings_label" for="cp_post_types_enabled">' . $label . '</label><br>';
 
 			}
 
-			// implode
+			// Implode.
 			$options = implode( "\n", $output );
 
 		}
 
-		// construct option
+		// Construct option.
 		$html = '
 		<tr valign="top">
 			<th scope="row"><label for="cp_post_types_enabled">' . __( 'Post Types on which CommentPress Core is enabled', 'commentpress-core' ) . '</label></th>
@@ -2365,7 +2366,7 @@ HELPTEXT;
 	 */
 	function _get_textblock_meta() {
 
-		// define override
+		// Define override.
 		$override = '
 		<tr valign="top">
 			<th scope="row"><label for="cp_textblock_meta">' . __( 'Show paragraph meta (Number and Comment Icon)', 'commentpress-core' ) . '</label></th>
@@ -2394,10 +2395,10 @@ HELPTEXT;
 	 */
 	function _get_submit() {
 
-		// define label
+		// Define label.
 		$label = __( 'Save Changes', 'commentpress-core' );
 
-		// define editor
+		// Define editor.
 		$submit = '
 		<p class="submit">
 			<input type="submit" name="commentpress_submit" value="' . $label . '" class="button-primary" />
@@ -2415,7 +2416,7 @@ HELPTEXT;
 
 
 
-} // class ends
+} // Class ends.
 
 
 

@@ -2,9 +2,10 @@
 /*
 Template Name: Blog
 */
-?>
 
-<?php get_header(); ?>
+
+
+get_header(); ?>
 
 
 
@@ -28,10 +29,10 @@ Template Name: Blog
 
 <?php
 
-// show river of news
-if (have_posts()) : ?>
+// Show river of news.
+if ( have_posts() ) : ?>
 
-	<?php while (have_posts()) : the_post(); ?>
+	<?php while ( have_posts() ) : the_post(); ?>
 
 		<div class="search_result">
 

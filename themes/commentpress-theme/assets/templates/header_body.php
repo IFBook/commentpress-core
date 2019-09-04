@@ -2,7 +2,7 @@
 ================================================================================
 HTML Body Header
 ================================================================================
-AUTHOR			: Christian Wach <needle@haystack.co.uk>
+AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
 NOTES
 =====
@@ -14,7 +14,7 @@ Separated this out for inclusion in multiple files.
 
 
 
-// Start HTML
+// Start HTML.
 ?>
 <a class="skip" href="#content"><?php _e( 'Skip to Content', 'commentpress-core' ); ?></a>
 <span class="off-left"> | </span>
@@ -45,13 +45,20 @@ Separated this out for inclusion in multiple files.
 
 	<?php
 
-	// first try to locate using WP method
+	/**
+	 * Try to locate template using WP method.
+	 *
+	 * @since 3.4
+	 *
+	 * @param str The existing path returned by WordPress.
+	 * @return str The modified path.
+	 */
 	$cp_user_links = apply_filters(
 		'cp_template_user_links',
 		locate_template( 'assets/templates/user_links.php' )
 	);
 
-	// load it if we find it
+	// Load it if we find it.
 	if ( $cp_user_links != '' ) load_template( $cp_user_links );
 
 	?>
@@ -64,13 +71,20 @@ Separated this out for inclusion in multiple files.
 
 	<?php
 
-	// first try to locate using WP method
+	/**
+	 * Try to locate template using WP method.
+	 *
+	 * @since 3.4
+	 *
+	 * @param str The existing path returned by WordPress.
+	 * @return str The modified path.
+	 */
 	$cp_navigation = apply_filters(
 		'cp_template_navigation',
 		locate_template( 'assets/templates/navigation.php' )
 	);
 
-	// load it if we find it
+	// Load it if we find it.
 	if ( $cp_navigation != '' ) load_template( $cp_navigation );
 
 	?>

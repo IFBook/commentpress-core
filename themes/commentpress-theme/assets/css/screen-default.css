@@ -990,7 +990,7 @@ div#respond p a:visited
 {
 	color: #761D19;
 	text-decoration: none;
-	padding: 0;
+	/* padding: 0; */
 }
 
 div#respond p a:active,

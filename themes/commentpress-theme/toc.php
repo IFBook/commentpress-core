@@ -2,9 +2,10 @@
 /*
 Template Name: Table of Contents
 */
-?>
 
-<?php get_header(); ?>
+
+
+get_header(); ?>
 
 
 

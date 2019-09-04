@@ -25,7 +25,7 @@
 
 	<?php
 
-	// show footer menu if assigned
+	// Show footer menu if assigned.
 	if ( has_nav_menu( 'footer' ) ) {
 		wp_nav_menu( array(
 			'theme_location' => 'footer',
@@ -33,20 +33,20 @@
 		) );
 	}
 
-	// are we using the page footer widget?
+	// Are we using the page footer widget?
 	if ( ! dynamic_sidebar( 'cp-license-8' ) ) {
 
-		// no - make other provision here
+		// No - make other provision here.
 
-		// compat with wplicense plugin
+		// Compat with wplicense plugin.
 		if ( function_exists( 'isLicensed' ) AND isLicensed() ) {
 
-			// show the license from wpLicense
+			// Show the license from wpLicense.
 			cc_showLicenseHtml();
 
 		} else {
 
-			// show copyright
+			// Show copyright.
 			?><p><?php _e( 'Website content', 'commentpress-core' ); ?> &copy; <a href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a> <?php echo date('Y'); ?>. <?php _e( 'All rights reserved.', 'commentpress-core' ); ?></p><?php
 
 		}

@@ -38,13 +38,13 @@ class Commentpress_Multisite_Revisions {
 	 */
 	function __construct( $parent_obj = null ) {
 
-		// store reference to "parent" (calling obj, not OOP parent)
+		// Store reference to "parent" (calling obj, not OOP parent).
 		$this->parent_obj = $parent_obj;
 
-		// store reference to database wrapper (child of calling obj)
+		// Store reference to database wrapper (child of calling obj).
 		$this->db = $this->parent_obj->db;
 
-		// init
+		// Init.
 		$this->_init();
 
 	}
@@ -95,7 +95,7 @@ class Commentpress_Multisite_Revisions {
 	 */
 	public function new_post_title_prefix( $prefix ) {
 
-		// don't use a prefix
+		// Don't use a prefix.
 		return '';
 
 	}
@@ -113,37 +113,37 @@ class Commentpress_Multisite_Revisions {
 	 */
 	public function new_post_title( $title, $post ) {
 
-		// get incremental version number of source post
+		// Get incremental version number of source post.
 		$key = '_cp_version_count';
 
-		// if the custom field of our current post has a value
+		// If the custom field of our current post has a value.
 		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 
-			// get current value
+			// Get current value.
 			$value = get_post_meta( $post->ID, $key, true );
 
-			// increment
+			// Increment.
 			$value++;
 
 		} else {
 
-			// this must be the first new version (Draft 2)
+			// This must be the first new version (Draft 2).
 			$value = 2;
 
 		}
 
-		// do we already have our suffix in the title?
+		// Do we already have our suffix in the title?
 		if ( stristr( $title, ' - Draft ' ) === false ) {
 
-			// no, append " - Draft N"
+			// No, append " - Draft N".
 			$title = $title . ' - Draft ' . $value;
 
 		} else {
 
-			// yes, split
+			// Yes, split.
 			$title_array = explode( ' - Draft ', $title );
 
-			// append to first part
+			// Append to first part.
 			$title = $title_array[0] . ' - Draft ' . $value;
 
 		}
@@ -174,7 +174,7 @@ class Commentpress_Multisite_Revisions {
 	 */
 	function _init() {
 
-		// register hooks
+		// Register hooks.
 		$this->_register_hooks();
 
 	}
@@ -188,10 +188,10 @@ class Commentpress_Multisite_Revisions {
 	 */
 	function _register_hooks() {
 
-		// add filter for new post title prefix
+		// Add filter for new post title prefix.
 		add_filter( 'commentpress_new_post_title_prefix', array( $this, 'new_post_title_prefix' ), 21, 1 );
 
-		// add filter for new post title
+		// Add filter for new post title.
 		add_filter( 'commentpress_new_post_title', array( $this, 'new_post_title' ), 21, 2 );
 
 	}
@@ -202,7 +202,7 @@ class Commentpress_Multisite_Revisions {
 
 
 
-} // class ends
+} // Class ends.
 
 
 

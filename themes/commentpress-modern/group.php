@@ -3,20 +3,20 @@
 Template Name: Group
 */
 
-// get_users_of_blog() is deprecated in WP 3.1+
+// Get_users_of_blog() is deprecated in WP 3.1+
 if ( version_compare( $wp_version, '3.1', '>=' ) ) {
 
-	// set args
+	// Set args.
 	$args = array(
 		'orderby' => 'nicename',
 	);
 
-	// get users of this blog (blog_id is provided by default)
+	// Get users of this blog (blog_id is provided by default).
 	$_users = get_users( $args );
 
 } else {
 
-	// get the users of this blog
+	// Get the users of this blog.
 	$_users = get_users_of_blog();
 
 }
@@ -55,32 +55,32 @@ get_header(); ?>
 
 <?php
 
-// did we get any?
+// Did we get any?
 if ( count( $_users ) > 0 ) {
 
-	// open list
+	// Open list.
 	echo '<ul id="group_list">' . "\n";
 
-	// loop
+	// Loop.
 	foreach( $_users AS $_user ) {
 
-		// exclude admin
+		// Exclude admin.
 		if( $_user->user_id != '1' ) {
 
-			// open item
+			// Open item.
 			echo '<li>' . "\n";
 
-			// show display name
+			// Show display name.
 			echo  '<a href="' . home_url() . '/author/' . $_user->user_login . '/">' . $_user->display_name . '</a>';
 
-			// close item
+			// Close item.
 			echo '</li>' . "\n\n";
 
 		}
 
 	}
 
-	// close list
+	// Close list.
 	echo '</ul>' . "\n\n";
 
 } ?>
