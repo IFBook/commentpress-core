@@ -3090,6 +3090,11 @@ table.doctable tr td.groups-cell ul li img.avatar
 	padding: 0;
 }
 
+#buddypress table.doctable p.no-docs a
+{
+	font-size: 100%;
+}
+
 #doc-content-textarea
 {
 	width: 99.9%;
