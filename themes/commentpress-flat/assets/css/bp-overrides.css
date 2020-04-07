@@ -3095,6 +3095,11 @@ table.doctable tr td.groups-cell ul li img.avatar
 	font-size: 100%;
 }
 
+#buddypress table.doctable .edited-date-cell
+{
+	width: 110px;
+}
+
 #doc-content-textarea
 {
 	width: 99.9%;
