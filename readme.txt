@@ -215,6 +215,11 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+<h4>3.9.13</h4>
+
+* Style fixes for BuddyPress Docs compatibility
+* Fix escape characters when editing a comment
+
 <h4>3.9.12</h4>
 
 * Introduces front-end AJAXified comment editing
