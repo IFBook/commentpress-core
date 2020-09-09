@@ -2742,7 +2742,8 @@ Compatibility with BP Group Sites plugin
 BuddyPress Docs compatibility
 --------------------------------------------------------------------------------
 */
-body.bp-docs #content
+body.bp-docs #content,
+body.archive.bp-docs #content
 {
 	padding: 0;
 	margin: 0;
