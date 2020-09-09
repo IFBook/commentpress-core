@@ -2,7 +2,7 @@
 Contributors: needle, commentpress
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZSKM8T5ZP3SC
 Tags: commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
-Requires at least: 3.4
+Requires at least: 4.8
 Tested up to: 5.5
 Stable tag: 3.9.13
 License: GPLv2 or later
