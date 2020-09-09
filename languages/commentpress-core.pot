@@ -1,14 +1,14 @@
-# Copyright (C) 2019 CommentPress Core
+# Copyright (C) 2020 CommentPress Core
 # This file is distributed under the same license as the CommentPress Core package.
 msgid ""
 msgstr ""
-"Project-Id-Version: CommentPress Core 3.9.12\n"
+"Project-Id-Version: CommentPress Core 3.9.13\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/commentpress-core\n"
-"POT-Creation-Date: 2019-07-25 17:00:46+00:00\n"
+"POT-Creation-Date: 2020-09-09 09:59:00+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2020-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
@@ -81,15 +81,15 @@ msgstr ""
 msgid "Comments"
 msgstr ""
 
-#: commentpress-ajax/cp-ajax-comments.php:604
+#: commentpress-ajax/cp-ajax-comments.php:598
 msgid "Drop on to a text-block to reassign this comment (and any replies) to it"
 msgstr ""
 
-#: commentpress-ajax/cp-ajax-comments.php:610
+#: commentpress-ajax/cp-ajax-comments.php:604
 msgid "Move"
 msgstr ""
 
-#: commentpress-ajax/cp-ajax-comments.php:817
+#: commentpress-ajax/cp-ajax-comments.php:811
 msgid "No CommentPress Core"
 msgstr ""
 
