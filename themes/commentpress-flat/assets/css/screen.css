@@ -408,6 +408,7 @@ table th
 #content embed,
 #content iframe
 {
+	width: 100%;
 	max-width: 100%;
 }
 
