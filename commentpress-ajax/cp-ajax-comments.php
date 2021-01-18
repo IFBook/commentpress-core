@@ -78,7 +78,7 @@ function cpajax_add_javascripts() {
 	if ( ! cpajax_plugin_can_activate() ) return;
 
 	// Init vars.
-	$vars = array();
+	$vars = [];
 
 	// Is "live" comment refreshing enabled?
 	$vars['cpajax_live'] = ( $commentpress_core->db->option_get( 'cp_para_comments_live' ) == '1' ) ? 1 : 0;
@@ -140,7 +140,7 @@ function cpajax_add_javascripts() {
 		wp_enqueue_script(
 			'cpajax',
 			plugins_url( 'commentpress-ajax/assets/js/cp-ajax-comments' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
-			array( 'jquery-ui-droppable', 'jquery-ui-dialog' ), // Load droppable and dialog as dependencies.
+			[ 'jquery-ui-droppable', 'jquery-ui-dialog' ], // Load droppable and dialog as dependencies.
 			COMMENTPRESS_VERSION // Version.
 		);
 
@@ -169,7 +169,7 @@ function cpajax_add_javascripts() {
 function cpajax_localise() {
 
 	// Init array.
-	$translations = array();
+	$translations = [];
 
 	// Add translations for comment form.
 	$translations[] = __( 'Loading...', 'commentpress-core' );
@@ -243,7 +243,7 @@ function cpajax_plugin_can_activate() {
 function cpajax_get_comment() {
 
 	// Init return.
-	$data = array();
+	$data = [];
 
 	// Get incoming data.
 	$comment_id = isset( $_POST['comment_id'] ) ? absint( $_POST['comment_id'] ) : NULL;
@@ -255,13 +255,13 @@ function cpajax_get_comment() {
 		$comment = get_comment( $comment_id );
 
 		// Add comment data to array.
-		$data = array(
+		$data = [
 			'id' => $comment->comment_ID,
 			'parent' => $comment->comment_parent,
 			'text_sig' => $comment->comment_signature,
 			'post_id' => $comment->comment_post_ID,
 			'content' => $comment->comment_content,
-		);
+		];
 
 		// Get selection data.
 		$selection_data = get_comment_meta( $comment_id, '_cp_comment_selection', true );
@@ -322,7 +322,7 @@ function cpajax_get_comment() {
 function cpajax_edit_comment() {
 
 	// Init return.
-	$data = array();
+	$data = [];
 
 	// Authenticate.
 	$nonce = isset( $_POST['cpajax_comment_nonce'] ) ? $_POST['cpajax_comment_nonce'] : '';
@@ -339,11 +339,11 @@ function cpajax_edit_comment() {
 		if ( ! is_null( $comment_id ) ) {
 
 			// Construct comment data.
-			$comment_data = array(
+			$comment_data = [
 				'comment_ID' => $comment_id,
 				'comment_content' => isset( $_POST['comment'] ) ? trim( $_POST['comment'] ) : '',
 				'comment_post_ID' => isset( $_POST['comment_post_ID'] ) ? absint( $_POST['comment_post_ID'] ) : '',
-			);
+			];
 
 			// Update the comment.
 			wp_update_comment( $comment_data );
@@ -358,13 +358,13 @@ function cpajax_edit_comment() {
 			$comment_signature = $commentpress_core->db->get_text_signature_by_comment_id( $comment->comment_ID );
 
 			// Add comment data to array.
-			$data = array(
+			$data = [
 				'id' => $comment->comment_ID,
 				'parent' => $comment->comment_parent,
 				'text_sig' => $comment_signature,
 				'post_id' => $comment->comment_post_ID,
 				'content' => apply_filters( 'comment_text', get_comment_text( $comment->comment_ID ) ),
-			);
+			];
 
 			// Get selection data.
 			$selection_data = get_comment_meta( $comment_id, '_cp_comment_selection', true );
@@ -428,7 +428,7 @@ function cpajax_edit_comment() {
 function cpajax_get_new_comments() {
 
 	// Init return.
-	$data = array();
+	$data = [];
 
 	// Get incoming data.
 	$last_comment_count = isset( $_POST['last_count'] ) ? $_POST['last_count'] : NULL;
@@ -446,7 +446,7 @@ function cpajax_get_new_comments() {
 	$GLOBALS['post'] = get_post( $post_id );
 
 	// Get any comments posted since last update time.
-	$data['cpajax_new_comments'] = array();
+	$data['cpajax_new_comments'] = [];
 
 	// Get current array.
 	$current_comment_count_array = get_comment_count( $post_id );
@@ -464,14 +464,14 @@ function cpajax_get_new_comments() {
 		$data['cpajax_comment_count'] = (string) $current_comment_count;
 
 		// Set get_comments defaults.
-		$defaults = array(
+		$defaults = [
 			'number' => $num_to_get,
 			'orderby' => 'comment_date',
 			'order' => 'DESC',
 			'post_id' => $post_id,
 			'status' => 'approve',
 			'type' => 'comment'
-		);
+		];
 
 		// Get them.
 		$comments = get_comments( $defaults );
@@ -483,7 +483,7 @@ function cpajax_get_new_comments() {
 			$identifier = 1;
 
 			// Set args.
-			$args = array();
+			$args = [];
 			$args['max_depth'] = get_option( 'thread_comments_depth' );
 
 			// Loop.
@@ -507,12 +507,12 @@ function cpajax_get_new_comments() {
 				$html .= '</li>' . "\n\n\n\n";
 
 				// Add comment to array.
-				$data['cpajax_new_comment_' . $identifier] = array(
+				$data['cpajax_new_comment_' . $identifier] = [
 					'parent' => $comment->comment_parent,
 					'id' => $comment->comment_ID,
 					'text_sig' => $comment->comment_signature,
 					'markup' => $html
-				);
+				];
 
 				// Increment.
 				$identifier++;
@@ -629,11 +629,11 @@ function cpajax_reassign_comment() {
 	global $data;
 
 	// Init return.
-	$data = array();
+	$data = [];
 	$data['msg'] = '';
 
 	// Init checker.
-	$comment_ids = array();
+	$comment_ids = [];
 
 	// Get incoming data.
 	$text_sig = isset( $_POST['text_signature'] ) ? $_POST['text_signature'] : '';
@@ -768,7 +768,7 @@ function cpajax_infinite_scroll_scripts() {
 	wp_enqueue_script(
 		'cpajax-waypoints',
 		plugins_url( 'commentpress-ajax/assets/js/waypoints' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
-		array( 'jquery' ), //dependencies
+		[ 'jquery' ], //dependencies
 		COMMENTPRESS_VERSION // Version.
 	);
 
@@ -776,12 +776,12 @@ function cpajax_infinite_scroll_scripts() {
 	wp_enqueue_script(
 		'cpajax-infinite',
 		plugins_url( 'commentpress-ajax/assets/js/cp-ajax-infinite' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
-		array( 'cpajax', 'cpajax-waypoints' ), //dependencies
+		[ 'cpajax', 'cpajax-waypoints' ], //dependencies
 		COMMENTPRESS_VERSION // Version.
 	);
 
 	// Init vars.
-	$infinite = array();
+	$infinite = [];
 
 	// Is "live" comment refreshing enabled?
 	$infinite['nonce'] = wp_create_nonce( 'cpajax_infinite_nonce' );
@@ -893,7 +893,7 @@ function cpajax_infinite_scroll_load_next_page() {
 	if ( defined( 'DOING_AJAX' ) AND DOING_AJAX AND is_admin() ) {
 
 		// Add CommentPress Core filter to the content when it's on the admin side.
-		add_filter( 'the_content', array( $commentpress_core->parser, 'the_content' ), 20 );
+		add_filter( 'the_content', [ $commentpress_core->parser, 'the_content' ], 20 );
 
 	}
 
@@ -1013,14 +1013,14 @@ function cpajax_infinite_scroll_load_next_page() {
 
 
 	// Construct response.
-	$response =  array(
+	$response =  [
 		'post_id' => $post->ID,
 		'url' => get_permalink( $post->ID ),
 		'title' => $page_title,
 		'content' => $data,
 		'comments' => $comments,
 		'comment_status' => $post->comment_status,
-	);
+	];
 
 	// Set reasonable headers.
 	header('Content-type: text/plain');

@@ -26,7 +26,7 @@ class Commentpress_Core_Navigator {
 	 * @access public
 	 * @var array $next_pages The next pages array.
 	 */
-	public $next_pages = array();
+	public $next_pages = [];
 
 	/**
 	 * Previous pages array.
@@ -35,7 +35,7 @@ class Commentpress_Core_Navigator {
 	 * @access public
 	 * @var array $previous_pages The previous pages array.
 	 */
-	public $previous_pages = array();
+	public $previous_pages = [];
 
 	/**
 	 * Next posts array.
@@ -44,7 +44,7 @@ class Commentpress_Core_Navigator {
 	 * @access public
 	 * @var array $next_posts The next posts array.
 	 */
-	public $next_posts = array();
+	public $next_posts = [];
 
 	/**
 	 * Previous posts array.
@@ -53,7 +53,7 @@ class Commentpress_Core_Navigator {
 	 * @access public
 	 * @var array $previous_posts The previous posts array.
 	 */
-	public $previous_posts = array();
+	public $previous_posts = [];
 
 	/**
 	 * Page numbers array.
@@ -62,7 +62,7 @@ class Commentpress_Core_Navigator {
 	 * @access public
 	 * @var array $page_numbers The page numbers array.
 	 */
-	public $page_numbers = array();
+	public $page_numbers = [];
 
 	/**
 	 * Menu objects array, when using custom menu.
@@ -71,7 +71,7 @@ class Commentpress_Core_Navigator {
 	 * @access public
 	 * @var array $menu_objects The menu objects array.
 	 */
-	public $menu_objects = array();
+	public $menu_objects = [];
 
 	/**
 	 * Page navigation enabled flag.
@@ -117,7 +117,7 @@ class Commentpress_Core_Navigator {
 			if ( $this->page_nav_is_disabled() ) {
 
 				// Remove page arrows via filter.
-				add_filter( 'cp_template_page_navigation', array( $this, 'page_nav_disable' ), 100, 1 );
+				add_filter( 'cp_template_page_navigation', [ $this, 'page_nav_disable' ], 100, 1 );
 
 				// Save flag.
 				$this->nav_enabled = false;
@@ -419,14 +419,14 @@ class Commentpress_Core_Navigator {
 	public function get_first_child( $page_id ) {
 
 		// Init to look for published pages.
-		$defaults = array(
+		$defaults = [
 			'post_parent' => $page_id,
 			'post_type' => 'page',
 			'numberposts' => -1,
 			'post_status' => 'publish',
 			'orderby' => 'menu_order, post_title',
 			'order' => 'ASC'
-		);
+		];
 
 		// Get page children.
 		$children = get_children( $defaults );
@@ -458,7 +458,7 @@ class Commentpress_Core_Navigator {
 	public function get_book_pages( $mode = 'readable' ) {
 
 		// Init.
-		$all_pages = array();
+		$all_pages = [];
 
 		// Do we have a nav menu enabled?
 		if ( has_nav_menu( 'toc' ) ) {
@@ -678,7 +678,7 @@ class Commentpress_Core_Navigator {
 			if ( $page_key === false ) {
 
 				// The current page is a chapter and is not a page.
-				$this->next_pages = array();
+				$this->next_pages = [];
 
 				// --<
 				return;
@@ -715,10 +715,10 @@ class Commentpress_Core_Navigator {
 	public function init_posts_lists() {
 
 		// Set defaults.
-		$defaults = array(
+		$defaults = [
 			'numberposts' => -1,
 			'orderby' => 'date'
-		);
+		];
 
 		// Get them.
 		$all_posts = get_posts( $defaults );
@@ -805,7 +805,7 @@ class Commentpress_Core_Navigator {
 	public function _filter_chapters( $pages ) {
 
 		// Init return.
-		$subpages = array();
+		$subpages = [];
 
 		// If we have any.
 		if ( count( $pages ) > 0 ) {
@@ -814,12 +814,12 @@ class Commentpress_Core_Navigator {
 			foreach( $pages AS $key => $page_obj ) {
 
 				// Init to look for published pages.
-				$defaults = array(
+				$defaults = [
 					'post_parent' => $page_obj->ID,
 					'post_type' => 'page',
 					'numberposts' => -1,
 					'post_status' => 'publish'
-				);
+				];
 
 				// Get page children.
 				$children = get_children( $defaults );
@@ -861,14 +861,14 @@ class Commentpress_Core_Navigator {
 			foreach( $pages AS $key => $page_obj ) {
 
 				// Init to look for published pages.
-				$defaults = array(
+				$defaults = [
 					'post_parent' => $page_obj->ID,
 					'post_type' => 'page',
 					'numberposts' => -1,
 					'post_status' => 'publish',
 					'orderby' => 'menu_order, post_title',
 					'order' => 'ASC'
-				);
+				];
 
 				// Get page children.
 				$children = get_children( $defaults );
@@ -1038,7 +1038,7 @@ class Commentpress_Core_Navigator {
 	public function _filter_theme_my_login_page( $pages ) {
 
 		// Init return.
-		$clean = array();
+		$clean = [];
 
 		// If we have any.
 		if ( count( $pages ) > 0 ) {
@@ -1112,10 +1112,10 @@ class Commentpress_Core_Navigator {
 	 */
 	public function _number_to_roman( $arabic ) {
 
-		$ones = array("", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX");
-		$tens = array("", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC");
-		$hundreds = array("", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM");
-		$thousands = array("", "M", "MM", "MMM", "MMMM");
+		$ones = [ "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" ];
+		$tens = [ "", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC" ];
+		$hundreds = [ "", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM" ];
+		$thousands = [ "", "M", "MM", "MMM", "MMMM" ];
 
 		if ( $arabic > 4999 ) {
 
@@ -1196,7 +1196,7 @@ class Commentpress_Core_Navigator {
 	public function _parse_pages( $mode ) {
 
 		// Init return.
-		$pages = array();
+		$pages = [];
 
 		// -----------------------------------------------------------------
 		// Construct "book" navigation based on pages
@@ -1258,7 +1258,7 @@ class Commentpress_Core_Navigator {
 		}
 
 		// Set list pages defaults.
-		$defaults = array(
+		$defaults = [
 			'child_of' => 0,
 			'sort_order' => 'ASC',
 			'sort_column' => 'menu_order, post_title',
@@ -1270,7 +1270,7 @@ class Commentpress_Core_Navigator {
 			'authors' => '',
 			'parent' => -1,
 			'exclude_tree' => ''
-		);
+		];
 
 		// Get them.
 		$pages = get_pages( $defaults );
@@ -1360,7 +1360,7 @@ class Commentpress_Core_Navigator {
 	public function _parse_menu( $mode ) {
 
 		// Init return.
-		$pages = array();
+		$pages = [];
 
 		// Get menu locations.
 		$locations = get_nav_menu_locations();
@@ -1372,7 +1372,7 @@ class Commentpress_Core_Navigator {
 			$menu = wp_get_nav_menu_object( $locations['toc'] );
 
 			// Default args for reference.
-			$args = array(
+			$args = [
 				'order' => 'ASC',
 				'orderby' => 'menu_order',
 				'post_type' => 'nav_menu_item',
@@ -1381,7 +1381,7 @@ class Commentpress_Core_Navigator {
 				'output_key' => 'menu_order',
 				'nopaging' => true,
 				'update_post_term_cache' => false
-			);
+			];
 
 			// Get the menu objects and store for later.
 			$this->menu_objects = wp_get_nav_menu_items( $menu->term_id, $args );
@@ -1413,7 +1413,7 @@ class Commentpress_Core_Navigator {
 				}
 
 				// Init.
-				$pages_to_get = array();
+				$pages_to_get = [];
 
 				// Convert to array of pages.
 				foreach ( $menu_items AS $menu_item ) {
@@ -1465,7 +1465,7 @@ class Commentpress_Core_Navigator {
 	public function _filter_menu( $menu_items ) {
 
 		// Init return.
-		$sub_items = array();
+		$sub_items = [];
 
 		// If we have any.
 		if ( count( $menu_items ) > 0 ) {
@@ -1507,7 +1507,7 @@ class Commentpress_Core_Navigator {
 	public function _get_menu_item_children( $menu_items, $menu_obj ) {
 
 		// Init return.
-		$sub_items = array();
+		$sub_items = [];
 
 		// If we have any.
 		if ( count( $menu_items ) > 0 ) {

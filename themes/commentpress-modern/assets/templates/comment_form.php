@@ -39,7 +39,7 @@ $forced_class = '';
 if ( $cp_force_form ) {
 
 	// Init classes.
-	$forced_classes = array( 'cp_force_displayed' );
+	$forced_classes = [ 'cp_force_displayed' ];
 	if ( 'open' != $post->comment_status ) $forced_classes[] = 'cp_force_closed';
 
 	// Build class attribute.

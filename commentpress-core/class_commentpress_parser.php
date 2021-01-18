@@ -30,7 +30,7 @@ class Commentpress_Core_Parser {
 	 * @access public
 	 * @var array $text_signatures The text signatures array.
 	 */
-	public $text_signatures = array();
+	public $text_signatures = [];
 
 	/**
 	 * All comments array.
@@ -39,7 +39,7 @@ class Commentpress_Core_Parser {
 	 * @access public
 	 * @var array $comments_all The all comments array.
 	 */
-	public $comments_all = array();
+	public $comments_all = [];
 
 	/**
 	 * Approved comments array.
@@ -48,7 +48,7 @@ class Commentpress_Core_Parser {
 	 * @access public
 	 * @var array $comments_approved The approved comments array.
 	 */
-	public $comments_approved = array();
+	public $comments_approved = [];
 
 	/**
 	 * Sorted comments array.
@@ -57,7 +57,7 @@ class Commentpress_Core_Parser {
 	 * @access public
 	 * @var array $comments_sorted The sorted comments array.
 	 */
-	public $comments_sorted = array();
+	public $comments_sorted = [];
 
 	/**
 	 * Do Not Parse flag.
@@ -102,7 +102,7 @@ class Commentpress_Core_Parser {
 		$this->parent_obj = $parent_obj;
 
 		// Initialise via 'wp' hook.
-		add_action( 'wp', array( $this, 'initialise' ) );
+		add_action( 'wp', [ $this, 'initialise' ] );
 
 	}
 
@@ -148,8 +148,8 @@ class Commentpress_Core_Parser {
 		} else {
 
 			// Filter shortcodes at source.
-			add_filter( 'wp_audio_shortcode', array( $this, '_parse_audio_shortcode' ), 10, 5 );
-			add_filter( 'wp_video_shortcode', array( $this, '_parse_video_shortcode' ), 10, 5 );
+			add_filter( 'wp_audio_shortcode', [ $this, '_parse_audio_shortcode' ], 10, 5 );
+			add_filter( 'wp_video_shortcode', [ $this, '_parse_video_shortcode' ], 10, 5 );
 
 		}
 
@@ -628,16 +628,16 @@ class Commentpress_Core_Parser {
 			}
 
 			// Assign icons to paras.
-			$pattern = array('#<(' . $tag . '[^a^r>]*)>#');
+			$pattern = [ '#<(' . $tag . '[^a^r>]*)>#' ];
 
-			$replace = array(
+			$replace = [
 				$this->parent_obj->display->get_para_tag(
 					$text_signature,
 					$paragraph_icon . $comment_icon,
 					$tag,
 					$start
 				)
-			);
+			];
 
 			$block = preg_replace( $pattern, $replace, $paragraph );
 
@@ -659,7 +659,7 @@ class Commentpress_Core_Parser {
 
 			// Replace the paragraph in the original context, preserving all other content.
 			$content = preg_replace(
-				//array($paragraph),
+				//[ $paragraph ],
 				'/' . $prepared_para . '/',
 				$block,
 				$content,
@@ -708,7 +708,7 @@ class Commentpress_Core_Parser {
 		} else {
 
 			// --<
-			return array();
+			return [];
 
 		}
 
@@ -755,8 +755,8 @@ class Commentpress_Core_Parser {
 
 		}
 
-		// Init ( array( 'text_signature' => n ), where n is the number of duplicates ).
-		$duplicates = array();
+		// Init ( [ 'text_signature' => n ], where n is the number of duplicates ).
+		$duplicates = [];
 
 		// Run through 'em.
 		foreach( $matches AS $paragraph ) {
@@ -845,7 +845,7 @@ class Commentpress_Core_Parser {
 		$sig_key = 0;
 
 		// Init our content array.
-		$content_array = array();
+		$content_array = [];
 
 		// Run through 'em.
 		foreach( $matches AS $line ) {
@@ -942,7 +942,7 @@ class Commentpress_Core_Parser {
 		// Wrap all lines with spans.
 
 		// Get all instances.
-		$pattern = array(
+		$pattern = [
 			'/<br>/',
 			'/<br\/>/',
 			'/<br \/>/',
@@ -951,10 +951,10 @@ class Commentpress_Core_Parser {
 			'/<br \/>\n/',
 			'/<p>/',
 			'/<\/p>/'
-		);
+		];
 
 		// Define replacements.
-		$replace = array(
+		$replace = [
 			'<!-- line-end --></span><br>',
 			'<!-- line-end --></span><br/>',
 			'<!-- line-end --></span><br />',
@@ -963,7 +963,7 @@ class Commentpress_Core_Parser {
 			'<br />' . "\n" . '<span class="cp-line">',
 			'<p><span class="cp-line">',
 			'<!-- line-end --></span></p>'
-		);
+		];
 
 		// Do replacement.
 		$content = preg_replace( $pattern, $replace, $content );
@@ -973,7 +973,7 @@ class Commentpress_Core_Parser {
 
 		// Kick out if we have an empty array.
 		if ( empty( $output_array ) ) {
-			return array();
+			return [];
 		}
 
 		// --<
@@ -1027,10 +1027,10 @@ class Commentpress_Core_Parser {
 		global $post;
 
 		// Init our content array.
-		$content_array = array();
+		$content_array = [];
 
-		// Init ( array( 'text_signature' => n ), where n is the number of duplicates ).
-		$duplicates = array();
+		// Init ( [ 'text_signature' => n ], where n is the number of duplicates ).
+		$duplicates = [];
 
 		// Run through 'em.
 		foreach( $output_array AS $paragraph ) {
@@ -1135,7 +1135,7 @@ class Commentpress_Core_Parser {
 		$sig_key = 0;
 
 		// Init content array.
-		$content_array = array();
+		$content_array = [];
 
 		// Run through 'em.
 		foreach( $matches AS $paragraph ) {
@@ -1303,7 +1303,7 @@ class Commentpress_Core_Parser {
 
 		// Kick out if we have an empty array.
 		if ( empty( $output_array ) ) {
-			return array();
+			return [];
 		}
 
 		// --<
@@ -1340,8 +1340,8 @@ class Commentpress_Core_Parser {
 		// Get blocks array.
 		$matches = $this->_get_block_matches( $content );
 
-		// Init ( array( 'text_signature' => n ), where n is the number of duplicates ).
-		$duplicates = array();
+		// Init ( [ 'text_signature' => n ], where n is the number of duplicates ).
+		$duplicates = [];
 
 		// Run through 'em.
 		foreach( $matches AS $paragraph ) {
@@ -1715,16 +1715,16 @@ class Commentpress_Core_Parser {
 	public function _parse_captions( $content ) {
 
 		// Filter captioned images that are *not* inside other tags.
-		$pattern = array(
+		$pattern = [
 			'/\n<!-- cp_caption_start -->/',
 			'/<!-- cp_caption_end -->\n/'
-		);
+		];
 
 		// Define replacements.
-		$replace = array(
+		$replace = [
 			"\n" . '<p><!-- cp_caption_start -->',
 			'<!-- cp_caption_end --></p>' . "\n"
-		);
+		];
 
 		// Do replacement.
 		$content = preg_replace( $pattern, $replace, $content );
@@ -1834,7 +1834,7 @@ class Commentpress_Core_Parser {
 	public function _get_sorted_comments( $post_ID ) {
 
 		// Init return.
-		$sorted_comments = array();
+		$sorted_comments = [];
 
 		// Get all comments.
 		$comments = $this->comments_all;
@@ -1860,7 +1860,7 @@ class Commentpress_Core_Parser {
 		} else {
 
 			// Append empty array.
-			$sorted_comments['WHOLE_PAGE_OR_POST_COMMENTS'] = array();
+			$sorted_comments['WHOLE_PAGE_OR_POST_COMMENTS'] = [];
 
 		}
 
@@ -1879,7 +1879,7 @@ class Commentpress_Core_Parser {
 				} else {
 
 					// Append empty array.
-					$sorted_comments[$text_signature] = array();
+					$sorted_comments[$text_signature] = [];
 
 				}
 
@@ -1896,7 +1896,7 @@ class Commentpress_Core_Parser {
 		} else {
 
 			// Append empty array.
-			$sorted_comments['PINGS_AND_TRACKS'] = array();
+			$sorted_comments['PINGS_AND_TRACKS'] = [];
 
 		}
 
@@ -1921,7 +1921,7 @@ class Commentpress_Core_Parser {
 		global $post, $page, $multipage;
 
 	  	// Init return.
-		$filtered = array();
+		$filtered = [];
 
 		// Kick out if no comments.
 		if( ! is_array( $comments ) OR empty( $comments ) ) {
@@ -1988,7 +1988,7 @@ class Commentpress_Core_Parser {
 
 	  	// Init returned array.
 	  	// NB: we use a very unlikely key for page-level comments: WHOLE_PAGE_OR_POST_COMMENTS.
-		$assigned = array();
+		$assigned = [];
 
 		// Kick out if no comments.
 		if( ! is_array( $comments ) OR empty( $comments ) ) {
@@ -2011,7 +2011,7 @@ class Commentpress_Core_Parser {
 				} else {
 
 					// Init possibles array.
-					$possibles = array();
+					$possibles = [];
 
 					// Find the nearest matching text signature.
 					foreach( $text_signatures AS $text_signature ) {

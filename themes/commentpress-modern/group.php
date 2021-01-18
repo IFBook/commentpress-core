@@ -7,9 +7,9 @@ Template Name: Group
 if ( version_compare( $wp_version, '3.1', '>=' ) ) {
 
 	// Set args.
-	$args = array(
+	$args = [
 		'orderby' => 'nicename',
-	);
+	];
 
 	// Get users of this blog (blog_id is provided by default).
 	$_users = get_users( $args );

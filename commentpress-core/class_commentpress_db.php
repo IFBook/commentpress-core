@@ -25,7 +25,7 @@ class Commentpress_Core_Database {
 	 * @access public
 	 * @var array $commentpress_options The plugin options array.
 	 */
-	public $commentpress_options = array();
+	public $commentpress_options = [];
 
 	/**
 	 * Table of Contents content flag.
@@ -243,7 +243,7 @@ class Commentpress_Core_Database {
 	 * @access public
 	 * @var str $post_types_disabled The post types not to be parsed.
 	 */
-	public $post_types_disabled = array();
+	public $post_types_disabled = [];
 
 
 
@@ -277,7 +277,7 @@ class Commentpress_Core_Database {
 		$this->commentpress_options = $this->option_wp_get( 'commentpress_options', $this->commentpress_options );
 
 		// Do immediate upgrades after the theme has loaded.
-		add_action( 'after_setup_theme', array( $this, 'upgrade_immediately' ) );
+		add_action( 'after_setup_theme', [ $this, 'upgrade_immediately' ] );
 
 	}
 
@@ -338,7 +338,7 @@ class Commentpress_Core_Database {
 		}
 
 		// Retrieve data on special pages.
-		$special_pages = $this->option_get( 'cp_special_pages', array() );
+		$special_pages = $this->option_get( 'cp_special_pages', [] );
 
 		// If we haven't created any.
 		if ( count( $special_pages ) == 0 ) {
@@ -734,13 +734,13 @@ class Commentpress_Core_Database {
 					$page_id = $this->option_get( 'cp_welcome_page' );
 
 					// Retrieve data on special pages.
-					$special_pages = $this->option_get( 'cp_special_pages', array() );
+					$special_pages = $this->option_get( 'cp_special_pages', [] );
 
 					// Is it in our special pages array?
 					if ( in_array( $page_id, $special_pages ) ) {
 
 						// Remove page id from array.
-						$special_pages = array_diff( $special_pages, array( $page_id ) );
+						$special_pages = array_diff( $special_pages, [ $page_id ] );
 
 						// Reset option.
 						$this->option_set( 'cp_special_pages', $special_pages );
@@ -907,7 +907,7 @@ class Commentpress_Core_Database {
 				if ( ! $this->option_exists( 'cp_toc_page' ) ) {
 
 					// Get special pages array.
-					$special_pages = $this->option_get( 'cp_special_pages', array() );
+					$special_pages = $this->option_get( 'cp_special_pages', [] );
 
 					// Create TOC page -> a convenience, let's us define a logo as attachment.
 					$special_pages[] = $this->_create_toc_page();
@@ -2202,12 +2202,12 @@ class Commentpress_Core_Database {
 		$key = '_cp_newer_version';
 
 		// Get posts with the about-to-be-deleted post_id (there will be only one, if at all).
-		$previous_versions = get_posts( array(
+		$previous_versions = get_posts( [
 
 			'meta_key' => $key,
 			'meta_value' => $post_id
 
-		) );
+		] );
 
 		// Did we get one?
 		if ( count( $previous_versions ) > 0 ) {
@@ -2244,7 +2244,7 @@ class Commentpress_Core_Database {
 		 */
 
 		// Get special pages array, if it's there.
-		$special_pages = $this->option_get( 'cp_special_pages', array() );
+		$special_pages = $this->option_get( 'cp_special_pages', [] );
 
 		// Create welcome/title page, but don't add to special pages.
 		$welcome = $this->_create_title_page();
@@ -2291,7 +2291,7 @@ class Commentpress_Core_Database {
 		$new_id = false;
 
 		// Get special pages array, if it's there.
-		$special_pages = $this->option_get( 'cp_special_pages', array() );
+		$special_pages = $this->option_get( 'cp_special_pages', [] );
 
 		// Switch by page.
 		switch( $page ) {
@@ -2375,7 +2375,7 @@ class Commentpress_Core_Database {
 		 */
 
 		// Retrieve data on special pages.
-		$special_pages = $this->option_get( 'cp_special_pages', array() );
+		$special_pages = $this->option_get( 'cp_special_pages', [] );
 
 		// If we have created any.
 		if ( is_array( $special_pages ) AND count( $special_pages ) > 0 ) {
@@ -2522,13 +2522,13 @@ class Commentpress_Core_Database {
 		}
 
 		// Retrieve data on special pages.
-		$special_pages = $this->option_get( 'cp_special_pages', array() );
+		$special_pages = $this->option_get( 'cp_special_pages', [] );
 
 		// Is it in our special pages array?
 		if ( in_array( $page_id, $special_pages ) ) {
 
 			// Remove page id from array.
-			$special_pages = array_diff( $special_pages, array( $page_id ) );
+			$special_pages = array_diff( $special_pages, [ $page_id ] );
 
 			// Reset option.
 			$this->option_set( 'cp_special_pages', $special_pages );
@@ -2569,7 +2569,7 @@ class Commentpress_Core_Database {
 		}
 
 		// Get special pages.
-		$special_pages = $this->option_get( 'cp_special_pages', array() );
+		$special_pages = $this->option_get( 'cp_special_pages', [] );
 
 		// Do we have a special page array?
 		if ( is_array( $special_pages ) AND count( $special_pages ) > 0 ) {
@@ -2601,16 +2601,16 @@ class Commentpress_Core_Database {
 	public function get_supported_post_types() {
 
 		// Only parse post types once.
-		static $supported_post_types = array();
+		static $supported_post_types = [];
 		if ( ! empty( $supported_post_types ) ) {
 			return $supported_post_types;
 		}
 
 		// Get only post types with an admin UI.
-		$args = array(
+		$args = [
 			'public' => true,
 			'show_ui' => true,
-		);
+		];
 
 		// Get post types.
 		$post_types = get_post_types( $args, 'objects' );
@@ -2813,7 +2813,7 @@ class Commentpress_Core_Database {
 		if ( count( $selection ) != 2 ) return true;
 
 		// Sanity check: both elements must be integers.
-		$start_end = array();
+		$start_end = [];
 		foreach( $selection AS $item ) {
 
 			// Not integer - kick out.
@@ -2980,7 +2980,7 @@ class Commentpress_Core_Database {
 	public function get_javascript_vars() {
 
 		// Init return.
-		$vars = array();
+		$vars = [];
 
 		// Add comments open.
 		global $post;
@@ -3429,7 +3429,7 @@ class Commentpress_Core_Database {
 	public function _create_new_post( $post ) {
 
 		// Define basics.
-		$new_post = array(
+		$new_post = [
 			'post_status' => 'draft',
 			'post_type' => 'post',
 			'comment_status' => 'open',
@@ -3438,7 +3438,7 @@ class Commentpress_Core_Database {
 			'pinged' => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
 			'post_excerpt' => '' // Quick fix for Windows.
-		);
+		];
 
 		// Add post-specific stuff.
 
@@ -3509,7 +3509,7 @@ class Commentpress_Core_Database {
 		}
 
 		// Define welcome/title page.
-		$title = array(
+		$title = [
 			'post_status' => 'publish',
 			'post_type' => 'page',
 			'post_parent' => 0,
@@ -3520,7 +3520,7 @@ class Commentpress_Core_Database {
 			'post_content_filtered' => '', // Quick fix for Windows.
 			'post_excerpt' => '', // Quick fix for Windows.
 			'menu_order' => 0
-		);
+		];
 
 		// Add post-specific stuff.
 
@@ -3577,7 +3577,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	public function _create_general_comments_page() {
 
 		// Define general comments page.
-		$general_comments = array(
+		$general_comments = [
 			'post_status' => 'publish',
 			'post_type' => 'page',
 			'post_parent' => 0,
@@ -3588,7 +3588,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'post_content_filtered' => '', // Quick fix for Windows.
 			'post_excerpt' => '', // Quick fix for Windows.
 			'menu_order' => 0
-		);
+		];
 
 		// Add post-specific stuff.
 
@@ -3630,7 +3630,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	public function _create_all_comments_page() {
 
 		// Define all comments page.
-		$all_comments = array(
+		$all_comments = [
 			'post_status' => 'publish',
 			'post_type' => 'page',
 			'post_parent' => 0,
@@ -3641,7 +3641,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'post_content_filtered' => '', // Quick fix for Windows.
 			'post_excerpt' => '', // Quick fix for Windows.
 			'menu_order' => 0
-		);
+		];
 
 		// Add post-specific stuff.
 
@@ -3683,7 +3683,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	public function _create_comments_by_author_page() {
 
 		// Define comments by author page.
-		$group = array(
+		$group = [
 			'post_status' => 'publish',
 			'post_type' => 'page',
 			'post_parent' => 0,
@@ -3694,7 +3694,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'post_content_filtered' => '', // Quick fix for Windows.
 			'post_excerpt' => '', // Quick fix for Windows.
 			'menu_order' => 0
-		);
+		];
 
 		// Add post-specific stuff.
 
@@ -3736,7 +3736,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	public function _create_blog_page() {
 
 		// Define blog page.
-		$blog = array(
+		$blog = [
 			'post_status' => 'publish',
 			'post_type' => 'page',
 			'post_parent' => 0,
@@ -3747,7 +3747,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'post_content_filtered' => '', // Quick fix for Windows.
 			'post_excerpt' => '', // Quick fix for Windows.
 			'menu_order' => 0
-		);
+		];
 
 		// Add post-specific stuff.
 
@@ -3792,7 +3792,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	public function _create_blog_archive_page() {
 
 		// Define blog archive page.
-		$blog = array(
+		$blog = [
 			'post_status' => 'publish',
 			'post_type' => 'page',
 			'post_parent' => 0,
@@ -3803,7 +3803,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'post_content_filtered' => '', // Quick fix for Windows.
 			'post_excerpt' => '', // Quick fix for Windows.
 			'menu_order' => 0
-		);
+		];
 
 		// Add post-specific stuff.
 
@@ -3847,7 +3847,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	public function _create_toc_page() {
 
 		// Define TOC page.
-		$toc = array(
+		$toc = [
 			'post_status' => 'publish',
 			'post_type' => 'page',
 			'post_parent' => 0,
@@ -3858,7 +3858,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'post_content_filtered' => '', // Quick fix for Windows.
 			'post_excerpt' => '', // Quick fix for Windows.
 			'menu_order' => 0
-		);
+		];
 
 		// Default page title.
 		$title = __( 'Table of Contents', 'commentpress-core' );
@@ -3927,13 +3927,13 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		add_option( 'commentpress_sidebars_widgets', $this->option_wp_get( 'sidebars_widgets' ) );
 
 		// Clear them - this array is based on the array in wp_install_defaults().
-		update_option( 'sidebars_widgets', array(
-			'wp_inactive_widgets' => array(),
-			'sidebar-1' => array(),
-			'sidebar-2' => array(),
-			'sidebar-3' => array(),
+		update_option( 'sidebars_widgets', [
+			'wp_inactive_widgets' => [],
+			'sidebar-1' => [],
+			'sidebar-2' => [],
+			'sidebar-3' => [],
 			'array_version' => 3
-		) );
+		] );
 
 	}
 
@@ -4000,7 +4000,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	public function _options_create() {
 
 		// Init options array.
-		$this->commentpress_options = array(
+		$this->commentpress_options = [
 			'cp_show_posts_or_pages_in_toc' => $this->toc_content,
 			'cp_toc_chapter_is_page' => $this->toc_chapter_is_page,
 			'cp_show_subpages' => $this->show_subpages,
@@ -4022,7 +4022,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'cp_page_nav_enabled' => $this->page_nav_enabled,
 			'cp_do_not_parse' => $this->do_not_parse,
 			'cp_post_types_disabled' => $this->post_types_disabled,
-		);
+		];
 
 		// Paragraph-level comments enabled by default.
 		add_option( 'commentpress_options', $this->commentpress_options );
@@ -4116,7 +4116,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	public function _options_migrate() {
 
 		// Get existing options.
-		$old = get_option( 'cp_options', array() );
+		$old = get_option( 'cp_options', [] );
 
 		// ---------------------------------------------------------------------
 		// Retrieve new ones, if they exist, or use defaults otherwise.
@@ -4243,7 +4243,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 									null;
 
 		// Init options array.
-		$this->commentpress_options = array(
+		$this->commentpress_options = [
 			'cp_show_posts_or_pages_in_toc' => $this->toc_content,
 			'cp_toc_chapter_is_page' => $this->toc_chapter_is_page,
 			'cp_show_subpages' => $this->show_subpages,
@@ -4265,13 +4265,13 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'cp_page_nav_enabled' => $this->page_nav_enabled,
 			'cp_do_not_parse' => $this->do_not_parse,
 			'cp_post_types_disabled' => $this->post_types_disabled,
-		);
+		];
 
 		// If we have special pages.
 		if ( ! is_null( $special_pages ) AND is_array( $special_pages ) ) {
 
 			// Let's have them as well.
-			$pages = array(
+			$pages = [
 				'cp_special_pages' => $special_pages,
 				'cp_blog_page' => $blog_page,
 				'cp_blog_archive_page' => $blog_archive_page,
@@ -4279,7 +4279,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 				'cp_all_comments_page' => $all_comments_page,
 				'cp_comments_by_page' => $comments_by_page,
 				'cp_toc_page' => $toc_page
-			);
+			];
 
 			// Merge.
 			$this->commentpress_options = array_merge( $this->commentpress_options, $pages );
@@ -4367,7 +4367,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// ---------------------------------------------------------------------
 
 		// Migrate Theme Customizations.
-		$theme_settings = get_option( 'cp_theme_settings', array() );
+		$theme_settings = get_option( 'cp_theme_settings', [] );
 
 		// Did we get any?
 		if ( ! empty( $theme_settings ) ) {
@@ -4378,7 +4378,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		}
 
 		// Migrate Theme Mods.
-		$theme_mods = get_option( 'theme_mods_commentpress', array() );
+		$theme_mods = get_option( 'theme_mods_commentpress', [] );
 
 		// Did we get any?
 		if ( is_array( $theme_mods ) AND count( $theme_mods ) > 0 ) {
@@ -4449,7 +4449,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	public function _options_upgrade() {
 
 		// Populate options array with current values.
-		$this->commentpress_options = array(
+		$this->commentpress_options = [
 
 			// Theme settings we want to keep.
 			'cp_show_posts_or_pages_in_toc' => $this->option_wp_get( 'cp_show_posts_or_pages_in_toc' ),
@@ -4468,7 +4468,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			// Store setting for what was independently set by the ajax commenting plugin, "off" by default.
 			'cp_para_comments_live' => $this->para_comments_live
 
-		);
+		];
 
 		// Save options array.
 		$this->options_save();

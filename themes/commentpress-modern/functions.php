@@ -45,22 +45,22 @@ function commentpress_setup() {
 	if ( version_compare( $wp_version, '3.4', '>=' ) ) {
 
 		// Allow custom backgrounds.
-		add_theme_support( 'custom-background', array(
+		add_theme_support( 'custom-background', [
 			'default-color'          => 'ccc',
 			'default-image'          => '',
 			'wp-head-callback'       => 'commentpress_background',
 			'admin-head-callback'    => '',
 			'admin-preview-callback' => ''
-		) );
+		] );
 
 		// Allow custom header.
-		add_theme_support( 'custom-header', array(
+		add_theme_support( 'custom-header', [
 			'default-text-color' => 'eeeeee',
 			'width' => apply_filters( 'cp_header_image_width', 940 ),
 			'height' => apply_filters( 'cp_header_image_height', 67 ),
 			'wp-head-callback' => 'commentpress_header',
 			'admin-head-callback' => 'commentpress_admin_header'
-		) );
+		] );
 
 	} else {
 
@@ -88,32 +88,32 @@ function commentpress_setup() {
 	 * %s is a placeholder for the theme template directory URI.
 	 */
 	register_default_headers(
-		array(
-			'caves-green' => array(
+		[
+			'caves-green' => [
 				'url' => '%s/assets/images/header/caves-green.jpg',
 				'thumbnail_url' => '%s/assets/images/header/caves-green-thumbnail.jpg',
 				/* translators: header image description */
 				'description' => __( 'Abstract Green', 'commentpress-core' )
-			),
-			'caves-red' => array(
+			],
+			'caves-red' => [
 				'url' => '%s/assets/images/header/caves-red.jpg',
 				'thumbnail_url' => '%s/assets/images/header/caves-red-thumbnail.jpg',
 				/* translators: header image description */
 				'description' => __( 'Abstract Red', 'commentpress-core' )
-			),
-			'caves-blue' => array(
+			],
+			'caves-blue' => [
 				'url' => '%s/assets/images/header/caves-blue.jpg',
 				'thumbnail_url' => '%s/assets/images/header/caves-blue-thumbnail.jpg',
 				/* translators: header image description */
 				'description' => __( 'Abstract Blue', 'commentpress-core' )
-			),
-			'caves-violet' => array(
+			],
+			'caves-violet' => [
 				'url' => '%s/assets/images/header/caves-violet.jpg',
 				'thumbnail_url' => '%s/assets/images/header/caves-violet-thumbnail.jpg',
 				/* translators: header image description */
 				'description' => __( 'Abstract Violet', 'commentpress-core' )
-			)
-		)
+			]
+		]
 	);
 
 	// Auto feed links.
@@ -183,7 +183,7 @@ function commentpress_enqueue_scripts_and_styles() {
 	wp_register_style(
 		'cp_screen_css', // Unique id
 		get_template_directory_uri() . '/assets/css/screen' . $dev . '.css', // Src
-		array(), // Dependencies.
+		[], // Dependencies.
 		COMMENTPRESS_VERSION, // Version.
 		'all' // Media.
 	);
@@ -196,7 +196,7 @@ function commentpress_enqueue_scripts_and_styles() {
 	wp_enqueue_style(
 		'cp_webfont_lato_css',
 		set_url_scheme( 'http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' ),
-		array( 'cp_screen_css' ),
+		[ 'cp_screen_css' ],
 		COMMENTPRESS_VERSION, // Version.
 		'all' // Media.
 	);
@@ -205,7 +205,7 @@ function commentpress_enqueue_scripts_and_styles() {
 	wp_enqueue_style(
 		'cp_colours_css',
 		get_template_directory_uri() . '/assets/css/colours-01' . $dev . '.css',
-		array( 'cp_webfont_lato_css' ),
+		[ 'cp_webfont_lato_css' ],
 		COMMENTPRESS_VERSION, // Version.
 		'all' // Media.
 	);
@@ -221,7 +221,7 @@ function commentpress_enqueue_scripts_and_styles() {
 	wp_enqueue_script(
 		'cp_common_js',
 		get_template_directory_uri() . '/assets/js/screen' . $dev . '.js',
-		array( 'jquery_commentpress' ), // Dependencies.
+		[ 'jquery_commentpress' ], // Dependencies.
 		COMMENTPRESS_VERSION // Version.
 	);
 
@@ -242,18 +242,18 @@ function commentpress_enqueue_scripts_and_styles() {
 			wp_enqueue_script(
 				'cp_form',
 				plugins_url( 'commentpress-core/assets/js/jquery.commentform' . $dev . '.js', COMMENTPRESS_PLUGIN_FILE ),
-				array( 'cp_common_js' ), // Dependencies.
+				[ 'cp_common_js' ], // Dependencies.
 				COMMENTPRESS_VERSION // Version.
 			);
 
 			// Localisation array.
-			$vars = array(
-				'localisation' => array(
+			$vars = [
+				'localisation' => [
 					'submit' => __( 'Edit Comment', 'commentpress-core' ),
 					'title' => __( 'Leave a comment', 'commentpress-core' ),
 					'edit_title' => __( 'Edit comment', 'commentpress-core' ),
-				),
-			);
+				],
+			];
 
 			// Localise with wp function.
 			wp_localize_script(
@@ -271,7 +271,7 @@ function commentpress_enqueue_scripts_and_styles() {
 			wp_enqueue_script(
 				'cp_special',
 				get_template_directory_uri() . '/assets/js/cp_js_all_comments.js',
-				array( 'cp_form' ), // Dependencies.
+				[ 'cp_form' ], // Dependencies.
 				COMMENTPRESS_VERSION // Version.
 			);
 
@@ -302,7 +302,7 @@ function commentpress_enqueue_print_styles() {
 	wp_enqueue_style(
 		'cp_print_css',
 		get_template_directory_uri() . '/assets/css/print' . $dev . '.css',
-		array( 'cp_screen_css' ),
+		[ 'cp_screen_css' ],
 		COMMENTPRESS_VERSION, // Version.
 		'print'
 	);
@@ -361,7 +361,7 @@ function commentpress_bp_enqueue_styles() {
 	wp_enqueue_style(
 		'cp_buddypress_css',
 		get_template_directory_uri() . '/assets/css/bp-overrides' . $dev . '.css',
-		array( 'cp_screen_css' ),
+		[ 'cp_screen_css' ],
 		COMMENTPRESS_VERSION, // Version.
 		'all' // Media.
 	);
@@ -386,7 +386,7 @@ function commentpress_enqueue_wp_fee_js() {
 	wp_enqueue_script(
 		'cp_wp_fee_js',
 		get_template_directory_uri() . '/assets/js/wp_fee' . $dev . '.js',
-		array( 'cp_common_js' ), // Dependencies.
+		[ 'cp_common_js' ], // Dependencies.
 		COMMENTPRESS_VERSION // Version.
 	);
 
@@ -660,19 +660,19 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 	$html = '';
 
 	// Get all approved comments.
-	$all_comments = get_comments( array(
+	$all_comments = get_comments( [
 		'status' => 'approve',
 		'orderby' => 'comment_post_ID,comment_date',
 		'order' => 'ASC',
 		'post_type' => $page_or_post,
-	) );
+	] );
 
 	// Kick out if none.
 	if ( count( $all_comments ) == 0 ) return $html;
 
 	// Build list of posts to which they are attached.
-	$posts_with = array();
-	$post_comment_counts = array();
+	$posts_with = [];
+	$post_comment_counts = [];
 	foreach( $all_comments AS $comment ) {
 
 		// Add to posts with comments array.
@@ -693,12 +693,12 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 	if ( count( $posts_with ) == 0 ) return $html;
 
 	// Get those posts.
-	$posts = get_posts( array(
+	$posts = get_posts( [
 		'orderby' => 'comment_count',
 		'order' => 'DESC',
 		'post_type' => $page_or_post,
 		'include' => $posts_with,
-	) );
+	] );
 
 	// Kick out if none.
 	if ( count( $posts ) == 0 ) return $html;
@@ -810,7 +810,7 @@ function commentpress_get_all_comments_page_content() {
 	// Allow oEmbed in comments.
 	global $wp_embed;
 	if ( $wp_embed instanceof WP_Embed ) {
-		add_filter( 'comment_text', array( $wp_embed, 'autoembed' ), 1 );
+		add_filter( 'comment_text', [ $wp_embed, 'autoembed' ], 1 );
 	}
 
 	// Declare access to globals.
@@ -1119,7 +1119,7 @@ function commentpress_has_feature_image() {
 function commentpress_register_widget_areas() {
 
 	// Define an area where a widget may be placed.
-	register_sidebar( array(
+	register_sidebar( [
 		'name' => __( 'CommentPress Footer', 'commentpress-core' ),
 		'id' => 'cp-license-8',
 		'description' => __( 'An optional widget area in the footer of a CommentPress theme', 'commentpress-core' ),
@@ -1127,10 +1127,10 @@ function commentpress_register_widget_areas() {
 		'after_widget' => "</div>",
 		'before_title' => '<h3 class="widget-title">',
 		'after_title' => '</h3>',
-	) );
+	] );
 
 	// Define an area where a widget may be placed.
-	register_sidebar( array(
+	register_sidebar( [
 		'name' => __( 'Navigation Top', 'commentpress-core' ),
 		'id' => 'cp-nav-top',
 		'description' => __( 'An optional widget area at the top of the Navigation Column', 'commentpress-core' ),
@@ -1138,10 +1138,10 @@ function commentpress_register_widget_areas() {
 		'after_widget' => "</div></div></div>",
 		'before_title' => '<h3 class="widget-title activity_heading">',
 		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
-	) );
+	] );
 
 	// Define an area where a widget may be placed.
-	register_sidebar( array(
+	register_sidebar( [
 		'name' => __( 'Navigation Bottom', 'commentpress-core' ),
 		'id' => 'cp-nav-bottom',
 		'description' => __( 'An optional widget area at the bottom of the Navigation Column', 'commentpress-core' ),
@@ -1149,10 +1149,10 @@ function commentpress_register_widget_areas() {
 		'after_widget' => "</div></div></div>",
 		'before_title' => '<h3 class="widget-title activity_heading">',
 		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
-	) );
+	] );
 
 	// Define an area where a widget may be placed.
-	register_sidebar( array(
+	register_sidebar( [
 		'name' => __( 'Activity Top', 'commentpress-core' ),
 		'id' => 'cp-activity-top',
 		'description' => __( 'An optional widget area at the top of the Activity Column', 'commentpress-core' ),
@@ -1160,10 +1160,10 @@ function commentpress_register_widget_areas() {
 		'after_widget' => "</div></div></div>",
 		'before_title' => '<h3 class="widget-title activity_heading">',
 		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
-	) );
+	] );
 
 	// Define an area where a widget may be placed.
-	register_sidebar( array(
+	register_sidebar( [
 		'name' => __( 'Activity Bottom', 'commentpress-core' ),
 		'id' => 'cp-activity-bottom',
 		'description' => __( 'An optional widget area at the bottom of the Activity Column', 'commentpress-core' ),
@@ -1171,7 +1171,7 @@ function commentpress_register_widget_areas() {
 		'after_widget' => "</div></div></div>",
 		'before_title' => '<h3 class="widget-title activity_heading">',
 		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
-	) );
+	] );
 
 }
 

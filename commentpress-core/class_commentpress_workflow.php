@@ -181,9 +181,9 @@ class Commentpress_Core_Workflow {
 		wp_editor(
 			esc_html( stripslashes( $content ) ),
 			$editor_id,
-			$settings = array(
+			$settings = [
 				'media_buttons' => false
-			)
+			]
 		);
 
 		// Label.
@@ -205,9 +205,9 @@ class Commentpress_Core_Workflow {
 		wp_editor(
 			esc_html( stripslashes( $content ) ),
 			$editor_id,
-			$settings = array(
+			$settings = [
 				'media_buttons' => false
-			)
+			]
 		);
 
 	}
@@ -247,7 +247,7 @@ class Commentpress_Core_Workflow {
 		if ( ! $post_obj ) return;
 
 		// If not post or page, kick out.
-		$types = array( 'post', 'page' );
+		$types = [ 'post', 'page' ];
 		if ( ! in_array( $post_obj->post_type, $types ) ) return;
 
 		// Authenticate.
@@ -478,31 +478,31 @@ class Commentpress_Core_Workflow {
 	public function _register_hooks() {
 
 		// Enable workflow.
-		add_filter( 'cp_blog_workflow_exists', array( $this, 'blog_workflow_exists' ), 21 );
+		add_filter( 'cp_blog_workflow_exists', [ $this, 'blog_workflow_exists' ], 21 );
 
 		// Override label.
-		add_filter( 'cp_blog_workflow_label', array( $this, 'blog_workflow_label' ), 21 );
+		add_filter( 'cp_blog_workflow_label', [ $this, 'blog_workflow_label' ], 21 );
 
 		// Override blog type if workflow is on.
-		add_filter( 'cp_get_group_meta_for_blog_type', array( $this, 'group_meta_set_blog_type' ), 21, 2 );
+		add_filter( 'cp_get_group_meta_for_blog_type', [ $this, 'group_meta_set_blog_type' ], 21, 2 );
 
 		// Is this the back end?
 		if ( is_admin() ) {
 
 			// Add meta box for translation workflow.
-			add_action( 'cp_workflow_metabox', array( $this, 'workflow_metabox' ), 10, 2 );
+			add_action( 'cp_workflow_metabox', [ $this, 'workflow_metabox' ], 10, 2 );
 
 			// Override meta box title for translation workflow.
-			add_filter( 'cp_workflow_metabox_title', array( $this, 'workflow_metabox_title' ), 21, 1 );
+			add_filter( 'cp_workflow_metabox_title', [ $this, 'workflow_metabox_title' ], 21, 1 );
 
 			// Save post with translation workflow.
-			add_action( 'cp_workflow_save_post', array( $this, 'workflow_save_post' ), 21, 1 );
+			add_action( 'cp_workflow_save_post', [ $this, 'workflow_save_post' ], 21, 1 );
 
 			// Save page with translation workflow.
-			add_action( 'cp_workflow_save_page', array( $this, 'workflow_save_post' ), 21, 1 );
+			add_action( 'cp_workflow_save_page', [ $this, 'workflow_save_post' ], 21, 1 );
 
 			// Save translation workflow for copied posts.
-			add_action( 'cp_workflow_save_copy', array( $this, 'workflow_save_copy' ), 21, 1 );
+			add_action( 'cp_workflow_save_copy', [ $this, 'workflow_save_copy' ], 21, 1 );
 
 		}
 

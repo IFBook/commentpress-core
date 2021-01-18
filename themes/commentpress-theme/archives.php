@@ -61,7 +61,7 @@ get_header(); ?>
 <?php
 
 // Configure.
-$defaults = array(
+$defaults = [
 	'show_option_all' => '',
 	'orderby' => 'name',
 	'order' => 'ASC',
@@ -81,7 +81,7 @@ $defaults = array(
 	'title_li' => '',
 	'echo' => 1,
 	'depth' => 0,
-);
+];
 
 // Show them.
 wp_list_categories( $defaults );
@@ -100,7 +100,7 @@ wp_list_categories( $defaults );
 <?php
 
 // Configure.
-$args = array(
+$args = [
 	'smallest' => 1,
 	'largest' => 1,
 	'unit' => 'em',
@@ -112,7 +112,7 @@ $args = array(
 	'link' => 'view',
 	'taxonomy' => 'post_tag',
 	'echo' => false,
-);
+];
 
 // Get them.
 $tags = wp_tag_cloud( $args );

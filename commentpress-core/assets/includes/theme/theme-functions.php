@@ -142,7 +142,7 @@ function commentpress_customize_site_image( $wp_customize ) {
 		// Properties.
 		public $type = 'media';
 		public $mime_type = 'image';
-		public $button_labels = array();
+		public $button_labels = [];
 
 		/**
 		 * Constructor.
@@ -151,7 +151,7 @@ function commentpress_customize_site_image( $wp_customize ) {
 		 * @param string $id
 		 * @param array  $args
 		 */
-		public function __construct( $manager, $id, $args = array() ) {
+		public function __construct( $manager, $id, $args = [] ) {
 
 			// Call parent constructor.
 			parent::__construct( $manager, $id, $args );
@@ -160,7 +160,7 @@ function commentpress_customize_site_image( $wp_customize ) {
 			$site_image = apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) );
 
 			// Set labels.
-			$this->button_labels = array(
+			$this->button_labels = [
 				'select'       => sprintf( __( 'Select %s', 'commentpress-core' ), $site_image ),
 				'change'       => sprintf( __( 'Change %s', 'commentpress-core' ), $site_image ),
 				'remove'       => sprintf( __( 'Remove %s', 'commentpress-core' ), $site_image ),
@@ -168,7 +168,7 @@ function commentpress_customize_site_image( $wp_customize ) {
 				'placeholder'  => sprintf( __( 'No %s selected', 'commentpress-core' ), $site_image ),
 				'frame_title'  => sprintf( __( 'Select %s', 'commentpress-core' ), $site_image ),
 				'frame_button' => sprintf( __( 'Choose %s', 'commentpress-core' ), $site_image ),
-			);
+			];
 
 		}
 
@@ -178,27 +178,27 @@ function commentpress_customize_site_image( $wp_customize ) {
 	//$wp_customize->register_control_type( 'WP_Customize_Site_Image_Control' );
 
 	// Add customizer section title.
-	$wp_customize->add_section( 'cp_site_image', array(
+	$wp_customize->add_section( 'cp_site_image', [
 		'title' => apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) ),
 		'priority' => 25,
-	) );
+	] );
 
 	// Add image setting.
-	$wp_customize->add_setting( 'commentpress_theme_settings[cp_site_image]', array(
+	$wp_customize->add_setting( 'commentpress_theme_settings[cp_site_image]', [
 		 'default' => '',
 		 'capability' => 'edit_theme_options',
 		 'type' => 'option'
-	));
+	] );
 
 	// Add image control.
 	$wp_customize->add_control( new WP_Customize_Site_Image_Control(
-		$wp_customize, 'cp_site_image', array(
+		$wp_customize, 'cp_site_image', [
 		'label' => apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) ),
 		'description' => apply_filters( 'commentpress_customizer_site_image_description', __( 'Choose an image to represent this site. Other plugins may use this image to illustrate this site - in multisite directory listings, for example.', 'commentpress-core' ) ),
 		'section' => 'cp_site_image',
 		'settings' => 'commentpress_theme_settings[cp_site_image]',
 		'priority'	=>	1
-	)));
+	] ) );
 
 }
 endif; // End commentpress_customize_site_image
@@ -220,41 +220,41 @@ function commentpress_customize_site_logo( $wp_customize ) {
 	if ( $commentpress_core->is_groupblog() ) return;
 
 	// Add customizer section title.
-	$wp_customize->add_section( 'cp_inline_header_image', array(
+	$wp_customize->add_section( 'cp_inline_header_image', [
 		'title' => __( 'Site Logo', 'commentpress-core' ),
 		'priority' => 35,
-	) );
+	] );
 
 	// Add image setting.
-	$wp_customize->add_setting( 'commentpress_theme_settings[cp_inline_header_image]', array(
+	$wp_customize->add_setting( 'commentpress_theme_settings[cp_inline_header_image]', [
 		 'default' => '',
 		 'capability' => 'edit_theme_options',
 		 'type' => 'option'
-	));
+	] );
 
 	// Add image control.
 	$wp_customize->add_control( new WP_Customize_Image_Control(
-		$wp_customize, 'cp_inline_header_image', array(
+		$wp_customize, 'cp_inline_header_image', [
 		'label' => __( 'Logo Image', 'commentpress-core' ),
 		'description' => apply_filters( 'commentpress_customizer_site_logo_description', __( 'You may prefer to display an image instead of text in the header of your site. The image must be a maximum of 70px tall. If it is less tall, then you can adjust the vertical alignment using the "Top padding in px" setting below.', 'commentpress-core' ) ),
 		'section' => 'cp_inline_header_image',
 		'settings' => 'commentpress_theme_settings[cp_inline_header_image]',
 		'priority'	=>	1
-	)));
+	] ) );
 
 	// Add padding setting.
-	$wp_customize->add_setting( 'commentpress_theme_settings[cp_inline_header_padding]', array(
+	$wp_customize->add_setting( 'commentpress_theme_settings[cp_inline_header_padding]', [
 		 'default' => '',
 		 'capability' => 'edit_theme_options',
 		 'type' => 'option'
-	));
+	] );
 
 	// Add text control.
-	$wp_customize->add_control( 'commentpress_theme_settings[cp_inline_header_padding]', array(
+	$wp_customize->add_control( 'commentpress_theme_settings[cp_inline_header_padding]', [
 		'label' => __( 'Top padding in px', 'commentpress-core' ),
 		'section' => 'cp_inline_header_image',
 		'type' => 'text'
-	) );
+	] );
 
 }
 endif; // End commentpress_customize_site_logo
@@ -274,19 +274,19 @@ function commentpress_customize_header_bg_color( $wp_customize ) {
 	global $commentpress_core;
 
 	// Add color picker setting.
-	$wp_customize->add_setting( 'commentpress_header_bg_color', array(
+	$wp_customize->add_setting( 'commentpress_header_bg_color', [
 		'default' => '#' . $commentpress_core->db->header_bg_colour,
 		 //'capability' => 'edit_theme_options',
 		 //'type' => 'option',
-	) );
+	] );
 
 	// Add color picker control.
 	$wp_customize->add_control( new WP_Customize_Color_Control(
-		$wp_customize, 'commentpress_header_bg_color', array(
+		$wp_customize, 'commentpress_header_bg_color', [
 		'label' => __( 'Header Background Colour', 'commentpress-core' ),
 		'section' => 'colors',
 		'settings' => 'commentpress_header_bg_color',
-	) ) );
+	] ) );
 
 }
 endif; // End commentpress_customize_header_bg_color
@@ -474,12 +474,12 @@ function commentpress_get_header_image() {
 	if ( is_object( $commentpress_core ) AND $commentpress_core->db->option_get( 'cp_toc_page' ) ) {
 
 		// Set defaults.
-		$args = array(
+		$args = [
 			'post_type' => 'attachment',
 			'numberposts' => 1,
 			'post_status' => null,
 			'post_parent' => $commentpress_core->db->option_get( 'cp_toc_page' )
-		);
+		];
 
 		// Get them.
 		$attachments = get_posts( $args );
@@ -547,7 +547,7 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ):
 function commentpress_get_body_classes( $raw = false ) {
 
 	// Init the array that holds our custom classes.
-	$classes = array();
+	$classes = [];
 
 	// Access post and plugin.
 	global $post, $commentpress_core;
@@ -1014,7 +1014,7 @@ function commentpress_page_title() {
 			if ( $ancestors ) {
 				$ancestors = array_reverse( $ancestors );
 
-				$crumbs = array();
+				$crumbs = [];
 
 				foreach ( $ancestors as $crumb ) {
 					$crumbs[] = get_the_title( $crumb );
@@ -1062,12 +1062,12 @@ if ( ! function_exists( 'commentpress_has_page_children' ) ):
 function commentpress_has_page_children( $page_obj ) {
 
 	// Init to look for published pages.
-	$defaults = array(
+	$defaults = [
 		'post_parent' => $page_obj->ID,
 		'post_type' => 'page',
 		'numberposts' => -1,
 		'post_status' => 'publish'
-	);
+	];
 
 	// Get page children.
 	$kids =& get_children( $defaults );
@@ -1570,19 +1570,19 @@ function commentpress_get_comments_by_content() {
 	$html = '';
 
 	// Get all approved comments.
-	$all_comments = get_comments( array(
+	$all_comments = get_comments( [
 		'status' => 'approve',
 		'orderby' => 'comment_author, comment_post_ID, comment_date',
 		'order' => 'ASC',
-	) );
+	] );
 
 	// Kick out if none.
 	if ( count( $all_comments ) == 0 ) return $html;
 
 	// Build list of authors
-	$authors_with = array();
-	$author_names = array();
-	//$post_comment_counts = array();
+	$authors_with = [];
+	$author_names = [];
+	//$post_comment_counts = [];
 
 	foreach( $all_comments AS $comment ) {
 
@@ -1679,7 +1679,7 @@ function commentpress_get_comments_by_page_content() {
 	// Allow oEmbed in comments.
 	global $wp_embed;
 	if ( $wp_embed instanceof WP_Embed ) {
-		add_filter( 'comment_text', array( $wp_embed, 'autoembed' ), 1 );
+		add_filter( 'comment_text', [ $wp_embed, 'autoembed' ], 1 );
 	}
 
 	// Declare access to globals.
@@ -1780,7 +1780,7 @@ function commentpress_get_comment_activity( $scope = 'all' ) {
 	// Allow oEmbed in comments.
 	global $wp_embed;
 	if ( $wp_embed instanceof WP_Embed ) {
-		add_filter( 'comment_text', array( $wp_embed, 'autoembed' ), 1 );
+		add_filter( 'comment_text', [ $wp_embed, 'autoembed' ], 1 );
 	}
 
 	// Declare access to globals.
@@ -1790,12 +1790,12 @@ function commentpress_get_comment_activity( $scope = 'all' ) {
 	$page_content = '';
 
 	// Define defaults.
-	$args = array(
+	$args = [
 		'number' => 10,
 		'status' => 'approve',
 		// Exclude trackbacks and pingbacks until we decide what to do with them.
 		'type' => ''
-	);
+	];
 
 	// If we are on a 404, for example.
 	if ( $scope == 'post' AND is_object( $post ) ) {
@@ -2105,7 +2105,7 @@ if ( ! function_exists( 'commentpress_comments_by_para_format_whole' ) ):
 function commentpress_comments_by_para_format_whole( $post_type_name, $post_type, $comment_count ) {
 
 	// Init return.
-	$return = array();
+	$return = [];
 
 	// Construct entity text.
 	$return['entity_text'] = sprintf(
@@ -2171,7 +2171,7 @@ if ( ! function_exists( 'commentpress_comments_by_para_format_pings' ) ):
 function commentpress_comments_by_para_format_pings( $comment_count ) {
 
 	// Init return.
-	$return = array();
+	$return = [];
 
 	// Construct entity text.
 	$return['entity_text'] = __( 'pingback or trackback', 'commentpress-core' );
@@ -2209,7 +2209,7 @@ if ( ! function_exists( 'commentpress_comments_by_para_format_block' ) ):
 function commentpress_comments_by_para_format_block( $comment_count, $para_num ) {
 
 	// Init return.
-	$return = array();
+	$return = [];
 
 	// Access plugin.
 	global $commentpress_core;
@@ -2283,7 +2283,7 @@ function commentpress_get_comments_by_para() {
 	// Allow oEmbed in comments.
 	global $wp_embed;
 	if ( $wp_embed instanceof WP_Embed ) {
-		add_filter( 'comment_text', array( $wp_embed, 'autoembed' ), 1 );
+		add_filter( 'comment_text', [ $wp_embed, 'autoembed' ], 1 );
 	}
 
 	// Allow plugins to precede comments.
@@ -2338,11 +2338,11 @@ function commentpress_get_comments_by_para() {
 
 			// Walker_Comment has changed to buffered output, so define args without
 			// our custom walker. The built in walker works just fine now.
-			$args = array(
+			$args = [
 				'style'=> 'ol',
 				'type'=> $comment_type,
 				'callback' => 'commentpress_comments'
-			);
+			];
 
 		} else {
 
@@ -2355,12 +2355,12 @@ function commentpress_get_comments_by_para() {
 			$walker = new Walker_Comment_Press();
 
 			// Define args.
-			$args = array(
+			$args = [
 				'walker' => $walker,
 				'style'=> 'ol',
 				'type'=> $comment_type,
 				'callback' => 'commentpress_comments'
-			);
+			];
 
 		}
 
@@ -2383,7 +2383,7 @@ function commentpress_get_comments_by_para() {
 		$sig_counter = 0;
 
 		// Init array for tracking text sigs.
-		$used_text_sigs = array();
+		$used_text_sigs = [];
 
 		// Loop through each paragraph.
 		foreach( $comments_sorted AS $text_signature => $comments ) {
@@ -2545,12 +2545,12 @@ function commentpress_get_comments_by_para() {
 							);
 
 							// Just show replytopara.
-							$query = remove_query_arg( array( 'replytocom' ) );
+							$query = remove_query_arg( [ 'replytocom' ] );
 
 							// Add param to querystring.
 							$query = esc_url(
 								add_query_arg(
-									array( 'replytopara' => $para_num ),
+									[ 'replytopara' => $para_num ],
 									$query
 								)
 							);
@@ -2633,7 +2633,7 @@ class Walker_Comment_Press extends Walker_Comment {
 	 * @param int $depth Depth of comment.
 	 * @param array $args Uses 'style' argument for type of HTML list.
 	 */
-	public function start_lvl( &$output, $depth = 0, $args = array() ) {
+	public function start_lvl( &$output, $depth = 0, $args = [] ) {
 
 		// Store depth.
 		$GLOBALS['comment_depth'] = $depth + 1;
@@ -2760,10 +2760,10 @@ if ( ! function_exists( 'commentpress_comment_reply_link' ) ):
  * @param object $comment The comment.
  * @param object $post The post.
  */
-function commentpress_comment_reply_link( $args = array(), $comment = null, $post = null ) {
+function commentpress_comment_reply_link( $args = [], $comment = null, $post = null ) {
 
 	// Set some defaults.
-	$defaults = array(
+	$defaults = [
 		'add_below' => 'comment',
 		'respond_id' => 'respond',
 		'reply_text' => __( 'Reply', 'commentpress-core' ),
@@ -2771,7 +2771,7 @@ function commentpress_comment_reply_link( $args = array(), $comment = null, $pos
 		'depth' => 0,
 		'before' => '',
 		'after' => ''
-	);
+	];
 
 	// Parse them.
 	$args = wp_parse_args( $args, $defaults );
@@ -2802,12 +2802,12 @@ function commentpress_comment_reply_link( $args = array(), $comment = null, $pos
 	} else {
 
 		// Just show replytocom.
-		$query = remove_query_arg( array( 'replytopara' ), get_permalink( $post->ID ) );
+		$query = remove_query_arg( [ 'replytopara' ], get_permalink( $post->ID ) );
 
 		// Define query string.
 		$addquery = esc_url(
 			add_query_arg(
-				array( 'replytocom' => $comment->comment_ID ),
+				[ 'replytocom' => $comment->comment_ID ],
 				$query
 			)
 
@@ -2927,11 +2927,11 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 			// Custom comment_reply_link.
 			$comment_reply = commentpress_comment_reply_link( array_merge(
 				$args,
-				array(
+				[
 					'reply_text' => sprintf( __( 'Reply to %s', 'commentpress-core' ), get_comment_author() ),
 					'depth' => $depth,
 					'max_depth' => $args['max_depth']
-				)
+				]
 			) );
 
 			// Wrap in div.
@@ -3220,7 +3220,7 @@ function commentpress_get_post_multipage_url( $i, $post = '' ) {
 		if ( 1 == $i ) {
 			$url = get_permalink();
 		} else {
-			if ( '' == get_option( 'permalink_structure' ) || in_array( $post->post_status, array( 'draft', 'pending' ) ) )
+			if ( '' == get_option( 'permalink_structure' ) || in_array( $post->post_status, [ 'draft', 'pending' ] ) )
 				$url = add_query_arg( 'page', $i, get_permalink() );
 			elseif ( 'page' == get_option( 'show_on_front' ) AND get_option( 'page_on_front' ) == $post->ID )
 				$url = trailingslashit( get_permalink() ) . user_trailingslashit( "$wp_rewrite->pagination_base/" . $i, 'single_paged' );
@@ -3234,7 +3234,7 @@ function commentpress_get_post_multipage_url( $i, $post = '' ) {
 		if ( 1 == $i ) {
 			$url = get_permalink( $post->ID );
 		} else {
-			if ( '' == get_option( 'permalink_structure' ) || in_array( $post->post_status, array( 'draft', 'pending' ) ) )
+			if ( '' == get_option( 'permalink_structure' ) || in_array( $post->post_status, [ 'draft', 'pending' ] ) )
 				$url = add_query_arg( 'page', $i, get_permalink( $post->ID ) );
 			elseif ( 'page' == get_option( 'show_on_front' ) AND get_option( 'page_on_front' ) == $post->ID )
 				$url = trailingslashit( get_permalink( $post->ID ) ) . user_trailingslashit( "$wp_rewrite->pagination_base/" . $i, 'single_paged' );
@@ -3262,7 +3262,7 @@ if ( ! function_exists( 'commentpress_multipager' ) ):
 function commentpress_multipager() {
 
 	// Set default behaviour.
-	$defaults = array(
+	$defaults = [
 		'before' => '<div class="multipager">',
 		'after' => '</div>',
 		'link_before' => '',
@@ -3273,7 +3273,7 @@ function commentpress_multipager() {
 		'pagelink' => '%',
 		'more_file' => '',
 		'echo' => 0
-	);
+	];
 
 	// Get page links.
 	$page_links = wp_link_pages( $defaults );
@@ -3286,12 +3286,12 @@ function commentpress_multipager() {
 	);
 
 	// Get page links.
-	$page_links .= wp_link_pages( array(
+	$page_links .= wp_link_pages( [
 		'before' => '<div class="multipager multipager_all"><span>' . __( 'Pages: ', 'commentpress-core' ) . '</span>',
 		'after' => '</div>',
 		'pagelink' => '<span class="multipager_link">%</span>',
 		'echo' => 0
-	) );
+	] );
 
 	// --<
 	return $page_links;
@@ -3339,7 +3339,7 @@ function commentpress_add_wp_editor() {
 		'cp_tinymce_buttons',
 
 		// Basic buttons.
-		array(
+		[
 			'bold',
 			'italic',
 			'underline',
@@ -3352,7 +3352,7 @@ function commentpress_add_wp_editor() {
 			'|',
 			'removeformat',
 			'fullscreen'
-		)
+		]
 
 	);
 
@@ -3368,10 +3368,10 @@ function commentpress_add_wp_editor() {
 		// TinyMCE 4 - allow tinymce config to be overridden.
 		$tinymce_config = apply_filters(
 			'commentpress_rte_tinymce',
-			array(
+			[
 				'theme' => 'modern',
 				'statusbar' => false,
-			)
+			]
 		);
 
 		// No need for editor CSS.
@@ -3382,11 +3382,11 @@ function commentpress_add_wp_editor() {
 		// TinyMCE 3 - allow tinymce config to be overridden.
 		$tinymce_config = apply_filters(
 			'commentpress_rte_tinymce',
-			array(
+			[
 				'theme' => 'advanced',
 				'theme_advanced_buttons1' => implode( ',', $mce_buttons ),
 				'theme_advanced_statusbar_location' => 'none',
-			)
+			]
 		);
 
 		// Use legacy editor CSS.
@@ -3404,13 +3404,13 @@ function commentpress_add_wp_editor() {
 	// Allow quicktags setting to be overridden.
 	$quicktags = apply_filters(
 		'commentpress_rte_quicktags',
-		array(
+		[
 			'buttons' => 'strong,em,ul,ol,li,link,close'
-		)
+		]
 	);
 
 	// Our settings.
-	$settings = array(
+	$settings = [
 
 		// Configure comment textarea.
 		'media_buttons' => $media_buttons,
@@ -3429,7 +3429,7 @@ function commentpress_add_wp_editor() {
 		// Configure Quicktags.
 		'quicktags' => $quicktags
 
-	);
+	];
 
 	// Create editor.
 	wp_editor(
@@ -3445,7 +3445,7 @@ function commentpress_add_wp_editor() {
 	wp_enqueue_style(
 		'commentpress-editor-css',
 		wp_admin_css_uri( 'css/edit' ),
-		array( 'dashicons', 'open-sans' ),
+		[ 'dashicons', 'open-sans' ],
 		$wp_version, // Version.
 		'all' // Media.
 	);
@@ -3570,7 +3570,7 @@ if ( ! function_exists( 'commentpress_assign_editor_buttons' ) ):
 function commentpress_assign_editor_buttons( $buttons ) {
 
 	// Basic buttons.
-	return array(
+	return [
 		'bold',
 		'italic',
 		'underline',
@@ -3583,7 +3583,7 @@ function commentpress_assign_editor_buttons( $buttons ) {
 		'|',
 		'removeformat',
 		'fullscreen'
-	);
+	];
 
 }
 endif; // End commentpress_assign_editor_buttons
@@ -3673,12 +3673,12 @@ if ( ! function_exists( 'commentpress_image_caption_shortcode' ) ):
 function commentpress_image_caption_shortcode( $empty = null, $attr, $content ) {
 
 	// Get our shortcode vars.
-	extract( shortcode_atts( array(
+	extract( shortcode_atts( [
 		'id'	=> '',
 		'align'	=> 'alignnone',
 		'width'	=> '',
 		'caption' => ''
-	), $attr ) );
+	], $attr ) );
 
 	if ( 1 > (int) $width || empty( $caption ) ) {
 		return $content;
@@ -3697,11 +3697,11 @@ function commentpress_image_caption_shortcode( $empty = null, $attr, $content ) 
 	$caption = wp_kses( $caption,
 
 		// Allow a few tags.
-		array(
-			'em' => array(),
-			'strong' => array(),
+		[
+			'em' => [],
+			'strong' => [],
 			'a' => array( 'href' )
-		)
+		]
 
 	);
 
@@ -3815,7 +3815,7 @@ function commentpress_trap_empty_search() {
 	if ( isset( $_GET['s'] ) AND empty( $_GET['s'] ) ) {
 
 		// Send to search page.
-		return locate_template( array( 'search.php' ) );
+		return locate_template( [ 'search.php' ] );
 
 	}
 
@@ -3854,7 +3854,7 @@ function commentpress_amend_search_query( &$query ) {
 		if ( function_exists( 'bp_search_form_type_select' ) AND bp_is_root_blog() ) {
 
 			// Search posts and pages.
-			$query->set( 'post_type', apply_filters( 'commentpress_amend_search_query_post_types', array( 'post', 'page' ) ) );
+			$query->set( 'post_type', apply_filters( 'commentpress_amend_search_query_post_types', [ 'post', 'page' ] ) );
 
 			// Declare access to globals.
 			global $commentpress_core;
@@ -4139,11 +4139,11 @@ function commentpress_get_post_version_info( $post ) {
 	$older_link = '';
 
 	// Get post with this post's ID as their _cp_newer_version meta value.
-	$args = array(
+	$args = [
 		'numberposts' => 1,
 		'meta_key' => '_cp_newer_version',
 		'meta_value' => $post->ID
-	);
+	];
 
 	// Get the array
 	$previous_posts = get_posts( $args );
@@ -4332,13 +4332,13 @@ function commentpress_sidebars_widgets( $array ) {
 	if ( ! is_array( $array ) ) {
 
 		// This array is based on the array in wp_install_defaults().
-		$array = array(
-			'wp_inactive_widgets' => array(),
-			'sidebar-1' => array(),
-			'sidebar-2' => array(),
-			'sidebar-3' => array(),
+		$array = [
+			'wp_inactive_widgets' => [],
+			'sidebar-1' => [],
+			'sidebar-2' => [],
+			'sidebar-3' => [],
 			'array_version' => 3
-		);
+		];
 
 	}
 

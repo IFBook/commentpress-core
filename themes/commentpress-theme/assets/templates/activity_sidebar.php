@@ -182,11 +182,11 @@ if (
 	if ( $commentpress_core->is_groupblog() OR bp_is_root_blog() ) {
 
 		// Define args.
-		$recent_groupblog_activity = array(
+		$recent_groupblog_activity = [
 			'scope' => 'groups',
 			'action' => 'new_groupblog_comment,new_groupblog_post',
 			'primary_id' => false,
-		);
+		];
 
 		// Get activities.
 		if ( function_exists( 'bp_has_activities' ) AND bp_has_activities( $recent_groupblog_activity ) ) :
@@ -281,13 +281,13 @@ if (
 
 
 	// Define args.
-	$members_recently_active = array(
+	$members_recently_active = [
 		'user_id' => 0,
 		'type' => 'online',
 		'per_page' => $_max_members,
 		'max' => $_max_members,
 		'populate_extras' => 1,
-	);
+	];
 
 	// Get recently active members.
 	if ( bp_has_members( $members_recently_active ) ) : ?>
@@ -333,13 +333,13 @@ if (
 	<?php
 
 	// Define args.
-	$members_online = array(
+	$members_online = [
 		'user_id' => 0,
 		'type' => 'online',
 		'per_page' => $_max_members,
 		'max' => $_max_members,
 		'populate_extras' => 1,
-	);
+	];
 
 	// Get online members.
 	if ( bp_has_members( $members_online ) ) : ?>

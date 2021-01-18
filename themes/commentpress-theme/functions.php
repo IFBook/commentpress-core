@@ -48,13 +48,13 @@ function commentpress_setup() {
 		add_theme_support( 'custom-background' );
 
 		// Allow custom header.
-		add_theme_support( 'custom-header', array(
+		add_theme_support( 'custom-header', [
 			'default-text-color' => 'eeeeee',
 			'width' => apply_filters( 'cp_header_image_width', 940 ),
 			'height' => apply_filters( 'cp_header_image_height', 67 ),
 			'wp-head-callback' => 'commentpress_header',
 			'admin-head-callback' => 'commentpress_admin_header'
-		) );
+		] );
 
 	} else {
 
@@ -82,32 +82,32 @@ function commentpress_setup() {
 	 * %s is a placeholder for the theme template directory URI.
 	 */
 	register_default_headers(
-		array(
-			'caves-green' => array(
+		[
+			'caves-green' => [
 				'url' => '%s/assets/images/header/caves-green.jpg',
 				'thumbnail_url' => '%s/assets/images/header/caves-green-thumbnail.jpg',
 				/* translators: header image description */
 				'description' => __( 'Abstract Green', 'commentpress-core' )
-			),
-			'caves-red' => array(
+			],
+			'caves-red' => [
 				'url' => '%s/assets/images/header/caves-red.jpg',
 				'thumbnail_url' => '%s/assets/images/header/caves-red-thumbnail.jpg',
 				/* translators: header image description */
 				'description' => __( 'Abstract Red', 'commentpress-core' )
-			),
-			'caves-blue' => array(
+			],
+			'caves-blue' => [
 				'url' => '%s/assets/images/header/caves-blue.jpg',
 				'thumbnail_url' => '%s/assets/images/header/caves-blue-thumbnail.jpg',
 				/* translators: header image description */
 				'description' => __( 'Abstract Blue', 'commentpress-core' )
-			),
-			'caves-violet' => array(
+			],
+			'caves-violet' => [
 				'url' => '%s/assets/images/header/caves-violet.jpg',
 				'thumbnail_url' => '%s/assets/images/header/caves-violet-thumbnail.jpg',
 				/* translators: header image description */
 				'description' => __( 'Abstract Violet', 'commentpress-core' )
-			)
-		)
+			]
+		]
 	);
 
 	// Auto feed links.
@@ -146,7 +146,7 @@ function commentpress_enqueue_scripts_and_styles() {
 	wp_enqueue_style(
 		'cp_layout_css',
 		get_template_directory_uri() . '/assets/css/screen-default' . $dev . '.css',
-		array(),
+		[],
 		COMMENTPRESS_VERSION, // Version.
 		'all' // Media.
 	);
@@ -159,7 +159,7 @@ function commentpress_enqueue_scripts_and_styles() {
 	wp_enqueue_style(
 		'cp_webfont_css',
 		set_url_scheme( 'http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' ),
-		array( 'cp_layout_css' ),
+		[ 'cp_layout_css' ],
 		null, // No version, thanks.
 		null // No media, thanks.
 	);
@@ -168,7 +168,7 @@ function commentpress_enqueue_scripts_and_styles() {
 	wp_enqueue_style(
 		'cp_colours_css',
 		get_template_directory_uri() . '/assets/css/colours-01' . $dev . '.css',
-		array( 'cp_webfont_css' ),
+		[ 'cp_webfont_css' ],
 		COMMENTPRESS_VERSION, // Version.
 		'all' // Media.
 	);
@@ -190,7 +190,7 @@ function commentpress_enqueue_scripts_and_styles() {
 		wp_enqueue_script(
 			'cp_common_js',
 			get_template_directory_uri() . '/assets/js/cp_js_common' . $dev . '.js',
-			array( 'jquery_commentpress' ),
+			[ 'jquery_commentpress' ],
 			COMMENTPRESS_VERSION // Version.
 		);
 
@@ -205,18 +205,18 @@ function commentpress_enqueue_scripts_and_styles() {
 			wp_enqueue_script(
 				'cp_form',
 				plugins_url( 'commentpress-core/assets/js/jquery.commentform' . $dev . '.js', COMMENTPRESS_PLUGIN_FILE ),
-				array( 'cp_common_js' ),
+				[ 'cp_common_js' ],
 				COMMENTPRESS_VERSION // Version.
 			);
 
 			// Localisation array.
-			$vars = array(
-				'localisation' => array(
+			$vars = [
+				'localisation' => [
 					'submit' => __( 'Edit Comment', 'commentpress-core' ),
 					'title' => __( 'Leave a comment', 'commentpress-core' ),
 					'edit_title' => __( 'Edit comment', 'commentpress-core' ),
-				),
-			);
+				],
+			];
 
 			// Localise with wp function.
 			wp_localize_script(
@@ -234,7 +234,7 @@ function commentpress_enqueue_scripts_and_styles() {
 			wp_enqueue_script(
 				'cp_special',
 				get_template_directory_uri() . '/assets/js/cp_js_all_comments.js',
-				array( 'cp_form' ),
+				[ 'cp_form' ],
 				COMMENTPRESS_VERSION // Version.
 			);
 
@@ -265,7 +265,7 @@ function commentpress_enqueue_print_styles() {
 	wp_enqueue_style(
 		'cp_print_css',
 		get_template_directory_uri() . '/assets/css/print' . $dev . '.css',
-		array( 'cp_layout_css' ),
+		[ 'cp_layout_css' ],
 		COMMENTPRESS_VERSION, // Version.
 		'print'
 	);
@@ -541,19 +541,19 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 	$html = '';
 
 	// Get all approved comments.
-	$all_comments = get_comments( array(
+	$all_comments = get_comments( [
 		'status' => 'approve',
 		'orderby' => 'comment_post_ID,comment_date',
 		'order' => 'ASC',
 		'post_type' => $page_or_post,
-	) );
+	] );
 
 	// Kick out if none.
 	if ( count( $all_comments ) == 0 ) return $html;
 
 	// Build list of posts to which they are attached.
-	$posts_with = array();
-	$post_comment_counts = array();
+	$posts_with = [];
+	$post_comment_counts = [];
 	foreach( $all_comments AS $comment ) {
 
 		// Add to posts with comments array.
@@ -574,12 +574,12 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 	if ( count( $posts_with ) == 0 ) return $html;
 
 	// Get those posts.
-	$posts = get_posts( array(
+	$posts = get_posts( [
 		'orderby' => 'comment_count',
 		'order' => 'DESC',
 		'post_type' => $page_or_post,
 		'include' => $posts_with,
-	) );
+	] );
 
 	// Kick out if none.
 	if ( count( $posts ) == 0 ) return $html;
@@ -689,7 +689,7 @@ function commentpress_get_all_comments_page_content() {
 	// Allow oEmbed in comments.
 	global $wp_embed;
 	if ( $wp_embed instanceof WP_Embed ) {
-		add_filter( 'comment_text', array( $wp_embed, 'autoembed' ), 1 );
+		add_filter( 'comment_text', [ $wp_embed, 'autoembed' ], 1 );
 	}
 
 	// Declare access to globals.
@@ -816,7 +816,7 @@ add_filter( 'register', 'commentpress_add_loginout_id' );
 function commentpress_register_widget_areas() {
 
 	// Define an area where a widget may be placed.
-	register_sidebar( array(
+	register_sidebar( [
 		'name' => __( 'CommentPress Footer', 'commentpress-core' ),
 		'id' => 'cp-license-8',
 		'description' => __( 'An optional widget area in the footer of a CommentPress theme', 'commentpress-core' ),
@@ -824,7 +824,7 @@ function commentpress_register_widget_areas() {
 		'after_widget' => "</div>",
 		'before_title' => '<h3 class="widget-title">',
 		'after_title' => '</h3>',
-	) );
+	] );
 
 }
 
