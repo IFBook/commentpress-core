@@ -96,7 +96,7 @@ class Commentpress_Core_Parser {
 	 *
 	 * @param object $parent_obj a reference to the parent object.
 	 */
-	function __construct( $parent_obj ) {
+	public function __construct( $parent_obj ) {
 
 		// Store reference to parent.
 		$this->parent_obj = $parent_obj;
@@ -398,7 +398,7 @@ class Commentpress_Core_Parser {
 	 *
 	 * @since 3.0
 	 */
-	function _init() {
+	public function _init() {
 
 	}
 
@@ -413,7 +413,7 @@ class Commentpress_Core_Parser {
 	 * @param str $tag The tag to filter by.
 	 * @return str $content the parsed content.
 	 */
-	function _parse_content( $content, $tag = 'p|ul|ol' ) {
+	public function _parse_content( $content, $tag = 'p|ul|ol' ) {
 
 		// Parse standalone captioned images.
 		$content = $this->_parse_captions( $content );
@@ -684,7 +684,7 @@ class Commentpress_Core_Parser {
 	 * @param str $tag The tag to filter by.
 	 * @return array $matches The ordered array of matched items.
 	 */
-	function _get_text_matches( $content, $tag = 'p|ul|ol' ) {
+	public function _get_text_matches( $content, $tag = 'p|ul|ol' ) {
 
 		// Filter out embedded tweets.
 		$content = $this->_filter_twitter_embeds( $content );
@@ -725,7 +725,7 @@ class Commentpress_Core_Parser {
 	 * @param str $tag The tag to filter by.
 	 * @return array $text_signatures The ordered array of text signatures.
 	 */
-	function _generate_text_signatures( $content, $tag = 'p|ul|ol' ) {
+	public function _generate_text_signatures( $content, $tag = 'p|ul|ol' ) {
 
 		// Don't filter if a password is required.
 		if ( post_password_required() ) {
@@ -808,7 +808,7 @@ class Commentpress_Core_Parser {
 	 * @param str $content The post content.
 	 * @return str $content The parsed content.
 	 */
-	function _parse_lines( $content ) {
+	public function _parse_lines( $content ) {
 
 		// Parse standalone captioned images.
 		$content = $this->_parse_captions( $content );
@@ -934,7 +934,7 @@ class Commentpress_Core_Parser {
 	 * @param str $content The post content.
 	 * @return array $output_array The ordered array of matched items.
 	 */
-	function _get_line_matches( $content ) {
+	public function _get_line_matches( $content ) {
 
 		// Filter out embedded tweets.
 		$content = $this->_filter_twitter_embeds( $content );
@@ -991,7 +991,7 @@ class Commentpress_Core_Parser {
 	 * @param str $content The post content.
 	 * @return array $text_signatures The ordered array of text signatures.
 	 */
-	function _generate_line_signatures( $content ) {
+	public function _generate_line_signatures( $content ) {
 
 		// Don't filter if a password is required.
 		if ( post_password_required() ) {
@@ -1098,7 +1098,7 @@ class Commentpress_Core_Parser {
 	 * @param str $content The post content.
 	 * @return str $content The parsed content.
 	 */
-	function _parse_blocks( $content ) {
+	public function _parse_blocks( $content ) {
 
 		// Parse standalone captioned images.
 		$content = $this->_parse_captions( $content );
@@ -1207,7 +1207,7 @@ class Commentpress_Core_Parser {
 	 * @param str $content The post content.
 	 * @return array $output_array The ordered array of matched items.
 	 */
-	function _get_block_matches( $content ) {
+	public function _get_block_matches( $content ) {
 
 		// Filter out embedded tweets.
 		$content = $this->_filter_twitter_embeds( $content );
@@ -1321,7 +1321,7 @@ class Commentpress_Core_Parser {
 	 * @param str $content The post content.
 	 * @return array $text_signatures The ordered array of text signatures.
 	 */
-	function _generate_block_signatures( $content ) {
+	public function _generate_block_signatures( $content ) {
 
 		// Don't filter if a password is required.
 		if ( post_password_required() ) {
@@ -1398,7 +1398,7 @@ class Commentpress_Core_Parser {
 	 * @param str $content The post content.
 	 * @return str $content The modified post content.
 	 */
-	function _has_comment_block_quicktag( $content ) {
+	public function _has_comment_block_quicktag( $content ) {
 
 		// Init.
 		$return = false;
@@ -1426,7 +1426,7 @@ class Commentpress_Core_Parser {
 	 * @param str $content The post content.
 	 * @return str $content The modified post content.
 	 */
-	function _strip_comment_block_quicktag( $content ) {
+	public function _strip_comment_block_quicktag( $content ) {
 
 		// Look for < !--commentblock--> comment
 		if ( preg_match('/<' . '!--commentblock--><br \/>/', $content, $matches) ) {
@@ -1465,7 +1465,7 @@ class Commentpress_Core_Parser {
 	 * @param str $content The post content.
 	 * @return str $content The modified post content.
 	 */
-	function _strip_shortcodes( $content ) {
+	public function _strip_shortcodes( $content ) {
 
 		/*
 		------------------------------------------------------------------------
@@ -1617,7 +1617,7 @@ class Commentpress_Core_Parser {
 	 * @return str $text_signature The generated text signature.
 	 *
 	 */
-	function _generate_text_signature( $text ) {
+	public function _generate_text_signature( $text ) {
 
 		// Get an array of words from the text.
 		$words = explode( ' ', preg_replace( '/[^A-Za-z]/', ' ', html_entity_decode($text) ) );
@@ -1660,7 +1660,7 @@ class Commentpress_Core_Parser {
 	 * @param str $content The post content.
 	 * @return str $content The filtered post content.
 	 */
-	function _filter_twitter_embeds( $content ) {
+	public function _filter_twitter_embeds( $content ) {
 
 		// Test for a WP 3.4 function.
 		if ( function_exists( 'wp_get_themes' ) ) {
@@ -1712,7 +1712,7 @@ class Commentpress_Core_Parser {
 	 * @param str $content The post content.
 	 * @return str $content The filtered post content.
 	 */
-	function _parse_captions( $content ) {
+	public function _parse_captions( $content ) {
 
 		// Filter captioned images that are *not* inside other tags.
 		$pattern = array(
@@ -1752,7 +1752,7 @@ class Commentpress_Core_Parser {
 	 * @param int $post_id Post ID.
 	 * @param string $library Media library used for the shortcode.
 	 */
-	function _parse_audio_shortcode( $html, $atts, $file, $post_id, $library ) {
+	public function _parse_audio_shortcode( $html, $atts, $file, $post_id, $library ) {
 
 		// Wrap.
 		return '<p><span class="cp-audio-shortcode">' . $html . '</span></p>';
@@ -1772,7 +1772,7 @@ class Commentpress_Core_Parser {
 	 * @param int $post_id Post ID.
 	 * @param string $library Media library used for the shortcode.
 	 */
-	function _parse_video_shortcode( $html, $atts, $file, $post_id, $library ) {
+	public function _parse_video_shortcode( $html, $atts, $file, $post_id, $library ) {
 
 		// Replace enclosing div with span.
 		$html = str_replace( '<div', '<span', $html );
@@ -1793,7 +1793,7 @@ class Commentpress_Core_Parser {
 	 * @param string $content The post content.
 	 * @return string $content The filtered post content.
 	 */
-	function _parse_blockquotes_in_paras( $content ) {
+	public function _parse_blockquotes_in_paras( $content ) {
 
 		// Make sure we strip leading br.
 		$content = str_replace(
@@ -1831,7 +1831,7 @@ class Commentpress_Core_Parser {
 	 * @param int $post_ID The numeric ID of the post.
 	 * @return array $sorted_comments The array of comment data.
 	 */
-	function _get_sorted_comments( $post_ID ) {
+	public function _get_sorted_comments( $post_ID ) {
 
 		// Init return.
 		$sorted_comments = array();
@@ -1915,7 +1915,7 @@ class Commentpress_Core_Parser {
 	 * @param array $comments The array of comment objects.
 	 * @return array $filtered The array of comments for the current page.
 	 */
-	function _multipage_comment_filter( $comments ) {
+	public function _multipage_comment_filter( $comments ) {
 
 		// Access globals.
 		global $post, $page, $multipage;
@@ -1984,7 +1984,7 @@ class Commentpress_Core_Parser {
 	 * @param integer $confidence The confidence level of paragraph identity - default 90%.
 	 * @return array $assigned The array with text signatures as keys and array of comments as values.
 	 */
-	function _assign_comments( $comments, $text_signatures, $confidence = 90 ) {
+	public function _assign_comments( $comments, $text_signatures, $confidence = 90 ) {
 
 	  	// Init returned array.
 	  	// NB: we use a very unlikely key for page-level comments: WHOLE_PAGE_OR_POST_COMMENTS.

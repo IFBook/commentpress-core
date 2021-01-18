@@ -84,7 +84,7 @@ class Commentpress_Multisite_Loader {
 	 *
 	 * @since 3.3
 	 */
-	function __construct() {
+	public function __construct() {
 
 		// Init.
 		$this->initialise();

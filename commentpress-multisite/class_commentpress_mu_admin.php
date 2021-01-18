@@ -45,7 +45,7 @@ class Commentpress_Multisite_Admin {
 	 *
 	 * @param object $parent_obj a reference to the parent object.
 	 */
-	function __construct( $parent_obj = null ) {
+	public function __construct( $parent_obj = null ) {
 
 		// Store reference to "parent" (calling obj, not OOP parent).
 		$this->parent_obj = $parent_obj;

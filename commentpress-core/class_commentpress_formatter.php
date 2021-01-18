@@ -36,7 +36,7 @@ class Commentpress_Core_Formatter {
 	 *
 	 * @param object $parent_obj A reference to the parent object.
 	 */
-	function __construct( $parent_obj = null ) {
+	public function __construct( $parent_obj = null ) {
 
 		// Store reference to "parent" (calling obj, not OOP parent).
 		$this->parent_obj = $parent_obj;
@@ -201,7 +201,7 @@ class Commentpress_Core_Formatter {
 	 *
 	 * @since 3.3
 	 */
-	function _init() {
+	public function _init() {
 
 		// Register hooks.
 		$this->_register_hooks();
@@ -215,7 +215,7 @@ class Commentpress_Core_Formatter {
 	 *
 	 * @since 3.3
 	 */
-	function _register_hooks() {
+	public function _register_hooks() {
 
 		// Set blog type options.
 		add_filter( 'cp_blog_type_options', array( $this, 'blog_type_options' ), 21 );

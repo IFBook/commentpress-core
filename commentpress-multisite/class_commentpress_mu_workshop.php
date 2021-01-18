@@ -72,7 +72,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	 *
 	 * @param object $parent_obj a reference to the parent object.
 	 */
-	function __construct( $parent_obj = null ) {
+	public function __construct( $parent_obj = null ) {
 
 		// Store reference to "parent" (calling obj, not OOP parent).
 		$this->parent_obj = $parent_obj;
@@ -433,7 +433,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	 *
 	 * @since 3.3
 	 */
-	function _init() {
+	public function _init() {
 
 		// Is this the back end?
 		if ( is_admin() ) {
@@ -508,7 +508,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	 *
 	 * @since 3.3
 	 */
-	function _register_hooks() {
+	public function _register_hooks() {
 
 		// Override CommentPress Core "Title Page".
 		add_filter( 'cp_nav_title_page_title', array( $this, 'filter_nav_title_page_title' ), 25 );
@@ -549,7 +549,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	 *
 	 * @return str $element The admin form element.
 	 */
-	function _buddypress_admin_form() {
+	public function _buddypress_admin_form() {
 
 		// Check if we already have it switched on.
 		if ( $this->db->option_get( 'cpmu_bp_workshop_nomenclature' ) == '1' ) {
@@ -603,7 +603,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	 *
 	 * @since 3.3
 	 */
-	function _buddypress_admin_update() {
+	public function _buddypress_admin_update() {
 
 		// Init.
 		$cpmu_bp_groupblog_nomenclature = 0;
@@ -652,7 +652,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	 *
 	 * @return array $settings The default settings.
 	 */
-	function _get_default_settings( $settings ) {
+	public function _get_default_settings( $settings ) {
 
 		// Add our options.
 		$settings['cpmu_bp_workshop_nomenclature'] = $this->groupblog_nomenclature;
@@ -674,7 +674,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	 *
 	 * @return str $name The legacy singular name of a groupblog.
 	 */
-	function _get_legacy_name() {
+	public function _get_legacy_name() {
 
 		// --<
 		return __( 'Workshop', 'commentpress-core' );
@@ -690,7 +690,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	 *
 	 * @return str $name The legacy plural name of a groupblog.
 	 */
-	function _get_legacy_plural() {
+	public function _get_legacy_plural() {
 
 		// --<
 		return __( 'Workshops', 'commentpress-core' );
@@ -706,7 +706,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	 *
 	 * @return str $name The legacy slug of a groupblog.
 	 */
-	function _get_legacy_slug() {
+	public function _get_legacy_slug() {
 
 		// --<
 		return 'workshop';

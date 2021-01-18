@@ -2633,7 +2633,7 @@ class Walker_Comment_Press extends Walker_Comment {
 	 * @param int $depth Depth of comment.
 	 * @param array $args Uses 'style' argument for type of HTML list.
 	 */
-	function start_lvl( &$output, $depth = 0, $args = array() ) {
+	public function start_lvl( &$output, $depth = 0, $args = array() ) {
 
 		// Store depth.
 		$GLOBALS['comment_depth'] = $depth + 1;

@@ -36,7 +36,7 @@ class Commentpress_Multisite_Revisions {
 	 *
 	 * @param object $parent_obj The reference to the parent object.
 	 */
-	function __construct( $parent_obj = null ) {
+	public function __construct( $parent_obj = null ) {
 
 		// Store reference to "parent" (calling obj, not OOP parent).
 		$this->parent_obj = $parent_obj;
@@ -172,7 +172,7 @@ class Commentpress_Multisite_Revisions {
 	 *
 	 * @since 3.3
 	 */
-	function _init() {
+	public function _init() {
 
 		// Register hooks.
 		$this->_register_hooks();
@@ -186,7 +186,7 @@ class Commentpress_Multisite_Revisions {
 	 *
 	 * @since 3.3
 	 */
-	function _register_hooks() {
+	public function _register_hooks() {
 
 		// Add filter for new post title prefix.
 		add_filter( 'commentpress_new_post_title_prefix', array( $this, 'new_post_title_prefix' ), 21, 1 );

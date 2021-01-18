@@ -91,7 +91,7 @@ class Commentpress_Core_Navigator {
 	 *
 	 * @param object $parent_obj A reference to the parent object.
 	 */
-	function __construct( $parent_obj ) {
+	public function __construct( $parent_obj ) {
 
 		// Store reference to parent.
 		$this->parent_obj = $parent_obj;
@@ -571,7 +571,7 @@ class Commentpress_Core_Navigator {
 	 * @param int $page_id The page ID.
 	 * @return int $number The number of the page.
 	 */
-	function _get_page_number( $page_id ) {
+	public function _get_page_number( $page_id ) {
 
 		// Init.
 		$num = 0;
@@ -596,7 +596,7 @@ class Commentpress_Core_Navigator {
 	 *
 	 * @since 3.3
 	 */
-	function redirect_to_child() {
+	public function redirect_to_child() {
 
 		// Only on pages.
 		if ( ! is_page() ) return;
@@ -781,7 +781,7 @@ class Commentpress_Core_Navigator {
 	 *
 	 * @since 3.3
 	 */
-	function _init() {
+	public function _init() {
 
 		/**
 		 * is_page() and is_single() are not yet defined, so we init this object when
@@ -802,7 +802,7 @@ class Commentpress_Core_Navigator {
 	 * @param array $pages The array of page objects.
 	 * @return array $subpages All subpages.
 	 */
-	function _filter_chapters( $pages ) {
+	public function _filter_chapters( $pages ) {
 
 		// Init return.
 		$subpages = array();
@@ -852,7 +852,7 @@ class Commentpress_Core_Navigator {
 	 * @param array $pages The array of page objects.
 	 * @return array $subpages All subpages.
 	 */
-	function _get_first_child( $pages ) {
+	public function _get_first_child( $pages ) {
 
 		// If we have any.
 		if ( count( $pages ) > 0 ) {
@@ -907,7 +907,7 @@ class Commentpress_Core_Navigator {
 	 *
 	 * @param array $pages The array of page objects in the 'book'.
 	 */
-	function _generate_page_numbers( $pages ) {
+	public function _generate_page_numbers( $pages ) {
 
 		// If we have any.
 		if ( count( $pages ) > 0 ) {
@@ -1035,7 +1035,7 @@ class Commentpress_Core_Navigator {
 	 * @param array $pages An array of page objects.
 	 * @return bool $clean The modified array pf page objects.
 	 */
-	function _filter_theme_my_login_page( $pages ) {
+	public function _filter_theme_my_login_page( $pages ) {
 
 		// Init return.
 		$clean = array();
@@ -1073,7 +1073,7 @@ class Commentpress_Core_Navigator {
 	 * @param object $page_obj The WordPress page object.
 	 * @return boolean $success True if TML page, false otherwise.
 	 */
-	function _detect_login_page( $page_obj ) {
+	public function _detect_login_page( $page_obj ) {
 
 		// Compat with Theme My Login.
 		if(
@@ -1110,7 +1110,7 @@ class Commentpress_Core_Navigator {
 	 * @param int $arabic The numeric Arabic value.
 	 * @return str $roman The Roman equivalent.
 	 */
-	function _number_to_roman( $arabic ) {
+	public function _number_to_roman( $arabic ) {
 
 		$ones = array("", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX");
 		$tens = array("", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC");
@@ -1163,7 +1163,7 @@ class Commentpress_Core_Navigator {
 	 * @param int $post_id The queried page ID.
 	 * @return int $post_id The overridden page ID.
 	 */
-	function _get_top_parent_id( $post_id ) {
+	public function _get_top_parent_id( $post_id ) {
 
 		// Get page data.
 		$page = get_page( $post_id );
@@ -1193,7 +1193,7 @@ class Commentpress_Core_Navigator {
 	 * @param str $mode Either 'structural' or 'readable'.
 	 * @return array $pages All 'book' pages.
 	 */
-	function _parse_pages( $mode ) {
+	public function _parse_pages( $mode ) {
 
 		// Init return.
 		$pages = array();
@@ -1357,7 +1357,7 @@ class Commentpress_Core_Navigator {
 	 * @param str $mode Either 'structural' or 'readable'.
 	 * @return array $pages All 'book' pages.
 	 */
-	function _parse_menu( $mode ) {
+	public function _parse_menu( $mode ) {
 
 		// Init return.
 		$pages = array();
@@ -1462,7 +1462,7 @@ class Commentpress_Core_Navigator {
 	 * @param array $menu_items An array of menu item objects.
 	 * @return array $sub_items All lowest level items.
 	 */
-	function _filter_menu( $menu_items ) {
+	public function _filter_menu( $menu_items ) {
 
 		// Init return.
 		$sub_items = array();
@@ -1504,7 +1504,7 @@ class Commentpress_Core_Navigator {
 	 * @param obj $menu_obj The menu item object.
 	 * @return array $sub_items The menu item children.
 	 */
-	function _get_menu_item_children( $menu_items, $menu_obj ) {
+	public function _get_menu_item_children( $menu_items, $menu_obj ) {
 
 		// Init return.
 		$sub_items = array();
@@ -1542,7 +1542,7 @@ class Commentpress_Core_Navigator {
 	 * @param obj $menu_obj The menu item object.
 	 * @return int|bool $menu_item The parent menu item - or false if not found.
 	 */
-	function _get_menu_item_parent( $menu_obj ) {
+	public function _get_menu_item_parent( $menu_obj ) {
 
 		// If we have any.
 		if ( count( $this->menu_objects ) > 0 ) {
@@ -1577,7 +1577,7 @@ class Commentpress_Core_Navigator {
 	 * @param object $menu_obj The queried menu object.
 	 * @return object $parent_obj The parent object or false if not found.
 	 */
-	function _get_top_menu_obj( $menu_obj ) {
+	public function _get_top_menu_obj( $menu_obj ) {
 
 		/*
 		 * There is little point walking the menu tree because menu items can

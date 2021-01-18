@@ -254,7 +254,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @param object $parent_obj A reference to the parent object.
 	 */
-	function __construct( $parent_obj ) {
+	public function __construct( $parent_obj ) {
 
 		// Store reference to parent.
 		$this->parent_obj = $parent_obj;
@@ -271,7 +271,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @since 3.0
 	 */
-	function initialise() {
+	public function initialise() {
 
 		// Load options array.
 		$this->commentpress_options = $this->option_wp_get( 'commentpress_options', $this->commentpress_options );
@@ -3426,7 +3426,7 @@ class Commentpress_Core_Database {
 	 * @return int $post The WordPress post object to make a copy of.
 	 * @return int $new_post_id The numeric ID of the new post.
 	 */
-	function _create_new_post( $post ) {
+	public function _create_new_post( $post ) {
 
 		// Define basics.
 		$new_post = array(
@@ -3477,7 +3477,7 @@ class Commentpress_Core_Database {
 	 *
 	 * @return int $title_id The numeric ID of the Title Page.
 	 */
-	function _create_title_page() {
+	public function _create_title_page() {
 
 		// Get the option, if it exists.
 		$page_exists = $this->option_get( 'cp_welcome_page' );
@@ -3574,7 +3574,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @return int $general_comments_id The numeric ID of the "General Comments" page.
 	 */
-	function _create_general_comments_page() {
+	public function _create_general_comments_page() {
 
 		// Define general comments page.
 		$general_comments = array(
@@ -3627,7 +3627,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @return int $all_comments_id The numeric ID of the "All Comments" page.
 	 */
-	function _create_all_comments_page() {
+	public function _create_all_comments_page() {
 
 		// Define all comments page.
 		$all_comments = array(
@@ -3680,7 +3680,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @return int $group_id The numeric ID of the "Comments by Author" page.
 	 */
-	function _create_comments_by_author_page() {
+	public function _create_comments_by_author_page() {
 
 		// Define comments by author page.
 		$group = array(
@@ -3733,7 +3733,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @return int $blog_id The numeric ID of the "Blog" page.
 	 */
-	function _create_blog_page() {
+	public function _create_blog_page() {
 
 		// Define blog page.
 		$blog = array(
@@ -3789,7 +3789,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @return int $blog_id The numeric ID of the "Blog Archive" page.
 	 */
-	function _create_blog_archive_page() {
+	public function _create_blog_archive_page() {
 
 		// Define blog archive page.
 		$blog = array(
@@ -3844,7 +3844,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @return int $toc_id The numeric ID of the "Table of Contents" page.
 	 */
-	function _create_toc_page() {
+	public function _create_toc_page() {
 
 		// Define TOC page.
 		$toc = array(
@@ -3893,7 +3893,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @since 3.4
 	 */
-	function _cancel_comment_paging() {
+	public function _cancel_comment_paging() {
 
 		// Store option.
 		$this->_store_wordpress_option( 'page_comments', '' );
@@ -3907,7 +3907,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @since 3.4
 	 */
-	function _reset_comment_paging() {
+	public function _reset_comment_paging() {
 
 		// Reset option.
 		$this->_reset_wordpress_option( 'page_comments' );
@@ -3921,7 +3921,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @since 3.4
 	 */
-	function _clear_widgets() {
+	public function _clear_widgets() {
 
 		// Set backup option.
 		add_option( 'commentpress_sidebars_widgets', $this->option_wp_get( 'sidebars_widgets' ) );
@@ -3944,7 +3944,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @since 3.4
 	 */
-	function _reset_widgets() {
+	public function _reset_widgets() {
 
 		// Reset option.
 		$this->_reset_wordpress_option( 'sidebars_widgets' );
@@ -3961,7 +3961,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 * @param str $name The name of the option.
 	 * @param mixed $value The value of the option.
 	 */
-	function _store_wordpress_option( $name, $value ) {
+	public function _store_wordpress_option( $name, $value ) {
 
 		// Set backup option.
 		add_option( 'commentpress_' . $name, $this->option_wp_get( $name ) );
@@ -3980,7 +3980,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @param str $name The name of the option.
 	 */
-	function _reset_wordpress_option( $name ) {
+	public function _reset_wordpress_option( $name ) {
 
 		// Set the WordPress option.
 		$this->option_wp_set( $name, $this->option_wp_get( 'cp_' . $name ) );
@@ -3997,7 +3997,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @since 3.4
 	 */
-	function _options_create() {
+	public function _options_create() {
 
 		// Init options array.
 		$this->commentpress_options = array(
@@ -4036,7 +4036,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @since 3.4
 	 */
-	function _options_reset() {
+	public function _options_reset() {
 
 		// TOC: show posts by default.
 		$this->option_set( 'cp_show_posts_or_pages_in_toc', $this->toc_content );
@@ -4113,7 +4113,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @since 3.4
 	 */
-	function _options_migrate() {
+	public function _options_migrate() {
 
 		// Get existing options.
 		$old = get_option( 'cp_options', array() );
@@ -4446,7 +4446,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @since 3.4
 	 */
-	function _options_upgrade() {
+	public function _options_upgrade() {
 
 		// Populate options array with current values.
 		$this->commentpress_options = array(
@@ -4485,7 +4485,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @since 3.4
 	 */
-	function _options_delete_legacy() {
+	public function _options_delete_legacy() {
 
 		// Delete paragraph-level commenting option.
 		delete_option( 'cp_para_comments_enabled' );
