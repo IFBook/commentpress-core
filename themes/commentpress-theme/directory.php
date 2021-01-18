@@ -56,7 +56,7 @@ get_header(); ?>
 	if ( class_exists( 'tern_members' ) ) {
 
 		// Init members-list plugin.
-		$members = new tern_members;
+		$members = new tern_members();
 
 		// Set options.
 		$members->members( array(

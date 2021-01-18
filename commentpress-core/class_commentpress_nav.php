@@ -1422,7 +1422,7 @@ class Commentpress_Core_Navigator {
 					if ( isset( $menu_item->object_id ) ) {
 
 						// Init pseudo WP_POST object.
-						$pseudo_post = new stdClass;
+						$pseudo_post = new stdClass();
 
 						// Add post ID.
 						$pseudo_post->ID = $menu_item->object_id;

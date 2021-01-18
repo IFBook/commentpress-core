@@ -314,7 +314,7 @@ endif; // Class_exists.
 global $commentpress_mu;
 
 // Instantiate it.
-$commentpress_mu = new Commentpress_Multisite_Loader;
+$commentpress_mu = new Commentpress_Multisite_Loader();
 
 
 

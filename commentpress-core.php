@@ -164,7 +164,7 @@ function commentpress_activate_core() {
 	if ( is_null( $commentpress_core ) ) {
 
 		// Instantiate it.
-		$commentpress_core = new Commentpress_Core;
+		$commentpress_core = new Commentpress_Core();
 
 	}
 
