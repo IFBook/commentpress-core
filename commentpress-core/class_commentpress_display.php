@@ -1235,6 +1235,28 @@ HELPTEXT;
 
 
 
+	/**
+	 * Allow all CommentPress parent themes in Multisite optional scenario.
+	 *
+	 * @since 3.9.14
+	 *
+	 * @param array $retval The existing array of allowed themes.
+	 * @return array $retval The modified array of allowed themes.
+	 */
+	public function allowed_themes( $retval ) {
+
+		// Allow all parent themes.
+		$retval['commentpress-flat'] = 1;
+		$retval['commentpress-modern'] = 1;
+		$retval['commentpress-theme'] = 1;
+
+		// --<
+		return $retval;
+
+	}
+
+
+
 //##############################################################################
 
 
@@ -1258,6 +1280,23 @@ HELPTEXT;
 		 * Moved mobile checks to class_commentpress_db.php so it only loads as
 		 * needed and so that it loads *after* the old CommentPress loads it.
 		 */
+
+		// Register hooks after parent class has done its thing.
+		add_action( 'commentpress_after_hooks', array( $this, '_register_hooks' ) );
+
+	}
+
+
+
+	/**
+	 * Register hooks.
+	 *
+	 * @since 3.9.14
+	 */
+	function _register_hooks() {
+
+		// Enable CommentPress themes in Multisite optional scenario.
+		add_filter( 'network_allowed_themes', array( $this, 'allowed_themes' ) );
 
 	}
 
