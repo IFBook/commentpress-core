@@ -2352,7 +2352,7 @@ function commentpress_get_comments_by_para() {
 			 *
 			 * @see https://github.com/WordPress/WordPress/blob/5828310157f1805a5f0976d76692c7023e8a895d/wp-includes/comment-template.php#L880
 			 */
-			$walker = new Walker_Comment_Press;
+			$walker = new Walker_Comment_Press();
 
 			// Define args.
 			$args = array(
@@ -2633,7 +2633,7 @@ class Walker_Comment_Press extends Walker_Comment {
 	 * @param int $depth Depth of comment.
 	 * @param array $args Uses 'style' argument for type of HTML list.
 	 */
-	function start_lvl( &$output, $depth = 0, $args = array() ) {
+	public function start_lvl( &$output, $depth = 0, $args = array() ) {
 
 		// Store depth.
 		$GLOBALS['comment_depth'] = $depth + 1;
@@ -4734,7 +4734,7 @@ class CommentPress_Theme_Tabs {
 
 		// Instantiate if need be.
 		if ( null === $instance ) {
-			$instance = new CommentPress_Theme_Tabs;
+			$instance = new CommentPress_Theme_Tabs();
 		}
 
 		// Always return instance.

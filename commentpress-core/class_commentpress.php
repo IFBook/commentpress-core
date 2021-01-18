@@ -106,7 +106,7 @@ class Commentpress_Core {
 	 *
 	 * @since 3.0
 	 */
-	function __construct() {
+	public function __construct() {
 
 		// Init.
 		$this->_init();
@@ -2064,7 +2064,7 @@ class Commentpress_Core {
 	 *
 	 * @since 3.4
 	 */
-	function _init() {
+	public function _init() {
 
 		// ---------------------------------------------------------------------
 		// Database Object.
@@ -2239,7 +2239,7 @@ class Commentpress_Core {
 	 *
 	 * @since 3.4
 	 */
-	function _register_hooks() {
+	public function _register_hooks() {
 
 		// Access version.
 		global $wp_version;
@@ -2366,7 +2366,7 @@ class Commentpress_Core {
 	 *
 	 * @return str $types Array of post types.
 	 */
-	function _get_commentable_cpts() {
+	public function _get_commentable_cpts() {
 
 		// Init.
 		$types = false;
@@ -2413,7 +2413,7 @@ class Commentpress_Core {
 	 *
 	 * @param object $post The WordPress post object.
 	 */
-	function _get_post_formatter_metabox( $post ) {
+	public function _get_post_formatter_metabox( $post ) {
 
 		// ---------------------------------------------------------------------
 		// Override post formatter.
@@ -2494,7 +2494,7 @@ class Commentpress_Core {
 	 *
 	 * @param object $post The WordPress post object.
 	 */
-	function _get_default_sidebar_metabox( $post ) {
+	public function _get_default_sidebar_metabox( $post ) {
 
 		// Allow this to be disabled.
 		if ( apply_filters( 'commentpress_hide_sidebar_option', false ) ) return;
@@ -2549,7 +2549,7 @@ class Commentpress_Core {
 	 *
 	 * @param object $post The WordPress post object.
 	 */
-	function _get_para_numbering_metabox( $post ) {
+	public function _get_para_numbering_metabox( $post ) {
 
 		// Show a title.
 		echo '<div class="cp_starting_para_number_wrapper">
@@ -2589,7 +2589,7 @@ class Commentpress_Core {
 	 * @param str $plugin The name of the plugin.
 	 * @param bool $network_wide True if the plugin is network-activated, false otherwise.
 	 */
-	function _plugin_deactivated( $plugin, $network_wide = null ) {
+	public function _plugin_deactivated( $plugin, $network_wide = null ) {
 
 		// Is it the old CommentPress plugin still active?
 		if ( defined( 'CP_PLUGIN_FILE' ) ) {

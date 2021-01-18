@@ -45,7 +45,7 @@ class Commentpress_Core_Editor {
 	 *
 	 * @param object $parent_obj a reference to the parent object.
 	 */
-	function __construct( $parent_obj = null ) {
+	public function __construct( $parent_obj = null ) {
 
 		// Store reference to "parent" (calling obj, not OOP parent).
 		$this->parent_obj = $parent_obj;
@@ -772,7 +772,7 @@ class Commentpress_Core_Editor {
 	 * @param string $context How to write ampersands. Default 'display' encodes as '&amp;'.
 	 * @return string $link The modified link.
 	 */
-	function get_edit_post_link( $link, $id, $context ) {
+	public function get_edit_post_link( $link, $id, $context ) {
 
 		// Test for WP FEE hash.
 		if ( $link == '#fee-edit-link' ) {

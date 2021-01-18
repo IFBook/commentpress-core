@@ -36,7 +36,7 @@ class Commentpress_Core_Display {
 	 *
 	 * @param object $parent_obj A reference to the parent object.
 	 */
-	function __construct( $parent_obj ) {
+	public function __construct( $parent_obj ) {
 
 		// Store reference to parent.
 		$this->parent_obj = $parent_obj;
@@ -1235,6 +1235,28 @@ HELPTEXT;
 
 
 
+	/**
+	 * Allow all CommentPress parent themes in Multisite optional scenario.
+	 *
+	 * @since 3.9.14
+	 *
+	 * @param array $retval The existing array of allowed themes.
+	 * @return array $retval The modified array of allowed themes.
+	 */
+	public function allowed_themes( $retval ) {
+
+		// Allow all parent themes.
+		$retval['commentpress-flat'] = 1;
+		$retval['commentpress-modern'] = 1;
+		$retval['commentpress-theme'] = 1;
+
+		// --<
+		return $retval;
+
+	}
+
+
+
 //##############################################################################
 
 
@@ -1252,12 +1274,29 @@ HELPTEXT;
 	 *
 	 * @since 3.0
 	 */
-	function _init() {
+	public function _init() {
 
 		/**
 		 * Moved mobile checks to class_commentpress_db.php so it only loads as
 		 * needed and so that it loads *after* the old CommentPress loads it.
 		 */
+
+		// Register hooks after parent class has done its thing.
+		add_action( 'commentpress_after_hooks', array( $this, '_register_hooks' ) );
+
+	}
+
+
+
+	/**
+	 * Register hooks.
+	 *
+	 * @since 3.9.14
+	 */
+	public function _register_hooks() {
+
+		// Enable CommentPress themes in Multisite optional scenario.
+		add_filter( 'network_allowed_themes', array( $this, 'allowed_themes' ) );
 
 	}
 
@@ -1270,7 +1309,7 @@ HELPTEXT;
 	 *
 	 * @return str $admin_page The admin page HTML.
 	 */
-	function _get_admin_form() {
+	public function _get_admin_form() {
 
 		// Sanitise admin page URL.
 		$url = $_SERVER['REQUEST_URI'];
@@ -1358,7 +1397,7 @@ HELPTEXT;
 	 *
 	 * @return str $options The options markup.
 	 */
-	function _get_options() {
+	public function _get_options() {
 
 		// Define CommentPress Core theme options.
 		$options = '
@@ -1505,7 +1544,7 @@ HELPTEXT;
 	 *
 	 * @return str $html The markup.
 	 */
-	function _get_optional_options() {
+	public function _get_optional_options() {
 
 		// Init.
 		$html = '';
@@ -1619,7 +1658,7 @@ HELPTEXT;
 	 *
 	 * @return str $upgrade The upgrade markup.
 	 */
-	function _get_upgrade() {
+	public function _get_upgrade() {
 
 		// Init.
 		$upgrade = '';
@@ -2020,7 +2059,7 @@ HELPTEXT;
 	 *
 	 * @return str $html The multisite markup, default is empty.
 	 */
-	function _get_deactivate() {
+	public function _get_deactivate() {
 
 		// Do this via a filter, so only the Multisite object returns anything.
 		return apply_filters( 'cpmu_deactivate_commentpress_element', '' );
@@ -2036,7 +2075,7 @@ HELPTEXT;
 	 *
 	 * @return str $reset The reset button markup.
 	 */
-	function _get_reset() {
+	public function _get_reset() {
 
 		// Define label.
 		$label = __( 'Reset options to plugin defaults', 'commentpress-core' );
@@ -2063,7 +2102,7 @@ HELPTEXT;
 	 *
 	 * @return str $editor The editor option markup.
 	 */
-	function _get_editor() {
+	public function _get_editor() {
 
 		// Define labels.
 		$editor_label = __( 'Comment form editor', 'commentpress-core' );
@@ -2109,7 +2148,7 @@ HELPTEXT;
 	 *
 	 * @return str $editor The markup.
 	 */
-	function _get_toc() {
+	public function _get_toc() {
 
 		// Define labels.
 		$toc_label = __( 'Table of Contents contains', 'commentpress-core' );
@@ -2178,7 +2217,7 @@ HELPTEXT;
 	 *
 	 * @return str $toc The markup.
 	 */
-	function _get_sidebar() {
+	public function _get_sidebar() {
 
 		// Allow this to be disabled.
 		if ( apply_filters( 'commentpress_hide_sidebar_option', false ) ) return;
@@ -2220,7 +2259,7 @@ HELPTEXT;
 	 *
 	 * @return str $override The markup.
 	 */
-	function _get_override() {
+	public function _get_override() {
 
 		// Define label.
 		$label = __( 'Enable "live" comment refreshing (Please note: may cause heavy load on your server)', 'commentpress-core' );
@@ -2247,7 +2286,7 @@ HELPTEXT;
 	 *
 	 * @return str $html The markup for the button.
 	 */
-	function _get_do_not_parse() {
+	public function _get_do_not_parse() {
 
 			$description = __( 'Note: when comments are closed on an entry and there are no comments on that entry, if this option is set to "Yes" then the content will not be parsed for paragraphs, lines or blocks. Comments will also not be parsed, meaning that the entry behaves the same as content which is not commentable. Default prior to 3.8.10 was "No" - all content was always parsed.', 'commentpress-core' );
 
@@ -2279,7 +2318,7 @@ HELPTEXT;
 	 *
 	 * @return str $html The markup for the button.
 	 */
-	function _get_page_nav_enabled() {
+	public function _get_page_nav_enabled() {
 
 		// Define override.
 		$html = '
@@ -2364,7 +2403,7 @@ HELPTEXT;
 	 *
 	 * @return str $override The markup.
 	 */
-	function _get_textblock_meta() {
+	public function _get_textblock_meta() {
 
 		// Define override.
 		$override = '
@@ -2393,7 +2432,7 @@ HELPTEXT;
 	 *
 	 * @return str $submit The submit button HTML.
 	 */
-	function _get_submit() {
+	public function _get_submit() {
 
 		// Define label.
 		$label = __( 'Save Changes', 'commentpress-core' );

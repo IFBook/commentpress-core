@@ -63,7 +63,7 @@ class Commentpress_Multisite_Wordpress {
 	 *
 	 * @param object $parent_obj A reference to the parent object.
 	 */
-	function __construct( $parent_obj = null ) {
+	public function __construct( $parent_obj = null ) {
 
 		// Store reference to "parent" (calling obj, not OOP parent).
 		$this->parent_obj = $parent_obj;
@@ -295,7 +295,7 @@ class Commentpress_Multisite_Wordpress {
 	 *
 	 * @since 3.3
 	 */
-	function _init() {
+	public function _init() {
 
 		// Register hooks.
 		$this->_register_hooks();
@@ -309,7 +309,7 @@ class Commentpress_Multisite_Wordpress {
 	 *
 	 * @since 3.3
 	 */
-	function _register_hooks() {
+	public function _register_hooks() {
 
 		// Add form elements to signup form.
 		add_action( 'signup_blogform', array( $this, 'signup_blogform' ) );
@@ -358,7 +358,7 @@ class Commentpress_Multisite_Wordpress {
 	 * @param int $site_id The numeric ID of the WordPress parent site.
 	 * @param array $meta The meta data of the WordPress blog.
 	 */
-	function _create_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
+	public function _create_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 
 		// Wpmu_new_blog calls this *after* restore_current_blog, so we need to do it again.
 		switch_to_blog( $blog_id );
@@ -380,7 +380,7 @@ class Commentpress_Multisite_Wordpress {
 	 *
 	 * @return str $workflow_html The HTML form element.
 	 */
-	function _get_workflow() {
+	public function _get_workflow() {
 
 		// Init.
 		$workflow_html = '';
@@ -416,7 +416,7 @@ class Commentpress_Multisite_Wordpress {
 	 *
 	 * @return str $type_html The HTML form element.
 	 */
-	function _get_blogtype() {
+	public function _get_blogtype() {
 
 		// Init.
 		$type_html = '';
@@ -454,7 +454,7 @@ class Commentpress_Multisite_Wordpress {
 	 *
 	 * @since 3.3
 	 */
-	function _network_admin_form() {
+	public function _network_admin_form() {
 
 		// Only allow network admins through.
 		if( is_super_admin() == false ) {
@@ -595,7 +595,7 @@ class Commentpress_Multisite_Wordpress {
 	 *
 	 * @return str Empty string by default, but may be overridden.
 	 */
-	function _additional_multisite_options() {
+	public function _additional_multisite_options() {
 
 		// Return whatever plugins send.
 		return apply_filters( 'cpmu_network_multisite_options_form', '' );
@@ -611,7 +611,7 @@ class Commentpress_Multisite_Wordpress {
 	 *
 	 * @return str Empty string by default, but may be overridden.
 	 */
-	function _additional_form_options() {
+	public function _additional_form_options() {
 
 		// Return whatever plugins send.
 		return apply_filters( 'cpmu_network_options_form', '' );
@@ -628,7 +628,7 @@ class Commentpress_Multisite_Wordpress {
 	 * @param array $existing_options The existing options.
 	 * @return array $existing_options The modified options.
 	 */
-	function _get_default_settings( $existing_options ) {
+	public function _get_default_settings( $existing_options ) {
 
 		// Default Multisite options.
 		$defaults = array(
@@ -659,7 +659,7 @@ class Commentpress_Multisite_Wordpress {
 	 *
 	 * @since 3.3
 	 */
-	function _network_admin_update() {
+	public function _network_admin_update() {
 
 		// Init.
 		$cpmu_force_commentpress = '0';
@@ -694,7 +694,7 @@ class Commentpress_Multisite_Wordpress {
 	 *
 	 * @return bool $disabled True if disabled, false otherwise.
 	 */
-	function _get_workflow_enabled() {
+	public function _get_workflow_enabled() {
 
 		// Get option.
 		$disabled = $this->db->option_get( 'cpmu_disable_translation_workflow' ) == '1' ? false : true;
@@ -716,7 +716,7 @@ class Commentpress_Multisite_Wordpress {
 	 * @param str $content The existing content.
 	 * @return str $content The modified content.
 	 */
-	function _get_title_page_content( $content ) {
+	public function _get_title_page_content( $content ) {
 
 		// Get content.
 		$overridden_content = stripslashes( $this->db->option_get( 'cpmu_title_page_content' ) );
@@ -743,7 +743,7 @@ class Commentpress_Multisite_Wordpress {
 	 *
 	 * @return str $content The default Title Page content.
 	 */
-	function _get_default_title_page_content() {
+	public function _get_default_title_page_content() {
 
 		// --<
 		return __(

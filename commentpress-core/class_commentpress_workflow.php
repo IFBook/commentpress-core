@@ -27,7 +27,7 @@ class Commentpress_Core_Workflow {
 	 *
 	 * @param object $parent_obj a reference to the parent object.
 	 */
-	function __construct( $parent_obj = null ) {
+	public function __construct( $parent_obj = null ) {
 
 		// Store reference to "parent" (calling obj, not OOP parent).
 		$this->parent_obj = $parent_obj;
@@ -461,7 +461,7 @@ class Commentpress_Core_Workflow {
 	 *
 	 * @since 3.0
 	 */
-	function _init() {
+	public function _init() {
 
 		// Register hooks.
 		$this->_register_hooks();
@@ -475,7 +475,7 @@ class Commentpress_Core_Workflow {
 	 *
 	 * @since 3.0
 	 */
-	function _register_hooks() {
+	public function _register_hooks() {
 
 		// Enable workflow.
 		add_filter( 'cp_blog_workflow_exists', array( $this, 'blog_workflow_exists' ), 21 );

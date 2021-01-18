@@ -3,8 +3,8 @@ Contributors: needle, commentpress
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZSKM8T5ZP3SC
 Tags: commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
 Requires at least: 4.8
-Tested up to: 5.5
-Stable tag: 3.9.14
+Tested up to: 5.6
+Stable tag: 3.9.15
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -214,6 +214,10 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 
 == Changelog ==
+
+<h4>3.9.14</h4>
+
+* Allow themes when in multiste but not network-activated
 
 <h4>3.9.13</h4>
 
