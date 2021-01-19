@@ -565,7 +565,7 @@ class Commentpress_Multisite_Wordpress {
 			$content,
 			'cpmu_title_page_content',
 			$settings = [
-				'media_buttons' => false
+				'media_buttons' => false,
 			]
 		);
 		*/
@@ -634,7 +634,7 @@ class Commentpress_Multisite_Wordpress {
 		$defaults = [
 			'cpmu_force_commentpress' => $this->cpmu_force_commentpress,
 			//'cpmu_title_page_content' => $this->cpmu_title_page_content,
-			'cpmu_disable_translation_workflow' => $this->cpmu_disable_translation_workflow
+			'cpmu_disable_translation_workflow' => $this->cpmu_disable_translation_workflow,
 		];
 
 		/**

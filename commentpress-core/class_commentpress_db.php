@@ -2203,10 +2203,8 @@ class Commentpress_Core_Database {
 
 		// Get posts with the about-to-be-deleted post_id (there will be only one, if at all).
 		$previous_versions = get_posts( [
-
 			'meta_key' => $key,
-			'meta_value' => $post_id
-
+			'meta_value' => $post_id,
 		] );
 
 		// Did we get one?
@@ -3437,7 +3435,7 @@ class Commentpress_Core_Database {
 			'to_ping' => '', // Quick fix for Windows.
 			'pinged' => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '' // Quick fix for Windows.
+			'post_excerpt' => '', // Quick fix for Windows.
 		];
 
 		// Add post-specific stuff.
@@ -3519,7 +3517,7 @@ class Commentpress_Core_Database {
 			'pinged' => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
 			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0
+			'menu_order' => 0,
 		];
 
 		// Add post-specific stuff.
@@ -3587,7 +3585,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'pinged' => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
 			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0
+			'menu_order' => 0,
 		];
 
 		// Add post-specific stuff.
@@ -3640,7 +3638,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'pinged' => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
 			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0
+			'menu_order' => 0,
 		];
 
 		// Add post-specific stuff.
@@ -3693,7 +3691,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'pinged' => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
 			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0
+			'menu_order' => 0,
 		];
 
 		// Add post-specific stuff.
@@ -3746,7 +3744,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'pinged' => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
 			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0
+			'menu_order' => 0,
 		];
 
 		// Add post-specific stuff.
@@ -3802,7 +3800,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'pinged' => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
 			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0
+			'menu_order' => 0,
 		];
 
 		// Add post-specific stuff.
@@ -3857,7 +3855,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'pinged' => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
 			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0
+			'menu_order' => 0,
 		];
 
 		// Default page title.
@@ -3932,7 +3930,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'sidebar-1' => [],
 			'sidebar-2' => [],
 			'sidebar-3' => [],
-			'array_version' => 3
+			'array_version' => 3,
 		] );
 
 	}
@@ -4278,7 +4276,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 				'cp_general_comments_page' => $general_comments_page,
 				'cp_all_comments_page' => $all_comments_page,
 				'cp_comments_by_page' => $comments_by_page,
-				'cp_toc_page' => $toc_page
+				'cp_toc_page' => $toc_page,
 			];
 
 			// Merge.
@@ -4466,7 +4464,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'cp_blog_page' => $this->option_wp_get( 'cp_blog_page'),
 
 			// Store setting for what was independently set by the ajax commenting plugin, "off" by default.
-			'cp_para_comments_live' => $this->para_comments_live
+			'cp_para_comments_live' => $this->para_comments_live,
 
 		];
 

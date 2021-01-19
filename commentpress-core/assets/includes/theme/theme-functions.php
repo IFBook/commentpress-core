@@ -187,7 +187,7 @@ function commentpress_customize_site_image( $wp_customize ) {
 	$wp_customize->add_setting( 'commentpress_theme_settings[cp_site_image]', [
 		 'default' => '',
 		 'capability' => 'edit_theme_options',
-		 'type' => 'option'
+		 'type' => 'option',
 	] );
 
 	// Add image control.
@@ -197,7 +197,7 @@ function commentpress_customize_site_image( $wp_customize ) {
 		'description' => apply_filters( 'commentpress_customizer_site_image_description', __( 'Choose an image to represent this site. Other plugins may use this image to illustrate this site - in multisite directory listings, for example.', 'commentpress-core' ) ),
 		'section' => 'cp_site_image',
 		'settings' => 'commentpress_theme_settings[cp_site_image]',
-		'priority'	=>	1
+		'priority'	=>	1,
 	] ) );
 
 }
@@ -229,7 +229,7 @@ function commentpress_customize_site_logo( $wp_customize ) {
 	$wp_customize->add_setting( 'commentpress_theme_settings[cp_inline_header_image]', [
 		 'default' => '',
 		 'capability' => 'edit_theme_options',
-		 'type' => 'option'
+		 'type' => 'option',
 	] );
 
 	// Add image control.
@@ -239,21 +239,21 @@ function commentpress_customize_site_logo( $wp_customize ) {
 		'description' => apply_filters( 'commentpress_customizer_site_logo_description', __( 'You may prefer to display an image instead of text in the header of your site. The image must be a maximum of 70px tall. If it is less tall, then you can adjust the vertical alignment using the "Top padding in px" setting below.', 'commentpress-core' ) ),
 		'section' => 'cp_inline_header_image',
 		'settings' => 'commentpress_theme_settings[cp_inline_header_image]',
-		'priority'	=>	1
+		'priority'	=>	1,
 	] ) );
 
 	// Add padding setting.
 	$wp_customize->add_setting( 'commentpress_theme_settings[cp_inline_header_padding]', [
 		 'default' => '',
 		 'capability' => 'edit_theme_options',
-		 'type' => 'option'
+		 'type' => 'option',
 	] );
 
 	// Add text control.
 	$wp_customize->add_control( 'commentpress_theme_settings[cp_inline_header_padding]', [
 		'label' => __( 'Top padding in px', 'commentpress-core' ),
 		'section' => 'cp_inline_header_image',
-		'type' => 'text'
+		'type' => 'text',
 	] );
 
 }
@@ -478,7 +478,7 @@ function commentpress_get_header_image() {
 			'post_type' => 'attachment',
 			'numberposts' => 1,
 			'post_status' => null,
-			'post_parent' => $commentpress_core->db->option_get( 'cp_toc_page' )
+			'post_parent' => $commentpress_core->db->option_get( 'cp_toc_page' ),
 		];
 
 		// Get them.
@@ -1066,7 +1066,7 @@ function commentpress_has_page_children( $page_obj ) {
 		'post_parent' => $page_obj->ID,
 		'post_type' => 'page',
 		'numberposts' => -1,
-		'post_status' => 'publish'
+		'post_status' => 'publish',
 	];
 
 	// Get page children.
@@ -1794,7 +1794,7 @@ function commentpress_get_comment_activity( $scope = 'all' ) {
 		'number' => 10,
 		'status' => 'approve',
 		// Exclude trackbacks and pingbacks until we decide what to do with them.
-		'type' => ''
+		'type' => '',
 	];
 
 	// If we are on a 404, for example.
@@ -2341,7 +2341,7 @@ function commentpress_get_comments_by_para() {
 			$args = [
 				'style'=> 'ol',
 				'type'=> $comment_type,
-				'callback' => 'commentpress_comments'
+				'callback' => 'commentpress_comments',
 			];
 
 		} else {
@@ -2359,7 +2359,7 @@ function commentpress_get_comments_by_para() {
 				'walker' => $walker,
 				'style'=> 'ol',
 				'type'=> $comment_type,
-				'callback' => 'commentpress_comments'
+				'callback' => 'commentpress_comments',
 			];
 
 		}
@@ -2770,7 +2770,7 @@ function commentpress_comment_reply_link( $args = [], $comment = null, $post = n
 		'login_text' => __( 'Log in to Reply', 'commentpress-core' ),
 		'depth' => 0,
 		'before' => '',
-		'after' => ''
+		'after' => '',
 	];
 
 	// Parse them.
@@ -2930,7 +2930,7 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 				[
 					'reply_text' => sprintf( __( 'Reply to %s', 'commentpress-core' ), get_comment_author() ),
 					'depth' => $depth,
-					'max_depth' => $args['max_depth']
+					'max_depth' => $args['max_depth'],
 				]
 			) );
 
@@ -3272,7 +3272,7 @@ function commentpress_multipager() {
 		'previouspagelink' => '<span class="alignleft">&laquo; ' . __( 'Previous page', 'commentpress-core' ) . '</span>',
 		'pagelink' => '%',
 		'more_file' => '',
-		'echo' => 0
+		'echo' => 0,
 	];
 
 	// Get page links.
@@ -3290,7 +3290,7 @@ function commentpress_multipager() {
 		'before' => '<div class="multipager multipager_all"><span>' . __( 'Pages: ', 'commentpress-core' ) . '</span>',
 		'after' => '</div>',
 		'pagelink' => '<span class="multipager_link">%</span>',
-		'echo' => 0
+		'echo' => 0,
 	] );
 
 	// --<
@@ -3351,7 +3351,7 @@ function commentpress_add_wp_editor() {
 			'unlink',
 			'|',
 			'removeformat',
-			'fullscreen'
+			'fullscreen',
 		]
 
 	);
@@ -3405,7 +3405,7 @@ function commentpress_add_wp_editor() {
 	$quicktags = apply_filters(
 		'commentpress_rte_quicktags',
 		[
-			'buttons' => 'strong,em,ul,ol,li,link,close'
+			'buttons' => 'strong,em,ul,ol,li,link,close',
 		]
 	);
 
@@ -3427,7 +3427,7 @@ function commentpress_add_wp_editor() {
 		'tinymce' => $tinymce_config,
 
 		// Configure Quicktags.
-		'quicktags' => $quicktags
+		'quicktags' => $quicktags,
 
 	];
 
@@ -3582,7 +3582,7 @@ function commentpress_assign_editor_buttons( $buttons ) {
 		'unlink',
 		'|',
 		'removeformat',
-		'fullscreen'
+		'fullscreen',
 	];
 
 }
@@ -3677,7 +3677,7 @@ function commentpress_image_caption_shortcode( $empty = null, $attr, $content ) 
 		'id'	=> '',
 		'align'	=> 'alignnone',
 		'width'	=> '',
-		'caption' => ''
+		'caption' => '',
 	], $attr ) );
 
 	if ( 1 > (int) $width || empty( $caption ) ) {
@@ -3700,7 +3700,7 @@ function commentpress_image_caption_shortcode( $empty = null, $attr, $content ) 
 		[
 			'em' => [],
 			'strong' => [],
-			'a' => array( 'href' )
+			'a' => [ 'href' ],
 		]
 
 	);
@@ -4142,7 +4142,7 @@ function commentpress_get_post_version_info( $post ) {
 	$args = [
 		'numberposts' => 1,
 		'meta_key' => '_cp_newer_version',
-		'meta_value' => $post->ID
+		'meta_value' => $post->ID,
 	];
 
 	// Get the array
@@ -4337,7 +4337,7 @@ function commentpress_sidebars_widgets( $array ) {
 			'sidebar-1' => [],
 			'sidebar-2' => [],
 			'sidebar-3' => [],
-			'array_version' => 3
+			'array_version' => 3,
 		];
 
 	}

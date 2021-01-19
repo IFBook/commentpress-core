@@ -470,7 +470,7 @@ function cpajax_get_new_comments() {
 			'order' => 'DESC',
 			'post_id' => $post_id,
 			'status' => 'approve',
-			'type' => 'comment'
+			'type' => 'comment',
 		];
 
 		// Get them.
@@ -511,7 +511,7 @@ function cpajax_get_new_comments() {
 					'parent' => $comment->comment_parent,
 					'id' => $comment->comment_ID,
 					'text_sig' => $comment->comment_signature,
-					'markup' => $html
+					'markup' => $html,
 				];
 
 				// Increment.

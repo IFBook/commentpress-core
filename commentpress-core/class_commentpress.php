@@ -2374,7 +2374,7 @@ class Commentpress_Core {
 		// NOTE: exactly how do we support CPTs?
 		$args = [
 			//'public'   => true,
-			'_builtin' => false
+			'_builtin' => false,
 		];
 
 		$output = 'names'; // Names or objects, note names is the default.

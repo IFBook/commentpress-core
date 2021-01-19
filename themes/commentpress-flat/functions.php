@@ -46,7 +46,7 @@ function commentpress_setup() {
 		'default-image'          => '',
 		'wp-head-callback'       => 'commentpress_background',
 		'admin-head-callback'    => '',
-		'admin-preview-callback' => ''
+		'admin-preview-callback' => '',
 	] );
 
 	// Allow custom header.
@@ -55,7 +55,7 @@ function commentpress_setup() {
 		'width' => apply_filters( 'cp_header_image_width', 940 ),
 		'height' => apply_filters( 'cp_header_image_height', 67 ),
 		'wp-head-callback' => 'commentpress_header',
-		'admin-head-callback' => 'commentpress_admin_header'
+		'admin-head-callback' => 'commentpress_admin_header',
 	] );
 
 	// Auto feed links.

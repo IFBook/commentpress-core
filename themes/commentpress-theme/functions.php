@@ -53,7 +53,7 @@ function commentpress_setup() {
 			'width' => apply_filters( 'cp_header_image_width', 940 ),
 			'height' => apply_filters( 'cp_header_image_height', 67 ),
 			'wp-head-callback' => 'commentpress_header',
-			'admin-head-callback' => 'commentpress_admin_header'
+			'admin-head-callback' => 'commentpress_admin_header',
 		] );
 
 	} else {
@@ -87,26 +87,26 @@ function commentpress_setup() {
 				'url' => '%s/assets/images/header/caves-green.jpg',
 				'thumbnail_url' => '%s/assets/images/header/caves-green-thumbnail.jpg',
 				/* translators: header image description */
-				'description' => __( 'Abstract Green', 'commentpress-core' )
+				'description' => __( 'Abstract Green', 'commentpress-core' ),
 			],
 			'caves-red' => [
 				'url' => '%s/assets/images/header/caves-red.jpg',
 				'thumbnail_url' => '%s/assets/images/header/caves-red-thumbnail.jpg',
 				/* translators: header image description */
-				'description' => __( 'Abstract Red', 'commentpress-core' )
+				'description' => __( 'Abstract Red', 'commentpress-core' ),
 			],
 			'caves-blue' => [
 				'url' => '%s/assets/images/header/caves-blue.jpg',
 				'thumbnail_url' => '%s/assets/images/header/caves-blue-thumbnail.jpg',
 				/* translators: header image description */
-				'description' => __( 'Abstract Blue', 'commentpress-core' )
+				'description' => __( 'Abstract Blue', 'commentpress-core' ),
 			],
 			'caves-violet' => [
 				'url' => '%s/assets/images/header/caves-violet.jpg',
 				'thumbnail_url' => '%s/assets/images/header/caves-violet-thumbnail.jpg',
 				/* translators: header image description */
-				'description' => __( 'Abstract Violet', 'commentpress-core' )
-			]
+				'description' => __( 'Abstract Violet', 'commentpress-core' ),
+			],
 		]
 	);
 

@@ -31,7 +31,7 @@ class Commentpress_License_Widget extends WP_Widget {
 		// Widget settings.
 		$widget_options = [
 			'classname' => 'commentpress_widget',
-			'description' => __( 'This widget is supplied by CommentPress Core for placing HTML in the page footer - for example, copyright or licensing information.', 'commentpress-core' )
+			'description' => __( 'This widget is supplied by CommentPress Core for placing HTML in the page footer - for example, copyright or licensing information.', 'commentpress-core' ),
 		];
 
 		// Instantiate parent.

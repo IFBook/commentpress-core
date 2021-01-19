@@ -425,7 +425,7 @@ class Commentpress_Core_Navigator {
 			'numberposts' => -1,
 			'post_status' => 'publish',
 			'orderby' => 'menu_order, post_title',
-			'order' => 'ASC'
+			'order' => 'ASC',
 		];
 
 		// Get page children.
@@ -717,7 +717,7 @@ class Commentpress_Core_Navigator {
 		// Set defaults.
 		$defaults = [
 			'numberposts' => -1,
-			'orderby' => 'date'
+			'orderby' => 'date',
 		];
 
 		// Get them.
@@ -818,7 +818,7 @@ class Commentpress_Core_Navigator {
 					'post_parent' => $page_obj->ID,
 					'post_type' => 'page',
 					'numberposts' => -1,
-					'post_status' => 'publish'
+					'post_status' => 'publish',
 				];
 
 				// Get page children.
@@ -867,7 +867,7 @@ class Commentpress_Core_Navigator {
 					'numberposts' => -1,
 					'post_status' => 'publish',
 					'orderby' => 'menu_order, post_title',
-					'order' => 'ASC'
+					'order' => 'ASC',
 				];
 
 				// Get page children.
@@ -1269,7 +1269,7 @@ class Commentpress_Core_Navigator {
 			'meta_value' => '',
 			'authors' => '',
 			'parent' => -1,
-			'exclude_tree' => ''
+			'exclude_tree' => '',
 		];
 
 		// Get them.
@@ -1380,7 +1380,7 @@ class Commentpress_Core_Navigator {
 				'output' => ARRAY_A,
 				'output_key' => 'menu_order',
 				'nopaging' => true,
-				'update_post_term_cache' => false
+				'update_post_term_cache' => false,
 			];
 
 			// Get the menu objects and store for later.

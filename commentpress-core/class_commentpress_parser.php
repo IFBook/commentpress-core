@@ -950,7 +950,7 @@ class Commentpress_Core_Parser {
 			'/<br\/>\n/',
 			'/<br \/>\n/',
 			'/<p>/',
-			'/<\/p>/'
+			'/<\/p>/',
 		];
 
 		// Define replacements.
@@ -962,7 +962,7 @@ class Commentpress_Core_Parser {
 			'<br/>' . "\n" . '<span class="cp-line">',
 			'<br />' . "\n" . '<span class="cp-line">',
 			'<p><span class="cp-line">',
-			'<!-- line-end --></span></p>'
+			'<!-- line-end --></span></p>',
 		];
 
 		// Do replacement.
@@ -1717,13 +1717,13 @@ class Commentpress_Core_Parser {
 		// Filter captioned images that are *not* inside other tags.
 		$pattern = [
 			'/\n<!-- cp_caption_start -->/',
-			'/<!-- cp_caption_end -->\n/'
+			'/<!-- cp_caption_end -->\n/',
 		];
 
 		// Define replacements.
 		$replace = [
 			"\n" . '<p><!-- cp_caption_start -->',
-			'<!-- cp_caption_end --></p>' . "\n"
+			'<!-- cp_caption_end --></p>' . "\n",
 		];
 
 		// Do replacement.

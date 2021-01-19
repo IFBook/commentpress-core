@@ -61,7 +61,7 @@ NOTES
 		// Get comments for this post in ascending order.
 		$comments = get_comments( [
 			'post_id' => $post->ID,
-			'order' => 'ASC'
+			'order' => 'ASC',
 		] );
 
 		// List comments.

@@ -182,7 +182,7 @@ class Commentpress_Core_Workflow {
 			esc_html( stripslashes( $content ) ),
 			$editor_id,
 			$settings = [
-				'media_buttons' => false
+				'media_buttons' => false,
 			]
 		);
 
@@ -206,7 +206,7 @@ class Commentpress_Core_Workflow {
 			esc_html( stripslashes( $content ) ),
 			$editor_id,
 			$settings = [
-				'media_buttons' => false
+				'media_buttons' => false,
 			]
 		);
 

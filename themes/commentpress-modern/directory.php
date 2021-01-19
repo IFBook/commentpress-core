@@ -65,7 +65,7 @@ get_header(); ?>
 			'pagination' => true,
 			'pagination2' => true,
 			'radius' => false,
-			'sort' => false
+			'sort' => false,
 		] );
 
 	}

@@ -549,7 +549,7 @@ class Commentpress_Multisite_Buddypress {
 			'user_id' => $activity->user_id,
 			'type' => $type,
 			'item_id' => $group_id,
-			'secondary_item_id' => $activity->secondary_item_id
+			'secondary_item_id' => $activity->secondary_item_id,
 		] );
 
 		// If we don't find a modified item.
@@ -560,7 +560,7 @@ class Commentpress_Multisite_Buddypress {
 				'user_id' => $activity->user_id,
 				'type' => $activity->type,
 				'item_id' => $activity->item_id,
-				'secondary_item_id' => $activity->secondary_item_id
+				'secondary_item_id' => $activity->secondary_item_id,
 			] );
 
 		}
@@ -790,7 +790,7 @@ class Commentpress_Multisite_Buddypress {
 			'user_id' => $activity->user_id,
 			'type' => 'new_groupblog_post',
 			'item_id' => $group_id,
-			'secondary_item_id' => $activity->secondary_item_id
+			'secondary_item_id' => $activity->secondary_item_id,
 		] );
 
 		// If we don't find a modified item.
@@ -801,7 +801,7 @@ class Commentpress_Multisite_Buddypress {
 				'user_id' => $activity->user_id,
 				'type' => $activity->type,
 				'item_id' => $activity->item_id,
-				'secondary_item_id' => $activity->secondary_item_id
+				'secondary_item_id' => $activity->secondary_item_id,
 			] );
 
 		}
@@ -968,7 +968,7 @@ class Commentpress_Multisite_Buddypress {
 					'component'         => 'groups',
 					'type'              => 'new_groupblog_post',
 					'item_id'           => $group_id,
-					'secondary_item_id' => $post->ID
+					'secondary_item_id' => $post->ID,
 				] );
 
 				// Bail if we don't have one.
@@ -2707,7 +2707,7 @@ class Commentpress_Multisite_Buddypress {
 			'cpmu_bp_force_commentpress' => $this->force_commentpress,
 			'cpmu_bp_groupblog_privacy' => $this->groupblog_privacy,
 			'cpmu_bp_require_comment_registration' => $this->require_comment_registration,
-			'cpmu_bp_groupblog_theme' => $theme_data
+			'cpmu_bp_groupblog_theme' => $theme_data,
 		];
 
 		// Return defaults, but allow overrides and additions.
