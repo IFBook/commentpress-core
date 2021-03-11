@@ -215,6 +215,10 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+<h4>3.9.15</h4>
+
+* Hide Activity Column comments section when there are none
+
 <h4>3.9.14</h4>
 
 * Allow themes when in multiste but not network-activated
