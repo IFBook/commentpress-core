@@ -1811,24 +1811,35 @@ function commentpress_get_comment_activity( $scope = 'all' ) {
 	// Did we get any?
 	if ( count( $data ) > 0 ) {
 
-		// Open ul.
-		$page_content .= '<ol class="comment_activity">' . "\n\n";
-
-		// Init title.
-		$title = '';
+		// Init comments array.
+		$comments_array = [];
 
 		// Loop.
 		foreach( $data AS $comment ) {
 
-			// Exclude comments from password-protected posts
+			// Exclude comments from password-protected posts.
 			if ( ! post_password_required( $comment->comment_post_ID ) ) {
-				$page_content .= commentpress_get_comment_activity_item( $comment );
+				$comment_markup = commentpress_get_comment_activity_item( $comment );
+				if ( ! empty( $comment_markup ) ) {
+					$comments_array[] = $comment_markup;
+				}
 			}
 
 		}
 
-		// Close ul.
-		$page_content .= '</ol><!-- /comment_activity -->' . "\n\n";
+		// Wrap in list if we get some.
+		if ( ! empty( $comments_array ) ) {
+
+			// Open ul.
+			$page_content .= '<ol class="comment_activity">' . "\n\n";
+
+			// Add comments.
+			$page_content .= implode( '', $comments_array );
+
+			// Close ul.
+			$page_content .= '</ol><!-- /comment_activity -->' . "\n\n";
+
+		}
 
 	}
 
