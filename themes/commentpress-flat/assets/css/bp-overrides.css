@@ -257,7 +257,7 @@ form#whats-new-form,
 	margin: 0;
 	border-top: none;
 	border-bottom: 1px solid #B5BFB2;
-	background-color: #CBFFBD;
+	background-color: #EEE;
 }
 
 #buddypress form#whats-new-form #whats-new-content
@@ -518,6 +518,16 @@ Standard Form
 #buddypress .standard-form
 {
 	padding: 19px;
+}
+
+/* Except on Member Settings */
+#buddypress .cp-member-settings-template
+{
+	padding: 0 19px 19px 19px;
+}
+#buddypress .cp-member-settings-template .standard-form
+{
+	padding: 0;
 }
 
 body.group-create #buddypress .standard-form

@@ -335,11 +335,41 @@ function commentpress_buddypress_support() {
 	// Add filter for groups class.
 	add_filter( 'bp_get_group_class', 'commentpress_bp_group_css_class' );
 
+	// Add wrapper element to Member Settings section.
+	add_action( 'bp_before_member_settings_template', 'commentpress_bp_wrapper_open' );
+	add_action( 'bp_after_member_settings_template', 'commentpress_bp_wrapper_close' );
+
 }
 endif; // End commentpress_buddypress_support
 
 // Add an action for the above (BuddyPress hooks this to after_setup_theme with priority 100).
 add_action( 'bp_after_setup_theme', 'commentpress_buddypress_support' );
+
+
+
+if ( ! function_exists( 'commentpress_bp_wrapper_open' ) ):
+/**
+ * Open wrapper element for BuddyPress.
+ *
+ * @since 3.9.15
+ */
+function commentpress_bp_wrapper_open() {
+	echo '<div class="cp-member-settings-template">';
+}
+endif; // End commentpress_bp_wrapper_open
+
+
+
+if ( ! function_exists( 'commentpress_bp_wrapper_close' ) ):
+/**
+ * Close BuddyPress wrapper element.
+ *
+ * @since 3.9.15
+ */
+function commentpress_bp_wrapper_close() {
+	echo '</div>';
+}
+endif; // End commentpress_bp_wrapper_close
 
 
 

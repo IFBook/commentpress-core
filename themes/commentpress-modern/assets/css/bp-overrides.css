@@ -488,6 +488,16 @@ Standard Form
 	padding: 19px;
 }
 
+/* Except on Member Settings */
+#buddypress .cp-member-settings-template
+{
+	padding: 0 19px 19px 19px;
+}
+#buddypress .cp-member-settings-template .standard-form
+{
+	padding: 0;
+}
+
 body.group-create #buddypress .standard-form
 {
 	padding: 0;
