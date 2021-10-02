@@ -686,6 +686,13 @@ List items
 	top: 15px;
 }
 
+#buddypress .standard-form .datebox-selects label,
+#buddypress .standard-form .checkbox-options label,
+#buddypress .standard-form .radio-button-options label
+{
+	margin: 0;
+	text-transform: none;
+}
 
 
 

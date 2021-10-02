@@ -582,6 +582,17 @@ body.create-blog.buddypress_page #content a.button,
 
 
 
+/* handle xProfile Form styles */
+#buddypress .standard-form .datebox-selects label,
+#buddypress .standard-form .checkbox-options label,
+#buddypress .standard-form .radio-button-options label
+{
+	margin: 0;
+	text-transform: none;
+}
+
+
+
 /* override bp.css table styles */
 div#comments_sidebar table,
 div#respond .defaultSkin table
