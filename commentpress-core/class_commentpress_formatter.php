@@ -115,10 +115,10 @@ class Commentpress_Core_Formatter {
 	public function blog_type_options( $existing_options ) {
 
 		// Define types.
-		$types = array(
+		$types = [
 			__( 'Prose', 'commentpress-core' ), // Types[0]
 			__( 'Poetry', 'commentpress-core' ), // Types[1]
-		);
+		];
 
 		// --<
 		return apply_filters(
@@ -218,13 +218,13 @@ class Commentpress_Core_Formatter {
 	public function _register_hooks() {
 
 		// Set blog type options.
-		add_filter( 'cp_blog_type_options', array( $this, 'blog_type_options' ), 21 );
+		add_filter( 'cp_blog_type_options', [ $this, 'blog_type_options' ], 21 );
 
 		// Set blog type options label.
-		add_filter( 'cp_blog_type_label', array( $this, 'blog_type_label' ), 21 );
+		add_filter( 'cp_blog_type_label', [ $this, 'blog_type_label' ], 21 );
 
 		// Add filter for CommentPress Core formatter.
-		add_filter( 'cp_select_content_formatter', array( $this, 'content_formatter' ), 21, 1 );
+		add_filter( 'cp_select_content_formatter', [ $this, 'content_formatter' ], 21, 1 );
 
 		// Is this the back end?
 		if ( is_admin() ) {

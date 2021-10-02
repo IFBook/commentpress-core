@@ -323,7 +323,7 @@ class Commentpress_Core {
 				if ( in_array( 'commentpress', (array) $theme->Tags ) ) {
 
 					// --<
-					return array( $stylesheet, $template );
+					return [ $stylesheet, $template ];
 
 				}
 
@@ -336,7 +336,7 @@ class Commentpress_Core {
 				if ( in_array( 'commentpress', (array) $theme['Tags'] ) ) {
 
 					// --<
-					return array( $stylesheet, $template );
+					return [ $stylesheet, $template ];
 
 				}
 
@@ -423,7 +423,7 @@ class Commentpress_Core {
 			} else {
 
 				// Show message.
-				add_action( 'admin_notices', array( $this, 'admin_upgrade_alert' ) );
+				add_action( 'admin_notices', [ $this, 'admin_upgrade_alert' ] );
 
 			}
 
@@ -435,13 +435,13 @@ class Commentpress_Core {
 			__( 'CommentPress Core', 'commentpress-core' ),
 			'manage_options',
 			'commentpress_admin',
-			array( $this, 'options_page' )
+			[ $this, 'options_page' ]
 		);
 
 		// Add scripts and styles.
-		add_action( 'admin_print_scripts-' . $this->options_page, array( $this, 'admin_js' ) );
-		add_action( 'admin_print_styles-' . $this->options_page, array( $this, 'admin_css' ) );
-		add_action( 'admin_head-' . $this->options_page, array( $this, 'admin_head' ), 50 );
+		add_action( 'admin_print_scripts-' . $this->options_page, [ $this, 'admin_js' ] );
+		add_action( 'admin_print_styles-' . $this->options_page, [ $this, 'admin_css' ] );
+		add_action( 'admin_head-' . $this->options_page, [ $this, 'admin_head' ], 50 );
 
 	}
 
@@ -790,7 +790,7 @@ class Commentpress_Core {
 		// Get all image attachments to our title page.
 		$reserved_names = array_merge(
 			$reserved_names,
-			array(
+			[
 				'title-page',
 				'general-comments',
 				'all-comments',
@@ -798,7 +798,7 @@ class Commentpress_Core {
 				'table-of-contents',
 				'author', // Not currently used.
 				'login', // For Theme My Login.
-			)
+			]
 		);
 
 		// --<
@@ -833,7 +833,7 @@ class Commentpress_Core {
 		add_meta_box(
 			'commentpress_page_options',
 			__( 'CommentPress Core Options', 'commentpress-core' ),
-			array( $this, 'custom_box_page' ),
+			[ $this, 'custom_box_page' ],
 			'page',
 			'side'
 		);
@@ -842,7 +842,7 @@ class Commentpress_Core {
 		add_meta_box(
 			'commentpress_post_options',
 			__( 'CommentPress Core Options', 'commentpress-core' ),
-			array( $this, 'custom_box_post' ),
+			[ $this, 'custom_box_post' ],
 			'post',
 			'side'
 		);
@@ -863,7 +863,7 @@ class Commentpress_Core {
 			add_meta_box(
 				'commentpress_workflow_fields',
 				$title,
-				array( $this, 'custom_box_workflow' ),
+				[ $this, 'custom_box_workflow' ],
 				'post',
 				'normal'
 			);
@@ -872,7 +872,7 @@ class Commentpress_Core {
 			add_meta_box(
 				'commentpress_workflow_fields',
 				$title,
-				array( $this, 'custom_box_workflow' ),
+				[ $this, 'custom_box_workflow' ],
 				'page',
 				'normal'
 			);
@@ -1184,11 +1184,11 @@ class Commentpress_Core {
 		}
 
 		// Add a tab.
-		$screen->add_help_tab( array(
+		$screen->add_help_tab( [
 			'id'      => 'commentpress-base',
 			'title'   => __( 'CommentPress Core Help', 'commentpress-core' ),
 			'content' => $this->display->get_help(),
-		));
+		] );
 
 		// --<
 		return $screen;
@@ -1292,7 +1292,7 @@ class Commentpress_Core {
 	 *
 	 * @since 3.4
 	 */
-	public function get_toc_list( $exclude_pages = array() ) {
+	public function get_toc_list( $exclude_pages = [] ) {
 
 		// Switch pages or posts.
 		if( $this->get_list_option() == 'post' ) {
@@ -1748,7 +1748,7 @@ class Commentpress_Core {
 	public function bp_docs_loaded() {
 
 		// Dequeue offending script (after BuddyPress Docs runs its enqueuing).
-		add_action( 'wp_enqueue_scripts', array( $this, 'bp_docs_dequeue_scripts' ), 20 );
+		add_action( 'wp_enqueue_scripts', [ $this, 'bp_docs_dequeue_scripts' ], 20 );
 
 	}
 
@@ -1808,10 +1808,10 @@ class Commentpress_Core {
 			$fc = wp_featured_comments_load();
 
 			// Remove comment_text filter.
-			remove_filter( 'comment_text', array( $fc, 'comment_text' ), 10 );
+			remove_filter( 'comment_text', [ $fc, 'comment_text' ], 10 );
 
 			// Get the plugin markup in the comment edit section.
-			add_filter( 'cp_comment_edit_link', array( $this, 'featured_comments_markup' ), 100, 2 );
+			add_filter( 'cp_comment_edit_link', [ $this, 'featured_comments_markup' ], 100, 2 );
 
 		}
 
@@ -1964,7 +1964,7 @@ class Commentpress_Core {
 		// Set default but allow overrides.
 		$order = apply_filters(
 			'cp_sidebar_tab_order',
-			array( 'contents', 'comments', 'activity' ) // Default order.
+			[ 'contents', 'comments', 'activity' ] // Default order.
 		);
 
 		// --<
@@ -2245,44 +2245,44 @@ class Commentpress_Core {
 		global $wp_version;
 
 		// Broadcast that CommentPress Core is active.
-		add_action( 'plugins_loaded', array( $this, 'broadcast' ) );
+		add_action( 'plugins_loaded', [ $this, 'broadcast' ] );
 
 		// Use translation.
-		add_action( 'plugins_loaded', array( $this, 'translation' ) );
+		add_action( 'plugins_loaded', [ $this, 'translation' ] );
 
 		// Check for plugin deactivation.
-		add_action( 'deactivated_plugin',  array( $this, '_plugin_deactivated' ), 10, 2 );
+		add_action( 'deactivated_plugin',  [ $this, '_plugin_deactivated' ], 10, 2 );
 
 		// Modify comment posting.
-		add_action( 'comment_post', array( $this, 'save_comment' ), 10, 2 );
+		add_action( 'comment_post', [ $this, 'save_comment' ], 10, 2 );
 
 		// Exclude special pages from listings.
-		add_filter( 'wp_list_pages_excludes', array( $this, 'exclude_special_pages' ), 10, 1 );
-		add_filter( 'parse_query', array( $this, 'exclude_special_pages_from_admin' ), 10, 1 );
+		add_filter( 'wp_list_pages_excludes', [ $this, 'exclude_special_pages' ], 10, 1 );
+		add_filter( 'parse_query', [ $this, 'exclude_special_pages_from_admin' ], 10, 1 );
 
 		// Is this the back end?
 		if ( is_admin() ) {
 
 			// Modify all.
-			add_filter( 'views_edit-page', array( $this, 'update_page_counts_in_admin' ), 10, 1 );
+			add_filter( 'views_edit-page', [ $this, 'update_page_counts_in_admin' ], 10, 1 );
 
 			// Modify admin menu.
-			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+			add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 
 			// Add meta boxes.
-			add_action( 'add_meta_boxes' , array( $this, 'add_meta_boxes' ) );
+			add_action( 'add_meta_boxes' , [ $this, 'add_meta_boxes' ] );
 
 			// Intercept save.
-			add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
+			add_action( 'save_post', [ $this, 'save_post' ], 10, 2 );
 
 			// Intercept delete.
-			add_action( 'before_delete_post', array( $this, 'delete_post' ), 10, 1 );
+			add_action( 'before_delete_post', [ $this, 'delete_post' ], 10, 1 );
 
 			// There's a new screen object in 3.3.
 			if ( version_compare( $wp_version, '3.2.99999', '>=' ) ) {
 
 				// Use new help functionality.
-				//add_action('add_screen_help_and_options', array( $this, 'options_help' ) );
+				//add_action('add_screen_help_and_options', [ $this, 'options_help' ] );
 
 				// NOTE: help is actually called in $this->admin_head() because the
 				// 'add_screen_help_and_options' action does not seem to be working in 3.3-beta1
@@ -2290,29 +2290,29 @@ class Commentpress_Core {
 			} else {
 
 				// Previous help method.
-				add_action( 'contextual_help', array( $this, 'contextual_help' ) );
+				add_action( 'contextual_help', [ $this, 'contextual_help' ] );
 
 			}
 
 			// Comment block quicktag.
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
+			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_scripts' ] );
 
 		} else {
 
 			// Modify the document head.
-			add_filter( 'wp_head', array( $this, 'head' ) );
+			add_filter( 'wp_head', [ $this, 'head' ] );
 
 			// Add script libraries.
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+			add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 
 			// Add CSS files.
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+			add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_styles' ] );
 
 			// Add template redirect for TOC behaviour.
-			add_action( 'template_redirect', array( $this, 'redirect_to_child' ) );
+			add_action( 'template_redirect', [ $this, 'redirect_to_child' ] );
 
 			// Modify the content (after all's done).
-			add_filter( 'the_content', array( $this, 'the_content' ), 20 );
+			add_filter( 'the_content', [ $this, 'the_content' ], 20 );
 
 		}
 
@@ -2320,13 +2320,13 @@ class Commentpress_Core {
 		if ( is_multisite() ) {
 
 			// Add filter for signup page to include sidebar.
-			add_filter( 'after_signup_form', array( $this, 'after_signup_form' ), 20 );
+			add_filter( 'after_signup_form', [ $this, 'after_signup_form' ], 20 );
 
 			// If subdirectory install.
 			if ( ! is_subdomain_install() ) {
 
 				// Add filter for reserved CommentPress Core special page names.
-				add_filter( 'subdirectory_reserved_names', array( $this, 'add_reserved_names' ) );
+				add_filter( 'subdirectory_reserved_names', [ $this, 'add_reserved_names' ] );
 
 			}
 
@@ -2335,22 +2335,22 @@ class Commentpress_Core {
 		// If BuddyPress installed, then the following actions will fire.
 
 		// Enable BuddyPress functionality.
-		add_action( 'bp_include', array( $this, 'buddypress_init' ) );
+		add_action( 'bp_include', [ $this, 'buddypress_init' ] );
 
 		// Add BuddyPress functionality (really late, so group object is set up).
-		add_action( 'bp_setup_globals', array( $this, 'buddypress_globals_loaded' ), 1000 );
+		add_action( 'bp_setup_globals', [ $this, 'buddypress_globals_loaded' ], 1000 );
 
 		// Actions to perform on BuddyPress loaded.
-		add_action( 'bp_loaded', array( $this, 'bp_docs_loaded' ), 20 );
+		add_action( 'bp_loaded', [ $this, 'bp_docs_loaded' ], 20 );
 
 		// Actions to perform on BuddyPress Docs load.
-		add_action( 'bp_docs_load', array( $this, 'bp_docs_loaded' ), 20 );
+		add_action( 'bp_docs_load', [ $this, 'bp_docs_loaded' ], 20 );
 
 		// Override BuddyPress Docs comment template.
-		add_filter( 'bp_docs_comment_template_path', array( $this, 'bp_docs_comment_tempate' ), 20, 2 );
+		add_filter( 'bp_docs_comment_template_path', [ $this, 'bp_docs_comment_tempate' ], 20, 2 );
 
 		// Amend the behaviour of Featured Comments plugin.
-		add_action( 'plugins_loaded', array( $this, 'featured_comments_override' ), 1000 );
+		add_action( 'plugins_loaded', [ $this, 'featured_comments_override' ], 1000 );
 
 		// Broadcast.
 		do_action( 'commentpress_after_hooks' );
@@ -2372,10 +2372,10 @@ class Commentpress_Core {
 		$types = false;
 
 		// NOTE: exactly how do we support CPTs?
-		$args = array(
+		$args = [
 			//'public'   => true,
-			'_builtin' => false
-		);
+			'_builtin' => false,
+		];
 
 		$output = 'names'; // Names or objects, note names is the default.
 		$operator = 'and'; // 'and' or 'or'.
@@ -2423,7 +2423,7 @@ class Commentpress_Core {
 		if ( $this->db->option_exists( 'cp_blog_type' ) ) {
 
 			// Define no types.
-			$types = array();
+			$types = [];
 
 			// Allow overrides.
 			$types = apply_filters( 'cp_blog_type_options', $types );
@@ -2442,7 +2442,7 @@ class Commentpress_Core {
 				<p><strong><label for="cp_post_type_override">' . $type_title . '</label></strong></p>';
 
 				// Construct options.
-				$type_option_list = array();
+				$type_option_list = [];
 				$n = 0;
 
 				// Set key.

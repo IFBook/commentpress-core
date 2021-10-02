@@ -203,7 +203,7 @@ else {
 				// When this blog is a groupblog.
 				if ( isset( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
-					$group = groups_get_group( array( 'group_id' => $group_id ) );
+					$group = groups_get_group( [ 'group_id' => $group_id ] );
 					$group_url = bp_get_group_permalink( $group );
 
 					// Set default link name.

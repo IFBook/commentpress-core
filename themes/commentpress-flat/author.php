@@ -169,13 +169,13 @@ if ( $my_name != '' ) { ?>
 <?php
 
 // Define our args.
-$page_args = array(
+$page_args = [
 	'post_status' => 'publish',
 	'post_type' => 'page',
 	'author' => $my_author->ID,
 	'posts_per_page' => 0,
 	'no_found_rows' => true,
-);
+];
 
 // The pages query.
 $_pages = new WP_Query( $page_args );

@@ -59,14 +59,14 @@ get_header(); ?>
 		$members = new tern_members();
 
 		// Set options
-		$members->members( array(
+		$members->members( [
 			'search' => true,
 			'alpha' => true,
 			'pagination' => true,
 			'pagination2' => true,
 			'radius' => false,
-			'sort' => false
-		) );
+			'sort' => false,
+		] );
 
 	}
 

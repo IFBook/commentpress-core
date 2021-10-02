@@ -29,10 +29,10 @@ class Commentpress_License_Widget extends WP_Widget {
 	public function __construct() {
 
 		// Widget settings.
-		$widget_options = array(
+		$widget_options = [
 			'classname' => 'commentpress_widget',
-			'description' => __( 'This widget is supplied by CommentPress Core for placing HTML in the page footer - for example, copyright or licensing information.', 'commentpress-core' )
-		);
+			'description' => __( 'This widget is supplied by CommentPress Core for placing HTML in the page footer - for example, copyright or licensing information.', 'commentpress-core' ),
+		];
 
 		// Instantiate parent.
 		parent::__construct(
@@ -124,7 +124,7 @@ class Commentpress_License_Widget extends WP_Widget {
 	 */
 	public function form( $instance ) {
 
-		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'text' => '' ) );
+		$instance = wp_parse_args( (array) $instance, [ 'title' => '', 'text' => '' ] );
 		$title = strip_tags( $instance['title'] );
 		$text = esc_textarea( $instance['text'] );
 

@@ -4,7 +4,7 @@ Plugin Name: CommentPress Core
 Plugin URI: http://www.futureofthebook.org/commentpress/
 Description: CommentPress allows readers to comment in the margins of a text. You can use it to annotate, gloss, workshop, debate and more!
 Author: Institute for the Future of the Book
-Version: 3.9.15
+Version: 4.0
 Author URI: http://www.futureofthebook.org
 Text Domain: commentpress-core
 Domain Path: /languages
@@ -18,7 +18,7 @@ Mark James for the icons: http://www.famfamfam.com/lab/icons/silk/
 
 
 // Set version.
-define( 'COMMENTPRESS_VERSION', '3.9.15' );
+define( 'COMMENTPRESS_VERSION', '4.0' );
 
 // Store reference to this file.
 if ( ! defined( 'COMMENTPRESS_PLUGIN_FILE' ) ) {
@@ -250,9 +250,9 @@ function commentpress_plugin_action_links( $links, $file ) {
 
 		// Is this Network Admin?
 		if ( is_network_admin() ) {
-			$link = add_query_arg( array( 'page' => 'cpmu_admin_page' ), network_admin_url( 'settings.php' ) );
+			$link = add_query_arg( [ 'page' => 'cpmu_admin_page' ], network_admin_url( 'settings.php' ) );
 		} else {
-			$link = add_query_arg( array( 'page' => 'commentpress_admin' ), admin_url( 'options-general.php' ) );
+			$link = add_query_arg( [ 'page' => 'commentpress_admin' ], admin_url( 'options-general.php' ) );
 		}
 
 		// Add settings link.
@@ -338,7 +338,7 @@ function commentpress_is_legacy_plugin_active() {
 	$active = false;
 
 	// Get old options.
-	$old = get_option( 'cp_options', array() );
+	$old = get_option( 'cp_options', [] );
 
 	// Test if we have a existing pre-3.4 CommentPress instance.
 	if ( is_array( $old ) AND count( $old ) > 0 ) {
@@ -419,10 +419,10 @@ if (
 	global $commentpress_core;
 
 	// Activation.
-	register_activation_hook( COMMENTPRESS_PLUGIN_FILE, array( $commentpress_core, 'activate' ) );
+	register_activation_hook( COMMENTPRESS_PLUGIN_FILE, [ $commentpress_core, 'activate' ] );
 
 	// Deactivation.
-	register_deactivation_hook( COMMENTPRESS_PLUGIN_FILE, array( $commentpress_core, 'deactivate' ) );
+	register_deactivation_hook( COMMENTPRESS_PLUGIN_FILE, [ $commentpress_core, 'deactivate' ] );
 
 	// Uninstall uses the 'uninstall.php' method.
 	// See: http://codex.wordpress.org/Function_Reference/register_uninstall_hook

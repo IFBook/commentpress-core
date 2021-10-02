@@ -247,7 +247,7 @@ class Commentpress_Core_Display {
 		wp_enqueue_script(
 			'jquery_commentpress',
 			plugins_url( 'commentpress-core/assets/js/jquery.commentpress' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
-			array( 'jquery', 'jquery-form', 'jquery-ui-core', 'jquery-ui-resizable', 'jquery-ui-tooltip' ),
+			[ 'jquery', 'jquery-form', 'jquery-ui-core', 'jquery-ui-resizable', 'jquery-ui-tooltip' ],
 			COMMENTPRESS_VERSION // Version.
 		);
 
@@ -261,7 +261,7 @@ class Commentpress_Core_Display {
 		wp_enqueue_script(
 			'jquery_scrollto',
 			plugins_url( 'commentpress-core/assets/js/jquery.scrollTo.js', COMMENTPRESS_PLUGIN_FILE ),
-			array( 'jquery_commentpress' ),
+			[ 'jquery_commentpress' ],
 			COMMENTPRESS_VERSION // Version.
 		);
 
@@ -269,7 +269,7 @@ class Commentpress_Core_Display {
 		wp_enqueue_script(
 			'jquery_cookie',
 			plugins_url( 'commentpress-core/assets/js/jquery.biscuit.js', COMMENTPRESS_PLUGIN_FILE ),
-			array( 'jquery_commentpress' ),
+			[ 'jquery_commentpress' ],
 			COMMENTPRESS_VERSION // Version.
 		);
 
@@ -302,7 +302,7 @@ class Commentpress_Core_Display {
 			wp_enqueue_script(
 				'jquery_wrapselection',
 				plugins_url( 'commentpress-core/assets/js/jquery.wrap-selection' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
-				array( 'jquery_commentpress' ),
+				[ 'jquery_commentpress' ],
 				COMMENTPRESS_VERSION // Version.
 			);
 
@@ -310,7 +310,7 @@ class Commentpress_Core_Display {
 			wp_enqueue_script(
 				'jquery_highlighter',
 				plugins_url( 'commentpress-core/assets/js/jquery.highlighter' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
-				array( 'jquery_wrapselection' ),
+				[ 'jquery_wrapselection' ],
 				COMMENTPRESS_VERSION // Version.
 			);
 
@@ -318,7 +318,7 @@ class Commentpress_Core_Display {
 			wp_enqueue_script(
 				'jquery_texthighlighter',
 				plugins_url( 'commentpress-core/assets/js/jquery.texthighlighter' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
-				array( 'jquery_highlighter' ),
+				[ 'jquery_highlighter' ],
 				COMMENTPRESS_VERSION // Version.
 			);
 
@@ -329,19 +329,19 @@ class Commentpress_Core_Display {
 			$popover_comment = '<span class="comment-popover-holder"><div class="popover-holder-inner"><div class="popover-holder-caret"></div><div class="popover-holder-btn-left"><span class="comment-popover-holder-btn-left-quote">' . __( 'Quote', 'commentpress-core' ) . '</span></div><div class="popover-holder-btn-right">&times;</div></div></span>';
 
 			// Define localisation array.
-			$texthighlighter_vars = array(
+			$texthighlighter_vars = [
 				'popover_textblock' => $popover_textblock,
 				'popover_comment' => $popover_comment,
-			);
+			];
 
 			// Create translations.
-			$texthighlighter_translations = array(
+			$texthighlighter_translations = [
 				'dialog_title' => __( 'Are you sure?', 'commentpress-core' ),
 				'dialog_content' => __( 'You have not yet submitted your comment. Are you sure you want to discard it?', 'commentpress-core' ),
 				'dialog_yes' => __( 'Discard', 'commentpress-core' ),
 				'dialog_no' => __( 'Keep', 'commentpress-core' ),
 				'backlink_text' => __( 'Back', 'commentpress-core' ),
-			);
+			];
 
 			// Add to vars.
 			$texthighlighter_vars['localisation'] = $texthighlighter_translations;
@@ -377,7 +377,7 @@ class Commentpress_Core_Display {
 			wp_enqueue_script(
 				'commentpress_custom_quicktags',
 				plugin_dir_url( COMMENTPRESS_PLUGIN_FILE ) . 'commentpress-core/assets/js/cp_quicktags_3.3.js',
-				array( 'quicktags' ),
+				[ 'quicktags' ],
 				COMMENTPRESS_VERSION, // Version.
 				true // In footer
 			);
@@ -388,7 +388,7 @@ class Commentpress_Core_Display {
 			wp_enqueue_script(
 				'commentpress_custom_quicktags',
 				plugin_dir_url( COMMENTPRESS_PLUGIN_FILE ) . 'commentpress-core/assets/js/cp_quicktags.js',
-				array( 'quicktags' ),
+				[ 'quicktags' ],
 				COMMENTPRESS_VERSION, // Version.
 				false // Not in footer (but may need to be in WP 3.3)
 			);
@@ -700,18 +700,18 @@ HELPTEXT;
 	 *
 	 * @since 3.4
 	 */
-	public function list_pages( $exclude_pages = array() ) {
+	public function list_pages( $exclude_pages = [] ) {
 
 		// Test for custom menu.
 		if ( has_nav_menu( 'toc' ) ) {
 
 			// Display menu.
-			wp_nav_menu( array(
+			wp_nav_menu( [
 				'theme_location' => 'toc',
 				'echo' => true,
 				'container' => '',
 				'items_wrap' => '%3$s',
-			) );
+			] );
 
 			// --<
 			return;
@@ -754,7 +754,7 @@ HELPTEXT;
 		$exclude = $this->db->option_get( 'cp_special_pages' );
 
 		// Do we have any?
-		if ( ! $exclude ) { $exclude = array(); }
+		if ( ! $exclude ) { $exclude = []; }
 
 		// Exclude title page, if we have one.
 		if ( $welcome_id !== false ) { $exclude[] = $welcome_id; }
@@ -768,7 +768,7 @@ HELPTEXT;
 		}
 
 		// Set list pages defaults.
-		$defaults = array(
+		$defaults = [
 			'depth' => $depth,
 			'show_date' => '',
 			'date_format' => $this->db->option_get( 'date_format' ),
@@ -781,7 +781,7 @@ HELPTEXT;
 			'link_before' => '',
 			'link_after' => '',
 			'exclude_tree' => '',
-		);
+		];
 
 		// Use WordPress function to echo.
 		wp_list_pages( $defaults );
@@ -1282,7 +1282,7 @@ HELPTEXT;
 		 */
 
 		// Register hooks after parent class has done its thing.
-		add_action( 'commentpress_after_hooks', array( $this, '_register_hooks' ) );
+		add_action( 'commentpress_after_hooks', [ $this, '_register_hooks' ] );
 
 	}
 
@@ -1296,7 +1296,7 @@ HELPTEXT;
 	public function _register_hooks() {
 
 		// Enable CommentPress themes in Multisite optional scenario.
-		add_filter( 'network_allowed_themes', array( $this, 'allowed_themes' ) );
+		add_filter( 'network_allowed_themes', [ $this, 'allowed_themes' ] );
 
 	}
 
@@ -1553,7 +1553,7 @@ HELPTEXT;
 		if ( $this->db->option_exists( 'cp_blog_type' ) ) {
 
 			// Define no types.
-			$types = array();
+			$types = [];
 
 			// Allow overrides.
 			$types = apply_filters( 'cp_blog_type_options', $types );
@@ -1571,7 +1571,7 @@ HELPTEXT;
 				$type_title .= __( ' (can be overridden on individual pages)', 'commentpress-core' );
 
 				// Construct options.
-				$type_option_list = array();
+				$type_option_list = [];
 				$n = 0;
 
 				// Get existing.
@@ -1674,7 +1674,7 @@ HELPTEXT;
 			$capable_post_types = $this->db->get_supported_post_types();
 
 			// Init outputs.
-			$output = array();
+			$output = [];
 			$options = '';
 
 			// Sanity check.
@@ -1851,7 +1851,7 @@ HELPTEXT;
 		if ( ! $this->db->option_exists( 'cp_blog_type' ) ) {
 
 			// Define no types.
-			$types = array();
+			$types = [];
 
 			// Allow overrides.
 			$types = apply_filters( 'cp_blog_type_options', $types );
@@ -1866,7 +1866,7 @@ HELPTEXT;
 				$type_title = apply_filters( 'cp_blog_type_label', $type_title );
 
 				// Construct options.
-				$type_option_list = array();
+				$type_option_list = [];
 				$n = 0;
 				foreach( $types AS $type ) {
 					$type_option_list[] = '<option value="' . $n . '">' . $type . '</option>';
@@ -2353,11 +2353,11 @@ HELPTEXT;
 		$capable_post_types = $this->db->get_supported_post_types();
 
 		// Init outputs.
-		$output = array();
+		$output = [];
 		$options = '';
 
 		// Get chosen post types.
-		$selected_types = $this->db->option_get( 'cp_post_types_disabled', array() );
+		$selected_types = $this->db->option_get( 'cp_post_types_disabled', [] );
 
 		// Sanity check.
 		if ( count( $capable_post_types ) > 0 ) {

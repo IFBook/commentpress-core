@@ -54,7 +54,7 @@ class Commentpress_Core_Editor {
 		$this->db = $this->parent_obj->db;
 
 		// Init this class.
-		add_action( 'init', array( $this, 'initialise' ), 999 );
+		add_action( 'init', [ $this, 'initialise' ], 999 );
 
 	}
 
@@ -123,10 +123,10 @@ class Commentpress_Core_Editor {
 	public function register_hooks() {
 
 		// Intercept toggles when WP is set up.
-		add_action( 'wp', array( $this, 'editor_toggle_intercept' ) );
+		add_action( 'wp', [ $this, 'editor_toggle_intercept' ] );
 
 		// Enable editor toggle.
-		add_action( 'cp_content_tab_before_search', array( $this, 'editor_toggle_show' ), 20 );
+		add_action( 'cp_content_tab_before_search', [ $this, 'editor_toggle_show' ], 20 );
 
 		// Test for flag.
 		if ( isset( $this->fee ) AND $this->fee == 'killed' ) {
@@ -135,11 +135,11 @@ class Commentpress_Core_Editor {
 			//add_filter( 'cpajax_disable_infinite_scroll', '__return_false', 11 );
 
 			// Amend Edit Page button.
-			add_action( 'wp_before_admin_bar_render', array( $GLOBALS['wp_front_end_editor'], 'wp_before_admin_bar_render' ) );
+			add_action( 'wp_before_admin_bar_render', [ $GLOBALS['wp_front_end_editor'], 'wp_before_admin_bar_render' ] );
 
 			// Amend Edit Page link.
-			add_filter( 'get_edit_post_link', array( $GLOBALS['wp_front_end_editor'], 'get_edit_post_link' ), 10, 3 );
-			add_filter( 'get_edit_post_link', array( $this, 'get_edit_post_link' ), 100, 3 );
+			add_filter( 'get_edit_post_link', [ $GLOBALS['wp_front_end_editor'], 'get_edit_post_link' ], 10, 3 );
+			add_filter( 'get_edit_post_link', [ $this, 'get_edit_post_link' ], 100, 3 );
 
 			// Broadcast.
 			do_action( 'commentpress_editor_wp_fee_disabled' );
@@ -159,8 +159,8 @@ class Commentpress_Core_Editor {
 		add_filter( 'cpajax_disable_infinite_scroll', '__return_true' );
 
 		// Prevent TinyMCE in comment form.
-		add_filter( 'cp_override_tinymce', array( $this, 'commentpress_prevent_tinymce' ), 1000, 1 );
-		add_filter( 'commentpress_is_tinymce_allowed', array( $this, 'commentpress_disallow_tinymce' ), 1000 );
+		add_filter( 'cp_override_tinymce', [ $this, 'commentpress_prevent_tinymce' ], 1000, 1 );
+		add_filter( 'commentpress_is_tinymce_allowed', [ $this, 'commentpress_disallow_tinymce' ], 1000 );
 
 		// Test for AJAX.
 		if ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) {
@@ -169,34 +169,34 @@ class Commentpress_Core_Editor {
 			add_filter( 'commentpress_force_the_content', '__return_true' );
 
 			// Filter the content during AJAX.
-			add_filter( 'the_content', array( $this->parent_obj, 'the_content' ), 20 );
+			add_filter( 'the_content', [ $this->parent_obj, 'the_content' ], 20 );
 
 		}
 
 		// Add AJAX functionality.
-		add_action( 'wp_ajax_cp_get_comments_container', array( $this, 'comments_get_container' ) );
-		add_action( 'wp_ajax_nopriv_cp_get_comments_container', array( $this, 'comments_get_container' ) );
+		add_action( 'wp_ajax_cp_get_comments_container', [ $this, 'comments_get_container' ] );
+		add_action( 'wp_ajax_nopriv_cp_get_comments_container', [ $this, 'comments_get_container' ] );
 
 		// Add vars to Javascript.
-		add_filter( 'commentpress_get_javascript_vars', array( $this, 'javascript_get_vars' ) );
+		add_filter( 'commentpress_get_javascript_vars', [ $this, 'javascript_get_vars' ] );
 
 		// Add metabox.
-		add_action( 'commentpress_after_comments_container', array( $this, 'metabox_get_container' ) );
+		add_action( 'commentpress_after_comments_container', [ $this, 'metabox_get_container' ] );
 
 		// Add metabox AJAX functionality.
-		add_action( 'wp_ajax_cp_set_post_title_visibility', array( $this, 'metabox_set_post_title_visibility' ) );
-		add_action( 'wp_ajax_nopriv_cp_set_post_title_visibility', array( $this, 'metabox_set_post_title_visibility' ) );
-		add_action( 'wp_ajax_cp_set_page_meta_visibility', array( $this, 'metabox_set_page_meta_visibility' ) );
-		add_action( 'wp_ajax_nopriv_cp_set_page_meta_visibility', array( $this, 'metabox_set_page_meta_visibility' ) );
-		add_action( 'wp_ajax_cp_set_number_format', array( $this, 'metabox_set_number_format' ) );
-		add_action( 'wp_ajax_nopriv_cp_set_number_format', array( $this, 'metabox_set_number_format' ) );
-		add_action( 'wp_ajax_cp_set_post_type_override', array( $this, 'metabox_set_post_type_override' ) );
-		add_action( 'wp_ajax_nopriv_cp_set_post_type_override', array( $this, 'metabox_set_post_type_override' ) );
-		add_action( 'wp_ajax_cp_set_starting_para_number', array( $this, 'metabox_set_starting_para_number' ) );
-		add_action( 'wp_ajax_nopriv_cp_set_starting_para_number', array( $this, 'metabox_set_starting_para_number' ) );
+		add_action( 'wp_ajax_cp_set_post_title_visibility', [ $this, 'metabox_set_post_title_visibility' ] );
+		add_action( 'wp_ajax_nopriv_cp_set_post_title_visibility', [ $this, 'metabox_set_post_title_visibility' ] );
+		add_action( 'wp_ajax_cp_set_page_meta_visibility', [ $this, 'metabox_set_page_meta_visibility' ] );
+		add_action( 'wp_ajax_nopriv_cp_set_page_meta_visibility', [ $this, 'metabox_set_page_meta_visibility' ] );
+		add_action( 'wp_ajax_cp_set_number_format', [ $this, 'metabox_set_number_format' ] );
+		add_action( 'wp_ajax_nopriv_cp_set_number_format', [ $this, 'metabox_set_number_format' ] );
+		add_action( 'wp_ajax_cp_set_post_type_override', [ $this, 'metabox_set_post_type_override' ] );
+		add_action( 'wp_ajax_nopriv_cp_set_post_type_override', [ $this, 'metabox_set_post_type_override' ] );
+		add_action( 'wp_ajax_cp_set_starting_para_number', [ $this, 'metabox_set_starting_para_number' ] );
+		add_action( 'wp_ajax_nopriv_cp_set_starting_para_number', [ $this, 'metabox_set_starting_para_number' ] );
 
 		// Add an action to wp_enqueue_scripts that triggers themes to include their WP FEE compatibility script.
-		add_action( 'wp_enqueue_scripts', array( $this, 'trigger_script_inclusion' ), 9999 );
+		add_action( 'wp_enqueue_scripts', [ $this, 'trigger_script_inclusion' ], 9999 );
 
 		// Broadcast.
 		do_action( 'commentpress_editor_wp_fee_enabled' );
@@ -384,7 +384,7 @@ class Commentpress_Core_Editor {
 			$this->fee = 'killed';
 
 			// Do not allow FEE to init.
-			remove_action( 'init', array( $GLOBALS['wp_front_end_editor'], 'init' ) );
+			remove_action( 'init', [ $GLOBALS['wp_front_end_editor'], 'init' ] );
 
 		}
 
@@ -473,7 +473,7 @@ class Commentpress_Core_Editor {
 	public function comments_get_container() {
 
 		// Init return.
-		$data = array();
+		$data = [];
 
 		// Access globals.
 		global $post, $multipage, $page, $pages;
@@ -579,7 +579,7 @@ class Commentpress_Core_Editor {
 		global $post;
 
 		// Init return.
-		$data = array();
+		$data = [];
 
 		// Set up post.
 		if ( $this->_setup_post() ) {
@@ -617,7 +617,7 @@ class Commentpress_Core_Editor {
 		global $post;
 
 		// Init return.
-		$data = array();
+		$data = [];
 
 		// Set up post.
 		if ( $this->_setup_post() ) {
@@ -655,7 +655,7 @@ class Commentpress_Core_Editor {
 		global $post;
 
 		// Init return.
-		$data = array();
+		$data = [];
 
 		// Set up post.
 		if ( $this->_setup_post() ) {
@@ -699,7 +699,7 @@ class Commentpress_Core_Editor {
 		global $post;
 
 		// Init return.
-		$data = array();
+		$data = [];
 
 		// Set up post.
 		if ( $this->_setup_post() ) {
@@ -736,7 +736,7 @@ class Commentpress_Core_Editor {
 		global $post;
 
 		// Init return.
-		$data = array();
+		$data = [];
 
 		// Set up post.
 		if ( $this->_setup_post() ) {

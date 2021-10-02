@@ -51,7 +51,7 @@ if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 	global $commentpres_obj;
 
 	// Init.
-	$_special_pages = array();
+	$_special_pages = [];
 
 	// If we have the plugin enabled.
 	if ( is_object( $commentpress_core ) ) {

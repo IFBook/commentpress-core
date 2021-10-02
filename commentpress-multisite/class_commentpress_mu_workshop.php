@@ -439,13 +439,13 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 		if ( is_admin() ) {
 
 			// Add element to Network BuddyPress form.
-			add_filter( 'cpmu_network_buddypress_options_form', array( $this, '_buddypress_admin_form' ) );
+			add_filter( 'cpmu_network_buddypress_options_form', [ $this, '_buddypress_admin_form' ] );
 
 			// Hook into Network BuddyPress form update.
-			add_action( 'cpmu_db_options_update', array( $this, '_buddypress_admin_update' ), 21 );
+			add_action( 'cpmu_db_options_update', [ $this, '_buddypress_admin_update' ], 21 );
 
 			// Hook into Network BuddyPress options reset.
-			add_filter( 'cpmu_buddypress_options_get_defaults', array( $this, '_get_default_settings' ), 10, 1 );
+			add_filter( 'cpmu_buddypress_options_get_defaults', [ $this, '_get_default_settings' ], 10, 1 );
 
 		}
 
@@ -511,32 +511,32 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	public function _register_hooks() {
 
 		// Override CommentPress Core "Title Page".
-		add_filter( 'cp_nav_title_page_title', array( $this, 'filter_nav_title_page_title' ), 25 );
+		add_filter( 'cp_nav_title_page_title', [ $this, 'filter_nav_title_page_title' ], 25 );
 
 		// Override CommentPress Core title of "view document" button in blog lists.
-		add_filter( 'cp_get_blogs_visit_groupblog_button', array( $this, 'get_blogs_visit_blog_button' ), 25, 1 );
+		add_filter( 'cp_get_blogs_visit_groupblog_button', [ $this, 'get_blogs_visit_blog_button' ], 25, 1 );
 
 		// Filter bp-groupblog defaults.
-		add_filter( 'cpmu_bp_groupblog_subnav_item_name', array( $this, 'filter_blog_name' ), 25 );
-		add_filter( 'cpmu_bp_groupblog_subnav_item_slug', array( $this, 'filter_blog_slug' ), 25 );
+		add_filter( 'cpmu_bp_groupblog_subnav_item_name', [ $this, 'filter_blog_name' ], 25 );
+		add_filter( 'cpmu_bp_groupblog_subnav_item_slug', [ $this, 'filter_blog_slug' ], 25 );
 
 		// Change name of activity sidebar headings.
-		add_filter( 'cp_activity_tab_recent_title_all_yours', array( $this, 'filter_activity_title_all_yours' ), 25 );
-		add_filter( 'cp_activity_tab_recent_title_all_public', array( $this, 'filter_activity_title_all_public' ), 25 );
+		add_filter( 'cp_activity_tab_recent_title_all_yours', [ $this, 'filter_activity_title_all_yours' ], 25 );
+		add_filter( 'cp_activity_tab_recent_title_all_public', [ $this, 'filter_activity_title_all_public' ], 25 );
 
 		// Override with 'workshop'.
-		add_filter( 'cp_activity_tab_recent_title_blog', array( $this, 'activity_tab_recent_title_blog' ), 25, 1 );
+		add_filter( 'cp_activity_tab_recent_title_blog', [ $this, 'activity_tab_recent_title_blog' ], 25, 1 );
 
 		// Override titles of BuddyPress activity filters.
-		add_filter( 'cp_groupblog_comment_name', array( $this, 'groupblog_comment_name' ), 25 );
-		add_filter( 'cp_groupblog_post_name', array( $this, 'groupblog_post_name' ), 25 );
+		add_filter( 'cp_groupblog_comment_name', [ $this, 'groupblog_comment_name' ], 25 );
+		add_filter( 'cp_groupblog_post_name', [ $this, 'groupblog_post_name' ], 25 );
 
 		// Cp_activity_post_name_filter.
-		add_filter( 'cp_activity_post_name', array( $this, 'activity_post_name' ), 25 );
+		add_filter( 'cp_activity_post_name', [ $this, 'activity_post_name' ], 25 );
 
 		// Override label on All Comments page.
-		add_filter( 'cp_page_all_comments_book_title', array( $this, 'page_all_comments_book_title' ), 25, 1 );
-		add_filter( 'cp_page_all_comments_blog_title', array( $this, 'page_all_comments_blog_title' ), 25, 1 );
+		add_filter( 'cp_page_all_comments_book_title', [ $this, 'page_all_comments_book_title' ], 25, 1 );
+		add_filter( 'cp_page_all_comments_blog_title', [ $this, 'page_all_comments_blog_title' ], 25, 1 );
 
 	}
 

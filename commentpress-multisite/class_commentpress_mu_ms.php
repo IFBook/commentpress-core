@@ -132,12 +132,12 @@ class Commentpress_Multisite_Wordpress {
 			__( 'CommentPress', 'commentpress-core' ),
 			'manage_options',
 			'cpmu_admin_page',
-			array( $this, '_network_admin_form' )
+			[ $this, '_network_admin_form' ]
 		);
 
 		// Add styles only on our admin page, see:
 		// http://codex.wordpress.org/Function_Reference/wp_enqueue_script#Load_scripts_only_on_plugin_pages
-		add_action( 'admin_print_styles-' . $page, array( $this, 'add_admin_styles' ) );
+		add_action( 'admin_print_styles-' . $page, [ $this, 'add_admin_styles' ] );
 
 	}
 
@@ -312,35 +312,35 @@ class Commentpress_Multisite_Wordpress {
 	public function _register_hooks() {
 
 		// Add form elements to signup form.
-		add_action( 'signup_blogform', array( $this, 'signup_blogform' ) );
+		add_action( 'signup_blogform', [ $this, 'signup_blogform' ] );
 
 		// Activate blog-specific CommentPress Core plugin.
-		add_action( 'wpmu_new_blog', array( $this, 'wpmu_new_blog' ), 12, 6 );
+		add_action( 'wpmu_new_blog', [ $this, 'wpmu_new_blog' ], 12, 6 );
 
 		// Enable/disable workflow sitewide.
-		add_filter( 'cp_class_commentpress_workflow_enabled', array( $this, '_get_workflow_enabled' ) );
+		add_filter( 'cp_class_commentpress_workflow_enabled', [ $this, '_get_workflow_enabled' ] );
 
 		// Is this the back end?
 		if ( is_admin() ) {
 
 			// Add menu to Network submenu.
-			add_action( 'network_admin_menu', array( $this, 'add_admin_menu' ), 30 );
+			add_action( 'network_admin_menu', [ $this, 'add_admin_menu' ], 30 );
 
 			// Add options to reset array.
-			add_filter( 'cpmu_db_options_get_defaults', array( $this, '_get_default_settings' ), 20, 1 );
+			add_filter( 'cpmu_db_options_get_defaults', [ $this, '_get_default_settings' ], 20, 1 );
 
 			// Hook into Network BuddyPress form update.
-			add_action( 'cpmu_db_options_update', array( $this, '_network_admin_update' ), 20 );
+			add_action( 'cpmu_db_options_update', [ $this, '_network_admin_update' ], 20 );
 
 		} else {
 
 			// Register any public styles.
-			add_action( 'wp_enqueue_scripts', array( $this, 'add_frontend_styles' ), 20 );
+			add_action( 'wp_enqueue_scripts', [ $this, 'add_frontend_styles' ], 20 );
 
 		}
 
 		// Override Title Page content.
-		//add_filter( 'cp_title_page_content', array( $this, '_get_title_page_content' ) );
+		//add_filter( 'cp_title_page_content', [ $this, '_get_title_page_content' ] );
 
 	}
 
@@ -564,9 +564,9 @@ class Commentpress_Multisite_Wordpress {
 		wp_editor(
 			$content,
 			'cpmu_title_page_content',
-			$settings = array(
-				'media_buttons' => false
-			)
+			$settings = [
+				'media_buttons' => false,
+			]
 		);
 		*/
 
@@ -631,11 +631,11 @@ class Commentpress_Multisite_Wordpress {
 	public function _get_default_settings( $existing_options ) {
 
 		// Default Multisite options.
-		$defaults = array(
+		$defaults = [
 			'cpmu_force_commentpress' => $this->cpmu_force_commentpress,
 			//'cpmu_title_page_content' => $this->cpmu_title_page_content,
-			'cpmu_disable_translation_workflow' => $this->cpmu_disable_translation_workflow
-		);
+			'cpmu_disable_translation_workflow' => $this->cpmu_disable_translation_workflow,
+		];
 
 		/**
 		 * Allow overrides and additions.

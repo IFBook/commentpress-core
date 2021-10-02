@@ -101,10 +101,10 @@ class Commentpress_Multisite_Loader {
 	public function initialise() {
 
 		// Check for network activation.
-		//add_action( 'activated_plugin',  array( $this, 'network_activated' ), 10, 2 );
+		//add_action( 'activated_plugin',  [ $this, 'network_activated' ], 10, 2 );
 
 		// Check for network deactivation.
-		add_action( 'deactivated_plugin',  array( $this, 'network_deactivated' ), 10, 2 );
+		add_action( 'deactivated_plugin',  [ $this, 'network_deactivated' ], 10, 2 );
 
 		// ---------------------------------------------------------------------
 		// Load Database Wrapper object
@@ -184,7 +184,7 @@ class Commentpress_Multisite_Loader {
 		// ---------------------------------------------------------------------
 
 		// Load when BuddyPress is loaded.
-		add_action( 'bp_include', array( $this, 'load_buddypress_object' ) );
+		add_action( 'bp_include', [ $this, 'load_buddypress_object' ] );
 
 	}
 

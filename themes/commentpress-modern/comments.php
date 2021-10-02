@@ -124,11 +124,11 @@ if ( is_object( $commentpress_core ) ) {
 
 		<ol class="commentlist">
 
-		<?php wp_list_comments( array(
+		<?php wp_list_comments( [
 			'type'=> 'comment',
 			'reply_text' => __( 'Reply to this comment', 'commentpress-core' ),
 			'callback' => 'commentpress_comments',
-		) ); ?>
+		] ); ?>
 
 		</ol>
 

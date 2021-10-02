@@ -59,19 +59,19 @@ NOTES
 		<?php
 
 		// Get comments for this post in ascending order.
-		$comments = get_comments( array(
+		$comments = get_comments( [
 			'post_id' => $post->ID,
-			'order' => 'ASC'
-		) );
+			'order' => 'ASC',
+		] );
 
 		// List comments.
 		wp_list_comments(
-			array(
+			[
 				'type'=> 'comment',
 				'reply_text' => __( 'Reply to this comment', 'commentpress-core' ),
 				'callback' => 'commentpress_comments',
 				'style'=> 'ol',
-			),
+			],
 			$comments
 		); ?>
 

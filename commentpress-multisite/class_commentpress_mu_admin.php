@@ -34,7 +34,7 @@ class Commentpress_Multisite_Admin {
 	 * @access public
 	 * @var array $cpmu_options The multisite options array.
 	 */
-	public $cpmu_options = array();
+	public $cpmu_options = [];
 
 
 
@@ -196,7 +196,7 @@ class Commentpress_Multisite_Admin {
 	public function options_create() {
 
 		// Init default options.
-		$this->cpmu_options = array();
+		$this->cpmu_options = [];
 
 		// Allow plugins to add their own options (we always get options from commentpress_mu).
 		$this->cpmu_options = apply_filters( 'cpmu_db_options_get_defaults', $this->cpmu_options );
@@ -333,7 +333,7 @@ class Commentpress_Multisite_Admin {
 	public function options_reset( $component = 'multisite' ) {
 
 		// Init default options.
-		$options = array();
+		$options = [];
 
 		// Did we get a multisite request?
 		if ( $component == 'multisite' ) {
@@ -678,7 +678,7 @@ class Commentpress_Multisite_Admin {
 	public function get_workflow_data() {
 
 		// Init.
-		$return = array();
+		$return = [];
 
 		// Off by default.
 		$has_workflow = false;
@@ -726,10 +726,10 @@ class Commentpress_Multisite_Admin {
 	public function get_blogtype_data() {
 
 		// Init.
-		$return = array();
+		$return = [];
 
 		// Assume no types.
-		$types = array();
+		$types = [];
 
 		// But allow overrides for plugins to supply some.
 		$types = apply_filters( 'cp_blog_type_options', $types );
@@ -747,7 +747,7 @@ class Commentpress_Multisite_Admin {
 			$return['label'] = $type_label;
 
 			// Construct options.
-			$type_option_list = array();
+			$type_option_list = [];
 			$n = 0;
 			foreach( $types AS $type ) {
 				$type_option_list[] = '<option value="' . $n . '">' . $type . '</option>';
@@ -846,13 +846,13 @@ class Commentpress_Multisite_Admin {
 			__( 'CommentPress Core', 'commentpress-core' ),
 			'manage_options',
 			'commentpress_admin',
-			array( $this, 'options_page' )
+			[ $this, 'options_page' ]
 		);
 
 		// Add scripts and styles.
-		//add_action( 'admin_print_scripts-' . $this->options_page, array( $this, 'admin_js' ) );
-		//add_action( 'admin_print_styles-' . $this->options_page, array( $this, 'admin_css' ) );
-		//add_action( 'admin_head-' . $this->options_page, array( $this, 'admin_head' ), 50 );
+		//add_action( 'admin_print_scripts-' . $this->options_page, [ $this, 'admin_js' ] );
+		//add_action( 'admin_print_styles-' . $this->options_page, [ $this, 'admin_css' ] );
+		//add_action( 'admin_head-' . $this->options_page, [ $this, 'admin_head' ], 50 );
 
 		// Test if we have a existing pre-3.4 CommentPress instance
 		if ( commentpress_is_legacy_plugin_active() ) {
@@ -872,7 +872,7 @@ class Commentpress_Multisite_Admin {
 			} else {
 
 				// Show message.
-				add_action( 'admin_notices', array( $this, 'migrate_alert' ) );
+				add_action( 'admin_notices', [ $this, 'migrate_alert' ] );
 
 			}
 
@@ -989,15 +989,15 @@ class Commentpress_Multisite_Admin {
 				commentpress_activate_ajax();
 
 				// Modify CommentPress Core settings page.
-				add_filter( 'cpmu_deactivate_commentpress_element', array( $this, 'get_deactivate_element' ) );
+				add_filter( 'cpmu_deactivate_commentpress_element', [ $this, 'get_deactivate_element' ] );
 
 				// Hook into CommentPress Core settings page result.
-				add_action( 'cpmu_deactivate_commentpress', array( $this, 'disable_core' ) );
+				add_action( 'cpmu_deactivate_commentpress', [ $this, 'disable_core' ] );
 
 			} else {
 
 				// Modify admin menu.
-				add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+				add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 
 			}
 

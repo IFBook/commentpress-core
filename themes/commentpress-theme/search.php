@@ -29,7 +29,7 @@
 	global $commentpres_obj;
 
 	// Init.
-	$_special_pages = array();
+	$_special_pages = [];
 
 	// If we have the plugin enabled.
 	if ( is_object( $commentpress_core ) ) {

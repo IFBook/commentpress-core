@@ -27,10 +27,10 @@
 
 	// Show footer menu if assigned.
 	if ( has_nav_menu( 'footer' ) ) {
-		wp_nav_menu( array(
+		wp_nav_menu( [
 			'theme_location' => 'footer',
 			'container_class' => 'commentpress-footer-nav-menu',
-		) );
+		] );
 	}
 
 	// Are we using the page footer widget?

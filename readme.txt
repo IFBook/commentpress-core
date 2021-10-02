@@ -1,10 +1,10 @@
 === CommentPress Core ===
 Contributors: needle, commentpress
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZSKM8T5ZP3SC
+Donate link: https://www.paypal.me/interactivist
 Tags: commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
-Requires at least: 4.8
-Tested up to: 5.6
-Stable tag: 3.9.15
+Requires at least: 4.9
+Tested up to: 5.8
+Stable tag: 4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -214,6 +214,11 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 
 == Changelog ==
+
+<h4>3.9.15</h4>
+
+* Hide Activity Column comments section when there are none
+* Style fixes for BuddyPress
 
 <h4>3.9.14</h4>
 

@@ -14,10 +14,10 @@
 	<?php if ( has_nav_menu( 'footer' ) ) : ?>
 		<?php
 		// Show footer menu if assigned.
-		wp_nav_menu( array(
+		wp_nav_menu( [
 			'theme_location' => 'footer',
 			'container_class' => 'commentpress-footer-nav-menu',
-		) );
+		] );
 		?>
 	<?php endif; ?>
 

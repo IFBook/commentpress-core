@@ -6,7 +6,7 @@ global $commentpress_core;
 
 
 // Init tab order (only relevant for old default theme)
-$_tab_order = array( 'comments', 'activity' );
+$_tab_order = [ 'comments', 'activity' ];
 
 
 
@@ -51,7 +51,7 @@ foreach( $_tab_order AS $_tab ) {
 
 // Add active class.
 $active_class = '';
-if ( in_array( $commentpress_core->get_default_sidebar(), array( 'comments', 'toc' ) ) ) {
+if ( in_array( $commentpress_core->get_default_sidebar(), [ 'comments', 'toc' ] ) ) {
 	$active_class = ' class="active-tab"';
 }
 
