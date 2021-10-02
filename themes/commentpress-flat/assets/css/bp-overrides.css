@@ -14,7 +14,7 @@ BuddyPress compatibility and overrides.
 /* override links to graphics in bp.css */
 #buddypress div.item-list-tabs ul li.feed a
 {
-	background: url( ../images/buddypress/rss.png ) center left no-repeat;
+	background: url( ../images/buddypress/feed.png ) center left no-repeat;
 	margin-left: 5px;
 	padding-left: 20px;
 }
@@ -580,19 +580,6 @@ body.create-blog.buddypress_page #content a.button,
 	text-transform: uppercase;
 }
 
-
-
-/* handle xProfile Form styles */
-#buddypress .standard-form .datebox-selects label,
-#buddypress .standard-form .checkbox-options label,
-#buddypress .standard-form .radio-button-options label
-{
-	margin: 0;
-	text-transform: none;
-}
-
-
-
 /* override bp.css table styles */
 div#comments_sidebar table,
 div#respond .defaultSkin table
@@ -636,6 +623,20 @@ div.dir-search input[type="text"]
 	margin: 0.5em 0;
 	padding: 0;
 	line-height: 1.3;
+}
+
+/* handle xProfile Form styles */
+#buddypress .standard-form .datebox-selects label,
+#buddypress .standard-form .checkbox-options label,
+#buddypress .standard-form .radio-button-options label
+{
+	margin: 0;
+	text-transform: none;
+}
+
+#buddypress .wp-editor-wrap button.wp-switch-editor
+{
+	border-radius: 3px 3px 0 0;
 }
 
 
@@ -1372,7 +1373,7 @@ body.groups h2.post_title
 	font-weight: normal;
 	font-family: sans-serif;
 	color: #fff;
-	padding: 21px 19px 15px 19px;
+	padding: 0.5em;
 	color: #fff;
 }
 
@@ -1886,7 +1887,7 @@ Messages
 
 #buddypress div#message p
 {
-	margin-top: 0.7em;
+	margin-top: 0;
 	border: none;
 }
 
@@ -4226,7 +4227,8 @@ body.group-create #content form.standard-form > h3,
 body.activation.activate #content h2,
 body.activation.activate #content h3,
 div#item-header,
-#content div.item-list-tabs#object-nav
+#content div.item-list-tabs#object-nav,
+#buddypress div.item-list-tabs
 {
 	background: #b4b797;
 }
