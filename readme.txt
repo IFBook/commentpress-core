@@ -218,6 +218,7 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 <h4>3.9.15</h4>
 
 * Hide Activity Column comments section when there are none
+* Style fixes for BuddyPress
 
 <h4>3.9.14</h4>
 
