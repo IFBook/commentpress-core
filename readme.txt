@@ -1,6 +1,6 @@
 === CommentPress Core ===
 Contributors: needle, commentpress
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZSKM8T5ZP3SC
+Donate link: https://www.paypal.me/interactivist
 Tags: commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
 Requires at least: 4.9
 Tested up to: 5.8
