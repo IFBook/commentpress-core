@@ -751,26 +751,26 @@ CommentPress.theme.sidebars = new function() {
 	this.enable_buttons = function() {
 
 		// Toggle for navigation.
-		$('#switcher .navigation-button').click( function(e) {
+		$('#switcher .navigation-button').on( 'click', function(e) {
 			e.preventDefault();
 			me.show_nav();
 		});
 
 		// Toggle for content - we don't have one of these in this theme!
-		$('#switcher .content-button').click( function(e) {
+		$('#switcher .content-button').on( 'click', function(e) {
 			e.preventDefault();
 			me.show_content();
 		});
 
 		// Toggle for comments sidebar.
-		$('#switcher .comments-button').click( function(e) {
+		$('#switcher .comments-button').on( 'click', function(e) {
 			e.preventDefault();
 			me.show_comments();
 			me.activate_sidebar( 'comments' );
 		});
 
 		// Toggle for activity sidebar.
-		$('#switcher .activity-button').click( function(e) {
+		$('#switcher .activity-button').on( 'click', function(e) {
 			e.preventDefault();
 			me.show_activity();
 			me.activate_sidebar( 'activity' );
@@ -944,7 +944,7 @@ CommentPress.theme.viewport = new function() {
 		 *
 		 * @since 3.8
 		 */
-		$(window).resize( function() {
+		$(window).on( 'resize', function() {
 
 			// Maintain height of sidebars.
 			CommentPress.theme.sidebars.set_height();
@@ -986,7 +986,7 @@ CommentPress.theme.viewport = new function() {
 		 *
 		 * @since 3.8
 		 */
-		$(window).scroll( function() {
+		$(window).on( 'scroll', function() {
 
 			// Declare vars.
 			var viewport, header_height, toc_sidebar_height, sidebar_height,

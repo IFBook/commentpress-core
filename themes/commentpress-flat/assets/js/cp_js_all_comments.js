@@ -21,7 +21,7 @@ jQuery(document).ready( function($) {
 	cp_headers.addClass( 'pointer' );
 
 	// All comment page headings toggle slide.
-	cp_headers.click( function() {
+	cp_headers.on( 'click', function() {
 
 		// Toggle next item_body.
 		$(this).next('div.item_body').slideToggle( 'slow' );

@@ -27,13 +27,13 @@
 		setup: function (data, namespaces) {
 			var elem = this,
 				$elem = jQuery(elem);
-			$elem.bind('click', jQuery.event.special.tripleclick.handler);
+			$elem.on('click', jQuery.event.special.tripleclick.handler);
 		},
 
 		teardown: function (namespaces) {
 			var elem = this,
 				$elem = jQuery(elem);
-			$elem.unbind('click', jQuery.event.special.tripleclick.handler);
+			$elem.off('click', jQuery.event.special.tripleclick.handler);
 		},
 
 		handler: function (event) {
@@ -128,7 +128,7 @@
 						sel = window.getSelection();
 						selText = sel.toString();
 
-						if ($.trim(selText) === '' || selText.split(' ').length < settings.minWords) return;
+						if (selText.trim() === '' || selText.split(' ').length < settings.minWords) return;
 
 						if (sel.getRangeAt && sel.rangeCount) {
 							range = window.getSelection().getRangeAt(0);
@@ -162,11 +162,11 @@
 
 							if (numClicks !== clicks) return;
 							$(settings.selector).hide();
-							if (!isIE && $.trim(selText) === $.trim(expandedSelRange.startContainer.innerText)) {
+							if (!isIE && expandedSelRange.startContainer.innerText && selText.trim() === expandedSelRange.startContainer.innerText.trim()) {
 								expandedSelRange.startContainer.innerHTML += "<span class='dummy'>&nbsp;</span>";
 								position = $(".dummy").offset();
 								$(".dummy").remove();
-							} else if (!isIE && $.trim(selText) === $.trim(expandedSelRange.endContainer.innerText)) {
+							} else if (!isIE && expandedSelRange.endContainer.innerText && selText.trim() === expandedSelRange.endContainer.innerText.trim()) {
 								expandedSelRange.endContainer.innerHTML += "<span class='dummy'>&nbsp;</span>";
 								position = $(".dummy").offset();
 								$(".dummy").remove();
@@ -181,7 +181,7 @@
 						expandedSelRange = range.duplicate();
 
 						selText = expandedSelRange.text;
-						if ($.trim(selText) === '' || selText.split(' ').length < settings.minWords) return;
+						if (selText.trim() === '' || selText.split(' ').length < settings.minWords) return;
 
 						range.collapse(false);
 						range.pasteHTML(html);
@@ -200,7 +200,7 @@
 				}
 				$(settings.selector).hide();
 				$(settings.selector).css("position", "absolute");
-				$(document).bind('mouseup.highlighter' + touchend, function (e) {
+				$(document).on('mouseup.highlighter' + touchend, function (e) {
 					if (isDown) {
 						numClicks = 1;
 						clicks = 0;
@@ -210,27 +210,27 @@
 						isDown = false;
 					}
 				});
-				$(this).bind('mouseup.highlighter' + touchend, function (e) {
+				$(this).on('mouseup.highlighter' + touchend, function (e) {
 					numClicks = 1;
 					clicks = 0;
 					setTimeout(function () {
 						insertSpanAfterSelection(1);
 					}, 300);
 				});
-				$(this).bind('tripleclick.highlighter', function (e) {
+				$(this).on('tripleclick.highlighter', function (e) {
 					numClicks = 3;
 					setTimeout(function () {
 						insertSpanAfterSelection(3);
 					}, 200);
 				});
 
-				$(this).bind('dblclick.highlighter', function (e) {
+				$(this).on('dblclick.highlighter', function (e) {
 					numClicks = 2;
 					setTimeout(function () {
 						insertSpanAfterSelection(2);
 					}, 300);
 				});
-				$(this).bind('mousedown.highlighter' + touchstart, function (e) {
+				$(this).on('mousedown.highlighter' + touchstart, function (e) {
 					$(settings.selector).hide();
 					isDown = true;
 				});
@@ -245,11 +245,11 @@
 		},
 		destroy: function (content) {
 			return this.each(function () {
-				$(document).unbind('mouseup.highlighter' + touchend);
-				$(this).unbind('mouseup.highlighter' + touchend);
-				$(this).unbind('tripleclick.highlighter');
-				$(this).unbind('dblclick.highlighter');
-				$(this).unbind('mousedown.highlighter' + touchstart);
+				$(document).off('mouseup.highlighter' + touchend);
+				$(this).off('mouseup.highlighter' + touchend);
+				$(this).off('tripleclick.highlighter');
+				$(this).off('dblclick.highlighter');
+				$(this).off('mousedown.highlighter' + touchstart);
 			});
 		}
 	};

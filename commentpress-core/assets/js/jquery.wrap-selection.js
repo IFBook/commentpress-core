@@ -319,7 +319,7 @@
 						// get only text and whap it's
 						.filter(function() {
 							if (this.nodeType !== 3) return false;
-							return $.trim(this.textContent).length > 0;
+							return this.textContent.trim().length > 0;
 						}).wrap(makeSpanElement());
 					myNodesSurrounded += 1;
 				}

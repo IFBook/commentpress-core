@@ -639,19 +639,19 @@ CommentPress.theme.sidebars = new function() {
 	this.enable_buttons = function() {
 
 		// Toggle for navigation.
-		$('.navigation-button').click(function(e) {
+		$('.navigation-button').on( 'click', function(e) {
 			e.preventDefault();
 			me.show_nav();
 		});
 
 		// Toggle for content.
-		$('.content-button').click(function(e) {
+		$('.content-button').on( 'click', function(e) {
 			e.preventDefault();
 			me.show_content();
 		});
 
 		// Toggle for sidebar.
-		$('.sidebar-button').click(function(e) {
+		$('.sidebar-button').on( 'click', function(e) {
 			e.preventDefault();
 			me.show_discuss();
 		});
@@ -758,7 +758,7 @@ CommentPress.theme.viewport = new function() {
 		 *
 		 * @since 3.8
 		 */
-		$(window).resize( function() {
+		$(window).on( 'resize', function() {
 
 			// Maintain height of sidebars.
 			CommentPress.theme.sidebars.set_height();
@@ -783,7 +783,7 @@ CommentPress.theme.viewport = new function() {
 		 *
 		 * @since 3.8
 		 */
-		$(window).scroll( function() {
+		$(window).on( 'scroll', function() {
 
 			// Declare vars.
 			var viewport, header_height, switcher_height, sidebar_header_height, wpadminbar_height,

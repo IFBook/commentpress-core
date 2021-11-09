@@ -725,7 +725,7 @@ CommentPress.infinite.DOM = new function() {
 				//console.log( 'page_title: ' + CommentPress.infinite.settings.get_post_title() );
 
 				// Store items as HTML.
-				html_to_save = $.trim( context.html() );
+				html_to_save = context.html().trim();
 
 				// Create new state object to push to history.
 				window.history.pushState(

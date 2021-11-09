@@ -18,7 +18,7 @@ jQuery(document).ready( function($) {
 	$("ul.all_comments_listing li > h3").css( 'cursor', 'pointer' );
 
 	// All comment page headings toggle slide.
-	$("ul.all_comments_listing li > h3").click( function() {
+	$("ul.all_comments_listing li > h3").on( 'click', function() {
 
 		// Toggle next item_body.
 		$(this).next('div.item_body').slideToggle( 'slow' );

@@ -449,7 +449,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 		 *
 		 * @since 3.8
 		 */
-		$('.popover-holder').mousedown( function() {
+		$('.popover-holder').on( 'mousedown', function() {
 			return false;
 		});
 
@@ -458,7 +458,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 		 *
 		 * @since 3.8
 		 */
-		$('.popover-holder-btn-left-comment').click( function() {
+		$('.popover-holder-btn-left-comment').on( 'click', function() {
 
 			// Define vars.
 			var textblock_id, selection, wrap;
@@ -494,7 +494,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 		 *
 		 * @since 3.8
 		 */
-		$('.popover-holder-btn-left-quote').click( function() {
+		$('.popover-holder-btn-left-quote').on( 'click', function() {
 
 			// Define vars.
 			var textblock_id, selection, wrap;
@@ -530,7 +530,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 		 *
 		 * @since 3.8
 		 */
-		$('.popover-holder-btn-right').click( function() {
+		$('.popover-holder-btn-right').on( 'click', function() {
 
 			// Hide popover.
 			$('.popover-holder').hide();
@@ -709,7 +709,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 		var selection, container;
 
 		// Unbind popover document click handler.
-		$(document).unbind( 'click', me.highlighter_textblock_handler );
+		$(document).off( 'click', me.highlighter_textblock_handler );
 
 		// Get container.
 		container = me.container_get();
@@ -869,7 +869,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 			'minWords': 1,
 			'complete': function( selected_text ) {
 				// Attach a handler to the document body.
-				$(document).bind( 'click', me.highlighter_textblock_handler );
+				$(document).on( 'click', me.highlighter_textblock_handler );
 			}
 		});
 
@@ -886,7 +886,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 		$('.textblock').highlighter('destroy');
 
 		// Unbind document click handler.
-		$(document).unbind( 'click', me.highlighter_textblock_handler );
+		$(document).off( 'click', me.highlighter_textblock_handler );
 
 	};
 
@@ -1305,10 +1305,10 @@ CommentPress.texthighlighter.commentform = new function() {
 			if ( $('#wp-comment-wrap').hasClass( 'html-active' ) ) {
 				content = $('#comment').val();
 			} else {
-				if ( 'undefined' !== typeof tinymce.activeEditor ) {
-					content = tinymce.activeEditor.getContent();
-				} else {
+				if ( 'undefined' === typeof tinymce.activeEditor || tinymce.activeEditor === null ) {
 					content = $('#comment').val();
+				} else {
+					content = tinymce.activeEditor.getContent();
 				}
 			}
 		} else {
@@ -1333,10 +1333,10 @@ CommentPress.texthighlighter.commentform = new function() {
 			if ( $('#wp-comment-wrap').hasClass( 'html-active' ) ) {
 				$('#comment').val( '' );
 			} else {
-				if ( 'undefined' !== typeof tinymce.activeEditor ) {
-					tinymce.activeEditor.setContent( '', {format : 'html'} );
-				} else {
+				if ( 'undefined' === typeof tinymce.activeEditor || tinymce.activeEditor === null ) {
 					$('#comment').val( '' );
+				} else {
+					tinymce.activeEditor.setContent( '', {format : 'html'} );
 				}
 			}
 		} else {
@@ -1424,7 +1424,7 @@ CommentPress.texthighlighter.commentform = new function() {
 		me.focus_active = true;
 
 		// Attach a handler to the document body.
-		$(document).bind( 'click', me.focus_active_handler );
+		$(document).on( 'click', me.focus_active_handler );
 
 	};
 
@@ -1452,7 +1452,7 @@ CommentPress.texthighlighter.commentform = new function() {
 		me.focus_active = false;
 
 		// Unbind document click handler.
-		$(document).unbind( 'click', me.focus_active_handler );
+		$(document).off( 'click', me.focus_active_handler );
 
 	};
 
@@ -1479,7 +1479,7 @@ CommentPress.texthighlighter.commentform = new function() {
 						me.modal();
 
 						// Unbind document click handler.
-						$(document).unbind( 'click', me.focus_active_handler );
+						$(document).off( 'click', me.focus_active_handler );
 
 					} else {
 
@@ -1768,7 +1768,7 @@ CommentPress.texthighlighter.comments = new function() {
 		 *
 		 * @since 3.8
 		 */
-		$('.comment-popover-holder').mousedown( function() {
+		$('.comment-popover-holder').on( 'mousedown', function() {
 			return false;
 		});
 
@@ -1777,7 +1777,7 @@ CommentPress.texthighlighter.comments = new function() {
 		 *
 		 * @since 3.8
 		 */
-		$('.comment-popover-holder-btn-left-quote').click( function() {
+		$('.comment-popover-holder-btn-left-quote').on( 'click', function() {
 
 			// Define vars.
 			var comment_id, selection, wrap;
@@ -1807,7 +1807,7 @@ CommentPress.texthighlighter.comments = new function() {
 		 *
 		 * @since 3.8
 		 */
-		$('.popover-holder-btn-right').click( function() {
+		$('.popover-holder-btn-right').on( 'click', function() {
 
 			// Hide popover.
 			$('.comment-popover-holder').hide();
@@ -2031,7 +2031,7 @@ CommentPress.texthighlighter.comments = new function() {
 		var selection;
 
 		// Unbind popover document click handler.
-		$(document).unbind( 'click', me.highlighter_comment_handler );
+		$(document).off( 'click', me.highlighter_comment_handler );
 
 		// Get selection.
 		selection = CommentPress.texthighlighter.utilities.selection_get( me.container_get() );
@@ -2161,7 +2161,7 @@ CommentPress.texthighlighter.comments = new function() {
 			'minWords': 1,
 			'complete': function( selected_text ) {
 				// Attach a handler to the document body.
-				$(document).bind( 'click', me.highlighter_comment_handler );
+				$(document).on( 'click', me.highlighter_comment_handler );
 			}
 		});
 
@@ -2178,7 +2178,7 @@ CommentPress.texthighlighter.comments = new function() {
 		$('#comments_sidebar .comment-content').highlighter('destroy');
 
 		// Unbind document click handler.
-		$(document).unbind( 'click', me.highlighter_comment_handler );
+		$(document).off( 'click', me.highlighter_comment_handler );
 
 	};
 

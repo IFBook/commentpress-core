@@ -193,7 +193,7 @@ CommentPress.ajax.comments = new function() {
 		$('#loading').hide();
 
 		// Enable submit button.
-		$('#submit').removeAttr( 'disabled' );
+		$('#submit').prop( 'disabled', false );
 
 		// Make it visible.
 		$('#submit').show();
@@ -375,7 +375,7 @@ CommentPress.ajax.comments = new function() {
 		head_id = '#para_heading-' + text_sig;
 
 		// Find the commentlist we want.
-		comm_list = $(para_id + ' ol.commentlist:first');
+		comm_list = $(para_id + ' ol.commentlist').first();
 
 		// If the comment is a reply, append the comment to the children.
 		if ( comm_parent != '0' ) {
@@ -383,7 +383,7 @@ CommentPress.ajax.comments = new function() {
 			parent_id = '#li-comment-' + comm_parent;
 
 			// Find the child list we want.
-			child_list = $(parent_id + ' > ol.children:first');
+			child_list = $(parent_id + ' > ol.children').first();
 
 			// Is there a child list?
 			if ( child_list[0] ) {
@@ -756,7 +756,8 @@ CommentPress.ajax.comments = new function() {
 
 		// Define vars.
 		var text_sig, comm_parent, para_id, head_id, parent_id, child_list,
-			comm_list, comment_num, new_comment_count, new_comm_id;
+			comm_list, comment_num, new_comment_count, new_comment, new_comm_id = '',
+			last_id;
 
 		// Get form data.
 		text_sig = me.cpajax_form.find( '#text_signature' ).val();
@@ -770,60 +771,84 @@ CommentPress.ajax.comments = new function() {
 		$(para_id).removeClass( 'no_comments' );
 		$(head_id).removeClass( 'no_comments' );
 
-		// If the comment is a reply, append the comment to the children.
-		if ( comm_parent != '0' ) {
+		/*
+		 * Test for undefined and null, which may happen on replies to comments
+		 * which have lost their original context.
+		 */
+		if ( 'undefined' !== typeof response && response !== null ) {
 
-			// Get parent.
-			parent_id = '#li-comment-' + comm_parent;
+			// If the comment is a reply, append the comment to the children.
+			if ( comm_parent != '0' ) {
 
-			// Find the child list we want.
-			child_list = $(parent_id + ' > ol.children:first');
+				// Get parent.
+				parent_id = '#li-comment-' + comm_parent;
 
-			// Is there a child list?
-			if ( child_list[0] ) {
+				// Find the child list we want.
+				child_list = $(parent_id + ' > ol.children').first();
 
-				new_comm_id = me.nice_append(
-					response,
-					parent_id + ' > ol.children:first > li:last',
-					child_list,
-					parent_id + ' > ol.children:first > li:last'
-				);
+				// Is there a child list?
+				if ( child_list[0] ) {
 
+					// Make a copy of the new comment, append to target and hide.
+					new_comment = response.find(parent_id + ' > ol.children').first().children().last().clone();
+					new_comment.appendTo(child_list).hide();
+
+					// Get the last list item and its ID.
+					list_item = $(parent_id + ' > ol.children').first().children().last();
+					list_item_id = $(parent_id + ' > ol.children').first().children().last().prop('id');
+
+					// Clean up and get the new Comment ID.
+					new_comm_id = me.cleanup( list_item, list_item_id );
+
+				} else {
+
+					// Make a copy of the new comment, append to target and hide.
+					new_comment = response.find(parent_id + ' > ol.children').first().clone();
+					new_comment.appendTo(parent_id).hide();
+
+					// Get the last list item and its ID.
+					list_item = $(parent_id + ' > ol.children').first();
+					list_item_id = $(parent_id + ' > ol.children').first().children().last().prop('id');
+
+					// Clean up and get the new Comment ID.
+					new_comm_id = me.cleanup( list_item, list_item_id );
+
+				}
+
+			// If not, append the new comment at the bottom.
 			} else {
 
-				new_comm_id = me.nice_append(
-					response,
-					parent_id + ' > ol.children:first',
-					parent_id,
-					parent_id + ' > ol.children:first > li:last'
-				);
+				// Find the commentlist we want.
+				comm_list = $(para_id + ' > ol.commentlist').first();
 
-			}
+				// Is there a comment list?
+				if ( comm_list[0] ) {
 
-		// If not, append the new comment at the bottom.
-		} else {
+					// Make a copy of the new comment, append to target and hide.
+					new_comment = response.find(para_id + ' > ol.commentlist').first().children().last().clone();
+					new_comment.appendTo(comm_list).hide();
 
-			// Find the commentlist we want.
-			comm_list = $(para_id + ' > ol.commentlist:first');
+					// Get the last list item and its ID.
+					list_item = $(para_id + ' > ol.commentlist').first().children().last();
+					list_item_id = $(para_id + ' > ol.commentlist').first().children().last().prop('id');
 
-			// Is there a comment list?
-			if ( comm_list[0] ) {
+					// Clean up and get the new Comment ID.
+					new_comm_id = me.cleanup( list_item, list_item_id );
 
-				new_comm_id = me.nice_append(
-					response,
-					para_id + ' > ol.commentlist:first > li:last',
-					comm_list,
-					para_id + ' > ol.commentlist:first > li:last'
-				);
+				} else {
 
-			} else {
+					// Make a copy of the new comment, prepend to target and hide.
+					new_comment = response.find(para_id + ' > ol.commentlist').first().clone();
+					new_comment.prependTo(para_id).hide();
 
-				new_comm_id = me.nice_prepend(
-					response,
-					para_id + ' > ol.commentlist:first',
-					para_id,
-					para_id + ' > ol.commentlist:first > li:last'
-				);
+					// Get the last list item and its ID.
+					list_item = $(para_id + ' > ol.commentlist').first();
+					list_item_id = $(para_id + ' > ol.commentlist').first().children().last().prop('id');
+
+					// Clean up and get the new Comment ID.
+					new_comm_id = me.cleanup( list_item, list_item_id );
+
+				}
 
 			}
 
@@ -887,93 +912,18 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * Do comment append.
-	 *
-	 * @since 3.8
-	 *
-	 * @param object response The jQuery object from the AJAX request.
-	 * @param string content The jQuery selector that targets the comment content.
-	 * @param object target The jQuery object in which the comment should be placed.
-	 * @param string last The jQuery selector of the last item in the comment list.
-	 * @return string new_comment_id The ID of the new comment.
-	 */
-	this.nice_append = function( response, content, target, last ) {
-
-		// Define vars.
-		var new_comment, new_comment_id;
-
-		// Test for undefined, which may happen on replies to comments
-		// which have lost their original context.
-		if ( 'undefined' === typeof response || response === null ) { return; }
-
-		// Make a copy of the new comment.
-		new_comment = response.find(content).clone();
-
-		// Hide and append.
-		new_comment.appendTo(target).hide();
-
-		// Clean up.
-		new_comment_id = me.cleanup( content, last );
-
-		// --<
-		return new_comment_id;
-
-	};
-
-
-
-	/**
-	 * Do comment prepend.
-	 *
-	 * @since 3.8
-	 *
-	 * @param object response The jQuery object from the AJAX request.
-	 * @param string content The jQuery selector that targets the comment content.
-	 * @param object target The jQuery object in which the comment should be placed.
-	 * @param string last The jQuery selector of the last item in the comment list.
-	 * @return string new_comment_id The ID of the new comment.
-	 */
-	this.nice_prepend = function( response, content, target, last ) {
-
-		// Define vars.
-		var new_comment, new_comment_id;
-
-		// Test for undefined, which may happen on replies to comments
-		// Which have lost their original context
-		if ( 'undefined' === typeof response || response === null ) { return; }
-
-		// Make a copy of the new comment.
-		new_comment = response.find(content).clone();
-
-		// Hide and prepend.
-		new_comment.prependTo(target).hide();
-
-		// Clean up.
-		new_comment_id = me.cleanup( content, last );
-
-		// --<
-		return new_comment_id;
-
-	};
-
-
-
-	/**
 	 * Do comment cleanup.
 	 *
 	 * @since 3.8
 	 *
-	 * @param string content The jQuery selector that targets the comment content.
-	 * @param string last The jQuery selector of the last item in the comment list.
+	 * @param object list_item The jQuery comment list item object.
+	 * @param string list_item_id The ID of the last item in the comment list.
 	 * @return string new_comm_id The ID of the new comment.
 	 */
-	this.cleanup = function( content, last ) {
+	this.cleanup = function( list_item, list_item_id ) {
 
 		// Define vars.
-		var last_id, new_comm_id, comment;
-
-		// Get the id of the last list item.
-		last_id = $(last).prop('id');
+		var new_comm_id, comment;
 
 		/*
 		// IE seems to grab the result from cache despite nocache_headers()
@@ -986,13 +936,13 @@ CommentPress.ajax.comments = new function() {
 		*/
 
 		// Construct new comment id.
-		new_comm_id = '#comment-' + ( last_id.toString().split('-')[2] );
+		new_comm_id = '#comment-' + ( list_item_id.toString().split('-')[2] );
 		comment = $(new_comm_id);
 
 		// Add a couple of classes.
 		comment.addClass( 'comment-highlighted' );
 
-		$(content).slideDown( 'slow',
+		$(list_item).slideDown( 'slow',
 
 			// Animation complete.
 			function() {
@@ -1189,7 +1139,7 @@ CommentPress.ajax.comments = new function() {
 				beforeSubmit: function() {
 
 					$('#loading').show();
-					$('#submit').prop('disabled','disabled');
+					$('#submit').prop( 'disabled','disabled' );
 					$('#submit').hide();
 
 				}, // End beforeSubmit.
@@ -1215,18 +1165,14 @@ CommentPress.ajax.comments = new function() {
 					// Declare vars.
 					var response;
 
-					// jQuery 1.9 fails to recognise the response as HTML, so
-					// we *must* use parseHTML if it's available.
+					/*
+					 * jQuery 1.9 fails to recognise the response as HTML, so
+					 * we *must* use parseHTML if it's available.
+					 */
 					if ( $.parseHTML ) {
-
-						// If our jQuery version is 1.8+, it'll have parseHTML.
 						response =  $( $.parseHTML( data ) );
-
 					} else {
-
-						// Get our data as object in the basic way.
 						response = $(data);
-
 					}
 
 					// Avoid errors if we can.

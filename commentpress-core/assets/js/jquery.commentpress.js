@@ -1079,7 +1079,7 @@ CommentPress.common.content = new function() {
 				CommentPress.settings.textblock.set_permalink_shown( true );
 
 				// Attach a reset handler to the document body.
-				$(document).bind( 'click', me.textblock_permalink_handler );
+				$(document).on( 'click', me.textblock_permalink_handler );
 
 			}
 
@@ -1105,7 +1105,7 @@ CommentPress.common.content = new function() {
 				if ( CommentPress.settings.textblock.get_permalink_shown() ) {
 
 					// Unbind document click handler.
-					$(document).unbind( 'click', me.textblock_permalink_handler );
+					$(document).off( 'click', me.textblock_permalink_handler );
 
 					// Set flag.
 					CommentPress.settings.textblock.set_permalink_shown( false );
@@ -1133,7 +1133,7 @@ CommentPress.common.content = new function() {
 		if ( !$(event.target).closest( '.textblock_permalink' ).length ) {
 
 			// Unbind document click handler.
-			$(document).unbind( 'click', me.textblock_permalink_handler );
+			$(document).off( 'click', me.textblock_permalink_handler );
 
 			// Set flag.
 			CommentPress.settings.textblock.set_permalink_shown( false );
@@ -2122,7 +2122,7 @@ CommentPress.common.comments = new function() {
 				CommentPress.common.DOM.location_set( url );
 
 				// Attach a reset handler to the document body.
-				$(document).bind( 'click', me.comment_permalink_handler );
+				$(document).on( 'click', me.comment_permalink_handler );
 
 			}
 
@@ -2143,7 +2143,7 @@ CommentPress.common.comments = new function() {
 		if ( !$(event.target).closest( '.comment_permalink' ).length ) {
 
 			// Unbind document click handler.
-			$(document).unbind( 'click', me.comment_permalink_handler );
+			$(document).off( 'click', me.comment_permalink_handler );
 
 			// Replace window state with original.
 			CommentPress.common.DOM.location_reset();

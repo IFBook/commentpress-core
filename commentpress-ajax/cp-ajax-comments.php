@@ -767,7 +767,7 @@ function cpajax_infinite_scroll_scripts() {
 	// Add waypoints script.
 	wp_enqueue_script(
 		'cpajax-waypoints',
-		plugins_url( 'commentpress-ajax/assets/js/waypoints' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
+		plugins_url( 'commentpress-ajax/assets/js/jquery.waypoints' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
 		[ 'jquery' ], //dependencies
 		COMMENTPRESS_VERSION // Version.
 	);
