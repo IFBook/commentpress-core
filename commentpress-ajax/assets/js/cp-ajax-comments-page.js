@@ -190,15 +190,6 @@ CommentPress.ajax.comments = new function() {
 					// Clean up and get the new Comment ID.
 					new_comm_id = me.cleanup( list_item, list_item_id );
 
-					/*
-					new_comm_id = me.nice_append(
-						response,
-						parent_id + ' > ol.children:first > li:last',
-						child_list,
-						parent_id + ' > ol.children:first > li:last'
-					);
-					*/
-
 				} else {
 
 					// Make a copy of the new comment, append to target and hide.
@@ -211,15 +202,6 @@ CommentPress.ajax.comments = new function() {
 
 					// Clean up and get the new Comment ID.
 					new_comm_id = me.cleanup( list_item, list_item_id );
-
-					/*
-					new_comm_id = me.nice_append(
-						response,
-						parent_id + ' > ol.children:first',
-						parent_id,
-						parent_id + ' > ol.children:first > li:last'
-					);
-					*/
 
 				}
 
@@ -240,15 +222,6 @@ CommentPress.ajax.comments = new function() {
 					// Clean up and get the new Comment ID.
 					new_comm_id = me.cleanup( list_item, list_item_id );
 
-					/*
-					new_comm_id = me.nice_append(
-						response,
-						'ol.commentlist:first > li:last',
-						comm_list,
-						'ol.commentlist:first > li:last'
-					);
-					*/
-
 				} else {
 
 					// Make a copy of the new comment, prepend to target and hide.
@@ -261,15 +234,6 @@ CommentPress.ajax.comments = new function() {
 
 					// Clean up and get the new Comment ID.
 					new_comm_id = me.cleanup( list_item, list_item_id );
-
-					/*
-					new_comm_id = me.nice_append(
-						response,
-						'ol.commentlist:first',
-						'div.comments_container',
-						'ol.commentlist:first > li:last'
-					);
-					*/
 
 				}
 
