@@ -341,6 +341,20 @@ function commentpress_bp_enqueue_styles() {
 		'all' // Media.
 	);
 
+	// Skip the new stylesheet when BP is less than 10.
+	if ( version_compare( bp_get_version(), '10.0.0', '<' ) ) {
+		return;
+	}
+
+	// Add BuddyPress 10+ CSS.
+	wp_enqueue_style(
+		'cp_buddypress_10_css',
+		get_template_directory_uri() . '/assets/css/bp-overrides-10' . $dev . '.css',
+		[ 'cp_buddypress_css' ],
+		COMMENTPRESS_VERSION, // Version.
+		'all' // Media.
+	);
+
 }
 endif; // End commentpress_bp_enqueue_styles
 
