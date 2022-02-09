@@ -285,7 +285,7 @@ function commentpress_buddypress_support() {
 	add_action( 'bp_after_member_settings_template', 'commentpress_bp_wrapper_close' );
 
 }
-endif; // Commentpress_buddypress_support
+endif; // End commentpress_buddypress_support
 
 // Add an action for the above (BuddyPress hooks this to after_setup_theme with priority 100)
 add_action( 'bp_after_setup_theme', 'commentpress_buddypress_support' );
