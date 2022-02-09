@@ -33,6 +33,7 @@ BuddyPress 10+ compatibility and overrides.
     height: auto;
 	margin-left: auto;
 	margin-right: auto;
+	border: 2px solid #fff;
 }
 
 #buddypress .bp-member-preview-cover img,
