@@ -31,7 +31,7 @@
 			return {
 				longname : "Comment Block Shortcode",
 				author : 'Christian Wach',
-				authorurl : 'http://haystack.co.uk/',
+				authorurl : 'https://haystack.co.uk/',
 				infourl : 'http://futureofthebook.org/commentpress/',
 				version : "1.0"
 			};
