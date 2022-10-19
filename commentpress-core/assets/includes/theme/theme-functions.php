@@ -3681,7 +3681,7 @@ if ( ! function_exists( 'commentpress_image_caption_shortcode' ) ):
  * @param str $content Optional. Shortcode content.
  * @return str $caption The modified caption
  */
-function commentpress_image_caption_shortcode( $empty = null, $attr, $content ) {
+function commentpress_image_caption_shortcode( $empty, $attr, $content ) {
 
 	// Get our shortcode vars.
 	extract( shortcode_atts( [
