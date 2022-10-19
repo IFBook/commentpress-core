@@ -3110,6 +3110,17 @@ Compatibility with JetPack plugin
 .content div.sharedaddy div.sd-block
 {
 	padding-top: 1.5em;
+	margin-top: 1.5em;
+	margin-bottom: 0;
+	border-top: 1px solid #ddd;
+}
+
+#content div.sharedaddy h3.sd-title,
+.content div.sharedaddy h3.sd-title,
+#content div.sharedaddy .share-customize-link,
+.content div.sharedaddy .share-customize-link
+{
+	display: none;
 }
 
 p.comment-subscription-form
