@@ -50,3 +50,13 @@ BuddyPress 10+ compatibility and overrides.
 		margin-bottom: 15px;
 	}
 }
+
+/**
+ * Select2 compatibility.
+ */
+#buddypress .standard-form .select2 input[type="search"]
+{
+	padding: 0;
+	border: none;
+	background: transparent;
+}
