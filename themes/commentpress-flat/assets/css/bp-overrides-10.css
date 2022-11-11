@@ -60,3 +60,21 @@ BuddyPress 10+ compatibility and overrides.
 	border: none;
 	background: transparent;
 }
+
+/**
+ * Register link in BP Login Widget.
+ */
+.widget.buddypress #bp-login-widget-form .bp-login-widget-register-link
+{
+	margin-left: 10px;
+	vertical-align: unset;
+}
+
+/**
+ * Lost Password link in BP Login Widget.
+ */
+.widget.buddypress #bp-login-widget-form .bp-login-widget-password-link
+{
+	margin-left: 10px;
+}
+
