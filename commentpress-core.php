@@ -1,21 +1,24 @@
-<?php /*
---------------------------------------------------------------------------------
-Plugin Name: CommentPress Core
-Plugin URI: http://www.futureofthebook.org/commentpress/
-Description: CommentPress allows readers to comment in the margins of a text. You can use it to annotate, gloss, workshop, debate and more!
-Author: Institute for the Future of the Book
-Version: 4.0a
-Author URI: http://www.futureofthebook.org
-Text Domain: commentpress-core
-Domain Path: /languages
---------------------------------------------------------------------------------
-Special thanks to:
-Eddie Tejeda @ http://www.visudo.com for CommentPress 2.0
-Mark James for the icons: http://www.famfamfam.com/lab/icons/silk/
---------------------------------------------------------------------------------
-*/
+<?php
+/**
+ * Plugin Name: CommentPress Core
+ * Plugin URI: http://www.futureofthebook.org/commentpress/
+ * Description: CommentPress allows readers to comment in the margins of a text. You can use it to annotate, gloss, workshop, debate and more!
+ * Author: Institute for the Future of the Book
+ * Version: 4.0a
+ * Author URI: http://www.futureofthebook.org
+ * Text Domain: commentpress-core
+ * Domain Path: /languages
+ * -----------------------------------------------------------------------------
+ * Special thanks to:
+ * Eddie Tejeda @ http://www.visudo.com for CommentPress 2.0
+ * Mark James for the icons: http://www.famfamfam.com/lab/icons/silk/
+ * -----------------------------------------------------------------------------
+ *
+ * @package CommentPress_Core
+ */
 
-
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 // Set version.
 define( 'COMMENTPRESS_VERSION', '4.0a' );
@@ -33,8 +36,6 @@ if ( ! defined( 'COMMENTPRESS_PLUGIN_URL' ) ) {
 if ( ! defined( 'COMMENTPRESS_PLUGIN_PATH' ) ) {
 	define( 'COMMENTPRESS_PLUGIN_PATH', plugin_dir_path( COMMENTPRESS_PLUGIN_FILE ) );
 }
-
-
 
 /*
  * -----------------------------------------------------------------------------
@@ -70,7 +71,7 @@ if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
 	$active_plugins = (array) get_site_option( 'active_sitewide_plugins' );
 
 	// Is the plugin network activated?
-	if ( isset( $active_plugins[$this_plugin] ) ) {
+	if ( isset( $active_plugins[ $this_plugin ] ) ) {
 
 		// Yes, network activated.
 		if ( ! defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
@@ -95,8 +96,6 @@ if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
 
 }
 
-
-
 /**
  * Utility to check for presence of vital files.
  *
@@ -112,18 +111,13 @@ function commentpress_file_is_present( $filename ) {
 
 	// Die if the file is not present.
 	if ( ! is_file( $filepath ) ) {
-		wp_die( sprintf(
-			__( 'CommentPress Core Error: file "%s" is missing from the plugin directory.', 'commentpress-core' ),
-			$filepath )
-		);
+		wp_die( sprintf( __( 'CommentPress Core Error: file "%s" is missing from the plugin directory.', 'commentpress-core' ), $filepath ) );
 	}
 
 	// --<
 	return $filepath;
 
 }
-
-
 
 /**
  * Utility to include the core plugin.
@@ -142,13 +136,11 @@ function commentpress_include_core() {
 		$file_path = commentpress_file_is_present( $file );
 
 		// We're fine, include class definition.
-		require_once( $file_path );
+		require_once $file_path;
 
 	}
 
 }
-
-
 
 /**
  * Utility to activate the core plugin.
@@ -170,8 +162,6 @@ function commentpress_activate_core() {
 
 }
 
-
-
 /**
  * Utility to activate the AJAX commenting plugin.
  *
@@ -186,11 +176,9 @@ function commentpress_activate_ajax() {
 	$file_path = commentpress_file_is_present( $file );
 
 	// We're fine, include AJAX file.
-	require_once( $file_path );
+	require_once $file_path;
 
 }
-
-
 
 /**
  * Utility to amend filenames when debugging.
@@ -205,7 +193,7 @@ function commentpress_minified() {
 	$minified = '.min';
 
 	// Target unminified scripts when debugging.
-	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
+	if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG === true ) {
 		$minified = '';
 	}
 
@@ -214,14 +202,12 @@ function commentpress_minified() {
 
 }
 
-
-
 /**
  * Shortcut for debugging.
  *
  * @since 3.0
  *
- * @param str The debug string to be sent the the browser.
+ * @param str $var The debug string to be sent the the browser.
  */
 function _cpdie( $var ) {
 
@@ -231,8 +217,6 @@ function _cpdie( $var ) {
 	die();
 
 }
-
-
 
 /**
  * Utility to add link to settings page.
@@ -273,8 +257,6 @@ function commentpress_plugin_action_links( $links, $file ) {
 add_filter( 'network_admin_plugin_action_links', 'commentpress_plugin_action_links', 10, 2 );
 add_filter( 'plugin_action_links', 'commentpress_plugin_action_links', 10, 2 );
 
-
-
 /**
  * Get WP plugin reference by name.
  *
@@ -289,7 +271,9 @@ add_filter( 'plugin_action_links', 'commentpress_plugin_action_links', 10, 2 );
 function commentpress_find_plugin_by_name( $plugin_name = '' ) {
 
 	// Kick out if no param supplied.
-	if ( $plugin_name == '' ) return false;
+	if ( $plugin_name == '' ) {
+		return false;
+	}
 
 	// Init path.
 	$path_to_plugin = false;
@@ -305,7 +289,7 @@ function commentpress_find_plugin_by_name( $plugin_name = '' ) {
 	// Because the key is the path to the plugin file, we have to find the
 	// key by iterating over the values (which are arrays) to find the
 	// plugin with the name we want. Doh!
-	foreach( $plugins AS $key => $plugin ) {
+	foreach ( $plugins as $key => $plugin ) {
 
 		// Is it ours?
 		if ( $plugin['Name'] == $plugin_name ) {
@@ -323,8 +307,6 @@ function commentpress_find_plugin_by_name( $plugin_name = '' ) {
 
 }
 
-
-
 /**
  * Test if the old pre-3.4 CommentPress plugin is active.
  *
@@ -341,7 +323,7 @@ function commentpress_is_legacy_plugin_active() {
 	$old = get_option( 'cp_options', [] );
 
 	// Test if we have a existing pre-3.4 CommentPress instance.
-	if ( is_array( $old ) AND count( $old ) > 0 ) {
+	if ( is_array( $old ) && count( $old ) > 0 ) {
 
 		// If we have "special pages", then the plugin must be active on this blog
 		// NB: do we need to check is_plugin_active() as well (or instead)?
@@ -358,8 +340,6 @@ function commentpress_is_legacy_plugin_active() {
 	return $active;
 
 }
-
-
 
 /*
  * -----------------------------------------------------------------------------
@@ -385,8 +365,6 @@ function commentpress_is_legacy_plugin_active() {
 // Register our themes directory.
 register_theme_directory( plugin_dir_path( COMMENTPRESS_PLUGIN_FILE ) . 'themes' );
 
-
-
 /*
 --------------------------------------------------------------------------------
 Include Standalone.
@@ -394,8 +372,6 @@ Include Standalone.
 */
 
 commentpress_include_core();
-
-
 
 /*
 --------------------------------------------------------------------------------
@@ -408,8 +384,8 @@ Init Standalone.
 
 // Only activate if in standard or mu_optional context.
 if (
-	COMMENTPRESS_PLUGIN_CONTEXT == 'standard' OR
-	( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_optional' AND ! is_network_admin() )
+	COMMENTPRESS_PLUGIN_CONTEXT == 'standard' ||
+	( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_optional' && ! is_network_admin() )
 ) {
 
 	// CommentPress Core.
@@ -424,15 +400,15 @@ if (
 	// Deactivation.
 	register_deactivation_hook( COMMENTPRESS_PLUGIN_FILE, [ $commentpress_core, 'deactivate' ] );
 
-	// Uninstall uses the 'uninstall.php' method.
-	// See: http://codex.wordpress.org/Function_Reference/register_uninstall_hook
+	/*
+	 * Uninstall uses the 'uninstall.php' method.
+	 * @see https://developer.wordpress.org/reference/functions/register_uninstall_hook/
+	 */
 
 	// AJAX Commenting.
 	commentpress_activate_ajax();
 
 }
-
-
 
 /*
 --------------------------------------------------------------------------------
@@ -452,9 +428,12 @@ if ( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_sitewide' ) {
 	$file_path = commentpress_file_is_present( $file );
 
 	// We're fine, include class definition.
-	require_once( $file_path );
+	require_once $file_path;
+
+	// Define as global.
+	global $commentpress_mu;
+
+	// Instantiate it.
+	$commentpress_mu = new Commentpress_Multisite_Loader();
 
 }
-
-
-

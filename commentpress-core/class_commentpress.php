@@ -1,4 +1,14 @@
 <?php
+/**
+ * CommentPress Core class.
+ *
+ * Handles single site plugin functionality.
+ *
+ * @package CommentPress_Core
+ */
+
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 /**
  * CommentPress Core Class.
@@ -99,8 +109,6 @@ class Commentpress_Core {
 	 */
 	public $bp_groupblog = false;
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -113,8 +121,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * If needed, destroys this object.
 	 *
@@ -126,19 +132,11 @@ class Commentpress_Core {
 
 	}
 
-
-
-//##############################################################################
-
-
-
 	/**
 	 * -------------------------------------------------------------------------
 	 * Public Methods
 	 * -------------------------------------------------------------------------
 	 */
-
-
 
 	/**
 	 * Runs when plugin is activated.
@@ -155,8 +153,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Runs when plugin is deactivated.
 	 *
@@ -172,8 +168,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Utility that fires an action when CommentPress Core has loaded.
 	 *
@@ -186,8 +180,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Loads translation, if present.
 	 *
@@ -195,28 +187,15 @@ class Commentpress_Core {
 	 */
 	public function translation() {
 
-		// Only use, if we have it.
-		if( function_exists('load_plugin_textdomain') ) {
-
-			// Not used, as there are no translations as yet.
-			load_plugin_textdomain(
-
-				// Unique name.
-				'commentpress-core',
-
-				// Deprecated argument.
-				false,
-
-				// Relative path to directory containing translation files.
-				dirname( plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) . '/languages/'
-
-			);
-
-		}
+		// Load translations.
+		// phpcs:ignore WordPress.WP.DeprecatedParameters.Load_plugin_textdomainParam2Found
+		load_plugin_textdomain(
+			'commentpress-core', // Unique name.
+			false, // Deprecated argument.
+			dirname( plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) . '/languages/' // Relative path to directory.
+		);
 
 	}
-
-
 
 	/**
 	 * Called when BuddyPress is active.
@@ -230,8 +209,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Configure when BuddyPress is loaded.
 	 *
@@ -244,7 +221,7 @@ class Commentpress_Core {
 
 			// Check if this blog is a group blog.
 			$group_id = get_groupblog_group_id( get_current_blog_id() );
-			if ( isset( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
+			if ( isset( $group_id ) && is_numeric( $group_id ) && $group_id > 0 ) {
 
 				// Okay, we're properly configured.
 				$this->bp_groupblog = true;
@@ -254,8 +231,6 @@ class Commentpress_Core {
 		}
 
 	}
-
-
 
 	/**
 	 * Is BuddyPress active?
@@ -271,8 +246,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Is this blog a BuddyPress Groupblog?
 	 *
@@ -287,8 +260,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Is a BuddyPress Groupblog theme set?
 	 *
@@ -299,8 +270,12 @@ class Commentpress_Core {
 	public function get_groupblog_theme() {
 
 		// Kick out if not in a group context.
-		if ( ! function_exists( 'bp_is_groups_component' ) ) return false;
-		if ( ! bp_is_groups_component() ) return false;
+		if ( ! function_exists( 'bp_is_groups_component' ) ) {
+			return false;
+		}
+		if ( ! bp_is_groups_component() ) {
+			return false;
+		}
 
 		// Get groupblog options.
 		$options = get_site_option( 'bp_groupblog_blog_defaults_options' );
@@ -311,34 +286,16 @@ class Commentpress_Core {
 			// We have a groupblog theme set.
 
 			// Split the options.
-			list( $stylesheet, $template ) = explode( "|", $options['theme'] );
+			list( $stylesheet, $template ) = explode( '|', $options['theme'] );
 
-			// Test for WP3.4.
-			if ( function_exists( 'wp_get_theme' ) ) {
+			// Get the registered theme.
+			$theme = wp_get_theme( $stylesheet );
 
-				// Get the registered theme.
-				$theme = wp_get_theme( $stylesheet );
+			// Test if it's a CommentPress Core theme.
+			if ( in_array( 'commentpress', (array) $theme->get( 'Tags' ) ) ) {
 
-				// Test if it's a CommentPress Core theme.
-				if ( in_array( 'commentpress', (array) $theme->Tags ) ) {
-
-					// --<
-					return [ $stylesheet, $template ];
-
-				}
-
-			} else {
-
-				// Get the registered theme.
-				$theme = get_theme( $stylesheet );
-
-				// Test if it's a CommentPress Core theme.
-				if ( in_array( 'commentpress', (array) $theme['Tags'] ) ) {
-
-					// --<
-					return [ $stylesheet, $template ];
-
-				}
+				// --<
+				return [ $stylesheet, $template ];
 
 			}
 
@@ -348,8 +305,6 @@ class Commentpress_Core {
 		return false;
 
 	}
-
-
 
 	/**
 	 * Is this a BuddyPress "special page" - a component homepage?
@@ -373,8 +328,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Utility to add a message to admin pages when upgrade required.
 	 *
@@ -383,14 +336,21 @@ class Commentpress_Core {
 	public function admin_upgrade_alert() {
 
 		// Check user permissions.
-		if ( ! current_user_can( 'manage_options' ) ) return;
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
 
 		// Show it.
-		echo '<div id="message" class="error"><p>' . __( 'CommentPress Core has been updated. Please visit the ' ) . '<a href="options-general.php?page=commentpress_admin">' . __( 'Settings Page', 'commentpress-core' ) . '</a>.</p></div>';
+		echo '<div id="message" class="error"><p>' .
+			sprintf(
+				/* translators: 1: The opening anchor tag, 2: The closing anchor tag. */
+				__( 'CommentPress Core has been updated. Please visit the %1$sSettings Page%2$s.', 'commentpress-core' ),
+				'<a href="options-general.php?page=commentpress_admin">',
+				'</a>'
+			) .
+		'</p></div>';
 
 	}
-
-
 
 	/**
 	 * Appends option to admin menu.
@@ -400,7 +360,9 @@ class Commentpress_Core {
 	public function admin_menu() {
 
 		// Check user permissions.
-		if ( ! current_user_can( 'manage_options' ) ) return;
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
 
 		// Try and update options.
 		$saved = $this->db->options_update();
@@ -413,8 +375,8 @@ class Commentpress_Core {
 
 			// Show on pages other than the CommentPress Core admin page.
 			if (
-				$pagenow == 'options-general.php' AND
-				! empty( $_GET['page'] ) AND
+				$pagenow == 'options-general.php' &&
+				! empty( $_GET['page'] ) &&
 				'commentpress_admin' == $_GET['page']
 			) {
 
@@ -445,8 +407,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Prints plugin options page header.
 	 *
@@ -468,8 +428,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Enqueue Settings page CSS.
 	 *
@@ -488,8 +446,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Enqueue Settings page Javascript.
 	 *
@@ -499,8 +455,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Prints plugin options page.
 	 *
@@ -509,14 +463,14 @@ class Commentpress_Core {
 	public function options_page() {
 
 		// Check user permissions.
-		if ( ! current_user_can( 'manage_options' ) ) return;
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
 
 		// Get our admin options page.
 		echo $this->display->get_admin_page();
 
 	}
-
-
 
 	/**
 	 * Add scripts needed across all WP admin pages.
@@ -528,15 +482,15 @@ class Commentpress_Core {
 	public function enqueue_admin_scripts( $hook ) {
 
 		// Don't enqueue on comment edit screen.
-		if ( 'comment.php' == $hook ) return;
+		if ( 'comment.php' == $hook ) {
+			return;
+		}
 
 		// There's a new quicktags script in 3.3.
 		// Add quicktag button to page editor.
 		$this->display->get_custom_quicktags();
 
 	}
-
-
 
 	/**
 	 * Adds script libraries.
@@ -546,7 +500,7 @@ class Commentpress_Core {
 	public function enqueue_scripts() {
 
 		// Don't include in admin or wp-login.php.
-		if ( is_admin() OR ( isset( $GLOBALS['pagenow'] ) AND 'wp-login.php' == $GLOBALS['pagenow'] ) ) {
+		if ( is_admin() || ( isset( $GLOBALS['pagenow'] ) && 'wp-login.php' == $GLOBALS['pagenow'] ) ) {
 			return;
 		}
 
@@ -557,8 +511,6 @@ class Commentpress_Core {
 		$this->display->get_jquery();
 
 	}
-
-
 
 	/**
 	 * Adds CSS.
@@ -572,8 +524,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Redirect to child page.
 	 *
@@ -586,19 +536,17 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Inserts plugin-specific header items.
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $headers
+	 * @param str $headers The headers.
 	 */
 	public function head( $headers ) {
 
 		// Do we have navigation?
-		if ( is_single() OR is_page() OR is_attachment() ) {
+		if ( is_single() || is_page() || is_attachment() ) {
 
 			// Initialise nav.
 			$this->nav->initialise();
@@ -606,8 +554,6 @@ class Commentpress_Core {
 		}
 
 	}
-
-
 
 	/**
 	 * Parses page/post content.
@@ -624,18 +570,24 @@ class Commentpress_Core {
 
 		// JetPack 2.7 or greater parses the content in the head to create
 		// content summaries so prevent parsing unless this is the main content.
-		if ( is_admin() OR ! in_the_loop() OR ! is_main_query() ) {
+		if ( is_admin() || ! in_the_loop() || ! is_main_query() ) {
 			return $content;
 		}
 
 		// Compat with Subscribe to Comments Reloaded.
-		if( $this->is_subscribe_to_comments_reloaded_page() ) return $content;
+		if ( $this->is_subscribe_to_comments_reloaded_page() ) {
+			return $content;
+		}
 
 		// Compat with Theme My Login.
-		if( $this->is_theme_my_login_page() ) return $content;
+		if ( $this->is_theme_my_login_page() ) {
+			return $content;
+		}
 
 		// Compat with Members List plugin.
-		if( $this->is_members_list_page() ) return $content;
+		if ( $this->is_members_list_page() ) {
+			return $content;
+		}
 
 		// Test for BuddyPress special page (compat with BuddyPress Docs).
 		if ( $this->is_buddypress() ) {
@@ -654,7 +606,7 @@ class Commentpress_Core {
 		$allowed = false;
 
 		// Only parse posts or pages.
-		if( ( is_single() OR is_page() OR is_attachment() ) AND ! $this->db->is_special_page() ) {
+		if ( ( is_single() || is_page() || is_attachment() ) && ! $this->db->is_special_page() ) {
 			$allowed = true;
 		}
 
@@ -670,8 +622,6 @@ class Commentpress_Core {
 		return $content;
 
 	}
-
-
 
 	/**
 	 * Retrieves option for displaying TOC.
@@ -689,8 +639,6 @@ class Commentpress_Core {
 		return $result;
 
 	}
-
-
 
 	/**
 	 * Retrieves minimise all button.
@@ -710,8 +658,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Retrieves header minimise button.
 	 *
@@ -728,8 +674,6 @@ class Commentpress_Core {
 		return $result;
 
 	}
-
-
 
 	/**
 	 * Retrieves text_signature hidden input.
@@ -775,8 +719,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Add reserved names.
 	 *
@@ -806,8 +748,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Add sidebar to signup form.
 	 *
@@ -819,8 +759,6 @@ class Commentpress_Core {
 		get_sidebar();
 
 	}
-
-
 
 	/**
 	 * Adds meta boxes to admin screens.
@@ -881,8 +819,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Adds meta box to page edit screens.
 	 *
@@ -902,7 +838,7 @@ class Commentpress_Core {
 
 		// Show a title.
 		echo '<div class="cp_title_visibility_wrapper">
-		<p><strong><label for="cp_title_visibility">' . __( 'Page Title Visibility' , 'commentpress-core' ) . '</label></strong></p>';
+		<p><strong><label for="cp_title_visibility">' . __( 'Page Title Visibility', 'commentpress-core' ) . '</label></strong></p>';
 
 		// Set key.
 		$key = '_cp_title_visibility';
@@ -922,8 +858,8 @@ class Commentpress_Core {
 		echo '
 		<p>
 		<select id="cp_title_visibility" name="cp_title_visibility">
-			<option value="show" ' . (($viz == 'show') ? ' selected="selected"' : '') . '>' . __('Show page title', 'commentpress-core') . '</option>
-			<option value="hide" ' . (($viz == 'hide') ? ' selected="selected"' : '') . '>' . __('Hide page title', 'commentpress-core') . '</option>
+			<option value="show" ' . ( ( $viz == 'show' ) ? ' selected="selected"' : '' ) . '>' . __( 'Show page title', 'commentpress-core' ) . '</option>
+			<option value="hide" ' . ( ( $viz == 'hide' ) ? ' selected="selected"' : '' ) . '>' . __( 'Hide page title', 'commentpress-core' ) . '</option>
 		</select>
 		</p>
 		</div>
@@ -935,7 +871,7 @@ class Commentpress_Core {
 
 		// Show a label.
 		echo '<div class="cp_page_meta_visibility_wrapper">
-		<p><strong><label for="cp_page_meta_visibility">' . __( 'Page Meta Visibility' , 'commentpress-core' ) . '</label></strong></p>';
+		<p><strong><label for="cp_page_meta_visibility">' . __( 'Page Meta Visibility', 'commentpress-core' ) . '</label></strong></p>';
 
 		// Set key.
 		$key = '_cp_page_meta_visibility';
@@ -955,8 +891,8 @@ class Commentpress_Core {
 		echo '
 		<p>
 		<select id="cp_page_meta_visibility" name="cp_page_meta_visibility">
-			<option value="show" ' . (($viz == 'show') ? ' selected="selected"' : '') . '>' . __('Show page meta', 'commentpress-core') . '</option>
-			<option value="hide" ' . (($viz == 'hide') ? ' selected="selected"' : '') . '>' . __('Hide page meta', 'commentpress-core') . '</option>
+			<option value="show" ' . ( ( $viz == 'show' ) ? ' selected="selected"' : '' ) . '>' . __( 'Show page meta', 'commentpress-core' ) . '</option>
+			<option value="hide" ' . ( ( $viz == 'hide' ) ? ' selected="selected"' : '' ) . '>' . __( 'Hide page meta', 'commentpress-core' ) . '</option>
 		</select>
 		</p>
 		</div>
@@ -968,14 +904,14 @@ class Commentpress_Core {
 
 		// If page has no parent and it's not a special page and it's the first.
 		if (
-			$post->post_parent == '0' AND
-			! $this->db->is_special_page() AND
+			$post->post_parent == '0' &&
+			! $this->db->is_special_page() &&
 			$post->ID == $this->nav->get_first_page()
 		) {
 
 			// Label.
 			echo '<div class="cp_number_format_wrapper">
-			<p><strong><label for="cp_number_format">' . __('Page Number Format', 'commentpress-core' ) . '</label></strong></p>';
+			<p><strong><label for="cp_number_format">' . __( 'Page Number Format', 'commentpress-core' ) . '</label></strong></p>';
 
 			// Set key.
 			$key = '_cp_number_format';
@@ -995,8 +931,8 @@ class Commentpress_Core {
 			echo '
 			<p>
 			<select id="cp_number_format" name="cp_number_format">
-				<option value="arabic" ' . (($format == 'arabic') ? ' selected="selected"' : '') . '>' . __('Arabic numerals', 'commentpress-core' ) . '</option>
-				<option value="roman" ' . (($format == 'roman') ? ' selected="selected"' : '') . '>' . __('Roman numerals', 'commentpress-core' ) . '</option>
+				<option value="arabic" ' . ( ( $format == 'arabic' ) ? ' selected="selected"' : '' ) . '>' . __( 'Arabic numerals', 'commentpress-core' ) . '</option>
+				<option value="roman" ' . ( ( $format == 'roman' ) ? ' selected="selected"' : '' ) . '>' . __( 'Roman numerals', 'commentpress-core' ) . '</option>
 			</select>
 			</p>
 			</div>
@@ -1013,7 +949,7 @@ class Commentpress_Core {
 
 			// Label.
 			echo '<div class="cp_page_layout_wrapper">
-			<p><strong><label for="cp_page_layout">' . __('Page Layout', 'commentpress-core' ) . '</label></strong></p>';
+			<p><strong><label for="cp_page_layout">' . __( 'Page Layout', 'commentpress-core' ) . '</label></strong></p>';
 
 			// Set key.
 			$key = '_cp_page_layout';
@@ -1033,8 +969,8 @@ class Commentpress_Core {
 			echo '
 			<p>
 			<select id="cp_page_layout" name="cp_page_layout">
-				<option value="text" ' . (($value == 'text') ? ' selected="selected"' : '') . '>' . __('Standard', 'commentpress-core' ) . '</option>
-				<option value="wide" ' . (($value == 'wide') ? ' selected="selected"' : '') . '>' . __('Wide', 'commentpress-core' ) . '</option>
+				<option value="text" ' . ( ( $value == 'text' ) ? ' selected="selected"' : '' ) . '>' . __( 'Standard', 'commentpress-core' ) . '</option>
+				<option value="wide" ' . ( ( $value == 'wide' ) ? ' selected="selected"' : '' ) . '>' . __( 'Wide', 'commentpress-core' ) . '</option>
 			</select>
 			</p>
 			</div>
@@ -1052,8 +988,6 @@ class Commentpress_Core {
 		$this->_get_para_numbering_metabox( $post );
 
 	}
-
-
 
 	/**
 	 * Adds meta box to post edit screens.
@@ -1101,7 +1035,7 @@ class Commentpress_Core {
 			// -----------------------------------------------------------------
 
 			// Label.
-			echo '<p><strong><label for="cp_page_layout">' . __('Versioning', 'commentpress-core' ) . '</label></strong></p>';
+			echo '<p><strong><label for="cp_page_layout">' . __( 'Versioning', 'commentpress-core' ) . '</label></strong></p>';
 
 			// Define label.
 			$label = __( 'Create new version', 'commentpress-core' );
@@ -1122,8 +1056,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Adds workflow meta box to post edit screens.
 	 *
@@ -1135,35 +1067,6 @@ class Commentpress_Core {
 		do_action( 'cp_workflow_metabox' );
 
 	}
-
-
-
-	/**
-	 * Adds help copy to admin page in WP <= 3.2.
-	 *
-	 * @since 3.4
-	 *
-	 * @param str $text The existing help text.
-	 * @return str $text The modified help text.
-	 */
-	public function contextual_help( $text ) {
-
-		$text = '';
-		$screen = isset( $_GET['page'] ) ? $_GET['page'] : '';
-		if ($screen == 'commentpress_admin') {
-
-			// Get help text.
-			$text = '<h5>' . __('CommentPress Core Help', 'commentpress-core' ) . '</h5>';
-			$text .= $this->display->get_help();
-
-		}
-
-		// --<
-		return $text;
-
-	}
-
-
 
 	/**
 	 * Adds help copy to admin page in WP3.3+.
@@ -1195,8 +1098,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Stores our additional params.
 	 *
@@ -1214,8 +1115,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Check for data integrity of other posts when one is deleted.
 	 *
@@ -1229,8 +1128,6 @@ class Commentpress_Core {
 		$result = $this->db->delete_meta( $post_id );
 
 	}
-
-
 
 	/**
 	 * Stores our additional param - the text signature.
@@ -1255,13 +1152,11 @@ class Commentpress_Core {
 		if ( $comment_status === 'spam' ) {
 
 			// Yes - let the commenter know without throwing an AJAX error.
-			wp_die( __( 'This comment has been marked as spam. Please contact a site administrator.',  'commentpress-core' ) );
+			wp_die( __( 'This comment has been marked as spam. Please contact a site administrator.', 'commentpress-core' ) );
 
 		}
 
 	}
-
-
 
 	/**
 	 * Get table of contents.
@@ -1271,7 +1166,7 @@ class Commentpress_Core {
 	public function get_toc() {
 
 		// Switch pages or posts.
-		if( $this->get_list_option() == 'post' ) {
+		if ( $this->get_list_option() == 'post' ) {
 
 			// List posts.
 			$this->display->list_posts();
@@ -1285,17 +1180,17 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Get table of contents list.
 	 *
 	 * @since 3.4
+	 *
+	 * @param array $exclude_pages The array of pages to exclude.
 	 */
 	public function get_toc_list( $exclude_pages = [] ) {
 
 		// Switch pages or posts.
-		if( $this->get_list_option() == 'post' ) {
+		if ( $this->get_list_option() == 'post' ) {
 
 			// List posts.
 			$this->display->list_posts();
@@ -1308,8 +1203,6 @@ class Commentpress_Core {
 		}
 
 	}
-
-
 
 	/**
 	 * Exclude special pages from page listings.
@@ -1337,8 +1230,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Exclude special pages from admin page listings.
 	 *
@@ -1351,13 +1242,13 @@ class Commentpress_Core {
 		global $pagenow, $post_type;
 
 		// Check admin location.
-		if ( is_admin() AND $pagenow=='edit.php' AND $post_type =='page' ) {
+		if ( is_admin() && $pagenow == 'edit.php' && $post_type == 'page' ) {
 
 			// Get special pages array, if it's there.
 			$special_pages = $this->db->option_get( 'cp_special_pages' );
 
 			// Do we have an array?
-			if ( is_array( $special_pages ) AND count( $special_pages ) > 0 ) {
+			if ( is_array( $special_pages ) && count( $special_pages ) > 0 ) {
 
 				// Modify query.
 				$query->query_vars['post__not_in'] = $special_pages;
@@ -1367,8 +1258,6 @@ class Commentpress_Core {
 		}
 
 	}
-
-
 
 	/**
 	 * Page counts still need amending.
@@ -1383,7 +1272,7 @@ class Commentpress_Core {
 		global $pagenow, $post_type;
 
 		// Check admin location.
-		if (is_admin() AND $pagenow=='edit.php' AND $post_type =='page') {
+		if ( is_admin() && $pagenow == 'edit.php' && $post_type == 'page' ) {
 
 			// Get special pages array, if it's there.
 			$special_pages = $this->db->option_get( 'cp_special_pages' );
@@ -1443,8 +1332,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Get comments sorted by text signature and paragraph.
 	 *
@@ -1459,8 +1346,6 @@ class Commentpress_Core {
 		return $this->parser->get_sorted_comments( $post_ID );
 
 	}
-
-
 
 	/**
 	 * Get paragraph number for a particular text signature.
@@ -1480,8 +1365,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Get text signature for a particular paragraph number.
 	 *
@@ -1496,14 +1379,12 @@ class Commentpress_Core {
 		$sigs = $this->db->get_text_sigs();
 
 		// Get value at that position in array.
-		$text_sig = ( isset( $sigs[$para_num - 1] ) ) ? $sigs[$para_num - 1] : '';
+		$text_sig = ( isset( $sigs[ $para_num - 1 ] ) ) ? $sigs[ $para_num - 1 ] : '';
 
 		// --<
 		return $text_sig;
 
 	}
-
-
 
 	/**
 	 * Get a link to a "special" page.
@@ -1532,7 +1413,7 @@ class Commentpress_Core {
 
 			// Is it the current page?
 			$active = '';
-			if ( isset( $post ) AND $page->ID == $post->ID ) {
+			if ( isset( $post ) && $page->ID == $post->ID ) {
 				$active = ' class="active_page"';
 			}
 
@@ -1540,7 +1421,7 @@ class Commentpress_Core {
 			$url = get_permalink( $page );
 
 			// Switch title by type.
-			switch( $page_type ) {
+			switch ( $page_type ) {
 
 				case 'cp_welcome_page':
 					$link_title = __( 'Title Page', 'commentpress-core' );
@@ -1549,24 +1430,31 @@ class Commentpress_Core {
 
 				case 'cp_all_comments_page':
 					$link_title = __( 'All Comments', 'commentpress-core' );
-					$button = 'allcomments'; break;
+					$button = 'allcomments';
+					break;
 
 				case 'cp_general_comments_page':
 					$link_title = __( 'General Comments', 'commentpress-core' );
-					$button = 'general'; break;
+					$button = 'general';
+					break;
 
 				case 'cp_blog_page':
 					$link_title = __( 'Blog', 'commentpress-core' );
-					if ( is_home() ) { $active = ' class="active_page"'; }
-					$button = 'blog'; break;
+					if ( is_home() ) {
+						$active = ' class="active_page"';
+					}
+					$button = 'blog';
+					break;
 
 				case 'cp_blog_archive_page':
 					$link_title = __( 'Blog Archive', 'commentpress-core' );
-					$button = 'archive'; break;
+					$button = 'archive';
+					break;
 
 				case 'cp_comments_by_page':
 					$link_title = __( 'Comments by Commenter', 'commentpress-core' );
-					$button = 'members'; break;
+					$button = 'members';
+					break;
 
 				default:
 					$link_title = __( 'Members', 'commentpress-core' );
@@ -1586,8 +1474,6 @@ class Commentpress_Core {
 		return $link;
 
 	}
-
-
 
 	/**
 	 * Get the URL for a "special" page.
@@ -1621,14 +1507,10 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Get book cover.
 	 *
 	 * @since 3.4
-	 *
-	 * @param str The markup for the "cover".
 	 */
 	public function get_book_cover() {
 
@@ -1643,8 +1525,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Utility to check for presence of Theme My Login.
 	 *
@@ -1658,10 +1538,10 @@ class Commentpress_Core {
 		global $post;
 
 		// Compat with Theme My Login.
-		if(
-			is_page() AND
-			! $this->db->is_special_page() AND
-			$post->post_name == 'login' AND
+		if (
+			is_page() &&
+			! $this->db->is_special_page() &&
+			$post->post_name == 'login' &&
 			$post->post_content == '[theme-my-login]'
 		) {
 
@@ -1674,8 +1554,6 @@ class Commentpress_Core {
 		return false;
 
 	}
-
-
 
 	/**
 	 * Utility to check for presence of Members List.
@@ -1690,9 +1568,9 @@ class Commentpress_Core {
 		global $post;
 
 		// Compat with Members List.
-		if(
-			is_page() AND
-			! $this->db->is_special_page() AND
+		if (
+			is_page() &&
+			! $this->db->is_special_page() &&
 			( strstr( $post->post_content, '[members-list' ) !== false )
 		) {
 
@@ -1705,8 +1583,6 @@ class Commentpress_Core {
 		return false;
 
 	}
-
-
 
 	/**
 	 * Utility to check for presence of Subscribe to Comments Reloaded.
@@ -1721,11 +1597,11 @@ class Commentpress_Core {
 		global $post;
 
 		// Compat with Subscribe to Comments Reloaded.
-		if(
-			is_page() AND
-			! $this->db->is_special_page() AND
-			$post->ID == '9999999' AND
-			$post->guid == get_bloginfo('url') . '/?page_id=9999999'
+		if (
+			is_page() &&
+			! $this->db->is_special_page() &&
+			$post->ID == '9999999' &&
+			$post->guid == get_bloginfo( 'url' ) . '/?page_id=9999999'
 		) {
 
 			// --<
@@ -1737,8 +1613,6 @@ class Commentpress_Core {
 		return false;
 
 	}
-
-
 
 	/**
 	 * Override the comment reply script that BuddyPress Docs loads.
@@ -1752,8 +1626,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Override the comment reply script that BuddyPress Docs loads.
 	 *
@@ -1765,8 +1637,6 @@ class Commentpress_Core {
 		wp_dequeue_script( 'comment-reply' );
 
 	}
-
-
 
 	/**
 	 * Override the comments tempate for BuddyPress Docs.
@@ -1792,8 +1662,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Override the Featured Comments behaviour.
 	 *
@@ -1816,8 +1684,6 @@ class Commentpress_Core {
 		}
 
 	}
-
-
 
 	/**
 	 * Get the Featured Comments link markup.
@@ -1845,8 +1711,6 @@ class Commentpress_Core {
 		return $editlink;
 
 	}
-
-
 
 	/**
 	 * Return the name of the default sidebar.
@@ -1877,7 +1741,9 @@ class Commentpress_Core {
 				$default = $this->db->option_get( 'cp_sidebar_default' );
 
 				// Use it unless it's 'comments'.
-				if ( $default != 'comments' ) { $return = $default; }
+				if ( $default != 'comments' ) {
+					$return = $default;
+				}
 
 			}
 
@@ -1886,11 +1752,13 @@ class Commentpress_Core {
 
 		}
 
+		/*
 		// Get CPTs.
 		//$types = $this->_get_commentable_cpts();
 
 		// Testing what we do with CPTs.
-		//if ( is_singular() OR is_singular( $types ) ) {
+		//if ( is_singular() || is_singular( $types ) ) {
+		*/
 
 		// Is it a commentable page?
 		if ( is_singular() ) {
@@ -1941,7 +1809,9 @@ class Commentpress_Core {
 			$default = $this->db->option_get( 'cp_sidebar_default' );
 
 			// Use it unless it's 'comments'.
-			if ( $default != 'comments' ) { $return = $default; }
+			if ( $default != 'comments' ) {
+				$return = $default;
+			}
 
 		}
 
@@ -1949,8 +1819,6 @@ class Commentpress_Core {
 		return $return;
 
 	}
-
-
 
 	/**
 	 * Get the order of the sidebars.
@@ -1972,8 +1840,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Check if a page/post can be commented on.
 	 *
@@ -1987,33 +1853,47 @@ class Commentpress_Core {
 		global $post;
 
 		// Not on signup pages.
-		if ( is_multisite() AND 'wp-signup.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) return false;
-		if ( is_multisite() AND 'wp-activate.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) return false;
+		if ( is_multisite() && 'wp-signup.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) {
+			return false;
+		}
+		if ( is_multisite() && 'wp-activate.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) {
+			return false;
+		}
 
 		// Not if we're not on a page/post and especially not if there's no post object.
-		if ( ! is_singular() OR ! is_object( $post ) ) return false;
+		if ( ! is_singular() || ! is_object( $post ) ) {
+			return false;
+		}
 
 		// CommentPress Core Special Pages special pages are not.
-		if ( $this->db->is_special_page() ) return false;
+		if ( $this->db->is_special_page() ) {
+			return false;
+		}
 
 		// BuddyPress special pages are not.
-		if ( $this->is_buddypress_special_page() ) return false;
+		if ( $this->is_buddypress_special_page() ) {
+			return false;
+		}
 
 		// Theme My Login page is not.
-		if ( $this->is_theme_my_login_page() ) return false;
+		if ( $this->is_theme_my_login_page() ) {
+			return false;
+		}
 
 		// Members List page is not.
-		if ( $this->is_members_list_page() ) return false;
+		if ( $this->is_members_list_page() ) {
+			return false;
+		}
 
 		// Subscribe to Comments Reloaded page is not.
-		if ( $this->is_subscribe_to_comments_reloaded_page() ) return false;
+		if ( $this->is_subscribe_to_comments_reloaded_page() ) {
+			return false;
+		}
 
 		// --<
 		return apply_filters( 'cp_is_commentable', true );
 
 	}
-
-
 
 	/**
 	 * Check if user agent is mobile.
@@ -2029,8 +1909,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Check if user agent is tablet.
 	 *
@@ -2045,19 +1923,11 @@ class Commentpress_Core {
 
 	}
 
-
-
-//##############################################################################
-
-
-
 	/**
 	 * -------------------------------------------------------------------------
 	 * Private Methods
 	 * -------------------------------------------------------------------------
 	 */
-
-
 
 	/**
 	 * Object initialisation.
@@ -2083,7 +1953,7 @@ class Commentpress_Core {
 		);
 
 		// We're fine, include class definition.
-		require_once( $class_file_path );
+		require_once $class_file_path;
 
 		// Init autoload database object.
 		$this->db = new Commentpress_Core_Database( $this );
@@ -2105,7 +1975,7 @@ class Commentpress_Core {
 		);
 
 		// We're fine, include class definition.
-		require_once( $class_file_path );
+		require_once $class_file_path;
 
 		// Init display object.
 		$this->display = new Commentpress_Core_Display( $this );
@@ -2127,7 +1997,7 @@ class Commentpress_Core {
 		);
 
 		// We're fine, include class definition.
-		require_once( $class_file_path );
+		require_once $class_file_path;
 
 		// Init display object.
 		$this->nav = new Commentpress_Core_Navigator( $this );
@@ -2149,7 +2019,7 @@ class Commentpress_Core {
 		);
 
 		// We're fine, include class definition.
-		require_once( $class_file_path );
+		require_once $class_file_path;
 
 		// Init parser object.
 		$this->parser = new Commentpress_Core_Parser( $this );
@@ -2170,10 +2040,10 @@ class Commentpress_Core {
 			$class_file_path
 		);
 
-		// We're fine, include class definition
-		require_once( $class_file_path );
+		// We're fine, include class definition.
+		require_once $class_file_path;
 
-		// Init formatter object
+		// Init formatter object.
 		$this->formatter = new Commentpress_Core_Formatter( $this );
 
 		// ---------------------------------------------------------------------
@@ -2193,7 +2063,7 @@ class Commentpress_Core {
 		);
 
 		// We're fine, include class definition.
-		require_once( $class_file_path );
+		require_once $class_file_path;
 
 		// Init workflow object.
 		$this->workflow = new Commentpress_Core_Workflow( $this );
@@ -2215,7 +2085,7 @@ class Commentpress_Core {
 		);
 
 		// We're fine, include class definition.
-		require_once( $class_file_path );
+		require_once $class_file_path;
 
 		// Init workflow object.
 		$this->editor = new Commentpress_Core_Editor( $this );
@@ -2231,8 +2101,6 @@ class Commentpress_Core {
 		$this->_register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register WordPress hooks.
@@ -2251,7 +2119,7 @@ class Commentpress_Core {
 		add_action( 'plugins_loaded', [ $this, 'translation' ] );
 
 		// Check for plugin deactivation.
-		add_action( 'deactivated_plugin',  [ $this, '_plugin_deactivated' ], 10, 2 );
+		add_action( 'deactivated_plugin', [ $this, '_plugin_deactivated' ], 10, 2 );
 
 		// Modify comment posting.
 		add_action( 'comment_post', [ $this, 'save_comment' ], 10, 2 );
@@ -2270,7 +2138,7 @@ class Commentpress_Core {
 			add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 
 			// Add meta boxes.
-			add_action( 'add_meta_boxes' , [ $this, 'add_meta_boxes' ] );
+			add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes' ] );
 
 			// Intercept save.
 			add_action( 'save_post', [ $this, 'save_post' ], 10, 2 );
@@ -2278,21 +2146,12 @@ class Commentpress_Core {
 			// Intercept delete.
 			add_action( 'before_delete_post', [ $this, 'delete_post' ], 10, 1 );
 
-			// There's a new screen object in 3.3.
-			if ( version_compare( $wp_version, '3.2.99999', '>=' ) ) {
-
-				// Use new help functionality.
-				//add_action('add_screen_help_and_options', [ $this, 'options_help' ] );
-
-				// NOTE: help is actually called in $this->admin_head() because the
-				// 'add_screen_help_and_options' action does not seem to be working in 3.3-beta1
-
-			} else {
-
-				// Previous help method.
-				add_action( 'contextual_help', [ $this, 'contextual_help' ] );
-
-			}
+			/*
+			// Use new help functionality.
+			//add_action('add_screen_help_and_options', [ $this, 'options_help' ] );
+			// NOTE: help is actually called in $this->admin_head() because the
+			// 'add_screen_help_and_options' action does not seem to be working in 3.3-beta1
+			*/
 
 			// Comment block quicktag.
 			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_scripts' ] );
@@ -2357,8 +2216,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Utility to check for commentable CPT.
 	 *
@@ -2390,7 +2247,7 @@ class Commentpress_Core {
 			$types = false;
 
 			// Loop.
-			foreach ($post_types AS $post_type ) {
+			foreach ( $post_types as $post_type ) {
 
 				// Add name to array (is_singular expects this).
 				$types[] = $post_type;
@@ -2403,8 +2260,6 @@ class Commentpress_Core {
 		return $types;
 
 	}
-
-
 
 	/**
 	 * Adds the formatter to the page/post metabox.
@@ -2459,7 +2314,7 @@ class Commentpress_Core {
 
 				}
 
-				foreach( $types AS $type ) {
+				foreach ( $types as $type ) {
 					if ( $n == $value ) {
 						$type_option_list[] = '<option value="' . $n . '" selected="selected">' . $type . '</option>';
 					} else {
@@ -2485,8 +2340,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Adds the default sidebar preference to the page/post metabox.
 	 *
@@ -2497,7 +2350,9 @@ class Commentpress_Core {
 	public function _get_default_sidebar_metabox( $post ) {
 
 		// Allow this to be disabled.
-		if ( apply_filters( 'commentpress_hide_sidebar_option', false ) ) return;
+		if ( apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
+			return;
+		}
 
 		// ---------------------------------------------------------------------
 		// Override post formatter.
@@ -2508,7 +2363,7 @@ class Commentpress_Core {
 
 			// Show a title.
 			echo '<div class="cp_sidebar_default_wrapper">
-			<p><strong><label for="cp_sidebar_default">' . __( 'Default Sidebar' , 'commentpress-core' ) . '</label></strong></p>';
+			<p><strong><label for="cp_sidebar_default">' . __( 'Default Sidebar', 'commentpress-core' ) . '</label></strong></p>';
 
 			// Set key.
 			$key = '_cp_sidebar_default';
@@ -2528,9 +2383,9 @@ class Commentpress_Core {
 			echo '
 			<p>
 			<select id="cp_sidebar_default" name="cp_sidebar_default">
-				<option value="toc" ' . (($sidebar == 'toc') ? ' selected="selected"' : '') . '>' . __('Contents', 'commentpress-core') . '</option>
-				<option value="activity" ' . (($sidebar == 'activity') ? ' selected="selected"' : '') . '>' . __('Activity', 'commentpress-core') . '</option>
-				<option value="comments" ' . (($sidebar == 'comments') ? ' selected="selected"' : '') . '>' . __('Comments', 'commentpress-core') . '</option>
+				<option value="toc" ' . ( ( $sidebar == 'toc' ) ? ' selected="selected"' : '' ) . '>' . __( 'Contents', 'commentpress-core' ) . '</option>
+				<option value="activity" ' . ( ( $sidebar == 'activity' ) ? ' selected="selected"' : '' ) . '>' . __( 'Activity', 'commentpress-core' ) . '</option>
+				<option value="comments" ' . ( ( $sidebar == 'comments' ) ? ' selected="selected"' : '' ) . '>' . __( 'Comments', 'commentpress-core' ) . '</option>
 			</select>
 			</p>
 			</div>
@@ -2539,8 +2394,6 @@ class Commentpress_Core {
 		}
 
 	}
-
-
 
 	/**
 	 * Adds the paragraph numbering preference to the page/post metabox.
@@ -2553,7 +2406,7 @@ class Commentpress_Core {
 
 		// Show a title.
 		echo '<div class="cp_starting_para_number_wrapper">
-		<p><strong><label for="cp_starting_para_number">' . __( 'Starting Paragraph Number' , 'commentpress-core' ) . '</label></strong></p>';
+		<p><strong><label for="cp_starting_para_number">' . __( 'Starting Paragraph Number', 'commentpress-core' ) . '</label></strong></p>';
 
 		// Set key.
 		$key = '_cp_starting_para_number';
@@ -2579,8 +2432,6 @@ class Commentpress_Core {
 
 	}
 
-
-
 	/**
 	 * Deactivate this plugin.
 	 *
@@ -2598,13 +2449,15 @@ class Commentpress_Core {
 			if ( $plugin == plugin_basename( CP_PLUGIN_FILE ) ) {
 
 				// Only trigger this when not network-wide.
-				if ( is_null( $network_wide ) OR $network_wide == false ) {
+				if ( is_null( $network_wide ) || $network_wide == false ) {
 
 					// Restore theme.
 					$this->display->activate();
 
+					/*
 					// Override widgets?
-					//$this->db->_clear_widgets();
+					$this->db->_clear_widgets();
+					*/
 
 				}
 
@@ -2614,13 +2467,4 @@ class Commentpress_Core {
 
 	}
 
-
-
-//##############################################################################
-
-
-
-} // Class ends.
-
-
-
+}

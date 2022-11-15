@@ -1,27 +1,18 @@
-<?php /*
-================================================================================
-CommentPress Core for Multisite
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
-=====
+<?php
+/**
+ * CommentPress Core for Multisite class.
+ *
+ * This used to be the CommentPress for Multisite plugin, but is now merged into
+ * a unified plugin that covers all situations.
+ *
+ * @package CommentPress_Core
+ */
 
-This used to be the CommentPress for Multisite plugin, but is now merged into
-a unified plugin that covers all situations.
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
---------------------------------------------------------------------------------
-*/
-
-
-
-// Define version
+// Define version.
 define( 'COMMENTPRESS_MU_PLUGIN_VERSION', '1.0' );
-
-
-
-// Sanity check.
-if ( ! class_exists( 'Commentpress_Multisite_Loader' ) ) :
 
 /**
  * CommentPress Core Multisite Loader Class.
@@ -77,8 +68,6 @@ class Commentpress_Multisite_Loader {
 	 */
 	public $workshop;
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -91,8 +80,6 @@ class Commentpress_Multisite_Loader {
 
 	}
 
-
-
 	/**
 	 * Set up all items associated with this object.
 	 *
@@ -100,11 +87,13 @@ class Commentpress_Multisite_Loader {
 	 */
 	public function initialise() {
 
+		/*
 		// Check for network activation.
-		//add_action( 'activated_plugin',  [ $this, 'network_activated' ], 10, 2 );
+		add_action( 'activated_plugin',  [ $this, 'network_activated' ], 10, 2 );
+		*/
 
 		// Check for network deactivation.
-		add_action( 'deactivated_plugin',  [ $this, 'network_deactivated' ], 10, 2 );
+		add_action( 'deactivated_plugin', [ $this, 'network_deactivated' ], 10, 2 );
 
 		// ---------------------------------------------------------------------
 		// Load Database Wrapper object
@@ -123,7 +112,7 @@ class Commentpress_Multisite_Loader {
 		);
 
 		// We're fine, include class definition.
-		require_once( $class_file_path );
+		require_once $class_file_path;
 
 		// Init autoload database object.
 		$this->db = new Commentpress_Multisite_Admin( $this );
@@ -145,9 +134,9 @@ class Commentpress_Multisite_Loader {
 		);
 
 		// We're fine, include class definition.
-		require_once( $class_file_path );
+		require_once $class_file_path;
 
-		// Init multisite object
+		// Init multisite object.
 		$this->multisite = new Commentpress_Multisite_Wordpress( $this );
 
 		// ---------------------------------------------------------------------
@@ -167,7 +156,7 @@ class Commentpress_Multisite_Loader {
 		);
 
 		// We're fine, include class definition.
-		require_once( $class_file_path );
+		require_once $class_file_path;
 
 		// Instantiate it.
 		$this->revisions = new Commentpress_Multisite_Revisions( $this );
@@ -187,8 +176,6 @@ class Commentpress_Multisite_Loader {
 		add_action( 'bp_include', [ $this, 'load_buddypress_object' ] );
 
 	}
-
-
 
 	/**
 	 * BuddyPress object initialisation.
@@ -214,7 +201,7 @@ class Commentpress_Multisite_Loader {
 		);
 
 		// We're fine, include class definition.
-		require_once( $class_file_path );
+		require_once $class_file_path;
 
 		// Init BuddyPress object.
 		$this->bp = new Commentpress_Multisite_Buddypress( $this );
@@ -236,7 +223,7 @@ class Commentpress_Multisite_Loader {
 		);
 
 		// We're fine, include class definition.
-		require_once( $class_file_path );
+		require_once $class_file_path;
 
 		// Instantiate it.
 		$this->workshop = new Commentpress_Multisite_Buddypress_Groupblog( $this );
@@ -250,12 +237,13 @@ class Commentpress_Multisite_Loader {
 
 	}
 
-
-
 	/**
 	 * This plugin has been network-activated. (does not fire!)!
 	 *
 	 * @since 3.3
+	 *
+	 * @param str $plugin The plugin file.
+	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
 	public function network_activated( $plugin, $network_wide = null ) {
 
@@ -273,12 +261,13 @@ class Commentpress_Multisite_Loader {
 
 	}
 
-
-
 	/**
 	 * This plugin has been network-deactivated.
 	 *
 	 * @since 3.3
+	 *
+	 * @param str $plugin The plugin file.
+	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
 	public function network_deactivated( $plugin, $network_wide = null ) {
 
@@ -298,23 +287,4 @@ class Commentpress_Multisite_Loader {
 
 	}
 
-
-
-//##############################################################################
-
-
-
-} // Class ends.
-
-endif; // Class_exists.
-
-
-
-// Define as global.
-global $commentpress_mu;
-
-// Instantiate it.
-$commentpress_mu = new Commentpress_Multisite_Loader();
-
-
-
+}
