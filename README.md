@@ -1,5 +1,20 @@
-CommentPress Core
-=================
+# CommentPress Core
+
+**Contributors:** [needle](https://profiles.wordpress.org/needle/), [commentpress](https://profiles.wordpress.org/commentpress/)<br/>
+**Donate link:** https://www.paypal.me/interactivist<br/>
+**Tags:** commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration<br/>
+**Requires at least:** 4.9<br/>
+**Tested up to:** 6.1<br/>
+**Stable tag:** 4.0a<br/>
+**License:** GPLv2 or later<br/>
+**License URI:** https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+
+CommentPress Core allows fine-grained commenting in the margins of a text. Use it to annotate, workshop or debate a social text in a social context.
+
+
+---
+
+## Description
 
 **Please note:** this is the development repository for *CommentPress Core*. It can be found in [the WordPress Plugin Directory](http://wordpress.org/plugins/commentpress-core/), which is the best place to get it from if you're not a developer.
 
@@ -25,13 +40,13 @@ Many thanks to the following for translations:
 
 ---
 
-## Installation ##
+## Installation
 
-### GitHub ###
+### GitHub
 
 There are two ways to install from GitHub:
 
-#### ZIP Download ####
+#### ZIP Download
 
 If you have downloaded *CommentPress Core* as a ZIP file from the GitHub repository, do the following to install and activate the plugin and theme:
 
@@ -40,18 +55,17 @@ If you have downloaded *CommentPress Core* as a ZIP file from the GitHub reposit
 3. Follow the setup instructions for your context below
 4. You are done!
 
-#### git clone ####
+#### git clone
 
 If you have cloned the code from GitHub, it is assumed that you know what you're doing.
 
-### WordPress Plugin Repository ###
+### WordPress Plugin Repository
 
 You can download and install *CommentPress Core* using the built in WordPress plugin installer. If you download *CommentPress Core* manually, make sure it is uploaded so that the plugin directory is `/wp-content/plugins/commentpress-core`.
 
 The following are full instructions for setting up *CommentPress Core* in the contexts in which it works:
 
-
-#### Install *CommentPress Core* in WordPress Standalone ####
+#### Install *CommentPress Core* in WordPress Standalone
 
 Base Install:
 
@@ -66,8 +80,7 @@ Your basic *CommentPress Core* setup is complete. At this point you can:
 3. Change Background and Header
 4. Customise *CommentPress Core* via its Settings Page
 
-
-#### Install *CommentPress Core* in WordPress Multisite ####
+#### Install *CommentPress Core* in WordPress Multisite
 
 Base Install:
 
@@ -94,8 +107,7 @@ Your basic *CommentPress Core* setup is complete. At this point you can:
 3. Change Background and Header
 4. Customise *CommentPress Core* via its Settings Page
 
-
-#### Install *CommentPress Core* with *BuddyPress Groupblogs* ####
+#### Install *CommentPress Core* with *BuddyPress Groupblogs*
 
 Base Install:
 
@@ -155,16 +167,16 @@ To create a *CommentPress Core*-enabled Groupblog:
 6. To go to the groupblog, click "Blog" (or if you have chosen to alter the naming scheme, then whatever name you have chosen)
 7. Start your group blogging!
 
+
 ---
 
-## Upgrades ##
+## Upgrades
 
 Upgrades from previous versions of *CommentPress* are possible. Please follow the following procedures for your context.
 
 **The name has been changed from *CommentPress* to *CommentPress Core* for two reasons:** (a) because it serves as the basis for extending it for your purposes and (b) to safeguard historical installations, which could break if they upgrade. Newer *CommentPress* installations (versions 3.0.x - 3.3.x) can upgrade to the current version.
 
-
-### Upgrade to *CommentPress Core* ###
+### Upgrade to *CommentPress Core*
 
 It is recommended that you upgrade to the latest versions of WordPress as well as the latest versions of the old *CommentPress* plugins and theme before upgrading to *CommentPress Core*, but *CommentPress Core* will do its best if this is not possible. A minimum of WordPress 3.3 is required, but upgrades under WordPress 3.4+ work much better. The old *CommentPress* plugins and theme can all be found on Github:
 
@@ -173,8 +185,7 @@ It is recommended that you upgrade to the latest versions of WordPress as well a
 3. Get the latest [CommentPress Ajaxified](https://github.com/IFBook/CommentPressAjaxified)
 4. Get the latest [CommentPress Theme](https://github.com/IFBook/CommentPressTheme)
 
-
-### Upgrade to *CommentPress Core* in WordPress Standalone ###
+### Upgrade to *CommentPress Core* in WordPress Standalone
 
 1. Activate *CommentPress Core* plugin
 2. *CommentPress Core* will try and deactivate the *CommentPress Ajaxified* plugin. Deactivate it if it is still active.
@@ -182,8 +193,7 @@ It is recommended that you upgrade to the latest versions of WordPress as well a
 4. Delete *CommentPress Ajaxified* plugin
 5. Delete *CommentPress* plugin
 
-
-### Upgrade to *CommentPress Core* in WordPress Multisite (NOT network-activated) ###
+### Upgrade to *CommentPress Core* in WordPress Multisite (NOT network-activated)
 
 On each site:
 
@@ -196,8 +206,7 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 1. Delete *CommentPress Ajaxified* plugin
 2. Delete *CommentPress* plugin
 
-
-### Upgrade to *CommentPress Core* (network-activated OR with *BuddyPress Groupblogs*) ###
+### Upgrade to *CommentPress Core* (network-activated OR with *BuddyPress Groupblogs*)
 
 To upgrade to *CommentPress Core*.
 
@@ -222,24 +231,24 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 3. Delete *CommentPress for Multisite Extras*, if present
 4. Delete *CommentPress for Multisite*
 
+
 ---
 
-## Changelogs ##
+## Changelogs
 
-### 3.4 onwards ###
+### 3.4 onwards
 
 The merged plugins and theme.
 
 * See the [commits on GitHub](https://github.com/IFBook/commentpress-core/commits/master)
 
-### Merging 3.3.6 to 3.4 ###
+### Merging 3.3.6 to 3.4
 
 The merging process for the plugins and theme.
 
 * See the [commits on GitHub](https://github.com/IFBook/commentpress/commits/master)
 
-
-### Up to 3.3.6 ###
+### Up to 3.3.6
 
 Up to this version, *CommentPress* was a collection of separate plugins and a theme.
 
@@ -247,4 +256,3 @@ Up to this version, *CommentPress* was a collection of separate plugins and a th
 * See the [theme commits on GitHub](https://github.com/IFBook/CommentPressTheme/commits/master)
 * See the [ajax plugin commits on GitHub](https://github.com/IFBook/CommentPressAjaxified/commits/master)
 * See the [multisite plugin commits on GitHub](https://github.com/IFBook/CommentPressMultisite/commits/master)
-
