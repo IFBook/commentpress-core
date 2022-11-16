@@ -12,13 +12,13 @@ defined( 'ABSPATH' ) || exit;
 
 
 // Include our Comment functions file.
-include_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/includes/theme/theme-comments.php';
+require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/includes/theme/theme-comments.php';
 
 // Include our BuddyPress compatibility file.
-include_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/includes/theme/theme-buddypress.php';
+require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/includes/theme/theme-buddypress.php';
 
 // Include our "Theme Tabs" class file.
-include_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/includes/theme/theme-tabs.php';
+require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/includes/theme/theme-tabs.php';
 
 
 
