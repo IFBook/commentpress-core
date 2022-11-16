@@ -1,4 +1,14 @@
 <?php
+/**
+ * CommentPress Core Workflow class.
+ *
+ * Handles "Translation" workflow in CommentPress Core.
+ *
+ * @package CommentPress_Core
+ */
+
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 /**
  * CommentPress Core Workflow Class.
@@ -18,8 +28,6 @@ class Commentpress_Core_Workflow {
 	 */
 	public $parent_obj;
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -35,12 +43,10 @@ class Commentpress_Core_Workflow {
 		// Store reference to database wrapper (child of calling obj).
 		$this->db = $this->parent_obj->db;
 
-		// Init.
-		$this->_init();
+		// Register hooks.
+		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Set up all items associated with this object.
@@ -51,8 +57,6 @@ class Commentpress_Core_Workflow {
 
 	}
 
-
-
 	/**
 	 * If needed, destroys all items associated with this object.
 	 *
@@ -62,19 +66,56 @@ class Commentpress_Core_Workflow {
 
 	}
 
-
-
-//##############################################################################
-
-
-
 	/**
 	 * -------------------------------------------------------------------------
 	 * Public Methods
 	 * -------------------------------------------------------------------------
 	 */
 
+	/**
+	 * Register WordPress hooks.
+	 *
+	 * @since 3.0
+	 */
+	public function register_hooks() {
 
+		// Enable workflow.
+		add_filter( 'cp_blog_workflow_exists', [ $this, 'blog_workflow_exists' ], 21 );
+
+		// Override label.
+		add_filter( 'cp_blog_workflow_label', [ $this, 'blog_workflow_label' ], 21 );
+
+		// Override blog type if workflow is on.
+		add_filter( 'cp_get_group_meta_for_blog_type', [ $this, 'group_meta_set_blog_type' ], 21, 2 );
+
+		// Is this the back end?
+		if ( is_admin() ) {
+
+			// Add meta box for translation workflow.
+			add_action( 'cp_workflow_metabox', [ $this, 'workflow_metabox' ], 10, 2 );
+
+			// Override meta box title for translation workflow.
+			add_filter( 'cp_workflow_metabox_title', [ $this, 'workflow_metabox_title' ], 21, 1 );
+
+			// Save post with translation workflow.
+			add_action( 'cp_workflow_save_post', [ $this, 'workflow_save_post' ], 21, 1 );
+
+			// Save page with translation workflow.
+			add_action( 'cp_workflow_save_page', [ $this, 'workflow_save_post' ], 21, 1 );
+
+			// Save translation workflow for copied posts.
+			add_action( 'cp_workflow_save_copy', [ $this, 'workflow_save_copy' ], 21, 1 );
+
+		}
+
+		// Create custom filters that mirror 'the_content'.
+		add_filter( 'cp_workflow_richtext_content', 'wptexturize' );
+		add_filter( 'cp_workflow_richtext_content', 'convert_smilies' );
+		add_filter( 'cp_workflow_richtext_content', 'convert_chars' );
+		add_filter( 'cp_workflow_richtext_content', 'wpautop' );
+		add_filter( 'cp_workflow_richtext_content', 'shortcode_unautop' );
+
+	}
 
 	/**
 	 * Enable workflow.
@@ -94,8 +135,6 @@ class Commentpress_Core_Workflow {
 
 	}
 
-
-
 	/**
 	 * Override the name of the workflow checkbox label.
 	 *
@@ -114,14 +153,13 @@ class Commentpress_Core_Workflow {
 
 	}
 
-
-
 	/**
 	 * Amend the group meta if workflow is enabled.
 	 *
 	 * @since 3.0
 	 *
 	 * @param str $blog_type The existing numerical type of the blog.
+	 * @param int|bool $blog_workflow A positive number if workflow enabled, false otherwise.
 	 * @return str $blog_type The modified numerical type of the blog.
 	 */
 	public function group_meta_set_blog_type( $blog_type, $blog_workflow ) {
@@ -129,7 +167,7 @@ class Commentpress_Core_Workflow {
 		// If the blog workflow is enabled, then this is a translation group.
 		if ( $blog_workflow == '1' ) {
 
-			// Translation is type 2
+			// Translation is type 2.
 			$blog_type = '2';
 
 		}
@@ -142,13 +180,11 @@ class Commentpress_Core_Workflow {
 		 * @since 3.0
 		 *
 		 * @param int $blog_type The numeric blog type.
-		 * @param bool $blog_workflow True if workflow enabled, false otherwise.
+		 * @param int|bool $blog_workflow A positive number if workflow enabled, false otherwise.
 		 */
 		return apply_filters( 'cp_class_commentpress_workflow_group_blogtype', $blog_type, $blog_workflow );
 
 	}
-
-
 
 	/**
 	 * Add our metabox if workflow is enabled.
@@ -212,8 +248,6 @@ class Commentpress_Core_Workflow {
 
 	}
 
-
-
 	/**
 	 * Amend the workflow metabox title.
 	 *
@@ -232,8 +266,6 @@ class Commentpress_Core_Workflow {
 
 	}
 
-
-
 	/**
 	 * Save workflow data based on the state of the metabox.
 	 *
@@ -244,22 +276,34 @@ class Commentpress_Core_Workflow {
 	public function workflow_save_post( $post_obj ) {
 
 		// If no post, kick out.
-		if ( ! $post_obj ) return;
+		if ( ! $post_obj ) {
+			return;
+		}
 
 		// If not post or page, kick out.
 		$types = [ 'post', 'page' ];
-		if ( ! in_array( $post_obj->post_type, $types ) ) return;
+		if ( ! in_array( $post_obj->post_type, $types ) ) {
+			return;
+		}
 
 		// Authenticate.
-		$nonce = isset( $_POST['commentpress_workflow_nonce'] ) ? $_POST['commentpress_workflow_nonce'] : '';
-		if ( ! wp_verify_nonce( $nonce, 'commentpress_post_workflow_settings' ) ) return;
+		$nonce = isset( $_POST['commentpress_workflow_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['commentpress_workflow_nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce, 'commentpress_post_workflow_settings' ) ) {
+			return;
+		}
 
 		// Is this an auto save routine?
-		if ( defined('DOING_AUTOSAVE') AND DOING_AUTOSAVE ) return;
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
 
 		// Check permissions.
-		if ( $post_obj->post_type == 'post' AND ! current_user_can( 'edit_posts' ) ) return;
-		if ( $post_obj->post_type == 'page' AND ! current_user_can( 'edit_pages' ) ) return;
+		if ( $post_obj->post_type == 'post' && ! current_user_can( 'edit_posts' ) ) {
+			return;
+		}
+		if ( $post_obj->post_type == 'page' && ! current_user_can( 'edit_pages' ) ) {
+			return;
+		}
 
 		// OK, we're authenticated.
 
@@ -282,7 +326,7 @@ class Commentpress_Core_Workflow {
 		// ---------------------------------------------------------------------
 
 		// Get original text.
-		$original = ( isset( $_POST['cporiginaltext'] ) ) ? $_POST['cporiginaltext'] : '';
+		$original = isset( $_POST['cporiginaltext'] ) ? trim( wp_unslash( $_POST['cporiginaltext'] ) ) : '';
 
 		// Set key.
 		$key = '_cp_original_text';
@@ -316,7 +360,7 @@ class Commentpress_Core_Workflow {
 		}
 
 		// Get literal translation.
-		$literal = ( isset( $_POST['cpliteraltranslation'] ) ) ? $_POST['cpliteraltranslation'] : '';
+		$literal = isset( $_POST['cpliteraltranslation'] ) ? trim( wp_unslash( $_POST['cpliteraltranslation'] ) ) : '';
 
 		// Set key.
 		$key = '_cp_literal_translation';
@@ -351,8 +395,6 @@ class Commentpress_Core_Workflow {
 
 	}
 
-
-
 	/**
 	 * Add the workflow content to the new version.
 	 *
@@ -363,17 +405,19 @@ class Commentpress_Core_Workflow {
 	public function workflow_save_copy( $new_post_id ) {
 
 		// ---------------------------------------------------------------------
-		// If we are making a copy of the current version, also save meta
+		// If we are making a copy of the current version, also save meta.
 		// ---------------------------------------------------------------------
 
 		// Find and save the data.
-		$data = ( isset( $_POST['commentpress_new_post'] ) ) ? $_POST['commentpress_new_post'] : '0';
+		$data = isset( $_POST['commentpress_new_post'] ) ? trim( wp_unslash( $_POST['commentpress_new_post'] ) ) : '0';
 
 		// Do we want to create a new revision?
-		if ( $data == '0' ) return;
+		if ( $data == '0' ) {
+			return;
+		}
 
 		// Get original text.
-		$original = ( isset( $_POST['cporiginaltext'] ) ) ? $_POST['cporiginaltext'] : '';
+		$original = isset( $_POST['cporiginaltext'] ) ? trim( wp_unslash( $_POST['cporiginaltext'] ) ) : '';
 
 		// Set key.
 		$key = '_cp_original_text';
@@ -407,7 +451,7 @@ class Commentpress_Core_Workflow {
 		}
 
 		// Get literal translation.
-		$literal = ( isset( $_POST['cpliteraltranslation'] ) ) ? $_POST['cpliteraltranslation'] : '';
+		$literal = isset( $_POST['cpliteraltranslation'] ) ? trim( wp_unslash( $_POST['cpliteraltranslation'] ) ) : '';
 
 		// Set key.
 		$key = '_cp_literal_translation';
@@ -442,86 +486,4 @@ class Commentpress_Core_Workflow {
 
 	}
 
-
-
-//##############################################################################
-
-
-
-	/**
-	 * -------------------------------------------------------------------------
-	 * Private Methods
-	 * -------------------------------------------------------------------------
-	 */
-
-
-
-	/**
-	 * Object initialisation.
-	 *
-	 * @since 3.0
-	 */
-	public function _init() {
-
-		// Register hooks.
-		$this->_register_hooks();
-
-	}
-
-
-
-	/**
-	 * Register WordPress hooks.
-	 *
-	 * @since 3.0
-	 */
-	public function _register_hooks() {
-
-		// Enable workflow.
-		add_filter( 'cp_blog_workflow_exists', [ $this, 'blog_workflow_exists' ], 21 );
-
-		// Override label.
-		add_filter( 'cp_blog_workflow_label', [ $this, 'blog_workflow_label' ], 21 );
-
-		// Override blog type if workflow is on.
-		add_filter( 'cp_get_group_meta_for_blog_type', [ $this, 'group_meta_set_blog_type' ], 21, 2 );
-
-		// Is this the back end?
-		if ( is_admin() ) {
-
-			// Add meta box for translation workflow.
-			add_action( 'cp_workflow_metabox', [ $this, 'workflow_metabox' ], 10, 2 );
-
-			// Override meta box title for translation workflow.
-			add_filter( 'cp_workflow_metabox_title', [ $this, 'workflow_metabox_title' ], 21, 1 );
-
-			// Save post with translation workflow.
-			add_action( 'cp_workflow_save_post', [ $this, 'workflow_save_post' ], 21, 1 );
-
-			// Save page with translation workflow.
-			add_action( 'cp_workflow_save_page', [ $this, 'workflow_save_post' ], 21, 1 );
-
-			// Save translation workflow for copied posts.
-			add_action( 'cp_workflow_save_copy', [ $this, 'workflow_save_copy' ], 21, 1 );
-
-		}
-
-		// Create custom filters that mirror 'the_content'.
-		add_filter( 'cp_workflow_richtext_content', 'wptexturize' );
-		add_filter( 'cp_workflow_richtext_content', 'convert_smilies' );
-		add_filter( 'cp_workflow_richtext_content', 'convert_chars' );
-		add_filter( 'cp_workflow_richtext_content', 'wpautop' );
-		add_filter( 'cp_workflow_richtext_content', 'shortcode_unautop' );
-
-	}
-
-
-
-//##############################################################################
-
-
-
-} // Class ends.
-
-
-
+}

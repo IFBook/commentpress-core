@@ -1,4 +1,14 @@
 <?php
+/**
+ * CommentPress Core Formatter class.
+ *
+ * Handles "Prose" and "Poetry" formatting in CommentPress Core.
+ *
+ * @package CommentPress_Core
+ */
+
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 /**
  * CommentPress Core Editor Class.
@@ -36,8 +46,6 @@ class Commentpress_Core_Editor {
 	 */
 	public $toggle_state;
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -58,8 +66,6 @@ class Commentpress_Core_Editor {
 
 	}
 
-
-
 	/**
 	 * Set up all items associated with this object.
 	 *
@@ -68,13 +74,19 @@ class Commentpress_Core_Editor {
 	public function initialise() {
 
 		// Bail if not logged in.
-		if ( ! is_user_logged_in() ) return;
+		if ( ! is_user_logged_in() ) {
+			return;
+		}
 
 		// Bail if there's no WP FEE present.
-		if ( ! class_exists( 'FEE' ) ) return;
+		if ( ! class_exists( 'FEE' ) ) {
+			return;
+		}
 
 		// Try and find the global.
-		if ( ! isset( $GLOBALS['wp_front_end_editor'] ) ) return;
+		if ( ! isset( $GLOBALS['wp_front_end_editor'] ) ) {
+			return;
+		}
 
 		// Broadcast.
 		do_action( 'commentpress_editor_present' );
@@ -90,8 +102,6 @@ class Commentpress_Core_Editor {
 
 	}
 
-
-
 	/**
 	 * If needed, destroys all items associated with this object.
 	 *
@@ -101,19 +111,11 @@ class Commentpress_Core_Editor {
 
 	}
 
-
-
-//##############################################################################
-
-
-
 	/**
 	 * -------------------------------------------------------------------------
 	 * Public Methods
 	 * -------------------------------------------------------------------------
 	 */
-
-
 
 	/**
 	 * Register WordPress hooks.
@@ -129,10 +131,12 @@ class Commentpress_Core_Editor {
 		add_action( 'cp_content_tab_before_search', [ $this, 'editor_toggle_show' ], 20 );
 
 		// Test for flag.
-		if ( isset( $this->fee ) AND $this->fee == 'killed' ) {
+		if ( isset( $this->fee ) && $this->fee == 'killed' ) {
 
+			/*
 			// Enable infinite scroll.
-			//add_filter( 'cpajax_disable_infinite_scroll', '__return_false', 11 );
+			add_filter( 'cpajax_disable_infinite_scroll', '__return_false', 11 );
+			*/
 
 			// Amend Edit Page button.
 			add_action( 'wp_before_admin_bar_render', [ $GLOBALS['wp_front_end_editor'], 'wp_before_admin_bar_render' ] );
@@ -163,7 +167,7 @@ class Commentpress_Core_Editor {
 		add_filter( 'commentpress_is_tinymce_allowed', [ $this, 'commentpress_disallow_tinymce' ], 1000 );
 
 		// Test for AJAX.
-		if ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) {
+		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 
 			// Force filter the content during AJAX.
 			add_filter( 'commentpress_force_the_content', '__return_true' );
@@ -203,8 +207,6 @@ class Commentpress_Core_Editor {
 
 	}
 
-
-
 	/**
 	 * Set editor toggle state if none exists.
 	 *
@@ -213,8 +215,6 @@ class Commentpress_Core_Editor {
 	public function trigger_script_inclusion() {
 		do_action( 'commentpress_editor_include_javascript' );
 	}
-
-
 
 	/**
 	 * Set editor toggle state if none exists.
@@ -245,8 +245,6 @@ class Commentpress_Core_Editor {
 
 	}
 
-
-
 	/**
 	 * Intercept editor toggling once plugins are loaded.
 	 *
@@ -261,10 +259,8 @@ class Commentpress_Core_Editor {
 		$do_toggle = false;
 
 		// Check toggle button.
-		if (
-			isset( $_GET['cp_editor_nonce'] ) AND
-			wp_verify_nonce( $_GET['cp_editor_nonce'], 'editor_toggle' )
-		) {
+		$editor_nonce = isset( $_GET['cp_editor_nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['cp_editor_nonce'] ) ) : '';
+		if ( wp_verify_nonce( $editor_nonce, 'editor_toggle' ) ) {
 
 			// Yes, toggle.
 			$do_toggle = true;
@@ -275,10 +271,8 @@ class Commentpress_Core_Editor {
 		}
 
 		// Check "Edit Page" menu link.
-		if (
-			isset( $_GET['cp_editor_edit_nonce'] ) AND
-			wp_verify_nonce( $_GET['cp_editor_edit_nonce'], 'editor_edit_toggle' )
-		) {
+		$editor_edit_nonce = isset( $_GET['cp_editor_nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['cp_editor_nonce'] ) ) : '';
+		if ( wp_verify_nonce( $editor_edit_nonce, 'editor_edit_toggle' ) ) {
 
 			// Yes, toggle.
 			$do_toggle = true;
@@ -289,7 +283,9 @@ class Commentpress_Core_Editor {
 		}
 
 		// Bail of not toggling.
-		if ( $do_toggle === false ) return;
+		if ( $do_toggle === false ) {
+			return;
+		}
 
 		// Get existing state.
 		$state = $this->db->option_get( 'cp_editor_toggle' );
@@ -308,12 +304,10 @@ class Commentpress_Core_Editor {
 		$this->db->options_save();
 
 		// Redirect.
-		wp_redirect( $url );
+		wp_safe_redirect( $url );
 		exit();
 
 	}
-
-
 
 	/**
 	 * Inject editor toggle link before search in Contents column.
@@ -323,16 +317,22 @@ class Commentpress_Core_Editor {
 	public function editor_toggle_show() {
 
 		// Bail if not commentable.
-		if ( ! $this->parent_obj->is_commentable() ) return;
+		if ( ! $this->parent_obj->is_commentable() ) {
+			return;
+		}
 
 		// Access post.
 		global $post;
 
 		// Bail if there isn't one.
-		if ( ! is_object( $post ) ) return;
+		if ( ! is_object( $post ) ) {
+			return;
+		}
 
 		// Only show for admins and post authors.
-		if ( ! current_user_can( 'edit_post', $post->ID ) ) return;
+		if ( ! current_user_can( 'edit_post', $post->ID ) ) {
+			return;
+		}
 
 		// Change text depending on toggle state.
 		if ( $this->toggle_state == 'writing' ) {
@@ -355,7 +355,7 @@ class Commentpress_Core_Editor {
 		echo '
 
 		<div class="editor_toggle">
-			' . $this->_toggle_link() . '
+			' . $this->toggle_link() . '
 		</div><!-- /editor_toggle -->
 
 		';
@@ -368,8 +368,6 @@ class Commentpress_Core_Editor {
 
 	}
 
-
-
 	/**
 	 * Prevent WordPress Front-end Editor from loading.
 	 *
@@ -378,7 +376,7 @@ class Commentpress_Core_Editor {
 	public function wp_fee_prevent_tinymce() {
 
 		// What's our toggle state?
-		if ( isset( $this->toggle_state ) AND $this->toggle_state === 'commenting' ) {
+		if ( isset( $this->toggle_state ) && $this->toggle_state === 'commenting' ) {
 
 			// Set flag.
 			$this->fee = 'killed';
@@ -389,8 +387,6 @@ class Commentpress_Core_Editor {
 		}
 
 	}
-
-
 
 	/**
 	 * Disallow TinyMCE from loading in the comment form.
@@ -406,13 +402,12 @@ class Commentpress_Core_Editor {
 
 	}
 
-
-
 	/**
 	 * Prevent TinyMCE from loading in the comment form.
 	 *
 	 * @since 3.7
 	 *
+	 * @param int $var Ignored variable.
 	 * @return int Zero prevents loading.
 	 */
 	public function commentpress_prevent_tinymce( $var ) {
@@ -421,8 +416,6 @@ class Commentpress_Core_Editor {
 		return 0;
 
 	}
-
-
 
 	/**
 	 * Get additional javascript vars.
@@ -438,7 +431,9 @@ class Commentpress_Core_Editor {
 		global $post, $multipage, $page;
 
 		// Bail if we don't have a post (like on the 404 page).
-		if ( ! is_object( $post ) ) return $vars;
+		if ( ! is_object( $post ) ) {
+			return $vars;
+		}
 
 		// We need to know the url of the AJAX handler.
 		$vars['cp_ajax_url'] = admin_url( 'admin-ajax.php' );
@@ -463,8 +458,6 @@ class Commentpress_Core_Editor {
 
 	}
 
-
-
 	/**
 	 * Get new comments container.
 	 *
@@ -479,12 +472,13 @@ class Commentpress_Core_Editor {
 		global $post, $multipage, $page, $pages;
 
 		// Get post ID.
-		$post_id = isset( $_POST['post_id'] ) ? $_POST['post_id'] : NULL;
+		$post_id = isset( $_POST['post_id'] ) ? sanitize_text_field( wp_unslash( $_POST['post_id'] ) ) : null;
 
 		// Make it an integer, just to be sure.
 		$post_id = (int) $post_id;
 
 		// Enable WordPress API on post.
+		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		$GLOBALS['post'] = get_post( $post_id );
 		setup_postdata( $post );
 
@@ -492,11 +486,15 @@ class Commentpress_Core_Editor {
 		$content = $post->post_content;
 
 		// Get page number.
-		$page_num = isset( $_POST['post_page'] ) ? $_POST['post_page'] : 1;
-		if ( $page_num == 0 ) $page_num = 1;
+		$page_num = isset( $_POST['post_page'] ) ? sanitize_text_field( wp_unslash( $_POST['post_page'] ) ) : 1;
+		if ( $page_num == 0 ) {
+			$page_num = 1;
+		}
 
 		// Override if multipage.
-		if ( $multipage ) $content = $pages[($page_num - 1)];
+		if ( $multipage ) {
+			$content = $pages[ ( $page_num - 1 ) ];
+		}
 
 		// Trigger CommentPress Core comments collation.
 		$content = apply_filters( 'the_content', $content );
@@ -524,7 +522,9 @@ class Commentpress_Core_Editor {
 		);
 
 		// Load it if we find it.
-		if ( $cp_comments_by_para != '' ) load_template( $cp_comments_by_para );
+		if ( $cp_comments_by_para != '' ) {
+			load_template( $cp_comments_by_para );
+		}
 
 		// Get content.
 		$comments = ob_get_contents();
@@ -542,11 +542,9 @@ class Commentpress_Core_Editor {
 		//$data['pages'] = $pages;
 
 		// Send to browser.
-		$this->_send_json_data( $data );
+		wp_send_json( $data );
 
 	}
-
-
 
 	/**
 	 * Get new post metabox container.
@@ -566,8 +564,6 @@ class Commentpress_Core_Editor {
 
 	}
 
-
-
 	/**
 	 * AJAX metabox: set post title visibility.
 	 *
@@ -582,7 +578,7 @@ class Commentpress_Core_Editor {
 		$data = [];
 
 		// Set up post.
-		if ( $this->_setup_post() ) {
+		if ( $this->setup_post() ) {
 
 			// Save data.
 			$result = $this->db->save_page_title_visibility( $post );
@@ -600,11 +596,9 @@ class Commentpress_Core_Editor {
 		}
 
 		// Send to browser.
-		$this->_send_json_data( $data );
+		wp_send_json( $data );
 
 	}
-
-
 
 	/**
 	 * AJAX metabox: set page meta visibility.
@@ -620,7 +614,7 @@ class Commentpress_Core_Editor {
 		$data = [];
 
 		// Set up post.
-		if ( $this->_setup_post() ) {
+		if ( $this->setup_post() ) {
 
 			// Save data.
 			$result = $this->db->save_page_meta_visibility( $post );
@@ -638,11 +632,9 @@ class Commentpress_Core_Editor {
 		}
 
 		// Send to browser.
-		$this->_send_json_data( $data );
+		wp_send_json( $data );
 
 	}
-
-
 
 	/**
 	 * AJAX metabox: set number format.
@@ -658,7 +650,7 @@ class Commentpress_Core_Editor {
 		$data = [];
 
 		// Set up post.
-		if ( $this->_setup_post() ) {
+		if ( $this->setup_post() ) {
 
 			// Save data.
 			$this->db->save_page_numbering( $post );
@@ -682,11 +674,9 @@ class Commentpress_Core_Editor {
 		}
 
 		// Send to browser.
-		$this->_send_json_data( $data );
+		wp_send_json( $data );
 
 	}
-
-
 
 	/**
 	 * AJAX metabox: set formatter.
@@ -702,7 +692,7 @@ class Commentpress_Core_Editor {
 		$data = [];
 
 		// Set up post.
-		if ( $this->_setup_post() ) {
+		if ( $this->setup_post() ) {
 
 			// Save data.
 			$this->db->save_formatter( $post );
@@ -719,11 +709,9 @@ class Commentpress_Core_Editor {
 		}
 
 		// Send to browser.
-		$this->_send_json_data( $data );
+		wp_send_json( $data );
 
 	}
-
-
 
 	/**
 	 * AJAX metabox: set starting paragraph number.
@@ -739,7 +727,7 @@ class Commentpress_Core_Editor {
 		$data = [];
 
 		// Set up post.
-		if ( $this->_setup_post() ) {
+		if ( $this->setup_post() ) {
 
 			// Save data.
 			$this->db->save_starting_paragraph( $post );
@@ -756,11 +744,9 @@ class Commentpress_Core_Editor {
 		}
 
 		// Send to browser.
-		$this->_send_json_data( $data );
+		wp_send_json( $data );
 
 	}
-
-
 
 	/**
 	 * Override the "Edit Page" link when WP FEE not active.
@@ -790,19 +776,11 @@ class Commentpress_Core_Editor {
 
 	}
 
-
-
-//##############################################################################
-
-
-
 	/**
 	 * -------------------------------------------------------------------------
 	 * Private Methods
 	 * -------------------------------------------------------------------------
 	 */
-
-
 
 	/**
 	 * Set up post object from passed data.
@@ -811,21 +789,26 @@ class Commentpress_Core_Editor {
 	 *
 	 * @return bool True if post object set up, false otherwise
 	 */
-	private function _setup_post() {
+	private function setup_post() {
 
 		// Access globals.
 		global $post;
 
 		// Get post ID.
-		$post_id = isset( $_POST['post_id'] ) ? (int) $_POST['post_id'] : NULL;
+		$post_id = isset( $_POST['post_id'] ) ? (int) sanitize_text_field( wp_unslash( $_POST['post_id'] ) ) : null;
 
 		// Bail if we don't get one.
-		if ( is_null( $post_id ) ) return false;
+		if ( is_null( $post_id ) ) {
+			return false;
+		}
 
 		// Bail if we get a non-numeric value.
-		if ( ! is_numeric( $post_id ) ) return false;
+		if ( ! is_numeric( $post_id ) ) {
+			return false;
+		}
 
 		// Enable WordPress API on post.
+		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		$GLOBALS['post'] = get_post( $post_id );
 		setup_postdata( $post );
 
@@ -834,30 +817,6 @@ class Commentpress_Core_Editor {
 
 	}
 
-
-
-	/**
-	 * Send data to browser and exit.
-	 *
-	 * @since 3.7
-	 */
-	private function _send_json_data( $data ) {
-
-		// Set reasonable headers.
-		header('Content-type: text/plain');
-		header("Cache-Control: no-cache");
-		header("Expires: -1");
-
-		// Echo.
-		echo json_encode( $data );
-
-		// Die!
-		exit();
-
-	}
-
-
-
 	/**
 	 * Inject editor toggle before search in Contents column.
 	 *
@@ -865,12 +824,12 @@ class Commentpress_Core_Editor {
 	 *
 	 * @return str $link The link markup.
 	 */
-	private function _toggle_link() {
+	private function toggle_link() {
 
 		// Declare access to globals.
 		global $post;
 
-		// Change text depending on toggle state
+		// Change text depending on toggle state.
 		if ( $this->toggle_state == 'writing' ) {
 
 			// Link text.
@@ -892,7 +851,7 @@ class Commentpress_Core_Editor {
 		// Link URL.
 		$url = wp_nonce_url( get_permalink( $post->ID ), 'editor_toggle', 'cp_editor_nonce' );
 
-		// Link class
+		// Link class.
 		$class = 'button';
 
 		// Construct link.
@@ -903,13 +862,4 @@ class Commentpress_Core_Editor {
 
 	}
 
-
-
-//##############################################################################
-
-
-
-} // Class ends.
-
-
-
+}

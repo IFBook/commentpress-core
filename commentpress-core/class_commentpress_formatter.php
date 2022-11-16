@@ -1,4 +1,14 @@
 <?php
+/**
+ * CommentPress Core Formatter class.
+ *
+ * Handles "Prose" and "Poetry" formatting in CommentPress Core.
+ *
+ * @package CommentPress_Core
+ */
+
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 /**
  * CommentPress Core Formatter Class.
@@ -27,8 +37,6 @@ class Commentpress_Core_Formatter {
 	 */
 	public $db;
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -44,12 +52,10 @@ class Commentpress_Core_Formatter {
 		// Store reference to database wrapper (child of calling obj).
 		$this->db = $this->parent_obj->db;
 
-		// Init.
-		$this->_init();
+		// Register hooks.
+		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Set up all items associated with this object.
@@ -60,8 +66,6 @@ class Commentpress_Core_Formatter {
 
 	}
 
-
-
 	/**
 	 * If needed, destroys all items associated with this object.
 	 *
@@ -71,19 +75,29 @@ class Commentpress_Core_Formatter {
 
 	}
 
-
-
-//##############################################################################
-
-
-
 	/**
 	 * -------------------------------------------------------------------------
 	 * Public Methods
 	 * -------------------------------------------------------------------------
 	 */
 
+	/**
+	 * Register WordPress hooks.
+	 *
+	 * @since 3.3
+	 */
+	public function register_hooks() {
 
+		// Set blog type options.
+		add_filter( 'cp_blog_type_options', [ $this, 'blog_type_options' ], 21 );
+
+		// Set blog type options label.
+		add_filter( 'cp_blog_type_label', [ $this, 'blog_type_label' ], 21 );
+
+		// Add filter for CommentPress Core formatter.
+		add_filter( 'cp_select_content_formatter', [ $this, 'content_formatter' ], 21, 1 );
+
+	}
 
 	/**
 	 * Override the name of the type dropdown label.
@@ -102,8 +116,6 @@ class Commentpress_Core_Formatter {
 
 	}
 
-
-
 	/**
 	 * Define the "types" of groupblog.
 	 *
@@ -116,8 +128,8 @@ class Commentpress_Core_Formatter {
 
 		// Define types.
 		$types = [
-			__( 'Prose', 'commentpress-core' ), // Types[0]
-			__( 'Poetry', 'commentpress-core' ), // Types[1]
+			__( 'Prose', 'commentpress-core' ), // Types[0].
+			__( 'Poetry', 'commentpress-core' ), // Types[1].
 		];
 
 		// --<
@@ -127,8 +139,6 @@ class Commentpress_Core_Formatter {
 		);
 
 	}
-
-
 
 	/**
 	 * Choose content formatter by blog type or post meta value.
@@ -161,14 +171,12 @@ class Commentpress_Core_Formatter {
 		switch ( $type ) {
 
 			// Prose.
-			case '0' :
-
+			case '0':
 				$formatter = 'tag';
 				break;
 
 			// Poetry.
-			case '1' :
-
+			case '1':
 				$formatter = 'line';
 				break;
 
@@ -182,64 +190,4 @@ class Commentpress_Core_Formatter {
 
 	}
 
-
-
-//##############################################################################
-
-
-
-	/**
-	 * -------------------------------------------------------------------------
-	 * Private Methods
-	 * -------------------------------------------------------------------------
-	 */
-
-
-
-	/**
-	 * Object initialisation.
-	 *
-	 * @since 3.3
-	 */
-	public function _init() {
-
-		// Register hooks.
-		$this->_register_hooks();
-
-	}
-
-
-
-	/**
-	 * Register WordPress hooks.
-	 *
-	 * @since 3.3
-	 */
-	public function _register_hooks() {
-
-		// Set blog type options.
-		add_filter( 'cp_blog_type_options', [ $this, 'blog_type_options' ], 21 );
-
-		// Set blog type options label.
-		add_filter( 'cp_blog_type_label', [ $this, 'blog_type_label' ], 21 );
-
-		// Add filter for CommentPress Core formatter.
-		add_filter( 'cp_select_content_formatter', [ $this, 'content_formatter' ], 21, 1 );
-
-		// Is this the back end?
-		if ( is_admin() ) {
-
-		}
-
-	}
-
-
-
-//##############################################################################
-
-
-
-} // Class ends.
-
-
-
+}

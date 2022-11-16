@@ -1651,7 +1651,7 @@ class Commentpress_Core_Parser {
 	private function filter_jetpack_sharing( $content ) {
 
 		// Bail if JetPack isn't present.
-		if ( !defined( 'JETPACK__VERSION' ) ) {
+		if ( ! defined( 'JETPACK__VERSION' ) ) {
 			return $content;
 		}
 
