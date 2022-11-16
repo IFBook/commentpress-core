@@ -43,7 +43,6 @@ if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 <?php if (have_posts()) : ?>
 
-	<?php //$post = $posts[0]; // Hack. Set $post so that the_date() works. ?>
 	<?php /* If this is a category archive */ if (is_category()) { ?>
 	<h3 class="post_title"><?php echo sprintf( __( 'Archive for the &#8216;%s&#8217; Category', 'commentpress-core' ), single_cat_title( '', false ) ) ?></h3>
 	<?php /* If this is a tag archive */ } elseif( is_tag() ) { ?>
