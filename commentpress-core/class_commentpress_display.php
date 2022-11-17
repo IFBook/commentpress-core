@@ -334,38 +334,19 @@ class CommentPress_Core_Display {
 	 */
 	public function get_custom_quicktags() {
 
-		// Don't bother if the current user lacks permissions.
+		// Bail if the current user lacks permissions.
 		if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'edit_pages' ) ) {
 			return;
 		}
 
-		// Need access to WordPress version.
-		global $wp_version;
-
-		// There's a new quicktags script in 3.3.
-		if ( version_compare( $wp_version, '3.2.99999', '>=' ) ) {
-
-			// Add our javascript script and dependencies.
-			wp_enqueue_script(
-				'commentpress_custom_quicktags',
-				plugin_dir_url( COMMENTPRESS_PLUGIN_FILE ) . 'commentpress-core/assets/js/cp_quicktags_3.3.js',
-				[ 'quicktags' ],
-				COMMENTPRESS_VERSION, // Version.
-				true // In footer.
-			);
-
-		} else {
-
-			// Add our javascript script and dependencies.
-			wp_enqueue_script(
-				'commentpress_custom_quicktags',
-				plugin_dir_url( COMMENTPRESS_PLUGIN_FILE ) . 'commentpress-core/assets/js/cp_quicktags.js',
-				[ 'quicktags' ],
-				COMMENTPRESS_VERSION, // Version.
-				false // Not in footer - but may need to be in WordPress 3.3.
-			);
-
-		}
+		// Add our javascript and dependencies.
+		wp_enqueue_script(
+			'commentpress_custom_quicktags',
+			plugins_url( 'commentpress-core/assets/js/cp_quicktags_3.3.js', COMMENTPRESS_PLUGIN_FILE ),
+			[ 'quicktags' ],
+			COMMENTPRESS_VERSION, // Version.
+			true // In footer.
+		);
 
 	}
 
@@ -1487,7 +1468,6 @@ HELPTEXT;
 						</select>
 					</td>
 				</tr>
-
 				';
 
 			}
@@ -1522,7 +1502,6 @@ HELPTEXT;
 					<td><input id="cp_blog_workflow" name="cp_blog_workflow" value="1" type="checkbox" ' . ( $this->core->db->option_get( 'cp_blog_workflow' ) ? ' checked="checked"' : '' ) . ' /></td>
 
 				</tr>
-
 				';
 
 			}
@@ -1587,7 +1566,6 @@ HELPTEXT;
 					<p>' . $options . '</p>
 				</td>
 			</tr>
-
 			';
 
 		}
@@ -1612,7 +1590,6 @@ HELPTEXT;
 					<p>' . $description . '</p>
 				</td>
 			</tr>
-
 			';
 
 		}
@@ -1635,7 +1612,6 @@ HELPTEXT;
 					</select>
 				</td>
 			</tr>
-
 			';
 
 		}
@@ -1658,7 +1634,6 @@ HELPTEXT;
 					</select>
 				</td>
 			</tr>
-
 			';
 
 		}
@@ -1681,7 +1656,6 @@ HELPTEXT;
 					</select>
 				</td>
 			</tr>
-
 			';
 
 		}
@@ -1706,7 +1680,6 @@ HELPTEXT;
 					</select>
 				</td>
 			</tr>
-
 			';
 
 		}
@@ -1768,7 +1741,6 @@ HELPTEXT;
 						</select>
 					</td>
 				</tr>
-
 				';
 
 			}
@@ -1799,7 +1771,6 @@ HELPTEXT;
 					<th scope="row"><label for="cp_blog_workflow">' . $workflow_label . '</label></th>
 					<td><input id="cp_blog_workflow" name="cp_blog_workflow" value="1" type="checkbox" /></td>
 				</tr>
-
 				';
 
 			}
@@ -1823,7 +1794,6 @@ HELPTEXT;
 					</select>
 				</td>
 			</tr>
-
 			';
 
 		}
@@ -1905,7 +1875,6 @@ HELPTEXT;
 				<th scope="row"><label for="cp_js_scroll_speed">' . $scroll_label . '</label></th>
 				<td><input type="text" id="cp_js_scroll_speed" name="cp_js_scroll_speed" value="' . $this->core->db->js_scroll_speed . '" class="small-text" /> ' . $scroll_ms_label . '</td>
 			</tr>
-
 			';
 
 		}
@@ -1923,7 +1892,6 @@ HELPTEXT;
 				<th scope="row"><label for="cp_min_page_width"></label></th>
 				<td><input type="text" id="cp_min_page_width" name="cp_min_page_width" value="' . $this->core->db->min_page_width . '" class="small-text" /> ' . $min_pix_label . '</td>
 			</tr>
-
 			';
 
 		}
@@ -2171,7 +2139,6 @@ HELPTEXT;
 				<p>' . $description . '</p>
 			</td>
 		</tr>
-
 		';
 
 		// --<
@@ -2198,7 +2165,6 @@ HELPTEXT;
 				</select>
 			</td>
 		</tr>
-
 		';
 
 		// --<
@@ -2254,7 +2220,6 @@ HELPTEXT;
 				<p>' . $options . '</p>
 			</td>
 		</tr>
-
 		';
 
 		// --<
@@ -2281,7 +2246,6 @@ HELPTEXT;
 				</select>
 			</td>
 		</tr>
-
 		';
 
 		// --<

@@ -38,22 +38,13 @@ class CommentPress_Multisite_Buddypress {
 	public $force_commentpress = '0';
 
 	/**
-	 * Default theme stylesheet for groupblogs (WordPress 3.4+).
+	 * Default theme stylesheet for groupblogs.
 	 *
 	 * @since 3.3
 	 * @access public
 	 * @var str $groupblog_theme The default theme stylesheet.
 	 */
 	public $groupblog_theme = 'commentpress-modern';
-
-	/**
-	 * Default theme stylesheet for groupblogs (pre-WordPress 3.4).
-	 *
-	 * @since 3.3
-	 * @access public
-	 * @var str $groupblog_theme_name The default theme stylesheet.
-	 */
-	public $groupblog_theme_name = 'CommentPress Default Theme';
 
 	/**
 	 * Groupblog privacy flag.
@@ -2486,7 +2477,7 @@ class CommentPress_Multisite_Buddypress {
 	 */
 	public function get_commentpress_themes() {
 
-		// Get theme data the WordPress 3.4+ way.
+		// Get theme data.
 		$themes = wp_get_themes(
 			false,     // Only error-free themes.
 			'network', // Only network-allowed themes.
@@ -2512,18 +2503,8 @@ class CommentPress_Multisite_Buddypress {
 					in_array( 'groupblog', (array) $theme['Tags'] )
 				) {
 
-					// Is this WordPress 3.4+?
-					if ( function_exists( 'wp_get_themes' ) ) {
-
-						// Use stylesheet as theme data.
-						$theme_data = $theme->get_stylesheet();
-
-					} else {
-
-						// Use name as theme data.
-						$theme_data = $theme['Title'];
-
-					}
+					// Use stylesheet as theme data.
+					$theme_data = $theme->get_stylesheet();
 
 					// Is it the currently selected theme?
 					$selected = ( $current_theme == $theme_data ) ? ' selected="selected"' : '';
@@ -2605,18 +2586,8 @@ class CommentPress_Multisite_Buddypress {
 	 */
 	public function get_default_settings( $existing_options ) {
 
-		// Is this WordPress 3.4+?
-		if ( function_exists( 'wp_get_themes' ) ) {
-
-			// Use stylesheet as theme data.
-			$theme_data = $this->groupblog_theme;
-
-		} else {
-
-			// Use name as theme data.
-			$theme_data = $this->groupblog_theme_name;
-
-		}
+		// Use stylesheet as theme data.
+		$theme_data = $this->groupblog_theme;
 
 		// Define BuddyPress and BuddyPress Groupblog defaults.
 		$defaults = [

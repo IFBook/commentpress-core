@@ -3,25 +3,13 @@
 Template Name: Group
 */
 
-// The get_users_of_blog() function is deprecated in WordPress 3.1+.
-if ( version_compare( $wp_version, '3.1', '>=' ) ) {
+// Set args.
+$args = [
+	'orderby' => 'nicename',
+];
 
-	// Set args.
-	$args = [
-		'orderby' => 'nicename',
-	];
-
-	// Get users of this blog (blog_id is provided by default).
-	$_users = get_users( $args );
-
-} else {
-
-	// Get the users of this blog.
-	$_users = get_users_of_blog();
-
-}
-
-
+// Get users of this blog (blog_id is provided by default).
+$_users = get_users( $args );
 
 get_header(); ?>
 

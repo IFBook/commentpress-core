@@ -37,47 +37,26 @@ if ( ! function_exists( 'commentpress_setup' ) ):
  */
 function commentpress_setup() {
 
-	// Add title support: wp_title() is deprecated as of WordPress 4.4.
+	// Add title support.
 	add_theme_support( 'title-tag' );
 
-	// Add_custom_background function is deprecated in WordPress 3.4+.
-	global $wp_version;
-	if ( version_compare( $wp_version, '3.4', '>=' ) ) {
+	// Allow custom backgrounds.
+	add_theme_support( 'custom-background', [
+		'default-color'          => 'ccc',
+		'default-image'          => '',
+		'wp-head-callback'       => 'commentpress_background',
+		'admin-head-callback'    => '',
+		'admin-preview-callback' => '',
+	] );
 
-		// Allow custom backgrounds.
-		add_theme_support( 'custom-background', [
-			'default-color'          => 'ccc',
-			'default-image'          => '',
-			'wp-head-callback'       => 'commentpress_background',
-			'admin-head-callback'    => '',
-			'admin-preview-callback' => '',
-		] );
-
-		// Allow custom header.
-		add_theme_support( 'custom-header', [
-			'default-text-color' => 'eeeeee',
-			'width' => apply_filters( 'cp_header_image_width', 940 ),
-			'height' => apply_filters( 'cp_header_image_height', 67 ),
-			'wp-head-callback' => 'commentpress_header',
-			'admin-head-callback' => 'commentpress_admin_header',
-		] );
-
-	} else {
-
-		// Retain old declarations for earlier versions.
-		add_custom_background();
-
-		// Header text colour.
-		define( 'HEADER_TEXTCOLOR', 'eeeeee' );
-
-		// Set height and width.
-		define( 'HEADER_IMAGE_WIDTH', apply_filters( 'cp_header_image_width', 940 ) );
-		define( 'HEADER_IMAGE_HEIGHT', apply_filters( 'cp_header_image_height', 67 ) );
-
-		// Allow custom header images.
-		add_custom_image_header( 'commentpress_header', 'commentpress_admin_header' );
-
-	}
+	// Allow custom header.
+	add_theme_support( 'custom-header', [
+		'default-text-color' => 'eeeeee',
+		'width' => apply_filters( 'cp_header_image_width', 940 ),
+		'height' => apply_filters( 'cp_header_image_height', 67 ),
+		'wp-head-callback' => 'commentpress_header',
+		'admin-head-callback' => 'commentpress_admin_header',
+	] );
 
 	/**
 	 * Default custom headers packaged with the theme (see Twenty Eleven)
@@ -504,32 +483,17 @@ function commentpress_header() {
 	// Note: this does NOT retrieve the default if not manually set in the Theme Customizer in WordPress 3.4.
 	$text_color = get_header_textcolor();
 
-	// WordPress 3.4 seems to behave differently.
-	global $wp_version;
-	if ( version_compare( $wp_version, '3.4', '>=' ) ) {
-
-		// If blank, we're hiding the title.
-		if ( $text_color == 'blank' ) {
-			$css = 'text-indent: -9999px;';
-		} else {
-
-			// If empty, we need to use default.
-			if ( $text_color == '' ) {
-				$css = 'color: #' . HEADER_TEXTCOLOR . ';';
-			} else {
-
-				// Use the custom one. I know this amounts to the same thing.
-				$css = 'color: #' . $text_color . ';';
-			}
-
-		}
-
+	// If blank, we're hiding the title.
+	if ( $text_color == 'blank' ) {
+		$css = 'text-indent: -9999px;';
 	} else {
 
-		// Use previous logic.
-		if ( $text_color == 'blank' OR $text_color == '' ) {
-			$css = 'text-indent: -9999px;';
+		// If empty, we need to use default.
+		if ( $text_color == '' ) {
+			$css = 'color: #' . HEADER_TEXTCOLOR . ';';
 		} else {
+
+			// Use the custom one. I know this amounts to the same thing.
 			$css = 'color: #' . $text_color . ';';
 		}
 

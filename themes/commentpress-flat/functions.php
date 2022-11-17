@@ -37,7 +37,7 @@ if ( ! function_exists( 'commentpress_setup' ) ):
  */
 function commentpress_setup() {
 
-	// Add title support: wp_title() is deprecated as of WordPress 4.4.
+	// Add title support.
 	add_theme_support( 'title-tag' );
 
 	// Allow custom backgrounds.
@@ -462,8 +462,12 @@ function commentpress_header() {
 		$bg_image = 'background-image: url("' . $header_image . '");';
 	}
 
-	// Get custom text colour.
-	// Note: this does NOT retrieve the default if not manually set in the Theme Customizer in WordPress 3.4.
+	/*
+	 * Get custom text colour.
+	 *
+	 * Note: this does NOT retrieve the default if not manually set in the
+	 * Theme Customizer in WordPress 3.4.
+	 */
 	$text_color = get_header_textcolor();
 
 	// If blank, we're hiding the title.

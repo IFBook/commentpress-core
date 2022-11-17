@@ -888,34 +888,12 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 			// Default comment type to get.
 			$comment_type = 'all';
 
-			// Check for a WordPress 3.8+ function.
-			if ( function_exists( 'wp_admin_bar_sidebar_toggle' ) ) {
-
-				// Walker_Comment has changed to buffered output, so define args without
-				// our custom walker. The built in walker works just fine now.
-				$args = [
-					'style' => 'ol',
-					'type' => $comment_type,
-					'callback' => 'commentpress_comments',
-				];
-
-			} else {
-
-				// Include our class file.
-				include_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/includes/theme/class-comment-walker.php';
-
-				// Init new walker.
-				$walker = new Walker_Comment_Press();
-
-				// Define args.
-				$args = [
-					'walker' => $walker,
-					'style' => 'ol',
-					'type' => $comment_type,
-					'callback' => 'commentpress_comments',
-				];
-
-			}
+			// The built in walker works just fine since WordPress 3.8.
+			$args = [
+				'style' => 'ol',
+				'type' => $comment_type,
+				'callback' => 'commentpress_comments',
+			];
 
 			// Get singular post type label.
 			$current_type = get_post_type();
@@ -1673,47 +1651,17 @@ if ( ! function_exists( 'commentpress_add_wp_editor' ) ) :
 		 */
 		$media_buttons = apply_filters( 'commentpress_rte_media_buttons', true );
 
-		// Access WordPress version.
-		global $wp_version;
+		// TinyMCE 4 - allow tinymce config to be overridden.
+		$tinymce_config = apply_filters(
+			'commentpress_rte_tinymce',
+			[
+				'theme' => 'modern',
+				'statusbar' => false,
+			]
+		);
 
-		// If greater than 3.8.
-		if ( version_compare( $wp_version, '3.8.9999', '>' ) ) {
-
-			// TinyMCE 4 - allow tinymce config to be overridden.
-			$tinymce_config = apply_filters(
-				'commentpress_rte_tinymce',
-				[
-					'theme' => 'modern',
-					'statusbar' => false,
-				]
-			);
-
-			// No need for editor CSS.
-			$editor_css = '';
-
-		} else {
-
-			// TinyMCE 3 - allow tinymce config to be overridden.
-			$tinymce_config = apply_filters(
-				'commentpress_rte_tinymce',
-				[
-					'theme' => 'advanced',
-					'theme_advanced_buttons1' => implode( ',', $mce_buttons ),
-					'theme_advanced_statusbar_location' => 'none',
-				]
-			);
-
-			// Use legacy editor CSS.
-			$editor_css = '
-				<style type="text/css">
-					.wp_themeSkin iframe
-					{
-						background: #fff;
-					}
-				</style>
-			';
-
-		}
+		// No need for editor CSS.
+		$editor_css = '';
 
 		// Allow quicktags setting to be overridden.
 		$quicktags = apply_filters(

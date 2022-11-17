@@ -651,7 +651,6 @@ class CommentPress_Core {
 			return;
 		}
 
-		// There's a new quicktags script in 3.3.
 		// Add quicktag button to page editor.
 		$this->display->get_custom_quicktags();
 
@@ -1215,7 +1214,7 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Adds help copy to admin page in WordPress 3.3+.
+	 * Adds help copy to admin page.
 	 *
 	 * @since 3.4
 	 *
@@ -1224,12 +1223,9 @@ class CommentPress_Core {
 	 */
 	public function options_help( $screen ) {
 
-		// Is this our screen?
+		// Bail if not our screen.
 		if ( $screen->id != $this->options_page ) {
-
-			// No, kick out.
 			return;
-
 		}
 
 		// Add a tab.

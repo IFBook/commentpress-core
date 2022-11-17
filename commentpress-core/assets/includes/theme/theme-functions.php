@@ -731,26 +731,10 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 
 		// -------------------- TinyMCE version --------------------
 
-		// Init TinyMCE class.
-		$tinymce_version = 'tinymce-3';
+		// TinyMCE is v4 since WordPress 3.9.
+		$classes[] =  'tinymce-4';
 
-		// Access WordPress version.
-		global $wp_version;
-
-		// If greater than 3.8.
-		if ( version_compare( $wp_version, '3.8.9999', '>' ) ) {
-
-			// Override TinyMCE class.
-			$tinymce_version = 'tinymce-4';
-
-		}
-
-		// Add to array.
-		if ( ! empty( $tinymce_version ) ) {
-			$classes[] = $tinymce_version;
-		}
-
-		// -------------------- process --------------------
+		// -------------------- Process --------------------
 
 		// Construct attribute but allow filtering.
 		$body_classes = apply_filters( 'commentpress_body_classes', implode( ' ', $classes ) );

@@ -811,7 +811,7 @@ class CommentPress_Core_Navigator {
 	 * Get first published child, however deep.
 	 *
 	 * @since 3.0
-	 * @since 4.0 Renamed
+	 * @since 4.0 Renamed.
 	 *
 	 * @param array $pages The array of page objects.
 	 * @return array $subpages All subpages.

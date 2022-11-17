@@ -491,7 +491,7 @@ class CommentPress_Core_Database {
 		$version = (string) $this->option_wp_get( 'commentpress_version' );
 
 		// Override if we have a CommentPress Core install and it's lower than this one.
-		if ( $version !== false && version_compare( COMMENTPRESS_VERSION, $version, '>' ) ) {
+		if ( ! empty( $version ) && version_compare( COMMENTPRESS_VERSION, $version, '>' ) ) {
 			return true;
 		}
 
@@ -619,322 +619,314 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * Upgrade CommentPress plugin from 3.1 options to CommentPress Core set.
+	 * Upgrade CommentPress options.
 	 *
 	 * @since 3.0
-	 *
-	 * @return boolean $result
 	 */
 	public function upgrade_options() {
 
-		// Init return.
-		$result = false;
+		// Bail if no upgrade required.
+		if ( ! $this->upgrade_required() ) {
+			return
+		}
 
-		// If we have a CommentPress install (or we're forcing).
-		if ( $this->upgrade_required() ) {
+		// Checkboxes send no value if not checked, so use a default.
+		$cp_blog_workflow = $this->blog_workflow;
 
-			// Checkboxes send no value if not checked, so use a default.
-			$cp_blog_workflow = $this->blog_workflow;
+		/*
+		 * We don't receive disabled post types in $_POST, so let's default
+		 * to all post types being enabled.
+		 */
+		$cp_post_types_enabled = array_keys( $this->get_supported_post_types() );
 
-			/*
-			 * We don't receive disabled post types in $_POST, so let's default
-			 * to all post types being enabled.
-			 */
-			$cp_post_types_enabled = array_keys( $this->get_supported_post_types() );
+		// Default blog type.
+		$cp_blog_type = $this->blog_type;
 
-			// Default blog type.
-			$cp_blog_type = $this->blog_type;
+		// Get variables.
+		extract( $_POST );
 
-			// Get variables.
-			extract( $_POST );
+		// New in CommentPress Core 3.9 - post types can be excluded.
+		if ( ! $this->option_exists( 'cp_post_types_disabled' ) ) {
 
-			// New in CommentPress Core 3.9 - post types can be excluded.
-			if ( ! $this->option_exists( 'cp_post_types_disabled' ) ) {
+			// Get selected post types.
+			$enabled_types = array_map( 'esc_sql', $cp_post_types_enabled );
 
-				// Get selected post types.
-				$enabled_types = array_map( 'esc_sql', $cp_post_types_enabled );
+			// Exclude the selected post types.
+			$disabled_types = array_diff( array_keys( $this->get_supported_post_types() ), $enabled_types );
 
-				// Exclude the selected post types.
-				$disabled_types = array_diff( array_keys( $this->get_supported_post_types() ), $enabled_types );
+			// Add option.
+			$this->option_set( 'cp_post_types_disabled', $disabled_types );
 
-				// Add option.
-				$this->option_set( 'cp_post_types_disabled', $disabled_types );
+		}
 
-			}
+		// New in CommentPress Core 3.8.10 - parsing can be prevented.
+		if ( ! $this->option_exists( 'cp_do_not_parse' ) ) {
 
-			// New in CommentPress Core 3.8.10 - parsing can be prevented.
-			if ( ! $this->option_exists( 'cp_do_not_parse' ) ) {
+			// Get choice.
+			$choice = esc_sql( $cp_do_not_parse );
 
-				// Get choice.
-				$choice = esc_sql( $cp_do_not_parse );
+			// Add chosen parsing option.
+			$this->option_set( 'cp_do_not_parse', $choice );
 
-				// Add chosen parsing option.
-				$this->option_set( 'cp_do_not_parse', $choice );
+		}
 
-			}
+		// New in CommentPress Core 3.8.10 - page navigation can be disabled.
+		if ( ! $this->option_exists( 'cp_page_nav_enabled' ) ) {
 
-			// New in CommentPress Core 3.8.10 - page navigation can be disabled.
-			if ( ! $this->option_exists( 'cp_page_nav_enabled' ) ) {
+			// Get choice.
+			$choice = esc_sql( $cp_page_nav_enabled );
 
-				// Get choice.
-				$choice = esc_sql( $cp_page_nav_enabled );
+			// Add chosen page navigation option.
+			$this->option_set( 'cp_page_nav_enabled', $choice );
 
-				// Add chosen page navigation option.
-				$this->option_set( 'cp_page_nav_enabled', $choice );
+		}
 
-			}
+		// New in CommentPress Core 3.5.9 - textblock meta can be hidden.
+		if ( ! $this->option_exists( 'cp_textblock_meta' ) ) {
 
-			// New in CommentPress Core 3.5.9 - textblock meta can be hidden.
-			if ( ! $this->option_exists( 'cp_textblock_meta' ) ) {
+			// Get choice.
+			$choice = esc_sql( $cp_textblock_meta );
 
-				// Get choice.
-				$choice = esc_sql( $cp_textblock_meta );
+			// Add chosen textblock meta option.
+			$this->option_set( 'cp_textblock_meta', $choice );
 
-				// Add chosen textblock meta option.
-				$this->option_set( 'cp_textblock_meta', $choice );
+		}
 
-			}
+		// New in CommentPress Core 3.5.4 - featured image capabilities.
+		if ( ! $this->option_exists( 'cp_featured_images' ) ) {
 
-			// New in CommentPress Core 3.5.4 - featured image capabilities.
-			if ( ! $this->option_exists( 'cp_featured_images' ) ) {
+			// Get choice.
+			$choice = esc_sql( $cp_featured_images );
 
-				// Get choice.
-				$choice = esc_sql( $cp_featured_images );
+			// Add chosen featured images option.
+			$this->option_set( 'cp_featured_images', $choice );
 
-				// Add chosen featured images option.
-				$this->option_set( 'cp_featured_images', $choice );
+		}
 
-			}
+		// Removed in CommentPress Core 3.4 - do we still have the legacy cp_para_comments_enabled option?
+		if ( $this->option_exists( 'cp_para_comments_enabled' ) ) {
 
-			// Removed in CommentPress Core 3.4 - do we still have the legacy cp_para_comments_enabled option?
-			if ( $this->option_exists( 'cp_para_comments_enabled' ) ) {
+			// Delete old cp_para_comments_enabled option.
+			$this->option_delete( 'cp_para_comments_enabled' );
 
-				// Delete old cp_para_comments_enabled option.
-				$this->option_delete( 'cp_para_comments_enabled' );
+		}
 
-			}
+		// Removed in CommentPress Core 3.4 - do we still have the legacy cp_minimise_sidebar option?
+		if ( $this->option_exists( 'cp_minimise_sidebar' ) ) {
 
-			// Removed in CommentPress Core 3.4 - do we still have the legacy cp_minimise_sidebar option?
-			if ( $this->option_exists( 'cp_minimise_sidebar' ) ) {
+			// Delete old cp_minimise_sidebar option.
+			$this->option_delete( 'cp_minimise_sidebar' );
 
-				// Delete old cp_minimise_sidebar option.
-				$this->option_delete( 'cp_minimise_sidebar' );
+		}
 
-			}
+		// New in CommentPress Core 3.4 - has AJAX "live" comment refreshing been migrated?
+		if ( ! $this->option_exists( 'cp_para_comments_live' ) ) {
 
-			// New in CommentPress Core 3.4 - has AJAX "live" comment refreshing been migrated?
-			if ( ! $this->option_exists( 'cp_para_comments_live' ) ) {
+			// "live" comment refreshing, off by default.
+			$this->option_set( 'cp_para_comments_live', $this->para_comments_live );
 
-				// "live" comment refreshing, off by default.
-				$this->option_set( 'cp_para_comments_live', $this->para_comments_live );
+		}
 
-			}
+		// New in CommentPress 3.3.3 - changed the way the welcome page works.
+		if ( $this->option_exists( 'cp_special_pages' ) ) {
 
-			// New in CommentPress 3.3.3 - changed the way the welcome page works.
-			if ( $this->option_exists( 'cp_special_pages' ) ) {
+			// Do we have the cp_welcome_page option?
+			if ( $this->option_exists( 'cp_welcome_page' ) ) {
 
-				// Do we have the cp_welcome_page option?
-				if ( $this->option_exists( 'cp_welcome_page' ) ) {
+				// Get it.
+				$page_id = $this->option_get( 'cp_welcome_page' );
 
-					// Get it.
-					$page_id = $this->option_get( 'cp_welcome_page' );
+				// Retrieve data on special pages.
+				$special_pages = $this->option_get( 'cp_special_pages', [] );
 
-					// Retrieve data on special pages.
-					$special_pages = $this->option_get( 'cp_special_pages', [] );
+				// Is it in our special pages array?
+				if ( in_array( $page_id, $special_pages ) ) {
 
-					// Is it in our special pages array?
-					if ( in_array( $page_id, $special_pages ) ) {
+					// Remove page id from array.
+					$special_pages = array_diff( $special_pages, [ $page_id ] );
 
-						// Remove page id from array.
-						$special_pages = array_diff( $special_pages, [ $page_id ] );
-
-						// Reset option.
-						$this->option_set( 'cp_special_pages', $special_pages );
-
-					}
-
-				}
-
-			}
-
-			// New in CommentPress 3.3.3 - are we missing the cp_sidebar_default option?
-			if ( ! $this->option_exists( 'cp_sidebar_default' ) ) {
-
-				// Does the current theme need this option?
-				if ( ! apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
-
-					// Yes, get choice.
-					$choice = esc_sql( $cp_sidebar_default );
-
-					// Add chosen cp_sidebar_default option.
-					$this->option_set( 'cp_sidebar_default', $choice );
-
-				} else {
-
-					// Add default cp_sidebar_default option.
-					$this->option_set( 'cp_sidebar_default', $this->sidebar_default );
-
-				}
-
-			}
-
-			// New in CommentPress 3.3.2 - are we missing the cp_page_meta_visibility option?
-			if ( ! $this->option_exists( 'cp_page_meta_visibility' ) ) {
-
-				// Get choice.
-				$choice = esc_sql( $cp_page_meta_visibility );
-
-				// Add chosen cp_page_meta_visibility option.
-				$this->option_set( 'cp_page_meta_visibility', $choice );
-
-			}
-
-			// New in CommentPress 3.3.1 - are we missing the cp_blog_workflow option?
-			if ( ! $this->option_exists( 'cp_blog_workflow' ) ) {
-
-				// Get choice.
-				$choice = esc_sql( $cp_blog_workflow );
-
-				// Add chosen cp_blog_workflow option.
-				$this->option_set( 'cp_blog_workflow', $choice );
-
-			}
-
-			// New in CommentPress 3.3.1 - are we missing the cp_blog_type option?
-			if ( ! $this->option_exists( 'cp_blog_type' ) ) {
-
-				// Get choice.
-				$choice = esc_sql( $cp_blog_type );
-
-				// Add chosen cp_blog_type option.
-				$this->option_set( 'cp_blog_type', $choice );
-
-			}
-
-			// New in CommentPress 3.3 - are we missing the cp_show_extended_toc option?
-			if ( ! $this->option_exists( 'cp_show_extended_toc' ) ) {
-
-				// Get choice.
-				$choice = esc_sql( $cp_show_extended_toc );
-
-				// Add chosen cp_show_extended_toc option.
-				$this->option_set( 'cp_show_extended_toc', $choice );
-
-			}
-
-			// Are we missing the cp_comment_editor option?
-			if ( ! $this->option_exists( 'cp_comment_editor' ) ) {
-
-				// Get choice.
-				$choice = esc_sql( $cp_comment_editor );
-
-				// Add chosen cp_comment_editor option.
-				$this->option_set( 'cp_comment_editor', $choice );
-
-			}
-
-			// Are we missing the cp_promote_reading option?
-			if ( ! $this->option_exists( 'cp_promote_reading' ) ) {
-
-				// Get choice.
-				$choice = esc_sql( $cp_promote_reading );
-
-				// Add chosen cp_promote_reading option.
-				$this->option_set( 'cp_promote_reading', $choice );
-
-			}
-
-			// Are we missing the cp_title_visibility option?
-			if ( ! $this->option_exists( 'cp_title_visibility' ) ) {
-
-				// Get choice.
-				$choice = esc_sql( $cp_title_visibility );
-
-				// Add chosen cp_title_visibility option.
-				$this->option_set( 'cp_title_visibility', $choice );
-
-			}
-
-			// Are we missing the cp_header_bg_colour option?
-			if ( ! $this->option_exists( 'cp_header_bg_colour' ) ) {
-
-				// Get choice.
-				$choice = esc_sql( $cp_header_bg_colour );
-
-				// Strip our hex # char.
-				if ( stristr( $choice, '#' ) ) {
-					$choice = substr( $choice, 1 );
-				}
-
-				// Reset to default if blank.
-				if ( $choice == '' ) {
-					$choice = $this->header_bg_colour;
-				}
-
-				// Add chosen cp_header_bg_colour option.
-				$this->option_set( 'cp_header_bg_colour', $choice );
-
-			}
-
-			// Are we missing the cp_js_scroll_speed option?
-			if ( ! $this->option_exists( 'cp_js_scroll_speed' ) ) {
-
-				// Get choice.
-				$choice = esc_sql( $cp_js_scroll_speed );
-
-				// Add chosen cp_js_scroll_speed option.
-				$this->option_set( 'cp_js_scroll_speed', $choice );
-
-			}
-
-			// Are we missing the cp_min_page_width option?
-			if ( ! $this->option_exists( 'cp_min_page_width' ) ) {
-
-				// Get choice.
-				$choice = esc_sql( $cp_min_page_width );
-
-				// Add chosen cp_min_page_width option.
-				$this->option_set( 'cp_min_page_width', $choice );
-
-			}
-
-			// Do we still have the legacy cp_allow_users_to_minimize option?
-			if ( $this->option_exists( 'cp_allow_users_to_minimize' ) ) {
-
-				// Delete old cp_allow_users_to_minimize option.
-				$this->option_delete( 'cp_allow_users_to_minimize' );
-
-			}
-
-			// Do we have special pages?
-			if ( $this->option_exists( 'cp_special_pages' ) ) {
-
-				// If we don't have the toc page.
-				if ( ! $this->option_exists( 'cp_toc_page' ) ) {
-
-					// Get special pages array.
-					$special_pages = $this->option_get( 'cp_special_pages', [] );
-
-					// Create TOC page -> a convenience, let's us define a logo as attachment.
-					$special_pages[] = $this->create_toc_page();
-
-					// Store the array of page IDs that were created.
+					// Reset option.
 					$this->option_set( 'cp_special_pages', $special_pages );
 
 				}
 
 			}
 
-			// Save new CommentPress Core options.
-			$this->options_save();
+		}
 
-			// Store new CommentPress Core version.
-			$this->option_wp_set( 'commentpress_version', COMMENTPRESS_VERSION );
+		// New in CommentPress 3.3.3 - are we missing the cp_sidebar_default option?
+		if ( ! $this->option_exists( 'cp_sidebar_default' ) ) {
+
+			// Does the current theme need this option?
+			if ( ! apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
+
+				// Yes, get choice.
+				$choice = esc_sql( $cp_sidebar_default );
+
+				// Add chosen cp_sidebar_default option.
+				$this->option_set( 'cp_sidebar_default', $choice );
+
+			} else {
+
+				// Add default cp_sidebar_default option.
+				$this->option_set( 'cp_sidebar_default', $this->sidebar_default );
+
+			}
 
 		}
 
-		// --<
-		return $result;
+		// New in CommentPress 3.3.2 - are we missing the cp_page_meta_visibility option?
+		if ( ! $this->option_exists( 'cp_page_meta_visibility' ) ) {
+
+			// Get choice.
+			$choice = esc_sql( $cp_page_meta_visibility );
+
+			// Add chosen cp_page_meta_visibility option.
+			$this->option_set( 'cp_page_meta_visibility', $choice );
+
+		}
+
+		// New in CommentPress 3.3.1 - are we missing the cp_blog_workflow option?
+		if ( ! $this->option_exists( 'cp_blog_workflow' ) ) {
+
+			// Get choice.
+			$choice = esc_sql( $cp_blog_workflow );
+
+			// Add chosen cp_blog_workflow option.
+			$this->option_set( 'cp_blog_workflow', $choice );
+
+		}
+
+		// New in CommentPress 3.3.1 - are we missing the cp_blog_type option?
+		if ( ! $this->option_exists( 'cp_blog_type' ) ) {
+
+			// Get choice.
+			$choice = esc_sql( $cp_blog_type );
+
+			// Add chosen cp_blog_type option.
+			$this->option_set( 'cp_blog_type', $choice );
+
+		}
+
+		// New in CommentPress 3.3 - are we missing the cp_show_extended_toc option?
+		if ( ! $this->option_exists( 'cp_show_extended_toc' ) ) {
+
+			// Get choice.
+			$choice = esc_sql( $cp_show_extended_toc );
+
+			// Add chosen cp_show_extended_toc option.
+			$this->option_set( 'cp_show_extended_toc', $choice );
+
+		}
+
+		// Are we missing the cp_comment_editor option?
+		if ( ! $this->option_exists( 'cp_comment_editor' ) ) {
+
+			// Get choice.
+			$choice = esc_sql( $cp_comment_editor );
+
+			// Add chosen cp_comment_editor option.
+			$this->option_set( 'cp_comment_editor', $choice );
+
+		}
+
+		// Are we missing the cp_promote_reading option?
+		if ( ! $this->option_exists( 'cp_promote_reading' ) ) {
+
+			// Get choice.
+			$choice = esc_sql( $cp_promote_reading );
+
+			// Add chosen cp_promote_reading option.
+			$this->option_set( 'cp_promote_reading', $choice );
+
+		}
+
+		// Are we missing the cp_title_visibility option?
+		if ( ! $this->option_exists( 'cp_title_visibility' ) ) {
+
+			// Get choice.
+			$choice = esc_sql( $cp_title_visibility );
+
+			// Add chosen cp_title_visibility option.
+			$this->option_set( 'cp_title_visibility', $choice );
+
+		}
+
+		// Are we missing the cp_header_bg_colour option?
+		if ( ! $this->option_exists( 'cp_header_bg_colour' ) ) {
+
+			// Get choice.
+			$choice = esc_sql( $cp_header_bg_colour );
+
+			// Strip our hex # char.
+			if ( stristr( $choice, '#' ) ) {
+				$choice = substr( $choice, 1 );
+			}
+
+			// Reset to default if blank.
+			if ( $choice == '' ) {
+				$choice = $this->header_bg_colour;
+			}
+
+			// Add chosen cp_header_bg_colour option.
+			$this->option_set( 'cp_header_bg_colour', $choice );
+
+		}
+
+		// Are we missing the cp_js_scroll_speed option?
+		if ( ! $this->option_exists( 'cp_js_scroll_speed' ) ) {
+
+			// Get choice.
+			$choice = esc_sql( $cp_js_scroll_speed );
+
+			// Add chosen cp_js_scroll_speed option.
+			$this->option_set( 'cp_js_scroll_speed', $choice );
+
+		}
+
+		// Are we missing the cp_min_page_width option?
+		if ( ! $this->option_exists( 'cp_min_page_width' ) ) {
+
+			// Get choice.
+			$choice = esc_sql( $cp_min_page_width );
+
+			// Add chosen cp_min_page_width option.
+			$this->option_set( 'cp_min_page_width', $choice );
+
+		}
+
+		// Do we still have the legacy cp_allow_users_to_minimize option?
+		if ( $this->option_exists( 'cp_allow_users_to_minimize' ) ) {
+
+			// Delete old cp_allow_users_to_minimize option.
+			$this->option_delete( 'cp_allow_users_to_minimize' );
+
+		}
+
+		// Do we have special pages?
+		if ( $this->option_exists( 'cp_special_pages' ) ) {
+
+			// If we don't have the toc page.
+			if ( ! $this->option_exists( 'cp_toc_page' ) ) {
+
+				// Get special pages array.
+				$special_pages = $this->option_get( 'cp_special_pages', [] );
+
+				// Create TOC page -> a convenience, let's us define a logo as attachment.
+				$special_pages[] = $this->create_toc_page();
+
+				// Store the array of page IDs that were created.
+				$this->option_set( 'cp_special_pages', $special_pages );
+
+			}
+
+		}
+
+		// Save new CommentPress Core options.
+		$this->options_save();
+
+		// Store new CommentPress Core version.
+		$this->option_wp_set( 'commentpress_version', COMMENTPRESS_VERSION );
 
 	}
 
@@ -2989,26 +2981,18 @@ class CommentPress_Core_Database {
 		$vars['cp_wp_adminbar'] = 'n';
 		$vars['cp_bp_adminbar'] = 'n';
 
-		// Assume pre-3.8 admin bar.
-		$vars['cp_wp_adminbar_height'] = '28';
+		// Match WordPress 3.8+ admin bar.
+		$vars['cp_wp_adminbar_height'] = '32';
 		$vars['cp_wp_adminbar_expanded'] = '0';
 
 		// Are we showing the WordPress admin bar?
-		if ( function_exists( 'is_admin_bar_showing' ) && is_admin_bar_showing() ) {
+		if ( is_admin_bar_showing() ) {
 
 			// We have it.
 			$vars['cp_wp_adminbar'] = 'y';
 
-			// Check for a WordPress 3.8+ function.
-			if ( function_exists( 'wp_admin_bar_sidebar_toggle' ) ) {
-
-				// The 3.8+ admin bar is taller.
-				$vars['cp_wp_adminbar_height'] = '32';
-
-				// It also expands in height below 782px viewport width.
-				$vars['cp_wp_adminbar_expanded'] = '46';
-
-			}
+			// Admin bar expands in height below 782px viewport width.
+			$vars['cp_wp_adminbar_expanded'] = '46';
 
 		}
 
@@ -3140,20 +3124,6 @@ class CommentPress_Core_Database {
 
 			// Don't add rich text editor.
 			$vars['cp_tinymce'] = 0;
-
-		}
-
-		// Add TinyMCE version var.
-		$vars['cp_tinymce_version'] = 3;
-
-		// Access WordPress version.
-		global $wp_version;
-
-		// If greater than 3.8.
-		if ( version_compare( $wp_version, '3.8.9999', '>' ) ) {
-
-			// Add newer TinyMCE version.
-			$vars['cp_tinymce_version'] = 4;
 
 		}
 

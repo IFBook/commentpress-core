@@ -163,24 +163,17 @@ class CommentPress_Multisite_Admin {
 	 * Upgrade plugin from 1.0 options to latest set.
 	 *
 	 * @since 3.3
-	 *
-	 * @return boolean $result
 	 */
 	public function upgrade_options() {
 
-		// Init return.
-		$result = false;
-
 		// If we have a CommentPress Core install - or we're forcing.
-		if ( $this->upgrade_required() ) {
-
-			// Store new version.
-			$this->option_wpms_set( 'cpmu_version', COMMENTPRESS_MU_PLUGIN_VERSION );
-
+		if ( ! $this->upgrade_required() ) {
+			return;
 		}
 
-		// --<
-		return $result;
+		// Store new version.
+		$this->option_wpms_set( 'cpmu_version', COMMENTPRESS_MU_PLUGIN_VERSION );
+
 	}
 
 	/**
@@ -197,7 +190,7 @@ class CommentPress_Multisite_Admin {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Check for plugin upgrade.
+	 * Check for upgrade.
 	 *
 	 * @since 3.3
 	 *
@@ -215,6 +208,7 @@ class CommentPress_Multisite_Admin {
 
 		// Fallback.
 		return false;
+
 	}
 
 	/**

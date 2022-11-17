@@ -636,27 +636,14 @@ addComment = {
 	 */
 	enableForm : function() {
 
-		// Test for tinyMCE.
+		// Test for TinyMCE.
 		if ( cp_tinymce == '1' ) {
 
-			// Test for tinyMCE version.
-			if ( cp_tinymce_version == '3' ) {
-
-				// Load tinyMCE up to version 3.
-				setTimeout( function() {
-					tinyMCE.execCommand( 'mceAddControl', false, 'comment' );
-					tinyMCE.execCommand( 'render' );
-				}, 1 );
-
-			} else {
-
-				// Load tinyMCE version 4.
-				setTimeout( function() {
-					tinyMCE.execCommand( 'mceAddEditor', false, 'comment' );
-					tinyMCE.execCommand( 'render' );
-				}, 1 );
-
-			}
+			// Load TinyMCE version 4.
+			setTimeout( function() {
+				tinyMCE.execCommand( 'mceAddEditor', false, 'comment' );
+				tinyMCE.execCommand( 'render' );
+			}, 1 );
 
 		}
 
@@ -670,21 +657,11 @@ addComment = {
 	 */
 	disableForm : function() {
 
-		// Test for tinyMCE.
+		// Test for TinyMCE.
 		if ( cp_tinymce == '1' ) {
 
-			// Test for tinyMCE version.
-			if ( cp_tinymce_version == '3' ) {
-
-				// Unload tinyMCE up to version 3.
-				tinyMCE.execCommand( 'mceRemoveControl', false, 'comment' );
-
-			} else {
-
-				// Unload tinyMCE version 4.
-				tinyMCE.execCommand( 'mceRemoveEditor', false, 'comment' );
-
-			}
+			// Unload TinyMCE version 4.
+			tinyMCE.execCommand( 'mceRemoveEditor', false, 'comment' );
 
 		}
 

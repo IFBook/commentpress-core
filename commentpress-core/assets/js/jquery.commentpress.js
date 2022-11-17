@@ -44,7 +44,7 @@ if ( 'undefined' !== typeof cp_msie ) {
 if ( 'undefined' !== typeof CommentpressSettings ) {
 
 	// Define our vars.
-	var cp_comments_open, cp_special_page, cp_tinymce, cp_tinymce_version,
+	var cp_comments_open, cp_special_page, cp_tinymce,
 		cp_promote_reading, cp_is_mobile, cp_is_touch, cp_is_tablet, cp_cookie_path,
 		cp_multipage_page, cp_toc_chapter_is_page, cp_show_subpages,
 		cp_default_sidebar, cp_scroll_speed, cp_min_page_width,
@@ -54,7 +54,6 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 	cp_comments_open = CommentpressSettings.cp_comments_open;
 	cp_special_page = CommentpressSettings.cp_special_page;
 	cp_tinymce = CommentpressSettings.cp_tinymce;
-	cp_tinymce_version = CommentpressSettings.cp_tinymce_version;
 	cp_promote_reading = CommentpressSettings.cp_promote_reading;
 	cp_is_mobile = CommentpressSettings.cp_is_mobile;
 	cp_is_touch = CommentpressSettings.cp_is_touch;
