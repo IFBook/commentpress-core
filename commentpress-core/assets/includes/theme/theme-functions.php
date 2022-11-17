@@ -329,6 +329,7 @@ if ( ! function_exists( 'commentpress_admin_menu' ) ) :
 endif;
 
 // Add callback for the above.
+// TODO: Is this necessary?
 add_action( 'admin_menu', 'commentpress_admin_menu' );
 
 
