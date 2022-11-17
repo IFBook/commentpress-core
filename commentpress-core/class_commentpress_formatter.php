@@ -24,54 +24,36 @@ class CommentPress_Core_Formatter {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $parent_obj The plugin object.
+	 * @var object $core The plugin object.
 	 */
-	public $parent_obj;
+	public $core;
 
 	/**
-	 * Database interaction object.
-	 *
-	 * @since 3.3
-	 * @access public
-	 * @var object $db The database object.
-	 */
-	public $db;
-
-	/**
-	 * Initialises this object.
+	 * Constructor.
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $parent_obj A reference to the parent object.
+	 * @param object $core Reference to the core plugin object.
 	 */
-	public function __construct( $parent_obj = null ) {
+	public function __construct( $core ) {
 
-		// Store reference to "parent" (calling obj, not OOP parent).
-		$this->parent_obj = $parent_obj;
+		// Store reference to core plugin object.
+		$this->core = $core;
 
-		// Store reference to database wrapper (child of calling obj).
-		$this->db = $this->parent_obj->db;
-
-		// Register hooks.
-		$this->register_hooks();
+		// Init when this plugin is fully loaded.
+		add_action( 'commentpress/core/loaded', [ $this, 'initialise' ] );
 
 	}
 
 	/**
-	 * Set up all items associated with this object.
+	 * Sets up all items associated with this object.
 	 *
 	 * @since 3.3
 	 */
 	public function initialise() {
 
-	}
-
-	/**
-	 * If needed, destroys all items associated with this object.
-	 *
-	 * @since 3.3
-	 */
-	public function destroy() {
+		// Register hooks.
+		$this->register_hooks();
 
 	}
 
@@ -157,7 +139,7 @@ class CommentPress_Core_Formatter {
 		$key = '_cp_post_type_override';
 
 		// Default to current blog type.
-		$type = $this->db->option_get( 'cp_blog_type' );
+		$type = $this->core->db->option_get( 'cp_blog_type' );
 
 		// But, if the custom field has a value.
 		if ( get_post_meta( $post->ID, $key, true ) != '' ) {

@@ -25,9 +25,9 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $parent_obj The plugin object.
+	 * @var object $core The plugin object.
 	 */
-	public $parent_obj;
+	public $core;
 
 	/**
 	 * Next pages array.
@@ -93,28 +93,55 @@ class CommentPress_Core_Navigator {
 	public $nav_enabled = true;
 
 	/**
-	 * Initialises this object.
+	 * Constructor.
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $parent_obj A reference to the parent object.
+	 * @param object $core Reference to the core plugin object.
 	 */
-	public function __construct( $parent_obj ) {
+	public function __construct( $core ) {
 
 		// Store reference to parent.
-		$this->parent_obj = $parent_obj;
+		$this->core = $core;
 
-		// Init.
-		$this->_init();
+		// Init when this plugin is fully loaded.
+		add_action( 'commentpress/core/loaded', [ $this, 'initialise' ] );
+
+	}
+
+	/**
+	 * Initialises this object.
+	 *
+	 * @since 3.0
+	 */
+	public function initialise() {
+
+		// Register hooks.
+		$this->register_hooks();
+
+	}
+
+	/**
+	 * Register hooks.
+	 *
+	 * @since 4.0
+	 */
+	public function register_hooks() {
+
+		/*
+		 * We need template functions - e.g. is_page() and is_single() - to be
+		 * defined, so we set up this object when the "wp_head" action is fired.
+		 */
+		add_action( 'wp_head', [ $this, 'setup_items' ] );
 
 	}
 
 	/**
 	 * Set up all items associated with this object.
 	 *
-	 * @since 3.0
+	 * @since 4.0
 	 */
-	public function initialise() {
+	public function setup_items() {
 
 		// If we're navigating pages.
 		if ( is_page() ) {
@@ -135,22 +162,13 @@ class CommentPress_Core_Navigator {
 
 		}
 
-		// If we're navigating posts.
-		if ( is_single() ) {
+		// If we're navigating posts or attachments.
+		if ( is_single() || is_attachment() ) {
 
 			// Init posts lists.
 			$this->init_posts_lists();
 
 		}
-
-	}
-
-	/**
-	 * If needed, destroys all items associated with this object.
-	 *
-	 * @since 3.0
-	 */
-	public function destroy() {
 
 	}
 
@@ -186,8 +204,8 @@ class CommentPress_Core_Navigator {
 
 		// Check page navigation option.
 		if (
-			$this->parent_obj->db->option_exists( 'cp_page_nav_enabled' ) &&
-			$this->parent_obj->db->option_get( 'cp_page_nav_enabled', 'y' ) == 'n'
+			$this->core->db->option_exists( 'cp_page_nav_enabled' ) &&
+			$this->core->db->option_get( 'cp_page_nav_enabled', 'y' ) == 'n'
 		) {
 
 			// Overwrite flag.
@@ -510,7 +528,7 @@ class CommentPress_Core_Navigator {
 		global $post;
 
 		// Are parent pages viewable?
-		$viewable = ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) == '1' ) ? true : false;
+		$viewable = ( $this->core->db->option_get( 'cp_toc_chapter_is_page' ) == '1' ) ? true : false;
 
 		// If they are.
 		if ( $viewable ) {
@@ -580,7 +598,7 @@ class CommentPress_Core_Navigator {
 		}
 
 		// Bail if this is a BuddyPress page.
-		if ( $this->parent_obj->is_buddypress_special_page() ) {
+		if ( $this->core->is_buddypress_special_page() ) {
 			return;
 		}
 
@@ -599,7 +617,7 @@ class CommentPress_Core_Navigator {
 		}
 
 		// Are parent pages viewable?
-		$viewable = ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) == '1' ) ? true : false;
+		$viewable = ( $this->core->db->option_get( 'cp_toc_chapter_is_page' ) == '1' ) ? true : false;
 
 		// Get id of first child.
 		$first_child = $this->get_first_child( $post->ID );
@@ -746,20 +764,6 @@ class CommentPress_Core_Navigator {
 	 * Private Methods
 	 * -------------------------------------------------------------------------
 	 */
-
-	/**
-	 * Object initialisation.
-	 *
-	 * @since 3.3
-	 */
-	public function _init() {
-
-		/**
-		 * is_page() and is_single() are not yet defined, so we init this object when
-		 * wp_head() is fired - see initialise() above
-		 */
-
-	}
 
 	/**
 	 * Strip out all but lowest level pages.
@@ -1161,7 +1165,7 @@ class CommentPress_Core_Navigator {
 		$excludes = '';
 
 		// Init excluded array with "special pages".
-		$excluded_pages = $this->parent_obj->db->option_get( 'cp_special_pages' );
+		$excluded_pages = $this->core->db->option_get( 'cp_special_pages' );
 
 		// If the supplied title page is the homepage.
 		$title_id = $this->is_title_page_the_homepage();
@@ -1173,7 +1177,7 @@ class CommentPress_Core_Navigator {
 		}
 
 		// Are we in a BuddyPress scenario?
-		if ( $this->parent_obj->is_buddypress() ) {
+		if ( $this->core->is_buddypress() ) {
 
 			/*
 			 * BuddyPress creates its own registration page and redirects ordinary
@@ -1234,7 +1238,7 @@ class CommentPress_Core_Navigator {
 		if ( count( $pages ) > 0 ) {
 
 			// If chapters are not pages.
-			if ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
+			if ( $this->core->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
 
 				// Do we want all readable pages?
 				if ( $mode == 'readable' ) {
@@ -1277,10 +1281,10 @@ class CommentPress_Core_Navigator {
 		}
 
 		// Get welcome page ID.
-		$welcome_id = $this->parent_obj->db->option_get( 'cp_welcome_page' );
+		$welcome_id = $this->core->db->option_get( 'cp_welcome_page' );
 
 		// Get front page.
-		$page_on_front = $this->parent_obj->db->option_wp_get( 'page_on_front' );
+		$page_on_front = $this->core->db->option_wp_get( 'page_on_front' );
 
 		// If the CommentPress title page exists and it's the front page.
 		if ( $welcome_id !== false && $page_on_front == $welcome_id ) {
@@ -1341,7 +1345,7 @@ class CommentPress_Core_Navigator {
 			if ( $this->menu_objects ) {
 
 				// If chapters are not pages, filter the menu items.
-				if ( $this->parent_obj->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
+				if ( $this->core->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
 
 					// Do we want all readable pages?
 					if ( $mode == 'readable' ) {

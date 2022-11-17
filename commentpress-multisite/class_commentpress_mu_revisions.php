@@ -20,40 +20,28 @@ defined( 'ABSPATH' ) || exit;
 class CommentPress_Multisite_Revisions {
 
 	/**
-	 * Plugin object.
+	 * Multisite plugin object.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $parent_obj The plugin object.
+	 * @var object $ms_loader The multisite plugin object.
 	 */
-	public $parent_obj;
+	public $ms_loader;
 
 	/**
-	 * Database interaction object.
-	 *
-	 * @since 3.0
-	 * @access public
-	 * @var object $db The database object.
-	 */
-	public $db;
-
-	/**
-	 * Initialises this object.
+	 * Constructor.
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $parent_obj The reference to the parent object.
+	 * @param object $ms_loader Reference to the multisite plugin object.
 	 */
-	public function __construct( $parent_obj = null ) {
+	public function __construct( $ms_loader ) {
 
-		// Store reference to "parent" (calling obj, not OOP parent).
-		$this->parent_obj = $parent_obj;
+		// Store reference to multisite plugin object.
+		$this->ms_loader = $ms_loader;
 
-		// Store reference to database wrapper (child of calling obj).
-		$this->db = $this->parent_obj->db;
-
-		// Register hooks.
-		$this->register_hooks();
+		// Init when the multisite plugin is fully loaded.
+		add_action( 'commentpress/core/multisite/loaded', [ $this, 'initialise' ] );
 
 	}
 
@@ -64,14 +52,8 @@ class CommentPress_Multisite_Revisions {
 	 */
 	public function initialise() {
 
-	}
-
-	/**
-	 * If needed, destroys all items associated with this object.
-	 *
-	 * @since 3.3
-	 */
-	public function destroy() {
+		// Register hooks.
+		$this->register_hooks();
 
 	}
 

@@ -2228,8 +2228,6 @@ add_action( 'after_signup_form', 'commentpress_suffix_signup_template' );
 
 
 
-
-
 if ( ! function_exists( 'commentpress_geomashup_map_get' ) ) :
 
 	/**

@@ -24,45 +24,36 @@ class CommentPress_Core_Workflow {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $parent_obj The plugin object.
+	 * @var object $core The plugin object.
 	 */
-	public $parent_obj;
+	public $core;
+
+	/**
+	 * Constructor.
+	 *
+	 * @since 3.0
+	 *
+	 * @param object $core Reference to the core plugin object.
+	 */
+	public function __construct( $core ) {
+
+		// Store reference to core plugin object.
+		$this->core = $core;
+
+		// Init when this plugin is fully loaded.
+		add_action( 'commentpress/core/loaded', [ $this, 'initialise' ] );
+
+	}
 
 	/**
 	 * Initialises this object.
 	 *
 	 * @since 3.0
-	 *
-	 * @param object $parent_obj a reference to the parent object.
-	 */
-	public function __construct( $parent_obj = null ) {
-
-		// Store reference to "parent" (calling obj, not OOP parent).
-		$this->parent_obj = $parent_obj;
-
-		// Store reference to database wrapper (child of calling obj).
-		$this->db = $this->parent_obj->db;
-
-		// Register hooks.
-		$this->register_hooks();
-
-	}
-
-	/**
-	 * Set up all items associated with this object.
-	 *
-	 * @since 3.0
 	 */
 	public function initialise() {
 
-	}
-
-	/**
-	 * If needed, destroys all items associated with this object.
-	 *
-	 * @since 3.0
-	 */
-	public function destroy() {
+		// Register hooks.
+		$this->register_hooks();
 
 	}
 
@@ -110,10 +101,17 @@ class CommentPress_Core_Workflow {
 
 		// Create custom filters that mirror 'the_content'.
 		add_filter( 'cp_workflow_richtext_content', 'wptexturize' );
-		add_filter( 'cp_workflow_richtext_content', 'convert_smilies' );
+		add_filter( 'cp_workflow_richtext_content', 'convert_smilies', 20 );
 		add_filter( 'cp_workflow_richtext_content', 'convert_chars' );
 		add_filter( 'cp_workflow_richtext_content', 'wpautop' );
 		add_filter( 'cp_workflow_richtext_content', 'shortcode_unautop' );
+		add_filter( 'cp_workflow_richtext_content', 'prepend_attachment' );
+
+		/*
+		// Introduced since WordPress 5.5.
+		add_filter( 'cp_workflow_richtext_content', 'wp_filter_content_tags' );
+		add_filter( 'cp_workflow_richtext_content', 'wp_replace_insecure_home_url' );
+		*/
 
 	}
 

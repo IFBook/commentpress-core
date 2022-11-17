@@ -24,36 +24,69 @@ class CommentPress_Core_Display {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $parent_obj The plugin object.
+	 * @var object $core The plugin object.
 	 */
-	public $parent_obj;
+	public $core;
 
 	/**
-	 * Database interaction object.
+	 * Constructor.
 	 *
 	 * @since 3.0
-	 * @access public
-	 * @var object $db The database object.
+	 *
+	 * @param object $core Reference to the core plugin object.
 	 */
-	public $db;
+	public function __construct( $core ) {
+
+		// Store reference to core plugin object.
+		$this->core = $core;
+
+		// Init when this plugin is fully loaded.
+		add_action( 'commentpress/core/loaded', [ $this, 'initialise' ] );
+
+	}
 
 	/**
 	 * Initialises this object.
 	 *
-	 * @since 3.0
-	 *
-	 * @param object $parent_obj A reference to the parent object.
+	 * @since 4.0
 	 */
-	public function __construct( $parent_obj ) {
+	public function initialise() {
 
-		// Store reference to parent.
-		$this->parent_obj = $parent_obj;
+		// Only do this once.
+		static $done;
+		if ( isset( $done ) && $done === true ) {
+			return;
+		}
 
-		// Store reference to database wrapper (child of calling obj).
-		$this->db = $this->parent_obj->db;
+		/**
+		 * Moved mobile checks to class_commentpress_db.php so it only loads as
+		 * needed and so that it loads *after* the old CommentPress loads it.
+		 */
 
-		// Init.
-		$this->_init();
+		// Register hooks.
+		$this->register_hooks();
+
+		/**
+		 * Broadcast that this class has loaded.
+		 *
+		 * @since 4.0
+		 */
+		do_action( 'commentpress/core/display/loaded' );
+
+		// We're done.
+		$done = true;
+
+	}
+
+	/**
+	 * Register hooks.
+	 *
+	 * @since 3.9.14
+	 */
+	public function register_hooks() {
+
+		// Enable CommentPress themes in Multisite optional scenario.
+		add_filter( 'network_allowed_themes', [ $this, 'allowed_themes' ] );
 
 	}
 
@@ -82,7 +115,7 @@ class CommentPress_Core_Display {
 		 * @param array The existing array containing the stylesheet and template paths.
 		 * @return array The modified array containing the stylesheet and template paths.
 		 */
-		$theme = apply_filters( 'commentpress_get_groupblog_theme', $this->parent_obj->get_groupblog_theme() );
+		$theme = apply_filters( 'commentpress_get_groupblog_theme', $this->core->get_groupblog_theme() );
 
 		// Did we get a CommentPress Core one?
 		if ( $theme !== false ) {
@@ -194,7 +227,7 @@ class CommentPress_Core_Display {
 		);
 
 		// Get vars.
-		$vars = $this->db->get_javascript_vars();
+		$vars = $this->core->db->get_javascript_vars();
 
 		// Localise the WordPress way.
 		wp_localize_script( 'jquery_commentpress', 'CommentpressSettings', $vars );
@@ -230,10 +263,10 @@ class CommentPress_Core_Display {
 	public function get_text_highlighter() {
 
 		// Only allow text highlighting on non-touch devices (allow testing override).
-		if ( ! $this->db->is_touch() || ( defined( 'COMMENTPRESS_TOUCH_SELECT' ) && COMMENTPRESS_TOUCH_SELECT ) ) {
+		if ( ! $this->core->db->is_touch() || ( defined( 'COMMENTPRESS_TOUCH_SELECT' ) && COMMENTPRESS_TOUCH_SELECT ) ) {
 
 			// Bail if not a commentable page/post.
-			if ( ! $this->parent_obj->is_commentable() ) {
+			if ( ! $this->core->is_commentable() ) {
 				return;
 			}
 
@@ -372,8 +405,8 @@ class CommentPress_Core_Display {
 
 		// Check option.
 		if (
-			$this->db->option_exists( 'cp_comment_editor' ) &&
-			$this->db->option_get( 'cp_comment_editor' ) != '1'
+			$this->core->db->option_exists( 'cp_comment_editor' ) &&
+			$this->core->db->option_get( 'cp_comment_editor' ) != '1'
 		) {
 
 			// Disallow.
@@ -383,9 +416,9 @@ class CommentPress_Core_Display {
 
 			// Don't return TinyMCE for touchscreens, mobile phones or tablets.
 			if (
-				( isset( $this->db->is_mobile_touch ) && $this->db->is_mobile_touch ) ||
-				( isset( $this->db->is_mobile ) && $this->db->is_mobile ) ||
-				( isset( $this->db->is_tablet ) && $this->db->is_tablet )
+				( isset( $this->core->db->is_mobile_touch ) && $this->core->db->is_mobile_touch ) ||
+				( isset( $this->core->db->is_mobile ) && $this->core->db->is_mobile ) ||
+				( isset( $this->core->db->is_tablet ) && $this->core->db->is_tablet )
 			) {
 
 				// Disallow.
@@ -437,7 +470,7 @@ HELPTEXT;
 		$posts = get_posts( $params );
 
 		// Have we set the option?
-		$list_style = $this->db->option_get( 'cp_show_extended_toc' );
+		$list_style = $this->core->db->option_get( 'cp_show_extended_toc' );
 
 		// If not set or set to 'off'.
 		if ( $list_style === false || $list_style == '0' ) {
@@ -450,7 +483,7 @@ HELPTEXT;
 			foreach ( $posts as $item ) {
 
 				// Get comment count for that post.
-				$count = count( $this->db->get_approved_comments( $item->ID ) );
+				$count = count( $this->core->db->get_approved_comments( $item->ID ) );
 
 				// Write list item.
 				echo '<li class="title"><a href="' . get_permalink( $item->ID ) . '">' . get_the_title( $item->ID ) . ' (' . $count . ')</a></li>' . "\n";
@@ -473,7 +506,7 @@ HELPTEXT;
 				$html = '';
 
 				// Get comment count for that post.
-				$count = count( $this->db->get_approved_comments( $item->ID ) );
+				$count = count( $this->core->db->get_approved_comments( $item->ID ) );
 
 				// Compat with Co-Authors Plus.
 				if ( function_exists( 'get_coauthors' ) ) {
@@ -656,10 +689,10 @@ HELPTEXT;
 		}
 
 		// Get welcome page ID.
-		$welcome_id = $this->db->option_get( 'cp_welcome_page' );
+		$welcome_id = $this->core->db->option_get( 'cp_welcome_page' );
 
 		// Get front page.
-		$page_on_front = $this->db->option_wp_get( 'page_on_front' );
+		$page_on_front = $this->core->db->option_wp_get( 'page_on_front' );
 
 		// Print link to title page, if we have one and it's the front page.
 		if ( $welcome_id !== false && $page_on_front == $welcome_id ) {
@@ -683,14 +716,14 @@ HELPTEXT;
 
 		/*
 		// Get page display option.
-		$depth = $this->db->option_get( 'cp_show_subpages' );
+		$depth = $this->core->db->option_get( 'cp_show_subpages' );
 		*/
 
 		// ALWAYS write subpages into page, even if they aren't displayed.
 		$depth = 0;
 
 		// Get pages to exclude.
-		$exclude = $this->db->option_get( 'cp_special_pages' );
+		$exclude = $this->core->db->option_get( 'cp_special_pages' );
 
 		// Do we have any?
 		if ( ! $exclude ) {
@@ -714,7 +747,7 @@ HELPTEXT;
 		$defaults = [
 			'depth' => $depth,
 			'show_date' => '',
-			'date_format' => $this->db->option_get( 'date_format' ),
+			'date_format' => $this->core->db->option_get( 'date_format' ),
 			'child_of' => 0,
 			'exclude' => implode( ',', $exclude ),
 			'title_li' => '',
@@ -774,13 +807,13 @@ HELPTEXT;
 				$title_text = sprintf(
 					_n( 'There is %1$d comment written for this %2$s', 'There are %1$d comments written for this %2$s', $comment_count, 'commentpress-core' ),
 					$comment_count,
-					$this->parent_obj->parser->lexia_get()
+					$this->core->parser->lexia_get()
 				);
 
 				// Define add comment text.
 				$add_text = sprintf(
 					__( 'Leave a comment on %1$s %2$d', 'commentpress-core' ),
-					$this->parent_obj->parser->lexia_get(),
+					$this->core->parser->lexia_get(),
 					$para_num
 				);
 
@@ -795,13 +828,13 @@ HELPTEXT;
 				$title_text = sprintf(
 					_n( 'There is %1$d comment written for this %2$s', 'There are %1$d comments written for this %2$s', $comment_count, 'commentpress-core' ),
 					$comment_count,
-					$this->parent_obj->parser->lexia_get()
+					$this->core->parser->lexia_get()
 				);
 
 				// Define add comment text.
 				$add_text = sprintf(
 					__( 'Leave a comment on %1$s %2$d', 'commentpress-core' ),
-					$this->parent_obj->parser->lexia_get(),
+					$this->core->parser->lexia_get(),
 					$para_num
 				);
 
@@ -816,13 +849,13 @@ HELPTEXT;
 				$title_text = sprintf(
 					_n( 'There is %1$d comment written for this %2$s', 'There are %1$d comments written for this %2$s', $comment_count, 'commentpress-core' ),
 					$comment_count,
-					$this->parent_obj->parser->lexia_get()
+					$this->core->parser->lexia_get()
 				);
 
 				// Define add comment text.
 				$add_text = sprintf(
 					__( 'Leave a comment on %1$s %2$d', 'commentpress-core' ),
-					$this->parent_obj->parser->lexia_get(),
+					$this->core->parser->lexia_get(),
 					$para_num
 				);
 
@@ -865,7 +898,7 @@ HELPTEXT;
 				// Define permalink text.
 				$permalink_text = sprintf(
 					__( 'Permalink for %1$s %2$d', 'commentpress-core' ),
-					$this->parent_obj->parser->lexia_get(),
+					$this->core->parser->lexia_get(),
 					$para_num
 				);
 
@@ -882,7 +915,7 @@ HELPTEXT;
 				// Define permalink text.
 				$permalink_text = sprintf(
 					__( 'Permalink for %1$s %2$d', 'commentpress-core' ),
-					$this->parent_obj->parser->lexia_get(),
+					$this->core->parser->lexia_get(),
 					$para_num
 				);
 
@@ -899,7 +932,7 @@ HELPTEXT;
 				// Define permalink text.
 				$permalink_text = sprintf(
 					__( 'Permalink for %1$s %2$d', 'commentpress-core' ),
-					$this->parent_obj->parser->lexia_get(),
+					$this->core->parser->lexia_get(),
 					$para_num
 				);
 
@@ -1183,35 +1216,6 @@ HELPTEXT;
 	 */
 
 	/**
-	 * Object initialisation.
-	 *
-	 * @since 3.0
-	 */
-	public function _init() {
-
-		/**
-		 * Moved mobile checks to class_commentpress_db.php so it only loads as
-		 * needed and so that it loads *after* the old CommentPress loads it.
-		 */
-
-		// Register hooks after parent class has done its thing.
-		add_action( 'commentpress_after_hooks', [ $this, '_register_hooks' ] );
-
-	}
-
-	/**
-	 * Register hooks.
-	 *
-	 * @since 3.9.14
-	 */
-	public function _register_hooks() {
-
-		// Enable CommentPress themes in Multisite optional scenario.
-		add_filter( 'network_allowed_themes', [ $this, 'allowed_themes' ] );
-
-	}
-
-	/**
 	 * Returns the admin form HTML.
 	 *
 	 * @since 3.4
@@ -1230,7 +1234,7 @@ HELPTEXT;
 		}
 
 		// If we need to upgrade.
-		if ( $this->db->upgrade_required() ) {
+		if ( $this->core->db->upgrade_required() ) {
 
 			// Get upgrade options.
 			$upgrade = $this->_get_upgrade();
@@ -1352,8 +1356,8 @@ HELPTEXT;
 			<tr valign="top">
 				<th scope="row"><label for="cp_featured_images">' . __( 'Enable Featured Images (Note: if you have already implemented this in a child theme, you should choose "No")', 'commentpress-core' ) . '</label></th>
 				<td><select id="cp_featured_images" name="cp_featured_images">
-						<option value="y" ' . ( ( $this->db->option_get( 'cp_featured_images', 'n' ) == 'y' ) ? ' selected="selected"' : '' ) . '>' . __( 'Yes', 'commentpress-core' ) . '</option>
-						<option value="n" ' . ( ( $this->db->option_get( 'cp_featured_images', 'n' ) == 'n' ) ? ' selected="selected"' : '' ) . '>' . __( 'No', 'commentpress-core' ) . '</option>
+						<option value="y" ' . ( ( $this->core->db->option_get( 'cp_featured_images', 'n' ) == 'y' ) ? ' selected="selected"' : '' ) . '>' . __( 'Yes', 'commentpress-core' ) . '</option>
+						<option value="n" ' . ( ( $this->core->db->option_get( 'cp_featured_images', 'n' ) == 'n' ) ? ' selected="selected"' : '' ) . '>' . __( 'No', 'commentpress-core' ) . '</option>
 					</select>
 				</td>
 			</tr>
@@ -1363,8 +1367,8 @@ HELPTEXT;
 			<tr valign="top">
 				<th scope="row"><label for="cp_title_visibility">' . __( 'Default page title visibility (can be overridden on individual pages)', 'commentpress-core' ) . '</label></th>
 				<td><select id="cp_title_visibility" name="cp_title_visibility">
-						<option value="show" ' . ( ( $this->db->option_get( 'cp_title_visibility' ) == 'show' ) ? ' selected="selected"' : '' ) . '>' . __( 'Show page titles', 'commentpress-core' ) . '</option>
-						<option value="hide" ' . ( ( $this->db->option_get( 'cp_title_visibility' ) == 'hide' ) ? ' selected="selected"' : '' ) . '>' . __( 'Hide page titles', 'commentpress-core' ) . '</option>
+						<option value="show" ' . ( ( $this->core->db->option_get( 'cp_title_visibility' ) == 'show' ) ? ' selected="selected"' : '' ) . '>' . __( 'Show page titles', 'commentpress-core' ) . '</option>
+						<option value="hide" ' . ( ( $this->core->db->option_get( 'cp_title_visibility' ) == 'hide' ) ? ' selected="selected"' : '' ) . '>' . __( 'Hide page titles', 'commentpress-core' ) . '</option>
 					</select>
 				</td>
 			</tr>
@@ -1372,8 +1376,8 @@ HELPTEXT;
 			<tr valign="top">
 				<th scope="row"><label for="cp_page_meta_visibility">' . __( 'Default page meta visibility (can be overridden on individual pages)', 'commentpress-core' ) . '</label></th>
 				<td><select id="cp_page_meta_visibility" name="cp_page_meta_visibility">
-						<option value="show" ' . ( ( $this->db->option_get( 'cp_page_meta_visibility' ) == 'show' ) ? ' selected="selected"' : '' ) . '>' . __( 'Show page meta', 'commentpress-core' ) . '</option>
-						<option value="hide" ' . ( ( $this->db->option_get( 'cp_page_meta_visibility' ) == 'hide' ) ? ' selected="selected"' : '' ) . '>' . __( 'Hide page meta', 'commentpress-core' ) . '</option>
+						<option value="show" ' . ( ( $this->core->db->option_get( 'cp_page_meta_visibility' ) == 'show' ) ? ' selected="selected"' : '' ) . '>' . __( 'Show page meta', 'commentpress-core' ) . '</option>
+						<option value="hide" ' . ( ( $this->core->db->option_get( 'cp_page_meta_visibility' ) == 'hide' ) ? ' selected="selected"' : '' ) . '>' . __( 'Hide page meta', 'commentpress-core' ) . '</option>
 					</select>
 				</td>
 			</tr>
@@ -1382,7 +1386,7 @@ HELPTEXT;
 
 			<tr valign="top">
 				<th scope="row"><label for="cp_excerpt_length">' . __( 'Blog excerpt length', 'commentpress-core' ) . '</label></th>
-				<td><input type="text" id="cp_excerpt_length" name="cp_excerpt_length" value="' . $this->db->option_get( 'cp_excerpt_length' ) . '" class="small-text" /> ' . __( 'words', 'commentpress-core' ) . '</td>
+				<td><input type="text" id="cp_excerpt_length" name="cp_excerpt_length" value="' . $this->core->db->option_get( 'cp_excerpt_length' ) . '" class="small-text" /> ' . __( 'words', 'commentpress-core' ) . '</td>
 			</tr>
 
 		</table>
@@ -1411,12 +1415,12 @@ HELPTEXT;
 
 			<tr valign="top">
 				<th scope="row"><label for="cp_js_scroll_speed">' . __( 'Scroll speed', 'commentpress-core' ) . '</label></th>
-				<td><input type="text" id="cp_js_scroll_speed" name="cp_js_scroll_speed" value="' . $this->db->option_get( 'cp_js_scroll_speed' ) . '" class="small-text" /> ' . __( 'milliseconds', 'commentpress-core' ) . '</td>
+				<td><input type="text" id="cp_js_scroll_speed" name="cp_js_scroll_speed" value="' . $this->core->db->option_get( 'cp_js_scroll_speed' ) . '" class="small-text" /> ' . __( 'milliseconds', 'commentpress-core' ) . '</td>
 			</tr>
 
 			<tr valign="top">
 				<th scope="row"><label for="cp_min_page_width">' . __( 'Minimum page width', 'commentpress-core' ) . '</label></th>
-				<td><input type="text" id="cp_min_page_width" name="cp_min_page_width" value="' . $this->db->option_get( 'cp_min_page_width' ) . '" class="small-text" /> ' . __( 'pixels', 'commentpress-core' ) . '</td>
+				<td><input type="text" id="cp_min_page_width" name="cp_min_page_width" value="' . $this->core->db->option_get( 'cp_min_page_width' ) . '" class="small-text" /> ' . __( 'pixels', 'commentpress-core' ) . '</td>
 			</tr>
 
 		' . $this->_get_sidebar() . '
@@ -1445,7 +1449,7 @@ HELPTEXT;
 		$html = '';
 
 		// Do we have the option to choose blog type (new in 3.3.1)?
-		if ( $this->db->option_exists( 'cp_blog_type' ) ) {
+		if ( $this->core->db->option_exists( 'cp_blog_type' ) ) {
 
 			// Define no types.
 			$types = [];
@@ -1470,7 +1474,7 @@ HELPTEXT;
 				$n = 0;
 
 				// Get existing.
-				$blog_type = $this->db->option_get( 'cp_blog_type' );
+				$blog_type = $this->core->db->option_get( 'cp_blog_type' );
 
 				foreach ( $types as $type ) {
 					if ( $n == $blog_type ) {
@@ -1499,7 +1503,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to choose blog workflow (new in 3.3.1)?
-		if ( $this->db->option_exists( 'cp_blog_workflow' ) ) {
+		if ( $this->core->db->option_exists( 'cp_blog_workflow' ) ) {
 
 			// Off by default.
 			$has_workflow = false;
@@ -1523,7 +1527,7 @@ HELPTEXT;
 				$html .= '
 				<tr valign="top">
 					<th scope="row"><label for="cp_blog_workflow">' . $workflow_label . '</label></th>
-					<td><input id="cp_blog_workflow" name="cp_blog_workflow" value="1" type="checkbox" ' . ( $this->db->option_get( 'cp_blog_workflow' ) ? ' checked="checked"' : '' ) . ' /></td>
+					<td><input id="cp_blog_workflow" name="cp_blog_workflow" value="1" type="checkbox" ' . ( $this->core->db->option_get( 'cp_blog_workflow' ) ? ' checked="checked"' : '' ) . ' /></td>
 
 				</tr>
 
@@ -1553,14 +1557,14 @@ HELPTEXT;
 		$upgrade = '';
 
 		// Do we have the option to choose which post types to skip (new in 3.9)?
-		if ( ! $this->db->option_exists( 'cp_post_types_disabled' ) ) {
+		if ( ! $this->core->db->option_exists( 'cp_post_types_disabled' ) ) {
 
 			// Define labels.
 			$description = __( 'Choose the Post Types on which CommentPress Core is enabled. Disabling a post type will mean that paragraph-level commenting will not be enabled on any entries of that post type. Default prior to 3.9 was that all post types were enabled.', 'commentpress-core' );
 			$label = __( 'Post Types on which CommentPress Core is enabled.', 'commentpress-core' );
 
 			// Get post types that support the editor.
-			$capable_post_types = $this->db->get_supported_post_types();
+			$capable_post_types = $this->core->db->get_supported_post_types();
 
 			// Init outputs.
 			$output = [];
@@ -1597,7 +1601,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to choose to disable parsing (new in 3.8.10)?
-		if ( ! $this->db->option_exists( 'cp_do_not_parse' ) ) {
+		if ( ! $this->core->db->option_exists( 'cp_do_not_parse' ) ) {
 
 			// Define labels.
 			$description = __( 'Note: when comments are closed on an entry and there are no comments on that entry, if this option is set to "Yes" then the content will not be parsed for paragraphs, lines or blocks. Comments will also not be parsed, meaning that the entry behaves the same as content which is not commentable. Default prior to 3.8.10 was "No" - all content was always parsed.', 'commentpress-core' );
@@ -1622,7 +1626,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to choose to disable page navigation (new in 3.8.10)?
-		if ( ! $this->db->option_exists( 'cp_page_nav_enabled' ) ) {
+		if ( ! $this->core->db->option_exists( 'cp_page_nav_enabled' ) ) {
 
 			// Define labels.
 			$label = __( 'Enable automatic page navigation (controls appearance of page numbering and navigation arrows on hierarchical pages). Previous default was "Yes".', 'commentpress-core' );
@@ -1645,7 +1649,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to choose to hide textblock meta (new in 3.5.9)?
-		if ( ! $this->db->option_exists( 'cp_textblock_meta' ) ) {
+		if ( ! $this->core->db->option_exists( 'cp_textblock_meta' ) ) {
 
 			// Define labels.
 			$label = __( 'Show paragraph meta (Number and Comment Icon)', 'commentpress-core' );
@@ -1668,7 +1672,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to choose featured images (new in 3.5.4)?
-		if ( ! $this->db->option_exists( 'cp_featured_images' ) ) {
+		if ( ! $this->core->db->option_exists( 'cp_featured_images' ) ) {
 
 			// Define labels.
 			$label = __( 'Enable Featured Images (Note: if you have already implemented this in a child theme, you should choose "No")', 'commentpress-core' );
@@ -1691,7 +1695,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to choose the default sidebar (new in 3.3.3)?
-		if ( ! $this->db->option_exists( 'cp_sidebar_default' ) ) {
+		if ( ! $this->core->db->option_exists( 'cp_sidebar_default' ) ) {
 
 			// Define labels.
 			$label = __( 'Which sidebar do you want to be active by default? (can be overridden on individual pages)', 'commentpress-core' );
@@ -1716,7 +1720,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to show or hide page meta (new in 3.3.2)?
-		if ( ! $this->db->option_exists( 'cp_page_meta_visibility' ) ) {
+		if ( ! $this->core->db->option_exists( 'cp_page_meta_visibility' ) ) {
 
 			$meta_label = __( 'Show or hide page meta by default', 'commentpress-core' );
 			$meta_show_label = __( 'Show page meta', 'commentpress-core' );
@@ -1737,7 +1741,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to choose blog type (new in 3.3.1)?
-		if ( ! $this->db->option_exists( 'cp_blog_type' ) ) {
+		if ( ! $this->core->db->option_exists( 'cp_blog_type' ) ) {
 
 			// Define no types.
 			$types = [];
@@ -1780,7 +1784,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to choose blog workflow (new in 3.3.1)?
-		if ( ! $this->db->option_exists( 'cp_blog_workflow' ) ) {
+		if ( ! $this->core->db->option_exists( 'cp_blog_workflow' ) ) {
 
 			// Off by default.
 			$has_workflow = false;
@@ -1811,7 +1815,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to choose the TOC layout (new in 3.3)?
-		if ( ! $this->db->option_exists( 'cp_show_extended_toc' ) ) {
+		if ( ! $this->core->db->option_exists( 'cp_show_extended_toc' ) ) {
 
 			$extended_label = __( 'Appearance of TOC for posts', 'commentpress-core' );
 			$extended_info_label = __( 'Extended information', 'commentpress-core' );
@@ -1833,7 +1837,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to set the comment editor?
-		if ( ! $this->db->option_exists( 'cp_comment_editor' ) ) {
+		if ( ! $this->core->db->option_exists( 'cp_comment_editor' ) ) {
 
 			$editor_label = __( 'Comment form editor', 'commentpress-core' );
 			$rich_label = __( 'Rich-text Editor', 'commentpress-core' );
@@ -1854,7 +1858,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to set the default behaviour?
-		if ( ! $this->db->option_exists( 'cp_promote_reading' ) ) {
+		if ( ! $this->core->db->option_exists( 'cp_promote_reading' ) ) {
 
 			$behaviour_label = __( 'Default comment form behaviour', 'commentpress-core' );
 			$reading_label = __( 'Promote reading', 'commentpress-core' );
@@ -1875,7 +1879,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to show or hide titles?
-		if ( ! $this->db->option_exists( 'cp_title_visibility' ) ) {
+		if ( ! $this->core->db->option_exists( 'cp_title_visibility' ) ) {
 
 			// Define labels.
 			$titles_label = __( 'Show or hide page titles by default', 'commentpress-core' );
@@ -1897,7 +1901,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to set the scroll speed?
-		if ( ! $this->db->option_exists( 'cp_js_scroll_speed' ) ) {
+		if ( ! $this->core->db->option_exists( 'cp_js_scroll_speed' ) ) {
 
 			// Define labels.
 			$scroll_label = __( 'Scroll speed', 'commentpress-core' );
@@ -1907,7 +1911,7 @@ HELPTEXT;
 			$upgrade .= '
 			<tr valign="top">
 				<th scope="row"><label for="cp_js_scroll_speed">' . $scroll_label . '</label></th>
-				<td><input type="text" id="cp_js_scroll_speed" name="cp_js_scroll_speed" value="' . $this->db->js_scroll_speed . '" class="small-text" /> ' . $scroll_ms_label . '</td>
+				<td><input type="text" id="cp_js_scroll_speed" name="cp_js_scroll_speed" value="' . $this->core->db->js_scroll_speed . '" class="small-text" /> ' . $scroll_ms_label . '</td>
 			</tr>
 
 			';
@@ -1915,7 +1919,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to set the minimum page width?
-		if ( ! $this->db->option_exists( 'cp_min_page_width' ) ) {
+		if ( ! $this->core->db->option_exists( 'cp_min_page_width' ) ) {
 
 			// Define labels.
 			$min_label = __( 'Minimum page width', 'commentpress-core' );
@@ -1925,7 +1929,7 @@ HELPTEXT;
 			$upgrade .= '
 			<tr valign="top">
 				<th scope="row"><label for="cp_min_page_width"></label></th>
-				<td><input type="text" id="cp_min_page_width" name="cp_min_page_width" value="' . $this->db->min_page_width . '" class="small-text" /> ' . $min_pix_label . '</td>
+				<td><input type="text" id="cp_min_page_width" name="cp_min_page_width" value="' . $this->core->db->min_page_width . '" class="small-text" /> ' . $min_pix_label . '</td>
 			</tr>
 
 			';
@@ -1999,8 +2003,8 @@ HELPTEXT;
 		<tr valign="top">
 			<th scope="row"><label for="cp_comment_editor">' . $editor_label . '</label></th>
 			<td><select id="cp_comment_editor" name="cp_comment_editor">
-					<option value="1" ' . ( ( $this->db->option_get( 'cp_comment_editor' ) == '1' ) ? ' selected="selected"' : '' ) . '>' . $rich_label . '</option>
-					<option value="0" ' . ( ( $this->db->option_get( 'cp_comment_editor' ) == '0' ) ? ' selected="selected"' : '' ) . '>' . $plain_label . '</option>
+					<option value="1" ' . ( ( $this->core->db->option_get( 'cp_comment_editor' ) == '1' ) ? ' selected="selected"' : '' ) . '>' . $rich_label . '</option>
+					<option value="0" ' . ( ( $this->core->db->option_get( 'cp_comment_editor' ) == '0' ) ? ' selected="selected"' : '' ) . '>' . $plain_label . '</option>
 				</select>
 			</td>
 		</tr>
@@ -2008,8 +2012,8 @@ HELPTEXT;
 		<tr valign="top">
 			<th scope="row"><label for="cp_promote_reading">' . $behaviour_label . '</label></th>
 			<td><select id="cp_promote_reading" name="cp_promote_reading">
-					<option value="1" ' . ( ( $this->db->option_get( 'cp_promote_reading' ) == '1' ) ? ' selected="selected"' : '' ) . '>' . $reading_label . '</option>
-					<option value="0" ' . ( ( $this->db->option_get( 'cp_promote_reading' ) == '0' ) ? ' selected="selected"' : '' ) . '>' . $commenting_label . '</option>
+					<option value="1" ' . ( ( $this->core->db->option_get( 'cp_promote_reading' ) == '1' ) ? ' selected="selected"' : '' ) . '>' . $reading_label . '</option>
+					<option value="0" ' . ( ( $this->core->db->option_get( 'cp_promote_reading' ) == '0' ) ? ' selected="selected"' : '' ) . '>' . $commenting_label . '</option>
 				</select>
 			</td>
 		</tr>
@@ -2049,33 +2053,33 @@ HELPTEXT;
 		<tr valign="top">
 			<th scope="row"><label for="cp_show_posts_or_pages_in_toc">' . $toc_label . '</label></th>
 			<td><select id="cp_show_posts_or_pages_in_toc" name="cp_show_posts_or_pages_in_toc">
-					<option value="post" ' . ( ( $this->db->option_get( 'cp_show_posts_or_pages_in_toc' ) == 'post' ) ? ' selected="selected"' : '' ) . '>' . $posts_label . '</option>
-					<option value="page" ' . ( ( $this->db->option_get( 'cp_show_posts_or_pages_in_toc' ) == 'page' ) ? ' selected="selected"' : '' ) . '>' . $pages_label . '</option>
+					<option value="post" ' . ( ( $this->core->db->option_get( 'cp_show_posts_or_pages_in_toc' ) == 'post' ) ? ' selected="selected"' : '' ) . '>' . $posts_label . '</option>
+					<option value="page" ' . ( ( $this->core->db->option_get( 'cp_show_posts_or_pages_in_toc' ) == 'page' ) ? ' selected="selected"' : '' ) . '>' . $pages_label . '</option>
 				</select>
 			</td>
 		</tr>
 
-		' . ( ( $this->db->option_get( 'cp_show_posts_or_pages_in_toc' ) == 'page' ) ? '
+		' . ( ( $this->core->db->option_get( 'cp_show_posts_or_pages_in_toc' ) == 'page' ) ? '
 		<tr valign="top">
 			<th scope="row"><label for="cp_toc_chapter_is_page">' . $chapter_label . '</label></th>
 			<td><select id="cp_toc_chapter_is_page" name="cp_toc_chapter_is_page">
-					<option value="1" ' . ( ( $this->db->option_get( 'cp_toc_chapter_is_page' ) == '1' ) ? ' selected="selected"' : '' ) . '>' . $chapter_pages_label . '</option>
-					<option value="0" ' . ( ( $this->db->option_get( 'cp_toc_chapter_is_page' ) == '0' ) ? ' selected="selected"' : '' ) . '>' . $chapter_headings_label . '</option>
+					<option value="1" ' . ( ( $this->core->db->option_get( 'cp_toc_chapter_is_page' ) == '1' ) ? ' selected="selected"' : '' ) . '>' . $chapter_pages_label . '</option>
+					<option value="0" ' . ( ( $this->core->db->option_get( 'cp_toc_chapter_is_page' ) == '0' ) ? ' selected="selected"' : '' ) . '>' . $chapter_headings_label . '</option>
 				</select>
 			</td>
 		</tr>' : '' ) . '
 
-		' . ( ( $this->db->option_get( 'cp_show_posts_or_pages_in_toc' ) == 'page' && $this->db->option_get( 'cp_toc_chapter_is_page' ) == '0' ) ? '
+		' . ( ( $this->core->db->option_get( 'cp_show_posts_or_pages_in_toc' ) == 'page' && $this->core->db->option_get( 'cp_toc_chapter_is_page' ) == '0' ) ? '
 		<tr valign="top">
 			<th scope="row"><label for="cp_show_subpages">' . $sub_pages_label . '</label></th>
-			<td><input id="cp_show_subpages" name="cp_show_subpages" value="1"  type="checkbox" ' . ( $this->db->option_get( 'cp_show_subpages' ) ? ' checked="checked"' : '' ) . ' /></td>
+			<td><input id="cp_show_subpages" name="cp_show_subpages" value="1"  type="checkbox" ' . ( $this->core->db->option_get( 'cp_show_subpages' ) ? ' checked="checked"' : '' ) . ' /></td>
 		</tr>' : '' ) . '
 
 		<tr valign="top">
 			<th scope="row"><label for="cp_show_extended_toc">' . $extended_label . '</label></th>
 			<td><select id="cp_show_extended_toc" name="cp_show_extended_toc">
-					<option value="1" ' . ( ( $this->db->option_get( 'cp_show_extended_toc' ) == '1' ) ? ' selected="selected"' : '' ) . '>' . $extended_info_label . '</option>
-					<option value="0" ' . ( ( $this->db->option_get( 'cp_show_extended_toc' ) == '0' ) ? ' selected="selected"' : '' ) . '>' . $extended_title_label . '</option>
+					<option value="1" ' . ( ( $this->core->db->option_get( 'cp_show_extended_toc' ) == '1' ) ? ' selected="selected"' : '' ) . '>' . $extended_info_label . '</option>
+					<option value="0" ' . ( ( $this->core->db->option_get( 'cp_show_extended_toc' ) == '0' ) ? ' selected="selected"' : '' ) . '>' . $extended_title_label . '</option>
 				</select>
 			</td>
 		</tr>
@@ -2107,7 +2111,7 @@ HELPTEXT;
 		$comments_label = __( 'Comments', 'commentpress-core' );
 
 		// Get option - but if we haven't got a value, use comments.
-		$default = $this->db->option_get( 'cp_sidebar_default', 'comments' );
+		$default = $this->core->db->option_get( 'cp_sidebar_default', 'comments' );
 
 		// Define table of contents options.
 		$toc = '
@@ -2144,7 +2148,7 @@ HELPTEXT;
 		$override = '
 		<tr valign="top">
 			<th scope="row"><label for="cp_para_comments_live">' . $label . '</label></th>
-			<td><input id="cp_para_comments_live" name="cp_para_comments_live" value="1" type="checkbox" ' . ( ( $this->db->option_get( 'cp_para_comments_live' ) == '1' ) ? ' checked="checked"' : '' ) . ' /></td>
+			<td><input id="cp_para_comments_live" name="cp_para_comments_live" value="1" type="checkbox" ' . ( ( $this->core->db->option_get( 'cp_para_comments_live' ) == '1' ) ? ' checked="checked"' : '' ) . ' /></td>
 		</tr>
 		';
 
@@ -2169,8 +2173,8 @@ HELPTEXT;
 		<tr valign="top">
 			<th scope="row"><label for="cp_do_not_parse">' . __( 'Disable CommentPress on entries with no comments. (can be overridden on individual entries)', 'commentpress-core' ) . '</label></th>
 			<td><select id="cp_do_not_parse" name="cp_do_not_parse">
-					<option value="y" ' . ( ( $this->db->option_get( 'cp_do_not_parse', 'n' ) == 'y' ) ? ' selected="selected"' : '' ) . '>' . __( 'Yes', 'commentpress-core' ) . '</option>
-					<option value="n" ' . ( ( $this->db->option_get( 'cp_do_not_parse', 'n' ) == 'n' ) ? ' selected="selected"' : '' ) . '>' . __( 'No', 'commentpress-core' ) . '</option>
+					<option value="y" ' . ( ( $this->core->db->option_get( 'cp_do_not_parse', 'n' ) == 'y' ) ? ' selected="selected"' : '' ) . '>' . __( 'Yes', 'commentpress-core' ) . '</option>
+					<option value="n" ' . ( ( $this->core->db->option_get( 'cp_do_not_parse', 'n' ) == 'n' ) ? ' selected="selected"' : '' ) . '>' . __( 'No', 'commentpress-core' ) . '</option>
 				</select>
 				<p>' . $description . '</p>
 			</td>
@@ -2197,8 +2201,8 @@ HELPTEXT;
 		<tr valign="top">
 			<th scope="row"><label for="cp_page_nav_enabled">' . __( 'Enable automatic page navigation (controls appearance of page numbering and navigation arrows on hierarchical pages)', 'commentpress-core' ) . '</label></th>
 			<td><select id="cp_page_nav_enabled" name="cp_page_nav_enabled">
-					<option value="y" ' . ( ( $this->db->option_get( 'cp_page_nav_enabled', 'y' ) == 'y' ) ? ' selected="selected"' : '' ) . '>' . __( 'Yes', 'commentpress-core' ) . '</option>
-					<option value="n" ' . ( ( $this->db->option_get( 'cp_page_nav_enabled', 'y' ) == 'n' ) ? ' selected="selected"' : '' ) . '>' . __( 'No', 'commentpress-core' ) . '</option>
+					<option value="y" ' . ( ( $this->core->db->option_get( 'cp_page_nav_enabled', 'y' ) == 'y' ) ? ' selected="selected"' : '' ) . '>' . __( 'Yes', 'commentpress-core' ) . '</option>
+					<option value="n" ' . ( ( $this->core->db->option_get( 'cp_page_nav_enabled', 'y' ) == 'n' ) ? ' selected="selected"' : '' ) . '>' . __( 'No', 'commentpress-core' ) . '</option>
 				</select>
 			</td>
 		</tr>
@@ -2220,14 +2224,14 @@ HELPTEXT;
 	public function _get_post_type_options() {
 
 		// Get post types that support the editor.
-		$capable_post_types = $this->db->get_supported_post_types();
+		$capable_post_types = $this->core->db->get_supported_post_types();
 
 		// Init outputs.
 		$output = [];
 		$options = '';
 
 		// Get chosen post types.
-		$selected_types = $this->db->option_get( 'cp_post_types_disabled', [] );
+		$selected_types = $this->core->db->option_get( 'cp_post_types_disabled', [] );
 
 		// Sanity check.
 		if ( count( $capable_post_types ) > 0 ) {
@@ -2280,8 +2284,8 @@ HELPTEXT;
 		<tr valign="top">
 			<th scope="row"><label for="cp_textblock_meta">' . __( 'Show paragraph meta (Number and Comment Icon)', 'commentpress-core' ) . '</label></th>
 			<td><select id="cp_textblock_meta" name="cp_textblock_meta">
-					<option value="y" ' . ( ( $this->db->option_get( 'cp_textblock_meta', 'y' ) == 'y' ) ? ' selected="selected"' : '' ) . '>' . __( 'Always', 'commentpress-core' ) . '</option>
-					<option value="n" ' . ( ( $this->db->option_get( 'cp_textblock_meta', 'y' ) == 'n' ) ? ' selected="selected"' : '' ) . '>' . __( 'On rollover', 'commentpress-core' ) . '</option>
+					<option value="y" ' . ( ( $this->core->db->option_get( 'cp_textblock_meta', 'y' ) == 'y' ) ? ' selected="selected"' : '' ) . '>' . __( 'Always', 'commentpress-core' ) . '</option>
+					<option value="n" ' . ( ( $this->core->db->option_get( 'cp_textblock_meta', 'y' ) == 'n' ) ? ' selected="selected"' : '' ) . '>' . __( 'On rollover', 'commentpress-core' ) . '</option>
 				</select>
 			</td>
 		</tr>

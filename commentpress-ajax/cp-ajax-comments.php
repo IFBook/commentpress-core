@@ -910,7 +910,7 @@ function cpajax_infinite_scroll_load_next_page() {
 	}
 
 	// Init nav.
-	$commentpress_core->nav->initialise();
+	$commentpress_core->nav->setup_items();
 
 	// Get page navigation.
 	$navigation = commentpress_page_navigation();

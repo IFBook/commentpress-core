@@ -24,9 +24,9 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $parent_obj The plugin object.
+	 * @var object $core The plugin object.
 	 */
-	public $parent_obj;
+	public $core;
 
 	/**
 	 * Plugin options array.
@@ -256,19 +256,19 @@ class CommentPress_Core_Database {
 	public $post_types_disabled = [];
 
 	/**
-	 * Initialises this object.
+	 * Constructor.
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $parent_obj A reference to the parent object.
+	 * @param object $core Reference to the core plugin object.
 	 */
-	public function __construct( $parent_obj ) {
+	public function __construct( $core ) {
 
 		// Store reference to parent.
-		$this->parent_obj = $parent_obj;
+		$this->core = $core;
 
-		// Init.
-		$this->initialise();
+		// Init when this plugin is fully loaded.
+		add_action( 'commentpress/core/loaded', [ $this, 'initialise' ] );
 
 	}
 
@@ -279,11 +279,20 @@ class CommentPress_Core_Database {
 	 */
 	public function initialise() {
 
+		// Only do this once.
+		static $done;
+		if ( isset( $done ) && $done === true ) {
+			return;
+		}
+
 		// Load options array.
 		$this->commentpress_options = $this->option_wp_get( 'commentpress_options', $this->commentpress_options );
 
 		// Do immediate upgrades after the theme has loaded.
 		add_action( 'after_setup_theme', [ $this, 'upgrade_immediately' ] );
+
+		// We're done.
+		$done = true;
 
 	}
 
@@ -304,7 +313,7 @@ class CommentPress_Core_Database {
 			if ( ! $this->schema_upgrade() ) {
 
 				// Kill plugin activation.
-				_cpdie( 'CommentPress Core Error: could not upgrade the database' );
+				wp_die( 'CommentPress Core Error: could not upgrade the database' );
 
 			}
 
@@ -1204,7 +1213,7 @@ class CommentPress_Core_Database {
 			$this->option_set( 'cp_blog_type', $cp_blog_type );
 
 			// If it's a groupblog.
-			if ( $this->parent_obj->is_groupblog() ) {
+			if ( $this->core->is_groupblog() ) {
 
 				// Get the group's id.
 				$group_id = get_groupblog_group_id( get_current_blog_id() );
@@ -1700,7 +1709,7 @@ class CommentPress_Core_Database {
 			if (
 				$post->post_parent == '0' &&
 				! $this->is_special_page() &&
-				$post->ID == $this->parent_obj->nav->get_first_page()
+				$post->ID == $this->core->nav->get_first_page()
 			) {
 
 				// Get the data.
@@ -1735,7 +1744,7 @@ class CommentPress_Core_Database {
 			// the relationship between pages, thus causing the page numbering to fail.
 
 			// Get all pages including chapters.
-			$all_pages = $this->parent_obj->nav->get_book_pages( 'structural' );
+			$all_pages = $this->core->nav->get_book_pages( 'structural' );
 
 			// If we have any pages.
 			if ( count( $all_pages ) > 0 ) {
@@ -3026,7 +3035,7 @@ class CommentPress_Core_Database {
 		}
 
 		// Are we logged in AND in a BuddyPress scenario?
-		if ( is_user_logged_in() && $this->parent_obj->is_buddypress() ) {
+		if ( is_user_logged_in() && $this->core->is_buddypress() ) {
 
 			// Regardless of version, settings can be made in bp-custom.php.
 			if ( defined( 'BP_DISABLE_ADMIN_BAR' ) && BP_DISABLE_ADMIN_BAR ) {
@@ -3090,7 +3099,7 @@ class CommentPress_Core_Database {
 		}
 
 		// If on a public groupblog and user isn't logged in.
-		if ( $this->parent_obj->is_groupblog() && ! is_user_logged_in() ) {
+		if ( $this->core->is_groupblog() && ! is_user_logged_in() ) {
 
 			// Don't add rich text editor, because only members can comment.
 			$vars['cp_tinymce'] = 0;
@@ -3188,10 +3197,10 @@ class CommentPress_Core_Database {
 		$vars['cp_special_page'] = ( $this->is_special_page() ) ? '1' : '0';
 
 		// Are we in a BuddyPress scenario?
-		if ( $this->parent_obj->is_buddypress() ) {
+		if ( $this->core->is_buddypress() ) {
 
 			// Is it a component homepage?
-			if ( $this->parent_obj->is_buddypress_special_page() ) {
+			if ( $this->core->is_buddypress_special_page() ) {
 
 				// Treat them the way we do ours.
 				$vars['cp_special_page'] = '1';
@@ -3220,7 +3229,7 @@ class CommentPress_Core_Database {
 		$vars['cp_show_subpages'] = $this->option_get( 'cp_show_subpages' );
 
 		// Set default sidebar.
-		$vars['cp_default_sidebar'] = $this->parent_obj->get_default_sidebar();
+		$vars['cp_default_sidebar'] = $this->core->get_default_sidebar();
 
 		// Set scroll speed.
 		$vars['cp_js_scroll_speed'] = $this->option_get( 'cp_js_scroll_speed' );

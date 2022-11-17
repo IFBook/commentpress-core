@@ -24,7 +24,7 @@ define( 'COMMENTPRESS_MU_PLUGIN_VERSION', '1.0' );
 class CommentPress_Multisite_Loader {
 
 	/**
-	 * Database interaction object.
+	 * Database object.
 	 *
 	 * @since 3.3
 	 * @access public
@@ -69,111 +69,148 @@ class CommentPress_Multisite_Loader {
 	public $workshop;
 
 	/**
-	 * Initialises this object.
+	 * Constructor.
 	 *
 	 * @since 3.3
 	 */
 	public function __construct() {
 
-		// Init.
+		// Initialise.
 		$this->initialise();
 
 	}
 
 	/**
-	 * Set up all items associated with this object.
+	 * Initialises this plugin.
 	 *
-	 * @since 3.3
+	 * @since 4.0
 	 */
 	public function initialise() {
 
-		/*
-		// Check for network activation.
-		add_action( 'activated_plugin',  [ $this, 'network_activated' ], 10, 2 );
-		*/
+		// Only do this once.
+		static $done;
+		if ( isset( $done ) && $done === true ) {
+			return;
+		}
 
-		// Check for network deactivation.
-		add_action( 'deactivated_plugin', [ $this, 'network_deactivated' ], 10, 2 );
-
-		// ---------------------------------------------------------------------
-		// Load Database object
-		// ---------------------------------------------------------------------
-
-		// Include class definition.
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_admin.php';
-
-		// Init autoload database object.
-		$this->db = new CommentPress_Multisite_Admin( $this );
-
-		// ---------------------------------------------------------------------
-		// Load standard Multisite object.
-		// ---------------------------------------------------------------------
-
-		// Include class definition.
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_ms.php';
-
-		// Init multisite object.
-		$this->multisite = new CommentPress_Multisite_WordPress( $this );
-
-		// ---------------------------------------------------------------------
-		// Load Post Revisions object (merge this into Core as an option).
-		// ---------------------------------------------------------------------
-
-		// Include class definition.
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_revisions.php';
-
-		// Instantiate it.
-		$this->revisions = new CommentPress_Multisite_Revisions( $this );
-
-		// ---------------------------------------------------------------------
-		// Call initialise() on admin object.
-		// ---------------------------------------------------------------------
+		// Bootstrap plugin.
+		$this->include_files();
+		$this->setup_objects();
+		$this->register_hooks();
 
 		// Initialise db for multisite.
-		$this->db->initialise( 'multisite' );
+		$this->db->options_initialise( 'multisite' );
 
-		// ---------------------------------------------------------------------
-		// Optionally load BuddyPress object.
-		// ---------------------------------------------------------------------
+		/**
+		 * Broadcast that CommentPress Core Multisite has loaded.
+		 *
+		 * Used internally to bootstrap objects.
+		 *
+		 * @since 4.0
+		 */
+		do_action( 'commentpress/core/multisite/loaded' );
 
-		// Load when BuddyPress is loaded.
-		add_action( 'bp_include', [ $this, 'load_buddypress_object' ] );
+		// We're done.
+		$done = true;
 
 	}
 
 	/**
-	 * BuddyPress object initialisation.
+	 * Includes class files.
+	 *
+	 * @since 4.0
+	 */
+	public function include_files() {
+
+		// Include class files.
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_admin.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_ms.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_revisions.php';
+
+	}
+
+	/**
+	 * Sets up this plugin's objects.
+	 *
+	 * @since 4.0
+	 */
+	public function setup_objects() {
+
+		// Initialise objects.
+		$this->db = new CommentPress_Multisite_Admin( $this );
+		$this->multisite = new CommentPress_Multisite_WordPress( $this );
+		$this->revisions = new CommentPress_Multisite_Revisions( $this );
+
+	}
+
+	/**
+	 * Register WordPress hooks.
+	 *
+	 * @since 4.0
+	 */
+	public function register_hooks() {
+
+		/*
+		// Check for network activation.
+		add_action( 'activated_plugin',  [ $this, 'network_activated' ], 10, 2 );
+
+		// Check for network deactivation.
+		add_action( 'deactivated_plugin', [ $this, 'network_deactivated' ], 10, 2 );
+		*/
+
+		// Load when BuddyPress is loaded.
+		add_action( 'bp_include', [ $this, 'buddypress_init' ] );
+
+	}
+
+	/**
+	 * BuddyPress initialisation.
 	 *
 	 * @since 3.3
 	 */
-	public function load_buddypress_object() {
+	public function buddypress_init() {
 
-		// ---------------------------------------------------------------------
-		// Load BuddyPress object.
-		// ---------------------------------------------------------------------
-
-		// Include class definition.
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_bp.php';
-
-		// Init BuddyPress object.
-		$this->bp = new CommentPress_Multisite_Buddypress( $this );
-
-		// ---------------------------------------------------------------------
-		// Load Groupblog Workshop renaming object.
-		// ---------------------------------------------------------------------
-
-		// Include class definition.
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_workshop.php';
-
-		// Instantiate it.
-		$this->workshop = new CommentPress_Multisite_Buddypress_Groupblog( $this );
-
-		// ---------------------------------------------------------------------
-		// Call initialise() on admin object again.
-		// ---------------------------------------------------------------------
+		// Bootstrap plugin.
+		$this->buddypress_include_files();
+		$this->buddypress_setup_objects();
 
 		// Initialise db for BuddyPress.
-		$this->db->initialise( 'buddypress' );
+		$this->db->options_initialise( 'buddypress' );
+
+		/**
+		 * Broadcast that BuddyPress has loaded.
+		 *
+		 * Used internally to bootstrap objects.
+		 *
+		 * @since 4.0
+		 */
+		do_action( 'commentpress/core/multisite/bp/loaded' );
+
+	}
+
+	/**
+	 * Includes BuddyPress class files.
+	 *
+	 * @since 4.0
+	 */
+	public function buddypress_include_files() {
+
+		// Include class files.
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_bp.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_workshop.php';
+
+	}
+
+	/**
+	 * Sets up this plugin's BuddyPress objects.
+	 *
+	 * @since 4.0
+	 */
+	public function buddypress_setup_objects() {
+
+		// Initialise objects.
+		$this->bp = new CommentPress_Multisite_Buddypress( $this );
+		$this->workshop = new CommentPress_Multisite_Buddypress_Groupblog( $this );
 
 	}
 
@@ -187,6 +224,7 @@ class CommentPress_Multisite_Loader {
 	 */
 	public function network_activated( $plugin, $network_wide = null ) {
 
+		/*
 		// If it's our plugin.
 		if ( $plugin == plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) {
 
@@ -198,6 +236,7 @@ class CommentPress_Multisite_Loader {
 			}
 
 		}
+		*/
 
 	}
 
@@ -211,6 +250,7 @@ class CommentPress_Multisite_Loader {
 	 */
 	public function network_deactivated( $plugin, $network_wide = null ) {
 
+		/*
 		// If it's our plugin.
 		if ( $plugin == plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) {
 
@@ -224,6 +264,7 @@ class CommentPress_Multisite_Loader {
 			}
 
 		}
+		*/
 
 	}
 

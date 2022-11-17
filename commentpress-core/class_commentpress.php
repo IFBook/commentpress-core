@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
 class CommentPress_Core {
 
 	/**
-	 * Database interaction object.
+	 * Database object.
 	 *
 	 * @since 3.0
 	 * @access public
@@ -110,25 +110,207 @@ class CommentPress_Core {
 	public $bp_groupblog = false;
 
 	/**
-	 * Initialises this object.
+	 * Constructor.
 	 *
 	 * @since 3.0
 	 */
 	public function __construct() {
 
+		// Initialise when all plugins have loaded.
+		add_action( 'plugins_loaded', [ $this, 'initialise' ] );
+
+		// Use translation.
+		add_action( 'plugins_loaded', [ $this, 'translation' ] );
+
 		// Init.
-		$this->_init();
+		$this->initialise();
 
 	}
 
 	/**
-	 * If needed, destroys this object.
+	 * Initialises this plugin.
 	 *
-	 * @since 3.0
+	 * @since 4.0
 	 */
-	public function destroy() {
+	public function initialise() {
 
-		// Nothing.
+		// Only do this once.
+		static $done;
+		if ( isset( $done ) && $done === true ) {
+			return;
+		}
+
+		// Bootstrap plugin.
+		$this->include_files();
+		$this->setup_objects();
+		$this->register_hooks();
+
+		/**
+		 * Broadcast that CommentPress Core has loaded.
+		 *
+		 * Used internally to bootstrap objects.
+		 *
+		 * @since 4.0
+		 */
+		do_action( 'commentpress/core/loaded' );
+
+		/**
+		 * Broadcast that CommentPress Core has loaded.
+		 *
+		 * @since 3.6.3
+		 */
+		do_action( 'commentpress_loaded' );
+
+		// We're done.
+		$done = true;
+
+	}
+
+	/**
+	 * Includes class files.
+	 *
+	 * @since 4.0
+	 */
+	public function include_files() {
+
+		// Include class files.
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_db.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_display.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_nav.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_parser.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_formatter.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_workflow.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_editor.php';
+
+		/**
+		 * Broadcast that class files have been included.
+		 *
+		 * @since 3.6.2
+		 */
+		do_action( 'commentpress_after_includes' );
+
+	}
+
+	/**
+	 * Sets up this plugin's objects.
+	 *
+	 * @since 4.0
+	 */
+	public function setup_objects() {
+
+		// Initialise objects.
+		$this->db = new CommentPress_Core_Database( $this );
+		$this->display = new CommentPress_Core_Display( $this );
+		$this->nav = new CommentPress_Core_Navigator( $this );
+		$this->parser = new CommentPress_Core_Parser( $this );
+		$this->formatter = new CommentPress_Core_Formatter( $this );
+		$this->workflow = new CommentPress_Core_Workflow( $this );
+		$this->editor = new CommentPress_Core_Editor( $this );
+
+	}
+
+	/**
+	 * Register WordPress hooks.
+	 *
+	 * @since 3.4
+	 * @since 4.0 Renamed.
+	 */
+	public function register_hooks() {
+
+		// Modify comment posting.
+		add_action( 'comment_post', [ $this, 'save_comment' ], 10, 2 );
+
+		// Exclude special pages from listings.
+		add_filter( 'wp_list_pages_excludes', [ $this, 'exclude_special_pages' ], 10, 1 );
+		add_filter( 'parse_query', [ $this, 'exclude_special_pages_from_admin' ], 10, 1 );
+
+		// Is this the back end?
+		if ( is_admin() ) {
+
+			// Modify all.
+			add_filter( 'views_edit-page', [ $this, 'update_page_counts_in_admin' ], 10, 1 );
+
+			// Modify admin menu.
+			add_action( 'admin_menu', [ $this, 'admin_menu' ] );
+
+			// Add meta boxes.
+			add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes' ] );
+
+			// Intercept save.
+			add_action( 'save_post', [ $this, 'save_post' ], 10, 2 );
+
+			// Intercept delete.
+			add_action( 'before_delete_post', [ $this, 'delete_post' ], 10, 1 );
+
+			/*
+			// Use new help functionality.
+			//add_action('add_screen_help_and_options', [ $this, 'options_help' ] );
+			// NOTE: help is actually called in $this->admin_head() because the
+			// 'add_screen_help_and_options' action does not seem to be working in 3.3-beta1
+			*/
+
+			// Comment block quicktag.
+			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_scripts' ] );
+
+		} else {
+
+			// Add script libraries.
+			add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+
+			// Add CSS files.
+			add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_styles' ] );
+
+			// Add template redirect for TOC behaviour.
+			add_action( 'template_redirect', [ $this, 'redirect_to_child' ] );
+
+			// Modify the content (after all's done).
+			add_filter( 'the_content', [ $this, 'the_content' ], 20 );
+
+		}
+
+		// If we're in a multisite scenario.
+		// TODO: Move to WordPress Multisite class.
+		if ( is_multisite() ) {
+
+			// Add callback for signup page to include sidebar.
+			add_action( 'after_signup_form', [ $this, 'after_signup_form' ], 20 );
+
+			// If subdirectory install.
+			if ( ! is_subdomain_install() ) {
+
+				// Add filter for reserved CommentPress Core special page names.
+				add_filter( 'subdirectory_reserved_names', [ $this, 'add_reserved_names' ] );
+
+			}
+
+		}
+
+		// If BuddyPress installed, then the following actions will fire.
+
+		// Enable BuddyPress functionality.
+		add_action( 'bp_include', [ $this, 'buddypress_init' ] );
+
+		// Add BuddyPress functionality - really late, so group object is set up.
+		add_action( 'bp_setup_globals', [ $this, 'buddypress_globals_loaded' ], 1000 );
+
+		// Actions to perform on BuddyPress loaded.
+		add_action( 'bp_loaded', [ $this, 'bp_docs_loaded' ], 20 );
+
+		// Actions to perform on BuddyPress Docs load.
+		add_action( 'bp_docs_load', [ $this, 'bp_docs_loaded' ], 20 );
+
+		// Override BuddyPress Docs comment template.
+		add_filter( 'bp_docs_comment_template_path', [ $this, 'bp_docs_comment_tempate' ], 20, 2 );
+
+		// Amend the behaviour of Featured Comments plugin.
+		add_action( 'plugins_loaded', [ $this, 'featured_comments_override' ], 1000 );
+
+		/**
+		 * Broadcast that callbacks have been added.
+		 *
+		 * @since 3.6.2
+		 */
+		do_action( 'commentpress_after_hooks' );
 
 	}
 
@@ -165,18 +347,6 @@ class CommentPress_Core {
 
 		// Call display destroy method.
 		$this->display->deactivate();
-
-	}
-
-	/**
-	 * Utility that fires an action when CommentPress Core has loaded.
-	 *
-	 * @since 3.6.3
-	 */
-	public function broadcast() {
-
-		// Broadcast.
-		do_action( 'commentpress_loaded' );
 
 	}
 
@@ -414,17 +584,11 @@ class CommentPress_Core {
 	 */
 	public function admin_head() {
 
-		// There's a new screen object for help in 3.3.
-		global $wp_version;
-		if ( version_compare( $wp_version, '3.2.99999', '>=' ) ) {
+		// Get screen object.
+		$screen = get_current_screen();
 
-			// Get screen object.
-			$screen = get_current_screen();
-
-			// Use method in this class.
-			$this->options_help( $screen );
-
-		}
+		// Use method in this class.
+		$this->options_help( $screen );
 
 	}
 
@@ -533,25 +697,6 @@ class CommentPress_Core {
 
 		// Do redirect.
 		$this->nav->redirect_to_child();
-
-	}
-
-	/**
-	 * Inserts plugin-specific header items.
-	 *
-	 * @since 3.4
-	 *
-	 * @param str $headers The headers.
-	 */
-	public function head( $headers ) {
-
-		// Do we have navigation?
-		if ( is_single() || is_page() || is_attachment() ) {
-
-			// Initialise nav.
-			$this->nav->initialise();
-
-		}
 
 	}
 
@@ -1670,18 +1815,18 @@ class CommentPress_Core {
 	public function featured_comments_override() {
 
 		// Is the plugin available?
-		if ( function_exists( 'wp_featured_comments_load' ) ) {
-
-			// Get instance.
-			$fc = wp_featured_comments_load();
-
-			// Remove comment_text filter.
-			remove_filter( 'comment_text', [ $fc, 'comment_text' ], 10 );
-
-			// Get the plugin markup in the comment edit section.
-			add_filter( 'cp_comment_edit_link', [ $this, 'featured_comments_markup' ], 100, 2 );
-
+		if ( ! function_exists( 'wp_featured_comments_load' ) ) {
+			return;
 		}
+
+		// Get instance.
+		$fc = wp_featured_comments_load();
+
+		// Remove comment_text filter.
+		remove_filter( 'comment_text', [ $fc, 'comment_text' ], 10 );
+
+		// Get the plugin markup in the comment edit section.
+		add_filter( 'cp_comment_edit_link', [ $this, 'featured_comments_markup' ], 100, 2 );
 
 	}
 
@@ -1697,18 +1842,15 @@ class CommentPress_Core {
 	public function featured_comments_markup( $editlink, $comment ) {
 
 		// Is the plugin available?
-		if ( function_exists( 'wp_featured_comments_load' ) ) {
-
-			// Get instance.
-			$fc = wp_featured_comments_load();
-
-			// Get markup.
-			return $editlink . $fc->comment_text( '' );
-
+		if ( ! function_exists( 'wp_featured_comments_load' ) ) {
+			return $editlink;
 		}
 
-		// --<
-		return $editlink;
+		// Get instance.
+		$fc = wp_featured_comments_load();
+
+		// Get markup.
+		return $editlink . $fc->comment_text( '' );
 
 	}
 
@@ -1930,217 +2072,6 @@ class CommentPress_Core {
 	 */
 
 	/**
-	 * Object initialisation.
-	 *
-	 * @since 3.4
-	 */
-	public function _init() {
-
-		// ---------------------------------------------------------------------
-		// Database Object.
-		// ---------------------------------------------------------------------
-
-		// Include class definition.
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_db.php';
-
-		// Init database object.
-		$this->db = new CommentPress_Core_Database( $this );
-
-		// ---------------------------------------------------------------------
-		// Display Object.
-		// ---------------------------------------------------------------------
-
-		// Include class definition.
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_display.php';
-
-		// Init display object.
-		$this->display = new CommentPress_Core_Display( $this );
-
-		// ---------------------------------------------------------------------
-		// Navigation Object.
-		// ---------------------------------------------------------------------
-
-		// Include class definition.
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_nav.php';
-
-		// Init nav object.
-		$this->nav = new CommentPress_Core_Navigator( $this );
-
-		// ---------------------------------------------------------------------
-		// Parser Object.
-		// ---------------------------------------------------------------------
-
-		// Include class definition.
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_parser.php';
-
-		// Init parser object.
-		$this->parser = new CommentPress_Core_Parser( $this );
-
-		// ---------------------------------------------------------------------
-		// Formatter Object.
-		// ---------------------------------------------------------------------
-
-		// Include class definition.
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_formatter.php';
-
-		// Init formatter object.
-		$this->formatter = new CommentPress_Core_Formatter( $this );
-
-		// ---------------------------------------------------------------------
-		// Workflow Object
-		// ---------------------------------------------------------------------
-
-		// Include class definition.
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_workflow.php';
-
-		// Init workflow object.
-		$this->workflow = new CommentPress_Core_Workflow( $this );
-
-		// ---------------------------------------------------------------------
-		// Front-end Editor Object.
-		// ---------------------------------------------------------------------
-
-		// Include class definition.
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_editor.php';
-
-		// Init workflow object.
-		$this->editor = new CommentPress_Core_Editor( $this );
-
-		/**
-		 * Broadcast that class files have been included.
-		 *
-		 * @since 3.6.2
-		 */
-		do_action( 'commentpress_after_includes' );
-
-		// ---------------------------------------------------------------------
-		// Finally, register hooks.
-		// ---------------------------------------------------------------------
-
-		// Register hooks.
-		$this->_register_hooks();
-
-	}
-
-	/**
-	 * Register WordPress hooks.
-	 *
-	 * @since 3.4
-	 */
-	public function _register_hooks() {
-
-		// Access version.
-		global $wp_version;
-
-		// Broadcast that CommentPress Core is active.
-		add_action( 'plugins_loaded', [ $this, 'broadcast' ] );
-
-		// Use translation.
-		add_action( 'plugins_loaded', [ $this, 'translation' ] );
-
-		// Check for plugin deactivation.
-		add_action( 'deactivated_plugin', [ $this, '_plugin_deactivated' ], 10, 2 );
-
-		// Modify comment posting.
-		add_action( 'comment_post', [ $this, 'save_comment' ], 10, 2 );
-
-		// Exclude special pages from listings.
-		add_filter( 'wp_list_pages_excludes', [ $this, 'exclude_special_pages' ], 10, 1 );
-		add_filter( 'parse_query', [ $this, 'exclude_special_pages_from_admin' ], 10, 1 );
-
-		// Is this the back end?
-		if ( is_admin() ) {
-
-			// Modify all.
-			add_filter( 'views_edit-page', [ $this, 'update_page_counts_in_admin' ], 10, 1 );
-
-			// Modify admin menu.
-			add_action( 'admin_menu', [ $this, 'admin_menu' ] );
-
-			// Add meta boxes.
-			add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes' ] );
-
-			// Intercept save.
-			add_action( 'save_post', [ $this, 'save_post' ], 10, 2 );
-
-			// Intercept delete.
-			add_action( 'before_delete_post', [ $this, 'delete_post' ], 10, 1 );
-
-			/*
-			// Use new help functionality.
-			//add_action('add_screen_help_and_options', [ $this, 'options_help' ] );
-			// NOTE: help is actually called in $this->admin_head() because the
-			// 'add_screen_help_and_options' action does not seem to be working in 3.3-beta1
-			*/
-
-			// Comment block quicktag.
-			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_scripts' ] );
-
-		} else {
-
-			// Modify the document head.
-			add_filter( 'wp_head', [ $this, 'head' ] );
-
-			// Add script libraries.
-			add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
-
-			// Add CSS files.
-			add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_styles' ] );
-
-			// Add template redirect for TOC behaviour.
-			add_action( 'template_redirect', [ $this, 'redirect_to_child' ] );
-
-			// Modify the content (after all's done).
-			add_filter( 'the_content', [ $this, 'the_content' ], 20 );
-
-		}
-
-		// If we're in a multisite scenario.
-		if ( is_multisite() ) {
-
-			// Add filter for signup page to include sidebar.
-			add_filter( 'after_signup_form', [ $this, 'after_signup_form' ], 20 );
-
-			// If subdirectory install.
-			if ( ! is_subdomain_install() ) {
-
-				// Add filter for reserved CommentPress Core special page names.
-				add_filter( 'subdirectory_reserved_names', [ $this, 'add_reserved_names' ] );
-
-			}
-
-		}
-
-		// If BuddyPress installed, then the following actions will fire.
-
-		// Enable BuddyPress functionality.
-		add_action( 'bp_include', [ $this, 'buddypress_init' ] );
-
-		// Add BuddyPress functionality (really late, so group object is set up).
-		add_action( 'bp_setup_globals', [ $this, 'buddypress_globals_loaded' ], 1000 );
-
-		// Actions to perform on BuddyPress loaded.
-		add_action( 'bp_loaded', [ $this, 'bp_docs_loaded' ], 20 );
-
-		// Actions to perform on BuddyPress Docs load.
-		add_action( 'bp_docs_load', [ $this, 'bp_docs_loaded' ], 20 );
-
-		// Override BuddyPress Docs comment template.
-		add_filter( 'bp_docs_comment_template_path', [ $this, 'bp_docs_comment_tempate' ], 20, 2 );
-
-		// Amend the behaviour of Featured Comments plugin.
-		add_action( 'plugins_loaded', [ $this, 'featured_comments_override' ], 1000 );
-
-		/**
-		 * Broadcast that callbacks have been added.
-		 *
-		 * @since 3.6.2
-		 */
-		do_action( 'commentpress_after_hooks' );
-
-	}
-
-	/**
 	 * Utility to check for commentable CPT.
 	 *
 	 * @since 3.4
@@ -2353,41 +2284,6 @@ class CommentPress_Core {
 		</p>
 		</div>
 		';
-
-	}
-
-	/**
-	 * Deactivate this plugin.
-	 *
-	 * @since 3.4
-	 *
-	 * @param str $plugin The name of the plugin.
-	 * @param bool $network_wide True if the plugin is network-activated, false otherwise.
-	 */
-	public function _plugin_deactivated( $plugin, $network_wide = null ) {
-
-		// Is it the old CommentPress plugin still active?
-		if ( defined( 'CP_PLUGIN_FILE' ) ) {
-
-			// Is it the old CommentPress plugin being deactivated?
-			if ( $plugin == plugin_basename( CP_PLUGIN_FILE ) ) {
-
-				// Only trigger this when not network-wide.
-				if ( is_null( $network_wide ) || $network_wide == false ) {
-
-					// Restore theme.
-					$this->display->activate();
-
-					/*
-					// Override widgets?
-					$this->db->_clear_widgets();
-					*/
-
-				}
-
-			}
-
-		}
 
 	}
 

@@ -20,13 +20,13 @@ defined( 'ABSPATH' ) || exit;
 class CommentPress_Multisite_Admin {
 
 	/**
-	 * Plugin object.
+	 * Multisite plugin object.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $parent_obj The plugin object.
+	 * @var object $ms_loader The multisite plugin object.
 	 */
-	public $parent_obj;
+	public $ms_loader;
 
 	/**
 	 * Options page reference.
@@ -47,19 +47,74 @@ class CommentPress_Multisite_Admin {
 	public $cpmu_options = [];
 
 	/**
-	 * Initialises this object.
+	 * Constructor.
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $parent_obj a reference to the parent object.
+	 * @param object $ms_loader Reference to the multisite plugin object.
 	 */
-	public function __construct( $parent_obj = null ) {
+	public function __construct( $ms_loader ) {
 
-		// Store reference to "parent" (calling obj, not OOP parent).
-		$this->parent_obj = $parent_obj;
+		// Store reference to multisite plugin object.
+		$this->ms_loader = $ms_loader;
 
-		// Init.
-		$this->_init();
+		// Init when the multisite plugin is fully loaded.
+		add_action( 'commentpress/core/multisite/loaded', [ $this, 'initialise' ] );
+
+	}
+
+	/**
+	 * Initialises this obiject.
+	 *
+	 * @since 3.3
+	 */
+	public function initialise() {
+
+		// Load options array.
+		$this->cpmu_options = $this->option_wpms_get( 'cpmu_options', $this->cpmu_options );
+
+		/*
+		// If we don't have one.
+		if ( count( $this->cpmu_options ) == 0 ) {
+
+			// Init upgrade if not in backend.
+			if ( ! is_admin() ) {
+				die( 'CommentPress Core Multisite upgrade required.' );
+			}
+
+		}
+		*/
+
+		/*
+		 * Optionally load CommentPress Core.
+		 */
+
+		// If we're network-enabled.
+		if ( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_sitewide' ) {
+
+			// Is CommentPress Core active on this blog?
+			if ( $this->is_commentpress() ) {
+
+				// Activate core.
+				commentpress_activate_core();
+
+				// Activate AJAX.
+				commentpress_activate_ajax();
+
+				// Modify CommentPress Core settings page.
+				add_filter( 'cpmu_deactivate_commentpress_element', [ $this, 'get_deactivate_element' ] );
+
+				// Hook into CommentPress Core settings page result.
+				add_action( 'cpmu_deactivate_commentpress', [ $this, 'disable_core' ] );
+
+			} else {
+
+				// Modify admin menu.
+				add_action( 'admin_menu', [ $this, 'admin_menu' ] );
+
+			}
+
+		}
 
 	}
 
@@ -70,7 +125,7 @@ class CommentPress_Multisite_Admin {
 	 *
 	 * @param string $component a component identifier, either 'multisite' or 'buddypress'.
 	 */
-	public function initialise( $component = 'multisite' ) {
+	public function options_initialise( $component = 'multisite' ) {
 
 		// We always get a multisite request.
 		if ( $component == 'multisite' ) {
@@ -126,18 +181,6 @@ class CommentPress_Multisite_Admin {
 
 		// --<
 		return $result;
-	}
-
-	/**
-	 * If needed, destroys all items associated with this object.
-	 *
-	 * @since 3.3
-	 */
-	public function destroy() {
-
-		// Delete options.
-		$this->options_delete();
-
 	}
 
 	/**
@@ -900,61 +943,6 @@ class CommentPress_Multisite_Admin {
 	 * Private Methods
 	 * -------------------------------------------------------------------------
 	 */
-
-	/**
-	 * Object initialisation.
-	 *
-	 * @since 3.3
-	 */
-	private function _init() {
-
-		// Load options array.
-		$this->cpmu_options = $this->option_wpms_get( 'cpmu_options', $this->cpmu_options );
-
-		/*
-		// If we don't have one.
-		if ( count( $this->cpmu_options ) == 0 ) {
-
-			// Init upgrade if not in backend.
-			if ( ! is_admin() ) {
-				die( 'CommentPress Core Multisite upgrade required.' );
-			}
-
-		}
-		*/
-
-		/*
-		 * Optionally load CommentPress Core.
-		 */
-
-		// If we're network-enabled.
-		if ( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_sitewide' ) {
-
-			// Is CommentPress Core active on this blog?
-			if ( $this->is_commentpress() ) {
-
-				// Activate core.
-				commentpress_activate_core();
-
-				// Activate AJAX.
-				commentpress_activate_ajax();
-
-				// Modify CommentPress Core settings page.
-				add_filter( 'cpmu_deactivate_commentpress_element', [ $this, 'get_deactivate_element' ] );
-
-				// Hook into CommentPress Core settings page result.
-				add_action( 'cpmu_deactivate_commentpress', [ $this, 'disable_core' ] );
-
-			} else {
-
-				// Modify admin menu.
-				add_action( 'admin_menu', [ $this, 'admin_menu' ] );
-
-			}
-
-		}
-
-	}
 
 	/**
 	 * Get the WordPress admin page.

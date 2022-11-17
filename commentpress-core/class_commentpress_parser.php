@@ -29,9 +29,9 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $parent_obj The plugin object.
+	 * @var object $core The plugin object.
 	 */
-	public $parent_obj;
+	public $core;
 
 	/**
 	 * Text signatures array.
@@ -98,19 +98,43 @@ class CommentPress_Core_Parser {
 	public $block_name = '';
 
 	/**
-	 * Initialises this object.
+	 * Constructor.
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $parent_obj a reference to the parent object.
+	 * @param object $core Reference to the core plugin object.
 	 */
-	public function __construct( $parent_obj ) {
+	public function __construct( $core ) {
 
-		// Store reference to parent.
-		$this->parent_obj = $parent_obj;
+		// Store reference to core plugin object.
+		$this->core = $core;
 
-		// Initialise via 'wp' hook.
-		add_action( 'wp', [ $this, 'initialise' ] );
+		// Init when this plugin is fully loaded.
+		add_action( 'commentpress/core/loaded', [ $this, 'initialise' ] );
+
+	}
+
+	/**
+	 * Initialises this object.
+	 *
+	 * @since 4.0
+	 */
+	public function initialise() {
+
+		// Register hooks.
+		$this->register_hooks();
+
+	}
+
+	/**
+	 * Register hooks.
+	 *
+	 * @since 4.0
+	 */
+	public function register_hooks() {
+
+		// Set up items when "wp" action fires.
+		add_action( 'wp', [ $this, 'setup_items' ] );
 
 	}
 
@@ -119,7 +143,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 */
-	public function initialise() {
+	public function setup_items() {
 
 		global $post;
 
@@ -130,14 +154,14 @@ class CommentPress_Core_Parser {
 			! is_object( $post ) || (
 
 				// Post types can be skipped.
-				$this->parent_obj->db->option_exists( 'cp_post_types_disabled' ) &&
-				in_array( $post->post_type, $this->parent_obj->db->option_get( 'cp_post_types_disabled' ) )
+				$this->core->db->option_exists( 'cp_post_types_disabled' ) &&
+				in_array( $post->post_type, $this->core->db->option_get( 'cp_post_types_disabled' ) )
 
 			) || (
 
 				// Individual entries can have parsing skipped when.
-				$this->parent_obj->db->option_exists( 'cp_do_not_parse' ) &&
-				$this->parent_obj->db->option_get( 'cp_do_not_parse' ) == 'y' &&
+				$this->core->db->option_exists( 'cp_do_not_parse' ) &&
+				$this->core->db->option_get( 'cp_do_not_parse' ) == 'y' &&
 				$post->comment_status == 'closed' &&
 				empty( $post->comment_count )
 
@@ -162,15 +186,6 @@ class CommentPress_Core_Parser {
 	}
 
 	/**
-	 * If needed, destroys all items associated with this object.
-	 *
-	 * @since 3.0
-	 */
-	public function destroy() {
-
-	}
-
-	/**
 	 * -------------------------------------------------------------------------
 	 * Public Methods
 	 * -------------------------------------------------------------------------
@@ -191,7 +206,7 @@ class CommentPress_Core_Parser {
 
 		// Retrieve all comments and store.
 		// We need this data multiple times and only need to get it once.
-		$this->comments_all = $this->parent_obj->db->get_all_comments( $post->ID );
+		$this->comments_all = $this->core->db->get_all_comments( $post->ID );
 
 		// Are we skipping parsing?
 		if ( $this->do_not_parse ) {
@@ -289,7 +304,7 @@ class CommentPress_Core_Parser {
 		}
 
 		// Store text sigs.
-		$this->parent_obj->db->set_text_sigs( $this->text_signatures );
+		$this->core->db->set_text_sigs( $this->text_signatures );
 
 		// --<
 		return $content;
@@ -443,7 +458,7 @@ class CommentPress_Core_Parser {
 			$comment_count = count( $this->comments_sorted[ $text_signature ] );
 
 			// Get comment icon.
-			$comment_icon = $this->parent_obj->display->get_comment_icon(
+			$comment_icon = $this->core->display->get_comment_icon(
 				$comment_count,
 				$text_signature,
 				'auto',
@@ -451,7 +466,7 @@ class CommentPress_Core_Parser {
 			);
 
 			// Get paragraph icon.
-			$paragraph_icon = $this->parent_obj->display->get_paragraph_icon(
+			$paragraph_icon = $this->core->display->get_paragraph_icon(
 				$comment_count,
 				$text_signature,
 				'auto',
@@ -612,7 +627,7 @@ class CommentPress_Core_Parser {
 			$pattern = [ '#<(' . $tag . '[^a^r>]*)>#' ];
 
 			$replace = [
-				$this->parent_obj->display->get_para_tag(
+				$this->core->display->get_para_tag(
 					$text_signature,
 					$paragraph_icon . $comment_icon,
 					$tag,
@@ -706,7 +721,7 @@ class CommentPress_Core_Parser {
 		if ( post_password_required() ) {
 
 			// Store text sigs array in global.
-			$this->parent_obj->db->set_text_sigs( $this->text_signatures );
+			$this->core->db->set_text_sigs( $this->text_signatures );
 
 			// --<
 			return $this->text_signatures;
@@ -723,7 +738,7 @@ class CommentPress_Core_Parser {
 		if ( ! count( $matches ) ) {
 
 			// Store text sigs array in global.
-			$this->parent_obj->db->set_text_sigs( $this->text_signatures );
+			$this->core->db->set_text_sigs( $this->text_signatures );
 
 			// --<
 			return $this->text_signatures;
@@ -766,7 +781,7 @@ class CommentPress_Core_Parser {
 		}
 
 		// Store text sigs array in global.
-		$this->parent_obj->db->set_text_sigs( $this->text_signatures );
+		$this->core->db->set_text_sigs( $this->text_signatures );
 
 		// --<
 		return $this->text_signatures;
@@ -852,7 +867,7 @@ class CommentPress_Core_Parser {
 					$comment_count = count( $this->comments_sorted[ $text_signature ] );
 
 					// Get paragraph icon.
-					$paragraph_icon = $this->parent_obj->display->get_paragraph_icon(
+					$paragraph_icon = $this->core->display->get_paragraph_icon(
 						$comment_count,
 						$text_signature,
 						'line',
@@ -860,7 +875,7 @@ class CommentPress_Core_Parser {
 					);
 
 					// Get opening tag markup for this line.
-					$opening_tag = $this->parent_obj->display->get_para_tag(
+					$opening_tag = $this->core->display->get_para_tag(
 						$text_signature,
 						$paragraph_icon,
 						'span'
@@ -870,7 +885,7 @@ class CommentPress_Core_Parser {
 					$line = $opening_tag . $line;
 
 					// Get comment icon.
-					$comment_icon = $this->parent_obj->display->get_comment_icon(
+					$comment_icon = $this->core->display->get_comment_icon(
 						$comment_count,
 						$text_signature,
 						'line',
@@ -969,7 +984,7 @@ class CommentPress_Core_Parser {
 		if ( post_password_required() ) {
 
 			// Store text sigs array in global.
-			$this->parent_obj->db->set_text_sigs( $this->text_signatures );
+			$this->core->db->set_text_sigs( $this->text_signatures );
 
 			// --<
 			return $this->text_signatures;
@@ -988,7 +1003,7 @@ class CommentPress_Core_Parser {
 		if ( empty( $output_array ) ) {
 
 			// Store text sigs array in global.
-			$this->parent_obj->db->set_text_sigs( $this->text_signatures );
+			$this->core->db->set_text_sigs( $this->text_signatures );
 
 			// --<
 			return $this->text_signatures;
@@ -1053,7 +1068,7 @@ class CommentPress_Core_Parser {
 		}
 
 		// Store text sigs array in global.
-		$this->parent_obj->db->set_text_sigs( $this->text_signatures );
+		$this->core->db->set_text_sigs( $this->text_signatures );
 
 		// --<
 		return $this->text_signatures;
@@ -1127,7 +1142,7 @@ class CommentPress_Core_Parser {
 				$comment_count = count( $this->comments_sorted[ $text_signature ] );
 
 				// Get comment icon.
-				$comment_icon = $this->parent_obj->display->get_comment_icon(
+				$comment_icon = $this->core->display->get_comment_icon(
 					$comment_count,
 					$text_signature,
 					'block',
@@ -1135,7 +1150,7 @@ class CommentPress_Core_Parser {
 				);
 
 				// Get paragraph icon.
-				$paragraph_icon = $this->parent_obj->display->get_paragraph_icon(
+				$paragraph_icon = $this->core->display->get_paragraph_icon(
 					$comment_count,
 					$text_signature,
 					'block',
@@ -1143,7 +1158,7 @@ class CommentPress_Core_Parser {
 				);
 
 				// Get comment icon markup.
-				$icon_html = $this->parent_obj->display->get_para_tag(
+				$icon_html = $this->core->display->get_para_tag(
 					$text_signature,
 					$paragraph_icon . $comment_icon,
 					'div'
@@ -1324,7 +1339,7 @@ class CommentPress_Core_Parser {
 		if ( post_password_required() ) {
 
 			// Store text sigs array in global.
-			$this->parent_obj->db->set_text_sigs( $this->text_signatures );
+			$this->core->db->set_text_sigs( $this->text_signatures );
 
 			// --<
 			return $this->text_signatures;
@@ -1378,7 +1393,7 @@ class CommentPress_Core_Parser {
 		}
 
 		// Store text sigs array in global.
-		$this->parent_obj->db->set_text_sigs( $this->text_signatures );
+		$this->core->db->set_text_sigs( $this->text_signatures );
 
 		// --<
 		return $this->text_signatures;
@@ -1854,7 +1869,7 @@ class CommentPress_Core_Parser {
 		$comments = $this->multipage_comment_filter( $comments );
 
 		// Get our signatures.
-		$sigs = $this->parent_obj->db->get_text_sigs();
+		$sigs = $this->core->db->get_text_sigs();
 
 		// Assign comments to text signatures.
 		$assigned = $this->assign_comments( $comments, $sigs );

@@ -191,22 +191,6 @@ function commentpress_minified() {
 }
 
 /**
- * Shortcut for debugging.
- *
- * @since 3.0
- *
- * @param str $var The debug string to be sent the the browser.
- */
-function _cpdie( $var ) {
-
-	print '<pre>';
-	print_r( $var );
-	print '</pre>';
-	die();
-
-}
-
-/**
  * Utility to add link to settings page.
  *
  * @since 3.4

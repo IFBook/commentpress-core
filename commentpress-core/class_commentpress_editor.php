@@ -24,18 +24,9 @@ class CommentPress_Core_Editor {
 	 *
 	 * @since 3.7
 	 * @access public
-	 * @var object $parent_obj The plugin object.
+	 * @var object $core The plugin object.
 	 */
-	public $parent_obj;
-
-	/**
-	 * Database interaction object.
-	 *
-	 * @since 3.7
-	 * @access public
-	 * @var object $db The database object.
-	 */
-	public $db;
+	public $core;
 
 	/**
 	 * Editor toggle state.
@@ -47,21 +38,18 @@ class CommentPress_Core_Editor {
 	public $toggle_state;
 
 	/**
-	 * Initialises this object.
+	 * Constructor.
 	 *
 	 * @since 3.7
 	 *
-	 * @param object $parent_obj a reference to the parent object.
+	 * @param object $core Reference to the core plugin object.
 	 */
-	public function __construct( $parent_obj = null ) {
+	public function __construct( $core ) {
 
-		// Store reference to "parent" (calling obj, not OOP parent).
-		$this->parent_obj = $parent_obj;
+		// Store reference to core plugin object.
+		$this->core = $core;
 
-		// Store reference to database wrapper (child of calling obj).
-		$this->db = $this->parent_obj->db;
-
-		// Init this class.
+		// Init this class after WordPress Front End Editor.
 		add_action( 'init', [ $this, 'initialise' ], 999 );
 
 	}
@@ -88,7 +76,11 @@ class CommentPress_Core_Editor {
 			return;
 		}
 
-		// Broadcast.
+		/**
+		 * Broadcast that WordPress Front End Editor compatibility is active.
+		 *
+		 * @since 3.7
+		 */
 		do_action( 'commentpress_editor_present' );
 
 		// Save default toggle state.
@@ -99,15 +91,6 @@ class CommentPress_Core_Editor {
 
 		// Register hooks.
 		$this->register_hooks();
-
-	}
-
-	/**
-	 * If needed, destroys all items associated with this object.
-	 *
-	 * @since 3.7
-	 */
-	public function destroy() {
 
 	}
 
@@ -131,7 +114,7 @@ class CommentPress_Core_Editor {
 		add_action( 'cp_content_tab_before_search', [ $this, 'editor_toggle_show' ], 20 );
 
 		// Test for flag.
-		if ( isset( $this->fee ) && $this->fee == 'killed' ) {
+		if ( ! empty( $this->fee ) && $this->fee == 'killed' ) {
 
 			/*
 			// Enable infinite scroll.
@@ -173,7 +156,7 @@ class CommentPress_Core_Editor {
 			add_filter( 'commentpress_force_the_content', '__return_true' );
 
 			// Filter the content during AJAX.
-			add_filter( 'the_content', [ $this->parent_obj, 'the_content' ], 20 );
+			add_filter( 'the_content', [ $this->core, 'the_content' ], 20 );
 
 		}
 
@@ -224,7 +207,7 @@ class CommentPress_Core_Editor {
 	public function editor_toggle_set_default() {
 
 		// Get existing.
-		$state = $this->db->option_get( 'cp_editor_toggle', false );
+		$state = $this->core->db->option_get( 'cp_editor_toggle', false );
 
 		// Well?
 		if ( $state === false ) {
@@ -233,10 +216,10 @@ class CommentPress_Core_Editor {
 			$state = 'writing';
 
 			// Set default.
-			$this->db->option_set( 'cp_editor_toggle', $state );
+			$this->core->db->option_set( 'cp_editor_toggle', $state );
 
 			// Save.
-			$this->db->options_save();
+			$this->core->db->options_save();
 
 		}
 
@@ -288,7 +271,7 @@ class CommentPress_Core_Editor {
 		}
 
 		// Get existing state.
-		$state = $this->db->option_get( 'cp_editor_toggle' );
+		$state = $this->core->db->option_get( 'cp_editor_toggle' );
 
 		// Flip the state.
 		if ( $state === 'writing' ) {
@@ -298,10 +281,10 @@ class CommentPress_Core_Editor {
 		}
 
 		// Save the new toggle state.
-		$this->db->option_set( 'cp_editor_toggle', $state );
+		$this->core->db->option_set( 'cp_editor_toggle', $state );
 
 		// Save.
-		$this->db->options_save();
+		$this->core->db->options_save();
 
 		// Redirect.
 		wp_safe_redirect( $url );
@@ -317,7 +300,7 @@ class CommentPress_Core_Editor {
 	public function editor_toggle_show() {
 
 		// Bail if not commentable.
-		if ( ! $this->parent_obj->is_commentable() ) {
+		if ( ! $this->core->is_commentable() ) {
 			return;
 		}
 
@@ -506,7 +489,7 @@ class CommentPress_Core_Editor {
 		ob_start();
 
 		// Can't remember why we need this.
-		$vars = $this->parent_obj->db->get_javascript_vars();
+		$vars = $this->core->db->get_javascript_vars();
 
 		/**
 		 * Try to locate template using WP method.
@@ -557,7 +540,7 @@ class CommentPress_Core_Editor {
 		echo '<div class="metabox_container" style="display: none;">';
 
 		// Use common method.
-		$this->parent_obj->custom_box_page();
+		$this->core->custom_box_page();
 
 		// Close div.
 		echo '</div>' . "\n\n";
@@ -581,7 +564,7 @@ class CommentPress_Core_Editor {
 		if ( $this->setup_post() ) {
 
 			// Save data.
-			$result = $this->db->save_page_title_visibility( $post );
+			$result = $this->core->db->save_page_title_visibility( $post );
 
 			// Construct data to return.
 			$data['error'] = 'success';
@@ -617,7 +600,7 @@ class CommentPress_Core_Editor {
 		if ( $this->setup_post() ) {
 
 			// Save data.
-			$result = $this->db->save_page_meta_visibility( $post );
+			$result = $this->core->db->save_page_meta_visibility( $post );
 
 			// Construct data to return.
 			$data['error'] = 'success';
@@ -653,13 +636,13 @@ class CommentPress_Core_Editor {
 		if ( $this->setup_post() ) {
 
 			// Save data.
-			$this->db->save_page_numbering( $post );
+			$this->core->db->save_page_numbering( $post );
 
 			// Init list.
-			$num = $this->parent_obj->nav->init_page_lists();
+			$num = $this->core->nav->init_page_lists();
 
 			// Get page num.
-			$num = $this->parent_obj->nav->get_page_number( $post->ID );
+			$num = $this->core->nav->get_page_number( $post->ID );
 
 			// Construct data to return.
 			$data['error'] = 'success';
@@ -695,7 +678,7 @@ class CommentPress_Core_Editor {
 		if ( $this->setup_post() ) {
 
 			// Save data.
-			$this->db->save_formatter( $post );
+			$this->core->db->save_formatter( $post );
 
 			// Construct data to return.
 			$data['error'] = 'success';
@@ -730,7 +713,7 @@ class CommentPress_Core_Editor {
 		if ( $this->setup_post() ) {
 
 			// Save data.
-			$this->db->save_starting_paragraph( $post );
+			$this->core->db->save_starting_paragraph( $post );
 
 			// Construct data to return.
 			$data['error'] = 'success';

@@ -20,22 +20,13 @@ defined( 'ABSPATH' ) || exit;
 class CommentPress_Multisite_WordPress {
 
 	/**
-	 * Plugin object.
-	 *
-	 * @since 3.3
-	 * @access public
-	 * @var object $parent_obj The plugin object.
-	 */
-	public $parent_obj;
-
-	/**
-	 * Database interaction object.
+	 * Multisite plugin object.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $db The database object.
+	 * @var object $ms_loader The multisite plugin object.
 	 */
-	public $db;
+	public $ms_loader;
 
 	/**
 	 * CommentPress Core enabled on all sites flag.
@@ -65,22 +56,19 @@ class CommentPress_Multisite_WordPress {
 	public $cpmu_disable_translation_workflow = '1';
 
 	/**
-	 * Initialises this object.
+	 * Constructor.
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $parent_obj A reference to the parent object.
+	 * @param object $ms_loader Reference to the multisite plugin object.
 	 */
-	public function __construct( $parent_obj = null ) {
+	public function __construct( $ms_loader ) {
 
-		// Store reference to "parent" (calling obj, not OOP parent).
-		$this->parent_obj = $parent_obj;
+		// Store reference to multisite plugin object.
+		$this->ms_loader = $ms_loader;
 
-		// Store reference to database wrapper (child of calling obj).
-		$this->db = $this->parent_obj->db;
-
-		// Register hooks.
-		$this->register_hooks();
+		// Init when the multisite plugin is fully loaded.
+		add_action( 'commentpress/core/multisite/loaded', [ $this, 'initialise' ] );
 
 	}
 
@@ -91,22 +79,10 @@ class CommentPress_Multisite_WordPress {
 	 */
 	public function initialise() {
 
-	}
-
-	/**
-	 * If needed, destroys all items associated with this object.
-	 *
-	 * @since 3.3
-	 */
-	public function destroy() {
+		// Register hooks.
+		$this->register_hooks();
 
 	}
-
-	/**
-	 * -------------------------------------------------------------------------
-	 * Public Methods
-	 * -------------------------------------------------------------------------
-	 */
 
 	/**
 	 * Register WordPress hooks.
@@ -163,7 +139,7 @@ class CommentPress_Multisite_WordPress {
 		}
 
 		// Try and update options.
-		$saved = $this->db->options_update();
+		$saved = $this->ms_loader->db->options_update();
 
 		// Always add the admin page to the Settings menu.
 		$page = add_submenu_page(
@@ -217,12 +193,12 @@ class CommentPress_Multisite_WordPress {
 	public function signup_blogform( $errors ) {
 
 		// Only apply to WordPress signup form (not the BuddyPress one).
-		if ( is_object( $this->parent_obj->bp ) ) {
+		if ( is_object( $this->ms_loader->bp ) ) {
 			return;
 		}
 
 		// Get force option.
-		$forced = $this->db->option_get( 'cpmu_force_commentpress' );
+		$forced = $this->ms_loader->db->option_get( 'cpmu_force_commentpress' );
 
 		// Are we force-enabling CommentPress Core?
 		if ( $forced ) {
@@ -334,7 +310,7 @@ class CommentPress_Multisite_WordPress {
 		switch_to_blog( $blog_id );
 
 		// Activate CommentPress Core.
-		$this->db->install_commentpress();
+		$this->ms_loader->db->install_commentpress();
 
 		// Switch back.
 		restore_current_blog();
@@ -354,7 +330,7 @@ class CommentPress_Multisite_WordPress {
 		$workflow_html = '';
 
 		// Get data.
-		$workflow = $this->db->get_workflow_data();
+		$workflow = $this->ms_loader->db->get_workflow_data();
 
 		// If we have workflow data.
 		if ( ! empty( $workflow ) ) {
@@ -388,7 +364,7 @@ class CommentPress_Multisite_WordPress {
 		$type_html = '';
 
 		// Get data.
-		$type = $this->db->get_blogtype_data();
+		$type = $this->ms_loader->db->get_blogtype_data();
 
 		// Show if we have type data.
 		if ( ! empty( $type ) ) {
@@ -462,12 +438,12 @@ class CommentPress_Multisite_WordPress {
 
 	<tr valign="top">
 		<th scope="row"><label for="cpmu_force_commentpress">' . __( 'Make all new sites CommentPress-enabled', 'commentpress-core' ) . '</label></th>
-		<td><input id="cpmu_force_commentpress" name="cpmu_force_commentpress" value="1" type="checkbox"' . ( $this->db->option_get( 'cpmu_force_commentpress' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
+		<td><input id="cpmu_force_commentpress" name="cpmu_force_commentpress" value="1" type="checkbox"' . ( $this->ms_loader->db->option_get( 'cpmu_force_commentpress' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
 	</tr>
 
 	<tr valign="top">
 		<th scope="row"><label for="cpmu_disable_translation_workflow">' . __( 'Disable Translation Workflow (Recommended because it is still very experimental)', 'commentpress-core' ) . '</label></th>
-		<td><input id="cpmu_disable_translation_workflow" name="cpmu_disable_translation_workflow" value="1" type="checkbox"' . ( $this->db->option_get( 'cpmu_disable_translation_workflow' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
+		<td><input id="cpmu_disable_translation_workflow" name="cpmu_disable_translation_workflow" value="1" type="checkbox"' . ( $this->ms_loader->db->option_get( 'cpmu_disable_translation_workflow' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
 	</tr>
 
 ' . $this->additional_multisite_options() . '
@@ -483,17 +459,17 @@ class CommentPress_Multisite_WordPress {
 
 	<tr valign="top">
 		<th scope="row"><label for="cpmu_delete_first_page">' . __( 'Delete WordPress-generated Sample Page', 'commentpress-core' ) . '</label></th>
-		<td><input id="cpmu_delete_first_page" name="cpmu_delete_first_page" value="1" type="checkbox"' . ( $this->db->option_get( 'cpmu_delete_first_page' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
+		<td><input id="cpmu_delete_first_page" name="cpmu_delete_first_page" value="1" type="checkbox"' . ( $this->ms_loader->db->option_get( 'cpmu_delete_first_page' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
 	</tr>
 
 	<tr valign="top">
 		<th scope="row"><label for="cpmu_delete_first_post">' . __( 'Delete WordPress-generated Hello World post', 'commentpress-core' ) . '</label></th>
-		<td><input id="cpmu_delete_first_post" name="cpmu_delete_first_post" value="1" type="checkbox"' . ( $this->db->option_get( 'cpmu_delete_first_post' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
+		<td><input id="cpmu_delete_first_post" name="cpmu_delete_first_post" value="1" type="checkbox"' . ( $this->ms_loader->db->option_get( 'cpmu_delete_first_post' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
 	</tr>
 
 	<tr valign="top">
 		<th scope="row"><label for="cpmu_delete_first_comment">' . __( 'Delete WordPress-generated First Comment', 'commentpress-core' ) . '</label></th>
-		<td><input id="cpmu_delete_first_comment" name="cpmu_delete_first_comment" value="1" type="checkbox"' . ( $this->db->option_get( 'cpmu_delete_first_comment' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
+		<td><input id="cpmu_delete_first_comment" name="cpmu_delete_first_comment" value="1" type="checkbox"' . ( $this->ms_loader->db->option_get( 'cpmu_delete_first_comment' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
 	</tr>
 
 </table>';
@@ -511,8 +487,7 @@ class CommentPress_Multisite_WordPress {
 		echo '<p>' . __( 'The following is the content of the Title Page for each new CommentPress site. Edit it if you want to show something else on the Title Page.', 'commentpress-core' ) . '</p>';
 
 		// Get content.
-		$content = stripslashes( $this->db->option_get( 'cpmu_title_page_content' ) );
-		//_cpdie( $content );
+		$content = stripslashes( $this->ms_loader->db->option_get( 'cpmu_title_page_content' ) );
 
 		// Call the editor
 		wp_editor(
@@ -617,17 +592,17 @@ class CommentPress_Multisite_WordPress {
 
 		// Force all new sites to be CommentPress Core-enabled.
 		$cpmu_force_commentpress = esc_sql( $cpmu_force_commentpress );
-		$this->db->option_set( 'cpmu_force_commentpress', ( $cpmu_force_commentpress ? 1 : 0 ) );
+		$this->ms_loader->db->option_set( 'cpmu_force_commentpress', ( $cpmu_force_commentpress ? 1 : 0 ) );
 
 		/*
 		// Default title page content.
 		$cpmu_title_page_content = esc_sql( $cpmu_title_page_content );
-		$this->db->option_set( 'cpmu_title_page_content', $cpmu_title_page_content );
+		$this->ms_loader->db->option_set( 'cpmu_title_page_content', $cpmu_title_page_content );
 		*/
 
 		// Allow translation workflow.
 		$cpmu_disable_translation_workflow = esc_sql( $cpmu_disable_translation_workflow );
-		$this->db->option_set( 'cpmu_disable_translation_workflow', ( $cpmu_disable_translation_workflow ? 1 : 0 ) );
+		$this->ms_loader->db->option_set( 'cpmu_disable_translation_workflow', ( $cpmu_disable_translation_workflow ? 1 : 0 ) );
 
 	}
 
@@ -641,7 +616,7 @@ class CommentPress_Multisite_WordPress {
 	public function get_workflow_enabled() {
 
 		// Get option.
-		$disabled = $this->db->option_get( 'cpmu_disable_translation_workflow' ) == '1' ? false : true;
+		$disabled = $this->ms_loader->db->option_get( 'cpmu_disable_translation_workflow' ) == '1' ? false : true;
 
 		// Return whatever option is set.
 		return $disabled;
@@ -661,7 +636,7 @@ class CommentPress_Multisite_WordPress {
 	public function get_title_page_content( $content ) {
 
 		// Get content.
-		$overridden_content = stripslashes( $this->db->option_get( 'cpmu_title_page_content' ) );
+		$overridden_content = stripslashes( $this->ms_loader->db->option_get( 'cpmu_title_page_content' ) );
 
 		// Override if different to what's been passed.
 		if ( $content != $overridden_content ) {
