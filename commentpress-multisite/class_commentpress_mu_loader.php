@@ -96,23 +96,11 @@ class CommentPress_Multisite_Loader {
 		add_action( 'deactivated_plugin', [ $this, 'network_deactivated' ], 10, 2 );
 
 		// ---------------------------------------------------------------------
-		// Load Database Wrapper object
+		// Load Database object
 		// ---------------------------------------------------------------------
 
-		// Define filename.
-		$class_file = 'commentpress-multisite/class_commentpress_mu_admin.php';
-
-		// Get path.
-		$class_file_path = commentpress_file_is_present( $class_file );
-
-		// Allow plugins to override this and supply their own.
-		$class_file_path = apply_filters(
-			'class_commentpress_mu_admin',
-			$class_file_path
-		);
-
-		// We're fine, include class definition.
-		require_once $class_file_path;
+		// Include class definition.
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_admin.php';
 
 		// Init autoload database object.
 		$this->db = new CommentPress_Multisite_Admin( $this );
@@ -121,20 +109,8 @@ class CommentPress_Multisite_Loader {
 		// Load standard Multisite object.
 		// ---------------------------------------------------------------------
 
-		// Define filename.
-		$class_file = 'commentpress-multisite/class_commentpress_mu_ms.php';
-
-		// Get path.
-		$class_file_path = commentpress_file_is_present( $class_file );
-
-		// Allow plugins to override this and supply their own.
-		$class_file_path = apply_filters(
-			'class_commentpress_mu_ms',
-			$class_file_path
-		);
-
-		// We're fine, include class definition.
-		require_once $class_file_path;
+		// Include class definition.
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_ms.php';
 
 		// Init multisite object.
 		$this->multisite = new CommentPress_Multisite_WordPress( $this );
@@ -143,20 +119,8 @@ class CommentPress_Multisite_Loader {
 		// Load Post Revisions object (merge this into Core as an option).
 		// ---------------------------------------------------------------------
 
-		// Define filename.
-		$class_file = 'commentpress-multisite/class_commentpress_mu_revisions.php';
-
-		// Get path.
-		$class_file_path = commentpress_file_is_present( $class_file );
-
-		// Allow plugins to override this and supply their own.
-		$class_file_path = apply_filters(
-			'class_commentpress_mu_revisions',
-			$class_file_path
-		);
-
-		// We're fine, include class definition.
-		require_once $class_file_path;
+		// Include class definition.
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_revisions.php';
 
 		// Instantiate it.
 		$this->revisions = new CommentPress_Multisite_Revisions( $this );
@@ -188,20 +152,8 @@ class CommentPress_Multisite_Loader {
 		// Load BuddyPress object.
 		// ---------------------------------------------------------------------
 
-		// Define filename.
-		$class_file = 'commentpress-multisite/class_commentpress_mu_bp.php';
-
-		// Get path.
-		$class_file_path = commentpress_file_is_present( $class_file );
-
-		// Allow plugins to override this and supply their own.
-		$class_file_path = apply_filters(
-			'class_commentpress_mu_bp',
-			$class_file_path
-		);
-
-		// We're fine, include class definition.
-		require_once $class_file_path;
+		// Include class definition.
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_bp.php';
 
 		// Init BuddyPress object.
 		$this->bp = new CommentPress_Multisite_Buddypress( $this );
@@ -210,20 +162,8 @@ class CommentPress_Multisite_Loader {
 		// Load Groupblog Workshop renaming object.
 		// ---------------------------------------------------------------------
 
-		// Define filename.
-		$class_file = 'commentpress-multisite/class_commentpress_mu_workshop.php';
-
-		// Get path.
-		$class_file_path = commentpress_file_is_present( $class_file );
-
-		// Allow plugins to override this and supply their own.
-		$class_file_path = apply_filters(
-			'class_commentpress_mu_workshop',
-			$class_file_path
-		);
-
-		// We're fine, include class definition.
-		require_once $class_file_path;
+		// Include class definition.
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_workshop.php';
 
 		// Instantiate it.
 		$this->workshop = new CommentPress_Multisite_Buddypress_Groupblog( $this );

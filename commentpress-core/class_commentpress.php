@@ -1940,42 +1940,18 @@ class CommentPress_Core {
 		// Database Object.
 		// ---------------------------------------------------------------------
 
-		// Define filename.
-		$class_file = 'commentpress-core/class_commentpress_db.php';
+		// Include class definition.
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_db.php';
 
-		// Get path.
-		$class_file_path = commentpress_file_is_present( $class_file );
-
-		// Allow plugins to override this and supply their own.
-		$class_file_path = apply_filters(
-			'cp_class_commentpress_db',
-			$class_file_path
-		);
-
-		// We're fine, include class definition.
-		require_once $class_file_path;
-
-		// Init autoload database object.
+		// Init database object.
 		$this->db = new CommentPress_Core_Database( $this );
 
 		// ---------------------------------------------------------------------
 		// Display Object.
 		// ---------------------------------------------------------------------
 
-		// Define filename.
-		$class_file = 'commentpress-core/class_commentpress_display.php';
-
-		// Get path.
-		$class_file_path = commentpress_file_is_present( $class_file );
-
-		// Allow plugins to override this and supply their own.
-		$class_file_path = apply_filters(
-			'cp_class_commentpress_display',
-			$class_file_path
-		);
-
-		// We're fine, include class definition.
-		require_once $class_file_path;
+		// Include class definition.
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_display.php';
 
 		// Init display object.
 		$this->display = new CommentPress_Core_Display( $this );
@@ -1984,42 +1960,18 @@ class CommentPress_Core {
 		// Navigation Object.
 		// ---------------------------------------------------------------------
 
-		// Define filename.
-		$class_file = 'commentpress-core/class_commentpress_nav.php';
+		// Include class definition.
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_nav.php';
 
-		// Get path.
-		$class_file_path = commentpress_file_is_present( $class_file );
-
-		// Allow plugins to override this and supply their own.
-		$class_file_path = apply_filters(
-			'cp_class_commentpress_nav',
-			$class_file_path
-		);
-
-		// We're fine, include class definition.
-		require_once $class_file_path;
-
-		// Init display object.
+		// Init nav object.
 		$this->nav = new CommentPress_Core_Navigator( $this );
 
 		// ---------------------------------------------------------------------
 		// Parser Object.
 		// ---------------------------------------------------------------------
 
-		// Define filename.
-		$class_file = 'commentpress-core/class_commentpress_parser.php';
-
-		// Get path.
-		$class_file_path = commentpress_file_is_present( $class_file );
-
-		// Allow plugins to override this and supply their own.
-		$class_file_path = apply_filters(
-			'cp_class_commentpress_parser',
-			$class_file_path
-		);
-
-		// We're fine, include class definition.
-		require_once $class_file_path;
+		// Include class definition.
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_parser.php';
 
 		// Init parser object.
 		$this->parser = new CommentPress_Core_Parser( $this );
@@ -2028,20 +1980,8 @@ class CommentPress_Core {
 		// Formatter Object.
 		// ---------------------------------------------------------------------
 
-		// Define filename.
-		$class_file = 'commentpress-core/class_commentpress_formatter.php';
-
-		// Get path.
-		$class_file_path = commentpress_file_is_present( $class_file );
-
-		// Allow plugins to override this and supply their own.
-		$class_file_path = apply_filters(
-			'cp_class_commentpress_formatter',
-			$class_file_path
-		);
-
-		// We're fine, include class definition.
-		require_once $class_file_path;
+		// Include class definition.
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_formatter.php';
 
 		// Init formatter object.
 		$this->formatter = new CommentPress_Core_Formatter( $this );
@@ -2050,20 +1990,8 @@ class CommentPress_Core {
 		// Workflow Object
 		// ---------------------------------------------------------------------
 
-		// Define filename.
-		$class_file = 'commentpress-core/class_commentpress_workflow.php';
-
-		// Get path.
-		$class_file_path = commentpress_file_is_present( $class_file );
-
-		// Allow plugins to override this and supply their own.
-		$class_file_path = apply_filters(
-			'cp_class_commentpress_workflow',
-			$class_file_path
-		);
-
-		// We're fine, include class definition.
-		require_once $class_file_path;
+		// Include class definition.
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_workflow.php';
 
 		// Init workflow object.
 		$this->workflow = new CommentPress_Core_Workflow( $this );
@@ -2072,25 +2000,17 @@ class CommentPress_Core {
 		// Front-end Editor Object.
 		// ---------------------------------------------------------------------
 
-		// Define filename.
-		$class_file = 'commentpress-core/class_commentpress_editor.php';
-
-		// Get path.
-		$class_file_path = commentpress_file_is_present( $class_file );
-
-		// Allow plugins to override this and supply their own.
-		$class_file_path = apply_filters(
-			'cp_class_commentpress_editor',
-			$class_file_path
-		);
-
-		// We're fine, include class definition.
-		require_once $class_file_path;
+		// Include class definition.
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_editor.php';
 
 		// Init workflow object.
 		$this->editor = new CommentPress_Core_Editor( $this );
 
-		// Broadcast.
+		/**
+		 * Broadcast that class files have been included.
+		 *
+		 * @since 3.6.2
+		 */
 		do_action( 'commentpress_after_includes' );
 
 		// ---------------------------------------------------------------------
@@ -2211,7 +2131,11 @@ class CommentPress_Core {
 		// Amend the behaviour of Featured Comments plugin.
 		add_action( 'plugins_loaded', [ $this, 'featured_comments_override' ], 1000 );
 
-		// Broadcast.
+		/**
+		 * Broadcast that callbacks have been added.
+		 *
+		 * @since 3.6.2
+		 */
 		do_action( 'commentpress_after_hooks' );
 
 	}

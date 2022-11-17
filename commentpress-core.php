@@ -129,14 +129,8 @@ function commentpress_include_core() {
 	// Do we have our class?
 	if ( ! class_exists( 'CommentPress_Core' ) ) {
 
-		// Define filename.
-		$file = 'commentpress-core/class_commentpress.php';
-
-		// Get path.
-		$file_path = commentpress_file_is_present( $file );
-
-		// We're fine, include class definition.
-		require_once $file_path;
+		// Include class definition.
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress.php';
 
 	}
 
@@ -169,14 +163,8 @@ function commentpress_activate_core() {
  */
 function commentpress_activate_ajax() {
 
-	// Define filename.
-	$file = 'commentpress-ajax/cp-ajax-comments.php';
-
-	// Get path.
-	$file_path = commentpress_file_is_present( $file );
-
-	// We're fine, include AJAX file.
-	require_once $file_path;
+	// Include AJAX file.
+	require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-ajax/cp-ajax-comments.php';
 
 }
 
@@ -421,14 +409,8 @@ if ( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_sitewide' ) {
 
 	// Activate multisite plugin.
 
-	// Define filename.
-	$file = 'commentpress-multisite/class_commentpress_mu_loader.php';
-
-	// Get path.
-	$file_path = commentpress_file_is_present( $file );
-
-	// We're fine, include class definition.
-	require_once $file_path;
+	// Include class definition.
+	require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_loader.php';
 
 	// Define as global.
 	global $commentpress_mu;
