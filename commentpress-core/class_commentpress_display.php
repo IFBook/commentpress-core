@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 3.0
  */
-class Commentpress_Core_Display {
+class CommentPress_Core_Display {
 
 	/**
 	 * Plugin object.

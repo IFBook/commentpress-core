@@ -127,7 +127,7 @@ function commentpress_file_is_present( $filename ) {
 function commentpress_include_core() {
 
 	// Do we have our class?
-	if ( ! class_exists( 'Commentpress_Core' ) ) {
+	if ( ! class_exists( 'CommentPress_Core' ) ) {
 
 		// Define filename.
 		$file = 'commentpress-core/class_commentpress.php';
@@ -156,7 +156,7 @@ function commentpress_activate_core() {
 	if ( is_null( $commentpress_core ) ) {
 
 		// Instantiate it.
-		$commentpress_core = new Commentpress_Core();
+		$commentpress_core = new CommentPress_Core();
 
 	}
 
@@ -434,6 +434,6 @@ if ( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_sitewide' ) {
 	global $commentpress_mu;
 
 	// Instantiate it.
-	$commentpress_mu = new Commentpress_Multisite_Loader();
+	$commentpress_mu = new CommentPress_Multisite_Loader();
 
 }

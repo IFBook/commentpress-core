@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 3.3
  */
-class Commentpress_Multisite_Buddypress {
+class CommentPress_Multisite_Buddypress {
 
 	/**
 	 * Plugin object.
@@ -1693,7 +1693,7 @@ class Commentpress_Multisite_Buddypress {
 		// Override "publicness" of groupblogs.
 		add_filter( 'bp_is_blog_public', [ $this, 'is_blog_public' ], 20, 1 );
 
-		// Amend BuddyPress group activity (after class Commentpress_Core does).
+		// Amend BuddyPress group activity (after class CommentPress_Core does).
 		add_action( 'bp_setup_globals', [ $this, '_group_activity_mods' ], 1001 );
 
 		// Get group avatar when listing groupblogs.

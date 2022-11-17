@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 3.0
  */
-class Commentpress_Core {
+class CommentPress_Core {
 
 	/**
 	 * Database interaction object.
@@ -1956,7 +1956,7 @@ class Commentpress_Core {
 		require_once $class_file_path;
 
 		// Init autoload database object.
-		$this->db = new Commentpress_Core_Database( $this );
+		$this->db = new CommentPress_Core_Database( $this );
 
 		// ---------------------------------------------------------------------
 		// Display Object.
@@ -1978,7 +1978,7 @@ class Commentpress_Core {
 		require_once $class_file_path;
 
 		// Init display object.
-		$this->display = new Commentpress_Core_Display( $this );
+		$this->display = new CommentPress_Core_Display( $this );
 
 		// ---------------------------------------------------------------------
 		// Navigation Object.
@@ -2000,7 +2000,7 @@ class Commentpress_Core {
 		require_once $class_file_path;
 
 		// Init display object.
-		$this->nav = new Commentpress_Core_Navigator( $this );
+		$this->nav = new CommentPress_Core_Navigator( $this );
 
 		// ---------------------------------------------------------------------
 		// Parser Object.
@@ -2022,7 +2022,7 @@ class Commentpress_Core {
 		require_once $class_file_path;
 
 		// Init parser object.
-		$this->parser = new Commentpress_Core_Parser( $this );
+		$this->parser = new CommentPress_Core_Parser( $this );
 
 		// ---------------------------------------------------------------------
 		// Formatter Object.
@@ -2044,7 +2044,7 @@ class Commentpress_Core {
 		require_once $class_file_path;
 
 		// Init formatter object.
-		$this->formatter = new Commentpress_Core_Formatter( $this );
+		$this->formatter = new CommentPress_Core_Formatter( $this );
 
 		// ---------------------------------------------------------------------
 		// Workflow Object
@@ -2066,7 +2066,7 @@ class Commentpress_Core {
 		require_once $class_file_path;
 
 		// Init workflow object.
-		$this->workflow = new Commentpress_Core_Workflow( $this );
+		$this->workflow = new CommentPress_Core_Workflow( $this );
 
 		// ---------------------------------------------------------------------
 		// Front-end Editor Object.
@@ -2088,7 +2088,7 @@ class Commentpress_Core {
 		require_once $class_file_path;
 
 		// Init workflow object.
-		$this->editor = new Commentpress_Core_Editor( $this );
+		$this->editor = new CommentPress_Core_Editor( $this );
 
 		// Broadcast.
 		do_action( 'commentpress_after_includes' );

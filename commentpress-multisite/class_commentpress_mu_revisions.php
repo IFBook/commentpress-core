@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 3.3
  */
-class Commentpress_Multisite_Revisions {
+class CommentPress_Multisite_Revisions {
 
 	/**
 	 * Plugin object.

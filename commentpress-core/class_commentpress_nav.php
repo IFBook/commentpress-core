@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 3.0
  */
-class Commentpress_Core_Navigator {
+class CommentPress_Core_Navigator {
 
 	/**
 	 * Plugin object.
@@ -1180,7 +1180,7 @@ class Commentpress_Core_Navigator {
 			 * WordPress registration page requests to it. It also seems to exclude
 			 * it from wp_list_pages()
 			 *
-			 * @see Commentpress_Core_Display::list_pages()
+			 * @see CommentPress_Core_Display::list_pages()
 			 */
 
 			// Check if registration is allowed.

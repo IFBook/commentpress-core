@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 3.3
  */
-class Commentpress_Multisite_Admin {
+class CommentPress_Multisite_Admin {
 
 	/**
 	 * Plugin object.

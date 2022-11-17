@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 3.0
  */
-class Commentpress_Core_Parser {
+class CommentPress_Core_Parser {
 
 	/**
 	 * Plugin object.
@@ -72,7 +72,7 @@ class Commentpress_Core_Parser {
 	/**
 	 * Do Not Parse flag.
 	 *
-	 * @see Commentpress_Core_Database->do_not_parse
+	 * @see CommentPress_Core_Database->do_not_parse
 	 * @since 3.8.10
 	 * @access public
 	 * @var bool $do_not_parse False if content is parsed, true disables parsing.

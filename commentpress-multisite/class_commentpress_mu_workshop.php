@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 3.3
  */
-class Commentpress_Multisite_Buddypress_Groupblog {
+class CommentPress_Multisite_Buddypress_Groupblog {
 
 	/**
 	 * Plugin object.

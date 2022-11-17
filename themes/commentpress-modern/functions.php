@@ -397,7 +397,7 @@ function commentpress_bp_enqueue_styles() {
 	);
 
 }
-endif; // Commentpress_bp_enqueue_styles
+endif;
 
 
 

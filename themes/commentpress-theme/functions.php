@@ -674,7 +674,7 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 	return $html;
 
 }
-endif; // Commentpress_get_all_comments_content
+endif;
 
 
 

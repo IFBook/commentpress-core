@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 3.0
  */
-class Commentpress_Core_Workflow {
+class CommentPress_Core_Workflow {
 
 	/**
 	 * Plugin object.

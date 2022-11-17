@@ -21,7 +21,7 @@ define( 'COMMENTPRESS_MU_PLUGIN_VERSION', '1.0' );
  *
  * @since 3.3
  */
-class Commentpress_Multisite_Loader {
+class CommentPress_Multisite_Loader {
 
 	/**
 	 * Database interaction object.
@@ -115,7 +115,7 @@ class Commentpress_Multisite_Loader {
 		require_once $class_file_path;
 
 		// Init autoload database object.
-		$this->db = new Commentpress_Multisite_Admin( $this );
+		$this->db = new CommentPress_Multisite_Admin( $this );
 
 		// ---------------------------------------------------------------------
 		// Load standard Multisite object.
@@ -137,7 +137,7 @@ class Commentpress_Multisite_Loader {
 		require_once $class_file_path;
 
 		// Init multisite object.
-		$this->multisite = new Commentpress_Multisite_WordPress( $this );
+		$this->multisite = new CommentPress_Multisite_WordPress( $this );
 
 		// ---------------------------------------------------------------------
 		// Load Post Revisions object (merge this into Core as an option).
@@ -159,7 +159,7 @@ class Commentpress_Multisite_Loader {
 		require_once $class_file_path;
 
 		// Instantiate it.
-		$this->revisions = new Commentpress_Multisite_Revisions( $this );
+		$this->revisions = new CommentPress_Multisite_Revisions( $this );
 
 		// ---------------------------------------------------------------------
 		// Call initialise() on admin object.
@@ -204,7 +204,7 @@ class Commentpress_Multisite_Loader {
 		require_once $class_file_path;
 
 		// Init BuddyPress object.
-		$this->bp = new Commentpress_Multisite_Buddypress( $this );
+		$this->bp = new CommentPress_Multisite_Buddypress( $this );
 
 		// ---------------------------------------------------------------------
 		// Load Groupblog Workshop renaming object.
@@ -226,7 +226,7 @@ class Commentpress_Multisite_Loader {
 		require_once $class_file_path;
 
 		// Instantiate it.
-		$this->workshop = new Commentpress_Multisite_Buddypress_Groupblog( $this );
+		$this->workshop = new CommentPress_Multisite_Buddypress_Groupblog( $this );
 
 		// ---------------------------------------------------------------------
 		// Call initialise() on admin object again.

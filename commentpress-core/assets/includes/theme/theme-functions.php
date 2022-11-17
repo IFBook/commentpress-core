@@ -1724,7 +1724,7 @@ if ( ! function_exists( 'commentpress_widgets_init' ) ) :
 		require COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/widgets/widget-license.php';
 
 		// Register license widget.
-		register_widget( 'Commentpress_License_Widget' );
+		register_widget( 'CommentPress_License_Widget' );
 
 	}
 

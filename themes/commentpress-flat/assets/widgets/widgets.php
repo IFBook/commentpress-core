@@ -17,7 +17,7 @@ NOTES
  *
  * @since 3.4
  */
-class Commentpress_License_Widget extends WP_Widget {
+class CommentPress_License_Widget extends WP_Widget {
 
 
 
@@ -142,7 +142,4 @@ class Commentpress_License_Widget extends WP_Widget {
 
 
 
-} // Ends class Commentpress_License_Widget
-
-
-
+}
