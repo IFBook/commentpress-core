@@ -45,7 +45,7 @@ if ( is_object( $commentpress_core ) ) {
 		// Include 'comments in page' template.
 
 		/**
-		 * Try to locate template using WP method.
+		 * Try to locate template using WordPress method.
 		 *
 		 * @since 3.4
 		 *
@@ -68,7 +68,7 @@ if ( is_object( $commentpress_core ) ) {
 		// Include comments split by paragraph template.
 
 		/**
-		 * Try to locate template using WP method.
+		 * Try to locate template using WordPress method.
 		 *
 		 * @since 3.4
 		 *
@@ -181,7 +181,7 @@ if ( is_object( $commentpress_core ) ) {
 <?php
 
 /**
- * Try to locate template using WP method.
+ * Try to locate template using WordPress method.
  *
  * @since 3.4
  *

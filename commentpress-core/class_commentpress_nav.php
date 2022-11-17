@@ -1138,7 +1138,7 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Parse a WP page list.
+	 * Parse a WordPress page list.
 	 *
 	 * @since 3.0
 	 *
@@ -1296,7 +1296,7 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Parse a WP menu.
+	 * Parse a WordPress menu.
 	 *
 	 * @since 3.0
 	 *
@@ -1364,7 +1364,7 @@ class CommentPress_Core_Navigator {
 				// Convert to array of pages.
 				foreach ( $menu_items as $menu_item ) {
 
-					// Is it a WP item?
+					// Is it a WordPress item?
 					if ( isset( $menu_item->object_id ) ) {
 
 						// Init pseudo WP_POST object.
@@ -1382,7 +1382,7 @@ class CommentPress_Core_Navigator {
 						// Add comment count for possible calls for "next with comments".
 						$pseudo_post->comment_count = $menu_item->comment_count;
 
-						// Add to array of WP pages in menu.
+						// Add to array of WordPress pages in menu.
 						$pages[] = $pseudo_post;
 
 					}

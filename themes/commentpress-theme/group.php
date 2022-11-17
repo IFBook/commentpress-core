@@ -3,7 +3,7 @@
 Template Name: Group
 */
 
-// Get_users_of_blog() is deprecated in WP 3.1+
+// The get_users_of_blog() function is deprecated in WordPress 3.1+.
 if ( version_compare( $wp_version, '3.1', '>=' ) ) {
 
 	// Set args.

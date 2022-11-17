@@ -888,7 +888,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 			// Default comment type to get.
 			$comment_type = 'all';
 
-			// Check for a WP 3.8+ function.
+			// Check for a WordPress 3.8+ function.
 			if ( function_exists( 'wp_admin_bar_sidebar_toggle' ) ) {
 
 				// Walker_Comment has changed to buffered output, so define args without
@@ -1031,7 +1031,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 							// Open commentlist.
 							echo '<ol class="commentlist">' . "\n\n";
 
-							// Use WP 2.7+ functionality.
+							// Use WordPress 2.7+ functionality.
 							wp_list_comments( $args, $comments );
 
 							// Close commentlist.
@@ -1171,7 +1171,7 @@ endif;
 if ( ! function_exists( 'commentpress_comment_form_title' ) ) :
 
 	/**
-	 * Alternative to the built-in WP function.
+	 * Alternative to the built-in WordPress function.
 	 *
 	 * @since 3.0
 	 *
@@ -1269,7 +1269,7 @@ endif;
 if ( ! function_exists( 'commentpress_comment_reply_link' ) ) :
 
 	/**
-	 * Alternative to the built-in WP function.
+	 * Alternative to the built-in WordPress function.
 	 *
 	 * @since 3.0
 	 *
@@ -1673,7 +1673,7 @@ if ( ! function_exists( 'commentpress_add_wp_editor' ) ) :
 		 */
 		$media_buttons = apply_filters( 'commentpress_rte_media_buttons', true );
 
-		// Access WP version.
+		// Access WordPress version.
 		global $wp_version;
 
 		// If greater than 3.8.
@@ -1752,7 +1752,7 @@ if ( ! function_exists( 'commentpress_add_wp_editor' ) ) :
 			$settings
 		);
 
-		// Access WP version.
+		// Access WordPress version.
 		global $wp_version;
 
 		// Add styles.

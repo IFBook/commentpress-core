@@ -37,10 +37,10 @@ if ( ! function_exists( 'commentpress_setup' ) ):
  */
 function commentpress_setup() {
 
-	// Add title support: wp_title() is deprecated as of WP 4.4.
+	// Add title support: wp_title() is deprecated as of WordPress 4.4.
 	add_theme_support( 'title-tag' );
 
-	// Add_custom_background function is deprecated in WP 3.4+
+	// Add_custom_background function is deprecated in WordPress 3.4+.
 	global $wp_version;
 	if ( version_compare( $wp_version, '3.4', '>=' ) ) {
 
@@ -337,10 +337,10 @@ function commentpress_header() {
 	}
 
 	// Get custom text colour.
-	// Note: this does NOT retrieve the default if not manually set in the Theme Customizer in WP3.4.
+	// Note: this does NOT retrieve the default if not manually set in the Theme Customizer in WordPress 3.4.
 	$text_color = get_header_textcolor();
 
-	// WP3.4 seems to behave differently.
+	// WordPress 3.4 seems to behave differently.
 	global $wp_version;
 	if ( version_compare( $wp_version, '3.4', '>=' ) ) {
 

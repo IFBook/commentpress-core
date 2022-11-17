@@ -48,7 +48,7 @@ if ( ! empty( $_SERVER['SCRIPT_FILENAME'] ) AND 'comments_by_para.php' == basena
 <?php
 
 /**
- * Try to locate template using WP method.
+ * Try to locate template using WordPress method.
  *
  * @since 3.4
  *

@@ -593,7 +593,7 @@ class CommentPress_Core_Parser {
 			// Further checks when there's a <ol> tag.
 			if ( $tag == 'ol' ) {
 
-				// Compat with WP Footnotes.
+				// Compat with "WP Footnotes".
 				if ( substr( $paragraph, 0, 21 ) == '<ol class="footnotes"' ) {
 
 					// Construct tag.

@@ -109,7 +109,7 @@ NOTES
 <?php
 
 /**
- * Try to locate template using WP method.
+ * Try to locate template using WordPress method.
  *
  * @since 3.4
  *

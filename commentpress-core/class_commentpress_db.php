@@ -2993,13 +2993,13 @@ class CommentPress_Core_Database {
 		$vars['cp_wp_adminbar_height'] = '28';
 		$vars['cp_wp_adminbar_expanded'] = '0';
 
-		// Are we showing the WP admin bar?
+		// Are we showing the WordPress admin bar?
 		if ( function_exists( 'is_admin_bar_showing' ) && is_admin_bar_showing() ) {
 
 			// We have it.
 			$vars['cp_wp_adminbar'] = 'y';
 
-			// Check for a WP 3.8+ function.
+			// Check for a WordPress 3.8+ function.
 			if ( function_exists( 'wp_admin_bar_sidebar_toggle' ) ) {
 
 				// The 3.8+ admin bar is taller.
@@ -3024,7 +3024,7 @@ class CommentPress_Core_Database {
 
 			}
 
-			// Check for BuddyPress versions prior to 1.6 (1.6 uses the WP admin bar instead of a custom one).
+			// Check for BuddyPress versions prior to 1.6 (1.6 uses the WordPress admin bar instead of a custom one).
 			if ( ! function_exists( 'bp_get_version' ) ) {
 
 				// But, this can already be overridden in bp-custom.php.
@@ -3146,7 +3146,7 @@ class CommentPress_Core_Database {
 		// Add TinyMCE version var.
 		$vars['cp_tinymce_version'] = 3;
 
-		// Access WP version.
+		// Access WordPress version.
 		global $wp_version;
 
 		// If greater than 3.8.

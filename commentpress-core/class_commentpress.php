@@ -638,7 +638,7 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Add scripts needed across all WP admin pages.
+	 * Add scripts needed across all WordPress admin pages.
 	 *
 	 * @since 3.4
 	 *
@@ -1215,7 +1215,7 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Adds help copy to admin page in WP3.3+.
+	 * Adds help copy to admin page in WordPress 3.3+.
 	 *
 	 * @since 3.4
 	 *

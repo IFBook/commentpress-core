@@ -89,7 +89,7 @@ if ( function_exists( 'wp_body_open' ) ) {
 <?php
 
 /**
- * Try to locate template using WP method.
+ * Try to locate template using WordPress method.
  *
  * @since 3.4
  *

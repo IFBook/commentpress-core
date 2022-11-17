@@ -59,7 +59,7 @@ echo apply_filters( 'cp_content_tab_search_title', __( 'Search', 'commentpress-c
 	<?php
 
 	/**
-	 * Try to locate template using WP method.
+	 * Try to locate template using WordPress method.
 	 *
 	 * @since 3.4
 	 *

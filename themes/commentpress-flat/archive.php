@@ -19,7 +19,7 @@
 <?php
 
 /**
- * Try to locate template using WP method but allow overrides.
+ * Try to locate template using WordPress method but allow overrides.
  *
  * @since 3.4
  */

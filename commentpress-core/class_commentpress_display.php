@@ -339,7 +339,7 @@ class CommentPress_Core_Display {
 			return;
 		}
 
-		// Need access to WP version.
+		// Need access to WordPress version.
 		global $wp_version;
 
 		// There's a new quicktags script in 3.3.
@@ -362,7 +362,7 @@ class CommentPress_Core_Display {
 				plugin_dir_url( COMMENTPRESS_PLUGIN_FILE ) . 'commentpress-core/assets/js/cp_quicktags.js',
 				[ 'quicktags' ],
 				COMMENTPRESS_VERSION, // Version.
-				false // Not in footer - but may need to be in WP 3.3.
+				false // Not in footer - but may need to be in WordPress 3.3.
 			);
 
 		}
@@ -977,7 +977,7 @@ HELPTEXT;
 							'<li class="list_commenticon">' . $commenticon . '</li>';
 				break;
 
-			// Compat with WP Footnotes.
+			// Compat with "WP Footnotes".
 			case 'ol class="footnotes"':
 
 				// Define list tag.
@@ -985,7 +985,7 @@ HELPTEXT;
 							'<li class="list_commenticon">' . $commenticon . '</li>';
 				break;
 
-			// Compat with WP Footnotes.
+			// Compat with "WP Footnotes".
 			case ( substr( $tag, 0, 10 ) == 'ol start="' ):
 
 				// Define list tag.

@@ -50,7 +50,7 @@ function cpajax_enable_plugin() {
 		return;
 	}
 
-	// Kick out if we're in the WP back end.
+	// Kick out if we're in the WordPress back end.
 	if ( is_admin() ) {
 		return;
 	}
@@ -958,7 +958,7 @@ function cpajax_infinite_scroll_load_next_page() {
 	$vars = $commentpress_core->db->get_javascript_vars();
 
 	/**
-	 * Try to locate template using WP method.
+	 * Try to locate template using WordPress method.
 	 *
 	 * @since 3.4
 	 *

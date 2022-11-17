@@ -70,7 +70,7 @@ if ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) {
 } else {
 
 	/**
-	 * Try to locate template using WP method.
+	 * Try to locate template using WordPress method.
 	 *
 	 * @since 3.4
 	 *

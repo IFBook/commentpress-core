@@ -38,7 +38,7 @@ class CommentPress_Multisite_Buddypress {
 	public $force_commentpress = '0';
 
 	/**
-	 * Default theme stylesheet for groupblogs (WP3.4+).
+	 * Default theme stylesheet for groupblogs (WordPress 3.4+).
 	 *
 	 * @since 3.3
 	 * @access public
@@ -47,7 +47,7 @@ class CommentPress_Multisite_Buddypress {
 	public $groupblog_theme = 'commentpress-modern';
 
 	/**
-	 * Default theme stylesheet for groupblogs (pre-WP3.4).
+	 * Default theme stylesheet for groupblogs (pre-WordPress 3.4).
 	 *
 	 * @since 3.3
 	 * @access public
@@ -230,7 +230,7 @@ class CommentPress_Multisite_Buddypress {
 		// Is this the back end?
 		if ( is_admin() ) {
 
-			// Anything specifically for WP Admin.
+			// Anything specifically for WordPress Admin.
 
 			// Add options to network settings form.
 			add_filter( 'cpmu_network_options_form', [ $this, 'network_admin_form' ], 20 );
@@ -883,7 +883,7 @@ class CommentPress_Multisite_Buddypress {
 	 * @param object $activity The existing activity object.
 	 * @param array $args {
 	 *     Optional. Handy if you've already parsed the blog post and group ID.
-	 *     @type WP_Post $post The WP post object.
+	 *     @type WP_Post $post The WordPress post object.
 	 *     @type int $group_id The group ID.
 	 * }
 	 * @return object $activity The modified activity object.
@@ -2512,7 +2512,7 @@ class CommentPress_Multisite_Buddypress {
 					in_array( 'groupblog', (array) $theme['Tags'] )
 				) {
 
-					// Is this WP3.4+?
+					// Is this WordPress 3.4+?
 					if ( function_exists( 'wp_get_themes' ) ) {
 
 						// Use stylesheet as theme data.
@@ -2605,7 +2605,7 @@ class CommentPress_Multisite_Buddypress {
 	 */
 	public function get_default_settings( $existing_options ) {
 
-		// Is this WP3.4+?
+		// Is this WordPress 3.4+?
 		if ( function_exists( 'wp_get_themes' ) ) {
 
 			// Use stylesheet as theme data.

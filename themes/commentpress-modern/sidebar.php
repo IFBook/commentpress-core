@@ -182,7 +182,7 @@ if ( is_object( $commentpress_core ) ) {
 	if ( $commentable ) {
 
 		/**
-		 * Try to locate template using WP method.
+		 * Try to locate template using WordPress method.
 		 *
 		 * @since 3.4
 		 *
@@ -203,7 +203,7 @@ if ( is_object( $commentpress_core ) ) {
 	if ( commentpress_show_activity_tab() ) {
 
 		/**
-		 * Try to locate template using WP method.
+		 * Try to locate template using WordPress method.
 		 *
 		 * @since 3.4
 		 *

@@ -230,7 +230,7 @@ add_filter( 'network_admin_plugin_action_links', 'commentpress_plugin_action_lin
 add_filter( 'plugin_action_links', 'commentpress_plugin_action_links', 10, 2 );
 
 /**
- * Get WP plugin reference by name.
+ * Gets a plugin reference by name.
  *
  * This is required because we never know for sure what the enclosing directory
  * is called.

@@ -734,7 +734,7 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		// Init TinyMCE class.
 		$tinymce_version = 'tinymce-3';
 
-		// Access WP version.
+		// Access WordPress version.
 		global $wp_version;
 
 		// If greater than 3.8.
@@ -2099,7 +2099,7 @@ endif;
 if ( ! function_exists( 'commentpress_sidebars_widgets' ) ) :
 
 	/**
-	 * Temporary fix for PHP notice in WP 3.9.
+	 * Temporary fix for PHP notice in WordPress 3.9.
 	 *
 	 * @since 3.6
 	 *

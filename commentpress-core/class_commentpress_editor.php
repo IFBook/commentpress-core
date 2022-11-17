@@ -66,7 +66,7 @@ class CommentPress_Core_Editor {
 			return;
 		}
 
-		// Bail if there's no WP FEE present.
+		// Bail if there's no FEE class.
 		if ( ! class_exists( 'FEE' ) ) {
 			return;
 		}
@@ -86,7 +86,7 @@ class CommentPress_Core_Editor {
 		// Save default toggle state.
 		$this->editor_toggle_set_default();
 
-		// Kill WP FEE.
+		// Kill FEE.
 		$this->wp_fee_prevent_tinymce();
 
 		// Register hooks.
@@ -103,7 +103,7 @@ class CommentPress_Core_Editor {
 	 */
 	public function register_hooks() {
 
-		// Intercept toggles when WP is set up.
+		// Intercept toggles when WordPress is set up.
 		add_action( 'wp', [ $this, 'editor_toggle_intercept' ] );
 
 		// Enable editor toggle.
@@ -133,9 +133,9 @@ class CommentPress_Core_Editor {
 		}
 
 		/*
-		 * The following hooks are enabled when WP FEE is enabled because we need
+		 * The following hooks are enabled when FEE is enabled because we need
 		 * to suppress TinyMCE for commenting and enable slipstream functionality
-		 * that supports WP FEE.
+		 * that supports FEE.
 		 */
 
 		// Prevent infinite scroll, if enabled.
@@ -178,7 +178,7 @@ class CommentPress_Core_Editor {
 		add_action( 'wp_ajax_cp_set_starting_para_number', [ $this, 'metabox_set_starting_para_number' ] );
 		add_action( 'wp_ajax_nopriv_cp_set_starting_para_number', [ $this, 'metabox_set_starting_para_number' ] );
 
-		// Add an action to wp_enqueue_scripts that triggers themes to include their WP FEE compatibility script.
+		// Add an action to wp_enqueue_scripts that triggers themes to include their FEE compatibility script.
 		add_action( 'wp_enqueue_scripts', [ $this, 'trigger_script_inclusion' ], 9999 );
 
 		// Broadcast.
@@ -488,7 +488,7 @@ class CommentPress_Core_Editor {
 		$vars = $this->core->db->get_javascript_vars();
 
 		/**
-		 * Try to locate template using WP method.
+		 * Try to locate template using WordPress method.
 		 *
 		 * @since 3.4
 		 *
@@ -728,7 +728,7 @@ class CommentPress_Core_Editor {
 	}
 
 	/**
-	 * Override the "Edit Page" link when WP FEE not active.
+	 * Override the "Edit Page" link when FEE not active.
 	 *
 	 * @since 3.7
 	 *
@@ -739,7 +739,7 @@ class CommentPress_Core_Editor {
 	 */
 	public function get_edit_post_link( $link, $id, $context ) {
 
-		// Test for WP FEE hash.
+		// Test for FEE hash.
 		if ( $link == '#fee-edit-link' ) {
 
 			// Get url including anchor.
