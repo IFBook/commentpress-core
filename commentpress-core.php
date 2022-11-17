@@ -279,40 +279,6 @@ function commentpress_find_plugin_by_name( $plugin_name = '' ) {
 
 }
 
-/**
- * Test if the old pre-3.4 CommentPress plugin is active.
- *
- * @since 3.4
- *
- * @return bool $active True if the legacy plugin is active, false otherwise.
- */
-function commentpress_is_legacy_plugin_active() {
-
-	// Assume not.
-	$active = false;
-
-	// Get old options.
-	$old = get_option( 'cp_options', [] );
-
-	// Test if we have a existing pre-3.4 CommentPress instance.
-	if ( is_array( $old ) && count( $old ) > 0 ) {
-
-		// If we have "special pages", then the plugin must be active on this blog
-		// NB: do we need to check is_plugin_active() as well (or instead)?
-		if ( isset( $old['cp_special_pages'] ) ) {
-
-			// Set flag.
-			$active = true;
-
-		}
-
-	}
-
-	// --<
-	return $active;
-
-}
-
 /*
  * -----------------------------------------------------------------------------
  * NOTE: in multisite, child themes are registered as broken if the plugin

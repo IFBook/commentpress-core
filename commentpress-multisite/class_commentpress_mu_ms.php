@@ -286,11 +286,7 @@ class CommentPress_Multisite_WordPress {
 
 	}
 
-	/**
-	 * -------------------------------------------------------------------------
-	 * Private Methods
-	 * -------------------------------------------------------------------------
-	 */
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Create a blog.
@@ -398,7 +394,7 @@ class CommentPress_Multisite_WordPress {
 		}
 
 		// Sanitise admin page URL.
-		$url = $_SERVER['REQUEST_URI'];
+		$url = isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '';
 		$url_array = explode( '&', $url );
 		if ( is_array( $url_array ) ) {
 			$url = $url_array[0];

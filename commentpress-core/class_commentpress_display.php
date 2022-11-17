@@ -201,11 +201,7 @@ class CommentPress_Core_Display {
 
 	}
 
-	/**
-	 * -------------------------------------------------------------------------
-	 * Public Methods
-	 * -------------------------------------------------------------------------
-	 */
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Enqueue jQuery, jQuery UI and plugins.
@@ -1179,7 +1175,7 @@ HELPTEXT;
 		$admin_page .= '<div class="wrap" id="commentpress_admin_wrapper">' . "\n\n";
 
 		// Get our form.
-		$admin_page .= $this->_get_admin_form();
+		$admin_page .= $this->get_admin_form();
 
 		// Close div.
 		$admin_page .= '</div>' . "\n\n";
@@ -1209,11 +1205,7 @@ HELPTEXT;
 
 	}
 
-	/**
-	 * -------------------------------------------------------------------------
-	 * Private Methods
-	 * -------------------------------------------------------------------------
-	 */
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Returns the admin form HTML.
@@ -1222,7 +1214,7 @@ HELPTEXT;
 	 *
 	 * @return str $admin_page The admin page HTML.
 	 */
-	public function _get_admin_form() {
+	public function get_admin_form() {
 
 		// Sanitise admin page URL.
 		$url = isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '';
@@ -1237,7 +1229,7 @@ HELPTEXT;
 		if ( $this->core->db->upgrade_required() ) {
 
 			// Get upgrade options.
-			$upgrade = $this->_get_upgrade();
+			$upgrade = $this->get_upgrade();
 
 			// Init text.
 			$options_text = '';
@@ -1288,11 +1280,11 @@ HELPTEXT;
 
 			' .
 
-			$this->_get_options() .
+			$this->get_options() .
 
 			'<input type="hidden" name="action" value="update" />
 
-			' . $this->_get_submit() . '
+			' . $this->get_submit() . '
 
 			</form>' . "\n\n\n\n";
 
@@ -1310,7 +1302,7 @@ HELPTEXT;
 	 *
 	 * @return str $options The options markup.
 	 */
-	public function _get_options() {
+	public function get_options() {
 
 		// Define CommentPress Core theme options.
 		$options = '
@@ -1322,15 +1314,15 @@ HELPTEXT;
 
 		<table class="form-table">
 
-		' . $this->_get_deactivate() . '
+		' . $this->get_deactivate() . '
 
-		' . $this->_get_reset() . '
+		' . $this->get_reset() . '
 
-		' . $this->_get_post_type_options() . '
+		' . $this->get_post_type_options() . '
 
-		' . $this->_get_optional_options() . '
+		' . $this->get_optional_options() . '
 
-		' . $this->_get_do_not_parse() . '
+		' . $this->get_do_not_parse() . '
 
 		</table>
 
@@ -1343,7 +1335,7 @@ HELPTEXT;
 
 		<table class="form-table">
 
-		' . $this->_get_toc() . '
+		' . $this->get_toc() . '
 
 		</table>
 
@@ -1362,7 +1354,7 @@ HELPTEXT;
 				</td>
 			</tr>
 
-		' . $this->_get_page_nav_enabled() . '
+		' . $this->get_page_nav_enabled() . '
 
 			<tr valign="top">
 				<th scope="row"><label for="cp_title_visibility">' . __( 'Default page title visibility (can be overridden on individual pages)', 'commentpress-core' ) . '</label></th>
@@ -1382,7 +1374,7 @@ HELPTEXT;
 				</td>
 			</tr>
 
-		' . $this->_get_textblock_meta() . '
+		' . $this->get_textblock_meta() . '
 
 			<tr valign="top">
 				<th scope="row"><label for="cp_excerpt_length">' . __( 'Blog excerpt length', 'commentpress-core' ) . '</label></th>
@@ -1397,9 +1389,9 @@ HELPTEXT;
 
 		<table class="form-table">
 
-		' . $this->_get_editor() . '
+		' . $this->get_editor() . '
 
-		' . $this->_get_override() . '
+		' . $this->get_override() . '
 
 		</table>
 
@@ -1423,7 +1415,7 @@ HELPTEXT;
 				<td><input type="text" id="cp_min_page_width" name="cp_min_page_width" value="' . $this->core->db->option_get( 'cp_min_page_width' ) . '" class="small-text" /> ' . __( 'pixels', 'commentpress-core' ) . '</td>
 			</tr>
 
-		' . $this->_get_sidebar() . '
+		' . $this->get_sidebar() . '
 
 		' . apply_filters( 'commentpress_theme_customisation_options', '' ) . '
 
@@ -1443,7 +1435,7 @@ HELPTEXT;
 	 *
 	 * @return str $html The markup.
 	 */
-	public function _get_optional_options() {
+	public function get_optional_options() {
 
 		// Init.
 		$html = '';
@@ -1551,7 +1543,7 @@ HELPTEXT;
 	 *
 	 * @return str $upgrade The upgrade markup.
 	 */
-	public function _get_upgrade() {
+	public function get_upgrade() {
 
 		// Init.
 		$upgrade = '';
@@ -1948,7 +1940,7 @@ HELPTEXT;
 	 *
 	 * @return str $html The multisite markup, default is empty.
 	 */
-	public function _get_deactivate() {
+	public function get_deactivate() {
 
 		// Do this via a filter, so only the Multisite object returns anything.
 		return apply_filters( 'cpmu_deactivate_commentpress_element', '' );
@@ -1962,7 +1954,7 @@ HELPTEXT;
 	 *
 	 * @return str $reset The reset button markup.
 	 */
-	public function _get_reset() {
+	public function get_reset() {
 
 		// Define label.
 		$label = __( 'Reset options to plugin defaults', 'commentpress-core' );
@@ -1987,7 +1979,7 @@ HELPTEXT;
 	 *
 	 * @return str $editor The editor option markup.
 	 */
-	public function _get_editor() {
+	public function get_editor() {
 
 		// Define labels.
 		$editor_label = __( 'Comment form editor', 'commentpress-core' );
@@ -2031,7 +2023,7 @@ HELPTEXT;
 	 *
 	 * @return str $editor The markup.
 	 */
-	public function _get_toc() {
+	public function get_toc() {
 
 		// Define labels.
 		$toc_label = __( 'Table of Contents contains', 'commentpress-core' );
@@ -2097,7 +2089,7 @@ HELPTEXT;
 	 *
 	 * @return str $toc The markup.
 	 */
-	public function _get_sidebar() {
+	public function get_sidebar() {
 
 		// Allow this to be disabled.
 		if ( apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
@@ -2139,7 +2131,7 @@ HELPTEXT;
 	 *
 	 * @return str $override The markup.
 	 */
-	public function _get_override() {
+	public function get_override() {
 
 		// Define label.
 		$label = __( 'Enable "live" comment refreshing (Please note: may cause heavy load on your server)', 'commentpress-core' );
@@ -2164,7 +2156,7 @@ HELPTEXT;
 	 *
 	 * @return str $html The markup for the button.
 	 */
-	public function _get_do_not_parse() {
+	public function get_do_not_parse() {
 
 			$description = __( 'Note: when comments are closed on an entry and there are no comments on that entry, if this option is set to "Yes" then the content will not be parsed for paragraphs, lines or blocks. Comments will also not be parsed, meaning that the entry behaves the same as content which is not commentable. Default prior to 3.8.10 was "No" - all content was always parsed.', 'commentpress-core' );
 
@@ -2194,7 +2186,7 @@ HELPTEXT;
 	 *
 	 * @return str $html The markup for the button.
 	 */
-	public function _get_page_nav_enabled() {
+	public function get_page_nav_enabled() {
 
 		// Define override.
 		$html = '
@@ -2221,7 +2213,7 @@ HELPTEXT;
 	 *
 	 * @return str $html The markup for the post type options.
 	 */
-	public function _get_post_type_options() {
+	public function get_post_type_options() {
 
 		// Get post types that support the editor.
 		$capable_post_types = $this->core->db->get_supported_post_types();
@@ -2277,7 +2269,7 @@ HELPTEXT;
 	 *
 	 * @return str $override The markup.
 	 */
-	public function _get_textblock_meta() {
+	public function get_textblock_meta() {
 
 		// Define override.
 		$override = '
@@ -2304,7 +2296,7 @@ HELPTEXT;
 	 *
 	 * @return str $submit The submit button HTML.
 	 */
-	public function _get_submit() {
+	public function get_submit() {
 
 		// Define label.
 		$label = __( 'Save Changes', 'commentpress-core' );

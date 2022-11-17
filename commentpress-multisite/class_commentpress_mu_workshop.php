@@ -82,19 +82,31 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 	}
 
 	/**
-	 * Set up all items associated with this object.
+	 * Initialises this obiject.
 	 *
 	 * @since 3.3
 	 */
 	public function initialise() {
 
-		// Register hooks.
-		$this->register_hooks();
-
 		// Make properties translatable.
 		$this->groupblog_nomenclature_name = __( 'Document', 'commentpress-core' );
 		$this->groupblog_nomenclature_plural = __( 'Documents', 'commentpress-core' );
 		$this->groupblog_nomenclature_slug = __( 'document', 'commentpress-core' );
+
+		// Register hooks.
+		$this->register_hooks();
+
+		// Set up items.
+		$this->setup_items();
+
+	}
+
+	/**
+	 * Set up all items associated with this object.
+	 *
+	 * @since 4.0
+	 */
+	public function setup_items() {
 
 		// Bail if we do not have our option set.
 		if ( $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature' ) != '1' ) {
@@ -106,41 +118,29 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 
 		// Do we have the name option already defined?
 		if ( $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ) {
-
 			// No, so we must have switched to the legacy "Workshop" setting.
-			$this->groupblog_nomenclature_name = $this->_get_legacy_name();
-
+			$this->groupblog_nomenclature_name = $this->get_legacy_name();
 		} else {
-
 			// Store the setting locally.
 			$this->groupblog_nomenclature_name = $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature_name' );
-
 		}
 
 		// Do we have the plural option already defined?
 		if ( $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) == '' ) {
-
 			// No, likewise we must have switched to the legacy "Workshop" setting.
-			$this->groupblog_nomenclature_plural = $this->_get_legacy_plural();
-
+			$this->groupblog_nomenclature_plural = $this->get_legacy_plural();
 		} else {
-
 			// Store the setting locally.
 			$this->groupblog_nomenclature_plural = $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' );
-
 		}
 
 		// Do we have the slug option already defined?
 		if ( $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature_slug' ) == '' ) {
-
 			// No, likewise we must have switched to the legacy "Workshop" setting.
-			$this->groupblog_nomenclature_slug = $this->_get_legacy_slug();
-
+			$this->groupblog_nomenclature_slug = $this->get_legacy_slug();
 		} else {
-
 			// Store the setting locally.
 			$this->groupblog_nomenclature_slug = $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature_slug' );
-
 		}
 
 		// Register Workshop hooks.
@@ -159,10 +159,10 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 		if ( is_admin() ) {
 
 			// Add element to Network BuddyPress form.
-			add_filter( 'cpmu_network_buddypress_options_form', [ $this, '_buddypress_admin_form' ] );
+			add_filter( 'cpmu_network_buddypress_options_form', [ $this, 'buddypress_admin_form' ] );
 
 			// Hook into Network BuddyPress form update.
-			add_action( 'cpmu_db_options_update', [ $this, '_buddypress_admin_update' ], 21 );
+			add_action( 'cpmu_db_options_update', [ $this, 'buddypress_admin_update' ], 21 );
 
 			// Hook into Network BuddyPress options reset.
 			add_filter( 'cpmu_buddypress_options_get_defaults', [ $this, 'get_default_settings' ], 10, 1 );
@@ -208,11 +208,7 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 
 	}
 
-	/**
-	 * -------------------------------------------------------------------------
-	 * Public Methods
-	 * -------------------------------------------------------------------------
-	 */
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Override the name of the filter item.
@@ -351,7 +347,7 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 	public function page_all_comments_blog_title( $title ) {
 
 		// Override if groupblog.
-		if ( ! $this->ms_loader->bp->_is_commentpress_groupblog() ) {
+		if ( ! $this->ms_loader->bp->is_commentpress_groupblog() ) {
 			return $title;
 		}
 
@@ -374,7 +370,7 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 	public function page_all_comments_book_title( $title ) {
 
 		// Override if groupblog.
-		if ( ! $this->ms_loader->bp->_is_commentpress_groupblog() ) {
+		if ( ! $this->ms_loader->bp->is_commentpress_groupblog() ) {
 			return $title;
 		}
 
@@ -399,7 +395,7 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 		// Override if groupblog.
 		if (
 			! bp_is_root_blog() &&
-			! $this->ms_loader->bp->_is_commentpress_groupblog()
+			! $this->ms_loader->bp->is_commentpress_groupblog()
 		) {
 			return $title;
 		}
@@ -425,7 +421,7 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 		// Override if groupblog.
 		if (
 			! bp_is_root_blog() &&
-			! $this->ms_loader->bp->_is_commentpress_groupblog()
+			! $this->ms_loader->bp->is_commentpress_groupblog()
 		) {
 			return $title;
 		}
@@ -454,7 +450,7 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 		}
 
 		// Bail if not groupblog.
-		if ( ! $this->ms_loader->bp->_is_commentpress_groupblog() ) {
+		if ( ! $this->ms_loader->bp->is_commentpress_groupblog() ) {
 			return $title;
 		}
 
@@ -484,11 +480,8 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 
 	}
 
-	/**
-	 * -------------------------------------------------------------------------
-	 * Private Methods
-	 * -------------------------------------------------------------------------
-	 */
+	// -------------------------------------------------------------------------
+
 
 	/**
 	 * Add our options to the BuddyPress admin form.
@@ -497,7 +490,7 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 	 *
 	 * @return str $element The admin form element.
 	 */
-	public function _buddypress_admin_form() {
+	public function buddypress_admin_form() {
 
 		// Check if we already have it switched on.
 		if ( $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature' ) == '1' ) {
@@ -506,7 +499,7 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 			if ( $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ) {
 
 				// No, so we must have switched to the legacy "Workshop" setting.
-				$this->groupblog_nomenclature_name = $this->_get_legacy_name();
+				$this->groupblog_nomenclature_name = $this->get_legacy_name();
 
 			}
 
@@ -514,7 +507,7 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 			if ( $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) == '' ) {
 
 				// No, likewise we must have switched to the legacy "Workshop" setting.
-				$this->groupblog_nomenclature_plural = $this->_get_legacy_plural();
+				$this->groupblog_nomenclature_plural = $this->get_legacy_plural();
 
 			}
 
@@ -549,12 +542,13 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 	 *
 	 * @since 3.3
 	 */
-	public function _buddypress_admin_update() {
+	public function buddypress_admin_update() {
 
 		// Init.
 		$cpmu_bp_groupblog_nomenclature = 0;
 
-		// Get variables.
+		// Get variables. Nonce evaluated elsewhere.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		extract( $_POST );
 
 		// Set on/off option.
@@ -617,11 +611,8 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 	 *
 	 * @return str $name The legacy singular name of a groupblog.
 	 */
-	public function _get_legacy_name() {
-
-		// --<
+	public function get_legacy_name() {
 		return __( 'Workshop', 'commentpress-core' );
-
 	}
 
 	/**
@@ -631,11 +622,8 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 	 *
 	 * @return str $name The legacy plural name of a groupblog.
 	 */
-	public function _get_legacy_plural() {
-
-		// --<
+	public function get_legacy_plural() {
 		return __( 'Workshops', 'commentpress-core' );
-
 	}
 
 	/**
@@ -645,11 +633,8 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 	 *
 	 * @return str $name The legacy slug of a groupblog.
 	 */
-	public function _get_legacy_slug() {
-
-		// --<
+	public function get_legacy_slug() {
 		return 'workshop';
-
 	}
 
 }

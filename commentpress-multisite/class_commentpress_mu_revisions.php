@@ -58,12 +58,6 @@ class CommentPress_Multisite_Revisions {
 	}
 
 	/**
-	 * -------------------------------------------------------------------------
-	 * Public Methods
-	 * -------------------------------------------------------------------------
-	 */
-
-	/**
 	 * Register WordPress hooks.
 	 *
 	 * @since 3.3
@@ -77,6 +71,8 @@ class CommentPress_Multisite_Revisions {
 		add_filter( 'commentpress_new_post_title', [ $this, 'new_post_title' ], 21, 2 );
 
 	}
+
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Amend the post title prefix.

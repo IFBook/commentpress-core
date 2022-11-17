@@ -314,11 +314,7 @@ class CommentPress_Core {
 
 	}
 
-	/**
-	 * -------------------------------------------------------------------------
-	 * Public Methods
-	 * -------------------------------------------------------------------------
-	 */
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Runs when plugin is activated.
@@ -569,6 +565,11 @@ class CommentPress_Core {
 			'commentpress_admin',
 			[ $this, 'options_page' ]
 		);
+
+		/*
+		// Register our form submit hander.
+		add_action( 'load-' . $this->options_page, [ $this, 'form_submitted' ] );
+		*/
 
 		// Add scripts and styles.
 		add_action( 'admin_print_scripts-' . $this->options_page, [ $this, 'admin_js' ] );
@@ -1124,13 +1125,13 @@ class CommentPress_Core {
 		}
 
 		// Get post formatter.
-		$this->_get_post_formatter_metabox( $post );
+		$this->get_post_formatter_metabox( $post );
 
 		// Get default sidebar.
-		$this->_get_default_sidebar_metabox( $post );
+		$this->get_default_sidebar_metabox( $post );
 
 		// Get starting para number.
-		$this->_get_para_numbering_metabox( $post );
+		$this->get_para_numbering_metabox( $post );
 
 	}
 
@@ -1194,10 +1195,10 @@ class CommentPress_Core {
 		}
 
 		// Get post formatter.
-		$this->_get_post_formatter_metabox( $post );
+		$this->get_post_formatter_metabox( $post );
 
 		// Get default sidebar.
-		$this->_get_default_sidebar_metabox( $post );
+		$this->get_default_sidebar_metabox( $post );
 
 	}
 
@@ -1896,7 +1897,7 @@ class CommentPress_Core {
 
 		/*
 		// Get CPTs.
-		//$types = $this->_get_commentable_cpts();
+		//$types = $this->get_commentable_cpts();
 
 		// Testing what we do with CPTs.
 		//if ( is_singular() || is_singular( $types ) ) {
@@ -1995,11 +1996,14 @@ class CommentPress_Core {
 		global $post;
 
 		// Not on signup pages.
-		if ( is_multisite() && 'wp-signup.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) {
-			return false;
-		}
-		if ( is_multisite() && 'wp-activate.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) {
-			return false;
+		$script = isset( $_SERVER['SCRIPT_FILENAME'] ) ? wp_unslash( $_SERVER['SCRIPT_FILENAME'] ) : '';
+		if ( is_multisite() && ! empty( $script ) ) {
+			if ( 'wp-signup.php' == basename( $script ) ) {
+				return false;
+			}
+			if ( 'wp-activate.php' == basename( $script ) ) {
+				return false;
+			}
 		}
 
 		// Not if we're not on a page/post and especially not if there's no post object.
@@ -2032,7 +2036,13 @@ class CommentPress_Core {
 			return false;
 		}
 
-		// --<
+		/**
+		 * Filter comment allowed.
+		 *
+		 * @since 3.4
+		 *
+		 * @param bool $is_commentable True by default.
+		 */
 		return apply_filters( 'cp_is_commentable', true );
 
 	}
@@ -2065,11 +2075,7 @@ class CommentPress_Core {
 
 	}
 
-	/**
-	 * -------------------------------------------------------------------------
-	 * Private Methods
-	 * -------------------------------------------------------------------------
-	 */
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Utility to check for commentable CPT.
@@ -2078,7 +2084,7 @@ class CommentPress_Core {
 	 *
 	 * @return str $types Array of post types.
 	 */
-	public function _get_commentable_cpts() {
+	public function get_commentable_cpts() {
 
 		// Init.
 		$types = false;
@@ -2123,7 +2129,7 @@ class CommentPress_Core {
 	 *
 	 * @param object $post The WordPress post object.
 	 */
-	public function _get_post_formatter_metabox( $post ) {
+	public function get_post_formatter_metabox( $post ) {
 
 		// ---------------------------------------------------------------------
 		// Override post formatter.
@@ -2202,7 +2208,7 @@ class CommentPress_Core {
 	 *
 	 * @param object $post The WordPress post object.
 	 */
-	public function _get_default_sidebar_metabox( $post ) {
+	public function get_default_sidebar_metabox( $post ) {
 
 		// Allow this to be disabled.
 		if ( apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
@@ -2257,7 +2263,7 @@ class CommentPress_Core {
 	 *
 	 * @param object $post The WordPress post object.
 	 */
-	public function _get_para_numbering_metabox( $post ) {
+	public function get_para_numbering_metabox( $post ) {
 
 		// Show a title.
 		echo '<div class="cp_starting_para_number_wrapper">

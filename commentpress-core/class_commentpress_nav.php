@@ -172,11 +172,7 @@ class CommentPress_Core_Navigator {
 
 	}
 
-	/**
-	 * -------------------------------------------------------------------------
-	 * Public Methods
-	 * -------------------------------------------------------------------------
-	 */
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Disable page navigation when on a "page".
@@ -443,7 +439,7 @@ class CommentPress_Core_Navigator {
 		}
 
 		// We got some.
-		return $this->_get_first_child( $kids );
+		return $this->get_first_child_recursive( $kids );
 
 	}
 
@@ -464,12 +460,12 @@ class CommentPress_Core_Navigator {
 		if ( has_nav_menu( 'toc' ) ) {
 
 			// Parse menu.
-			$all_pages = $this->_parse_menu( $mode );
+			$all_pages = $this->parse_menu( $mode );
 
 		} else {
 
 			// Parse page order.
-			$all_pages = $this->_parse_pages( $mode );
+			$all_pages = $this->parse_pages( $mode );
 
 		} // End check for custom menu.
 
@@ -534,7 +530,7 @@ class CommentPress_Core_Navigator {
 		if ( $viewable ) {
 
 			// Get page number from array.
-			$num = $this->_get_page_number( $page_id );
+			$num = $this->get_page_num( $page_id );
 
 		} else {
 
@@ -545,7 +541,7 @@ class CommentPress_Core_Navigator {
 			if ( ! $first_child ) {
 
 				// Get page number from array.
-				$num = $this->_get_page_number( $page_id );
+				$num = $this->get_page_num( $page_id );
 
 			}
 
@@ -567,7 +563,7 @@ class CommentPress_Core_Navigator {
 	 * @param int $page_id The page ID.
 	 * @return int $number The number of the page.
 	 */
-	public function _get_page_number( $page_id ) {
+	public function get_page_num( $page_id ) {
 
 		// Init.
 		$num = 0;
@@ -649,7 +645,7 @@ class CommentPress_Core_Navigator {
 		if ( count( $all_pages ) > 0 ) {
 
 			// Generate page numbers.
-			$this->_generate_page_numbers( $all_pages );
+			$this->generate_page_numbers( $all_pages );
 
 			// Access post object.
 			global $post;
@@ -759,11 +755,7 @@ class CommentPress_Core_Navigator {
 
 	}
 
-	/**
-	 * -------------------------------------------------------------------------
-	 * Private Methods
-	 * -------------------------------------------------------------------------
-	 */
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Strip out all but lowest level pages.
@@ -775,7 +767,7 @@ class CommentPress_Core_Navigator {
 	 * @param array $pages The array of page objects.
 	 * @return array $subpages All subpages.
 	 */
-	public function _filter_chapters( $pages ) {
+	public function filter_chapters( $pages ) {
 
 		// Init return.
 		$subpages = [];
@@ -819,11 +811,12 @@ class CommentPress_Core_Navigator {
 	 * Get first published child, however deep.
 	 *
 	 * @since 3.0
+	 * @since 4.0 Renamed
 	 *
 	 * @param array $pages The array of page objects.
 	 * @return array $subpages All subpages.
 	 */
-	public function _get_first_child( $pages ) {
+	public function get_first_child_recursive( $pages ) {
 
 		// If we have any.
 		if ( count( $pages ) > 0 ) {
@@ -849,7 +842,7 @@ class CommentPress_Core_Navigator {
 				if ( ! empty( $kids ) ) {
 
 					// Go deeper.
-					return $this->_get_first_child( $kids );
+					return $this->get_first_child_recursive( $kids );
 
 				} else {
 
@@ -876,7 +869,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @param array $pages The array of page objects in the 'book'.
 	 */
-	public function _generate_page_numbers( $pages ) {
+	public function generate_page_numbers( $pages ) {
 
 		// If we have any.
 		if ( count( $pages ) > 0 ) {
@@ -926,7 +919,7 @@ class CommentPress_Core_Navigator {
 					if ( $has_nav_menu ) {
 
 						// Get top level menu item.
-						$top_menu_item = $this->_get_top_menu_obj( $page_obj );
+						$top_menu_item = $this->get_top_menu_obj( $page_obj );
 
 						// Since this might not be a WP_POST object.
 						if ( isset( $top_menu_item->object_id ) ) {
@@ -947,7 +940,7 @@ class CommentPress_Core_Navigator {
 					} else {
 
 						// Get top level parent.
-						$top_page_id = $this->_get_top_parent_id( $page_obj->ID );
+						$top_page_id = $this->get_top_parent_id( $page_obj->ID );
 
 						// If the custom field has a value.
 						if ( get_post_meta( $top_page_id, $key, true ) !== '' ) {
@@ -965,7 +958,7 @@ class CommentPress_Core_Navigator {
 				if ( $format == 'roman' ) {
 
 					// Convert arabic to roman.
-					$this->page_numbers[ $page_obj->ID ] = $this->_number_to_roman( $num );
+					$this->page_numbers[ $page_obj->ID ] = $this->number_to_roman( $num );
 
 				} else {
 
@@ -1002,7 +995,7 @@ class CommentPress_Core_Navigator {
 	 * @param array $pages An array of page objects.
 	 * @return bool $clean The modified array pf page objects.
 	 */
-	public function _filter_theme_my_login_page( $pages ) {
+	public function filter_theme_my_login_page( $pages ) {
 
 		// Init return.
 		$clean = [];
@@ -1014,7 +1007,7 @@ class CommentPress_Core_Navigator {
 			foreach ( $pages as $page_obj ) {
 
 				// Do we have any?
-				if ( ! $this->_detect_login_page( $page_obj ) ) {
+				if ( ! $this->detect_login_page( $page_obj ) ) {
 
 					// Add to our return array.
 					$clean[] = $page_obj;
@@ -1038,7 +1031,7 @@ class CommentPress_Core_Navigator {
 	 * @param object $page_obj The WordPress page object.
 	 * @return boolean $success True if TML page, false otherwise.
 	 */
-	public function _detect_login_page( $page_obj ) {
+	public function detect_login_page( $page_obj ) {
 
 		// Compat with Theme My Login.
 		if (
@@ -1073,7 +1066,7 @@ class CommentPress_Core_Navigator {
 	 * @param int $arabic The numeric Arabic value.
 	 * @return str $roman The Roman equivalent.
 	 */
-	public function _number_to_roman( $arabic ) {
+	public function number_to_roman( $arabic ) {
 
 		$ones = [ '', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX' ];
 		$tens = [ '', 'X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC' ];
@@ -1124,7 +1117,7 @@ class CommentPress_Core_Navigator {
 	 * @param int $post_id The queried page ID.
 	 * @return int $post_id The overridden page ID.
 	 */
-	public function _get_top_parent_id( $post_id ) {
+	public function get_top_parent_id( $post_id ) {
 
 		// Get page data.
 		$page = get_page( $post_id );
@@ -1138,7 +1131,7 @@ class CommentPress_Core_Navigator {
 		} else {
 
 			// No -> recurse upwards.
-			return $this->_get_top_parent_id( $page->post_parent );
+			return $this->get_top_parent_id( $page->post_parent );
 
 		}
 
@@ -1152,7 +1145,7 @@ class CommentPress_Core_Navigator {
 	 * @param str $mode Either 'structural' or 'readable'.
 	 * @return array $pages All 'book' pages.
 	 */
-	public function _parse_pages( $mode ) {
+	public function parse_pages( $mode ) {
 
 		// Init return.
 		$pages = [];
@@ -1224,8 +1217,6 @@ class CommentPress_Core_Navigator {
 			'hierarchical' => 1,
 			'exclude' => $excludes,
 			'include' => '',
-			'meta_key' => '',
-			'meta_value' => '',
 			'authors' => '',
 			'parent' => -1,
 			'exclude_tree' => '',
@@ -1244,7 +1235,7 @@ class CommentPress_Core_Navigator {
 				if ( $mode == 'readable' ) {
 
 					// Filter chapters out.
-					$pages = $this->_filter_chapters( $pages );
+					$pages = $this->filter_chapters( $pages );
 
 				}
 
@@ -1254,7 +1245,7 @@ class CommentPress_Core_Navigator {
 			if ( defined( 'TML_ABSPATH' ) ) {
 
 				// Filter its page out.
-				$pages = $this->_filter_theme_my_login_page( $pages );
+				$pages = $this->filter_theme_my_login_page( $pages );
 
 			}
 
@@ -1312,7 +1303,7 @@ class CommentPress_Core_Navigator {
 	 * @param str $mode Either 'structural' or 'readable'.
 	 * @return array $pages All 'book' pages.
 	 */
-	public function _parse_menu( $mode ) {
+	public function parse_menu( $mode ) {
 
 		// Init return.
 		$pages = [];
@@ -1351,7 +1342,7 @@ class CommentPress_Core_Navigator {
 					if ( $mode == 'readable' ) {
 
 						// Filter chapters out.
-						$menu_items = $this->_filter_menu( $this->menu_objects );
+						$menu_items = $this->filter_menu( $this->menu_objects );
 
 					} else {
 
@@ -1415,7 +1406,7 @@ class CommentPress_Core_Navigator {
 	 * @param array $menu_items An array of menu item objects.
 	 * @return array $sub_items All lowest level items.
 	 */
-	public function _filter_menu( $menu_items ) {
+	public function filter_menu( $menu_items ) {
 
 		// Init return.
 		$sub_items = [];
@@ -1427,7 +1418,7 @@ class CommentPress_Core_Navigator {
 			foreach ( $menu_items as $key => $menu_obj ) {
 
 				// Get item children.
-				$kids = $this->_get_menu_item_children( $menu_items, $menu_obj );
+				$kids = $this->get_menu_item_children( $menu_items, $menu_obj );
 
 				// Do we have any?
 				if ( empty( $kids ) ) {
@@ -1455,7 +1446,7 @@ class CommentPress_Core_Navigator {
 	 * @param obj $menu_obj The menu item object.
 	 * @return array $sub_items The menu item children.
 	 */
-	public function _get_menu_item_children( $menu_items, $menu_obj ) {
+	public function get_menu_item_children( $menu_items, $menu_obj ) {
 
 		// Init return.
 		$sub_items = [];
@@ -1491,7 +1482,7 @@ class CommentPress_Core_Navigator {
 	 * @param obj $menu_obj The menu item object.
 	 * @return int|bool $menu_item The parent menu item - or false if not found.
 	 */
-	public function _get_menu_item_parent( $menu_obj ) {
+	public function get_menu_item_parent( $menu_obj ) {
 
 		// If we have any.
 		if ( count( $this->menu_objects ) > 0 ) {
@@ -1524,7 +1515,7 @@ class CommentPress_Core_Navigator {
 	 * @param object $menu_obj The queried menu object.
 	 * @return object $parent_obj The parent object or false if not found.
 	 */
-	public function _get_top_menu_obj( $menu_obj ) {
+	public function get_top_menu_obj( $menu_obj ) {
 
 		/*
 		 * There is little point walking the menu tree because menu items can
@@ -1543,13 +1534,13 @@ class CommentPress_Core_Navigator {
 		}
 
 		// Get parent item.
-		$parent_obj = $this->_get_menu_item_parent( $menu_obj );
+		$parent_obj = $this->get_menu_item_parent( $menu_obj );
 
 		// Is the top item?
 		if ( $parent_obj->menu_item_parent !== 0 ) {
 
 			// No -> recurse upwards.
-			return $this->_get_top_menu_obj( $parent_obj );
+			return $this->get_top_menu_obj( $parent_obj );
 
 		}
 

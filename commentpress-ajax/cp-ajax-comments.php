@@ -876,7 +876,7 @@ function cpajax_infinite_scroll_load_next_page() {
 	$content = apply_filters( 'the_content', $post->post_content );
 
 	// Generate page numbers.
-	$commentpress_core->nav->_generate_page_numbers( $all_pages );
+	$commentpress_core->nav->generate_page_numbers( $all_pages );
 
 	// Get page number.
 	$number = $commentpress_core->nav->get_page_number( $post->ID );
