@@ -1,6 +1,6 @@
 <?php
 /**
- * CommentPress Core for Multisite class.
+ * CommentPress Core for Multisite Loader class.
  *
  * This used to be the CommentPress for Multisite plugin, but is now merged into
  * a unified plugin that covers all situations.
@@ -137,7 +137,7 @@ class Commentpress_Multisite_Loader {
 		require_once $class_file_path;
 
 		// Init multisite object.
-		$this->multisite = new Commentpress_Multisite_Wordpress( $this );
+		$this->multisite = new Commentpress_Multisite_WordPress( $this );
 
 		// ---------------------------------------------------------------------
 		// Load Post Revisions object (merge this into Core as an option).

@@ -1,4 +1,14 @@
 <?php
+/**
+ * CommentPress Core BuddyPress Groupblog class.
+ *
+ * Overrides the name of Groupblogs from "Blog" (or "Document") to "Workshop".
+ *
+ * @package CommentPress_Core
+ */
+
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 /**
  * CommentPress Core BuddyPress Groupblog Class.
@@ -63,8 +73,6 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	 */
 	public $groupblog_nomenclature_slug = '';
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -90,8 +98,6 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 
 	}
 
-
-
 	/**
 	 * Set up all items associated with this object.
 	 *
@@ -100,8 +106,6 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	public function initialise() {
 
 	}
-
-
 
 	/**
 	 * If needed, destroys all items associated with this object.
@@ -112,19 +116,11 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 
 	}
 
-
-
-//##############################################################################
-
-
-
 	/**
 	 * -------------------------------------------------------------------------
 	 * Public Methods
 	 * -------------------------------------------------------------------------
 	 */
-
-
 
 	/**
 	 * Override the name of the filter item.
@@ -143,8 +139,6 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 
 	}
 
-
-
 	/**
 	 * Override the name of the filter item.
 	 *
@@ -161,8 +155,6 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 		);
 
 	}
-
-
 
 	/**
 	 * Override the name of the filter item.
@@ -181,14 +173,13 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 
 	}
 
-
-
 	/**
 	 * Override the name of the sub-nav item.
 	 *
 	 * @since 3.3
 	 *
-	 * @return str The singular name of the groupblog post.
+	 * @param str $name The existing singular name of the groupblog post.
+	 * @return str $name The modified singular name of the groupblog post.
 	 */
 	public function filter_blog_name( $name ) {
 
@@ -197,14 +188,13 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 
 	}
 
-
-
 	/**
 	 * Override the slug of the sub-nav item.
 	 *
 	 * @since 3.3
 	 *
-	 * @return The slug of the sub-nav item.
+	 * @param str $slug The existing slug of the sub-nav item.
+	 * @return str $slug The modified slug of the sub-nav item.
 	 */
 	public function filter_blog_slug( $slug ) {
 
@@ -212,8 +202,6 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 		return $this->groupblog_nomenclature_slug;
 
 	}
-
-
 
 	/**
 	 * Override the title of the "Recent Comments in..." link.
@@ -228,8 +216,8 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 		// If groupblog.
 		global $commentpress_core;
 		if (
-			! is_null( $commentpress_core ) AND
-			is_object( $commentpress_core ) AND
+			! is_null( $commentpress_core ) &&
+			is_object( $commentpress_core ) &&
 			$commentpress_core->is_groupblog()
 		) {
 
@@ -244,8 +232,8 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 
 		}
 
-		// If main site
-		if ( is_multisite() AND is_main_site() ) {
+		// If main site.
+		if ( is_multisite() && is_main_site() ) {
 
 			// Override default link name.
 			return apply_filters(
@@ -259,8 +247,6 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 		return $title;
 
 	}
-
-
 
 	/**
 	 * Override title on All Comments page.
@@ -285,8 +271,6 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 
 	}
 
-
-
 	/**
 	 * Override title on All Comments page.
 	 *
@@ -310,8 +294,6 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 
 	}
 
-
-
 	/**
 	 * Override title on Activity tab.
 	 *
@@ -324,9 +306,9 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 
 		// Override if groupblog.
 		if (
-			! bp_is_root_blog() AND
-			! $this->parent_obj->bp->_is_commentpress_groupblog() )
-		{
+			! bp_is_root_blog() &&
+			! $this->parent_obj->bp->_is_commentpress_groupblog()
+		) {
 			return $title;
 		}
 
@@ -337,8 +319,6 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 		);
 
 	}
-
-
 
 	/**
 	 * Override title on Activity tab.
@@ -352,9 +332,9 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 
 		// Override if groupblog.
 		if (
-			! bp_is_root_blog() AND
-			! $this->parent_obj->bp->_is_commentpress_groupblog() )
-		{
+			! bp_is_root_blog() &&
+			! $this->parent_obj->bp->_is_commentpress_groupblog()
+		) {
 			return $title;
 		}
 
@@ -365,8 +345,6 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 		);
 
 	}
-
-
 
 	/**
 	 * Override CommentPress Core "Title Page".
@@ -379,7 +357,9 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 	public function filter_nav_title_page_title( $title ) {
 
 		// Bail if main BuddyPress site.
-		if ( bp_is_root_blog() ) return $title;
+		if ( bp_is_root_blog() ) {
+			return $title;
+		}
 
 		// Bail if not groupblog.
 		if ( ! $this->parent_obj->bp->_is_commentpress_groupblog() ) {
@@ -393,8 +373,6 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 		);
 
 	}
-
-
 
 	/**
 	 * Override the BuddyPress Sites Directory "visit" button.
@@ -414,19 +392,11 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 
 	}
 
-
-
-//##############################################################################
-
-
-
 	/**
 	 * -------------------------------------------------------------------------
 	 * Private Methods
 	 * -------------------------------------------------------------------------
 	 */
-
-
 
 	/**
 	 * Object initialisation.
@@ -445,7 +415,7 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 			add_action( 'cpmu_db_options_update', [ $this, '_buddypress_admin_update' ], 21 );
 
 			// Hook into Network BuddyPress options reset.
-			add_filter( 'cpmu_buddypress_options_get_defaults', [ $this, '_get_default_settings' ], 10, 1 );
+			add_filter( 'cpmu_buddypress_options_get_defaults', [ $this, 'get_default_settings' ], 10, 1 );
 
 		}
 
@@ -501,8 +471,6 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 
 	}
 
-
-
 	/**
 	 * Register WordPress hooks.
 	 *
@@ -539,8 +507,6 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 		add_filter( 'cp_page_all_comments_blog_title', [ $this, 'page_all_comments_blog_title' ], 25, 1 );
 
 	}
-
-
 
 	/**
 	 * Add our options to the BuddyPress admin form.
@@ -596,8 +562,6 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 
 	}
 
-
-
 	/**
 	 * Hook into Network BuddyPress form update.
 	 *
@@ -643,16 +607,15 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 
 	}
 
-
-
 	/**
 	 * Add our default BuddyPress-related settings.
 	 *
 	 * @since 3.3
 	 *
-	 * @return array $settings The default settings.
+	 * @param array $settings The existing default settings.
+	 * @return array $settings The modified default settings.
 	 */
-	public function _get_default_settings( $settings ) {
+	public function get_default_settings( $settings ) {
 
 		// Add our options.
 		$settings['cpmu_bp_workshop_nomenclature'] = $this->groupblog_nomenclature;
@@ -664,8 +627,6 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 		return $settings;
 
 	}
-
-
 
 	/**
 	 * Get legacy name when already set.
@@ -681,8 +642,6 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 
 	}
 
-
-
 	/**
 	 * Get legacy plural name when already set.
 	 *
@@ -696,8 +655,6 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 		return __( 'Workshops', 'commentpress-core' );
 
 	}
-
-
 
 	/**
 	 * Get legacy slug when already set.
@@ -713,13 +670,4 @@ class Commentpress_Multisite_Buddypress_Groupblog {
 
 	}
 
-
-
-//##############################################################################
-
-
-
-} // Class ends.
-
-
-
+}

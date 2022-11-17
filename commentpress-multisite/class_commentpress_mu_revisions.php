@@ -1,4 +1,14 @@
 <?php
+/**
+ * CommentPress Core Multisite Revisions class.
+ *
+ * Overrides the way that new post revisions are named.
+ *
+ * @package CommentPress_Core
+ */
+
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 /**
  * CommentPress Core Multisite Revisions Class.
@@ -27,8 +37,6 @@ class Commentpress_Multisite_Revisions {
 	 */
 	public $db;
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -44,12 +52,10 @@ class Commentpress_Multisite_Revisions {
 		// Store reference to database wrapper (child of calling obj).
 		$this->db = $this->parent_obj->db;
 
-		// Init.
-		$this->_init();
+		// Register hooks.
+		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Set up all items associated with this object.
@@ -60,8 +66,6 @@ class Commentpress_Multisite_Revisions {
 
 	}
 
-
-
 	/**
 	 * If needed, destroys all items associated with this object.
 	 *
@@ -71,19 +75,26 @@ class Commentpress_Multisite_Revisions {
 
 	}
 
-
-
-//##############################################################################
-
-
-
 	/**
 	 * -------------------------------------------------------------------------
 	 * Public Methods
 	 * -------------------------------------------------------------------------
 	 */
 
+	/**
+	 * Register WordPress hooks.
+	 *
+	 * @since 3.3
+	 */
+	public function register_hooks() {
 
+		// Add filter for new post title prefix.
+		add_filter( 'commentpress_new_post_title_prefix', [ $this, 'new_post_title_prefix' ], 21, 1 );
+
+		// Add filter for new post title.
+		add_filter( 'commentpress_new_post_title', [ $this, 'new_post_title' ], 21, 2 );
+
+	}
 
 	/**
 	 * Amend the post title prefix.
@@ -99,8 +110,6 @@ class Commentpress_Multisite_Revisions {
 		return '';
 
 	}
-
-
 
 	/**
 	 * Add suffix " - Draft N", where N is the latest version number.
@@ -153,56 +162,4 @@ class Commentpress_Multisite_Revisions {
 
 	}
 
-
-
-//##############################################################################
-
-
-
-	/**
-	 * -------------------------------------------------------------------------
-	 * Private Methods
-	 * -------------------------------------------------------------------------
-	 */
-
-
-
-	/**
-	 * Object initialisation.
-	 *
-	 * @since 3.3
-	 */
-	public function _init() {
-
-		// Register hooks.
-		$this->_register_hooks();
-
-	}
-
-
-
-	/**
-	 * Register WordPress hooks.
-	 *
-	 * @since 3.3
-	 */
-	public function _register_hooks() {
-
-		// Add filter for new post title prefix.
-		add_filter( 'commentpress_new_post_title_prefix', [ $this, 'new_post_title_prefix' ], 21, 1 );
-
-		// Add filter for new post title.
-		add_filter( 'commentpress_new_post_title', [ $this, 'new_post_title' ], 21, 2 );
-
-	}
-
-
-
-//##############################################################################
-
-
-
-} // Class ends.
-
-
-
+}
