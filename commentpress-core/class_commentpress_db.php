@@ -627,7 +627,7 @@ class CommentPress_Core_Database {
 
 		// Bail if no upgrade required.
 		if ( ! $this->upgrade_required() ) {
-			return
+			return;
 		}
 
 		// Checkboxes send no value if not checked, so use a default.
