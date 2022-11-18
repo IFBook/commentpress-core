@@ -12,7 +12,7 @@ NOTES
 
 
 // Always include our common theme functions file.
-require_once( COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/includes/theme/theme-functions.php' );
+require_once( COMMENTPRESS_PLUGIN_PATH . 'includes/commentpress-core/assets/includes/theme/theme-functions.php' );
 
 
 
@@ -220,7 +220,7 @@ function commentpress_enqueue_scripts_and_styles() {
 			// Enqueue form Javascript.
 			wp_enqueue_script(
 				'cp_form',
-				plugins_url( 'commentpress-core/assets/js/jquery.commentform' . $dev . '.js', COMMENTPRESS_PLUGIN_FILE ),
+				plugins_url( 'includes/commentpress-core/assets/js/jquery.commentform' . $dev . '.js', COMMENTPRESS_PLUGIN_FILE ),
 				[ 'cp_common_js' ], // Dependencies.
 				COMMENTPRESS_VERSION // Version.
 			);

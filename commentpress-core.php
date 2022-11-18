@@ -150,7 +150,7 @@ function commentpress_include_core() {
 
 	// Include class definition.
 	if ( ! class_exists( 'CommentPress_Core' ) ) {
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class-core-loader.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . 'includes/commentpress-core/class-core-loader.php';
 	}
 
 }
@@ -185,7 +185,7 @@ function commentpress_activate_core() {
 function commentpress_activate_ajax() {
 
 	// Include file.
-	require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-ajax/cp-ajax-comments.php';
+	require_once COMMENTPRESS_PLUGIN_PATH . 'includes/commentpress-ajax/cp-ajax-comments.php';
 
 }
 
@@ -396,7 +396,7 @@ function commentpress_multisite() {
 if ( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_sitewide' ) {
 
 	// Include multisite plugin class definition.
-	require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class-multisite-loader.php';
+	require_once COMMENTPRESS_PLUGIN_PATH . 'includes/commentpress-multisite/class-multisite-loader.php';
 
 	// Activate multisite plugin.
 	commentpress_multisite();
