@@ -10,7 +10,16 @@
 ?><!-- commentpress-core/assets/templates/wordpress/metaboxes/metabox-admin-settings-general.php -->
 <table class="form-table">
 
-	<?php echo $deactivate; ?>
+	<?php
+
+	/**
+	 * Fire at the top of the "General Settings" metabox.
+	 *
+	 * @since 4.0
+	 */
+	do_action( 'commentpress/core/admin/settings/general/before' );
+
+	?>
 
 	<tr>
 		<th scope="row">
@@ -41,7 +50,12 @@
 		</td>
 	</tr>
 
-	<?php echo $this->core->display->get_optional_options(); ?>
+	<?php
+
+	// TODO: Make this an action.
+	echo $this->core->display->get_optional_options();
+
+	?>
 
 	<tr valign="top">
 		<th scope="row">
@@ -56,5 +70,16 @@
 			<p class="description"><?php esc_html_e( 'Note: when comments are closed on an entry and there are no comments on that entry, if this option is set to "Yes" then the content will not be parsed for paragraphs, lines or blocks. Comments will also not be parsed, meaning that the entry behaves the same as content which is not commentable. Default prior to 3.8.10 was "No" - all content was always parsed.', 'commentpress-core' ); ?></p>
 		</td>
 	</tr>
+
+	<?php
+
+	/**
+	 * Fire at the bottom of the "General Settings" metabox.
+	 *
+	 * @since 4.0
+	 */
+	do_action( 'commentpress/core/admin/settings/general/after' );
+
+	?>
 
 </table>

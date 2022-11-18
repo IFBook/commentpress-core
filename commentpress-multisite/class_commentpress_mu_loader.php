@@ -33,6 +33,15 @@ class CommentPress_Multisite_Loader {
 	public $db;
 
 	/**
+	 * Admin object.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var object $db The admin object.
+	 */
+	public $admin;
+
+	/**
 	 * Multisite object.
 	 *
 	 * @since 3.3
@@ -123,6 +132,7 @@ class CommentPress_Multisite_Loader {
 	public function include_files() {
 
 		// Include class files.
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_db.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_admin.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_ms.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_revisions.php';
@@ -137,7 +147,8 @@ class CommentPress_Multisite_Loader {
 	public function setup_objects() {
 
 		// Initialise objects.
-		$this->db = new CommentPress_Multisite_Admin( $this );
+		$this->db = new CommentPress_Multisite_Database( $this );
+		$this->admin = new CommentPress_Multisite_Admin( $this );
 		$this->multisite = new CommentPress_Multisite_WordPress( $this );
 		$this->revisions = new CommentPress_Multisite_Revisions( $this );
 

@@ -344,17 +344,14 @@ if (
 	( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_optional' && ! is_network_admin() )
 ) {
 
-	// CommentPress Core.
-	commentpress_activate_core();
-
-	// Access global.
-	global $commentpress_core;
+	// Activate CommentPress Core.
+	$core = commentpress_activate_core();
 
 	// Activation.
-	register_activation_hook( COMMENTPRESS_PLUGIN_FILE, [ $commentpress_core, 'activate' ] );
+	register_activation_hook( COMMENTPRESS_PLUGIN_FILE, [ $core, 'activate' ] );
 
 	// Deactivation.
-	register_deactivation_hook( COMMENTPRESS_PLUGIN_FILE, [ $commentpress_core, 'deactivate' ] );
+	register_deactivation_hook( COMMENTPRESS_PLUGIN_FILE, [ $core, 'deactivate' ] );
 
 	/*
 	 * Uninstall uses the 'uninstall.php' method.

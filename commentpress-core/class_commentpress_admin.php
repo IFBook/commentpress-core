@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * CommentPress Core Workflow Class.
  *
- * This class admin settings page functionality in CommentPress Core.
+ * This class handles admin settings page functionality in CommentPress Core.
  *
  * @since 4.0
  */
@@ -130,7 +130,7 @@ class CommentPress_Core_Admin {
 		// Maybe show a warning if Settings need updating.
 		//add_action( 'admin_notices', [ $this, 'upgrade_warning' ] );
 
-		// Modify admin menu.
+		// Add our item to the admin menu.
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 
 		// Add our meta boxes.
@@ -196,7 +196,7 @@ class CommentPress_Core_Admin {
 
 		// Insert item in relevant menu.
 		$this->settings_page = add_submenu_page(
-			'options-general.php?page=' . $this->parent_page_slug, // Parent slug.
+			$this->parent_page_slug, // Parent slug.
 			__( 'CommentPress Core Settings', 'commentpress-core' ),
 			__( 'CommentPress Core', 'commentpress-core' ),
 			'manage_options', // Required caps.
@@ -556,16 +556,6 @@ class CommentPress_Core_Admin {
 			return;
 		}
 
-		// Create "Submit" metabox.
-		add_meta_box(
-			'submitdiv',
-			__( 'Settings', 'commentpress-core' ),
-			[ $this, 'meta_box_submit_render' ], // Callback.
-			$screen_id, // Screen ID.
-			'side', // Column: options are 'normal' and 'side'.
-			'core' // Vertical placement: options are 'core', 'high', 'low'.
-		);
-
 		// Create "General Settings" metabox.
 		add_meta_box(
 			'commentpress_general',
@@ -616,17 +606,15 @@ class CommentPress_Core_Admin {
 			'core' // Vertical placement: options are 'core', 'high', 'low'.
 		);
 
-	}
-
-	/**
-	 * Render Save Settings meta box on Admin screen.
-	 *
-	 * @since 4.0
-	 */
-	public function meta_box_submit_render() {
-
-		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-admin-settings-submit.php';
+		// Create "Submit" metabox.
+		add_meta_box(
+			'submitdiv',
+			__( 'Settings', 'commentpress-core' ),
+			[ $this, 'meta_box_submit_render' ], // Callback.
+			$screen_id, // Screen ID.
+			'side', // Column: options are 'normal' and 'side'.
+			'core' // Vertical placement: options are 'core', 'high', 'low'.
+		);
 
 	}
 
@@ -636,15 +624,6 @@ class CommentPress_Core_Admin {
 	 * @since 4.0
 	 */
 	public function meta_box_general_render() {
-
-		/**
-		 * Fire deactivate filter.
-		 *
-		 * @since 3.4
-		 *
-		 * @param str $deactivate Empty so only the Multisite object returns anything.
-		 */
-		$deactivate = apply_filters( 'cpmu_deactivate_commentpress_element', '' );
 
 		// Get post types that support the editor.
 		$capable_post_types = $this->core->db->get_supported_post_types();
@@ -729,6 +708,18 @@ class CommentPress_Core_Admin {
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-admin-settings-theme.php';
+
+	}
+
+	/**
+	 * Render Save Settings meta box on Admin screen.
+	 *
+	 * @since 4.0
+	 */
+	public function meta_box_submit_render() {
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-admin-settings-submit.php';
 
 	}
 

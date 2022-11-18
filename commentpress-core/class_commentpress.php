@@ -38,6 +38,15 @@ class CommentPress_Core {
 	public $display;
 
 	/**
+	 * Admin object.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var object $db The admin object.
+	 */
+	public $admin;
+
+	/**
 	 * Navigation handling object.
 	 *
 	 * @since 3.0
@@ -191,9 +200,9 @@ class CommentPress_Core {
 	public function setup_objects() {
 
 		// Initialise objects.
-		$this->admin = new CommentPress_Core_Admin( $this );
 		$this->db = new CommentPress_Core_Database( $this );
 		$this->display = new CommentPress_Core_Display( $this );
+		$this->admin = new CommentPress_Core_Admin( $this );
 		$this->nav = new CommentPress_Core_Navigator( $this );
 		$this->parser = new CommentPress_Core_Parser( $this );
 		$this->formatter = new CommentPress_Core_Formatter( $this );

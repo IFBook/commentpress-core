@@ -1027,8 +1027,16 @@ class CommentPress_Core_Database {
 		// Get variables.
 		extract( $_POST );
 
-		// Hand off to Multisite first, in case we're deactivating.
-		do_action( 'cpmu_deactivate_commentpress' );
+		/**
+		 * Fires before the options have been updated.
+		 *
+		 * Used internally by:
+		 *
+		 * * CommentPress_Multisite_Admin::disable_core()
+		 *
+		 * @since 4.0
+		 */
+		do_action( 'commentpress/core/db/options_update/before' );
 
 		// Is Multisite activating CommentPress Core?
 		if ( $cp_activate == '1' ) {
