@@ -2081,44 +2081,6 @@ endif;
 
 
 
-if ( ! function_exists( 'commentpress_sidebars_widgets' ) ) :
-
-	/**
-	 * Temporary fix for PHP notice in WordPress 3.9.
-	 *
-	 * @since 3.6
-	 *
-	 * @param array $array Existing widgets array.
-	 * @return array $array Modified widgets array.
-	 */
-	function commentpress_sidebars_widgets( $array ) {
-
-		// Prevent errors in Theme Customizer.
-		if ( ! is_array( $array ) ) {
-
-			// This array is based on the array in wp_install_defaults().
-			$array = [
-				'wp_inactive_widgets' => [],
-				'sidebar-1' => [],
-				'sidebar-2' => [],
-				'sidebar-3' => [],
-				'array_version' => 3,
-			];
-
-		}
-
-		// --<
-		return $array;
-
-	}
-
-endif;
-
-// Add callback for the above.
-add_filter( 'sidebars_widgets', 'commentpress_sidebars_widgets', 1000 );
-
-
-
 if ( ! function_exists( 'commentpress_add_selection_classes' ) ) :
 
 	/**
