@@ -110,6 +110,15 @@ class CommentPress_Core {
 	public $bp_groupblog = false;
 
 	/**
+	 * Classes directory path.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $classes_path Relative path to the classes directory.
+	 */
+	public $classes_path = 'commentpress-core/classes/';
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 3.0
@@ -174,14 +183,14 @@ class CommentPress_Core {
 	public function include_files() {
 
 		// Include class files.
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_db.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_display.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_settings_site.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_nav.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_parser.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_formatter.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_workflow.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_revisions.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-database.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-display.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-settings-site.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-navigation.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-parser.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-formatter.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-workflow.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-revisions.php';
 
 		/**
 		 * Broadcast that class files have been included.

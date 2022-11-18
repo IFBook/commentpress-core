@@ -87,6 +87,15 @@ class CommentPress_Multisite_Loader {
 	public $workshop;
 
 	/**
+	 * Classes directory path.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $classes_path Relative path to the classes directory.
+	 */
+	public $classes_path = 'commentpress-multisite/classes/';
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 3.3
@@ -141,11 +150,11 @@ class CommentPress_Multisite_Loader {
 	public function include_files() {
 
 		// Include class files.
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_db.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_ms.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_settings_network.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_settings_site.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_revisions.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-database.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-sites.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-settings-network.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-settings-site.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-revisions.php';
 
 	}
 
@@ -218,8 +227,8 @@ class CommentPress_Multisite_Loader {
 	public function buddypress_include_files() {
 
 		// Include class files.
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_bp.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_workshop.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-bp-core.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-bp-workshop.php';
 
 	}
 

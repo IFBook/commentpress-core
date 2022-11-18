@@ -34,7 +34,7 @@ if ( ! function_exists( 'commentpress_admin_header' ) ) :
 		// Access plugin.
 		global $commentpress_core;
 
-		// Init with same colour as theme stylesheets and default in "class_commentpress_db.php".
+		// Init with same colour as theme stylesheets and default in "class-core-database.php".
 		$colour = '2c2622';
 
 		// Override if we have the plugin enabled.
