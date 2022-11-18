@@ -101,8 +101,8 @@ if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
  *
  * @since 3.0
  *
- * @param string $filename the name of the CommentPress Core Plugin file.
- * @return string $filepath absolute path to file.
+ * @param string $filename The name of the CommentPress Core Plugin file.
+ * @return string $filepath Absolute path to file.
  */
 function commentpress_file_is_present( $filename ) {
 
@@ -120,18 +120,37 @@ function commentpress_file_is_present( $filename ) {
 }
 
 /**
+ * Gets a reference to the core plugin object.
+ *
+ * @since 4.0
+ *
+ * @return CommentPress_Core $commentpress_core The plugin reference, or false on failure.
+ */
+function commentpress_core() {
+
+	// Access global.
+	global $commentpress_core;
+
+	// Maybe return reference.
+	if ( isset( $commentpress_core ) && ( $commentpress_core instanceof CommentPress_Core ) ) {
+		return $commentpress_core;
+	}
+
+	// --<
+	return false;
+
+}
+
+/**
  * Utility to include the core plugin.
  *
  * @since 3.4
  */
 function commentpress_include_core() {
 
-	// Do we have our class?
+	// Include class definition.
 	if ( ! class_exists( 'CommentPress_Core' ) ) {
-
-		// Include class definition.
 		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress.php';
-
 	}
 
 }
@@ -140,19 +159,21 @@ function commentpress_include_core() {
  * Utility to activate the core plugin.
  *
  * @since 3.4
+ *
+ * @return CommentPress_Core $commentpress_core The plugin reference, or false on failure.
  */
 function commentpress_activate_core() {
 
 	// Declare as global.
 	global $commentpress_core;
 
-	// Do we have it already?
-	if ( is_null( $commentpress_core ) ) {
-
-		// Instantiate it.
+	// Instantiate it if not already instantiated.
+	if ( ! isset( $commentpress_core ) ) {
 		$commentpress_core = new CommentPress_Core();
-
 	}
+
+	// Return reference.
+	return $commentpress_core;
 
 }
 
@@ -163,7 +184,7 @@ function commentpress_activate_core() {
  */
 function commentpress_activate_ajax() {
 
-	// Include AJAX file.
+	// Include file.
 	require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-ajax/cp-ajax-comments.php';
 
 }
@@ -258,9 +279,11 @@ function commentpress_find_plugin_by_name( $plugin_name = '' ) {
 	// Get plugins.
 	$plugins = get_plugins();
 
-	// Because the key is the path to the plugin file, we have to find the
-	// key by iterating over the values (which are arrays) to find the
-	// plugin with the name we want. Doh!
+	/*
+	 * Because the key is the path to the plugin file, we have to find the
+	 * key by iterating over the values (which are arrays) to find the
+	 * plugin with the name we want. Doh!
+	 */
 	foreach ( $plugins as $key => $plugin ) {
 
 		// Is it ours?
@@ -305,20 +328,15 @@ register_theme_directory( plugin_dir_path( COMMENTPRESS_PLUGIN_FILE ) . 'themes'
 
 /*
 --------------------------------------------------------------------------------
-Include Standalone.
---------------------------------------------------------------------------------
-*/
-
-commentpress_include_core();
-
-/*
---------------------------------------------------------------------------------
 Init Standalone.
 --------------------------------------------------------------------------------
+Note: we exclude activation on network admin pages to avoid auto-installation
+on main site when the plugin is network activated.
+--------------------------------------------------------------------------------
 */
 
-// Note: we exclude activation on network admin pages to avoid auto-installation
-// On main site when the plugin is network activated.
+// Include Standalone.
+commentpress_include_core();
 
 // Only activate if in standard or mu_optional context.
 if (
@@ -340,10 +358,11 @@ if (
 
 	/*
 	 * Uninstall uses the 'uninstall.php' method.
+	 *
 	 * @see https://developer.wordpress.org/reference/functions/register_uninstall_hook/
 	 */
 
-	// AJAX Commenting.
+	// Activate AJAX Commenting.
 	commentpress_activate_ajax();
 
 }
@@ -354,18 +373,35 @@ Init Multisite.
 --------------------------------------------------------------------------------
 */
 
-// Have we activated network-wide?
-if ( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_sitewide' ) {
-
-	// Activate multisite plugin.
-
-	// Include class definition.
-	require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_loader.php';
+/**
+ * Instantiate the multisite plugin object.
+ *
+ * @since 4.0
+ *
+ * @return CommentPress_Multisite_Loader $commentpress_mu The multisite plugin reference, or false on failure.
+ */
+function commentpress_multisite() {
 
 	// Define as global.
 	global $commentpress_mu;
 
-	// Instantiate it.
-	$commentpress_mu = new CommentPress_Multisite_Loader();
+	// Instantiate plugin if not yet instantiated.
+	if ( ! isset( $commentpress_mu ) ) {
+		$commentpress_mu = new CommentPress_Multisite_Loader();
+	}
+
+	// --<
+	return $commentpress_mu;
+
+}
+
+// Have we activated network-wide?
+if ( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_sitewide' ) {
+
+	// Include multisite plugin class definition.
+	require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_loader.php';
+
+	// Activate multisite plugin.
+	commentpress_multisite();
 
 }
