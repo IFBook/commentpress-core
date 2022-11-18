@@ -228,7 +228,7 @@ class CommentPress_Multisite_Loader {
 
 		// Include class files.
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-bp-core.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-bp-workshop.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-bp-groupblog.php';
 
 	}
 

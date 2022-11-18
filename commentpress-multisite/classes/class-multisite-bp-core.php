@@ -65,6 +65,15 @@ class CommentPress_Multisite_BuddyPress {
 	public $require_comment_registration = 1;
 
 	/**
+	 * Metabox template directory path.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $metabox_path Relative path to the Metabox directory.
+	 */
+	public $metabox_path = 'commentpress-multisite/assets/templates/wordpress/metaboxes/';
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 3.3
@@ -225,9 +234,6 @@ class CommentPress_Multisite_BuddyPress {
 
 			// Add our metaboxes to the Network Settings screen.
 			add_filter( 'commentpress/multisite/settings/network/metaboxes/after', [ $this, 'network_admin_metaboxes' ] );
-
-			// Add options to network settings form.
-			//add_filter( 'cpmu_network_options_form', [ $this, 'network_admin_form' ], 20 );
 
 			// Add options to reset array.
 			add_filter( 'cpmu_db_bp_options_get_defaults', [ $this, 'get_default_settings' ], 20, 1 );
