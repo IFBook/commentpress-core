@@ -29,13 +29,40 @@ class CommentPress_Multisite_Admin {
 	public $ms_loader;
 
 	/**
-	 * Options page reference.
+	 * Settings Page reference.
 	 *
-	 * @since 3.0
+	 * @since 4.0
 	 * @access public
-	 * @var str $options_page The options page reference.
+	 * @var string $settings_page The reference to the Settings Page.
 	 */
-	public $options_page;
+	public $settings_page;
+
+	/**
+	 * Settings Page slug.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $settings_page_slug The slug of the Settings Page.
+	 */
+	public $settings_page_slug = 'commentpress_admin';
+
+	/**
+	 * Page template directory path.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $page_path Relative path to the Page template directory.
+	 */
+	public $page_path = 'commentpress-multisite/assets/templates/wordpress/pages/';
+
+	/**
+	 * Metabox template directory path.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $metabox_path Relative path to the Metabox directory.
+	 */
+	public $metabox_path = 'commentpress-multisite/assets/templates/wordpress/metaboxes/';
 
 	/**
 	 * Constructor.
@@ -92,6 +119,9 @@ class CommentPress_Multisite_Admin {
 			// Add our item to the admin menu.
 			add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 
+			// Add our meta boxes.
+			add_action( 'add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
+
 		}
 
 	}
@@ -111,119 +141,222 @@ class CommentPress_Multisite_Admin {
 		}
 
 		// Insert item in relevant menu.
-		$this->options_page = add_options_page(
+		$this->settings_page = add_options_page(
 			__( 'CommentPress Core Settings', 'commentpress-core' ),
 			__( 'CommentPress Core', 'commentpress-core' ),
 			'manage_options',
-			'commentpress_admin',
-			[ $this, 'page_settings_site' ]
+			$this->settings_page_slug, // Slug name.
+			[ $this, 'page_settings' ]
 		);
 
 		// Register our form submit hander.
-		add_action( 'load-' . $this->options_page, [ $this, 'form_enable_core' ] );
+		add_action( 'load-' . $this->settings_page, [ $this, 'form_enable_core' ] );
 
-		/*
-		// Add scripts and styles.
-		add_action( 'admin_print_scripts-' . $this->options_page, [ $this, 'admin_js' ] );
-		add_action( 'admin_print_styles-' . $this->options_page, [ $this, 'admin_css' ] );
-		add_action( 'admin_head-' . $this->options_page, [ $this, 'admin_head' ], 50 );
-		*/
+		// Add WordPress scripts, styles and help text.
+		add_action( 'admin_print_styles-' . $this->settings_page, [ $this, 'admin_css' ] );
+		add_action( 'admin_print_scripts-' . $this->settings_page, [ $this, 'admin_js' ] );
+		add_action( 'admin_head-' . $this->settings_page, [ $this, 'admin_head' ], 50 );
 
 	}
 
 	/**
-	 * Renders the core Settings page.
+	 * Enqueue Settings page CSS.
 	 *
-	 * @since 3.3
-	 * @since 4.0 Renamed.
+	 * @since 4.0
 	 */
-	public function page_settings_site() {
+	public function admin_css() {
+
+	}
+
+	/**
+	 * Enqueue Settings page Javascript.
+	 *
+	 * @since 4.0
+	 */
+	public function admin_js() {
+
+	}
+
+	/**
+	 * Performs tasks in Settings page header.
+	 *
+	 * @since 4.0
+	 */
+	public function admin_head() {
+
+		// Enqueue WordPress scripts.
+		wp_enqueue_script( 'common' );
+		wp_enqueue_script( 'jquery-ui-sortable' );
+		wp_enqueue_script( 'dashboard' );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Renders the Site Settings page when core is not enabled.
+	 *
+	 * @since 4.0
+	 */
+	public function page_settings() {
 
 		// Check user permissions.
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 
-		// Get our admin options page.
-		echo $this->page_settings_site_get();
+		// Get current screen.
+		$screen = get_current_screen();
+
+		/**
+		 * Allow meta boxes to be added to this screen.
+		 *
+		 * The Screen IDs to use are:
+		 *
+		 * * "settings_page_commentpress_admin"
+		 * * "admin_page_commentpress_settings"
+		 *
+		 * @since 4.0
+		 *
+		 * @param string $screen_id The ID of the current screen.
+		 */
+		do_action( 'add_meta_boxes', $screen->id, null );
+
+		// Grab columns.
+		$columns = ( 1 == $screen->get_columns() ? '1' : '2' );
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->page_path . 'page-site-settings.php';
 
 	}
 
 	/**
-	 * Gets the WordPress admin page markup.
+	 * Get the URL of the Settings Page.
 	 *
-	 * @since 3.3
-	 * @since 4.0 Renamed.
+	 * @since 4.0
 	 *
-	 * @return string $admin_page The HTML for the admin page.
+	 * @return string $url The URL of the Settings Page.
 	 */
-	private function page_settings_site_get() {
+	public function page_settings_url_get() {
 
-		// Open div.
-		$admin_page = '<div class="wrap" id="cpmu_admin_wrapper">' . "\n\n";
+		// Get Settings Page URL.
+		$url = menu_page_url( $this->settings_page_slug, false );
 
-		// Get our form.
-		$admin_page .= $this->page_settings_site_form_get();
-
-		// Close div.
-		$admin_page .= '</div>' . "\n\n";
+		/**
+		 * Filter the Settings Page URL.
+		 *
+		 * @since 4.0
+		 *
+		 * @param array $url The default Settings Page URL.
+		 */
+		$url = apply_filters( 'commentpress/multisite/admin/page/settings/url', $url );
 
 		// --<
-		return $admin_page;
+		return $url;
 
 	}
 
 	/**
-	 * Returns the admin form HTML.
+	 * Get the URL for the Settings Page form action attribute.
 	 *
-	 * @since 3.3
+	 * This happens to be the same as the Settings Page URL, but need not be.
 	 *
-	 * @return string $admin_page The HTML for the admin page.
+	 * @since 4.0
+	 *
+	 * @return string $submit_url The URL for the Settings Page form action.
 	 */
-	private function page_settings_site_form_get() {
+	public function page_settings_submit_url_get() {
 
-		// Sanitise admin page URL.
-		$url = isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '';
-		$url_array = explode( '&', $url );
-		if ( $url_array ) {
-			$url = $url_array[0];
+		// Get Settings Page submit URL.
+		$submit_url = menu_page_url( $this->settings_page_slug, false );
+
+		/**
+		 * Filter the Settings Page submit URL.
+		 *
+		 * @since 4.0
+		 *
+		 * @param array $submit_url The Settings Page submit URL.
+		 */
+		$submit_url = apply_filters( 'commentpress/multisite/admin/page/settings/submit_url', $submit_url );
+
+		// --<
+		return $submit_url;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Register meta boxes.
+	 *
+	 * @since 4.0
+	 *
+	 * @param string $screen_id The Admin Page Screen ID.
+	 */
+	public function meta_boxes_add( $screen_id ) {
+
+		// Bail if not the Screen ID we want.
+		if ( $screen_id !== $this->settings_page ) {
+			return;
 		}
 
-		// Init vars.
-		$label = __( 'Activate CommentPress', 'commentpress-core' );
-		$submit = __( 'Save Changes', 'commentpress-core' );
+		/**
+		 * Set access capability but allow overrides.
+		 *
+		 * @since 4.0
+		 *
+		 * @param string The default capability for access to Settings Page.
+		 */
+		$capability = apply_filters( 'commentpress/multisite/admin/page/settings/cap', 'manage_options' );
 
-		// Define admin page.
-		$admin_page = '
-		<h1>' . __( 'CommentPress Core Settings', 'commentpress-core' ) . '</h1>
+		// Check user permissions.
+		if ( ! current_user_can( $capability ) ) {
+			return;
+		}
 
-		<form method="post" action="' . htmlentities( $url . '&updated=true' ) . '">
+		// Create "General Settings" metabox.
+		add_meta_box(
+			'commentpress_general',
+			__( 'General Settings', 'commentpress-core' ),
+			[ $this, 'meta_box_general_render' ], // Callback.
+			$screen_id, // Screen ID.
+			'normal', // Column: options are 'normal' and 'side'.
+			'core' // Vertical placement: options are 'core', 'high', 'low'.
+		);
 
-		' . wp_nonce_field( 'commentpress_core_settings_action', 'commentpress_core_settings_nonce', true, false ) . '
-		' . wp_referer_field( false ) . '
-		<input id="cp_activate" name="cp_activate" value="1" type="hidden" />
+		// Create "Submit" metabox.
+		add_meta_box(
+			'submitdiv',
+			__( 'Settings', 'commentpress-core' ),
+			[ $this, 'meta_box_submit_render' ], // Callback.
+			$screen_id, // Screen ID.
+			'side', // Column: options are 'normal' and 'side'.
+			'core' // Vertical placement: options are 'core', 'high', 'low'.
+		);
 
-		<h4>' . __( 'Activation', 'commentpress-core' ) . '</h4>
+	}
 
-		<table class="form-table">
+	/**
+	 * Render "General Settings" meta box on Admin screen.
+	 *
+	 * @since 4.0
+	 */
+	public function meta_box_general_render() {
 
-			<tr valign="top">
-				<th scope="row"><label for="cp_activate_commentpress">' . $label . '</label></th>
-				<td><input id="cp_activate_commentpress" name="cp_activate_commentpress" value="1" type="checkbox" /></td>
-			</tr>
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-admin-settings-general.php';
 
-		</table>
+	}
 
-		<input type="hidden" name="action" value="update" />
+	/**
+	 * Render Save Settings meta box on Admin screen.
+	 *
+	 * @since 4.0
+	 */
+	public function meta_box_submit_render() {
 
-		<p class="submit">
-			<input type="submit" name="commentpress_submit" value="' . $submit . '" class="button-primary" />
-		</p>
-
-		</form>' . "\n\n\n\n";
-
-		// --<
-		return $admin_page;
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-admin-settings-submit.php';
 
 	}
 
@@ -256,11 +389,8 @@ class CommentPress_Multisite_Admin {
 			// Install core, but not from wpmu_new_blog.
 			$this->ms_loader->db->install_commentpress( 'admin_page' );
 
-			// Get core reference.
-			$core = commentpres_core();
-
 			// Get Settings Page URL.
-			$url = $core->admin->page_settings_url_get();
+			$url = $this->page_settings_url_get();
 
 			// Redirect.
 			wp_safe_redirect( $url );
@@ -294,11 +424,8 @@ class CommentPress_Multisite_Admin {
 		// Did we ask to deactivate CommentPress Core?
 		if ( $cp_deactivate_commentpress == '1' ) {
 
-			// Get core reference.
-			$core = commentpres_core();
-
 			// Get Settings Page URL.
-			$url = $core->admin->page_settings_url_get();
+			$url = $this->page_settings_url_get();
 
 			// Uninstall core.
 			$this->ms_loader->db->uninstall_commentpress();
@@ -319,13 +446,13 @@ class CommentPress_Multisite_Admin {
 	 */
 	public function form_disable_element() {
 
-		// Define HTML.
-		echo '
+		// Render form element
+		?>
 		<tr valign="top">
-			<th scope="row"><label for="cp_deactivate_commentpress">' . esc_html__( 'Disable CommentPress Core on this site', 'commentpress-core' ) . '</label></th>
+			<th scope="row"><label for="cp_deactivate_commentpress"><?php esc_html_e( 'Disable CommentPress Core on this site', 'commentpress-core' ); ?></label></th>
 			<td><input id="cp_deactivate_commentpress" name="cp_deactivate_commentpress" value="1" type="checkbox" /></td>
 		</tr>
-		';
+		<?php
 
 	}
 
