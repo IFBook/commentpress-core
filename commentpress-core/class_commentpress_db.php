@@ -343,10 +343,10 @@ class CommentPress_Core_Database {
 		}
 
 		// Turn comment paging option off.
-		$this->cancel_comment_paging();
+		$this->comment_paging_cancel();
 
 		// Override widgets.
-		$this->clear_widgets();
+		$this->widgets_clear();
 
 	}
 
@@ -358,10 +358,10 @@ class CommentPress_Core_Database {
 	public function deactivate() {
 
 		// Reset comment paging option.
-		$this->reset_comment_paging();
+		$this->comment_paging_restore();
 
 		// Restore widgets.
-		$this->reset_widgets();
+		$this->widgets_restore();
 
 		// Always remove special pages.
 		$this->delete_special_pages();
@@ -2162,9 +2162,9 @@ class CommentPress_Core_Database {
 			$this->options_save();
 
 			// Reset WordPress internal page references.
-			$this->reset_wordpress_option( 'show_on_front' );
-			$this->reset_wordpress_option( 'page_on_front' );
-			$this->reset_wordpress_option( 'page_for_posts' );
+			$this->wordpress_option_restore( 'show_on_front' );
+			$this->wordpress_option_restore( 'page_on_front' );
+			$this->wordpress_option_restore( 'page_for_posts' );
 
 		}
 
@@ -2201,8 +2201,8 @@ class CommentPress_Core_Database {
 				$flag = 'cp_welcome_page';
 
 				// Reset WordPress internal page references.
-				$this->reset_wordpress_option( 'show_on_front' );
-				$this->reset_wordpress_option( 'page_on_front' );
+				$this->wordpress_option_restore( 'show_on_front' );
+				$this->wordpress_option_restore( 'page_on_front' );
 
 				break;
 
@@ -2230,7 +2230,7 @@ class CommentPress_Core_Database {
 				$flag = 'cp_blog_page';
 
 				// Reset WordPress internal page reference.
-				$this->reset_wordpress_option( 'page_for_posts' );
+				$this->wordpress_option_restore( 'page_for_posts' );
 
 				break;
 
@@ -3080,8 +3080,8 @@ class CommentPress_Core_Database {
 				// Got it.
 
 				// We still ought to set WordPress internal page references.
-				$this->store_wordpress_option( 'show_on_front', 'page' );
-				$this->store_wordpress_option( 'page_on_front', $page_exists );
+				$this->wordpress_option_backup( 'show_on_front', 'page' );
+				$this->wordpress_option_backup( 'page_on_front', $page_exists );
 
 				// --<
 				return $page_exists;
@@ -3141,8 +3141,8 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$this->option_set( 'cp_welcome_page', $title_id );
 
 		// Set WordPress internal page references.
-		$this->store_wordpress_option( 'show_on_front', 'page' );
-		$this->store_wordpress_option( 'page_on_front', $title_id );
+		$this->wordpress_option_backup( 'show_on_front', 'page' );
+		$this->wordpress_option_backup( 'page_on_front', $title_id );
 
 		// --<
 		return $title_id;
@@ -3349,7 +3349,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$this->option_set( 'cp_blog_page', $blog_id );
 
 		// Set WordPress internal page reference.
-		$this->store_wordpress_option( 'page_for_posts', $blog_id );
+		$this->wordpress_option_backup( 'page_for_posts', $blog_id );
 
 		// --<
 		return $blog_id;
@@ -3458,15 +3458,18 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 	}
 
+	// -------------------------------------------------------------------------
+
 	/**
 	 * Cancels comment paging because CommentPress Core will not work with comment paging.
 	 *
 	 * @since 3.4
+	 * @since 4.0 Renamed.
 	 */
-	public function cancel_comment_paging() {
+	public function comment_paging_cancel() {
 
 		// Store option.
-		$this->store_wordpress_option( 'page_comments', '' );
+		$this->wordpress_option_backup( 'page_comments', '' );
 
 	}
 
@@ -3474,20 +3477,24 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 * Resets comment paging option when plugin is deactivated.
 	 *
 	 * @since 3.4
+	 * @since 4.0 Renamed.
 	 */
-	public function reset_comment_paging() {
+	public function comment_paging_restore() {
 
 		// Reset option.
-		$this->reset_wordpress_option( 'page_comments' );
+		$this->wordpress_option_restore( 'page_comments' );
 
 	}
+
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Clears widgets for a fresh start.
 	 *
 	 * @since 3.4
+	 * @since 4.0 Renamed.
 	 */
-	public function clear_widgets() {
+	public function widgets_clear() {
 
 		// Set backup option.
 		add_option( 'commentpress_sidebars_widgets', $this->option_wp_get( 'sidebars_widgets' ) );
@@ -3504,51 +3511,58 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	}
 
 	/**
-	 * Resets widgets when plugin is deactivated.
+	 * Restores widgets when plugin is deactivated.
 	 *
 	 * @since 3.4
+	 * @since 4.0 Renamed.
 	 */
-	public function reset_widgets() {
+	public function widgets_restore() {
 
 		// Reset option.
-		$this->reset_wordpress_option( 'sidebars_widgets' );
+		$this->wordpress_option_restore( 'sidebars_widgets' );
 
 	}
 
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Store WordPress option.
+	 * Backs up a current WordPress option.
 	 *
 	 * @since 3.4
+	 * @since 4.0 Renamed.
 	 *
-	 * @param str $name The name of the option.
+	 * @param str $name The name of the option to back up.
 	 * @param mixed $value The value of the option.
 	 */
-	public function store_wordpress_option( $name, $value ) {
+	public function wordpress_option_backup( $name, $value ) {
 
-		// Set backup option.
+		// Save backup option.
 		add_option( 'commentpress_' . $name, $this->option_wp_get( $name ) );
 
-		// Set the WordPress option.
+		// Overwrite the WordPress option.
 		$this->option_wp_set( $name, $value );
 
 	}
 
 	/**
-	 * Reset WordPress option.
+	 * Restores a WordPress option to the backed-up value.
 	 *
 	 * @since 3.4
+	 * @since 4.0 Renamed.
 	 *
 	 * @param str $name The name of the option.
 	 */
-	public function reset_wordpress_option( $name ) {
+	public function wordpress_option_restore( $name ) {
 
-		// Set the WordPress option.
-		$this->option_wp_set( $name, $this->option_wp_get( 'cp_' . $name ) );
+		// Restore the WordPress option.
+		$this->option_wp_set( $name, $this->option_wp_get( 'commentpress_' . $name ) );
 
 		// Remove backup option.
 		delete_option( 'commentpress_' . $name );
 
 	}
+
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Create all basic CommentPress Core options.
