@@ -371,7 +371,7 @@ Init Multisite.
 */
 
 /**
- * Instantiate the multisite plugin object.
+ * Instantiate the multisite loader object.
  *
  * @since 4.0
  *

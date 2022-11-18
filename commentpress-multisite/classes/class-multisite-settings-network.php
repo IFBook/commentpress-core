@@ -20,13 +20,13 @@ defined( 'ABSPATH' ) || exit;
 class CommentPress_Multisite_Settings_Network {
 
 	/**
-	 * Multisite plugin object.
+	 * Multisite loader object.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $ms_loader The multisite plugin object.
+	 * @var object $multisite The multisite loader object.
 	 */
-	public $ms_loader;
+	public $multisite;
 
 	/**
 	 * Settings Page reference.
@@ -69,12 +69,12 @@ class CommentPress_Multisite_Settings_Network {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $ms_loader Reference to the multisite plugin object.
+	 * @param object $multisite Reference to the multisite loader object.
 	 */
-	public function __construct( $ms_loader ) {
+	public function __construct( $multisite ) {
 
-		// Store reference to multisite plugin object.
-		$this->ms_loader = $ms_loader;
+		// Store reference to multisite loader object.
+		$this->multisite = $multisite;
 
 		// Init when the multisite plugin is fully loaded.
 		add_action( 'commentpress/multisite/loaded', [ $this, 'initialise' ] );
@@ -383,8 +383,8 @@ class CommentPress_Multisite_Settings_Network {
 	public function meta_box_general_render() {
 
 		// Get settings.
-		$force_commentpress = $this->ms_loader->db->option_get( 'cpmu_force_commentpress' );
-		$disable_translation_workflow = $this->ms_loader->db->option_get( 'cpmu_disable_translation_workflow' );
+		$force_commentpress = $this->multisite->db->option_get( 'cpmu_force_commentpress' );
+		$disable_translation_workflow = $this->multisite->db->option_get( 'cpmu_disable_translation_workflow' );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-network-settings-general.php';
@@ -399,9 +399,9 @@ class CommentPress_Multisite_Settings_Network {
 	public function meta_box_wordpress_render() {
 
 		// Get settings.
-		$delete_first_page = $this->ms_loader->db->option_get( 'cpmu_delete_first_page' );
-		$delete_first_post = $this->ms_loader->db->option_get( 'cpmu_delete_first_post' );
-		$delete_first_comment = $this->ms_loader->db->option_get( 'cpmu_delete_first_comment' );
+		$delete_first_page = $this->multisite->db->option_get( 'cpmu_delete_first_page' );
+		$delete_first_post = $this->multisite->db->option_get( 'cpmu_delete_first_post' );
+		$delete_first_comment = $this->multisite->db->option_get( 'cpmu_delete_first_comment' );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-network-settings-wordpress.php';
@@ -416,7 +416,7 @@ class CommentPress_Multisite_Settings_Network {
 	public function meta_box_title_page_render() {
 
 		// Get settings.
-		$content = stripslashes( $this->ms_loader->db->option_get( 'cpmu_title_page_content' ) );
+		$content = stripslashes( $this->multisite->db->option_get( 'cpmu_title_page_content' ) );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-network-settings-title-page.php';
@@ -462,20 +462,20 @@ class CommentPress_Multisite_Settings_Network {
 		// Did we ask to upgrade CommentPress Multisite?
 		$cpmu_upgrade = isset( $_POST['cpmu_upgrade'] ) ? sanitize_text_field( wp_unslash( $_POST['cpmu_upgrade'] ) ) : '0';
 		if ( $cpmu_upgrade == '1' ) {
-			$this->ms_loader->db->upgrade_options();
+			$this->multisite->db->upgrade_options();
 			$this->form_redirect();
 		}
 
 		// Did we ask to reset Multisite?
 		$cpmu_reset = isset( $_POST['cpmu_reset'] ) ? sanitize_text_field( wp_unslash( $_POST['cpmu_reset'] ) ) : '0';
 		if ( $cpmu_reset == '1' ) {
-			$this->ms_loader->db->options_reset( 'multisite' );
+			$this->multisite->db->options_reset( 'multisite' );
 		}
 
 		// Did we ask to reset BuddyPress?
 		$cpmu_bp_reset = isset( $_POST['cpmu_bp_reset'] ) ? sanitize_text_field( wp_unslash( $_POST['cpmu_bp_reset'] ) ) : '0';
 		if ( $cpmu_bp_reset == '1' ) {
-			$this->ms_loader->db->options_reset( 'buddypress' );
+			$this->multisite->db->options_reset( 'buddypress' );
 		}
 
 		// Bail if we asked to reset either of the above.
@@ -488,7 +488,7 @@ class CommentPress_Multisite_Settings_Network {
 		 *
 		 * Used internally by:
 		 *
-		 * * CommentPress_Multisite_WordPress::network_admin_update() (Priority: 10)
+		 * * CommentPress_Multisite_Sites::network_admin_update() (Priority: 10)
 		 * * CommentPress_Multisite_BuddyPress::network_admin_update() (Priority: 20)
 		 * * CommentPress_Multisite_BuddyPress_GroupBlog::network_admin_update() (Priority: 30)
 		 *
@@ -497,7 +497,7 @@ class CommentPress_Multisite_Settings_Network {
 		do_action( 'commentpress/multisite/settings/network/form_submitted/pre' );
 
 		// Save.
-		$this->ms_loader->db->options_save();
+		$this->multisite->db->options_save();
 
 		/**
 		 * Fires after network settings have been updated.

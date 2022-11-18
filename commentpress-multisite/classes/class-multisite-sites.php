@@ -1,8 +1,8 @@
 <?php
 /**
- * CommentPress Core for Multisite class.
+ * CommentPress Multisite Sites class.
  *
- * Handles WordPress Multisite compatibility.
+ * Handles functionality related to Sites in WordPress Multisite.
  *
  * @package CommentPress_Core
  */
@@ -11,22 +11,22 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * CommentPress Core WordPress Multisite Class.
+ * CommentPress Multisite Sites Class.
  *
- * This class encapsulates WordPress Multisite compatibility.
+ * This class functionality related to Sites in WordPress Multisite.
  *
  * @since 3.3
  */
-class CommentPress_Multisite_WordPress {
+class CommentPress_Multisite_Sites {
 
 	/**
-	 * Multisite plugin object.
+	 * Multisite loader object.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $ms_loader The multisite plugin object.
+	 * @var object $multisite The multisite loader object.
 	 */
-	public $ms_loader;
+	public $multisite;
 
 	/**
 	 * CommentPress Core enabled on all sites flag.
@@ -60,12 +60,12 @@ class CommentPress_Multisite_WordPress {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $ms_loader Reference to the multisite plugin object.
+	 * @param object $multisite Reference to the multisite loader object.
 	 */
-	public function __construct( $ms_loader ) {
+	public function __construct( $multisite ) {
 
-		// Store reference to multisite plugin object.
-		$this->ms_loader = $ms_loader;
+		// Store reference to multisite loader object.
+		$this->multisite = $multisite;
 
 		// Init when the multisite plugin is fully loaded.
 		add_action( 'commentpress/multisite/loaded', [ $this, 'initialise' ] );
@@ -100,21 +100,11 @@ class CommentPress_Multisite_WordPress {
 		// Enable/disable workflow sitewide.
 		add_filter( 'cp_class_commentpress_workflow_enabled', [ $this, 'get_workflow_enabled' ] );
 
-		// Is this the back end?
-		if ( is_admin() ) {
+		// Add options to reset array.
+		add_filter( 'cpmu_db_options_get_defaults', [ $this, 'get_default_settings' ], 20, 1 );
 
-			// Add options to reset array.
-			add_filter( 'cpmu_db_options_get_defaults', [ $this, 'get_default_settings' ], 20, 1 );
-
-			// Hook into Network Settings form update.
-			add_action( 'commentpress/multisite/settings/network/form_submitted/pre', [ $this, 'network_admin_update' ] );
-
-		} else {
-
-			// Register any public styles.
-			add_action( 'wp_enqueue_scripts', [ $this, 'add_frontend_styles' ], 20 );
-
-		}
+		// Hook into Network Settings form update.
+		add_action( 'commentpress/multisite/settings/network/form_submitted/pre', [ $this, 'network_admin_update' ] );
 
 		/*
 		// Override Title Page content.
@@ -123,14 +113,7 @@ class CommentPress_Multisite_WordPress {
 
 	}
 
-	/**
-	 * Enqueue any styles and scripts needed by our public pages.
-	 *
-	 * @since 3.3
-	 */
-	public function add_frontend_styles() {
-
-	}
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Hook into the blog signup form.
@@ -142,12 +125,12 @@ class CommentPress_Multisite_WordPress {
 	public function signup_blogform( $errors ) {
 
 		// Only apply to WordPress signup form (not the BuddyPress one).
-		if ( is_object( $this->ms_loader->bp ) ) {
+		if ( is_object( $this->multisite->bp ) ) {
 			return;
 		}
 
 		// Get force option.
-		$forced = $this->ms_loader->db->option_get( 'cpmu_force_commentpress' );
+		$forced = $this->multisite->db->option_get( 'cpmu_force_commentpress' );
 
 		// Are we force-enabling CommentPress Core?
 		if ( $forced ) {
@@ -255,7 +238,7 @@ class CommentPress_Multisite_WordPress {
 		switch_to_blog( $blog_id );
 
 		// Activate CommentPress Core.
-		$this->ms_loader->db->install_commentpress();
+		$this->multisite->db->install_commentpress();
 
 		// Switch back.
 		restore_current_blog();
@@ -275,7 +258,7 @@ class CommentPress_Multisite_WordPress {
 		$workflow_html = '';
 
 		// Get data.
-		$workflow = $this->ms_loader->db->get_workflow_data();
+		$workflow = $this->multisite->db->get_workflow_data();
 
 		// If we have workflow data.
 		if ( ! empty( $workflow ) ) {
@@ -309,7 +292,7 @@ class CommentPress_Multisite_WordPress {
 		$type_html = '';
 
 		// Get data.
-		$type = $this->ms_loader->db->get_blogtype_data();
+		$type = $this->multisite->db->get_blogtype_data();
 
 		// Show if we have type data.
 		if ( ! empty( $type ) ) {
@@ -322,20 +305,6 @@ class CommentPress_Multisite_WordPress {
 
 		// --<
 		return $type_html;
-
-	}
-
-	/**
-	 * Allow other plugins to hook into our admin form.
-	 *
-	 * @since 3.3
-	 *
-	 * @return str Empty string by default, but may be overridden.
-	 */
-	public function additional_form_options() {
-
-		// Return whatever plugins send.
-		return apply_filters( 'cpmu_network_options_form', '' );
 
 	}
 
@@ -387,7 +356,7 @@ class CommentPress_Multisite_WordPress {
 			'0';
 
 		// Set "force all new sites to be CommentPress Core-enabled" option.
-		$this->ms_loader->db->option_set( 'cpmu_force_commentpress', ( $cpmu_force_commentpress ? 1 : 0 ) );
+		$this->multisite->db->option_set( 'cpmu_force_commentpress', ( $cpmu_force_commentpress ? 1 : 0 ) );
 
 		/*
 		// Get "Default title page content" value.
@@ -396,7 +365,7 @@ class CommentPress_Multisite_WordPress {
 			$this->get_default_title_page_content();
 
 		// Set "Default title page content" option.
-		$this->ms_loader->db->option_set( 'cpmu_title_page_content', $cpmu_title_page_content );
+		$this->multisite->db->option_set( 'cpmu_title_page_content', $cpmu_title_page_content );
 		*/
 
 		// Get "Disable translation workflow" value.
@@ -405,7 +374,7 @@ class CommentPress_Multisite_WordPress {
 			'0';
 
 		// Set "Disable translation workflow" option.
-		$this->ms_loader->db->option_set( 'cpmu_disable_translation_workflow', ( $cpmu_disable_translation_workflow ? 1 : 0 ) );
+		$this->multisite->db->option_set( 'cpmu_disable_translation_workflow', ( $cpmu_disable_translation_workflow ? 1 : 0 ) );
 
 	}
 
@@ -419,7 +388,7 @@ class CommentPress_Multisite_WordPress {
 	public function get_workflow_enabled() {
 
 		// Get option.
-		$disabled = $this->ms_loader->db->option_get( 'cpmu_disable_translation_workflow' ) == '1' ? false : true;
+		$disabled = $this->multisite->db->option_get( 'cpmu_disable_translation_workflow' ) == '1' ? false : true;
 
 		// Return whatever option is set.
 		return $disabled;
@@ -439,7 +408,7 @@ class CommentPress_Multisite_WordPress {
 	public function get_title_page_content( $content ) {
 
 		// Get content.
-		$overridden_content = stripslashes( $this->ms_loader->db->option_get( 'cpmu_title_page_content' ) );
+		$overridden_content = stripslashes( $this->multisite->db->option_get( 'cpmu_title_page_content' ) );
 
 		// Override if different to what's been passed.
 		if ( $content != $overridden_content ) {

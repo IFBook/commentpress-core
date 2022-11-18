@@ -33,13 +33,14 @@ class CommentPress_Multisite_Loader {
 	public $db;
 
 	/**
-	 * Multisite object.
+	 * Sites object.
 	 *
 	 * @since 3.3
+	 * @since 4.0 Renamed.
 	 * @access public
-	 * @var object $mu The multisite object reference.
+	 * @var object $sites The sites object reference.
 	 */
-	public $multisite;
+	public $sites;
 
 	/**
 	 * Network Settings object.
@@ -167,7 +168,7 @@ class CommentPress_Multisite_Loader {
 
 		// Initialise objects.
 		$this->db = new CommentPress_Multisite_Database( $this );
-		$this->multisite = new CommentPress_Multisite_WordPress( $this );
+		$this->sites = new CommentPress_Multisite_Sites( $this );
 		$this->settings_network = new CommentPress_Multisite_Settings_Network( $this );
 		$this->settings_site = new CommentPress_Multisite_Settings_Site( $this );
 		$this->revisions = new CommentPress_Multisite_Revisions( $this );

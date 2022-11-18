@@ -20,13 +20,13 @@ defined( 'ABSPATH' ) || exit;
 class CommentPress_Multisite_BuddyPress_GroupBlog {
 
 	/**
-	 * Multisite plugin object.
+	 * Multisite loader object.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $ms_loader The multisite plugin object.
+	 * @var object $multisite The multisite loader object.
 	 */
-	public $ms_loader;
+	public $multisite;
 
 	/**
 	 * Flag whether or not to rename a groupblog.
@@ -69,12 +69,12 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $ms_loader Reference to the multisite plugin object.
+	 * @param object $multisite Reference to the multisite loader object.
 	 */
-	public function __construct( $ms_loader ) {
+	public function __construct( $multisite ) {
 
-		// Store reference to multisite plugin object.
-		$this->ms_loader = $ms_loader;
+		// Store reference to multisite loader object.
+		$this->multisite = $multisite;
 
 		// Init when the BuddyPress classes are fully loaded.
 		add_action( 'commentpress/multisite/bp/loaded', [ $this, 'initialise' ] );
@@ -109,7 +109,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	public function setup_items() {
 
 		// Bail if we do not have our option set.
-		if ( $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature' ) != '1' ) {
+		if ( $this->multisite->db->option_get( 'cpmu_bp_workshop_nomenclature' ) != '1' ) {
 			return;
 		}
 
@@ -117,30 +117,30 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 		$this->groupblog_nomenclature = '1';
 
 		// Do we have the name option already defined?
-		if ( $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ) {
+		if ( $this->multisite->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ) {
 			// No, so we must have switched to the legacy "Workshop" setting.
 			$this->groupblog_nomenclature_name = $this->get_legacy_name();
 		} else {
 			// Store the setting locally.
-			$this->groupblog_nomenclature_name = $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature_name' );
+			$this->groupblog_nomenclature_name = $this->multisite->db->option_get( 'cpmu_bp_workshop_nomenclature_name' );
 		}
 
 		// Do we have the plural option already defined?
-		if ( $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) == '' ) {
+		if ( $this->multisite->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) == '' ) {
 			// No, likewise we must have switched to the legacy "Workshop" setting.
 			$this->groupblog_nomenclature_plural = $this->get_legacy_plural();
 		} else {
 			// Store the setting locally.
-			$this->groupblog_nomenclature_plural = $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' );
+			$this->groupblog_nomenclature_plural = $this->multisite->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' );
 		}
 
 		// Do we have the slug option already defined?
-		if ( $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature_slug' ) == '' ) {
+		if ( $this->multisite->db->option_get( 'cpmu_bp_workshop_nomenclature_slug' ) == '' ) {
 			// No, likewise we must have switched to the legacy "Workshop" setting.
 			$this->groupblog_nomenclature_slug = $this->get_legacy_slug();
 		} else {
 			// Store the setting locally.
-			$this->groupblog_nomenclature_slug = $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature_slug' );
+			$this->groupblog_nomenclature_slug = $this->multisite->db->option_get( 'cpmu_bp_workshop_nomenclature_slug' );
 		}
 
 		// Register Workshop hooks.
@@ -342,7 +342,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	public function page_all_comments_blog_title( $title ) {
 
 		// Override if groupblog.
-		if ( ! $this->ms_loader->bp->is_commentpress_groupblog() ) {
+		if ( ! $this->multisite->bp->is_commentpress_groupblog() ) {
 			return $title;
 		}
 
@@ -365,7 +365,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	public function page_all_comments_book_title( $title ) {
 
 		// Override if groupblog.
-		if ( ! $this->ms_loader->bp->is_commentpress_groupblog() ) {
+		if ( ! $this->multisite->bp->is_commentpress_groupblog() ) {
 			return $title;
 		}
 
@@ -390,7 +390,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 		// Override if groupblog.
 		if (
 			! bp_is_root_blog() &&
-			! $this->ms_loader->bp->is_commentpress_groupblog()
+			! $this->multisite->bp->is_commentpress_groupblog()
 		) {
 			return $title;
 		}
@@ -416,7 +416,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 		// Override if groupblog.
 		if (
 			! bp_is_root_blog() &&
-			! $this->ms_loader->bp->is_commentpress_groupblog()
+			! $this->multisite->bp->is_commentpress_groupblog()
 		) {
 			return $title;
 		}
@@ -445,7 +445,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 		}
 
 		// Bail if not groupblog.
-		if ( ! $this->ms_loader->bp->is_commentpress_groupblog() ) {
+		if ( ! $this->multisite->bp->is_commentpress_groupblog() ) {
 			return $title;
 		}
 
@@ -488,10 +488,10 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	public function buddypress_admin_form() {
 
 		// Check if we already have it switched on.
-		if ( $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature' ) == '1' ) {
+		if ( $this->multisite->db->option_get( 'cpmu_bp_workshop_nomenclature' ) == '1' ) {
 
 			// Do we have the name option already defined?
-			if ( $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ) {
+			if ( $this->multisite->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ) {
 
 				// No, so we must have switched to the legacy "Workshop" setting.
 				$this->groupblog_nomenclature_name = $this->get_legacy_name();
@@ -499,7 +499,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 			}
 
 			// Do we have the plural option already defined?
-			if ( $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) == '' ) {
+			if ( $this->multisite->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) == '' ) {
 
 				// No, likewise we must have switched to the legacy "Workshop" setting.
 				$this->groupblog_nomenclature_plural = $this->get_legacy_plural();
@@ -512,17 +512,17 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 		$element = '
 		<tr valign="top">
 			<th scope="row"><label for="cpmu_bp_groupblog_nomenclature">' . __( 'Change the name of a Group "Document"?', 'commentpress-core' ) . '</label></th>
-			<td><input id="cpmu_bp_groupblog_nomenclature" name="cpmu_bp_groupblog_nomenclature" value="1" type="checkbox"' . ( $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
+			<td><input id="cpmu_bp_groupblog_nomenclature" name="cpmu_bp_groupblog_nomenclature" value="1" type="checkbox"' . ( $this->multisite->db->option_get( 'cpmu_bp_workshop_nomenclature' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
 		</tr>
 
 		<tr valign="top">
 			<th scope="row"><label for="cpmu_bp_groupblog_nomenclature_name">' . __( 'Singular name for a Group "Document"', 'commentpress-core' ) . '</label></th>
-			<td><input id="cpmu_bp_groupblog_nomenclature_name" name="cpmu_bp_groupblog_nomenclature_name" value="' . ( $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ? $this->groupblog_nomenclature_name : $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) ) . '" type="text" /></td>
+			<td><input id="cpmu_bp_groupblog_nomenclature_name" name="cpmu_bp_groupblog_nomenclature_name" value="' . ( $this->multisite->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ? $this->groupblog_nomenclature_name : $this->multisite->db->option_get( 'cpmu_bp_workshop_nomenclature_name' ) ) . '" type="text" /></td>
 		</tr>
 
 		<tr valign="top">
 			<th scope="row"><label for="cpmu_bp_groupblog_nomenclature_plural">' . __( 'Plural name for Group "Documents"', 'commentpress-core' ) . '</label></th>
-			<td><input id="cpmu_bp_groupblog_nomenclature_plural" name="cpmu_bp_groupblog_nomenclature_plural" value="' . ( $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) == '' ? $this->groupblog_nomenclature_plural : $this->ms_loader->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) ) . '" type="text" /></td>
+			<td><input id="cpmu_bp_groupblog_nomenclature_plural" name="cpmu_bp_groupblog_nomenclature_plural" value="' . ( $this->multisite->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) == '' ? $this->groupblog_nomenclature_plural : $this->multisite->db->option_get( 'cpmu_bp_workshop_nomenclature_plural' ) ) . '" type="text" /></td>
 		</tr>
 
 		';
@@ -549,7 +549,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 
 		// Set on/off option.
 		$cpmu_bp_groupblog_nomenclature = esc_sql( $cpmu_bp_groupblog_nomenclature );
-		$this->ms_loader->db->option_set( 'cpmu_bp_workshop_nomenclature', ( $cpmu_bp_groupblog_nomenclature ? 1 : 0 ) );
+		$this->multisite->db->option_set( 'cpmu_bp_workshop_nomenclature', ( $cpmu_bp_groupblog_nomenclature ? 1 : 0 ) );
 
 		// Get name option.
 		$cpmu_bp_groupblog_nomenclature_name = esc_sql( $cpmu_bp_groupblog_nomenclature_name );
@@ -560,7 +560,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 		}
 
 		// Set name option.
-		$this->ms_loader->db->option_set( 'cpmu_bp_workshop_nomenclature_name', $cpmu_bp_groupblog_nomenclature_name );
+		$this->multisite->db->option_set( 'cpmu_bp_workshop_nomenclature_name', $cpmu_bp_groupblog_nomenclature_name );
 
 		// Get plural option.
 		$cpmu_bp_groupblog_nomenclature_plural = esc_sql( $cpmu_bp_groupblog_nomenclature_plural );
@@ -571,11 +571,11 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 		}
 
 		// Set plural option.
-		$this->ms_loader->db->option_set( 'cpmu_bp_workshop_nomenclature_plural', $cpmu_bp_groupblog_nomenclature_plural );
+		$this->multisite->db->option_set( 'cpmu_bp_workshop_nomenclature_plural', $cpmu_bp_groupblog_nomenclature_plural );
 
 		// Set slug option.
 		$cpmu_bp_groupblog_nomenclature_slug = sanitize_title( $cpmu_bp_groupblog_nomenclature_name );
-		$this->ms_loader->db->option_set( 'cpmu_bp_workshop_nomenclature_slug', $cpmu_bp_groupblog_nomenclature_slug );
+		$this->multisite->db->option_set( 'cpmu_bp_workshop_nomenclature_slug', $cpmu_bp_groupblog_nomenclature_slug );
 
 	}
 

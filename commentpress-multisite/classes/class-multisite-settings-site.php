@@ -20,13 +20,13 @@ defined( 'ABSPATH' ) || exit;
 class CommentPress_Multisite_Settings_Site {
 
 	/**
-	 * Multisite plugin object.
+	 * Multisite loader object.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $ms_loader The multisite plugin object.
+	 * @var object $multisite The multisite loader object.
 	 */
-	public $ms_loader;
+	public $multisite;
 
 	/**
 	 * Settings Page reference.
@@ -69,12 +69,12 @@ class CommentPress_Multisite_Settings_Site {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $ms_loader Reference to the multisite plugin object.
+	 * @param object $multisite Reference to the multisite loader object.
 	 */
-	public function __construct( $ms_loader ) {
+	public function __construct( $multisite ) {
 
-		// Store reference to multisite plugin object.
-		$this->ms_loader = $ms_loader;
+		// Store reference to multisite loader object.
+		$this->multisite = $multisite;
 
 		// Init when the multisite plugin is fully loaded.
 		add_action( 'commentpress/multisite/loaded', [ $this, 'initialise' ] );
@@ -106,7 +106,7 @@ class CommentPress_Multisite_Settings_Site {
 		}
 
 		// Is CommentPress Core active on this blog?
-		if ( $this->ms_loader->db->is_commentpress() ) {
+		if ( $this->multisite->db->is_commentpress() ) {
 
 			// Modify CommentPress Core settings page.
 			add_action( 'commentpress/core/settings/site/metabox/general/before', [ $this, 'form_disable_element' ] );
@@ -400,7 +400,7 @@ class CommentPress_Multisite_Settings_Site {
 		if ( $cp_activate_commentpress === '1' ) {
 
 			// Install core, but not from wpmu_new_blog.
-			$this->ms_loader->db->install_commentpress( 'admin_page' );
+			$this->multisite->db->install_commentpress( 'admin_page' );
 
 			// Get Settings Page URL.
 			$url = $this->page_settings_url_get();
@@ -440,7 +440,7 @@ class CommentPress_Multisite_Settings_Site {
 			$url = $this->page_settings_url_get();
 
 			// Uninstall core.
-			$this->ms_loader->db->uninstall_commentpress();
+			$this->multisite->db->uninstall_commentpress();
 
 			// Redirect.
 			wp_safe_redirect( $url );

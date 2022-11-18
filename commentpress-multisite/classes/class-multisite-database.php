@@ -20,13 +20,13 @@ defined( 'ABSPATH' ) || exit;
 class CommentPress_Multisite_Database {
 
 	/**
-	 * Multisite plugin object.
+	 * Multisite loader object.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $ms_loader The multisite plugin object.
+	 * @var object $multisite The multisite loader object.
 	 */
-	public $ms_loader;
+	public $multisite;
 
 	/**
 	 * Multisite options array.
@@ -42,12 +42,12 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $ms_loader Reference to the multisite plugin object.
+	 * @param object $multisite Reference to the multisite loader object.
 	 */
-	public function __construct( $ms_loader ) {
+	public function __construct( $multisite ) {
 
-		// Store reference to multisite plugin object.
-		$this->ms_loader = $ms_loader;
+		// Store reference to multisite loader object.
+		$this->multisite = $multisite;
 
 		// Init when the multisite plugin is fully loaded.
 		add_action( 'commentpress/multisite/loaded', [ $this, 'initialise' ] );
@@ -452,7 +452,7 @@ class CommentPress_Multisite_Database {
 			 *
 			 * Used internally by:
 			 *
-			 * * CommentPress_Multisite_WordPress::get_default_settings() (Priority: 20)
+			 * * CommentPress_Multisite_Sites::get_default_settings() (Priority: 20)
 			 *
 			 * @since 3.3
 			 */

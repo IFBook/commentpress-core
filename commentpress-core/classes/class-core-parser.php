@@ -25,11 +25,12 @@ defined( 'ABSPATH' ) || exit;
 class CommentPress_Core_Parser {
 
 	/**
-	 * Plugin object.
+	 * Core loader object.
 	 *
 	 * @since 3.0
+	 * @since 4.0 Renamed.
 	 * @access public
-	 * @var object $core The plugin object.
+	 * @var object $core The core loader object.
 	 */
 	public $core;
 
