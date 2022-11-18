@@ -2,7 +2,7 @@
 /**
  * CommentPress Core class.
  *
- * Handles single site plugin functionality.
+ * Handles single Site plugin functionality.
  *
  * @package CommentPress_Core
  */
@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * CommentPress Core Class.
  *
- * A class that encapsulates single site plugin functionality.
+ * A class that encapsulates single Site plugin functionality.
  *
  * @since 3.0
  */
@@ -69,7 +69,7 @@ class CommentPress_Core {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $formatter The formatter object.
+	 * @var object $formatter The Formatter object.
 	 */
 	public $formatter;
 
@@ -78,7 +78,7 @@ class CommentPress_Core {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $workflow The workflow object.
+	 * @var object $workflow The Workflow object.
 	 */
 	public $workflow;
 
@@ -87,7 +87,7 @@ class CommentPress_Core {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $revisions The workflow object.
+	 * @var object $revisions The Workflow object.
 	 */
 	public $revisions;
 
@@ -101,11 +101,11 @@ class CommentPress_Core {
 	public $buddypress = false;
 
 	/**
-	 * BuddyPress GroupBlog flag.
+	 * BuddyPress Group Blog flag.
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var bool $bp_groupblog True if BuddyPress GroupBlog present, false otherwise.
+	 * @var bool $bp_groupblog True if BuddyPress Group Blog present, false otherwise.
 	 */
 	public $bp_groupblog = false;
 
@@ -228,10 +228,10 @@ class CommentPress_Core {
 	 */
 	public function register_hooks() {
 
-		// Modify comment posting.
+		// Modify Comment posting.
 		add_action( 'comment_post', [ $this, 'save_comment' ], 10, 2 );
 
-		// Exclude special pages from listings.
+		// Exclude Special Pages from listings.
 		add_filter( 'wp_list_pages_excludes', [ $this, 'exclude_special_pages' ], 10, 1 );
 		add_filter( 'parse_query', [ $this, 'exclude_special_pages_from_admin' ], 10, 1 );
 
@@ -250,7 +250,7 @@ class CommentPress_Core {
 			// Intercept delete.
 			add_action( 'before_delete_post', [ $this, 'delete_post' ], 10, 1 );
 
-			// Comment block quicktag.
+			// Comment Block quicktag.
 			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_scripts' ] );
 
 		} else {
@@ -273,13 +273,13 @@ class CommentPress_Core {
 		// TODO: Move to WordPress Multisite class.
 		if ( is_multisite() ) {
 
-			// Add callback for signup page to include sidebar.
+			// Add callback for Signup Page to include sidebar.
 			add_action( 'after_signup_form', [ $this, 'after_signup_form' ], 20 );
 
 			// If subdirectory install.
 			if ( ! is_subdomain_install() ) {
 
-				// Add filter for reserved CommentPress Core special page names.
+				// Add filter for reserved CommentPress Core Special Page names.
 				add_filter( 'subdirectory_reserved_names', [ $this, 'add_reserved_names' ] );
 
 			}
@@ -291,7 +291,7 @@ class CommentPress_Core {
 		// Enable BuddyPress functionality.
 		add_action( 'bp_include', [ $this, 'buddypress_init' ] );
 
-		// Add BuddyPress functionality - really late, so group object is set up.
+		// Add BuddyPress functionality - really late, so Group object is set up.
 		add_action( 'bp_setup_globals', [ $this, 'buddypress_globals_loaded' ], 1000 );
 
 		// Actions to perform on BuddyPress loaded.
@@ -386,7 +386,7 @@ class CommentPress_Core {
 		// Test for a bp-groupblog function.
 		if ( function_exists( 'get_groupblog_group_id' ) ) {
 
-			// Check if this blog is a group blog.
+			// Check if this Blog is a Group Blog.
 			$group_id = get_groupblog_group_id( get_current_blog_id() );
 			if ( isset( $group_id ) && is_numeric( $group_id ) && $group_id > 0 ) {
 
@@ -414,11 +414,11 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Is this blog a BuddyPress GroupBlog?
+	 * Is this Blog a BuddyPress Group Blog?
 	 *
 	 * @since 3.4
 	 *
-	 * @return bool $bp_groupblog True when current blog is a BuddyPress GroupBlog, false otherwise.
+	 * @return bool $bp_groupblog True when current Blog is a BuddyPress Group Blog, false otherwise.
 	 */
 	public function is_groupblog() {
 
@@ -428,7 +428,7 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Is a BuddyPress GroupBlog theme set?
+	 * Is a BuddyPress Group Blog theme set?
 	 *
 	 * @since 3.4
 	 *
@@ -436,7 +436,7 @@ class CommentPress_Core {
 	 */
 	public function get_groupblog_theme() {
 
-		// Kick out if not in a group context.
+		// Kick out if not in a Group context.
 		if ( ! function_exists( 'bp_is_groups_component' ) ) {
 			return false;
 		}
@@ -444,13 +444,13 @@ class CommentPress_Core {
 			return false;
 		}
 
-		// Get GroupBlog options.
+		// Get Group Blog options.
 		$options = get_site_option( 'bp_groupblog_blog_defaults_options' );
 
 		// Get theme setting.
 		if ( ! empty( $options['theme'] ) ) {
 
-			// We have a GroupBlog theme set.
+			// We have a Group Blog theme set.
 
 			// Split the options.
 			list( $stylesheet, $template ) = explode( '|', $options['theme'] );
@@ -474,11 +474,11 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Is this a BuddyPress "special page" - a component homepage?
+	 * Is this a BuddyPress "Special Page" - a component homepage?
 	 *
 	 * @since 3.4
 	 *
-	 * @return bool $is_bp True if current page is a BuddyPress page, false otherwise.
+	 * @return bool $is_bp True if current Page is a BuddyPress Page, false otherwise.
 	 */
 	public function is_buddypress_special_page() {
 
@@ -487,7 +487,7 @@ class CommentPress_Core {
 			return false;
 		}
 
-		// Is it a BuddyPress page?
+		// Is it a BuddyPress Page?
 		$is_bp = ! bp_is_blog_page();
 
 		// Let's see.
@@ -496,13 +496,13 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Utility to add a message to admin pages when upgrade required.
+	 * Utility to add a message to Admin Pages when upgrade required.
 	 *
 	 * @since 3.4
 	 */
 	public function admin_upgrade_alert() {
 
-		// Check user permissions.
+		// Check User permissions.
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
@@ -520,11 +520,11 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Add scripts needed across all WordPress admin pages.
+	 * Add scripts needed across all WordPress Admin Pages.
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $hook The requested admin page.
+	 * @param str $hook The requested Admin Page.
 	 */
 	public function enqueue_admin_scripts( $hook ) {
 
@@ -533,7 +533,7 @@ class CommentPress_Core {
 			return;
 		}
 
-		// Add quicktag button to page editor.
+		// Add quicktag button to Page editor.
 		$this->display->get_custom_quicktags();
 
 	}
@@ -571,7 +571,7 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Redirect to child page.
+	 * Redirect to child Page.
 	 *
 	 * @since 3.4
 	 */
@@ -583,16 +583,16 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Parses page/post content.
+	 * Parses Page/Post content.
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The content of the page/post.
+	 * @param str $content The content of the Page/Post.
 	 * @return str $content The modified content.
 	 */
 	public function the_content( $content ) {
 
-		// Reference our post.
+		// Reference our Post.
 		global $post;
 
 		// JetPack 2.7 or greater parses the content in the head to create
@@ -616,7 +616,7 @@ class CommentPress_Core {
 			return $content;
 		}
 
-		// Test for BuddyPress special page (compat with BuddyPress Docs).
+		// Test for BuddyPress Special Page (compat with BuddyPress Docs).
 		if ( $this->is_buddypress() ) {
 
 			// Is it a component homepage?
@@ -632,7 +632,7 @@ class CommentPress_Core {
 		// Init allowed.
 		$allowed = false;
 
-		// Only parse posts or pages.
+		// Only parse Posts or Pages.
 		if ( ( is_single() || is_page() || is_attachment() ) && ! $this->db->is_special_page() ) {
 			$allowed = true;
 		}
@@ -711,7 +711,7 @@ class CommentPress_Core {
 	 */
 	public function get_signature_field() {
 
-		// Init text signature.
+		// Init Text Signature.
 		$text_sig = '';
 
 		// Get comment ID to reply to from URL query string.
@@ -720,18 +720,18 @@ class CommentPress_Core {
 		// Did we get a comment ID?
 		if ( $reply_to_comment_id != 0 ) {
 
-			// Get paragraph text signature.
+			// Get Paragraph Text Signature.
 			$text_sig = $this->db->get_text_signature_by_comment_id( $reply_to_comment_id );
 
 		} else {
 
-			// Do we have a paragraph number in the query string?
+			// Do we have a Paragraph Number in the query string?
 			$reply_to_para_id = isset( $_GET['replytopara'] ) ? (int) $_GET['replytopara'] : 0;
 
 			// Did we get a comment ID?
 			if ( $reply_to_para_id != 0 ) {
 
-				// Get paragraph text signature.
+				// Get Paragraph Text Signature.
 				$text_sig = $this->get_text_signature( $reply_to_para_id );
 
 			}
@@ -756,7 +756,7 @@ class CommentPress_Core {
 	 */
 	public function add_reserved_names( $reserved_names ) {
 
-		// Get all image attachments to our title page.
+		// Get all image attachments to our Title Page.
 		$reserved_names = array_merge(
 			$reserved_names,
 			[
@@ -794,7 +794,7 @@ class CommentPress_Core {
 	 */
 	public function add_meta_boxes() {
 
-		// Add our meta boxes to pages.
+		// Add our meta boxes to Pages.
 		add_meta_box(
 			'commentpress_page_options',
 			__( 'CommentPress Core Options', 'commentpress-core' ),
@@ -803,7 +803,7 @@ class CommentPress_Core {
 			'side'
 		);
 
-		// Add our meta box to posts.
+		// Add our meta box to Posts.
 		add_meta_box(
 			'commentpress_post_options',
 			__( 'CommentPress Core Options', 'commentpress-core' ),
@@ -812,7 +812,7 @@ class CommentPress_Core {
 			'side'
 		);
 
-		// Get workflow.
+		// Get Workflow.
 		$workflow = $this->db->option_get( 'cp_blog_workflow' );
 
 		// If it's enabled.
@@ -824,7 +824,7 @@ class CommentPress_Core {
 			// Allow overrides.
 			$title = apply_filters( 'cp_workflow_metabox_title', $title );
 
-			// Add our meta box to posts.
+			// Add our meta box to Posts.
 			add_meta_box(
 				'commentpress_workflow_fields',
 				$title,
@@ -833,7 +833,7 @@ class CommentPress_Core {
 				'normal'
 			);
 
-			// Add our meta box to pages.
+			// Add our meta box to Pages.
 			add_meta_box(
 				'commentpress_workflow_fields',
 				$title,
@@ -847,13 +847,13 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Adds meta box to page edit screens.
+	 * Adds meta box to Page edit screens.
 	 *
 	 * @since 3.4
 	 */
 	public function custom_box_page() {
 
-		// Access post.
+		// Access Post.
 		global $post;
 
 		// Use nonce for verification.
@@ -926,10 +926,10 @@ class CommentPress_Core {
 		';
 
 		// ---------------------------------------------------------------------
-		// Page Numbering - only shown on first top level page.
+		// Page Numbering - only shown on first top level Page.
 		// ---------------------------------------------------------------------
 
-		// If page has no parent and it's not a special page and it's the first.
+		// If Page has no parent and it's not a Special Page and it's the first.
 		if (
 			$post->post_parent == '0' &&
 			! $this->db->is_special_page() &&
@@ -971,7 +971,7 @@ class CommentPress_Core {
 		// Page Layout for Title Page -> to allow for Book Cover image.
 		// ---------------------------------------------------------------------
 
-		// Is this the title page?
+		// Is this the Title Page?
 		if ( $post->ID == $this->db->option_get( 'cp_welcome_page' ) ) {
 
 			// Label.
@@ -1005,7 +1005,7 @@ class CommentPress_Core {
 
 		}
 
-		// Get post formatter.
+		// Get Post Formatter.
 		$this->get_post_formatter_metabox( $post );
 
 		// Get default sidebar.
@@ -1017,13 +1017,13 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Adds meta box to post edit screens.
+	 * Adds meta box to Post edit screens.
 	 *
 	 * @since 3.4
 	 */
 	public function custom_box_post() {
 
-		// Access post.
+		// Access Post.
 		global $post;
 
 		// Use nonce for verification.
@@ -1039,13 +1039,13 @@ class CommentPress_Core {
 			$new_post_id = get_post_meta( $post->ID, $key, true );
 
 			// -----------------------------------------------------------------
-			// Show link to newer post.
+			// Show link to newer Post.
 			// -----------------------------------------------------------------
 
 			// Define label.
 			$label = __( 'This post already has a new version', 'commentpress-core' );
 
-			// Get the edit post link.
+			// Get the edit Post link.
 			$edit_link = get_edit_post_link( $new_post_id );
 
 			// Define label.
@@ -1058,7 +1058,7 @@ class CommentPress_Core {
 		} else {
 
 			// -----------------------------------------------------------------
-			// Create new post with content of current post.
+			// Create new Post with content of current Post.
 			// -----------------------------------------------------------------
 
 			// Label.
@@ -1075,7 +1075,7 @@ class CommentPress_Core {
 
 		}
 
-		// Get post formatter.
+		// Get Post Formatter.
 		$this->get_post_formatter_metabox( $post );
 
 		// Get default sidebar.
@@ -1084,13 +1084,13 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Adds workflow meta box to post edit screens.
+	 * Adds Workflow meta box to Post edit screens.
 	 *
 	 * @since 3.4
 	 */
 	public function custom_box_workflow() {
 
-		// We now need to add any workflow that a plugin might want.
+		// We now need to add any Workflow that a plugin might want.
 		do_action( 'cp_workflow_metabox' );
 
 	}
@@ -1100,12 +1100,12 @@ class CommentPress_Core {
 	 *
 	 * @since 3.4
 	 *
-	 * @param int $post_id The numeric ID of the post (or revision).
-	 * @param object $post The post object.
+	 * @param int $post_id The numeric ID of the Post (or revision).
+	 * @param object $post The Post object.
 	 */
 	public function save_post( $post_id, $post ) {
 
-		// We don't use post_id because we're not interested in revisions.
+		// We don't use "post_id" because we're not interested in revisions.
 
 		// Store our meta data.
 		$result = $this->db->save_meta( $post );
@@ -1113,11 +1113,11 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Check for data integrity of other posts when one is deleted.
+	 * Check for data integrity of other Posts when one is deleted.
 	 *
 	 * @since 3.4
 	 *
-	 * @param int $post_id The numeric ID of the post (or revision).
+	 * @param int $post_id The numeric ID of the Post (or revision).
 	 */
 	public function delete_post( $post_id ) {
 
@@ -1127,7 +1127,7 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Stores our additional param - the text signature.
+	 * Stores our additional param - the Text Signature.
 	 *
 	 * @since 3.4
 	 *
@@ -1142,7 +1142,7 @@ class CommentPress_Core {
 		// Store our comment selection.
 		$result = $this->db->save_comment_selection( $comment_ID );
 
-		// In multipage situations, store our comment's page.
+		// In multipage situations, store our comment's Page.
 		$result = $this->db->save_comment_page( $comment_ID );
 
 		// Has the comment been marked as spam?
@@ -1162,15 +1162,15 @@ class CommentPress_Core {
 	 */
 	public function get_toc() {
 
-		// Switch pages or posts.
+		// Switch Pages or Posts.
 		if ( $this->get_list_option() == 'post' ) {
 
-			// List posts.
+			// List Posts.
 			$this->display->list_posts();
 
 		} else {
 
-			// List pages.
+			// List Pages.
 			$this->display->list_pages();
 
 		}
@@ -1182,19 +1182,19 @@ class CommentPress_Core {
 	 *
 	 * @since 3.4
 	 *
-	 * @param array $exclude_pages The array of pages to exclude.
+	 * @param array $exclude_pages The array of Pages to exclude.
 	 */
 	public function get_toc_list( $exclude_pages = [] ) {
 
-		// Switch pages or posts.
+		// Switch Pages or Posts.
 		if ( $this->get_list_option() == 'post' ) {
 
-			// List posts.
+			// List Posts.
 			$this->display->list_posts();
 
 		} else {
 
-			// List pages.
+			// List Pages.
 			$this->display->list_pages( $exclude_pages );
 
 		}
@@ -1202,16 +1202,16 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Exclude special pages from page listings.
+	 * Exclude Special Pages from Page listings.
 	 *
 	 * @since 3.4
 	 *
-	 * @param array $excluded_array The existing list of excluded pages.
-	 * @return array $excluded_array The modified list of excluded pages.
+	 * @param array $excluded_array The existing list of excluded Pages.
+	 * @return array $excluded_array The modified list of excluded Pages.
 	 */
 	public function exclude_special_pages( $excluded_array ) {
 
-		// Get special pages array, if it's there.
+		// Get Special Pages array, if it's there.
 		$special_pages = $this->db->option_get( 'cp_special_pages' );
 
 		// Do we have an array?
@@ -1228,11 +1228,11 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Exclude special pages from admin page listings.
+	 * Exclude Special Pages from Admin Page listings.
 	 *
 	 * @since 3.4
 	 *
-	 * @param array $query The existing page query.
+	 * @param array $query The existing Page query.
 	 */
 	public function exclude_special_pages_from_admin( $query ) {
 
@@ -1241,7 +1241,7 @@ class CommentPress_Core {
 		// Check admin location.
 		if ( is_admin() && $pagenow == 'edit.php' && $post_type == 'page' ) {
 
-			// Get special pages array, if it's there.
+			// Get Special Pages array, if it's there.
 			$special_pages = $this->db->option_get( 'cp_special_pages' );
 
 			// Do we have an array?
@@ -1271,7 +1271,7 @@ class CommentPress_Core {
 		// Check admin location.
 		if ( is_admin() && $pagenow == 'edit.php' && $post_type == 'page' ) {
 
-			// Get special pages array, if it's there.
+			// Get Special Pages array, if it's there.
 			$special_pages = $this->db->option_get( 'cp_special_pages' );
 
 			// Do we have an array?
@@ -1290,7 +1290,7 @@ class CommentPress_Core {
 				// Did we get a result?
 				if ( isset( $matches[1] ) ) {
 
-					// Subtract special page count.
+					// Subtract Special Page count.
 					$new_count = $matches[1] - count( $special_pages );
 
 					// Rebuild 'all' and 'publish' items.
@@ -1308,7 +1308,7 @@ class CommentPress_Core {
 				// Did we get a result?
 				if ( isset( $matches[1] ) ) {
 
-					// Subtract special page count.
+					// Subtract Special Page count.
 					$new_count = $matches[1] - count( $special_pages );
 
 					// Rebuild 'all' and 'publish' items.
@@ -1330,11 +1330,11 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Get comments sorted by text signature and paragraph.
+	 * Get Comments sorted by Text Signature and Paragraph.
 	 *
 	 * @since 3.4
 	 *
-	 * @param int $post_ID The numeric ID of the post.
+	 * @param int $post_ID The numeric ID of the Post.
 	 * @return array $comments An array of sorted comment data.
 	 */
 	public function get_sorted_comments( $post_ID ) {
@@ -1345,12 +1345,12 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Get paragraph number for a particular text signature.
+	 * Get Paragraph Number for a particular Text Signature.
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $text_signature The text signature.
-	 * @return int $num The position in text signature array.
+	 * @param str $text_signature The Text Signature.
+	 * @return int $num The position in Text Signature array.
 	 */
 	public function get_para_num( $text_signature ) {
 
@@ -1363,12 +1363,12 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Get text signature for a particular paragraph number.
+	 * Get Text Signature for a particular Paragraph Number.
 	 *
 	 * @since 3.4
 	 *
-	 * @param int $para_num The paragraph number in a post.
-	 * @return str $text_signature The text signature.
+	 * @param int $para_num The Paragraph Number in a Post.
+	 * @return str $text_signature The Text Signature.
 	 */
 	public function get_text_signature( $para_num ) {
 
@@ -1384,12 +1384,12 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Get a link to a "special" page.
+	 * Get a link to a Special Page.
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $page_type The CommentPress Core name of a special page.
-	 * @return str $link THe HTML link to that page.
+	 * @param str $page_type The CommentPress Core name of a Special Page.
+	 * @return str $link THe HTML link to that Page.
 	 */
 	public function get_page_link( $page_type = 'cp_all_comments_page' ) {
 
@@ -1399,16 +1399,16 @@ class CommentPress_Core {
 		// Init.
 		$link = '';
 
-		// Get page ID.
+		// Get Page ID.
 		$page_id = $this->db->option_get( $page_type );
 
-		// Do we have a page?
+		// Do we have a Page?
 		if ( $page_id != '' ) {
 
-			// Get page.
+			// Get Page.
 			$page = get_post( $page_id );
 
-			// Is it the current page?
+			// Is it the current Page?
 			$active = '';
 			if ( isset( $post ) && $page->ID == $post->ID ) {
 				$active = ' class="active_page"';
@@ -1473,25 +1473,25 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Get the URL for a "special" page.
+	 * Get the URL for a Special Page.
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $page_type The CommentPress Core name of a special page.
-	 * @return str $url The URL of that page.
+	 * @param str $page_type The CommentPress Core name of a Special Page.
+	 * @return str $url The URL of that Page.
 	 */
 	public function get_page_url( $page_type = 'cp_all_comments_page' ) {
 
 		// Init.
 		$url = '';
 
-		// Get page ID.
+		// Get Page ID.
 		$page_id = $this->db->option_get( $page_type );
 
-		// Do we have a page?
+		// Do we have a Page?
 		if ( $page_id != '' ) {
 
-			// Get page.
+			// Get Page.
 			$page = get_post( $page_id );
 
 			// Get link.
@@ -1527,11 +1527,11 @@ class CommentPress_Core {
 	 *
 	 * @since 3.4
 	 *
-	 * @return bool $success True if TML page, false otherwise
+	 * @return bool $success True if TML Page, false otherwise
 	 */
 	public function is_theme_my_login_page() {
 
-		// Access page.
+		// Access Page.
 		global $post;
 
 		// Compat with Theme My Login.
@@ -1557,11 +1557,11 @@ class CommentPress_Core {
 	 *
 	 * @since 3.4.7
 	 *
-	 * @return bool $success True if is Members List page, false otherwise.
+	 * @return bool $success True if is Members List Page, false otherwise.
 	 */
 	public function is_members_list_page() {
 
-		// Access page.
+		// Access Page.
 		global $post;
 
 		// Compat with Members List.
@@ -1586,11 +1586,11 @@ class CommentPress_Core {
 	 *
 	 * @since 3.5.9
 	 *
-	 * @return bool $success True if "Subscribe to Comments Reloaded" page, false otherwise.
+	 * @return bool $success True if "Subscribe to Comments Reloaded" Page, false otherwise.
 	 */
 	public function is_subscribe_to_comments_reloaded_page() {
 
-		// Access page.
+		// Access Page.
 		global $post;
 
 		// Compat with Subscribe to Comments Reloaded.
@@ -1636,7 +1636,7 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Override the comments tempate for BuddyPress Docs.
+	 * Override the Comments Template for BuddyPress Docs.
 	 *
 	 * @since 3.4
 	 *
@@ -1646,7 +1646,7 @@ class CommentPress_Core {
 	 */
 	public function bp_docs_comment_tempate( $path, $original_path ) {
 
-		// If on BuddyPress root site.
+		// If on BuddyPress root Site.
 		if ( bp_is_root_blog() ) {
 
 			// Override default link name.
@@ -1725,13 +1725,13 @@ class CommentPress_Core {
 		 */
 		$return = apply_filters( 'commentpress_default_sidebar', 'activity' );
 
-		// Is this a commentable page?
+		// Is this a commentable Page?
 		if ( ! $this->is_commentable() ) {
 
 			// No - we must use either 'activity' or 'toc'.
 			if ( $this->db->option_exists( 'cp_sidebar_default' ) ) {
 
-				// Get option (we don't need to look at the page meta in this case).
+				// Get option (we don't need to look at the Page meta in this case).
 				$default = $this->db->option_get( 'cp_sidebar_default' );
 
 				// Use it unless it's 'comments'.
@@ -1754,7 +1754,7 @@ class CommentPress_Core {
 		//if ( is_singular() || is_singular( $types ) ) {
 		*/
 
-		// Is it a commentable page?
+		// Is it a commentable Page?
 		if ( is_singular() ) {
 
 			// Some people have reported that db is not an object at this point -
@@ -1762,10 +1762,10 @@ class CommentPress_Core {
 			// avoid the issue by checking if it is.
 			if ( is_object( $this->db ) ) {
 
-				// Is it a special page which have comments in page (or are not commentable)?
+				// Is it a Special Page which have Comments-in-Page (or are not commentable)?
 				if ( ! $this->db->is_special_page() ) {
 
-					// Access page.
+					// Access Page.
 					global $post;
 
 					// Either 'comments', 'activity' or 'toc'.
@@ -1774,7 +1774,7 @@ class CommentPress_Core {
 						// Get global option.
 						$return = $this->db->option_get( 'cp_sidebar_default' );
 
-						// Check if the post/page has a meta value.
+						// Check if the Post/Page has a meta value.
 						$key = '_cp_sidebar_default';
 
 						// If the custom field already has a value.
@@ -1796,7 +1796,7 @@ class CommentPress_Core {
 
 		}
 
-		// Not singular - must be either activity or toc.
+		// Not singular - must be either "activity" or "toc".
 		if ( $this->db->option_exists( 'cp_sidebar_default' ) ) {
 
 			// Override.
@@ -1835,7 +1835,7 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Check if a page/post can be commented on.
+	 * Check if a Page/Post can be commented on.
 	 *
 	 * @since 3.4
 	 *
@@ -1846,7 +1846,7 @@ class CommentPress_Core {
 		// Declare access to globals.
 		global $post;
 
-		// Not on signup pages.
+		// Not on Signup Pages.
 		$script = isset( $_SERVER['SCRIPT_FILENAME'] ) ? wp_unslash( $_SERVER['SCRIPT_FILENAME'] ) : '';
 		if ( is_multisite() && ! empty( $script ) ) {
 			if ( 'wp-signup.php' == basename( $script ) ) {
@@ -1857,32 +1857,32 @@ class CommentPress_Core {
 			}
 		}
 
-		// Not if we're not on a page/post and especially not if there's no post object.
+		// Not if we're not on a Page/Post and especially not if there's no Post object.
 		if ( ! is_singular() || ! is_object( $post ) ) {
 			return false;
 		}
 
-		// CommentPress Core Special Pages special pages are not.
+		// CommentPress Core Special Pages Special Pages are not.
 		if ( $this->db->is_special_page() ) {
 			return false;
 		}
 
-		// BuddyPress special pages are not.
+		// BuddyPress Special Pages are not.
 		if ( $this->is_buddypress_special_page() ) {
 			return false;
 		}
 
-		// Theme My Login page is not.
+		// Theme My Login Page is not.
 		if ( $this->is_theme_my_login_page() ) {
 			return false;
 		}
 
-		// Members List page is not.
+		// Members List Page is not.
 		if ( $this->is_members_list_page() ) {
 			return false;
 		}
 
-		// Subscribe to Comments Reloaded page is not.
+		// Subscribe to Comments Reloaded Page is not.
 		if ( $this->is_subscribe_to_comments_reloaded_page() ) {
 			return false;
 		}
@@ -1933,7 +1933,7 @@ class CommentPress_Core {
 	 *
 	 * @since 3.4
 	 *
-	 * @return str $types Array of post types.
+	 * @return str $types Array of Post Types.
 	 */
 	public function get_commentable_cpts() {
 
@@ -1949,7 +1949,7 @@ class CommentPress_Core {
 		$output = 'names'; // Names or objects, note names is the default.
 		$operator = 'and'; // 'and' or 'or'.
 
-		// Get post types.
+		// Get Post Types.
 		$post_types = get_post_types( $args, $output, $operator );
 
 		// Did we get any?
@@ -1974,19 +1974,19 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Adds the formatter to the page/post metabox.
+	 * Adds the Formatter to the Page/Post metabox.
 	 *
 	 * @since 3.4
 	 *
-	 * @param object $post The WordPress post object.
+	 * @param object $post The WordPress Post object.
 	 */
 	public function get_post_formatter_metabox( $post ) {
 
 		// ---------------------------------------------------------------------
-		// Override post formatter.
+		// Override Post Formatter.
 		// ---------------------------------------------------------------------
 
-		// Do we have the option to choose blog type (new in 3.3.1)?
+		// Do we have the option to choose Blog Type (new in 3.3.1)?
 		if ( $this->db->option_exists( 'cp_blog_type' ) ) {
 
 			// Define no types.
@@ -2015,7 +2015,7 @@ class CommentPress_Core {
 				// Set key.
 				$key = '_cp_post_type_override';
 
-				// Default to current blog type.
+				// Default to current Blog Type.
 				$value = $this->db->option_get( 'cp_blog_type' );
 
 				// But, if the custom field has a value.
@@ -2053,11 +2053,11 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Adds the default sidebar preference to the page/post metabox.
+	 * Adds the default sidebar preference to the Page/Post metabox.
 	 *
 	 * @since 3.4
 	 *
-	 * @param object $post The WordPress post object.
+	 * @param object $post The WordPress Post object.
 	 */
 	public function get_default_sidebar_metabox( $post ) {
 
@@ -2067,7 +2067,7 @@ class CommentPress_Core {
 		}
 
 		// ---------------------------------------------------------------------
-		// Override post formatter.
+		// Override Post Formatter.
 		// ---------------------------------------------------------------------
 
 		// Do we have the option to choose the default sidebar (new in 3.3.3)?
@@ -2108,11 +2108,11 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Adds the paragraph numbering preference to the page/post metabox.
+	 * Adds the Paragraph numbering preference to the Page/Post metabox.
 	 *
 	 * @since 3.4
 	 *
-	 * @param object $post The WordPress post object.
+	 * @param object $post The WordPress Post object.
 	 */
 	public function get_para_numbering_metabox( $post ) {
 

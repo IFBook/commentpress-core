@@ -58,13 +58,13 @@ NOTES
 
 		<?php
 
-		// Get comments for this post in ascending order.
+		// Get Comments for this Post in ascending order.
 		$comments = get_comments( [
 			'post_id' => $post->ID,
 			'order' => 'ASC',
 		] );
 
-		// List comments.
+		// List Comments.
 		wp_list_comments(
 			[
 				'type'=> 'comment',
@@ -81,14 +81,14 @@ NOTES
 
 
 
-<?php else : // This is displayed if there are no comments so far. ?>
+<?php else : // This is displayed if there are no Comments so far. ?>
 
 
 
 	<?php if ('open' == $post->comment_status) : ?>
 
-		<!-- comments are open, but there are no comments. -->
-		<h3 class="nocomments">No general comments yet</h3>
+		<!-- Comments are open, but there are no Comments. -->
+		<h3 class="nocomments"><?php esc_html_e( 'No general comments yet.', 'commentpress-core' ) ?></h3>
 
 	<?php endif; ?>
 

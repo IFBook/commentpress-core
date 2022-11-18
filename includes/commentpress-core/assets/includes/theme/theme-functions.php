@@ -2,7 +2,7 @@
 /**
  * CommentPress Core Common Theme Functions.
  *
- * Handles single site plugin functionality.
+ * Functions that all CommentPress themes can use are collected here.
  *
  * @package CommentPress_Core
  */
@@ -139,7 +139,7 @@ if ( ! function_exists( 'commentpress_customize_site_image' ) ) :
 	 */
 	function commentpress_customize_site_image( $wp_customize ) {
 
-		// Kick out if BuddyPress GroupBlog.
+		// Kick out if BuddyPress Group Blog.
 		global $commentpress_core;
 		if ( $commentpress_core->is_groupblog() ) {
 			return;
@@ -204,7 +204,7 @@ if ( ! function_exists( 'commentpress_customize_site_logo' ) ) :
 	 */
 	function commentpress_customize_site_logo( $wp_customize ) {
 
-		// Kick out if BuddyPress GroupBlog.
+		// Kick out if BuddyPress Group Blog.
 		global $commentpress_core;
 		if ( $commentpress_core->is_groupblog() ) {
 			return;
@@ -343,7 +343,7 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @todo Inform users that header images are using a different method.
+	 * @todo Inform Users that header images are using a different method.
 	 */
 	function commentpress_get_header_image() {
 
@@ -351,16 +351,16 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ) :
 		global $commentpress_core;
 
 		// -------------------------------------------------------------------------
-		// If this is a groupblog, always show group avatar
+		// If this is a Group Blog, always show Group Avatar
 		// -------------------------------------------------------------------------
 
-		// Test for groupblog.
+		// Test for Group Blog.
 		if ( is_object( $commentpress_core ) && $commentpress_core->is_groupblog() ) {
 
-			// Get group ID.
+			// Get Group ID.
 			$group_id = get_groupblog_group_id( get_current_blog_id() );
 
-			// Get group avatar.
+			// Get Group Avatar.
 			$avatar_options = [
 				'item_id' => $group_id,
 				'object' => 'group',
@@ -375,7 +375,7 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ) :
 			// Add filter for the function above.
 			add_filter( 'bp_core_avatar_url', 'commentpress_fix_bp_core_avatar_url', 10, 1 );
 
-			// Show group avatar.
+			// Show Group Avatar.
 			echo bp_core_fetch_avatar( $avatar_options );
 
 			// Remove filter.
@@ -504,10 +504,10 @@ if ( ! function_exists( 'commentpress_get_body_id' ) ) :
 		// Is this multisite?
 		if ( is_multisite() ) {
 
-			// Is this the main blog?
+			// Is this the main Blog?
 			if ( is_main_site() ) {
 
-				// Set main blog id.
+				// Set main Blog ID.
 				$body_id = ' id="main_blog"';
 
 			}
@@ -538,10 +538,10 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		// Init the array that holds our custom classes.
 		$classes = [];
 
-		// Access post and plugin.
+		// Access Post and plugin.
 		global $post, $commentpress_core;
 
-		// -------------------- default sidebar --------------------
+		// -------------------- Default Sidebar --------------------------------
 
 		// Set default sidebar but override if we have the plugin enabled.
 		$sidebar_flag = 'toc';
@@ -555,7 +555,7 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		// Add to array.
 		$classes[] = $sidebar_class;
 
-		// -------------------- commentable --------------------
+		// -------------------- Commentable ------------------------------------
 
 		// Init commentable class but override if we have the plugin enabled.
 		$commentable = '';
@@ -568,13 +568,13 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 			$classes[] = $commentable;
 		}
 
-		// -------------------- layout --------------------
+		// -------------------- Layout -----------------------------------------
 
 		// Init layout class but if we have the plugin enabled.
 		$layout_class = '';
 		if ( is_object( $commentpress_core ) ) {
 
-			// Is this the title page?
+			// Is this the Title Page?
 			if (
 				is_object( $post ) &&
 				isset( $post->ID ) &&
@@ -606,12 +606,12 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 			$classes[] = $layout_class;
 		}
 
-		// -------------------- page type --------------------
+		// -------------------- Page Type --------------------------------------
 
-		// Set default page type.
+		// Set default Page Type.
 		$page_type = '';
 
-		// Add blog post class if blog post.
+		// Add Blog Post class if Blog Post.
 		if ( is_single() ) {
 			$page_type = 'blog_post';
 		}
@@ -619,12 +619,12 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		// If we have the plugin enabled.
 		if ( is_object( $commentpress_core ) ) {
 
-			// Add BuddyPress page class on BuddyPress special pages.
+			// Add BuddyPress Page class on BuddyPress Special Pages.
 			if ( $commentpress_core->is_buddypress_special_page() ) {
 				$page_type = 'buddypress_page';
 			}
 
-			// Add BuddyPress page class on CommentPress Core special pages.
+			// Add BuddyPress Page class on CommentPress Core Special Pages.
 			if ( $commentpress_core->db->is_special_page() ) {
 				$page_type = 'commentpress_page';
 			}
@@ -636,7 +636,7 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 			$classes[] = $page_type;
 		}
 
-		// -------------------- Is GroupBlog --------------------
+		// -------------------- Is Group Blog ----------------------------------
 
 		// Set default type.
 		$is_groupblog = 'not-groupblog';
@@ -644,7 +644,7 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		// If we have the plugin enabled.
 		if ( is_object( $commentpress_core ) ) {
 
-			// If it's a groupblog.
+			// If it's a Group Blog.
 			if ( $commentpress_core->is_groupblog() ) {
 				$is_groupblog = 'is-groupblog';
 			}
@@ -656,7 +656,7 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 			$classes[] = $is_groupblog;
 		}
 
-		// -------------------- blog type --------------------
+		// -------------------- Blog Type --------------------------------------
 
 		// Set default type.
 		$blog_type = '';
@@ -667,22 +667,22 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 			// Get type.
 			$type = $commentpress_core->db->option_get( 'cp_blog_type' );
 
-			// Get workflow.
+			// Get Workflow.
 			$workflow = $commentpress_core->db->option_get( 'cp_blog_workflow' );
 
 			/**
-			 * Allow plugins to override the blog type - for example if workflow
-			 * is enabled, it might become a new blog type as far as BuddyPress
+			 * Allow plugins to override the Blog Type - for example if Workflow
+			 * is enabled, it might become a new Blog Type as far as BuddyPress
 			 * is concerned.
 			 *
 			 * @since 3.3
 			 *
-			 * @param int $type The numeric blog type.
-			 * @param bool $workflow True if workflow enabled, false otherwise.
+			 * @param int $type The numeric Blog Type.
+			 * @param bool $workflow True if Workflow enabled, false otherwise.
 			 */
 			$current_blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $type, $workflow );
 
-			// If it's not the main site, add class.
+			// If it's not the Main Site, add class.
 			if ( is_multisite() && ! is_main_site() ) {
 				$blog_type = 'blogtype-' . intval( $current_blog_type );
 			}
@@ -694,27 +694,27 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 			$classes[] = $blog_type;
 		}
 
-		// -------------------- GroupBlog type --------------------
+		// -------------------- Group Blog Type ---------------------------------
 
-		// When viewing a group, set default GroupBlog type.
+		// When viewing a Group, set default Group Blog Type.
 		$group_groupblog_type = '';
 
 		// If we have the plugin enabled.
 		if ( is_object( $commentpress_core ) ) {
 
-			// Is it a BuddyPress group page?
+			// Is it a BuddyPress Group Page?
 			if ( function_exists( 'bp_is_groups_component' ) && bp_is_groups_component() ) {
 
-				// Get current group.
+				// Get current Group.
 				$current_group = groups_get_current_group();
 
 				// Sanity check.
 				if ( $current_group instanceof BP_Groups_Group ) {
 
-					// Get GroupBlog type.
+					// Get Group Blog Type.
 					$groupblogtype = groups_get_groupmeta( $current_group->id, 'groupblogtype' );
 
-					// Set GroupBlog type if present.
+					// Set Group Blog Type if present.
 					if ( ! empty( $groupblogtype ) ) {
 						$group_groupblog_type = $groupblogtype;
 					}
@@ -730,12 +730,12 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 			$classes[] = $group_groupblog_type;
 		}
 
-		// -------------------- TinyMCE version --------------------
+		// -------------------- TinyMCE version --------------------------------
 
 		// TinyMCE is v4 since WordPress 3.9.
 		$classes[] =  'tinymce-4';
 
-		// -------------------- Process --------------------
+		// -------------------- Process ----------------------------------------
 
 		// Construct attribute but allow filtering.
 		$body_classes = apply_filters( 'commentpress_body_classes', implode( ' ', $classes ) );
@@ -760,7 +760,7 @@ endif;
 if ( ! function_exists( 'commentpress_document_title_parts' ) ) :
 
 	/**
-	 * Add the root network name when the sub-blog is a group blog.
+	 * Add the root network name when the sub-blog is a Group Blog.
 	 *
 	 * @since 3.8
 	 *
@@ -774,7 +774,7 @@ if ( ! function_exists( 'commentpress_document_title_parts' ) ) :
 		// If we have the plugin enabled.
 		if ( is_object( $commentpress_core ) ) {
 
-			// If it's a groupblog.
+			// If it's a Group Blog.
 			if ( $commentpress_core->is_groupblog() ) {
 				if ( ! isset( $parts['site'] ) ) {
 					$parts['title'] .= commentpress_site_title( '|', false );
@@ -825,13 +825,13 @@ add_filter( 'document_title_separator', 'commentpress_document_title_separator' 
 if ( ! function_exists( 'commentpress_site_title' ) ) :
 
 	/**
-	 * Amend the site title depending on context of blog.
+	 * Amend the Site title depending on context of Blog.
 	 *
 	 * @since 3.8
 	 *
 	 * @param string $sep The title separator.
 	 * @param boolean $echo Echo the result or not.
-	 * @return string $site_name The title of the site.
+	 * @return string $site_name The title of the Site.
 	 */
 	function commentpress_site_title( $sep = '', $echo = true ) {
 
@@ -846,12 +846,12 @@ if ( ! function_exists( 'commentpress_site_title' ) ) :
 				// Print?
 				if ( $echo ) {
 
-					// Add site name.
+					// Add Site name.
 					echo ' ' . trim( $sep ) . ' ' . $current_site->site_name;
 
 				} else {
 
-					// Add site name.
+					// Add Site name.
 					return ' ' . trim( $sep ) . ' ' . $current_site->site_name;
 
 				}
@@ -968,14 +968,14 @@ add_filter( 'the_content_more_link', 'commentpress_remove_more_jump_link' );
 if ( ! function_exists( 'commentpress_page_title' ) ) :
 
 	/**
-	 * Builds a page title, including parent page titles.
+	 * Builds a Page title, including parent Page titles.
 	 *
 	 * The CommentPress Core Default theme displays a "cookie trail" style title for
-	 * pages so we need to build this by inspecting page ancestors.
+	 * Pages so we need to build this by inspecting Page ancestors.
 	 *
 	 * @since 3.0
 	 *
-	 * @return string $title The page title.
+	 * @return string $title The Page title.
 	 */
 	function commentpress_page_title() {
 
@@ -987,7 +987,7 @@ if ( ! function_exists( 'commentpress_page_title' ) ) :
 		$sep = ' &#8594; ';
 
 		/*
-		// Maybe use blog title.
+		// Maybe use Blog title.
 		$title .= get_bloginfo( 'name' );
 		*/
 
@@ -1024,7 +1024,7 @@ if ( ! function_exists( 'commentpress_page_title' ) ) :
 				$title .= $category[0]->cat_name . $sep;
 			}
 
-			// Current page.
+			// Current Page.
 			if ( is_page() || is_single() ) {
 				$title .= get_the_title();
 			}
@@ -1043,16 +1043,16 @@ endif;
 if ( ! function_exists( 'commentpress_has_page_children' ) ) :
 
 	/**
-	 * Query whether a given page has children.
+	 * Query whether a given Page has children.
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $page_obj The WordPress page object to query.
-	 * @return boolean True if page has children, false otherwise.
+	 * @param object $page_obj The WordPress Page object to query.
+	 * @return boolean True if Page has children, false otherwise.
 	 */
 	function commentpress_has_page_children( $page_obj ) {
 
-		// Init to look for published pages.
+		// Init to look for published Pages.
 		$defaults = [
 			'post_parent' => $page_obj->ID,
 			'post_type' => 'page',
@@ -1060,7 +1060,7 @@ if ( ! function_exists( 'commentpress_has_page_children' ) ) :
 			'post_status' => 'publish',
 		];
 
-		// Get page children.
+		// Get Page children.
 		$kids =& get_children( $defaults );
 
 		// Do we have any?
@@ -1075,13 +1075,13 @@ endif;
 if ( ! function_exists( 'commentpress_echo_post_meta' ) ) :
 
 	/**
-	 * Show user(s) in the loop.
+	 * Show User(s) in the loop.
 	 *
 	 * @since 3.0
 	 */
 	function commentpress_echo_post_meta() {
 
-		// Bail if this is a BuddyPress page.
+		// Bail if this is a BuddyPress Page.
 		if ( function_exists( 'is_buddypress' ) && is_buddypress() ) {
 			return;
 		}
@@ -1233,7 +1233,7 @@ if ( ! function_exists( 'commentpress_echo_post_author' ) ) :
 		// Get author details.
 		$user = get_userdata( $author_id );
 
-		// Kick out if we don't have a user with that ID.
+		// Kick out if we don't have a User with that ID.
 		if ( ! is_object( $user ) ) {
 			return;
 		}
@@ -1244,12 +1244,12 @@ if ( ! function_exists( 'commentpress_echo_post_author' ) ) :
 		// If we have the plugin enabled. and it's BuddyPress.
 		if ( is_object( $post ) && is_object( $commentpress_core ) && $commentpress_core->is_buddypress() ) {
 
-			// Construct user link.
+			// Construct User link.
 			$author = bp_core_get_userlink( $user->ID );
 
 		} else {
 
-			// Link to theme's author page.
+			// Link to theme's Author Page.
 			$link = sprintf(
 				'<a href="%1$s" title="%2$s" rel="author">%3$s</a>',
 				get_author_posts_url( $user->ID, $user->user_nicename ),
@@ -1280,7 +1280,7 @@ if ( ! function_exists( 'commentpress_show_activity_tab' ) ) :
 	 *
 	 * @since 3.3
 	 *
-	 * @return bool True if we show the activity tab, false otherwise.
+	 * @return bool True if we show the Activity Tab, false otherwise.
 	 */
 	function commentpress_show_activity_tab() {
 
@@ -1297,7 +1297,7 @@ if ( ! function_exists( 'commentpress_show_activity_tab' ) ) :
 				! is_object( $post )
 			) {
 
-				// Ignore activity.
+				// Ignore Activity.
 				return false;
 
 			}
@@ -1317,11 +1317,11 @@ endif;
 if ( ! function_exists( 'commentpress_is_commentable' ) ) :
 
 	/**
-	 * Is a post/page commentable?
+	 * Is a Post/Page commentable?
 	 *
 	 * @since 3.3
 	 *
-	 * @return bool $is_commentable True if page can have comments, false otherwise.
+	 * @return bool $is_commentable True if Page can have Comments, false otherwise.
 	 */
 	function commentpress_is_commentable() {
 
@@ -1348,13 +1348,13 @@ endif;
 if ( ! function_exists( 'commentpress_lexia_support_mime' ) ) :
 
 	/**
-	 * The "media" post type needs more granular naming support.
+	 * The "media" Post Type needs more granular naming support.
 	 *
 	 * @since 3.9
 	 *
-	 * @param str $post_type_name The existing singular name of the post type.
-	 * @param str $post_type The post type identifier.
-	 * @return str $post_type_name The modified singular name of the post type.
+	 * @param str $post_type_name The existing singular name of the Post Type.
+	 * @param str $post_type The Post Type identifier.
+	 * @return str $post_type_name The modified singular name of the Post Type.
 	 */
 	function commentpress_lexia_support_mime( $post_type_name, $post_type ) {
 
@@ -1419,13 +1419,13 @@ add_filter( 'commentpress_lexia_post_type_name', 'commentpress_lexia_support_mim
 if ( ! function_exists( 'commentpress_lexia_modify_entity_text' ) ) :
 
 	/**
-	 * The "media" post type needs more granular naming support.
+	 * The "media" Post Type needs more granular naming support.
 	 *
 	 * @since 3.9
 	 *
 	 * @param str $entity_text The current entity text.
-	 * @param str $post_type_name The singular name of the post type.
-	 * @param str $post_type The post type identifier.
+	 * @param str $post_type_name The singular name of the Post Type.
+	 * @param str $post_type The Post Type identifier.
 	 * @return str $entity_text The modified entity text.
 	 */
 	function commentpress_lexia_modify_entity_text( $entity_text, $post_type_name, $post_type ) {
@@ -1460,9 +1460,9 @@ if ( ! function_exists( 'commentpress_get_full_name' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $forename The WordPress user's first name.
-	 * @param str $surname The WordPress user's last name.
-	 * @return str $fullname The WordPress user's full name.
+	 * @param str $forename The WordPress User's first name.
+	 * @param str $surname The WordPress User's last name.
+	 * @return str $fullname The WordPress User's full name.
 	 */
 	function commentpress_get_full_name( $forename, $surname ) {
 
@@ -1531,7 +1531,7 @@ add_filter( 'excerpt_length', 'commentpress_excerpt_length' );
 if ( ! function_exists( 'commentpress_add_link_css' ) ) :
 
 	/**
-	 * Utility to add button css class to blog nav links.
+	 * Utility to add button css class to Blog nav links.
 	 *
 	 * @since 3.0
 	 *
@@ -1559,7 +1559,7 @@ add_filter( 'next_post_link', 'commentpress_add_link_css' );
 if ( ! function_exists( 'commentpress_get_link_css' ) ) :
 
 	/**
-	 * Utility to add button css class to blog nav links.
+	 * Utility to add button css class to Blog nav links.
 	 *
 	 * @since 3.0
 	 *
@@ -1577,7 +1577,7 @@ if ( ! function_exists( 'commentpress_get_link_css' ) ) :
 
 endif;
 
-// Add callback for next/previous posts links.
+// Add callback for next/previous Posts links.
 add_filter( 'previous_posts_link_attributes', 'commentpress_get_link_css' );
 add_filter( 'next_posts_link_attributes', 'commentpress_get_link_css' );
 
@@ -1586,11 +1586,11 @@ add_filter( 'next_posts_link_attributes', 'commentpress_get_link_css' );
 if ( ! function_exists( 'commentpress_multipager' ) ) :
 
 	/**
-	 * Create sane links between pages.
+	 * Create sane links between Pages.
 	 *
 	 * @since 3.5
 	 *
-	 * @return str $page_links The next page and previous page links.
+	 * @return str $page_links The Next Page and Previous Page links.
 	 */
 	function commentpress_multipager() {
 
@@ -1608,7 +1608,7 @@ if ( ! function_exists( 'commentpress_multipager' ) ) :
 			'echo' => 0,
 		];
 
-		// Get page links.
+		// Get Page links.
 		$page_links = wp_link_pages( $defaults );
 
 		// Add separator when there are two links.
@@ -1618,7 +1618,7 @@ if ( ! function_exists( 'commentpress_multipager' ) ) :
 			$page_links
 		);
 
-		// Get page links.
+		// Get Page links.
 		$page_links .= wp_link_pages( [
 			'before' => '<div class="multipager multipager_all"><span>' . __( 'Pages: ', 'commentpress-core' ) . '</span>',
 			'after' => '</div>',
@@ -1646,7 +1646,7 @@ if ( ! function_exists( 'commentpress_trap_empty_search' ) ) :
 	 */
 	function commentpress_trap_empty_search() {
 
-		// Send to search page when there is an empty search.
+		// Send to Search Page when there is an empty search.
 		if ( empty( $_GET['s'] ) ) {
 			return locate_template( [ 'search.php' ] );
 		}
@@ -1696,7 +1696,7 @@ add_filter( 'the_password_form', 'commentpress_amend_password_form' );
 if ( ! function_exists( 'commentpress_widgets_init' ) ) :
 
 	/**
-	 * Register CommentPress widgets.
+	 * Register CommentPress Widgets.
 	 *
 	 * Widget areas (dynamic sidebars) are defined on a per-theme basis in their
 	 * functions.php file or similar.
@@ -1705,10 +1705,10 @@ if ( ! function_exists( 'commentpress_widgets_init' ) ) :
 	 */
 	function commentpress_widgets_init() {
 
-		// Load license widget definition.
+		// Load License Widget definition.
 		require COMMENTPRESS_PLUGIN_PATH . 'includes/commentpress-core/assets/widgets/widget-license.php';
 
-		// Register license widget.
+		// Register License Widget.
 		register_widget( 'CommentPress_License_Widget' );
 
 	}
@@ -1746,7 +1746,7 @@ add_action( 'license_img_style', 'commentpress_license_image_css' );
 if ( ! function_exists( 'commentpress_license_widget_compat' ) ) :
 
 	/**
-	 * Remove license from footer when widget not active.
+	 * Remove license from footer when Widget not active.
 	 *
 	 * This is because wp_footer() is not inside #footer.
 	 *
@@ -1754,7 +1754,7 @@ if ( ! function_exists( 'commentpress_license_widget_compat' ) ) :
 	 */
 	function commentpress_license_widget_compat() {
 
-		// If the widget is not active, (i.e. the plugin is installed but the widget has not been
+		// If the Widget is not active, (i.e. the plugin is installed but the Widget has not been
 		// dragged to a sidebar), then DO NOT display the license in the footer as a default.
 		if ( ! is_active_widget( false, false, 'license-widget', true ) ) {
 			remove_action( 'wp_footer', 'license_print_license_html' );
@@ -1795,18 +1795,18 @@ add_action( 'init', 'commentpress_wplicense_compat', 100 );
 if ( ! function_exists( 'commentpress_widget_title' ) ) :
 
 	/**
-	 * Ensure that widget title is not empty.
+	 * Ensure that Widget title is not empty.
 	 *
-	 * Empty widget titles break the layout of the theme at present, because the
+	 * Empty Widget titles break the layout of the theme at present, because the
 	 * enclosing markup for the sub-section is split between the 'after_title' and
 	 * 'after_widget' substitutions in the theme register_sidebar() declarations.
 	 *
-	 * Note: #footer widget titles are hidden via CSS. Override this in your child
+	 * Note: #footer Widget titles are hidden via CSS. Override this in your child
 	 * theme to show them collectively or individually.
 	 *
 	 * @since 3.8.10
 	 *
-	 * @param str $title The possibly-empty widget title.
+	 * @param str $title The possibly-empty Widget title.
 	 * @return str $title The non-empty title.
 	 */
 	function commentpress_widget_title( $title = '' ) {
@@ -1823,7 +1823,7 @@ if ( ! function_exists( 'commentpress_widget_title' ) ) :
 
 endif;
 
-// Make sure widget title is not empty.
+// Make sure Widget title is not empty.
 add_filter( 'widget_title', 'commentpress_widget_title', 10, 1 );
 
 
@@ -1835,7 +1835,7 @@ if ( ! function_exists( 'commentpress_get_post_version_info' ) ) :
 	 *
 	 * @since 3.3
 	 *
-	 * @param WP_Post $post The WordPress post object.
+	 * @param WP_Post $post The WordPress Post object.
 	 */
 	function commentpress_get_post_version_info( $post ) {
 
@@ -1859,7 +1859,7 @@ if ( ! function_exists( 'commentpress_get_post_version_info' ) ) :
 		// If we've got one.
 		if ( $newer_id !== '' ) {
 
-			// Get post.
+			// Get Post.
 			$newer_post = get_post( $newer_id );
 
 			// Is it published?
@@ -1881,7 +1881,7 @@ if ( ! function_exists( 'commentpress_get_post_version_info' ) ) :
 		// Check for older version.
 		$older_link = '';
 
-		// Get post with this post's ID as their _cp_newer_version meta value.
+		// Get Post with this Post's ID as their _cp_newer_version meta value.
 		$args = [
 			'numberposts' => 1,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
@@ -1950,16 +1950,16 @@ endif;
 if ( ! function_exists( 'commentpress_get_post_css_override' ) ) :
 
 	/**
-	 * Overrride post type by adding a CSS class.
+	 * Overrride Post Type by adding a CSS class.
 	 *
 	 * @since 3.3
 	 *
-	 * @param int $post_id The numeric ID of the post.
+	 * @param int $post_id The numeric ID of the Post.
 	 * @return str $type_overridden The CSS class.
 	 */
 	function commentpress_get_post_css_override( $post_id ) {
 
-		// Add a class for overridden page types.
+		// Add a class for overridden Page Types.
 		$type_overridden = '';
 
 		// Declare access to globals.
@@ -1968,10 +1968,10 @@ if ( ! function_exists( 'commentpress_get_post_css_override' ) ) :
 		// If we have the plugin enabled.
 		if ( is_object( $commentpress_core ) ) {
 
-			// Default to current blog type.
+			// Default to current Blog Type.
 			$type = $commentpress_core->db->option_get( 'cp_blog_type' );
 
-			// Set post meta key.
+			// Set Post meta key.
 			$key = '_cp_post_type_override';
 
 			// But, if the custom field has a value.
@@ -1980,7 +1980,7 @@ if ( ! function_exists( 'commentpress_get_post_css_override' ) ) :
 				// Get it.
 				$overridden_type = get_post_meta( $post_id, $key, true );
 
-				// Is it different to the current blog type?
+				// Is it different to the current Blog Type?
 				if ( $overridden_type != $type ) {
 					$type_overridden = ' overridden_type-' . $overridden_type;
 				}
@@ -2001,11 +2001,11 @@ endif;
 if ( ! function_exists( 'commentpress_get_post_title_visibility' ) ) :
 
 	/**
-	 * Do we want to show page/post title?
+	 * Do we want to show Page/Post title?
 	 *
 	 * @since 3.3
 	 *
-	 * @param int $post_id The numeric ID of the post.
+	 * @param int $post_id The numeric ID of the Post.
 	 * @return bool $hide True if title is shown, false if hidden.
 	 */
 	function commentpress_get_post_title_visibility( $post_id ) {
@@ -2041,11 +2041,11 @@ endif;
 if ( ! function_exists( 'commentpress_get_post_meta_visibility' ) ) :
 
 	/**
-	 * Do we want to show page/post meta?
+	 * Do we want to show Page/Post meta?
 	 *
 	 * @since 3.3
 	 *
-	 * @param int $post_id The numeric ID of the post.
+	 * @param int $post_id The numeric ID of the Post.
 	 * @return bool $hide_meta True if meta is shown, false if hidden.
 	 */
 	function commentpress_get_post_meta_visibility( $post_id ) {
@@ -2092,7 +2092,7 @@ if ( ! function_exists( 'commentpress_add_selection_classes' ) ) :
 	 * @param string $class A comma-separated list of additional classes added to the list.
 	 * @param int $comment_id The comment id.
 	 * @param object $comment The comment.
-	 * @param int|WP_Post $post_id The post ID or WP_Post object.
+	 * @param int|WP_Post $post_id The Post ID or WP_Post object.
 	 */
 	function commentpress_add_selection_classes( $classes, $class, $comment_id, $comment, $post_id = 0 ) {
 
@@ -2178,7 +2178,7 @@ add_action( 'after_signup_form', 'commentpress_suffix_signup_template' );
 if ( ! function_exists( 'commentpress_geomashup_map_get' ) ) :
 
 	/**
-	 * Show the map for a post.
+	 * Show the map for a Post.
 	 *
 	 * Does not work in non-global loops, such as those made via WP_Query.
 	 *
@@ -2191,7 +2191,7 @@ if ( ! function_exists( 'commentpress_geomashup_map_get' ) ) :
 			return;
 		}
 
-		// Bail if post has no location.
+		// Bail if Post has no location.
 		$location = GeoMashup::current_location( null, 'post' );
 		if ( empty( $location ) ) {
 			return;

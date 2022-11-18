@@ -72,8 +72,8 @@ Template Name: Welcome
 
 	<?php
 
-	// NOTE: Comment permalinks are filtered if the comment is not on the first page
-	// in a multipage post... see: commentpress_multipage_comment_link in functions.php
+	// NOTE: Comment permalinks are filtered if the comment is not on the first Page
+	// in a multipage Post... see: commentpress_multipage_comment_link in functions.php
 	echo commentpress_multipager();
 
 	?>

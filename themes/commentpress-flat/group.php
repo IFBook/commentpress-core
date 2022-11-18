@@ -8,7 +8,7 @@ $args = [
 	'orderby' => 'nicename',
 ];
 
-// Get users of this blog (blog_id is provided by default).
+// Get Users of this Blog (blog_id is provided by default).
 $_users = get_users( $args );
 
 get_header(); ?>

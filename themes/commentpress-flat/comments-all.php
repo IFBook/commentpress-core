@@ -5,7 +5,7 @@ Template Name: All Comments
 
 
 
-// Get page content.
+// Get Page content.
 $_page_content = commentpress_get_all_comments_page_content();
 
 
@@ -37,7 +37,7 @@ get_header(); ?>
 <h2 class="post_title"><?php
 
 /**
- * Filter the title of the All Comments page.
+ * Filter the title of the All Comments Page.
  *
  * @since 3.4
  *

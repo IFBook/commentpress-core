@@ -20,10 +20,10 @@ global $commentpress_core;
 $previous_title = apply_filters( 'cp_nav_previous_link_title', __( 'Older Entries', 'commentpress-core' ) );
 $next_title = apply_filters( 'cp_nav_next_link_title', __( 'Newer Entries', 'commentpress-core' ) );
 
-// Is it a page?
+// Is it a Page?
 if ( is_page() ) {
 
-	// Get our custom page navigation.
+	// Get our custom Page Navigation.
 	$cp_page_nav = apply_filters( 'cp_template_page_navigation', commentpress_page_navigation() );
 
 	// If we get any.
@@ -43,7 +43,7 @@ if ( is_page() ) {
 
 
 
-// Is it a post?
+// Is it a Post?
 elseif ( is_single() ) {
 
 	?><ul id="blog_navigation">
@@ -58,7 +58,7 @@ elseif ( is_single() ) {
 
 
 
-// Is this the posts archive or a CPT archive?
+// Is this the Posts archive or a CPT archive?
 elseif ( is_home() OR is_post_type_archive() ) {
 
 	$nl = get_next_posts_link( '&laquo; ' . $previous_title );
@@ -152,8 +152,8 @@ elseif ( is_category() OR is_tag() OR is_tax() ) {
 
 else {
 
-	// Catchall for other page types.
-	?><div id="cp_book_info"><p><?php wp_title(''); ?></p></div>
+	// Catch-all for other Page Types.
+	?><div id="cp_book_info"><p><?php wp_title( '' ); ?></p></div>
 	<?php
 
 }
@@ -173,13 +173,13 @@ else {
 	// Do we have the plugin?
 	if ( is_object( $commentpress_core ) ) {
 
-		// NOTE: we need to account for situations where no CommentPress Core special pages exist.
+		// NOTE: we need to account for situations where no CommentPress Core Special Pages exist.
 
 		// Get title ID and URL.
 		$title_id = $commentpress_core->db->option_get( 'cp_welcome_page' );
 		$title_url = $commentpress_core->get_page_url( 'cp_welcome_page' );
 
-		// Use as link to main blog in multisite.
+		// Use as link to main Blog in multisite.
 		if ( is_multisite() ) {
 
 			// Set default link name.
@@ -191,16 +191,16 @@ else {
 			// Allow plugins to inject links.
 			//do_action( 'cp_nav_after_network_home_title' );
 
-			// Link to group in multisite groupblog.
+			// Link to Group in multisite Group Blog.
 			if ( $commentpress_core->is_groupblog() ) {
 
-				// Get current blog ID.
+				// Get current Blog ID.
 				$blog_id = get_current_blog_id();
 
-				// Check if this blog is a group blog.
+				// Check if this Blog is a Group Blog.
 				$group_id = get_groupblog_group_id( $blog_id );
 
-				// When this blog is a groupblog.
+				// When this Blog is a Group Blog.
 				if ( isset( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
 					$group = groups_get_group( [ 'group_id' => $group_id ] );
@@ -217,7 +217,7 @@ else {
 
 		} else {
 
-			// Use if blog home is not CommentPress Core welcome page.
+			// Use if Blog home is not CommentPress Core Welcome Page.
 			if ( $title_id != get_option('page_on_front') ) {
 
 				// Set default link name.
@@ -230,7 +230,7 @@ else {
 
 		}
 
-		// Do we have a title page URL?
+		// Do we have a Title Page URL?
 		if ( !empty( $title_url ) ) {
 
 			// Set default link name.
@@ -240,19 +240,19 @@ else {
 
 		}
 
-		// Show link to general comments page if we have one.
+		// Show link to General Comments Page if we have one.
 		echo $commentpress_core->get_page_link( 'cp_general_comments_page' );
 
-		// Show link to all comments page if we have one.
+		// Show link to All Comments Page if we have one.
 		echo $commentpress_core->get_page_link( 'cp_all_comments_page' );
 
-		// Show link to comments-by-user page if we have one.
+		// Show link to Comments-by-User Page if we have one.
 		echo $commentpress_core->get_page_link( 'cp_comments_by_page' );
 
-		// Show link to book blog page if we have one.
+		// Show link to book Blog Page if we have one.
 		echo $commentpress_core->get_page_link( 'cp_blog_page' );
 
-		// Show link to book blog archive page if we have one.
+		// Show link to book Blog Archive Page if we have one.
 		echo $commentpress_core->get_page_link( 'cp_blog_archive_page' );
 
 	}

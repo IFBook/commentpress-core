@@ -2,7 +2,7 @@
 /**
  * CommentPress Core Revisions class.
  *
- * Handles "Revisions" workflow in CommentPress Core.
+ * Handles "Revisions" in CommentPress Core.
  *
  * @package CommentPress_Core
  */
@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * CommentPress Core Revisions Class.
  *
- * This class provides "Revisions" workflow to CommentPress Core.
+ * This class provides "Revisions" to CommentPress Core.
  *
  * @since 4.0
  */
@@ -33,7 +33,7 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var str $saved_post True if post already saved.
+	 * @var str $saved_post True if Post already saved.
 	 */
 	public $saved_post = false;
 
@@ -81,16 +81,16 @@ class CommentPress_Core_Revisions {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Maybe create a post revision.
+	 * Maybe create a Post revision.
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $post The WordPress post object.
+	 * @param object $post The WordPress Post object.
 	 */
 	public function create_revision( $post ) {
 
 		// ---------------------------------------------------------------------
-		// Create new post with content of current.
+		// Create new Post with content of current.
 		// ---------------------------------------------------------------------
 
 		// Do we want to create a new revision?
@@ -142,7 +142,7 @@ class CommentPress_Core_Revisions {
 		// Set key.
 		$key = '_cp_version_count';
 
-		// If the custom field of our current post has a value.
+		// If the custom field of our current Post has a value.
 		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 			// Get current value.
@@ -162,7 +162,7 @@ class CommentPress_Core_Revisions {
 		add_post_meta( $new_post_id, $key, $value );
 
 		// ---------------------------------------------------------------------
-		// Store formatter in new version
+		// Store Formatter in new version
 		// ---------------------------------------------------------------------
 
 		// Set key.
@@ -184,12 +184,12 @@ class CommentPress_Core_Revisions {
 		 *
 		 * @since 3.3
 		 *
-		 * @param int $new_post_id The numeric ID of the new post.
+		 * @param int $new_post_id The numeric ID of the new Post.
 		 */
 		do_action( 'cp_workflow_save_copy', $new_post_id );
 
 		/*
-		// Get the edit post link.
+		// Get the edit Post link.
 		$edit_link = get_edit_post_link( $new_post_id );
 
 		// Redirect there?
@@ -198,13 +198,13 @@ class CommentPress_Core_Revisions {
 	}
 
 	/**
-	 * Create new post with content of existing.
+	 * Create new Post with content of existing.
 	 *
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
 	 *
-	 * @param int $post The WordPress post object to make a copy of.
-	 * @return int $new_post_id The numeric ID of the new post.
+	 * @param int $post The WordPress Post object to make a copy of.
+	 * @return int $new_post_id The numeric ID of the new Post.
 	 */
 	public function create_new_post( $post ) {
 
@@ -220,9 +220,9 @@ class CommentPress_Core_Revisions {
 			'post_excerpt' => '', // Quick fix for Windows.
 		];
 
-		// Add post-specific stuff.
+		// Add Post-specific stuff.
 
-		// Default page title.
+		// Default Page title.
 		$prefix = __( 'Copy of ', 'commentpress-core' );
 
 		/**
@@ -243,10 +243,10 @@ class CommentPress_Core_Revisions {
 		// Set content, but allow overrides.
 		$new_post['post_content'] = apply_filters( 'commentpress_new_post_content', $post->post_content );
 
-		// Set post author, but allow overrides.
+		// Set Post author, but allow overrides.
 		$new_post['post_author'] = apply_filters( 'commentpress_new_post_author', $post->post_author );
 
-		// Insert the post into the database.
+		// Insert the Post into the database.
 		$new_post_id = wp_insert_post( $new_post );
 
 		// --<

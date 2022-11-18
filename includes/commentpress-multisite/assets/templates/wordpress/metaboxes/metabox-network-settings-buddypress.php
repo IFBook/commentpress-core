@@ -1,8 +1,8 @@
 <?php
 /**
- * Multisite Network Settings page "BuddyPress & GroupBlog Settings" metabox template.
+ * Multisite Network Settings Page "BuddyPress & Group Blog Settings" metabox template.
  *
- * Handles markup for the Multisite Network Settings page "BuddyPress & GroupBlog Settings" metabox.
+ * Handles markup for the Multisite Network Settings Page "BuddyPress & Group Blog Settings" metabox.
  *
  * @package CommentPress_Core
  */
@@ -13,7 +13,7 @@
 	<?php
 
 	/**
-	 * Fires at the top of the "BuddyPress & GroupBlog Settings" metabox.
+	 * Fires at the top of the "BuddyPress & Group Blog Settings" metabox.
 	 *
 	 * @since 4.0
 	 */
@@ -64,7 +64,7 @@
 	<?php
 
 	/**
-	 * Fires at the bottom of the "BuddyPress & GroupBlog Settings" metabox.
+	 * Fires at the bottom of the "BuddyPress & Group Blog Settings" metabox.
 	 *
 	 * @since 4.0
 	 */

@@ -26,7 +26,7 @@
 
 <?php
 
-// Allow widgets to be placed above navigation.
+// Allow Widgets to be placed above navigation.
 dynamic_sidebar( 'cp-nav-top' );
 
 ?>
@@ -114,7 +114,7 @@ if ( is_object( $commentpress_core ) ) {
 
 <?php
 
-// Allow widgets to be placed below navigation.
+// Allow Widgets to be placed below navigation.
 dynamic_sidebar( 'cp-nav-bottom' );
 
 ?>

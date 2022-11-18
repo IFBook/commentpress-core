@@ -2,7 +2,7 @@
 /**
  * CommentPress Core Navigation class.
  *
- * Handles navigating pages in whatever hierarchy or relationship they have been assigned.
+ * Handles navigating Pages in whatever hierarchy or relationship they have been assigned.
  *
  * @package CommentPress_Core
  */
@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * CommentPress Core Navigation Class.
  *
- * This class is a wrapper for navigating pages in whatever hierarchy or
+ * This class is a wrapper for navigating Pages in whatever hierarchy or
  * relationship they have been assigned.
  *
  * @since 3.0
@@ -31,38 +31,38 @@ class CommentPress_Core_Navigator {
 	public $core;
 
 	/**
-	 * Next pages array.
+	 * Next Pages array.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $next_pages The next pages array.
+	 * @var array $next_pages The Next Pages array.
 	 */
 	public $next_pages = [];
 
 	/**
-	 * Previous pages array.
+	 * Previous Pages array.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $previous_pages The previous pages array.
+	 * @var array $previous_pages The Previous Pages array.
 	 */
 	public $previous_pages = [];
 
 	/**
-	 * Next posts array.
+	 * Next Posts array.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $next_posts The next posts array.
+	 * @var array $next_posts The Next Posts array.
 	 */
 	public $next_posts = [];
 
 	/**
-	 * Previous posts array.
+	 * Previous Posts array.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $previous_posts The previous posts array.
+	 * @var array $previous_posts The Previous Posts array.
 	 */
 	public $previous_posts = [];
 
@@ -71,7 +71,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $page_numbers The page numbers array.
+	 * @var array $page_numbers The Page numbers array.
 	 */
 	public $page_numbers = [];
 
@@ -89,7 +89,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.8.10
 	 * @access public
-	 * @var bool $nav_enabled True if page navigation is enabled, false otherwise.
+	 * @var bool $nav_enabled True if Page Navigation is enabled, false otherwise.
 	 */
 	public $nav_enabled = true;
 
@@ -144,13 +144,13 @@ class CommentPress_Core_Navigator {
 	 */
 	public function setup_items() {
 
-		// If we're navigating pages.
+		// If we're navigating Pages.
 		if ( is_page() ) {
 
-			// Check page navigation flag.
+			// Check Page Navigation flag.
 			if ( $this->page_nav_is_disabled() ) {
 
-				// Remove page arrows via filter.
+				// Remove Page arrows via filter.
 				add_filter( 'cp_template_page_navigation', [ $this, 'page_nav_disable' ], 100, 1 );
 
 				// Save flag.
@@ -158,15 +158,15 @@ class CommentPress_Core_Navigator {
 
 			}
 
-			// Init page lists.
+			// Init Page lists.
 			$this->init_page_lists();
 
 		}
 
-		// If we're navigating posts or attachments.
+		// If we're navigating Posts or attachments.
 		if ( is_single() || is_attachment() ) {
 
-			// Init posts lists.
+			// Init Posts lists.
 			$this->init_posts_lists();
 
 		}
@@ -176,7 +176,7 @@ class CommentPress_Core_Navigator {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Disable page navigation when on a "page".
+	 * Disable Page Navigation when on a "page".
 	 *
 	 * @since 3.8.10
 	 *
@@ -185,13 +185,13 @@ class CommentPress_Core_Navigator {
 	 */
 	public function page_nav_disable( $template ) {
 
-		// Disable for page post type.
+		// Disable for Page Post Type.
 		return '';
 
 	}
 
 	/**
-	 * Check if page navigation is disabled when on a "page".
+	 * Check if Page Navigation is disabled when on a "page".
 	 *
 	 * @since 3.9
 	 *
@@ -199,7 +199,7 @@ class CommentPress_Core_Navigator {
 	 */
 	public function page_nav_is_disabled() {
 
-		// Check page navigation option.
+		// Check Page Navigation option.
 		if (
 			$this->core->db->option_exists( 'cp_page_nav_enabled' ) &&
 			$this->core->db->option_get( 'cp_page_nav_enabled', 'y' ) == 'n'
@@ -216,25 +216,25 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Get next page link.
+	 * Get Next Page link.
 	 *
 	 * @since 3.0
 	 *
-	 * @param bool $with_comments The requested page has comments - default false.
+	 * @param bool $with_comments The requested Page has Comments - default false.
 	 * @return object $page_data True if successful, boolean false if not.
 	 */
 	public function get_next_page( $with_comments = false ) {
 
-		// Do we have any next pages?
+		// Do we have any Next Pages?
 		if ( count( $this->next_pages ) > 0 ) {
 
-			// Are we asking for comments?
+			// Are we asking for Comments?
 			if ( $with_comments ) {
 
 				// Loop.
 				foreach ( $this->next_pages as $next_page ) {
 
-					// Does it have comments?
+					// Does it have Comments?
 					if ( $next_page->comment_count > 0 ) {
 
 						// --<
@@ -253,14 +253,14 @@ class CommentPress_Core_Navigator {
 
 		}
 
-		// Check if the supplied title page is the homepage and this is it.
+		// Check if the supplied Title Page is the homepage and this is it.
 		$title_id = $this->is_title_page_the_homepage();
 		if ( $title_id !== false && is_front_page() ) {
 
-			// Get the first readable page.
+			// Get the first readable Page.
 			$first_id = $this->get_first_page();
 
-			// Return the post object.
+			// Return the Post object.
 			return get_post( $first_id );
 
 		}
@@ -271,25 +271,25 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Get previous page link.
+	 * Get Previous Page link.
 	 *
 	 * @since 3.0
 	 *
-	 * @param bool $with_comments The requested page has comments - default false.
+	 * @param bool $with_comments The requested Page has Comments - default false.
 	 * @return object $page_data True if successful, boolean false if not.
 	 */
 	public function get_previous_page( $with_comments = false ) {
 
-		// Do we have any previous pages?
+		// Do we have any Previous Pages?
 		if ( count( $this->previous_pages ) > 0 ) {
 
-			// Are we asking for comments?
+			// Are we asking for Comments?
 			if ( $with_comments ) {
 
 				// Loop.
 				foreach ( $this->previous_pages as $previous_page ) {
 
-					// Does it have comments?
+					// Does it have Comments?
 					if ( $previous_page->comment_count > 0 ) {
 
 						// --<
@@ -308,9 +308,9 @@ class CommentPress_Core_Navigator {
 
 		}
 
-		// This must be the first page.
+		// This must be the first Page.
 
-		// We still need to check if the supplied title page is the homepage.
+		// We still need to check if the supplied Title Page is the homepage.
 		$title_id = $this->is_title_page_the_homepage();
 		if ( $title_id !== false && ! is_front_page() ) {
 			return get_post( $title_id );
@@ -322,25 +322,25 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Get next post link.
+	 * Get next Post link.
 	 *
 	 * @since 3.0
 	 *
-	 * @param bool $with_comments The requested post has comments - default false.
+	 * @param bool $with_comments The requested Post has Comments - default false.
 	 * @return object $post_data True if successful, boolean false if not.
 	 */
 	public function get_next_post( $with_comments = false ) {
 
-		// Do we have any next posts?
+		// Do we have any next Posts?
 		if ( count( $this->next_posts ) > 0 ) {
 
-			// Are we asking for comments?
+			// Are we asking for Comments?
 			if ( $with_comments ) {
 
 				// Loop.
 				foreach ( $this->next_posts as $next_post ) {
 
-					// Does it have comments?
+					// Does it have Comments?
 					if ( $next_post->comment_count > 0 ) {
 
 						// --<
@@ -365,25 +365,25 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Get previous post link.
+	 * Get previous Post link.
 	 *
 	 * @since 3.0
 	 *
-	 * @param bool $with_comments The requested post has comments - default false.
+	 * @param bool $with_comments The requested Post has Comments - default false.
 	 * @return object $post_data True if successful, boolean false if not.
 	 */
 	public function get_previous_post( $with_comments = false ) {
 
-		// Do we have any previous posts?
+		// Do we have any previous Posts?
 		if ( count( $this->previous_posts ) > 0 ) {
 
-			// Are we asking for comments?
+			// Are we asking for Comments?
 			if ( $with_comments ) {
 
 				// Loop.
 				foreach ( $this->previous_posts as $previous_post ) {
 
-					// Does it have comments?
+					// Does it have Comments?
 					if ( $previous_post->comment_count > 0 ) {
 
 						// --<
@@ -408,16 +408,16 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Get first viewable child page.
+	 * Get first viewable child Page.
 	 *
 	 * @since 3.0
 	 *
-	 * @param int $page_id The page ID.
-	 * @return int $first_child The ID of the first child page (or false if not found).
+	 * @param int $page_id The Page ID.
+	 * @return int $first_child The ID of the first child Page (or false if not found).
 	 */
 	public function get_first_child( $page_id ) {
 
-		// Init to look for published pages.
+		// Init to look for published Pages.
 		$defaults = [
 			'post_parent' => $page_id,
 			'post_type' => 'page',
@@ -427,7 +427,7 @@ class CommentPress_Core_Navigator {
 			'order' => 'ASC',
 		];
 
-		// Get page children.
+		// Get Page children.
 		$children = get_children( $defaults );
 		$kids =& $children;
 
@@ -445,12 +445,12 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Get list of 'book' pages.
+	 * Get list of 'book' Pages.
 	 *
 	 * @since 3.0
 	 *
 	 * @param str $mode Either 'structural' or 'readable'.
-	 * @return array $pages All 'book' pages.
+	 * @return array $pages All 'book' Pages.
 	 */
 	public function get_book_pages( $mode = 'readable' ) {
 
@@ -465,7 +465,7 @@ class CommentPress_Core_Navigator {
 
 		} else {
 
-			// Parse page order.
+			// Parse Page order.
 			$all_pages = $this->parse_pages( $mode );
 
 		} // End check for custom menu.
@@ -476,21 +476,21 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Get first readable 'book' page.
+	 * Get first readable 'book' Page.
 	 *
 	 * @since 3.0
 	 *
-	 * @return int $id The ID of the first page (or false if not found).
+	 * @return int $id The ID of the first Page (or false if not found).
 	 */
 	public function get_first_page() {
 
 		// Init.
 		$id = false;
 
-		// Get all pages including chapters.
+		// Get all Pages including chapters.
 		$all_pages = $this->get_book_pages( 'structural' );
 
-		// If we have any pages.
+		// If we have any Pages.
 		if ( count( $all_pages ) > 0 ) {
 
 			// Get first ID.
@@ -504,16 +504,16 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Get page number.
+	 * Get Page number.
 	 *
 	 * @since 3.0
 	 *
-	 * @param int $page_id The page ID.
-	 * @return int $number The number of the page.
+	 * @param int $page_id The Page ID.
+	 * @return int $number The number of the Page.
 	 */
 	public function get_page_number( $page_id ) {
 
-		// Bail if page nav is disabled.
+		// Bail if Page nav is disabled.
 		if ( $this->nav_enabled === false ) {
 			return;
 		}
@@ -521,16 +521,16 @@ class CommentPress_Core_Navigator {
 		// Init.
 		$num = 0;
 
-		// Access post.
+		// Access Post.
 		global $post;
 
-		// Are parent pages viewable?
+		// Are parent Pages viewable?
 		$viewable = ( $this->core->db->option_get( 'cp_toc_chapter_is_page' ) == '1' ) ? true : false;
 
 		// If they are.
 		if ( $viewable ) {
 
-			// Get page number from array.
+			// Get Page number from array.
 			$num = $this->get_page_num( $page_id );
 
 		} else {
@@ -538,10 +538,10 @@ class CommentPress_Core_Navigator {
 			// Get id of first viewable child.
 			$first_child = $this->get_first_child( $post->ID );
 
-			// If this is a childless page.
+			// If this is a childless Page.
 			if ( ! $first_child ) {
 
-				// Get page number from array.
+				// Get Page number from array.
 				$num = $this->get_page_num( $page_id );
 
 			}
@@ -557,12 +557,12 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Get page number.
+	 * Get Page number.
 	 *
 	 * @since 3.0
 	 *
-	 * @param int $page_id The page ID.
-	 * @return int $number The number of the page.
+	 * @param int $page_id The Page ID.
+	 * @return int $number The number of the Page.
 	 */
 	public function get_page_num( $page_id ) {
 
@@ -589,12 +589,12 @@ class CommentPress_Core_Navigator {
 	 */
 	public function redirect_to_child() {
 
-		// Only on pages.
+		// Only on Pages.
 		if ( ! is_page() ) {
 			return;
 		}
 
-		// Bail if this is a BuddyPress page.
+		// Bail if this is a BuddyPress Page.
 		if ( $this->core->is_buddypress_special_page() ) {
 			return;
 		}
@@ -605,7 +605,7 @@ class CommentPress_Core_Navigator {
 			return;
 		}
 
-		// Access post object.
+		// Access Post object.
 		global $post;
 
 		// Sanity check.
@@ -613,7 +613,7 @@ class CommentPress_Core_Navigator {
 			return;
 		}
 
-		// Are parent pages viewable?
+		// Are parent Pages viewable?
 		$viewable = ( $this->core->db->option_get( 'cp_toc_chapter_is_page' ) == '1' ) ? true : false;
 
 		// Get id of first child.
@@ -633,22 +633,22 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Set up page list.
+	 * Set up Page list.
 	 *
 	 * @since 3.3
 	 */
 	public function init_page_lists() {
 
-		// Get all pages.
+		// Get all Pages.
 		$all_pages = $this->get_book_pages( 'readable' );
 
-		// If we have any pages.
+		// If we have any Pages.
 		if ( count( $all_pages ) > 0 ) {
 
-			// Generate page numbers.
+			// Generate Page numbers.
 			$this->generate_page_numbers( $all_pages );
 
-			// Access post object.
+			// Access Post object.
 			global $post;
 
 			// Init the key we want.
@@ -657,10 +657,10 @@ class CommentPress_Core_Navigator {
 			// Loop.
 			foreach ( $all_pages as $key => $page_obj ) {
 
-				// Is it the currently viewed page?
+				// Is it the currently viewed Page?
 				if ( $page_obj->ID == $post->ID ) {
 
-					// Set page key.
+					// Set Page key.
 					$page_key = $key;
 
 					// Kick out to preserve key.
@@ -673,7 +673,7 @@ class CommentPress_Core_Navigator {
 			// If we don't get a key.
 			if ( $page_key === false ) {
 
-				// The current page is a chapter and is not a page.
+				// The current Page is a chapter and is not a Page.
 				$this->next_pages = [];
 
 				// --<
@@ -684,7 +684,7 @@ class CommentPress_Core_Navigator {
 			// Will there be a next array?
 			if ( isset( $all_pages[ $key + 1 ] ) ) {
 
-				// Get all subsequent pages.
+				// Get all subsequent Pages.
 				$this->next_pages = array_slice( $all_pages, $key + 1 );
 
 			}
@@ -692,7 +692,7 @@ class CommentPress_Core_Navigator {
 			// Will there be a previous array?
 			if ( isset( $all_pages[ $key - 1 ] ) ) {
 
-				// Get all previous pages.
+				// Get all Previous Pages.
 				$this->previous_pages = array_reverse( array_slice( $all_pages, 0, $key ) );
 
 			}
@@ -702,7 +702,7 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Set up posts list.
+	 * Set up Posts list.
 	 *
 	 * @since 3.3
 	 */
@@ -717,10 +717,10 @@ class CommentPress_Core_Navigator {
 		// Get them.
 		$all_posts = get_posts( $defaults );
 
-		// If we have any posts.
+		// If we have any Posts.
 		if ( count( $all_posts ) > 0 ) {
 
-			// Access post object.
+			// Access Post object.
 			global $post;
 
 			// Loop.
@@ -739,7 +739,7 @@ class CommentPress_Core_Navigator {
 			// Will there be a next array?
 			if ( isset( $all_posts[ $key + 1 ] ) ) {
 
-				// Get all subsequent posts.
+				// Get all subsequent Posts.
 				$this->next_posts = array_slice( $all_posts, $key + 1 );
 
 			}
@@ -747,7 +747,7 @@ class CommentPress_Core_Navigator {
 			// Will there be a previous array?
 			if ( isset( $all_posts[ $key - 1 ] ) ) {
 
-				// Get all previous posts.
+				// Get all previous Posts.
 				$this->previous_posts = array_reverse( array_slice( $all_posts, 0, $key ) );
 
 			}
@@ -759,13 +759,13 @@ class CommentPress_Core_Navigator {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Strip out all but lowest level pages.
+	 * Strip out all but lowest level Pages.
 	 *
 	 * @todo This only works one level deep?
 	 *
 	 * @since 3.0
 	 *
-	 * @param array $pages The array of page objects.
+	 * @param array $pages The array of Page objects.
 	 * @return array $subpages All subpages.
 	 */
 	public function filter_chapters( $pages ) {
@@ -779,7 +779,7 @@ class CommentPress_Core_Navigator {
 			// Loop.
 			foreach ( $pages as $key => $page_obj ) {
 
-				// Init to look for published pages.
+				// Init to look for published Pages.
 				$defaults = [
 					'post_parent' => $page_obj->ID,
 					'post_type' => 'page',
@@ -787,7 +787,7 @@ class CommentPress_Core_Navigator {
 					'post_status' => 'publish',
 				];
 
-				// Get page children.
+				// Get Page children.
 				$children = get_children( $defaults );
 				$kids =& $children;
 
@@ -814,7 +814,7 @@ class CommentPress_Core_Navigator {
 	 * @since 3.0
 	 * @since 4.0 Renamed.
 	 *
-	 * @param array $pages The array of page objects.
+	 * @param array $pages The array of Page objects.
 	 * @return array $subpages All subpages.
 	 */
 	public function get_first_child_recursive( $pages ) {
@@ -825,7 +825,7 @@ class CommentPress_Core_Navigator {
 			// Loop.
 			foreach ( $pages as $key => $page_obj ) {
 
-				// Init to look for published pages.
+				// Init to look for published Pages.
 				$defaults = [
 					'post_parent' => $page_obj->ID,
 					'post_type' => 'page',
@@ -835,7 +835,7 @@ class CommentPress_Core_Navigator {
 					'order' => 'ASC',
 				];
 
-				// Get page children.
+				// Get Page children.
 				$children = get_children( $defaults );
 				$kids =& $children;
 
@@ -862,20 +862,20 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Generates page numbers.
+	 * Generates Page numbers.
 	 *
-	 * @todo Refine by section, page meta value etc.
+	 * @todo Refine by section, Page meta value etc.
 	 *
 	 * @since 3.0
 	 *
-	 * @param array $pages The array of page objects in the 'book'.
+	 * @param array $pages The array of Page objects in the 'book'.
 	 */
 	public function generate_page_numbers( $pages ) {
 
 		// If we have any.
 		if ( count( $pages ) > 0 ) {
 
-			// Init with page 1.
+			// Init with Page 1.
 			$num = 1;
 
 			// Assume no menu.
@@ -895,9 +895,9 @@ class CommentPress_Core_Navigator {
 				/**
 				 * Get number format - the way this works in publications is that
 				 * only prefaces are numbered with Roman numerals. So, we only allow
-				 * the first top level page to have the option of Roman numerals.
+				 * the first top level Page to have the option of Roman numerals.
 				 *
-				 * If set, all child pages will be set to Roman.
+				 * If set, all child Pages will be set to Roman.
 				 */
 
 				// Once we run out of Roman numerals, $num is reset to 1.
@@ -989,12 +989,12 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Utility to remove the Theme My Login page.
+	 * Utility to remove the Theme My Login Page.
 	 *
 	 * @since 3.0
 	 *
-	 * @param array $pages An array of page objects.
-	 * @return bool $clean The modified array pf page objects.
+	 * @param array $pages An array of Page objects.
+	 * @return bool $clean The modified array pf Page objects.
 	 */
 	public function filter_theme_my_login_page( $pages ) {
 
@@ -1025,12 +1025,12 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Utility to detect the Theme My Login page.
+	 * Utility to detect the Theme My Login Page.
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $page_obj The WordPress page object.
-	 * @return boolean $success True if TML page, false otherwise.
+	 * @param object $page_obj The WordPress Page object.
+	 * @return boolean $success True if TML Page, false otherwise.
 	 */
 	public function detect_login_page( $page_obj ) {
 
@@ -1111,19 +1111,19 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Get top parent page ID.
+	 * Get top parent Page ID.
 	 *
 	 * @since 3.0
 	 *
-	 * @param int $post_id The queried page ID.
-	 * @return int $post_id The overridden page ID.
+	 * @param int $post_id The queried Page ID.
+	 * @return int $post_id The overridden Page ID.
 	 */
 	public function get_top_parent_id( $post_id ) {
 
-		// Get page data.
+		// Get Page data.
 		$page = get_page( $post_id );
 
-		// Is the top page?
+		// Is the top Page?
 		if ( $page->post_parent == 0 ) {
 
 			// Yes -> return the ID.
@@ -1139,12 +1139,12 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Parse a WordPress page list.
+	 * Parse a WordPress Page list.
 	 *
 	 * @since 3.0
 	 *
 	 * @param str $mode Either 'structural' or 'readable'.
-	 * @return array $pages All 'book' pages.
+	 * @return array $pages All 'book' Pages.
 	 */
 	public function parse_pages( $mode ) {
 
@@ -1152,20 +1152,20 @@ class CommentPress_Core_Navigator {
 		$pages = [];
 
 		// -----------------------------------------------------------------
-		// Construct "book" navigation based on pages
+		// Construct "book" navigation based on Pages
 		// -----------------------------------------------------------------
 
 		// Default to no excludes.
 		$excludes = '';
 
-		// Init excluded array with "special pages".
+		// Init excluded array with "Special Pages".
 		$excluded_pages = $this->core->db->option_get( 'cp_special_pages' );
 
-		// If the supplied title page is the homepage.
+		// If the supplied Title Page is the homepage.
 		$title_id = $this->is_title_page_the_homepage();
 		if ( $title_id !== false ) {
 
-			// It will already have been shown at the top of the page list.
+			// It will already have been shown at the top of the Page list.
 			$excluded_pages[] = $title_id;
 
 		}
@@ -1174,8 +1174,8 @@ class CommentPress_Core_Navigator {
 		if ( $this->core->is_buddypress() ) {
 
 			/*
-			 * BuddyPress creates its own registration page and redirects ordinary
-			 * WordPress registration page requests to it. It also seems to exclude
+			 * BuddyPress creates its own Registration Page and redirects ordinary
+			 * WordPress Registration Page requests to it. It also seems to exclude
 			 * it from wp_list_pages()
 			 *
 			 * @see CommentPress_Core_Display::list_pages()
@@ -1184,7 +1184,7 @@ class CommentPress_Core_Navigator {
 			// Check if registration is allowed.
 			if ( '1' == get_option( 'users_can_register' ) && is_main_site() ) {
 
-				// Find the registration page by its slug.
+				// Find the Registration Page by its slug.
 				$reg_page = get_page_by_path( 'register' );
 
 				// Did we get one?
@@ -1210,7 +1210,7 @@ class CommentPress_Core_Navigator {
 
 		}
 
-		// Set list pages defaults.
+		// Set list Pages defaults.
 		$defaults = [
 			'child_of' => 0,
 			'sort_order' => 'ASC',
@@ -1226,13 +1226,13 @@ class CommentPress_Core_Navigator {
 		// Get them.
 		$pages = get_pages( $defaults );
 
-		// If we have any pages.
+		// If we have any Pages.
 		if ( count( $pages ) > 0 ) {
 
-			// If chapters are not pages.
+			// If chapters are not Pages.
 			if ( $this->core->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
 
-				// Do we want all readable pages?
+				// Do we want all readable Pages?
 				if ( $mode == 'readable' ) {
 
 					// Filter chapters out.
@@ -1245,7 +1245,7 @@ class CommentPress_Core_Navigator {
 			// If Theme My Login is present.
 			if ( defined( 'TML_ABSPATH' ) ) {
 
-				// Filter its page out.
+				// Filter its Page out.
 				$pages = $this->filter_theme_my_login_page( $pages );
 
 			}
@@ -1262,7 +1262,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 *
-	 * @return bool|int $is_home False if not homepage, page ID if true.
+	 * @return bool|int $is_home False if not homepage, Page ID if true.
 	 */
 	public function is_title_page_the_homepage() {
 
@@ -1272,21 +1272,21 @@ class CommentPress_Core_Navigator {
 			return $is_home;
 		}
 
-		// Get welcome page ID.
+		// Get Welcome Page ID.
 		$welcome_id = $this->core->db->option_get( 'cp_welcome_page' );
 
-		// Get front page.
+		// Get Front Page.
 		$page_on_front = $this->core->db->option_wp_get( 'page_on_front' );
 
-		// If the CommentPress title page exists and it's the front page.
+		// If the CommentPress Title Page exists and it's the Front Page.
 		if ( $welcome_id !== false && $page_on_front == $welcome_id ) {
 
-			// Set to page ID.
+			// Set to Page ID.
 			$is_home = $welcome_id;
 
 		} else {
 
-			// Not home page.
+			// Not home Page.
 			$is_home = false;
 
 		}
@@ -1302,7 +1302,7 @@ class CommentPress_Core_Navigator {
 	 * @since 3.0
 	 *
 	 * @param str $mode Either 'structural' or 'readable'.
-	 * @return array $pages All 'book' pages.
+	 * @return array $pages All 'book' Pages.
 	 */
 	public function parse_menu( $mode ) {
 
@@ -1336,10 +1336,10 @@ class CommentPress_Core_Navigator {
 			// If we get some.
 			if ( $this->menu_objects ) {
 
-				// If chapters are not pages, filter the menu items.
+				// If chapters are not Pages, filter the menu items.
 				if ( $this->core->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
 
-					// Do we want all readable pages?
+					// Do we want all readable Pages?
 					if ( $mode == 'readable' ) {
 
 						// Filter chapters out.
@@ -1362,7 +1362,7 @@ class CommentPress_Core_Navigator {
 				// Init.
 				$pages_to_get = [];
 
-				// Convert to array of pages.
+				// Convert to array of Pages.
 				foreach ( $menu_items as $menu_item ) {
 
 					// Is it a WordPress item?
@@ -1371,7 +1371,7 @@ class CommentPress_Core_Navigator {
 						// Init pseudo WP_POST object.
 						$pseudo_post = new stdClass();
 
-						// Add post ID.
+						// Add Post ID.
 						$pseudo_post->ID = $menu_item->object_id;
 
 						// Add menu ID (for filtering below).
@@ -1380,10 +1380,10 @@ class CommentPress_Core_Navigator {
 						// Add menu item parent ID (for finding parent below).
 						$pseudo_post->menu_item_parent = $menu_item->menu_item_parent;
 
-						// Add comment count for possible calls for "next with comments".
+						// Add comment count for possible calls for "Next with Comments".
 						$pseudo_post->comment_count = $menu_item->comment_count;
 
-						// Add to array of WordPress pages in menu.
+						// Add to array of WordPress Pages in menu.
 						$pages[] = $pseudo_post;
 
 					}

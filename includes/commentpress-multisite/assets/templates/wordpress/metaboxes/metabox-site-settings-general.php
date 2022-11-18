@@ -1,8 +1,8 @@
 <?php
 /**
- * Multisite Site Settings page "General Settings" metabox template.
+ * Multisite Site Settings Page "General Settings" metabox template.
  *
- * Handles markup for the Multisite Site Settings page "General Settings" metabox.
+ * Handles markup for the Multisite Site Settings Page "General Settings" metabox.
  *
  * @package CommentPress_Core
  */

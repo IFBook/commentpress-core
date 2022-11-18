@@ -1,6 +1,6 @@
 <?php
 /**
- * CommentPress Core BuddyPress GroupBlog class.
+ * CommentPress Core BuddyPress Group Blog class.
  *
  * Overrides the name of Group Blogs from "Blog" (or "Document") to "Workshop".
  *
@@ -11,7 +11,7 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * CommentPress Core BuddyPress GroupBlog Class.
+ * CommentPress Core BuddyPress Group Blog Class.
  *
  * This class overrides the name of Group Blogs from "Blog" (or "Document") to "Workshop".
  *
@@ -29,38 +29,38 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	public $multisite;
 
 	/**
-	 * Flag whether or not to rename a groupblog.
+	 * Flag whether or not to rename a Group Blog.
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $groupblog_nomenclature Flag whether or not to rename a GroupBlog - default to "off".
+	 * @var object $groupblog_nomenclature Flag whether or not to rename a Group Blog - default to "off".
 	 */
 	public $groupblog_nomenclature = 0;
 
 	/**
-	 * Default singular name of a groupblog.
+	 * Default singular name of a Group Blog.
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $groupblog_nomenclature_name Default name of a groupblog.
+	 * @var object $groupblog_nomenclature_name Default name of a Group Blog.
 	 */
 	public $groupblog_nomenclature_name = '';
 
 	/**
-	 * Default plural name of a groupblog.
+	 * Default plural name of a Group Blog.
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $groupblog_nomenclature_plural Default plural name of a groupblog.
+	 * @var object $groupblog_nomenclature_plural Default plural name of a Group Blog.
 	 */
 	public $groupblog_nomenclature_plural = '';
 
 	/**
-	 * Default slug of a groupblog.
+	 * Default slug of a Group Blog.
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $groupblog_nomenclature_slug Default slug of a groupblog.
+	 * @var object $groupblog_nomenclature_slug Default slug of a Group Blog.
 	 */
 	public $groupblog_nomenclature_slug = '';
 
@@ -176,28 +176,28 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 		// Override CommentPress Core "Title Page".
 		add_filter( 'cp_nav_title_page_title', [ $this, 'filter_nav_title_page_title' ], 25 );
 
-		// Override CommentPress Core title of "view document" button in blog lists.
+		// Override CommentPress Core title of "view document" button in Blog lists.
 		add_filter( 'cp_get_blogs_visit_groupblog_button', [ $this, 'get_blogs_visit_blog_button' ], 25, 1 );
 
 		// Filter bp-groupblog defaults.
 		add_filter( 'cpmu_bp_groupblog_subnav_item_name', [ $this, 'filter_blog_name' ], 25 );
 		add_filter( 'cpmu_bp_groupblog_subnav_item_slug', [ $this, 'filter_blog_slug' ], 25 );
 
-		// Change name of activity sidebar headings.
+		// Change name of Activity Sidebar headings.
 		add_filter( 'cp_activity_tab_recent_title_all_yours', [ $this, 'filter_activity_title_all_yours' ], 25 );
 		add_filter( 'cp_activity_tab_recent_title_all_public', [ $this, 'filter_activity_title_all_public' ], 25 );
 
 		// Override with 'workshop'.
 		add_filter( 'cp_activity_tab_recent_title_blog', [ $this, 'activity_tab_recent_title_blog' ], 25, 1 );
 
-		// Override titles of BuddyPress activity filters.
+		// Override titles of BuddyPress Activity filters.
 		add_filter( 'cp_groupblog_comment_name', [ $this, 'groupblog_comment_name' ], 25 );
 		add_filter( 'cp_groupblog_post_name', [ $this, 'groupblog_post_name' ], 25 );
 
 		// Cp_activity_post_name_filter.
 		add_filter( 'cp_activity_post_name', [ $this, 'activity_post_name' ], 25 );
 
-		// Override label on All Comments page.
+		// Override label on All Comments Page.
 		add_filter( 'cp_page_all_comments_book_title', [ $this, 'page_all_comments_book_title' ], 25, 1 );
 		add_filter( 'cp_page_all_comments_blog_title', [ $this, 'page_all_comments_blog_title' ], 25, 1 );
 
@@ -210,7 +210,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	 *
 	 * @since 3.3
 	 *
-	 * @return str The name in the GroupBlog comments label.
+	 * @return str The name in the Group Blog Comments label.
 	 */
 	public function groupblog_comment_name() {
 
@@ -227,7 +227,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	 *
 	 * @since 3.3
 	 *
-	 * @return str The plural name in the GroupBlog posts label.
+	 * @return str The plural name in the Group Blog Posts label.
 	 */
 	public function groupblog_post_name() {
 
@@ -244,7 +244,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	 *
 	 * @since 3.3
 	 *
-	 * @return str The singular name of the GroupBlog post.
+	 * @return str The singular name of the Group Blog Post.
 	 */
 	public function activity_post_name() {
 
@@ -261,8 +261,8 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $name The existing singular name of the GroupBlog post.
-	 * @return str $name The modified singular name of the GroupBlog post.
+	 * @param str $name The existing singular name of the Group Blog Post.
+	 * @return str $name The modified singular name of the Group Blog Post.
 	 */
 	public function filter_blog_name( $name ) {
 
@@ -296,7 +296,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	 */
 	public function activity_tab_recent_title_blog( $title ) {
 
-		// If groupblog.
+		// If Group Blog.
 		global $commentpress_core;
 		if (
 			! is_null( $commentpress_core ) &&
@@ -315,7 +315,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 
 		}
 
-		// If main site.
+		// If Main Site.
 		if ( is_multisite() && is_main_site() ) {
 
 			// Override default link name.
@@ -332,7 +332,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	}
 
 	/**
-	 * Override title on All Comments page.
+	 * Override title on All Comments Page.
 	 *
 	 * @since 3.3
 	 *
@@ -341,7 +341,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	 */
 	public function page_all_comments_blog_title( $title ) {
 
-		// Override if groupblog.
+		// Override if Group Blog.
 		if ( ! $this->multisite->bp->is_commentpress_groupblog() ) {
 			return $title;
 		}
@@ -355,7 +355,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	}
 
 	/**
-	 * Override title on All Comments page.
+	 * Override title on All Comments Page.
 	 *
 	 * @since 3.3
 	 *
@@ -364,7 +364,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	 */
 	public function page_all_comments_book_title( $title ) {
 
-		// Override if groupblog.
+		// Override if Group Blog.
 		if ( ! $this->multisite->bp->is_commentpress_groupblog() ) {
 			return $title;
 		}
@@ -387,7 +387,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	 */
 	public function filter_activity_title_all_yours( $title ) {
 
-		// Override if groupblog.
+		// Override if Group Blog.
 		if (
 			! bp_is_root_blog() &&
 			! $this->multisite->bp->is_commentpress_groupblog()
@@ -413,7 +413,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	 */
 	public function filter_activity_title_all_public( $title ) {
 
-		// Override if groupblog.
+		// Override if Group Blog.
 		if (
 			! bp_is_root_blog() &&
 			! $this->multisite->bp->is_commentpress_groupblog()
@@ -439,12 +439,12 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	 */
 	public function filter_nav_title_page_title( $title ) {
 
-		// Bail if main BuddyPress site.
+		// Bail if main BuddyPress Site.
 		if ( bp_is_root_blog() ) {
 			return $title;
 		}
 
-		// Bail if not groupblog.
+		// Bail if not Group Blog.
 		if ( ! $this->multisite->bp->is_commentpress_groupblog() ) {
 			return $title;
 		}
@@ -467,7 +467,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	 */
 	public function get_blogs_visit_blog_button( $button ) {
 
-		// Update link for groupblogs.
+		// Update link for Group Blogs.
 		return sprintf(
 			__( 'Visit %s', 'commentpress-core' ),
 			$this->groupblog_nomenclature_name
@@ -605,7 +605,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	 *
 	 * @since 3.3
 	 *
-	 * @return str $name The legacy singular name of a groupblog.
+	 * @return str $name The legacy singular name of a Group Blog.
 	 */
 	public function get_legacy_name() {
 		return __( 'Workshop', 'commentpress-core' );
@@ -616,7 +616,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	 *
 	 * @since 3.3
 	 *
-	 * @return str $name The legacy plural name of a groupblog.
+	 * @return str $name The legacy plural name of a Group Blog.
 	 */
 	public function get_legacy_plural() {
 		return __( 'Workshops', 'commentpress-core' );
@@ -627,7 +627,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	 *
 	 * @since 3.3
 	 *
-	 * @return str $name The legacy slug of a groupblog.
+	 * @return str $name The legacy slug of a Group Blog.
 	 */
 	public function get_legacy_slug() {
 		return 'workshop';

@@ -22,7 +22,7 @@ class CommentPress_License_Widget extends WP_Widget {
 
 
 	/**
-	 * Constructor registers widget with WordPress.
+	 * Constructor registers Widget with WordPress.
 	 *
 	 * @since 3.4
 	 */
@@ -45,12 +45,12 @@ class CommentPress_License_Widget extends WP_Widget {
 
 
 	/**
-	 * Outputs the HTML for this widget.
+	 * Outputs the HTML for this Widget.
 	 *
 	 * @since 3.4
 	 *
-	 * @param array $args An array of standard parameters for widgets in this theme.
-	 * @param array $instance An array of settings for this widget instance.
+	 * @param array $args An array of standard parameters for Widgets in this theme.
+	 * @param array $instance An array of settings for this Widget instance.
 	 */
 	public function widget( $args, $instance ) {
 
@@ -78,7 +78,7 @@ class CommentPress_License_Widget extends WP_Widget {
 
 
 	/**
-	 * Sanitize widget form values as they are saved.
+	 * Sanitize Widget form values as they are saved.
 	 *
 	 * @see WP_Widget::update()
 	 *
@@ -114,7 +114,7 @@ class CommentPress_License_Widget extends WP_Widget {
 
 
 	/**
-	 * Back-end widget form.
+	 * Back-end Widget form.
 	 *
 	 * @see WP_Widget::form()
 	 *

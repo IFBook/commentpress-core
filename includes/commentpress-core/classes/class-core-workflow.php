@@ -2,7 +2,7 @@
 /**
  * CommentPress Core Workflow class.
  *
- * Handles "Translation" workflow in CommentPress Core.
+ * Handles "Translation" Workflow in CommentPress Core.
  *
  * @package CommentPress_Core
  */
@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * CommentPress Core Workflow Class.
  *
- * This class provides "Translation" workflow to CommentPress Core.
+ * This class provides "Translation" Workflow to CommentPress Core.
  *
  * @since 3.0
  */
@@ -67,36 +67,36 @@ class CommentPress_Core_Workflow {
 	 */
 	public function register_hooks() {
 
-		// Enable workflow.
+		// Enable Workflow.
 		add_filter( 'cp_blog_workflow_exists', [ $this, 'blog_workflow_exists' ], 21 );
 
 		// Override label.
 		add_filter( 'cp_blog_workflow_label', [ $this, 'blog_workflow_label' ], 21 );
 
-		// Override blog type if workflow is on.
+		// Override Blog Type if Workflow is on.
 		add_filter( 'cp_get_group_meta_for_blog_type', [ $this, 'group_meta_set_blog_type' ], 21, 2 );
 
 		// Is this the back end?
 		if ( is_admin() ) {
 
-			// Add meta box for translation workflow.
+			// Add meta box for Translation Workflow.
 			add_action( 'cp_workflow_metabox', [ $this, 'workflow_metabox' ], 10, 2 );
 
-			// Override meta box title for translation workflow.
+			// Override meta box title for Translation Workflow.
 			add_filter( 'cp_workflow_metabox_title', [ $this, 'workflow_metabox_title' ], 21, 1 );
 
-			// Save post with translation workflow.
+			// Save Post with Translation Workflow.
 			add_action( 'cp_workflow_save_post', [ $this, 'workflow_save_post' ], 21, 1 );
 
-			// Save page with translation workflow.
+			// Save Page with Translation Workflow.
 			add_action( 'cp_workflow_save_page', [ $this, 'workflow_save_post' ], 21, 1 );
 
-			// Save translation workflow for copied posts.
+			// Save Translation Workflow for copied Posts.
 			add_action( 'cp_workflow_save_copy', [ $this, 'workflow_save_copy' ], 21, 1 );
 
 		}
 
-		// Save workflow meta.
+		// Save Workflow meta.
 		add_action( 'commentpress/core/db/page_meta/saved', [ $this, 'save_workflow' ] );
 		add_action( 'commentpress/core/db/post_meta/saved', [ $this, 'save_workflow' ] );
 
@@ -117,7 +117,7 @@ class CommentPress_Core_Workflow {
 	}
 
 	/**
-	 * Enable workflow.
+	 * Enable Workflow.
 	 *
 	 * @since 3.0
 	 *
@@ -135,7 +135,7 @@ class CommentPress_Core_Workflow {
 	}
 
 	/**
-	 * Override the name of the workflow checkbox label.
+	 * Override the name of the Workflow checkbox label.
 	 *
 	 * @since 3.0
 	 *
@@ -153,17 +153,17 @@ class CommentPress_Core_Workflow {
 	}
 
 	/**
-	 * Amend the group meta if workflow is enabled.
+	 * Amend the Group meta if Workflow is enabled.
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $blog_type The existing numerical type of the blog.
-	 * @param int|bool $blog_workflow A positive number if workflow enabled, false otherwise.
-	 * @return str $blog_type The modified numerical type of the blog.
+	 * @param str $blog_type The existing numerical type of the Blog.
+	 * @param int|bool $blog_workflow A positive number if Workflow enabled, false otherwise.
+	 * @return str $blog_type The modified numerical type of the Blog.
 	 */
 	public function group_meta_set_blog_type( $blog_type, $blog_workflow ) {
 
-		// If the blog workflow is enabled, then this is a translation group.
+		// If the Blog Workflow is enabled, then this is a Translation Group.
 		if ( $blog_workflow == '1' ) {
 
 			// Translation is type 2.
@@ -172,21 +172,21 @@ class CommentPress_Core_Workflow {
 		}
 
 		/**
-		 * Allow plugins to override the blog type - for example if workflow
-		 * is enabled, it might become a new blog type as far as BuddyPress
+		 * Allow plugins to override the Blog Type - for example if Workflow
+		 * is enabled, it might become a new Blog Type as far as BuddyPress
 		 * is concerned.
 		 *
 		 * @since 3.0
 		 *
-		 * @param int $blog_type The numeric blog type.
-		 * @param int|bool $blog_workflow A positive number if workflow enabled, false otherwise.
+		 * @param int $blog_type The numeric Blog Type.
+		 * @param int|bool $blog_workflow A positive number if Workflow enabled, false otherwise.
 		 */
 		return apply_filters( 'cp_class_commentpress_workflow_group_blogtype', $blog_type, $blog_workflow );
 
 	}
 
 	/**
-	 * Add our metabox if workflow is enabled.
+	 * Add our metabox if Workflow is enabled.
 	 *
 	 * @since 3.0
 	 */
@@ -248,7 +248,7 @@ class CommentPress_Core_Workflow {
 	}
 
 	/**
-	 * Amend the workflow metabox title.
+	 * Amend the Workflow metabox title.
 	 *
 	 * @since 3.0
 	 *
@@ -266,20 +266,20 @@ class CommentPress_Core_Workflow {
 	}
 
 	/**
-	 * Save workflow data based on the state of the metabox.
+	 * Save Workflow data based on the state of the metabox.
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $post_obj The WordPress post object.
+	 * @param object $post_obj The WordPress Post object.
 	 */
 	public function workflow_save_post( $post_obj ) {
 
-		// If no post, kick out.
+		// If no Post, kick out.
 		if ( ! $post_obj ) {
 			return;
 		}
 
-		// If not post or page, kick out.
+		// If not Post or Page, kick out.
 		$types = [ 'post', 'page' ];
 		if ( ! in_array( $post_obj->post_type, $types ) ) {
 			return;
@@ -395,11 +395,11 @@ class CommentPress_Core_Workflow {
 	}
 
 	/**
-	 * Add the workflow content to the new version.
+	 * Add the Workflow content to the new version.
 	 *
 	 * @since 3.0
 	 *
-	 * @param int $new_post_id The numeric ID of the new WordPress post.
+	 * @param int $new_post_id The numeric ID of the new WordPress Post.
 	 */
 	public function workflow_save_copy( $new_post_id ) {
 
@@ -486,18 +486,18 @@ class CommentPress_Core_Workflow {
 	}
 
 	/**
-	 * Save workflow meta value.
+	 * Save Workflow meta value.
 	 *
 	 * @since 3.4
 	 *
-	 * @param object $post The post object.
+	 * @param object $post The Post object.
 	 */
 	public function save_workflow( $post ) {
 
-		// Do we have the option to set workflow (new in 3.3.1)?
+		// Do we have the option to set Workflow (new in 3.3.1)?
 		if ( $this->core->db->option_exists( 'cp_blog_workflow' ) ) {
 
-			// Get workflow setting for the blog.
+			// Get Workflow setting for the Blog.
 			$workflow = $this->core->db->option_get( 'cp_blog_workflow' );
 
 			/*
@@ -521,11 +521,11 @@ class CommentPress_Core_Workflow {
 			if ( $workflow == '1' ) {
 
 				/**
-				 * Notify plugins that workflow stuff needs saving.
+				 * Notify plugins that Workflow stuff needs saving.
 				 *
 				 * @since 3.4
 				 *
-				 * @param object $post The post object.
+				 * @param object $post The Post object.
 				 */
 				do_action( 'cp_workflow_save_' . $post->post_type, $post );
 
@@ -535,7 +535,7 @@ class CommentPress_Core_Workflow {
 			// ----------------
 			// WORK IN PROGRESS
 
-			// Get the setting for the post (we do this after saving the extra
+			// Get the setting for the Post (we do this after saving the extra
 			// Post data because
 			$formatter = isset( $_POST['cp_post_type_override'] ) ? $_POST['cp_post_type_override'] : '';
 

@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 if ( ! function_exists( 'commentpress_fix_bp_core_avatar_url' ) ) :
 
 	/**
-	 * Filter to fix broken group avatar images in BuddyPress 1.7.
+	 * Filter to fix broken Group Avatar images in BuddyPress 1.7.
 	 *
 	 * @since 3.3
 	 *
@@ -24,10 +24,10 @@ if ( ! function_exists( 'commentpress_fix_bp_core_avatar_url' ) ) :
 	 */
 	function commentpress_fix_bp_core_avatar_url( $url ) {
 
-		// If in multisite and on non-root site.
+		// If in multisite and on non-root Site.
 		if ( is_multisite() && ! bp_is_root_blog() ) {
 
-			// Switch to root site.
+			// Switch to root Site.
 			switch_to_blog( bp_get_root_blog_id() );
 
 			// Get upload dir data.
@@ -53,7 +53,7 @@ endif;
 if ( ! function_exists( 'commentpress_amend_search_query' ) ) :
 
 	/**
-	 * Restrict search query to pages only.
+	 * Restrict search query to Pages only.
 	 *
 	 * @since 3.3
 	 *
@@ -64,14 +64,14 @@ if ( ! function_exists( 'commentpress_amend_search_query' ) ) :
 		/*
 		 * Restrict to search outside admin.
 		 *
-		 * Note: BuddyPress does a redirect to the blog page and so $query->is_search is not set.
+		 * Note: BuddyPress does a redirect to the Blog Page and so $query->is_search is not set.
 		 */
 		if ( ! is_admin() && ! empty( $query->query['s'] ) ) {
 
 			// Is this a BuddyPress search on the main BuddyPress instance?
 			if ( function_exists( 'bp_search_form_type_select' ) && bp_is_root_blog() ) {
 
-				// Search posts and pages.
+				// Search Posts and Pages.
 				$query->set( 'post_type', apply_filters( 'commentpress_amend_search_query_post_types', [ 'post', 'page' ] ) );
 
 				// Declare access to globals.
@@ -80,10 +80,10 @@ if ( ! function_exists( 'commentpress_amend_search_query' ) ) :
 				// If we have the plugin enabled.
 				if ( is_object( $commentpress_core ) ) {
 
-					// Get special pages array, if it's there.
+					// Get special Pages array, if it's there.
 					$special_pages = $commentpress_core->db->option_get( 'cp_special_pages' );
 
-					// Exclude special pages if we have them.
+					// Exclude Special Pages if we have them.
 					if ( is_array( $special_pages ) ) {
 						$query->set( 'post__not_in', apply_filters( 'commentpress_amend_search_query_exclusions', $special_pages ) );
 					}
@@ -106,11 +106,11 @@ add_filter( 'pre_get_posts', 'commentpress_amend_search_query' );
 if ( ! function_exists( 'commentpress_groupblog_classes' ) ) :
 
 	/**
-	 * Add classes to #content in BuddyPress, so that we can distinguish different GroupBlog types.
+	 * Add classes to #content in BuddyPress, so that we can distinguish different Group Blog Types.
 	 *
 	 * @since 3.3
 	 *
-	 * @return str $groupblog_class The class for the groupblog.
+	 * @return str $groupblog_class The class for the Group Blog.
 	 */
 	function commentpress_groupblog_classes() {
 
@@ -120,10 +120,10 @@ if ( ! function_exists( 'commentpress_groupblog_classes' ) ) :
 		// Only add classes when bp-groupblog is active.
 		if ( function_exists( 'get_groupblog_group_id' ) ) {
 
-			// Init groupblogtype.
+			// Init Group Blog type.
 			$groupblogtype = 'groupblog';
 
-			// Get group blogtype.
+			// Get Group Blog Type.
 			$groupblog_type = groups_get_groupmeta( bp_get_current_group_id(), 'groupblogtype' );
 
 			// Add to default if we get one.
@@ -148,7 +148,7 @@ endif;
 if ( ! function_exists( 'commentpress_bp_activity_css_class' ) ) :
 
 	/**
-	 * Update BuddyPress activity CSS class with GroupBlog type.
+	 * Update BuddyPress Activity CSS class with Group Blog Type.
 	 *
 	 * @since 3.3
 	 *
@@ -157,17 +157,17 @@ if ( ! function_exists( 'commentpress_bp_activity_css_class' ) ) :
 	 */
 	function commentpress_bp_activity_css_class( $existing_class ) {
 
-		// Init group blog type.
+		// Init Group Blog Type.
 		$groupblog_type = '';
 
 		// Get current item.
 		global $activities_template;
 		$current_activity = $activities_template->activity;
 
-		// For group activity.
+		// For Group Activity.
 		if ( $current_activity->component == 'groups' ) {
 
-			// Get group blogtype.
+			// Get Group Blog Type.
 			$groupblog_type = groups_get_groupmeta( $current_activity->item_id, 'groupblogtype' );
 
 			// Add space before if we have it.
@@ -189,7 +189,7 @@ endif;
 if ( ! function_exists( 'commentpress_bp_blog_css_class' ) ) :
 
 	/**
-	 * Update BuddyPress Sites Directory blog item CSS class with GroupBlog type.
+	 * Update BuddyPress Sites Directory Blog item CSS class with Group Blog Type.
 	 *
 	 * @since 3.3
 	 *
@@ -198,7 +198,7 @@ if ( ! function_exists( 'commentpress_bp_blog_css_class' ) ) :
 	 */
 	function commentpress_bp_blog_css_class( $classes ) {
 
-		// Bail if not a groupblog.
+		// Bail if not a Group Blog.
 		if ( ! function_exists( 'get_groupblog_group_id' ) ) {
 			return $classes;
 		}
@@ -206,11 +206,11 @@ if ( ! function_exists( 'commentpress_bp_blog_css_class' ) ) :
 		// Access BuddyPress object.
 		global $blogs_template;
 
-		// Get group ID.
+		// Get Group ID.
 		$group_id = get_groupblog_group_id( $blogs_template->blog->blog_id );
 		if ( isset( $group_id ) && is_numeric( $group_id ) && $group_id > 0 ) {
 
-			// Get group blogtype.
+			// Get Group Blog Type.
 			$groupblog_type = groups_get_groupmeta( $group_id, 'groupblogtype' );
 
 			// Add classes if we get one.
@@ -233,7 +233,7 @@ endif;
 if ( ! function_exists( 'commentpress_bp_group_css_class' ) ) :
 
 	/**
-	 * Update BuddyPress Groups Directory group item CSS class with GroupBlog type.
+	 * Update BuddyPress Groups Directory Group item CSS class with Group Blog Type.
 	 *
 	 * @since 3.3
 	 *
@@ -247,7 +247,7 @@ if ( ! function_exists( 'commentpress_bp_group_css_class' ) ) :
 			return $classes;
 		}
 
-		// Get group blogtype.
+		// Get Group Blog Type.
 		$groupblog_type = groups_get_groupmeta( bp_get_group_id(), 'groupblogtype' );
 
 		// Add class if we get one.
@@ -268,7 +268,7 @@ endif;
 if ( ! function_exists( 'commentpress_prefix_bp_templates' ) ) :
 
 	/**
-	 * Prefixes BuddyPress pages with the div wrappers that CommentPress Core needs.
+	 * Prefixes BuddyPress Pages with the div wrappers that CommentPress Core needs.
 	 *
 	 * @since 3.3
 	 */
@@ -291,7 +291,7 @@ add_action( 'bp_before_directory_groupsites_page', 'commentpress_prefix_bp_templ
 if ( ! function_exists( 'commentpress_suffix_bp_templates' ) ) :
 
 	/**
-	 * Suffixes BuddyPress pages with the div wrappers that CommentPress Core needs.
+	 * Suffixes BuddyPress Pages with the div wrappers that CommentPress Core needs.
 	 *
 	 * @since 3.3
 	 */

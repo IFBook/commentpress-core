@@ -90,8 +90,8 @@
 
 					<?php
 
-					// NOTE: Comment permalinks are filtered if the comment is not on the first page
-					// in a multipage post... see: commentpress_multipage_comment_link in functions.php
+					// NOTE: Comment permalinks are filtered if the comment is not on the first Page
+					// in a multipage Post... see: commentpress_multipage_comment_link in functions.php
 					echo commentpress_multipager();
 
 					?>
@@ -114,7 +114,7 @@
 					// If we have the plugin enabled.
 					if ( is_object( $commentpress_core ) ) {
 
-						// Get page num.
+						// Get Page num.
 						$num = $commentpress_core->nav->get_page_number( get_the_ID() );
 
 						// If we get one.
@@ -128,7 +128,7 @@
 							// Wrap number.
 							$element = '<span class="page_num_bottom">' . $num . '</span>';
 
-							// Add page number.
+							// Add Page number.
 							?><div class="running_header_bottom"><?php
 								echo sprintf( __( 'Page %s', 'commentpress-core' ), $element );
 							?></div><?php
@@ -148,7 +148,7 @@
 			<div class="page_nav_lower">
 			<?php
 
-			// Include page_navigation again.
+			// Include Page Navigation again.
 			if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 			?>

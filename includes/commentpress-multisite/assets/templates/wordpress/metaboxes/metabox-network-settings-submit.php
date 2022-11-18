@@ -1,8 +1,8 @@
 <?php
 /**
- * Multisite Network Settings page "Submit" metabox template.
+ * Multisite Network Settings Page "Submit" metabox template.
  *
- * Handles markup for the Multisite Network Settings page "Submit" metabox.
+ * Handles markup for the Multisite Network Settings Page "Submit" metabox.
  *
  * @package CommentPress_Core
  */

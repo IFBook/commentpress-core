@@ -2,7 +2,7 @@
 /**
  * CommentPress Core Parser class.
  *
- * Handles parsing content and comments.
+ * Handles parsing content and Comments.
  *
  * @package CommentPress_Core
  */
@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * CommentPress Core Parser Class.
  *
- * This class is a wrapper for parsing content and comments.
+ * This class is a wrapper for parsing content and Comments.
  *
  * The aim is to migrate parsing of content to DOM parsing instead of regex.
  * When converted to DOM parsing, this class will include two other classes,
@@ -39,34 +39,34 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $text_signatures The text signatures array.
+	 * @var array $text_signatures The Text Signatures array.
 	 */
 	public $text_signatures = [];
 
 	/**
-	 * All comments array.
+	 * All Comments array.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $comments_all The all comments array.
+	 * @var array $comments_all The array of all Comments.
 	 */
 	public $comments_all = [];
 
 	/**
-	 * Approved comments array.
+	 * Approved Comments array.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $comments_approved The approved comments array.
+	 * @var array $comments_approved The approved Comments array.
 	 */
 	public $comments_approved = [];
 
 	/**
-	 * Sorted comments array.
+	 * Sorted Comments array.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $comments_sorted The sorted comments array.
+	 * @var array $comments_sorted The sorted Comments array.
 	 */
 	public $comments_sorted = [];
 
@@ -85,7 +85,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.8.10
 	 * @access public
-	 * @var str $formatter The type of formatter ('tag', 'line' or 'block').
+	 * @var str $formatter The type of Formatter ('tag', 'line' or 'block').
 	 */
 	public $formatter = 'tag';
 
@@ -94,7 +94,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.8.10
 	 * @access public
-	 * @var str $block_name The name of the block (e.g. "paragraph", "line" etc).
+	 * @var str $block_name The name of the Block (e.g. "paragraph", "line" etc).
 	 */
 	public $block_name = '';
 
@@ -189,7 +189,7 @@ class CommentPress_Core_Parser {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Intercept content and modify based on paragraphs, blocks or lines.
+	 * Intercept content and modify based on Paragraphs, Blocks or Lines.
 	 *
 	 * @since 3.0
 	 *
@@ -198,10 +198,10 @@ class CommentPress_Core_Parser {
 	 */
 	public function the_content( $content ) {
 
-		// Reference our post.
+		// Reference our Post.
 		global $post;
 
-		// Retrieve all comments and store.
+		// Retrieve all Comments and store.
 		// We need this data multiple times and only need to get it once.
 		$this->comments_all = $this->core->db->get_all_comments( $post->ID );
 
@@ -219,7 +219,7 @@ class CommentPress_Core_Parser {
 		// Check for our quicktag.
 		$has_quicktag = $this->has_comment_block_quicktag( $content );
 
-		// Determine formatter.
+		// Determine Formatter.
 		if ( ! $has_quicktag ) {
 
 			// Auto-format content.
@@ -247,13 +247,13 @@ class CommentPress_Core_Parser {
 		// Determine "lexia" names.
 		$this->lexia_set( $this->formatter );
 
-		// Act on formatter.
+		// Act on Formatter.
 		switch ( $this->formatter ) {
 
 			// For poetry.
 			case 'line':
 
-				// Generate text signatures array.
+				// Generate Text Signatures array.
 				$this->text_signatures = $this->generate_line_signatures( $content );
 
 				// Only continue parsing if we have an array of sigs.
@@ -269,7 +269,7 @@ class CommentPress_Core_Parser {
 			// For general prose.
 			case 'tag':
 
-				// Generate text signatures array.
+				// Generate Text Signatures array.
 				$this->text_signatures = $this->generate_text_signatures( $content, 'p|ul|ol' );
 
 				// Only continue parsing if we have an array of sigs.
@@ -282,10 +282,10 @@ class CommentPress_Core_Parser {
 
 				break;
 
-			// For blocks.
+			// For Blocks.
 			case 'block':
 
-				// Generate text signatures array.
+				// Generate Text Signatures array.
 				$this->text_signatures = $this->generate_block_signatures( $content );
 
 				// Only parse content if we have an array of sigs.
@@ -309,16 +309,16 @@ class CommentPress_Core_Parser {
 	}
 
 	/**
-	 * Get comments sorted by text signature and paragraph.
+	 * Get Comments sorted by Text Signature and Paragraph.
 	 *
 	 * @since 3.0
 	 *
-	 * @param int $post_ID The numeric ID of the post.
-	 * @return array $comments The sorted comments array.
+	 * @param int $post_ID The numeric ID of the Post.
+	 * @return array $comments The sorted Comments array.
 	 */
 	public function get_sorted_comments( $post_ID ) {
 
-		// Have we already sorted the comments?
+		// Have we already sorted the Comments?
 		if ( ! empty( $this->comments_sorted ) ) {
 
 			// --<
@@ -332,15 +332,15 @@ class CommentPress_Core_Parser {
 	}
 
 	/**
-	 * Store the name of the "block" for paragraphs, blocks or lines.
+	 * Store the name of the "block" for Paragraphs, Blocks or Lines.
 	 *
 	 * @since 3.8.10
 	 *
-	 * @param str $formatter The formatter.
+	 * @param str $formatter The Formatter.
 	 */
 	public function lexia_set( $formatter ) {
 
-		// Set block identifier.
+		// Set Block identifier.
 		switch ( $formatter ) {
 
 			case 'block':
@@ -359,24 +359,24 @@ class CommentPress_Core_Parser {
 		}
 
 		/**
-		 * Allow filtering of block name by formatter.
+		 * Allow filtering of Block name by Formatter.
 		 *
 		 * @since 3.8.10
 		 *
-		 * @param str $block_name The existing name of the block.
-		 * @param str $block_name The type of block.
-		 * @return str $block_name The modified name of the block.
+		 * @param str $block_name The existing name of the Block.
+		 * @param str $block_name The type of Block.
+		 * @return str $block_name The modified name of the Block.
 		 */
 		$this->block_name = apply_filters( 'commentpress_lexia_block_name', $block_name, $formatter );
 
 	}
 
 	/**
-	 * Get the name of the "block" for paragraphs, blocks or lines.
+	 * Get the name of the "block" for Paragraphs, Blocks or Lines.
 	 *
 	 * @since 3.8.10
 	 *
-	 * @return str $block_name The name of the block.
+	 * @return str $block_name The name of the Block.
 	 */
 	public function lexia_get() {
 
@@ -392,7 +392,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The post content.
+	 * @param str $content The Post content.
 	 * @param str $tag The tag to filter by.
 	 * @return str $content the parsed content.
 	 */
@@ -404,7 +404,7 @@ class CommentPress_Core_Parser {
 		// Parse embedded quotes.
 		$content = $this->parse_blockquotes_in_paras( $content );
 
-		// Get our paragraphs.
+		// Get our Paragraphs.
 		$matches = $this->get_text_matches( $content, $tag );
 
 		// Kick out if we don't have any.
@@ -412,13 +412,13 @@ class CommentPress_Core_Parser {
 			return $content;
 		}
 
-		// Reference our post.
+		// Reference our Post.
 		global $post;
 
-		// Get sorted comments and store.
+		// Get sorted Comments and store.
 		$this->comments_sorted = $this->sorted_comments_get( $post->ID );
 
-		// Init starting paragraph number.
+		// Init starting Paragraph Number.
 		$start_num = 1;
 
 		// Set key.
@@ -432,16 +432,16 @@ class CommentPress_Core_Parser {
 
 		}
 
-		// We already have our text signatures, so set flag.
+		// We already have our Text Signatures, so set flag.
 		$sig_key = 0;
 
 		// Run through 'em.
 		foreach ( $matches as $paragraph ) {
 
-			// Get a signature for the paragraph.
+			// Get a signature for the Paragraph.
 			$text_signature = $this->text_signatures[ $sig_key ];
 
-			// Construct paragraph number.
+			// Construct Paragraph Number.
 			$para_num = $sig_key + $start_num;
 
 			// Increment.
@@ -458,7 +458,7 @@ class CommentPress_Core_Parser {
 				$para_num
 			);
 
-			// Get paragraph icon.
+			// Get Paragraph icon.
 			$paragraph_icon = $this->core->display->get_paragraph_icon(
 				$comment_count,
 				$text_signature,
@@ -639,16 +639,16 @@ class CommentPress_Core_Parser {
 			 *
 			 * $content = str_replace( $paragraph, $block, $content );
 			 *
-			 * This prevents repeated paragraphs from being blanket replaced.
+			 * This prevents repeated Paragraphs from being blanket replaced.
 			 */
 
-			// Prepare paragraph for preg_replace.
+			// Prepare Paragraph for preg_replace.
 			$prepared_para = preg_quote( $paragraph, '/' );
 
 			// Only once please.
 			$limit = 1;
 
-			// Replace the paragraph in the original context, preserving all other content.
+			// Replace the Paragraph in the original context, preserving all other content.
 			$content = preg_replace(
 				'/' . $prepared_para . '/',
 				$block,
@@ -668,7 +668,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The post content.
+	 * @param str $content The Post content.
 	 * @param str $tag The tag to filter by.
 	 * @return array $matches The ordered array of matched items.
 	 */
@@ -681,7 +681,7 @@ class CommentPress_Core_Parser {
 		$filtered = $this->filter_jetpack_sharing( $filtered );
 
 		/*
-		 * Get our paragraphs.
+		 * Get our Paragraphs.
 		 *
 		 * This is needed to split regex into two strings since some IDEs don't
 		 * like PHP closing tags, even they are part of a regex and not actually
@@ -700,13 +700,13 @@ class CommentPress_Core_Parser {
 	}
 
 	/**
-	 * Parses the content by tag and builds text signatures array.
+	 * Parses the content by tag and builds Text Signatures array.
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The post content.
+	 * @param str $content The Post content.
 	 * @param str $tag The tag to filter by.
-	 * @return array $text_signatures The ordered array of text signatures.
+	 * @return array $text_signatures The ordered array of Text Signatures.
 	 */
 	private function generate_text_signatures( $content, $tag = 'p|ul|ol' ) {
 
@@ -724,7 +724,7 @@ class CommentPress_Core_Parser {
 		// Parse standalone captioned images.
 		$content = $this->parse_captions( $content );
 
-		// Get our paragraphs.
+		// Get our Paragraphs.
 		$matches = $this->get_text_matches( $content, $tag );
 
 		// Kick out if we don't have any.
@@ -744,7 +744,7 @@ class CommentPress_Core_Parser {
 		// Run through 'em.
 		foreach ( $matches as $paragraph ) {
 
-			// Get a signature for the paragraph.
+			// Get a signature for the Paragraph.
 			$text_signature = $this->generate_text_signature( $paragraph );
 
 			// Do we have one already?
@@ -782,11 +782,11 @@ class CommentPress_Core_Parser {
 	}
 
 	/**
-	 * Parse the content by line (<br />).
+	 * Parse the content by Line (<br />).
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The post content.
+	 * @param str $content The Post content.
 	 * @return str $content The parsed content.
 	 */
 	private function parse_lines( $content ) {
@@ -794,7 +794,7 @@ class CommentPress_Core_Parser {
 		// Parse standalone captioned images.
 		$content = $this->parse_captions( $content );
 
-		// Get our lines.
+		// Get our Lines.
 		$matches = $this->get_line_matches( $content );
 
 		// Kick out if we don't have any.
@@ -802,13 +802,13 @@ class CommentPress_Core_Parser {
 			return $content;
 		}
 
-		// Reference our post.
+		// Reference our Post.
 		global $post;
 
-		// Get sorted comments and store.
+		// Get sorted Comments and store.
 		$this->comments_sorted = $this->sorted_comments_get( $post->ID );
 
-		// Init starting paragraph number.
+		// Init starting Paragraph Number.
 		$start_num = 1;
 
 		// Set key.
@@ -822,7 +822,7 @@ class CommentPress_Core_Parser {
 
 		}
 
-		// We already have our text signatures, so set flag.
+		// We already have our Text Signatures, so set flag.
 		$sig_key = 0;
 
 		// Init our content array.
@@ -846,20 +846,20 @@ class CommentPress_Core_Parser {
 
 					// Line commenting.
 
-					// Get a signature for the line.
+					// Get a signature for the Line.
 					$text_signature = $this->text_signatures[ $sig_key ];
 
-					// Construct paragraph number.
+					// Construct Paragraph Number.
 					$para_num = $sig_key + $start_num;
 
 					// Increment.
 					$sig_key++;
 
 					// Get comment count.
-					// NB: the sorted array contains whole page as key 0, so we use the incremented value.
+					// NB: the sorted array contains "Whole Page" as key 0, so we use the incremented value.
 					$comment_count = count( $this->comments_sorted[ $text_signature ] );
 
-					// Get paragraph icon.
+					// Get Paragraph icon.
 					$paragraph_icon = $this->core->display->get_paragraph_icon(
 						$comment_count,
 						$text_signature,
@@ -867,14 +867,14 @@ class CommentPress_Core_Parser {
 						$para_num
 					);
 
-					// Get opening tag markup for this line.
+					// Get opening tag markup for this Line.
 					$opening_tag = $this->core->display->get_para_tag(
 						$text_signature,
 						$paragraph_icon,
 						'span'
 					);
 
-					// Assign opening tag markup to line.
+					// Assign opening tag markup to Line.
 					$line = $opening_tag . $line;
 
 					// Get comment icon.
@@ -906,11 +906,11 @@ class CommentPress_Core_Parser {
 	}
 
 	/**
-	 * Splits the content into an array by line.
+	 * Splits the content into an array by Line.
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The post content.
+	 * @param str $content The Post content.
 	 * @return array $output_array The ordered array of matched items.
 	 */
 	private function get_line_matches( $content ) {
@@ -921,7 +921,7 @@ class CommentPress_Core_Parser {
 		// Filter out Sharedaddy markup.
 		$filtered = $this->filter_jetpack_sharing( $filtered );
 
-		// Wrap all lines with spans.
+		// Wrap all Lines with spans.
 
 		// Get all instances.
 		$pattern = [
@@ -964,12 +964,12 @@ class CommentPress_Core_Parser {
 	}
 
 	/**
-	 * Parses the content by line (<br />) and builds text signatures array.
+	 * Parses the content by Line (<br />) and builds Text Signatures array.
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The post content.
-	 * @return array $text_signatures The ordered array of text signatures.
+	 * @param str $content The Post content.
+	 * @return array $text_signatures The ordered array of Text Signatures.
 	 */
 	private function generate_line_signatures( $content ) {
 
@@ -984,7 +984,7 @@ class CommentPress_Core_Parser {
 
 		}
 
-		// Wrap all lines with spans.
+		// Wrap all Lines with spans.
 
 		// Parse standalone captioned images.
 		$content = $this->parse_captions( $content );
@@ -1003,7 +1003,7 @@ class CommentPress_Core_Parser {
 
 		}
 
-		// Reference our post.
+		// Reference our Post.
 		global $post;
 
 		// Init our content array.
@@ -1027,7 +1027,7 @@ class CommentPress_Core_Parser {
 
 					// Line commenting.
 
-					// Get a signature for the paragraph.
+					// Get a signature for the Paragraph.
 					$text_signature = $this->generate_text_signature( $paragraph );
 
 					// Do we have one already?
@@ -1069,11 +1069,11 @@ class CommentPress_Core_Parser {
 	}
 
 	/**
-	 * Parses the content by comment block.
+	 * Parses the content by Comment Block.
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The post content.
+	 * @param str $content The Post content.
 	 * @return str $content The parsed content.
 	 */
 	private function parse_blocks( $content ) {
@@ -1081,7 +1081,7 @@ class CommentPress_Core_Parser {
 		// Parse standalone captioned images.
 		$content = $this->parse_captions( $content );
 
-		// Get our lines.
+		// Get our Lines.
 		$matches = $this->get_block_matches( $content );
 
 		// Kick out if we don't have any.
@@ -1089,13 +1089,13 @@ class CommentPress_Core_Parser {
 			return $content;
 		}
 
-		// Reference our post.
+		// Reference our Post.
 		global $post;
 
-		// Get sorted comments and store.
+		// Get sorted Comments and store.
 		$this->comments_sorted = $this->sorted_comments_get( $post->ID );
 
-		// Init starting paragraph number.
+		// Init starting Paragraph Number.
 		$start_num = 1;
 
 		// Set key.
@@ -1109,7 +1109,7 @@ class CommentPress_Core_Parser {
 
 		}
 
-		// We already have our text signatures, so set flag.
+		// We already have our Text Signatures, so set flag.
 		$sig_key = 0;
 
 		// Init content array.
@@ -1121,17 +1121,17 @@ class CommentPress_Core_Parser {
 			// Is there any content?
 			if ( $paragraph != '' ) {
 
-				// Get a signature for the paragraph.
+				// Get a signature for the Paragraph.
 				$text_signature = $this->text_signatures[ $sig_key ];
 
-				// Construct paragraph number.
+				// Construct Paragraph Number.
 				$para_num = $sig_key + $start_num;
 
 				// Increment.
 				$sig_key++;
 
 				// Get comment count.
-				// NB: the sorted array contains whole page as key 0, so we use the incremented value.
+				// NB: the sorted array contains "Whole Page" as key 0, so we use the incremented value.
 				$comment_count = count( $this->comments_sorted[ $text_signature ] );
 
 				// Get comment icon.
@@ -1142,7 +1142,7 @@ class CommentPress_Core_Parser {
 					$para_num
 				);
 
-				// Get paragraph icon.
+				// Get Paragraph icon.
 				$paragraph_icon = $this->core->display->get_paragraph_icon(
 					$comment_count,
 					$text_signature,
@@ -1157,7 +1157,7 @@ class CommentPress_Core_Parser {
 					'div'
 				);
 
-				// Assign icons to blocks.
+				// Assign icons to Blocks.
 				$paragraph = $icon_html . $paragraph . '</div>' . "\n\n\n\n";
 
 				// Add to content array.
@@ -1176,11 +1176,11 @@ class CommentPress_Core_Parser {
 	}
 
 	/**
-	 * Splits the content into an array by block.
+	 * Splits the content into an array by Block.
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The post content.
+	 * @param str $content The Post content.
 	 * @return array $output_array The ordered array of matched items.
 	 */
 	private function get_block_matches( $content ) {
@@ -1193,8 +1193,8 @@ class CommentPress_Core_Parser {
 
 		/*
 		 *
-		 * Although wp_texturize() does an okay job with creating paragraphs,
-		 *  comments tend to screw things up. let's try and fix.
+		 * Although wp_texturize() does an okay job with creating Paragraphs,
+		 *  Comments tend to screw things up. let's try and fix.
 		 */
 
 		/*
@@ -1283,21 +1283,21 @@ class CommentPress_Core_Parser {
 			$filtered
 		);
 
-		// Repair some oddities: empty paragraphs with whitespace inside.
+		// Repair some oddities: empty Paragraphs with whitespace inside.
 		$filtered = preg_replace(
 			'/<p>\s+<\/p>\s+/',
 			'',
 			$filtered
 		);
 
-		// Repair some oddities: empty paragraphs without whitespace inside.
+		// Repair some oddities: empty Paragraphs without whitespace inside.
 		$filtered = preg_replace(
 			'/<p><\/p>\s+/',
 			'',
 			$filtered
 		);
 
-		// Repair some oddities: any remaining empty paragraphs.
+		// Repair some oddities: any remaining empty Paragraphs.
 		$filtered = preg_replace(
 			'/<p><\/p>/',
 			'',
@@ -1319,12 +1319,12 @@ class CommentPress_Core_Parser {
 	}
 
 	/**
-	 * Parses the content by comment block and generates text signature array.
+	 * Parses the content by Comment Block and generates Text Signature array.
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The post content.
-	 * @return array $text_signatures The ordered array of text signatures.
+	 * @param str $content The Post content.
+	 * @return array $text_signatures The ordered array of Text Signatures.
 	 */
 	private function generate_block_signatures( $content ) {
 
@@ -1342,7 +1342,7 @@ class CommentPress_Core_Parser {
 		// Parse standalone captioned images.
 		$content = $this->parse_captions( $content );
 
-		// Get blocks array.
+		// Get Blocks array.
 		$matches = $this->get_block_matches( $content );
 
 		// Init ( [ 'text_signature' => n ], where n is the number of duplicates ).
@@ -1354,7 +1354,7 @@ class CommentPress_Core_Parser {
 			// Is there any content?
 			if ( $paragraph != '' ) {
 
-				// Get a signature for the paragraph.
+				// Get a signature for the Paragraph.
 				$text_signature = $this->generate_text_signature( $paragraph );
 
 				// Do we have one already?
@@ -1398,8 +1398,8 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The post content.
-	 * @return str $content The modified post content.
+	 * @param str $content The Post content.
+	 * @return str $content The modified Post content.
 	 */
 	private function has_comment_block_quicktag( $content ) {
 
@@ -1424,8 +1424,8 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The post content.
-	 * @return str $content The modified post content.
+	 * @param str $content The Post content.
+	 * @return str $content The modified Post content.
 	 */
 	private function strip_comment_block_quicktag( $content ) {
 
@@ -1463,8 +1463,8 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The post content.
-	 * @return str $content The modified post content.
+	 * @param str $content The Post content.
+	 * @return str $content The modified Post content.
 	 */
 	private function strip_shortcodes( $content ) {
 
@@ -1486,7 +1486,7 @@ class CommentPress_Core_Parser {
 		<span id="more-689"></span><br />
 		Here&#8217;s the rest of the post</p>
 
-		Is the intention here that the teaser is a paragraph? I'd say so.
+		Is the intention here that the teaser is a Paragraph? I'd say so.
 
 		What about (2):
 
@@ -1504,7 +1504,7 @@ class CommentPress_Core_Parser {
 		<p>Here&#8217;s the teaser<br />
 		<span id="more-689"></span>Here&#8217;s the rest of the post</p>
 
-		Now, for our purposes, since we currently use the excerpt in the blog archives, only
+		Now, for our purposes, since we currently use the excerpt in the Blog Archives, only
 		(1) and (2) are truly problematic - because they cause visible formatting. (3) & (4)
 		do not currently get filtered out because the spans are inline - but they do imply
 		that the content before and after should be self-contained. As a result, I think it
@@ -1516,7 +1516,7 @@ class CommentPress_Core_Parser {
 		-----------------
 
 		The Codex says "Include <!--noteaser--> in the post text, immediately after the <!--more-->"
-		which really means *on the same line*. When this is done, our content looks like this (1):
+		which really means *on the same Line*. When this is done, our content looks like this (1):
 
 		<p><span id="more-691"></span><!--noteaser--></p>
 		<p>And this is the rest of the post blah</p>
@@ -1608,12 +1608,12 @@ class CommentPress_Core_Parser {
 	}
 
 	/**
-	 * Generates a text signature based on the content of a paragraph.
+	 * Generates a Text Signature based on the content of a Paragraph.
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $text The text of a paragraph.
-	 * @return str $text_signature The generated text signature.
+	 * @param str $text The text of a Paragraph.
+	 * @return str $text_signature The generated Text Signature.
 	 */
 	private function generate_text_signature( $text ) {
 
@@ -1634,7 +1634,7 @@ class CommentPress_Core_Parser {
 			$text_signature .= substr( $word, 0, 1 );
 
 			// Limit to 250 chars.
-			// NB: this is because we have changed the format of text signatures by adding numerals
+			// NB: this is because we have changed the format of Text Signatures by adding numerals
 			// when there are duplicates. Duplicates add at least 2 characters, so there is the
 			// (admittedly remote) possibility of exceeding the varchar(255) character limit.
 			if ( $key > 250 ) {
@@ -1649,12 +1649,12 @@ class CommentPress_Core_Parser {
 	}
 
 	/**
-	 * Prevents the JetPack Sharedaddy list and paragraph from being parsed.
+	 * Prevents the JetPack Sharedaddy list and Paragraph from being parsed.
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $content The post content.
-	 * @return str $content The filtered post content.
+	 * @param str $content The Post content.
+	 * @return str $content The filtered Post content.
 	 */
 	private function filter_jetpack_sharing( $content ) {
 
@@ -1689,8 +1689,8 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The post content.
-	 * @return str $content The filtered post content.
+	 * @param str $content The Post content.
+	 * @return str $content The filtered Post content.
 	 */
 	private function filter_twitter_embeds( $content ) {
 
@@ -1732,12 +1732,12 @@ class CommentPress_Core_Parser {
 	 * Previously, there was a weakness in the means by which standalone captions
 	 * were detected: it was assumed that standalones were always preceded by a
 	 * newline, but this is not always true. When they are the first element of
-	 * the post content, they can be standalone too. Props: Ralph Bloch.
+	 * the Post content, they can be standalone too. Props: Ralph Bloch.
 	 *
 	 * @since 3.8
 	 *
-	 * @param str $content The post content.
-	 * @return str $content The filtered post content.
+	 * @param str $content The Post content.
+	 * @return str $content The filtered Post content.
 	 */
 	private function parse_captions( $content ) {
 
@@ -1767,7 +1767,7 @@ class CommentPress_Core_Parser {
 	}
 
 	/**
-	 * Wraps processed audio shortcodes in a paragraph tag.
+	 * Wraps processed audio shortcodes in a Paragraph tag.
 	 *
 	 * @since 3.9.3
 	 *
@@ -1785,7 +1785,7 @@ class CommentPress_Core_Parser {
 	}
 
 	/**
-	 * Wraps processed video shortcodes in a paragraph tag.
+	 * Wraps processed video shortcodes in a Paragraph tag.
 	 *
 	 * @since 3.9.3
 	 *
@@ -1811,8 +1811,8 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param string $content The post content.
-	 * @return string $content The filtered post content.
+	 * @param string $content The Post content.
+	 * @return string $content The filtered Post content.
 	 */
 	private function parse_blockquotes_in_paras( $content ) {
 
@@ -1843,11 +1843,11 @@ class CommentPress_Core_Parser {
 	}
 
 	/**
-	 * Get comments sorted by text signature and paragraph.
+	 * Get Comments sorted by Text Signature and Paragraph.
 	 *
 	 * @since 3.0
 	 *
-	 * @param int $post_ID The numeric ID of the post.
+	 * @param int $post_ID The numeric ID of the Post.
 	 * @return array $sorted_comments The array of comment data.
 	 */
 	public function sorted_comments_get( $post_ID ) {
@@ -1855,24 +1855,24 @@ class CommentPress_Core_Parser {
 		// Init return.
 		$sorted_comments = [];
 
-		// Get all comments.
+		// Get all Comments.
 		$comments = $this->comments_all;
 
-		// Filter out any multipage comments not on this page.
+		// Filter out any multipage Comments not on this Page.
 		$comments = $this->multipage_comment_filter( $comments );
 
 		// Get our signatures.
 		$sigs = $this->core->db->get_text_sigs();
 
-		// Assign comments to text signatures.
+		// Assign Comments to Text Signatures.
 		$assigned = $this->assign_comments( $comments, $sigs );
 
 		/*
-		 * NOTE: $assigned is an array with sigs as keys and array of comments
+		 * NOTE: $assigned is an array with sigs as keys and array of Comments
 		 * as value it may be empty.
 		 */
 
-		// If we have any comments on the whole page.
+		// If we have any Comments on the whole Page.
 		if ( isset( $assigned['WHOLE_PAGE_OR_POST_COMMENTS'] ) ) {
 
 			// Add them first.
@@ -1885,16 +1885,16 @@ class CommentPress_Core_Parser {
 
 		}
 
-		// We must have text signatures.
+		// We must have Text Signatures.
 		if ( ! empty( $sigs ) ) {
 
-			// Then add  in the order of our text signatures.
+			// Then add  in the order of our Text Signatures.
 			foreach ( $sigs as $text_signature ) {
 
 				// If we have any assigned.
 				if ( isset( $assigned[ $text_signature ] ) ) {
 
-					// Append assigned comments.
+					// Append assigned Comments.
 					$sorted_comments[ $text_signature ] = $assigned[ $text_signature ];
 
 				} else {
@@ -1927,12 +1927,12 @@ class CommentPress_Core_Parser {
 	}
 
 	/**
-	 * Filter comments to find comments for the current page of a multipage post.
+	 * Filter Comments to find Comments for the current Page of a multipage Post.
 	 *
 	 * @since 3.4
 	 *
 	 * @param array $comments The array of comment objects.
-	 * @return array $filtered The array of comments for the current page.
+	 * @return array $filtered The array of Comments for the current Page.
 	 */
 	private function multipage_comment_filter( $comments ) {
 
@@ -1942,7 +1942,7 @@ class CommentPress_Core_Parser {
 		// Init return.
 		$filtered = [];
 
-		// Kick out if no comments.
+		// Kick out if no Comments.
 		if ( ! is_array( $comments ) || empty( $comments ) ) {
 			return $filtered;
 		}
@@ -1952,7 +1952,7 @@ class CommentPress_Core_Parser {
 			return $comments;
 		}
 
-		// Now add only comments that are on this page or are page-level.
+		// Now add only Comments that are on this Page or are Page-level.
 		foreach ( $comments as $comment ) {
 
 			// If it has a text sig.
@@ -1964,7 +1964,7 @@ class CommentPress_Core_Parser {
 				// Does it have a comment meta value?
 				if ( get_comment_meta( $comment->comment_ID, $key, true ) != '' ) {
 
-					// Get the page number.
+					// Get the Page number.
 					$page_num = get_comment_meta( $comment->comment_ID, $key, true );
 
 					// Is it the current one?
@@ -1992,30 +1992,30 @@ class CommentPress_Core_Parser {
 	}
 
 	/**
-	 * Filter comments by text signature.
+	 * Filter Comments by Text Signature.
 	 *
 	 * @since 3.0
 	 *
 	 * @param array $comments The array of comment objects.
-	 * @param array $text_signatures The array of text signatures.
-	 * @param integer $confidence The confidence level of paragraph identity - default 90%.
-	 * @return array $assigned The array with text signatures as keys and array of comments as values.
+	 * @param array $text_signatures The array of Text Signatures.
+	 * @param integer $confidence The confidence level of Paragraph identity - default 90%.
+	 * @return array $assigned The array with Text Signatures as keys and array of Comments as values.
 	 */
 	private function assign_comments( $comments, $text_signatures, $confidence = 90 ) {
 
 		// Init returned array.
-		// NB: we use a very unlikely key for page-level comments: WHOLE_PAGE_OR_POST_COMMENTS.
+		// NB: we use a very unlikely key for Page-level Comments: WHOLE_PAGE_OR_POST_COMMENTS.
 		$assigned = [];
 
-		// Kick out if no comments.
+		// Kick out if no Comments.
 		if ( ! is_array( $comments ) || empty( $comments ) ) {
 			return $assigned;
 		}
 
-		// Run through our comments.
+		// Run through our Comments.
 		foreach ( $comments as $comment ) {
 
-			// Test for empty comment text signature.
+			// Test for empty comment Text Signature.
 			if ( ! is_null( $comment->comment_signature ) && $comment->comment_signature != '' ) {
 
 				// Do we have an exact match in the text sigs array?
@@ -2030,7 +2030,7 @@ class CommentPress_Core_Parser {
 					// Init possibles array.
 					$possibles = [];
 
-					// Find the nearest matching text signature.
+					// Find the nearest matching Text Signature.
 					foreach ( $text_signatures as $text_signature ) {
 
 						// Compare strings.
@@ -2063,7 +2063,7 @@ class CommentPress_Core_Parser {
 						// Set property in case we need it.
 						$comment->orphan = true;
 
-						// Clear text signature.
+						// Clear Text Signature.
 						$comment->comment_signature = '';
 
 						// Is it a pingback or trackback?
@@ -2074,7 +2074,7 @@ class CommentPress_Core_Parser {
 
 						} else {
 
-							// We have comment with no text sig - assign to page.
+							// We have comment with no text sig - assign to Page.
 							$assigned['WHOLE_PAGE_OR_POST_COMMENTS'][] = $comment;
 
 						}
@@ -2093,7 +2093,7 @@ class CommentPress_Core_Parser {
 
 				} else {
 
-					// We have comment with no text sig - assign to page.
+					// We have comment with no text sig - assign to Page.
 					$assigned['WHOLE_PAGE_OR_POST_COMMENTS'][] = $comment;
 
 				}

@@ -2,7 +2,7 @@
 /**
  * CommentPress Multisite Network Settings class.
  *
- * Handles Network Settings page functionality in CommentPress Multisite.
+ * Handles Network Settings Page functionality in CommentPress Multisite.
  *
  * @package CommentPress_Core
  */
@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * CommentPress Multisite Network Settings Class.
  *
- * This class handles Network Settings page functionality in CommentPress Multisite.
+ * This class handles Network Settings Page functionality in CommentPress Multisite.
  *
  * @since 3.3
  */
@@ -117,7 +117,7 @@ class CommentPress_Multisite_Settings_Network {
 	 */
 	public function admin_menu() {
 
-		// Check user permissions.
+		// Check User permissions.
 		if ( ! $this->page_capability() ) {
 			return;
 		}
@@ -143,7 +143,7 @@ class CommentPress_Multisite_Settings_Network {
 	}
 
 	/**
-	 * Enqueue Settings page CSS.
+	 * Enqueue Settings Page CSS.
 	 *
 	 * @since 4.0
 	 */
@@ -152,7 +152,7 @@ class CommentPress_Multisite_Settings_Network {
 	}
 
 	/**
-	 * Enqueue Settings page Javascript.
+	 * Enqueue Settings Page Javascript.
 	 *
 	 * @since 4.0
 	 */
@@ -161,7 +161,7 @@ class CommentPress_Multisite_Settings_Network {
 	}
 
 	/**
-	 * Performs tasks in Settings page header.
+	 * Performs tasks in Settings Page header.
 	 *
 	 * @since 4.0
 	 */
@@ -177,7 +177,7 @@ class CommentPress_Multisite_Settings_Network {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Checks the access capability for this page.
+	 * Checks the access capability for this Page.
 	 *
 	 * @since 4.0
 	 *
@@ -199,7 +199,7 @@ class CommentPress_Multisite_Settings_Network {
 		 */
 		$capability = apply_filters( 'commentpress/multisite/settings/network/page/cap', 'manage_options' );
 
-		// Check user permissions.
+		// Check User permissions.
 		if ( ! current_user_can( $capability ) ) {
 			return false;
 		}
@@ -210,13 +210,13 @@ class CommentPress_Multisite_Settings_Network {
 	}
 
 	/**
-	 * Renders the Network Settings page when core is not enabled.
+	 * Renders the Network Settings Page when core is not enabled.
 	 *
 	 * @since 4.0
 	 */
 	public function page_settings() {
 
-		// Check user permissions.
+		// Check User permissions.
 		if ( ! $this->page_capability() ) {
 			return;
 		}
@@ -311,7 +311,7 @@ class CommentPress_Multisite_Settings_Network {
 			return;
 		}
 
-		// Check user permissions.
+		// Check User permissions.
 		if ( ! $this->page_capability() ) {
 			return;
 		}
@@ -518,7 +518,7 @@ class CommentPress_Multisite_Settings_Network {
 	 */
 	public function form_redirect() {
 
-		// Get Network Settings page URL.
+		// Get Network Settings Page URL.
 		$url = $this->page_settings_url_get();
 
 		// Do the redirect.
@@ -530,7 +530,7 @@ class CommentPress_Multisite_Settings_Network {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Get the URL to access a particular menu page.
+	 * Get the URL to access a particular menu Page.
 	 *
 	 * The URL based on the slug it was registered with. If the slug hasn't been
 	 * registered properly no url will be returned.

@@ -18,13 +18,13 @@ global $commentpress_core;
 	// Do we have the plugin?
 	if ( is_object( $commentpress_core ) ) {
 
-		// NOTE: we need to account for situations where no CommentPress Core special pages exist.
+		// NOTE: we need to account for situations where no CommentPress Core Special Pages exist.
 
 		// Get title ID and URL.
 		$title_id = $commentpress_core->db->option_get( 'cp_welcome_page' );
 		$title_url = $commentpress_core->get_page_url( 'cp_welcome_page' );
 
-		// Use as link to main blog in multisite.
+		// Use as link to main Blog in multisite.
 		if ( is_multisite() ) {
 
 			// Set default link name.
@@ -36,16 +36,16 @@ global $commentpress_core;
 			// Allow plugins to inject links.
 			do_action( 'cp_nav_after_network_home_title' );
 
-			// Link to group in multisite groupblog.
+			// Link to Group in multisite Group Blog.
 			if ( $commentpress_core->is_groupblog() ) {
 
-				// Get current blog ID.
+				// Get current Blog ID.
 				$blog_id = get_current_blog_id();
 
-				// Check if this blog is a group blog.
+				// Check if this Blog is a Group Blog.
 				$group_id = get_groupblog_group_id( $blog_id );
 
-				// When this blog is a groupblog.
+				// When this Blog is a Group Blog.
 				if ( isset( $group_id ) AND is_numeric( $group_id ) AND $group_id > 0 ) {
 
 					$group = groups_get_group( [ 'group_id' => $group_id ] );
@@ -62,7 +62,7 @@ global $commentpress_core;
 
 		} else {
 
-			// Use if blog home is not CommentPress Core welcome page.
+			// Use if Blog home is not CommentPress Core Welcome Page.
 			if ( $title_id != get_option('page_on_front') ) {
 
 				// Set default link name.
@@ -75,7 +75,7 @@ global $commentpress_core;
 
 		}
 
-		// Do we have a title page URL?
+		// Do we have a Title Page URL?
 		if ( !empty( $title_url ) ) {
 
 			// Set default link name.
@@ -88,19 +88,19 @@ global $commentpress_core;
 		// Allow plugins to inject links.
 		do_action( 'cp_nav_before_special_pages' );
 
-		// Show link to general comments page if we have one.
+		// Show link to General Comments Page if we have one.
 		echo $commentpress_core->get_page_link( 'cp_general_comments_page' );
 
-		// Show link to all comments page if we have one.
+		// Show link to All Comments Page if we have one.
 		echo $commentpress_core->get_page_link( 'cp_all_comments_page' );
 
-		// Show link to comments-by-user page if we have one.
+		// Show link to Comments-by-User Page if we have one.
 		echo $commentpress_core->get_page_link( 'cp_comments_by_page' );
 
-		// Show link to document blog page if we have one
+		// Show link to document Blog Page if we have one
 		echo $commentpress_core->get_page_link( 'cp_blog_page' );
 
-		// Show link to document blog archive page if we have one
+		// Show link to document Blog Archive Page if we have one
 		echo $commentpress_core->get_page_link( 'cp_blog_archive_page' );
 
 	}
@@ -110,7 +110,7 @@ global $commentpress_core;
 	// Is this multisite?
 	if ( is_multisite() ) {
 
-		// Can users register?
+		// Can Users register?
 		if ( get_option( 'users_can_register' ) ) {
 
 			// This works for get_site_option( 'registration' ) == 'none' and 'user'
@@ -119,7 +119,7 @@ global $commentpress_core;
 
 		}
 
-		// Multisite signup and blog create.
+		// Multisite signup and Blog create.
 		if (
 			( is_user_logged_in() AND get_site_option( 'registration' ) == 'blog' ) OR
 			get_site_option( 'registration' ) == 'all'
@@ -137,7 +137,7 @@ global $commentpress_core;
 						__( 'Create a new document', 'commentpress-core' )
 					);
 
-					// BuddyPress uses its own signup page.
+					// BuddyPress uses its own Signup Page.
 					$item = '<li><a href="' . bp_get_root_domain() . '/' . bp_get_blogs_root_slug() . '/create/" title="' . $new_site_title . '" id="btn_create">' . $new_site_title . '</a></li>';
 
 				} else {

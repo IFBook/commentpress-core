@@ -34,8 +34,8 @@
 
 					<?php
 
-					// NOTE: Comment permalinks are filtered if the comment is not on the first page
-					// in a multipage post... see: commentpress_multipage_comment_link in functions.php
+					// NOTE: Comment permalinks are filtered if the comment is not on the first Page
+					// in a multipage Post... see: commentpress_multipage_comment_link in functions.php
 					echo commentpress_multipager();
 
 					?>
@@ -64,7 +64,7 @@
 
 						if (('open' == $post->comment_status) AND ('open' == $post->ping_status)) {
 
-							// Both comments and pings are open.
+							// Both Comments and pings are open.
 
 							// Define trackback text.
 							$trackback_text = __( 'trackback', 'commentpress-core' );
@@ -110,7 +110,7 @@
 
 						} elseif (!('open' == $post->comment_status) AND !('open' == $post->ping_status)) {
 
-							// Neither comments nor pings are open.
+							// Neither Comments nor pings are open.
 							_e( 'Both comments and pings are currently closed.', 'commentpress-core' );
 
 							// Add trailing space.

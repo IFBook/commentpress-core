@@ -7,16 +7,16 @@ Template Name: Welcome
 
 global $post;
 
-// "Title Page" always points to the first readable page, unless it is itself.
+// "Title Page" always points to the first readable Page, unless it is itself.
 $next_page_id = $commentpress_core->nav->get_first_page();
 
 // Init.
 $next_page_html = '';
 
-// If the link does not point to this page and we're allowing page nav.
+// If the link does not point to this Page and we're allowing Page nav.
 if ( $next_page_id != $post->ID AND false === $commentpress_core->nav->page_nav_is_disabled() ) {
 
-	// Get page attributes.
+	// Get Page attributes.
 	$title = get_the_title( $next_page_id );
 	$target = get_permalink( $next_page_id );
 
@@ -50,7 +50,7 @@ get_header(); ?>
 
 <?php
 
-// Show feature image.
+// Show Feature Image.
 commentpress_get_feature_image();
 
 ?>
@@ -131,8 +131,8 @@ endif; ?>
 
 	<?php
 
-	// NOTE: Comment permalinks are filtered if the comment is not on the first page
-	// in a multipage post... see: commentpress_multipage_comment_link in functions.php
+	// NOTE: Comment permalinks are filtered if the comment is not on the first Page
+	// in a multipage Post... see: commentpress_multipage_comment_link in functions.php
 	echo commentpress_multipager();
 
 	?>

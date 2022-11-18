@@ -2,7 +2,7 @@
 /**
  * CommentPress Core Admin class.
  *
- * Handles admin settings page functionality in CommentPress Core.
+ * Handles Settings Page functionality in CommentPress Core.
  *
  * @package CommentPress_Core
  */
@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * CommentPress Core Workflow Class.
  *
- * This class handles admin settings page functionality in CommentPress Core.
+ * This class handles Settings Page functionality in CommentPress Core.
  *
  * @since 4.0
  */
@@ -29,20 +29,20 @@ class CommentPress_Core_Settings_Site {
 	public $core;
 
 	/**
-	 * Parent page reference.
+	 * Parent Page reference.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $parent_page The reference to the parent page.
+	 * @var string $parent_page The reference to the parent Page.
 	 */
 	public $parent_page;
 
 	/**
-	 * Parent page slug.
+	 * Parent Page slug.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $parent_page_slug The slug of the parent page.
+	 * @var string $parent_page_slug The slug of the parent Page.
 	 */
 	public $parent_page_slug = 'commentpress_admin';
 
@@ -143,14 +143,14 @@ class CommentPress_Core_Settings_Site {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Add our admin page(s) to the WordPress admin menu.
+	 * Add our Admin Page(s) to the WordPress admin menu.
 	 *
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
 	 */
 	public function admin_menu() {
 
-		// Check user permissions.
+		// Check User permissions.
 		if ( ! $this->page_capability() ) {
 			return;
 		}
@@ -161,14 +161,14 @@ class CommentPress_Core_Settings_Site {
 			// Access globals.
 			global $pagenow;
 
-			// Show on pages other than the CommentPress Core admin page.
+			// Show on Pages other than the CommentPress Core Admin Page.
 			if (
 				$pagenow == 'options-general.php' &&
 				! empty( $_GET['page'] ) &&
 				'commentpress_admin' == $_GET['page']
 			) {
 
-				// We're on our admin page.
+				// We're on our Admin Page.
 
 			} else {
 
@@ -179,7 +179,7 @@ class CommentPress_Core_Settings_Site {
 
 		}
 
-		// Add parent page to Settings menu.
+		// Add parent Page to Settings menu.
 		$this->parent_page = add_options_page(
 			__( 'CommentPress Core Settings', 'commentpress-core' ),
 			__( 'CommentPress Core', 'commentpress-core' ),
@@ -220,7 +220,7 @@ class CommentPress_Core_Settings_Site {
 	}
 
 	/**
-	 * Enqueue Settings page CSS.
+	 * Enqueue Settings Page CSS.
 	 *
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
@@ -239,7 +239,7 @@ class CommentPress_Core_Settings_Site {
 	}
 
 	/**
-	 * Enqueue Settings page Javascript.
+	 * Enqueue Settings Page Javascript.
 	 *
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
@@ -257,7 +257,7 @@ class CommentPress_Core_Settings_Site {
 	 *
 	 * @since 4.0
 	 *
-	 * @global string $plugin_page The current plugin page.
+	 * @global string $plugin_page The current plugin Page.
 	 * @global string $submenu_file The current submenu.
 	 */
 	public function admin_menu_highlight() {
@@ -307,7 +307,7 @@ class CommentPress_Core_Settings_Site {
 	}
 
 	/**
-	 * Adds help copy to admin page.
+	 * Adds help copy to Admin Page.
 	 *
 	 * @since 3.4
 	 * @since 4.0 Moved to this class and renamed.
@@ -337,7 +337,7 @@ class CommentPress_Core_Settings_Site {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Checks the access capability for this page.
+	 * Checks the access capability for this Page.
 	 *
 	 * @since 4.0
 	 *
@@ -354,7 +354,7 @@ class CommentPress_Core_Settings_Site {
 		 */
 		$capability = apply_filters( 'commentpress/core/settings/site/page/cap', 'manage_options' );
 
-		// Check user permissions.
+		// Check User permissions.
 		if ( ! current_user_can( $capability ) ) {
 			return false;
 		}
@@ -402,7 +402,7 @@ class CommentPress_Core_Settings_Site {
 	 */
 	public function page_settings() {
 
-		// Check user permissions.
+		// Check User permissions.
 		if ( ! $this->page_capability() ) {
 			return;
 		}
@@ -569,7 +569,7 @@ class CommentPress_Core_Settings_Site {
 			return;
 		}
 
-		// Check user permissions.
+		// Check User permissions.
 		if ( ! $this->page_capability() ) {
 			return;
 		}
@@ -643,10 +643,10 @@ class CommentPress_Core_Settings_Site {
 	 */
 	public function meta_box_general_render() {
 
-		// Get post types that support the editor.
+		// Get Post Types that support the editor.
 		$capable_post_types = $this->core->db->get_supported_post_types();
 
-		// Get chosen post types.
+		// Get chosen Post Types.
 		$selected_types = $this->core->db->option_get( 'cp_post_types_disabled', [] );
 
 		// Get settings.

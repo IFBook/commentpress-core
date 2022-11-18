@@ -80,7 +80,7 @@ if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
 
 	} else {
 
-		// Optional activation per blog in multisite.
+		// Optional activation per Blog in multisite.
 		if ( ! defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
 			define( 'COMMENTPRESS_PLUGIN_CONTEXT', 'mu_optional' );
 		}
@@ -89,7 +89,7 @@ if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
 
 } else {
 
-	// Single user install.
+	// Single install.
 	if ( ! defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
 		define( 'COMMENTPRESS_PLUGIN_CONTEXT', 'standard' );
 	}
@@ -212,7 +212,7 @@ function commentpress_minified() {
 }
 
 /**
- * Utility to add link to settings page.
+ * Utility to add link to Site Settings Page.
  *
  * @since 3.4
  *
@@ -311,12 +311,12 @@ function commentpress_find_plugin_by_name( $plugin_name = '' ) {
  *
  * First scenario:
  * if the plugin is NOT initially network-enabled
- * but it IS enabled on one or more blogs on the network
+ * but it IS enabled on one or more Blogs on the network
  * and the plugin in THEN network-enabled
  *
  * Second scenario:
  * if the plugin IS initially network-enabled
- * and it IS activated on one or more blogs on the network
+ * and it IS activated on one or more Blogs on the network
  * and the plugin in THEN network-disabled
  *
  * If installs stick to one or the other, then all works as expected.
@@ -330,8 +330,8 @@ register_theme_directory( plugin_dir_path( COMMENTPRESS_PLUGIN_FILE ) . 'themes'
 --------------------------------------------------------------------------------
 Init Standalone.
 --------------------------------------------------------------------------------
-Note: we exclude activation on network admin pages to avoid auto-installation
-on main site when the plugin is network activated.
+Note: we exclude activation on Network Admin Pages to avoid auto-installation
+on Main Site when the plugin is network activated.
 --------------------------------------------------------------------------------
 */
 

@@ -1,8 +1,8 @@
 <?php
 /**
- * Multisite Network Settings page "Title Page Content" metabox template.
+ * Multisite Network Settings Page "Title Page Content" metabox template.
  *
- * Handles markup for the Multisite Network Settings page "Title Page Content" metabox.
+ * Handles markup for the Multisite Network Settings Page "Title Page Content" metabox.
  *
  * @package CommentPress_Core
  */

@@ -71,7 +71,7 @@
 
 			if (('open' == $post-> comment_status) AND ('open' == $post->ping_status)) {
 
-				// Both comments and pings are open.
+				// Both Comments and pings are open.
 
 				// Define trackback text.
 				$trackback_text = __( 'trackback', 'commentpress-core' );
@@ -117,7 +117,7 @@
 
 			} elseif (!('open' == $post-> comment_status) AND !('open' == $post->ping_status)) {
 
-				// Neither comments nor pings are open.
+				// Neither Comments nor pings are open.
 				_e( 'Both comments and pings are currently closed.', 'commentpress-core' );
 
 				// Add trailing space.

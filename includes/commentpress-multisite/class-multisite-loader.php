@@ -38,7 +38,7 @@ class CommentPress_Multisite_Loader {
 	 * @since 3.3
 	 * @since 4.0 Renamed.
 	 * @access public
-	 * @var object $sites The sites object reference.
+	 * @var object $sites The Sites object reference.
 	 */
 	public $sites;
 
@@ -79,7 +79,7 @@ class CommentPress_Multisite_Loader {
 	public $bp;
 
 	/**
-	 * BuddyPress GroupBlog compatibility object.
+	 * BuddyPress Group Blog compatibility object.
 	 *
 	 * @since 3.3
 	 * @access public
@@ -263,7 +263,7 @@ class CommentPress_Multisite_Loader {
 			// Was it network deactivated?
 			if ( $network_wide == true ) {
 
-				// If upgrading, we need to migrate each existing instance into a CommentPress Core blog.
+				// If upgrading, we need to migrate each existing instance into a CommentPress Core Blog.
 
 			}
 
@@ -291,7 +291,7 @@ class CommentPress_Multisite_Loader {
 
 				// Do we want to trigger deactivation_hook for all sub-blogs?
 				// Or do we want to convert each instance into a self-contained
-				// CommentPress Core blog?
+				// CommentPress Core Blog?
 
 			}
 

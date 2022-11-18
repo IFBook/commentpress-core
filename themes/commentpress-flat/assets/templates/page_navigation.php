@@ -16,10 +16,10 @@ $next_title = apply_filters( 'cp_nav_next_link_title', __( 'Newer Entries', 'com
 
 
 
-// Is it a page?
+// Is it a Page?
 if ( is_page() ) {
 
-	// Get our custom page navigation.
+	// Get our custom Page Navigation.
 	$cp_page_nav = commentpress_page_navigation();
 
 	// If we get any.
@@ -36,7 +36,7 @@ if ( is_page() ) {
 
 
 
-// Is it a post?
+// Is it a Post?
 elseif ( is_single() ) {
 
 	?><ul class="blog_navigation">
@@ -50,7 +50,7 @@ elseif ( is_single() ) {
 
 
 
-// Is this the posts archive or a CPT archive?
+// Is this the Posts archive or a CPT archive?
 elseif ( is_home() OR is_post_type_archive() ) {
 
 	$nl = get_next_posts_link( $previous_title );

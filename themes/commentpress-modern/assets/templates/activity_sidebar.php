@@ -11,25 +11,25 @@ $_page_comments_output = '';
 // Is it commentable?
 $_is_commentable = commentpress_is_commentable();
 
-// If a commentable post.
+// If a commentable Post.
 if ( $_is_commentable AND ! post_password_required() ) {
 
-	// Get singular post type label.
+	// Get singular Post Type label.
 	$current_type = get_post_type();
 	$post_type = get_post_type_object( $current_type );
 
 	/**
-	 * Assign name of post type.
+	 * Assign name of Post Type.
 	 *
 	 * @since 3.8.10
 	 *
-	 * @param str $singular_name The singular label for this post type.
-	 * @param str $current_type The post type identifier.
-	 * @return str $singular_name The modified label for this post type.
+	 * @param str $singular_name The singular label for this Post Type.
+	 * @param str $current_type The Post Type identifier.
+	 * @return str $singular_name The modified label for this Post Type.
 	 */
 	$post_type_name = apply_filters( 'commentpress_lexia_post_type_name', $post_type->labels->singular_name, $current_type );
 
-	// Construct recent comments phrase.
+	// Construct "Recent Comments" phrase.
 	$_paragraph_text = sprintf( __( 'Recent Comments on this %s', 'commentpress-core' ), $post_type_name );
 
 	/**
@@ -42,7 +42,7 @@ if ( $_is_commentable AND ! post_password_required() ) {
 		$_paragraph_text
 	);
 
-	// Get page comments.
+	// Get Page Comments.
 	$_page_comments_output = commentpress_get_comment_activity( 'post' );
 
 }
@@ -59,7 +59,7 @@ $_all_comments_title = apply_filters(
 	__( 'Recent Comments in this Document', 'commentpress-core' )
 );
 
-// Get all comments.
+// Get all Comments.
 $_all_comments_output = commentpress_get_comment_activity( 'all' );
 
 
@@ -93,11 +93,11 @@ $_max_members = 10;
 
 <?php
 
-// Allow widgets to be placed above activity.
+// Allow Widgets to be placed above Activity.
 dynamic_sidebar( 'cp-activity-top' );
 
 /**
- * Allow plugins to add their own activity headings here.
+ * Allow plugins to add their own Activity Headings here.
  *
  * @since 3.4.8
  */
@@ -109,11 +109,11 @@ do_action( 'commentpress_bp_activity_sidebar_before_activity' );
 
 <?php
 
-// Show page comments if we can.
+// Show Page Comments if we can.
 if ( $_is_commentable AND $_page_comments_output != '' ) {
 
 /**
- * Allow plugins to add their own activity heading here.
+ * Allow plugins to add their own Activity Heading here.
  *
  * @since 3.4.8
  */
@@ -130,21 +130,21 @@ do_action( 'commentpress_bp_activity_sidebar_before_page_comments' );
 <?php
 
 /**
- * Allow plugins to add their own activity heading here.
+ * Allow plugins to add their own Activity Heading here.
  *
  * @since 3.4.8
  */
 do_action( 'commentpress_bp_activity_sidebar_after_page_comments' );
 
-} // End commentable post/page check.
+} // End commentable Post/Page check.
 
 
 
-// Show all comments from site if we can
+// Show all Comments from Site if we can.
 if ( $_all_comments_output != '' ) {
 
 /**
- * Allow plugins to add their own activity heading here.
+ * Allow plugins to add their own Activity Heading here.
  *
  * @since 3.4.8
  */
@@ -161,13 +161,13 @@ do_action( 'commentpress_bp_activity_sidebar_before_all_comments' );
 <?php
 
 /**
- * Allow plugins to add their own activity heading here.
+ * Allow plugins to add their own Activity Heading here.
  *
  * @since 3.4.8
  */
 do_action( 'commentpress_bp_activity_sidebar_after_all_comments' );
 
-} // End comments from site check.
+}
 
 
 
@@ -181,7 +181,7 @@ if (
 	$commentpress_core->is_buddypress()
 ) {
 
-	// If on either groupblog or main BuddyPress blog.
+	// If on either Group Blog or main BuddyPress Blog.
 	if ( $commentpress_core->is_groupblog() OR bp_is_root_blog() ) {
 
 		// Define args.
@@ -270,12 +270,12 @@ if (
 
 		<?php
 
-	} // End groupblog check.
+	}
 
 
 
 	/**
-	 * Allow plugins to add their own activity headings here.
+	 * Allow plugins to add their own Activity Headings here.
 	 *
 	 * @since 3.4.8
 	 */
@@ -389,7 +389,7 @@ if (
 
 
 	/**
-	 * Allow plugins to add their own activity headings here.
+	 * Allow plugins to add their own Activity Headings here.
 	 *
 	 * @since 3.4.8
 	 */
@@ -402,13 +402,13 @@ if (
 
 
 /**
- * Allow plugins to add their own activity headings here.
+ * Allow plugins to add their own Activity Headings here.
  *
  * @since 3.4.8
  */
 do_action( 'commentpress_bp_activity_sidebar_after_activity' );
 
-// Allow widgets to be placed below activity.
+// Allow Widgets to be placed below Activity.
 dynamic_sidebar( 'cp-activity-bottom' );
 
 

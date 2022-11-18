@@ -15,7 +15,7 @@ if ( isset( $_GET['author_name'] ) ) {
 // Init url (because it can be 'http://' -> doh!)
 $authorURL = '';
 
-// Do we have an URL for this user?
+// Do we have an URL for this User?
 if ( $my_author->user_url != '' AND $my_author->user_url != 'http://' ) {
 	$authorURL = $my_author->user_url;
 }
@@ -177,10 +177,10 @@ $page_args = [
 	'no_found_rows' => true,
 ];
 
-// The pages query.
+// The Pages query.
 $_pages = new WP_Query( $page_args );
 
-// Proceed only if published pages exist.
+// Proceed only if published Pages exist.
 if ( $_pages->have_posts() ) {
 
 	// Init name.

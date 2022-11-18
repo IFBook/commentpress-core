@@ -1,8 +1,8 @@
 <?php
 /**
- * Site Settings page "Submit" metabox template.
+ * Site Settings Page "Submit" metabox template.
  *
- * Handles markup for the Site Settings page "Submit" metabox.
+ * Handles markup for the Site Settings Page "Submit" metabox.
  *
  * @package CommentPress_Core
  */

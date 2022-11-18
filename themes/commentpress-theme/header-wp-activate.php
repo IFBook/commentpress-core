@@ -2,7 +2,7 @@
 
 
 
-<!-- Activate page wrappers -->
+<!-- Activate Page wrappers -->
 <div id="wrapper">
 <div id="main_wrapper" class="clearfix">
 <div id="page_wrapper">

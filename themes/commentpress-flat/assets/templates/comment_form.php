@@ -23,7 +23,7 @@ if ( ! empty( $_SERVER['SCRIPT_FILENAME'] ) AND 'comment_form.php' == basename( 
 // Access globals.
 global $post;
 
-// Get user data.
+// Get User data.
 $user = wp_get_current_user();
 $user_identity = $user->exists() ? $user->display_name : '';
 
@@ -172,7 +172,7 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 
 		}
 
-		// Add page for multipage situations.
+		// Add Page for multipage situations.
 		global $page;
 		if ( !empty( $page ) ) {
 			echo "\n" . '<input type="hidden" name="page" value="' . $page . '" />' . "\n";

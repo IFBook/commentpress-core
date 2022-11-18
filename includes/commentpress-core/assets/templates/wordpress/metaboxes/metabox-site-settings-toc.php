@@ -1,8 +1,8 @@
 <?php
 /**
- * Site Settings page "Table of Contents" metabox template.
+ * Site Settings Page "Table of Contents" metabox template.
  *
- * Handles markup for the Site Settings page "Table of Contents" metabox.
+ * Handles markup for the Site Settings Page "Table of Contents" metabox.
  *
  * @package CommentPress_Core
  */

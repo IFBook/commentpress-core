@@ -5,7 +5,7 @@ Template Name: Comments by Commenter
 
 
 
-// Get page content.
+// Get Page content.
 $_page_content = commentpress_get_comments_by_page_content();
 
 

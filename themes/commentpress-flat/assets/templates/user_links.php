@@ -32,7 +32,7 @@ global $commentpress_core;
 // Is this multisite?
 if ( is_multisite() ) {
 
-	// Can users register?
+	// Can Users register?
 	if ( get_option( 'users_can_register' ) ) {
 
 		// This works for get_site_option( 'registration' ) == 'none' and 'user'
@@ -41,7 +41,7 @@ if ( is_multisite() ) {
 
 	}
 
-	// Multisite signup and blog create.
+	// Multisite signup and Blog create.
 	if (
 		( is_user_logged_in() AND get_site_option( 'registration' ) == 'blog' ) OR
 		get_site_option( 'registration' ) == 'all'

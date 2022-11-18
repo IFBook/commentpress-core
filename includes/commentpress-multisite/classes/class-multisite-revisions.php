@@ -2,7 +2,7 @@
 /**
  * CommentPress Multisite Revisions class.
  *
- * Overrides the way that new post revisions are named.
+ * Overrides the way that new Post revisions are named.
  *
  * @package CommentPress_Core
  */
@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * CommentPress Multisite Revisions Class.
  *
- * This class overrides the way that new post revisions are named.
+ * This class overrides the way that new Post revisions are named.
  *
  * @since 3.3
  */
@@ -64,10 +64,10 @@ class CommentPress_Multisite_Revisions {
 	 */
 	public function register_hooks() {
 
-		// Add filter for new post title prefix.
+		// Add filter for new Post title prefix.
 		add_filter( 'commentpress_new_post_title_prefix', [ $this, 'new_post_title_prefix' ], 21, 1 );
 
-		// Add filter for new post title.
+		// Add filter for new Post title.
 		add_filter( 'commentpress_new_post_title', [ $this, 'new_post_title' ], 21, 2 );
 
 	}
@@ -75,11 +75,11 @@ class CommentPress_Multisite_Revisions {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Amend the post title prefix.
+	 * Amend the Post title prefix.
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $prefix The existing post title prefix.
+	 * @param str $prefix The existing Post title prefix.
 	 * @return str An empty string.
 	 */
 	public function new_post_title_prefix( $prefix ) {
@@ -94,16 +94,16 @@ class CommentPress_Multisite_Revisions {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $title The existing title of the post.
-	 * @param object $post The WordPress post object.
-	 * @return str $title The modified title of the post.
+	 * @param str $title The existing title of the Post.
+	 * @param object $post The WordPress Post object.
+	 * @return str $title The modified title of the Post.
 	 */
 	public function new_post_title( $title, $post ) {
 
-		// Get incremental version number of source post.
+		// Get incremental version number of source Post.
 		$key = '_cp_version_count';
 
-		// If the custom field of our current post has a value.
+		// If the custom field of our current Post has a value.
 		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 
 			// Get current value.

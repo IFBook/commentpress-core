@@ -102,10 +102,10 @@ class CommentPress_Core_Display {
 		search_theme_directories( true );
 
 		/**
-		 * Get groupblog-set theme, if we have one.
+		 * Get Group Blog and set theme, if we have one.
 		 *
 		 * Allow filtering here because plugins may want to override a correctly-set
-		 * CommentPress Core theme for a particular GroupBlog (or type of GroupBlog).
+		 * CommentPress Core theme for a particular Group Blog (or type of Group Blog).
 		 *
 		 * If that is the case, then the filter callback must return boolean 'false'
 		 * to prevent the theme being applied and also implement a filter on
@@ -121,7 +121,7 @@ class CommentPress_Core_Display {
 		// Did we get a CommentPress Core one?
 		if ( $theme !== false ) {
 
-			// We're in a GroupBlog context: BuddyPress GroupBlog will already have set
+			// We're in a Group Blog context: BuddyPress Group Blog will already have set
 			// the theme because we're adding our wpmu_new_blog action after it.
 
 			// --<
@@ -262,7 +262,7 @@ class CommentPress_Core_Display {
 		// Only allow text highlighting on non-touch devices (allow testing override).
 		if ( ! $this->core->db->is_touch() || ( defined( 'COMMENTPRESS_TOUCH_SELECT' ) && COMMENTPRESS_TOUCH_SELECT ) ) {
 
-			// Bail if not a commentable page/post.
+			// Bail if not a commentable Page/Post.
 			if ( ! $this->core->is_commentable() ) {
 				return;
 			}
@@ -300,7 +300,7 @@ class CommentPress_Core_Display {
 			// Define popover for textblocks.
 			$popover_textblock = '<span class="popover-holder"><div class="popover-holder-inner"><div class="popover-holder-caret"></div><div class="popover-holder-btn-left"><span class="popover-holder-btn-left-comment">' . __( 'Comment', 'commentpress-core' ) . '</span><span class="popover-holder-btn-left-quote">' . __( 'Quote &amp; Comment', 'commentpress-core' ) . '</span></div><div class="popover-holder-btn-right">&times;</div></div></span>';
 
-			// Define popover for comments.
+			// Define popover for Comments.
 			$popover_comment = '<span class="comment-popover-holder"><div class="popover-holder-inner"><div class="popover-holder-caret"></div><div class="popover-holder-btn-left"><span class="comment-popover-holder-btn-left-quote">' . __( 'Quote', 'commentpress-core' ) . '</span></div><div class="popover-holder-btn-right">&times;</div></div></span>';
 
 			// Define localisation array.
@@ -335,7 +335,7 @@ class CommentPress_Core_Display {
 	 */
 	public function get_custom_quicktags() {
 
-		// Bail if the current user lacks permissions.
+		// Bail if the current User lacks permissions.
 		if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'edit_pages' ) ) {
 			return;
 		}
@@ -436,15 +436,15 @@ HELPTEXT;
 	}
 
 	/**
-	 * Show the posts and their comment count in a list format.
+	 * Show the Posts and their comment count in a list format.
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $params The parameters to list posts by.
+	 * @param str $params The parameters to list Posts by.
 	 */
 	public function list_posts( $params = 'numberposts=-1&order=DESC' ) {
 
-		// Get all posts.
+		// Get all Posts.
 		$posts = get_posts( $params );
 
 		// Have we set the option?
@@ -453,14 +453,13 @@ HELPTEXT;
 		// If not set or set to 'off'.
 		if ( $list_style === false || $list_style == '0' ) {
 
-			// --------------------------
+			// -----------------------------------------------------------------
 			// Old-style undecorated list.
-			// --------------------------
-
+			// -----------------------------------------------------------------
 			// Run through them.
 			foreach ( $posts as $item ) {
 
-				// Get comment count for that post.
+				// Get comment count for that Post.
 				$count = count( get_approved_comments( $item->ID ) );
 
 				// Write list item.
@@ -470,11 +469,11 @@ HELPTEXT;
 
 		} else {
 
-			// ------------------------
+			// -----------------------------------------------------------------
 			// New-style decorated list.
-			// ------------------------
+			// -----------------------------------------------------------------
 
-			// Access current post.
+			// Access current Post.
 			global $post;
 
 			// Run through them.
@@ -483,7 +482,7 @@ HELPTEXT;
 				// Init output.
 				$html = '';
 
-				// Get comment count for that post.
+				// Get comment count for that Post.
 				$count = count( get_approved_comments( $item->ID ) );
 
 				// Compat with Co-Authors Plus.
@@ -570,10 +569,10 @@ HELPTEXT;
 
 				}
 
-				// Init current post class as empty.
+				// Init current Post class as empty.
 				$current_post = '';
 
-				// If we're on the current post and it's this item.
+				// If we're on the current Post and it's this item.
 				if ( is_singular() && isset( $post ) && $post->ID == $item->ID ) {
 					$current_post = ' current_page_item';
 				}
@@ -605,7 +604,7 @@ HELPTEXT;
 		// Get author details.
 		$user = get_userdata( $author_id );
 
-		// Kick out if we don't have a user with that ID.
+		// Kick out if we don't have a User with that ID.
 		if ( ! is_object( $user ) ) {
 			return;
 		}
@@ -616,12 +615,12 @@ HELPTEXT;
 		// If we have the plugin enabled. and it's BuddyPress.
 		if ( is_object( $post ) && is_object( $commentpress_core ) && $commentpress_core->is_buddypress() ) {
 
-			// Construct user link.
+			// Construct User link.
 			$author = bp_core_get_userlink( $user->ID );
 
 		} else {
 
-			// Link to theme's author page.
+			// Link to theme's Author Page.
 			$link = sprintf(
 				'<a href="%1$s" title="%2$s" rel="author">%3$s</a>',
 				get_author_posts_url( $user->ID, $user->user_nicename ),
@@ -642,11 +641,11 @@ HELPTEXT;
 	}
 
 	/**
-	 * Print the posts and their comment count in a list format.
+	 * Print the Posts and their comment count in a list format.
 	 *
 	 * @since 3.4
 	 *
-	 * @param array $exclude_pages THe array of pages to exclude.
+	 * @param array $exclude_pages The array of Pages to exclude.
 	 */
 	public function list_pages( $exclude_pages = [] ) {
 
@@ -666,22 +665,22 @@ HELPTEXT;
 
 		}
 
-		// Get welcome page ID.
+		// Get Welcome Page ID.
 		$welcome_id = $this->core->db->option_get( 'cp_welcome_page' );
 
-		// Get front page.
+		// Get Front Page.
 		$page_on_front = $this->core->db->option_wp_get( 'page_on_front' );
 
-		// Print link to title page, if we have one and it's the front page.
+		// Print link to Title Page, if we have one and it's the Front Page.
 		if ( $welcome_id !== false && $page_on_front == $welcome_id ) {
 
-			// Define title page.
+			// Define Title Page.
 			$title_page_title = get_the_title( $welcome_id );
 
 			// Allow overrides.
 			$title_page_title = apply_filters( 'cp_title_page_title', $title_page_title );
 
-			// Set current item class if viewing front page.
+			// Set current item class if viewing Front Page.
 			$is_active = '';
 			if ( is_front_page() ) {
 				$is_active = ' current_page_item';
@@ -693,14 +692,14 @@ HELPTEXT;
 		}
 
 		/*
-		// Get page display option.
+		// Get Page display option.
 		$depth = $this->core->db->option_get( 'cp_show_subpages' );
 		*/
 
-		// ALWAYS write subpages into page, even if they aren't displayed.
+		// ALWAYS write subpages into Page, even if they aren't displayed.
 		$depth = 0;
 
-		// Get pages to exclude.
+		// Get Pages to exclude.
 		$exclude = $this->core->db->option_get( 'cp_special_pages' );
 
 		// Do we have any?
@@ -708,7 +707,7 @@ HELPTEXT;
 			$exclude = [];
 		}
 
-		// Exclude title page, if we have one.
+		// Exclude Title Page, if we have one.
 		if ( $welcome_id !== false ) {
 			$exclude[] = $welcome_id;
 		}
@@ -721,7 +720,7 @@ HELPTEXT;
 
 		}
 
-		// Set list pages defaults.
+		// Set list Pages defaults.
 		$defaults = [
 			'depth' => $depth,
 			'show_date' => '',
@@ -743,12 +742,12 @@ HELPTEXT;
 	}
 
 	/**
-	 * Get the block comment icon.
+	 * Get the Block Comment icon.
 	 *
 	 * @since 3.4
 	 *
-	 * @param int $comment_count The number of comments.
-	 * @param str $text_signature The comment text signature.
+	 * @param int $comment_count The number of Comments.
+	 * @param str $text_signature The comment Text Signature.
 	 * @param str $block_type Either 'auto', 'line' or 'block'.
 	 * @param int $para_num Sequential commentable block number.
 	 * @return str $comment_icon The comment icon formatted as HTML.
@@ -758,7 +757,7 @@ HELPTEXT;
 		// Reset icon.
 		$icon = null;
 
-		// If we have no comments.
+		// If we have no Comments.
 		if ( $comment_count == 0 ) {
 
 			// Show add comment icon.
@@ -767,18 +766,18 @@ HELPTEXT;
 
 		} elseif ( $comment_count > 0 ) {
 
-			// Show comments present icon.
+			// Show Comments Present icon.
 			$icon = 'comment.png';
 			$class = ' has_comments';
 
 		}
 
-		// Define block title by block type.
+		// Define Block title by Block type.
 		switch ( $block_type ) {
 
-			// ----------------------------
+			// -----------------------------------------------------------------
 			// Auto-formatted.
-			// ----------------------------
+			// -----------------------------------------------------------------
 			case 'auto':
 			default:
 				// Define title text.
@@ -797,9 +796,9 @@ HELPTEXT;
 
 				break;
 
-			// ----------------------------
+			// -----------------------------------------------------------------
 			// Line-by-line, eg poetry.
-			// ----------------------------
+			// -----------------------------------------------------------------
 			case 'line':
 
 				// Define title text.
@@ -818,9 +817,9 @@ HELPTEXT;
 
 				break;
 
-			// ----------------------------
+			// -----------------------------------------------------------------
 			// Comment-blocks.
-			// ----------------------------
+			// -----------------------------------------------------------------
 			case 'block':
 
 				// Define title text.
@@ -853,24 +852,24 @@ HELPTEXT;
 	}
 
 	/**
-	 * Get the block paragraph icon.
+	 * Get the Block Paragraph icon.
 	 *
 	 * @since 3.4
 	 *
-	 * @param int $comment_count The number of comments.
-	 * @param str $text_signature The comment text signature.
+	 * @param int $comment_count The number of Comments.
+	 * @param str $text_signature The comment Text Signature.
 	 * @param str $block_type Either 'auto', 'line' or 'block'.
-	 * @param int $para_num The sequential commentable block number.
-	 * @return str $paragraph_icon The paragraph icon formatted as HTML.
+	 * @param int $para_num The sequential commentable Block number.
+	 * @return str $paragraph_icon The Paragraph icon formatted as HTML.
 	 */
 	public function get_paragraph_icon( $comment_count, $text_signature, $block_type = 'auto', $para_num = 1 ) {
 
-		// Define block title by block type.
+		// Define Block title by Block type.
 		switch ( $block_type ) {
 
-			// ----------------------------
+			// -----------------------------------------------------------------
 			// Auto-formatted.
-			// ----------------------------
+			// -----------------------------------------------------------------
 			case 'auto':
 			default:
 				// Define permalink text.
@@ -880,14 +879,14 @@ HELPTEXT;
 					$para_num
 				);
 
-				// Define paragraph marker.
+				// Define Paragraph marker.
 				$para_marker = '<span class="para_marker"><a class="textblock_permalink" id="' . $text_signature . '" href="#' . $text_signature . '" title="' . $permalink_text . '">&para; <span>' . (string) $para_num . '</span></a></span>';
 
 				break;
 
-			// ----------------------------
+			// -----------------------------------------------------------------
 			// Line-by-line, eg poetry.
-			// ----------------------------
+			// -----------------------------------------------------------------
 			case 'line':
 
 				// Define permalink text.
@@ -897,14 +896,14 @@ HELPTEXT;
 					$para_num
 				);
 
-				// Define paragraph marker.
+				// Define Paragraph marker.
 				$para_marker = '<span class="para_marker"><a class="textblock_permalink" id="' . $text_signature . '" href="#' . $text_signature . '" title="' . $permalink_text . '">&para; <span>' . (string) $para_num . '</span></a></span>';
 
 				break;
 
-			// ----------------------------
+			// -----------------------------------------------------------------
 			// Comment-blocks.
-			// ----------------------------
+			// -----------------------------------------------------------------
 			case 'block':
 
 				// Define permalink text.
@@ -914,14 +913,14 @@ HELPTEXT;
 					$para_num
 				);
 
-				// Define paragraph marker.
+				// Define Paragraph marker.
 				$para_marker = '<span class="para_marker"><a class="textblock_permalink" id="' . $text_signature . '" href="#' . $text_signature . '" title="' . $permalink_text . '">&para; <span>' . (string) $para_num . '</span></a></span>';
 
 				break;
 
 		}
 
-		// Define HTML for paragraph icon.
+		// Define HTML for Paragraph icon.
 		$paragraph_icon = $para_marker . "\n";
 
 		// --<
@@ -934,7 +933,7 @@ HELPTEXT;
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $text_signature The comment text signature.
+	 * @param str $text_signature The comment Text Signature.
 	 * @param str $commenticon The comment icon.
 	 * @param str $tag The tag.
 	 * @param str $start The ordered list start value.
@@ -1038,11 +1037,11 @@ HELPTEXT;
 	}
 
 	/**
-	 * Get the text signature input for the comment form.
+	 * Get the Text Signature input for the comment form.
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $text_sig The comment text signature.
+	 * @param str $text_sig The comment Text Signature.
 	 * @return str $input The HTML input element.
 	 */
 	public function get_signature_input( $text_sig = '' ) {
@@ -1060,7 +1059,7 @@ HELPTEXT;
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $sidebar The type of sidebar (comments, toc, activity).
+	 * @param str $sidebar The type of sidebar: "comments", "toc" or "activity".
 	 * @return str $tag The tag.
 	 */
 	public function get_minimise_all_button( $sidebar = 'comments' ) {
@@ -1162,13 +1161,13 @@ HELPTEXT;
 	 *
 	 * @since 3.4
 	 *
-	 * @return str $admin_page The admin page HTML.
+	 * @return str $admin_page The Admin Page HTML.
 	 */
 	public function get_admin_form() {
 
 		// TODO: Implement upgrades.
 
-		// Sanitise admin page URL.
+		// Sanitise Admin Page URL.
 		$url = isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '';
 		if ( ! empty( $url ) ) {
 			$url_array = explode( '&', $url );
@@ -1194,7 +1193,7 @@ HELPTEXT;
 				$options_text = __( ' The following options have become available in the new version.', 'commentpress-core' );
 			}
 
-			// Define admin page.
+			// Define Admin Page.
 			$admin_page = '
 			<h1>' . __( 'CommentPress Core Upgrade', 'commentpress-core' ) . '</h1>
 
@@ -1241,7 +1240,7 @@ HELPTEXT;
 		// Init.
 		$html = '';
 
-		// Do we have the option to choose blog type (new in 3.3.1)?
+		// Do we have the option to choose Blog Type (new in 3.3.1)?
 		if ( $this->core->db->option_exists( 'cp_blog_type' ) ) {
 
 			// Define no types.
@@ -1294,7 +1293,7 @@ HELPTEXT;
 
 		}
 
-		// Do we have the option to choose blog workflow (new in 3.3.1)?
+		// Do we have the option to choose Blog Workflow (new in 3.3.1)?
 		if ( $this->core->db->option_exists( 'cp_blog_workflow' ) ) {
 
 			// Off by default.
@@ -1303,7 +1302,7 @@ HELPTEXT;
 			// Allow overrides.
 			$has_workflow = apply_filters( 'cp_blog_workflow_exists', $has_workflow );
 
-			// If we have workflow enabled, by a plugin, say.
+			// If we have Workflow enabled, by a plugin, say.
 			if ( $has_workflow !== false ) {
 
 				// Define label.
@@ -1347,14 +1346,14 @@ HELPTEXT;
 		// Init.
 		$upgrade = '';
 
-		// Do we have the option to choose which post types to skip (new in 3.9)?
+		// Do we have the option to choose which Post Types to skip (new in 3.9)?
 		if ( ! $this->core->db->option_exists( 'cp_post_types_disabled' ) ) {
 
 			// Define labels.
 			$description = __( 'Choose the Post Types on which CommentPress Core is enabled. Disabling a post type will mean that paragraph-level commenting will not be enabled on any entries of that post type. Default prior to 3.9 was that all post types were enabled.', 'commentpress-core' );
 			$label = __( 'Post Types on which CommentPress Core is enabled.', 'commentpress-core' );
 
-			// Get post types that support the editor.
+			// Get Post Types that support the editor.
 			$capable_post_types = $this->core->db->get_supported_post_types();
 
 			// Init outputs.
@@ -1364,7 +1363,7 @@ HELPTEXT;
 			// Sanity check.
 			if ( count( $capable_post_types ) > 0 ) {
 
-				// Construct checkbox for each post type.
+				// Construct checkbox for each Post Type.
 				foreach ( $capable_post_types as $post_type => $label ) {
 
 					// Add checked checkbox.
@@ -1414,7 +1413,7 @@ HELPTEXT;
 
 		}
 
-		// Do we have the option to choose to disable page navigation (new in 3.8.10)?
+		// Do we have the option to choose to disable Page Navigation (new in 3.8.10)?
 		if ( ! $this->core->db->option_exists( 'cp_page_nav_enabled' ) ) {
 
 			// Define labels.
@@ -1504,7 +1503,7 @@ HELPTEXT;
 
 		}
 
-		// Do we have the option to show or hide page meta (new in 3.3.2)?
+		// Do we have the option to show or hide Page meta (new in 3.3.2)?
 		if ( ! $this->core->db->option_exists( 'cp_page_meta_visibility' ) ) {
 
 			$meta_label = __( 'Show or hide page meta by default', 'commentpress-core' );
@@ -1525,7 +1524,7 @@ HELPTEXT;
 
 		}
 
-		// Do we have the option to choose blog type (new in 3.3.1)?
+		// Do we have the option to choose Blog Type (new in 3.3.1)?
 		if ( ! $this->core->db->option_exists( 'cp_blog_type' ) ) {
 
 			// Define no types.
@@ -1567,7 +1566,7 @@ HELPTEXT;
 
 		}
 
-		// Do we have the option to choose blog workflow (new in 3.3.1)?
+		// Do we have the option to choose Blog Workflow (new in 3.3.1)?
 		if ( ! $this->core->db->option_exists( 'cp_blog_workflow' ) ) {
 
 			// Off by default.
@@ -1576,7 +1575,7 @@ HELPTEXT;
 			// Allow overrides.
 			$has_workflow = apply_filters( 'cp_blog_workflow_exists', $has_workflow );
 
-			// If we have workflow enabled, by a plugin, say.
+			// If we have Workflow enabled, by a plugin, say.
 			if ( $has_workflow !== false ) {
 
 				// Define label.
@@ -1699,7 +1698,7 @@ HELPTEXT;
 
 		}
 
-		// Do we have the option to set the minimum page width?
+		// Do we have the option to set the minimum Page width?
 		if ( ! $this->core->db->option_exists( 'cp_min_page_width' ) ) {
 
 			// Define labels.

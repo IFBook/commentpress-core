@@ -82,7 +82,7 @@ class CommentPress_Multisite_Database {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Enables CommentPress Core when active on the current site.
+	 * Enables CommentPress Core when active on the current Site.
 	 *
 	 * @since 4.0
 	 */
@@ -93,7 +93,7 @@ class CommentPress_Multisite_Database {
 			return;
 		}
 
-		// Bail if CommentPress Core is not active on this blog.
+		// Bail if CommentPress Core is not active on this Blog.
 		if ( ! $this->is_commentpress() ) {
 			return;
 		}
@@ -107,11 +107,11 @@ class CommentPress_Multisite_Database {
 	}
 
 	/**
-	 * Check if blog is CommentPress Core-enabled.
+	 * Check if Blog is CommentPress Core-enabled.
 	 *
 	 * @since 3.3
 	 *
-	 * @param int $blog_id The ID of the blog to check.
+	 * @param int $blog_id The ID of the Blog to check.
 	 * @return bool $core_active True if CommentPress Core-enabled, false otherwise.
 	 */
 	public function is_commentpress( $blog_id = 0 ) {
@@ -119,10 +119,10 @@ class CommentPress_Multisite_Database {
 		// Init return.
 		$core_active = false;
 
-		// Get current blog ID.
+		// Get current Blog ID.
 		$current_blog_id = get_current_blog_id();
 
-		// If we have a passed value and it's not this blog.
+		// If we have a passed value and it's not this Blog.
 		if ( $blog_id !== 0 && (int) $current_blog_id !== (int) $blog_id ) {
 
 			// We need to switch to it.
@@ -131,7 +131,7 @@ class CommentPress_Multisite_Database {
 
 		}
 
-		// TODO: Checking for special pages seems a fragile way to test for CommentPress Core.
+		// TODO: Checking for Special Pages seems a fragile way to test for CommentPress Core.
 
 		// Do we have CommentPress Core options?
 		if ( get_option( 'commentpress_options', false ) ) {
@@ -139,7 +139,7 @@ class CommentPress_Multisite_Database {
 			// Get them.
 			$commentpress_options = get_option( 'commentpress_options' );
 
-			// If we have "special pages", then the plugin must be active on this blog.
+			// If we have "Special Pages", then the plugin must be active on this Blog.
 			if ( isset( $commentpress_options['cp_special_pages'] ) ) {
 				$core_active = true;
 			}
@@ -176,24 +176,24 @@ class CommentPress_Multisite_Database {
 
 		/*
 		------------------------------------------------------------------------
-		Configure CommentPress Core based on admin page settings
+		Configure CommentPress Core based on Admin Page settings
 		------------------------------------------------------------------------
 		*/
 
-		// TODO: Create admin page settings.
+		// TODO: Create Admin Page settings.
 
 		/*
-		// TOC = posts.
+		// TOC = Posts.
 		$commentpress_core->db->option_set( 'cp_show_posts_or_pages_in_toc', 'post' );
 
-		// TOC show extended posts.
+		// TOC show extended Posts.
 		$commentpress_core->db->option_set( 'cp_show_extended_toc', 1 );
 		*/
 
 		/*
 		------------------------------------------------------------------------
 		Further CommentPress plugins may define Blog Workflows and Type and
-		enable them to be set in the blog signup form.
+		enable them to be set in the Blog signup form.
 		------------------------------------------------------------------------
 		*/
 
@@ -204,24 +204,24 @@ class CommentPress_Multisite_Database {
 		// Use passed value.
 		if ( $context == 'new_blog' ) {
 
-			// Check for (translation) workflow (checkbox).
+			// Check for Workflow (checkbox).
 			if ( isset( $_POST['cp_blog_workflow'] ) ) {
 
 				// Ensure boolean.
 				$cp_blog_workflow = ( $_POST['cp_blog_workflow'] == '1' ) ? 1 : 0;
 
-				// Set workflow.
+				// Set Workflow.
 				$commentpress_core->db->option_set( 'cp_blog_workflow', $cp_blog_workflow );
 
 			}
 
-			// Check for blog type (dropdown).
+			// Check for Blog Type (dropdown).
 			if ( isset( $_POST['cp_blog_type'] ) ) {
 
 				// Ensure boolean.
 				$cp_blog_type = intval( $_POST['cp_blog_type'] );
 
-				// Set blog type.
+				// Set Blog Type.
 				$commentpress_core->db->option_set( 'cp_blog_type', $cp_blog_type );
 
 			}
@@ -419,7 +419,7 @@ class CommentPress_Multisite_Database {
 	}
 
 	/**
-	 * Save options array as WordPress site option.
+	 * Save options array as WordPress Site option.
 	 *
 	 * @since 3.3
 	 *
@@ -547,7 +547,7 @@ class CommentPress_Multisite_Database {
 	}
 
 	/**
-	 * Return existence of a specified site option.
+	 * Return existence of a specified Site option.
 	 *
 	 * @since 3.3
 	 *
@@ -566,7 +566,7 @@ class CommentPress_Multisite_Database {
 	}
 
 	/**
-	 * Return a value for a specified site option.
+	 * Return a value for a specified Site option.
 	 *
 	 * @since 3.3
 	 *
@@ -582,7 +582,7 @@ class CommentPress_Multisite_Database {
 	}
 
 	/**
-	 * Sets a value for a specified site option.
+	 * Sets a value for a specified Site option.
 	 *
 	 * @since 3.3
 	 *
@@ -600,7 +600,7 @@ class CommentPress_Multisite_Database {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Get workflow form elements.
+	 * Get Workflow form elements.
 	 *
 	 * @since 3.3
 	 *
@@ -614,7 +614,7 @@ class CommentPress_Multisite_Database {
 		// Get data.
 		$workflow = $this->get_workflow_data();
 
-		// If we have workflow data.
+		// If we have Workflow data.
 		if ( ! empty( $workflow ) ) {
 
 			// Show it.
@@ -633,7 +633,7 @@ class CommentPress_Multisite_Database {
 	}
 
 	/**
-	 * Get workflow form data.
+	 * Get Workflow form data.
 	 *
 	 * @since 3.3
 	 *
@@ -653,10 +653,10 @@ class CommentPress_Multisite_Database {
 		// Allow overrides.
 		$has_workflow = apply_filters( 'cp_blog_workflow_exists', $has_workflow );
 
-		// If we have workflow enabled, by a plugin, say.
+		// If we have Workflow enabled, by a plugin, say.
 		if ( $has_workflow !== false ) {
 
-			// Define workflow label.
+			// Define Workflow label.
 			$workflow_label = __( 'Enable Custom Workflow', 'commentpress-core' );
 
 			// Allow overrides.
@@ -681,7 +681,7 @@ class CommentPress_Multisite_Database {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Get blog type form elements.
+	 * Get Blog Type form elements.
 	 *
 	 * @since 3.3
 	 *
@@ -716,7 +716,7 @@ class CommentPress_Multisite_Database {
 	}
 
 	/**
-	 * Get blog type form elements.
+	 * Get Blog Type form elements.
 	 *
 	 * @since 3.3
 	 *
@@ -736,7 +736,7 @@ class CommentPress_Multisite_Database {
 		// If we got any, use them.
 		if ( ! empty( $types ) ) {
 
-			// Define blog type label.
+			// Define Blog Type label.
 			$type_label = __( 'Document Type', 'commentpress-core' );
 
 			// Allow overrides.

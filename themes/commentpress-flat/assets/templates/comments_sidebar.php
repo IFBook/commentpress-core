@@ -6,7 +6,7 @@ global $post;
 // Init no comment class.
 $no_comments_class = '';
 
-// Override if there are no comments (for print stylesheet to hide title).
+// Override if there are no Comments (for print stylesheet to hide title).
 if ( $post->comment_count == 0 ) { $no_comments_class = ' no_comments'; }
 
 ?><!-- comments_sidebar.php -->

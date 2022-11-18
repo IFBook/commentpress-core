@@ -56,10 +56,10 @@ if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 	// If we have the plugin enabled.
 	if ( is_object( $commentpress_core ) ) {
 
-		// Get special pages.
+		// Get Special Pages.
 		$special_pages = $commentpress_core->db->option_get( 'cp_special_pages' );
 
-		// Do we have a special page array?
+		// Do we have a Special Page array?
 		if ( is_array( $special_pages ) AND count( $special_pages ) > 0 ) {
 
 			// Override.
@@ -104,7 +104,7 @@ if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 	<?php
 
-	} // End check for special page.
+	} // End check for Special Page.
 
 	endwhile; // End loop.
 

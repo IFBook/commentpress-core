@@ -1,8 +1,8 @@
 <?php
 /**
- * Multisite Network Settings page "WordPress Overrides" metabox template.
+ * Multisite Network Settings Page "WordPress Overrides" metabox template.
  *
- * Handles markup for the Multisite Network Settings page "WordPress Overrides" metabox.
+ * Handles markup for the Multisite Network Settings Page "WordPress Overrides" metabox.
  *
  * @package CommentPress_Core
  */

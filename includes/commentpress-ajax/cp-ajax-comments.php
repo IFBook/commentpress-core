@@ -93,16 +93,16 @@ function cpajax_add_javascripts() {
 	// Time formatted thus: 2009-08-09 14:46:14.
 	$vars['cpajax_current_time'] = gmdate( 'Y-m-d H:i:s' );
 
-	// Get comment count at the time the page is served.
+	// Get comment count at the time the Page is served.
 	$count = get_comment_count( $post->ID );
 
 	// Adding moderation queue as well, since we do show these.
 	$vars['cpajax_comment_count'] = $count['approved']; // + $count['awaiting_moderation'];
 
-	// Add post ID.
+	// Add Post ID.
 	$vars['cpajax_post_id'] = $post->ID;
 
-	// Add post comment status.
+	// Add Post Comment status.
 	$vars['cpajax_post_comment_status'] = $post->comment_status;
 
 	// Get translations array.
@@ -124,10 +124,10 @@ function cpajax_add_javascripts() {
 	// Default to minified scripts.
 	$debug_state = commentpress_minified();
 
-	// Are we asking for in-page comments?
+	// Are we asking for Comments-in-Page?
 	if ( $commentpress_core->db->is_special_page() ) {
 
-		// Add comments in page script.
+		// Add Comments-in-Page script.
 		wp_enqueue_script(
 			'cpajax',
 			plugins_url( 'includes/commentpress-ajax/assets/js/cp-ajax-comments-page' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
@@ -138,7 +138,7 @@ function cpajax_add_javascripts() {
 
 	} else {
 
-		// Add comments in sidebar script.
+		// Add Comments-in-Sidebar script.
 		wp_enqueue_script(
 			'cpajax',
 			plugins_url( 'includes/commentpress-ajax/assets/js/cp-ajax-comments' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
@@ -208,12 +208,12 @@ function cpajax_plugin_can_activate() {
 	// Access globals.
 	global $post, $commentpress_core;
 
-	// Disallow if no post ID (such as 404).
+	// Disallow if no Post ID (such as 404).
 	if ( ! is_object( $post ) ) {
 		return false;
 	}
 
-	// It's the Theme My Login page.
+	// It's the Theme My Login Page.
 	if ( $commentpress_core->is_theme_my_login_page() ) {
 		return false;
 	}
@@ -221,12 +221,12 @@ function cpajax_plugin_can_activate() {
 	// Init.
 	$allowed = true;
 
-	// Disallow generally if page doesn't allow commenting.
+	// Disallow generally if Page doesn't allow commenting.
 	if ( ! $commentpress_core->is_commentable() ) {
 		$allowed = false;
 	}
 
-	// But, allow general comments page.
+	// But, allow General Comments Page.
 	if ( $commentpress_core->db->option_get( 'cp_general_comments_page' ) == $post->ID ) {
 		$allowed = true;
 	}
@@ -347,7 +347,7 @@ function cpajax_edit_comment() {
 			// Access plugin.
 			global $commentpress_core;
 
-			// Get text signature.
+			// Get Text Signature.
 			$comment_signature = $commentpress_core->db->get_text_signature_by_comment_id( $comment->comment_ID );
 
 			// Add comment data to array.
@@ -402,7 +402,7 @@ function cpajax_edit_comment() {
 //##############################################################################
 
 /**
- * Get new comments in response to an AJAX request.
+ * Get new Comments in response to an AJAX request.
  *
  * @since 3.4
  */
@@ -417,16 +417,16 @@ function cpajax_get_new_comments() {
 	// Store incoming unless updated later.
 	$data['cpajax_comment_count'] = (int) $last_comment_count;
 
-	// Get post ID.
+	// Get Post ID.
 	$post_id = isset( $_POST['post_id'] ) ? sanitize_text_field( wp_unslash( $_POST['post_id'] ) ) : null;
 
 	// Make it an integer, just to be sure.
 	$post_id = (int) $post_id;
 
-	// Enable WordPress API on post.
+	// Enable WordPress API on Post.
 	$GLOBALS['post'] = get_post( $post_id );
 
-	// Get any comments posted since last update time.
+	// Get any Comments posted since last update time.
 	$data['cpajax_new_comments'] = [];
 
 	// Get current array.
@@ -435,7 +435,7 @@ function cpajax_get_new_comments() {
 	// Get approved -> do we want others?
 	$current_comment_count = $current_comment_count_array['approved'];
 
-	// Get number of new comments to fetch.
+	// Get number of new Comments to fetch.
 	$num_to_get = (int) $current_comment_count - (int) $last_comment_count;
 
 	// Are there any?
@@ -622,7 +622,7 @@ function cpajax_reassign_comment() {
 		// Access globals.
 		global $commentpress_core;
 
-		// Store text signature.
+		// Store Text Signature.
 		$commentpress_core->db->save_comment_signature( $comment_id );
 
 		// Trace.
@@ -642,12 +642,12 @@ function cpajax_reassign_comment() {
 }
 
 /**
- * Store text signature for all children of a comment.
+ * Store Text Signature for all children of a comment.
  *
  * @since 3.4
  *
  * @param int $comment_id The numeric ID of the Comment.
- * @param str $text_sig The text signature.
+ * @param str $text_sig The Text Signature.
  * @param array $comment_ids The array of Comment IDs.
  */
 function cpajax_reassign_comment_children( $comment_id, $text_sig, &$comment_ids ) {
@@ -664,7 +664,7 @@ function cpajax_reassign_comment_children( $comment_id, $text_sig, &$comment_ids
 			// Access globals.
 			global $commentpress_core;
 
-			// Store text signature.
+			// Store Text Signature.
 			$commentpress_core->db->save_comment_signature( $child->comment_ID );
 
 			// Trace.
@@ -685,7 +685,7 @@ function cpajax_reassign_comment_children( $comment_id, $text_sig, &$comment_ids
  * @since 3.4
  *
  * @param int $comment_id The numeric ID of the comment.
- * @return array $children The array of child comments.
+ * @return array $children The array of child Comments.
  */
 function cpajax_get_children( $comment_id ) {
 
@@ -715,7 +715,7 @@ function cpajax_infinite_scroll_scripts() {
 		return;
 	}
 
-	// Always load the comment form, even if comments are disabled.
+	// Always load the comment form, even if Comments are disabled.
 	add_filter( 'commentpress_force_comment_form', '__return_true' );
 
 	// Access globals.
@@ -724,7 +724,7 @@ function cpajax_infinite_scroll_scripts() {
 	// Default to minified scripts.
 	$debug_state = commentpress_minified();
 
-	// Bail if we are we asking for in-page comments.
+	// Bail if we are we asking for Comments-in-Page.
 	if ( $commentpress_core->db->is_special_page() ) {
 		return;
 	}
@@ -759,7 +759,7 @@ function cpajax_infinite_scroll_scripts() {
 }
 
 /**
- * Load the next page.
+ * Load the Next Page.
  *
  * @since 3.4
  */
@@ -792,10 +792,10 @@ function cpajax_infinite_scroll_load_next_page() {
 		die( 'No $current_post_id' );
 	}
 
-	// Get all pages.
+	// Get all Pages.
 	$all_pages = $commentpress_core->nav->get_book_pages( 'readable' );
 
-	// If we have any pages.
+	// If we have any Pages.
 	if ( count( $all_pages ) == 0 ) {
 		die( 'No $all_pages' );
 	}
@@ -806,10 +806,10 @@ function cpajax_infinite_scroll_load_next_page() {
 	// Loop.
 	foreach ( $all_pages as $key => $page_obj ) {
 
-		// Is it the currently viewed page?
+		// Is it the currently viewed Page?
 		if ( $page_obj->ID == $current_post_id ) {
 
-			// Set page key.
+			// Set Page key.
 			$page_key = $key;
 
 			// Kick out to preserve key.
@@ -832,10 +832,10 @@ function cpajax_infinite_scroll_load_next_page() {
 	// Get object.
 	$new_post = $all_pages[ $page_key + 1 ];
 
-	// Access post.
+	// Access Post.
 	global $post;
 
-	// Get page data.
+	// Get Page data.
 	$post = get_post( $new_post->ID );
 
 	// Enable API.
@@ -853,9 +853,9 @@ function cpajax_infinite_scroll_load_next_page() {
 	// Format title.
 	$page_title = get_the_title( $post->ID ) . ' | ' . $page_title;
 
-	// Get next page.
+	// Get Next Page.
 
-	// Get feature image.
+	// Get Feature Image.
 	ob_start();
 	commentpress_get_feature_image();
 	$feature_image = ob_get_contents();
@@ -875,10 +875,10 @@ function cpajax_infinite_scroll_load_next_page() {
 	// Get content.
 	$content = apply_filters( 'the_content', $post->post_content );
 
-	// Generate page numbers.
+	// Generate Page numbers.
 	$commentpress_core->nav->generate_page_numbers( $all_pages );
 
-	// Get page number.
+	// Get Page number.
 	$number = $commentpress_core->nav->get_page_number( $post->ID );
 
 	// Get menu ID, if we have one.
@@ -888,7 +888,7 @@ function cpajax_infinite_scroll_load_next_page() {
 		$menu_id = 'wppage_menuid-' . $new_post->ID;
 	}
 
-	// Init page number html.
+	// Init Page number html.
 	$page_num = '';
 
 	// If we get one.
@@ -897,12 +897,12 @@ function cpajax_infinite_scroll_load_next_page() {
 		// Is it arabic?
 		if ( is_numeric( $number ) ) {
 
-			// Add page number.
+			// Add Page number.
 			$page_num = '<div class="running_header_bottom">page ' . $number . '</div>';
 
 		} else {
 
-			// Add page number.
+			// Add Page number.
 			$page_num = '<div class="running_header_bottom">page ' . strtolower( $number ) . '</div>';
 
 		}
@@ -912,7 +912,7 @@ function cpajax_infinite_scroll_load_next_page() {
 	// Init nav.
 	$commentpress_core->nav->setup_items();
 
-	// Get page navigation.
+	// Get Page navigation.
 	$navigation = commentpress_page_navigation();
 
 	// If we get any.
@@ -926,12 +926,12 @@ function cpajax_infinite_scroll_load_next_page() {
 	// Do we have a featured image?
 	if ( ! commentpress_has_feature_image() ) {
 
-		// Assign upper page navigation.
+		// Assign upper Page navigation.
 		$upper_navigation = $navigation;
 
 	} else {
 
-		// We have a feature image - clear title in main body of content.
+		// We have a Feature Image - clear title in main body of content.
 		$title = '';
 
 	}
@@ -953,7 +953,7 @@ function cpajax_infinite_scroll_load_next_page() {
 		$lower_navigation .
 	'</div>';
 
-	// Get comments using buffer.
+	// Get Comments using buffer.
 	ob_start();
 	$vars = $commentpress_core->db->get_javascript_vars();
 

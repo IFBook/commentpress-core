@@ -117,7 +117,7 @@ function commentpress_setup() {
 		// Do we have the featured images option enabled?
 		if ( $featured_images == 'y' ) {
 
-			// Use Featured Images (also known as post thumbnails)
+			// Use Featured Images (also known as Post Thumbnails)
 			add_theme_support( 'post-thumbnails' );
 
 			// Define a custom image size, cropped to fit.
@@ -210,7 +210,7 @@ function commentpress_enqueue_scripts_and_styles() {
 	// If we have the plugin enabled.
 	if ( is_object( $commentpress_core ) ) {
 
-		// Test for BuddyPress special page.
+		// Test for BuddyPress Special Page.
 		if ( $commentpress_core->is_buddypress() AND $commentpress_core->is_buddypress_special_page() ) {
 
 			// Skip custom addComment.
@@ -243,7 +243,7 @@ function commentpress_enqueue_scripts_and_styles() {
 
 		}
 
-		// Test for CommentPress Core special page.
+		// Test for CommentPress Core Special Page.
 		if ( $commentpress_core->db->is_special_page() ) {
 
 			// Enqueue accordion-like Javascript.
@@ -305,13 +305,13 @@ function commentpress_buddypress_support() {
 	// Include bp-overrides when BuddyPress is active.
 	add_action( 'wp_enqueue_scripts', 'commentpress_bp_enqueue_styles', 996 );
 
-	// Add filter for activity class.
+	// Add filter for Activity class.
 	add_filter( 'bp_get_activity_css_class', 'commentpress_bp_activity_css_class' );
 
-	// Add filter for blogs class.
+	// Add filter for Blogs class.
 	add_filter( 'bp_get_blog_class', 'commentpress_bp_blog_css_class' );
 
-	// Add filter for groups class.
+	// Add filter for Groups class.
 	add_filter( 'bp_get_group_class', 'commentpress_bp_group_css_class' );
 
 	// Add wrapper element to Member Settings section.
@@ -509,11 +509,11 @@ endif; // End commentpress_header
 
 if ( ! function_exists( 'commentpress_page_navigation' ) ):
 /**
- * Builds a list of previous and next pages, optionally with comments.
+ * Builds a list of previous and Next Pages, optionally with Comments.
  *
  * @since 3.0
  *
- * @param bool $with_comments True returns the next page with comments.
+ * @param bool $with_comments True returns the Next Page with Comments.
  * @return str $nav_list The unordered list of navigation links.
  */
 function commentpress_page_navigation( $with_comments = false ) {
@@ -533,17 +533,17 @@ function commentpress_page_navigation( $with_comments = false ) {
 	// Init.
 	$next_page_html = '';
 
-	// Get next page.
+	// Get Next Page.
 	$next_page = $commentpress_core->nav->get_next_page( $with_comments );
 
-	// Did we get a next page?
+	// Did we get a Next Page?
 	if ( is_object( $next_page ) ) {
 
 		// Init title.
 		$img = '';
 		$title = __( 'Next page', 'commentpress-core' ); //htmlentities( $next_page->post_title );
 
-		// If we wanted pages with comments.
+		// If we wanted Pages with Comments.
 		if ( $with_comments ) {
 
 			// Set title.
@@ -563,17 +563,17 @@ function commentpress_page_navigation( $with_comments = false ) {
 	// Init.
 	$prev_page_html = '';
 
-	// Get next page.
+	// Get Next Page.
 	$prev_page = $commentpress_core->nav->get_previous_page( $with_comments );
 
-	// Did we get a next page?
+	// Did we get a Next Page?
 	if ( is_object( $prev_page ) ) {
 
 		// Init title.
 		$img = '';
 		$title = __( 'Previous page', 'commentpress-core' ); //htmlentities( $prev_page->post_title );
 
-		// If we wanted pages with comments.
+		// If we wanted Pages with Comments.
 		if ( $with_comments ) {
 
 			// Set title.
@@ -611,7 +611,7 @@ endif; // End commentpress_page_navigation
 
 if ( ! function_exists( 'commentpress_get_all_comments_content' ) ):
 /**
- * All-comments page display function.
+ * All-comments Page display function.
  *
  * @since 3.0
  *
@@ -637,12 +637,12 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 	// Kick out if none.
 	if ( count( $all_comments ) == 0 ) return $html;
 
-	// Build list of posts to which they are attached.
+	// Build list of Posts to which they are attached.
 	$posts_with = [];
 	$post_comment_counts = [];
 	foreach( $all_comments AS $comment ) {
 
-		// Add to posts with comments array.
+		// Add to Posts with comments array.
 		if ( !in_array( $comment->comment_post_ID, $posts_with ) ) {
 			$posts_with[] = $comment->comment_post_ID;
 		}
@@ -659,7 +659,7 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 	// Kick out if none.
 	if ( count( $posts_with ) == 0 ) return $html;
 
-	// Get those posts.
+	// Get those Posts.
 	$posts = get_posts( [
 		'orderby' => 'comment_count',
 		'order' => 'DESC',
@@ -766,11 +766,11 @@ endif; // End commentpress_get_all_comments_content
 
 if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ):
 /**
- * All-comments page display function.
+ * All-comments Page display function.
  *
  * @since 3.0
  *
- * @return str $page_content The page content.
+ * @return str $page_content The Page content.
  */
 function commentpress_get_all_comments_page_content() {
 
@@ -783,10 +783,10 @@ function commentpress_get_all_comments_page_content() {
 	// Declare access to globals.
 	global $commentpress_core;
 
-	// Init page content.
+	// Init Page content.
 	$page_content = '';
 
-	// Get page or post.
+	// Get Page or Post.
 	$page_or_post = $commentpress_core->get_list_option();
 
 	// Set default.
@@ -818,7 +818,7 @@ function commentpress_get_all_comments_page_content() {
 
 	}
 
-	// Get data for other page type.
+	// Get data for other Page Type.
 	$other_type = ( $page_or_post == 'page' ) ? 'post': 'page';
 
 	// Get title.
@@ -927,13 +927,13 @@ add_filter( 'bp_get_the_notification_delete_link', 'commentpress_convert_link_to
 
 if ( ! function_exists( 'commentpress_get_feature_image' ) ):
 /**
- * Show feature image.
+ * Show Feature Image.
  *
  * @since 3.5
  */
 function commentpress_get_feature_image() {
 
-	// Access post.
+	// Access Post.
 	global $post;
 
 	// Do we have a featured image?
@@ -943,12 +943,12 @@ function commentpress_get_feature_image() {
 		echo '<div class="cp_feature_image">';
 
 		/**
-		 * Filter the feature image.
+		 * Filter the Feature Image.
 		 *
 		 * @since 3.9
 		 *
 		 * @param str The HTML for showing the image.
-		 * @param WP_Post The current WordPress post object.
+		 * @param WP_Post The current WordPress Post object.
 		 */
 		echo apply_filters(
 			'commentpress_get_feature_image',
@@ -962,8 +962,8 @@ function commentpress_get_feature_image() {
 
 				<?php
 
-				// When pulling post in via AJAX, is_page() isn't available, so
-				// inspect the post type as well.
+				// When pulling Post in via AJAX, is_page() isn't available, so
+				// inspect the Post Type as well.
 				if ( is_page() OR $post->post_type == 'page' ) {
 
 				?>
@@ -984,12 +984,12 @@ function commentpress_get_feature_image() {
 							 '</h2>';
 
 					/**
-					 * Filter the page/post title when there is a feature image.
+					 * Filter the Page/Post title when there is a Feature Image.
 					 *
 					 * @since 3.9.10
 					 *
 					 * @param str The HTML for showing the image.
-					 * @param WP_Post The current WordPress post object.
+					 * @param WP_Post The current WordPress Post object.
 					 */
 					echo apply_filters( 'commentpress_get_feature_image_title', $title, $post );
 
@@ -1014,12 +1014,12 @@ function commentpress_get_feature_image() {
 							 '</h2>';
 
 					/**
-					 * Filter the page/post title when there is a feature image.
+					 * Filter the Page/Post title when there is a Feature Image.
 					 *
 					 * @since 3.9.10
 					 *
 					 * @param str The HTML for showing the image.
-					 * @param WP_Post The current WordPress post object.
+					 * @param WP_Post The current WordPress Post object.
 					 */
 					echo apply_filters( 'commentpress_get_feature_image_title', $title, $post );
 
@@ -1045,13 +1045,13 @@ endif; // End commentpress_get_feature_image
 
 
 /**
- * Utility to test for feature image, because has_post_thumbnail() fails sometimes.
+ * Utility to test for Feature Image, because has_post_thumbnail() fails sometimes.
  *
  * @see http://codex.wordpress.org/Function_Reference/has_post_thumbnail
  *
  * @since 3.5
  *
- * @return bool True if post has thumbnail, false otherwise.
+ * @return bool True if Post has thumbnail, false otherwise.
  */
 function commentpress_has_feature_image() {
 
@@ -1068,7 +1068,7 @@ function commentpress_has_feature_image() {
 	 *
 	 * @since 3.9
 	 *
-	 * @param bool $has_feature_image True if the post has a feature image, false otherwise.
+	 * @param bool $has_feature_image True if the Post has a Feature Image, false otherwise.
 	 */
 	return apply_filters( 'commentpress_has_feature_image', $has_feature_image );
 
@@ -1077,7 +1077,7 @@ function commentpress_has_feature_image() {
 
 
 /**
- * Register widget areas for this theme.
+ * Register Widget areas for this theme.
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  *
@@ -1085,7 +1085,7 @@ function commentpress_has_feature_image() {
  */
 function commentpress_register_widget_areas() {
 
-	// Define an area where a widget may be placed.
+	// Define an area where a Widget may be placed.
 	register_sidebar( [
 		'name' => __( 'CommentPress Footer', 'commentpress-core' ),
 		'id' => 'cp-license-8',
@@ -1096,7 +1096,7 @@ function commentpress_register_widget_areas() {
 		'after_title' => '</h3>',
 	] );
 
-	// Define an area where a widget may be placed.
+	// Define an area where a Widget may be placed.
 	register_sidebar( [
 		'name' => __( 'Navigation Top', 'commentpress-core' ),
 		'id' => 'cp-nav-top',
@@ -1107,7 +1107,7 @@ function commentpress_register_widget_areas() {
 		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
 	] );
 
-	// Define an area where a widget may be placed.
+	// Define an area where a Widget may be placed.
 	register_sidebar( [
 		'name' => __( 'Navigation Bottom', 'commentpress-core' ),
 		'id' => 'cp-nav-bottom',
@@ -1118,7 +1118,7 @@ function commentpress_register_widget_areas() {
 		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
 	] );
 
-	// Define an area where a widget may be placed.
+	// Define an area where a Widget may be placed.
 	register_sidebar( [
 		'name' => __( 'Activity Top', 'commentpress-core' ),
 		'id' => 'cp-activity-top',
@@ -1129,7 +1129,7 @@ function commentpress_register_widget_areas() {
 		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
 	] );
 
-	// Define an area where a widget may be placed.
+	// Define an area where a Widget may be placed.
 	register_sidebar( [
 		'name' => __( 'Activity Bottom', 'commentpress-core' ),
 		'id' => 'cp-activity-bottom',

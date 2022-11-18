@@ -39,10 +39,10 @@ global $commentpress_core, $post;
 // If we have the plugin enabled.
 if ( is_object( $commentpress_core ) ) {
 
-	// Are we asking for in-page comments?
+	// Are we asking for Comments-in-Page?
 	if ( $commentpress_core->db->is_special_page() ) {
 
-		// Include 'comments in page' template
+		// Include 'Comments-in-Page' template
 
 		/**
 		 * Try to locate template using WordPress method.
@@ -65,7 +65,7 @@ if ( is_object( $commentpress_core ) ) {
 
 	} else {
 
-		// Include comments split by paragraph template
+		// Include Comments split by Paragraph template
 
 		/**
 		 * Try to locate template using WordPress method.
@@ -140,13 +140,13 @@ if ( is_object( $commentpress_core ) ) {
 
 
 
-<?php else : // This is displayed if there are no comments so far. ?>
+<?php else : // This is displayed if there are no Comments so far. ?>
 
 
 
 	<?php if ( 'open' == $post->comment_status ) : ?>
 
-		<!-- comments are open, but there are no comments. -->
+		<!-- Comments are open, but there are no Comments. -->
 		<h3 class="nocomments"><span><?php _e( 'No comments on the whole page', 'commentpress-core' ); ?></span></h3>
 
 		<div class="paragraph_wrapper">
@@ -157,9 +157,9 @@ if ( is_object( $commentpress_core ) ) {
 
 		</div><!-- /paragraph_wrapper -->
 
-	<?php else : // Comments are closed. ?>
+	<?php else : ?>
 
-		<!-- comments are closed. -->
+		<!-- Comments are closed. -->
 		<h3 class="nocomments comments-closed"><span><?php _e( 'Comments are closed.', 'commentpress-core' ); ?></span></h3>
 
 	<?php endif; ?>

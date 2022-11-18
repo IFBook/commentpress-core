@@ -109,14 +109,14 @@ class CommentPress_Theme_Tabs {
 			return;
 		}
 
-		// Bail if workflow not enabled.
+		// Bail if Workflow not enabled.
 		if ( '1' != $commentpress_core->db->option_get( 'cp_blog_workflow' ) ) {
 			return;
 		}
 
 		// Okay, let's get our data.
 
-		// Access post.
+		// Access Post.
 		global $post;
 
 		// Set key.
@@ -135,7 +135,7 @@ class CommentPress_Theme_Tabs {
 			$this->literal = get_post_meta( $post->ID, $key, true );
 		}
 
-		// Did we get either type of workflow content?
+		// Did we get either type of Workflow content?
 		if ( $this->literal != '' || $this->original != '' ) {
 
 			// Override tabs class.
@@ -166,7 +166,7 @@ class CommentPress_Theme_Tabs {
 			return;
 		}
 
-		// Bail if we get neither type of workflow content.
+		// Bail if we get neither type of Workflow content.
 		if ( empty( $this->literal ) && empty( $this->original ) ) {
 			return;
 		}
@@ -203,7 +203,7 @@ class CommentPress_Theme_Tabs {
 			return;
 		}
 
-		// Bail if we get neither type of workflow content.
+		// Bail if we get neither type of Workflow content.
 		if ( empty( $this->literal ) && empty( $this->original ) ) {
 			return;
 		}

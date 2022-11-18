@@ -48,20 +48,20 @@ class CommentPress_Core_Database {
 	public $toc_content = 'page';
 
 	/**
-	 * Table of Contents "chapters are pages" flag.
+	 * Table of Contents "Chapters are Pages" flag.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var bool $toc_chapter_is_page The Table of Contents "chapters are pages" flag.
+	 * @var bool $toc_chapter_is_page The Table of Contents "Chapters are Pages" flag.
 	 */
 	public $toc_chapter_is_page = 1;
 
 	/**
-	 * Extended Table of Contents content for posts lists flag.
+	 * Extended Table of Contents content for Posts lists flag.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var bool $show_extended_toc The extended TOC content for posts lists flag.
+	 * @var bool $show_extended_toc The extended TOC content for Posts lists flag.
 	 */
 	public $show_extended_toc = 1;
 
@@ -79,7 +79,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var str $title_visibility Show page titles by default.
+	 * @var str $title_visibility Show Page titles by default.
 	 */
 	public $title_visibility = 'show';
 
@@ -88,7 +88,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var str $page_meta_visibility Hide page meta by default.
+	 * @var str $page_meta_visibility Hide Page meta by default.
 	 */
 	public $page_meta_visibility = 'hide';
 
@@ -138,24 +138,24 @@ class CommentPress_Core_Database {
 	public $js_scroll_speed = '800';
 
 	/**
-	 * Default type of blog.
+	 * Default type of Blog.
 	 *
-	 * Blog types are built as an array - eg, array('0' => 'Poetry','1' => 'Prose')
+	 * Blog Types are built as an array - eg, array('0' => 'Poetry','1' => 'Prose')
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var bool|int $blog_type The default type of blog.
+	 * @var bool|int $blog_type The default type of Blog.
 	 */
 	public $blog_type = false;
 
 	/**
-	 * Default blog workflow.
+	 * Default Blog Workflow.
 	 *
 	 * Like "translation", for example, off by default.
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var bool $blog_workflow True if blog workflow enabled.
+	 * @var bool $blog_workflow True if Blog Workflow enabled.
 	 */
 	public $blog_workflow = 0;
 
@@ -169,11 +169,11 @@ class CommentPress_Core_Database {
 	public $sidebar_default = 'toc';
 
 	/**
-	 * Default minimum page width (px).
+	 * Default minimum Page width (px).
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var str $min_page_width The default minimum page width in pixels.
+	 * @var str $min_page_width The default minimum Page width in pixels.
 	 */
 	public $min_page_width = '447';
 
@@ -208,22 +208,22 @@ class CommentPress_Core_Database {
 	 * Page navigation enabled flag.
 	 *
 	 * By default, CommentPress creates "book-like" navigation for the built-in
-	 * "page" post type. This is what CommentPress was built for in the first
-	 * place - to create a "document" from hierarchically-organised pages. This
+	 * "page" Post Type. This is what CommentPress was built for in the first
+	 * place - to create a "document" from hierarchically-organised Pages. This
 	 * is not always the desired behaviour.
 	 *
 	 * @since 3.8.10
 	 * @access public
-	 * @var str $page_nav_enabled The page navigation flag ('y' or 'n').
+	 * @var str $page_nav_enabled The Page navigation flag ('y' or 'n').
 	 */
 	public $page_nav_enabled = 'y';
 
 	/**
 	 * Do Not Parse flag.
 	 *
-	 * When comments are closed on an entry and there are no comments on that
-	 * entry, if this is set then the content will not be parsed for paragraphs,
-	 * lines or blocks. Comments will also not be parsed, meaning that the entry
+	 * When Comments are closed on an entry and there are no Comments on that
+	 * entry, if this is set then the content will not be parsed for Paragraphs,
+	 * Lines or Blocks. Comments will also not be parsed, meaning that the entry
 	 * behaves the same as content which is not commentable. This allows, for
 	 * example, the rendering of the comment column to be skipped in these
 	 * circumstances.
@@ -237,13 +237,13 @@ class CommentPress_Core_Database {
 	/**
 	 * Skipped Post Types.
 	 *
-	 * By default all post types are parsed by CommentPress. Post Types in this
+	 * By default all Post Types are parsed by CommentPress. Post Types in this
 	 * array will not be parsed. This effectively batch sets $do_not_parse for
 	 * the Post Type.
 	 *
 	 * @since 3.9
 	 * @access public
-	 * @var str $post_types_disabled The post types not to be parsed.
+	 * @var str $post_types_disabled The Post Types not to be parsed.
 	 */
 	public $post_types_disabled = [];
 
@@ -332,13 +332,13 @@ class CommentPress_Core_Database {
 
 		}
 
-		// Retrieve data on special pages.
+		// Retrieve data on Special Pages.
 		$special_pages = $this->option_get( 'cp_special_pages', [] );
 
 		// If we haven't created any.
 		if ( count( $special_pages ) == 0 ) {
 
-			// Create special pages.
+			// Create Special Pages.
 			$this->create_special_pages();
 
 		}
@@ -346,7 +346,7 @@ class CommentPress_Core_Database {
 		// Turn comment paging option off.
 		$this->comment_paging_cancel();
 
-		// Override widgets.
+		// Override Widgets.
 		$this->widgets_clear();
 
 	}
@@ -361,10 +361,10 @@ class CommentPress_Core_Database {
 		// Reset comment paging option.
 		$this->comment_paging_restore();
 
-		// Restore widgets.
+		// Restore Widgets.
 		$this->widgets_restore();
 
-		// Always remove special pages.
+		// Always remove Special Pages.
 		$this->delete_special_pages();
 
 	}
@@ -429,7 +429,7 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * Do we have a column in the comments table?
+	 * Do we have a column in the Comments table?
 	 *
 	 * @since 3.0
 	 *
@@ -525,7 +525,7 @@ class CommentPress_Core_Database {
 	 */
 	public function upgrade_options_check() {
 
-		// Do we have the option to choose which post types are supported (new in 3.9)?
+		// Do we have the option to choose which Post Types are supported (new in 3.9)?
 		if ( ! $this->option_exists( 'cp_post_types_disabled' ) ) {
 			return true;
 		}
@@ -535,7 +535,7 @@ class CommentPress_Core_Database {
 			return true;
 		}
 
-		// Do we have the option to choose to disable page navigation (new in 3.8.10)?
+		// Do we have the option to choose to disable Page navigation (new in 3.8.10)?
 		if ( ! $this->option_exists( 'cp_page_nav_enabled' ) ) {
 			return true;
 		}
@@ -555,17 +555,17 @@ class CommentPress_Core_Database {
 			return true;
 		}
 
-		// Do we have the option to show or hide page meta (new in 3.3.2)?
+		// Do we have the option to show or hide Page meta (new in 3.3.2)?
 		if ( ! $this->option_exists( 'cp_page_meta_visibility' ) ) {
 			return true;
 		}
 
-		// Do we have the option to choose blog type (new in 3.3.1)?
+		// Do we have the option to choose Blog Type (new in 3.3.1)?
 		if ( ! $this->option_exists( 'cp_blog_type' ) ) {
 			return true;
 		}
 
-		// Do we have the option to choose blog workflow (new in 3.3.1)?
+		// Do we have the option to choose Blog Workflow (new in 3.3.1)?
 		if ( ! $this->option_exists( 'cp_blog_workflow' ) ) {
 			return true;
 		}
@@ -600,7 +600,7 @@ class CommentPress_Core_Database {
 			return true;
 		}
 
-		// Do we have the option to set the minimum page width?
+		// Do we have the option to set the minimum Page width?
 		if ( ! $this->option_exists( 'cp_min_page_width' ) ) {
 			return true;
 		}
@@ -626,24 +626,24 @@ class CommentPress_Core_Database {
 		$cp_blog_workflow = $this->blog_workflow;
 
 		/*
-		 * We don't receive disabled post types in $_POST, so let's default
-		 * to all post types being enabled.
+		 * We don't receive disabled Post Types in $_POST, so let's default
+		 * to all Post Types being enabled.
 		 */
 		$cp_post_types_enabled = array_keys( $this->get_supported_post_types() );
 
-		// Default blog type.
+		// Default Blog Type.
 		$cp_blog_type = $this->blog_type;
 
 		// Get variables.
 		extract( $_POST );
 
-		// New in CommentPress Core 3.9 - post types can be excluded.
+		// New in CommentPress Core 3.9 - Post Types can be excluded.
 		if ( ! $this->option_exists( 'cp_post_types_disabled' ) ) {
 
-			// Get selected post types.
+			// Get selected Post Types.
 			$enabled_types = array_map( 'esc_sql', $cp_post_types_enabled );
 
-			// Exclude the selected post types.
+			// Exclude the selected Post Types.
 			$disabled_types = array_diff( array_keys( $this->get_supported_post_types() ), $enabled_types );
 
 			// Add option.
@@ -662,13 +662,13 @@ class CommentPress_Core_Database {
 
 		}
 
-		// New in CommentPress Core 3.8.10 - page navigation can be disabled.
+		// New in CommentPress Core 3.8.10 - Page navigation can be disabled.
 		if ( ! $this->option_exists( 'cp_page_nav_enabled' ) ) {
 
 			// Get choice.
 			$choice = esc_sql( $cp_page_nav_enabled );
 
-			// Add chosen page navigation option.
+			// Add chosen Page navigation option.
 			$this->option_set( 'cp_page_nav_enabled', $choice );
 
 		}
@@ -719,7 +719,7 @@ class CommentPress_Core_Database {
 
 		}
 
-		// New in CommentPress 3.3.3 - changed the way the welcome page works.
+		// New in CommentPress 3.3.3 - changed the way the Welcome Page works.
 		if ( $this->option_exists( 'cp_special_pages' ) ) {
 
 			// Do we have the cp_welcome_page option?
@@ -728,13 +728,13 @@ class CommentPress_Core_Database {
 				// Get it.
 				$page_id = $this->option_get( 'cp_welcome_page' );
 
-				// Retrieve data on special pages.
+				// Retrieve data on Special Pages.
 				$special_pages = $this->option_get( 'cp_special_pages', [] );
 
-				// Is it in our special pages array?
+				// Is it in our Special Pages array?
 				if ( in_array( $page_id, $special_pages ) ) {
 
-					// Remove page id from array.
+					// Remove Page ID from array.
 					$special_pages = array_diff( $special_pages, [ $page_id ] );
 
 					// Reset option.
@@ -895,19 +895,19 @@ class CommentPress_Core_Database {
 
 		}
 
-		// Do we have special pages?
+		// Do we have Special Pages?
 		if ( $this->option_exists( 'cp_special_pages' ) ) {
 
-			// If we don't have the toc page.
+			// If we don't have the TOC Page.
 			if ( ! $this->option_exists( 'cp_toc_page' ) ) {
 
-				// Get special pages array.
+				// Get Special Pages array.
 				$special_pages = $this->option_get( 'cp_special_pages', [] );
 
-				// Create TOC page -> a convenience, let's us define a logo as attachment.
+				// Create TOC Page -> a convenience, let's us define a logo as attachment.
 				$special_pages[] = $this->create_toc_page();
 
-				// Store the array of page IDs that were created.
+				// Store the array of Page IDs that were created.
 				$this->option_set( 'cp_special_pages', $special_pages );
 
 			}
@@ -923,10 +923,10 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * Perform any plugin upgrades that do not have a setting on page load.
+	 * Perform any plugin upgrades that do not have a setting on Page load.
 	 *
 	 * Unlike `upgrade_options()` (which is only called when someone visits the
-	 * CommentPress Core settings page), this method is called on every page
+	 * CommentPress Core Settings Page), this method is called on every Page
 	 * load so that upgrades are performed immediately if required.
 	 *
 	 * @since 3.0
@@ -1014,7 +1014,7 @@ class CommentPress_Core_Database {
 		$cp_page_nav_enabled = 'y';
 		$cp_do_not_parse = 'y';
 
-		// Assume all post types are enabled.
+		// Assume all Post Types are enabled.
 		$cp_post_types_enabled = array_keys( $this->get_supported_post_types() );
 
 		// Get variables.
@@ -1048,21 +1048,21 @@ class CommentPress_Core_Database {
 			return;
 		}
 
-		// Did we ask to auto-create special pages?
+		// Did we ask to auto-create Special Pages?
 		if ( $cp_create_pages == '1' ) {
 
-			// Remove any existing special pages.
+			// Remove any existing Special Pages.
 			$this->delete_special_pages();
 
-			// Create special pages.
+			// Create Special Pages.
 			$this->create_special_pages();
 
 		}
 
-		// Did we ask to delete special pages?
+		// Did we ask to delete Special Pages?
 		if ( $cp_delete_pages == '1' ) {
 
-			// Remove special pages.
+			// Remove Special Pages.
 			$this->delete_special_pages();
 
 		}
@@ -1070,7 +1070,7 @@ class CommentPress_Core_Database {
 		// Let's deal with our params now.
 
 		/*
-		// Individual special pages.
+		// Individual Special Pages.
 		$cp_welcome_page = esc_sql( $cp_welcome_page );
 		$cp_blog_page = esc_sql( $cp_blog_page );
 		$cp_general_comments_page = esc_sql( $cp_general_comments_page );
@@ -1087,13 +1087,13 @@ class CommentPress_Core_Database {
 		$cp_show_posts_or_pages_in_toc = esc_sql( $cp_show_posts_or_pages_in_toc );
 		$this->option_set( 'cp_show_posts_or_pages_in_toc', $cp_show_posts_or_pages_in_toc );
 
-		// If we have pages in TOC and a value for the next param.
+		// If we have Pages in TOC and a value for the next param.
 		if ( $cp_show_posts_or_pages_in_toc == 'page' && isset( $cp_toc_chapter_is_page ) ) {
 
 			$cp_toc_chapter_is_page = esc_sql( $cp_toc_chapter_is_page );
 			$this->option_set( 'cp_toc_chapter_is_page', $cp_toc_chapter_is_page );
 
-			// If chapters are not pages and we have a value for the next param.
+			// If chapters are not Pages and we have a value for the next param.
 			if ( $cp_toc_chapter_is_page == '0' ) {
 
 				$cp_show_subpages = esc_sql( $cp_show_subpages );
@@ -1108,7 +1108,7 @@ class CommentPress_Core_Database {
 
 		}
 
-		// Extended or vanilla posts TOC.
+		// Extended or vanilla Posts TOC.
 		if ( $cp_show_posts_or_pages_in_toc == 'post' ) {
 
 			$cp_show_extended_toc = esc_sql( $cp_show_extended_toc );
@@ -1149,36 +1149,36 @@ class CommentPress_Core_Database {
 		$cp_js_scroll_speed = esc_sql( $cp_js_scroll_speed );
 		$this->option_set( 'cp_js_scroll_speed', $cp_js_scroll_speed );
 
-		// Save min page width.
+		// Save min Page width.
 		$cp_min_page_width = esc_sql( $cp_min_page_width );
 		$this->option_set( 'cp_min_page_width', $cp_min_page_width );
 
-		// Save workflow.
+		// Save Workflow.
 		$cp_blog_workflow = esc_sql( $cp_blog_workflow );
 		$this->option_set( 'cp_blog_workflow', ( $cp_blog_workflow ? 1 : 0 ) );
 
-		// Save blog type.
+		// Save Blog Type.
 		$cp_blog_type = esc_sql( $cp_blog_type );
 		$this->option_set( 'cp_blog_type', $cp_blog_type );
 
-		// If it's a groupblog.
+		// If it's a Group Blog.
 		if ( $this->core->is_groupblog() ) {
 
-			// Get the group's id.
+			// Get the Group ID.
 			$group_id = get_groupblog_group_id( get_current_blog_id() );
 			if ( isset( $group_id ) && is_numeric( $group_id ) && $group_id > 0 ) {
 
 				/**
-				 * Allow plugins to override the blog type - for example if workflow
-				 * is enabled, it might become a new blog type as far as BuddyPress
+				 * Allow plugins to override the Blog Type - for example if Workflow
+				 * is enabled, it might become a new Blog Type as far as BuddyPress
 				 * is concerned.
 				 *
-				 * @param int $cp_blog_type The numeric blog type.
-				 * @param bool $cp_blog_workflow True if workflow enabled, false otherwise.
+				 * @param int $cp_blog_type The numeric Blog Type.
+				 * @param bool $cp_blog_workflow True if Workflow enabled, false otherwise.
 				 */
 				$blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $cp_blog_type, $cp_blog_workflow );
 
-				// Set the type as group meta info.
+				// Store the type in Group meta.
 				groups_update_groupmeta( $group_id, 'groupblogtype', 'groupblogtype-' . $blog_type );
 
 			}
@@ -1199,7 +1199,7 @@ class CommentPress_Core_Database {
 		$cp_textblock_meta = esc_sql( $cp_textblock_meta );
 		$this->option_set( 'cp_textblock_meta', $cp_textblock_meta );
 
-		// Save page navigation enabled flag.
+		// Save Page navigation enabled flag.
 		$cp_page_nav_enabled = esc_sql( $cp_page_nav_enabled );
 		$this->option_set( 'cp_page_nav_enabled', $cp_page_nav_enabled );
 
@@ -1207,16 +1207,16 @@ class CommentPress_Core_Database {
 		$cp_do_not_parse = esc_sql( $cp_do_not_parse );
 		$this->option_set( 'cp_do_not_parse', $cp_do_not_parse );
 
-		// Do we have the post types option?
+		// Do we have the Post Types option?
 		if ( $this->option_exists( 'cp_post_types_disabled' ) ) {
 
-			// Get selected post types.
+			// Get selected Post Types.
 			$enabled_types = array_map( 'esc_sql', $cp_post_types_enabled );
 
-			// Exclude the selected post types.
+			// Exclude the selected Post Types.
 			$disabled_types = array_diff( array_keys( $this->get_supported_post_types() ), $enabled_types );
 
-			// Save skipped post types.
+			// Save skipped Post Types.
 			$this->option_set( 'cp_post_types_disabled', $disabled_types );
 
 		}
@@ -1433,25 +1433,25 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * When a page is saved, this also saves the CommentPress Core options.
+	 * When a Page is saved, this also saves the CommentPress Core options.
 	 *
 	 * @since 3.4
 	 *
-	 * @param object $post_obj The post object.
+	 * @param object $post_obj The Post object.
 	 */
 	public function save_meta( $post_obj ) {
 
-		// If no post, kick out.
+		// If no Post, kick out.
 		if ( ! $post_obj ) {
 			return;
 		}
 
-		// If page.
+		// If Page.
 		if ( $post_obj->post_type == 'page' ) {
 			$this->save_page_meta( $post_obj );
 		}
 
-		// If post.
+		// If Post.
 		if ( $post_obj->post_type == 'post' ) {
 			$this->save_post_meta( $post_obj );
 		}
@@ -1459,11 +1459,11 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * When a page is saved, this also saves the CommentPress Core options.
+	 * When a Page is saved, this also saves the CommentPress Core options.
 	 *
 	 * @since 3.4
 	 *
-	 * @param object $post_obj The post object.
+	 * @param object $post_obj The Post object.
 	 */
 	public function save_page_meta( $post_obj ) {
 
@@ -1486,50 +1486,50 @@ class CommentPress_Core_Database {
 			$post = $post_obj;
 		}
 
-		// Save page title visibility.
+		// Save Page title visibility.
 		$this->save_page_title_visibility( $post );
 
-		// Save page meta visibility.
+		// Save Page meta visibility.
 		$this->save_page_meta_visibility( $post );
 
-		// Save page numbering.
+		// Save Page numbering.
 		$this->save_page_numbering( $post );
 
-		// Save page layout for Title Page.
+		// Save Page layout for Title Page.
 		$this->save_page_layout( $post );
 
 		// Save default sidebar.
 		$this->save_default_sidebar( $post );
 
-		// Save starting paragraph number.
+		// Save starting Paragraph Number.
 		$this->save_starting_paragraph( $post );
 
 		/**
-		 * Broadcast that page meta has been saved.
+		 * Broadcast that Page meta has been saved.
 		 *
 		 * @since 4.0
 		 *
-		 * @param object $post The WordPress post object.
+		 * @param object $post The WordPress Post object.
 		 */
 		do_action( 'commentpress/core/db/page_meta/saved', $post );
 
 	}
 
 	/**
-	 * When a page is saved, this authenticates that our options can be saved.
+	 * When a Page is saved, this authenticates that our options can be saved.
 	 *
 	 * @since 3.4
 	 *
-	 * @param object $post_obj The post object.
+	 * @param object $post_obj The Post object.
 	 */
 	public function save_page_meta_authenticated( $post_obj ) {
 
-		// If no post, kick out.
+		// If no Post, kick out.
 		if ( ! $post_obj ) {
 			return false;
 		}
 
-		// If not page, kick out.
+		// If not Page, kick out.
 		if ( $post_obj->post_type != 'page' ) {
 			return false;
 		}
@@ -1560,7 +1560,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.4
 	 *
-	 * @param object $post The post object.
+	 * @param object $post The Post object.
 	 * @return string $data Either 'show' (default) or ''.
 	 */
 	public function save_page_title_visibility( $post ) {
@@ -1599,7 +1599,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.4
 	 *
-	 * @param object $post The post object.
+	 * @param object $post The Post object.
 	 * @return string $data Either 'hide' (default) or ''.
 	 */
 	public function save_page_meta_visibility( $post ) {
@@ -1638,9 +1638,9 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.4
 	 *
-	 * Only first top-level page is allowed to save this.
+	 * Only first top-level Page is allowed to save this.
 	 *
-	 * @param object $post The post object.
+	 * @param object $post The Post object.
 	 */
 	public function save_page_numbering( $post ) {
 
@@ -1650,7 +1650,7 @@ class CommentPress_Core_Database {
 			// Set meta key.
 			$key = '_cp_number_format';
 
-			// Do we need to check this, since only the first top level page
+			// Do we need to check this, since only the first top level Page
 			// can now send this data? doesn't hurt to validate, I guess.
 			if (
 				$post->post_parent == '0' &&
@@ -1686,19 +1686,19 @@ class CommentPress_Core_Database {
 
 			}
 
-			// Delete this meta value from all other pages, because we may have altered
-			// the relationship between pages, thus causing the page numbering to fail.
+			// Delete this meta value from all other Pages, because we may have altered
+			// the relationship between Pages, thus causing the Page numbering to fail.
 
-			// Get all pages including chapters.
+			// Get all Pages including chapters.
 			$all_pages = $this->core->nav->get_book_pages( 'structural' );
 
-			// If we have any pages.
+			// If we have any Pages.
 			if ( count( $all_pages ) > 0 ) {
 
 				// Loop.
 				foreach ( $all_pages as $page ) {
 
-					// Exclude first top level page.
+					// Exclude first top level Page.
 					if ( $post->ID != $page->ID ) {
 
 						// Delete the meta value.
@@ -1719,11 +1719,11 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $post The post object.
+	 * @param object $post The Post object.
 	 */
 	public function save_page_layout( $post ) {
 
-		// Is this the title page?
+		// Is this the Title Page?
 		if ( $post->ID == $this->option_get( 'cp_welcome_page' ) ) {
 
 			// Find and save the data.
@@ -1754,11 +1754,11 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * When a post is saved, this also saves the CommentPress Core options.
+	 * When a Post is saved, this also saves the CommentPress Core options.
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $post_obj The post object.
+	 * @param object $post_obj The Post object.
 	 */
 	public function save_post_meta( $post_obj ) {
 
@@ -1785,31 +1785,31 @@ class CommentPress_Core_Database {
 		$this->save_default_sidebar( $post );
 
 		/**
-		 * Broadcast that post meta has been saved.
+		 * Broadcast that Post meta has been saved.
 		 *
 		 * @since 4.0
 		 *
-		 * @param object $post The WordPress post object.
+		 * @param object $post The WordPress Post object.
 		 */
 		do_action( 'commentpress/core/db/post_meta/saved', $post );
 
 	}
 
 	/**
-	 * When a post is saved, this authenticates that our options can be saved.
+	 * When a Post is saved, this authenticates that our options can be saved.
 	 *
 	 * @since 3.4
 	 *
-	 * @param object $post_obj The post object.
+	 * @param object $post_obj The Post object.
 	 */
 	public function save_post_meta_authenticated( $post_obj ) {
 
-		// If no post, kick out.
+		// If no Post, kick out.
 		if ( ! $post_obj ) {
 			return false;
 		}
 
-		// If not page, kick out.
+		// If not Page, kick out.
 		if ( $post_obj->post_type != 'post' ) {
 			return false;
 		}
@@ -1840,7 +1840,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.4
 	 *
-	 * @param object $post The post object.
+	 * @param object $post The Post object.
 	 */
 	public function save_default_sidebar( $post ) {
 
@@ -1886,7 +1886,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.4
 	 *
-	 * @param object $post The post object.
+	 * @param object $post The Post object.
 	 */
 	public function save_starting_paragraph( $post ) {
 
@@ -1926,20 +1926,20 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * When a page is deleted, this makes sure that the CommentPress Core options are synced.
+	 * When a Page is deleted, this makes sure that the CommentPress Core options are synced.
 	 *
 	 * @since 3.4
 	 *
-	 * @param object $post_id The post ID.
+	 * @param object $post_id The Post ID.
 	 */
 	public function delete_meta( $post_id ) {
 
-		// If no post, kick out.
+		// If no Post, kick out.
 		if ( ! $post_id ) {
 			return;
 		}
 
-		// If it's our welcome page.
+		// If it's our Welcome Page.
 		if ( $post_id == $this->option_get( 'cp_welcome_page' ) ) {
 
 			// Delete option.
@@ -1950,12 +1950,12 @@ class CommentPress_Core_Database {
 
 		}
 
-		// For posts with versions, we need to delete the version data for the previous version.
+		// For Posts with versions, we need to delete the version data for the previous version.
 
 		// Define key.
 		$key = '_cp_newer_version';
 
-		// Get posts with the about-to-be-deleted post_id - there will be only one, if at all.
+		// Get Posts with the about-to-be-deleted "post_id" - there will be only one, if at all.
 		$previous_versions = get_posts( [
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			'meta_key' => $key,
@@ -1982,7 +1982,7 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * Create all "special" pages.
+	 * Create all Special Pages.
 	 *
 	 * @since 3.4
 	 */
@@ -1990,36 +1990,36 @@ class CommentPress_Core_Database {
 
 		/*
 		 * One of the CommentPress Core themes MUST be active or WordPress will
-		 * fail to set the page templates for the pages that require them.
+		 * fail to set the Page templates for the Pages that require them.
 		 *
-		 * Also, a user must be logged in for these pages to be associated with them.
+		 * Also, a User must be logged in for these Pages to be associated with them.
 		 */
 
-		// Get special pages array, if it's there.
+		// Get Special Pages array, if it's there.
 		$special_pages = $this->option_get( 'cp_special_pages', [] );
 
-		// Create welcome/title page, but don't add to special pages.
+		// Create Welcome/Title Page, but don't add to Special Pages.
 		$welcome = $this->create_title_page();
 
-		// Create general comments page.
+		// Create General Comments Page.
 		$special_pages[] = $this->create_general_comments_page();
 
-		// Create all comments page.
+		// Create All Comments Page.
 		$special_pages[] = $this->create_all_comments_page();
 
-		// Create comments by author page.
+		// Create Comments by Author Page.
 		$special_pages[] = $this->create_comments_by_author_page();
 
-		// Create blog page.
+		// Create Blog Page.
 		$special_pages[] = $this->create_blog_page();
 
-		// Create blog archive page.
+		// Create Blog Archive Page.
 		$special_pages[] = $this->create_blog_archive_page();
 
-		// Create TOC page -> a convenience, let's us define a logo as attachment.
+		// Create TOC Page -> a convenience, let's us define a logo as attachment.
 		$special_pages[] = $this->create_toc_page();
 
-		// Store the array of page IDs that were created.
+		// Store the array of Page IDs that were created.
 		$this->option_set( 'cp_special_pages', $special_pages );
 
 		// Save changes.
@@ -2028,69 +2028,69 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * Create a particular "special" page.
+	 * Create a particular Special Page.
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $page The type of special page.
-	 * @return mixed $new_id If successful, the numeric ID of the new page, false on failure.
+	 * @param str $page The type of Special Page.
+	 * @return mixed $new_id If successful, the numeric ID of the new Page, false on failure.
 	 */
 	public function create_special_page( $page ) {
 
 		// Init.
 		$new_id = false;
 
-		// Get special pages array, if it's there.
+		// Get Special Pages array, if it's there.
 		$special_pages = $this->option_get( 'cp_special_pages', [] );
 
-		// Switch by page.
+		// Switch by Page.
 		switch ( $page ) {
 
 			case 'title':
 
-				// Create welcome/title page.
+				// Create Welcome/Title Page.
 				$new_id = $this->create_title_page();
 				break;
 
 			case 'general_comments':
 
-				// Create general comments page.
+				// Create General Comments Page.
 				$new_id = $this->create_general_comments_page();
 				break;
 
 			case 'all_comments':
 
-				// Create all comments page.
+				// Create All Comments Page.
 				$new_id = $this->create_all_comments_page();
 				break;
 
 			case 'comments_by_author':
 
-				// Create comments by author page.
+				// Create Comments by Author Page.
 				$new_id = $this->create_comments_by_author_page();
 				break;
 
 			case 'blog':
 
-				// Create blog page.
+				// Create Blog Page.
 				$new_id = $this->create_blog_page();
 				break;
 
 			case 'blog_archive':
 
-				// Create blog page.
+				// Create Blog Page.
 				$new_id = $this->create_blog_archive_page();
 				break;
 
 			case 'toc':
 
-				// Create TOC page.
+				// Create TOC Page.
 				$new_id = $this->create_toc_page();
 				break;
 
 		}
 
-		// Add to special pages.
+		// Add to Special Pages.
 		$special_pages[] = $new_id;
 
 		// Reset option.
@@ -2105,11 +2105,11 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * Delete "special" pages.
+	 * Delete Special Pages.
 	 *
 	 * @since 3.4
 	 *
-	 * @return bool $success True if page deleted successfully, false otherwise.
+	 * @return bool $success True if Page deleted successfully, false otherwise.
 	 */
 	public function delete_special_pages() {
 
@@ -2117,12 +2117,12 @@ class CommentPress_Core_Database {
 		$success = true;
 
 		/*
-		 * Only delete special pages if we have one of the CommentPress Core
+		 * Only delete Special Pages if we have one of the CommentPress Core
 		 * themes active because other themes may have a totally different way
-		 * of presenting the content of the blog.
+		 * of presenting the content of the Blog.
 		 */
 
-		// Retrieve data on special pages.
+		// Retrieve data on Special Pages.
 		$special_pages = $this->option_get( 'cp_special_pages', [] );
 
 		// If we have created any.
@@ -2134,7 +2134,7 @@ class CommentPress_Core_Database {
 				// Bypass trash.
 				$force_delete = true;
 
-				// Try and delete each page.
+				// Try and delete each Page.
 				if ( ! wp_delete_post( $special_page, $force_delete ) ) {
 
 					// Oops, set success flag to false.
@@ -2155,14 +2155,14 @@ class CommentPress_Core_Database {
 			$this->option_delete( 'cp_toc_page' );
 
 			/*
-			// For now, keep welcome page - delete option when page is deleted.
+			// For now, keep Welcome Page - delete option when Page is deleted.
 			$this->option_delete( 'cp_welcome_page' );
 			*/
 
 			// Save changes.
 			$this->options_save();
 
-			// Reset WordPress internal page references.
+			// Reset WordPress internal Page references.
 			$this->wordpress_option_restore( 'show_on_front' );
 			$this->wordpress_option_restore( 'page_on_front' );
 			$this->wordpress_option_restore( 'page_for_posts' );
@@ -2175,11 +2175,11 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * Delete a particular "special" page.
+	 * Delete a particular Special Page.
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $page The type of special page to delete.
+	 * @param str $page The type of Special Page to delete.
 	 * @return boolean $success True if succesfully deleted false otherwise.
 	 */
 	public function delete_special_page( $page ) {
@@ -2188,12 +2188,12 @@ class CommentPress_Core_Database {
 		$success = true;
 
 		/*
-		 * Only delete a special page if we have one of the CommentPress Core
+		 * Only delete a Special Page if we have one of the CommentPress Core
 		 * themes active because other themes may have a totally different way
-		 * of presenting the content of the blog.
+		 * of presenting the content of the Blog.
 		 */
 
-		// Get id of special page.
+		// Get id of Special Page.
 		switch ( $page ) {
 
 			case 'title':
@@ -2201,7 +2201,7 @@ class CommentPress_Core_Database {
 				// Set flag.
 				$flag = 'cp_welcome_page';
 
-				// Reset WordPress internal page references.
+				// Reset WordPress internal Page references.
 				$this->wordpress_option_restore( 'show_on_front' );
 				$this->wordpress_option_restore( 'page_on_front' );
 
@@ -2230,7 +2230,7 @@ class CommentPress_Core_Database {
 				// Set flag.
 				$flag = 'cp_blog_page';
 
-				// Reset WordPress internal page reference.
+				// Reset WordPress internal Page reference.
 				$this->wordpress_option_restore( 'page_for_posts' );
 
 				break;
@@ -2249,7 +2249,7 @@ class CommentPress_Core_Database {
 
 		}
 
-		// Get page ID.
+		// Get Page ID.
 		$page_id = $this->option_get( $flag );
 
 		// Kick out if it doesn't exist.
@@ -2263,7 +2263,7 @@ class CommentPress_Core_Database {
 		// Bypass trash.
 		$force_delete = true;
 
-		// Try and delete the page.
+		// Try and delete the Page.
 		if ( ! wp_delete_post( $page_id, $force_delete ) ) {
 
 			// Oops, set success flag to false.
@@ -2271,13 +2271,13 @@ class CommentPress_Core_Database {
 
 		}
 
-		// Retrieve data on special pages.
+		// Retrieve data on Special Pages.
 		$special_pages = $this->option_get( 'cp_special_pages', [] );
 
-		// Is it in our special pages array?
+		// Is it in our Special Pages array?
 		if ( in_array( $page_id, $special_pages ) ) {
 
-			// Remove page id from array.
+			// Remove Page ID from array.
 			$special_pages = array_diff( $special_pages, [ $page_id ] );
 
 			// Reset option.
@@ -2294,18 +2294,18 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * Test if a page is a "special" page.
+	 * Test if a Page is a Special Page.
 	 *
 	 * @since 3.4
 	 *
-	 * @return bool $is_special_page True if a special page, false otherwise.
+	 * @return bool $is_special_page True if a Special Page, false otherwise.
 	 */
 	public function is_special_page() {
 
 		// Init flag.
 		$is_special_page = false;
 
-		// Access post object.
+		// Access Post object.
 		global $post;
 
 		// Do we have one?
@@ -2316,13 +2316,13 @@ class CommentPress_Core_Database {
 
 		}
 
-		// Get special pages.
+		// Get Special Pages.
 		$special_pages = $this->option_get( 'cp_special_pages', [] );
 
-		// Do we have a special page array?
+		// Do we have a Special Page array?
 		if ( is_array( $special_pages ) && count( $special_pages ) > 0 ) {
 
-			// Is the current page one?
+			// Is the current Page one?
 			if ( in_array( $post->ID, $special_pages ) ) {
 
 				// It is.
@@ -2338,27 +2338,27 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * Get WordPress post types that CommentPress supports.
+	 * Get WordPress Post Types that CommentPress supports.
 	 *
 	 * @since 3.9
 	 *
-	 * @return array $supported_post_types Array of post types that have an editor.
+	 * @return array $supported_post_types Array of Post Types that have an editor.
 	 */
 	public function get_supported_post_types() {
 
-		// Only parse post types once.
+		// Only parse Post Types once.
 		static $supported_post_types = [];
 		if ( ! empty( $supported_post_types ) ) {
 			return $supported_post_types;
 		}
 
-		// Get only post types with an admin UI.
+		// Get only Post Types with an admin UI.
 		$args = [
 			'public' => true,
 			'show_ui' => true,
 		];
 
-		// Get post types.
+		// Get Post Types.
 		$post_types = get_post_types( $args, 'objects' );
 
 		// Include only those which have an editor.
@@ -2378,16 +2378,16 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * Get all WordPress comments for a post, unless paged.
+	 * Get all WordPress Comments for a Post, unless Paged.
 	 *
 	 * @since 3.4
 	 *
-	 * @param int $post_ID The numeric ID of the post.
+	 * @param int $post_ID The numeric ID of the Post.
 	 * @return array $comments The array of comment data.
 	 */
 	public function get_all_comments( $post_ID ) {
 
-		// Access post.
+		// Access Post.
 		global $post;
 
 		// For WordPress, we use the API.
@@ -2399,11 +2399,11 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * Get all comments for a post.
+	 * Get all Comments for a Post.
 	 *
 	 * @since 3.4
 	 *
-	 * @param int $post_ID The ID of the post.
+	 * @param int $post_ID The ID of the Post.
 	 * @return array $comments The array of comment data.
 	 */
 	public function get_comments( $post_ID ) {
@@ -2411,7 +2411,7 @@ class CommentPress_Core_Database {
 		// Database object.
 		global $wpdb;
 
-		// Get comments from db.
+		// Get Comments from db.
 		// TODO: convert to WordPress method.
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 		$comments = $wpdb->get_results(
@@ -2427,7 +2427,7 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * When a comment is saved, this also saves the text signature.
+	 * When a comment is saved, this also saves the Text Signature.
 	 *
 	 * @since 3.0
 	 *
@@ -2439,7 +2439,7 @@ class CommentPress_Core_Database {
 		// Database object.
 		global $wpdb;
 
-		// Get text signature.
+		// Get Text Signature.
 		$text_signature = isset( $_POST['text_signature'] ) ? sanitize_text_field( wp_unslash( $_POST['text_signature'] ) ) : '';
 
 		// Did we get one?
@@ -2543,9 +2543,9 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * When a comment is saved, this also saves the page it was submitted on.
+	 * When a comment is saved, this also saves the Page it was submitted on.
 	 *
-	 * This allows us to point to the correct page of a multipage post without
+	 * This allows us to point to the correct Page of a multipage Post without
 	 * parsing the content every time.
 	 *
 	 * @since 3.4
@@ -2554,13 +2554,13 @@ class CommentPress_Core_Database {
 	 */
 	public function save_comment_page( $comment_ID ) {
 
-		// Get the page number.
+		// Get the Page number.
 		$page_number = isset( $_POST['page'] ) ? sanitize_text_field( wp_unslash( $_POST['page'] ) ) : false;
 
-		// Is this a paged post?
+		// Is this a paged Post?
 		if ( is_numeric( $page_number ) ) {
 
-			// Get text signature.
+			// Get Text Signature.
 			$text_signature = isset( $_POST['text_signature'] ) ? sanitize_text_field( wp_unslash( $_POST['text_signature'] ) ) : '';
 
 			// Is it a para-level comment?
@@ -2585,7 +2585,7 @@ class CommentPress_Core_Database {
 			} else {
 
 				/*
-				// Top level comments are always page 1.
+				// Top level Comments are always Page 1.
 				$page_number = 1;
 				*/
 
@@ -2596,12 +2596,12 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * Retrieves text signature by comment ID.
+	 * Retrieves Text Signature by comment ID.
 	 *
 	 * @since 3.4
 	 *
 	 * @param int $comment_ID The numeric ID of the comment.
-	 * @return str $text_signature The text signature for the comment.
+	 * @return str $text_signature The Text Signature for the comment.
 	 */
 	public function get_text_signature_by_comment_id( $comment_ID ) {
 
@@ -2629,7 +2629,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.4
 	 *
-	 * @param array $sigs An array of text signatures.
+	 * @param array $sigs An array of Text Signatures.
 	 */
 	public function set_text_sigs( $sigs ) {
 
@@ -2644,7 +2644,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.4
 	 *
-	 * @return array $text_signatures An array of text signatures.
+	 * @return array $text_signatures An array of Text Signatures.
 	 */
 	public function get_text_sigs() {
 
@@ -2666,10 +2666,10 @@ class CommentPress_Core_Database {
 		// Init return.
 		$vars = [];
 
-		// Add comments open.
+		// Add Comments open.
 		global $post;
 
-		// If we don't have a post (like on the 404 page).
+		// If we don't have a Post (like on the 404 Page).
 		if ( ! is_object( $post ) ) {
 
 			// Comments must be closed.
@@ -2680,10 +2680,10 @@ class CommentPress_Core_Database {
 
 		} else {
 
-			// Check for post comment_status.
+			// Check for Post "comment_status".
 			$vars['cp_comments_open'] = ( $post->comment_status == 'open' ) ? 'y' : 'n';
 
-			// Set post permalink.
+			// Set Post permalink.
 			$vars['cp_permalink'] = get_permalink( $post->ID );
 
 		}
@@ -2752,7 +2752,7 @@ class CommentPress_Core_Database {
 		// Add rich text editor.
 		$vars['cp_tinymce'] = 1;
 
-		// Check if users must be logged in to comment.
+		// Check if Users must be logged in to comment.
 		if ( get_option( 'comment_registration' ) == '1' && ! is_user_logged_in() ) {
 
 			// Don't add rich text editor.
@@ -2771,7 +2771,7 @@ class CommentPress_Core_Database {
 
 		}
 
-		// If on a public GroupBlog and user isn't logged in.
+		// If on a public Group Blog and User isn't logged in.
 		if ( $this->core->is_groupblog() && ! is_user_logged_in() ) {
 
 			// Don't add rich text editor, because only members can comment.
@@ -2852,7 +2852,7 @@ class CommentPress_Core_Database {
 
 		}
 
-		// Add special page var.
+		// Add Special Page var.
 		$vars['cp_special_page'] = ( $this->is_special_page() ) ? '1' : '0';
 
 		// Are we in a BuddyPress scenario?
@@ -2877,11 +2877,11 @@ class CommentPress_Core_Database {
 			$vars['cp_cookie_path'] = trailingslashit( $url_info['path'] );
 		}
 
-		// Add page.
+		// Add Page.
 		global $page;
 		$vars['cp_multipage_page'] = ( ! empty( $page ) ) ? $page : 0;
 
-		// Are chapters pages?
+		// Are chapters Pages?
 		$vars['cp_toc_chapter_is_page'] = $this->option_get( 'cp_toc_chapter_is_page' );
 
 		// Are subpages shown?
@@ -2893,7 +2893,7 @@ class CommentPress_Core_Database {
 		// Set scroll speed.
 		$vars['cp_js_scroll_speed'] = $this->option_get( 'cp_js_scroll_speed' );
 
-		// Set min page width.
+		// Set min Page width.
 		$vars['cp_min_page_width'] = $this->option_get( 'cp_min_page_width' );
 
 		// Default to showing textblock meta.
@@ -2910,7 +2910,7 @@ class CommentPress_Core_Database {
 
 		}
 
-		// Default to page navigation enabled.
+		// Default to Page navigation enabled.
 		$vars['cp_page_nav_enabled'] = 1;
 
 		// Check option.
@@ -2919,12 +2919,12 @@ class CommentPress_Core_Database {
 			$this->option_get( 'cp_page_nav_enabled' ) == 'n'
 		) {
 
-			// Disable page navigation.
+			// Disable Page navigation.
 			$vars['cp_page_nav_enabled'] = 0;
 
 		}
 
-		// Default to parsing content and comments.
+		// Default to parsing content and Comments.
 		$vars['cp_do_not_parse'] = 0;
 
 		// Check option.
@@ -2959,32 +2959,32 @@ class CommentPress_Core_Database {
 		// Init touch flag.
 		$this->is_mobile_touch = false;
 
-		// Do we have a user agent?
-		if ( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
+		// Bail if there is no user agent.
+		if ( ! isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
+			return;
+		}
 
-			// The old CommentPress also includes Mobile_Detect.
-			if ( ! class_exists( 'Mobile_Detect' ) ) {
-				include_once COMMENTPRESS_PLUGIN_PATH . 'includes/commentpress-core/assets/includes/mobile-detect/Mobile_Detect.php';
-			}
+		// The old CommentPress also includes Mobile_Detect.
+		if ( ! class_exists( 'Mobile_Detect' ) ) {
+			include_once COMMENTPRESS_PLUGIN_PATH . 'includes/commentpress-core/assets/includes/mobile-detect/Mobile_Detect.php';
+		}
 
-			// Init.
-			$detect = new Mobile_Detect();
+		// Init.
+		$detect = new Mobile_Detect();
 
-			// Overwrite flag if mobile.
-			if ( $detect->isMobile() ) {
-				$this->is_mobile = true;
-			}
+		// Overwrite flag if mobile.
+		if ( $detect->isMobile() ) {
+			$this->is_mobile = true;
+		}
 
-			// Overwrite flag if tablet.
-			if ( $detect->isTablet() ) {
-				$this->is_tablet = true;
-			}
+		// Overwrite flag if tablet.
+		if ( $detect->isTablet() ) {
+			$this->is_tablet = true;
+		}
 
-			// To guess at touch devices, we assume *either* phone *or* tablet..
-			if ( $this->is_mobile || $this->is_tablet ) {
-				$this->is_mobile_touch = true;
-			}
-
+		// To guess at touch devices, we assume *either* phone *or* tablet..
+		if ( $this->is_mobile || $this->is_tablet ) {
+			$this->is_mobile_touch = true;
 		}
 
 	}
@@ -3058,7 +3058,7 @@ class CommentPress_Core_Database {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Create "title" page.
+	 * Create "title" Page.
 	 *
 	 * @since 3.4
 	 *
@@ -3072,15 +3072,15 @@ class CommentPress_Core_Database {
 		// Don't create if we already have the option set.
 		if ( $page_exists !== false && is_numeric( $page_exists ) ) {
 
-			// Get the page (the plugin may have been deactivated, then the page deleted).
+			// Get the Page (the plugin may have been deactivated, then the Page deleted).
 			$welcome = get_post( $page_exists );
 
-			// Check that the page exists.
+			// Check that the Page exists.
 			if ( ! is_null( $welcome ) ) {
 
 				// Got it.
 
-				// We still ought to set WordPress internal page references.
+				// We still ought to set WordPress internal Page references.
 				$this->wordpress_option_backup( 'show_on_front', 'page' );
 				$this->wordpress_option_backup( 'page_on_front', $page_exists );
 
@@ -3095,7 +3095,7 @@ class CommentPress_Core_Database {
 
 		}
 
-		// Define welcome/title page.
+		// Define Welcome/Title Page.
 		$title = [
 			'post_status' => 'publish',
 			'post_type' => 'page',
@@ -3109,9 +3109,9 @@ class CommentPress_Core_Database {
 			'menu_order' => 0,
 		];
 
-		// Add post-specific stuff.
+		// Add Post-specific stuff.
 
-		// Default page title.
+		// Default Page title.
 		$default_title = __( 'Title Page', 'commentpress-core' );
 
 		// Set, but allow overrides.
@@ -3132,16 +3132,16 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Set template, but allow overrides.
 		$title['page_template'] = apply_filters( 'cp_title_page_template', 'welcome.php' );
 
-		// Insert the post into the database.
+		// Insert the Post into the database.
 		$title_id = wp_insert_post( $title );
 
-		// Make sure it has the default formatter (0 = prose).
+		// Make sure it has the default Formatter (0 = prose).
 		add_post_meta( $title_id, '_cp_post_type_override', '0' );
 
 		// Store the option.
 		$this->option_set( 'cp_welcome_page', $title_id );
 
-		// Set WordPress internal page references.
+		// Set WordPress internal Page references.
 		$this->wordpress_option_backup( 'show_on_front', 'page' );
 		$this->wordpress_option_backup( 'page_on_front', $title_id );
 
@@ -3151,15 +3151,15 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	}
 
 	/**
-	 * Create "General Comments" page.
+	 * Create "General Comments" Page.
 	 *
 	 * @since 3.4
 	 *
-	 * @return int $general_comments_id The numeric ID of the "General Comments" page.
+	 * @return int $general_comments_id The numeric ID of the "General Comments" Page.
 	 */
 	public function create_general_comments_page() {
 
-		// Define general comments page.
+		// Define General Comments Page.
 		$general_comments = [
 			'post_status' => 'publish',
 			'post_type' => 'page',
@@ -3173,9 +3173,9 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'menu_order' => 0,
 		];
 
-		// Add post-specific stuff.
+		// Add Post-specific stuff.
 
-		// Default page title.
+		// Default Page title.
 		$title = __( 'General Comments', 'commentpress-core' );
 
 		// Set, but allow overrides.
@@ -3190,7 +3190,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Set template, but allow overrides.
 		$general_comments['page_template'] = apply_filters( 'cp_general_comments_template', 'comments-general.php' );
 
-		// Insert the post into the database.
+		// Insert the Post into the database.
 		$general_comments_id = wp_insert_post( $general_comments );
 
 		// Store the option.
@@ -3202,15 +3202,15 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	}
 
 	/**
-	 * Create "all comments" page.
+	 * Create "All Comments" Page.
 	 *
 	 * @since 3.4
 	 *
-	 * @return int $all_comments_id The numeric ID of the "All Comments" page.
+	 * @return int $all_comments_id The numeric ID of the "All Comments" Page.
 	 */
 	public function create_all_comments_page() {
 
-		// Define all comments page.
+		// Define All Comments Page.
 		$all_comments = [
 			'post_status' => 'publish',
 			'post_type' => 'page',
@@ -3224,9 +3224,9 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'menu_order' => 0,
 		];
 
-		// Add post-specific stuff.
+		// Add Post-specific stuff.
 
-		// Default page title.
+		// Default Page title.
 		$title = __( 'All Comments', 'commentpress-core' );
 
 		// Set, but allow overrides.
@@ -3241,7 +3241,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Set template, but allow overrides.
 		$all_comments['page_template'] = apply_filters( 'cp_all_comments_template', 'comments-all.php' );
 
-		// Insert the post into the database.
+		// Insert the Post into the database.
 		$all_comments_id = wp_insert_post( $all_comments );
 
 		// Store the option.
@@ -3253,15 +3253,15 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	}
 
 	/**
-	 * Create "Comments by Author" page.
+	 * Create "Comments by Author" Page.
 	 *
 	 * @since 3.4
 	 *
-	 * @return int $group_id The numeric ID of the "Comments by Author" page.
+	 * @return int $group_id The numeric ID of the "Comments by Author" Page.
 	 */
 	public function create_comments_by_author_page() {
 
-		// Define comments by author page.
+		// Define Comments by Author Page.
 		$group = [
 			'post_status' => 'publish',
 			'post_type' => 'page',
@@ -3275,9 +3275,9 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'menu_order' => 0,
 		];
 
-		// Add post-specific stuff.
+		// Add Post-specific stuff.
 
-		// Default page title.
+		// Default Page title.
 		$title = __( 'Comments by Commenter', 'commentpress-core' );
 
 		// Set, but allow overrides.
@@ -3292,7 +3292,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Set template, but allow overrides.
 		$group['page_template'] = apply_filters( 'cp_comments_by_template', 'comments-by.php' );
 
-		// Insert the post into the database.
+		// Insert the Post into the database.
 		$group_id = wp_insert_post( $group );
 
 		// Store the option.
@@ -3304,15 +3304,15 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	}
 
 	/**
-	 * Create "blog" page.
+	 * Create "blog" Page.
 	 *
 	 * @since 3.4
 	 *
-	 * @return int $blog_id The numeric ID of the "Blog" page.
+	 * @return int $blog_id The numeric ID of the "Blog" Page.
 	 */
 	public function create_blog_page() {
 
-		// Define blog page.
+		// Define Blog Page.
 		$blog = [
 			'post_status' => 'publish',
 			'post_type' => 'page',
@@ -3326,9 +3326,9 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'menu_order' => 0,
 		];
 
-		// Add post-specific stuff.
+		// Add Post-specific stuff.
 
-		// Default page title.
+		// Default Page title.
 		$title = __( 'Blog', 'commentpress-core' );
 
 		// Set, but allow overrides.
@@ -3343,13 +3343,13 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Set template, but allow overrides.
 		$blog['page_template'] = apply_filters( 'cp_blog_page_template', 'blog.php' );
 
-		// Insert the post into the database.
+		// Insert the Post into the database.
 		$blog_id = wp_insert_post( $blog );
 
 		// Store the option.
 		$this->option_set( 'cp_blog_page', $blog_id );
 
-		// Set WordPress internal page reference.
+		// Set WordPress internal Page reference.
 		$this->wordpress_option_backup( 'page_for_posts', $blog_id );
 
 		// --<
@@ -3358,15 +3358,15 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	}
 
 	/**
-	 * Create "Blog Archive" page.
+	 * Create "Blog Archive" Page.
 	 *
 	 * @since 3.4
 	 *
-	 * @return int $blog_id The numeric ID of the "Blog Archive" page.
+	 * @return int $blog_id The numeric ID of the "Blog Archive" Page.
 	 */
 	public function create_blog_archive_page() {
 
-		// Define blog archive page.
+		// Define Blog Archive Page.
 		$blog = [
 			'post_status' => 'publish',
 			'post_type' => 'page',
@@ -3380,9 +3380,9 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'menu_order' => 0,
 		];
 
-		// Add post-specific stuff.
+		// Add Post-specific stuff.
 
-		// Default page title.
+		// Default Page title.
 		$title = __( 'Blog Archive', 'commentpress-core' );
 
 		// Set, but allow overrides.
@@ -3397,7 +3397,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Set template, but allow overrides.
 		$blog['page_template'] = apply_filters( 'cp_blog_archive_page_template', 'archives.php' );
 
-		// Insert the post into the database.
+		// Insert the Post into the database.
 		$blog_id = wp_insert_post( $blog );
 
 		// Store the option.
@@ -3409,17 +3409,17 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	}
 
 	/**
-	 * Create "table of contents" page.
+	 * Create "table of contents" Page.
 	 *
 	 * PLease note: this is NOT USED.
 	 *
 	 * @since 3.4
 	 *
-	 * @return int $toc_id The numeric ID of the "Table of Contents" page.
+	 * @return int $toc_id The numeric ID of the "Table of Contents" Page.
 	 */
 	public function create_toc_page() {
 
-		// Define TOC page.
+		// Define TOC Page.
 		$toc = [
 			'post_status' => 'publish',
 			'post_type' => 'page',
@@ -3433,7 +3433,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'menu_order' => 0,
 		];
 
-		// Default page title.
+		// Default Page title.
 		$title = __( 'Table of Contents', 'commentpress-core' );
 
 		// Set, but allow overrides.
@@ -3448,7 +3448,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Set template, but allow overrides.
 		$toc['page_template'] = apply_filters( 'cp_toc_page_template', 'toc.php' );
 
-		// Insert the post into the database.
+		// Insert the Post into the database.
 		$toc_id = wp_insert_post( $toc );
 
 		// Store the option.
@@ -3490,7 +3490,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Clears widgets for a fresh start.
+	 * Clears Widgets for a fresh start.
 	 *
 	 * @since 3.4
 	 * @since 4.0 Renamed.
@@ -3512,7 +3512,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	}
 
 	/**
-	 * Restores widgets when plugin is deactivated.
+	 * Restores Widgets when plugin is deactivated.
 	 *
 	 * @since 3.4
 	 * @since 4.0 Renamed.
@@ -3597,7 +3597,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'cp_post_types_disabled' => $this->post_types_disabled,
 		];
 
-		// Paragraph-level comments enabled by default.
+		// Paragraph-level Comments enabled by default.
 		add_option( 'commentpress_options', $this->commentpress_options );
 
 	}
@@ -3609,16 +3609,16 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 */
 	public function options_reset() {
 
-		// TOC: show posts by default.
+		// TOC: show Posts by default.
 		$this->option_set( 'cp_show_posts_or_pages_in_toc', $this->toc_content );
 
-		// TOC: are chapters pages.
+		// TOC: are chapters Pages.
 		$this->option_set( 'cp_toc_chapter_is_page', $this->toc_chapter_is_page );
 
-		// TOC: if pages are shown, show subpages by default.
+		// TOC: if Pages are shown, show subpages by default.
 		$this->option_set( 'cp_show_subpages', $this->show_subpages );
 
-		// TOC: show extended post list.
+		// TOC: show extended Post list.
 		$this->option_set( 'cp_show_extended_toc', $this->show_extended_toc );
 
 		// Comment editor.
@@ -3630,7 +3630,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Show or hide titles.
 		$this->option_set( 'cp_title_visibility', $this->title_visibility );
 
-		// Show or hide page meta.
+		// Show or hide Page meta.
 		$this->option_set( 'cp_page_meta_visibility', $this->page_meta_visibility );
 
 		// Header background colour.
@@ -3639,7 +3639,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Javascript scroll speed.
 		$this->option_set( 'cp_js_scroll_speed', $this->js_scroll_speed );
 
-		// Minimum page width.
+		// Minimum Page width.
 		$this->option_set( 'cp_min_page_width', $this->min_page_width );
 
 		// "live" comment refeshing.
@@ -3651,7 +3651,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Workflow.
 		$this->option_set( 'cp_blog_workflow', $this->blog_workflow );
 
-		// Blog type.
+		// Blog Type.
 		$this->option_set( 'cp_blog_type', $this->blog_type );
 
 		// Default sidebar.
@@ -3669,7 +3669,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Do not parse flag.
 		$this->option_set( 'cp_do_not_parse', $this->do_not_parse );
 
-		// Skipped post types.
+		// Skipped Post Types.
 		$this->option_set( 'cp_post_types_disabled', $this->post_types_disabled );
 
 		// Store it.

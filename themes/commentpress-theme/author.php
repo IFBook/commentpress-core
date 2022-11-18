@@ -15,7 +15,7 @@ if ( isset( $_GET['author_name'] ) ) {
 // Init url (because it can be 'http://' -> doh!)
 $authorURL = '';
 
-// Do we have an URL for this user?
+// Do we have an URL for this User?
 if ( $my_author->user_url != '' AND $my_author->user_url != 'http://' ) {
 	$authorURL = $my_author->user_url;
 }

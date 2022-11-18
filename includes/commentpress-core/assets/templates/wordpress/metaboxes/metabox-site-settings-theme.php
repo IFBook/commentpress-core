@@ -1,8 +1,8 @@
 <?php
 /**
- * Site Settings page "Theme Customisation" metabox template.
+ * Site Settings Page "Theme Customisation" metabox template.
  *
- * Handles markup for the Site Settings page "Theme Customisation" metabox.
+ * Handles markup for the Site Settings Page "Theme Customisation" metabox.
  *
  * @package CommentPress_Core
  */

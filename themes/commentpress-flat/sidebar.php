@@ -100,7 +100,7 @@ break;
 		// Activity Header.
 		case 'activity':
 
-// Do we want to show activity tab?
+// Do we want to show Activity Tab?
 if ( commentpress_show_activity_tab() ) {
 
 	// Add class if not commentable.
@@ -139,7 +139,7 @@ if ( commentpress_show_activity_tab() ) {
 
 } else {
 
-	// Ignore activity.
+	// Ignore Activity.
 
 }
 
@@ -199,7 +199,7 @@ if ( is_object( $commentpress_core ) ) {
 
 	}
 
-	// Do we want to show activity tab?
+	// Do we want to show Activity Tab?
 	if ( commentpress_show_activity_tab() ) {
 
 		/**

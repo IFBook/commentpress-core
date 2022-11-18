@@ -2,7 +2,7 @@
 /**
  * Multisite Network Settings template.
  *
- * Handles markup for the Multisite Network Settings page.
+ * Handles markup for the Multisite Network Settings Page.
  *
  * @package CommentPress_Core
  */

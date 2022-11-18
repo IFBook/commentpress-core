@@ -1,8 +1,8 @@
 <?php
 /**
- * Site Settings page "Page Display Options" metabox template.
+ * Site Settings Page "Page Display Options" metabox template.
  *
- * Handles markup for the Site Settings page "Page Display Options" metabox.
+ * Handles markup for the Site Settings Page "Page Display Options" metabox.
  *
  * @package CommentPress_Core
  */

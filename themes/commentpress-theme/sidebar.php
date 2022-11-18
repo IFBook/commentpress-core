@@ -96,7 +96,7 @@ break;
 
 
 
-// Do we want to show activity tab?
+// Do we want to show Activity Tab?
 if ( commentpress_show_activity_tab() ) {
 
 	// Set default link name.
@@ -235,7 +235,7 @@ if ( is_object( $commentpress_core ) ) {
 	// Load it if we find it.
 	if ( $cp_toc_sidebar != '' ) load_template( $cp_toc_sidebar );
 
-	// Do we want to show activity tab?
+	// Do we want to show Activity Tab?
 	if ( commentpress_show_activity_tab() ) {
 
 		/**

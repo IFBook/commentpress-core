@@ -2,7 +2,7 @@
 
 
 
-<!-- Activate page wrappers -->
+<!-- Activate Page wrappers -->
 </div><!-- /content -->
 </div><!-- /page_wrapper -->
 </div><!-- /main_wrapper -->
@@ -25,7 +25,7 @@
 
 	<?php
 
-	// Are we using the page footer widget?
+	// Are we using the Page footer Widget?
 	if ( ! dynamic_sidebar( 'cp-license-8' ) ) {
 
 		// No - make other provision here.

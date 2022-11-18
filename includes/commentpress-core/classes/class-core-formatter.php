@@ -67,16 +67,16 @@ class CommentPress_Core_Formatter {
 	 */
 	public function register_hooks() {
 
-		// Set blog type options.
+		// Set Blog Type options.
 		add_filter( 'cp_blog_type_options', [ $this, 'blog_type_options' ], 21 );
 
-		// Set blog type options label.
+		// Set Blog Type options label.
 		add_filter( 'cp_blog_type_label', [ $this, 'blog_type_label' ], 21 );
 
-		// Add filter for CommentPress Core formatter.
+		// Add filter for CommentPress Core Formatter.
 		add_filter( 'cp_select_content_formatter', [ $this, 'content_formatter' ], 21, 1 );
 
-		// Save post formatter - this overrides "blog_type".
+		// Save Post Formatter - this overrides "blog_type".
 		add_action( 'commentpress/core/db/page_meta/saved', [ $this, 'save_formatter' ] );
 		add_action( 'commentpress/core/db/post_meta/saved', [ $this, 'save_formatter' ] );
 
@@ -100,12 +100,12 @@ class CommentPress_Core_Formatter {
 	}
 
 	/**
-	 * Define the "types" of groupblog.
+	 * Define the "types" of Group Blog.
 	 *
 	 * @since 3.3
 	 *
-	 * @param array $existing_options The existing types of groupblog.
-	 * @return array $existing_options The modified types of groupblog.
+	 * @param array $existing_options The existing types of Group Blog.
+	 * @return array $existing_options The modified types of Group Blog.
 	 */
 	public function blog_type_options( $existing_options ) {
 
@@ -124,22 +124,22 @@ class CommentPress_Core_Formatter {
 	}
 
 	/**
-	 * Choose content formatter by blog type or post meta value.
+	 * Choose content Formatter by Blog Type or Post meta value.
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $formatter The existing formatter code.
-	 * @return str $formatter The existing formatter code.
+	 * @param str $formatter The existing Formatter code.
+	 * @return str $formatter The existing Formatter code.
 	 */
 	public function content_formatter( $formatter ) {
 
 		// Access globals.
 		global $post;
 
-		// Set post meta key.
+		// Set Post meta key.
 		$key = '_cp_post_type_override';
 
-		// Default to current blog type.
+		// Default to current Blog Type.
 		$type = $this->core->db->option_get( 'cp_blog_type' );
 
 		// But, if the custom field has a value.
@@ -174,14 +174,14 @@ class CommentPress_Core_Formatter {
 	}
 
 	/**
-	 * Override post formatter.
+	 * Override Post Formatter.
 	 *
-	 * This overrides the "blog_type" for a post.
+	 * This overrides the "blog_type" for a Post.
 	 *
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
 	 *
-	 * @param object $post The post object.
+	 * @param object $post The Post object.
 	 */
 	public function save_formatter( $post ) {
 

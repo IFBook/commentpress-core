@@ -29,29 +29,29 @@ class CommentPress_Multisite_Sites {
 	public $multisite;
 
 	/**
-	 * CommentPress Core enabled on all sites flag.
+	 * CommentPress Core enabled on all Sites flag.
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var str $cpmu_bp_force_commentpress The enabled on all sites flag ('0' or '1').
+	 * @var str $cpmu_bp_force_commentpress The enabled on all Sites flag ('0' or '1').
 	 */
 	public $cpmu_force_commentpress = '0';
 
 	/**
-	 * Default title page content on new sites (not yet used).
+	 * Default Title Page content on new Sites (not yet used).
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var str $cpmu_title_page_content The default title page content.
+	 * @var str $cpmu_title_page_content The default Title Page content.
 	 */
 	public $cpmu_title_page_content = '';
 
 	/**
-	 * Allow translation workflow flag.
+	 * Allow Translation Workflow flag.
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var str $cpmu_disable_translation_workflow The translation workflow allowed flag ('0' or '1').
+	 * @var str $cpmu_disable_translation_workflow The Translation Workflow allowed flag ('0' or '1').
 	 */
 	public $cpmu_disable_translation_workflow = '1';
 
@@ -94,10 +94,10 @@ class CommentPress_Multisite_Sites {
 		// Add form elements to signup form.
 		add_action( 'signup_blogform', [ $this, 'signup_blogform' ] );
 
-		// Activate blog-specific CommentPress Core plugin.
+		// Activate Blog-specific CommentPress Core plugin.
 		add_action( 'wpmu_new_blog', [ $this, 'wpmu_new_blog' ], 12, 6 );
 
-		// Enable/disable workflow sitewide.
+		// Enable/disable Workflow sitewide.
 		add_filter( 'cp_class_commentpress_workflow_enabled', [ $this, 'get_workflow_enabled' ] );
 
 		// Add options to reset array.
@@ -116,7 +116,7 @@ class CommentPress_Multisite_Sites {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Hook into the blog signup form.
+	 * Hook into the Blog signup form.
 	 *
 	 * @since 3.3
 	 *
@@ -163,10 +163,10 @@ class CommentPress_Multisite_Sites {
 
 		}
 
-		// Get workflow element.
+		// Get Workflow element.
 		$workflow_html = $this->get_workflow();
 
-		// Get blog type element.
+		// Get Blog Type element.
 		$type_html = $this->get_blogtype();
 
 		// Construct form.
@@ -198,12 +198,12 @@ class CommentPress_Multisite_Sites {
 	 *
 	 * @since 3.3
 	 *
-	 * @param int $blog_id The numeric ID of the WordPress blog.
-	 * @param int $user_id The numeric ID of the WordPress user.
-	 * @param str $domain The domain of the WordPress blog.
-	 * @param str $path The path of the WordPress blog.
-	 * @param int $site_id The numeric ID of the WordPress parent site.
-	 * @param array $meta The meta data of the WordPress blog.
+	 * @param int $blog_id The numeric ID of the WordPress Blog.
+	 * @param int $user_id The numeric ID of the WordPress User.
+	 * @param str $domain The domain of the WordPress Blog.
+	 * @param str $path The path of the WordPress Blog.
+	 * @param int $site_id The numeric ID of the WordPress parent Site.
+	 * @param array $meta The meta data of the WordPress Blog.
 	 */
 	public function wpmu_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 
@@ -221,16 +221,16 @@ class CommentPress_Multisite_Sites {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Create a blog.
+	 * Create a Blog.
 	 *
 	 * @since 3.3
 	 *
-	 * @param int $blog_id The numeric ID of the WordPress blog.
-	 * @param int $user_id The numeric ID of the WordPress user.
-	 * @param str $domain The domain of the WordPress blog.
-	 * @param str $path The path of the WordPress blog.
-	 * @param int $site_id The numeric ID of the WordPress parent site.
-	 * @param array $meta The meta data of the WordPress blog.
+	 * @param int $blog_id The numeric ID of the WordPress Blog.
+	 * @param int $user_id The numeric ID of the WordPress User.
+	 * @param str $domain The domain of the WordPress Blog.
+	 * @param str $path The path of the WordPress Blog.
+	 * @param int $site_id The numeric ID of the WordPress parent Site.
+	 * @param array $meta The meta data of the WordPress Blog.
 	 */
 	private function create_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 
@@ -246,7 +246,7 @@ class CommentPress_Multisite_Sites {
 	}
 
 	/**
-	 * Get workflow form elements.
+	 * Get Workflow form elements.
 	 *
 	 * @since 3.3
 	 *
@@ -260,7 +260,7 @@ class CommentPress_Multisite_Sites {
 		// Get data.
 		$workflow = $this->multisite->db->get_workflow_data();
 
-		// If we have workflow data.
+		// If we have Workflow data.
 		if ( ! empty( $workflow ) ) {
 
 			// Show it.
@@ -280,7 +280,7 @@ class CommentPress_Multisite_Sites {
 	}
 
 	/**
-	 * Get blog type form elements.
+	 * Get Blog Type form elements.
 	 *
 	 * @since 3.3
 	 *
@@ -355,31 +355,31 @@ class CommentPress_Multisite_Sites {
 			sanitize_text_field( wp_unslash( $_POST['cpmu_force_commentpress'] ) ) :
 			'0';
 
-		// Set "force all new sites to be CommentPress Core-enabled" option.
+		// Set "force all new Sites to be CommentPress Core-enabled" option.
 		$this->multisite->db->option_set( 'cpmu_force_commentpress', ( $cpmu_force_commentpress ? 1 : 0 ) );
 
 		/*
-		// Get "Default title page content" value.
+		// Get "Default Title Page content" value.
 		$cpmu_title_page_content = isset( $_POST['cpmu_title_page_content'] ) ?
 			sanitize_text_field( wp_unslash( $_POST['cpmu_title_page_content'] ) ) :
 			$this->get_default_title_page_content();
 
-		// Set "Default title page content" option.
+		// Set "Default Title Page content" option.
 		$this->multisite->db->option_set( 'cpmu_title_page_content', $cpmu_title_page_content );
 		*/
 
-		// Get "Disable translation workflow" value.
+		// Get "Disable Translation Workflow" value.
 		$cpmu_disable_translation_workflow = isset( $_POST['cpmu_disable_translation_workflow'] ) ?
 			sanitize_text_field( wp_unslash( $_POST['cpmu_disable_translation_workflow'] ) ) :
 			'0';
 
-		// Set "Disable translation workflow" option.
+		// Set "Disable Translation Workflow" option.
 		$this->multisite->db->option_set( 'cpmu_disable_translation_workflow', ( $cpmu_disable_translation_workflow ? 1 : 0 ) );
 
 	}
 
 	/**
-	 * Get workflow enabled setting.
+	 * Get Workflow enabled setting.
 	 *
 	 * @since 3.3
 	 *
@@ -398,7 +398,7 @@ class CommentPress_Multisite_Sites {
 	/**
 	 * Get default Title Page content, if set.
 	 *
-	 * Do we want to enable this when we enable the admin page editor?
+	 * Do we want to enable this when we enable the Admin Page editor?
 	 *
 	 * @since 3.3
 	 *

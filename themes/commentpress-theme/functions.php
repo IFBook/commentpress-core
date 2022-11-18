@@ -173,7 +173,7 @@ function commentpress_enqueue_scripts_and_styles() {
 			COMMENTPRESS_VERSION // Version.
 		);
 
-		// Test for BuddyPress special page.
+		// Test for BuddyPress Special Page.
 		if ( $commentpress_core->is_buddypress() AND $commentpress_core->is_buddypress_special_page() ) {
 
 			// Skip custom addComment.
@@ -206,7 +206,7 @@ function commentpress_enqueue_scripts_and_styles() {
 
 		}
 
-		// Test for CommentPress Core special page.
+		// Test for CommentPress Core Special Page.
 		if ( $commentpress_core->db->is_special_page() ) {
 
 			// Enqueue accordion-like Javascript.
@@ -265,13 +265,13 @@ if ( ! function_exists( 'commentpress_buddypress_support' ) ):
  */
 function commentpress_buddypress_support() {
 
-	// Add filter for activity class.
+	// Add filter for Activity class.
 	add_filter( 'bp_get_activity_css_class', 'commentpress_bp_activity_css_class' );
 
-	// Add filter for blogs class.
+	// Add filter for Blogs class.
 	add_filter( 'bp_get_blog_class', 'commentpress_bp_blog_css_class' );
 
-	// Add filter for groups class.
+	// Add filter for Groups class.
 	add_filter( 'bp_get_group_class', 'commentpress_bp_group_css_class' );
 
 }
@@ -395,9 +395,9 @@ endif; // End commentpress_header.
 
 if ( ! function_exists( 'commentpress_page_navigation' ) ):
 /**
- * Builds a list of previous and next pages, optionally with comments.
+ * Builds a list of previous and Next Pages, optionally with Comments.
  *
- * @param bool $with_comments True returns the next page with comments.
+ * @param bool $with_comments True returns the Next Page with Comments.
  * @return str $nav_list The unordered list of navigation links.
  */
 function commentpress_page_navigation( $with_comments = false ) {
@@ -417,17 +417,17 @@ function commentpress_page_navigation( $with_comments = false ) {
 	// Init.
 	$next_page_html = '';
 
-	// Get next page.
+	// Get Next Page.
 	$next_page = $commentpress_core->nav->get_next_page( $with_comments );
 
-	// Did we get a next page?
+	// Did we get a Next Page?
 	if ( is_object( $next_page ) ) {
 
 		// Init title.
 		$img = '';
 		$title = __( 'Next page', 'commentpress-core' ); //htmlentities( $next_page->post_title );
 
-		// If we wanted pages with comments.
+		// If we wanted Pages with Comments.
 		if ( $with_comments ) {
 
 			// Set title.
@@ -445,17 +445,17 @@ function commentpress_page_navigation( $with_comments = false ) {
 	// Init.
 	$prev_page_html = '';
 
-	// Get next page.
+	// Get Next Page.
 	$prev_page = $commentpress_core->nav->get_previous_page( $with_comments );
 
-	// Did we get a next page?
+	// Did we get a Next Page?
 	if ( is_object( $prev_page ) ) {
 
 		// Init title.
 		$img = '';
 		$title = __( 'Previous page', 'commentpress-core' ); //htmlentities( $prev_page->post_title );
 
-		// If we wanted pages with comments.
+		// If we wanted Pages with Comments.
 		if ( $with_comments ) {
 
 			// Set title.
@@ -491,10 +491,10 @@ endif; // End commentpress_page_navigation
 
 if ( ! function_exists( 'commentpress_get_all_comments_content' ) ):
 /**
- * All-comments page display function.
+ * All-comments Page display function.
  *
- * @param str $page_or_post Retrieve either 'page' or 'post' comments.
- * @return str $html The comments.
+ * @param str $page_or_post Retrieve either 'page' or 'post' Comments.
+ * @return str $html The Comments.
  */
 function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 
@@ -504,7 +504,7 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 	// Init output.
 	$html = '';
 
-	// Get all approved comments.
+	// Get all approved Comments.
 	$all_comments = get_comments( [
 		'status' => 'approve',
 		'orderby' => 'comment_post_ID,comment_date',
@@ -515,12 +515,12 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 	// Kick out if none.
 	if ( count( $all_comments ) == 0 ) return $html;
 
-	// Build list of posts to which they are attached.
+	// Build list of Posts to which they are attached.
 	$posts_with = [];
 	$post_comment_counts = [];
 	foreach( $all_comments AS $comment ) {
 
-		// Add to posts with comments array.
+		// Add to Posts with Comments array.
 		if ( !in_array( $comment->comment_post_ID, $posts_with ) ) {
 			$posts_with[] = $comment->comment_post_ID;
 		}
@@ -537,7 +537,7 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 	// Kick out if none.
 	if ( count( $posts_with ) == 0 ) return $html;
 
-	// Get those posts.
+	// Get those Posts.
 	$posts = get_posts( [
 		'orderby' => 'comment_count',
 		'order' => 'DESC',
@@ -565,7 +565,7 @@ function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 		// Show it.
 		$html .= '<h3>' . esc_html( $post->post_title ) . ' <span>(' . $comment_count_text . ')</span></h3>' . "\n\n";
 
-		// Open comments div.
+		// Open Comments div.
 		$html .= '<div class="item_body">' . "\n\n";
 
 		// Open ul.
@@ -644,13 +644,13 @@ endif;
 
 if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ):
 /**
- * All-comments page display function.
+ * All-comments Page display function.
  *
- * @return str $page_content The page content.
+ * @return str $page_content The Page content.
  */
 function commentpress_get_all_comments_page_content() {
 
-	// Allow oEmbed in comments.
+	// Allow oEmbed in Comments.
 	global $wp_embed;
 	if ( $wp_embed instanceof WP_Embed ) {
 		add_filter( 'comment_text', [ $wp_embed, 'autoembed' ], 1 );
@@ -659,10 +659,10 @@ function commentpress_get_all_comments_page_content() {
 	// Declare access to globals.
 	global $commentpress_core;
 
-	// Init page content.
+	// Init Page content.
 	$page_content = '';
 
-	// Get page or post.
+	// Get Page or Post.
 	$page_or_post = $commentpress_core->get_list_option();
 
 	// Set default.
@@ -694,7 +694,7 @@ function commentpress_get_all_comments_page_content() {
 
 	}
 
-	// Get data for other page type.
+	// Get data for other Page Type.
 	$other_type = ( $page_or_post == 'page' ) ? 'post': 'page';
 
 	// Get title.
@@ -771,7 +771,7 @@ add_filter( 'register', 'commentpress_add_loginout_id' );
 
 
 /**
- * Register widget areas for this theme.
+ * Register Widget areas for this theme.
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  *
@@ -779,7 +779,7 @@ add_filter( 'register', 'commentpress_add_loginout_id' );
  */
 function commentpress_register_widget_areas() {
 
-	// Define an area where a widget may be placed.
+	// Define an area where a Widget may be placed.
 	register_sidebar( [
 		'name' => __( 'CommentPress Footer', 'commentpress-core' ),
 		'id' => 'cp-license-8',

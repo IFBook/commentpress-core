@@ -2,7 +2,7 @@
 /**
  * CommentPress Multisite Site Settings class.
  *
- * Handles Site Settings page functionality in CommentPress Multisite.
+ * Handles Site Settings Page functionality in CommentPress Multisite.
  *
  * @package CommentPress_Core
  */
@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * CommentPress Multisite Site Settings Class.
  *
- * This class handles Site Settings page functionality in CommentPress Multisite.
+ * This class handles Site Settings Page functionality in CommentPress Multisite.
  *
  * @since 3.3
  */
@@ -105,13 +105,13 @@ class CommentPress_Multisite_Settings_Site {
 			return;
 		}
 
-		// Is CommentPress Core active on this blog?
+		// Is CommentPress Core active on this Blog?
 		if ( $this->multisite->db->is_commentpress() ) {
 
-			// Modify CommentPress Core settings page.
+			// Modify CommentPress Core Settings Page.
 			add_action( 'commentpress/core/settings/site/metabox/general/before', [ $this, 'form_disable_element' ] );
 
-			// Hook into CommentPress Core settings page result.
+			// Hook into CommentPress Core Settings Page result.
 			add_action( 'commentpress/core/db/options_update/before', [ $this, 'form_disable_core' ] );
 
 		} else {
@@ -135,7 +135,7 @@ class CommentPress_Multisite_Settings_Site {
 	 */
 	public function admin_menu() {
 
-		// Check user permissions.
+		// Check User permissions.
 		if ( ! $this->page_capability() ) {
 			return;
 		}
@@ -160,7 +160,7 @@ class CommentPress_Multisite_Settings_Site {
 	}
 
 	/**
-	 * Enqueue Settings page CSS.
+	 * Enqueue Settings Page CSS.
 	 *
 	 * @since 4.0
 	 */
@@ -169,7 +169,7 @@ class CommentPress_Multisite_Settings_Site {
 	}
 
 	/**
-	 * Enqueue Settings page Javascript.
+	 * Enqueue Settings Page Javascript.
 	 *
 	 * @since 4.0
 	 */
@@ -178,7 +178,7 @@ class CommentPress_Multisite_Settings_Site {
 	}
 
 	/**
-	 * Performs tasks in Settings page header.
+	 * Performs tasks in Settings Page header.
 	 *
 	 * @since 4.0
 	 */
@@ -194,7 +194,7 @@ class CommentPress_Multisite_Settings_Site {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Checks the access capability for this page.
+	 * Checks the access capability for this Page.
 	 *
 	 * @since 4.0
 	 *
@@ -211,7 +211,7 @@ class CommentPress_Multisite_Settings_Site {
 		 */
 		$capability = apply_filters( 'commentpress/multisite/settings/site/page/cap', 'manage_options' );
 
-		// Check user permissions.
+		// Check User permissions.
 		if ( ! current_user_can( $capability ) ) {
 			return false;
 		}
@@ -222,13 +222,13 @@ class CommentPress_Multisite_Settings_Site {
 	}
 
 	/**
-	 * Renders the Site Settings page when core is not enabled.
+	 * Renders the Site Settings Page when core is not enabled.
 	 *
 	 * @since 4.0
 	 */
 	public function page_settings() {
 
-		// Check user permissions.
+		// Check User permissions.
 		if ( ! $this->page_capability() ) {
 			return;
 		}
@@ -323,7 +323,7 @@ class CommentPress_Multisite_Settings_Site {
 			return;
 		}
 
-		// Check user permissions.
+		// Check User permissions.
 		if ( ! $this->page_capability() ) {
 			return;
 		}
