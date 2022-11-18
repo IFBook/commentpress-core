@@ -74,15 +74,6 @@ class CommentPress_Core {
 	public $workflow;
 
 	/**
-	 * WordPress Front End Editor compatibility object.
-	 *
-	 * @since 3.3
-	 * @access public
-	 * @var object $editor The front-end editor object.
-	 */
-	public $editor;
-
-	/**
 	 * BuddyPress present flag.
 	 *
 	 * @since 3.3
@@ -172,7 +163,6 @@ class CommentPress_Core {
 		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_parser.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_formatter.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_workflow.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_editor.php';
 
 		/**
 		 * Broadcast that class files have been included.
@@ -198,7 +188,6 @@ class CommentPress_Core {
 		$this->parser = new CommentPress_Core_Parser( $this );
 		$this->formatter = new CommentPress_Core_Formatter( $this );
 		$this->workflow = new CommentPress_Core_Workflow( $this );
-		$this->editor = new CommentPress_Core_Editor( $this );
 
 	}
 

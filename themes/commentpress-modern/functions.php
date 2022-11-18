@@ -380,33 +380,6 @@ endif;
 
 
 
-if ( ! function_exists( 'commentpress_enqueue_wp_fee_js' ) ):
-/**
- * Add CommentPress Modern FEE Javascript.
- *
- * @since 3.7
- */
-function commentpress_enqueue_wp_fee_js() {
-
-	// Check for dev.
-	$dev = commentpress_minified();
-
-	// Enqueue support for FEE.
-	wp_enqueue_script(
-		'cp_wp_fee_js',
-		get_template_directory_uri() . '/assets/js/wp_fee' . $dev . '.js',
-		[ 'cp_common_js' ], // Dependencies.
-		COMMENTPRESS_VERSION // Version.
-	);
-
-}
-endif; // End commentpress_enqueue_wp_fee_js
-
-// Add an action to include FEE script if detected.
-add_action( 'commentpress_editor_include_javascript', 'commentpress_enqueue_wp_fee_js' );
-
-
-
 if ( ! function_exists( 'commentpress_background' ) ):
 /**
  * Custom background colour.

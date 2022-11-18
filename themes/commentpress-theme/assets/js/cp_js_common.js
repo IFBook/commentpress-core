@@ -1537,10 +1537,6 @@ CommentPress.theme.viewport = new function() {
 			// Get anchor.
 			anchor_id = url.split('#')[1];
 
-			// Bail if it's WP FEE's custom anchor.
-			if ( anchor_id == 'edit=true' ) { return; }
-			if ( anchor_id == 'fee-edit-link' ) { return; }
-
 			// Locate in DOM.
 			anchor = $( '#' + anchor_id );
 

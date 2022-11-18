@@ -155,29 +155,6 @@ CommentPress.ajax.comments = new function() {
 
 		});
 
-
-
-		/**
-		 * Hook into WordPress Front-end Editor.
-		 *
-		 * @since 3.8
-		 */
-		$( document ).on( 'fee-after-save', function( event ) {
-
-			// Re-enable CommentPress Core AJAX clicks.
-			me.reassign_comments();
-
-			// Re-enable AJAX comment editing.
-			me.edit_comments_setup();
-
-			// Compatibility with Featured Comments.
-			cpajax_reenable_featured_comments();
-
-			// Compatibility with Comment Upvoter.
-			cpajax_reenable_comment_upvoter();
-
-		});
-
 	};
 
 

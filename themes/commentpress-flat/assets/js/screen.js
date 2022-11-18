@@ -1283,10 +1283,6 @@ CommentPress.theme.viewport = new function() {
 			// Get anchor.
 			anchor_id = url.split('#')[1];
 
-			// Bail if it's WP FEE's custom anchor.
-			if ( anchor_id == 'edit=true' ) { return; }
-			if ( anchor_id == 'fee-edit-link' ) { return; }
-
 			// Locate in DOM.
 			anchor = $( '#' + anchor_id );
 
@@ -1807,45 +1803,6 @@ jQuery(document).ready( function($) {
 
 		// Remove highlight class.
 		jQuery( '.comment-wrapper' ).removeClass( 'background-highlight' );
-
-	});
-
-
-
-	/**
-	 * Hook into CommentPress AJAX Infinite Scroll page changed.
-	 *
-	 * This hook is present in this file because the WP FEE JS is not loaded
-	 * when WP FEE is active, but we still want to change the URL of the toggle
-	 * button to reflect the page URL change.
-	 *
-	 * @since 3.8
-	 */
-	$( document ).on( 'commentpress-post-changed', function( event ) {
-
-		// Declare local vars.
-		var toggler, new_url, toggle_url;
-
-		// Find new URL.
-		new_url = document.location.href;
-
-		// Get toggle URL.
-		toggler = $( '.editor_toggle a' );
-
-		// Bail if not found.
-		if ( toggler.length == 0 ) { return; }
-
-		// Get toggle URL.
-		toggle_url = toggler.attr( 'href' );
-
-		// Split on query string.
-		nonce = toggle_url.split( '?' )[1];
-
-		// Add to new URL.
-		new_url += '?' + nonce;
-
-		// Update toggle.
-		toggler.attr( 'href', new_url );
 
 	});
 
