@@ -117,7 +117,7 @@ class CommentPress_Multisite_Loader {
 		 *
 		 * @since 4.0
 		 */
-		do_action( 'commentpress/core/multisite/loaded' );
+		do_action( 'commentpress/multisite/loaded' );
 
 		// We're done.
 		$done = true;
@@ -195,7 +195,7 @@ class CommentPress_Multisite_Loader {
 		 *
 		 * @since 4.0
 		 */
-		do_action( 'commentpress/core/multisite/bp/loaded' );
+		do_action( 'commentpress/multisite/bp/loaded' );
 
 	}
 

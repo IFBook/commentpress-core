@@ -68,7 +68,7 @@ class CommentPress_Multisite_WordPress {
 		$this->ms_loader = $ms_loader;
 
 		// Init when the multisite plugin is fully loaded.
-		add_action( 'commentpress/core/multisite/loaded', [ $this, 'initialise' ] );
+		add_action( 'commentpress/multisite/loaded', [ $this, 'initialise' ] );
 
 	}
 

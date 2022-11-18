@@ -77,7 +77,7 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 		$this->ms_loader = $ms_loader;
 
 		// Init when the BuddyPress classes are fully loaded.
-		add_action( 'commentpress/core/multisite/bp/loaded', [ $this, 'initialise' ] );
+		add_action( 'commentpress/multisite/bp/loaded', [ $this, 'initialise' ] );
 
 	}
 
