@@ -83,15 +83,6 @@ class CommentPress_Core {
 	public $editor;
 
 	/**
-	 * Options page reference.
-	 *
-	 * @since 3.0
-	 * @access public
-	 * @var str $options_page The options page reference.
-	 */
-	public $options_page;
-
-	/**
 	 * BuddyPress present flag.
 	 *
 	 * @since 3.3
@@ -174,6 +165,7 @@ class CommentPress_Core {
 	public function include_files() {
 
 		// Include class files.
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_admin.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_db.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_display.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_nav.php';
@@ -199,6 +191,7 @@ class CommentPress_Core {
 	public function setup_objects() {
 
 		// Initialise objects.
+		$this->admin = new CommentPress_Core_Admin( $this );
 		$this->db = new CommentPress_Core_Database( $this );
 		$this->display = new CommentPress_Core_Display( $this );
 		$this->nav = new CommentPress_Core_Navigator( $this );
@@ -230,9 +223,6 @@ class CommentPress_Core {
 			// Modify all.
 			add_filter( 'views_edit-page', [ $this, 'update_page_counts_in_admin' ], 10, 1 );
 
-			// Modify admin menu.
-			add_action( 'admin_menu', [ $this, 'admin_menu' ] );
-
 			// Add meta boxes.
 			add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes' ] );
 
@@ -241,13 +231,6 @@ class CommentPress_Core {
 
 			// Intercept delete.
 			add_action( 'before_delete_post', [ $this, 'delete_post' ], 10, 1 );
-
-			/*
-			// Use new help functionality.
-			//add_action('add_screen_help_and_options', [ $this, 'options_help' ] );
-			// NOTE: help is actually called in $this->admin_head() because the
-			// 'add_screen_help_and_options' action does not seem to be working in 3.3-beta1
-			*/
 
 			// Comment block quicktag.
 			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_scripts' ] );
@@ -515,125 +498,6 @@ class CommentPress_Core {
 				'</a>'
 			) .
 		'</p></div>';
-
-	}
-
-	/**
-	 * Appends option to admin menu.
-	 *
-	 * @since 3.4
-	 */
-	public function admin_menu() {
-
-		// Check user permissions.
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-
-		// Try and update options.
-		$saved = $this->db->options_update();
-
-		// If upgrade required.
-		if ( $this->db->upgrade_required() ) {
-
-			// Access globals.
-			global $pagenow;
-
-			// Show on pages other than the CommentPress Core admin page.
-			if (
-				$pagenow == 'options-general.php' &&
-				! empty( $_GET['page'] ) &&
-				'commentpress_admin' == $_GET['page']
-			) {
-
-				// We're on our admin page.
-
-			} else {
-
-				// Show message.
-				add_action( 'admin_notices', [ $this, 'admin_upgrade_alert' ] );
-
-			}
-
-		}
-
-		// Insert item in relevant menu.
-		$this->options_page = add_options_page(
-			__( 'CommentPress Core Settings', 'commentpress-core' ),
-			__( 'CommentPress Core', 'commentpress-core' ),
-			'manage_options',
-			'commentpress_admin',
-			[ $this, 'options_page' ]
-		);
-
-		/*
-		// Register our form submit hander.
-		add_action( 'load-' . $this->options_page, [ $this, 'form_submitted' ] );
-		*/
-
-		// Add scripts and styles.
-		add_action( 'admin_print_scripts-' . $this->options_page, [ $this, 'admin_js' ] );
-		add_action( 'admin_print_styles-' . $this->options_page, [ $this, 'admin_css' ] );
-		add_action( 'admin_head-' . $this->options_page, [ $this, 'admin_head' ], 50 );
-
-	}
-
-	/**
-	 * Prints plugin options page header.
-	 *
-	 * @since 3.4
-	 */
-	public function admin_head() {
-
-		// Get screen object.
-		$screen = get_current_screen();
-
-		// Use method in this class.
-		$this->options_help( $screen );
-
-	}
-
-	/**
-	 * Enqueue Settings page CSS.
-	 *
-	 * @since 3.4
-	 */
-	public function admin_css() {
-
-		// Add admin stylesheet.
-		wp_enqueue_style(
-			'commentpress_admin_css',
-			plugins_url( 'commentpress-core/assets/css/admin.css', COMMENTPRESS_PLUGIN_FILE ),
-			false,
-			COMMENTPRESS_VERSION, // Version.
-			'all' // Media.
-		);
-
-	}
-
-	/**
-	 * Enqueue Settings page Javascript.
-	 *
-	 * @since 3.4
-	 */
-	public function admin_js() {
-
-	}
-
-	/**
-	 * Prints plugin options page.
-	 *
-	 * @since 3.4
-	 */
-	public function options_page() {
-
-		// Check user permissions.
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-
-		// Get our admin options page.
-		echo $this->display->get_admin_page();
 
 	}
 
@@ -1210,33 +1074,6 @@ class CommentPress_Core {
 
 		// We now need to add any workflow that a plugin might want.
 		do_action( 'cp_workflow_metabox' );
-
-	}
-
-	/**
-	 * Adds help copy to admin page.
-	 *
-	 * @since 3.4
-	 *
-	 * @param object $screen The existing screen object.
-	 * @return object $screen The modified screen object.
-	 */
-	public function options_help( $screen ) {
-
-		// Bail if not our screen.
-		if ( $screen->id != $this->options_page ) {
-			return;
-		}
-
-		// Add a tab.
-		$screen->add_help_tab( [
-			'id'      => 'commentpress-base',
-			'title'   => __( 'CommentPress Core Help', 'commentpress-core' ),
-			'content' => $this->display->get_help(),
-		] );
-
-		// --<
-		return $screen;
 
 	}
 

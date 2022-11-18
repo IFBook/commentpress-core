@@ -1002,261 +1002,242 @@ class CommentPress_Core_Database {
 	 * Save the settings set by the administrator.
 	 *
 	 * @since 3.0
-	 *
-	 * @return bool $result True if successful, false otherwise.
 	 */
 	public function options_update() {
 
-		// Init result.
-		$result = false;
-
 		// Was the form submitted?
-		if ( isset( $_POST['commentpress_submit'] ) ) {
-
-			// Check that we trust the source of the data.
-			check_admin_referer( 'commentpress_admin_action', 'commentpress_nonce' );
-
-			// Init vars.
-			$cp_activate = '0';
-			$cp_upgrade = '';
-			$cp_reset = '';
-			$cp_create_pages = '';
-			$cp_delete_pages = '';
-			$cp_para_comments_live = 0;
-			$cp_show_subpages = 0;
-			$cp_show_extended_toc = 0;
-			$cp_blog_type = 0;
-			$cp_blog_workflow = 0;
-			$cp_sidebar_default = 'toc';
-			$cp_featured_images = 'n';
-			$cp_textblock_meta = 'y';
-			$cp_page_nav_enabled = 'y';
-			$cp_do_not_parse = 'y';
-
-			// Assume all post types are enabled.
-			$cp_post_types_enabled = array_keys( $this->get_supported_post_types() );
-
-			// Get variables.
-			extract( $_POST );
-
-			// Hand off to Multisite first, in case we're deactivating.
-			do_action( 'cpmu_deactivate_commentpress' );
-
-			// Is Multisite activating CommentPress Core?
-			if ( $cp_activate == '1' ) {
-				return true;
-			}
-
-			// Did we ask to upgrade CommentPress Core?
-			if ( $cp_upgrade == '1' ) {
-
-				// Do upgrade.
-				$this->upgrade_options();
-
-				// --<
-				return true;
-
-			}
-
-			// Did we ask to reset?
-			if ( $cp_reset == '1' ) {
-
-				// Reset theme options.
-				$this->options_reset();
-
-				// --<
-				return true;
-
-			}
-
-			// Did we ask to auto-create special pages?
-			if ( $cp_create_pages == '1' ) {
-
-				// Remove any existing special pages.
-				$this->delete_special_pages();
-
-				// Create special pages.
-				$this->create_special_pages();
-
-			}
-
-			// Did we ask to delete special pages?
-			if ( $cp_delete_pages == '1' ) {
-
-				// Remove special pages.
-				$this->delete_special_pages();
-
-			}
-
-			// Let's deal with our params now.
-
-			/*
-			// Individual special pages.
-			$cp_welcome_page = esc_sql( $cp_welcome_page );
-			$cp_blog_page = esc_sql( $cp_blog_page );
-			$cp_general_comments_page = esc_sql( $cp_general_comments_page );
-			$cp_all_comments_page = esc_sql( $cp_all_comments_page );
-			$cp_comments_by_page = esc_sql( $cp_comments_by_page );
-			$this->option_set( 'cp_welcome_page', $cp_welcome_page );
-			$this->option_set( 'cp_blog_page', $cp_blog_page );
-			$this->option_set( 'cp_general_comments_page', $cp_general_comments_page );
-			$this->option_set( 'cp_all_comments_page', $cp_all_comments_page );
-			$this->option_set( 'cp_comments_by_page', $cp_comments_by_page );
-			*/
-
-			// TOC content.
-			$cp_show_posts_or_pages_in_toc = esc_sql( $cp_show_posts_or_pages_in_toc );
-			$this->option_set( 'cp_show_posts_or_pages_in_toc', $cp_show_posts_or_pages_in_toc );
-
-			// If we have pages in TOC and a value for the next param.
-			if ( $cp_show_posts_or_pages_in_toc == 'page' && isset( $cp_toc_chapter_is_page ) ) {
-
-				$cp_toc_chapter_is_page = esc_sql( $cp_toc_chapter_is_page );
-				$this->option_set( 'cp_toc_chapter_is_page', $cp_toc_chapter_is_page );
-
-				// If chapters are not pages and we have a value for the next param.
-				if ( $cp_toc_chapter_is_page == '0' ) {
-
-					$cp_show_subpages = esc_sql( $cp_show_subpages );
-					$this->option_set( 'cp_show_subpages', ( $cp_show_subpages ? 1 : 0 ) );
-
-				} else {
-
-					// Always set to show subpages.
-					$this->option_set( 'cp_show_subpages', 1 );
-
-				}
-
-			}
-
-			// Extended or vanilla posts TOC.
-			if ( $cp_show_posts_or_pages_in_toc == 'post' ) {
-
-				$cp_show_extended_toc = esc_sql( $cp_show_extended_toc );
-				$this->option_set( 'cp_show_extended_toc', ( $cp_show_extended_toc ? 1 : 0 ) );
-
-			}
-
-			// Excerpt length.
-			$cp_excerpt_length = esc_sql( $cp_excerpt_length );
-			$this->option_set( 'cp_excerpt_length', intval( $cp_excerpt_length ) );
-
-			// Comment editor.
-			$cp_comment_editor = esc_sql( $cp_comment_editor );
-			$this->option_set( 'cp_comment_editor', ( $cp_comment_editor ? 1 : 0 ) );
-
-			// Has AJAX "live" comment refreshing been migrated?
-			if ( $this->option_exists( 'cp_para_comments_live' ) ) {
-
-				// "live" comment refreshing.
-				$cp_para_comments_live = esc_sql( $cp_para_comments_live );
-				$this->option_set( 'cp_para_comments_live', ( $cp_para_comments_live ? 1 : 0 ) );
-
-			}
-
-			// Behaviour.
-			$cp_promote_reading = esc_sql( $cp_promote_reading );
-			$this->option_set( 'cp_promote_reading', ( $cp_promote_reading ? 1 : 0 ) );
-
-			// Title visibility.
-			$cp_title_visibility = esc_sql( $cp_title_visibility );
-			$this->option_set( 'cp_title_visibility', $cp_title_visibility );
-
-			// Page meta visibility.
-			$cp_page_meta_visibility = esc_sql( $cp_page_meta_visibility );
-			$this->option_set( 'cp_page_meta_visibility', $cp_page_meta_visibility );
-
-			// Save scroll speed.
-			$cp_js_scroll_speed = esc_sql( $cp_js_scroll_speed );
-			$this->option_set( 'cp_js_scroll_speed', $cp_js_scroll_speed );
-
-			// Save min page width.
-			$cp_min_page_width = esc_sql( $cp_min_page_width );
-			$this->option_set( 'cp_min_page_width', $cp_min_page_width );
-
-			// Save workflow.
-			$cp_blog_workflow = esc_sql( $cp_blog_workflow );
-			$this->option_set( 'cp_blog_workflow', ( $cp_blog_workflow ? 1 : 0 ) );
-
-			// Save blog type.
-			$cp_blog_type = esc_sql( $cp_blog_type );
-			$this->option_set( 'cp_blog_type', $cp_blog_type );
-
-			// If it's a groupblog.
-			if ( $this->core->is_groupblog() ) {
-
-				// Get the group's id.
-				$group_id = get_groupblog_group_id( get_current_blog_id() );
-				if ( isset( $group_id ) && is_numeric( $group_id ) && $group_id > 0 ) {
-
-					/**
-					 * Allow plugins to override the blog type - for example if workflow
-					 * is enabled, it might become a new blog type as far as BuddyPress
-					 * is concerned.
-					 *
-					 * @param int $cp_blog_type The numeric blog type.
-					 * @param bool $cp_blog_workflow True if workflow enabled, false otherwise.
-					 */
-					$blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $cp_blog_type, $cp_blog_workflow );
-
-					// Set the type as group meta info.
-					groups_update_groupmeta( $group_id, 'groupblogtype', 'groupblogtype-' . $blog_type );
-
-				}
-
-			}
-
-			// Save default sidebar.
-			if ( ! apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
-				$cp_sidebar_default = esc_sql( $cp_sidebar_default );
-				$this->option_set( 'cp_sidebar_default', $cp_sidebar_default );
-			}
-
-			// Save featured images.
-			$cp_featured_images = esc_sql( $cp_featured_images );
-			$this->option_set( 'cp_featured_images', $cp_featured_images );
-
-			// Save textblock meta.
-			$cp_textblock_meta = esc_sql( $cp_textblock_meta );
-			$this->option_set( 'cp_textblock_meta', $cp_textblock_meta );
-
-			// Save page navigation enabled flag.
-			$cp_page_nav_enabled = esc_sql( $cp_page_nav_enabled );
-			$this->option_set( 'cp_page_nav_enabled', $cp_page_nav_enabled );
-
-			// Save do not parse flag.
-			$cp_do_not_parse = esc_sql( $cp_do_not_parse );
-			$this->option_set( 'cp_do_not_parse', $cp_do_not_parse );
-
-			// Do we have the post types option?
-			if ( $this->option_exists( 'cp_post_types_disabled' ) ) {
-
-				// Get selected post types.
-				$enabled_types = array_map( 'esc_sql', $cp_post_types_enabled );
-
-				// Exclude the selected post types.
-				$disabled_types = array_diff( array_keys( $this->get_supported_post_types() ), $enabled_types );
-
-				// Save skipped post types.
-				$this->option_set( 'cp_post_types_disabled', $disabled_types );
-
-			}
-
-			// Save.
-			$this->options_save();
-
-			// Set flag.
-			$result = true;
-
-			/**
-			 * Allow other plugins to hook into the update process.
-			 */
-			do_action( 'commentpress_admin_page_options_updated' );
+		if ( ! isset( $_POST['commentpress_submit'] ) ) {
+			return;
+		}
+
+		// Check that we trust the source of the data.
+		check_admin_referer( 'commentpress_admin_action', 'commentpress_nonce' );
+
+		// Init vars.
+		$cp_activate = '0';
+		$cp_upgrade = '';
+		$cp_reset = '';
+		$cp_create_pages = '';
+		$cp_delete_pages = '';
+		$cp_para_comments_live = 0;
+		$cp_show_subpages = 0;
+		$cp_show_extended_toc = 0;
+		$cp_blog_type = 0;
+		$cp_blog_workflow = 0;
+		$cp_sidebar_default = 'toc';
+		$cp_featured_images = 'n';
+		$cp_textblock_meta = 'y';
+		$cp_page_nav_enabled = 'y';
+		$cp_do_not_parse = 'y';
+
+		// Assume all post types are enabled.
+		$cp_post_types_enabled = array_keys( $this->get_supported_post_types() );
+
+		// Get variables.
+		extract( $_POST );
+
+		// Hand off to Multisite first, in case we're deactivating.
+		do_action( 'cpmu_deactivate_commentpress' );
+
+		// Is Multisite activating CommentPress Core?
+		if ( $cp_activate == '1' ) {
+			return;
+		}
+
+		// Did we ask to upgrade CommentPress Core?
+		if ( $cp_upgrade == '1' ) {
+			$this->upgrade_options();
+			return;
+		}
+
+		// Did we ask to reset?
+		if ( $cp_reset == '1' ) {
+			$this->options_reset();
+			return ;
+		}
+
+		// Did we ask to auto-create special pages?
+		if ( $cp_create_pages == '1' ) {
+
+			// Remove any existing special pages.
+			$this->delete_special_pages();
+
+			// Create special pages.
+			$this->create_special_pages();
 
 		}
 
-		// --<
-		return $result;
+		// Did we ask to delete special pages?
+		if ( $cp_delete_pages == '1' ) {
+
+			// Remove special pages.
+			$this->delete_special_pages();
+
+		}
+
+		// Let's deal with our params now.
+
+		/*
+		// Individual special pages.
+		$cp_welcome_page = esc_sql( $cp_welcome_page );
+		$cp_blog_page = esc_sql( $cp_blog_page );
+		$cp_general_comments_page = esc_sql( $cp_general_comments_page );
+		$cp_all_comments_page = esc_sql( $cp_all_comments_page );
+		$cp_comments_by_page = esc_sql( $cp_comments_by_page );
+		$this->option_set( 'cp_welcome_page', $cp_welcome_page );
+		$this->option_set( 'cp_blog_page', $cp_blog_page );
+		$this->option_set( 'cp_general_comments_page', $cp_general_comments_page );
+		$this->option_set( 'cp_all_comments_page', $cp_all_comments_page );
+		$this->option_set( 'cp_comments_by_page', $cp_comments_by_page );
+		*/
+
+		// TOC content.
+		$cp_show_posts_or_pages_in_toc = esc_sql( $cp_show_posts_or_pages_in_toc );
+		$this->option_set( 'cp_show_posts_or_pages_in_toc', $cp_show_posts_or_pages_in_toc );
+
+		// If we have pages in TOC and a value for the next param.
+		if ( $cp_show_posts_or_pages_in_toc == 'page' && isset( $cp_toc_chapter_is_page ) ) {
+
+			$cp_toc_chapter_is_page = esc_sql( $cp_toc_chapter_is_page );
+			$this->option_set( 'cp_toc_chapter_is_page', $cp_toc_chapter_is_page );
+
+			// If chapters are not pages and we have a value for the next param.
+			if ( $cp_toc_chapter_is_page == '0' ) {
+
+				$cp_show_subpages = esc_sql( $cp_show_subpages );
+				$this->option_set( 'cp_show_subpages', ( $cp_show_subpages ? 1 : 0 ) );
+
+			} else {
+
+				// Always set to show subpages.
+				$this->option_set( 'cp_show_subpages', 1 );
+
+			}
+
+		}
+
+		// Extended or vanilla posts TOC.
+		if ( $cp_show_posts_or_pages_in_toc == 'post' ) {
+
+			$cp_show_extended_toc = esc_sql( $cp_show_extended_toc );
+			$this->option_set( 'cp_show_extended_toc', ( $cp_show_extended_toc ? 1 : 0 ) );
+
+		}
+
+		// Excerpt length.
+		$cp_excerpt_length = esc_sql( $cp_excerpt_length );
+		$this->option_set( 'cp_excerpt_length', intval( $cp_excerpt_length ) );
+
+		// Comment editor.
+		$cp_comment_editor = esc_sql( $cp_comment_editor );
+		$this->option_set( 'cp_comment_editor', ( $cp_comment_editor ? 1 : 0 ) );
+
+		// Has AJAX "live" comment refreshing been migrated?
+		if ( $this->option_exists( 'cp_para_comments_live' ) ) {
+
+			// "live" comment refreshing.
+			$cp_para_comments_live = esc_sql( $cp_para_comments_live );
+			$this->option_set( 'cp_para_comments_live', ( $cp_para_comments_live ? 1 : 0 ) );
+
+		}
+
+		// Behaviour.
+		$cp_promote_reading = esc_sql( $cp_promote_reading );
+		$this->option_set( 'cp_promote_reading', ( $cp_promote_reading ? 1 : 0 ) );
+
+		// Title visibility.
+		$cp_title_visibility = esc_sql( $cp_title_visibility );
+		$this->option_set( 'cp_title_visibility', $cp_title_visibility );
+
+		// Page meta visibility.
+		$cp_page_meta_visibility = esc_sql( $cp_page_meta_visibility );
+		$this->option_set( 'cp_page_meta_visibility', $cp_page_meta_visibility );
+
+		// Save scroll speed.
+		$cp_js_scroll_speed = esc_sql( $cp_js_scroll_speed );
+		$this->option_set( 'cp_js_scroll_speed', $cp_js_scroll_speed );
+
+		// Save min page width.
+		$cp_min_page_width = esc_sql( $cp_min_page_width );
+		$this->option_set( 'cp_min_page_width', $cp_min_page_width );
+
+		// Save workflow.
+		$cp_blog_workflow = esc_sql( $cp_blog_workflow );
+		$this->option_set( 'cp_blog_workflow', ( $cp_blog_workflow ? 1 : 0 ) );
+
+		// Save blog type.
+		$cp_blog_type = esc_sql( $cp_blog_type );
+		$this->option_set( 'cp_blog_type', $cp_blog_type );
+
+		// If it's a groupblog.
+		if ( $this->core->is_groupblog() ) {
+
+			// Get the group's id.
+			$group_id = get_groupblog_group_id( get_current_blog_id() );
+			if ( isset( $group_id ) && is_numeric( $group_id ) && $group_id > 0 ) {
+
+				/**
+				 * Allow plugins to override the blog type - for example if workflow
+				 * is enabled, it might become a new blog type as far as BuddyPress
+				 * is concerned.
+				 *
+				 * @param int $cp_blog_type The numeric blog type.
+				 * @param bool $cp_blog_workflow True if workflow enabled, false otherwise.
+				 */
+				$blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $cp_blog_type, $cp_blog_workflow );
+
+				// Set the type as group meta info.
+				groups_update_groupmeta( $group_id, 'groupblogtype', 'groupblogtype-' . $blog_type );
+
+			}
+
+		}
+
+		// Save default sidebar.
+		if ( ! apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
+			$cp_sidebar_default = esc_sql( $cp_sidebar_default );
+			$this->option_set( 'cp_sidebar_default', $cp_sidebar_default );
+		}
+
+		// Save featured images.
+		$cp_featured_images = esc_sql( $cp_featured_images );
+		$this->option_set( 'cp_featured_images', $cp_featured_images );
+
+		// Save textblock meta.
+		$cp_textblock_meta = esc_sql( $cp_textblock_meta );
+		$this->option_set( 'cp_textblock_meta', $cp_textblock_meta );
+
+		// Save page navigation enabled flag.
+		$cp_page_nav_enabled = esc_sql( $cp_page_nav_enabled );
+		$this->option_set( 'cp_page_nav_enabled', $cp_page_nav_enabled );
+
+		// Save do not parse flag.
+		$cp_do_not_parse = esc_sql( $cp_do_not_parse );
+		$this->option_set( 'cp_do_not_parse', $cp_do_not_parse );
+
+		// Do we have the post types option?
+		if ( $this->option_exists( 'cp_post_types_disabled' ) ) {
+
+			// Get selected post types.
+			$enabled_types = array_map( 'esc_sql', $cp_post_types_enabled );
+
+			// Exclude the selected post types.
+			$disabled_types = array_diff( array_keys( $this->get_supported_post_types() ), $enabled_types );
+
+			// Save skipped post types.
+			$this->option_set( 'cp_post_types_disabled', $disabled_types );
+
+		}
+
+		// Save.
+		$this->options_save();
+
+		/**
+		 * Allow other plugins to hook into the update process.
+		 *
+		 * @since 3.4
+		 */
+		do_action( 'commentpress_admin_page_options_updated' );
 
 	}
 
