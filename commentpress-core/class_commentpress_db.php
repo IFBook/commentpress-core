@@ -186,15 +186,6 @@ class CommentPress_Core_Database {
 	public $para_comments_live = 0;
 
 	/**
-	 * Prevent save_post hook firing more than once.
-	 *
-	 * @since 3.3
-	 * @access public
-	 * @var str $saved_post True if post already saved.
-	 */
-	public $saved_post = false;
-
-	/**
 	 * Featured images flag.
 	 *
 	 * @since 3.5
@@ -1786,7 +1777,7 @@ class CommentPress_Core_Database {
 			$post = $post_obj;
 		}
 
-		// Save post formatter (overrides blog_type).
+		// Save post formatter - this overrides "blog_type".
 		$this->save_formatter( $post );
 
 		// Save workflow meta.
@@ -1795,107 +1786,14 @@ class CommentPress_Core_Database {
 		// Save default sidebar.
 		$this->save_default_sidebar( $post );
 
-		// ---------------------------------------------------------------------
-		// Create new post with content of current.
-		// ---------------------------------------------------------------------
-
-		// Find and save the data.
-		$data = isset( $_POST['commentpress_new_post'] ) ? sanitize_text_field( wp_unslash( $_POST['commentpress_new_post'] ) ) : '0';
-
-		// Do we want to create a new revision?
-		if ( $data == '0' ) {
-			return;
-		}
-
-		// We need to make sure this only runs once.
-		if ( $this->saved_post === false ) {
-			$this->saved_post = true;
-		} else {
-			return;
-		}
-
-		// ---------------------------------------------------------------------
-
-		// We're through: create it.
-		$new_post_id = $this->create_new_post( $post );
-
-		// ---------------------------------------------------------------------
-		// Store ID of new version in current version.
-		// ---------------------------------------------------------------------
-
-		// Set key.
-		$key = '_cp_newer_version';
-
-		// If the custom field already has a value.
-		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-			// Delete the meta_key if empty string.
-			if ( $data === '' ) {
-				delete_post_meta( $post->ID, $key );
-			} else {
-				update_post_meta( $post->ID, $key, $new_post_id );
-			}
-
-		} else {
-
-			// Add the data.
-			add_post_meta( $post->ID, $key, $new_post_id );
-
-		}
-
-		// ---------------------------------------------------------------------
-		// Store incremental version number in new version
-		// ---------------------------------------------------------------------
-
-		// Set key.
-		$key = '_cp_version_count';
-
-		// If the custom field of our current post has a value.
-		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-			// Get current value.
-			$value = get_post_meta( $post->ID, $key, true );
-
-			// Increment.
-			$value++;
-
-		} else {
-
-			// This must be the first new version (Draft 2).
-			$value = 2;
-
-		}
-
-		// Add the data.
-		add_post_meta( $new_post_id, $key, $value );
-
-		// ---------------------------------------------------------------------
-		// Store formatter in new version
-		// ---------------------------------------------------------------------
-
-		// Set key.
-		$key = '_cp_post_type_override';
-
-		// If we have one set.
-		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-			// Get current value.
-			$formatter = get_post_meta( $post->ID, $key, true );
-
-			// Add the data.
-			add_post_meta( $new_post_id, $key, esc_sql( $formatter ) );
-
-		}
-
-		// Allow plugins to hook into this.
-		do_action( 'cp_workflow_save_copy', $new_post_id );
-
-		/*
-		// Get the edit post link.
-		$edit_link = get_edit_post_link( $new_post_id );
-
-		// Redirect there?
-		*/
+		/**
+		 * Broadcast that post meta has been saved.
+		 *
+		 * @since 4.0
+		 *
+		 * @param object $post The WordPress post object.
+		 */
+		do_action( 'commentpress/core/db/post_meta/saved', $post );
 
 	}
 
@@ -2595,59 +2493,6 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * Check if a post allows comments to be posted.
-	 *
-	 * @since 3.4
-	 *
-	 * @return boolean $allowed True if comments enabled, false otherwise.
-	 */
-	public function comments_enabled() {
-
-		// Init return.
-		$allowed = false;
-
-		// Access post object.
-		global $post;
-
-		// Do we have one?
-		if ( ! is_object( $post ) ) {
-
-			// --<
-			return $allowed;
-
-		}
-
-		// Are comments enabled on this post?
-		if ( $post->comment_status == 'open' ) {
-
-			// Set return.
-			$allowed = true;
-
-		}
-
-		// --<
-		return $allowed;
-	}
-
-	/**
-	 * Get WordPress approved comments.
-	 *
-	 * @since 3.4
-	 *
-	 * @param int $post_ID The numeric ID of the post.
-	 * @return array $comments The array of comment data.
-	 */
-	public function get_approved_comments( $post_ID ) {
-
-		// For WordPress, we use the API.
-		$comments = get_approved_comments( $post_ID );
-
-		// --<
-		return $comments;
-
-	}
-
-	/**
 	 * Get all WordPress comments for a post, unless paged.
 	 *
 	 * @since 3.4
@@ -3326,56 +3171,6 @@ class CommentPress_Core_Database {
 	}
 
 	// -------------------------------------------------------------------------
-
-	/**
-	 * Create new post with content of existing.
-	 *
-	 * @since 3.4
-	 *
-	 * @param int $post The WordPress post object to make a copy of.
-	 * @return int $new_post_id The numeric ID of the new post.
-	 */
-	public function create_new_post( $post ) {
-
-		// Define basics.
-		$new_post = [
-			'post_status' => 'draft',
-			'post_type' => 'post',
-			'comment_status' => 'open',
-			'ping_status' => 'open',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
-			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-		];
-
-		// Add post-specific stuff.
-
-		// Default page title.
-		$prefix = __( 'Copy of ', 'commentpress-core' );
-
-		// Allow overrides of prefix.
-		$prefix = apply_filters( 'commentpress_new_post_title_prefix', $prefix );
-
-		// Set title, but allow overrides.
-		$new_post['post_title'] = apply_filters( 'commentpress_new_post_title', $prefix . $post->post_title, $post );
-
-		// Set excerpt, but allow overrides.
-		$new_post['post_excerpt'] = apply_filters( 'commentpress_new_post_excerpt', $post->post_excerpt );
-
-		// Set content, but allow overrides.
-		$new_post['post_content'] = apply_filters( 'commentpress_new_post_content', $post->post_content );
-
-		// Set post author, but allow overrides.
-		$new_post['post_author'] = apply_filters( 'commentpress_new_post_author', $post->post_author );
-
-		// Insert the post into the database.
-		$new_post_id = wp_insert_post( $new_post );
-
-		// --<
-		return $new_post_id;
-
-	}
 
 	/**
 	 * Create "title" page.

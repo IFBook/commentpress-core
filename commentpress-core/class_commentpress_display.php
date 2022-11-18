@@ -460,7 +460,7 @@ HELPTEXT;
 			foreach ( $posts as $item ) {
 
 				// Get comment count for that post.
-				$count = count( $this->core->db->get_approved_comments( $item->ID ) );
+				$count = count( get_approved_comments( $item->ID ) );
 
 				// Write list item.
 				echo '<li class="title"><a href="' . get_permalink( $item->ID ) . '">' . get_the_title( $item->ID ) . ' (' . $count . ')</a></li>' . "\n";
@@ -483,7 +483,7 @@ HELPTEXT;
 				$html = '';
 
 				// Get comment count for that post.
-				$count = count( $this->core->db->get_approved_comments( $item->ID ) );
+				$count = count( get_approved_comments( $item->ID ) );
 
 				// Compat with Co-Authors Plus.
 				if ( function_exists( 'get_coauthors' ) ) {

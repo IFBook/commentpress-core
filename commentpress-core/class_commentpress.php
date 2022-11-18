@@ -74,6 +74,15 @@ class CommentPress_Core {
 	public $workflow;
 
 	/**
+	 * Revisions object.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var object $revisions The workflow object.
+	 */
+	public $revisions;
+
+	/**
 	 * BuddyPress present flag.
 	 *
 	 * @since 3.3
@@ -163,6 +172,7 @@ class CommentPress_Core {
 		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_parser.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_formatter.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_workflow.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_revisions.php';
 
 		/**
 		 * Broadcast that class files have been included.
@@ -188,6 +198,7 @@ class CommentPress_Core {
 		$this->parser = new CommentPress_Core_Parser( $this );
 		$this->formatter = new CommentPress_Core_Formatter( $this );
 		$this->workflow = new CommentPress_Core_Workflow( $this );
+		$this->revisions = new CommentPress_Core_Revisions( $this );
 
 	}
 
