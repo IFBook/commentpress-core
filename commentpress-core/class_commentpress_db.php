@@ -1011,7 +1011,7 @@ class CommentPress_Core_Database {
 		}
 
 		// Check that we trust the source of the data.
-		check_admin_referer( 'commentpress_admin_action', 'commentpress_nonce' );
+		check_admin_referer( 'commentpress_core_settings_action', 'commentpress_core_settings_nonce' );
 
 		// Init vars.
 		$cp_activate = '0';
