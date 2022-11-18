@@ -409,9 +409,6 @@ class CommentPress_Core_Admin {
 		// Grab columns.
 		$columns = ( 1 == $screen->get_columns() ? '1' : '2' );
 
-		// Get our admin options page.
-		//echo $this->core->display->get_admin_page();
-
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->page_path . 'page-site-settings.php';
 
