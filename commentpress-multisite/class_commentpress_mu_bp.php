@@ -1,6 +1,6 @@
 <?php
 /**
- * CommentPress Core Multisite BuddyPress class.
+ * CommentPress Multisite BuddyPress class.
  *
  * Handles BuddyPress compatibility in WordPress Multisite contexts.
  *
@@ -11,13 +11,13 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * CommentPress Core Multisite BuddyPress Class.
+ * CommentPress Multisite BuddyPress Class.
  *
  * This class encapsulates BuddyPress compatibility.
  *
  * @since 3.3
  */
-class CommentPress_Multisite_Buddypress {
+class CommentPress_Multisite_BuddyPress {
 
 	/**
 	 * Multisite plugin object.
@@ -47,7 +47,7 @@ class CommentPress_Multisite_Buddypress {
 	public $groupblog_theme = 'commentpress-modern';
 
 	/**
-	 * Groupblog privacy flag.
+	 * GroupBlog privacy flag.
 	 *
 	 * @since 3.3
 	 * @access public
@@ -164,7 +164,7 @@ class CommentPress_Multisite_Buddypress {
 		/*
 		 * Duplicated from 'class_commentpress_formatter.php' because CommentPress Core need
 		 * not be active on the main blog, but we still need the options to appear
-		 * in the Groupblog Create screen.
+		 * in the GroupBlog Create screen.
 		 */
 
 		// Set blog type options.
@@ -178,7 +178,7 @@ class CommentPress_Multisite_Buddypress {
 		/*
 		 * Duplicated from 'class_commentpress_workflow.php' because CommentPress Core need
 		 * not be active on the main blog, but we still need the options to appear
-		 * in the Groupblog Create screen.
+		 * in the GroupBlog Create screen.
 		 */
 
 		// Enable workflow.
@@ -192,13 +192,13 @@ class CommentPress_Multisite_Buddypress {
 
 		// ---------------------------------------------------------------------
 
-		// Add form elements to groupblog form.
+		// Add form elements to GroupBlog form.
 		add_action( 'signup_blogform', [ $this, 'signup_blogform' ] );
 
 		/*
 		 * Activate blog-specific CommentPress Core plugin.
 		 *
-		 * Added at priority 20 because BuddyPress Groupblog adds its action at
+		 * Added at priority 20 because BuddyPress GroupBlog adds its action at
 		 * the default 10 and we want it to have done its stuff before we do ours.
 		 */
 		add_action( 'wpmu_new_blog', [ $this, 'wpmu_new_blog' ], 20, 6 );
@@ -211,7 +211,7 @@ class CommentPress_Multisite_Buddypress {
 		add_filter( 'cp_site_directory_link_title', [ $this, 'user_links_new_site_title' ], 21 );
 		add_filter( 'cp_register_new_site_page_title', [ $this, 'user_links_new_site_title' ], 21 );
 
-		// Override groupblog theme, if the bp-groupblog default theme is not a CommentPress Core one.
+		// Override GroupBlog theme, if the bp-groupblog default theme is not a CommentPress Core one.
 		add_filter( 'cp_forced_theme_slug', [ $this, 'get_groupblog_theme' ], 20, 1 );
 		add_filter( 'cp_forced_theme_name', [ $this, 'get_groupblog_theme' ], 20, 1 );
 
@@ -223,14 +223,17 @@ class CommentPress_Multisite_Buddypress {
 
 			// Anything specifically for WordPress Admin.
 
+			// Add our metaboxes to the Network Settings screen.
+			add_filter( 'commentpress/multisite/settings/network/metaboxes/after', [ $this, 'network_admin_metaboxes' ] );
+
 			// Add options to network settings form.
-			add_filter( 'cpmu_network_options_form', [ $this, 'network_admin_form' ], 20 );
+			//add_filter( 'cpmu_network_options_form', [ $this, 'network_admin_form' ], 20 );
 
 			// Add options to reset array.
 			add_filter( 'cpmu_db_bp_options_get_defaults', [ $this, 'get_default_settings' ], 20, 1 );
 
-			// Hook into Network BuddyPress form update.
-			add_action( 'cpmu_db_options_update', [ $this, 'buddypress_admin_update' ], 20 );
+			// Hook into Network Settings form update.
+			add_action( 'commentpress/multisite/settings/network/form_submitted/pre', [ $this, 'network_admin_update' ], 20 );
 
 		} else {
 
@@ -575,7 +578,7 @@ class CommentPress_Multisite_Buddypress {
 		$is_groupsite = false;
 		$is_working_paper = false;
 
-		// Get groupblog status.
+		// Get GroupBlog status.
 		$is_groupblog = $this->is_commentpress_groupblog();
 
 		// If on a CommentPress Core-enabled groupblog.
@@ -862,7 +865,7 @@ class CommentPress_Multisite_Buddypress {
 	 *
 	 * Adapted from code by Luiz Armesto.
 	 *
-	 * Since the updates to BP Groupblog, a second argument is passed to this
+	 * Since the updates to BP GroupBlog, a second argument is passed to this
 	 * method which, if present, means that we don't need to check for an
 	 * existing activity item. This code needs to be streamlined in the light
 	 * of the changes.
@@ -1061,7 +1064,7 @@ class CommentPress_Multisite_Buddypress {
 	 * This is needed for BuddyPress 2.2+. Older versions of BuddyPress continue
 	 * to use the {@link bp_groupblog_set_group_to_post_activity()} function.
 	 *
-	 * This is copied from BP Groupblog and amended to suit.
+	 * This is copied from BP GroupBlog and amended to suit.
 	 *
 	 * @see bp_groupblog_catch_transition_post_type_status()
 	 *
@@ -1687,7 +1690,7 @@ class CommentPress_Multisite_Buddypress {
 	 * Check if a non-public group is being accessed by a user who is not a
 	 * member of the group.
 	 *
-	 * Adapted from code in mahype's fork of BuddyPress Groupblog plugin, but not
+	 * Adapted from code in mahype's fork of BuddyPress GroupBlog plugin, but not
 	 * accepted because there may be cases where private groups have public
 	 * groupblogs. Ours is not such a case.
 	 *
@@ -1712,7 +1715,7 @@ class CommentPress_Multisite_Buddypress {
 		// If is not the main blog but we do have a blog ID.
 		if ( ! is_main_site() && isset( $blog_id ) && is_numeric( $blog_id ) ) {
 
-			// Do we have groupblog active?
+			// Do we have GroupBlog active?
 			if ( function_exists( 'get_groupblog_group_id' ) ) {
 
 				// Get group ID for this blog.
@@ -1727,7 +1730,7 @@ class CommentPress_Multisite_Buddypress {
 					// If group is not public.
 					if ( $group->status != 'public' ) {
 
-						// Is the groupblog CommentPress Core enabled?
+						// Is the GroupBlog CommentPress Core enabled?
 						if ( $this->group_has_commentpress_groupblog( $group->id ) ) {
 
 							// Is the current user a member of the blog?
@@ -1912,7 +1915,7 @@ class CommentPress_Multisite_Buddypress {
 	}
 
 	/**
-	 * Hook into the groupblog create screen.
+	 * Hook into the GroupBlog create screen.
 	 *
 	 * @since 3.3
 	 */
@@ -1928,7 +1931,7 @@ class CommentPress_Multisite_Buddypress {
 
 		} else {
 
-			// Creating a new group - no groupblog exists yet
+			// Creating a new group - no GroupBlog exists yet
 			// NOTE: need to check that our context is right.
 
 			// Get force option.
@@ -2417,6 +2420,48 @@ class CommentPress_Multisite_Buddypress {
 
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Add our metaboxes to the Network Settings screen.
+	 *
+	 * @since 4.0
+	 *
+	 * @param string $screen_id The Network Settings Screen ID.
+	 */
+	public function network_admin_metaboxes( $screen_id ) {
+
+		// Create "BuddyPress & GroupBlog Settings" metabox.
+		add_meta_box(
+			'commentpress_buddypress',
+			__( 'BuddyPress &amp; Group Blog Settings', 'commentpress-core' ),
+			[ $this, 'meta_box_buddypress_render' ], // Callback.
+			$screen_id, // Screen ID.
+			'normal', // Column: options are 'normal' and 'side'.
+			'core' // Vertical placement: options are 'core', 'high', 'low'.
+		);
+
+	}
+
+	/**
+	 * Renders the "BuddyPress & GroupBlog Settings" metabox.
+	 *
+	 * @since 4.0
+	 */
+	public function meta_box_buddypress_render() {
+
+		// Get settings.
+		$bp_force_commentpress = $this->ms_loader->db->option_get( 'cpmu_bp_force_commentpress' );
+		$bp_groupblog_privacy = $this->ms_loader->db->option_get( 'cpmu_bp_groupblog_privacy' );
+		$bp_require_comment_registration = $this->ms_loader->db->option_get( 'cpmu_bp_require_comment_registration' );
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-network-settings-buddypress.php';
+
+	}
+
+	// -------------------------------------------------------------------------
+
 	/**
 	 * Add our options to the network admin form.
 	 *
@@ -2428,9 +2473,9 @@ class CommentPress_Multisite_Buddypress {
 		$admin_page = '
 		<div id="cpmu_bp_admin_options">
 
-		<h3>' . __( 'BuddyPress &amp; Groupblog Settings', 'commentpress-core' ) . '</h3>
+		<h3>' . __( 'BuddyPress &amp; Group Blog Settings', 'commentpress-core' ) . '</h3>
 
-		<p>' . __( 'Configure how CommentPress interacts with BuddyPress and BuddyPress Groupblog.', 'commentpress-core' ) . '</p>
+		<p>' . __( 'Configure how CommentPress interacts with BuddyPress and BuddyPress Group Blog.', 'commentpress-core' ) . '</p>
 
 		<table class="form-table">
 
@@ -2440,19 +2485,19 @@ class CommentPress_Multisite_Buddypress {
 			</tr>
 
 			<tr valign="top">
-				<th scope="row"><label for="cpmu_bp_force_commentpress">' . __( 'Make all new Groupblogs CommentPress-enabled', 'commentpress-core' ) . '</label></th>
+				<th scope="row"><label for="cpmu_bp_force_commentpress">' . __( 'Make all new Group Blogs CommentPress-enabled', 'commentpress-core' ) . '</label></th>
 				<td><input id="cpmu_bp_force_commentpress" name="cpmu_bp_force_commentpress" value="1" type="checkbox"' . ( $this->ms_loader->db->option_get( 'cpmu_bp_force_commentpress' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
 			</tr>
 
 			' . $this->get_commentpress_themes() . '
 
 			<tr valign="top">
-				<th scope="row"><label for="cpmu_bp_groupblog_privacy">' . __( 'Private Groups must have Private Groupblogs', 'commentpress-core' ) . '</label></th>
+				<th scope="row"><label for="cpmu_bp_groupblog_privacy">' . __( 'Private Groups must have Private Group Blogs', 'commentpress-core' ) . '</label></th>
 				<td><input id="cpmu_bp_groupblog_privacy" name="cpmu_bp_groupblog_privacy" value="1" type="checkbox"' . ( $this->ms_loader->db->option_get( 'cpmu_bp_groupblog_privacy' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
 			</tr>
 
 			<tr valign="top">
-				<th scope="row"><label for="cpmu_bp_require_comment_registration">' . __( 'Require user login to post comments on Groupblogs', 'commentpress-core' ) . '</label></th>
+				<th scope="row"><label for="cpmu_bp_require_comment_registration">' . __( 'Require user login to post comments on Group Blogs', 'commentpress-core' ) . '</label></th>
 				<td><input id="cpmu_bp_require_comment_registration" name="cpmu_bp_require_comment_registration" value="1" type="checkbox"' . ( $this->ms_loader->db->option_get( 'cpmu_bp_require_comment_registration' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
 			</tr>
 
@@ -2497,7 +2542,7 @@ class CommentPress_Multisite_Buddypress {
 			// Loop.
 			foreach ( $themes as $theme ) {
 
-				// Is it a CommentPress Core Groupblog theme?
+				// Is it a CommentPress Core GroupBlog theme?
 				if (
 					in_array( 'commentpress', (array) $theme['Tags'] ) &&
 					in_array( 'groupblog', (array) $theme['Tags'] )
@@ -2526,7 +2571,7 @@ class CommentPress_Multisite_Buddypress {
 				$element = '
 
 				<tr valign="top">
-					<th scope="row"><label for="cpmu_bp_groupblog_theme">' . __( 'Select theme for CommentPress Groupblogs', 'commentpress-core' ) . '</label></th>
+					<th scope="row"><label for="cpmu_bp_groupblog_theme">' . __( 'Select theme for CommentPress Group Blogs', 'commentpress-core' ) . '</label></th>
 					<td><select id="cpmu_bp_groupblog_theme" name="cpmu_bp_groupblog_theme">
 						' . $opts . '
 						</select>
@@ -2545,7 +2590,7 @@ class CommentPress_Multisite_Buddypress {
 	}
 
 	/**
-	 * Get Groupblog theme as defined in Network BuddyPress admin.
+	 * Get GroupBlog theme as defined in Network Settings.
 	 *
 	 * @since 3.3
 	 *
@@ -2563,20 +2608,6 @@ class CommentPress_Multisite_Buddypress {
 	}
 
 	/**
-	 * Allow other plugins to hook into our multisite admin options.
-	 *
-	 * @since 3.3
-	 *
-	 * @return str Empty string, but plugins may send content back.
-	 */
-	public function additional_buddypress_options() {
-
-		// Return whatever plugins send back.
-		return apply_filters( 'cpmu_network_buddypress_options_form', '' );
-
-	}
-
-	/**
 	 * Get default BuddyPress-related settings.
 	 *
 	 * @since 3.3
@@ -2589,7 +2620,7 @@ class CommentPress_Multisite_Buddypress {
 		// Use stylesheet as theme data.
 		$theme_data = $this->groupblog_theme;
 
-		// Define BuddyPress and BuddyPress Groupblog defaults.
+		// Define BuddyPress and BuddyPress GroupBlog defaults.
 		$defaults = [
 			'cpmu_bp_force_commentpress' => $this->force_commentpress,
 			'cpmu_bp_groupblog_privacy' => $this->groupblog_privacy,
@@ -2603,11 +2634,12 @@ class CommentPress_Multisite_Buddypress {
 	}
 
 	/**
-	 * Hook into Network BuddyPress form update.
+	 * Hook into Network Settings form update.
 	 *
 	 * @since 3.3
+	 * @since 4.0 Renamed.
 	 */
-	public function buddypress_admin_update() {
+	public function network_admin_update() {
 
 		// Init.
 		$cpmu_bp_force_commentpress = '0';
@@ -2621,11 +2653,11 @@ class CommentPress_Multisite_Buddypress {
 		$cpmu_bp_force_commentpress = esc_sql( $cpmu_bp_force_commentpress );
 		$this->ms_loader->db->option_set( 'cpmu_bp_force_commentpress', ( $cpmu_bp_force_commentpress ? 1 : 0 ) );
 
-		// Groupblog privacy synced to group privacy.
+		// GroupBlog privacy synced to group privacy.
 		$cpmu_bp_groupblog_privacy = esc_sql( $cpmu_bp_groupblog_privacy );
 		$this->ms_loader->db->option_set( 'cpmu_bp_groupblog_privacy', ( $cpmu_bp_groupblog_privacy ? 1 : 0 ) );
 
-		// Default groupblog theme.
+		// Default GroupBlog theme.
 		$cpmu_bp_groupblog_theme = esc_sql( $cpmu_bp_groupblog_theme );
 		$this->ms_loader->db->option_set( 'cpmu_bp_groupblog_theme', $cpmu_bp_groupblog_theme );
 

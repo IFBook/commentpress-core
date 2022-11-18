@@ -1,13 +1,13 @@
 <?php
 /**
- * Admin Settings page "Table of Contents" metabox template.
+ * Site Settings page "Table of Contents" metabox template.
  *
- * Handles markup for the Admin Settings page "Table of Contents" metabox.
+ * Handles markup for the Site Settings page "Table of Contents" metabox.
  *
  * @package CommentPress_Core
  */
 
-?><!-- commentpress-core/assets/templates/wordpress/metaboxes/metabox-admin-settings-toc.php -->
+?><!-- commentpress-core/assets/templates/wordpress/metaboxes/metabox-site-settings-toc.php -->
 <p><?php _e( 'Choose how you want your Table of Contents to appear and function.<br />
 <strong style="color: red;">NOTE!</strong> When Chapters are Pages, the TOC will always show Sub-Pages, since collapsing the TOC makes no sense in that situation.', 'commentpress-core' ); ?></p>
 

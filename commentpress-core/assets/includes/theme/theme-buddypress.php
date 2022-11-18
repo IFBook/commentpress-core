@@ -106,7 +106,7 @@ add_filter( 'pre_get_posts', 'commentpress_amend_search_query' );
 if ( ! function_exists( 'commentpress_groupblog_classes' ) ) :
 
 	/**
-	 * Add classes to #content in BuddyPress, so that we can distinguish different groupblog types.
+	 * Add classes to #content in BuddyPress, so that we can distinguish different GroupBlog types.
 	 *
 	 * @since 3.3
 	 *
@@ -148,7 +148,7 @@ endif;
 if ( ! function_exists( 'commentpress_bp_activity_css_class' ) ) :
 
 	/**
-	 * Update BuddyPress activity CSS class with groupblog type.
+	 * Update BuddyPress activity CSS class with GroupBlog type.
 	 *
 	 * @since 3.3
 	 *
@@ -189,7 +189,7 @@ endif;
 if ( ! function_exists( 'commentpress_bp_blog_css_class' ) ) :
 
 	/**
-	 * Update BuddyPress Sites Directory blog item CSS class with groupblog type.
+	 * Update BuddyPress Sites Directory blog item CSS class with GroupBlog type.
 	 *
 	 * @since 3.3
 	 *
@@ -233,7 +233,7 @@ endif;
 if ( ! function_exists( 'commentpress_bp_group_css_class' ) ) :
 
 	/**
-	 * Update BuddyPress Groups Directory group item CSS class with groupblog type.
+	 * Update BuddyPress Groups Directory group item CSS class with GroupBlog type.
 	 *
 	 * @since 3.3
 	 *

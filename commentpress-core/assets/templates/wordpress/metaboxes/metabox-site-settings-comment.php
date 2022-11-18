@@ -1,13 +1,13 @@
 <?php
 /**
- * Admin Settings page "Commenting Options" metabox template.
+ * Site Settings page "Commenting Options" metabox template.
  *
- * Handles markup for the Admin Settings page "Commenting Options" metabox.
+ * Handles markup for the Site Settings page "Commenting Options" metabox.
  *
  * @package CommentPress_Core
  */
 
-?><!-- commentpress-core/assets/templates/wordpress/metaboxes/metabox-admin-settings-comment.php -->
+?><!-- commentpress-core/assets/templates/wordpress/metaboxes/metabox-site-settings-comment.php -->
 <table class="form-table">
 
 	<tr valign="top">

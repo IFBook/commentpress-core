@@ -1,43 +1,24 @@
 <?php
 /**
- * Site Settings template.
+ * Multisite Network Settings template.
  *
- * Handles markup for the Site Settings page.
+ * Handles markup for the Multisite Network Settings page.
  *
  * @package CommentPress_Core
  */
 
-?><!-- commentpress-core/assets/templates/wordpress/pages/page-site-settings.php -->
+?><!-- commentpress-multisite/assets/templates/wordpress/pages/page-network-settings.php -->
 <div class="wrap">
 
-	<h1><?php esc_html_e( 'CommentPress Core', 'commentpress-core' ); ?></h1>
+	<h1><?php esc_html_e( 'CommentPress Network', 'commentpress-core' ); ?></h1>
 
-	<?php if ( $show_tabs ) : ?>
-		<h2 class="nav-tab-wrapper">
-			<a href="<?php echo $urls['settings']; ?>" class="nav-tab nav-tab-active"><?php esc_html_e( 'Settings', 'commentpress-core' ); ?></a>
-			<?php
-
-			/**
-			 * Allow others to add tabs.
-			 *
-			 * @since 4.0
-			 *
-			 * @param array $urls The array of subpage URLs.
-			 * @param string The key of the active tab in the subpage URLs array.
-			 */
-			do_action( 'commentpress/core/settings/site/page/nav_tabs', $urls, 'settings' );
-
-			?>
-		</h2>
-	<?php else : ?>
-		<hr />
-	<?php endif; ?>
+	<hr />
 
 	<form method="post" id="commentpress_core_settings_form" action="<?php echo $this->page_settings_submit_url_get(); ?>">
 
 		<?php wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ); ?>
 		<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
-		<?php wp_nonce_field( 'commentpress_core_settings_action', 'commentpress_core_settings_nonce' ); ?>
+		<?php wp_nonce_field( 'cpmu_admin_action', 'cpmu_nonce' ); ?>
 
 		<div id="poststuff">
 

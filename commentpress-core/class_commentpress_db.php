@@ -1044,7 +1044,7 @@ class CommentPress_Core_Database {
 		// Did we ask to reset?
 		if ( $cp_reset == '1' ) {
 			$this->options_reset();
-			return ;
+			return;
 		}
 
 		// Did we ask to auto-create special pages?
@@ -2770,7 +2770,7 @@ class CommentPress_Core_Database {
 
 		}
 
-		// If on a public groupblog and user isn't logged in.
+		// If on a public GroupBlog and user isn't logged in.
 		if ( $this->core->is_groupblog() && ! is_user_logged_in() ) {
 
 			// Don't add rich text editor, because only members can comment.

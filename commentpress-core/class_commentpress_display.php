@@ -104,7 +104,7 @@ class CommentPress_Core_Display {
 		 * Get groupblog-set theme, if we have one.
 		 *
 		 * Allow filtering here because plugins may want to override a correctly-set
-		 * CommentPress Core theme for a particular groupblog (or type of groupblog).
+		 * CommentPress Core theme for a particular GroupBlog (or type of GroupBlog).
 		 *
 		 * If that is the case, then the filter callback must return boolean 'false'
 		 * to prevent the theme being applied and also implement a filter on
@@ -120,7 +120,7 @@ class CommentPress_Core_Display {
 		// Did we get a CommentPress Core one?
 		if ( $theme !== false ) {
 
-			// We're in a groupblog context: BuddyPress Groupblog will already have set
+			// We're in a GroupBlog context: BuddyPress GroupBlog will already have set
 			// the theme because we're adding our wpmu_new_blog action after it.
 
 			// --<

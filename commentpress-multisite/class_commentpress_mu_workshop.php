@@ -1,8 +1,8 @@
 <?php
 /**
- * CommentPress Core BuddyPress Groupblog class.
+ * CommentPress Core BuddyPress GroupBlog class.
  *
- * Overrides the name of Groupblogs from "Blog" (or "Document") to "Workshop".
+ * Overrides the name of Group Blogs from "Blog" (or "Document") to "Workshop".
  *
  * @package CommentPress_Core
  */
@@ -11,13 +11,13 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * CommentPress Core BuddyPress Groupblog Class.
+ * CommentPress Core BuddyPress GroupBlog Class.
  *
- * This class overrides the name of Groupblogs from "Blog" (or "Document") to "Workshop".
+ * This class overrides the name of Group Blogs from "Blog" (or "Document") to "Workshop".
  *
  * @since 3.3
  */
-class CommentPress_Multisite_Buddypress_Groupblog {
+class CommentPress_Multisite_BuddyPress_GroupBlog {
 
 	/**
 	 * Multisite plugin object.
@@ -33,7 +33,7 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $groupblog_nomenclature Flag whether or not to rename a groupblog - default to "off".
+	 * @var object $groupblog_nomenclature Flag whether or not to rename a GroupBlog - default to "off".
 	 */
 	public $groupblog_nomenclature = 0;
 
@@ -155,19 +155,14 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 	 */
 	public function register_hooks() {
 
-		// Is this the back end?
-		if ( is_admin() ) {
+		// Add element to Network Settings form BuddyPress section.
+		add_filter( 'cpmu_network_buddypress_options_form', [ $this, 'buddypress_admin_form' ] );
 
-			// Add element to Network BuddyPress form.
-			add_filter( 'cpmu_network_buddypress_options_form', [ $this, 'buddypress_admin_form' ] );
+		// Hook into Network Settings form update.
+		add_action( 'commentpress/multisite/settings/network/form_submitted/pre', [ $this, 'network_admin_update' ], 30 );
 
-			// Hook into Network BuddyPress form update.
-			add_action( 'cpmu_db_options_update', [ $this, 'buddypress_admin_update' ], 21 );
-
-			// Hook into Network BuddyPress options reset.
-			add_filter( 'cpmu_buddypress_options_get_defaults', [ $this, 'get_default_settings' ], 10, 1 );
-
-		}
+		// Hook into Network Settings BuddyPress options reset.
+		add_filter( 'cpmu_buddypress_options_get_defaults', [ $this, 'get_default_settings' ], 10, 1 );
 
 	}
 
@@ -215,7 +210,7 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 	 *
 	 * @since 3.3
 	 *
-	 * @return str The name in the groupblog comments label.
+	 * @return str The name in the GroupBlog comments label.
 	 */
 	public function groupblog_comment_name() {
 
@@ -232,7 +227,7 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 	 *
 	 * @since 3.3
 	 *
-	 * @return str The plural name in the groupblog posts label.
+	 * @return str The plural name in the GroupBlog posts label.
 	 */
 	public function groupblog_post_name() {
 
@@ -249,7 +244,7 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 	 *
 	 * @since 3.3
 	 *
-	 * @return str The singular name of the groupblog post.
+	 * @return str The singular name of the GroupBlog post.
 	 */
 	public function activity_post_name() {
 
@@ -266,8 +261,8 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $name The existing singular name of the groupblog post.
-	 * @return str $name The modified singular name of the groupblog post.
+	 * @param str $name The existing singular name of the GroupBlog post.
+	 * @return str $name The modified singular name of the GroupBlog post.
 	 */
 	public function filter_blog_name( $name ) {
 
@@ -439,8 +434,8 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $title The title of the "Groupblog Home Page" heading.
-	 * @return str $title The modified title of the "Groupblog Home Page" heading.
+	 * @param str $title The title of the "Group Blog Home Page" heading.
+	 * @return str $title The modified title of the "Group Blog Home Page" heading.
 	 */
 	public function filter_nav_title_page_title( $title ) {
 
@@ -538,11 +533,12 @@ class CommentPress_Multisite_Buddypress_Groupblog {
 	}
 
 	/**
-	 * Hook into Network BuddyPress form update.
+	 * Hook into Network Settings form update.
 	 *
 	 * @since 3.3
+	 * @since 4.0 Renamed.
 	 */
-	public function buddypress_admin_update() {
+	public function network_admin_update() {
 
 		// Init.
 		$cpmu_bp_groupblog_nomenclature = 0;

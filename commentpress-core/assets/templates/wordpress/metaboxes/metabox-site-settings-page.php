@@ -1,13 +1,13 @@
 <?php
 /**
- * Admin Settings page "Page Display Options" metabox template.
+ * Site Settings page "Page Display Options" metabox template.
  *
- * Handles markup for the Admin Settings page "Page Display Options" metabox.
+ * Handles markup for the Site Settings page "Page Display Options" metabox.
  *
  * @package CommentPress_Core
  */
 
-?><!-- commentpress-core/assets/templates/wordpress/metaboxes/metabox-admin-settings-page.php -->
+?><!-- commentpress-core/assets/templates/wordpress/metaboxes/metabox-site-settings-page.php -->
 <table class="form-table">
 
 	<tr valign="top">

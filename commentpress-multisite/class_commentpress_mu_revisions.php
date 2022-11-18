@@ -1,6 +1,6 @@
 <?php
 /**
- * CommentPress Core Multisite Revisions class.
+ * CommentPress Multisite Revisions class.
  *
  * Overrides the way that new post revisions are named.
  *
@@ -11,7 +11,7 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * CommentPress Core Multisite Revisions Class.
+ * CommentPress Multisite Revisions Class.
  *
  * This class overrides the way that new post revisions are named.
  *

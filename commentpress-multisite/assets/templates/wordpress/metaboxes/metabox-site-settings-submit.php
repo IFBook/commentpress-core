@@ -1,13 +1,13 @@
 <?php
 /**
- * Admin Settings page Submit metabox template.
+ * Multisite Site Settings page "Submit" metabox template.
  *
- * Handles markup for the Admin Settings page Submit metabox.
+ * Handles markup for the Multisite Site Settings page "Submit" metabox.
  *
  * @package CommentPress_Core
  */
 
-?><!-- commentpress-core/assets/templates/wordpress/metaboxes/metabox-admin-settings-submit.php -->
+?><!-- commentpress-multisite/assets/templates/wordpress/metaboxes/metabox-site-settings-submit.php -->
 <div class="submitbox">
 	<div id="minor-publishing">
 		<div id="misc-publishing-actions">

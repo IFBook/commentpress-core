@@ -38,13 +38,13 @@ class CommentPress_Core {
 	public $display;
 
 	/**
-	 * Admin object.
+	 * Site Settings object.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $db The admin object.
+	 * @var object $site_settings The Site Settings object.
 	 */
-	public $admin;
+	public $site_settings;
 
 	/**
 	 * Navigation handling object.
@@ -101,11 +101,11 @@ class CommentPress_Core {
 	public $buddypress = false;
 
 	/**
-	 * BuddyPress Groupblog flag.
+	 * BuddyPress GroupBlog flag.
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var bool $bp_groupblog True if BuddyPress Groupblog present, false otherwise.
+	 * @var bool $bp_groupblog True if BuddyPress GroupBlog present, false otherwise.
 	 */
 	public $bp_groupblog = false;
 
@@ -174,9 +174,9 @@ class CommentPress_Core {
 	public function include_files() {
 
 		// Include class files.
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_admin.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_db.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_display.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_settings_site.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_nav.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_parser.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/class_commentpress_formatter.php';
@@ -202,7 +202,7 @@ class CommentPress_Core {
 		// Initialise objects.
 		$this->db = new CommentPress_Core_Database( $this );
 		$this->display = new CommentPress_Core_Display( $this );
-		$this->admin = new CommentPress_Core_Admin( $this );
+		$this->admin = new CommentPress_Core_Settings_Site( $this );
 		$this->nav = new CommentPress_Core_Navigator( $this );
 		$this->parser = new CommentPress_Core_Parser( $this );
 		$this->formatter = new CommentPress_Core_Formatter( $this );
@@ -405,11 +405,11 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Is this blog a BuddyPress Groupblog?
+	 * Is this blog a BuddyPress GroupBlog?
 	 *
 	 * @since 3.4
 	 *
-	 * @return bool $bp_groupblog True when current blog is a BuddyPress Groupblog, false otherwise.
+	 * @return bool $bp_groupblog True when current blog is a BuddyPress GroupBlog, false otherwise.
 	 */
 	public function is_groupblog() {
 
@@ -419,7 +419,7 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Is a BuddyPress Groupblog theme set?
+	 * Is a BuddyPress GroupBlog theme set?
 	 *
 	 * @since 3.4
 	 *
@@ -435,13 +435,13 @@ class CommentPress_Core {
 			return false;
 		}
 
-		// Get groupblog options.
+		// Get GroupBlog options.
 		$options = get_site_option( 'bp_groupblog_blog_defaults_options' );
 
 		// Get theme setting.
 		if ( ! empty( $options['theme'] ) ) {
 
-			// We have a groupblog theme set.
+			// We have a GroupBlog theme set.
 
 			// Split the options.
 			list( $stylesheet, $template ) = explode( '|', $options['theme'] );

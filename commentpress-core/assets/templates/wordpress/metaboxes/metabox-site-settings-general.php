@@ -1,23 +1,23 @@
 <?php
 /**
- * Admin Settings page "General Settings" metabox template.
+ * Site Settings page "General Settings" metabox template.
  *
- * Handles markup for the Admin Settings page "General Settings" metabox.
+ * Handles markup for the Site Settings page "General Settings" metabox.
  *
  * @package CommentPress_Core
  */
 
-?><!-- commentpress-core/assets/templates/wordpress/metaboxes/metabox-admin-settings-general.php -->
+?><!-- commentpress-core/assets/templates/wordpress/metaboxes/metabox-site-settings-general.php -->
 <table class="form-table">
 
 	<?php
 
 	/**
-	 * Fire at the top of the "General Settings" metabox.
+	 * Fires at the top of the "General Settings" metabox.
 	 *
 	 * @since 4.0
 	 */
-	do_action( 'commentpress/core/admin/settings/general/before' );
+	do_action( 'commentpress/core/settings/site/metabox/general/before' );
 
 	?>
 
@@ -74,11 +74,11 @@
 	<?php
 
 	/**
-	 * Fire at the bottom of the "General Settings" metabox.
+	 * Fires at the bottom of the "General Settings" metabox.
 	 *
 	 * @since 4.0
 	 */
-	do_action( 'commentpress/core/admin/settings/general/after' );
+	do_action( 'commentpress/core/settings/site/metabox/general/after' );
 
 	?>
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * CommentPress Core Multisite Database class.
+ * CommentPress Multisite Database class.
  *
  * Handles the majority of database operations in WordPress Multisite contexts.
  *
@@ -11,7 +11,7 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * CommentPress Core Multisite Database Class.
+ * CommentPress Multisite Database Class.
  *
  * This class is a wrapper for the majority of database operations.
  *
@@ -69,7 +69,7 @@ class CommentPress_Multisite_Database {
 		if ( count( $this->cpmu_options ) == 0 ) {
 			// Init upgrade if not in backend.
 			if ( ! is_admin() ) {
-				die( 'CommentPress Core Multisite upgrade required.' );
+				die( 'CommentPress Multisite upgrade required.' );
 			}
 		}
 		*/
@@ -398,7 +398,7 @@ class CommentPress_Multisite_Database {
 		// Store options array.
 		add_site_option( 'cpmu_options', $this->cpmu_options );
 
-		// Store CommentPress Core Multisite version.
+		// Store CommentPress Multisite version.
 		add_site_option( 'cpmu_version', COMMENTPRESS_MU_PLUGIN_VERSION );
 
 	}
@@ -410,89 +410,11 @@ class CommentPress_Multisite_Database {
 	 */
 	public function options_delete() {
 
-		// Delete CommentPress Core Multisite version.
+		// Delete CommentPress Multisite version.
 		delete_site_option( 'cpmu_version' );
 
-		// Delete CommentPress Core Multisite options.
+		// Delete CommentPress Multisite options.
 		delete_site_option( 'cpmu_options' );
-
-	}
-
-	/**
-	 * Save the settings set by the administrator.
-	 *
-	 * @since 3.3
-	 *
-	 * @return boolean True on success, false on failure.
-	 */
-	public function options_update() {
-
-		// Init result.
-		$result = false;
-
-		// Bail if our form was not submitted.
-		if ( ! isset( $_POST['cpmu_submit'] ) ) {
-			return $result;
-		}
-
-		// Check that we trust the source of the data.
-		check_admin_referer( 'cpmu_admin_action', 'cpmu_nonce' );
-
-		// Init vars.
-		$cpmu_upgrade = '0';
-		$cpmu_reset = '0';
-		$cpmu_bp_reset = '0';
-
-		// Get variables.
-		extract( $_POST );
-
-		// Did we ask to upgrade CommentPress Core Multisite?
-		if ( $cpmu_upgrade == '1' ) {
-
-			// Do upgrade.
-			$this->upgrade_options();
-
-			// --<
-			return true;
-
-		}
-
-		// Did we ask to reset Multisite?
-		if ( $cpmu_reset == '1' ) {
-
-			// Reset Multisite options.
-			$this->options_reset( 'multisite' );
-
-		}
-
-		// Did we ask to reset BuddyPress?
-		if ( $cpmu_bp_reset == '1' ) {
-
-			// Reset BuddyPress options.
-			$this->options_reset( 'buddypress' );
-
-		}
-
-		// Bail if we asked to reset either of the above.
-		if ( $cpmu_reset == '1' || $cpmu_bp_reset == '1' ) {
-			return true;
-		}
-
-		/**
-		 * Allow other plugins to hook in here.
-		 *
-		 * @since 3.3
-		 */
-		do_action( 'cpmu_db_options_update' );
-
-		// Save.
-		$this->options_save();
-
-		// Set flag.
-		$result = true;
-
-		// --<
-		return $result;
 
 	}
 
@@ -528,6 +450,10 @@ class CommentPress_Multisite_Database {
 			/**
 			 * Allow plugins to add their own options.
 			 *
+			 * Used internally by:
+			 *
+			 * * CommentPress_Multisite_WordPress::get_default_settings() (Priority: 20)
+			 *
 			 * @since 3.3
 			 */
 			$options = apply_filters( 'cpmu_db_options_get_defaults', $options );
@@ -539,6 +465,10 @@ class CommentPress_Multisite_Database {
 
 			/**
 			 * Allow plugins to add their own options.
+			 *
+			 * Used internally by:
+			 *
+			 * * CommentPress_Multisite_BuddyPress::get_default_settings() (Priority: 20)
 			 *
 			 * @since 3.3
 			 */

@@ -1,8 +1,8 @@
 <?php
 /**
- * Multisite Admin Site Settings template.
+ * Multisite Site Settings template.
  *
- * Handles markup for the Multisite Admin Site Settings page.
+ * Handles markup for the Multisite Site Settings page.
  *
  * @package CommentPress_Core
  */

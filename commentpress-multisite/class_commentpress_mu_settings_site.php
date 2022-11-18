@@ -1,8 +1,8 @@
 <?php
 /**
- * CommentPress Core Multisite Admin class.
+ * CommentPress Multisite Site Settings class.
  *
- * Handles admin settings page functionality in CommentPress Multisite.
+ * Handles Site Settings page functionality in CommentPress Multisite.
  *
  * @package CommentPress_Core
  */
@@ -11,13 +11,13 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * CommentPress Core Multisite Admin Class.
+ * CommentPress Multisite Site Settings Class.
  *
- * This class handles admin settings page functionality in CommentPress Multisite.
+ * This class handles Site Settings page functionality in CommentPress Multisite.
  *
  * @since 3.3
  */
-class CommentPress_Multisite_Admin {
+class CommentPress_Multisite_Settings_Site {
 
 	/**
 	 * Multisite plugin object.
@@ -109,7 +109,7 @@ class CommentPress_Multisite_Admin {
 		if ( $this->ms_loader->db->is_commentpress() ) {
 
 			// Modify CommentPress Core settings page.
-			add_action( 'commentpress/core/admin/settings/general/before', [ $this, 'form_disable_element' ] );
+			add_action( 'commentpress/core/settings/site/metabox/general/before', [ $this, 'form_disable_element' ] );
 
 			// Hook into CommentPress Core settings page result.
 			add_action( 'commentpress/core/db/options_update/before', [ $this, 'form_disable_core' ] );
@@ -136,7 +136,7 @@ class CommentPress_Multisite_Admin {
 	public function admin_menu() {
 
 		// Check user permissions.
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! $this->page_capability() ) {
 			return;
 		}
 
@@ -194,6 +194,34 @@ class CommentPress_Multisite_Admin {
 	// -------------------------------------------------------------------------
 
 	/**
+	 * Checks the access capability for this page.
+	 *
+	 * @since 4.0
+	 *
+	 * @return bool True if the current User has the capability, false otherwise.
+	 */
+	public function page_capability() {
+
+		/**
+		 * Set access capability but allow overrides.
+		 *
+		 * @since 4.0
+		 *
+		 * @param string The default capability for access to Settings Page.
+		 */
+		$capability = apply_filters( 'commentpress/multisite/settings/site/page/cap', 'manage_options' );
+
+		// Check user permissions.
+		if ( ! current_user_can( $capability ) ) {
+			return false;
+		}
+
+		// --<
+		return true;
+
+	}
+
+	/**
 	 * Renders the Site Settings page when core is not enabled.
 	 *
 	 * @since 4.0
@@ -201,7 +229,7 @@ class CommentPress_Multisite_Admin {
 	public function page_settings() {
 
 		// Check user permissions.
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! $this->page_capability() ) {
 			return;
 		}
 
@@ -210,11 +238,6 @@ class CommentPress_Multisite_Admin {
 
 		/**
 		 * Allow meta boxes to be added to this screen.
-		 *
-		 * The Screen IDs to use are:
-		 *
-		 * * "settings_page_commentpress_admin"
-		 * * "admin_page_commentpress_settings"
 		 *
 		 * @since 4.0
 		 *
@@ -249,7 +272,7 @@ class CommentPress_Multisite_Admin {
 		 *
 		 * @param array $url The default Settings Page URL.
 		 */
-		$url = apply_filters( 'commentpress/multisite/admin/page/settings/url', $url );
+		$url = apply_filters( 'commentpress/multisite/settings/site/page/settings/url', $url );
 
 		// --<
 		return $url;
@@ -277,7 +300,7 @@ class CommentPress_Multisite_Admin {
 		 *
 		 * @param array $submit_url The Settings Page submit URL.
 		 */
-		$submit_url = apply_filters( 'commentpress/multisite/admin/page/settings/submit_url', $submit_url );
+		$submit_url = apply_filters( 'commentpress/multisite/settings/site/page/settings/submit_url', $submit_url );
 
 		// --<
 		return $submit_url;
@@ -300,17 +323,8 @@ class CommentPress_Multisite_Admin {
 			return;
 		}
 
-		/**
-		 * Set access capability but allow overrides.
-		 *
-		 * @since 4.0
-		 *
-		 * @param string The default capability for access to Settings Page.
-		 */
-		$capability = apply_filters( 'commentpress/multisite/admin/page/settings/cap', 'manage_options' );
-
 		// Check user permissions.
-		if ( ! current_user_can( $capability ) ) {
+		if ( ! $this->page_capability() ) {
 			return;
 		}
 
@@ -337,26 +351,26 @@ class CommentPress_Multisite_Admin {
 	}
 
 	/**
-	 * Render "General Settings" meta box on Admin screen.
+	 * Renders the "General Settings" metabox.
 	 *
 	 * @since 4.0
 	 */
 	public function meta_box_general_render() {
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-admin-settings-general.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-site-settings-general.php';
 
 	}
 
 	/**
-	 * Render Save Settings meta box on Admin screen.
+	 * Render Save Settings metabox.
 	 *
 	 * @since 4.0
 	 */
 	public function meta_box_submit_render() {
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-admin-settings-submit.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-site-settings-submit.php';
 
 	}
 
@@ -377,14 +391,13 @@ class CommentPress_Multisite_Admin {
 		// Check that we trust the source of the data.
 		check_admin_referer( 'commentpress_core_settings_action', 'commentpress_core_settings_nonce' );
 
-		// Init var.
-		$cp_activate_commentpress = 0;
-
-		// Get vars.
-		extract( $_POST );
+		// Get the posted variable.
+		$cp_activate_commentpress = isset( $_POST['cp_activate_commentpress'] ) ?
+			sanitize_text_field( wp_unslash( $_POST['cp_activate_commentpress'] ) ) :
+			'0';
 
 		// Did we ask to activate CommentPress Core?
-		if ( $cp_activate_commentpress == '1' ) {
+		if ( $cp_activate_commentpress === '1' ) {
 
 			// Install core, but not from wpmu_new_blog.
 			$this->ms_loader->db->install_commentpress( 'admin_page' );
@@ -415,11 +428,10 @@ class CommentPress_Multisite_Admin {
 		// Check that we trust the source of the data.
 		check_admin_referer( 'commentpress_core_settings_action', 'commentpress_core_settings_nonce' );
 
-		// Init var.
-		$cp_deactivate_commentpress = 0;
-
-		// Get vars.
-		extract( $_POST );
+		// Get the posted variable.
+		$cp_deactivate_commentpress = isset( $_POST['cp_deactivate_commentpress'] ) ?
+			sanitize_text_field( wp_unslash( $_POST['cp_deactivate_commentpress'] ) ) :
+			'0';
 
 		// Did we ask to deactivate CommentPress Core?
 		if ( $cp_deactivate_commentpress == '1' ) {
@@ -446,7 +458,7 @@ class CommentPress_Multisite_Admin {
 	 */
 	public function form_disable_element() {
 
-		// Render form element
+		// Render form element.
 		?>
 		<tr valign="top">
 			<th scope="row"><label for="cp_deactivate_commentpress"><?php esc_html_e( 'Disable CommentPress Core on this site', 'commentpress-core' ); ?></label></th>

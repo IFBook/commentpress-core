@@ -139,7 +139,7 @@ if ( ! function_exists( 'commentpress_customize_site_image' ) ) :
 	 */
 	function commentpress_customize_site_image( $wp_customize ) {
 
-		// Kick out if BuddyPress Groupblog.
+		// Kick out if BuddyPress GroupBlog.
 		global $commentpress_core;
 		if ( $commentpress_core->is_groupblog() ) {
 			return;
@@ -204,7 +204,7 @@ if ( ! function_exists( 'commentpress_customize_site_logo' ) ) :
 	 */
 	function commentpress_customize_site_logo( $wp_customize ) {
 
-		// Kick out if BuddyPress Groupblog.
+		// Kick out if BuddyPress GroupBlog.
 		global $commentpress_core;
 		if ( $commentpress_core->is_groupblog() ) {
 			return;
@@ -636,7 +636,7 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 			$classes[] = $page_type;
 		}
 
-		// -------------------- is groupblog --------------------
+		// -------------------- Is GroupBlog --------------------
 
 		// Set default type.
 		$is_groupblog = 'not-groupblog';
@@ -694,9 +694,9 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 			$classes[] = $blog_type;
 		}
 
-		// -------------------- group groupblog type --------------------
+		// -------------------- GroupBlog type --------------------
 
-		// When viewing a group, set default groupblog type.
+		// When viewing a group, set default GroupBlog type.
 		$group_groupblog_type = '';
 
 		// If we have the plugin enabled.
@@ -711,10 +711,10 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 				// Sanity check.
 				if ( $current_group instanceof BP_Groups_Group ) {
 
-					// Get groupblog type.
+					// Get GroupBlog type.
 					$groupblogtype = groups_get_groupmeta( $current_group->id, 'groupblogtype' );
 
-					// Set groupblog type if present.
+					// Set GroupBlog type if present.
 					if ( ! empty( $groupblogtype ) ) {
 						$group_groupblog_type = $groupblogtype;
 					}

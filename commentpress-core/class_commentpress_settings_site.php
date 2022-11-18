@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 4.0
  */
-class CommentPress_Core_Admin {
+class CommentPress_Core_Settings_Site {
 
 	/**
 	 * Plugin object.
@@ -127,8 +127,10 @@ class CommentPress_Core_Admin {
 	 */
 	public function register_hooks() {
 
+		/*
 		// Maybe show a warning if Settings need updating.
-		//add_action( 'admin_notices', [ $this, 'upgrade_warning' ] );
+		add_action( 'admin_notices', [ $this, 'upgrade_warning' ] );
+		*/
 
 		// Add our item to the admin menu.
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
@@ -149,7 +151,7 @@ class CommentPress_Core_Admin {
 	public function admin_menu() {
 
 		// Check user permissions.
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! $this->page_capability() ) {
 			return;
 		}
 
@@ -274,7 +276,7 @@ class CommentPress_Core_Admin {
 		 *
 		 * @param array $subpages The existing list of subpages.
 		 */
-		$subpages = apply_filters( 'commentpress/core/admin/settings/subpages', $subpages );
+		$subpages = apply_filters( 'commentpress/core/settings/site/page/subpages', $subpages );
 
 		// This tweaks the Settings subnav menu to show only one menu item.
 		if ( in_array( $plugin_page, $subpages ) ) {
@@ -335,6 +337,34 @@ class CommentPress_Core_Admin {
 	// -------------------------------------------------------------------------
 
 	/**
+	 * Checks the access capability for this page.
+	 *
+	 * @since 4.0
+	 *
+	 * @return bool True if the current User has the capability, false otherwise.
+	 */
+	public function page_capability() {
+
+		/**
+		 * Set access capability but allow overrides.
+		 *
+		 * @since 4.0
+		 *
+		 * @param string The default capability for access to Settings Page.
+		 */
+		$capability = apply_filters( 'commentpress/core/settings/site/page/cap', 'manage_options' );
+
+		// Check user permissions.
+		if ( ! current_user_can( $capability ) ) {
+			return false;
+		}
+
+		// --<
+		return true;
+
+	}
+
+	/**
 	 * Get Settings Page Tab URLs.
 	 *
 	 * @since 4.0
@@ -358,7 +388,7 @@ class CommentPress_Core_Admin {
 		 *
 		 * @param array $urls The existing list of URLs.
 		 */
-		$this->urls = apply_filters( 'commentpress/core/admin/settings/tab_urls', $this->urls );
+		$this->urls = apply_filters( 'commentpress/core/settings/site/page/tab_urls', $this->urls );
 
 		// --<
 		return $this->urls;
@@ -373,7 +403,7 @@ class CommentPress_Core_Admin {
 	public function page_settings() {
 
 		// Check user permissions.
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! $this->page_capability() ) {
 			return;
 		}
 
@@ -387,7 +417,7 @@ class CommentPress_Core_Admin {
 		 *
 		 * @param bool False by default - do not show tabs.
 		 */
-		$show_tabs = apply_filters( 'commentpress/core/admin/settings/show_tabs', false );
+		$show_tabs = apply_filters( 'commentpress/core/settings/site/page/show_tabs', false );
 
 		// Get current screen.
 		$screen = get_current_screen();
@@ -539,17 +569,8 @@ class CommentPress_Core_Admin {
 			return;
 		}
 
-		/**
-		 * Set access capability but allow overrides.
-		 *
-		 * @since 4.0
-		 *
-		 * @param string The default capability for access to Settings Page.
-		 */
-		$capability = apply_filters( 'commentpress/core/admin/page/settings/cap', 'manage_options' );
-
 		// Check user permissions.
-		if ( ! current_user_can( $capability ) ) {
+		if ( ! $this->page_capability() ) {
 			return;
 		}
 
@@ -616,7 +637,7 @@ class CommentPress_Core_Admin {
 	}
 
 	/**
-	 * Render "General Settings" meta box on Admin screen.
+	 * Renders the "General Settings" metabox.
 	 *
 	 * @since 4.0
 	 */
@@ -632,12 +653,12 @@ class CommentPress_Core_Admin {
 		$do_not_parse = $this->core->db->option_get( 'cp_do_not_parse', 'n' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-admin-settings-general.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-site-settings-general.php';
 
 	}
 
 	/**
-	 * Render "Table of Contents" meta box on Admin screen.
+	 * Renders the "Table of Contents" metabox.
 	 *
 	 * @since 4.0
 	 */
@@ -650,12 +671,12 @@ class CommentPress_Core_Admin {
 		$show_extended_toc = $this->core->db->option_get( 'cp_show_extended_toc' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-admin-settings-toc.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-site-settings-toc.php';
 
 	}
 
 	/**
-	 * Render "Page Display Options" meta box on Admin screen.
+	 * Renders the "Page Display Options" metabox.
 	 *
 	 * @since 4.0
 	 */
@@ -670,12 +691,12 @@ class CommentPress_Core_Admin {
 		$excerpt_length = $this->core->db->option_get( 'cp_excerpt_length' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-admin-settings-page.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-site-settings-page.php';
 
 	}
 
 	/**
-	 * Render "Commenting Options" meta box on Admin screen.
+	 * Renders the "Commenting Options" metabox.
 	 *
 	 * @since 4.0
 	 */
@@ -687,12 +708,12 @@ class CommentPress_Core_Admin {
 		$comments_live = $this->core->db->option_get( 'cp_para_comments_live' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-admin-settings-comment.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-site-settings-comment.php';
 
 	}
 
 	/**
-	 * Render "Theme Customisation" meta box on Admin screen.
+	 * Renders the "Theme Customisation" metabox.
 	 *
 	 * @since 4.0
 	 */
@@ -704,19 +725,19 @@ class CommentPress_Core_Admin {
 		$sidebar_default = $this->core->db->option_get( 'cp_sidebar_default', 'comments' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-admin-settings-theme.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-site-settings-theme.php';
 
 	}
 
 	/**
-	 * Render Save Settings meta box on Admin screen.
+	 * Render Save Settings metabox.
 	 *
 	 * @since 4.0
 	 */
 	public function meta_box_submit_render() {
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-admin-settings-submit.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-site-settings-submit.php';
 
 	}
 

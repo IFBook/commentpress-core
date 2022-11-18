@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 define( 'COMMENTPRESS_MU_PLUGIN_VERSION', '1.0' );
 
 /**
- * CommentPress Core Multisite Loader Class.
+ * CommentPress Multisite Loader Class.
  *
  * This class loads all Multisite compatibility.
  *
@@ -33,15 +33,6 @@ class CommentPress_Multisite_Loader {
 	public $db;
 
 	/**
-	 * Admin object.
-	 *
-	 * @since 4.0
-	 * @access public
-	 * @var object $db The admin object.
-	 */
-	public $admin;
-
-	/**
 	 * Multisite object.
 	 *
 	 * @since 3.3
@@ -49,6 +40,24 @@ class CommentPress_Multisite_Loader {
 	 * @var object $mu The multisite object reference.
 	 */
 	public $multisite;
+
+	/**
+	 * Network Settings object.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var object $settings_network The Network Settings object.
+	 */
+	public $settings_network;
+
+	/**
+	 * Site Settings object.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var object $settings_site The Site Settings object.
+	 */
+	public $settings_site;
 
 	/**
 	 * Revisions object.
@@ -69,7 +78,7 @@ class CommentPress_Multisite_Loader {
 	public $bp;
 
 	/**
-	 * BuddyPress Groupblog compatibility object.
+	 * BuddyPress GroupBlog compatibility object.
 	 *
 	 * @since 3.3
 	 * @access public
@@ -111,7 +120,7 @@ class CommentPress_Multisite_Loader {
 		$this->db->options_initialise( 'multisite' );
 
 		/**
-		 * Broadcast that CommentPress Core Multisite has loaded.
+		 * Broadcast that CommentPress Multisite has loaded.
 		 *
 		 * Used internally to bootstrap objects.
 		 *
@@ -133,8 +142,9 @@ class CommentPress_Multisite_Loader {
 
 		// Include class files.
 		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_db.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_admin.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_ms.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_settings_network.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_settings_site.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . 'commentpress-multisite/class_commentpress_mu_revisions.php';
 
 	}
@@ -148,8 +158,9 @@ class CommentPress_Multisite_Loader {
 
 		// Initialise objects.
 		$this->db = new CommentPress_Multisite_Database( $this );
-		$this->admin = new CommentPress_Multisite_Admin( $this );
 		$this->multisite = new CommentPress_Multisite_WordPress( $this );
+		$this->settings_network = new CommentPress_Multisite_Settings_Network( $this );
+		$this->settings_site = new CommentPress_Multisite_Settings_Site( $this );
 		$this->revisions = new CommentPress_Multisite_Revisions( $this );
 
 	}
@@ -220,8 +231,8 @@ class CommentPress_Multisite_Loader {
 	public function buddypress_setup_objects() {
 
 		// Initialise objects.
-		$this->bp = new CommentPress_Multisite_Buddypress( $this );
-		$this->workshop = new CommentPress_Multisite_Buddypress_Groupblog( $this );
+		$this->bp = new CommentPress_Multisite_BuddyPress( $this );
+		$this->workshop = new CommentPress_Multisite_BuddyPress_GroupBlog( $this );
 
 	}
 
