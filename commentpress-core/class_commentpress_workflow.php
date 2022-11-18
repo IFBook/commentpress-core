@@ -95,6 +95,10 @@ class CommentPress_Core_Workflow {
 
 		}
 
+		// Save workflow meta.
+		add_action( 'commentpress/core/db/page_meta/saved', [ $this, 'save_workflow' ] );
+		add_action( 'commentpress/core/db/post_meta/saved', [ $this, 'save_workflow' ] );
+
 		// Create custom filters that mirror 'the_content'.
 		add_filter( 'cp_workflow_richtext_content', 'wptexturize' );
 		add_filter( 'cp_workflow_richtext_content', 'convert_smilies', 20 );
@@ -475,6 +479,89 @@ class CommentPress_Core_Workflow {
 				add_post_meta( $new_post_id, $key, $literal, true );
 
 			}
+
+		}
+
+	}
+
+	/**
+	 * Save workflow meta value.
+	 *
+	 * @since 3.4
+	 *
+	 * @param object $post The post object.
+	 */
+	public function save_workflow( $post ) {
+
+		// Do we have the option to set workflow (new in 3.3.1)?
+		if ( $this->core->db->option_exists( 'cp_blog_workflow' ) ) {
+
+			// Get workflow setting for the blog.
+			$workflow = $this->core->db->option_get( 'cp_blog_workflow' );
+
+			/*
+			// ----------------
+			// WORK IN PROGRESS
+
+			// Set key.
+			$key = '_cp_blog_workflow_override';
+
+			// If the custom field already has a value.
+			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+
+				// Get existing value
+				$workflow = get_post_meta( $post->ID, $key, true );
+
+			}
+			// ----------------
+			*/
+
+			// If it's enabled.
+			if ( $workflow == '1' ) {
+
+				/**
+				 * Notify plugins that workflow stuff needs saving.
+				 *
+				 * @since 3.4
+				 *
+				 * @param object $post The post object.
+				 */
+				do_action( 'cp_workflow_save_' . $post->post_type, $post );
+
+			}
+
+			/*
+			// ----------------
+			// WORK IN PROGRESS
+
+			// Get the setting for the post (we do this after saving the extra
+			// Post data because
+			$formatter = isset( $_POST['cp_post_type_override'] ) ? $_POST['cp_post_type_override'] : '';
+
+			// If the custom field already has a value.
+			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+
+				// If empty string
+				if ( $data === '' ) {
+
+					// Delete the meta_key
+					delete_post_meta( $post->ID, $key );
+
+				} else {
+
+					// Update the data.
+					update_post_meta( $post->ID, $key, esc_sql( $data ) );
+
+				}
+
+			} else {
+
+				// Add the data.
+				add_post_meta( $post->ID, $key, esc_sql( $data ) );
+
+			}
+			// ----------------
+			*/
 
 		}
 

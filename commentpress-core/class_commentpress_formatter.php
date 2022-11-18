@@ -75,6 +75,10 @@ class CommentPress_Core_Formatter {
 		// Add filter for CommentPress Core formatter.
 		add_filter( 'cp_select_content_formatter', [ $this, 'content_formatter' ], 21, 1 );
 
+		// Save post formatter - this overrides "blog_type".
+		add_action( 'commentpress/core/db/page_meta/saved', [ $this, 'save_formatter' ] );
+		add_action( 'commentpress/core/db/post_meta/saved', [ $this, 'save_formatter' ] );
+
 	}
 
 	/**
@@ -165,6 +169,43 @@ class CommentPress_Core_Formatter {
 			'cp_class_commentpress_formatter_format',
 			$formatter
 		);
+
+	}
+
+	/**
+	 * Override post formatter.
+	 *
+	 * This overrides the "blog_type" for a post.
+	 *
+	 * @since 3.4
+	 * @since 4.0 Moved to this class.
+	 *
+	 * @param object $post The post object.
+	 */
+	public function save_formatter( $post ) {
+
+		// Get the data.
+		$data = isset( $_POST['cp_post_type_override'] ) ? sanitize_text_field( wp_unslash( $_POST['cp_post_type_override'] ) ) : '';
+
+		// Set key.
+		$key = '_cp_post_type_override';
+
+		// If the custom field already has a value.
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+
+			// Delete the meta_key if empty string.
+			if ( $data === '' ) {
+				delete_post_meta( $post->ID, $key );
+			} else {
+				update_post_meta( $post->ID, $key, esc_sql( $data ) );
+			}
+
+		} else {
+
+			// Add the data.
+			add_post_meta( $post->ID, $key, esc_sql( $data ) );
+
+		}
 
 	}
 

@@ -1497,17 +1497,20 @@ class CommentPress_Core_Database {
 		// Save page layout for Title Page.
 		$this->save_page_layout( $post );
 
-		// Save post formatter (overrides blog_type).
-		$this->save_formatter( $post );
-
 		// Save default sidebar.
 		$this->save_default_sidebar( $post );
 
 		// Save starting paragraph number.
 		$this->save_starting_paragraph( $post );
 
-		// Save workflow meta.
-		$this->save_workflow( $post );
+		/**
+		 * Broadcast that page meta has been saved.
+		 *
+		 * @since 4.0
+		 *
+		 * @param object $post The WordPress post object.
+		 */
+		do_action( 'commentpress/core/db/page_meta/saved', $post );
 
 	}
 
@@ -1777,12 +1780,6 @@ class CommentPress_Core_Database {
 			$post = $post_obj;
 		}
 
-		// Save post formatter - this overrides "blog_type".
-		$this->save_formatter( $post );
-
-		// Save workflow meta.
-		$this->save_workflow( $post );
-
 		// Save default sidebar.
 		$this->save_default_sidebar( $post );
 
@@ -1834,42 +1831,6 @@ class CommentPress_Core_Database {
 
 		// Good to go.
 		return true;
-
-	}
-
-	/**
-	 * Override post formatter.
-	 *
-	 * This overrides the "blog_type" for a post.
-	 *
-	 * @since 3.4
-	 *
-	 * @param object $post The post object.
-	 */
-	public function save_formatter( $post ) {
-
-		// Get the data.
-		$data = isset( $_POST['cp_post_type_override'] ) ? sanitize_text_field( wp_unslash( $_POST['cp_post_type_override'] ) ) : '';
-
-		// Set key.
-		$key = '_cp_post_type_override';
-
-		// If the custom field already has a value.
-		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-			// Delete the meta_key if empty string.
-			if ( $data === '' ) {
-				delete_post_meta( $post->ID, $key );
-			} else {
-				update_post_meta( $post->ID, $key, esc_sql( $data ) );
-			}
-
-		} else {
-
-			// Add the data.
-			add_post_meta( $post->ID, $key, esc_sql( $data ) );
-
-		}
 
 	}
 
@@ -1958,83 +1919,6 @@ class CommentPress_Core_Database {
 			if ( $data > 1 ) {
 				add_post_meta( $post->ID, $key, esc_sql( $data ) );
 			}
-
-		}
-
-	}
-
-	/**
-	 * Save workflow meta value.
-	 *
-	 * @since 3.4
-	 *
-	 * @param object $post The post object.
-	 */
-	public function save_workflow( $post ) {
-
-		// Do we have the option to set workflow (new in 3.3.1)?
-		if ( $this->option_exists( 'cp_blog_workflow' ) ) {
-
-			// Get workflow setting for the blog.
-			$workflow = $this->option_get( 'cp_blog_workflow' );
-
-			/*
-			// ----------------
-			// WORK IN PROGRESS
-
-			// Set key.
-			$key = '_cp_blog_workflow_override';
-
-			// If the custom field already has a value.
-			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-				// Get existing value
-				$workflow = get_post_meta( $post->ID, $key, true );
-
-			}
-			// ----------------
-			*/
-
-			// If it's enabled.
-			if ( $workflow == '1' ) {
-
-				// Notify plugins that workflow stuff needs saving.
-				do_action( 'cp_workflow_save_' . $post->post_type, $post );
-
-			}
-
-			/*
-			// ----------------
-			// WORK IN PROGRESS
-
-			// Get the setting for the post (we do this after saving the extra
-			// Post data because
-			$formatter = ( isset( $_POST['cp_post_type_override'] ) ) ? $_POST['cp_post_type_override'] : '';
-
-			// If the custom field already has a value.
-			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-				// If empty string
-				if ( $data === '' ) {
-
-					// Delete the meta_key
-					delete_post_meta( $post->ID, $key );
-
-				} else {
-
-					// Update the data.
-					update_post_meta( $post->ID, $key, esc_sql( $data ) );
-
-				}
-
-			} else {
-
-				// Add the data.
-				add_post_meta( $post->ID, $key, esc_sql( $data ) );
-
-			}
-			// ----------------
-			*/
 
 		}
 
