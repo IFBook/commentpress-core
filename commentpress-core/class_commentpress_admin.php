@@ -187,7 +187,7 @@ class CommentPress_Core_Admin {
 		);
 
 		// Register our form submit hander.
-		add_action( 'load-' . $this->parent_page, [ $this->core->db, 'options_update' ] );
+		add_action( 'load-' . $this->parent_page, [ $this, 'form_submitted' ] );
 
 		// Add WordPress scripts, styles and help text.
 		add_action( 'admin_print_styles-' . $this->parent_page, [ $this, 'admin_css' ] );
@@ -205,7 +205,7 @@ class CommentPress_Core_Admin {
 		);
 
 		// Register our form submit hander.
-		add_action( 'load-' . $this->settings_page, [ $this->core->db, 'options_update' ] );
+		add_action( 'load-' . $this->settings_page, [ $this, 'form_submitted' ] );
 
 		// Ensure correct menu item is highlighted.
 		add_action( 'admin_head-' . $this->settings_page, [ $this, 'admin_menu_highlight' ], 50 );
@@ -720,6 +720,38 @@ class CommentPress_Core_Admin {
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-admin-settings-submit.php';
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Routes settings updates to relevant methods.
+	 *
+	 * @since 4.0
+	 */
+	public function form_submitted() {
+
+		// Was the form submitted?
+		if ( ! isset( $_POST['commentpress_submit'] ) ) {
+			return;
+		}
+
+		// Check that we trust the source of the data.
+		check_admin_referer( 'commentpress_core_settings_action', 'commentpress_core_settings_nonce' );
+
+		// Update the settings.
+		$this->core->db->options_update();
+
+		// Get the Settings Page URL.
+		$url = $this->page_settings_url_get();
+
+		// Our array of arguments.
+		$args = [ 'updated' => 'true' ];
+
+		// Redirect to our Settings Page.
+		wp_safe_redirect( add_query_arg( $args, $url ) );
+		exit;
 
 	}
 

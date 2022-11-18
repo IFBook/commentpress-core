@@ -996,14 +996,6 @@ class CommentPress_Core_Database {
 	 */
 	public function options_update() {
 
-		// Was the form submitted?
-		if ( ! isset( $_POST['commentpress_submit'] ) ) {
-			return;
-		}
-
-		// Check that we trust the source of the data.
-		check_admin_referer( 'commentpress_core_settings_action', 'commentpress_core_settings_nonce' );
-
 		// Init vars.
 		$cp_activate = '0';
 		$cp_upgrade = '';
