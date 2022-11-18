@@ -74,6 +74,24 @@ class CommentPress_Core_Admin {
 	public $urls = [];
 
 	/**
+	 * Page template directory path.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $page_path Relative path to the Page template directory.
+	 */
+	public $page_path = 'commentpress-core/assets/templates/wordpress/pages/';
+
+	/**
+	 * Metabox template directory path.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $metabox_path Relative path to the Metabox directory.
+	 */
+	public $metabox_path = 'commentpress-core/assets/templates/wordpress/metaboxes/';
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 4.0
@@ -395,7 +413,7 @@ class CommentPress_Core_Admin {
 		//echo $this->core->display->get_admin_page();
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/templates/wordpress/pages/page-site-settings.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->page_path . 'page-site-settings.php';
 
 	}
 
@@ -608,7 +626,7 @@ class CommentPress_Core_Admin {
 	public function meta_box_submit_render() {
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/templates/wordpress/metaboxes/metabox-admin-settings-submit.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-admin-settings-submit.php';
 
 	}
 
@@ -638,7 +656,7 @@ class CommentPress_Core_Admin {
 		$do_not_parse = $this->core->db->option_get( 'cp_do_not_parse', 'n' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/templates/wordpress/metaboxes/metabox-admin-settings-general.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-admin-settings-general.php';
 
 	}
 
@@ -656,7 +674,7 @@ class CommentPress_Core_Admin {
 		$show_extended_toc = $this->core->db->option_get( 'cp_show_extended_toc' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/templates/wordpress/metaboxes/metabox-admin-settings-toc.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-admin-settings-toc.php';
 
 	}
 
@@ -676,7 +694,7 @@ class CommentPress_Core_Admin {
 		$excerpt_length = $this->core->db->option_get( 'cp_excerpt_length' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/templates/wordpress/metaboxes/metabox-admin-settings-page.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-admin-settings-page.php';
 
 	}
 
@@ -693,7 +711,7 @@ class CommentPress_Core_Admin {
 		$comments_live = $this->core->db->option_get( 'cp_para_comments_live' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/templates/wordpress/metaboxes/metabox-admin-settings-comment.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-admin-settings-comment.php';
 
 	}
 
@@ -704,13 +722,13 @@ class CommentPress_Core_Admin {
 	 */
 	public function meta_box_theme_render() {
 
-		// Get option - but if we haven't got a value, use comments.
+		// Get settings.
 		$scroll_speed = $this->core->db->option_get( 'cp_js_scroll_speed' );
 		$min_page_width = $this->core->db->option_get( 'cp_min_page_width' );
 		$sidebar_default = $this->core->db->option_get( 'cp_sidebar_default', 'comments' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . 'commentpress-core/assets/templates/wordpress/metaboxes/metabox-admin-settings-theme.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-admin-settings-theme.php';
 
 	}
 
