@@ -133,7 +133,7 @@ if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 <div class="page_nav_lower">
 <?php
 
-// Include page_navigation again.
+// Include Page Navigation again.
 if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
 
 ?>
