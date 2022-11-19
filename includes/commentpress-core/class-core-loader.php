@@ -1029,52 +1029,6 @@ class CommentPress_Core {
 		// Use nonce for verification.
 		wp_nonce_field( 'commentpress_post_settings', 'commentpress_nonce' );
 
-		// Set key.
-		$key = '_cp_newer_version';
-
-		// If the custom field already has a value.
-		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-			// Get it.
-			$new_post_id = get_post_meta( $post->ID, $key, true );
-
-			// -----------------------------------------------------------------
-			// Show link to newer Post.
-			// -----------------------------------------------------------------
-
-			// Define label.
-			$label = __( 'This post already has a new version', 'commentpress-core' );
-
-			// Get the edit Post link.
-			$edit_link = get_edit_post_link( $new_post_id );
-
-			// Define label.
-			$link = __( 'Edit new version', 'commentpress-core' );
-
-			// Show link.
-			echo '
-			<p><a href="' . $edit_link . '">' . $link . '</a></p>' . "\n";
-
-		} else {
-
-			// -----------------------------------------------------------------
-			// Create new Post with content of current Post.
-			// -----------------------------------------------------------------
-
-			// Label.
-			echo '<p><strong><label for="cp_page_layout">' . __( 'Versioning', 'commentpress-core' ) . '</label></strong></p>';
-
-			// Define label.
-			$label = __( 'Create new version', 'commentpress-core' );
-
-			// Show a title.
-			echo '
-			<div class="checkbox">
-				<label for="commentpress_new_post"><input type="checkbox" value="1" id="commentpress_new_post" name="commentpress_new_post" /> ' . $label . '</label>
-			</div>' . "\n";
-
-		}
-
 		// Get Post Formatter.
 		$this->get_post_formatter_metabox( $post );
 

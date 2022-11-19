@@ -1831,7 +1831,7 @@ add_filter( 'widget_title', 'commentpress_widget_title', 10, 1 );
 if ( ! function_exists( 'commentpress_get_post_version_info' ) ) :
 
 	/**
-	 * Get links to previous and next versions, should they exist.
+	 * Echoes links to previous and next versions, should they exist.
 	 *
 	 * @since 3.3
 	 *
@@ -1839,107 +1839,40 @@ if ( ! function_exists( 'commentpress_get_post_version_info' ) ) :
 	 */
 	function commentpress_get_post_version_info( $post ) {
 
-		// Check for newer version.
-		$newer_link = '';
-
-		// Assume no newer version.
-		$newer_id = '';
-
-		// Set key.
-		$key = '_cp_newer_version';
-
-		// If the custom field already has a value.
-		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-			// Get it.
-			$newer_id = get_post_meta( $post->ID, $key, true );
-
+		// Sanity check.
+		if ( ! ( $post instanceof WP_Post ) ) {
+			return;
 		}
 
-		// If we've got one.
-		if ( $newer_id !== '' ) {
-
-			// Get Post.
-			$newer_post = get_post( $newer_id );
-
-			// Is it published?
-			if ( $newer_post->post_status == 'publish' ) {
-
-				// Get link.
-				$link = get_permalink( $newer_post->ID );
-
-				// Define title.
-				$title = __( 'Newer version', 'commentpress-core' );
-
-				// Construct anchor.
-				$newer_link = '<a href="' . $link . '" title="' . $title . '">' . $title . ' &rarr;</a>';
-
-			}
-
+		// Get core plugin reference.
+		$core = commentpress_core();
+		if ( empty( $core ) ) {
+			return;
 		}
 
-		// Check for older version.
-		$older_link = '';
+		// Get newer link for this Post.
+		$newer_link = $core->revisions->revision_next_link_get( $post->ID );
 
-		// Get Post with this Post's ID as their _cp_newer_version meta value.
-		$args = [
-			'numberposts' => 1,
-			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-			'meta_key' => '_cp_newer_version',
-			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
-			'meta_value' => $post->ID,
-		];
+		// Get older link for this Post.
+		$older_link = $core->revisions->revision_previous_link_get( $post->ID );
 
-		// Get the array.
-		$previous_posts = get_posts( $args );
-
-		// Did we get one?
-		if ( is_array( $previous_posts ) && count( $previous_posts ) == 1 ) {
-
-			// Get it.
-			$older_post = $previous_posts[0];
-
-			// Is it published?
-			if ( $older_post->post_status == 'publish' ) {
-
-				// Get link.
-				$link = get_permalink( $older_post->ID );
-
-				// Define title.
-				$title = __( 'Older version', 'commentpress-core' );
-
-				// Construct anchor.
-				$older_link = '<a href="' . $link . '" title="' . $title . '">&larr; ' . $title . '</a>';
-
-			}
-
+		// Bail if we didn't either of them.
+		if ( empty( $newer_link ) && empty( $older_link ) ) {
+			return;
 		}
 
-		// Did we get either?
-		if ( $newer_link != '' || $older_link != '' ) {
-
-			?>
-			<div class="version_info">
-				<ul>
-					<?php
-
-					if ( $newer_link != '' ) {
-						echo '<li class="newer_version">' . $newer_link . '</li>';
-					}
-
-					?>
-					<?php
-
-					if ( $older_link != '' ) {
-						echo '<li class="older_version">' . $older_link . '</li>';
-					}
-
-					?>
-				</ul>
-			</div>
-			<?php
-
-		}
+		?>
+		<div class="version_info clear">
+			<ul>
+				<?php if ( ! empty( $newer_link ) ) : ?>
+					<li class="newer_version"><?php echo $newer_link; ?></li>
+				<?php endif; ?>
+				<?php if ( ! empty( $older_link ) ) : ?>
+					<li class="older_version"><?php echo $older_link; ?></li>
+				<?php endif; ?>
+			</ul>
+		</div>
+		<?php
 
 	}
 

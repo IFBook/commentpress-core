@@ -92,7 +92,7 @@ class CommentPress_Core_Workflow {
 			add_action( 'cp_workflow_save_page', [ $this, 'workflow_save_post' ], 21, 1 );
 
 			// Save Translation Workflow for copied Posts.
-			add_action( 'cp_workflow_save_copy', [ $this, 'workflow_save_copy' ], 21, 1 );
+			add_action( 'commentpress/core/revisions/revision/created', [ $this, 'workflow_save_copy' ], 21, 1 );
 
 		}
 

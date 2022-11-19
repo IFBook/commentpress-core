@@ -1950,35 +1950,6 @@ class CommentPress_Core_Database {
 
 		}
 
-		// For Posts with versions, we need to delete the version data for the previous version.
-
-		// Define key.
-		$key = '_cp_newer_version';
-
-		// Get Posts with the about-to-be-deleted "post_id" - there will be only one, if at all.
-		$previous_versions = get_posts( [
-			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-			'meta_key' => $key,
-			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
-			'meta_value' => $post_id,
-		] );
-
-		// Did we get one?
-		if ( count( $previous_versions ) > 0 ) {
-
-			// Get it.
-			$previous_version = $previous_versions[0];
-
-			// If the custom field has a value.
-			if ( get_post_meta( $previous_version->ID, $key, true ) !== '' ) {
-
-				// Delete it.
-				delete_post_meta( $previous_version->ID, $key );
-
-			}
-
-		}
-
 	}
 
 	/**
