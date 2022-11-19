@@ -91,8 +91,10 @@ class CommentPress_Core_Workflow {
 			// Save Page with Translation Workflow.
 			add_action( 'cp_workflow_save_page', [ $this, 'workflow_save_post' ], 21, 1 );
 
-			// Save Translation Workflow for copied Posts.
-			add_action( 'commentpress/core/revisions/revision/created', [ $this, 'workflow_save_copy' ], 21, 1 );
+			/*
+			// Save Translation Workflow on new Revisions.
+			add_action( 'commentpress/core/revisions/revision/meta/added', [ $this, 'workflow_meta_add' ] );
+			*/
 
 		}
 
@@ -395,13 +397,15 @@ class CommentPress_Core_Workflow {
 	}
 
 	/**
-	 * Add the Workflow content to the new version.
+	 * Add the Workflow content to the new Revision Posts.
 	 *
 	 * @since 3.0
+	 * @since 4.0 Renamed and rehooked.
 	 *
-	 * @param int $new_post_id The numeric ID of the new WordPress Post.
+	 * @param int $new_post_id The numeric ID of the new Post.
+	 * @param WP_Post $post The WordPress Post object that has been copied.
 	 */
-	public function workflow_save_copy( $new_post_id ) {
+	public function workflow_meta_add( $new_post_id, $post ) {
 
 		// ---------------------------------------------------------------------
 		// If we are making a copy of the current version, also save meta.
