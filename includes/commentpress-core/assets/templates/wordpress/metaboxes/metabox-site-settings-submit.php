@@ -7,7 +7,8 @@
  * @package CommentPress_Core
  */
 
-?><!-- includes/commentpress-core/assets/templates/wordpress/metaboxes/metabox-site-settings-submit.php -->
+?>
+<!-- includes/commentpress-core/assets/templates/wordpress/metaboxes/metabox-site-settings-submit.php -->
 <div class="submitbox">
 	<div id="minor-publishing">
 		<div id="misc-publishing-actions">

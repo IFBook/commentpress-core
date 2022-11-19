@@ -7,7 +7,8 @@
  * @package CommentPress_Core
  */
 
-?><!-- includes/commentpress-multisite/assets/templates/wordpress/metaboxes/metabox-site-settings-general.php -->
+?>
+<!-- includes/commentpress-multisite/assets/templates/wordpress/metaboxes/metabox-site-settings-general.php -->
 <table class="form-table">
 
 	<?php

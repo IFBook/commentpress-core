@@ -7,7 +7,8 @@
  * @package CommentPress_Core
  */
 
-?><!-- includes/commentpress-multisite/assets/templates/wordpress/pages/page-network-settings.php -->
+?>
+<!-- includes/commentpress-multisite/assets/templates/wordpress/pages/page-network-settings.php -->
 <div class="wrap">
 
 	<h1><?php esc_html_e( 'CommentPress Network', 'commentpress-core' ); ?></h1>

@@ -72,4 +72,6 @@
 		</properties>
 	</rule>
 
+	<exclude-pattern>includes/commentpress-core/assets/includes/mobile-detect/*</exclude-pattern>
+
 </ruleset>

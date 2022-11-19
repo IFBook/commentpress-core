@@ -7,10 +7,9 @@
  * @package CommentPress_Core
  */
 
-?><!-- includes/commentpress-core/assets/templates/wordpress/metaboxes/metabox-site-settings-theme.php -->
-<p><?php _e( 'You can set a custom background colour in <em>Appearance &#8594; Background</em>.<br />
-You can also set a custom header image and header text colour in <em>Appearance &#8594; Header</em>.<br />
-Below are extra options for changing how the theme functions.', 'commentpress-core' ); ?></p>
+?>
+<!-- includes/commentpress-core/assets/templates/wordpress/metaboxes/metabox-site-settings-theme.php -->
+<p><?php _e( 'You can set a custom background colour in <em>Appearance &#8594; Background</em>.<br />You can also set a custom header image and header text colour in <em>Appearance &#8594; Header</em>.<br />Below are extra options for changing how the theme functions.', 'commentpress-core' ); ?></p>
 
 <table class="form-table">
 

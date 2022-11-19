@@ -733,7 +733,7 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		// -------------------- TinyMCE version --------------------------------
 
 		// TinyMCE is v4 since WordPress 3.9.
-		$classes[] =  'tinymce-4';
+		$classes[] = 'tinymce-4';
 
 		// -------------------- Process ----------------------------------------
 

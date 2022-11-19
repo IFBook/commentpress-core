@@ -7,12 +7,13 @@
  * @package CommentPress_Core
  */
 
-?><!-- includes/commentpress-core/assets/templates/wordpress/metaboxes/metabox-site-settings-page.php -->
+?>
+<!-- includes/commentpress-core/assets/templates/wordpress/metaboxes/metabox-site-settings-page.php -->
 <table class="form-table">
 
 	<tr valign="top">
 		<th scope="row">
-			<label for="cp_featured_images"><?php _e( 'Enable Featured Images', 'commentpress-core' ); ?></label>
+			<label for="cp_featured_images"><?php esc_html_e( 'Enable Featured Images', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
 			<select id="cp_featured_images" name="cp_featured_images">
@@ -25,7 +26,7 @@
 
 	<tr valign="top">
 		<th scope="row">
-			<label for="cp_page_nav_enabled"><?php _e( 'Enable automatic page navigation', 'commentpress-core' ); ?></label>
+			<label for="cp_page_nav_enabled"><?php esc_html_e( 'Enable automatic page navigation', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
 			<select id="cp_page_nav_enabled" name="cp_page_nav_enabled">
@@ -38,7 +39,7 @@
 
 	<tr valign="top">
 		<th scope="row">
-			<label for="cp_title_visibility"><?php _e( 'Default page title visibility', 'commentpress-core' ); ?></label>
+			<label for="cp_title_visibility"><?php esc_html_e( 'Default page title visibility', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
 			<select id="cp_title_visibility" name="cp_title_visibility">
@@ -51,7 +52,7 @@
 
 	<tr valign="top">
 		<th scope="row">
-			<label for="cp_page_meta_visibility"><?php _e( 'Default page meta visibility', 'commentpress-core' ); ?></label>
+			<label for="cp_page_meta_visibility"><?php esc_html_e( 'Default page meta visibility', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
 			<select id="cp_page_meta_visibility" name="cp_page_meta_visibility">
