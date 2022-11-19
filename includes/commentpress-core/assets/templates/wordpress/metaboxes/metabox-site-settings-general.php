@@ -40,11 +40,11 @@
 				<p>
 					<?php foreach ( $capable_post_types as $post_type_slug => $label ) : ?>
 						<?php if ( ! in_array( $post_type_slug, $selected_types ) ) : ?>
-							<input type="checkbox" class="settings-checkbox" id="cp_post_types_enabled-<?php echo esc_attr( $post_type_slug ); ?>" name="cp_post_types_enabled[]" value="<?php echo esc_attr( $post_type_slug ); ?>" checked="checked" />
+							<input type="checkbox" class="settings-checkbox" id="cp_post_types_enabled_<?php echo esc_attr( $post_type_slug ); ?>" name="cp_post_types_enabled[]" value="<?php echo esc_attr( $post_type_slug ); ?>" checked="checked" />
 						<?php else : ?>
-							<input type="checkbox" class="settings-checkbox" name="cp_post_types_enabled[]" value="<?php echo esc_attr( $post_type_slug ); ?>" />
+							<input type="checkbox" class="settings-checkbox" id="cp_post_types_enabled_<?php echo esc_attr( $post_type_slug ); ?>" name="cp_post_types_enabled[]" value="<?php echo esc_attr( $post_type_slug ); ?>" />
 						<?php endif; ?>
-						<label class="commentpress_settings_label" for="cp_post_types_enabled=<?php echo esc_attr( $post_type_slug ); ?>"><?php echo esc_html( $label ); ?></label><br>
+						<label class="commentpress_settings_label" for="cp_post_types_enabled_<?php echo esc_attr( $post_type_slug ); ?>"><?php echo esc_html( $label ); ?></label><br>
 					<?php endforeach; ?>
 				</p>
 			<?php endif; ?>
