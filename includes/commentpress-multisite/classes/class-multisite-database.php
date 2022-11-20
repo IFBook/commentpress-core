@@ -724,13 +724,21 @@ class CommentPress_Multisite_Database {
 	 */
 	public function get_blogtype_data() {
 
+		// TODO: Move to Formatter class when install has a lighter touch.
+
 		// Init.
 		$return = [];
 
 		// Assume no types.
 		$types = [];
 
-		// But allow overrides for plugins to supply some.
+		/**
+		 * Build Text Format options.
+		 *
+		 * @since 3.3.1
+		 *
+		 * @param array $types Empty by default since others add them.
+		 */
 		$types = apply_filters( 'cp_blog_type_options', $types );
 
 		// If we got any, use them.

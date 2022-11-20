@@ -407,18 +407,6 @@ class CommentPress_Core_Workflow {
 	 */
 	public function workflow_meta_add( $new_post_id, $post ) {
 
-		// ---------------------------------------------------------------------
-		// If we are making a copy of the current version, also save meta.
-		// ---------------------------------------------------------------------
-
-		// Find and save the data.
-		$data = isset( $_POST['commentpress_new_post'] ) ? trim( wp_unslash( $_POST['commentpress_new_post'] ) ) : '0';
-
-		// Do we want to create a new revision?
-		if ( $data == '0' ) {
-			return;
-		}
-
 		// Get original text.
 		$original = isset( $_POST['cporiginaltext'] ) ? trim( wp_unslash( $_POST['cporiginaltext'] ) ) : '';
 

@@ -1240,59 +1240,6 @@ HELPTEXT;
 		// Init.
 		$html = '';
 
-		// Do we have the option to choose Blog Type (new in 3.3.1)?
-		if ( $this->core->db->option_exists( 'cp_blog_type' ) ) {
-
-			// Define no types.
-			$types = [];
-
-			// Allow overrides.
-			$types = apply_filters( 'cp_blog_type_options', $types );
-
-			// If we get some from a plugin, say.
-			if ( ! empty( $types ) ) {
-
-				// Define title.
-				$type_title = __( 'Default Text Format', 'commentpress-core' );
-
-				// Allow overrides.
-				$type_title = apply_filters( 'cp_blog_type_label', $type_title );
-
-				// Add extra message.
-				$type_title .= __( ' (can be overridden on individual pages)', 'commentpress-core' );
-
-				// Construct options.
-				$type_option_list = [];
-				$n = 0;
-
-				// Get existing.
-				$blog_type = $this->core->db->option_get( 'cp_blog_type' );
-
-				foreach ( $types as $type ) {
-					if ( $n == $blog_type ) {
-						$type_option_list[] = '<option value="' . $n . '" selected="selected">' . $type . '</option>';
-					} else {
-						$type_option_list[] = '<option value="' . $n . '">' . $type . '</option>';
-					}
-					$n++;
-				}
-				$type_options = implode( "\n", $type_option_list );
-
-				// Define upgrade.
-				$html .= '
-				<tr valign="top">
-					<th scope="row"><label for="cp_blog_type">' . $type_title . '</label></th>
-					<td><select id="cp_blog_type" name="cp_blog_type">
-							' . $type_options . '
-						</select>
-					</td>
-				</tr>
-				';
-
-			}
-
-		}
-
 		// Do we have the option to choose Blog Workflow (new in 3.3.1)?
 		if ( $this->core->db->option_exists( 'cp_blog_workflow' ) ) {
 
@@ -1530,7 +1477,13 @@ HELPTEXT;
 			// Define no types.
 			$types = [];
 
-			// Allow overrides.
+			/**
+			 * Build Text Format options.
+			 *
+			 * @since 3.3.1
+			 *
+			 * @param array $types Empty by default since others add them.
+			 */
 			$types = apply_filters( 'cp_blog_type_options', $types );
 
 			// If we get some from a plugin, say.

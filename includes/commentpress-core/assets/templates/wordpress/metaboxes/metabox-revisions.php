@@ -9,7 +9,7 @@
 
 ?>
 <!-- includes/commentpress-core/assets/templates/wordpress/metaboxes/metabox-revisions.php -->
-<?php wp_nonce_field( 'commentpress_revisions', 'commentpress_nonce' ); ?>
+<?php wp_nonce_field( $this->nonce_value, $this->nonce_name ); ?>
 
 <?php if ( ! empty( $newer_post_id ) ) : ?>
 
@@ -20,8 +20,8 @@
 <?php else : ?>
 
 	<div class="checkbox">
-		<label for="commentpress_new_post">
-			<input type="checkbox" value="1" id="commentpress_new_post" name="commentpress_new_post" /> <?php esc_html_e( 'Create new version', 'commentpress-core' ); ?>
+		<label for="<?php echo $this->element_checkbox; ?>">
+			<input type="checkbox" value="1" id="<?php echo $this->element_checkbox; ?>" name="<?php echo $this->element_checkbox; ?>" /> <?php esc_html_e( 'Create new version', 'commentpress-core' ); ?>
 		</label>
 	</div>
 

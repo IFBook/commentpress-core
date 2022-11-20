@@ -77,19 +77,19 @@ class CommentPress_Core_Settings_Site {
 	 * Page template directory path.
 	 *
 	 * @since 4.0
-	 * @access public
+	 * @access private
 	 * @var string $page_path Relative path to the Page template directory.
 	 */
-	public $page_path = 'includes/commentpress-core/assets/templates/wordpress/pages/';
+	private $page_path = 'includes/commentpress-core/assets/templates/wordpress/pages/';
 
 	/**
 	 * Metabox template directory path.
 	 *
 	 * @since 4.0
-	 * @access public
+	 * @access private
 	 * @var string $metabox_path Relative path to the Metabox directory.
 	 */
-	public $metabox_path = 'includes/commentpress-core/assets/templates/wordpress/metaboxes/';
+	private $metabox_path = 'includes/commentpress-core/assets/templates/wordpress/metaboxes/';
 
 	/**
 	 * Constructor.

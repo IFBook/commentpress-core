@@ -1221,15 +1221,26 @@ class CommentPress_Core_Database {
 
 		}
 
+		/**
+		 * Fires before the options have been saved.
+		 *
+		 * Used internally by:
+		 *
+		 * @since 4.0
+		 */
+		do_action( 'commentpress/core/db/options_update/pre' );
+
 		// Save.
 		$this->options_save();
 
 		/**
-		 * Allow other plugins to hook into the update process.
+		 * Fires after the options have been saved.
 		 *
-		 * @since 3.4
+		 * Used internally by:
+		 *
+		 * @since 4.0
 		 */
-		do_action( 'commentpress_admin_page_options_updated' );
+		do_action( 'commentpress/core/db/options_update/post' );
 
 	}
 
@@ -3106,15 +3117,25 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Insert the Post into the database.
 		$title_id = wp_insert_post( $title );
 
-		// Make sure it has the default Formatter (0 = prose).
-		add_post_meta( $title_id, '_cp_post_type_override', '0' );
-
 		// Store the option.
 		$this->option_set( 'cp_welcome_page', $title_id );
 
 		// Set WordPress internal Page references.
 		$this->wordpress_option_backup( 'show_on_front', 'page' );
 		$this->wordpress_option_backup( 'page_on_front', $title_id );
+
+		/**
+		 * Fires when the Title Page has been created.
+		 *
+		 * Used internally by:
+		 *
+		 * * CommentPress_Core_Formatter::formatter_default_apply() (Priority: 10)
+		 *
+		 * @since 4.0
+		 *
+		 * @param int $title_id The numeric ID of the new Page.
+		 */
+		do_action( 'commentpress/core/db/page/special/title/created', $title_id );
 
 		// --<
 		return $title_id;

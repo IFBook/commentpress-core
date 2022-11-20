@@ -29,15 +29,6 @@ class CommentPress_Core_Revisions {
 	public $core;
 
 	/**
-	 * Prevent save_post hook firing more than once.
-	 *
-	 * @since 3.3
-	 * @access public
-	 * @var str $saved_post True if Post already saved.
-	 */
-	public $saved_post = false;
-
-	/**
 	 * Newer Version meta key.
 	 *
 	 * @since 4.0
@@ -56,22 +47,49 @@ class CommentPress_Core_Revisions {
 	public $meta_key_version_count = '_cp_version_count';
 
 	/**
-	 * Formatter meta key.
-	 *
-	 * @since 4.0
-	 * @access public
-	 * @var str $meta_key_formatter The "Formatter" meta key.
-	 */
-	public $meta_key_formatter = '_cp_post_type_override';
-
-	/**
 	 * Metabox template directory path.
 	 *
 	 * @since 4.0
-	 * @access public
+	 * @access private
 	 * @var string $metabox_path Relative path to the Metabox directory.
 	 */
-	public $metabox_path = 'includes/commentpress-core/assets/templates/wordpress/metaboxes/';
+	private $metabox_path = 'includes/commentpress-core/assets/templates/wordpress/metaboxes/';
+
+	/**
+	 * Metabox nonce name.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $nonce_name The name of the metabox nonce element.
+	 */
+	private $nonce_name = 'commentpress_revisions_nonce';
+
+	/**
+	 * Metabox nonce value.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $nonce_value The name of the metabox nonce value.
+	 */
+	private $nonce_value = 'commentpress_revisions_value';
+
+	/**
+	 * Metabox checkbox element name.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $element_checkbox The name of the metabox checkbox element.
+	 */
+	private $element_checkbox = 'cp_revision_create';
+
+	/**
+	 * Prevent "save_post" callback from running more than once.
+	 *
+	 * @since 3.3
+	 * @access private
+	 * @var str $saved_post True if Post already saved.
+	 */
+	private $saved_post = false;
 
 	/**
 	 * Constructor.
@@ -207,7 +225,7 @@ class CommentPress_Core_Revisions {
 	}
 
 	/**
-	 * Handles Revision authentication and creation.
+	 * Handles authentication and creates Revision.
 	 *
 	 * @since 4.0
 	 *
@@ -227,8 +245,8 @@ class CommentPress_Core_Revisions {
 		}
 
 		// Authenticate.
-		$nonce = isset( $_POST['commentpress_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['commentpress_nonce'] ) ) : '';
-		if ( ! wp_verify_nonce( $nonce, 'commentpress_revisions' ) ) {
+		$nonce = isset( $_POST[ $this->nonce_value ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->nonce_value ] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce, $this->nonce_name ) ) {
 			return;
 		}
 
@@ -243,7 +261,7 @@ class CommentPress_Core_Revisions {
 		}
 
 		// Do we want to create a new Revision?
-		$new_post = isset( $_POST['commentpress_new_post'] ) ? sanitize_text_field( wp_unslash( $_POST['commentpress_new_post'] ) ) : '';
+		$new_post = isset( $_POST[ $this->element_checkbox ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->element_checkbox ] ) ) : '';
 		if ( empty( $new_post ) ) {
 			return;
 		}
@@ -403,15 +421,19 @@ class CommentPress_Core_Revisions {
 		// Add the updated count to the new Post.
 		add_post_meta( $new_post_id, $this->meta_key_version_count, $version_count );
 
-		// ---------------------------------------------------------------------
-		// Store Formatter in new Post.
-		// ---------------------------------------------------------------------
-
-		// Add Formatter to new Post if we have one in current Post.
-		$formatter = get_post_meta( $post->ID, $this->meta_key_formatter, true );
-		if ( ! empty( $formatter ) ) {
-			add_post_meta( $new_post_id, $this->meta_key_formatter, esc_sql( $formatter ) );
-		}
+		/**
+		 * Fires when Revision meta has been added.
+		 *
+		 * Used internally by:
+		 *
+		 * * CommentPress_Core_Formatter::revision_formatter_set() (Priority: 10)
+		 *
+		 * @since 4.0
+		 *
+		 * @param int $new_post_id The numeric ID of the new Post.
+		 * @param WP_Post $post The copied WordPress Post object.
+		 */
+		do_action( 'commentpress/core/revisions/revision/meta/added', $new_post_id, $post );
 
 	}
 
@@ -425,7 +447,7 @@ class CommentPress_Core_Revisions {
 	 * @param int $post_id The ID of the WordPress Post.
 	 * @return str $newer_link The HTML link to the newer WordPress Post.
 	 */
-	public function revision_next_link_get( $post_id ) {
+	public function link_next_get( $post_id ) {
 
 		// Init return.
 		$newer_link = '';
@@ -466,7 +488,7 @@ class CommentPress_Core_Revisions {
 	 * @param int $post_id The ID of the WordPress Post.
 	 * @return str $older_link The HTML link to the older WordPress Post.
 	 */
-	public function revision_previous_link_get( $post_id ) {
+	public function link_previous_get( $post_id ) {
 
 		// Init return.
 		$older_link = '';

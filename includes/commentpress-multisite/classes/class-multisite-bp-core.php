@@ -68,10 +68,10 @@ class CommentPress_Multisite_BuddyPress {
 	 * Metabox template directory path.
 	 *
 	 * @since 4.0
-	 * @access public
+	 * @access private
 	 * @var string $metabox_path Relative path to the Metabox directory.
 	 */
-	public $metabox_path = 'includes/commentpress-multisite/assets/templates/wordpress/metaboxes/';
+	private $metabox_path = 'includes/commentpress-multisite/assets/templates/wordpress/metaboxes/';
 
 	/**
 	 * Constructor.
@@ -171,10 +171,12 @@ class CommentPress_Multisite_BuddyPress {
 		*/
 
 		/*
-		 * Duplicated from 'class_commentpress_formatter.php' because CommentPress Core need
+		 * Duplicated from 'class-core-formatter.php' because CommentPress Core need
 		 * not be active on the main Blog, but we still need the options to appear
 		 * in the Group Blog Create screen.
 		 */
+
+		// TODO: Remove when core installation is more lightweight.
 
 		// Set Blog Type options.
 		add_filter( 'cp_blog_type_options', [ $this, 'blog_type_options' ], 21 );
@@ -185,7 +187,7 @@ class CommentPress_Multisite_BuddyPress {
 		// ---------------------------------------------------------------------
 
 		/*
-		 * Duplicated from 'class_commentpress_workflow.php' because CommentPress Core need
+		 * Duplicated from 'class-core-workflow.php' because CommentPress Core need
 		 * not be active on the main Blog, but we still need the options to appear
 		 * in the Group Blog Create screen.
 		 */
@@ -1523,7 +1525,7 @@ class CommentPress_Multisite_BuddyPress {
 	}
 
 	/**
-	 * Override the name of the type dropdown label.
+	 * Override the name of the Blog Types dropdown label.
 	 *
 	 * @since 3.3
 	 *
@@ -1531,18 +1533,16 @@ class CommentPress_Multisite_BuddyPress {
 	 * @return str $name The modified name of the label.
 	 */
 	public function blog_type_label( $name ) {
-
-		return apply_filters( 'cp_class_commentpress_formatter_label', __( 'Default Text Format', 'commentpress-core' ) );
-
+		return __( 'Default Text Format', 'commentpress-core' );
 	}
 
 	/**
-	 * Define the "types" of Group Blog.
+	 * Define the "types" of Blog.
 	 *
 	 * @since 3.3
 	 *
-	 * @param array $existing_options The existing types of Group Blog.
-	 * @return array $existing_options The modified types of Group Blog.
+	 * @param array $existing_options The existing types of Blog.
+	 * @return array $existing_options The modified types of Blog.
 	 */
 	public function blog_type_options( $existing_options ) {
 
@@ -1552,7 +1552,13 @@ class CommentPress_Multisite_BuddyPress {
 			__( 'Poetry', 'commentpress-core' ), // Types[1].
 		];
 
-		// --<
+		/**
+		 * Filters the Blog Types.
+		 *
+		 * @since 3.3.1
+		 *
+		 * @param array $types The array of Blog Type.
+		 */
 		return apply_filters( 'cp_class_commentpress_formatter_types', $types );
 
 	}
@@ -2009,7 +2015,13 @@ class CommentPress_Multisite_BuddyPress {
 			// Init output.
 			$type_html = '';
 
-			// But allow overrides for plugins to supply some.
+			/**
+			 * Build Text Format options.
+			 *
+			 * @since 3.3.1
+			 *
+			 * @param array $types Empty by default since others add them.
+			 */
 			$types = apply_filters( 'cp_blog_type_options', $types );
 
 			// If we got any, use them.
@@ -2264,7 +2276,13 @@ class CommentPress_Multisite_BuddyPress {
 		// Init output.
 		$type_html = '';
 
-		// But allow overrides for plugins to supply some.
+		/**
+		 * Build Text Format options.
+		 *
+		 * @since 3.3.1
+		 *
+		 * @param array $types Empty by default since others add them.
+		 */
 		$types = apply_filters( 'cp_blog_type_options', $types );
 
 		// If we got any, use them.

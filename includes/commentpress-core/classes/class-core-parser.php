@@ -81,13 +81,15 @@ class CommentPress_Core_Parser {
 	public $do_not_parse = false;
 
 	/**
-	 * Formatter flag.
+	 * Parser type.
+	 *
+	 * Possible values are 'tag', 'line' or 'block'.
 	 *
 	 * @since 3.8.10
 	 * @access public
-	 * @var str $formatter The type of Formatter ('tag', 'line' or 'block').
+	 * @var str $parser The type of parser.
 	 */
-	public $formatter = 'tag';
+	public $parser = 'tag';
 
 	/**
 	 * Block name.
@@ -224,18 +226,26 @@ class CommentPress_Core_Parser {
 
 			// Auto-format content.
 
-			// Get action to take (defaults to 'tag').
-			$this->formatter = apply_filters( 'cp_select_content_formatter', 'tag' );
+			/**
+			 * Filters the default parser.
+			 *
+			 * Defaults to 'tag'.
+			 *
+			 * @since 4.0
+			 *
+			 * @param str $parser The type of content parser to use.
+			 */
+			$this->parser = apply_filters( 'commentpress/core/parser/content/parser', 'tag' );
 
 			// Set constant.
 			if ( ! defined( 'COMMENTPRESS_BLOCK' ) ) {
-				define( 'COMMENTPRESS_BLOCK', $this->formatter );
+				define( 'COMMENTPRESS_BLOCK', $this->parser );
 			}
 
 		} else {
 
 			// Set action to take.
-			$this->formatter = 'block';
+			$this->parser = 'block';
 
 			// Set constant.
 			if ( ! defined( 'COMMENTPRESS_BLOCK' ) ) {
@@ -245,10 +255,10 @@ class CommentPress_Core_Parser {
 		}
 
 		// Determine "lexia" names.
-		$this->lexia_set( $this->formatter );
+		$this->lexia_set( $this->parser );
 
 		// Act on Formatter.
-		switch ( $this->formatter ) {
+		switch ( $this->parser ) {
 
 			// For poetry.
 			case 'line':
@@ -320,10 +330,7 @@ class CommentPress_Core_Parser {
 
 		// Have we already sorted the Comments?
 		if ( ! empty( $this->comments_sorted ) ) {
-
-			// --<
 			return $this->comments_sorted;
-
 		}
 
 		// --<
@@ -331,17 +338,19 @@ class CommentPress_Core_Parser {
 
 	}
 
+	// -------------------------------------------------------------------------
+
 	/**
 	 * Store the name of the "block" for Paragraphs, Blocks or Lines.
 	 *
 	 * @since 3.8.10
 	 *
-	 * @param str $formatter The Formatter.
+	 * @param str $parser The type of content parser.
 	 */
-	public function lexia_set( $formatter ) {
+	public function lexia_set( $parser ) {
 
 		// Set Block identifier.
-		switch ( $formatter ) {
+		switch ( $parser ) {
 
 			case 'block':
 				$block_name = __( 'block', 'commentpress-core' );
@@ -359,15 +368,15 @@ class CommentPress_Core_Parser {
 		}
 
 		/**
-		 * Allow filtering of Block name by Formatter.
+		 * Filters the name of the "block" for Paragraphs, Blocks or Lines.
 		 *
 		 * @since 3.8.10
 		 *
 		 * @param str $block_name The existing name of the Block.
-		 * @param str $block_name The type of Block.
+		 * @param str $parser The type of content parser.
 		 * @return str $block_name The modified name of the Block.
 		 */
-		$this->block_name = apply_filters( 'commentpress_lexia_block_name', $block_name, $formatter );
+		$this->block_name = apply_filters( 'commentpress_lexia_block_name', $block_name, $parser );
 
 	}
 

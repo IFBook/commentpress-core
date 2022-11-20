@@ -1851,10 +1851,10 @@ if ( ! function_exists( 'commentpress_get_post_version_info' ) ) :
 		}
 
 		// Get newer link for this Post.
-		$newer_link = $core->revisions->revision_next_link_get( $post->ID );
+		$newer_link = $core->revisions->link_next_get( $post->ID );
 
 		// Get older link for this Post.
-		$older_link = $core->revisions->revision_previous_link_get( $post->ID );
+		$older_link = $core->revisions->link_previous_get( $post->ID );
 
 		// Bail if we didn't either of them.
 		if ( empty( $newer_link ) && empty( $older_link ) ) {
@@ -1883,47 +1883,40 @@ endif;
 if ( ! function_exists( 'commentpress_get_post_css_override' ) ) :
 
 	/**
-	 * Overrride Post Type by adding a CSS class.
+	 * Override Post Type by adding a CSS class.
 	 *
 	 * @since 3.3
 	 *
 	 * @param int $post_id The numeric ID of the Post.
-	 * @return str $type_overridden The CSS class.
+	 * @return str $class_name The CSS class.
 	 */
 	function commentpress_get_post_css_override( $post_id ) {
 
-		// Add a class for overridden Page Types.
-		$type_overridden = '';
+		// A class for overridden Page Types.
+		$class_name = '';
 
-		// Declare access to globals.
-		global $commentpress_core;
-
-		// If we have the plugin enabled.
-		if ( is_object( $commentpress_core ) ) {
-
-			// Default to current Blog Type.
-			$type = $commentpress_core->db->option_get( 'cp_blog_type' );
-
-			// Set Post meta key.
-			$key = '_cp_post_type_override';
-
-			// But, if the custom field has a value.
-			if ( get_post_meta( $post_id, $key, true ) !== '' ) {
-
-				// Get it.
-				$overridden_type = get_post_meta( $post_id, $key, true );
-
-				// Is it different to the current Blog Type?
-				if ( $overridden_type != $type ) {
-					$type_overridden = ' overridden_type-' . $overridden_type;
-				}
-
-			}
-
+		// Get core plugin reference.
+		$core = commentpress_core();
+		if ( empty( $core ) ) {
+			return $class_name;
 		}
 
+		// Check if the Formatter for this Post is overridden.
+		$overridden = $core->formatter->formatter_is_overridden( $post_id );
+
+		// Bail if not overridden.
+		if ( $overridden === false ) {
+			return $class_name;
+		}
+
+		// Get the Formatter for this Post.
+		$formatter = $core->formatter->formatter_get( $post_id );
+
+		// Build class.
+		$class_name = ' overridden_type-' . $formatter;
+
 		// --<
-		return $type_overridden;
+		return $class_name;
 
 	}
 
