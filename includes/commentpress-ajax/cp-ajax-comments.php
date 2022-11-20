@@ -214,7 +214,7 @@ function cpajax_plugin_can_activate() {
 	}
 
 	// It's the Theme My Login Page.
-	if ( $commentpress_core->is_theme_my_login_page() ) {
+	if ( $commentpress_core->plugins->is_theme_my_login_page() ) {
 		return false;
 	}
 
@@ -868,7 +868,7 @@ function cpajax_infinite_scroll_load_next_page() {
 	if ( defined( 'DOING_AJAX' ) && DOING_AJAX && is_admin() ) {
 
 		// Add CommentPress Core filter to the content when it's on the admin side.
-		add_filter( 'the_content', [ $commentpress_core->parser, 'the_content' ], 20 );
+		add_filter( 'the_content', [ $commentpress_core->parser, 'the_content_parse' ], 20 );
 
 	}
 

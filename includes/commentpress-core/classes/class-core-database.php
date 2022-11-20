@@ -1127,7 +1127,7 @@ class CommentPress_Core_Database {
 		$this->option_set( 'cp_blog_type', $cp_blog_type );
 
 		// If it's a Group Blog.
-		if ( $this->core->is_groupblog() ) {
+		if ( $this->core->bp->is_groupblog() ) {
 
 			// Get the Group ID.
 			$group_id = get_groupblog_group_id( get_current_blog_id() );
@@ -2645,7 +2645,7 @@ class CommentPress_Core_Database {
 		}
 
 		// Are we logged in AND in a BuddyPress scenario?
-		if ( is_user_logged_in() && $this->core->is_buddypress() ) {
+		if ( is_user_logged_in() && $this->core->bp->is_buddypress() ) {
 
 			// Regardless of version, settings can be made in bp-custom.php.
 			if ( defined( 'BP_DISABLE_ADMIN_BAR' ) && BP_DISABLE_ADMIN_BAR ) {
@@ -2709,7 +2709,7 @@ class CommentPress_Core_Database {
 		}
 
 		// If on a public Group Blog and User isn't logged in.
-		if ( $this->core->is_groupblog() && ! is_user_logged_in() ) {
+		if ( $this->core->bp->is_groupblog() && ! is_user_logged_in() ) {
 
 			// Don't add rich text editor, because only members can comment.
 			$vars['cp_tinymce'] = 0;
@@ -2726,7 +2726,7 @@ class CommentPress_Core_Database {
 		$vars['cp_is_mobile'] = 0;
 
 		// Is it a mobile?
-		if ( isset( $this->is_mobile ) && $this->is_mobile ) {
+		if ( $this->core->device->is_mobile() ) {
 
 			// Is mobile.
 			$vars['cp_is_mobile'] = 1;
@@ -2740,7 +2740,7 @@ class CommentPress_Core_Database {
 		$vars['cp_is_touch'] = 0;
 
 		// Is it a touch device?
-		if ( isset( $this->is_mobile_touch ) && $this->is_mobile_touch ) {
+		if ( $this->core->device->is_touch() ) {
 
 			// Is touch.
 			$vars['cp_is_touch'] = 1;
@@ -2765,7 +2765,7 @@ class CommentPress_Core_Database {
 		$vars['cp_is_tablet'] = 0;
 
 		// Is it a touch device?
-		if ( isset( $this->is_tablet ) && $this->is_tablet ) {
+		if ( $this->core->device->is_tablet() ) {
 
 			// Is touch.
 			$vars['cp_is_tablet'] = 1;
@@ -2793,10 +2793,10 @@ class CommentPress_Core_Database {
 		$vars['cp_special_page'] = ( $this->is_special_page() ) ? '1' : '0';
 
 		// Are we in a BuddyPress scenario?
-		if ( $this->core->is_buddypress() ) {
+		if ( $this->core->bp->is_buddypress() ) {
 
 			// Is it a component homepage?
-			if ( $this->core->is_buddypress_special_page() ) {
+			if ( $this->core->bp->is_buddypress_special_page() ) {
 
 				// Treat them the way we do ours.
 				$vars['cp_special_page'] = '1';
@@ -2877,118 +2877,6 @@ class CommentPress_Core_Database {
 
 		// --<
 		return apply_filters( 'commentpress_get_javascript_vars', $vars );
-
-	}
-
-	/**
-	 * Sets class properties for mobile browsers.
-	 *
-	 * @since 3.4
-	 */
-	public function test_for_mobile() {
-
-		// Init mobile flag.
-		$this->is_mobile = false;
-
-		// Init tablet flag.
-		$this->is_tablet = false;
-
-		// Init touch flag.
-		$this->is_mobile_touch = false;
-
-		// Bail if there is no user agent.
-		if ( ! isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
-			return;
-		}
-
-		// The old CommentPress also includes Mobile_Detect.
-		if ( ! class_exists( 'Mobile_Detect' ) ) {
-			include_once COMMENTPRESS_PLUGIN_PATH . 'includes/commentpress-core/assets/includes/mobile-detect/Mobile_Detect.php';
-		}
-
-		// Init.
-		$detect = new Mobile_Detect();
-
-		// Overwrite flag if mobile.
-		if ( $detect->isMobile() ) {
-			$this->is_mobile = true;
-		}
-
-		// Overwrite flag if tablet.
-		if ( $detect->isTablet() ) {
-			$this->is_tablet = true;
-		}
-
-		// To guess at touch devices, we assume *either* phone *or* tablet..
-		if ( $this->is_mobile || $this->is_tablet ) {
-			$this->is_mobile_touch = true;
-		}
-
-	}
-
-	/**
-	 * Returns class properties for mobile browsers.
-	 *
-	 * @since 3.4
-	 *
-	 * @return bool $is_mobile True if mobile device, false otherwise.
-	 */
-	public function is_mobile() {
-
-		// Do we have the property?
-		if ( ! isset( $this->is_mobile ) ) {
-
-			// Get it.
-			$this->test_for_mobile();
-
-		}
-
-		// --<
-		return $this->is_mobile;
-
-	}
-
-	/**
-	 * Returns class properties for tablet browsers.
-	 *
-	 * @since 3.4
-	 *
-	 * @return bool $is_tablet True if tablet device, false otherwise.
-	 */
-	public function is_tablet() {
-
-		// Do we have the property?
-		if ( ! isset( $this->is_tablet ) ) {
-
-			// Get it.
-			$this->test_for_mobile();
-
-		}
-
-		// --<
-		return $this->is_tablet;
-
-	}
-
-	/**
-	 * Returns class properties for touch devices.
-	 *
-	 * @since 3.4
-	 *
-	 * @return bool $is_touch True if touch device, false otherwise.
-	 */
-	public function is_touch() {
-
-		// Do we have the property?
-		if ( ! isset( $this->is_mobile_touch ) ) {
-
-			// Get it.
-			$this->test_for_mobile();
-
-		}
-
-		// --<
-		return $this->is_mobile_touch;
 
 	}
 

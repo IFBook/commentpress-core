@@ -178,11 +178,11 @@ global $commentpress_core, $post, $blog_id;
 if (
 	is_multisite() AND
 	is_object( $commentpress_core ) AND
-	$commentpress_core->is_buddypress()
+	$commentpress_core->bp->is_buddypress()
 ) {
 
 	// If on either Group Blog or main BuddyPress Blog.
-	if ( $commentpress_core->is_groupblog() OR bp_is_root_blog() ) {
+	if ( $commentpress_core->bp->is_groupblog() OR bp_is_root_blog() ) {
 
 		// Define args.
 		$recent_groupblog_activity = [

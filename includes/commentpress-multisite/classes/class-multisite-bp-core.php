@@ -567,7 +567,6 @@ class CommentPress_Multisite_BuddyPress {
 		// Init vars.
 		$is_groupblog = false;
 		$is_groupsite = false;
-		$is_working_paper = false;
 
 		// Get Group Blog status.
 		$is_groupblog = $this->is_commentpress_groupblog();
@@ -609,41 +608,12 @@ class CommentPress_Multisite_BuddyPress {
 				// Set Activity Type.
 				$type = 'new_groupsite_comment';
 
-			} else {
-
-				// Do we have the function we need to call?
-				if ( function_exists( 'bpwpapers_is_working_paper' ) ) {
-
-					// Which Blog?
-					$blog_id = $activity->item_id;
-
-					// Only on working papers.
-					if ( ! bpwpapers_is_working_paper( $blog_id ) ) {
-						return $activity;
-					}
-
-					// Get the Group ID for this Blog.
-					$group_id = bpwpapers_get_group_by_blog_id( $blog_id );
-
-					// Sanity check.
-					if ( $group_id === false ) {
-						return $activity;
-					}
-
-					// Set Activity Type.
-					$type = 'new_working_paper_comment';
-
-					// Working paper is active.
-					$is_working_paper = true;
-
-				}
-
 			}
 
 		}
 
 		// Sanity check.
-		if ( ! $is_groupblog && ! $is_groupsite && ! $is_working_paper ) {
+		if ( ! $is_groupblog && ! $is_groupsite ) {
 			return $activity;
 		}
 
@@ -716,18 +686,6 @@ class CommentPress_Multisite_BuddyPress {
 			// Respect BP Group Sites filter for the name of the Activity item.
 			$activity_name = apply_filters(
 				'bpgsites_activity_post_name',
-				__( 'post', 'commentpress-core' ),
-				$post
-			);
-
-		}
-
-		// If on a CommentPress Core-enabled working paper.
-		if ( $is_working_paper ) {
-
-			// Respect BP Working Papers filter for the name of the Activity item.
-			$activity_name = apply_filters(
-				'bpwpapers_activity_post_name',
 				__( 'post', 'commentpress-core' ),
 				$post
 			);
@@ -1746,12 +1704,6 @@ class CommentPress_Multisite_BuddyPress {
 			remove_action( 'bp_activity_before_save', [ $bp_groupsites->activity, 'custom_comment_activity' ] );
 		}
 
-		// Drop the bp-working-papers Comment Activity action, if present.
-		global $bp_working_papers;
-		if ( ! is_null( $bp_working_papers ) && is_object( $bp_working_papers ) ) {
-			remove_action( 'bp_activity_before_save', [ $bp_working_papers->activity, 'custom_comment_activity' ] );
-		}
-
 		// Add our own custom Comment Activity.
 		add_action( 'bp_activity_before_save', [ $this, 'group_custom_comment_activity' ], 20, 1 );
 
@@ -2245,7 +2197,7 @@ class CommentPress_Multisite_BuddyPress {
 		if (
 			! is_null( $commentpress_core ) &&
 			is_object( $commentpress_core ) &&
-			$commentpress_core->is_groupblog()
+			$commentpress_core->bp->is_groupblog()
 		) {
 
 			return true;

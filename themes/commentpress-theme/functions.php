@@ -174,7 +174,7 @@ function commentpress_enqueue_scripts_and_styles() {
 		);
 
 		// Test for BuddyPress Special Page.
-		if ( $commentpress_core->is_buddypress() AND $commentpress_core->is_buddypress_special_page() ) {
+		if ( $commentpress_core->bp->is_buddypress_special_page() ) {
 
 			// Skip custom addComment.
 

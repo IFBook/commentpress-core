@@ -110,6 +110,24 @@ class CommentPress_Core {
 	public $bp;
 
 	/**
+	 * Plugin compatibility object.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var object $plugins The plugin compatibility object.
+	 */
+	public $plugins;
+
+	/**
+	 * Device detection object.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var object $device The Device detection object.
+	 */
+	public $device;
+
+	/**
 	 * Legacy Pages object.
 	 *
 	 * @since 4.0
@@ -202,6 +220,8 @@ class CommentPress_Core {
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-comments.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-revisions.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-bp-core.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-plugins.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-device.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-pages-legacy.php';
 
 		/**
@@ -231,6 +251,8 @@ class CommentPress_Core {
 		$this->comments = new CommentPress_Core_Comments( $this );
 		$this->revisions = new CommentPress_Core_Revisions( $this );
 		$this->bp = new CommentPress_Core_BuddyPress( $this );
+		$this->plugins = new CommentPress_Core_Plugins( $this );
+		$this->device = new CommentPress_Core_Device( $this );
 		$this->pages_legacy = new CommentPress_Core_Pages_Legacy( $this );
 
 	}
@@ -250,9 +272,6 @@ class CommentPress_Core {
 			add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes' ] );
 
 		} else {
-
-			// Modify the content (after all's done).
-			add_filter( 'the_content', [ $this, 'the_content' ], 20 );
 
 		}
 
@@ -313,80 +332,6 @@ class CommentPress_Core {
 	}
 
 	// -------------------------------------------------------------------------
-
-	/**
-	 * Parses Page/Post content.
-	 *
-	 * @since 3.0
-	 *
-	 * @param str $content The content of the Page/Post.
-	 * @return str $content The modified content.
-	 */
-	public function the_content( $content ) {
-
-		// Reference our Post.
-		global $post;
-
-		// JetPack 2.7 or greater parses the content in the head to create
-		// content summaries so prevent parsing unless this is the main content.
-		if ( is_admin() || ! in_the_loop() || ! is_main_query() ) {
-			return $content;
-		}
-
-		// Compat with Subscribe to Comments Reloaded.
-		if ( $this->is_subscribe_to_comments_reloaded_page() ) {
-			return $content;
-		}
-
-		// Compat with Theme My Login.
-		if ( $this->is_theme_my_login_page() ) {
-			return $content;
-		}
-
-		// Compat with Members List plugin.
-		if ( $this->is_members_list_page() ) {
-			return $content;
-		}
-
-		// Test for BuddyPress Special Page (compat with BuddyPress Docs).
-		if ( $this->is_buddypress() ) {
-
-			// Is it a component homepage?
-			if ( $this->is_buddypress_special_page() ) {
-
-				// --<
-				return $content;
-
-			}
-
-		}
-
-		// Init allowed.
-		$allowed = false;
-
-		// Only parse Posts or Pages.
-		if ( ( is_single() || is_page() || is_attachment() ) && ! $this->db->is_special_page() ) {
-			$allowed = true;
-		}
-
-		/**
-		 * If allowed, parse.
-		 *
-		 * @since 3.0
-		 *
-		 * @param bool $allowed True if allowed, false otherwise.
-		 */
-		if ( apply_filters( 'commentpress_force_the_content', $allowed ) ) {
-
-			// Delegate to parser.
-			$content = $this->parser->the_content( $content );
-
-		}
-
-		// --<
-		return $content;
-
-	}
 
 	/**
 	 * Retrieves option for displaying TOC.
@@ -880,95 +825,6 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Utility to check for presence of Theme My Login.
-	 *
-	 * @since 3.4
-	 *
-	 * @return bool $success True if Theme My Login Page, false otherwise
-	 */
-	public function is_theme_my_login_page() {
-
-		// Access Page.
-		global $post;
-
-		// Compat with Theme My Login.
-		if (
-			is_page() &&
-			! $this->db->is_special_page() &&
-			$post->post_name == 'login' &&
-			$post->post_content == '[theme-my-login]'
-		) {
-
-			// --<
-			return true;
-
-		}
-
-		// --<
-		return false;
-
-	}
-
-	/**
-	 * Utility to check for presence of Members List.
-	 *
-	 * @since 3.4.7
-	 *
-	 * @return bool $success True if is Members List Page, false otherwise.
-	 */
-	public function is_members_list_page() {
-
-		// Access Page.
-		global $post;
-
-		// Compat with Members List.
-		if (
-			is_page() &&
-			! $this->db->is_special_page() &&
-			( strstr( $post->post_content, '[members-list' ) !== false )
-		) {
-
-			// --<
-			return true;
-
-		}
-
-		// --<
-		return false;
-
-	}
-
-	/**
-	 * Utility to check for presence of Subscribe to Comments Reloaded.
-	 *
-	 * @since 3.5.9
-	 *
-	 * @return bool $success True if "Subscribe to Comments Reloaded" Page, false otherwise.
-	 */
-	public function is_subscribe_to_comments_reloaded_page() {
-
-		// Access Page.
-		global $post;
-
-		// Compat with Subscribe to Comments Reloaded.
-		if (
-			is_page() &&
-			! $this->db->is_special_page() &&
-			$post->ID == '9999999' &&
-			$post->guid == get_bloginfo( 'url' ) . '/?page_id=9999999'
-		) {
-
-			// --<
-			return true;
-
-		}
-
-		// --<
-		return false;
-
-	}
-
-	/**
 	 * Return the name of the default sidebar.
 	 *
 	 * @since 3.4
@@ -1133,27 +989,27 @@ class CommentPress_Core {
 		}
 
 		// BuddyPress Special Pages are not.
-		if ( $this->is_buddypress_special_page() ) {
+		if ( $this->bp->is_buddypress_special_page() ) {
 			return false;
 		}
 
 		// Theme My Login Page is not.
-		if ( $this->is_theme_my_login_page() ) {
+		if ( $this->plugins->is_theme_my_login_page() ) {
 			return false;
 		}
 
 		// Members List Page is not.
-		if ( $this->is_members_list_page() ) {
+		if ( $this->plugins->is_members_list_page() ) {
 			return false;
 		}
 
 		// Subscribe to Comments Reloaded Page is not.
-		if ( $this->is_subscribe_to_comments_reloaded_page() ) {
+		if ( $this->plugins->is_subscribe_to_comments_reloaded_page() ) {
 			return false;
 		}
 
 		/**
-		 * Filter comment allowed.
+		 * Filters "comment allowed" status.
 		 *
 		 * @since 3.4
 		 *
@@ -1163,6 +1019,8 @@ class CommentPress_Core {
 
 	}
 
+	// -------------------------------------------------------------------------
+
 	/**
 	 * Check if user agent is mobile.
 	 *
@@ -1171,10 +1029,7 @@ class CommentPress_Core {
 	 * @return bool $is_mobile True if mobile OS, false otherwise.
 	 */
 	public function is_mobile() {
-
-		// --<
-		return $this->db->is_mobile();
-
+		return $this->device->is_mobile();
 	}
 
 	/**
@@ -1185,10 +1040,7 @@ class CommentPress_Core {
 	 * @return boolean $is_tablet True if tablet OS, false otherwise.
 	 */
 	public function is_tablet() {
-
-		// --<
-		return $this->db->is_tablet();
-
+		return $this->device->is_tablet();
 	}
 
 	// -------------------------------------------------------------------------

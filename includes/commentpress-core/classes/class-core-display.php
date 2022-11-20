@@ -59,11 +59,6 @@ class CommentPress_Core_Display {
 			return;
 		}
 
-		/**
-		 * Moved mobile checks to class-core-database.php so it only loads as
-		 * needed and so that it loads *after* the old CommentPress loads it.
-		 */
-
 		// Register hooks.
 		$this->register_hooks();
 
@@ -96,7 +91,7 @@ class CommentPress_Core_Display {
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_styles' ] );
 
 		// Add script libraries.
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ], 20 );
 
 	}
 
@@ -256,9 +251,6 @@ class CommentPress_Core_Display {
 			return;
 		}
 
-		// Test for mobile user agents.
-		$this->core->db->test_for_mobile();
-
 		// Add jQuery libraries.
 		$this->get_jquery();
 
@@ -322,7 +314,7 @@ class CommentPress_Core_Display {
 	public function get_text_highlighter() {
 
 		// Only allow text highlighting on non-touch devices (allow testing override).
-		if ( ! $this->core->db->is_touch() || ( defined( 'COMMENTPRESS_TOUCH_SELECT' ) && COMMENTPRESS_TOUCH_SELECT ) ) {
+		if ( ! $this->core->device->is_touch() || ( defined( 'COMMENTPRESS_TOUCH_SELECT' ) && COMMENTPRESS_TOUCH_SELECT ) ) {
 
 			// Bail if not a commentable Page/Post.
 			if ( ! $this->core->is_commentable() ) {
@@ -456,9 +448,9 @@ class CommentPress_Core_Display {
 
 			// Don't return TinyMCE for touchscreens, mobile phones or tablets.
 			if (
-				( isset( $this->core->db->is_mobile_touch ) && $this->core->db->is_mobile_touch ) ||
-				( isset( $this->core->db->is_mobile ) && $this->core->db->is_mobile ) ||
-				( isset( $this->core->db->is_tablet ) && $this->core->db->is_tablet )
+				( $this->core->device->is_touch() ) ||
+				( $this->core->device->is_mobile() ) ||
+				( $this->core->device->is_tablet() )
 			) {
 
 				// Disallow.
@@ -672,10 +664,10 @@ HELPTEXT;
 		}
 
 		// Access plugin.
-		global $commentpress_core, $post;
+		global $post;
 
-		// If we have the plugin enabled. and it's BuddyPress.
-		if ( is_object( $post ) && is_object( $commentpress_core ) && $commentpress_core->is_buddypress() ) {
+		// If we have a Post and it's BuddyPress.
+		if ( is_object( $post ) && $this->core->bp->is_buddypress() ) {
 
 			// Construct User link.
 			$author = bp_core_get_userlink( $user->ID );

@@ -598,7 +598,7 @@ class CommentPress_Core_Navigator {
 		}
 
 		// Bail if this is a BuddyPress Page.
-		if ( $this->core->is_buddypress_special_page() ) {
+		if ( $this->core->bp->is_buddypress_special_page() ) {
 			return;
 		}
 
@@ -1174,7 +1174,7 @@ class CommentPress_Core_Navigator {
 		}
 
 		// Are we in a BuddyPress scenario?
-		if ( $this->core->is_buddypress() ) {
+		if ( $this->core->bp->is_buddypress() ) {
 
 			/*
 			 * BuddyPress creates its own Registration Page and redirects ordinary

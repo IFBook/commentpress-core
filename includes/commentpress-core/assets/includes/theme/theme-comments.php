@@ -138,7 +138,7 @@ if ( ! function_exists( 'commentpress_get_user_link' ) ) :
 		global $commentpress_core;
 
 		// If BuddyPress.
-		if ( is_object( $commentpress_core ) && $commentpress_core->is_buddypress() ) {
+		if ( is_object( $commentpress_core ) && $commentpress_core->bp->is_buddypress() ) {
 
 			// BuddyPress link - $no_anchor = null, $just_link = true.
 			$url = bp_core_get_userlink( $user->ID, null, true );

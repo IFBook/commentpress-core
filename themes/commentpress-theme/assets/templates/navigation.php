@@ -192,7 +192,7 @@ else {
 			//do_action( 'cp_nav_after_network_home_title' );
 
 			// Link to Group in multisite Group Blog.
-			if ( $commentpress_core->is_groupblog() ) {
+			if ( $commentpress_core->bp->is_groupblog() ) {
 
 				// Get current Blog ID.
 				$blog_id = get_current_blog_id();

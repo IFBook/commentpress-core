@@ -139,6 +139,10 @@ class CommentPress_Core_Parser {
 		// Set up items when "wp" action fires.
 		add_action( 'wp', [ $this, 'setup_items' ] );
 
+		// Modify the content after all built-in WordPress filters have run.
+		// TODO: Check that this priority is right.
+		add_filter( 'the_content', [ $this, 'the_content' ], 20 );
+
 	}
 
 	/**
@@ -191,6 +195,82 @@ class CommentPress_Core_Parser {
 	// -------------------------------------------------------------------------
 
 	/**
+	 * Parses Page/Post content.
+	 *
+	 * @since 3.0
+	 *
+	 * @param str $content The content of the Page/Post.
+	 * @return str $content The modified content.
+	 */
+	public function the_content( $content ) {
+
+		// Reference our Post.
+		global $post;
+
+		// JetPack 2.7 or greater parses the content in the head to create
+		// content summaries so prevent parsing unless this is the main content.
+		if ( is_admin() || ! in_the_loop() || ! is_main_query() ) {
+			return $content;
+		}
+
+		// Compat with Subscribe to Comments Reloaded.
+		if ( $this->core->plugins->is_subscribe_to_comments_reloaded_page() ) {
+			return $content;
+		}
+
+		// Compat with Theme My Login.
+		if ( $this->core->plugins->is_theme_my_login_page() ) {
+			return $content;
+		}
+
+		// Compat with Members List plugin.
+		if ( $this->core->plugins->is_members_list_page() ) {
+			return $content;
+		}
+
+		// Test for BuddyPress Special Page (compat with BuddyPress Docs).
+		if ( $this->core->bp->is_buddypress() ) {
+
+			// Is it a component homepage?
+			if ( $this->core->bp->is_buddypress_special_page() ) {
+
+				// --<
+				return $content;
+
+			}
+
+		}
+
+		// Init allowed.
+		$allowed = false;
+
+		// Only parse Posts or Pages.
+		if ( ( is_single() || is_page() || is_attachment() ) && ! $this->core->db->is_special_page() ) {
+			$allowed = true;
+		}
+
+		/**
+		 * If allowed, parse.
+		 *
+		 * @since 3.0
+		 *
+		 * @param bool $allowed True if allowed, false otherwise.
+		 */
+		if ( apply_filters( 'commentpress_force_the_content', $allowed ) ) {
+
+			// Delegate to method.
+			$content = $this->the_content_parse( $content );
+
+		}
+
+		// --<
+		return $content;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
 	 * Intercept content and modify based on Paragraphs, Blocks or Lines.
 	 *
 	 * @since 3.0
@@ -198,7 +278,7 @@ class CommentPress_Core_Parser {
 	 * @param str $content The existing content.
 	 * @return str $content The modified content.
 	 */
-	public function the_content( $content ) {
+	public function the_content_parse( $content ) {
 
 		// Reference our Post.
 		global $post;

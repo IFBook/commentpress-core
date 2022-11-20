@@ -138,7 +138,7 @@ if ( ! function_exists( 'commentpress_customize_site_image' ) ) :
 
 		// Kick out if BuddyPress Group Blog.
 		global $commentpress_core;
-		if ( $commentpress_core->is_groupblog() ) {
+		if ( $commentpress_core->bp->is_groupblog() ) {
 			return;
 		}
 
@@ -203,7 +203,7 @@ if ( ! function_exists( 'commentpress_customize_site_logo' ) ) :
 
 		// Kick out if BuddyPress Group Blog.
 		global $commentpress_core;
-		if ( $commentpress_core->is_groupblog() ) {
+		if ( $commentpress_core->bp->is_groupblog() ) {
 			return;
 		}
 
@@ -352,7 +352,7 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ) :
 		// -------------------------------------------------------------------------
 
 		// Test for Group Blog.
-		if ( is_object( $commentpress_core ) && $commentpress_core->is_groupblog() ) {
+		if ( is_object( $commentpress_core ) && $commentpress_core->bp->is_groupblog() ) {
 
 			// Get Group ID.
 			$group_id = get_groupblog_group_id( get_current_blog_id() );
@@ -617,7 +617,7 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		if ( is_object( $commentpress_core ) ) {
 
 			// Add BuddyPress Page class on BuddyPress Special Pages.
-			if ( $commentpress_core->is_buddypress_special_page() ) {
+			if ( $commentpress_core->bp->is_buddypress_special_page() ) {
 				$page_type = 'buddypress_page';
 			}
 
@@ -642,7 +642,7 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		if ( is_object( $commentpress_core ) ) {
 
 			// If it's a Group Blog.
-			if ( $commentpress_core->is_groupblog() ) {
+			if ( $commentpress_core->bp->is_groupblog() ) {
 				$is_groupblog = 'is-groupblog';
 			}
 
@@ -757,7 +757,7 @@ if ( ! function_exists( 'commentpress_document_title_parts' ) ) :
 		if ( is_object( $commentpress_core ) ) {
 
 			// If it's a Group Blog.
-			if ( $commentpress_core->is_groupblog() ) {
+			if ( $commentpress_core->bp->is_groupblog() ) {
 				if ( ! isset( $parts['site'] ) ) {
 					$parts['title'] .= commentpress_site_title( '|', false );
 					unset( $parts['tagline'] );
@@ -1224,7 +1224,7 @@ if ( ! function_exists( 'commentpress_echo_post_author' ) ) :
 		global $commentpress_core, $post;
 
 		// If we have the plugin enabled. and it's BuddyPress.
-		if ( is_object( $post ) && is_object( $commentpress_core ) && $commentpress_core->is_buddypress() ) {
+		if ( is_object( $post ) && is_object( $commentpress_core ) && $commentpress_core->bp->is_buddypress() ) {
 
 			// Construct User link.
 			$author = bp_core_get_userlink( $user->ID );
@@ -1275,7 +1275,7 @@ if ( ! function_exists( 'commentpress_show_activity_tab' ) ) :
 
 			// Is this multisite?
 			if (
-				( is_multisite() && is_main_site() && $commentpress_core->is_buddypress_special_page() ) ||
+				( is_multisite() && is_main_site() && $commentpress_core->bp->is_buddypress_special_page() ) ||
 				! is_object( $post )
 			) {
 

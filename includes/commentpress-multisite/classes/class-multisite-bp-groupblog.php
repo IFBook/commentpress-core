@@ -301,7 +301,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 		if (
 			! is_null( $commentpress_core ) &&
 			is_object( $commentpress_core ) &&
-			$commentpress_core->is_groupblog()
+			$commentpress_core->bp->is_groupblog()
 		) {
 
 			// Override default link name.
