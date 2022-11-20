@@ -1647,7 +1647,7 @@ if ( ! function_exists( 'commentpress_trap_empty_search' ) ) :
 	function commentpress_trap_empty_search() {
 
 		// Send to Search Page when there is an empty search.
-		if ( empty( $_GET['s'] ) ) {
+		if ( isset( $_GET['s'] ) && empty( $_GET['s'] ) ) {
 			return locate_template( [ 'search.php' ] );
 		}
 
