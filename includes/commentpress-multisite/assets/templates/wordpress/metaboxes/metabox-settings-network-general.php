@@ -40,15 +40,6 @@
 		</td>
 	</tr>
 
-	<tr valign="top">
-		<th scope="row">
-			<label for="cpmu_disable_translation_workflow"><?php esc_html_e( 'Disable Translation Workflow (Recommended because it is still very experimental)', 'commentpress-core' ); ?></label>
-		</th>
-		<td>
-			<input id="cpmu_disable_translation_workflow" name="cpmu_disable_translation_workflow" value="1" type="checkbox"<?php echo ( $disable_translation_workflow == '1' ? ' checked="checked"' : '' ); ?> />
-		</td>
-	</tr>
-
 	<?php
 
 	/**

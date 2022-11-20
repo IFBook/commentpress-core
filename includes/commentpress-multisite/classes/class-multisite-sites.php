@@ -47,15 +47,6 @@ class CommentPress_Multisite_Sites {
 	public $cpmu_title_page_content = '';
 
 	/**
-	 * Allow Translation Workflow flag.
-	 *
-	 * @since 3.3
-	 * @access public
-	 * @var str $cpmu_disable_translation_workflow The Translation Workflow allowed flag ('0' or '1').
-	 */
-	public $cpmu_disable_translation_workflow = '1';
-
-	/**
 	 * Constructor.
 	 *
 	 * @since 3.3
@@ -96,9 +87,6 @@ class CommentPress_Multisite_Sites {
 
 		// Activate Blog-specific CommentPress Core plugin.
 		add_action( 'wpmu_new_blog', [ $this, 'wpmu_new_blog' ], 12, 6 );
-
-		// Enable/disable Workflow sitewide.
-		add_filter( 'cp_class_commentpress_workflow_enabled', [ $this, 'get_workflow_enabled' ] );
 
 		// Add options to reset array.
 		add_filter( 'cpmu_db_options_get_defaults', [ $this, 'get_default_settings' ], 20, 1 );
@@ -163,9 +151,6 @@ class CommentPress_Multisite_Sites {
 
 		}
 
-		// Get Workflow element.
-		$workflow_html = $this->get_workflow();
-
 		// Get Blog Type element.
 		$type_html = $this->get_blogtype();
 
@@ -180,8 +165,6 @@ class CommentPress_Multisite_Sites {
 			<p>' . $text . '</p>
 
 			' . $forced_html . '
-
-			' . $workflow_html . '
 
 			' . $type_html . '
 
@@ -246,40 +229,6 @@ class CommentPress_Multisite_Sites {
 	}
 
 	/**
-	 * Get Workflow form elements.
-	 *
-	 * @since 3.3
-	 *
-	 * @return str $workflow_html The HTML form element.
-	 */
-	public function get_workflow() {
-
-		// Init.
-		$workflow_html = '';
-
-		// Get data.
-		$workflow = $this->multisite->db->get_workflow_data();
-
-		// If we have Workflow data.
-		if ( ! empty( $workflow ) ) {
-
-			// Show it.
-			$workflow_html = '
-
-			<div class="checkbox">
-				<label for="cp_blog_workflow">' . $workflow['element'] . ' ' . $workflow['label'] . '</label>
-			</div>
-
-			';
-
-		}
-
-		// --<
-		return $workflow_html;
-
-	}
-
-	/**
 	 * Get Blog Type form elements.
 	 *
 	 * @since 3.3
@@ -322,7 +271,6 @@ class CommentPress_Multisite_Sites {
 		$defaults = [
 			'cpmu_force_commentpress' => $this->cpmu_force_commentpress,
 			//'cpmu_title_page_content' => $this->cpmu_title_page_content,
-			'cpmu_disable_translation_workflow' => $this->cpmu_disable_translation_workflow,
 		];
 
 		/**
@@ -367,31 +315,6 @@ class CommentPress_Multisite_Sites {
 		// Set "Default Title Page content" option.
 		$this->multisite->db->option_set( 'cpmu_title_page_content', $cpmu_title_page_content );
 		*/
-
-		// Get "Disable Translation Workflow" value.
-		$cpmu_disable_translation_workflow = isset( $_POST['cpmu_disable_translation_workflow'] ) ?
-			sanitize_text_field( wp_unslash( $_POST['cpmu_disable_translation_workflow'] ) ) :
-			'0';
-
-		// Set "Disable Translation Workflow" option.
-		$this->multisite->db->option_set( 'cpmu_disable_translation_workflow', ( $cpmu_disable_translation_workflow ? 1 : 0 ) );
-
-	}
-
-	/**
-	 * Get Workflow enabled setting.
-	 *
-	 * @since 3.3
-	 *
-	 * @return bool $disabled True if disabled, false otherwise.
-	 */
-	public function get_workflow_enabled() {
-
-		// Get option.
-		$disabled = $this->multisite->db->option_get( 'cpmu_disable_translation_workflow' ) == '1' ? false : true;
-
-		// Return whatever option is set.
-		return $disabled;
 
 	}
 

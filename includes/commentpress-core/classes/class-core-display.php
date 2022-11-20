@@ -1240,40 +1240,6 @@ HELPTEXT;
 		// Init.
 		$html = '';
 
-		// Do we have the option to choose Blog Workflow (new in 3.3.1)?
-		if ( $this->core->db->option_exists( 'cp_blog_workflow' ) ) {
-
-			// Off by default.
-			$has_workflow = false;
-
-			// Allow overrides.
-			$has_workflow = apply_filters( 'cp_blog_workflow_exists', $has_workflow );
-
-			// If we have Workflow enabled, by a plugin, say.
-			if ( $has_workflow !== false ) {
-
-				// Define label.
-				$workflow_label = __( 'Enable Custom Workflow', 'commentpress-core' );
-
-				// Define label.
-				$workflow_label = apply_filters( 'cp_blog_workflow_label', $workflow_label );
-
-				// Add extra message.
-				$workflow_label .= __( ' (Not recommended because it is still very experimental)', 'commentpress-core' );
-
-				// Define upgrade.
-				$html .= '
-				<tr valign="top">
-					<th scope="row"><label for="cp_blog_workflow">' . $workflow_label . '</label></th>
-					<td><input id="cp_blog_workflow" name="cp_blog_workflow" value="1" type="checkbox" ' . ( $this->core->db->option_get( 'cp_blog_workflow' ) ? ' checked="checked"' : '' ) . ' /></td>
-
-				</tr>
-				';
-
-			}
-
-		}
-
 		// TODO: add infinite scroll switch when ready.
 
 		// --<
@@ -1518,36 +1484,6 @@ HELPTEXT;
 							' . $type_options . '
 						</select>
 					</td>
-				</tr>
-				';
-
-			}
-
-		}
-
-		// Do we have the option to choose Blog Workflow (new in 3.3.1)?
-		if ( ! $this->core->db->option_exists( 'cp_blog_workflow' ) ) {
-
-			// Off by default.
-			$has_workflow = false;
-
-			// Allow overrides.
-			$has_workflow = apply_filters( 'cp_blog_workflow_exists', $has_workflow );
-
-			// If we have Workflow enabled, by a plugin, say.
-			if ( $has_workflow !== false ) {
-
-				// Define label.
-				$workflow_label = __( 'Enable Custom Workflow', 'commentpress-core' );
-
-				// Define label.
-				$workflow_label = apply_filters( 'cp_blog_workflow_label', $workflow_label );
-
-				// Define upgrade.
-				$upgrade .= '
-				<tr valign="top">
-					<th scope="row"><label for="cp_blog_workflow">' . $workflow_label . '</label></th>
-					<td><input id="cp_blog_workflow" name="cp_blog_workflow" value="1" type="checkbox" /></td>
 				</tr>
 				';
 

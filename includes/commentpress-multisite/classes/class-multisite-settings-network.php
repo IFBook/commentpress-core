@@ -384,7 +384,6 @@ class CommentPress_Multisite_Settings_Network {
 
 		// Get settings.
 		$force_commentpress = $this->multisite->db->option_get( 'cpmu_force_commentpress' );
-		$disable_translation_workflow = $this->multisite->db->option_get( 'cpmu_disable_translation_workflow' );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-network-general.php';

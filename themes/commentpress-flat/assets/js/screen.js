@@ -592,13 +592,6 @@ CommentPress.theme.content = new function() {
 		// Store content padding-bottom on load.
 		content_padding_bottom = $('#page_wrapper').css( 'padding-bottom' );
 
-		// Hide workflow content.
-		$('#literal .post').css( 'display', 'none' );
-		$('#original .post').css( 'display', 'none' );
-
-		// Setup workflow tabs, if present.
-		CommentPress.common.content.workflow_tabs( content_min_height, content_padding_bottom );
-
 	};
 
 }; // End content class.

@@ -204,17 +204,6 @@ class CommentPress_Multisite_Database {
 		// Use passed value.
 		if ( $context == 'new_blog' ) {
 
-			// Check for Workflow (checkbox).
-			if ( isset( $_POST['cp_blog_workflow'] ) ) {
-
-				// Ensure boolean.
-				$cp_blog_workflow = ( $_POST['cp_blog_workflow'] == '1' ) ? 1 : 0;
-
-				// Set Workflow.
-				$commentpress_core->db->option_set( 'cp_blog_workflow', $cp_blog_workflow );
-
-			}
-
 			// Check for Blog Type (dropdown).
 			if ( isset( $_POST['cp_blog_type'] ) ) {
 
@@ -598,85 +587,6 @@ class CommentPress_Multisite_Database {
 	}
 
 	// -------------------------------------------------------------------------
-
-	/**
-	 * Get Workflow form elements.
-	 *
-	 * @since 3.3
-	 *
-	 * @return str The form HTML.
-	 */
-	private function get_workflow() {
-
-		// Init.
-		$workflow_html = '';
-
-		// Get data.
-		$workflow = $this->get_workflow_data();
-
-		// If we have Workflow data.
-		if ( ! empty( $workflow ) ) {
-
-			// Show it.
-			$workflow_html = '
-			<tr valign="top">
-				<th scope="row"><label for="cp_blog_workflow">' . $workflow['label'] . '</label></th>
-				<td>' . $workflow['element'] . '</td>
-			</tr>
-			';
-
-		}
-
-		// --<
-		return $workflow_html;
-
-	}
-
-	/**
-	 * Get Workflow form data.
-	 *
-	 * @since 3.3
-	 *
-	 * @return array $return Keyed array of form data.
-	 */
-	public function get_workflow_data() {
-
-		// Init.
-		$return = [];
-
-		// Off by default.
-		$has_workflow = false;
-
-		// Init output.
-		$workflow_html = '';
-
-		// Allow overrides.
-		$has_workflow = apply_filters( 'cp_blog_workflow_exists', $has_workflow );
-
-		// If we have Workflow enabled, by a plugin, say.
-		if ( $has_workflow !== false ) {
-
-			// Define Workflow label.
-			$workflow_label = __( 'Enable Custom Workflow', 'commentpress-core' );
-
-			// Allow overrides.
-			$workflow_label = apply_filters( 'cp_blog_workflow_label', $workflow_label );
-
-			// Add to return.
-			$return['label'] = $workflow_label;
-
-			// Define form element.
-			$workflow_element = '<input type="checkbox" value="1" id="cp_blog_workflow" name="cp_blog_workflow" />';
-
-			// Add to return.
-			$return['element'] = $workflow_element;
-
-		}
-
-		// --<
-		return $return;
-
-	}
 
 	// -------------------------------------------------------------------------
 

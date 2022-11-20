@@ -12,13 +12,11 @@
 
 
 
-	<div id="main_wrapper" class="clearfix<?php echo commentpress_theme_tabs_class_get(); ?>">
+	<div id="main_wrapper" class="clearfix">
 
-		<?php commentpress_theme_tabs_render(); ?>
+		<div id="page_wrapper">
 
-		<div id="page_wrapper"<?php echo commentpress_theme_tabs_classes_get(); ?>>
-
-			<div id="content" class="workflow-wrapper">
+			<div id="content" class="content-wrapper">
 
 				<div class="post<?php echo commentpress_get_post_css_override( get_the_ID() ); ?>" id="post-<?php the_ID(); ?>">
 
@@ -106,8 +104,6 @@
 				</div><!-- /post -->
 
 			</div><!-- /content -->
-
-			<?php commentpress_theme_tabs_content_render(); ?>
 
 		</div><!-- /page_wrapper -->
 

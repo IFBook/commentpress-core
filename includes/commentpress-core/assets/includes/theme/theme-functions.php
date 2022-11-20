@@ -17,9 +17,6 @@ require_once COMMENTPRESS_PLUGIN_PATH . 'includes/commentpress-core/assets/inclu
 // Include our BuddyPress compatibility file.
 require_once COMMENTPRESS_PLUGIN_PATH . 'includes/commentpress-core/assets/includes/theme/theme-buddypress.php';
 
-// Include our "Theme Tabs" class file.
-require_once COMMENTPRESS_PLUGIN_PATH . 'includes/commentpress-core/assets/includes/theme/theme-tabs.php';
-
 
 
 if ( ! function_exists( 'commentpress_admin_header' ) ) :
@@ -664,23 +661,8 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		// If we have the plugin enabled.
 		if ( is_object( $commentpress_core ) ) {
 
-			// Get type.
-			$type = $commentpress_core->db->option_get( 'cp_blog_type' );
-
-			// Get Workflow.
-			$workflow = $commentpress_core->db->option_get( 'cp_blog_workflow' );
-
-			/**
-			 * Allow plugins to override the Blog Type - for example if Workflow
-			 * is enabled, it might become a new Blog Type as far as BuddyPress
-			 * is concerned.
-			 *
-			 * @since 3.3
-			 *
-			 * @param int $type The numeric Blog Type.
-			 * @param bool $workflow True if Workflow enabled, false otherwise.
-			 */
-			$current_blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $type, $workflow );
+			// Get current Blog Type.
+			$current_blog_type = $commentpress_core->db->option_get( 'cp_blog_type' );
 
 			// If it's not the Main Site, add class.
 			if ( is_multisite() && ! is_main_site() ) {

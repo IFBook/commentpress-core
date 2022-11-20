@@ -149,17 +149,6 @@ class CommentPress_Core_Database {
 	public $blog_type = false;
 
 	/**
-	 * Default Blog Workflow.
-	 *
-	 * Like "translation", for example, off by default.
-	 *
-	 * @since 3.3
-	 * @access public
-	 * @var bool $blog_workflow True if Blog Workflow enabled.
-	 */
-	public $blog_workflow = 0;
-
-	/**
 	 * Default sidebar tab.
 	 *
 	 * @since 3.0
@@ -565,11 +554,6 @@ class CommentPress_Core_Database {
 			return true;
 		}
 
-		// Do we have the option to choose Blog Workflow (new in 3.3.1)?
-		if ( ! $this->option_exists( 'cp_blog_workflow' ) ) {
-			return true;
-		}
-
 		// Do we have the option to choose the TOC layout (new in 3.3)?
 		if ( ! $this->option_exists( 'cp_show_extended_toc' ) ) {
 			return true;
@@ -621,9 +605,6 @@ class CommentPress_Core_Database {
 		if ( ! $this->upgrade_required() ) {
 			return;
 		}
-
-		// Checkboxes send no value if not checked, so use a default.
-		$cp_blog_workflow = $this->blog_workflow;
 
 		/*
 		 * We don't receive disabled Post Types in $_POST, so let's default
@@ -775,17 +756,6 @@ class CommentPress_Core_Database {
 
 			// Add chosen cp_page_meta_visibility option.
 			$this->option_set( 'cp_page_meta_visibility', $choice );
-
-		}
-
-		// New in CommentPress 3.3.1 - are we missing the cp_blog_workflow option?
-		if ( ! $this->option_exists( 'cp_blog_workflow' ) ) {
-
-			// Get choice.
-			$choice = esc_sql( $cp_blog_workflow );
-
-			// Add chosen cp_blog_workflow option.
-			$this->option_set( 'cp_blog_workflow', $choice );
 
 		}
 
@@ -1007,7 +977,6 @@ class CommentPress_Core_Database {
 		$cp_show_subpages = 0;
 		$cp_show_extended_toc = 0;
 		$cp_blog_type = 0;
-		$cp_blog_workflow = 0;
 		$cp_sidebar_default = 'toc';
 		$cp_featured_images = 'n';
 		$cp_textblock_meta = 'y';
@@ -1153,10 +1122,6 @@ class CommentPress_Core_Database {
 		$cp_min_page_width = esc_sql( $cp_min_page_width );
 		$this->option_set( 'cp_min_page_width', $cp_min_page_width );
 
-		// Save Workflow.
-		$cp_blog_workflow = esc_sql( $cp_blog_workflow );
-		$this->option_set( 'cp_blog_workflow', ( $cp_blog_workflow ? 1 : 0 ) );
-
 		// Save Blog Type.
 		$cp_blog_type = esc_sql( $cp_blog_type );
 		$this->option_set( 'cp_blog_type', $cp_blog_type );
@@ -1168,18 +1133,8 @@ class CommentPress_Core_Database {
 			$group_id = get_groupblog_group_id( get_current_blog_id() );
 			if ( isset( $group_id ) && is_numeric( $group_id ) && $group_id > 0 ) {
 
-				/**
-				 * Allow plugins to override the Blog Type - for example if Workflow
-				 * is enabled, it might become a new Blog Type as far as BuddyPress
-				 * is concerned.
-				 *
-				 * @param int $cp_blog_type The numeric Blog Type.
-				 * @param bool $cp_blog_workflow True if Workflow enabled, false otherwise.
-				 */
-				$blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $cp_blog_type, $cp_blog_workflow );
-
-				// Store the type in Group meta.
-				groups_update_groupmeta( $group_id, 'groupblogtype', 'groupblogtype-' . $blog_type );
+				// Store the Blog Type in Group meta.
+				groups_update_groupmeta( $group_id, 'groupblogtype', 'groupblogtype-' . $cp_blog_type );
 
 			}
 
@@ -3580,7 +3535,6 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			'cp_excerpt_length' => $this->excerpt_length,
 			'cp_para_comments_live' => $this->para_comments_live,
 			'cp_blog_type' => $this->blog_type,
-			'cp_blog_workflow' => $this->blog_workflow,
 			'cp_sidebar_default' => $this->sidebar_default,
 			'cp_featured_images' => $this->featured_images,
 			'cp_textblock_meta' => $this->textblock_meta,
@@ -3639,9 +3593,6 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// Blog: excerpt length.
 		$this->option_set( 'cp_excerpt_length', $this->excerpt_length );
-
-		// Workflow.
-		$this->option_set( 'cp_blog_workflow', $this->blog_workflow );
 
 		// Blog Type.
 		$this->option_set( 'cp_blog_type', $this->blog_type );

@@ -250,9 +250,7 @@ class CommentPress_Core_Revisions {
 		 *
 		 * Used internally by:
 		 *
-		 * * CommentPress_Core_Workflow::workflow_save_copy() (Priority: 21)
-		 *
-		 * @since 3.3 Named "cp_workflow_save_copy"
+		 * @since 3.3
 		 * @since 4.0 Renamed since it's only used internally.
 		 *
 		 * @param int $new_post_id The numeric ID of the new Post.

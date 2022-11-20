@@ -1785,7 +1785,7 @@ body.create-blog #content #setupform #blogname
 }
 
 body.create-blog #content #setupform label.checkbox,
-body.create-blog #content #cp-multisite-options .cp-workflow-type label
+body.create-blog #content #cp-multisite-options .cp-blog-type label
 {
 	color: #000;
 	font-size: 14px;
@@ -1794,13 +1794,13 @@ body.create-blog #content #cp-multisite-options .cp-workflow-type label
 	text-transform: none;
 }
 
-body.create-blog #content #cp-multisite-options .cp-workflow-type label
+body.create-blog #content #cp-multisite-options .cp-blog-type label
 {
 	font-size: 15px;
 	color: #761D19;
 }
 
-body.create-blog #content #cp-multisite-options .cp-workflow-type
+body.create-blog #content #cp-multisite-options .cp-blog-type
 {
 	margin: 15px 0 5px 0;
 }
@@ -4149,7 +4149,7 @@ BuddyPress Colour Scheme
 #buddypress .activity-list li.load-newest a
 #buddypress .activity-list li.load-newest a:active,
 body.create-blog #content #setupform label,
-body.create-blog #content #cp-multisite-options .cp-workflow-type label,
+body.create-blog #content #cp-multisite-options .cp-blog-type label,
 body.create-blog #cp-multisite-options h4,
 #buddypress table#message-threads tr td.thread-from a,
 #buddypress table#message-threads tr td.thread-info p a,

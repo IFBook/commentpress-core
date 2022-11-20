@@ -83,15 +83,6 @@ class CommentPress_Core {
 	public $formatter;
 
 	/**
-	 * Workflow object.
-	 *
-	 * @since 3.3
-	 * @access public
-	 * @var object $workflow The Workflow object.
-	 */
-	public $workflow;
-
-	/**
 	 * Revisions object.
 	 *
 	 * @since 4.0
@@ -199,7 +190,6 @@ class CommentPress_Core {
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-navigation.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-parser.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-formatter.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-workflow.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-revisions.php';
 
 		/**
@@ -226,7 +216,6 @@ class CommentPress_Core {
 		$this->nav = new CommentPress_Core_Navigator( $this );
 		$this->parser = new CommentPress_Core_Parser( $this );
 		$this->formatter = new CommentPress_Core_Formatter( $this );
-		$this->workflow = new CommentPress_Core_Workflow( $this );
 		$this->revisions = new CommentPress_Core_Revisions( $this );
 
 	}
@@ -808,38 +797,6 @@ class CommentPress_Core {
 			'side'
 		);
 
-		// Get Workflow.
-		$workflow = $this->db->option_get( 'cp_blog_workflow' );
-
-		// If it's enabled.
-		if ( $workflow == '1' ) {
-
-			// Init title.
-			$title = __( 'Workflow', 'commentpress-core' );
-
-			// Allow overrides.
-			$title = apply_filters( 'cp_workflow_metabox_title', $title );
-
-			// Add our meta box to Posts.
-			add_meta_box(
-				'commentpress_workflow_fields',
-				$title,
-				[ $this, 'custom_box_workflow' ],
-				'post',
-				'normal'
-			);
-
-			// Add our meta box to Pages.
-			add_meta_box(
-				'commentpress_workflow_fields',
-				$title,
-				[ $this, 'custom_box_workflow' ],
-				'page',
-				'normal'
-			);
-
-		}
-
 	}
 
 	/**
@@ -1006,18 +963,6 @@ class CommentPress_Core {
 
 		// Get starting para number.
 		$this->get_para_numbering_metabox( $post );
-
-	}
-
-	/**
-	 * Adds Workflow meta box to Post edit screens.
-	 *
-	 * @since 3.4
-	 */
-	public function custom_box_workflow() {
-
-		// We now need to add any Workflow that a plugin might want.
-		do_action( 'cp_workflow_metabox' );
 
 	}
 

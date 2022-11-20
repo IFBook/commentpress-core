@@ -186,23 +186,6 @@ class CommentPress_Multisite_BuddyPress {
 
 		// ---------------------------------------------------------------------
 
-		/*
-		 * Duplicated from 'class-core-workflow.php' because CommentPress Core need
-		 * not be active on the main Blog, but we still need the options to appear
-		 * in the Group Blog Create screen.
-		 */
-
-		// Enable Workflow.
-		add_filter( 'cp_blog_workflow_exists', [ $this, 'blog_workflow_exists' ], 21 );
-
-		// Override label.
-		add_filter( 'cp_blog_workflow_label', [ $this, 'blog_workflow_label' ], 21 );
-
-		// Override Blog Type if Workflow is on.
-		add_filter( 'cp_get_group_meta_for_blog_type', [ $this, 'group_meta_set_blog_type' ], 21, 2 );
-
-		// ---------------------------------------------------------------------
-
 		// Add form elements to Group Blog form.
 		add_action( 'signup_blogform', [ $this, 'signup_blogform' ] );
 
@@ -1564,69 +1547,6 @@ class CommentPress_Multisite_BuddyPress {
 	}
 
 	/**
-	 * Enable Workflow.
-	 *
-	 * @since 3.3
-	 *
-	 * @param bool $exists True if "workflow" is enabled, false otherwise.
-	 * @return bool $exists True if "workflow" is enabled, false otherwise.
-	 */
-	public function blog_workflow_exists( $exists ) {
-
-		// Switch on, but allow overrides.
-		return apply_filters( 'cp_class_commentpress_workflow_enabled', true );
-
-	}
-
-	/**
-	 * Override the name of the Workflow checkbox label.
-	 *
-	 * @since 3.3
-	 *
-	 * @param str $name The existing singular name of the label.
-	 * @return str $name The modified singular name of the label.
-	 */
-	public function blog_workflow_label( $name ) {
-
-		// Set label, but allow overrides.
-		return apply_filters( 'cp_class_commentpress_workflow_label', __( 'Enable Translation Workflow', 'commentpress-core' ) );
-
-	}
-
-	/**
-	 * Amend the Group meta if Workflow is enabled.
-	 *
-	 * @since 3.3
-	 *
-	 * @param str $blog_type The existing numerical type of the Blog.
-	 * @param int|bool $blog_workflow A positive number if Workflow enabled, false otherwise.
-	 * @return str $blog_type The modified numerical type of the Blog.
-	 */
-	public function group_meta_set_blog_type( $blog_type, $blog_workflow ) {
-
-		// If the Blog Workflow is enabled, then this is a Translation Group.
-		if ( $blog_workflow == '1' ) {
-
-			// Translation is type 2.
-			$blog_type = '2';
-
-		}
-
-		/**
-		 * Allow plugins to override the Blog Type - for example if Workflow
-		 * is enabled, it might become a new Blog Type as far as BuddyPress
-		 * is concerned.
-		 *
-		 * @since 3.3
-		 *
-		 * @param int $blog_type The numeric Blog Type.
-		 * @param int|bool $blog_workflow A positive number if Workflow enabled, false otherwise.
-		 */
-		return apply_filters( 'cp_class_commentpress_workflow_group_blogtype', $blog_type, $blog_workflow );
-
-	}
-
-	/**
 	 * Hook into the Group Blog signup form.
 	 *
 	 * @since 3.3
@@ -1980,35 +1900,6 @@ class CommentPress_Multisite_BuddyPress {
 
 			}
 
-			// Off by default.
-			$has_workflow = false;
-
-			// Init output.
-			$workflow_html = '';
-
-			// Allow overrides.
-			$has_workflow = apply_filters( 'cp_blog_workflow_exists', $has_workflow );
-
-			// If we have Workflow enabled, by a plugin, say.
-			if ( $has_workflow !== false ) {
-
-				// Define Workflow label.
-				$workflow_label = __( 'Enable Custom Workflow', 'commentpress-core' );
-
-				// Allow overrides.
-				$workflow_label = apply_filters( 'cp_blog_workflow_label', $workflow_label );
-
-				// Show it.
-				$workflow_html = '
-
-				<div class="checkbox">
-					<label for="cp_blog_workflow"><input type="checkbox" value="1" id="cp_blog_workflow" name="cp_blog_workflow" /> ' . $workflow_label . '</label>
-				</div>
-
-				';
-
-			}
-
 			// Assume no types.
 			$types = [];
 
@@ -2070,7 +1961,6 @@ class CommentPress_Multisite_BuddyPress {
 				<h3>' . __( 'CommentPress Options', 'commentpress-core' ) . '</h3>
 				<p>' . $text . '</p>
 				' . $forced_html . '
-				' . $workflow_html . '
 				' . $type_html . '
 			</div>
 
@@ -2128,25 +2018,12 @@ class CommentPress_Multisite_BuddyPress {
 		// Get Blog Type (saved already).
 		$cp_blog_type = $commentpress_core->db->option_get( 'cp_blog_type' );
 
-		// Get Workflow (saved already).
-		$cp_blog_workflow = $commentpress_core->db->option_get( 'cp_blog_workflow' );
-
 		// Did we get a Group ID before we switched Blogs?
 		if ( isset( $group_id ) ) {
 
-			/**
-			 * Allow plugins to override the Blog Type - for example if Workflow
-			 * is enabled, it might become a new Blog Type as far as BuddyPress
-			 * is concerned.
-			 *
-			 * @param int $cp_blog_type The numeric Blog Type
-			 * @param bool $cp_blog_workflow True if Workflow enabled, false otherwise
-			 */
-			$blog_type = apply_filters( 'cp_get_group_meta_for_blog_type', $cp_blog_type, $cp_blog_workflow );
-
 			// Set the type as Group meta info.
 			// We also need to change this when the type is changed from the CommentPress Core Admin Page.
-			groups_update_groupmeta( $group_id, 'groupblogtype', 'groupblogtype-' . $blog_type );
+			groups_update_groupmeta( $group_id, 'groupblogtype', 'groupblogtype-' . $cp_blog_type );
 
 		}
 
@@ -2203,9 +2080,9 @@ class CommentPress_Multisite_BuddyPress {
 		 *
 		 * @param int $blog_id The numeric ID of the WordPress Blog
 		 * @param int $cp_blog_type The numeric Blog Type
-		 * @param bool $cp_blog_workflow True if Workflow enabled, false otherwise
+		 * @param bool False since this is now deprecated.
 		 */
-		do_action( 'cp_new_groupblog_created', $blog_id, $cp_blog_type, $cp_blog_workflow );
+		do_action( 'cp_new_groupblog_created', $blog_id, $cp_blog_type, false );
 
 		// Switch back.
 		restore_current_blog();
@@ -2244,35 +2121,6 @@ class CommentPress_Multisite_BuddyPress {
 
 			// Define text.
 			$text = __( 'Do you want to make the new site a CommentPress document?', 'commentpress-core' );
-
-		}
-
-		// Off by default.
-		$has_workflow = false;
-
-		// Init output.
-		$workflow_html = '';
-
-		// Allow overrides.
-		$has_workflow = apply_filters( 'cp_blog_workflow_exists', $has_workflow );
-
-		// If we have Workflow enabled, by a plugin, say.
-		if ( $has_workflow !== false ) {
-
-			// Define Workflow label.
-			$workflow_label = __( 'Enable Custom Workflow', 'commentpress-core' );
-
-			// Allow overrides.
-			$workflow_label = apply_filters( 'cp_blog_workflow_label', $workflow_label );
-
-			// Show it.
-			$workflow_html = '
-
-			<div class="checkbox">
-				<label for="cp_blog_workflow"><input type="checkbox" value="1" id="cp_blog_workflow" name="cp_blog_workflow" /> ' . $workflow_label . '</label>
-			</div>
-
-			';
 
 		}
 
@@ -2318,7 +2166,7 @@ class CommentPress_Multisite_BuddyPress {
 			// Show it.
 			$type_html = '
 
-			<div class="dropdown cp-workflow-type">
+			<div class="dropdown cp-blog-type">
 				<label for="cp_blog_type">' . $type_label . '</label> <select id="cp_blog_type" name="cp_blog_type">
 
 				' . $type_options . '
@@ -2341,8 +2189,6 @@ class CommentPress_Multisite_BuddyPress {
 			<p>' . $text . '</p>
 
 			' . $forced_html . '
-
-			' . $workflow_html . '
 
 			' . $type_html . '
 

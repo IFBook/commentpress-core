@@ -1574,66 +1574,6 @@ CommentPress.common.content = new function() {
 
 	}
 
-
-
-	/**
-	 * Workflow tabs.
-	 *
-	 * @since 3.8
-	 *
-	 * @param str content_min_height The min-height CSS declaration.
-	 * @param str content_padding_bottom The content wrapper padding-bottom CSS declaration.
-	 */
-	this.workflow_tabs = function( content_min_height, content_padding_bottom ) {
-
-		// Hide workflow content.
-		$('#literal .post').css( 'display', 'none' );
-		$('#original .post').css( 'display', 'none' );
-
-		/**
-		 * Clicking on the workflow tabs.
-		 *
-		 * @since 3.8
-		 */
-		$('#container').on( 'click', '#content-tabs li h2 a', function( event ) {
-
-			// Define vars.
-			var target_id;
-
-			// Override event.
-			event.preventDefault();
-
-			// Hide others and show corresponding item.
-
-			// Get href.
-			target_id = this.href.split('#')[1];
-
-			// Hide all.
-			$('.post').css( 'display', 'none' );
-
-			// Remove content min-height.
-			$('.workflow-wrapper').css( 'min-height', '0' );
-
-			// Remove bottom padding.
-			$('.workflow-wrapper').css( 'padding-bottom', '0' );
-
-			// Set min-height of target.
-			$('#' + target_id + '.workflow-wrapper').css( 'min-height', content_min_height );
-
-			// Set padding-bottom of target.
-			$('#' + target_id + '.workflow-wrapper').css( 'padding-bottom', content_padding_bottom );
-
-			// Show it.
-			$('#' + target_id + ' .post').css( 'display', 'block' );
-
-			// Amend CSS of list items to mimic tabs.
-			$('#content-tabs li').removeClass( 'default-content-tab' );
-			$(this).parent().parent().addClass( 'default-content-tab' );
-
-		});
-
-	};
-
 }; // End CommentPress Core setup content class.
 
 
