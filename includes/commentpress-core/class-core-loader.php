@@ -83,31 +83,40 @@ class CommentPress_Core {
 	public $formatter;
 
 	/**
+	 * Comments object.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var object $comments The Comments object.
+	 */
+	public $comments;
+
+	/**
 	 * Revisions object.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $revisions The Workflow object.
+	 * @var object $revisions The Revisions object.
 	 */
 	public $revisions;
 
 	/**
-	 * BuddyPress present flag.
+	 * BuddyPress compatibility object.
 	 *
-	 * @since 3.3
+	 * @since 4.0
 	 * @access public
-	 * @var bool $buddypress True if BuddyPress present, false otherwise.
+	 * @var object $bp The BuddyPress compatibility object.
 	 */
-	public $buddypress = false;
+	public $bp;
 
 	/**
-	 * BuddyPress Group Blog flag.
+	 * Legacy Pages object.
 	 *
-	 * @since 3.3
+	 * @since 4.0
 	 * @access public
-	 * @var bool $bp_groupblog True if BuddyPress Group Blog present, false otherwise.
+	 * @var object $pages_legacy The legacy Special Pages object.
 	 */
-	public $bp_groupblog = false;
+	public $pages_legacy;
 
 	/**
 	 * Classes directory path.
@@ -190,7 +199,10 @@ class CommentPress_Core {
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-navigation.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-parser.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-formatter.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-comments.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-revisions.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-bp-core.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-pages-legacy.php';
 
 		/**
 		 * Broadcast that class files have been included.
@@ -216,7 +228,10 @@ class CommentPress_Core {
 		$this->nav = new CommentPress_Core_Navigator( $this );
 		$this->parser = new CommentPress_Core_Parser( $this );
 		$this->formatter = new CommentPress_Core_Formatter( $this );
+		$this->comments = new CommentPress_Core_Comments( $this );
 		$this->revisions = new CommentPress_Core_Revisions( $this );
+		$this->bp = new CommentPress_Core_BuddyPress( $this );
+		$this->pages_legacy = new CommentPress_Core_Pages_Legacy( $this );
 
 	}
 
@@ -228,77 +243,18 @@ class CommentPress_Core {
 	 */
 	public function register_hooks() {
 
-		// Modify Comment posting.
-		add_action( 'comment_post', [ $this, 'save_comment' ], 10, 2 );
-
-		// Exclude Special Pages from listings.
-		add_filter( 'wp_list_pages_excludes', [ $this, 'exclude_special_pages' ], 10, 1 );
-		add_filter( 'parse_query', [ $this, 'exclude_special_pages_from_admin' ], 10, 1 );
-
 		// Is this the back end?
 		if ( is_admin() ) {
-
-			// Modify all.
-			add_filter( 'views_edit-page', [ $this, 'update_page_counts_in_admin' ], 10, 1 );
 
 			// Add meta boxes.
 			add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes' ] );
 
-			// Comment Block quicktag.
-			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_scripts' ] );
-
 		} else {
-
-			// Add script libraries.
-			add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
-
-			// Add CSS files.
-			add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_styles' ] );
-
-			// Add template redirect for TOC behaviour.
-			add_action( 'template_redirect', [ $this, 'redirect_to_child' ] );
 
 			// Modify the content (after all's done).
 			add_filter( 'the_content', [ $this, 'the_content' ], 20 );
 
 		}
-
-		// If we're in a multisite scenario.
-		// TODO: Move to WordPress Multisite class.
-		if ( is_multisite() ) {
-
-			// Add callback for Signup Page to include sidebar.
-			add_action( 'after_signup_form', [ $this, 'after_signup_form' ], 20 );
-
-			// If subdirectory install.
-			if ( ! is_subdomain_install() ) {
-
-				// Add filter for reserved CommentPress Core Special Page names.
-				add_filter( 'subdirectory_reserved_names', [ $this, 'add_reserved_names' ] );
-
-			}
-
-		}
-
-		// If BuddyPress installed, then the following actions will fire.
-
-		// Enable BuddyPress functionality.
-		add_action( 'bp_include', [ $this, 'buddypress_init' ] );
-
-		// Add BuddyPress functionality - really late, so Group object is set up.
-		add_action( 'bp_setup_globals', [ $this, 'buddypress_globals_loaded' ], 1000 );
-
-		// Actions to perform on BuddyPress loaded.
-		add_action( 'bp_loaded', [ $this, 'bp_docs_loaded' ], 20 );
-
-		// Actions to perform on BuddyPress Docs load.
-		add_action( 'bp_docs_load', [ $this, 'bp_docs_loaded' ], 20 );
-
-		// Override BuddyPress Docs comment template.
-		add_filter( 'bp_docs_comment_template_path', [ $this, 'bp_docs_comment_tempate' ], 20, 2 );
-
-		// Amend the behaviour of Featured Comments plugin.
-		add_action( 'plugins_loaded', [ $this, 'featured_comments_override' ], 1000 );
 
 		/**
 		 * Broadcast that callbacks have been added.
@@ -308,8 +264,6 @@ class CommentPress_Core {
 		do_action( 'commentpress_after_hooks' );
 
 	}
-
-	// -------------------------------------------------------------------------
 
 	/**
 	 * Runs when plugin is activated.
@@ -358,223 +312,7 @@ class CommentPress_Core {
 
 	}
 
-	/**
-	 * Called when BuddyPress is active.
-	 *
-	 * @since 3.4
-	 */
-	public function buddypress_init() {
-
-		// We've got BuddyPress installed.
-		$this->buddypress = true;
-
-	}
-
-	/**
-	 * Configure when BuddyPress is loaded.
-	 *
-	 * @since 3.4
-	 */
-	public function buddypress_globals_loaded() {
-
-		// Test for a bp-groupblog function.
-		if ( function_exists( 'get_groupblog_group_id' ) ) {
-
-			// Check if this Blog is a Group Blog.
-			$group_id = get_groupblog_group_id( get_current_blog_id() );
-			if ( isset( $group_id ) && is_numeric( $group_id ) && $group_id > 0 ) {
-
-				// Okay, we're properly configured.
-				$this->bp_groupblog = true;
-
-			}
-
-		}
-
-	}
-
-	/**
-	 * Is BuddyPress active?
-	 *
-	 * @since 3.4
-	 *
-	 * @return bool $buddypress True when BuddyPress active, false otherwise.
-	 */
-	public function is_buddypress() {
-
-		// --<
-		return $this->buddypress;
-
-	}
-
-	/**
-	 * Is this Blog a BuddyPress Group Blog?
-	 *
-	 * @since 3.4
-	 *
-	 * @return bool $bp_groupblog True when current Blog is a BuddyPress Group Blog, false otherwise.
-	 */
-	public function is_groupblog() {
-
-		// --<
-		return $this->bp_groupblog;
-
-	}
-
-	/**
-	 * Is a BuddyPress Group Blog theme set?
-	 *
-	 * @since 3.4
-	 *
-	 * @return array $theme An array describing the theme.
-	 */
-	public function get_groupblog_theme() {
-
-		// Kick out if not in a Group context.
-		if ( ! function_exists( 'bp_is_groups_component' ) ) {
-			return false;
-		}
-		if ( ! bp_is_groups_component() ) {
-			return false;
-		}
-
-		// Get Group Blog options.
-		$options = get_site_option( 'bp_groupblog_blog_defaults_options' );
-
-		// Get theme setting.
-		if ( ! empty( $options['theme'] ) ) {
-
-			// We have a Group Blog theme set.
-
-			// Split the options.
-			list( $stylesheet, $template ) = explode( '|', $options['theme'] );
-
-			// Get the registered theme.
-			$theme = wp_get_theme( $stylesheet );
-
-			// Test if it's a CommentPress Core theme.
-			if ( in_array( 'commentpress', (array) $theme->get( 'Tags' ) ) ) {
-
-				// --<
-				return [ $stylesheet, $template ];
-
-			}
-
-		}
-
-		// --<
-		return false;
-
-	}
-
-	/**
-	 * Is this a BuddyPress "Special Page" - a component homepage?
-	 *
-	 * @since 3.4
-	 *
-	 * @return bool $is_bp True if current Page is a BuddyPress Page, false otherwise.
-	 */
-	public function is_buddypress_special_page() {
-
-		// Kick out if not BuddyPress.
-		if ( ! $this->is_buddypress() ) {
-			return false;
-		}
-
-		// Is it a BuddyPress Page?
-		$is_bp = ! bp_is_blog_page();
-
-		// Let's see.
-		return apply_filters( 'cp_is_buddypress_special_page', $is_bp );
-
-	}
-
-	/**
-	 * Utility to add a message to Admin Pages when upgrade required.
-	 *
-	 * @since 3.4
-	 */
-	public function admin_upgrade_alert() {
-
-		// Check User permissions.
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-
-		// Show it.
-		echo '<div id="message" class="error"><p>' .
-			sprintf(
-				/* translators: 1: The opening anchor tag, 2: The closing anchor tag. */
-				__( 'CommentPress Core has been updated. Please visit the %1$sSettings Page%2$s.', 'commentpress-core' ),
-				'<a href="options-general.php?page=commentpress_admin">',
-				'</a>'
-			) .
-		'</p></div>';
-
-	}
-
-	/**
-	 * Add scripts needed across all WordPress Admin Pages.
-	 *
-	 * @since 3.4
-	 *
-	 * @param str $hook The requested Admin Page.
-	 */
-	public function enqueue_admin_scripts( $hook ) {
-
-		// Don't enqueue on comment edit screen.
-		if ( 'comment.php' == $hook ) {
-			return;
-		}
-
-		// Add quicktag button to Page editor.
-		$this->display->get_custom_quicktags();
-
-	}
-
-	/**
-	 * Adds script libraries.
-	 *
-	 * @since 3.4
-	 */
-	public function enqueue_scripts() {
-
-		// Don't include in admin or wp-login.php.
-		if ( is_admin() || ( isset( $GLOBALS['pagenow'] ) && 'wp-login.php' == $GLOBALS['pagenow'] ) ) {
-			return;
-		}
-
-		// Test for mobile user agents.
-		$this->db->test_for_mobile();
-
-		// Add jQuery libraries.
-		$this->display->get_jquery();
-
-	}
-
-	/**
-	 * Adds CSS.
-	 *
-	 * @since 3.4
-	 */
-	public function enqueue_styles() {
-
-		// Add plugin styles.
-		$this->display->get_frontend_styles();
-
-	}
-
-	/**
-	 * Redirect to child Page.
-	 *
-	 * @since 3.4
-	 */
-	public function redirect_to_child() {
-
-		// Do redirect.
-		$this->nav->redirect_to_child();
-
-	}
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Parses Page/Post content.
@@ -631,7 +369,13 @@ class CommentPress_Core {
 			$allowed = true;
 		}
 
-		// If allowed, parse.
+		/**
+		 * If allowed, parse.
+		 *
+		 * @since 3.0
+		 *
+		 * @param bool $allowed True if allowed, false otherwise.
+		 */
 		if ( apply_filters( 'commentpress_force_the_content', $allowed ) ) {
 
 			// Delegate to parser.
@@ -652,13 +396,7 @@ class CommentPress_Core {
 	 * @return mixed $result
 	 */
 	public function get_list_option() {
-
-		// Get list option flag.
-		$result = $this->db->option_get( 'cp_show_posts_or_pages_in_toc' );
-
-		// --<
-		return $result;
-
+		return $this->db->option_get( 'cp_show_posts_or_pages_in_toc' );
 	}
 
 	/**
@@ -667,16 +405,10 @@ class CommentPress_Core {
 	 * @since 3.4
 	 *
 	 * @param str $sidebar The type of sidebar - either 'comments', 'toc' or 'activity'.
-	 * @return str $result The HTML for minimise button.
+	 * @return str $sidebar The HTML for minimise button.
 	 */
 	public function get_minimise_all_button( $sidebar = 'comments' ) {
-
-		// Get minimise image.
-		$result = $this->display->get_minimise_all_button( $sidebar );
-
-		// --<
-		return $result;
-
+		return $this->display->get_minimise_all_button( $sidebar );
 	}
 
 	/**
@@ -687,13 +419,7 @@ class CommentPress_Core {
 	 * @return str $result The HTML for minimise button.
 	 */
 	public function get_header_min_link() {
-
-		// Get minimise image.
-		$result = $this->display->get_header_min_link();
-
-		// --<
-		return $result;
-
+		return $this->display->get_header_min_link();
 	}
 
 	/**
@@ -737,47 +463,6 @@ class CommentPress_Core {
 
 		// --<
 		return $result;
-
-	}
-
-	/**
-	 * Add reserved names.
-	 *
-	 * @since 3.4
-	 *
-	 * @param array $reserved_names The existing list of illegal names.
-	 * @return array $reserved_names The modified list of illegal names.
-	 */
-	public function add_reserved_names( $reserved_names ) {
-
-		// Get all image attachments to our Title Page.
-		$reserved_names = array_merge(
-			$reserved_names,
-			[
-				'title-page',
-				'general-comments',
-				'all-comments',
-				'comments-by-commenter',
-				'table-of-contents',
-				'author', // Not currently used.
-				'login', // For Theme My Login.
-			]
-		);
-
-		// --<
-		return $reserved_names;
-
-	}
-
-	/**
-	 * Add sidebar to signup form.
-	 *
-	 * @since 3.4
-	 */
-	public function after_signup_form() {
-
-		// Add sidebar.
-		get_sidebar();
 
 	}
 
@@ -967,35 +652,6 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Stores our additional param - the Text Signature.
-	 *
-	 * @since 3.4
-	 *
-	 * @param int $comment_ID The numeric ID of the comment.
-	 * @param str $comment_status The status of the comment.
-	 */
-	public function save_comment( $comment_ID, $comment_status ) {
-
-		// Store our comment signature.
-		$result = $this->db->save_comment_signature( $comment_ID );
-
-		// Store our comment selection.
-		$result = $this->db->save_comment_selection( $comment_ID );
-
-		// In multipage situations, store our comment's Page.
-		$result = $this->db->save_comment_page( $comment_ID );
-
-		// Has the comment been marked as spam?
-		if ( $comment_status === 'spam' ) {
-
-			// Yes - let the commenter know without throwing an AJAX error.
-			wp_die( __( 'This comment has been marked as spam. Please contact a site administrator.', 'commentpress-core' ) );
-
-		}
-
-	}
-
-	/**
 	 * Get table of contents.
 	 *
 	 * @since 3.4
@@ -1038,134 +694,6 @@ class CommentPress_Core {
 			$this->display->list_pages( $exclude_pages );
 
 		}
-
-	}
-
-	/**
-	 * Exclude Special Pages from Page listings.
-	 *
-	 * @since 3.4
-	 *
-	 * @param array $excluded_array The existing list of excluded Pages.
-	 * @return array $excluded_array The modified list of excluded Pages.
-	 */
-	public function exclude_special_pages( $excluded_array ) {
-
-		// Get Special Pages array, if it's there.
-		$special_pages = $this->db->option_get( 'cp_special_pages' );
-
-		// Do we have an array?
-		if ( is_array( $special_pages ) ) {
-
-			// Merge and make unique.
-			$excluded_array = array_unique( array_merge( $excluded_array, $special_pages ) );
-
-		}
-
-		// --<
-		return $excluded_array;
-
-	}
-
-	/**
-	 * Exclude Special Pages from Admin Page listings.
-	 *
-	 * @since 3.4
-	 *
-	 * @param array $query The existing Page query.
-	 */
-	public function exclude_special_pages_from_admin( $query ) {
-
-		global $pagenow, $post_type;
-
-		// Check admin location.
-		if ( is_admin() && $pagenow == 'edit.php' && $post_type == 'page' ) {
-
-			// Get Special Pages array, if it's there.
-			$special_pages = $this->db->option_get( 'cp_special_pages' );
-
-			// Do we have an array?
-			if ( is_array( $special_pages ) && count( $special_pages ) > 0 ) {
-
-				// Modify query.
-				$query->query_vars['post__not_in'] = $special_pages;
-
-			}
-
-		}
-
-	}
-
-	/**
-	 * Page counts still need amending.
-	 *
-	 * @since 3.4
-	 *
-	 * @param array $vars The existing variables.
-	 * @return array $vars The modified list of variables.
-	 */
-	public function update_page_counts_in_admin( $vars ) {
-
-		global $pagenow, $post_type;
-
-		// Check admin location.
-		if ( is_admin() && $pagenow == 'edit.php' && $post_type == 'page' ) {
-
-			// Get Special Pages array, if it's there.
-			$special_pages = $this->db->option_get( 'cp_special_pages' );
-
-			// Do we have an array?
-			if ( is_array( $special_pages ) ) {
-
-				/**
-				 * Data comes in like this:
-				 *
-				 * [all] => <a href='edit.php?post_type=page' class="current">All <span class="count">(8)</span></a>
-				 * [publish] => <a href='edit.php?post_status=publish&amp;post_type=page'>Published <span class="count">(8)</span></a>
-				 */
-
-				// Capture existing value enclosed in brackets.
-				preg_match( '/\((\d+)\)/', $vars['all'], $matches );
-
-				// Did we get a result?
-				if ( isset( $matches[1] ) ) {
-
-					// Subtract Special Page count.
-					$new_count = $matches[1] - count( $special_pages );
-
-					// Rebuild 'all' and 'publish' items.
-					$vars['all'] = preg_replace(
-						'/\(\d+\)/',
-						'(' . $new_count . ')',
-						$vars['all']
-					);
-
-				}
-
-				// Capture existing value enclosed in brackets.
-				preg_match( '/\((\d+)\)/', $vars['publish'], $matches );
-
-				// Did we get a result?
-				if ( isset( $matches[1] ) ) {
-
-					// Subtract Special Page count.
-					$new_count = $matches[1] - count( $special_pages );
-
-					// Rebuild 'all' and 'publish' items.
-					$vars['publish'] = preg_replace(
-						'/\(\d+\)/',
-						'(' . $new_count . ')',
-						$vars['publish']
-					);
-
-				}
-
-			}
-
-		}
-
-		// --<
-		return $vars;
 
 	}
 
@@ -1299,7 +827,14 @@ class CommentPress_Core {
 
 			}
 
-			// Let plugins override titles.
+			/**
+			 * Filters the Special Page title.
+			 *
+			 * @since 3.4
+			 *
+			 * @param str $link_title The default Special Page title.
+			 * @param str $page_type The CommentPress Core name of a Special Page.
+			 */
 			$title = apply_filters( 'commentpress_page_link_title', $link_title, $page_type );
 
 			// Show link.
@@ -1345,29 +880,11 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Get book cover.
-	 *
-	 * @since 3.4
-	 */
-	public function get_book_cover() {
-
-		// Get image SRC.
-		$src = $this->db->option_get( 'cp_book_picture' );
-
-		// Get link URL.
-		$url = $this->db->option_get( 'cp_book_picture_link' );
-
-		// --<
-		return $this->display->get_linked_image( $src, $url );
-
-	}
-
-	/**
 	 * Utility to check for presence of Theme My Login.
 	 *
 	 * @since 3.4
 	 *
-	 * @return bool $success True if TML Page, false otherwise
+	 * @return bool $success True if Theme My Login Page, false otherwise
 	 */
 	public function is_theme_my_login_page() {
 
@@ -1448,101 +965,6 @@ class CommentPress_Core {
 
 		// --<
 		return false;
-
-	}
-
-	/**
-	 * Override the comment reply script that BuddyPress Docs loads.
-	 *
-	 * @since 3.5.9
-	 */
-	public function bp_docs_loaded() {
-
-		// Dequeue offending script (after BuddyPress Docs runs its enqueuing).
-		add_action( 'wp_enqueue_scripts', [ $this, 'bp_docs_dequeue_scripts' ], 20 );
-
-	}
-
-	/**
-	 * Override the comment reply script that BuddyPress Docs loads.
-	 *
-	 * @since 3.5.9
-	 */
-	public function bp_docs_dequeue_scripts() {
-
-		// Dequeue offending script.
-		wp_dequeue_script( 'comment-reply' );
-
-	}
-
-	/**
-	 * Override the Comments Template for BuddyPress Docs.
-	 *
-	 * @since 3.4
-	 *
-	 * @param str $path The existing path to the template.
-	 * @param str $original_path The original path to the template.
-	 * @return str $path The modified path to the template.
-	 */
-	public function bp_docs_comment_tempate( $path, $original_path ) {
-
-		// If on BuddyPress root Site.
-		if ( bp_is_root_blog() ) {
-
-			// Override default link name.
-			return $original_path;
-
-		}
-
-		// Pass through.
-		return $path;
-
-	}
-
-	/**
-	 * Override the Featured Comments behaviour.
-	 *
-	 * @since 3.4.8
-	 */
-	public function featured_comments_override() {
-
-		// Is the plugin available?
-		if ( ! function_exists( 'wp_featured_comments_load' ) ) {
-			return;
-		}
-
-		// Get instance.
-		$fc = wp_featured_comments_load();
-
-		// Remove comment_text filter.
-		remove_filter( 'comment_text', [ $fc, 'comment_text' ], 10 );
-
-		// Get the plugin markup in the comment edit section.
-		add_filter( 'cp_comment_edit_link', [ $this, 'featured_comments_markup' ], 100, 2 );
-
-	}
-
-	/**
-	 * Get the Featured Comments link markup.
-	 *
-	 * @since 3.4.8
-	 *
-	 * @param str $editlink The existing HTML link.
-	 * @param array $comment The comment data.
-	 * @return str $editlink The modified HTML link.
-	 */
-	public function featured_comments_markup( $editlink, $comment ) {
-
-		// Is the plugin available?
-		if ( ! function_exists( 'wp_featured_comments_load' ) ) {
-			return $editlink;
-		}
-
-		// Get instance.
-		$fc = wp_featured_comments_load();
-
-		// Get markup.
-		return $editlink . $fc->comment_text( '' );
 
 	}
 
@@ -1663,11 +1085,14 @@ class CommentPress_Core {
 	 */
 	public function get_sidebar_order() {
 
-		// Set default but allow overrides.
-		$order = apply_filters(
-			'cp_sidebar_tab_order',
-			[ 'contents', 'comments', 'activity' ] // Default order.
-		);
+		/**
+		 * Filters the default tab order.
+		 *
+		 * @since 3.4
+		 *
+		 * @param array $order The default tab order array.
+		 */
+		$order = apply_filters( 'cp_sidebar_tab_order', [ 'contents', 'comments', 'activity' ] );
 
 		// --<
 		return $order;
@@ -1848,6 +1273,41 @@ class CommentPress_Core {
 		</div>
 		';
 
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Is BuddyPress active?
+	 *
+	 * @since 3.4
+	 *
+	 * @return bool $buddypress True when BuddyPress active, false otherwise.
+	 */
+	public function is_buddypress() {
+		return $this->bp->is_buddypress();
+	}
+
+	/**
+	 * Is this Blog a BuddyPress Group Blog?
+	 *
+	 * @since 3.4
+	 *
+	 * @return bool $bp_groupblog True when current Blog is a BuddyPress Group Blog, false otherwise.
+	 */
+	public function is_groupblog() {
+		return $this->bp->is_groupblog();
+	}
+
+	/**
+	 * Is this a BuddyPress "Special Page" - a component homepage?
+	 *
+	 * @since 3.4
+	 *
+	 * @return bool $is_bp True if current Page is a BuddyPress Page, false otherwise.
+	 */
+	public function is_buddypress_special_page() {
+		return $this->bp->is_buddypress_special_page();
 	}
 
 }

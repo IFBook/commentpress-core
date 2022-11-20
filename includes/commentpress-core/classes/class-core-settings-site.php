@@ -143,6 +143,31 @@ class CommentPress_Core_Settings_Site {
 	// -------------------------------------------------------------------------
 
 	/**
+	 * Utility to add a message to Admin Pages when upgrade required.
+	 *
+	 * @since 3.4
+	 * @since 4.0 Moved to this class.
+	 */
+	public function admin_upgrade_alert() {
+
+		// Check User permissions.
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		// Show it.
+		echo '<div id="message" class="error"><p>' .
+			sprintf(
+				/* translators: 1: The opening anchor tag, 2: The closing anchor tag. */
+				__( 'CommentPress Core has been updated. Please visit the %1$sSettings Page%2$s.', 'commentpress-core' ),
+				'<a href="options-general.php?page=commentpress_admin">',
+				'</a>'
+			) .
+		'</p></div>';
+
+	}
+
+	/**
 	 * Add our Admin Page(s) to the WordPress admin menu.
 	 *
 	 * @since 3.4

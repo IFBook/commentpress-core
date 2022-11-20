@@ -85,6 +85,17 @@ class CommentPress_Multisite_Sites {
 		// Add form elements to signup form.
 		add_action( 'signup_blogform', [ $this, 'signup_blogform' ] );
 
+		// Add callback for Signup Page to include sidebar.
+		add_action( 'after_signup_form', [ $this, 'after_signup_form' ], 20 );
+
+		// If subdirectory install.
+		if ( ! is_subdomain_install() ) {
+
+			// Add filter for reserved CommentPress Core Special Page names.
+			add_filter( 'subdirectory_reserved_names', [ $this, 'add_reserved_names' ] );
+
+		}
+
 		// Activate Blog-specific CommentPress Core plugin.
 		add_action( 'wpmu_new_blog', [ $this, 'wpmu_new_blog' ], 12, 6 );
 
@@ -173,6 +184,49 @@ class CommentPress_Multisite_Sites {
 		';
 
 		echo $form;
+
+	}
+
+	/**
+	 * Add sidebar to signup form.
+	 *
+	 * @since 3.4
+	 */
+	public function after_signup_form() {
+
+		// Add sidebar.
+		get_sidebar();
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Add reserved names.
+	 *
+	 * @since 3.4
+	 *
+	 * @param array $reserved_names The existing list of illegal names.
+	 * @return array $reserved_names The modified list of illegal names.
+	 */
+	public function add_reserved_names( $reserved_names ) {
+
+		// Add Special Page slugs.
+		$reserved_names = array_merge(
+			$reserved_names,
+			[
+				'title-page',
+				'general-comments',
+				'all-comments',
+				'comments-by-commenter',
+				'table-of-contents',
+				'author', // Not currently used.
+				'login', // For Theme My Login.
+			]
+		);
+
+		// --<
+		return $reserved_names;
 
 	}
 

@@ -135,6 +135,9 @@ class CommentPress_Core_Navigator {
 		 */
 		add_action( 'wp_head', [ $this, 'setup_items' ] );
 
+		// Add template redirect for TOC behaviour.
+		add_action( 'template_redirect', [ $this, 'redirect_to_child' ] );
+
 	}
 
 	/**
@@ -1030,7 +1033,7 @@ class CommentPress_Core_Navigator {
 	 * @since 3.0
 	 *
 	 * @param object $page_obj The WordPress Page object.
-	 * @return boolean $success True if TML Page, false otherwise.
+	 * @return boolean $success True if Theme My Login Page, false otherwise.
 	 */
 	public function detect_login_page( $page_obj ) {
 

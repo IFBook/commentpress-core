@@ -89,6 +89,15 @@ class CommentPress_Core_Display {
 		// Enable CommentPress themes in Multisite optional scenario.
 		add_filter( 'network_allowed_themes', [ $this, 'allowed_themes' ] );
 
+		// Comment Block quicktag.
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_scripts' ] );
+
+		// Add CSS files.
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_styles' ] );
+
+		// Add script libraries.
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+
 	}
 
 	/**
@@ -116,7 +125,7 @@ class CommentPress_Core_Display {
 		 * @param array The existing array containing the stylesheet and template paths.
 		 * @return array The modified array containing the stylesheet and template paths.
 		 */
-		$theme = apply_filters( 'commentpress_get_groupblog_theme', $this->core->get_groupblog_theme() );
+		$theme = apply_filters( 'commentpress_get_groupblog_theme', $this->core->bp->get_groupblog_theme() );
 
 		// Did we get a CommentPress Core one?
 		if ( $theme !== false ) {
@@ -199,6 +208,59 @@ class CommentPress_Core_Display {
 			);
 
 		}
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Add scripts needed across all WordPress Admin Pages.
+	 *
+	 * @since 3.4
+	 *
+	 * @param str $hook The requested Admin Page.
+	 */
+	public function enqueue_admin_scripts( $hook ) {
+
+		// Don't enqueue on comment edit screen.
+		if ( 'comment.php' == $hook ) {
+			return;
+		}
+
+		// Add quicktag button to Page editor.
+		$this->get_custom_quicktags();
+
+	}
+
+	/**
+	 * Adds CSS.
+	 *
+	 * @since 3.4
+	 */
+	public function enqueue_styles() {
+
+		// Add plugin styles.
+		$this->get_frontend_styles();
+
+	}
+
+	/**
+	 * Adds script libraries.
+	 *
+	 * @since 3.4
+	 */
+	public function enqueue_scripts() {
+
+		// Don't include in admin or wp-login.php.
+		if ( is_admin() || ( isset( $GLOBALS['pagenow'] ) && 'wp-login.php' == $GLOBALS['pagenow'] ) ) {
+			return;
+		}
+
+		// Test for mobile user agents.
+		$this->core->db->test_for_mobile();
+
+		// Add jQuery libraries.
+		$this->get_jquery();
 
 	}
 
