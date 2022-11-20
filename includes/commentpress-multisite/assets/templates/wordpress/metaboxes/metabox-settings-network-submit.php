@@ -1,14 +1,14 @@
 <?php
 /**
- * Site Settings Page "Submit" metabox template.
+ * Multisite Network Settings Page "Submit" metabox template.
  *
- * Handles markup for the Site Settings Page "Submit" metabox.
+ * Handles markup for the Multisite Network Settings Page "Submit" metabox.
  *
  * @package CommentPress_Core
  */
 
 ?>
-<!-- includes/commentpress-core/assets/templates/wordpress/metaboxes/metabox-site-settings-submit.php -->
+<!-- includes/commentpress-multisite/assets/templates/wordpress/metaboxes/metabox-settings-network-submit.php -->
 <div class="submitbox">
 	<div id="minor-publishing">
 		<div id="misc-publishing-actions">
@@ -21,7 +21,7 @@
 
 	<div id="major-publishing-actions">
 		<div id="publishing-action">
-			<?php submit_button( esc_html__( 'Update', 'commentpress-core' ), 'primary', 'commentpress_submit', false ); ?>
+			<?php submit_button( esc_html__( 'Update', 'commentpress-core' ), 'primary', 'cpmu_submit', false ); ?>
 			<input type="hidden" name="action" value="update" />
 		</div>
 		<div class="clear"></div>

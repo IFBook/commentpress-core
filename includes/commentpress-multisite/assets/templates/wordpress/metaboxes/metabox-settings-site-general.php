@@ -8,7 +8,7 @@
  */
 
 ?>
-<!-- includes/commentpress-multisite/assets/templates/wordpress/metaboxes/metabox-site-settings-general.php -->
+<!-- includes/commentpress-multisite/assets/templates/wordpress/metaboxes/metabox-settings-site-general.php -->
 <table class="form-table">
 
 	<?php

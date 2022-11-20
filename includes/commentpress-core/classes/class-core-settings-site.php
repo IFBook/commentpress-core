@@ -440,7 +440,7 @@ class CommentPress_Core_Settings_Site {
 		$columns = ( 1 == $screen->get_columns() ? '1' : '2' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->page_path . 'page-site-settings.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->page_path . 'page-settings-site.php';
 
 	}
 
@@ -653,7 +653,7 @@ class CommentPress_Core_Settings_Site {
 		$do_not_parse = $this->core->db->option_get( 'cp_do_not_parse', 'n' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-site-settings-general.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-general.php';
 
 	}
 
@@ -671,7 +671,7 @@ class CommentPress_Core_Settings_Site {
 		$show_extended_toc = $this->core->db->option_get( 'cp_show_extended_toc' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-site-settings-toc.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-toc.php';
 
 	}
 
@@ -691,7 +691,7 @@ class CommentPress_Core_Settings_Site {
 		$excerpt_length = $this->core->db->option_get( 'cp_excerpt_length' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-site-settings-page.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-page.php';
 
 	}
 
@@ -708,7 +708,7 @@ class CommentPress_Core_Settings_Site {
 		$comments_live = $this->core->db->option_get( 'cp_para_comments_live' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-site-settings-comment.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-comment.php';
 
 	}
 
@@ -725,7 +725,7 @@ class CommentPress_Core_Settings_Site {
 		$sidebar_default = $this->core->db->option_get( 'cp_sidebar_default', 'comments' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-site-settings-theme.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-theme.php';
 
 	}
 
@@ -737,7 +737,7 @@ class CommentPress_Core_Settings_Site {
 	public function meta_box_submit_render() {
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-site-settings-submit.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-submit.php';
 
 	}
 

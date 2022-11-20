@@ -249,7 +249,7 @@ class CommentPress_Multisite_Settings_Site {
 		$columns = ( 1 == $screen->get_columns() ? '1' : '2' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->page_path . 'page-site-settings.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->page_path . 'page-settings-site.php';
 
 	}
 
@@ -358,7 +358,7 @@ class CommentPress_Multisite_Settings_Site {
 	public function meta_box_general_render() {
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-site-settings-general.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-general.php';
 
 	}
 
@@ -370,7 +370,7 @@ class CommentPress_Multisite_Settings_Site {
 	public function meta_box_submit_render() {
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-site-settings-submit.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-submit.php';
 
 	}
 

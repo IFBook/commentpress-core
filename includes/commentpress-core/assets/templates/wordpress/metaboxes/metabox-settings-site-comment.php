@@ -8,7 +8,7 @@
  */
 
 ?>
-<!-- includes/commentpress-core/assets/templates/wordpress/metaboxes/metabox-site-settings-comment.php -->
+<!-- includes/commentpress-core/assets/templates/wordpress/metaboxes/metabox-settings-site-comment.php -->
 <table class="form-table">
 
 	<tr valign="top">

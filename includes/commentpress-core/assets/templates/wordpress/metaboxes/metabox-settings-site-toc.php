@@ -8,7 +8,7 @@
  */
 
 ?>
-<!-- includes/commentpress-core/assets/templates/wordpress/metaboxes/metabox-site-settings-toc.php -->
+<!-- includes/commentpress-core/assets/templates/wordpress/metaboxes/metabox-settings-site-toc.php -->
 <p><?php _e( 'Choose how you want your Table of Contents to appear and function.<br /><strong style="color: red;">NOTE!</strong> When Chapters are Pages, the TOC will always show Sub-Pages, since collapsing the TOC makes no sense in that situation.', 'commentpress-core' ); ?></p>
 
 <table class="form-table">

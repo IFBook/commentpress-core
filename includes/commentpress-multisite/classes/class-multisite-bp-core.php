@@ -2492,7 +2492,7 @@ class CommentPress_Multisite_BuddyPress {
 		$bp_require_comment_registration = $this->multisite->db->option_get( 'cpmu_bp_require_comment_registration' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-network-settings-buddypress.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-network-buddypress.php';
 
 	}
 

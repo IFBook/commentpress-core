@@ -8,7 +8,7 @@
  */
 
 ?>
-<!-- includes/commentpress-core/assets/templates/wordpress/pages/page-site-settings.php -->
+<!-- includes/commentpress-core/assets/templates/wordpress/pages/page-settings-site.php -->
 <div class="wrap">
 
 	<h1><?php esc_html_e( 'CommentPress Core', 'commentpress-core' ); ?></h1>

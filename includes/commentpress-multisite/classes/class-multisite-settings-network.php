@@ -237,7 +237,7 @@ class CommentPress_Multisite_Settings_Network {
 		$columns = ( 1 == $screen->get_columns() ? '1' : '2' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->page_path . 'page-network-settings.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->page_path . 'page-settings-network.php';
 
 	}
 
@@ -387,7 +387,7 @@ class CommentPress_Multisite_Settings_Network {
 		$disable_translation_workflow = $this->multisite->db->option_get( 'cpmu_disable_translation_workflow' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-network-settings-general.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-network-general.php';
 
 	}
 
@@ -404,7 +404,7 @@ class CommentPress_Multisite_Settings_Network {
 		$delete_first_comment = $this->multisite->db->option_get( 'cpmu_delete_first_comment' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-network-settings-wordpress.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-network-wordpress.php';
 
 	}
 
@@ -419,7 +419,7 @@ class CommentPress_Multisite_Settings_Network {
 		$content = stripslashes( $this->multisite->db->option_get( 'cpmu_title_page_content' ) );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-network-settings-title-page.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-network-title-page.php';
 
 	}
 
@@ -431,7 +431,7 @@ class CommentPress_Multisite_Settings_Network {
 	public function meta_box_submit_render() {
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-network-settings-submit.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-network-submit.php';
 
 	}
 
