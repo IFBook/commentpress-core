@@ -47,6 +47,15 @@ class CommentPress_Core {
 	public $site_settings;
 
 	/**
+	 * Post Settings object.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var object $post_settings The Post Settings object.
+	 */
+	public $post_settings;
+
+	/**
 	 * Navigation handling object.
 	 *
 	 * @since 3.0
@@ -186,6 +195,7 @@ class CommentPress_Core {
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-database.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-display.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-settings-site.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-settings-post.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-navigation.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-parser.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-formatter.php';
@@ -211,7 +221,8 @@ class CommentPress_Core {
 		// Initialise objects.
 		$this->db = new CommentPress_Core_Database( $this );
 		$this->display = new CommentPress_Core_Display( $this );
-		$this->admin = new CommentPress_Core_Settings_Site( $this );
+		$this->site_settings = new CommentPress_Core_Settings_Site( $this );
+		$this->post_settings = new CommentPress_Core_Settings_Post( $this );
 		$this->nav = new CommentPress_Core_Navigator( $this );
 		$this->parser = new CommentPress_Core_Parser( $this );
 		$this->formatter = new CommentPress_Core_Formatter( $this );
@@ -243,12 +254,6 @@ class CommentPress_Core {
 
 			// Add meta boxes.
 			add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes' ] );
-
-			// Intercept save.
-			add_action( 'save_post', [ $this, 'save_post' ], 10, 2 );
-
-			// Intercept delete.
-			add_action( 'before_delete_post', [ $this, 'delete_post' ], 10, 1 );
 
 			// Comment Block quicktag.
 			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_scripts' ] );
@@ -803,15 +808,6 @@ class CommentPress_Core {
 			'side'
 		);
 
-		// Add our meta box to Posts.
-		add_meta_box(
-			'commentpress_post_options',
-			__( 'CommentPress Core Options', 'commentpress-core' ),
-			[ $this, 'custom_box_post' ],
-			'post',
-			'side'
-		);
-
 		// Get Workflow.
 		$workflow = $this->db->option_get( 'cp_blog_workflow' );
 
@@ -1014,24 +1010,6 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Adds meta box to Post edit screens.
-	 *
-	 * @since 3.4
-	 */
-	public function custom_box_post() {
-
-		// Access Post.
-		global $post;
-
-		// Use nonce for verification.
-		wp_nonce_field( 'commentpress_post_settings', 'commentpress_nonce' );
-
-		// Get default sidebar.
-		$this->get_default_sidebar_metabox( $post );
-
-	}
-
-	/**
 	 * Adds Workflow meta box to Post edit screens.
 	 *
 	 * @since 3.4
@@ -1040,37 +1018,6 @@ class CommentPress_Core {
 
 		// We now need to add any Workflow that a plugin might want.
 		do_action( 'cp_workflow_metabox' );
-
-	}
-
-	/**
-	 * Stores our additional params.
-	 *
-	 * @since 3.4
-	 *
-	 * @param int $post_id The numeric ID of the Post (or revision).
-	 * @param object $post The Post object.
-	 */
-	public function save_post( $post_id, $post ) {
-
-		// We don't use "post_id" because we're not interested in revisions.
-
-		// Store our meta data.
-		$result = $this->db->save_meta( $post );
-
-	}
-
-	/**
-	 * Check for data integrity of other Posts when one is deleted.
-	 *
-	 * @since 3.4
-	 *
-	 * @param int $post_id The numeric ID of the Post (or revision).
-	 */
-	public function delete_post( $post_id ) {
-
-		// Store our meta data.
-		$result = $this->db->delete_meta( $post_id );
 
 	}
 
@@ -1918,61 +1865,6 @@ class CommentPress_Core {
 
 		// --<
 		return $types;
-
-	}
-
-	/**
-	 * Adds the default sidebar preference to the Page/Post metabox.
-	 *
-	 * @since 3.4
-	 *
-	 * @param object $post The WordPress Post object.
-	 */
-	public function get_default_sidebar_metabox( $post ) {
-
-		// Allow this to be disabled.
-		if ( apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
-			return;
-		}
-
-		// ---------------------------------------------------------------------
-		// Override Post Formatter.
-		// ---------------------------------------------------------------------
-
-		// Do we have the option to choose the default sidebar (new in 3.3.3)?
-		if ( $this->db->option_exists( 'cp_sidebar_default' ) ) {
-
-			// Show a title.
-			echo '<div class="cp_sidebar_default_wrapper">
-			<p><strong><label for="cp_sidebar_default">' . __( 'Default Sidebar', 'commentpress-core' ) . '</label></strong></p>';
-
-			// Set key.
-			$key = '_cp_sidebar_default';
-
-			// Default to show.
-			$sidebar = $this->db->option_get( 'cp_sidebar_default' );
-
-			// If the custom field already has a value.
-			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-				// Get it.
-				$sidebar = get_post_meta( $post->ID, $key, true );
-
-			}
-
-			// Select.
-			echo '
-			<p>
-			<select id="cp_sidebar_default" name="cp_sidebar_default">
-				<option value="toc" ' . ( ( $sidebar == 'toc' ) ? ' selected="selected"' : '' ) . '>' . __( 'Contents', 'commentpress-core' ) . '</option>
-				<option value="activity" ' . ( ( $sidebar == 'activity' ) ? ' selected="selected"' : '' ) . '>' . __( 'Activity', 'commentpress-core' ) . '</option>
-				<option value="comments" ' . ( ( $sidebar == 'comments' ) ? ' selected="selected"' : '' ) . '>' . __( 'Comments', 'commentpress-core' ) . '</option>
-			</select>
-			</p>
-			</div>
-			';
-
-		}
 
 	}
 
