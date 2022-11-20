@@ -66,11 +66,11 @@ class CommentPress_Core_Database {
 	public $show_extended_toc = 1;
 
 	/**
-	 * Table of Contents show subpages flag.
+	 * Table of Contents show Sub-pages flag.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var bool $show_subpages The Table of Contents shows subpages by default.
+	 * @var bool $show_subpages The Table of Contents shows Sub-pages by default.
 	 */
 	public $show_subpages = 1;
 
@@ -328,7 +328,7 @@ class CommentPress_Core_Database {
 		if ( count( $special_pages ) == 0 ) {
 
 			// Create Special Pages.
-			$this->create_special_pages();
+			$this->core->pages_legacy->create_special_pages();
 
 		}
 
@@ -354,7 +354,7 @@ class CommentPress_Core_Database {
 		$this->widgets_restore();
 
 		// Always remove Special Pages.
-		$this->delete_special_pages();
+		$this->core->pages_legacy->delete_special_pages();
 
 	}
 
@@ -1021,10 +1021,10 @@ class CommentPress_Core_Database {
 		if ( $cp_create_pages == '1' ) {
 
 			// Remove any existing Special Pages.
-			$this->delete_special_pages();
+			$this->core->pages_legacy->delete_special_pages();
 
 			// Create Special Pages.
-			$this->create_special_pages();
+			$this->core->pages_legacy->create_special_pages();
 
 		}
 
@@ -1032,7 +1032,7 @@ class CommentPress_Core_Database {
 		if ( $cp_delete_pages == '1' ) {
 
 			// Remove Special Pages.
-			$this->delete_special_pages();
+			$this->core->pages_legacy->delete_special_pages();
 
 		}
 
@@ -1062,7 +1062,7 @@ class CommentPress_Core_Database {
 			$cp_toc_chapter_is_page = esc_sql( $cp_toc_chapter_is_page );
 			$this->option_set( 'cp_toc_chapter_is_page', $cp_toc_chapter_is_page );
 
-			// If chapters are not Pages and we have a value for the next param.
+			// If Chapters are not Pages and we have a value for the next param.
 			if ( $cp_toc_chapter_is_page == '0' ) {
 
 				$cp_show_subpages = esc_sql( $cp_show_subpages );
@@ -1070,7 +1070,7 @@ class CommentPress_Core_Database {
 
 			} else {
 
-				// Always set to show subpages.
+				// Always set to show Sub-pages.
 				$this->option_set( 'cp_show_subpages', 1 );
 
 			}
@@ -1655,7 +1655,7 @@ class CommentPress_Core_Database {
 			// Delete this meta value from all other Pages, because we may have altered
 			// the relationship between Pages, thus causing the Page numbering to fail.
 
-			// Get all Pages including chapters.
+			// Get all Pages including Chapters.
 			$all_pages = $this->core->nav->get_book_pages( 'structural' );
 
 			// If we have any Pages.
@@ -1915,318 +1915,6 @@ class CommentPress_Core_Database {
 			$this->options_save();
 
 		}
-
-	}
-
-	/**
-	 * Create all Special Pages.
-	 *
-	 * @since 3.4
-	 */
-	public function create_special_pages() {
-
-		/*
-		 * One of the CommentPress Core themes MUST be active or WordPress will
-		 * fail to set the Page templates for the Pages that require them.
-		 *
-		 * Also, a User must be logged in for these Pages to be associated with them.
-		 */
-
-		// Get Special Pages array, if it's there.
-		$special_pages = $this->option_get( 'cp_special_pages', [] );
-
-		// Create Welcome/Title Page, but don't add to Special Pages.
-		$welcome = $this->create_title_page();
-
-		// Create General Comments Page.
-		$special_pages[] = $this->create_general_comments_page();
-
-		// Create All Comments Page.
-		$special_pages[] = $this->create_all_comments_page();
-
-		// Create Comments by Author Page.
-		$special_pages[] = $this->create_comments_by_author_page();
-
-		// Create Blog Page.
-		$special_pages[] = $this->create_blog_page();
-
-		// Create Blog Archive Page.
-		$special_pages[] = $this->create_blog_archive_page();
-
-		// Create TOC Page -> a convenience, let's us define a logo as attachment.
-		$special_pages[] = $this->create_toc_page();
-
-		// Store the array of Page IDs that were created.
-		$this->option_set( 'cp_special_pages', $special_pages );
-
-		// Save changes.
-		$this->options_save();
-
-	}
-
-	/**
-	 * Create a particular Special Page.
-	 *
-	 * @since 3.4
-	 *
-	 * @param str $page The type of Special Page.
-	 * @return mixed $new_id If successful, the numeric ID of the new Page, false on failure.
-	 */
-	public function create_special_page( $page ) {
-
-		// Init.
-		$new_id = false;
-
-		// Get Special Pages array, if it's there.
-		$special_pages = $this->option_get( 'cp_special_pages', [] );
-
-		// Switch by Page.
-		switch ( $page ) {
-
-			case 'title':
-
-				// Create Welcome/Title Page.
-				$new_id = $this->create_title_page();
-				break;
-
-			case 'general_comments':
-
-				// Create General Comments Page.
-				$new_id = $this->create_general_comments_page();
-				break;
-
-			case 'all_comments':
-
-				// Create All Comments Page.
-				$new_id = $this->create_all_comments_page();
-				break;
-
-			case 'comments_by_author':
-
-				// Create Comments by Author Page.
-				$new_id = $this->create_comments_by_author_page();
-				break;
-
-			case 'blog':
-
-				// Create Blog Page.
-				$new_id = $this->create_blog_page();
-				break;
-
-			case 'blog_archive':
-
-				// Create Blog Page.
-				$new_id = $this->create_blog_archive_page();
-				break;
-
-			case 'toc':
-
-				// Create TOC Page.
-				$new_id = $this->create_toc_page();
-				break;
-
-		}
-
-		// Add to Special Pages.
-		$special_pages[] = $new_id;
-
-		// Reset option.
-		$this->option_set( 'cp_special_pages', $special_pages );
-
-		// Save changes.
-		$this->options_save();
-
-		// --<
-		return $new_id;
-
-	}
-
-	/**
-	 * Delete Special Pages.
-	 *
-	 * @since 3.4
-	 *
-	 * @return bool $success True if Page deleted successfully, false otherwise.
-	 */
-	public function delete_special_pages() {
-
-		// Init success flag.
-		$success = true;
-
-		/*
-		 * Only delete Special Pages if we have one of the CommentPress Core
-		 * themes active because other themes may have a totally different way
-		 * of presenting the content of the Blog.
-		 */
-
-		// Retrieve data on Special Pages.
-		$special_pages = $this->option_get( 'cp_special_pages', [] );
-
-		// If we have created any.
-		if ( is_array( $special_pages ) && count( $special_pages ) > 0 ) {
-
-			// Loop through them.
-			foreach ( $special_pages as $special_page ) {
-
-				// Bypass trash.
-				$force_delete = true;
-
-				// Try and delete each Page.
-				if ( ! wp_delete_post( $special_page, $force_delete ) ) {
-
-					// Oops, set success flag to false.
-					$success = false;
-
-				}
-
-			}
-
-			// Delete the corresponding options.
-			$this->option_delete( 'cp_special_pages' );
-
-			$this->option_delete( 'cp_blog_page' );
-			$this->option_delete( 'cp_blog_archive_page' );
-			$this->option_delete( 'cp_general_comments_page' );
-			$this->option_delete( 'cp_all_comments_page' );
-			$this->option_delete( 'cp_comments_by_page' );
-			$this->option_delete( 'cp_toc_page' );
-
-			/*
-			// For now, keep Welcome Page - delete option when Page is deleted.
-			$this->option_delete( 'cp_welcome_page' );
-			*/
-
-			// Save changes.
-			$this->options_save();
-
-			// Reset WordPress internal Page references.
-			$this->wordpress_option_restore( 'show_on_front' );
-			$this->wordpress_option_restore( 'page_on_front' );
-			$this->wordpress_option_restore( 'page_for_posts' );
-
-		}
-
-		// --<
-		return $success;
-
-	}
-
-	/**
-	 * Delete a particular Special Page.
-	 *
-	 * @since 3.4
-	 *
-	 * @param str $page The type of Special Page to delete.
-	 * @return boolean $success True if succesfully deleted false otherwise.
-	 */
-	public function delete_special_page( $page ) {
-
-		// Init success flag.
-		$success = true;
-
-		/*
-		 * Only delete a Special Page if we have one of the CommentPress Core
-		 * themes active because other themes may have a totally different way
-		 * of presenting the content of the Blog.
-		 */
-
-		// Get id of Special Page.
-		switch ( $page ) {
-
-			case 'title':
-
-				// Set flag.
-				$flag = 'cp_welcome_page';
-
-				// Reset WordPress internal Page references.
-				$this->wordpress_option_restore( 'show_on_front' );
-				$this->wordpress_option_restore( 'page_on_front' );
-
-				break;
-
-			case 'general_comments':
-
-				// Set flag.
-				$flag = 'cp_general_comments_page';
-				break;
-
-			case 'all_comments':
-
-				// Set flag.
-				$flag = 'cp_all_comments_page';
-				break;
-
-			case 'comments_by_author':
-
-				// Set flag.
-				$flag = 'cp_comments_by_page';
-				break;
-
-			case 'blog':
-
-				// Set flag.
-				$flag = 'cp_blog_page';
-
-				// Reset WordPress internal Page reference.
-				$this->wordpress_option_restore( 'page_for_posts' );
-
-				break;
-
-			case 'blog_archive':
-
-				// Set flag.
-				$flag = 'cp_blog_archive_page';
-				break;
-
-			case 'toc':
-
-				// Set flag.
-				$flag = 'cp_toc_page';
-				break;
-
-		}
-
-		// Get Page ID.
-		$page_id = $this->option_get( $flag );
-
-		// Kick out if it doesn't exist.
-		if ( ! $page_id ) {
-			return true;
-		}
-
-		// Delete option.
-		$this->option_delete( $flag );
-
-		// Bypass trash.
-		$force_delete = true;
-
-		// Try and delete the Page.
-		if ( ! wp_delete_post( $page_id, $force_delete ) ) {
-
-			// Oops, set success flag to false.
-			$success = false;
-
-		}
-
-		// Retrieve data on Special Pages.
-		$special_pages = $this->option_get( 'cp_special_pages', [] );
-
-		// Is it in our Special Pages array?
-		if ( in_array( $page_id, $special_pages ) ) {
-
-			// Remove Page ID from array.
-			$special_pages = array_diff( $special_pages, [ $page_id ] );
-
-			// Reset option.
-			$this->option_set( 'cp_special_pages', $special_pages );
-
-		}
-
-		// Save changes.
-		$this->options_save();
-
-		// --<
-		return $success;
 
 	}
 
@@ -2774,10 +2462,10 @@ class CommentPress_Core_Database {
 		global $page;
 		$vars['cp_multipage_page'] = ( ! empty( $page ) ) ? $page : 0;
 
-		// Are chapters Pages?
+		// Are Chapters Pages?
 		$vars['cp_toc_chapter_is_page'] = $this->option_get( 'cp_toc_chapter_is_page' );
 
-		// Are subpages shown?
+		// Are Sub-pages shown?
 		$vars['cp_show_subpages'] = $this->option_get( 'cp_show_subpages' );
 
 		// Set default sidebar.
@@ -2833,420 +2521,6 @@ class CommentPress_Core_Database {
 
 		// --<
 		return apply_filters( 'commentpress_get_javascript_vars', $vars );
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Create "title" Page.
-	 *
-	 * @since 3.4
-	 *
-	 * @return int $title_id The numeric ID of the Title Page.
-	 */
-	public function create_title_page() {
-
-		// Get the option, if it exists.
-		$page_exists = $this->option_get( 'cp_welcome_page' );
-
-		// Don't create if we already have the option set.
-		if ( $page_exists !== false && is_numeric( $page_exists ) ) {
-
-			// Get the Page (the plugin may have been deactivated, then the Page deleted).
-			$welcome = get_post( $page_exists );
-
-			// Check that the Page exists.
-			if ( ! is_null( $welcome ) ) {
-
-				// Got it.
-
-				// We still ought to set WordPress internal Page references.
-				$this->wordpress_option_backup( 'show_on_front', 'page' );
-				$this->wordpress_option_backup( 'page_on_front', $page_exists );
-
-				// --<
-				return $page_exists;
-
-			} else {
-
-				// Page does not exist, continue on and create it.
-
-			}
-
-		}
-
-		// Define Welcome/Title Page.
-		$title = [
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'post_parent' => 0,
-			'comment_status' => 'open',
-			'ping_status' => 'closed',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
-			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
-		];
-
-		// Add Post-specific stuff.
-
-		// Default Page title.
-		$default_title = __( 'Title Page', 'commentpress-core' );
-
-		// Set, but allow overrides.
-		$title['post_title'] = apply_filters( 'cp_title_page_title', $default_title );
-
-		// Default content.
-		$content = __(
-			'Welcome to your new CommentPress site, which allows your readers to comment paragraph-by-paragraph or line-by-line in the margins of a text. Annotate, gloss, workshop, debate: with CommentPress you can do all of these things on a finer-grained level, turning a document into a conversation.
-
-This is your title page. Edit it to suit your needs. It has been automatically set as your homepage but if you want another page as your homepage, set it in <em>WordPress</em> &#8594; <em>Settings</em> &#8594; <em>Reading</em>.
-
-You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings</em> &#8594; <em>CommentPress</em> to make the site work the way you want it to. Use the Theme Customizer to change the way your site looks in <em>WordPress</em> &#8594; <em>Appearance</em> &#8594; <em>Customize</em>. For help with structuring, formatting and reading text in CommentPress, please refer to the <a href="http://www.futureofthebook.org/commentpress/">CommentPress website</a>.', 'commentpress-core'
-		);
-
-		// Set, but allow overrides.
-		$title['post_content'] = apply_filters( 'cp_title_page_content', $content );
-
-		// Set template, but allow overrides.
-		$title['page_template'] = apply_filters( 'cp_title_page_template', 'welcome.php' );
-
-		// Insert the Post into the database.
-		$title_id = wp_insert_post( $title );
-
-		// Store the option.
-		$this->option_set( 'cp_welcome_page', $title_id );
-
-		// Set WordPress internal Page references.
-		$this->wordpress_option_backup( 'show_on_front', 'page' );
-		$this->wordpress_option_backup( 'page_on_front', $title_id );
-
-		/**
-		 * Fires when the Title Page has been created.
-		 *
-		 * Used internally by:
-		 *
-		 * * CommentPress_Core_Formatter::formatter_default_apply() (Priority: 10)
-		 *
-		 * @since 4.0
-		 *
-		 * @param int $title_id The numeric ID of the new Page.
-		 */
-		do_action( 'commentpress/core/db/page/special/title/created', $title_id );
-
-		// --<
-		return $title_id;
-
-	}
-
-	/**
-	 * Create "General Comments" Page.
-	 *
-	 * @since 3.4
-	 *
-	 * @return int $general_comments_id The numeric ID of the "General Comments" Page.
-	 */
-	public function create_general_comments_page() {
-
-		// Define General Comments Page.
-		$general_comments = [
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'post_parent' => 0,
-			'comment_status' => 'open',
-			'ping_status' => 'open',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
-			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
-		];
-
-		// Add Post-specific stuff.
-
-		// Default Page title.
-		$title = __( 'General Comments', 'commentpress-core' );
-
-		// Set, but allow overrides.
-		$general_comments['post_title'] = apply_filters( 'cp_general_comments_title', $title );
-
-		// Default content.
-		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-core' );
-
-		// Set, but allow overrides.
-		$general_comments['post_content'] = apply_filters( 'cp_general_comments_content', $content );
-
-		// Set template, but allow overrides.
-		$general_comments['page_template'] = apply_filters( 'cp_general_comments_template', 'comments-general.php' );
-
-		// Insert the Post into the database.
-		$general_comments_id = wp_insert_post( $general_comments );
-
-		// Store the option.
-		$this->option_set( 'cp_general_comments_page', $general_comments_id );
-
-		// --<
-		return $general_comments_id;
-
-	}
-
-	/**
-	 * Create "All Comments" Page.
-	 *
-	 * @since 3.4
-	 *
-	 * @return int $all_comments_id The numeric ID of the "All Comments" Page.
-	 */
-	public function create_all_comments_page() {
-
-		// Define All Comments Page.
-		$all_comments = [
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'post_parent' => 0,
-			'comment_status' => 'closed',
-			'ping_status' => 'closed',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
-			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
-		];
-
-		// Add Post-specific stuff.
-
-		// Default Page title.
-		$title = __( 'All Comments', 'commentpress-core' );
-
-		// Set, but allow overrides.
-		$all_comments['post_title'] = apply_filters( 'cp_all_comments_title', $title );
-
-		// Default content.
-		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-core' );
-
-		// Set, but allow overrides.
-		$all_comments['post_content'] = apply_filters( 'cp_all_comments_content', $content );
-
-		// Set template, but allow overrides.
-		$all_comments['page_template'] = apply_filters( 'cp_all_comments_template', 'comments-all.php' );
-
-		// Insert the Post into the database.
-		$all_comments_id = wp_insert_post( $all_comments );
-
-		// Store the option.
-		$this->option_set( 'cp_all_comments_page', $all_comments_id );
-
-		// --<
-		return $all_comments_id;
-
-	}
-
-	/**
-	 * Create "Comments by Author" Page.
-	 *
-	 * @since 3.4
-	 *
-	 * @return int $group_id The numeric ID of the "Comments by Author" Page.
-	 */
-	public function create_comments_by_author_page() {
-
-		// Define Comments by Author Page.
-		$group = [
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'post_parent' => 0,
-			'comment_status' => 'closed',
-			'ping_status' => 'closed',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
-			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
-		];
-
-		// Add Post-specific stuff.
-
-		// Default Page title.
-		$title = __( 'Comments by Commenter', 'commentpress-core' );
-
-		// Set, but allow overrides.
-		$group['post_title'] = apply_filters( 'cp_comments_by_title', $title );
-
-		// Default content.
-		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-core' );
-
-		// Set, but allow overrides.
-		$group['post_content'] = apply_filters( 'cp_comments_by_content', $content );
-
-		// Set template, but allow overrides.
-		$group['page_template'] = apply_filters( 'cp_comments_by_template', 'comments-by.php' );
-
-		// Insert the Post into the database.
-		$group_id = wp_insert_post( $group );
-
-		// Store the option.
-		$this->option_set( 'cp_comments_by_page', $group_id );
-
-		// --<
-		return $group_id;
-
-	}
-
-	/**
-	 * Create "blog" Page.
-	 *
-	 * @since 3.4
-	 *
-	 * @return int $blog_id The numeric ID of the "Blog" Page.
-	 */
-	public function create_blog_page() {
-
-		// Define Blog Page.
-		$blog = [
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'post_parent' => 0,
-			'comment_status' => 'closed',
-			'ping_status' => 'closed',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
-			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
-		];
-
-		// Add Post-specific stuff.
-
-		// Default Page title.
-		$title = __( 'Blog', 'commentpress-core' );
-
-		// Set, but allow overrides.
-		$blog['post_title'] = apply_filters( 'cp_blog_page_title', $title );
-
-		// Default content.
-		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-core' );
-
-		// Set, but allow overrides.
-		$blog['post_content'] = apply_filters( 'cp_blog_page_content', $content );
-
-		// Set template, but allow overrides.
-		$blog['page_template'] = apply_filters( 'cp_blog_page_template', 'blog.php' );
-
-		// Insert the Post into the database.
-		$blog_id = wp_insert_post( $blog );
-
-		// Store the option.
-		$this->option_set( 'cp_blog_page', $blog_id );
-
-		// Set WordPress internal Page reference.
-		$this->wordpress_option_backup( 'page_for_posts', $blog_id );
-
-		// --<
-		return $blog_id;
-
-	}
-
-	/**
-	 * Create "Blog Archive" Page.
-	 *
-	 * @since 3.4
-	 *
-	 * @return int $blog_id The numeric ID of the "Blog Archive" Page.
-	 */
-	public function create_blog_archive_page() {
-
-		// Define Blog Archive Page.
-		$blog = [
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'post_parent' => 0,
-			'comment_status' => 'closed',
-			'ping_status' => 'closed',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
-			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
-		];
-
-		// Add Post-specific stuff.
-
-		// Default Page title.
-		$title = __( 'Blog Archive', 'commentpress-core' );
-
-		// Set, but allow overrides.
-		$blog['post_title'] = apply_filters( 'cp_blog_archive_page_title', $title );
-
-		// Default content.
-		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-core' );
-
-		// Set, but allow overrides.
-		$blog['post_content'] = apply_filters( 'cp_blog_archive_page_content', $content );
-
-		// Set template, but allow overrides.
-		$blog['page_template'] = apply_filters( 'cp_blog_archive_page_template', 'archives.php' );
-
-		// Insert the Post into the database.
-		$blog_id = wp_insert_post( $blog );
-
-		// Store the option.
-		$this->option_set( 'cp_blog_archive_page', $blog_id );
-
-		// --<
-		return $blog_id;
-
-	}
-
-	/**
-	 * Create "table of contents" Page.
-	 *
-	 * PLease note: this is NOT USED.
-	 *
-	 * @since 3.4
-	 *
-	 * @return int $toc_id The numeric ID of the "Table of Contents" Page.
-	 */
-	public function create_toc_page() {
-
-		// Define TOC Page.
-		$toc = [
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'post_parent' => 0,
-			'comment_status' => 'closed',
-			'ping_status' => 'closed',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
-			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
-		];
-
-		// Default Page title.
-		$title = __( 'Table of Contents', 'commentpress-core' );
-
-		// Set, but allow overrides.
-		$toc['post_title'] = apply_filters( 'cp_toc_page_title', $title );
-
-		// Default content.
-		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-core' );
-
-		// Set, but allow overrides.
-		$toc['post_content'] = apply_filters( 'cp_toc_page_content', $content );
-
-		// Set template, but allow overrides.
-		$toc['page_template'] = apply_filters( 'cp_toc_page_template', 'toc.php' );
-
-		// Insert the Post into the database.
-		$toc_id = wp_insert_post( $toc );
-
-		// Store the option.
-		$this->option_set( 'cp_toc_page', $toc_id );
-
-		// --<
-		return $toc_id;
 
 	}
 
@@ -3402,10 +2676,10 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// TOC: show Posts by default.
 		$this->option_set( 'cp_show_posts_or_pages_in_toc', $this->toc_content );
 
-		// TOC: are chapters Pages.
+		// TOC: are Chapters Pages.
 		$this->option_set( 'cp_toc_chapter_is_page', $this->toc_chapter_is_page );
 
-		// TOC: if Pages are shown, show subpages by default.
+		// TOC: if Pages are shown, show Sub-pages by default.
 		$this->option_set( 'cp_show_subpages', $this->show_subpages );
 
 		// TOC: show extended Post list.

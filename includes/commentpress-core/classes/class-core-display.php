@@ -228,19 +228,28 @@ class CommentPress_Core_Display {
 	}
 
 	/**
-	 * Adds CSS.
+	 * Adds our Stylesheets.
 	 *
 	 * @since 3.4
 	 */
 	public function enqueue_styles() {
 
-		// Add plugin styles.
-		$this->get_frontend_styles();
+		// Add jQuery UI stylesheet -> needed for resizable columns.
+		wp_enqueue_style(
+			'cp_jquery_ui_base',
+			plugins_url( 'includes/commentpress-core/assets/css/jquery.ui.css', COMMENTPRESS_PLUGIN_FILE ),
+			false,
+			COMMENTPRESS_VERSION, // Version.
+			'all' // Media.
+		);
+
 
 	}
 
 	/**
-	 * Adds script libraries.
+	 * Adds our Javascripts.
+	 *
+	 * Enqueue jQuery, jQuery UI and plugins.
 	 *
 	 * @since 3.4
 	 */
@@ -250,20 +259,6 @@ class CommentPress_Core_Display {
 		if ( is_admin() || ( isset( $GLOBALS['pagenow'] ) && 'wp-login.php' == $GLOBALS['pagenow'] ) ) {
 			return;
 		}
-
-		// Add jQuery libraries.
-		$this->get_jquery();
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Enqueue jQuery, jQuery UI and plugins.
-	 *
-	 * @since 3.4
-	 */
-	public function get_jquery() {
 
 		// Default to minified scripts.
 		$debug_state = commentpress_minified();
@@ -406,24 +401,6 @@ class CommentPress_Core_Display {
 	}
 
 	/**
-	 * Get plugin stylesheets.
-	 *
-	 * @since 3.0
-	 */
-	public function get_frontend_styles() {
-
-		// Add jQuery UI stylesheet -> needed for resizable columns.
-		wp_enqueue_style(
-			'cp_jquery_ui_base',
-			plugins_url( 'includes/commentpress-core/assets/css/jquery.ui.css', COMMENTPRESS_PLUGIN_FILE ),
-			false,
-			COMMENTPRESS_VERSION, // Version.
-			'all' // Media.
-		);
-
-	}
-
-	/**
 	 * Test if TinyMCE is allowed.
 	 *
 	 * @since 3.4
@@ -447,11 +424,7 @@ class CommentPress_Core_Display {
 		} else {
 
 			// Don't return TinyMCE for touchscreens, mobile phones or tablets.
-			if (
-				( $this->core->device->is_touch() ) ||
-				( $this->core->device->is_mobile() ) ||
-				( $this->core->device->is_tablet() )
-			) {
+			if ( $this->core->device->is_touch() || $this->core->device->is_mobile() || $this->core->device->is_tablet() ) {
 
 				// Disallow.
 				$allowed = false;
@@ -750,7 +723,7 @@ HELPTEXT;
 		$depth = $this->core->db->option_get( 'cp_show_subpages' );
 		*/
 
-		// ALWAYS write subpages into Page, even if they aren't displayed.
+		// ALWAYS write Sub-pages into Page, even if they aren't displayed.
 		$depth = 0;
 
 		// Get Pages to exclude.

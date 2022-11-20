@@ -2159,7 +2159,7 @@ if ( ! function_exists( 'commentpress_get_post_multipage_url' ) ) :
 	 *
 	 * @param int $i The Page number.
 	 * @param WP_Post $post The WordPress Post object.
-	 * @return str $url The URL to the subpage.
+	 * @return str $url The URL to the Sub-page.
 	 */
 	function commentpress_get_post_multipage_url( $i, $post = '' ) {
 

@@ -278,7 +278,7 @@ class CommentPress_Core_Settings_Site {
 	 *
 	 * Regardless of the actual admin screen we are on, we need the parent menu
 	 * item to be highlighted so that the appropriate menu is open by default
-	 * when the subpage is viewed.
+	 * when the Sub-page is viewed.
 	 *
 	 * @since 4.0
 	 *
@@ -289,17 +289,17 @@ class CommentPress_Core_Settings_Site {
 
 		global $plugin_page, $submenu_file;
 
-		// Define subpages.
+		// Define Sub-pages.
 		$subpages = [
 			$this->settings_page_slug,
 		];
 
 		/**
-		 * Filter the list of subpages.
+		 * Filter the list of Sub-pages.
 		 *
 		 * @since 4.0
 		 *
-		 * @param array $subpages The existing list of subpages.
+		 * @param array $subpages The existing list of Sub-pages.
 		 */
 		$subpages = apply_filters( 'commentpress/core/settings/site/page/subpages', $subpages );
 

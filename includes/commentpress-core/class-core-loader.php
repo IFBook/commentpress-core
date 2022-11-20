@@ -38,6 +38,15 @@ class CommentPress_Core {
 	public $display;
 
 	/**
+	 * Theme object.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var object $theme The theme object.
+	 */
+	public $theme;
+
+	/**
 	 * Site Settings object.
 	 *
 	 * @since 4.0
@@ -212,6 +221,7 @@ class CommentPress_Core {
 		// Include class files.
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-database.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-display.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-theme.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-settings-site.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-settings-post.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-navigation.php';
@@ -243,6 +253,7 @@ class CommentPress_Core {
 		// Initialise objects.
 		$this->db = new CommentPress_Core_Database( $this );
 		$this->display = new CommentPress_Core_Display( $this );
+		$this->theme = new CommentPress_Core_Theme( $this );
 		$this->site_settings = new CommentPress_Core_Settings_Site( $this );
 		$this->post_settings = new CommentPress_Core_Settings_Post( $this );
 		$this->nav = new CommentPress_Core_Navigator( $this );
@@ -402,7 +413,7 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Get table of contents list.
+	 * Get "Table of Contents" list.
 	 *
 	 * @since 3.4
 	 *

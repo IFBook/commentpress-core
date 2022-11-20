@@ -132,13 +132,6 @@ class CommentPress_Core_Settings_Post {
 			return;
 		}
 
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			//'backtrace' => $trace,
-		], true ) );
-
 		// Add our metabox.
 		add_meta_box(
 			'commentpress_post_settings',

@@ -769,7 +769,7 @@ class CommentPress_Core_Navigator {
 	 * @since 3.0
 	 *
 	 * @param array $pages The array of Page objects.
-	 * @return array $subpages All subpages.
+	 * @return array $subpages All Sub-pages.
 	 */
 	public function filter_chapters( $pages ) {
 
@@ -818,7 +818,7 @@ class CommentPress_Core_Navigator {
 	 * @since 4.0 Renamed.
 	 *
 	 * @param array $pages The array of Page objects.
-	 * @return array $subpages All subpages.
+	 * @return array $subpages All Sub-pages.
 	 */
 	public function get_first_child_recursive( $pages ) {
 

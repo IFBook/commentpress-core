@@ -23,8 +23,8 @@
 			 *
 			 * @since 4.0
 			 *
-			 * @param array $urls The array of subpage URLs.
-			 * @param string The key of the active tab in the subpage URLs array.
+			 * @param array $urls The array of Sub-page URLs.
+			 * @param string The key of the active tab in the Sub-page URLs array.
 			 */
 			do_action( 'commentpress/core/settings/site/page/nav_tabs', $urls, 'settings' );
 

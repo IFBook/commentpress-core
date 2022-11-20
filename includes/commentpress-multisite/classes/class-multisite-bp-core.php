@@ -695,7 +695,7 @@ class CommentPress_Multisite_BuddyPress {
 		// Set key.
 		$key = '_cp_comment_page';
 
-		// If the custom field has a value, we have a subpage comment.
+		// If the custom field has a value, we have a Sub-page comment.
 		if ( get_comment_meta( $comment->comment_ID, $key, true ) != '' ) {
 
 			// Get comment's Page from meta.
@@ -709,15 +709,15 @@ class CommentPress_Multisite_BuddyPress {
 
 			// Init target link.
 			$target_post_link = '<a href="' . commentpress_get_post_multipage_url( $page_num, $post ) . '">' .
-									esc_html( $post->post_title ) .
-								'</a>';
+				esc_html( $post->post_title ) .
+			'</a>';
 
 		} else {
 
 			// Init target link.
 			$target_post_link = '<a href="' . get_permalink( $post->ID ) . '">' .
-									esc_html( $post->post_title ) .
-								'</a>';
+				esc_html( $post->post_title ) .
+			'</a>';
 
 		}
 
