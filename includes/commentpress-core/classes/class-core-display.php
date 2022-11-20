@@ -1492,7 +1492,13 @@ HELPTEXT;
 				// Define title.
 				$type_title = __( 'Blog Type', 'commentpress-core' );
 
-				// Allow overrides.
+				/**
+				 * Filters the Blog Type label.
+				 *
+				 * @since 3.3.1
+				 *
+				 * @param str $type_title The the Blog Type label.
+				 */
 				$type_title = apply_filters( 'cp_blog_type_label', $type_title );
 
 				// Construct options.

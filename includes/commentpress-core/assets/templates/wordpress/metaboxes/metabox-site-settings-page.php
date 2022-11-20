@@ -46,7 +46,7 @@
 				<option value="show" <?php echo ( ( $title_visibility == 'show' ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Show page titles', 'commentpress-core' ); ?></option>
 				<option value="hide" <?php echo ( ( $title_visibility == 'hide' ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Hide page titles', 'commentpress-core' ); ?></option>
 			</select>
-			<p class="description"><?php esc_html_e( 'This can be overridden on individual pages.', 'commentpress-core' ); ?></p>
+			<p class="description"><?php esc_html_e( 'This setting can be overridden on individual entries.', 'commentpress-core' ); ?></p>
 		</td>
 	</tr>
 
@@ -59,7 +59,7 @@
 				<option value="show" <?php echo ( ( $page_meta_visibility == 'show' ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Show page meta', 'commentpress-core' ); ?></option>
 				<option value="hide" <?php echo ( ( $page_meta_visibility == 'hide' ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Hide page meta', 'commentpress-core' ); ?></option>
 			</select>
-			<p class="description"><?php esc_html_e( 'This can be overridden on individual pages.', 'commentpress-core' ); ?></p>
+			<p class="description"><?php esc_html_e( 'This setting can be overridden on individual entries.', 'commentpress-core' ); ?></p>
 		</td>
 	</tr>
 

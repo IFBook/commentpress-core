@@ -466,11 +466,14 @@ class CommentPress_Core_Formatter {
 		// Define title.
 		$type_title = __( 'Default Text Format', 'commentpress-core' );
 
-		// Allow overrides.
+		/**
+		 * Filters the Blog Type label.
+		 *
+		 * @since 3.3.1
+		 *
+		 * @param str $type_title The the Blog Type label.
+		 */
 		$type_title = apply_filters( 'cp_blog_type_label', $type_title );
-
-		// Add extra message.
-		$type_title .= __( ' (can be overridden on individual pages)', 'commentpress-core' );
 
 		// Construct options.
 		$type_option_list = [];
@@ -493,12 +496,13 @@ class CommentPress_Core_Formatter {
 		?>
 		<tr valign="top">
 			<th scope="row">
-				<label for="cp_blog_type">' . $type_title . '</label>
+				<label for="cp_blog_type"><?php echo $type_title; ?></label>
 			</th>
 			<td>
 				<select id="cp_blog_type" name="cp_blog_type">
-					' . $type_options . '
+					<?php echo $type_options; ?>
 				</select>
+				<p class="description"><?php esc_html_e( 'This setting can be overridden on individual entries.', 'commentpress-core' ); ?></p>
 			</td>
 		</tr>
 		<?php

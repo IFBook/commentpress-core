@@ -2030,7 +2030,13 @@ class CommentPress_Multisite_BuddyPress {
 				// Define Blog Type label.
 				$type_label = __( 'Document Type', 'commentpress-core' );
 
-				// Allow overrides.
+				/**
+				 * Filters the Blog Type label.
+				 *
+				 * @since 3.3.1
+				 *
+				 * @param str $type_title The the Blog Type label.
+				 */
 				$type_label = apply_filters( 'cp_blog_type_label', $type_label );
 
 				// Construct options.
@@ -2291,7 +2297,13 @@ class CommentPress_Multisite_BuddyPress {
 			// Define Blog Type label.
 			$type_label = __( 'Document Type', 'commentpress-core' );
 
-			// Allow overrides.
+			/**
+			 * Filters the Blog Type label.
+			 *
+			 * @since 3.3.1
+			 *
+			 * @param str $type_title The the Blog Type label.
+			 */
 			$type_label = apply_filters( 'cp_blog_type_label', $type_label );
 
 			// Construct options.

@@ -42,7 +42,7 @@
 					<option value="activity" <?php echo ( ( $sidebar_default == 'activity' ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Activity', 'commentpress-core' ); ?></option>
 					<option value="comments" <?php echo ( ( $sidebar_default == 'comments' ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Comments', 'commentpress-core' ); ?></option>
 				</select>
-				<p class="description"><?php esc_html_e( 'This can be overridden on individual pages.', 'commentpress-core' ); ?></p>
+				<p class="description"><?php esc_html_e( 'This setting can be overridden on individual entries.', 'commentpress-core' ); ?></p>
 			</td>
 		</tr>
 	<?php endif; ?>
