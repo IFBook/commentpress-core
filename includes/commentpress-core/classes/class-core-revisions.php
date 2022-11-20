@@ -134,7 +134,7 @@ class CommentPress_Core_Revisions {
 		add_action( 'save_post', [ $this, 'revision_create' ], 10, 2 );
 
 		// Maybe delete Newer Post pointer in Older Post meta.
-		add_action( 'before_delete_post', [ $this, 'delete_post' ] );
+		add_action( 'before_delete_post', [ $this, 'revision_meta_delete' ] );
 
 	}
 
@@ -186,43 +186,6 @@ class CommentPress_Core_Revisions {
 	}
 
 	// -------------------------------------------------------------------------
-
-	/**
-	 * Handles Revision deletion.
-	 *
-	 * For Posts with versions, we need to delete the version data in the previous
-	 * Post's meta.
-	 *
-	 * @since 4.0
-	 *
-	 * @param int $post_id The ID of the deleted WordPress Post.
-	 */
-	public function revision_deleted( $post_id ) {
-
-		// Get Posts with the about-to-be-deleted Post ID in meta.
-		$older_posts = get_posts( [
-			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-			'meta_key' => $this->meta_key_newer_id,
-			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
-			'meta_value' => $post_id,
-		] );
-
-		// Bail if we didn't get any.
-		if ( empty( $older_posts ) ) {
-			return;
-		}
-
-		// There will be only one, but let's use a loop anyway.
-		foreach ( $older_posts as $older_post ) {
-
-			// Delete it if the custom field has a value.
-			if ( get_post_meta( $older_post->ID, $key, true ) !== '' ) {
-				delete_post_meta( $older_post->ID, $key );
-			}
-
-		}
-
-	}
 
 	/**
 	 * Handles authentication and creates Revision.
@@ -434,6 +397,45 @@ class CommentPress_Core_Revisions {
 		 * @param WP_Post $post The copied WordPress Post object.
 		 */
 		do_action( 'commentpress/core/revisions/revision/meta/added', $new_post_id, $post );
+
+	}
+
+	/**
+	 * Handles Revision deletion.
+	 *
+	 * For Posts with versions, we need to delete the version data in the previous
+	 * Post's meta.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $post_id The ID of the deleted WordPress Post.
+	 */
+	public function revision_meta_delete( $post_id ) {
+
+		// Get Posts with the about-to-be-deleted Post ID in meta.
+		$older_posts = get_posts( [
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+			'meta_key' => $this->meta_key_newer_id,
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			'meta_value' => $post_id,
+		] );
+
+		// Bail if we didn't get any.
+		if ( empty( $older_posts ) ) {
+			return;
+		}
+
+		// There will be only one, but let's use a loop anyway.
+		foreach ( $older_posts as $older_post ) {
+
+			// Delete it if the custom field has a value.
+			if ( get_post_meta( $older_post->ID, $key, true ) !== '' ) {
+				delete_post_meta( $older_post->ID, $key );
+			}
+
+		}
+
+		// TODO: If there is a Newer Post, link Older Post to it.
 
 	}
 
