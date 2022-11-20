@@ -184,18 +184,18 @@ class CommentPress_Core {
 		/**
 		 * Broadcast that CommentPress Core has loaded.
 		 *
+		 * @since 3.6.3
+		 */
+		do_action_deprecated( 'commentpress_loaded', '4.0', 'commentpress/core/loaded' );
+
+		/**
+		 * Broadcast that CommentPress Core has loaded.
+		 *
 		 * Used internally to bootstrap objects.
 		 *
 		 * @since 4.0
 		 */
 		do_action( 'commentpress/core/loaded' );
-
-		/**
-		 * Broadcast that CommentPress Core has loaded.
-		 *
-		 * @since 3.6.3
-		 */
-		do_action( 'commentpress_loaded' );
 
 		// We're done.
 		$done = true;
@@ -229,7 +229,7 @@ class CommentPress_Core {
 		 *
 		 * @since 3.6.2
 		 */
-		do_action( 'commentpress_after_includes' );
+		do_action_deprecated( 'commentpress_after_includes', '4.0', 'commentpress/core/loaded' );
 
 	}
 
@@ -265,22 +265,12 @@ class CommentPress_Core {
 	 */
 	public function register_hooks() {
 
-		// Is this the back end?
-		if ( is_admin() ) {
-
-			// Add meta boxes.
-			add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes' ] );
-
-		} else {
-
-		}
-
 		/**
 		 * Broadcast that callbacks have been added.
 		 *
 		 * @since 3.6.2
 		 */
-		do_action( 'commentpress_after_hooks' );
+		do_action_deprecated( 'commentpress_after_hooks', '4.0', 'commentpress/core/loaded' );
 
 	}
 
@@ -408,213 +398,6 @@ class CommentPress_Core {
 
 		// --<
 		return $result;
-
-	}
-
-	/**
-	 * Adds meta boxes to admin screens.
-	 *
-	 * @since 3.4
-	 */
-	public function add_meta_boxes() {
-
-		// Add our meta boxes to Pages.
-		add_meta_box(
-			'commentpress_page_options',
-			__( 'CommentPress Core Options', 'commentpress-core' ),
-			[ $this, 'custom_box_page' ],
-			'page',
-			'side'
-		);
-
-	}
-
-	/**
-	 * Adds meta box to Page edit screens.
-	 *
-	 * @since 3.4
-	 */
-	public function custom_box_page() {
-
-		// Access Post.
-		global $post;
-
-		// Use nonce for verification.
-		wp_nonce_field( 'commentpress_page_settings', 'commentpress_nonce' );
-
-		// ---------------------------------------------------------------------
-		// Show or Hide Page Title.
-		// ---------------------------------------------------------------------
-
-		// Show a title.
-		echo '<div class="cp_title_visibility_wrapper">
-		<p><strong><label for="cp_title_visibility">' . __( 'Page Title Visibility', 'commentpress-core' ) . '</label></strong></p>';
-
-		// Set key.
-		$key = '_cp_title_visibility';
-
-		// Default to show.
-		$viz = $this->db->option_get( 'cp_title_visibility' );
-
-		// If the custom field already has a value.
-		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-			// Get it.
-			$viz = get_post_meta( $post->ID, $key, true );
-
-		}
-
-		// Select.
-		echo '
-		<p>
-		<select id="cp_title_visibility" name="cp_title_visibility">
-			<option value="show" ' . ( ( $viz == 'show' ) ? ' selected="selected"' : '' ) . '>' . __( 'Show page title', 'commentpress-core' ) . '</option>
-			<option value="hide" ' . ( ( $viz == 'hide' ) ? ' selected="selected"' : '' ) . '>' . __( 'Hide page title', 'commentpress-core' ) . '</option>
-		</select>
-		</p>
-		</div>
-		';
-
-		// ---------------------------------------------------------------------
-		// Show or Hide Page Meta.
-		// ---------------------------------------------------------------------
-
-		// Show a label.
-		echo '<div class="cp_page_meta_visibility_wrapper">
-		<p><strong><label for="cp_page_meta_visibility">' . __( 'Page Meta Visibility', 'commentpress-core' ) . '</label></strong></p>';
-
-		// Set key.
-		$key = '_cp_page_meta_visibility';
-
-		// Default to show.
-		$viz = $this->db->option_get( 'cp_page_meta_visibility' );
-
-		// If the custom field already has a value.
-		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-			// Get it.
-			$viz = get_post_meta( $post->ID, $key, true );
-
-		}
-
-		// Select.
-		echo '
-		<p>
-		<select id="cp_page_meta_visibility" name="cp_page_meta_visibility">
-			<option value="show" ' . ( ( $viz == 'show' ) ? ' selected="selected"' : '' ) . '>' . __( 'Show page meta', 'commentpress-core' ) . '</option>
-			<option value="hide" ' . ( ( $viz == 'hide' ) ? ' selected="selected"' : '' ) . '>' . __( 'Hide page meta', 'commentpress-core' ) . '</option>
-		</select>
-		</p>
-		</div>
-		';
-
-		// ---------------------------------------------------------------------
-		// Page Numbering - only shown on first top level Page.
-		// ---------------------------------------------------------------------
-
-		// If Page has no parent and it's not a Special Page and it's the first.
-		if (
-			$post->post_parent == '0' &&
-			! $this->db->is_special_page() &&
-			$post->ID == $this->nav->get_first_page()
-		) {
-
-			// Label.
-			echo '<div class="cp_number_format_wrapper">
-			<p><strong><label for="cp_number_format">' . __( 'Page Number Format', 'commentpress-core' ) . '</label></strong></p>';
-
-			// Set key.
-			$key = '_cp_number_format';
-
-			// Default to arabic.
-			$format = 'arabic';
-
-			// If the custom field already has a value.
-			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-				// Get it.
-				$format = get_post_meta( $post->ID, $key, true );
-
-			}
-
-			// Select.
-			echo '
-			<p>
-			<select id="cp_number_format" name="cp_number_format">
-				<option value="arabic" ' . ( ( $format == 'arabic' ) ? ' selected="selected"' : '' ) . '>' . __( 'Arabic numerals', 'commentpress-core' ) . '</option>
-				<option value="roman" ' . ( ( $format == 'roman' ) ? ' selected="selected"' : '' ) . '>' . __( 'Roman numerals', 'commentpress-core' ) . '</option>
-			</select>
-			</p>
-			</div>
-			';
-
-		}
-
-		// ---------------------------------------------------------------------
-		// Page Layout for Title Page -> to allow for Book Cover image.
-		// ---------------------------------------------------------------------
-
-		// Is this the Title Page?
-		if ( $post->ID == $this->db->option_get( 'cp_welcome_page' ) ) {
-
-			// Label.
-			echo '<div class="cp_page_layout_wrapper">
-			<p><strong><label for="cp_page_layout">' . __( 'Page Layout', 'commentpress-core' ) . '</label></strong></p>';
-
-			// Set key.
-			$key = '_cp_page_layout';
-
-			// Default to text.
-			$value = 'text';
-
-			// If the custom field already has a value.
-			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-				// Get it.
-				$value = get_post_meta( $post->ID, $key, true );
-
-			}
-
-			// Select.
-			echo '
-			<p>
-			<select id="cp_page_layout" name="cp_page_layout">
-				<option value="text" ' . ( ( $value == 'text' ) ? ' selected="selected"' : '' ) . '>' . __( 'Standard', 'commentpress-core' ) . '</option>
-				<option value="wide" ' . ( ( $value == 'wide' ) ? ' selected="selected"' : '' ) . '>' . __( 'Wide', 'commentpress-core' ) . '</option>
-			</select>
-			</p>
-			</div>
-			';
-
-		}
-
-		// Get default sidebar.
-		$this->get_default_sidebar_metabox( $post );
-
-		// Get starting para number.
-		$this->get_para_numbering_metabox( $post );
-
-	}
-
-	/**
-	 * Get table of contents.
-	 *
-	 * @since 3.4
-	 */
-	public function get_toc() {
-
-		// Switch Pages or Posts.
-		if ( $this->get_list_option() == 'post' ) {
-
-			// List Posts.
-			$this->display->list_posts();
-
-		} else {
-
-			// List Pages.
-			$this->display->list_pages();
-
-		}
 
 	}
 
@@ -881,7 +664,7 @@ class CommentPress_Core {
 			if ( is_object( $this->db ) ) {
 
 				// Is it a Special Page which have Comments-in-Page (or are not commentable)?
-				if ( ! $this->db->is_special_page() ) {
+				if ( ! $this->pages_legacy->is_special_page() ) {
 
 					// Access Page.
 					global $post;
@@ -984,7 +767,7 @@ class CommentPress_Core {
 		}
 
 		// CommentPress Core Special Pages Special Pages are not.
-		if ( $this->db->is_special_page() ) {
+		if ( $this->pages_legacy->is_special_page() ) {
 			return false;
 		}
 
@@ -1017,30 +800,6 @@ class CommentPress_Core {
 		 */
 		return apply_filters( 'cp_is_commentable', true );
 
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Check if user agent is mobile.
-	 *
-	 * @since 3.4
-	 *
-	 * @return bool $is_mobile True if mobile OS, false otherwise.
-	 */
-	public function is_mobile() {
-		return $this->device->is_mobile();
-	}
-
-	/**
-	 * Check if user agent is tablet.
-	 *
-	 * @since 3.4
-	 *
-	 * @return boolean $is_tablet True if tablet OS, false otherwise.
-	 */
-	public function is_tablet() {
-		return $this->device->is_tablet();
 	}
 
 	// -------------------------------------------------------------------------
@@ -1090,41 +849,28 @@ class CommentPress_Core {
 
 	}
 
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Adds the Paragraph numbering preference to the Page/Post metabox.
+	 * Check if user agent is mobile.
 	 *
 	 * @since 3.4
 	 *
-	 * @param object $post The WordPress Post object.
+	 * @return bool $is_mobile True if mobile OS, false otherwise.
 	 */
-	public function get_para_numbering_metabox( $post ) {
+	public function is_mobile() {
+		return $this->device->is_mobile();
+	}
 
-		// Show a title.
-		echo '<div class="cp_starting_para_number_wrapper">
-		<p><strong><label for="cp_starting_para_number">' . __( 'Starting Paragraph Number', 'commentpress-core' ) . '</label></strong></p>';
-
-		// Set key.
-		$key = '_cp_starting_para_number';
-
-		// Default to start with para 1.
-		$num = 1;
-
-		// If the custom field already has a value.
-		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-			// Get it.
-			$num = get_post_meta( $post->ID, $key, true );
-
-		}
-
-		// Select.
-		echo '
-		<p>
-		<input type="text" id="cp_starting_para_number" name="cp_starting_para_number" value="' . $num . '" />
-		</p>
-		</div>
-		';
-
+	/**
+	 * Check if user agent is tablet.
+	 *
+	 * @since 3.4
+	 *
+	 * @return boolean $is_tablet True if tablet OS, false otherwise.
+	 */
+	public function is_tablet() {
+		return $this->device->is_tablet();
 	}
 
 	// -------------------------------------------------------------------------

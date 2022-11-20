@@ -76,6 +76,52 @@ class CommentPress_Core_Pages_Legacy {
 	// -------------------------------------------------------------------------
 
 	/**
+	 * Test if a Page is a Special Page.
+	 *
+	 * @since 3.4
+	 *
+	 * @return bool $is_special_page True if a Special Page, false otherwise.
+	 */
+	public function is_special_page() {
+
+		// Init flag.
+		$is_special_page = false;
+
+		// Access Post object.
+		global $post;
+
+		// Do we have one?
+		if ( ! is_object( $post ) ) {
+
+			// --<
+			return $is_special_page;
+
+		}
+
+		// Get Special Pages.
+		$special_pages = $this->core->db->option_get( 'cp_special_pages', [] );
+
+		// Do we have a Special Page array?
+		if ( is_array( $special_pages ) && count( $special_pages ) > 0 ) {
+
+			// Is the current Page one?
+			if ( in_array( $post->ID, $special_pages ) ) {
+
+				// It is.
+				$is_special_page = true;
+
+			}
+
+		}
+
+		// --<
+		return $is_special_page;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
 	 * Exclude Special Pages from Page listings.
 	 *
 	 * @since 3.4
@@ -86,7 +132,7 @@ class CommentPress_Core_Pages_Legacy {
 	public function exclude_special_pages( $excluded_array ) {
 
 		// Get Special Pages array, if it's there.
-		$special_pages = $this->db->option_get( 'cp_special_pages' );
+		$special_pages = $this->core->db->option_get( 'cp_special_pages' );
 
 		// Do we have an array?
 		if ( is_array( $special_pages ) ) {
@@ -116,7 +162,7 @@ class CommentPress_Core_Pages_Legacy {
 		if ( is_admin() && $pagenow == 'edit.php' && $post_type == 'page' ) {
 
 			// Get Special Pages array, if it's there.
-			$special_pages = $this->db->option_get( 'cp_special_pages' );
+			$special_pages = $this->core->db->option_get( 'cp_special_pages' );
 
 			// Do we have an array?
 			if ( is_array( $special_pages ) && count( $special_pages ) > 0 ) {
@@ -146,7 +192,7 @@ class CommentPress_Core_Pages_Legacy {
 		if ( is_admin() && $pagenow == 'edit.php' && $post_type == 'page' ) {
 
 			// Get Special Pages array, if it's there.
-			$special_pages = $this->db->option_get( 'cp_special_pages' );
+			$special_pages = $this->core->db->option_get( 'cp_special_pages' );
 
 			// Do we have an array?
 			if ( is_array( $special_pages ) ) {

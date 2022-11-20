@@ -1,14 +1,14 @@
 <?php
 /**
- * Post Settings metabox template.
+ * Page Settings metabox template.
  *
- * Handles markup for the Post Settings metabox on "Edit Post" screens.
+ * Handles markup for the Page Settings metabox on "Edit Page" screens.
  *
  * @package CommentPress_Core
  */
 
 ?>
-<!-- includes/commentpress-core/assets/templates/wordpress/metaboxes/metabox-settings-post.php -->
+<!-- includes/commentpress-core/assets/templates/wordpress/metaboxes/metabox-settings-page.php -->
 <?php wp_nonce_field( $this->nonce_value, $this->nonce_name ); ?>
 
 <div class="cp_sidebar_default_wrapper">

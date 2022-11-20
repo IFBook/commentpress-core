@@ -34,7 +34,7 @@ class CommentPress_Core_Formatter {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $post_types The supported Post Types meta key.
+	 * @var str $post_types The array of supported Post Types.
 	 */
 	public $post_types = [
 		'post',
@@ -132,7 +132,7 @@ class CommentPress_Core_Formatter {
 	public function register_hooks() {
 
 		// Add meta boxes.
-		add_action( 'add_meta_boxes', [ $this, 'metabox_add' ], 10, 2 );
+		add_action( 'add_meta_boxes', [ $this, 'metabox_add' ], 30, 2 );
 
 		// Add Formatter meta value to Post.
 		add_action( 'save_post', [ $this, 'formatter_save' ], 10, 2 );
@@ -180,10 +180,17 @@ class CommentPress_Core_Formatter {
 			return;
 		}
 
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			//'backtrace' => $trace,
+		], true ) );
+
 		// Add our metabox.
 		add_meta_box(
 			'commentpress_formatter',
-			__( 'CommentPress Text Format', 'commentpress-core' ),
+			__( 'CommentPress Format', 'commentpress-core' ),
 			[ $this, 'metabox_render' ],
 			$post_type,
 			'side'

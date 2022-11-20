@@ -83,7 +83,7 @@ class CommentPress_Core_Plugins {
 		// Compat with Theme My Login.
 		if (
 			is_page() &&
-			! $this->core->db->is_special_page() &&
+			! $this->core->pages_legacy->is_special_page() &&
 			$post->post_name == 'login' &&
 			$post->post_content == '[theme-my-login]'
 		) {
@@ -115,7 +115,7 @@ class CommentPress_Core_Plugins {
 		// Compat with Members List.
 		if (
 			is_page() &&
-			! $this->core->db->is_special_page() &&
+			! $this->core->pages_legacy->is_special_page() &&
 			( strstr( $post->post_content, '[members-list' ) !== false )
 		) {
 
@@ -146,7 +146,7 @@ class CommentPress_Core_Plugins {
 		// Compat with Subscribe to Comments Reloaded.
 		if (
 			is_page() &&
-			! $this->core->db->is_special_page() &&
+			! $this->core->pages_legacy->is_special_page() &&
 			$post->ID == '9999999' &&
 			$post->guid == get_bloginfo( 'url' ) . '/?page_id=9999999'
 		) {

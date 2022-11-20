@@ -245,7 +245,7 @@ class CommentPress_Core_Parser {
 		$allowed = false;
 
 		// Only parse Posts or Pages.
-		if ( ( is_single() || is_page() || is_attachment() ) && ! $this->core->db->is_special_page() ) {
+		if ( ( is_single() || is_page() || is_attachment() ) && ! $this->core->pages_legacy->is_special_page() ) {
 			$allowed = true;
 		}
 

@@ -40,7 +40,7 @@ global $commentpress_core, $post;
 if ( is_object( $commentpress_core ) ) {
 
 	// Are we asking for Comments-in-Page?
-	if ( $commentpress_core->db->is_special_page() ) {
+	if ( $commentpress_core->pages_legacy->is_special_page() ) {
 
 		// Include 'Comments-in-Page' template.
 

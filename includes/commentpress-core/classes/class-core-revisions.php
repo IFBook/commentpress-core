@@ -128,7 +128,7 @@ class CommentPress_Core_Revisions {
 	public function register_hooks() {
 
 		// Add meta boxes.
-		add_action( 'add_meta_boxes', [ $this, 'metabox_add' ], 10, 2 );
+		add_action( 'add_meta_boxes', [ $this, 'metabox_add' ], 40, 2 );
 
 		// Maybe create a new Revision.
 		add_action( 'save_post', [ $this, 'revision_create' ], 10, 2 );
@@ -155,6 +155,13 @@ class CommentPress_Core_Revisions {
 		if ( 'post' !== $post_type ) {
 			return;
 		}
+
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			//'backtrace' => $trace,
+		], true ) );
 
 		// Add our metabox.
 		add_meta_box(

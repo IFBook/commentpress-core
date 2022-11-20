@@ -210,7 +210,7 @@ function commentpress_enqueue_scripts_and_styles() {
 		}
 
 		// Test for CommentPress Core Special Page.
-		if ( $commentpress_core->db->is_special_page() ) {
+		if ( $commentpress_core->pages_legacy->is_special_page() ) {
 
 			// Enqueue accordion-like Javascript.
 			wp_enqueue_script(

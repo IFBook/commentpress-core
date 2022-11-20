@@ -622,7 +622,7 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 			}
 
 			// Add BuddyPress Page class on CommentPress Core Special Pages.
-			if ( $commentpress_core->db->is_special_page() ) {
+			if ( $commentpress_core->pages_legacy->is_special_page() ) {
 				$page_type = 'commentpress_page';
 			}
 

@@ -125,7 +125,7 @@ function cpajax_add_javascripts() {
 	$debug_state = commentpress_minified();
 
 	// Are we asking for Comments-in-Page?
-	if ( $commentpress_core->db->is_special_page() ) {
+	if ( $commentpress_core->pages_legacy->is_special_page() ) {
 
 		// Add Comments-in-Page script.
 		wp_enqueue_script(
@@ -725,7 +725,7 @@ function cpajax_infinite_scroll_scripts() {
 	$debug_state = commentpress_minified();
 
 	// Bail if we are we asking for Comments-in-Page.
-	if ( $commentpress_core->db->is_special_page() ) {
+	if ( $commentpress_core->pages_legacy->is_special_page() ) {
 		return;
 	}
 

@@ -1620,7 +1620,7 @@ class CommentPress_Core_Database {
 			// can now send this data? doesn't hurt to validate, I guess.
 			if (
 				$post->post_parent == '0' &&
-				! $this->is_special_page() &&
+				! $this->core->pages_legacy->is_special_page() &&
 				$post->ID == $this->core->nav->get_first_page()
 			) {
 
@@ -2231,50 +2231,6 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * Test if a Page is a Special Page.
-	 *
-	 * @since 3.4
-	 *
-	 * @return bool $is_special_page True if a Special Page, false otherwise.
-	 */
-	public function is_special_page() {
-
-		// Init flag.
-		$is_special_page = false;
-
-		// Access Post object.
-		global $post;
-
-		// Do we have one?
-		if ( ! is_object( $post ) ) {
-
-			// --<
-			return $is_special_page;
-
-		}
-
-		// Get Special Pages.
-		$special_pages = $this->option_get( 'cp_special_pages', [] );
-
-		// Do we have a Special Page array?
-		if ( is_array( $special_pages ) && count( $special_pages ) > 0 ) {
-
-			// Is the current Page one?
-			if ( in_array( $post->ID, $special_pages ) ) {
-
-				// It is.
-				$is_special_page = true;
-
-			}
-
-		}
-
-		// --<
-		return $is_special_page;
-
-	}
-
-	/**
 	 * Get WordPress Post Types that CommentPress supports.
 	 *
 	 * @since 3.9
@@ -2790,7 +2746,7 @@ class CommentPress_Core_Database {
 		}
 
 		// Add Special Page var.
-		$vars['cp_special_page'] = ( $this->is_special_page() ) ? '1' : '0';
+		$vars['cp_special_page'] = ( $this->core->pages_legacy->is_special_page() ) ? '1' : '0';
 
 		// Are we in a BuddyPress scenario?
 		if ( $this->core->bp->is_buddypress() ) {
