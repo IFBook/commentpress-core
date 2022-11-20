@@ -1,8 +1,8 @@
 <?php
 /**
- * CommentPress Core class.
+ * CommentPress Core Loader class.
  *
- * Handles single Site plugin functionality.
+ * Handles Single Site plugin functionality.
  *
  * @package CommentPress_Core
  */
@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * CommentPress Core Class.
  *
- * A class that encapsulates single Site plugin functionality.
+ * A class that encapsulates Single Site plugin functionality.
  *
  * @since 3.0
  */
