@@ -26,16 +26,17 @@
 
 	<?php
 
-	global $commentpres_obj;
+	// Get core plugin reference.
+	$core = commentpress_core();
 
 	// Init.
 	$_special_pages = [];
 
 	// If we have the plugin enabled.
-	if ( is_object( $commentpress_core ) ) {
+	if ( ! empty( $core ) ) {
 
 		// Get Special Pages.
-		$special_pages = $commentpress_core->db->option_get( 'cp_special_pages' );
+		$special_pages = $core->db->option_get( 'cp_special_pages' );
 
 		// Do we have a Special Page array?
 		if ( is_array( $special_pages ) AND count( $special_pages ) > 0 ) {
@@ -51,7 +52,7 @@
 	while (have_posts()) : the_post();
 
 	// Exclude if CommentPress Core Special Page.
-	if ( !in_array( get_the_ID(), $_special_pages ) ) {
+	if ( ! in_array( get_the_ID(), $_special_pages ) ) {
 
 	?>
 

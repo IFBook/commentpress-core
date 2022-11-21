@@ -2177,7 +2177,7 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * Retrieves Text Signature by comment ID.
+	 * Retrieves Text Signature by Comment ID.
 	 *
 	 * @since 3.4
 	 *

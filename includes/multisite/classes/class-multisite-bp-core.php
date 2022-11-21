@@ -1949,26 +1949,26 @@ class CommentPress_Multisite_BuddyPress {
 		// Activate CommentPress Core.
 		$this->multisite->db->install_commentpress();
 
-		// Access core.
-		global $commentpress_core;
+		// Get core plugin reference.
+		$core = commentpress_core();
 
 		// TODO: create Admin Page settings for WordPress options.
 
 		// Show Posts by default (allow plugin overrides).
 		$posts_or_pages = apply_filters( 'cp_posts_or_pages_in_toc', 'post' );
-		$commentpress_core->db->option_set( 'cp_show_posts_or_pages_in_toc', $posts_or_pages );
+		$core->db->option_set( 'cp_show_posts_or_pages_in_toc', $posts_or_pages );
 
 		// If we opted for Posts.
 		if ( $posts_or_pages == 'post' ) {
 
 			// TOC shows extended Posts by default (allow plugin overrides).
 			$extended_toc = apply_filters( 'cp_extended_toc', 1 );
-			$commentpress_core->db->option_set( 'cp_show_extended_toc', $extended_toc );
+			$core->db->option_set( 'cp_show_extended_toc', $extended_toc );
 
 		}
 
 		// Get Blog Type (saved already).
-		$cp_blog_type = $commentpress_core->db->option_get( 'cp_blog_type' );
+		$cp_blog_type = $core->db->option_get( 'cp_blog_type' );
 
 		// Did we get a Group ID before we switched Blogs?
 		if ( isset( $group_id ) ) {
@@ -1979,8 +1979,8 @@ class CommentPress_Multisite_BuddyPress {
 
 		}
 
-		// Save.
-		$commentpress_core->db->options_save();
+		// Save options.
+		$core->db->options_save();
 
 		// ---------------------------------------------------------------------
 		// WordPress Internal Configuration.
@@ -2192,18 +2192,15 @@ class CommentPress_Multisite_BuddyPress {
 	 */
 	public function is_commentpress_groupblog() {
 
+		// Get core plugin reference.
+		$core = commentpress_core();
+
 		// Check if this Blog is a CommentPress Core Group Blog.
-		global $commentpress_core;
-		if (
-			! is_null( $commentpress_core ) &&
-			is_object( $commentpress_core ) &&
-			$commentpress_core->bp->is_groupblog()
-		) {
-
+		if ( ! empty( $core ) && $core->bp->is_groupblog() ) {
 			return true;
-
 		}
 
+		// --<
 		return false;
 
 	}
@@ -2240,13 +2237,12 @@ class CommentPress_Multisite_BuddyPress {
 	 */
 	public function get_groupblog_type() {
 
-		global $commentpress_core;
+		// Get core plugin reference.
+		$core = commentpress_core();
 
 		// If we have the plugin.
-		if ( ! is_null( $commentpress_core ) && is_object( $commentpress_core ) ) {
-
-			// --<
-			return $commentpress_core->db->option_get( 'cp_blog_type' );
+		if ( ! empty( $core ) ) {
+			return $core->db->option_get( 'cp_blog_type' );
 		}
 
 		// --<

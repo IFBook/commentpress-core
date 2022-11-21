@@ -74,14 +74,12 @@ if ( ! function_exists( 'commentpress_amend_search_query' ) ) :
 				// Search Posts and Pages.
 				$query->set( 'post_type', apply_filters( 'commentpress_amend_search_query_post_types', [ 'post', 'page' ] ) );
 
-				// Declare access to globals.
-				global $commentpress_core;
-
-				// If we have the plugin enabled.
-				if ( is_object( $commentpress_core ) ) {
+				// Get core plugin reference.
+				$core = commentpress_core();
+				if ( ! empty( $core ) ) {
 
 					// Get special Pages array, if it's there.
-					$special_pages = $commentpress_core->db->option_get( 'cp_special_pages' );
+					$special_pages = $core->db->option_get( 'cp_special_pages' );
 
 					// Exclude Special Pages if we have them.
 					if ( is_array( $special_pages ) ) {

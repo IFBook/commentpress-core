@@ -34,13 +34,16 @@ if ( post_password_required() ) { ?>
 
 
 // Declare access to globals.
-global $commentpress_core, $post;
+global $post;
+
+// Get core plugin reference.
+$core = commentpress_core();
 
 // If we have the plugin enabled.
-if ( is_object( $commentpress_core ) ) {
+if ( ! empty( $core ) ) {
 
 	// Are we asking for Comments-in-Page?
-	if ( $commentpress_core->pages_legacy->is_special_page() ) {
+	if ( $core->pages_legacy->is_special_page() ) {
 
 		// Include 'Comments-in-Page' template.
 

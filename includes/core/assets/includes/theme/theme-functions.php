@@ -28,15 +28,15 @@ if ( ! function_exists( 'commentpress_admin_header' ) ) :
 	 */
 	function commentpress_admin_header() {
 
-		// Access plugin.
-		global $commentpress_core;
+		// Get core plugin reference.
+		$core = commentpress_core();
 
 		// Init with same colour as theme stylesheets and default in "class-core-database.php".
 		$colour = '2c2622';
 
 		// Override if we have the plugin enabled.
-		if ( is_object( $commentpress_core ) ) {
-			$colour = $commentpress_core->db->option_get_header_bg();
+		if ( ! empty( $core ) ) {
+			$colour = $core->db->option_get_header_bg();
 		}
 
 		// Try and recreate the look of the theme header.
@@ -101,9 +101,9 @@ if ( ! function_exists( 'commentpress_customize_register' ) ) :
 	 */
 	function commentpress_customize_register( $wp_customize ) {
 
-		// Kick out if plugin not active.
-		global $commentpress_core;
-		if ( ! is_object( $commentpress_core ) ) {
+		// Get core plugin reference.
+		$core = commentpress_core();
+		if ( empty( $core ) ) {
 			return;
 		}
 
@@ -136,9 +136,11 @@ if ( ! function_exists( 'commentpress_customize_site_image' ) ) :
 	 */
 	function commentpress_customize_site_image( $wp_customize ) {
 
-		// Kick out if BuddyPress Group Blog.
-		global $commentpress_core;
-		if ( $commentpress_core->bp->is_groupblog() ) {
+		// Get core plugin reference.
+		$core = commentpress_core();
+
+		// Bail if BuddyPress Group Blog.
+		if ( ! empty( $core ) && $core->bp->is_groupblog() ) {
 			return;
 		}
 
@@ -201,9 +203,11 @@ if ( ! function_exists( 'commentpress_customize_site_logo' ) ) :
 	 */
 	function commentpress_customize_site_logo( $wp_customize ) {
 
-		// Kick out if BuddyPress Group Blog.
-		global $commentpress_core;
-		if ( $commentpress_core->bp->is_groupblog() ) {
+		// Get core plugin reference.
+		$core = commentpress_core();
+
+		// Bail if BuddyPress Group Blog.
+		if ( empty( $core ) && $core->bp->is_groupblog() ) {
 			return;
 		}
 
@@ -278,13 +282,17 @@ if ( ! function_exists( 'commentpress_customize_header_bg_color' ) ) :
 	 */
 	function commentpress_customize_header_bg_color( $wp_customize ) {
 
-		global $commentpress_core;
+		// Get core plugin reference.
+		$core = commentpress_core();
+		if ( empty( $core ) ) {
+			return;
+		}
 
 		// Add color picker setting.
 		$wp_customize->add_setting(
 			'commentpress_header_bg_color',
 			[
-				'default' => '#' . $commentpress_core->db->header_bg_colour,
+				'default' => '#' . $core->db->header_bg_colour,
 				//'capability' => 'edit_theme_options',
 				//'type' => 'option',
 			]
@@ -344,15 +352,13 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ) :
 	 */
 	function commentpress_get_header_image() {
 
-		// Access plugin.
-		global $commentpress_core;
+		// Get core plugin reference.
+		$core = commentpress_core();
 
 		// -------------------------------------------------------------------------
 		// If this is a Group Blog, always show Group Avatar
 		// -------------------------------------------------------------------------
-
-		// Test for Group Blog.
-		if ( is_object( $commentpress_core ) && $commentpress_core->bp->is_groupblog() ) {
+		if ( ! empty( $core ) && $core->bp->is_groupblog() ) {
 
 			// Get Group ID.
 			$group_id = get_groupblog_group_id( get_current_blog_id() );
@@ -390,15 +396,10 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ) :
 		// Allow plugins to hook in.
 		$custom_avatar_pre = apply_filters( 'commentpress_header_image_pre_customizer', false );
 
-		// Did we get one?
+		// Show it if we get an override.
 		if ( $custom_avatar_pre !== false ) {
-
-			// Show it.
 			echo $custom_avatar_pre;
-
-			// Bail before fallback.
 			return;
-
 		}
 
 		// -------------------------------------------------------------------------
@@ -451,16 +452,14 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ) :
 		// -------------------------------------------------------------------------
 		// Our fallback is to go with the legacy method that some people might still be using.
 		// -------------------------------------------------------------------------
-
-		// If we have the plugin enabled.
-		if ( is_object( $commentpress_core ) && $commentpress_core->db->option_get( 'cp_toc_page' ) ) {
+		if ( ! empty( $core ) && $core->db->option_get( 'cp_toc_page' ) ) {
 
 			// Set defaults.
 			$args = [
 				'post_type' => 'attachment',
 				'numberposts' => 1,
 				'post_status' => null,
-				'post_parent' => $commentpress_core->db->option_get( 'cp_toc_page' ),
+				'post_parent' => $core->db->option_get( 'cp_toc_page' ),
 			];
 
 			// Get them.
@@ -535,15 +534,18 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		// Init the array that holds our custom classes.
 		$classes = [];
 
-		// Access Post and plugin.
-		global $post, $commentpress_core;
+		// Access Post.
+		global $post;
+
+		// Get core plugin reference.
+		$core = commentpress_core();
 
 		// -------------------- Default Sidebar --------------------------------
 
 		// Set default sidebar but override if we have the plugin enabled.
 		$sidebar_flag = 'toc';
-		if ( is_object( $commentpress_core ) ) {
-			$sidebar_flag = $commentpress_core->get_default_sidebar();
+		if ( ! empty( $core ) ) {
+			$sidebar_flag = $core->get_default_sidebar();
 		}
 
 		// Set class per sidebar.
@@ -556,8 +558,8 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 
 		// Init commentable class but override if we have the plugin enabled.
 		$commentable = '';
-		if ( is_object( $commentpress_core ) ) {
-			$commentable = ( $commentpress_core->is_commentable() ) ? 'commentable' : 'not_commentable';
+		if ( ! empty( $core ) ) {
+			$commentable = $core->is_commentable() ? 'commentable' : 'not_commentable';
 		}
 
 		// Add to array.
@@ -569,14 +571,10 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 
 		// Init layout class but if we have the plugin enabled.
 		$layout_class = '';
-		if ( is_object( $commentpress_core ) ) {
+		if ( ! empty( $core ) ) {
 
 			// Is this the Title Page?
-			if (
-				is_object( $post ) &&
-				isset( $post->ID ) &&
-				$post->ID == $commentpress_core->db->option_get( 'cp_welcome_page' )
-			) {
+			if ( ( $post instanceof WP_Post ) && (int) $post->ID === (int) $core->db->option_get( 'cp_welcome_page' ) ) {
 
 				// Init layout.
 				$layout = '';
@@ -614,15 +612,15 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		}
 
 		// If we have the plugin enabled.
-		if ( is_object( $commentpress_core ) ) {
+		if ( ! empty( $core ) ) {
 
 			// Add BuddyPress Page class on BuddyPress Special Pages.
-			if ( $commentpress_core->bp->is_buddypress_special_page() ) {
+			if ( $core->bp->is_buddypress_special_page() ) {
 				$page_type = 'buddypress_page';
 			}
 
 			// Add BuddyPress Page class on CommentPress Core Special Pages.
-			if ( $commentpress_core->pages_legacy->is_special_page() ) {
+			if ( $core->pages_legacy->is_special_page() ) {
 				$page_type = 'commentpress_page';
 			}
 
@@ -638,20 +636,13 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		// Set default type.
 		$is_groupblog = 'not-groupblog';
 
-		// If we have the plugin enabled.
-		if ( is_object( $commentpress_core ) ) {
-
-			// If it's a Group Blog.
-			if ( $commentpress_core->bp->is_groupblog() ) {
-				$is_groupblog = 'is-groupblog';
-			}
-
+		// If it's a Group Blog.
+		if ( ! empty( $core ) && $core->bp->is_groupblog() ) {
+			$is_groupblog = 'is-groupblog';
 		}
 
 		// Add to array.
-		if ( ! empty( $is_groupblog ) ) {
-			$classes[] = $is_groupblog;
-		}
+		$classes[] = $is_groupblog;
 
 		// -------------------- Blog Type --------------------------------------
 
@@ -659,10 +650,10 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		$blog_type = '';
 
 		// If we have the plugin enabled.
-		if ( is_object( $commentpress_core ) ) {
+		if ( ! empty( $core ) ) {
 
 			// Get current Blog Type.
-			$current_blog_type = $commentpress_core->db->option_get( 'cp_blog_type' );
+			$current_blog_type = $core->db->option_get( 'cp_blog_type' );
 
 			// If it's not the Main Site, add class.
 			if ( is_multisite() && ! is_main_site() ) {
@@ -682,7 +673,7 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		$group_groupblog_type = '';
 
 		// If we have the plugin enabled.
-		if ( is_object( $commentpress_core ) ) {
+		if ( ! empty( $core ) ) {
 
 			// Is it a BuddyPress Group Page?
 			if ( function_exists( 'bp_is_groups_component' ) && bp_is_groups_component() ) {
@@ -751,21 +742,17 @@ if ( ! function_exists( 'commentpress_document_title_parts' ) ) :
 	 */
 	function commentpress_document_title_parts( $parts ) {
 
-		global $commentpress_core;
+		// Get core plugin reference.
+		$core = commentpress_core();
 
-		// If we have the plugin enabled.
-		if ( is_object( $commentpress_core ) ) {
-
-			// If it's a Group Blog.
-			if ( $commentpress_core->bp->is_groupblog() ) {
-				if ( ! isset( $parts['site'] ) ) {
-					$parts['title'] .= commentpress_site_title( '|', false );
-					unset( $parts['tagline'] );
-				} else {
-					$parts['site'] .= commentpress_site_title( '|', false );
-				}
+		// If it's a Group Blog.
+		if ( ! empty( $core ) && $core->bp->is_groupblog() ) {
+			if ( ! isset( $parts['site'] ) ) {
+				$parts['title'] .= commentpress_site_title( '|', false );
+				unset( $parts['tagline'] );
+			} else {
+				$parts['site'] .= commentpress_site_title( '|', false );
 			}
-
 		}
 
 		// Return filtered array.
@@ -961,8 +948,8 @@ if ( ! function_exists( 'commentpress_page_title' ) ) :
 	 */
 	function commentpress_page_title() {
 
-		// Declare access to globals.
-		global $commentpress_core, $post;
+		// Access globals.
+		global $post;
 
 		// Init.
 		$title = '';
@@ -980,15 +967,16 @@ if ( ! function_exists( 'commentpress_page_title' ) ) :
 				$ancestors = get_post_ancestors( $post );
 
 				if ( $ancestors ) {
+
 					$ancestors = array_reverse( $ancestors );
 
 					$crumbs = [];
-
 					foreach ( $ancestors as $crumb ) {
 						$crumbs[] = get_the_title( $crumb );
 					}
 
 					$title .= implode( $sep, $crumbs ) . $sep;
+
 				}
 
 			}
@@ -1215,16 +1203,22 @@ if ( ! function_exists( 'commentpress_echo_post_author' ) ) :
 		// Get author details.
 		$user = get_userdata( $author_id );
 
-		// Kick out if we don't have a User with that ID.
-		if ( ! is_object( $user ) ) {
-			return;
+		// Bail if we don't have a User.
+		if ( ! ( $user instanceof WP_User ) ) {
+			return '';
 		}
 
 		// Access plugin.
-		global $commentpress_core, $post;
+		global $post;
 
-		// If we have the plugin enabled. and it's BuddyPress.
-		if ( is_object( $post ) && is_object( $commentpress_core ) && $commentpress_core->bp->is_buddypress() ) {
+		// Get core plugin reference.
+		$core = commentpress_core();
+		if ( empty( $core ) ) {
+			return '';
+		}
+
+		// If we have the plugin enabled and it's BuddyPress.
+		if ( ( $post instanceof WP_Post ) && ! empty( $core ) && $core->bp->is_buddypress() ) {
 
 			// Construct User link.
 			$author = bp_core_get_userlink( $user->ID );
@@ -1266,24 +1260,25 @@ if ( ! function_exists( 'commentpress_show_activity_tab' ) ) :
 	 */
 	function commentpress_show_activity_tab() {
 
-		// Declare access to globals.
-		global $commentpress_core, $post;
-
 		/*
-		// If we have the plugin enabled.
-		if ( is_object( $commentpress_core ) ) {
+		// Declare access to globals.
+		global $post;
 
-			// Is this multisite?
-			if (
-				( is_multisite() && is_main_site() && $commentpress_core->bp->is_buddypress_special_page() ) ||
-				! is_object( $post )
-			) {
+		// Get core plugin reference.
+		$core = commentpress_core();
+		if ( empty( $core ) ) {
+			return false;
+		}
 
-				// Ignore Activity.
-				return false;
+		// Bail if no Post.
+		if ( ! ( $post instanceof WP_Post ) ) {
+			return false;
+		}
 
-			}
-
+		// Is this multisite?
+		if ( is_multisite() && is_main_site() && $core->bp->is_buddypress_special_page() ) {
+			// Ignore Activity.
+			return false;
 		}
 		*/
 
@@ -1299,27 +1294,22 @@ endif;
 if ( ! function_exists( 'commentpress_is_commentable' ) ) :
 
 	/**
-	 * Is a Post/Page commentable?
+	 * Is a Entry commentable?
 	 *
 	 * @since 3.3
 	 *
-	 * @return bool $is_commentable True if Page can have Comments, false otherwise.
+	 * @return bool $is_commentable True if Entry can have Comments, false otherwise.
 	 */
 	function commentpress_is_commentable() {
 
-		// Declare access to plugin.
-		global $commentpress_core;
-
-		// If we have it.
-		if ( is_object( $commentpress_core ) ) {
-
-			// Return what it reports.
-			return $commentpress_core->is_commentable();
-
+		// Get core plugin reference.
+		$core = commentpress_core();
+		if ( empty( $core ) ) {
+			return false;
 		}
 
-		// --<
-		return false;
+		// Return what core reports.
+		return $core->is_commentable();
 
 	}
 
@@ -1476,7 +1466,7 @@ endif;
 if ( ! function_exists( 'commentpress_excerpt_length' ) ) :
 
 	/**
-	 * Utility to define length of excerpt.
+	 * Gets the length of excerpt.
 	 *
 	 * @since 3.0
 	 *
@@ -1484,19 +1474,16 @@ if ( ! function_exists( 'commentpress_excerpt_length' ) ) :
 	 */
 	function commentpress_excerpt_length() {
 
-		// Declare access to globals.
-		global $commentpress_core;
+		// Init return
+		$length = 55; // WordPress default.
 
-		// Is the plugin active?
-		if ( ! is_object( $commentpress_core ) ) {
-
-			// --<
-			return 55; // WordPress default.
-
-		}
+		// Get core plugin reference.
+		$core = commentpress_core();
 
 		// Get length of excerpt from option.
-		$length = $commentpress_core->db->option_get( 'cp_excerpt_length' );
+		if ( ! empty( $core ) ) {
+			$length = $core->db->option_get( 'cp_excerpt_length' );
+		}
 
 		// --<
 		return $length;
@@ -1918,23 +1905,26 @@ if ( ! function_exists( 'commentpress_get_post_title_visibility' ) ) :
 	 */
 	function commentpress_get_post_title_visibility( $post_id ) {
 
-		// Init hide (show by default).
+		// Show by default.
 		$hide = 'show';
 
-		// Declare access to globals.
-		global $commentpress_core;
+		// Get core plugin reference.
+		$core = commentpress_core();
 
-		// Get global hide if we have the plugin enabled.
-		if ( is_object( $commentpress_core ) ) {
-			$hide = $commentpress_core->db->option_get( 'cp_title_visibility' );
-		}
+		// If we have the plugin enabled.
+		if ( ! empty( $core ) ) {
 
-		// Set key.
-		$key = '_cp_title_visibility';
+			// Get global hide.
+			$hide = $core->db->option_get( 'cp_title_visibility' );
 
-		// Get value if the custom field already has one.
-		if ( get_post_meta( $post_id, $key, true ) != '' ) {
-			$hide = get_post_meta( $post_id, $key, true );
+			// Set key.
+			$key = '_cp_title_visibility';
+
+			// Get value if the custom field already has one.
+			if ( get_post_meta( $post_id, $key, true ) != '' ) {
+				$hide = get_post_meta( $post_id, $key, true );
+			}
+
 		}
 
 		// --<
@@ -1958,17 +1948,17 @@ if ( ! function_exists( 'commentpress_get_post_meta_visibility' ) ) :
 	 */
 	function commentpress_get_post_meta_visibility( $post_id ) {
 
-		// Init hide (hide by default).
+		// Hide by default.
 		$hide_meta = 'hide';
 
-		// Declare access to globals.
-		global $commentpress_core;
+		// Get core plugin reference.
+		$core = commentpress_core();
 
 		// If we have the plugin enabled.
-		if ( is_object( $commentpress_core ) ) {
+		if ( ! empty( $core ) ) {
 
 			// Get global hide_meta.
-			$hide_meta = $commentpress_core->db->option_get( 'cp_page_meta_visibility' );
+			$hide_meta = $core->db->option_get( 'cp_page_meta_visibility' );
 
 			// Set key.
 			$key = '_cp_page_meta_visibility';

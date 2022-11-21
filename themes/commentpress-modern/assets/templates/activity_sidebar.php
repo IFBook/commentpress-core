@@ -1,9 +1,7 @@
 <?php
 
 // Access globals.
-global $post, $commentpress_core;
-
-
+global $post;
 
 // Init output.
 $_page_comments_output = '';
@@ -172,17 +170,16 @@ do_action( 'commentpress_bp_activity_sidebar_after_all_comments' );
 
 
 // Access plugin
-global $commentpress_core, $post, $blog_id;
+global $post, $blog_id;
+
+// Get core plugin reference.
+$core = commentpress_core();
 
 // If we have the plugin enabled and it's Multisite BuddyPress.
-if (
-	is_multisite() AND
-	is_object( $commentpress_core ) AND
-	$commentpress_core->bp->is_buddypress()
-) {
+if ( is_multisite() && ( ! empty( $core ) && $core->bp->is_buddypress() ) ) {
 
 	// If on either Group Blog or main BuddyPress Blog.
-	if ( $commentpress_core->bp->is_groupblog() OR bp_is_root_blog() ) {
+	if ( $core->bp->is_groupblog() || bp_is_root_blog() ) {
 
 		// Define args.
 		$recent_groupblog_activity = [

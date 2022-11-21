@@ -73,11 +73,14 @@
 
 					<?php
 
+					// Get core plugin reference.
+					$core = commentpress_core();
+
 					// If we have the plugin enabled.
-					if ( is_object( $commentpress_core ) ) {
+					if ( ! empty( $core ) ) {
 
 						// Get Page num.
-						$num = $commentpress_core->nav->get_page_number( get_the_ID() );
+						$num = $core->nav->get_page_number( get_the_ID() );
 
 						// If we get one.
 						if ( $num ) {

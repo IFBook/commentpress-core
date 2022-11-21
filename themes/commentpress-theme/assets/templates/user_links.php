@@ -11,13 +11,6 @@ User links template for CommentPress Core
 --------------------------------------------------------------------------------
 */
 
-
-
-// Access plugin global.
-global $commentpress_core;
-
-
-
 ?><!-- user_links.php -->
 
 <div id="user_links">

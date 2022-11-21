@@ -1,7 +1,10 @@
 <?php
 
 // Access globals.
-global $post, $commentpress_core;
+global $post;
+
+// Get core plugin reference.
+$core = commentpress_core();
 
 
 
@@ -168,17 +171,13 @@ do_action( 'commentpress_bp_activity_sidebar_after_all_comments' );
 
 
 // Access plugin.
-global $commentpress_core, $post, $blog_id;
+global $post, $blog_id;
 
 // If we have the plugin enabled and it's Multisite BuddyPress.
-if (
-	is_multisite() AND
-	is_object( $commentpress_core ) AND
-	$commentpress_core->bp->is_buddypress()
-) {
+if ( is_multisite() && ! empty( $core ) &&  $core->bp->is_buddypress() ) {
 
 	// If on either Group Blog or main BuddyPress Blog.
-	if ( $commentpress_core->bp->is_groupblog() OR bp_is_root_blog() ) {
+	if ( $core->bp->is_groupblog() || bp_is_root_blog() ) {
 
 		// Define args.
 		$recent_groupblog_activity = [
@@ -188,7 +187,7 @@ if (
 		];
 
 		// Get activities.
-		if ( function_exists( 'bp_has_activities' ) AND bp_has_activities( $recent_groupblog_activity ) ) :
+		if ( function_exists( 'bp_has_activities' ) && bp_has_activities( $recent_groupblog_activity ) ) :
 
 			// Change header depending on logged in status.
 			if ( is_user_logged_in() ) {

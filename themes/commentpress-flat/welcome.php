@@ -3,30 +3,36 @@
 Template Name: Welcome
 */
 
-
-
 global $post;
-
-// "Title Page" always points to the first readable Page, unless it is itself.
-$next_page_id = $commentpress_core->nav->get_first_page();
 
 // Init.
 $next_page_html = '';
 
-// If the link does not point to this Page and we're allowing Page nav.
-if ( $next_page_id != $post->ID AND false === $commentpress_core->nav->page_nav_is_disabled() ) {
+// Get core plugin reference.
+$core = commentpress_core();
 
-	// Get Page attributes.
-	$title = get_the_title( $next_page_id );
-	$target = get_permalink( $next_page_id );
+if ( ! empty( $core ) ) {
 
-	// Set the link.
-	$next_page_html = '<a href="' . $target . '" id="next_page" class="css_btn" title="' . esc_attr( $title ) . '">' . $title . '</a>';
+	// "Title Page" always points to the first readable Page, unless it is itself.
+	$next_page_id = $core->nav->get_first_page();
+
+	// If the link does not point to this Page and we're allowing Page nav.
+	if ( $next_page_id != $post->ID AND false === $core->nav->page_nav_is_disabled() ) {
+
+		// Get Page attributes.
+		$title = get_the_title( $next_page_id );
+		$target = get_permalink( $next_page_id );
+
+		// Set the link.
+		$next_page_html = '<a href="' . $target . '" id="next_page" class="css_btn" title="' . esc_attr( $title ) . '">' . $title . '</a>';
+
+	}
 
 }
 
+get_header();
 
-get_header(); ?>
+?>
 
 
 

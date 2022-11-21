@@ -89,17 +89,17 @@ echo apply_filters( 'cp_content_tab_toc_title', __( 'Table of Contents', 'commen
 
 <?php
 
-// Declare access to globals.
-global $commentpress_core;
+// Get core plugin reference.
+$core = commentpress_core();
 
 // If we have the plugin enabled.
-if ( is_object( $commentpress_core ) ) {
+if ( ! empty( $core ) ) {
 
 	?><ul id="toc_list">
 	<?php
 
 	// Show the TOC.
-	echo $commentpress_core->get_toc_list();
+	echo $core->get_toc_list();
 
 	?></ul>
 	<?php

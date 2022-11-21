@@ -163,10 +163,10 @@ class CommentPress_Multisite_Database {
 	public function install_commentpress( $context = 'new_blog' ) {
 
 		// Activate core.
-		$commentpress_core = commentpress_activate_core();
+		$core = commentpress_activate_core();
 
 		// Run activation hook.
-		$commentpress_core->activate();
+		$core->activate();
 
 		/*
 		------------------------------------------------------------------------
@@ -178,10 +178,10 @@ class CommentPress_Multisite_Database {
 
 		/*
 		// TOC = Posts.
-		$commentpress_core->db->option_set( 'cp_show_posts_or_pages_in_toc', 'post' );
+		$core->db->option_set( 'cp_show_posts_or_pages_in_toc', 'post' );
 
 		// TOC show extended Posts.
-		$commentpress_core->db->option_set( 'cp_show_extended_toc', 1 );
+		$core->db->option_set( 'cp_show_extended_toc', 1 );
 		*/
 
 		/*
@@ -205,12 +205,12 @@ class CommentPress_Multisite_Database {
 				$cp_blog_type = intval( $_POST['cp_blog_type'] );
 
 				// Set Blog Type.
-				$commentpress_core->db->option_set( 'cp_blog_type', $cp_blog_type );
+				$core->db->option_set( 'cp_blog_type', $cp_blog_type );
 
 			}
 
 			// Save.
-			$commentpress_core->db->options_save();
+			$core->db->options_save();
 
 		}
 
@@ -259,10 +259,10 @@ class CommentPress_Multisite_Database {
 	public function uninstall_commentpress() {
 
 		// Activate core.
-		$commentpress_core = commentpress_activate_core();
+		$core = commentpress_activate_core();
 
 		// Run deactivation hook.
-		$commentpress_core->deactivate();
+		$core->deactivate();
 
 		/**
 		 * Fires when multisite has "soft uninstalled" core.

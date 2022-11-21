@@ -395,10 +395,10 @@ class CommentPress_Core {
 		// Init Text Signature.
 		$text_sig = '';
 
-		// Get comment ID to reply to from URL query string.
+		// Get Comment ID to reply to from URL query string.
 		$reply_to_comment_id = isset( $_GET['replytocom'] ) ? (int) $_GET['replytocom'] : 0;
 
-		// Did we get a comment ID?
+		// Did we get a Comment ID?
 		if ( $reply_to_comment_id != 0 ) {
 
 			// Get Paragraph Text Signature.
@@ -409,7 +409,7 @@ class CommentPress_Core {
 			// Do we have a Paragraph Number in the query string?
 			$reply_to_para_id = isset( $_GET['replytopara'] ) ? (int) $_GET['replytopara'] : 0;
 
-			// Did we get a comment ID?
+			// Did we get a Comment ID?
 			if ( $reply_to_para_id != 0 ) {
 
 				// Get Paragraph Text Signature.

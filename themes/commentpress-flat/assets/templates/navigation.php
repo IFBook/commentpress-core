@@ -1,6 +1,7 @@
 <?php
 
-global $commentpress_core;
+// Get core plugin reference.
+$core = commentpress_core();
 
 ?><!-- navigation.php -->
 
@@ -16,13 +17,13 @@ global $commentpress_core;
 	<?php
 
 	// Do we have the plugin?
-	if ( is_object( $commentpress_core ) ) {
+	if ( ! empty( $core ) ) {
 
 		// NOTE: we need to account for situations where no CommentPress Core Special Pages exist.
 
 		// Get title ID and URL.
-		$title_id = $commentpress_core->db->option_get( 'cp_welcome_page' );
-		$title_url = $commentpress_core->get_page_url( 'cp_welcome_page' );
+		$title_id = $core->db->option_get( 'cp_welcome_page' );
+		$title_url = $core->get_page_url( 'cp_welcome_page' );
 
 		// Use as link to main Blog in multisite.
 		if ( is_multisite() ) {
@@ -37,7 +38,7 @@ global $commentpress_core;
 			do_action( 'cp_nav_after_network_home_title' );
 
 			// Link to Group in multisite Group Blog.
-			if ( $commentpress_core->bp->is_groupblog() ) {
+			if ( $core->bp->is_groupblog() ) {
 
 				// Get current Blog ID.
 				$blog_id = get_current_blog_id();
@@ -89,19 +90,19 @@ global $commentpress_core;
 		do_action( 'cp_nav_before_special_pages' );
 
 		// Show link to General Comments Page if we have one.
-		echo $commentpress_core->get_page_link( 'cp_general_comments_page' );
+		echo $core->get_page_link( 'cp_general_comments_page' );
 
 		// Show link to All Comments Page if we have one.
-		echo $commentpress_core->get_page_link( 'cp_all_comments_page' );
+		echo $core->get_page_link( 'cp_all_comments_page' );
 
 		// Show link to Comments-by-User Page if we have one.
-		echo $commentpress_core->get_page_link( 'cp_comments_by_page' );
+		echo $core->get_page_link( 'cp_comments_by_page' );
 
 		// Show link to document Blog Page if we have one
-		echo $commentpress_core->get_page_link( 'cp_blog_page' );
+		echo $core->get_page_link( 'cp_blog_page' );
 
 		// Show link to document Blog Archive Page if we have one
-		echo $commentpress_core->get_page_link( 'cp_blog_archive_page' );
+		echo $core->get_page_link( 'cp_blog_archive_page' );
 
 	}
 

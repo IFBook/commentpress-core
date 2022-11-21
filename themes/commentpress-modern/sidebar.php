@@ -1,27 +1,18 @@
 <?php
 
-// Declare access to globals.
-global $commentpress_core;
-
-
+// Get core plugin reference.
+$core = commentpress_core();
 
 // Init tab order (only relevant for old default theme)
 $_tab_order = [ 'comments', 'activity' ];
 
-
-
 // Init commentable as true by default.
 $is_commentable = true;
 
-// If we have the plugin enabled.
-if ( is_object( $commentpress_core ) ) {
-
-	// Override.
-	$is_commentable = ( $commentpress_core->is_commentable() ) ? true : false;
-
+// Override if we have the plugin enabled.
+if ( ! empty( $core ) ) {
+	$is_commentable = $core->is_commentable() ? true : false;
 }
-
-
 
 ?><!-- sidebar.php -->
 
@@ -51,7 +42,7 @@ foreach( $_tab_order AS $_tab ) {
 
 // Add active class.
 $active_class = '';
-if ( in_array( $commentpress_core->get_default_sidebar(), [ 'comments', 'toc' ] ) ) {
+if ( ! empty( $core ) && in_array( $core->get_default_sidebar(), [ 'comments', 'toc' ] ) ) {
 	$active_class = ' class="active-tab"';
 }
 
@@ -78,10 +69,10 @@ echo $_comments_title;
 $_min = '';
 
 // If we have the plugin enabled.
-if ( is_object( $commentpress_core ) ) {
+if ( ! empty( $core ) ) {
 
 	// Show the minimise all button.
-	$_min = $commentpress_core->get_minimise_all_button( 'comments' );
+	$_min = $core->get_minimise_all_button( 'comments' );
 
 }
 
@@ -105,7 +96,7 @@ if ( commentpress_show_activity_tab() ) {
 
 	// Add class if not commentable.
 	$active_class = '';
-	if ( ! $is_commentable OR 'activity' == $commentpress_core->get_default_sidebar() ) {
+	if ( ! $is_commentable || ( ! empty( $core ) && 'activity' === $core->get_default_sidebar() ) ) {
 		$active_class = ' class="active-tab"';
 	}
 
@@ -126,10 +117,10 @@ if ( commentpress_show_activity_tab() ) {
 	<?php
 
 	// If we have the plugin enabled.
-	if ( is_object( $commentpress_core ) ) {
+	if ( ! empty( $core ) ) {
 
 		// Show the minimise all button.
-		echo $commentpress_core->get_minimise_all_button( 'activity' );
+		echo $core->get_minimise_all_button( 'activity' );
 
 	}
 
@@ -168,15 +159,15 @@ break;
 // -----------------------------------------------------------------------------
 
 // Access globals.
-global $commentpress_core, $post;
+global $post;
 
 // If we have the plugin enabled.
-if ( is_object( $commentpress_core ) ) {
+if ( ! empty( $core ) ) {
 
 
 
 	// Check commentable status.
-	$commentable = $commentpress_core->is_commentable();
+	$commentable = $core->is_commentable();
 
 	// Is it commentable?
 	if ( $commentable ) {

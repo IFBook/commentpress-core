@@ -163,13 +163,12 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 		// Add default wp fields.
 		comment_id_fields();
 
-		// Is CommentPress Core active?
-		global $commentpress_core;
-		if ( is_object( $commentpress_core ) ) {
+		// Get core plugin reference.
+		$core = commentpress_core();
 
-			// Get text sig input.
-			echo $commentpress_core->get_signature_field();
-
+		// Get text sig input.
+		if ( ! empty( $core ) ) {
+			echo $core->get_signature_field();
 		}
 
 		// Add Page for multipage situations.

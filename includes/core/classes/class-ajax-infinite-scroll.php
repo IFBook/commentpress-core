@@ -168,15 +168,6 @@ class CommentPress_AJAX_Infinite_Scroll {
 		}
 		*/
 
-		// Access globals.
-		global $commentpress_core;
-
-		// Die if CommentPress is not enabled.
-		if ( is_null( $commentpress_core ) || ! is_object( $commentpress_core ) ) {
-			$message = __( 'No CommentPress Core', 'commentpress-core' );
-			die( $message );
-		}
-
 		// Init data.
 		$data = '';
 

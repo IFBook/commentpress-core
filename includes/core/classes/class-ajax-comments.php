@@ -331,7 +331,7 @@ class CommentPress_AJAX_Comments {
 
 		} else {
 
-			// Get incoming comment ID.
+			// Get incoming Comment ID.
 			$comment_id = isset( $_POST['comment_ID'] ) ? sanitize_text_field( wp_unslash( $_POST['comment_ID'] ) ) : null;
 
 			// Sanity check.
@@ -349,9 +349,6 @@ class CommentPress_AJAX_Comments {
 
 				// Get the fresh comment data.
 				$comment = get_comment( $comment_data['comment_ID'] );
-
-				// Access plugin.
-				global $commentpress_core;
 
 				// Get Text Signature.
 				$comment_signature = $this->core->db->get_text_signature_by_comment_id( $comment->comment_ID );
@@ -386,7 +383,7 @@ class CommentPress_AJAX_Comments {
 
 				}
 
-			} // End check for comment ID.
+			} // End check for Comment ID.
 
 			/**
 			 * Filter the data returned to the calling script.
@@ -617,9 +614,6 @@ class CommentPress_AJAX_Comments {
 		// Sanity check.
 		if ( ! empty( $text_sig ) && ! empty( $comment_id ) ) {
 
-			// Access globals.
-			global $commentpress_core;
-
 			// Store Text Signature.
 			$this->core->db->save_comment_signature( $comment_id );
 
@@ -658,9 +652,6 @@ class CommentPress_AJAX_Comments {
 
 			// Loop.
 			foreach ( $children as $child ) {
-
-				// Access globals.
-				global $commentpress_core;
 
 				// Store Text Signature.
 				$this->core->db->save_comment_signature( $child->comment_ID );

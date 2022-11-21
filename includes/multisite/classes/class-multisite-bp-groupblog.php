@@ -296,13 +296,11 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	 */
 	public function activity_tab_recent_title_blog( $title ) {
 
+		// Get core plugin reference.
+		$core = commentpress_core();
+
 		// If Group Blog.
-		global $commentpress_core;
-		if (
-			! is_null( $commentpress_core ) &&
-			is_object( $commentpress_core ) &&
-			$commentpress_core->bp->is_groupblog()
-		) {
+		if ( ! empty( $core ) && $core->bp->is_groupblog() ) {
 
 			// Override default link name.
 			return apply_filters(

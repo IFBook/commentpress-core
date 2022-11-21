@@ -1,3 +1,9 @@
+<?php
+
+// Get core plugin reference.
+$core = commentpress_core();
+
+?>
 <!-- toc_dropdown.php -->
 
 <div id="toc_dropdown">
@@ -17,13 +23,13 @@
 <?php
 
 // If we have the plugin enabled.
-if ( is_object( $commentpress_core ) ) {
+if ( ! empty( $core ) ) {
 
 	?><ul id="toc_dd_list">
 	<?php
 
 	// Show the TOC.
-	echo $commentpress_core->get_toc_list();
+	echo $core->get_toc_list();
 
 	?></ul>
 	<?php

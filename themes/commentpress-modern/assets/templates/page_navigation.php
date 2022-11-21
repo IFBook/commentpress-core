@@ -1,7 +1,5 @@
 <?php
 
-global $commentpress_core;
-
 ?><!-- page_navigation.php -->
 
 

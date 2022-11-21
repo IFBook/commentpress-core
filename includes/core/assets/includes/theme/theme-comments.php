@@ -129,16 +129,16 @@ if ( ! function_exists( 'commentpress_get_user_link' ) ) :
 	 */
 	function commentpress_get_user_link( $user, $comment = null ) {
 
-		// Kick out if not a User.
-		if ( ! is_object( $user ) ) {
-			return false;
+		// Bail if not a User.
+		if ( ! ( $user instanceof WP_User ) ) {
+			return '';
 		}
 
-		// We're through: the User is on the system.
-		global $commentpress_core;
+		// Get core plugin reference.
+		$core = commentpress_core();
 
 		// If BuddyPress.
-		if ( is_object( $commentpress_core ) && $commentpress_core->bp->is_buddypress() ) {
+		if ( ! empty( $core ) && $core->bp->is_buddypress() ) {
 
 			// BuddyPress link - $no_anchor = null, $just_link = true.
 			$url = bp_core_get_userlink( $user->ID, null, true );
@@ -146,8 +146,6 @@ if ( ! function_exists( 'commentpress_get_user_link' ) ) :
 		} else {
 
 			// Get standard WordPress author URL.
-
-			// Get author URL.
 			$url = get_author_posts_url( $user->ID );
 
 			// WordPress sometimes leaves 'http://' or 'https://' in the field.
@@ -180,7 +178,7 @@ if ( ! function_exists( 'commentpress_format_comment' ) ) :
 	function commentpress_format_comment( $comment, $context = 'all' ) {
 
 		// Declare access to globals.
-		global $commentpress_core, $cp_comment_output;
+		global $cp_comment_output;
 
 		/*
 		// TODO: Enable WordPress API on comment?
@@ -448,9 +446,6 @@ if ( ! function_exists( 'commentpress_get_comments_by_page_content' ) ) :
 			add_filter( 'comment_text', [ $wp_embed, 'autoembed' ], 1 );
 		}
 
-		// Declare access to globals.
-		global $commentpress_core;
-
 		// Get data.
 		$page_content = commentpress_get_comments_by_content();
 
@@ -484,7 +479,7 @@ if ( ! function_exists( 'commentpress_get_comment_activity' ) ) :
 		}
 
 		// Declare access to globals.
-		global $commentpress_core, $post;
+		global $post;
 
 		// Init Page content.
 		$page_content = '';
@@ -568,7 +563,7 @@ if ( ! function_exists( 'commentpress_get_comment_activity_item' ) ) :
 		$GLOBALS['comment'] = $comment;
 
 		// Declare access to globals.
-		global $commentpress_core, $post;
+		global $post;
 
 		// Init markup.
 		$item_html = '';
@@ -764,13 +759,13 @@ if ( ! function_exists( 'commentpress_comments_by_para_format_block' ) ) :
 		// Init return.
 		$return = [];
 
-		// Access plugin.
-		global $commentpress_core;
+		// Get core plugin reference.
+		$core = commentpress_core();
 
 		// Get Block name.
 		$block_name = __( 'paragraph', 'commentpress-core' );
-		if ( is_object( $commentpress_core ) ) {
-			$block_name = $commentpress_core->parser->lexia_get();
+		if ( ! empty( $core ) ) {
+			$block_name = $core->parser->lexia_get();
 		}
 
 		// Construct entity text.
@@ -819,6 +814,9 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 	 */
 	function commentpress_get_comments_by_para() {
 
+		// Declare access to globals.
+		global $content_width, $post, $wp_embed;
+
 		/**
 		 * Overwrite the content width for the Comments column.
 		 *
@@ -832,23 +830,24 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 		 * @param int $content_width An general content width for all themes.
 		 * @return int $content_width A specific content width for a specific theme.
 		 */
-		global $content_width;
 		$content_width = apply_filters( 'commentpress_comments_content_width', 380 );
 
 		// Allow oEmbed in Comments.
-		global $wp_embed;
 		if ( $wp_embed instanceof WP_Embed ) {
 			add_filter( 'comment_text', [ $wp_embed, 'autoembed' ], 1 );
+		}
+
+		// Get core plugin reference.
+		$core = commentpress_core();
+		if ( empty( $core ) ) {
+			return;
 		}
 
 		// Allow plugins to precede Comments.
 		do_action( 'commentpress_before_scrollable_comments' );
 
-		// Declare access to globals.
-		global $post, $commentpress_core;
-
 		// Get approved Comments for this Post, sorted Comments by Text Signature.
-		$comments_sorted = $commentpress_core->get_sorted_comments( $post->ID );
+		$comments_sorted = $core->get_sorted_comments( $post->ID );
 
 		// Key for starting Paragraph Number.
 		$key = '_cp_starting_para_number';
@@ -1171,72 +1170,76 @@ if ( ! function_exists( 'commentpress_comment_form_title' ) ) :
 			$reply_to_para_text = __( 'Leave a comment on %s', 'commentpress-core' );
 		}
 
-		// Declare access to globals.
-		global $comment, $commentpress_core;
-
-		// Get comment ID to reply to from URL query string.
+		// Get Comment ID to reply to from URL query string.
 		$reply_to_comment_id = isset( $_GET['replytocom'] ) ? (int) sanitize_text_field( wp_unslash( $_GET['replytocom'] ) ) : 0;
 
 		// Get Paragraph Number to reply to from URL query string.
 		$reply_to_para_id = isset( $_GET['replytopara'] ) ? (int) sanitize_text_field( wp_unslash( $_GET['replytopara'] ) ) : 0;
 
-		// If we have no comment ID and no Paragraph ID to reply to.
+		// If we have no Comment ID and no Paragraph ID to reply to.
 		if ( $reply_to_comment_id == 0 && $reply_to_para_id === 0 ) {
 
 			// Write default title to Page.
 			echo $no_reply_text;
+			return;
+
+		}
+
+		// If we have a Comment ID and NO Paragraph ID to reply to.
+		if ( $reply_to_comment_id !== 0 && $reply_to_para_id === 0 ) {
+
+			// Declare access to globals.
+			global $comment;
+
+			// Get comment.
+			$comment = get_comment( $reply_to_comment_id );
+
+			// Get link to comment.
+			$author = ( $link_to_parent ) ?
+				'<a href="#comment-' . get_comment_ID() . '">' . get_comment_author() . '</a>' :
+				get_comment_author();
+
+			// Write to Page.
+			printf( $reply_to_comment_text, $author );
+			return;
+
+		}
+
+		// Get core plugin reference.
+		$core = commentpress_core();
+		if ( empty( $core ) ) {
+			return;
+		}
+
+		// Get Paragraph Text Signature.
+		$text_sig = $core->get_text_signature( $reply_to_para_id );
+
+		// Get link to Paragraph.
+		if ( $link_to_parent ) {
+
+			// Construct link text.
+			$para_text = sprintf(
+				_x( '%1$s %2$s', 'The first substitution is the block name e.g. "paragraph". The second is the numeric comment count.', 'commentpress-core' ),
+				ucfirst( $core->parser->lexia_get() ),
+				$reply_to_para_id
+			);
+
+			// Construct Paragraph.
+			$paragraph = '<a href="#para_heading-' . $text_sig . '">' . $para_text . '</a>';
 
 		} else {
 
-			// If we have a comment ID and NO Paragraph ID to reply to.
-			if ( $reply_to_comment_id !== 0 && $reply_to_para_id === 0 ) {
-
-				// Get comment.
-				$comment = get_comment( $reply_to_comment_id );
-
-				// Get link to comment.
-				$author = ( $link_to_parent ) ?
-					'<a href="#comment-' . get_comment_ID() . '">' . get_comment_author() . '</a>' :
-					get_comment_author();
-
-				// Write to Page.
-				printf( $reply_to_comment_text, $author );
-
-			} else {
-
-				// Get Paragraph Text Signature.
-				$text_sig = $commentpress_core->get_text_signature( $reply_to_para_id );
-
-				// Get link to Paragraph.
-				if ( $link_to_parent ) {
-
-					// Construct link text.
-					$para_text = sprintf(
-						_x( '%1$s %2$s', 'The first substitution is the block name e.g. "paragraph". The second is the numeric comment count.', 'commentpress-core' ),
-						ucfirst( $commentpress_core->parser->lexia_get() ),
-						$reply_to_para_id
-					);
-
-					// Construct Paragraph.
-					$paragraph = '<a href="#para_heading-' . $text_sig . '">' . $para_text . '</a>';
-
-				} else {
-
-					// Construct Paragraph without link.
-					$paragraph = sprintf(
-						_x( '%1$s %2$s', 'The first substitution is the block name e.g. "paragraph". The second is the numeric comment count.', 'commentpress-core' ),
-						ucfirst( $commentpress_core->parser->lexia_get() ),
-						$para_num
-					);
-
-				}
-
-				// Write to Page.
-				printf( $reply_to_para_text, $paragraph );
-
-			}
+			// Construct Paragraph without link.
+			$paragraph = sprintf(
+				_x( '%1$s %2$s', 'The first substitution is the block name e.g. "paragraph". The second is the numeric comment count.', 'commentpress-core' ),
+				ucfirst( $core->parser->lexia_get() ),
+				$para_num
+			);
 
 		}
+
+		// Write to Page.
+		printf( $reply_to_para_text, $paragraph );
 
 	}
 
@@ -1597,23 +1600,14 @@ if ( ! function_exists( 'commentpress_add_wp_editor' ) ) :
 	 */
 	function commentpress_add_wp_editor() {
 
-		// Init option.
-		$rich_text = false;
-
-		// Kick out if wp_editor doesn't exist.
-		// TinyMCE will be handled by including the script using the pre- wp_editor() method.
-		if ( ! function_exists( 'wp_editor' ) ) {
-			return false;
-		}
-
-		// Kick out if plugin not active.
-		global $commentpress_core;
-		if ( ! is_object( $commentpress_core ) ) {
+		// Get core plugin reference.
+		$core = commentpress_core();
+		if ( empty( $core ) ) {
 			return false;
 		}
 
 		// Only allow through if plugin says so.
-		if ( ! $commentpress_core->display->is_tinymce_allowed() ) {
+		if ( ! $core->display->is_tinymce_allowed() ) {
 			return false;
 		}
 
