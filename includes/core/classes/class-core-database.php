@@ -140,7 +140,7 @@ class CommentPress_Core_Database {
 	/**
 	 * Default type of Blog.
 	 *
-	 * Blog Types are built as an array - eg, array('0' => 'Poetry','1' => 'Prose')
+	 * Blog Types are built as an array - eg, array( '0' => 'Poetry', '1' => 'Prose' )
 	 *
 	 * @since 3.3
 	 * @access public
