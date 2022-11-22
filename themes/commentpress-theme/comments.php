@@ -1,35 +1,32 @@
-<?php /*
-================================================================================
-CommentPress Default Theme Comments
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
+<?php
+/**
+ * Comments Template.
+ *
+ * @package CommentPress_Core
+ */
 
---------------------------------------------------------------------------------
-*/
-
-
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 // Do not delete these lines.
-if ( ! empty( $_SERVER['SCRIPT_FILENAME'] ) AND 'comments.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) {
+if ( ! empty( $_SERVER['SCRIPT_FILENAME'] ) && 'comments.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) {
 	die( 'Please do not load this page directly. Thanks!' );
 }
 
-
-
 // First, test for password protection.
-if ( post_password_required() ) { ?>
+if ( post_password_required() ) :
 
-<div class="sidebar_contents_wrapper">
-<div class="comments_container">
-	<h3 class="nocomments"><span><?php _e( 'Enter the password to view comments', 'commentpress-core' ); ?></span></h3>
-</div><!-- /comments_container -->
-</div><!-- /sidebar_contents_wrapper -->
+	?>
+	<div class="sidebar_contents_wrapper">
+		<div class="comments_container">
+			<h3 class="nocomments"><span><?php esc_html_e( 'Enter the password to view comments', 'commentpress-core' ); ?></span></h3>
+		</div><!-- /comments_container -->
+	</div><!-- /sidebar_contents_wrapper -->
+	<?php
 
-<?php
 	return;
-}
+
+endif;
 
 // Declare access to globals.
 global $post;
@@ -53,18 +50,16 @@ if ( ! empty( $core ) ) {
 		 * @param str The existing path returned by WordPress.
 		 * @return str The modified path.
 		 */
-		$cp_comments_in_page = apply_filters(
-			'cp_template_comments_in_page',
-			locate_template( 'assets/templates/comments_in_page.php' )
-		);
+		$cp_comments_in_page = apply_filters( 'cp_template_comments_in_page', locate_template( 'assets/templates/comments_in_page.php' ) );
 
 		// Load it if we find it.
-		if ( $cp_comments_in_page != '' ) load_template( $cp_comments_in_page );
+		if ( $cp_comments_in_page != '' ) {
+			load_template( $cp_comments_in_page );
+		}
 
 		// --<
 		return;
 
-	// Otherwise, Comments-in-Sidebar.
 	} else {
 
 		// Include Comments split by Paragraph template.
@@ -77,13 +72,12 @@ if ( ! empty( $core ) ) {
 		 * @param str The existing path returned by WordPress.
 		 * @return str The modified path.
 		 */
-		$cp_comments_by_para = apply_filters(
-			'cp_template_comments_by_para',
-			locate_template( 'assets/templates/comments_by_para.php' )
-		);
+		$cp_comments_by_para = apply_filters( 'cp_template_comments_by_para', locate_template( 'assets/templates/comments_by_para.php' ) );
 
 		// Load it if we find it.
-		if ( $cp_comments_by_para != '' ) load_template( $cp_comments_by_para );
+		if ( $cp_comments_by_para != '' ) {
+			load_template( $cp_comments_by_para );
+		}
 
 		// --<
 		return;
@@ -92,93 +86,74 @@ if ( ! empty( $core ) ) {
 
 }
 
-
-
 // Fallback.
 ?>
 <!-- comments.php -->
-
 <div id="sidebar_contents_wrapper">
+	<div class="comments_container">
 
+		<?php if ( have_comments() ) : ?>
 
+			<h3 id="para-heading-"><span class="heading-padder">
+				<?php
 
-<div class="comments_container">
+				// TODO: Needs sprintf() here.
+				comments_number(
+					'<span>0</span> comments',
+					'<span>1</span> comment',
+					'<span>%</span> comments'
+				);
 
+				?>
+				<?php esc_html_e( 'on the whole page', 'commentpress-core' ); ?>
+			</span></h3>
 
+			<div class="paragraph_wrapper">
 
-<?php if ( have_comments() ) : ?>
+				<ol class="commentlist">
+					<?php
 
+					wp_list_comments( [
+						'type' => 'comment',
+						'reply_text' => __( 'Reply to this comment', 'commentpress-core' ),
+						'callback' => 'commentpress_comments',
+					] );
 
+					?>
+				</ol>
 
-	<h3 id="para-heading-"><span class="heading-padder"><?php
+				<div class="reply_to_para" id="reply_to_para-">
+					<p><a class="reply_to_para" href="<?php the_permalink(); ?>?replytopara#respond" onclick="return addComment.moveFormToPara( '', '', '1' )"><?php esc_html_e( 'Leave a comment on the whole page', 'commentpress-core' ); ?></a></p>
+				</div>
 
-	comments_number(
-		'<span>0</span> comments',
-		'<span>1</span> comment',
-		'<span>%</span> comments'
-	);
+			</div><!-- /paragraph_wrapper -->
 
-	?> <?php _e( 'on the whole page', 'commentpress-core' ); ?></span></h3>
+		<?php else : /* This is displayed if there are no Comments so far. */ ?>
 
+			<?php if ( 'open' == $post->comment_status ) : ?>
 
+				<!-- Comments are open, but there are no Comments. -->
+				<h3 class="nocomments"><span><?php esc_html_e( 'No comments on the whole page', 'commentpress-core' ); ?></span></h3>
 
-	<div class="paragraph_wrapper">
+				<div class="paragraph_wrapper">
 
-		<ol class="commentlist">
+					<div class="reply_to_para" id="reply_to_para-">
+						<p><a class="reply_to_para" href="<?php the_permalink(); ?>?replytopara#respond" onclick="return addComment.moveFormToPara( '', '', '1' )"><?php esc_html_e( 'Leave a comment on the whole page', 'commentpress-core' ); ?></a></p>
+					</div>
 
-		<?php wp_list_comments( [
-			'type'=> 'comment',
-			'reply_text' => __( 'Reply to this comment', 'commentpress-core' ),
-			'callback' => 'commentpress_comments',
-		] ); ?>
+				</div><!-- /paragraph_wrapper -->
 
-		</ol>
+			<?php else : ?>
 
-		<div class="reply_to_para" id="reply_to_para-">
-		<p><a class="reply_to_para" href="<?php the_permalink() ?>?replytopara#respond" onclick="return addComment.moveFormToPara( '', '', '1' )"><?php _e( 'Leave a comment on the whole page', 'commentpress-core' ); ?></a></p>
-		</div>
+				<!-- comments are closed. -->
+				<h3 class="nocomments comments-closed"><span><?php esc_html_e( 'Comments are closed.', 'commentpress-core' ); ?></span></h3>
 
-	</div><!-- /paragraph_wrapper -->
+			<?php endif; ?>
 
+		<?php endif; ?>
 
-
-<?php else : // This is displayed if there are no Comments so far. ?>
-
-
-
-	<?php if ( 'open' == $post->comment_status ) : ?>
-
-		<!-- Comments are open, but there are no Comments. -->
-		<h3 class="nocomments"><span><?php _e( 'No comments on the whole page', 'commentpress-core' ); ?></span></h3>
-
-		<div class="paragraph_wrapper">
-
-			<div class="reply_to_para" id="reply_to_para-">
-			<p><a class="reply_to_para" href="<?php the_permalink() ?>?replytopara#respond" onclick="return addComment.moveFormToPara( '', '', '1' )"><?php _e( 'Leave a comment on the whole page', 'commentpress-core' ); ?></a></p>
-			</div>
-
-		</div><!-- /paragraph_wrapper -->
-
-	<?php else : ?>
-
-		<!-- Comments are closed. -->
-		<h3 class="nocomments comments-closed"><span><?php _e( 'Comments are closed.', 'commentpress-core' ); ?></span></h3>
-
-	<?php endif; ?>
-
-
-
-<?php endif; ?>
-
-
-
-</div><!-- /comments_container -->
-
-
-
+	</div><!-- /comments_container -->
 </div><!-- /sidebar_contents_wrapper -->
-
-
 
 <?php
 
@@ -190,12 +165,9 @@ if ( ! empty( $core ) ) {
  * @param str The existing path returned by WordPress.
  * @return str The modified path.
  */
-$cp_comment_form = apply_filters(
-	'cp_template_comment_form',
-	locate_template( 'assets/templates/comment_form.php' )
-);
+$cp_comment_form = apply_filters( 'cp_template_comment_form', locate_template( 'assets/templates/comment_form.php' ) );
 
 // Load it if we find it.
-if ( $cp_comment_form != '' ) load_template( $cp_comment_form );
-
-?>
+if ( $cp_comment_form != '' ) {
+	load_template( $cp_comment_form );
+}

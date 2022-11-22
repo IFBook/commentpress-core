@@ -1,76 +1,70 @@
-<!-- footer.php -->
+<?php
+/**
+ * WordPress Activation Page Footer Template.
+ *
+ * @package CommentPress_Core
+ */
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
+?>
+<!-- footer-wp-activate.php -->
+							</div><!-- /content --><?php /* Activate Page wrappers. */ ?>
+						</div><!-- /page_wrapper -->
+					</div><!-- /main_wrapper -->
+				</div><!-- /wrapper -->
 
-<!-- Activate Page wrappers -->
-</div><!-- /content -->
-</div><!-- /page_wrapper -->
-</div><!-- /main_wrapper -->
-</div><!-- /wrapper -->
+			</div><!-- /content_container --><?php /* Opened in "assets/templates/header_body.php" */ ?>
 
+			<?php get_sidebar(); ?>
 
+			<div id="footer">
+				<div id="footer_inner">
 
-<?php /* opened in assets/templates/header_body.php */ ?>
-</div><!-- /content_container -->
+					<?php if ( has_nav_menu( 'footer' ) ) : ?>
 
+						<?php
 
+						// Show footer menu if assigned.
+						wp_nav_menu( [
+							'theme_location' => 'footer',
+							'container_class' => 'commentpress-footer-nav-menu',
+						] );
 
-<?php get_sidebar(); ?>
+						?>
 
+					<?php endif; ?>
 
+					<?php if ( is_active_sidebar( 'cp-license-8' ) ) : ?>
 
-<div id="footer">
+						<div class="footer_widgets">
+							<?php dynamic_sidebar( 'cp-license-8' ); ?>
+						</div>
 
-<div id="footer_inner">
+					<?php else : ?>
 
-	<?php
+						<p>
+							<?php
 
-	// Show footer menu if assigned.
-	if ( has_nav_menu( 'footer' ) ) {
-		wp_nav_menu( [
-			'theme_location' => 'footer',
-			'container_class' => 'commentpress-footer-nav-menu',
-		] );
-	}
+							echo sprintf(
+								__( 'Website content &copy; %1$s %2$s. All rights reserved.', 'commentpress-core' ),
+								'<a href="' . home_url() . '">' . get_bloginfo( 'name' ) . '</a>',
+								gmdate( 'Y' )
+							);
 
-	// Are we using the Page footer Widget?
-	if ( ! dynamic_sidebar( 'cp-license-8' ) ) {
+							?>
+						</p>
 
-		// No - make other provision here.
+					<?php endif; ?>
 
-		// Compat with wplicense plugin.
-		if ( function_exists( 'isLicensed' ) AND isLicensed() ) {
+				</div><!-- /footer_inner -->
+			</div><!-- /footer -->
 
-			// Show the license from wpLicense.
-			cc_showLicenseHtml();
+		</div><!-- /container -->
 
-		} else {
+		<?php wp_footer(); ?>
 
-			// Show copyright.
-			?><p><?php _e( 'Website content', 'commentpress-core' ); ?> &copy; <a href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a> <?php echo date('Y'); ?>. <?php _e( 'All rights reserved.', 'commentpress-core' ); ?></p><?php
-
-		}
-
-	}
-
-	?>
-
-</div><!-- /footer_inner -->
-
-</div><!-- /footer -->
-
-
-
-</div><!-- /container -->
-
-
-
-<?php wp_footer() ?>
-
-
-
-</body>
-
-
+	</body>
 
 </html>

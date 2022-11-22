@@ -1,124 +1,100 @@
-<?php get_header(); ?>
-
-
-
-<!-- index.php -->
-
-<div id="wrapper">
-
-
-
-<div id="main_wrapper" class="clearfix">
-
-
-
-<div id="page_wrapper">
-
-
-
 <?php
-
 /**
- * Try to locate template using WordPress method.
+ * Default Template.
  *
- * @since 3.4
- *
- * @param str The existing path returned by WordPress.
- * @return str The modified path.
+ * @package CommentPress_Core
  */
-$cp_page_navigation = apply_filters(
-	'cp_template_page_navigation',
-	locate_template( 'assets/templates/page_navigation.php' )
-);
 
-// Load it if we find it.
-if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
+get_header();
 
 ?>
+<!-- index.php -->
+<div id="wrapper">
+	<div id="main_wrapper" class="clearfix">
+		<div id="page_wrapper">
 
+			<?php
 
+			/**
+			 * Try to locate template using WordPress method.
+			 *
+			 * @since 3.4
+			 *
+			 * @param str The existing path returned by WordPress.
+			 * @return str The modified path.
+			 */
+			$cp_page_navigation = apply_filters( 'cp_template_page_navigation', locate_template( 'assets/templates/page_navigation.php' ) );
 
-<div id="content" class="clearfix">
+			// Load it if we find it.
+			if ( $cp_page_navigation != '' ) {
+				load_template( $cp_page_navigation, false );
+			}
 
-<div class="post">
+			?>
 
+			<div id="content" class="clearfix">
+				<div class="post">
 
+					<?php if ( have_posts() ) : ?>
 
-<?php if (have_posts()) : ?>
+						<?php while ( have_posts() ) : ?>
 
-	<?php while (have_posts()) : the_post(); ?>
+							<?php the_post(); ?>
 
-	<div class="search_result">
+							<div class="search_result">
 
-		<h3 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'commentpress-core' ); ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
+								<h3 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php esc_attr_e( 'Permanent Link to', 'commentpress-core' ); ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
 
-		<div class="search_meta">
-			<?php commentpress_echo_post_meta(); ?>
-		</div>
+								<div class="search_meta">
+									<?php commentpress_echo_post_meta(); ?>
+								</div>
 
-		<?php the_excerpt() ?>
+								<?php the_excerpt(); ?>
 
-		<p class="search_meta"><?php the_tags( __( 'Tags: ', 'commentpress-core' ), ', ', '<br />'); ?> <?php _e( 'Posted in', 'commentpress-core' ); ?> <?php the_category( ', ' ) ?> | <?php edit_post_link( __( 'Edit', 'commentpress-core' ), '', ' | '); ?>  <?php comments_popup_link( __( 'No Comments &#187;', 'commentpress-core' ), __( '1 Comment &#187;', 'commentpress-core' ), __( '% Comments &#187;', 'commentpress-core' ) ); ?></p>
+								<p class="search_meta"><?php the_tags( __( 'Tags: ', 'commentpress-core' ), ', ', '<br />' ); ?> <?php esc_html_e( 'Posted in', 'commentpress-core' ); ?> <?php the_category( ', ' ); ?> | <?php edit_post_link( __( 'Edit', 'commentpress-core' ), '', ' | ' ); ?>  <?php comments_popup_link( __( 'No Comments &#187;', 'commentpress-core' ), __( '1 Comment &#187;', 'commentpress-core' ), __( '% Comments &#187;', 'commentpress-core' ) ); ?></p>
 
-	</div><!-- /search_result -->
+							</div><!-- /search_result -->
 
-	<?php endwhile; ?>
+						<?php endwhile; ?>
 
-<?php else : ?>
+					<?php else : ?>
 
-		<h2 class="post_title"><?php _e( 'No blog posts found', 'commentpress-core' ); ?></h2>
+						<h2 class="post_title"><?php esc_html_e( 'No blog posts found', 'commentpress-core' ); ?></h2>
 
-		<p><?php _e( 'There are no blog posts yet.', 'commentpress-core' ); ?> <?php
+						<p>
+							<?php esc_html_e( 'There are no blog posts yet.', 'commentpress-core' ); ?>
+							<?php if ( is_user_logged_in() ) : ?>
+								<a href="<?php admin_url(); ?>"><?php esc_html_e( 'Go to your dashboard to add one.', 'commentpress-core' ); ?></a>
+							<?php endif; ?>
+						</p>
 
-		// If logged in.
-		if ( is_user_logged_in() ) {
+						<p><?php esc_html_e( 'If you were looking for something that hasn’t been found, try using the search form below.', 'commentpress-core' ); ?></p>
 
-			// Add a suggestion.
-			?> <a href="<?php admin_url(); ?>"><?php _e( 'Go to your dashboard to add one.', 'commentpress-core' ); ?></a><?php
+						<?php get_search_form(); ?>
 
-		}
+					<?php endif; ?>
 
-		?></p>
+				</div><!-- /post -->
+			</div><!-- /content -->
 
-		<p><?php _e( "If you were looking for something that hasn't been found, try using the search form below.", 'commentpress-core' ); ?></p>
+			<div class="page_nav_lower">
+				<?php
 
-		<?php get_search_form(); ?>
+				// Include Page Navigation again.
+				if ( $cp_page_navigation != '' ) {
+					load_template( $cp_page_navigation, false );
+				}
 
-<?php endif; ?>
+				?>
+			</div><!-- /page_nav_lower -->
 
-
-
-</div><!-- /post -->
-
-</div><!-- /content -->
-
-
-
-<div class="page_nav_lower">
-<?php
-
-// Include Page Navigation again.
-if ( $cp_page_navigation != '' ) load_template( $cp_page_navigation, false );
-
-?>
-</div><!-- /page_nav_lower -->
-
-
-
-</div><!-- /page_wrapper -->
-
-
-
-</div><!-- /main_wrapper -->
-
-
-
+		</div><!-- /page_wrapper -->
+	</div><!-- /main_wrapper -->
 </div><!-- /wrapper -->
 
-
-
 <?php get_sidebar(); ?>
-
-
 
 <?php get_footer(); ?>

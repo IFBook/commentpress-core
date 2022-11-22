@@ -1,7 +1,14 @@
 <?php
-/*
-Template Name: Group
-*/
+/**
+ * Template Name: Group
+ *
+ * Appears to be a list of all Users. Perhaps redundant.
+ *
+ * @package CommentPress_Core
+ */
+
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 // Set args.
 $args = [
@@ -9,93 +16,44 @@ $args = [
 ];
 
 // Get Users of this Blog (blog_id is provided by default).
-$_users = get_users( $args );
+$group_users = get_users( $args );
 
-get_header(); ?>
+get_header();
 
-
-
+?>
 <!-- group.php -->
-
 <div id="wrapper">
+	<div id="main_wrapper" class="clearfix">
+		<div id="page_wrapper">
 
+			<div id="content">
+				<div class="post">
 
+					<h2 class="post_title"><?php esc_html_e( 'Group Members', 'commentpress-core' ); ?></h2>
 
-<div id="main_wrapper" class="clearfix">
+					<?php if ( ! empty( $group_users ) ) : ?>
 
+						<ul id="group_list">
 
+						<?php foreach ( $group_users as $group_user ) : ?>
+							<?php if ( $group_user->user_id != '1' ) : ?>
+								<li>
+									<a href="<?php echo home_url(); ?>/author/<?php echo $group_user->user_login; ?>/"><?php echo esc_html( $group_user->display_name ); ?></a>
+								</li>
+							<?php endif; ?>
+						<?php endforeach; ?>
 
-<div id="page_wrapper">
+						</ul>
 
+					<?php endif; ?>
 
+				</div><!-- /post -->
+			</div><!-- /content -->
 
-<div id="content">
-
-
-
-<div class="post">
-
-
-
-<h2 class="post_title"><?php _e( 'Group Members', 'commentpress-core' ); ?></h2>
-
-
-
-<?php
-
-// Did we get any?
-if ( count( $_users ) > 0 ) {
-
-	// Open list.
-	echo '<ul id="group_list">' . "\n";
-
-	// Loop.
-	foreach( $_users AS $_user ) {
-
-		// Exclude admin.
-		if( $_user->user_id != '1' ) {
-
-			// Open item.
-			echo '<li>' . "\n";
-
-			// Show display name.
-			echo  '<a href="' . home_url() . '/author/' . $_user->user_login . '/">' . $_user->display_name . '</a>';
-
-			// Close item.
-			echo '</li>' . "\n\n";
-
-		}
-
-	}
-
-	// Close list.
-	echo '</ul>' . "\n\n";
-
-} ?>
-
-
-</div><!-- /post -->
-
-
-
-</div><!-- /content -->
-
-
-
-</div><!-- /page_wrapper -->
-
-
-
-</div><!-- /main_wrapper -->
-
-
-
+		</div><!-- /page_wrapper -->
+	</div><!-- /main_wrapper -->
 </div><!-- /wrapper -->
 
-
-
 <?php get_sidebar(); ?>
-
-
 
 <?php get_footer(); ?>

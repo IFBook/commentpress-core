@@ -1,127 +1,99 @@
-<?php /*
-================================================================================
-CommentPress Default Theme Comments in Page
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
+<?php
+/**
+ * Comments in Page Template.
+ *
+ * @package CommentPress_Core
+ */
 
---------------------------------------------------------------------------------
-*/
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 ?>
-
-
-
 <!-- comments_in_page.php -->
-
 <div id="comments_in_page_wrapper">
+	<div class="comments_container">
 
+		<?php if ( 'open' != $post->comment_status ) : ?>
+			<h3 class="nocomments comments-closed"><span><?php esc_html_e( 'Comments are closed', 'commentpress-core' ); ?></span></h3>
+		<?php endif; ?>
 
+		<?php if ( have_comments() ) : ?>
 
-<div class="comments_container">
+			<h3 class="general_comments_header">
+				<?php
 
+				comments_number(
+					'<span>0</span> general comments',
+					'<span>1</span> general comment',
+					'<span>%</span> general comments'
+				);
 
+				?>
+			</h3>
 
-<?php if ('open' != $post->comment_status) : ?>
+			<?php
 
-	<!-- comments are closed. -->
-	<h3 class="nocomments comments-closed"><span><?php _e( 'Comments are closed', 'commentpress-core' ); ?></span></h3>
+			/**
+			 * Fires before the Comments are rendered.
+			 *
+			 * @since 3.4
+			 */
+			do_action( 'commentpress_before_scrollable_comments' );
 
-<?php endif; ?>
+			?>
 
+			<div class="paragraph_wrapper">
 
+				<ol class="commentlist">
+					<?php
 
-<?php if ( have_comments() ) : ?>
+					// Get Comments for this Post in ascending order.
+					$comments = get_comments( [
+						'post_id' => $post->ID,
+						'order' => 'ASC',
+					] );
 
+					// List Comments.
+					wp_list_comments(
+						[
+							'type' => 'comment',
+							'reply_text' => __( 'Reply to this comment', 'commentpress-core' ),
+							'callback' => 'commentpress_comments',
+							'style' => 'ol',
+						],
+						$comments
+					);
 
+					?>
+				</ol>
 
-	<h3><?php
+			</div><!-- /paragraph_wrapper -->
 
-	comments_number(
-		'<span>0</span> general comments',
-		'<span>1</span> general comment',
-		'<span>%</span> general comments'
-	);
+		<?php else : /* This is displayed if there are no Comments so far. */ ?>
 
-	?></h3>
+			<?php if ( 'open' == $post->comment_status ) : ?>
+				<h3 class="nocomments"><?php esc_html_e( 'No general comments yet.', 'commentpress-core' ); ?></h3>
+			<?php endif; ?>
 
+		<?php endif; ?>
 
-
-	<?php do_action( 'commentpress_before_scrollable_comments' ); ?>
-
-
-
-	<div class="paragraph_wrapper">
-
-		<ol class="commentlist">
-
-		<?php
-
-		// Get Comments for this Post in ascending order.
-		$comments = get_comments( [
-			'post_id' => $post->ID,
-			'order' => 'ASC',
-		] );
-
-		// List Comments.
-		wp_list_comments(
-			[
-				'type'=> 'comment',
-				'reply_text' => __( 'Reply to this comment', 'commentpress-core' ),
-				'callback' => 'commentpress_comments',
-				'style'=> 'ol',
-			],
-			$comments
-		); ?>
-
-		</ol>
-
-	</div><!-- /paragraph_wrapper -->
-
-
-
-<?php else : // This is displayed if there are no Comments so far. ?>
-
-
-
-	<?php if ('open' == $post->comment_status) : ?>
-
-		<!-- Comments are open, but there are no Comments. -->
-		<h3 class="nocomments"><?php esc_html_e( 'No general comments yet', 'commentpress-core' ); ?></h3>
-
-	<?php endif; ?>
-
-
-
-<?php endif; ?>
-
-
-
-</div><!-- /comments_container -->
-
-
-
+	</div><!-- /comments_container -->
 </div><!-- /comments_in_page_wrapper -->
-
-
 
 <?php
 
 /**
- * Try to locate template using WordPress method.
+ * Locates the Comment form template.
  *
- * @since 3.4
+ * @since 3.7
  *
- * @param str The existing path returned by WordPress.
- * @return str The modified path.
+ * @param str The path to the Comment form template.
  */
-$cp_comment_form = apply_filters(
-	'cp_template_comment_form',
-	locate_template( 'assets/templates/comment_form.php' )
-);
+$cp_comment_form = apply_filters( 'cp_template_comment_form', locate_template( 'assets/templates/comment_form.php' ) );
 
 // Load it if we find it.
-if ( $cp_comment_form != '' ) load_template( $cp_comment_form );
+if ( $cp_comment_form != '' ) {
+	load_template( $cp_comment_form );
+}
 
 ?>

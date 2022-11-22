@@ -1,166 +1,156 @@
-<?php get_header(); ?>
+<?php
+/**
+ * Default Single Template.
+ *
+ * @package CommentPress_Core
+ */
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
+get_header();
 
+?>
 <!-- single.php -->
-
 <div id="wrapper">
 
+	<?php if ( have_posts() ) : ?>
 
+		<?php while ( have_posts() ) : ?>
 
-<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+			<?php the_post(); ?>
 
+			<div id="main_wrapper" class="clearfix">
+				<div id="page_wrapper">
 
+					<div id="content" class="content-wrapper">
+						<div class="post<?php echo commentpress_get_post_css_override( get_the_ID() ); ?>" id="post-<?php the_ID(); ?>">
 
-	<div id="main_wrapper" class="clearfix">
+							<h2 class="post_title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 
-		<div id="page_wrapper">
+							<div class="search_meta">
+								<?php commentpress_echo_post_meta(); ?>
+							</div>
 
-			<div id="content" class="content-wrapper">
+							<?php commentpress_get_post_version_info( $post ); ?>
 
-				<div class="post<?php echo commentpress_get_post_css_override( get_the_ID() ); ?>" id="post-<?php the_ID(); ?>">
+							<?php the_content(); ?>
 
-					<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+							<?php echo commentpress_multipager(); ?>
 
-					<div class="search_meta">
-						<?php commentpress_echo_post_meta(); ?>
-					</div>
+							<?php commentpress_geomashup_map_get(); ?>
 
-					<?php commentpress_get_post_version_info( $post ); ?>
+							<?php the_tags( '<p class="postmetadata">' . __( 'Tags: ', 'commentpress-core' ), ', ', '</p>' ); ?>
 
-					<?php global $more; $more = true; the_content(''); ?>
+							<p class="postmetadata">
+								<?php
 
-					<?php
+								// Define RSS text.
+								$rss_text = __( 'RSS 2.0', 'commentpress-core' );
 
-					// NOTE: Comment permalinks are filtered if the comment is not on the first Page
-					// in a multipage Post... see: commentpress_multipage_comment_link in functions.php
-					echo commentpress_multipager();
+								// Construct RSS link.
+								$rss_link = '<a href="' . esc_url( get_post_comments_feed_link() ) . '">' . $rss_text . '</a>';
 
-					?>
+								// Show text.
+								echo sprintf(
+									__( 'This entry is filed under %1$s. You can follow any comments on this entry through the %2$s feed.', 'commentpress-core' ),
+									get_the_category_list( ', ' ),
+									$rss_link
+								);
 
-					<?php commentpress_geomashup_map_get(); ?>
+								// Add trailing space.
+								echo ' ';
 
-					<?php the_tags( '<p class="postmetadata">' . __( 'Tags: ', 'commentpress-core' ), ', ', '</p>'); ?>
+								if ( ( 'open' == $post->comment_status ) && ( 'open' == $post->ping_status ) ) {
 
-					<p class="postmetadata"><?php
+									// Both Comments and pings are open.
 
-						// Define RSS text.
-						$rss_text = __( 'RSS 2.0', 'commentpress-core' );
+									// Define trackback text.
+									$trackback_text = __( 'trackback', 'commentpress-core' );
 
-						// Construct RSS link.
-						$rss_link = '<a href="' . esc_url( get_post_comments_feed_link() ) . '">' . $rss_text . '</a>';
+									// Construct RSS link.
+									$trackback_link = '<a href="' . esc_url( get_trackback_url() ) . '"rel="trackback">' . $trackback_text . '</a>';
 
-						// Show text.
-						echo sprintf(
-							__( 'This entry is filed under %1$s. You can follow any comments on this entry through the %2$s feed.', 'commentpress-core' ),
-							get_the_category_list( ', ' ),
-							$rss_link
-						);
+									// Write out.
+									echo sprintf(
+										__( 'You can leave a comment, or %s from your own site.', 'commentpress-core' ),
+										$trackback_link
+									);
 
-						// Add trailing space.
-						echo ' ';
+									// Add trailing space.
+									echo ' ';
 
-						if (('open' == $post->comment_status) AND ('open' == $post->ping_status)) {
+								} elseif ( ! ( 'open' == $post->comment_status ) && ( 'open' == $post->ping_status ) ) {
 
-							// Both Comments and pings are open.
+									// Only pings are open.
 
-							// Define trackback text.
-							$trackback_text = __( 'trackback', 'commentpress-core' );
+									// Define trackback text.
+									$trackback_text = __( 'trackback', 'commentpress-core' );
 
-							// Construct RSS link.
-							$trackback_link = '<a href="' . esc_url( get_trackback_url() ) . '"rel="trackback">' . $trackback_text . '</a>';
+									// Construct RSS link.
+									$trackback_link = '<a href="' . esc_url( get_trackback_url() ) . '"rel="trackback">' . $trackback_text . '</a>';
 
-							// Write out.
-							echo sprintf(
-								__( 'You can leave a comment, or %s from your own site.', 'commentpress-core' ),
-								$trackback_link
-							);
+									// Write out.
+									echo sprintf(
+										__( 'Comments are currently closed, but you can %s from your own site.', 'commentpress-core' ),
+										$trackback_link
+									);
 
-							// Add trailing space.
-							echo ' ';
+									// Add trailing space.
+									echo ' ';
 
-						} elseif (!('open' == $post->comment_status) AND ('open' == $post->ping_status)) {
+								} elseif ( ( 'open' == $post->comment_status ) && ! ( 'open' == $post->ping_status ) ) {
 
-							// Only pings are open.
+									// Comments are open, pings are not.
+									esc_html_e( 'You can leave a comment. Pinging is currently not allowed.', 'commentpress-core' );
 
-							// Define trackback text.
-							$trackback_text = __( 'trackback', 'commentpress-core' );
+									// Add trailing space.
+									echo ' ';
 
-							// Construct RSS link.
-							$trackback_link = '<a href="' . esc_url( get_trackback_url() ) . '"rel="trackback">' . $trackback_text . '</a>';
+								} elseif ( ! ( 'open' == $post->comment_status ) && ! ( 'open' == $post->ping_status ) ) {
 
-							// Write out.
-							echo sprintf(
-								__( 'Comments are currently closed, but you can %s from your own site.', 'commentpress-core' ),
-								$trackback_link
-							);
+									// Neither Comments nor pings are open.
+									esc_html_e( 'Both comments and pings are currently closed.', 'commentpress-core' );
 
-							// Add trailing space.
-							echo ' ';
+									// Add trailing space.
+									echo ' ';
 
-						} elseif (('open' == $post->comment_status) AND !('open' == $post->ping_status)) {
+								}
 
-							// Comments are open, pings are not.
-							_e( 'You can leave a comment. Pinging is currently not allowed.', 'commentpress-core' );
+								// Show edit link.
+								edit_post_link( __( 'Edit this entry', 'commentpress-core' ), '', '.' );
 
-							// Add trailing space.
-							echo ' ';
+								?>
+							</p>
 
-						} elseif (!('open' == $post->comment_status) AND !('open' == $post->ping_status)) {
+						</div><!-- /post -->
+					</div><!-- /content -->
 
-							// Neither Comments nor pings are open.
-							_e( 'Both comments and pings are currently closed.', 'commentpress-core' );
+				</div><!-- /page_wrapper -->
+			</div><!-- /main_wrapper -->
 
-							// Add trailing space.
-							echo ' ';
+		<?php endwhile; ?>
 
-						}
+	<?php else : ?>
 
-						// Show edit link.
-						edit_post_link( __( 'Edit this entry', 'commentpress-core' ), '', '.' );
+		<div id="main_wrapper" class="clearfix">
+			<div id="page_wrapper">
+				<div id="content">
+					<div class="post">
 
-					?></p>
+						<h2 class="post_title"><?php esc_html_e( 'Post Not Found', 'commentpress-core' ); ?></h2>
+						<p><?php esc_html_e( 'Sorry, no posts matched your criteria.', 'commentpress-core' ); ?></p>
+						<?php get_search_form(); ?>
 
-				</div><!-- /post -->
+					</div><!-- /post -->
+				</div><!-- /content -->
+			</div><!-- /page_wrapper -->
+		</div><!-- /main_wrapper -->
 
-			</div><!-- /content -->
-
-		</div><!-- /page_wrapper -->
-
-	</div><!-- /main_wrapper -->
-
-
-
-<?php endwhile; else: ?>
-
-
-
-	<div id="main_wrapper" class="clearfix">
-		<div id="page_wrapper">
-			<div id="content">
-				<div class="post">
-
-					<h2 class="post_title"><?php _e( 'Post Not Found', 'commentpress-core' ); ?></h2>
-					<p><?php _e( 'Sorry, no posts matched your criteria.', 'commentpress-core' ); ?></p>
-					<?php get_search_form(); ?>
-
-				</div><!-- /post -->
-			</div><!-- /content -->
-		</div><!-- /page_wrapper -->
-	</div><!-- /main_wrapper -->
-
-
-
-<?php endif; ?>
-
-
+	<?php endif; ?>
 
 </div><!-- /wrapper -->
 
-
-
 <?php get_sidebar(); ?>
-
-
 
 <?php get_footer(); ?>

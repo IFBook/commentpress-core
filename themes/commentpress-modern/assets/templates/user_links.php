@@ -1,113 +1,90 @@
-<?php /*
-================================================================================
-CommentPress Modern Theme User Links Template
-================================================================================
-AUTHOR: Christian Wach <needle@haystack.co.uk>
---------------------------------------------------------------------------------
-NOTES
+<?php
+/**
+ * User Links Template.
+ *
+ * @package CommentPress_Core
+ */
 
-User links template for CommentPress Core
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
---------------------------------------------------------------------------------
-*/
-
-?><!-- user_links.php -->
-
+?>
+<!-- user_links.php -->
 <div id="user_links">
 
-<ul>
-<?php
+	<ul>
+		<li><?php wp_loginout(); ?></li>
 
-// Login/logout.
-?><li><?php wp_loginout(); ?></li>
-<?php
+		<?php if ( is_multisite() ) : ?>
 
-// Is this multisite?
-if ( is_multisite() ) {
+			<?php if ( get_option( 'users_can_register' ) ) : ?>
+				<?php /* This works for get_site_option( 'registration' ) === 'none' and 'user' */ ?>
+				<li><?php wp_register( ' ', ' ' ); ?></li>
+			<?php endif; ?>
 
-	// Can Users register?
-	if ( get_option( 'users_can_register' ) ) {
+			<?php
 
-		// This works for get_site_option( 'registration' ) == 'none' and 'user'
-		?><li><?php wp_register(' ' , ' '); ?></li>
-		<?php
+			// Multisite signup and Blog create.
+			if (
+				( is_user_logged_in() && get_site_option( 'registration' ) === 'blog' )
+				|| get_site_option( 'registration' ) === 'all'
+			) {
 
-	}
+				/**
+				 * Filters the default Create a Site link name.
+				 *
+				 * @since 3.4
+				 *
+				 * @param str The default Create a Site link name.
+				 */
+				$new_site_title = apply_filters( 'cp_user_links_new_site_title', __( 'Create a new document', 'commentpress-core' ) );
 
-	// Multisite signup and Blog create.
-	if (
-		( is_user_logged_in() AND get_site_option( 'registration' ) == 'blog' ) OR
-		get_site_option( 'registration' ) == 'all'
-	) {
+				// Test whether we have BuddyPress.
+				if ( function_exists( 'bp_get_blogs_root_slug' ) ) {
 
-		// Test whether we have BuddyPress.
-		if ( function_exists( 'bp_get_blogs_root_slug' ) ) {
+					// New Sites for logged-out Users are not directly allowed - done through Signup Page.
+					if ( is_user_logged_in() ) {
 
-			// Different behaviour when logged in or not.
-			if ( is_user_logged_in() ) {
+						// BuddyPress uses its own Signup Page.
+						?>
+						<li><a href="<?php echo bp_get_root_domain() . '/' . bp_get_blogs_root_slug(); ?>/create/" title="<?php echo esc_attr( $new_site_title ); ?>" id="btn_create" class="button"><?php echo esc_html( $new_site_title ); ?></a></li>
+						<?php
 
-				// Set default link name.
-				$new_site_title = apply_filters(
-					'cp_user_links_new_site_title',
-					__( 'Create a new document', 'commentpress-core' )
-				);
+					}
 
-				// BuddyPress uses its own Signup Page.
-				?><li><a href="<?php echo bp_get_root_domain() . '/' . bp_get_blogs_root_slug(); ?>/create/" title="<?php echo $new_site_title; ?>" id="btn_create" class="button"><?php echo $new_site_title; ?></a></li>
-				<?php
+				} else {
 
-			} else {
+					// Standard WordPress multisite.
+					?>
+					<li><a href="<?php echo network_site_url(); ?>wp-signup.php" title="<?php echo esc_attr( $new_site_title ); ?>" id="btn_create" class="button"><?php echo esc_html( $new_site_title ); ?></a></li>
+					<?php
 
-				// Not directly allowed - done through signup form.
+				}
 
 			}
 
-		} else {
+			?>
 
-			// Set default link name.
-			$new_site_title = apply_filters(
-				'cp_user_links_new_site_title',
-				__( 'Create a new document', 'commentpress-core' )
-			);
+		<?php else : ?>
 
-			// Standard WordPress multisite.
-			?><li><a href="<?php echo network_site_url(); ?>wp-signup.php" title="<?php echo $new_site_title; ?>" id="btn_create" class="button"><?php echo $new_site_title; ?></a></li>
-			<?php
+			<?php if ( is_user_logged_in() ) : ?>
+				<?php
 
-		}
+				/**
+				 * Filters the default Dashboard link name.
+				 *
+				 * @since 3.4
+				 *
+				 * @param str The default Dashboard link name.
+				 */
+				$dashboard_title = apply_filters( 'cp_user_links_dashboard_title', __( 'Dashboard', 'commentpress-core' ) );
 
-	}
+				?>
 
-} else {
+				<li><a href="<?php echo admin_url(); ?>" title="<?php echo $dashboard_title; ?>" id="btn_dash" class="button"><?php echo $dashboard_title; ?></a></li>
+			<?php endif; ?>
 
-	// If logged in.
-	if ( is_user_logged_in() ) {
+		<?php endif; ?>
+	</ul>
 
-		// Set default link name.
-		$dashboard_title = apply_filters(
-			'cp_user_links_dashboard_title',
-			__( 'Dashboard', 'commentpress-core' )
-		);
-
-		?>
-		<li><a href="<?php echo admin_url(); ?>" title="<?php echo $dashboard_title; ?>" id="btn_dash" class="button"><?php echo $dashboard_title; ?></a></li>
-		<?php
-
-	}
-
-	/*
-	// Testing JS.
-	?>
-	<li><a href="#" title="Javascript" id="btn_js">Javascript</a></li>
-	<?php
-	*/
-
-}
-
-?></ul>
-</div>
-
-<!-- /user_links.php -->
-
-
-
+</div><!-- /user_links.php -->

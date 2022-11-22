@@ -1557,6 +1557,11 @@ if ( ! function_exists( 'commentpress_multipager' ) ) :
 	/**
 	 * Create sane links between Pages.
 	 *
+	 * Comment permalinks are filtered if the comment is not on the first Page
+	 * in a multipage Post.
+	 *
+	 * @see commentpress_multipage_comment_link()
+	 *
 	 * @since 3.5
 	 *
 	 * @return str $page_links The Next Page and Previous Page links.
