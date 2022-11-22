@@ -545,7 +545,7 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		// Set default sidebar but override if we have the plugin enabled.
 		$sidebar_flag = 'toc';
 		if ( ! empty( $core ) ) {
-			$sidebar_flag = $core->get_default_sidebar();
+			$sidebar_flag = $core->theme->get_default_sidebar();
 		}
 
 		// Set class per sidebar.
@@ -556,16 +556,8 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 
 		// -------------------- Commentable ------------------------------------
 
-		// Init commentable class but override if we have the plugin enabled.
-		$commentable = '';
-		if ( ! empty( $core ) ) {
-			$commentable = $core->is_commentable() ? 'commentable' : 'not_commentable';
-		}
-
-		// Add to array.
-		if ( ! empty( $commentable ) ) {
-			$classes[] = $commentable;
-		}
+		// Add commentable class to array.
+		$classes[] = commentpress_is_commentable() ? 'commentable' : 'not_commentable';
 
 		// -------------------- Layout -----------------------------------------
 
@@ -1309,7 +1301,7 @@ if ( ! function_exists( 'commentpress_is_commentable' ) ) :
 		}
 
 		// Return what core reports.
-		return $core->is_commentable();
+		return $core->parser->is_commentable();
 
 	}
 

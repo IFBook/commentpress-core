@@ -347,7 +347,17 @@ class CommentPress_Core {
 
 	}
 
-	// -------------------------------------------------------------------------
+	/*
+	 * -------------------------------------------------------------------------
+	 * Methods below are legacy methods and should no longer be used.
+	 * -------------------------------------------------------------------------
+	 *
+	 * They are retained here for the time-being but will be removed in future
+	 * versions. You should check your log files to identify any calls to these
+	 * methods and update your code accordingly.
+	 *
+	 * -------------------------------------------------------------------------
+	 */
 
 	/**
 	 * Retrieves option for displaying TOC.
@@ -357,74 +367,8 @@ class CommentPress_Core {
 	 * @return mixed $result
 	 */
 	public function get_list_option() {
+		_deprecated_function( __METHOD__, '4.0' );
 		return $this->db->option_get( 'cp_show_posts_or_pages_in_toc' );
-	}
-
-	/**
-	 * Retrieves minimise all button.
-	 *
-	 * @since 3.4
-	 *
-	 * @param str $sidebar The type of sidebar - either 'comments', 'toc' or 'activity'.
-	 * @return str $sidebar The HTML for minimise button.
-	 */
-	public function get_minimise_all_button( $sidebar = 'comments' ) {
-		return $this->display->get_minimise_all_button( $sidebar );
-	}
-
-	/**
-	 * Retrieves header minimise button.
-	 *
-	 * @since 3.4
-	 *
-	 * @return str $result The HTML for minimise button.
-	 */
-	public function get_header_min_link() {
-		return $this->display->get_header_min_link();
-	}
-
-	/**
-	 * Retrieves text_signature hidden input.
-	 *
-	 * @since 3.4
-	 *
-	 * @return str $result The HTML input.
-	 */
-	public function get_signature_field() {
-
-		// Init Text Signature.
-		$text_sig = '';
-
-		// Get Comment ID to reply to from URL query string.
-		$reply_to_comment_id = isset( $_GET['replytocom'] ) ? (int) $_GET['replytocom'] : 0;
-
-		// Did we get a Comment ID?
-		if ( $reply_to_comment_id != 0 ) {
-
-			// Get Paragraph Text Signature.
-			$text_sig = $this->db->get_text_signature_by_comment_id( $reply_to_comment_id );
-
-		} else {
-
-			// Do we have a Paragraph Number in the query string?
-			$reply_to_para_id = isset( $_GET['replytopara'] ) ? (int) $_GET['replytopara'] : 0;
-
-			// Did we get a Comment ID?
-			if ( $reply_to_para_id != 0 ) {
-
-				// Get Paragraph Text Signature.
-				$text_sig = $this->get_text_signature( $reply_to_para_id );
-
-			}
-
-		}
-
-		// Get constructed hidden input for Comment form.
-		$result = $this->display->get_signature_input( $text_sig );
-
-		// --<
-		return $result;
-
 	}
 
 	/**
@@ -435,20 +379,8 @@ class CommentPress_Core {
 	 * @param array $exclude_pages The array of Pages to exclude.
 	 */
 	public function get_toc_list( $exclude_pages = [] ) {
-
-		// Switch Pages or Posts.
-		if ( $this->get_list_option() == 'post' ) {
-
-			// List Posts.
-			$this->display->list_posts();
-
-		} else {
-
-			// List Pages.
-			$this->display->list_pages( $exclude_pages );
-
-		}
-
+		_deprecated_function( __METHOD__, '4.0' );
+		$this->display->get_toc_list( $exclude_pages );
 	}
 
 	/**
@@ -460,50 +392,36 @@ class CommentPress_Core {
 	 * @return array $comments An array of sorted Comment data.
 	 */
 	public function get_sorted_comments( $post_ID ) {
-
-		// --<
+		_deprecated_function( __METHOD__, '4.0' );
 		return $this->parser->get_sorted_comments( $post_ID );
-
 	}
 
 	/**
-	 * Get Paragraph Number for a particular Text Signature.
+	 * Retrieves minimise all button.
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $text_signature The Text Signature.
-	 * @return int $num The position in Text Signature array.
+	 * @param str $sidebar The type of sidebar - either 'comments', 'toc' or 'activity'.
+	 * @return str $sidebar The HTML for minimise button.
 	 */
-	public function get_para_num( $text_signature ) {
-
-		// Get position in array.
-		$num = array_search( $text_signature, $this->db->get_text_sigs() );
-
-		// --<
-		return $num + 1;
-
+	public function get_minimise_all_button( $sidebar = 'comments' ) {
+		_deprecated_function( __METHOD__, '4.0' );
+		return $this->display->get_minimise_all_button( $sidebar );
 	}
 
 	/**
-	 * Get Text Signature for a particular Paragraph Number.
+	 * Retrieves header minimise button.
 	 *
 	 * @since 3.4
 	 *
-	 * @param int $para_num The Paragraph Number in a Post.
-	 * @return str $text_signature The Text Signature.
+	 * @return str $result The HTML for minimise button.
 	 */
-	public function get_text_signature( $para_num ) {
-
-		// Get Text Signatures.
-		$sigs = $this->db->get_text_sigs();
-
-		// Get value at that position in array.
-		$text_sig = ( isset( $sigs[ $para_num - 1 ] ) ) ? $sigs[ $para_num - 1 ] : '';
-
-		// --<
-		return $text_sig;
-
+	public function get_header_min_link() {
+		_deprecated_function( __METHOD__, '4.0' );
+		return $this->display->get_header_min_link();
 	}
+
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Get a link to a Special Page.
@@ -511,94 +429,11 @@ class CommentPress_Core {
 	 * @since 3.4
 	 *
 	 * @param str $page_type The CommentPress Core name of a Special Page.
-	 * @return str $link THe HTML link to that Page.
+	 * @return str $link The HTML link to that Page.
 	 */
 	public function get_page_link( $page_type = 'cp_all_comments_page' ) {
-
-		// Access globals.
-		global $post;
-
-		// Init.
-		$link = '';
-
-		// Get Page ID.
-		$page_id = $this->db->option_get( $page_type );
-
-		// Do we have a Page?
-		if ( $page_id != '' ) {
-
-			// Get Page.
-			$page = get_post( $page_id );
-
-			// Is it the current Page?
-			$active = '';
-			if ( isset( $post ) && $page->ID == $post->ID ) {
-				$active = ' class="active_page"';
-			}
-
-			// Get link.
-			$url = get_permalink( $page );
-
-			// Switch title by type.
-			switch ( $page_type ) {
-
-				case 'cp_welcome_page':
-					$link_title = __( 'Title Page', 'commentpress-core' );
-					$button = 'cover';
-					break;
-
-				case 'cp_all_comments_page':
-					$link_title = __( 'All Comments', 'commentpress-core' );
-					$button = 'allcomments';
-					break;
-
-				case 'cp_general_comments_page':
-					$link_title = __( 'General Comments', 'commentpress-core' );
-					$button = 'general';
-					break;
-
-				case 'cp_blog_page':
-					$link_title = __( 'Blog', 'commentpress-core' );
-					if ( is_home() ) {
-						$active = ' class="active_page"';
-					}
-					$button = 'blog';
-					break;
-
-				case 'cp_blog_archive_page':
-					$link_title = __( 'Blog Archive', 'commentpress-core' );
-					$button = 'archive';
-					break;
-
-				case 'cp_comments_by_page':
-					$link_title = __( 'Comments by Commenter', 'commentpress-core' );
-					$button = 'members';
-					break;
-
-				default:
-					$link_title = __( 'Members', 'commentpress-core' );
-					$button = 'members';
-
-			}
-
-			/**
-			 * Filters the Special Page title.
-			 *
-			 * @since 3.4
-			 *
-			 * @param str $link_title The default Special Page title.
-			 * @param str $page_type The CommentPress Core name of a Special Page.
-			 */
-			$title = apply_filters( 'commentpress_page_link_title', $link_title, $page_type );
-
-			// Show link.
-			$link = '<li' . $active . '><a href="' . $url . '" id="btn_' . $button . '" class="css_btn" title="' . $title . '">' . $title . '</a></li>' . "\n";
-
-		}
-
-		// --<
-		return $link;
-
+		_deprecated_function( __METHOD__, '4.0' );
+		return $this->pages_legacy->get_page_link( $page_type );
 	}
 
 	/**
@@ -610,28 +445,11 @@ class CommentPress_Core {
 	 * @return str $url The URL of that Page.
 	 */
 	public function get_page_url( $page_type = 'cp_all_comments_page' ) {
-
-		// Init.
-		$url = '';
-
-		// Get Page ID.
-		$page_id = $this->db->option_get( $page_type );
-
-		// Do we have a Page?
-		if ( $page_id != '' ) {
-
-			// Get Page.
-			$page = get_post( $page_id );
-
-			// Get link.
-			$url = get_permalink( $page );
-
-		}
-
-		// --<
-		return $url;
-
+		_deprecated_function( __METHOD__, '4.0' );
+		return $this->pages_legacy->get_page_url( $page_type );
 	}
+
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Return the name of the default sidebar.
@@ -641,104 +459,8 @@ class CommentPress_Core {
 	 * @return str $return The code for the default sidebar.
 	 */
 	public function get_default_sidebar() {
-
-		/**
-		 * Set sensible default sidebar, but allow overrides.
-		 *
-		 * @since 3.9.8
-		 *
-		 * @param str The default sidebar before any contextual modifications.
-		 * @return str The modified sidebar before any contextual modifications.
-		 */
-		$return = apply_filters( 'commentpress_default_sidebar', 'activity' );
-
-		// Is this a commentable Page?
-		if ( ! $this->is_commentable() ) {
-
-			// No - we must use either 'activity' or 'toc'.
-			if ( $this->db->option_exists( 'cp_sidebar_default' ) ) {
-
-				// Get option (we don't need to look at the Page meta in this case).
-				$default = $this->db->option_get( 'cp_sidebar_default' );
-
-				// Use it unless it's 'comments'.
-				if ( $default != 'comments' ) {
-					$return = $default;
-				}
-
-			}
-
-			// --<
-			return $return;
-
-		}
-
-		/*
-		// Get CPTs.
-		//$types = $this->get_commentable_cpts();
-
-		// Testing what we do with CPTs.
-		//if ( is_singular() || is_singular( $types ) ) {
-		*/
-
-		// Is it a commentable Page?
-		if ( is_singular() ) {
-
-			// Some people have reported that db is not an object at this point -
-			// though I cannot figure out how this might be occurring - so we
-			// avoid the issue by checking if it is.
-			if ( is_object( $this->db ) ) {
-
-				// Is it a Special Page which have Comments-in-Page (or are not commentable)?
-				if ( ! $this->pages_legacy->is_special_page() ) {
-
-					// Access Page.
-					global $post;
-
-					// Either 'comments', 'activity' or 'toc'.
-					if ( $this->db->option_exists( 'cp_sidebar_default' ) ) {
-
-						// Get global option.
-						$return = $this->db->option_get( 'cp_sidebar_default' );
-
-						// Check if the Post/Page has a meta value.
-						$key = '_cp_sidebar_default';
-
-						// If the custom field already has a value.
-						if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-							// Get it.
-							$return = get_post_meta( $post->ID, $key, true );
-
-						}
-
-					}
-
-					// --<
-					return $return;
-
-				}
-
-			}
-
-		}
-
-		// Not singular - must be either "activity" or "toc".
-		if ( $this->db->option_exists( 'cp_sidebar_default' ) ) {
-
-			// Override.
-			$default = $this->db->option_get( 'cp_sidebar_default' );
-
-			// Use it unless it's 'comments'.
-			if ( $default != 'comments' ) {
-				$return = $default;
-			}
-
-		}
-
-		// --<
-		return $return;
-
+		_deprecated_function( __METHOD__, '4.0' );
+		return $this->theme->get_default_sidebar();
 	}
 
 	/**
@@ -749,20 +471,38 @@ class CommentPress_Core {
 	 * @return array $order Sidebars in order of display.
 	 */
 	public function get_sidebar_order() {
-
-		/**
-		 * Filters the default tab order.
-		 *
-		 * @since 3.4
-		 *
-		 * @param array $order The default tab order array.
-		 */
-		$order = apply_filters( 'cp_sidebar_tab_order', [ 'contents', 'comments', 'activity' ] );
-
-		// --<
-		return $order;
-
+		_deprecated_function( __METHOD__, '4.0' );
+		return $this->theme->get_sidebar_order();
 	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Retrieves th current Text Signature hidden input.
+	 *
+	 * @since 3.4
+	 *
+	 * @return str $result The HTML input.
+	 */
+	public function get_signature_field() {
+		_deprecated_function( __METHOD__, '4.0' );
+		return $this->display->get_signature_field();
+	}
+
+	/**
+	 * Get Text Signature for a particular Paragraph Number.
+	 *
+	 * @since 3.4
+	 *
+	 * @param int $para_num The Paragraph Number in a Post.
+	 * @return str $text_signature The Text Signature.
+	 */
+	public function get_text_signature( $para_num ) {
+		_deprecated_function( __METHOD__, '4.0' );
+		return $this->db->get_text_signature( $para_num );
+	}
+
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Check if a Page/Post can be commented on.
@@ -772,110 +512,9 @@ class CommentPress_Core {
 	 * @return bool $is_commentable True if commentable, false otherwise.
 	 */
 	public function is_commentable() {
-
-		// Declare access to globals.
-		global $post;
-
-		// Not on Signup Pages.
-		$script = isset( $_SERVER['SCRIPT_FILENAME'] ) ? wp_unslash( $_SERVER['SCRIPT_FILENAME'] ) : '';
-		if ( is_multisite() && ! empty( $script ) ) {
-			if ( 'wp-signup.php' == basename( $script ) ) {
-				return false;
-			}
-			if ( 'wp-activate.php' == basename( $script ) ) {
-				return false;
-			}
-		}
-
-		// Not if we're not on a Page/Post and especially not if there's no Post object.
-		if ( ! is_singular() || ! is_object( $post ) ) {
-			return false;
-		}
-
-		// CommentPress Core Special Pages Special Pages are not.
-		if ( $this->pages_legacy->is_special_page() ) {
-			return false;
-		}
-
-		// BuddyPress Special Pages are not.
-		if ( $this->bp->is_buddypress_special_page() ) {
-			return false;
-		}
-
-		// Theme My Login Page is not.
-		if ( $this->plugins->is_theme_my_login_page() ) {
-			return false;
-		}
-
-		// Members List Page is not.
-		if ( $this->plugins->is_members_list_page() ) {
-			return false;
-		}
-
-		// Subscribe to Comments Reloaded Page is not.
-		if ( $this->plugins->is_subscribe_to_comments_reloaded_page() ) {
-			return false;
-		}
-
-		/**
-		 * Filters "commenting allowed" status.
-		 *
-		 * @since 3.4
-		 *
-		 * @param bool $is_commentable True by default.
-		 */
-		return apply_filters( 'cp_is_commentable', true );
-
+		_deprecated_function( __METHOD__, '4.0' );
+		return $this->parser->is_commentable();
 	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Utility to check for commentable CPT.
-	 *
-	 * @since 3.4
-	 *
-	 * @return str $types Array of Post Types.
-	 */
-	public function get_commentable_cpts() {
-
-		// Init.
-		$types = false;
-
-		// NOTE: exactly how do we support CPTs?
-		$args = [
-			//'public'   => true,
-			'_builtin' => false,
-		];
-
-		$output = 'names'; // Names or objects, note names is the default.
-		$operator = 'and'; // 'and' or 'or'.
-
-		// Get Post Types.
-		$post_types = get_post_types( $args, $output, $operator );
-
-		// Did we get any?
-		if ( count( $post_types ) > 0 ) {
-
-			// Init as array.
-			$types = false;
-
-			// Loop.
-			foreach ( $post_types as $post_type ) {
-
-				// Add name to array (is_singular expects this).
-				$types[] = $post_type;
-
-			}
-
-		}
-
-		// --<
-		return $types;
-
-	}
-
-	// -------------------------------------------------------------------------
 
 	/**
 	 * Check if user agent is mobile.
@@ -885,6 +524,7 @@ class CommentPress_Core {
 	 * @return bool $is_mobile True if mobile OS, false otherwise.
 	 */
 	public function is_mobile() {
+		_deprecated_function( __METHOD__, '4.0' );
 		return $this->device->is_mobile();
 	}
 
@@ -896,6 +536,7 @@ class CommentPress_Core {
 	 * @return boolean $is_tablet True if tablet OS, false otherwise.
 	 */
 	public function is_tablet() {
+		_deprecated_function( __METHOD__, '4.0' );
 		return $this->device->is_tablet();
 	}
 
@@ -909,18 +550,8 @@ class CommentPress_Core {
 	 * @return bool $buddypress True when BuddyPress active, false otherwise.
 	 */
 	public function is_buddypress() {
+		_deprecated_function( __METHOD__, '4.0' );
 		return $this->bp->is_buddypress();
-	}
-
-	/**
-	 * Is this Blog a BuddyPress Group Blog?
-	 *
-	 * @since 3.4
-	 *
-	 * @return bool $bp_groupblog True when current Blog is a BuddyPress Group Blog, false otherwise.
-	 */
-	public function is_groupblog() {
-		return $this->bp->is_groupblog();
 	}
 
 	/**
@@ -931,7 +562,20 @@ class CommentPress_Core {
 	 * @return bool $is_bp True if current Page is a BuddyPress Page, false otherwise.
 	 */
 	public function is_buddypress_special_page() {
+		_deprecated_function( __METHOD__, '4.0' );
 		return $this->bp->is_buddypress_special_page();
+	}
+
+	/**
+	 * Is this Blog a BuddyPress Group Blog?
+	 *
+	 * @since 3.4
+	 *
+	 * @return bool $bp_groupblog True when current Blog is a BuddyPress Group Blog, false otherwise.
+	 */
+	public function is_groupblog() {
+		_deprecated_function( __METHOD__, '4.0' );
+		return $this->bp->is_groupblog();
 	}
 
 }

@@ -2177,6 +2177,46 @@ class CommentPress_Core_Database {
 	}
 
 	/**
+	 * Get Paragraph Number for a particular Text Signature.
+	 *
+	 * @since 3.4
+	 *
+	 * @param str $text_signature The Text Signature.
+	 * @return int $num The position in Text Signature array.
+	 */
+	public function get_para_num( $text_signature ) {
+
+		// Get position in array.
+		$num = array_search( $text_signature, $this->get_text_signatures() );
+
+		// --<
+		return $num + 1;
+
+	}
+
+	/**
+	 * Get Text Signature for a particular Paragraph Number.
+	 *
+	 * @since 3.4
+	 * @since 4.0 Moved to this class.
+	 *
+	 * @param int $para_num The Paragraph Number in a Post.
+	 * @return str $text_signature The Text Signature.
+	 */
+	public function get_text_signature( $para_num ) {
+
+		// Get Text Signatures.
+		$sigs = $this->get_text_signatures();
+
+		// Get value at that position in array.
+		$text_sig = isset( $sigs[ $para_num - 1 ] ) ? $sigs[ $para_num - 1 ] : '';
+
+		// --<
+		return $text_sig;
+
+	}
+
+	/**
 	 * Retrieves Text Signature by Comment ID.
 	 *
 	 * @since 3.4
@@ -2212,7 +2252,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @param array $sigs An array of Text Signatures.
 	 */
-	public function set_text_sigs( $sigs ) {
+	public function set_text_signatures( $sigs ) {
 
 		// Store them.
 		global $ffffff_sigs;
@@ -2227,7 +2267,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @return array $text_signatures An array of Text Signatures.
 	 */
-	public function get_text_sigs() {
+	public function get_text_signatures() {
 
 		// Get them.
 		global $ffffff_sigs;
@@ -2469,7 +2509,7 @@ class CommentPress_Core_Database {
 		$vars['cp_show_subpages'] = $this->option_get( 'cp_show_subpages' );
 
 		// Set default sidebar.
-		$vars['cp_default_sidebar'] = $this->core->get_default_sidebar();
+		$vars['cp_default_sidebar'] = $this->core->theme->get_default_sidebar();
 
 		// Set scroll speed.
 		$vars['cp_js_scroll_speed'] = $this->option_get( 'cp_js_scroll_speed' );

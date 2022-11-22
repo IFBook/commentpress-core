@@ -14,8 +14,11 @@ $core = commentpress_core();
 // If we have the plugin enabled, get order from plugin options.
 $_tab_order = [ 'comments', 'activity', 'contents' ];
 if ( ! empty( $core ) ) {
-	$_tab_order = $core->get_sidebar_order();
+	$_tab_order = $core->theme->get_sidebar_order();
 }
+
+// Get commentable status.
+$is_commentable = commentpress_is_commentable();
 
 ?>
 <!-- sidebar.php -->
@@ -56,7 +59,7 @@ if ( ! empty( $core ) ) {
 
 							// Show the minimise all button if we have the plugin enabled.
 							if ( ! empty( $core ) ) {
-								echo $core->get_minimise_all_button( 'comments' );
+								echo $core->display->get_minimise_all_button( 'comments' );
 							}
 
 							?>
@@ -88,7 +91,7 @@ if ( ! empty( $core ) ) {
 
 								// Show the minimise all button if we have the plugin enabled.
 								if ( ! empty( $core ) ) {
-									echo $core->get_minimise_all_button( 'activity' );
+									echo $core->display->get_minimise_all_button( 'activity' );
 								}
 
 								?>
@@ -145,7 +148,7 @@ if ( ! empty( $core ) ) {
 		if ( ! empty( $core ) ) {
 
 			// Is it commentable?
-			if ( $core->is_commentable() ) {
+			if ( $is_commentable ) {
 
 				/**
 				 * Try to locate template using WordPress method.

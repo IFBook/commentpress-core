@@ -14,13 +14,8 @@ $core = commentpress_core();
 // Init tab order - only relevant for old default theme.
 $_tab_order = [ 'comments', 'activity' ];
 
-// Init commentable as true by default.
-$is_commentable = true;
-
-// Override if we have the plugin enabled.
-if ( ! empty( $core ) ) {
-	$is_commentable = $core->is_commentable() ? true : false;
-}
+// Get commentable status.
+$is_commentable = commentpress_is_commentable();
 
 ?>
 <!-- sidebar.php -->
@@ -43,7 +38,7 @@ if ( ! empty( $core ) ) {
 
 						// Add active class.
 						$active_class = '';
-						if ( ! empty( $core ) && in_array( $core->get_default_sidebar(), [ 'comments', 'toc' ] ) ) {
+						if ( ! empty( $core ) && in_array( $core->theme->get_default_sidebar(), [ 'comments', 'toc' ] ) ) {
 							$active_class = ' class="active-tab"';
 						}
 
@@ -69,7 +64,7 @@ if ( ! empty( $core ) ) {
 
 							// Show the minimise all button if we have the plugin enabled.
 							if ( ! empty( $core ) ) {
-								echo $core->get_minimise_all_button( 'comments' );
+								echo $core->display->get_minimise_all_button( 'comments' );
 							}
 
 							?>
@@ -87,7 +82,7 @@ if ( ! empty( $core ) ) {
 
 							// Add class if not commentable.
 							$active_class = '';
-							if ( ! $is_commentable || ( ! empty( $core ) && 'activity' === $core->get_default_sidebar() ) ) {
+							if ( ! $is_commentable || ( ! empty( $core ) && 'activity' === $core->theme->get_default_sidebar() ) ) {
 								$active_class = ' class="active-tab"';
 							}
 
@@ -108,7 +103,7 @@ if ( ! empty( $core ) ) {
 
 								// Show the minimise all button if we have the plugin enabled.
 								if ( ! empty( $core ) ) {
-									echo $core->get_minimise_all_button( 'activity' );
+									echo $core->display->get_minimise_all_button( 'activity' );
 								}
 
 								?>
@@ -141,7 +136,7 @@ if ( ! empty( $core ) ) {
 		if ( ! empty( $core ) ) {
 
 			// Is it commentable?
-			if ( $core->is_commentable() ) {
+			if ( $is_commentable ) {
 
 				/**
 				 * Try to locate template using WordPress method.

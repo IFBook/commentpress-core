@@ -18,10 +18,10 @@ $core = commentpress_core();
 $_page_comments_output = '';
 
 // Is it commentable?
-$_is_commentable = commentpress_is_commentable();
+$is_commentable = commentpress_is_commentable();
 
 // If a commentable Post.
-if ( $_is_commentable && ! post_password_required() ) {
+if ( $is_commentable && ! post_password_required() ) {
 
 	// Get singular Post Type label.
 	$current_type = get_post_type();
@@ -39,7 +39,11 @@ if ( $_is_commentable && ! post_password_required() ) {
 	$post_type_name = apply_filters( 'commentpress_lexia_post_type_name', $post_type_obj->labels->singular_name, $current_type );
 
 	// Construct "Recent Comments" phrase.
-	$_paragraph_text = sprintf( __( 'Recent Comments on this %s', 'commentpress-core' ), $post_type_name );
+	$_paragraph_text = sprintf(
+		/* translators: %s: The name of the Post Type. */
+		__( 'Recent Comments on this %s', 'commentpress-core' ),
+		$post_type_name
+	);
 
 	/**
 	 * Filters the "Recent Comments" phrase.
@@ -71,7 +75,8 @@ $_all_comments_output = commentpress_get_comment_activity( 'all' );
 // TODO: Make this an option?
 $_max_members = 10;
 
-?><!-- activity_sidebar.php -->
+?>
+<!-- activity_sidebar.php -->
 <div id="activity_sidebar" class="sidebar_container">
 
 	<div class="sidebar_header">
@@ -97,7 +102,7 @@ $_max_members = 10;
 
 				?>
 
-				<?php if ( $_is_commentable && $_page_comments_output != '' ) { ?>
+				<?php if ( $is_commentable && $_page_comments_output != '' ) { ?>
 
 					<?php
 

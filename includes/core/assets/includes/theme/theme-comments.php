@@ -847,7 +847,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 		do_action( 'commentpress_before_scrollable_comments' );
 
 		// Get approved Comments for this Post, sorted Comments by Text Signature.
-		$comments_sorted = $core->get_sorted_comments( $post->ID );
+		$comments_sorted = $core->parser->get_sorted_comments( $post->ID );
 
 		// Key for starting Paragraph Number.
 		$key = '_cp_starting_para_number';
@@ -1212,7 +1212,7 @@ if ( ! function_exists( 'commentpress_comment_form_title' ) ) :
 		}
 
 		// Get Paragraph Text Signature.
-		$text_sig = $core->get_text_signature( $reply_to_para_id );
+		$text_sig = $core->db->get_text_signature( $reply_to_para_id );
 
 		// Get link to Paragraph.
 		if ( $link_to_parent ) {

@@ -977,4 +977,140 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets a link to a Special Page.
+	 *
+	 * @since 3.4
+	 * @since 4.0 Moved to this class.
+	 *
+	 * @param str $page_type The CommentPress Core "name" of a Special Page.
+	 * @return str $link The HTML link to that Page.
+	 */
+	public function get_page_link( $page_type = 'cp_all_comments_page' ) {
+
+		// Access globals.
+		global $post;
+
+		// Init.
+		$link = '';
+
+		// Get Page ID.
+		$page_id = $this->core->db->option_get( $page_type );
+
+		// Bail if we have no Page.
+		if ( empty( $page_id ) ) {
+			return $link;
+		}
+
+		// Get Page.
+		$page = get_post( $page_id );
+
+		// Is it the current Page?
+		$active = '';
+		if ( ( $post instanceof WP_Post ) && (int) $page->ID === (int) $post->ID ) {
+			$active = ' class="active_page"';
+		}
+
+		// Get link.
+		$url = get_permalink( $page );
+
+		// Switch title by type.
+		switch ( $page_type ) {
+
+			case 'cp_welcome_page':
+				$link_title = __( 'Title Page', 'commentpress-core' );
+				$button = 'cover';
+				break;
+
+			case 'cp_all_comments_page':
+				$link_title = __( 'All Comments', 'commentpress-core' );
+				$button = 'allcomments';
+				break;
+
+			case 'cp_general_comments_page':
+				$link_title = __( 'General Comments', 'commentpress-core' );
+				$button = 'general';
+				break;
+
+			case 'cp_blog_page':
+				$link_title = __( 'Blog', 'commentpress-core' );
+				if ( is_home() ) {
+					$active = ' class="active_page"';
+				}
+				$button = 'blog';
+				break;
+
+			case 'cp_blog_archive_page':
+				$link_title = __( 'Blog Archive', 'commentpress-core' );
+				$button = 'archive';
+				break;
+
+			case 'cp_comments_by_page':
+				$link_title = __( 'Comments by Commenter', 'commentpress-core' );
+				$button = 'members';
+				break;
+
+			default:
+				$link_title = __( 'Members', 'commentpress-core' );
+				$button = 'members';
+
+		}
+
+		/**
+		 * Filters the Special Page title.
+		 *
+		 * @since 3.4
+		 *
+		 * @param str $link_title The default Special Page title.
+		 * @param str $page_type The CommentPress Core "name" of a Special Page.
+		 */
+		$title = apply_filters( 'commentpress_page_link_title', $link_title, $page_type );
+
+		// Build link.
+		$link = '<li' . $active . '>' .
+			'<a href="' . $url . '" id="btn_' . $button . '" class="css_btn" title="' . $title . '">' .
+				$title .
+			'</a>' .
+		'</li>' . "\n";
+
+		// --<
+		return $link;
+
+	}
+
+	/**
+	 * Gets the URL for a Special Page.
+	 *
+	 * @since 3.4
+	 * @since 4.0 Moved to this class.
+	 *
+	 * @param str $page_type The CommentPress Core "name" of a Special Page.
+	 * @return str $url The URL of that Page.
+	 */
+	public function get_page_url( $page_type = 'cp_all_comments_page' ) {
+
+		// Init.
+		$url = '';
+
+		// Get Page ID.
+		$page_id = $this->core->db->option_get( $page_type );
+
+		// Bail if we have no Page.
+		if ( empty( $page_id ) ) {
+			return $url;
+		}
+
+		// Get Page.
+		$page = get_post( $page_id );
+
+		// Get link.
+		$url = get_permalink( $page );
+
+		// --<
+		return $url;
+
+	}
+
 }

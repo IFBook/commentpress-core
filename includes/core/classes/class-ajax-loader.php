@@ -177,7 +177,7 @@ class CommentPress_AJAX_Loader {
 		$allowed = true;
 
 		// Disallow generally if Page doesn't allow commenting.
-		if ( ! $this->core->is_commentable() ) {
+		if ( ! $this->core->parser->is_commentable() ) {
 			$allowed = false;
 		}
 

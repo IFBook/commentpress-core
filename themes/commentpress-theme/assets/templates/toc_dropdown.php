@@ -22,7 +22,7 @@ $core = commentpress_core();
 	<div id="toc_dd_wrapper">
 		<?php if ( ! empty( $core ) ) : ?>
 			<ul id="toc_dd_list">
-				<?php echo $core->get_toc_list(); ?></ul>
+				<?php echo $core->display->get_toc_list(); ?></ul>
 		<?php endif; ?>
 	</div><!-- /toc_dd_wrapper -->
 

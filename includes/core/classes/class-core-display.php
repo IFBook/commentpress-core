@@ -312,7 +312,7 @@ class CommentPress_Core_Display {
 		if ( ! $this->core->device->is_touch() || ( defined( 'COMMENTPRESS_TOUCH_SELECT' ) && COMMENTPRESS_TOUCH_SELECT ) ) {
 
 			// Bail if not a commentable Page/Post.
-			if ( ! $this->core->is_commentable() ) {
+			if ( ! $this->core->parser->is_commentable() ) {
 				return;
 			}
 
@@ -459,6 +459,31 @@ HELPTEXT;
 
 		// --<
 		return $help;
+
+	}
+
+	/**
+	 * Get "Table of Contents" list.
+	 *
+	 * @since 3.4
+	 * @since 4.0 Moved to this class.
+	 *
+	 * @param array $exclude_pages The array of Pages to exclude.
+	 */
+	public function get_toc_list( $exclude_pages = [] ) {
+
+		// Switch Pages or Posts.
+		if ( 'post' === $this->core->db->option_get( 'cp_show_posts_or_pages_in_toc' ) ) {
+
+			// List Posts.
+			$this->list_posts();
+
+		} else {
+
+			// List Pages.
+			$this->list_pages( $exclude_pages );
+
+		}
 
 	}
 
@@ -1060,6 +1085,51 @@ HELPTEXT;
 
 		// --<
 		return $para_tag;
+
+	}
+
+	/**
+	 * Retrieves th current Text Signature hidden input.
+	 *
+	 * @since 3.4
+	 * @since 4.0 Moved to this class.
+	 *
+	 * @return str $result The HTML input.
+	 */
+	public function get_signature_field() {
+
+		// Init Text Signature.
+		$text_sig = '';
+
+		// Get Comment ID to reply to from URL query string.
+		$reply_to_comment_id = isset( $_GET['replytocom'] ) ? (int) $_GET['replytocom'] : 0;
+
+		// Did we get a Comment ID?
+		if ( $reply_to_comment_id != 0 ) {
+
+			// Get Paragraph Text Signature.
+			$text_sig = $this->core->db->get_text_signature_by_comment_id( $reply_to_comment_id );
+
+		} else {
+
+			// Do we have a Paragraph Number in the query string?
+			$reply_to_para_id = isset( $_GET['replytopara'] ) ? (int) $_GET['replytopara'] : 0;
+
+			// Did we get a Comment ID?
+			if ( $reply_to_para_id != 0 ) {
+
+				// Get Paragraph Text Signature.
+				$text_sig = $this->core->db->get_text_signature( $reply_to_para_id );
+
+			}
+
+		}
+
+		// Get constructed hidden input for Comment form.
+		$result = $this->get_signature_input( $text_sig );
+
+		// --<
+		return $result;
 
 	}
 

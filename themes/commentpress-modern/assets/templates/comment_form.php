@@ -194,7 +194,7 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 					<?php comment_id_fields(); ?>
 
 					<?php if ( ! empty( $core ) ) : ?>
-						<?php echo $core->get_signature_field(); ?>
+						<?php echo $core->display->get_signature_field(); ?>
 					<?php endif; ?>
 
 					<?php if ( ! empty( $page ) ) : /* Add Page for multipage situations. */ ?>

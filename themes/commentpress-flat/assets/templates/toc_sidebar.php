@@ -124,7 +124,7 @@ $core = commentpress_core();
 				<div class="paragraph_wrapper start_open">
 					<?php if ( ! empty( $core ) ) : ?>
 						<ul id="toc_list">
-							<?php echo $core->get_toc_list(); ?></ul>
+							<?php echo $core->display->get_toc_list(); ?></ul>
 					<?php endif; ?>
 				</div>
 

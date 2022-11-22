@@ -302,19 +302,19 @@ if ( ! empty( $core ) ) {
 			<?php
 
 			// Show link to General Comments Page if we have one.
-			echo $core->get_page_link( 'cp_general_comments_page' );
+			echo $core->pages_legacy->get_page_link( 'cp_general_comments_page' );
 
 			// Show link to All Comments Page if we have one.
-			echo $core->get_page_link( 'cp_all_comments_page' );
+			echo $core->pages_legacy->get_page_link( 'cp_all_comments_page' );
 
 			// Show link to Comments-by-User Page if we have one.
-			echo $core->get_page_link( 'cp_comments_by_page' );
+			echo $core->pages_legacy->get_page_link( 'cp_comments_by_page' );
 
 			// Show link to book Blog Page if we have one.
-			echo $core->get_page_link( 'cp_blog_page' );
+			echo $core->pages_legacy->get_page_link( 'cp_blog_page' );
 
 			// Show link to book Blog Archive Page if we have one.
-			echo $core->get_page_link( 'cp_blog_archive_page' );
+			echo $core->pages_legacy->get_page_link( 'cp_blog_archive_page' );
 
 			?>
 
@@ -324,7 +324,7 @@ if ( ! empty( $core ) ) {
 
 	<ul id="minimiser_trigger">
 		<?php if ( ! empty( $core ) ) : ?>
-			<?php echo $core->get_header_min_link(); /* Show minimise header button. */ ?>
+			<?php echo $core->display->get_header_min_link(); /* Show minimise header button. */ ?>
 		<?php endif; ?>
 	</ul>
 

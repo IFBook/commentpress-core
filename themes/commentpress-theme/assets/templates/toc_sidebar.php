@@ -25,7 +25,7 @@ $core = commentpress_core();
 
 		<?php if ( ! empty( $core ) ) : ?>
 			<ul id="toc_list">
-				<?php echo $core->get_toc_list(); ?>
+				<?php echo $core->display->get_toc_list(); ?>
 			</ul>
 		<?php endif; ?>
 

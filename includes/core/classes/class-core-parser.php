@@ -195,6 +195,72 @@ class CommentPress_Core_Parser {
 	// -------------------------------------------------------------------------
 
 	/**
+	 * Check if a Page/Post can be commented on.
+	 *
+	 * @since 3.4
+	 *
+	 * @return bool $is_commentable True if commentable, false otherwise.
+	 */
+	public function is_commentable() {
+
+		// Declare access to globals.
+		global $post;
+
+		// Not on Signup Pages.
+		$script = isset( $_SERVER['SCRIPT_FILENAME'] ) ? wp_unslash( $_SERVER['SCRIPT_FILENAME'] ) : '';
+		if ( is_multisite() && ! empty( $script ) ) {
+			if ( 'wp-signup.php' == basename( $script ) ) {
+				return false;
+			}
+			if ( 'wp-activate.php' == basename( $script ) ) {
+				return false;
+			}
+		}
+
+		// Not if we're not on a Page/Post and especially not if there's no Post object.
+		if ( ! ( $post instanceof WP_Post ) || ! is_singular() ) {
+			return false;
+		}
+
+		// CommentPress Special Pages are not.
+		if ( $this->core->pages_legacy->is_special_page() ) {
+			return false;
+		}
+
+		// BuddyPress Special Pages are not.
+		if ( $this->core->bp->is_buddypress_special_page() ) {
+			return false;
+		}
+
+		// Theme My Login Page is not.
+		if ( $this->core->plugins->is_theme_my_login_page() ) {
+			return false;
+		}
+
+		// Members List Page is not.
+		if ( $this->core->plugins->is_members_list_page() ) {
+			return false;
+		}
+
+		// Subscribe to Comments Reloaded Page is not.
+		if ( $this->core->plugins->is_subscribe_to_comments_reloaded_page() ) {
+			return false;
+		}
+
+		/**
+		 * Filters "commenting allowed" status.
+		 *
+		 * @since 3.4
+		 *
+		 * @param bool $is_commentable True by default.
+		 */
+		return apply_filters( 'cp_is_commentable', true );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
 	 * Parses Page/Post content.
 	 *
 	 * @since 3.0
@@ -391,7 +457,7 @@ class CommentPress_Core_Parser {
 		}
 
 		// Store Text Signatures.
-		$this->core->db->set_text_sigs( $this->text_signatures );
+		$this->core->db->set_text_signatures( $this->text_signatures );
 
 		// --<
 		return $content;
@@ -803,7 +869,7 @@ class CommentPress_Core_Parser {
 		if ( post_password_required() ) {
 
 			// Store Text Signatures array in global.
-			$this->core->db->set_text_sigs( $this->text_signatures );
+			$this->core->db->set_text_signatures( $this->text_signatures );
 
 			// --<
 			return $this->text_signatures;
@@ -820,7 +886,7 @@ class CommentPress_Core_Parser {
 		if ( ! count( $matches ) ) {
 
 			// Store Text Signatures array in global.
-			$this->core->db->set_text_sigs( $this->text_signatures );
+			$this->core->db->set_text_signatures( $this->text_signatures );
 
 			// --<
 			return $this->text_signatures;
@@ -863,7 +929,7 @@ class CommentPress_Core_Parser {
 		}
 
 		// Store Text Signatures array in global.
-		$this->core->db->set_text_sigs( $this->text_signatures );
+		$this->core->db->set_text_signatures( $this->text_signatures );
 
 		// --<
 		return $this->text_signatures;
@@ -1066,7 +1132,7 @@ class CommentPress_Core_Parser {
 		if ( post_password_required() ) {
 
 			// Store Text Signatures array in global.
-			$this->core->db->set_text_sigs( $this->text_signatures );
+			$this->core->db->set_text_signatures( $this->text_signatures );
 
 			// --<
 			return $this->text_signatures;
@@ -1085,7 +1151,7 @@ class CommentPress_Core_Parser {
 		if ( empty( $output_array ) ) {
 
 			// Store Text Signatures array in global.
-			$this->core->db->set_text_sigs( $this->text_signatures );
+			$this->core->db->set_text_signatures( $this->text_signatures );
 
 			// --<
 			return $this->text_signatures;
@@ -1150,7 +1216,7 @@ class CommentPress_Core_Parser {
 		}
 
 		// Store Text Signatures array in global.
-		$this->core->db->set_text_sigs( $this->text_signatures );
+		$this->core->db->set_text_signatures( $this->text_signatures );
 
 		// --<
 		return $this->text_signatures;
@@ -1421,7 +1487,7 @@ class CommentPress_Core_Parser {
 		if ( post_password_required() ) {
 
 			// Store Text Signatures array in global.
-			$this->core->db->set_text_sigs( $this->text_signatures );
+			$this->core->db->set_text_signatures( $this->text_signatures );
 
 			// --<
 			return $this->text_signatures;
@@ -1475,7 +1541,7 @@ class CommentPress_Core_Parser {
 		}
 
 		// Store Text Signatures array in global.
-		$this->core->db->set_text_sigs( $this->text_signatures );
+		$this->core->db->set_text_signatures( $this->text_signatures );
 
 		// --<
 		return $this->text_signatures;
@@ -1951,7 +2017,7 @@ class CommentPress_Core_Parser {
 		$comments = $this->multipage_comment_filter( $comments );
 
 		// Get our signatures.
-		$sigs = $this->core->db->get_text_sigs();
+		$sigs = $this->core->db->get_text_signatures();
 
 		// Assign Comments to Text Signatures.
 		$assigned = $this->assign_comments( $comments, $sigs );

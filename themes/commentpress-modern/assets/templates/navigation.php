@@ -154,19 +154,19 @@ if ( ! empty( $core ) ) {
 				do_action( 'cp_nav_before_special_pages' );
 
 				// Show link to General Comments Page if we have one.
-				echo $core->get_page_link( 'cp_general_comments_page' );
+				echo $core->pages_legacy->get_page_link( 'cp_general_comments_page' );
 
 				// Show link to All Comments Page if we have one.
-				echo $core->get_page_link( 'cp_all_comments_page' );
+				echo $core->pages_legacy->get_page_link( 'cp_all_comments_page' );
 
 				// Show link to Comments-by-User Page if we have one.
-				echo $core->get_page_link( 'cp_comments_by_page' );
+				echo $core->pages_legacy->get_page_link( 'cp_comments_by_page' );
 
 				// Show link to document Blog Page if we have one.
-				echo $core->get_page_link( 'cp_blog_page' );
+				echo $core->pages_legacy->get_page_link( 'cp_blog_page' );
 
 				// Show link to document Blog Archive Page if we have one.
-				echo $core->get_page_link( 'cp_blog_archive_page' );
+				echo $core->pages_legacy->get_page_link( 'cp_blog_archive_page' );
 
 				?>
 
