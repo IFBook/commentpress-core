@@ -167,11 +167,11 @@ class CommentPress_Core_Database {
 	public $min_page_width = '447';
 
 	/**
-	 * "Live" comment refreshing.
+	 * "Live" Comment refreshing.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var str $para_comments_live The "live" comment refreshing setting (off by default).
+	 * @var str $para_comments_live The "live" Comment refreshing setting (off by default).
 	 */
 	public $para_comments_live = 0;
 
@@ -214,7 +214,7 @@ class CommentPress_Core_Database {
 	 * entry, if this is set then the content will not be parsed for Paragraphs,
 	 * Lines or Blocks. Comments will also not be parsed, meaning that the entry
 	 * behaves the same as content which is not commentable. This allows, for
-	 * example, the rendering of the comment column to be skipped in these
+	 * example, the rendering of the Comment column to be skipped in these
 	 * circumstances.
 	 *
 	 * @since 3.8.10
@@ -332,7 +332,7 @@ class CommentPress_Core_Database {
 
 		}
 
-		// Turn comment paging option off.
+		// Turn Comment paging option off.
 		$this->comment_paging_cancel();
 
 		// Override Widgets.
@@ -347,7 +347,7 @@ class CommentPress_Core_Database {
 	 */
 	public function deactivate() {
 
-		// Reset comment paging option.
+		// Reset Comment paging option.
 		$this->comment_paging_restore();
 
 		// Restore Widgets.
@@ -559,7 +559,7 @@ class CommentPress_Core_Database {
 			return true;
 		}
 
-		// Do we have the option to set the comment editor?
+		// Do we have the option to set the Comment editor?
 		if ( ! $this->option_exists( 'cp_comment_editor' ) ) {
 			return true;
 		}
@@ -692,10 +692,10 @@ class CommentPress_Core_Database {
 
 		}
 
-		// New in CommentPress Core 3.4 - has AJAX "live" comment refreshing been migrated?
+		// New in CommentPress Core 3.4 - has AJAX "live" Comment refreshing been migrated?
 		if ( ! $this->option_exists( 'cp_para_comments_live' ) ) {
 
-			// "live" comment refreshing, off by default.
+			// "live" Comment refreshing, off by default.
 			$this->option_set( 'cp_para_comments_live', $this->para_comments_live );
 
 		}
@@ -1093,10 +1093,10 @@ class CommentPress_Core_Database {
 		$cp_comment_editor = esc_sql( $cp_comment_editor );
 		$this->option_set( 'cp_comment_editor', ( $cp_comment_editor ? 1 : 0 ) );
 
-		// Has AJAX "live" comment refreshing been migrated?
+		// Has AJAX "live" Comment refreshing been migrated?
 		if ( $this->option_exists( 'cp_para_comments_live' ) ) {
 
-			// "live" comment refreshing.
+			// "live" Comment refreshing.
 			$cp_para_comments_live = esc_sql( $cp_para_comments_live );
 			$this->option_set( 'cp_para_comments_live', ( $cp_para_comments_live ? 1 : 0 ) );
 
@@ -1964,7 +1964,7 @@ class CommentPress_Core_Database {
 	 * @since 3.4
 	 *
 	 * @param int $post_ID The numeric ID of the Post.
-	 * @return array $comments The array of comment data.
+	 * @return array $comments The array of Comment data.
 	 */
 	public function get_all_comments( $post_ID ) {
 
@@ -1985,7 +1985,7 @@ class CommentPress_Core_Database {
 	 * @since 3.4
 	 *
 	 * @param int $post_ID The ID of the Post.
-	 * @return array $comments The array of comment data.
+	 * @return array $comments The array of Comment data.
 	 */
 	public function get_comments( $post_ID ) {
 
@@ -2008,11 +2008,11 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * When a comment is saved, this also saves the Text Signature.
+	 * When a Comment is saved, this also saves the Text Signature.
 	 *
 	 * @since 3.0
 	 *
-	 * @param int $comment_ID The numeric ID of the comment.
+	 * @param int $comment_ID The numeric ID of the Comment.
 	 * @return boolean $result True if successful, false otherwise.
 	 */
 	public function save_comment_signature( $comment_ID ) {
@@ -2029,7 +2029,7 @@ class CommentPress_Core_Database {
 			// Escape it.
 			$text_signature = esc_sql( $text_signature );
 
-			// Store comment signature.
+			// Store Comment Text Signature.
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 			$result = $wpdb->query(
 				$wpdb->prepare(
@@ -2052,11 +2052,11 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * When a comment is saved, this also saves the text selection.
+	 * When a Comment is saved, this also saves the text selection.
 	 *
 	 * @since 3.9
 	 *
-	 * @param int $comment_id The numeric ID of the comment.
+	 * @param int $comment_id The numeric ID of the Comment.
 	 * @return boolean $result True if successful, false otherwise.
 	 */
 	public function save_comment_selection( $comment_id ) {
@@ -2105,7 +2105,7 @@ class CommentPress_Core_Database {
 		// Get current.
 		$current = get_comment_meta( $comment_id, $key, true );
 
-		// If the comment meta already has a value.
+		// If the Comment meta already has a value.
 		if ( ! empty( $current ) ) {
 
 			// Update the data.
@@ -2124,14 +2124,14 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * When a comment is saved, this also saves the Page it was submitted on.
+	 * When a Comment is saved, this also saves the Page it was submitted on.
 	 *
 	 * This allows us to point to the correct Page of a multipage Post without
 	 * parsing the content every time.
 	 *
 	 * @since 3.4
 	 *
-	 * @param int $comment_ID The numeric ID of the comment.
+	 * @param int $comment_ID The numeric ID of the Comment.
 	 */
 	public function save_comment_page( $comment_ID ) {
 
@@ -2181,8 +2181,8 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.4
 	 *
-	 * @param int $comment_ID The numeric ID of the comment.
-	 * @return str $text_signature The Text Signature for the comment.
+	 * @param int $comment_ID The numeric ID of the Comment.
+	 * @return str $text_signature The Text Signature for the Comment.
 	 */
 	public function get_text_signature_by_comment_id( $comment_ID ) {
 
@@ -2204,7 +2204,7 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * Store text sigs in a global.
+	 * Store Text Signatures in a global.
 	 *
 	 * This is needed because some versions of PHP do not save properties!
 	 *
@@ -2221,7 +2221,7 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * Retrieve text sigs.
+	 * Retrieve Text Signatures.
 	 *
 	 * @since 3.4
 	 *
@@ -2355,7 +2355,7 @@ class CommentPress_Core_Database {
 		// If on a public Group Blog and User isn't logged in.
 		if ( $this->core->bp->is_groupblog() && ! is_user_logged_in() ) {
 
-			// Don't add rich text editor, because only members can comment.
+			// Don't add rich text editor, because only Members can comment.
 			$vars['cp_tinymce'] = 0;
 
 		}
@@ -2527,7 +2527,7 @@ class CommentPress_Core_Database {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Cancels comment paging because CommentPress Core will not work with comment paging.
+	 * Cancels Comment paging because CommentPress Core will not work with Comment paging.
 	 *
 	 * @since 3.4
 	 * @since 4.0 Renamed.
@@ -2540,7 +2540,7 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * Resets comment paging option when plugin is deactivated.
+	 * Resets Comment paging option when plugin is deactivated.
 	 *
 	 * @since 3.4
 	 * @since 4.0 Renamed.
@@ -2706,7 +2706,7 @@ class CommentPress_Core_Database {
 		// Minimum Page width.
 		$this->option_set( 'cp_min_page_width', $this->min_page_width );
 
-		// "live" comment refeshing.
+		// "live" Comment refeshing.
 		$this->option_set( 'cp_para_comments_live', $this->para_comments_live );
 
 		// Blog: excerpt length.

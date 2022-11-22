@@ -98,21 +98,21 @@ class CommentPress_Core_Comments {
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
 	 *
-	 * @param int $comment_id The numeric ID of the comment.
-	 * @param str $comment_status The status of the comment.
+	 * @param int $comment_id The numeric ID of the Comment.
+	 * @param str $comment_status The status of the Comment.
 	 */
 	public function save_comment( $comment_id, $comment_status ) {
 
-		// Store our comment signature.
+		// Store our Comment Text Signature.
 		$result = $this->core->db->save_comment_signature( $comment_id );
 
-		// Store our comment selection.
+		// Store our Comment Selection.
 		$result = $this->core->db->save_comment_selection( $comment_id );
 
 		// In multipage situations, store our comment's Page.
 		$result = $this->core->db->save_comment_page( $comment_id );
 
-		// Has the comment been marked as spam?
+		// Has the Comment been marked as spam?
 		if ( $comment_status === 'spam' ) {
 
 			// TODO: Check for AJAX request.
@@ -145,7 +145,7 @@ class CommentPress_Core_Comments {
 		// Remove comment_text filter.
 		remove_filter( 'comment_text', [ $fc, 'comment_text' ], 10 );
 
-		// Get the plugin markup in the comment edit section.
+		// Get the plugin markup in the Comment edit section.
 		add_filter( 'cp_comment_edit_link', [ $this, 'featured_comments_markup' ], 100, 2 );
 
 	}
@@ -157,7 +157,7 @@ class CommentPress_Core_Comments {
 	 * @since 4.0 Moved to this class.
 	 *
 	 * @param str $editlink The existing HTML link.
-	 * @param array $comment The comment data.
+	 * @param array $comment The Comment data.
 	 * @return str $editlink The modified HTML link.
 	 */
 	public function featured_comments_markup( $editlink, $comment ) {

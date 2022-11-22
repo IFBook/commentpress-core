@@ -390,7 +390,7 @@ class CommentPress_Core_Parser {
 
 		}
 
-		// Store text sigs.
+		// Store Text Signatures.
 		$this->core->db->set_text_sigs( $this->text_signatures );
 
 		// --<
@@ -536,10 +536,10 @@ class CommentPress_Core_Parser {
 			// Increment.
 			$sig_key++;
 
-			// Get comment count.
+			// Get Comment count.
 			$comment_count = count( $this->comments_sorted[ $text_signature ] );
 
-			// Get comment icon.
+			// Get Comment icon.
 			$comment_icon = $this->core->display->get_comment_icon(
 				$comment_count,
 				$text_signature,
@@ -802,7 +802,7 @@ class CommentPress_Core_Parser {
 		// Don't filter if a password is required.
 		if ( post_password_required() ) {
 
-			// Store text sigs array in global.
+			// Store Text Signatures array in global.
 			$this->core->db->set_text_sigs( $this->text_signatures );
 
 			// --<
@@ -819,7 +819,7 @@ class CommentPress_Core_Parser {
 		// Kick out if we don't have any.
 		if ( ! count( $matches ) ) {
 
-			// Store text sigs array in global.
+			// Store Text Signatures array in global.
 			$this->core->db->set_text_sigs( $this->text_signatures );
 
 			// --<
@@ -852,7 +852,7 @@ class CommentPress_Core_Parser {
 
 				}
 
-				// Add number to end of text sig.
+				// Add number to end of Text Signature.
 				$text_signature .= '_' . $duplicates[ $text_signature ];
 
 			}
@@ -862,7 +862,7 @@ class CommentPress_Core_Parser {
 
 		}
 
-		// Store text sigs array in global.
+		// Store Text Signatures array in global.
 		$this->core->db->set_text_sigs( $this->text_signatures );
 
 		// --<
@@ -944,7 +944,7 @@ class CommentPress_Core_Parser {
 					// Increment.
 					$sig_key++;
 
-					// Get comment count.
+					// Get Comment count.
 					// NB: the sorted array contains "Whole Page" as key 0, so we use the incremented value.
 					$comment_count = count( $this->comments_sorted[ $text_signature ] );
 
@@ -966,7 +966,7 @@ class CommentPress_Core_Parser {
 					// Assign opening tag markup to Line.
 					$line = $opening_tag . $line;
 
-					// Get comment icon.
+					// Get Comment icon.
 					$comment_icon = $this->core->display->get_comment_icon(
 						$comment_count,
 						$text_signature,
@@ -974,7 +974,7 @@ class CommentPress_Core_Parser {
 						$para_num
 					);
 
-					// Replace inline html comment with comment_icon.
+					// Replace inline html Comment with comment_icon.
 					$line = str_replace( '<!-- line-end -->', ' ' . $comment_icon, $line );
 
 					// Add to content array.
@@ -1065,7 +1065,7 @@ class CommentPress_Core_Parser {
 		// Don't filter if a password is required.
 		if ( post_password_required() ) {
 
-			// Store text sigs array in global.
+			// Store Text Signatures array in global.
 			$this->core->db->set_text_sigs( $this->text_signatures );
 
 			// --<
@@ -1084,7 +1084,7 @@ class CommentPress_Core_Parser {
 		// Kick out if we have an empty array.
 		if ( empty( $output_array ) ) {
 
-			// Store text sigs array in global.
+			// Store Text Signatures array in global.
 			$this->core->db->set_text_sigs( $this->text_signatures );
 
 			// --<
@@ -1135,7 +1135,7 @@ class CommentPress_Core_Parser {
 
 						}
 
-						// Add number to end of text sig.
+						// Add number to end of Text Signature.
 						$text_signature .= '_' . $duplicates[ $text_signature ];
 
 					}
@@ -1149,7 +1149,7 @@ class CommentPress_Core_Parser {
 
 		}
 
-		// Store text sigs array in global.
+		// Store Text Signatures array in global.
 		$this->core->db->set_text_sigs( $this->text_signatures );
 
 		// --<
@@ -1219,11 +1219,11 @@ class CommentPress_Core_Parser {
 				// Increment.
 				$sig_key++;
 
-				// Get comment count.
+				// Get Comment count.
 				// NB: the sorted array contains "Whole Page" as key 0, so we use the incremented value.
 				$comment_count = count( $this->comments_sorted[ $text_signature ] );
 
-				// Get comment icon.
+				// Get Comment icon.
 				$comment_icon = $this->core->display->get_comment_icon(
 					$comment_count,
 					$text_signature,
@@ -1239,7 +1239,7 @@ class CommentPress_Core_Parser {
 					$para_num
 				);
 
-				// Get comment icon markup.
+				// Get Comment icon markup.
 				$icon_html = $this->core->display->get_para_tag(
 					$text_signature,
 					$paragraph_icon . $comment_icon,
@@ -1420,7 +1420,7 @@ class CommentPress_Core_Parser {
 		// Don't filter if a password is required.
 		if ( post_password_required() ) {
 
-			// Store text sigs array in global.
+			// Store Text Signatures array in global.
 			$this->core->db->set_text_sigs( $this->text_signatures );
 
 			// --<
@@ -1462,7 +1462,7 @@ class CommentPress_Core_Parser {
 
 					}
 
-					// Add number to end of text sig.
+					// Add number to end of Text Signature.
 					$text_signature .= '_' . $duplicates[ $text_signature ];
 
 				}
@@ -1474,7 +1474,7 @@ class CommentPress_Core_Parser {
 
 		}
 
-		// Store text sigs array in global.
+		// Store Text Signatures array in global.
 		$this->core->db->set_text_sigs( $this->text_signatures );
 
 		// --<
@@ -1495,7 +1495,7 @@ class CommentPress_Core_Parser {
 		// Init.
 		$return = false;
 
-		// Look for < !--commentblock--> comment.
+		// Look for < !--commentblock-->.
 		if ( strstr( $content, '<!--commentblock-->' ) !== false ) {
 
 			// Yep.
@@ -1518,7 +1518,7 @@ class CommentPress_Core_Parser {
 	 */
 	private function strip_comment_block_quicktag( $content ) {
 
-		// Look for < !--commentblock--> comment.
+		// Look for < !--commentblock-->.
 		// phpcs:ignore Generic.Strings.UnnecessaryStringConcat.Found
 		if ( preg_match( '/<' . '!--commentblock--><br \/>/', $content, $matches ) ) {
 
@@ -1530,7 +1530,7 @@ class CommentPress_Core_Parser {
 
 		}
 
-		// Look for < !--commentblock--> comment.
+		// Look for < !--commentblock-->.
 		// phpcs:ignore Generic.Strings.UnnecessaryStringConcat.Found
 		if ( preg_match( '/<p><' . '!--commentblock--><\/p>/', $content, $matches ) ) {
 
@@ -1662,7 +1662,7 @@ class CommentPress_Core_Parser {
 
 		}
 
-		// Look for incorrectly placed inline <!--noteaser--> comment.
+		// Look for incorrectly placed inline <!--noteaser-->.
 		// phpcs:ignore Generic.Strings.UnnecessaryStringConcat.Found
 		if ( preg_match( '/<' . '!--noteaser--><br \/>/', $content, $matches ) ) {
 
@@ -1674,7 +1674,7 @@ class CommentPress_Core_Parser {
 
 		}
 
-		// Look for incorrectly placed separated <!--noteaser--> comment.
+		// Look for incorrectly placed separated <!--noteaser-->.
 		// phpcs:ignore Generic.Strings.UnnecessaryStringConcat.Found
 		if ( preg_match( '/<p><' . '!--noteaser--><\/p>/', $content, $matches ) ) {
 
@@ -1937,7 +1937,7 @@ class CommentPress_Core_Parser {
 	 * @since 3.0
 	 *
 	 * @param int $post_ID The numeric ID of the Post.
-	 * @return array $sorted_comments The array of comment data.
+	 * @return array $sorted_comments The array of Comment data.
 	 */
 	public function sorted_comments_get( $post_ID ) {
 
@@ -2020,7 +2020,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.4
 	 *
-	 * @param array $comments The array of comment objects.
+	 * @param array $comments The array of Comment objects.
 	 * @return array $filtered The array of Comments for the current Page.
 	 */
 	private function multipage_comment_filter( $comments ) {
@@ -2044,13 +2044,13 @@ class CommentPress_Core_Parser {
 		// Now add only Comments that are on this Page or are Page-level.
 		foreach ( $comments as $comment ) {
 
-			// If it has a text sig.
+			// If it has a Text Signature.
 			if ( ! is_null( $comment->comment_signature ) && $comment->comment_signature != '' ) {
 
 				// Set key.
 				$key = '_cp_comment_page';
 
-				// Does it have a comment meta value?
+				// Does it have a Comment meta value?
 				if ( get_comment_meta( $comment->comment_ID, $key, true ) != '' ) {
 
 					// Get the Page number.
@@ -2085,7 +2085,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param array $comments The array of comment objects.
+	 * @param array $comments The array of Comment objects.
 	 * @param array $text_signatures The array of Text Signatures.
 	 * @param integer $confidence The confidence level of Paragraph identity - default 90%.
 	 * @return array $assigned The array with Text Signatures as keys and array of Comments as values.
@@ -2104,10 +2104,10 @@ class CommentPress_Core_Parser {
 		// Run through our Comments.
 		foreach ( $comments as $comment ) {
 
-			// Test for empty comment Text Signature.
+			// Test for empty Comment Text Signature.
 			if ( ! is_null( $comment->comment_signature ) && $comment->comment_signature != '' ) {
 
-				// Do we have an exact match in the text sigs array?
+				// Do we have an exact match in the Text Signatures array?
 				// NB: this will work, because we're already ensuring identical sigs are made unique.
 				if ( in_array( $comment->comment_signature, $text_signatures ) ) {
 
@@ -2141,10 +2141,10 @@ class CommentPress_Core_Parser {
 						// Get keys.
 						$keys = array_keys( $possibles );
 
-						// Let's use the sig with the highest score.
+						// Let's use the Text Signature with the highest score.
 						$highest = array_pop( $keys );
 
-						// Assign comment to that key.
+						// Assign Comment to that key.
 						$assigned[ $highest ][] = $comment;
 
 					} else {
@@ -2163,7 +2163,7 @@ class CommentPress_Core_Parser {
 
 						} else {
 
-							// We have comment with no text sig - assign to Page.
+							// We have Comment with no Text Signature - assign to Page.
 							$assigned['WHOLE_PAGE_OR_POST_COMMENTS'][] = $comment;
 
 						}
@@ -2182,7 +2182,7 @@ class CommentPress_Core_Parser {
 
 				} else {
 
-					// We have comment with no text sig - assign to Page.
+					// We have Comment with no Text Signature - assign to Page.
 					$assigned['WHOLE_PAGE_OR_POST_COMMENTS'][] = $comment;
 
 				}

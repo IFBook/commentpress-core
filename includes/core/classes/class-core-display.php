@@ -217,7 +217,7 @@ class CommentPress_Core_Display {
 	 */
 	public function enqueue_admin_scripts( $hook ) {
 
-		// Don't enqueue on comment edit screen.
+		// Don't enqueue on "Edit Comment" screen.
 		if ( 'comment.php' == $hook ) {
 			return;
 		}
@@ -463,7 +463,7 @@ HELPTEXT;
 	}
 
 	/**
-	 * Show the Posts and their comment count in a list format.
+	 * Show the Posts and their Comment count in a list format.
 	 *
 	 * @since 3.4
 	 *
@@ -486,7 +486,7 @@ HELPTEXT;
 			// Run through them.
 			foreach ( $posts as $item ) {
 
-				// Get comment count for that Post.
+				// Get Comment count for that Post.
 				$count = count( get_approved_comments( $item->ID ) );
 
 				// Write list item.
@@ -509,7 +509,7 @@ HELPTEXT;
 				// Init output.
 				$html = '';
 
-				// Get comment count for that Post.
+				// Get Comment count for that Post.
 				$count = count( get_approved_comments( $item->ID ) );
 
 				// Compat with Co-Authors Plus.
@@ -668,7 +668,7 @@ HELPTEXT;
 	}
 
 	/**
-	 * Print the Posts and their comment count in a list format.
+	 * Print the Posts and their Comment count in a list format.
 	 *
 	 * @since 3.4
 	 *
@@ -774,10 +774,10 @@ HELPTEXT;
 	 * @since 3.4
 	 *
 	 * @param int $comment_count The number of Comments.
-	 * @param str $text_signature The comment Text Signature.
+	 * @param str $text_signature The Comment Text Signature.
 	 * @param str $block_type Either 'auto', 'line' or 'block'.
 	 * @param int $para_num Sequential commentable block number.
-	 * @return str $comment_icon The comment icon formatted as HTML.
+	 * @return str $comment_icon The Comment icon formatted as HTML.
 	 */
 	public function get_comment_icon( $comment_count, $text_signature, $block_type = 'auto', $para_num = 1 ) {
 
@@ -787,7 +787,7 @@ HELPTEXT;
 		// If we have no Comments.
 		if ( $comment_count == 0 ) {
 
-			// Show add comment icon.
+			// Show add Comment icon.
 			$icon = 'comment_add.png';
 			$class = ' no_comments';
 
@@ -814,7 +814,7 @@ HELPTEXT;
 					$this->core->parser->lexia_get()
 				);
 
-				// Define add comment text.
+				// Define add Comment text.
 				$add_text = sprintf(
 					__( 'Leave a comment on %1$s %2$d', 'commentpress-core' ),
 					$this->core->parser->lexia_get(),
@@ -835,7 +835,7 @@ HELPTEXT;
 					$this->core->parser->lexia_get()
 				);
 
-				// Define add comment text.
+				// Define add Comment text.
 				$add_text = sprintf(
 					__( 'Leave a comment on %1$s %2$d', 'commentpress-core' ),
 					$this->core->parser->lexia_get(),
@@ -856,7 +856,7 @@ HELPTEXT;
 					$this->core->parser->lexia_get()
 				);
 
-				// Define add comment text.
+				// Define add Comment text.
 				$add_text = sprintf(
 					__( 'Leave a comment on %1$s %2$d', 'commentpress-core' ),
 					$this->core->parser->lexia_get(),
@@ -870,7 +870,7 @@ HELPTEXT;
 		// Define small.
 		$small = '<small class="comment_count" title="' . $title_text . '">' . (string) $comment_count . '</small>';
 
-		// Define HTML for comment icon.
+		// Define HTML for Comment icon.
 		$comment_icon = '<span class="commenticonbox"><a class="para_permalink' . $class . '" href="#' . $text_signature . '" title="' . $add_text . '">' . $add_text . '</a> ' . $small . '</span>' . "\n";
 
 		// --<
@@ -884,7 +884,7 @@ HELPTEXT;
 	 * @since 3.4
 	 *
 	 * @param int $comment_count The number of Comments.
-	 * @param str $text_signature The comment Text Signature.
+	 * @param str $text_signature The Comment Text Signature.
 	 * @param str $block_type Either 'auto', 'line' or 'block'.
 	 * @param int $para_num The sequential commentable Block number.
 	 * @return str $paragraph_icon The Paragraph icon formatted as HTML.
@@ -956,12 +956,12 @@ HELPTEXT;
 	}
 
 	/**
-	 * Get the content comment icon tag.
+	 * Get the content Comment icon tag.
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $text_signature The comment Text Signature.
-	 * @param str $commenticon The comment icon.
+	 * @param str $text_signature The Comment Text Signature.
+	 * @param str $commenticon The Comment icon.
 	 * @param str $tag The tag.
 	 * @param str $start The ordered list start value.
 	 * @return str $para_tag The tag formatted as HTML.
@@ -1064,11 +1064,11 @@ HELPTEXT;
 	}
 
 	/**
-	 * Get the Text Signature input for the comment form.
+	 * Get the Text Signature input for the Comment form.
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $text_sig The comment Text Signature.
+	 * @param str $text_sig The Comment Text Signature.
 	 * @return str $input The HTML input element.
 	 */
 	public function get_signature_input( $text_sig = '' ) {
@@ -1539,7 +1539,7 @@ HELPTEXT;
 
 		}
 
-		// Do we have the option to set the comment editor?
+		// Do we have the option to set the Comment editor?
 		if ( ! $this->core->db->option_exists( 'cp_comment_editor' ) ) {
 
 			$editor_label = __( 'Comment form editor', 'commentpress-core' );

@@ -1383,7 +1383,7 @@ class CommentPress_Core_Navigator {
 						// Add menu item parent ID (for finding parent below).
 						$pseudo_post->menu_item_parent = $menu_item->menu_item_parent;
 
-						// Add comment count for possible calls for "Next with Comments".
+						// Add Comment count for possible calls for "Next with Comments".
 						$pseudo_post->comment_count = $menu_item->comment_count;
 
 						// Add to array of WordPress Pages in menu.

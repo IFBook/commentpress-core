@@ -116,7 +116,7 @@ class CommentPress_Multisite_BuddyPress {
 		// Check for the privacy of a Group Blog.
 		add_action( 'init', [ $this, 'groupblog_privacy_check' ] );
 
-		// Add some tags to the allowed tags in activities.
+		// Add some tags to the allowed tags in Activities.
 		add_filter( 'bp_activity_allowed_tags', [ $this, 'activity_allowed_tags' ], 20 );
 
 		// Allow Comment Authors to edit their own Comments.
@@ -126,7 +126,7 @@ class CommentPress_Multisite_BuddyPress {
 		add_filter( 'pre_comment_approved', [ $this, 'pre_comment_approved' ], 99, 2 );
 
 		/*
-		// A nicer way to assess comment approval?
+		// A nicer way to assess Comment approval?
 		add_action( 'preprocess_comment', [ $this, 'my_check_comment' ], 1 );
 		*/
 
@@ -230,7 +230,7 @@ class CommentPress_Multisite_BuddyPress {
 
 			// Anything specifically for Front End.
 
-			// Add filter options for the Post and comment activities as late as we can
+			// Add filter options for the Post and Comment Activities as late as we can
 			// so that bp-groupblog's action can be removed.
 			add_action( 'bp_setup_globals', [ $this, 'groupblog_filter_options' ] );
 
@@ -308,10 +308,10 @@ class CommentPress_Multisite_BuddyPress {
 	 */
 	public function enable_comment_editing( $caps, $cap, $user_id, $args ) {
 
-		// Only apply this to queries for edit_comment cap.
+		// Only apply this to queries for "edit_comment" cap.
 		if ( 'edit_comment' == $cap ) {
 
-			// Get comment.
+			// Get Comment.
 			$comment = get_comment( $args[0] );
 
 			// Is the User the same as the Comment Author?
@@ -334,9 +334,9 @@ class CommentPress_Multisite_BuddyPress {
 	 *
 	 * @since 3.3
 	 *
-	 * @param bool $approved True if the comment is approved, false otherwise.
-	 * @param array $commentdata The comment data.
-	 * @return bool $approved Modified approval value. True if the comment is approved, false otherwise.
+	 * @param bool $approved True if the Comment is approved, false otherwise.
+	 * @param array $commentdata The Comment data.
+	 * @return bool $approved Modified approval value. True if the Comment is approved, false otherwise.
 	 */
 	public function pre_comment_approved( $approved, $commentdata ) {
 
@@ -352,7 +352,7 @@ class CommentPress_Multisite_BuddyPress {
 			// When this Blog is a Group Blog.
 			if ( isset( $group_id ) && is_numeric( $group_id ) && $group_id > 0 ) {
 
-				// Is this User a member?
+				// Is this User a Member?
 				if ( groups_is_user_member( $commentdata['user_id'], $group_id ) ) {
 
 					// Allow un-moderated commenting.
@@ -376,7 +376,7 @@ class CommentPress_Multisite_BuddyPress {
 		// Get the User ID of the Comment Author.
 		$user_id = absint( $commentdata['user_ID'] );
 
-		// If Comment Author is a registered User, approve the comment.
+		// If Comment Author is a registered User, approve the Comment.
 		if ( 0 < $user_id ) {
 			add_filter( 'pre_comment_approved', 'my_approve_comment' );
 		} else {
@@ -504,7 +504,7 @@ class CommentPress_Multisite_BuddyPress {
 			// When this Blog is a Group Blog.
 			if ( isset( $group_id ) && is_numeric( $group_id ) && $group_id > 0 ) {
 
-				// Always true - so that activities are registered.
+				// Always true - so that Activities are registered.
 				return 1;
 
 			}
@@ -517,8 +517,8 @@ class CommentPress_Multisite_BuddyPress {
 	}
 
 	/**
-	 * Disable comment sync because parent Activity items may not be in the same
-	 * Group as the comment. Furthermore, CommentPress Core Comments should be
+	 * Disable Comment sync because parent Activity items may not be in the same
+	 * Group as the Comment. Furthermore, CommentPress Core Comments should be
 	 * read in context rather than appearing as if globally attached to the Post
 	 * or Page.
 	 *
@@ -600,7 +600,7 @@ class CommentPress_Multisite_BuddyPress {
 				global $bp_groupsites;
 				$group_id = $bp_groupsites->activity->get_group_id_from_comment_form();
 
-				// Kick out if not a comment in a Group.
+				// Kick out if not a Comment in a Group.
 				if ( false === $group_id ) {
 					return $activity;
 				}
@@ -642,12 +642,12 @@ class CommentPress_Multisite_BuddyPress {
 		}
 
 		// If we found an Activity for this Blog Comment then overwrite that to avoid having
-		// multiple activities for every Blog Comment edit.
+		// multiple Activities for every Blog Comment edit.
 		if ( $id ) {
 			$activity->id = $id;
 		}
 
-		// Get the comment.
+		// Get the Comment.
 		$comment = get_comment( $activity->secondary_item_id );
 
 		// Get the Post.
@@ -695,13 +695,13 @@ class CommentPress_Multisite_BuddyPress {
 		// Set key.
 		$key = '_cp_comment_page';
 
-		// If the custom field has a value, we have a Sub-page comment.
+		// If the custom field has a value, we have a Sub-page Comment.
 		if ( get_comment_meta( $comment->comment_ID, $key, true ) != '' ) {
 
 			// Get comment's Page from meta.
 			$page_num = get_comment_meta( $comment->comment_ID, $key, true );
 
-			// Get the url for the comment.
+			// Get the url for the Comment.
 			$link = commentpress_get_post_multipage_url( $page_num, $post ) . '#comment-' . $comment->comment_ID;
 
 			// Amend the primary link.
@@ -884,7 +884,7 @@ class CommentPress_Multisite_BuddyPress {
 		}
 
 		// If we found an Activity for this Blog Post then overwrite that to avoid
-		// having multiple activities for every Blog Post edit.
+		// having multiple Activities for every Blog Post edit.
 		if ( $id ) {
 			$activity->id = $id;
 		}
@@ -1578,7 +1578,7 @@ class CommentPress_Multisite_BuddyPress {
 
 	/**
 	 * Check if a non-public Group is being accessed by a User who is not a
-	 * member of the Group.
+	 * Member of the Group.
 	 *
 	 * Adapted from code in mahype's fork of BuddyPress Group Blog plugin, but not
 	 * accepted because there may be cases where private Groups have public
@@ -1623,7 +1623,7 @@ class CommentPress_Multisite_BuddyPress {
 						// Is the Group Blog CommentPress Core enabled?
 						if ( $this->group_has_commentpress_groupblog( $group->id ) ) {
 
-							// Is the current User a member of the Blog?
+							// Is the current User a Member of the Blog?
 							if ( ! is_user_member_of_blog( $current_user->ID, $blog_id ) ) {
 
 								// No - redirect to network home, but allow overrides.
@@ -1696,7 +1696,7 @@ class CommentPress_Multisite_BuddyPress {
 		add_action( 'bp_activity_before_save', [ $this, 'groupblog_custom_post_activity' ], 20, 1 );
 		add_action( 'transition_post_status', [ $this, 'transition_post_type_status' ], 20, 3 );
 
-		// CommentPress Core needs to know the sub-page for a comment.
+		// CommentPress Core needs to know the sub-page for a Comment.
 
 		// Drop the bp-group-sites Comment Activity action, if present.
 		global $bp_groupsites;
@@ -1770,7 +1770,7 @@ class CommentPress_Multisite_BuddyPress {
 	}
 
 	/**
-	 * Allow our TinyMCE comment markup in Activity content.
+	 * Allow our TinyMCE Comment markup in Activity content.
 	 *
 	 * @since 3.3
 	 *

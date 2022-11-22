@@ -111,7 +111,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 			return;
 		}
 
-		// Always load the comment form, even if Comments are disabled.
+		// Always load the Comment form, even if Comments are disabled.
 		add_filter( 'commentpress_force_comment_form', '__return_true' );
 
 		// Access globals.
@@ -146,7 +146,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 		// Init vars.
 		$infinite = [];
 
-		// Is "live" comment refreshing enabled?
+		// Is "live" Comment refreshing enabled?
 		$infinite['nonce'] = wp_create_nonce( 'cpajax_infinite_nonce' );
 
 		// Use wp function to localise.

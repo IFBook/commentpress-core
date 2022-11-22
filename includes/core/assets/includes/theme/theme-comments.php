@@ -2,7 +2,7 @@
 /**
  * CommentPress Core Theme Comment functions.
  *
- * Handles common comment functionality in CommentPress themes.
+ * Handles common Comment functionality in CommentPress themes.
  *
  * @package CommentPress_Core
  */
@@ -15,11 +15,11 @@ defined( 'ABSPATH' ) || exit;
 if ( ! function_exists( 'commentpress_get_children' ) ) :
 
 	/**
-	 * Retrieve comment children.
+	 * Retrieve Comment children.
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $comment The WordPress comment object.
+	 * @param object $comment The WordPress Comment object.
 	 * @param string $page_or_post The WordPress Post Type to query.
 	 * @return array $result The array of child Comments.
 	 */
@@ -28,7 +28,7 @@ if ( ! function_exists( 'commentpress_get_children' ) ) :
 		// Declare access to globals.
 		global $wpdb;
 
-		// Does the comment have children?
+		// Does the Comment have children?
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 		return $wpdb->get_results(
 			$wpdb->prepare(
@@ -62,7 +62,7 @@ if ( ! function_exists( 'commentpress_get_comments' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param array $comments An array of WordPress comment objects.
+	 * @param array $comments An array of WordPress Comment objects.
 	 * @param string $page_or_post The WordPress Post Type to query.
 	 */
 	function commentpress_get_comments( $comments, $page_or_post ) {
@@ -82,10 +82,10 @@ if ( ! function_exists( 'commentpress_get_comments' ) ) :
 				// Open li.
 				$cp_comment_output .= '<li class="item_li">' . "\n\n";
 
-				// Format this comment.
+				// Format this Comment.
 				$cp_comment_output .= commentpress_format_comment( $comment );
 
-				// Get comment children.
+				// Get Comment children.
 				$children = commentpress_get_children( $comment, $page_or_post );
 
 				// Do we have any?
@@ -124,7 +124,7 @@ if ( ! function_exists( 'commentpress_get_user_link' ) ) :
 	 * @since 3.0
 	 *
 	 * @param object $user The WordPress User object.
-	 * @param object $comment The WordPress comment object.
+	 * @param object $comment The WordPress Comment object.
 	 * @return string $url The URL for the User.
 	 */
 	function commentpress_get_user_link( $user, $comment = null ) {
@@ -167,13 +167,13 @@ endif;
 if ( ! function_exists( 'commentpress_format_comment' ) ) :
 
 	/**
-	 * Format comment on custom CommentPress Core Comments Pages.
+	 * Format Comment on custom CommentPress Core Comments Pages.
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $comment The comment object.
+	 * @param object $comment The Comment object.
 	 * @param str $context Either "all" for all-comments or "by" for comments-by-commenter.
-	 * @return str The formatted comment HTML.
+	 * @return str The formatted Comment HTML.
 	 */
 	function commentpress_format_comment( $comment, $context = 'all' ) {
 
@@ -246,7 +246,7 @@ if ( ! function_exists( 'commentpress_format_comment' ) ) :
 
 			}
 
-			// Construct comment header content.
+			// Construct Comment header content.
 			$comment_meta_content = sprintf(
 				__( '%1$s by %2$s on %3$s', 'commentpress-core' ),
 				$comment_anchor,
@@ -254,7 +254,7 @@ if ( ! function_exists( 'commentpress_format_comment' ) ) :
 				$comment_date
 			);
 
-			// Wrap comment meta in a div.
+			// Wrap Comment meta in a div.
 			$comment_meta = '<div class="comment_meta">' . $comment_meta_content . '</div>' . "\n";
 
 			// Allow filtering by plugins.
@@ -276,7 +276,7 @@ if ( ! function_exists( 'commentpress_format_comment' ) ) :
 			// Construct Page anchor.
 			$page_anchor = '<a href="' . $page_link . '">' . get_the_title( $comment->comment_post_ID ) . '</a>';
 
-			// Construct comment header content.
+			// Construct Comment header content.
 			$comment_meta_content = sprintf(
 				__( '%1$s on %2$s on %3$s', 'commentpress-core' ),
 				$comment_anchor,
@@ -284,7 +284,7 @@ if ( ! function_exists( 'commentpress_format_comment' ) ) :
 				$comment_date
 			);
 
-			// Wrap comment meta in a div.
+			// Wrap Comment meta in a div.
 			$comment_meta = '<div class="comment_meta">' . $comment_meta_content . '</div>' . "\n";
 
 			// Allow filtering by plugins.
@@ -302,7 +302,7 @@ if ( ! function_exists( 'commentpress_format_comment' ) ) :
 		// Comment content.
 		$comment_body = '<div class="comment-content">' . apply_filters( 'comment_text', $comment->comment_content ) . '</div>' . "\n";
 
-		// Construct comment.
+		// Construct Comment.
 		return '<div class="comment_wrapper">' . "\n" . $comment_meta . $comment_body . '</div>' . "\n\n";
 
 	}
@@ -396,7 +396,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_content' ) ) :
 					// Open li.
 					$html .= '<li class="item_li"><!-- item li -->' . "\n\n";
 
-					// Show the comment.
+					// Show the Comment.
 					$html .= commentpress_format_comment( $comment, 'by' );
 
 					// Close li.
@@ -467,8 +467,8 @@ if ( ! function_exists( 'commentpress_get_comment_activity' ) ) :
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $scope The scope of the activities.
-	 * @return str $page_content The HTML output for activities.
+	 * @param str $scope The scope of the Activities.
+	 * @return str $page_content The HTML output for Activities.
 	 */
 	function commentpress_get_comment_activity( $scope = 'all' ) {
 
@@ -550,16 +550,16 @@ endif;
 if ( ! function_exists( 'commentpress_get_comment_activity_item' ) ) :
 
 	/**
-	 * Get comment formatted for the Activity Sidebar.
+	 * Get Comment formatted for the Activity Sidebar.
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $comment The comment object.
-	 * @return string $item_html The modified comment HTML.
+	 * @param object $comment The Comment object.
+	 * @return string $item_html The modified Comment HTML.
 	 */
 	function commentpress_get_comment_activity_item( $comment ) {
 
-		// Enable WordPress API on comment.
+		// Enable WordPress API on Comment.
 		$GLOBALS['comment'] = $comment;
 
 		// Declare access to globals.
@@ -576,7 +576,7 @@ if ( ! function_exists( 'commentpress_get_comment_activity_item' ) ) :
 			return $item_html;
 		}
 
-		// Test for anonymous comment - usually generated by WordPress itself in multisite installs.
+		// Test for anonymous Comment - usually generated by WordPress itself in multisite installs.
 		if ( empty( $comment->comment_author ) ) {
 			$comment->comment_author = __( 'Anonymous', 'commentpress-core' );
 		}
@@ -626,7 +626,7 @@ if ( ! function_exists( 'commentpress_get_comment_activity_item' ) ) :
 			// Is it the same Page, if paged?
 			if ( $multipage ) {
 
-				// If it has a text sig.
+				// If it has a Text Signature.
 				if (
 					! is_null( $comment->comment_signature ) &&
 					$comment->comment_signature != ''
@@ -670,7 +670,7 @@ if ( ! function_exists( 'commentpress_get_comment_activity_item' ) ) :
 		// Open li.
 		$item_html .= '<li><!-- item li -->' . "\n\n";
 
-		// Show the comment.
+		// Show the Comment.
 		$item_html .= '
 	<div class="comment-wrapper">
 
@@ -725,7 +725,7 @@ if ( ! function_exists( 'commentpress_comments_by_para_format_pings' ) ) :
 		// Construct permalink text.
 		$return['permalink_text'] = __( 'Permalink for pingbacks and trackbacks', 'commentpress-core' );
 
-		// Construct comment count.
+		// Construct Comment count.
 		$return['comment_text'] = sprintf(
 			_n( '<span>%d</span> Pingback or trackback', '<span>%d</span> Pingbacks and trackbacks', $comment_count, 'commentpress-core' ),
 			$comment_count // Substitution.
@@ -782,7 +782,7 @@ if ( ! function_exists( 'commentpress_comments_by_para_format_block' ) ) :
 			$para_num
 		);
 
-		// Construct comment count.
+		// Construct Comment count.
 		$return['comment_text'] = sprintf(
 			_n( '<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span>', '<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span>', $comment_count, 'commentpress-core' ),
 			$comment_count // Substitution.
@@ -876,15 +876,15 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 				$redirect = wp_login_url( get_permalink() );
 			}
 
-			// Init allowed to comment.
+			// Init allowed to Comment.
 			$login_to_comment = false;
 
-			// If we have to log in to comment.
+			// If we have to log in to Comment.
 			if ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) {
 				$login_to_comment = true;
 			}
 
-			// Default comment type to get.
+			// Default Comment type to get.
 			$comment_type = 'all';
 
 			// The built in walker works just fine since WordPress 3.8.
@@ -912,7 +912,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 			// Init counter for text_signatures array.
 			$sig_counter = 0;
 
-			// Init array for tracking text sigs.
+			// Init array for tracking Text Signatures.
 			$used_text_sigs = [];
 
 			// Loop through each Paragraph.
@@ -963,7 +963,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 
 				}
 
-				// Init no comment class.
+				// Init no Comment class.
 				$no_comments_class = '';
 
 				// Override if there are no Comments (for print stylesheet to hide them).
@@ -993,7 +993,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 					if ( in_array( $text_sig, $used_text_sigs ) ) {
 
 						// Show some kind of message.
-						// Should not be necessary now that we ensure unique text sigs.
+						// Should not be necessary now that we ensure unique Text Signatures.
 						echo '<div class="reply_to_para" id="reply_to_para-' . $para_num . '">' . "\n" .
 							'<p>' .
 								__( 'It appears that this paragraph is a duplicate of a previous one.', 'commentpress-core' ) .
@@ -1029,7 +1029,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 						// Only add comment-on-para link if Comments are open and it's not the pingback section.
 						if ( 'open' == $post->comment_status && $text_signature != 'PINGS_AND_TRACKS' ) {
 
-							// If we have to log in to comment.
+							// If we have to log in to Comment.
 							if ( $login_to_comment ) {
 
 								// The link text depending on whether we've got registration.
@@ -1055,7 +1055,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 								 */
 								$prompt = apply_filters( 'commentpress_reply_to_prompt_text', $prompt, $registration );
 
-								// Leave comment link.
+								// Leave Comment link.
 								echo '<div class="reply_to_para" id="reply_to_para-' . $para_num . '">' . "\n" .
 									'<p><a class="reply_to_para" rel="nofollow" href="' . $redirect . '">' .
 										$prompt .
@@ -1104,7 +1104,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 									$markup['entity_text']
 								);
 
-								// Leave comment link.
+								// Leave Comment link.
 								echo '<div class="reply_to_para" id="reply_to_para-' . $para_num . '">' . "\n" .
 									'<p><a class="reply_to_para" href="' . $href . '"' . $onclick . '>' .
 										$link_content .
@@ -1155,7 +1155,7 @@ if ( ! function_exists( 'commentpress_comment_form_title' ) ) :
 	 * @param str $no_reply_text The text to show when there are no Comments.
 	 * @param str $reply_to_comment_text The text to show when there are Comments.
 	 * @param str $reply_to_para_text The text to show on Paragraphs when there are Comments.
-	 * @param str $link_to_parent The link to the parent comment.
+	 * @param str $link_to_parent The link to the parent Comment.
 	 */
 	function commentpress_comment_form_title( $no_reply_text = '', $reply_to_comment_text = '', $reply_to_para_text = '', $link_to_parent = true ) {
 
@@ -1191,10 +1191,10 @@ if ( ! function_exists( 'commentpress_comment_form_title' ) ) :
 			// Declare access to globals.
 			global $comment;
 
-			// Get comment.
+			// Get Comment.
 			$comment = get_comment( $reply_to_comment_id );
 
-			// Get link to comment.
+			// Get link to Comment.
 			$author = ( $link_to_parent ) ?
 				'<a href="#comment-' . get_comment_ID() . '">' . get_comment_author() . '</a>' :
 				get_comment_author();
@@ -1255,7 +1255,7 @@ if ( ! function_exists( 'commentpress_comment_reply_link' ) ) :
 	 * @since 3.0
 	 *
 	 * @param array $args The reply links arguments.
-	 * @param object $comment The comment.
+	 * @param object $comment The Comment.
 	 * @param object $post The Post.
 	 */
 	function commentpress_comment_reply_link( $args = [], $comment = null, $post = null ) {
@@ -1293,7 +1293,7 @@ if ( ! function_exists( 'commentpress_comment_reply_link' ) ) :
 		// Init link.
 		$link = '';
 
-		// If we have to log in to comment.
+		// If we have to log in to Comment.
 		if ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) {
 
 			// Construct link.
@@ -1333,13 +1333,13 @@ if ( ! function_exists( 'commentpress_comments' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $comment The comment object.
-	 * @param array $args The comment arguments.
-	 * @param int $depth The comment depth.
+	 * @param object $comment The Comment object.
+	 * @param array $args The Comment arguments.
+	 * @param int $depth The Comment depth.
 	 */
 	function commentpress_comments( $comment, $args, $depth ) {
 
-		// Build comment as html.
+		// Build Comment as html.
 		echo commentpress_get_comment_markup( $comment, $args, $depth );
 
 	}
@@ -1351,18 +1351,18 @@ endif;
 if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 
 	/**
-	 * Wrap comment in its markup.
+	 * Wrap Comment in its markup.
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $comment The comment object.
-	 * @param array $args The comment arguments.
-	 * @param int $depth The comment depth.
-	 * @return str $html The comment markup.
+	 * @param object $comment The Comment object.
+	 * @param array $args The Comment arguments.
+	 * @param int $depth The Comment depth.
+	 * @return str $html The Comment markup.
 	 */
 	function commentpress_get_comment_markup( $comment, $args, $depth ) {
 
-		// Enable WordPress API on comment.
+		// Enable WordPress API on Comment.
 		$GLOBALS['comment'] = $comment;
 
 		// Was it a registered User?
@@ -1465,7 +1465,7 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 				__( 'Edit', 'commentpress-core' )
 			);
 
-			// Get edit comment link.
+			// Get "Edit Comment" link.
 			$editlink = '<span class="alignright comment-edit"><a class="comment-edit-link" href="' . get_edit_comment_link() . '" title="' . $edit_title_text . '">' . $edit_text . '</a></span>';
 
 			// Add a filter for plugins.
@@ -1476,7 +1476,7 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 		// Add a nopriv filter for plugins.
 		$editlink = apply_filters( 'cp_comment_action_links', $editlink, $comment );
 
-		// Get comment class(es).
+		// Get Comment class(es).
 		$comment_class = comment_class( null, $comment->comment_ID, $post->ID, false );
 
 		// If orphaned, add class to identify as such.
@@ -1545,8 +1545,8 @@ if ( ! function_exists( 'commentpress_comments_by_para_format_whole' ) ) :
 		/**
 		 * Allow "the whole entity" text to be filtered.
 		 *
-		 * This is primarily for "media", where it makes little sense the comment on
-		 * "the whole image", for example.
+		 * This is primarily for "media", where it makes little sense to comment
+		 * on "the whole image", for example.
 		 *
 		 * @since 3.9
 		 *
@@ -1567,7 +1567,7 @@ if ( ! function_exists( 'commentpress_comments_by_para_format_whole' ) ) :
 			$return['entity_text']
 		);
 
-		// Construct comment count.
+		// Construct Comment count.
 		$return['comment_text'] = sprintf(
 			_n( '<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span>', '<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span>', $comment_count, 'commentpress-core' ),
 			$comment_count // Substitution.
@@ -1668,7 +1668,7 @@ if ( ! function_exists( 'commentpress_add_wp_editor' ) ) :
 		// Our settings.
 		$settings = [
 
-			// Configure comment textarea.
+			// Configure Comment textarea.
 			'media_buttons' => $media_buttons,
 			'textarea_name' => 'comment',
 			'textarea_rows' => 10,
@@ -1690,7 +1690,7 @@ if ( ! function_exists( 'commentpress_add_wp_editor' ) ) :
 		// Create editor.
 		wp_editor(
 			'', // Initial content.
-			'comment', // ID of comment textarea.
+			'comment', // ID of Comment textarea.
 			$settings
 		);
 
@@ -1732,7 +1732,7 @@ if ( ! function_exists( 'commentpress_assign_default_editor' ) ) :
 			return $r;
 		}
 
-		// Always return 'tinymce' as the default editor, or else the comment form will not show up.
+		// Always return 'tinymce' as the default editor, or else the Comment form will not show up.
 
 		// --<
 		return 'tinymce';
@@ -1873,12 +1873,12 @@ if ( ! function_exists( 'commentpress_comment_post_redirect' ) ) :
 	 *
 	 * @since 3.5
 	 *
-	 * @param str $link The link to the comment.
-	 * @param object $comment The comment object.
+	 * @param str $link The link to the Comment.
+	 * @param object $comment The Comment object.
 	 */
 	function commentpress_comment_post_redirect( $link, $comment ) {
 
-		// Get URL of the Page that submitted the comment.
+		// Get URL of the Page that submitted the Comment.
 		$page_url = isset( $_SERVER['HTTP_REFERER'] ) ? wp_unslash( $_SERVER['HTTP_REFERER'] ) : '';
 
 		// Get anchor position.
@@ -1895,7 +1895,7 @@ if ( ! function_exists( 'commentpress_comment_post_redirect' ) ) :
 		// Assume not AJAX.
 		$ajax_token = '';
 
-		// Is this an AJAX comment form submission?
+		// Is this an AJAX Comment form submission?
 		if ( isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) ) {
 			if ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' ) {
 
@@ -1914,7 +1914,7 @@ if ( ! function_exists( 'commentpress_comment_post_redirect' ) ) :
 
 		}
 
-		// Construct cachebusting comment redirect.
+		// Construct cachebusting Comment redirect.
 		$link = $page_url . $ajax_token . '#comment-' . $comment->comment_ID;
 
 		// --<
@@ -2088,10 +2088,10 @@ if ( ! function_exists( 'commentpress_multipage_comment_link' ) ) :
 	 *
 	 * @since 3.5
 	 *
-	 * @param str $link The existing comment link.
-	 * @param object $comment The comment object.
+	 * @param str $link The existing Comment link.
+	 * @param object $comment The Comment object.
 	 * @param array $args An array of extra arguments.
-	 * @return str $link The modified comment link.
+	 * @return str $link The modified Comment link.
 	 */
 	function commentpress_multipage_comment_link( $link, $comment, $args ) {
 
@@ -2117,10 +2117,10 @@ if ( ! function_exists( 'commentpress_multipage_comment_link' ) ) :
 				$page_num = get_comment_meta( $comment->comment_ID, $key, true );
 			}
 
-			// Get current comment info.
+			// Get current Comment info.
 			$comment_path_info = wp_parse_url( $link );
 
-			// Set comment path.
+			// Set Comment path.
 			$link = commentpress_get_post_multipage_url( $page_num, get_post( $comment->comment_post_ID ) ) . '#' . $comment_path_info['fragment'];
 
 		}

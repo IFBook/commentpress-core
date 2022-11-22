@@ -94,7 +94,7 @@ class CommentPress_Core_BuddyPress {
 		// Actions to perform on BuddyPress Docs load.
 		add_action( 'bp_docs_load', [ $this, 'bp_docs_loaded' ], 20 );
 
-		// Override BuddyPress Docs comment template.
+		// Override BuddyPress Docs Comment template.
 		add_filter( 'bp_docs_comment_template_path', [ $this, 'bp_docs_comment_tempate' ], 20, 2 );
 
 	}
@@ -237,7 +237,7 @@ class CommentPress_Core_BuddyPress {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Override the comment reply script that BuddyPress Docs loads.
+	 * Override the Comment Reply script that BuddyPress Docs loads.
 	 *
 	 * @since 3.5.9
 	 */
@@ -249,7 +249,7 @@ class CommentPress_Core_BuddyPress {
 	}
 
 	/**
-	 * Override the comment reply script that BuddyPress Docs loads.
+	 * Override the Comment Reply script that BuddyPress Docs loads.
 	 *
 	 * @since 3.5.9
 	 */

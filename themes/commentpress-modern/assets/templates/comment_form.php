@@ -52,7 +52,7 @@ if ( $cp_force_form ) {
 }
 
 /**
- * Allow plugins to override showing the comment form.
+ * Allow plugins to override showing the Comment form.
  *
  * @since 3.8
  *
@@ -242,4 +242,4 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 		</div><!-- /respond -->
 	</div><!-- /respond_wrapper -->
 
-<?php endif; /* End open comment status check. */ ?>
+<?php endif; /* End open Comment status check. */ ?>

@@ -662,7 +662,7 @@ return $html;
 			// Open li.
 			$html .= '<li class="page_li"><!-- page li -->' . "\n\n";
 
-			// Define comment count.
+			// Define Comment count.
 			$comment_count_text = sprintf(
 				_n( '<span class="cp_comment_count">%d</span> comment', '<span class="cp_comment_count">%d</span> comments', $post_comment_counts[ $post->ID ], 'commentpress-core' ),
 				$post_comment_counts[ $post->ID ]
@@ -695,11 +695,11 @@ return $html;
 
 					if ( $comment->comment_post_ID == $post->ID ) {
 
-						// Show the comment.
+						// Show the Comment.
 						$html .= commentpress_format_comment( $comment );
 
 						/*
-						// Get comment children.
+						// Get Comment children.
 						$children = commentpress_get_children( $comment, $page_or_post );
 
 						// Do we have any?
@@ -711,7 +711,7 @@ return $html;
 							// Show them.
 							$html .= $cp_comment_output;
 
-							// Clear global comment output.
+							// Clear global Comment output.
 							$cp_comment_output = '';
 
 						}

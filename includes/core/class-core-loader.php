@@ -419,7 +419,7 @@ class CommentPress_Core {
 
 		}
 
-		// Get constructed hidden input for comment form.
+		// Get constructed hidden input for Comment form.
 		$result = $this->display->get_signature_input( $text_sig );
 
 		// --<
@@ -457,7 +457,7 @@ class CommentPress_Core {
 	 * @since 3.4
 	 *
 	 * @param int $post_ID The numeric ID of the Post.
-	 * @return array $comments An array of sorted comment data.
+	 * @return array $comments An array of sorted Comment data.
 	 */
 	public function get_sorted_comments( $post_ID ) {
 
@@ -494,7 +494,7 @@ class CommentPress_Core {
 	 */
 	public function get_text_signature( $para_num ) {
 
-		// Get text sigs.
+		// Get Text Signatures.
 		$sigs = $this->db->get_text_sigs();
 
 		// Get value at that position in array.
@@ -818,7 +818,7 @@ class CommentPress_Core {
 		}
 
 		/**
-		 * Filters "comment allowed" status.
+		 * Filters "commenting allowed" status.
 		 *
 		 * @since 3.4
 		 *

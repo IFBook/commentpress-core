@@ -93,7 +93,7 @@ class CommentPress_AJAX_Comments {
 		add_action( 'wp_ajax_cpajax_get_new_comments', [ $this, 'new_comments_get' ] );
 		add_action( 'wp_ajax_nopriv_cpajax_get_new_comments', [ $this, 'new_comments_get' ] );
 
-		// Add AJAX edit comment functionality.
+		// Add AJAX "Edit Comment" functionality.
 		add_action( 'wp_ajax_cpajax_get_comment', [ $this, 'comment_get' ] );
 		add_action( 'wp_ajax_cpajax_edit_comment', [ $this, 'comment_edit' ] );
 
@@ -102,7 +102,7 @@ class CommentPress_AJAX_Comments {
 		add_action( 'wp_ajax_nopriv_cpajax_reassign_comment', [ $this, 'comment_reassign' ] );
 
 		/*
-		// Remove comment flood filter if you want more 'chat-like' functionality.
+		// Remove Comment Flood filter if you want more 'chat-like' functionality.
 		remove_filter('comment_flood_filter', 'wp_throttle_comment_flood', 10, 3);
 		*/
 
@@ -128,7 +128,7 @@ class CommentPress_AJAX_Comments {
 		// Init vars.
 		$vars = [];
 
-		// Is "live" comment refreshing enabled?
+		// Is "live" Comment refreshing enabled?
 		$vars['cpajax_live'] = ( $this->core->db->option_get( 'cp_para_comments_live' ) == '1' ) ? 1 : 0;
 
 		// We need to know the url of the Ajax handler.
@@ -140,7 +140,7 @@ class CommentPress_AJAX_Comments {
 		// Time formatted thus: 2009-08-09 14:46:14.
 		$vars['cpajax_current_time'] = gmdate( 'Y-m-d H:i:s' );
 
-		// Get comment count at the time the Page is served.
+		// Get Comment count at the time the Page is served.
 		$count = get_comment_count( $post->ID );
 
 		// Adding moderation queue as well, since we do show these.
@@ -216,7 +216,7 @@ class CommentPress_AJAX_Comments {
 		// Init array.
 		$translations = [];
 
-		// Add translations for comment form.
+		// Add translations for Comment form.
 		$translations[] = __( 'Loading...', 'commentpress-core' );
 		$translations[] = __( 'Please enter your name.', 'commentpress-core' );
 		$translations[] = __( 'Please enter your email address.', 'commentpress-core' );
@@ -225,13 +225,13 @@ class CommentPress_AJAX_Comments {
 		$translations[] = __( 'Your comment has been added.', 'commentpress-core' );
 		$translations[] = __( 'AJAX error!', 'commentpress-core' );
 
-		// Add translations for comment reassignment.
+		// Add translations for Comment reassignment.
 		$translations[] = __( 'Are you sure?', 'commentpress-core' );
 		$translations[] = __( 'Are you sure you want to assign the comment and its replies to the textblock? This action cannot be undone.', 'commentpress-core' );
 		$translations[] = __( 'Submitting...', 'commentpress-core' );
 		$translations[] = __( 'Please wait while the comments are reassigned. The page will refresh when this has been done.', 'commentpress-core' );
 
-		// Add translations for comment word.
+		// Add translations for Comment word.
 		// Singular.
 		$translations[] = __( 'Comment', 'commentpress-core' );
 		// Plural.
@@ -245,7 +245,7 @@ class CommentPress_AJAX_Comments {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Get a comment in response to an AJAX request.
+	 * Get a Comment in response to an AJAX request.
 	 *
 	 * @since 3.9.12
 	 */
@@ -260,10 +260,10 @@ class CommentPress_AJAX_Comments {
 		// Sanity check.
 		if ( ! is_null( $comment_id ) && is_numeric( $comment_id ) ) {
 
-			// Get comment.
+			// Get Comment.
 			$comment = get_comment( (int) $comment_id );
 
-			// Add comment data to array.
+			// Add Comment data to array.
 			$data = [
 				'id' => $comment->comment_ID,
 				'parent' => $comment->comment_parent,
@@ -303,8 +303,8 @@ class CommentPress_AJAX_Comments {
 		 *
 		 * @since 3.9.12
 		 *
-		 * @param array $data The array of comment data.
-		 * @return array $data The modified array of comment data.
+		 * @param array $data The array of Comment data.
+		 * @return array $data The modified array of Comment data.
 		 */
 		$data = apply_filters( 'commentpress_ajax_get_comment', $data );
 
@@ -314,7 +314,7 @@ class CommentPress_AJAX_Comments {
 	}
 
 	/**
-	 * Edit a comment in response to an AJAX request.
+	 * Edit a Comment in response to an AJAX request.
 	 *
 	 * @since 3.9.12
 	 */
@@ -337,23 +337,23 @@ class CommentPress_AJAX_Comments {
 			// Sanity check.
 			if ( ! is_null( $comment_id ) && is_numeric( $comment_id ) ) {
 
-				// Construct comment data.
+				// Construct Comment data.
 				$comment_data = [
 					'comment_ID' => (int) $comment_id,
 					'comment_content' => isset( $_POST['comment'] ) ? trim( wp_unslash( $_POST['comment'] ) ) : '',
 					'comment_post_ID' => isset( $_POST['comment_post_ID'] ) ? sanitize_text_field( wp_unslash( $_POST['comment_post_ID'] ) ) : '',
 				];
 
-				// Update the comment.
+				// Update the Comment.
 				wp_update_comment( $comment_data );
 
-				// Get the fresh comment data.
+				// Get the fresh Comment data.
 				$comment = get_comment( $comment_data['comment_ID'] );
 
 				// Get Text Signature.
 				$comment_signature = $this->core->db->get_text_signature_by_comment_id( $comment->comment_ID );
 
-				// Add comment data to array.
+				// Add Comment data to array.
 				$data = [
 					'id' => $comment->comment_ID,
 					'parent' => $comment->comment_parent,
@@ -390,8 +390,8 @@ class CommentPress_AJAX_Comments {
 			 *
 			 * @since 3.9.12
 			 *
-			 * @param array $data The array of comment data.
-			 * @return array $data The modified array of comment data.
+			 * @param array $data The array of Comment data.
+			 * @return array $data The modified array of Comment data.
 			 */
 			$data = apply_filters( 'commentpress_ajax_edited_comment', $data );
 
@@ -443,7 +443,7 @@ class CommentPress_AJAX_Comments {
 		// Are there any?
 		if ( $num_to_get > 0 ) {
 
-			// Update comment count since last request.
+			// Update Comment count since last request.
 			$data['cpajax_comment_count'] = (string) $current_comment_count;
 
 			// Set get_comments defaults.
@@ -483,13 +483,13 @@ class CommentPress_AJAX_Comments {
 
 					}
 
-					// Get comment markup.
+					// Get Comment markup.
 					$html = commentpress_get_comment_markup( $comment, $args, $depth );
 
 					// Close li (walker would normally do this).
 					$html .= '</li>' . "\n\n\n\n";
 
-					// Add comment to array.
+					// Add Comment to array.
 					$data[ 'cpajax_new_comment_' . $identifier ] = [
 						'parent' => $comment->comment_parent,
 						'id' => $comment->comment_ID,
@@ -512,13 +512,13 @@ class CommentPress_AJAX_Comments {
 	}
 
 	/**
-	 * Gets the comment depth.
+	 * Gets the Comment depth.
 	 *
 	 * @since 3.4
 	 *
 	 * @param object $comment The Comment object.
 	 * @param int $depth The depth of the Comment in a thread.
-	 * @return int $depth The depth of the comment in a thread.
+	 * @return int $depth The depth of the Comment in a thread.
 	 */
 	public function comment_depth_get( $comment, $depth ) {
 
@@ -527,7 +527,7 @@ class CommentPress_AJAX_Comments {
 			return $depth;
 		}
 
-		// Get parent comment.
+		// Get parent Comment.
 		$parent = get_comment( $comment->comment_parent );
 
 		// Increase depth.
@@ -539,12 +539,12 @@ class CommentPress_AJAX_Comments {
 	}
 
 	/**
-	 * Add "reassign" button to comment utilities.
+	 * Add "reassign" button to Comment utilities.
 	 *
 	 * @since 3.4
 	 *
 	 * @param str $edit_button The existing edit button HTML.
-	 * @param array $comment The comment  this edit button applies to.
+	 * @param array $comment The Comment this edit button applies to.
 	 * @return str $edit_button The modified edit button HTML.
 	 */
 	public function reassign_button_add( $edit_button, $comment ) {
@@ -620,7 +620,7 @@ class CommentPress_AJAX_Comments {
 			// Trace.
 			$comment_ids[] = (int) $comment_id;
 
-			// Recurse for any comment children.
+			// Recurse for any Comment children.
 			$htis->comment_children_reassign( (int) $comment_id, $text_sig, $comment_ids );
 
 		}
@@ -634,7 +634,7 @@ class CommentPress_AJAX_Comments {
 	}
 
 	/**
-	 * Store Text Signature for all children of a comment.
+	 * Store Text Signature for all children of a Comment.
 	 *
 	 * @since 3.4
 	 *
@@ -644,7 +644,7 @@ class CommentPress_AJAX_Comments {
 	 */
 	public function comment_children_reassign( $comment_id, $text_sig, &$comment_ids ) {
 
-		// Get the children of the comment.
+		// Get the children of the Comment.
 		$children = $this->comment_children_get( $comment_id );
 
 		// Did we get any?
@@ -659,7 +659,7 @@ class CommentPress_AJAX_Comments {
 				// Trace.
 				$comment_ids[] = $child->comment_ID;
 
-				// Recurse for any comment children.
+				// Recurse for any Comment children.
 				$this->comment_children_reassign( $child->comment_ID, $text_sig, $comment_ids );
 
 			}
@@ -669,11 +669,11 @@ class CommentPress_AJAX_Comments {
 	}
 
 	/**
-	 * Retrieve comment children.
+	 * Retrieve Comment children.
 	 *
 	 * @since 3.4
 	 *
-	 * @param int $comment_id The numeric ID of the comment.
+	 * @param int $comment_id The numeric ID of the Comment.
 	 * @return array $children The array of child Comments.
 	 */
 	public function comment_children_get( $comment_id ) {

@@ -180,7 +180,7 @@ $_max_members = 10;
 							'primary_id' => false,
 						];
 
-						// Get activities.
+						// Get Activities.
 						if ( function_exists( 'bp_has_activities' ) && bp_has_activities( $recent_groupblog_activity ) ) :
 
 							// Change header depending on logged in status.
@@ -258,7 +258,7 @@ $_max_members = 10;
 
 					<?php
 
-					// Get recently active members.
+					// Get recently active Members.
 					$members_recently_active = [
 						'user_id' => 0,
 						'type' => 'online',
@@ -306,7 +306,7 @@ $_max_members = 10;
 
 					<?php
 
-					// Get online members.
+					// Get online Members.
 					$members_online = [
 						'user_id' => 0,
 						'type' => 'online',

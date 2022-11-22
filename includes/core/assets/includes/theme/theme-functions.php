@@ -1557,7 +1557,7 @@ if ( ! function_exists( 'commentpress_multipager' ) ) :
 	/**
 	 * Create sane links between Pages.
 	 *
-	 * Comment permalinks are filtered if the comment is not on the first Page
+	 * Comment permalinks are filtered if the Comment is not on the first Page
 	 * in a multipage Post.
 	 *
 	 * @see commentpress_multipage_comment_link()
@@ -1987,14 +1987,14 @@ endif;
 if ( ! function_exists( 'commentpress_add_selection_classes' ) ) :
 
 	/**
-	 * Filter the comment class to add selection data.
+	 * Filter the Comment class to add selection data.
 	 *
 	 * @since 3.8
 	 *
-	 * @param array $classes An array of comment classes.
+	 * @param array $classes An array of Comment classes.
 	 * @param string $class A comma-separated list of additional classes added to the list.
-	 * @param int $comment_id The comment id.
-	 * @param object $comment The comment.
+	 * @param int $comment_id The Comment ID.
+	 * @param object $comment The Comment.
 	 * @param int|WP_Post $post_id The Post ID or WP_Post object.
 	 */
 	function commentpress_add_selection_classes( $classes, $class, $comment_id, $comment, $post_id = 0 ) {
@@ -2005,7 +2005,7 @@ if ( ! function_exists( 'commentpress_add_selection_classes' ) ) :
 		// Get current.
 		$data = get_comment_meta( $comment_id, $key, true );
 
-		// If the comment meta already has a value.
+		// If the Comment meta already has a value.
 		if ( ! empty( $data ) ) {
 
 			// Make into an array.
