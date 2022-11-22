@@ -17,7 +17,7 @@ get_header();
 		<div id="page_wrapper">
 
 			<div id="content" class="clearfix">
-				<div class="post">
+				<div class="post clearfix">
 
 				<?php if ( have_posts() ) : ?>
 

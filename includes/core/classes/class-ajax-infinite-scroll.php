@@ -332,7 +332,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 		$data = '<div class="page_wrapper cp_page_wrapper">' .
 			$feature_image .
 			$upper_navigation .
-			'<div class="content"><div class="post' . commentpress_get_post_css_override( $post->ID ) . ' ' . $menu_id . '" id="post-' . $post->ID . '">' .
+			'<div class="content"><div class="post clearfix' . commentpress_get_post_css_override( $post->ID ) . ' ' . $menu_id . '" id="post-' . $post->ID . '">' .
 				$title .
 				$content .
 				$page_num .

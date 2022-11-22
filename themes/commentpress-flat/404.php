@@ -17,7 +17,7 @@ get_header();
 		<div id="page_wrapper">
 
 			<div id="content" class="error-404 clearfix">
-				<div class="post">
+				<div class="post clearfix">
 
 					<h2 class="post_title"><?php esc_html_e( 'Page Not Found', 'commentpress-core' ); ?></h2>
 

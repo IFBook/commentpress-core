@@ -58,7 +58,7 @@ get_header();
 					<?php endif; ?>
 
 					<div id="content" class="content">
-						<div class="post<?php echo commentpress_get_post_css_override( get_the_ID() ); ?>" id="post-<?php the_ID(); ?>">
+						<div class="post clearfix<?php echo commentpress_get_post_css_override( get_the_ID() ); ?>" id="post-<?php the_ID(); ?>">
 
 							<?php if ( ! commentpress_has_feature_image() ) : ?>
 								<?php
@@ -146,7 +146,7 @@ get_header();
 		<div id="main_wrapper" class="clearfix">
 			<div id="page_wrapper" class="page_wrapper">
 				<div id="content" class="content">
-					<div class="post">
+					<div class="post clearfix">
 
 						<h2 class="post_title"><?php esc_html_e( 'Page Not Found', 'commentpress-core' ); ?></h2>
 						<p><?php esc_html_e( 'Sorry, but you are looking for something that isn’t here.', 'commentpress-core' ); ?></p>
