@@ -857,7 +857,11 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 			return;
 		}
 
-		// Allow plugins to precede Comments.
+		/**
+		 * Fires before scrollable Comments.
+		 *
+		 * @since 3.9
+		 */
 		do_action( 'commentpress_before_scrollable_comments' );
 
 		// Get approved Comments for this Post, sorted Comments by Text Signature.
@@ -1032,6 +1036,8 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 						/**
 						 * Allow plugins to append to Paragraph-level Comments.
 						 *
+						 * @since 3.9
+						 *
 						 * @param str $text_sig The Text Signature of the Paragraph.
 						 */
 						do_action( 'commentpress_after_paragraph_comments', $text_sig );
@@ -1160,7 +1166,11 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 
 		}
 
-		// Allow plugins to follow Comments.
+		/**
+		 * Fires after scrollable Comments.
+		 *
+		 * @since 3.9
+		 */
 		do_action( 'commentpress_after_scrollable_comments' );
 
 	}
