@@ -48,7 +48,7 @@ if ( ! function_exists( 'commentpress_customizer_get_site_image_title' ) ) :
 	 *
 	 * @return str The default "Site Image" label.
 	 */
-	function commentpress_customizer_get_site_image_title( $wp_customize ) {
+	function commentpress_customizer_get_site_image_title() {
 
 		/**
 		 * Filters the "Site Image" label.
@@ -183,13 +183,6 @@ if ( ! function_exists( 'commentpress_customize_site_image' ) ) :
 		$wp_customize->add_section(
 			'cp_site_image',
 			[
-		/**
-		 * Filters the "Site Image" label.
-		 *
-		 * @since3.8.6
-		 *
-		 * @param str The default "Site Image"  label.
-		 */
 				'title' => commentpress_customizer_get_site_image_title(),
 				'priority' => 25,
 			]

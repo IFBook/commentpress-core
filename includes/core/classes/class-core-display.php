@@ -243,7 +243,6 @@ class CommentPress_Core_Display {
 			'all' // Media.
 		);
 
-
 	}
 
 	/**

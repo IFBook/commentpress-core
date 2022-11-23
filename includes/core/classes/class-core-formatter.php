@@ -159,8 +159,6 @@ class CommentPress_Core_Formatter {
 		// Set Blog Type options label.
 		add_filter( 'cp_blog_type_label', [ $this, 'blog_type_label' ], 21 );
 
-
-
 	}
 
 	// -------------------------------------------------------------------------
