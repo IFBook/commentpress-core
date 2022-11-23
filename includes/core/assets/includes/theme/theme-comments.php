@@ -155,7 +155,15 @@ if ( ! function_exists( 'commentpress_get_user_link' ) ) :
 
 		}
 
-		// --<
+		/**
+		 * Filters User link.
+		 *
+		 * @since 3.9
+		 *
+		 * @param string $url The URL for the User.
+		 * @param WP_User The WordPress User object.
+		 * @param object The WordPress Comment object.
+		 */
 		return apply_filters( 'commentpress_get_user_link', $url, $user, $comment );
 
 	}
@@ -257,15 +265,18 @@ if ( ! function_exists( 'commentpress_format_comment' ) ) :
 			// Wrap Comment meta in a div.
 			$comment_meta = '<div class="comment_meta">' . $comment_meta_content . '</div>' . "\n";
 
-			// Allow filtering by plugins.
-			$comment_meta = apply_filters(
-				'commentpress_format_comment_all_meta', // Filter name.
-				$comment_meta, // Built meta.
-				$comment,
-				$comment_anchor,
-				$comment_author,
-				$comment_date
-			);
+			/**
+			 * Filters the Comment meta markup in an "All Comments" context.
+			 *
+			 * @since 3.4
+			 *
+			 * @param string $comment_meta The Comment meta markup.
+			 * @param object The WordPress Comment object.
+			 * @param string The Comment anchor tag.
+			 * @param string The Comment author tag.
+			 * @param string The Comment date tag.
+			 */
+			$comment_meta = apply_filters( 'commentpress_format_comment_all_meta', $comment_meta, $comment, $comment_anchor, $comment_author, $comment_date );
 
 		// If context is 'by commenter'.
 		} elseif ( $context == 'by' ) {
@@ -287,19 +298,22 @@ if ( ! function_exists( 'commentpress_format_comment' ) ) :
 			// Wrap Comment meta in a div.
 			$comment_meta = '<div class="comment_meta">' . $comment_meta_content . '</div>' . "\n";
 
-			// Allow filtering by plugins.
-			$comment_meta = apply_filters(
-				'commentpress_format_comment_by_meta', // Filter name.
-				$comment_meta, // Built meta.
-				$comment,
-				$comment_anchor,
-				$page_anchor,
-				$comment_date
-			);
+			/**
+			 * Filters the Comment meta markup in a "By Commenter" context.
+			 *
+			 * @since 3.4
+			 *
+			 * @param string $comment_meta The Comment meta markup.
+			 * @param object The WordPress Comment object.
+			 * @param string The Comment anchor tag.
+			 * @param string The Comment author tag.
+			 * @param string The Comment date tag.
+			 */
+			$comment_meta = apply_filters( 'commentpress_format_comment_by_meta', $comment_meta, $comment, $comment_anchor, $page_anchor, $comment_date );
 
 		}
 
-		// Comment content.
+		// Render Comment content via built-in WordPress filter.
 		$comment_body = '<div class="comment-content">' . apply_filters( 'comment_text', $comment->comment_content ) . '</div>' . "\n";
 
 		// Construct Comment.
@@ -905,7 +919,6 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 			 *
 			 * @param str $singular_name The singular label for this Post Type.
 			 * @param str $current_type The Post Type identifier.
-			 * @return str $singular_name The modified label for this Post Type.
 			 */
 			$post_type_name = apply_filters( 'commentpress_lexia_post_type_name', $post_type->labels->singular_name, $current_type );
 
@@ -1064,14 +1077,17 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 
 							} else {
 
-								// Construct onclick content.
+								// Construct "onclick" content.
 								$onclick = "return addComment.moveFormToPara( '$para_num', '$text_sig', '$post->ID' )";
 
-								// Construct onclick attribute.
-								$onclick = apply_filters(
-									'commentpress_reply_to_para_link_onclick',
-									' onclick="' . $onclick . '"'
-								);
+								/**
+								 * Filters the "onclick" attribute.
+								 *
+								 * @since 3.9
+								 *
+								 * @param str The default "onclick" attribute.
+								 */
+								$onclick = apply_filters( 'commentpress_reply_to_para_link_onclick', ' onclick="' . $onclick . '"' );
 
 								// Just show replytopara.
 								$query = remove_query_arg( [ 'replytocom' ] );
@@ -1084,12 +1100,15 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 									)
 								);
 
-								// Construct href attribute.
-								$href = apply_filters(
-									'commentpress_reply_to_para_link_href',
-									$query . '#respond', // Add respond ID.
-									$text_sig
-								);
+								/**
+								 * Filters the "href" attribute.
+								 *
+								 * @since 3.9
+								 *
+								 * @param str The default "href" attribute.
+								 * @param str $text_sig The Text Signature of the Paragraph.
+								 */
+								$href = apply_filters( 'commentpress_reply_to_para_link_href', $query . '#respond', $text_sig );
 
 								// Construct link content.
 								$link_content = sprintf(
@@ -1097,12 +1116,15 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 									$markup['entity_text']
 								);
 
-								// Allow overrides.
-								$link_content = apply_filters(
-									'commentpress_reply_to_para_link_text',
-									$link_content,
-									$markup['entity_text']
-								);
+								/**
+								 * Filters the link content.
+								 *
+								 * @since 3.9
+								 *
+								 * @param str $link_content The default link content.
+								 * @param str The entity text.
+								 */
+								$link_content = apply_filters( 'commentpress_reply_to_para_link_text', $link_content, $markup['entity_text'] );
 
 								// Leave Comment link.
 								echo '<div class="reply_to_para" id="reply_to_para-' . $para_num . '">' . "\n" .
@@ -1119,6 +1141,8 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 
 					/**
 					 * Allow plugins to append to Paragraph wrappers.
+					 *
+					 * @since 3.9
 					 *
 					 * @param str $text_sig The Text Signature of the Paragraph.
 					 */
@@ -1317,7 +1341,16 @@ if ( ! function_exists( 'commentpress_comment_reply_link' ) ) :
 
 		}
 
-		// --<
+		/**
+		 * Filters the Comment Reply link.
+		 *
+		 * @since 3.4
+		 *
+		 * @param str $link The default the Comment Reply link.
+		 * @param array $args The reply links arguments.
+		 * @param object $comment The Comment.
+		 * @param object $post The Post.
+		 */
 		return apply_filters( 'comment_reply_link', $before . $link . $after, $args, $comment, $post );
 
 	}
@@ -1453,27 +1486,47 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 			current_user_can( 'edit_comment', $comment->comment_ID )
 		) {
 
-			// Set default edit link title text.
-			$edit_title_text = apply_filters(
-				'cp_comment_edit_link_title_text',
-				__( 'Edit this comment', 'commentpress-core' )
-			);
+			/**
+			 * Filters default edit link title text.
+			 *
+			 * @since 3.4
+			 *
+			 * @param str The default edit link title text.
+			 */
+			$edit_title_text = apply_filters( 'cp_comment_edit_link_title_text', __( 'Edit this comment', 'commentpress-core' ) );
 
-			// Set default edit link text.
-			$edit_text = apply_filters(
-				'cp_comment_edit_link_text',
-				__( 'Edit', 'commentpress-core' )
-			);
+			/**
+			 * Filters default edit link text.
+			 *
+			 * @since 3.4
+			 *
+			 * @param str The default edit link text.
+			 */
+			$edit_text = apply_filters( 'cp_comment_edit_link_text', __( 'Edit', 'commentpress-core' ) );
 
 			// Get "Edit Comment" link.
 			$editlink = '<span class="alignright comment-edit"><a class="comment-edit-link" href="' . get_edit_comment_link() . '" title="' . $edit_title_text . '">' . $edit_text . '</a></span>';
 
-			// Add a filter for plugins.
+			/**
+			 * Filters default edit link.
+			 *
+			 * @since 3.4
+			 *
+			 * @param str The default edit link.
+			 * @param object $comment The Comment object.
+			 */
 			$editlink = apply_filters( 'cp_comment_edit_link', $editlink, $comment );
 
 		}
 
-		// Add a nopriv filter for plugins.
+		/**
+		 * Filters default action links.
+		 *
+		 * @since 3.4
+		 *
+		 * @param str The default edit link.
+		 * @param object $comment The Comment object.
+		 */
 		$editlink = apply_filters( 'cp_comment_action_links', $editlink, $comment );
 
 		// Get Comment class(es).
@@ -1554,12 +1607,7 @@ if ( ! function_exists( 'commentpress_comments_by_para_format_whole' ) ) :
 		 * @param str $post_type_name The singular name of the Post Type.
 		 * @return str $entity_text The modified entity text.
 		 */
-		$return['entity_text'] = apply_filters(
-			'commentpress_lexia_whole_entity_text',
-			$return['entity_text'],
-			$post_type_name,
-			$post_type
-		);
+		$return['entity_text'] = apply_filters( 'commentpress_lexia_whole_entity_text', $return['entity_text'], $post_type_name, $post_type );
 
 		// Construct permalink text.
 		$return['permalink_text'] = sprintf(
@@ -1691,25 +1739,31 @@ if ( ! function_exists( 'commentpress_add_wp_editor' ) ) :
 		 */
 		$media_buttons = apply_filters( 'commentpress_rte_media_buttons', true );
 
-		// TinyMCE 4 - allow tinymce config to be overridden.
-		$tinymce_config = apply_filters(
-			'commentpress_rte_tinymce',
-			[
-				'theme' => 'modern',
-				'statusbar' => false,
-			]
-		);
+		/**
+		 * Filters the TinyMCE 4 config.
+		 *
+		 * @since 3.4
+		 *
+		 * @param array The default TinyMCE 4 config.
+		 */
+		$tinymce_config = apply_filters( 'commentpress_rte_tinymce', [
+			'theme' => 'modern',
+			'statusbar' => false,
+		] );
 
 		// No need for editor CSS.
 		$editor_css = '';
 
-		// Allow quicktags setting to be overridden.
-		$quicktags = apply_filters(
-			'commentpress_rte_quicktags',
-			[
-				'buttons' => 'strong,em,ul,ol,li,link,close',
-			]
-		);
+		/**
+		 * Filters the quicktags setting.
+		 *
+		 * @since 3.4
+		 *
+		 * @param array The default quicktags setting.
+		 */
+		$quicktags = apply_filters( 'commentpress_rte_quicktags', [
+			'buttons' => 'strong,em,ul,ol,li,link,close',
+		] );
 
 		// Our settings.
 		$settings = [

@@ -566,17 +566,23 @@ class CommentPress_AJAX_Comments {
 		}
 		*/
 
-		// Set default edit link title text.
-		$title_text = apply_filters(
-			'cpajax_comment_assign_link_title_text',
-			__( 'Drop on to a text-block to reassign this comment (and any replies) to it', 'commentpress-core' )
-		);
+		/**
+		 * Filters default "Move Comment" link title text.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string The default "Move Comment" link title text.
+		 */
+		$title_text = apply_filters( 'cpajax_comment_assign_link_title_text', __( 'Drop on to a text-block to reassign this comment (and any replies) to it', 'commentpress-core' ) );
 
-		// Set default edit link text.
-		$text = apply_filters(
-			'cp_comment_assign_link_text',
-			__( 'Move', 'commentpress-core' )
-		);
+		/**
+		 * Filters default "Move Comment" link text.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string The default "Move Comment" link text.
+		 */
+		$text = apply_filters( 'cp_comment_assign_link_text', __( 'Move', 'commentpress-core' ) );
 
 		// Construct assign button.
 		$assign_button = '<span class="alignright comment-assign" title="' . $title_text . '" id="cpajax_assign-' . $comment->comment_ID . '">' .

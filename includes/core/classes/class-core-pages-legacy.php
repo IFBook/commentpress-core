@@ -622,7 +622,13 @@ class CommentPress_Core_Pages_Legacy {
 		// Default Page title.
 		$default_title = __( 'Title Page', 'commentpress-core' );
 
-		// Set, but allow overrides.
+		/**
+		 * Filters the Title Page title.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string $default_title The default title of the Page.
+		 */
 		$title['post_title'] = apply_filters( 'cp_title_page_title', $default_title );
 
 		// Default content.
@@ -634,10 +640,22 @@ This is your title page. Edit it to suit your needs. It has been automatically s
 You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings</em> &#8594; <em>CommentPress</em> to make the site work the way you want it to. Use the Theme Customizer to change the way your site looks in <em>WordPress</em> &#8594; <em>Appearance</em> &#8594; <em>Customize</em>. For help with structuring, formatting and reading text in CommentPress, please refer to the <a href="http://www.futureofthebook.org/commentpress/">CommentPress website</a>.', 'commentpress-core'
 		);
 
-		// Set, but allow overrides.
+		/**
+		 * Filters the Title Page content.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string $content The default content of the Page.
+		 */
 		$title['post_content'] = apply_filters( 'cp_title_page_content', $content );
 
-		// Set template, but allow overrides.
+		/**
+		 * Filters the Title Page template.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string The default template of the Page.
+		 */
 		$title['page_template'] = apply_filters( 'cp_title_page_template', 'welcome.php' );
 
 		// Insert the Post into the database.
@@ -696,16 +714,34 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Default Page title.
 		$title = __( 'General Comments', 'commentpress-core' );
 
-		// Set, but allow overrides.
+		/**
+		 * Filters the General Comments Page title.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string $title The default title of the Page.
+		 */
 		$general_comments['post_title'] = apply_filters( 'cp_general_comments_title', $title );
 
 		// Default content.
 		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-core' );
 
-		// Set, but allow overrides.
+		/**
+		 * Filters the General Comments Page content.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string $content The default content of the Page.
+		 */
 		$general_comments['post_content'] = apply_filters( 'cp_general_comments_content', $content );
 
-		// Set template, but allow overrides.
+		/**
+		 * Filters the General Comments Page template.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string The default template of the Page.
+		 */
 		$general_comments['page_template'] = apply_filters( 'cp_general_comments_template', 'comments-general.php' );
 
 		// Insert the Post into the database.
@@ -747,16 +783,34 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Default Page title.
 		$title = __( 'All Comments', 'commentpress-core' );
 
-		// Set, but allow overrides.
+		/**
+		 * Filters the All Comments Page title.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string $title The default title of the Page.
+		 */
 		$all_comments['post_title'] = apply_filters( 'cp_all_comments_title', $title );
 
 		// Default content.
 		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-core' );
 
-		// Set, but allow overrides.
+		/**
+		 * Filters the All Comments Page content.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string $content The default content of the Page.
+		 */
 		$all_comments['post_content'] = apply_filters( 'cp_all_comments_content', $content );
 
-		// Set template, but allow overrides.
+		/**
+		 * Filters the All Comments Page template.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string The default template of the Page.
+		 */
 		$all_comments['page_template'] = apply_filters( 'cp_all_comments_template', 'comments-all.php' );
 
 		// Insert the Post into the database.
@@ -798,16 +852,34 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Default Page title.
 		$title = __( 'Comments by Commenter', 'commentpress-core' );
 
-		// Set, but allow overrides.
+		/**
+		 * Filters the Comments by Commenter Page title.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string $title The default title of the Page.
+		 */
 		$group['post_title'] = apply_filters( 'cp_comments_by_title', $title );
 
 		// Default content.
 		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-core' );
 
-		// Set, but allow overrides.
+		/**
+		 * Filters the Comments by Commenter Page content.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string $content The default content of the Page.
+		 */
 		$group['post_content'] = apply_filters( 'cp_comments_by_content', $content );
 
-		// Set template, but allow overrides.
+		/**
+		 * Filters the Comments by Commenter Page template.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string The default template of the Page.
+		 */
 		$group['page_template'] = apply_filters( 'cp_comments_by_template', 'comments-by.php' );
 
 		// Insert the Post into the database.
@@ -849,16 +921,34 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Default Page title.
 		$title = __( 'Blog', 'commentpress-core' );
 
-		// Set, but allow overrides.
+		/**
+		 * Filters the Blog Page title.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string $title The default title of the Page.
+		 */
 		$blog['post_title'] = apply_filters( 'cp_blog_page_title', $title );
 
 		// Default content.
 		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-core' );
 
-		// Set, but allow overrides.
+		/**
+		 * Filters the Blog Page content.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string $content The default content of the Page.
+		 */
 		$blog['post_content'] = apply_filters( 'cp_blog_page_content', $content );
 
-		// Set template, but allow overrides.
+		/**
+		 * Filters the Blog Page template.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string The default template of the Page.
+		 */
 		$blog['page_template'] = apply_filters( 'cp_blog_page_template', 'blog.php' );
 
 		// Insert the Post into the database.
@@ -903,16 +993,34 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Default Page title.
 		$title = __( 'Blog Archive', 'commentpress-core' );
 
-		// Set, but allow overrides.
+		/**
+		 * Filters the Blog Archive Page content.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string $title The default content of the Page.
+		 */
 		$blog['post_title'] = apply_filters( 'cp_blog_archive_page_title', $title );
 
 		// Default content.
 		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-core' );
 
-		// Set, but allow overrides.
+		/**
+		 * Filters the Blog Archive Page content.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string $content The default content of the Page.
+		 */
 		$blog['post_content'] = apply_filters( 'cp_blog_archive_page_content', $content );
 
-		// Set template, but allow overrides.
+		/**
+		 * Filters the Blog Archive Page template.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string The default template of the Page.
+		 */
 		$blog['page_template'] = apply_filters( 'cp_blog_archive_page_template', 'archives.php' );
 
 		// Insert the Post into the database.
@@ -954,16 +1062,34 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Default Page title.
 		$title = __( 'Table of Contents', 'commentpress-core' );
 
-		// Set, but allow overrides.
+		/**
+		 * Filters the TOC Page title.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string $title The default title of the Page.
+		 */
 		$toc['post_title'] = apply_filters( 'cp_toc_page_title', $title );
 
 		// Default content.
 		$content = __( 'Do not delete this page. Page content is generated with a custom template.', 'commentpress-core' );
 
-		// Set, but allow overrides.
+		/**
+		 * Filters the TOC Page content.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string $content The default content of the Page.
+		 */
 		$toc['post_content'] = apply_filters( 'cp_toc_page_content', $content );
 
-		// Set template, but allow overrides.
+		/**
+		 * Filters the TOC Page template.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string The default template of the Page.
+		 */
 		$toc['page_template'] = apply_filters( 'cp_toc_page_template', 'toc.php' );
 
 		// Insert the Post into the database.

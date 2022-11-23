@@ -433,7 +433,13 @@ class CommentPress_Core_Display {
 
 		}
 
-		// --<
+		/**
+		 * Filters if TinyMCE is allowed.
+		 *
+		 * @since 3.4
+		 *
+		 * @param bool $allowed True if TinyMCE is allowed, false otherwise.
+		 */
 		return apply_filters( 'commentpress_is_tinymce_allowed', $allowed );
 
 	}
@@ -729,7 +735,13 @@ HELPTEXT;
 			// Define Title Page.
 			$title_page_title = get_the_title( $welcome_id );
 
-			// Allow overrides.
+			/**
+			 * Filters the Title Page title.
+			 *
+			 * @since 3.4
+			 *
+			 * @param string $title_page_title The default Title Page title.
+			 */
 			$title_page_title = apply_filters( 'cp_title_page_title', $title_page_title );
 
 			// Set current item class if viewing Front Page.

@@ -2400,11 +2400,16 @@ class CommentPress_Core_Database {
 
 		}
 
-		// Allow plugins to override TinyMCE.
-		$vars['cp_tinymce'] = apply_filters(
-			'cp_override_tinymce',
-			$vars['cp_tinymce']
-		);
+		/**
+		 * Filters the TinyMCE vars.
+		 *
+		 * Allow plugins to override TinyMCE.
+		 *
+		 * @since 3.4
+		 *
+		 * @param bool $cp_tinymce The default TinyMCE vars.
+		 */
+		$vars['cp_tinymce'] = apply_filters( 'cp_override_tinymce', $vars['cp_tinymce'] );
 
 		// Add mobile var.
 		$vars['cp_is_mobile'] = 0;
@@ -2559,7 +2564,13 @@ class CommentPress_Core_Database {
 
 		}
 
-		// --<
+		/**
+		 * Filters the Javascript vars.
+		 *
+		 * @since 3.4
+		 *
+		 * @param array $vars The default Javascript vars.
+		 */
 		return apply_filters( 'commentpress_get_javascript_vars', $vars );
 
 	}

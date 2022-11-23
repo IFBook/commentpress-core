@@ -139,11 +139,14 @@ class CommentPress_Multisite_Sites {
 			<input type="hidden" value="1" id="cpmu-new-blog" name="cpmu-new-blog" />
 			';
 
-			// Define text, but allow overrides.
-			$text = apply_filters(
-				'cp_multisite_options_signup_text_forced',
-				__( 'Select the options for your new CommentPress document.', 'commentpress-core' )
-			);
+			/**
+			 * Filters the Signup Form text.
+			 *
+			 * @since 3.3
+			 *
+			 * @param string The default Signup Form text.
+			 */
+			$text = apply_filters( 'cp_multisite_options_signup_text_forced', __( 'Select the options for your new CommentPress document.', 'commentpress-core' ) );
 
 		} else {
 
@@ -154,11 +157,14 @@ class CommentPress_Multisite_Sites {
 			</div>
 			';
 
-			// Define text, but allow overrides.
-			$text = apply_filters(
-				'cp_multisite_options_signup_text',
-				__( 'Do you want to make the new site a CommentPress document?', 'commentpress-core' )
-			);
+			/**
+			 * Filters the signup text.
+			 *
+			 * @since 3.3
+			 *
+			 * @param string The default signup text.
+			 */
+			$text = apply_filters( 'cp_multisite_options_signup_text', __( 'Do you want to make the new site a CommentPress document?', 'commentpress-core' ) );
 
 		}
 

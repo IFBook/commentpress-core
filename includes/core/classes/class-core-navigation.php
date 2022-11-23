@@ -1208,7 +1208,13 @@ class CommentPress_Core_Navigator {
 
 		}
 
-		// Allow plugins to filter.
+		/**
+		 * Filters the Pages excluded from navigation.
+		 *
+		 * @since 3.4
+		 *
+		 * @param array $excluded_pages The default Pages excluded from navigation.
+		 */
 		$excluded_pages = apply_filters( 'cp_exclude_pages_from_nav', $excluded_pages );
 
 		// Are there any?

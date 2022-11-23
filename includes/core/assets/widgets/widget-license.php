@@ -48,8 +48,17 @@ class CommentPress_License_Widget extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 
-		// Get data.
+		// Filters the widget title using WordPress filter.
 		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
+
+		/**
+		 * Filters the content of the widget.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string The content of the widget.
+		 * @param array $instance An array of settings for this Widget instance.
+		 */
 		$text = apply_filters( 'commentpress_widget', empty( $instance['text'] ) ? '' : $instance['text'], $instance );
 
 		// Show before.

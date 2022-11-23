@@ -375,7 +375,17 @@ class CommentPress_Multisite_Database {
 		// Init default options.
 		$this->cpmu_options = [];
 
-		// Allow plugins to add their own options (we always get options from commentpress_mu).
+		/**
+		 * Filters the default Multisite options.
+		 *
+		 * Used internally by:
+		 *
+		 * * CommentPress_Multisite_Sites::get_default_settings() (Priority: 20)
+		 *
+		 * @since 3.4
+		 *
+		 * @param array The default Multisite options.
+		 */
 		$this->cpmu_options = apply_filters( 'cpmu_db_options_get_defaults', $this->cpmu_options );
 
 		// Store options array.

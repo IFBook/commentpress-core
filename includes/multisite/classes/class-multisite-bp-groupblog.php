@@ -302,25 +302,34 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 		// If Group Blog.
 		if ( ! empty( $core ) && $core->bp->is_groupblog() ) {
 
-			// Override default link name.
-			return apply_filters(
-				'cpmsextras_user_links_new_site_title',
-				sprintf(
-					__( 'Recent Comments in this %s', 'commentpress-core' ),
-					$this->groupblog_nomenclature_name
-				)
+			// Build title.
+			$recent_title = sprintf(
+				__( 'Recent Comments in this %s', 'commentpress-core' ),
+				$this->groupblog_nomenclature_name
 			);
+
+			/**
+			 * Filters the Recent Comments title.
+			 *
+			 * @since 3.4
+			 *
+			 * @param string $recent_title The default Recent Comments title.
+			 */
+			return apply_filters( 'cpmsextras_user_links_new_site_title', $recent_title );
 
 		}
 
 		// If Main Site.
 		if ( is_multisite() && is_main_site() ) {
 
-			// Override default link name.
-			return apply_filters(
-				'cpmsextras_user_links_new_site_title',
-				__( 'Recent Comments in Site Blog', 'commentpress-core' )
-			);
+			/**
+			 * Filters the Recent Comments in Site Blog title.
+			 *
+			 * @since 3.4
+			 *
+			 * @param string The default Recent Comments title.
+			 */
+			return apply_filters( 'cpmsextras_user_links_new_site_title', __( 'Recent Comments in Site Blog', 'commentpress-core' ) );
 
 		}
 

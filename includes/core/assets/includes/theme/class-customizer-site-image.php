@@ -58,8 +58,8 @@ class WP_Customize_Site_Image_Control extends WP_Customize_Media_Control {
 		// Call parent constructor.
 		parent::__construct( $manager, $id, $args );
 
-		// Allow label to be filtered.
-		$site_image = apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) );
+		// Get the "Site Image" label.
+		$site_image = commentpress_customizer_get_site_image_title();
 
 		// Set labels.
 		$this->button_labels = [

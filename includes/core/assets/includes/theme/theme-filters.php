@@ -85,7 +85,13 @@ if ( ! function_exists( 'commentpress_document_title_parts' ) ) :
 			}
 		}
 
-		// Return filtered array.
+		/**
+		 * Filters array of title parts.
+		 *
+		 * @since 3.8.3
+		 *
+		 * @param array $parts The array of title parts.
+		 */
 		return apply_filters( 'commentpress_document_title_parts', $parts );
 
 	}

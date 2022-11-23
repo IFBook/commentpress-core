@@ -60,7 +60,18 @@
 		</td>
 	</tr>
 
-	<?php echo apply_filters( 'cpmu_network_buddypress_options_form', '' ); ?>
+	<?php
+
+	/**
+	 * Legacy filter to inject content into the Network Settings Page.
+	 *
+	 * @since 3.4
+	 *
+	 * @param string Empty by default. Populated via the filter.
+	 */
+	echo apply_filters( 'cpmu_network_buddypress_options_form', '' );
+
+	?>
 
 	<?php
 

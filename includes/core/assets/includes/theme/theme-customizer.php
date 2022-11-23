@@ -22,7 +22,12 @@ if ( ! function_exists( 'commentpress_admin_menu' ) ) :
 	function commentpress_admin_menu() {
 
 		// Add the Customize link to the admin menu.
-		add_theme_page( __( 'Customize', 'commentpress-core' ), __( 'Customize', 'commentpress-core' ), 'edit_theme_options', 'customize.php' );
+		add_theme_page(
+			__( 'Customize', 'commentpress-core' ),
+			__( 'Customize', 'commentpress-core' ),
+			'edit_theme_options',
+			'customize.php'
+		);
 
 	}
 
@@ -31,6 +36,84 @@ endif;
 // Add callback for the above.
 // TODO: Is this necessary?
 add_action( 'admin_menu', 'commentpress_admin_menu' );
+
+
+
+if ( ! function_exists( 'commentpress_customizer_get_site_image_title' ) ) :
+
+	/**
+	 * Gets the "Site Image" label.
+	 *
+	 * @since 4.0
+	 *
+	 * @return str The default "Site Image" label.
+	 */
+	function commentpress_customizer_get_site_image_title( $wp_customize ) {
+
+		/**
+		 * Filters the "Site Image" label.
+		 *
+		 * @since 3.8.6
+		 *
+		 * @param str The default "Site Image" label.
+		 */
+		return apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) );
+
+	}
+
+endif;
+
+
+
+if ( ! function_exists( 'commentpress_customizer_get_site_image_description' ) ) :
+
+	/**
+	 * Gets the "Site Image" description.
+	 *
+	 * @since 4.0
+	 *
+	 * @return str The default "Site Image" label.
+	 */
+	function commentpress_customizer_get_site_image_description() {
+
+		/**
+		 * Filters the "Site Image" description.
+		 *
+		 * @since 3.8.6
+		 *
+		 * @param str The default "Site Image" description.
+		 */
+		return apply_filters( 'commentpress_customizer_site_image_description', __( 'Choose an image to represent this site. Other plugins may use this image to illustrate this site - in multisite directory listings, for example.', 'commentpress-core' ) );
+
+	}
+
+endif;
+
+
+
+if ( ! function_exists( 'commentpress_customizer_get_site_logo_description' ) ) :
+
+	/**
+	 * Gets the "Site Logo" description.
+	 *
+	 * @since 4.0
+	 *
+	 * @return str The default "Site Logo" label.
+	 */
+	function commentpress_customizer_get_site_logo_description() {
+
+		/**
+		 * Filters the "Site Logo" description.
+		 *
+		 * @since 3.8.6
+		 *
+		 * @param str The default "Site Logo" description.
+		 */
+		return apply_filters( 'commentpress_customizer_site_logo_description', __( 'You may prefer to display an image instead of text in the header of your site. The image must be a maximum of 70px tall. If it is less tall, then you can adjust the vertical alignment using the "Top padding in px" setting below.', 'commentpress-core' ) );
+
+	}
+
+endif;
 
 
 
@@ -100,7 +183,14 @@ if ( ! function_exists( 'commentpress_customize_site_image' ) ) :
 		$wp_customize->add_section(
 			'cp_site_image',
 			[
-				'title' => apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) ),
+		/**
+		 * Filters the "Site Image" label.
+		 *
+		 * @since3.8.6
+		 *
+		 * @param str The default "Site Image"  label.
+		 */
+				'title' => commentpress_customizer_get_site_image_title(),
 				'priority' => 25,
 			]
 		);
@@ -121,8 +211,8 @@ if ( ! function_exists( 'commentpress_customize_site_image' ) ) :
 				$wp_customize,
 				'cp_site_image',
 				[
-					'label' => apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) ),
-					'description' => apply_filters( 'commentpress_customizer_site_image_description', __( 'Choose an image to represent this site. Other plugins may use this image to illustrate this site - in multisite directory listings, for example.', 'commentpress-core' ) ),
+					'label' => commentpress_customizer_get_site_image_title(),
+					'description' => commentpress_customizer_get_site_image_description(),
 					'section' => 'cp_site_image',
 					'settings' => 'commentpress_theme_settings[cp_site_image]',
 					'priority' => 1,
@@ -181,7 +271,7 @@ if ( ! function_exists( 'commentpress_customize_site_logo' ) ) :
 				'cp_inline_header_image',
 				[
 					'label' => __( 'Logo Image', 'commentpress-core' ),
-					'description' => apply_filters( 'commentpress_customizer_site_logo_description', __( 'You may prefer to display an image instead of text in the header of your site. The image must be a maximum of 70px tall. If it is less tall, then you can adjust the vertical alignment using the "Top padding in px" setting below.', 'commentpress-core' ) ),
+					'description' => commentpress_customizer_get_site_logo_description(),
 					'section' => 'cp_inline_header_image',
 					'settings' => 'commentpress_theme_settings[cp_inline_header_image]',
 					'priority' => 1,

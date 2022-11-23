@@ -672,23 +672,29 @@ class CommentPress_Multisite_BuddyPress {
 		// If on a CommentPress Core-enabled Group Blog.
 		if ( $is_groupblog ) {
 
-			// Allow plugins to override the name of the Activity item.
-			$activity_name = apply_filters(
-				'cp_activity_post_name',
-				__( 'post', 'commentpress-core' )
-			);
+			/**
+			 * Filters the name of the Activity item.
+			 *
+			 * @since 3.3
+			 *
+			 * @param string The default name of the Activity item.
+			 */
+			$activity_name = apply_filters( 'cp_activity_post_name', __( 'post', 'commentpress-core' ) );
 
 		}
 
 		// If on a CommentPress Core-enabled Group Site.
 		if ( $is_groupsite ) {
 
-			// Respect BP Group Sites filter for the name of the Activity item.
-			$activity_name = apply_filters(
-				'bpgsites_activity_post_name',
-				__( 'post', 'commentpress-core' ),
-				$post
-			);
+			/**
+			 * Respect BP Group Sites filter for the name of the Activity item.
+			 *
+			 * @since 3.3
+			 *
+			 * @param string The default name of the Activity item.
+			 * @param WP_Post The WordPress Post object.
+			 */
+			$activity_name = apply_filters( 'bpgsites_activity_post_name', __( 'post', 'commentpress-core' ), $post );
 
 		}
 
@@ -735,17 +741,20 @@ class CommentPress_Multisite_BuddyPress {
 			$group_link
 		);
 
-		// Allow plugins to override this.
-		$activity->action = apply_filters(
-			'commentpress_comment_activity_action', // Hook.
-			$activity->action, // Default.
-			$activity,
-			$user_link,
-			$comment_link,
-			$activity_name,
-			$target_post_link,
-			$group_link
-		);
+		/**
+		 * Filters the Activity action.
+		 *
+		 * @since 3.3
+		 *
+		 * @param string $action The Activity action.
+		 * @param object $activity The Activity object.
+		 * @param string $user_link The User link element.
+		 * @param string $comment_link The User link element.
+		 * @param string $activity_name The name of the Activity.
+		 * @param string $target_post_link The Target Post link element.
+		 * @param string $group_link The Group link element.
+		 */
+		$activity->action = apply_filters( 'commentpress_comment_activity_action', $activity->action, $activity, $user_link, $comment_link, $activity_name, $target_post_link, $group_link );
 
 		// Apply Group ID.
 		$activity->item_id = (int) $group_id;
@@ -889,11 +898,14 @@ class CommentPress_Multisite_BuddyPress {
 			$activity->id = $id;
 		}
 
-		// Allow plugins to override the name of the Activity item.
-		$activity_name = apply_filters(
-			'cp_activity_post_name',
-			__( 'post', 'commentpress-core' )
-		);
+		/**
+		 * Filters the name of the Activity item.
+		 *
+		 * @since 3.3
+		 *
+		 * @param string The name of the Activity item.
+		 */
+		$activity_name = apply_filters( 'cp_activity_post_name', __( 'post', 'commentpress-core' ) );
 
 		// Default to standard BuddyPress author.
 		$activity_author = bp_core_get_userlink( $post->post_author );
@@ -1174,7 +1186,13 @@ class CommentPress_Multisite_BuddyPress {
 		// Default name.
 		$comment_name = __( 'CommentPress Comments', 'commentpress-core' );
 
-		// Allow plugins to override the name of the option.
+		/**
+		 * Filters the name of the option.
+		 *
+		 * @since 3.3
+		 *
+		 * @param string $comment_name The name of the option.
+		 */
 		$comment_name = apply_filters( 'cp_groupblog_comment_name', $comment_name );
 
 		// Construct option.
@@ -1195,7 +1213,13 @@ class CommentPress_Multisite_BuddyPress {
 		// Default name.
 		$name = __( 'CommentPress Posts', 'commentpress-core' );
 
-		// Allow plugins to override the name of the option.
+		/**
+		 * Filters the name of the option.
+		 *
+		 * @since 3.3
+		 *
+		 * @param string $comment_name The name of the option.
+		 */
 		$name = apply_filters( 'cp_groupblog_post_name', $name );
 
 		// Construct option.
@@ -1260,7 +1284,13 @@ class CommentPress_Multisite_BuddyPress {
 		// Did we get one?
 		if ( $groupblog_type ) {
 
-			// Yes, it's a CommentPress Core-enabled Group Blog.
+			/**
+			 * Filters the name of a CommentPress-enabled the Group Blog.
+			 *
+			 * @since 3.3
+			 *
+			 * @param string The default name of the Group Blog.
+			 */
 			return apply_filters( 'cpmu_bp_groupblog_subnav_item_name', __( 'Document', 'commentpress-core' ) );
 
 		}
@@ -1286,7 +1316,13 @@ class CommentPress_Multisite_BuddyPress {
 		// Did we get one?
 		if ( $groupblog_type ) {
 
-			// Yes, it's a CommentPress Core-enabled Group Blog.
+			/**
+			 * Filters the slug of a CommentPress-enabled the Group Blog.
+			 *
+			 * @since 3.3
+			 *
+			 * @param string The default slug of the Group Blog.
+			 */
 			return apply_filters( 'cpmu_bp_groupblog_subnav_item_slug', 'document' );
 
 		}
@@ -1311,7 +1347,13 @@ class CommentPress_Multisite_BuddyPress {
 			return $title;
 		}
 
-		// Override default link name.
+		/**
+		 * Filters the link name of a CommentPress-enabled the Group Blog.
+		 *
+		 * @since 3.3
+		 *
+		 * @param string The default link name of the Group Blog.
+		 */
 		return apply_filters( 'cpmu_bp_nav_title_page_title', __( 'Document Home Page', 'commentpress-core' ) );
 
 	}
@@ -1571,7 +1613,13 @@ class CommentPress_Multisite_BuddyPress {
 	 */
 	public function user_links_new_site_title() {
 
-		// Override default link name.
+		/**
+		 * Filters the title of the "Create a new document" link.
+		 *
+		 * @since 3.3
+		 *
+		 * @param string The default title of the "Create a new document" link.
+		 */
 		return apply_filters( 'cpmu_bp_create_new_site_title', __( 'Create a New Site', 'commentpress-core' ) );
 
 	}
@@ -1626,7 +1674,13 @@ class CommentPress_Multisite_BuddyPress {
 							// Is the current User a Member of the Blog?
 							if ( ! is_user_member_of_blog( $current_user->ID, $blog_id ) ) {
 
-								// No - redirect to network home, but allow overrides.
+								/**
+								 * Redirect to network home, but allow overrides.
+								 *
+								 * @since 3.4
+								 *
+								 * @param string The default network home URL.
+								 */
 								wp_safe_redirect( apply_filters( 'bp_groupblog_privacy_redirect_url', network_site_url() ) );
 								exit;
 
@@ -1829,11 +1883,14 @@ class CommentPress_Multisite_BuddyPress {
 				<input type="hidden" value="1" id="cpbp-groupblog" name="cpbp-groupblog" />
 				';
 
-				// Define text, but allow overrides.
-				$text = apply_filters(
-					'cp_groupblog_options_signup_text_forced',
-					__( 'Select the options for your new CommentPress-enabled blog. Note: if you choose an existing blog as a group blog, setting these options will have no effect.', 'commentpress-core' )
-				);
+				/**
+				 * Filters the Signup Form text.
+				 *
+				 * @since 3.4
+				 *
+				 * @param string The default Signup Form text.
+				 */
+				$text = apply_filters( 'cp_groupblog_options_signup_text_forced', __( 'Select the options for your new CommentPress-enabled blog. Note: if you choose an existing blog as a group blog, setting these options will have no effect.', 'commentpress-core' ) );
 
 			} else {
 
@@ -1844,11 +1901,14 @@ class CommentPress_Multisite_BuddyPress {
 				</div>
 				';
 
-				// Define text, but allow overrides.
-				$text = apply_filters(
-					'cp_groupblog_options_signup_text',
-					__( 'When you create a group blog, you can choose to enable it as a CommentPress blog. This is a "one time only" option because you cannot disable CommentPress from here once the group blog is created. Note: if you choose an existing blog as a group blog, setting this option will have no effect.', 'commentpress-core' )
-				);
+				/**
+				 * Filters the Signup Form Group Blog options text.
+				 *
+				 * @since 3.4
+				 *
+				 * @param string The default Signup Form Group Blog options text.
+				 */
+				$text = apply_filters( 'cp_groupblog_options_signup_text', __( 'When you create a group blog, you can choose to enable it as a CommentPress blog. This is a "one time only" option because you cannot disable CommentPress from here once the group blog is created. Note: if you choose an existing blog as a group blog, setting this option will have no effect.', 'commentpress-core' ) );
 
 			}
 
@@ -1954,14 +2014,26 @@ class CommentPress_Multisite_BuddyPress {
 
 		// TODO: create Admin Page settings for WordPress options.
 
-		// Show Posts by default (allow plugin overrides).
+		/**
+		 * Filters the "Show Posts by default" option.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string The default "Show Posts by default" option.
+		 */
 		$posts_or_pages = apply_filters( 'cp_posts_or_pages_in_toc', 'post' );
 		$core->db->option_set( 'cp_show_posts_or_pages_in_toc', $posts_or_pages );
 
 		// If we opted for Posts.
 		if ( $posts_or_pages == 'post' ) {
 
-			// TOC shows extended Posts by default (allow plugin overrides).
+			/**
+			 * Filters the "TOC shows extended Posts" option.
+			 *
+			 * @since 3.4
+			 *
+			 * @param bool The default "TOC shows extended Posts" option.
+			 */
 			$extended_toc = apply_filters( 'cp_extended_toc', 1 );
 			$core->db->option_set( 'cp_show_extended_toc', $extended_toc );
 
@@ -2458,7 +2530,13 @@ class CommentPress_Multisite_BuddyPress {
 			'cpmu_bp_groupblog_theme' => $theme_data,
 		];
 
-		// Return defaults, but allow overrides and additions.
+		/**
+		 * Filters the default BuddyPress options.
+		 *
+		 * @since 3.4
+		 *
+		 * @param array $defaults The default BuddyPress options.
+		 */
 		return apply_filters( 'cpmu_buddypress_options_get_defaults', $defaults );
 
 	}

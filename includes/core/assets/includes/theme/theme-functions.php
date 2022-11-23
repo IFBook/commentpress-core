@@ -188,7 +188,13 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ) :
 		// Allow plugins to hook in before Theme Customizer.
 		// -------------------------------------------------------------------------
 
-		// Allow plugins to hook in.
+		/**
+		 * Allows plugins to short-circuit the Header Image.
+		 *
+		 * @since 3.4
+		 *
+		 * @param bool False by default. Return true to short-circuit.
+		 */
 		$custom_avatar_pre = apply_filters( 'commentpress_header_image_pre_customizer', false );
 
 		// Show it if we get an override.
@@ -215,11 +221,14 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ) :
 				$style = ' style="padding-top: ' . $options['cp_inline_header_padding'] . 'px"';
 			}
 
-			// Show the uploaded image.
-			echo apply_filters(
-				'commentpress_header_image',
-				'<img src="' . $options['cp_inline_header_image'] . '" class="cp_logo_image"' . $style . ' alt="' . __( 'Logo', 'commentpress-core' ) . '" />'
-			);
+			/**
+			 * Filters the uploaded image markup.
+			 *
+			 * @since 3.4
+			 *
+			 * @param string The uploaded image markup.
+			 */
+			echo apply_filters( 'commentpress_header_image', '<img src="' . $options['cp_inline_header_image'] . '" class="cp_logo_image"' . $style . ' alt="' . __( 'Logo', 'commentpress-core' ) . '" />' );
 
 			// --<
 			return;
@@ -230,7 +239,13 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ) :
 		// Allow plugins to hook in after Theme Customizer.
 		// -------------------------------------------------------------------------
 
-		// Allow plugins to hook in.
+		/**
+		 * Allows plugins to short-circuit the Header Image.
+		 *
+		 * @since 3.4
+		 *
+		 * @param bool False by default. Return true to short-circuit fallback Header Image.
+		 */
 		$custom_avatar_post = apply_filters( 'commentpress_header_image_post_customizer', false );
 
 		// Did we get one?
@@ -497,7 +512,13 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 
 		// -------------------- Process ----------------------------------------
 
-		// Construct attribute but allow filtering.
+		/**
+		 * Filters the body classes attribute.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string The body classes attribute.
+		 */
 		$body_classes = apply_filters( 'commentpress_body_classes', implode( ' ', $classes ) );
 
 		// If we want them wrapped, do so.
@@ -829,11 +850,19 @@ if ( ! function_exists( 'commentpress_echo_post_author' ) ) :
 
 			// Link to theme's Author Page.
 			$link = sprintf(
-				'<a href="%1$s" title="%2$s" rel="author">%3$s</a>',
+				'<a href="%s" title="%s" rel="author">%s</a>',
 				get_author_posts_url( $user->ID, $user->user_nicename ),
 				esc_attr( sprintf( __( 'Posts by %s', 'commentpress-core' ), $user->display_name ) ),
 				esc_html( $user->display_name )
 			);
+
+			/**
+			 * Filters the link to theme's Author Page.
+			 *
+			 * @since 3.4
+			 *
+			 * @param string The link to theme's Author Page.
+			 */
 			$author = apply_filters( 'the_author_posts_link', $link );
 
 		}

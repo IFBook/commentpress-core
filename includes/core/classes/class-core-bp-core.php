@@ -181,7 +181,13 @@ class CommentPress_Core_BuddyPress {
 		// Is it a BuddyPress Page?
 		$is_bp = ! bp_is_blog_page();
 
-		// Let's see.
+		/**
+		 * Filters the BuddyPress "Special Page" result.
+		 *
+		 * @since 3.4
+		 *
+		 * @param bool $is_bp The default BuddyPress "Special Page" result.
+		 */
 		return apply_filters( 'cp_is_buddypress_special_page', $is_bp );
 
 	}

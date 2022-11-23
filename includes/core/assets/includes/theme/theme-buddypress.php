@@ -71,7 +71,15 @@ if ( ! function_exists( 'commentpress_amend_search_query' ) ) :
 			// Is this a BuddyPress search on the main BuddyPress instance?
 			if ( function_exists( 'bp_search_form_type_select' ) && bp_is_root_blog() ) {
 
-				// Search Posts and Pages.
+				/**
+				 * Filters the Post Types to search.
+				 *
+				 * Searches Posts and Pages by default.
+				 *
+				 * @since 3.8.2
+				 *
+				 * @param array The default array of Post Types to search.
+				 */
 				$query->set( 'post_type', apply_filters( 'commentpress_amend_search_query_post_types', [ 'post', 'page' ] ) );
 
 				// Get core plugin reference.
@@ -81,9 +89,18 @@ if ( ! function_exists( 'commentpress_amend_search_query' ) ) :
 					// Get special Pages array, if it's there.
 					$special_pages = $core->db->option_get( 'cp_special_pages' );
 
+					/**
+					 * Filters the Special Pages search query exclusions.
+					 *
+					 * @since 3.8.2
+					 *
+					 * @param array The array of Special Pages.
+					 */
+					$special_pages = apply_filters( 'commentpress_amend_search_query_exclusions', $special_pages );
+
 					// Exclude Special Pages if we have them.
 					if ( is_array( $special_pages ) ) {
-						$query->set( 'post__not_in', apply_filters( 'commentpress_amend_search_query_exclusions', $special_pages ) );
+						$query->set( 'post__not_in', $special_pages );
 					}
 
 				}
