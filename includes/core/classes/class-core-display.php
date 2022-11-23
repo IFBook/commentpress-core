@@ -81,6 +81,10 @@ class CommentPress_Core_Display {
 	 */
 	public function register_hooks() {
 
+		// Act when this plugin is activated/deactivated.
+		add_action( 'commentpress/core/activated', [ $this, 'activate' ] );
+		add_action( 'commentpress/core/deactivated', [ $this, 'deactivate' ] );
+
 		// Enable CommentPress themes in Multisite optional scenario.
 		add_filter( 'network_allowed_themes', [ $this, 'allowed_themes' ] );
 

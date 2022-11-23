@@ -301,32 +301,34 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Runs when plugin is activated.
+	 * Activates core plugin.
 	 *
 	 * @since 3.0
 	 */
 	public function activate() {
 
-		// Initialise display - sets the theme.
-		$this->display->activate();
-
-		// Initialise database.
-		$this->db->activate();
+		/**
+		 * Fires when plugin is activated.
+		 *
+		 * @since 4.0
+		 */
+		do_action( 'commentpress/core/activated' );
 
 	}
 
 	/**
-	 * Runs when plugin is deactivated.
+	 * Deactivates core plugin.
 	 *
 	 * @since 3.0
 	 */
 	public function deactivate() {
 
-		// Call database destroy method.
-		$this->db->deactivate();
-
-		// Call display destroy method.
-		$this->display->deactivate();
+		/**
+		 * Fires when plugin is activated.
+		 *
+		 * @since 4.0
+		 */
+		do_action( 'commentpress/core/deactivated' );
 
 	}
 
