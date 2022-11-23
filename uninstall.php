@@ -40,7 +40,15 @@ delete_option( 'commentpress_options' );
 
 // Restore database schema.
 $success = commentpress_schema_restore();
-// Do we care about the result?
+
+// Write something to the logs on failure.
+if ( ! $success ) {
+	$e = new \Exception();
+	$trace = $e->getTraceAsString();
+	error_log( print_r( [
+		'commentpress-uninstall-error' => __( 'Could not drop comment signature column.', 'commentpress-core' ),
+	], true ) );
+}
 
 // Are we deleting in multisite?
 if ( is_multisite() ) {
