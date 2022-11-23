@@ -251,9 +251,13 @@ class CommentPress_Core_Database {
 		// Init when this plugin is fully loaded.
 		add_action( 'commentpress/core/loaded', [ $this, 'initialise' ] );
 
-		// Act when this plugin is activated/deactivated.
-		add_action( 'commentpress/core/activated', [ $this, 'activate' ] );
-		add_action( 'commentpress/core/deactivated', [ $this, 'deactivate' ] );
+		/*
+		 * Act when this plugin is activated/deactivated.
+		 *
+		 * Hooked in after Display class.
+		 */
+		add_action( 'commentpress/core/activated', [ $this, 'activate' ], 20 );
+		add_action( 'commentpress/core/deactivated', [ $this, 'deactivate' ],20 );
 
 	}
 
