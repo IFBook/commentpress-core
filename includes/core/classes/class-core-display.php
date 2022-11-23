@@ -81,13 +81,6 @@ class CommentPress_Core_Display {
 	 */
 	public function register_hooks() {
 
-		// Act when this plugin is activated/deactivated.
-		add_action( 'commentpress/core/activated', [ $this, 'activate' ] );
-		add_action( 'commentpress/core/deactivated', [ $this, 'deactivate' ] );
-
-		// Enable CommentPress themes in Multisite optional scenario.
-		add_filter( 'network_allowed_themes', [ $this, 'allowed_themes' ] );
-
 		// Comment Block quicktag.
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_scripts' ] );
 
@@ -96,117 +89,6 @@ class CommentPress_Core_Display {
 
 		// Add script libraries.
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ], 20 );
-
-	}
-
-	/**
-	 * If needed, sets up this object.
-	 *
-	 * @since 3.0
-	 */
-	public function activate() {
-
-		// Force WordPress to regenerate theme directories.
-		search_theme_directories( true );
-
-		/**
-		 * Get Group Blog and set theme, if we have one.
-		 *
-		 * Allow filtering here because plugins may want to override a correctly-set
-		 * CommentPress Core theme for a particular Group Blog (or type of Group Blog).
-		 *
-		 * If that is the case, then the filter callback must return boolean 'false'
-		 * to prevent the theme being applied and also implement a filter on
-		 * 'cp_forced_theme_slug' below that returns the desired theme slug.
-		 *
-		 * @since 3.4
-		 *
-		 * @param array The existing array containing the stylesheet and template paths.
-		 * @return array The modified array containing the stylesheet and template paths.
-		 */
-		$theme = apply_filters( 'commentpress_get_groupblog_theme', $this->core->bp->get_groupblog_theme() );
-
-		// Did we get a CommentPress Core one?
-		if ( $theme !== false ) {
-
-			// We're in a Group Blog context: BuddyPress Group Blog will already have set
-			// the theme because we're adding our wpmu_new_blog action after it.
-
-			// --<
-			return;
-
-		}
-
-		/**
-		 * Get CommentPress Core theme by default, but allow overrides.
-		 *
-		 * @since 3.4
-		 *
-		 * @param str The default slug of the theme.
-		 * @return str The modified slug of the theme.
-		 */
-		$target_theme = apply_filters( 'cp_forced_theme_slug', 'commentpress-modern' );
-
-		// Get the theme we want.
-		$theme = wp_get_theme( $target_theme );
-
-		// If we get it.
-		if ( $theme->exists() ) {
-
-			/*
-			// Ignore if not allowed.
-			if ( is_multisite() && ! $theme->is_allowed() ) {
-				return;
-			}
-			*/
-
-			// Activate it.
-			switch_theme(
-				$theme->get_template(),
-				$theme->get_stylesheet()
-			);
-
-		}
-
-	}
-
-	/**
-	 * If needed, destroys this object.
-	 *
-	 * @since 3.0
-	 */
-	public function deactivate() {
-
-		/**
-		 * Get WordPress default theme, but allow overrides.
-		 *
-		 * @since 3.4
-		 *
-		 * @param str The slug of the default theme to switch to.
-		 * @return str The modified slug of the default theme to switch to.
-		 */
-		$target_theme = apply_filters( 'cp_restore_theme_slug', WP_DEFAULT_THEME );
-
-		// Get the theme we want.
-		$theme = wp_get_theme( $target_theme );
-
-		// If we get it.
-		if ( $theme->exists() ) {
-
-			/*
-			// Ignore if not allowed.
-			if ( is_multisite() && ! $theme->is_allowed() ) {
-				return;
-			}
-			*/
-
-			// Activate it.
-			switch_theme(
-				$theme->get_template(),
-				$theme->get_stylesheet()
-			);
-
-		}
 
 	}
 
@@ -1243,26 +1125,6 @@ HELPTEXT;
 
 		// --<
 		return $html;
-
-	}
-
-	/**
-	 * Allow all CommentPress parent themes in Multisite optional scenario.
-	 *
-	 * @since 3.9.14
-	 *
-	 * @param array $retval The existing array of allowed themes.
-	 * @return array $retval The modified array of allowed themes.
-	 */
-	public function allowed_themes( $retval ) {
-
-		// Allow all parent themes.
-		$retval['commentpress-flat'] = 1;
-		$retval['commentpress-modern'] = 1;
-		$retval['commentpress-theme'] = 1;
-
-		// --<
-		return $retval;
 
 	}
 
