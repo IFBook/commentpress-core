@@ -43,6 +43,11 @@ class CommentPress_Core_Theme {
 		// Init when this plugin is fully loaded.
 		add_action( 'commentpress/core/loaded', [ $this, 'initialise' ] );
 
+		// Acts in the middle when this plugin is activated.
+		add_action( 'commentpress/core/activated', [ $this, 'activate' ], 30 );
+		// Acts in the middle when this plugin is deactivated.
+		add_action( 'commentpress/core/deactivated', [ $this, 'deactivate' ], 30 );
+
 	}
 
 	/**
@@ -63,10 +68,6 @@ class CommentPress_Core_Theme {
 	 * @since 4.0
 	 */
 	public function register_hooks() {
-
-		// Act when this plugin is activated/deactivated.
-		add_action( 'commentpress/core/activated', [ $this, 'activate' ] );
-		add_action( 'commentpress/core/deactivated', [ $this, 'deactivate' ] );
 
 		// Enable CommentPress themes in Multisite optional scenario.
 		add_filter( 'network_allowed_themes', [ $this, 'allowed_themes' ] );
@@ -144,6 +145,12 @@ class CommentPress_Core_Theme {
 
 		}
 
+		// Turn Comment paging option off.
+		$this->comment_paging_cancel();
+
+		// Override Widgets.
+		$this->widgets_clear();
+
 	}
 
 	/**
@@ -185,7 +192,83 @@ class CommentPress_Core_Theme {
 
 		}
 
+		// Reset Comment paging option.
+		$this->comment_paging_restore();
+
+		// Restore Widgets.
+		$this->widgets_restore();
+
 	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Cancels Comment Paging because CommentPress Core does not work with Comment Paging.
+	 *
+	 * @since 3.4
+	 * @since 4.0 Moved to this class and renamed.
+	 */
+	public function comment_paging_cancel() {
+
+		// Set backup option.
+		$this->core->db->wordpress_option_backup( 'page_comments', '' );
+
+	}
+
+	/**
+	 * Resets Comment Paging option when plugin is deactivated.
+	 *
+	 * @since 3.4
+	 * @since 4.0 Moved to this class and renamed.
+	 */
+	public function comment_paging_restore() {
+
+		// Reset option.
+		$this->core->db->wordpress_option_restore( 'page_comments' );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Clears Widgets for a fresh start.
+	 *
+	 * @since 3.4
+	 * @since 4.0 Moved to this class and renamed.
+	 */
+	public function widgets_clear() {
+
+		/*
+		 * Clear the Widget array.
+		 *
+		 * This array is based on the default WordPress array.
+		 *
+		 * @see wp_install_defaults()
+		 */
+		$this->core->db->wordpress_option_backup( 'sidebars_widgets', [
+			'wp_inactive_widgets' => [],
+			'sidebar-1' => [],
+			'sidebar-2' => [],
+			'sidebar-3' => [],
+			'array_version' => 3,
+		] );
+
+	}
+
+	/**
+	 * Restores Widgets when plugin is deactivated.
+	 *
+	 * @since 3.4
+	 * @since 4.0 Moved to this class and renamed.
+	 */
+	public function widgets_restore() {
+
+		// Reset option.
+		$this->core->db->wordpress_option_restore( 'sidebars_widgets' );
+
+	}
+
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Allow all CommentPress parent themes in Multisite optional scenario.

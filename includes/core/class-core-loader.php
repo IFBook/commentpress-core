@@ -310,6 +310,12 @@ class CommentPress_Core {
 		/**
 		 * Fires when plugin is activated.
 		 *
+		 * Used internally by:
+		 *
+		 * * CommentPress_Core_Database::activate() (Priority: 10)
+		 * * CommentPress_Core_Theme::activate() (Priority: 30)
+		 * * CommentPress_Core_Pages_Legacy::activate() (Priority: 50)
+		 *
 		 * @since 4.0
 		 */
 		do_action( 'commentpress/core/activated' );
@@ -325,6 +331,12 @@ class CommentPress_Core {
 
 		/**
 		 * Fires when plugin is activated.
+		 *
+		 * Used internally by:
+		 *
+		 * * CommentPress_Core_Pages_Legacy::deactivate() (Priority: 10)
+		 * * CommentPress_Core_Theme::deactivate() (Priority: 30)
+		 * * CommentPress_Core_Database::deactivate() (Priority: 50)
 		 *
 		 * @since 4.0
 		 */

@@ -251,13 +251,10 @@ class CommentPress_Core_Database {
 		// Init when this plugin is fully loaded.
 		add_action( 'commentpress/core/loaded', [ $this, 'initialise' ] );
 
-		/*
-		 * Act when this plugin is activated/deactivated.
-		 *
-		 * Hooked in after Display class.
-		 */
-		add_action( 'commentpress/core/activated', [ $this, 'activate' ], 20 );
-		add_action( 'commentpress/core/deactivated', [ $this, 'deactivate' ],20 );
+		// Act early when this plugin is activated.
+		add_action( 'commentpress/core/activated', [ $this, 'activate' ], 10 );
+		// Act late when this plugin is deactivated.
+		add_action( 'commentpress/core/deactivated', [ $this, 'deactivate' ], 50 );
 
 	}
 
@@ -292,16 +289,47 @@ class CommentPress_Core_Database {
 	 */
 	public function activate() {
 
-		// Have we already got a modified database?
-		$modified = $this->db_is_modified( 'comment_text_signature' ) ? 'y' : 'n';
+		// Install the database schema.
+		$this->schema_install();
 
-		// If  we have an existing comment_text_signature column.
-		if ( $modified == 'y' ) {
+		// Store CommentPress Core version if it doesn't exist.
+		if ( ! $this->option_wp_get( 'commentpress_version' ) ) {
+			$this->option_wp_set( 'commentpress_version', COMMENTPRESS_VERSION );
+		}
 
-			// Upgrade old CommentPress schema to new.
+		// Add options with default values if we aren't reactivating.
+		if ( ! $this->option_wp_get( 'commentpress_options' ) ) {
+			$this->options_create();
+		}
+
+	}
+
+	/**
+	 * Reset WordPress to prior state, but retain options.
+	 *
+	 * @since 3.0
+	 */
+	public function deactivate() {
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Installs the WordPress database schema.
+	 *
+	 * @since 4.0
+	 */
+	public function schema_install() {
+
+		// If we have an existing legacy "comment_text_signature" column.
+		if ( $this->db_is_modified( 'comment_text_signature' ) ) {
+
+			// Upgrade old CommentPress schema to new CommentPress Core schema.
 			if ( ! $this->schema_upgrade() ) {
 
 				// Kill plugin activation.
+				// TODO: Test failures because multisite may have called this directly.
 				wp_die( 'CommentPress Core Error: could not upgrade the database' );
 
 			}
@@ -313,63 +341,10 @@ class CommentPress_Core_Database {
 
 		}
 
-		// Test if we have our version.
-		if ( ! $this->option_wp_get( 'commentpress_version' ) ) {
-
-			// Store CommentPress Core version.
-			$this->option_wp_set( 'commentpress_version', COMMENTPRESS_VERSION );
-
-		}
-
-		// Test that we aren't reactivating.
-		if ( ! $this->option_wp_get( 'commentpress_options' ) ) {
-
-			// Add options with default values.
-			$this->options_create();
-
-		}
-
-		// Retrieve data on Special Pages.
-		$special_pages = $this->option_get( 'cp_special_pages', [] );
-
-		// If we haven't created any.
-		if ( count( $special_pages ) == 0 ) {
-
-			// Create Special Pages.
-			$this->core->pages_legacy->create_special_pages();
-
-		}
-
-		// Turn Comment paging option off.
-		$this->comment_paging_cancel();
-
-		// Override Widgets.
-		$this->widgets_clear();
-
 	}
 
 	/**
-	 * Reset WordPress to prior state, but retain options.
-	 *
-	 * @since 3.0
-	 */
-	public function deactivate() {
-
-		// Reset Comment paging option.
-		$this->comment_paging_restore();
-
-		// Restore Widgets.
-		$this->widgets_restore();
-
-		// Always remove Special Pages.
-		$this->core->pages_legacy->delete_special_pages();
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Update WordPress database schema.
+	 * Updates the WordPress database schema.
 	 *
 	 * @since 3.0
 	 *
@@ -380,8 +355,8 @@ class CommentPress_Core_Database {
 		// Database object.
 		global $wpdb;
 
-		// Include WordPress upgrade script.
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		// Include WordPress install helper script.
+		require_once ABSPATH . 'wp-admin/install-helper.php';
 
 		// Add the column, if not already there.
 		$result = maybe_add_column(
@@ -426,7 +401,7 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * Do we have a column in the Comments table?
+	 * Checks if we have a column in the Comments table.
 	 *
 	 * @since 3.0
 	 *
@@ -454,17 +429,16 @@ class CommentPress_Core_Database {
 			// Is it our desired column?
 			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			if ( $col->Field == $column_name ) {
-
 				// We got it.
 				$result = true;
 				break;
-
 			}
 
 		}
 
 		// --<
 		return $result;
+
 	}
 
 	/**
@@ -2481,71 +2455,6 @@ class CommentPress_Core_Database {
 		 * @param array $vars The default Javascript vars.
 		 */
 		return apply_filters( 'commentpress_get_javascript_vars', $vars );
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Cancels Comment paging because CommentPress Core will not work with Comment paging.
-	 *
-	 * @since 3.4
-	 * @since 4.0 Renamed.
-	 */
-	public function comment_paging_cancel() {
-
-		// Store option.
-		$this->wordpress_option_backup( 'page_comments', '' );
-
-	}
-
-	/**
-	 * Resets Comment paging option when plugin is deactivated.
-	 *
-	 * @since 3.4
-	 * @since 4.0 Renamed.
-	 */
-	public function comment_paging_restore() {
-
-		// Reset option.
-		$this->wordpress_option_restore( 'page_comments' );
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Clears Widgets for a fresh start.
-	 *
-	 * @since 3.4
-	 * @since 4.0 Renamed.
-	 */
-	public function widgets_clear() {
-
-		// Set backup option.
-		add_option( 'commentpress_sidebars_widgets', $this->option_wp_get( 'sidebars_widgets' ) );
-
-		// Clear them - this array is based on the array in wp_install_defaults().
-		update_option( 'sidebars_widgets', [
-			'wp_inactive_widgets' => [],
-			'sidebar-1' => [],
-			'sidebar-2' => [],
-			'sidebar-3' => [],
-			'array_version' => 3,
-		] );
-
-	}
-
-	/**
-	 * Restores Widgets when plugin is deactivated.
-	 *
-	 * @since 3.4
-	 * @since 4.0 Renamed.
-	 */
-	public function widgets_restore() {
-
-		// Reset option.
-		$this->wordpress_option_restore( 'sidebars_widgets' );
 
 	}
 

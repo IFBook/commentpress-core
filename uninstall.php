@@ -32,11 +32,8 @@ function commentpress_schema_restore() {
 
 	// --<
 	return $result;
-}
 
-// Delete standalone options.
-delete_option( 'commentpress_version' );
-delete_option( 'commentpress_options' );
+}
 
 // Restore database schema.
 $success = commentpress_schema_restore();
@@ -49,6 +46,10 @@ if ( ! $success ) {
 		'commentpress-uninstall-error' => __( 'Could not drop comment signature column.', 'commentpress-core' ),
 	], true ) );
 }
+
+// Delete standalone options.
+delete_option( 'commentpress_version' );
+delete_option( 'commentpress_options' );
 
 // Are we deleting in multisite?
 if ( is_multisite() ) {

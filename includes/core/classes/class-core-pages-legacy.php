@@ -43,6 +43,11 @@ class CommentPress_Core_Pages_Legacy {
 		// Init when this plugin is fully loaded.
 		add_action( 'commentpress/core/loaded', [ $this, 'initialise' ] );
 
+		// Acts late when this plugin is activated.
+		add_action( 'commentpress/core/activated', [ $this, 'activate' ], 50 );
+		// Act early when this plugin is deactivated.
+		add_action( 'commentpress/core/deactivated', [ $this, 'deactivate' ], 10 );
+
 	}
 
 	/**
@@ -70,6 +75,40 @@ class CommentPress_Core_Pages_Legacy {
 
 		// Modify all.
 		add_filter( 'views_edit-page', [ $this, 'update_page_counts_in_admin' ], 10, 1 );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Creates the Special Pages.
+	 *
+	 * @since 3.0
+	 */
+	public function activate() {
+
+		// Retrieve data on Special Pages.
+		$special_pages = $this->core->db->option_get( 'cp_special_pages', [] );
+
+		// Bail if we have already created them.
+		if ( ! empty( $special_pages ) ) {
+			return;
+		}
+
+		// Create Special Pages.
+		$this->create_special_pages();
+
+	}
+
+	/**
+	 * Removes the Special Pages.
+	 *
+	 * @since 3.0
+	 */
+	public function deactivate() {
+
+		// Remove Special Pages.
+		$this->delete_special_pages();
 
 	}
 
