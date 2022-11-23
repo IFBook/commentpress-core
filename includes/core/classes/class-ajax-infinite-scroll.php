@@ -265,9 +265,6 @@ class CommentPress_AJAX_Infinite_Scroll {
 		// Generate Page numbers.
 		$this->core->nav->generate_page_numbers( $all_pages );
 
-		// Get Page number.
-		$number = $this->core->nav->get_page_number( $post->ID );
-
 		// Get menu ID, if we have one.
 		if ( isset( $new_post->menu_id ) ) {
 			$menu_id = 'wpcustom_menuid-' . $new_post->menu_id;
@@ -275,25 +272,17 @@ class CommentPress_AJAX_Infinite_Scroll {
 			$menu_id = 'wppage_menuid-' . $new_post->ID;
 		}
 
-		// Init Page number html.
-		$page_num = '';
+		// Get Page number.
+		$number = $this->core->nav->get_page_number( $post->ID );
 
-		// If we get one.
+		// Add Page number.
 		if ( $number ) {
-
 			// Is it arabic?
 			if ( is_numeric( $number ) ) {
-
-				// Add Page number.
 				$page_num = '<div class="running_header_bottom">page ' . $number . '</div>';
-
 			} else {
-
-				// Add Page number.
 				$page_num = '<div class="running_header_bottom">page ' . strtolower( $number ) . '</div>';
-
 			}
-
 		}
 
 		// Init nav.
@@ -301,8 +290,6 @@ class CommentPress_AJAX_Infinite_Scroll {
 
 		// Get Page navigation.
 		$navigation = commentpress_page_navigation();
-
-		// If we get any.
 		if ( $navigation != '' ) {
 			$navigation = '<div class="page_navigation"><ul>' . $navigation . '</ul></div><!-- /page_navigation -->';
 		}
@@ -325,8 +312,8 @@ class CommentPress_AJAX_Infinite_Scroll {
 
 		// Always show lower nav.
 		$lower_navigation = '<div class="page_nav_lower">' .
-								$navigation .
-							'</div><!-- /page_nav_lower -->';
+			$navigation .
+		'</div><!-- /page_nav_lower -->';
 
 		// Wrap in div.
 		$data = '<div class="page_wrapper cp_page_wrapper">' .
@@ -352,10 +339,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 		 * @param str The existing path returned by WordPress.
 		 * @return str The modified path.
 		 */
-		$cp_comments_by_para = apply_filters(
-			'cp_template_comments_by_para',
-			locate_template( 'assets/templates/comments_by_para.php' )
-		);
+		$cp_comments_by_para = apply_filters( 'cp_template_comments_by_para', locate_template( 'assets/templates/comments_by_para.php' ) );
 
 		// Load it if we find it.
 		if ( $cp_comments_by_para != '' ) {

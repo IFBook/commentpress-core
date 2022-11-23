@@ -1589,6 +1589,52 @@ endif;
 
 
 
+if ( ! function_exists( 'commentpress_add_selection_classes' ) ) :
+
+	/**
+	 * Filter the Comment class to add selection data.
+	 *
+	 * @since 3.8
+	 *
+	 * @param array $classes An array of Comment classes.
+	 * @param string $class A comma-separated list of additional classes added to the list.
+	 * @param int $comment_id The Comment ID.
+	 * @param object $comment The Comment.
+	 * @param int|WP_Post $post_id The Post ID or WP_Post object.
+	 */
+	function commentpress_add_selection_classes( $classes, $class, $comment_id, $comment, $post_id = 0 ) {
+
+		// Define key.
+		$key = '_cp_comment_selection';
+
+		// Get current.
+		$data = get_comment_meta( $comment_id, $key, true );
+
+		// If the Comment meta already has a value.
+		if ( ! empty( $data ) ) {
+
+			// Make into an array.
+			$selection = explode( ',', $data );
+
+			// Add to classes.
+			$classes[] = 'selection-exists';
+			$classes[] = 'sel_start-' . $selection[0];
+			$classes[] = 'sel_end-' . $selection[1];
+
+		}
+
+		// --<
+		return $classes;
+
+	}
+
+endif;
+
+// Add callback for the above.
+add_filter( 'comment_class', 'commentpress_add_selection_classes', 100, 4 );
+
+
+
 if ( ! function_exists( 'commentpress_add_wp_editor' ) ) :
 
 	/**
@@ -2197,6 +2243,3 @@ if ( ! function_exists( 'commentpress_get_post_multipage_url' ) ) :
 	}
 
 endif;
-
-
-

@@ -27,7 +27,7 @@ if ( ! isset( $content_width ) ) {
 if ( ! function_exists( 'commentpress_setup' ) ) :
 
 	/**
-	 * Set up CommentPress Modern theme.
+	 * Set up theme.
 	 *
 	 * @since 3.0
 	 */
@@ -103,8 +103,6 @@ if ( ! function_exists( 'commentpress_setup' ) ) :
 
 		// Get core plugin reference.
 		$core = commentpress_core();
-
-		// If we have the plugin enabled.
 		if ( ! empty( $core ) ) {
 
 			// Get the option.
@@ -149,11 +147,11 @@ if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ) :
 	 */
 	function commentpress_enqueue_scripts_and_styles() {
 
-		// Check for dev.
+		// Check for minification.
 		$min = commentpress_minified();
 
 		// -------------------------------------------------------------------------
-		// Stylesheets
+		// Stylesheets.
 		// -------------------------------------------------------------------------
 
 		// Register screen styles.
@@ -166,7 +164,7 @@ if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ) :
 		);
 
 		// -------------------------------------------------------------------------
-		// Overrides for styles - for child themes, dequeue these and add you own
+		// Overrides for styles - for child themes, dequeue these and add you own.
 		// -------------------------------------------------------------------------
 
 		// Add Google Webfont "Lato".
@@ -209,7 +207,7 @@ if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ) :
 			return;
 		}
 
-		// Skip for BuddyPress Special Pages.
+		// Skip when on a BuddyPress Special Page.
 		if ( ! $core->bp->is_buddypress_special_page() ) {
 
 			// Enqueue form Javascript.
@@ -317,7 +315,7 @@ if ( ! function_exists( 'commentpress_buddypress_support' ) ) :
 
 endif;
 
-// Add an action for the above (BuddyPress hooks this to after_setup_theme with priority 100).
+// Add an action for the above. BuddyPress hooks this to "after_setup_theme" with priority 100.
 add_action( 'bp_after_setup_theme', 'commentpress_buddypress_support' );
 
 if ( ! function_exists( 'commentpress_bp_wrapper_open' ) ) :
@@ -355,7 +353,7 @@ if ( ! function_exists( 'commentpress_bp_enqueue_styles' ) ) :
 	 */
 	function commentpress_bp_enqueue_styles() {
 
-		// Kick out on admin.
+		// Bail if admin.
 		if ( is_admin() ) {
 			return;
 		}
@@ -476,8 +474,7 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 		echo '
 		<style type="text/css">
 
-		#header
-		{
+		#header {
 			background-color: #' . $bg_colour . ';
 			' . $bg_image . '
 			-webkit-background-size: cover;
@@ -488,121 +485,16 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 			background-position: 50%;
 		}
 
-		#title h1,
-		#title h1 a
-		{
+		#title h1, #title h1 a {
 			' . $css . '
 		}
 
-		#header #tagline
-		{
+		#header #tagline {
 			' . $css . '
 		}
 
 		</style>
 		';
-
-	}
-
-endif;
-
-if ( ! function_exists( 'commentpress_page_navigation' ) ) :
-
-	/**
-	 * Builds a list of previous and Next Pages, optionally with Comments.
-	 *
-	 * @since 3.0
-	 *
-	 * @param bool $with_comments True returns the Next Page with Comments.
-	 * @return str $nav_list The unordered list of navigation links.
-	 */
-	function commentpress_page_navigation( $with_comments = false ) {
-
-		// Init return.
-		$nav_list = '';
-
-		// Get core plugin reference.
-		$core = commentpress_core();
-		if ( empty( $core ) ) {
-			return $nav_list;
-		}
-
-		// Init formatting.
-		$before_next = '<li class="alignright">';
-		$after_next = ' </li>';
-		$before_prev = '<li class="alignleft">';
-		$after_prev = '</li>';
-
-		// Init.
-		$next_page_html = '';
-
-		// Get Next Page.
-		$next_page = $core->nav->get_next_page( $with_comments );
-
-		// Did we get a Next Page?
-		if ( is_object( $next_page ) ) {
-
-			// Init title.
-			$img = '';
-			$title = __( 'Next page', 'commentpress-core' );
-
-			// If we wanted Pages with Comments.
-			if ( $with_comments ) {
-
-				// Set title.
-				$title = __( 'Next page with comments', 'commentpress-core' );
-				$img = '<img src="' . get_template_directory_uri() . '/assets/images/next.png" />';
-
-			}
-
-			// Define list item.
-			$next_page_html = $before_next .
-				$img .
-				'<a href="' . get_permalink( $next_page->ID ) . '" class="next_page" title="' . esc_attr( $title ) . '">' . esc_html( $title ) . '</a>' .
-				$after_next;
-
-		}
-
-		// Init.
-		$prev_page_html = '';
-
-		// Get Next Page.
-		$prev_page = $core->nav->get_previous_page( $with_comments );
-
-		// Did we get a Next Page?
-		if ( is_object( $prev_page ) ) {
-
-			// Init title.
-			$img = '';
-			$title = __( 'Previous page', 'commentpress-core' );
-
-			// If we wanted Pages with Comments.
-			if ( $with_comments ) {
-
-				// Set title.
-				$title = __( 'Previous page with comments', 'commentpress-core' );
-				$img = '<img src="' . get_template_directory_uri() . '/assets/images/prev.png" />';
-
-			}
-
-			// Define list item.
-			$prev_page_html = $before_prev .
-				$img .
-				'<a href="' . get_permalink( $prev_page->ID ) . '" class="previous_page" title="' . esc_attr( $title ) . '">' . esc_html( $title ) . '</a>' .
-				$after_prev;
-
-		}
-
-		// Did we get either?
-		if ( $next_page_html != '' || $prev_page_html != '' ) {
-
-			// Construct nav list items.
-			$nav_list = $prev_page_html . "\n" . $next_page_html . "\n";
-
-		}
-
-		// --<
-		return $nav_list;
 
 	}
 
@@ -615,8 +507,8 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $page_or_post Retrieve either 'page' or 'post' comments.
-	 * @return str $html The comments.
+	 * @param str $page_or_post Retrieve either 'page' or 'post' Comments.
+	 * @return str $html The Comments markup.
 	 */
 	function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 
@@ -626,7 +518,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 		// Init output.
 		$html = '';
 
-		// Get all approved comments.
+		// Get all approved Comments.
 		$all_comments = get_comments( [
 			'status' => 'approve',
 			'orderby' => 'comment_post_ID,comment_date',
@@ -644,7 +536,7 @@ return $html;
 		$post_comment_counts = [];
 		foreach ( $all_comments as $comment ) {
 
-			// Add to Posts with comments array.
+			// Add to Posts with Comments array.
 			if ( ! in_array( $comment->comment_post_ID, $posts_with ) ) {
 				$posts_with[] = $comment->comment_post_ID;
 			}
@@ -693,7 +585,7 @@ return $html;
 			// Show it.
 			$html .= '<h4>' . esc_html( $post->post_title ) . ' <span>(' . $comment_count_text . ')</span></h4>' . "\n\n";
 
-			// Open comments div.
+			// Open Comments div.
 			$html .= '<div class="item_body">' . "\n\n";
 
 			// Open ul.
@@ -780,7 +672,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 	 */
 	function commentpress_get_all_comments_page_content() {
 
-		// Allow oEmbed in comments.
+		// Allow oEmbed in Comments.
 		global $wp_embed;
 		if ( $wp_embed instanceof WP_Embed ) {
 			add_filter( 'comment_text', [ $wp_embed, 'autoembed' ], 1 );
@@ -959,11 +851,7 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 			 * @param str The HTML for showing the image.
 			 * @param WP_Post The current WordPress Post object.
 			 */
-			echo apply_filters(
-				'commentpress_get_feature_image',
-				get_the_post_thumbnail( get_the_ID(), 'commentpress-feature' ),
-				$post
-			);
+			echo apply_filters( 'commentpress_get_feature_image', get_the_post_thumbnail( get_the_ID(), 'commentpress-feature' ), $post );
 
 			?>
 			<div class="cp_featured_title">
@@ -979,10 +867,8 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 
 						<?php
 
-						// Default to hidden.
-						$cp_title_visibility = ' style="display: none;"';
-
 						// Override if we've elected to show the title.
+						$cp_title_visibility = ' style="display: none;"';
 						if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
 							$cp_title_visibility = '';
 						}
@@ -1015,7 +901,8 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 							<?php commentpress_echo_post_meta(); ?>
 						</div>
 
-					<?php
+						<?php
+
 					} else {
 
 						// Construct title.
@@ -1082,6 +969,52 @@ function commentpress_has_feature_image() {
 	return apply_filters( 'commentpress_has_feature_image', $has_feature_image );
 
 }
+
+/**
+ * Clears the default "Previous Page" and "Next Page" CSS IDs.
+ *
+ * @since 4.0
+ *
+ * @param str The default Navigation link CSS ID.
+ * @return str The modified Navigation link CSS ID.
+ */
+function commentpress_page_link_css_id( $body_classes ) {
+	return '';
+}
+
+// Add filter for the above.
+add_filter( 'commentpress/navigation/page/link/next/css_id', 'commentpress_page_link_css_id' );
+add_filter( 'commentpress/navigation/page/link/previous/css_id', 'commentpress_page_link_css_id' );
+
+/**
+ * Adds the "Next Page" Navigation link CSS classes.
+ *
+ * @since 4.0
+ *
+ * @param array $css_classes The default "Next Page" CSS classes.
+ * @return array $css_classes The modified "Next Page" CSS classes.
+ */
+function commentpress_page_next_link_css_classes( $css_classes ) {
+	return [ 'next_page' ];
+}
+
+// Add filter for the above.
+add_filter( 'commentpress/navigation/page/link/next/css_classes', 'commentpress_page_next_link_css_classes' );
+
+/**
+ * Adds the "Previous Page" Navigation link CSS classes.
+ *
+ * @since 4.0
+ *
+ * @param array $css_classes The default "Previous Page" CSS classes.
+ * @return array $css_classes The modified "Previous Page" CSS classes.
+ */
+function commentpress_page_previous_link_css_classes( $css_classes ) {
+	return [ 'previous_page' ];
+}
+
+// Add filter for the above.
+add_filter( 'commentpress/navigation/page/link/previous/css_classes', 'commentpress_page_previous_link_css_classes' );
 
 /**
  * Register Widget areas for this theme.

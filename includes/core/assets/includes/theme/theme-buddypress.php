@@ -262,7 +262,6 @@ endif;
 
 
 
-
 if ( ! function_exists( 'commentpress_prefix_bp_templates' ) ) :
 
 	/**

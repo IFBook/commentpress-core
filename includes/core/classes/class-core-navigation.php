@@ -153,7 +153,7 @@ class CommentPress_Core_Navigator {
 			// Check Page Navigation flag.
 			if ( $this->page_nav_is_disabled() ) {
 
-				// Remove Page arrows via filter.
+				// Remove Page Navigation via filter.
 				add_filter( 'cp_template_page_navigation', [ $this, 'page_nav_disable' ], 100, 1 );
 
 				// Save flag.
@@ -512,13 +512,13 @@ class CommentPress_Core_Navigator {
 	 * @since 3.0
 	 *
 	 * @param int $page_id The Page ID.
-	 * @return int $number The number of the Page.
+	 * @return int|bool $number The number of the Page, or false on failure.
 	 */
 	public function get_page_number( $page_id ) {
 
 		// Bail if Page nav is disabled.
 		if ( $this->nav_enabled === false ) {
-			return;
+			return false;
 		}
 
 		// Init.
@@ -551,7 +551,13 @@ class CommentPress_Core_Navigator {
 
 		}
 
-		// Apply a filter.
+		/**
+		 * Filters the Page Number.
+		 *
+		 * @since 3.0
+		 *
+		 * @param int|bool $number The number of the Page, or false if not found.
+		 */
 		$num = apply_filters( 'cp_nav_page_num', $num );
 
 		// --<

@@ -8,8 +8,22 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-// Set default link names.
+/**
+ * Filters the Older Entries title.
+ *
+ * @since 3.4
+ *
+ * @param str The default Older Entries title.
+ */
 $previous_title = apply_filters( 'cp_nav_previous_link_title', __( 'Older Entries', 'commentpress-core' ) );
+
+/**
+ * Filters the Newer Entries title.
+ *
+ * @since 3.4
+ *
+ * @param str The default Newer Entries title.
+ */
 $next_title = apply_filters( 'cp_nav_next_link_title', __( 'Newer Entries', 'commentpress-core' ) );
 
 ?>
@@ -18,18 +32,10 @@ $next_title = apply_filters( 'cp_nav_next_link_title', __( 'Newer Entries', 'com
 
 	<?php
 
-	// Is it a Page?
 	if ( is_page() ) {
 
 		// Maybe show our custom Page Navigation.
-		$cp_page_nav = commentpress_page_navigation();
-		if ( $cp_page_nav != '' ) {
-			?>
-			<ul>
-				<?php echo $cp_page_nav; ?>
-			</ul>
-			<?php
-		}
+		commentpress_page_navigation_list();
 
 	} elseif ( is_single() ) {
 

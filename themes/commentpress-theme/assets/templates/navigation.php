@@ -8,6 +8,24 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Filters the Older Entries title.
+ *
+ * @since 3.4
+ *
+ * @param str The default Older Entries title.
+ */
+$previous_title = apply_filters( 'cp_nav_previous_link_title', __( 'Older Entries', 'commentpress-core' ) );
+
+/**
+ * Filters the Newer Entries title.
+ *
+ * @since 3.4
+ *
+ * @param str The default Newer Entries title.
+ */
+$next_title = apply_filters( 'cp_nav_next_link_title', __( 'Newer Entries', 'commentpress-core' ) );
+
 // Get core plugin reference.
 $core = commentpress_core();
 
@@ -23,28 +41,6 @@ if ( ! empty( $core ) ) {
 	<div id="book_nav_wrapper">
 
 	<div id="cp_book_nav">
-
-		<?php
-
-		/**
-		 * Filters the Older Entries title.
-		 *
-		 * @since 3.4
-		 *
-		 * @param str The default Older Entries title.
-		 */
-		$previous_title = apply_filters( 'cp_nav_previous_link_title', __( 'Older Entries', 'commentpress-core' ) );
-
-		/**
-		 * Filters the Newer Entries title.
-		 *
-		 * @since 3.4
-		 *
-		 * @param str The default Newer Entries title.
-		 */
-		$next_title = apply_filters( 'cp_nav_next_link_title', __( 'Newer Entries', 'commentpress-core' ) );
-
-		?>
 
 		<?php if ( is_page() ) : ?>
 

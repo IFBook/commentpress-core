@@ -33,27 +33,7 @@ get_header();
 	<div id="main_wrapper" class="clearfix">
 		<div id="page_wrapper">
 
-			<?php
-
-			/**
-			 * Try to locate template using WordPress method.
-			 *
-			 * @since 3.4
-			 *
-			 * @param str The existing path returned by WordPress.
-			 * @return str The modified path.
-			 */
-			$cp_page_navigation = apply_filters(
-				'cp_template_page_navigation',
-				locate_template( 'assets/templates/page_navigation.php' )
-			);
-
-			// Load it if we find it.
-			if ( $cp_page_navigation != '' ) {
-				load_template( $cp_page_navigation, false );
-			}
-
-			?>
+			<?php commentpress_page_navigation_template(); ?>
 
 			<div id="content" class="clearfix">
 
@@ -73,16 +53,7 @@ get_header();
 
 									<h3 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php esc_attr_e( 'Permanent Link to', 'commentpress-core' ); ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
 
-									<?php
-
-									// Override if we've elected to show the meta.
-									$cp_meta_visibility = ' style="display: none;"';
-									if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
-										$cp_meta_visibility = '';
-									}
-
-									?>
-									<div class="search_meta"<?php echo $cp_meta_visibility; ?>>
+									<div class="search_meta"<?php commentpress_post_meta_visibility( get_the_ID() ); ?>>
 										<?php commentpress_echo_post_meta(); ?>
 									</div>
 
@@ -111,14 +82,7 @@ get_header();
 			</div><!-- /content -->
 
 			<div class="page_nav_lower">
-				<?php
-
-				// Include Page Navigation again.
-				if ( $cp_page_navigation != '' ) {
-					load_template( $cp_page_navigation, false );
-				}
-
-				?>
+				<?php commentpress_page_navigation_template(); ?>
 			</div><!-- /page_nav_lower -->
 
 		</div><!-- /page_wrapper -->

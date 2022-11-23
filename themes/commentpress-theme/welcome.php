@@ -24,27 +24,9 @@ get_header();
 
 						<div class="post clearfix<?php echo commentpress_get_post_css_override( get_the_ID() ); ?>" id="post-<?php the_ID(); ?>">
 
-							<?php
+							<h2 class="post_title"<?php commentpress_post_title_visibility( get_the_ID() ); ?>><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 
-							// Override if we've elected to show the title.
-							$cp_title_visibility = ' style="display: none;"';
-							if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
-								$cp_title_visibility = '';
-							}
-
-							?>
-							<h2 class="post_title"<?php echo $cp_title_visibility; ?>><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-
-							<?php
-
-							// Override if we've elected to show the meta.
-							$cp_meta_visibility = ' style="display: none;"';
-							if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
-								$cp_meta_visibility = '';
-							}
-
-							?>
-							<div class="search_meta"<?php echo $cp_meta_visibility; ?>>
+							<div class="search_meta"<?php commentpress_post_meta_visibility( get_the_ID() ); ?>>
 								<?php commentpress_echo_post_meta(); ?>
 							</div>
 

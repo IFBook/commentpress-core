@@ -22,26 +22,6 @@ defined( 'ABSPATH' ) || exit;
 
 	<head profile="http://gmpg.org/xfn/11">
 
-		<?php if ( ! function_exists( '_wp_render_title_tag' ) ) : ?>
-			<?php
-
-			/**
-			 * Adds theme support for built-in title tags.
-			 *
-			 * @since 3.8.3
-			 */
-			function commentpress_theme_slug_render_title() {
-				?>
-				<!-- title -->
-				<title><?php wp_title( '|', true, 'right' ); ?> <?php bloginfo( 'name' ); ?> <?php commentpress_site_title( '|' ); ?></title>
-				<?php
-			}
-
-			add_action( 'wp_head', 'commentpress_theme_slug_render_title' );
-
-			?>
-		<?php endif; ?>
-
 		<!-- meta -->
 		<meta http-equiv="content-type" content="<?php bloginfo( 'html_type' ); ?>; charset=<?php bloginfo( 'charset' ); ?>" />
 		<meta name="description" content="<?php echo commentpress_header_meta_description(); ?>" />
@@ -97,23 +77,6 @@ defined( 'ABSPATH' ) || exit;
 			<?php do_action( 'wp_body_open' ); ?>
 		<?php endif; ?>
 
-		<?php
-
-		/**
-		 * Try to locate template using WordPress method.
-		 *
-		 * @since 3.4
-		 *
-		 * @param str The existing path returned by WordPress.
-		 * @return str The modified path.
-		 */
-		$cp_header_body = apply_filters( 'cp_template_header_body', locate_template( 'assets/templates/header_body.php' ) );
-
-		// Load it if we find it.
-		if ( $cp_header_body != '' ) {
-			load_template( $cp_header_body );
-		}
-
-		?>
+		<?php commentpress_header_body_template(); ?>
 
 		<div id="container">

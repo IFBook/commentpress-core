@@ -26,28 +26,19 @@ get_header();
 
 						<?php the_post(); ?>
 
-						<div class="post<?php echo commentpress_get_post_css_override( get_the_ID() ); ?>" id="post-<?php the_ID(); ?>">
+						<div class="post clearfix<?php echo commentpress_get_post_css_override( get_the_ID() ); ?>" id="post-<?php the_ID(); ?>">
 
-							<?php
-
-							// Override if we've elected to show the title.
-							$cp_title_visibility = ' style="display: none;"';
-							if ( commentpress_get_post_title_visibility( get_the_ID() ) ) {
-								$cp_title_visibility = '';
-							}
-
-							?>
-							<h2 class="post_title"<?php echo $cp_title_visibility; ?>><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+							<h2 class="post_title"<?php commentpress_post_title_visibility( get_the_ID() ); ?>><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 
 							<?php
 
 							// If we have the Members List plugin.
 							if ( class_exists( 'tern_members' ) ) {
 
-								// Init members-list plugin.
+								// Init Members List plugin.
 								$members = new tern_members();
 
-								// Set options.
+								// Show Membership.
 								$members->members( [
 									'search' => true,
 									'alpha' => true,

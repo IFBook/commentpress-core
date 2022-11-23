@@ -11,11 +11,21 @@
 defined( 'ABSPATH' ) || exit;
 
 
+
+// Include our Theme filters file.
+require_once COMMENTPRESS_PLUGIN_PATH . 'includes/core/assets/includes/theme/theme-filters.php';
+
+// Include our Theme Customizer file.
+require_once COMMENTPRESS_PLUGIN_PATH . 'includes/core/assets/includes/theme/theme-customizer.php';
+
 // Include our Comment functions file.
 require_once COMMENTPRESS_PLUGIN_PATH . 'includes/core/assets/includes/theme/theme-comments.php';
 
 // Include our BuddyPress compatibility file.
 require_once COMMENTPRESS_PLUGIN_PATH . 'includes/core/assets/includes/theme/theme-buddypress.php';
+
+// Include our Navigation file.
+require_once COMMENTPRESS_PLUGIN_PATH . 'includes/core/assets/includes/theme/theme-navigation.php';
 
 
 
@@ -90,252 +100,37 @@ if ( ! function_exists( 'commentpress_admin_header' ) ) :
 
 endif;
 
-if ( ! function_exists( 'commentpress_customize_register' ) ) :
+
+
+if ( ! function_exists( 'commentpress_header_body_template' ) ) :
 
 	/**
-	 * Implements CommentPress Core Theme options in the Theme Customizer.
+	 * Loads the Header Body template.
 	 *
-	 * @since 3.0
-	 *
-	 * @param object $wp_customize Theme Customizer object.
+	 * @since 4.0
 	 */
-	function commentpress_customize_register( $wp_customize ) {
+	function commentpress_header_body_template() {
 
-		// Get core plugin reference.
-		$core = commentpress_core();
-		if ( empty( $core ) ) {
-			return;
+		// Try to locate template.
+		$template = locate_template( 'assets/templates/header_body.php' );
+
+		/**
+		 * Filters the located Header Body template.
+		 *
+		 * @since 3.4
+		 *
+		 * @param str $template The path to the Header Body template.
+		 */
+		$template = apply_filters( 'cp_template_header_body', $template );
+
+		// Load it if we find it.
+		if ( ! empty( $template ) ) {
+			load_template( $template, false );
 		}
 
-		// Add "Site Image".
-		commentpress_customize_site_image( $wp_customize );
-
-		// Add "Site Logo".
-		commentpress_customize_site_logo( $wp_customize );
-
-		// Add "Header Background Colour".
-		commentpress_customize_header_bg_color( $wp_customize );
-
 	}
 
 endif;
-
-// Add callback for the above.
-add_action( 'customize_register', 'commentpress_customize_register' );
-
-
-
-if ( ! function_exists( 'commentpress_customize_site_image' ) ) :
-
-	/**
-	 * Implements CommentPress Core "Site Image" in the Theme Customizer.
-	 *
-	 * @since 3.8.5
-	 *
-	 * @param object $wp_customize Theme Customizer object.
-	 */
-	function commentpress_customize_site_image( $wp_customize ) {
-
-		// Get core plugin reference.
-		$core = commentpress_core();
-
-		// Bail if BuddyPress Group Blog.
-		if ( ! empty( $core ) && $core->bp->is_groupblog() ) {
-			return;
-		}
-
-		// Include our class file.
-		include_once COMMENTPRESS_PLUGIN_PATH . 'includes/core/assets/includes/theme/class-customizer-site-image.php';
-
-		/*
-		// Register control - not needed as yet, but is if we want to fully extend.
-		$wp_customize->register_control_type( 'WP_Customize_Site_Image_Control' );
-		*/
-
-		// Add customizer section title.
-		$wp_customize->add_section(
-			'cp_site_image',
-			[
-				'title' => apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) ),
-				'priority' => 25,
-			]
-		);
-
-		// Add image setting.
-		$wp_customize->add_setting(
-			'commentpress_theme_settings[cp_site_image]',
-			[
-				'default' => '',
-				'capability' => 'edit_theme_options',
-				'type' => 'option',
-			]
-		);
-
-		// Add image control.
-		$wp_customize->add_control(
-			new WP_Customize_Site_Image_Control(
-				$wp_customize,
-				'cp_site_image',
-				[
-					'label' => apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) ),
-					'description' => apply_filters( 'commentpress_customizer_site_image_description', __( 'Choose an image to represent this site. Other plugins may use this image to illustrate this site - in multisite directory listings, for example.', 'commentpress-core' ) ),
-					'section' => 'cp_site_image',
-					'settings' => 'commentpress_theme_settings[cp_site_image]',
-					'priority' => 1,
-				]
-			)
-		);
-
-	}
-
-endif;
-
-
-
-if ( ! function_exists( 'commentpress_customize_site_logo' ) ) :
-
-	/**
-	 * Implements CommentPress Core "Site Logo" in the Theme Customizer.
-	 *
-	 * @since 3.8.5
-	 *
-	 * @param object $wp_customize Theme Customizer object.
-	 */
-	function commentpress_customize_site_logo( $wp_customize ) {
-
-		// Get core plugin reference.
-		$core = commentpress_core();
-
-		// Bail if BuddyPress Group Blog.
-		if ( empty( $core ) && $core->bp->is_groupblog() ) {
-			return;
-		}
-
-		// Add customizer section title.
-		$wp_customize->add_section(
-			'cp_inline_header_image',
-			[
-				'title' => __( 'Site Logo', 'commentpress-core' ),
-				'priority' => 35,
-			]
-		);
-
-		// Add image setting.
-		$wp_customize->add_setting(
-			'commentpress_theme_settings[cp_inline_header_image]',
-			[
-				'default' => '',
-				'capability' => 'edit_theme_options',
-				'type' => 'option',
-			]
-		);
-
-		// Add image control.
-		$wp_customize->add_control(
-			new WP_Customize_Image_Control(
-				$wp_customize,
-				'cp_inline_header_image',
-				[
-					'label' => __( 'Logo Image', 'commentpress-core' ),
-					'description' => apply_filters( 'commentpress_customizer_site_logo_description', __( 'You may prefer to display an image instead of text in the header of your site. The image must be a maximum of 70px tall. If it is less tall, then you can adjust the vertical alignment using the "Top padding in px" setting below.', 'commentpress-core' ) ),
-					'section' => 'cp_inline_header_image',
-					'settings' => 'commentpress_theme_settings[cp_inline_header_image]',
-					'priority' => 1,
-				]
-			)
-		);
-
-		// Add padding setting.
-		$wp_customize->add_setting(
-			'commentpress_theme_settings[cp_inline_header_padding]',
-			[
-				'default' => '',
-				'capability' => 'edit_theme_options',
-				'type' => 'option',
-			]
-		);
-
-		// Add text control.
-		$wp_customize->add_control(
-			'commentpress_theme_settings[cp_inline_header_padding]',
-			[
-				'label' => __( 'Top padding in px', 'commentpress-core' ),
-				'section' => 'cp_inline_header_image',
-				'type' => 'text',
-			]
-		);
-
-	}
-
-endif;
-
-
-
-if ( ! function_exists( 'commentpress_customize_header_bg_color' ) ) :
-
-	/**
-	 * Implements CommentPress Core "Header Background Colour" in the Theme Customizer.
-	 *
-	 * @since 3.8.5
-	 *
-	 * @param object $wp_customize Theme Customizer object.
-	 */
-	function commentpress_customize_header_bg_color( $wp_customize ) {
-
-		// Get core plugin reference.
-		$core = commentpress_core();
-		if ( empty( $core ) ) {
-			return;
-		}
-
-		// Add color picker setting.
-		$wp_customize->add_setting(
-			'commentpress_header_bg_color',
-			[
-				'default' => '#' . $core->db->header_bg_colour,
-				//'capability' => 'edit_theme_options',
-				//'type' => 'option',
-			]
-		);
-
-		// Add color picker control.
-		$wp_customize->add_control(
-			new WP_Customize_Color_Control(
-				$wp_customize,
-				'commentpress_header_bg_color',
-				[
-					'label' => __( 'Header Background Colour', 'commentpress-core' ),
-					'section' => 'colors',
-					'settings' => 'commentpress_header_bg_color',
-				]
-			)
-		);
-
-	}
-
-endif;
-
-
-
-if ( ! function_exists( 'commentpress_admin_menu' ) ) :
-
-	/**
-	 * Adds more prominent menu item.
-	 *
-	 * @since 3.0
-	 */
-	function commentpress_admin_menu() {
-
-		// Add the Customize link to the admin menu.
-		add_theme_page( __( 'Customize', 'commentpress-core' ), __( 'Customize', 'commentpress-core' ), 'edit_theme_options', 'customize.php' );
-
-	}
-
-endif;
-
-// Add callback for the above.
-// TODO: Is this necessary?
-add_action( 'admin_menu', 'commentpress_admin_menu' );
 
 
 
@@ -722,111 +517,6 @@ endif;
 
 
 
-if ( ! function_exists( 'commentpress_document_title_parts' ) ) :
-
-	/**
-	 * Add the root network name when the sub-blog is a Group Blog.
-	 *
-	 * @since 3.8
-	 *
-	 * @param array $parts The existing title parts.
-	 * @return array $parts The modified title parts.
-	 */
-	function commentpress_document_title_parts( $parts ) {
-
-		// Get core plugin reference.
-		$core = commentpress_core();
-
-		// If it's a Group Blog.
-		if ( ! empty( $core ) && $core->bp->is_groupblog() ) {
-			if ( ! isset( $parts['site'] ) ) {
-				$parts['title'] .= commentpress_site_title( '|', false );
-				unset( $parts['tagline'] );
-			} else {
-				$parts['site'] .= commentpress_site_title( '|', false );
-			}
-		}
-
-		// Return filtered array.
-		return apply_filters( 'commentpress_document_title_parts', $parts );
-
-	}
-
-endif;
-
-// Add callback for the above.
-add_filter( 'document_title_parts', 'commentpress_document_title_parts' );
-
-
-
-if ( ! function_exists( 'commentpress_document_title_separator' ) ) :
-
-	/**
-	 * Use the separator that CommentPress Core has always used.
-	 *
-	 * @since 3.8
-	 *
-	 * @param string $sep The existing separator.
-	 * @return string $sep The modified separator.
-	 */
-	function commentpress_document_title_separator( $sep ) {
-
-		// --<
-		return '|';
-
-	}
-
-endif;
-
-// Add callback for the above.
-add_filter( 'document_title_separator', 'commentpress_document_title_separator' );
-
-
-
-if ( ! function_exists( 'commentpress_site_title' ) ) :
-
-	/**
-	 * Amend the Site title depending on context of Blog.
-	 *
-	 * @since 3.8
-	 *
-	 * @param string $sep The title separator.
-	 * @param boolean $echo Echo the result or not.
-	 * @return string $site_name The title of the Site.
-	 */
-	function commentpress_site_title( $sep = '', $echo = true ) {
-
-		// Is this multisite?
-		if ( is_multisite() ) {
-
-			// If we're on a sub-blog.
-			if ( ! is_main_site() ) {
-
-				$current_site = get_current_site();
-
-				// Print?
-				if ( $echo ) {
-
-					// Add Site name.
-					echo ' ' . trim( $sep ) . ' ' . $current_site->site_name;
-
-				} else {
-
-					// Add Site name.
-					return ' ' . trim( $sep ) . ' ' . $current_site->site_name;
-
-				}
-
-			}
-
-		}
-
-	}
-
-endif;
-
-
-
 if ( ! function_exists( 'commentpress_header_meta_description' ) ) :
 
 	/**
@@ -888,41 +578,6 @@ if ( ! function_exists( 'commentpress_header_meta_description' ) ) :
 	}
 
 endif;
-
-
-
-if ( ! function_exists( 'commentpress_remove_more_jump_link' ) ) :
-
-	/**
-	 * Disable more link jump.
-	 *
-	 * @see http://codex.wordpress.org/Customizing_the_Read_More
-	 *
-	 * @since 3.0
-	 *
-	 * @param string $link The existing more link.
-	 * @return string $link The modified more link.
-	 */
-	function commentpress_remove_more_jump_link( $link ) {
-
-		$offset = strpos( $link, '#more-' );
-
-		if ( $offset ) {
-			$end = strpos( $link, '"', $offset );
-			if ( $end ) {
-				$link = substr_replace( $link, '', $offset, $end - $offset );
-			}
-		}
-
-		// --<
-		return $link;
-
-	}
-
-endif;
-
-// Add callback for the above.
-add_filter( 'the_content_more_link', 'commentpress_remove_more_jump_link' );
 
 
 
@@ -1134,51 +789,6 @@ endif;
 
 
 
-if ( ! function_exists( 'commentpress_show_source_url' ) ) :
-
-	/**
-	 * Show source URL for print.
-	 *
-	 * @since 3.5
-	 */
-	function commentpress_show_source_url() {
-
-		// Add the URL - hidden, but revealed by print stylesheet.
-		?>
-		<p class="hidden_page_url">
-			<?php
-
-			// Label.
-			echo __( 'Source: ', 'commentpress-core' );
-
-			// Path from server array, if set.
-			$path = isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '';
-
-			// Get server, if set.
-			$server = isset( $_SERVER['SERVER_NAME'] ) ? wp_unslash( $_SERVER['SERVER_NAME'] ) : '';
-
-			// Get protocol, if set.
-			$protocol = ! empty( $_SERVER['HTTPS'] ) ? 'https' : 'http';
-
-			// Construct URL.
-			$url = $protocol . '://' . $server . $path;
-
-			// Echo.
-			echo $url;
-
-			?>
-		</p>
-		<?php
-
-	}
-
-endif;
-
-// Add callback for the above.
-add_action( 'wp_footer', 'commentpress_show_source_url' );
-
-
-
 if ( ! function_exists( 'commentpress_echo_post_author' ) ) :
 
 	/**
@@ -1309,114 +919,6 @@ endif;
 
 
 
-if ( ! function_exists( 'commentpress_lexia_support_mime' ) ) :
-
-	/**
-	 * The "media" Post Type needs more granular naming support.
-	 *
-	 * @since 3.9
-	 *
-	 * @param str $post_type_name The existing singular name of the Post Type.
-	 * @param str $post_type The Post Type identifier.
-	 * @return str $post_type_name The modified singular name of the Post Type.
-	 */
-	function commentpress_lexia_support_mime( $post_type_name, $post_type ) {
-
-		// Only handle media.
-		if ( $post_type != 'attachment' ) {
-			return $post_type_name;
-		}
-
-		// Get mime type.
-		$mime_type = get_post_mime_type( get_the_ID() );
-
-		// Use different name for each.
-		switch ( $mime_type ) {
-
-			// Image.
-			case 'image/jpeg':
-			case 'image/png':
-			case 'image/gif':
-				$mime_type_name = __( 'Image', 'commentpress-core' );
-				break;
-
-			// Video.
-			case 'video/mpeg':
-			case 'video/mp4':
-			case 'video/quicktime':
-				$mime_type_name = __( 'Video', 'commentpress-core' );
-				break;
-
-			// File.
-			case 'text/csv':
-			case 'text/plain':
-			case 'text/xml':
-			default:
-				$mime_type_name = __( 'File', 'commentpress-core' );
-				break;
-
-		}
-
-		/**
-		 * Allow this name to be filtered.
-		 *
-		 * @since 3.9
-		 *
-		 * @param str $mime_type_name The name for this mime type.
-		 * @param str $mime_type The mime type.
-		 * @return str $mime_type_name The modified name for this mime type.
-		 */
-		$mime_type_name = apply_filters( 'commentpress_lexia_mime_type_name', $mime_type_name, $mime_type );
-
-		// --<
-		return $mime_type_name;
-
-	}
-
-endif;
-
-// Add callback for the above.
-add_filter( 'commentpress_lexia_post_type_name', 'commentpress_lexia_support_mime', 10, 2 );
-
-
-
-if ( ! function_exists( 'commentpress_lexia_modify_entity_text' ) ) :
-
-	/**
-	 * The "media" Post Type needs more granular naming support.
-	 *
-	 * @since 3.9
-	 *
-	 * @param str $entity_text The current entity text.
-	 * @param str $post_type_name The singular name of the Post Type.
-	 * @param str $post_type The Post Type identifier.
-	 * @return str $entity_text The modified entity text.
-	 */
-	function commentpress_lexia_modify_entity_text( $entity_text, $post_type_name, $post_type ) {
-
-		// Only handle media.
-		if ( $post_type != 'attachment' ) {
-			return $entity_text;
-		}
-
-		// Override entity text.
-		$entity_text = sprintf(
-			__( 'the %s', 'commentpress-core' ),
-			$post_type_name
-		);
-
-		// --<
-		return $entity_text;
-
-	}
-
-endif;
-
-// Add callback for the above.
-add_filter( 'commentpress_lexia_whole_entity_text', 'commentpress_lexia_modify_entity_text', 10, 3 );
-
-
-
 if ( ! function_exists( 'commentpress_get_full_name' ) ) :
 
 	/**
@@ -1452,210 +954,6 @@ if ( ! function_exists( 'commentpress_get_full_name' ) ) :
 	}
 
 endif;
-
-
-
-if ( ! function_exists( 'commentpress_excerpt_length' ) ) :
-
-	/**
-	 * Gets the length of excerpt.
-	 *
-	 * @since 3.0
-	 *
-	 * @return int $length The length of the excerpt.
-	 */
-	function commentpress_excerpt_length() {
-
-		// Init return
-		$length = 55; // WordPress default.
-
-		// Get core plugin reference.
-		$core = commentpress_core();
-
-		// Get length of excerpt from option.
-		if ( ! empty( $core ) ) {
-			$length = $core->db->option_get( 'cp_excerpt_length' );
-		}
-
-		// --<
-		return $length;
-
-	}
-
-endif;
-
-// Add callback for excerpt length.
-add_filter( 'excerpt_length', 'commentpress_excerpt_length' );
-
-
-
-if ( ! function_exists( 'commentpress_add_link_css' ) ) :
-
-	/**
-	 * Utility to add button css class to Blog nav links.
-	 *
-	 * @since 3.0
-	 *
-	 * @param str $link The existing link.
-	 * @return str $link The link with the custom class attribute added.
-	 */
-	function commentpress_add_link_css( $link ) {
-
-		// Add CSS.
-		$link = str_replace( '<a ', '<a class="css_btn" ', $link );
-
-		// --<
-		return $link;
-
-	}
-
-endif;
-
-// Add callback for next/previous links.
-add_filter( 'previous_post_link', 'commentpress_add_link_css' );
-add_filter( 'next_post_link', 'commentpress_add_link_css' );
-
-
-
-if ( ! function_exists( 'commentpress_get_link_css' ) ) :
-
-	/**
-	 * Utility to add button css class to Blog nav links.
-	 *
-	 * @since 3.0
-	 *
-	 * @return str $link The custom class attribute.
-	 */
-	function commentpress_get_link_css() {
-
-		// Add CSS.
-		$link = 'class="css_btn"';
-
-		// --<
-		return $link;
-
-	}
-
-endif;
-
-// Add callback for next/previous Posts links.
-add_filter( 'previous_posts_link_attributes', 'commentpress_get_link_css' );
-add_filter( 'next_posts_link_attributes', 'commentpress_get_link_css' );
-
-
-
-if ( ! function_exists( 'commentpress_multipager' ) ) :
-
-	/**
-	 * Create sane links between Pages.
-	 *
-	 * Comment permalinks are filtered if the Comment is not on the first Page
-	 * in a multipage Post.
-	 *
-	 * @see commentpress_multipage_comment_link()
-	 *
-	 * @since 3.5
-	 *
-	 * @return str $page_links The Next Page and Previous Page links.
-	 */
-	function commentpress_multipager() {
-
-		// Set default behaviour.
-		$defaults = [
-			'before' => '<div class="multipager">',
-			'after' => '</div>',
-			'link_before' => '',
-			'link_after' => '',
-			'next_or_number' => 'next',
-			'nextpagelink' => '<span class="alignright">' . __( 'Next page', 'commentpress-core' ) . ' &raquo;</span>',
-			'previouspagelink' => '<span class="alignleft">&laquo; ' . __( 'Previous page', 'commentpress-core' ) . '</span>',
-			'pagelink' => '%',
-			'more_file' => '',
-			'echo' => 0,
-		];
-
-		// Get Page links.
-		$page_links = wp_link_pages( $defaults );
-
-		// Add separator when there are two links.
-		$page_links = str_replace(
-			'a><a',
-			'a> <span class="multipager_sep">|</span> <a',
-			$page_links
-		);
-
-		// Get Page links.
-		$page_links .= wp_link_pages( [
-			'before' => '<div class="multipager multipager_all"><span>' . __( 'Pages: ', 'commentpress-core' ) . '</span>',
-			'after' => '</div>',
-			'pagelink' => '<span class="multipager_link">%</span>',
-			'echo' => 0,
-		] );
-
-		// --<
-		return $page_links;
-
-	}
-
-endif;
-
-
-
-if ( ! function_exists( 'commentpress_trap_empty_search' ) ) :
-
-	/**
-	 * Trap empty search queries and redirect.
-	 *
-	 * @since 3.3
-	 *
-	 * @return str $template The path to the search template.
-	 */
-	function commentpress_trap_empty_search() {
-
-		// Send to Search Page when there is an empty search.
-		if ( isset( $_GET['s'] ) && empty( $_GET['s'] ) ) {
-			return locate_template( [ 'search.php' ] );
-		}
-
-	}
-
-endif;
-
-// Add callback for the above.
-add_filter( 'home_template', 'commentpress_trap_empty_search' );
-
-
-
-if ( ! function_exists( 'commentpress_amend_password_form' ) ) :
-
-	/**
-	 * Adds some style to the password form by adding a class to it.
-	 *
-	 * @since 3.3
-	 *
-	 * @param str $output The existing password form.
-	 * @return str $output The modified password form.
-	 */
-	function commentpress_amend_password_form( $output ) {
-
-		// Add css class to form.
-		$output = str_replace( '<form ', '<form class="post_password_form" ', $output );
-
-		// Add css class to text field.
-		$output = str_replace( '<input name="post_password" ', '<input class="post_password_field" name="post_password" ', $output );
-
-		// Add css class to submit button.
-		$output = str_replace( '<input type="submit" ', '<input class="post_password_button" type="submit" ', $output );
-
-		// --<
-		return $output;
-
-	}
-
-endif;
-
-// Add callback for the above.
-add_filter( 'the_password_form', 'commentpress_amend_password_form' );
 
 
 
@@ -1890,6 +1188,32 @@ endif;
 
 
 
+if ( ! function_exists( 'commentpress_post_title_visibility' ) ) :
+
+	/**
+	 * Echoes a "style" attribute to show or hide the Page/Post title.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $post_id The numeric ID of the Post.
+	 */
+	function commentpress_post_title_visibility( $post_id ) {
+
+		// Override if we've elected to show the title.
+		$visibility_attr = ' style="display: none;"';
+		if ( commentpress_get_post_title_visibility( $post_id ) ) {
+			$visibility_attr = '';
+		}
+
+		// Write to screen.
+		echo $visibility_attr;
+
+	}
+
+endif;
+
+
+
 if ( ! function_exists( 'commentpress_get_post_title_visibility' ) ) :
 
 	/**
@@ -1926,6 +1250,32 @@ if ( ! function_exists( 'commentpress_get_post_title_visibility' ) ) :
 
 		// --<
 		return ( $hide == 'show' ) ? true : false;
+
+	}
+
+endif;
+
+
+
+if ( ! function_exists( 'commentpress_post_meta_visibility' ) ) :
+
+	/**
+	 * Echoes a "style" attribute to show or hide the Page/Post meta.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $post_id The numeric ID of the Post.
+	 */
+	function commentpress_post_meta_visibility( $post_id ) {
+
+		// Override if we've elected to show the meta.
+		$visibility_attr = ' style="display: none;"';
+		if ( commentpress_get_post_meta_visibility( $post_id ) ) {
+			$visibility_attr = '';
+		}
+
+		// Write to screen.
+		echo $visibility_attr;
 
 	}
 
@@ -1973,100 +1323,6 @@ if ( ! function_exists( 'commentpress_get_post_meta_visibility' ) ) :
 	}
 
 endif;
-
-
-
-if ( ! function_exists( 'commentpress_add_selection_classes' ) ) :
-
-	/**
-	 * Filter the Comment class to add selection data.
-	 *
-	 * @since 3.8
-	 *
-	 * @param array $classes An array of Comment classes.
-	 * @param string $class A comma-separated list of additional classes added to the list.
-	 * @param int $comment_id The Comment ID.
-	 * @param object $comment The Comment.
-	 * @param int|WP_Post $post_id The Post ID or WP_Post object.
-	 */
-	function commentpress_add_selection_classes( $classes, $class, $comment_id, $comment, $post_id = 0 ) {
-
-		// Define key.
-		$key = '_cp_comment_selection';
-
-		// Get current.
-		$data = get_comment_meta( $comment_id, $key, true );
-
-		// If the Comment meta already has a value.
-		if ( ! empty( $data ) ) {
-
-			// Make into an array.
-			$selection = explode( ',', $data );
-
-			// Add to classes.
-			$classes[] = 'selection-exists';
-			$classes[] = 'sel_start-' . $selection[0];
-			$classes[] = 'sel_end-' . $selection[1];
-
-		}
-
-		// --<
-		return $classes;
-
-	}
-
-endif;
-
-// Add callback for the above.
-add_filter( 'comment_class', 'commentpress_add_selection_classes', 100, 4 );
-
-
-
-if ( ! function_exists( 'commentpress_prefix_signup_template' ) ) :
-
-	/**
-	 * Prefixes WordPress Signup Page with the div wrappers that CommentPress Core needs.
-	 *
-	 * @since 3.8.5
-	 */
-	function commentpress_prefix_signup_template() {
-
-		// Prefixed wrappers.
-		echo '<div id="wrapper">
-			  <div id="main_wrapper" class="clearfix">
-			  <div id="page_wrapper">
-			  <div id="content">';
-
-	}
-
-endif;
-
-// Add callback for the above.
-add_action( 'before_signup_form', 'commentpress_prefix_signup_template' );
-
-
-
-if ( ! function_exists( 'commentpress_suffix_signup_template' ) ) :
-
-	/**
-	 * Suffixes WordPress Signup Page with the div wrappers that CommentPress Core needs.
-	 *
-	 * @since 3.8.5
-	 */
-	function commentpress_suffix_signup_template() {
-
-		// Prefixed wrappers.
-		echo '</div><!-- /content -->
-			  </div><!-- /page_wrapper -->
-			  </div><!-- /main_wrapper -->
-			  </div><!-- /wrapper -->';
-
-	}
-
-endif;
-
-// Add callback for the above.
-add_action( 'after_signup_form', 'commentpress_suffix_signup_template' );
 
 
 
