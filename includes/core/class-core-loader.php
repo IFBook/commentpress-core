@@ -499,7 +499,7 @@ class CommentPress_Core {
 	 */
 	public function get_text_signature( $para_num ) {
 		_deprecated_function( __METHOD__, '4.0' );
-		return $this->db->get_text_signature( $para_num );
+		return $this->parser->get_text_signature( $para_num );
 	}
 
 	// -------------------------------------------------------------------------

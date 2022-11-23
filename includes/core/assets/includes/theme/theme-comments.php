@@ -1246,7 +1246,7 @@ if ( ! function_exists( 'commentpress_comment_form_title' ) ) :
 		}
 
 		// Get Paragraph Text Signature.
-		$text_sig = $core->db->get_text_signature( $reply_to_para_id );
+		$text_sig = $core->parser->get_text_signature( $reply_to_para_id );
 
 		// Get link to Paragraph.
 		if ( $link_to_parent ) {

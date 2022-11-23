@@ -1120,7 +1120,7 @@ HELPTEXT;
 		if ( $reply_to_comment_id != 0 ) {
 
 			// Get Paragraph Text Signature.
-			$text_sig = $this->core->db->get_text_signature_by_comment_id( $reply_to_comment_id );
+			$text_sig = $this->core->parser->get_text_signature_by_comment_id( $reply_to_comment_id );
 
 		} else {
 
@@ -1131,7 +1131,7 @@ HELPTEXT;
 			if ( $reply_to_para_id != 0 ) {
 
 				// Get Paragraph Text Signature.
-				$text_sig = $this->core->db->get_text_signature( $reply_to_para_id );
+				$text_sig = $this->core->parser->get_text_signature( $reply_to_para_id );
 
 			}
 

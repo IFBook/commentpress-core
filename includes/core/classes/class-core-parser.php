@@ -457,7 +457,7 @@ class CommentPress_Core_Parser {
 		}
 
 		// Store Text Signatures.
-		$this->core->db->set_text_signatures( $this->text_signatures );
+		$this->set_text_signatures( $this->text_signatures );
 
 		// --<
 		return $content;
@@ -869,7 +869,7 @@ class CommentPress_Core_Parser {
 		if ( post_password_required() ) {
 
 			// Store Text Signatures array in global.
-			$this->core->db->set_text_signatures( $this->text_signatures );
+			$this->set_text_signatures( $this->text_signatures );
 
 			// --<
 			return $this->text_signatures;
@@ -886,7 +886,7 @@ class CommentPress_Core_Parser {
 		if ( ! count( $matches ) ) {
 
 			// Store Text Signatures array in global.
-			$this->core->db->set_text_signatures( $this->text_signatures );
+			$this->set_text_signatures( $this->text_signatures );
 
 			// --<
 			return $this->text_signatures;
@@ -929,7 +929,7 @@ class CommentPress_Core_Parser {
 		}
 
 		// Store Text Signatures array in global.
-		$this->core->db->set_text_signatures( $this->text_signatures );
+		$this->set_text_signatures( $this->text_signatures );
 
 		// --<
 		return $this->text_signatures;
@@ -1132,7 +1132,7 @@ class CommentPress_Core_Parser {
 		if ( post_password_required() ) {
 
 			// Store Text Signatures array in global.
-			$this->core->db->set_text_signatures( $this->text_signatures );
+			$this->set_text_signatures( $this->text_signatures );
 
 			// --<
 			return $this->text_signatures;
@@ -1151,7 +1151,7 @@ class CommentPress_Core_Parser {
 		if ( empty( $output_array ) ) {
 
 			// Store Text Signatures array in global.
-			$this->core->db->set_text_signatures( $this->text_signatures );
+			$this->set_text_signatures( $this->text_signatures );
 
 			// --<
 			return $this->text_signatures;
@@ -1216,7 +1216,7 @@ class CommentPress_Core_Parser {
 		}
 
 		// Store Text Signatures array in global.
-		$this->core->db->set_text_signatures( $this->text_signatures );
+		$this->set_text_signatures( $this->text_signatures );
 
 		// --<
 		return $this->text_signatures;
@@ -1487,7 +1487,7 @@ class CommentPress_Core_Parser {
 		if ( post_password_required() ) {
 
 			// Store Text Signatures array in global.
-			$this->core->db->set_text_signatures( $this->text_signatures );
+			$this->set_text_signatures( $this->text_signatures );
 
 			// --<
 			return $this->text_signatures;
@@ -1541,7 +1541,7 @@ class CommentPress_Core_Parser {
 		}
 
 		// Store Text Signatures array in global.
-		$this->core->db->set_text_signatures( $this->text_signatures );
+		$this->set_text_signatures( $this->text_signatures );
 
 		// --<
 		return $this->text_signatures;
@@ -2017,7 +2017,7 @@ class CommentPress_Core_Parser {
 		$comments = $this->multipage_comment_filter( $comments );
 
 		// Get our signatures.
-		$sigs = $this->core->db->get_text_signatures();
+		$sigs = $this->get_text_signatures();
 
 		// Assign Comments to Text Signatures.
 		$assigned = $this->assign_comments( $comments, $sigs );
@@ -2259,6 +2259,105 @@ class CommentPress_Core_Parser {
 
 		// --<
 		return $assigned;
+
+	}
+
+	/**
+	 * Get Text Signature for a particular Paragraph Number.
+	 *
+	 * @since 3.4
+	 * @since 4.0 Moved to this class.
+	 *
+	 * @param int $para_num The Paragraph Number in a Post.
+	 * @return str $text_signature The Text Signature.
+	 */
+	public function get_text_signature( $para_num ) {
+
+		// Get Text Signatures.
+		$sigs = $this->get_text_signatures();
+
+		// Get value at that position in array.
+		$text_sig = isset( $sigs[ $para_num - 1 ] ) ? $sigs[ $para_num - 1 ] : '';
+
+		// --<
+		return $text_sig;
+
+	}
+
+	/**
+	 * Store Text Signatures in a global.
+	 *
+	 * This is needed because some versions of PHP do not save properties!
+	 *
+	 * @since 3.4
+	 *
+	 * @param array $sigs An array of Text Signatures.
+	 */
+	public function set_text_signatures( $sigs ) {
+
+		// Store them.
+		global $ffffff_sigs;
+		$ffffff_sigs = $sigs;
+
+	}
+
+	/**
+	 * Retrieve Text Signatures.
+	 *
+	 * @since 3.4
+	 *
+	 * @return array $text_signatures An array of Text Signatures.
+	 */
+	public function get_text_signatures() {
+
+		// Get them.
+		global $ffffff_sigs;
+		return $ffffff_sigs;
+
+	}
+
+	/**
+	 * Retrieves Text Signature by Comment ID.
+	 *
+	 * @since 3.4
+	 *
+	 * @param int $comment_ID The numeric ID of the Comment.
+	 * @return str $text_signature The Text Signature for the Comment.
+	 */
+	public function get_text_signature_by_comment_id( $comment_ID ) {
+
+		// Database object.
+		global $wpdb;
+
+		// Query for signature.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+		$text_signature = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT comment_signature FROM $wpdb->comments WHERE comment_ID = %s",
+				$comment_ID
+			)
+		);
+
+		// --<
+		return $text_signature;
+
+	}
+
+	/**
+	 * Get Paragraph Number for a particular Text Signature.
+	 *
+	 * @since 3.4
+	 *
+	 * @param str $text_signature The Text Signature.
+	 * @return int $num The position in Text Signature array.
+	 */
+	public function get_para_num( $text_signature ) {
+
+		// Get position in array.
+		$num = array_search( $text_signature, $this->get_text_signatures() );
+
+		// --<
+		return $num + 1;
 
 	}
 

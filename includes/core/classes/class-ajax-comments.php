@@ -351,7 +351,7 @@ class CommentPress_AJAX_Comments {
 				$comment = get_comment( $comment_data['comment_ID'] );
 
 				// Get Text Signature.
-				$comment_signature = $this->core->db->get_text_signature_by_comment_id( $comment->comment_ID );
+				$comment_signature = $this->core->parser->get_text_signature_by_comment_id( $comment->comment_ID );
 
 				// Add Comment data to array.
 				$data = [
