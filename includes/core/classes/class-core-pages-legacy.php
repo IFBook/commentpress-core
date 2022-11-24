@@ -472,9 +472,9 @@ class CommentPress_Core_Pages_Legacy {
 			$this->core->db->options_save();
 
 			// Reset WordPress internal Page references.
-			$this->wordpress_option_restore( 'show_on_front' );
-			$this->wordpress_option_restore( 'page_on_front' );
-			$this->wordpress_option_restore( 'page_for_posts' );
+			$this->core->db->wordpress_option_restore( 'show_on_front' );
+			$this->core->db->wordpress_option_restore( 'page_on_front' );
+			$this->core->db->wordpress_option_restore( 'page_for_posts' );
 
 		}
 
@@ -511,8 +511,8 @@ class CommentPress_Core_Pages_Legacy {
 				$flag = 'cp_welcome_page';
 
 				// Reset WordPress internal Page references.
-				$this->wordpress_option_restore( 'show_on_front' );
-				$this->wordpress_option_restore( 'page_on_front' );
+				$this->core->db->wordpress_option_restore( 'show_on_front' );
+				$this->core->db->wordpress_option_restore( 'page_on_front' );
 
 				break;
 
@@ -540,7 +540,7 @@ class CommentPress_Core_Pages_Legacy {
 				$flag = 'cp_blog_page';
 
 				// Reset WordPress internal Page reference.
-				$this->wordpress_option_restore( 'page_for_posts' );
+				$this->core->db->wordpress_option_restore( 'page_for_posts' );
 
 				break;
 
