@@ -12,33 +12,6 @@ defined( 'ABSPATH' ) || exit;
 
 
 
-if ( ! function_exists( 'commentpress_admin_menu' ) ) :
-
-	/**
-	 * Adds more prominent menu item.
-	 *
-	 * @since 3.0
-	 */
-	function commentpress_admin_menu() {
-
-		// Add the Customize link to the admin menu.
-		add_theme_page(
-			__( 'Customize', 'commentpress-core' ),
-			__( 'Customize', 'commentpress-core' ),
-			'edit_theme_options',
-			'customize.php'
-		);
-
-	}
-
-endif;
-
-// Add callback for the above.
-// TODO: Is this necessary?
-add_action( 'admin_menu', 'commentpress_admin_menu' );
-
-
-
 if ( ! function_exists( 'commentpress_customizer_get_site_image_title' ) ) :
 
 	/**
@@ -122,7 +95,7 @@ if ( ! function_exists( 'commentpress_customize_register' ) ) :
 	/**
 	 * Implements CommentPress Core Theme options in the Theme Customizer.
 	 *
-	 * @since 3.0
+	 * @since 3.8.5
 	 *
 	 * @param object $wp_customize Theme Customizer object.
 	 */

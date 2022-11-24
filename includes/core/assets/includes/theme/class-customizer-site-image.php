@@ -13,9 +13,11 @@ defined( 'ABSPATH' ) || exit;
  *
  * This is incomplete at present, because the labels are not all overridden
  * the way we would like them, but it does at least allow us to save the
- * attachment ID of the uploaded image instead of the URL to the full size image.
+ * Attachment ID of the uploaded image instead of the URL to the full size image.
  *
  * @see WP_Customize_Media_Control
+ *
+ * @since 3.8.5
  */
 class WP_Customize_Site_Image_Control extends WP_Customize_Media_Control {
 
@@ -48,6 +50,8 @@ class WP_Customize_Site_Image_Control extends WP_Customize_Media_Control {
 
 	/**
 	 * Constructor.
+	 *
+	 * @since 3.8.5
 	 *
 	 * @param WP_Customize_Manager $manager The manager object.
 	 * @param string $id The ID.
