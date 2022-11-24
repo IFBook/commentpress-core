@@ -510,7 +510,7 @@ class CommentPress_Core_Settings_Post {
 	public function delete_post( $post_id ) {
 
 		// Store our meta data.
-		$result = $this->core->db->delete_meta( $post_id );
+		$result = $this->delete_meta( $post_id );
 
 	}
 

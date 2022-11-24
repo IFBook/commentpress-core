@@ -494,7 +494,7 @@ class CommentPress_Core_Settings_Site {
 		 *
 		 * @param array $settings_screens The default array of Settings Page screens.
 		 */
-		return apply_filters( 'commentpress/core/admin/page/settings/screens', $settings_screens );
+		return apply_filters( 'commentpress/core/settings/site/page/settings/screens', $settings_screens );
 
 	}
 
@@ -517,7 +517,7 @@ class CommentPress_Core_Settings_Site {
 		 *
 		 * @param array $url The default Settings Page URL.
 		 */
-		$url = apply_filters( 'commentpress/core/admin/page/settings/url', $url );
+		$url = apply_filters( 'commentpress/core/settings/site/page/settings/url', $url );
 
 		// --<
 		return $url;
@@ -545,7 +545,7 @@ class CommentPress_Core_Settings_Site {
 		 *
 		 * @param array $submit_url The Settings Page submit URL.
 		 */
-		$submit_url = apply_filters( 'commentpress/core/admin/page/settings/submit_url', $submit_url );
+		$submit_url = apply_filters( 'commentpress/core/settings/site/page/settings/submit_url', $submit_url );
 
 		// --<
 		return $submit_url;
@@ -571,7 +571,7 @@ class CommentPress_Core_Settings_Site {
 		 *
 		 * @param array $notice_url The default Settings Page URL in Admin Notices.
 		 */
-		$notice_url = apply_filters( 'commentpress/core/admin/notice/url', $notice_url );
+		$notice_url = apply_filters( 'commentpress/core/settings/site/notice/url', $notice_url );
 
 		// --<
 		return $notice_url;
@@ -661,6 +661,15 @@ class CommentPress_Core_Settings_Site {
 			'side', // Column: options are 'normal' and 'side'.
 			'core' // Vertical placement: options are 'core', 'high', 'low'.
 		);
+
+		/**
+		 * Fires after Site Settings metaboxes have been added.
+		 *
+		 * @since 4.0
+		 *
+		 * @param string $screen_id The Admin Page Screen ID.
+		 */
+		do_action( 'commentpress/core/settings/site/page/settings/metaboxes/after', $screen_id );
 
 	}
 

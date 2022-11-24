@@ -109,7 +109,7 @@ class CommentPress_Multisite_Settings_Site {
 		if ( $this->multisite->db->is_commentpress() ) {
 
 			// Modify CommentPress Core Settings Page.
-			add_action( 'commentpress/core/settings/site/metabox/general/before', [ $this, 'form_disable_element' ] );
+			add_action( 'commentpress/core/settings/site/page/settings/metaboxes/after', [ $this, 'meta_boxes_append' ] );
 
 			// Hook into CommentPress Core Settings Page result.
 			add_action( 'commentpress/core/db/options_update/before', [ $this, 'form_disable_core' ] );
@@ -361,7 +361,7 @@ class CommentPress_Multisite_Settings_Site {
 	public function meta_box_activate_render() {
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-general.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-activate.php';
 
 	}
 
@@ -374,6 +374,46 @@ class CommentPress_Multisite_Settings_Site {
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-submit.php';
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Registers additional meta boxes to the core Site Settings screen.
+	 *
+	 * @since 4.0
+	 *
+	 * @param string $screen_id The Admin Page Screen ID.
+	 */
+	public function meta_boxes_append( $screen_id ) {
+
+		// Check User permissions.
+		if ( ! $this->page_capability() ) {
+			return;
+		}
+
+		// Create "Deactivation" metabox.
+		add_meta_box(
+			'commentpress_deactivate',
+			__( 'Danger Zone', 'commentpress-core' ),
+			[ $this, 'meta_box_deactivate_render' ], // Callback.
+			$screen_id, // Screen ID.
+			'normal', // Column: options are 'normal' and 'side'.
+			'low' // Vertical placement: options are 'core', 'high', 'low'.
+		);
+
+	}
+
+	/**
+	 * Renders the "Deactivation" metabox.
+	 *
+	 * @since 4.0
+	 */
+	public function meta_box_deactivate_render() {
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-deactivate.php';
 
 	}
 
@@ -450,24 +490,6 @@ class CommentPress_Multisite_Settings_Site {
 			exit();
 
 		}
-
-	}
-
-	/**
-	 * Insert the deactivation form element.
-	 *
-	 * @since 3.3
-	 * @since 4.0 Renamed.
-	 */
-	public function form_disable_element() {
-
-		// Render form element.
-		?>
-		<tr valign="top">
-			<th scope="row"><label for="cp_deactivate_commentpress"><?php esc_html_e( 'Disable CommentPress Core on this site', 'commentpress-core' ); ?></label></th>
-			<td><input id="cp_deactivate_commentpress" name="cp_deactivate_commentpress" value="1" type="checkbox" /></td>
-		</tr>
-		<?php
 
 	}
 

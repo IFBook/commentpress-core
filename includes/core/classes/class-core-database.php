@@ -953,7 +953,7 @@ class CommentPress_Core_Database {
 		 *
 		 * Used internally by:
 		 *
-		 * * CommentPress_Multisite_Admin::disable_core()
+		 * * CommentPress_Multisite_Settings_Site::disable_core() (Priority: 10)
 		 *
 		 * @since 4.0
 		 */
