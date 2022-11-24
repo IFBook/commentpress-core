@@ -418,13 +418,13 @@ class CommentPress_Core {
 	public function register_hooks() {
 
 		// Add links to Settings Page.
-		add_filter( 'network_admin_plugin_action_links', [ $this, 'action_links' ], 10, 2 );
-		add_filter( 'plugin_action_links', [ $this, 'action_links' ], 10, 2 );
+		add_filter( 'network_admin_plugin_action_links', [ $this, 'action_links' ], 20, 2 );
+		add_filter( 'plugin_action_links', [ $this, 'action_links' ], 20, 2 );
 
 	}
 
 	/**
-	 * Utility to add link to Site Settings Page.
+	 * Adds "Donate" link to CommentPress plugin action links.
 	 *
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
@@ -435,24 +435,14 @@ class CommentPress_Core {
 	 */
 	public function action_links( $links, $file ) {
 
-		// Add settings link.
-		if ( $file == plugin_basename( dirname( __FILE__ ) . '/commentpress-core.php' ) ) {
-
-			// Is this Network Admin?
-			if ( is_network_admin() ) {
-				$link = add_query_arg( [ 'page' => 'cpmu_admin_page' ], network_admin_url( 'settings.php' ) );
-			} else {
-				$link = add_query_arg( [ 'page' => 'commentpress_admin' ], admin_url( 'options-general.php' ) );
-			}
-
-			// Add settings link.
-			$links[] = '<a href="' . esc_url( $link ) . '">' . esc_html__( 'Settings', 'commentpress-core' ) . '</a>';
-
-			// Add Paypal link.
-			$paypal = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=PZSKM8T5ZP3SC';
-			$links[] = '<a href="' . $paypal . '" target="_blank">' . __( 'Donate!', 'commentpress-core' ) . '</a>';
-
+		// Bail if not this plugin.
+		if ( $file !== plugin_basename( dirname( COMMENTPRESS_PLUGIN_FILE ) . '/commentpress-core.php' ) ) {
+			return $links;
 		}
+
+		// Add PayPal link.
+		$paypal = 'https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=PZSKM8T5ZP3SC';
+		$links[] = '<a href="' . esc_url( $paypal ) . '" target="_blank">' . __( 'Donate!', 'commentpress-core' ) . '</a>';
 
 		// --<
 		return $links;

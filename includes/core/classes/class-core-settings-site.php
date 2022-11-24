@@ -138,6 +138,9 @@ class CommentPress_Core_Settings_Site {
 		// Add our meta boxes.
 		add_action( 'add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
 
+		// Add link to Settings Page.
+		add_filter( 'plugin_action_links', [ $this, 'action_links' ], 10, 2 );
+
 	}
 
 	// -------------------------------------------------------------------------
@@ -795,6 +798,35 @@ class CommentPress_Core_Settings_Site {
 		// Redirect to our Settings Page.
 		wp_safe_redirect( add_query_arg( $args, $url ) );
 		exit;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Utility to add link to "Site Settings" screen on Site Plugins screen.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $links The existing links array.
+	 * @param str $file The name of the plugin file.
+	 * @return array $links The modified links array.
+	 */
+	public function action_links( $links, $file ) {
+
+		// Bail if not this plugin.
+		if ( $file !== plugin_basename( dirname( COMMENTPRESS_PLUGIN_FILE ) . '/commentpress-core.php' ) ) {
+			return $links;
+		}
+
+		// Get the "Site Settings" link.
+		$link = $this->page_settings_url_get();
+
+		// Add settings link.
+		$links[] = '<a href="' . esc_url( $link ) . '">' . esc_html__( 'Site Settings', 'commentpress-core' ) . '</a>';
+
+		// --<
+		return $links;
 
 	}
 

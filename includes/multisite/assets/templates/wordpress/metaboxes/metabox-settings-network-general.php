@@ -24,7 +24,7 @@
 
 	<tr valign="top">
 		<th scope="row">
-			<label for="cpmu_reset"><?php esc_html_e( 'Reset Multisite options', 'commentpress-core' ); ?>
+			<label for="cpmu_reset"><?php esc_html_e( 'Reset Network Settings', 'commentpress-core' ); ?>
 		</label></th>
 		<td>
 			<input id="cpmu_reset" name="cpmu_reset" value="1" type="checkbox" />

@@ -106,6 +106,9 @@ class CommentPress_Multisite_Settings_Network {
 		// Add our meta boxes.
 		add_action( 'add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
 
+		// Add link to Settings Page.
+		add_filter( 'network_admin_plugin_action_links', [ $this, 'action_links' ], 10, 2 );
+
 	}
 
 	// -------------------------------------------------------------------------
@@ -563,6 +566,36 @@ class CommentPress_Multisite_Settings_Network {
 
 		// --<
 		return $url;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Utility to add link to "Network Settings" screen on Network Plugins screen.
+	 *
+	 * @since 3.4
+	 * @since 4.0 Moved to this class.
+	 *
+	 * @param array $links The existing links array.
+	 * @param str $file The name of the plugin file.
+	 * @return array $links The modified links array.
+	 */
+	public function action_links( $links, $file ) {
+
+		// Bail if not this plugin.
+		if ( $file !== plugin_basename( dirname( COMMENTPRESS_PLUGIN_FILE ) . '/commentpress-core.php' ) ) {
+			return $links;
+		}
+
+		// Get the "Network Settings" link
+		$link = $this->page_settings_url_get();
+
+		// Add settings link.
+		$links[] = '<a href="' . esc_url( $link ) . '">' . esc_html__( 'Network Settings', 'commentpress-core' ) . '</a>';
+
+		// --<
+		return $links;
 
 	}
 

@@ -122,6 +122,9 @@ class CommentPress_Multisite_Settings_Site {
 			// Add our meta boxes.
 			add_action( 'add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
 
+			// Add link to Settings Page.
+			add_filter( 'plugin_action_links', [ $this, 'action_links' ], 10, 2 );
+
 		}
 
 	}
@@ -328,11 +331,11 @@ class CommentPress_Multisite_Settings_Site {
 			return;
 		}
 
-		// Create "General Settings" metabox.
+		// Create "Activation" metabox.
 		add_meta_box(
-			'commentpress_general',
-			__( 'General Settings', 'commentpress-core' ),
-			[ $this, 'meta_box_general_render' ], // Callback.
+			'commentpress_activate',
+			__( 'Activation', 'commentpress-core' ),
+			[ $this, 'meta_box_activate_render' ], // Callback.
 			$screen_id, // Screen ID.
 			'normal', // Column: options are 'normal' and 'side'.
 			'core' // Vertical placement: options are 'core', 'high', 'low'.
@@ -351,11 +354,11 @@ class CommentPress_Multisite_Settings_Site {
 	}
 
 	/**
-	 * Renders the "General Settings" metabox.
+	 * Renders the "Activation" metabox.
 	 *
 	 * @since 4.0
 	 */
-	public function meta_box_general_render() {
+	public function meta_box_activate_render() {
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-general.php';
@@ -465,6 +468,35 @@ class CommentPress_Multisite_Settings_Site {
 			<td><input id="cp_deactivate_commentpress" name="cp_deactivate_commentpress" value="1" type="checkbox" /></td>
 		</tr>
 		<?php
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Utility to add link to "Site Settings" screen on Site Plugins screen.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $links The existing links array.
+	 * @param str $file The name of the plugin file.
+	 * @return array $links The modified links array.
+	 */
+	public function action_links( $links, $file ) {
+
+		// Bail if not this plugin.
+		if ( $file !== plugin_basename( dirname( COMMENTPRESS_PLUGIN_FILE ) . '/commentpress-core.php' ) ) {
+			return $links;
+		}
+
+		// Get the "Site Settings" link.
+		$link = $this->page_settings_url_get();
+
+		// Add settings link.
+		$links[] = '<a href="' . esc_url( $link ) . '">' . esc_html__( 'Site Settings', 'commentpress-core' ) . '</a>';
+
+		// --<
+		return $links;
 
 	}
 
