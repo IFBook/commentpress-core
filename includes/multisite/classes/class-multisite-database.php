@@ -89,7 +89,7 @@ class CommentPress_Multisite_Database {
 	public function enable_commentpress() {
 
 		// Bail if not network-enabled.
-		if ( COMMENTPRESS_PLUGIN_CONTEXT !== 'mu_sitewide' ) {
+		if ( $this->multisite->plugin->plugin_context !== 'mu_sitewide' ) {
 			return;
 		}
 
@@ -99,7 +99,7 @@ class CommentPress_Multisite_Database {
 		}
 
 		// Activate core plugin.
-		commentpress_activate_core();
+		$this->multisite->plugin->core_activate();
 
 	}
 
@@ -162,8 +162,8 @@ class CommentPress_Multisite_Database {
 	 */
 	public function install_commentpress( $context = 'new_blog' ) {
 
-		// Activate core.
-		$core = commentpress_activate_core();
+		// Activate core plugin.
+		$core = $this->multisite->plugin->core_activate();
 
 		// Run activation hook.
 		$core->activate();
@@ -258,8 +258,8 @@ class CommentPress_Multisite_Database {
 	 */
 	public function uninstall_commentpress() {
 
-		// Activate core.
-		$core = commentpress_activate_core();
+		// Activate core plugin.
+		$core = $this->multisite->plugin->core_activate();
 
 		// Run deactivation hook.
 		$core->deactivate();

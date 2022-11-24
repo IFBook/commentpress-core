@@ -8,11 +8,11 @@
  * Author URI: http://www.futureofthebook.org
  * Text Domain: commentpress-core
  * Domain Path: /languages
- * -----------------------------------------------------------------------------
+ *
  * Special thanks to:
- * Eddie Tejeda @ http://www.visudo.com for CommentPress 2.0
+ *
+ * Eddie Tejeda for CommentPress 2.0: https://www.visudo.com
  * Mark James for the icons: http://www.famfamfam.com/lab/icons/silk/
- * -----------------------------------------------------------------------------
  *
  * @package CommentPress_Core
  */
@@ -37,353 +37,490 @@ if ( ! defined( 'COMMENTPRESS_PLUGIN_PATH' ) ) {
 	define( 'COMMENTPRESS_PLUGIN_PATH', plugin_dir_path( COMMENTPRESS_PLUGIN_FILE ) );
 }
 
-/*
- * -----------------------------------------------------------------------------
- * Begin by establishing Plugin Context.
- * -----------------------------------------------------------------------------
- * NOTE: force-activated context is now deprecated.
- * -----------------------------------------------------------------------------
+/**
+ * CommentPress Core Class.
+ *
+ * A class that handles plugin functionality.
+ *
+ * @since 4.0
  */
+class CommentPress_Core {
 
-// Test for multisite location.
-if ( basename( dirname( COMMENTPRESS_PLUGIN_FILE ) ) == 'mu-plugins' ) {
-
-	// Directory-based forced activation.
-	if ( ! defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
-		define( 'COMMENTPRESS_PLUGIN_CONTEXT', 'mu_forced' );
-	}
-
-// Test for multisite.
-} elseif ( is_multisite() ) {
-
-	// Check if our plugin is one of those activated sitewide.
-	$this_plugin = plugin_basename( COMMENTPRESS_PLUGIN_FILE );
-
-	/*
-	 * Unfortunately, is_plugin_active_for_network() is not yet available so we
-	 * have to do this manually.
+	/**
+	 * Plugin context flag.
 	 *
-	 * Also note: during network activation, this plugin is not yet present in
-	 * the active_sitewide_plugins array.
+	 * Replaces the legacy "COMMENTPRESS_PLUGIN_CONTEXT" constant.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $plugin_context The plugin context flag.
 	 */
+	public $plugin_context;
 
-	// Get sitewide plugins.
-	$active_plugins = (array) get_site_option( 'active_sitewide_plugins' );
+	/**
+	 * Common directory path.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $common_path Relative path to the common directory.
+	 */
+	public $common_path = 'includes/common/';
 
-	// Is the plugin network activated?
-	if ( isset( $active_plugins[ $this_plugin ] ) ) {
+	/**
+	 * Core directory path.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $core_path Relative path to the core directory.
+	 */
+	public $core_path = 'includes/core/';
 
-		// Yes, network activated.
-		if ( ! defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
-			define( 'COMMENTPRESS_PLUGIN_CONTEXT', 'mu_sitewide' );
+	/**
+	 * Multisite directory path.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $multisite_path Relative path to the multisite directory.
+	 */
+	public $multisite_path = 'includes/multisite/';
+
+	/**
+	 * Constructor.
+	 *
+	 * @since 4.0
+	 */
+	public function __construct() {
+
+		// Initialise plugin.
+		$this->initialise();
+
+	}
+
+	/**
+	 * Initialises this plugin.
+	 *
+	 * @since 4.0
+	 */
+	public function initialise() {
+
+		// Only do this once.
+		static $done;
+		if ( isset( $done ) && $done === true ) {
+			return;
 		}
 
-	} else {
+		// Include files.
+		$this->include_files();
 
-		// Optional activation per Blog in multisite.
-		if ( ! defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
-			define( 'COMMENTPRESS_PLUGIN_CONTEXT', 'mu_optional' );
+		// Establish context.
+		$this->plugin_context();
+
+		// Register theme directory.
+		$this->theme_directory_register();
+
+		// Maybe bootstrap core.
+		$this->core_bootstrap();
+
+		// Maybe bootstrap multisite.
+		$this->multisite_bootstrap();
+
+		// Register hooks.
+		$this->register_hooks();
+
+		/**
+		 * Fires when CommentPress has loaded.
+		 *
+		 * @since 4.0
+		 */
+		do_action( 'commentpress/loaded' );
+
+		// We're done.
+		$done = true;
+
+	}
+
+	/**
+	 * Includes files.
+	 *
+	 * @since 4.0
+	 */
+	public function include_files() {
+
+		// Include common files.
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->common_path . 'common-functions.php';
+
+	}
+
+	/**
+	 * Determines plugin context.
+	 *
+	 * @since 4.0
+	 */
+	public function plugin_context() {
+
+		// If not multisite, then must be Single Site install.
+		if ( ! is_multisite() ) {
+			$this->plugin_context = 'standard';
+			return;
+		}
+
+		// Check if our plugin is one of those activated sitewide.
+		$this_plugin = plugin_basename( COMMENTPRESS_PLUGIN_FILE );
+
+		/*
+		 * Unfortunately, is_plugin_active_for_network() is not yet available so we
+		 * have to do this manually.
+		 *
+		 * Also note: during network activation, this plugin is not yet present in
+		 * the active_sitewide_plugins array.
+		 */
+
+		// Get sitewide plugins.
+		$active_plugins = (array) get_site_option( 'active_sitewide_plugins' );
+
+		// Is the plugin network activated?
+		if ( isset( $active_plugins[ $this_plugin ] ) ) {
+			$this->plugin_context = 'mu_sitewide';
+			return;
+		}
+
+		// Optional activation per Site in Multisite.
+		$this->plugin_context = 'mu_optional';
+
+	}
+
+	/**
+	 * Registers the theme directory with WordPress.
+	 *
+	 * NOTE: in multisite, child themes are registered as broken if the plugin
+	 * is not network-enabled. Make sure child themes have instructions.
+	 *
+	 * There are further complex issues when in Multisite:
+	 *
+	 * First scenario:
+	 *
+	 * * If the plugin is NOT initially network-enabled
+	 * * But it IS enabled on one or more Blogs on the network
+	 * * And the plugin in THEN network-enabled
+	 *
+	 * Second scenario:
+	 *
+	 * * If the plugin IS initially network-enabled
+	 * * And it IS activated on one or more Blogs on the network
+	 * * And the plugin in THEN network-disabled
+	 *
+	 * If installs stick to one or the other, then all works as expected.
+	 *
+	 * @since 4.0
+	 */
+	public function theme_directory_register() {
+
+		// Register our themes directory.
+		register_theme_directory( plugin_dir_path( COMMENTPRESS_PLUGIN_FILE ) . 'themes' );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets a reference to the core plugin object.
+	 *
+	 * @since 4.0
+	 *
+	 * @return CommentPress_Core_Loader $commentpress_core The plugin reference, or false on failure.
+	 */
+	public function core() {
+
+		// Declare as global to retain backwards compatibility.
+		global $commentpress_core;
+
+		// Maybe return reference.
+		if ( isset( $commentpress_core ) ) {
+			if ( $commentpress_core instanceof CommentPress_Core_Loader ) {
+				return $commentpress_core;
+			}
+		}
+
+		// Not present.
+		return false;
+
+	}
+
+	/**
+	 * Maybe bootstrap core.
+	 *
+	 * @since 4.0
+	 */
+	public function core_bootstrap() {
+
+		/*
+		--------------------------------------------------------------------------------
+		Init Standalone.
+		--------------------------------------------------------------------------------
+		Note: we exclude activation on Network Admin Pages to avoid auto-installation
+		on Main Site when the plugin is network activated.
+		--------------------------------------------------------------------------------
+		*/
+
+		// Include Standalone.
+		$this->core_include();
+
+		// Only activate if in "standard" or "mu_optional" context.
+		if (
+			$this->plugin_context == 'standard' ||
+			( $this->plugin_context == 'mu_optional' && ! is_network_admin() )
+		) {
+
+			// Activate CommentPress Core.
+			$core = $this->core_activate();
+
+			// Activation.
+			register_activation_hook( COMMENTPRESS_PLUGIN_FILE, [ $core, 'activate' ] );
+
+			// Deactivation.
+			register_deactivation_hook( COMMENTPRESS_PLUGIN_FILE, [ $core, 'deactivate' ] );
+
+			/*
+			 * Uninstall uses the 'uninstall.php' method.
+			 *
+			 * @see https://developer.wordpress.org/reference/functions/register_uninstall_hook/
+			 */
+
 		}
 
 	}
 
-} else {
+	/**
+	 * Includes the core plugin loader file.
+	 *
+	 * @since 4.0
+	 */
+	public function core_include() {
 
-	// Single install.
-	if ( ! defined( 'COMMENTPRESS_PLUGIN_CONTEXT' ) ) {
-		define( 'COMMENTPRESS_PLUGIN_CONTEXT', 'standard' );
+		// Include core loader class file.
+		if ( ! class_exists( 'CommentPress_Core_Loader' ) ) {
+			require_once COMMENTPRESS_PLUGIN_PATH . $this->core_path . 'class-core-loader.php';
+		}
+
+	}
+
+	/**
+	 * Activates the core plugin.
+	 *
+	 * @since 4.0
+	 *
+	 * @return CommentPress_Core $commentpress_core The plugin reference.
+	 */
+	public function core_activate() {
+
+		// Declare as global to retain backwards compatibility.
+		global $commentpress_core;
+
+		// Instantiate if not already instantiated.
+		if ( ! isset( $commentpress_core ) ) {
+			$commentpress_core = new CommentPress_Core_Loader( $this );
+		}
+
+		// Return reference.
+		return $commentpress_core;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets a reference to the multisite plugin object.
+	 *
+	 * @since 4.0
+	 *
+	 * @return CommentPress_Multisite_Loader $commentpress_mu The multisite plugin reference.
+	 */
+	public function multisite() {
+
+		// Declare as global to retain backwards compatibility.
+		global $commentpress_mu;
+
+		// Maybe return reference.
+		if ( isset( $commentpress_mu ) ) {
+			if ( $commentpress_mu instanceof CommentPress_Multisite_Loader ) {
+				return $commentpress_mu;
+			}
+		}
+
+		// Not present.
+		return false;
+
+	}
+
+	/**
+	 * Maybe bootstrap multisite plugin.
+	 *
+	 * @since 4.0
+	 */
+	public function multisite_bootstrap() {
+
+		// Bail if we have not activated network-wide.
+		if ( $this->plugin_context !== 'mu_sitewide' ) {
+			return;
+		}
+
+		// Include multisite plugin class file.
+		$this->multisite_include();
+
+		// Activate multisite plugin.
+		$this->multisite_activate();
+
+	}
+
+	/**
+	 * Includes the multisite plugin loader file.
+	 *
+	 * @since 4.0
+	 */
+	public function multisite_include() {
+
+		// Include multisite loader class file.
+		if ( ! class_exists( 'CommentPress_Multisite_Loader' ) ) {
+			require_once COMMENTPRESS_PLUGIN_PATH . $this->multisite_path . 'class-multisite-loader.php';
+		}
+
+	}
+
+	/**
+	 * Activates the multisite plugin.
+	 *
+	 * @since 4.0
+	 *
+	 * @return CommentPress_Multisite_Loader $commentpress_mu The multisite plugin reference.
+	 */
+	function multisite_activate() {
+
+		// Declare as global to retain backwards compatibility.
+		global $commentpress_mu;
+
+		// Instantiate if not yet instantiated.
+		if ( ! isset( $commentpress_mu ) ) {
+			$commentpress_mu = new CommentPress_Multisite_Loader( $this );
+		}
+
+		// --<
+		return $commentpress_mu;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Register WordPress hooks.
+	 *
+	 * @since 4.0
+	 */
+	public function register_hooks() {
+
+		// Add links to Settings Page.
+		add_filter( 'network_admin_plugin_action_links', [ $this, 'action_links' ], 10, 2 );
+		add_filter( 'plugin_action_links', [ $this, 'action_links' ], 10, 2 );
+
+	}
+
+	/**
+	 * Utility to add link to Site Settings Page.
+	 *
+	 * @since 3.4
+	 * @since 4.0 Moved to this class.
+	 *
+	 * @param array $links The existing links array.
+	 * @param str $file The name of the plugin file.
+	 * @return array $links The modified links array.
+	 */
+	public function action_links( $links, $file ) {
+
+		// Add settings link.
+		if ( $file == plugin_basename( dirname( __FILE__ ) . '/commentpress-core.php' ) ) {
+
+			// Is this Network Admin?
+			if ( is_network_admin() ) {
+				$link = add_query_arg( [ 'page' => 'cpmu_admin_page' ], network_admin_url( 'settings.php' ) );
+			} else {
+				$link = add_query_arg( [ 'page' => 'commentpress_admin' ], admin_url( 'options-general.php' ) );
+			}
+
+			// Add settings link.
+			$links[] = '<a href="' . esc_url( $link ) . '">' . esc_html__( 'Settings', 'commentpress-core' ) . '</a>';
+
+			// Add Paypal link.
+			$paypal = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=PZSKM8T5ZP3SC';
+			$links[] = '<a href="' . $paypal . '" target="_blank">' . __( 'Donate!', 'commentpress-core' ) . '</a>';
+
+		}
+
+		// --<
+		return $links;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Checks if this plugin is network activated.
+	 *
+	 * @since 4.0
+	 *
+	 * @return bool $is_network_active True if network activated, false otherwise.
+	 */
+	public function is_network_activated() {
+
+		// Only need to test once.
+		static $is_network_active;
+
+		// Have we done this already?
+		if ( isset( $is_network_active ) ) {
+			return $is_network_active;
+		}
+
+		// If not multisite, it cannot be.
+		if ( ! is_multisite() ) {
+			$is_network_active = false;
+			return $is_network_active;
+		}
+
+		// Make sure plugin file is included when outside admin.
+		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+			require_once ABSPATH . '/wp-admin/includes/plugin.php';
+		}
+
+		// Get path from "plugins" directory to this plugin.
+		$this_plugin = plugin_basename( COMMENTPRESS_PLUGIN_FILE );
+
+		// Test if network activated.
+		$is_network_active = is_plugin_active_for_network( $this_plugin );
+
+		// --<
+		return $is_network_active;
+
 	}
 
 }
 
 /**
- * Utility to check for presence of vital files.
- *
- * @since 3.0
- *
- * @param string $filename The name of the CommentPress Core Plugin file.
- * @return string $filepath Absolute path to file.
- */
-function commentpress_file_is_present( $filename ) {
-
-	// Define path to our requested file.
-	$filepath = COMMENTPRESS_PLUGIN_PATH . $filename;
-
-	// Die if the file is not present.
-	if ( ! is_file( $filepath ) ) {
-		wp_die( sprintf( __( 'CommentPress Core Error: file "%s" is missing from the plugin directory.', 'commentpress-core' ), $filepath ) );
-	}
-
-	// --<
-	return $filepath;
-
-}
-
-/**
- * Gets a reference to the core plugin object.
+ * Bootstrap plugin if not yet loaded and returns reference.
  *
  * @since 4.0
  *
- * @return CommentPress_Core $commentpress_core The plugin reference, or false on failure.
+ * @return CommentPress_Core $plugin The plugin reference.
  */
-function commentpress_core() {
+function commentpress() {
 
-	// Access global.
-	global $commentpress_core;
-
-	// Maybe return reference.
-	if ( isset( $commentpress_core ) && ( $commentpress_core instanceof CommentPress_Core ) ) {
-		return $commentpress_core;
-	}
-
-	// --<
-	return false;
-
-}
-
-/**
- * Utility to include the core plugin.
- *
- * @since 3.4
- */
-function commentpress_include_core() {
-
-	// Include class definition.
-	if ( ! class_exists( 'CommentPress_Core' ) ) {
-		require_once COMMENTPRESS_PLUGIN_PATH . 'includes/core/class-core-loader.php';
-	}
-
-}
-
-/**
- * Utility to activate the core plugin.
- *
- * @since 3.4
- *
- * @return CommentPress_Core $commentpress_core The plugin reference, or false on failure.
- */
-function commentpress_activate_core() {
-
-	// Declare as global.
-	global $commentpress_core;
-
-	// Instantiate it if not already instantiated.
-	if ( ! isset( $commentpress_core ) ) {
-		$commentpress_core = new CommentPress_Core();
+	// Maybe bootstrap plugin.
+	static $plugin;
+	if ( ! isset( $plugin ) ) {
+		$plugin = new CommentPress_Core();
 	}
 
 	// Return reference.
-	return $commentpress_core;
+	return $plugin;
 
 }
 
-/**
- * Utility to amend filenames when debugging.
- *
- * @since 3.8.5
- *
- * @return str The debug string to be included in a filename.
- */
-function commentpress_minified() {
-
-	// Default to minified scripts.
-	$minified = '.min';
-
-	// Target unminified scripts when debugging.
-	if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG === true ) {
-		$minified = '';
-	}
-
-	// --<
-	return $minified;
-
-}
-
-/**
- * Utility to add link to Site Settings Page.
- *
- * @since 3.4
- *
- * @param array $links The existing links array.
- * @param str $file The name of the plugin file.
- * @return array $links The modified links array.
- */
-function commentpress_plugin_action_links( $links, $file ) {
-
-	// Add settings link.
-	if ( $file == plugin_basename( dirname( __FILE__ ) . '/commentpress-core.php' ) ) {
-
-		// Is this Network Admin?
-		if ( is_network_admin() ) {
-			$link = add_query_arg( [ 'page' => 'cpmu_admin_page' ], network_admin_url( 'settings.php' ) );
-		} else {
-			$link = add_query_arg( [ 'page' => 'commentpress_admin' ], admin_url( 'options-general.php' ) );
-		}
-
-		// Add settings link.
-		$links[] = '<a href="' . esc_url( $link ) . '">' . esc_html__( 'Settings', 'commentpress-core' ) . '</a>';
-
-		// Add Paypal link.
-		$paypal = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=PZSKM8T5ZP3SC';
-		$links[] = '<a href="' . $paypal . '" target="_blank">' . __( 'Donate!', 'commentpress-core' ) . '</a>';
-
-	}
-
-	// --<
-	return $links;
-
-}
-
-// Add filters for the above.
-add_filter( 'network_admin_plugin_action_links', 'commentpress_plugin_action_links', 10, 2 );
-add_filter( 'plugin_action_links', 'commentpress_plugin_action_links', 10, 2 );
-
-/**
- * Gets a plugin reference by name.
- *
- * This is required because we never know for sure what the enclosing directory
- * is called.
- *
- * @since 3.4
- *
- * @param str $plugin_name The name of the plugin.
- * @return str $path_to_plugin The path to the plugin.
- */
-function commentpress_find_plugin_by_name( $plugin_name = '' ) {
-
-	// Kick out if no param supplied.
-	if ( $plugin_name == '' ) {
-		return false;
-	}
-
-	// Init path.
-	$path_to_plugin = false;
-
-	// Ensure function is available.
-	if ( ! function_exists( 'get_plugins' ) ) {
-		require_once ABSPATH . 'wp-admin/includes/plugin.php';
-	}
-
-	// Get plugins.
-	$plugins = get_plugins();
-
-	/*
-	 * Because the key is the path to the plugin file, we have to find the
-	 * key by iterating over the values (which are arrays) to find the
-	 * plugin with the name we want. Doh!
-	 */
-	foreach ( $plugins as $key => $plugin ) {
-
-		// Is it ours?
-		if ( $plugin['Name'] == $plugin_name ) {
-
-			// Now get the key, which is our path.
-			$path_to_plugin = $key;
-			break;
-
-		}
-
-	}
-
-	// --<
-	return $path_to_plugin;
-
-}
-
-/*
- * -----------------------------------------------------------------------------
- * NOTE: in multisite, child themes are registered as broken if the plugin
- * is not network-enabled. Make sure child themes have instructions.
- * -----------------------------------------------------------------------------
- * There are further complex issues when in Multisite:
- *
- * First scenario:
- * if the plugin is NOT initially network-enabled
- * but it IS enabled on one or more Blogs on the network
- * and the plugin in THEN network-enabled
- *
- * Second scenario:
- * if the plugin IS initially network-enabled
- * and it IS activated on one or more Blogs on the network
- * and the plugin in THEN network-disabled
- *
- * If installs stick to one or the other, then all works as expected.
- * -----------------------------------------------------------------------------
- */
-
-// Register our themes directory.
-register_theme_directory( plugin_dir_path( COMMENTPRESS_PLUGIN_FILE ) . 'themes' );
-
-/*
---------------------------------------------------------------------------------
-Init Standalone.
---------------------------------------------------------------------------------
-Note: we exclude activation on Network Admin Pages to avoid auto-installation
-on Main Site when the plugin is network activated.
---------------------------------------------------------------------------------
-*/
-
-// Include Standalone.
-commentpress_include_core();
-
-// Only activate if in standard or mu_optional context.
-if (
-	COMMENTPRESS_PLUGIN_CONTEXT == 'standard' ||
-	( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_optional' && ! is_network_admin() )
-) {
-
-	// Activate CommentPress Core.
-	$core = commentpress_activate_core();
-
-	// Activation.
-	register_activation_hook( COMMENTPRESS_PLUGIN_FILE, [ $core, 'activate' ] );
-
-	// Deactivation.
-	register_deactivation_hook( COMMENTPRESS_PLUGIN_FILE, [ $core, 'deactivate' ] );
-
-	/*
-	 * Uninstall uses the 'uninstall.php' method.
-	 *
-	 * @see https://developer.wordpress.org/reference/functions/register_uninstall_hook/
-	 */
-
-}
-
-/*
---------------------------------------------------------------------------------
-Init Multisite.
---------------------------------------------------------------------------------
-*/
-
-/**
- * Instantiate the multisite loader object.
- *
- * @since 4.0
- *
- * @return CommentPress_Multisite_Loader $commentpress_mu The multisite plugin reference, or false on failure.
- */
-function commentpress_multisite() {
-
-	// Define as global.
-	global $commentpress_mu;
-
-	// Instantiate plugin if not yet instantiated.
-	if ( ! isset( $commentpress_mu ) ) {
-		$commentpress_mu = new CommentPress_Multisite_Loader();
-	}
-
-	// --<
-	return $commentpress_mu;
-
-}
-
-// Have we activated network-wide?
-if ( COMMENTPRESS_PLUGIN_CONTEXT == 'mu_sitewide' ) {
-
-	// Include multisite plugin class definition.
-	require_once COMMENTPRESS_PLUGIN_PATH . 'includes/multisite/class-multisite-loader.php';
-
-	// Activate multisite plugin.
-	commentpress_multisite();
-
-}
+// Bootstrap immediately.
+commentpress();

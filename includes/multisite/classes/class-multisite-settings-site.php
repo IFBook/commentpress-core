@@ -101,7 +101,7 @@ class CommentPress_Multisite_Settings_Site {
 	public function register_hooks() {
 
 		// Bail if not network-enabled.
-		if ( COMMENTPRESS_PLUGIN_CONTEXT !== 'mu_sitewide' ) {
+		if ( $this->multisite->plugin->plugin_context !== 'mu_sitewide' ) {
 			return;
 		}
 

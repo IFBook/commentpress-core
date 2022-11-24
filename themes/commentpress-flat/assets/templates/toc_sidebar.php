@@ -122,10 +122,13 @@ $core = commentpress_core();
 				</h3>
 
 				<div class="paragraph_wrapper start_open">
-					<?php if ( ! empty( $core ) ) : ?>
-						<ul id="toc_list">
-							<?php echo $core->display->get_toc_list(); ?></ul>
-					<?php endif; ?>
+					<ul id="toc_list">
+						<?php if ( ! empty( $core ) ) : ?>
+							<?php echo $core->display->get_toc_list(); ?>
+						<?php else : ?>
+							<?php wp_list_pages( 'sort_column=menu_order&title_li=' ); ?>
+						<?php endif; ?>
+					</ul>
 				</div>
 
 				<?php

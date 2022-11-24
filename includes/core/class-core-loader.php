@@ -11,13 +11,22 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * CommentPress Core Class.
+ * CommentPress Core Loader Class.
  *
  * A class that encapsulates Single Site plugin functionality.
  *
  * @since 3.0
  */
-class CommentPress_Core {
+class CommentPress_Core_Loader {
+
+	/**
+	 * Plugin object.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
 
 	/**
 	 * Database object.
@@ -167,8 +176,13 @@ class CommentPress_Core {
 	 * Constructor.
 	 *
 	 * @since 3.0
+	 *
+	 * @param object $plugin The plugin object.
 	 */
-	public function __construct() {
+	public function __construct( $plugin ) {
+
+		// Store reference to plugin.
+		$this->plugin = $plugin;
 
 		// Initialise when all plugins have loaded.
 		add_action( 'plugins_loaded', [ $this, 'initialise' ] );

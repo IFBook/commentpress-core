@@ -129,73 +129,47 @@ $is_commentable = commentpress_is_commentable();
 		// THE SIDEBARS THEMSELVES.
 		// ---------------------------------------------------------------------
 
-		// Access globals.
-		global $post;
+		// Is it commentable?
+		if ( $is_commentable ) {
 
-		// If we have the plugin enabled.
-		if ( ! empty( $core ) ) {
+			/**
+			 * Try to locate template using WordPress method.
+			 *
+			 * @since 3.4
+			 *
+			 * @param str The existing path returned by WordPress.
+			 * @return str The modified path.
+			 */
+			$cp_comments_sidebar = apply_filters( 'cp_template_comments_sidebar', locate_template( 'assets/templates/comments_sidebar.php' ) );
 
-			// Is it commentable?
-			if ( $is_commentable ) {
-
-				/**
-				 * Try to locate template using WordPress method.
-				 *
-				 * @since 3.4
-				 *
-				 * @param str The existing path returned by WordPress.
-				 * @return str The modified path.
-				 */
-				$cp_comments_sidebar = apply_filters( 'cp_template_comments_sidebar', locate_template( 'assets/templates/comments_sidebar.php' ) );
-
-				// Load it if we find it.
-				if ( $cp_comments_sidebar != '' ) {
-					load_template( $cp_comments_sidebar );
-				}
-
+			// Load it if we find it.
+			if ( $cp_comments_sidebar != '' ) {
+				load_template( $cp_comments_sidebar );
 			}
 
-			// Do we want to show Activity Tab?
-			if ( commentpress_show_activity_tab() ) {
+		}
 
-				/**
-				 * Try to locate template using WordPress method.
-				 *
-				 * @since 3.4
-				 *
-				 * @param str The existing path returned by WordPress.
-				 * @return str The modified path.
-				 */
-				$cp_activity_sidebar = apply_filters( 'cp_template_activity_sidebar', locate_template( 'assets/templates/activity_sidebar.php' ) );
+		// Do we want to show Activity Tab?
+		if ( commentpress_show_activity_tab() ) {
 
-				// Load it if we find it.
-				if ( $cp_activity_sidebar != '' ) {
-					load_template( $cp_activity_sidebar );
-				}
+			/**
+			 * Try to locate template using WordPress method.
+			 *
+			 * @since 3.4
+			 *
+			 * @param str The existing path returned by WordPress.
+			 * @return str The modified path.
+			 */
+			$cp_activity_sidebar = apply_filters( 'cp_template_activity_sidebar', locate_template( 'assets/templates/activity_sidebar.php' ) );
 
+			// Load it if we find it.
+			if ( $cp_activity_sidebar != '' ) {
+				load_template( $cp_activity_sidebar );
 			}
 
-		} else {
+		}
 
-			// Default sidebar when plugin not active.
-			?>
-			<div id="toc_sidebar">
-				<div class="sidebar_header">
-					<h2><?php echo $_toc_title; ?></h2>
-				</div>
-
-				<div class="sidebar_minimiser">
-
-					<div class="sidebar_contents_wrapper">
-						<ul>
-							<?php wp_list_pages( 'sort_column=menu_order&title_li=' ); ?>
-						</ul>
-					</div><!-- /sidebar_contents_wrapper -->
-
-				</div><!-- /sidebar_minimiser -->
-			</div><!-- /toc_sidebar -->
-
-		<?php } ?>
+		?>
 
 	</div><!-- /sidebar_inner -->
 </div><!-- /sidebar -->

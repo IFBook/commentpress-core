@@ -24,6 +24,15 @@ define( 'COMMENTPRESS_MU_PLUGIN_VERSION', '1.0' );
 class CommentPress_Multisite_Loader {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * Database object.
 	 *
 	 * @since 3.3
@@ -100,8 +109,13 @@ class CommentPress_Multisite_Loader {
 	 * Constructor.
 	 *
 	 * @since 3.3
+	 *
+	 * @param object $plugin The plugin object.
 	 */
-	public function __construct() {
+	public function __construct( $plugin ) {
+
+		// Store reference to plugin.
+		$this->plugin = $plugin;
 
 		// Initialise.
 		$this->initialise();

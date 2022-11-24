@@ -13,7 +13,6 @@ $core = commentpress_core();
 
 ?>
 <!-- toc_sidebar.php -->
-
 <div id="toc_sidebar" class="sidebar_container">
 
 	<div class="sidebar_header">
@@ -23,11 +22,13 @@ $core = commentpress_core();
 	<div class="sidebar_minimiser">
 		<div class="sidebar_contents_wrapper">
 
-		<?php if ( ! empty( $core ) ) : ?>
 			<ul id="toc_list">
-				<?php echo $core->display->get_toc_list(); ?>
+				<?php if ( ! empty( $core ) ) : ?>
+					<?php echo $core->display->get_toc_list(); ?>
+				<?php else : ?>
+					<?php wp_list_pages( 'sort_column=menu_order&title_li=' ); ?>
+				<?php endif; ?>
 			</ul>
-		<?php endif; ?>
 
 		</div><!-- /sidebar_contents_wrapper -->
 	</div><!-- /sidebar_minimiser -->
