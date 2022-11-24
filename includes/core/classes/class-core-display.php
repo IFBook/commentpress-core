@@ -150,16 +150,6 @@ class CommentPress_Core_Display {
 			false // In footer.
 		);
 
-		// Add jQuery Cookie plugin - renamed to jquery.biscuit.js because some hosts don't like 'cookie' in the filename.
-		// TODO: Move to CommentPress Default theme.
-		wp_enqueue_script(
-			'jquery_cookie',
-			plugins_url( 'includes/core/assets/js/jquery.biscuit.js', COMMENTPRESS_PLUGIN_FILE ),
-			[ 'jquery_commentpress' ],
-			COMMENTPRESS_VERSION, // Version.
-			false // In footer.
-		);
-
 		// Optionally get text highlighter.
 		$this->get_text_highlighter();
 

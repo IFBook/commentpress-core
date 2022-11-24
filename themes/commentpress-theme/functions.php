@@ -161,6 +161,19 @@ if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ) :
 			return;
 		}
 
+		/*
+		 * Add jQuery Cookie plugin.
+		 *
+		 * Renamed to jquery.biscuit.js because some hosts don't like 'cookie' in the filename.
+		 */
+		wp_enqueue_script(
+			'jquery_cookie',
+			plugins_url( 'includes/core/assets/js/jquery.biscuit.js', COMMENTPRESS_PLUGIN_FILE ),
+			[ 'jquery_commentpress' ],
+			COMMENTPRESS_VERSION, // Version.
+			false // In footer.
+		);
+
 		// Enqueue common js.
 		wp_enqueue_script(
 			'cp_common_js',
