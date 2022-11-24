@@ -104,7 +104,7 @@ class CommentPress_Core_Comments {
 	public function save_comment( $comment_id, $comment_status ) {
 
 		// Store our Comment Text Signature.
-		$result = $this->core->db->save_comment_signature( $comment_id );
+		$result = $this->save_comment_signature( $comment_id );
 
 		// Store our Comment Selection.
 		$result = $this->save_comment_selection( $comment_id );
@@ -121,6 +121,50 @@ class CommentPress_Core_Comments {
 			wp_die( __( 'This comment has been marked as spam. Please contact a site administrator.', 'commentpress-core' ) );
 
 		}
+
+	}
+
+	/**
+	 * When a Comment is saved, this also saves the Text Signature.
+	 *
+	 * @since 3.0
+	 *
+	 * @param int $comment_id The numeric ID of the Comment.
+	 * @return boolean $result True if successful, false otherwise.
+	 */
+	public function save_comment_signature( $comment_id ) {
+
+		// Database object.
+		global $wpdb;
+
+		// Get Text Signature.
+		$text_signature = isset( $_POST['text_signature'] ) ? sanitize_text_field( wp_unslash( $_POST['text_signature'] ) ) : '';
+
+		// Did we get one?
+		if ( ! empty( $text_signature ) ) {
+
+			// Escape it.
+			$text_signature = esc_sql( $text_signature );
+
+			// Store Comment Text Signature.
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+			$result = $wpdb->query(
+				$wpdb->prepare(
+					"UPDATE $wpdb->comments SET comment_signature = %s WHERE comment_ID = %d",
+					$text_signature,
+					$comment_id
+				)
+			);
+
+		} else {
+
+			// Set result to true - why not, eh?
+			$result = true;
+
+		}
+
+		// --<
+		return $result;
 
 	}
 

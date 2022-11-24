@@ -482,8 +482,20 @@ class CommentPress_Core_Settings_Post {
 
 		// We don't use "post_id" because we're not interested in revisions.
 
-		// Store our meta data.
-		$result = $this->core->db->save_meta( $post );
+		// If no Post, kick out.
+		if ( ! $post ) {
+			return;
+		}
+
+		// If Page.
+		if ( $post->post_type == 'page' ) {
+			$this->save_page_meta( $post );
+		}
+
+		// If Post.
+		if ( $post->post_type == 'post' ) {
+			$this->save_post_meta( $post );
+		}
 
 	}
 
@@ -499,6 +511,508 @@ class CommentPress_Core_Settings_Post {
 
 		// Store our meta data.
 		$result = $this->core->db->delete_meta( $post_id );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * When a Post is saved, this authenticates that our options can be saved.
+	 *
+	 * @since 3.4
+	 *
+	 * @param object $post_obj The Post object.
+	 */
+	public function save_post_meta_authenticated( $post_obj ) {
+
+		// If no Post, kick out.
+		if ( ! $post_obj ) {
+			return false;
+		}
+
+		// If not Page, kick out.
+		if ( $post_obj->post_type != 'post' ) {
+			return false;
+		}
+
+		// Authenticate.
+		$nonce = isset( $_POST['commentpress_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['commentpress_nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce, 'commentpress_post_settings' ) ) {
+			return false;
+		}
+
+		// Is this an auto save routine?
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return false;
+		}
+
+		// Check permissions - 'edit_posts' is available to contributor+.
+		if ( ! current_user_can( 'edit_posts', $post_obj->ID ) ) {
+			return false;
+		}
+
+		// Good to go.
+		return true;
+
+	}
+
+	/**
+	 * When a Page is saved, this authenticates that our options can be saved.
+	 *
+	 * @since 3.4
+	 *
+	 * @param object $post_obj The Post object.
+	 */
+	public function save_page_meta_authenticated( $post_obj ) {
+
+		// If no Post, kick out.
+		if ( ! $post_obj ) {
+			return false;
+		}
+
+		// If not Page, kick out.
+		if ( $post_obj->post_type != 'page' ) {
+			return false;
+		}
+
+		// Authenticate.
+		$nonce = isset( $_POST['commentpress_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['commentpress_nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce, 'commentpress_page_settings' ) ) {
+			return false;
+		}
+
+		// Is this an auto save routine?
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return false;
+		}
+
+		// Check permissions - 'edit_pages' is available to editor or greater.
+		if ( ! current_user_can( 'edit_pages' ) ) {
+			return false;
+		}
+
+		// Good to go.
+		return true;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * When a Post is saved, this also saves the CommentPress Core options.
+	 *
+	 * @since 3.0
+	 *
+	 * @param object $post_obj The Post object.
+	 */
+	public function save_post_meta( $post_obj ) {
+
+		// Bail if we're not authenticated.
+		if ( ! $this->save_post_meta_authenticated( $post_obj ) ) {
+			return;
+		}
+
+		// Check for revision.
+		if ( $post_obj->post_type == 'revision' ) {
+
+			// Get parent.
+			if ( $post_obj->post_parent != 0 ) {
+				$post = get_post( $post_obj->post_parent );
+			} else {
+				$post = $post_obj;
+			}
+
+		} else {
+			$post = $post_obj;
+		}
+
+		// Save default sidebar.
+		$this->save_default_sidebar( $post );
+
+		/**
+		 * Broadcast that Post meta has been saved.
+		 *
+		 * @since 4.0
+		 *
+		 * @param object $post The WordPress Post object.
+		 */
+		do_action( 'commentpress/core/db/post_meta/saved', $post );
+
+	}
+
+	/**
+	 * When a Page is saved, this also saves the CommentPress Core options.
+	 *
+	 * @since 3.4
+	 *
+	 * @param object $post_obj The Post object.
+	 */
+	public function save_page_meta( $post_obj ) {
+
+		// Bail if we're not authenticated.
+		if ( ! $this->save_page_meta_authenticated( $post_obj ) ) {
+			return;
+		}
+
+		// Check for revision.
+		if ( $post_obj->post_type == 'revision' ) {
+
+			// Get parent.
+			if ( $post_obj->post_parent != 0 ) {
+				$post = get_post( $post_obj->post_parent );
+			} else {
+				$post = $post_obj;
+			}
+
+		} else {
+			$post = $post_obj;
+		}
+
+		// Save Page title visibility.
+		$this->save_page_title_visibility( $post );
+
+		// Save Page meta visibility.
+		$this->save_page_meta_visibility( $post );
+
+		// Save Page numbering.
+		$this->save_page_numbering( $post );
+
+		// Save Page layout for Title Page.
+		$this->save_page_layout( $post );
+
+		// Save default sidebar.
+		$this->save_default_sidebar( $post );
+
+		// Save starting Paragraph Number.
+		$this->save_starting_paragraph( $post );
+
+		/**
+		 * Broadcast that Page meta has been saved.
+		 *
+		 * @since 4.0
+		 *
+		 * @param object $post The WordPress Post object.
+		 */
+		do_action( 'commentpress/core/db/page_meta/saved', $post );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Save Page Title visibility.
+	 *
+	 * @since 3.4
+	 *
+	 * @param object $post The Post object.
+	 * @return string $data Either 'show' (default) or ''.
+	 */
+	public function save_page_title_visibility( $post ) {
+
+		// Find and save the data.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$data = isset( $_POST['cp_title_visibility'] ) ? sanitize_text_field( wp_unslash( $_POST['cp_title_visibility'] ) ) : 'show';
+
+		// Set key.
+		$key = '_cp_title_visibility';
+
+		// If the custom field already has a value.
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+
+			// Delete the meta_key if empty string.
+			if ( $data === '' ) {
+				delete_post_meta( $post->ID, $key );
+			} else {
+				update_post_meta( $post->ID, $key, esc_sql( $data ) );
+			}
+
+		} else {
+
+			// Add the data.
+			add_post_meta( $post->ID, $key, esc_sql( $data ) );
+
+		}
+
+		// --<
+		return $data;
+
+	}
+
+	/**
+	 * Save Page Meta visibility.
+	 *
+	 * @since 3.4
+	 *
+	 * @param object $post The Post object.
+	 * @return string $data Either 'hide' (default) or ''.
+	 */
+	public function save_page_meta_visibility( $post ) {
+
+		// Find and save the data.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$data = isset( $_POST['cp_page_meta_visibility'] ) ? sanitize_text_field( wp_unslash( $_POST['cp_page_meta_visibility'] ) ) : 'hide';
+
+		// Set key.
+		$key = '_cp_page_meta_visibility';
+
+		// If the custom field already has a value.
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+
+			// Delete the meta_key if empty string.
+			if ( $data === '' ) {
+				delete_post_meta( $post->ID, $key );
+			} else {
+				update_post_meta( $post->ID, $key, esc_sql( $data ) );
+			}
+
+		} else {
+
+			// Add the data.
+			add_post_meta( $post->ID, $key, esc_sql( $data ) );
+
+		}
+
+		// --<
+		return $data;
+
+	}
+
+	/**
+	 * Save Page Numbering format.
+	 *
+	 * @since 3.4
+	 *
+	 * Only first top-level Page is allowed to save this.
+	 *
+	 * @param object $post The Post object.
+	 */
+	public function save_page_numbering( $post ) {
+
+		// Bail if no value received.
+		if ( ! isset( $_POST['cp_number_format'] ) ) {
+			return;
+		}
+
+		// Set meta key.
+		$key = '_cp_number_format';
+
+		// Do we need to check this, since only the first top level Page
+		// can now send this data? doesn't hurt to validate, I guess.
+		if (
+			$post->post_parent == '0' &&
+			! $this->core->pages_legacy->is_special_page() &&
+			$post->ID == $this->core->nav->get_first_page()
+		) {
+
+			// Get the data.
+			$data = sanitize_text_field( wp_unslash( $_POST['cp_number_format'] ) );
+
+			// If the custom field already has a value.
+			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+
+				// If empty string.
+				if ( $data === '' ) {
+
+					// Delete the meta_key.
+					delete_post_meta( $post->ID, $key );
+
+				} else {
+
+					// Update the data.
+					update_post_meta( $post->ID, $key, esc_sql( $data ) );
+
+				}
+
+			} else {
+
+				// Add the data.
+				add_post_meta( $post->ID, $key, esc_sql( $data ) );
+
+			}
+
+		}
+
+		/*
+		 * Delete this meta value from all other Pages, because we may have altered
+		 * the relationship between Pages, thus causing the Page numbering to fail.
+		 */
+
+		// Get all Pages including Chapters.
+		$all_pages = $this->core->nav->get_book_pages( 'structural' );
+
+		// If we have any Pages.
+		if ( count( $all_pages ) > 0 ) {
+
+			// Loop.
+			foreach ( $all_pages as $page ) {
+
+				// Exclude first top level Page.
+				if ( $post->ID != $page->ID ) {
+
+					// Delete the meta value.
+					delete_post_meta( $page->ID, $key );
+
+				}
+
+			}
+
+		}
+
+	}
+
+	/**
+	 * Save Page Layout for Title Page -> to allow for Book Cover image.
+	 *
+	 * @since 3.0
+	 *
+	 * @param object $post The Post object.
+	 */
+	public function save_page_layout( $post ) {
+
+		// Bail if this is not the Title Page.
+		if ( $post->ID !== (int) $this->core->db->option_get( 'cp_welcome_page' ) ) {
+			return;
+		}
+
+		// Find and save the data.
+		$data = isset( $_POST['cp_page_layout'] ) ? sanitize_text_field( wp_unslash( $_POST['cp_page_layout'] ) ) : 'text';
+
+		// Set key.
+		$key = '_cp_page_layout';
+
+		// If the custom field already has a value.
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+
+			// Delete the meta_key if empty string.
+			if ( $data === '' ) {
+				delete_post_meta( $post->ID, $key );
+			} else {
+				update_post_meta( $post->ID, $key, esc_sql( $data ) );
+			}
+
+		} else {
+
+			// Add the data.
+			add_post_meta( $post->ID, $key, esc_sql( $data ) );
+
+		}
+
+	}
+
+	/**
+	 * Override default sidebar.
+	 *
+	 * @since 3.4
+	 *
+	 * @param object $post The Post object.
+	 */
+	public function save_default_sidebar( $post ) {
+
+		// Allow this to be disabled.
+		if ( apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
+			return;
+		}
+
+		// Bail if we do have the option to choose the default sidebar (new in 3.3.3).
+		if ( ! $this->core->db->option_exists( 'cp_sidebar_default' ) ) {
+			return;
+		}
+
+		// Find and save the data.
+		$data = ( isset( $_POST['cp_sidebar_default'] ) ) ?
+			sanitize_text_field( wp_unslash( $_POST['cp_sidebar_default'] ) ) :
+			$this->core->db->option_get( 'cp_sidebar_default' );
+
+		// Set key.
+		$key = '_cp_sidebar_default';
+
+		// If the custom field already has a value.
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+
+			// Delete the meta_key if empty string.
+			if ( $data === '' ) {
+				delete_post_meta( $post->ID, $key );
+			} else {
+				update_post_meta( $post->ID, $key, esc_sql( $data ) );
+			}
+
+		} else {
+
+			// Add the data.
+			add_post_meta( $post->ID, $key, esc_sql( $data ) );
+
+		}
+
+	}
+
+	/**
+	 * Starting Paragraph Number - meta only exists when not default value.
+	 *
+	 * @since 3.4
+	 *
+	 * @param object $post The Post object.
+	 */
+	public function save_starting_paragraph( $post ) {
+
+		// Get the data.
+		$data = isset( $_POST['cp_starting_para_number'] ) ? sanitize_text_field( wp_unslash( $_POST['cp_starting_para_number'] ) ) : 1;
+
+		// If not numeric, set to default.
+		if ( ! is_numeric( $data ) ) {
+			$data = 1;
+		}
+
+		// Sanitize it.
+		$data = absint( $data );
+
+		// Set key.
+		$key = '_cp_starting_para_number';
+
+		// If the custom field already has a value.
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+
+			// Delete if default.
+			if ( $data === 1 ) {
+				delete_post_meta( $post->ID, $key );
+			} else {
+				update_post_meta( $post->ID, $key, esc_sql( $data ) );
+			}
+
+		} else {
+
+			// Add the data if greater than default.
+			if ( $data > 1 ) {
+				add_post_meta( $post->ID, $key, esc_sql( $data ) );
+			}
+
+		}
+
+	}
+
+	/**
+	 * When a Page is deleted, this makes sure that the CommentPress Core options are synced.
+	 *
+	 * @since 3.4
+	 *
+	 * @param object $post_id The Post ID.
+	 */
+	public function delete_meta( $post_id ) {
+
+		// If no Post, kick out.
+		if ( ! $post_id ) {
+			return;
+		}
+
+		// If it's our Welcome Page.
+		if ( $post_id == $this->core->db->option_get( 'cp_welcome_page' ) ) {
+
+			// Delete option.
+			$this->option_delete( 'cp_welcome_page' );
+
+			// Save.
+			$this->options_save();
+
+		}
 
 	}
 

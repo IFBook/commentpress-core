@@ -426,6 +426,32 @@ class CommentPress_Core_Theme {
 	// -------------------------------------------------------------------------
 
 	/**
+	 * Get current header background colour.
+	 *
+	 * @since 3.0
+	 *
+	 * @return str $header_bg_color The hex value of the header.
+	 */
+	public function header_bg_color_get() {
+
+		// TODO: Remove this method.
+
+		// Do we have one set via the Customizer?
+		$header_bg_color = get_theme_mod( 'commentpress_header_bg_color', false );
+
+		// Return it if we do.
+		if ( ! empty( $header_bg_color ) ) {
+			return substr( $header_bg_color, 1 );
+		}
+
+		// Fallback to default.
+		return $this->core->db->header_bg_color;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
 	 * Retrieves the commentable Post Types.
 	 *
 	 * @since 3.4

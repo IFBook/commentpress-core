@@ -341,7 +341,7 @@ class CommentPress_Core_Parser {
 
 		// Retrieve all Comments and store.
 		// We need this data multiple times and only need to get it once.
-		$this->comments_all = $this->core->db->get_all_comments( $post->ID );
+		$this->comments_all = $this->comments_for_post_get_all( $post->ID );
 
 		// Are we skipping parsing?
 		if ( $this->do_not_parse ) {
@@ -1864,6 +1864,25 @@ class CommentPress_Core_Parser {
 	}
 
 	// -------------------------------------------------------------------------
+
+	/**
+	 * Get all WordPress Comments for a Post, unless Paged.
+	 *
+	 * @since 3.4
+	 * @since 4.0 Moved to this class and renamed.
+	 *
+	 * @param int $post_id The numeric ID of the Post.
+	 * @return array $comments The array of Comment data.
+	 */
+	private function comments_for_post_get_all( $post_id ) {
+
+		// Use the WordPress API.
+		$comments = get_comments( 'post_id=' . $post_id . '&order=ASC' );
+
+		// --<
+		return $comments;
+
+	}
 
 	/**
 	 * Gets Comments sorted by Text Signature and Paragraph.

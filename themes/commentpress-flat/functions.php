@@ -415,7 +415,13 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 			$bg_colour = $colour;
 		}
 
-		// Allow overrides.
+		/**
+		 * Filters the default header bgcolor.
+		 *
+		 * @since 3.0
+		 *
+		 * @param str $bg_color The default header bgcolor.
+		 */
 		$bg_colour = apply_filters( 'cp_default_header_bgcolor', $bg_colour );
 
 		// Init background-image.

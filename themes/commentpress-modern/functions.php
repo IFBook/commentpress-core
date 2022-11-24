@@ -432,10 +432,16 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 
 		// Override if we have the plugin enabled.
 		if ( ! empty( $core ) ) {
-			$bg_colour = $core->db->option_get_header_bg();
+			$bg_colour = $core->theme->header_bg_color_get();
 		}
 
-		// Allow overrides.
+		/**
+		 * Filters the default header bgcolor.
+		 *
+		 * @since 3.0
+		 *
+		 * @param str $bg_color The default header bgcolor.
+		 */
 		$bg_colour = apply_filters( 'cp_default_header_bgcolor', $bg_colour );
 
 		// Init background-image.

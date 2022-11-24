@@ -621,7 +621,7 @@ class CommentPress_AJAX_Comments {
 		if ( ! empty( $text_sig ) && ! empty( $comment_id ) ) {
 
 			// Store Text Signature.
-			$this->core->db->save_comment_signature( $comment_id );
+			$this->core->comments->save_comment_signature( $comment_id );
 
 			// Trace.
 			$comment_ids[] = (int) $comment_id;
@@ -660,7 +660,7 @@ class CommentPress_AJAX_Comments {
 			foreach ( $children as $child ) {
 
 				// Store Text Signature.
-				$this->core->db->save_comment_signature( $child->comment_ID );
+				$this->core->comments->save_comment_signature( $child->comment_ID );
 
 				// Trace.
 				$comment_ids[] = $child->comment_ID;

@@ -46,7 +46,7 @@ if ( ! function_exists( 'commentpress_admin_header' ) ) :
 
 		// Override if we have the plugin enabled.
 		if ( ! empty( $core ) ) {
-			$colour = $core->db->option_get_header_bg();
+			$colour = $core->theme->header_bg_color_get();
 		}
 
 		// Try and recreate the look of the theme header.

@@ -124,9 +124,9 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var bool $header_bg_colour The default header background colour.
+	 * @var bool $header_bg_color The default header background colour.
 	 */
-	public $header_bg_colour = '2c2622';
+	public $header_bg_color = '2c2622';
 
 	/**
 	 * Default scroll speed.
@@ -323,7 +323,7 @@ class CommentPress_Core_Database {
 	public function schema_install() {
 
 		// If we have an existing legacy "comment_text_signature" column.
-		if ( $this->db_is_modified( 'comment_text_signature' ) ) {
+		if ( $this->schema_is_modified( 'comment_text_signature' ) ) {
 
 			// Upgrade old CommentPress schema to new CommentPress Core schema.
 			if ( ! $this->schema_upgrade() ) {
@@ -392,7 +392,7 @@ class CommentPress_Core_Database {
 		$wpdb->query( $query );
 
 		// Test if we now have the correct column name.
-		if ( $this->db_is_modified( 'comment_signature' ) ) {
+		if ( $this->schema_is_modified( 'comment_signature' ) ) {
 			$result = true;
 		}
 
@@ -408,7 +408,7 @@ class CommentPress_Core_Database {
 	 * @param string $column_name The name of the column.
 	 * @return bool $result True if modified, false otherwise.
 	 */
-	public function db_is_modified( $column_name ) {
+	public function schema_is_modified( $column_name ) {
 
 		// Database object.
 		global $wpdb;
@@ -557,11 +557,6 @@ class CommentPress_Core_Database {
 
 		// Do we have the option to show or hide titles?
 		if ( ! $this->option_exists( 'cp_title_visibility' ) ) {
-			return true;
-		}
-
-		// Do we have the option to set the header bg colour?
-		if ( ! $this->option_exists( 'cp_header_bg_colour' ) ) {
 			return true;
 		}
 
@@ -800,27 +795,6 @@ class CommentPress_Core_Database {
 
 		}
 
-		// Are we missing the cp_header_bg_colour option?
-		if ( ! $this->option_exists( 'cp_header_bg_colour' ) ) {
-
-			// Get choice.
-			$choice = esc_sql( $cp_header_bg_colour );
-
-			// Strip our hex # char.
-			if ( stristr( $choice, '#' ) ) {
-				$choice = substr( $choice, 1 );
-			}
-
-			// Reset to default if blank.
-			if ( $choice == '' ) {
-				$choice = $this->header_bg_colour;
-			}
-
-			// Add chosen cp_header_bg_colour option.
-			$this->option_set( 'cp_header_bg_colour', $choice );
-
-		}
-
 		// Are we missing the cp_js_scroll_speed option?
 		if ( ! $this->option_exists( 'cp_js_scroll_speed' ) ) {
 
@@ -908,41 +882,38 @@ class CommentPress_Core_Database {
 	 */
 	public function upgrade_theme_mods() {
 
-		// Bail if option is already deprecated.
-		if ( 'deprecated' == $this->option_get( 'cp_header_bg_colour' ) ) {
+		// Bail if option is already removed.
+		if ( ! $this->option_exists( 'cp_header_bg_colour' ) ) {
 			return;
 		}
 
 		// Get header background colour set via customizer (new in 3.8.5).
 		$colour = get_theme_mod( 'commentpress_header_bg_color', false );
 
-		// If we have no existing one.
-		if ( $colour === false ) {
-
-			// Set to default.
-			$colour = $this->header_bg_colour;
-
-			// Check for existing option.
-			if ( $this->option_exists( 'cp_header_bg_colour' ) ) {
-
-				// Get current value.
-				$value = $this->option_get( 'cp_header_bg_colour' );
-
-				// Override colour if not yet deprecated.
-				if ( $value !== 'deprecated' ) {
-					$colour = $value;
-				}
-
-			}
-
-			// Apply theme mod setting.
-			set_theme_mod( 'commentpress_header_bg_color', '#' . $colour );
-
-			// Set option to deprecated.
-			$this->option_set( 'cp_header_bg_colour', 'deprecated' );
-			$this->options_save();
-
+		// Bail if we have an existing one.
+		if ( $colour !== false ) {
+			return;
 		}
+
+		// Set to default.
+		$colour = $this->header_bg_color;
+
+		// Get current value.
+		$value = $this->option_get( 'cp_header_bg_colour', 'deprecated' );
+
+		// Override colour if not yet deprecated.
+		if ( $value !== 'deprecated' ) {
+			$colour = $value;
+		}
+
+		// Apply theme mod setting.
+		set_theme_mod( 'commentpress_header_bg_color', '#' . $colour );
+
+		// Delete option.
+		$this->option_delete( 'cp_header_bg_colour', 'deprecated' );
+
+		// Save options.
+		$this->options_save();
 
 	}
 
@@ -1211,12 +1182,7 @@ class CommentPress_Core_Database {
 	 * @param str $option_name The name of the option.
 	 * @return bool True if the option exists, false otherwise.
 	 */
-	public function option_exists( $option_name = '' ) {
-
-		// Test for null.
-		if ( $option_name == '' ) {
-			die( __( 'You must supply an option to option_exists()', 'commentpress-core' ) );
-		}
+	public function option_exists( $option_name ) {
 
 		// Get option with unlikely default.
 		return array_key_exists( $option_name, $this->commentpress_options );
@@ -1232,12 +1198,7 @@ class CommentPress_Core_Database {
 	 * @param mixed $default The default value for the option.
 	 * @return mixed The value of the option if it exists, $default otherwise.
 	 */
-	public function option_get( $option_name = '', $default = false ) {
-
-		// Test for null.
-		if ( $option_name == '' ) {
-			die( __( 'You must supply an option to option_get()', 'commentpress-core' ) );
-		}
+	public function option_get( $option_name, $default = false ) {
 
 		// Get option.
 		return array_key_exists( $option_name, $this->commentpress_options ) ? $this->commentpress_options[ $option_name ] : $default;
@@ -1252,17 +1213,7 @@ class CommentPress_Core_Database {
 	 * @param str $option_name The name of the option.
 	 * @param mixed $value The value for the option.
 	 */
-	public function option_set( $option_name = '', $value = '' ) {
-
-		// Test for null.
-		if ( $option_name == '' ) {
-			die( __( 'You must supply an option to option_set()', 'commentpress-core' ) );
-		}
-
-		// Test for other than string.
-		if ( ! is_string( $option_name ) ) {
-			die( __( 'You must supply the option as a string to option_set()', 'commentpress-core' ) );
-		}
+	public function option_set( $option_name, $value = '' ) {
 
 		// Set option.
 		$this->commentpress_options[ $option_name ] = $value;
@@ -1276,12 +1227,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @param str $option_name The name of the option.
 	 */
-	public function option_delete( $option_name = '' ) {
-
-		// Test for null.
-		if ( $option_name == '' ) {
-			die( __( 'You must supply an option to option_delete()', 'commentpress-core' ) );
-		}
+	public function option_delete( $option_name ) {
 
 		// Unset option.
 		unset( $this->commentpress_options[ $option_name ] );
@@ -1298,12 +1244,7 @@ class CommentPress_Core_Database {
 	 * @param str $option_name The name of the option.
 	 * @return bool True if option exists, false otherwise.
 	 */
-	public function option_wp_exists( $option_name = '' ) {
-
-		// Test for null.
-		if ( $option_name == '' ) {
-			die( __( 'You must supply an option to option_wp_exists()', 'commentpress-core' ) );
-		}
+	public function option_wp_exists( $option_name ) {
 
 		// Get option with unlikely default.
 		if ( $this->option_wp_get( $option_name, 'fenfgehgejgrkj' ) == 'fenfgehgejgrkj' ) {
@@ -1323,12 +1264,7 @@ class CommentPress_Core_Database {
 	 * @param mixed $default The default value for the option.
 	 * @return mixed The value of the option if it exists, $default otherwise.
 	 */
-	public function option_wp_get( $option_name = '', $default = false ) {
-
-		// Test for null.
-		if ( $option_name == '' ) {
-			die( __( 'You must supply an option to option_wp_get()', 'commentpress-core' ) );
-		}
+	public function option_wp_get( $option_name, $default = false ) {
 
 		// Get option.
 		return get_option( $option_name, $default );
@@ -1343,709 +1279,10 @@ class CommentPress_Core_Database {
 	 * @param str $option_name The name of the option.
 	 * @param mixed $value The value for the option.
 	 */
-	public function option_wp_set( $option_name = '', $value = null ) {
-
-		// Test for null.
-		if ( $option_name == '' ) {
-			die( __( 'You must supply an option to option_wp_set()', 'commentpress-core' ) );
-		}
+	public function option_wp_set( $option_name, $value = null ) {
 
 		// Set option.
 		return update_option( $option_name, $value );
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Get current header background colour.
-	 *
-	 * @since 3.0
-	 *
-	 * @return str $header_bg_colour The hex value of the header.
-	 */
-	public function option_get_header_bg() {
-
-		// Do we have one set via the Customizer?
-		$colour = get_theme_mod( 'commentpress_header_bg_color', false );
-
-		// Return it if we do.
-		if ( ! empty( $colour ) ) {
-			return substr( $colour, 1 );
-		}
-
-		// Check if legacy option exists.
-		if ( $this->option_exists( 'cp_header_bg_colour' ) ) {
-
-			// Get the option.
-			$colour = $this->option_get( 'cp_header_bg_colour' );
-
-			// Return it if it is not yet deprecated.
-			if ( $colour !== 'deprecated' ) {
-				return $colour;
-			}
-
-		}
-
-		// Fallback to default.
-		return $this->header_bg_colour;
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * When a Page is saved, this also saves the CommentPress Core options.
-	 *
-	 * @since 3.4
-	 *
-	 * @param object $post_obj The Post object.
-	 */
-	public function save_meta( $post_obj ) {
-
-		// If no Post, kick out.
-		if ( ! $post_obj ) {
-			return;
-		}
-
-		// If Page.
-		if ( $post_obj->post_type == 'page' ) {
-			$this->save_page_meta( $post_obj );
-		}
-
-		// If Post.
-		if ( $post_obj->post_type == 'post' ) {
-			$this->save_post_meta( $post_obj );
-		}
-
-	}
-
-	/**
-	 * When a Page is saved, this also saves the CommentPress Core options.
-	 *
-	 * @since 3.4
-	 *
-	 * @param object $post_obj The Post object.
-	 */
-	public function save_page_meta( $post_obj ) {
-
-		// Bail if we're not authenticated.
-		if ( ! $this->save_page_meta_authenticated( $post_obj ) ) {
-			return;
-		}
-
-		// Check for revision.
-		if ( $post_obj->post_type == 'revision' ) {
-
-			// Get parent.
-			if ( $post_obj->post_parent != 0 ) {
-				$post = get_post( $post_obj->post_parent );
-			} else {
-				$post = $post_obj;
-			}
-
-		} else {
-			$post = $post_obj;
-		}
-
-		// Save Page title visibility.
-		$this->save_page_title_visibility( $post );
-
-		// Save Page meta visibility.
-		$this->save_page_meta_visibility( $post );
-
-		// Save Page numbering.
-		$this->save_page_numbering( $post );
-
-		// Save Page layout for Title Page.
-		$this->save_page_layout( $post );
-
-		// Save default sidebar.
-		$this->save_default_sidebar( $post );
-
-		// Save starting Paragraph Number.
-		$this->save_starting_paragraph( $post );
-
-		/**
-		 * Broadcast that Page meta has been saved.
-		 *
-		 * @since 4.0
-		 *
-		 * @param object $post The WordPress Post object.
-		 */
-		do_action( 'commentpress/core/db/page_meta/saved', $post );
-
-	}
-
-	/**
-	 * When a Page is saved, this authenticates that our options can be saved.
-	 *
-	 * @since 3.4
-	 *
-	 * @param object $post_obj The Post object.
-	 */
-	public function save_page_meta_authenticated( $post_obj ) {
-
-		// If no Post, kick out.
-		if ( ! $post_obj ) {
-			return false;
-		}
-
-		// If not Page, kick out.
-		if ( $post_obj->post_type != 'page' ) {
-			return false;
-		}
-
-		// Authenticate.
-		$nonce = isset( $_POST['commentpress_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['commentpress_nonce'] ) ) : '';
-		if ( ! wp_verify_nonce( $nonce, 'commentpress_page_settings' ) ) {
-			return false;
-		}
-
-		// Is this an auto save routine?
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-			return false;
-		}
-
-		// Check permissions - 'edit_pages' is available to editor or greater.
-		if ( ! current_user_can( 'edit_pages' ) ) {
-			return false;
-		}
-
-		// Good to go.
-		return true;
-
-	}
-
-	/**
-	 * Save Page Title visibility.
-	 *
-	 * @since 3.4
-	 *
-	 * @param object $post The Post object.
-	 * @return string $data Either 'show' (default) or ''.
-	 */
-	public function save_page_title_visibility( $post ) {
-
-		// Find and save the data.
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$data = isset( $_POST['cp_title_visibility'] ) ? sanitize_text_field( wp_unslash( $_POST['cp_title_visibility'] ) ) : 'show';
-
-		// Set key.
-		$key = '_cp_title_visibility';
-
-		// If the custom field already has a value.
-		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-			// Delete the meta_key if empty string.
-			if ( $data === '' ) {
-				delete_post_meta( $post->ID, $key );
-			} else {
-				update_post_meta( $post->ID, $key, esc_sql( $data ) );
-			}
-
-		} else {
-
-			// Add the data.
-			add_post_meta( $post->ID, $key, esc_sql( $data ) );
-
-		}
-
-		// --<
-		return $data;
-
-	}
-
-	/**
-	 * Save Page Meta visibility.
-	 *
-	 * @since 3.4
-	 *
-	 * @param object $post The Post object.
-	 * @return string $data Either 'hide' (default) or ''.
-	 */
-	public function save_page_meta_visibility( $post ) {
-
-		// Find and save the data.
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$data = isset( $_POST['cp_page_meta_visibility'] ) ? sanitize_text_field( wp_unslash( $_POST['cp_page_meta_visibility'] ) ) : 'hide';
-
-		// Set key.
-		$key = '_cp_page_meta_visibility';
-
-		// If the custom field already has a value.
-		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-			// Delete the meta_key if empty string.
-			if ( $data === '' ) {
-				delete_post_meta( $post->ID, $key );
-			} else {
-				update_post_meta( $post->ID, $key, esc_sql( $data ) );
-			}
-
-		} else {
-
-			// Add the data.
-			add_post_meta( $post->ID, $key, esc_sql( $data ) );
-
-		}
-
-		// --<
-		return $data;
-
-	}
-
-	/**
-	 * Save Page Numbering format.
-	 *
-	 * @since 3.4
-	 *
-	 * Only first top-level Page is allowed to save this.
-	 *
-	 * @param object $post The Post object.
-	 */
-	public function save_page_numbering( $post ) {
-
-		// Bail if no value received.
-		if ( ! isset( $_POST['cp_number_format'] ) ) {
-			return;
-		}
-
-		// Set meta key.
-		$key = '_cp_number_format';
-
-		// Do we need to check this, since only the first top level Page
-		// can now send this data? doesn't hurt to validate, I guess.
-		if (
-			$post->post_parent == '0' &&
-			! $this->core->pages_legacy->is_special_page() &&
-			$post->ID == $this->core->nav->get_first_page()
-		) {
-
-			// Get the data.
-			$data = sanitize_text_field( wp_unslash( $_POST['cp_number_format'] ) );
-
-			// If the custom field already has a value.
-			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-				// If empty string.
-				if ( $data === '' ) {
-
-					// Delete the meta_key.
-					delete_post_meta( $post->ID, $key );
-
-				} else {
-
-					// Update the data.
-					update_post_meta( $post->ID, $key, esc_sql( $data ) );
-
-				}
-
-			} else {
-
-				// Add the data.
-				add_post_meta( $post->ID, $key, esc_sql( $data ) );
-
-			}
-
-		}
-
-		/*
-		 * Delete this meta value from all other Pages, because we may have altered
-		 * the relationship between Pages, thus causing the Page numbering to fail.
-		 */
-
-		// Get all Pages including Chapters.
-		$all_pages = $this->core->nav->get_book_pages( 'structural' );
-
-		// If we have any Pages.
-		if ( count( $all_pages ) > 0 ) {
-
-			// Loop.
-			foreach ( $all_pages as $page ) {
-
-				// Exclude first top level Page.
-				if ( $post->ID != $page->ID ) {
-
-					// Delete the meta value.
-					delete_post_meta( $page->ID, $key );
-
-				}
-
-			}
-
-		}
-
-	}
-
-	/**
-	 * Save Page Layout for Title Page -> to allow for Book Cover image.
-	 *
-	 * @since 3.0
-	 *
-	 * @param object $post The Post object.
-	 */
-	public function save_page_layout( $post ) {
-
-		// Bail if this is not the Title Page.
-		if ( $post->ID !== (int) $this->option_get( 'cp_welcome_page' ) ) {
-			return;
-		}
-
-		// Find and save the data.
-		$data = isset( $_POST['cp_page_layout'] ) ? sanitize_text_field( wp_unslash( $_POST['cp_page_layout'] ) ) : 'text';
-
-		// Set key.
-		$key = '_cp_page_layout';
-
-		// If the custom field already has a value.
-		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-			// Delete the meta_key if empty string.
-			if ( $data === '' ) {
-				delete_post_meta( $post->ID, $key );
-			} else {
-				update_post_meta( $post->ID, $key, esc_sql( $data ) );
-			}
-
-		} else {
-
-			// Add the data.
-			add_post_meta( $post->ID, $key, esc_sql( $data ) );
-
-		}
-
-	}
-
-	/**
-	 * When a Post is saved, this also saves the CommentPress Core options.
-	 *
-	 * @since 3.0
-	 *
-	 * @param object $post_obj The Post object.
-	 */
-	public function save_post_meta( $post_obj ) {
-
-		// Bail if we're not authenticated.
-		if ( ! $this->save_post_meta_authenticated( $post_obj ) ) {
-			return;
-		}
-
-		// Check for revision.
-		if ( $post_obj->post_type == 'revision' ) {
-
-			// Get parent.
-			if ( $post_obj->post_parent != 0 ) {
-				$post = get_post( $post_obj->post_parent );
-			} else {
-				$post = $post_obj;
-			}
-
-		} else {
-			$post = $post_obj;
-		}
-
-		// Save default sidebar.
-		$this->save_default_sidebar( $post );
-
-		/**
-		 * Broadcast that Post meta has been saved.
-		 *
-		 * @since 4.0
-		 *
-		 * @param object $post The WordPress Post object.
-		 */
-		do_action( 'commentpress/core/db/post_meta/saved', $post );
-
-	}
-
-	/**
-	 * When a Post is saved, this authenticates that our options can be saved.
-	 *
-	 * @since 3.4
-	 *
-	 * @param object $post_obj The Post object.
-	 */
-	public function save_post_meta_authenticated( $post_obj ) {
-
-		// If no Post, kick out.
-		if ( ! $post_obj ) {
-			return false;
-		}
-
-		// If not Page, kick out.
-		if ( $post_obj->post_type != 'post' ) {
-			return false;
-		}
-
-		// Authenticate.
-		$nonce = isset( $_POST['commentpress_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['commentpress_nonce'] ) ) : '';
-		if ( ! wp_verify_nonce( $nonce, 'commentpress_post_settings' ) ) {
-			return false;
-		}
-
-		// Is this an auto save routine?
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-			return false;
-		}
-
-		// Check permissions - 'edit_posts' is available to contributor+.
-		if ( ! current_user_can( 'edit_posts', $post_obj->ID ) ) {
-			return false;
-		}
-
-		// Good to go.
-		return true;
-
-	}
-
-	/**
-	 * Override default sidebar.
-	 *
-	 * @since 3.4
-	 *
-	 * @param object $post The Post object.
-	 */
-	public function save_default_sidebar( $post ) {
-
-		// Allow this to be disabled.
-		if ( apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
-			return;
-		}
-
-		// Bail if we do have the option to choose the default sidebar (new in 3.3.3).
-		if ( ! $this->option_exists( 'cp_sidebar_default' ) ) {
-			return;
-		}
-
-		// Find and save the data.
-		$data = ( isset( $_POST['cp_sidebar_default'] ) ) ?
-			sanitize_text_field( wp_unslash( $_POST['cp_sidebar_default'] ) ) :
-			$this->option_get( 'cp_sidebar_default' );
-
-		// Set key.
-		$key = '_cp_sidebar_default';
-
-		// If the custom field already has a value.
-		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-			// Delete the meta_key if empty string.
-			if ( $data === '' ) {
-				delete_post_meta( $post->ID, $key );
-			} else {
-				update_post_meta( $post->ID, $key, esc_sql( $data ) );
-			}
-
-		} else {
-
-			// Add the data.
-			add_post_meta( $post->ID, $key, esc_sql( $data ) );
-
-		}
-
-	}
-
-	/**
-	 * Starting Paragraph Number - meta only exists when not default value.
-	 *
-	 * @since 3.4
-	 *
-	 * @param object $post The Post object.
-	 */
-	public function save_starting_paragraph( $post ) {
-
-		// Get the data.
-		$data = isset( $_POST['cp_starting_para_number'] ) ? sanitize_text_field( wp_unslash( $_POST['cp_starting_para_number'] ) ) : 1;
-
-		// If not numeric, set to default.
-		if ( ! is_numeric( $data ) ) {
-			$data = 1;
-		}
-
-		// Sanitize it.
-		$data = absint( $data );
-
-		// Set key.
-		$key = '_cp_starting_para_number';
-
-		// If the custom field already has a value.
-		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-			// Delete if default.
-			if ( $data === 1 ) {
-				delete_post_meta( $post->ID, $key );
-			} else {
-				update_post_meta( $post->ID, $key, esc_sql( $data ) );
-			}
-
-		} else {
-
-			// Add the data if greater than default.
-			if ( $data > 1 ) {
-				add_post_meta( $post->ID, $key, esc_sql( $data ) );
-			}
-
-		}
-
-	}
-
-	/**
-	 * When a Page is deleted, this makes sure that the CommentPress Core options are synced.
-	 *
-	 * @since 3.4
-	 *
-	 * @param object $post_id The Post ID.
-	 */
-	public function delete_meta( $post_id ) {
-
-		// If no Post, kick out.
-		if ( ! $post_id ) {
-			return;
-		}
-
-		// If it's our Welcome Page.
-		if ( $post_id == $this->option_get( 'cp_welcome_page' ) ) {
-
-			// Delete option.
-			$this->option_delete( 'cp_welcome_page' );
-
-			// Save.
-			$this->options_save();
-
-		}
-
-	}
-
-	/**
-	 * Get WordPress Post Types that CommentPress supports.
-	 *
-	 * @since 3.9
-	 *
-	 * @return array $supported_post_types Array of Post Types that have an editor.
-	 */
-	public function get_supported_post_types() {
-
-		// Only parse Post Types once.
-		static $supported_post_types = [];
-		if ( ! empty( $supported_post_types ) ) {
-			return $supported_post_types;
-		}
-
-		// Get only Post Types with an admin UI.
-		$args = [
-			'public' => true,
-			'show_ui' => true,
-		];
-
-		// Get Post Types.
-		$post_types = get_post_types( $args, 'objects' );
-
-		// Include only those which have an editor.
-		foreach ( $post_types as $post_type ) {
-			if ( post_type_supports( $post_type->name, 'editor' ) ) {
-				$supported_post_types[ $post_type->name ] = $post_type->label;
-			}
-		}
-
-		// Built-in media descriptions are also supported.
-		$attachment = get_post_type_object( 'attachment' );
-		$supported_post_types[ $attachment->name ] = $attachment->label;
-
-		// --<
-		return $supported_post_types;
-
-	}
-
-	/**
-	 * Get all WordPress Comments for a Post, unless Paged.
-	 *
-	 * @since 3.4
-	 *
-	 * @param int $post_ID The numeric ID of the Post.
-	 * @return array $comments The array of Comment data.
-	 */
-	public function get_all_comments( $post_ID ) {
-
-		// Access Post.
-		global $post;
-
-		// For WordPress, we use the API.
-		$comments = get_comments( 'post_id=' . $post_ID . '&order=ASC' );
-
-		// --<
-		return $comments;
-
-	}
-
-	/**
-	 * Get all Comments for a Post.
-	 *
-	 * @since 3.4
-	 *
-	 * @param int $post_ID The ID of the Post.
-	 * @return array $comments The array of Comment data.
-	 */
-	public function get_comments( $post_ID ) {
-
-		// Database object.
-		global $wpdb;
-
-		// Get Comments from db.
-		// TODO: convert to WordPress method.
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-		$comments = $wpdb->get_results(
-			$wpdb->prepare(
-				"SELECT * FROM $wpdb->comments WHERE comment_post_ID = %d",
-				$post_ID
-			)
-		);
-
-		// --<
-		return $comments;
-
-	}
-
-	/**
-	 * When a Comment is saved, this also saves the Text Signature.
-	 *
-	 * @since 3.0
-	 *
-	 * @param int $comment_id The numeric ID of the Comment.
-	 * @return boolean $result True if successful, false otherwise.
-	 */
-	public function save_comment_signature( $comment_id ) {
-
-		// Database object.
-		global $wpdb;
-
-		// Get Text Signature.
-		$text_signature = isset( $_POST['text_signature'] ) ? sanitize_text_field( wp_unslash( $_POST['text_signature'] ) ) : '';
-
-		// Did we get one?
-		if ( ! empty( $text_signature ) ) {
-
-			// Escape it.
-			$text_signature = esc_sql( $text_signature );
-
-			// Store Comment Text Signature.
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-			$result = $wpdb->query(
-				$wpdb->prepare(
-					"UPDATE $wpdb->comments SET comment_signature = %s WHERE comment_ID = %d",
-					$text_signature,
-					$comment_id
-				)
-			);
-
-		} else {
-
-			// Set result to true - why not, eh?
-			$result = true;
-
-		}
-
-		// --<
-		return $result;
 
 	}
 
@@ -2105,7 +1342,6 @@ class CommentPress_Core_Database {
 			'cp_show_extended_toc' => $this->show_extended_toc,
 			'cp_title_visibility' => $this->title_visibility,
 			'cp_page_meta_visibility' => $this->page_meta_visibility,
-			'cp_header_bg_colour' => 'deprecated',
 			'cp_js_scroll_speed' => $this->js_scroll_speed,
 			'cp_min_page_width' => $this->min_page_width,
 			'cp_comment_editor' => $this->comment_editor,
@@ -2157,9 +1393,6 @@ class CommentPress_Core_Database {
 		// Show or hide Page meta.
 		$this->option_set( 'cp_page_meta_visibility', $this->page_meta_visibility );
 
-		// Header background colour.
-		$this->option_set( 'cp_header_bg_colour', 'deprecated' );
-
 		// Javascript scroll speed.
 		$this->option_set( 'cp_js_scroll_speed', $this->js_scroll_speed );
 
@@ -2195,6 +1428,48 @@ class CommentPress_Core_Database {
 
 		// Store it.
 		$this->options_save();
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the WordPress Post Types that CommentPress supports.
+	 *
+	 * @since 3.9
+	 *
+	 * @return array $supported_post_types The array of Post Types that have an editor.
+	 */
+	public function get_supported_post_types() {
+
+		// Only parse Post Types once.
+		static $supported_post_types = [];
+		if ( ! empty( $supported_post_types ) ) {
+			return $supported_post_types;
+		}
+
+		// Get only Post Types with an admin UI.
+		$args = [
+			'public' => true,
+			'show_ui' => true,
+		];
+
+		// Get Post Types.
+		$post_types = get_post_types( $args, 'objects' );
+
+		// Include only those which have an editor.
+		foreach ( $post_types as $post_type ) {
+			if ( post_type_supports( $post_type->name, 'editor' ) ) {
+				$supported_post_types[ $post_type->name ] = $post_type->label;
+			}
+		}
+
+		// Built-in media descriptions are also supported.
+		$attachment = get_post_type_object( 'attachment' );
+		$supported_post_types[ $attachment->name ] = $attachment->label;
+
+		// --<
+		return $supported_post_types;
 
 	}
 

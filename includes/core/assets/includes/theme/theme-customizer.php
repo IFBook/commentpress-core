@@ -319,7 +319,7 @@ if ( ! function_exists( 'commentpress_customize_header_bg_color' ) ) :
 		$wp_customize->add_setting(
 			'commentpress_header_bg_color',
 			[
-				'default' => '#' . $core->db->header_bg_colour,
+				'default' => '#' . $core->db->header_bg_color,
 				//'capability' => 'edit_theme_options',
 				//'type' => 'option',
 			]
