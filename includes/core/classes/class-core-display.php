@@ -318,131 +318,150 @@ HELPTEXT;
 				$count = count( get_approved_comments( $item->ID ) );
 
 				// Write list item.
-				echo '<li class="title"><a href="' . get_permalink( $item->ID ) . '">' . get_the_title( $item->ID ) . ' (' . $count . ')</a></li>' . "\n";
+				echo '<li class="title">' .
+					'<a href="' . get_permalink( $item->ID ) . '">' . get_the_title( $item->ID ) . ' (' . $count . ')</a>' .
+				'</li>' . "\n";
 
 			}
 
-		} else {
+			// Bail early.
+			return;
 
-			// -----------------------------------------------------------------
-			// New-style decorated list.
-			// -----------------------------------------------------------------
+		}
 
-			// Access current Post.
-			global $post;
+		// -----------------------------------------------------------------
+		// New-style decorated list.
+		// -----------------------------------------------------------------
 
-			// Run through them.
-			foreach ( $posts as $item ) {
+		// Access current Post.
+		global $post;
 
-				// Init output.
-				$html = '';
+		// Run through them.
+		foreach ( $posts as $item ) {
 
-				// Get Comment count for that Post.
-				$count = count( get_approved_comments( $item->ID ) );
+			// Init output.
+			$html = '';
 
-				// Compat with Co-Authors Plus.
-				if ( function_exists( 'get_coauthors' ) ) {
+			// Compat with Co-Authors Plus.
+			if ( function_exists( 'get_coauthors' ) ) {
 
-					// Get multiple authors.
-					$authors = get_coauthors( $item->ID );
+				// Add permalink.
+				$html .= $this->list_posts_coauthors( $item );
 
-					// If we get some.
-					if ( ! empty( $authors ) ) {
+			} else {
 
-						// Use the Co-Authors format of "name, name, name & name".
-						$author_html = '';
+				// Get avatar.
+				$author_id = $item->post_author;
 
-						// Init counter.
-						$n = 1;
-
-						// Find out how many author we have.
-						$author_count = count( $authors );
-
-						// Loop.
-						foreach ( $authors as $author ) {
-
-							// Default to comma.
-							$sep = ', ';
-
-							// If we're on the penultimate.
-							if ( $n == ( $author_count - 1 ) ) {
-
-								// Use ampersand.
-								$sep = __( ' &amp; ', 'commentpress-core' );
-
-							}
-
-							// If we're on the last, don't add.
-							if ( $n == $author_count ) {
-								$sep = '';
-							}
-
-							// Get name.
-							$author_html .= $this->echo_post_author( $author->ID, false );
-
-							// Add separator.
-							$author_html .= $sep;
-
-							// Increment.
-							$n++;
-
-							// Are we showing avatars?
-							if ( get_option( 'show_avatars' ) ) {
-
-								// Get avatar.
-								$html .= get_avatar( $author->ID, $size = '32' );
-
-							}
-
-						}
-
-						// Add citation.
-						$html .= '<cite class="fn">' . $author_html . '</cite>' . "\n";
-
-						// Add permalink.
-						$html .= '<p class="post_activity_date">' . esc_html( get_the_time( get_option( 'date_format' ), $item->ID ) ) . '</p>' . "\n";
-
-					}
-
-				} else {
-
-					// Get avatar.
-					$author_id = $item->post_author;
-
-					// Are we showing avatars?
-					if ( get_option( 'show_avatars' ) ) {
-
-						$html .= get_avatar( $author_id, $size = '32' );
-
-					}
-
-					// Add citation.
-					$html .= '<cite class="fn">' . $this->echo_post_author( $author_id, false ) . '</cite>';
-
-					// Add permalink.
-					$html .= '<p class="post_activity_date">' . esc_html( get_the_time( get_option( 'date_format' ), $item->ID ) ) . '</p>';
-
+				// Are we showing avatars?
+				if ( get_option( 'show_avatars' ) ) {
+					$html .= get_avatar( $author_id, $size = '32' );
 				}
 
-				// Init current Post class as empty.
-				$current_post = '';
+				// Add citation.
+				$html .= '<cite class="fn">' . $this->echo_post_author( $author_id, false ) . '</cite>';
 
-				// If we're on the current Post and it's this item.
-				if ( is_singular() && isset( $post ) && $post->ID == $item->ID ) {
-					$current_post = ' current_page_item';
-				}
+				// Add permalink.
+				$html .= '<p class="post_activity_date">' . esc_html( get_the_time( get_option( 'date_format' ), $item->ID ) ) . '</p>';
 
-				// Write list item.
-				echo '<li class="title' . $current_post . '">
+			}
+
+			// Init current Post class as empty.
+			$current_post = '';
+
+			// If we're on the current Post and it's this item.
+			if ( is_singular() && ( $post instanceof WP_Post ) && $post->ID == $item->ID ) {
+				$current_post = ' current_page_item';
+			}
+
+			// Get Comment count for this item.
+			$count = count( get_approved_comments( $item->ID ) );
+
+			// Write list item.
+			echo '<li class="title' . $current_post . '">
 				<div class="post-identifier">
-				' . $html . '
+					' . $html . '
 				</div>
-				<a href="' . get_permalink( $item->ID ) . '" class="post_activity_link">' . get_the_title( $item->ID ) . ' (' . $count . ')</a>
-				</li>' . "\n";
+				<a href="' . get_permalink( $item->ID ) . '" class="post_activity_link">' .
+					get_the_title( $item->ID ) . ' (' . $count . ')' .
+				'</a>
+			</li>' . "\n";
 
+		}
+
+	}
+
+	/**
+	 * Build Authors when Co-Authors Plus is present.
+	 *
+	 * @since 4.0
+	 *
+	 * @param WP_Post $item The WordPress Post object.
+	 */
+	private function list_posts_coauthors( $item ) {
+
+		// Init return.
+		$html = '';
+
+		// Get multiple authors.
+		$authors = get_coauthors( $item->ID );
+
+		// Bail if we don't get any.
+		if ( empty( $authors ) ) {
+			return $html;
+		}
+
+		// Use the Co-Authors format of "name, name, name & name".
+		$author_html = '';
+
+		// Init counter.
+		$n = 1;
+
+		// Find out how many author we have.
+		$author_count = count( $authors );
+
+		// Loop.
+		foreach ( $authors as $author ) {
+
+			// Default to comma.
+			$sep = ', ';
+
+			// Use ampersand if we're on the penultimate.
+			if ( $n == ( $author_count - 1 ) ) {
+				$sep = __( ' &amp; ', 'commentpress-core' );
+			}
+
+			// If we're on the last, don't add.
+			if ( $n == $author_count ) {
+				$sep = '';
+			}
+
+			// Get name.
+			$author_html .= $this->echo_post_author( $author->ID, false );
+
+			// Add separator.
+			$author_html .= $sep;
+
+			// Increment.
+			$n++;
+
+			// Maybe get avatar.
+			if ( get_option( 'show_avatars' ) ) {
+				$html .= get_avatar( $author->ID, $size = '32' );
 			}
 
 		}
+
+		// Add citation.
+		$html .= '<cite class="fn">' . $author_html . '</cite>' . "\n";
+
+		// Add permalink.
+		$html .= '<p class="post_activity_date">' .
+			esc_html( get_the_time( get_option( 'date_format' ), $item->ID ) ) .
+		'</p>' . "\n";
+
+		// --<
+		return $html;
 
 	}
 

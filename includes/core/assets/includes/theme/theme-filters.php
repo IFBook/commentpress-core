@@ -325,8 +325,8 @@ if ( ! function_exists( 'commentpress_excerpt_length' ) ) :
 	 */
 	function commentpress_excerpt_length() {
 
-		// Init return
-		$length = 55; // WordPress default.
+		// Init return with WordPress default value.
+		$length = 55;
 
 		// Get core plugin reference.
 		$core = commentpress_core();
