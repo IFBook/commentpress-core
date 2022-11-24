@@ -13,7 +13,26 @@
 
 	<h1><?php esc_html_e( 'CommentPress Core', 'commentpress-core' ); ?></h1>
 
-	<hr />
+	<?php if ( $show_tabs ) : ?>
+		<h2 class="nav-tab-wrapper">
+			<a href="<?php echo $urls['settings']; ?>" class="nav-tab nav-tab-active"><?php esc_html_e( 'Settings', 'commentpress-core' ); ?></a>
+			<?php
+
+			/**
+			 * Allow others to add tabs.
+			 *
+			 * @since 4.0
+			 *
+			 * @param array $urls The array of Sub-page URLs.
+			 * @param string The key of the active tab in the Sub-page URLs array.
+			 */
+			do_action( 'commentpress/multisite/settings/site/page/nav_tabs', $urls, 'settings' );
+
+			?>
+		</h2>
+	<?php else : ?>
+		<hr />
+	<?php endif; ?>
 
 	<form method="post" id="commentpress_core_settings_form" action="<?php echo $this->page_settings_submit_url_get(); ?>">
 

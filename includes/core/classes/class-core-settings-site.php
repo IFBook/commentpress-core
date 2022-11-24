@@ -1,8 +1,8 @@
 <?php
 /**
- * CommentPress Core Admin class.
+ * CommentPress Core Site Settings class.
  *
- * Handles Settings Page functionality in CommentPress Core.
+ * Handles Site Settings Page functionality in CommentPress Core.
  *
  * @package CommentPress_Core
  */
@@ -11,9 +11,9 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * CommentPress Core Workflow Class.
+ * CommentPress Core Site Settings Class.
  *
- * This class handles Settings Page functionality in CommentPress Core.
+ * This class handles Site Settings Page functionality in CommentPress Core.
  *
  * @since 4.0
  */
@@ -96,14 +96,14 @@ class CommentPress_Core_Settings_Site {
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $core Reference to the core plugin object.
+	 * @param object $core Reference to the core loader object.
 	 */
 	public function __construct( $core ) {
 
-		// Store reference to core plugin object.
+		// Store reference to core loader object.
 		$this->core = $core;
 
-		// Init when this plugin is fully loaded.
+		// Init when the core plugin is fully loaded.
 		add_action( 'commentpress/core/loaded', [ $this, 'initialise' ] );
 
 	}
@@ -170,6 +170,8 @@ class CommentPress_Core_Settings_Site {
 
 	}
 
+	// -------------------------------------------------------------------------
+
 	/**
 	 * Add our Admin Page(s) to the WordPress admin menu.
 	 *
@@ -183,6 +185,7 @@ class CommentPress_Core_Settings_Site {
 			return;
 		}
 
+		/*
 		// If upgrade required.
 		if ( $this->core->db->upgrade_required() ) {
 
@@ -206,6 +209,7 @@ class CommentPress_Core_Settings_Site {
 			}
 
 		}
+		*/
 
 		// Add parent Page to Settings menu.
 		$this->parent_page = add_options_page(
@@ -317,7 +321,7 @@ class CommentPress_Core_Settings_Site {
 	}
 
 	/**
-	 * Performs tasks in Options Page header.
+	 * Performs tasks in Site Settings screen header.
 	 *
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
@@ -424,7 +428,7 @@ class CommentPress_Core_Settings_Site {
 	}
 
 	/**
-	 * Show our Settings Page.
+	 * Renders the Site Settings screen.
 	 *
 	 * @since 4.0
 	 */

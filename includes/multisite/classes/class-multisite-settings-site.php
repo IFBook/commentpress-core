@@ -29,6 +29,24 @@ class CommentPress_Multisite_Settings_Site {
 	public $multisite;
 
 	/**
+	 * Parent Page reference.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $parent_page The reference to the parent Page.
+	 */
+	public $parent_page;
+
+	/**
+	 * Parent Page slug.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $parent_page_slug The slug of the parent Page.
+	 */
+	public $parent_page_slug = 'commentpress_admin';
+
+	/**
 	 * Settings Page reference.
 	 *
 	 * @since 4.0
@@ -44,7 +62,16 @@ class CommentPress_Multisite_Settings_Site {
 	 * @access public
 	 * @var string $settings_page_slug The slug of the Settings Page.
 	 */
-	public $settings_page_slug = 'commentpress_admin';
+	public $settings_page_slug = 'commentpress_settings';
+
+	/**
+	 * Settings Page Tab URLs.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $urls The array of Settings Page Tab URLs.
+	 */
+	public $urls = [];
 
 	/**
 	 * Page template directory path.
@@ -82,7 +109,7 @@ class CommentPress_Multisite_Settings_Site {
 	}
 
 	/**
-	 * Initialises this obiject.
+	 * Initialises this object.
 	 *
 	 * @since 3.3
 	 */
@@ -132,7 +159,7 @@ class CommentPress_Multisite_Settings_Site {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Appends option to admin menu.
+	 * Add our Admin Page(s) to the WordPress admin menu.
 	 *
 	 * @since 3.3
 	 */
@@ -143,17 +170,38 @@ class CommentPress_Multisite_Settings_Site {
 			return;
 		}
 
-		// Insert item in relevant menu.
-		$this->settings_page = add_options_page(
+		// Add parent Page to Settings menu.
+		$this->parent_page = add_options_page(
 			__( 'CommentPress Core Settings', 'commentpress-core' ),
 			__( 'CommentPress Core', 'commentpress-core' ),
-			'manage_options',
+			'manage_options', // Required caps.
+			$this->parent_page_slug, // Slug name.
+			[ $this, 'page_settings' ] // Callback.
+		);
+
+		// Register our form submit hander.
+		add_action( 'load-' . $this->parent_page, [ $this, 'form_enable_core' ] );
+
+		// Add WordPress scripts, styles and help text.
+		add_action( 'admin_print_styles-' . $this->parent_page, [ $this, 'admin_css' ] );
+		add_action( 'admin_print_scripts-' . $this->parent_page, [ $this, 'admin_js' ] );
+		add_action( 'admin_head-' . $this->parent_page, [ $this, 'admin_head' ], 50 );
+
+		// Insert item in relevant menu.
+		$this->settings_page = add_submenu_page(
+			$this->parent_page_slug, // Parent slug.
+			__( 'CommentPress Core Settings', 'commentpress-core' ),
+			__( 'CommentPress Core', 'commentpress-core' ),
+			'manage_options', // Required caps.
 			$this->settings_page_slug, // Slug name.
 			[ $this, 'page_settings' ]
 		);
 
 		// Register our form submit hander.
 		add_action( 'load-' . $this->settings_page, [ $this, 'form_enable_core' ] );
+
+		// Ensure correct menu item is highlighted.
+		add_action( 'admin_head-' . $this->settings_page, [ $this, 'admin_menu_highlight' ], 50 );
 
 		// Add WordPress scripts, styles and help text.
 		add_action( 'admin_print_styles-' . $this->settings_page, [ $this, 'admin_css' ] );
@@ -181,7 +229,47 @@ class CommentPress_Multisite_Settings_Site {
 	}
 
 	/**
-	 * Performs tasks in Settings Page header.
+	 * Highlight the plugin's parent menu item.
+	 *
+	 * Regardless of the actual admin screen we are on, we need the parent menu
+	 * item to be highlighted so that the appropriate menu is open by default
+	 * when the Sub-page is viewed.
+	 *
+	 * @since 4.0
+	 *
+	 * @global string $plugin_page The current plugin Page.
+	 * @global string $submenu_file The current submenu.
+	 */
+	public function admin_menu_highlight() {
+
+		global $plugin_page, $submenu_file;
+
+		// Define Sub-pages.
+		$subpages = [
+			$this->settings_page_slug,
+		];
+
+		/**
+		 * Filter the list of Sub-pages.
+		 *
+		 * @since 4.0
+		 *
+		 * @param array $subpages The existing list of Sub-pages.
+		 */
+		$subpages = apply_filters( 'commentpress/core/settings/site/page/subpages', $subpages );
+
+		// This tweaks the Settings subnav menu to show only one menu item.
+		if ( in_array( $plugin_page, $subpages ) ) {
+			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+			$plugin_page = $this->parent_page_slug;
+			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+			$submenu_file = $this->parent_page_slug;
+		}
+
+	}
+
+	/**
+	 * Performs tasks in Site Settings screen header.
 	 *
 	 * @since 4.0
 	 */
@@ -225,7 +313,38 @@ class CommentPress_Multisite_Settings_Site {
 	}
 
 	/**
-	 * Renders the Site Settings Page when core is not enabled.
+	 * Get Settings Page Tab URLs.
+	 *
+	 * @since 4.0
+	 *
+	 * @return array $urls The array of Settings Page Tab URLs.
+	 */
+	public function page_tab_urls_get() {
+
+		// Only build once.
+		if ( ! empty( $this->urls ) ) {
+			return $this->urls;
+		}
+
+		// Get Settings Page URL.
+		$this->urls['settings'] = menu_page_url( $this->settings_page_slug, false );
+
+		/**
+		 * Filter the list of URLs.
+		 *
+		 * @since 4.0
+		 *
+		 * @param array $urls The existing list of URLs.
+		 */
+		$this->urls = apply_filters( 'commentpress/multisite/settings/site/page/tab_urls', $this->urls );
+
+		// --<
+		return $this->urls;
+
+	}
+
+	/**
+	 * Renders the Site Settings screen when core is not enabled.
 	 *
 	 * @since 4.0
 	 */
@@ -236,11 +355,28 @@ class CommentPress_Multisite_Settings_Site {
 			return;
 		}
 
+		// Get Settings Page Tab URLs.
+		$urls = $this->page_tab_urls_get();
+
+		/**
+		 * Do not show tabs by default but allow overrides.
+		 *
+		 * @since 4.0
+		 *
+		 * @param bool False by default - do not show tabs.
+		 */
+		$show_tabs = apply_filters( 'commentpress/multisite/settings/site/page/show_tabs', false );
+
 		// Get current screen.
 		$screen = get_current_screen();
 
 		/**
 		 * Allow meta boxes to be added to this screen.
+		 *
+		 * The Screen IDs to use are:
+		 *
+		 * * "settings_page_commentpress_admin"
+		 * * "admin_page_commentpress_settings"
 		 *
 		 * @since 4.0
 		 *
@@ -253,6 +389,32 @@ class CommentPress_Multisite_Settings_Site {
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->page_path . 'page-settings-site.php';
+
+	}
+
+	/**
+	 * Get our Settings Page screens.
+	 *
+	 * @since 4.0
+	 *
+	 * @return array $settings_screens The array of Settings Page screens.
+	 */
+	public function page_settings_screens_get() {
+
+		// Define this plugin's Settings Page screen IDs.
+		$settings_screens = [
+			'settings_page_' . $this->parent_page_slug,
+			'admin_page_' . $this->settings_page_slug,
+		];
+
+		/**
+		 * Filter the Settings Page screens.
+		 *
+		 * @since 4.0
+		 *
+		 * @param array $settings_screens The default array of Settings Page screens.
+		 */
+		return apply_filters( 'commentpress/multisite/settings/site/page/settings/screens', $settings_screens );
 
 	}
 
@@ -321,8 +483,11 @@ class CommentPress_Multisite_Settings_Site {
 	 */
 	public function meta_boxes_add( $screen_id ) {
 
+		// Get our Settings Page screens.
+		$settings_screens = $this->page_settings_screens_get();
+
 		// Bail if not the Screen ID we want.
-		if ( $screen_id !== $this->settings_page ) {
+		if ( ! in_array( $screen_id, $settings_screens ) ) {
 			return;
 		}
 
@@ -350,6 +515,15 @@ class CommentPress_Multisite_Settings_Site {
 			'side', // Column: options are 'normal' and 'side'.
 			'core' // Vertical placement: options are 'core', 'high', 'low'.
 		);
+
+		/**
+		 * Fires after Site Settings metaboxes have been added.
+		 *
+		 * @since 4.0
+		 *
+		 * @param string $screen_id The Admin Page Screen ID.
+		 */
+		do_action( 'commentpress/multisite/settings/site/page/settings/metaboxes/after', $screen_id );
 
 	}
 
