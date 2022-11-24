@@ -60,18 +60,18 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $site_settings The Site Settings object.
+	 * @var object $settings_site The Site Settings object.
 	 */
-	public $site_settings;
+	public $settings_site;
 
 	/**
 	 * Post Settings object.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $post_settings The Post Settings object.
+	 * @var object $settings_post The Post Settings object.
 	 */
-	public $post_settings;
+	public $settings_post;
 
 	/**
 	 * Navigation handling object.
@@ -300,8 +300,8 @@ class CommentPress_Core_Loader {
 		$this->db = new CommentPress_Core_Database( $this );
 		$this->display = new CommentPress_Core_Display( $this );
 		$this->theme = new CommentPress_Core_Theme( $this );
-		$this->site_settings = new CommentPress_Core_Settings_Site( $this );
-		$this->post_settings = new CommentPress_Core_Settings_Post( $this );
+		$this->settings_site = new CommentPress_Core_Settings_Site( $this );
+		$this->settings_post = new CommentPress_Core_Settings_Post( $this );
 		$this->nav = new CommentPress_Core_Navigator( $this );
 		$this->parser = new CommentPress_Core_Parser( $this );
 		$this->formatter = new CommentPress_Core_Formatter( $this );
