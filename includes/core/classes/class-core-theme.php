@@ -116,13 +116,13 @@ class CommentPress_Core_Theme {
 		}
 
 		/**
-		 * Get CommentPress Core theme by default, but allow overrides.
+		 * Filters the default CommentPress theme.
 		 *
 		 * @since 3.4
 		 *
 		 * @param str The default slug of the theme.
 		 */
-		$target_theme = apply_filters( 'cp_forced_theme_slug', 'commentpress-modern' );
+		$target_theme = apply_filters( 'cp_forced_theme_slug', 'commentpress-flat' );
 
 		// Get the theme we want.
 		$theme = wp_get_theme( $target_theme );

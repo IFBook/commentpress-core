@@ -44,7 +44,7 @@ class CommentPress_Multisite_BuddyPress {
 	 * @access public
 	 * @var str $groupblog_theme The default theme stylesheet.
 	 */
-	public $groupblog_theme = 'commentpress-modern';
+	public $groupblog_theme = 'commentpress-flat';
 
 	/**
 	 * Group Blog privacy flag.
