@@ -107,10 +107,10 @@ class CommentPress_Core_Comments {
 		$result = $this->core->db->save_comment_signature( $comment_id );
 
 		// Store our Comment Selection.
-		$result = $this->core->db->save_comment_selection( $comment_id );
+		$result = $this->save_comment_selection( $comment_id );
 
 		// In multipage situations, store our comment's Page.
-		$result = $this->core->db->save_comment_page( $comment_id );
+		$result = $this->save_comment_page( $comment_id );
 
 		// Has the Comment been marked as spam?
 		if ( $comment_status === 'spam' ) {
@@ -121,6 +121,119 @@ class CommentPress_Core_Comments {
 			wp_die( __( 'This comment has been marked as spam. Please contact a site administrator.', 'commentpress-core' ) );
 
 		}
+
+	}
+
+	/**
+	 * When a Comment is saved, this also saves the Page it was submitted on.
+	 *
+	 * This allows us to point to the correct Page of a multipage Post without
+	 * parsing the content every time.
+	 *
+	 * @since 3.4
+	 * @since 4.0 Moved to this class.
+	 *
+	 * @param int $comment_ID The numeric ID of the Comment.
+	 */
+	private function save_comment_page( $comment_ID ) {
+
+		// Get the Page number.
+		$page_number = isset( $_POST['page'] ) ? sanitize_text_field( wp_unslash( $_POST['page'] ) ) : false;
+
+		// Bail if this is not a paged Post.
+		if ( ! is_numeric( $page_number ) ) {
+			return;
+		}
+
+		// Get Text Signature.
+		$text_signature = isset( $_POST['text_signature'] ) ? sanitize_text_field( wp_unslash( $_POST['text_signature'] ) ) : '';
+
+		// Is it a paragraph-level comment?
+		if ( ! empty( $text_signature ) ) {
+
+			// Set key.
+			$key = '_cp_comment_page';
+
+			// Add or update the data.
+			if ( get_comment_meta( $comment_ID, $key, true ) != '' ) {
+				update_comment_meta( $comment_ID, $key, $page_number );
+			} else {
+				add_comment_meta( $comment_ID, $key, $page_number, true );
+			}
+
+			// Okay, we're done.
+			return;
+
+		}
+
+		/*
+		// Top level Comments are always Page 1.
+		$page_number = 1;
+		*/
+
+	}
+
+	/**
+	 * When a Comment is saved, this also saves the text selection.
+	 *
+	 * @since 3.9
+	 *
+	 * @param int $comment_id The numeric ID of the Comment.
+	 * @return boolean $result True if successful, false otherwise.
+	 */
+	private function save_comment_selection( $comment_id ) {
+
+		// Get text selection.
+		$text_selection = isset( $_POST['text_selection'] ) ? sanitize_text_field( wp_unslash( $_POST['text_selection'] ) ) : '';
+
+		// Bail if we didn't get one.
+		if ( empty( $text_selection ) ) {
+			return true;
+		}
+
+		// Sanity check: must have a comma.
+		if ( false === stristr( $text_selection, ',' ) ) {
+			return true;
+		}
+
+		// Make into an array.
+		$selection = explode( ',', $text_selection );
+
+		// Sanity check: must have only two elements.
+		if ( count( $selection ) !== 2 ) {
+			return true;
+		}
+
+		// Sanity check: both elements must be integers.
+		$start_end = [];
+		foreach ( $selection as $item ) {
+
+			// Not an integer - bail entirely.
+			if ( ! is_numeric( $item ) ) {
+				return true;
+			}
+
+			// Cast as integer and add to array.
+			$start_end[] = (int) $item;
+
+		}
+
+		// Okay, we're good to go.
+		$selection_data = implode( ',', $start_end );
+
+		// Set key.
+		$key = '_cp_comment_selection';
+
+		// Add or update the data.
+		$current = get_comment_meta( $comment_id, $key, true );
+		if ( ! empty( $current ) ) {
+			update_comment_meta( $comment_id, $key, $selection_data );
+		} else {
+			add_comment_meta( $comment_id, $key, $selection_data, true );
+		}
+
+		// --<
+		return true;
 
 	}
 

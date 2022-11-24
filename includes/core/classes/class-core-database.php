@@ -441,6 +441,8 @@ class CommentPress_Core_Database {
 
 	}
 
+	// -------------------------------------------------------------------------
+
 	/**
 	 * Check for an outdated plugin version.
 	 *
@@ -462,6 +464,8 @@ class CommentPress_Core_Database {
 		return false;
 
 	}
+
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Check for plugin upgrade.
@@ -942,6 +946,8 @@ class CommentPress_Core_Database {
 
 	}
 
+	// -------------------------------------------------------------------------
+
 	/**
 	 * Save the settings set by the administrator.
 	 *
@@ -1181,6 +1187,8 @@ class CommentPress_Core_Database {
 
 	}
 
+	// -------------------------------------------------------------------------
+
 	/**
 	 * Upgrade CommentPress Core options to array.
 	 *
@@ -1280,6 +1288,8 @@ class CommentPress_Core_Database {
 
 	}
 
+	// -------------------------------------------------------------------------
+
 	/**
 	 * Return existence of a specified WordPress option.
 	 *
@@ -1345,6 +1355,8 @@ class CommentPress_Core_Database {
 
 	}
 
+	// -------------------------------------------------------------------------
+
 	/**
 	 * Get current header background colour.
 	 *
@@ -1379,6 +1391,8 @@ class CommentPress_Core_Database {
 		return $this->header_bg_colour;
 
 	}
+
+	// -------------------------------------------------------------------------
 
 	/**
 	 * When a Page is saved, this also saves the CommentPress Core options.
@@ -1592,67 +1606,69 @@ class CommentPress_Core_Database {
 	 */
 	public function save_page_numbering( $post ) {
 
-		// Was the value sent?
-		if ( isset( $_POST['cp_number_format'] ) ) {
+		// Bail if no value received.
+		if ( ! isset( $_POST['cp_number_format'] ) ) {
+			return;
+		}
 
-			// Set meta key.
-			$key = '_cp_number_format';
+		// Set meta key.
+		$key = '_cp_number_format';
 
-			// Do we need to check this, since only the first top level Page
-			// can now send this data? doesn't hurt to validate, I guess.
-			if (
-				$post->post_parent == '0' &&
-				! $this->core->pages_legacy->is_special_page() &&
-				$post->ID == $this->core->nav->get_first_page()
-			) {
+		// Do we need to check this, since only the first top level Page
+		// can now send this data? doesn't hurt to validate, I guess.
+		if (
+			$post->post_parent == '0' &&
+			! $this->core->pages_legacy->is_special_page() &&
+			$post->ID == $this->core->nav->get_first_page()
+		) {
 
-				// Get the data.
-				$data = sanitize_text_field( wp_unslash( $_POST['cp_number_format'] ) );
+			// Get the data.
+			$data = sanitize_text_field( wp_unslash( $_POST['cp_number_format'] ) );
 
-				// If the custom field already has a value.
-				if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+			// If the custom field already has a value.
+			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
-					// If empty string.
-					if ( $data === '' ) {
+				// If empty string.
+				if ( $data === '' ) {
 
-						// Delete the meta_key.
-						delete_post_meta( $post->ID, $key );
-
-					} else {
-
-						// Update the data.
-						update_post_meta( $post->ID, $key, esc_sql( $data ) );
-
-					}
+					// Delete the meta_key.
+					delete_post_meta( $post->ID, $key );
 
 				} else {
 
-					// Add the data.
-					add_post_meta( $post->ID, $key, esc_sql( $data ) );
+					// Update the data.
+					update_post_meta( $post->ID, $key, esc_sql( $data ) );
 
 				}
 
+			} else {
+
+				// Add the data.
+				add_post_meta( $post->ID, $key, esc_sql( $data ) );
+
 			}
 
-			// Delete this meta value from all other Pages, because we may have altered
-			// the relationship between Pages, thus causing the Page numbering to fail.
+		}
 
-			// Get all Pages including Chapters.
-			$all_pages = $this->core->nav->get_book_pages( 'structural' );
+		/*
+		 * Delete this meta value from all other Pages, because we may have altered
+		 * the relationship between Pages, thus causing the Page numbering to fail.
+		 */
 
-			// If we have any Pages.
-			if ( count( $all_pages ) > 0 ) {
+		// Get all Pages including Chapters.
+		$all_pages = $this->core->nav->get_book_pages( 'structural' );
 
-				// Loop.
-				foreach ( $all_pages as $page ) {
+		// If we have any Pages.
+		if ( count( $all_pages ) > 0 ) {
 
-					// Exclude first top level Page.
-					if ( $post->ID != $page->ID ) {
+			// Loop.
+			foreach ( $all_pages as $page ) {
 
-						// Delete the meta value.
-						delete_post_meta( $page->ID, $key );
+				// Exclude first top level Page.
+				if ( $post->ID != $page->ID ) {
 
-					}
+					// Delete the meta value.
+					delete_post_meta( $page->ID, $key );
 
 				}
 
@@ -1671,31 +1687,31 @@ class CommentPress_Core_Database {
 	 */
 	public function save_page_layout( $post ) {
 
-		// Is this the Title Page?
-		if ( $post->ID == $this->option_get( 'cp_welcome_page' ) ) {
+		// Bail if this is not the Title Page.
+		if ( $post->ID !== (int) $this->option_get( 'cp_welcome_page' ) ) {
+			return;
+		}
 
-			// Find and save the data.
-			$data = isset( $_POST['cp_page_layout'] ) ? sanitize_text_field( wp_unslash( $_POST['cp_page_layout'] ) ) : 'text';
+		// Find and save the data.
+		$data = isset( $_POST['cp_page_layout'] ) ? sanitize_text_field( wp_unslash( $_POST['cp_page_layout'] ) ) : 'text';
 
-			// Set key.
-			$key = '_cp_page_layout';
+		// Set key.
+		$key = '_cp_page_layout';
 
-			// If the custom field already has a value.
-			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+		// If the custom field already has a value.
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
-				// Delete the meta_key if empty string.
-				if ( $data === '' ) {
-					delete_post_meta( $post->ID, $key );
-				} else {
-					update_post_meta( $post->ID, $key, esc_sql( $data ) );
-				}
-
+			// Delete the meta_key if empty string.
+			if ( $data === '' ) {
+				delete_post_meta( $post->ID, $key );
 			} else {
-
-				// Add the data.
-				add_post_meta( $post->ID, $key, esc_sql( $data ) );
-
+				update_post_meta( $post->ID, $key, esc_sql( $data ) );
 			}
+
+		} else {
+
+			// Add the data.
+			add_post_meta( $post->ID, $key, esc_sql( $data ) );
 
 		}
 
@@ -1797,33 +1813,33 @@ class CommentPress_Core_Database {
 			return;
 		}
 
-		// Do we have the option to choose the default sidebar (new in 3.3.3)?
-		if ( $this->option_exists( 'cp_sidebar_default' ) ) {
+		// Bail if we do have the option to choose the default sidebar (new in 3.3.3).
+		if ( ! $this->option_exists( 'cp_sidebar_default' ) ) {
+			return;
+		}
 
-			// Find and save the data.
-			$data = ( isset( $_POST['cp_sidebar_default'] ) ) ?
-				sanitize_text_field( wp_unslash( $_POST['cp_sidebar_default'] ) ) :
-				$this->option_get( 'cp_sidebar_default' );
+		// Find and save the data.
+		$data = ( isset( $_POST['cp_sidebar_default'] ) ) ?
+			sanitize_text_field( wp_unslash( $_POST['cp_sidebar_default'] ) ) :
+			$this->option_get( 'cp_sidebar_default' );
 
-			// Set key.
-			$key = '_cp_sidebar_default';
+		// Set key.
+		$key = '_cp_sidebar_default';
 
-			// If the custom field already has a value.
-			if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+		// If the custom field already has a value.
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
-				// Delete the meta_key if empty string.
-				if ( $data === '' ) {
-					delete_post_meta( $post->ID, $key );
-				} else {
-					update_post_meta( $post->ID, $key, esc_sql( $data ) );
-				}
-
+			// Delete the meta_key if empty string.
+			if ( $data === '' ) {
+				delete_post_meta( $post->ID, $key );
 			} else {
-
-				// Add the data.
-				add_post_meta( $post->ID, $key, esc_sql( $data ) );
-
+				update_post_meta( $post->ID, $key, esc_sql( $data ) );
 			}
+
+		} else {
+
+			// Add the data.
+			add_post_meta( $post->ID, $key, esc_sql( $data ) );
 
 		}
 
@@ -1994,10 +2010,10 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 *
-	 * @param int $comment_ID The numeric ID of the Comment.
+	 * @param int $comment_id The numeric ID of the Comment.
 	 * @return boolean $result True if successful, false otherwise.
 	 */
-	public function save_comment_signature( $comment_ID ) {
+	public function save_comment_signature( $comment_id ) {
 
 		// Database object.
 		global $wpdb;
@@ -2006,7 +2022,7 @@ class CommentPress_Core_Database {
 		$text_signature = isset( $_POST['text_signature'] ) ? sanitize_text_field( wp_unslash( $_POST['text_signature'] ) ) : '';
 
 		// Did we get one?
-		if ( $text_signature != '' ) {
+		if ( ! empty( $text_signature ) ) {
 
 			// Escape it.
 			$text_signature = esc_sql( $text_signature );
@@ -2017,7 +2033,7 @@ class CommentPress_Core_Database {
 				$wpdb->prepare(
 					"UPDATE $wpdb->comments SET comment_signature = %s WHERE comment_ID = %d",
 					$text_signature,
-					$comment_ID
+					$comment_id
 				)
 			);
 
@@ -2030,431 +2046,6 @@ class CommentPress_Core_Database {
 
 		// --<
 		return $result;
-
-	}
-
-	/**
-	 * When a Comment is saved, this also saves the text selection.
-	 *
-	 * @since 3.9
-	 *
-	 * @param int $comment_id The numeric ID of the Comment.
-	 * @return boolean $result True if successful, false otherwise.
-	 */
-	public function save_comment_selection( $comment_id ) {
-
-		// Get text selection.
-		$text_selection = isset( $_POST['text_selection'] ) ? sanitize_text_field( wp_unslash( $_POST['text_selection'] ) ) : '';
-
-		// Bail if we didn't get one.
-		if ( $text_selection == '' ) {
-			return true;
-		}
-
-		// Sanity check: must have a comma.
-		if ( stristr( $text_selection, ',' ) === false ) {
-			return true;
-		}
-
-		// Make into an array.
-		$selection = explode( ',', $text_selection );
-
-		// Sanity check: must have only two elements.
-		if ( count( $selection ) != 2 ) {
-			return true;
-		}
-
-		// Sanity check: both elements must be integers.
-		$start_end = [];
-		foreach ( $selection as $item ) {
-
-			// Not integer - kick out.
-			if ( ! is_numeric( $item ) ) {
-				return true;
-			}
-
-			// Cast as integer and add to array.
-			$start_end[] = absint( $item );
-
-		}
-
-		// Okay, we're good to go.
-		$selection_data = implode( ',', $start_end );
-
-		// Set key.
-		$key = '_cp_comment_selection';
-
-		// Get current.
-		$current = get_comment_meta( $comment_id, $key, true );
-
-		// If the Comment meta already has a value.
-		if ( ! empty( $current ) ) {
-
-			// Update the data.
-			update_comment_meta( $comment_id, $key, $selection_data );
-
-		} else {
-
-			// Add the data.
-			add_comment_meta( $comment_id, $key, $selection_data, true );
-
-		}
-
-		// --<
-		return true;
-
-	}
-
-	/**
-	 * When a Comment is saved, this also saves the Page it was submitted on.
-	 *
-	 * This allows us to point to the correct Page of a multipage Post without
-	 * parsing the content every time.
-	 *
-	 * @since 3.4
-	 *
-	 * @param int $comment_ID The numeric ID of the Comment.
-	 */
-	public function save_comment_page( $comment_ID ) {
-
-		// Get the Page number.
-		$page_number = isset( $_POST['page'] ) ? sanitize_text_field( wp_unslash( $_POST['page'] ) ) : false;
-
-		// Is this a paged Post?
-		if ( is_numeric( $page_number ) ) {
-
-			// Get Text Signature.
-			$text_signature = isset( $_POST['text_signature'] ) ? sanitize_text_field( wp_unslash( $_POST['text_signature'] ) ) : '';
-
-			// Is it a para-level comment?
-			if ( $text_signature != '' ) {
-
-				// Set key.
-				$key = '_cp_comment_page';
-
-				// If the custom field already has a value.
-				if ( get_comment_meta( $comment_ID, $key, true ) != '' ) {
-
-					// Update the data.
-					update_comment_meta( $comment_ID, $key, $page_number );
-
-				} else {
-
-					// Add the data.
-					add_comment_meta( $comment_ID, $key, $page_number, true );
-
-				}
-
-			} else {
-
-				/*
-				// Top level Comments are always Page 1.
-				$page_number = 1;
-				*/
-
-			}
-
-		}
-
-	}
-
-	/**
-	 * Get Javascript params for the plugin, context dependent.
-	 *
-	 * @since 3.4
-	 *
-	 * @return array $vars The Javascript setup params.
-	 */
-	public function get_javascript_vars() {
-
-		// Init return.
-		$vars = [];
-
-		// Add Comments open.
-		global $post;
-
-		// If we don't have a Post (like on the 404 Page).
-		if ( ! is_object( $post ) ) {
-
-			// Comments must be closed.
-			$vars['cp_comments_open'] = 'n';
-
-			// Set empty permalink.
-			$vars['cp_permalink'] = '';
-
-		} else {
-
-			// Check for Post "comment_status".
-			$vars['cp_comments_open'] = ( $post->comment_status == 'open' ) ? 'y' : 'n';
-
-			// Set Post permalink.
-			$vars['cp_permalink'] = get_permalink( $post->ID );
-
-		}
-
-		// Assume no admin bars.
-		$vars['cp_wp_adminbar'] = 'n';
-		$vars['cp_bp_adminbar'] = 'n';
-
-		// Match WordPress 3.8+ admin bar.
-		$vars['cp_wp_adminbar_height'] = '32';
-		$vars['cp_wp_adminbar_expanded'] = '0';
-
-		// Are we showing the WordPress admin bar?
-		if ( is_admin_bar_showing() ) {
-
-			// We have it.
-			$vars['cp_wp_adminbar'] = 'y';
-
-			// Admin bar expands in height below 782px viewport width.
-			$vars['cp_wp_adminbar_expanded'] = '46';
-
-		}
-
-		// Are we logged in AND in a BuddyPress scenario?
-		if ( is_user_logged_in() && $this->core->bp->is_buddypress() ) {
-
-			// Regardless of version, settings can be made in bp-custom.php.
-			if ( defined( 'BP_DISABLE_ADMIN_BAR' ) && BP_DISABLE_ADMIN_BAR ) {
-
-				// We've killed both admin bars.
-				$vars['cp_bp_adminbar'] = 'n';
-				$vars['cp_wp_adminbar'] = 'n';
-
-			}
-
-			// Check for BuddyPress versions prior to 1.6 (1.6 uses the WordPress admin bar instead of a custom one).
-			if ( ! function_exists( 'bp_get_version' ) ) {
-
-				// But, this can already be overridden in bp-custom.php.
-				if ( defined( 'BP_USE_WP_ADMIN_BAR' ) && BP_USE_WP_ADMIN_BAR ) {
-
-					// Not present.
-					$vars['cp_bp_adminbar'] = 'n';
-					$vars['cp_wp_adminbar'] = 'y';
-
-				} else {
-
-					// Let our javascript know.
-					$vars['cp_bp_adminbar'] = 'y';
-
-					// Recheck 'BP_DISABLE_ADMIN_BAR'.
-					if ( defined( 'BP_DISABLE_ADMIN_BAR' ) && BP_DISABLE_ADMIN_BAR ) {
-
-						// We've killed both admin bars.
-						$vars['cp_bp_adminbar'] = 'n';
-						$vars['cp_wp_adminbar'] = 'n';
-
-					}
-
-				}
-
-			}
-
-		}
-
-		// Add rich text editor.
-		$vars['cp_tinymce'] = 1;
-
-		// Check if Users must be logged in to comment.
-		if ( get_option( 'comment_registration' ) == '1' && ! is_user_logged_in() ) {
-
-			// Don't add rich text editor.
-			$vars['cp_tinymce'] = 0;
-
-		}
-
-		// Check CommentPress Core option.
-		if (
-			$this->option_exists( 'cp_comment_editor' ) &&
-			$this->option_get( 'cp_comment_editor' ) != '1'
-		) {
-
-			// Don't add rich text editor.
-			$vars['cp_tinymce'] = 0;
-
-		}
-
-		// If on a public Group Blog and User isn't logged in.
-		if ( $this->core->bp->is_groupblog() && ! is_user_logged_in() ) {
-
-			// Don't add rich text editor, because only Members can comment.
-			$vars['cp_tinymce'] = 0;
-
-		}
-
-		/**
-		 * Filters the TinyMCE vars.
-		 *
-		 * Allow plugins to override TinyMCE.
-		 *
-		 * @since 3.4
-		 *
-		 * @param bool $cp_tinymce The default TinyMCE vars.
-		 */
-		$vars['cp_tinymce'] = apply_filters( 'cp_override_tinymce', $vars['cp_tinymce'] );
-
-		// Add mobile var.
-		$vars['cp_is_mobile'] = 0;
-
-		// Is it a mobile?
-		if ( $this->core->device->is_mobile() ) {
-
-			// Is mobile.
-			$vars['cp_is_mobile'] = 1;
-
-			// Don't add rich text editor.
-			$vars['cp_tinymce'] = 0;
-
-		}
-
-		// Add touch var.
-		$vars['cp_is_touch'] = 0;
-
-		// Is it a touch device?
-		if ( $this->core->device->is_touch() ) {
-
-			// Is touch.
-			$vars['cp_is_touch'] = 1;
-
-			// Don't add rich text editor.
-			$vars['cp_tinymce'] = 0;
-
-		}
-
-		// Add touch testing var.
-		$vars['cp_touch_testing'] = 0;
-
-		// Have we set our testing constant?
-		if ( defined( 'COMMENTPRESS_TOUCH_SELECT' ) && COMMENTPRESS_TOUCH_SELECT ) {
-
-			// Support touch device testing.
-			$vars['cp_touch_testing'] = 1;
-
-		}
-
-		// Add tablet var.
-		$vars['cp_is_tablet'] = 0;
-
-		// Is it a touch device?
-		if ( $this->core->device->is_tablet() ) {
-
-			// Is touch.
-			$vars['cp_is_tablet'] = 1;
-
-			// Don't add rich text editor.
-			$vars['cp_tinymce'] = 0;
-
-		}
-
-		// Add rich text editor behaviour.
-		$vars['cp_promote_reading'] = 1;
-
-		// Check option.
-		if (
-			$this->option_exists( 'cp_promote_reading' ) &&
-			$this->option_get( 'cp_promote_reading' ) != '1'
-		) {
-
-			// Promote commenting.
-			$vars['cp_promote_reading'] = 0;
-
-		}
-
-		// Add Special Page var.
-		$vars['cp_special_page'] = ( $this->core->pages_legacy->is_special_page() ) ? '1' : '0';
-
-		// Are we in a BuddyPress scenario?
-		if ( $this->core->bp->is_buddypress() ) {
-
-			// Is it a component homepage?
-			if ( $this->core->bp->is_buddypress_special_page() ) {
-
-				// Treat them the way we do ours.
-				$vars['cp_special_page'] = '1';
-
-			}
-
-		}
-
-		// Get path.
-		$url_info = wp_parse_url( get_option( 'siteurl' ) );
-
-		// Add path for cookies.
-		$vars['cp_cookie_path'] = '/';
-		if ( ! empty( $url_info['path'] ) ) {
-			$vars['cp_cookie_path'] = trailingslashit( $url_info['path'] );
-		}
-
-		// Add Page.
-		global $page;
-		$vars['cp_multipage_page'] = ( ! empty( $page ) ) ? $page : 0;
-
-		// Are Chapters Pages?
-		$vars['cp_toc_chapter_is_page'] = $this->option_get( 'cp_toc_chapter_is_page' );
-
-		// Are Sub-pages shown?
-		$vars['cp_show_subpages'] = $this->option_get( 'cp_show_subpages' );
-
-		// Set default sidebar.
-		$vars['cp_default_sidebar'] = $this->core->theme->get_default_sidebar();
-
-		// Set scroll speed.
-		$vars['cp_js_scroll_speed'] = $this->option_get( 'cp_js_scroll_speed' );
-
-		// Set min Page width.
-		$vars['cp_min_page_width'] = $this->option_get( 'cp_min_page_width' );
-
-		// Default to showing textblock meta.
-		$vars['cp_textblock_meta'] = 1;
-
-		// Check option.
-		if (
-			$this->option_exists( 'cp_textblock_meta' ) &&
-			$this->option_get( 'cp_textblock_meta' ) == 'n'
-		) {
-
-			// Only show textblock meta on rollover.
-			$vars['cp_textblock_meta'] = 0;
-
-		}
-
-		// Default to Page navigation enabled.
-		$vars['cp_page_nav_enabled'] = 1;
-
-		// Check option.
-		if (
-			$this->option_exists( 'cp_page_nav_enabled' ) &&
-			$this->option_get( 'cp_page_nav_enabled' ) == 'n'
-		) {
-
-			// Disable Page navigation.
-			$vars['cp_page_nav_enabled'] = 0;
-
-		}
-
-		// Default to parsing content and Comments.
-		$vars['cp_do_not_parse'] = 0;
-
-		// Check option.
-		if (
-			$this->option_exists( 'cp_do_not_parse' ) &&
-			$this->option_get( 'cp_do_not_parse' ) == 'y'
-		) {
-
-			// Do not parse.
-			$vars['cp_do_not_parse'] = 1;
-
-		}
-
-		/**
-		 * Filters the Javascript vars.
-		 *
-		 * @since 3.4
-		 *
-		 * @param array $vars The default Javascript vars.
-		 */
-		return apply_filters( 'commentpress_get_javascript_vars', $vars );
 
 	}
 

@@ -115,7 +115,7 @@ class CommentPress_Core_Display {
 		);
 
 		// Get vars.
-		$vars = $this->core->db->get_javascript_vars();
+		$vars = $this->get_javascript_vars();
 
 		// Localise the WordPress way.
 		wp_localize_script( 'jquery_commentpress', 'CommentpressSettings', $vars );
@@ -180,10 +180,10 @@ class CommentPress_Core_Display {
 			);
 
 			// Define popover for textblocks.
-			$popover_textblock = '<span class="popover-holder"><div class="popover-holder-inner"><div class="popover-holder-caret"></div><div class="popover-holder-btn-left"><span class="popover-holder-btn-left-comment">' . __( 'Comment', 'commentpress-core' ) . '</span><span class="popover-holder-btn-left-quote">' . __( 'Quote &amp; Comment', 'commentpress-core' ) . '</span></div><div class="popover-holder-btn-right">&times;</div></div></span>';
+			$popover_textblock = '<span class="popover-holder"><div class="popover-holder-inner"><div class="popover-holder-caret"></div><div class="popover-holder-btn-left"><span class="popover-holder-btn-left-comment">' . esc_html__( 'Comment', 'commentpress-core' ) . '</span><span class="popover-holder-btn-left-quote">' . esc_html__( 'Quote &amp; Comment', 'commentpress-core' ) . '</span></div><div class="popover-holder-btn-right">&times;</div></div></span>';
 
 			// Define popover for Comments.
-			$popover_comment = '<span class="comment-popover-holder"><div class="popover-holder-inner"><div class="popover-holder-caret"></div><div class="popover-holder-btn-left"><span class="comment-popover-holder-btn-left-quote">' . __( 'Quote', 'commentpress-core' ) . '</span></div><div class="popover-holder-btn-right">&times;</div></div></span>';
+			$popover_comment = '<span class="comment-popover-holder"><div class="popover-holder-inner"><div class="popover-holder-caret"></div><div class="popover-holder-btn-left"><span class="comment-popover-holder-btn-left-quote">' . esc_html__( 'Quote', 'commentpress-core' ) . '</span></div><div class="popover-holder-btn-right">&times;</div></div></span>';
 
 			// Define localisation array.
 			$texthighlighter_vars = [
@@ -193,11 +193,11 @@ class CommentPress_Core_Display {
 
 			// Create translations.
 			$texthighlighter_translations = [
-				'dialog_title' => __( 'Are you sure?', 'commentpress-core' ),
-				'dialog_content' => __( 'You have not yet submitted your comment. Are you sure you want to discard it?', 'commentpress-core' ),
-				'dialog_yes' => __( 'Discard', 'commentpress-core' ),
-				'dialog_no' => __( 'Keep', 'commentpress-core' ),
-				'backlink_text' => __( 'Back', 'commentpress-core' ),
+				'dialog_title' => esc_html__( 'Are you sure?', 'commentpress-core' ),
+				'dialog_content' => esc_html__( 'You have not yet submitted your comment. Are you sure you want to discard it?', 'commentpress-core' ),
+				'dialog_yes' => esc_html__( 'Discard', 'commentpress-core' ),
+				'dialog_no' => esc_html__( 'Keep', 'commentpress-core' ),
+				'backlink_text' => esc_html__( 'Back', 'commentpress-core' ),
 			];
 
 			// Add to vars.
@@ -211,7 +211,313 @@ class CommentPress_Core_Display {
 	}
 
 	/**
-	 * Get help text.
+	 * Get Javascript params for the plugin, context dependent.
+	 *
+	 * @since 3.4
+	 *
+	 * @return array $vars The Javascript setup params.
+	 */
+	public function get_javascript_vars() {
+
+		// Init return.
+		$vars = [];
+
+		// Access Post.
+		global $post;
+
+		// If we don't have a Post - like on the 404 Page.
+		if ( ! ( $post instanceof WP_Post ) ) {
+
+			// Comments must be closed.
+			$vars['cp_comments_open'] = 'n';
+
+			// Set empty permalink.
+			$vars['cp_permalink'] = '';
+
+		} else {
+
+			// Check for Post "comment_status".
+			$vars['cp_comments_open'] = ( $post->comment_status == 'open' ) ? 'y' : 'n';
+
+			// Set Post permalink.
+			$vars['cp_permalink'] = get_permalink( $post->ID );
+
+		}
+
+		// Assume no admin bars.
+		$vars['cp_wp_adminbar'] = 'n';
+		$vars['cp_bp_adminbar'] = 'n';
+
+		// Match WordPress 3.8+ admin bar.
+		$vars['cp_wp_adminbar_height'] = '32';
+		$vars['cp_wp_adminbar_expanded'] = '0';
+
+		// Are we showing the WordPress admin bar?
+		if ( is_admin_bar_showing() ) {
+
+			// We have it.
+			$vars['cp_wp_adminbar'] = 'y';
+
+			// Admin bar expands in height below 782px viewport width.
+			$vars['cp_wp_adminbar_expanded'] = '46';
+
+		}
+
+		// Are we logged in AND in a BuddyPress scenario?
+		if ( is_user_logged_in() && $this->core->bp->is_buddypress() ) {
+
+			// Regardless of version, settings can be made in bp-custom.php.
+			if ( defined( 'BP_DISABLE_ADMIN_BAR' ) && BP_DISABLE_ADMIN_BAR ) {
+
+				// We've killed both admin bars.
+				$vars['cp_bp_adminbar'] = 'n';
+				$vars['cp_wp_adminbar'] = 'n';
+
+			}
+
+			/*
+			 * Check for BuddyPress versions prior to 1.6.
+			 *
+			 * BuddyPress 1.6 uses the WordPress admin bar instead of a custom one.
+			 */
+			if ( ! function_exists( 'bp_get_version' ) ) {
+
+				// But, this can already be overridden in bp-custom.php.
+				if ( defined( 'BP_USE_WP_ADMIN_BAR' ) && BP_USE_WP_ADMIN_BAR ) {
+
+					// Not present.
+					$vars['cp_bp_adminbar'] = 'n';
+					$vars['cp_wp_adminbar'] = 'y';
+
+				} else {
+
+					// Let our javascript know.
+					$vars['cp_bp_adminbar'] = 'y';
+
+					// Recheck 'BP_DISABLE_ADMIN_BAR'.
+					if ( defined( 'BP_DISABLE_ADMIN_BAR' ) && BP_DISABLE_ADMIN_BAR ) {
+
+						// We've killed both admin bars.
+						$vars['cp_bp_adminbar'] = 'n';
+						$vars['cp_wp_adminbar'] = 'n';
+
+					}
+
+				}
+
+			}
+
+		}
+
+		// Add rich text editor by default.
+		$vars['cp_tinymce'] = 1;
+
+		// Check if Users must be logged in to comment.
+		if ( get_option( 'comment_registration' ) == '1' && ! is_user_logged_in() ) {
+
+			// Don't add rich text editor.
+			$vars['cp_tinymce'] = 0;
+
+		}
+
+		// Check CommentPress Core option.
+		if (
+			$this->core->db->option_exists( 'cp_comment_editor' ) &&
+			$this->core->db->option_get( 'cp_comment_editor' ) != '1'
+		) {
+
+			// Don't add rich text editor.
+			$vars['cp_tinymce'] = 0;
+
+		}
+
+		// If on a public Group Blog and User isn't logged in.
+		if ( $this->core->bp->is_groupblog() && ! is_user_logged_in() ) {
+
+			// Don't add rich text editor, because only Members can comment.
+			$vars['cp_tinymce'] = 0;
+
+		}
+
+		/**
+		 * Filters the TinyMCE vars.
+		 *
+		 * Allow plugins to override TinyMCE.
+		 *
+		 * @since 3.4
+		 *
+		 * @param bool $cp_tinymce The default TinyMCE vars.
+		 */
+		$vars['cp_tinymce'] = apply_filters( 'cp_override_tinymce', $vars['cp_tinymce'] );
+
+		// Add mobile var.
+		$vars['cp_is_mobile'] = 0;
+
+		// Is it a mobile?
+		if ( $this->core->device->is_mobile() ) {
+
+			// Is mobile.
+			$vars['cp_is_mobile'] = 1;
+
+			// Don't add rich text editor.
+			$vars['cp_tinymce'] = 0;
+
+		}
+
+		// Add touch var.
+		$vars['cp_is_touch'] = 0;
+
+		// Is it a touch device?
+		if ( $this->core->device->is_touch() ) {
+
+			// Is touch.
+			$vars['cp_is_touch'] = 1;
+
+			// Don't add rich text editor.
+			$vars['cp_tinymce'] = 0;
+
+		}
+
+		// Add touch testing var.
+		$vars['cp_touch_testing'] = 0;
+
+		// Have we set our testing constant?
+		if ( defined( 'COMMENTPRESS_TOUCH_SELECT' ) && COMMENTPRESS_TOUCH_SELECT ) {
+
+			// Support touch device testing.
+			$vars['cp_touch_testing'] = 1;
+
+		}
+
+		// Add tablet var.
+		$vars['cp_is_tablet'] = 0;
+
+		// Is it a touch device?
+		if ( $this->core->device->is_tablet() ) {
+
+			// Is touch.
+			$vars['cp_is_tablet'] = 1;
+
+			// Don't add rich text editor.
+			$vars['cp_tinymce'] = 0;
+
+		}
+
+		// Add rich text editor behaviour.
+		$vars['cp_promote_reading'] = 1;
+
+		// Check option.
+		if (
+			$this->core->db->option_exists( 'cp_promote_reading' ) &&
+			$this->core->db->option_get( 'cp_promote_reading' ) != '1'
+		) {
+
+			// Promote commenting.
+			$vars['cp_promote_reading'] = 0;
+
+		}
+
+		// Add Special Page var.
+		$vars['cp_special_page'] = ( $this->core->pages_legacy->is_special_page() ) ? '1' : '0';
+
+		// Are we in a BuddyPress scenario?
+		if ( $this->core->bp->is_buddypress() ) {
+
+			// Is it a component homepage?
+			if ( $this->core->bp->is_buddypress_special_page() ) {
+
+				// Treat them the way we do ours.
+				$vars['cp_special_page'] = '1';
+
+			}
+
+		}
+
+		// Get path.
+		$url_info = wp_parse_url( get_option( 'siteurl' ) );
+
+		// Add path for cookies.
+		$vars['cp_cookie_path'] = '/';
+		if ( ! empty( $url_info['path'] ) ) {
+			$vars['cp_cookie_path'] = trailingslashit( $url_info['path'] );
+		}
+
+		// Add Page.
+		global $page;
+		$vars['cp_multipage_page'] = ( ! empty( $page ) ) ? $page : 0;
+
+		// Are Chapters Pages?
+		$vars['cp_toc_chapter_is_page'] = $this->core->db->option_get( 'cp_toc_chapter_is_page' );
+
+		// Are Sub-pages shown?
+		$vars['cp_show_subpages'] = $this->core->db->option_get( 'cp_show_subpages' );
+
+		// Set default sidebar.
+		$vars['cp_default_sidebar'] = $this->core->theme->get_default_sidebar();
+
+		// Set scroll speed.
+		$vars['cp_js_scroll_speed'] = $this->core->db->option_get( 'cp_js_scroll_speed' );
+
+		// Set min Page width.
+		$vars['cp_min_page_width'] = $this->core->db->option_get( 'cp_min_page_width' );
+
+		// Default to showing textblock meta.
+		$vars['cp_textblock_meta'] = 1;
+
+		// Check option.
+		if (
+			$this->core->db->option_exists( 'cp_textblock_meta' ) &&
+			$this->core->db->option_get( 'cp_textblock_meta' ) == 'n'
+		) {
+
+			// Only show textblock meta on rollover.
+			$vars['cp_textblock_meta'] = 0;
+
+		}
+
+		// Default to Page navigation enabled.
+		$vars['cp_page_nav_enabled'] = 1;
+
+		// Check option.
+		if (
+			$this->core->db->option_exists( 'cp_page_nav_enabled' ) &&
+			$this->core->db->option_get( 'cp_page_nav_enabled' ) == 'n'
+		) {
+
+			// Disable Page navigation.
+			$vars['cp_page_nav_enabled'] = 0;
+
+		}
+
+		// Default to parsing content and Comments.
+		$vars['cp_do_not_parse'] = 0;
+
+		// Check option.
+		if (
+			$this->core->db->option_exists( 'cp_do_not_parse' ) &&
+			$this->core->db->option_get( 'cp_do_not_parse' ) == 'y'
+		) {
+
+			// Do not parse.
+			$vars['cp_do_not_parse'] = 1;
+
+		}
+
+		/**
+		 * Filters the Javascript vars.
+		 *
+		 * @since 3.4
+		 *
+		 * @param array $vars The default Javascript vars.
+		 */
+		return apply_filters( 'commentpress_get_javascript_vars', $vars );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the help text.
 	 *
 	 * @since 3.4
 	 *
@@ -234,6 +540,8 @@ HELPTEXT;
 
 	}
 
+	// -------------------------------------------------------------------------
+
 	/**
 	 * Get "Table of Contents" list.
 	 *
@@ -246,15 +554,9 @@ HELPTEXT;
 
 		// Switch Pages or Posts.
 		if ( 'post' === $this->core->db->option_get( 'cp_show_posts_or_pages_in_toc' ) ) {
-
-			// List Posts.
 			$this->list_posts();
-
 		} else {
-
-			// List Pages.
 			$this->list_pages( $exclude_pages );
-
 		}
 
 	}
@@ -442,7 +744,7 @@ HELPTEXT;
 	 * @param int $author_id The numeric ID of the author.
 	 * @param bool $echo True if link is to be echoed, false if returned.
 	 */
-	public function echo_post_author( $author_id, $echo = true ) {
+	private function echo_post_author( $author_id, $echo = true ) {
 
 		// Get author details.
 		$user = get_userdata( $author_id );
@@ -483,8 +785,10 @@ HELPTEXT;
 
 	}
 
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Print the Posts and their Comment count in a list format.
+	 * Print the Pages and their Comment count in a list format.
 	 *
 	 * @since 3.4
 	 *
@@ -492,7 +796,7 @@ HELPTEXT;
 	 */
 	public function list_pages( $exclude_pages = [] ) {
 
-		// Test for custom menu.
+		// Bail if there is a custom menu.
 		if ( has_nav_menu( 'toc' ) ) {
 
 			// Display menu.
@@ -536,7 +840,9 @@ HELPTEXT;
 			}
 
 			// Echo list item.
-			echo '<li class="page_item page-item-' . $welcome_id . $is_active . '"><a href="' . get_permalink( $welcome_id ) . '">' . $title_page_title . '</a></li>';
+			echo '<li class="page_item page-item-' . $welcome_id . $is_active . '">' .
+				'<a href="' . get_permalink( $welcome_id ) . '">' . $title_page_title . '</a>' .
+			'</li>';
 
 		}
 
@@ -693,7 +999,12 @@ HELPTEXT;
 		$small = '<small class="comment_count" title="' . $title_text . '">' . (string) $comment_count . '</small>';
 
 		// Define HTML for Comment icon.
-		$comment_icon = '<span class="commenticonbox"><a class="para_permalink' . $class . '" href="#' . $text_signature . '" title="' . $add_text . '">' . $add_text . '</a> ' . $small . '</span>' . "\n";
+		$comment_icon = '<span class="commenticonbox">' .
+			'<a class="para_permalink' . $class . '" href="#' . $text_signature . '" title="' . $add_text . '">' .
+				$add_text .
+			'</a> ' .
+			$small .
+		'</span>' . "\n";
 
 		// --<
 		return $comment_icon;
@@ -729,7 +1040,11 @@ HELPTEXT;
 				);
 
 				// Define Paragraph marker.
-				$para_marker = '<span class="para_marker"><a class="textblock_permalink" id="' . $text_signature . '" href="#' . $text_signature . '" title="' . $permalink_text . '">&para; <span>' . (string) $para_num . '</span></a></span>';
+				$para_marker = '<span class="para_marker">' .
+					'<a class="textblock_permalink" id="' . $text_signature . '" href="#' . $text_signature . '" title="' . $permalink_text . '">' .
+						'&para; <span>' . (string) $para_num . '</span>' .
+					'</a>' .
+				'</span>';
 
 				break;
 
@@ -746,7 +1061,11 @@ HELPTEXT;
 				);
 
 				// Define Paragraph marker.
-				$para_marker = '<span class="para_marker"><a class="textblock_permalink" id="' . $text_signature . '" href="#' . $text_signature . '" title="' . $permalink_text . '">&para; <span>' . (string) $para_num . '</span></a></span>';
+				$para_marker = '<span class="para_marker">' .
+					'<a class="textblock_permalink" id="' . $text_signature . '" href="#' . $text_signature . '" title="' . $permalink_text . '">' .
+						'&para; <span>' . (string) $para_num . '</span>' .
+					'</a>' .
+				'</span>';
 
 				break;
 
@@ -763,7 +1082,11 @@ HELPTEXT;
 				);
 
 				// Define Paragraph marker.
-				$para_marker = '<span class="para_marker"><a class="textblock_permalink" id="' . $text_signature . '" href="#' . $text_signature . '" title="' . $permalink_text . '">&para; <span>' . (string) $para_num . '</span></a></span>';
+				$para_marker = '<span class="para_marker">' .
+					'<a class="textblock_permalink" id="' . $text_signature . '" href="#' . $text_signature . '" title="' . $permalink_text . '">' .
+						'&para; <span>' . (string) $para_num . '</span>' .
+					'</a>' .
+				'</span>';
 
 				break;
 
@@ -797,14 +1120,14 @@ HELPTEXT;
 
 				// Define list tag.
 				$para_tag = '<' . $tag . ' class="textblock" id="textblock-' . $text_signature . '">' .
-							'<li class="list_commenticon">' . $commenticon . '</li>';
+					'<li class="list_commenticon">' . $commenticon . '</li>';
 				break;
 
 			case 'ol':
 
 				// Define list tag.
 				$para_tag = '<' . $tag . ' class="textblock" id="textblock-' . $text_signature . '" start="0">' .
-							'<li class="list_commenticon">' . $commenticon . '</li>';
+					'<li class="list_commenticon">' . $commenticon . '</li>';
 				break;
 
 			// Compat with "WP Footnotes".
@@ -812,7 +1135,7 @@ HELPTEXT;
 
 				// Define list tag.
 				$para_tag = '<ol class="footnotes textblock" id="textblock-' . $text_signature . '" start="0">' .
-							'<li class="list_commenticon">' . $commenticon . '</li>';
+					'<li class="list_commenticon">' . $commenticon . '</li>';
 				break;
 
 			// Compat with "WP Footnotes".
@@ -820,7 +1143,7 @@ HELPTEXT;
 
 				// Define list tag.
 				$para_tag = '<ol class="textblock" id="textblock-' . $text_signature . '" start="' . ( $start - 1 ) . '">' .
-							'<li class="list_commenticon">' . $commenticon . '</li>';
+					'<li class="list_commenticon">' . $commenticon . '</li>';
 				break;
 
 			case 'p':
@@ -929,7 +1252,11 @@ HELPTEXT;
 	public function get_header_min_link() {
 
 		// Define minimise button.
-		$link = '<li><a href="#" id="btn_header_min" class="css_btn" title="' . __( 'Minimise Header', 'commentpress-core' ) . '">' . __( 'Minimise Header', 'commentpress-core' ) . '</a></li>' . "\n";
+		$link = '<li>' .
+			'<a href="#" id="btn_header_min" class="css_btn" title="' . __( 'Minimise Header', 'commentpress-core' ) . '">' .
+				__( 'Minimise Header', 'commentpress-core' ) .
+			'</a>' .
+		'</li>' . "\n";
 
 		// --<
 		return $link;
@@ -1010,25 +1337,25 @@ HELPTEXT;
 
 			<form method="post" action="' . htmlentities( $url . '&updated=true' ) . '">
 
-			' . wp_nonce_field( 'commentpress_admin_action', 'commentpress_nonce', true, false ) . '
-			' . wp_referer_field( false ) . '
-			<input id="cp_upgrade" name="cp_upgrade" value="1" type="hidden" />
+				' . wp_nonce_field( 'commentpress_admin_action', 'commentpress_nonce', true, false ) . '
+				' . wp_referer_field( false ) . '
+				<input id="cp_upgrade" name="cp_upgrade" value="1" type="hidden" />
 
-			<h3>' . __( 'Please upgrade CommentPress Core', 'commentpress-core' ) . '</h3>
+				<h3>' . __( 'Please upgrade CommentPress Core', 'commentpress-core' ) . '</h3>
 
-			<p>' . __( 'It looks like you are running an older version of CommentPress Core.', 'commentpress-core' ) . $options_text . '</p>
+				<p>' . __( 'It looks like you are running an older version of CommentPress Core.', 'commentpress-core' ) . $options_text . '</p>
 
-			<table class="form-table">
+				<table class="form-table">
 
-			' . $upgrade . '
+					' . $upgrade . '
 
-			</table>
+				</table>
 
-			<input type="hidden" name="action" value="update" />
+				<input type="hidden" name="action" value="update" />
 
-			<p class="submit">
-				<input type="submit" name="commentpress_submit" value="' . __( 'Upgrade', 'commentpress-core' ) . '" class="button-primary" />
-			</p>
+				<p class="submit">
+					<input type="submit" name="commentpress_submit" value="' . __( 'Upgrade', 'commentpress-core' ) . '" class="button-primary" />
+				</p>
 
 			</form>' . "\n\n\n\n";
 

@@ -329,7 +329,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 
 		// Get Comments using buffer.
 		ob_start();
-		$vars = $this->core->db->get_javascript_vars();
+		$vars = $this->core->display->get_javascript_vars();
 
 		/**
 		 * Try to locate template using WordPress method.
