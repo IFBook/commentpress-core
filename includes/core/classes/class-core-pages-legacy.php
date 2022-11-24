@@ -628,8 +628,8 @@ class CommentPress_Core_Pages_Legacy {
 				// Got it.
 
 				// We still ought to set WordPress internal Page references.
-				$this->wordpress_option_backup( 'show_on_front', 'page' );
-				$this->wordpress_option_backup( 'page_on_front', $page_exists );
+				$this->core->db->wordpress_option_backup( 'show_on_front', 'page' );
+				$this->core->db->wordpress_option_backup( 'page_on_front', $page_exists );
 
 				// --<
 				return $page_exists;
@@ -704,8 +704,8 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$this->core->db->option_set( 'cp_welcome_page', $title_id );
 
 		// Set WordPress internal Page references.
-		$this->wordpress_option_backup( 'show_on_front', 'page' );
-		$this->wordpress_option_backup( 'page_on_front', $title_id );
+		$this->core->db->wordpress_option_backup( 'show_on_front', 'page' );
+		$this->core->db->wordpress_option_backup( 'page_on_front', $title_id );
 
 		/**
 		 * Fires when the Title Page has been created.
@@ -997,7 +997,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$this->core->db->option_set( 'cp_blog_page', $blog_id );
 
 		// Set WordPress internal Page reference.
-		$this->wordpress_option_backup( 'page_for_posts', $blog_id );
+		$this->core->db->wordpress_option_backup( 'page_for_posts', $blog_id );
 
 		// --<
 		return $blog_id;
