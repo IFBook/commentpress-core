@@ -126,6 +126,15 @@ if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ) :
 			'all' // Media.
 		);
 
+		// Add jQuery UI stylesheet - needed for resizable columns.
+		wp_enqueue_style(
+			'cp_jquery_ui_base',
+			plugins_url( 'includes/core/assets/css/jquery.ui.css', COMMENTPRESS_PLUGIN_FILE ),
+			false,
+			COMMENTPRESS_VERSION, // Version.
+			'all' // Media.
+		);
+
 		// -------------------------------------------------------------------------
 		// Overrides for styles - for child themes, dequeue these and add you own.
 		// -------------------------------------------------------------------------

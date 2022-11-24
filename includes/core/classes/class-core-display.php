@@ -81,33 +81,12 @@ class CommentPress_Core_Display {
 	 */
 	public function register_hooks() {
 
-		// Add CSS files.
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_styles' ] );
-
-		// Add script libraries.
+		// Enqueue common Javascripts.
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ], 20 );
 
 	}
 
 	// -------------------------------------------------------------------------
-
-	/**
-	 * Adds our Stylesheets.
-	 *
-	 * @since 3.4
-	 */
-	public function enqueue_styles() {
-
-		// Add jQuery UI stylesheet -> needed for resizable columns.
-		wp_enqueue_style(
-			'cp_jquery_ui_base',
-			plugins_url( 'includes/core/assets/css/jquery.ui.css', COMMENTPRESS_PLUGIN_FILE ),
-			false,
-			COMMENTPRESS_VERSION, // Version.
-			'all' // Media.
-		);
-
-	}
 
 	/**
 	 * Adds our Javascripts.
