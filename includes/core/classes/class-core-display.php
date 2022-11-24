@@ -81,9 +81,6 @@ class CommentPress_Core_Display {
 	 */
 	public function register_hooks() {
 
-		// Comment Block quicktag.
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_scripts' ] );
-
 		// Add CSS files.
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_styles' ] );
 
@@ -93,25 +90,6 @@ class CommentPress_Core_Display {
 	}
 
 	// -------------------------------------------------------------------------
-
-	/**
-	 * Add scripts needed across all WordPress Admin Pages.
-	 *
-	 * @since 3.4
-	 *
-	 * @param str $hook The requested Admin Page.
-	 */
-	public function enqueue_admin_scripts( $hook ) {
-
-		// Don't enqueue on "Edit Comment" screen.
-		if ( 'comment.php' == $hook ) {
-			return;
-		}
-
-		// Add quicktag button to Page editor.
-		$this->get_custom_quicktags();
-
-	}
 
 	/**
 	 * Adds our Stylesheets.
@@ -146,12 +124,12 @@ class CommentPress_Core_Display {
 		}
 
 		// Default to minified scripts.
-		$debug_state = commentpress_minified();
+		$min = commentpress_minified();
 
-		// Add our javascript plugin and dependencies.
+		// Add our jQuery plugin and dependencies.
 		wp_enqueue_script(
 			'jquery_commentpress',
-			plugins_url( 'includes/core/assets/js/jquery.commentpress' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
+			plugins_url( 'includes/core/assets/js/jquery.commentpress' . $min . '.js', COMMENTPRESS_PLUGIN_FILE ),
 			[ 'jquery', 'jquery-form', 'jquery-ui-core', 'jquery-ui-resizable', 'jquery-ui-tooltip' ],
 			COMMENTPRESS_VERSION, // Version.
 			false // In footer.
@@ -173,6 +151,7 @@ class CommentPress_Core_Display {
 		);
 
 		// Add jQuery Cookie plugin - renamed to jquery.biscuit.js because some hosts don't like 'cookie' in the filename.
+		// TODO: Move to CommentPress Default theme.
 		wp_enqueue_script(
 			'jquery_cookie',
 			plugins_url( 'includes/core/assets/js/jquery.biscuit.js', COMMENTPRESS_PLUGIN_FILE ),
@@ -193,7 +172,7 @@ class CommentPress_Core_Display {
 	 */
 	public function get_text_highlighter() {
 
-		// Only allow text highlighting on non-touch devices (allow testing override).
+		// Only allow text highlighting on non-touch devices - but allow testing override.
 		if ( ! $this->core->device->is_touch() || ( defined( 'COMMENTPRESS_TOUCH_SELECT' ) && COMMENTPRESS_TOUCH_SELECT ) ) {
 
 			// Bail if not a commentable Page/Post.
@@ -202,12 +181,12 @@ class CommentPress_Core_Display {
 			}
 
 			// Default to minified scripts.
-			$debug_state = commentpress_minified();
+			$min = commentpress_minified();
 
 			// Add jQuery wrapSelection plugin.
 			wp_enqueue_script(
 				'jquery_wrapselection',
-				plugins_url( 'includes/core/assets/js/jquery.wrap-selection' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
+				plugins_url( 'includes/core/assets/js/jquery.wrap-selection' . $min . '.js', COMMENTPRESS_PLUGIN_FILE ),
 				[ 'jquery_commentpress' ],
 				COMMENTPRESS_VERSION, // Version.
 				false // In footer.
@@ -216,7 +195,7 @@ class CommentPress_Core_Display {
 			// Add jQuery highlighter plugin.
 			wp_enqueue_script(
 				'jquery_highlighter',
-				plugins_url( 'includes/core/assets/js/jquery.highlighter' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
+				plugins_url( 'includes/core/assets/js/jquery.highlighter' . $min . '.js', COMMENTPRESS_PLUGIN_FILE ),
 				[ 'jquery_wrapselection' ],
 				COMMENTPRESS_VERSION, // Version.
 				false // In footer.
@@ -225,7 +204,7 @@ class CommentPress_Core_Display {
 			// Add jQuery text highlighter plugin.
 			wp_enqueue_script(
 				'jquery_texthighlighter',
-				plugins_url( 'includes/core/assets/js/jquery.texthighlighter' . $debug_state . '.js', COMMENTPRESS_PLUGIN_FILE ),
+				plugins_url( 'includes/core/assets/js/jquery.texthighlighter' . $min . '.js', COMMENTPRESS_PLUGIN_FILE ),
 				[ 'jquery_highlighter' ],
 				COMMENTPRESS_VERSION, // Version.
 				false // In footer.
@@ -259,73 +238,6 @@ class CommentPress_Core_Display {
 			wp_localize_script( 'jquery_texthighlighter', 'CommentpressTextSelectorSettings', $texthighlighter_vars );
 
 		}
-
-	}
-
-	/**
-	 * Enqueue our quicktags script.
-	 *
-	 * @since 3.4
-	 */
-	public function get_custom_quicktags() {
-
-		// Bail if the current User lacks permissions.
-		if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'edit_pages' ) ) {
-			return;
-		}
-
-		// Add our javascript and dependencies.
-		wp_enqueue_script(
-			'commentpress_custom_quicktags',
-			plugins_url( 'includes/core/assets/js/cp_quicktags_3.3.js', COMMENTPRESS_PLUGIN_FILE ),
-			[ 'quicktags' ],
-			COMMENTPRESS_VERSION, // Version.
-			true // In footer.
-		);
-
-	}
-
-	/**
-	 * Test if TinyMCE is allowed.
-	 *
-	 * @since 3.4
-	 *
-	 * @return bool $allowed True if TinyMCE is allowed, false otherwise.
-	 */
-	public function is_tinymce_allowed() {
-
-		// Default to allowed.
-		$allowed = true;
-
-		// Check option.
-		if (
-			$this->core->db->option_exists( 'cp_comment_editor' ) &&
-			$this->core->db->option_get( 'cp_comment_editor' ) != '1'
-		) {
-
-			// Disallow.
-			$allowed = false;
-
-		} else {
-
-			// Don't return TinyMCE for touchscreens, mobile phones or tablets.
-			if ( $this->core->device->is_touch() || $this->core->device->is_mobile() || $this->core->device->is_tablet() ) {
-
-				// Disallow.
-				$allowed = false;
-
-			}
-
-		}
-
-		/**
-		 * Filters if TinyMCE is allowed.
-		 *
-		 * @since 3.4
-		 *
-		 * @param bool $allowed True if TinyMCE is allowed, false otherwise.
-		 */
-		return apply_filters( 'commentpress_is_tinymce_allowed', $allowed );
 
 	}
 
@@ -982,69 +894,6 @@ HELPTEXT;
 
 		// --<
 		return $para_tag;
-
-	}
-
-	/**
-	 * Retrieves th current Text Signature hidden input.
-	 *
-	 * @since 3.4
-	 * @since 4.0 Moved to this class.
-	 *
-	 * @return str $result The HTML input.
-	 */
-	public function get_signature_field() {
-
-		// Init Text Signature.
-		$text_sig = '';
-
-		// Get Comment ID to reply to from URL query string.
-		$reply_to_comment_id = isset( $_GET['replytocom'] ) ? (int) $_GET['replytocom'] : 0;
-
-		// Did we get a Comment ID?
-		if ( $reply_to_comment_id != 0 ) {
-
-			// Get Paragraph Text Signature.
-			$text_sig = $this->core->parser->get_text_signature_by_comment_id( $reply_to_comment_id );
-
-		} else {
-
-			// Do we have a Paragraph Number in the query string?
-			$reply_to_para_id = isset( $_GET['replytopara'] ) ? (int) $_GET['replytopara'] : 0;
-
-			// Did we get a Comment ID?
-			if ( $reply_to_para_id != 0 ) {
-
-				// Get Paragraph Text Signature.
-				$text_sig = $this->core->parser->get_text_signature( $reply_to_para_id );
-
-			}
-
-		}
-
-		// Get constructed hidden input for Comment form.
-		$result = $this->get_signature_input( $text_sig );
-
-		// --<
-		return $result;
-
-	}
-
-	/**
-	 * Get the Text Signature input for the Comment form.
-	 *
-	 * @since 3.4
-	 *
-	 * @param str $text_sig The Comment Text Signature.
-	 * @return str $input The HTML input element.
-	 */
-	public function get_signature_input( $text_sig = '' ) {
-
-		// Define input tag.
-		$input = '<input type="hidden" name="text_signature" value="' . $text_sig . '" id="text_signature" />';
-
-		// --<
-		return $input;
 
 	}
 

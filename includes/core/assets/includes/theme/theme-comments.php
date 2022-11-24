@@ -865,7 +865,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 		do_action( 'commentpress_before_scrollable_comments' );
 
 		// Get approved Comments for this Post, sorted Comments by Text Signature.
-		$comments_sorted = $core->parser->get_sorted_comments( $post->ID );
+		$comments_sorted = $core->parser->comments_sorted_get( $post->ID );
 
 		// Key for starting Paragraph Number.
 		$key = '_cp_starting_para_number';
@@ -1246,7 +1246,7 @@ if ( ! function_exists( 'commentpress_comment_form_title' ) ) :
 		}
 
 		// Get Paragraph Text Signature.
-		$text_sig = $core->parser->get_text_signature( $reply_to_para_id );
+		$text_sig = $core->parser->text_signature_get( $reply_to_para_id );
 
 		// Get link to Paragraph.
 		if ( $link_to_parent ) {
@@ -1543,33 +1543,32 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 		$comment_class = comment_class( null, $comment->comment_ID, $post->ID, false );
 
 		// If orphaned, add class to identify as such.
-		$comment_orphan = ( isset( $comment->orphan ) ) ? ' comment-orphan' : '';
+		$comment_orphan = isset( $comment->orphan ) ? ' comment-orphan' : '';
 
 		// Construct permalink.
 		$comment_permalink = sprintf( __( '%1$s at %2$s', 'commentpress-core' ), get_comment_date(), get_comment_time() );
 
-		// Stripped source.
-		$html = '
-			<li id="li-comment-' . $comment->comment_ID . '" ' . $comment_class . '>
+		// Rebuild Comment markup. The <li> element is closed by the Walker.
+		$html = '<li id="li-comment-' . $comment->comment_ID . '" ' . $comment_class . '>
 			<div class="comment-wrapper">
-			<div id="comment-' . $comment->comment_ID . '">
+				<div id="comment-' . $comment->comment_ID . '">
 
-			<div class="comment-identifier' . $comment_orphan . '">
-			' . apply_filters( 'commentpress_comment_identifier_prepend', '', $comment ) . '
-			' . get_avatar( $comment, $size = '32' ) . '
-			' . $editlink . '
-			' . $author . '
-			<a class="comment_permalink" href="' . htmlspecialchars( get_comment_link() ) . '" title="' . __( 'Permalink for this comment', 'commentpress-core' ) . '"><span class="comment_permalink_copy"></span>' . $comment_permalink . '</a>
-			' . apply_filters( 'commentpress_comment_identifier_append', '', $comment ) . '
-			</div><!-- /comment-identifier -->
+					<div class="comment-identifier' . $comment_orphan . '">
+						' . apply_filters( 'commentpress_comment_identifier_prepend', '', $comment ) . '
+						' . get_avatar( $comment, $size = '32' ) . '
+						' . $editlink . '
+						' . $author . '
+						<a class="comment_permalink" href="' . htmlspecialchars( get_comment_link() ) . '" title="' . __( 'Permalink for this comment', 'commentpress-core' ) . '"><span class="comment_permalink_copy"></span>' . $comment_permalink . '</a>
+						' . apply_filters( 'commentpress_comment_identifier_append', '', $comment ) . '
+					</div><!-- /comment-identifier -->
 
-			<div class="comment-content' . $comment_orphan . '">
-			' . apply_filters( 'comment_text', $comment_text ) . '
-			</div><!-- /comment-content -->
+					<div class="comment-content' . $comment_orphan . '">
+						' . apply_filters( 'comment_text', $comment_text ) . '
+					</div><!-- /comment-content -->
 
-			' . $comment_reply . '
+					' . $comment_reply . '
 
-			</div><!-- /comment-' . $comment->comment_ID . ' -->
+				</div><!-- /comment-' . $comment->comment_ID . ' -->
 			</div><!-- /comment-wrapper -->
 			';
 
@@ -1693,289 +1692,6 @@ add_filter( 'comment_class', 'commentpress_add_selection_classes', 100, 4 );
 
 
 
-if ( ! function_exists( 'commentpress_add_wp_editor' ) ) :
-
-	/**
-	 * Adds our styles to the TinyMCE editor.
-	 *
-	 * @since 3.5
-	 *
-	 * @return bool True if the editor has been added, false otherwise.
-	 */
-	function commentpress_add_wp_editor() {
-
-		// Get core plugin reference.
-		$core = commentpress_core();
-		if ( empty( $core ) ) {
-			return false;
-		}
-
-		// Only allow through if plugin says so.
-		if ( ! $core->display->is_tinymce_allowed() ) {
-			return false;
-		}
-
-		// Basic buttons.
-		$basic_buttons = [
-			'bold',
-			'italic',
-			'underline',
-			'|',
-			'bullist',
-			'numlist',
-			'|',
-			'link',
-			'unlink',
-			'|',
-			'removeformat',
-			'fullscreen',
-		];
-
-		/**
-		 * Add our buttons but allow filtering.
-		 *
-		 * @since 3.5
-		 *
-		 * @param array $basic_buttons The default buttons.
-		 */
-		$mce_buttons = apply_filters( 'cp_tinymce_buttons', $basic_buttons );
-
-		/**
-		 * Allow media buttons setting to be overridden.
-		 *
-		 * @since 3.5
-		 *
-		 * @param bool True by default - buttons are allowed.
-		 */
-		$media_buttons = apply_filters( 'commentpress_rte_media_buttons', true );
-
-		/**
-		 * Filters the TinyMCE 4 config.
-		 *
-		 * @since 3.4
-		 *
-		 * @param array The default TinyMCE 4 config.
-		 */
-		$tinymce_config = apply_filters( 'commentpress_rte_tinymce', [
-			'theme' => 'modern',
-			'statusbar' => false,
-		] );
-
-		// No need for editor CSS.
-		$editor_css = '';
-
-		/**
-		 * Filters the quicktags setting.
-		 *
-		 * @since 3.4
-		 *
-		 * @param array The default quicktags setting.
-		 */
-		$quicktags = apply_filters( 'commentpress_rte_quicktags', [
-			'buttons' => 'strong,em,ul,ol,li,link,close',
-		] );
-
-		// Our settings.
-		$settings = [
-
-			// Configure Comment textarea.
-			'media_buttons' => $media_buttons,
-			'textarea_name' => 'comment',
-			'textarea_rows' => 10,
-
-			// Might as well start with teeny.
-			'teeny' => true,
-
-			// Give the iframe a white background.
-			'editor_css' => $editor_css,
-
-			// Configure TinyMCE.
-			'tinymce' => $tinymce_config,
-
-			// Configure Quicktags.
-			'quicktags' => $quicktags,
-
-		];
-
-		// Create editor.
-		wp_editor(
-			'', // Initial content.
-			'comment', // ID of Comment textarea.
-			$settings
-		);
-
-		// Access WordPress version.
-		global $wp_version;
-
-		// Add styles.
-		wp_enqueue_style(
-			'commentpress-editor-css',
-			wp_admin_css_uri( 'css/edit' ),
-			[ 'dashicons', 'open-sans' ],
-			$wp_version, // Version.
-			'all' // Media.
-		);
-
-		// Don't show textarea.
-		return true;
-
-	}
-
-endif;
-
-
-
-if ( ! function_exists( 'commentpress_assign_default_editor' ) ) :
-
-	/**
-	 * Makes TinyMCE the default editor on the front end.
-	 *
-	 * @since 3.0
-	 *
-	 * @param str $r The default editor as set by WordPress.
-	 * @return str 'tinymce' our overridden default editor.
-	 */
-	function commentpress_assign_default_editor( $r ) {
-
-		// Only on front-end.
-		if ( is_admin() ) {
-			return $r;
-		}
-
-		// Always return 'tinymce' as the default editor, or else the Comment form will not show up.
-
-		// --<
-		return 'tinymce';
-
-	}
-
-endif;
-
-// Add callback for the above.
-add_filter( 'wp_default_editor', 'commentpress_assign_default_editor', 10, 1 );
-
-
-
-if ( ! function_exists( 'commentpress_add_tinymce_styles' ) ) :
-
-	/**
-	 * Adds our styles to the TinyMCE editor.
-	 *
-	 * @since 3.0
-	 *
-	 * @param str $mce_css The default TinyMCE stylesheets as set by WordPress.
-	 * @return str $mce_css The list of stylesheets with ours added.
-	 */
-	function commentpress_add_tinymce_styles( $mce_css ) {
-
-		// Only on front-end.
-		if ( is_admin() ) {
-			return $mce_css;
-		}
-
-		// Add comma if not empty.
-		if ( ! empty( $mce_css ) ) {
-			$mce_css .= ',';
-		}
-
-		// Add our editor styles.
-		$mce_css .= get_template_directory_uri() . '/assets/css/comment-form.css';
-
-		// --<
-		return $mce_css;
-
-	}
-
-endif;
-
-// Add callback for the above.
-add_filter( 'mce_css', 'commentpress_add_tinymce_styles' );
-
-
-
-if ( ! function_exists( 'commentpress_add_tinymce_nextpage_button' ) ) :
-
-	/**
-	 * Adds the Next Page button to the TinyMCE editor.
-	 *
-	 * @since 3.5
-	 *
-	 * @param array $buttons The default TinyMCE buttons as set by WordPress.
-	 * @return array $buttons The buttons with More removed.
-	 */
-	function commentpress_add_tinymce_nextpage_button( $buttons ) {
-
-		// Only on back-end.
-		if ( ! is_admin() ) {
-			return $buttons;
-		}
-
-		// Try and place Next Page after More button.
-		$pos = array_search( 'wp_more', $buttons, true );
-
-		// Is it there?
-		if ( $pos !== false ) {
-
-			// Get array up to that point.
-			$tmp_buttons = array_slice( $buttons, 0, $pos + 1 );
-
-			// Add Next Page button.
-			$tmp_buttons[] = 'wp_page';
-
-			// Recombine.
-			$buttons = array_merge( $tmp_buttons, array_slice( $buttons, $pos + 1 ) );
-
-		}
-
-		// --<
-		return $buttons;
-
-	}
-
-endif;
-
-// Add callback for the above.
-add_filter( 'mce_buttons', 'commentpress_add_tinymce_nextpage_button' );
-
-
-
-if ( ! function_exists( 'commentpress_assign_editor_buttons' ) ) :
-
-	/**
-	 * Assign our buttons to TinyMCE in teeny mode.
-	 *
-	 * @since 3.5
-	 *
-	 * @param array $buttons The default editor buttons as set by WordPress.
-	 * @return array The overridden editor buttons.
-	 */
-	function commentpress_assign_editor_buttons( $buttons ) {
-
-		// Basic buttons.
-		return [
-			'bold',
-			'italic',
-			'underline',
-			'|',
-			'bullist',
-			'numlist',
-			'|',
-			'link',
-			'unlink',
-			'|',
-			'removeformat',
-			'fullscreen',
-		];
-
-	}
-
-endif;
-
-// Add callback for the above.
-add_filter( 'teeny_mce_buttons', 'commentpress_assign_editor_buttons' );
-
-
-
 if ( ! function_exists( 'commentpress_comment_post_redirect' ) ) :
 
 	/**
@@ -2042,14 +1758,14 @@ add_filter( 'comment_post_redirect', 'commentpress_comment_post_redirect', 4, 2 
 if ( ! function_exists( 'commentpress_image_caption_shortcode' ) ) :
 
 	/**
-	 * Rebuild caption shortcode output.
+	 * Rebuilds the "Caption" shortcode output.
 	 *
 	 * @since 3.5
 	 *
 	 * @param array $empty WordPress passes '' as the first param.
 	 * @param array $attr Attributes attributed to the shortcode.
 	 * @param str $content Optional. Shortcode content.
-	 * @return str $caption The modified caption
+	 * @return str $caption The modified caption.
 	 */
 	function commentpress_image_caption_shortcode( $empty, $attr, $content ) {
 
@@ -2087,15 +1803,15 @@ if ( ! function_exists( 'commentpress_image_caption_shortcode' ) ) :
 		$caption = wp_kses( $caption, $tags_to_allow );
 
 		// Force balance those tags.
-		$caption = balanceTags( $caption, true );
+		$caption = force_balance_tags( $caption, true );
 
 		// Construct.
 		$caption = '<!-- cp_caption_start -->' .
-					'<span class="captioned_image' . $alignment . '" style="width: ' . $width . 'px">' .
-						'<span ' . $id . ' class="wp-caption">' . do_shortcode( $content ) . '</span>' .
-						'<small class="wp-caption-text">' . $caption . '</small>' .
-					'</span>' .
-					'<!-- cp_caption_end -->';
+			'<span class="captioned_image' . $alignment . '" style="width: ' . $width . 'px">' .
+				'<span ' . $id . ' class="wp-caption">' . do_shortcode( $content ) . '</span>' .
+				'<small class="wp-caption-text">' . $caption . '</small>' .
+			'</span>' .
+		'<!-- cp_caption_end -->';
 
 		// --<
 		return $caption;
@@ -2106,88 +1822,6 @@ endif;
 
 // Add callback for the above.
 add_filter( 'img_caption_shortcode', 'commentpress_image_caption_shortcode', 10, 3 );
-
-
-
-if ( ! function_exists( 'commentpress_add_commentblock_button' ) ) :
-
-	/**
-	 * Add filters for adding our custom TinyMCE button.
-	 *
-	 * @since 3.3
-	 */
-	function commentpress_add_commentblock_button() {
-
-		// Only on back-end.
-		if ( ! is_admin() ) {
-			return;
-		}
-
-		// Don't bother doing this stuff if the current User lacks permissions.
-		if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'edit_pages' ) ) {
-			return;
-		}
-
-		// Add only if User can edit in Rich-text Editor mode.
-		if ( get_user_option( 'rich_editing' ) == 'true' ) {
-			add_filter( 'mce_external_plugins', 'commentpress_add_commentblock_tinymce_plugin' );
-			add_filter( 'mce_buttons', 'commentpress_register_commentblock_button' );
-		}
-
-	}
-
-endif;
-
-// Init process for button control.
-add_action( 'init', 'commentpress_add_commentblock_button' );
-
-
-
-if ( ! function_exists( 'commentpress_register_commentblock_button' ) ) :
-
-	/**
-	 * Add our custom TinyMCE button.
-	 *
-	 * @since 3.3
-	 *
-	 * @param array $buttons The existing button array.
-	 * @return array $buttons The modified button array.
-	 */
-	function commentpress_register_commentblock_button( $buttons ) {
-
-		// Add our button to the editor button array.
-		array_push( $buttons, '|', 'commentblock' );
-
-		// --<
-		return $buttons;
-
-	}
-
-endif;
-
-
-
-if ( ! function_exists( 'commentpress_add_commentblock_tinymce_plugin' ) ) :
-
-	/**
-	 * Load the TinyMCE plugin : cp_editor_plugin.js
-	 *
-	 * @since 3.3
-	 *
-	 * @param array $plugin_array The existing TinyMCE plugin array.
-	 * @return array $plugin_array The modified TinyMCE plugin array.
-	 */
-	function commentpress_add_commentblock_tinymce_plugin( $plugin_array ) {
-
-		// Add Comment Block.
-		$plugin_array['commentblock'] = get_template_directory_uri() . '/assets/js/tinymce/cp_editor_plugin.js';
-
-		// --<
-		return $plugin_array;
-
-	}
-
-endif;
 
 
 
@@ -2307,3 +1941,134 @@ if ( ! function_exists( 'commentpress_get_post_multipage_url' ) ) :
 	}
 
 endif;
+
+
+
+if ( ! function_exists( 'commentpress_add_wp_editor' ) ) :
+
+	/**
+	 * Adds the TinyMCE editor.
+	 *
+	 * @since 3.5
+	 *
+	 * @return bool True if the TinyMCE editor has been added, false otherwise.
+	 */
+	function commentpress_add_wp_editor() {
+
+		// Get core plugin reference.
+		$core = commentpress_core();
+		if ( empty( $core ) ) {
+			return false;
+		}
+
+		// Render the TinyMCE editor.
+		return $core->editor_comments->editor_render();
+
+	}
+
+endif;
+
+
+
+if ( ! function_exists( 'commentpress_assign_default_editor' ) ) :
+
+	/**
+	 * Makes TinyMCE the default editor on the front end.
+	 *
+	 * Callback is located here because it's only relevant in CommentPress themes.
+	 *
+	 * @since 3.0
+	 *
+	 * @param str $default_editor The default editor as set by WordPress.
+	 * @return str 'tinymce' our overridden default editor.
+	 */
+	function commentpress_assign_default_editor( $default_editor ) {
+
+		// Only on front-end.
+		if ( is_admin() ) {
+			return $default_editor;
+		}
+
+		// Always return 'tinymce' as the default editor, or else the Comment form will not show up.
+		return 'tinymce';
+
+	}
+
+endif;
+
+// Add callback for the above.
+add_filter( 'wp_default_editor', 'commentpress_assign_default_editor', 10, 1 );
+
+
+
+if ( ! function_exists( 'commentpress_add_tinymce_styles' ) ) :
+
+	/**
+	 * Adds our styles to the TinyMCE editor.
+	 *
+	 * @since 3.0
+	 *
+	 * @param str $mce_css The default TinyMCE stylesheets as set by WordPress.
+	 * @return str $mce_css The list of stylesheets with ours added.
+	 */
+	function commentpress_add_tinymce_styles( $mce_css ) {
+
+		// Only on front-end.
+		if ( is_admin() ) {
+			return $mce_css;
+		}
+
+		// Add comma if not empty.
+		if ( ! empty( $mce_css ) ) {
+			$mce_css .= ',';
+		}
+
+		// Add our editor styles.
+		$mce_css .= get_template_directory_uri() . '/assets/css/comment-form.css';
+
+		// --<
+		return $mce_css;
+
+	}
+
+endif;
+
+// Add callback for the above.
+add_filter( 'mce_css', 'commentpress_add_tinymce_styles' );
+
+
+
+if ( ! function_exists( 'commentpress_assign_editor_buttons' ) ) :
+
+	/**
+	 * Assign our buttons to TinyMCE in teeny mode.
+	 *
+	 * @since 3.5
+	 *
+	 * @param array $buttons The default editor buttons as set by WordPress.
+	 * @return array The overridden editor buttons.
+	 */
+	function commentpress_assign_editor_buttons( $buttons ) {
+
+		// Basic buttons.
+		return [
+			'bold',
+			'italic',
+			'underline',
+			'|',
+			'bullist',
+			'numlist',
+			'|',
+			'link',
+			'unlink',
+			'|',
+			'removeformat',
+			'fullscreen',
+		];
+
+	}
+
+endif;
+
+// Add callback for the above.
+add_filter( 'teeny_mce_buttons', 'commentpress_assign_editor_buttons' );

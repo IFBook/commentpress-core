@@ -986,6 +986,81 @@ endif;
 
 
 
+if ( ! function_exists( 'commentpress_add_tinymce_nextpage_button' ) ) :
+
+	/**
+	 * Moves the "Next Page" button in the TinyMCE editor.
+	 *
+	 * @since 3.5
+	 *
+	 * @param array $buttons The default TinyMCE buttons as set by WordPress.
+	 * @return array $buttons The buttons with More removed.
+	 */
+	function commentpress_add_tinymce_nextpage_button( $buttons ) {
+
+		// Only on back-end.
+		if ( ! is_admin() ) {
+			return $buttons;
+		}
+
+		// Try and place "Next Page" after "More" button.
+		$pos = array_search( 'wp_more', $buttons, true );
+
+		// Is it there?
+		if ( $pos !== false ) {
+
+			// Get array up to that point.
+			$tmp_buttons = array_slice( $buttons, 0, $pos + 1 );
+
+			// Add "Next Page" button.
+			$tmp_buttons[] = 'wp_page';
+
+			// Recombine.
+			$buttons = array_merge( $tmp_buttons, array_slice( $buttons, $pos + 1 ) );
+
+		}
+
+		// --<
+		return $buttons;
+
+	}
+
+endif;
+
+// Add callback for the above.
+add_filter( 'mce_buttons', 'commentpress_add_tinymce_nextpage_button' );
+
+
+
+if ( ! function_exists( 'commentpress_add_commentblock_button' ) ) :
+
+	/**
+	 * Adds our custom TinyMCE button.
+	 *
+	 * Callback is located here because it's only relevant in CommentPress themes.
+	 *
+	 * @since 3.3
+	 */
+	function commentpress_add_commentblock_button() {
+
+		// Get core plugin reference.
+		$core = commentpress_core();
+		if ( empty( $core ) ) {
+			return;
+		}
+
+		// Add the TinyMCE button.
+		$core->editor_content->button_add();
+
+	}
+
+endif;
+
+// Add callback for the above.
+add_action( 'init', 'commentpress_add_commentblock_button' );
+
+
+
 if ( ! function_exists( 'commentpress_widgets_init' ) ) :
 
 	/**

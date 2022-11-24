@@ -155,6 +155,24 @@ class CommentPress_Core_Loader {
 	public $pages_legacy;
 
 	/**
+	 * Content Editor object.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var object $editor_content The Content Editor object.
+	 */
+	public $editor_content;
+
+	/**
+	 * Comments Editor object.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var object $editor_content The Comments Editor object.
+	 */
+	public $editor_comments;
+
+	/**
 	 * AJAX loader object.
 	 *
 	 * @since 4.0
@@ -255,6 +273,8 @@ class CommentPress_Core_Loader {
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-bp-core.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-plugins.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-device.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-editor-content.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-editor-comments.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-pages-legacy.php';
 
 		// Include ajax class files.
@@ -290,6 +310,10 @@ class CommentPress_Core_Loader {
 		$this->bp = new CommentPress_Core_BuddyPress( $this );
 		$this->plugins = new CommentPress_Core_Plugins( $this );
 		$this->device = new CommentPress_Core_Device( $this );
+
+		$this->editor_content = new CommentPress_Core_Editor_Content( $this );
+		$this->editor_comments = new CommentPress_Core_Editor_Comments( $this );
+
 		$this->pages_legacy = new CommentPress_Core_Pages_Legacy( $this );
 
 		// Initialise ajax objects.
@@ -421,7 +445,7 @@ class CommentPress_Core_Loader {
 	 */
 	public function get_sorted_comments( $post_ID ) {
 		_deprecated_function( __METHOD__, '4.0' );
-		return $this->parser->get_sorted_comments( $post_ID );
+		return $this->parser->comments_sorted_get( $post_ID );
 	}
 
 	/**
@@ -514,7 +538,7 @@ class CommentPress_Core_Loader {
 	 */
 	public function get_signature_field() {
 		_deprecated_function( __METHOD__, '4.0' );
-		return $this->display->get_signature_field();
+		return $this->parser->text_signature_field_get();
 	}
 
 	/**
@@ -527,7 +551,7 @@ class CommentPress_Core_Loader {
 	 */
 	public function get_text_signature( $para_num ) {
 		_deprecated_function( __METHOD__, '4.0' );
-		return $this->parser->get_text_signature( $para_num );
+		return $this->parser->text_signature_get( $para_num );
 	}
 
 	// -------------------------------------------------------------------------

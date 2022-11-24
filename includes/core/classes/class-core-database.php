@@ -1232,7 +1232,7 @@ class CommentPress_Core_Database {
 		}
 
 		// Get option.
-		return ( array_key_exists( $option_name, $this->commentpress_options ) ) ? $this->commentpress_options[ $option_name ] : $default;
+		return array_key_exists( $option_name, $this->commentpress_options ) ? $this->commentpress_options[ $option_name ] : $default;
 
 	}
 

@@ -8,11 +8,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-// Do not delete these lines.
-if ( ! empty( $_SERVER['SCRIPT_FILENAME'] ) && 'comment_form.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) {
-	die( 'Please do not load this page directly. Thanks!' );
-}
-
 // Access globals.
 global $post, $page;
 
@@ -194,7 +189,7 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 					<?php comment_id_fields(); ?>
 
 					<?php if ( ! empty( $core ) ) : ?>
-						<?php echo $core->display->get_signature_field(); ?>
+						<?php echo $core->parser->text_signature_field_get(); ?>
 					<?php endif; ?>
 
 					<?php if ( ! empty( $page ) ) : /* Add Page for multipage situations. */ ?>
