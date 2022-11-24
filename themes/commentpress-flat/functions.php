@@ -976,10 +976,10 @@ add_filter( 'commentpress_body_classes', 'commentpress_flat_body_classes' );
  *
  * @since 4.0
  *
- * @param str The default Navigation link CSS ID.
- * @return str The modified Navigation link CSS ID.
+ * @param str $css_id The default Navigation link CSS ID.
+ * @return str $css_id The modified Navigation link CSS ID.
  */
-function commentpress_page_link_css_id( $body_classes ) {
+function commentpress_page_link_css_id( $css_id ) {
 	return '';
 }
 

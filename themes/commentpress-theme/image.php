@@ -57,7 +57,11 @@ get_header();
 									get_the_category_list( ', ' )
 								);
 
-								?> <?php the_taxonomies(); ?> <?php
+								?>
+
+								<?php the_taxonomies(); ?>
+
+								<?php
 
 								// Define RSS text.
 								$rss_text = __( 'RSS 2.0', 'commentpress-core' );
@@ -129,7 +133,8 @@ get_header();
 								// Show edit link.
 								edit_post_link( __( 'Edit this entry', 'commentpress-core' ), '', '.' );
 
-							?></p>
+								?>
+							</p>
 
 							<ul class="image_link">
 								<li class="alignright">

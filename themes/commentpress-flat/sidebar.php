@@ -169,7 +169,7 @@ $is_commentable = commentpress_is_commentable();
 
 		}
 
-		 ?>
+		?>
 
 	</div><!-- /sidebar_inner -->
 </div><!-- /sidebar -->
