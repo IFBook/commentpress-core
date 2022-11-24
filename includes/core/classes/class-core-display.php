@@ -1367,25 +1367,6 @@ HELPTEXT;
 	}
 
 	/**
-	 * Returns optional options, if defined.
-	 *
-	 * @since 3.4
-	 *
-	 * @return str $html The markup.
-	 */
-	public function get_optional_options() {
-
-		// Init.
-		$html = '';
-
-		// TODO: add infinite scroll switch when ready.
-
-		// --<
-		return $html;
-
-	}
-
-	/**
 	 * Returns the upgrade details for the admin form.
 	 *
 	 * @since 3.4

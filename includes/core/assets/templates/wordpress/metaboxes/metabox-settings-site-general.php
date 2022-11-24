@@ -51,13 +51,6 @@
 		</td>
 	</tr>
 
-	<?php
-
-	// TODO: Make this an action.
-	echo $this->core->display->get_optional_options();
-
-	?>
-
 	<tr valign="top">
 		<th scope="row">
 			<label for="cp_do_not_parse"><?php esc_html_e( 'Disable CommentPress on entries with no comments', 'commentpress-core' ); ?></label>
