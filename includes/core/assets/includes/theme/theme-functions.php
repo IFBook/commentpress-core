@@ -355,7 +355,7 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		// Set default sidebar but override if we have the plugin enabled.
 		$sidebar_flag = 'toc';
 		if ( ! empty( $core ) ) {
-			$sidebar_flag = $core->theme->get_default_sidebar();
+			$sidebar_flag = $core->theme->sidebar->default_get();
 		}
 
 		// Set class per sidebar.
@@ -1270,7 +1270,7 @@ if ( ! function_exists( 'commentpress_get_post_css_override' ) ) :
 		}
 
 		// Check if the Formatter for this Post is overridden.
-		$overridden = $core->formatter->formatter_is_overridden( $post_id );
+		$overridden = $core->entry->formatter->is_overridden( $post_id );
 
 		// Bail if not overridden.
 		if ( $overridden === false ) {
@@ -1278,7 +1278,7 @@ if ( ! function_exists( 'commentpress_get_post_css_override' ) ) :
 		}
 
 		// Get the Formatter for this Post.
-		$formatter = $core->formatter->formatter_get( $post_id );
+		$formatter = $core->entry->formatter->get_for_post_id( $post_id );
 
 		// Build class.
 		$class_name = ' overridden_type-' . $formatter;

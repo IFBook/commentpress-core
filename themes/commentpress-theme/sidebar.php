@@ -14,7 +14,7 @@ $core = commentpress_core();
 // If we have the plugin enabled, get order from plugin options.
 $_tab_order = [ 'comments', 'activity', 'contents' ];
 if ( ! empty( $core ) ) {
-	$_tab_order = $core->theme->get_sidebar_order();
+	$_tab_order = $core->theme->sidebar->order_get();
 }
 
 // Get commentable status.

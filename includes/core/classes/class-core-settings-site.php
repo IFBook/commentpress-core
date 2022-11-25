@@ -2,7 +2,7 @@
 /**
  * CommentPress Core Site Settings class.
  *
- * Handles Site Settings Page functionality in CommentPress Core.
+ * Handles Site Settings screen functionality in CommentPress Core.
  *
  * @package CommentPress_Core
  */
@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * CommentPress Core Site Settings Class.
  *
- * This class handles Site Settings Page functionality in CommentPress Core.
+ * This class handles Site Settings screen functionality in CommentPress Core.
  *
  * @since 4.0
  */
@@ -642,20 +642,20 @@ class CommentPress_Core_Settings_Site {
 			'core' // Vertical placement: options are 'core', 'high', 'low'.
 		);
 
-		// Create "Page Display Options" metabox.
+		// Create "Page Display Settings" metabox.
 		add_meta_box(
 			'commentpress_page_display',
-			__( 'Page Display Options', 'commentpress-core' ),
+			__( 'Page Display Settings', 'commentpress-core' ),
 			[ $this, 'meta_box_page_display_render' ], // Callback.
 			$screen_id, // Screen ID.
 			'normal', // Column: options are 'normal' and 'side'.
 			'core' // Vertical placement: options are 'core', 'high', 'low'.
 		);
 
-		// Create "Commenting Options" metabox.
+		// Create "Commenting Settings" metabox.
 		add_meta_box(
 			'commentpress_commenting',
-			__( 'Commenting Options', 'commentpress-core' ),
+			__( 'Commenting Settings', 'commentpress-core' ),
 			[ $this, 'meta_box_commenting_render' ], // Callback.
 			$screen_id, // Screen ID.
 			'normal', // Column: options are 'normal' and 'side'.
@@ -733,19 +733,16 @@ class CommentPress_Core_Settings_Site {
 	}
 
 	/**
-	 * Renders the "Page Display Options" metabox.
+	 * Renders the "Page Display Settings" metabox.
 	 *
 	 * @since 4.0
 	 */
 	public function meta_box_page_display_render() {
 
 		// Get settings.
-		$featured_images = $this->core->db->option_get( 'cp_featured_images', 'n' );
 		$page_nav_enabled = $this->core->db->option_get( 'cp_page_nav_enabled', 'y' );
-		$title_visibility = $this->core->db->option_get( 'cp_title_visibility' );
-		$page_meta_visibility = $this->core->db->option_get( 'cp_page_meta_visibility' );
+		$featured_images = $this->core->db->option_get( 'cp_featured_images', 'n' );
 		$textblock_meta = $this->core->db->option_get( 'cp_textblock_meta', 'y' );
-		$excerpt_length = $this->core->db->option_get( 'cp_excerpt_length' );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-page.php';
@@ -753,7 +750,7 @@ class CommentPress_Core_Settings_Site {
 	}
 
 	/**
-	 * Renders the "Commenting Options" metabox.
+	 * Renders the "Commenting Settings" metabox.
 	 *
 	 * @since 4.0
 	 */
@@ -779,7 +776,7 @@ class CommentPress_Core_Settings_Site {
 		// Get settings.
 		$scroll_speed = $this->core->db->option_get( 'cp_js_scroll_speed' );
 		$min_page_width = $this->core->db->option_get( 'cp_min_page_width' );
-		$sidebar_default = $this->core->db->option_get( 'cp_sidebar_default', 'comments' );
+		$excerpt_length = $this->core->db->option_get( 'cp_excerpt_length' );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-theme.php';
@@ -801,7 +798,7 @@ class CommentPress_Core_Settings_Site {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Routes settings updates to relevant methods.
+	 * Form submission handler.
 	 *
 	 * @since 4.0
 	 */
@@ -817,6 +814,25 @@ class CommentPress_Core_Settings_Site {
 
 		// Update the settings.
 		$this->core->db->options_update();
+
+		/**
+		 * Fires when the Site Settings have been saved.
+		 *
+		 * @since 4.0
+		 */
+		do_action( 'commentpress/core/settings/site/saved' );
+
+		// Now redirect.
+		$this->form_redirect();
+
+	}
+
+	/**
+	 * Form redirection handler.
+	 *
+	 * @since 4.0
+	 */
+	public function form_redirect() {
 
 		// Get the Settings Page URL.
 		$url = $this->page_settings_url_get();

@@ -2,7 +2,7 @@
 /**
  * CommentPress Multisite Site Settings class.
  *
- * Handles Site Settings Page functionality in CommentPress Multisite.
+ * Handles Site Settings screen functionality in CommentPress Multisite.
  *
  * @package CommentPress_Core
  */
@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * CommentPress Multisite Site Settings Class.
  *
- * This class handles Site Settings Page functionality in CommentPress Multisite.
+ * This class handles Site Settings screen functionality in CommentPress Multisite.
  *
  * @since 3.3
  */

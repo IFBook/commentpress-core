@@ -1,8 +1,8 @@
 <?php
 /**
- * Multisite Site Settings Page "Submit" metabox template.
+ * Multisite Site Settings screen "Submit" metabox template.
  *
- * Handles markup for the Multisite Site Settings Page "Submit" metabox.
+ * Handles markup for the Multisite Site Settings screen "Submit" metabox.
  *
  * @package CommentPress_Core
  */

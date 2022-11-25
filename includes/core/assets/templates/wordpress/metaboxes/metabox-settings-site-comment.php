@@ -1,8 +1,8 @@
 <?php
 /**
- * Site Settings Page "Commenting Options" metabox template.
+ * Site Settings screen "Commenting Options" metabox template.
  *
- * Handles markup for the Site Settings Page "Commenting Options" metabox.
+ * Handles markup for the Site Settings screen "Commenting Options" metabox.
  *
  * @package CommentPress_Core
  */

@@ -980,8 +980,6 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 * Build texthighlighter selections for a comments array.
 	 *
 	 * @since 3.8
-	 *
-	 * @param string comment_id The numerical comment ID.
 	 */
 	this.selection_build_for_comments = function() {
 
@@ -1040,7 +1038,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 *
 	 * @since 3.8
 	 *
-	 * @param string comment_id The numerical comment ID.
+	 * @param string comment_id The numeric ID of the Comment.
 	 */
 	this.selection_save_for_comment = function( comment_id ) {
 
@@ -1066,7 +1064,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 *
 	 * @since 3.8
 	 *
-	 * @param int comment_id The numerical comment ID.
+	 * @param string comment_id The numeric ID of the Comment.
 	 */
 	this.selection_recall_for_comment = function( comment_id ) {
 

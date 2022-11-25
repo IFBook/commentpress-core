@@ -1033,7 +1033,7 @@ CommentPress.infinite.menu = new function() {
 	 *
 	 * @since 3.8
 	 *
-	 * @param string item_id The numerical ID of the menu item.
+	 * @param string item_id The numeric ID of the menu item.
 	 */
 	this.update_custom = function( item_id ) {
 
@@ -1054,7 +1054,7 @@ CommentPress.infinite.menu = new function() {
 	 *
 	 * @since 3.8
 	 *
-	 * @param string item_id The numerical ID of the menu item.
+	 * @param string item_id The numeric ID of the menu item.
 	 */
 	this.CommentPress.infinite.menu.update_pages = function( item_id ) {
 

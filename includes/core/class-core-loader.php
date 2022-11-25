@@ -56,6 +56,15 @@ class CommentPress_Core_Loader {
 	public $theme;
 
 	/**
+	 * Entry object.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var object $entry The Entry object.
+	 */
+	public $entry;
+
+	/**
 	 * Site Settings object.
 	 *
 	 * @since 4.0
@@ -65,20 +74,11 @@ class CommentPress_Core_Loader {
 	public $settings_site;
 
 	/**
-	 * Post Settings object.
-	 *
-	 * @since 4.0
-	 * @access public
-	 * @var object $settings_post The Post Settings object.
-	 */
-	public $settings_post;
-
-	/**
-	 * Navigation handling object.
+	 * Navigation object.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $nav The nav object.
+	 * @var object $nav The Navigation object.
 	 */
 	public $nav;
 
@@ -90,15 +90,6 @@ class CommentPress_Core_Loader {
 	 * @var object $parser The parser object.
 	 */
 	public $parser;
-
-	/**
-	 * Formatter object.
-	 *
-	 * @since 3.3
-	 * @access public
-	 * @var object $formatter The Formatter object.
-	 */
-	public $formatter;
 
 	/**
 	 * Comments object.
@@ -263,11 +254,10 @@ class CommentPress_Core_Loader {
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-database.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-display.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-theme.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-entry.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-settings-site.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-settings-post.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-navigation.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-parser.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-formatter.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-comments.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-revisions.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-bp-core.php';
@@ -300,11 +290,10 @@ class CommentPress_Core_Loader {
 		$this->db = new CommentPress_Core_Database( $this );
 		$this->display = new CommentPress_Core_Display( $this );
 		$this->theme = new CommentPress_Core_Theme( $this );
+		$this->entry = new CommentPress_Core_Entry( $this );
 		$this->settings_site = new CommentPress_Core_Settings_Site( $this );
-		$this->settings_post = new CommentPress_Core_Settings_Post( $this );
 		$this->nav = new CommentPress_Core_Navigator( $this );
 		$this->parser = new CommentPress_Core_Parser( $this );
-		$this->formatter = new CommentPress_Core_Formatter( $this );
 		$this->comments = new CommentPress_Core_Comments( $this );
 		$this->revisions = new CommentPress_Core_Revisions( $this );
 		$this->bp = new CommentPress_Core_BuddyPress( $this );
@@ -512,7 +501,7 @@ class CommentPress_Core_Loader {
 	 */
 	public function get_default_sidebar() {
 		_deprecated_function( __METHOD__, '4.0' );
-		return $this->theme->get_default_sidebar();
+		return $this->theme->sidebar->default_get();
 	}
 
 	/**
@@ -524,7 +513,7 @@ class CommentPress_Core_Loader {
 	 */
 	public function get_sidebar_order() {
 		_deprecated_function( __METHOD__, '4.0' );
-		return $this->theme->get_sidebar_order();
+		return $this->theme->sidebar->order_get();
 	}
 
 	// -------------------------------------------------------------------------

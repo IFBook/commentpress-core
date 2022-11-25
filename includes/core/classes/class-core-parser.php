@@ -211,8 +211,13 @@ class CommentPress_Core_Parser {
 			}
 		}
 
-		// Not if we're not on a Page/Post and especially not if there's no Post object.
-		if ( ! ( $post instanceof WP_Post ) || ! is_singular() ) {
+		// Not if there's no Post object.
+		if ( ! ( $post instanceof WP_Post ) ) {
+			return false;
+		}
+
+		// Not if we're not on a Page/Post.
+		if ( ! is_singular() ) {
 			return false;
 		}
 

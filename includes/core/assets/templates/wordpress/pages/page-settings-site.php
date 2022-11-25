@@ -2,7 +2,7 @@
 /**
  * Site Settings template.
  *
- * Handles markup for the Site Settings Page.
+ * Handles markup for the Site Settings screen.
  *
  * @package CommentPress_Core
  */

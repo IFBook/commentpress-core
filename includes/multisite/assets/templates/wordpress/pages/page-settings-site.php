@@ -2,7 +2,7 @@
 /**
  * Multisite Site Settings template.
  *
- * Handles markup for the Multisite Site Settings Page.
+ * Handles markup for the Multisite Site Settings screen.
  *
  * @package CommentPress_Core
  */

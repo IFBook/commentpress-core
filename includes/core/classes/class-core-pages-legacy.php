@@ -76,6 +76,9 @@ class CommentPress_Core_Pages_Legacy {
 		// Modify all.
 		add_filter( 'views_edit-page', [ $this, 'update_page_counts_in_admin' ], 10, 1 );
 
+		// Intercept delete.
+		add_action( 'before_delete_post', [ $this, 'post_pre_delete' ], 10, 1 );
+
 	}
 
 	// -------------------------------------------------------------------------
@@ -712,7 +715,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		 *
 		 * Used internally by:
 		 *
-		 * * CommentPress_Core_Formatter::formatter_default_apply() (Priority: 10)
+		 * * CommentPress_Core_Entry_Formatter::default_set_for_post() (Priority: 10)
 		 *
 		 * @since 4.0
 		 *
@@ -1275,6 +1278,36 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// --<
 		return $url;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Check for data integrity of other Posts when one is deleted.
+	 *
+	 * @since 3.4
+	 * @since 4.0 Renamed and moved to this class.
+	 *
+	 * @param int $post_id The numeric ID of the Post or Revision.
+	 */
+	public function post_pre_delete( $post_id ) {
+
+		// If no Post, kick out.
+		if ( ! $post_id ) {
+			return;
+		}
+
+		// If it's our Welcome Page.
+		if ( $post_id === (int) $this->core->db->option_get( 'cp_welcome_page' ) ) {
+
+			// Delete option.
+			$this->core->db->option_delete( 'cp_welcome_page' );
+
+			// Save.
+			$this->core->db->options_save();
+
+		}
 
 	}
 

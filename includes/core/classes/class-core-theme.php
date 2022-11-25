@@ -29,6 +29,24 @@ class CommentPress_Core_Theme {
 	public $core;
 
 	/**
+	 * Sidebar object.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var object $sidebar The Sidebar object.
+	 */
+	public $sidebar;
+
+	/**
+	 * Classes directory path.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $classes_path Relative path to the classes directory.
+	 */
+	public $classes_path = 'includes/core/classes/';
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 4.0
@@ -57,8 +75,52 @@ class CommentPress_Core_Theme {
 	 */
 	public function initialise() {
 
-		// Register hooks.
+		// Only do this once.
+		static $done;
+		if ( isset( $done ) && $done === true ) {
+			return;
+		}
+
+		// Bootstrap object.
+		$this->include_files();
+		$this->setup_objects();
 		$this->register_hooks();
+
+		/**
+		 * Fires when the Theme object has loaded.
+		 *
+		 * Used internally to bootstrap objects.
+		 *
+		 * @since 4.0
+		 */
+		do_action( 'commentpress/core/theme/loaded' );
+
+		// We're done.
+		$done = true;
+
+	}
+
+	/**
+	 * Includes class files.
+	 *
+	 * @since 4.0
+	 */
+	public function include_files() {
+
+		// Include theme class files.
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-theme-sidebar.php';
+
+	}
+
+	/**
+	 * Sets up the objects in this class.
+	 *
+	 * @since 4.0
+	 */
+	public function setup_objects() {
+
+		// Initialise theme objects.
+		$this->sidebar = new CommentPress_Core_Theme_Sidebar( $this );
 
 	}
 
@@ -288,138 +350,6 @@ class CommentPress_Core_Theme {
 
 		// --<
 		return $retval;
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Returns the name of the default sidebar.
-	 *
-	 * @since 3.4
-	 *
-	 * @return str $return The code for the default sidebar.
-	 */
-	public function get_default_sidebar() {
-
-		/**
-		 * Filters the default sidebar.
-		 *
-		 * @since 3.9.8
-		 *
-		 * @param str The default sidebar. Defaults to 'activity'.
-		 */
-		$return = apply_filters( 'commentpress_default_sidebar', 'activity' );
-
-		// Is this a commentable Page?
-		if ( ! $this->core->parser->is_commentable() ) {
-
-			// No - we must use either 'activity' or 'toc'.
-			if ( $this->core->db->option_exists( 'cp_sidebar_default' ) ) {
-
-				// Get option (we don't need to look at the Page meta in this case).
-				$default = $this->core->db->option_get( 'cp_sidebar_default' );
-
-				// Use it unless it's 'comments'.
-				if ( $default != 'comments' ) {
-					$return = $default;
-				}
-
-			}
-
-			// --<
-			return $return;
-
-		}
-
-		/*
-		// Get CPTs.
-		//$types = $this->get_commentable_cpts();
-
-		// Testing what we do with CPTs.
-		//if ( is_singular() || is_singular( $types ) ) {
-		*/
-
-		// Is it a commentable Page?
-		if ( is_singular() ) {
-
-			/*
-			 * Some people have reported that db is not an object at this point,
-			 * though I cannot figure out how this might be occurring - so we
-			 * avoid the issue by checking if it is.
-			 */
-			if ( is_object( $this->core->db ) ) {
-
-				// Is it a Special Page which have Comments-in-Page (or are not commentable)?
-				if ( ! $this->core->pages_legacy->is_special_page() ) {
-
-					// Access Page.
-					global $post;
-
-					// Either 'comments', 'activity' or 'toc'.
-					if ( $this->core->db->option_exists( 'cp_sidebar_default' ) ) {
-
-						// Get global option.
-						$return = $this->core->db->option_get( 'cp_sidebar_default' );
-
-						// Check if the Post/Page has a meta value.
-						$key = '_cp_sidebar_default';
-
-						// If the custom field already has a value.
-						if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
-
-							// Get it.
-							$return = get_post_meta( $post->ID, $key, true );
-
-						}
-
-					}
-
-					// --<
-					return $return;
-
-				}
-
-			}
-
-		}
-
-		// Not singular - must be either "activity" or "toc".
-		if ( $this->core->db->option_exists( 'cp_sidebar_default' ) ) {
-
-			// Use default unless it's 'comments'.
-			$default = $this->core->db->option_get( 'cp_sidebar_default' );
-			if ( $default != 'comments' ) {
-				$return = $default;
-			}
-
-		}
-
-		// --<
-		return $return;
-
-	}
-
-	/**
-	 * Get the order of the sidebars.
-	 *
-	 * @since 3.4
-	 *
-	 * @return array $order Sidebars in order of display.
-	 */
-	public function get_sidebar_order() {
-
-		/**
-		 * Filters the default tab order.
-		 *
-		 * @since 3.4
-		 *
-		 * @param array $order The default tab order array.
-		 */
-		$order = apply_filters( 'cp_sidebar_tab_order', [ 'contents', 'comments', 'activity' ] );
-
-		// --<
-		return $order;
 
 	}
 

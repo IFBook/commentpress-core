@@ -302,7 +302,7 @@ class CommentPress_Multisite_BuddyPress {
 	 *
 	 * @param array $caps The existing capabilities array for the WordPress User.
 	 * @param str $cap The capability in question.
-	 * @param int $user_id The numerical ID of the WordPress User.
+	 * @param int $user_id The numeric ID of the WordPress User.
 	 * @param array $args The additional arguments.
 	 * @return array $caps The modified capabilities array for the WordPress User.
 	 */

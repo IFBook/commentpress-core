@@ -387,7 +387,7 @@ class CommentPress_Core_Revisions {
 		 *
 		 * Used internally by:
 		 *
-		 * * CommentPress_Core_Formatter::revision_formatter_set() (Priority: 10)
+		 * * CommentPress_Core_Entry_Formatter::revision_formatter_set() (Priority: 10)
 		 *
 		 * @since 4.0
 		 *

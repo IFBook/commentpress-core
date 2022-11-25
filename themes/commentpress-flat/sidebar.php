@@ -38,7 +38,7 @@ $is_commentable = commentpress_is_commentable();
 
 						// Add active class.
 						$active_class = '';
-						if ( ! empty( $core ) && in_array( $core->theme->get_default_sidebar(), [ 'comments', 'toc' ] ) ) {
+						if ( ! empty( $core ) && in_array( $core->theme->sidebar->default_get(), [ 'comments', 'toc' ] ) ) {
 							$active_class = ' class="active-tab"';
 						}
 
@@ -82,7 +82,7 @@ $is_commentable = commentpress_is_commentable();
 
 							// Add class if not commentable.
 							$active_class = '';
-							if ( ! $is_commentable || ( ! empty( $core ) && 'activity' === $core->theme->get_default_sidebar() ) ) {
+							if ( ! $is_commentable || ( ! empty( $core ) && 'activity' === $core->theme->sidebar->default_get() ) ) {
 								$active_class = ' class="active-tab"';
 							}
 

@@ -453,7 +453,7 @@ class CommentPress_Core_Display {
 		$vars['cp_show_subpages'] = $this->core->db->option_get( 'cp_show_subpages' );
 
 		// Set default sidebar.
-		$vars['cp_default_sidebar'] = $this->core->theme->get_default_sidebar();
+		$vars['cp_default_sidebar'] = $this->core->theme->sidebar->default_get();
 
 		// Set scroll speed.
 		$vars['cp_js_scroll_speed'] = $this->core->db->option_get( 'cp_js_scroll_speed' );

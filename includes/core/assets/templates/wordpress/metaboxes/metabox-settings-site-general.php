@@ -1,8 +1,8 @@
 <?php
 /**
- * Site Settings Page "General Settings" metabox template.
+ * Site Settings screen "General Settings" metabox template.
  *
- * Handles markup for the Site Settings Page "General Settings" metabox.
+ * Handles markup for the Site Settings screen "General Settings" metabox.
  *
  * @package CommentPress_Core
  */
