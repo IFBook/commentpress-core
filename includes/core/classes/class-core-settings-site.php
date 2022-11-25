@@ -259,6 +259,7 @@ class CommentPress_Core_Settings_Site {
 	 */
 	public function admin_css() {
 
+		/*
 		// Add admin stylesheet.
 		wp_enqueue_style(
 			'commentpress_admin_css',
@@ -267,6 +268,7 @@ class CommentPress_Core_Settings_Site {
 			COMMENTPRESS_VERSION, // Version.
 			'all' // Media.
 		);
+		*/
 
 	}
 
