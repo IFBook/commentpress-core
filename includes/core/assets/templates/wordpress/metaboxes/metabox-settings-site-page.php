@@ -26,7 +26,7 @@
 
 	<tr valign="top">
 		<th scope="row">
-			<label for="cp_page_nav_enabled"><?php esc_html_e( 'Enable automatic page navigation', 'commentpress-core' ); ?></label>
+			<label for="cp_page_nav_enabled"><?php esc_html_e( 'Automatic page navigation', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
 			<select id="cp_page_nav_enabled" name="cp_page_nav_enabled">
@@ -39,7 +39,7 @@
 
 	<tr valign="top">
 		<th scope="row">
-			<label for="cp_title_visibility"><?php esc_html_e( 'Default page title visibility', 'commentpress-core' ); ?></label>
+			<label for="cp_title_visibility"><?php esc_html_e( 'Page title visibility', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
 			<select id="cp_title_visibility" name="cp_title_visibility">
@@ -52,7 +52,7 @@
 
 	<tr valign="top">
 		<th scope="row">
-			<label for="cp_page_meta_visibility"><?php esc_html_e( 'Default page meta visibility', 'commentpress-core' ); ?></label>
+			<label for="cp_page_meta_visibility"><?php esc_html_e( 'Page meta visibility', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
 			<select id="cp_page_meta_visibility" name="cp_page_meta_visibility">

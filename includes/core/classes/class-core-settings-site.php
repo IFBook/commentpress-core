@@ -275,10 +275,24 @@ class CommentPress_Core_Settings_Site {
 	/**
 	 * Enqueue Settings Page Javascript.
 	 *
-	 * @since 3.4
-	 * @since 4.0 Moved to this class.
+	 * @since 4.0
 	 */
 	public function admin_js() {
+
+		// Add our "Site Settings" Javascript.
+		wp_enqueue_script(
+			'commentpress-core-site-settings',
+			plugins_url( 'includes/core/assets/js/cp-settings-site.js', COMMENTPRESS_PLUGIN_FILE ),
+			[ 'jquery' ],
+			COMMENTPRESS_VERSION, // Version.
+			true // In footer.
+		);
+
+		// Build vars.
+		$vars = [];
+
+		// Localise the WordPress way.
+		wp_localize_script( 'commentpress-core-site-settings', 'CommentPress_Core_Settings_Site_Vars', $vars );
 
 	}
 

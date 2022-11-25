@@ -25,7 +25,7 @@
 
 	<tr valign="top">
 		<th scope="row"><label for="cp_promote_reading">
-			<?php esc_html_e( 'Default comment form behaviour', 'commentpress-core' ); ?></label>
+			<?php esc_html_e( 'Comment form behaviour', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
 			<select id="cp_promote_reading" name="cp_promote_reading">
@@ -37,7 +37,7 @@
 
 	<tr valign="top">
 		<th scope="row">
-			<label for="cp_para_comments_live"><?php esc_html_e( 'Enable "live" comment refreshing', 'commentpress-core' ); ?></label>
+			<label for="cp_para_comments_live"><?php esc_html_e( '"Live" comment refreshing', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
 			<input id="cp_para_comments_live" name="cp_para_comments_live" value="1" type="checkbox" <?php echo ( ( $comments_live == '1' ) ? ' checked="checked"' : '' ); ?> />

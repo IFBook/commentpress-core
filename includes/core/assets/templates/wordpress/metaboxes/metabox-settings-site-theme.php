@@ -34,7 +34,7 @@
 	<?php if ( ! apply_filters( 'commentpress_hide_sidebar_option', false ) ) : ?>
 		<tr valign="top">
 			<th scope="row">
-				<label for="cp_sidebar_default"><?php esc_html_e( 'Which sidebar do you want to be active by default?', 'commentpress-core' ); ?></label>
+				<label for="cp_sidebar_default"><?php esc_html_e( 'Default active sidebar', 'commentpress-core' ); ?></label>
 			</th>
 			<td>
 				<select id="cp_sidebar_default" name="cp_sidebar_default">
