@@ -4,6 +4,10 @@
  *
  * Handles "Document" functionality in CommentPress Core.
  *
+ * Historically, CommentPress only supported the built-in "Page" Post Type for
+ * creating "Structured Documents". The plan is to support one or more Custom
+ * Post Types for building "Structured Documents".
+ *
  * @package CommentPress_Core
  */
 
@@ -378,6 +382,8 @@ class CommentPress_Core_Entry_Document {
 	/**
 	 * Gets the Page Numbering format.
 	 *
+	 * This is only shown on the first Page that is not the Title Page.
+	 *
 	 * @since 4.0
 	 *
 	 * @param object $post The Post object.
@@ -419,7 +425,7 @@ class CommentPress_Core_Entry_Document {
 	 *
 	 * @since 3.4
 	 *
-	 * Only first top-level Page is allowed to save this.
+	 * Only first top-level Page that is not the Title Page is allowed to save this.
 	 *
 	 * @param object $post The Post object.
 	 */
@@ -435,7 +441,7 @@ class CommentPress_Core_Entry_Document {
 		$meta_key = '_' . $this->key_number_format;
 
 		// Do we need to check this, since only the first top level Page
-		// can now send this data? doesn't hurt to validate, I guess.
+		// can now send this data? Doesn't hurt to check, I guess.
 		if (
 			$post->post_parent == '0' &&
 			! $this->core->pages_legacy->is_special_page() &&
