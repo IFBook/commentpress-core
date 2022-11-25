@@ -319,14 +319,35 @@ if ( ! function_exists( 'commentpress_page_number' ) ) :
 			$number = strtolower( $number );
 		}
 
-		// Wrap number.
+		// Wrap number in identifying span.
 		$element = '<span class="page_num_bottom">' . $number . '</span>';
 
-		echo sprintf(
-			/* translators: %s: The span element containing the Page number. */
-			__( 'Page %s', 'commentpress-core' ),
-			$element
-		);
+		/**
+		 * Filter that allows Page number string to be disabled.
+		 *
+		 * @since 4.0
+		 *
+		 * @param bool False by default. Return true to skip building string.
+		 */
+		// Allow this to be disabled.
+		if ( ! apply_filters( 'commentpress_hide_page_number_string', false ) ) {
+
+			// Build Page number string.
+			$page_number = sprintf(
+				/* translators: %s: The span element containing the Page number. */
+				__( 'Page %s', 'commentpress-core' ),
+				$element
+			);
+
+		} else {
+
+			// Skip building string.
+			$page_number = $element;
+
+		}
+
+		// Wrap in identifying class.
+		echo '<span class="' . ( ! is_numeric( $number ) ? 'roman' : 'arabic' ) . '">' . $page_number . '</span>';
 
 	}
 
