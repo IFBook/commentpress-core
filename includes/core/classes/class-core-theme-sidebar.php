@@ -277,7 +277,7 @@ class CommentPress_Core_Theme_Sidebar {
 		}
 
 		// Get the Sidebar for this Entry.
-		$sidebar = $this->get_for_post_id( $post->ID );
+		$sidebar = $this->get_for_post_id( $post->ID, $raw = true );
 
 		?>
 
@@ -287,6 +287,7 @@ class CommentPress_Core_Theme_Sidebar {
 
 			<p>
 				<select id="<?php echo $this->option_sidebar; ?>" name="<?php echo $this->option_sidebar; ?>">
+					<option value="" <?php echo ( empty( $sidebar ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Use default', 'commentpress-core' ); ?></option>
 					<option value="toc" <?php echo ( $sidebar === 'toc' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Contents', 'commentpress-core' ); ?></option>
 					<option value="activity" <?php echo ( $sidebar === 'activity' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Activity', 'commentpress-core' ); ?></option>
 					<option value="comments" <?php echo ( $sidebar === 'comments' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Comments', 'commentpress-core' ); ?></option>
@@ -313,10 +314,9 @@ class CommentPress_Core_Theme_Sidebar {
 			return;
 		}
 
-		// Find the data, but default to default Sidebar.
-		$sidebar = isset( $_POST[ $this->option_sidebar ] ) ?
-			sanitize_text_field( wp_unslash( $_POST[ $this->option_sidebar ] ) ) :
-			$this->core->db->option_get( $this->option_sidebar );
+		// Find the data.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$sidebar = isset( $_POST[ $this->option_sidebar ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->option_sidebar ] ) ) : '';
 
 		// Save Sidebar for this Entry.
 		$this->set_for_post_id( $post->ID, $sidebar );
@@ -331,15 +331,21 @@ class CommentPress_Core_Theme_Sidebar {
 	 * @since 4.0
 	 *
 	 * @param int $post_id The numeric ID of the Post.
+	 * @param bool $raw Pass "true" to get the actual meta value.
 	 * @return string $sidebar The Sidebar identifier.
 	 */
-	public function get_for_post_id( $post_id ) {
-
-		// Default to current Sidebar.
-		$sidebar = $this->core->db->option_get( $this->option_sidebar );
+	public function get_for_post_id( $post_id, $raw = false ) {
 
 		// Check Post for override.
 		$override = get_post_meta( $post_id, $this->meta_key, true );
+
+		// Return raw value if requested.
+		if ( $raw === true ) {
+			return $override;
+		}
+
+		// Default to current Sidebar.
+		$sidebar = $this->core->db->option_get( $this->option_sidebar );
 
 		// Bail if we didn't get one.
 		if ( empty( $override ) ) {

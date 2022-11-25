@@ -144,8 +144,6 @@ class CommentPress_Core_Entry_Formatter {
 		// Save data from "Site Settings" screen.
 		add_action( 'commentpress/core/settings/site/saved', [ $this, 'save_for_settings' ] );
 
-
-
 		// Save default Post Formatter on Special Pages.
 		add_action( 'commentpress/core/db/page/special/title/created', [ $this, 'default_set_for_post' ] );
 
@@ -234,7 +232,7 @@ class CommentPress_Core_Entry_Formatter {
 		}
 
 		// Default to current Blog Type.
-		$value = $this->get_for_post_id( $post->ID );
+		$value = $this->get_for_post_id( $post->ID, $raw = true );
 
 		// Get the "Text Format" options markup.
 		$type_options = $this->options_markup_get( $types, $value );
@@ -274,6 +272,7 @@ class CommentPress_Core_Entry_Formatter {
 		}
 
 		// Get the value of the metabox select element.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$formatter = isset( $_POST[ $this->element_select ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->element_select ] ) ) : '';
 
 		// Save the Formatter for the Post.
@@ -289,15 +288,21 @@ class CommentPress_Core_Entry_Formatter {
 	 * @since 4.0
 	 *
 	 * @param int $post_id The numeric ID of the Post.
+	 * @param bool $raw Pass "true" to get the actual meta value.
 	 * @return int $formatter The numeric ID of the Formatter.
 	 */
-	public function get_for_post_id( $post_id ) {
-
-		// Default to current Blog Type.
-		$formatter = $this->core->db->option_get( $this->option_formatter );
+	public function get_for_post_id( $post_id, $raw = false ) {
 
 		// Check Post for override.
 		$override = get_post_meta( $post_id, $this->meta_key, true );
+
+		// Return raw value if requested.
+		if ( $raw === true ) {
+			return $override;
+		}
+
+		// Default to current Blog Type.
+		$formatter = $this->core->db->option_get( $this->option_formatter );
 
 		// Bail if something went wrong.
 		if ( $override === false || $override === '' || ! is_numeric( $override ) ) {
@@ -548,10 +553,16 @@ class CommentPress_Core_Entry_Formatter {
 			return $markup;
 		}
 
+		// Always add "Use Default".
+		$options = [
+			'<option value="" ' . ( ( $current === false || $current === '' ) ? ' selected="selected"' : '' ) . '>' .
+				esc_html__( 'Use default', 'commentpress-core' ) .
+			'</option>',
+		];
+
 		// Build options.
-		$options = [];
 		foreach ( $types as $key => $type ) {
-			if ( (int) $key === (int) $current ) {
+			if ( (string) $key === (string) $current ) {
 				$options[] = '<option value="' . esc_attr( $key ) . '" selected="selected">' . esc_html( $type ) . '</option>';
 			} else {
 				$options[] = '<option value="' . esc_attr( $key ) . '">' . esc_html( $type ) . '</option>';

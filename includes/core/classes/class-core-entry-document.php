@@ -213,7 +213,7 @@ class CommentPress_Core_Entry_Document {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Adds our form element to the "CommentPress Settings" metabox.
+	 * Adds our form elements to the "CommentPress Settings" metabox.
 	 *
 	 * @since 4.0
 	 *
@@ -226,93 +226,20 @@ class CommentPress_Core_Entry_Document {
 			return;
 		}
 
-		// ---------------------------------------------------------------------
-		// Show or Hide Page Title.
-		// ---------------------------------------------------------------------
+		// Get the Entry title visibility.
+		$title_visibility = $this->title_visibility_get( $post );
 
-		// Build meta key.
-		$meta_key = '_' . $this->key_show_title;
+		// Get the Entry meta visibility.
+		$meta_visibility = $this->meta_visibility_get( $post );
 
-		// Get the value from Post meta.
-		$title_visibility = $this->get_for_post_id( $post->ID, $meta_key, $this->key_show_title );
+		// Get the Page Numbering format.
+		$format = $this->page_numbering_get( $post );
 
-		// ---------------------------------------------------------------------
-		// Show or Hide Page Meta.
-		// ---------------------------------------------------------------------
+		// Get the layout for Title Page.
+		$layout = $this->title_page_layout_get( $post );
 
-		// Build meta key.
-		$meta_key = '_' . $this->key_show_meta;
-
-		// Get the value from Post meta.
-		$meta_visibility = $this->get_for_post_id( $post->ID, $meta_key, $this->key_show_meta );
-
-		// ---------------------------------------------------------------------
-		// Page Numbering - only shown on first top level Page.
-		// ---------------------------------------------------------------------
-
-		// Default to empty.
-		$format = '';
-
-		// If Page has no parent and it's not a Special Page and it's the first.
-		if (
-			$post->post_parent == '0' &&
-			! $this->core->pages_legacy->is_special_page() &&
-			$post->ID == $this->core->nav->get_first_page()
-		) {
-
-			// Default to arabic.
-			$default = 'arabic';
-
-			// Build meta key.
-			$meta_key = '_' . $this->key_number_format;
-
-			// Get the value from Post meta.
-			$format = $this->get_for_post_id( $post->ID, $meta_key );
-			if ( empty( $format ) ) {
-				$format = $default;
-			}
-
-		}
-
-		// ---------------------------------------------------------------------
-		// Page Layout for Title Page to allow for Book Cover image.
-		// ---------------------------------------------------------------------
-
-		// Default to empty.
-		$layout = '';
-
-		// Is this the Title Page?
-		if ( $post->ID == $this->core->db->option_get( 'cp_welcome_page' ) ) {
-
-			// Default to text.
-			$default = 'text';
-
-			// Build meta key.
-			$meta_key = '_' . $this->key_layout;
-
-			// Get the value from Post meta.
-			$layout = $this->get_for_post_id( $post->ID, $meta_key );
-			if ( empty( $layout ) ) {
-				$layout = $default;
-			}
-
-		}
-
-		// ---------------------------------------------------------------------
-		// Paragraph numbering.
-		// ---------------------------------------------------------------------
-
-		// Default to start with para 1.
-		$default = 1;
-
-		// Build meta key.
-		$meta_key = '_' . $this->key_para_num;
-
-		// Get the value from Post meta.
-		$num = $this->get_for_post_id( $post->ID, $meta_key );
-		if ( ! is_numeric( $num ) ) {
-			$num = $default;
-		}
+		// Get the starting Paragraph Number.
+		$number = $this->paragraph_start_number_get( $post );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-entry-document-entry.php';
@@ -320,7 +247,7 @@ class CommentPress_Core_Entry_Document {
 	}
 
 	/**
-	 * Saves the Document for a given Entry.
+	 * Saves the meta values for a given Entry.
 	 *
 	 * @since 4.0
 	 *
@@ -345,38 +272,58 @@ class CommentPress_Core_Entry_Document {
 			return;
 		}
 
-		// Save Page title visibility.
-		$this->page_save_title_visibility( $post );
+		// Save Entry title visibility.
+		$this->title_visibility_save( $post );
 
-		// Save Page meta visibility.
-		$this->page_save_meta_visibility( $post );
+		// Save Entry meta visibility.
+		$this->meta_visibility_save( $post );
 
-		// Save Page numbering.
-		$this->page_save_numbering( $post );
+		// Save Page Numbering.
+		$this->page_numbering_save( $post );
 
-		// Save Page layout for Title Page.
-		$this->page_save_layout( $post );
+		// Save layout for Title Page.
+		$this->title_page_layout_save( $post );
 
 		// Save starting Paragraph Number.
-		$this->page_save_starting_paragraph( $post );
+		$this->paragraph_start_number_save( $post );
 
 	}
 
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Save Page Title visibility.
+	 * Gets the Entry title visibility.
+	 *
+	 * @since 4.0
+	 *
+	 * @param object $post The Post object.
+	 * @return string $value The Entry title visibility.
+	 */
+	public function title_visibility_get( $post ) {
+
+		// Build meta key.
+		$meta_key = '_' . $this->key_show_title;
+
+		// Get the value from Post meta.
+		$value = $this->get_for_post_id( $post->ID, $meta_key, $this->key_show_title, $raw = true );
+
+		// --<
+		return $value;
+
+	}
+
+	/**
+	 * Saves the Entry title visibility.
 	 *
 	 * @since 3.4
 	 *
 	 * @param object $post The Post object.
-	 * @return string $data Either 'show' (default) or ''.
 	 */
-	public function page_save_title_visibility( $post ) {
+	private function title_visibility_save( $post ) {
 
 		// Find and save the data.
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$value = isset( $_POST[ $this->key_show_title ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_show_title ] ) ) : 'show';
+		$value = isset( $_POST[ $this->key_show_title ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_show_title ] ) ) : '';
 
 		// Build meta key.
 		$meta_key = '_' . $this->key_show_title;
@@ -384,6 +331,26 @@ class CommentPress_Core_Entry_Document {
 		// Save the meta value.
 		$this->set_for_post_id( $post->ID, $value, $meta_key );
 
+	}
+
+	/**
+	 * Gets the Entry title visibility.
+	 *
+	 * @since 4.0
+	 *
+	 * @param object $post The Post object.
+	 * @return string $value The Entry title visibility.
+	 */
+	public function meta_visibility_get( $post ) {
+
+		// Build meta key.
+		$meta_key = '_' . $this->key_show_meta;
+
+		// Get the value from Post meta.
+		$value = $this->get_for_post_id( $post->ID, $meta_key, $this->key_show_meta, $raw = true );
+
+		// --<
+		return $value;
 
 	}
 
@@ -393,19 +360,57 @@ class CommentPress_Core_Entry_Document {
 	 * @since 3.4
 	 *
 	 * @param object $post The Post object.
-	 * @return string $data Either 'hide' (default) or ''.
 	 */
-	public function page_save_meta_visibility( $post ) {
+	private function meta_visibility_save( $post ) {
 
 		// Find and save the data.
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$value = isset( $_POST[ $this->key_show_meta ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_show_meta ] ) ) : 'hide';
+		$value = isset( $_POST[ $this->key_show_meta ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_show_meta ] ) ) : '';
 
 		// Build meta key.
 		$meta_key = '_' . $this->key_show_meta;
 
 		// Save the meta value.
 		$this->set_for_post_id( $post->ID, $value, $meta_key );
+
+	}
+
+	/**
+	 * Gets the Page Numbering format.
+	 *
+	 * @since 4.0
+	 *
+	 * @param object $post The Post object.
+	 * @return string $format The Page Numbering format.
+	 */
+	public function page_numbering_get( $post ) {
+
+		// Default to empty.
+		$format = '';
+
+		// If Entry has no parent and it's not a Special Page and it's the first.
+		if (
+			empty( $post->post_parent ) &&
+			! $this->core->pages_legacy->is_special_page() &&
+			$post->ID === (int) $this->core->nav->get_first_page()
+		) {
+
+			// Default to arabic.
+			$default = 'arabic';
+
+			// Build meta key.
+			$meta_key = '_' . $this->key_number_format;
+
+			// Get the value from Post meta.
+			$format = $this->get_for_post_id( $post->ID, $meta_key );
+			if ( empty( $format ) ) {
+				$format = $default;
+			}
+
+		}
+
+		// --<
+		return $format;
 
 	}
 
@@ -418,9 +423,10 @@ class CommentPress_Core_Entry_Document {
 	 *
 	 * @param object $post The Post object.
 	 */
-	public function page_save_numbering( $post ) {
+	private function page_numbering_save( $post ) {
 
 		// Bail if no value received.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( ! isset( $_POST[ $this->key_number_format ] ) ) {
 			return;
 		}
@@ -437,6 +443,7 @@ class CommentPress_Core_Entry_Document {
 		) {
 
 			// Get the value.
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			$value = sanitize_text_field( wp_unslash( $_POST[ $this->key_number_format ] ) );
 
 			// Save the meta value.
@@ -446,12 +453,12 @@ class CommentPress_Core_Entry_Document {
 
 		/*
 		 * Delete this meta value from all other Pages, because we may have altered
-		 * the relationship between Pages, thus causing the Page numbering to fail.
+		 * the relationship between Pages, thus causing the Page Numbering to fail.
 		 */
 
 		// Get all Pages including Chapters.
 		$all_pages = $this->core->nav->get_book_pages( 'structural' );
-		if ( empty( $all_pages  ) ) {
+		if ( empty( $all_pages ) ) {
 			return;
 		}
 
@@ -471,7 +478,42 @@ class CommentPress_Core_Entry_Document {
 	}
 
 	/**
-	 * Save Page Layout for Title Page.
+	 * Gets the layout for the Title Page.
+	 *
+	 * @since 4.0
+	 *
+	 * @param object $post The Post object.
+	 * @return string $layout The layout for the Title Page.
+	 */
+	public function title_page_layout_get( $post ) {
+
+		// Default to empty.
+		$layout = '';
+
+		// Is this the Title Page?
+		if ( $post->ID == $this->core->db->option_get( 'cp_welcome_page' ) ) {
+
+			// Default to text.
+			$default = 'text';
+
+			// Build meta key.
+			$meta_key = '_' . $this->key_layout;
+
+			// Get the value from Post meta.
+			$layout = $this->get_for_post_id( $post->ID, $meta_key );
+			if ( empty( $layout ) ) {
+				$layout = $default;
+			}
+
+		}
+
+		// --<
+		return $layout;
+
+	}
+
+	/**
+	 * Saves the layout for the Title Page.
 	 *
 	 * Note: This allows for the legacy "Book Cover image".
 	 *
@@ -481,7 +523,7 @@ class CommentPress_Core_Entry_Document {
 	 *
 	 * @param object $post The Post object.
 	 */
-	public function page_save_layout( $post ) {
+	private function title_page_layout_save( $post ) {
 
 		// Bail if this is not the Title Page.
 		if ( $post->ID !== (int) $this->core->db->option_get( 'cp_welcome_page' ) ) {
@@ -489,6 +531,7 @@ class CommentPress_Core_Entry_Document {
 		}
 
 		// Find and save the value.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$value = isset( $_POST[ $this->key_layout ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_layout ] ) ) : 'text';
 
 		// Build meta key.
@@ -500,15 +543,43 @@ class CommentPress_Core_Entry_Document {
 	}
 
 	/**
-	 * Starting Paragraph Number - meta only exists when not default value.
+	 * Gets the starting Paragraph Number.
+	 *
+	 * @since 4.0
+	 *
+	 * @param object $post The Post object.
+	 * @return int $number The starting Paragraph Number.
+	 */
+	public function paragraph_start_number_get( $post ) {
+
+		// Default to start with Paragraph Number 1.
+		$default = 1;
+
+		// Build meta key.
+		$meta_key = '_' . $this->key_para_num;
+
+		// Get the value from Post meta.
+		$number = $this->get_for_post_id( $post->ID, $meta_key );
+		if ( ! is_numeric( $number ) ) {
+			$number = $default;
+		}
+
+		// --<
+		return $number;
+
+	}
+
+	/**
+	 * Saves the starting Paragraph Number.
 	 *
 	 * @since 3.4
 	 *
 	 * @param object $post The Post object.
 	 */
-	public function page_save_starting_paragraph( $post ) {
+	private function paragraph_start_number_save( $post ) {
 
 		// Get the data.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$data = isset( $_POST[ $this->key_para_num ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_para_num ] ) ) : 1;
 
 		// If not numeric, set to default.
@@ -537,17 +608,23 @@ class CommentPress_Core_Entry_Document {
 	 * @param int $post_id The numeric ID of the Post.
 	 * @param string $meta_key The name of the meta key.
 	 * @param string $option The name of the site setting. Optional.
+	 * @param bool $raw Pass "true" to get the actual meta value.
 	 * @return mixed $value The meta value.
 	 */
-	public function get_for_post_id( $post_id, $meta_key, $option = '' ) {
+	public function get_for_post_id( $post_id, $meta_key, $option = '', $raw = false ) {
+
+		// Check Post for override.
+		$override = get_post_meta( $post_id, $meta_key, true );
+
+		// Return raw value if requested.
+		if ( $raw === true ) {
+			return $override;
+		}
 
 		// Default to site setting when name is passed.
 		if ( ! empty( $option ) ) {
 			$setting = $this->core->db->option_get( $option );
 		}
-
-		// Check Post for override.
-		$override = get_post_meta( $post_id, $meta_key, true );
 
 		// Bail if we didn't get one.
 		if ( ! empty( $option ) && empty( $override ) ) {
