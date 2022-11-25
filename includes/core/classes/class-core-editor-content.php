@@ -100,10 +100,10 @@ class CommentPress_Core_Editor_Content {
 			return;
 		}
 
-		// Add our Quicktag Javascript and dependencies.
+		// Add our Quicktag Javascript.
 		wp_enqueue_script(
-			'commentpress_custom_quicktags',
-			plugins_url( 'includes/core/assets/js/cp_quicktags_3.3.js', COMMENTPRESS_PLUGIN_FILE ),
+			'commentpress-quicktags',
+			plugins_url( 'includes/core/assets/js/cp-editor-quicktags.js', COMMENTPRESS_PLUGIN_FILE ),
 			[ 'quicktags' ],
 			COMMENTPRESS_VERSION, // Version.
 			true // In footer.
