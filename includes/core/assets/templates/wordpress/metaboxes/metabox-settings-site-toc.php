@@ -25,7 +25,7 @@
 
 <table class="form-table">
 
-	<tr valign="top">
+	<tr valign="top" class="show_posts_or_pages">
 		<th scope="row">
 			<label for="cp_show_posts_or_pages_in_toc"><?php esc_html_e( 'Table of Contents contains', 'commentpress-core' ); ?></label>
 		</th>
@@ -38,7 +38,7 @@
 	</tr>
 
 	<?php if ( $show_posts_or_pages_in_toc == 'page' ) : ?>
-		<tr valign="top">
+		<tr valign="top" class="chapter_is_page">
 			<th scope="row">
 				<label for="cp_toc_chapter_is_page"><?php esc_html_e( 'Chapters are', 'commentpress-core' ); ?></label>
 			</th>
@@ -52,7 +52,7 @@
 	<?php endif; ?>
 
 	<?php if ( $show_posts_or_pages_in_toc == 'page' && $toc_chapter_is_page == '0' ) : ?>
-		<tr valign="top">
+		<tr valign="top" class="show_subpages">
 			<th scope="row">
 				<label for="cp_show_subpages"><?php esc_html_e( 'Show Sub-Pages', 'commentpress-core' ); ?></label>
 			</th>
@@ -62,7 +62,7 @@
 		</tr>
 	<?php endif; ?>
 
-	<tr valign="top">
+	<tr valign="top" class="show_extended">
 		<th scope="row"><label for="cp_show_extended_toc"><?php esc_html_e( 'Appearance of TOC for posts', 'commentpress-core' ); ?></label></th>
 		<td><select id="cp_show_extended_toc" name="cp_show_extended_toc">
 				<option value="1" <?php echo ( ( $show_extended_toc == '1' ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Extended information', 'commentpress-core' ); ?></option>
