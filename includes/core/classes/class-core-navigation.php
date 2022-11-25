@@ -35,7 +35,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $next_pages The Next Pages array.
+	 * @var array $next_pages The "Next Pages" array.
 	 */
 	public $next_pages = [];
 
@@ -44,7 +44,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $previous_pages The Previous Pages array.
+	 * @var array $previous_pages The "Previous Pages" array.
 	 */
 	public $previous_pages = [];
 
@@ -53,7 +53,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $next_posts The Next Posts array.
+	 * @var array $next_posts The "Next Posts" array.
 	 */
 	public $next_posts = [];
 
@@ -62,7 +62,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $previous_posts The Previous Posts array.
+	 * @var array $previous_posts The "Previous Posts" array.
 	 */
 	public $previous_posts = [];
 
@@ -76,11 +76,11 @@ class CommentPress_Core_Navigator {
 	public $page_numbers = [];
 
 	/**
-	 * Menu objects array, when using custom menu.
+	 * Menu objects array, when using custom Menu.
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var array $menu_objects The menu objects array.
+	 * @var array $menu_objects The Menu objects array.
 	 */
 	public $menu_objects = [];
 
@@ -228,7 +228,7 @@ class CommentPress_Core_Navigator {
 	 */
 	public function get_next_page( $with_comments = false ) {
 
-		// Do we have any Next Pages?
+		// Do we have any subsequent Pages?
 		if ( count( $this->next_pages ) > 0 ) {
 
 			// Are we asking for Comments?
@@ -277,7 +277,7 @@ class CommentPress_Core_Navigator {
 	 */
 	public function get_previous_page( $with_comments = false ) {
 
-		// Do we have any Previous Pages?
+		// Do we have any previous Pages?
 		if ( count( $this->previous_pages ) > 0 ) {
 
 			// Are we asking for Comments?
@@ -322,7 +322,7 @@ class CommentPress_Core_Navigator {
 	 */
 	public function get_next_post( $with_comments = false ) {
 
-		// Do we have any next Posts?
+		// Do we have any subsequent Posts?
 		if ( count( $this->next_posts ) > 0 ) {
 
 			// Are we asking for Comments?
@@ -424,30 +424,26 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Get list of 'book' Pages.
+	 * Get list of "Document" Pages.
 	 *
 	 * @since 3.0
 	 *
 	 * @param str $mode Either 'structural' or 'readable'.
-	 * @return array $pages All 'book' Pages.
+	 * @return array $pages All "Document" Pages.
 	 */
 	public function get_book_pages( $mode = 'readable' ) {
 
 		// Init.
 		$all_pages = [];
 
-		// Do we have a nav menu enabled?
+		// Parse Menu if we have one.
 		if ( has_nav_menu( 'toc' ) ) {
-
-			// Parse menu.
 			$all_pages = $this->parse_menu( $mode );
-
-		} else {
-
-			// Parse Page order.
-			$all_pages = $this->parse_pages( $mode );
-
+			return $all_pages;
 		}
+
+		// Fall back to parsing the Page order.
+		$all_pages = $this->parse_pages( $mode );
 
 		// --<
 		return $all_pages;
@@ -455,7 +451,7 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Get first readable 'book' Page.
+	 * Get first readable "Document" Page.
 	 *
 	 * @since 3.0
 	 *
@@ -466,7 +462,7 @@ class CommentPress_Core_Navigator {
 		// Init.
 		$id = false;
 
-		// Get all Pages including chapters.
+		// Get all Pages including Chapters.
 		$all_pages = $this->get_book_pages( 'structural' );
 
 		// If we have any Pages.
@@ -514,7 +510,7 @@ class CommentPress_Core_Navigator {
 
 		} else {
 
-			// Get id of first viewable child.
+			// Get the ID of first viewable child.
 			$first_child = $this->get_first_child( $post->ID );
 
 			// If this is a childless Page.
@@ -584,8 +580,8 @@ class CommentPress_Core_Navigator {
 			return;
 		}
 
-		// Bail if we have a custom menu.
-		// TODO: we need to parse the menu to find the viewable child.
+		// Bail if we have a custom Menu.
+		// TODO: we need to parse the Menu to find the viewable child.
 		if ( has_nav_menu( 'toc' ) ) {
 			return;
 		}
@@ -593,15 +589,15 @@ class CommentPress_Core_Navigator {
 		// Access Post object.
 		global $post;
 
-		// Sanity check.
-		if ( ! is_object( $post ) ) {
+		// Bail if not a WordPress Post.
+		if ( ! ( $post instanceof WP_Post ) ) {
 			return;
 		}
 
 		// Are parent Pages viewable?
 		$viewable = ( $this->core->db->option_get( 'cp_toc_chapter_is_page' ) == '1' ) ? true : false;
 
-		// Get id of first child.
+		// Get the ID of the first child.
 		$first_child = $this->get_first_child( $post->ID );
 
 		// Our conditions.
@@ -619,7 +615,7 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Set up Page list.
+	 * Builds the next and previous Page lists.
 	 *
 	 * @since 3.3
 	 */
@@ -628,7 +624,7 @@ class CommentPress_Core_Navigator {
 		// Get all Pages.
 		$all_pages = $this->get_book_pages( 'readable' );
 
-		// If we have any Pages.
+		// Bail if we have no Pages.
 		if ( empty( $all_pages ) ) {
 			return;
 		}
@@ -651,7 +647,7 @@ class CommentPress_Core_Navigator {
 				// Set Page key.
 				$page_key = $key;
 
-				// Kick out to preserve key.
+				// Break to preserve key.
 				break;
 
 			}
@@ -672,14 +668,14 @@ class CommentPress_Core_Navigator {
 
 		// Will there be a previous array?
 		if ( isset( $all_pages[ $key - 1 ] ) ) {
-			// Get all Previous Pages.
+			// Get all previous Pages.
 			$this->previous_pages = array_reverse( array_slice( $all_pages, 0, $key ) );
 		}
 
 	}
 
 	/**
-	 * Set up Posts list.
+	 * Builds the "Next Posts" and "Previous Posts" list.
 	 *
 	 * @since 3.3
 	 */
@@ -708,7 +704,7 @@ class CommentPress_Core_Navigator {
 			// Is it ours?
 			if ( $post_obj->ID == $post->ID ) {
 
-				// Kick out to preserve key.
+				// Break to preserve key.
 				break;
 
 			}
@@ -839,7 +835,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 *
-	 * @param array $pages The array of Page objects in the 'book'.
+	 * @param array $pages The array of Page objects in the "Document".
 	 */
 	public function generate_page_numbers( $pages ) {
 
@@ -851,7 +847,7 @@ class CommentPress_Core_Navigator {
 		// Init with Page 1.
 		$num = 1;
 
-		// Check if we have a custom menu.
+		// Check if we have a custom Menu.
 		$has_nav_menu = false;
 		if ( has_nav_menu( 'toc' ) ) {
 			$has_nav_menu = true;
@@ -884,10 +880,10 @@ class CommentPress_Core_Navigator {
 
 			} else {
 
-				// If we have a custom menu.
+				// If we have a custom Menu.
 				if ( $has_nav_menu ) {
 
-					// Get top level menu item.
+					// Get top level Menu Item.
 					$top_menu_item = $this->get_top_menu_obj( $page_obj );
 
 					// Since this might not be a WP_POST object.
@@ -1104,13 +1100,15 @@ class CommentPress_Core_Navigator {
 
 	}
 
+	// -------------------------------------------------------------------------
+
 	/**
 	 * Parse a WordPress Page list.
 	 *
 	 * @since 3.0
 	 *
 	 * @param str $mode Either 'structural' or 'readable'.
-	 * @return array $pages All 'book' Pages.
+	 * @return array $pages All "Document" Pages.
 	 */
 	public function parse_pages( $mode ) {
 
@@ -1118,7 +1116,7 @@ class CommentPress_Core_Navigator {
 		$pages = [];
 
 		// -----------------------------------------------------------------
-		// Construct "book" navigation based on Pages
+		// Construct "Document" navigation based on Pages
 		// -----------------------------------------------------------------
 
 		// Default to no excludes.
@@ -1131,7 +1129,7 @@ class CommentPress_Core_Navigator {
 		$title_id = $this->is_title_page_the_homepage();
 		if ( $title_id !== false ) {
 
-			// It will already have been shown at the top of the Page list.
+			// It will already be shown at the top of the Page list.
 			$excluded_pages[] = $title_id;
 
 		}
@@ -1174,15 +1172,12 @@ class CommentPress_Core_Navigator {
 		 */
 		$excluded_pages = apply_filters( 'cp_exclude_pages_from_nav', $excluded_pages );
 
-		// Are there any?
-		if ( is_array( $excluded_pages ) && count( $excluded_pages ) > 0 ) {
-
-			// Format them for the exclude param.
+		// Maybe comma-delimit them for the "exclude" argument.
+		if ( is_array( $excluded_pages ) && ! empty( $excluded_pages ) ) {
 			$excludes = implode( ',', $excluded_pages );
-
 		}
 
-		// Set list Pages defaults.
+		// Build Page query defaults.
 		$defaults = [
 			'child_of' => 0,
 			'sort_order' => 'ASC',
@@ -1195,33 +1190,25 @@ class CommentPress_Core_Navigator {
 			'exclude_tree' => '',
 		];
 
-		// Get them.
+		// Get the Pages.
 		$pages = get_pages( $defaults );
+		if ( empty( $pages ) ) {
+			return $pages;
+		}
 
-		// If we have any Pages.
-		if ( count( $pages ) > 0 ) {
+		// If Chapters are not Pages.
+		if ( $this->core->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
 
-			// If chapters are not Pages.
-			if ( $this->core->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
-
-				// Do we want all readable Pages?
-				if ( $mode == 'readable' ) {
-
-					// Filter chapters out.
-					$pages = $this->filter_chapters( $pages );
-
-				}
-
+			// Filter Chapters out if we want all readable Pages.
+			if ( $mode == 'readable' ) {
+				$pages = $this->filter_chapters( $pages );
 			}
 
-			// If Theme My Login is present.
-			if ( defined( 'TML_ABSPATH' ) ) {
+		}
 
-				// Filter its Page out.
-				$pages = $this->filter_theme_my_login_page( $pages );
-
-			}
-
+		// Filter out Theme My Login Page if present.
+		if ( defined( 'TML_ABSPATH' ) ) {
+			$pages = $this->filter_theme_my_login_page( $pages );
 		}
 
 		// --<
@@ -1239,28 +1226,22 @@ class CommentPress_Core_Navigator {
 	public function is_title_page_the_homepage() {
 
 		// Only need to parse this once.
-		static $is_home = null;
-		if ( ! is_null( $is_home ) ) {
+		static $is_home;
+		if ( isset( $is_home ) ) {
 			return $is_home;
 		}
 
 		// Get Welcome Page ID.
 		$welcome_id = $this->core->db->option_get( 'cp_welcome_page' );
 
-		// Get Front Page.
+		// Get Front Page ID.
 		$page_on_front = $this->core->db->option_wp_get( 'page_on_front' );
 
 		// If the CommentPress Title Page exists and it's the Front Page.
 		if ( $welcome_id !== false && $page_on_front == $welcome_id ) {
-
-			// Set to Page ID.
 			$is_home = $welcome_id;
-
 		} else {
-
-			// Not home Page.
 			$is_home = false;
-
 		}
 
 		// --<
@@ -1268,26 +1249,28 @@ class CommentPress_Core_Navigator {
 
 	}
 
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Parse a WordPress menu.
+	 * Parse a WordPress Menu.
 	 *
 	 * @since 3.0
 	 *
 	 * @param str $mode Either 'structural' or 'readable'.
-	 * @return array $pages All 'book' Pages.
+	 * @return array $pages All "Document" Pages.
 	 */
 	public function parse_menu( $mode ) {
 
 		// Init return.
 		$pages = [];
 
-		// Get menu locations.
+		// Get Menu locations.
 		$locations = get_nav_menu_locations();
 
-		// Check menu locations.
+		// Check Menu locations.
 		if ( isset( $locations['toc'] ) ) {
 
-			// Get the menu object.
+			// Get the Menu object.
 			$menu = wp_get_nav_menu_object( $locations['toc'] );
 
 			// Default args for reference.
@@ -1302,31 +1285,31 @@ class CommentPress_Core_Navigator {
 				'update_post_term_cache' => false,
 			];
 
-			// Get the menu objects and store for later.
+			// Get the Menu objects and store for later.
 			$this->menu_objects = wp_get_nav_menu_items( $menu->term_id, $args );
 
 			// If we get some.
 			if ( $this->menu_objects ) {
 
-				// If chapters are not Pages, filter the menu items.
+				// If Chapters are not Pages, filter the Menu Items.
 				if ( $this->core->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
 
 					// Do we want all readable Pages?
 					if ( $mode == 'readable' ) {
 
-						// Filter chapters out.
+						// Filter Chapters out.
 						$menu_items = $this->filter_menu( $this->menu_objects );
 
 					} else {
 
-						// Structural - use a copy of the raw menu data.
+						// Structural - use a copy of the raw Menu data.
 						$menu_items = $this->menu_objects;
 
 					}
 
 				} else {
 
-					// Use a copy of the raw menu data.
+					// Use a copy of the raw Menu data.
 					$menu_items = $this->menu_objects;
 
 				}
@@ -1337,7 +1320,7 @@ class CommentPress_Core_Navigator {
 				// Convert to array of Pages.
 				foreach ( $menu_items as $menu_item ) {
 
-					// Is it a WordPress item?
+					// Is it a WordPress Menu Item?
 					if ( isset( $menu_item->object_id ) ) {
 
 						// Init pseudo WP_Post object.
@@ -1346,16 +1329,16 @@ class CommentPress_Core_Navigator {
 						// Add Post ID.
 						$pseudo_post->ID = $menu_item->object_id;
 
-						// Add menu ID (for filtering below).
+						// Add Menu ID (for filtering below).
 						$pseudo_post->menu_id = $menu_item->ID;
 
-						// Add menu item parent ID (for finding parent below).
+						// Add Menu Item parent ID (for finding parent below).
 						$pseudo_post->menu_item_parent = $menu_item->menu_item_parent;
 
 						// Add Comment count for possible calls for "Next with Comments".
 						$pseudo_post->comment_count = $menu_item->comment_count;
 
-						// Add to array of WordPress Pages in menu.
+						// Add to array of WordPress Pages in Menu.
 						$pages[] = $pseudo_post;
 
 					}
@@ -1372,12 +1355,12 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Strip out all but lowest level menu items.
+	 * Strip out all but lowest level Menu Items.
 	 *
 	 * @since 3.0
 	 *
-	 * @param array $menu_items An array of menu item objects.
-	 * @return array $sub_items All lowest level items.
+	 * @param array $menu_items An array of Menu Item objects.
+	 * @return array $sub_items All lowest level Menu Items.
 	 */
 	public function filter_menu( $menu_items ) {
 
@@ -1390,7 +1373,7 @@ class CommentPress_Core_Navigator {
 			// Loop.
 			foreach ( $menu_items as $key => $menu_obj ) {
 
-				// Get item children.
+				// Get Menu Item children.
 				$kids = $this->get_menu_item_children( $menu_items, $menu_obj );
 
 				// Do we have any?
@@ -1411,13 +1394,13 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Utility to get children of a menu item.
+	 * Utility to get children of a Menu Item.
 	 *
 	 * @since 3.0
 	 *
-	 * @param array $menu_items An array of menu item objects.
-	 * @param obj $menu_obj The menu item object.
-	 * @return array $sub_items The menu item children.
+	 * @param array $menu_items An array of Menu Item objects.
+	 * @param obj $menu_obj The Menu Item object.
+	 * @return array $sub_items The Menu Item children.
 	 */
 	public function get_menu_item_children( $menu_items, $menu_obj ) {
 
@@ -1432,7 +1415,7 @@ class CommentPress_Core_Navigator {
 		// Loop.
 		foreach ( $menu_items as $key => $menu_item ) {
 
-			// Is this item a child of the passed in menu object?
+			// Is this Menu Item a child of the passed in Menu object?
 			if ( $menu_item->menu_item_parent == $menu_obj->ID ) {
 
 				// Add to our return array.
@@ -1448,12 +1431,12 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Utility to get parent of a menu item.
+	 * Utility to get parent of a Menu Item.
 	 *
 	 * @since 3.0
 	 *
-	 * @param obj $menu_obj The menu item object.
-	 * @return int|bool $menu_item The parent menu item - or false if not found.
+	 * @param obj $menu_obj The Menu Item object.
+	 * @return int|bool $menu_item The parent Menu Item - or false if not found.
 	 */
 	public function get_menu_item_parent( $menu_obj ) {
 
@@ -1463,7 +1446,7 @@ class CommentPress_Core_Navigator {
 			// Loop.
 			foreach ( $this->menu_objects as $key => $menu_item ) {
 
-				// Is this item the first parent of the passed in menu object?
+				// Is this Menu Item the first parent of the passed in Menu object?
 				if ( $menu_item->ID == $menu_obj->menu_item_parent ) {
 
 					// --<
@@ -1481,24 +1464,24 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Get top parent menu item.
+	 * Get top parent Menu Item.
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $menu_obj The queried menu object.
+	 * @param object $menu_obj The queried Menu object.
 	 * @return object $parent_obj The parent object or false if not found.
 	 */
 	public function get_top_menu_obj( $menu_obj ) {
 
 		/*
-		 * There is little point walking the menu tree because menu items can
-		 * appear more than once in the menu.
+		 * There is little point walking the Menu tree because Menu Items can
+		 * appear more than once in the Menu.
 		 *
-		 * HOWEVER: for instances where people do use the menu sensibly, we
+		 * HOWEVER: for instances where people do use the Menu sensibly, we
 		 * should attempt to walk the tree as best we can.
 		 */
 
-		// Is this the top item?
+		// Is this the top Menu Item?
 		if ( $menu_obj->menu_item_parent == 0 ) {
 
 			// Yes -> return the object.
@@ -1506,10 +1489,10 @@ class CommentPress_Core_Navigator {
 
 		}
 
-		// Get parent item.
+		// Get parent Menu Item.
 		$parent_obj = $this->get_menu_item_parent( $menu_obj );
 
-		// Is the top item?
+		// Is the top Menu Item?
 		if ( $parent_obj->menu_item_parent !== 0 ) {
 
 			// No -> recurse upwards.
