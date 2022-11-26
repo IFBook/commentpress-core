@@ -69,6 +69,15 @@ class CommentPress_Core_Entry_Formatter {
 	public $meta_key = '_cp_post_type_override';
 
 	/**
+	 * Select element name.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $element_select The name of the metabox select element.
+	 */
+	private $element_select = 'cp_formatter_value';
+
+	/**
 	 * Partials template directory path.
 	 *
 	 * @since 4.0
@@ -76,15 +85,6 @@ class CommentPress_Core_Entry_Formatter {
 	 * @var string $metabox_path Relative path to the Partials directory.
 	 */
 	private $partials_path = 'includes/core/assets/templates/wordpress/partials/';
-
-	/**
-	 * Metabox select element name.
-	 *
-	 * @since 4.0
-	 * @access private
-	 * @var string $element_select The name of the metabox select element.
-	 */
-	private $element_select = 'cp_formatter_value';
 
 	/**
 	 * Prevent "save_post" callback from running more than once.
@@ -142,7 +142,7 @@ class CommentPress_Core_Entry_Formatter {
 		add_action( 'commentpress/core/settings/site/metabox/general/after', [ $this, 'metabox_settings_get' ] );
 
 		// Save data from "Site Settings" screen.
-		add_action( 'commentpress/core/settings/site/saved', [ $this, 'save_for_settings' ] );
+		add_action( 'commentpress/core/settings/site/save/before', [ $this, 'save_for_settings' ] );
 
 		// Save default Post Formatter on Special Pages.
 		add_action( 'commentpress/core/db/page/special/title/created', [ $this, 'default_set_for_post' ] );
@@ -193,7 +193,7 @@ class CommentPress_Core_Entry_Formatter {
 		$blog_type = $this->core->db->option_get( $this->option_formatter );
 
 		// Get the "Text Format" options markup.
-		$type_options = $this->options_markup_get( $types, $blog_type );
+		$type_options = $this->options_markup_get( $types, $blog_type, $show_default = false );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-entry-formatter-settings.php';
@@ -203,9 +203,20 @@ class CommentPress_Core_Entry_Formatter {
 	/**
 	 * Saves the data from "Site Settings" screen.
 	 *
+	 * Adds the data to the options array. The options are actually saved later.
+	 *
+	 * @see CommentPress_Core_Settings_Site::form_submitted()
+	 *
 	 * @since 4.0
 	 */
 	public function save_for_settings() {
+
+		// Get the value of the metabox select element.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$formatter = isset( $_POST[ $this->option_formatter ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->option_formatter ] ) ) : '';
+
+		// Set default sidebar.
+		$this->core->db->option_set( $this->option_formatter, $formatter );
 
 	}
 
@@ -541,9 +552,10 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @param array $types The array of "Text Format" options.
 	 * @param int $current The current "Text Format" option.
+	 * @param bool $show_default True includes the "Use default" option, false does not.
 	 * @return string $markup The "Text Format" options markup.
 	 */
-	public function options_markup_get( $types, $current ) {
+	public function options_markup_get( $types, $current, $show_default = true ) {
 
 		// Init markup.
 		$markup = '';
@@ -553,12 +565,17 @@ class CommentPress_Core_Entry_Formatter {
 			return $markup;
 		}
 
-		// Always add "Use Default".
-		$options = [
-			'<option value="" ' . ( ( $current === false || $current === '' ) ? ' selected="selected"' : '' ) . '>' .
-				esc_html__( 'Use default', 'commentpress-core' ) .
-			'</option>',
-		];
+		// Init options.
+		$options = [];
+
+		// Maybe add "Use Default".
+		if ( $show_default === true ) {
+			$options = [
+				'<option value="" ' . ( ( $current === false || $current === '' ) ? ' selected="selected"' : '' ) . '>' .
+					esc_html__( 'Use default', 'commentpress-core' ) .
+				'</option>',
+			];
+		}
 
 		// Build options.
 		foreach ( $types as $key => $type ) {

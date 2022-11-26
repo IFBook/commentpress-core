@@ -183,7 +183,7 @@ class CommentPress_Core_Entry_Document {
 		add_action( 'commentpress/core/settings/site/metabox/page/after', [ $this, 'metabox_settings_get' ] );
 
 		// Save data from "Site Settings" screen.
-		add_action( 'commentpress/core/settings/site/saved', [ $this, 'save_for_settings' ] );
+		add_action( 'commentpress/core/settings/site/save/before', [ $this, 'save_for_settings' ] );
 
 	}
 
@@ -208,9 +208,27 @@ class CommentPress_Core_Entry_Document {
 	/**
 	 * Saves the data from "Site Settings" screen.
 	 *
+	 * Adds the data to the options array. The options are actually saved later.
+	 *
+	 * @see CommentPress_Core_Settings_Site::form_submitted()
+	 *
 	 * @since 4.0
 	 */
 	public function save_for_settings() {
+
+		// Get the Entry title visibility value.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$show_title = isset( $_POST[ $this->key_show_title ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_show_title ] ) ) : '';
+
+		// Set the Page Meta visibility value.
+		$this->core->db->option_set( $this->key_show_title, $show_title );
+
+		// Get the Page Meta visibility value.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$show_meta = isset( $_POST[ $this->key_show_meta ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_show_meta ] ) ) : '';
+
+		// Set the Page Meta visibility value.
+		$this->core->db->option_set( $this->key_show_meta, $show_meta );
 
 	}
 

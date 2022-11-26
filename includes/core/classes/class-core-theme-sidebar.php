@@ -96,7 +96,7 @@ class CommentPress_Core_Theme_Sidebar {
 		add_action( 'commentpress/core/settings/site/metabox/theme/after', [ $this, 'metabox_settings_get' ] );
 
 		// Save Sidebar data from "Site Settings" screen.
-		add_action( 'commentpress/core/settings/site/saved', [ $this, 'save_for_settings' ] );
+		add_action( 'commentpress/core/settings/site/save/before', [ $this, 'save_for_settings' ] );
 
 		// Inject form element into the "CommentPress Settings" metabox on "Edit Entry" screens.
 		add_action( 'commentpress/core/entry/metabox/after', [ $this, 'metabox_post_get' ] );
@@ -254,9 +254,25 @@ class CommentPress_Core_Theme_Sidebar {
 	/**
 	 * Saves the Sidebar with data from "Site Settings" screen.
 	 *
+	 * Adds the data to the options array. The options are actually saved later.
+	 *
+	 * @see CommentPress_Core_Settings_Site::form_submitted()
+	 *
 	 * @since 4.0
 	 */
 	public function save_for_settings() {
+
+		// Allow this to be disabled.
+		if ( apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
+			return;
+		}
+
+		// Find the data.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$sidebar = isset( $_POST[ $this->option_sidebar ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->option_sidebar ] ) ) : '';
+
+		// Set default sidebar.
+		$this->core->db->option_set( $this->option_sidebar, $sidebar );
 
 	}
 

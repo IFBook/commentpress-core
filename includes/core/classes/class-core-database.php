@@ -935,8 +935,6 @@ class CommentPress_Core_Database {
 		$cp_para_comments_live = 0;
 		$cp_show_subpages = 0;
 		$cp_show_extended_toc = 0;
-		$cp_blog_type = 0;
-		$cp_sidebar_default = 'toc';
 		$cp_featured_images = 'n';
 		$cp_textblock_meta = 'y';
 		$cp_page_nav_enabled = 'y';
@@ -1065,14 +1063,6 @@ class CommentPress_Core_Database {
 		$cp_promote_reading = esc_sql( $cp_promote_reading );
 		$this->option_set( 'cp_promote_reading', ( $cp_promote_reading ? 1 : 0 ) );
 
-		// Title visibility.
-		$cp_title_visibility = esc_sql( $cp_title_visibility );
-		$this->option_set( 'cp_title_visibility', $cp_title_visibility );
-
-		// Page meta visibility.
-		$cp_page_meta_visibility = esc_sql( $cp_page_meta_visibility );
-		$this->option_set( 'cp_page_meta_visibility', $cp_page_meta_visibility );
-
 		// Save scroll speed.
 		$cp_js_scroll_speed = esc_sql( $cp_js_scroll_speed );
 		$this->option_set( 'cp_js_scroll_speed', $cp_js_scroll_speed );
@@ -1080,10 +1070,6 @@ class CommentPress_Core_Database {
 		// Save min Page width.
 		$cp_min_page_width = esc_sql( $cp_min_page_width );
 		$this->option_set( 'cp_min_page_width', $cp_min_page_width );
-
-		// Save Blog Type.
-		$cp_blog_type = esc_sql( $cp_blog_type );
-		$this->option_set( 'cp_blog_type', $cp_blog_type );
 
 		// If it's a Group Blog.
 		if ( $this->core->bp->is_groupblog() ) {
@@ -1097,12 +1083,6 @@ class CommentPress_Core_Database {
 
 			}
 
-		}
-
-		// Save default sidebar.
-		if ( ! apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
-			$cp_sidebar_default = esc_sql( $cp_sidebar_default );
-			$this->option_set( 'cp_sidebar_default', $cp_sidebar_default );
 		}
 
 		// Save featured images.
@@ -1134,27 +1114,6 @@ class CommentPress_Core_Database {
 			$this->option_set( 'cp_post_types_disabled', $disabled_types );
 
 		}
-
-		/**
-		 * Fires before the options have been saved.
-		 *
-		 * Used internally by:
-		 *
-		 * @since 4.0
-		 */
-		do_action( 'commentpress/core/db/options_update/pre' );
-
-		// Save.
-		$this->options_save();
-
-		/**
-		 * Fires after the options have been saved.
-		 *
-		 * Used internally by:
-		 *
-		 * @since 4.0
-		 */
-		do_action( 'commentpress/core/db/options_update/post' );
 
 	}
 

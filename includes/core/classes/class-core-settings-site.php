@@ -816,11 +816,35 @@ class CommentPress_Core_Settings_Site {
 		$this->core->db->options_update();
 
 		/**
-		 * Fires when the Site Settings have been saved.
+		 * Fires before the options have been saved.
+		 *
+		 * * Callbacks do not need to verify the nonce as this has already been done.
+		 * * Callbacks should, however, implement their own data validation checks.
+		 *
+		 * Used internally by:
+		 *
+		 * * CommentPress_Core_Entry_Document::save_for_settings() (Priority: 10)
+		 * * CommentPress_Core_Entry_Formatter::save_for_settings() (Priority: 10)
+		 * * CommentPress_Core_Theme_Sidebar::save_for_settings() (Priority: 10)
 		 *
 		 * @since 4.0
 		 */
-		do_action( 'commentpress/core/settings/site/saved' );
+		do_action( 'commentpress/core/settings/site/save/before' );
+
+		// Save the options.
+		$this->core->db->options_save();
+
+		/**
+		 * Fires when the Site Settings have been saved.
+		 *
+		 * * Callbacks do not need to verify the nonce as this has already been done.
+		 * * Callbacks should, however, implement their own data validation checks.
+		 *
+		 * Used internally by:
+		 *
+		 * @since 4.0
+		 */
+		do_action( 'commentpress/core/settings/site/save/after' );
 
 		// Now redirect.
 		$this->form_redirect();

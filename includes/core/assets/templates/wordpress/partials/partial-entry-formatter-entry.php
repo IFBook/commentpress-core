@@ -9,8 +9,8 @@
 
 ?>
 <!-- includes/core/assets/templates/wordpress/partials/partial-entry-formatter-entry.php -->
-<div class="cp_post_type_override_wrapper">
-	<p><strong><label for="cp_title_visibility"><?php esc_html_e( 'Text Format', 'commentpress-core' ); ?></label></strong></p>
+<div class="<?php echo $this->element_select; ?>_wrapper">
+	<p><strong><label for="<?php echo $this->element_select; ?>"><?php esc_html_e( 'Text Format', 'commentpress-core' ); ?></label></strong></p>
 	<p>
 		<select id="<?php echo $this->element_select; ?>" name="<?php echo $this->element_select; ?>">
 			<?php echo $type_options; ?>

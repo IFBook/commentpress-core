@@ -21,4 +21,3 @@
 		<p class="description"><?php esc_html_e( 'Choose "Prose" if you want content to be parsed by paragraphs and lists. Choose "Poetry" if you want content to be parsed by lines. If you insert a Comment Block into the content, then it will be parsed by block, regardless of this setting.', 'commentpress-core' ); ?></p>
 	</td>
 </tr>
-
