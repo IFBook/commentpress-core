@@ -598,14 +598,14 @@ class CommentPress_Core_Navigator {
 	/**
 	 * Strip out all but lowest level Pages.
 	 *
-	 * TODO: This only works one level deep.
-	 *
 	 * @since 3.0
 	 *
 	 * @param array $pages The array of Page objects.
 	 * @return array $subpages All Sub-pages.
 	 */
 	public function page_chapters_filter( $pages ) {
+
+		// TODO: This only works one level deep.
 
 		// Init return.
 		$subpages = [];
