@@ -1511,14 +1511,42 @@ We could position so that there's a bigger touch area:
 	text-decoration: none;
 }
 
-/* compatibility with Subscribe to Comments Reloaded */
-div#respond .subscribe_reloaded_insert
+/* Support for "Subscribe to Comments Reloaded" */
+div#respond .subscribe_reloaded_insert,
+div#respond .stcr-wrapper
 {
 	font-family: sans-serif;
+	text-transform: uppercase;
 	color: #666;
 	padding: 0;
 	margin: 15px 0;
 	font-size: 80%;
+}
+
+div#respond .stcr-wrapper p
+{
+	text-indent: -24px;
+	margin-left: 24px;
+}
+
+div#respond .stcr-wrapper a
+{
+	color: #000;
+	text-decoration: underline;
+}
+
+div#respond .stcr-wrapper a:hover,
+div#respond .stcr-wrapper a:active,
+div#respond .stcr-wrapper a:focus
+{
+	color: #761D19;
+}
+
+div#respond .stcr-wrapper #subscribe-reloaded
+{
+	width: auto !important;
+	vertical-align: top;
+	margin-top: 1px;
 }
 
 #cpajax_error_msg

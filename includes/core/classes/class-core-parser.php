@@ -231,23 +231,12 @@ class CommentPress_Core_Parser {
 			return false;
 		}
 
-		// Theme My Login Page is not.
-		if ( $this->core->plugins->is_theme_my_login_page() ) {
-			return false;
-		}
-
-		// Members List Page is not.
-		if ( $this->core->plugins->is_members_list_page() ) {
-			return false;
-		}
-
-		// Subscribe to Comments Reloaded Page is not.
-		if ( $this->core->plugins->is_subscribe_to_comments_reloaded_page() ) {
-			return false;
-		}
-
 		/**
 		 * Filters "commenting allowed" status.
+		 *
+		 * Used internally by:
+		 *
+		 * * CommentPress_Core_Plugins::is_commentable() (Priority: 10)
 		 *
 		 * @since 3.4
 		 *
@@ -280,18 +269,20 @@ class CommentPress_Core_Parser {
 			return $content;
 		}
 
-		// Compat with Subscribe to Comments Reloaded.
-		if ( $this->core->plugins->is_subscribe_to_comments_reloaded_page() ) {
-			return $content;
-		}
-
-		// Compat with Theme My Login.
-		if ( $this->core->plugins->is_theme_my_login_page() ) {
-			return $content;
-		}
-
-		// Compat with Members List plugin.
-		if ( $this->core->plugins->is_members_list_page() ) {
+		/**
+		 * Filter for plugins to disallow parsing of content.
+		 *
+		 * Used internally by:
+		 *
+		 * * CommentPress_Core_Plugins::is_theme_my_login_page() (Priority: 10)
+		 * * CommentPress_Core_Plugins::is_members_list_page() (Priority: 10)
+		 * * CommentPress_Core_Plugins::is_subscribe_to_comments_reloaded_page() (Priority: 10)
+		 *
+		 * @since 4.0
+		 *
+		 * @param bool False by default. Return true to skip parsing.
+		 */
+		if ( apply_filters( 'commentpress/core/parser/the_content/skip', false ) ) {
 			return $content;
 		}
 

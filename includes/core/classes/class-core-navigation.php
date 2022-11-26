@@ -951,68 +951,6 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Utility to remove the Theme My Login Page.
-	 *
-	 * @since 3.0
-	 *
-	 * @param array $pages An array of Page objects.
-	 * @return bool $clean The modified array pf Page objects.
-	 */
-	public function filter_theme_my_login_page( $pages ) {
-
-		// Init return.
-		$clean = [];
-
-		// If we have any.
-		if ( count( $pages ) > 0 ) {
-
-			// Loop.
-			foreach ( $pages as $page_obj ) {
-
-				// Do we have any?
-				if ( ! $this->detect_login_page( $page_obj ) ) {
-
-					// Add to our return array.
-					$clean[] = $page_obj;
-
-				}
-
-			}
-
-		} // End have array check.
-
-		// --<
-		return $clean;
-
-	}
-
-	/**
-	 * Utility to detect the Theme My Login Page.
-	 *
-	 * @since 3.0
-	 *
-	 * @param object $page_obj The WordPress Page object.
-	 * @return boolean $success True if Theme My Login Page, false otherwise.
-	 */
-	public function detect_login_page( $page_obj ) {
-
-		// Compat with Theme My Login.
-		if (
-			$page_obj->post_name == 'login' &&
-			$page_obj->post_content == '[theme-my-login]'
-		) {
-
-			// --<
-			return true;
-
-		}
-
-		// --<
-		return false;
-
-	}
-
-	/**
 	 * PHP Roman Numeral Library.
 	 *
 	 * Copyright (c) 2008, reusablecode.blogspot.com; some rights reserved.
@@ -1208,7 +1146,7 @@ class CommentPress_Core_Navigator {
 
 		// Filter out Theme My Login Page if present.
 		if ( defined( 'TML_ABSPATH' ) ) {
-			$pages = $this->filter_theme_my_login_page( $pages );
+			$pages = $this->core->plugins->filter_theme_my_login_page( $pages );
 		}
 
 		// --<

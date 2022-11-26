@@ -111,10 +111,12 @@ body.create-blog #content a,
 
 /* Links in comment identifiers */
 .comment-content a,
-div#respond .subscribe_reloaded_insert a
 .comment-meta a,
 .acomment-meta a,
 .meta a,
+
+/* Support for "Subscribe to Comments Reloaded" */
+div#respond .subscribe_reloaded_insert a,
 
 /* Links in comments */
 .comment-identifier .comment-edit a:hover,

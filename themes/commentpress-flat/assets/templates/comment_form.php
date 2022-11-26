@@ -193,13 +193,7 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 					<?php endif; ?>
 
 					<?php if ( ! empty( $page ) ) : /* Add Page for multipage situations. */ ?>
-						<input type="hidden" name="page" value="' . $page . '" />
-					<?php endif; ?>
-
-					<?php if ( function_exists( 'subscribe_reloaded_show' ) ) : /* Compatibility with Subscribe to Comments Reloaded. */ ?>
-						<div class="subscribe_reloaded_insert">
-							<?php subscribe_reloaded_show(); ?>
-						</div>
+						<input type="hidden" name="page" value="<?php echo esc_attr( $page ); ?>" />
 					<?php endif; ?>
 
 					<?php
