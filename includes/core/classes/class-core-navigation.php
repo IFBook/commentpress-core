@@ -598,6 +598,9 @@ class CommentPress_Core_Navigator {
 	/**
 	 * Strip out all but lowest level Pages.
 	 *
+	 * It seems that the "redirect_to_child" method handles deeper levels, so it
+	 * may not be necessary to recurse deeper than one level.
+	 *
 	 * @since 3.0
 	 *
 	 * @param array $pages The array of Page objects.
