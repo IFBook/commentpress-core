@@ -416,7 +416,7 @@ class CommentPress_Core_Entry_Document {
 		if (
 			empty( $post->post_parent ) &&
 			! $this->core->pages_legacy->is_special_page() &&
-			$post->ID === (int) $this->core->nav->get_first_page()
+			$post->ID === (int) $this->core->nav->page_get_first()
 		) {
 
 			// Default to arabic.
@@ -463,7 +463,7 @@ class CommentPress_Core_Entry_Document {
 		if (
 			$post->post_parent == '0' &&
 			! $this->core->pages_legacy->is_special_page() &&
-			$post->ID == $this->core->nav->get_first_page()
+			$post->ID == $this->core->nav->page_get_first()
 		) {
 
 			// Get the value.
@@ -481,7 +481,7 @@ class CommentPress_Core_Entry_Document {
 		 */
 
 		// Get all Pages including Chapters.
-		$all_pages = $this->core->nav->get_book_pages( 'structural' );
+		$all_pages = $this->core->nav->document_pages_get_all( 'structural' );
 		if ( empty( $all_pages ) ) {
 			return;
 		}

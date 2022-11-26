@@ -136,7 +136,7 @@ if ( ! function_exists( 'commentpress_page_navigation_get_next_link' ) ) :
 		}
 
 		// Get Next Page.
-		$next_page = $core->nav->get_next_page( $with_comments );
+		$next_page = $core->nav->page_next_get( $with_comments );
 		if ( ! is_object( $next_page ) ) {
 			return $link;
 		}
@@ -211,7 +211,7 @@ if ( ! function_exists( 'commentpress_page_navigation_get_previous_link' ) ) :
 		}
 
 		// Get Previous Page.
-		$previous_page = $core->nav->get_previous_page( $with_comments );
+		$previous_page = $core->nav->page_previous_get( $with_comments );
 		if ( ! is_object( $previous_page ) ) {
 			return $link;
 		}
@@ -283,7 +283,7 @@ if ( ! function_exists( 'commentpress_get_page_number' ) ) :
 		}
 
 		// Try and get the "Page Number".
-		$number = $core->nav->get_page_number( $post_id );
+		$number = $core->nav->page_number_get( $post_id );
 		if ( empty( $number ) ) {
 			return false;
 		}

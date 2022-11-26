@@ -20,7 +20,7 @@ $next_page_html = '';
 if ( ! empty( $core ) ) {
 
 	// "Title Page" always points to the first readable Page, unless it is itself.
-	$next_page_id = $core->nav->get_first_page();
+	$next_page_id = $core->nav->page_get_first();
 
 	// If the link does not point to this Page and we're allowing Page nav.
 	if ( $next_page_id != $post->ID && false === $core->nav->page_nav_is_disabled() ) {

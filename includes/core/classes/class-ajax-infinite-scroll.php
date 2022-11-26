@@ -180,7 +180,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 		}
 
 		// Get all Pages.
-		$all_pages = $this->core->nav->get_book_pages( 'readable' );
+		$all_pages = $this->core->nav->document_pages_get_all( 'readable' );
 
 		// If we have any Pages.
 		if ( count( $all_pages ) == 0 ) {
@@ -263,7 +263,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 		$content = apply_filters( 'the_content', $post->post_content );
 
 		// Generate Page numbers.
-		$this->core->nav->generate_page_numbers( $all_pages );
+		$this->core->nav->page_numbers_generate( $all_pages );
 
 		// Get menu ID, if we have one.
 		if ( isset( $new_post->menu_id ) ) {
@@ -273,7 +273,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 		}
 
 		// Get Page number.
-		$number = $this->core->nav->get_page_number( $post->ID );
+		$number = $this->core->nav->page_number_get( $post->ID );
 
 		// Add Page number.
 		if ( $number ) {

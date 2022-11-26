@@ -608,6 +608,39 @@ class CommentPress_Core_Pages_Legacy {
 	// -------------------------------------------------------------------------
 
 	/**
+	 * Checks if the CommentPress "Welcome Page" is the homepage.
+	 *
+	 * @since 3.0
+	 *
+	 * @return bool|int $is_home False if not homepage, the ID of the Welcome Page if true.
+	 */
+	public function is_title_page_the_homepage() {
+
+		// Only need to parse this once.
+		static $is_home;
+		if ( isset( $is_home ) ) {
+			return $is_home;
+		}
+
+		// Get Welcome Page ID.
+		$welcome_id = $this->core->db->option_get( 'cp_welcome_page' );
+
+		// Get Front Page ID.
+		$page_on_front = $this->core->db->option_wp_get( 'page_on_front' );
+
+		// If the CommentPress Title Page exists and it's the Front Page.
+		if ( $welcome_id !== false && $page_on_front == $welcome_id ) {
+			$is_home = $welcome_id;
+		} else {
+			$is_home = false;
+		}
+
+		// --<
+		return $is_home;
+
+	}
+
+	/**
 	 * Create "title" Page.
 	 *
 	 * @since 3.4
