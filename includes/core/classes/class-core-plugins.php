@@ -71,6 +71,9 @@ class CommentPress_Core_Plugins {
 		add_filter( 'commentpress/core/parser/the_content/skip', [ $this, 'is_theme_my_login_page' ] );
 		add_filter( 'commentpress/core/parser/the_content/skip', [ $this, 'is_subscribe_to_comments_reloaded_page' ] );
 
+		// Removes any "Theme My Login" Pages.
+		add_filter( 'commentpress/core/nav/page_list', [ $this, 'filter_theme_my_login_page' ] );
+
 		// Show the "Subscribe to Comments Reloaded" Subscription Checkbox.
 		add_action( 'commentpress_comment_form_pre_submit', [ $this, 'subscribe_to_comments_reloaded_show' ] );
 
@@ -106,7 +109,7 @@ class CommentPress_Core_Plugins {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Utility to check for presence of "Theme My Login" Shortcode.
+	 * Checks for presence of "Theme My Login" Shortcode in the current Post.
 	 *
 	 * @since 3.4
 	 *
@@ -133,7 +136,7 @@ class CommentPress_Core_Plugins {
 	}
 
 	/**
-	 * Removes the "Theme My Login" Page.
+	 * Removes any "Theme My Login" Pages from the Navigation Page List.
 	 *
 	 * @since 3.0
 	 *
@@ -141,6 +144,11 @@ class CommentPress_Core_Plugins {
 	 * @return array $clean The modified array of Page objects.
 	 */
 	public function filter_theme_my_login_page( $pages ) {
+
+		// Bail if Theme My Login is not present.
+		if ( ! defined( 'TML_ABSPATH' ) ) {
+			return $pages;
+		}
 
 		// Bail if there are none.
 		if ( empty( $pages ) ) {
@@ -150,9 +158,9 @@ class CommentPress_Core_Plugins {
 		// Init return.
 		$clean = [];
 
-		// Rebuild array without the Theme My Login Page.
+		// Rebuild array without Pages that have the "Theme My Login" Shortcode.
 		foreach ( $pages as $page ) {
-			if ( ! $this->is_theme_my_login_page( $page ) ) {
+			if ( ! has_shortcode( $page->post_content, 'theme-my-login' ) ) {
 				$clean[] = $page;
 			}
 		}

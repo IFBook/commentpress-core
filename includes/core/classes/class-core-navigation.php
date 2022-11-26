@@ -752,10 +752,18 @@ class CommentPress_Core_Navigator {
 
 		}
 
-		// Filter out Theme My Login Page if present.
-		if ( defined( 'TML_ABSPATH' ) ) {
-			$pages = $this->core->plugins->filter_theme_my_login_page( $pages );
-		}
+		/**
+		 * Filters the parsed Pages.
+		 *
+		 * Used internally by:
+		 *
+		 * * CommentPress_Core_Plugins::filter_theme_my_login_page() (Priority: 10)
+		 *
+		 * @since 4.0
+		 *
+		 * @param array $pages The array of parsed Pages.
+		 */
+		$pages = apply_filters( 'commentpress/core/nav/page_list', $pages );
 
 		// --<
 		return $pages;
