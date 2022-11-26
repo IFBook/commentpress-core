@@ -275,7 +275,6 @@ class CommentPress_Core_Parser {
 		 * Used internally by:
 		 *
 		 * * CommentPress_Core_Plugins::is_theme_my_login_page() (Priority: 10)
-		 * * CommentPress_Core_Plugins::is_members_list_page() (Priority: 10)
 		 * * CommentPress_Core_Plugins::is_subscribe_to_comments_reloaded_page() (Priority: 10)
 		 *
 		 * @since 4.0

@@ -69,7 +69,6 @@ class CommentPress_Core_Plugins {
 
 		// Check plugin pages when parsing content.
 		add_filter( 'commentpress/core/parser/the_content/skip', [ $this, 'is_theme_my_login_page' ] );
-		add_filter( 'commentpress/core/parser/the_content/skip', [ $this, 'is_members_list_page' ] );
 		add_filter( 'commentpress/core/parser/the_content/skip', [ $this, 'is_subscribe_to_comments_reloaded_page' ] );
 
 		// Show the "Subscribe to Comments Reloaded" Subscription Checkbox.
@@ -91,11 +90,6 @@ class CommentPress_Core_Plugins {
 
 		// Theme My Login Page is not.
 		if ( $this->core->plugins->is_theme_my_login_page() ) {
-			return false;
-		}
-
-		// Members List Page is not.
-		if ( $this->core->plugins->is_members_list_page() ) {
 			return false;
 		}
 
@@ -165,35 +159,6 @@ class CommentPress_Core_Plugins {
 
 		// --<
 		return $clean;
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Utility to check for presence of "Members List" Shortcode.
-	 *
-	 * @since 3.4.7
-	 *
-	 * @return bool $success True if is Members List Page, false otherwise.
-	 */
-	public function is_members_list_page() {
-
-		// Access Page.
-		global $post;
-
-		// Bail if not a Post.
-		if ( ! ( $post instanceof WP_Post ) ) {
-			return false;
-		}
-
-		// It is if it has the "Members List" Shortcode.
-		if ( has_shortcode( $post->post_content, 'members-list' ) ) {
-			return true;
-		}
-
-		// --<
-		return false;
 
 	}
 
