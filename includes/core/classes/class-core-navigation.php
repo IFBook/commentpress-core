@@ -133,7 +133,7 @@ class CommentPress_Core_Navigator {
 		 * We need template functions - e.g. is_page() and is_single() - to be
 		 * defined, so we set up this object when the "wp_head" action is fired.
 		 */
-		add_action( 'wp_head', [ $this, 'setup_items' ] );
+		add_action( 'wp_head', [ $this, 'lists_build' ] );
 
 		// Add template redirect for TOC behaviour.
 		add_action( 'template_redirect', [ $this, 'redirect_to_child' ] );
@@ -141,37 +141,31 @@ class CommentPress_Core_Navigator {
 	}
 
 	/**
-	 * Sets up all items associated with this object.
+	 * Builds all lists associated with this object.
 	 *
 	 * @since 4.0
 	 */
-	public function setup_items() {
+	public function lists_build() {
 
-		/*
-		// Build Posts lists if we're navigating Posts or Attachments.
-		if ( is_single() || is_attachment() ) {
-			$this->posts_lists_build();
+		// Bail if we're not navigating Pages.
+		// TODO: We will want to support other Post Types.
+		if ( ! is_page() ) {
+			return;
 		}
-		*/
 
-		// Build Page lists if we're navigating Pages.
-		if ( is_page() ) {
+		// Check Page Navigation flag.
+		if ( $this->page_nav_is_disabled() ) {
 
-			// Check Page Navigation flag.
-			if ( $this->page_nav_is_disabled() ) {
+			// Remove Page Navigation via filter.
+			add_filter( 'cp_template_page_navigation', [ $this, 'page_nav_disable' ], 100, 1 );
 
-				// Remove Page Navigation via filter.
-				add_filter( 'cp_template_page_navigation', [ $this, 'page_nav_disable' ], 100, 1 );
-
-				// Save flag.
-				$this->nav_enabled = false;
-
-			}
-
-			// Init Page lists.
-			$this->page_lists_build();
+			// Save flag.
+			$this->nav_enabled = false;
 
 		}
+
+		// Init Page lists.
+		$this->page_lists_build();
 
 	}
 
@@ -1286,139 +1280,6 @@ class CommentPress_Core_Navigator {
 			return $roman;
 
 		}
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Builds the "Next Posts" and "Previous Posts" list.
-	 *
-	 * Unused it seems.
-	 *
-	 * @since 3.3
-	 */
-	private function posts_lists_build() {
-
-		// Set defaults.
-		$defaults = [
-			'numberposts' => -1,
-			'orderby' => 'date',
-		];
-
-		// Get them.
-		$all_posts = get_posts( $defaults );
-
-		// Bail of we have no Posts.
-		if ( empty( $all_posts ) ) {
-			return;
-		}
-
-		// Access Post object.
-		global $post;
-
-		// Loop.
-		foreach ( $all_posts as $key => $post_obj ) {
-
-			// Is it ours?
-			if ( $post_obj->ID == $post->ID ) {
-
-				// Break to preserve key.
-				break;
-
-			}
-
-		}
-
-		// Will there be a next array?
-		if ( isset( $all_posts[ $key + 1 ] ) ) {
-			// Get all subsequent Posts.
-			$this->next_posts = array_slice( $all_posts, $key + 1 );
-		}
-
-		// Will there be a previous array?
-		if ( isset( $all_posts[ $key - 1 ] ) ) {
-			// Get all previous Posts.
-			$this->previous_posts = array_reverse( array_slice( $all_posts, 0, $key ) );
-		}
-
-	}
-
-	/**
-	 * Get "Next Post" object.
-	 *
-	 * Unused it seems.
-	 *
-	 * @since 3.0
-	 *
-	 * @param bool $with_comments The requested Post has Comments. Default false.
-	 * @return object|bool $next_post The WordPress Post object, or false on failure.
-	 */
-	public function post_next_get( $with_comments = false ) {
-
-		// Do we have any subsequent Posts?
-		if ( count( $this->next_posts ) > 0 ) {
-
-			// Are we asking for Comments?
-			if ( $with_comments ) {
-
-				// Find the first with Comments.
-				foreach ( $this->next_posts as $next_post ) {
-					if ( $next_post->comment_count > 0 ) {
-						return $next_post;
-					}
-				}
-
-			} else {
-
-				// Return the first on the stack.
-				return reset( $this->next_posts );
-
-			}
-
-		}
-
-		// --<
-		return false;
-
-	}
-
-	/**
-	 * Get "Previous Post" link.
-	 *
-	 * Unused it seems.
-	 *
-	 * @since 3.0
-	 *
-	 * @param bool $with_comments The requested Post has Comments. Default false.
-	 * @return object|bool $previous_post The WordPress Post object, or false on failure.
-	 */
-	public function post_previous_get( $with_comments = false ) {
-
-		// Do we have any previous Posts?
-		if ( count( $this->previous_posts ) > 0 ) {
-
-			// Are we asking for Comments?
-			if ( $with_comments ) {
-
-				// Find the first with Comments.
-				foreach ( $this->previous_posts as $previous_post ) {
-					if ( $previous_post->comment_count > 0 ) {
-						return $previous_post;
-					}
-				}
-
-			} else {
-
-				// Return the first on the stack.
-				return reset( $this->previous_posts );
-
-			}
-
-		}
-
-		// --<
-		return false;
 
 	}
 
