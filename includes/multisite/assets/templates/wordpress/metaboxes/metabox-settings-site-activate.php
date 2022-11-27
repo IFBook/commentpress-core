@@ -25,15 +25,6 @@ defined( 'ABSPATH' ) || exit;
 
 	?>
 
-	<tr valign="top">
-		<th scope="row">
-			<label for="cp_activate_commentpress"><?php esc_html_e( 'Enable CommentPress on this site', 'commentpress-core' ); ?></label>
-		</th>
-		<td>
-			<input id="cp_activate_commentpress" name="cp_activate_commentpress" value="1" type="checkbox" />
-		</td>
-	</tr>
-
 	<?php
 
 	/**

@@ -37,16 +37,6 @@ defined( 'ABSPATH' ) || exit;
 
 	?>
 
-	<tr valign="top">
-		<th scope="row">
-			<label for="cp_deactivate_commentpress"><?php esc_html_e( 'Disable CommentPress on this site', 'commentpress-core' ); ?></label>
-		</th>
-		<td>
-			<input id="cp_deactivate_commentpress" name="cp_deactivate_commentpress" value="1" type="checkbox" />
-			<p class="description"><?php esc_html_e( 'You will not lose any data if you disable CommentPress on this site, however this is a drastic action to take. Please be certain.', 'commentpress-core' ); ?></p>
-		</td>
-	</tr>
-
 	<?php
 
 	/**

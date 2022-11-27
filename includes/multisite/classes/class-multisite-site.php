@@ -47,6 +47,15 @@ class CommentPress_Multisite_Site {
 	public $key_disable = 'cpmu_activate_commentpress';
 
 	/**
+	 * Partials template directory path.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $metabox_path Relative path to the Partials directory.
+	 */
+	private $partials_path = 'includes/multisite/assets/templates/wordpress/partials/';
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 3.3
@@ -85,12 +94,33 @@ class CommentPress_Multisite_Site {
 	 */
 	public function register_hooks() {
 
-		// Save data from Network Settings form submissions.
+		// Add our option to the Site Settings "CommentPress Settings" Activation metabox.
+		add_action( 'commentpress/multisite/settings/site/metabox/activate/after', [ $this, 'metabox_settings_get' ] );
+
+		// Save data from multisite Site Settings "CommentPress Settings" screen form submissions.
 		add_action( 'commentpress/multisite/settings/site/save/before', [ $this, 'settings_save' ] );
+
+		// Add our option to the Site Settings "CommentPress Settings" Danger Zone metabox.
+		add_action( 'commentpress/multisite/settings/site/metabox/danger/after', [ $this, 'metabox_settings_core_get' ] );
+
+		// Save data from multisite Site Settings "CommentPress Settings" screen form submissions.
+		add_action( 'commentpress/multisite/settings/site/core/save/before', [ $this, 'settings_core_save' ] );
 
 	}
 
 	// -------------------------------------------------------------------------
+
+	/**
+	 * Adds our settings to the multisite Site Settings "Activation" metabox.
+	 *
+	 * @since 4.0
+	 */
+	public function metabox_settings_get() {
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-site-settings-site.php';
+
+	}
 
 	/**
 	 * Saves the data from the "CommentPress Settings" screen.
@@ -112,6 +142,20 @@ class CommentPress_Multisite_Site {
 
 		// Install core, but not from "wpmu_new_blog".
 		$this->core_install( 'admin_page' );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Adds our settings to the multisite Site Settings "Activation" metabox.
+	 *
+	 * @since 4.0
+	 */
+	public function metabox_settings_core_get() {
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-site-settings-core.php';
 
 	}
 

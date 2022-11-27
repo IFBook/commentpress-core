@@ -140,7 +140,7 @@ class CommentPress_Multisite_Sites {
 		$forced = $this->multisite->db->setting_get( $this->key_forced );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-sites-settings.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-sites-settings-network.php';
 
 	}
 
