@@ -29,6 +29,15 @@ class CommentPress_Multisite_BuddyPress {
 	public $multisite;
 
 	/**
+	 * BuddyPress Group Blog compatibility object.
+	 *
+	 * @since 3.3
+	 * @access public
+	 * @var object $workshop The BuddyPress Group Blog object reference.
+	 */
+	public $workshop;
+
+	/**
 	 * CommentPress Core enabled on all Group Blogs flag.
 	 *
 	 * @since 3.3
@@ -65,6 +74,15 @@ class CommentPress_Multisite_BuddyPress {
 	public $require_comment_registration = 1;
 
 	/**
+	 * Classes directory path.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $classes_path Relative path to the classes directory.
+	 */
+	public $classes_path = 'includes/multisite/classes/';
+
+	/**
 	 * Metabox template directory path.
 	 *
 	 * @since 4.0
@@ -85,20 +103,58 @@ class CommentPress_Multisite_BuddyPress {
 		// Store reference to multisite loader object.
 		$this->multisite = $multisite;
 
-		// Init when the BuddyPress classes are fully loaded.
-		add_action( 'commentpress/multisite/bp/loaded', [ $this, 'initialise' ] );
+		// Intialise when BuddyPress is loaded.
+		add_action( 'bp_include', [ $this, 'initialise' ] );
 
 	}
 
 	/**
-	 * Set up all items associated with this object.
+	 * Intialises this object.
 	 *
 	 * @since 3.3
 	 */
 	public function initialise() {
 
-		// Register hooks.
+		// Initialise db for BuddyPress.
+		$this->multisite->db->options_initialise( 'buddypress' );
+
+		// Bootstrap this object.
+		$this->include_files();
+		$this->setup_objects();
 		$this->register_hooks();
+
+		/**
+		 * Broadcast that BuddyPress has loaded.
+		 *
+		 * Used internally to bootstrap objects.
+		 *
+		 * @since 4.0
+		 */
+		do_action( 'commentpress/multisite/bp/loaded' );
+
+	}
+
+	/**
+	 * Includes class files.
+	 *
+	 * @since 4.0
+	 */
+	public function include_files() {
+
+		// Include class files.
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-bp-groupblog.php';
+
+	}
+
+	/**
+	 * Sets up the objects in this class.
+	 *
+	 * @since 4.0
+	 */
+	public function setup_objects() {
+
+		// Initialise objects.
+		$this->workshop = new CommentPress_Multisite_BuddyPress_GroupBlog( $this );
 
 	}
 
@@ -224,7 +280,7 @@ class CommentPress_Multisite_BuddyPress {
 			add_filter( 'cpmu_db_bp_options_get_defaults', [ $this, 'get_default_settings' ], 20, 1 );
 
 			// Hook into Network Settings form update.
-			add_action( 'commentpress/multisite/settings/network/form_submitted/pre', [ $this, 'network_admin_update' ], 20 );
+			add_action( 'commentpress/multisite/settings/network/save/before', [ $this, 'network_admin_update' ], 20 );
 
 		} else {
 
@@ -538,7 +594,7 @@ class CommentPress_Multisite_BuddyPress {
 		$blog_id = get_current_blog_id();
 
 		// If it's CommentPress Core-enabled, disable sync.
-		if ( $this->multisite->db->is_commentpress( $blog_id ) ) {
+		if ( $this->multisite->site->is_commentpress( $blog_id ) ) {
 			return 1;
 		}
 
@@ -1644,7 +1700,7 @@ class CommentPress_Multisite_BuddyPress {
 		}
 
 		// Check our Site option.
-		if ( $this->multisite->db->option_get( 'cpmu_bp_groupblog_privacy' ) != '1' ) {
+		if ( $this->multisite->db->setting_get( 'cpmu_bp_groupblog_privacy' ) != '1' ) {
 			return;
 		}
 
@@ -1873,7 +1929,7 @@ class CommentPress_Multisite_BuddyPress {
 			// NOTE: need to check that our context is right.
 
 			// Get force option.
-			$forced = $this->multisite->db->option_get( 'cpmu_bp_force_commentpress' );
+			$forced = $this->multisite->db->setting_get( 'cpmu_bp_force_commentpress' );
 
 			// Are we force-enabling CommentPress Core?
 			if ( $forced ) {
@@ -2007,7 +2063,7 @@ class CommentPress_Multisite_BuddyPress {
 		switch_to_blog( $blog_id );
 
 		// Activate CommentPress Core.
-		$this->multisite->db->install_commentpress();
+		$this->multisite->site->core_install();
 
 		// Get core plugin reference.
 		$core = commentpress_core();
@@ -2022,7 +2078,7 @@ class CommentPress_Multisite_BuddyPress {
 		 * @param string The default "Show Posts by default" option.
 		 */
 		$posts_or_pages = apply_filters( 'cp_posts_or_pages_in_toc', 'post' );
-		$core->db->option_set( 'cp_show_posts_or_pages_in_toc', $posts_or_pages );
+		$core->db->setting_set( 'cp_show_posts_or_pages_in_toc', $posts_or_pages );
 
 		// If we opted for Posts.
 		if ( $posts_or_pages == 'post' ) {
@@ -2035,12 +2091,12 @@ class CommentPress_Multisite_BuddyPress {
 			 * @param bool The default "TOC shows extended Posts" option.
 			 */
 			$extended_toc = apply_filters( 'cp_extended_toc', 1 );
-			$core->db->option_set( 'cp_show_extended_toc', $extended_toc );
+			$core->db->setting_set( 'cp_show_extended_toc', $extended_toc );
 
 		}
 
 		// Get Blog Type (saved already).
-		$cp_blog_type = $core->db->option_get( 'cp_blog_type' );
+		$cp_blog_type = $core->db->setting_get( 'cp_blog_type' );
 
 		// Did we get a Group ID before we switched Blogs?
 		if ( isset( $group_id ) ) {
@@ -2052,14 +2108,14 @@ class CommentPress_Multisite_BuddyPress {
 		}
 
 		// Save options.
-		$core->db->options_save();
+		$core->db->settings_save();
 
 		// ---------------------------------------------------------------------
 		// WordPress Internal Configuration.
 		// ---------------------------------------------------------------------
 
 		// Get commenting option.
-		$anon_comments = $this->multisite->db->option_get( 'cpmu_bp_require_comment_registration' ) == '1' ? 1 : 0;
+		$anon_comments = $this->multisite->db->setting_get( 'cpmu_bp_require_comment_registration' ) == '1' ? 1 : 0;
 
 		/**
 		 * Allow overrides for anonymous commenting.
@@ -2121,7 +2177,7 @@ class CommentPress_Multisite_BuddyPress {
 	public function create_blog_options() {
 
 		// Get force option.
-		$forced = $this->multisite->db->option_get( 'cpmu_force_commentpress' );
+		$forced = $this->multisite->db->setting_get( 'cpmu_force_commentpress' );
 
 		// Are we force-enabling CommentPress Core?
 		if ( $forced ) {
@@ -2242,7 +2298,7 @@ class CommentPress_Multisite_BuddyPress {
 		switch_to_blog( $blog_id );
 
 		// Activate CommentPress Core.
-		$this->multisite->db->install_commentpress();
+		$this->multisite->site->core_install();
 
 		// Switch back.
 		restore_current_blog();
@@ -2314,7 +2370,7 @@ class CommentPress_Multisite_BuddyPress {
 
 		// If we have the plugin.
 		if ( ! empty( $core ) ) {
-			return $core->db->option_get( 'cp_blog_type' );
+			return $core->db->setting_get( 'cp_blog_type' );
 		}
 
 		// --<
@@ -2353,9 +2409,9 @@ class CommentPress_Multisite_BuddyPress {
 	public function meta_box_buddypress_render() {
 
 		// Get settings.
-		$bp_force_commentpress = $this->multisite->db->option_get( 'cpmu_bp_force_commentpress' );
-		$bp_groupblog_privacy = $this->multisite->db->option_get( 'cpmu_bp_groupblog_privacy' );
-		$bp_require_comment_registration = $this->multisite->db->option_get( 'cpmu_bp_require_comment_registration' );
+		$bp_force_commentpress = $this->multisite->db->setting_get( 'cpmu_bp_force_commentpress' );
+		$bp_groupblog_privacy = $this->multisite->db->setting_get( 'cpmu_bp_groupblog_privacy' );
+		$bp_require_comment_registration = $this->multisite->db->setting_get( 'cpmu_bp_require_comment_registration' );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-network-buddypress.php';
@@ -2388,19 +2444,19 @@ class CommentPress_Multisite_BuddyPress {
 
 			<tr valign="top">
 				<th scope="row"><label for="cpmu_bp_force_commentpress">' . __( 'Make all new Group Blogs CommentPress-enabled', 'commentpress-core' ) . '</label></th>
-				<td><input id="cpmu_bp_force_commentpress" name="cpmu_bp_force_commentpress" value="1" type="checkbox"' . ( $this->multisite->db->option_get( 'cpmu_bp_force_commentpress' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
+				<td><input id="cpmu_bp_force_commentpress" name="cpmu_bp_force_commentpress" value="1" type="checkbox"' . ( $this->multisite->db->setting_get( 'cpmu_bp_force_commentpress' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
 			</tr>
 
 			' . $this->get_commentpress_themes() . '
 
 			<tr valign="top">
 				<th scope="row"><label for="cpmu_bp_groupblog_privacy">' . __( 'Private Groups must have Private Group Blogs', 'commentpress-core' ) . '</label></th>
-				<td><input id="cpmu_bp_groupblog_privacy" name="cpmu_bp_groupblog_privacy" value="1" type="checkbox"' . ( $this->multisite->db->option_get( 'cpmu_bp_groupblog_privacy' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
+				<td><input id="cpmu_bp_groupblog_privacy" name="cpmu_bp_groupblog_privacy" value="1" type="checkbox"' . ( $this->multisite->db->setting_get( 'cpmu_bp_groupblog_privacy' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
 			</tr>
 
 			<tr valign="top">
 				<th scope="row"><label for="cpmu_bp_require_comment_registration">' . __( 'Require user login to post comments on Group Blogs', 'commentpress-core' ) . '</label></th>
-				<td><input id="cpmu_bp_require_comment_registration" name="cpmu_bp_require_comment_registration" value="1" type="checkbox"' . ( $this->multisite->db->option_get( 'cpmu_bp_require_comment_registration' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
+				<td><input id="cpmu_bp_require_comment_registration" name="cpmu_bp_require_comment_registration" value="1" type="checkbox"' . ( $this->multisite->db->setting_get( 'cpmu_bp_require_comment_registration' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
 			</tr>
 
 			' . $this->additional_buddypress_options() . '
@@ -2432,7 +2488,7 @@ class CommentPress_Multisite_BuddyPress {
 		);
 
 		// Get currently selected theme.
-		$current_theme = $this->multisite->db->option_get( 'cpmu_bp_groupblog_theme' );
+		$current_theme = $this->multisite->db->setting_get( 'cpmu_bp_groupblog_theme' );
 
 		// Init.
 		$options = [];
@@ -2502,7 +2558,7 @@ class CommentPress_Multisite_BuddyPress {
 	public function get_groupblog_theme( $default_theme ) {
 
 		// Get the theme we've defined as the default for Group Blogs.
-		$theme = $this->multisite->db->option_get( 'cpmu_bp_groupblog_theme' );
+		$theme = $this->multisite->db->setting_get( 'cpmu_bp_groupblog_theme' );
 
 		// --<
 		return $theme;
@@ -2559,19 +2615,19 @@ class CommentPress_Multisite_BuddyPress {
 
 		// Force CommentPress Core to be enabled on all Group Blogs.
 		$cpmu_bp_force_commentpress = esc_sql( $cpmu_bp_force_commentpress );
-		$this->multisite->db->option_set( 'cpmu_bp_force_commentpress', ( $cpmu_bp_force_commentpress ? 1 : 0 ) );
+		$this->multisite->db->setting_set( 'cpmu_bp_force_commentpress', ( $cpmu_bp_force_commentpress ? 1 : 0 ) );
 
 		// Group Blog privacy synced to Group privacy.
 		$cpmu_bp_groupblog_privacy = esc_sql( $cpmu_bp_groupblog_privacy );
-		$this->multisite->db->option_set( 'cpmu_bp_groupblog_privacy', ( $cpmu_bp_groupblog_privacy ? 1 : 0 ) );
+		$this->multisite->db->setting_set( 'cpmu_bp_groupblog_privacy', ( $cpmu_bp_groupblog_privacy ? 1 : 0 ) );
 
 		// Default Group Blog theme.
 		$cpmu_bp_groupblog_theme = esc_sql( $cpmu_bp_groupblog_theme );
-		$this->multisite->db->option_set( 'cpmu_bp_groupblog_theme', $cpmu_bp_groupblog_theme );
+		$this->multisite->db->setting_set( 'cpmu_bp_groupblog_theme', $cpmu_bp_groupblog_theme );
 
 		// Anonymous Comments on Group Blogs.
 		$cpmu_bp_require_comment_registration = esc_sql( $cpmu_bp_require_comment_registration );
-		$this->multisite->db->option_set( 'cpmu_bp_require_comment_registration', ( $cpmu_bp_require_comment_registration ? 1 : 0 ) );
+		$this->multisite->db->setting_set( 'cpmu_bp_require_comment_registration', ( $cpmu_bp_require_comment_registration ? 1 : 0 ) );
 
 	}
 

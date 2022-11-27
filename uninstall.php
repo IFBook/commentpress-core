@@ -13,6 +13,8 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 /**
  * Restore WordPress database schema.
  *
+ * In Multisite, this needs to target the Sites on which CommentPress Core was active.
+ *
  * @return boolean $result The result of the database operation.
  */
 function commentpress_schema_restore() {
@@ -47,14 +49,22 @@ if ( ! $success ) {
 	], true ) );
 }
 
-// Delete standalone options.
+/*
+ * Delete core options.
+ *
+ * Make sure these match those declared in CommentPress_Core_Database.
+ */
 delete_option( 'commentpress_version' );
 delete_option( 'commentpress_options' );
 
 // Are we deleting in multisite?
 if ( is_multisite() ) {
 
-	// Delete multisite options.
+	/*
+	 * Delete multisite options.
+	 *
+	 * Make sure these match those declared in CommentPress_Multisite_Database.
+	 */
 	delete_site_option( 'cpmu_options' );
 	delete_site_option( 'cpmu_version' );
 

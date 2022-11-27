@@ -1,14 +1,17 @@
 <?php
 /**
- * Multisite Network Settings Page "Submit" metabox template.
+ * Multisite Network Settings screen "Submit" metabox template.
  *
- * Handles markup for the Multisite Network Settings Page "Submit" metabox.
+ * Handles markup for the Multisite Network Settings screen "Submit" metabox.
  *
  * @package CommentPress_Core
  */
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
 ?>
-<!-- includes/multisite/assets/templates/wordpress/metaboxes/metabox-settings-network-submit.php -->
+<!-- <?php echo $this->metabox_path; ?>metabox-settings-network-submit.php -->
 <div class="submitbox">
 	<div id="minor-publishing">
 		<div id="misc-publishing-actions">
@@ -21,7 +24,7 @@
 
 	<div id="major-publishing-actions">
 		<div id="publishing-action">
-			<?php submit_button( esc_html__( 'Update', 'commentpress-core' ), 'primary', 'cpmu_submit', false ); ?>
+			<?php submit_button( esc_html__( 'Update', 'commentpress-core' ), 'primary', $this->submit_id, false ); ?>
 			<input type="hidden" name="action" value="update" />
 		</div>
 		<div class="clear"></div>

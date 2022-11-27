@@ -29,13 +29,49 @@ class CommentPress_Multisite_Database {
 	public $multisite;
 
 	/**
-	 * Multisite options array.
+	 * The installed version of the plugin.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $plugin_version The plugin version.
+	 */
+	public $plugin_version;
+
+	/**
+	 * Upgrade flag.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var bool $is_upgrade The upgrade flag. False by default.
+	 */
+	public $is_upgrade = false;
+
+	/**
+	 * Multisite version site option name.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $option_version The name of the multisite version site option.
+	 */
+	public $option_version = 'cpmu_version';
+
+	/**
+	 * Multisite settings site option name.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $option_settings The name of the multisite settings site option.
+	 */
+	public $option_settings = 'cpmu_options';
+
+	/**
+	 * Multisite settings array.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $cpmu_options The multisite options array.
+	 * @var array $settings The multisite settings array.
 	 */
-	public $cpmu_options = [];
+	public $settings = [];
 
 	/**
 	 * Constructor.
@@ -61,242 +97,146 @@ class CommentPress_Multisite_Database {
 	 */
 	public function initialise() {
 
-		// Load options array.
-		$this->cpmu_options = $this->option_wpms_get( 'cpmu_options', $this->cpmu_options );
-
-		/*
-		// If we don't have one.
-		if ( count( $this->cpmu_options ) == 0 ) {
-			// Init upgrade if not in backend.
-			if ( ! is_admin() ) {
-				die( 'CommentPress Multisite upgrade required.' );
-			}
+		// Only do this once.
+		static $done;
+		if ( isset( $done ) && $done === true ) {
+			return;
 		}
-		*/
 
-		// Maybe enable CommentPress.
-		$this->enable_commentpress();
+		// Init settings.
+		$this->settings_initialise();
+
+		// Register hooks.
+		$this->register_hooks();
+
+		// We're done.
+		$done = true;
 
 	}
 
-	// -------------------------------------------------------------------------
-
 	/**
-	 * Enables CommentPress Core when active on the current Site.
+	 * Initialises the settings.
 	 *
 	 * @since 4.0
 	 */
-	public function enable_commentpress() {
+	public function settings_initialise() {
 
-		// Bail if not network-enabled.
-		if ( $this->multisite->plugin->plugin_context !== 'mu_sitewide' ) {
-			return;
+		// Load installed plugin version.
+		$this->plugin_version = $this->version_get();
+
+		// Load settings array.
+		$this->settings = $this->settings_get();
+
+		// Store version if there has been a change.
+		if ( $this->version_outdated() ) {
+			$this->version_set( COMMENTPRESS_MU_PLUGIN_VERSION );
+			$this->is_upgrade = true;
 		}
 
-		// Bail if CommentPress Core is not active on this Blog.
-		if ( ! $this->is_commentpress() ) {
-			return;
-		}
-
-		// Activate core plugin.
-		$this->multisite->plugin->core_activate();
+		// Settings upgrade tasks.
+		$this->settings_upgrade();
 
 	}
 
 	/**
-	 * Check if Blog is CommentPress Core-enabled.
+	 * Register WordPress hooks.
 	 *
-	 * @since 3.3
-	 *
-	 * @param int $blog_id The ID of the Blog to check.
-	 * @return bool $core_active True if CommentPress Core-enabled, false otherwise.
+	 * @since 4.0
 	 */
-	public function is_commentpress( $blog_id = 0 ) {
+	public function register_hooks() {
 
-		// Init return.
-		$core_active = false;
+		// Acts early when this plugin is activated.
+		add_action( 'commentpress/activated', [ $this, 'activate' ], 10 );
 
-		// Get current Blog ID.
-		$current_blog_id = get_current_blog_id();
-
-		// If we have a passed value and it's not this Blog.
-		if ( $blog_id !== 0 && (int) $current_blog_id !== (int) $blog_id ) {
-
-			// We need to switch to it.
-			switch_to_blog( $blog_id );
-			$switched = true;
-
-		}
-
-		// TODO: Checking for Special Pages seems a fragile way to test for CommentPress Core.
-
-		// Do we have CommentPress Core options?
-		if ( get_option( 'commentpress_options', false ) ) {
-
-			// Get them.
-			$commentpress_options = get_option( 'commentpress_options' );
-
-			// If we have "Special Pages", then the plugin must be active on this Blog.
-			if ( isset( $commentpress_options['cp_special_pages'] ) ) {
-				$core_active = true;
-			}
-
-		}
-
-		// Do we need to switch back?
-		if ( isset( $switched ) && $switched === true ) {
-			restore_current_blog();
-		}
-
-		// --<
-		return $core_active;
-
-	}
-
-	/**
-	 * CommentPress Core initialisation.
-	 *
-	 * @since 3.3
-	 *
-	 * @param str $context The initialisation context.
-	 */
-	public function install_commentpress( $context = 'new_blog' ) {
-
-		// Activate core plugin.
-		$core = $this->multisite->plugin->core_activate();
-
-		// Run activation hook.
-		$core->activate();
-
-		/*
-		------------------------------------------------------------------------
-		Configure CommentPress Core based on Admin Page settings
-		------------------------------------------------------------------------
-		*/
-
-		// TODO: Create Admin Page settings.
-
-		/*
-		// TOC = Posts.
-		$core->db->option_set( 'cp_show_posts_or_pages_in_toc', 'post' );
-
-		// TOC show extended Posts.
-		$core->db->option_set( 'cp_show_extended_toc', 1 );
-		*/
-
-		/*
-		------------------------------------------------------------------------
-		Further CommentPress plugins may define Blog Workflows and Type and
-		enable them to be set in the Blog signup form.
-		------------------------------------------------------------------------
-		*/
-
-		// If we're installing from the wpmu_new_blog filter, then we need to grab
-		// the extra options below - but if we're installing any other way, we need
-		// to ignore these, as they override actual values.
-
-		// Use passed value.
-		if ( $context == 'new_blog' ) {
-
-			// Check for Blog Type (dropdown).
-			if ( isset( $_POST['cp_blog_type'] ) ) {
-
-				// Ensure boolean.
-				$cp_blog_type = intval( $_POST['cp_blog_type'] );
-
-				// Set Blog Type.
-				$core->db->option_set( 'cp_blog_type', $cp_blog_type );
-
-			}
-
-			// Save.
-			$core->db->options_save();
-
-		}
-
-		/**
-		 * Fires when multisite has "soft installed" core.
-		 *
-		 * @since 3.3
-		 * @since 4.0 Added context param.
-		 *
-		 * @param str $context The initialisation context.
-		 */
-		do_action( 'commentpress_core_soft_installed', $context );
-
-		/*
-		------------------------------------------------------------------------
-		Set WordPress Internal Configuration.
-		------------------------------------------------------------------------
-		*/
-
-		/*
-		// Allow anonymous commenting (may be overridden).
-		$anon_comments = 0;
-
-		// Allow plugin overrides.
-		$anon_comments = apply_filters( 'cp_require_comment_registration', $anon_comments );
-
-		// Update wp option.
-		update_option( 'comment_registration', $anon_comments );
-
-		// Add Lorem Ipsum to "Sample Page" if the Network setting is empty?
-		$first_page = get_site_option( 'first_page' );
-
-		// Is it empty?
-		if ( $first_page == '' ) {
-			// Get it & update content, or perhaps delete?
-		}
-		*/
-
-	}
-
-	/**
-	 * CommentPress Core deactivation.
-	 *
-	 * @since 3.3
-	 */
-	public function uninstall_commentpress() {
-
-		// Activate core plugin.
-		$core = $this->multisite->plugin->core_activate();
-
-		// Run deactivation hook.
-		$core->deactivate();
-
-		/**
-		 * Fires when multisite has "soft uninstalled" core.
-		 *
-		 * @since 3.3
-		 */
-		do_action( 'commentpress_core_soft_uninstalled' );
-
-		/*
-		------------------------------------------------------------------------
-		Reset WordPress Internal Configuration.
-		------------------------------------------------------------------------
-		*/
-
-		// Reset any options set in install_commentpress().
+		// Act late when this plugin is deactivated.
+		add_action( 'commentpress/deactivated', [ $this, 'deactivate' ], 50 );
 
 	}
 
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Check for upgrade.
+	 * Runs when the plugin is activated.
 	 *
-	 * @since 3.3
-	 *
-	 * @return boolean True if upgrade required, false otherwise.
+	 * @since 4.0
 	 */
-	public function upgrade_required() {
+	public function activate() {
+
+	}
+
+	/**
+	 *  Runs when the plugin is deactivated.
+	 *
+	 * @since 4.0
+	 */
+	public function deactivate() {
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the installed plugin version.
+	 *
+	 * @since 4.0
+	 *
+	 * @return string|bool $version The installed version, or false if none found.
+	 */
+	public function version_get() {
+
+		// Get installed version cast as string.
+		$version = (string) $this->option_wpms_get( $this->option_version );
+
+		// Cast as boolean if not found.
+		if ( empty( $version ) ) {
+			$version = false;
+		}
+
+		// --<
+		return $version;
+
+	}
+
+	/**
+	 * Sets the plugin version.
+	 *
+	 * @since 4.0
+	 *
+	 * @param string $version The version to save.
+	 */
+	public function version_set( $version ) {
+
+		// Store new CommentPress Core version.
+		$this->option_wp_set( $this->option_version, $version );
+
+	}
+
+	/**
+	 * Deletes the plugin version Site Option.
+	 *
+	 * @since 4.0
+	 */
+	public function version_delete() {
+
+		// Delete CommentPress Multisite version option.
+		$this->option_wpms_delete( $this->option_version );
+
+	}
+
+	/**
+	 * Checks for an outdated plugin version.
+	 *
+	 * @since 4.0
+	 *
+	 * @return bool True if outdated, false otherwise.
+	 */
+	public function version_outdated() {
 
 		// Get installed version.
-		$version = $this->option_wpms_get( 'cpmu_version' );
+		$version = $this->version_get();
 
-		// Override if we have an install and it's lower than this one.
-		if ( $version !== false && version_compare( COMMENTPRESS_MU_PLUGIN_VERSION, $version, '>' ) ) {
+		// True if we have a CommentPress Multisite install and it's lower than this one.
+		if ( ! empty( $version ) && version_compare( COMMENTPRESS_MU_PLUGIN_VERSION, $version, '>' ) ) {
 			return true;
 		}
 
@@ -305,242 +245,174 @@ class CommentPress_Multisite_Database {
 
 	}
 
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Upgrade plugin from 1.0 options to latest set.
+	 * Gets the settings array from a WordPress Site Option.
+	 *
+	 * @since 4.0
+	 *
+	 * @return array $settings The array of settings if successful, or empty array otherwise.
+	 */
+	public function settings_get() {
+
+		// Get the Site Option.
+		return $this->option_wpms_get( $this->option_settings, $this->settings_get_defaults() );
+
+	}
+
+	/**
+	 * Saves the settings array in a WordPress Site Option.
 	 *
 	 * @since 3.3
+	 *
+	 * @return boolean $success True if successful, or false otherwise.
 	 */
-	public function upgrade_options() {
+	public function settings_save() {
 
-		// If we have a CommentPress Core install - or we're forcing.
-		if ( ! $this->upgrade_required() ) {
-			return;
+		// Set the Site Option.
+		return $this->option_wpms_set( $this->option_settings, $this->settings );
+
+	}
+
+	/**
+	 * Deletes the settings WordPress Site Option.
+	 *
+	 * @since 4.0
+	 */
+	public function settings_delete() {
+
+		// Delete the Site Option.
+		$this->option_wpms_delete( $this->option_settings );
+
+	}
+
+	/**
+	 * Upgrades the settings when required.
+	 *
+	 * @since 4.0
+	 */
+	public function settings_upgrade() {
+
+		// Don't save by default.
+		$save = false;
+
+		/*
+		// Some setting may not exist.
+		if ( ! $this->setting_exists( 'some_setting' ) ) {
+			$settings = $this->settings_get_defaults();
+			$this->setting_set( 'some_setting', $settings['some_setting'] );
+			$save = true;
+		}
+		*/
+
+		/*
+		// Things to always check on upgrade.
+		if ( $this->is_upgrade ) {
+			// Add them here.
+			//$save = true;
+		}
+		*/
+
+		// Save settings if need be.
+		if ( $save === true ) {
+			$this->settings_save();
 		}
 
-		// Store new version.
-		$this->option_wpms_set( 'cpmu_version', COMMENTPRESS_MU_PLUGIN_VERSION );
+	}
+
+	/**
+	 * Gets the default settings.
+	 *
+	 * @since 4.0
+	 *
+	 * @return array $settings  The array of default settings.
+	 */
+	public function settings_get_defaults() {
+
+		// Init return.
+		$settings = [];
+
+		/**
+		 * Filters the default settings.
+		 *
+		 * @since 4.0
+		 *
+		 * @param array $settings The array of default settings.
+		 */
+		$settings = apply_filters( 'commentpress/multisite/settings/defaults', $settings );
+
+		// --<
+		return $settings;
 
 	}
 
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Set up all options associated with this object.
+	 * Returns existence of a specified setting.
 	 *
 	 * @since 3.3
 	 *
-	 * @param string $component a component identifier, either 'multisite' or 'buddypress'.
+	 * @param str $setting_name The name of the setting.
+	 * @return bool True if the setting exists, false otherwise.
 	 */
-	public function options_initialise( $component = 'multisite' ) {
+	public function setting_exists( $setting_name ) {
 
-		// We always get a multisite request.
-		if ( $component == 'multisite' ) {
-
-			// If we don't have our version option.
-			if ( ! $this->option_wpms_exists( 'cpmu_version' ) ) {
-
-				// We're activating: add our options.
-
-				// Add options with default values.
-				$this->options_create();
-
-			}
-
-		}
-
-		// If BuddyPress is enabled, we'll get a request for that too.
-		if ( $component == 'buddypress' ) {
-
-			// If we don't have one of our BuddyPress options.
-			if ( ! $this->option_exists( 'cpmu_bp_force_commentpress' ) ) {
-
-				// We're activating: add our options.
-
-				// Use reset method.
-				$this->options_reset( $component );
-
-			}
-
-		}
+		// Check if the setting exists in the settings array.
+		return array_key_exists( $setting_name, $this->settings );
 
 	}
 
 	/**
-	 * Create all plugin options.
+	 * Return a value for a specified setting.
 	 *
 	 * @since 3.3
+	 *
+	 * @param str $setting_name The name of the setting.
+	 * @param mixed $default The default value for the setting.
+	 * @return mixed The value of the setting if it exists, $default otherwise.
 	 */
-	public function options_create() {
+	public function setting_get( $setting_name, $default = false ) {
 
-		// Init default options.
-		$this->cpmu_options = [];
-
-		/**
-		 * Filters the default Multisite options.
-		 *
-		 * Used internally by:
-		 *
-		 * * CommentPress_Multisite_Sites::get_default_settings() (Priority: 20)
-		 *
-		 * @since 3.4
-		 *
-		 * @param array The default Multisite options.
-		 */
-		$this->cpmu_options = apply_filters( 'cpmu_db_options_get_defaults', $this->cpmu_options );
-
-		// Store options array.
-		add_site_option( 'cpmu_options', $this->cpmu_options );
-
-		// Store CommentPress Multisite version.
-		add_site_option( 'cpmu_version', COMMENTPRESS_MU_PLUGIN_VERSION );
+		// Get setting.
+		return array_key_exists( $setting_name, $this->settings ) ? $this->settings[ $setting_name ] : $default;
 
 	}
 
 	/**
-	 * Delete all plugin options.
+	 * Sets a value for a specified setting.
 	 *
 	 * @since 3.3
+	 *
+	 * @param str $setting_name The name of the setting.
+	 * @param mixed $value The value for the setting.
 	 */
-	public function options_delete() {
+	public function setting_set( $setting_name, $value = '' ) {
 
-		// Delete CommentPress Multisite version.
-		delete_site_option( 'cpmu_version' );
-
-		// Delete CommentPress Multisite options.
-		delete_site_option( 'cpmu_options' );
+		// Set setting.
+		$this->settings[ $setting_name ] = $value;
 
 	}
 
 	/**
-	 * Save options array as WordPress Site option.
+	 * Deletes a specified setting.
 	 *
 	 * @since 3.3
 	 *
-	 * @return boolean $success True if successful, false otherwise.
+	 * @param str $setting_name The name of the setting.
 	 */
-	public function options_save() {
+	public function setting_delete( $setting_name ) {
 
-		// Set option.
-		return $this->option_wpms_set( 'cpmu_options', $this->cpmu_options );
+		// Unset setting.
+		unset( $this->settings[ $setting_name ] );
 
 	}
 
-	/**
-	 * Reset options.
-	 *
-	 * @since 3.3
-	 *
-	 * @param string $component a component identifier, either 'multisite' or 'buddypress'.
-	 */
-	public function options_reset( $component = 'multisite' ) {
-
-		// Init default options.
-		$options = [];
-
-		// Did we get a multisite request?
-		if ( $component == 'multisite' ) {
-
-			/**
-			 * Allow plugins to add their own options.
-			 *
-			 * Used internally by:
-			 *
-			 * * CommentPress_Multisite_Sites::get_default_settings() (Priority: 20)
-			 *
-			 * @since 3.3
-			 */
-			$options = apply_filters( 'cpmu_db_options_get_defaults', $options );
-
-		}
-
-		// Did we get a BuddyPress request?
-		if ( $component == 'buddypress' ) {
-
-			/**
-			 * Allow plugins to add their own options.
-			 *
-			 * Used internally by:
-			 *
-			 * * CommentPress_Multisite_BuddyPress::get_default_settings() (Priority: 20)
-			 *
-			 * @since 3.3
-			 */
-			$options = apply_filters( 'cpmu_db_bp_options_get_defaults', $options );
-
-		}
-
-		// Loop and set.
-		foreach ( $options as $option => $value ) {
-			$this->option_set( $option, $value );
-		}
-
-		// Store it.
-		$this->options_save();
-
-	}
+	// -------------------------------------------------------------------------
 
 	/**
-	 * Returns existence of a specified option.
-	 *
-	 * @since 3.3
-	 *
-	 * @param str $option_name The name of the option.
-	 * @return bool True if the option exists, false otherwise.
-	 */
-	public function option_exists( $option_name ) {
-
-		// Check if the option exists in the options array.
-		return array_key_exists( $option_name, $this->cpmu_options );
-
-	}
-
-	/**
-	 * Return a value for a specified option.
-	 *
-	 * @since 3.3
-	 *
-	 * @param str $option_name The name of the option.
-	 * @param mixed $default The default value for the option.
-	 * @return mixed The value of the option if it exists, $default otherwise.
-	 */
-	public function option_get( $option_name, $default = false ) {
-
-		// Get option.
-		return array_key_exists( $option_name, $this->cpmu_options ) ? $this->cpmu_options[ $option_name ] : $default;
-
-	}
-
-	/**
-	 * Sets a value for a specified option.
-	 *
-	 * @since 3.3
-	 *
-	 * @param str $option_name The name of the option.
-	 * @param mixed $value The value for the option.
-	 */
-	public function option_set( $option_name, $value = '' ) {
-
-		// Set option.
-		$this->cpmu_options[ $option_name ] = $value;
-
-	}
-
-	/**
-	 * Deletes a specified option.
-	 *
-	 * @since 3.3
-	 *
-	 * @param str $option_name The name of the option.
-	 */
-	public function option_delete( $option_name ) {
-
-		// Unset option.
-		unset( $this->cpmu_options[ $option_name ] );
-
-	}
-
-	/**
-	 * Return existence of a specified Site option.
+	 * Return existence of a specified Site Option.
 	 *
 	 * @since 3.3
 	 *
@@ -550,7 +422,7 @@ class CommentPress_Multisite_Database {
 	public function option_wpms_exists( $option_name ) {
 
 		// Get option with unlikely default.
-		if ( $this->option_wpms_get( $option_name, 'fenfgehgejgrkj' ) == 'fenfgehgejgrkj' ) {
+		if ( $this->option_wpms_get( $option_name, 'fenfgehgejgrkj' ) === 'fenfgehgejgrkj' ) {
 			return false;
 		} else {
 			return true;
@@ -559,7 +431,7 @@ class CommentPress_Multisite_Database {
 	}
 
 	/**
-	 * Return a value for a specified Site option.
+	 * Return a value for a specified Site Option.
 	 *
 	 * @since 3.3
 	 *
@@ -575,7 +447,7 @@ class CommentPress_Multisite_Database {
 	}
 
 	/**
-	 * Sets a value for a specified Site option.
+	 * Sets the value for a specified Site Option.
 	 *
 	 * @since 3.3
 	 *
@@ -590,7 +462,19 @@ class CommentPress_Multisite_Database {
 
 	}
 
-	// -------------------------------------------------------------------------
+	/**
+	 * Deletes a specified Site Option.
+	 *
+	 * @since 4.0
+	 *
+	 * @param str $option_name The name of the option.
+	 */
+	public function option_wpms_delete( $option_name ) {
+
+		// Set option.
+		delete_site_option( $option_name );
+
+	}
 
 	// -------------------------------------------------------------------------
 
@@ -602,6 +486,8 @@ class CommentPress_Multisite_Database {
 	 * @return str $type_html The HTML for the form element.
 	 */
 	private function get_blogtype() {
+
+		// TODO: Move to Formatter class when install has a lighter touch.
 
 		// Init.
 		$type_html = '';

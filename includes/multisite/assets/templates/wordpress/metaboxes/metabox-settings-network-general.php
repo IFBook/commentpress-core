@@ -7,8 +7,11 @@
  * @package CommentPress_Core
  */
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
 ?>
-<!-- includes/multisite/assets/templates/wordpress/metaboxes/metabox-settings-network-general.php -->
+<!-- <?php echo $this->metabox_path; ?>metabox-settings-network-general.php -->
 <table class="form-table">
 
 	<?php
@@ -21,24 +24,6 @@
 	do_action( 'commentpress/multisite/settings/network/metabox/general/before' );
 
 	?>
-
-	<tr valign="top">
-		<th scope="row">
-			<label for="cpmu_reset"><?php esc_html_e( 'Reset Network Settings', 'commentpress-core' ); ?>
-		</label></th>
-		<td>
-			<input id="cpmu_reset" name="cpmu_reset" value="1" type="checkbox" />
-		</td>
-	</tr>
-
-	<tr valign="top">
-		<th scope="row">
-			<label for="cpmu_force_commentpress"><?php esc_html_e( 'Make all new sites CommentPress-enabled', 'commentpress-core' ); ?></label>
-		</th>
-		<td>
-			<input id="cpmu_force_commentpress" name="cpmu_force_commentpress" value="1" type="checkbox"<?php echo ( $force_commentpress == '1' ? ' checked="checked"' : '' ); ?> />
-		</td>
-	</tr>
 
 	<?php
 

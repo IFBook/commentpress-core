@@ -30,6 +30,15 @@ class CommentPress_Core_Database {
 	public $core;
 
 	/**
+	 * The installed version of the plugin.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $plugin_version The plugin version.
+	 */
+	public $plugin_version;
+
+	/**
 	 * Plugin options array.
 	 *
 	 * @since 3.0
@@ -271,14 +280,40 @@ class CommentPress_Core_Database {
 			return;
 		}
 
-		// Load options array.
-		$this->commentpress_options = $this->option_wp_get( 'commentpress_options', $this->commentpress_options );
+		// Init settings.
+		$this->initialise_settings();
 
-		// Do immediate upgrades after the theme has loaded.
-		add_action( 'after_setup_theme', [ $this, 'upgrade_immediately' ] );
+		// Register hooks.
+		$this->register_hooks();
 
 		// We're done.
 		$done = true;
+
+	}
+
+	/**
+	 * Initialise settings.
+	 *
+	 * @since 4.0
+	 */
+	public function initialise_settings() {
+
+		// Assign installed plugin version.
+		$this->plugin_version = $this->version_get();
+
+		// Do upgrade tasks.
+		$this->upgrade_tasks();
+
+		// Store version for later reference if there has been a change.
+		if ( $this->version_outdated() ) {
+			$this->version_set( 'cwps_version', COMMENTPRESS_VERSION );
+		}
+
+		// Load options array.
+		$this->commentpress_options = $this->option_wp_get( 'commentpress_options', $this->commentpress_options );
+
+		// Settings upgrade tasks.
+		$this->upgrade_settings();
 
 	}
 
@@ -310,6 +345,18 @@ class CommentPress_Core_Database {
 	 * @since 3.0
 	 */
 	public function deactivate() {
+
+	}
+
+	/**
+	 * Register WordPress hooks.
+	 *
+	 * @since 4.0
+	 */
+	public function register_hooks() {
+
+		// Do immediate upgrades after the theme has loaded.
+		add_action( 'after_setup_theme', [ $this, 'upgrade_immediately' ] );
 
 	}
 
@@ -444,18 +491,54 @@ class CommentPress_Core_Database {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Check for an outdated plugin version.
+	 * Gets the installed plugin version.
 	 *
-	 * @since 3.0
+	 * @since 4.0
 	 *
-	 * @return bool $result True if outdated, false otherwise.
+	 * @return string|bool $version The installed version, or false if none found.
 	 */
-	public function version_outdated() {
+	public function version_get() {
 
 		// Get installed version cast as string.
 		$version = (string) $this->option_wp_get( 'commentpress_version' );
 
-		// Override if we have a CommentPress Core install and it's lower than this one.
+		// Cast as boolean if not found.
+		if ( empty( $version ) ) {
+			$version = false;
+		}
+
+		// --<
+		return $version;
+
+	}
+
+	/**
+	 * Sets the plugin version.
+	 *
+	 * @since 4.0
+	 *
+	 * @param string $version The version to save.
+	 */
+	public function version_set( $version ) {
+
+		// Store new CommentPress Core version.
+		$this->option_wp_set( 'commentpress_version', $version );
+
+	}
+
+	/**
+	 * Checks for an outdated plugin version.
+	 *
+	 * @since 3.0
+	 *
+	 * @return bool True if outdated, false otherwise.
+	 */
+	public function version_outdated() {
+
+		// Get installed version cast as string.
+		$version = $this->version_get();
+
+		// True if we have a CommentPress Core install and it's lower than this one.
 		if ( ! empty( $version ) && version_compare( COMMENTPRESS_VERSION, $version, '>' ) ) {
 			return true;
 		}
@@ -846,9 +929,6 @@ class CommentPress_Core_Database {
 
 		// Save new CommentPress Core options.
 		$this->options_save();
-
-		// Store new CommentPress Core version.
-		$this->option_wp_set( 'commentpress_version', COMMENTPRESS_VERSION );
 
 	}
 

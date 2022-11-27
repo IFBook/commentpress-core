@@ -2,24 +2,27 @@
 /**
  * Multisite Network Settings template.
  *
- * Handles markup for the Multisite Network Settings Page.
+ * Handles markup for the Multisite Network Settings screen.
  *
  * @package CommentPress_Core
  */
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
 ?>
-<!-- includes/multisite/assets/templates/wordpress/pages/page-settings-network.php -->
+<!-- <?php echo $this->page_path; ?>page-settings-network.php -->
 <div class="wrap">
 
 	<h1><?php esc_html_e( 'CommentPress Network', 'commentpress-core' ); ?></h1>
 
 	<hr />
 
-	<form method="post" id="commentpress_core_settings_form" action="<?php echo $this->page_settings_submit_url_get(); ?>">
+	<form method="post" id="<?php echo esc_attr( $this->form_id ); ?>" action="<?php echo $this->page_settings_submit_url_get(); ?>">
 
 		<?php wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ); ?>
 		<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
-		<?php wp_nonce_field( 'cpmu_admin_action', 'cpmu_nonce' ); ?>
+		<?php wp_nonce_field( $this->nonce_value, $this->nonce_name ); ?>
 
 		<div id="poststuff">
 

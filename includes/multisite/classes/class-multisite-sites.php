@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * CommentPress Multisite Sites Class.
  *
- * This class functionality related to Sites in WordPress Multisite.
+ * This class provides functionality related to Sites in WordPress Multisite.
  *
  * @since 3.3
  */
@@ -29,22 +29,33 @@ class CommentPress_Multisite_Sites {
 	public $multisite;
 
 	/**
-	 * CommentPress Core enabled on all Sites flag.
+	 * "CommentPress Core enabled on all Sites" settings key.
 	 *
-	 * @since 3.3
+	 * @since 4.0
 	 * @access public
-	 * @var str $cpmu_bp_force_commentpress The enabled on all Sites flag ('0' or '1').
+	 * @var str $key_forced The settings key for the "CommentPress Core enabled on all Sites" setting.
 	 */
-	public $cpmu_force_commentpress = '0';
+	public $key_forced = 'cpmu_force_commentpress';
 
 	/**
-	 * Default Title Page content on new Sites (not yet used).
+	 * "Default Title Page content" settings key.
 	 *
-	 * @since 3.3
+	 * Not implemented.
+	 *
+	 * @since 4.0
 	 * @access public
-	 * @var str $cpmu_title_page_content The default Title Page content.
+	 * @var str $key_title_page_content The settings key for the "Default Title Page content" setting.
 	 */
-	public $cpmu_title_page_content = '';
+	public $key_title_page_content = 'cpmu_title_page_content';
+
+	/**
+	 * Partials template directory path.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $metabox_path Relative path to the Partials directory.
+	 */
+	private $partials_path = 'includes/multisite/assets/templates/wordpress/partials/';
 
 	/**
 	 * Constructor.
@@ -82,33 +93,107 @@ class CommentPress_Multisite_Sites {
 	 */
 	public function register_hooks() {
 
+		// Add our option to the Network Settings "General Settings" metabox.
+		add_action( 'commentpress/multisite/settings/network/metabox/general/after', [ $this, 'metabox_settings_get' ] );
+
+		// Save data from Network Settings form submissions.
+		add_action( 'commentpress/multisite/settings/network/save/before', [ $this, 'settings_save' ] );
+
+		// Filter the default multisite settings.
+		add_filter( 'commentpress/multisite/settings/defaults', [ $this, 'settings_get_default' ] );
+
+		// ---------------------------------------------------------------------
+
+		// Add filter for reserved core "Special Page" names on subdirectory installs.
+		if ( ! is_subdomain_install() ) {
+			add_filter( 'subdirectory_reserved_names', [ $this, 'reserved_names_add' ] );
+		}
+
+		// ---------------------------------------------------------------------
+
 		// Add form elements to signup form.
 		add_action( 'signup_blogform', [ $this, 'signup_blogform' ] );
 
 		// Add callback for Signup Page to include sidebar.
 		add_action( 'after_signup_form', [ $this, 'after_signup_form' ], 20 );
 
-		// If subdirectory install.
-		if ( ! is_subdomain_install() ) {
-
-			// Add filter for reserved CommentPress Core Special Page names.
-			add_filter( 'subdirectory_reserved_names', [ $this, 'add_reserved_names' ] );
-
-		}
-
 		// Activate Blog-specific CommentPress Core plugin.
 		add_action( 'wpmu_new_blog', [ $this, 'wpmu_new_blog' ], 12, 6 );
 
-		// Add options to reset array.
-		add_filter( 'cpmu_db_options_get_defaults', [ $this, 'get_default_settings' ], 20, 1 );
-
-		// Hook into Network Settings form update.
-		add_action( 'commentpress/multisite/settings/network/form_submitted/pre', [ $this, 'network_admin_update' ] );
-
 		/*
 		// Override Title Page content.
-		add_filter( 'cp_title_page_content', [ $this, 'get_title_page_content' ] );
+		add_filter( 'cp_title_page_content', [ $this, 'title_page_content_get' ] );
 		*/
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Adds our settings to the Network Settings "General Settings" metabox.
+	 *
+	 * @since 4.0
+	 */
+	public function metabox_settings_get() {
+
+		// Get settings.
+		$forced = $this->multisite->db->setting_get( $this->key_forced );
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-sites-settings.php';
+
+	}
+
+	/**
+	 * Saves the data from the CommentPress Network "General Settings" screen.
+	 *
+	 * Adds the data to the options array. The options are actually saved later.
+	 *
+	 * @see CommentPress_Multisite_Settings_Network::form_submitted()
+	 *
+	 * @since 4.0
+	 */
+	public function settings_save() {
+
+		// Get "Make all new sites CommentPress-enabled" value.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$forced = isset( $_POST[ $this->key_forced ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_forced ] ) ) : '0';
+
+		// Set "Make all new sites CommentPress-enabled" option.
+		$this->multisite->db->setting_set( $this->key_forced, ( $forced ? 1 : 0 ) );
+
+		/*
+		// Get "Default Title Page content" value.
+		$title_page_content = isset( $_POST[ $this->key_title_page_content ] ) ?
+			sanitize_textarea_field( wp_unslash( $_POST[ $this->key_title_page_content ] ) ) :
+			$this->title_page_content_default_get();
+
+		// Set "Default Title Page content" setting.
+		$this->multisite->db->setting_set( $this->key_title_page_content, $title_page_content );
+		*/
+
+	}
+
+	/**
+	 * Appends the Sites settings to the default multisite settings.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $default_settings The existing default multisite settings.
+	 * @return array $default_settings The modified default multisite settings.
+	 */
+	public function settings_get_default( $default_settings ) {
+
+		// CommentPress Core not enabled on all Sites by default.
+		$default_settings[ $this->key_forced ] = '0';
+
+		/*
+		// The default "Default Title Page content" value.
+		$default_settings[ $this->key_title_page_content ] = $this->title_page_content_default_get();
+		*/
+
+		// --<
+		return $default_settings;
 
 	}
 
@@ -128,8 +213,8 @@ class CommentPress_Multisite_Sites {
 			return;
 		}
 
-		// Get force option.
-		$forced = $this->multisite->db->option_get( 'cpmu_force_commentpress' );
+		// Get force setting.
+		$forced = $this->multisite->db->setting_get( $this->key_forced );
 
 		// Are we force-enabling CommentPress Core?
 		if ( $forced ) {
@@ -208,14 +293,14 @@ class CommentPress_Multisite_Sites {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Add reserved names.
+	 * Adds the "Special Page" slugs to reserved names array.
 	 *
 	 * @since 3.4
 	 *
-	 * @param array $reserved_names The existing list of illegal names.
-	 * @return array $reserved_names The modified list of illegal names.
+	 * @param array $reserved_names The existing list of reserved names.
+	 * @return array $reserved_names The modified list of reserved names.
 	 */
-	public function add_reserved_names( $reserved_names ) {
+	public function reserved_names_add( $reserved_names ) {
 
 		// Add Special Page slugs.
 		$reserved_names = array_merge(
@@ -250,7 +335,7 @@ class CommentPress_Multisite_Sites {
 	 */
 	public function wpmu_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 
-		// Test for presence of our checkbox variable in _POST.
+		// Test for presence of our checkbox variable in POST.
 		$cpmu_new_blog = isset( $_POST['cpmu-new-blog'] ) ? sanitize_text_field( wp_unslash( $_POST['cpmu-new-blog'] ) ) : '';
 		if ( $cpmu_new_blog == '1' ) {
 
@@ -277,11 +362,12 @@ class CommentPress_Multisite_Sites {
 	 */
 	private function create_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 
-		// Wpmu_new_blog calls this *after* restore_current_blog, so we need to do it again.
+		// The "wpmu_new_blog" function calls this *after* "restore_current_blog"
+		// so we need to do it again.
 		switch_to_blog( $blog_id );
 
 		// Activate CommentPress Core.
-		$this->multisite->db->install_commentpress();
+		$this->multisite->site->core_install();
 
 		// Switch back.
 		restore_current_blog();
@@ -317,66 +403,7 @@ class CommentPress_Multisite_Sites {
 
 	}
 
-	/**
-	 * Get default Multisite-related settings.
-	 *
-	 * @since 3.3
-	 *
-	 * @param array $existing_options The existing options.
-	 * @return array $existing_options The modified options.
-	 */
-	public function get_default_settings( $existing_options ) {
-
-		// Default Multisite options.
-		$defaults = [
-			'cpmu_force_commentpress' => $this->cpmu_force_commentpress,
-			//'cpmu_title_page_content' => $this->cpmu_title_page_content,
-		];
-
-		/**
-		 * Allow overrides and additions.
-		 *
-		 * @since 3.3
-		 *
-		 * @param array $defaults The existing array of defaults.
-		 * @return array $defaults The modified array of defaults.
-		 */
-		$defaults = apply_filters( 'cpmu_multisite_options_get_defaults', $defaults );
-
-		// Return options array.
-		return array_merge( $existing_options, $defaults );
-
-	}
-
-	/**
-	 * Hook into Network form update.
-	 *
-	 * @since 3.3
-	 */
-	public function network_admin_update() {
-
-		// Check that we trust the source of the data.
-		check_admin_referer( 'cpmu_admin_action', 'cpmu_nonce' );
-
-		// Get "force CommentPress" value.
-		$cpmu_force_commentpress = isset( $_POST['cpmu_force_commentpress'] ) ?
-			sanitize_text_field( wp_unslash( $_POST['cpmu_force_commentpress'] ) ) :
-			'0';
-
-		// Set "force all new Sites to be CommentPress Core-enabled" option.
-		$this->multisite->db->option_set( 'cpmu_force_commentpress', ( $cpmu_force_commentpress ? 1 : 0 ) );
-
-		/*
-		// Get "Default Title Page content" value.
-		$cpmu_title_page_content = isset( $_POST['cpmu_title_page_content'] ) ?
-			sanitize_text_field( wp_unslash( $_POST['cpmu_title_page_content'] ) ) :
-			$this->get_default_title_page_content();
-
-		// Set "Default Title Page content" option.
-		$this->multisite->db->option_set( 'cpmu_title_page_content', $cpmu_title_page_content );
-		*/
-
-	}
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Get default Title Page content, if set.
@@ -388,10 +415,10 @@ class CommentPress_Multisite_Sites {
 	 * @param str $content The existing content.
 	 * @return str $content The modified content.
 	 */
-	public function get_title_page_content( $content ) {
+	public function title_page_content_get( $content ) {
 
 		// Get content.
-		$overridden_content = stripslashes( $this->multisite->db->option_get( 'cpmu_title_page_content' ) );
+		$overridden_content = stripslashes( $this->multisite->db->setting_get( $this->key_title_page_content ) );
 
 		// Override if different to what's been passed.
 		if ( $content != $overridden_content ) {
@@ -410,7 +437,7 @@ class CommentPress_Multisite_Sites {
 	 *
 	 * @return str $content The default Title Page content.
 	 */
-	public function get_default_title_page_content() {
+	public function title_page_content_default_get() {
 
 		// --<
 		return __(

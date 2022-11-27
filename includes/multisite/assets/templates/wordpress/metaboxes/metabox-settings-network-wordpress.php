@@ -7,8 +7,11 @@
  * @package CommentPress_Core
  */
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
 ?>
-<!-- includes/multisite/assets/templates/wordpress/metaboxes/metabox-settings-network-wordpress.php -->
+<!-- <?php echo $this->metabox_path; ?>metabox-settings-network-wordpress.php -->
 <table class="form-table">
 
 	<?php

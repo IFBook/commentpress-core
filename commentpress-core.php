@@ -118,11 +118,11 @@ class CommentPress_Core {
 		// Register theme directory.
 		$this->theme_directory_register();
 
-		// Maybe bootstrap core.
-		$this->core_bootstrap();
-
 		// Maybe bootstrap multisite.
 		$this->multisite_bootstrap();
+
+		// Maybe bootstrap core.
+		$this->core_bootstrap();
 
 		// Register hooks.
 		$this->register_hooks();
@@ -154,32 +154,21 @@ class CommentPress_Core {
 	/**
 	 * Determines plugin context.
 	 *
+	 * Worth noting that during network activation, this plugin is not present
+	 * in the "active_sitewide_plugins" array.
+	 *
 	 * @since 4.0
 	 */
 	public function plugin_context() {
 
-		// If not multisite, then must be Single Site install.
+		// If not Multisite, then must be Single Site install.
 		if ( ! is_multisite() ) {
 			$this->plugin_context = 'standard';
 			return;
 		}
 
-		// Check if our plugin is one of those activated sitewide.
-		$this_plugin = plugin_basename( COMMENTPRESS_PLUGIN_FILE );
-
-		/*
-		 * Unfortunately, is_plugin_active_for_network() is not yet available so we
-		 * have to do this manually.
-		 *
-		 * Also note: during network activation, this plugin is not yet present in
-		 * the active_sitewide_plugins array.
-		 */
-
-		// Get sitewide plugins.
-		$active_plugins = (array) get_site_option( 'active_sitewide_plugins' );
-
 		// Is the plugin network activated?
-		if ( isset( $active_plugins[ $this_plugin ] ) ) {
+		if ( $this->is_network_activated() ) {
 			$this->plugin_context = 'mu_sitewide';
 			return;
 		}
@@ -223,11 +212,93 @@ class CommentPress_Core {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Gets a reference to the core plugin object.
+	 * Gets a reference to the multisite loader object.
 	 *
 	 * @since 4.0
 	 *
-	 * @return CommentPress_Core_Loader $commentpress_core The plugin reference, or false on failure.
+	 * @return CommentPress_Multisite_Loader $commentpress_mu The multisite loader reference.
+	 */
+	public function multisite() {
+
+		// Declare as global to retain backwards compatibility.
+		global $commentpress_mu;
+
+		// Maybe return reference.
+		if ( isset( $commentpress_mu ) ) {
+			if ( $commentpress_mu instanceof CommentPress_Multisite_Loader ) {
+				return $commentpress_mu;
+			}
+		}
+
+		// Not present.
+		return false;
+
+	}
+
+	/**
+	 * Maybe bootstrap multisite.
+	 *
+	 * @since 4.0
+	 */
+	public function multisite_bootstrap() {
+
+		// Bail if we have not activated network-wide.
+		if ( $this->plugin_context !== 'mu_sitewide' ) {
+			return;
+		}
+
+		// Include multisite loader class file.
+		$this->multisite_include();
+
+		// Initialise multisite.
+		$this->multisite_initialise();
+
+	}
+
+	/**
+	 * Includes the multisite loader file.
+	 *
+	 * @since 4.0
+	 */
+	public function multisite_include() {
+
+		// Include multisite loader class file.
+		if ( ! class_exists( 'CommentPress_Multisite_Loader' ) ) {
+			require_once COMMENTPRESS_PLUGIN_PATH . $this->multisite_path . 'class-multisite-loader.php';
+		}
+
+	}
+
+	/**
+	 * Initialises multisite.
+	 *
+	 * @since 4.0
+	 *
+	 * @return CommentPress_Multisite_Loader $commentpress_mu The multisite loader reference.
+	 */
+	function multisite_initialise() {
+
+		// Declare as global to retain backwards compatibility.
+		global $commentpress_mu;
+
+		// Instantiate if not yet instantiated.
+		if ( ! isset( $commentpress_mu ) ) {
+			$commentpress_mu = new CommentPress_Multisite_Loader( $this );
+		}
+
+		// --<
+		return $commentpress_mu;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets a reference to the core loader object.
+	 *
+	 * @since 4.0
+	 *
+	 * @return CommentPress_Core_Loader $commentpress_core The core loader reference, or false on failure.
 	 */
 	public function core() {
 
@@ -253,45 +324,21 @@ class CommentPress_Core {
 	 */
 	public function core_bootstrap() {
 
-		/*
-		--------------------------------------------------------------------------------
-		Init Standalone.
-		--------------------------------------------------------------------------------
-		Note: we exclude activation on Network Admin Pages to avoid auto-installation
-		on Main Site when the plugin is network activated.
-		--------------------------------------------------------------------------------
-		*/
+		// Bail if plugin is activated network-wide.
+		if ( $this->plugin_context !== 'standard' ) {
+			return;
+		}
 
-		// Include Standalone.
+		// Include core loader class file.
 		$this->core_include();
 
-		// Only activate if in "standard" or "mu_optional" context.
-		if (
-			$this->plugin_context == 'standard' ||
-			( $this->plugin_context == 'mu_optional' && ! is_network_admin() )
-		) {
-
-			// Activate CommentPress Core.
-			$core = $this->core_activate();
-
-			// Activation.
-			register_activation_hook( COMMENTPRESS_PLUGIN_FILE, [ $core, 'activate' ] );
-
-			// Deactivation.
-			register_deactivation_hook( COMMENTPRESS_PLUGIN_FILE, [ $core, 'deactivate' ] );
-
-			/*
-			 * Uninstall uses the 'uninstall.php' method.
-			 *
-			 * @see https://developer.wordpress.org/reference/functions/register_uninstall_hook/
-			 */
-
-		}
+		// Initialise core.
+		$this->core_initialise();
 
 	}
 
 	/**
-	 * Includes the core plugin loader file.
+	 * Includes the core loader file.
 	 *
 	 * @since 4.0
 	 */
@@ -305,13 +352,13 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Activates the core plugin.
+	 * Initialises core.
 	 *
 	 * @since 4.0
 	 *
-	 * @return CommentPress_Core $commentpress_core The plugin reference.
+	 * @return CommentPress_Core_Loader $commentpress_core The core loader reference.
 	 */
-	public function core_activate() {
+	public function core_initialise() {
 
 		// Declare as global to retain backwards compatibility.
 		global $commentpress_core;
@@ -323,88 +370,6 @@ class CommentPress_Core {
 
 		// Return reference.
 		return $commentpress_core;
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Gets a reference to the multisite plugin object.
-	 *
-	 * @since 4.0
-	 *
-	 * @return CommentPress_Multisite_Loader $commentpress_mu The multisite plugin reference.
-	 */
-	public function multisite() {
-
-		// Declare as global to retain backwards compatibility.
-		global $commentpress_mu;
-
-		// Maybe return reference.
-		if ( isset( $commentpress_mu ) ) {
-			if ( $commentpress_mu instanceof CommentPress_Multisite_Loader ) {
-				return $commentpress_mu;
-			}
-		}
-
-		// Not present.
-		return false;
-
-	}
-
-	/**
-	 * Maybe bootstrap multisite plugin.
-	 *
-	 * @since 4.0
-	 */
-	public function multisite_bootstrap() {
-
-		// Bail if we have not activated network-wide.
-		if ( $this->plugin_context !== 'mu_sitewide' ) {
-			return;
-		}
-
-		// Include multisite plugin class file.
-		$this->multisite_include();
-
-		// Activate multisite plugin.
-		$this->multisite_activate();
-
-	}
-
-	/**
-	 * Includes the multisite plugin loader file.
-	 *
-	 * @since 4.0
-	 */
-	public function multisite_include() {
-
-		// Include multisite loader class file.
-		if ( ! class_exists( 'CommentPress_Multisite_Loader' ) ) {
-			require_once COMMENTPRESS_PLUGIN_PATH . $this->multisite_path . 'class-multisite-loader.php';
-		}
-
-	}
-
-	/**
-	 * Activates the multisite plugin.
-	 *
-	 * @since 4.0
-	 *
-	 * @return CommentPress_Multisite_Loader $commentpress_mu The multisite plugin reference.
-	 */
-	function multisite_activate() {
-
-		// Declare as global to retain backwards compatibility.
-		global $commentpress_mu;
-
-		// Instantiate if not yet instantiated.
-		if ( ! isset( $commentpress_mu ) ) {
-			$commentpress_mu = new CommentPress_Multisite_Loader( $this );
-		}
-
-		// --<
-		return $commentpress_mu;
 
 	}
 
@@ -424,7 +389,7 @@ class CommentPress_Core {
 	}
 
 	/**
-	 * Adds "Donate" link to CommentPress plugin action links.
+	 * Adds "Donate" link to all CommentPress action links.
 	 *
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
@@ -514,3 +479,47 @@ function commentpress() {
 
 // Bootstrap immediately.
 commentpress();
+
+/**
+ * Performs plugin activation tasks.
+ *
+ * @since 4.0
+ */
+function commentpress_activated() {
+
+	/**
+	 * Fires when this plugin has been activated.
+	 *
+	 * @since 4.0
+	 */
+	do_action( 'commentpress/plugin/activated' );
+
+}
+
+// Activation.
+register_activation_hook( __FILE__, 'commentpress_activated' );
+
+/**
+ * Performs plugin deactivation tasks.
+ *
+ * @since 4.0
+ */
+function commentpress_deactivated() {
+
+	/**
+	 * Fires when this plugin has been deactivated.
+	 *
+	 * @since 4.0
+	 */
+	do_action( 'commentpress/plugin/deactivated' );
+
+}
+
+// Deactivation.
+register_deactivation_hook( __FILE__, 'commentpress_deactivated' );
+
+/*
+ * Uninstall uses the 'uninstall.php' method.
+ *
+ * @see https://developer.wordpress.org/reference/functions/register_uninstall_hook/
+ */

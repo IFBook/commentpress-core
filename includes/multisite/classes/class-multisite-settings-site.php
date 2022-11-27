@@ -92,6 +92,42 @@ class CommentPress_Multisite_Settings_Site {
 	private $metabox_path = 'includes/multisite/assets/templates/wordpress/metaboxes/';
 
 	/**
+	 * Form nonce name.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $nonce_name The name of the form nonce element.
+	 */
+	private $nonce_name = 'cpms_settings_site_nonce';
+
+	/**
+	 * Form nonce value.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $nonce_value The name of the form nonce value.
+	 */
+	private $nonce_value = 'cpms_settings_site_action';
+
+	/**
+	 * Form "name" and "id".
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $input_submit The "name" and "id" of the form.
+	 */
+	private $form_id = 'cpms_settings_site_form';
+
+	/**
+	 * Form submit input element "name" and "id".
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $input_submit The "name" and "id" of the form's submit input element.
+	 */
+	private $submit_id = 'cpms_settings_site_submit';
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 3.3
@@ -133,13 +169,16 @@ class CommentPress_Multisite_Settings_Site {
 		}
 
 		// Is CommentPress Core active on this Blog?
-		if ( $this->multisite->db->is_commentpress() ) {
+		if ( $this->multisite->site->is_commentpress() ) {
 
-			// Modify CommentPress Core Settings Page.
+			// Add metaboxes to the core "CommentPress Settings" screen.
 			add_action( 'commentpress/core/settings/site/page/settings/metaboxes/after', [ $this, 'meta_boxes_append' ] );
 
-			// Hook into CommentPress Core Settings Page result.
-			add_action( 'commentpress/core/db/options_update/before', [ $this, 'form_disable_core' ] );
+			// Hook into core "CommentPress Settings" form submissions.
+			add_action( 'commentpress/core/settings/site/save/before', [ $this, 'form_core_submitted' ] );
+
+			// Listen for form redirection requests via "do_action".
+			add_action( 'commentpress/multisite/settings/site/core/redirect', [ $this, 'form_core_redirect' ] );
 
 		} else {
 
@@ -180,7 +219,7 @@ class CommentPress_Multisite_Settings_Site {
 		);
 
 		// Register our form submit hander.
-		add_action( 'load-' . $this->parent_page, [ $this, 'form_enable_core' ] );
+		add_action( 'load-' . $this->parent_page, [ $this, 'form_submitted' ] );
 
 		// Add WordPress scripts, styles and help text.
 		add_action( 'admin_print_styles-' . $this->parent_page, [ $this, 'admin_css' ] );
@@ -198,7 +237,7 @@ class CommentPress_Multisite_Settings_Site {
 		);
 
 		// Register our form submit hander.
-		add_action( 'load-' . $this->settings_page, [ $this, 'form_enable_core' ] );
+		add_action( 'load-' . $this->settings_page, [ $this, 'form_submitted' ] );
 
 		// Ensure correct menu item is highlighted.
 		add_action( 'admin_head-' . $this->settings_page, [ $this, 'admin_menu_highlight' ], 50 );
@@ -554,7 +593,7 @@ class CommentPress_Multisite_Settings_Site {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Registers additional meta boxes to the core Site Settings screen.
+	 * Registers additional metaboxes to the core Site Settings screen.
 	 *
 	 * @since 4.0
 	 *
@@ -571,99 +610,155 @@ class CommentPress_Multisite_Settings_Site {
 		add_meta_box(
 			'commentpress_deactivate',
 			__( 'Danger Zone', 'commentpress-core' ),
-			[ $this, 'meta_box_deactivate_render' ], // Callback.
+			[ $this, 'meta_box_danger_render' ], // Callback.
 			$screen_id, // Screen ID.
 			'normal', // Column: options are 'normal' and 'side'.
 			'low' // Vertical placement: options are 'core', 'high', 'low'.
 		);
 
+		/**
+		 * Fires after Site Settings metaboxes have been added.
+		 *
+		 * @since 4.0
+		 *
+		 * @param string $screen_id The Admin Page Screen ID.
+		 */
+		do_action( 'commentpress/multisite/settings/site/metaboxes/after', $screen_id );
+
 	}
 
 	/**
-	 * Renders the "Deactivation" metabox.
+	 * Renders the "Danger Zone" metabox.
 	 *
 	 * @since 4.0
 	 */
-	public function meta_box_deactivate_render() {
+	public function meta_box_danger_render() {
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-deactivate.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-danger.php';
 
 	}
 
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Enable CommentPress Core.
+	 * Form submission handler.
 	 *
-	 * @since 3.3
+	 * @since 4.0
 	 */
-	public function form_enable_core() {
+	public function form_submitted() {
 
 		// Was the form submitted?
-		if ( ! isset( $_POST['commentpress_submit'] ) ) {
+		if ( ! isset( $_POST[ $this->submit_id ] ) ) {
 			return;
 		}
 
 		// Check that we trust the source of the data.
-		check_admin_referer( 'commentpress_core_settings_action', 'commentpress_core_settings_nonce' );
+		check_admin_referer( $this->nonce_value, $this->nonce_name );
 
-		// Get the posted variable.
-		$cp_activate_commentpress = isset( $_POST['cp_activate_commentpress'] ) ?
-			sanitize_text_field( wp_unslash( $_POST['cp_activate_commentpress'] ) ) :
-			'0';
+		/**
+		 * Fires before the options have been saved.
+		 *
+		 * * Callbacks do not need to verify the nonce as this has already been done.
+		 * * Callbacks should, however, implement their own data validation checks.
+		 *
+		 * Used internally by:
+		 *
+		 * * CommentPress_Multisite_Site::settings_save() (Priority: 10)
+		 *
+		 * @since 4.0
+		 */
+		do_action( 'commentpress/multisite/settings/site/save/before' );
 
-		// Did we ask to activate CommentPress Core?
-		if ( $cp_activate_commentpress === '1' ) {
+		// Save the settings to the database.
+		$this->multisite->db->settings_save();
 
-			// Install core, but not from wpmu_new_blog.
-			$this->multisite->db->install_commentpress( 'admin_page' );
+		/**
+		 * Fires when the Site Settings have been saved.
+		 *
+		 * * Callbacks do not need to verify the nonce as this has already been done.
+		 * * Callbacks should, however, implement their own data validation checks.
+		 *
+		 * @since 4.0
+		 */
+		do_action( 'commentpress/multisite/settings/site/save/after' );
 
-			// Get Settings Page URL.
-			$url = $this->page_settings_url_get();
-
-			// Redirect.
-			wp_safe_redirect( $url );
-			exit();
-
-		}
+		// Redirect.
+		$this->form_redirect();
 
 	}
 
 	/**
-	 * Disable CommentPress Core.
+	 * Form redirection handler.
 	 *
-	 * @since 3.3
+	 * @since 4.0
 	 */
-	public function form_disable_core() {
+	public function form_redirect() {
 
-		// Was the form submitted?
-		if ( ! isset( $_POST['commentpress_submit'] ) ) {
-			return;
-		}
+		// Get Network Settings Page URL.
+		$url = $this->page_settings_url_get();
 
-		// Check that we trust the source of the data.
-		check_admin_referer( 'commentpress_core_settings_action', 'commentpress_core_settings_nonce' );
+		// Do the redirect.
+		wp_safe_redirect( $url );
+		exit();
 
-		// Get the posted variable.
-		$cp_deactivate_commentpress = isset( $_POST['cp_deactivate_commentpress'] ) ?
-			sanitize_text_field( wp_unslash( $_POST['cp_deactivate_commentpress'] ) ) :
-			'0';
+	}
 
-		// Did we ask to deactivate CommentPress Core?
-		if ( $cp_deactivate_commentpress == '1' ) {
+	// -------------------------------------------------------------------------
 
-			// Get Settings Page URL.
-			$url = $this->page_settings_url_get();
+	/**
+	 * Handles data received from our metaboxes on the core "CommentPress Settings" screen.
+	 *
+	 * This method does not redirect by default. Redirection can be called with:
+	 *
+	 * do_action( 'commentpress/multisite/settings/site/core/redirect' );
+	 *
+	 * @since 4.0
+	 */
+	public function form_core_submitted() {
 
-			// Uninstall core.
-			$this->multisite->db->uninstall_commentpress();
+		/**
+		 * Fires before the "CommentPress Settings" have been saved.
+		 *
+		 * * Callbacks do not need to verify the nonce as this has already been done.
+		 * * Callbacks should, however, implement their own data validation checks.
+		 *
+		 * Used internally by:
+		 *
+		 * * CommentPress_Multisite_Site::settings_core_save() (Priority: 10)
+		 *
+		 * @since 4.0
+		 */
+		do_action( 'commentpress/multisite/settings/site/core/save/before', $this );
 
-			// Redirect.
-			wp_safe_redirect( $url );
-			exit();
+		// Save the settings to the database.
+		$this->multisite->db->settings_save();
 
-		}
+		/**
+		 * Fires after the "CommentPress Settings" have been saved.
+		 *
+		 * * Callbacks do not need to verify the nonce as this has already been done.
+		 * * Callbacks should, however, implement their own data validation checks.
+		 *
+		 * @since 4.0
+		 */
+		do_action( 'commentpress/multisite/settings/site/core/save/after' );
+
+	}
+
+	/**
+	 * Form redirection handler for the core "CommentPress Settings" screen.
+	 *
+	 * @since 4.0
+	 */
+	public function form_core_redirect() {
+
+		// Get Network Settings Page URL.
+		$url = $this->page_settings_url_get();
+
+		// Do the redirect.
+		wp_safe_redirect( $url );
+		exit();
 
 	}
 

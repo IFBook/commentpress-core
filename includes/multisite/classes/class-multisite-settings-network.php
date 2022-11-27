@@ -65,6 +65,42 @@ class CommentPress_Multisite_Settings_Network {
 	private $metabox_path = 'includes/multisite/assets/templates/wordpress/metaboxes/';
 
 	/**
+	 * Form nonce name.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $nonce_name The name of the form nonce element.
+	 */
+	private $nonce_name = 'cpms_settings_network_nonce';
+
+	/**
+	 * Form nonce value.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $nonce_value The name of the form nonce value.
+	 */
+	private $nonce_value = 'cpms_settings_network_action';
+
+	/**
+	 * Form "name" and "id".
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $input_submit The "name" and "id" of the form.
+	 */
+	private $form_id = 'cpms_settings_network_form';
+
+	/**
+	 * Form submit input element "name" and "id".
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $input_submit The "name" and "id" of the form's submit input element.
+	 */
+	private $submit_id = 'cpms_settings_network_submit';
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 3.3
@@ -385,9 +421,6 @@ class CommentPress_Multisite_Settings_Network {
 	 */
 	public function meta_box_general_render() {
 
-		// Get settings.
-		$force_commentpress = $this->multisite->db->option_get( 'cpmu_force_commentpress' );
-
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-network-general.php';
 
@@ -401,9 +434,9 @@ class CommentPress_Multisite_Settings_Network {
 	public function meta_box_wordpress_render() {
 
 		// Get settings.
-		$delete_first_page = $this->multisite->db->option_get( 'cpmu_delete_first_page' );
-		$delete_first_post = $this->multisite->db->option_get( 'cpmu_delete_first_post' );
-		$delete_first_comment = $this->multisite->db->option_get( 'cpmu_delete_first_comment' );
+		$delete_first_page = $this->multisite->db->setting_get( 'cpmu_delete_first_page' );
+		$delete_first_post = $this->multisite->db->setting_get( 'cpmu_delete_first_post' );
+		$delete_first_comment = $this->multisite->db->setting_get( 'cpmu_delete_first_comment' );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-network-wordpress.php';
@@ -418,7 +451,7 @@ class CommentPress_Multisite_Settings_Network {
 	public function meta_box_title_page_render() {
 
 		// Get settings.
-		$content = stripslashes( $this->multisite->db->option_get( 'cpmu_title_page_content' ) );
+		$content = stripslashes( $this->multisite->db->setting_get( 'cpmu_title_page_content' ) );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-network-title-page.php';
@@ -447,62 +480,46 @@ class CommentPress_Multisite_Settings_Network {
 	public function form_submitted() {
 
 		// Was the form submitted?
-		if ( ! isset( $_POST['cpmu_submit'] ) ) {
+		if ( ! isset( $_POST[ $this->submit_id ] ) ) {
 			return;
 		}
 
 		// Check that we trust the source of the data.
-		check_admin_referer( 'cpmu_admin_action', 'cpmu_nonce' );
+		check_admin_referer( $this->nonce_value, $this->nonce_name );
+
+		// TODO: THIS IS THE WAY to halt further settings.
+
+		/*
+		// Bail if we asked to reset either of the above.
+		if ( $cpmu_bp_reset == '1' ) {
+			$this->form_redirect();
+		}
+		*/
 
 		/**
 		 * Fires before network settings have been updated.
 		 *
-		 * @since 4.0
-		 */
-		do_action( 'commentpress/multisite/settings/network/form_submitted/before' );
-
-		// Did we ask to upgrade CommentPress Multisite?
-		$cpmu_upgrade = isset( $_POST['cpmu_upgrade'] ) ? sanitize_text_field( wp_unslash( $_POST['cpmu_upgrade'] ) ) : '0';
-		if ( $cpmu_upgrade == '1' ) {
-			$this->multisite->db->upgrade_options();
-			$this->form_redirect();
-		}
-
-		// Did we ask to reset Multisite?
-		$cpmu_reset = isset( $_POST['cpmu_reset'] ) ? sanitize_text_field( wp_unslash( $_POST['cpmu_reset'] ) ) : '0';
-		if ( $cpmu_reset == '1' ) {
-			$this->multisite->db->options_reset( 'multisite' );
-		}
-
-		// Did we ask to reset BuddyPress?
-		$cpmu_bp_reset = isset( $_POST['cpmu_bp_reset'] ) ? sanitize_text_field( wp_unslash( $_POST['cpmu_bp_reset'] ) ) : '0';
-		if ( $cpmu_bp_reset == '1' ) {
-			$this->multisite->db->options_reset( 'buddypress' );
-		}
-
-		// Bail if we asked to reset either of the above.
-		if ( $cpmu_reset == '1' || $cpmu_bp_reset == '1' ) {
-			$this->form_redirect();
-		}
-
-		/**
-		 * Fires before network settings have been updated.
+		 * * Callbacks do not need to verify the nonce as this has already been done.
+		 * * Callbacks should, however, implement their own data validation checks.
 		 *
 		 * Used internally by:
 		 *
-		 * * CommentPress_Multisite_Sites::network_admin_update() (Priority: 10)
+		 * * CommentPress_Multisite_Sites::settings_save() (Priority: 10)
 		 * * CommentPress_Multisite_BuddyPress::network_admin_update() (Priority: 20)
 		 * * CommentPress_Multisite_BuddyPress_GroupBlog::network_admin_update() (Priority: 30)
 		 *
 		 * @since 4.0
 		 */
-		do_action( 'commentpress/multisite/settings/network/form_submitted/pre' );
+		do_action( 'commentpress/multisite/settings/network/save/before' );
 
-		// Save.
-		$this->multisite->db->options_save();
+		// Save the settings to the database.
+		$this->multisite->db->settings_save();
 
 		/**
 		 * Fires after network settings have been updated.
+		 *
+		 * * Callbacks do not need to verify the nonce as this has already been done.
+		 * * Callbacks should, however, implement their own data validation checks.
 		 *
 		 * @since 4.0
 		 */
@@ -588,7 +605,7 @@ class CommentPress_Multisite_Settings_Network {
 			return $links;
 		}
 
-		// Get the "Network Settings" link
+		// Get the "Network Settings" link.
 		$link = $this->page_settings_url_get();
 
 		// Add settings link.

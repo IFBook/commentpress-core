@@ -52,6 +52,15 @@ class CommentPress_Multisite_Loader {
 	public $sites;
 
 	/**
+	 * Single Site object.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var object $site The Single Site object reference.
+	 */
+	public $site;
+
+	/**
 	 * Network Settings object.
 	 *
 	 * @since 4.0
@@ -86,15 +95,6 @@ class CommentPress_Multisite_Loader {
 	 * @var object $bp The BuddyPress object reference.
 	 */
 	public $bp;
-
-	/**
-	 * BuddyPress Group Blog compatibility object.
-	 *
-	 * @since 3.3
-	 * @access public
-	 * @var object $workshop The workshop object reference.
-	 */
-	public $workshop;
 
 	/**
 	 * Classes directory path.
@@ -135,16 +135,13 @@ class CommentPress_Multisite_Loader {
 			return;
 		}
 
-		// Bootstrap plugin.
+		// Bootstrap multisite.
 		$this->include_files();
 		$this->setup_objects();
 		$this->register_hooks();
 
-		// Initialise db for multisite.
-		$this->db->options_initialise( 'multisite' );
-
 		/**
-		 * Broadcast that CommentPress Multisite has loaded.
+		 * Fire when CommentPress Multisite has loaded.
 		 *
 		 * Used internally to bootstrap objects.
 		 *
@@ -167,9 +164,11 @@ class CommentPress_Multisite_Loader {
 		// Include class files.
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-database.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-sites.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-site.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-settings-network.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-settings-site.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-revisions.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-bp.php';
 
 	}
 
@@ -183,9 +182,11 @@ class CommentPress_Multisite_Loader {
 		// Initialise objects.
 		$this->db = new CommentPress_Multisite_Database( $this );
 		$this->sites = new CommentPress_Multisite_Sites( $this );
+		$this->site = new CommentPress_Multisite_Site( $this );
 		$this->settings_network = new CommentPress_Multisite_Settings_Network( $this );
 		$this->settings_site = new CommentPress_Multisite_Settings_Site( $this );
 		$this->revisions = new CommentPress_Multisite_Revisions( $this );
+		$this->bp = new CommentPress_Multisite_BuddyPress( $this );
 
 	}
 
@@ -204,64 +205,10 @@ class CommentPress_Multisite_Loader {
 		add_action( 'deactivated_plugin', [ $this, 'network_deactivated' ], 10, 2 );
 		*/
 
-		// Load when BuddyPress is loaded.
-		add_action( 'bp_include', [ $this, 'buddypress_init' ] );
-
 	}
 
 	/**
-	 * BuddyPress initialisation.
-	 *
-	 * @since 3.3
-	 */
-	public function buddypress_init() {
-
-		// Bootstrap plugin.
-		$this->buddypress_include_files();
-		$this->buddypress_setup_objects();
-
-		// Initialise db for BuddyPress.
-		$this->db->options_initialise( 'buddypress' );
-
-		/**
-		 * Broadcast that BuddyPress has loaded.
-		 *
-		 * Used internally to bootstrap objects.
-		 *
-		 * @since 4.0
-		 */
-		do_action( 'commentpress/multisite/bp/loaded' );
-
-	}
-
-	/**
-	 * Includes BuddyPress class files.
-	 *
-	 * @since 4.0
-	 */
-	public function buddypress_include_files() {
-
-		// Include class files.
-		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-bp-core.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-bp-groupblog.php';
-
-	}
-
-	/**
-	 * Sets up this plugin's BuddyPress objects.
-	 *
-	 * @since 4.0
-	 */
-	public function buddypress_setup_objects() {
-
-		// Initialise objects.
-		$this->bp = new CommentPress_Multisite_BuddyPress( $this );
-		$this->workshop = new CommentPress_Multisite_BuddyPress_GroupBlog( $this );
-
-	}
-
-	/**
-	 * This plugin has been network-activated. (does not fire!)!
+	 * This plugin has been network-activated.
 	 *
 	 * @since 3.3
 	 *
@@ -271,17 +218,18 @@ class CommentPress_Multisite_Loader {
 	public function network_activated( $plugin, $network_wide = null ) {
 
 		/*
-		// If it's our plugin.
-		if ( $plugin == plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) {
-
-			// Was it network deactivated?
-			if ( $network_wide == true ) {
-
-				// If upgrading, we need to migrate each existing instance into a CommentPress Core Blog.
-
-			}
-
+		// Bail if it's not our plugin.
+		if ( $plugin !== plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) {
+			return;
 		}
+
+		// Bail if plugin not network activated.
+		if ( ! $network_wide ) {
+			return;
+		}
+
+		// If upgrading, we might want to migrate each existing instance into a
+		// CommentPress Core Blog.
 		*/
 
 	}
@@ -297,19 +245,19 @@ class CommentPress_Multisite_Loader {
 	public function network_deactivated( $plugin, $network_wide = null ) {
 
 		/*
-		// If it's our plugin.
-		if ( $plugin == plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) {
-
-			// Was it network deactivated?
-			if ( $network_wide == true ) {
-
-				// Do we want to trigger deactivation_hook for all sub-blogs?
-				// Or do we want to convert each instance into a self-contained
-				// CommentPress Core Blog?
-
-			}
-
+		// Bail if it's not our plugin.
+		if ( $plugin !== plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) {
+			return;
 		}
+
+		// Bail if plugin not network activated.
+		if ( ! $network_wide ) {
+			return;
+		}
+
+		// Do we want to trigger deactivation_hook for all sub-blogs?
+		// Or do we want to convert each instance into a self-contained
+		// CommentPress Core Blog?
 		*/
 
 	}

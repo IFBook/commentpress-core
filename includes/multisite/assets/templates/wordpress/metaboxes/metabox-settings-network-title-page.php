@@ -7,8 +7,11 @@
  * @package CommentPress_Core
  */
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
 ?>
-<!-- includes/multisite/assets/templates/wordpress/metaboxes/metabox-settings-network-title-page.php -->
+<!-- <?php echo $this->metabox_path; ?>metabox-settings-network-title-page.php -->
 <p><?php esc_html_e( 'The following is the content of the Title Page for each new CommentPress site. Edit it if you want to show something else on the Title Page by default.', 'commentpress-core' ); ?></p>
 
 <?php
