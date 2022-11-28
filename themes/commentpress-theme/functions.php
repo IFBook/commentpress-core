@@ -186,7 +186,7 @@ if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ) :
 		// Enqueue theme Javascript.
 		wp_enqueue_script(
 			'cp_common_js',
-			get_template_directory_uri() . '/assets/js/cp_js_common' . $min . '.js',
+			get_template_directory_uri() . '/assets/js/screen' . $min . '.js',
 			[ 'jquery_cookie' ],
 			COMMENTPRESS_VERSION, // Version.
 			false
@@ -228,7 +228,7 @@ if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ) :
 			// Enqueue accordion-like Javascript.
 			wp_enqueue_script(
 				'cp_special',
-				get_template_directory_uri() . '/assets/js/cp_js_all_comments.js',
+				get_template_directory_uri() . '/assets/js/all-comments.js',
 				[ 'cp_form' ], // Dependencies.
 				COMMENTPRESS_VERSION, // Version.
 				false

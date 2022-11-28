@@ -135,6 +135,9 @@ class CommentPress_Core_Theme {
 		// Enable CommentPress themes in Multisite optional scenario.
 		add_filter( 'network_allowed_themes', [ $this, 'allowed_themes' ] );
 
+		// Enqueue common Javascripts.
+		add_action( 'wp_enqueue_scripts', [ $this, 'scripts_enqueue' ], 20 );
+
 	}
 
 	// -------------------------------------------------------------------------
@@ -417,6 +420,434 @@ class CommentPress_Core_Theme {
 
 		// --<
 		return $retval;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Adds our Javascripts.
+	 *
+	 * Enqueue jQuery, jQuery UI and plugins.
+	 *
+	 * @since 3.4
+	 */
+	public function scripts_enqueue() {
+
+		// Don't include in admin or wp-login.php.
+		if ( is_admin() || ( isset( $GLOBALS['pagenow'] ) && 'wp-login.php' == $GLOBALS['pagenow'] ) ) {
+			return;
+		}
+
+		// Default to minified scripts.
+		$min = commentpress_minified();
+
+		// Add our jQuery plugin and dependencies.
+		wp_enqueue_script(
+			'jquery_commentpress',
+			plugins_url( 'includes/core/assets/js/jquery.commentpress' . $min . '.js', COMMENTPRESS_PLUGIN_FILE ),
+			[ 'jquery', 'jquery-form', 'jquery-ui-core', 'jquery-ui-resizable', 'jquery-ui-tooltip' ],
+			COMMENTPRESS_VERSION, // Version.
+			false // In footer.
+		);
+
+		// Get vars.
+		$vars = $this->get_javascript_vars();
+
+		// Localise the WordPress way.
+		wp_localize_script( 'jquery_commentpress', 'CommentpressSettings', $vars );
+
+		// Add jQuery Scroll-To plugin.
+		wp_enqueue_script(
+			'jquery_scrollto',
+			plugins_url( 'includes/core/assets/js/jquery.scrollTo.js', COMMENTPRESS_PLUGIN_FILE ),
+			[ 'jquery_commentpress' ],
+			COMMENTPRESS_VERSION, // Version.
+			false // In footer.
+		);
+
+		// Optionally get text highlighter.
+		$this->get_text_highlighter();
+
+	}
+
+	/**
+	 * Enqueue our text highlighter script.
+	 *
+	 * @since 3.8
+	 */
+	public function get_text_highlighter() {
+
+		// Only allow text highlighting on non-touch devices - but allow testing override.
+		if ( ! $this->core->device->is_touch() || ( defined( 'COMMENTPRESS_TOUCH_SELECT' ) && COMMENTPRESS_TOUCH_SELECT ) ) {
+
+			// Bail if not a commentable Page/Post.
+			if ( ! $this->core->parser->is_commentable() ) {
+				return;
+			}
+
+			// Default to minified scripts.
+			$min = commentpress_minified();
+
+			// Add jQuery wrapSelection plugin.
+			wp_enqueue_script(
+				'jquery_wrapselection',
+				plugins_url( 'includes/core/assets/js/jquery.wrap-selection' . $min . '.js', COMMENTPRESS_PLUGIN_FILE ),
+				[ 'jquery_commentpress' ],
+				COMMENTPRESS_VERSION, // Version.
+				false // In footer.
+			);
+
+			// Add jQuery highlighter plugin.
+			wp_enqueue_script(
+				'jquery_highlighter',
+				plugins_url( 'includes/core/assets/js/jquery.highlighter' . $min . '.js', COMMENTPRESS_PLUGIN_FILE ),
+				[ 'jquery_wrapselection' ],
+				COMMENTPRESS_VERSION, // Version.
+				false // In footer.
+			);
+
+			// Add jQuery text highlighter plugin.
+			wp_enqueue_script(
+				'jquery_texthighlighter',
+				plugins_url( 'includes/core/assets/js/jquery.texthighlighter' . $min . '.js', COMMENTPRESS_PLUGIN_FILE ),
+				[ 'jquery_highlighter' ],
+				COMMENTPRESS_VERSION, // Version.
+				false // In footer.
+			);
+
+			// Define popover for textblocks.
+			$popover_textblock = '<span class="popover-holder"><div class="popover-holder-inner"><div class="popover-holder-caret"></div><div class="popover-holder-btn-left"><span class="popover-holder-btn-left-comment">' . esc_html__( 'Comment', 'commentpress-core' ) . '</span><span class="popover-holder-btn-left-quote">' . esc_html__( 'Quote &amp; Comment', 'commentpress-core' ) . '</span></div><div class="popover-holder-btn-right">&times;</div></div></span>';
+
+			// Define popover for Comments.
+			$popover_comment = '<span class="comment-popover-holder"><div class="popover-holder-inner"><div class="popover-holder-caret"></div><div class="popover-holder-btn-left"><span class="comment-popover-holder-btn-left-quote">' . esc_html__( 'Quote', 'commentpress-core' ) . '</span></div><div class="popover-holder-btn-right">&times;</div></div></span>';
+
+			// Define localisation array.
+			$texthighlighter_vars = [
+				'popover_textblock' => $popover_textblock,
+				'popover_comment' => $popover_comment,
+			];
+
+			// Create translations.
+			$texthighlighter_translations = [
+				'dialog_title' => esc_html__( 'Are you sure?', 'commentpress-core' ),
+				'dialog_content' => esc_html__( 'You have not yet submitted your comment. Are you sure you want to discard it?', 'commentpress-core' ),
+				'dialog_yes' => esc_html__( 'Discard', 'commentpress-core' ),
+				'dialog_no' => esc_html__( 'Keep', 'commentpress-core' ),
+				'backlink_text' => esc_html__( 'Back', 'commentpress-core' ),
+			];
+
+			// Add to vars.
+			$texthighlighter_vars['localisation'] = $texthighlighter_translations;
+
+			// Localise the WordPress way.
+			wp_localize_script( 'jquery_texthighlighter', 'CommentpressTextSelectorSettings', $texthighlighter_vars );
+
+		}
+
+	}
+
+	/**
+	 * Get Javascript params for the plugin, context dependent.
+	 *
+	 * @since 3.4
+	 *
+	 * @return array $vars The Javascript setup params.
+	 */
+	public function get_javascript_vars() {
+
+		// Init return.
+		$vars = [];
+
+		// Access Post.
+		global $post;
+
+		// If we don't have a Post - like on the 404 Page.
+		if ( ! ( $post instanceof WP_Post ) ) {
+
+			// Comments must be closed.
+			$vars['cp_comments_open'] = 'n';
+
+			// Set empty permalink.
+			$vars['cp_permalink'] = '';
+
+		} else {
+
+			// Check for Post "comment_status".
+			$vars['cp_comments_open'] = ( $post->comment_status == 'open' ) ? 'y' : 'n';
+
+			// Set Post permalink.
+			$vars['cp_permalink'] = get_permalink( $post->ID );
+
+		}
+
+		// Assume no admin bars.
+		$vars['cp_wp_adminbar'] = 'n';
+		$vars['cp_bp_adminbar'] = 'n';
+
+		// Match WordPress 3.8+ admin bar.
+		$vars['cp_wp_adminbar_height'] = '32';
+		$vars['cp_wp_adminbar_expanded'] = '0';
+
+		// Are we showing the WordPress admin bar?
+		if ( is_admin_bar_showing() ) {
+
+			// We have it.
+			$vars['cp_wp_adminbar'] = 'y';
+
+			// Admin bar expands in height below 782px viewport width.
+			$vars['cp_wp_adminbar_expanded'] = '46';
+
+		}
+
+		// Are we logged in AND in a BuddyPress scenario?
+		if ( is_user_logged_in() && $this->core->bp->is_buddypress() ) {
+
+			// Regardless of version, settings can be made in bp-custom.php.
+			if ( defined( 'BP_DISABLE_ADMIN_BAR' ) && BP_DISABLE_ADMIN_BAR ) {
+
+				// We've killed both admin bars.
+				$vars['cp_bp_adminbar'] = 'n';
+				$vars['cp_wp_adminbar'] = 'n';
+
+			}
+
+			/*
+			 * Check for BuddyPress versions prior to 1.6.
+			 *
+			 * BuddyPress 1.6 uses the WordPress admin bar instead of a custom one.
+			 */
+			if ( ! function_exists( 'bp_get_version' ) ) {
+
+				// But, this can already be overridden in bp-custom.php.
+				if ( defined( 'BP_USE_WP_ADMIN_BAR' ) && BP_USE_WP_ADMIN_BAR ) {
+
+					// Not present.
+					$vars['cp_bp_adminbar'] = 'n';
+					$vars['cp_wp_adminbar'] = 'y';
+
+				} else {
+
+					// Let our javascript know.
+					$vars['cp_bp_adminbar'] = 'y';
+
+					// Recheck 'BP_DISABLE_ADMIN_BAR'.
+					if ( defined( 'BP_DISABLE_ADMIN_BAR' ) && BP_DISABLE_ADMIN_BAR ) {
+
+						// We've killed both admin bars.
+						$vars['cp_bp_adminbar'] = 'n';
+						$vars['cp_wp_adminbar'] = 'n';
+
+					}
+
+				}
+
+			}
+
+		}
+
+		// Add rich text editor by default.
+		$vars['cp_tinymce'] = 1;
+
+		// Check if Users must be logged in to comment.
+		if ( get_option( 'comment_registration' ) == '1' && ! is_user_logged_in() ) {
+
+			// Don't add rich text editor.
+			$vars['cp_tinymce'] = 0;
+
+		}
+
+		// Check CommentPress Core option.
+		if (
+			$this->core->db->setting_exists( 'cp_comment_editor' ) &&
+			$this->core->db->setting_get( 'cp_comment_editor' ) != '1'
+		) {
+
+			// Don't add rich text editor.
+			$vars['cp_tinymce'] = 0;
+
+		}
+
+		// If on a public Group Blog and User isn't logged in.
+		if ( $this->core->bp->is_groupblog() && ! is_user_logged_in() ) {
+
+			// Don't add rich text editor, because only Members can comment.
+			$vars['cp_tinymce'] = 0;
+
+		}
+
+		/**
+		 * Filters the TinyMCE vars.
+		 *
+		 * Allow plugins to override TinyMCE.
+		 *
+		 * @since 3.4
+		 *
+		 * @param bool $cp_tinymce The default TinyMCE vars.
+		 */
+		$vars['cp_tinymce'] = apply_filters( 'cp_override_tinymce', $vars['cp_tinymce'] );
+
+		// Add mobile var.
+		$vars['cp_is_mobile'] = 0;
+
+		// Is it a mobile?
+		if ( $this->core->device->is_mobile() ) {
+
+			// Is mobile.
+			$vars['cp_is_mobile'] = 1;
+
+			// Don't add rich text editor.
+			$vars['cp_tinymce'] = 0;
+
+		}
+
+		// Add touch var.
+		$vars['cp_is_touch'] = 0;
+
+		// Is it a touch device?
+		if ( $this->core->device->is_touch() ) {
+
+			// Is touch.
+			$vars['cp_is_touch'] = 1;
+
+			// Don't add rich text editor.
+			$vars['cp_tinymce'] = 0;
+
+		}
+
+		// Add touch testing var.
+		$vars['cp_touch_testing'] = 0;
+
+		// Have we set our testing constant?
+		if ( defined( 'COMMENTPRESS_TOUCH_SELECT' ) && COMMENTPRESS_TOUCH_SELECT ) {
+
+			// Support touch device testing.
+			$vars['cp_touch_testing'] = 1;
+
+		}
+
+		// Add tablet var.
+		$vars['cp_is_tablet'] = 0;
+
+		// Is it a touch device?
+		if ( $this->core->device->is_tablet() ) {
+
+			// Is touch.
+			$vars['cp_is_tablet'] = 1;
+
+			// Don't add rich text editor.
+			$vars['cp_tinymce'] = 0;
+
+		}
+
+		// Add rich text editor behaviour.
+		$vars['cp_promote_reading'] = 1;
+
+		// Check option.
+		if (
+			$this->core->db->setting_exists( 'cp_promote_reading' ) &&
+			$this->core->db->setting_get( 'cp_promote_reading' ) != '1'
+		) {
+
+			// Promote commenting.
+			$vars['cp_promote_reading'] = 0;
+
+		}
+
+		// Add Special Page var.
+		$vars['cp_special_page'] = ( $this->core->pages_legacy->is_special_page() ) ? '1' : '0';
+
+		// Are we in a BuddyPress scenario?
+		if ( $this->core->bp->is_buddypress() ) {
+
+			// Is it a component homepage?
+			if ( $this->core->bp->is_buddypress_special_page() ) {
+
+				// Treat them the way we do ours.
+				$vars['cp_special_page'] = '1';
+
+			}
+
+		}
+
+		// Get path.
+		$url_info = wp_parse_url( get_option( 'siteurl' ) );
+
+		// Add path for cookies.
+		$vars['cp_cookie_path'] = '/';
+		if ( ! empty( $url_info['path'] ) ) {
+			$vars['cp_cookie_path'] = trailingslashit( $url_info['path'] );
+		}
+
+		// Add Page.
+		global $page;
+		$vars['cp_multipage_page'] = ( ! empty( $page ) ) ? $page : 0;
+
+		// Are Chapters Pages?
+		$vars['cp_toc_chapter_is_page'] = $this->core->db->setting_get( 'cp_toc_chapter_is_page' );
+
+		// Are Sub-pages shown?
+		$vars['cp_show_subpages'] = $this->core->db->setting_get( 'cp_show_subpages' );
+
+		// Set default sidebar.
+		$vars['cp_default_sidebar'] = $this->core->theme->sidebar->default_get();
+
+		// Set scroll speed.
+		$vars['cp_js_scroll_speed'] = $this->core->db->setting_get( 'cp_js_scroll_speed' );
+
+		// Set min Page width.
+		$vars['cp_min_page_width'] = $this->core->db->setting_get( 'cp_min_page_width' );
+
+		// Default to showing textblock meta.
+		$vars['cp_textblock_meta'] = 1;
+
+		// Check option.
+		if (
+			$this->core->db->setting_exists( 'cp_textblock_meta' ) &&
+			$this->core->db->setting_get( 'cp_textblock_meta' ) == 'n'
+		) {
+
+			// Only show textblock meta on rollover.
+			$vars['cp_textblock_meta'] = 0;
+
+		}
+
+		// Default to Page navigation enabled.
+		$vars['cp_page_nav_enabled'] = 1;
+
+		// Check option.
+		if (
+			$this->core->db->setting_exists( 'cp_page_nav_enabled' ) &&
+			$this->core->db->setting_get( 'cp_page_nav_enabled' ) == 'n'
+		) {
+
+			// Disable Page navigation.
+			$vars['cp_page_nav_enabled'] = 0;
+
+		}
+
+		// Default to parsing content and Comments.
+		$vars['cp_do_not_parse'] = 0;
+
+		// Check option.
+		if (
+			$this->core->db->setting_exists( 'cp_do_not_parse' ) &&
+			$this->core->db->setting_get( 'cp_do_not_parse' ) == 'y'
+		) {
+
+			// Do not parse.
+			$vars['cp_do_not_parse'] = 1;
+
+		}
+
+		/**
+		 * Filters the Javascript vars.
+		 *
+		 * @since 3.4
+		 *
+		 * @param array $vars The default Javascript vars.
+		 */
+		return apply_filters( 'commentpress_get_javascript_vars', $vars );
 
 	}
 

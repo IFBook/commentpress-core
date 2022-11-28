@@ -91,8 +91,8 @@ class CommentPress_Core_Device {
 	 */
 	public function register_hooks() {
 
-		// Check device.
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+		// Check device before any theme-related code has run.
+		add_action( 'init', [ $this, 'detect' ] );
 
 	}
 
@@ -103,7 +103,7 @@ class CommentPress_Core_Device {
 	 *
 	 * @since 3.4
 	 */
-	public function enqueue_scripts() {
+	public function detect() {
 
 		// Don't include in admin or wp-login.php.
 		if ( is_admin() || ( isset( $GLOBALS['pagenow'] ) && 'wp-login.php' == $GLOBALS['pagenow'] ) ) {

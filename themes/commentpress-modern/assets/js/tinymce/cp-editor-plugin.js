@@ -5,7 +5,7 @@
 		init : function(ed, url) {
 
 			var commentblockHTML;
-			commentblockHTML = '<img src="' + url + '/trans.gif" class="mceCommentBlock mceItemNoResize" title="Comment Block" />';
+			commentblockHTML = '<img src="' + url + '/transparent.gif" class="mceCommentBlock mceItemNoResize" title="Comment Block" />';
 
 			// Add button.
 			ed.addButton('commentblock', {
@@ -38,7 +38,7 @@
 		},
 
 		_handleCommentBlock : function(ed, url) {
-			var commentblockHTML = '<img src="' + url + '/trans.gif" class="mceCommentBlock mceItemNoResize" title="Comment Block" />';
+			var commentblockHTML = '<img src="' + url + '/transparent.gif" class="mceCommentBlock mceItemNoResize" title="Comment Block" />';
 
 			// Load plugin specific CSS into editor.
 			ed.onInit.add(function() {

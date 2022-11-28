@@ -1944,7 +1944,7 @@ body.single-post .post
 
 span.commenticonbox a.no_comments
 {
-	background: transparent url("../images/icons/comment_add.png") no-repeat;
+	background: transparent url("../images/icons/comment-add.png") no-repeat;
 }
 
 span.commenticonbox a.has_comments

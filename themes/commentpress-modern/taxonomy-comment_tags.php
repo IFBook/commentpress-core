@@ -16,7 +16,7 @@ function my_js_needed() {
 	// Enqueue accordion-like Javascript.
 	wp_enqueue_script(
 		'cp_special',
-		get_template_directory_uri() . '/assets/js/cp_js_all_comments.js',
+		get_template_directory_uri() . '/assets/js/all-comments.js',
 		null, // Dependencies.
 		COMMENTPRESS_VERSION, // Version.
 		false

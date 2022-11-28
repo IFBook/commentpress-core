@@ -171,7 +171,7 @@ class CommentPress_Core_Editor_Content {
 	public function tinymce_plugin_load( $plugin_array ) {
 
 		// Add "Comment Block" script.
-		$plugin_array['commentblock'] = get_template_directory_uri() . '/assets/js/tinymce/cp_editor_plugin.js';
+		$plugin_array['commentblock'] = get_template_directory_uri() . '/assets/js/tinymce/cp-editor-plugin.js';
 
 		// --<
 		return $plugin_array;

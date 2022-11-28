@@ -1949,7 +1949,7 @@ Header
 		clear: left;
 		float: left;
 		width: 100%;
-		background: #bfbfbf url(../images/buttonbar_bgr.jpg) repeat-x;
+		background: #bfbfbf url(../images/buttonbar-bg.jpg) repeat-x;
 		border-bottom: 2px solid #B5BFB2;
 		height: 30px;
 	}
@@ -2127,12 +2127,12 @@ Header
 
 			#book_nav div#cp_book_nav ul li a#next_page
 			{
-				background: transparent url(../images/page_nav/page_next.jpg);
+				background: transparent url(../images/page_nav/page-next.jpg);
 			}
 
 			#book_nav div#cp_book_nav ul li a#previous_page
 			{
-				background: transparent url(../images/page_nav/page_prev.jpg);
+				background: transparent url(../images/page_nav/page-prev.jpg);
 			}
 
 
@@ -2148,12 +2148,12 @@ Header
 
 			#book_nav div#cp_book_nav ul#blog_navigation li.alignright a
 			{
-				background: transparent url(../images/page_nav/page_next.jpg);
+				background: transparent url(../images/page_nav/page-next.jpg);
 			}
 
 			#book_nav div#cp_book_nav ul#blog_navigation li.alignleft a
 			{
-				background: transparent url(../images/page_nav/page_prev.jpg);
+				background: transparent url(../images/page_nav/page-prev.jpg);
 			}
 
 
@@ -2580,7 +2580,7 @@ span.commenticonbox a.para_permalink
 
 	span.commenticonbox a.no_comments
 	{
-		background: transparent url("../images/icons/comment_add.png") no-repeat;
+		background: transparent url("../images/icons/comment-add.png") no-repeat;
 	}
 
 	span.commenticonbox a.has_comments
