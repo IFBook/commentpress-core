@@ -130,7 +130,7 @@ class CommentPress_Core_Theme {
 		add_action( 'commentpress/core/activate', [ $this, 'plugin_activate' ], 30 );
 
 		// Acts when this plugin is deactivated.
-		add_action( 'commentpress/core/deactivate', [ $this, 'plugin_deactivate' ], 20 );
+		add_action( 'commentpress/core/deactivate', [ $this, 'plugin_deactivate' ], 30 );
 
 		// Enable CommentPress themes in Multisite optional scenario.
 		add_filter( 'network_allowed_themes', [ $this, 'allowed_themes' ] );

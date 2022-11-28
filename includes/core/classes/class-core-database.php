@@ -324,7 +324,7 @@ class CommentPress_Core_Database {
 		add_action( 'commentpress/core/activate', [ $this, 'plugin_activate' ], 10 );
 
 		// Act late when this plugin is deactivated.
-		add_action( 'commentpress/core/deactivate', [ $this, 'plugin_deactivate' ], 40 );
+		add_action( 'commentpress/core/deactivate', [ $this, 'plugin_deactivate' ], 10 );
 
 		// Initialise settings when plugins are loaded.
 		add_action( 'plugins_loaded', [ $this, 'settings_initialise' ] );
@@ -383,6 +383,9 @@ class CommentPress_Core_Database {
 			//'backtrace' => $trace,
 		], true ) );
 		*/
+
+		// Init settings.
+		$this->settings_initialise();
 
 		// Keep options when deactivating.
 
@@ -522,6 +525,15 @@ class CommentPress_Core_Database {
 			//$save = true;
 		}
 		*/
+
+		/**
+		 * Filters the "Save settings" flag.
+		 *
+		 * @since 4.0
+		 *
+		 * @param bool $save True if settings should be saved, false otherwise.
+		 */
+		$save = apply_filters( 'commentpress/core/settings/upgrade/save', $save );
 
 		// Save settings if need be.
 		if ( $save === true ) {

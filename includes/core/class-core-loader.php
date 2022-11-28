@@ -338,15 +338,6 @@ class CommentPress_Core_Loader {
 	 */
 	public function register_hooks() {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Act when this plugin is activated.
 		add_action( 'commentpress/activated', [ $this, 'plugin_activated' ], 20 );
 
@@ -414,11 +405,6 @@ class CommentPress_Core_Loader {
 	 */
 	public function plugin_deactivated( $network_wide = false ) {
 
-		// Bail if plugin is network activated.
-		if ( $network_wide ) {
-			return;
-		}
-
 		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
@@ -429,15 +415,20 @@ class CommentPress_Core_Loader {
 		], true ) );
 		*/
 
+		// Bail if plugin is network activated.
+		if ( $network_wide ) {
+			return;
+		}
+
 		/**
-		 * Fires when plugin is activated.
+		 * Fires when plugin is deactivated.
 		 *
 		 * Used internally by:
 		 *
-		 * * CommentPress_Core_Pages_Legacy::deactivate() (Priority: 10)
-		 * * CommentPress_Core_Theme::deactivate() (Priority: 20)
-		 * * CommentPress_Core_Comments::activate() (Priority: 30)
-		 * * CommentPress_Core_Database::deactivate() (Priority: 40)
+		 * * CommentPress_Core_Database::deactivate() (Priority: 10)
+		 * * CommentPress_Core_Pages_Legacy::deactivate() (Priority: 20)
+		 * * CommentPress_Core_Theme::deactivate() (Priority: 30)
+		 * * CommentPress_Core_Comments::deactivate() (Priority: 40)
 		 * * CommentPress_Multisite_Sites::core_site_deactivated() (Priority: 50)
 		 *
 		 * @since 4.0

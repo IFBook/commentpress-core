@@ -86,7 +86,7 @@ class CommentPress_Core_Comments {
 		add_action( 'commentpress/core/activate', [ $this, 'plugin_activate' ], 20 );
 
 		// Act when this plugin is deactivated.
-		add_action( 'commentpress/core/deactivate', [ $this, 'plugin_deactivate' ], 30 );
+		add_action( 'commentpress/core/deactivate', [ $this, 'plugin_deactivate' ], 40 );
 
 		// Modify Comment posting.
 		add_action( 'comment_post', [ $this, 'save_comment' ], 10, 2 );

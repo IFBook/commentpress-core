@@ -115,15 +115,6 @@ class CommentPress_Multisite_Sites {
 	 */
 	public function register_hooks() {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Acts when multisite is activated.
 		add_action( 'commentpress/multisite/activate', [ $this, 'plugin_activate' ], 20 );
 
@@ -141,9 +132,6 @@ class CommentPress_Multisite_Sites {
 
 		// Act when plugin is not network-active and core is "optionally deactivated".
 		add_action( 'commentpress/core/deactivate', [ $this, 'core_site_deactivated' ], 50 );
-
-		// Reconcile core Site ID when "optionally activated".
-		add_action( 'plugins_loaded', [ $this, 'core_site_reconcile' ], 20 );
 
 		// Add our option to the Network Settings "General Settings" metabox.
 		add_action( 'commentpress/multisite/settings/network/metabox/general/after', [ $this, 'metabox_settings_get' ] );
@@ -254,8 +242,9 @@ class CommentPress_Multisite_Sites {
 			return;
 		}
 
-		// Remove "soft activated" callback because we want to keep the setting as is.
-		remove_action( 'commentpress/multisite/site/core/activated/after', [ $this, 'core_site_id_remove' ], 10 );
+		// Remove both "activated" callbacks because we want to keep the setting as is.
+		remove_action( 'commentpress/multisite/site/core/activated/after', [ $this, 'core_site_id_add' ], 10 );
+		remove_action( 'commentpress/core/activate', [ $this, 'core_site_activated' ], 50 );
 
 		// Handle each Site in turn.
 		foreach ( $site_ids as $site_id ) {
@@ -269,8 +258,9 @@ class CommentPress_Multisite_Sites {
 		// Restore.
 		restore_current_blog();
 
-		// Restore "soft activated" callback.
-		add_action( 'commentpress/multisite/site/core/activated/after', [ $this, 'core_site_id_remove' ], 10 );
+		// Restore both "activated" callbacks.
+		add_action( 'commentpress/multisite/site/core/activated/after', [ $this, 'core_site_id_add' ], 10 );
+		add_action( 'commentpress/core/activate', [ $this, 'core_site_activated' ], 50 );
 
 	}
 
@@ -287,8 +277,12 @@ class CommentPress_Multisite_Sites {
 			return;
 		}
 
-		// Remove "soft deactivated" callback because we want to keep the setting as is.
+		// Initialise core.
+		$this->multisite->plugin->core_initialise();
+
+		// Remove both "deactivated" callbacks because we want to keep the setting as is.
 		remove_action( 'commentpress/multisite/site/core/deactivated/after', [ $this, 'core_site_id_remove' ], 10 );
+		remove_action( 'commentpress/core/deactivate', [ $this, 'core_site_deactivated' ], 50 );
 
 		// Handle each Site in turn.
 		foreach ( $site_ids as $site_id ) {
@@ -302,8 +296,9 @@ class CommentPress_Multisite_Sites {
 		// Restore.
 		restore_current_blog();
 
-		// Restore "soft deactivated" callback.
+		// Restore both "deactivated" callbacks.
 		add_action( 'commentpress/multisite/site/core/deactivated/after', [ $this, 'core_site_id_remove' ], 10 );
+		add_action( 'commentpress/core/deactivate', [ $this, 'core_site_deactivated' ], 50 );
 
 	}
 
@@ -321,8 +316,8 @@ class CommentPress_Multisite_Sites {
 		// Get the current Site ID.
 		$site_id = get_current_blog_id();
 
-		// Set it in a Site Option for later reconciliation.
-		update_site_option( 'commentpress_multisite_core_site_id', $site_id );
+		// Add Site ID.
+		$this->core_site_id_add( $site_id );
 
 	}
 
@@ -343,26 +338,72 @@ class CommentPress_Multisite_Sites {
 
 	}
 
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Adds the Site ID to the array of Site IDs where CommentPress Core "optionally deactivated".
+	 * Adds a Site ID to the "CommentPress Sites on the Network" array.
 	 *
 	 * @since 4.0
 	 *
-	 * @param bool $network_wide True if network-activated, false otherwise.
+	 * @param int $site_id The numeric ID of the Site.
+	 * @param str $context The activation context.
 	 */
-	public function core_site_reconcile() {
+	public function core_site_id_add( $site_id, $context = '' ) {
 
-		// Get Site ID from Site Option for reconciliation.
-		$site_id = get_site_option( 'commentpress_multisite_core_site_id' );
-		if ( empty( $site_id ) ) {
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'site_id' => $site_id,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Get the current Site IDs.
+		$site_ids = $this->core_site_ids_get();
+
+		// Bail if already present.
+		if ( in_array( $site_id, $site_ids ) ) {
 			return;
 		}
 
-		// Add it to the setting.
-		$this->core_site_id_add( $site_id );
+		// Add the Site ID and save setting.
+		$site_ids[] = $site_id;
+		$this->core_site_ids_set( $site_ids );
 
-		// Delete the Site Option.
-		delete_site_option( 'commentpress_multisite_core_site_id' );
+	}
+
+	/**
+	 * Removes a Site ID from the "CommentPress Sites on the Network" array.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $site_id The numeric ID of the Site.
+	 */
+	public function core_site_id_remove( $site_id ) {
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'site_id' => $site_id,
+			'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Get the current Site IDs.
+		$site_ids = $this->core_site_ids_get();
+
+		// Bail if not already present.
+		if ( ! in_array( $site_id, $site_ids ) ) {
+			return;
+		}
+
+		// Remove Site ID from array and save setting.
+		$site_ids = array_diff( $site_ids, [ $site_id ] );
+		$this->core_site_ids_set( $site_ids );
 
 	}
 
@@ -378,7 +419,7 @@ class CommentPress_Multisite_Sites {
 	public function core_site_ids_get() {
 
 		// Get the current Site IDs setting.
-		$site_ids = $this->multisite->db->setting_get( $this->key_sites, [] );
+		$site_ids = get_site_option( $this->key_sites, [] );
 
 		/*
 		$e = new \Exception();
@@ -415,56 +456,7 @@ class CommentPress_Multisite_Sites {
 		*/
 
 		// Set the Site IDs setting.
-		$this->multisite->db->setting_set( $this->key_sites, $site_ids );
-
-	}
-
-	/**
-	 * Adds a Site ID to the "CommentPress Sites on the Network" array.
-	 *
-	 * @since 4.0
-	 *
-	 * @param int $site_id The numeric ID of the Site.
-	 * @param str $context The activation context.
-	 */
-	public function core_site_id_add( $site_id, $context = '' ) {
-
-		// Get the current Site IDs.
-		$site_ids = $this->core_site_ids_get();
-
-		// Bail if already present.
-		if ( in_array( $site_id, $site_ids ) ) {
-			return;
-		}
-
-		// Add the Site ID and save setting.
-		$site_ids[] = $site_id;
-		$this->core_site_ids_set( $site_ids );
-		$this->multisite->db->settings_save();
-
-	}
-
-	/**
-	 * Removes a Site ID from the "CommentPress Sites on the Network" array.
-	 *
-	 * @since 4.0
-	 *
-	 * @param int $site_id The numeric ID of the Site.
-	 */
-	public function core_site_id_remove( $site_id ) {
-
-		// Get the current Site IDs.
-		$site_ids = $this->core_site_ids_get();
-
-		// Bail if not already present.
-		if ( ! in_array( $site_id, $site_ids ) ) {
-			return;
-		}
-
-		// Remove Site ID from array and save setting.
-		$site_ids = array_diff( $site_ids, [ $site_id ] );
-		$this->core_site_ids_set( $site_ids );
-		$this->multisite->db->settings_save();
+		update_site_option( $this->key_sites, $site_ids );
 
 	}
 
@@ -513,9 +505,6 @@ class CommentPress_Multisite_Sites {
 		// CommentPress Core not enabled on all Sites by default.
 		$default_settings[ $this->key_forced ] = '0';
 
-		// CommentPress Sites on the Network is empty by default.
-		$default_settings[ $this->key_sites ] = [];
-
 		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
@@ -533,28 +522,6 @@ class CommentPress_Multisite_Sites {
 
 		// --<
 		return $default_settings;
-
-	}
-
-	/**
-	 * Upgrades the Sites settings.
-	 *
-	 * @since 4.0
-	 *
-	 * @param bool $save True if settings should be saved, false otherwise.
-	 * @return bool $save True if settings should be saved, false otherwise.
-	 */
-	public function settings_upgrade( $save ) {
-
-		// Add "CommentPress Sites on the Network" if it does not exist.
-		if ( ! $this->multisite->db->setting_exists( $this->key_sites ) ) {
-			$settings = $this->settings_get_defaults();
-			$this->setting_set( $this->key_sites, $settings[ $this->key_sites ] );
-			$save = true;
-		}
-
-		// --<
-		return $save;
 
 	}
 

@@ -68,7 +68,7 @@ class CommentPress_Core_Pages_Legacy {
 		add_action( 'commentpress/core/activate', [ $this, 'plugin_activate' ], 40 );
 
 		// Act early when this plugin is deactivated.
-		add_action( 'commentpress/core/deactivate', [ $this, 'plugin_deactivate' ], 10 );
+		add_action( 'commentpress/core/deactivate', [ $this, 'plugin_deactivate' ], 20 );
 
 		// Intercept Welcome Page delete.
 		add_action( 'before_delete_post', [ $this, 'title_page_pre_delete' ], 10, 1 );
@@ -108,7 +108,7 @@ class CommentPress_Core_Pages_Legacy {
 		], true ) );
 		*/
 
-		// Create the Special Pages.
+		// Create the Legacy Pages.
 		$this->activate();
 
 	}
@@ -142,11 +142,8 @@ class CommentPress_Core_Pages_Legacy {
 		}
 		*/
 
-		// Remove Special Pages.
-		$this->special_pages_delete();
-
-		// Disable Welcome Page.
-		$this->title_page_disable();
+		// Remove the Legacy Pages.
+		$this->deactivate();
 
 	}
 
@@ -557,15 +554,6 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 * @since 3.4
 	 */
 	public function special_pages_delete() {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Try to retrieve data for Special Pages.
 		$special_pages = $this->core->db->setting_get( 'cp_special_pages', [] );

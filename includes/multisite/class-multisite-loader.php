@@ -203,15 +203,6 @@ class CommentPress_Multisite_Loader {
 	 */
 	public function register_hooks() {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Act when this plugin is activated.
 		add_action( 'commentpress/activated', [ $this, 'plugin_activated' ], 10 );
 

@@ -118,15 +118,6 @@ class CommentPress_Multisite_Database {
 	 */
 	public function register_hooks() {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Acts when plugin is activated.
 		add_action( 'commentpress/activate', [ $this, 'plugin_activate' ], 10 );
 
@@ -355,10 +346,6 @@ class CommentPress_Multisite_Database {
 		/**
 		 * Filters the "Save settings" flag.
 		 *
-		 * Used internally by:
-		 *
-		 * * CommentPress_Multisite_Sites::
-		 *
 		 * @since 4.0
 		 *
 		 * @param bool $save True if settings should be saved, false otherwise.
@@ -397,16 +384,6 @@ class CommentPress_Multisite_Database {
 		 */
 		$settings = apply_filters( 'commentpress/multisite/settings/defaults', $settings );
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'default_settings' => $settings,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// --<
 		return $settings;
 
@@ -436,17 +413,6 @@ class CommentPress_Multisite_Database {
 	 * @return boolean $success True if successful, or false otherwise.
 	 */
 	public function settings_save() {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			//'plugin_context' => $this->multisite->plugin->plugin_context_get(),
-			'settings' => $this->settings,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Set the Site Option.
 		return $this->option_wpms_set( $this->option_settings, $this->settings );
