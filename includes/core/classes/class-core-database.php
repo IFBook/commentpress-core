@@ -39,13 +39,43 @@ class CommentPress_Core_Database {
 	public $plugin_version;
 
 	/**
-	 * Plugin options array.
+	 * Upgrade flag.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var bool $is_upgrade The upgrade flag. False by default.
+	 */
+	public $is_upgrade = false;
+
+
+	/**
+	 * Core version option name.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $option_version The name of the core version option.
+	 */
+	public $option_version = 'commentpress_version';
+
+	/**
+	 * Core settings option name.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $option_settings The name of the core settings option.
+	 */
+	public $option_settings = 'commentpress_options';
+
+	/**
+	 * Core settings array.
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $commentpress_options The plugin options array.
+	 * @var array $settings The core settings array.
 	 */
-	public $commentpress_options = [];
+	public $settings = [];
+
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Table of Contents content flag.
@@ -260,11 +290,6 @@ class CommentPress_Core_Database {
 		// Init when this plugin is fully loaded.
 		add_action( 'commentpress/core/loaded', [ $this, 'initialise' ] );
 
-		// Act early when this plugin is activated.
-		add_action( 'commentpress/core/activated', [ $this, 'activate' ], 10 );
-		// Act late when this plugin is deactivated.
-		add_action( 'commentpress/core/deactivated', [ $this, 'deactivate' ], 50 );
-
 	}
 
 	/**
@@ -280,71 +305,11 @@ class CommentPress_Core_Database {
 			return;
 		}
 
-		// Init settings.
-		$this->initialise_settings();
-
 		// Register hooks.
 		$this->register_hooks();
 
 		// We're done.
 		$done = true;
-
-	}
-
-	/**
-	 * Initialise settings.
-	 *
-	 * @since 4.0
-	 */
-	public function initialise_settings() {
-
-		// Assign installed plugin version.
-		$this->plugin_version = $this->version_get();
-
-		// Do upgrade tasks.
-		$this->upgrade_tasks();
-
-		// Store version for later reference if there has been a change.
-		if ( $this->version_outdated() ) {
-			$this->version_set( 'cwps_version', COMMENTPRESS_VERSION );
-		}
-
-		// Load options array.
-		$this->commentpress_options = $this->option_wp_get( 'commentpress_options', $this->commentpress_options );
-
-		// Settings upgrade tasks.
-		$this->upgrade_settings();
-
-	}
-
-	/**
-	 * Set up all items associated with this object.
-	 *
-	 * @since 3.0
-	 */
-	public function activate() {
-
-		// Install the database schema.
-		$this->schema_install();
-
-		// Store CommentPress Core version if it doesn't exist.
-		if ( ! $this->option_wp_get( 'commentpress_version' ) ) {
-			$this->option_wp_set( 'commentpress_version', COMMENTPRESS_VERSION );
-		}
-
-		// Add options with default values if we aren't reactivating.
-		if ( ! $this->option_wp_get( 'commentpress_options' ) ) {
-			$this->options_create();
-		}
-
-	}
-
-	/**
-	 * Reset WordPress to prior state, but retain options.
-	 *
-	 * @since 3.0
-	 */
-	public function deactivate() {
 
 	}
 
@@ -355,136 +320,74 @@ class CommentPress_Core_Database {
 	 */
 	public function register_hooks() {
 
-		// Do immediate upgrades after the theme has loaded.
-		add_action( 'after_setup_theme', [ $this, 'upgrade_immediately' ] );
+		// Act early when this plugin is activated.
+		add_action( 'commentpress/core/activated', [ $this, 'plugin_activated' ], 10 );
+
+		// Act late when this plugin is deactivated.
+		add_action( 'commentpress/core/deactivated', [ $this, 'plugin_deactivated' ], 40 );
+
+		// Initialise settings when plugins are loaded.
+		add_action( 'plugins_loaded', [ $this, 'settings_initialise' ] );
 
 	}
 
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Installs the WordPress database schema.
+	 * Runs when core is activated.
 	 *
-	 * @since 4.0
+	 * @since 3.0
+	 *
+	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
-	public function schema_install() {
+	public function plugin_activated( $network_wide = false ) {
 
-		// If we have an existing legacy "comment_text_signature" column.
-		if ( $this->schema_is_modified( 'comment_text_signature' ) ) {
-
-			// Upgrade old CommentPress schema to new CommentPress Core schema.
-			if ( ! $this->schema_upgrade() ) {
-
-				// Kill plugin activation.
-				// TODO: Test failures because multisite may have called this directly.
-				wp_die( 'CommentPress Core Error: could not upgrade the database' );
-
-			}
-
-		} else {
-
-			// Update db schema.
-			$this->schema_update();
-
+		// Bail if plugin is network activated.
+		if ( $network_wide ) {
+			return;
 		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'network_wide' => $network_wide ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Init settings.
+		$this->settings_initialise();
+
+		// Save settings.
+		$this->settings_save();
 
 	}
 
 	/**
-	 * Updates the WordPress database schema.
+	 * Runs when core is deactivated.
 	 *
 	 * @since 3.0
 	 *
-	 * @return bool $result True if successful, false otherwise.
+	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
-	public function schema_update() {
+	public function plugin_deactivated( $network_wide = false ) {
 
-		// Database object.
-		global $wpdb;
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'network_wide' => $network_wide ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
 
-		// Include WordPress install helper script.
-		require_once ABSPATH . 'wp-admin/install-helper.php';
-
-		// Add the column, if not already there.
-		$result = maybe_add_column(
-			$wpdb->comments,
-			'comment_signature',
-			"ALTER TABLE `$wpdb->comments` ADD `comment_signature` VARCHAR(255) NULL;"
-		);
-
-		// --<
-		return $result;
-	}
-
-	/**
-	 * Upgrade WordPress database schema.
-	 *
-	 * @since 3.0
-	 *
-	 * @return bool $result True if successful, false otherwise.
-	 */
-	public function schema_upgrade() {
-
-		// Database object.
-		global $wpdb;
-
-		// Init return.
-		$result = false;
-
-		// Construct query.
-		$query = "ALTER TABLE `$wpdb->comments` CHANGE `comment_text_signature` `comment_signature` VARCHAR(255) NULL;";
-
-		// Do the query to rename the column.
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-		$wpdb->query( $query );
-
-		// Test if we now have the correct column name.
-		if ( $this->schema_is_modified( 'comment_signature' ) ) {
-			$result = true;
+		// Bail if plugin is network activated.
+		if ( $network_wide ) {
+			return;
 		}
-
-		// --<
-		return $result;
-	}
-
-	/**
-	 * Checks if we have a column in the Comments table.
-	 *
-	 * @since 3.0
-	 *
-	 * @param string $column_name The name of the column.
-	 * @return bool $result True if modified, false otherwise.
-	 */
-	public function schema_is_modified( $column_name ) {
-
-		// Database object.
-		global $wpdb;
-
-		// Init.
-		$result = false;
-
-		// Define query.
-		$query = "DESCRIBE $wpdb->comments";
-
-		// Get columns.
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-		$cols = $wpdb->get_results( $query );
-
-		// Loop.
-		foreach ( $cols as $col ) {
-
-			// Is it our desired column?
-			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-			if ( $col->Field == $column_name ) {
-				// We got it.
-				$result = true;
-				break;
-			}
-
-		}
-
-		// --<
-		return $result;
 
 	}
 
@@ -500,7 +403,7 @@ class CommentPress_Core_Database {
 	public function version_get() {
 
 		// Get installed version cast as string.
-		$version = (string) $this->option_wp_get( 'commentpress_version' );
+		$version = (string) $this->option_wp_get( $this->option_version );
 
 		// Cast as boolean if not found.
 		if ( empty( $version ) ) {
@@ -522,24 +425,36 @@ class CommentPress_Core_Database {
 	public function version_set( $version ) {
 
 		// Store new CommentPress Core version.
-		$this->option_wp_set( 'commentpress_version', $version );
+		$this->option_wp_set( $this->option_version, $version );
+
+	}
+
+	/**
+	 * Deletes the plugin version option.
+	 *
+	 * @since 4.0
+	 */
+	public function version_delete() {
+
+		// Delete CommentPress Core version option.
+		$this->option_wp_delete( $this->option_version );
 
 	}
 
 	/**
 	 * Checks for an outdated plugin version.
 	 *
-	 * @since 3.0
+	 * @since 4.0
 	 *
 	 * @return bool True if outdated, false otherwise.
 	 */
 	public function version_outdated() {
 
-		// Get installed version cast as string.
+		// Get installed version.
 		$version = $this->version_get();
 
-		// True if we have a CommentPress Core install and it's lower than this one.
-		if ( ! empty( $version ) && version_compare( COMMENTPRESS_VERSION, $version, '>' ) ) {
+		// True if no version or we have a core install and it's lower than this one.
+		if ( empty( $version ) || version_compare( COMMENTPRESS_VERSION, $version, '>' ) ) {
 			return true;
 		}
 
@@ -551,460 +466,125 @@ class CommentPress_Core_Database {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Check for plugin upgrade.
+	 * Initialise settings.
 	 *
-	 * @since 3.0
-	 *
-	 * @return bool $result True if required, false otherwise.
+	 * @since 4.0
 	 */
-	public function upgrade_required() {
-
-		// Bail if we do not have an outdated version.
-		if ( ! $this->version_outdated() ) {
-			return false;
-		}
-
-		// Override if any options need to be shown.
-		if ( $this->upgrade_options_check() ) {
-			return true;
-		}
-
-		// Fallback.
-		return false;
-
-	}
-
-	/**
-	 * Check for options added in this plugin upgrade.
-	 *
-	 * @since 3.0
-	 *
-	 * @return bool $result True if upgrade needed, false otherwise.
-	 */
-	public function upgrade_options_check() {
-
-		// Do we have the option to choose which Post Types are supported (new in 3.9)?
-		if ( ! $this->option_exists( 'cp_post_types_disabled' ) ) {
-			return true;
-		}
-
-		// Do we have the option to choose not to parse content (new in 3.8.10)?
-		if ( ! $this->option_exists( 'cp_do_not_parse' ) ) {
-			return true;
-		}
-
-		// Do we have the option to choose to disable Page navigation (new in 3.8.10)?
-		if ( ! $this->option_exists( 'cp_page_nav_enabled' ) ) {
-			return true;
-		}
-
-		// Do we have the option to choose to hide textblock meta (new in 3.5.9)?
-		if ( ! $this->option_exists( 'cp_textblock_meta' ) ) {
-			return true;
-		}
-
-		// Do we have the option to choose featured images (new in 3.5.4)?
-		if ( ! $this->option_exists( 'cp_featured_images' ) ) {
-			return true;
-		}
-
-		// Do we have the option to choose the default sidebar (new in 3.3.3)?
-		if ( ! $this->option_exists( 'cp_sidebar_default' ) ) {
-			return true;
-		}
-
-		// Do we have the option to show or hide Page meta (new in 3.3.2)?
-		if ( ! $this->option_exists( 'cp_page_meta_visibility' ) ) {
-			return true;
-		}
-
-		// Do we have the option to choose Blog Type (new in 3.3.1)?
-		if ( ! $this->option_exists( 'cp_blog_type' ) ) {
-			return true;
-		}
-
-		// Do we have the option to choose the TOC layout (new in 3.3)?
-		if ( ! $this->option_exists( 'cp_show_extended_toc' ) ) {
-			return true;
-		}
-
-		// Do we have the option to set the Comment editor?
-		if ( ! $this->option_exists( 'cp_comment_editor' ) ) {
-			return true;
-		}
-
-		// Do we have the option to set the default behaviour?
-		if ( ! $this->option_exists( 'cp_promote_reading' ) ) {
-			return true;
-		}
-
-		// Do we have the option to show or hide titles?
-		if ( ! $this->option_exists( 'cp_title_visibility' ) ) {
-			return true;
-		}
-
-		// Do we have the option to set the scroll speed?
-		if ( ! $this->option_exists( 'cp_js_scroll_speed' ) ) {
-			return true;
-		}
-
-		// Do we have the option to set the minimum Page width?
-		if ( ! $this->option_exists( 'cp_min_page_width' ) ) {
-			return true;
-		}
-
-		// --<
-		return false;
-
-	}
-
-	/**
-	 * Upgrade CommentPress options.
-	 *
-	 * @since 3.0
-	 */
-	public function upgrade_options() {
-
-		// Bail if no upgrade required.
-		if ( ! $this->upgrade_required() ) {
-			return;
-		}
+	public function settings_initialise() {
 
 		/*
-		 * We don't receive disabled Post Types in $_POST, so let's default
-		 * to all Post Types being enabled.
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'plugin_context' => $this->core->plugin->plugin_context_get(),
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Load installed plugin version.
+		$this->plugin_version = $this->version_get();
+
+		// Load settings array.
+		$this->settings = $this->settings_get();
+
+		// Store version if there has been a change.
+		if ( $this->version_outdated() ) {
+			$this->version_set( COMMENTPRESS_MU_PLUGIN_VERSION );
+			$this->is_upgrade = true;
+		}
+
+		// Settings upgrade tasks.
+		$this->settings_upgrade();
+
+	}
+
+	/**
+	 * Upgrades the settings when required.
+	 *
+	 * @since 4.0
+	 */
+	public function settings_upgrade() {
+
+		// Don't save by default.
+		$save = false;
+
+		/*
+		// Some setting may not exist.
+		if ( ! $this->setting_exists( 'some_setting' ) ) {
+			$settings = $this->settings_get_defaults();
+			$this->setting_set( 'some_setting', $settings['some_setting'] );
+			$save = true;
+		}
+		*/
+
+		/*
+		// Things to always check on upgrade.
+		if ( $this->is_upgrade ) {
+			// Add them here.
+			//$save = true;
+		}
+		*/
+
+		// Save settings if need be.
+		if ( $save === true ) {
+			$this->settings_save();
+		}
+
+	}
+
+	/**
+	 * Gets the default settings.
+	 *
+	 * @since 4.0
+	 *
+	 * @return array $settings  The array of default settings.
+	 */
+	public function settings_get_defaults() {
+
+		// Init return.
+		$settings = [
+			'cp_show_posts_or_pages_in_toc' => $this->toc_content,
+			'cp_toc_chapter_is_page' => $this->toc_chapter_is_page,
+			'cp_show_subpages' => $this->show_subpages,
+			'cp_show_extended_toc' => $this->show_extended_toc,
+			'cp_title_visibility' => $this->title_visibility,
+			'cp_page_meta_visibility' => $this->page_meta_visibility,
+			'cp_js_scroll_speed' => $this->js_scroll_speed,
+			'cp_min_page_width' => $this->min_page_width,
+			'cp_comment_editor' => $this->comment_editor,
+			'cp_promote_reading' => $this->promote_reading,
+			'cp_excerpt_length' => $this->excerpt_length,
+			'cp_para_comments_live' => $this->para_comments_live,
+			'cp_blog_type' => $this->blog_type,
+			'cp_sidebar_default' => $this->sidebar_default,
+			'cp_featured_images' => $this->featured_images,
+			'cp_textblock_meta' => $this->textblock_meta,
+			'cp_page_nav_enabled' => $this->page_nav_enabled,
+			'cp_do_not_parse' => $this->do_not_parse,
+			'cp_post_types_disabled' => $this->post_types_disabled,
+		];
+
+		/**
+		 * Filters the default settings.
+		 *
+		 * @since 4.0
+		 *
+		 * @param array $settings The array of default settings.
 		 */
-		$cp_post_types_enabled = array_keys( $this->get_supported_post_types() );
+		$settings = apply_filters( 'commentpress/core/settings/defaults', $settings );
 
-		// Default Blog Type.
-		$cp_blog_type = $this->blog_type;
-
-		// Get variables.
-		extract( $_POST );
-
-		// New in CommentPress Core 3.9 - Post Types can be excluded.
-		if ( ! $this->option_exists( 'cp_post_types_disabled' ) ) {
-
-			// Get selected Post Types.
-			$enabled_types = array_map( 'esc_sql', $cp_post_types_enabled );
-
-			// Exclude the selected Post Types.
-			$disabled_types = array_diff( array_keys( $this->get_supported_post_types() ), $enabled_types );
-
-			// Add option.
-			$this->option_set( 'cp_post_types_disabled', $disabled_types );
-
-		}
-
-		// New in CommentPress Core 3.8.10 - parsing can be prevented.
-		if ( ! $this->option_exists( 'cp_do_not_parse' ) ) {
-
-			// Get choice.
-			$choice = esc_sql( $cp_do_not_parse );
-
-			// Add chosen parsing option.
-			$this->option_set( 'cp_do_not_parse', $choice );
-
-		}
-
-		// New in CommentPress Core 3.8.10 - Page navigation can be disabled.
-		if ( ! $this->option_exists( 'cp_page_nav_enabled' ) ) {
-
-			// Get choice.
-			$choice = esc_sql( $cp_page_nav_enabled );
-
-			// Add chosen Page navigation option.
-			$this->option_set( 'cp_page_nav_enabled', $choice );
-
-		}
-
-		// New in CommentPress Core 3.5.9 - textblock meta can be hidden.
-		if ( ! $this->option_exists( 'cp_textblock_meta' ) ) {
-
-			// Get choice.
-			$choice = esc_sql( $cp_textblock_meta );
-
-			// Add chosen textblock meta option.
-			$this->option_set( 'cp_textblock_meta', $choice );
-
-		}
-
-		// New in CommentPress Core 3.5.4 - featured image capabilities.
-		if ( ! $this->option_exists( 'cp_featured_images' ) ) {
-
-			// Get choice.
-			$choice = esc_sql( $cp_featured_images );
-
-			// Add chosen featured images option.
-			$this->option_set( 'cp_featured_images', $choice );
-
-		}
-
-		// Removed in CommentPress Core 3.4 - do we still have the legacy cp_para_comments_enabled option?
-		if ( $this->option_exists( 'cp_para_comments_enabled' ) ) {
-
-			// Delete old cp_para_comments_enabled option.
-			$this->option_delete( 'cp_para_comments_enabled' );
-
-		}
-
-		// Removed in CommentPress Core 3.4 - do we still have the legacy cp_minimise_sidebar option?
-		if ( $this->option_exists( 'cp_minimise_sidebar' ) ) {
-
-			// Delete old cp_minimise_sidebar option.
-			$this->option_delete( 'cp_minimise_sidebar' );
-
-		}
-
-		// New in CommentPress Core 3.4 - has AJAX "live" Comment refreshing been migrated?
-		if ( ! $this->option_exists( 'cp_para_comments_live' ) ) {
-
-			// "live" Comment refreshing, off by default.
-			$this->option_set( 'cp_para_comments_live', $this->para_comments_live );
-
-		}
-
-		// New in CommentPress 3.3.3 - changed the way the Welcome Page works.
-		if ( $this->option_exists( 'cp_special_pages' ) ) {
-
-			// Do we have the cp_welcome_page option?
-			if ( $this->option_exists( 'cp_welcome_page' ) ) {
-
-				// Get it.
-				$page_id = $this->option_get( 'cp_welcome_page' );
-
-				// Retrieve data on Special Pages.
-				$special_pages = $this->option_get( 'cp_special_pages', [] );
-
-				// Is it in our Special Pages array?
-				if ( in_array( $page_id, $special_pages ) ) {
-
-					// Remove Page ID from array.
-					$special_pages = array_diff( $special_pages, [ $page_id ] );
-
-					// Reset option.
-					$this->option_set( 'cp_special_pages', $special_pages );
-
-				}
-
-			}
-
-		}
-
-		// New in CommentPress 3.3.3 - are we missing the cp_sidebar_default option?
-		if ( ! $this->option_exists( 'cp_sidebar_default' ) ) {
-
-			// Does the current theme need this option?
-			if ( ! apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
-
-				// Yes, get choice.
-				$choice = esc_sql( $cp_sidebar_default );
-
-				// Add chosen cp_sidebar_default option.
-				$this->option_set( 'cp_sidebar_default', $choice );
-
-			} else {
-
-				// Add default cp_sidebar_default option.
-				$this->option_set( 'cp_sidebar_default', $this->sidebar_default );
-
-			}
-
-		}
-
-		// New in CommentPress 3.3.2 - are we missing the cp_page_meta_visibility option?
-		if ( ! $this->option_exists( 'cp_page_meta_visibility' ) ) {
-
-			// Get choice.
-			$choice = esc_sql( $cp_page_meta_visibility );
-
-			// Add chosen cp_page_meta_visibility option.
-			$this->option_set( 'cp_page_meta_visibility', $choice );
-
-		}
-
-		// New in CommentPress 3.3.1 - are we missing the cp_blog_type option?
-		if ( ! $this->option_exists( 'cp_blog_type' ) ) {
-
-			// Get choice.
-			$choice = esc_sql( $cp_blog_type );
-
-			// Add chosen cp_blog_type option.
-			$this->option_set( 'cp_blog_type', $choice );
-
-		}
-
-		// New in CommentPress 3.3 - are we missing the cp_show_extended_toc option?
-		if ( ! $this->option_exists( 'cp_show_extended_toc' ) ) {
-
-			// Get choice.
-			$choice = esc_sql( $cp_show_extended_toc );
-
-			// Add chosen cp_show_extended_toc option.
-			$this->option_set( 'cp_show_extended_toc', $choice );
-
-		}
-
-		// Are we missing the cp_comment_editor option?
-		if ( ! $this->option_exists( 'cp_comment_editor' ) ) {
-
-			// Get choice.
-			$choice = esc_sql( $cp_comment_editor );
-
-			// Add chosen cp_comment_editor option.
-			$this->option_set( 'cp_comment_editor', $choice );
-
-		}
-
-		// Are we missing the cp_promote_reading option?
-		if ( ! $this->option_exists( 'cp_promote_reading' ) ) {
-
-			// Get choice.
-			$choice = esc_sql( $cp_promote_reading );
-
-			// Add chosen cp_promote_reading option.
-			$this->option_set( 'cp_promote_reading', $choice );
-
-		}
-
-		// Are we missing the cp_title_visibility option?
-		if ( ! $this->option_exists( 'cp_title_visibility' ) ) {
-
-			// Get choice.
-			$choice = esc_sql( $cp_title_visibility );
-
-			// Add chosen cp_title_visibility option.
-			$this->option_set( 'cp_title_visibility', $choice );
-
-		}
-
-		// Are we missing the cp_js_scroll_speed option?
-		if ( ! $this->option_exists( 'cp_js_scroll_speed' ) ) {
-
-			// Get choice.
-			$choice = esc_sql( $cp_js_scroll_speed );
-
-			// Add chosen cp_js_scroll_speed option.
-			$this->option_set( 'cp_js_scroll_speed', $choice );
-
-		}
-
-		// Are we missing the cp_min_page_width option?
-		if ( ! $this->option_exists( 'cp_min_page_width' ) ) {
-
-			// Get choice.
-			$choice = esc_sql( $cp_min_page_width );
-
-			// Add chosen cp_min_page_width option.
-			$this->option_set( 'cp_min_page_width', $choice );
-
-		}
-
-		// Do we still have the legacy cp_allow_users_to_minimize option?
-		if ( $this->option_exists( 'cp_allow_users_to_minimize' ) ) {
-
-			// Delete old cp_allow_users_to_minimize option.
-			$this->option_delete( 'cp_allow_users_to_minimize' );
-
-		}
-
-		// Do we have Special Pages?
-		if ( $this->option_exists( 'cp_special_pages' ) ) {
-
-			// If we don't have the TOC Page.
-			if ( ! $this->option_exists( 'cp_toc_page' ) ) {
-
-				// Get Special Pages array.
-				$special_pages = $this->option_get( 'cp_special_pages', [] );
-
-				// Create TOC Page -> a convenience, let's us define a logo as attachment.
-				$special_pages[] = $this->create_toc_page();
-
-				// Store the array of Page IDs that were created.
-				$this->option_set( 'cp_special_pages', $special_pages );
-
-			}
-
-		}
-
-		// Save new CommentPress Core options.
-		$this->options_save();
+		// --<
+		return $settings;
 
 	}
 
 	/**
-	 * Perform any plugin upgrades that do not have a setting on Page load.
+	 * Updates the settings from form submissions.
 	 *
-	 * Unlike `upgrade_options()` (which is only called when someone visits the
-	 * CommentPress Core Settings Page), this method is called on every Page
-	 * load so that upgrades are performed immediately if required.
-	 *
-	 * @since 3.0
+	 * @since 4.0
 	 */
-	public function upgrade_immediately() {
-
-		// Bail if we do not have an outdated version.
-		if ( ! $this->version_outdated() ) {
-			return;
-		}
-
-		// Maybe upgrade theme mods.
-		$this->upgrade_theme_mods();
-
-	}
-
-	/**
-	 * Check for theme mods added in this plugin upgrade.
-	 *
-	 * @since 3.4
-	 *
-	 * @return bool $result True if upgraded, false otherwise.
-	 */
-	public function upgrade_theme_mods() {
-
-		// Bail if option is already removed.
-		if ( ! $this->option_exists( 'cp_header_bg_colour' ) ) {
-			return;
-		}
-
-		// Get header background colour set via customizer (new in 3.8.5).
-		$colour = get_theme_mod( 'commentpress_header_bg_color', false );
-
-		// Bail if we have an existing one.
-		if ( $colour !== false ) {
-			return;
-		}
-
-		// Set to default.
-		$colour = $this->header_bg_color;
-
-		// Get current value.
-		$value = $this->option_get( 'cp_header_bg_colour', 'deprecated' );
-
-		// Override colour if not yet deprecated.
-		if ( $value !== 'deprecated' ) {
-			$colour = $value;
-		}
-
-		// Apply theme mod setting.
-		set_theme_mod( 'commentpress_header_bg_color', '#' . $colour );
-
-		// Delete option.
-		$this->option_delete( 'cp_header_bg_colour', 'deprecated' );
-
-		// Save options.
-		$this->options_save();
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Save the settings set by the administrator.
-	 *
-	 * @since 3.0
-	 */
-	public function options_update() {
+	public function settings_update() {
 
 		// Init vars.
 		$cp_activate = '0';
@@ -1021,17 +601,13 @@ class CommentPress_Core_Database {
 		$cp_do_not_parse = 'y';
 
 		// Assume all Post Types are enabled.
-		$cp_post_types_enabled = array_keys( $this->get_supported_post_types() );
+		$cp_post_types_enabled = array_keys( $this->post_types_get_supported() );
 
 		// Get variables.
 		extract( $_POST );
 
 		/**
 		 * Fires before the options have been updated.
-		 *
-		 * Used internally by:
-		 *
-		 * * CommentPress_Multisite_Settings_Site::disable_core() (Priority: 10)
 		 *
 		 * @since 4.0
 		 */
@@ -1050,7 +626,8 @@ class CommentPress_Core_Database {
 
 		// Did we ask to reset?
 		if ( $cp_reset == '1' ) {
-			$this->options_reset();
+			$defaults = $this->settings_get_defaults();
+			$this->settings_save();
 			return;
 		}
 
@@ -1082,33 +659,33 @@ class CommentPress_Core_Database {
 		$cp_general_comments_page = esc_sql( $cp_general_comments_page );
 		$cp_all_comments_page = esc_sql( $cp_all_comments_page );
 		$cp_comments_by_page = esc_sql( $cp_comments_by_page );
-		$this->option_set( 'cp_welcome_page', $cp_welcome_page );
-		$this->option_set( 'cp_blog_page', $cp_blog_page );
-		$this->option_set( 'cp_general_comments_page', $cp_general_comments_page );
-		$this->option_set( 'cp_all_comments_page', $cp_all_comments_page );
-		$this->option_set( 'cp_comments_by_page', $cp_comments_by_page );
+		$this->setting_set( 'cp_welcome_page', $cp_welcome_page );
+		$this->setting_set( 'cp_blog_page', $cp_blog_page );
+		$this->setting_set( 'cp_general_comments_page', $cp_general_comments_page );
+		$this->setting_set( 'cp_all_comments_page', $cp_all_comments_page );
+		$this->setting_set( 'cp_comments_by_page', $cp_comments_by_page );
 		*/
 
 		// TOC content.
 		$cp_show_posts_or_pages_in_toc = esc_sql( $cp_show_posts_or_pages_in_toc );
-		$this->option_set( 'cp_show_posts_or_pages_in_toc', $cp_show_posts_or_pages_in_toc );
+		$this->setting_set( 'cp_show_posts_or_pages_in_toc', $cp_show_posts_or_pages_in_toc );
 
 		// If we have Pages in TOC and a value for the next param.
 		if ( $cp_show_posts_or_pages_in_toc == 'page' && isset( $cp_toc_chapter_is_page ) ) {
 
 			$cp_toc_chapter_is_page = esc_sql( $cp_toc_chapter_is_page );
-			$this->option_set( 'cp_toc_chapter_is_page', $cp_toc_chapter_is_page );
+			$this->setting_set( 'cp_toc_chapter_is_page', $cp_toc_chapter_is_page );
 
 			// If Chapters are not Pages and we have a value for the next param.
 			if ( $cp_toc_chapter_is_page == '0' ) {
 
 				$cp_show_subpages = esc_sql( $cp_show_subpages );
-				$this->option_set( 'cp_show_subpages', ( $cp_show_subpages ? 1 : 0 ) );
+				$this->setting_set( 'cp_show_subpages', ( $cp_show_subpages ? 1 : 0 ) );
 
 			} else {
 
 				// Always set to show Sub-pages.
-				$this->option_set( 'cp_show_subpages', 1 );
+				$this->setting_set( 'cp_show_subpages', 1 );
 
 			}
 
@@ -1118,38 +695,38 @@ class CommentPress_Core_Database {
 		if ( $cp_show_posts_or_pages_in_toc == 'post' ) {
 
 			$cp_show_extended_toc = esc_sql( $cp_show_extended_toc );
-			$this->option_set( 'cp_show_extended_toc', ( $cp_show_extended_toc ? 1 : 0 ) );
+			$this->setting_set( 'cp_show_extended_toc', ( $cp_show_extended_toc ? 1 : 0 ) );
 
 		}
 
 		// Excerpt length.
 		$cp_excerpt_length = esc_sql( $cp_excerpt_length );
-		$this->option_set( 'cp_excerpt_length', intval( $cp_excerpt_length ) );
+		$this->setting_set( 'cp_excerpt_length', intval( $cp_excerpt_length ) );
 
 		// Comment editor.
 		$cp_comment_editor = esc_sql( $cp_comment_editor );
-		$this->option_set( 'cp_comment_editor', ( $cp_comment_editor ? 1 : 0 ) );
+		$this->setting_set( 'cp_comment_editor', ( $cp_comment_editor ? 1 : 0 ) );
 
 		// Has AJAX "live" Comment refreshing been migrated?
-		if ( $this->option_exists( 'cp_para_comments_live' ) ) {
+		if ( $this->setting_exists( 'cp_para_comments_live' ) ) {
 
 			// "live" Comment refreshing.
 			$cp_para_comments_live = esc_sql( $cp_para_comments_live );
-			$this->option_set( 'cp_para_comments_live', ( $cp_para_comments_live ? 1 : 0 ) );
+			$this->setting_set( 'cp_para_comments_live', ( $cp_para_comments_live ? 1 : 0 ) );
 
 		}
 
 		// Behaviour.
 		$cp_promote_reading = esc_sql( $cp_promote_reading );
-		$this->option_set( 'cp_promote_reading', ( $cp_promote_reading ? 1 : 0 ) );
+		$this->setting_set( 'cp_promote_reading', ( $cp_promote_reading ? 1 : 0 ) );
 
 		// Save scroll speed.
 		$cp_js_scroll_speed = esc_sql( $cp_js_scroll_speed );
-		$this->option_set( 'cp_js_scroll_speed', $cp_js_scroll_speed );
+		$this->setting_set( 'cp_js_scroll_speed', $cp_js_scroll_speed );
 
 		// Save min Page width.
 		$cp_min_page_width = esc_sql( $cp_min_page_width );
-		$this->option_set( 'cp_min_page_width', $cp_min_page_width );
+		$this->setting_set( 'cp_min_page_width', $cp_min_page_width );
 
 		// If it's a Group Blog.
 		if ( $this->core->bp->is_groupblog() ) {
@@ -1167,31 +744,31 @@ class CommentPress_Core_Database {
 
 		// Save featured images.
 		$cp_featured_images = esc_sql( $cp_featured_images );
-		$this->option_set( 'cp_featured_images', $cp_featured_images );
+		$this->setting_set( 'cp_featured_images', $cp_featured_images );
 
 		// Save textblock meta.
 		$cp_textblock_meta = esc_sql( $cp_textblock_meta );
-		$this->option_set( 'cp_textblock_meta', $cp_textblock_meta );
+		$this->setting_set( 'cp_textblock_meta', $cp_textblock_meta );
 
 		// Save Page navigation enabled flag.
 		$cp_page_nav_enabled = esc_sql( $cp_page_nav_enabled );
-		$this->option_set( 'cp_page_nav_enabled', $cp_page_nav_enabled );
+		$this->setting_set( 'cp_page_nav_enabled', $cp_page_nav_enabled );
 
 		// Save do not parse flag.
 		$cp_do_not_parse = esc_sql( $cp_do_not_parse );
-		$this->option_set( 'cp_do_not_parse', $cp_do_not_parse );
+		$this->setting_set( 'cp_do_not_parse', $cp_do_not_parse );
 
 		// Do we have the Post Types option?
-		if ( $this->option_exists( 'cp_post_types_disabled' ) ) {
+		if ( $this->setting_exists( 'cp_post_types_disabled' ) ) {
 
 			// Get selected Post Types.
 			$enabled_types = array_map( 'esc_sql', $cp_post_types_enabled );
 
 			// Exclude the selected Post Types.
-			$disabled_types = array_diff( array_keys( $this->get_supported_post_types() ), $enabled_types );
+			$disabled_types = array_diff( array_keys( $this->post_types_get_supported() ), $enabled_types );
 
 			// Save skipped Post Types.
-			$this->option_set( 'cp_post_types_disabled', $disabled_types );
+			$this->setting_set( 'cp_post_types_disabled', $disabled_types );
 
 		}
 
@@ -1200,93 +777,132 @@ class CommentPress_Core_Database {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Upgrade CommentPress Core options to array.
+	 * Gets the settings array from a WordPress option.
 	 *
-	 * @since 3.0
+	 * @since 4.0
 	 *
-	 * @return array $commentpress_options The plugin options.
+	 * @return array $settings The array of settings if successful, or empty array otherwise.
 	 */
-	public function options_save() {
+	public function settings_get() {
 
-		// Set option.
-		return $this->option_wp_set( 'commentpress_options', $this->commentpress_options );
+		// Get the option.
+		return $this->option_wp_get( $this->option_settings, $this->settings_get_defaults() );
 
 	}
 
 	/**
-	 * Return existence of a specified option.
+	 * Saves the settings array in a WordPress option.
 	 *
-	 * @since 3.0
+	 * @since 4.0
 	 *
-	 * @param str $option_name The name of the option.
-	 * @return bool True if the option exists, false otherwise.
+	 * @return boolean $success True if successful, or false otherwise.
 	 */
-	public function option_exists( $option_name ) {
+	public function settings_save() {
 
-		// Get option with unlikely default.
-		return array_key_exists( $option_name, $this->commentpress_options );
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'plugin_context' => $this->core->plugin->plugin_context_get(),
+			'settings' => $this->settings,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Set the option.
+		return $this->option_wp_set( $this->option_settings, $this->settings );
 
 	}
 
 	/**
-	 * Return a value for a specified option.
+	 * Deletes the settings WordPress option.
 	 *
-	 * @since 3.0
-	 *
-	 * @param str $option_name The name of the option.
-	 * @param mixed $default The default value for the option.
-	 * @return mixed The value of the option if it exists, $default otherwise.
+	 * @since 4.0
 	 */
-	public function option_get( $option_name, $default = false ) {
+	public function settings_delete() {
 
-		// Get option.
-		return array_key_exists( $option_name, $this->commentpress_options ) ? $this->commentpress_options[ $option_name ] : $default;
-
-	}
-
-	/**
-	 * Sets a value for a specified option.
-	 *
-	 * @since 3.0
-	 *
-	 * @param str $option_name The name of the option.
-	 * @param mixed $value The value for the option.
-	 */
-	public function option_set( $option_name, $value = '' ) {
-
-		// Set option.
-		$this->commentpress_options[ $option_name ] = $value;
-
-	}
-
-	/**
-	 * Deletes a specified option.
-	 *
-	 * @since 3.0
-	 *
-	 * @param str $option_name The name of the option.
-	 */
-	public function option_delete( $option_name ) {
-
-		// Unset option.
-		unset( $this->commentpress_options[ $option_name ] );
+		// Delete the option.
+		$this->option_wp_delete( $this->option_settings );
 
 	}
 
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Return existence of a specified WordPress option.
+	 * Returns existence of a specified setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param str $name The name of the setting.
+	 * @return bool True if the setting exists, false otherwise.
+	 */
+	public function setting_exists( $name ) {
+
+		// Check if the setting exists in the settings array.
+		return array_key_exists( $name, $this->settings );
+
+	}
+
+	/**
+	 * Return a value for a specified setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param str $name The name of the setting.
+	 * @param mixed $default The default value for the setting.
+	 * @return mixed The value of the setting if it exists, $default otherwise.
+	 */
+	public function setting_get( $name, $default = false ) {
+
+		// Get setting.
+		return array_key_exists( $name, $this->settings ) ? $this->settings[ $name ] : $default;
+
+	}
+
+	/**
+	 * Sets a value for a specified setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param str $name The name of the setting.
+	 * @param mixed $value The value for the setting.
+	 */
+	public function setting_set( $name, $value = '' ) {
+
+		// Set setting.
+		$this->settings[ $name ] = $value;
+
+	}
+
+	/**
+	 * Deletes a specified setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param str $name The name of the setting.
+	 */
+	public function setting_delete( $name ) {
+
+		// Unset setting.
+		unset( $this->settings[ $name ] );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Return existence of a specified option.
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $option_name The name of the option.
+	 * @param str $name The name of the option.
 	 * @return bool True if option exists, false otherwise.
 	 */
-	public function option_wp_exists( $option_name ) {
+	public function option_wp_exists( $name ) {
 
 		// Get option with unlikely default.
-		if ( $this->option_wp_get( $option_name, 'fenfgehgejgrkj' ) == 'fenfgehgejgrkj' ) {
+		if ( $this->option_wp_get( $name, 'fenfgehgejgrkj' ) === 'fenfgehgejgrkj' ) {
 			return false;
 		} else {
 			return true;
@@ -1295,37 +911,50 @@ class CommentPress_Core_Database {
 	}
 
 	/**
-	 * Return a value for a specified WordPress option.
+	 * Return a value for a specified option.
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $option_name The name of the option.
+	 * @param str $name The name of the option.
 	 * @param mixed $default The default value for the option.
-	 * @return mixed The value of the option if it exists, $default otherwise.
+	 * @return mixed The value of the option if it exists, default otherwise.
 	 */
-	public function option_wp_get( $option_name, $default = false ) {
+	public function option_wp_get( $name, $default = false ) {
 
 		// Get option.
-		return get_option( $option_name, $default );
+		return get_option( $name, $default );
 
 	}
 
 	/**
-	 * Sets a value for a specified WordPress option.
+	 * Sets the value for a specified option.
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $option_name The name of the option.
+	 * @param str $name The name of the option.
 	 * @param mixed $value The value for the option.
+	 * @return bool True if the value was updated, false otherwise.
 	 */
-	public function option_wp_set( $option_name, $value = null ) {
+	public function option_wp_set( $name, $value = '' ) {
 
 		// Set option.
-		return update_option( $option_name, $value );
+		return update_option( $name, $value );
 
 	}
 
-	// -------------------------------------------------------------------------
+	/**
+	 * Deletes a specified option.
+	 *
+	 * @since 4.0
+	 *
+	 * @param str $name The name of the option.
+	 */
+	public function option_wp_delete( $name ) {
+
+		// Delete option.
+		delete_option( $name );
+
+	}
 
 	/**
 	 * Backs up a current WordPress option.
@@ -1336,10 +965,10 @@ class CommentPress_Core_Database {
 	 * @param str $name The name of the option to back up.
 	 * @param mixed $value The value of the option.
 	 */
-	public function wordpress_option_backup( $name, $value ) {
+	public function option_wp_backup( $name, $value ) {
 
 		// Save backup option.
-		add_option( 'commentpress_' . $name, $this->option_wp_get( $name ) );
+		$this->option_wp_set( 'commentpress_' . $name, $this->option_wp_get( $name ) );
 
 		// Overwrite the WordPress option.
 		$this->option_wp_set( $name, $value );
@@ -1354,119 +983,13 @@ class CommentPress_Core_Database {
 	 *
 	 * @param str $name The name of the option.
 	 */
-	public function wordpress_option_restore( $name ) {
+	public function option_wp_restore( $name ) {
 
 		// Restore the WordPress option.
 		$this->option_wp_set( $name, $this->option_wp_get( 'commentpress_' . $name ) );
 
 		// Remove backup option.
-		delete_option( 'commentpress_' . $name );
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Create all basic CommentPress Core options.
-	 *
-	 * @since 3.4
-	 */
-	public function options_create() {
-
-		// Init options array.
-		$this->commentpress_options = [
-			'cp_show_posts_or_pages_in_toc' => $this->toc_content,
-			'cp_toc_chapter_is_page' => $this->toc_chapter_is_page,
-			'cp_show_subpages' => $this->show_subpages,
-			'cp_show_extended_toc' => $this->show_extended_toc,
-			'cp_title_visibility' => $this->title_visibility,
-			'cp_page_meta_visibility' => $this->page_meta_visibility,
-			'cp_js_scroll_speed' => $this->js_scroll_speed,
-			'cp_min_page_width' => $this->min_page_width,
-			'cp_comment_editor' => $this->comment_editor,
-			'cp_promote_reading' => $this->promote_reading,
-			'cp_excerpt_length' => $this->excerpt_length,
-			'cp_para_comments_live' => $this->para_comments_live,
-			'cp_blog_type' => $this->blog_type,
-			'cp_sidebar_default' => $this->sidebar_default,
-			'cp_featured_images' => $this->featured_images,
-			'cp_textblock_meta' => $this->textblock_meta,
-			'cp_page_nav_enabled' => $this->page_nav_enabled,
-			'cp_do_not_parse' => $this->do_not_parse,
-			'cp_post_types_disabled' => $this->post_types_disabled,
-		];
-
-		// Paragraph-level Comments enabled by default.
-		add_option( 'commentpress_options', $this->commentpress_options );
-
-	}
-
-	/**
-	 * Reset CommentPress Core options.
-	 *
-	 * @since 3.4
-	 */
-	public function options_reset() {
-
-		// TOC: show Posts by default.
-		$this->option_set( 'cp_show_posts_or_pages_in_toc', $this->toc_content );
-
-		// TOC: are Chapters Pages.
-		$this->option_set( 'cp_toc_chapter_is_page', $this->toc_chapter_is_page );
-
-		// TOC: if Pages are shown, show Sub-pages by default.
-		$this->option_set( 'cp_show_subpages', $this->show_subpages );
-
-		// TOC: show extended Post list.
-		$this->option_set( 'cp_show_extended_toc', $this->show_extended_toc );
-
-		// Comment editor.
-		$this->option_set( 'cp_comment_editor', $this->comment_editor );
-
-		// Promote reading or commenting.
-		$this->option_set( 'cp_promote_reading', $this->promote_reading );
-
-		// Show or hide titles.
-		$this->option_set( 'cp_title_visibility', $this->title_visibility );
-
-		// Show or hide Page meta.
-		$this->option_set( 'cp_page_meta_visibility', $this->page_meta_visibility );
-
-		// Javascript scroll speed.
-		$this->option_set( 'cp_js_scroll_speed', $this->js_scroll_speed );
-
-		// Minimum Page width.
-		$this->option_set( 'cp_min_page_width', $this->min_page_width );
-
-		// "live" Comment refeshing.
-		$this->option_set( 'cp_para_comments_live', $this->para_comments_live );
-
-		// Blog: excerpt length.
-		$this->option_set( 'cp_excerpt_length', $this->excerpt_length );
-
-		// Blog Type.
-		$this->option_set( 'cp_blog_type', $this->blog_type );
-
-		// Default sidebar.
-		$this->option_set( 'cp_sidebar_default', $this->sidebar_default );
-
-		// Featured images.
-		$this->option_set( 'cp_featured_images', $this->featured_images );
-
-		// Textblock meta.
-		$this->option_set( 'cp_textblock_meta', $this->textblock_meta );
-
-		// Page navigation enabled.
-		$this->option_set( 'cp_page_nav_enabled', $this->page_nav_enabled );
-
-		// Do not parse flag.
-		$this->option_set( 'cp_do_not_parse', $this->do_not_parse );
-
-		// Skipped Post Types.
-		$this->option_set( 'cp_post_types_disabled', $this->post_types_disabled );
-
-		// Store it.
-		$this->options_save();
+		$this->option_wp_delete( 'commentpress_' . $name );
 
 	}
 
@@ -1479,7 +1002,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @return array $supported_post_types The array of Post Types that have an editor.
 	 */
-	public function get_supported_post_types() {
+	public function post_types_get_supported() {
 
 		// Only parse Post Types once.
 		static $supported_post_types = [];
@@ -1510,6 +1033,104 @@ class CommentPress_Core_Database {
 		// --<
 		return $supported_post_types;
 
+	}
+
+	/*
+	 * -------------------------------------------------------------------------
+	 * Methods below are legacy methods and should no longer be used.
+	 * -------------------------------------------------------------------------
+	 *
+	 * They are retained here for the time-being but will be removed in future
+	 * versions. You should check your log files to identify any calls to these
+	 * methods and update your code accordingly.
+	 *
+	 * -------------------------------------------------------------------------
+	 */
+
+	/**
+	 * Gets the WordPress Post Types that CommentPress supports.
+	 *
+	 * @since 3.9
+	 *
+	 * @return array $supported_post_types The array of Post Types that have an editor.
+	 */
+	public function get_supported_post_types() {
+		_deprecated_function( __METHOD__, '4.0' );
+		return $this->post_types_get_supported();
+	}
+
+	/**
+	 * Saves CommentPress Core options array in a WordPress option.
+	 *
+	 * @since 3.0
+	 *
+	 * @return boolean $success True if successful, or false otherwise.
+	 */
+	public function options_save() {
+		_deprecated_function( __METHOD__, '4.0' );
+		return $this->settings_save();
+	}
+
+	/**
+	 * Save the settings set by the administrator.
+	 *
+	 * @since 3.0
+	 */
+	public function options_update() {
+		_deprecated_function( __METHOD__, '4.0' );
+		$this->settings_update();
+	}
+
+	/**
+	 * Return existence of a specified option.
+	 *
+	 * @since 3.0
+	 *
+	 * @param str $name The name of the option.
+	 * @return bool True if the option exists, false otherwise.
+	 */
+	public function option_exists( $name ) {
+		_deprecated_function( __METHOD__, '4.0' );
+		return $this->setting_exists( $name );
+	}
+
+	/**
+	 * Return a value for a specified option.
+	 *
+	 * @since 3.0
+	 *
+	 * @param str $name The name of the option.
+	 * @param mixed $default The default value for the option.
+	 * @return mixed The value of the option if it exists, $default otherwise.
+	 */
+	public function option_get( $name, $default = false ) {
+		_deprecated_function( __METHOD__, '4.0' );
+		return $this->setting_get( $name, $default );
+	}
+
+	/**
+	 * Sets a value for a specified option.
+	 *
+	 * @since 3.0
+	 *
+	 * @param str $name The name of the option.
+	 * @param mixed $value The value for the option.
+	 */
+	public function option_set( $name, $value = '' ) {
+		_deprecated_function( __METHOD__, '4.0' );
+		$this->setting_set( $name, $value );
+	}
+
+	/**
+	 * Deletes a specified option.
+	 *
+	 * @since 3.0
+	 *
+	 * @param str $name The name of the option.
+	 */
+	public function option_delete( $name ) {
+		_deprecated_function( __METHOD__, '4.0' );
+		$this->setting_delete( $name );
 	}
 
 }

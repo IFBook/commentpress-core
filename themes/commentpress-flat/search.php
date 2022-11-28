@@ -18,7 +18,7 @@ $_special_pages = [];
 if ( ! empty( $core ) ) {
 
 	// Get Special Pages.
-	$special_pages = $core->db->option_get( 'cp_special_pages' );
+	$special_pages = $core->db->setting_get( 'cp_special_pages' );
 	if ( is_array( $special_pages ) && ! empty( $special_pages ) ) {
 		$_special_pages = $special_pages;
 	}

@@ -182,7 +182,7 @@ class CommentPress_AJAX_Loader {
 		}
 
 		// But, allow General Comments Page.
-		if ( (int) $post->ID === (int) $this->core->db->option_get( 'cp_general_comments_page' ) ) {
+		if ( (int) $post->ID === (int) $this->core->db->setting_get( 'cp_general_comments_page' ) ) {
 			$allowed = true;
 		}
 

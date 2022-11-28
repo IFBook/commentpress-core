@@ -161,10 +161,10 @@ class CommentPress_Core_Parser {
 			! ( $post instanceof WP_Post ) ||
 
 			// Some Post Types can be skipped.
-			in_array( $post->post_type, $this->core->db->option_get( 'cp_post_types_disabled', [] ) ) || (
+			in_array( $post->post_type, $this->core->db->setting_get( 'cp_post_types_disabled', [] ) ) || (
 
 			// Individual entries can have parsing skipped.
-			$this->core->db->option_get( 'cp_do_not_parse', 'n' ) == 'y' &&
+			$this->core->db->setting_get( 'cp_do_not_parse', 'n' ) == 'y' &&
 			$post->comment_status == 'closed' &&
 			empty( $post->comment_count ) )
 

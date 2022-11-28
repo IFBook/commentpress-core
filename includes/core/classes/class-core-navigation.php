@@ -193,7 +193,7 @@ class CommentPress_Core_Navigator {
 	public function page_nav_is_disabled() {
 
 		// Overwrite flag if Page Navigation option is set to "off".
-		if ( $this->core->db->option_get( 'cp_page_nav_enabled', 'y' ) == 'n' ) {
+		if ( $this->core->db->setting_get( 'cp_page_nav_enabled', 'y' ) == 'n' ) {
 			$this->nav_enabled = false;
 		}
 
@@ -300,7 +300,7 @@ class CommentPress_Core_Navigator {
 		}
 
 		// Are parent Pages viewable?
-		$viewable = ( $this->core->db->option_get( 'cp_toc_chapter_is_page' ) == '1' ) ? true : false;
+		$viewable = ( $this->core->db->setting_get( 'cp_toc_chapter_is_page' ) == '1' ) ? true : false;
 
 		// Get the ID of the first child.
 		$first_child = $this->first_child_get( $post->ID );
@@ -669,7 +669,7 @@ class CommentPress_Core_Navigator {
 		$excludes = '';
 
 		// Init excluded array with "Special Pages".
-		$excluded_pages = $this->core->db->option_get( 'cp_special_pages' );
+		$excluded_pages = $this->core->db->setting_get( 'cp_special_pages' );
 
 		// If the supplied Title Page is the homepage.
 		$title_id = $this->core->pages_legacy->is_title_page_the_homepage();
@@ -743,7 +743,7 @@ class CommentPress_Core_Navigator {
 		}
 
 		// If Chapters are not Pages.
-		if ( $this->core->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
+		if ( $this->core->db->setting_get( 'cp_toc_chapter_is_page' ) != '1' ) {
 
 			// Filter Chapters out if we want all readable Pages.
 			if ( $mode == 'readable' ) {
@@ -916,7 +916,7 @@ class CommentPress_Core_Navigator {
 		global $post;
 
 		// Are parent Pages viewable?
-		$viewable = ( $this->core->db->option_get( 'cp_toc_chapter_is_page' ) == '1' ) ? true : false;
+		$viewable = ( $this->core->db->setting_get( 'cp_toc_chapter_is_page' ) == '1' ) ? true : false;
 
 		// If they are.
 		if ( $viewable ) {
@@ -1019,7 +1019,7 @@ class CommentPress_Core_Navigator {
 			if ( $this->menu_objects ) {
 
 				// If Chapters are not Pages, filter the Menu Items.
-				if ( $this->core->db->option_get( 'cp_toc_chapter_is_page' ) != '1' ) {
+				if ( $this->core->db->setting_get( 'cp_toc_chapter_is_page' ) != '1' ) {
 
 					// Do we want all readable Pages?
 					if ( $mode == 'readable' ) {

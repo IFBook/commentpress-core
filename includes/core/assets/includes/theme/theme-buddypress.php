@@ -87,7 +87,7 @@ if ( ! function_exists( 'commentpress_amend_search_query' ) ) :
 				if ( ! empty( $core ) ) {
 
 					// Get special Pages array, if it's there.
-					$special_pages = $core->db->option_get( 'cp_special_pages' );
+					$special_pages = $core->db->setting_get( 'cp_special_pages' );
 
 					/**
 					 * Filters the Special Pages search query exclusions.

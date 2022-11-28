@@ -13,7 +13,7 @@ $core = commentpress_core();
 
 // Get the ID and URL for the "Welcome Page".
 if ( ! empty( $core ) ) {
-	$title_id = $core->db->option_get( 'cp_welcome_page' );
+	$title_id = $core->db->setting_get( 'cp_welcome_page' );
 	$title_url = $core->pages_legacy->get_page_url( 'cp_welcome_page' );
 }
 

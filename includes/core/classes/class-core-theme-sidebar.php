@@ -133,7 +133,7 @@ class CommentPress_Core_Theme_Sidebar {
 		if ( ! ( $post instanceof WP_Post ) || ! $this->core->parser->is_commentable() ) {
 
 			// Get option (we don't need to look at the Entry meta in this case).
-			$default = $this->core->db->option_get( $this->option_sidebar );
+			$default = $this->core->db->setting_get( $this->option_sidebar );
 
 			// Use it unless it's "comments".
 			if ( $default !== 'comments' ) {
@@ -181,7 +181,7 @@ class CommentPress_Core_Theme_Sidebar {
 		// Not singular - must be either "activity" or "toc".
 
 		// Use default unless it's "comments".
-		$default = $this->core->db->option_get( $this->option_sidebar );
+		$default = $this->core->db->setting_get( $this->option_sidebar );
 		if ( $default !== 'comments' ) {
 			$return = $default;
 		}
@@ -229,7 +229,7 @@ class CommentPress_Core_Theme_Sidebar {
 		}
 
 		// Get the value of the option.
-		$sidebar = $this->core->db->option_get( $this->option_sidebar, 'comments' );
+		$sidebar = $this->core->db->setting_get( $this->option_sidebar, 'comments' );
 
 		?>
 
@@ -272,7 +272,7 @@ class CommentPress_Core_Theme_Sidebar {
 		$sidebar = isset( $_POST[ $this->option_sidebar ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->option_sidebar ] ) ) : '';
 
 		// Set default sidebar.
-		$this->core->db->option_set( $this->option_sidebar, $sidebar );
+		$this->core->db->setting_set( $this->option_sidebar, $sidebar );
 
 	}
 
@@ -361,7 +361,7 @@ class CommentPress_Core_Theme_Sidebar {
 		}
 
 		// Default to current Sidebar.
-		$sidebar = $this->core->db->option_get( $this->option_sidebar );
+		$sidebar = $this->core->db->setting_get( $this->option_sidebar );
 
 		// Bail if we didn't get one.
 		if ( empty( $override ) ) {
@@ -425,7 +425,7 @@ class CommentPress_Core_Theme_Sidebar {
 	public function is_overridden( $post_id ) {
 
 		// Get the current Sidebar.
-		$sidebar_blog = $this->core->db->option_get( $this->option_sidebar );
+		$sidebar_blog = $this->core->db->setting_get( $this->option_sidebar );
 
 		// Get the Sidebar for this Post.
 		$sidebar_post = $this->get_for_post_id( $post_id );

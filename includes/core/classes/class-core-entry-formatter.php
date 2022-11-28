@@ -190,7 +190,7 @@ class CommentPress_Core_Entry_Formatter {
 		$type_title = apply_filters( 'cp_blog_type_label', __( 'Default Text Format', 'commentpress-core' ) );
 
 		// Get existing.
-		$blog_type = $this->core->db->option_get( $this->option_formatter );
+		$blog_type = $this->core->db->setting_get( $this->option_formatter );
 
 		// Get the "Text Format" options markup.
 		$type_options = $this->options_markup_get( $types, $blog_type, $show_default = false );
@@ -216,7 +216,7 @@ class CommentPress_Core_Entry_Formatter {
 		$formatter = isset( $_POST[ $this->option_formatter ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->option_formatter ] ) ) : '';
 
 		// Set default sidebar.
-		$this->core->db->option_set( $this->option_formatter, $formatter );
+		$this->core->db->setting_set( $this->option_formatter, $formatter );
 
 	}
 
@@ -313,7 +313,7 @@ class CommentPress_Core_Entry_Formatter {
 		}
 
 		// Default to current Blog Type.
-		$formatter = $this->core->db->option_get( $this->option_formatter );
+		$formatter = $this->core->db->setting_get( $this->option_formatter );
 
 		// Bail if something went wrong.
 		if ( $override === false || $override === '' || ! is_numeric( $override ) ) {
@@ -378,7 +378,7 @@ class CommentPress_Core_Entry_Formatter {
 	public function is_overridden( $post_id ) {
 
 		// Get the current Blog Type.
-		$formatter_blog = $this->core->db->option_get( $this->option_formatter );
+		$formatter_blog = $this->core->db->setting_get( $this->option_formatter );
 
 		// Get the Formatter for this Post.
 		$formatter_post = $this->get_for_post_id( $post_id );

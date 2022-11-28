@@ -322,8 +322,8 @@ class CommentPress_Core_Display {
 
 		// Check CommentPress Core option.
 		if (
-			$this->core->db->option_exists( 'cp_comment_editor' ) &&
-			$this->core->db->option_get( 'cp_comment_editor' ) != '1'
+			$this->core->db->setting_exists( 'cp_comment_editor' ) &&
+			$this->core->db->setting_get( 'cp_comment_editor' ) != '1'
 		) {
 
 			// Don't add rich text editor.
@@ -408,8 +408,8 @@ class CommentPress_Core_Display {
 
 		// Check option.
 		if (
-			$this->core->db->option_exists( 'cp_promote_reading' ) &&
-			$this->core->db->option_get( 'cp_promote_reading' ) != '1'
+			$this->core->db->setting_exists( 'cp_promote_reading' ) &&
+			$this->core->db->setting_get( 'cp_promote_reading' ) != '1'
 		) {
 
 			// Promote commenting.
@@ -447,27 +447,27 @@ class CommentPress_Core_Display {
 		$vars['cp_multipage_page'] = ( ! empty( $page ) ) ? $page : 0;
 
 		// Are Chapters Pages?
-		$vars['cp_toc_chapter_is_page'] = $this->core->db->option_get( 'cp_toc_chapter_is_page' );
+		$vars['cp_toc_chapter_is_page'] = $this->core->db->setting_get( 'cp_toc_chapter_is_page' );
 
 		// Are Sub-pages shown?
-		$vars['cp_show_subpages'] = $this->core->db->option_get( 'cp_show_subpages' );
+		$vars['cp_show_subpages'] = $this->core->db->setting_get( 'cp_show_subpages' );
 
 		// Set default sidebar.
 		$vars['cp_default_sidebar'] = $this->core->theme->sidebar->default_get();
 
 		// Set scroll speed.
-		$vars['cp_js_scroll_speed'] = $this->core->db->option_get( 'cp_js_scroll_speed' );
+		$vars['cp_js_scroll_speed'] = $this->core->db->setting_get( 'cp_js_scroll_speed' );
 
 		// Set min Page width.
-		$vars['cp_min_page_width'] = $this->core->db->option_get( 'cp_min_page_width' );
+		$vars['cp_min_page_width'] = $this->core->db->setting_get( 'cp_min_page_width' );
 
 		// Default to showing textblock meta.
 		$vars['cp_textblock_meta'] = 1;
 
 		// Check option.
 		if (
-			$this->core->db->option_exists( 'cp_textblock_meta' ) &&
-			$this->core->db->option_get( 'cp_textblock_meta' ) == 'n'
+			$this->core->db->setting_exists( 'cp_textblock_meta' ) &&
+			$this->core->db->setting_get( 'cp_textblock_meta' ) == 'n'
 		) {
 
 			// Only show textblock meta on rollover.
@@ -480,8 +480,8 @@ class CommentPress_Core_Display {
 
 		// Check option.
 		if (
-			$this->core->db->option_exists( 'cp_page_nav_enabled' ) &&
-			$this->core->db->option_get( 'cp_page_nav_enabled' ) == 'n'
+			$this->core->db->setting_exists( 'cp_page_nav_enabled' ) &&
+			$this->core->db->setting_get( 'cp_page_nav_enabled' ) == 'n'
 		) {
 
 			// Disable Page navigation.
@@ -494,8 +494,8 @@ class CommentPress_Core_Display {
 
 		// Check option.
 		if (
-			$this->core->db->option_exists( 'cp_do_not_parse' ) &&
-			$this->core->db->option_get( 'cp_do_not_parse' ) == 'y'
+			$this->core->db->setting_exists( 'cp_do_not_parse' ) &&
+			$this->core->db->setting_get( 'cp_do_not_parse' ) == 'y'
 		) {
 
 			// Do not parse.
@@ -553,7 +553,7 @@ HELPTEXT;
 	public function get_toc_list( $exclude_pages = [] ) {
 
 		// Switch Pages or Posts.
-		if ( 'post' === $this->core->db->option_get( 'cp_show_posts_or_pages_in_toc' ) ) {
+		if ( 'post' === $this->core->db->setting_get( 'cp_show_posts_or_pages_in_toc' ) ) {
 			$this->list_posts();
 		} else {
 			$this->list_pages( $exclude_pages );
@@ -574,7 +574,7 @@ HELPTEXT;
 		$posts = get_posts( $params );
 
 		// Have we set the option?
-		$list_style = $this->core->db->option_get( 'cp_show_extended_toc' );
+		$list_style = $this->core->db->setting_get( 'cp_show_extended_toc' );
 
 		// If not set or set to 'off'.
 		if ( $list_style === false || $list_style == '0' ) {
@@ -813,7 +813,7 @@ HELPTEXT;
 		}
 
 		// Get Welcome Page ID.
-		$welcome_id = $this->core->db->option_get( 'cp_welcome_page' );
+		$welcome_id = $this->core->db->setting_get( 'cp_welcome_page' );
 
 		// Get Front Page.
 		$page_on_front = $this->core->db->option_wp_get( 'page_on_front' );
@@ -848,14 +848,14 @@ HELPTEXT;
 
 		/*
 		// Get Page display option.
-		$depth = $this->core->db->option_get( 'cp_show_subpages' );
+		$depth = $this->core->db->setting_get( 'cp_show_subpages' );
 		*/
 
 		// ALWAYS write Sub-pages into Page, even if they aren't displayed.
 		$depth = 0;
 
 		// Get Pages to exclude.
-		$exclude = $this->core->db->option_get( 'cp_special_pages' );
+		$exclude = $this->core->db->setting_get( 'cp_special_pages' );
 
 		// Do we have any?
 		if ( ! $exclude ) {
@@ -879,7 +879,7 @@ HELPTEXT;
 		$defaults = [
 			'depth' => $depth,
 			'show_date' => '',
-			'date_format' => $this->core->db->option_get( 'date_format' ),
+			'date_format' => $this->core->db->setting_get( 'date_format' ),
 			'child_of' => 0,
 			'exclude' => implode( ',', $exclude ),
 			'title_li' => '',
@@ -1379,14 +1379,14 @@ HELPTEXT;
 		$upgrade = '';
 
 		// Do we have the option to choose which Post Types to skip (new in 3.9)?
-		if ( ! $this->core->db->option_exists( 'cp_post_types_disabled' ) ) {
+		if ( ! $this->core->db->setting_exists( 'cp_post_types_disabled' ) ) {
 
 			// Define labels.
 			$description = __( 'Choose the Post Types on which CommentPress Core is enabled. Disabling a post type will mean that paragraph-level commenting will not be enabled on any entries of that post type. Default prior to 3.9 was that all post types were enabled.', 'commentpress-core' );
 			$label = __( 'Post Types on which CommentPress Core is enabled.', 'commentpress-core' );
 
 			// Get Post Types that support the editor.
-			$capable_post_types = $this->core->db->get_supported_post_types();
+			$capable_post_types = $this->core->db->post_types_get_supported();
 
 			// Init outputs.
 			$output = [];
@@ -1422,7 +1422,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to choose to disable parsing (new in 3.8.10)?
-		if ( ! $this->core->db->option_exists( 'cp_do_not_parse' ) ) {
+		if ( ! $this->core->db->setting_exists( 'cp_do_not_parse' ) ) {
 
 			// Define labels.
 			$description = __( 'Note: when comments are closed on an entry and there are no comments on that entry, if this option is set to "Yes" then the content will not be parsed for paragraphs, lines or blocks. Comments will also not be parsed, meaning that the entry behaves the same as content which is not commentable. Default prior to 3.8.10 was "No" - all content was always parsed.', 'commentpress-core' );
@@ -1446,7 +1446,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to choose to disable Page Navigation (new in 3.8.10)?
-		if ( ! $this->core->db->option_exists( 'cp_page_nav_enabled' ) ) {
+		if ( ! $this->core->db->setting_exists( 'cp_page_nav_enabled' ) ) {
 
 			// Define labels.
 			$label = __( 'Enable automatic page navigation (controls appearance of page numbering and navigation arrows on hierarchical pages). Previous default was "Yes".', 'commentpress-core' );
@@ -1468,7 +1468,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to choose to hide textblock meta (new in 3.5.9)?
-		if ( ! $this->core->db->option_exists( 'cp_textblock_meta' ) ) {
+		if ( ! $this->core->db->setting_exists( 'cp_textblock_meta' ) ) {
 
 			// Define labels.
 			$label = __( 'Show paragraph meta (Number and Comment Icon)', 'commentpress-core' );
@@ -1490,7 +1490,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to choose featured images (new in 3.5.4)?
-		if ( ! $this->core->db->option_exists( 'cp_featured_images' ) ) {
+		if ( ! $this->core->db->setting_exists( 'cp_featured_images' ) ) {
 
 			// Define labels.
 			$label = __( 'Enable Featured Images (Note: if you have already implemented this in a child theme, you should choose "No")', 'commentpress-core' );
@@ -1512,7 +1512,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to choose the default sidebar (new in 3.3.3)?
-		if ( ! $this->core->db->option_exists( 'cp_sidebar_default' ) ) {
+		if ( ! $this->core->db->setting_exists( 'cp_sidebar_default' ) ) {
 
 			// Define labels.
 			$label = __( 'Which sidebar do you want to be active by default? (can be overridden on individual pages)', 'commentpress-core' );
@@ -1536,7 +1536,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to show or hide Page meta (new in 3.3.2)?
-		if ( ! $this->core->db->option_exists( 'cp_page_meta_visibility' ) ) {
+		if ( ! $this->core->db->setting_exists( 'cp_page_meta_visibility' ) ) {
 
 			$meta_label = __( 'Show or hide page meta by default', 'commentpress-core' );
 			$meta_show_label = __( 'Show page meta', 'commentpress-core' );
@@ -1557,7 +1557,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to choose Blog Type (new in 3.3.1)?
-		if ( ! $this->core->db->option_exists( 'cp_blog_type' ) ) {
+		if ( ! $this->core->db->setting_exists( 'cp_blog_type' ) ) {
 
 			// Define no types.
 			$types = [];
@@ -1611,7 +1611,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to choose the TOC layout (new in 3.3)?
-		if ( ! $this->core->db->option_exists( 'cp_show_extended_toc' ) ) {
+		if ( ! $this->core->db->setting_exists( 'cp_show_extended_toc' ) ) {
 
 			$extended_label = __( 'Appearance of TOC for posts', 'commentpress-core' );
 			$extended_info_label = __( 'Extended information', 'commentpress-core' );
@@ -1632,7 +1632,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to set the Comment editor?
-		if ( ! $this->core->db->option_exists( 'cp_comment_editor' ) ) {
+		if ( ! $this->core->db->setting_exists( 'cp_comment_editor' ) ) {
 
 			$editor_label = __( 'Comment form editor', 'commentpress-core' );
 			$rich_label = __( 'Rich-text Editor', 'commentpress-core' );
@@ -1653,7 +1653,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to set the default behaviour?
-		if ( ! $this->core->db->option_exists( 'cp_promote_reading' ) ) {
+		if ( ! $this->core->db->setting_exists( 'cp_promote_reading' ) ) {
 
 			$behaviour_label = __( 'Default comment form behaviour', 'commentpress-core' );
 			$reading_label = __( 'Promote reading', 'commentpress-core' );
@@ -1674,7 +1674,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to show or hide titles?
-		if ( ! $this->core->db->option_exists( 'cp_title_visibility' ) ) {
+		if ( ! $this->core->db->setting_exists( 'cp_title_visibility' ) ) {
 
 			// Define labels.
 			$titles_label = __( 'Show or hide page titles by default', 'commentpress-core' );
@@ -1696,7 +1696,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to set the scroll speed?
-		if ( ! $this->core->db->option_exists( 'cp_js_scroll_speed' ) ) {
+		if ( ! $this->core->db->setting_exists( 'cp_js_scroll_speed' ) ) {
 
 			// Define labels.
 			$scroll_label = __( 'Scroll speed', 'commentpress-core' );
@@ -1713,7 +1713,7 @@ HELPTEXT;
 		}
 
 		// Do we have the option to set the minimum Page width?
-		if ( ! $this->core->db->option_exists( 'cp_min_page_width' ) ) {
+		if ( ! $this->core->db->setting_exists( 'cp_min_page_width' ) ) {
 
 			// Define labels.
 			$min_label = __( 'Minimum page width', 'commentpress-core' );

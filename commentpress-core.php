@@ -38,13 +38,13 @@ if ( ! defined( 'COMMENTPRESS_PLUGIN_PATH' ) ) {
 }
 
 /**
- * CommentPress Core Class.
+ * CommentPress Plugin Class.
  *
  * A class that handles plugin functionality.
  *
  * @since 4.0
  */
-class CommentPress_Core {
+class CommentPress_Plugin {
 
 	/**
 	 * Plugin context flag.
@@ -90,6 +90,16 @@ class CommentPress_Core {
 	 * @since 4.0
 	 */
 	public function __construct() {
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'-' => '--------------------------------------------------------------------------------',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
 
 		// Initialise plugin.
 		$this->initialise();
@@ -149,6 +159,10 @@ class CommentPress_Core {
 		// Include common files.
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->common_path . 'common-functions.php';
 
+		// Include multisite and core class files.
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->multisite_path . 'class-multisite-loader.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->core_path . 'class-core-loader.php';
+
 	}
 
 	/**
@@ -177,6 +191,19 @@ class CommentPress_Core {
 		$this->plugin_context = 'mu_optional';
 
 	}
+
+	/**
+	 * Gets the plugin context.
+	 *
+	 * @since 4.0
+	 *
+	 * @return str $plugin_context The current plugin context.
+	 */
+	public function plugin_context_get() {
+		return $this->plugin_context;
+	}
+
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Registers the theme directory with WordPress.
@@ -238,34 +265,19 @@ class CommentPress_Core {
 	/**
 	 * Maybe bootstrap multisite.
 	 *
+	 * NOTE: This will always initialise multisite when in a multisite context.
+	 *
 	 * @since 4.0
 	 */
 	public function multisite_bootstrap() {
 
-		// Bail if we have not activated network-wide.
-		if ( $this->plugin_context !== 'mu_sitewide' ) {
+		// Bail if not multisite.
+		if ( ! is_multisite() ) {
 			return;
 		}
 
-		// Include multisite loader class file.
-		$this->multisite_include();
-
 		// Initialise multisite.
 		$this->multisite_initialise();
-
-	}
-
-	/**
-	 * Includes the multisite loader file.
-	 *
-	 * @since 4.0
-	 */
-	public function multisite_include() {
-
-		// Include multisite loader class file.
-		if ( ! class_exists( 'CommentPress_Multisite_Loader' ) ) {
-			require_once COMMENTPRESS_PLUGIN_PATH . $this->multisite_path . 'class-multisite-loader.php';
-		}
 
 	}
 
@@ -320,34 +332,23 @@ class CommentPress_Core {
 	/**
 	 * Maybe bootstrap core.
 	 *
+	 * NOTE: This will initialise core during plugin activation because the plugin
+	 * context will not be registered as "mu_sitewide". This is good because core
+	 * tests for "network_wide" during activation and acts accordingly. Subsequent
+	 * loading will skip initialising core - this will be handled by the multisite
+	 * class responsible for core on a per-site basis.
+	 *
 	 * @since 4.0
 	 */
 	public function core_bootstrap() {
 
 		// Bail if plugin is activated network-wide.
-		if ( $this->plugin_context !== 'standard' ) {
+		if ( $this->plugin_context === 'mu_sitewide' ) {
 			return;
 		}
 
-		// Include core loader class file.
-		$this->core_include();
-
 		// Initialise core.
 		$this->core_initialise();
-
-	}
-
-	/**
-	 * Includes the core loader file.
-	 *
-	 * @since 4.0
-	 */
-	public function core_include() {
-
-		// Include core loader class file.
-		if ( ! class_exists( 'CommentPress_Core_Loader' ) ) {
-			require_once COMMENTPRESS_PLUGIN_PATH . $this->core_path . 'class-core-loader.php';
-		}
 
 	}
 
@@ -382,6 +383,12 @@ class CommentPress_Core {
 	 */
 	public function register_hooks() {
 
+		// Check for activation.
+		add_action( 'activated_plugin',  [ $this, 'plugin_activated' ], 10, 2 );
+
+		// Check for deactivation.
+		add_action( 'deactivated_plugin', [ $this, 'plugin_deactivated' ], 10, 2 );
+
 		// Add links to Settings Page.
 		add_filter( 'network_admin_plugin_action_links', [ $this, 'action_links' ], 20, 2 );
 		add_filter( 'plugin_action_links', [ $this, 'action_links' ], 20, 2 );
@@ -415,6 +422,94 @@ class CommentPress_Core {
 	}
 
 	// -------------------------------------------------------------------------
+
+	/**
+	 * This plugin has been activated.
+	 *
+	 * @since 3.3
+	 *
+	 * @param str $plugin The plugin file.
+	 * @param bool $network_wide True if network-activated, false otherwise.
+	 */
+	public function plugin_activated( $plugin, $network_wide = false ) {
+
+		// Bail if it's not our plugin.
+		if ( $plugin !== plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) {
+			return;
+		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'network_wide' => $network_wide ? 'y' : 'n',
+			'-' => '--------------------------------------------------------------------------------',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		/**
+		 * Fires when this plugin has been activated.
+		 *
+		 * Used internally by:
+		 *
+		 * * CommentPress_Multisite_Loader::plugin_activated() (Priority: 10)
+		 * * CommentPress_Core_Loader::plugin_activated() (Priority: 20)
+		 *
+		 * @since 4.0
+		 *
+		 * @param bool $network_wide True if network-activated, false otherwise.
+		 */
+		do_action( 'commentpress/activated', $network_wide );
+
+	}
+
+	/**
+	 * This plugin has been deactivated.
+	 *
+	 * @since 3.3
+	 *
+	 * @param str $plugin The plugin file.
+	 * @param bool $network_wide True if network-activated, false otherwise.
+	 */
+	public function plugin_deactivated( $plugin, $network_wide = false ) {
+
+		// Bail if it's not our plugin.
+		if ( $plugin !== plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) {
+			return;
+		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'network_wide' => $network_wide ? 'y' : 'n',
+			'-' => '--------------------------------------------------------------------------------',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		/**
+		 * Fires when this plugin has been deactivated.
+		 *
+		 * Used internally by:
+		 *
+		 * * CommentPress_Core_Loader::plugin_deactivated() (Priority: 10)
+		 * * CommentPress_Multisite_Loader::plugin_deactivated() (Priority: 20)
+		 *
+		 * @since 4.0
+		 *
+		 * @param bool $network_wide True if network-activated, false otherwise.
+		 */
+		do_action( 'commentpress/deactivated', $network_wide );
+
+		// Do we want to trigger deactivation_hook for all sub-blogs?
+		// Or do we want to convert each instance into a self-contained
+		// CommentPress Core Blog?
+
+	}
 
 	/**
 	 * Checks if this plugin is network activated.
@@ -462,14 +557,14 @@ class CommentPress_Core {
  *
  * @since 4.0
  *
- * @return CommentPress_Core $plugin The plugin reference.
+ * @return CommentPress_Plugin $plugin The plugin reference.
  */
 function commentpress() {
 
 	// Maybe bootstrap plugin.
 	static $plugin;
 	if ( ! isset( $plugin ) ) {
-		$plugin = new CommentPress_Core();
+		$plugin = new CommentPress_Plugin();
 	}
 
 	// Return reference.
@@ -479,44 +574,6 @@ function commentpress() {
 
 // Bootstrap immediately.
 commentpress();
-
-/**
- * Performs plugin activation tasks.
- *
- * @since 4.0
- */
-function commentpress_activated() {
-
-	/**
-	 * Fires when this plugin has been activated.
-	 *
-	 * @since 4.0
-	 */
-	do_action( 'commentpress/plugin/activated' );
-
-}
-
-// Activation.
-register_activation_hook( __FILE__, 'commentpress_activated' );
-
-/**
- * Performs plugin deactivation tasks.
- *
- * @since 4.0
- */
-function commentpress_deactivated() {
-
-	/**
-	 * Fires when this plugin has been deactivated.
-	 *
-	 * @since 4.0
-	 */
-	do_action( 'commentpress/plugin/deactivated' );
-
-}
-
-// Deactivation.
-register_deactivation_hook( __FILE__, 'commentpress_deactivated' );
 
 /*
  * Uninstall uses the 'uninstall.php' method.

@@ -43,11 +43,6 @@ class CommentPress_Core_Pages_Legacy {
 		// Init when this plugin is fully loaded.
 		add_action( 'commentpress/core/loaded', [ $this, 'initialise' ] );
 
-		// Acts late when this plugin is activated.
-		add_action( 'commentpress/core/activated', [ $this, 'activate' ], 50 );
-		// Act early when this plugin is deactivated.
-		add_action( 'commentpress/core/deactivated', [ $this, 'deactivate' ], 10 );
-
 	}
 
 	/**
@@ -69,6 +64,12 @@ class CommentPress_Core_Pages_Legacy {
 	 */
 	public function register_hooks() {
 
+		// Acts late when this plugin is activated.
+		add_action( 'commentpress/core/activated', [ $this, 'plugin_activated' ], 40 );
+
+		// Act early when this plugin is deactivated.
+		add_action( 'commentpress/core/deactivated', [ $this, 'plugin_deactivated' ], 10 );
+
 		// Exclude Special Pages from listings.
 		add_filter( 'wp_list_pages_excludes', [ $this, 'exclude_special_pages' ], 10, 1 );
 		add_filter( 'parse_query', [ $this, 'exclude_special_pages_from_admin' ], 10, 1 );
@@ -84,6 +85,69 @@ class CommentPress_Core_Pages_Legacy {
 	// -------------------------------------------------------------------------
 
 	/**
+	 * Runs when core is activated.
+	 *
+	 * @since 4.0
+	 *
+	 * @param bool $network_wide True if network-activated, false otherwise.
+	 */
+	public function plugin_activated( $network_wide = false ) {
+
+		// Bail if plugin is network activated.
+		if ( $network_wide ) {
+			return;
+		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'network_wide' => $network_wide ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Create the Special Pages.
+		$this->activate();
+
+	}
+
+	/**
+	 * Runs when core is deactivated.
+	 *
+	 * NOTE: The database schema is only restored in "uninstall.php" when this
+	 * plugin is deleted.
+	 *
+	 * @since 4.0
+	 *
+	 * @param bool $network_wide True if network-activated, false otherwise.
+	 */
+	public function plugin_deactivated( $network_wide = false ) {
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'network_wide' => $network_wide ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Bail if plugin is network activated.
+		if ( $network_wide ) {
+			return;
+		}
+
+		// Remove Special Pages.
+		$this->deactivate();
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
 	 * Creates the Special Pages.
 	 *
 	 * @since 3.0
@@ -91,7 +155,7 @@ class CommentPress_Core_Pages_Legacy {
 	public function activate() {
 
 		// Retrieve data on Special Pages.
-		$special_pages = $this->core->db->option_get( 'cp_special_pages', [] );
+		$special_pages = $this->core->db->setting_get( 'cp_special_pages', [] );
 
 		// Bail if we have already created them.
 		if ( ! empty( $special_pages ) ) {
@@ -141,7 +205,7 @@ class CommentPress_Core_Pages_Legacy {
 		}
 
 		// Get Special Pages.
-		$special_pages = $this->core->db->option_get( 'cp_special_pages', [] );
+		$special_pages = $this->core->db->setting_get( 'cp_special_pages', [] );
 
 		// Do we have a Special Page array?
 		if ( is_array( $special_pages ) && count( $special_pages ) > 0 ) {
@@ -174,7 +238,7 @@ class CommentPress_Core_Pages_Legacy {
 	public function exclude_special_pages( $excluded_array ) {
 
 		// Get Special Pages array, if it's there.
-		$special_pages = $this->core->db->option_get( 'cp_special_pages' );
+		$special_pages = $this->core->db->setting_get( 'cp_special_pages' );
 
 		// Do we have an array?
 		if ( is_array( $special_pages ) ) {
@@ -204,7 +268,7 @@ class CommentPress_Core_Pages_Legacy {
 		if ( is_admin() && $pagenow == 'edit.php' && $post_type == 'page' ) {
 
 			// Get Special Pages array, if it's there.
-			$special_pages = $this->core->db->option_get( 'cp_special_pages' );
+			$special_pages = $this->core->db->setting_get( 'cp_special_pages' );
 
 			// Do we have an array?
 			if ( is_array( $special_pages ) && count( $special_pages ) > 0 ) {
@@ -234,7 +298,7 @@ class CommentPress_Core_Pages_Legacy {
 		if ( is_admin() && $pagenow == 'edit.php' && $post_type == 'page' ) {
 
 			// Get Special Pages array, if it's there.
-			$special_pages = $this->core->db->option_get( 'cp_special_pages' );
+			$special_pages = $this->core->db->setting_get( 'cp_special_pages' );
 
 			// Do we have an array?
 			if ( is_array( $special_pages ) ) {
@@ -308,7 +372,7 @@ class CommentPress_Core_Pages_Legacy {
 		 */
 
 		// Get Special Pages array, if it's there.
-		$special_pages = $this->core->db->option_get( 'cp_special_pages', [] );
+		$special_pages = $this->core->db->setting_get( 'cp_special_pages', [] );
 
 		// Create Welcome/Title Page, but don't add to Special Pages.
 		$welcome = $this->create_title_page();
@@ -332,10 +396,10 @@ class CommentPress_Core_Pages_Legacy {
 		$special_pages[] = $this->create_toc_page();
 
 		// Store the array of Page IDs that were created.
-		$this->core->db->option_set( 'cp_special_pages', $special_pages );
+		$this->core->db->setting_set( 'cp_special_pages', $special_pages );
 
 		// Save changes.
-		$this->core->db->options_save();
+		$this->core->db->settings_save();
 
 	}
 
@@ -353,7 +417,7 @@ class CommentPress_Core_Pages_Legacy {
 		$new_id = false;
 
 		// Get Special Pages array, if it's there.
-		$special_pages = $this->core->db->option_get( 'cp_special_pages', [] );
+		$special_pages = $this->core->db->setting_get( 'cp_special_pages', [] );
 
 		// Switch by Page.
 		switch ( $page ) {
@@ -406,10 +470,10 @@ class CommentPress_Core_Pages_Legacy {
 		$special_pages[] = $new_id;
 
 		// Reset option.
-		$this->core->db->option_set( 'cp_special_pages', $special_pages );
+		$this->core->db->setting_set( 'cp_special_pages', $special_pages );
 
 		// Save changes.
-		$this->core->db->options_save();
+		$this->core->db->settings_save();
 
 		// --<
 		return $new_id;
@@ -435,7 +499,7 @@ class CommentPress_Core_Pages_Legacy {
 		 */
 
 		// Retrieve data on Special Pages.
-		$special_pages = $this->core->db->option_get( 'cp_special_pages', [] );
+		$special_pages = $this->core->db->setting_get( 'cp_special_pages', [] );
 
 		// If we have created any.
 		if ( is_array( $special_pages ) && count( $special_pages ) > 0 ) {
@@ -457,27 +521,27 @@ class CommentPress_Core_Pages_Legacy {
 			}
 
 			// Delete the corresponding options.
-			$this->core->db->option_delete( 'cp_special_pages' );
+			$this->core->db->setting_delete( 'cp_special_pages' );
 
-			$this->core->db->option_delete( 'cp_blog_page' );
-			$this->core->db->option_delete( 'cp_blog_archive_page' );
-			$this->core->db->option_delete( 'cp_general_comments_page' );
-			$this->core->db->option_delete( 'cp_all_comments_page' );
-			$this->core->db->option_delete( 'cp_comments_by_page' );
-			$this->core->db->option_delete( 'cp_toc_page' );
+			$this->core->db->setting_delete( 'cp_blog_page' );
+			$this->core->db->setting_delete( 'cp_blog_archive_page' );
+			$this->core->db->setting_delete( 'cp_general_comments_page' );
+			$this->core->db->setting_delete( 'cp_all_comments_page' );
+			$this->core->db->setting_delete( 'cp_comments_by_page' );
+			$this->core->db->setting_delete( 'cp_toc_page' );
 
 			/*
 			// For now, keep Welcome Page - delete option when Page is deleted.
-			$this->core->db->option_delete( 'cp_welcome_page' );
+			$this->core->db->setting_delete( 'cp_welcome_page' );
 			*/
 
 			// Save changes.
-			$this->core->db->options_save();
+			$this->core->db->settings_save();
 
 			// Reset WordPress internal Page references.
-			$this->core->db->wordpress_option_restore( 'show_on_front' );
-			$this->core->db->wordpress_option_restore( 'page_on_front' );
-			$this->core->db->wordpress_option_restore( 'page_for_posts' );
+			$this->core->db->option_wp_restore( 'show_on_front' );
+			$this->core->db->option_wp_restore( 'page_on_front' );
+			$this->core->db->option_wp_restore( 'page_for_posts' );
 
 		}
 
@@ -514,8 +578,8 @@ class CommentPress_Core_Pages_Legacy {
 				$flag = 'cp_welcome_page';
 
 				// Reset WordPress internal Page references.
-				$this->core->db->wordpress_option_restore( 'show_on_front' );
-				$this->core->db->wordpress_option_restore( 'page_on_front' );
+				$this->core->db->option_wp_restore( 'show_on_front' );
+				$this->core->db->option_wp_restore( 'page_on_front' );
 
 				break;
 
@@ -543,7 +607,7 @@ class CommentPress_Core_Pages_Legacy {
 				$flag = 'cp_blog_page';
 
 				// Reset WordPress internal Page reference.
-				$this->core->db->wordpress_option_restore( 'page_for_posts' );
+				$this->core->db->option_wp_restore( 'page_for_posts' );
 
 				break;
 
@@ -562,7 +626,7 @@ class CommentPress_Core_Pages_Legacy {
 		}
 
 		// Get Page ID.
-		$page_id = $this->core->db->option_get( $flag );
+		$page_id = $this->core->db->setting_get( $flag );
 
 		// Kick out if it doesn't exist.
 		if ( ! $page_id ) {
@@ -570,7 +634,7 @@ class CommentPress_Core_Pages_Legacy {
 		}
 
 		// Delete option.
-		$this->core->db->option_delete( $flag );
+		$this->core->db->setting_delete( $flag );
 
 		// Bypass trash.
 		$force_delete = true;
@@ -584,7 +648,7 @@ class CommentPress_Core_Pages_Legacy {
 		}
 
 		// Retrieve data on Special Pages.
-		$special_pages = $this->core->db->option_get( 'cp_special_pages', [] );
+		$special_pages = $this->core->db->setting_get( 'cp_special_pages', [] );
 
 		// Is it in our Special Pages array?
 		if ( in_array( $page_id, $special_pages ) ) {
@@ -593,12 +657,12 @@ class CommentPress_Core_Pages_Legacy {
 			$special_pages = array_diff( $special_pages, [ $page_id ] );
 
 			// Reset option.
-			$this->core->db->option_set( 'cp_special_pages', $special_pages );
+			$this->core->db->setting_set( 'cp_special_pages', $special_pages );
 
 		}
 
 		// Save changes.
-		$this->core->db->options_save();
+		$this->core->db->settings_save();
 
 		// --<
 		return $success;
@@ -623,7 +687,7 @@ class CommentPress_Core_Pages_Legacy {
 		}
 
 		// Get Welcome Page ID.
-		$welcome_id = $this->core->db->option_get( 'cp_welcome_page' );
+		$welcome_id = $this->core->db->setting_get( 'cp_welcome_page' );
 
 		// Get Front Page ID.
 		$page_on_front = $this->core->db->option_wp_get( 'page_on_front' );
@@ -650,7 +714,7 @@ class CommentPress_Core_Pages_Legacy {
 	public function create_title_page() {
 
 		// Get the option, if it exists.
-		$page_exists = $this->core->db->option_get( 'cp_welcome_page' );
+		$page_exists = $this->core->db->setting_get( 'cp_welcome_page' );
 
 		// Don't create if we already have the option set.
 		if ( $page_exists !== false && is_numeric( $page_exists ) ) {
@@ -664,8 +728,8 @@ class CommentPress_Core_Pages_Legacy {
 				// Got it.
 
 				// We still ought to set WordPress internal Page references.
-				$this->core->db->wordpress_option_backup( 'show_on_front', 'page' );
-				$this->core->db->wordpress_option_backup( 'page_on_front', $page_exists );
+				$this->core->db->option_wp_backup( 'show_on_front', 'page' );
+				$this->core->db->option_wp_backup( 'page_on_front', $page_exists );
 
 				// --<
 				return $page_exists;
@@ -737,11 +801,11 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$title_id = wp_insert_post( $title );
 
 		// Store the option.
-		$this->core->db->option_set( 'cp_welcome_page', $title_id );
+		$this->core->db->setting_set( 'cp_welcome_page', $title_id );
 
 		// Set WordPress internal Page references.
-		$this->core->db->wordpress_option_backup( 'show_on_front', 'page' );
-		$this->core->db->wordpress_option_backup( 'page_on_front', $title_id );
+		$this->core->db->option_wp_backup( 'show_on_front', 'page' );
+		$this->core->db->option_wp_backup( 'page_on_front', $title_id );
 
 		/**
 		 * Fires when the Title Page has been created.
@@ -823,7 +887,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$general_comments_id = wp_insert_post( $general_comments );
 
 		// Store the option.
-		$this->core->db->option_set( 'cp_general_comments_page', $general_comments_id );
+		$this->core->db->setting_set( 'cp_general_comments_page', $general_comments_id );
 
 		// --<
 		return $general_comments_id;
@@ -892,7 +956,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$all_comments_id = wp_insert_post( $all_comments );
 
 		// Store the option.
-		$this->core->db->option_set( 'cp_all_comments_page', $all_comments_id );
+		$this->core->db->setting_set( 'cp_all_comments_page', $all_comments_id );
 
 		// --<
 		return $all_comments_id;
@@ -961,7 +1025,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$group_id = wp_insert_post( $group );
 
 		// Store the option.
-		$this->core->db->option_set( 'cp_comments_by_page', $group_id );
+		$this->core->db->setting_set( 'cp_comments_by_page', $group_id );
 
 		// --<
 		return $group_id;
@@ -1030,10 +1094,10 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$blog_id = wp_insert_post( $blog );
 
 		// Store the option.
-		$this->core->db->option_set( 'cp_blog_page', $blog_id );
+		$this->core->db->setting_set( 'cp_blog_page', $blog_id );
 
 		// Set WordPress internal Page reference.
-		$this->core->db->wordpress_option_backup( 'page_for_posts', $blog_id );
+		$this->core->db->option_wp_backup( 'page_for_posts', $blog_id );
 
 		// --<
 		return $blog_id;
@@ -1102,7 +1166,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$blog_id = wp_insert_post( $blog );
 
 		// Store the option.
-		$this->core->db->option_set( 'cp_blog_archive_page', $blog_id );
+		$this->core->db->setting_set( 'cp_blog_archive_page', $blog_id );
 
 		// --<
 		return $blog_id;
@@ -1171,7 +1235,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$toc_id = wp_insert_post( $toc );
 
 		// Store the option.
-		$this->core->db->option_set( 'cp_toc_page', $toc_id );
+		$this->core->db->setting_set( 'cp_toc_page', $toc_id );
 
 		// --<
 		return $toc_id;
@@ -1198,7 +1262,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$link = '';
 
 		// Get Page ID.
-		$page_id = $this->core->db->option_get( $page_type );
+		$page_id = $this->core->db->setting_get( $page_type );
 
 		// Bail if we have no Page.
 		if ( empty( $page_id ) ) {
@@ -1296,7 +1360,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$url = '';
 
 		// Get Page ID.
-		$page_id = $this->core->db->option_get( $page_type );
+		$page_id = $this->core->db->setting_get( $page_type );
 
 		// Bail if we have no Page.
 		if ( empty( $page_id ) ) {
@@ -1332,13 +1396,13 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		}
 
 		// If it's our Welcome Page.
-		if ( $post_id === (int) $this->core->db->option_get( 'cp_welcome_page' ) ) {
+		if ( $post_id === (int) $this->core->db->setting_get( 'cp_welcome_page' ) ) {
 
 			// Delete option.
-			$this->core->db->option_delete( 'cp_welcome_page' );
+			$this->core->db->setting_delete( 'cp_welcome_page' );
 
-			// Save.
-			$this->core->db->options_save();
+			// Save changes.
+			$this->core->db->settings_save();
 
 		}
 

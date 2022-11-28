@@ -193,14 +193,11 @@ class CommentPress_Core_Loader {
 		// Store reference to plugin.
 		$this->plugin = $plugin;
 
-		// Initialise when all plugins have loaded.
-		add_action( 'plugins_loaded', [ $this, 'initialise' ] );
+		// Initialise.
+		$this->initialise();
 
 		// Use translation.
 		add_action( 'plugins_loaded', [ $this, 'translation' ] );
-
-		// Init.
-		$this->initialise();
 
 	}
 
@@ -252,23 +249,31 @@ class CommentPress_Core_Loader {
 
 		// Include core class files.
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-database.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-display.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-theme.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-entry.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-settings-site.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-navigation.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-parser.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-comments.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-revisions.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-bp-core.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-plugins.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-theme.php';
+
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-settings-site.php';
+
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-display.php';
+
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-navigation.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-entry.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-parser.php';
+
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-device.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-editor-content.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-editor-comments.php';
+
+		// Include legacy class files.
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-revisions.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-pages-legacy.php';
 
 		// Include ajax class files.
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-ajax-loader.php';
+
+		// Include compatibility class files.
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-bp-core.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-plugins.php';
 
 		/**
 		 * Broadcast that class files have been included.
@@ -288,25 +293,31 @@ class CommentPress_Core_Loader {
 
 		// Initialise core objects.
 		$this->db = new CommentPress_Core_Database( $this );
-		$this->display = new CommentPress_Core_Display( $this );
-		$this->theme = new CommentPress_Core_Theme( $this );
-		$this->entry = new CommentPress_Core_Entry( $this );
-		$this->settings_site = new CommentPress_Core_Settings_Site( $this );
-		$this->nav = new CommentPress_Core_Navigator( $this );
-		$this->parser = new CommentPress_Core_Parser( $this );
 		$this->comments = new CommentPress_Core_Comments( $this );
-		$this->revisions = new CommentPress_Core_Revisions( $this );
-		$this->bp = new CommentPress_Core_BuddyPress( $this );
-		$this->plugins = new CommentPress_Core_Plugins( $this );
-		$this->device = new CommentPress_Core_Device( $this );
+		$this->theme = new CommentPress_Core_Theme( $this );
 
+		$this->settings_site = new CommentPress_Core_Settings_Site( $this );
+
+		$this->display = new CommentPress_Core_Display( $this );
+
+		$this->nav = new CommentPress_Core_Navigator( $this );
+		$this->entry = new CommentPress_Core_Entry( $this );
+		$this->parser = new CommentPress_Core_Parser( $this );
+
+		$this->device = new CommentPress_Core_Device( $this );
 		$this->editor_content = new CommentPress_Core_Editor_Content( $this );
 		$this->editor_comments = new CommentPress_Core_Editor_Comments( $this );
 
+		// Initialise legacy objects.
+		$this->revisions = new CommentPress_Core_Revisions( $this );
 		$this->pages_legacy = new CommentPress_Core_Pages_Legacy( $this );
 
 		// Initialise ajax objects.
 		$this->ajax = new CommentPress_AJAX_Loader( $this );
+
+		// Initialise compatibility objects.
+		$this->bp = new CommentPress_Core_BuddyPress( $this );
+		$this->plugins = new CommentPress_Core_Plugins( $this );
 
 	}
 
@@ -318,6 +329,12 @@ class CommentPress_Core_Loader {
 	 */
 	public function register_hooks() {
 
+		// Act when this plugin is activated.
+		add_action( 'commentpress/activated', [ $this, 'plugin_activated' ], 20 );
+
+		// Act when this plugin is deactivated.
+		add_action( 'commentpress/deactivated', [ $this, 'plugin_deactivated' ], 10 );
+
 		/**
 		 * Broadcast that callbacks have been added.
 		 *
@@ -328,11 +345,13 @@ class CommentPress_Core_Loader {
 	}
 
 	/**
-	 * Activates core plugin.
+	 * Runs when the plugin is activated.
 	 *
 	 * @since 3.0
+	 *
+	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
-	public function activate() {
+	public function plugin_activated( $network_wide = false ) {
 
 		/**
 		 * Fires when plugin is activated.
@@ -340,21 +359,26 @@ class CommentPress_Core_Loader {
 		 * Used internally by:
 		 *
 		 * * CommentPress_Core_Database::activate() (Priority: 10)
+		 * * CommentPress_Core_Comments::activate() (Priority: 20)
 		 * * CommentPress_Core_Theme::activate() (Priority: 30)
-		 * * CommentPress_Core_Pages_Legacy::activate() (Priority: 50)
+		 * * CommentPress_Core_Pages_Legacy::activate() (Priority: 40)
 		 *
 		 * @since 4.0
+		 *
+		 * @param bool $network_wide True if network-activated, false otherwise.
 		 */
-		do_action( 'commentpress/core/activated' );
+		do_action( 'commentpress/core/activated', $network_wide );
 
 	}
 
 	/**
-	 * Deactivates core plugin.
+	 * Runs when the plugin is deactivated.
 	 *
 	 * @since 3.0
+	 *
+	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
-	public function deactivate() {
+	public function plugin_deactivated( $network_wide = false ) {
 
 		/**
 		 * Fires when plugin is activated.
@@ -362,12 +386,15 @@ class CommentPress_Core_Loader {
 		 * Used internally by:
 		 *
 		 * * CommentPress_Core_Pages_Legacy::deactivate() (Priority: 10)
-		 * * CommentPress_Core_Theme::deactivate() (Priority: 30)
-		 * * CommentPress_Core_Database::deactivate() (Priority: 50)
+		 * * CommentPress_Core_Theme::deactivate() (Priority: 20)
+		 * * CommentPress_Core_Comments::activate() (Priority: 30)
+		 * * CommentPress_Core_Database::deactivate() (Priority: 40)
 		 *
 		 * @since 4.0
+		 *
+		 * @param bool $network_wide True if network-activated, false otherwise.
 		 */
-		do_action( 'commentpress/core/deactivated' );
+		do_action( 'commentpress/core/deactivated', $network_wide );
 
 	}
 
@@ -409,7 +436,7 @@ class CommentPress_Core_Loader {
 	 */
 	public function get_list_option() {
 		_deprecated_function( __METHOD__, '4.0' );
-		return $this->db->option_get( 'cp_show_posts_or_pages_in_toc' );
+		return $this->db->setting_get( 'cp_show_posts_or_pages_in_toc' );
 	}
 
 	/**

@@ -202,7 +202,7 @@ class CommentPress_Core_Editor_Comments {
 		$allowed = true;
 
 		// Get "Comment form editor" option.
-		$comment_editor = $this->core->db->option_get( 'cp_comment_editor' );
+		$comment_editor = $this->core->db->setting_get( 'cp_comment_editor' );
 
 		// Disallow if not "Rich-text Editor".
 		if ( $comment_editor != '1' ) {

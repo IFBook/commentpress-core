@@ -82,12 +82,106 @@ class CommentPress_Core_Comments {
 	 */
 	public function register_hooks() {
 
+		// Act when this plugin is activated.
+		add_action( 'commentpress/core/activated', [ $this, 'plugin_activated' ], 20 );
+
+		// Act when this plugin is deactivated.
+		add_action( 'commentpress/core/deactivated', [ $this, 'plugin_deactivated' ], 30 );
+
 		// Modify Comment posting.
 		add_action( 'comment_post', [ $this, 'save_comment' ], 10, 2 );
 
 		// Amend the behaviour of Featured Comments plugin.
 		add_action( 'plugins_loaded', [ $this, 'featured_comments_override' ], 1000 );
 
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Runs when core is activated.
+	 *
+	 * @since 4.0
+	 *
+	 * @param bool $network_wide True if network-activated, false otherwise.
+	 */
+	public function plugin_activated( $network_wide ) {
+
+		// Bail if plugin is network activated.
+		if ( $network_wide ) {
+			return;
+		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'network_wide' => $network_wide ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Install the database schema.
+		$this->schema_install();
+
+	}
+
+	/**
+	 * Runs when core is deactivated.
+	 *
+	 * NOTE: The database schema is only restored in "uninstall.php" when this
+	 * plugin is deleted.
+	 *
+	 * @since 4.0
+	 *
+	 * @param bool $network_wide True if network-activated, false otherwise.
+	 */
+	public function plugin_deactivated( $network_wide ) {
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'network_wide' => $network_wide ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Bail if plugin is network activated.
+		if ( $network_wide ) {
+			return;
+		}
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Installs the WordPress database schema.
+	 *
+	 * @since 4.0
+	 *
+	 * @return bool $result True if successful, false otherwise.
+	 */
+	public function schema_install() {
+
+		// Database object.
+		global $wpdb;
+
+		// Include WordPress install helper script.
+		require_once ABSPATH . 'wp-admin/install-helper.php';
+
+		// Add the column, if not already there.
+		$result = maybe_add_column(
+			$wpdb->comments,
+			'comment_signature',
+			"ALTER TABLE `$wpdb->comments` ADD `comment_signature` VARCHAR(255) NULL;"
+		);
+
+		// --<
+		return $result;
 	}
 
 	// -------------------------------------------------------------------------

@@ -136,6 +136,11 @@ class CommentPress_Multisite_Settings_Network {
 	 */
 	public function register_hooks() {
 
+		// Bail if plugin is not activated network-wide.
+		if ( 'mu_sitewide' !== $this->multisite->plugin->plugin_context_get() ) {
+			return;
+		}
+
 		// Add our item to the network admin menu.
 		add_action( 'network_admin_menu', [ $this, 'admin_menu' ] );
 

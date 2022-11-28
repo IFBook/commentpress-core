@@ -61,11 +61,6 @@ class CommentPress_Core_Theme {
 		// Init when this plugin is fully loaded.
 		add_action( 'commentpress/core/loaded', [ $this, 'initialise' ] );
 
-		// Acts in the middle when this plugin is activated.
-		add_action( 'commentpress/core/activated', [ $this, 'activate' ], 30 );
-		// Acts in the middle when this plugin is deactivated.
-		add_action( 'commentpress/core/deactivated', [ $this, 'deactivate' ], 30 );
-
 	}
 
 	/**
@@ -131,8 +126,88 @@ class CommentPress_Core_Theme {
 	 */
 	public function register_hooks() {
 
+		// Acts when this plugin is activated.
+		add_action( 'commentpress/core/activated', [ $this, 'plugin_activated' ], 30 );
+
+		// Acts when this plugin is deactivated.
+		add_action( 'commentpress/core/deactivated', [ $this, 'plugin_deactivated' ], 20 );
+
 		// Enable CommentPress themes in Multisite optional scenario.
 		add_filter( 'network_allowed_themes', [ $this, 'allowed_themes' ] );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Runs when core is activated.
+	 *
+	 * @since 3.0
+	 * @since 4.0 Moved to this class.
+	 *
+	 * @param bool $network_wide True if network-activated, false otherwise.
+	 */
+	public function plugin_activated( $network_wide = false ) {
+
+		// Bail if plugin is network activated.
+		if ( $network_wide ) {
+			return;
+		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'network_wide' => $network_wide ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Activate the default CommentPress theme.
+		$this->activate();
+
+		// Turn Comment paging option off.
+		$this->comment_paging_cancel();
+
+		// Override Widgets.
+		$this->widgets_clear();
+
+	}
+
+	/**
+	 * Runs when core is deactivated.
+	 *
+	 * @since 3.0
+	 * @since 4.0 Moved to this class.
+	 *
+	 * @param bool $network_wide True if network-activated, false otherwise.
+	 */
+	public function plugin_deactivated( $network_wide = false ) {
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'network_wide' => $network_wide ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Bail if plugin is network activated.
+		if ( $network_wide ) {
+			return;
+		}
+
+		// Deactivate the default CommentPress theme.
+		$this->deactivate();
+
+		// Reset Comment paging option.
+		$this->comment_paging_restore();
+
+		// Restore Widgets.
+		$this->widgets_restore();
 
 	}
 
@@ -207,12 +282,6 @@ class CommentPress_Core_Theme {
 
 		}
 
-		// Turn Comment paging option off.
-		$this->comment_paging_cancel();
-
-		// Override Widgets.
-		$this->widgets_clear();
-
 	}
 
 	/**
@@ -220,6 +289,8 @@ class CommentPress_Core_Theme {
 	 *
 	 * @since 3.0
 	 * @since 4.0 Moved to this class.
+	 *
+	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
 	public function deactivate() {
 
@@ -254,12 +325,6 @@ class CommentPress_Core_Theme {
 
 		}
 
-		// Reset Comment paging option.
-		$this->comment_paging_restore();
-
-		// Restore Widgets.
-		$this->widgets_restore();
-
 	}
 
 	// -------------------------------------------------------------------------
@@ -273,7 +338,7 @@ class CommentPress_Core_Theme {
 	public function comment_paging_cancel() {
 
 		// Set backup option.
-		$this->core->db->wordpress_option_backup( 'page_comments', '' );
+		$this->core->db->option_wp_backup( 'page_comments', '' );
 
 	}
 
@@ -286,7 +351,7 @@ class CommentPress_Core_Theme {
 	public function comment_paging_restore() {
 
 		// Reset option.
-		$this->core->db->wordpress_option_restore( 'page_comments' );
+		$this->core->db->option_wp_restore( 'page_comments' );
 
 	}
 
@@ -307,7 +372,7 @@ class CommentPress_Core_Theme {
 		 *
 		 * @see wp_install_defaults()
 		 */
-		$this->core->db->wordpress_option_backup( 'sidebars_widgets', [
+		$this->core->db->option_wp_backup( 'sidebars_widgets', [
 			'wp_inactive_widgets' => [],
 			'sidebar-1' => [],
 			'sidebar-2' => [],
@@ -326,7 +391,7 @@ class CommentPress_Core_Theme {
 	public function widgets_restore() {
 
 		// Reset option.
-		$this->core->db->wordpress_option_restore( 'sidebars_widgets' );
+		$this->core->db->option_wp_restore( 'sidebars_widgets' );
 
 	}
 

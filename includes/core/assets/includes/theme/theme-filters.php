@@ -333,7 +333,7 @@ if ( ! function_exists( 'commentpress_excerpt_length' ) ) :
 
 		// Get length of excerpt from option.
 		if ( ! empty( $core ) ) {
-			$length = $core->db->option_get( 'cp_excerpt_length' );
+			$length = $core->db->setting_get( 'cp_excerpt_length' );
 		}
 
 		// --<

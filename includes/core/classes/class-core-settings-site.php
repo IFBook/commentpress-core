@@ -701,13 +701,13 @@ class CommentPress_Core_Settings_Site {
 	public function meta_box_general_render() {
 
 		// Get Post Types that support the editor.
-		$capable_post_types = $this->core->db->get_supported_post_types();
+		$capable_post_types = $this->core->db->post_types_get_supported();
 
 		// Get chosen Post Types.
-		$selected_types = $this->core->db->option_get( 'cp_post_types_disabled', [] );
+		$selected_types = $this->core->db->setting_get( 'cp_post_types_disabled', [] );
 
 		// Get settings.
-		$do_not_parse = $this->core->db->option_get( 'cp_do_not_parse', 'n' );
+		$do_not_parse = $this->core->db->setting_get( 'cp_do_not_parse', 'n' );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-general.php';
@@ -722,10 +722,10 @@ class CommentPress_Core_Settings_Site {
 	public function meta_box_toc_render() {
 
 		// Get settings.
-		$show_posts_or_pages_in_toc = $this->core->db->option_get( 'cp_show_posts_or_pages_in_toc' );
-		$toc_chapter_is_page = $this->core->db->option_get( 'cp_toc_chapter_is_page' );
-		$show_subpages = $this->core->db->option_get( 'cp_show_subpages' );
-		$show_extended_toc = $this->core->db->option_get( 'cp_show_extended_toc' );
+		$show_posts_or_pages_in_toc = $this->core->db->setting_get( 'cp_show_posts_or_pages_in_toc' );
+		$toc_chapter_is_page = $this->core->db->setting_get( 'cp_toc_chapter_is_page' );
+		$show_subpages = $this->core->db->setting_get( 'cp_show_subpages' );
+		$show_extended_toc = $this->core->db->setting_get( 'cp_show_extended_toc' );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-toc.php';
@@ -740,9 +740,9 @@ class CommentPress_Core_Settings_Site {
 	public function meta_box_page_display_render() {
 
 		// Get settings.
-		$page_nav_enabled = $this->core->db->option_get( 'cp_page_nav_enabled', 'y' );
-		$featured_images = $this->core->db->option_get( 'cp_featured_images', 'n' );
-		$textblock_meta = $this->core->db->option_get( 'cp_textblock_meta', 'y' );
+		$page_nav_enabled = $this->core->db->setting_get( 'cp_page_nav_enabled', 'y' );
+		$featured_images = $this->core->db->setting_get( 'cp_featured_images', 'n' );
+		$textblock_meta = $this->core->db->setting_get( 'cp_textblock_meta', 'y' );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-page.php';
@@ -757,9 +757,9 @@ class CommentPress_Core_Settings_Site {
 	public function meta_box_commenting_render() {
 
 		// Get settings.
-		$comment_editor = $this->core->db->option_get( 'cp_comment_editor' );
-		$promote_reading = $this->core->db->option_get( 'cp_promote_reading' );
-		$comments_live = $this->core->db->option_get( 'cp_para_comments_live' );
+		$comment_editor = $this->core->db->setting_get( 'cp_comment_editor' );
+		$promote_reading = $this->core->db->setting_get( 'cp_promote_reading' );
+		$comments_live = $this->core->db->setting_get( 'cp_para_comments_live' );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-comment.php';
@@ -774,9 +774,9 @@ class CommentPress_Core_Settings_Site {
 	public function meta_box_theme_render() {
 
 		// Get settings.
-		$scroll_speed = $this->core->db->option_get( 'cp_js_scroll_speed' );
-		$min_page_width = $this->core->db->option_get( 'cp_min_page_width' );
-		$excerpt_length = $this->core->db->option_get( 'cp_excerpt_length' );
+		$scroll_speed = $this->core->db->setting_get( 'cp_js_scroll_speed' );
+		$min_page_width = $this->core->db->setting_get( 'cp_min_page_width' );
+		$excerpt_length = $this->core->db->setting_get( 'cp_excerpt_length' );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-theme.php';
@@ -831,8 +831,8 @@ class CommentPress_Core_Settings_Site {
 		 */
 		do_action( 'commentpress/core/settings/site/save/before' );
 
-		// Save the options.
-		$this->core->db->options_save();
+		// Save the settings.
+		$this->core->db->settings_save();
 
 		/**
 		 * Fires when the Site Settings have been saved.
@@ -891,8 +891,15 @@ class CommentPress_Core_Settings_Site {
 		// Get the "Site Settings" link.
 		$link = $this->page_settings_url_get();
 
+		// Use "Site Settings" when network active.
+		if ( 'mu_sitewide' === commentpress()->plugin_context_get() ) {
+			$text = __( 'Site Settings', 'commentpress-core' );
+		} else {
+			$text = __( 'Settings', 'commentpress-core' );
+		}
+
 		// Add settings link.
-		$links[] = '<a href="' . esc_url( $link ) . '">' . esc_html__( 'Site Settings', 'commentpress-core' ) . '</a>';
+		$links[] = '<a href="' . esc_url( $link ) . '">' . esc_html( $text ) . '</a>';
 
 		// --<
 		return $links;

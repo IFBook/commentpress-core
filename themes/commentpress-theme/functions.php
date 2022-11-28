@@ -575,7 +575,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 		}
 
 		// Get Page or Post.
-		$page_or_post = $core->db->option_get( 'cp_show_posts_or_pages_in_toc' );
+		$page_or_post = $core->db->setting_get( 'cp_show_posts_or_pages_in_toc' );
 
 		// Set default.
 		$blog_title = apply_filters(

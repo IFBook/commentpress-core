@@ -197,8 +197,8 @@ class CommentPress_Core_Entry_Document {
 	public function metabox_settings_get() {
 
 		// Get settings.
-		$title_visibility = $this->core->db->option_get( 'cp_title_visibility' );
-		$page_meta_visibility = $this->core->db->option_get( 'cp_page_meta_visibility' );
+		$title_visibility = $this->core->db->setting_get( 'cp_title_visibility' );
+		$page_meta_visibility = $this->core->db->setting_get( 'cp_page_meta_visibility' );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-entry-document-settings.php';
@@ -221,14 +221,14 @@ class CommentPress_Core_Entry_Document {
 		$show_title = isset( $_POST[ $this->key_show_title ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_show_title ] ) ) : '';
 
 		// Set the Page Meta visibility value.
-		$this->core->db->option_set( $this->key_show_title, $show_title );
+		$this->core->db->setting_set( $this->key_show_title, $show_title );
 
 		// Get the Page Meta visibility value.
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$show_meta = isset( $_POST[ $this->key_show_meta ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_show_meta ] ) ) : '';
 
 		// Set the Page Meta visibility value.
-		$this->core->db->option_set( $this->key_show_meta, $show_meta );
+		$this->core->db->setting_set( $this->key_show_meta, $show_meta );
 
 	}
 
@@ -515,7 +515,7 @@ class CommentPress_Core_Entry_Document {
 		$layout = '';
 
 		// Is this the Title Page?
-		if ( $post->ID == $this->core->db->option_get( 'cp_welcome_page' ) ) {
+		if ( $post->ID == $this->core->db->setting_get( 'cp_welcome_page' ) ) {
 
 			// Default to text.
 			$default = 'text';
@@ -550,7 +550,7 @@ class CommentPress_Core_Entry_Document {
 	private function title_page_layout_save( $post ) {
 
 		// Bail if this is not the Title Page.
-		if ( $post->ID !== (int) $this->core->db->option_get( 'cp_welcome_page' ) ) {
+		if ( $post->ID !== (int) $this->core->db->setting_get( 'cp_welcome_page' ) ) {
 			return;
 		}
 
@@ -647,7 +647,7 @@ class CommentPress_Core_Entry_Document {
 
 		// Default to site setting when name is passed.
 		if ( ! empty( $option ) ) {
-			$setting = $this->core->db->option_get( $option );
+			$setting = $this->core->db->setting_get( $option );
 		}
 
 		// Bail if we didn't get one.
@@ -713,7 +713,7 @@ class CommentPress_Core_Entry_Document {
 	public function is_overridden( $post_id ) {
 
 		// Get the current Sidebar.
-		$sidebar_blog = $this->core->db->option_get( $this->option_sidebar );
+		$sidebar_blog = $this->core->db->setting_get( $this->option_sidebar );
 
 		// Get the Sidebar for this Post.
 		$sidebar_post = $this->get_for_post_id( $post_id );

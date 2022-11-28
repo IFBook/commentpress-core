@@ -103,38 +103,11 @@ class CommentPress_Multisite_Database {
 			return;
 		}
 
-		// Init settings.
-		$this->settings_initialise();
-
 		// Register hooks.
 		$this->register_hooks();
 
 		// We're done.
 		$done = true;
-
-	}
-
-	/**
-	 * Initialises the settings.
-	 *
-	 * @since 4.0
-	 */
-	public function settings_initialise() {
-
-		// Load installed plugin version.
-		$this->plugin_version = $this->version_get();
-
-		// Load settings array.
-		$this->settings = $this->settings_get();
-
-		// Store version if there has been a change.
-		if ( $this->version_outdated() ) {
-			$this->version_set( COMMENTPRESS_MU_PLUGIN_VERSION );
-			$this->is_upgrade = true;
-		}
-
-		// Settings upgrade tasks.
-		$this->settings_upgrade();
 
 	}
 
@@ -145,11 +118,14 @@ class CommentPress_Multisite_Database {
 	 */
 	public function register_hooks() {
 
-		// Acts early when this plugin is activated.
-		add_action( 'commentpress/activated', [ $this, 'activate' ], 10 );
+		// Acts when multisite is activated.
+		add_action( 'commentpress/multisite/activated', [ $this, 'plugin_activated' ], 10 );
 
-		// Act late when this plugin is deactivated.
-		add_action( 'commentpress/deactivated', [ $this, 'deactivate' ], 50 );
+		// Act when multisite is deactivated.
+		add_action( 'commentpress/multisite/deactivated', [ $this, 'plugin_deactivated' ], 10 );
+
+		// Initialise settings when plugins are loaded.
+		add_action( 'plugins_loaded', [ $this, 'settings_initialise' ] );
 
 	}
 
@@ -159,8 +135,31 @@ class CommentPress_Multisite_Database {
 	 * Runs when the plugin is activated.
 	 *
 	 * @since 4.0
+	 *
+	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
-	public function activate() {
+	public function plugin_activated( $network_wide = false ) {
+
+		// Bail if plugin is not network activated.
+		if ( ! $network_wide ) {
+			return;
+		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'network_wide' => $network_wide ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Initialise settings.
+		$this->settings_initialise( $network_activation = true );
+
+		// Save settings.
+		$this->settings_save();
 
 	}
 
@@ -168,8 +167,25 @@ class CommentPress_Multisite_Database {
 	 *  Runs when the plugin is deactivated.
 	 *
 	 * @since 4.0
+	 *
+	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
-	public function deactivate() {
+	public function plugin_deactivated( $network_wide = false ) {
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'network_wide' => $network_wide ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Bail if plugin is not network activated.
+		if ( ! $network_wide ) {
+			return;
+		}
 
 	}
 
@@ -206,8 +222,8 @@ class CommentPress_Multisite_Database {
 	 */
 	public function version_set( $version ) {
 
-		// Store new CommentPress Core version.
-		$this->option_wp_set( $this->option_version, $version );
+		// Store new CommentPress Multisite version.
+		$this->option_wpms_set( $this->option_version, $version );
 
 	}
 
@@ -235,8 +251,8 @@ class CommentPress_Multisite_Database {
 		// Get installed version.
 		$version = $this->version_get();
 
-		// True if we have a CommentPress Multisite install and it's lower than this one.
-		if ( ! empty( $version ) && version_compare( COMMENTPRESS_MU_PLUGIN_VERSION, $version, '>' ) ) {
+		// True if no version or we have a multisite install and it's lower than this one.
+		if ( empty( $version ) || version_compare( COMMENTPRESS_MU_PLUGIN_VERSION, $version, '>' ) ) {
 			return true;
 		}
 
@@ -248,42 +264,43 @@ class CommentPress_Multisite_Database {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Gets the settings array from a WordPress Site Option.
+	 * Initialises the settings.
 	 *
 	 * @since 4.0
 	 *
-	 * @return array $settings The array of settings if successful, or empty array otherwise.
+	 * @param bool $network_activation True during network activation, false otherwise.
 	 */
-	public function settings_get() {
+	public function settings_initialise( $network_activation = false ) {
 
-		// Get the Site Option.
-		return $this->option_wpms_get( $this->option_settings, $this->settings_get_defaults() );
+		// Bail if plugin is not activated network-wide - unless activating network-wide.
+		if ( ! $network_activation && 'mu_sitewide' !== $this->multisite->plugin->plugin_context_get() ) {
+			return;
+		}
 
-	}
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'plugin_context' => $this->multisite->plugin->plugin_context_get(),
+			//'backtrace' => $trace,
+		], true ) );
+		*/
 
-	/**
-	 * Saves the settings array in a WordPress Site Option.
-	 *
-	 * @since 3.3
-	 *
-	 * @return boolean $success True if successful, or false otherwise.
-	 */
-	public function settings_save() {
+		// Load installed plugin version.
+		$this->plugin_version = $this->version_get();
 
-		// Set the Site Option.
-		return $this->option_wpms_set( $this->option_settings, $this->settings );
+		// Load settings array.
+		$this->settings = $this->settings_get();
 
-	}
+		// Store version if there has been a change.
+		if ( $this->version_outdated() ) {
+			$this->version_set( COMMENTPRESS_MU_PLUGIN_VERSION );
+			$this->is_upgrade = true;
+		}
 
-	/**
-	 * Deletes the settings WordPress Site Option.
-	 *
-	 * @since 4.0
-	 */
-	public function settings_delete() {
-
-		// Delete the Site Option.
-		$this->option_wpms_delete( $this->option_settings );
+		// Settings upgrade tasks.
+		$this->settings_upgrade();
 
 	}
 
@@ -350,17 +367,70 @@ class CommentPress_Multisite_Database {
 	// -------------------------------------------------------------------------
 
 	/**
+	 * Gets the settings array from a WordPress Site Option.
+	 *
+	 * @since 4.0
+	 *
+	 * @return array $settings The array of settings if successful, or empty array otherwise.
+	 */
+	public function settings_get() {
+
+		// Get the Site Option.
+		return $this->option_wpms_get( $this->option_settings, $this->settings_get_defaults() );
+
+	}
+
+	/**
+	 * Saves the settings array in a WordPress Site Option.
+	 *
+	 * @since 3.3
+	 *
+	 * @return boolean $success True if successful, or false otherwise.
+	 */
+	public function settings_save() {
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'plugin_context' => $this->multisite->plugin->plugin_context_get(),
+			'settings' => $this->settings,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Set the Site Option.
+		return $this->option_wpms_set( $this->option_settings, $this->settings );
+
+	}
+
+	/**
+	 * Deletes the settings WordPress Site Option.
+	 *
+	 * @since 4.0
+	 */
+	public function settings_delete() {
+
+		// Delete the Site Option.
+		$this->option_wpms_delete( $this->option_settings );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
 	 * Returns existence of a specified setting.
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $setting_name The name of the setting.
+	 * @param str $name The name of the setting.
 	 * @return bool True if the setting exists, false otherwise.
 	 */
-	public function setting_exists( $setting_name ) {
+	public function setting_exists( $name ) {
 
 		// Check if the setting exists in the settings array.
-		return array_key_exists( $setting_name, $this->settings );
+		return array_key_exists( $name, $this->settings );
 
 	}
 
@@ -369,14 +439,14 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $setting_name The name of the setting.
+	 * @param str $name The name of the setting.
 	 * @param mixed $default The default value for the setting.
 	 * @return mixed The value of the setting if it exists, $default otherwise.
 	 */
-	public function setting_get( $setting_name, $default = false ) {
+	public function setting_get( $name, $default = false ) {
 
 		// Get setting.
-		return array_key_exists( $setting_name, $this->settings ) ? $this->settings[ $setting_name ] : $default;
+		return array_key_exists( $name, $this->settings ) ? $this->settings[ $name ] : $default;
 
 	}
 
@@ -385,13 +455,13 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $setting_name The name of the setting.
+	 * @param str $name The name of the setting.
 	 * @param mixed $value The value for the setting.
 	 */
-	public function setting_set( $setting_name, $value = '' ) {
+	public function setting_set( $name, $value = '' ) {
 
 		// Set setting.
-		$this->settings[ $setting_name ] = $value;
+		$this->settings[ $name ] = $value;
 
 	}
 
@@ -400,12 +470,12 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $setting_name The name of the setting.
+	 * @param str $name The name of the setting.
 	 */
-	public function setting_delete( $setting_name ) {
+	public function setting_delete( $name ) {
 
 		// Unset setting.
-		unset( $this->settings[ $setting_name ] );
+		unset( $this->settings[ $name ] );
 
 	}
 
@@ -416,13 +486,13 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $option_name The name of the option.
-	 * @return bool True if option exists, false otherwise.
+	 * @param str $name The name of the Site Option.
+	 * @return bool True if Site Option exists, false otherwise.
 	 */
-	public function option_wpms_exists( $option_name ) {
+	public function option_wpms_exists( $name ) {
 
-		// Get option with unlikely default.
-		if ( $this->option_wpms_get( $option_name, 'fenfgehgejgrkj' ) === 'fenfgehgejgrkj' ) {
+		// Get Site Option with unlikely default.
+		if ( $this->option_wpms_get( $name, 'fenfgehgejgrkj' ) === 'fenfgehgejgrkj' ) {
 			return false;
 		} else {
 			return true;
@@ -435,14 +505,14 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $option_name The name of the option.
-	 * @param mixed $default The default value for the option.
-	 * @return mixed The value of the option if it exists, default otherwise.
+	 * @param str $name The name of the Site Option.
+	 * @param mixed $default The default value for the Site Option.
+	 * @return mixed The value of the Site Option if it exists, default otherwise.
 	 */
-	public function option_wpms_get( $option_name, $default = false ) {
+	public function option_wpms_get( $name, $default = false ) {
 
-		// Get option.
-		return get_site_option( $option_name, $default );
+		// Get Site Option.
+		return get_site_option( $name, $default );
 
 	}
 
@@ -451,14 +521,14 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $option_name The name of the option.
-	 * @param mixed $value The value for the option.
+	 * @param str $name The name of the Site Option.
+	 * @param mixed $value The value for the Site Option.
 	 * @return bool True if the value was updated, false otherwise.
 	 */
-	public function option_wpms_set( $option_name, $value = '' ) {
+	public function option_wpms_set( $name, $value = '' ) {
 
-		// Set option.
-		return update_site_option( $option_name, $value );
+		// Set Site Option.
+		return update_site_option( $name, $value );
 
 	}
 
@@ -467,12 +537,12 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $option_name The name of the option.
+	 * @param str $name The name of the Site Option.
 	 */
-	public function option_wpms_delete( $option_name ) {
+	public function option_wpms_delete( $name ) {
 
-		// Set option.
-		delete_site_option( $option_name );
+		// Delete Site Option.
+		delete_site_option( $name );
 
 	}
 

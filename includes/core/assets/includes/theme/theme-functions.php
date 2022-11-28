@@ -262,14 +262,14 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ) :
 		// -------------------------------------------------------------------------
 		// Our fallback is to go with the legacy method that some people might still be using.
 		// -------------------------------------------------------------------------
-		if ( ! empty( $core ) && $core->db->option_get( 'cp_toc_page' ) ) {
+		if ( ! empty( $core ) && $core->db->setting_get( 'cp_toc_page' ) ) {
 
 			// Set defaults.
 			$args = [
 				'post_type' => 'attachment',
 				'numberposts' => 1,
 				'post_status' => null,
-				'post_parent' => $core->db->option_get( 'cp_toc_page' ),
+				'post_parent' => $core->db->setting_get( 'cp_toc_page' ),
 			];
 
 			// Get them.
@@ -376,7 +376,7 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		if ( ! empty( $core ) ) {
 
 			// Is this the Title Page?
-			if ( ( $post instanceof WP_Post ) && (int) $post->ID === (int) $core->db->option_get( 'cp_welcome_page' ) ) {
+			if ( ( $post instanceof WP_Post ) && (int) $post->ID === (int) $core->db->setting_get( 'cp_welcome_page' ) ) {
 
 				// Init layout.
 				$layout = '';
@@ -455,7 +455,7 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		if ( ! empty( $core ) ) {
 
 			// Get current Blog Type.
-			$current_blog_type = $core->db->option_get( 'cp_blog_type' );
+			$current_blog_type = $core->db->setting_get( 'cp_blog_type' );
 
 			// If it's not the Main Site, add class.
 			if ( is_multisite() && ! is_main_site() ) {
@@ -1340,7 +1340,7 @@ if ( ! function_exists( 'commentpress_get_post_title_visibility' ) ) :
 		if ( ! empty( $core ) ) {
 
 			// Get global hide.
-			$hide = $core->db->option_get( 'cp_title_visibility' );
+			$hide = $core->db->setting_get( 'cp_title_visibility' );
 
 			// Set key.
 			$key = '_cp_title_visibility';
@@ -1409,7 +1409,7 @@ if ( ! function_exists( 'commentpress_get_post_meta_visibility' ) ) :
 		if ( ! empty( $core ) ) {
 
 			// Get global hide_meta.
-			$hide_meta = $core->db->option_get( 'cp_page_meta_visibility' );
+			$hide_meta = $core->db->setting_get( 'cp_page_meta_visibility' );
 
 			// Set key.
 			$key = '_cp_page_meta_visibility';

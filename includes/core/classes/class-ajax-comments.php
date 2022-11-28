@@ -129,7 +129,7 @@ class CommentPress_AJAX_Comments {
 		$vars = [];
 
 		// Is "live" Comment refreshing enabled?
-		$vars['cpajax_live'] = ( $this->core->db->option_get( 'cp_para_comments_live' ) == '1' ) ? 1 : 0;
+		$vars['cpajax_live'] = ( $this->core->db->setting_get( 'cp_para_comments_live' ) == '1' ) ? 1 : 0;
 
 		// We need to know the url of the Ajax handler.
 		$vars['cpajax_ajax_url'] = admin_url( 'admin-ajax.php' );

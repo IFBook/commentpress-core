@@ -12,7 +12,7 @@
 defined( 'ABSPATH' ) || exit;
 
 // Define version.
-define( 'COMMENTPRESS_MU_PLUGIN_VERSION', '1.0' );
+define( 'COMMENTPRESS_MU_PLUGIN_VERSION', '4.0' );
 
 /**
  * CommentPress Multisite Loader Class.
@@ -197,68 +197,59 @@ class CommentPress_Multisite_Loader {
 	 */
 	public function register_hooks() {
 
-		/*
-		// Check for network activation.
-		add_action( 'activated_plugin',  [ $this, 'network_activated' ], 10, 2 );
+		// Act when this plugin is activated.
+		add_action( 'commentpress/activated', [ $this, 'plugin_activated' ], 10 );
 
-		// Check for network deactivation.
-		add_action( 'deactivated_plugin', [ $this, 'network_deactivated' ], 10, 2 );
-		*/
+		// Act when this plugin is deactivated.
+		add_action( 'commentpress/deactivated', [ $this, 'plugin_deactivated' ], 20 );
 
 	}
 
 	/**
-	 * This plugin has been network-activated.
+	 * Runs when the plugin is activated.
 	 *
-	 * @since 3.3
+	 * @since 4.0
 	 *
-	 * @param str $plugin The plugin file.
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
-	public function network_activated( $plugin, $network_wide = null ) {
+	public function plugin_activated( $network_wide = false ) {
 
-		/*
-		// Bail if it's not our plugin.
-		if ( $plugin !== plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) {
-			return;
-		}
-
-		// Bail if plugin not network activated.
-		if ( ! $network_wide ) {
-			return;
-		}
-
-		// If upgrading, we might want to migrate each existing instance into a
-		// CommentPress Core Blog.
-		*/
+		/**
+		 * Fires when plugin is activated.
+		 *
+		 * Used internally by:
+		 *
+		 * * CommentPress_Multisite_Database::plugin_activated() (Priority: 10)
+		 *
+		 * @since 4.0
+		 *
+		 * @param bool $network_wide True if network-activated, false otherwise.
+		 */
+		do_action( 'commentpress/multisite/activated', $network_wide );
 
 	}
 
 	/**
-	 * This plugin has been network-deactivated.
+	 * Runs when the plugin is deactivated.
 	 *
-	 * @since 3.3
+	 * @since 4.0
 	 *
-	 * @param str $plugin The plugin file.
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
-	public function network_deactivated( $plugin, $network_wide = null ) {
+	public function plugin_deactivated( $network_wide = false ) {
 
-		/*
-		// Bail if it's not our plugin.
-		if ( $plugin !== plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) {
-			return;
-		}
-
-		// Bail if plugin not network activated.
-		if ( ! $network_wide ) {
-			return;
-		}
-
-		// Do we want to trigger deactivation_hook for all sub-blogs?
-		// Or do we want to convert each instance into a self-contained
-		// CommentPress Core Blog?
-		*/
+		/**
+		 * Fires when plugin is activated.
+		 *
+		 * Used internally by:
+		 *
+		 * * CommentPress_Multisite_Database::plugin_activated() (Priority: 10)
+		 *
+		 * @since 4.0
+		 *
+		 * @param bool $network_wide True if network-activated, false otherwise.
+		 */
+		do_action( 'commentpress/multisite/deactivated', $network_wide );
 
 	}
 
