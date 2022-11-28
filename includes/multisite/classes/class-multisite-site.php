@@ -111,83 +111,6 @@ class CommentPress_Multisite_Site {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Adds our settings to the multisite Site Settings "Activation" metabox.
-	 *
-	 * @since 4.0
-	 */
-	public function metabox_settings_get() {
-
-		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-site-settings-site.php';
-
-	}
-
-	/**
-	 * Saves the data from the "CommentPress Settings" screen.
-	 *
-	 * @see CommentPress_Multisite_Settings_Site::form_submitted()
-	 *
-	 * @since 4.0
-	 */
-	public function settings_save() {
-
-		// Get the posted setting.
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$activate = isset( $_POST[ $this->key_enable ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_enable ] ) ) : '0';
-
-		// Bail if we did not ask to activate CommentPress Core.
-		if ( $activate !== '1' ) {
-			return;
-		}
-
-		// Install core, but not from "wpmu_new_blog".
-		$this->core_install( 'admin_page' );
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Adds our settings to the multisite Site Settings "Activation" metabox.
-	 *
-	 * @since 4.0
-	 */
-	public function metabox_settings_core_get() {
-
-		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-site-settings-core.php';
-
-	}
-
-	/**
-	 * Saves the data from the core "CommentPress Settings" screen.
-	 *
-	 * @see CommentPress_Multisite_Settings_Site::form_core_submitted()
-	 *
-	 * @since 4.0
-	 */
-	public function settings_core_save() {
-
-		// Get the posted setting.
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$deactivate = isset( $_POST[ $this->key_disable ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_disable ] ) ) : '0';
-
-		// Bail if we did not ask to deactivate CommentPress Core.
-		if ( $deactivate !== '1' ) {
-			return;
-		}
-
-		// Uninstall core.
-		$this->core_uninstall();
-
-		// Do form redirection.
-		do_action( 'commentpress/multisite/settings/site/core/redirect' );
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
 	 * Initialises CommentPress Core when it is enabled on the current Site.
 	 *
 	 * @since 4.0
@@ -210,19 +133,56 @@ class CommentPress_Multisite_Site {
 	}
 
 	/**
-	 * CommentPress Core installation.
+	 * CommentPress Core activation.
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $context The installation context.
+	 * @param str $context The activation context.
 	 */
-	public function core_install( $context = 'new_blog' ) {
+	public function core_activate( $context = 'new_blog' ) {
 
-		// Initialise core plugin.
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'context' => $context,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Initialise core.
 		$core = $this->multisite->plugin->core_initialise();
 
-		// Run activation hook.
-		$core->activate();
+		// Get the current Site ID.
+		$site_id = get_current_blog_id();
+
+		/**
+		 * Fires before multisite has "soft activated" core.
+		 *
+		 * @since 4.0
+		 *
+		 * @param int $site_id The current Site ID.
+		 * @param str $context The activation context.
+		 */
+		do_action( 'commentpress/multisite/core/activated/before', $site_id, $context );
+
+		// Run core activation hook.
+		do_action( 'commentpress/core/activate', $network_wide = false );
+
+		/**
+		 * Fires after multisite has "soft activated" core.
+		 *
+		 * Used internally by:
+		 *
+		 * * CommentPress_Multisite_Sites::site_id_add() (Priority: 10)
+		 *
+		 * @since 4.0
+		 *
+		 * @param int $site_id The current Site ID.
+		 * @param str $context The activation context.
+		 */
+		do_action( 'commentpress/multisite/core/activated/after', $site_id, $context );
 
 		/*
 		------------------------------------------------------------------------
@@ -247,11 +207,11 @@ class CommentPress_Multisite_Site {
 		------------------------------------------------------------------------
 		*/
 
-		// If we're installing from the "wpmu_new_blog" action, then we need to grab
-		// the extra options below - but if we're installing any other way, we need
+		// If we're activating from the "wpmu_new_blog" action, then we need to grab
+		// the extra options below - but if we're activating any other way, we need
 		// to ignore these, as they override actual values.
 
-		// TODO: Move to bp class and use action below.
+		// TODO: Move to bp class and use action above.
 
 		// Use passed value.
 		if ( $context == 'new_blog' ) {
@@ -271,16 +231,6 @@ class CommentPress_Multisite_Site {
 			$core->db->settings_save();
 
 		}
-
-		/**
-		 * Fires when multisite has "soft installed" core.
-		 *
-		 * @since 3.3
-		 * @since 4.0 Added context param.
-		 *
-		 * @param str $context The initialisation context.
-		 */
-		do_action( 'commentpress_core_soft_installed', $context );
 
 		/*
 		------------------------------------------------------------------------
@@ -314,20 +264,44 @@ class CommentPress_Multisite_Site {
 	 *
 	 * @since 3.3
 	 */
-	public function core_uninstall() {
+	public function core_deactivate() {
 
-		// Activate core plugin.
-		$core = $this->multisite->plugin->core_initialise();
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
 
-		// Run deactivation hook.
-		$core->deactivate();
+		// Get the current Site ID.
+		$site_id = get_current_blog_id();
 
 		/**
-		 * Fires when multisite has "soft uninstalled" core.
+		 * Fires before multisite has "soft deactivated" core.
 		 *
-		 * @since 3.3
+		 * @since 4.0
+		 *
+		 * @param int $site_id The current Site ID.
 		 */
-		do_action( 'commentpress_core_soft_uninstalled' );
+		do_action( 'commentpress/multisite/core/deactivated/before', $site_id );
+
+		// Run core deactivation hook.
+		do_action( 'commentpress/core/deactivate', $network_wide = false );
+
+		/**
+		 * Fires after multisite has "soft deactivated" core.
+		 *
+		 * Used internally by:
+		 *
+		 * * CommentPress_Multisite_Sites::site_id_remove() (Priority: 10)
+		 *
+		 * @since 4.0
+		 *
+		 * @param int $site_id The current Site ID.
+		 */
+		do_action( 'commentpress/multisite/site/core/deactivated/after', $site_id );
 
 		/*
 		------------------------------------------------------------------------
@@ -335,7 +309,7 @@ class CommentPress_Multisite_Site {
 		------------------------------------------------------------------------
 		*/
 
-		// Reset any options set in core_install().
+		// Reset any options set in core_activate().
 
 	}
 
@@ -388,6 +362,83 @@ class CommentPress_Multisite_Site {
 
 		// --<
 		return $core_active;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Adds our settings to the multisite Site Settings "Activation" metabox.
+	 *
+	 * @since 4.0
+	 */
+	public function metabox_settings_get() {
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-site-settings-site.php';
+
+	}
+
+	/**
+	 * Saves the data from the "CommentPress Settings" screen.
+	 *
+	 * @see CommentPress_Multisite_Settings_Site::form_submitted()
+	 *
+	 * @since 4.0
+	 */
+	public function settings_save() {
+
+		// Get the posted setting.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$activate = isset( $_POST[ $this->key_enable ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_enable ] ) ) : '0';
+
+		// Bail if we did not ask to activate CommentPress Core.
+		if ( $activate !== '1' ) {
+			return;
+		}
+
+		// Activate core, but not from "wpmu_new_blog".
+		$this->core_activate( 'admin_page' );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Adds our settings to the multisite Site Settings "Activation" metabox.
+	 *
+	 * @since 4.0
+	 */
+	public function metabox_settings_core_get() {
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-site-settings-core.php';
+
+	}
+
+	/**
+	 * Saves the data from the core "CommentPress Settings" screen.
+	 *
+	 * @see CommentPress_Multisite_Settings_Site::form_core_submitted()
+	 *
+	 * @since 4.0
+	 */
+	public function settings_core_save() {
+
+		// Get the posted setting.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$deactivate = isset( $_POST[ $this->key_disable ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_disable ] ) ) : '0';
+
+		// Bail if we did not ask to deactivate CommentPress Core.
+		if ( $deactivate !== '1' ) {
+			return;
+		}
+
+		// Deactivate core.
+		$this->core_deactivate();
+
+		// Do form redirection.
+		do_action( 'commentpress/multisite/settings/site/core/redirect' );
 
 	}
 

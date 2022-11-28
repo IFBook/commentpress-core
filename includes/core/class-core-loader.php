@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * CommentPress Core Loader Class.
  *
- * A class that encapsulates Single Site plugin functionality.
+ * A class that loads all Single Site functionality.
  *
  * @since 3.0
  */
@@ -190,6 +190,15 @@ class CommentPress_Core_Loader {
 	 */
 	public function __construct( $plugin ) {
 
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
 		// Store reference to plugin.
 		$this->plugin = $plugin;
 
@@ -214,7 +223,7 @@ class CommentPress_Core_Loader {
 			return;
 		}
 
-		// Bootstrap plugin.
+		// Bootstrap core.
 		$this->include_files();
 		$this->setup_objects();
 		$this->register_hooks();
@@ -329,6 +338,15 @@ class CommentPress_Core_Loader {
 	 */
 	public function register_hooks() {
 
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
 		// Act when this plugin is activated.
 		add_action( 'commentpress/activated', [ $this, 'plugin_activated' ], 20 );
 
@@ -353,6 +371,21 @@ class CommentPress_Core_Loader {
 	 */
 	public function plugin_activated( $network_wide = false ) {
 
+		// Bail if plugin is network activated.
+		if ( $network_wide ) {
+			return;
+		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'network_wide' => $network_wide ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
 		/**
 		 * Fires when plugin is activated.
 		 *
@@ -362,12 +395,13 @@ class CommentPress_Core_Loader {
 		 * * CommentPress_Core_Comments::activate() (Priority: 20)
 		 * * CommentPress_Core_Theme::activate() (Priority: 30)
 		 * * CommentPress_Core_Pages_Legacy::activate() (Priority: 40)
+		 * * CommentPress_Multisite_Sites::core_site_activated() (Priority: 50)
 		 *
 		 * @since 4.0
 		 *
 		 * @param bool $network_wide True if network-activated, false otherwise.
 		 */
-		do_action( 'commentpress/core/activated', $network_wide );
+		do_action( 'commentpress/core/activate', $network_wide );
 
 	}
 
@@ -380,6 +414,21 @@ class CommentPress_Core_Loader {
 	 */
 	public function plugin_deactivated( $network_wide = false ) {
 
+		// Bail if plugin is network activated.
+		if ( $network_wide ) {
+			return;
+		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'network_wide' => $network_wide ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
 		/**
 		 * Fires when plugin is activated.
 		 *
@@ -389,12 +438,13 @@ class CommentPress_Core_Loader {
 		 * * CommentPress_Core_Theme::deactivate() (Priority: 20)
 		 * * CommentPress_Core_Comments::activate() (Priority: 30)
 		 * * CommentPress_Core_Database::deactivate() (Priority: 40)
+		 * * CommentPress_Multisite_Sites::core_site_deactivated() (Priority: 50)
 		 *
 		 * @since 4.0
 		 *
 		 * @param bool $network_wide True if network-activated, false otherwise.
 		 */
-		do_action( 'commentpress/core/deactivated', $network_wide );
+		do_action( 'commentpress/core/deactivate', $network_wide );
 
 	}
 

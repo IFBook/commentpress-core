@@ -19,7 +19,7 @@ $next_page_html = '';
 // If we have the plugin.
 if ( ! empty( $core ) ) {
 
-	// "Title Page" always points to the first readable Page, unless it is itself.
+	// "Welcome Page" always points to the first readable Page, unless it is itself.
 	$next_page_id = $core->nav->page_get_first();
 
 	// If the link does not point to this Page and we're allowing Page nav.

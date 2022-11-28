@@ -279,11 +279,11 @@ if ( ! empty( $core ) ) {
 				<?php
 
 				/**
-				 * Filters the Title Page title.
+				 * Filters the Welcome Page title.
 				 *
 				 * @since 3.4
 				 *
-				 * @param str The default Title Page title.
+				 * @param str The default Welcome Page title.
 				 */
 				$title_title = apply_filters( 'cp_nav_title_page_title', __( 'Title Page', 'commentpress-core' ) );
 

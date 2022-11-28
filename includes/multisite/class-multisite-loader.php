@@ -11,13 +11,10 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-// Define version.
-define( 'COMMENTPRESS_MU_PLUGIN_VERSION', '4.0' );
-
 /**
  * CommentPress Multisite Loader Class.
  *
- * This class loads all Multisite compatibility.
+ * This class loads all Multisite functionality.
  *
  * @since 3.3
  */
@@ -114,6 +111,15 @@ class CommentPress_Multisite_Loader {
 	 */
 	public function __construct( $plugin ) {
 
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
 		// Store reference to plugin.
 		$this->plugin = $plugin;
 
@@ -197,6 +203,15 @@ class CommentPress_Multisite_Loader {
 	 */
 	public function register_hooks() {
 
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
 		// Act when this plugin is activated.
 		add_action( 'commentpress/activated', [ $this, 'plugin_activated' ], 10 );
 
@@ -214,18 +229,29 @@ class CommentPress_Multisite_Loader {
 	 */
 	public function plugin_activated( $network_wide = false ) {
 
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'network_wide' => $network_wide ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
 		/**
 		 * Fires when plugin is activated.
 		 *
 		 * Used internally by:
 		 *
 		 * * CommentPress_Multisite_Database::plugin_activated() (Priority: 10)
+		 * * CommentPress_Multisite_Sites::plugin_activated() (Priority: 20)
 		 *
 		 * @since 4.0
 		 *
 		 * @param bool $network_wide True if network-activated, false otherwise.
 		 */
-		do_action( 'commentpress/multisite/activated', $network_wide );
+		do_action( 'commentpress/multisite/activate', $network_wide );
 
 	}
 
@@ -238,18 +264,29 @@ class CommentPress_Multisite_Loader {
 	 */
 	public function plugin_deactivated( $network_wide = false ) {
 
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'network_wide' => $network_wide ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
 		/**
 		 * Fires when plugin is activated.
 		 *
 		 * Used internally by:
 		 *
-		 * * CommentPress_Multisite_Database::plugin_activated() (Priority: 10)
+		 * * CommentPress_Multisite_Sites::plugin_deactivated() (Priority: 10)
+		 * * CommentPress_Multisite_Database::plugin_deactivated() (Priority: 20)
 		 *
 		 * @since 4.0
 		 *
 		 * @param bool $network_wide True if network-activated, false otherwise.
 		 */
-		do_action( 'commentpress/multisite/deactivated', $network_wide );
+		do_action( 'commentpress/multisite/deactivate', $network_wide );
 
 	}
 

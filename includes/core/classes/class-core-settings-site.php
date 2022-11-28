@@ -812,9 +812,6 @@ class CommentPress_Core_Settings_Site {
 		// Check that we trust the source of the data.
 		check_admin_referer( 'commentpress_core_settings_action', 'commentpress_core_settings_nonce' );
 
-		// Update the settings.
-		$this->core->db->options_update();
-
 		/**
 		 * Fires before the options have been saved.
 		 *

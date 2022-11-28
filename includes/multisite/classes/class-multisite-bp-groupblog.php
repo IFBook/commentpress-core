@@ -183,7 +183,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	 */
 	public function register_hooks_workshop() {
 
-		// Override CommentPress Core "Title Page".
+		// Override CommentPress Core "Welcome Page".
 		add_filter( 'cp_nav_title_page_title', [ $this, 'filter_nav_title_page_title' ], 25 );
 
 		// Override CommentPress Core title of "view document" button in Blog lists.
@@ -447,7 +447,7 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	}
 
 	/**
-	 * Override CommentPress Core "Title Page".
+	 * Override CommentPress Core "Welcome Page".
 	 *
 	 * @since 3.3
 	 *

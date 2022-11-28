@@ -375,7 +375,7 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		$layout_class = '';
 		if ( ! empty( $core ) ) {
 
-			// Is this the Title Page?
+			// Is this the Welcome Page?
 			if ( ( $post instanceof WP_Post ) && (int) $post->ID === (int) $core->db->setting_get( 'cp_welcome_page' ) ) {
 
 				// Init layout.

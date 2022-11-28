@@ -123,7 +123,7 @@ class CommentPress_Plugin {
 		$this->include_files();
 
 		// Establish context.
-		$this->plugin_context();
+		$this->plugin_context_set();
 
 		// Register theme directory.
 		$this->theme_directory_register();
@@ -166,14 +166,26 @@ class CommentPress_Plugin {
 	}
 
 	/**
+	 * Gets the plugin context.
+	 *
+	 * @since 4.0
+	 *
+	 * @return str $plugin_context The current plugin context.
+	 */
+	public function plugin_context_get() {
+		return $this->plugin_context;
+	}
+
+	/**
 	 * Determines plugin context.
 	 *
 	 * Worth noting that during network activation, this plugin is not present
-	 * in the "active_sitewide_plugins" array.
+	 * in the "active_sitewide_plugins" array and so the plugin context will be
+	 * set as "mu_optional" while that process runs.
 	 *
 	 * @since 4.0
 	 */
-	public function plugin_context() {
+	public function plugin_context_set() {
 
 		// If not Multisite, then must be Single Site install.
 		if ( ! is_multisite() ) {
@@ -190,17 +202,6 @@ class CommentPress_Plugin {
 		// Optional activation per Site in Multisite.
 		$this->plugin_context = 'mu_optional';
 
-	}
-
-	/**
-	 * Gets the plugin context.
-	 *
-	 * @since 4.0
-	 *
-	 * @return str $plugin_context The current plugin context.
-	 */
-	public function plugin_context_get() {
-		return $this->plugin_context;
 	}
 
 	// -------------------------------------------------------------------------

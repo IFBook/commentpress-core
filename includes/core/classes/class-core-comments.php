@@ -83,10 +83,10 @@ class CommentPress_Core_Comments {
 	public function register_hooks() {
 
 		// Act when this plugin is activated.
-		add_action( 'commentpress/core/activated', [ $this, 'plugin_activated' ], 20 );
+		add_action( 'commentpress/core/activate', [ $this, 'plugin_activate' ], 20 );
 
 		// Act when this plugin is deactivated.
-		add_action( 'commentpress/core/deactivated', [ $this, 'plugin_deactivated' ], 30 );
+		add_action( 'commentpress/core/deactivate', [ $this, 'plugin_deactivate' ], 30 );
 
 		// Modify Comment posting.
 		add_action( 'comment_post', [ $this, 'save_comment' ], 10, 2 );
@@ -105,7 +105,7 @@ class CommentPress_Core_Comments {
 	 *
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
-	public function plugin_activated( $network_wide ) {
+	public function plugin_activate( $network_wide ) {
 
 		// Bail if plugin is network activated.
 		if ( $network_wide ) {
@@ -137,7 +137,17 @@ class CommentPress_Core_Comments {
 	 *
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
-	public function plugin_deactivated( $network_wide ) {
+	public function plugin_deactivate( $network_wide ) {
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'network_wide' => $network_wide ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
 
 		// Keep schema when deactivating.
 

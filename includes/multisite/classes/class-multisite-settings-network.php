@@ -383,7 +383,7 @@ class CommentPress_Multisite_Settings_Network {
 		*/
 
 		/*
-		// Create "Title Page Content" metabox.
+		// Create "Welcome Page Content" metabox.
 		add_meta_box(
 			'commentpress_title_page',
 			__( 'Title Page Content', 'commentpress-core' ),
@@ -449,7 +449,7 @@ class CommentPress_Multisite_Settings_Network {
 	}
 
 	/**
-	 * Renders the "Title Page Content" metabox.
+	 * Renders the "Welcome Page Content" metabox.
 	 *
 	 * @since 4.0
 	 */

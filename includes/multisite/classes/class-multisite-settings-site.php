@@ -537,7 +537,7 @@ class CommentPress_Multisite_Settings_Site {
 
 		// Create "Activation" metabox.
 		add_meta_box(
-			'commentpress_activate',
+			'commentpress_activation',
 			__( 'Activation', 'commentpress-core' ),
 			[ $this, 'meta_box_activate_render' ], // Callback.
 			$screen_id, // Screen ID.
@@ -608,7 +608,7 @@ class CommentPress_Multisite_Settings_Site {
 
 		// Create "Deactivation" metabox.
 		add_meta_box(
-			'commentpress_deactivate',
+			'commentpress_danger',
 			__( 'Danger Zone', 'commentpress-core' ),
 			[ $this, 'meta_box_danger_render' ], // Callback.
 			$screen_id, // Screen ID.

@@ -257,7 +257,7 @@ class CommentPress_Core_Entry_Document {
 		// Get the Page Numbering format.
 		$format = $this->page_numbering_get( $post );
 
-		// Get the layout for Title Page.
+		// Get the layout for Welcome Page.
 		$layout = $this->title_page_layout_get( $post );
 
 		// Get the starting Paragraph Number.
@@ -303,7 +303,7 @@ class CommentPress_Core_Entry_Document {
 		// Save Page Numbering.
 		$this->page_numbering_save( $post );
 
-		// Save layout for Title Page.
+		// Save layout for Welcome Page.
 		$this->title_page_layout_save( $post );
 
 		// Save starting Paragraph Number.
@@ -400,7 +400,7 @@ class CommentPress_Core_Entry_Document {
 	/**
 	 * Gets the Page Numbering format.
 	 *
-	 * This is only shown on the first Page that is not the Title Page.
+	 * This is only shown on the first Page that is not the Welcome Page.
 	 *
 	 * @since 4.0
 	 *
@@ -443,7 +443,7 @@ class CommentPress_Core_Entry_Document {
 	 *
 	 * @since 3.4
 	 *
-	 * Only first top-level Page that is not the Title Page is allowed to save this.
+	 * Only first top-level Page that is not the Welcome Page is allowed to save this.
 	 *
 	 * @param object $post The Post object.
 	 */
@@ -502,19 +502,19 @@ class CommentPress_Core_Entry_Document {
 	}
 
 	/**
-	 * Gets the layout for the Title Page.
+	 * Gets the layout for the Welcome Page.
 	 *
 	 * @since 4.0
 	 *
 	 * @param object $post The Post object.
-	 * @return string $layout The layout for the Title Page.
+	 * @return string $layout The layout for the Welcome Page.
 	 */
 	public function title_page_layout_get( $post ) {
 
 		// Default to empty.
 		$layout = '';
 
-		// Is this the Title Page?
+		// Is this the Welcome Page?
 		if ( $post->ID == $this->core->db->setting_get( 'cp_welcome_page' ) ) {
 
 			// Default to text.
@@ -537,7 +537,7 @@ class CommentPress_Core_Entry_Document {
 	}
 
 	/**
-	 * Saves the layout for the Title Page.
+	 * Saves the layout for the Welcome Page.
 	 *
 	 * Note: This allows for the legacy "Book Cover image".
 	 *
@@ -549,7 +549,7 @@ class CommentPress_Core_Entry_Document {
 	 */
 	private function title_page_layout_save( $post ) {
 
-		// Bail if this is not the Title Page.
+		// Bail if this is not the Welcome Page.
 		if ( $post->ID !== (int) $this->core->db->setting_get( 'cp_welcome_page' ) ) {
 			return;
 		}

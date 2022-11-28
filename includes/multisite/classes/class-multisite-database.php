@@ -118,11 +118,20 @@ class CommentPress_Multisite_Database {
 	 */
 	public function register_hooks() {
 
-		// Acts when multisite is activated.
-		add_action( 'commentpress/multisite/activated', [ $this, 'plugin_activated' ], 10 );
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
 
-		// Act when multisite is deactivated.
-		add_action( 'commentpress/multisite/deactivated', [ $this, 'plugin_deactivated' ], 10 );
+		// Acts when plugin is activated.
+		add_action( 'commentpress/activate', [ $this, 'plugin_activate' ], 10 );
+
+		// Act when plugin is deactivated.
+		add_action( 'commentpress/deactivate', [ $this, 'plugin_deactivate' ], 100 );
 
 		// Initialise settings when plugins are loaded.
 		add_action( 'plugins_loaded', [ $this, 'settings_initialise' ] );
@@ -138,7 +147,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
-	public function plugin_activated( $network_wide = false ) {
+	public function plugin_activate( $network_wide = false ) {
 
 		// Bail if plugin is not network activated.
 		if ( ! $network_wide ) {
@@ -170,7 +179,22 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
-	public function plugin_deactivated( $network_wide = false ) {
+	public function plugin_deactivate( $network_wide = false ) {
+
+		// Bail if plugin is not network activated.
+		if ( ! $network_wide ) {
+			return;
+		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'network_wide' => $network_wide ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
 
 		// Keep Site Options when deactivating.
 
@@ -239,7 +263,7 @@ class CommentPress_Multisite_Database {
 		$version = $this->version_get();
 
 		// True if no version or we have a multisite install and it's lower than this one.
-		if ( empty( $version ) || version_compare( COMMENTPRESS_MU_PLUGIN_VERSION, $version, '>' ) ) {
+		if ( empty( $version ) || version_compare( COMMENTPRESS_VERSION, $version, '>' ) ) {
 			return true;
 		}
 
@@ -261,7 +285,7 @@ class CommentPress_Multisite_Database {
 
 		// Bail if plugin is not activated network-wide - unless activating network-wide.
 		if ( ! $network_activation && 'mu_sitewide' !== $this->multisite->plugin->plugin_context_get() ) {
-			return;
+			//return;
 		}
 
 		/*
@@ -280,9 +304,19 @@ class CommentPress_Multisite_Database {
 		// Load settings array.
 		$this->settings = $this->settings_get();
 
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'settings' => $this->settings,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
 		// Store version if there has been a change.
 		if ( $this->version_outdated() ) {
-			$this->version_set( COMMENTPRESS_MU_PLUGIN_VERSION );
+			$this->version_set( COMMENTPRESS_VERSION );
 			$this->is_upgrade = true;
 		}
 
@@ -318,6 +352,19 @@ class CommentPress_Multisite_Database {
 		}
 		*/
 
+		/**
+		 * Filters the "Save settings" flag.
+		 *
+		 * Used internally by:
+		 *
+		 * * CommentPress_Multisite_Sites::
+		 *
+		 * @since 4.0
+		 *
+		 * @param bool $save True if settings should be saved, false otherwise.
+		 */
+		$save = apply_filters( 'commentpress/multisite/settings/upgrade/save', $save );
+
 		// Save settings if need be.
 		if ( $save === true ) {
 			$this->settings_save();
@@ -340,11 +387,25 @@ class CommentPress_Multisite_Database {
 		/**
 		 * Filters the default settings.
 		 *
+		 * Used internally by:
+		 *
+		 * * CommentPress_Multisite_Sites::settings_get_defaults() (Priority: 10)
+		 *
 		 * @since 4.0
 		 *
 		 * @param array $settings The array of default settings.
 		 */
 		$settings = apply_filters( 'commentpress/multisite/settings/defaults', $settings );
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'default_settings' => $settings,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
 
 		// --<
 		return $settings;
@@ -381,7 +442,7 @@ class CommentPress_Multisite_Database {
 		$trace = $e->getTraceAsString();
 		error_log( print_r( [
 			'method' => __METHOD__,
-			'plugin_context' => $this->multisite->plugin->plugin_context_get(),
+			//'plugin_context' => $this->multisite->plugin->plugin_context_get(),
 			'settings' => $this->settings,
 			//'backtrace' => $trace,
 		], true ) );

@@ -213,7 +213,7 @@ class CommentPress_Multisite_BuddyPress {
 		add_filter( 'bp_groupblog_subnav_item_name', [ $this, 'filter_blog_name' ], 20 );
 		add_filter( 'bp_groupblog_subnav_item_slug', [ $this, 'filter_blog_slug' ], 20 );
 
-		// Override CommentPress Core "Title Page".
+		// Override CommentPress Core "Welcome Page".
 		add_filter( 'cp_nav_title_page_title', [ $this, 'filter_nav_title_page_title' ], 20 );
 
 		// Override the name of the button on the BuddyPress "blogs" screen.
@@ -1389,7 +1389,7 @@ class CommentPress_Multisite_BuddyPress {
 	}
 
 	/**
-	 * Override CommentPress Core "Title Page".
+	 * Override CommentPress Core "Welcome Page".
 	 *
 	 * @since 3.3
 	 *

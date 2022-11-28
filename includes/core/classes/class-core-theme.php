@@ -127,10 +127,10 @@ class CommentPress_Core_Theme {
 	public function register_hooks() {
 
 		// Acts when this plugin is activated.
-		add_action( 'commentpress/core/activated', [ $this, 'plugin_activated' ], 30 );
+		add_action( 'commentpress/core/activate', [ $this, 'plugin_activate' ], 30 );
 
 		// Acts when this plugin is deactivated.
-		add_action( 'commentpress/core/deactivated', [ $this, 'plugin_deactivated' ], 20 );
+		add_action( 'commentpress/core/deactivate', [ $this, 'plugin_deactivate' ], 20 );
 
 		// Enable CommentPress themes in Multisite optional scenario.
 		add_filter( 'network_allowed_themes', [ $this, 'allowed_themes' ] );
@@ -147,7 +147,7 @@ class CommentPress_Core_Theme {
 	 *
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
-	public function plugin_activated( $network_wide = false ) {
+	public function plugin_activate( $network_wide = false ) {
 
 		// Bail if plugin is network activated.
 		if ( $network_wide ) {
@@ -183,7 +183,7 @@ class CommentPress_Core_Theme {
 	 *
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
-	public function plugin_deactivated( $network_wide = false ) {
+	public function plugin_deactivate( $network_wide = false ) {
 
 		/*
 		$e = new \Exception();

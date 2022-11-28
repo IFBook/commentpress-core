@@ -415,7 +415,7 @@ class CommentPress_Core_Navigator {
 
 		}
 
-		// Check if the supplied Title Page is the homepage and this is it.
+		// Check if the supplied Welcome Page is the Front Page and this is it.
 		$title_id = $this->core->pages_legacy->is_title_page_the_homepage();
 		if ( $title_id !== false && is_front_page() ) {
 
@@ -466,7 +466,7 @@ class CommentPress_Core_Navigator {
 
 		// This must be the first Page.
 
-		// We still need to check if the supplied Title Page is the homepage.
+		// We still need to check if the supplied Welcome Page is the Front Page.
 		$title_id = $this->core->pages_legacy->is_title_page_the_homepage();
 		if ( $title_id !== false && ! is_front_page() ) {
 			return get_post( $title_id );
@@ -671,7 +671,7 @@ class CommentPress_Core_Navigator {
 		// Init excluded array with "Special Pages".
 		$excluded_pages = $this->core->db->setting_get( 'cp_special_pages' );
 
-		// If the supplied Title Page is the homepage.
+		// If the supplied Welcome Page is the Front Page.
 		$title_id = $this->core->pages_legacy->is_title_page_the_homepage();
 		if ( $title_id !== false ) {
 

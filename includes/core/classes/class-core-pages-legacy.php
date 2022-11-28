@@ -65,20 +65,20 @@ class CommentPress_Core_Pages_Legacy {
 	public function register_hooks() {
 
 		// Acts late when this plugin is activated.
-		add_action( 'commentpress/core/activated', [ $this, 'plugin_activated' ], 40 );
+		add_action( 'commentpress/core/activate', [ $this, 'plugin_activate' ], 40 );
 
 		// Act early when this plugin is deactivated.
-		add_action( 'commentpress/core/deactivated', [ $this, 'plugin_deactivated' ], 10 );
+		add_action( 'commentpress/core/deactivate', [ $this, 'plugin_deactivate' ], 10 );
+
+		// Intercept Welcome Page delete.
+		add_action( 'before_delete_post', [ $this, 'title_page_pre_delete' ], 10, 1 );
 
 		// Exclude Special Pages from listings.
-		add_filter( 'wp_list_pages_excludes', [ $this, 'exclude_special_pages' ], 10, 1 );
-		add_filter( 'parse_query', [ $this, 'exclude_special_pages_from_admin' ], 10, 1 );
+		add_filter( 'wp_list_pages_excludes', [ $this, 'special_pages_exclude' ], 10, 1 );
+		add_filter( 'parse_query', [ $this, 'special_pages_exclude_from_admin' ], 10, 1 );
 
-		// Modify all.
+		// Modify Page count in listings.
 		add_filter( 'views_edit-page', [ $this, 'update_page_counts_in_admin' ], 10, 1 );
-
-		// Intercept delete.
-		add_action( 'before_delete_post', [ $this, 'post_pre_delete' ], 10, 1 );
 
 	}
 
@@ -91,7 +91,7 @@ class CommentPress_Core_Pages_Legacy {
 	 *
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
-	public function plugin_activated( $network_wide = false ) {
+	public function plugin_activate( $network_wide = false ) {
 
 		// Bail if plugin is network activated.
 		if ( $network_wide ) {
@@ -123,7 +123,7 @@ class CommentPress_Core_Pages_Legacy {
 	 *
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
-	public function plugin_deactivated( $network_wide = false ) {
+	public function plugin_deactivate( $network_wide = false ) {
 
 		/*
 		$e = new \Exception();
@@ -143,14 +143,17 @@ class CommentPress_Core_Pages_Legacy {
 		*/
 
 		// Remove Special Pages.
-		$this->deactivate();
+		$this->special_pages_delete();
+
+		// Disable Welcome Page.
+		$this->title_page_disable();
 
 	}
 
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Creates the Special Pages.
+	 * Creates the Legacy Pages.
 	 *
 	 * @since 3.0
 	 */
@@ -164,559 +167,42 @@ class CommentPress_Core_Pages_Legacy {
 			return;
 		}
 
-		// Create Special Pages.
-		$this->create_special_pages();
+		// Create the Welcome Page.
+		$this->title_page_create();
+
+		// Create all Special Pages.
+		$this->special_pages_create();
 
 	}
 
 	/**
-	 * Removes the Special Pages.
+	 * Removes the Legacy Pages.
 	 *
 	 * @since 3.0
 	 */
 	public function deactivate() {
 
-		// Remove Special Pages.
-		$this->delete_special_pages();
+		// Remove all Special Pages.
+		$this->special_pages_delete();
+
+		// Disable the Welcome Page.
+		$this->title_page_disable();
 
 	}
 
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Test if a Page is a Special Page.
+	 * Creates the Welcome Page.
 	 *
 	 * @since 3.4
 	 *
-	 * @return bool $is_special_page True if a Special Page, false otherwise.
+	 * @return int $title_id The numeric ID of the Welcome Page.
 	 */
-	public function is_special_page() {
-
-		// Init flag.
-		$is_special_page = false;
-
-		// Access Post object.
-		global $post;
-
-		// Do we have one?
-		if ( ! is_object( $post ) ) {
-
-			// --<
-			return $is_special_page;
-
-		}
-
-		// Get Special Pages.
-		$special_pages = $this->core->db->setting_get( 'cp_special_pages', [] );
-
-		// Do we have a Special Page array?
-		if ( is_array( $special_pages ) && count( $special_pages ) > 0 ) {
-
-			// Is the current Page one?
-			if ( in_array( $post->ID, $special_pages ) ) {
-
-				// It is.
-				$is_special_page = true;
-
-			}
-
-		}
-
-		// --<
-		return $is_special_page;
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Exclude Special Pages from Page listings.
-	 *
-	 * @since 3.4
-	 *
-	 * @param array $excluded_array The existing list of excluded Pages.
-	 * @return array $excluded_array The modified list of excluded Pages.
-	 */
-	public function exclude_special_pages( $excluded_array ) {
-
-		// Get Special Pages array, if it's there.
-		$special_pages = $this->core->db->setting_get( 'cp_special_pages' );
-
-		// Do we have an array?
-		if ( is_array( $special_pages ) ) {
-
-			// Merge and make unique.
-			$excluded_array = array_unique( array_merge( $excluded_array, $special_pages ) );
-
-		}
-
-		// --<
-		return $excluded_array;
-
-	}
-
-	/**
-	 * Exclude Special Pages from Admin Page listings.
-	 *
-	 * @since 3.4
-	 *
-	 * @param array $query The existing Page query.
-	 */
-	public function exclude_special_pages_from_admin( $query ) {
-
-		global $pagenow, $post_type;
-
-		// Check admin location.
-		if ( is_admin() && $pagenow == 'edit.php' && $post_type == 'page' ) {
-
-			// Get Special Pages array, if it's there.
-			$special_pages = $this->core->db->setting_get( 'cp_special_pages' );
-
-			// Do we have an array?
-			if ( is_array( $special_pages ) && count( $special_pages ) > 0 ) {
-
-				// Modify query.
-				$query->query_vars['post__not_in'] = $special_pages;
-
-			}
-
-		}
-
-	}
-
-	/**
-	 * Page counts still need amending.
-	 *
-	 * @since 3.4
-	 *
-	 * @param array $vars The existing variables.
-	 * @return array $vars The modified list of variables.
-	 */
-	public function update_page_counts_in_admin( $vars ) {
-
-		global $pagenow, $post_type;
-
-		// Check admin location.
-		if ( is_admin() && $pagenow == 'edit.php' && $post_type == 'page' ) {
-
-			// Get Special Pages array, if it's there.
-			$special_pages = $this->core->db->setting_get( 'cp_special_pages' );
-
-			// Do we have an array?
-			if ( is_array( $special_pages ) ) {
-
-				/**
-				 * Data comes in like this:
-				 *
-				 * [all] => <a href='edit.php?post_type=page' class="current">All <span class="count">(8)</span></a>
-				 * [publish] => <a href='edit.php?post_status=publish&amp;post_type=page'>Published <span class="count">(8)</span></a>
-				 */
-
-				// Capture existing value enclosed in brackets.
-				preg_match( '/\((\d+)\)/', $vars['all'], $matches );
-
-				// Did we get a result?
-				if ( isset( $matches[1] ) ) {
-
-					// Subtract Special Page count.
-					$new_count = $matches[1] - count( $special_pages );
-
-					// Rebuild 'all' and 'publish' items.
-					$vars['all'] = preg_replace(
-						'/\(\d+\)/',
-						'(' . $new_count . ')',
-						$vars['all']
-					);
-
-				}
-
-				// Capture existing value enclosed in brackets.
-				preg_match( '/\((\d+)\)/', $vars['publish'], $matches );
-
-				// Did we get a result?
-				if ( isset( $matches[1] ) ) {
-
-					// Subtract Special Page count.
-					$new_count = $matches[1] - count( $special_pages );
-
-					// Rebuild 'all' and 'publish' items.
-					$vars['publish'] = preg_replace(
-						'/\(\d+\)/',
-						'(' . $new_count . ')',
-						$vars['publish']
-					);
-
-				}
-
-			}
-
-		}
-
-		// --<
-		return $vars;
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Create all Special Pages.
-	 *
-	 * @since 3.4
-	 */
-	public function create_special_pages() {
-
-		/*
-		 * One of the CommentPress Core themes MUST be active or WordPress will
-		 * fail to set the Page templates for the Pages that require them.
-		 *
-		 * Also, a User must be logged in for these Pages to be associated with them.
-		 */
-
-		// Get Special Pages array, if it's there.
-		$special_pages = $this->core->db->setting_get( 'cp_special_pages', [] );
-
-		// Create Welcome/Title Page, but don't add to Special Pages.
-		$welcome = $this->create_title_page();
-
-		// Create General Comments Page.
-		$special_pages[] = $this->create_general_comments_page();
-
-		// Create All Comments Page.
-		$special_pages[] = $this->create_all_comments_page();
-
-		// Create Comments by Author Page.
-		$special_pages[] = $this->create_comments_by_author_page();
-
-		// Create Blog Page.
-		$special_pages[] = $this->create_blog_page();
-
-		// Create Blog Archive Page.
-		$special_pages[] = $this->create_blog_archive_page();
-
-		// Create TOC Page -> a convenience, let's us define a logo as attachment.
-		$special_pages[] = $this->create_toc_page();
-
-		// Store the array of Page IDs that were created.
-		$this->core->db->setting_set( 'cp_special_pages', $special_pages );
-
-		// Save changes.
-		$this->core->db->settings_save();
-
-	}
-
-	/**
-	 * Create a particular Special Page.
-	 *
-	 * @since 3.4
-	 *
-	 * @param str $page The type of Special Page.
-	 * @return mixed $new_id If successful, the numeric ID of the new Page, false on failure.
-	 */
-	public function create_special_page( $page ) {
-
-		// Init.
-		$new_id = false;
-
-		// Get Special Pages array, if it's there.
-		$special_pages = $this->core->db->setting_get( 'cp_special_pages', [] );
-
-		// Switch by Page.
-		switch ( $page ) {
-
-			case 'title':
-
-				// Create Welcome/Title Page.
-				$new_id = $this->create_title_page();
-				break;
-
-			case 'general_comments':
-
-				// Create General Comments Page.
-				$new_id = $this->create_general_comments_page();
-				break;
-
-			case 'all_comments':
-
-				// Create All Comments Page.
-				$new_id = $this->create_all_comments_page();
-				break;
-
-			case 'comments_by_author':
-
-				// Create Comments by Author Page.
-				$new_id = $this->create_comments_by_author_page();
-				break;
-
-			case 'blog':
-
-				// Create Blog Page.
-				$new_id = $this->create_blog_page();
-				break;
-
-			case 'blog_archive':
-
-				// Create Blog Page.
-				$new_id = $this->create_blog_archive_page();
-				break;
-
-			case 'toc':
-
-				// Create TOC Page.
-				$new_id = $this->create_toc_page();
-				break;
-
-		}
-
-		// Add to Special Pages.
-		$special_pages[] = $new_id;
-
-		// Reset option.
-		$this->core->db->setting_set( 'cp_special_pages', $special_pages );
-
-		// Save changes.
-		$this->core->db->settings_save();
-
-		// --<
-		return $new_id;
-
-	}
-
-	/**
-	 * Delete Special Pages.
-	 *
-	 * @since 3.4
-	 *
-	 * @return bool $success True if Page deleted successfully, false otherwise.
-	 */
-	public function delete_special_pages() {
-
-		// Init success flag.
-		$success = true;
-
-		/*
-		 * Only delete Special Pages if we have one of the CommentPress Core
-		 * themes active because other themes may have a totally different way
-		 * of presenting the content of the Blog.
-		 */
-
-		// Retrieve data on Special Pages.
-		$special_pages = $this->core->db->setting_get( 'cp_special_pages', [] );
-
-		// If we have created any.
-		if ( is_array( $special_pages ) && count( $special_pages ) > 0 ) {
-
-			// Loop through them.
-			foreach ( $special_pages as $special_page ) {
-
-				// Bypass trash.
-				$force_delete = true;
-
-				// Try and delete each Page.
-				if ( ! wp_delete_post( $special_page, $force_delete ) ) {
-
-					// Oops, set success flag to false.
-					$success = false;
-
-				}
-
-			}
-
-			// Delete the corresponding options.
-			$this->core->db->setting_delete( 'cp_special_pages' );
-
-			$this->core->db->setting_delete( 'cp_blog_page' );
-			$this->core->db->setting_delete( 'cp_blog_archive_page' );
-			$this->core->db->setting_delete( 'cp_general_comments_page' );
-			$this->core->db->setting_delete( 'cp_all_comments_page' );
-			$this->core->db->setting_delete( 'cp_comments_by_page' );
-			$this->core->db->setting_delete( 'cp_toc_page' );
-
-			/*
-			// For now, keep Welcome Page - delete option when Page is deleted.
-			$this->core->db->setting_delete( 'cp_welcome_page' );
-			*/
-
-			// Save changes.
-			$this->core->db->settings_save();
-
-			// Reset WordPress internal Page references.
-			$this->core->db->option_wp_restore( 'show_on_front' );
-			$this->core->db->option_wp_restore( 'page_on_front' );
-			$this->core->db->option_wp_restore( 'page_for_posts' );
-
-		}
-
-		// --<
-		return $success;
-
-	}
-
-	/**
-	 * Delete a particular Special Page.
-	 *
-	 * @since 3.4
-	 *
-	 * @param str $page The type of Special Page to delete.
-	 * @return boolean $success True if succesfully deleted false otherwise.
-	 */
-	public function delete_special_page( $page ) {
-
-		// Init success flag.
-		$success = true;
-
-		/*
-		 * Only delete a Special Page if we have one of the CommentPress Core
-		 * themes active because other themes may have a totally different way
-		 * of presenting the content of the Blog.
-		 */
-
-		// Get id of Special Page.
-		switch ( $page ) {
-
-			case 'title':
-
-				// Set flag.
-				$flag = 'cp_welcome_page';
-
-				// Reset WordPress internal Page references.
-				$this->core->db->option_wp_restore( 'show_on_front' );
-				$this->core->db->option_wp_restore( 'page_on_front' );
-
-				break;
-
-			case 'general_comments':
-
-				// Set flag.
-				$flag = 'cp_general_comments_page';
-				break;
-
-			case 'all_comments':
-
-				// Set flag.
-				$flag = 'cp_all_comments_page';
-				break;
-
-			case 'comments_by_author':
-
-				// Set flag.
-				$flag = 'cp_comments_by_page';
-				break;
-
-			case 'blog':
-
-				// Set flag.
-				$flag = 'cp_blog_page';
-
-				// Reset WordPress internal Page reference.
-				$this->core->db->option_wp_restore( 'page_for_posts' );
-
-				break;
-
-			case 'blog_archive':
-
-				// Set flag.
-				$flag = 'cp_blog_archive_page';
-				break;
-
-			case 'toc':
-
-				// Set flag.
-				$flag = 'cp_toc_page';
-				break;
-
-		}
-
-		// Get Page ID.
-		$page_id = $this->core->db->setting_get( $flag );
-
-		// Kick out if it doesn't exist.
-		if ( ! $page_id ) {
-			return true;
-		}
-
-		// Delete option.
-		$this->core->db->setting_delete( $flag );
-
-		// Bypass trash.
-		$force_delete = true;
-
-		// Try and delete the Page.
-		if ( ! wp_delete_post( $page_id, $force_delete ) ) {
-
-			// Oops, set success flag to false.
-			$success = false;
-
-		}
-
-		// Retrieve data on Special Pages.
-		$special_pages = $this->core->db->setting_get( 'cp_special_pages', [] );
-
-		// Is it in our Special Pages array?
-		if ( in_array( $page_id, $special_pages ) ) {
-
-			// Remove Page ID from array.
-			$special_pages = array_diff( $special_pages, [ $page_id ] );
-
-			// Reset option.
-			$this->core->db->setting_set( 'cp_special_pages', $special_pages );
-
-		}
-
-		// Save changes.
-		$this->core->db->settings_save();
-
-		// --<
-		return $success;
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Checks if the CommentPress "Welcome Page" is the homepage.
-	 *
-	 * @since 3.0
-	 *
-	 * @return bool|int $is_home False if not homepage, the ID of the Welcome Page if true.
-	 */
-	public function is_title_page_the_homepage() {
-
-		// Only need to parse this once.
-		static $is_home;
-		if ( isset( $is_home ) ) {
-			return $is_home;
-		}
-
-		// Get Welcome Page ID.
-		$welcome_id = $this->core->db->setting_get( 'cp_welcome_page' );
-
-		// Get Front Page ID.
-		$page_on_front = $this->core->db->option_wp_get( 'page_on_front' );
-
-		// If the CommentPress Title Page exists and it's the Front Page.
-		if ( $welcome_id !== false && $page_on_front == $welcome_id ) {
-			$is_home = $welcome_id;
-		} else {
-			$is_home = false;
-		}
-
-		// --<
-		return $is_home;
-
-	}
-
-	/**
-	 * Create "title" Page.
-	 *
-	 * @since 3.4
-	 *
-	 * @return int $title_id The numeric ID of the Title Page.
-	 */
-	public function create_title_page() {
+	public function title_page_create() {
 
 		// Get the option, if it exists.
-		$page_exists = $this->core->db->setting_get( 'cp_welcome_page' );
+		$page_exists = $this->core->db->setting_get( 'cp_welcome_page', false );
 
 		// Don't create if we already have the option set.
 		if ( $page_exists !== false && is_numeric( $page_exists ) ) {
@@ -725,7 +211,7 @@ class CommentPress_Core_Pages_Legacy {
 			$welcome = get_post( $page_exists );
 
 			// Check that the Page exists.
-			if ( ! is_null( $welcome ) ) {
+			if ( $welcome instanceof WP_Post ) {
 
 				// Got it.
 
@@ -744,7 +230,7 @@ class CommentPress_Core_Pages_Legacy {
 
 		}
 
-		// Define Welcome/Title Page.
+		// Define Welcome Page.
 		$title = [
 			'post_status' => 'publish',
 			'post_type' => 'page',
@@ -764,7 +250,7 @@ class CommentPress_Core_Pages_Legacy {
 		$default_title = __( 'Title Page', 'commentpress-core' );
 
 		/**
-		 * Filters the Title Page title.
+		 * Filters the Welcome Page title.
 		 *
 		 * @since 3.4
 		 *
@@ -782,7 +268,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		);
 
 		/**
-		 * Filters the Title Page content.
+		 * Filters the Welcome Page content.
 		 *
 		 * @since 3.4
 		 *
@@ -791,7 +277,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$title['post_content'] = apply_filters( 'cp_title_page_content', $content );
 
 		/**
-		 * Filters the Title Page template.
+		 * Filters the Welcome Page template.
 		 *
 		 * @since 3.4
 		 *
@@ -810,7 +296,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$this->core->db->option_wp_backup( 'page_on_front', $title_id );
 
 		/**
-		 * Fires when the Title Page has been created.
+		 * Fires when the Welcome Page has been created.
 		 *
 		 * Used internally by:
 		 *
@@ -828,13 +314,619 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	}
 
 	/**
+	 * Deletes the Welcome Page setting when the Welcome Page is deleted.
+	 *
+	 * @since 3.4
+	 * @since 4.0 Renamed and moved to this class.
+	 *
+	 * @param int $post_id The numeric ID of the Post or Revision.
+	 */
+	public function title_page_pre_delete( $post_id ) {
+
+		// If no Post, kick out.
+		if ( ! $post_id ) {
+			return;
+		}
+
+		// Bail if it's not our Welcome Page.
+		if ( $post_id !== (int) $this->core->db->setting_get( 'cp_welcome_page' ) ) {
+			return;
+		}
+
+		// Delete option.
+		$this->core->db->setting_delete( 'cp_welcome_page' );
+
+		// Save changes.
+		$this->core->db->settings_save();
+
+	}
+
+	/**
+	 * Deletes the Welcome Page.
+	 *
+	 * @since 4.0
+	 *
+	 * @return bool $success True if succesfully deleted, false otherwise.
+	 */
+	public function title_page_delete() {
+
+		// Get the ID if it exists.
+		$existing_id = $this->core->db->setting_get( 'cp_welcome_page', false );
+		if ( empty( $existing_id ) ) {
+			return false;
+		}
+
+		// Try and delete the Page, bypassing trash.
+		if ( ! wp_delete_post( $existing_id, $force_delete = true ) ) {
+			return false;
+		}
+
+		// Make sure setting is deleted.
+		if ( $this->core->db->setting_exists( 'cp_welcome_page' ) ) {
+			$this->core->db->setting_delete( 'cp_welcome_page' );
+			$this->core->db->settings_save();
+		}
+
+		// Reset WordPress internal Page references.
+		$this->core->db->option_wp_restore( 'show_on_front' );
+		$this->core->db->option_wp_restore( 'page_on_front' );
+
+		// --<
+		return true;
+
+	}
+
+	/**
+	 * Enables the Welcome Page.
+	 *
+	 * @since 4.0
+	 *
+	 * @return int|bool $post_id The numeric ID of the Welcome Page, or false on failure.
+	 */
+	public function title_page_enable() {
+
+		// Get the ID if it exists.
+		$existing_id = $this->core->db->setting_get( 'cp_welcome_page', false );
+		if ( empty( $existing_id ) ) {
+			return false;
+		}
+
+		// Define args to update the Post.
+		$args = [
+			'ID' => $existing_id,
+			'post_status' => 'publish',
+		];
+
+		// Update the Post.
+		$post_id = wp_update_post( $args, true );
+
+		// Bail on failure.
+		if ( is_wp_error( $post_id ) ) {
+			return false;
+		}
+
+		// --<
+		return $post_id;
+
+	}
+
+	/**
+	 * Disables the Welcome Page.
+	 *
+	 * The Welcome Page is not deleted in case people have modified it.
+	 *
+	 * The "cp_welcome_page" setting is deleted if the Welcome Page is maunally
+	 * deleted.
+	 *
+	 * @since 4.0
+	 *
+	 * @return int|bool $post_id The numeric ID of the Welcome Page, or false on failure.
+	 */
+	public function title_page_disable() {
+
+		// Get the ID if it exists.
+		$existing_id = $this->core->db->setting_get( 'cp_welcome_page', false );
+		if ( empty( $existing_id ) ) {
+			return false;
+		}
+
+		// Define args to update the Post.
+		$args = [
+			'ID' => $existing_id,
+			'post_status' => 'draft',
+		];
+
+		// Update the Post.
+		$post_id = wp_update_post( $args, true );
+
+		// Bail on failure.
+		if ( is_wp_error( $post_id ) ) {
+			return false;
+		}
+
+		// Reset WordPress internal Page references.
+		$this->core->db->option_wp_restore( 'show_on_front' );
+		$this->core->db->option_wp_restore( 'page_on_front' );
+
+		// --<
+		return $post_id;
+
+	}
+
+	/**
+	 * Checks if the CommentPress "Welcome Page" is the Front Page.
+	 *
+	 * @since 3.0
+	 *
+	 * @return bool|int $is_home False if not Front Page, the ID of the Welcome Page if true.
+	 */
+	public function is_title_page_the_homepage() {
+
+		// Only need to parse this once.
+		static $is_home;
+		if ( isset( $is_home ) ) {
+			return $is_home;
+		}
+
+		// Get Welcome Page ID.
+		$welcome_id = $this->core->db->setting_get( 'cp_welcome_page' );
+
+		// Get Front Page ID.
+		$page_on_front = $this->core->db->option_wp_get( 'page_on_front' );
+
+		// If the Welcome Page exists and it's the Front Page.
+		if ( $welcome_id !== false && $page_on_front == $welcome_id ) {
+			$is_home = $welcome_id;
+		} else {
+			$is_home = false;
+		}
+
+		// --<
+		return $is_home;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Creates all Special Pages.
+	 *
+	 * @since 3.4
+	 */
+	public function special_pages_create() {
+
+		/*
+		 * One of the CommentPress Core themes MUST be active or WordPress will
+		 * fail to set the Page templates for the Pages that require them.
+		 *
+		 * Also, a User must be logged in for these Pages to be associated with them.
+		 *
+		 * TODO: Remove the Page templates and use "the_content" filter instead.
+		 */
+
+		// Get Special Pages array, if it's there.
+		$special_pages = $this->core->db->setting_get( 'cp_special_pages', [] );
+
+		// Create General Comments Page.
+		$general_comments_page_id = $this->general_comments_page_create();
+		if ( false !== $general_comments_page_id ) {
+			$special_pages[] = $general_comments_page_id;
+		}
+
+		// Create All Comments Page.
+		$all_comments_page_id = $this->all_comments_page_create();
+		if ( false !== $all_comments_page_id ) {
+			$special_pages[] = $all_comments_page_id;
+		}
+
+		// Create Comments by Author Page.
+		$comments_by_author_page_id = $this->comments_by_author_page_create();
+		if ( false !== $comments_by_author_page_id ) {
+			$special_pages[] = $comments_by_author_page_id;
+		}
+
+		// Create Blog Page.
+		$blog_page_id = $this->blog_page_create();
+		if ( false !== $blog_page_id ) {
+			$special_pages[] = $blog_page_id;
+		}
+
+		// Create Blog Archive Page.
+		$blog_archive_page_id = $this->blog_archive_page_create();
+		if ( false !== $blog_archive_page_id ) {
+			$special_pages[] = $blog_archive_page_id;
+		}
+
+		// Create TOC Page -> a convenience, let's us define a logo as attachment.
+		$toc_page_id = $this->toc_page_create();
+		if ( false !== $toc_page_id ) {
+			$special_pages[] = $toc_page_id;
+		}
+
+		// Store the array of Page IDs that were created.
+		$this->core->db->setting_set( 'cp_special_pages', $special_pages );
+
+		// Save changes.
+		$this->core->db->settings_save();
+
+	}
+
+	/**
+	 * Deletes all Special Pages.
+	 *
+	 * @since 3.4
+	 */
+	public function special_pages_delete() {
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Try to retrieve data for Special Pages.
+		$special_pages = $this->core->db->setting_get( 'cp_special_pages', [] );
+		if ( empty( $special_pages ) ) {
+			return;
+		}
+
+		// Build an array of the individual Special Page IDs, keyed by "name".
+		$special_pages_keyed = [
+			'cp_general_comments_page' => $this->core->db->setting_get( 'cp_general_comments_page', false ),
+			'cp_all_comments_page' => $this->core->db->setting_get( 'cp_all_comments_page', false ),
+			'cp_comments_by_page' => $this->core->db->setting_get( 'cp_comments_by_page', false ),
+			'cp_blog_page' => $this->core->db->setting_get( 'cp_blog_page', false ),
+			'cp_blog_archive_page' => $this->core->db->setting_get( 'cp_blog_archive_page', false ),
+			'cp_toc_page' => $this->core->db->setting_get( 'cp_toc_page', false ),
+		];
+
+		// Try and delete each Page, bypassing trash.
+		foreach ( $special_pages as $special_page_id ) {
+
+			// Skip if this Special Page is somehow missing.
+			$name = array_search( $special_page_id, $special_pages_keyed );
+			if ( false === $name ) {
+				continue;
+			}
+
+			// Try to delete the Special Page, bypassing trash.
+			if ( ! wp_delete_post( $special_page_id, $force_delete = true ) ) {
+				continue;
+			}
+
+			// Delete the corresponding individual option.
+			$this->core->db->setting_delete( $name );
+
+			// For the Blog Page, restore the original WordPress Blog Page.
+			if ( 'cp_blog_page' === $name ) {
+				$this->core->db->option_wp_restore( 'page_for_posts' );
+			}
+
+		}
+
+		// Delete the corresponding options.
+		$this->core->db->setting_delete( 'cp_special_pages' );
+
+		// Save changes.
+		$this->core->db->settings_save();
+
+	}
+
+	/**
+	 * Excludes all Special Pages from Page listings.
+	 *
+	 * @since 3.4
+	 *
+	 * @param array $excluded_array The existing list of excluded Pages.
+	 * @return array $excluded_array The modified list of excluded Pages.
+	 */
+	public function special_pages_exclude( $excluded_array ) {
+
+		// Get Special Pages array, if it's there.
+		$special_pages = $this->core->db->setting_get( 'cp_special_pages' );
+
+		// Merge and make unique if we have an array.
+		if ( ! empty( $special_pages ) ) {
+			$excluded_array = array_unique( array_merge( $excluded_array, $special_pages ) );
+		}
+
+		// --<
+		return $excluded_array;
+
+	}
+
+	/**
+	 * Excludes all Special Pages from Admin Page listings.
+	 *
+	 * @since 3.4
+	 *
+	 * @param array $query The existing Page query.
+	 */
+	public function special_pages_exclude_from_admin( $query ) {
+
+		global $pagenow, $post_type;
+
+		// Check admin location.
+		if ( is_admin() && $pagenow == 'edit.php' && $post_type == 'page' ) {
+
+			// Get Special Pages array, if it's there.
+			$special_pages = $this->core->db->setting_get( 'cp_special_pages' );
+
+			// Modify query if we have an array.
+			if ( ! empty( $special_pages ) ) {
+				$query->query_vars['post__not_in'] = $special_pages;
+			}
+
+		}
+
+	}
+
+	/**
+	 * Updates Page counts in Page listings.
+	 *
+	 * @since 3.4
+	 *
+	 * @param array $vars The existing variables.
+	 * @return array $vars The modified list of variables.
+	 */
+	public function update_page_counts_in_admin( $vars ) {
+
+		global $pagenow, $post_type;
+
+		// Bail if not in admin.
+		if ( ! is_admin() ) {
+			return $vars;
+		}
+
+		// Bail if not Page listings screen.
+		if ( $pagenow !== 'edit.php' || $post_type !== 'page' ) {
+			return $vars;
+		}
+
+		// Get Special Pages array, if it's there.
+		$special_pages = $this->core->db->setting_get( 'cp_special_pages', [] );
+		if ( empty( $special_pages ) ) {
+			return $vars;
+		}
+
+		/**
+		 * Data comes in like this:
+		 *
+		 * [all] => <a href='edit.php?post_type=page' class="current">All <span class="count">(8)</span></a>
+		 * [publish] => <a href='edit.php?post_status=publish&amp;post_type=page'>Published <span class="count">(8)</span></a>
+		 */
+
+		// Capture existing value enclosed in brackets.
+		preg_match( '/\((\d+)\)/', $vars['all'], $matches );
+
+		// Did we get a result?
+		if ( isset( $matches[1] ) ) {
+
+			// Subtract Special Page count.
+			$new_count = (int) $matches[1] - count( $special_pages );
+
+			// Rebuild 'all' items.
+			$vars['all'] = preg_replace( '/\(\d+\)/', '(' . $new_count . ')', $vars['all'] );
+
+		}
+
+		// Capture existing value enclosed in brackets.
+		preg_match( '/\((\d+)\)/', $vars['publish'], $matches );
+
+		// Did we get a result?
+		if ( isset( $matches[1] ) ) {
+
+			// Subtract Special Page count.
+			$new_count = (int) $matches[1] - count( $special_pages );
+
+			// Rebuild 'publish' items.
+			$vars['publish'] = preg_replace( '/\(\d+\)/', '(' . $new_count . ')', $vars['publish'] );
+
+		}
+
+		// --<
+		return $vars;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Creates a given Special Page.
+	 *
+	 * @since 3.4
+	 *
+	 * @param str $page The type of Special Page.
+	 * @return mixed $new_id The numeric ID of the new Page, or false on failure.
+	 */
+	public function special_page_create( $page ) {
+
+		// Init.
+		$new_id = false;
+
+		// Get Special Pages array, if it's there.
+		$special_pages = $this->core->db->setting_get( 'cp_special_pages', [] );
+
+		// Switch by Page.
+		switch ( $page ) {
+
+			case 'title':
+
+				// Create Welcome Page.
+				$new_id = $this->title_page_create();
+				break;
+
+			case 'general_comments':
+
+				// Create General Comments Page.
+				$new_id = $this->general_comments_page_create();
+				break;
+
+			case 'all_comments':
+
+				// Create All Comments Page.
+				$new_id = $this->all_comments_page_create();
+				break;
+
+			case 'comments_by_author':
+
+				// Create Comments by Author Page.
+				$new_id = $this->comments_by_author_page_create();
+				break;
+
+			case 'blog':
+
+				// Create Blog Page.
+				$new_id = $this->blog_page_create();
+				break;
+
+			case 'blog_archive':
+
+				// Create Blog Page.
+				$new_id = $this->blog_archive_page_create();
+				break;
+
+			case 'toc':
+
+				// Create TOC Page.
+				$new_id = $this->toc_page_create();
+				break;
+
+		}
+
+		// Add to Special Pages settings array.
+		$special_pages[] = $new_id;
+
+		// Reset option.
+		$this->core->db->setting_set( 'cp_special_pages', $special_pages );
+
+		// Save changes.
+		$this->core->db->settings_save();
+
+		// --<
+		return $new_id;
+
+	}
+
+	/**
+	 * Deletes a given Special Page.
+	 *
+	 * @since 3.4
+	 *
+	 * @param str $page The type of Special Page to delete.
+	 * @return bool True if succesfully deleted, false otherwise.
+	 */
+	public function special_page_delete( $page ) {
+
+		// Get "name" of Special Page.
+		switch ( $page ) {
+			case 'general_comments':
+				$flag = 'cp_general_comments_page';
+				break;
+			case 'all_comments':
+				$flag = 'cp_all_comments_page';
+				break;
+			case 'comments_by_author':
+				$flag = 'cp_comments_by_page';
+				break;
+			case 'blog':
+				$flag = 'cp_blog_page';
+				break;
+			case 'blog_archive':
+				$flag = 'cp_blog_archive_page';
+				break;
+			case 'toc':
+				$flag = 'cp_toc_page';
+				break;
+		}
+
+		// Try to get the Page ID.
+		$page_id = $this->core->db->setting_get( $flag );
+		if ( empty( $page_id ) ) {
+			return true;
+		}
+
+		// Try to delete the Page, bypassing trash.
+		if ( ! wp_delete_post( $page_id, $force_delete = true ) ) {
+			return false;
+		}
+
+		// Delete singular setting.
+		$this->core->db->setting_delete( $flag );
+
+		// For the Blog Page, restore the original WordPress Blog Page.
+		if ( 'cp_blog_page' === $flag ) {
+			$this->core->db->option_wp_restore( 'page_for_posts' );
+		}
+
+		// Retrieve data on Special Pages.
+		$special_pages = $this->core->db->setting_get( 'cp_special_pages', [] );
+
+		// Is it in our Special Pages array?
+		if ( in_array( $page_id, $special_pages ) ) {
+
+			// Remove Page ID from array.
+			$special_pages = array_diff( $special_pages, [ $page_id ] );
+
+			// Overwrite setting.
+			$this->core->db->setting_set( 'cp_special_pages', $special_pages );
+
+		}
+
+		// Save changes.
+		$this->core->db->settings_save();
+
+		// Success.
+		return true;
+
+	}
+
+	/**
+	 * Tests if the current Page is a Special Page.
+	 *
+	 * @since 3.4
+	 *
+	 * @return bool True if Special Page, false otherwise.
+	 */
+	public function is_special_page() {
+
+		// Access Post object.
+		global $post;
+
+		// Bail if we have no Post object.
+		if ( ! $post ) {
+			return false;
+		}
+
+		// Try to get the Special Pages.
+		$special_pages = $this->core->db->setting_get( 'cp_special_pages', [] );
+		if ( empty( $special_pages ) ) {
+			return false;
+		}
+
+		// Bail if the current Page is not a Special Page.
+		if ( ! in_array( $post->ID, $special_pages ) ) {
+			return false;
+		}
+
+		// Success.
+		return true;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
 	 * Create "General Comments" Page.
 	 *
 	 * @since 3.4
 	 *
-	 * @return int $general_comments_id The numeric ID of the "General Comments" Page.
+	 * @return int|bool $general_comments_id The numeric ID of the "General Comments" Page, or false on failure.
 	 */
-	public function create_general_comments_page() {
+	public function general_comments_page_create() {
 
 		// Define General Comments Page.
 		$general_comments = [
@@ -888,6 +980,11 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Insert the Post into the database.
 		$general_comments_id = wp_insert_post( $general_comments );
 
+		// Bail on error.
+		if ( is_wp_error( $general_comments_id ) ) {
+			return false;
+		}
+
 		// Store the option.
 		$this->core->db->setting_set( 'cp_general_comments_page', $general_comments_id );
 
@@ -903,7 +1000,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @return int $all_comments_id The numeric ID of the "All Comments" Page.
 	 */
-	public function create_all_comments_page() {
+	public function all_comments_page_create() {
 
 		// Define All Comments Page.
 		$all_comments = [
@@ -957,6 +1054,11 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Insert the Post into the database.
 		$all_comments_id = wp_insert_post( $all_comments );
 
+		// Bail on error.
+		if ( is_wp_error( $all_comments_id ) ) {
+			return false;
+		}
+
 		// Store the option.
 		$this->core->db->setting_set( 'cp_all_comments_page', $all_comments_id );
 
@@ -972,7 +1074,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @return int $group_id The numeric ID of the "Comments by Author" Page.
 	 */
-	public function create_comments_by_author_page() {
+	public function comments_by_author_page_create() {
 
 		// Define Comments by Author Page.
 		$group = [
@@ -1026,6 +1128,11 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Insert the Post into the database.
 		$group_id = wp_insert_post( $group );
 
+		// Bail on error.
+		if ( is_wp_error( $group_id ) ) {
+			return false;
+		}
+
 		// Store the option.
 		$this->core->db->setting_set( 'cp_comments_by_page', $group_id );
 
@@ -1041,7 +1148,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @return int $blog_id The numeric ID of the "Blog" Page.
 	 */
-	public function create_blog_page() {
+	public function blog_page_create() {
 
 		// Define Blog Page.
 		$blog = [
@@ -1095,6 +1202,11 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Insert the Post into the database.
 		$blog_id = wp_insert_post( $blog );
 
+		// Bail on error.
+		if ( is_wp_error( $blog_id ) ) {
+			return false;
+		}
+
 		// Store the option.
 		$this->core->db->setting_set( 'cp_blog_page', $blog_id );
 
@@ -1113,7 +1225,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @return int $blog_id The numeric ID of the "Blog Archive" Page.
 	 */
-	public function create_blog_archive_page() {
+	public function blog_archive_page_create() {
 
 		// Define Blog Archive Page.
 		$blog = [
@@ -1167,6 +1279,11 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Insert the Post into the database.
 		$blog_id = wp_insert_post( $blog );
 
+		// Bail on error.
+		if ( is_wp_error( $blog_id ) ) {
+			return false;
+		}
+
 		// Store the option.
 		$this->core->db->setting_set( 'cp_blog_archive_page', $blog_id );
 
@@ -1184,7 +1301,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @return int $toc_id The numeric ID of the "Table of Contents" Page.
 	 */
-	public function create_toc_page() {
+	public function toc_page_create() {
 
 		// Define TOC Page.
 		$toc = [
@@ -1236,6 +1353,11 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Insert the Post into the database.
 		$toc_id = wp_insert_post( $toc );
 
+		// Bail on error.
+		if ( is_wp_error( $toc_id ) ) {
+			return false;
+		}
+
 		// Store the option.
 		$this->core->db->setting_set( 'cp_toc_page', $toc_id );
 
@@ -1247,7 +1369,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Gets a link to a Special Page.
+	 * Gets the link to a given Special Page.
 	 *
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
@@ -1263,15 +1385,13 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Init.
 		$link = '';
 
-		// Get Page ID.
+		// Try to get the Page ID.
 		$page_id = $this->core->db->setting_get( $page_type );
-
-		// Bail if we have no Page.
 		if ( empty( $page_id ) ) {
 			return $link;
 		}
 
-		// Get Page.
+		// Get Page object.
 		$page = get_post( $page_id );
 
 		// Is it the current Page?
@@ -1348,7 +1468,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	}
 
 	/**
-	 * Gets the URL for a Special Page.
+	 * Gets the URL for a given Special Page.
 	 *
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
@@ -1361,52 +1481,17 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Init.
 		$url = '';
 
-		// Get Page ID.
+		// Try to get the Page ID.
 		$page_id = $this->core->db->setting_get( $page_type );
-
-		// Bail if we have no Page.
 		if ( empty( $page_id ) ) {
 			return $url;
 		}
 
-		// Get Page.
-		$page = get_post( $page_id );
-
 		// Get link.
-		$url = get_permalink( $page );
+		$url = get_permalink( $page_id );
 
 		// --<
 		return $url;
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Check for data integrity of other Posts when one is deleted.
-	 *
-	 * @since 3.4
-	 * @since 4.0 Renamed and moved to this class.
-	 *
-	 * @param int $post_id The numeric ID of the Post or Revision.
-	 */
-	public function post_pre_delete( $post_id ) {
-
-		// If no Post, kick out.
-		if ( ! $post_id ) {
-			return;
-		}
-
-		// If it's our Welcome Page.
-		if ( $post_id === (int) $this->core->db->setting_get( 'cp_welcome_page' ) ) {
-
-			// Delete option.
-			$this->core->db->setting_delete( 'cp_welcome_page' );
-
-			// Save changes.
-			$this->core->db->settings_save();
-
-		}
 
 	}
 

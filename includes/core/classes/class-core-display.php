@@ -818,18 +818,18 @@ HELPTEXT;
 		// Get Front Page.
 		$page_on_front = $this->core->db->option_wp_get( 'page_on_front' );
 
-		// Print link to Title Page, if we have one and it's the Front Page.
+		// Print link to Welcome Page, if we have one and it's the Front Page.
 		if ( $welcome_id !== false && $page_on_front == $welcome_id ) {
 
-			// Define Title Page.
+			// Define Welcome Page.
 			$title_page_title = get_the_title( $welcome_id );
 
 			/**
-			 * Filters the Title Page title.
+			 * Filters the Welcome Page title.
 			 *
 			 * @since 3.4
 			 *
-			 * @param string $title_page_title The default Title Page title.
+			 * @param string $title_page_title The default Welcome Page title.
 			 */
 			$title_page_title = apply_filters( 'cp_title_page_title', $title_page_title );
 
@@ -862,7 +862,7 @@ HELPTEXT;
 			$exclude = [];
 		}
 
-		// Exclude Title Page, if we have one.
+		// Exclude Welcome Page, if we have one.
 		if ( $welcome_id !== false ) {
 			$exclude[] = $welcome_id;
 		}

@@ -29,6 +29,28 @@ class CommentPress_Multisite_Sites {
 	public $multisite;
 
 	/**
+	 * "CommentPress Sites on the Network" settings key.
+	 *
+	 * This setting allows us to track the Sites on the Network that have CommentPress Core
+	 * enabled on them.
+	 *
+	 * Each Site where CommentPress Core is active will register its Site ID in this array
+	 * whether the plugin is network activated or optionally activated.
+	 *
+	 * This allows us to retrieve that list of IDs in "uninstall.php" when the plugin is
+	 * being deleted. This is, of course, much more efficient than iterating through all
+	 * sites on the Network.
+	 *
+	 * TODO: Upgrade this functionality for WordPress Multi-Network installs once it is
+	 * working on vanilla WordPress Multisite installs.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var str $key_sites The settings key for the array of "CommentPress Sites enabled on the Network" setting.
+	 */
+	public $key_sites = 'sites';
+
+	/**
 	 * "CommentPress Core enabled on all Sites" settings key.
 	 *
 	 * @since 4.0
@@ -38,13 +60,13 @@ class CommentPress_Multisite_Sites {
 	public $key_forced = 'cpmu_force_commentpress';
 
 	/**
-	 * "Default Title Page content" settings key.
+	 * "Default Welcome Page content" settings key.
 	 *
 	 * Not implemented.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $key_title_page_content The settings key for the "Default Title Page content" setting.
+	 * @var str $key_title_page_content The settings key for the "Default Welcome Page content" setting.
 	 */
 	public $key_title_page_content = 'cpmu_title_page_content';
 
@@ -93,6 +115,36 @@ class CommentPress_Multisite_Sites {
 	 */
 	public function register_hooks() {
 
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Acts when multisite is activated.
+		add_action( 'commentpress/multisite/activate', [ $this, 'plugin_activate' ], 20 );
+
+		// Act when multisite is deactivated.
+		add_action( 'commentpress/multisite/deactivate', [ $this, 'plugin_deactivate' ], 10 );
+
+		// Act when plugin is network-active and core is "soft activated".
+		add_action( 'commentpress/multisite/site/core/activated/after', [ $this, 'core_site_id_add' ], 10, 2 );
+
+		// Act when plugin is network-active and core is "soft deactivated".
+		add_action( 'commentpress/multisite/site/core/deactivated/after', [ $this, 'core_site_id_remove' ], 10 );
+
+		// Act when plugin is not network-active and core is "optionally activated".
+		add_action( 'commentpress/core/activate', [ $this, 'core_site_activated' ], 50 );
+
+		// Act when plugin is not network-active and core is "optionally deactivated".
+		add_action( 'commentpress/core/deactivate', [ $this, 'core_site_deactivated' ], 50 );
+
+		// Reconcile core Site ID when "optionally activated".
+		add_action( 'plugins_loaded', [ $this, 'core_site_reconcile' ], 20 );
+
 		// Add our option to the Network Settings "General Settings" metabox.
 		add_action( 'commentpress/multisite/settings/network/metabox/general/after', [ $this, 'metabox_settings_get' ] );
 
@@ -100,7 +152,7 @@ class CommentPress_Multisite_Sites {
 		add_action( 'commentpress/multisite/settings/network/save/before', [ $this, 'settings_save' ] );
 
 		// Filter the default multisite settings.
-		add_filter( 'commentpress/multisite/settings/defaults', [ $this, 'settings_get_default' ] );
+		add_filter( 'commentpress/multisite/settings/defaults', [ $this, 'settings_get_defaults' ] );
 
 		// ---------------------------------------------------------------------
 
@@ -121,7 +173,7 @@ class CommentPress_Multisite_Sites {
 		add_action( 'wpmu_new_blog', [ $this, 'wpmu_new_blog' ], 12, 6 );
 
 		/*
-		// Override Title Page content.
+		// Override Welcome Page content.
 		add_filter( 'cp_title_page_content', [ $this, 'title_page_content_get' ] );
 		*/
 
@@ -130,19 +182,293 @@ class CommentPress_Multisite_Sites {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Adds our settings to the Network Settings "General Settings" metabox.
+	 * Runs when the plugin is activated.
+	 *
+	 * @since 4.0
+	 *
+	 * @param bool $network_wide True if network-activated, false otherwise.
+	 */
+	public function plugin_activate( $network_wide = false ) {
+
+		// Bail if plugin is not network activated.
+		if ( ! $network_wide ) {
+			return;
+		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'network_wide' => $network_wide ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Activate all CommentPress-enabled Sites when deactivating.
+		$this->core_sites_activate();
+
+	}
+
+	/**
+	 *  Runs when the plugin is deactivated.
+	 *
+	 * @since 4.0
+	 *
+	 * @param bool $network_wide True if network-activated, false otherwise.
+	 */
+	public function plugin_deactivate( $network_wide = false ) {
+
+		// Bail if plugin is not network activated.
+		if ( ! $network_wide ) {
+			return;
+		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'network_wide' => $network_wide ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Deactivate all CommentPress-enabled Sites when deactivating.
+		$this->core_sites_deactivate();
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Activates all CommentPress-enabled Sites.
 	 *
 	 * @since 4.0
 	 */
-	public function metabox_settings_get() {
+	public function core_sites_activate() {
 
-		// Get settings.
-		$forced = $this->multisite->db->setting_get( $this->key_forced );
+		// Try to get the CommentPress-enabled Site IDs.
+		$site_ids = $this->core_site_ids_get();
+		if ( empty( $site_ids ) ) {
+			return;
+		}
 
-		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-sites-settings-network.php';
+		// Remove "soft activated" callback because we want to keep the setting as is.
+		remove_action( 'commentpress/multisite/site/core/activated/after', [ $this, 'core_site_id_remove' ], 10 );
+
+		// Handle each Site in turn.
+		foreach ( $site_ids as $site_id ) {
+
+			// Switch and run core activation hook.
+			switch_to_blog( $site_id );
+			do_action( 'commentpress/core/activate', $network_wide = false );
+
+		}
+
+		// Restore.
+		restore_current_blog();
+
+		// Restore "soft activated" callback.
+		add_action( 'commentpress/multisite/site/core/activated/after', [ $this, 'core_site_id_remove' ], 10 );
 
 	}
+
+	/**
+	 * Deactivates all CommentPress-enabled Sites.
+	 *
+	 * @since 4.0
+	 */
+	public function core_sites_deactivate() {
+
+		// Try to get the CommentPress-enabled Site IDs.
+		$site_ids = $this->core_site_ids_get();
+		if ( empty( $site_ids ) ) {
+			return;
+		}
+
+		// Remove "soft deactivated" callback because we want to keep the setting as is.
+		remove_action( 'commentpress/multisite/site/core/deactivated/after', [ $this, 'core_site_id_remove' ], 10 );
+
+		// Handle each Site in turn.
+		foreach ( $site_ids as $site_id ) {
+
+			// Switch and run core deactivation hook.
+			switch_to_blog( $site_id );
+			do_action( 'commentpress/core/deactivate', $network_wide = false );
+
+		}
+
+		// Restore.
+		restore_current_blog();
+
+		// Restore "soft deactivated" callback.
+		add_action( 'commentpress/multisite/site/core/deactivated/after', [ $this, 'core_site_id_remove' ], 10 );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Stores the Site ID to the array of Site IDs where CommentPress Core "optionally deactivated".
+	 *
+	 * @since 4.0
+	 *
+	 * @param bool $network_wide True if network-activated, false otherwise.
+	 */
+	public function core_site_activated( $network_wide = false ) {
+
+		// Get the current Site ID.
+		$site_id = get_current_blog_id();
+
+		// Set it in a Site Option for later reconciliation.
+		update_site_option( 'commentpress_multisite_core_site_id', $site_id );
+
+	}
+
+	/**
+	 * Removes the Site ID from the array of Site IDs where CommentPress Core "optionally deactivated".
+	 *
+	 * @since 4.0
+	 *
+	 * @param bool $network_wide True if network-activated, false otherwise.
+	 */
+	public function core_site_deactivated( $network_wide = false ) {
+
+		// Get the current Site ID.
+		$site_id = get_current_blog_id();
+
+		// Remove it from the setting.
+		$this->core_site_id_remove( $site_id );
+
+	}
+
+	/**
+	 * Adds the Site ID to the array of Site IDs where CommentPress Core "optionally deactivated".
+	 *
+	 * @since 4.0
+	 *
+	 * @param bool $network_wide True if network-activated, false otherwise.
+	 */
+	public function core_site_reconcile() {
+
+		// Get Site ID from Site Option for reconciliation.
+		$site_id = get_site_option( 'commentpress_multisite_core_site_id' );
+		if ( empty( $site_id ) ) {
+			return;
+		}
+
+		// Add it to the setting.
+		$this->core_site_id_add( $site_id );
+
+		// Delete the Site Option.
+		delete_site_option( 'commentpress_multisite_core_site_id' );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the array of Site IDs where CommentPress Core is active.
+	 *
+	 * @since 4.0
+	 *
+	 * @return array $site_ids The array of numeric Site IDs.
+	 */
+	public function core_site_ids_get() {
+
+		// Get the current Site IDs setting.
+		$site_ids = $this->multisite->db->setting_get( $this->key_sites, [] );
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'site_ids-GET' => $site_ids,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// --<
+		return $site_ids;
+
+	}
+
+	/**
+	 * Sets the array of Site IDs where CommentPress Core is active.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $site_ids The array of numeric Site IDs.
+	 */
+	public function core_site_ids_set( $site_ids ) {
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'site_ids-SET' => $site_ids,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Set the Site IDs setting.
+		$this->multisite->db->setting_set( $this->key_sites, $site_ids );
+
+	}
+
+	/**
+	 * Adds a Site ID to the "CommentPress Sites on the Network" array.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $site_id The numeric ID of the Site.
+	 * @param str $context The activation context.
+	 */
+	public function core_site_id_add( $site_id, $context = '' ) {
+
+		// Get the current Site IDs.
+		$site_ids = $this->core_site_ids_get();
+
+		// Bail if already present.
+		if ( in_array( $site_id, $site_ids ) ) {
+			return;
+		}
+
+		// Add the Site ID and save setting.
+		$site_ids[] = $site_id;
+		$this->core_site_ids_set( $site_ids );
+		$this->multisite->db->settings_save();
+
+	}
+
+	/**
+	 * Removes a Site ID from the "CommentPress Sites on the Network" array.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $site_id The numeric ID of the Site.
+	 */
+	public function core_site_id_remove( $site_id ) {
+
+		// Get the current Site IDs.
+		$site_ids = $this->core_site_ids_get();
+
+		// Bail if not already present.
+		if ( ! in_array( $site_id, $site_ids ) ) {
+			return;
+		}
+
+		// Remove Site ID from array and save setting.
+		$site_ids = array_diff( $site_ids, [ $site_id ] );
+		$this->core_site_ids_set( $site_ids );
+		$this->multisite->db->settings_save();
+
+	}
+
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Saves the data from the CommentPress Network "General Settings" screen.
@@ -163,12 +489,12 @@ class CommentPress_Multisite_Sites {
 		$this->multisite->db->setting_set( $this->key_forced, ( $forced ? 1 : 0 ) );
 
 		/*
-		// Get "Default Title Page content" value.
+		// Get "Default Welcome Page content" value.
 		$title_page_content = isset( $_POST[ $this->key_title_page_content ] ) ?
 			sanitize_textarea_field( wp_unslash( $_POST[ $this->key_title_page_content ] ) ) :
 			$this->title_page_content_default_get();
 
-		// Set "Default Title Page content" setting.
+		// Set "Default Welcome Page content" setting.
 		$this->multisite->db->setting_set( $this->key_title_page_content, $title_page_content );
 		*/
 
@@ -182,18 +508,70 @@ class CommentPress_Multisite_Sites {
 	 * @param array $default_settings The existing default multisite settings.
 	 * @return array $default_settings The modified default multisite settings.
 	 */
-	public function settings_get_default( $default_settings ) {
+	public function settings_get_defaults( $default_settings ) {
 
 		// CommentPress Core not enabled on all Sites by default.
 		$default_settings[ $this->key_forced ] = '0';
 
+		// CommentPress Sites on the Network is empty by default.
+		$default_settings[ $this->key_sites ] = [];
+
 		/*
-		// The default "Default Title Page content" value.
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'default_settings' => $default_settings,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		/*
+		// The default "Default Welcome Page content" value.
 		$default_settings[ $this->key_title_page_content ] = $this->title_page_content_default_get();
 		*/
 
 		// --<
 		return $default_settings;
+
+	}
+
+	/**
+	 * Upgrades the Sites settings.
+	 *
+	 * @since 4.0
+	 *
+	 * @param bool $save True if settings should be saved, false otherwise.
+	 * @return bool $save True if settings should be saved, false otherwise.
+	 */
+	public function settings_upgrade( $save ) {
+
+		// Add "CommentPress Sites on the Network" if it does not exist.
+		if ( ! $this->multisite->db->setting_exists( $this->key_sites ) ) {
+			$settings = $this->settings_get_defaults();
+			$this->setting_set( $this->key_sites, $settings[ $this->key_sites ] );
+			$save = true;
+		}
+
+		// --<
+		return $save;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Adds our settings to the Network Settings "General Settings" metabox.
+	 *
+	 * @since 4.0
+	 */
+	public function metabox_settings_get() {
+
+		// Get settings.
+		$forced = $this->multisite->db->setting_get( $this->key_forced );
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-sites-settings-network.php';
 
 	}
 
@@ -406,7 +784,7 @@ class CommentPress_Multisite_Sites {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Get default Title Page content, if set.
+	 * Get default Welcome Page content, if set.
 	 *
 	 * Do we want to enable this when we enable the Admin Page editor?
 	 *
@@ -431,11 +809,11 @@ class CommentPress_Multisite_Sites {
 	}
 
 	/**
-	 * Get default Title Page content.
+	 * Get default Welcome Page content.
 	 *
 	 * @since 3.3
 	 *
-	 * @return str $content The default Title Page content.
+	 * @return str $content The default Welcome Page content.
 	 */
 	public function title_page_content_default_get() {
 

@@ -1,8 +1,8 @@
 <?php
 /**
- * Multisite Network Settings Page "Title Page Content" metabox template.
+ * Multisite Network Settings Page "Welcome Page Content" metabox template.
  *
- * Handles markup for the Multisite Network Settings Page "Title Page Content" metabox.
+ * Handles markup for the Multisite Network Settings Page "Welcome Page Content" metabox.
  *
  * @package CommentPress_Core
  */
@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
 <?php
 
 /**
- * Fires at the top of the "Title Page Content" metabox.
+ * Fires at the top of the "Welcome Page Content" metabox.
  *
  * @since 4.0
  */
@@ -33,7 +33,7 @@ wp_editor(
 );
 
 /**
- * Fires at the bottom of the "Title Page Content" metabox.
+ * Fires at the bottom of the "Welcome Page Content" metabox.
  *
  * @since 4.0
  */

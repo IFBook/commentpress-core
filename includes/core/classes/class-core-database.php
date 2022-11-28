@@ -321,10 +321,10 @@ class CommentPress_Core_Database {
 	public function register_hooks() {
 
 		// Act early when this plugin is activated.
-		add_action( 'commentpress/core/activated', [ $this, 'plugin_activated' ], 10 );
+		add_action( 'commentpress/core/activate', [ $this, 'plugin_activate' ], 10 );
 
 		// Act late when this plugin is deactivated.
-		add_action( 'commentpress/core/deactivated', [ $this, 'plugin_deactivated' ], 40 );
+		add_action( 'commentpress/core/deactivate', [ $this, 'plugin_deactivate' ], 40 );
 
 		// Initialise settings when plugins are loaded.
 		add_action( 'plugins_loaded', [ $this, 'settings_initialise' ] );
@@ -340,7 +340,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
-	public function plugin_activated( $network_wide = false ) {
+	public function plugin_activate( $network_wide = false ) {
 
 		// Bail if plugin is network activated.
 		if ( $network_wide ) {
@@ -372,7 +372,17 @@ class CommentPress_Core_Database {
 	 *
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
-	public function plugin_deactivated( $network_wide = false ) {
+	public function plugin_deactivate( $network_wide = false ) {
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'network_wide' => $network_wide ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
 
 		// Keep options when deactivating.
 
@@ -477,7 +487,7 @@ class CommentPress_Core_Database {
 
 		// Store version if there has been a change.
 		if ( $this->version_outdated() ) {
-			$this->version_set( COMMENTPRESS_MU_PLUGIN_VERSION );
+			$this->version_set( COMMENTPRESS_VERSION );
 			$this->is_upgrade = true;
 		}
 
@@ -598,7 +608,7 @@ class CommentPress_Core_Database {
 		 *
 		 * @since 4.0
 		 */
-		do_action( 'commentpress/core/db/options_update/before' );
+		do_action( 'commentpress/core/db/settings_update/before' );
 
 		// Is Multisite activating CommentPress Core?
 		if ( $cp_activate == '1' ) {
@@ -622,10 +632,10 @@ class CommentPress_Core_Database {
 		if ( $cp_create_pages == '1' ) {
 
 			// Remove any existing Special Pages.
-			$this->core->pages_legacy->delete_special_pages();
+			$this->core->pages_legacy->special_pages_delete();
 
 			// Create Special Pages.
-			$this->core->pages_legacy->create_special_pages();
+			$this->core->pages_legacy->special_pages_create();
 
 		}
 
@@ -633,7 +643,7 @@ class CommentPress_Core_Database {
 		if ( $cp_delete_pages == '1' ) {
 
 			// Remove Special Pages.
-			$this->core->pages_legacy->delete_special_pages();
+			$this->core->pages_legacy->special_pages_delete();
 
 		}
 
