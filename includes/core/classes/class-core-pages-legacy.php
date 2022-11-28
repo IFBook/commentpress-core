@@ -135,10 +135,12 @@ class CommentPress_Core_Pages_Legacy {
 		], true ) );
 		*/
 
+		/*
 		// Bail if plugin is network activated.
 		if ( $network_wide ) {
 			return;
 		}
+		*/
 
 		// Remove Special Pages.
 		$this->deactivate();

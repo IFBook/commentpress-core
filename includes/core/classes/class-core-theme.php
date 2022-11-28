@@ -195,10 +195,12 @@ class CommentPress_Core_Theme {
 		], true ) );
 		*/
 
+		/*
 		// Bail if plugin is network activated.
 		if ( $network_wide ) {
 			return;
 		}
+		*/
 
 		// Deactivate the default CommentPress theme.
 		$this->deactivate();

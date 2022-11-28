@@ -374,20 +374,7 @@ class CommentPress_Core_Database {
 	 */
 	public function plugin_deactivated( $network_wide = false ) {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'network_wide' => $network_wide ? 'y' : 'n',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
-		// Bail if plugin is network activated.
-		if ( $network_wide ) {
-			return;
-		}
+		// Keep options when deactivating.
 
 	}
 
