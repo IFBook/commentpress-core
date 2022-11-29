@@ -13,8 +13,8 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 /**
  * Restores all CommentPress-enabled Sites.
  *
- * NOTE: For a large Network, this could be a very lengthy process. At some point,
- * there will be an AJAX-driven UI for this task.
+ * NOTE: For a large Network, this could be a very lengthy process. There will
+ * be an AJAX-driven UI for this task in future.
  *
  * @since 4.0
  */
@@ -23,6 +23,7 @@ function commentpress_sites_restore() {
 	// Only restore current Site if not multisite.
 	if ( ! is_multisite() ) {
 		commentpress_schema_restore();
+		commentpress_options_delete();
 		return;
 	}
 
