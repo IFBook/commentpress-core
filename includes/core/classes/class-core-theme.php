@@ -132,9 +132,6 @@ class CommentPress_Core_Theme {
 		// Acts when this plugin is deactivated.
 		add_action( 'commentpress/core/deactivate', [ $this, 'plugin_deactivate' ], 30 );
 
-		// Enable CommentPress themes in Multisite optional scenario.
-		add_filter( 'network_allowed_themes', [ $this, 'allowed_themes' ] );
-
 		// Enqueue common Javascripts.
 		add_action( 'wp_enqueue_scripts', [ $this, 'scripts_enqueue' ], 20 );
 
@@ -397,29 +394,6 @@ class CommentPress_Core_Theme {
 
 		// Reset option.
 		$this->core->db->option_wp_restore( 'sidebars_widgets' );
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Allow all CommentPress parent themes in Multisite optional scenario.
-	 *
-	 * @since 3.9.14
-	 * @since 4.0 Moved to this class.
-	 *
-	 * @param array $retval The existing array of allowed themes.
-	 * @return array $retval The modified array of allowed themes.
-	 */
-	public function allowed_themes( $retval ) {
-
-		// Allow all parent themes.
-		$retval['commentpress-flat'] = 1;
-		$retval['commentpress-modern'] = 1;
-		$retval['commentpress-theme'] = 1;
-
-		// --<
-		return $retval;
 
 	}
 

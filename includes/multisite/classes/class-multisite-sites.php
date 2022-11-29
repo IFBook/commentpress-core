@@ -167,6 +167,9 @@ class CommentPress_Multisite_Sites {
 			add_filter( 'subdirectory_reserved_names', [ $this, 'reserved_names_add' ] );
 		}
 
+		// Enable CommentPress themes in Multisite optional scenario.
+		add_filter( 'site_allowed_themes', [ $this, 'themes_allowed_add' ], 10, 2 );
+
 		/*
 		// Override Welcome Page content.
 		add_filter( 'cp_title_page_content', [ $this, 'title_page_content_get' ] );
@@ -885,6 +888,44 @@ class CommentPress_Multisite_Sites {
 	// -------------------------------------------------------------------------
 
 	/**
+	 * Allows all CommentPress parent themes on CommentPress-enabled Sites.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $allowed_themes The existing array of allowed themes.
+	 * @param int $blog_id The numeric ID of the Site.
+	 * @return array $allowed_themes The modified array of allowed themes.
+	 */
+	public function themes_allowed_add( $allowed_themes, $blog_id ) {
+
+		// Bail if this Blog is not CommentPress-enabled.
+		if ( ! $this->multisite->site->is_commentpress( $blog_id ) ) {
+			return $allowed_themes;
+		}
+
+		// Allow all parent themes.
+		$allowed_themes['commentpress-flat'] = 1;
+		$allowed_themes['commentpress-modern'] = 1;
+		$allowed_themes['commentpress-theme'] = 1;
+
+		/**
+		 * Filters the allowed themes on a CommentPress-enabled Site.
+		 *
+		 * @since 4.0
+		 *
+		 * @param array $allowed_themes The array of allowed themes on a CommentPress-enabled Site.
+		 * @param int $blog_id The numeric ID of the Site.
+		 */
+		$allowed_themes = apply_filters( 'commentpress/multisite/sites/allowed_themes', $allowed_themes, $blog_id );
+
+		// --<
+		return $allowed_themes;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
 	 * Adds the "Special Page" slugs to reserved names array.
 	 *
 	 * @since 3.4
@@ -894,19 +935,19 @@ class CommentPress_Multisite_Sites {
 	 */
 	public function reserved_names_add( $reserved_names ) {
 
-		// Add Special Page slugs.
-		$reserved_names = array_merge(
-			$reserved_names,
-			[
-				'title-page',
-				'general-comments',
-				'all-comments',
-				'comments-by-commenter',
-				'table-of-contents',
-				'author', // Not currently used.
-				'login', // For Theme My Login.
-			]
-		);
+		// Build our array of Special Page slugs.
+		$reserved = [
+			'title-page',
+			'general-comments',
+			'all-comments',
+			'comments-by-commenter',
+			'table-of-contents',
+			'author', // Not currently used.
+			'login', // For Theme My Login.
+		];
+
+		// Add to the reserved names array.
+		$reserved_names = array_merge( $reserved_names, $reserved );
 
 		// --<
 		return $reserved_names;

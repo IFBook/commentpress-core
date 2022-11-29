@@ -280,18 +280,40 @@ class CommentPress_Multisite_Site {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Check if Blog is CommentPress Core-enabled.
+	 * Checks if the current Blog is CommentPress Core-enabled.
 	 *
 	 * @since 3.3
 	 *
 	 * @param int $blog_id The ID of the Blog to check.
 	 * @return bool $core_active True if CommentPress Core-enabled, false otherwise.
 	 */
-	public function is_commentpress( $blog_id = 0 ) {
+	public function is_commentpress( $blog_id = false ) {
 
 		// Init return.
 		$core_active = false;
 
+		// Get current Site ID if the Blog ID isn't passed.
+		if ( $blog_id === false ) {
+			$blog_id = get_current_blog_id();
+		}
+
+		// Bail if we still don't have one.
+		if ( empty( $blog_id ) ) {
+			return $core_active;
+		}
+
+		// Try to get the active Site IDs.
+		$site_ids = $this->multisite->sites->core_site_ids_get();
+		if ( empty( $site_ids ) ) {
+			return $core_active;
+		}
+
+		// Is this Site active?
+		if ( in_array( $blog_id, $site_ids ) ) {
+			$core_active = true;
+		}
+
+		/*
 		// Get current Blog ID.
 		$current_blog_id = get_current_blog_id();
 
@@ -323,6 +345,7 @@ class CommentPress_Multisite_Site {
 		if ( isset( $switched ) && $switched === true ) {
 			restore_current_blog();
 		}
+		*/
 
 		// --<
 		return $core_active;
