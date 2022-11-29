@@ -136,10 +136,8 @@ class CommentPress_Multisite_Site {
 	 * CommentPress Core activation.
 	 *
 	 * @since 3.3
-	 *
-	 * @param str $context The activation context.
 	 */
-	public function core_activate( $context = 'new_blog' ) {
+	public function core_activate() {
 
 		/*
 		$e = new \Exception();
@@ -163,9 +161,8 @@ class CommentPress_Multisite_Site {
 		 * @since 4.0
 		 *
 		 * @param int $site_id The current Site ID.
-		 * @param str $context The activation context.
 		 */
-		do_action( 'commentpress/multisite/core/activated/before', $site_id, $context );
+		do_action( 'commentpress/multisite/core/activated/before', $site_id );
 
 		// Run core activation hook.
 		do_action( 'commentpress/core/activate', $network_wide = false );
@@ -180,9 +177,8 @@ class CommentPress_Multisite_Site {
 		 * @since 4.0
 		 *
 		 * @param int $site_id The current Site ID.
-		 * @param str $context The activation context.
 		 */
-		do_action( 'commentpress/multisite/core/activated/after', $site_id, $context );
+		do_action( 'commentpress/multisite/core/activated/after', $site_id );
 
 		/*
 		------------------------------------------------------------------------
@@ -199,38 +195,6 @@ class CommentPress_Multisite_Site {
 		// TOC show extended Posts.
 		$core->db->setting_set( 'cp_show_extended_toc', 1 );
 		*/
-
-		/*
-		------------------------------------------------------------------------
-		Further CommentPress plugins may define Blog Workflows and Type and
-		enable them to be set in the Blog signup form.
-		------------------------------------------------------------------------
-		*/
-
-		// If we're activating from the "wpmu_new_blog" action, then we need to grab
-		// the extra options below - but if we're activating any other way, we need
-		// to ignore these, as they override actual values.
-
-		// TODO: Move to bp class and use action above.
-
-		// Use passed value.
-		if ( $context == 'new_blog' ) {
-
-			// Check for Blog Type (dropdown).
-			if ( isset( $_POST['cp_blog_type'] ) ) {
-
-				// Ensure boolean.
-				$cp_blog_type = intval( $_POST['cp_blog_type'] );
-
-				// Set Blog Type.
-				$core->db->setting_set( 'cp_blog_type', $cp_blog_type );
-
-			}
-
-			// Save.
-			$core->db->settings_save();
-
-		}
 
 		/*
 		------------------------------------------------------------------------
@@ -397,8 +361,8 @@ class CommentPress_Multisite_Site {
 			return;
 		}
 
-		// Activate core, but not from "wpmu_new_blog".
-		$this->core_activate( 'admin_page' );
+		// Activate core.
+		$this->core_activate();
 
 	}
 

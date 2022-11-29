@@ -175,7 +175,7 @@ class CommentPress_Core_Entry_Formatter {
 	public function metabox_settings_get() {
 
 		// Get the "Text Format" options array.
-		$types = $this->options_array_get();
+		$types = $this->formats_array_get();
 		if ( empty( $types ) ) {
 			return;
 		}
@@ -193,7 +193,7 @@ class CommentPress_Core_Entry_Formatter {
 		$blog_type = $this->core->db->setting_get( $this->option_formatter );
 
 		// Get the "Text Format" options markup.
-		$type_options = $this->options_markup_get( $types, $blog_type, $show_default = false );
+		$type_options = $this->formats_select_options_get( $types, $blog_type, $show_default = false );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-entry-formatter-settings.php';
@@ -237,7 +237,7 @@ class CommentPress_Core_Entry_Formatter {
 		}
 
 		// Get the "Text Format" options array.
-		$types = $this->options_array_get();
+		$types = $this->formats_array_get();
 		if ( empty( $types ) ) {
 			return;
 		}
@@ -246,7 +246,7 @@ class CommentPress_Core_Entry_Formatter {
 		$value = $this->get_for_post_id( $post->ID, $raw = true );
 
 		// Get the "Text Format" options markup.
-		$type_options = $this->options_markup_get( $types, $value );
+		$type_options = $this->formats_select_options_get( $types, $value );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-entry-formatter-entry.php';
@@ -521,7 +521,7 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @return array $types The array of Text Format options.
 	 */
-	public function options_array_get() {
+	public function formats_array_get() {
 
 		// Define no types.
 		$types = [];
@@ -555,7 +555,7 @@ class CommentPress_Core_Entry_Formatter {
 	 * @param bool $show_default True includes the "Use default" option, false does not.
 	 * @return string $markup The "Text Format" options markup.
 	 */
-	public function options_markup_get( $types, $current, $show_default = true ) {
+	public function formats_select_options_get( $types, $current, $show_default = true ) {
 
 		// Init markup.
 		$markup = '';

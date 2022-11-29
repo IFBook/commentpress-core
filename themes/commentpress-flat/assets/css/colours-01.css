@@ -17,18 +17,26 @@ to the same relative path in the child theme and amending the values as desired.
 
 /*
 --------------------------------------------------------------------------------
-Fonts
+Serif Fonts.
 --------------------------------------------------------------------------------
 */
 
-/* Georgia */
+/* Serif */
 #header #tagline,
 body#main_blog div#item-header div#item-meta
 {
-	font-family: Georgia, Times, serif;
+	font-family: serif;
 }
 
-/* Google Webfont: using "Lato" enqueued in functions.php */
+
+
+/*
+--------------------------------------------------------------------------------
+Sans Serif Fonts.
+--------------------------------------------------------------------------------
+Google Webfont: "Lato" is enqueued in "functions.php".
+--------------------------------------------------------------------------------
+*/
 
 /* Content is serif by default */
 .post,
@@ -53,27 +61,32 @@ h6,
 /* Signup, Activate and Register pages */
 body.create-blog #content #setupform label,
 #register-page #signup_form h2,
-#content #activateform label
-#content .mu_register h2,
-#content .mu_register label,
+#content #activateform label,
+#content .mu_register,
 #content #signup-content h2,
 #content #activateform label,
+#content .wp-activate-container,
 
 /* CommentPress Core form inserts */
 body.create-blog #cp-multisite-options h4,
 #content .mu_register #cp-multisite-options h3,
 
-/* Comment form */
+/* Comment Form */
 div#respond h4#respond_title,
 
 /* CommentPress JSTOR plugin support */
 .commentpress_jstor .comment-title a,
 
 /* Sidebar Widgets */
-.sidebar_container .widget
+.sidebar_container .widget,
+
+/* Image captions */
+div.image_attachment_caption p
 {
-	font-family: Lato, 'Trebuchet MS', Helvetica, Arial, sans-serif;
+	font-family: Lato, sans-serif;
 }
+
+
 
 /* Headings on page/posts */
 .post h1,
@@ -185,6 +198,8 @@ div#respond .subscribe_reloaded_insert a,
 #content #signup-content a,
 #content #activateform label,
 #content #signup-welcome span.h3,
+#content .mu_register #setupform .privacy-intro legend .label-heading,
+#content .mu_register .signup-options legend,
 
 /* Signup Form Styles */
 body.commentpress_page #cp-multisite-options h3,

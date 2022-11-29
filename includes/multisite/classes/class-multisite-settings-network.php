@@ -169,7 +169,7 @@ class CommentPress_Multisite_Settings_Network {
 		// Insert item in relevant menu.
 		$this->settings_page = add_submenu_page(
 			'settings.php',
-			__( 'CommentPress Network Settings', 'commentpress-core' ),
+			__( 'Network Settings for CommentPress', 'commentpress-core' ),
 			__( 'CommentPress Network', 'commentpress-core' ),
 			'manage_options',
 			$this->settings_page_slug, // Slug name.

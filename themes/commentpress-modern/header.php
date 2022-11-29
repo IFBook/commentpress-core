@@ -51,18 +51,6 @@ defined( 'ABSPATH' ) || exit;
 		<!-- wp_head -->
 		<?php wp_head(); ?>
 
-		<?php if ( is_multisite() ) : ?>
-			<?php $current_script = isset( $_SERVER['SCRIPT_FILENAME'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SCRIPT_FILENAME'] ) ) : ''; ?>
-			<?php if ( 'wp-signup.php' == basename( $current_script ) ) : ?>
-				<!-- signup css -->
-				<link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/assets/css/signup.css" media="screen" />
-			<?php endif; ?>
-			<?php if ( 'wp-activate.php' == basename( $current_script ) ) : ?>
-				<!-- activate css -->
-				<link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/assets/css/activate.css" media="screen" />
-			<?php endif; ?>
-		<?php endif; ?>
-
 	</head>
 
 	<body<?php echo commentpress_get_body_id(); ?> <?php body_class( commentpress_get_body_classes( true ) ); ?>>

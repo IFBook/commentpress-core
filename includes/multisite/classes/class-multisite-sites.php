@@ -144,21 +144,28 @@ class CommentPress_Multisite_Sites {
 
 		// ---------------------------------------------------------------------
 
-		// Add filter for reserved core "Special Page" names on subdirectory installs.
-		if ( ! is_subdomain_install() ) {
-			add_filter( 'subdirectory_reserved_names', [ $this, 'reserved_names_add' ] );
+		// Add form elements to Blog Signup Form.
+		add_action( 'signup_blogform', [ $this, 'signup_blogform_elements_add' ] );
+
+		// Add callback for Signup Page to include Sidebar.
+		add_action( 'after_signup_form', [ $this, 'signup_blogform_after' ], 20 );
+
+		// Save meta for Blog Signup Form submissions.
+		add_filter( 'signup_site_meta', [ $this, 'signup_blogform_meta_add' ], 10, 7 );
+
+		// Activate Blog-specific CommentPress Core plugin.
+		if ( version_compare( $GLOBALS['wp_version'], '5.1.0', '>=' ) ) {
+			add_action( 'wp_initialize_site', [ $this, 'site_initialise' ], 10, 2 );
+		} else {
+			add_action( 'wpmu_new_blog', [ $this, 'site_initialise_legacy' ], 20, 6 );
 		}
 
 		// ---------------------------------------------------------------------
 
-		// Add form elements to signup form.
-		add_action( 'signup_blogform', [ $this, 'signup_blogform' ] );
-
-		// Add callback for Signup Page to include sidebar.
-		add_action( 'after_signup_form', [ $this, 'after_signup_form' ], 20 );
-
-		// Activate Blog-specific CommentPress Core plugin.
-		add_action( 'wpmu_new_blog', [ $this, 'wpmu_new_blog' ], 12, 6 );
+		// Add filter for reserved core "Special Page" names on subdirectory installs.
+		if ( ! is_subdomain_install() ) {
+			add_filter( 'subdirectory_reserved_names', [ $this, 'reserved_names_add' ] );
+		}
 
 		/*
 		// Override Welcome Page content.
@@ -545,18 +552,20 @@ class CommentPress_Multisite_Sites {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Hook into the Blog signup form.
+	 * Adds the CommentPress form elements to the Blog Signup Form.
 	 *
 	 * @since 3.3
 	 *
 	 * @param array $errors The previously encountered errors.
 	 */
-	public function signup_blogform( $errors ) {
+	public function signup_blogform_elements_add( $errors ) {
 
+		/*
 		// Only apply to WordPress signup form (not the BuddyPress one).
-		if ( is_object( $this->multisite->bp ) ) {
+		if ( is_object( $this->multisite->bp->workshop ) ) {
 			return;
 		}
+		*/
 
 		// Get force setting.
 		$forced = $this->multisite->db->setting_get( $this->key_forced );
@@ -564,74 +573,312 @@ class CommentPress_Multisite_Sites {
 		// Are we force-enabling CommentPress Core?
 		if ( $forced ) {
 
-			// Set hidden element.
-			$forced_html = '
-			<input type="hidden" value="1" id="cpmu-new-blog" name="cpmu-new-blog" />
-			';
-
 			/**
-			 * Filters the Signup Form text.
+			 * Filters the forced Signup Form text.
 			 *
 			 * @since 3.3
 			 *
 			 * @param string The default Signup Form text.
 			 */
-			$text = apply_filters( 'cp_multisite_options_signup_text_forced', __( 'Select the options for your new CommentPress document.', 'commentpress-core' ) );
+			$text = apply_filters( 'cp_multisite_options_signup_text_forced', __( 'Your new site will be CommentPress-enabled.', 'commentpress-core' ) );
 
 		} else {
 
-			// Set checkbox.
-			$forced_html = '
-			<div class="checkbox">
-				<label for="cpmu-new-blog"><input type="checkbox" value="1" id="cpmu-new-blog" name="cpmu-new-blog" /> ' . __( 'Enable CommentPress', 'commentpress-core' ) . '</label>
-			</div>
-			';
-
 			/**
-			 * Filters the signup text.
+			 * Filters the un-forced Signup Form text.
 			 *
 			 * @since 3.3
 			 *
 			 * @param string The default signup text.
 			 */
-			$text = apply_filters( 'cp_multisite_options_signup_text', __( 'Do you want to make the new site a CommentPress document?', 'commentpress-core' ) );
+			$text = apply_filters( 'cp_multisite_options_signup_text', __( 'Do you want to make the new site CommentPress-enabled?', 'commentpress-core' ) );
 
 		}
 
-		// Get Blog Type element.
-		$type_html = $this->get_blogtype();
-
-		// Construct form.
-		$form = '
-
-		<br />
-		<div id="cp-multisite-options">
-
-			<h3>' . __( 'CommentPress:', 'commentpress-core' ) . '</h3>
-
-			<p>' . $text . '</p>
-
-			' . $forced_html . '
-
-			' . $type_html . '
-
-		</div>
-
-		';
-
-		echo $form;
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-sites-signup.php';
 
 	}
 
 	/**
-	 * Add sidebar to signup form.
+	 * Adds the theme's sidebar to Blog Signup Form.
 	 *
 	 * @since 3.4
 	 */
-	public function after_signup_form() {
+	public function signup_blogform_after() {
 
 		// Add sidebar.
 		get_sidebar();
+
+	}
+
+	/**
+	 * Saves metadata when Blog Signup Forms are submitted.
+	 *
+	 * The "signup_site_meta" filter has been available since WordPress 4.8.0.
+	 *
+	 * @since 3.4
+	 *
+	 * @param array $meta Signup meta data. Default empty array.
+	 * @param string $domain The requested domain.
+	 * @param string $path The requested path.
+	 * @param string $title The requested site title.
+	 * @param string $user The user's requested login name.
+	 * @param string $user_email The user's email address.
+	 * @param string $key The user's activation key.
+	 * @return array $meta The modified signup meta data.
+	 */
+	public function signup_blogform_meta_add( $meta, $domain, $path, $title, $user, $user_email, $key ) {
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'POST' => $_POST,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Init CommentPress metadata.
+		$metadata = [];
+
+		// Get "CommentPress Core enabled on all Sites" setting.
+		$forced = $this->multisite->db->setting_get( $this->key_forced );
+
+		// When not forced.
+		if ( ! $forced ) {
+
+			// Bail if our checkbox variable is not in POST.
+			$cpmu_new_blog = isset( $_POST['cpmu-new-blog'] ) ? sanitize_text_field( wp_unslash( $_POST['cpmu-new-blog'] ) ) : '';
+			if ( empty( $cpmu_new_blog ) ) {
+				return $meta;
+			}
+
+		}
+
+		// Add flag to our meta.
+		$metadata['enable'] = 'y';
+
+		// Maybe add our meta.
+		if ( ! empty( $metadata ) ) {
+			$meta['commentpress'] = $metadata;
+		}
+
+		///*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'meta' => $meta,
+			//'backtrace' => $trace,
+		], true ) );
+		//*/
+
+		// --<
+		return $meta;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Initialises a new site.
+	 *
+	 * The "wp_initialize_site" action has been available since WordPress 5.1.0.
+	 *
+	 * @since 3.3
+	 * @param WP_Site $new_site The new site object.
+	 * @param array $args The array of initialization arguments.
+	 */
+	public function site_initialise( $new_site, $args ) {
+
+		///*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'new_site' => $new_site,
+			'args' => $args,
+			//'backtrace' => $trace,
+		], true ) );
+		//*/
+
+		// Bail if none of our meta is present.
+		if ( empty( $args['options']['commentpress'] ) ) {
+			return;
+		}
+
+		///*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'one' => 'here',
+			//'backtrace' => $trace,
+		], true ) );
+		//*/
+
+		// Get "CommentPress Core enabled on all Sites" setting.
+		$forced = $this->multisite->db->setting_get( $this->key_forced );
+
+		// Bail if not forced and "Enable CommentPress" checkbox was not checked.
+		if ( ! $forced ) {
+			if ( empty( $args['options']['commentpress']['enable'] ) ) {
+				return;
+			}
+			if ( 'y' !== $args['options']['commentpress']['enable'] ) {
+				return;
+			}
+		}
+
+		///*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'two' => 'here',
+			//'backtrace' => $trace,
+		], true ) );
+		//*/
+
+		// Switch to the site.
+		switch_to_blog( $new_site->blog_id );
+
+		// Activate CommentPress Core.
+		$this->multisite->site->core_activate();
+
+		// Switch back.
+		restore_current_blog();
+
+	}
+
+	/**
+	 * Initialises a new blog.
+	 *
+	 * The "wpmu_new_blog" action has been deprecated since WordPress 5.1.0.
+	 *
+	 * @since 3.3
+	 *
+	 * @param int $blog_id The numeric ID of the WordPress Blog.
+	 * @param int $user_id The numeric ID of the WordPress User.
+	 * @param str $domain The domain of the WordPress Blog.
+	 * @param str $path The path of the WordPress Blog.
+	 * @param int $site_id The numeric ID of the WordPress parent Site.
+	 * @param array $meta The meta data of the WordPress Blog.
+	 */
+	public function site_initialise_legacy( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
+
+		// Bail if none of our meta is present.
+		if ( empty( $meta['commentpress'] ) ) {
+			return;
+		}
+
+		// Get "CommentPress Core enabled on all Sites" setting.
+		$forced = $this->multisite->db->setting_get( $this->key_forced );
+
+		// Bail if not forced and "Enable CommentPress" checkbox was not checked.
+		if ( ! $forced ) {
+			if ( empty( $meta['commentpress']['enable'] ) ) {
+				return;
+			}
+			if ( 'y' !== $meta['commentpress']['enable'] ) {
+				return;
+			}
+		}
+
+		// Switch to the site.
+		switch_to_blog( $blog_id );
+
+		// Activate CommentPress Core.
+		$this->multisite->site->core_activate();
+
+		// Switch back.
+		restore_current_blog();
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the "Text Format" options array.
+	 *
+	 * @since 4.0
+	 *
+	 * @return array $types The array of Text Format options.
+	 */
+	public function formats_array_get() {
+
+		// Define no types.
+		$types = [];
+
+		/**
+		 * Build Text Format options.
+		 *
+		 * @since 3.3.1
+		 *
+		 * @param array $types Empty by default since others add them.
+		 */
+		$types = apply_filters( 'cp_blog_type_options', $types );
+
+		// Bail if we don't get any.
+		if ( empty( $types ) ) {
+			return $types;
+		}
+
+		// --<
+		return $types;
+
+	}
+
+	/**
+	 * Gets the "Text Format" options for a select element.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $types The array of "Text Format" options.
+	 * @param int $current The current "Text Format" option.
+	 * @param bool $show_default True includes the "Use default" option, false does not.
+	 * @return string $markup The "Text Format" options markup.
+	 */
+	public function formats_select_options_get( $types, $current = false, $show_default = true ) {
+
+		// Init markup.
+		$markup = '';
+
+		// Bail if we don't get any.
+		if ( empty( $types ) ) {
+			return $markup;
+		}
+
+		// Init options.
+		$options = [];
+
+		// Maybe add "Use Default".
+		if ( $show_default === true ) {
+			$options = [
+				'<option value="" ' . ( ( $current === false || $current === '' ) ? ' selected="selected"' : '' ) . '>' .
+					esc_html__( 'Use default', 'commentpress-core' ) .
+				'</option>',
+			];
+		}
+
+		// Build options.
+		foreach ( $types as $key => $type ) {
+			if ( (string) $key === (string) $current ) {
+				$options[] = '<option value="' . esc_attr( $key ) . '" selected="selected">' . esc_html( $type ) . '</option>';
+			} else {
+				$options[] = '<option value="' . esc_attr( $key ) . '">' . esc_html( $type ) . '</option>';
+			}
+		}
+
+		// Merge options.
+		if ( ! empty( $options ) ) {
+			$markup = implode( "\n", $options );
+		}
+
+		// --<
+		return $markup;
 
 	}
 
@@ -663,88 +910,6 @@ class CommentPress_Multisite_Sites {
 
 		// --<
 		return $reserved_names;
-
-	}
-
-	/**
-	 * Hook into wpmu_new_blog and target plugins to be activated.
-	 *
-	 * @since 3.3
-	 *
-	 * @param int $blog_id The numeric ID of the WordPress Blog.
-	 * @param int $user_id The numeric ID of the WordPress User.
-	 * @param str $domain The domain of the WordPress Blog.
-	 * @param str $path The path of the WordPress Blog.
-	 * @param int $site_id The numeric ID of the WordPress parent Site.
-	 * @param array $meta The meta data of the WordPress Blog.
-	 */
-	public function wpmu_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
-
-		// Test for presence of our checkbox variable in POST.
-		$cpmu_new_blog = isset( $_POST['cpmu-new-blog'] ) ? sanitize_text_field( wp_unslash( $_POST['cpmu-new-blog'] ) ) : '';
-		if ( $cpmu_new_blog == '1' ) {
-
-			// Hand off to private method.
-			$this->create_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta );
-
-		}
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Create a Blog.
-	 *
-	 * @since 3.3
-	 *
-	 * @param int $blog_id The numeric ID of the WordPress Blog.
-	 * @param int $user_id The numeric ID of the WordPress User.
-	 * @param str $domain The domain of the WordPress Blog.
-	 * @param str $path The path of the WordPress Blog.
-	 * @param int $site_id The numeric ID of the WordPress parent Site.
-	 * @param array $meta The meta data of the WordPress Blog.
-	 */
-	private function create_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
-
-		// The "wpmu_new_blog" function calls this *after* "restore_current_blog"
-		// so we need to do it again.
-		switch_to_blog( $blog_id );
-
-		// Activate CommentPress Core.
-		$this->multisite->site->core_install();
-
-		// Switch back.
-		restore_current_blog();
-
-	}
-
-	/**
-	 * Get Blog Type form elements.
-	 *
-	 * @since 3.3
-	 *
-	 * @return str $type_html The HTML form element.
-	 */
-	public function get_blogtype() {
-
-		// Init.
-		$type_html = '';
-
-		// Get data.
-		$type = $this->multisite->db->get_blogtype_data();
-
-		// Show if we have type data.
-		if ( ! empty( $type ) ) {
-			$type_html = '<div class="dropdown">
-				<label for="cp_blog_type">' . $type['label'] . '</label> <select id="cp_blog_type" name="cp_blog_type">
-					' . $type['element'] . '
-				</select>
-			</div>';
-		}
-
-		// --<
-		return $type_html;
 
 	}
 

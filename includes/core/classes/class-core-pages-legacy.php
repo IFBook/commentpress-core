@@ -1384,8 +1384,10 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// Is it the current Page?
 		$active = '';
-		if ( ( $post instanceof WP_Post ) && (int) $page->ID === (int) $post->ID ) {
-			$active = ' class="active_page"';
+		if ( ( $post instanceof WP_Post ) && ( $page instanceof WP_Post ) ) {
+			if ( (int) $page->ID === (int) $post->ID ) {
+				$active = ' class="active_page"';
+			}
 		}
 
 		// Get link.

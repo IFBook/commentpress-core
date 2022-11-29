@@ -12,6 +12,99 @@ defined( 'ABSPATH' ) || exit;
 
 
 
+if ( ! function_exists( 'commentpress_page_navigation_is_login' ) ) :
+
+	/**
+	 * Checks if the current Entry is the WordPress Login Page.
+	 *
+	 * @since 4.0
+	 *
+	 * @return bool $is_login_page True if the current Page is the WordPress Login Page, false otherwise.
+	 */
+	function commentpress_page_navigation_is_login() {
+
+		// Assume not.
+		$is_login_page = false;
+
+		// Get core plugin reference.
+		$core = commentpress_core();
+
+		// Check Entry.
+		if ( ! empty( $core ) && $core->entry->is_login_page() ) {
+			$is_login_page = true;
+		}
+
+		// --<
+		return $is_login_page;
+
+	}
+
+endif;
+
+
+
+if ( ! function_exists( 'commentpress_page_navigation_is_signup' ) ) :
+
+	/**
+	 * Checks if the current Entry is the WordPress Signup Page.
+	 *
+	 * @since 4.0
+	 *
+	 * @return bool $is_signup_page True if the current Page is the WordPress Signup Page, false otherwise.
+	 */
+	function commentpress_page_navigation_is_signup() {
+
+		// Assume not.
+		$is_signup_page = false;
+
+		// Get core plugin reference.
+		$core = commentpress_core();
+
+		// Check Entry.
+		if ( ! empty( $core ) && $core->entry->is_signup_page() ) {
+			$is_signup_page = true;
+		}
+
+		// --<
+		return $is_signup_page;
+
+	}
+
+endif;
+
+
+
+if ( ! function_exists( 'commentpress_page_navigation_is_activate' ) ) :
+
+	/**
+	 * Checks if the current Entry is the WordPress Activation Page.
+	 *
+	 * @since 4.0
+	 *
+	 * @return bool $is_activate_page True if the current Page is the WordPress Activation Page, false otherwise.
+	 */
+	function commentpress_page_navigation_is_activate() {
+
+		// Assume not.
+		$is_activate_page = false;
+
+		// Get core plugin reference.
+		$core = commentpress_core();
+
+		// Check Entry.
+		if ( ! empty( $core ) && $core->entry->is_activate_page() ) {
+			$is_activate_page = true;
+		}
+
+		// --<
+		return $is_activate_page;
+
+	}
+
+endif;
+
+
+
 if ( ! function_exists( 'commentpress_page_navigation_template' ) ) :
 
 	/**

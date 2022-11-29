@@ -200,15 +200,19 @@ class CommentPress_Core_Parser {
 		// Declare access to globals.
 		global $post;
 
-		// Not on Signup Pages.
-		$script = isset( $_SERVER['SCRIPT_FILENAME'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SCRIPT_FILENAME'] ) ) : '';
-		if ( is_multisite() && ! empty( $script ) ) {
-			if ( 'wp-signup.php' == basename( $script ) ) {
-				return false;
-			}
-			if ( 'wp-activate.php' == basename( $script ) ) {
-				return false;
-			}
+		// Not if it's the Signup Page.
+		if ( $this->core->entry->is_signup_page() ) {
+			return false;
+		}
+
+		// Not if it's the Activation Page.
+		if ( $this->core->entry->is_activate_page() ) {
+			return false;
+		}
+
+		// Not if it's the Login Page.
+		if ( $this->core->entry->is_login_page() ) {
+			return false;
 		}
 
 		// Not if there's no Post object.

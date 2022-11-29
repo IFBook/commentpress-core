@@ -5193,6 +5193,355 @@ div#respond .select2-container--default .select2-search--inline .select2-search_
 
 /*
 --------------------------------------------------------------------------------
+Support for WordPress Signup Page.
+--------------------------------------------------------------------------------
+*/
+
+#content .mu_register
+{
+	width: auto;
+	margin: 0;
+	padding: 45px 60px 45px 77px;
+}
+
+#content .mu_register .mu_alert
+{
+	margin-bottom: 25px;
+	padding: 15px;
+	font-size: 0.8em;
+	font-weight: bold;
+	line-height: 1.5;
+}
+
+#content .mu_register .mu_alert a
+{
+	text-decoration: underline;
+}
+
+#content .mu_register #setupform p.error
+{
+	border: 1px solid #E1CA82;
+	font-weight: normal;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	text-decoration: none;
+	background: none;
+	background-color: #DB1717;
+	border-color: #A71A1A;
+	clear: left;
+	color: #fff;
+	font-size: 12px;
+	display: block;
+	padding: 5px 10px;
+}
+
+#content .mu_register h2
+{
+	font-size: 2em;
+	font-weight: normal;
+	color: #761D19;
+	margin: 8px 0 32px 0;
+	padding: 0;
+}
+
+#content .mu_register p
+{
+	font-size: 1em;
+	line-height: 1.5;
+	padding: 7px 0 11px 0;
+}
+
+#content .mu_register #privacy
+{
+	margin: 12px 0 0 0;
+	padding: 15px;
+	border: 1px solid #DDD;
+}
+
+#content .mu_register #setupform p.privacy-intro
+{
+	font-size: 1em;
+	line-height: 1.5;
+	padding: 0;
+}
+
+#content .mu_register #setupform p.privacy-intro label
+{
+	margin: 0;
+}
+
+#content .mu_register #setupform .privacy-intro legend .label-heading
+{
+	text-transform: uppercase;
+	color: #761D19;
+	font-size: 1.2em;
+}
+
+/* existing sites list */
+#content .mu_register ul
+{
+	font-size: 1em;
+	line-height: 1.5;
+	padding: 6px 0 0 0;
+	margin: 0 0 4px 0;
+	background: lightYellow;
+	border: 1px solid #E6DB55;
+}
+
+#content .mu_register ul li
+{
+	font-size: 1em;
+	line-height: 1.5;
+	margin: 0 10px;
+	padding: 0px 0 6px 0;
+}
+
+#content .mu_register ul#noemail-tips li
+{
+	font-size: 1em;
+	line-height: 1.5;
+}
+
+#content .mu_register ul li a
+{
+	text-decoration: underline;
+}
+
+#content .mu_register #setupform
+{
+	margin: 0;
+	padding: 0;
+}
+
+#content .mu_register #setupform p
+{
+}
+
+#content .mu_register label
+{
+	text-transform: uppercase;
+	color: #761D19;
+	font-size: 1.2em;
+	margin: 20px 0 5px 0;
+}
+
+#setupform .prefix_address
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.9em;
+}
+
+#content .mu_register #setupform #blogname
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.9em;
+	width: 50%;
+	margin: 0;
+	padding: 5px 2px;
+	margin-bottom: 5px;
+}
+
+#content .mu_register #setupform #blog_title,
+#content .mu_register #setupform #user_name,
+#content .mu_register #setupform #user_email
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 1em;
+	margin: 0;
+	padding: 5px 2px;
+	margin-bottom: 5px;
+	width: 90%;
+}
+
+#content .mu_register #setupform #blog_title
+{
+	padding: 5px;
+}
+
+/* Site or Username */
+#content .mu_register .signup-options
+{
+	padding: 15px;
+	margin: 15px 0 0 0;
+	border: 1px solid #ccc;
+	position: relative;
+}
+
+#content .mu_register .signup-options legend
+{
+	position: absolute;
+	margin-top: 0;
+	text-transform: uppercase;
+	font-size: 120%;
+	color: #761D19;
+}
+
+#content .mu_register .signup-options .wp-signup-radio-buttons
+{
+	margin-top: 36px;
+	margin-bottom: 3px;
+}
+
+/* CommentPress Options */
+#content .mu_register #cp-multisite-options
+{
+	margin-bottom: 11px;
+	padding: 15px;
+	border: 1px solid #DDD;
+}
+
+#content .mu_register #cp-multisite-options h3
+{
+	text-transform: uppercase;
+	color: #761D19;
+	font-size: 1.2em;
+}
+
+#content .mu_register #cp-multisite-options p
+{
+	padding: 5px 0;
+}
+
+#content .mu_register label.checkbox
+{
+	color: #000;
+	font-size: 1em;
+	padding: 0 10px 0 0;
+	margin: 0;
+	text-transform: none;
+}
+
+#content .mu_register #cp-multisite-options .checkbox label,
+#content .mu_register #cp-multisite-options .cp-blog-type label
+{
+	color: #000;
+	font-size: 1em;
+	font-weight: bold;
+	margin: 5px 0;
+	text-transform: none;
+}
+
+#content .mu_register #cp-multisite-options .dropdown label
+{
+	text-transform: none;
+	font-size: 1em;
+	color: #761D19;
+}
+
+#content .mu_register p.submit
+{
+	padding: 30px 0 0 0;
+}
+
+#content .mu_register p.submit input
+{
+	width: auto;
+	font-size: 1em;
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
+Support for WordPress Activation Page.
+--------------------------------------------------------------------------------
+*/
+
+/* content */
+#content .wp-activate-container
+{
+	padding: 45px 0;
+}
+
+#content .wp-activate-container h2
+{
+	font-family: Georgia, serif;
+	font-size: 1.55em;
+	font-weight: normal;
+	color: #761D19;
+	margin: 8px 0 16px 0;
+	padding: 0 60px 0 77px;
+}
+
+#content .wp-activate-container p
+{
+	font-size: 1em;
+	line-height: 1.45;
+	margin: 7px 0 11px 0;
+	padding: 0 60px 0 77px;
+}
+
+#content .wp-activate-container ul
+{
+	font-size: 1em;
+	line-height: 1.45;
+	padding: 7px 0 4px 0;
+	background-color: #CBFFBD;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+
+#content .wp-activate-container ul li
+{
+	font-size: 1.2em;
+	line-height: 1.45;
+	margin: 0 15px;
+	padding: 0px 0 7px 0;
+}
+
+#content .wp-activate-container a
+{
+	text-decoration: underline;
+}
+
+#content .wp-activate-container #signup-welcome
+{
+	padding: 7px;
+	margin: 7px 60px 7px 77px;
+	background-color: #CBFFBD;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+
+	#content .wp-activate-container #signup-welcome p
+	{
+		padding: 0;
+	}
+
+#content .wp-activate-container #activateform label
+{
+	color: #761D19;
+	font-size: 1.2em;
+}
+
+#content .wp-activate-container #signup-welcome span.h3
+{
+	text-transform: uppercase;
+	font-size: 1em;
+	line-height: 1.2;
+	font-family: sans-serif;
+	color: #761D19;
+}
+
+#content .wp-activate-container #activateform p
+{
+	padding-top: 30px;
+}
+
+#content .wp-activate-container p.submit input
+{
+	width: auto;
+	font-size: 100%;
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
 RESPONSIVENESS
 --------------------------------------------------------------------------------
 */

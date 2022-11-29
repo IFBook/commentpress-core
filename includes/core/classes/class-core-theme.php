@@ -250,7 +250,7 @@ class CommentPress_Core_Theme {
 		if ( $theme !== false ) {
 
 			// We're in a Group Blog context: BuddyPress Group Blog will already have set
-			// the theme because we're adding our wpmu_new_blog action after it.
+			// the theme because we're adding our "wpmu_new_blog" action after it.
 
 			// --<
 			return;

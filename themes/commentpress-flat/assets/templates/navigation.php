@@ -78,11 +78,11 @@ if ( ! empty( $core ) ) {
 							$group_url = bp_get_group_permalink( $group );
 
 							/**
-							 * Filters the Network Home title.
+							 * Filters the Group Home Page title.
 							 *
 							 * @since 3.4
 							 *
-							 * @param str The default Network Home title.
+							 * @param str The default Group Home Page title.
 							 */
 							$group_title = apply_filters( 'cp_nav_group_home_title', __( 'Group Home Page', 'commentpress-core' ) );
 
@@ -214,7 +214,7 @@ if ( ! empty( $core ) ) {
 
 					<?php else : /* Standard WordPress multisite. */ ?>
 
-						<li>
+						<li<?php echo ( commentpress_page_navigation_is_signup() ? ' class="active_page"' : '' ); ?>>
 							<a href="<?php echo network_site_url(); ?>wp-signup.php" title="<?php esc_attr( $new_site_title ); ?>" id="btn_create"><?php echo esc_html( $new_site_title ); ?></a>
 						</li>
 
@@ -247,7 +247,9 @@ if ( ! empty( $core ) ) {
 
 			<?php endif; ?>
 
-			<li><?php wp_loginout(); ?></li>
+			<li<?php echo ( commentpress_page_navigation_is_login() ? ' class="active_page"' : '' ); ?>>
+				<?php wp_loginout(); ?>
+			</li>
 
 		</ul>
 

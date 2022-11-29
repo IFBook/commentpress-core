@@ -1986,17 +1986,14 @@ class CommentPress_Multisite_BuddyPress {
 			// If we got any, use them.
 			if ( ! empty( $types ) ) {
 
-				// Define Blog Type label.
-				$type_label = __( 'Document Type', 'commentpress-core' );
-
 				/**
 				 * Filters the Blog Type label.
 				 *
 				 * @since 3.3.1
 				 *
-				 * @param str $type_title The the Blog Type label.
+				 * @param str The default Blog Type label.
 				 */
-				$type_label = apply_filters( 'cp_blog_type_label', $type_label );
+				$type_label = apply_filters( 'cp_blog_type_label', __( 'Document Type', 'commentpress-core' ) );
 
 				// Construct options.
 				$type_option_list = [];
@@ -2222,17 +2219,14 @@ class CommentPress_Multisite_BuddyPress {
 		// If we got any, use them.
 		if ( ! empty( $types ) ) {
 
-			// Define Blog Type label.
-			$type_label = __( 'Document Type', 'commentpress-core' );
-
 			/**
 			 * Filters the Blog Type label.
 			 *
 			 * @since 3.3.1
 			 *
-			 * @param str $type_title The the Blog Type label.
+			 * @param str The default Blog Type label.
 			 */
-			$type_label = apply_filters( 'cp_blog_type_label', $type_label );
+			$type_label = apply_filters( 'cp_blog_type_label', __( 'Document Type', 'commentpress-core' ) );
 
 			// Construct options.
 			$type_option_list = [];
