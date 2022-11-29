@@ -119,13 +119,13 @@ class CommentPress_Core_Entry_Document {
 	private $key_layout = 'cp_page_layout';
 
 	/**
-	 * Partials template directory path.
+	 * Parts template directory path.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Partials directory.
+	 * @var string $metabox_path Relative path to the Parts directory.
 	 */
-	private $partials_path = 'includes/core/assets/templates/wordpress/partials/';
+	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
 
 	/**
 	 * Prevent "save_post" callback from running more than once.
@@ -201,7 +201,7 @@ class CommentPress_Core_Entry_Document {
 		$page_meta_visibility = $this->core->db->setting_get( 'cp_page_meta_visibility' );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-entry-document-settings.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-entry-document-settings.php';
 
 	}
 
@@ -264,7 +264,7 @@ class CommentPress_Core_Entry_Document {
 		$number = $this->paragraph_start_number_get( $post );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-entry-document-entry.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-entry-document-entry.php';
 
 	}
 

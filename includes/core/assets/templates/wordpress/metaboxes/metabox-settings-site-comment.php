@@ -8,7 +8,7 @@
  */
 
 ?>
-<!-- includes/core/assets/templates/wordpress/metaboxes/metabox-settings-site-comment.php -->
+<!-- <?php echo $this->metabox_path; ?>metabox-settings-site-comment.php -->
 <table class="form-table">
 
 	<tr valign="top">

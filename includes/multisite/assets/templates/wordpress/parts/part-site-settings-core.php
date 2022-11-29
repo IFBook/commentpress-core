@@ -11,7 +11,7 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<!-- <?php echo $this->partials_path; ?>partial-sites-settings-core.php -->
+<!-- <?php echo $this->parts_path; ?>part-sites-settings-core.php -->
 <tr valign="top">
 	<th scope="row">
 		<label for="<?php echo $this->key_disable; ?>"><?php esc_html_e( 'Disable CommentPress on this site', 'commentpress-core' ); ?></label>

@@ -11,7 +11,7 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<!-- <?php echo $this->partials_path; ?>partial-sites-signup.php -->
+<!-- <?php echo $this->parts_path; ?>part-sites-signup.php -->
 <br />
 <div id="cp-multisite-options">
 

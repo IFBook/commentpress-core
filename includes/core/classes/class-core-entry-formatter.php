@@ -78,13 +78,13 @@ class CommentPress_Core_Entry_Formatter {
 	private $element_select = 'cp_formatter_value';
 
 	/**
-	 * Partials template directory path.
+	 * Parts template directory path.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Partials directory.
+	 * @var string $metabox_path Relative path to the Parts directory.
 	 */
-	private $partials_path = 'includes/core/assets/templates/wordpress/partials/';
+	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
 
 	/**
 	 * Prevent "save_post" callback from running more than once.
@@ -196,7 +196,7 @@ class CommentPress_Core_Entry_Formatter {
 		$type_options = $this->formats_select_options_get( $types, $blog_type, $show_default = false );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-entry-formatter-settings.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-entry-formatter-settings.php';
 
 	}
 
@@ -249,7 +249,7 @@ class CommentPress_Core_Entry_Formatter {
 		$type_options = $this->formats_select_options_get( $types, $value );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-entry-formatter-entry.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-entry-formatter-entry.php';
 
 	}
 

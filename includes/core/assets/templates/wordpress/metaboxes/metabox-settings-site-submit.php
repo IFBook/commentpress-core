@@ -8,7 +8,7 @@
  */
 
 ?>
-<!-- includes/core/assets/templates/wordpress/metaboxes/metabox-settings-site-submit.php -->
+<!-- <?php echo $this->metabox_path; ?>metabox-settings-site-submit.php -->
 <div class="submitbox">
 	<div id="minor-publishing">
 		<div id="misc-publishing-actions">

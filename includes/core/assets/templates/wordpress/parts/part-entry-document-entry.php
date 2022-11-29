@@ -8,7 +8,7 @@
  */
 
 ?>
-<!-- includes/core/assets/templates/wordpress/partials/partial-entry-document-entry.php -->
+<!-- <?php echo $this->parts_path; ?>part-entry-document-entry.php -->
 <div class="cp_title_visibility_wrapper">
 	<p><strong><label for="cp_title_visibility"><?php esc_html_e( 'Page Title Visibility', 'commentpress-core' ); ?></label></strong></p>
 	<p>

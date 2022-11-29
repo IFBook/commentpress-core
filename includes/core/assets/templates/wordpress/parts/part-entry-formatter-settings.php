@@ -8,7 +8,7 @@
  */
 
 ?>
-<!-- includes/core/assets/templates/wordpress/partials/partial-entry-formatter-settings.php -->
+<!-- <?php echo $this->parts_path; ?>part-entry-formatter-settings.php -->
 <tr valign="top">
 	<th scope="row">
 		<label for="<?php echo $this->option_formatter; ?>"><?php echo esc_html( $type_title ); ?></label>

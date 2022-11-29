@@ -8,7 +8,7 @@
  */
 
 ?>
-<!-- includes/core/assets/templates/wordpress/partials/partial-entry-formatter-entry.php -->
+<!-- <?php echo $this->parts_path; ?>part-entry-formatter-entry.php -->
 <div class="<?php echo $this->element_select; ?>_wrapper">
 	<p><strong><label for="<?php echo $this->element_select; ?>"><?php esc_html_e( 'Text Format', 'commentpress-core' ); ?></label></strong></p>
 	<p>

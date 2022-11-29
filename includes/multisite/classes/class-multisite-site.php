@@ -47,13 +47,13 @@ class CommentPress_Multisite_Site {
 	public $key_disable = 'cpmu_activate_commentpress';
 
 	/**
-	 * Partials template directory path.
+	 * Parts template directory path.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Partials directory.
+	 * @var string $metabox_path Relative path to the Parts directory.
 	 */
-	private $partials_path = 'includes/multisite/assets/templates/wordpress/partials/';
+	private $parts_path = 'includes/multisite/assets/templates/wordpress/parts/';
 
 	/**
 	 * Constructor.
@@ -362,7 +362,7 @@ class CommentPress_Multisite_Site {
 	public function metabox_settings_get() {
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-site-settings-site.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-site-settings-site.php';
 
 	}
 
@@ -399,7 +399,7 @@ class CommentPress_Multisite_Site {
 	public function metabox_settings_core_get() {
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->partials_path . 'partial-site-settings-core.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-site-settings-core.php';
 
 	}
 

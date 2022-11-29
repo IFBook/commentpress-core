@@ -8,7 +8,7 @@
  */
 
 ?>
-<!-- includes/core/assets/templates/wordpress/metaboxes/metabox-settings-site-toc.php -->
+<!-- <?php echo $this->metabox_path; ?>metabox-settings-site-toc.php -->
 <table class="form-table">
 
 	<tr valign="top" class="show_posts_or_pages">

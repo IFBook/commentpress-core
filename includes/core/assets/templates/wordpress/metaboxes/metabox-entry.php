@@ -8,7 +8,7 @@
  */
 
 ?>
-<!-- includes/core/assets/templates/wordpress/metaboxes/metabox-entry.php -->
+<!-- <?php echo $this->metabox_path; ?>metabox-entry.php -->
 <?php wp_nonce_field( $this->nonce_value, $this->nonce_name ); ?>
 
 <?php

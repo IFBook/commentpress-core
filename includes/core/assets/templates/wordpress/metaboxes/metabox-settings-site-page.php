@@ -8,7 +8,7 @@
  */
 
 ?>
-<!-- includes/core/assets/templates/wordpress/metaboxes/metabox-settings-site-page.php -->
+<!-- <?php echo $this->metabox_path; ?>metabox-settings-site-page.php -->
 <table class="form-table">
 
 	<?php

@@ -8,7 +8,7 @@
  */
 
 ?>
-<!-- includes/core/assets/templates/wordpress/metaboxes/metabox-revisions.php -->
+<!-- <?php echo $this->metabox_path; ?>metabox-revisions.php -->
 <?php wp_nonce_field( $this->nonce_value, $this->nonce_name ); ?>
 
 <?php if ( ! empty( $newer_post_id ) ) : ?>
