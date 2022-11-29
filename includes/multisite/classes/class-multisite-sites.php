@@ -48,7 +48,7 @@ class CommentPress_Multisite_Sites {
 	 * @access public
 	 * @var str $key_sites The settings key for the array of "CommentPress Sites enabled on the Network" setting.
 	 */
-	public $key_sites = 'sites';
+	public $key_sites = 'commentpress_sites';
 
 	/**
 	 * "CommentPress Core enabled on all Sites" settings key.
@@ -122,7 +122,7 @@ class CommentPress_Multisite_Sites {
 		add_action( 'commentpress/multisite/deactivate', [ $this, 'plugin_deactivate' ], 10 );
 
 		// Act when plugin is network-active and core is "soft activated".
-		add_action( 'commentpress/multisite/site/core/activated/after', [ $this, 'core_site_id_add' ], 10, 2 );
+		add_action( 'commentpress/multisite/site/core/activated/after', [ $this, 'core_site_id_add' ], 10 );
 
 		// Act when plugin is network-active and core is "soft deactivated".
 		add_action( 'commentpress/multisite/site/core/deactivated/after', [ $this, 'core_site_id_remove' ], 10 );
@@ -132,6 +132,11 @@ class CommentPress_Multisite_Sites {
 
 		// Act when plugin is not network-active and core is "optionally deactivated".
 		add_action( 'commentpress/core/deactivate', [ $this, 'core_site_deactivated' ], 50 );
+
+		// Listens for attempts to register a core Site ID.
+		add_action( 'commentpress/multisite/sites/core/register', [ $this, 'core_site_id_add' ], 10 );
+
+		// ---------------------------------------------------------------------
 
 		// Add our option to the Network Settings "General Settings" metabox.
 		add_action( 'commentpress/multisite/settings/network/metabox/general/after', [ $this, 'metabox_settings_get' ] );
@@ -356,16 +361,15 @@ class CommentPress_Multisite_Sites {
 	 * @since 4.0
 	 *
 	 * @param int $site_id The numeric ID of the Site.
-	 * @param str $context The activation context.
 	 */
-	public function core_site_id_add( $site_id, $context = '' ) {
+	public function core_site_id_add( $site_id ) {
 
 		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
 		error_log( print_r( [
 			'method' => __METHOD__,
-			'site_id' => $site_id,
+			'site_id-TO-ADD' => $site_id,
 			//'backtrace' => $trace,
 		], true ) );
 		*/
@@ -398,7 +402,7 @@ class CommentPress_Multisite_Sites {
 		$trace = $e->getTraceAsString();
 		error_log( print_r( [
 			'method' => __METHOD__,
-			'site_id' => $site_id,
+			'site_id-TO-REMOVE' => $site_id,
 			'backtrace' => $trace,
 		], true ) );
 		*/

@@ -162,7 +162,7 @@ class CommentPress_Multisite_Site {
 		 *
 		 * @param int $site_id The current Site ID.
 		 */
-		do_action( 'commentpress/multisite/core/activated/before', $site_id );
+		do_action( 'commentpress/multisite/site/core/activated/before', $site_id );
 
 		// Run core activation hook.
 		do_action( 'commentpress/core/activate', $network_wide = false );
@@ -178,7 +178,7 @@ class CommentPress_Multisite_Site {
 		 *
 		 * @param int $site_id The current Site ID.
 		 */
-		do_action( 'commentpress/multisite/core/activated/after', $site_id );
+		do_action( 'commentpress/multisite/site/core/activated/after', $site_id );
 
 		/*
 		------------------------------------------------------------------------
@@ -249,7 +249,7 @@ class CommentPress_Multisite_Site {
 		 *
 		 * @param int $site_id The current Site ID.
 		 */
-		do_action( 'commentpress/multisite/core/deactivated/before', $site_id );
+		do_action( 'commentpress/multisite/site/core/deactivated/before', $site_id );
 
 		// Run core deactivation hook.
 		do_action( 'commentpress/core/deactivate', $network_wide = false );

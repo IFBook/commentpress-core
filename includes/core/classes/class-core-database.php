@@ -518,13 +518,17 @@ class CommentPress_Core_Database {
 		}
 		*/
 
-		/*
 		// Things to always check on upgrade.
 		if ( $this->is_upgrade ) {
-			// Add them here.
+
+			// Make sure that this site is registered in multisite.
+			// TODO: Perhaps save a setting locally.
+			add_action( 'init', [ $this, 'register_on_network' ] );
+
+			// Maybe save settings.
 			//$save = true;
+
 		}
-		*/
 
 		/**
 		 * Filters the "Save settings" flag.
@@ -1044,6 +1048,39 @@ class CommentPress_Core_Database {
 
 	}
 
+	/**
+	 * Ensures that this site is registered in multisite.
+	 *
+	 * This is needed because this is new functionality in 4.0 and there are
+	 * going to be existing Sites on the network if this is not a fresh install.
+	 *
+	 * @see CommentPress_Multisite_Sites
+	 *
+	 * @since 4.0
+	 */
+	public function register_on_network() {
+
+		// Bail if not multisite.
+		if ( ! is_multisite() ) {
+			return;
+		}
+
+		// Get the current Site ID.
+		$site_id = get_current_blog_id();
+
+		/**
+		 * Fires the action to which the Multisite Sites class listens.
+		 *
+		 * @since 4.0
+		 *
+		 * @param int $site_id The numeric ID of the Site.
+		 */
+		do_action( 'commentpress/multisite/sites/core/register', $site_id );
+
+	}
+
+	// -------------------------------------------------------------------------
+
 	/*
 	 * -------------------------------------------------------------------------
 	 * Methods below are legacy methods and should no longer be used.
@@ -1055,18 +1092,6 @@ class CommentPress_Core_Database {
 	 *
 	 * -------------------------------------------------------------------------
 	 */
-
-	/**
-	 * Gets the WordPress Post Types that CommentPress supports.
-	 *
-	 * @since 3.9
-	 *
-	 * @return array $supported_post_types The array of Post Types that have an editor.
-	 */
-	public function get_supported_post_types() {
-		_deprecated_function( __METHOD__, '4.0' );
-		return $this->post_types_get_supported();
-	}
 
 	/**
 	 * Saves CommentPress Core options array in a WordPress option.
@@ -1140,6 +1165,18 @@ class CommentPress_Core_Database {
 	public function option_delete( $name ) {
 		_deprecated_function( __METHOD__, '4.0' );
 		$this->setting_delete( $name );
+	}
+
+	/**
+	 * Gets the WordPress Post Types that CommentPress supports.
+	 *
+	 * @since 3.9
+	 *
+	 * @return array $supported_post_types The array of Post Types that have an editor.
+	 */
+	public function get_supported_post_types() {
+		_deprecated_function( __METHOD__, '4.0' );
+		return $this->post_types_get_supported();
 	}
 
 }
