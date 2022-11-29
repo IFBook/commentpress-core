@@ -665,7 +665,7 @@ class CommentPress_Multisite_Sites {
 			$meta['commentpress'] = $metadata;
 		}
 
-		///*
+		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
 		error_log( print_r( [
@@ -673,7 +673,7 @@ class CommentPress_Multisite_Sites {
 			'meta' => $meta,
 			//'backtrace' => $trace,
 		], true ) );
-		//*/
+		*/
 
 		// --<
 		return $meta;
@@ -693,7 +693,7 @@ class CommentPress_Multisite_Sites {
 	 */
 	public function site_initialise( $new_site, $args ) {
 
-		///*
+		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
 		error_log( print_r( [
@@ -702,14 +702,14 @@ class CommentPress_Multisite_Sites {
 			'args' => $args,
 			//'backtrace' => $trace,
 		], true ) );
-		//*/
+		*/
 
 		// Bail if none of our meta is present.
 		if ( empty( $args['options']['commentpress'] ) ) {
 			return;
 		}
 
-		///*
+		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
 		error_log( print_r( [
@@ -717,7 +717,7 @@ class CommentPress_Multisite_Sites {
 			'one' => 'here',
 			//'backtrace' => $trace,
 		], true ) );
-		//*/
+		*/
 
 		// Get "CommentPress Core enabled on all Sites" setting.
 		$forced = $this->multisite->db->setting_get( $this->key_forced );
@@ -732,7 +732,7 @@ class CommentPress_Multisite_Sites {
 			}
 		}
 
-		///*
+		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
 		error_log( print_r( [
@@ -740,7 +740,7 @@ class CommentPress_Multisite_Sites {
 			'two' => 'here',
 			//'backtrace' => $trace,
 		], true ) );
-		//*/
+		*/
 
 		// Switch to the site.
 		switch_to_blog( $new_site->blog_id );
