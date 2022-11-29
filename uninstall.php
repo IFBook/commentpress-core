@@ -11,9 +11,53 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 }
 
 /**
- * Restore WordPress database schema.
+ * Restores all CommentPress-enabled Sites.
  *
- * In Multisite, this needs to target the Sites on which CommentPress Core was active.
+ * NOTE: For a large Network, this could be a very lengthy process. At some point,
+ * there will be an AJAX-driven UI for this task.
+ *
+ * @since 4.0
+ */
+function commentpress_sites_restore() {
+
+	// Only restore current Site if not multisite.
+	if ( ! is_multisite() ) {
+		commentpress_schema_restore();
+		return;
+	}
+
+	// Get the Site IDs.
+	$site_ids = get_site_option( 'commentpress_sites', [] );
+	if ( empty( $site_ids ) ) {
+		return;
+	}
+
+	// Restore each Site.
+	foreach ( $site_ids as $site_id ) {
+
+		// We have to switch to the Blog.
+		switch_to_blog( $site_id );
+
+		// Restore WordPress database schema.
+		commentpress_schema_restore();
+
+		// Delete options.
+		commentpress_options_delete();
+
+	}
+
+	// Restore.
+	restore_current_blog();
+
+	// Delete multisite options.
+	commentpress_site_options_delete();
+
+}
+
+/**
+ * Restores the WordPress database schema.
+ *
+ * @since 3.0
  *
  * @return boolean $result The result of the database operation.
  */
@@ -32,40 +76,53 @@ function commentpress_schema_restore() {
 		"ALTER TABLE `$wpdb->comments` DROP `comment_signature`;"
 	);
 
+	// Write something to the logs on failure.
+	if ( ! $result ) {
+
+		// Build message.
+		$message = sprintf(
+			'Could not drop "comment_signature" column in table "%s".',
+			$wpdb->comments
+		);
+
+		// Write to log.
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'CommentPress Uninstall Error' => $message,
+		], true ) );
+
+	}
+
 	// --<
 	return $result;
 
 }
 
-// Restore database schema.
-$success = commentpress_schema_restore();
-
-// Write something to the logs on failure.
-if ( ! $success ) {
-	$e = new \Exception();
-	$trace = $e->getTraceAsString();
-	error_log( print_r( [
-		'commentpress-uninstall-error' => __( 'Could not drop comment signature column.', 'commentpress-core' ),
-	], true ) );
-}
-
-/*
- * Delete core options.
+/**
+ * Deletes the core options.
  *
  * Make sure these match those declared in CommentPress_Core_Database.
+ *
+ * @since 4.0
  */
-delete_option( 'commentpress_version' );
-delete_option( 'commentpress_options' );
+function commentpress_options_delete() {
+	delete_option( 'commentpress_version' );
+	delete_option( 'commentpress_options' );
+}
 
-// Are we deleting in multisite?
-if ( is_multisite() ) {
-
-	/*
-	 * Delete multisite options.
-	 *
-	 * Make sure these match those declared in CommentPress_Multisite_Database.
-	 */
+/**
+ * Deletes the multisite options.
+ *
+ * Make sure these match those declared in CommentPress_Multisite_Database.
+ *
+ * @since 4.0
+ */
+function commentpress_site_options_delete() {
 	delete_site_option( 'cpmu_options' );
 	delete_site_option( 'cpmu_version' );
-
+	delete_site_option( 'commentpress_sites' );
 }
+
+// Restore all Sites to pre-CommentPress state.
+commentpress_sites_restore();
