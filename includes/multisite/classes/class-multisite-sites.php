@@ -133,9 +133,6 @@ class CommentPress_Multisite_Sites {
 		// Act when plugin is not network-active and core is "optionally deactivated".
 		add_action( 'commentpress/core/deactivate', [ $this, 'core_site_deactivated' ], 50 );
 
-		// Listens for attempts to register a core Site ID.
-		add_action( 'commentpress/multisite/sites/core/register', [ $this, 'core_site_id_add' ], 10 );
-
 		// ---------------------------------------------------------------------
 
 		// Add our option to the Network Settings "General Settings" metabox.

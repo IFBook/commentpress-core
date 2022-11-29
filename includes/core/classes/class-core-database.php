@@ -523,7 +523,7 @@ class CommentPress_Core_Database {
 
 			// Make sure that this site is registered in multisite.
 			// TODO: Perhaps save a setting locally.
-			add_action( 'init', [ $this, 'register_on_network' ] );
+			$this->register_on_network();
 
 			// Maybe save settings.
 			//$save = true;
@@ -1060,22 +1060,17 @@ class CommentPress_Core_Database {
 	 */
 	public function register_on_network() {
 
-		// Bail if not multisite.
-		if ( ! is_multisite() ) {
+		// Get multisite reference.
+		$multisite = commentpress_multisite();
+		if ( empty( $multisite ) ) {
 			return;
 		}
 
 		// Get the current Site ID.
 		$site_id = get_current_blog_id();
 
-		/**
-		 * Fires the action to which the Multisite Sites class listens.
-		 *
-		 * @since 4.0
-		 *
-		 * @param int $site_id The numeric ID of the Site.
-		 */
-		do_action( 'commentpress/multisite/sites/core/register', $site_id );
+		// Register this site on the network.
+		$multisite->sites->core_site_id_add( $site_id );
 
 	}
 
