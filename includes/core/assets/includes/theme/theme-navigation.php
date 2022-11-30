@@ -357,6 +357,35 @@ endif;
 
 
 
+if ( ! function_exists( 'commentpress_navigation_network_home_title' ) ) :
+
+	/**
+	 * Gets the "Network Home" title.
+	 *
+	 * @since 4.0
+	 *
+	 * @return str $title The default "Network Home" title.
+	 */
+	function commentpress_navigation_network_home_title() {
+
+		/**
+		 * Filters the Network Home title.
+		 *
+		 * @since 3.4
+		 *
+		 * @param str The default Network Home title.
+		 */
+		$title = apply_filters( 'cp_nav_network_home_title', __( 'Site Home Page', 'commentpress-core' ) );
+
+		// --<
+		return $title;
+
+	}
+
+endif;
+
+
+
 if ( ! function_exists( 'commentpress_get_page_number' ) ) :
 
 	/**

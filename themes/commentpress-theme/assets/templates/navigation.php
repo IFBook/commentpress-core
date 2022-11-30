@@ -194,19 +194,10 @@ if ( ! empty( $core ) ) {
 
 				// TODO: We need to account for situations where no CommentPress Core Special Pages exist.
 
-				/**
-				 * Filters the Network Home title.
-				 *
-				 * @since 3.4
-				 *
-				 * @param str The default Network Home title.
-				 */
-				$site_title = apply_filters( 'cp_nav_network_home_title', __( 'Site Home Page', 'commentpress-core' ) );
-
 				?>
 
 				<li>
-					<a href="<?php echo network_home_url(); ?>" id="btn_home" class="css_btn" title="<?php echo esc_attr( $site_title ); ?>"><?php echo esc_html( $site_title ); ?></a>
+					<a href="<?php echo network_home_url(); ?>" id="btn_home" class="css_btn" title="<?php echo esc_attr( $site_title ); ?>"><?php echo esc_html( commentpress_navigation_network_home_title() ); ?></a>
 				</li>
 
 				<?php if ( $core->bp->is_groupblog() ) : ?>
