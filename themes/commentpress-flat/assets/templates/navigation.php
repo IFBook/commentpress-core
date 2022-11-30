@@ -2,6 +2,8 @@
 /**
  * Navigation Template.
  *
+ * TODO: We need to account for situations where no CommentPress Core Special Pages exist.
+ *
  * @package CommentPress_Core
  */
 
@@ -17,7 +19,8 @@ if ( ! empty( $core ) ) {
 	$title_url = $core->pages_legacy->get_page_url( 'cp_welcome_page' );
 }
 
-?><!-- navigation.php -->
+?>
+<!-- themes/commentpress-flat/assets/templates/navigation.php -->
 <div id="document_nav">
 	<div id="document_nav_wrapper">
 
@@ -27,15 +30,10 @@ if ( ! empty( $core ) ) {
 
 				<?php if ( is_multisite() ) : ?>
 
-					<?php
+					<?php $site_title = commentpress_navigation_network_home_title(); ?>
 
-					// TODO: We need to account for situations where no CommentPress Core Special Pages exist.
-
-					// Use as link to main Blog in multisite.
-					// Show home.
-					?>
 					<li>
-						<a href="<?php echo network_home_url(); ?>" id="btn_home" class="css_btn" title="<?php echo esc_attr( $site_title ); ?>"><?php echo esc_html( commentpress_navigation_network_home_title() ); ?></a>
+						<a href="<?php echo network_home_url(); ?>" id="btn_home" class="css_btn" title="<?php echo esc_attr( $site_title ); ?>"><?php echo esc_html( $site_title ); ?></a>
 					</li>
 
 					<?php
@@ -83,12 +81,7 @@ if ( ! empty( $core ) ) {
 
 					<?php if ( (int) $title_id !== (int) get_option( 'page_on_front' ) ) : ?>
 
-						<?php
-
-						// Get the Home Page title.
-						$home_title = commentpress_navigation_blog_home_title();
-
-						?>
+						<?php $home_title = commentpress_navigation_blog_home_title(); ?>
 
 						<li>
 							<a href="<?php echo home_url(); ?>" id="btn_home" class="css_btn" title="<?php echo esc_attr( $home_title ); ?>"><?php echo esc_html( $home_title ); ?></a>
@@ -100,12 +93,7 @@ if ( ! empty( $core ) ) {
 
 				<?php if ( ! empty( $title_url ) ) : ?>
 
-					<?php
-
-					// Gets the Welcome Page title.
-					$title_title = commentpress_navigation_title_page_title();
-
-					?>
+					<?php $title_title = commentpress_navigation_title_page_title(); ?>
 
 					<li>
 						<a href="<?php echo $title_url; ?>" id="btn_cover" class="css_btn" title="<?php echo esc_attr( $title_title ); ?>"><?php echo esc_html( $title_title ); ?></a>
@@ -152,12 +140,7 @@ if ( ! empty( $core ) ) {
 
 				<?php if ( ( is_user_logged_in() && get_site_option( 'registration' ) == 'blog' ) || get_site_option( 'registration' ) == 'all' ) : ?>
 
-					<?php
-
-					// Gets the New Site title.
-					$new_site_title = commentpress_navigation_new_site_title();
-
-					?>
+					<?php $new_site_title = commentpress_navigation_new_site_title(); ?>
 
 					<?php if ( function_exists( 'bp_get_blogs_root_slug' ) ) : /* BuddyPress Site Tracking is active. */ ?>
 
@@ -183,12 +166,7 @@ if ( ! empty( $core ) ) {
 
 				<?php if ( is_user_logged_in() ) : ?>
 
-					<?php
-
-					// Get the Dashboard title.
-					$dashboard_title = commentpress_navigation_dashboard_title();
-
-					?>
+					<?php $dashboard_title = commentpress_navigation_dashboard_title(); ?>
 
 					<li>
 						<a href="<?php echo admin_url(); ?>" title="<?php echo esc_attr( $dashboard_title ); ?>" id="btn_dash"><?php echo esc_html( $dashboard_title ); ?></a>

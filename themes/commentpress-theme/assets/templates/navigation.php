@@ -2,6 +2,8 @@
 /**
  * Navigation Template.
  *
+ * TODO: We need to account for situations where no CommentPress Core Special Pages exist.
+ *
  * @package CommentPress_Core
  */
 
@@ -190,14 +192,10 @@ if ( ! empty( $core ) ) {
 
 			<?php if ( is_multisite() ) : ?>
 
-				<?php
-
-				// TODO: We need to account for situations where no CommentPress Core Special Pages exist.
-
-				?>
+				<?php $site_title = commentpress_navigation_network_home_title(); ?>
 
 				<li>
-					<a href="<?php echo network_home_url(); ?>" id="btn_home" class="css_btn" title="<?php echo esc_attr( $site_title ); ?>"><?php echo esc_html( commentpress_navigation_network_home_title() ); ?></a>
+					<a href="<?php echo network_home_url(); ?>" id="btn_home" class="css_btn" title="<?php echo esc_attr( $site_title ); ?>"><?php echo esc_html( $site_title ); ?></a>
 				</li>
 
 				<?php if ( $core->bp->is_groupblog() ) : ?>
