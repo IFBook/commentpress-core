@@ -280,17 +280,14 @@ class CommentPress_Multisite_Site {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Checks if the current Blog is CommentPress Core-enabled.
+	 * Checks if the current Blog is registered as CommentPress Core-enabled.
 	 *
 	 * @since 3.3
 	 *
 	 * @param int $blog_id The ID of the Blog to check.
-	 * @return bool $core_active True if CommentPress Core-enabled, false otherwise.
+	 * @return bool True if CommentPress Core-enabled, false otherwise.
 	 */
 	public function is_commentpress( $blog_id = false ) {
-
-		// Init return.
-		$core_active = false;
 
 		// Get current Site ID if the Blog ID isn't passed.
 		if ( $blog_id === false ) {
@@ -299,26 +296,49 @@ class CommentPress_Multisite_Site {
 
 		// Bail if we still don't have one.
 		if ( empty( $blog_id ) ) {
-			return $core_active;
+			return false;
 		}
 
 		// Try to get the active Site IDs.
 		$site_ids = $this->multisite->sites->core_site_ids_get();
-		if ( empty( $site_ids ) ) {
-			return $core_active;
-		}
 
 		// Is this Site active?
-		if ( in_array( $blog_id, $site_ids ) ) {
-			$core_active = true;
+		if ( ! empty( $site_ids ) && in_array( $blog_id, $site_ids ) ) {
+			return true;
 		}
 
-		/*
+		// If we fail to find one, then this might be an upgrade.
+		// Let's use our legacy method for checking.
+		$core_active = $this->has_commentpress( $blog_id );
+
+		// --<
+		return $core_active;
+
+	}
+
+	/**
+	 * Checks if the current Blog has CommentPress Core data.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $blog_id The ID of the Blog to check.
+	 * @return bool $core_active True if CommentPress Core-enabled, false otherwise.
+	 */
+	public function has_commentpress( $blog_id = false ) {
+
+		// Assume not active.
+		$core_active = false;
+
+		// Get current Site ID if no Blog ID is passed in.
+		if ( $blog_id === false ) {
+			$blog_id = get_current_blog_id();
+		}
+
 		// Get current Blog ID.
 		$current_blog_id = get_current_blog_id();
 
 		// If we have a passed value and it's not this Blog.
-		if ( $blog_id !== 0 && (int) $current_blog_id !== (int) $blog_id ) {
+		if ( ! empty( $blog_id ) && (int) $current_blog_id !== (int) $blog_id ) {
 
 			// We need to switch to it.
 			switch_to_blog( $blog_id );
@@ -328,24 +348,18 @@ class CommentPress_Multisite_Site {
 
 		// TODO: Checking for Special Pages seems a fragile way to test for CommentPress Core.
 
-		// Do we have CommentPress Core options?
-		if ( get_option( 'commentpress_options', false ) ) {
+		// Try to get the CommentPress Core options.
+		$commentpress_options = get_option( 'commentpress_options', false );
 
-			// Get them.
-			$commentpress_options = get_option( 'commentpress_options' );
-
-			// If we have "Special Pages", then the plugin must be active on this Blog.
-			if ( isset( $commentpress_options['cp_special_pages'] ) ) {
-				$core_active = true;
-			}
-
+		// If we have "Special Pages", then the plugin must be active on this Blog.
+		if ( ! empty( $commentpress_options['cp_special_pages'] ) ) {
+			$core_active = true;
 		}
 
 		// Do we need to switch back?
 		if ( isset( $switched ) && $switched === true ) {
 			restore_current_blog();
 		}
-		*/
 
 		// --<
 		return $core_active;

@@ -518,17 +518,25 @@ class CommentPress_Core_Database {
 		}
 		*/
 
-		// Things to always check on upgrade.
-		if ( $this->is_upgrade ) {
+		// The "registered in multisite" setting may not exist.
+		if ( is_multisite() && ! $this->setting_exists( 'network_registered' ) ) {
 
-			// Make sure that this site is registered in multisite.
-			// TODO: Perhaps save a setting locally.
+			// Make sure that this site is registered.
 			$this->register_on_network();
 
-			// Maybe save settings.
-			//$save = true;
+			// Save a setting locally.
+			$this->setting_set( 'network_registered', 'y' );
+			$save = true;
 
 		}
+
+		/*
+		// Things to always check on upgrade.
+		if ( $this->is_upgrade ) {
+			// Maybe save settings.
+			//$save = true;
+		}
+		*/
 
 		/**
 		 * Filters the "Save settings" flag.
