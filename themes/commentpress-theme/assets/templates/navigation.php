@@ -218,20 +218,12 @@ if ( ! empty( $core ) ) {
 						// When this Blog is a Group Blog.
 						$group = groups_get_group( [ 'group_id' => $group_id ] );
 						$group_url = bp_get_group_permalink( $group );
-
-						/**
-						 * Filters the Group Home Page title.
-						 *
-						 * @since 3.4
-						 *
-						 * @param str The default Group Home Page title.
-						 */
-						$group_title = apply_filters( 'cp_nav_group_home_title', __( 'Group Home Page', 'commentpress-core' ) );
+						$group_title = commentpress_navigation_group_home_title();
 
 						?>
 
 						<li>
-							<a href="<?php echo $group_url; ?>" id="btn_grouphome" class="css_btn" title="<?php echo $group_title; ?>"><?php echo $group_title; ?></a>
+							<a href="<?php echo esc_url( $group_url ); ?>" id="btn_grouphome" class="css_btn" title="<?php echo esc_attr( $group_title ); ?>"><?php echo esc_html( $group_title ); ?></a>
 						</li>
 
 					<?php endif; ?>
@@ -244,21 +236,13 @@ if ( ! empty( $core ) ) {
 
 					<?php
 
-					/**
-					 * Filters the Home Page title.
-					 *
-					 * Used if Blog home is not CommentPress Core Welcome Page.
-					 *
-					 * @since 3.4
-					 *
-					 * @param str The default Home Page title.
-					 */
-					$home_title = apply_filters( 'cp_nav_blog_home_title', __( 'Home Page', 'commentpress-core' ) );
+					// Get the Home Page title.
+					$home_title = commentpress_navigation_blog_home_title();
 
 					?>
 
 					<li>
-						<a href="<?php echo home_url(); ?>" id="btn_home" class="css_btn" title="<?php echo $home_title; ?>"><?php echo $home_title; ?></a>
+						<a href="<?php echo home_url(); ?>" id="btn_home" class="css_btn" title="<?php echo esc_attr( $home_title ); ?>"><?php echo esc_html( $home_title ); ?></a>
 					</li>
 
 				<?php endif; ?>
@@ -269,19 +253,13 @@ if ( ! empty( $core ) ) {
 
 				<?php
 
-				/**
-				 * Filters the Welcome Page title.
-				 *
-				 * @since 3.4
-				 *
-				 * @param str The default Welcome Page title.
-				 */
-				$title_title = apply_filters( 'cp_nav_title_page_title', __( 'Title Page', 'commentpress-core' ) );
+				// Gets the Welcome Page title.
+				$title_title = commentpress_navigation_title_page_title();
 
 				?>
 
 				<li>
-					<a href="<?php echo $title_url; ?>" id="btn_cover" class="css_btn" title="<?php echo $title_title; ?>"><?php echo $title_title; ?></a>
+					<a href="<?php echo $title_url; ?>" id="btn_cover" class="css_btn" title="<?php echo esc_attr( $title_title ); ?>"><?php echo esc_html( $title_title ); ?></a>
 				</li>
 
 			<?php endif; ?>

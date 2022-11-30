@@ -386,6 +386,159 @@ endif;
 
 
 
+if ( ! function_exists( 'commentpress_navigation_group_home_title' ) ) :
+
+	/**
+	 * Gets the "Group Home" title.
+	 *
+	 * @since 4.0
+	 *
+	 * @return str $title The default "Group Home" title.
+	 */
+	function commentpress_navigation_group_home_title() {
+
+		/**
+		 * Filters the Group Home Page title.
+		 *
+		 * @since 3.4
+		 *
+		 * @param str The default Group Home Page title.
+		 */
+		$title = apply_filters( 'cp_nav_group_home_title', __( 'Group Home Page', 'commentpress-core' ) );
+
+		// --<
+		return $title;
+
+	}
+
+endif;
+
+
+
+if ( ! function_exists( 'commentpress_navigation_blog_home_title' ) ) :
+
+	/**
+	 * Gets the "Blog Home" title.
+	 *
+	 * @since 4.0
+	 *
+	 * @return str $title The default "Blog Home" title.
+	 */
+	function commentpress_navigation_blog_home_title() {
+
+		/**
+		 * Filters the Home Page title.
+		 *
+		 * Used if Blog home is not CommentPress Core Welcome Page.
+		 *
+		 * @since 3.4
+		 *
+		 * @param str The default Home Page title.
+		 */
+		$title = apply_filters( 'cp_nav_blog_home_title', __( 'Home Page', 'commentpress-core' ) );
+
+		// --<
+		return $title;
+
+	}
+
+endif;
+
+
+
+if ( ! function_exists( 'commentpress_navigation_title_page_title' ) ) :
+
+	/**
+	 * Gets the "Welcome Page" title.
+	 *
+	 * @since 4.0
+	 *
+	 * @return str $title The default "Welcome Page" title.
+	 */
+	function commentpress_navigation_title_page_title() {
+
+		/**
+		 * Filters the Welcome Page title.
+		 *
+		 * @since 3.4
+		 *
+		 * @param str The default Welcome Page title.
+		 */
+		$title = apply_filters( 'cp_nav_title_page_title', __( 'Title Page', 'commentpress-core' ) );
+
+		// --<
+		return $title;
+
+	}
+
+endif;
+
+
+
+if ( ! function_exists( 'commentpress_navigation_new_site_title' ) ) :
+
+	/**
+	 * Gets the "New Site" title.
+	 *
+	 * @since 4.0
+	 *
+	 * @return str $title The default "New Site" title.
+	 */
+	function commentpress_navigation_new_site_title() {
+
+		/**
+		 * Filters the New Site title.
+		 *
+		 * This is used for multisite signup and Blog create.
+		 *
+		 * If BuddyPress Site Tracking is active, BuddyPress uses its
+		 * own Signup Page, so Blog create is not directly allowed -
+		 * it is done through Signup Page.
+		 *
+		 * @since 3.4
+		 *
+		 * @param str The default New Site title.
+		 */
+		$title = apply_filters( 'cp_user_links_new_site_title', __( 'Create a new document', 'commentpress-core' ) );
+
+		// --<
+		return $title;
+
+	}
+
+endif;
+
+
+
+if ( ! function_exists( 'commentpress_navigation_dashboard_title' ) ) :
+
+	/**
+	 * Gets the "Dashboard" title.
+	 *
+	 * @since 4.0
+	 *
+	 * @return str $title The default "Dashboard" title.
+	 */
+	function commentpress_navigation_dashboard_title() {
+
+		/**
+		 * Filters the Dashboard title.
+		 *
+		 * @since 3.4
+		 *
+		 * @param str The default Dashboard title.
+		 */
+		$title = apply_filters( 'cp_user_links_dashboard_title', __( 'Dashboard', 'commentpress-core' ) );
+
+		// --<
+		return $title;
+
+	}
+
+endif;
+
+
+
 if ( ! function_exists( 'commentpress_get_page_number' ) ) :
 
 	/**
