@@ -176,10 +176,10 @@ class CommentPress_Core_Loader {
 	 * Classes directory path.
 	 *
 	 * @since 4.0
-	 * @access public
+	 * @access private
 	 * @var string $classes_path Relative path to the classes directory.
 	 */
-	public $classes_path = 'includes/core/classes/';
+	private $classes_path = 'includes/core/classes/';
 
 	/**
 	 * Constructor.
@@ -229,14 +229,14 @@ class CommentPress_Core_Loader {
 		$this->register_hooks();
 
 		/**
-		 * Broadcast that CommentPress Core has loaded.
+		 * Fires when CommentPress Core has loaded.
 		 *
 		 * @since 3.6.3
 		 */
 		do_action_deprecated( 'commentpress_loaded', '4.0', 'commentpress/core/loaded' );
 
 		/**
-		 * Broadcast that CommentPress Core has loaded.
+		 * Fires when CommentPress Core has fully loaded.
 		 *
 		 * Used internally to bootstrap objects.
 		 *
@@ -285,7 +285,7 @@ class CommentPress_Core_Loader {
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-plugins.php';
 
 		/**
-		 * Broadcast that class files have been included.
+		 * Fires when class files have been included.
 		 *
 		 * @since 3.6.2
 		 */
@@ -345,7 +345,7 @@ class CommentPress_Core_Loader {
 		add_action( 'commentpress/deactivated', [ $this, 'plugin_deactivated' ], 10 );
 
 		/**
-		 * Broadcast that callbacks have been added.
+		 * Fires when callbacks have been added.
 		 *
 		 * @since 3.6.2
 		 */
@@ -676,11 +676,11 @@ class CommentPress_Core_Loader {
 	}
 
 	/**
-	 * Is this Blog a BuddyPress Group Blog?
+	 * Is this Blog a Group Blog?
 	 *
 	 * @since 3.4
 	 *
-	 * @return bool $bp_groupblog True when current Blog is a BuddyPress Group Blog, false otherwise.
+	 * @return bool $bp_groupblog True when current Blog is a Group Blog, false otherwise.
 	 */
 	public function is_groupblog() {
 		_deprecated_function( __METHOD__, '4.0' );

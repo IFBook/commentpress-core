@@ -38,11 +38,11 @@ class CommentPress_Core_BuddyPress {
 	public $buddypress = false;
 
 	/**
-	 * BuddyPress Group Blog flag.
+	 * BuddyPress Groupblog flag.
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var bool $bp_groupblog True if BuddyPress Group Blog present, false otherwise.
+	 * @var bool $bp_groupblog True if BuddyPress Groupblog present, false otherwise.
 	 */
 	public $bp_groupblog = false;
 
@@ -83,13 +83,10 @@ class CommentPress_Core_BuddyPress {
 	public function register_hooks() {
 
 		// Enable BuddyPress functionality.
-		add_action( 'bp_include', [ $this, 'buddypress_init' ] );
+		add_action( 'bp_include', [ $this, 'buddypress_present' ] );
 
 		// Add BuddyPress functionality - really late, so Group object is set up.
-		add_action( 'bp_setup_globals', [ $this, 'buddypress_globals_loaded' ], 1000 );
-
-		// Actions to perform on BuddyPress loaded.
-		add_action( 'bp_loaded', [ $this, 'bp_docs_loaded' ], 20 );
+		add_action( 'bp_setup_globals', [ $this, 'buddypress_groupblog_present' ], 100 );
 
 		// Actions to perform on BuddyPress Docs load.
 		add_action( 'bp_docs_load', [ $this, 'bp_docs_loaded' ], 20 );
@@ -102,70 +99,29 @@ class CommentPress_Core_BuddyPress {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Called when BuddyPress is active.
+	 * Sets a property when BuddyPress is active.
 	 *
 	 * @since 3.4
 	 */
-	public function buddypress_init() {
-
-		// We've got BuddyPress installed.
+	public function buddypress_present() {
 		$this->buddypress = true;
-
 	}
 
 	/**
-	 * Configure when BuddyPress is loaded.
-	 *
-	 * @since 3.4
-	 */
-	public function buddypress_globals_loaded() {
-
-		// Test for a bp-groupblog function.
-		if ( function_exists( 'get_groupblog_group_id' ) ) {
-
-			// Check if this Blog is a Group Blog.
-			$group_id = get_groupblog_group_id( get_current_blog_id() );
-			if ( isset( $group_id ) && is_numeric( $group_id ) && $group_id > 0 ) {
-
-				// Okay, we're properly configured.
-				$this->bp_groupblog = true;
-
-			}
-
-		}
-
-	}
-
-	/**
-	 * Is BuddyPress active?
+	 * Getter method for checking if BuddyPress is active.
 	 *
 	 * @since 3.4
 	 *
 	 * @return bool $buddypress True when BuddyPress active, false otherwise.
 	 */
 	public function is_buddypress() {
-
-		// --<
 		return $this->buddypress;
-
 	}
 
 	/**
-	 * Is this Blog a BuddyPress Group Blog?
+	 * Checks if the current Page is a BuddyPress "Special Page".
 	 *
-	 * @since 3.4
-	 *
-	 * @return bool $bp_groupblog True when current Blog is a BuddyPress Group Blog, false otherwise.
-	 */
-	public function is_groupblog() {
-
-		// --<
-		return $this->bp_groupblog;
-
-	}
-
-	/**
-	 * Is this a BuddyPress "Special Page" - a component homepage?
+	 * Example Page is a Component Homepage.
 	 *
 	 * @since 3.4
 	 *
@@ -178,72 +134,103 @@ class CommentPress_Core_BuddyPress {
 			return false;
 		}
 
-		// Is it a BuddyPress Page?
+		// We want the opposite of what is defined as a "non-BuddyPress Page".
 		$is_bp = ! bp_is_blog_page();
 
 		/**
 		 * Filters the BuddyPress "Special Page" result.
 		 *
+		 * This is not necessary because BuddyPress has its own filter.
+		 *
 		 * @since 3.4
 		 *
 		 * @param bool $is_bp The default BuddyPress "Special Page" result.
 		 */
-		return apply_filters( 'cp_is_buddypress_special_page', $is_bp );
+		return apply_filters_deprecated( 'cp_is_buddypress_special_page', [ $is_bp ], 'bp_is_blog_page' );
 
 	}
 
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Is a BuddyPress Group Blog theme set?
+	 * Sets a property when the current Site is a BuddyPress Groupblog.
+	 *
+	 * @since 3.4
+	 */
+	public function buddypress_groupblog_present() {
+
+		// Bail if BuddyPress Groupblog is not present.
+		if ( ! defined( 'BP_GROUPBLOG_VERSION' ) ) {
+			return;
+		}
+
+		// Check if this Blog is a Group Blog.
+		$group_id = get_groupblog_group_id( get_current_blog_id() );
+		if ( empty( $group_id ) || ! is_numeric( $group_id ) ) {
+			return;
+		}
+
+		// BuddyPress Groupblog is present.
+		$this->bp_groupblog = true;
+
+	}
+
+	/**
+	 * Getter method for checking if the current Blog a Group Blog.
 	 *
 	 * @since 3.4
 	 *
-	 * @return array $theme An array describing the theme.
+	 * @return bool $bp_groupblog True when current Blog is a Group Blog, false otherwise.
 	 */
-	public function get_groupblog_theme() {
+	public function is_groupblog() {
+		return $this->bp_groupblog;
+	}
 
-		// Kick out if not in a Group context.
-		if ( ! function_exists( 'bp_is_groups_component' ) ) {
+	/**
+	 * Checks if a Group Blog theme has been set.
+	 *
+	 * @since 3.4
+	 *
+	 * @return array|bool $theme An array describing the theme, or false otherwise.
+	 */
+	public function groupblog_theme_get() {
+
+		// Bail if Groups Component is not active.
+		if ( ! bp_is_active( 'groups' ) ) {
 			return false;
 		}
-		if ( ! bp_is_groups_component() ) {
+
+		// Bail if the current page is not part of the Groups component.
+		if ( ! function_exists( 'bp_is_groups_component' ) || ! bp_is_groups_component() ) {
 			return false;
 		}
 
-		// Get Group Blog options.
+		// Try to get BuddyPress Groupblog options.
 		$options = get_site_option( 'bp_groupblog_blog_defaults_options' );
-
-		// Get theme setting.
-		if ( ! empty( $options['theme'] ) ) {
-
-			// We have a Group Blog theme set.
-
-			// Split the options.
-			list( $stylesheet, $template ) = explode( '|', $options['theme'] );
-
-			// Get the registered theme.
-			$theme = wp_get_theme( $stylesheet );
-
-			// Test if it's a CommentPress Core theme.
-			if ( in_array( 'commentpress', (array) $theme->get( 'Tags' ) ) ) {
-
-				// --<
-				return [ $stylesheet, $template ];
-
-			}
-
+		if ( empty( $options['theme'] ) ) {
+			return false;
 		}
 
-		// --<
-		return false;
+		// We have a Group Blog theme set.
+		list( $stylesheet, $template ) = explode( '|', $options['theme'] );
+
+		// Get the registered theme.
+		$theme = wp_get_theme( $stylesheet );
+
+		// Bail if it's not a CommentPress Core theme.
+		if ( ! in_array( 'commentpress', (array) $theme->get( 'Tags' ) ) ) {
+			return false;
+		}
+
+		// We're good.
+		return [ $stylesheet, $template ];
 
 	}
 
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Override the Comment Reply script that BuddyPress Docs loads.
+	 * Adds callback to remove the Comment Reply script that BuddyPress Docs loads.
 	 *
 	 * @since 3.5.9
 	 */
@@ -255,7 +242,7 @@ class CommentPress_Core_BuddyPress {
 	}
 
 	/**
-	 * Override the Comment Reply script that BuddyPress Docs loads.
+	 * Removes the Comment Reply script that BuddyPress Docs loads.
 	 *
 	 * @since 3.5.9
 	 */

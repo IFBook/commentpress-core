@@ -12,10 +12,11 @@ defined( 'ABSPATH' ) || exit;
 
 ?>
 <!-- <?php echo $this->parts_path; ?>part-sites-signup.php -->
-<br />
 <div id="cp-multisite-options">
 
 	<h3><?php esc_html_e( 'CommentPress:', 'commentpress-core' ); ?></h3>
+
+	<input type="hidden" id="cp-sites-signup" name="cp-sites-signup" value="1" />
 
 	<?php if ( ! empty( $forced ) ) : ?>
 

@@ -42,13 +42,27 @@ BuddyPress 10+ compatibility and overrides.
 	height: 150px;
 }
 
+.bp-member-avatar-content,
+.bp-group-avatar-content
+{
+	 width: 128px;
+}
+
 @media screen and (max-width: 46.8em) {
+
 	#buddypress .bp-member-avatar-content,
 	#buddypress .bp-group-avatar-content
 	{
-	    width: 120px;
+	    width: 132px;
 		margin-bottom: 15px;
 	}
+
+}
+
+.bp-member-short-description .bp-profile-button,
+.bp-group-short-description .bp-profile-button
+{
+	text-align: center;
 }
 
 /**

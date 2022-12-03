@@ -274,10 +274,12 @@ class CommentPress_Multisite_Database {
 	 */
 	public function settings_initialise( $network_activation = false ) {
 
+		/*
 		// Bail if plugin is not activated network-wide - unless activating network-wide.
 		if ( ! $network_activation && 'mu_sitewide' !== $this->multisite->plugin->plugin_context_get() ) {
-			//return;
+			return;
 		}
+		*/
 
 		/*
 		$e = new \Exception();
@@ -327,21 +329,31 @@ class CommentPress_Multisite_Database {
 		$save = false;
 
 		/*
-		// Some setting may not exist.
+		// Add "Some setting" if it does not exist.
 		if ( ! $this->setting_exists( 'some_setting' ) ) {
 			$settings = $this->settings_get_defaults();
 			$this->setting_set( 'some_setting', $settings['some_setting'] );
 			$save = true;
 		}
-		*/
 
-		/*
+		// Maybe remove "Some setting" if it exists.
+		if ( $this->setting_exists( 'some_setting' ) ) {
+			$this->setting_delete( 'some_setting' );
+			$save = true;
+		}
+
 		// Things to always check on upgrade.
 		if ( $this->is_upgrade ) {
 			// Add them here.
-			//$save = true;
+			$save = true;
 		}
 		*/
+
+		// Maybe remove "Disable translation workflow" setting.
+		if ( $this->setting_exists( 'cpmu_disable_translation_workflow' ) ) {
+			$this->setting_delete( 'cpmu_disable_translation_workflow' );
+			$save = true;
+		}
 
 		/**
 		 * Filters the "Save settings" flag.
@@ -364,7 +376,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 4.0
 	 *
-	 * @return array $settings  The array of default settings.
+	 * @return array $settings The array of default settings.
 	 */
 	public function settings_get_defaults() {
 
@@ -389,6 +401,21 @@ class CommentPress_Multisite_Database {
 
 	}
 
+	/**
+	 * Reverts all settings to their defaults.
+	 *
+	 * @since 4.0
+	 */
+	public function settings_reset() {
+
+		// Overwrite the settings with the defaults.
+		$this->settings = $this->settings_get_defaults();
+
+		// Save settings.
+		$this->settings_save();
+
+	}
+
 	// -------------------------------------------------------------------------
 
 	/**
@@ -401,7 +428,10 @@ class CommentPress_Multisite_Database {
 	public function settings_get() {
 
 		// Get the Site Option.
-		return $this->option_wpms_get( $this->option_settings, $this->settings_get_defaults() );
+		return wp_parse_args(
+			$this->option_wpms_get( $this->option_settings, [] ),
+			$this->settings_get_defaults()
+		);
 
 	}
 

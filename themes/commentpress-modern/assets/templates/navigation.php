@@ -69,7 +69,7 @@ if ( ! empty( $core ) ) {
 							?>
 
 							<li>
-								<a href="<?php echo esc_url( $group_url ); ?>" id="btn_grouphome" class="css_btn" title="<?php echo esc_attr( $group_title ) ); ?>"><?php echo esc_html( $group_title ); ?></a>
+								<a href="<?php echo esc_url( $group_url ); ?>" id="btn_grouphome" class="css_btn" title="<?php echo esc_attr( $group_title ); ?>"><?php echo esc_html( $group_title ); ?></a>
 							</li>
 
 						<?php endif; ?>
@@ -146,7 +146,7 @@ if ( ! empty( $core ) ) {
 						<?php if ( is_user_logged_in() ) : ?>
 
 							<li>
-								<a href="<?php echo bp_get_root_domain(); ?>/<?php echo bp_get_blogs_root_slug(); ?>/create/" title="<?php echo esc_attr( $new_site_title ); ?>" id="btn_create"><?php echo esc_html( $new_site_title ); ?></a>
+								<a href="<?php echo trailingslashit( bp_get_blogs_directory_permalink() . 'create' ); ?>" title="<?php echo esc_attr( $new_site_title ); ?>" id="btn_create"><?php echo esc_html( $new_site_title ); ?></a>
 							</li>
 
 						<?php endif; ?>

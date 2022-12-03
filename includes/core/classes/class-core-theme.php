@@ -41,10 +41,10 @@ class CommentPress_Core_Theme {
 	 * Classes directory path.
 	 *
 	 * @since 4.0
-	 * @access public
+	 * @access private
 	 * @var string $classes_path Relative path to the classes directory.
 	 */
-	public $classes_path = 'includes/core/classes/';
+	private $classes_path = 'includes/core/classes/';
 
 	/**
 	 * Constructor.
@@ -241,15 +241,17 @@ class CommentPress_Core_Theme {
 		 *
 		 * @param array The existing array containing the stylesheet and template paths.
 		 */
-		$theme = apply_filters( 'commentpress_get_groupblog_theme', $this->core->bp->get_groupblog_theme() );
+		$theme = apply_filters( 'commentpress_get_groupblog_theme', $this->core->bp->groupblog_theme_get() );
 
 		// Did we get a CommentPress Core one?
 		if ( $theme !== false ) {
 
-			// We're in a Group Blog context: BuddyPress Group Blog will already have set
-			// the theme because we're adding our "wpmu_new_blog" action after it.
-
-			// --<
+			/*
+			 * We're in a Group Blog context.
+			 *
+			 * BuddyPress Groupblog will already have set the theme because we're
+			 * adding our "wpmu_new_blog" action after it.
+			 */
 			return;
 
 		}
@@ -291,8 +293,6 @@ class CommentPress_Core_Theme {
 	 *
 	 * @since 3.0
 	 * @since 4.0 Moved to this class.
-	 *
-	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
 	public function deactivate() {
 
@@ -416,11 +416,20 @@ class CommentPress_Core_Theme {
 		// Default to minified scripts.
 		$min = commentpress_minified();
 
+		// Add FitVids script.
+		wp_enqueue_script(
+			'jquery_fitvids',
+			plugins_url( 'includes/core/assets/js/jquery.fitvids.js', COMMENTPRESS_PLUGIN_FILE ),
+			[ 'jquery' ],
+			COMMENTPRESS_VERSION, // Version.
+			true
+		);
+
 		// Add our jQuery plugin and dependencies.
 		wp_enqueue_script(
 			'jquery_commentpress',
 			plugins_url( 'includes/core/assets/js/jquery.commentpress' . $min . '.js', COMMENTPRESS_PLUGIN_FILE ),
-			[ 'jquery', 'jquery-form', 'jquery-ui-core', 'jquery-ui-resizable', 'jquery-ui-tooltip' ],
+			[ 'jquery', 'jquery-form', 'jquery-ui-core', 'jquery-ui-resizable', 'jquery-ui-tooltip', 'jquery_fitvids' ],
 			COMMENTPRESS_VERSION, // Version.
 			false // In footer.
 		);

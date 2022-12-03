@@ -123,7 +123,7 @@ class CommentPress_Core_Entry_Document {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Parts directory.
+	 * @var string $parts_path Relative path to the Parts directory.
 	 */
 	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
 
@@ -208,7 +208,7 @@ class CommentPress_Core_Entry_Document {
 	/**
 	 * Saves the data from "Site Settings" screen.
 	 *
-	 * Adds the data to the options array. The options are actually saved later.
+	 * Adds the data to the settings array. The settings are actually saved later.
 	 *
 	 * @see CommentPress_Core_Settings_Site::form_submitted()
 	 *

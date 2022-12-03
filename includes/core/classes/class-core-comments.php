@@ -91,6 +91,14 @@ class CommentPress_Core_Comments {
 		// Modify Comment posting.
 		add_action( 'comment_post', [ $this, 'save_comment' ], 10, 2 );
 
+		// Allow Comment Authors to edit their own Comments.
+		add_filter( 'map_meta_cap', [ $this, 'enable_comment_editing' ], 10, 4 );
+
+		/*
+		// Auto-approve Comments for registered Users.
+		add_action( 'preprocess_comment', [ $this, 'allow_comment_editing' ], 1 );
+		*/
+
 		// Amend the behaviour of Featured Comments plugin.
 		add_action( 'plugins_loaded', [ $this, 'featured_comments_override' ], 1000 );
 
@@ -370,6 +378,102 @@ class CommentPress_Core_Comments {
 		// --<
 		return true;
 
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Adds the capability for Users to edit their own Comments.
+	 *
+	 * @see http://scribu.net/wordpress/prevent-blog-authors-from-editing-comments.html
+	 *
+	 * @since 3.3
+	 *
+	 * @param array $caps The existing capabilities array for the WordPress User.
+	 * @param str $cap The capability in question.
+	 * @param int $user_id The numeric ID of the WordPress User.
+	 * @param array $args The additional arguments.
+	 * @return array $caps The modified capabilities array for the WordPress User.
+	 */
+	public function enable_comment_editing( $caps, $cap, $user_id, $args ) {
+
+		// Only apply this to queries for "edit_comment" cap.
+		if ( 'edit_comment' !== $cap ) {
+			return $caps;
+		}
+
+		// Get the Comment.
+		$comment = get_comment( $args[0] );
+
+		// Is the User the same as the Comment Author?
+		if ( (int) $comment->user_id === (int) $user_id ) {
+			// TODO: Check this capability.
+			//$caps[] = 'moderate_comments';
+			$caps = [ 'edit_posts' ];
+		}
+
+		// --<
+		return $caps;
+
+	}
+
+	/**
+	 * Allows registered Users to edit their own Comments.
+	 *
+	 * Not used at present.
+	 *
+	 * @since 3.3
+	 *
+	 * @param array $commentdata The array of Comment data.
+	 * @return array $commentdata The modified array of Comment data.
+	 */
+	public function allow_comment_editing( $commentdata ) {
+
+		// Get the User ID of the Comment Author.
+		$user_id = (int) $commentdata['user_ID'];
+
+		// If Comment Author is a registered User, approve the Comment.
+		if ( ! empty( $user_id ) ) {
+			add_filter( 'pre_comment_approved', [ $this, 'approve_comment' ] );
+		} else {
+			add_filter( 'pre_comment_approved', [ $this, 'moderate_comment' ] );
+		}
+
+		// --<
+		return $commentdata;
+
+	}
+
+	/**
+	 * Approves Comments for registered Users.
+	 *
+	 * Not used at present.
+	 *
+	 * @since 3.3
+	 *
+	 * @param bool $approved True if the Comment is approved, false otherwise.
+	 * @return bool $approved True if the Comment is approved, false otherwise.
+	 */
+	public function approve_comment( $approved ) {
+		$approved = 1;
+		return $approved;
+	}
+
+	/**
+	 * Moderates Comments for unregistered Users.
+	 *
+	 * Not used at present.
+	 *
+	 * @since 3.3
+	 *
+	 * @param bool $approved True if the Comment is approved, false otherwise.
+	 * @return bool $approved True if the Comment is approved, false otherwise.
+	 */
+	public function moderate_comment( $approved ) {
+		if ( 'spam' !== $approved ) {
+			$approved = 0;
+		}
+		return $approved;
 	}
 
 	// -------------------------------------------------------------------------

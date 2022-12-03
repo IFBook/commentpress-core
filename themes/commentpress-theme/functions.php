@@ -192,6 +192,9 @@ if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ) :
 			false
 		);
 
+		// Always dequeue WordPress Comment Form script if present.
+		wp_dequeue_script( 'comment-reply' );
+
 		// Skip when on a BuddyPress Special Page.
 		if ( ! $core->bp->is_buddypress_special_page() ) {
 
@@ -577,17 +580,23 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 		// Get Page or Post.
 		$page_or_post = $core->db->setting_get( 'cp_show_posts_or_pages_in_toc' );
 
-		// Set default.
-		$blog_title = apply_filters(
-			'cp_page_all_comments_blog_title',
-			__( 'Comments on the Blog', 'commentpress-core' )
-		);
+		/**
+		 * Filters the title of the "All Comments" Page when TOC contains Posts.
+		 *
+		 * @since 3.0
+		 *
+		 * @param str The default title of the "All Comments" Page.
+		 */
+		$blog_title = apply_filters( 'cp_page_all_comments_blog_title', __( 'Comments on the Blog', 'commentpress-core' ) );
 
-		// Set default.
-		$book_title = apply_filters(
-			'cp_page_all_comments_book_title',
-			__( 'Comments on the Pages', 'commentpress-core' )
-		);
+		/**
+		 * Filters the title of the "All Comments" Page when TOC contains Pages.
+		 *
+		 * @since 3.0
+		 *
+		 * @param str The default title of the "All Comments" Page.
+		 */
+		$book_title = apply_filters( 'cp_page_all_comments_book_title', __( 'Comments on the Pages', 'commentpress-core' ) );
 
 		// Get title.
 		$title = ( $page_or_post == 'page' ) ? $book_title : $blog_title;

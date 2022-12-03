@@ -254,7 +254,7 @@ class CommentPress_Core_Theme_Sidebar {
 	/**
 	 * Saves the Sidebar with data from "Site Settings" screen.
 	 *
-	 * Adds the data to the options array. The options are actually saved later.
+	 * Adds the data to the settings array. The settings are actually saved later.
 	 *
 	 * @see CommentPress_Core_Settings_Site::form_submitted()
 	 *

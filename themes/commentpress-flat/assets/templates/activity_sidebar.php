@@ -180,8 +180,10 @@ $_max_members = 10;
 
 						// Define args.
 						$recent_groupblog_activity = [
-							'scope' => 'groups',
-							'action' => 'new_groupblog_comment,new_groupblog_post',
+							'action' => [
+								'new_groupblog_comment',
+								'new_groupblog_post',
+							],
 							'primary_id' => false,
 						];
 

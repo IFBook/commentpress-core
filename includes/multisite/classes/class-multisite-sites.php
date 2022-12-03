@@ -29,6 +29,15 @@ class CommentPress_Multisite_Sites {
 	public $multisite;
 
 	/**
+	 * Parts template directory path.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $parts_path Relative path to the Parts directory.
+	 */
+	private $parts_path = 'includes/multisite/assets/templates/wordpress/parts/';
+
+	/**
 	 * "CommentPress Sites on the Network" settings key.
 	 *
 	 * This setting allows us to track the Sites on the Network that have CommentPress Core
@@ -45,19 +54,19 @@ class CommentPress_Multisite_Sites {
 	 * working on vanilla WordPress Multisite installs.
 	 *
 	 * @since 4.0
-	 * @access public
+	 * @access private
 	 * @var str $key_sites The settings key for the array of "CommentPress Sites enabled on the Network" setting.
 	 */
-	public $key_sites = 'commentpress_sites';
+	private $key_sites = 'commentpress_sites';
 
 	/**
-	 * "CommentPress Core enabled on all Sites" settings key.
+	 * "CommentPress enabled on all Sites" settings key.
 	 *
 	 * @since 4.0
-	 * @access public
-	 * @var str $key_forced The settings key for the "CommentPress Core enabled on all Sites" setting.
+	 * @access private
+	 * @var str $key_forced The settings key for the "CommentPress enabled on all Sites" setting.
 	 */
-	public $key_forced = 'cpmu_force_commentpress';
+	private $key_forced = 'cpmu_force_commentpress';
 
 	/**
 	 * "Default Welcome Page content" settings key.
@@ -65,19 +74,10 @@ class CommentPress_Multisite_Sites {
 	 * Not implemented.
 	 *
 	 * @since 4.0
-	 * @access public
+	 * @access private
 	 * @var str $key_title_page_content The settings key for the "Default Welcome Page content" setting.
 	 */
-	public $key_title_page_content = 'cpmu_title_page_content';
-
-	/**
-	 * Parts template directory path.
-	 *
-	 * @since 4.0
-	 * @access private
-	 * @var string $metabox_path Relative path to the Parts directory.
-	 */
-	private $parts_path = 'includes/multisite/assets/templates/wordpress/parts/';
+	private $key_title_page_content = 'cpmu_title_page_content';
 
 	/**
 	 * Constructor.
@@ -136,7 +136,7 @@ class CommentPress_Multisite_Sites {
 		// ---------------------------------------------------------------------
 
 		// Add our option to the Network Settings "General Settings" metabox.
-		add_action( 'commentpress/multisite/settings/network/metabox/general/after', [ $this, 'metabox_settings_get' ] );
+		add_action( 'commentpress/multisite/settings/network/metabox/general/after', [ $this, 'metabox_get' ] );
 
 		// Save data from Network Settings form submissions.
 		add_action( 'commentpress/multisite/settings/network/save/before', [ $this, 'settings_save' ] );
@@ -146,31 +146,34 @@ class CommentPress_Multisite_Sites {
 
 		// ---------------------------------------------------------------------
 
-		// Add form elements to Blog Signup Form.
-		add_action( 'signup_blogform', [ $this, 'signup_blogform_elements_add' ] );
+		// Add form elements to Blog Signup Form. Hook late so others can unhook.
+		add_action( 'signup_blogform', [ $this, 'site_signup_form_elements_add' ], 50 );
 
 		// Add callback for Signup Page to include Sidebar.
-		add_action( 'after_signup_form', [ $this, 'signup_blogform_after' ], 20 );
+		add_action( 'after_signup_form', [ $this, 'site_signup_form_after' ], 20 );
 
 		// Save meta for Blog Signup Form submissions.
-		add_filter( 'signup_site_meta', [ $this, 'signup_blogform_meta_add' ], 10, 7 );
+		add_filter( 'signup_site_meta', [ $this, 'site_signup_form_meta_add' ], 10, 1 );
 
-		// Activate Blog-specific CommentPress Core plugin.
+		// Save meta for other Blog Signup Form submissions.
+		add_filter( 'add_signup_meta', [ $this, 'site_signup_form_meta_add' ], 10 );
+
+		// Activate Blog-specific CommentPress plugin.
 		if ( version_compare( $GLOBALS['wp_version'], '5.1.0', '>=' ) ) {
-			add_action( 'wp_initialize_site', [ $this, 'site_initialise' ], 10, 2 );
+			add_action( 'wp_initialize_site', [ $this, 'site_initialise' ], 20, 2 );
 		} else {
 			add_action( 'wpmu_new_blog', [ $this, 'site_initialise_legacy' ], 20, 6 );
 		}
 
 		// ---------------------------------------------------------------------
 
+		// Enable CommentPress themes in Multisite optional scenario.
+		add_filter( 'site_allowed_themes', [ $this, 'themes_allowed_add' ], 10, 2 );
+
 		// Add filter for reserved core "Special Page" names on subdirectory installs.
 		if ( ! is_subdomain_install() ) {
 			add_filter( 'subdirectory_reserved_names', [ $this, 'reserved_names_add' ] );
 		}
-
-		// Enable CommentPress themes in Multisite optional scenario.
-		add_filter( 'site_allowed_themes', [ $this, 'themes_allowed_add' ], 10, 2 );
 
 		/*
 		// Override Welcome Page content.
@@ -474,36 +477,6 @@ class CommentPress_Multisite_Sites {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Saves the data from the CommentPress Network "General Settings" screen.
-	 *
-	 * Adds the data to the options array. The options are actually saved later.
-	 *
-	 * @see CommentPress_Multisite_Settings_Network::form_submitted()
-	 *
-	 * @since 4.0
-	 */
-	public function settings_save() {
-
-		// Get "Make all new sites CommentPress-enabled" value.
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$forced = isset( $_POST[ $this->key_forced ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_forced ] ) ) : '0';
-
-		// Set "Make all new sites CommentPress-enabled" option.
-		$this->multisite->db->setting_set( $this->key_forced, ( $forced ? 1 : 0 ) );
-
-		/*
-		// Get "Default Welcome Page content" value.
-		$title_page_content = isset( $_POST[ $this->key_title_page_content ] ) ?
-			sanitize_textarea_field( wp_unslash( $_POST[ $this->key_title_page_content ] ) ) :
-			$this->title_page_content_default_get();
-
-		// Set "Default Welcome Page content" setting.
-		$this->multisite->db->setting_set( $this->key_title_page_content, $title_page_content );
-		*/
-
-	}
-
-	/**
 	 * Appends the Sites settings to the default multisite settings.
 	 *
 	 * @since 4.0
@@ -536,17 +509,78 @@ class CommentPress_Multisite_Sites {
 
 	}
 
-	// -------------------------------------------------------------------------
-
 	/**
-	 * Adds our settings to the Network Settings "General Settings" metabox.
+	 * Saves the data from the CommentPress Network "General Settings" screen.
+	 *
+	 * Adds the data to the settings array. The settings are actually saved later.
+	 *
+	 * @see CommentPress_Multisite_Settings_Network::form_submitted()
 	 *
 	 * @since 4.0
 	 */
-	public function metabox_settings_get() {
+	public function settings_save() {
+
+		// Get "Make all new sites CommentPress-enabled" value.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$forced = isset( $_POST[ $this->key_forced ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_forced ] ) ) : '0';
+
+		// Set "Make all new sites CommentPress-enabled" option.
+		$this->setting_forced_set( ( $forced ? 1 : 0 ) );
+
+		/*
+		// Get "Default Welcome Page content" value.
+		$title_page_content = isset( $_POST[ $this->key_title_page_content ] ) ?
+			sanitize_textarea_field( wp_unslash( $_POST[ $this->key_title_page_content ] ) ) :
+			$this->title_page_content_default_get();
+
+		// Set "Default Welcome Page content" setting.
+		$this->multisite->db->setting_set( $this->key_title_page_content, $title_page_content );
+		*/
+
+	}
+
+	/**
+	 * Gets the "Make all new sites CommentPress-enabled" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return bool $forced True if CommentPress is enabled on all Sites, false otherwise.
+	 */
+	public function setting_forced_get() {
+
+		// Get the setting.
+		$forced = $this->multisite->db->setting_get( $this->key_forced );
+
+		// Return a boolean.
+		return ! empty( $forced ) ? true : false;
+
+	}
+
+	/**
+	 * Sets the "Make all new sites CommentPress-enabled" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int|bool $forced True if CommentPress is enabled on all Sites, false otherwise.
+	 */
+	public function setting_forced_set( $forced ) {
+
+		// Set the setting.
+		$this->multisite->db->setting_set( $this->key_forced, ( $forced ? 1 : 0 ) );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Adds our form elements to the Network Settings "General Settings" metabox.
+	 *
+	 * @since 4.0
+	 */
+	public function metabox_get() {
 
 		// Get settings.
-		$forced = $this->multisite->db->setting_get( $this->key_forced );
+		$forced = $this->setting_forced_get();
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-sites-settings-network.php';
@@ -556,48 +590,32 @@ class CommentPress_Multisite_Sites {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Adds the CommentPress form elements to the Blog Signup Form.
+	 * Adds the CommentPress form elements to the WordPress Blog Signup Form.
 	 *
 	 * @since 3.3
 	 *
 	 * @param array $errors The previously encountered errors.
 	 */
-	public function signup_blogform_elements_add( $errors ) {
+	public function site_signup_form_elements_add( $errors ) {
 
-		/*
-		// Only apply to WordPress signup form (not the BuddyPress one).
-		if ( is_object( $this->multisite->bp->workshop ) ) {
+		// Only apply to WordPress signup form - not the BuddyPress ones.
+		// TODO: Skip this!
+		if ( doing_action( 'bp_groupblog_create_screen_markup' ) ) {
 			return;
 		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'message' => 'ADDING SITES',
+			//'backtrace' => $trace,
+		], true ) );
 		*/
 
 		// Get force setting.
-		$forced = $this->multisite->db->setting_get( $this->key_forced );
-
-		// Are we force-enabling CommentPress Core?
-		if ( $forced ) {
-
-			/**
-			 * Filters the forced Signup Form text.
-			 *
-			 * @since 3.3
-			 *
-			 * @param string The default Signup Form text.
-			 */
-			$text = apply_filters( 'cp_multisite_options_signup_text_forced', __( 'Your new site will be CommentPress-enabled.', 'commentpress-core' ) );
-
-		} else {
-
-			/**
-			 * Filters the un-forced Signup Form text.
-			 *
-			 * @since 3.3
-			 *
-			 * @param string The default signup text.
-			 */
-			$text = apply_filters( 'cp_multisite_options_signup_text', __( 'Do you want to make the new site CommentPress-enabled?', 'commentpress-core' ) );
-
-		}
+		$forced = $this->setting_forced_get();
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-sites-signup.php';
@@ -609,7 +627,7 @@ class CommentPress_Multisite_Sites {
 	 *
 	 * @since 3.4
 	 */
-	public function signup_blogform_after() {
+	public function site_signup_form_after() {
 
 		// Add sidebar.
 		get_sidebar();
@@ -621,18 +639,12 @@ class CommentPress_Multisite_Sites {
 	 *
 	 * The "signup_site_meta" filter has been available since WordPress 4.8.0.
 	 *
-	 * @since 3.4
+	 * @since 4.0
 	 *
 	 * @param array $meta Signup meta data. Default empty array.
-	 * @param string $domain The requested domain.
-	 * @param string $path The requested path.
-	 * @param string $title The requested site title.
-	 * @param string $user The user's requested login name.
-	 * @param string $user_email The user's email address.
-	 * @param string $key The user's activation key.
 	 * @return array $meta The modified signup meta data.
 	 */
-	public function signup_blogform_meta_add( $meta, $domain, $path, $title, $user, $user_email, $key ) {
+	public function site_signup_form_meta_add( $meta ) {
 
 		/*
 		$e = new \Exception();
@@ -644,16 +656,32 @@ class CommentPress_Multisite_Sites {
 		], true ) );
 		*/
 
+		// Bail early if we already have our meta.
+		if ( ! empty( $meta['commentpress'] ) ) {
+			return $meta;
+		}
+
 		// Init CommentPress metadata.
 		$metadata = [];
 
 		// Get "CommentPress Core enabled on all Sites" setting.
-		$forced = $this->multisite->db->setting_get( $this->key_forced );
+		$forced = $this->setting_forced_get();
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'forced' => $forced ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
 
 		// When not forced.
 		if ( ! $forced ) {
 
 			// Bail if our checkbox variable is not in POST.
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			$cpmu_new_blog = isset( $_POST['cpmu-new-blog'] ) ? sanitize_text_field( wp_unslash( $_POST['cpmu-new-blog'] ) ) : '';
 			if ( empty( $cpmu_new_blog ) ) {
 				return $meta;
@@ -687,11 +715,12 @@ class CommentPress_Multisite_Sites {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Initialises a new site.
+	 * Initialises a new CommentPress-enabled Site.
 	 *
 	 * The "wp_initialize_site" action has been available since WordPress 5.1.0.
 	 *
-	 * @since 3.3
+	 * @since 4.0
+	 *
 	 * @param WP_Site $new_site The new site object.
 	 * @param array $args The array of initialization arguments.
 	 */
@@ -704,27 +733,52 @@ class CommentPress_Multisite_Sites {
 			'method' => __METHOD__,
 			'new_site' => $new_site,
 			'args' => $args,
+			'skip' =>  empty( $args['options']['commentpress'] ) ? 'y' : 'n',
 			//'backtrace' => $trace,
 		], true ) );
 		*/
 
-		// Bail if none of our meta is present.
+		// If none of our Site initialisation meta is present.
 		if ( empty( $args['options']['commentpress'] ) ) {
-			return;
+
+			// This might be an *additional* Site signup, which skips "signup_site_meta".
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$stage = isset( $_POST['stage'] ) ? sanitize_text_field( wp_unslash( $_POST['stage'] ) ) : '';
+			if ( 'gimmeanotherblog' !== $stage ) {
+				return;
+			}
+
+			// Bail if POST does not contain our hidden variable.
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$signup = isset( $_POST['cp-sites-signup'] ) ? sanitize_text_field( wp_unslash( $_POST['cp-sites-signup'] ) ) : '';
+			if ( empty( $signup ) ) {
+				return;
+			}
+
+			// Bail if our checkbox variable is not in POST.
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$new_blog = isset( $_POST['cpmu-new-blog'] ) ? sanitize_text_field( wp_unslash( $_POST['cpmu-new-blog'] ) ) : '';
+			if ( empty( $new_blog ) ) {
+				return;
+			}
+
+			// Okay, let's add the options.
+			$args['options']['commentpress']['enable'] = 'y';
+
 		}
+
+		// Get "CommentPress Core enabled on all Sites" setting.
+		$forced = $this->setting_forced_get();
 
 		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
 		error_log( print_r( [
 			'method' => __METHOD__,
-			'one' => 'here',
+			'forced' => $forced,
 			//'backtrace' => $trace,
 		], true ) );
 		*/
-
-		// Get "CommentPress Core enabled on all Sites" setting.
-		$forced = $this->multisite->db->setting_get( $this->key_forced );
 
 		// Bail if not forced and "Enable CommentPress" checkbox was not checked.
 		if ( ! $forced ) {
@@ -736,21 +790,31 @@ class CommentPress_Multisite_Sites {
 			}
 		}
 
+		// Switch to the new Site.
+		switch_to_blog( $new_site->blog_id );
+
+		// Activate CommentPress Core.
+		$this->multisite->site->core_activate();
+
 		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
 		error_log( print_r( [
 			'method' => __METHOD__,
-			'two' => 'here',
+			'core_activated' => 'YES',
 			//'backtrace' => $trace,
 		], true ) );
 		*/
 
-		// Switch to the site.
-		switch_to_blog( $new_site->blog_id );
-
-		// Activate CommentPress Core.
-		$this->multisite->site->core_activate();
+		/**
+		 * Fires when a new CommentPress-enabled Site has been initialised.
+		 *
+		 * @since 4.0
+		 *
+		 * @param int $blog_id The numeric ID of the new WordPress Site.
+		 * @param array $args The array of initialization arguments.
+		 */
+		do_action( 'commentpress/multisite/sites/site/initialised', $new_site->blog_id, $args );
 
 		// Switch back.
 		restore_current_blog();
@@ -758,7 +822,7 @@ class CommentPress_Multisite_Sites {
 	}
 
 	/**
-	 * Initialises a new blog.
+	 * Legacy initialisation of a new CommentPress-enabled Site.
 	 *
 	 * The "wpmu_new_blog" action has been deprecated since WordPress 5.1.0.
 	 *
@@ -778,8 +842,8 @@ class CommentPress_Multisite_Sites {
 			return;
 		}
 
-		// Get "CommentPress Core enabled on all Sites" setting.
-		$forced = $this->multisite->db->setting_get( $this->key_forced );
+		// Get "CommentPress enabled on all Sites" setting.
+		$forced = $this->setting_forced_get();
 
 		// Bail if not forced and "Enable CommentPress" checkbox was not checked.
 		if ( ! $forced ) {
@@ -791,11 +855,31 @@ class CommentPress_Multisite_Sites {
 			}
 		}
 
-		// Switch to the site.
+		// Switch to the new Site.
 		switch_to_blog( $blog_id );
 
 		// Activate CommentPress Core.
 		$this->multisite->site->core_activate();
+
+		// Get the current Site.
+		$site = get_current_site();
+
+		// Build args for compatibility with action.
+		$args = [
+			'title' => ! empty( $site->site_name ) ? $site->site_name : '',
+			'user_id' => $user_id,
+			'options' => $meta,
+		];
+
+		/**
+		 * Fires when a new CommentPress-enabled Site has been initialised.
+		 *
+		 * @since 4.0
+		 *
+		 * @param int $blog_id The numeric ID of the new WordPress Site.
+		 * @param array $args The array of initialization arguments.
+		 */
+		do_action( 'commentpress/multisite/sites/site/initialised', $blog_id, $args );
 
 		// Switch back.
 		restore_current_blog();

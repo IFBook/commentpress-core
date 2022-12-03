@@ -51,7 +51,7 @@ class CommentPress_Multisite_Site {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Parts directory.
+	 * @var string $parts_path Relative path to the Parts directory.
 	 */
 	private $parts_path = 'includes/multisite/assets/templates/wordpress/parts/';
 
@@ -105,6 +105,9 @@ class CommentPress_Multisite_Site {
 
 		// Save data from multisite Site Settings "CommentPress Settings" screen form submissions.
 		add_action( 'commentpress/multisite/settings/site/core/save/before', [ $this, 'settings_core_save' ] );
+
+		// Enable HTML Comments and Content for Authors.
+		add_action( 'init', [ $this, 'html_content_allow' ] );
 
 	}
 
@@ -182,7 +185,7 @@ class CommentPress_Multisite_Site {
 
 		/*
 		------------------------------------------------------------------------
-		Configure CommentPress Core based on Admin Page settings
+		Configure CommentPress Core based on "Site Settings" screen.
 		------------------------------------------------------------------------
 		*/
 
@@ -280,14 +283,15 @@ class CommentPress_Multisite_Site {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Checks if the current Blog is registered as CommentPress Core-enabled.
+	 * Checks if the current Blog is registered as CommentPress-enabled.
 	 *
 	 * @since 3.3
 	 *
 	 * @param int $blog_id The ID of the Blog to check.
-	 * @return bool True if CommentPress Core-enabled, false otherwise.
+	 * @param bool $legacy_check Whether to switch to the Blog to perform legacy check. Default true.
+	 * @return bool True if CommentPress-enabled, false otherwise.
 	 */
-	public function is_commentpress( $blog_id = false ) {
+	public function is_commentpress( $blog_id = false, $legacy_check = true ) {
 
 		// Get current Site ID if the Blog ID isn't passed.
 		if ( $blog_id === false ) {
@@ -307,6 +311,11 @@ class CommentPress_Multisite_Site {
 			return true;
 		}
 
+		// Bail if legacy check has been skipped.
+		if ( true !== $legacy_check ) {
+			return false;
+		}
+
 		// If we fail to find one, then this might be an upgrade.
 		// Let's use our legacy method for checking.
 		$core_active = $this->has_commentpress( $blog_id );
@@ -322,7 +331,7 @@ class CommentPress_Multisite_Site {
 	 * @since 4.0
 	 *
 	 * @param int $blog_id The ID of the Blog to check.
-	 * @return bool $core_active True if CommentPress Core-enabled, false otherwise.
+	 * @return bool $core_active True if CommentPress-enabled, false otherwise.
 	 */
 	public function has_commentpress( $blog_id = false ) {
 
@@ -440,6 +449,36 @@ class CommentPress_Multisite_Site {
 
 		// Do form redirection.
 		do_action( 'commentpress/multisite/settings/site/core/redirect' );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Allows HTML Comments and Content on CommentPress-enabled Sites.
+	 *
+	 * @since 3.3
+	 */
+	public function html_content_allow() {
+
+		// Bail if CommentPress Core is not active on this Site.
+		if ( ! $this->is_commentpress() ) {
+			return;
+		}
+
+		// Using "publish_posts" for now - means author+.
+		if ( ! current_user_can( 'publish_posts' ) ) {
+			return;
+		}
+
+		/*
+		 * Remove html filtering on content.
+		 *
+		 * NOTE: This has possible consequences.
+		 *
+		 * @see https://wordpress.org/plugins/unfiltered-mu/
+		 */
+		kses_remove_filters();
 
 	}
 

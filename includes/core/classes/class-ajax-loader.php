@@ -48,10 +48,10 @@ class CommentPress_AJAX_Loader {
 	 * Classes directory path.
 	 *
 	 * @since 4.0
-	 * @access public
+	 * @access private
 	 * @var string $classes_path Relative path to the classes directory.
 	 */
-	public $classes_path = 'includes/core/classes/';
+	private $classes_path = 'includes/core/classes/';
 
 	/**
 	 * Constructor.
@@ -87,7 +87,7 @@ class CommentPress_AJAX_Loader {
 		$this->register_hooks();
 
 		/**
-		 * Broadcast that CommentPress AJAX has loaded.
+		 * Fires when CommentPress AJAX has loaded.
 		 *
 		 * Used internally to bootstrap objects.
 		 *

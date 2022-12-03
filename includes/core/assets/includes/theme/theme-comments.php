@@ -841,8 +841,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 		 *
 		 * @since 3.9
 		 *
-		 * @param int $content_width An general content width for all themes.
-		 * @return int $content_width A specific content width for a specific theme.
+		 * @param int $content_width A general content width for all themes.
 		 */
 		$content_width = apply_filters( 'commentpress_comments_content_width', 380 );
 

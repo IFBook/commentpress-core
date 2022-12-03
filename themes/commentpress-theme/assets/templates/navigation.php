@@ -232,12 +232,7 @@ if ( ! empty( $core ) ) {
 
 				<?php if ( (int) $title_id !== (int) get_option( 'page_on_front' ) ) : ?>
 
-					<?php
-
-					// Get the Home Page title.
-					$home_title = commentpress_navigation_blog_home_title();
-
-					?>
+					<?php $home_title = commentpress_navigation_blog_home_title(); ?>
 
 					<li>
 						<a href="<?php echo home_url(); ?>" id="btn_home" class="css_btn" title="<?php echo esc_attr( $home_title ); ?>"><?php echo esc_html( $home_title ); ?></a>
@@ -249,12 +244,7 @@ if ( ! empty( $core ) ) {
 
 			<?php if ( ! empty( $title_url ) ) : ?>
 
-				<?php
-
-				// Gets the Welcome Page title.
-				$title_title = commentpress_navigation_title_page_title();
-
-				?>
+				<?php $title_title = commentpress_navigation_title_page_title(); ?>
 
 				<li>
 					<a href="<?php echo $title_url; ?>" id="btn_cover" class="css_btn" title="<?php echo esc_attr( $title_title ); ?>"><?php echo esc_html( $title_title ); ?></a>

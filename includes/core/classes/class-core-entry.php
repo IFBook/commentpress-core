@@ -59,10 +59,10 @@ class CommentPress_Core_Entry {
 	 * Classes directory path.
 	 *
 	 * @since 4.0
-	 * @access public
+	 * @access private
 	 * @var string $classes_path Relative path to the classes directory.
 	 */
-	public $classes_path = 'includes/core/classes/';
+	private $classes_path = 'includes/core/classes/';
 
 	/**
 	 * Constructor.

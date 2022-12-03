@@ -63,7 +63,7 @@ class CommentPress_Core_Display {
 		$this->register_hooks();
 
 		/**
-		 * Broadcast that this class has loaded.
+		 * Fires when this class has loaded.
 		 *
 		 * @since 4.0
 		 */

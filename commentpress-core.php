@@ -289,7 +289,7 @@ class CommentPress_Plugin {
 	 *
 	 * @return CommentPress_Multisite_Loader $commentpress_mu The multisite loader reference.
 	 */
-	function multisite_initialise() {
+	public function multisite_initialise() {
 
 		// Declare as global to retain backwards compatibility.
 		global $commentpress_mu;
@@ -385,7 +385,7 @@ class CommentPress_Plugin {
 	public function register_hooks() {
 
 		// Check for activation.
-		add_action( 'activated_plugin',  [ $this, 'plugin_activated' ], 10, 2 );
+		add_action( 'activated_plugin', [ $this, 'plugin_activated' ], 10, 2 );
 
 		// Check for deactivation.
 		add_action( 'deactivated_plugin', [ $this, 'plugin_deactivated' ], 10, 2 );

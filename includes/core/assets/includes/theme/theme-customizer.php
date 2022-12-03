@@ -139,7 +139,7 @@ if ( ! function_exists( 'commentpress_customize_site_image' ) ) :
 		// Get core plugin reference.
 		$core = commentpress_core();
 
-		// Bail if BuddyPress Group Blog.
+		// Bail if Group Blog.
 		if ( ! empty( $core ) && $core->bp->is_groupblog() ) {
 			return;
 		}
@@ -206,7 +206,7 @@ if ( ! function_exists( 'commentpress_customize_site_logo' ) ) :
 		// Get core plugin reference.
 		$core = commentpress_core();
 
-		// Bail if BuddyPress Group Blog.
+		// Bail if Group Blog.
 		if ( empty( $core ) && $core->bp->is_groupblog() ) {
 			return;
 		}

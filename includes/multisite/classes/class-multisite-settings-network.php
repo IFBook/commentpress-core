@@ -202,6 +202,17 @@ class CommentPress_Multisite_Settings_Network {
 	 */
 	public function admin_js() {
 
+		/**
+		 * Fires when the Network Settings screen Javascript has been enqueued.
+		 *
+		 * Used internally by:
+		 *
+		 * * CommentPress_Multisite_BuddyPress_Groupblog::admin_js()
+		 *
+		 * @since 4.0
+		 */
+		do_action( 'commentpress/multisite/settings/network/admin/js' );
+
 	}
 
 	/**
@@ -362,7 +373,7 @@ class CommentPress_Multisite_Settings_Network {
 
 		// Create "General Settings" metabox.
 		add_meta_box(
-			'commentpress_general',
+			'commentpress_network_general',
 			__( 'General Settings', 'commentpress-core' ),
 			[ $this, 'meta_box_general_render' ], // Callback.
 			$screen_id, // Screen ID.
@@ -373,7 +384,7 @@ class CommentPress_Multisite_Settings_Network {
 		/*
 		// Create "WordPress Overrides" metabox.
 		add_meta_box(
-			'commentpress_wordpress',
+			'commentpress_network_wordpress',
 			__( 'WordPress Overrides', 'commentpress-core' ),
 			[ $this, 'meta_box_wordpress_render' ], // Callback.
 			$screen_id, // Screen ID.
@@ -385,7 +396,7 @@ class CommentPress_Multisite_Settings_Network {
 		/*
 		// Create "Welcome Page Content" metabox.
 		add_meta_box(
-			'commentpress_title_page',
+			'commentpress_network_title_page',
 			__( 'Title Page Content', 'commentpress-core' ),
 			[ $this, 'meta_box_title_page_render' ], // Callback.
 			$screen_id, // Screen ID.
@@ -393,6 +404,16 @@ class CommentPress_Multisite_Settings_Network {
 			'core' // Vertical placement: options are 'core', 'high', 'low'.
 		);
 		*/
+
+		// Create "Danger Zone" metabox.
+		add_meta_box(
+			'commentpress_network_danger',
+			__( 'Danger Zone', 'commentpress-core' ),
+			[ $this, 'meta_box_danger_render' ], // Callback.
+			$screen_id, // Screen ID.
+			'normal', // Column: options are 'normal' and 'side'.
+			'low' // Vertical placement: options are 'core', 'high', 'low'.
+		);
 
 		// Create "Submit" metabox.
 		add_meta_box(
@@ -464,6 +485,18 @@ class CommentPress_Multisite_Settings_Network {
 	}
 
 	/**
+	 * Renders the "Danger Zone" metabox.
+	 *
+	 * @since 4.0
+	 */
+	public function meta_box_danger_render() {
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-network-danger.php';
+
+	}
+
+	/**
 	 * Render Save Settings metabox.
 	 *
 	 * @since 4.0
@@ -511,11 +544,19 @@ class CommentPress_Multisite_Settings_Network {
 		 *
 		 * * CommentPress_Multisite_Sites::settings_save() (Priority: 10)
 		 * * CommentPress_Multisite_BuddyPress::network_admin_update() (Priority: 20)
-		 * * CommentPress_Multisite_BuddyPress_GroupBlog::network_admin_update() (Priority: 30)
+		 * * CommentPress_Multisite_BuddyPress_Groupblog::network_admin_update() (Priority: 30)
 		 *
 		 * @since 4.0
 		 */
 		do_action( 'commentpress/multisite/settings/network/save/before' );
+
+		// Get "Reset to defaults" value.
+		$reset = isset( $_POST['cpmu_reset'] ) ? sanitize_text_field( wp_unslash( $_POST['cpmu_reset'] ) ) : '0';
+
+		// Maybe reset the settings to the defaults.
+		if ( ! empty( $reset ) ) {
+			$this->multisite->db->settings_reset();
+		}
 
 		// Save the settings to the database.
 		$this->multisite->db->settings_save();

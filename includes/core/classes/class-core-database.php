@@ -185,7 +185,7 @@ class CommentPress_Core_Database {
 	 * @access public
 	 * @var bool|int $blog_type The default type of Blog.
 	 */
-	public $blog_type = false;
+	public $blog_type = 0;
 
 	/**
 	 * Default sidebar tab.

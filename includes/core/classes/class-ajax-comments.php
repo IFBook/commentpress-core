@@ -320,6 +320,9 @@ class CommentPress_AJAX_Comments {
 	 */
 	public function comment_edit() {
 
+		// TODO: Check permissions
+		// @see CommentPress_Multisite_BuddyPress::enable_comment_editing()
+
 		// Init return.
 		$data = [];
 

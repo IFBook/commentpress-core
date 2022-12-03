@@ -2522,6 +2522,21 @@ CommentPress.common.viewport = new function() {
 	 */
 	this.dom_ready = function() {
 
+		// Define selectors where videos may be present.
+		var selectors = '.post, .comments_container, .activity-inner, .widget_media_video, .activity';
+
+		// First pass at jQuery FitVids.
+		$( selectors ).fitVids( {
+			customSelector: "iframe.dfb-video"
+		} );
+
+		// Refresh after any AJAX event completes.
+		$(document).ajaxComplete( function() {
+			setTimeout( function() {
+				$( selectors ).fitVids();
+			}, 200 );
+		} );
+
 	};
 
 }; // End CommentPress Core setup viewport class.
@@ -2936,6 +2951,7 @@ CommentPress.common.navigation.init();
 CommentPress.common.content.init();
 CommentPress.common.comments.init();
 CommentPress.common.activity.init();
+CommentPress.common.viewport.init();
 
 
 
@@ -2960,6 +2976,7 @@ jQuery(document).ready(function($) {
 	CommentPress.common.content.dom_ready();
 	CommentPress.common.comments.dom_ready();
 	CommentPress.common.activity.dom_ready();
+	CommentPress.common.viewport.dom_ready();
 
 	// Broadcast.
 	jQuery(document).trigger( 'commentpress-initialised' );

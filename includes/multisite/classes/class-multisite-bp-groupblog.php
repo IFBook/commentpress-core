@@ -1,8 +1,8 @@
 <?php
 /**
- * CommentPress Core BuddyPress Group Blog class.
+ * CommentPress Multisite BuddyPress Groupblog class.
  *
- * Overrides the name of Group Blogs from "Blog" (or "Document") to "Workshop".
+ * Handles compatibility with the BuddyPress Groupblog plugin.
  *
  * @package CommentPress_Core
  */
@@ -11,13 +11,38 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * CommentPress Core BuddyPress Group Blog Class.
+ * CommentPress Multisite BuddyPress Groupblog Class.
  *
- * This class overrides the name of Group Blogs from "Blog" (or "Document") to "Workshop".
+ * This class handles compatibility with the BuddyPress Groupblog plugin.
+ *
+ * DEVELOPER NOTES:
+ *
+ * Things have changed since BuddyPress Groupblog 1.9.0:
+ *
+ * * The "new_groupblog_comment" Action has been fixed.
+ * * The way that the "new_groupblog_post" Action is declared has been changed.
+ *
+ * For versions of BuddyPress Groupblog prior to 1.9.0, this plugin provided
+ * replacement Actions for "new_groupblog_post" and "new_groupblog_comment" that
+ * fixed the bugs in those BuddyPress Groupblog Actions.
+ *
+ * The replacement "new_groupblog_post" Action also provided compatiblity with
+ * the "Co-Authors" plugin.
+ *
+ * For versions of BuddyPress Groupblog from 1.9.0 to 1.9.2, compatibility is
+ * sort of broken. Things still work, but the naming scheme and Activity filters
+ * do not work as expected.
+ *
+ * The updates to BuddyPress Groupblog that are in the pipeline for 1.9.3 may
+ * resolve the situation but that's not certain at this stage.
+ *
+ * In summary, either this plugin has to support all versions of BuddyPress
+ * Groupblog or it has to require the latest version. Tempting to go for the
+ * latter option.
  *
  * @since 3.3
  */
-class CommentPress_Multisite_BuddyPress_GroupBlog {
+class CommentPress_Multisite_BuddyPress_Groupblog {
 
 	/**
 	 * Multisite loader object.
@@ -38,40 +63,103 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	public $bp;
 
 	/**
-	 * Flag whether or not to rename a Group Blog.
+	 * BuddyPress Groupblog Groups object.
 	 *
-	 * @since 3.3
+	 * @since 4.0
 	 * @access public
-	 * @var object $groupblog_nomenclature Flag whether or not to rename a Group Blog - default to "off".
+	 * @var object $groups The BuddyPress Groupblog Groups object.
 	 */
-	public $groupblog_nomenclature = 0;
+	public $groups;
 
 	/**
-	 * Default singular name of a Group Blog.
+	 * BuddyPress Groupblog Names object.
 	 *
-	 * @since 3.3
+	 * @since 4.0
 	 * @access public
-	 * @var object $groupblog_nomenclature_name Default name of a Group Blog.
+	 * @var object $names The BuddyPress Groupblog Names object.
 	 */
-	public $groupblog_nomenclature_name = '';
+	public $names;
 
 	/**
-	 * Default plural name of a Group Blog.
+	 * BuddyPress Groupblog Site object.
 	 *
-	 * @since 3.3
+	 * @since 4.0
 	 * @access public
-	 * @var object $groupblog_nomenclature_plural Default plural name of a Group Blog.
+	 * @var object $site The BuddyPress Groupblog Site object.
 	 */
-	public $groupblog_nomenclature_plural = '';
+	public $site;
 
 	/**
-	 * Default slug of a Group Blog.
+	 * Classes directory path.
 	 *
-	 * @since 3.3
-	 * @access public
-	 * @var object $groupblog_nomenclature_slug Default slug of a Group Blog.
+	 * @since 4.0
+	 * @access private
+	 * @var string $classes_path Relative path to the classes directory.
 	 */
-	public $groupblog_nomenclature_slug = '';
+	private $classes_path = 'includes/multisite/classes/';
+
+	/**
+	 * Plugin compatibility flag.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $compatibility Plugin compatibility flag.
+	 */
+	public $compatibility = 'none';
+
+	/**
+	 * Metabox template directory path.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $metabox_path Relative path to the Metabox directory.
+	 */
+	private $metabox_path = 'includes/multisite/assets/templates/buddypress/metaboxes/';
+
+	/**
+	 * Parts template directory path.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $parts_path Relative path to the Parts directory.
+	 */
+	private $parts_path = 'includes/multisite/assets/templates/buddypress/parts/';
+
+	/**
+	 * "CommentPress enabled on all Group Blogs" settings key.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var str $key_forced The settings key for the "CommentPress enabled on all Group Blogs" setting.
+	 */
+	private $key_forced = 'cpmu_bp_force_commentpress';
+
+	/**
+	 * "Group Blog privacy" settings key.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var str $key_privacy The settings key for the "Group Blog privacy" setting.
+	 */
+	private $key_privacy = 'cpmu_bp_groupblog_privacy';
+
+	/**
+	 * "Require login to leave Comments on Group Blogs" settings key.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var str $key_comment_login The settings key for the "Require login to leave Comments on Group Blogs" setting.
+	 */
+	private $key_comment_login = 'cpmu_bp_require_comment_registration';
+
+	/**
+	 * "Default theme for Group Blogs" settings key.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var str $key_theme The settings key for the "Default theme for Group Blogs" setting.
+	 */
+	private $key_theme = 'cpmu_bp_groupblog_theme';
 
 	/**
 	 * Constructor.
@@ -82,9 +170,17 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	 */
 	public function __construct( $bp ) {
 
+		// Bail if BuddyPress Groupblog plugin is not present.
+		if ( ! defined( 'BP_GROUPBLOG_VERSION' ) ) {
+			return;
+		}
+
 		// Store references.
 		$this->multisite = $bp->multisite;
 		$this->bp = $bp;
+
+		// Check compatibility before proceeding.
+		$this->compatibility_check();
 
 		// Init when the BuddyPress classes are fully loaded.
 		add_action( 'commentpress/multisite/bp/loaded', [ $this, 'initialise' ] );
@@ -92,69 +188,96 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	}
 
 	/**
-	 * Initialises this obiject.
+	 * Checks compatibility with the BuddyPress Groupblog plugin.
+	 *
+	 * @since 4.0
+	 *
+	 * @param str|bool $compatibility False if BuddyPress Groupblog plugin not present, compatibility flag otherwise.
+	 */
+	public function compatibility_check() {
+
+		// Check BuddyPress Groupblog version before proceeding.
+		if ( version_compare( BP_GROUPBLOG_VERSION, '1.9.0', '>=' ) ) {
+			if ( version_compare( BP_GROUPBLOG_VERSION, '1.9.3', '>=' ) ) {
+				$this->compatibility = 'latest';
+			}
+		} else {
+			$this->compatibility = 'legacy';
+		}
+
+		// --<
+		return $this->compatibility;
+
+	}
+
+	/**
+	 * Gets the status of compatibility with the BuddyPress Groupblog plugin.
+	 *
+	 * @since 4.0
+	 *
+	 * @param str $compatibility The compatibility status flag.
+	 */
+	public function compatibility_get() {
+		return $this->compatibility;
+	}
+
+	/**
+	 * Initialises this object.
 	 *
 	 * @since 3.3
 	 */
 	public function initialise() {
 
-		// Make properties translatable.
-		$this->groupblog_nomenclature_name = __( 'Document', 'commentpress-core' );
-		$this->groupblog_nomenclature_plural = __( 'Documents', 'commentpress-core' );
-		$this->groupblog_nomenclature_slug = __( 'document', 'commentpress-core' );
+		// Only do this once.
+		static $done;
+		if ( isset( $done ) && $done === true ) {
+			return;
+		}
 
-		// Register hooks.
+		// Bootstrap this object.
+		$this->include_files();
+		$this->setup_objects();
 		$this->register_hooks();
 
-		// Set up items.
-		$this->setup_items();
+		/**
+		 * Fires when BuddyPress Groupblog has loaded.
+		 *
+		 * Used internally to bootstrap objects.
+		 *
+		 * @since 4.0
+		 */
+		do_action( 'commentpress/multisite/bp/groupblog/loaded' );
+
+		// We're done.
+		$done = true;
 
 	}
 
 	/**
-	 * Set up all items associated with this object.
+	 * Includes class files.
 	 *
 	 * @since 4.0
 	 */
-	public function setup_items() {
+	public function include_files() {
 
-		// Bail if we do not have our option set.
-		if ( $this->multisite->db->setting_get( 'cpmu_bp_workshop_nomenclature' ) != '1' ) {
-			return;
-		}
+		// Include class files.
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-bp-groupblog-groups.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-bp-groupblog-names.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-multisite-bp-groupblog-site.php';
 
-		// Store the setting locally.
-		$this->groupblog_nomenclature = '1';
+	}
 
-		// Do we have the name option already defined?
-		if ( $this->multisite->db->setting_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ) {
-			// No, so we must have switched to the legacy "Workshop" setting.
-			$this->groupblog_nomenclature_name = $this->get_legacy_name();
-		} else {
-			// Store the setting locally.
-			$this->groupblog_nomenclature_name = $this->multisite->db->setting_get( 'cpmu_bp_workshop_nomenclature_name' );
-		}
+	/**
+	 * Sets up the objects in this class.
+	 *
+	 * @since 4.0
+	 */
+	public function setup_objects() {
 
-		// Do we have the plural option already defined?
-		if ( $this->multisite->db->setting_get( 'cpmu_bp_workshop_nomenclature_plural' ) == '' ) {
-			// No, likewise we must have switched to the legacy "Workshop" setting.
-			$this->groupblog_nomenclature_plural = $this->get_legacy_plural();
-		} else {
-			// Store the setting locally.
-			$this->groupblog_nomenclature_plural = $this->multisite->db->setting_get( 'cpmu_bp_workshop_nomenclature_plural' );
-		}
-
-		// Do we have the slug option already defined?
-		if ( $this->multisite->db->setting_get( 'cpmu_bp_workshop_nomenclature_slug' ) == '' ) {
-			// No, likewise we must have switched to the legacy "Workshop" setting.
-			$this->groupblog_nomenclature_slug = $this->get_legacy_slug();
-		} else {
-			// Store the setting locally.
-			$this->groupblog_nomenclature_slug = $this->multisite->db->setting_get( 'cpmu_bp_workshop_nomenclature_slug' );
-		}
-
-		// Register Workshop hooks.
-		$this->register_hooks_workshop();
+		// Initialise objects.
+		$this->groups = new CommentPress_Multisite_BuddyPress_Groupblog_Groups( $this );
+		$this->names = new CommentPress_Multisite_BuddyPress_Groupblog_Names( $this );
+		$this->site = new CommentPress_Multisite_BuddyPress_Groupblog_Site( $this );
 
 	}
 
@@ -165,452 +288,78 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	 */
 	public function register_hooks() {
 
-		// Add element to Network Settings form BuddyPress section.
-		add_filter( 'cpmu_network_buddypress_options_form', [ $this, 'buddypress_admin_form' ] );
-
-		// Hook into Network Settings form update.
-		add_action( 'commentpress/multisite/settings/network/save/before', [ $this, 'network_admin_update' ], 30 );
-
-		// Hook into Network Settings BuddyPress options reset.
-		add_filter( 'cpmu_buddypress_options_get_defaults', [ $this, 'get_default_settings' ], 10, 1 );
+		// Separate callbacks into descriptive methods.
+		$this->register_hooks_settings();
+		$this->register_hooks_signup();
 
 	}
 
 	/**
-	 * Register Workshop hooks.
+	 * Registers BuddyPress Groupblog "Network Settings" hooks.
 	 *
-	 * @since 3.3
+	 * @since 4.0
 	 */
-	public function register_hooks_workshop() {
+	private function register_hooks_settings() {
 
-		// Override CommentPress Core "Welcome Page".
-		add_filter( 'cp_nav_title_page_title', [ $this, 'filter_nav_title_page_title' ], 25 );
+		// Add BuddyPress Groupblog settings to default settings.
+		add_filter( 'commentpress/multisite/settings/defaults', [ $this, 'settings_get_defaults' ], 20, 1 );
 
-		// Override CommentPress Core title of "view document" button in Blog lists.
-		add_filter( 'cp_get_blogs_visit_groupblog_button', [ $this, 'get_blogs_visit_blog_button' ], 25, 1 );
+		// Add our metaboxes to the Network Settings screen.
+		add_filter( 'commentpress/multisite/settings/network/metaboxes/after', [ $this, 'settings_meta_boxes_append' ] );
 
-		// Filter bp-groupblog defaults.
-		add_filter( 'cpmu_bp_groupblog_subnav_item_name', [ $this, 'filter_blog_name' ], 25 );
-		add_filter( 'cpmu_bp_groupblog_subnav_item_slug', [ $this, 'filter_blog_slug' ], 25 );
+		// Add our Javascript to the Network Settings screen.
+		add_action( 'commentpress/multisite/settings/network/admin/js', [ $this, 'settings_meta_box_js_enqueue' ] );
 
-		// Change name of Activity Sidebar headings.
-		add_filter( 'cp_activity_tab_recent_title_all_yours', [ $this, 'filter_activity_title_all_yours' ], 25 );
-		add_filter( 'cp_activity_tab_recent_title_all_public', [ $this, 'filter_activity_title_all_public' ], 25 );
+		// Save data from Network Settings form submissions.
+		add_action( 'commentpress/multisite/settings/network/save/before', [ $this, 'settings_meta_box_save' ] );
 
-		// Override with 'workshop'.
-		add_filter( 'cp_activity_tab_recent_title_blog', [ $this, 'activity_tab_recent_title_blog' ], 25, 1 );
+	}
 
-		// Override titles of BuddyPress Activity filters.
-		add_filter( 'cp_groupblog_comment_name', [ $this, 'groupblog_comment_name' ], 25 );
-		add_filter( 'cp_groupblog_post_name', [ $this, 'groupblog_post_name' ], 25 );
+	/**
+	 * Registers BuddyPress Groupblog Signup Form hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_signup() {
 
-		// Cp_activity_post_name_filter.
-		add_filter( 'cp_activity_post_name', [ $this, 'activity_post_name' ], 25 );
+		// Add form elements to the BuddyPress Groupblog Signup Form.
+		add_action( 'signup_blogform', [ $this, 'form_signup_elements_add' ] );
 
-		// Override label on All Comments Page.
-		add_filter( 'cp_page_all_comments_book_title', [ $this, 'page_all_comments_book_title' ], 25, 1 );
-		add_filter( 'cp_page_all_comments_blog_title', [ $this, 'page_all_comments_blog_title' ], 25, 1 );
+		// Save meta for BuddyPress Groupblog Blog Signup Form submissions.
+		add_filter( 'add_signup_meta', [ $this, 'form_signup_submitted_meta_add' ] );
+
+		// Act when the BuddyPress Groupblog Signup Form is submitted.
+		add_action( 'commentpress/multisite/sites/site/initialised', [ $this, 'form_signup_site_initialised' ], 10, 2 );
 
 	}
 
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Override the name of the filter item.
+	 * Appends the BuddyPress Groupblog settings to the default multisite settings.
 	 *
 	 * @since 3.3
 	 *
-	 * @return str The name in the Group Blog Comments label.
+	 * @param array $settings The existing default multisite settings.
+	 * @return array $settings The modified default multisite settings.
 	 */
-	public function groupblog_comment_name() {
-
-		// Default name.
-		return sprintf(
-			__( '%s Comments', 'commentpress-core' ),
-			$this->groupblog_nomenclature_name
-		);
-
-	}
-
-	/**
-	 * Override the name of the filter item.
-	 *
-	 * @since 3.3
-	 *
-	 * @return str The plural name in the Group Blog Posts label.
-	 */
-	public function groupblog_post_name() {
-
-		// Default name.
-		return sprintf(
-			__( '%s Posts', 'commentpress-core' ),
-			$this->groupblog_nomenclature_name
-		);
-
-	}
-
-	/**
-	 * Override the name of the filter item.
-	 *
-	 * @since 3.3
-	 *
-	 * @return str The singular name of the Group Blog Post.
-	 */
-	public function activity_post_name() {
-
-		// Default name.
-		return sprintf(
-			__( '%s post', 'commentpress-core' ),
-			strtolower( $this->groupblog_nomenclature_name )
-		);
-
-	}
-
-	/**
-	 * Override the name of the sub-nav item.
-	 *
-	 * @since 3.3
-	 *
-	 * @param str $name The existing singular name of the Group Blog Post.
-	 * @return str $name The modified singular name of the Group Blog Post.
-	 */
-	public function filter_blog_name( $name ) {
-
-		// --<
-		return $this->groupblog_nomenclature_name;
-
-	}
-
-	/**
-	 * Override the slug of the sub-nav item.
-	 *
-	 * @since 3.3
-	 *
-	 * @param str $slug The existing slug of the sub-nav item.
-	 * @return str $slug The modified slug of the sub-nav item.
-	 */
-	public function filter_blog_slug( $slug ) {
-
-		// --<
-		return $this->groupblog_nomenclature_slug;
-
-	}
-
-	/**
-	 * Override the title of the "Recent Comments in..." link.
-	 *
-	 * @since 3.3
-	 *
-	 * @param str $title The title of the Recent Comments heading.
-	 * @return str $title The modified title of the Recent Comments heading.
-	 */
-	public function activity_tab_recent_title_blog( $title ) {
-
-		// Get core plugin reference.
-		$core = commentpress_core();
-
-		// If Group Blog.
-		if ( ! empty( $core ) && $core->bp->is_groupblog() ) {
-
-			// Build title.
-			$recent_title = sprintf(
-				__( 'Recent Comments in this %s', 'commentpress-core' ),
-				$this->groupblog_nomenclature_name
-			);
-
-			/**
-			 * Filters the Recent Comments title.
-			 *
-			 * @since 3.4
-			 *
-			 * @param string $recent_title The default Recent Comments title.
-			 */
-			return apply_filters( 'cpmsextras_user_links_new_site_title', $recent_title );
-
-		}
-
-		// If Main Site.
-		if ( is_multisite() && is_main_site() ) {
-
-			/**
-			 * Filters the Recent Comments in Site Blog title.
-			 *
-			 * @since 3.4
-			 *
-			 * @param string The default Recent Comments title.
-			 */
-			return apply_filters( 'cpmsextras_user_links_new_site_title', __( 'Recent Comments in Site Blog', 'commentpress-core' ) );
-
-		}
-
-		// --<
-		return $title;
-
-	}
-
-	/**
-	 * Override title on All Comments Page.
-	 *
-	 * @since 3.3
-	 *
-	 * @param str $title The title of the All Comments heading.
-	 * @return str $title The modified title of the All Comments heading.
-	 */
-	public function page_all_comments_blog_title( $title ) {
-
-		// Override if Group Blog.
-		if ( ! $this->multisite->bp->is_commentpress_groupblog() ) {
-			return $title;
-		}
-
-		// --<
-		return sprintf(
-			__( 'Comments on %s Posts', 'commentpress-core' ),
-			$this->groupblog_nomenclature_name
-		);
-
-	}
-
-	/**
-	 * Override title on All Comments Page.
-	 *
-	 * @since 3.3
-	 *
-	 * @param str $title The title of the "Comments on..." heading.
-	 * @return str $title The modified title of the "Comments on..." heading.
-	 */
-	public function page_all_comments_book_title( $title ) {
-
-		// Override if Group Blog.
-		if ( ! $this->multisite->bp->is_commentpress_groupblog() ) {
-			return $title;
-		}
-
-		// --<
-		return sprintf(
-			__( 'Comments on %s Pages', 'commentpress-core' ),
-			$this->groupblog_nomenclature_name
-		);
-
-	}
-
-	/**
-	 * Override title on Activity tab.
-	 *
-	 * @since 3.3
-	 *
-	 * @param str $title The title of the "Recent Activity in..." heading.
-	 * @return str $title The modified title of the "Recent Activity in..." heading.
-	 */
-	public function filter_activity_title_all_yours( $title ) {
-
-		// Override if Group Blog.
-		if (
-			! bp_is_root_blog() &&
-			! $this->multisite->bp->is_commentpress_groupblog()
-		) {
-			return $title;
-		}
-
-		// --<
-		return sprintf(
-			__( 'Recent Activity in your %s', 'commentpress-core' ),
-			$this->groupblog_nomenclature_plural
-		);
-
-	}
-
-	/**
-	 * Override title on Activity tab.
-	 *
-	 * @since 3.3
-	 *
-	 * @param str $title The title of the "Recent Activity in..." heading.
-	 * @return str $title The modified title of the "Recent Activity in..." heading.
-	 */
-	public function filter_activity_title_all_public( $title ) {
-
-		// Override if Group Blog.
-		if (
-			! bp_is_root_blog() &&
-			! $this->multisite->bp->is_commentpress_groupblog()
-		) {
-			return $title;
-		}
-
-		// --<
-		return sprintf(
-			__( 'Recent Activity in Public %s', 'commentpress-core' ),
-			$this->groupblog_nomenclature_plural
-		);
-
-	}
-
-	/**
-	 * Override CommentPress Core "Welcome Page".
-	 *
-	 * @since 3.3
-	 *
-	 * @param str $title The title of the "Group Blog Home Page" heading.
-	 * @return str $title The modified title of the "Group Blog Home Page" heading.
-	 */
-	public function filter_nav_title_page_title( $title ) {
-
-		// Bail if main BuddyPress Site.
-		if ( bp_is_root_blog() ) {
-			return $title;
-		}
-
-		// Bail if not Group Blog.
-		if ( ! $this->multisite->bp->is_commentpress_groupblog() ) {
-			return $title;
-		}
-
-		// --<
-		return sprintf(
-			__( '%s Home Page', 'commentpress-core' ),
-			$this->groupblog_nomenclature_name
-		);
-
-	}
-
-	/**
-	 * Override the BuddyPress Sites Directory "visit" button.
-	 *
-	 * @since 3.3
-	 *
-	 * @param str $button The title of the "Visit Site" heading.
-	 * @return str $title The modified title of the "Visit Site" heading.
-	 */
-	public function get_blogs_visit_blog_button( $button ) {
-
-		// Update link for Group Blogs.
-		return sprintf(
-			__( 'Visit %s', 'commentpress-core' ),
-			$this->groupblog_nomenclature_name
-		);
-
-	}
-
-	// -------------------------------------------------------------------------
-
-
-	/**
-	 * Add our options to the BuddyPress admin form.
-	 *
-	 * @since 3.3
-	 *
-	 * @return str $element The admin form element.
-	 */
-	public function buddypress_admin_form() {
-
-		// Check if we already have it switched on.
-		if ( $this->multisite->db->setting_get( 'cpmu_bp_workshop_nomenclature' ) == '1' ) {
-
-			// Do we have the name option already defined?
-			if ( $this->multisite->db->setting_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ) {
-
-				// No, so we must have switched to the legacy "Workshop" setting.
-				$this->groupblog_nomenclature_name = $this->get_legacy_name();
-
-			}
-
-			// Do we have the plural option already defined?
-			if ( $this->multisite->db->setting_get( 'cpmu_bp_workshop_nomenclature_plural' ) == '' ) {
-
-				// No, likewise we must have switched to the legacy "Workshop" setting.
-				$this->groupblog_nomenclature_plural = $this->get_legacy_plural();
-
-			}
-
-		}
-
-		// Define form element.
-		$element = '
-		<tr valign="top">
-			<th scope="row"><label for="cpmu_bp_groupblog_nomenclature">' . __( 'Change the name of a Group "Document"?', 'commentpress-core' ) . '</label></th>
-			<td><input id="cpmu_bp_groupblog_nomenclature" name="cpmu_bp_groupblog_nomenclature" value="1" type="checkbox"' . ( $this->multisite->db->setting_get( 'cpmu_bp_workshop_nomenclature' ) == '1' ? ' checked="checked"' : '' ) . ' /></td>
-		</tr>
-
-		<tr valign="top">
-			<th scope="row"><label for="cpmu_bp_groupblog_nomenclature_name">' . __( 'Singular name for a Group "Document"', 'commentpress-core' ) . '</label></th>
-			<td><input id="cpmu_bp_groupblog_nomenclature_name" name="cpmu_bp_groupblog_nomenclature_name" value="' . ( $this->multisite->db->setting_get( 'cpmu_bp_workshop_nomenclature_name' ) == '' ? $this->groupblog_nomenclature_name : $this->multisite->db->setting_get( 'cpmu_bp_workshop_nomenclature_name' ) ) . '" type="text" /></td>
-		</tr>
-
-		<tr valign="top">
-			<th scope="row"><label for="cpmu_bp_groupblog_nomenclature_plural">' . __( 'Plural name for Group "Documents"', 'commentpress-core' ) . '</label></th>
-			<td><input id="cpmu_bp_groupblog_nomenclature_plural" name="cpmu_bp_groupblog_nomenclature_plural" value="' . ( $this->multisite->db->setting_get( 'cpmu_bp_workshop_nomenclature_plural' ) == '' ? $this->groupblog_nomenclature_plural : $this->multisite->db->setting_get( 'cpmu_bp_workshop_nomenclature_plural' ) ) . '" type="text" /></td>
-		</tr>
-
-		';
-
-		// --<
-		return $element;
-
-	}
-
-	/**
-	 * Hook into Network Settings form update.
-	 *
-	 * @since 3.3
-	 * @since 4.0 Renamed.
-	 */
-	public function network_admin_update() {
-
-		// Init.
-		$cpmu_bp_groupblog_nomenclature = 0;
-
-		// Get variables. Nonce evaluated elsewhere.
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		extract( $_POST );
-
-		// Set on/off option.
-		$cpmu_bp_groupblog_nomenclature = esc_sql( $cpmu_bp_groupblog_nomenclature );
-		$this->multisite->db->setting_set( 'cpmu_bp_workshop_nomenclature', ( $cpmu_bp_groupblog_nomenclature ? 1 : 0 ) );
-
-		// Get name option.
-		$cpmu_bp_groupblog_nomenclature_name = esc_sql( $cpmu_bp_groupblog_nomenclature_name );
-
-		// Revert to default if we didn't get one.
-		if ( $cpmu_bp_groupblog_nomenclature_name == '' ) {
-			$cpmu_bp_groupblog_nomenclature_name = $this->groupblog_nomenclature_name;
-		}
-
-		// Set name option.
-		$this->multisite->db->setting_set( 'cpmu_bp_workshop_nomenclature_name', $cpmu_bp_groupblog_nomenclature_name );
-
-		// Get plural option.
-		$cpmu_bp_groupblog_nomenclature_plural = esc_sql( $cpmu_bp_groupblog_nomenclature_plural );
-
-		// Revert to default if we didn't get one.
-		if ( $cpmu_bp_groupblog_nomenclature_plural == '' ) {
-			$cpmu_bp_groupblog_nomenclature_plural = $this->groupblog_nomenclature_plural;
-		}
-
-		// Set plural option.
-		$this->multisite->db->setting_set( 'cpmu_bp_workshop_nomenclature_plural', $cpmu_bp_groupblog_nomenclature_plural );
-
-		// Set slug option.
-		$cpmu_bp_groupblog_nomenclature_slug = sanitize_title( $cpmu_bp_groupblog_nomenclature_name );
-		$this->multisite->db->setting_set( 'cpmu_bp_workshop_nomenclature_slug', $cpmu_bp_groupblog_nomenclature_slug );
-
-	}
-
-	/**
-	 * Add our default BuddyPress-related settings.
-	 *
-	 * @since 3.3
-	 *
-	 * @param array $settings The existing default settings.
-	 * @return array $settings The modified default settings.
-	 */
-	public function get_default_settings( $settings ) {
-
-		// Add our options.
-		$settings['cpmu_bp_workshop_nomenclature'] = $this->groupblog_nomenclature;
-		$settings['cpmu_bp_workshop_nomenclature_name'] = $this->groupblog_nomenclature_name;
-		$settings['cpmu_bp_workshop_nomenclature_plural'] = $this->groupblog_nomenclature_plural;
-		$settings['cpmu_bp_workshop_nomenclature_slug'] = $this->groupblog_nomenclature_slug;
+	public function settings_get_defaults( $settings ) {
+
+		// Add our BuddyPress Groupblog defaults.
+		$settings[ $this->key_forced ] = 0;
+		$settings[ $this->key_privacy ] = 1;
+		$settings[ $this->key_comment_login ] = 1;
+		$settings[ $this->key_theme ] = 'commentpress-flat';
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'settings' => $settings,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
 
 		// --<
 		return $settings;
@@ -618,36 +367,533 @@ class CommentPress_Multisite_BuddyPress_GroupBlog {
 	}
 
 	/**
-	 * Get legacy name when already set.
+	 * Appends our metaboxes to the Network Settings screen.
 	 *
-	 * @since 3.3
+	 * @since 4.0
 	 *
-	 * @return str $name The legacy singular name of a Group Blog.
+	 * @param string $screen_id The Network Settings Screen ID.
 	 */
-	public function get_legacy_name() {
-		return __( 'Workshop', 'commentpress-core' );
+	public function settings_meta_boxes_append( $screen_id ) {
+
+		// Create "BuddyPress Groupblog Settings" metabox.
+		add_meta_box(
+			'commentpress_bp_groupblog',
+			__( 'BuddyPress Groupblog Settings', 'commentpress-core' ),
+			[ $this, 'settings_meta_box_render' ], // Callback.
+			$screen_id, // Screen ID.
+			'normal', // Column: options are 'normal' and 'side'.
+			'core' // Vertical placement: options are 'core', 'high', 'low'.
+		);
+
 	}
 
 	/**
-	 * Get legacy plural name when already set.
+	 * Renders the "BuddyPress Groupblog Settings" metabox.
 	 *
-	 * @since 3.3
-	 *
-	 * @return str $name The legacy plural name of a Group Blog.
+	 * @since 4.0
 	 */
-	public function get_legacy_plural() {
-		return __( 'Workshops', 'commentpress-core' );
+	public function settings_meta_box_render() {
+
+		// Get settings.
+		$force_commentpress = $this->setting_forced_get();
+		$privacy = $this->setting_privacy_get();
+		$comment_login = $this->setting_comment_login_get();
+
+		// Get the valid Theme stylesheets and titles.
+		$groupblog_themes = $this->site->themes_get();
+
+		// Get currently selected theme.
+		$current_theme = $this->setting_theme_get();
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'force_commentpress' => $force_commentpress ? 'y' : 'n',
+			'privacy' => $privacy ? 'y' : 'n',
+			'comment_login' => $comment_login ? 'y' : 'n',
+			'groupblog_themes' => $groupblog_themes,
+			'current_theme' => $current_theme,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-network-bp-groupblog.php';
+
 	}
 
 	/**
-	 * Get legacy slug when already set.
+	 * Adds our Javascript to the Network Settings screen.
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_js_enqueue() {
+
+		// Add our Javascript.
+		wp_enqueue_script(
+			'commentpress_bp_groupblog',
+			plugins_url( 'includes/multisite/assets/js/cp-bp-groupblog-settings-network.js', COMMENTPRESS_PLUGIN_FILE ),
+			[ 'jquery' ],
+			COMMENTPRESS_VERSION, // Version.
+			true
+		);
+
+	}
+
+	/**
+	 * Saves the data from the Network Settings "BuddyPress Groupblog Settings" metabox.
+	 *
+	 * Adds the data to the settings array. The settings are actually saved later.
+	 *
+	 * @see CommentPress_Multisite_Settings_Network::form_submitted()
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_save() {
+
+		// Get "Make all new Group Blogs CommentPress-enabled" value.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$forced = isset( $_POST[ $this->key_forced ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_forced ] ) ) : '0';
+
+		// Set the setting.
+		$this->setting_forced_set( ( $forced ? 1 : 0 ) );
+
+		// Get "Private Groups must have Private Group Blogs" value.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$privacy = isset( $_POST[ $this->key_privacy ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_privacy ] ) ) : '0';
+
+		// Set the setting.
+		$this->setting_privacy_set( ( $privacy ? 1 : 0 ) );
+
+		// Get "Require user login to post comments on Group Blogs" value.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$comment_login = isset( $_POST[ $this->key_comment_login ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_comment_login ] ) ) : '0';
+
+		// Set the setting.
+		$this->setting_comment_login_set( ( $comment_login ? 1 : 0 ) );
+
+		// Get "CommentPress-enabled Group Blog theme" value.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$theme = isset( $_POST[ $this->key_theme ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_theme ] ) ) : '';
+
+		// Set the setting.
+		$this->setting_theme_set( $theme );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the "Make all new Group Blogs CommentPress-enabled" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return bool $forced True if CommentPress is enabled on all Group Blogs, false otherwise.
+	 */
+	public function setting_forced_get() {
+
+		// Get the setting.
+		$forced = $this->multisite->db->setting_get( $this->key_forced );
+
+		// Return a boolean.
+		return ! empty( $forced ) ? true : false;
+
+	}
+
+	/**
+	 * Sets the "Make all new Group Blogs CommentPress-enabled" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int|bool $forced True if CommentPress is enabled on all Group Blogs, false otherwise.
+	 */
+	public function setting_forced_set( $forced ) {
+
+		// Set the setting.
+		$this->multisite->db->setting_set( $this->key_forced, ( $forced ? 1 : 0 ) );
+
+	}
+
+	/**
+	 * Gets the "Private Groups must have Private Group Blogs" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return bool $privacy True if Private Groups must have Private Group Blogs, false otherwise.
+	 */
+	public function setting_privacy_get() {
+
+		// Get the setting.
+		$privacy = $this->multisite->db->setting_get( $this->key_privacy );
+
+		// Return a boolean.
+		return ! empty( $privacy ) ? true : false;
+
+	}
+
+	/**
+	 * Sets the "Private Groups must have Private Group Blogs" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int|bool $privacy True if Private Groups must have Private Group Blogs, false otherwise.
+	 */
+	public function setting_privacy_set( $privacy ) {
+
+		// Set the setting.
+		$this->multisite->db->setting_set( $this->key_privacy, ( $privacy ? 1 : 0 ) );
+
+	}
+
+	/**
+	 * Gets the "Require user login to post comments on Group Blogs" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return bool $comment_login True if user login is required to post comments on Group Blogs, false otherwise.
+	 */
+	public function setting_comment_login_get() {
+
+		// Get the setting.
+		$comment_login = $this->multisite->db->setting_get( $this->key_comment_login );
+
+		// Return a boolean.
+		return ! empty( $comment_login ) ? true : false;
+
+	}
+
+	/**
+	 * Sets the "Require user login to post comments on Group Blogs" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int|bool $comment_login True if user login is required to post comments on Group Blogs, false otherwise.
+	 */
+	public function setting_comment_login_set( $comment_login ) {
+
+		// Set the setting.
+		$this->multisite->db->setting_set( $this->key_comment_login, ( $comment_login ? 1 : 0 ) );
+
+	}
+
+	/**
+	 * Gets the "CommentPress-enabled Group Blog theme" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return str|bool $theme The theme "stylesheet" if found, false otherwise.
+	 */
+	public function setting_theme_get() {
+
+		// Get the setting.
+		$theme = $this->multisite->db->setting_get( $this->key_theme );
+
+		// Return theme "stylesheet" or boolean if empty.
+		return ! empty( $theme ) ? $theme : false;
+
+	}
+
+	/**
+	 * Sets the "CommentPress-enabled Group Blog theme" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param str $theme The theme "stylesheet".
+	 */
+	public function setting_theme_set( $theme ) {
+
+		// Set the setting.
+		$this->multisite->db->setting_set( $this->key_theme, $theme );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Adds the CommentPress form elements to the BuddyPress Blog Signup Form.
 	 *
 	 * @since 3.3
 	 *
-	 * @return str $name The legacy slug of a Group Blog.
+	 * @param array $errors The errors generated previously.
 	 */
-	public function get_legacy_slug() {
-		return 'workshop';
+	public function form_signup_elements_add( $errors ) {
+
+		// Skip if it's not the BuddyPress GroupBlog Blog Signup Form.
+		if ( ! bp_is_groups_component() ) {
+			return;
+		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'message' => 'ADDING GROUP BLOG',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Unhook Multisite Sites callback.
+		remove_action( 'signup_blogform', [ $this->multisite->sites, 'site_signup_form_elements_add' ], 50 );
+
+		// Access the BuddyPress Groupblog global.
+		global $groupblog_create_screen;
+
+		// Get the current Group Blog ID.
+		$blog_id = get_groupblog_blog_id();
+
+		// Bail if there is an existing Blog and Group.
+		if ( ! $groupblog_create_screen && ! empty( $blog_id ) ) {
+			// Do we need to present any options?
+			return;
+		}
+
+		// Get forced option.
+		$forced = $this->setting_forced_get();
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-bp-groupblog-signup.php';
+
+	}
+
+	/**
+	 * Saves metadata when Blog Signup Forms are submitted.
+	 *
+	 * The "signup_site_meta" filter has been available since WordPress 4.8.0.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $meta Signup meta data. Default empty array.
+	 * @return array $meta The modified signup meta data.
+	 */
+	public function form_signup_submitted_meta_add( $meta ) {
+
+		// Bail early if not in a BuddyPress Groups context.
+		if ( ! bp_is_groups_component() ) {
+			return;
+		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'POST' => $_POST,
+			'meta' => $meta,
+			'skip' => ! empty( $meta['commentpress'] ) ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Bail early if we already have our meta.
+		if ( ! empty( $meta['commentpress'] ) ) {
+			return $meta;
+		}
+
+		// Init CommentPress metadata.
+		$metadata = [];
+
+		// Get "CommentPress enabled on all Sites" setting.
+		$forced = $this->setting_forced_get();
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'forced' => $forced ? 'y' : 'n',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// When not forced.
+		if ( ! $forced ) {
+
+			// Bail if our checkbox variable is not in POST.
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$checkbox = isset( $_POST['cpbp-groupblog'] ) ? sanitize_text_field( wp_unslash( $_POST['cpbp-groupblog'] ) ) : '';
+			if ( empty( $checkbox ) ) {
+				return $meta;
+			}
+
+		}
+
+		// Add flag to our meta.
+		$metadata['enable'] = 'y';
+
+		// Maybe add our meta.
+		if ( ! empty( $metadata ) ) {
+			$meta['commentpress'] = $metadata;
+		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'meta' => $meta,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// --<
+		return $meta;
+
+	}
+
+	/**
+	 * Initialises a new CommentPress-enabled Group Blog.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $blog_id The numeric ID of the new WordPress Site.
+	 * @param array $args The array of initialization arguments.
+	 */
+	public function form_signup_site_initialised( $blog_id, $args ) {
+
+		// Bail early if not in a BuddyPress Groups context.
+		if ( ! bp_is_groups_component() ) {
+			return;
+		}
+
+		// Get Group ID before switch.
+		$group_id = isset( $_COOKIE['bp_new_group_id'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['bp_new_group_id'] ) ) : bp_get_current_group_id();
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'group_id' => $group_id,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Bail if we don't get one.
+		if ( empty( $group_id ) ) {
+			return;
+		}
+
+		// We are already switched to the new Site so get core reference.
+		$core = commentpress_core();
+		if ( empty( $core ) ) {
+			return;
+		}
+
+		// TODO: Create settings in "BuddyPress Groupblog Settings" metabox for WordPress options.
+
+		/**
+		 * Filters the "Show Posts by default" option.
+		 *
+		 * @since 3.4
+		 *
+		 * @param string The default "Show Posts by default" option.
+		 */
+		$posts_or_pages = apply_filters( 'cp_posts_or_pages_in_toc', 'post' );
+		$core->db->setting_set( 'cp_show_posts_or_pages_in_toc', $posts_or_pages );
+
+		// If we opted for Posts.
+		if ( $posts_or_pages == 'post' ) {
+
+			/**
+			 * Filters the "TOC shows extended Posts" option.
+			 *
+			 * @since 3.4
+			 *
+			 * @param bool The default "TOC shows extended Posts" option.
+			 */
+			$extended_toc = apply_filters( 'cp_extended_toc', 1 );
+			$core->db->setting_set( 'cp_show_extended_toc', $extended_toc );
+
+		}
+
+		// Get Blog Type.
+		$blog_type = $core->db->setting_get( 'cp_blog_type' );
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'blog_type' => $blog_type,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Set the type as Group meta info.
+		// TODO: We also need to change this when the type is changed from the CommentPress Core "Site Settings" screen.
+		groups_update_groupmeta( $group_id, 'groupblogtype', 'groupblogtype-' . (string) $blog_type );
+
+		// Save options.
+		$core->db->settings_save();
+
+		// ---------------------------------------------------------------------
+		// WordPress Internal Configuration.
+		// ---------------------------------------------------------------------
+
+		// Get commenting option.
+		$anon_comments = $this->setting_comment_login_get() ? 1 : 0;
+
+		/**
+		 * Filters the anonymous commenting setting.
+		 *
+		 * @since 3.3
+		 *
+		 * @param bool $anon_comments A value of 1 requires registration, 0 does not.
+		 */
+		$anon_comments = apply_filters( 'cp_require_comment_registration', $anon_comments );
+
+		// Update WordPress option.
+		update_option( 'comment_registration', $anon_comments );
+
+		// Get all network-activated plugins.
+		$sitewide_plugins = maybe_unserialize( get_site_option( 'active_sitewide_plugins', [] ) );
+		if ( ! empty( $sitewide_plugins ) ) {
+
+			// Loop through them.
+			foreach ( $sitewide_plugins as $plugin_path => $plugin_data ) {
+
+				// Switch "comments_notify" off if we've got "BuddyPress Group Email Subscription" network-activated.
+				if ( false !== strstr( $plugin_path, 'bp-activity-subscription.php' ) ) {
+					update_option( 'comments_notify', 0 );
+					continue;
+				}
+
+				// Handle other network-activated plugins here.
+
+			}
+
+		}
+
+		/**
+		 * Allow plugins to add their own config.
+		 *
+		 * @since 3.8.5
+		 *
+		 * @param int $blog_id The numeric ID of the WordPress Blog.
+		 * @param int $blog_type The numeric Blog Type.
+		 * @param bool False since this is now deprecated.
+		 */
+		do_action_deprecated(
+			'cp_new_groupblog_created',
+			[ $blog_id, $blog_type, false ],
+			'4.0',
+			'commentpress/multisite/bp/groupblog/site/initialised'
+		);
+
+		/**
+		 * Fires when a new CommentPress-enabled Group Blog has been initialised.
+		 *
+		 * @since 4.0
+		 *
+		 * @param int $blog_id The numeric ID of the WordPress Blog.
+		 * @param int $blog_type The numeric Blog Type.
+		 * @param int $group_id The numeric ID of the BuddyPress Group.
+		 */
+		do_action_deprecated( 'commentpress/multisite/bp/groupblog/site/initialised', $blog_id, $blog_type, $group_id );
+
 	}
 
 }

@@ -132,7 +132,7 @@ if ( ! function_exists( 'commentpress_groupblog_classes' ) ) :
 		// Init empty.
 		$groupblog_class = '';
 
-		// Only add classes when bp-groupblog is active.
+		// Only add classes when BuddyPress Groupblog is active.
 		if ( function_exists( 'get_groupblog_group_id' ) ) {
 
 			// Init Group Blog type.
@@ -257,7 +257,7 @@ if ( ! function_exists( 'commentpress_bp_group_css_class' ) ) :
 	 */
 	function commentpress_bp_group_css_class( $classes ) {
 
-		// Only add classes when bp-groupblog is active.
+		// Only add classes when BuddyPress Groupblog is active.
 		if ( ! function_exists( 'get_groupblog_group_id' ) ) {
 			return $classes;
 		}

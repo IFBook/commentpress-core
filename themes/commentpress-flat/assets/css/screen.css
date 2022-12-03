@@ -4426,6 +4426,7 @@ Support for WordPress Signup Page.
 /* CommentPress Multisite Options container */
 #content .mu_register #cp-multisite-options
 {
+	margin-top: 36px;
 	margin-bottom: 11px;
 	padding: 15px;
 	border: 1px solid #DDD;
@@ -4851,15 +4852,6 @@ RESPONSIVENESS
 	.comment-content
 	{
 		font-size: 120%;
-	}
-
-	/* buddypress content */
-	.activity,
-	#groups-dir-list,
-	#members-dir-list,
-	#blogs-dir-list
-	{
-		font-size: 110%;
 	}
 
 	h3.activity_heading,
