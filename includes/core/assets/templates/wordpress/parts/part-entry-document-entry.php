@@ -7,6 +7,9 @@
  * @package CommentPress_Core
  */
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
 ?>
 <!-- <?php echo $this->parts_path; ?>part-entry-document-entry.php -->
 <div class="cp_title_visibility_wrapper">

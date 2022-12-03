@@ -7,6 +7,9 @@
  * @package CommentPress_Core
  */
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
 ?>
 <!-- <?php echo $this->metabox_path; ?>metabox-settings-site-page.php -->
 <table class="form-table">

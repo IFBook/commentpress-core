@@ -7,6 +7,9 @@
  * @package CommentPress_Core
  */
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
 ?>
 <!-- <?php echo $this->metabox_path; ?>metabox-settings-site-theme.php -->
 <p><?php _e( 'You can set a custom background colour in <em>Appearance &#8594; Background</em>.<br />You can also set a custom header image and header text colour in <em>Appearance &#8594; Header</em>.<br />Below are extra options for changing how the theme functions.', 'commentpress-core' ); ?></p>

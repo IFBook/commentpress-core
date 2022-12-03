@@ -7,6 +7,9 @@
  * @package CommentPress_Core
  */
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
 ?>
 <!-- <?php echo $this->metabox_path; ?>metabox-entry.php -->
 <?php wp_nonce_field( $this->nonce_value, $this->nonce_name ); ?>

@@ -7,6 +7,9 @@
  * @package CommentPress_Core
  */
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
 ?>
 <!-- <?php echo $this->parts_path; ?>part-entry-document-settings.php -->
 <tr valign="top">

@@ -7,6 +7,9 @@
  * @package CommentPress_Core
  */
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
 ?>
 <!-- <?php echo $this->parts_path; ?>part-entry-formatter-entry.php -->
 <div class="<?php echo $this->element_select; ?>_wrapper">
