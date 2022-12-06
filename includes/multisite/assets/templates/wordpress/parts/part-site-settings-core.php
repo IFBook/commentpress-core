@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
 <!-- <?php echo $this->parts_path; ?>part-sites-settings-core.php -->
 <tr valign="top">
 	<th scope="row">
-		<label for="<?php echo $this->key_disable; ?>"><?php esc_html_e( 'Disable CommentPress on this site', 'commentpress-core' ); ?></label>
+		<label for="<?php echo $this->key_disable; ?>"><?php esc_html_e( 'Disable CommentPress on this Site', 'commentpress-core' ); ?></label>
 	</th>
 	<td>
 		<input id="<?php echo $this->key_disable; ?>" name="<?php echo $this->key_disable; ?>" value="1" type="checkbox" />

@@ -21,7 +21,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 3.3
  */
-class CommentPress_Core_Entry_Document {
+class CommentPress_Core_Document {
 
 	/**
 	 * Core loader object.
@@ -32,15 +32,6 @@ class CommentPress_Core_Entry_Document {
 	 * @var object $core The core loader object.
 	 */
 	public $core;
-
-	/**
-	 * Entry object.
-	 *
-	 * @since 4.0
-	 * @access public
-	 * @var object $entry The Entry object.
-	 */
-	public $entry;
 
 	/**
 	 * Supported Post Types.
@@ -54,43 +45,22 @@ class CommentPress_Core_Entry_Document {
 	];
 
 	/**
-	 * Page Title visibility key.
-	 *
-	 * The key is the "id" and "name" of the form element.
-	 * The key is also used to check the POST array for the form element value.
-	 * The meta key is the key prefixed with an underscore.
+	 * Metabox template directory path.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $key_show_title The Page Title visibility key.
+	 * @var string $metabox_path Relative path to the Metabox directory.
 	 */
-	private $key_show_title = 'cp_title_visibility';
+	private $metabox_path = 'includes/core/assets/templates/wordpress/metaboxes/';
 
 	/**
-	 * Page Meta visibility key.
-	 *
-	 * The key is the "id" and "name" of the form element.
-	 * The key is also used to check the POST array for the form element value.
-	 * The meta key is the key prefixed with an underscore.
+	 * Parts template directory path.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $key_show_meta The Page Meta visibility key.
+	 * @var string $parts_path Relative path to the Parts directory.
 	 */
-	private $key_show_meta = 'cp_page_meta_visibility';
-
-	/**
-	 * Paragraph Number key.
-	 *
-	 * The key is the "id" and "name" of the form element.
-	 * The key is also used to check the POST array for the form element value.
-	 * The meta key is the key prefixed with an underscore.
-	 *
-	 * @since 4.0
-	 * @access private
-	 * @var string $key_para_num The Paragraph Number key.
-	 */
-	private $key_para_num = 'cp_starting_para_number';
+	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
 
 	/**
 	 * Page Numbering format key.
@@ -119,15 +89,6 @@ class CommentPress_Core_Entry_Document {
 	private $key_layout = 'cp_page_layout';
 
 	/**
-	 * Parts template directory path.
-	 *
-	 * @since 4.0
-	 * @access private
-	 * @var string $parts_path Relative path to the Parts directory.
-	 */
-	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
-
-	/**
 	 * Prevent "save_post" callback from running more than once.
 	 *
 	 * @since 4.0
@@ -141,16 +102,15 @@ class CommentPress_Core_Entry_Document {
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $entry Reference to the core entry object.
+	 * @param object $core Reference to the core plugin object.
 	 */
-	public function __construct( $entry ) {
+	public function __construct( $core ) {
 
-		// Store references.
-		$this->entry = $entry;
-		$this->core = $entry->core;
+		// Store reference to core plugin object.
+		$this->core = $core;
 
-		// Init when the entry object is fully loaded.
-		add_action( 'commentpress/core/entry/loaded', [ $this, 'initialise' ] );
+		// Init when this plugin is fully loaded.
+		add_action( 'commentpress/core/loaded', [ $this, 'initialise' ] );
 
 	}
 
@@ -173,40 +133,115 @@ class CommentPress_Core_Entry_Document {
 	 */
 	public function register_hooks() {
 
+		// Separate callbacks into descriptive methods.
+		//$this->register_hooks_settings();
+		$this->register_hooks_entry();
+
+	}
+
+	/**
+	 * Registers "Site Settings" hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_settings() {
+
+		// Add our settings to default settings.
+		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ], 20, 1 );
+
+		// Add our metaboxes to the Site Settings screen.
+		add_filter( 'commentpress/core/settings/site/metaboxes/after', [ $this, 'settings_meta_boxes_append' ], 20 );
+
+		// Save data from Site Settings form submissions.
+		add_action( 'commentpress/core/settings/site/save/before', [ $this, 'settings_meta_box_save' ] );
+
+	}
+
+	/**
+	 * Registers "Entry" hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_entry() {
+
 		// Inject form element into the "CommentPress Settings" metabox on "Edit Entry" screens.
-		add_action( 'commentpress/core/entry/metabox/after', [ $this, 'metabox_post_get' ] );
+		add_action( 'commentpress/core/entry/metabox/after', [ $this, 'entry_meta_box_part_get' ], 10 );
 
 		// Saves the Sidebar value on "Edit Entry" screens.
-		add_action( 'commentpress/core/settings/post/saved', [ $this, 'save_for_post' ] );
-
-		// Add our option to the Site Settings "Page Settings" metabox.
-		add_action( 'commentpress/core/settings/site/metabox/page/after', [ $this, 'metabox_settings_get' ] );
-
-		// Save data from "Site Settings" screen.
-		add_action( 'commentpress/core/settings/site/save/before', [ $this, 'save_for_settings' ] );
+		add_action( 'commentpress/core/settings/post/saved', [ $this, 'entry_meta_box_part_save' ] );
 
 	}
 
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Adds our option to the Site Settings "General Settings" metabox.
+	 * Appends our settings to the default core settings.
 	 *
 	 * @since 4.0
+	 *
+	 * @param array $settings The existing default core settings.
+	 * @return array $settings The modified default core settings.
 	 */
-	public function metabox_settings_get() {
+	public function settings_get_defaults( $settings ) {
 
-		// Get settings.
-		$title_visibility = $this->core->db->setting_get( 'cp_title_visibility' );
-		$page_meta_visibility = $this->core->db->setting_get( 'cp_page_meta_visibility' );
+		// Add our defaults.
+		$settings[ $this->key_show_title ] = 'show';
+		$settings[ $this->key_show_meta ] = 'hide';
 
-		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-entry-document-settings.php';
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'settings' => $settings,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// --<
+		return $settings;
 
 	}
 
 	/**
-	 * Saves the data from "Site Settings" screen.
+	 * Appends our metaboxes to the Site Settings screen.
+	 *
+	 * @since 4.0
+	 *
+	 * @param string $screen_id The Site Settings Screen ID.
+	 */
+	public function settings_meta_boxes_append( $screen_id ) {
+
+		// Create "Structured Document Settings" metabox.
+		add_meta_box(
+			'commentpress_document',
+			__( 'Structured Document Settings', 'commentpress-core' ),
+			[ $this, 'settings_meta_box_render' ], // Callback.
+			$screen_id, // Screen ID.
+			'normal', // Column: options are 'normal' and 'side'.
+			'core' // Vertical placement: options are 'core', 'high', 'low'.
+		);
+
+	}
+
+	/**
+	 * Renders the "Structured Document Settings" metabox.
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_render() {
+
+		// Get settings.
+		$show_title = $this->setting_show_title_get();
+		$show_meta = $this->setting_show_meta_get();
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-document.php';
+
+	}
+
+	/**
+	 * Saves the data from the Site Settings "Structured Document Settings" metabox.
 	 *
 	 * Adds the data to the settings array. The settings are actually saved later.
 	 *
@@ -214,21 +249,21 @@ class CommentPress_Core_Entry_Document {
 	 *
 	 * @since 4.0
 	 */
-	public function save_for_settings() {
+	public function settings_meta_box_save() {
 
-		// Get the Entry title visibility value.
+		// Get the "Page Title visibility" value.
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$show_title = isset( $_POST[ $this->key_show_title ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_show_title ] ) ) : '';
 
-		// Set the Page Meta visibility value.
-		$this->core->db->setting_set( $this->key_show_title, $show_title );
+		// Save the meta value.
+		$this->setting_show_title_set( $show_title );
 
-		// Get the Page Meta visibility value.
+		// Get the "Page Meta visibility" value.
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$show_meta = isset( $_POST[ $this->key_show_meta ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_show_meta ] ) ) : '';
 
-		// Set the Page Meta visibility value.
-		$this->core->db->setting_set( $this->key_show_meta, $show_meta );
+		// Save the meta value.
+		$this->setting_show_meta_set( $show_meta );
 
 	}
 
@@ -241,30 +276,21 @@ class CommentPress_Core_Entry_Document {
 	 *
 	 * @param WP_Post $post The WordPress Post object.
 	 */
-	public function metabox_post_get( $post ) {
+	public function entry_meta_box_part_get( $post ) {
 
 		// Bail if not one of our supported Post Types.
 		if ( ! in_array( $post->post_type, $this->post_types ) ) {
 			return;
 		}
 
-		// Get the Entry title visibility.
-		$title_visibility = $this->title_visibility_get( $post );
-
-		// Get the Entry meta visibility.
-		$meta_visibility = $this->meta_visibility_get( $post );
-
 		// Get the Page Numbering format.
-		$format = $this->page_numbering_get( $post );
+		$format = $this->entry_page_numbering_get( $post );
 
 		// Get the layout for Welcome Page.
-		$layout = $this->title_page_layout_get( $post );
-
-		// Get the starting Paragraph Number.
-		$number = $this->paragraph_start_number_get( $post );
+		$layout = $this->entry_title_page_layout_get( $post );
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-entry-document-entry.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-document-entry.php';
 
 	}
 
@@ -275,7 +301,7 @@ class CommentPress_Core_Entry_Document {
 	 *
 	 * @param object $post The WordPress Post object.
 	 */
-	public function save_for_post( $post ) {
+	public function entry_meta_box_part_save( $post ) {
 
 		// Bail if not one of our supported Post Types.
 		if ( ! in_array( $post->post_type, $this->post_types ) ) {
@@ -294,108 +320,15 @@ class CommentPress_Core_Entry_Document {
 			return;
 		}
 
-		// Save Entry title visibility.
-		$this->title_visibility_save( $post );
-
-		// Save Entry meta visibility.
-		$this->meta_visibility_save( $post );
-
 		// Save Page Numbering.
-		$this->page_numbering_save( $post );
+		$this->entry_page_numbering_set( $post );
 
 		// Save layout for Welcome Page.
-		$this->title_page_layout_save( $post );
-
-		// Save starting Paragraph Number.
-		$this->paragraph_start_number_save( $post );
+		$this->entry_title_page_layout_set( $post );
 
 	}
 
 	// -------------------------------------------------------------------------
-
-	/**
-	 * Gets the Entry title visibility.
-	 *
-	 * @since 4.0
-	 *
-	 * @param object $post The Post object.
-	 * @return string $value The Entry title visibility.
-	 */
-	public function title_visibility_get( $post ) {
-
-		// Build meta key.
-		$meta_key = '_' . $this->key_show_title;
-
-		// Get the value from Post meta.
-		$value = $this->get_for_post_id( $post->ID, $meta_key, $this->key_show_title, $raw = true );
-
-		// --<
-		return $value;
-
-	}
-
-	/**
-	 * Saves the Entry title visibility.
-	 *
-	 * @since 3.4
-	 *
-	 * @param object $post The Post object.
-	 */
-	private function title_visibility_save( $post ) {
-
-		// Find and save the data.
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$value = isset( $_POST[ $this->key_show_title ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_show_title ] ) ) : '';
-
-		// Build meta key.
-		$meta_key = '_' . $this->key_show_title;
-
-		// Save the meta value.
-		$this->set_for_post_id( $post->ID, $value, $meta_key );
-
-	}
-
-	/**
-	 * Gets the Entry title visibility.
-	 *
-	 * @since 4.0
-	 *
-	 * @param object $post The Post object.
-	 * @return string $value The Entry title visibility.
-	 */
-	public function meta_visibility_get( $post ) {
-
-		// Build meta key.
-		$meta_key = '_' . $this->key_show_meta;
-
-		// Get the value from Post meta.
-		$value = $this->get_for_post_id( $post->ID, $meta_key, $this->key_show_meta, $raw = true );
-
-		// --<
-		return $value;
-
-	}
-
-	/**
-	 * Save Page Meta visibility.
-	 *
-	 * @since 3.4
-	 *
-	 * @param object $post The Post object.
-	 */
-	private function meta_visibility_save( $post ) {
-
-		// Find and save the data.
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$value = isset( $_POST[ $this->key_show_meta ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_show_meta ] ) ) : '';
-
-		// Build meta key.
-		$meta_key = '_' . $this->key_show_meta;
-
-		// Save the meta value.
-		$this->set_for_post_id( $post->ID, $value, $meta_key );
-
-	}
 
 	/**
 	 * Gets the Page Numbering format.
@@ -407,7 +340,7 @@ class CommentPress_Core_Entry_Document {
 	 * @param object $post The Post object.
 	 * @return string $format The Page Numbering format.
 	 */
-	public function page_numbering_get( $post ) {
+	public function entry_page_numbering_get( $post ) {
 
 		// Default to empty.
 		$format = '';
@@ -447,7 +380,7 @@ class CommentPress_Core_Entry_Document {
 	 *
 	 * @param object $post The Post object.
 	 */
-	private function page_numbering_save( $post ) {
+	private function entry_page_numbering_set( $post ) {
 
 		// Bail if no value received.
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
@@ -509,26 +442,28 @@ class CommentPress_Core_Entry_Document {
 	 * @param object $post The Post object.
 	 * @return string $layout The layout for the Welcome Page.
 	 */
-	public function title_page_layout_get( $post ) {
+	public function entry_title_page_layout_get( $post ) {
+
+		// TODO: Move to "page_legacy" class.
 
 		// Default to empty.
 		$layout = '';
 
 		// Is this the Welcome Page?
-		if ( $post->ID == $this->core->db->setting_get( 'cp_welcome_page' ) ) {
+		if ( $post->ID !== (int) $this->core->db->setting_get( 'cp_welcome_page' ) ) {
+			return $layout;
+		}
 
-			// Default to text.
-			$default = 'text';
+		// Default to text.
+		$default = 'text';
 
-			// Build meta key.
-			$meta_key = '_' . $this->key_layout;
+		// Build meta key.
+		$meta_key = '_' . $this->key_layout;
 
-			// Get the value from Post meta.
-			$layout = $this->get_for_post_id( $post->ID, $meta_key );
-			if ( empty( $layout ) ) {
-				$layout = $default;
-			}
-
+		// Get the value from Post meta.
+		$layout = $this->get_for_post_id( $post->ID, $meta_key );
+		if ( empty( $layout ) ) {
+			$layout = $default;
 		}
 
 		// --<
@@ -541,13 +476,13 @@ class CommentPress_Core_Entry_Document {
 	 *
 	 * Note: This allows for the legacy "Book Cover image".
 	 *
-	 * TODO: Move to "page_legacy" class.
-	 *
 	 * @since 3.0
 	 *
 	 * @param object $post The Post object.
 	 */
-	private function title_page_layout_save( $post ) {
+	private function entry_title_page_layout_set( $post ) {
+
+		// TODO: Move to "page_legacy" class.
 
 		// Bail if this is not the Welcome Page.
 		if ( $post->ID !== (int) $this->core->db->setting_get( 'cp_welcome_page' ) ) {
@@ -560,62 +495,6 @@ class CommentPress_Core_Entry_Document {
 
 		// Build meta key.
 		$meta_key = '_' . $this->key_layout;
-
-		// Save the meta value.
-		$this->set_for_post_id( $post->ID, $value, $meta_key );
-
-	}
-
-	/**
-	 * Gets the starting Paragraph Number.
-	 *
-	 * @since 4.0
-	 *
-	 * @param object $post The Post object.
-	 * @return int $number The starting Paragraph Number.
-	 */
-	public function paragraph_start_number_get( $post ) {
-
-		// Default to start with Paragraph Number 1.
-		$default = 1;
-
-		// Build meta key.
-		$meta_key = '_' . $this->key_para_num;
-
-		// Get the value from Post meta.
-		$number = $this->get_for_post_id( $post->ID, $meta_key );
-		if ( ! is_numeric( $number ) ) {
-			$number = $default;
-		}
-
-		// --<
-		return $number;
-
-	}
-
-	/**
-	 * Saves the starting Paragraph Number.
-	 *
-	 * @since 3.4
-	 *
-	 * @param object $post The Post object.
-	 */
-	private function paragraph_start_number_save( $post ) {
-
-		// Get the data.
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$data = isset( $_POST[ $this->key_para_num ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_para_num ] ) ) : 1;
-
-		// If not numeric, set to default.
-		if ( ! is_numeric( $data ) ) {
-			$data = 1;
-		}
-
-		// Cast as integer.
-		$value = (int) $data;
-
-		// Build meta key.
-		$meta_key = '_' . $this->key_para_num;
 
 		// Save the meta value.
 		$this->set_for_post_id( $post->ID, $value, $meta_key );
@@ -676,6 +555,18 @@ class CommentPress_Core_Entry_Document {
 	 */
 	public function set_for_post_id( $post_id, $value, $meta_key ) {
 
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'post_id' => $post_id,
+			'value' => $value,
+			'meta_key' => $meta_key,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
 		// Delete the meta entry by passing an empty string.
 		if ( is_string( $value ) && $value === '' ) {
 			$this->delete_for_post_id( $post_id, $meta_key );
@@ -699,32 +590,6 @@ class CommentPress_Core_Entry_Document {
 
 		// Delete the meta value.
 		delete_post_meta( $post_id, $meta_key );
-
-	}
-
-	/**
-	 * Checks if the Sidebar of a Post is different to the default.
-	 *
-	 * @since 4.0
-	 *
-	 * @param int $post_id The numeric ID of the Post.
-	 * @return bool $overridden True if overridden, false otherwise.
-	 */
-	public function is_overridden( $post_id ) {
-
-		// Get the current Sidebar.
-		$sidebar_blog = $this->core->db->setting_get( $this->option_sidebar );
-
-		// Get the Sidebar for this Post.
-		$sidebar_post = $this->get_for_post_id( $post_id );
-
-		// Do override check.
-		if ( (string) $sidebar_blog !== (string) $sidebar_post ) {
-			return true;
-		}
-
-		// Not overridden.
-		return false;
 
 	}
 

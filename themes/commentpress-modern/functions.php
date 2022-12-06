@@ -11,6 +11,8 @@ defined( 'ABSPATH' ) || exit;
 // Always include our common theme functions file.
 require_once COMMENTPRESS_PLUGIN_PATH . 'includes/core/assets/includes/theme/theme-functions.php';
 
+
+
 /**
  * Set the content width based on the theme's design and stylesheet.
  *
@@ -23,6 +25,8 @@ require_once COMMENTPRESS_PLUGIN_PATH . 'includes/core/assets/includes/theme/the
 if ( ! isset( $content_width ) ) {
 	$content_width = 1024;
 }
+
+
 
 if ( ! function_exists( 'commentpress_setup' ) ) :
 
@@ -105,11 +109,8 @@ if ( ! function_exists( 'commentpress_setup' ) ) :
 		$core = commentpress_core();
 		if ( ! empty( $core ) ) {
 
-			// Get the option.
-			$featured_images = $core->db->setting_get( 'cp_featured_images', 'n' );
-
 			// Do we have the featured images option enabled?
-			if ( $featured_images == 'y' ) {
+			if ( $core->theme->setting_featured_images_get() == 'y' ) {
 
 				// Use Featured Images - also known as Post Thumbnails.
 				add_theme_support( 'post-thumbnails' );
@@ -137,6 +138,8 @@ endif;
 
 // Add after theme setup hook.
 add_action( 'after_setup_theme', 'commentpress_setup' );
+
+
 
 if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ) :
 
@@ -261,6 +264,8 @@ endif;
 // Add a filter for the above, very late so it (hopefully) is last in the queue.
 add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_scripts_and_styles', 995 );
 
+
+
 if ( ! function_exists( 'commentpress_enqueue_print_styles' ) ) :
 
 	/**
@@ -288,6 +293,8 @@ endif;
 
 // Add a filter for the above, very late so it (hopefully) is last in the queue.
 add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_print_styles', 999 );
+
+
 
 if ( ! function_exists( 'commentpress_buddypress_support' ) ) :
 
@@ -321,6 +328,8 @@ endif;
 // Add an action for the above. BuddyPress hooks this to "after_setup_theme" with priority 100.
 add_action( 'bp_after_setup_theme', 'commentpress_buddypress_support' );
 
+
+
 if ( ! function_exists( 'commentpress_bp_wrapper_open' ) ) :
 
 	/**
@@ -334,6 +343,8 @@ if ( ! function_exists( 'commentpress_bp_wrapper_open' ) ) :
 
 endif;
 
+
+
 if ( ! function_exists( 'commentpress_bp_wrapper_close' ) ) :
 
 	/**
@@ -346,6 +357,8 @@ if ( ! function_exists( 'commentpress_bp_wrapper_close' ) ) :
 	}
 
 endif;
+
+
 
 if ( ! function_exists( 'commentpress_bp_enqueue_styles' ) ) :
 
@@ -376,6 +389,8 @@ if ( ! function_exists( 'commentpress_bp_enqueue_styles' ) ) :
 	}
 
 endif;
+
+
 
 if ( ! function_exists( 'commentpress_background' ) ) :
 
@@ -418,6 +433,8 @@ if ( ! function_exists( 'commentpress_background' ) ) :
 
 endif;
 
+
+
 if ( ! function_exists( 'commentpress_header' ) ) :
 
 	/**
@@ -427,13 +444,11 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 	 */
 	function commentpress_header() {
 
-		// Get core plugin reference.
-		$core = commentpress_core();
-
 		// Init with same colour as theme stylesheets and default in class-core-database.php.
 		$bg_colour = '2c2622';
 
 		// Override if we have the plugin enabled.
+		$core = commentpress_core();
 		if ( ! empty( $core ) ) {
 			$bg_colour = $core->theme->header_bg_color_get();
 		}
@@ -508,6 +523,8 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 	}
 
 endif;
+
+
 
 if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 
@@ -670,6 +687,8 @@ return $html;
 
 endif;
 
+
+
 if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 
 	/**
@@ -697,7 +716,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 		}
 
 		// Get Page or Post.
-		$page_or_post = $core->db->setting_get( 'cp_show_posts_or_pages_in_toc' );
+		$page_or_post = $core->nav->setting_post_type_get();
 
 		/**
 		 * Filters the title of the "All Comments" Page when TOC contains Posts.
@@ -761,6 +780,8 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 
 endif;
 
+
+
 if ( ! function_exists( 'commentpress_add_loginout_id' ) ) :
 
 	/**
@@ -811,6 +832,8 @@ add_filter( 'loginout', 'commentpress_add_link_css' );
 add_filter( 'loginout', 'commentpress_add_loginout_id' );
 add_filter( 'register', 'commentpress_add_loginout_id' );
 
+
+
 if ( ! function_exists( 'commentpress_convert_link_to_button' ) ) :
 
 	/**
@@ -839,6 +862,8 @@ endif;
 add_filter( 'bp_get_the_notification_mark_unread_link', 'commentpress_convert_link_to_button' );
 add_filter( 'bp_get_the_notification_mark_read_link', 'commentpress_convert_link_to_button' );
 add_filter( 'bp_get_the_notification_delete_link', 'commentpress_convert_link_to_button' );
+
+
 
 if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 
@@ -903,16 +928,8 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 						 */
 						echo apply_filters( 'commentpress_get_feature_image_title', $title, $post );
 
-						// Default to hidden.
-						$cp_meta_visibility = ' style="display: none;"';
-
-						// Override if we've elected to show the meta.
-						if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
-							$cp_meta_visibility = '';
-						}
-
 						?>
-						<div class="search_meta page_search_meta"<?php echo $cp_meta_visibility; ?>>
+						<div class="search_meta page_search_meta"<?php commentpress_post_meta_visibility( get_the_ID() ); ?>>
 							<?php commentpress_echo_post_meta(); ?>
 						</div>
 
@@ -955,6 +972,8 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 
 endif;
 
+
+
 /**
  * Utility to test for Feature Image, because has_post_thumbnail() fails sometimes.
  *
@@ -985,6 +1004,8 @@ function commentpress_has_feature_image() {
 
 }
 
+
+
 /**
  * Clears the default "Previous Page" and "Next Page" CSS IDs.
  *
@@ -1001,6 +1022,8 @@ function commentpress_page_link_css_id( $css_id ) {
 add_filter( 'commentpress/navigation/page/link/next/css_id', 'commentpress_page_link_css_id' );
 add_filter( 'commentpress/navigation/page/link/previous/css_id', 'commentpress_page_link_css_id' );
 
+
+
 /**
  * Adds the "Next Page" Navigation link CSS classes.
  *
@@ -1016,6 +1039,8 @@ function commentpress_page_next_link_css_classes( $css_classes ) {
 // Add filter for the above.
 add_filter( 'commentpress/navigation/page/link/next/css_classes', 'commentpress_page_next_link_css_classes' );
 
+
+
 /**
  * Adds the "Previous Page" Navigation link CSS classes.
  *
@@ -1030,6 +1055,8 @@ function commentpress_page_previous_link_css_classes( $css_classes ) {
 
 // Add filter for the above.
 add_filter( 'commentpress/navigation/page/link/previous/css_classes', 'commentpress_page_previous_link_css_classes' );
+
+
 
 /**
  * Register Widget areas for this theme.
@@ -1097,4 +1124,5 @@ function commentpress_register_widget_areas() {
 
 }
 
+// Add callback for the above.
 add_action( 'widgets_init', 'commentpress_register_widget_areas' );

@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
 <!-- <?php echo $this->page_path; ?>page-settings-site.php -->
 <div class="wrap">
 
-	<h1><?php esc_html_e( 'CommentPress Core', 'commentpress-core' ); ?></h1>
+	<h1><?php esc_html_e( 'CommentPress Settings', 'commentpress-core' ); ?></h1>
 
 	<?php if ( $show_tabs ) : ?>
 		<h2 class="nav-tab-wrapper">
@@ -37,11 +37,11 @@ defined( 'ABSPATH' ) || exit;
 		<hr />
 	<?php endif; ?>
 
-	<form method="post" id="commentpress_core_settings_form" action="<?php echo $this->page_settings_submit_url_get(); ?>">
+	<form method="post" id="<?php echo esc_attr( $this->form_id ); ?>" action="<?php echo $this->page_settings_submit_url_get(); ?>">
 
 		<?php wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ); ?>
 		<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
-		<?php wp_nonce_field( 'commentpress_core_settings_action', 'commentpress_core_settings_nonce' ); ?>
+		<?php wp_nonce_field( $this->nonce_action, $this->nonce_field ); ?>
 
 		<div id="poststuff">
 

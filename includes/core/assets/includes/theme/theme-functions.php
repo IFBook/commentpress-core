@@ -38,13 +38,11 @@ if ( ! function_exists( 'commentpress_admin_header' ) ) :
 	 */
 	function commentpress_admin_header() {
 
-		// Get core plugin reference.
-		$core = commentpress_core();
-
-		// Init with same colour as theme stylesheets and default in "class-core-database.php".
+		// Init with same colour as theme stylesheets and default in "class-core-theme.php".
 		$colour = '2c2622';
 
 		// Override if we have the plugin enabled.
+		$core = commentpress_core();
 		if ( ! empty( $core ) ) {
 			$colour = $core->theme->header_bg_color_get();
 		}
@@ -371,30 +369,15 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 
 		// -------------------- Layout -----------------------------------------
 
-		// Init layout class but if we have the plugin enabled.
+		// Init layout class but override if we have the plugin enabled.
 		$layout_class = '';
-		if ( ! empty( $core ) ) {
-
-			// Is this the Welcome Page?
-			if ( ( $post instanceof WP_Post ) && (int) $post->ID === (int) $core->db->setting_get( 'cp_welcome_page' ) ) {
-
-				// Init layout.
-				$layout = '';
-
-				// Set key.
-				$key = '_cp_page_layout';
-
-				// Get it if the custom field already has a value.
-				if ( get_post_meta( $post->ID, $key, true ) != '' ) {
-					$layout = get_post_meta( $post->ID, $key, true );
-				}
+		if ( ! empty( $core ) && ( $post instanceof WP_Post ) ) {
 
 				// Set layout class if wide layout.
+				$layout = $core->document->entry_title_page_layout_get( $post );
 				if ( $layout == 'wide' ) {
 					$layout_class = 'full_width';
 				}
-
-			}
 
 		}
 
@@ -511,6 +494,15 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		$classes[] = 'tinymce-4';
 
 		// -------------------- Process ----------------------------------------
+
+		/**
+		 * Filters the body classes array.
+		 *
+		 * @since 3.4
+		 *
+		 * @param array $classes The body classes array.
+		 */
+		$classes = apply_filters( 'commentpress/core/theme/body/classes', $classes );
 
 		/**
 		 * Filters the body classes attribute.
@@ -1050,7 +1042,7 @@ if ( ! function_exists( 'commentpress_add_commentblock_button' ) ) :
 		}
 
 		// Add the TinyMCE button.
-		$core->editor_content->button_add();
+		$core->editor->content->button_add();
 
 	}
 
@@ -1326,34 +1318,21 @@ if ( ! function_exists( 'commentpress_get_post_title_visibility' ) ) :
 	 * @since 3.3
 	 *
 	 * @param int $post_id The numeric ID of the Post.
-	 * @return bool $hide True if title is shown, false if hidden.
+	 * @return bool $show_title True if title is shown, false if hidden.
 	 */
 	function commentpress_get_post_title_visibility( $post_id ) {
 
 		// Show by default.
-		$hide = 'show';
+		$show_title = 'show';
 
-		// Get core plugin reference.
+		// Use setting from core if present.
 		$core = commentpress_core();
-
-		// If we have the plugin enabled.
 		if ( ! empty( $core ) ) {
-
-			// Get global hide.
-			$hide = $core->db->setting_get( 'cp_title_visibility' );
-
-			// Set key.
-			$key = '_cp_title_visibility';
-
-			// Get value if the custom field already has one.
-			if ( get_post_meta( $post_id, $key, true ) != '' ) {
-				$hide = get_post_meta( $post_id, $key, true );
-			}
-
+			$show_title = $core->entry->single->entry_show_title_get( $post_id );
 		}
 
 		// --<
-		return ( $hide == 'show' ) ? true : false;
+		return ( $show_title == 'show' ) ? true : false;
 
 	}
 
@@ -1364,7 +1343,7 @@ endif;
 if ( ! function_exists( 'commentpress_post_meta_visibility' ) ) :
 
 	/**
-	 * Echoes a "style" attribute to show or hide the Page/Post meta.
+	 * Echoes a "style" attribute to show or show_title the Page/Post meta.
 	 *
 	 * @since 4.0
 	 *
@@ -1395,34 +1374,21 @@ if ( ! function_exists( 'commentpress_get_post_meta_visibility' ) ) :
 	 * @since 3.3
 	 *
 	 * @param int $post_id The numeric ID of the Post.
-	 * @return bool $hide_meta True if meta is shown, false if hidden.
+	 * @return bool $show_meta True if meta is shown, false if hidden.
 	 */
 	function commentpress_get_post_meta_visibility( $post_id ) {
 
 		// Hide by default.
-		$hide_meta = 'hide';
+		$show_meta = 'show_title';
 
-		// Get core plugin reference.
+		// Use setting from core if present.
 		$core = commentpress_core();
-
-		// If we have the plugin enabled.
 		if ( ! empty( $core ) ) {
-
-			// Get global hide_meta.
-			$hide_meta = $core->db->setting_get( 'cp_page_meta_visibility' );
-
-			// Set key.
-			$key = '_cp_page_meta_visibility';
-
-			// Override with local value if the custom field already has one.
-			if ( get_post_meta( $post_id, $key, true ) != '' ) {
-				$hide_meta = get_post_meta( $post_id, $key, true );
-			}
-
+			$show_meta = $core->entry->single->entry_show_meta_get( $post_id );
 		}
 
 		// --<
-		return ( $hide_meta == 'show' ) ? true : false;
+		return ( $show_meta == 'show' ) ? true : false;
 
 	}
 

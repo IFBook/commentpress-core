@@ -91,7 +91,7 @@ class CommentPress_Multisite_Database {
 	}
 
 	/**
-	 * Initialises this obiject.
+	 * Initialises this object.
 	 *
 	 * @since 3.3
 	 */

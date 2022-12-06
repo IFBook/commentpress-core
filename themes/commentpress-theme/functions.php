@@ -11,6 +11,8 @@ defined( 'ABSPATH' ) || exit;
 // Always include our common theme functions file.
 require_once COMMENTPRESS_PLUGIN_PATH . 'includes/core/assets/includes/theme/theme-functions.php';
 
+
+
 /**
  * Set the content width based on the theme's design and stylesheet.
  *
@@ -23,6 +25,8 @@ require_once COMMENTPRESS_PLUGIN_PATH . 'includes/core/assets/includes/theme/the
 if ( ! isset( $content_width ) ) {
 	$content_width = 588;
 }
+
+
 
 if ( ! function_exists( 'commentpress_setup' ) ) :
 
@@ -100,6 +104,114 @@ endif;
 
 // Add after theme setup hook.
 add_action( 'after_setup_theme', 'commentpress_setup' );
+
+
+
+if ( ! function_exists( 'commentpress_default_theme_customize_register' ) ) :
+
+	/**
+	 * Implements CommentPress Default Theme options in the Theme Customizer.
+	 *
+	 * @since 4.0
+	 *
+	 * @param object $wp_customize Theme Customizer object.
+	 */
+	function commentpress_default_theme_customize_register( $wp_customize ) {
+
+		// Add customizer section.
+		$wp_customize->add_section(
+			'cp_theme_options',
+			[
+				'title' => __( 'Theme Settings', 'commentpress-core' ),
+				'priority' => 36,
+			]
+		);
+
+		// Use it if we have a pre-existing default in core settings.
+		$core = commentpress_core();
+		if ( ! empty( $core ) ) {
+			$default = (int) $core->db->setting_get( 'cp_min_page_width' );
+		}
+
+		// Otherwise, set default.
+		if ( empty( $default ) ) {
+			$default = 447;
+		}
+
+		// Add setting.
+		$wp_customize->add_setting(
+			'cp_min_page_width',
+			[
+				'default' => $default,
+			]
+		);
+
+		// Add text control.
+		$wp_customize->add_control(
+			'cp_min_page_width',
+			[
+				'label' => __( 'Minimum page width in px', 'commentpress-core' ),
+				'section' => 'cp_theme_options',
+				'type' => 'number',
+			]
+		);
+
+	}
+
+endif;
+
+// Add callback for the above.
+add_action( 'customize_register', 'commentpress_default_theme_customize_register' );
+
+
+
+if ( ! function_exists( 'commentpress_default_theme_javascript_vars' ) ) :
+
+	/**
+	 * Filters the Javascript vars.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $vars The default Javascript vars.
+	 * @return array $vars The modified Javascript vars.
+	 */
+	function commentpress_default_theme_javascript_vars( $vars ) {
+
+		// Do we have a colour set via the Customizer?
+		$min_page_width = get_theme_mod( 'cp_min_page_width', false );
+
+		// Find legacy setting if not.
+		if ( empty( $min_page_width ) ) {
+
+			// Get core plugin reference.
+			$core = commentpress_core();
+
+			// Use it if we have a pre-existing default in core settings.
+			if ( empty( $core ) ) {
+				$min_page_width = (int) $core->db->setting_get( 'cp_min_page_width' );
+			}
+
+		}
+
+		// Otherwise, set default.
+		if ( empty( $min_page_width ) ) {
+			$min_page_width = 447;
+		}
+
+		// Set minimum Page width.
+		$vars['cp_min_page_width'] = $min_page_width;
+
+		// --<
+		return $vars;
+
+	}
+
+endif;
+
+// Add callback for the above.
+add_filter( 'commentpress_get_javascript_vars', 'commentpress_default_theme_javascript_vars' );
+
+
 
 if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ) :
 
@@ -246,6 +358,8 @@ endif;
 // Add a filter for the above, very late so it (hopefully) is last in the queue.
 add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_scripts_and_styles', 100 );
 
+
+
 if ( ! function_exists( 'commentpress_enqueue_print_styles' ) ) :
 
 	/**
@@ -274,6 +388,8 @@ endif;
 // Add a filter for the above, very late so it (hopefully) is last in the queue.
 add_action( 'wp_enqueue_scripts', 'commentpress_enqueue_print_styles', 101 );
 
+
+
 if ( ! function_exists( 'commentpress_buddypress_support' ) ) :
 
 	/**
@@ -299,6 +415,8 @@ endif;
 // Add an action for the above.
 add_action( 'bp_setup_globals', 'commentpress_buddypress_support' );
 
+
+
 if ( ! function_exists( 'commentpress_header' ) ) :
 
 	/**
@@ -308,13 +426,11 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 	 */
 	function commentpress_header() {
 
-		// Get core plugin reference.
-		$core = commentpress_core();
-
 		// Init with same colour as theme stylesheets and default in class-core-database.php.
 		$bg_colour = '2c2622';
 
 		// Override if we have the plugin enabled.
+		$core = commentpress_core();
 		if ( ! empty( $core ) ) {
 			$bg_colour = $core->theme->header_bg_color_get();
 		}
@@ -389,6 +505,8 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 	}
 
 endif;
+
+
 
 if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 
@@ -468,12 +586,19 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 
 			// Define Comment count.
 			$comment_count_text = sprintf(
-				_n( '<span class="cp_comment_count">%d</span> comment', '<span class="cp_comment_count">%d</span> comments', $post_comment_counts[ $post->ID ], 'commentpress-core' ),
+				_n(
+					'<span class="cp_comment_count">%d</span> comment',
+					'<span class="cp_comment_count">%d</span> comments',
+					$post_comment_counts[ $post->ID ],
+					'commentpress-core'
+				),
 				$post_comment_counts[ $post->ID ]
 			);
 
 			// Show it.
-			$html .= '<h3>' . esc_html( $post->post_title ) . ' <span>(' . $comment_count_text . ')</span></h3>' . "\n\n";
+			$html .= '<h3>' .
+				esc_html( $post->post_title ) . ' <span>(' . $comment_count_text . ')</span>' .
+			'</h3>' . "\n\n";
 
 			// Open Comments div.
 			$html .= '<div class="item_body">' . "\n\n";
@@ -551,6 +676,8 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 
 endif;
 
+
+
 if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 
 	/**
@@ -578,7 +705,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 		}
 
 		// Get Page or Post.
-		$page_or_post = $core->db->setting_get( 'cp_show_posts_or_pages_in_toc' );
+		$page_or_post = $core->nav->setting_post_type_get();
 
 		/**
 		 * Filters the title of the "All Comments" Page when TOC contains Posts.
@@ -642,6 +769,8 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 
 endif;
 
+
+
 if ( ! function_exists( 'commentpress_add_loginout_id' ) ) :
 
 	/**
@@ -687,10 +816,12 @@ if ( ! function_exists( 'commentpress_add_loginout_id' ) ) :
 
 endif;
 
-// Add filters for WordPress admin links.
+// Add callbacks for WordPress admin links.
 add_filter( 'loginout', 'commentpress_add_link_css' );
 add_filter( 'loginout', 'commentpress_add_loginout_id' );
 add_filter( 'register', 'commentpress_add_loginout_id' );
+
+
 
 /**
  * Register Widget areas for this theme.
@@ -714,7 +845,10 @@ function commentpress_register_widget_areas() {
 
 }
 
+// Add callback for the above.
 add_action( 'widgets_init', 'commentpress_register_widget_areas' );
+
+
 
 /**
  * Filter the default sidebar before modifications.
@@ -731,4 +865,5 @@ function commentpress_default_theme_default_sidebar( $sidebar ) {
 
 }
 
+// Add callback for the above.
 add_filter( 'commentpress_default_sidebar', 'commentpress_default_theme_default_sidebar' );

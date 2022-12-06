@@ -26,10 +26,8 @@ if ( ! function_exists( 'commentpress_page_navigation_is_login' ) ) :
 		// Assume not.
 		$is_login_page = false;
 
-		// Get core plugin reference.
-		$core = commentpress_core();
-
 		// Check Entry.
+		$core = commentpress_core();
 		if ( ! empty( $core ) && $core->entry->is_login_page() ) {
 			$is_login_page = true;
 		}
@@ -57,10 +55,8 @@ if ( ! function_exists( 'commentpress_page_navigation_is_signup' ) ) :
 		// Assume not.
 		$is_signup_page = false;
 
-		// Get core plugin reference.
-		$core = commentpress_core();
-
 		// Check Entry.
+		$core = commentpress_core();
 		if ( ! empty( $core ) && $core->entry->is_signup_page() ) {
 			$is_signup_page = true;
 		}
@@ -88,10 +84,8 @@ if ( ! function_exists( 'commentpress_page_navigation_is_activate' ) ) :
 		// Assume not.
 		$is_activate_page = false;
 
-		// Get core plugin reference.
-		$core = commentpress_core();
-
 		// Check Entry.
+		$core = commentpress_core();
 		if ( ! empty( $core ) && $core->entry->is_activate_page() ) {
 			$is_activate_page = true;
 		}
@@ -241,7 +235,7 @@ if ( ! function_exists( 'commentpress_page_navigation_get_next_link' ) ) :
 		}
 
 		// Set an image if asking for Pages with Comments.
-		$img = ( $with_comments === true ) ? '<img src="' . get_template_directory_uri() . '/assets/images/next.png" />' : '';
+		$img = $with_comments ? '<img src="' . get_template_directory_uri() . '/assets/images/next.png" />' : '';
 
 		/**
 		 * Filters the "Next Page" Navigation link CSS ID.
@@ -595,7 +589,7 @@ if ( ! function_exists( 'commentpress_page_number' ) ) :
 		}
 
 		// Wrap number in identifying span.
-		$element = '<span class="page_num_bottom">' . $number . '</span>';
+		$element = '<span class="page_num_bottom">' . esc_html( $number ) . '</span>';
 
 		/**
 		 * Filter that allows Page number string to be disabled.
@@ -608,10 +602,12 @@ if ( ! function_exists( 'commentpress_page_number' ) ) :
 		if ( ! apply_filters( 'commentpress_hide_page_number_string', false ) ) {
 
 			// Build Page number string.
-			$page_number = sprintf(
-				/* translators: %s: The span element containing the Page number. */
-				__( 'Page %s', 'commentpress-core' ),
-				$element
+			$page_number = esc_html(
+				sprintf(
+					/* translators: %s: The span element containing the Page number. */
+					__( 'Page %s', 'commentpress-core' ),
+					$element
+				)
 			);
 
 		} else {
@@ -622,7 +618,9 @@ if ( ! function_exists( 'commentpress_page_number' ) ) :
 		}
 
 		// Wrap in identifying class.
-		echo '<span class="' . ( ! is_numeric( $number ) ? 'roman' : 'arabic' ) . '">' . $page_number . '</span>';
+		echo '<span class="' . esc_attr( ! is_numeric( $number ) ? 'roman' : 'arabic' ) . '">' .
+			$page_number .
+		'</span>';
 
 	}
 

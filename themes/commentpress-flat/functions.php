@@ -72,11 +72,8 @@ if ( ! function_exists( 'commentpress_setup' ) ) :
 		$core = commentpress_core();
 		if ( ! empty( $core ) ) {
 
-			// Get the option.
-			$featured_images = $core->db->setting_get( 'cp_featured_images', 'n' );
-
 			// Do we have the featured images option enabled?
-			if ( $featured_images == 'y' ) {
+			if ( $core->theme->setting_featured_images_get() == 'y' ) {
 
 				// Use Featured Images - also known as Post Thumbnails.
 				add_theme_support( 'post-thumbnails' );
@@ -427,12 +424,10 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 		// Init as transparent.
 		$bg_colour = 'transparent';
 
-		// Do we have a colour set via the Customizer?
-		$colour = get_theme_mod( 'commentpress_header_bg_color', false );
-
-		// Override if we do.
-		if ( ! empty( $colour ) ) {
-			$bg_colour = $colour;
+		// Override if we have the plugin enabled.
+		$core = commentpress_core();
+		if ( ! empty( $core ) ) {
+			$bg_colour = $core->theme->header_bg_color_get();
 		}
 
 		/**
@@ -698,7 +693,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 		}
 
 		// Get Page or Post.
-		$page_or_post = $core->db->setting_get( 'cp_show_posts_or_pages_in_toc' );
+		$page_or_post = $core->nav->setting_post_type_get();
 
 		/**
 		 * Filters the title of the "All Comments" Page when TOC contains Posts.
@@ -910,16 +905,8 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 						 */
 						echo apply_filters( 'commentpress_get_feature_image_title', $title, $post );
 
-						// Default to hidden.
-						$cp_meta_visibility = ' style="display: none;"';
-
-						// Override if we've elected to show the meta.
-						if ( commentpress_get_post_meta_visibility( get_the_ID() ) ) {
-							$cp_meta_visibility = '';
-						}
-
 						?>
-						<div class="search_meta page_search_meta"<?php echo $cp_meta_visibility; ?>>
+						<div class="search_meta page_search_meta"<?php commentpress_post_meta_visibility( get_the_ID() ); ?>>
 							<?php commentpress_echo_post_meta(); ?>
 						</div>
 

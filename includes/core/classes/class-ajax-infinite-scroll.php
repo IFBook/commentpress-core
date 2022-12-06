@@ -163,7 +163,8 @@ class CommentPress_AJAX_Infinite_Scroll {
 
 		/*
 		// Error check.
-		if ( ! wp_verify_nonce( $_REQUEST['nonce'], 'cpajax_infinite_nonce' ) ) {
+		$nonce = isset( $_POST['cpajax_infinite_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['cpajax_infinite_nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce, 'cpajax_infinite_nonce' ) ) {
 			die( 'Nonce failure' );
 		}
 		*/

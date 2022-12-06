@@ -29,22 +29,22 @@ class CommentPress_Core_Comments {
 	public $core;
 
 	/**
-	 * Metabox nonce name.
+	 * Metabox template directory path.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_name The name of the metabox nonce element.
+	 * @var string $metabox_path Relative path to the Metabox directory.
 	 */
-	private $nonce_name = 'commentpress_nonce';
+	private $metabox_path = 'includes/core/assets/templates/wordpress/metaboxes/';
 
 	/**
-	 * Metabox nonce value.
+	 * "Live comment refreshing" settings key.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_value The name of the metabox nonce value.
+	 * @var str $key_live The settings key for the "Live comment refreshing" setting.
 	 */
-	private $nonce_value = 'commentpress_comments';
+	private $key_live = 'cp_para_comments_live';
 
 	/**
 	 * Constructor.
@@ -82,11 +82,52 @@ class CommentPress_Core_Comments {
 	 */
 	public function register_hooks() {
 
+		// Separate callbacks into descriptive methods.
+		$this->register_hooks_settings();
+		$this->register_hooks_activation();
+		$this->register_hooks_comments();
+
+	}
+
+	/**
+	 * Registers "Site Settings" hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_settings() {
+
+		// Add our settings to default settings.
+		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ], 20, 1 );
+
+		// Add our metaboxes to the Site Settings screen.
+		add_filter( 'commentpress/core/settings/site/metaboxes/after', [ $this, 'settings_meta_boxes_append' ], 40 );
+
+		// Save data from Site Settings form submissions.
+		add_action( 'commentpress/core/settings/site/save/before', [ $this, 'settings_meta_box_save' ] );
+
+	}
+
+	/**
+	 * Registers activation/deactivation hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_activation() {
+
 		// Act when this plugin is activated.
 		add_action( 'commentpress/core/activate', [ $this, 'plugin_activate' ], 20 );
 
 		// Act when this plugin is deactivated.
 		add_action( 'commentpress/core/deactivate', [ $this, 'plugin_deactivate' ], 40 );
+
+	}
+
+	/**
+	 * Registers Comment-related hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_comments() {
 
 		// Modify Comment posting.
 		add_action( 'comment_post', [ $this, 'save_comment' ], 10, 2 );
@@ -101,6 +142,125 @@ class CommentPress_Core_Comments {
 
 		// Amend the behaviour of Featured Comments plugin.
 		add_action( 'plugins_loaded', [ $this, 'featured_comments_override' ], 1000 );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Appends our settings to the default core settings.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $settings The existing default core settings.
+	 * @return array $settings The modified default core settings.
+	 */
+	public function settings_get_defaults( $settings ) {
+
+		// Add our defaults.
+		$settings[ $this->key_live ] = 0;
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'settings' => $settings,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// --<
+		return $settings;
+
+	}
+
+	/**
+	 * Appends our metaboxes to the Site Settings screen.
+	 *
+	 * @since 4.0
+	 *
+	 * @param string $screen_id The Site Settings Screen ID.
+	 */
+	public function settings_meta_boxes_append( $screen_id ) {
+
+		// Create "Theme Customisation" metabox.
+		add_meta_box(
+			'commentpress_commenting',
+			__( 'Commenting Settings', 'commentpress-core' ),
+			[ $this, 'settings_meta_box_render' ], // Callback.
+			$screen_id, // Screen ID.
+			'normal', // Column: options are 'normal' and 'side'.
+			'core' // Vertical placement: options are 'core', 'high', 'low'.
+		);
+
+	}
+
+	/**
+	 * Renders the "Commenting Settings" metabox.
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_render() {
+
+		// Get settings.
+		$live = $this->setting_live_get();
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-comments.php';
+
+	}
+
+	/**
+	 * Saves the data from the Network Settings "BuddyPress Groupblog Settings" metabox.
+	 *
+	 * Adds the data to the settings array. The settings are actually saved later.
+	 *
+	 * @see CommentPress_Core_Settings_Site::form_submitted()
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_save() {
+
+		// Get "Live comment refreshing" value.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$live = isset( $_POST[ $this->key_live ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_live ] ) ) : '0';
+
+		// Set the setting.
+		$this->setting_live_set( ( $live ? 1 : 0 ) );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the "Live comment refreshing" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return int $live The setting if found, false otherwise.
+	 */
+	public function setting_live_get() {
+
+		// Get the setting.
+		$live = $this->core->db->setting_get( $this->key_live );
+
+		// Return setting or boolean if empty.
+		return ! empty( $live ) ? $live : 0;
+
+	}
+
+	/**
+	 * Sets the "Live comment refreshing" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $live The setting value.
+	 */
+	public function setting_live_set( $live ) {
+
+		// Set the setting.
+		$this->core->db->setting_set( $this->key_live, $live );
 
 	}
 

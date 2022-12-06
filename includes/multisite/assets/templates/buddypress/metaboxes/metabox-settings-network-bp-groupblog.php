@@ -11,7 +11,7 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<!-- <?php echo $this->metabox_path; ?>metabox-settings-network-bp.php -->
+<!-- <?php echo $this->metabox_path; ?>metabox-settings-network-bp-groupblog.php -->
 <table class="form-table">
 
 	<?php

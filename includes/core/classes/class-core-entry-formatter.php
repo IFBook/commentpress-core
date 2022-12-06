@@ -51,11 +51,11 @@ class CommentPress_Core_Entry_Formatter {
 	];
 
 	/**
-	 * Formatter option in Site Settings.
+	 * "Text Format" option in Site Settings.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $option_formatter The "Default Text Format" option in Site Settings.
+	 * @var str $option_formatter The "Text Format" option in Site Settings.
 	 */
 	public $option_formatter = 'cp_blog_type';
 
@@ -133,16 +133,16 @@ class CommentPress_Core_Entry_Formatter {
 	public function register_hooks() {
 
 		// Inject form element into the "CommentPress Settings" metabox on "Edit Entry" screens.
-		add_action( 'commentpress/core/entry/metabox/after', [ $this, 'metabox_post_get' ] );
+		add_action( 'commentpress/core/entry/metabox/after', [ $this, 'entry_meta_box_part_get' ], 20 );
 
 		// Saves the Sidebar value on "Edit Entry" screens.
-		add_action( 'commentpress/core/settings/post/saved', [ $this, 'save_for_post' ] );
+		add_action( 'commentpress/core/settings/post/saved', [ $this, 'entry_meta_box_part_save' ] );
 
 		// Add our option to the Site Settings "General Settings" metabox.
-		add_action( 'commentpress/core/settings/site/metabox/general/after', [ $this, 'metabox_settings_get' ] );
+		add_action( 'commentpress/core/settings/site/metabox/general/after', [ $this, 'settings_meta_box_part_get' ], 20 );
 
 		// Save data from "Site Settings" screen.
-		add_action( 'commentpress/core/settings/site/save/before', [ $this, 'save_for_settings' ] );
+		add_action( 'commentpress/core/settings/site/save/before', [ $this, 'settings_meta_box_part_save' ] );
 
 		// Save default Post Formatter on Special Pages.
 		add_action( 'commentpress/core/db/page/special/title/created', [ $this, 'default_set_for_post' ] );
@@ -172,7 +172,7 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 4.0
 	 */
-	public function metabox_settings_get() {
+	public function settings_meta_box_part_get() {
 
 		// Get the "Text Format" options array.
 		$types = $this->formats_array_get();
@@ -187,7 +187,7 @@ class CommentPress_Core_Entry_Formatter {
 		 *
 		 * @param str The the Blog Type label.
 		 */
-		$type_title = apply_filters( 'cp_blog_type_label', __( 'Default Text Format', 'commentpress-core' ) );
+		$type_title = apply_filters( 'cp_blog_type_label', __( 'Text Format', 'commentpress-core' ) );
 
 		// Get existing.
 		$blog_type = $this->core->db->setting_get( $this->option_formatter );
@@ -209,7 +209,7 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 4.0
 	 */
-	public function save_for_settings() {
+	public function settings_meta_box_part_save() {
 
 		// Get the value of the metabox select element.
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
@@ -229,7 +229,7 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @param WP_Post $post The WordPress Post object.
 	 */
-	public function metabox_post_get( $post ) {
+	public function entry_meta_box_part_get( $post ) {
 
 		// Bail if not one of our supported Post Types.
 		if ( ! in_array( $post->post_type, $this->post_types ) ) {
@@ -242,8 +242,11 @@ class CommentPress_Core_Entry_Formatter {
 			return;
 		}
 
+		// We want raw values for the Edit Entry Metabox.
+		$raw = true;
+
 		// Default to current Blog Type.
-		$value = $this->get_for_post_id( $post->ID, $raw = true );
+		$value = $this->get_for_post_id( $post->ID, $raw );
 
 		// Get the "Text Format" options markup.
 		$type_options = $this->formats_select_options_get( $types, $value );
@@ -260,7 +263,7 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @param object $post The WordPress Post object.
 	 */
-	public function save_for_post( $post ) {
+	public function entry_meta_box_part_save( $post ) {
 
 		// Bail if not one of our supported Post Types.
 		if ( ! in_array( $post->post_type, $this->post_types ) ) {
@@ -288,108 +291,6 @@ class CommentPress_Core_Entry_Formatter {
 
 		// Save the Formatter for the Post.
 		$this->set_for_post_id( $post->ID, $formatter );
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Gets the Formatter for a given Post ID.
-	 *
-	 * @since 4.0
-	 *
-	 * @param int $post_id The numeric ID of the Post.
-	 * @param bool $raw Pass "true" to get the actual meta value.
-	 * @return int $formatter The numeric ID of the Formatter.
-	 */
-	public function get_for_post_id( $post_id, $raw = false ) {
-
-		// Check Post for override.
-		$override = get_post_meta( $post_id, $this->meta_key, true );
-
-		// Return raw value if requested.
-		if ( $raw === true ) {
-			return $override;
-		}
-
-		// Default to current Blog Type.
-		$formatter = $this->core->db->setting_get( $this->option_formatter );
-
-		// Bail if something went wrong.
-		if ( $override === false || $override === '' || ! is_numeric( $override ) ) {
-			return $formatter;
-		}
-
-		// Override if different to the current Blog Type.
-		if ( (int) $override !== (int) $formatter ) {
-			$formatter = $override;
-		}
-
-		// --<
-		return (int) $formatter;
-
-	}
-
-	/**
-	 * Sets the Formatter for a given Post ID.
-	 *
-	 * @since 4.0
-	 *
-	 * @param int $post_id The numeric ID of the Post.
-	 * @param int $formatter The numeric ID of the Formatter.
-	 */
-	public function set_for_post_id( $post_id, $formatter ) {
-
-		// Clear the Formatter by passing an empty string.
-		if ( is_string( $formatter ) && $formatter === '' ) {
-			$this->delete_for_post_id( $post_id );
-			return;
-		}
-
-		// Cast Formatter value as string when updating.
-		update_post_meta( $post_id, $this->meta_key, (string) $formatter );
-
-	}
-
-	/**
-	 * Deletes the Formatter for a given Post.
-	 *
-	 * @since 4.0
-	 *
-	 * @param int $post_id The numeric ID of the Post.
-	 */
-	public function delete_for_post_id( $post_id ) {
-
-		// Delete the Formatter meta value.
-		delete_post_meta( $post_id, $this->meta_key );
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Checks if the Formatter of a Post is different to the Blog Type.
-	 *
-	 * @since 4.0
-	 *
-	 * @param int $post_id The numeric ID of the Post.
-	 * @return bool $overridden True if overridden, false otherwise.
-	 */
-	public function is_overridden( $post_id ) {
-
-		// Get the current Blog Type.
-		$formatter_blog = $this->core->db->setting_get( $this->option_formatter );
-
-		// Get the Formatter for this Post.
-		$formatter_post = $this->get_for_post_id( $post_id );
-
-		// Do override check.
-		if ( (int) $formatter_blog !== (int) $formatter_post ) {
-			return true;
-		}
-
-		// Not overridden.
-		return false;
 
 	}
 
@@ -441,7 +342,7 @@ class CommentPress_Core_Entry_Formatter {
 	 * @return str $name The modified name of the label.
 	 */
 	public function blog_type_label( $name ) {
-		return __( 'Default Text Format', 'commentpress-core' );
+		return __( 'Text Format', 'commentpress-core' );
 	}
 
 	/**
@@ -593,6 +494,120 @@ class CommentPress_Core_Entry_Formatter {
 
 		// --<
 		return $markup;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the Formatter for a given Post ID.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $post_id The numeric ID of the Post.
+	 * @param bool $raw Pass "true" to get the actual meta value.
+	 * @return int $formatter The numeric ID of the Formatter.
+	 */
+	public function get_for_post_id( $post_id, $raw = false ) {
+
+		// Check Post for override.
+		$override = get_post_meta( $post_id, $this->meta_key, true );
+
+		// Return raw value if requested.
+		if ( $raw === true ) {
+			return $override;
+		}
+
+		// Default to current Blog Type.
+		$formatter = $this->core->db->setting_get( $this->option_formatter );
+
+		// Bail if something went wrong.
+		if ( $override === false || $override === '' || ! is_numeric( $override ) ) {
+			return $formatter;
+		}
+
+		// Override if different to the current Blog Type.
+		if ( (int) $override !== (int) $formatter ) {
+			$formatter = $override;
+		}
+
+		// --<
+		return (int) $formatter;
+
+	}
+
+	/**
+	 * Sets the Formatter for a given Post ID.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $post_id The numeric ID of the Post.
+	 * @param int $formatter The numeric ID of the Formatter.
+	 */
+	public function set_for_post_id( $post_id, $formatter ) {
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'post_id' => $post_id,
+			'formatter' => $formatter,
+			'meta_key' => $this->meta_key,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Clear the Formatter by passing an empty string.
+		if ( is_string( $formatter ) && $formatter === '' ) {
+			$this->delete_for_post_id( $post_id );
+			return;
+		}
+
+		// Cast Formatter value as string when updating.
+		update_post_meta( $post_id, $this->meta_key, (string) $formatter );
+
+	}
+
+	/**
+	 * Deletes the Formatter for a given Post.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $post_id The numeric ID of the Post.
+	 */
+	public function delete_for_post_id( $post_id ) {
+
+		// Delete the Formatter meta value.
+		delete_post_meta( $post_id, $this->meta_key );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Checks if the Formatter of a Post is different to the Blog Type.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $post_id The numeric ID of the Post.
+	 * @return bool $overridden True if overridden, false otherwise.
+	 */
+	public function is_overridden( $post_id ) {
+
+		// Get the Formatter setting.
+		$formatter_setting = $this->core->db->setting_get( $this->option_formatter );
+
+		// Get the Formatter for this Post.
+		$formatter_post = $this->get_for_post_id( $post_id );
+
+		// Do override check.
+		if ( (int) $formatter_setting !== (int) $formatter_post ) {
+			return true;
+		}
+
+		// Not overridden.
+		return false;
 
 	}
 

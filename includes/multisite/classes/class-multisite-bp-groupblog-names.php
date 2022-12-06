@@ -122,7 +122,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	}
 
 	/**
-	 * Initialises this obiject.
+	 * Initialises this object.
 	 *
 	 * @since 3.3
 	 */
@@ -168,7 +168,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 		add_action( 'commentpress/multisite/settings/network/admin/js', [ $this, 'settings_meta_box_part_js_enqueue' ] );
 
 		// Save data from Network Settings form submissions.
-		add_action( 'commentpress/multisite/settings/network/save/before', [ $this, 'settings_meta_box_save' ] );
+		add_action( 'commentpress/multisite/settings/network/save/before', [ $this, 'settings_meta_box_part_save' ] );
 
 	}
 
@@ -325,7 +325,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 4.0
 	 */
-	public function settings_meta_box_save() {
+	public function settings_meta_box_part_save() {
 
 		// Get "Group Blog naming scheme" value.
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing

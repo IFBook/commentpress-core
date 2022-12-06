@@ -96,18 +96,18 @@ class CommentPress_Multisite_Settings_Site {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_name The name of the form nonce element.
+	 * @var string $nonce_field The name of the form nonce element.
 	 */
-	private $nonce_name = 'cpms_settings_site_nonce';
+	private $nonce_field = 'cpms_settings_site_nonce';
 
 	/**
 	 * Form nonce value.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_value The name of the form nonce value.
+	 * @var string $nonce_action The name of the form nonce action.
 	 */
-	private $nonce_value = 'cpms_settings_site_action';
+	private $nonce_action = 'cpms_settings_site_action';
 
 	/**
 	 * Form "name" and "id".
@@ -172,7 +172,7 @@ class CommentPress_Multisite_Settings_Site {
 		if ( $this->multisite->site->is_commentpress() ) {
 
 			// Add metaboxes to the core "CommentPress Settings" screen.
-			add_action( 'commentpress/core/settings/site/page/settings/metaboxes/after', [ $this, 'meta_boxes_append' ] );
+			add_action( 'commentpress/core/settings/site/metaboxes/after', [ $this, 'meta_boxes_append' ] );
 
 			// Hook into core "CommentPress Settings" form submissions.
 			add_action( 'commentpress/core/settings/site/save/before', [ $this, 'form_core_submitted' ] );
@@ -654,7 +654,7 @@ class CommentPress_Multisite_Settings_Site {
 		}
 
 		// Check that we trust the source of the data.
-		check_admin_referer( $this->nonce_value, $this->nonce_name );
+		check_admin_referer( $this->nonce_action, $this->nonce_field );
 
 		/**
 		 * Fires before the options have been saved.

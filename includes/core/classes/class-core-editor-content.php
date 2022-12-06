@@ -29,6 +29,15 @@ class CommentPress_Core_Editor_Content {
 	public $core;
 
 	/**
+	 * Editor object.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var object $editor The Editor object.
+	 */
+	public $editor;
+
+	/**
 	 * The "Comment Block" Quicktag.
 	 *
 	 * @since 4.0
@@ -42,15 +51,16 @@ class CommentPress_Core_Editor_Content {
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $core Reference to the core plugin object.
+	 * @param object $editor Reference to the core editor object.
 	 */
-	public function __construct( $core ) {
+	public function __construct( $editor ) {
 
-		// Store reference to core plugin object.
-		$this->core = $core;
+		// Store references.
+		$this->editor = $editor;
+		$this->core = $editor->core;
 
-		// Init when this plugin is fully loaded.
-		add_action( 'commentpress/core/loaded', [ $this, 'initialise' ] );
+		// Init when the editor object is fully loaded.
+		add_action( 'commentpress/core/editor/loaded', [ $this, 'initialise' ] );
 
 	}
 

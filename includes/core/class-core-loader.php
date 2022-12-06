@@ -56,6 +56,15 @@ class CommentPress_Core_Loader {
 	public $theme;
 
 	/**
+	 * Document object.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var object $document The Document object.
+	 */
+	public $document;
+
+	/**
 	 * Entry object.
 	 *
 	 * @since 4.0
@@ -146,22 +155,13 @@ class CommentPress_Core_Loader {
 	public $pages_legacy;
 
 	/**
-	 * Content Editor object.
+	 * Editor object.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $editor_content The Content Editor object.
+	 * @var object $editor The Editor object.
 	 */
-	public $editor_content;
-
-	/**
-	 * Comments Editor object.
-	 *
-	 * @since 4.0
-	 * @access public
-	 * @var object $editor_content The Comments Editor object.
-	 */
-	public $editor_comments;
+	public $editor;
 
 	/**
 	 * AJAX loader object.
@@ -266,12 +266,12 @@ class CommentPress_Core_Loader {
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-display.php';
 
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-navigation.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-document.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-entry.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-parser.php';
 
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-device.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-editor-content.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-editor-comments.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-editor.php';
 
 		// Include legacy class files.
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-revisions.php';
@@ -310,12 +310,12 @@ class CommentPress_Core_Loader {
 		$this->display = new CommentPress_Core_Display( $this );
 
 		$this->nav = new CommentPress_Core_Navigator( $this );
+		$this->document = new CommentPress_Core_Document( $this );
 		$this->entry = new CommentPress_Core_Entry( $this );
 		$this->parser = new CommentPress_Core_Parser( $this );
 
 		$this->device = new CommentPress_Core_Device( $this );
-		$this->editor_content = new CommentPress_Core_Editor_Content( $this );
-		$this->editor_comments = new CommentPress_Core_Editor_Comments( $this );
+		$this->editor = new CommentPress_Core_Editor( $this );
 
 		// Initialise legacy objects.
 		$this->revisions = new CommentPress_Core_Revisions( $this );
@@ -477,7 +477,7 @@ class CommentPress_Core_Loader {
 	 */
 	public function get_list_option() {
 		_deprecated_function( __METHOD__, '4.0' );
-		return $this->db->setting_get( 'cp_show_posts_or_pages_in_toc' );
+		return $this->nav->setting_post_type_get();
 	}
 
 	/**

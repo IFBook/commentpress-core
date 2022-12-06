@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
 
 	<div id="major-publishing-actions">
 		<div id="publishing-action">
-			<?php submit_button( esc_html__( 'Update', 'commentpress-core' ), 'primary', 'commentpress_submit', false ); ?>
+			<?php submit_button( esc_html__( 'Update', 'commentpress-core' ), 'primary', $this->submit_id, false ); ?>
 			<input type="hidden" name="action" value="update" />
 		</div>
 		<div class="clear"></div>

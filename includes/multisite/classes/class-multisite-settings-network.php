@@ -69,18 +69,18 @@ class CommentPress_Multisite_Settings_Network {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_name The name of the form nonce element.
+	 * @var string $nonce_field The name of the form nonce element.
 	 */
-	private $nonce_name = 'cpms_settings_network_nonce';
+	private $nonce_field = 'cpms_settings_network_nonce';
 
 	/**
 	 * Form nonce value.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_value The name of the form nonce value.
+	 * @var string $nonce_action The name of the form nonce action.
 	 */
-	private $nonce_value = 'cpms_settings_network_action';
+	private $nonce_action = 'cpms_settings_network_action';
 
 	/**
 	 * Form "name" and "id".
@@ -118,7 +118,7 @@ class CommentPress_Multisite_Settings_Network {
 	}
 
 	/**
-	 * Initialises this obiject.
+	 * Initialises this object.
 	 *
 	 * @since 3.3
 	 */
@@ -155,7 +155,7 @@ class CommentPress_Multisite_Settings_Network {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Appends option to admin menu.
+	 * Appends option to WordPress Network Settings menu.
 	 *
 	 * @since 3.3
 	 */
@@ -426,7 +426,7 @@ class CommentPress_Multisite_Settings_Network {
 		);
 
 		/**
-		 * Fires when all metaboxes have been declared.
+		 * Fires when all metaboxes have been added.
 		 *
 		 * Used internally by:
 		 *
@@ -523,7 +523,7 @@ class CommentPress_Multisite_Settings_Network {
 		}
 
 		// Check that we trust the source of the data.
-		check_admin_referer( $this->nonce_value, $this->nonce_name );
+		check_admin_referer( $this->nonce_action, $this->nonce_field );
 
 		// TODO: THIS IS THE WAY to halt further settings.
 
@@ -562,7 +562,7 @@ class CommentPress_Multisite_Settings_Network {
 		$this->multisite->db->settings_save();
 
 		/**
-		 * Fires after network settings have been updated.
+		 * Fires when the Network Settings have been saved.
 		 *
 		 * * Callbacks do not need to verify the nonce as this has already been done.
 		 * * Callbacks should, however, implement their own data validation checks.
@@ -571,7 +571,7 @@ class CommentPress_Multisite_Settings_Network {
 		 */
 		do_action( 'commentpress/multisite/settings/network/form_submitted/post' );
 
-		// Redirect.
+		// Now redirect.
 		$this->form_redirect();
 
 	}
@@ -583,8 +583,11 @@ class CommentPress_Multisite_Settings_Network {
 	 */
 	public function form_redirect() {
 
-		// Get Network Settings Page URL.
+		// Get the Network Settings Page URL.
 		$url = $this->page_settings_url_get();
+
+		// Our array of arguments.
+		$args = [ 'updated' => 'true' ];
 
 		// Do the redirect.
 		wp_safe_redirect( $url );
@@ -635,7 +638,7 @@ class CommentPress_Multisite_Settings_Network {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Utility to add link to "Network Settings" screen on Network Plugins screen.
+	 * Adds a link to "Network Settings" screen on Network Plugins screen.
 	 *
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.

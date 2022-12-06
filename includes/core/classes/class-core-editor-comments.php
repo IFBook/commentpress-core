@@ -29,19 +29,56 @@ class CommentPress_Core_Editor_Comments {
 	public $core;
 
 	/**
+	 * Editor object.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var object $editor The Editor object.
+	 */
+	public $editor;
+
+	/**
+	 * Parts template directory path.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $parts_path Relative path to the Parts directory.
+	 */
+	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
+
+	/**
+	 * "Comment Editor" settings key.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var str $key_editor The settings key for the "Comment Editor" setting.
+	 */
+	private $key_editor = 'cp_comment_editor';
+
+	/**
+	 * "Promote Reading or Commenting" settings key.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var str $key_promote The settings key for the "Promote Reading or Commenting" setting.
+	 */
+	private $key_promote = 'cp_promote_reading';
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $core Reference to the core plugin object.
+	 * @param object $editor Reference to the core editor object.
 	 */
-	public function __construct( $core ) {
+	public function __construct( $editor ) {
 
-		// Store reference to core plugin object.
-		$this->core = $core;
+		// Store references.
+		$this->editor = $editor;
+		$this->core = $editor->core;
 
-		// Init when this plugin is fully loaded.
-		add_action( 'commentpress/core/loaded', [ $this, 'initialise' ] );
+		// Init when the editor object is fully loaded.
+		add_action( 'commentpress/core/editor/loaded', [ $this, 'initialise' ] );
 
 	}
 
@@ -63,6 +100,249 @@ class CommentPress_Core_Editor_Comments {
 	 * @since 4.0
 	 */
 	public function register_hooks() {
+
+		// Separate callbacks into descriptive methods.
+		$this->register_hooks_settings();
+		$this->register_hooks_theme();
+
+	}
+
+	/**
+	 * Registers "Site Settings" hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_settings() {
+
+		// Add our settings to default settings.
+		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ], 20, 1 );
+
+		// Inject form element into the "Commenting Settings" metabox on "Site Settings" screen.
+		add_action( 'commentpress/core/settings/site/metabox/comment/before', [ $this, 'settings_meta_box_part_get' ] );
+
+		// Save data from Site Settings form submissions.
+		add_action( 'commentpress/core/settings/site/save/before', [ $this, 'settings_meta_box_save' ] );
+
+	}
+
+	/**
+	 * Registers Theme hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_theme() {
+
+		// Add setting to the Javascript vars.
+		add_filter( 'commentpress_get_javascript_vars', [ $this, 'theme_javascript_vars_add' ] );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Appends our settings to the default core settings.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $settings The existing default core settings.
+	 * @return array $settings The modified default core settings.
+	 */
+	public function settings_get_defaults( $settings ) {
+
+		// Add our defaults.
+		$settings[ $this->key_editor ] = 1; // Default to TinyMCE.
+		$settings[ $this->key_promote ] = 0;
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'settings' => $settings,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// --<
+		return $settings;
+
+	}
+
+	/**
+	 * Adds our option to the Site Settings "General Settings" metabox.
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_part_get() {
+
+		// Get settings.
+		$editor = $this->setting_editor_get();
+		$promote = $this->setting_promote_get();
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-editor-comments-settings.php';
+
+	}
+
+	/**
+	 * Saves the data from the Network Settings "BuddyPress Groupblog Settings" metabox.
+	 *
+	 * Adds the data to the settings array. The settings are actually saved later.
+	 *
+	 * @see CommentPress_Core_Settings_Site::form_submitted()
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_save() {
+
+		// Get "Comment Editor" value.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$editor = isset( $_POST[ $this->key_editor ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_editor ] ) ) : '1';
+
+		// Set the setting.
+		$this->setting_editor_set( ( $editor ? 1 : 0 ) );
+
+		// Get "Promote Reading or Commenting" value.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$promote = isset( $_POST[ $this->key_promote ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_promote ] ) ) : '0';
+
+		// Set the setting.
+		$this->setting_promote_set( ( $promote ? 1 : 0 ) );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the "Comment Editor" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return int $editor The setting if found, false otherwise.
+	 */
+	public function setting_editor_get() {
+
+		// Get the setting.
+		$editor = $this->core->db->setting_get( $this->key_editor );
+
+		// Return setting or boolean if empty.
+		return ! empty( $editor ) ? $editor : 0;
+
+	}
+
+	/**
+	 * Sets the "Comment Editor" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $editor The setting value.
+	 */
+	public function setting_editor_set( $editor ) {
+
+		// Set the setting.
+		$this->core->db->setting_set( $this->key_editor, $editor );
+
+	}
+
+	/**
+	 * Gets the "Promote Reading or Commenting" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return int $promote The setting if found, false otherwise.
+	 */
+	public function setting_promote_get() {
+
+		// Get the setting.
+		$promote = $this->core->db->setting_get( $this->key_promote );
+
+		// Return setting or boolean if empty.
+		return ! empty( $promote ) ? $promote : 0;
+
+	}
+
+	/**
+	 * Sets the "Promote Reading or Commenting" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $promote The setting value.
+	 */
+	public function setting_promote_set( $promote ) {
+
+		// Set the setting.
+		$this->core->db->setting_set( $this->key_promote, $promote );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Filters the Javascript vars.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $vars The default Javascript vars.
+	 * @return array $vars The modified Javascript vars.
+	 */
+	public function theme_javascript_vars_add( $vars ) {
+
+		// Add TinyMCE by default.
+		$vars['cp_tinymce'] = $this->setting_editor_get();
+
+		// Don't add TinyMCE if Users must be logged in to comment.
+		if ( get_option( 'comment_registration' ) == '1' && ! is_user_logged_in() ) {
+			$vars['cp_tinymce'] = 0;
+		}
+
+		// Don't add TinyMCE if on a public Group Blog and User isn't logged in.
+		if ( $this->core->bp->is_groupblog() && ! is_user_logged_in() ) {
+			$vars['cp_tinymce'] = 0;
+		}
+
+		// Don't add TinyMCE if mobile device.
+		$vars['cp_is_mobile'] = 0;
+		if ( $this->core->device->is_mobile() ) {
+			$vars['cp_is_mobile'] = 1;
+			$vars['cp_tinymce'] = 0;
+		}
+
+		// Don't add TinyMCE if touch device.
+		$vars['cp_is_touch'] = 0;
+		if ( $this->core->device->is_touch() ) {
+			$vars['cp_is_touch'] = 1;
+			$vars['cp_tinymce'] = 0;
+		}
+
+		// Don't add TinyMCE if tablet device.
+		$vars['cp_is_tablet'] = 0;
+		if ( $this->core->device->is_tablet() ) {
+			$vars['cp_is_tablet'] = 1;
+			$vars['cp_tinymce'] = 0;
+		}
+
+		// Support touch device testing if constant is set.
+		$vars['cp_touch_testing'] = 0;
+		if ( defined( 'COMMENTPRESS_TOUCH_SELECT' ) && COMMENTPRESS_TOUCH_SELECT ) {
+			$vars['cp_touch_testing'] = 1;
+		}
+
+		/**
+		 * Filters the TinyMCE vars.
+		 *
+		 * Allow plugins to override TinyMCE.
+		 *
+		 * @since 3.4
+		 *
+		 * @param bool $cp_tinymce The default TinyMCE vars.
+		 */
+		$vars['cp_tinymce'] = apply_filters( 'cp_override_tinymce', $vars['cp_tinymce'] );
+
+		// Add TinyMCE behaviour.
+		$vars[ $this->key_promote ] = $this->setting_promote_get();
+
+		// --<
+		return $vars;
 
 	}
 
@@ -202,15 +482,15 @@ class CommentPress_Core_Editor_Comments {
 		$allowed = true;
 
 		// Get "Comment form editor" option.
-		$comment_editor = $this->core->db->setting_get( 'cp_comment_editor' );
+		$editor = $this->setting_editor_get();
 
 		// Disallow if not "Rich-text Editor".
-		if ( $comment_editor != '1' ) {
+		if ( empty( $editor ) ) {
 			$allowed = false;
 		}
 
 		// Disallow for touchscreens - i.e. mobile phones or tablets.
-		if ( $comment_editor == '1' && $this->core->device->is_touch() ) {
+		if ( ! empty( $editor ) && $this->core->device->is_touch() ) {
 			$allowed = false;
 		}
 

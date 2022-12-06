@@ -100,11 +100,11 @@ class CommentPress_Multisite_Site {
 		// Save data from multisite Site Settings "CommentPress Settings" screen form submissions.
 		add_action( 'commentpress/multisite/settings/site/save/before', [ $this, 'settings_save' ] );
 
-		// Add our option to the Site Settings "CommentPress Settings" Danger Zone metabox.
-		add_action( 'commentpress/multisite/settings/site/metabox/danger/after', [ $this, 'metabox_settings_core_get' ] );
+		// Add our form elements to the Site Settings "CommentPress Settings" Danger Zone metabox.
+		add_action( 'commentpress/core/settings/site/metabox/danger/after', [ $this, 'metabox_settings_core_get' ] );
 
 		// Save data from multisite Site Settings "CommentPress Settings" screen form submissions.
-		add_action( 'commentpress/multisite/settings/site/core/save/before', [ $this, 'settings_core_save' ] );
+		add_action( 'commentpress/core/settings/site/core/save/before', [ $this, 'settings_core_save' ] );
 
 		// Enable HTML Comments and Content for Authors.
 		add_action( 'init', [ $this, 'html_content_allow' ] );
@@ -193,10 +193,10 @@ class CommentPress_Multisite_Site {
 
 		/*
 		// TOC = Posts.
-		$core->db->setting_set( 'cp_show_posts_or_pages_in_toc', 'post' );
+		$core->nav->setting_post_type_set( 'post' );
 
 		// TOC show extended Posts.
-		$core->db->setting_set( 'cp_show_extended_toc', 1 );
+		$core->nav->setting_subpages_set( 1 );
 		*/
 
 		/*

@@ -792,7 +792,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 		 * @param string The default "Show Posts by default" option.
 		 */
 		$posts_or_pages = apply_filters( 'cp_posts_or_pages_in_toc', 'post' );
-		$core->db->setting_set( 'cp_show_posts_or_pages_in_toc', $posts_or_pages );
+		$core->nav->setting_post_type_set( $posts_or_pages );
 
 		// If we opted for Posts.
 		if ( $posts_or_pages == 'post' ) {
@@ -805,7 +805,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 			 * @param bool The default "TOC shows extended Posts" option.
 			 */
 			$extended_toc = apply_filters( 'cp_extended_toc', 1 );
-			$core->db->setting_set( 'cp_show_extended_toc', $extended_toc );
+			$core->nav->setting_subpages_set( $extended_toc );
 
 		}
 

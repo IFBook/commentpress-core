@@ -47,6 +47,60 @@ class CommentPress_Core_Theme {
 	private $classes_path = 'includes/core/classes/';
 
 	/**
+	 * Metabox template directory path.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $metabox_path Relative path to the Metabox directory.
+	 */
+	private $metabox_path = 'includes/core/assets/templates/wordpress/metaboxes/';
+
+	/**
+	 * "Featured Images" settings key.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var str $key_featured_images The settings key for the "Featured Images" setting.
+	 */
+	private $key_featured_images = 'cp_featured_images';
+
+	/**
+	 * "Textblock meta" settings key.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var str $key_excerpt_length The settings key for the "Textblock meta" setting.
+	 */
+	private $key_textblock_meta = 'cp_textblock_meta';
+
+	/**
+	 * "Excerpt length" settings key.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var str $key_excerpt_length The settings key for the "Excerpt length" setting.
+	 */
+	private $key_excerpt_length = 'cp_excerpt_length';
+
+	/**
+	 * "Scroll speed" settings key.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var str $key_scroll_speed The settings key for the "Scroll speed" setting.
+	 */
+	private $key_scroll_speed = 'cp_js_scroll_speed';
+
+	/**
+	 * Default header background colour (hex, same as in theme stylesheet).
+	 *
+	 * @since 3.0
+	 * @access public
+	 * @var bool $header_bg_color The default header background colour.
+	 */
+	public $header_bg_color = '2c2622';
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 4.0
@@ -126,14 +180,284 @@ class CommentPress_Core_Theme {
 	 */
 	public function register_hooks() {
 
+		// Separate callbacks into descriptive methods.
+		$this->register_hooks_activation();
+		$this->register_hooks_settings();
+
+		// Enqueue common Javascripts.
+		add_action( 'wp_enqueue_scripts', [ $this, 'scripts_enqueue' ], 20 );
+
+	}
+
+	/**
+	 * Registers activation/deactivation hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_activation() {
+
 		// Acts when this plugin is activated.
 		add_action( 'commentpress/core/activate', [ $this, 'plugin_activate' ], 30 );
 
 		// Acts when this plugin is deactivated.
 		add_action( 'commentpress/core/deactivate', [ $this, 'plugin_deactivate' ], 30 );
 
-		// Enqueue common Javascripts.
-		add_action( 'wp_enqueue_scripts', [ $this, 'scripts_enqueue' ], 20 );
+	}
+
+	/**
+	 * Registers "Site Settings" hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_settings() {
+
+		// Add our settings to default settings.
+		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ], 20, 1 );
+
+		// Add our metaboxes to the Site Settings screen.
+		add_filter( 'commentpress/core/settings/site/metaboxes/after', [ $this, 'settings_meta_boxes_append' ], 50 );
+
+		// Save data from Site Settings form submissions.
+		add_action( 'commentpress/core/settings/site/save/before', [ $this, 'settings_meta_box_save' ] );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Appends our settings to the default core settings.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $settings The existing default core settings.
+	 * @return array $settings The modified default core settings.
+	 */
+	public function settings_get_defaults( $settings ) {
+
+		// Add our defaults.
+		$settings[ $this->key_featured_images ] = 'n';
+		$settings[ $this->key_textblock_meta ] = 'y';
+		$settings[ $this->key_excerpt_length ] = 55;
+		$settings[ $this->key_scroll_speed ] = 800;
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'settings' => $settings,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// --<
+		return $settings;
+
+	}
+
+	/**
+	 * Appends our metaboxes to the Site Settings screen.
+	 *
+	 * @since 4.0
+	 *
+	 * @param string $screen_id The Site Settings Screen ID.
+	 */
+	public function settings_meta_boxes_append( $screen_id ) {
+
+		// Create "Theme Customisation" metabox.
+		add_meta_box(
+			'commentpress_core_theme',
+			__( 'Theme Customization', 'commentpress-core' ),
+			[ $this, 'settings_meta_box_render' ], // Callback.
+			$screen_id, // Screen ID.
+			'normal', // Column: options are 'normal' and 'side'.
+			'core' // Vertical placement: options are 'core', 'high', 'low'.
+		);
+
+	}
+
+	/**
+	 * Renders the "Theme Customisation" metabox.
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_render() {
+
+		// Get settings.
+		$featured_images = $this->setting_featured_images_get();
+		$textblock_meta = $this->setting_textblock_meta_get();
+		$excerpt_length = $this->setting_excerpt_length_get();
+		$scroll_speed = $this->setting_scroll_speed_get();
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-theme.php';
+
+	}
+
+	/**
+	 * Saves the data from the Network Settings "BuddyPress Groupblog Settings" metabox.
+	 *
+	 * Adds the data to the settings array. The settings are actually saved later.
+	 *
+	 * @see CommentPress_Core_Settings_Site::form_submitted()
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_save() {
+
+		// Get "Featured Images" value.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$featured_images = isset( $_POST[ $this->key_featured_images ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_featured_images ] ) ) : '0';
+
+		// Set the setting.
+		$this->setting_featured_images_set( $featured_images );
+
+		// Get "Textblock meta" value.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$textblock_meta = isset( $_POST[ $this->key_textblock_meta ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_textblock_meta ] ) ) : '0';
+
+		// Set the setting.
+		$this->setting_textblock_meta_set( $textblock_meta );
+
+		// Get "Excerpt length" value.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$excerpt_length = isset( $_POST[ $this->key_excerpt_length ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_excerpt_length ] ) ) : '0';
+
+		// Set the setting.
+		$this->setting_excerpt_length_set( $excerpt_length );
+
+		// Get "Scroll speed" value.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$scroll_speed = isset( $_POST[ $this->key_scroll_speed ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_scroll_speed ] ) ) : '0';
+
+		// Set the setting.
+		$this->setting_scroll_speed_set( $scroll_speed );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the "Featured Images" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return str $featured_images The setting if found, default otherwise.
+	 */
+	public function setting_featured_images_get() {
+
+		// Get the setting.
+		$featured_images = $this->core->db->setting_get( $this->key_featured_images );
+
+		// Return setting or default if empty.
+		return ! empty( $featured_images ) ? $featured_images : 'n';
+
+	}
+
+	/**
+	 * Sets the "Featured Images" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param str $featured_images The setting value.
+	 */
+	public function setting_featured_images_set( $featured_images ) {
+
+		// Set the setting.
+		$this->core->db->setting_set( $this->key_featured_images, $featured_images );
+
+	}
+
+	/**
+	 * Gets the "Textblock meta" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return str $textblock_meta The setting if found, default otherwise.
+	 */
+	public function setting_textblock_meta_get() {
+
+		// Get the setting.
+		$textblock_meta = $this->core->db->setting_get( $this->key_textblock_meta );
+
+		// Return setting or default if empty.
+		return ! empty( $textblock_meta ) ? $textblock_meta : 'y';
+
+	}
+
+	/**
+	 * Sets the "Textblock meta" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param str $textblock_meta The setting value.
+	 */
+	public function setting_textblock_meta_set( $textblock_meta ) {
+
+		// Set the setting.
+		$this->core->db->setting_set( $this->key_textblock_meta, $textblock_meta );
+
+	}
+
+	/**
+	 * Gets the "Excerpt length" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return int|bool $excerpt_length The setting if found, false otherwise.
+	 */
+	public function setting_excerpt_length_get() {
+
+		// Get the setting.
+		$excerpt_length = $this->core->db->setting_get( $this->key_excerpt_length );
+
+		// Return setting or boolean if empty.
+		return ! empty( $excerpt_length ) ? $excerpt_length : false;
+
+	}
+
+	/**
+	 * Sets the "Excerpt length" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $excerpt_length The setting value.
+	 */
+	public function setting_excerpt_length_set( $excerpt_length ) {
+
+		// Set the setting.
+		$this->core->db->setting_set( $this->key_excerpt_length, $excerpt_length );
+
+	}
+
+	/**
+	 * Gets the "Scroll speed" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return int|bool $scroll_speed The setting if found, false otherwise.
+	 */
+	public function setting_scroll_speed_get() {
+
+		// Get the setting.
+		$scroll_speed = $this->core->db->setting_get( $this->key_scroll_speed );
+
+		// Return setting or boolean if empty.
+		return ! empty( $scroll_speed ) ? $scroll_speed : false;
+
+	}
+
+	/**
+	 * Sets the "Scroll speed" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $scroll_speed The setting value.
+	 */
+	public function setting_scroll_speed_set( $scroll_speed ) {
+
+		// Set the setting.
+		$this->core->db->setting_set( $this->key_scroll_speed, $scroll_speed );
 
 	}
 
@@ -629,114 +953,6 @@ class CommentPress_Core_Theme {
 
 		}
 
-		// Add rich text editor by default.
-		$vars['cp_tinymce'] = 1;
-
-		// Check if Users must be logged in to comment.
-		if ( get_option( 'comment_registration' ) == '1' && ! is_user_logged_in() ) {
-
-			// Don't add rich text editor.
-			$vars['cp_tinymce'] = 0;
-
-		}
-
-		// Check CommentPress Core option.
-		if (
-			$this->core->db->setting_exists( 'cp_comment_editor' ) &&
-			$this->core->db->setting_get( 'cp_comment_editor' ) != '1'
-		) {
-
-			// Don't add rich text editor.
-			$vars['cp_tinymce'] = 0;
-
-		}
-
-		// If on a public Group Blog and User isn't logged in.
-		if ( $this->core->bp->is_groupblog() && ! is_user_logged_in() ) {
-
-			// Don't add rich text editor, because only Members can comment.
-			$vars['cp_tinymce'] = 0;
-
-		}
-
-		/**
-		 * Filters the TinyMCE vars.
-		 *
-		 * Allow plugins to override TinyMCE.
-		 *
-		 * @since 3.4
-		 *
-		 * @param bool $cp_tinymce The default TinyMCE vars.
-		 */
-		$vars['cp_tinymce'] = apply_filters( 'cp_override_tinymce', $vars['cp_tinymce'] );
-
-		// Add mobile var.
-		$vars['cp_is_mobile'] = 0;
-
-		// Is it a mobile?
-		if ( $this->core->device->is_mobile() ) {
-
-			// Is mobile.
-			$vars['cp_is_mobile'] = 1;
-
-			// Don't add rich text editor.
-			$vars['cp_tinymce'] = 0;
-
-		}
-
-		// Add touch var.
-		$vars['cp_is_touch'] = 0;
-
-		// Is it a touch device?
-		if ( $this->core->device->is_touch() ) {
-
-			// Is touch.
-			$vars['cp_is_touch'] = 1;
-
-			// Don't add rich text editor.
-			$vars['cp_tinymce'] = 0;
-
-		}
-
-		// Add touch testing var.
-		$vars['cp_touch_testing'] = 0;
-
-		// Have we set our testing constant?
-		if ( defined( 'COMMENTPRESS_TOUCH_SELECT' ) && COMMENTPRESS_TOUCH_SELECT ) {
-
-			// Support touch device testing.
-			$vars['cp_touch_testing'] = 1;
-
-		}
-
-		// Add tablet var.
-		$vars['cp_is_tablet'] = 0;
-
-		// Is it a touch device?
-		if ( $this->core->device->is_tablet() ) {
-
-			// Is touch.
-			$vars['cp_is_tablet'] = 1;
-
-			// Don't add rich text editor.
-			$vars['cp_tinymce'] = 0;
-
-		}
-
-		// Add rich text editor behaviour.
-		$vars['cp_promote_reading'] = 1;
-
-		// Check option.
-		if (
-			$this->core->db->setting_exists( 'cp_promote_reading' ) &&
-			$this->core->db->setting_get( 'cp_promote_reading' ) != '1'
-		) {
-
-			// Promote commenting.
-			$vars['cp_promote_reading'] = 0;
-
-		}
-
 		// Add Special Page var.
 		$vars['cp_special_page'] = ( $this->core->pages_legacy->is_special_page() ) ? '1' : '0';
 
@@ -766,61 +982,13 @@ class CommentPress_Core_Theme {
 		global $page;
 		$vars['cp_multipage_page'] = ( ! empty( $page ) ) ? $page : 0;
 
-		// Are Chapters Pages?
-		$vars['cp_toc_chapter_is_page'] = $this->core->db->setting_get( 'cp_toc_chapter_is_page' );
-
-		// Are Sub-pages shown?
-		$vars['cp_show_subpages'] = $this->core->db->setting_get( 'cp_show_subpages' );
-
-		// Set default sidebar.
-		$vars['cp_default_sidebar'] = $this->core->theme->sidebar->default_get();
-
 		// Set scroll speed.
-		$vars['cp_js_scroll_speed'] = $this->core->db->setting_get( 'cp_js_scroll_speed' );
+		$vars['cp_js_scroll_speed'] = $this->setting_scroll_speed_get();
 
-		// Set min Page width.
-		$vars['cp_min_page_width'] = $this->core->db->setting_get( 'cp_min_page_width' );
-
-		// Default to showing textblock meta.
+		// Show textblock meta unless setting is set to on rollover.
 		$vars['cp_textblock_meta'] = 1;
-
-		// Check option.
-		if (
-			$this->core->db->setting_exists( 'cp_textblock_meta' ) &&
-			$this->core->db->setting_get( 'cp_textblock_meta' ) == 'n'
-		) {
-
-			// Only show textblock meta on rollover.
+		if ( $this->setting_textblock_meta_get() == 'n' ) {
 			$vars['cp_textblock_meta'] = 0;
-
-		}
-
-		// Default to Page navigation enabled.
-		$vars['cp_page_nav_enabled'] = 1;
-
-		// Check option.
-		if (
-			$this->core->db->setting_exists( 'cp_page_nav_enabled' ) &&
-			$this->core->db->setting_get( 'cp_page_nav_enabled' ) == 'n'
-		) {
-
-			// Disable Page navigation.
-			$vars['cp_page_nav_enabled'] = 0;
-
-		}
-
-		// Default to parsing content and Comments.
-		$vars['cp_do_not_parse'] = 0;
-
-		// Check option.
-		if (
-			$this->core->db->setting_exists( 'cp_do_not_parse' ) &&
-			$this->core->db->setting_get( 'cp_do_not_parse' ) == 'y'
-		) {
-
-			// Do not parse.
-			$vars['cp_do_not_parse'] = 1;
-
 		}
 
 		/**
@@ -856,7 +1024,7 @@ class CommentPress_Core_Theme {
 		}
 
 		// Fallback to default.
-		return $this->core->db->header_bg_color;
+		return $this->header_bg_color;
 
 	}
 
@@ -896,7 +1064,7 @@ class CommentPress_Core_Theme {
 
 			// Decision goes here.
 
-			// Add name to array (is_singular expects this).
+			// Add name to array - "is_singular" expects this.
 			$types[] = $post_type;
 
 		}

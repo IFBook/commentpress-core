@@ -35,6 +35,7 @@ class CommentPress_Core_Entry {
 	 * @access public
 	 * @var object $metabox The Metabox object.
 	 */
+	// TODO: Move this into this class.
 	public $metabox;
 
 	/**
@@ -47,13 +48,13 @@ class CommentPress_Core_Entry {
 	public $formatter;
 
 	/**
-	 * Document object.
+	 * Single Entry object.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $document The Document object.
+	 * @var object $single The Single Entry object.
 	 */
-	public $document;
+	public $single;
 
 	/**
 	 * Classes directory path.
@@ -123,7 +124,7 @@ class CommentPress_Core_Entry {
 		// Include class files.
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-entry-metabox.php';
 		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-entry-formatter.php';
-		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-entry-document.php';
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-entry-single.php';
 
 	}
 
@@ -137,12 +138,12 @@ class CommentPress_Core_Entry {
 		// Initialise objects.
 		$this->metabox = new CommentPress_Core_Entry_Metabox( $this );
 		$this->formatter = new CommentPress_Core_Entry_Formatter( $this );
-		$this->document = new CommentPress_Core_Entry_Document( $this );
+		$this->single = new CommentPress_Core_Entry_Single( $this );
 
 	}
 
 	/**
-	 * Register WordPress hooks.
+	 * Registers hooks.
 	 *
 	 * @since 4.0
 	 */

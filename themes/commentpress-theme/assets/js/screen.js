@@ -623,7 +623,7 @@ CommentPress.theme.DOM = new function() {
 					var ww, width, item_w, book_nav_w, sidebar_w, left, sidebar_l;
 
 					// Viewport width.
-					ww = parseFloat($(window).width() );
+					ww = parseFloat( $(window).width() );
 
 					// Get element width.
 					width = item.width();
@@ -1074,10 +1074,10 @@ CommentPress.theme.sidebars = new function() {
 		if ( ontop == '2001' ) {
 
 			// Hide all.
-			$('.sidebar_container').css('z-index','2001');
+			$('.sidebar_container').css( 'z-index', '2001' );
 
 			// Show it.
-			$('#' + sidebar + '_sidebar').css('z-index','2010');
+			$('#' + sidebar + '_sidebar').css( 'z-index', '2010' );
 
 			s_top = me.get_top();
 			s_top_border = me.get_top_border();
@@ -1204,13 +1204,17 @@ CommentPress.theme.sidebars = new function() {
 	this.get_sidebar_name = function() {
 
 		// Init.
-		var name = 'toc';
+		var name = cp_sidebar_default;
 
+		/*
 		// If toc, must be toc.
-		//if ( cp_default_sidebar == 'toc' ) { name = 'toc'; }
+		if ( cp_sidebar_default == 'toc' ) {
+			name = 'toc';
+		}
+		*/
 
 		// If comments.
-		if ( cp_default_sidebar == 'comments' ) {
+		if ( cp_sidebar_default == 'comments' ) {
 			name = 'comments';
 			if ( CommentPress.theme.settings.get_toc_on_top() == 'y' ) {
 				name = 'toc';
@@ -1218,7 +1222,7 @@ CommentPress.theme.sidebars = new function() {
 		}
 
 		// If activity.
-		if ( cp_default_sidebar == 'activity' ) {
+		if ( cp_sidebar_default == 'activity' ) {
 			name = 'activity';
 			if ( CommentPress.theme.settings.get_toc_on_top() == 'y' ) {
 				name = 'toc';

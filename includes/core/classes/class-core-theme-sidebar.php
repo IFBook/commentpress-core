@@ -38,13 +38,22 @@ class CommentPress_Core_Theme_Sidebar {
 	public $theme;
 
 	/**
-	 * Sidebar option in Site Settings.
+	 * Parts template directory path.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $parts_path Relative path to the Parts directory.
+	 */
+	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
+
+	/**
+	 * Sidebar setting key in Site Settings.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $option_sidebar The "Default Sidebar" option in Site Settings.
+	 * @var str $key_sidebar The "Default Sidebar" setting key in Site Settings.
 	 */
-	public $option_sidebar = 'cp_sidebar_default';
+	public $key_sidebar = 'cp_sidebar_default';
 
 	/**
 	 * Sidebar meta key.
@@ -92,17 +101,200 @@ class CommentPress_Core_Theme_Sidebar {
 	 */
 	public function register_hooks() {
 
+		// Separate callbacks into descriptive methods.
+		$this->register_hooks_settings();
+		$this->register_hooks_entry();
+		$this->register_hooks_theme();
+
+	}
+
+	/**
+	 * Registers "Site Settings" hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_settings() {
+
+		// Add our settings to default settings.
+		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ], 20, 1 );
+
 		// Inject form element into the "Theme Customisation" metabox on "Site Settings" screen.
-		add_action( 'commentpress/core/settings/site/metabox/theme/after', [ $this, 'metabox_settings_get' ] );
+		add_action( 'commentpress/core/settings/site/metabox/theme/after', [ $this, 'settings_meta_box_part_get' ] );
 
 		// Save Sidebar data from "Site Settings" screen.
-		add_action( 'commentpress/core/settings/site/save/before', [ $this, 'save_for_settings' ] );
+		add_action( 'commentpress/core/settings/site/save/before', [ $this, 'settings_meta_box_part_save' ] );
+
+	}
+
+	/**
+	 * Registers "Entry Settings" hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_entry() {
 
 		// Inject form element into the "CommentPress Settings" metabox on "Edit Entry" screens.
-		add_action( 'commentpress/core/entry/metabox/after', [ $this, 'metabox_post_get' ] );
+		add_action( 'commentpress/core/entry/metabox/after', [ $this, 'entry_meta_box_part_get' ], 30 );
 
 		// Saves the Sidebar value on "Edit Entry" screens.
-		add_action( 'commentpress/core/settings/post/saved', [ $this, 'save_for_post' ] );
+		add_action( 'commentpress/core/settings/post/saved', [ $this, 'entry_meta_box_part_save' ] );
+
+	}
+
+	/**
+	 * Registers Theme hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_theme() {
+
+		// Add setting to the Javascript vars.
+		add_filter( 'commentpress_get_javascript_vars', [ $this, 'theme_javascript_vars_add' ] );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Appends our settings to the default core settings.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $settings The existing default core settings.
+	 * @return array $settings The modified default core settings.
+	 */
+	public function settings_get_defaults( $settings ) {
+
+		// Add our defaults.
+		$settings[ $this->key_sidebar ] = 'comments';
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'settings' => $settings,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// --<
+		return $settings;
+
+	}
+
+	/**
+	 * Adds our form element to the "Theme Customisation" metabox.
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_part_get() {
+
+		// Allow this to be disabled.
+		if ( apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
+			return;
+		}
+
+		// Get the value of the option.
+		$sidebar = $this->core->db->setting_get( $this->key_sidebar, 'comments' );
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-theme-sidebar-settings.php';
+
+	}
+
+	/**
+	 * Saves the Sidebar with data from "Site Settings" screen.
+	 *
+	 * Adds the data to the settings array. The settings are actually saved later.
+	 *
+	 * @see CommentPress_Core_Settings_Site::form_submitted()
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_part_save() {
+
+		// Allow this to be disabled.
+		if ( apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
+			return;
+		}
+
+		// Find the data.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$sidebar = isset( $_POST[ $this->key_sidebar ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_sidebar ] ) ) : '';
+
+		// Set default sidebar.
+		$this->core->db->setting_set( $this->key_sidebar, $sidebar );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Adds our form element to the "CommentPress Settings" metabox.
+	 *
+	 * @since 4.0
+	 *
+	 * @param WP_Post $post The WordPress Post object.
+	 */
+	public function entry_meta_box_part_get( $post ) {
+
+		// Allow this to be disabled.
+		if ( apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
+			return;
+		}
+
+		// We want raw values for the Edit Entry Metabox.
+		$raw = true;
+
+		// Get the Sidebar for this Entry.
+		$sidebar = $this->get_for_post_id( $post->ID, $raw );
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-theme-sidebar-entry.php';
+
+	}
+
+	/**
+	 * Saves the Sidebar for a given Entry.
+	 *
+	 * @since 4.0
+	 *
+	 * @param object $post The WordPress Post object.
+	 */
+	public function entry_meta_box_part_save( $post ) {
+
+		// Allow this to be disabled.
+		if ( apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
+			return;
+		}
+
+		// Find the data.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$sidebar = isset( $_POST[ $this->key_sidebar ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_sidebar ] ) ) : '';
+
+		// Save Sidebar for this Entry.
+		$this->set_for_post_id( $post->ID, $sidebar );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Filters the Javascript vars.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $vars The default Javascript vars.
+	 * @return array $vars The modified Javascript vars.
+	 */
+	public function theme_javascript_vars_add( $vars ) {
+
+		// Add our setting.
+		$vars['cp_sidebar_default'] = $this->default_get();
+
+		// --<
+		return $vars;
 
 	}
 
@@ -113,7 +305,7 @@ class CommentPress_Core_Theme_Sidebar {
 	 *
 	 * @since 3.4
 	 *
-	 * @return str $return The "code" of the default Sidebar.
+	 * @return str $default The "code" of the default Sidebar.
 	 */
 	public function default_get() {
 
@@ -123,71 +315,109 @@ class CommentPress_Core_Theme_Sidebar {
 		/**
 		 * Filters the default sidebar.
 		 *
+		 * Used internally by:
+		 *
+		 * * commentpress_default_theme_default_sidebar() (Priority: 10)
+		 *
 		 * @since 3.9.8
 		 *
 		 * @param str The default sidebar. Defaults to 'activity'.
 		 */
-		$return = apply_filters( 'commentpress_default_sidebar', 'activity' );
+		$default = apply_filters( 'commentpress_default_sidebar', 'activity' );
 
-		// If this is not a commentable Entry.
-		if ( ! ( $post instanceof WP_Post ) || ! $this->core->parser->is_commentable() ) {
+		// Get setting.
+		$setting = $this->core->db->setting_get( $this->key_sidebar );
 
-			// Get option (we don't need to look at the Entry meta in this case).
-			$default = $this->core->db->setting_get( $this->option_sidebar );
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'default-INIT' => $default,
+			'setting-INIT' => $setting,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
 
-			// Use it unless it's "comments".
-			if ( $default !== 'comments' ) {
-				$return = $default;
+		// If there's no Post object.
+		if ( ! ( $post instanceof WP_Post ) ) {
+
+			// Must be either "activity" or "toc".
+
+			// Use setting unless it's "comments".
+			// We don't need to look at the Entry meta in this case.
+			if ( $setting !== 'comments' ) {
+				$default = $setting;
 			}
 
 			// --<
-			return $return;
+			return $default;
 
 		}
 
-		/*
-		// Get CPTs.
-		//$types = $this->get_commentable_cpts();
+		// If this is not a commentable Entry.
+		if ( ! $this->core->parser->is_commentable() ) {
 
-		// Testing what we do with CPTs.
-		//if ( is_singular() || is_singular( $types ) ) {
-		*/
+			// Must be either "activity" or "toc".
 
-		// Is it a commentable Entry?
-		if ( is_singular() ) {
-
-			/*
-			 * Some people have reported that db is not an object at this point,
-			 * though I cannot figure out how this might be occurring - so we
-			 * avoid the issue by checking if it is.
-			 */
-			if ( is_object( $this->core->db ) ) {
-
-				// Is it a Special Page which have Comments-in-Page (or are not commentable)?
-				if ( ! $this->core->pages_legacy->is_special_page() ) {
-
-					// Get for this Post ID.
-					$return = $this->get_for_post_id( $post->ID );
-
-					// --<
-					return $return;
-
-				}
-
+			// Use setting unless it's "comments".
+			// We don't need to look at the Entry meta in this case.
+			if ( $setting !== 'comments' ) {
+				$default = $setting;
 			}
 
+			// --<
+			return $default;
+
 		}
 
-		// Not singular - must be either "activity" or "toc".
+		// If it's a Special Page which has Comments-in-Page or is not commentable.
+		if ( $this->core->pages_legacy->is_special_page() ) {
 
-		// Use default unless it's "comments".
-		$default = $this->core->db->setting_get( $this->option_sidebar );
-		if ( $default !== 'comments' ) {
-			$return = $default;
+			// Must be either "activity" or "toc".
+
+			// Use setting unless it's "comments".
+			// We don't need to look at the Entry meta in this case.
+			if ( $setting !== 'comments' ) {
+				$default = $setting;
+			}
+
+			// --<
+			return $default;
+
 		}
+
+		// If it's not a commentable Entry.
+		if ( ! is_singular() ) {
+
+			// Must be either "activity" or "toc".
+
+			// Use setting unless it's "comments".
+			// We don't need to look at the Entry meta in this case.
+			if ( $setting !== 'comments' ) {
+				$default = $setting;
+			}
+
+			// --<
+			return $default;
+
+		}
+
+		// Get for this Post ID.
+		$default = $this->get_for_post_id( $post->ID );
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'default-FINAL' => $default,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
 
 		// --<
-		return $return;
+		return $default;
 
 	}
 
@@ -217,131 +447,6 @@ class CommentPress_Core_Theme_Sidebar {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Adds our form element to the "Theme Customisation" metabox.
-	 *
-	 * @since 4.0
-	 */
-	public function metabox_settings_get() {
-
-		// Allow this to be disabled.
-		if ( apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
-			return;
-		}
-
-		// Get the value of the option.
-		$sidebar = $this->core->db->setting_get( $this->option_sidebar, 'comments' );
-
-		?>
-
-		<tr valign="top">
-			<th scope="row">
-				<label for="<?php echo $this->option_sidebar; ?>"><?php esc_html_e( 'Default active sidebar', 'commentpress-core' ); ?></label>
-			</th>
-			<td>
-				<select id="<?php echo $this->option_sidebar; ?>" name="<?php echo $this->option_sidebar; ?>">
-					<option value="toc" <?php echo ( ( $sidebar == 'contents' ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Contents', 'commentpress-core' ); ?></option>
-					<option value="activity" <?php echo ( ( $sidebar == 'activity' ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Activity', 'commentpress-core' ); ?></option>
-					<option value="comments" <?php echo ( ( $sidebar == 'comments' ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Comments', 'commentpress-core' ); ?></option>
-				</select>
-				<p class="description"><?php esc_html_e( 'This setting can be overridden on individual entries.', 'commentpress-core' ); ?></p>
-			</td>
-		</tr>
-
-		<?php
-
-	}
-
-	/**
-	 * Saves the Sidebar with data from "Site Settings" screen.
-	 *
-	 * Adds the data to the settings array. The settings are actually saved later.
-	 *
-	 * @see CommentPress_Core_Settings_Site::form_submitted()
-	 *
-	 * @since 4.0
-	 */
-	public function save_for_settings() {
-
-		// Allow this to be disabled.
-		if ( apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
-			return;
-		}
-
-		// Find the data.
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$sidebar = isset( $_POST[ $this->option_sidebar ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->option_sidebar ] ) ) : '';
-
-		// Set default sidebar.
-		$this->core->db->setting_set( $this->option_sidebar, $sidebar );
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Adds our form element to the "CommentPress Settings" metabox.
-	 *
-	 * @since 4.0
-	 *
-	 * @param WP_Post $post The WordPress Post object.
-	 */
-	public function metabox_post_get( $post ) {
-
-		// Allow this to be disabled.
-		if ( apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
-			return;
-		}
-
-		// Get the Sidebar for this Entry.
-		$sidebar = $this->get_for_post_id( $post->ID, $raw = true );
-
-		?>
-
-		<div class="<?php echo $this->option_sidebar; ?>_wrapper">
-
-			<p><strong><label for="<?php echo $this->option_sidebar; ?>"><?php esc_html_e( 'Default Sidebar', 'commentpress-core' ); ?></label></strong></p>
-
-			<p>
-				<select id="<?php echo $this->option_sidebar; ?>" name="<?php echo $this->option_sidebar; ?>">
-					<option value="" <?php echo ( empty( $sidebar ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Use default', 'commentpress-core' ); ?></option>
-					<option value="toc" <?php echo ( $sidebar === 'toc' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Contents', 'commentpress-core' ); ?></option>
-					<option value="activity" <?php echo ( $sidebar === 'activity' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Activity', 'commentpress-core' ); ?></option>
-					<option value="comments" <?php echo ( $sidebar === 'comments' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Comments', 'commentpress-core' ); ?></option>
-				</select>
-			</p>
-
-		</div>
-
-		<?php
-
-	}
-
-	/**
-	 * Saves the Sidebar for a given Entry.
-	 *
-	 * @since 4.0
-	 *
-	 * @param object $post The WordPress Post object.
-	 */
-	public function save_for_post( $post ) {
-
-		// Allow this to be disabled.
-		if ( apply_filters( 'commentpress_hide_sidebar_option', false ) ) {
-			return;
-		}
-
-		// Find the data.
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$sidebar = isset( $_POST[ $this->option_sidebar ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->option_sidebar ] ) ) : '';
-
-		// Save Sidebar for this Entry.
-		$this->set_for_post_id( $post->ID, $sidebar );
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
 	 * Gets the Sidebar for a given Post ID.
 	 *
 	 * @since 4.0
@@ -355,13 +460,33 @@ class CommentPress_Core_Theme_Sidebar {
 		// Check Post for override.
 		$override = get_post_meta( $post_id, $this->meta_key, true );
 
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'override' => $override,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
 		// Return raw value if requested.
 		if ( $raw === true ) {
 			return $override;
 		}
 
 		// Default to current Sidebar.
-		$sidebar = $this->core->db->setting_get( $this->option_sidebar );
+		$sidebar = $this->core->db->setting_get( $this->key_sidebar );
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'sidebar-SETTING' => $sidebar,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
 
 		// Bail if we didn't get one.
 		if ( empty( $override ) ) {
@@ -372,6 +497,16 @@ class CommentPress_Core_Theme_Sidebar {
 		if ( (string) $override !== (string) $sidebar ) {
 			$sidebar = $override;
 		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'sidebar-FINAL' => $sidebar,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
 
 		// --<
 		return (string) $sidebar;
@@ -388,6 +523,18 @@ class CommentPress_Core_Theme_Sidebar {
 	 */
 	public function set_for_post_id( $post_id, $sidebar ) {
 
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'post_id' => $post_id,
+			'sidebar' => $sidebar,
+			'meta_key' => $this->meta_key,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
 		// Sanity check.
 		$sidebar = (string) $sidebar;
 		if ( empty( $sidebar ) ) {
@@ -396,7 +543,7 @@ class CommentPress_Core_Theme_Sidebar {
 		}
 
 		// Cast Sidebar value as string when updating.
-		update_post_meta( $post_id, $this->meta_key, (string) $sidebar );
+		update_post_meta( $post_id, $this->meta_key, $sidebar );
 
 	}
 
@@ -424,14 +571,14 @@ class CommentPress_Core_Theme_Sidebar {
 	 */
 	public function is_overridden( $post_id ) {
 
-		// Get the current Sidebar.
-		$sidebar_blog = $this->core->db->setting_get( $this->option_sidebar );
+		// Get the Sidebar setting.
+		$sidebar_setting = $this->core->db->setting_get( $this->key_sidebar );
 
 		// Get the Sidebar for this Post.
 		$sidebar_post = $this->get_for_post_id( $post_id );
 
 		// Do override check.
-		if ( (string) $sidebar_blog !== (string) $sidebar_post ) {
+		if ( (string) $sidebar_setting !== (string) $sidebar_post ) {
 			return true;
 		}
 

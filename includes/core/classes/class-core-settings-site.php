@@ -92,6 +92,42 @@ class CommentPress_Core_Settings_Site {
 	private $metabox_path = 'includes/core/assets/templates/wordpress/metaboxes/';
 
 	/**
+	 * Form nonce name.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $nonce_field The name of the form nonce element.
+	 */
+	private $nonce_field = 'commentpress_core_settings_site_nonce';
+
+	/**
+	 * Form nonce value.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $nonce_action The name of the form nonce value.
+	 */
+	private $nonce_action = 'commentpress_core_settings_site_action';
+
+	/**
+	 * Form "name" and "id".
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $input_submit The "name" and "id" of the form.
+	 */
+	private $form_id = 'commentpress_core_settings_site_form';
+
+	/**
+	 * Form submit input element "name" and "id".
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $input_submit The "name" and "id" of the form's submit input element.
+	 */
+	private $submit_id = 'commentpress_core_settings_site_submit';
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 4.0
@@ -173,7 +209,7 @@ class CommentPress_Core_Settings_Site {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Add our Admin Page(s) to the WordPress admin menu.
+	 * Appends option to WordPress Settings menu.
 	 *
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
@@ -213,8 +249,8 @@ class CommentPress_Core_Settings_Site {
 
 		// Add parent Page to Settings menu.
 		$this->parent_page = add_options_page(
-			__( 'CommentPress Core Settings', 'commentpress-core' ),
-			__( 'CommentPress Core', 'commentpress-core' ),
+			__( 'Site Settings for CommentPress', 'commentpress-core' ),
+			__( 'CommentPress', 'commentpress-core' ),
 			'manage_options', // Required caps.
 			$this->parent_page_slug, // Slug name.
 			[ $this, 'page_settings' ] // Callback.
@@ -231,8 +267,8 @@ class CommentPress_Core_Settings_Site {
 		// Insert item in relevant menu.
 		$this->settings_page = add_submenu_page(
 			$this->parent_page_slug, // Parent slug.
-			__( 'CommentPress Core Settings', 'commentpress-core' ),
-			__( 'CommentPress Core', 'commentpress-core' ),
+			__( 'Site Settings for CommentPress', 'commentpress-core' ),
+			__( 'CommentPress', 'commentpress-core' ),
 			'manage_options', // Required caps.
 			$this->settings_page_slug, // Slug name.
 			[ $this, 'page_settings' ]
@@ -279,20 +315,12 @@ class CommentPress_Core_Settings_Site {
 	 */
 	public function admin_js() {
 
-		// Add our "Site Settings" Javascript.
-		wp_enqueue_script(
-			'commentpress-core-site-settings',
-			plugins_url( 'includes/core/assets/js/cp-settings-site.js', COMMENTPRESS_PLUGIN_FILE ),
-			[ 'jquery' ],
-			COMMENTPRESS_VERSION, // Version.
-			true // In footer.
-		);
-
-		// Build vars.
-		$vars = [];
-
-		// Localise the WordPress way.
-		wp_localize_script( 'commentpress-core-site-settings', 'CommentPress_Core_Settings_Site_Vars', $vars );
+		/**
+		 * Fires when the Site Settings screen Javascript has been enqueued.
+		 *
+		 * @since 4.0
+		 */
+		do_action( 'commentpress/core/settings/site/admin/js' );
 
 	}
 
@@ -632,44 +660,14 @@ class CommentPress_Core_Settings_Site {
 			'core' // Vertical placement: options are 'core', 'high', 'low'.
 		);
 
-		// Create "Table of Contents" metabox.
+		// Create "Danger Zone" metabox.
 		add_meta_box(
-			'commentpress_toc',
-			__( 'Table of Contents', 'commentpress-core' ),
-			[ $this, 'meta_box_toc_render' ], // Callback.
+			'commentpress_danger',
+			__( 'Danger Zone', 'commentpress-core' ),
+			[ $this, 'meta_box_danger_render' ], // Callback.
 			$screen_id, // Screen ID.
 			'normal', // Column: options are 'normal' and 'side'.
-			'core' // Vertical placement: options are 'core', 'high', 'low'.
-		);
-
-		// Create "Page Display Settings" metabox.
-		add_meta_box(
-			'commentpress_page_display',
-			__( 'Page Display Settings', 'commentpress-core' ),
-			[ $this, 'meta_box_page_display_render' ], // Callback.
-			$screen_id, // Screen ID.
-			'normal', // Column: options are 'normal' and 'side'.
-			'core' // Vertical placement: options are 'core', 'high', 'low'.
-		);
-
-		// Create "Commenting Settings" metabox.
-		add_meta_box(
-			'commentpress_commenting',
-			__( 'Commenting Settings', 'commentpress-core' ),
-			[ $this, 'meta_box_commenting_render' ], // Callback.
-			$screen_id, // Screen ID.
-			'normal', // Column: options are 'normal' and 'side'.
-			'core' // Vertical placement: options are 'core', 'high', 'low'.
-		);
-
-		// Create "Theme Customisation" metabox.
-		add_meta_box(
-			'commentpress_theme',
-			__( 'Theme Customisation', 'commentpress-core' ),
-			[ $this, 'meta_box_theme_render' ], // Callback.
-			$screen_id, // Screen ID.
-			'normal', // Column: options are 'normal' and 'side'.
-			'core' // Vertical placement: options are 'core', 'high', 'low'.
+			'low' // Vertical placement: options are 'core', 'high', 'low'.
 		);
 
 		// Create "Submit" metabox.
@@ -683,13 +681,13 @@ class CommentPress_Core_Settings_Site {
 		);
 
 		/**
-		 * Fires after Site Settings metaboxes have been added.
+		 * Fires when all metaboxes have been added.
 		 *
 		 * @since 4.0
 		 *
-		 * @param string $screen_id The Admin Page Screen ID.
+		 * @param string $screen_id The Settings Page Screen ID.
 		 */
-		do_action( 'commentpress/core/settings/site/page/settings/metaboxes/after', $screen_id );
+		do_action( 'commentpress/core/settings/site/metaboxes/after', $screen_id );
 
 	}
 
@@ -700,86 +698,20 @@ class CommentPress_Core_Settings_Site {
 	 */
 	public function meta_box_general_render() {
 
-		// Get Post Types that support the editor.
-		$capable_post_types = $this->core->db->post_types_get_supported();
-
-		// Get chosen Post Types.
-		$selected_types = $this->core->db->setting_get( 'cp_post_types_disabled', [] );
-
-		// Get settings.
-		$do_not_parse = $this->core->db->setting_get( 'cp_do_not_parse', 'n' );
-
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-general.php';
 
 	}
 
 	/**
-	 * Renders the "Table of Contents" metabox.
+	 * Renders the "Danger Zone" metabox.
 	 *
 	 * @since 4.0
 	 */
-	public function meta_box_toc_render() {
-
-		// Get settings.
-		$show_posts_or_pages_in_toc = $this->core->db->setting_get( 'cp_show_posts_or_pages_in_toc' );
-		$toc_chapter_is_page = $this->core->db->setting_get( 'cp_toc_chapter_is_page' );
-		$show_subpages = $this->core->db->setting_get( 'cp_show_subpages' );
-		$show_extended_toc = $this->core->db->setting_get( 'cp_show_extended_toc' );
+	public function meta_box_danger_render() {
 
 		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-toc.php';
-
-	}
-
-	/**
-	 * Renders the "Page Display Settings" metabox.
-	 *
-	 * @since 4.0
-	 */
-	public function meta_box_page_display_render() {
-
-		// Get settings.
-		$page_nav_enabled = $this->core->db->setting_get( 'cp_page_nav_enabled', 'y' );
-		$featured_images = $this->core->db->setting_get( 'cp_featured_images', 'n' );
-		$textblock_meta = $this->core->db->setting_get( 'cp_textblock_meta', 'y' );
-
-		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-page.php';
-
-	}
-
-	/**
-	 * Renders the "Commenting Settings" metabox.
-	 *
-	 * @since 4.0
-	 */
-	public function meta_box_commenting_render() {
-
-		// Get settings.
-		$comment_editor = $this->core->db->setting_get( 'cp_comment_editor' );
-		$promote_reading = $this->core->db->setting_get( 'cp_promote_reading' );
-		$comments_live = $this->core->db->setting_get( 'cp_para_comments_live' );
-
-		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-comment.php';
-
-	}
-
-	/**
-	 * Renders the "Theme Customisation" metabox.
-	 *
-	 * @since 4.0
-	 */
-	public function meta_box_theme_render() {
-
-		// Get settings.
-		$scroll_speed = $this->core->db->setting_get( 'cp_js_scroll_speed' );
-		$min_page_width = $this->core->db->setting_get( 'cp_min_page_width' );
-		$excerpt_length = $this->core->db->setting_get( 'cp_excerpt_length' );
-
-		// Include template file.
-		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-theme.php';
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-danger.php';
 
 	}
 
@@ -805,12 +737,12 @@ class CommentPress_Core_Settings_Site {
 	public function form_submitted() {
 
 		// Was the form submitted?
-		if ( ! isset( $_POST['commentpress_submit'] ) ) {
+		if ( ! isset( $_POST[ $this->submit_id ] ) ) {
 			return;
 		}
 
 		// Check that we trust the source of the data.
-		check_admin_referer( 'commentpress_core_settings_action', 'commentpress_core_settings_nonce' );
+		check_admin_referer( $this->nonce_action, $this->nonce_field );
 
 		/**
 		 * Fires before the options have been saved.
@@ -820,13 +752,21 @@ class CommentPress_Core_Settings_Site {
 		 *
 		 * Used internally by:
 		 *
-		 * * CommentPress_Core_Entry_Document::save_for_settings() (Priority: 10)
-		 * * CommentPress_Core_Entry_Formatter::save_for_settings() (Priority: 10)
-		 * * CommentPress_Core_Theme_Sidebar::save_for_settings() (Priority: 10)
+		 * * CommentPress_Core_Entry_Document::settings_meta_box_part_save() (Priority: 10)
+		 * * CommentPress_Core_Entry_Formatter::settings_meta_box_part_save() (Priority: 10)
+		 * * CommentPress_Core_Theme_Sidebar::settings_meta_box_part_save() (Priority: 10)
 		 *
 		 * @since 4.0
 		 */
 		do_action( 'commentpress/core/settings/site/save/before' );
+
+		// Get "Reset to defaults" value.
+		$reset = isset( $_POST['cp_reset'] ) ? sanitize_text_field( wp_unslash( $_POST['cp_reset'] ) ) : '0';
+
+		// Maybe reset the settings to the defaults.
+		if ( ! empty( $reset ) ) {
+			$this->core->db->settings_reset();
+		}
 
 		// Save the settings.
 		$this->core->db->settings_save();
@@ -836,8 +776,6 @@ class CommentPress_Core_Settings_Site {
 		 *
 		 * * Callbacks do not need to verify the nonce as this has already been done.
 		 * * Callbacks should, however, implement their own data validation checks.
-		 *
-		 * Used internally by:
 		 *
 		 * @since 4.0
 		 */
@@ -855,7 +793,7 @@ class CommentPress_Core_Settings_Site {
 	 */
 	public function form_redirect() {
 
-		// Get the Settings Page URL.
+		// Get the Site Settings Page URL.
 		$url = $this->page_settings_url_get();
 
 		// Our array of arguments.
@@ -870,7 +808,7 @@ class CommentPress_Core_Settings_Site {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Utility to add link to "Site Settings" screen on Site Plugins screen.
+	 * Adds a link to "Site Settings" screen on Site Plugins screen.
 	 *
 	 * @since 4.0
 	 *

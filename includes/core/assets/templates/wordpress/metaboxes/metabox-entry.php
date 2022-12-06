@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 
 ?>
 <!-- <?php echo $this->metabox_path; ?>metabox-entry.php -->
-<?php wp_nonce_field( $this->nonce_value, $this->nonce_name ); ?>
+<?php wp_nonce_field( $this->nonce_action, $this->nonce_field ); ?>
 
 <?php
 

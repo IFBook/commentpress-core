@@ -35,6 +35,55 @@ class CommentPress_Core_Parser {
 	public $core;
 
 	/**
+	 * Parts template directory path.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $parts_path Relative path to the Parts directory.
+	 */
+	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
+
+	/**
+	 * Skipped Post Types.
+	 *
+	 * By default all Post Types are parsed by CommentPress. Post Types in this
+	 * array will not be parsed. This effectively batch sets "do_not_parse" for
+	 * the Post Type.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var str $key_post_types_disabled The settings key for this setting.
+	 */
+	private $key_post_types_disabled = 'cp_post_types_disabled';
+
+	/**
+	 * Enabled Post Types.
+	 *
+	 * Stores the inverse of the skipped Post Types.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var str $key_post_types_enabled The settings key for this setting.
+	 */
+	private $key_post_types_enabled = 'cp_post_types_enabled';
+
+	/**
+	 * "Disable CommentPress on Entries with no Comments" settings key.
+	 *
+	 * When Comments are closed on an entry and there are no Comments on that
+	 * entry, if this is set then the content will not be parsed for Paragraphs,
+	 * Lines or Blocks. Comments will also not be parsed, meaning that the entry
+	 * behaves the same as content which is not commentable. This allows, for
+	 * example, the rendering of the Comment column to be skipped in these
+	 * circumstances.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var str $key_featured_images The settings key for this setting.
+	 */
+	private $key_do_not_parse = 'cp_do_not_parse';
+
+	/**
 	 * Text signatures array.
 	 *
 	 * @since 3.0
@@ -136,6 +185,50 @@ class CommentPress_Core_Parser {
 	 */
 	public function register_hooks() {
 
+		// Separate callbacks into descriptive methods.
+		$this->register_hooks_settings();
+		$this->register_hooks_theme();
+		$this->register_hooks_content();
+
+	}
+
+	/**
+	 * Registers "Site Settings" hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_settings() {
+
+		// Add our settings to default settings.
+		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ], 20, 1 );
+
+		// Inject form element into the "General Settings" metabox on "Site Settings" screen.
+		add_action( 'commentpress/core/settings/site/metabox/general/after', [ $this, 'settings_meta_box_part_get' ], 10 );
+
+		// Save Sidebar data from "Site Settings" screen.
+		add_action( 'commentpress/core/settings/site/save/before', [ $this, 'settings_meta_box_part_save' ] );
+
+	}
+
+	/**
+	 * Registers Theme hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_theme() {
+
+		// Add setting to the Javascript vars.
+		add_filter( 'commentpress_get_javascript_vars', [ $this, 'theme_javascript_vars_add' ] );
+
+	}
+
+	/**
+	 * Registers content hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_content() {
+
 		// Set up items when "wp" action fires.
 		add_action( 'wp', [ $this, 'setup_items' ] );
 
@@ -144,6 +237,225 @@ class CommentPress_Core_Parser {
 		add_filter( 'the_content', [ $this, 'the_content' ], 20 );
 
 	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Appends our settings to the default core settings.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $settings The existing default core settings.
+	 * @return array $settings The modified default core settings.
+	 */
+	public function settings_get_defaults( $settings ) {
+
+		// Add our defaults.
+		$settings[ $this->key_post_types_disabled ] = [];
+		$settings[ $this->key_do_not_parse ] = 'n';
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'settings' => $settings,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// --<
+		return $settings;
+
+	}
+
+	/**
+	 * Adds our form element to the "General Settings" metabox.
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_part_get() {
+
+		// Get settings.
+		$capable_post_types = $this->post_types_get_supported();
+		$selected_types = $this->setting_post_types_disabled_get();
+		$do_not_parse = $this->setting_do_not_parse_get();
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-parser-settings.php';
+
+	}
+
+	/**
+	 * Saves the data from the "Site Settings" screen.
+	 *
+	 * Adds the data to the settings array. The settings are actually saved later.
+	 *
+	 * @see CommentPress_Core_Settings_Site::form_submitted()
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_part_save() {
+
+		// Find the data.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$post_types_enabled = filter_input( INPUT_POST, $this->key_post_types_enabled, FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+
+		// Sanitise array contents.
+		if ( ! empty( $post_types_enabled ) ) {
+			array_walk(
+				$post_types_enabled,
+				function( &$item ) {
+					$item = sanitize_text_field( wp_unslash( $item ) );
+				}
+			);
+		}
+
+		// Exclude the selected Post Types.
+		$post_types_disabled = array_diff( array_keys( $this->post_types_get_supported() ), $post_types_enabled );
+
+		// Set the setting.
+		$this->setting_post_types_disabled_set( $post_types_disabled );
+
+		// Find the data.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$do_not_parse = isset( $_POST[ $this->key_do_not_parse ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_do_not_parse ] ) ) : 'n';
+
+		// Set the setting.
+		$this->setting_do_not_parse_set( $do_not_parse );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the "Skipped Post Types" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return int $post_types_disabled The setting if found, default otherwise.
+	 */
+	public function setting_post_types_disabled_get() {
+
+		// Get the setting.
+		$post_types_disabled = $this->core->db->setting_get( $this->key_post_types_disabled );
+
+		// Return setting or default if empty.
+		return ! empty( $post_types_disabled ) ? $post_types_disabled : [];
+
+	}
+
+	/**
+	 * Sets the "Skipped Post Types" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $post_types_disabled The setting value.
+	 */
+	public function setting_post_types_disabled_set( $post_types_disabled ) {
+
+		// Set the setting.
+		$this->core->db->setting_set( $this->key_post_types_disabled, $post_types_disabled );
+
+	}
+
+	/**
+	 * Gets the "Disable CommentPress on Entries with no Comments" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return int $do_not_parse The setting if found, default otherwise.
+	 */
+	public function setting_do_not_parse_get() {
+
+		// Get the setting.
+		$do_not_parse = $this->core->db->setting_get( $this->key_do_not_parse );
+
+		// Return setting or default if empty.
+		return ! empty( $do_not_parse ) ? $do_not_parse : 'n';
+
+	}
+
+	/**
+	 * Sets the "Disable CommentPress on Entries with no Comments" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $do_not_parse The setting value.
+	 */
+	public function setting_do_not_parse_set( $do_not_parse ) {
+
+		// Set the setting.
+		$this->core->db->setting_set( $this->key_do_not_parse, $do_not_parse );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Filters the Javascript vars.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $vars The default Javascript vars.
+	 * @return array $vars The modified Javascript vars.
+	 */
+	public function theme_javascript_vars_add( $vars ) {
+
+		// Default to parsing content and Comments.
+		$vars['cp_do_not_parse'] = 0;
+		if ( $this->setting_do_not_parse_get() == 'y' ) {
+			$vars['cp_do_not_parse'] = 1;
+		}
+
+		// --<
+		return $vars;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the WordPress Post Types that CommentPress supports.
+	 *
+	 * @since 3.9
+	 *
+	 * @return array $supported_post_types The array of Post Types that have an editor.
+	 */
+	public function post_types_get_supported() {
+
+		// Only parse Post Types once.
+		static $supported_post_types = [];
+		if ( ! empty( $supported_post_types ) ) {
+			return $supported_post_types;
+		}
+
+		// Get only Post Types with an admin UI.
+		$args = [
+			'public' => true,
+			'show_ui' => true,
+		];
+
+		// Get Post Types.
+		$post_types = get_post_types( $args, 'objects' );
+
+		// Include only those which have an editor.
+		foreach ( $post_types as $post_type ) {
+			if ( post_type_supports( $post_type->name, 'editor' ) ) {
+				$supported_post_types[ $post_type->name ] = $post_type->label;
+			}
+		}
+
+		// Built-in media descriptions are also supported.
+		$attachment = get_post_type_object( 'attachment' );
+		$supported_post_types[ $attachment->name ] = $attachment->label;
+
+		// --<
+		return $supported_post_types;
+
+	}
+
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Set up all items associated with this object.
@@ -161,7 +473,7 @@ class CommentPress_Core_Parser {
 			! ( $post instanceof WP_Post ) ||
 
 			// Some Post Types can be skipped.
-			in_array( $post->post_type, $this->core->db->setting_get( 'cp_post_types_disabled', [] ) ) || (
+			in_array( $post->post_type, $this->setting_post_types_disabled_get() ) || (
 
 			// Individual entries can have parsing skipped.
 			$this->core->db->setting_get( 'cp_do_not_parse', 'n' ) == 'y' &&
@@ -354,7 +666,7 @@ class CommentPress_Core_Parser {
 		$content = $this->filter_quicktags( $content );
 
 		// Check for our "Comment Block" Quicktag.
-		$has_quicktag = $this->core->editor_content->has_quicktag( $content );
+		$has_quicktag = $this->core->editor->content->has_quicktag( $content );
 
 		// Determine parser.
 		if ( ! $has_quicktag ) {

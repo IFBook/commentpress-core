@@ -1961,7 +1961,7 @@ if ( ! function_exists( 'commentpress_add_wp_editor' ) ) :
 		}
 
 		// Render the TinyMCE editor.
-		return $core->editor_comments->editor_render();
+		return $core->editor->comments->editor_render();
 
 	}
 

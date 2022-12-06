@@ -64,18 +64,18 @@ class CommentPress_Core_Entry_Metabox {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_name The name of the metabox nonce element.
+	 * @var string $nonce_field The name of the metabox nonce element.
 	 */
-	private $nonce_name = 'commentpress_nonce';
+	private $nonce_field = 'commentpress_core_entry_nonce';
 
 	/**
-	 * Metabox nonce value.
+	 * Metabox nonce action.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_value The name of the metabox nonce value.
+	 * @var string $nonce_action The name of the metabox nonce action.
 	 */
-	private $nonce_value = 'commentpress_entry_settings';
+	private $nonce_action = 'commentpress_core_entry_action';
 
 	/**
 	 * Constructor.
@@ -181,9 +181,9 @@ class CommentPress_Core_Entry_Metabox {
 			return;
 		}
 
-		// Bail if authentication fails.
-		$nonce = isset( $_POST[ $this->nonce_name ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->nonce_name ] ) ) : '';
-		if ( ! wp_verify_nonce( $nonce, $this->nonce_value ) ) {
+		// Authenticate.
+		$nonce = isset( $_POST[ $this->nonce_field ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->nonce_field ] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce, $this->nonce_action ) ) {
 			return;
 		}
 
@@ -241,7 +241,8 @@ class CommentPress_Core_Entry_Metabox {
 		/**
 		 * Fire when Post meta is being saved.
 		 *
-		 * Callbacks do not need to verify the nonce as this has already been done.
+		 * * Callbacks do not need to verify the nonce as this has already been done.
+		 * * Callbacks should, however, implement their own permissions checks.
 		 *
 		 * @since 4.0
 		 *
@@ -270,7 +271,8 @@ class CommentPress_Core_Entry_Metabox {
 		/**
 		 * Fire when Page meta is being saved.
 		 *
-		 * Callbacks do not need to verify the nonce as this has already been done.
+		 * * Callbacks do not need to verify the nonce as this has already been done.
+		 * * Callbacks should, however, implement their own permissions checks.
 		 *
 		 * @since 4.0
 		 *

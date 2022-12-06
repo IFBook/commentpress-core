@@ -11,7 +11,7 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<!-- <?php echo $this->parts_path; ?>part-bp-groupblog-signup.php -->
+<!-- <?php echo $this->parts_path; ?>part-bp-groupblog-names-settings-network.php -->
 <tr valign="top">
 	<th scope="row">
 		<label for="<?php echo esc_attr( $this->key_scheme ); ?>"><?php echo esc_html_e( 'Default naming scheme for Group Blogs', 'commentpress-core' ); ?></label>

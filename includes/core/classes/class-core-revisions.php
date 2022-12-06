@@ -60,18 +60,18 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_name The name of the metabox nonce element.
+	 * @var string $nonce_field The name of the metabox nonce element.
 	 */
-	private $nonce_name = 'commentpress_revisions_nonce';
+	private $nonce_field = 'commentpress_core_revisions_nonce';
 
 	/**
 	 * Metabox nonce value.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_value The name of the metabox nonce value.
+	 * @var string $nonce_action The name of the metabox nonce action.
 	 */
-	private $nonce_value = 'commentpress_revisions_value';
+	private $nonce_action = 'commentpress_core_revisions_action';
 
 	/**
 	 * Metabox checkbox element name.
@@ -208,8 +208,8 @@ class CommentPress_Core_Revisions {
 		}
 
 		// Authenticate.
-		$nonce = isset( $_POST[ $this->nonce_value ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->nonce_value ] ) ) : '';
-		if ( ! wp_verify_nonce( $nonce, $this->nonce_name ) ) {
+		$nonce = isset( $_POST[ $this->nonce_field ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->nonce_field ] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce, $this->nonce_action ) ) {
 			return;
 		}
 

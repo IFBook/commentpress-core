@@ -31,6 +31,67 @@ class CommentPress_Core_Navigator {
 	public $core;
 
 	/**
+	 * Metabox template directory path.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $metabox_path Relative path to the Metabox directory.
+	 */
+	private $metabox_path = 'includes/core/assets/templates/wordpress/metaboxes/';
+
+	/**
+	 * "Page navigation enabled" settings key.
+	 *
+	 * By default, CommentPress creates "book-like" navigation for the built-in
+	 * "page" Post Type. This is what CommentPress was built for in the first
+	 * place - to create a "document" from hierarchically-organised Pages. This
+	 * is not always the desired behaviour.
+	 *
+	 * The "Page navigation enabled" value is either 'y' or 'n'.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var str $key_page_nav_enabled The settings key for the "Page navigation enabled" setting.
+	 */
+	private $key_page_nav_enabled = 'cp_page_nav_enabled';
+
+	/**
+	 * "Table of Contents contains" settings key.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var str $key_post_type The settings key for the "Table of Contents contains" setting.
+	 */
+	private $key_post_type = 'cp_show_posts_or_pages_in_toc';
+
+	/**
+	 * "Chapters are Headings/Pages" settings key.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var str $key_chapter_is_page The settings key for the "Chapters are Headings/Pages" setting.
+	 */
+	private $key_chapter_is_page = 'cp_toc_chapter_is_page';
+
+	/**
+	 * "Show Sub-Pages" settings key.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var str $key_subpages The settings key for the "Show Sub-Pages" setting.
+	 */
+	private $key_subpages = 'cp_show_subpages';
+
+	/**
+	 * "Appearance of TOC for Posts" settings key.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var str $key_extended The settings key for the "Appearance of TOC for Posts" setting.
+	 */
+	private $key_extended = 'cp_show_extended_toc';
+
+	/**
 	 * Next Pages array.
 	 *
 	 * @since 3.0
@@ -129,6 +190,43 @@ class CommentPress_Core_Navigator {
 	 */
 	public function register_hooks() {
 
+		// Separate callbacks into descriptive methods.
+		$this->register_hooks_settings();
+		$this->register_hooks_theme();
+
+	}
+
+	/**
+	 * Registers "Site Settings" hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_settings() {
+
+		// Add our settings to default settings.
+		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ], 20, 1 );
+
+		// Add our metaboxes to the Site Settings screen.
+		add_filter( 'commentpress/core/settings/site/metaboxes/after', [ $this, 'settings_meta_boxes_append' ], 10 );
+
+		// Save data from Site Settings form submissions.
+		add_action( 'commentpress/core/settings/site/save/before', [ $this, 'settings_meta_box_save' ] );
+
+		// Add our Javascript to the Network Settings screen.
+		add_action( 'commentpress/core/settings/site/admin/js', [ $this, 'settings_meta_box_js_enqueue' ] );
+
+	}
+
+	/**
+	 * Registers Theme hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_theme() {
+
+		// Add setting to the Javascript vars.
+		add_filter( 'commentpress_get_javascript_vars', [ $this, 'theme_javascript_vars_add' ] );
+
 		/*
 		 * We need template functions - e.g. is_page() and is_single() - to be
 		 * defined, so we set up this object when the "wp_head" action is fired.
@@ -139,6 +237,338 @@ class CommentPress_Core_Navigator {
 		add_action( 'template_redirect', [ $this, 'redirect_to_child' ] );
 
 	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Appends our settings to the default core settings.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $settings The existing default core settings.
+	 * @return array $settings The modified default core settings.
+	 */
+	public function settings_get_defaults( $settings ) {
+
+		// Add our defaults.
+		$settings[ $this->key_page_nav_enabled ] = 'y';
+		$settings[ $this->key_post_type ] = 'page';
+		$settings[ $this->key_chapter_is_page ] = 1;
+		$settings[ $this->key_subpages ] = 1;
+		$settings[ $this->key_extended ] = 1;
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'settings' => $settings,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// --<
+		return $settings;
+
+	}
+
+	/**
+	 * Appends our metaboxes to the Site Settings screen.
+	 *
+	 * @since 4.0
+	 *
+	 * @param string $screen_id The Site Settings Screen ID.
+	 */
+	public function settings_meta_boxes_append( $screen_id ) {
+
+		// Create "Table of Contents" metabox.
+		add_meta_box(
+			'commentpress_nav',
+			__( 'Navigation Settings', 'commentpress-core' ),
+			[ $this, 'settings_meta_box_render' ], // Callback.
+			$screen_id, // Screen ID.
+			'normal', // Column: options are 'normal' and 'side'.
+			'core' // Vertical placement: options are 'core', 'high', 'low'.
+		);
+
+	}
+
+	/**
+	 * Renders the "Table of Contents" metabox.
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_render() {
+
+		// Get settings.
+		$page_nav_enabled = $this->setting_page_nav_enabled_get();
+		$post_type = $this->setting_post_type_get();
+		$chapter_is_page = $this->setting_chapter_is_page_get();
+		$show_subpages = $this->setting_subpages_get();
+		$extended = $this->setting_extended_get();
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-nav.php';
+
+	}
+
+	/**
+	 * Saves the data from the Network Settings "BuddyPress Groupblog Settings" metabox.
+	 *
+	 * Adds the data to the settings array. The settings are actually saved later.
+	 *
+	 * @see CommentPress_Core_Settings_Site::form_submitted()
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_save() {
+
+		// Get "Page navigation enabled" value.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$page_nav_enabled = isset( $_POST[ $this->key_page_nav_enabled ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_page_nav_enabled ] ) ) : '';
+
+		// Set the setting.
+		$this->setting_page_nav_enabled_set( $page_nav_enabled );
+
+		// Get "Table of Contents contains" value.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$post_type = isset( $_POST[ $this->key_post_type ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_post_type ] ) ) : '';
+
+		// Set the setting.
+		$this->setting_post_type_set( $post_type );
+
+		// Get "Chapters are Headings/Pages" value.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$chapter_is_page = isset( $_POST[ $this->key_chapter_is_page ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_chapter_is_page ] ) ) : '0';
+
+		// Set the setting.
+		$this->setting_chapter_is_page_set( ( $chapter_is_page ? 1 : 0 ) );
+
+		// Get "Show Sub-Pages" value.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$subpages = isset( $_POST[ $this->key_subpages ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_subpages ] ) ) : '0';
+
+		// Set the setting.
+		$this->setting_subpages_set( ( $subpages ? 1 : 0 ) );
+
+		// Get "Appearance of TOC for Posts" value.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$extended = isset( $_POST[ $this->key_extended ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_extended ] ) ) : '0';
+
+		// Set the setting.
+		$this->setting_extended_set( ( $extended ? 1 : 0 ) );
+
+	}
+
+	/**
+	 * Adds our Javascript to the Site Settings screen.
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_js_enqueue() {
+
+		// Add our "Site Settings" Javascript.
+		wp_enqueue_script(
+			'commentpress-core-site-settings-nav',
+			plugins_url( 'includes/core/assets/js/cp-settings-site-nav.js', COMMENTPRESS_PLUGIN_FILE ),
+			[ 'jquery' ],
+			COMMENTPRESS_VERSION, // Version.
+			true // In footer.
+		);
+
+		// Build vars.
+		$vars = [];
+
+		// Localise the WordPress way.
+		wp_localize_script( 'commentpress-core-site-settings', 'CommentPress_Core_Settings_Site_Vars', $vars );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the "Page navigation enabled" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return str $page_nav_enabled The setting if found, default otherwise.
+	 */
+	public function setting_page_nav_enabled_get() {
+
+		// Get the setting.
+		$page_nav_enabled = $this->core->db->setting_get( $this->key_page_nav_enabled );
+
+		// Return setting or default if empty.
+		return ! empty( $page_nav_enabled ) ? $page_nav_enabled : 'y';
+
+	}
+
+	/**
+	 * Sets the "Page navigation enabled" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param str $page_nav_enabled The setting value.
+	 */
+	public function setting_page_nav_enabled_set( $page_nav_enabled ) {
+
+		// Set the setting.
+		$this->core->db->setting_set( $this->key_page_nav_enabled, $page_nav_enabled );
+
+	}
+
+	/**
+	 * Gets the "Table of Contents contains" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return str $post_type The setting if found, default otherwise.
+	 */
+	public function setting_post_type_get() {
+
+		// Get the setting.
+		$post_type = $this->core->db->setting_get( $this->key_post_type );
+
+		// Return setting or default if empty.
+		return ! empty( $post_type ) ? $post_type : 'page';
+
+	}
+
+	/**
+	 * Sets the "Table of Contents contains" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param str $post_type The setting value.
+	 */
+	public function setting_post_type_set( $post_type ) {
+
+		// Set the setting.
+		$this->core->db->setting_set( $this->key_post_type, $post_type );
+
+	}
+
+	/**
+	 * Gets the "Chapters are Headings/Pages" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return int $chapter_is_page The setting if found, false otherwise.
+	 */
+	public function setting_chapter_is_page_get() {
+
+		// Get the setting.
+		$chapter_is_page = $this->core->db->setting_get( $this->key_chapter_is_page );
+
+		// Return setting or boolean if empty.
+		return ! empty( $chapter_is_page ) ? $chapter_is_page : 0;
+
+	}
+
+	/**
+	 * Sets the "Chapters are Headings/Pages" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $chapter_is_page The setting value.
+	 */
+	public function setting_chapter_is_page_set( $chapter_is_page ) {
+
+		// Set the setting.
+		$this->core->db->setting_set( $this->key_chapter_is_page, $chapter_is_page );
+
+	}
+
+	/**
+	 * Gets the "Show Sub-Pages" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return int $subpages The setting if found, false otherwise.
+	 */
+	public function setting_subpages_get() {
+
+		// Get the setting.
+		$subpages = $this->core->db->setting_get( $this->key_subpages );
+
+		// Return setting or boolean if empty.
+		return ! empty( $subpages ) ? $subpages : 0;
+
+	}
+
+	/**
+	 * Sets the "Show Sub-Pages" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $subpages The setting value.
+	 */
+	public function setting_subpages_set( $subpages ) {
+
+		// Set the setting.
+		$this->core->db->setting_set( $this->key_subpages, $subpages );
+
+	}
+
+	/**
+	 * Gets the "Appearance of TOC for Posts" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return int $extended The setting if found, false otherwise.
+	 */
+	public function setting_extended_get() {
+
+		// Get the setting.
+		$extended = $this->core->db->setting_get( $this->key_extended );
+
+		// Return setting or boolean if empty.
+		return ! empty( $extended ) ? $extended : 0;
+
+	}
+
+	/**
+	 * Sets the "Appearance of TOC for Posts" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $extended The setting value.
+	 */
+	public function setting_extended_set( $extended ) {
+
+		// Set the setting.
+		$this->core->db->setting_set( $this->key_extended, $extended );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Filters the Javascript vars.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $vars The default Javascript vars.
+	 * @return array $vars The modified Javascript vars.
+	 */
+	public function theme_javascript_vars_add( $vars ) {
+
+		// Add our settings.
+		$vars['cp_toc_chapter_is_page'] = $this->setting_chapter_is_page_get();
+		$vars['cp_show_subpages'] = $this->setting_subpages_get();
+
+		// Default to Page navigation enabled.
+		$vars['cp_page_nav_enabled'] = 1;
+		if ( $this->setting_page_nav_enabled_get() == 'n' ) {
+			$vars['cp_page_nav_enabled'] = 0;
+		}
+
+		// --<
+		return $vars;
+
+	}
+
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Builds all lists associated with this object.
@@ -169,8 +599,6 @@ class CommentPress_Core_Navigator {
 
 	}
 
-	// -------------------------------------------------------------------------
-
 	/**
 	 * Disable Page Navigation when on a "Page".
 	 *
@@ -193,7 +621,7 @@ class CommentPress_Core_Navigator {
 	public function page_nav_is_disabled() {
 
 		// Overwrite flag if Page Navigation option is set to "off".
-		if ( $this->core->db->setting_get( 'cp_page_nav_enabled', 'y' ) == 'n' ) {
+		if ( $this->setting_page_nav_enabled_get() == 'n' ) {
 			$this->nav_enabled = false;
 		}
 
@@ -300,7 +728,7 @@ class CommentPress_Core_Navigator {
 		}
 
 		// Are parent Pages viewable?
-		$viewable = ( $this->core->db->setting_get( 'cp_toc_chapter_is_page' ) == '1' ) ? true : false;
+		$viewable = $this->setting_chapter_is_page_get() == '1' ? true : false;
 
 		// Get the ID of the first child.
 		$first_child = $this->first_child_get( $post->ID );
@@ -743,7 +1171,7 @@ class CommentPress_Core_Navigator {
 		}
 
 		// If Chapters are not Pages.
-		if ( $this->core->db->setting_get( 'cp_toc_chapter_is_page' ) != '1' ) {
+		if ( $this->setting_chapter_is_page_get() != '1' ) {
 
 			// Filter Chapters out if we want all readable Pages.
 			if ( $mode == 'readable' ) {
@@ -916,7 +1344,7 @@ class CommentPress_Core_Navigator {
 		global $post;
 
 		// Are parent Pages viewable?
-		$viewable = ( $this->core->db->setting_get( 'cp_toc_chapter_is_page' ) == '1' ) ? true : false;
+		$viewable = ( $this->setting_chapter_is_page_get() == '1' ) ? true : false;
 
 		// If they are.
 		if ( $viewable ) {
@@ -1019,7 +1447,7 @@ class CommentPress_Core_Navigator {
 			if ( $this->menu_objects ) {
 
 				// If Chapters are not Pages, filter the Menu Items.
-				if ( $this->core->db->setting_get( 'cp_toc_chapter_is_page' ) != '1' ) {
+				if ( $this->setting_chapter_is_page_get() != '1' ) {
 
 					// Do we want all readable Pages?
 					if ( $mode == 'readable' ) {

@@ -129,7 +129,7 @@ class CommentPress_AJAX_Comments {
 		$vars = [];
 
 		// Is "live" Comment refreshing enabled?
-		$vars['cpajax_live'] = ( $this->core->db->setting_get( 'cp_para_comments_live' ) == '1' ) ? 1 : 0;
+		$vars['cpajax_live'] = $this->core->comments->setting_live_get();
 
 		// We need to know the url of the Ajax handler.
 		$vars['cpajax_ajax_url'] = admin_url( 'admin-ajax.php' );
@@ -143,8 +143,13 @@ class CommentPress_AJAX_Comments {
 		// Get Comment count at the time the Page is served.
 		$count = get_comment_count( $post->ID );
 
-		// Adding moderation queue as well, since we do show these.
-		$vars['cpajax_comment_count'] = $count['approved']; // + $count['awaiting_moderation'];
+		// Add approved Comment count.
+		$vars['cpajax_comment_count'] = (int) $count['approved'];
+
+		/*
+		// Add moderation queue as well, since we do show these.
+		//$vars['cpajax_comment_count'] += (int) $count['awaiting_moderation'];
+		*/
 
 		// Add Post ID.
 		$vars['cpajax_post_id'] = $post->ID;

@@ -67,7 +67,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	}
 
 	/**
-	 * Initialises this obiject.
+	 * Initialises this object.
 	 *
 	 * @since 3.3
 	 */

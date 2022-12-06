@@ -29,28 +29,47 @@ defined( 'ABSPATH' ) || exit;
 
 	<tr valign="top">
 		<th scope="row">
-			<label for="cp_excerpt_length"><?php esc_html_e( 'Blog excerpt length', 'commentpress-core' ); ?></label>
+			<label for="<?php echo esc_attr( $this->key_featured_images ); ?>"><?php esc_html_e( 'Featured Images', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
-			<input type="text" id="cp_excerpt_length" name="cp_excerpt_length" value="<?php echo esc_attr( $excerpt_length ); ?>" class="small-text" /> <?php esc_html_e( 'words', 'commentpress-core' ); ?>
+			<select id="<?php echo esc_attr( $this->key_featured_images ); ?>" name="<?php echo esc_attr( $this->key_featured_images ); ?>">
+				<option value="y" <?php echo ( $featured_images == 'y' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Enabled', 'commentpress-core' ); ?></option>
+				<option value="n" <?php echo ( $featured_images == 'n' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Disabled', 'commentpress-core' ); ?></option>
+			</select>
+			<p class="description"><?php esc_html_e( 'CommentPress is most commonly used for text-based content, however some sites benefit from additional graphics and illustration. Enable Feature Images if this Site would benefit from them.', 'commentpress-core' ); ?></p>
+			<p class="description"><?php esc_html_e( 'If you have already implemented this in a child theme, you should choose "Disabled".', 'commentpress-core' ); ?></p>
 		</td>
 	</tr>
 
 	<tr valign="top">
 		<th scope="row">
-			<label for="cp_js_scroll_speed"><?php esc_html_e( 'Scroll speed', 'commentpress-core' ); ?></label>
+			<label for="<?php echo esc_attr( $this->key_textblock_meta ); ?>"><?php esc_html_e( 'Show textblock meta', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
-			<input type="text" id="cp_js_scroll_speed" name="cp_js_scroll_speed" value="<?php echo $scroll_speed; ?>" class="small-text" /> <?php esc_html_e( 'milliseconds', 'commentpress-core' ); ?>
+			<select id="<?php echo esc_attr( $this->key_textblock_meta ); ?>" name="<?php echo esc_attr( $this->key_textblock_meta ); ?>">
+				<option value="y" <?php echo ( $textblock_meta == 'y' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Always', 'commentpress-core' ); ?></option>
+				<option value="n" <?php echo ( $textblock_meta == 'n' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'On rollover', 'commentpress-core' ); ?></option>
+			</select>
+			<p class="description"><?php esc_html_e( 'This controls the display of the number to the left and the comment icon to the right of each paragraph, line or block that can be commented on.', 'commentpress-core' ); ?></p>
 		</td>
 	</tr>
 
 	<tr valign="top">
 		<th scope="row">
-			<label for="cp_min_page_width"><?php esc_html_e( 'Minimum page width', 'commentpress-core' ); ?></label>
+			<label for="<?php echo esc_attr( $this->key_excerpt_length ); ?>"><?php esc_html_e( 'Blog excerpt length', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
-			<input type="text" id="cp_min_page_width" name="cp_min_page_width" value="<?php echo $min_page_width; ?>" class="small-text" /> <?php esc_html_e( 'pixels', 'commentpress-core' ); ?>
+			<input type="text" id="<?php echo esc_attr( $this->key_excerpt_length ); ?>" name="<?php echo esc_attr( $this->key_excerpt_length ); ?>" value="<?php echo esc_attr( $excerpt_length ); ?>" class="small-text" /> <?php esc_html_e( 'words', 'commentpress-core' ); ?>
+		</td>
+	</tr>
+
+	<tr valign="top">
+		<th scope="row">
+			<label for="<?php echo esc_attr( $this->key_scroll_speed ); ?>"><?php esc_html_e( 'Scroll speed', 'commentpress-core' ); ?></label>
+		</th>
+		<td>
+			<input type="text" id="<?php echo esc_attr( $this->key_scroll_speed ); ?>" name="<?php echo esc_attr( $this->key_scroll_speed ); ?>" value="<?php echo $scroll_speed; ?>" class="small-text" /> <?php esc_html_e( 'milliseconds', 'commentpress-core' ); ?>
+			<p class="description"><?php esc_html_e( 'Modifies the speed of scrolling when actions like clicking or tapping on a paragraph are performed.', 'commentpress-core' ); ?></p>
 		</td>
 	</tr>
 

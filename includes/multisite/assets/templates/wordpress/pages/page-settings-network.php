@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ); ?>
 		<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
-		<?php wp_nonce_field( $this->nonce_value, $this->nonce_name ); ?>
+		<?php wp_nonce_field( $this->nonce_action, $this->nonce_field ); ?>
 
 		<div id="poststuff">
 

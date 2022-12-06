@@ -122,7 +122,7 @@ HELPTEXT;
 	public function get_toc_list( $exclude_pages = [] ) {
 
 		// Switch Pages or Posts.
-		if ( 'post' === $this->core->db->setting_get( 'cp_show_posts_or_pages_in_toc' ) ) {
+		if ( 'post' === $this->core->nav->setting_post_type_get() ) {
 			$this->list_posts();
 		} else {
 			$this->list_pages( $exclude_pages );
@@ -143,7 +143,7 @@ HELPTEXT;
 		$posts = get_posts( $params );
 
 		// Have we set the option?
-		$list_style = $this->core->db->setting_get( 'cp_show_extended_toc' );
+		$list_style = $this->core->nav->setting_subpages_get();
 
 		// If not set or set to 'off'.
 		if ( $list_style === false || $list_style == '0' ) {
@@ -417,7 +417,7 @@ HELPTEXT;
 
 		/*
 		// Get Page display option.
-		$depth = $this->core->db->setting_get( 'cp_show_subpages' );
+		$depth = $this->core->nav->setting_subpages_get();
 		*/
 
 		// ALWAYS write Sub-pages into Page, even if they aren't displayed.

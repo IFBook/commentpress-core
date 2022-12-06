@@ -78,105 +78,6 @@ class CommentPress_Core_Database {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Table of Contents content flag.
-	 *
-	 * @since 3.0
-	 * @access public
-	 * @var str $toc_content The TOC content - either 'post' or 'page'.
-	 */
-	public $toc_content = 'page';
-
-	/**
-	 * Table of Contents "Chapters are Pages" flag.
-	 *
-	 * @since 3.0
-	 * @access public
-	 * @var bool $toc_chapter_is_page The Table of Contents "Chapters are Pages" flag.
-	 */
-	public $toc_chapter_is_page = 1;
-
-	/**
-	 * Extended Table of Contents content for Posts lists flag.
-	 *
-	 * @since 3.0
-	 * @access public
-	 * @var bool $show_extended_toc The extended TOC content for Posts lists flag.
-	 */
-	public $show_extended_toc = 1;
-
-	/**
-	 * Table of Contents show Sub-pages flag.
-	 *
-	 * @since 3.0
-	 * @access public
-	 * @var bool $show_subpages The Table of Contents shows Sub-pages by default.
-	 */
-	public $show_subpages = 1;
-
-	/**
-	 * Page title visibility flag.
-	 *
-	 * @since 3.0
-	 * @access public
-	 * @var str $title_visibility Show Page titles by default.
-	 */
-	public $title_visibility = 'show';
-
-	/**
-	 * Page meta visibility flag.
-	 *
-	 * @since 3.0
-	 * @access public
-	 * @var str $page_meta_visibility Hide Page meta by default.
-	 */
-	public $page_meta_visibility = 'hide';
-
-	/**
-	 * Default editor flag.
-	 *
-	 * @since 3.0
-	 * @access public
-	 * @var bool $comment_editor Default to rich text editor (TinyMCE).
-	 */
-	public $comment_editor = 1;
-
-	/**
-	 * Promote reading flag.
-	 *
-	 * @since 3.0
-	 * @access public
-	 * @var bool $promote_reading Either promote reading (1) or commenting (0).
-	 */
-	public $promote_reading = 0;
-
-	/**
-	 * Excerpt length.
-	 *
-	 * @since 3.0
-	 * @access public
-	 * @var bool $excerpt_length The default excerpt length.
-	 */
-	public $excerpt_length = 55;
-
-	/**
-	 * Default header background colour (hex, same as in theme stylesheet).
-	 *
-	 * @since 3.0
-	 * @access public
-	 * @var bool $header_bg_color The default header background colour.
-	 */
-	public $header_bg_color = '2c2622';
-
-	/**
-	 * Default scroll speed.
-	 *
-	 * @since 3.0
-	 * @access public
-	 * @var str $js_scroll_speed The scroll speed (in millisecs).
-	 */
-	public $js_scroll_speed = '800';
-
-	/**
 	 * Default type of Blog.
 	 *
 	 * Blog Types are built as an array - eg, array( '0' => 'Poetry', '1' => 'Prose' )
@@ -188,92 +89,13 @@ class CommentPress_Core_Database {
 	public $blog_type = 0;
 
 	/**
-	 * Default sidebar tab.
+	 * Default header background colour (hex, same as in theme stylesheet).
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var str $sidebar_default The default sidebar tab ('toc' == Contents tab).
+	 * @var bool $header_bg_color The default header background colour.
 	 */
-	public $sidebar_default = 'toc';
-
-	/**
-	 * Default minimum Page width (px).
-	 *
-	 * @since 3.0
-	 * @access public
-	 * @var str $min_page_width The default minimum Page width in pixels.
-	 */
-	public $min_page_width = '447';
-
-	/**
-	 * "Live" Comment refreshing.
-	 *
-	 * @since 3.0
-	 * @access public
-	 * @var str $para_comments_live The "live" Comment refreshing setting (off by default).
-	 */
-	public $para_comments_live = 0;
-
-	/**
-	 * Featured images flag.
-	 *
-	 * @since 3.5
-	 * @access public
-	 * @var str $featured_images The featured images flag ('y' or 'n').
-	 */
-	public $featured_images = 'n';
-
-	/**
-	 * Textblock meta flag.
-	 *
-	 * @since 3.5
-	 * @access public
-	 * @var str $textblock_meta The textblock meta flag ('y' or 'n').
-	 */
-	public $textblock_meta = 'y';
-
-	/**
-	 * Page navigation enabled flag.
-	 *
-	 * By default, CommentPress creates "book-like" navigation for the built-in
-	 * "page" Post Type. This is what CommentPress was built for in the first
-	 * place - to create a "document" from hierarchically-organised Pages. This
-	 * is not always the desired behaviour.
-	 *
-	 * @since 3.8.10
-	 * @access public
-	 * @var str $page_nav_enabled The Page navigation flag ('y' or 'n').
-	 */
-	public $page_nav_enabled = 'y';
-
-	/**
-	 * Do Not Parse flag.
-	 *
-	 * When Comments are closed on an entry and there are no Comments on that
-	 * entry, if this is set then the content will not be parsed for Paragraphs,
-	 * Lines or Blocks. Comments will also not be parsed, meaning that the entry
-	 * behaves the same as content which is not commentable. This allows, for
-	 * example, the rendering of the Comment column to be skipped in these
-	 * circumstances.
-	 *
-	 * @since 3.8.10
-	 * @access public
-	 * @var str $do_not_parse The flag indicating if content is to parsed ('y' or 'n').
-	 */
-	public $do_not_parse = 'n';
-
-	/**
-	 * Skipped Post Types.
-	 *
-	 * By default all Post Types are parsed by CommentPress. Post Types in this
-	 * array will not be parsed. This effectively batch sets $do_not_parse for
-	 * the Post Type.
-	 *
-	 * @since 3.9
-	 * @access public
-	 * @var str $post_types_disabled The Post Types not to be parsed.
-	 */
-	public $post_types_disabled = [];
+	public $header_bg_color = '2c2622';
 
 	/**
 	 * Constructor.
@@ -565,25 +387,7 @@ class CommentPress_Core_Database {
 
 		// Init return.
 		$settings = [
-			'cp_show_posts_or_pages_in_toc' => $this->toc_content,
-			'cp_toc_chapter_is_page' => $this->toc_chapter_is_page,
-			'cp_show_subpages' => $this->show_subpages,
-			'cp_show_extended_toc' => $this->show_extended_toc,
-			'cp_title_visibility' => $this->title_visibility,
-			'cp_page_meta_visibility' => $this->page_meta_visibility,
-			'cp_js_scroll_speed' => $this->js_scroll_speed,
-			'cp_min_page_width' => $this->min_page_width,
-			'cp_comment_editor' => $this->comment_editor,
-			'cp_promote_reading' => $this->promote_reading,
-			'cp_excerpt_length' => $this->excerpt_length,
-			'cp_para_comments_live' => $this->para_comments_live,
 			'cp_blog_type' => $this->blog_type,
-			'cp_sidebar_default' => $this->sidebar_default,
-			'cp_featured_images' => $this->featured_images,
-			'cp_textblock_meta' => $this->textblock_meta,
-			'cp_page_nav_enabled' => $this->page_nav_enabled,
-			'cp_do_not_parse' => $this->do_not_parse,
-			'cp_post_types_disabled' => $this->post_types_disabled,
 		];
 
 		/**
@@ -601,6 +405,21 @@ class CommentPress_Core_Database {
 	}
 
 	/**
+	 * Reverts all settings to their defaults.
+	 *
+	 * @since 4.0
+	 */
+	public function settings_reset() {
+
+		// Overwrite the settings with the defaults.
+		$this->settings = $this->settings_get_defaults();
+
+		// Save settings.
+		$this->settings_save();
+
+	}
+
+	/**
 	 * Updates the settings from form submissions.
 	 *
 	 * @since 4.0
@@ -613,16 +432,6 @@ class CommentPress_Core_Database {
 		$cp_reset = '';
 		$cp_create_pages = '';
 		$cp_delete_pages = '';
-		$cp_para_comments_live = 0;
-		$cp_show_subpages = 0;
-		$cp_show_extended_toc = 0;
-		$cp_featured_images = 'n';
-		$cp_textblock_meta = 'y';
-		$cp_page_nav_enabled = 'y';
-		$cp_do_not_parse = 'y';
-
-		// Assume all Post Types are enabled.
-		$cp_post_types_enabled = array_keys( $this->post_types_get_supported() );
 
 		// Get variables.
 		extract( $_POST );
@@ -687,68 +496,6 @@ class CommentPress_Core_Database {
 		$this->setting_set( 'cp_comments_by_page', $cp_comments_by_page );
 		*/
 
-		// TOC content.
-		$cp_show_posts_or_pages_in_toc = esc_sql( $cp_show_posts_or_pages_in_toc );
-		$this->setting_set( 'cp_show_posts_or_pages_in_toc', $cp_show_posts_or_pages_in_toc );
-
-		// If we have Pages in TOC and a value for the next param.
-		if ( $cp_show_posts_or_pages_in_toc == 'page' && isset( $cp_toc_chapter_is_page ) ) {
-
-			$cp_toc_chapter_is_page = esc_sql( $cp_toc_chapter_is_page );
-			$this->setting_set( 'cp_toc_chapter_is_page', $cp_toc_chapter_is_page );
-
-			// If Chapters are not Pages and we have a value for the next param.
-			if ( $cp_toc_chapter_is_page == '0' ) {
-
-				$cp_show_subpages = esc_sql( $cp_show_subpages );
-				$this->setting_set( 'cp_show_subpages', ( $cp_show_subpages ? 1 : 0 ) );
-
-			} else {
-
-				// Always set to show Sub-pages.
-				$this->setting_set( 'cp_show_subpages', 1 );
-
-			}
-
-		}
-
-		// Extended or vanilla Posts TOC.
-		if ( $cp_show_posts_or_pages_in_toc == 'post' ) {
-
-			$cp_show_extended_toc = esc_sql( $cp_show_extended_toc );
-			$this->setting_set( 'cp_show_extended_toc', ( $cp_show_extended_toc ? 1 : 0 ) );
-
-		}
-
-		// Excerpt length.
-		$cp_excerpt_length = esc_sql( $cp_excerpt_length );
-		$this->setting_set( 'cp_excerpt_length', intval( $cp_excerpt_length ) );
-
-		// Comment editor.
-		$cp_comment_editor = esc_sql( $cp_comment_editor );
-		$this->setting_set( 'cp_comment_editor', ( $cp_comment_editor ? 1 : 0 ) );
-
-		// Has AJAX "live" Comment refreshing been migrated?
-		if ( $this->setting_exists( 'cp_para_comments_live' ) ) {
-
-			// "live" Comment refreshing.
-			$cp_para_comments_live = esc_sql( $cp_para_comments_live );
-			$this->setting_set( 'cp_para_comments_live', ( $cp_para_comments_live ? 1 : 0 ) );
-
-		}
-
-		// Behaviour.
-		$cp_promote_reading = esc_sql( $cp_promote_reading );
-		$this->setting_set( 'cp_promote_reading', ( $cp_promote_reading ? 1 : 0 ) );
-
-		// Save scroll speed.
-		$cp_js_scroll_speed = esc_sql( $cp_js_scroll_speed );
-		$this->setting_set( 'cp_js_scroll_speed', $cp_js_scroll_speed );
-
-		// Save min Page width.
-		$cp_min_page_width = esc_sql( $cp_min_page_width );
-		$this->setting_set( 'cp_min_page_width', $cp_min_page_width );
-
 		// If it's a Group Blog.
 		if ( $this->core->bp->is_groupblog() ) {
 
@@ -760,36 +507,6 @@ class CommentPress_Core_Database {
 				groups_update_groupmeta( $group_id, 'groupblogtype', 'groupblogtype-' . $cp_blog_type );
 
 			}
-
-		}
-
-		// Save featured images.
-		$cp_featured_images = esc_sql( $cp_featured_images );
-		$this->setting_set( 'cp_featured_images', $cp_featured_images );
-
-		// Save textblock meta.
-		$cp_textblock_meta = esc_sql( $cp_textblock_meta );
-		$this->setting_set( 'cp_textblock_meta', $cp_textblock_meta );
-
-		// Save Page navigation enabled flag.
-		$cp_page_nav_enabled = esc_sql( $cp_page_nav_enabled );
-		$this->setting_set( 'cp_page_nav_enabled', $cp_page_nav_enabled );
-
-		// Save do not parse flag.
-		$cp_do_not_parse = esc_sql( $cp_do_not_parse );
-		$this->setting_set( 'cp_do_not_parse', $cp_do_not_parse );
-
-		// Do we have the Post Types option?
-		if ( $this->setting_exists( 'cp_post_types_disabled' ) ) {
-
-			// Get selected Post Types.
-			$enabled_types = array_map( 'esc_sql', $cp_post_types_enabled );
-
-			// Exclude the selected Post Types.
-			$disabled_types = array_diff( array_keys( $this->post_types_get_supported() ), $enabled_types );
-
-			// Save skipped Post Types.
-			$this->setting_set( 'cp_post_types_disabled', $disabled_types );
 
 		}
 
@@ -1015,46 +732,6 @@ class CommentPress_Core_Database {
 	}
 
 	// -------------------------------------------------------------------------
-
-	/**
-	 * Gets the WordPress Post Types that CommentPress supports.
-	 *
-	 * @since 3.9
-	 *
-	 * @return array $supported_post_types The array of Post Types that have an editor.
-	 */
-	public function post_types_get_supported() {
-
-		// Only parse Post Types once.
-		static $supported_post_types = [];
-		if ( ! empty( $supported_post_types ) ) {
-			return $supported_post_types;
-		}
-
-		// Get only Post Types with an admin UI.
-		$args = [
-			'public' => true,
-			'show_ui' => true,
-		];
-
-		// Get Post Types.
-		$post_types = get_post_types( $args, 'objects' );
-
-		// Include only those which have an editor.
-		foreach ( $post_types as $post_type ) {
-			if ( post_type_supports( $post_type->name, 'editor' ) ) {
-				$supported_post_types[ $post_type->name ] = $post_type->label;
-			}
-		}
-
-		// Built-in media descriptions are also supported.
-		$attachment = get_post_type_object( 'attachment' );
-		$supported_post_types[ $attachment->name ] = $attachment->label;
-
-		// --<
-		return $supported_post_types;
-
-	}
 
 	/**
 	 * Ensures that this site is registered in multisite.
