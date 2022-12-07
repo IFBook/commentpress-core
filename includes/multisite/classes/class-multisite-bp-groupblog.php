@@ -99,15 +99,6 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	private $classes_path = 'includes/multisite/classes/';
 
 	/**
-	 * Plugin compatibility flag.
-	 *
-	 * @since 4.0
-	 * @access public
-	 * @var string $compatibility Plugin compatibility flag.
-	 */
-	public $compatibility = 'none';
-
-	/**
 	 * Metabox template directory path.
 	 *
 	 * @since 4.0
@@ -124,6 +115,15 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 * @var string $parts_path Relative path to the Parts directory.
 	 */
 	private $parts_path = 'includes/multisite/assets/templates/buddypress/parts/';
+
+	/**
+	 * Plugin compatibility flag.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var string $compatibility Plugin compatibility flag.
+	 */
+	public $compatibility = 'none';
 
 	/**
 	 * "CommentPress enabled on all Group Blogs" settings key.
@@ -160,6 +160,15 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 * @var str $key_theme The settings key for the "Default theme for Group Blogs" setting.
 	 */
 	private $key_theme = 'cpmu_bp_groupblog_theme';
+
+	/**
+	 * "Group Type" Group meta key.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var str $key_theme The Group meta key for the "Group Type" setting.
+	 */
+	private $key_group_meta = 'groupblogtype';
 
 	/**
 	 * Constructor.
@@ -291,6 +300,9 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 		// Separate callbacks into descriptive methods.
 		$this->register_hooks_settings();
 		$this->register_hooks_signup();
+
+		// Update the "Text Format" for a Group Blog when it's changed on this Site.
+		add_action( 'commentpress/core/formatter/setting/set', [ $this, 'group_type_set_by_text_format' ] );
 
 	}
 
@@ -809,22 +821,22 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 
 		}
 
-		// Get Blog Type.
-		$blog_type = $core->db->setting_get( 'cp_blog_type' );
+		// Get Site Text Format.
+		$site_text_format = $core->formatter->setting_formatter_get();
 
 		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
 		error_log( print_r( [
 			'method' => __METHOD__,
-			'blog_type' => $blog_type,
+			'site_text_format' => $site_text_format,
 			//'backtrace' => $trace,
 		], true ) );
 		*/
 
 		// Set the type as Group meta info.
-		// TODO: We also need to change this when the type is changed from the CommentPress Core "Site Settings" screen.
-		groups_update_groupmeta( $group_id, 'groupblogtype', 'groupblogtype-' . (string) $blog_type );
+		// TODO: Check that the type is changed from the CommentPress Core "Site Settings" screen.
+		$this->group_type_set( $group_id, (string) $site_text_format );
 
 		// Save options.
 		$core->db->settings_save();
@@ -873,12 +885,12 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 		 * @since 3.8.5
 		 *
 		 * @param int $blog_id The numeric ID of the WordPress Blog.
-		 * @param int $blog_type The numeric Blog Type.
+		 * @param int $site_text_format The numeric Site Text Format.
 		 * @param bool False since this is now deprecated.
 		 */
 		do_action_deprecated(
 			'cp_new_groupblog_created',
-			[ $blog_id, $blog_type, false ],
+			[ $blog_id, $site_text_format, false ],
 			'4.0',
 			'commentpress/multisite/bp/groupblog/site/initialised'
 		);
@@ -889,10 +901,70 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 		 * @since 4.0
 		 *
 		 * @param int $blog_id The numeric ID of the WordPress Blog.
-		 * @param int $blog_type The numeric Blog Type.
+		 * @param int $site_text_format The numeric Site Text Format.
 		 * @param int $group_id The numeric ID of the BuddyPress Group.
 		 */
-		do_action_deprecated( 'commentpress/multisite/bp/groupblog/site/initialised', $blog_id, $blog_type, $group_id );
+		do_action_deprecated( 'commentpress/multisite/bp/groupblog/site/initialised', $blog_id, $site_text_format, $group_id );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the Group Blog Type for a given Group ID.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $group_id The numeric ID of the Group.
+	 * @return str $group_type The Group Type identifier, or false on failure.
+	 */
+	public function group_type_get( $group_id ) {
+
+		// Get the value from Group meta.
+		$group_type = groups_get_groupmeta( $group_id, $this->key_group_meta );
+
+		// --<
+		return $group_type;
+
+	}
+
+	/**
+	 * Sets the Group Blog Type for a given Group ID.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $group_id The numeric ID of the Group.
+	 * @param str $group_type The Group Type identifier.
+	 */
+	public function group_type_set( $group_id, $group_type ) {
+
+		// Set the value in Group meta.
+		groups_update_groupmeta( $group_id, $this->key_group_meta, $this->key_group_meta . '-' . $group_type );
+
+	}
+
+	/**
+	 * Sets the Group Blog Type when the "Text Format" of a Site changes.
+	 *
+	 * @since 4.0
+	 *
+	 * @param str $formatter The "Text Format" setting.
+	 */
+	public function group_type_set_by_text_format( $formatter ) {
+
+		// Bail if it's not a Group Blog.
+		if ( ! $this->site->is_commentpress_groupblog() ) {
+			return;
+		}
+
+		// Bail if there's no Group ID.
+		$group_id = get_groupblog_group_id( get_current_blog_id() );
+		if ( empty( $group_id ) || ! is_numeric( $group_id ) ) {
+			return;
+		}
+
+		// Store the Site Text Format in Group meta.
+		$groupblog_text_format = $this->group_type_set( $group_id, $formatter );
 
 	}
 

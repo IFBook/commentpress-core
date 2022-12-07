@@ -75,28 +75,6 @@ class CommentPress_Core_Database {
 	 */
 	public $settings = [];
 
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Default type of Blog.
-	 *
-	 * Blog Types are built as an array - eg, array( '0' => 'Poetry', '1' => 'Prose' )
-	 *
-	 * @since 3.3
-	 * @access public
-	 * @var bool|int $blog_type The default type of Blog.
-	 */
-	public $blog_type = 0;
-
-	/**
-	 * Default header background colour (hex, same as in theme stylesheet).
-	 *
-	 * @since 3.0
-	 * @access public
-	 * @var bool $header_bg_color The default header background colour.
-	 */
-	public $header_bg_color = '2c2622';
-
 	/**
 	 * Constructor.
 	 *
@@ -385,10 +363,8 @@ class CommentPress_Core_Database {
 	 */
 	public function settings_get_defaults() {
 
-		// Init return.
-		$settings = [
-			'cp_blog_type' => $this->blog_type,
-		];
+		// Init default settings array.
+		$settings = [];
 
 		/**
 		 * Filters the default settings.
@@ -495,20 +471,6 @@ class CommentPress_Core_Database {
 		$this->setting_set( 'cp_all_comments_page', $cp_all_comments_page );
 		$this->setting_set( 'cp_comments_by_page', $cp_comments_by_page );
 		*/
-
-		// If it's a Group Blog.
-		if ( $this->core->bp->is_groupblog() ) {
-
-			// Get the Group ID.
-			$group_id = get_groupblog_group_id( get_current_blog_id() );
-			if ( isset( $group_id ) && is_numeric( $group_id ) && $group_id > 0 ) {
-
-				// Store the Blog Type in Group meta.
-				groups_update_groupmeta( $group_id, 'groupblogtype', 'groupblogtype-' . $cp_blog_type );
-
-			}
-
-		}
 
 	}
 
@@ -856,7 +818,7 @@ class CommentPress_Core_Database {
 	 */
 	public function get_supported_post_types() {
 		_deprecated_function( __METHOD__, '4.0' );
-		return $this->post_types_get_supported();
+		return $this->core->parser->post_types_get_supported();
 	}
 
 }

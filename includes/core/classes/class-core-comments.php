@@ -97,7 +97,7 @@ class CommentPress_Core_Comments {
 	private function register_hooks_settings() {
 
 		// Add our settings to default settings.
-		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ], 20, 1 );
+		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ] );
 
 		// Add our metaboxes to the Site Settings screen.
 		add_filter( 'commentpress/core/settings/site/metaboxes/after', [ $this, 'settings_meta_boxes_append' ], 40 );

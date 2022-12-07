@@ -116,7 +116,7 @@ class CommentPress_Core_Theme_Sidebar {
 	private function register_hooks_settings() {
 
 		// Add our settings to default settings.
-		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ], 20, 1 );
+		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ] );
 
 		// Inject form element into the "Theme Customisation" metabox on "Site Settings" screen.
 		add_action( 'commentpress/core/settings/site/metabox/theme/after', [ $this, 'settings_meta_box_part_get' ] );
@@ -150,6 +150,9 @@ class CommentPress_Core_Theme_Sidebar {
 
 		// Add setting to the Javascript vars.
 		add_filter( 'commentpress_get_javascript_vars', [ $this, 'theme_javascript_vars_add' ] );
+
+		// Add our class(es) to the body classes.
+		add_filter( 'commentpress/core/theme/body/classes', [ $this, 'theme_body_classes_filter' ] );
 
 	}
 
@@ -295,6 +298,30 @@ class CommentPress_Core_Theme_Sidebar {
 
 		// --<
 		return $vars;
+
+	}
+
+	/**
+	 * Adds "Sidebar" class to the body classes array.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $classes The existing body classes array.
+	 * @return array $classes The modified body classes array.
+	 */
+	public function theme_body_classes_filter( $classes ) {
+
+		// Get default sidebar.
+		$sidebar = $this->default_get();
+
+		// Set class for sidebar.
+		$sidebar_class = 'cp_sidebar_' . $sidebar;
+
+		// Add to array.
+		$classes[] = $sidebar_class;
+
+		// --<
+		return $classes;
 
 	}
 

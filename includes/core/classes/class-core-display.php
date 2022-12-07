@@ -782,7 +782,7 @@ HELPTEXT;
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $sidebar The type of sidebar: "comments", "toc" or "activity".
+	 * @param str $sidebar The sidebar identifier - "comments", "toc" or "activity".
 	 * @return str $tag The tag.
 	 */
 	public function get_minimise_all_button( $sidebar = 'comments' ) {

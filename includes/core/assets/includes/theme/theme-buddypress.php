@@ -118,52 +118,10 @@ add_filter( 'pre_get_posts', 'commentpress_amend_search_query' );
 
 
 
-if ( ! function_exists( 'commentpress_groupblog_classes' ) ) :
-
-	/**
-	 * Add classes to #content in BuddyPress, so that we can distinguish different Group Blog Types.
-	 *
-	 * @since 3.3
-	 *
-	 * @return str $groupblog_class The class for the Group Blog.
-	 */
-	function commentpress_groupblog_classes() {
-
-		// Init empty.
-		$groupblog_class = '';
-
-		// Only add classes when BuddyPress Groupblog is active.
-		if ( function_exists( 'get_groupblog_group_id' ) ) {
-
-			// Init Group Blog type.
-			$groupblogtype = 'groupblog';
-
-			// Get Group Blog Type.
-			$groupblog_type = groups_get_groupmeta( bp_get_current_group_id(), 'groupblogtype' );
-
-			// Add to default if we get one.
-			if ( $groupblog_type ) {
-				$groupblogtype .= ' ' . $groupblog_type;
-			}
-
-			// Complete.
-			$groupblog_class = ' class="' . $groupblogtype . '"';
-
-		}
-
-		// --<
-		return $groupblog_class;
-
-	}
-
-endif;
-
-
-
 if ( ! function_exists( 'commentpress_bp_activity_css_class' ) ) :
 
 	/**
-	 * Update BuddyPress Activity CSS class with Group Blog Type.
+	 * Adds a Group Blog "Text Format" class to a BuddyPress Activity.
 	 *
 	 * @since 3.3
 	 *
@@ -172,28 +130,26 @@ if ( ! function_exists( 'commentpress_bp_activity_css_class' ) ) :
 	 */
 	function commentpress_bp_activity_css_class( $existing_class ) {
 
-		// Init Group Blog Type.
-		$groupblog_type = '';
-
 		// Get current item.
 		global $activities_template;
 		$current_activity = $activities_template->activity;
 
-		// For Group Activity.
-		if ( $current_activity->component == 'groups' ) {
-
-			// Get Group Blog Type.
-			$groupblog_type = groups_get_groupmeta( $current_activity->item_id, 'groupblogtype' );
-
-			// Add space before if we have it.
-			if ( $groupblog_type ) {
-				$groupblog_type = ' ' . $groupblog_type;
-			}
-
+		// Bail if not Group Activity.
+		if ( $current_activity->component !== 'groups' ) {
+			return $existing_class;
 		}
 
+		// Bail if we have no Group Blog Text Format.
+		$groupblog_text_format = groups_get_groupmeta( $current_activity->item_id, 'groupblogtype' );
+		if ( empty( $groupblog_text_format ) ) {
+			return $existing_class;
+		}
+
+		// Append Group Blog Text Format class.
+		$existing_class .= ' ' . $groupblog_text_format;
+
 		// --<
-		return $existing_class . $groupblog_type;
+		return $existing_class;
 
 	}
 
@@ -204,12 +160,12 @@ endif;
 if ( ! function_exists( 'commentpress_bp_blog_css_class' ) ) :
 
 	/**
-	 * Update BuddyPress Sites Directory Blog item CSS class with Group Blog Type.
+	 * Adds a Group Blog "Text Format" class to a BuddyPress Sites Directory item.
 	 *
 	 * @since 3.3
 	 *
 	 * @param array $classes The existing classes.
-	 * @return array $classes The overridden classes.
+	 * @return array $classes The modified classes.
 	 */
 	function commentpress_bp_blog_css_class( $classes ) {
 
@@ -221,20 +177,21 @@ if ( ! function_exists( 'commentpress_bp_blog_css_class' ) ) :
 		// Access BuddyPress object.
 		global $blogs_template;
 
-		// Get Group ID.
+		// Bail if we have no Group ID.
 		$group_id = get_groupblog_group_id( $blogs_template->blog->blog_id );
-		if ( isset( $group_id ) && is_numeric( $group_id ) && $group_id > 0 ) {
-
-			// Get Group Blog Type.
-			$groupblog_type = groups_get_groupmeta( $group_id, 'groupblogtype' );
-
-			// Add classes if we get one.
-			if ( $groupblog_type ) {
-				$classes[] = 'bp-groupblog-blog';
-				$classes[] = $groupblog_type;
-			}
-
+		if ( empty( $group_id ) || ! is_numeric( $group_id ) ) {
+			return $classes;
 		}
+
+		// Bail if we have no Group Blog Text Format.
+		$groupblog_text_format = groups_get_groupmeta( $group_id, 'groupblogtype' );
+		if ( empty( $groupblog_text_format ) ) {
+			return $classes;
+		}
+
+		// Add classes.
+		$classes[] = 'bp-groupblog-blog';
+		$classes[] = $groupblog_text_format;
 
 		// --<
 		return $classes;
@@ -248,12 +205,12 @@ endif;
 if ( ! function_exists( 'commentpress_bp_group_css_class' ) ) :
 
 	/**
-	 * Update BuddyPress Groups Directory Group item CSS class with Group Blog Type.
+	 * Adds a Group Blog "Text Format" class to a BuddyPress Groups Directory item.
 	 *
 	 * @since 3.3
 	 *
 	 * @param array $classes The existing classes.
-	 * @return array $classes The overridden classes.
+	 * @return array $classes The modified classes.
 	 */
 	function commentpress_bp_group_css_class( $classes ) {
 
@@ -262,13 +219,14 @@ if ( ! function_exists( 'commentpress_bp_group_css_class' ) ) :
 			return $classes;
 		}
 
-		// Get Group Blog Type.
-		$groupblog_type = groups_get_groupmeta( bp_get_group_id(), 'groupblogtype' );
-
-		// Add class if we get one.
-		if ( $groupblog_type ) {
-			$classes[] = $groupblog_type;
+		// Bail if we have no Group Blog Text Format.
+		$groupblog_text_format = groups_get_groupmeta( bp_get_group_id(), 'groupblogtype' );
+		if ( empty( $groupblog_text_format ) ) {
+			return $classes;
 		}
+
+		// Add class.
+		$classes[] = $groupblog_text_format;
 
 		// --<
 		return $classes;
@@ -289,9 +247,10 @@ if ( ! function_exists( 'commentpress_prefix_bp_templates' ) ) :
 	function commentpress_prefix_bp_templates() {
 
 		// Prefixed wrappers.
-		echo '<div id="wrapper">
-			  <div id="main_wrapper" class="clearfix">
-			  <div id="page_wrapper">';
+		echo '
+		<div id="wrapper">
+			<div id="main_wrapper" class="clearfix">
+				<div id="page_wrapper">';
 
 	}
 
@@ -312,9 +271,10 @@ if ( ! function_exists( 'commentpress_suffix_bp_templates' ) ) :
 	function commentpress_suffix_bp_templates() {
 
 		// Prefixed wrappers.
-		echo '</div><!-- /page_wrapper -->
-			  </div><!-- /main_wrapper -->
-			  </div><!-- /wrapper -->';
+		echo '
+				</div><!-- /page_wrapper -->
+			</div><!-- /main_wrapper -->
+		</div><!-- /wrapper -->';
 
 	}
 

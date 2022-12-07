@@ -187,7 +187,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 
 		/*
 		 * These don't seem to fire to allow us to add our meta values for Activity items.
-		 * Instead, we store the Blog Type as Group meta data.
+		 * Instead, we store the Site Text Format as Group meta data.
 		add_action( 'bp_activity_after_save', [ $this, 'activity_post_meta' ], 20, 1 );
 		add_action( 'bp_activity_after_save', [ $this, 'activity_comment_meta' ], 20, 1 );
 		*/
@@ -228,8 +228,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		}
 
 		// Bail if it is not CommentPress-enabled.
-		$groupblog_type = groups_get_groupmeta( $group_id, 'groupblogtype' );
-		if ( empty( $groupblog_type ) ) {
+		$groupblog_text_format = $this->groupblog->group_type_get( $group_id );
+		if ( empty( $groupblog_text_format ) ) {
 			return false;
 		}
 
@@ -493,7 +493,9 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	}
 
 	/**
-	 * Add some meta for the Activity item. (DISABLED)
+	 * Add some meta for the Activity item.
+	 *
+	 * Note: this is not used.
 	 *
 	 * @since 3.3
 	 *
@@ -512,8 +514,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 			return;
 		}
 
-		// Set a meta value for the Blog Type of the Post.
-		$meta_value = $this->groupblog->site->blogtype_get();
+		// Set a meta value for the Site Text Format of the Post.
+		$meta_value = $this->groupblog->site->text_format_get();
 		bp_activity_update_meta( $activity->id, 'groupblogtype', 'groupblogtype-' . $meta_value );
 
 		// --<
@@ -632,7 +634,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 			}
 
 			// Set Activity Type.
-			$type = 'new_groupblog_comment';
+			$activity_type = 'new_groupblog_comment';
 
 		} else {
 
@@ -652,7 +654,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 				}
 
 				// Set Activity Type.
-				$type = 'new_groupsite_comment';
+				$activity_type = 'new_groupsite_comment';
 
 			}
 
@@ -669,7 +671,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		// See if we already have the modified Activity for this Blog Comment.
 		$id = bp_activity_get_activity_id( [
 			'user_id' => $activity->user_id,
-			'type' => $type,
+			'type' => $activity_type,
 			'item_id' => $group_id,
 			'secondary_item_id' => $activity->secondary_item_id,
 		] );
@@ -820,7 +822,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		}
 
 		// Set unique type.
-		$activity->type = $type;
+		$activity->type = $activity_type;
 
 		// Note: BuddyPress seemingly runs content through "wp_filter_kses". Sad face.
 
@@ -833,7 +835,9 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	}
 
 	/**
-	 * Add some meta for the Activity item - bp_activity_after_save doesn't seem to fire.
+	 * Add some meta for the Activity item.
+	 *
+	 * Done here because "bp_activity_after_save" doesn't seem to fire.
 	 *
 	 * @since 3.3
 	 *
@@ -852,8 +856,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 			return $activity;
 		}
 
-		// Set a meta value for the Blog Type of the Post.
-		$meta_value = $this->groupblog->site->blogtype_get();
+		// Set a meta value for the Site Text Format of the Post.
+		$meta_value = $this->groupblog->site->text_format_get();
 		$result = bp_activity_update_meta( $activity->id, 'groupblogtype', 'groupblogtype-' . $meta_value );
 
 		// Prevent from firing again.

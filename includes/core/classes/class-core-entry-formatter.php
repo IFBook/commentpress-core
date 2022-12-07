@@ -51,22 +51,34 @@ class CommentPress_Core_Entry_Formatter {
 	];
 
 	/**
-	 * "Text Format" option in Site Settings.
+	 * "Text Format" setting in Site Settings.
+	 *
+	 * Text Formats are built as an array - e.g.
+	 *
+	 * array(
+	 *   0 => 'Poetry',
+	 *   1 => 'Prose',
+	 * )
+	 *
+	 * The stored value is the array key for the corresponding Text Format.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $option_formatter The "Text Format" option in Site Settings.
+	 * @var str $key_formatter The "Text Format" setting in Site Settings.
 	 */
-	public $option_formatter = 'cp_blog_type';
+	public $key_formatter = 'cp_blog_type';
 
 	/**
-	 * Formatter meta key.
+	 * The "Text Format" Post meta key.
+	 *
+	 * The stored value is the array key for the corresponding Text Format as
+	 * detailed above.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $meta_key The "Formatter" meta key.
+	 * @var str $key_post_meta The "Text Format" meta key.
 	 */
-	public $meta_key = '_cp_post_type_override';
+	public $key_post_meta = '_cp_post_type_override';
 
 	/**
 	 * Select element name.
@@ -132,17 +144,75 @@ class CommentPress_Core_Entry_Formatter {
 	 */
 	public function register_hooks() {
 
-		// Inject form element into the "CommentPress Settings" metabox on "Edit Entry" screens.
-		add_action( 'commentpress/core/entry/metabox/after', [ $this, 'entry_meta_box_part_get' ], 20 );
+		// Separate callbacks into descriptive methods.
+		$this->register_hooks_settings();
+		$this->register_hooks_entry();
+		$this->register_hooks_theme();
+		$this->register_hooks_content();
 
-		// Saves the Sidebar value on "Edit Entry" screens.
-		add_action( 'commentpress/core/settings/post/saved', [ $this, 'entry_meta_box_part_save' ] );
+		// TODO: Move Site Text Format save handling to this class.
+
+		// TODO: Untangle the following.
+
+		// Set Site Text Format options.
+		add_filter( 'cp_blog_type_options', [ $this, 'site_text_format_options' ], 21 );
+
+		// Set Site Text Format options label.
+		add_filter( 'cp_blog_type_label', [ $this, 'site_text_format_label' ], 21 );
+
+	}
+
+	/**
+	 * Registers "Site Settings" hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_settings() {
+
+		// Add our settings to default settings.
+		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ] );
 
 		// Add our option to the Site Settings "General Settings" metabox.
 		add_action( 'commentpress/core/settings/site/metabox/general/after', [ $this, 'settings_meta_box_part_get' ], 20 );
 
 		// Save data from "Site Settings" screen.
 		add_action( 'commentpress/core/settings/site/save/before', [ $this, 'settings_meta_box_part_save' ] );
+
+	}
+
+	/**
+	 * Registers "Entry" hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_entry() {
+
+		// Inject form element into the "CommentPress Settings" metabox on "Edit Entry" screens.
+		add_action( 'commentpress/core/entry/metabox/after', [ $this, 'entry_meta_box_part_get' ], 20 );
+
+		// Saves the Sidebar value on "Edit Entry" screens.
+		add_action( 'commentpress/core/settings/post/saved', [ $this, 'entry_meta_box_part_save' ] );
+
+	}
+
+	/**
+	 * Registers "Theme" hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_theme() {
+
+		// Add our class(es) to the body classes.
+		add_filter( 'commentpress/core/theme/body/classes', [ $this, 'theme_body_classes_filter' ] );
+
+	}
+
+	/**
+	 * Registers "Content" hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_content() {
 
 		// Save default Post Formatter on Special Pages.
 		add_action( 'commentpress/core/db/page/special/title/created', [ $this, 'default_set_for_post' ] );
@@ -153,19 +223,37 @@ class CommentPress_Core_Entry_Formatter {
 		// Add filter for Content Parser.
 		add_filter( 'commentpress/core/parser/content/parser', [ $this, 'content_parser' ], 21, 1 );
 
-		// TODO: Move Blog Type save handling to this class.
-
-		// TODO: Untangle the following.
-
-		// Set Blog Type options.
-		add_filter( 'cp_blog_type_options', [ $this, 'blog_type_options' ], 21 );
-
-		// Set Blog Type options label.
-		add_filter( 'cp_blog_type_label', [ $this, 'blog_type_label' ], 21 );
-
 	}
 
 	// -------------------------------------------------------------------------
+
+	/**
+	 * Appends our settings to the default core settings.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $settings The existing default core settings.
+	 * @return array $settings The modified default core settings.
+	 */
+	public function settings_get_defaults( $settings ) {
+
+		// Add our defaults.
+		$settings[ $this->key_formatter ] = 0;
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'settings' => $settings,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// --<
+		return $settings;
+
+	}
 
 	/**
 	 * Adds our option to the Site Settings "General Settings" metabox.
@@ -175,25 +263,26 @@ class CommentPress_Core_Entry_Formatter {
 	public function settings_meta_box_part_get() {
 
 		// Get the "Text Format" options array.
-		$types = $this->formats_array_get();
-		if ( empty( $types ) ) {
+		$text_formats = $this->formats_array_get();
+		if ( empty( $text_formats ) ) {
 			return;
 		}
 
 		/**
-		 * Filters the Blog Type label.
+		 * Filters the Site Text Format label.
 		 *
 		 * @since 3.3.1
 		 *
-		 * @param str The the Blog Type label.
+		 * @param str The the Site Text Format label.
 		 */
-		$type_title = apply_filters( 'cp_blog_type_label', __( 'Text Format', 'commentpress-core' ) );
+		$text_format_title = apply_filters( 'cp_blog_type_label', __( 'Text Format', 'commentpress-core' ) );
 
 		// Get existing.
-		$blog_type = $this->core->db->setting_get( $this->option_formatter );
+		$site_text_format = $this->setting_formatter_get();
 
-		// Get the "Text Format" options markup.
-		$type_options = $this->formats_select_options_get( $types, $blog_type, $show_default = false );
+		// Get the "Text Format" options markup without showing default.
+		$show_default = false;
+		$text_format_options = $this->formats_select_options_get( $text_formats, $site_text_format, $show_default );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-entry-formatter-settings.php';
@@ -213,10 +302,52 @@ class CommentPress_Core_Entry_Formatter {
 
 		// Get the value of the metabox select element.
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$formatter = isset( $_POST[ $this->option_formatter ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->option_formatter ] ) ) : '';
+		$formatter = isset( $_POST[ $this->key_formatter ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_formatter ] ) ) : '';
 
 		// Set default sidebar.
-		$this->core->db->setting_set( $this->option_formatter, $formatter );
+		$$this->setting_formatter_set( $formatter );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the "Text Format" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return int $formatter The setting if found, default otherwise.
+	 */
+	public function setting_formatter_get() {
+
+		// Get the setting.
+		$formatter = $this->core->db->setting_get( $this->key_formatter );
+
+		// Return setting or default if empty.
+		return ! empty( $formatter ) ? $formatter : 0;
+
+	}
+
+	/**
+	 * Sets the "Text Format" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int $formatter The setting value.
+	 */
+	public function setting_formatter_set( $formatter ) {
+
+		// Set the setting.
+		$this->core->db->setting_set( $this->key_formatter, $formatter );
+
+		/**
+		 * Fires when the Text Format has been set for a Site.
+		 *
+		 * @since 4.0
+		 *
+		 * @param str $formatter The "Text Format" setting.
+		 */
+		do_action( 'commentpress/core/formatter/setting/set', $formatter );
 
 	}
 
@@ -237,19 +368,19 @@ class CommentPress_Core_Entry_Formatter {
 		}
 
 		// Get the "Text Format" options array.
-		$types = $this->formats_array_get();
-		if ( empty( $types ) ) {
+		$text_formats = $this->formats_array_get();
+		if ( empty( $text_formats ) ) {
 			return;
 		}
 
 		// We want raw values for the Edit Entry Metabox.
 		$raw = true;
 
-		// Default to current Blog Type.
-		$value = $this->get_for_post_id( $post->ID, $raw );
+		// Default to current Site Text Format.
+		$site_text_format = $this->get_for_post_id( $post->ID, $raw );
 
 		// Get the "Text Format" options markup.
-		$type_options = $this->formats_select_options_get( $types, $value );
+		$text_format_options = $this->formats_select_options_get( $text_formats, $site_text_format );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-entry-formatter-entry.php';
@@ -297,6 +428,37 @@ class CommentPress_Core_Entry_Formatter {
 	// -------------------------------------------------------------------------
 
 	/**
+	 * Adds "Text Format" class to the body classes array.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $classes The existing body classes array.
+	 * @return array $classes The modified body classes array.
+	 */
+	public function theme_body_classes_filter( $classes ) {
+
+		// Bail if on the Main Site of a Multisite install.
+		if ( is_multisite() && is_main_site() ) {
+			return $classes;
+		}
+
+		// Bail if there's no Site Text Format.
+		$text_format = $this->setting_formatter_get();
+		if ( $text_format === '' || $text_format === false ) ) {
+			return $classes;
+		}
+
+		// Add class to array.
+		$classes[] = 'blogtype-' . (int) $text_format;
+
+		// --<
+		return $classes;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
 	 * Applies the default Formatter to a Post.
 	 *
 	 * @since 4.0
@@ -334,48 +496,48 @@ class CommentPress_Core_Entry_Formatter {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Override the name of the Blog Types dropdown label.
+	 * Override the name of the Site Text Formats dropdown label.
 	 *
 	 * @since 3.3
 	 *
 	 * @param str $name The existing name of the label.
 	 * @return str $name The modified name of the label.
 	 */
-	public function blog_type_label( $name ) {
+	public function site_text_format_label( $name ) {
 		return __( 'Text Format', 'commentpress-core' );
 	}
 
 	/**
-	 * Define the "types" of Blog.
+	 * Defines the "Text Formats" for CommentPress Sites.
 	 *
 	 * @since 3.3
 	 *
-	 * @param array $existing_options The existing types of Blog.
-	 * @return array $existing_options The modified types of Blog.
+	 * @param array $text_formats The existing array of Site Text Formats.
+	 * @return array $text_formats The modified array of Site Text Formats.
 	 */
-	public function blog_type_options( $existing_options ) {
+	public function site_text_format_options( $existing_options ) {
 
-		// Define types.
-		$types = [
+		// Define Text Formats.
+		$text_formats = [
 			__( 'Prose', 'commentpress-core' ), // Types[0].
 			__( 'Poetry', 'commentpress-core' ), // Types[1].
 		];
 
 		/**
-		 * Filters the Blog Types.
+		 * Filters the Site Text Formats.
 		 *
 		 * @since 3.3.1
 		 *
-		 * @param array $types The array of Blog Type.
+		 * @param array $text_formats The array of Site Text Formats.
 		 */
-		return apply_filters( 'cp_class_commentpress_formatter_types', $types );
+		return apply_filters( 'cp_class_commentpress_formatter_types', $text_formats );
 
 	}
 
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Chooses the Content Parser by Blog Type or Post meta value.
+	 * Chooses the Content Parser by Site Text Format or Post meta value.
 	 *
 	 * @since 3.3
 	 *
@@ -420,29 +582,24 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 4.0
 	 *
-	 * @return array $types The array of Text Format options.
+	 * @return array $text_formats The array of Text Formats.
 	 */
 	public function formats_array_get() {
 
-		// Define no types.
-		$types = [];
+		// Start with empty array.
+		$text_formats = [];
 
 		/**
 		 * Build Text Format options.
 		 *
 		 * @since 3.3.1
 		 *
-		 * @param array $types Empty by default since others add them.
+		 * @param array $text_formats Empty by default since others add them.
 		 */
-		$types = apply_filters( 'cp_blog_type_options', $types );
-
-		// Bail if we don't get any.
-		if ( empty( $types ) ) {
-			return $types;
-		}
+		$text_formats = apply_filters( 'cp_blog_type_options', $text_formats );
 
 		// --<
-		return $types;
+		return $text_formats;
 
 	}
 
@@ -451,18 +608,18 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 4.0
 	 *
-	 * @param array $types The array of "Text Format" options.
-	 * @param int $current The current "Text Format" option.
+	 * @param array $text_formats The array of Text Formats.
+	 * @param int $site_text_format The current "Text Format" option.
 	 * @param bool $show_default True includes the "Use default" option, false does not.
 	 * @return string $markup The "Text Format" options markup.
 	 */
-	public function formats_select_options_get( $types, $current, $show_default = true ) {
+	public function formats_select_options_get( $text_formats, $site_text_format, $show_default = true ) {
 
 		// Init markup.
 		$markup = '';
 
 		// Bail if we don't get any.
-		if ( empty( $types ) ) {
+		if ( empty( $text_formats ) ) {
 			return $markup;
 		}
 
@@ -472,18 +629,18 @@ class CommentPress_Core_Entry_Formatter {
 		// Maybe add "Use Default".
 		if ( $show_default === true ) {
 			$options = [
-				'<option value="" ' . ( ( $current === false || $current === '' ) ? ' selected="selected"' : '' ) . '>' .
+				'<option value="" ' . ( ( $site_text_format === false || $site_text_format === '' ) ? ' selected="selected"' : '' ) . '>' .
 					esc_html__( 'Use default', 'commentpress-core' ) .
 				'</option>',
 			];
 		}
 
 		// Build options.
-		foreach ( $types as $key => $type ) {
-			if ( (string) $key === (string) $current ) {
-				$options[] = '<option value="' . esc_attr( $key ) . '" selected="selected">' . esc_html( $type ) . '</option>';
+		foreach ( $text_formats as $key => $text_format ) {
+			if ( (string) $key === (string) $site_text_format ) {
+				$options[] = '<option value="' . esc_attr( $key ) . '" selected="selected">' . esc_html( $text_format ) . '</option>';
 			} else {
-				$options[] = '<option value="' . esc_attr( $key ) . '">' . esc_html( $type ) . '</option>';
+				$options[] = '<option value="' . esc_attr( $key ) . '">' . esc_html( $text_format ) . '</option>';
 			}
 		}
 
@@ -511,22 +668,22 @@ class CommentPress_Core_Entry_Formatter {
 	public function get_for_post_id( $post_id, $raw = false ) {
 
 		// Check Post for override.
-		$override = get_post_meta( $post_id, $this->meta_key, true );
+		$override = get_post_meta( $post_id, $this->key_post_meta, true );
 
 		// Return raw value if requested.
 		if ( $raw === true ) {
 			return $override;
 		}
 
-		// Default to current Blog Type.
-		$formatter = $this->core->db->setting_get( $this->option_formatter );
+		// Default to current Site Text Format.
+		$formatter = $this->setting_formatter_get();
 
 		// Bail if something went wrong.
 		if ( $override === false || $override === '' || ! is_numeric( $override ) ) {
 			return $formatter;
 		}
 
-		// Override if different to the current Blog Type.
+		// Override if different to the current Site Text Format.
 		if ( (int) $override !== (int) $formatter ) {
 			$formatter = $override;
 		}
@@ -553,7 +710,7 @@ class CommentPress_Core_Entry_Formatter {
 			'method' => __METHOD__,
 			'post_id' => $post_id,
 			'formatter' => $formatter,
-			'meta_key' => $this->meta_key,
+			'key_post_meta' => $this->key_post_meta,
 			//'backtrace' => $trace,
 		], true ) );
 		*/
@@ -565,7 +722,7 @@ class CommentPress_Core_Entry_Formatter {
 		}
 
 		// Cast Formatter value as string when updating.
-		update_post_meta( $post_id, $this->meta_key, (string) $formatter );
+		update_post_meta( $post_id, $this->key_post_meta, (string) $formatter );
 
 	}
 
@@ -579,14 +736,14 @@ class CommentPress_Core_Entry_Formatter {
 	public function delete_for_post_id( $post_id ) {
 
 		// Delete the Formatter meta value.
-		delete_post_meta( $post_id, $this->meta_key );
+		delete_post_meta( $post_id, $this->key_post_meta );
 
 	}
 
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Checks if the Formatter of a Post is different to the Blog Type.
+	 * Checks if the Formatter of a Post is different to the Site Text Format.
 	 *
 	 * @since 4.0
 	 *
@@ -596,7 +753,7 @@ class CommentPress_Core_Entry_Formatter {
 	public function is_overridden( $post_id ) {
 
 		// Get the Formatter setting.
-		$formatter_setting = $this->core->db->setting_get( $this->option_formatter );
+		$formatter_setting = $this->setting_formatter_get();
 
 		// Get the Formatter for this Post.
 		$formatter_post = $this->get_for_post_id( $post_id );

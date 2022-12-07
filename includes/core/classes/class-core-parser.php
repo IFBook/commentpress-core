@@ -130,13 +130,13 @@ class CommentPress_Core_Parser {
 	public $do_not_parse = false;
 
 	/**
-	 * Parser type.
+	 * Parser identifier.
 	 *
 	 * Possible values are 'tag', 'line' or 'block'.
 	 *
 	 * @since 3.8.10
 	 * @access public
-	 * @var str $parser The type of parser.
+	 * @var str $parser The parser identifier.
 	 */
 	public $parser = 'tag';
 
@@ -200,7 +200,7 @@ class CommentPress_Core_Parser {
 	private function register_hooks_settings() {
 
 		// Add our settings to default settings.
-		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ], 20, 1 );
+		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ] );
 
 		// Inject form element into the "General Settings" metabox on "Site Settings" screen.
 		add_action( 'commentpress/core/settings/site/metabox/general/after', [ $this, 'settings_meta_box_part_get' ], 10 );

@@ -569,9 +569,9 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 */
 	public function blog_name_filter( $name ) {
 
-		// Bail if we don't have a Group Blog Type.
-		$groupblog_type = groups_get_groupmeta( bp_get_current_group_id(), 'groupblogtype' );
-		if ( empty( $groupblog_type ) ) {
+		// Bail if we don't have a Group Blog Text Format.
+		$groupblog_text_format = $this->groupblog->group_type_get( bp_get_current_group_id() );
+		if ( empty( $groupblog_text_format ) ) {
 			return $name;
 		}
 
@@ -593,9 +593,9 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 */
 	public function blog_slug_filter( $slug ) {
 
-		// Bail if we don't have a Group Blog Type.
-		$groupblog_type = groups_get_groupmeta( bp_get_current_group_id(), 'groupblogtype' );
-		if ( empty( $groupblog_type ) ) {
+		// Bail if we don't have a Group Blog Text Format.
+		$groupblog_text_format = $this->groupblog->group_type_get( bp_get_current_group_id() );
+		if ( empty( $groupblog_text_format ) ) {
 			return $slug;
 		}
 
@@ -625,10 +625,10 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 * @since 3.3
 	 *
 	 * @param str $label The existing Blogs button label.
-	 * @param str $blogtype The type of Blog. Either 'blog' or 'commentpress'.
+	 * @param str $site_text_format The text format of Blog. Either 'blog' or 'commentpress'.
 	 * @return str $label The modified Blogs button label.
 	 */
-	public function blog_visit_blog_button_filter( $label, $blogtype ) {
+	public function blog_visit_blog_button_filter( $label, $site_text_format ) {
 
 		// Bail if BuddyPress Groupblog is not present.
 		if ( ! function_exists( 'get_groupblog_group_id' ) ) {
@@ -645,16 +645,16 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 		}
 
 		// Default to standard Group Blog.
-		$blogtype = 'groupblog';
+		$site_text_format = 'groupblog';
 
 		// Override if the Group has a CommentPress-enabled Group Blog.
-		$groupblog_type = groups_get_groupmeta( $group_id, 'groupblogtype' );
-		if ( ! empty( $groupblog_type ) ) {
-			$blogtype = 'commentpress-groupblog';
+		$groupblog_text_format = $this->groupblog->group_type_get( $group_id );
+		if ( ! empty( $groupblog_text_format ) ) {
+			$site_text_format = 'commentpress-groupblog';
 		}
 
 		// Return early for standard Group Blogs.
-		if ( 'groupblog' === $blogtype ) {
+		if ( 'groupblog' === $site_text_format ) {
 			$label = __( 'View Group Blog', 'commentpress-core' );
 			return $label;
 		}

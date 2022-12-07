@@ -348,43 +348,10 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		// Get core plugin reference.
 		$core = commentpress_core();
 
-		// -------------------- Default Sidebar --------------------------------
-
-		// Set default sidebar but override if we have the plugin enabled.
-		$sidebar_flag = 'toc';
-		if ( ! empty( $core ) ) {
-			$sidebar_flag = $core->theme->sidebar->default_get();
-		}
-
-		// Set class per sidebar.
-		$sidebar_class = 'cp_sidebar_' . $sidebar_flag;
-
-		// Add to array.
-		$classes[] = $sidebar_class;
-
 		// -------------------- Commentable ------------------------------------
 
 		// Add commentable class to array.
 		$classes[] = commentpress_is_commentable() ? 'commentable' : 'not_commentable';
-
-		// -------------------- Layout -----------------------------------------
-
-		// Init layout class but override if we have the plugin enabled.
-		$layout_class = '';
-		if ( ! empty( $core ) && ( $post instanceof WP_Post ) ) {
-
-				// Set layout class if wide layout.
-				$layout = $core->document->entry_title_page_layout_get( $post );
-				if ( $layout == 'wide' ) {
-					$layout_class = 'full_width';
-				}
-
-		}
-
-		// Add to array.
-		if ( ! empty( $layout_class ) ) {
-			$classes[] = $layout_class;
-		}
 
 		// -------------------- Page Type --------------------------------------
 
@@ -416,78 +383,6 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 			$classes[] = $page_type;
 		}
 
-		// -------------------- Is Group Blog ----------------------------------
-
-		// Set default type.
-		$is_groupblog = 'not-groupblog';
-
-		// If it's a Group Blog.
-		if ( ! empty( $core ) && $core->bp->is_groupblog() ) {
-			$is_groupblog = 'is-groupblog';
-		}
-
-		// Add to array.
-		$classes[] = $is_groupblog;
-
-		// -------------------- Blog Type --------------------------------------
-
-		// Set default type.
-		$blog_type = '';
-
-		// If we have the plugin enabled.
-		if ( ! empty( $core ) ) {
-
-			// Get current Blog Type.
-			$current_blog_type = $core->db->setting_get( 'cp_blog_type' );
-
-			// If it's not the Main Site, add class.
-			if ( is_multisite() && ! is_main_site() ) {
-				$blog_type = 'blogtype-' . intval( $current_blog_type );
-			}
-
-		}
-
-		// Add to array.
-		if ( ! empty( $blog_type ) ) {
-			$classes[] = $blog_type;
-		}
-
-		// -------------------- Group Blog Type ---------------------------------
-
-		// When viewing a Group, set default Group Blog Type.
-		$group_groupblog_type = '';
-
-		// If we have the plugin enabled.
-		if ( ! empty( $core ) ) {
-
-			// Is it a BuddyPress Group Page?
-			if ( function_exists( 'bp_is_groups_component' ) && bp_is_groups_component() ) {
-
-				// Get current Group.
-				$current_group = groups_get_current_group();
-
-				// Sanity check.
-				if ( $current_group instanceof BP_Groups_Group ) {
-
-					// Get Group Blog Type.
-					$groupblogtype = groups_get_groupmeta( $current_group->id, 'groupblogtype' );
-
-					// Set Group Blog Type if present.
-					if ( ! empty( $groupblogtype ) ) {
-						$group_groupblog_type = $groupblogtype;
-					}
-
-				}
-
-			}
-
-		}
-
-		// Add to array.
-		if ( ! empty( $group_groupblog_type ) ) {
-			$classes[] = $group_groupblog_type;
-		}
-
 		// -------------------- TinyMCE version --------------------------------
 
 		// TinyMCE is v4 since WordPress 3.9.
@@ -498,7 +393,7 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		/**
 		 * Filters the body classes array.
 		 *
-		 * @since 3.4
+		 * @since 4.0
 		 *
 		 * @param array $classes The body classes array.
 		 */
@@ -514,11 +409,9 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 		$body_classes = apply_filters( 'commentpress_body_classes', implode( ' ', $classes ) );
 
 		// If we want them wrapped, do so.
+		// Preserves backwards compat for older child themes.
 		if ( ! $raw ) {
-
-			// Preserve backwards compat for older child themes.
 			$body_classes = ' class="' . $body_classes . '"';
-
 		}
 
 		// --<

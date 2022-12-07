@@ -136,6 +136,7 @@ class CommentPress_Core_Document {
 		// Separate callbacks into descriptive methods.
 		//$this->register_hooks_settings();
 		$this->register_hooks_entry();
+		$this->register_hooks_theme();
 
 	}
 
@@ -147,7 +148,7 @@ class CommentPress_Core_Document {
 	private function register_hooks_settings() {
 
 		// Add our settings to default settings.
-		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ], 20, 1 );
+		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ] );
 
 		// Add our metaboxes to the Site Settings screen.
 		add_filter( 'commentpress/core/settings/site/metaboxes/after', [ $this, 'settings_meta_boxes_append' ], 20 );
@@ -169,6 +170,18 @@ class CommentPress_Core_Document {
 
 		// Saves the Sidebar value on "Edit Entry" screens.
 		add_action( 'commentpress/core/settings/post/saved', [ $this, 'entry_meta_box_part_save' ] );
+
+	}
+
+	/**
+	 * Registers "Theme" hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_theme() {
+
+		// Add our class(es) to the body classes.
+		add_filter( 'commentpress/core/theme/body/classes', [ $this, 'theme_body_classes_filter' ] );
 
 	}
 
@@ -498,6 +511,40 @@ class CommentPress_Core_Document {
 
 		// Save the meta value.
 		$this->set_for_post_id( $post->ID, $value, $meta_key );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Adds "Text Format" class to the body classes array.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $classes The existing body classes array.
+	 * @return array $classes The modified body classes array.
+	 */
+	public function theme_body_classes_filter( $classes ) {
+
+		// Access Post.
+		global $post;
+
+		// Bail if no Post object.
+		if ( ! ( $post instanceof WP_Post ) ) {
+			return $classes;
+		}
+
+		// Check for "wide" layout.
+		$layout = $this->entry_title_page_layout_get( $post );
+		if ( $layout !== 'wide' ) {
+			return $classes;
+		}
+
+		// Add class to array.
+		$classes[] = 'full_width';
+
+		// --<
+		return $classes;
 
 	}
 

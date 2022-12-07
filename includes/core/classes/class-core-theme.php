@@ -212,7 +212,7 @@ class CommentPress_Core_Theme {
 	private function register_hooks_settings() {
 
 		// Add our settings to default settings.
-		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ], 20, 1 );
+		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ] );
 
 		// Add our metaboxes to the Site Settings screen.
 		add_filter( 'commentpress/core/settings/site/metaboxes/after', [ $this, 'settings_meta_boxes_append' ], 50 );
@@ -554,7 +554,7 @@ class CommentPress_Core_Theme {
 		 * Get Group Blog and set theme, if we have one.
 		 *
 		 * Allow filtering here because plugins may want to override a correctly-set
-		 * CommentPress Core theme for a particular Group Blog (or type of Group Blog).
+		 * CommentPress Core theme for a particular Group Blog or type of Group Blog.
 		 *
 		 * If that is the case, then the filter callback must return boolean 'false'
 		 * to prevent the theme being applied and also implement a filter on
@@ -1035,12 +1035,12 @@ class CommentPress_Core_Theme {
 	 *
 	 * @since 3.4
 	 *
-	 * @return array $types The array of commentable Post Types.
+	 * @return array $commentable_post_types The array of commentable Post Types.
 	 */
 	public function get_commentable_cpts() {
 
 		// Init.
-		$types = [];
+		$commentable_post_types = [];
 
 		// TODO: Exactly how do we support Post Types?
 		$args = [
@@ -1056,7 +1056,7 @@ class CommentPress_Core_Theme {
 
 		// Did we get any?
 		if ( empty( $post_types ) ) {
-			return $types;
+			return $commentable_post_types;
 		}
 
 		// Loop.
@@ -1065,12 +1065,12 @@ class CommentPress_Core_Theme {
 			// Decision goes here.
 
 			// Add name to array - "is_singular" expects this.
-			$types[] = $post_type;
+			$commentable_post_types[] = $post_type;
 
 		}
 
 		// --<
-		return $types;
+		return $commentable_post_types;
 
 	}
 

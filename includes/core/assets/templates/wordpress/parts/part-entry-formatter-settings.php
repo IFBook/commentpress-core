@@ -14,11 +14,11 @@ defined( 'ABSPATH' ) || exit;
 <!-- <?php echo $this->parts_path; ?>part-entry-formatter-settings.php -->
 <tr valign="top">
 	<th scope="row">
-		<label for="<?php echo $this->option_formatter; ?>"><?php echo esc_html( $type_title ); ?></label>
+		<label for="<?php echo $this->key_formatter; ?>"><?php echo esc_html( $text_format_title ); ?></label>
 	</th>
 	<td>
-		<select id="<?php echo $this->option_formatter; ?>" name="<?php echo $this->option_formatter; ?>">
-			<?php echo $type_options; ?>
+		<select id="<?php echo $this->key_formatter; ?>" name="<?php echo $this->key_formatter; ?>">
+			<?php echo $text_format_options; ?>
 		</select>
 		<p class="description"><?php esc_html_e( 'Choose "Prose" if you want content to be parsed by paragraphs and lists. Choose "Poetry" if you want content to be parsed by lines. If you insert a Comment Block into the content, then it will be parsed by block, regardless of this setting.', 'commentpress-core' ); ?></p>
 		<p class="description"><?php esc_html_e( 'This setting can be overridden on individual entries.', 'commentpress-core' ); ?></p>

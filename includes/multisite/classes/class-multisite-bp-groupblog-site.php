@@ -88,6 +88,9 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 		add_filter( 'cp_forced_theme_slug', [ $this, 'theme_get' ], 20 );
 		add_filter( 'cp_forced_theme_name', [ $this, 'theme_get' ], 20 );
 
+		// Add our class(es) to the body classes.
+		add_filter( 'commentpress/core/theme/body/classes', [ $this, 'theme_body_classes_filter' ] );
+
 		// Check for the privacy of a Group Blog.
 		add_action( 'init', [ $this, 'privacy_check' ] );
 
@@ -189,6 +192,46 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 
 		// --<
 		return $default_theme;
+
+	}
+
+	/**
+	 * Adds "Text Format" class to the body classes array.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $classes The existing body classes array.
+	 * @return array $classes The modified body classes array.
+	 */
+	public function theme_body_classes_filter( $classes ) {
+
+		// Bail if BuddyPress Groupblog is not present.
+		if ( ! function_exists( 'get_groupblog_group_id' ) ) {
+			return $classes;
+		}
+
+		// Bail if not a BuddyPress Group Page.
+		if ( ! bp_is_groups_component() ) {
+			return $classes;
+		}
+
+		// Get current Group.
+		$current_group = groups_get_current_group();
+		if ( ! ( $current_group instanceof BP_Groups_Group ) ) {
+			return $classes;
+		}
+
+		// Bail if Group Blog Text Format not present.
+		$text_format = $this->groupblog->group_type_get( $current_group->id );
+		if ( empty( $text_format ) ) {
+			return $classes;
+		}
+
+		// Add class to array.
+		$classes[] = $text_format;
+
+		// --<
+		return $classes;
 
 	}
 
@@ -493,22 +536,22 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 	}
 
 	/**
-	 * Checks the Blog Type of the current Site.
+	 * Checks the Site Text Format of the current Site.
 	 *
 	 * @since 3.3
 	 *
-	 * @return str|bool The Blog Type if there is one, false otherwise.
+	 * @return int The Site Text Format if there is one, default otherwise.
 	 */
-	public function blogtype_get() {
+	public function text_format_get() {
 
 		// Get core plugin reference.
 		$core = commentpress_core();
 		if ( empty( $core ) ) {
-			return false;
+			return 0;
 		}
 
 		// Return the setting.
-		return $core->db->setting_get( 'cp_blog_type' );
+		return $core->formatter->setting_formatter_get();
 
 	}
 

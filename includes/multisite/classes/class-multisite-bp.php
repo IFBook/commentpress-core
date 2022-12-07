@@ -640,7 +640,7 @@ class CommentPress_Multisite_BuddyPress {
 	public function text_visit_blog_button_filter( $button ) {
 
 		// Set default.
-		$blogtype = 'blog';
+		$site_type = 'blog';
 
 		// Access BuddyPress Blogs global.
 		global $blogs_template;
@@ -648,12 +648,12 @@ class CommentPress_Multisite_BuddyPress {
 		// Check if this Blog is CommentPress-enabled.
 		if ( ! empty( $blogs_template->blog->blog_id ) ) {
 			if ( $this->multisite->site->is_commentpress( $blogs_template->blog->blog_id, $legacy_check = false ) ) {
-				$blogtype = 'commentpress';
+				$site_type = 'commentpress';
 			}
 		}
 
-		// Switch by Blog Type.
-		switch ( $blogtype ) {
+		// Switch by Site Type.
+		switch ( $site_type ) {
 
 			// Standard sub-site.
 			case 'blog':
@@ -682,9 +682,9 @@ class CommentPress_Multisite_BuddyPress {
 		 * @since 4.0
 		 *
 		 * @param str $label The text of the "Visit Blog" button label.
-		 * @param str $blogtype The type of Blog.
+		 * @param str $site_type The type of Blog.
 		 */
-		$label = apply_filters( 'commentpress/multisite/bp/button/visit_blog/label', $label, $blogtype );
+		$label = apply_filters( 'commentpress/multisite/bp/button/visit_blog/label', $label, $site_type );
 
 		/*
 		$e = new \Exception();

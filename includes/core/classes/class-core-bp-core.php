@@ -88,6 +88,9 @@ class CommentPress_Core_BuddyPress {
 		// Add BuddyPress functionality - really late, so Group object is set up.
 		add_action( 'bp_setup_globals', [ $this, 'buddypress_groupblog_present' ], 100 );
 
+		// Add our class(es) to the body classes.
+		add_filter( 'commentpress/core/theme/body/classes', [ $this, 'groupblog_body_class_add' ] );
+
 		// Actions to perform on BuddyPress Docs load.
 		add_action( 'bp_docs_load', [ $this, 'bp_docs_loaded' ], 20 );
 
@@ -224,6 +227,30 @@ class CommentPress_Core_BuddyPress {
 
 		// We're good.
 		return [ $stylesheet, $template ];
+
+	}
+
+	/**
+	 * Adds "Group Blog" class to the body classes array.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $classes The existing body classes array.
+	 * @return array $classes The modified body classes array.
+	 */
+	public function groupblog_body_class_add( $classes ) {
+
+		// Set default class unless it's a Group Blog.
+		$is_groupblog_class = 'not-groupblog';
+		if ( $this->is_groupblog() ) {
+			$is_groupblog_class = 'is-groupblog';
+		}
+
+		// Add to array.
+		$classes[] = $is_groupblog_class;
+
+		// --<
+		return $classes;
 
 	}
 

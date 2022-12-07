@@ -115,7 +115,7 @@ class CommentPress_Core_Editor_Comments {
 	private function register_hooks_settings() {
 
 		// Add our settings to default settings.
-		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ], 20, 1 );
+		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ] );
 
 		// Inject form element into the "Commenting Settings" metabox on "Site Settings" screen.
 		add_action( 'commentpress/core/settings/site/metabox/comment/before', [ $this, 'settings_meta_box_part_get' ] );

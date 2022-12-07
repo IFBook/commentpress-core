@@ -506,11 +506,11 @@ class CommentPress_Core_Loader {
 	}
 
 	/**
-	 * Retrieves minimise all button.
+	 * Retrieves "Minimise All" button.
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $sidebar The type of sidebar - either 'comments', 'toc' or 'activity'.
+	 * @param str $sidebar The sidebar identifier - 'comments', 'toc' or 'activity'.
 	 * @return str $sidebar The HTML for minimise button.
 	 */
 	public function get_minimise_all_button( $sidebar = 'comments' ) {
