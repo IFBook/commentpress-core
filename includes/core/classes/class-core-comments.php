@@ -184,7 +184,7 @@ class CommentPress_Core_Comments {
 	 */
 	public function settings_meta_boxes_append( $screen_id ) {
 
-		// Create "Theme Customisation" metabox.
+		// Create "Commenting Settings" metabox.
 		add_meta_box(
 			'commentpress_commenting',
 			__( 'Commenting Settings', 'commentpress-core' ),
@@ -212,7 +212,7 @@ class CommentPress_Core_Comments {
 	}
 
 	/**
-	 * Saves the data from the Network Settings "BuddyPress Groupblog Settings" metabox.
+	 * Saves the data from the Site Settings "Commenting Settings" metabox.
 	 *
 	 * Adds the data to the settings array. The settings are actually saved later.
 	 *
@@ -352,7 +352,7 @@ class CommentPress_Core_Comments {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Stores our additional param - the Text Signature.
+	 * Stores our additional Comment data.
 	 *
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
@@ -389,15 +389,19 @@ class CommentPress_Core_Comments {
 	 * @since 3.0
 	 *
 	 * @param int $comment_id The numeric ID of the Comment.
+	 * @param str $text_signature The Text Signature of the Comment.
 	 * @return boolean $result True if successful, false otherwise.
 	 */
-	public function save_comment_signature( $comment_id ) {
+	public function save_comment_signature( $comment_id, $text_signature = '' ) {
 
 		// Database object.
 		global $wpdb;
 
-		// Get Text Signature.
-		$text_signature = isset( $_POST['text_signature'] ) ? sanitize_text_field( wp_unslash( $_POST['text_signature'] ) ) : '';
+		// If no Text Signature is passed, look in POST.
+		if ( empty( $text_signature ) ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$text_signature = isset( $_POST['text_signature'] ) ? sanitize_text_field( wp_unslash( $_POST['text_signature'] ) ) : '';
+		}
 
 		// Did we get one?
 		if ( ! empty( $text_signature ) ) {
@@ -406,7 +410,7 @@ class CommentPress_Core_Comments {
 			$text_signature = esc_sql( $text_signature );
 
 			// Store Comment Text Signature.
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$result = $wpdb->query(
 				$wpdb->prepare(
 					"UPDATE $wpdb->comments SET comment_signature = %s WHERE comment_ID = %d",
@@ -437,19 +441,27 @@ class CommentPress_Core_Comments {
 	 * @since 4.0 Moved to this class.
 	 *
 	 * @param int $comment_ID The numeric ID of the Comment.
+	 * @param int $page_number The number of the Page.
+	 * @param str $text_signature The Text Signature of the Comment.
 	 */
-	private function save_comment_page( $comment_ID ) {
+	private function save_comment_page( $comment_ID, $page_number = false, $text_signature = '' ) {
 
-		// Get the Page number.
-		$page_number = isset( $_POST['page'] ) ? sanitize_text_field( wp_unslash( $_POST['page'] ) ) : false;
+		// If no Page number is passed, look in POST.
+		if ( empty( $page_number ) ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$page_number = isset( $_POST['page'] ) ? sanitize_text_field( wp_unslash( $_POST['page'] ) ) : false;
+		}
 
 		// Bail if this is not a paged Post.
 		if ( ! is_numeric( $page_number ) ) {
 			return;
 		}
 
-		// Get Text Signature.
-		$text_signature = isset( $_POST['text_signature'] ) ? sanitize_text_field( wp_unslash( $_POST['text_signature'] ) ) : '';
+		// If no Text Signature is passed, look in POST.
+		if ( empty( $text_signature ) ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$text_signature = isset( $_POST['text_signature'] ) ? sanitize_text_field( wp_unslash( $_POST['text_signature'] ) ) : '';
+		}
 
 		// Is it a paragraph-level comment?
 		if ( ! empty( $text_signature ) ) {
@@ -477,17 +489,21 @@ class CommentPress_Core_Comments {
 	}
 
 	/**
-	 * When a Comment is saved, this also saves the text selection.
+	 * When a Comment is saved, this also saves the Text Selection.
 	 *
 	 * @since 3.9
 	 *
 	 * @param int $comment_id The numeric ID of the Comment.
+	 * @param str $text_selection The Text Selection of the Comment.
 	 * @return boolean $result True if successful, false otherwise.
 	 */
-	private function save_comment_selection( $comment_id ) {
+	private function save_comment_selection( $comment_id, $text_selection = '' ) {
 
-		// Get text selection.
-		$text_selection = isset( $_POST['text_selection'] ) ? sanitize_text_field( wp_unslash( $_POST['text_selection'] ) ) : '';
+		// If no Text Selection is passed, look in POST.
+		if ( empty( $text_selection ) ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$text_selection = isset( $_POST['text_selection'] ) ? sanitize_text_field( wp_unslash( $_POST['text_selection'] ) ) : '';
+		}
 
 		// Bail if we didn't get one.
 		if ( empty( $text_selection ) ) {
@@ -567,8 +583,6 @@ class CommentPress_Core_Comments {
 
 		// Is the User the same as the Comment Author?
 		if ( (int) $comment->user_id === (int) $user_id ) {
-			// TODO: Check this capability.
-			//$caps[] = 'moderate_comments';
 			$caps = [ 'edit_posts' ];
 		}
 

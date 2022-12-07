@@ -444,7 +444,7 @@ class CommentPress_Core_Entry_Formatter {
 
 		// Bail if there's no Site Text Format.
 		$text_format = $this->setting_formatter_get();
-		if ( $text_format === '' || $text_format === false ) ) {
+		if ( $text_format === '' || $text_format === false ) {
 			return $classes;
 		}
 
@@ -515,7 +515,7 @@ class CommentPress_Core_Entry_Formatter {
 	 * @param array $text_formats The existing array of Site Text Formats.
 	 * @return array $text_formats The modified array of Site Text Formats.
 	 */
-	public function site_text_format_options( $existing_options ) {
+	public function site_text_format_options( $text_formats ) {
 
 		// Define Text Formats.
 		$text_formats = [

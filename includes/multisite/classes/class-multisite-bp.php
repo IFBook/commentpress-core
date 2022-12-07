@@ -559,7 +559,8 @@ class CommentPress_Multisite_BuddyPress {
 		$blog_id = get_current_blog_id();
 
 		// If it's CommentPress-enabled, disable sync.
-		if ( $this->multisite->site->is_commentpress( $blog_id, $legacy_check = false ) ) {
+		$legacy_check = false;
+		if ( $this->multisite->site->is_commentpress( $blog_id, $legacy_check ) ) {
 			return true;
 		}
 
@@ -647,7 +648,8 @@ class CommentPress_Multisite_BuddyPress {
 
 		// Check if this Blog is CommentPress-enabled.
 		if ( ! empty( $blogs_template->blog->blog_id ) ) {
-			if ( $this->multisite->site->is_commentpress( $blogs_template->blog->blog_id, $legacy_check = false ) ) {
+			$legacy_check = false;
+			if ( $this->multisite->site->is_commentpress( $blogs_template->blog->blog_id, $legacy_check ) ) {
 				$site_type = 'commentpress';
 			}
 		}

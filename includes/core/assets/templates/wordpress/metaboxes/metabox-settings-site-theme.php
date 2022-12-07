@@ -12,7 +12,25 @@ defined( 'ABSPATH' ) || exit;
 
 ?>
 <!-- <?php echo $this->metabox_path; ?>metabox-settings-site-theme.php -->
-<p><?php _e( 'You can set a custom background colour in <em>Appearance &#8594; Background</em>.<br />You can also set a custom header image and header text colour in <em>Appearance &#8594; Header</em>.<br />Below are extra options for changing how the theme functions.', 'commentpress-core' ); ?></p>
+<p>
+	<?php
+	echo sprintf(
+		/* translators: %s: The trail to the background screen. */
+		__( 'You can set a custom background colour in %s.', 'commentpress-core' ),
+		'<em>' . __( 'Appearance &#8594; Background', 'commentpress-core' ) . '</em>'
+	);
+	?>
+	<br>
+	<?php
+	echo sprintf(
+		/* translators: %s: The trail to the header screen. */
+		__( 'You can also set a custom header image and header text colour in %s.', 'commentpress-core' ),
+		'<em>' . __( 'Appearance &#8594; Header', 'commentpress-core' ) . '</em>'
+	);
+	?>
+	<br>
+	<?php esc_html_e( 'Below are additional options for changing how the theme functions.', 'commentpress-core' ); ?><br>
+</p>
 
 <table class="form-table">
 

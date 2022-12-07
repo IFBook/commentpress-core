@@ -134,9 +134,13 @@ class CommentPress_Core_Document {
 	public function register_hooks() {
 
 		// Separate callbacks into descriptive methods.
-		//$this->register_hooks_settings();
 		$this->register_hooks_entry();
 		$this->register_hooks_theme();
+
+		/*
+		// TODO: Build "Document" functionality.
+		//$this->register_hooks_settings();
+		*/
 
 	}
 

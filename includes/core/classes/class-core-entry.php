@@ -35,7 +35,6 @@ class CommentPress_Core_Entry {
 	 * @access public
 	 * @var object $metabox The Metabox object.
 	 */
-	// TODO: Move this into this class.
 	public $metabox;
 
 	/**

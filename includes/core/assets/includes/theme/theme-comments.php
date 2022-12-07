@@ -573,9 +573,6 @@ if ( ! function_exists( 'commentpress_get_comment_activity_item' ) ) :
 	 */
 	function commentpress_get_comment_activity_item( $comment ) {
 
-		// Enable WordPress API on Comment.
-		$GLOBALS['comment'] = $comment;
-
 		// Declare access to globals.
 		global $post;
 
@@ -596,7 +593,7 @@ if ( ! function_exists( 'commentpress_get_comment_activity_item' ) ) :
 		}
 
 		// Was it a registered User?
-		if ( $comment->user_id != '0' ) {
+		if ( ! empty( $comment->user_id ) ) {
 
 			// Get User details.
 			$user = get_userdata( $comment->user_id );
@@ -605,19 +602,19 @@ if ( ! function_exists( 'commentpress_get_comment_activity_item' ) ) :
 			$user_link = commentpress_get_user_link( $user, $comment );
 
 			// Construct author citation.
-			$author = '<cite class="fn"><a href="' . $user_link . '">' . get_comment_author() . '</a></cite>';
+			$author = '<cite class="fn"><a href="' . $user_link . '">' . get_comment_author( $comment->comment_ID ) . '</a></cite>';
 
 			// Construct link to User URL.
 			$author = ( $user_link != '' && $user_link != 'http://' ) ?
-				'<cite class="fn"><a href="' . $user_link . '">' . get_comment_author() . '</a></cite>' :
-				'<cite class="fn">' . get_comment_author() . '</cite>';
+				'<cite class="fn"><a href="' . esc_url( $user_link ) . '">' . get_comment_author( $comment->comment_ID ) . '</a></cite>' :
+				'<cite class="fn">' . get_comment_author( $comment->comment_ID ) . '</cite>';
 
 		} else {
 
 			// Construct link to commenter URL.
 			$author = ( $comment->comment_author_url != '' && $comment->comment_author_url != 'http://' ) ?
-				'<cite class="fn"><a href="' . $comment->comment_author_url . '">' . get_comment_author() . '</a></cite>' :
-				'<cite class="fn">' . get_comment_author() . '</cite>';
+				'<cite class="fn"><a href="' . esc_url( $comment->comment_author_url ) . '">' . get_comment_author( $comment->comment_ID ) . '</a></cite>' :
+				'<cite class="fn">' . get_comment_author( $comment->comment_ID ) . '</cite>';
 
 		}
 
@@ -641,10 +638,7 @@ if ( ! function_exists( 'commentpress_get_comment_activity_item' ) ) :
 			if ( $multipage ) {
 
 				// If it has a Text Signature.
-				if (
-					! is_null( $comment->comment_signature ) &&
-					$comment->comment_signature != ''
-				) {
+				if ( ! empty( $comment->comment_signature ) ) {
 
 					// Set key.
 					$key = '_cp_comment_page';
@@ -652,7 +646,7 @@ if ( ! function_exists( 'commentpress_get_comment_activity_item' ) ) :
 					// If the custom field already has a value.
 					if ( get_comment_meta( $comment->comment_ID, $key, true ) != '' ) {
 
-						// Get comment's Page from meta.
+						// Get Comment's Page from meta.
 						$page_num = get_comment_meta( $comment->comment_ID, $key, true );
 
 						// Is it this one?
@@ -686,25 +680,36 @@ if ( ! function_exists( 'commentpress_get_comment_activity_item' ) ) :
 
 		// Show the Comment.
 		$item_html .= '
-	<div class="comment-wrapper">
+		<div class="comment-wrapper">
 
-	<div class="comment-identifier">
-	' . get_avatar( $comment, $size = '32' ) . '
-	' . $author . '
-	<p class="comment_activity_date"><a class="comment_activity_link' . $is_on_current_post . '" href="' . htmlspecialchars( get_comment_link() ) . '">' . sprintf( __( '%1$s at %2$s', 'commentpress-core' ), get_comment_date(), get_comment_time() ) . '</a></p>
-	</div><!-- /comment-identifier -->
+			<div class="comment-identifier">
+				' . get_avatar( $comment, $size = '32' ) . '
+				' . $author . '
+				<p class="comment_activity_date">' .
+					'<a class="comment_activity_link' . $is_on_current_post . '" href="' . esc_url( get_comment_link( $comment->comment_ID ) ) . '">' .
+						sprintf(
+							__( '%1$s at %2$s', 'commentpress-core' ),
+							get_comment_date( '', $comment->comment_ID ),
+							commentpress_get_comment_time( $comment->comment_ID )
+						) .
+					'</a>' .
+				'</p>
+			</div><!-- /comment-identifier -->
 
+			<div class="comment-content">
+				' . apply_filters( 'comment_text', $comment_text ) . '
+			</div><!-- /comment-content -->
 
+			<div class="reply">' .
+				'<p>' .
+					'<a class="comment_activity_link' . $is_on_current_post . '" href="' . esc_url( get_comment_link( $comment->comment_ID ) ) . '">' .
+						esc_html__( 'See in context', 'commentpress-core' ) .
+					'</a>' .
+				'</p>' .
+			'</div><!-- /reply -->
 
-	<div class="comment-content">
-	' . apply_filters( 'comment_text', $comment_text ) . '
-	</div><!-- /comment-content -->
-
-	<div class="reply"><p><a class="comment_activity_link' . $is_on_current_post . '" href="' . htmlspecialchars( get_comment_link() ) . '">' . __( 'See in context', 'commentpress-core' ) . '</a></p></div><!-- /reply -->
-
-	</div><!-- /comment-wrapper -->
-
-	';
+		</div><!-- /comment-wrapper -->
+		' . "\n\n";
 
 		// Close li.
 		$item_html .= '</li><!-- /item li -->' . "\n\n";
@@ -1204,9 +1209,11 @@ if ( ! function_exists( 'commentpress_comment_form_title' ) ) :
 		}
 
 		// Get Comment ID to reply to from URL query string.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$reply_to_comment_id = isset( $_GET['replytocom'] ) ? (int) sanitize_text_field( wp_unslash( $_GET['replytocom'] ) ) : 0;
 
 		// Get Paragraph Number to reply to from URL query string.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$reply_to_para_id = isset( $_GET['replytopara'] ) ? (int) sanitize_text_field( wp_unslash( $_GET['replytopara'] ) ) : 0;
 
 		// If we have no Comment ID and no Paragraph ID to reply to.
@@ -1221,16 +1228,13 @@ if ( ! function_exists( 'commentpress_comment_form_title' ) ) :
 		// If we have a Comment ID and NO Paragraph ID to reply to.
 		if ( $reply_to_comment_id !== 0 && $reply_to_para_id === 0 ) {
 
-			// Declare access to globals.
-			global $comment;
-
 			// Get Comment.
 			$comment = get_comment( $reply_to_comment_id );
 
 			// Get link to Comment.
 			$author = ( $link_to_parent ) ?
-				'<a href="#comment-' . get_comment_ID() . '">' . get_comment_author() . '</a>' :
-				get_comment_author();
+				'<a href="#comment-' . $comment->comment_ID . '">' . get_comment_author( $comment->comment_ID ) . '</a>' :
+				get_comment_author( $comment->comment_ID );
 
 			// Write to Page.
 			printf( $reply_to_comment_text, $author );
@@ -1311,9 +1315,6 @@ if ( ! function_exists( 'commentpress_comment_reply_link' ) ) :
 			return;
 		}
 
-		// Convert to vars.
-		extract( $args, EXTR_SKIP );
-
 		// Get the obvious.
 		$comment = get_comment( $comment );
 		$post = get_post( $post );
@@ -1330,7 +1331,9 @@ if ( ! function_exists( 'commentpress_comment_reply_link' ) ) :
 		if ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) {
 
 			// Construct link.
-			$link = '<a rel="nofollow" href="' . site_url( 'wp-login.php?redirect_to=' . get_permalink() ) . '">' . $login_text . '</a>';
+			$link = '<a rel="nofollow" href="' . site_url( 'wp-login.php?redirect_to=' . get_permalink() ) . '">' .
+				esc_html( $args['login_text'] ) .
+			'</a>';
 
 		} else {
 
@@ -1345,10 +1348,25 @@ if ( ! function_exists( 'commentpress_comment_reply_link' ) ) :
 				)
 			);
 
+			// Build attributes.
+			$href = $addquery . '#' . $args['respond_id'];
+			$onclick = 'return addComment.moveForm(' .
+				"'" . $args['add_below'] . '-' . $comment->comment_ID . "', " .
+				"'" . $comment->comment_ID . "', " .
+				"'" . $args['respond_id'] . "', " .
+				"'" . $post->ID . "', " .
+				"'" . $comment->comment_signature . "'" .
+			');';
+
 			// Define link.
-			$link = "<a rel='nofollow' class='comment-reply-link' href='" . $addquery . '#' . $respond_id . "' onclick='return addComment.moveForm(\"$add_below-$comment->comment_ID\", \"$comment->comment_ID\", \"$respond_id\", \"$post->ID\", \"$comment->comment_signature\")'>$reply_text</a>";
+			$link = '<a rel="nofollow" class="comment-reply-link" href="' . esc_url( $href ) . '" onclick="' . $onclick . '">' .
+				esc_html( $args['reply_text'] ) .
+			'</a>';
 
 		}
+
+		// Wrap link in "before" and "after".
+		$link = $args['before'] . $link . $args['after'];
 
 		/**
 		 * Filters the Comment Reply link.
@@ -1360,7 +1378,7 @@ if ( ! function_exists( 'commentpress_comment_reply_link' ) ) :
 		 * @param object $comment The Comment.
 		 * @param object $post The Post.
 		 */
-		return apply_filters( 'comment_reply_link', $before . $link . $after, $args, $comment, $post );
+		return apply_filters( 'comment_reply_link', $link, $args, $comment, $post );
 
 	}
 
@@ -1404,11 +1422,8 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 	 */
 	function commentpress_get_comment_markup( $comment, $args, $depth ) {
 
-		// Enable WordPress API on Comment.
-		$GLOBALS['comment'] = $comment;
-
 		// Was it a registered User?
-		if ( $comment->user_id != '0' ) {
+		if ( ! empty( $comment->user_id ) ) {
 
 			// Get User details.
 			$user = get_userdata( $comment->user_id );
@@ -1418,8 +1433,8 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 
 			// Construct author citation.
 			$author = ( $user_link != '' && $user_link != 'http://' ) ?
-				'<cite class="fn"><a href="' . $user_link . '">' . get_comment_author() . '</a></cite>' :
-				'<cite class="fn">' . get_comment_author() . '</cite>';
+				'<cite class="fn"><a href="' . esc_url( $user_link ) . '">' . get_comment_author( $comment->comment_ID ) . '</a></cite>' :
+				'<cite class="fn">' . get_comment_author( $comment->comment_ID ) . '</cite>';
 
 		} else {
 
@@ -1429,9 +1444,9 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 				$comment->comment_author_url != 'http://' &&
 				$comment->comment_approved != '0'
 			) {
-				$author = '<cite class="fn"><a href="' . $comment->comment_author_url . '">' . get_comment_author() . '</a></cite>';
+				$author = '<cite class="fn"><a href="' . $comment->comment_author_url . '">' . get_comment_author( $comment->comment_ID ) . '</a></cite>';
 			} else {
-				$author = '<cite class="fn">' . get_comment_author() . '</cite>';
+				$author = '<cite class="fn">' . get_comment_author( $comment->comment_ID ) . '</cite>';
 			}
 
 		}
@@ -1440,7 +1455,7 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 		if ( $comment->comment_approved == '0' ) {
 			$comment_text = '<p><em>' . __( 'Comment awaiting moderation', 'commentpress-core' ) . '</em></p>';
 		} else {
-			$comment_text = get_comment_text();
+			$comment_text = get_comment_text( $comment->comment_ID );
 		}
 
 		// Empty reply div by default.
@@ -1473,7 +1488,7 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 				$comment_reply = commentpress_comment_reply_link( array_merge(
 					$args,
 					[
-						'reply_text' => sprintf( __( 'Reply to %s', 'commentpress-core' ), get_comment_author() ),
+						'reply_text' => sprintf( __( 'Reply to %s', 'commentpress-core' ), get_comment_author( $comment->comment_ID ) ),
 						'depth' => $depth,
 						'max_depth' => $args['max_depth'],
 					]
@@ -1490,10 +1505,7 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 		$editlink = '';
 
 		// If logged in and has capability.
-		if (
-			is_user_logged_in() &&
-			current_user_can( 'edit_comment', $comment->comment_ID )
-		) {
+		if ( is_user_logged_in() && current_user_can( 'edit_comment', $comment->comment_ID ) ) {
 
 			/**
 			 * Filters default edit link title text.
@@ -1513,8 +1525,15 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 			 */
 			$edit_text = apply_filters( 'cp_comment_edit_link_text', __( 'Edit', 'commentpress-core' ) );
 
+			// Get link.
+			$edit_comment_link = get_edit_comment_link( $comment->comment_ID );
+
 			// Get "Edit Comment" link.
-			$editlink = '<span class="alignright comment-edit"><a class="comment-edit-link" href="' . get_edit_comment_link() . '" title="' . $edit_title_text . '">' . $edit_text . '</a></span>';
+			$editlink = '<span class="alignright comment-edit">' .
+				'<a class="comment-edit-link" href="' . esc_url( $edit_comment_link ) . '" title="' . esc_attr( $edit_title_text ) . '">' .
+					esc_html( $edit_text ) .
+				'</a>' .
+			'</span>';
 
 			/**
 			 * Filters default edit link.
@@ -1545,7 +1564,12 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 		$comment_orphan = isset( $comment->orphan ) ? ' comment-orphan' : '';
 
 		// Construct permalink.
-		$comment_permalink = sprintf( __( '%1$s at %2$s', 'commentpress-core' ), get_comment_date(), get_comment_time() );
+		$comment_permalink = sprintf(
+			/* translators: 1: The Comment date, 2: The Comment time. */
+			__( '%1$s at %2$s', 'commentpress-core' ),
+			get_comment_date( '', $comment->comment_ID ),
+			commentpress_get_comment_time( $comment->comment_ID )
+		);
 
 		// Rebuild Comment markup. The <li> element is closed by the Walker.
 		$html = '<li id="li-comment-' . $comment->comment_ID . '" ' . $comment_class . '>
@@ -1557,7 +1581,7 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 						' . get_avatar( $comment, $size = '32' ) . '
 						' . $editlink . '
 						' . $author . '
-						<a class="comment_permalink" href="' . htmlspecialchars( get_comment_link() ) . '" title="' . __( 'Permalink for this comment', 'commentpress-core' ) . '"><span class="comment_permalink_copy"></span>' . $comment_permalink . '</a>
+						<a class="comment_permalink" href="' . esc_url( get_comment_link( $comment->comment_ID ) ) . '" title="' . esc_attr__( 'Permalink for this comment', 'commentpress-core' ) . '"><span class="comment_permalink_copy"></span>' . $comment_permalink . '</a>
 						' . apply_filters( 'commentpress_comment_identifier_append', '', $comment ) . '
 					</div><!-- /comment-identifier -->
 
@@ -1704,7 +1728,7 @@ if ( ! function_exists( 'commentpress_comment_post_redirect' ) ) :
 	function commentpress_comment_post_redirect( $link, $comment ) {
 
 		// Get URL of the Page that submitted the Comment.
-		$page_url = isset( $_SERVER['HTTP_REFERER'] ) ? wp_unslash( $_SERVER['HTTP_REFERER'] ) : '';
+		$page_url = isset( $_SERVER['HTTP_REFERER'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
 
 		// Get anchor position.
 		$hash = strpos( $page_url, '#' );
@@ -1769,27 +1793,28 @@ if ( ! function_exists( 'commentpress_image_caption_shortcode' ) ) :
 	function commentpress_image_caption_shortcode( $empty, $attr, $content ) {
 
 		// Get our shortcode vars.
-		extract( shortcode_atts( [
+		$atts = shortcode_atts( [
 			'id' => '',
 			'align' => 'alignnone',
 			'width' => '',
 			'caption' => '',
-		], $attr ) );
+		], $attr );
 
-		if ( 1 > (int) $width || empty( $caption ) ) {
+		if ( 1 > (int) $atts['width'] || empty( $atts['caption'] ) ) {
 			return $content;
 		}
 
 		// Sanitise ID.
-		if ( $id ) {
-			$id = 'id="' . esc_attr( $id ) . '" ';
+		$id = '';
+		if ( $atts['id'] ) {
+			$id = ' id="' . esc_attr( $atts['id'] ) . '" ';
 		}
 
 		// Add space prior to alignment.
-		$alignment = ' ' . esc_attr( $align );
+		$alignment = ' ' . esc_attr( $atts['align'] );
 
 		// Get width.
-		$width = ( 0 + (int) $width );
+		$width = ( 0 + (int) $atts['width'] );
 
 		// Allow a few tags.
 		$tags_to_allow = [
@@ -1799,7 +1824,7 @@ if ( ! function_exists( 'commentpress_image_caption_shortcode' ) ) :
 		];
 
 		// Sanitise caption.
-		$caption = wp_kses( $caption, $tags_to_allow );
+		$caption = wp_kses( $atts['caption'], $tags_to_allow );
 
 		// Force balance those tags.
 		$caption = force_balance_tags( $caption, true );
@@ -1807,7 +1832,7 @@ if ( ! function_exists( 'commentpress_image_caption_shortcode' ) ) :
 		// Construct.
 		$caption = '<!-- cp_caption_start -->' .
 			'<span class="captioned_image' . $alignment . '" style="width: ' . $width . 'px">' .
-				'<span ' . $id . ' class="wp-caption">' . do_shortcode( $content ) . '</span>' .
+				'<span' . $id . ' class="wp-caption">' . do_shortcode( $content ) . '</span>' .
 				'<small class="wp-caption-text">' . $caption . '</small>' .
 			'</span>' .
 		'<!-- cp_caption_end -->';
@@ -1901,7 +1926,7 @@ if ( ! function_exists( 'commentpress_get_post_multipage_url' ) ) :
 	function commentpress_get_post_multipage_url( $i, $post = '' ) {
 
 		// If we have no passed value.
-		if ( $post == '' ) {
+		if ( $post === '' ) {
 
 			// We assume we're in the loop.
 			global $post, $wp_rewrite;
@@ -2071,3 +2096,49 @@ endif;
 
 // Add callback for the above.
 add_filter( 'teeny_mce_buttons', 'commentpress_assign_editor_buttons' );
+
+
+
+if ( ! function_exists( 'commentpress_get_comment_time' ) ) :
+
+	/**
+	 * Retrieves the comment time for a given Comment.
+	 *
+	 * Replacement for the WordPress "get_comment_time" function that accepts a
+	 * Comment object or Comment ID.
+	 *
+	 * @since 4.0
+	 *
+	 * @param int|WP_Comment $comment_ID Optional. WP_Comment or ID of the comment for which to print the text.
+	 *                                   Default current comment.
+	 * @param string         $format     Optional. PHP time format. Defaults to the 'time_format' option.
+	 * @param bool           $gmt        Optional. Whether to use the GMT date. Default false.
+	 * @param bool           $translate  Optional. Whether to translate the time (for use in feeds).
+	 *                                   Default true.
+	 * @return string The formatted time.
+	 */
+	function commentpress_get_comment_time( $comment_ID = null, $format = '', $gmt = false, $translate = true ) {
+
+		$comment = get_comment( $comment_ID );
+
+		$comment_date = $gmt ? $comment->comment_date_gmt : $comment->comment_date;
+
+		$_format = ! empty( $format ) ? $format : get_option( 'time_format' );
+
+		$date = mysql2date( $_format, $comment_date, $translate );
+
+		/**
+		 * Filters the returned comment time.
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param string|int $date      The comment time, formatted as a date string or Unix timestamp.
+		 * @param string     $format    PHP date format.
+		 * @param bool       $gmt       Whether the GMT date is in use.
+		 * @param bool       $translate Whether the time is translated.
+		 * @param WP_Comment $comment   The comment object.
+		 */
+		return apply_filters( 'get_comment_time', $date, $format, $gmt, $translate, $comment );
+	}
+
+endif;

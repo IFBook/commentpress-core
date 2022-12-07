@@ -1,6 +1,6 @@
 /*
 ================================================================================
-CommentPress Core AJAX Comment Submission (in page)
+CommentPress Core AJAX Comment-In-Page Submission
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
@@ -50,14 +50,15 @@ CommentPress.ajax.comments = new function() {
 	this.cpajax_error = {};
 
 	// Test for our localisation object.
-	if ( 'undefined' !== typeof CommentpressAjaxSettings ) {
+	if ( 'undefined' !== typeof CommentPress_AJAX_Settings ) {
 
 		// Reference our localisation object vars.
-		this.cpajax_live = CommentpressAjaxSettings.cpajax_live;
-		this.cpajax_ajax_url = CommentpressAjaxSettings.cpajax_ajax_url;
-		this.cpajax_spinner_url = CommentpressAjaxSettings.cpajax_spinner_url;
-		this.cpajax_post_id = CommentpressAjaxSettings.cpajax_post_id;
-		this.cpajax_lang = CommentpressAjaxSettings.cpajax_lang;
+		this.cpajax_live = CommentPress_AJAX_Settings.cpajax_live;
+		this.cpajax_ajax_url = CommentPress_AJAX_Settings.cpajax_ajax_url;
+		this.cpajax_spinner_url = CommentPress_AJAX_Settings.cpajax_spinner_url;
+		this.cpajax_post_id = CommentPress_AJAX_Settings.cpajax_post_id;
+		this.cpajax_lang = CommentPress_AJAX_Settings.cpajax_lang;
+		this.cpajax_nonce = CommentPress_AJAX_Settings.cpajax_nonce;
 
 	}
 
@@ -512,7 +513,7 @@ CommentPress.ajax.comments = new function() {
 		$('#wrapper').on( 'click', '.comment-edit-link', function( event ) {
 
 			// Define vars.
-			var comment_id, input;
+			var comment_id;
 
 			// Override event.
 			event.preventDefault();
@@ -538,6 +539,8 @@ CommentPress.ajax.comments = new function() {
 	 */
 	this.get_comment = function( comment_id ) {
 
+		var payload;
+
 		// Kick out if submitting a comment.
 		if ( me.cpajax_submitting ) {
 			return;
@@ -554,31 +557,30 @@ CommentPress.ajax.comments = new function() {
 		 * });
 		 */
 
+		// Build payload.
+		payload = {
+			action: 'cpajax_get_comment',
+			comment_id: comment_id,
+			_ajax_nonce: me.cpajax_nonce
+		}
+
 		// Use post method.
 		$.post(
 
 			// Set URL.
 			me.cpajax_ajax_url,
 
-			// Add data.
-			{
-
-				// Set WordPress method to call.
-				action: 'cpajax_get_comment',
-
-				// Send comment ID.
-				comment_id: comment_id
-
-			},
+			// Add payload.
+			payload,
 
 			// Callback.
-			function( data, textStatus ) {
+			function( response, textStatus ) {
 
 				// If success.
 				if ( textStatus == 'success' ) {
 
 					// Pass to callback function.
-					me.get_comment_callback( data );
+					me.get_comment_callback( response );
 
 				} else {
 
@@ -599,7 +601,7 @@ CommentPress.ajax.comments = new function() {
 
 
 	/**
-	 * AJAX callback method called when comment data has been received.
+	 * AJAX callback method.
 	 *
 	 * This method gets called when data has been received from the server via
 	 * the AJAX request in this.get_comment().
@@ -644,7 +646,9 @@ CommentPress.ajax.comments = new function() {
 			url: me.cpajax_ajax_url,
 
 			// Set WordPress method to call.
-			data: { action: 'cpajax_edit_comment' },
+			data: {
+				action: 'cpajax_edit_comment'
+			},
 
 			beforeSubmit: function() {
 
@@ -668,8 +672,11 @@ CommentPress.ajax.comments = new function() {
 				// Declare vars.
 				var top, data, comment;
 
-				// Convert response string to JSON.
-				data = JSON.parse( response );
+				// Test for failures.
+				if ( ! response.id ) {
+					// TODO: Handle failures.
+					return;
+				}
 
 				// Slide up comment form.
 				$('#respond').slideUp( 'fast', function() {
@@ -682,25 +689,25 @@ CommentPress.ajax.comments = new function() {
 				});
 
 				// Get edited comment.
-				comment = $('#comment-' + data.id);
+				comment = $('#comment-' + response.id);
 
 				// Add a couple of classes.
 				comment.addClass( 'comment-highlighted' );
 
 				// Replace comment content.
-				$('#comment-' + data.id + ' .comment-content').html( data.content );
+				$('#comment-' + response.id + ' .comment-content').html( response.content );
 
 				/**
 				 * Notify plugins that a comment has been edited.
 				 *
 				 * @since 3.9.12
 				 *
-				 * @param {Object} data The edited comment data.
+				 * @param {Object} response The edited comment data.
 				 */
-				$(document).trigger( 'commentpress-ajax-comment-edited', [ data ] );
+				$(document).trigger( 'commentpress-ajax-comment-edited', [ response ] );
 
 				// Show it.
-				$('#comment-' + data.id + ' .comment-content').slideDown( 'fast',
+				$('#comment-' + response.id + ' .comment-content').slideDown( 'fast',
 
 					// Animation complete.
 					function() {

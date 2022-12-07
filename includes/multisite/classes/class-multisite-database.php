@@ -156,7 +156,8 @@ class CommentPress_Multisite_Database {
 		*/
 
 		// Initialise settings.
-		$this->settings_initialise( $network_activation = true );
+		$network_activation = true;
+		$this->settings_initialise( $network_activation );
 
 		// Save settings.
 		$this->settings_save();

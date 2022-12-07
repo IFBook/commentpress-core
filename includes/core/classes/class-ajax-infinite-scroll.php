@@ -161,23 +161,25 @@ class CommentPress_AJAX_Infinite_Scroll {
 	 */
 	public function next_page_load() {
 
-		/*
+		// Init data.
+		$data = [
+			'status' => 'failure',
+		];
+
 		// Error check.
 		$nonce = isset( $_POST['cpajax_infinite_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['cpajax_infinite_nonce'] ) ) : '';
 		if ( ! wp_verify_nonce( $nonce, 'cpajax_infinite_nonce' ) ) {
-			die( 'Nonce failure' );
+			$data['status'] = __( 'Authentication failure.', 'commentpress-core' );
+			wp_send_json( $data );
 		}
-		*/
-
-		// Init data.
-		$data = '';
 
 		// Get incoming data.
 		$current_post_id = isset( $_POST['current_post_id'] ) ? absint( $_POST['current_post_id'] ) : '';
 
 		// Sanity check.
 		if ( $current_post_id === '' ) {
-			die( 'No $current_post_id' );
+			$data['status'] = __( 'Could not find current Post ID.', 'commentpress-core' );
+			wp_send_json( $data );
 		}
 
 		// Get all Pages.
@@ -185,7 +187,8 @@ class CommentPress_AJAX_Infinite_Scroll {
 
 		// If we have any Pages.
 		if ( count( $all_pages ) == 0 ) {
-			die( 'No $all_pages' );
+			$data['status'] = __( 'Could not find any Pages.', 'commentpress-core' );
+			wp_send_json( $data );
 		}
 
 		// Init the key we want.
@@ -209,19 +212,18 @@ class CommentPress_AJAX_Infinite_Scroll {
 
 		// Die if we don't get a key.
 		if ( $page_key === false ) {
-			wp_die( 'No $page_key' );
+			$data['status'] = __( 'Could not find a Page key.', 'commentpress-core' );
+			wp_send_json( $data );
 		}
 
 		// Die if there is no next item.
 		if ( ! isset( $all_pages[ $page_key + 1 ] ) ) {
-			wp_die( 'No key in array' );
+			$data['status'] = __( 'Could not find the Page key in the array.', 'commentpress-core' );
+			wp_send_json( $data );
 		}
 
 		// Get object.
 		$new_post = $all_pages[ $page_key + 1 ];
-
-		// Access Post.
-		global $post;
 
 		// Get Page data.
 		$post = get_post( $new_post->ID );

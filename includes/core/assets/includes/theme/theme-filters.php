@@ -409,7 +409,7 @@ add_filter( 'next_posts_link_attributes', 'commentpress_get_link_css' );
 if ( ! function_exists( 'commentpress_trap_empty_search' ) ) :
 
 	/**
-	 * Trap empty search queries and redirect.
+	 * Trap empty search queries and use Search template.
 	 *
 	 * @since 3.3
 	 *
@@ -417,7 +417,8 @@ if ( ! function_exists( 'commentpress_trap_empty_search' ) ) :
 	 */
 	function commentpress_trap_empty_search() {
 
-		// Send to Search Page when there is an empty search.
+		// Use Search template when there is an empty search.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( isset( $_GET['s'] ) && empty( $_GET['s'] ) ) {
 			return locate_template( [ 'search.php' ] );
 		}
@@ -473,32 +474,27 @@ if ( ! function_exists( 'commentpress_show_source_url' ) ) :
 	 */
 	function commentpress_show_source_url() {
 
+		// Path from server array, if set.
+		$path = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+
+		// Get server, if set.
+		$server = isset( $_SERVER['SERVER_NAME'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_NAME'] ) ) : '';
+
+		// Get protocol, if set.
+		$protocol = ! empty( $_SERVER['HTTPS'] ) ? 'https' : 'http';
+
+		// Construct URL.
+		$url = $protocol . '://' . $server . $path;
+
+		// Construct source text.
+		$source = sprintf(
+			/* translators: %s: The source URL of the Page being printed. */
+			__( 'Source: %s', 'commentpress-core' ),
+			$url
+		);
+
 		// Add the URL - hidden, but revealed by print stylesheet.
-		?>
-		<p class="hidden_page_url">
-			<?php
-
-			// Label.
-			echo __( 'Source: ', 'commentpress-core' );
-
-			// Path from server array, if set.
-			$path = isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '';
-
-			// Get server, if set.
-			$server = isset( $_SERVER['SERVER_NAME'] ) ? wp_unslash( $_SERVER['SERVER_NAME'] ) : '';
-
-			// Get protocol, if set.
-			$protocol = ! empty( $_SERVER['HTTPS'] ) ? 'https' : 'http';
-
-			// Construct URL.
-			$url = $protocol . '://' . $server . $path;
-
-			// Echo.
-			echo $url;
-
-			?>
-		</p>
-		<?php
+		echo '<p class="hidden_page_url">' . esc_html( $source ) . '</p>';
 
 	}
 

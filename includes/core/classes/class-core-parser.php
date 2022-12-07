@@ -2568,17 +2568,11 @@ class CommentPress_Core_Parser {
 	 */
 	public function text_signature_get_by_comment_id( $comment_id ) {
 
-		// Database object.
-		global $wpdb;
+		// Get the Comment.
+		$comment = get_comment( $comment_id );
 
-		// Query for signature.
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-		$text_signature = $wpdb->get_var(
-			$wpdb->prepare(
-				"SELECT comment_signature FROM $wpdb->comments WHERE comment_ID = %s",
-				$comment_id
-			)
-		);
+		// Get the Comment's Paragraph Text Signature.
+		$text_signature = ! empty( $comment->comment_signature ) ? $comment->comment_signature : '';
 
 		// --<
 		return $text_signature;
@@ -2599,21 +2593,26 @@ class CommentPress_Core_Parser {
 		$text_signature = '';
 
 		// Get Comment ID to reply to from URL query string.
+		// phpcs:ignore: WordPress.Security.NonceVerification.Recommended
 		$reply_to_comment_id = isset( $_GET['replytocom'] ) ? (int) sanitize_text_field( wp_unslash( $_GET['replytocom'] ) ) : 0;
 
 		// Did we get a Comment ID?
-		if ( $reply_to_comment_id != 0 ) {
+		if ( ! empty( $reply_to_comment_id ) ) {
 
-			// Get Paragraph Text Signature.
-			$text_signature = $this->core->parser->text_signature_get_by_comment_id( $reply_to_comment_id );
+			// Get the Comment.
+			$comment = get_comment( $reply_to_comment_id );
+
+			// Get the Comment's Paragraph Text Signature.
+			$text_signature = $comment->comment_signature;
 
 		} else {
 
 			// Do we have a Paragraph Number in the query string?
+			// phpcs:ignore: WordPress.Security.NonceVerification.Recommended
 			$reply_to_para_id = isset( $_GET['replytopara'] ) ? (int) sanitize_text_field( wp_unslash( $_GET['replytopara'] ) ) : 0;
 
-			// Get Paragraph Text Signature when we get a Comment ID.
-			if ( $reply_to_para_id != 0 ) {
+			// Get Paragraph Text Signature when we get a Paragraph ID.
+			if ( ! empty( $reply_to_para_id ) ) {
 				$text_signature = $this->core->parser->text_signature_get( $reply_to_para_id );
 			}
 

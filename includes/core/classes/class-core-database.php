@@ -395,85 +395,6 @@ class CommentPress_Core_Database {
 
 	}
 
-	/**
-	 * Updates the settings from form submissions.
-	 *
-	 * @since 4.0
-	 */
-	public function settings_update() {
-
-		// Init vars.
-		$cp_activate = '0';
-		$cp_upgrade = '';
-		$cp_reset = '';
-		$cp_create_pages = '';
-		$cp_delete_pages = '';
-
-		// Get variables.
-		extract( $_POST );
-
-		/**
-		 * Fires before the options have been updated.
-		 *
-		 * @since 4.0
-		 */
-		do_action( 'commentpress/core/db/settings_update/before' );
-
-		// Is Multisite activating CommentPress Core?
-		if ( $cp_activate == '1' ) {
-			return;
-		}
-
-		// Did we ask to upgrade CommentPress Core?
-		if ( $cp_upgrade == '1' ) {
-			$this->upgrade_options();
-			return;
-		}
-
-		// Did we ask to reset?
-		if ( $cp_reset == '1' ) {
-			$defaults = $this->settings_get_defaults();
-			$this->settings_save();
-			return;
-		}
-
-		// Did we ask to auto-create Special Pages?
-		if ( $cp_create_pages == '1' ) {
-
-			// Remove any existing Special Pages.
-			$this->core->pages_legacy->special_pages_delete();
-
-			// Create Special Pages.
-			$this->core->pages_legacy->special_pages_create();
-
-		}
-
-		// Did we ask to delete Special Pages?
-		if ( $cp_delete_pages == '1' ) {
-
-			// Remove Special Pages.
-			$this->core->pages_legacy->special_pages_delete();
-
-		}
-
-		// Let's deal with our params now.
-
-		/*
-		// Individual Special Pages.
-		$cp_welcome_page = esc_sql( $cp_welcome_page );
-		$cp_blog_page = esc_sql( $cp_blog_page );
-		$cp_general_comments_page = esc_sql( $cp_general_comments_page );
-		$cp_all_comments_page = esc_sql( $cp_all_comments_page );
-		$cp_comments_by_page = esc_sql( $cp_comments_by_page );
-		$this->setting_set( 'cp_welcome_page', $cp_welcome_page );
-		$this->setting_set( 'cp_blog_page', $cp_blog_page );
-		$this->setting_set( 'cp_general_comments_page', $cp_general_comments_page );
-		$this->setting_set( 'cp_all_comments_page', $cp_all_comments_page );
-		$this->setting_set( 'cp_comments_by_page', $cp_comments_by_page );
-		*/
-
-	}
-
 	// -------------------------------------------------------------------------
 
 	/**
@@ -754,7 +675,6 @@ class CommentPress_Core_Database {
 	 */
 	public function options_update() {
 		_deprecated_function( __METHOD__, '4.0' );
-		$this->settings_update();
 	}
 
 	/**

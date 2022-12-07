@@ -47,6 +47,24 @@ class CommentPress_AJAX_Comments {
 	private $assets_path = 'includes/core/assets/';
 
 	/**
+	 * Form nonce action.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $nonce_action_form The name of the form nonce action.
+	 */
+	private $nonce_action_form = 'cpajax_comment_nonce';
+
+	/**
+	 * "Edit Comment" nonce action.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $nonce_action_edit The name of the form nonce action.
+	 */
+	private $nonce_action_edit = 'cpajax_comment_edit_action';
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 4.0
@@ -128,6 +146,9 @@ class CommentPress_AJAX_Comments {
 		// Init vars.
 		$vars = [];
 
+		// Add a nonce.
+		$vars['cpajax_nonce'] = wp_create_nonce( $this->nonce_action_form );
+
 		// Is "live" Comment refreshing enabled?
 		$vars['cpajax_live'] = $this->core->comments->setting_live_get();
 
@@ -205,7 +226,7 @@ class CommentPress_AJAX_Comments {
 		}
 
 		// Use wp function to localise.
-		wp_localize_script( 'cpajax', 'CommentpressAjaxSettings', $vars );
+		wp_localize_script( 'cpajax', 'CommentPress_AJAX_Settings', $vars );
 
 	}
 
@@ -257,13 +278,21 @@ class CommentPress_AJAX_Comments {
 	public function comment_get() {
 
 		// Init return.
-		$data = [];
+		$data = [
+			'id' => false,
+		];
+
+		// Since this is an AJAX request, check security.
+		$result = check_ajax_referer( $this->nonce_action_form, false, false );
+		if ( $result === false ) {
+			wp_send_json( $data );
+		}
 
 		// Get incoming data.
-		$comment_id = isset( $_POST['comment_id'] ) ? sanitize_text_field( wp_unslash( $_POST['comment_id'] ) ) : null;
+		$comment_id = isset( $_POST['comment_id'] ) ? sanitize_text_field( wp_unslash( $_POST['comment_id'] ) ) : false;
 
 		// Sanity check.
-		if ( ! is_null( $comment_id ) && is_numeric( $comment_id ) ) {
+		if ( ! empty( $comment_id ) && is_numeric( $comment_id ) ) {
 
 			// Get Comment.
 			$comment = get_comment( (int) $comment_id );
@@ -299,7 +328,7 @@ class CommentPress_AJAX_Comments {
 			}
 
 			// Add nonce or verification.
-			$data['nonce'] = wp_create_nonce( 'cpajax_comment_nonce' );
+			$data['nonce'] = wp_create_nonce( $this->nonce_action_form );
 
 		}
 
@@ -321,89 +350,83 @@ class CommentPress_AJAX_Comments {
 	/**
 	 * Edit a Comment in response to an AJAX request.
 	 *
+	 * @see CommentPress_Multisite_BuddyPress::enable_comment_editing()
+	 *
 	 * @since 3.9.12
 	 */
 	public function comment_edit() {
 
-		// TODO: Check permissions
-		// @see CommentPress_Multisite_BuddyPress::enable_comment_editing()
+		// TODO: Check permissions.
 
 		// Init return.
-		$data = [];
+		$data = [
+			'id' => false,
+		];
 
-		// Authenticate.
-		$nonce = isset( $_POST['cpajax_comment_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['cpajax_comment_nonce'] ) ) : '';
-		if ( ! wp_verify_nonce( $nonce, 'cpajax_comment_nonce' ) ) {
+		// Bail if authentication fails.
+		$nonce = isset( $_POST[ $this->nonce_action_form ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->nonce_action_form ] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce, $this->nonce_action_form ) ) {
+			wp_send_json( $data );
+		}
 
-			// Skip.
+		// Get incoming Comment ID.
+		$comment_id = isset( $_POST['comment_ID'] ) ? sanitize_text_field( wp_unslash( $_POST['comment_ID'] ) ) : null;
+		if ( empty( $comment_id ) || ! is_numeric( $comment_id ) ) {
+			wp_send_json( $data );
+		}
+
+		// Construct Comment data.
+		$comment_data = [
+			'comment_ID' => (int) $comment_id,
+			'comment_content' => isset( $_POST['comment'] ) ? sanitize_textarea_field( wp_unslash( $_POST['comment'] ) ) : '',
+			'comment_post_ID' => isset( $_POST['comment_post_ID'] ) ? sanitize_text_field( wp_unslash( $_POST['comment_post_ID'] ) ) : '',
+		];
+
+		// Update the Comment.
+		wp_update_comment( $comment_data );
+
+		// Get the fresh Comment data.
+		$comment = get_comment( $comment_data['comment_ID'] );
+
+		// Add Comment data to array.
+		$data = [
+			'id' => $comment->comment_ID,
+			'parent' => $comment->comment_parent,
+			'text_sig' => $comment->comment_signature,
+			'post_id' => $comment->comment_post_ID,
+			'content' => apply_filters( 'comment_text', get_comment_text( $comment->comment_ID ) ),
+		];
+
+		// Get selection data.
+		$selection_data = get_comment_meta( $comment_id, '_cp_comment_selection', true );
+
+		// If there is selection data.
+		if ( ! empty( $selection_data ) ) {
+
+			// Make into an array.
+			$selection = explode( ',', $selection_data );
+
+			// Add to data.
+			$data['sel_start'] = $selection[0];
+			$data['sel_end'] = $selection[1];
 
 		} else {
 
-			// Get incoming Comment ID.
-			$comment_id = isset( $_POST['comment_ID'] ) ? sanitize_text_field( wp_unslash( $_POST['comment_ID'] ) ) : null;
+			// Add default data.
+			$data['sel_start'] = 0;
+			$data['sel_end'] = 0;
 
-			// Sanity check.
-			if ( ! is_null( $comment_id ) && is_numeric( $comment_id ) ) {
+		}
 
-				// Construct Comment data.
-				$comment_data = [
-					'comment_ID' => (int) $comment_id,
-					'comment_content' => isset( $_POST['comment'] ) ? trim( wp_unslash( $_POST['comment'] ) ) : '',
-					'comment_post_ID' => isset( $_POST['comment_post_ID'] ) ? sanitize_text_field( wp_unslash( $_POST['comment_post_ID'] ) ) : '',
-				];
-
-				// Update the Comment.
-				wp_update_comment( $comment_data );
-
-				// Get the fresh Comment data.
-				$comment = get_comment( $comment_data['comment_ID'] );
-
-				// Get Text Signature.
-				$comment_signature = $this->core->parser->text_signature_get_by_comment_id( $comment->comment_ID );
-
-				// Add Comment data to array.
-				$data = [
-					'id' => $comment->comment_ID,
-					'parent' => $comment->comment_parent,
-					'text_sig' => $comment_signature,
-					'post_id' => $comment->comment_post_ID,
-					'content' => apply_filters( 'comment_text', get_comment_text( $comment->comment_ID ) ),
-				];
-
-				// Get selection data.
-				$selection_data = get_comment_meta( $comment_id, '_cp_comment_selection', true );
-
-				// If there is selection data.
-				if ( ! empty( $selection_data ) ) {
-
-					// Make into an array.
-					$selection = explode( ',', $selection_data );
-
-					// Add to data.
-					$data['sel_start'] = $selection[0];
-					$data['sel_end'] = $selection[1];
-
-				} else {
-
-					// Add default data.
-					$data['sel_start'] = 0;
-					$data['sel_end'] = 0;
-
-				}
-
-			} // End check for Comment ID.
-
-			/**
-			 * Filter the data returned to the calling script.
-			 *
-			 * @since 3.9.12
-			 *
-			 * @param array $data The array of Comment data.
-			 * @return array $data The modified array of Comment data.
-			 */
-			$data = apply_filters( 'commentpress_ajax_edited_comment', $data );
-
-		} // End nonce check.
+		/**
+		 * Filter the data returned to the calling script.
+		 *
+		 * @since 3.9.12
+		 *
+		 * @param array $data The array of Comment data.
+		 * @return array $data The modified array of Comment data.
+		 */
+		$data = apply_filters( 'commentpress_ajax_edited_comment', $data );
 
 		// Send data to browser.
 		wp_send_json( $data );
@@ -420,6 +443,12 @@ class CommentPress_AJAX_Comments {
 		// Init return.
 		$data = [];
 
+		// Since this is an AJAX request, check security.
+		$result = check_ajax_referer( $this->nonce_action_form, false, false );
+		if ( $result === false ) {
+			wp_send_json( $data );
+		}
+
 		// Get incoming data.
 		$last_comment_count = isset( $_POST['last_count'] ) ? sanitize_text_field( wp_unslash( $_POST['last_count'] ) ) : null;
 
@@ -431,10 +460,6 @@ class CommentPress_AJAX_Comments {
 
 		// Make it an integer, just to be sure.
 		$post_id = (int) $post_id;
-
-		// Enable WordPress API on Post.
-		// TODO: Do we really need to assign global here?
-		$GLOBALS['post'] = get_post( $post_id );
 
 		// Get any Comments posted since last update time.
 		$data['cpajax_new_comments'] = [];
@@ -449,68 +474,65 @@ class CommentPress_AJAX_Comments {
 		$num_to_get = (int) $current_comment_count - (int) $last_comment_count;
 
 		// Are there any?
-		if ( $num_to_get > 0 ) {
+		if ( $num_to_get <= 0 ) {
+			wp_send_json( $data );
+		}
 
-			// Update Comment count since last request.
-			$data['cpajax_comment_count'] = (string) $current_comment_count;
+		// Update Comment count since last request.
+		$data['cpajax_comment_count'] = (string) $current_comment_count;
 
-			// Set get_comments defaults.
-			$defaults = [
-				'number' => $num_to_get,
-				'orderby' => 'comment_date',
-				'order' => 'DESC',
-				'post_id' => $post_id,
-				'status' => 'approve',
-				'type' => 'comment',
+		// Build arguments.
+		$args = [
+			'number' => $num_to_get,
+			'orderby' => 'comment_date',
+			'order' => 'DESC',
+			'post_id' => $post_id,
+			'status' => 'approve',
+			'type' => 'comment',
+		];
+
+		// Get the Comments.
+		$comments = get_comments( $args );
+
+		// Bail if we don't get any.
+		if ( empty( $comments ) ) {
+			wp_send_json( $data );
+		}
+
+		// Init identifier.
+		$identifier = 1;
+
+		// Set args.
+		$args = [];
+		$args['max_depth'] = get_option( 'thread_comments_depth' );
+
+		// Loop.
+		foreach ( $comments as $comment ) {
+
+			// Assume top level.
+			$depth = 1;
+
+			// Override depth if no parent.
+			if ( $comment->comment_parent != '0' ) {
+				$depth = $this->comment_depth_get( $comment, $depth );
+			}
+
+			// Get Comment markup.
+			$html = commentpress_get_comment_markup( $comment, $args, $depth );
+
+			// Close li (walker would normally do this).
+			$html .= '</li>' . "\n\n\n\n";
+
+			// Add Comment to array.
+			$data[ 'cpajax_new_comment_' . $identifier ] = [
+				'parent' => $comment->comment_parent,
+				'id' => $comment->comment_ID,
+				'text_sig' => $comment->comment_signature,
+				'markup' => $html,
 			];
 
-			// Get them.
-			$comments = get_comments( $defaults );
-
-			// If we get some - again, just to be sure.
-			if ( count( $comments ) > 0 ) {
-
-				// Init identifier.
-				$identifier = 1;
-
-				// Set args.
-				$args = [];
-				$args['max_depth'] = get_option( 'thread_comments_depth' );
-
-				// Loop.
-				foreach ( $comments as $comment ) {
-
-					// Assume top level.
-					$depth = 1;
-
-					// If no parent.
-					if ( $comment->comment_parent != '0' ) {
-
-						// Override depth.
-						$depth = $this->comment_depth_get( $comment, $depth );
-
-					}
-
-					// Get Comment markup.
-					$html = commentpress_get_comment_markup( $comment, $args, $depth );
-
-					// Close li (walker would normally do this).
-					$html .= '</li>' . "\n\n\n\n";
-
-					// Add Comment to array.
-					$data[ 'cpajax_new_comment_' . $identifier ] = [
-						'parent' => $comment->comment_parent,
-						'id' => $comment->comment_ID,
-						'text_sig' => $comment->comment_signature,
-						'markup' => $html,
-					];
-
-					// Increment.
-					$identifier++;
-
-				}
-
-			}
+			// Increment.
+			$identifier++;
 
 		}
 
@@ -612,11 +634,15 @@ class CommentPress_AJAX_Comments {
 	 */
 	public function comment_reassign() {
 
-		global $data;
-
 		// Init return.
 		$data = [];
 		$data['msg'] = '';
+
+		// Since this is an AJAX request, check security.
+		$result = check_ajax_referer( $this->nonce_action_form, false, false );
+		if ( $result === false ) {
+			wp_send_json( $data );
+		}
 
 		// Init checker.
 		$comment_ids = [];
@@ -629,13 +655,13 @@ class CommentPress_AJAX_Comments {
 		if ( ! empty( $text_sig ) && ! empty( $comment_id ) ) {
 
 			// Store Text Signature.
-			$this->core->comments->save_comment_signature( $comment_id );
+			$this->core->comments->save_comment_signature( $comment_id, $text_sig );
 
 			// Trace.
 			$comment_ids[] = (int) $comment_id;
 
 			// Recurse for any Comment children.
-			$htis->comment_children_reassign( (int) $comment_id, $text_sig, $comment_ids );
+			$this->comment_children_reassign( (int) $comment_id, $text_sig, $comment_ids );
 
 		}
 
@@ -662,13 +688,13 @@ class CommentPress_AJAX_Comments {
 		$children = $this->comment_children_get( $comment_id );
 
 		// Did we get any?
-		if ( count( $children ) > 0 ) {
+		if ( ! empty( $children ) ) {
 
 			// Loop.
 			foreach ( $children as $child ) {
 
 				// Store Text Signature.
-				$this->core->comments->save_comment_signature( $child->comment_ID );
+				$this->core->comments->save_comment_signature( $child->comment_ID, $text_sig );
 
 				// Trace.
 				$comment_ids[] = $child->comment_ID;
@@ -692,15 +718,18 @@ class CommentPress_AJAX_Comments {
 	 */
 	public function comment_children_get( $comment_id ) {
 
-		// Declare access to globals.
-		global $wpdb;
+		// Build query args.
+		$args = [
+			'parent' => $comment_id,
+			'orderby' => 'comment_date',
+			'order' => 'ASC',
+		];
+
+		// Get the child Comments.
+		$children = get_comments( $args );
 
 		// --<
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-		return $wpdb->get_results(
-			$wpdb->prepare( "SELECT * FROM {$wpdb->comments} WHERE comment_parent = %d ORDER BY comment_date ASC" ),
-			$comment_id
-		);
+		return $children;
 
 	}
 

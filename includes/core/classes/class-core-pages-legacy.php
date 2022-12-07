@@ -64,11 +64,56 @@ class CommentPress_Core_Pages_Legacy {
 	 */
 	public function register_hooks() {
 
+		/*
+		// TODO: Build new Special Pages functionality.
+		$this->register_hooks_settings();
+		*/
+
+		// Separate callbacks into descriptive methods.
+		$this->register_hooks_activation();
+		$this->register_hooks_pages();
+
+	}
+
+	/**
+	 * Registers "Site Settings" hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_settings() {
+
+		// Add our settings to default settings.
+		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ] );
+
+		// Add our metaboxes to the Site Settings screen.
+		add_filter( 'commentpress/core/settings/site/metaboxes/after', [ $this, 'settings_meta_boxes_append' ], 40 );
+
+		// Save data from Site Settings form submissions.
+		add_action( 'commentpress/core/settings/site/save/before', [ $this, 'settings_meta_box_save' ] );
+
+	}
+
+	/**
+	 * Registers activation/deactivation hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_activation() {
+
 		// Acts late when this plugin is activated.
 		add_action( 'commentpress/core/activate', [ $this, 'plugin_activate' ], 40 );
 
 		// Act early when this plugin is deactivated.
 		add_action( 'commentpress/core/deactivate', [ $this, 'plugin_deactivate' ], 20 );
+
+	}
+
+	/**
+	 * Registers Page-related hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_pages() {
 
 		// Intercept Welcome Page delete.
 		add_action( 'before_delete_post', [ $this, 'title_page_pre_delete' ], 10, 1 );
@@ -79,6 +124,105 @@ class CommentPress_Core_Pages_Legacy {
 
 		// Modify Page count in listings.
 		add_filter( 'views_edit-page', [ $this, 'update_page_counts_in_admin' ], 10, 1 );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Appends our settings to the default core settings.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $settings The existing default core settings.
+	 * @return array $settings The modified default core settings.
+	 */
+	public function settings_get_defaults( $settings ) {
+
+		// --<
+		return $settings;
+
+	}
+
+	/**
+	 * Appends our metaboxes to the Site Settings screen.
+	 *
+	 * @since 4.0
+	 *
+	 * @param string $screen_id The Site Settings Screen ID.
+	 */
+	public function settings_meta_boxes_append( $screen_id ) {
+
+		// Create "Special Pages" metabox.
+		add_meta_box(
+			'commentpress_special',
+			__( 'Special Pages', 'commentpress-core' ),
+			[ $this, 'settings_meta_box_render' ], // Callback.
+			$screen_id, // Screen ID.
+			'normal', // Column: options are 'normal' and 'side'.
+			'core' // Vertical placement: options are 'core', 'high', 'low'.
+		);
+
+	}
+
+	/**
+	 * Renders the "Special Pages" metabox.
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_render() {
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-special.php';
+
+	}
+
+	/**
+	 * Saves the data from the Site Settings "Special Pages" metabox.
+	 *
+	 * Adds the data to the settings array. The settings are actually saved later.
+	 *
+	 * @see CommentPress_Core_Settings_Site::form_submitted()
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_save() {
+
+		// Init vars.
+		$cp_create_pages = '';
+		$cp_delete_pages = '';
+
+		// Did we ask to auto-create Special Pages?
+		if ( $cp_create_pages == '1' ) {
+
+			// Remove any existing Special Pages.
+			$this->special_pages_delete();
+
+			// Create fresh Special Pages.
+			$this->special_pages_create();
+
+		}
+
+		// Did we ask to delete Special Pages?
+		if ( $cp_delete_pages == '1' ) {
+			$this->special_pages_delete();
+		}
+
+		// Let's deal with our params now.
+
+		/*
+		// Individual Special Pages.
+		$cp_welcome_page = esc_sql( $cp_welcome_page );
+		$cp_blog_page = esc_sql( $cp_blog_page );
+		$cp_general_comments_page = esc_sql( $cp_general_comments_page );
+		$cp_all_comments_page = esc_sql( $cp_all_comments_page );
+		$cp_comments_by_page = esc_sql( $cp_comments_by_page );
+		$this->core->db->setting_set( 'cp_welcome_page', $cp_welcome_page );
+		$this->core->db->setting_set( 'cp_blog_page', $cp_blog_page );
+		$this->core->db->setting_set( 'cp_general_comments_page', $cp_general_comments_page );
+		$this->core->db->setting_set( 'cp_all_comments_page', $cp_all_comments_page );
+		$this->core->db->setting_set( 'cp_comments_by_page', $cp_comments_by_page );
+		*/
 
 	}
 
@@ -202,28 +346,22 @@ class CommentPress_Core_Pages_Legacy {
 		$page_exists = $this->core->db->setting_get( 'cp_welcome_page', false );
 
 		// Don't create if we already have the option set.
-		if ( $page_exists !== false && is_numeric( $page_exists ) ) {
+		if ( ! empty( $page_exists ) && is_numeric( $page_exists ) ) {
 
-			// Get the Page (the plugin may have been deactivated, then the Page deleted).
+			// Get the Page - the plugin may have been deactivated, then the Page deleted.
 			$welcome = get_post( $page_exists );
-
-			// Check that the Page exists.
 			if ( $welcome instanceof WP_Post ) {
 
-				// Got it.
-
-				// We still ought to set WordPress internal Page references.
+				// Got it. We still ought to set WordPress internal Page references.
 				$this->core->db->option_wp_backup( 'show_on_front', 'page' );
 				$this->core->db->option_wp_backup( 'page_on_front', $page_exists );
 
 				// --<
 				return $page_exists;
 
-			} else {
-
-				// Page does not exist, continue on and create it.
-
 			}
+
+			// Page does not exist, continue on and create it.
 
 		}
 
@@ -354,7 +492,8 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		}
 
 		// Try and delete the Page, bypassing trash.
-		if ( ! wp_delete_post( $existing_id, $force_delete = true ) ) {
+		$force_delete = true;
+		if ( ! wp_delete_post( $existing_id, $force_delete ) ) {
 			return false;
 		}
 
@@ -581,7 +720,8 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 			}
 
 			// Try to delete the Special Page, bypassing trash.
-			if ( ! wp_delete_post( $special_page_id, $force_delete = true ) ) {
+			$force_delete = true;
+			if ( ! wp_delete_post( $special_page_id, $force_delete ) ) {
 				continue;
 			}
 
@@ -838,7 +978,8 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		}
 
 		// Try to delete the Page, bypassing trash.
-		if ( ! wp_delete_post( $page_id, $force_delete = true ) ) {
+		$force_delete = true;
+		if ( ! wp_delete_post( $page_id, $force_delete ) ) {
 			return false;
 		}
 

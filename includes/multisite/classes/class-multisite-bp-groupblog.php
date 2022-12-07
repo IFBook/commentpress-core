@@ -201,7 +201,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str|bool $compatibility False if BuddyPress Groupblog plugin not present, compatibility flag otherwise.
+	 * @return str|bool $compatibility False if BuddyPress Groupblog plugin not present, compatibility flag otherwise.
 	 */
 	public function compatibility_check() {
 
@@ -224,7 +224,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $compatibility The compatibility status flag.
+	 * @return str $compatibility The compatibility status flag.
 	 */
 	public function compatibility_get() {
 		return $this->compatibility;

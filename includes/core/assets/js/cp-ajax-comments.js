@@ -46,16 +46,17 @@ CommentPress.ajax.comments = new function() {
 	this.cpajax_error = {};
 
 	// Test for our localisation object.
-	if ( 'undefined' !== typeof CommentpressAjaxSettings ) {
+	if ( 'undefined' !== typeof CommentPress_AJAX_Settings ) {
 
 		// Reference our localisation object vars.
-		this.cpajax_live = CommentpressAjaxSettings.cpajax_live;
-		this.cpajax_ajax_url = CommentpressAjaxSettings.cpajax_ajax_url;
-		this.cpajax_spinner_url = CommentpressAjaxSettings.cpajax_spinner_url;
-		this.cpajax_post_id = CommentpressAjaxSettings.cpajax_post_id;
-		this.cpajax_post_comment_status = CommentpressAjaxSettings.cpajax_post_comment_status;
-		this.cpajax_lang = CommentpressAjaxSettings.cpajax_lang;
-		this.cpajax_interval = CommentpressAjaxSettings.cpajax_comment_refresh_interval;
+		this.cpajax_live = CommentPress_AJAX_Settings.cpajax_live;
+		this.cpajax_ajax_url = CommentPress_AJAX_Settings.cpajax_ajax_url;
+		this.cpajax_spinner_url = CommentPress_AJAX_Settings.cpajax_spinner_url;
+		this.cpajax_post_id = CommentPress_AJAX_Settings.cpajax_post_id;
+		this.cpajax_post_comment_status = CommentPress_AJAX_Settings.cpajax_post_comment_status;
+		this.cpajax_lang = CommentPress_AJAX_Settings.cpajax_lang;
+		this.cpajax_interval = CommentPress_AJAX_Settings.cpajax_comment_refresh_interval;
+		this.cpajax_nonce = CommentPress_AJAX_Settings.cpajax_nonce;
 
 	}
 
@@ -211,12 +212,12 @@ CommentPress.ajax.comments = new function() {
 			 */
 
 			// Set repeat call.
-			CommentpressAjaxSettings.interval = window.setInterval( me.update, me.cpajax_interval );
+			CommentPress_AJAX_Settings.interval = window.setInterval( me.update, me.cpajax_interval );
 
 		} else {
 
 			// Stop repeat.
-			window.clearInterval( CommentpressAjaxSettings.interval );
+			window.clearInterval( CommentPress_AJAX_Settings.interval );
 
 		}
 
@@ -231,8 +232,12 @@ CommentPress.ajax.comments = new function() {
 	 */
 	this.update = function() {
 
+		var payload;
+
 		// Kick out if submitting a comment.
-		if ( me.cpajax_submitting ) { return; }
+		if ( me.cpajax_submitting ) {
+			return;
+		}
 
 		/*
 		 * Use the following to log ajax errors from jQuery.post():
@@ -242,6 +247,14 @@ CommentPress.ajax.comments = new function() {
 		 * });
 		 */
 
+		// Build payload.
+		payload = {
+			action: 'cpajax_get_new_comments',
+			last_count: CommentPress_AJAX_Settings.cpajax_comment_count,
+			post_id: me.cpajax_post_id,
+			_ajax_nonce: me.cpajax_nonce
+		};
+
 		// Use post method.
 		$.post(
 
@@ -249,18 +262,7 @@ CommentPress.ajax.comments = new function() {
 			me.cpajax_ajax_url,
 
 			// Add data.
-			{
-
-				// Set WordPress method to call.
-				action: 'cpajax_get_new_comments',
-
-				// Send last comment count.
-				last_count: CommentpressAjaxSettings.cpajax_comment_count,
-
-				// Send post ID.
-				post_id: me.cpajax_post_id
-
-			},
+			payload,
 
 			// Callback.
 			function( data, textStatus ) {
@@ -300,7 +302,7 @@ CommentPress.ajax.comments = new function() {
 		var diff, i, comment;
 
 		// Get diff.
-		diff = parseInt( data.cpajax_comment_count ) - parseInt( CommentpressAjaxSettings.cpajax_comment_count );
+		diff = parseInt( data.cpajax_comment_count ) - parseInt( CommentPress_AJAX_Settings.cpajax_comment_count );
 
 		// Did we get any new comments?
 		if ( diff > 0 ) {
@@ -315,7 +317,7 @@ CommentPress.ajax.comments = new function() {
 				me.add_new_comment( $(comment.markup), comment.text_sig, comment.parent, comment.id );
 
 				// Increment global.
-				CommentpressAjaxSettings.cpajax_comment_count++;
+				CommentPress_AJAX_Settings.cpajax_comment_count++;
 
 			}
 
@@ -625,6 +627,8 @@ CommentPress.ajax.comments = new function() {
 			// Animation complete.
 			function() {
 
+				var payload;
+
 				/*
 				// We could reassign via Javascript, but refreshing the page will clear
 				// any possible markup issues, so go with that instead.
@@ -671,25 +675,22 @@ CommentPress.ajax.comments = new function() {
 				}
 				*/
 
+				// Build payload.
+				payload = {
+					action: 'cpajax_reassign_comment',
+					text_signature: text_sig,
+					comment_id: comment_id,
+					_ajax_nonce: me.cpajax_nonce
+				}
+
 				// Use post.
 				$.post(
 
 					// Set URL.
 					me.cpajax_ajax_url,
 
-					// Set params.
-					{
-
-						// Action (function in WordPress)
-						action: 'cpajax_reassign_comment',
-
-						// Send text sig.
-						text_signature: text_sig,
-
-						// Send post ID.
-						comment_id: comment_id
-
-					 },
+					// Set payload.
+					payload,
 
 					// Callback.
 					function( data, textStatus ) {
@@ -1105,7 +1106,10 @@ CommentPress.ajax.comments = new function() {
 			if ( me.cpajax_form.find( '#cp_edit_comment' ).val() == 'y' ) {
 
 				// Skip submission and call method.
-				if ( event.preventDefault ) { event.preventDefault(); }
+				if ( event.preventDefault ) {
+					event.preventDefault();
+				}
+
 				return me.edit_comment( $(this) );
 
 			}
@@ -1229,6 +1233,8 @@ CommentPress.ajax.comments = new function() {
 	 */
 	this.get_comment = function( comment_id ) {
 
+		var payload;
+
 		// Kick out if submitting a comment.
 		if ( me.cpajax_submitting ) {
 			return;
@@ -1245,31 +1251,30 @@ CommentPress.ajax.comments = new function() {
 		 * });
 		 */
 
+		// Build payload.
+		payload = {
+			action: 'cpajax_get_comment',
+			comment_id: comment_id,
+			_ajax_nonce: me.cpajax_nonce
+		}
+
 		// Use post method.
 		$.post(
 
 			// Set URL.
 			me.cpajax_ajax_url,
 
-			// Add data.
-			{
-
-				// Set WordPress method to call.
-				action: 'cpajax_get_comment',
-
-				// Send comment ID.
-				comment_id: comment_id
-
-			},
+			// Add payload.
+			payload,
 
 			// Callback.
-			function( data, textStatus ) {
+			function( response, textStatus ) {
 
 				// If success.
 				if ( textStatus == 'success' ) {
 
 					// Pass to callback function.
-					me.get_comment_callback( data );
+					me.get_comment_callback( response );
 
 				} else {
 
@@ -1345,7 +1350,9 @@ CommentPress.ajax.comments = new function() {
 			url: me.cpajax_ajax_url,
 
 			// Set WordPress method to call.
-			data: { action: 'cpajax_edit_comment' },
+			data: {
+				action: 'cpajax_edit_comment'
+			},
 
 			beforeSubmit: function() {
 
@@ -1369,8 +1376,11 @@ CommentPress.ajax.comments = new function() {
 				// Declare vars.
 				var top, data, comment;
 
-				// Convert response string to JSON.
-				data = JSON.parse( response );
+				// Test for failures.
+				if ( ! response.id ) {
+					// TODO: Handle failures.
+					return;
+				}
 
 				// Slide up comment form.
 				$('#respond').slideUp( 'fast', function() {
@@ -1383,25 +1393,25 @@ CommentPress.ajax.comments = new function() {
 				});
 
 				// Get edited comment.
-				comment = $('#comment-' + data.id);
+				comment = $('#comment-' + response.id);
 
 				// Add a couple of classes.
 				comment.addClass( 'comment-highlighted' );
 
 				// Replace comment content.
-				$('#comment-' + data.id + ' .comment-content').html( data.content );
+				$('#comment-' + response.id + ' .comment-content').html( response.content );
 
 				/**
 				 * Notify plugins that a comment has been edited.
 				 *
 				 * @since 3.9.12
 				 *
-				 * @param {Object} data The edited comment data.
+				 * @param {Object} response The edited comment data.
 				 */
-				$(document).trigger( 'commentpress-ajax-comment-edited', [ data ] );
+				$(document).trigger( 'commentpress-ajax-comment-edited', [ response ] );
 
 				// Show it.
-				$('#comment-' + data.id + ' .comment-content').slideDown( 'fast',
+				$('#comment-' + response.id + ' .comment-content').slideDown( 'fast',
 
 					// Animation complete.
 					function() {
