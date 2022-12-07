@@ -153,16 +153,6 @@ class CommentPress_Core_Editor_Comments {
 		$settings[ $this->key_editor ] = 1; // Default to TinyMCE.
 		$settings[ $this->key_promote ] = 0;
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'settings' => $settings,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// --<
 		return $settings;
 

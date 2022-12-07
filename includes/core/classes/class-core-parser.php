@@ -254,16 +254,6 @@ class CommentPress_Core_Parser {
 		$settings[ $this->key_post_types_disabled ] = [];
 		$settings[ $this->key_do_not_parse ] = 'n';
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'settings' => $settings,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// --<
 		return $settings;
 

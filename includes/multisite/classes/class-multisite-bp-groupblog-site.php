@@ -345,16 +345,6 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 			$blog_public_option = 1;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'blog_public_option' => $blog_public_option ? 'y' : 'n',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// --<
 		return $blog_public_option;
 

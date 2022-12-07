@@ -257,16 +257,6 @@ class CommentPress_Core_Navigator {
 		$settings[ $this->key_subpages ] = 1;
 		$settings[ $this->key_extended ] = 1;
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'settings' => $settings,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// --<
 		return $settings;
 

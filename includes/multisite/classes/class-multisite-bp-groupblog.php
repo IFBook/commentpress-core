@@ -363,16 +363,6 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 		$settings[ $this->key_comment_login ] = 1;
 		$settings[ $this->key_theme ] = 'commentpress-flat';
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'settings' => $settings,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// --<
 		return $settings;
 
@@ -416,20 +406,6 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 
 		// Get currently selected theme.
 		$current_theme = $this->setting_theme_get();
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'force_commentpress' => $force_commentpress ? 'y' : 'n',
-			'privacy' => $privacy ? 'y' : 'n',
-			'comment_login' => $comment_login ? 'y' : 'n',
-			'groupblog_themes' => $groupblog_themes,
-			'current_theme' => $current_theme,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-network-bp-groupblog.php';
@@ -637,16 +613,6 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 			return;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'message' => 'ADDING GROUP BLOG',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Unhook Multisite Sites callback.
 		remove_action( 'signup_blogform', [ $this->multisite->sites, 'site_signup_form_elements_add' ], 50 );
 
@@ -687,18 +653,6 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 			return;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'POST' => $_POST,
-			'meta' => $meta,
-			'skip' => ! empty( $meta['commentpress'] ) ? 'y' : 'n',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Bail early if we already have our meta.
 		if ( ! empty( $meta['commentpress'] ) ) {
 			return $meta;
@@ -709,16 +663,6 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 
 		// Get "CommentPress enabled on all Sites" setting.
 		$forced = $this->setting_forced_get();
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'forced' => $forced ? 'y' : 'n',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// When not forced.
 		if ( ! $forced ) {
@@ -739,16 +683,6 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 		if ( ! empty( $metadata ) ) {
 			$meta['commentpress'] = $metadata;
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'meta' => $meta,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// --<
 		return $meta;
@@ -772,16 +706,6 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 
 		// Get Group ID before switch.
 		$group_id = isset( $_COOKIE['bp_new_group_id'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['bp_new_group_id'] ) ) : bp_get_current_group_id();
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'group_id' => $group_id,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Bail if we don't get one.
 		if ( empty( $group_id ) ) {
@@ -823,16 +747,6 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 
 		// Get Site Text Format.
 		$site_text_format = $core->formatter->setting_formatter_get();
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'site_text_format' => $site_text_format,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Set the type as Group meta info.
 		// TODO: Check that the type is changed from the CommentPress Core "Site Settings" screen.

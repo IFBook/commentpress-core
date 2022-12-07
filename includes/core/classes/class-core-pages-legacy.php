@@ -242,16 +242,6 @@ class CommentPress_Core_Pages_Legacy {
 			return;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'network_wide' => $network_wide ? 'y' : 'n',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Create the Legacy Pages.
 		$this->activate();
 
@@ -268,16 +258,6 @@ class CommentPress_Core_Pages_Legacy {
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
 	public function plugin_deactivate( $network_wide = false ) {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'network_wide' => $network_wide ? 'y' : 'n',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		/*
 		// Bail if plugin is network activated.

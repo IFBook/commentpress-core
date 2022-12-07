@@ -236,16 +236,6 @@ class CommentPress_Multisite_BuddyPress {
 			return;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'message' => 'ADDING BUDDYPRESS',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Get force option.
 		$forced = $this->multisite->db->setting_get( 'cpmu_force_commentpress' );
 
@@ -270,17 +260,6 @@ class CommentPress_Multisite_BuddyPress {
 		if ( bp_is_groups_component() ) {
 			return $meta;
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'POST' => $_POST,
-			'meta' => $meta,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Init CommentPress metadata.
 		$metadata = [];
@@ -308,16 +287,6 @@ class CommentPress_Multisite_BuddyPress {
 			$meta['commentpress-bp'] = $metadata;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'meta' => $meta,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// --<
 		return $meta;
 
@@ -344,29 +313,8 @@ class CommentPress_Multisite_BuddyPress {
 			return;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'new_site' => $new_site,
-			'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Get "CommentPress enabled on all Sites" setting.
 		$forced = $this->multisite->sites->setting_forced_get();
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'forced' => $forced ? 'y' : 'n',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Bail if not forced and "Enable CommentPress" checkbox was not checked.
 		if ( ! $forced ) {
@@ -377,16 +325,6 @@ class CommentPress_Multisite_BuddyPress {
 				return;
 			}
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'two' => 'here',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Switch to the site.
 		switch_to_blog( $new_site->blog_id );
@@ -687,16 +625,6 @@ class CommentPress_Multisite_BuddyPress {
 		 * @param str $site_type The type of Blog.
 		 */
 		$label = apply_filters( 'commentpress/multisite/bp/button/visit_blog/label', $label, $site_type );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'label' => $label,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Apply label.
 		$button['link_text'] = $label;

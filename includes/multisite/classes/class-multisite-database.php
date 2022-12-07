@@ -145,16 +145,6 @@ class CommentPress_Multisite_Database {
 			return;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'network_wide' => $network_wide ? 'y' : 'n',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Initialise settings.
 		$network_activation = true;
 		$this->settings_initialise( $network_activation );
@@ -177,16 +167,6 @@ class CommentPress_Multisite_Database {
 		if ( ! $network_wide ) {
 			return;
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'network_wide' => $network_wide ? 'y' : 'n',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Keep Site Options when deactivating.
 
@@ -282,31 +262,11 @@ class CommentPress_Multisite_Database {
 		}
 		*/
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'plugin_context' => $this->multisite->plugin->plugin_context_get(),
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Load installed plugin version.
 		$this->plugin_version = $this->version_get();
 
 		// Load settings array.
 		$this->settings = $this->settings_get();
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'settings' => $this->settings,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Store version if there has been a change.
 		if ( $this->version_outdated() ) {

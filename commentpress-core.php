@@ -91,16 +91,6 @@ class CommentPress_Plugin {
 	 */
 	public function __construct() {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'-' => '--------------------------------------------------------------------------------',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Initialise plugin.
 		$this->initialise();
 
@@ -439,17 +429,6 @@ class CommentPress_Plugin {
 			return;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'network_wide' => $network_wide ? 'y' : 'n',
-			'-' => '--------------------------------------------------------------------------------',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		/**
 		 * Fires when this plugin has been activated.
 		 *
@@ -480,17 +459,6 @@ class CommentPress_Plugin {
 		if ( $plugin !== plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) {
 			return;
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'network_wide' => $network_wide ? 'y' : 'n',
-			'-' => '--------------------------------------------------------------------------------',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		/**
 		 * Fires when this plugin has been deactivated.

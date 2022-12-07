@@ -111,15 +111,6 @@ class CommentPress_Multisite_Loader {
 	 */
 	public function __construct( $plugin ) {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Store reference to plugin.
 		$this->plugin = $plugin;
 
@@ -220,16 +211,6 @@ class CommentPress_Multisite_Loader {
 	 */
 	public function plugin_activated( $network_wide = false ) {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'network_wide' => $network_wide ? 'y' : 'n',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		/**
 		 * Fires when plugin is activated.
 		 *
@@ -254,16 +235,6 @@ class CommentPress_Multisite_Loader {
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
 	public function plugin_deactivated( $network_wide = false ) {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'network_wide' => $network_wide ? 'y' : 'n',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		/**
 		 * Fires when plugin is activated.

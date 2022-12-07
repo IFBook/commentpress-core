@@ -240,16 +240,6 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 		$settings[ $this->key_plural ] = $this->legacy_plural_get();
 		$settings[ $this->key_slug ] = $this->legacy_slug_get();
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'settings' => $settings,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// --<
 		return $settings;
 
@@ -277,21 +267,6 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 		$singular = $this->setting_singular_get();
 		$plural = $this->setting_plural_get();
 		$slug = $this->setting_slug_get();
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'schemes' => $schemes,
-			'groupblog_schemes' => $groupblog_schemes,
-			'enabled' => $enabled ? 'y' : 'n',
-			'singular' => $singular,
-			'plural' => $plural,
-			'slug' => $slug,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-bp-groupblog-names-settings-network.php';
@@ -659,32 +634,12 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 			return $label;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'singular' => $this->scheme_singular_get(),
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Use the naming scheme singular.
 		$label = sprintf(
 			/* translators: %s: The singular name for a Group Blog. */
 			__( 'View %s', 'commentpress-core' ),
 			$this->scheme_singular_get()
 		);
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'label' => $label,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// --<
 		return $label;

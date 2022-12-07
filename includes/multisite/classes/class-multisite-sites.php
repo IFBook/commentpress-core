@@ -198,16 +198,6 @@ class CommentPress_Multisite_Sites {
 			return;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'network_wide' => $network_wide ? 'y' : 'n',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Activate all CommentPress-enabled Sites when deactivating.
 		$this->core_sites_activate();
 
@@ -226,16 +216,6 @@ class CommentPress_Multisite_Sites {
 		if ( ! $network_wide ) {
 			return;
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'network_wide' => $network_wide ? 'y' : 'n',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Deactivate all CommentPress-enabled Sites when deactivating.
 		$this->core_sites_deactivate();
@@ -364,16 +344,6 @@ class CommentPress_Multisite_Sites {
 	 */
 	public function core_site_id_add( $site_id ) {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'site_id-TO-ADD' => $site_id,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Get the current Site IDs.
 		$site_ids = $this->core_site_ids_get();
 
@@ -396,16 +366,6 @@ class CommentPress_Multisite_Sites {
 	 * @param int $site_id The numeric ID of the Site.
 	 */
 	public function core_site_id_remove( $site_id ) {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'site_id-TO-REMOVE' => $site_id,
-			'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Get the current Site IDs.
 		$site_ids = $this->core_site_ids_get();
@@ -435,16 +395,6 @@ class CommentPress_Multisite_Sites {
 		// Get the current Site IDs setting.
 		$site_ids = get_site_option( $this->key_sites, [] );
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'site_ids-GET' => $site_ids,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// --<
 		return $site_ids;
 
@@ -458,16 +408,6 @@ class CommentPress_Multisite_Sites {
 	 * @param array $site_ids The array of numeric Site IDs.
 	 */
 	public function core_site_ids_set( $site_ids ) {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'site_ids-SET' => $site_ids,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Set the Site IDs setting.
 		update_site_option( $this->key_sites, $site_ids );
@@ -488,16 +428,6 @@ class CommentPress_Multisite_Sites {
 
 		// CommentPress Core not enabled on all Sites by default.
 		$default_settings[ $this->key_forced ] = '0';
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'default_settings' => $default_settings,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		/*
 		// The default "Default Welcome Page content" value.
@@ -604,16 +534,6 @@ class CommentPress_Multisite_Sites {
 			return;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'message' => 'ADDING SITES',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Get force setting.
 		$forced = $this->setting_forced_get();
 
@@ -646,16 +566,6 @@ class CommentPress_Multisite_Sites {
 	 */
 	public function site_signup_form_meta_add( $meta ) {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'POST' => $_POST,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Bail early if we already have our meta.
 		if ( ! empty( $meta['commentpress'] ) ) {
 			return $meta;
@@ -666,16 +576,6 @@ class CommentPress_Multisite_Sites {
 
 		// Get "CommentPress Core enabled on all Sites" setting.
 		$forced = $this->setting_forced_get();
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'forced' => $forced ? 'y' : 'n',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// When not forced.
 		if ( ! $forced ) {
@@ -697,16 +597,6 @@ class CommentPress_Multisite_Sites {
 			$meta['commentpress'] = $metadata;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'meta' => $meta,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// --<
 		return $meta;
 
@@ -725,18 +615,6 @@ class CommentPress_Multisite_Sites {
 	 * @param array $args The array of initialization arguments.
 	 */
 	public function site_initialise( $new_site, $args ) {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'new_site' => $new_site,
-			'args' => $args,
-			'skip' =>  empty( $args['options']['commentpress'] ) ? 'y' : 'n',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// If none of our Site initialisation meta is present.
 		if ( empty( $args['options']['commentpress'] ) ) {
@@ -770,16 +648,6 @@ class CommentPress_Multisite_Sites {
 		// Get "CommentPress Core enabled on all Sites" setting.
 		$forced = $this->setting_forced_get();
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'forced' => $forced,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Bail if not forced and "Enable CommentPress" checkbox was not checked.
 		if ( ! $forced ) {
 			if ( empty( $args['options']['commentpress']['enable'] ) ) {
@@ -795,16 +663,6 @@ class CommentPress_Multisite_Sites {
 
 		// Activate CommentPress Core.
 		$this->multisite->site->core_activate();
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'core_activated' => 'YES',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		/**
 		 * Fires when a new CommentPress-enabled Site has been initialised.

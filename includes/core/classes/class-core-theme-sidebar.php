@@ -171,16 +171,6 @@ class CommentPress_Core_Theme_Sidebar {
 		// Add our defaults.
 		$settings[ $this->key_sidebar ] = 'comments';
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'settings' => $settings,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// --<
 		return $settings;
 
@@ -355,17 +345,6 @@ class CommentPress_Core_Theme_Sidebar {
 		// Get setting.
 		$setting = $this->core->db->setting_get( $this->key_sidebar );
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'default-INIT' => $default,
-			'setting-INIT' => $setting,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// If there's no Post object.
 		if ( ! ( $post instanceof WP_Post ) ) {
 
@@ -433,16 +412,6 @@ class CommentPress_Core_Theme_Sidebar {
 		// Get for this Post ID.
 		$default = $this->get_for_post_id( $post->ID );
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'default-FINAL' => $default,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// --<
 		return $default;
 
@@ -487,16 +456,6 @@ class CommentPress_Core_Theme_Sidebar {
 		// Check Post for override.
 		$override = get_post_meta( $post_id, $this->meta_key, true );
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'override' => $override,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Return raw value if requested.
 		if ( $raw === true ) {
 			return $override;
@@ -504,16 +463,6 @@ class CommentPress_Core_Theme_Sidebar {
 
 		// Default to current Sidebar.
 		$sidebar = $this->core->db->setting_get( $this->key_sidebar );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'sidebar-SETTING' => $sidebar,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Bail if we didn't get one.
 		if ( empty( $override ) ) {
@@ -524,16 +473,6 @@ class CommentPress_Core_Theme_Sidebar {
 		if ( (string) $override !== (string) $sidebar ) {
 			$sidebar = $override;
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'sidebar-FINAL' => $sidebar,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// --<
 		return (string) $sidebar;
@@ -549,18 +488,6 @@ class CommentPress_Core_Theme_Sidebar {
 	 * @param string $sidebar The Sidebar identifier.
 	 */
 	public function set_for_post_id( $post_id, $sidebar ) {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'post_id' => $post_id,
-			'sidebar' => $sidebar,
-			'meta_key' => $this->meta_key,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Sanity check.
 		$sidebar = (string) $sidebar;

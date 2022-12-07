@@ -147,16 +147,6 @@ class CommentPress_Core_Database {
 			return;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'network_wide' => $network_wide ? 'y' : 'n',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Init settings.
 		$this->settings_initialise();
 
@@ -173,16 +163,6 @@ class CommentPress_Core_Database {
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
 	public function plugin_deactivate( $network_wide = false ) {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'network_wide' => $network_wide ? 'y' : 'n',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Init settings.
 		$this->settings_initialise();
@@ -271,16 +251,6 @@ class CommentPress_Core_Database {
 	 * @since 4.0
 	 */
 	public function settings_initialise() {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'plugin_context' => $this->core->plugin->plugin_context_get(),
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Load installed plugin version.
 		$this->plugin_version = $this->version_get();
@@ -419,17 +389,6 @@ class CommentPress_Core_Database {
 	 * @return boolean $success True if successful, or false otherwise.
 	 */
 	public function settings_save() {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'plugin_context' => $this->core->plugin->plugin_context_get(),
-			'settings' => $this->settings,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Set the option.
 		return $this->option_wp_set( $this->option_settings, $this->settings );

@@ -240,16 +240,6 @@ class CommentPress_Core_Theme {
 		$settings[ $this->key_excerpt_length ] = 55;
 		$settings[ $this->key_scroll_speed ] = 800;
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'settings' => $settings,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// --<
 		return $settings;
 
@@ -478,16 +468,6 @@ class CommentPress_Core_Theme {
 			return;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'network_wide' => $network_wide ? 'y' : 'n',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Activate the default CommentPress theme.
 		$this->activate();
 
@@ -508,16 +488,6 @@ class CommentPress_Core_Theme {
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
 	public function plugin_deactivate( $network_wide = false ) {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'network_wide' => $network_wide ? 'y' : 'n',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		/*
 		// Bail if plugin is network activated.

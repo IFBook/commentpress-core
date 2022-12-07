@@ -205,16 +205,6 @@ class CommentPress_Core_Document {
 		$settings[ $this->key_show_title ] = 'show';
 		$settings[ $this->key_show_meta ] = 'hide';
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'settings' => $settings,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// --<
 		return $settings;
 
@@ -605,18 +595,6 @@ class CommentPress_Core_Document {
 	 * @param string $meta_key The name of the meta key.
 	 */
 	public function set_for_post_id( $post_id, $value, $meta_key ) {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'post_id' => $post_id,
-			'value' => $value,
-			'meta_key' => $meta_key,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Delete the meta entry by passing an empty string.
 		if ( is_string( $value ) && $value === '' ) {

@@ -142,16 +142,6 @@ class CommentPress_Multisite_Site {
 	 */
 	public function core_activate() {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'context' => $context,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Initialise core.
 		$core = $this->multisite->plugin->core_initialise();
 
@@ -232,15 +222,6 @@ class CommentPress_Multisite_Site {
 	 * @since 3.3
 	 */
 	public function core_deactivate() {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Get the current Site ID.
 		$site_id = get_current_blog_id();

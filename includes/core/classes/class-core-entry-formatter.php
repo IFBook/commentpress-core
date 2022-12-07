@@ -240,16 +240,6 @@ class CommentPress_Core_Entry_Formatter {
 		// Add our defaults.
 		$settings[ $this->key_formatter ] = 0;
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'settings' => $settings,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// --<
 		return $settings;
 
@@ -702,18 +692,6 @@ class CommentPress_Core_Entry_Formatter {
 	 * @param int $formatter The numeric ID of the Formatter.
 	 */
 	public function set_for_post_id( $post_id, $formatter ) {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'post_id' => $post_id,
-			'formatter' => $formatter,
-			'key_post_meta' => $this->key_post_meta,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Clear the Formatter by passing an empty string.
 		if ( is_string( $formatter ) && $formatter === '' ) {
