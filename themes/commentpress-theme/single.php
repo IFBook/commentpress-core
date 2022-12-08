@@ -24,7 +24,7 @@ get_header();
 				<div id="page_wrapper">
 
 					<div id="content" class="content-wrapper">
-						<div class="post clearfix<?php echo commentpress_get_post_css_override( get_the_ID() ); ?>" id="post-<?php the_ID(); ?>">
+						<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>">
 
 							<h2 class="post_title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 

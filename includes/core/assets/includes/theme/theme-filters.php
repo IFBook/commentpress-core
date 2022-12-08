@@ -171,6 +171,56 @@ endif;
 
 
 
+if ( ! function_exists( 'commentpress_post_classes' ) ) :
+
+	/**
+	 * Filters the Post classes.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $classes The array of classes assigned to the Post.
+	 * @param array $class The additional classes assigned to the Post.
+	 * @param int $post_id The numeric ID of the Post.
+	 * @return array $classes The modified array of classes assigned to the Post.
+	 */
+	function commentpress_post_classes( $classes, $class, $post_id ) {
+
+		// Always add "post" to Post classes.
+		$classes[] = 'post';
+
+		// Always add "clearfix" to Post classes.
+		$classes[] = 'clearfix';
+
+		// Get core plugin reference.
+		$core = commentpress_core();
+		if ( empty( $core ) ) {
+			return $classes;
+		}
+
+		// Check if the Formatter for this Post is overridden.
+		$overridden = $core->entry->formatter->is_overridden( $post_id );
+		if ( $overridden === false ) {
+			return $classes;
+		}
+
+		// Get the Formatter for this Post.
+		$formatter = $core->entry->formatter->get_for_post_id( $post_id );
+
+		// Build class name and add to classes.
+		$classes[] = 'overridden_type-' . $formatter;
+
+		// --<
+		return $classes;
+
+	}
+
+endif;
+
+// Add callback for the above.
+add_filter( 'post_class', 'commentpress_post_classes', 20, 3 );
+
+
+
 if ( ! function_exists( 'commentpress_remove_more_jump_link' ) ) :
 
 	/**

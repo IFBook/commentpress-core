@@ -31,7 +31,7 @@ get_header();
 					<?php endif; ?>
 
 					<div id="content" class="content">
-						<div class="post clearfix<?php echo commentpress_get_post_css_override( get_the_ID() ); ?>" id="post-<?php the_ID(); ?>">
+						<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>">
 
 							<?php if ( ! commentpress_has_feature_image() ) : ?>
 
