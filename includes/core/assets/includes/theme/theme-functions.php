@@ -1272,7 +1272,7 @@ if ( ! function_exists( 'commentpress_get_post_meta_visibility' ) ) :
 	function commentpress_get_post_meta_visibility( $post_id ) {
 
 		// Hide by default.
-		$show_meta = 'show_title';
+		$show_meta = 'hide';
 
 		// Use setting from core if present.
 		$core = commentpress_core();
