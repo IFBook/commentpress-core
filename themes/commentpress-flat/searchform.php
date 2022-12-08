@@ -22,7 +22,7 @@ if ( function_exists( 'bp_search_form_type_select' ) && bp_is_root_blog() ) :
 	<form action="<?php echo bp_search_form_action(); ?>" method="post" id="search-form">
 
 		<label for="search-terms" class="accessibly-hidden"><?php esc_html_e( 'Search for:', 'commentpress-core' ); ?></label>
-		<input type="text" id="search-terms" name="search-terms" value="<?php echo isset( $_REQUEST['s'] ) ? esc_attr( $_REQUEST['s'] ) : ''; ?>" />
+		<input type="text" id="search-terms" name="search-terms" value="<?php echo isset( $_REQUEST['s'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) ) : ''; ?>" />
 
 		<?php echo bp_search_form_type_select(); ?>
 

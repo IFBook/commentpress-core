@@ -48,21 +48,20 @@ defined( 'ABSPATH' ) || exit;
 					<?php
 
 					// Get Comments for this Post in ascending order.
-					$comments = get_comments( [
+					$comments_in_page = get_comments( [
 						'post_id' => $post->ID,
 						'order' => 'ASC',
 					] );
 
+					$comments_args = [
+						'type' => 'comment',
+						'reply_text' => __( 'Reply to this comment', 'commentpress-core' ),
+						'callback' => 'commentpress_comments',
+						'style' => 'ol',
+					];
+
 					// List Comments.
-					wp_list_comments(
-						[
-							'type' => 'comment',
-							'reply_text' => __( 'Reply to this comment', 'commentpress-core' ),
-							'callback' => 'commentpress_comments',
-							'style' => 'ol',
-						],
-						$comments
-					);
+					wp_list_comments( $comments_in_page, $comments_args );
 
 					?>
 				</ol>
