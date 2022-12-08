@@ -602,12 +602,10 @@ if ( ! function_exists( 'commentpress_page_number' ) ) :
 		if ( ! apply_filters( 'commentpress_hide_page_number_string', false ) ) {
 
 			// Build Page number string.
-			$page_number = esc_html(
-				sprintf(
-					/* translators: %s: The span element containing the Page number. */
-					__( 'Page %s', 'commentpress-core' ),
-					$element
-				)
+			$page_number = sprintf(
+				/* translators: %s: The span element containing the Page number. */
+				__( 'Page %s', 'commentpress-core' ),
+				$element
 			);
 
 		} else {
