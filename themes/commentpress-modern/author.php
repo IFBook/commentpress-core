@@ -8,12 +8,13 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-// Get author info.
-// TODO: Check.
-if ( isset( $_GET['author_name'] ) ) {
-	$my_author = get_userdatabylogin( $author_name );
+// Get the User object for the Author.
+if ( ! empty( get_query_var( 'author_name' ) ) ) {
+	$my_author = get_user_by( 'login', get_query_var( 'author_name' ) );
+} elseif ( ! empty( $author ) ) {
+	$my_author = get_userdata( (int) $author );
 } else {
-	$my_author = get_userdata( intval( $author ) );
+	$my_author = get_queried_object();
 }
 
 // Do we have an URL for this User?
@@ -74,7 +75,7 @@ get_header();
 											'before' => __( 'Permanent Link:', 'commentpress-core' ),
 											'after' => '',
 											'echo' => false,
-										 ] ),
+										] ),
 										$post_title
 									);
 
@@ -116,7 +117,7 @@ get_header();
 											'before' => __( 'Permanent Link:', 'commentpress-core' ),
 											'after' => '',
 											'echo' => false,
-										 ] ),
+										] ),
 										get_the_title()
 									);
 
