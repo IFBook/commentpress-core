@@ -82,7 +82,27 @@ get_header();
 							<?php while ( have_posts() ) : ?>
 								<?php the_post(); ?>
 								<li>
-									<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php esc_attr_e( 'Permanent Link:', 'commentpress-core' ); ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a> on <?php the_time( get_option( 'date_format' ) ); ?>
+									<?php
+
+									$post_title = sprintf(
+										/* translators: 1: The Post permalink, 2: The date published. */
+										__( '%1$s (on %2$s)', 'commentpress-core' ),
+										get_the_title(),
+										get_the_time( get_option( 'date_format' ) )
+									);
+
+									printf(
+										'<a href="%s" title="%s">%s</a>',
+										get_permalink(),
+										the_title_attribute( [
+											'before' => __( 'Permanent Link:', 'commentpress-core' ),
+											'after' => '',
+											'echo' => false,
+										 ] ),
+										$post_title
+									);
+
+									?>
 								</li>
 							<?php endwhile; ?>
 						</ul>
