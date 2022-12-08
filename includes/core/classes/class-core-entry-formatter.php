@@ -295,7 +295,7 @@ class CommentPress_Core_Entry_Formatter {
 		$formatter = isset( $_POST[ $this->key_formatter ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_formatter ] ) ) : '';
 
 		// Set default sidebar.
-		$$this->setting_formatter_set( $formatter );
+		$this->setting_formatter_set( $formatter );
 
 	}
 
