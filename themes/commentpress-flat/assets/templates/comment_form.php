@@ -16,7 +16,7 @@ $core = commentpress_core();
 
 // Get User data.
 $user = wp_get_current_user();
-$user_identity = $user->exists() ? $user->display_name : '';
+$user_display_name = $user->exists() ? $user->display_name : '';
 
 /**
  * Force the Comment Form to be displayed.
@@ -63,7 +63,7 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 		<div id="respond">
 
 			<div class="cancel-comment-reply">
-				<p><?php cancel_comment_reply_link( 'Cancel' ); ?></p>
+				<p><?php cancel_comment_reply_link( __( 'Cancel', 'commentpress-core' ) ); ?></p>
 			</div>
 
 			<h4 id="respond_title">
@@ -84,7 +84,7 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 
 					$must_log_in = sprintf(
 						__( 'You must be <a href="%s">logged in</a> to post a comment.', 'commentpress-core' ),
-						get_option( 'siteurl' ) . '/wp-login.php?redirect_to=' . urlencode( get_permalink() )
+						esc_url( wp_login_url( get_permalink() ) )
 					);
 
 					/**
@@ -120,7 +120,7 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 						<?php if ( is_user_logged_in() ) : ?>
 
 							<p class="author_is_logged_in">
-								<?php esc_html_e( 'Logged in as', 'commentpress-core' ); ?> <a href="<?php echo get_option( 'siteurl' ); ?>/wp-admin/profile.php"><?php echo $user_identity; ?></a> &rarr; <a href="<?php echo wp_logout_url( get_permalink() ); ?>" title="<?php esc_attr_e( 'Log out of this account', 'commentpress-core' ); ?>"><?php esc_html_e( 'Log out', 'commentpress-core' ); ?></a>
+								<?php esc_html_e( 'Logged in as', 'commentpress-core' ); ?> <a href="<?php echo get_option( 'siteurl' ); ?>/wp-admin/profile.php"><?php echo esc_html( $user_display_name ); ?></a> &rarr; <a href="<?php echo wp_logout_url( get_permalink() ); ?>" title="<?php esc_attr_e( 'Log out of this account', 'commentpress-core' ); ?>"><?php esc_html_e( 'Log out', 'commentpress-core' ); ?></a>
 							</p>
 
 						<?php else : ?>
@@ -129,22 +129,22 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 								<label for="author">
 									<small>
 										<?php esc_html_e( 'Name', 'commentpress-core' ); ?>
-										<?php if ( $req ) echo ' <span class="req">(' . __( 'required', 'commentpress-core' ) . ')</span>'; ?>
+										<?php echo ( $req ? ' <span class="req">(' . __( 'required', 'commentpress-core' ) . ')</span>' : '' ); ?>
 									</small>
 								</label>
 								<br />
-								<input type="text" name="author" id="author" value="<?php echo esc_attr( $commenter['comment_author'] ); ?>" size="30"<?php if ($req) echo ' aria-required="true"'; ?> />
+								<input type="text" name="author" id="author" value="<?php echo esc_attr( $commenter['comment_author'] ); ?>" size="30"<?php echo ( $req ? ' aria-required="true"' : '' ); ?> />
 							</p>
 
 							<p>
 								<label for="email">
 									<small>
 										<?php esc_html_e( 'Mail (will not be published)', 'commentpress-core' ); ?>
-										<?php if ( $req ) echo ' <span class="req">(' . __( 'required', 'commentpress-core' ) . ')</span>'; ?>
+										<?php echo ( $req ? ' <span class="req">(' . __( 'required', 'commentpress-core' ) . ')</span>' : '' ); ?>
 									</small>
 								</label>
 								<br />
-								<input type="text" name="email" id="email" value="<?php echo esc_attr(  $commenter['comment_author_email'] ); ?>" size="30"<?php if ($req) { echo ' aria-required="true"'; } ?> />
+								<input type="text" name="email" id="email" value="<?php echo esc_attr( $commenter['comment_author_email'] ); ?>" size="30"<?php echo ( $req ? ' aria-required="true"' : '' ); ?> />
 							</p>
 
 							<p class="author_not_logged_in">
