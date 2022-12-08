@@ -44,7 +44,7 @@ class CommentPress_Multisite_Site {
 	 * @access public
 	 * @var str $key_enable The settings key for the "Disable CommentPress" setting.
 	 */
-	public $key_disable = 'cpmu_activate_commentpress';
+	public $key_disable = 'cpmu_deactivate_commentpress';
 
 	/**
 	 * Parts template directory path.
@@ -100,11 +100,11 @@ class CommentPress_Multisite_Site {
 		// Save data from multisite Site Settings "CommentPress Settings" screen form submissions.
 		add_action( 'commentpress/multisite/settings/site/save/before', [ $this, 'settings_save' ] );
 
-		// Add our form elements to the Site Settings "CommentPress Settings" Danger Zone metabox.
-		add_action( 'commentpress/core/settings/site/metabox/danger/after', [ $this, 'metabox_settings_core_get' ] );
+		// Inject form element into the "Danger Zone" metabox on core "Site Settings" screen.
+		add_action( 'commentpress/core/settings/site/metabox/danger/after', [ $this, 'settings_meta_box_part_get' ] );
 
-		// Save data from multisite Site Settings "CommentPress Settings" screen form submissions.
-		add_action( 'commentpress/core/settings/site/core/save/before', [ $this, 'settings_core_save' ] );
+		// Act early on core Site Settings "CommentPress Settings" screen form submissions.
+		add_action( 'commentpress/core/settings/site/save/before', [ $this, 'settings_meta_box_part_save' ], 1 );
 
 		// Enable HTML Comments and Content for Authors.
 		add_action( 'init', [ $this, 'html_content_allow' ] );
@@ -400,7 +400,7 @@ class CommentPress_Multisite_Site {
 	 *
 	 * @since 4.0
 	 */
-	public function metabox_settings_core_get() {
+	public function settings_meta_box_part_get() {
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-site-settings-core.php';
@@ -410,11 +410,11 @@ class CommentPress_Multisite_Site {
 	/**
 	 * Saves the data from the core "CommentPress Settings" screen.
 	 *
-	 * @see CommentPress_Multisite_Settings_Site::form_core_submitted()
+	 * @see CommentPress_Core_Settings_Site::form_submitted()
 	 *
 	 * @since 4.0
 	 */
-	public function settings_core_save() {
+	public function settings_meta_box_part_save() {
 
 		// Get the posted setting.
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
@@ -428,8 +428,8 @@ class CommentPress_Multisite_Site {
 		// Deactivate core.
 		$this->core_deactivate();
 
-		// Do form redirection.
-		do_action( 'commentpress/multisite/settings/site/core/redirect' );
+		// Do core "CommentPress Settings" form redirection.
+		do_action( 'commentpress/core/settings/site/form/redirect' );
 
 	}
 

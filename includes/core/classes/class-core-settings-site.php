@@ -177,6 +177,9 @@ class CommentPress_Core_Settings_Site {
 		// Add link to Settings Page.
 		add_filter( 'plugin_action_links', [ $this, 'action_links' ], 10, 2 );
 
+		// Listen for form redirection requests.
+		add_action( 'commentpress/core/settings/site/form/redirect', [ $this, 'form_redirect' ] );
+
 	}
 
 	// -------------------------------------------------------------------------
@@ -788,6 +791,12 @@ class CommentPress_Core_Settings_Site {
 
 	/**
 	 * Form redirection handler.
+	 *
+	 * Also responds to redirection requests made by calling:
+	 *
+	 * do_action( 'commentpress/core/settings/site/form/redirect' );
+	 *
+	 * @see CommentPress_Multisite_Site:settings_meta_box_part_save()
 	 *
 	 * @since 4.0
 	 */

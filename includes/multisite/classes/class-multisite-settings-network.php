@@ -525,15 +525,6 @@ class CommentPress_Multisite_Settings_Network {
 		// Check that we trust the source of the data.
 		check_admin_referer( $this->nonce_action, $this->nonce_field );
 
-		// TODO: THIS IS THE WAY to halt further settings.
-
-		/*
-		// Bail if we asked to reset either of the above.
-		if ( $cpmu_bp_reset == '1' ) {
-			$this->form_redirect();
-		}
-		*/
-
 		/**
 		 * Fires before network settings have been updated.
 		 *
