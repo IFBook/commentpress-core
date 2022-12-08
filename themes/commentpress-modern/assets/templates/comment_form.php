@@ -128,8 +128,7 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 							<p>
 								<label for="author">
 									<small>
-										<?php esc_html_e( 'Name', 'commentpress-core' ); ?>
-										<?php echo ( $req ? ' <span class="req">(' . __( 'required', 'commentpress-core' ) . ')</span>' : '' ); ?>
+										<?php esc_html_e( 'Name', 'commentpress-core' ); ?> <?php echo ( $req ? '<span class="req">(' . __( 'required', 'commentpress-core' ) . ')</span>' : '' ); ?>
 									</small>
 								</label>
 								<br />
@@ -139,8 +138,7 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 							<p>
 								<label for="email">
 									<small>
-										<?php esc_html_e( 'Mail (will not be published)', 'commentpress-core' ); ?>
-										<?php echo ( $req ? ' <span class="req">(' . __( 'required', 'commentpress-core' ) . ')</span>' : '' ); ?>
+										<?php esc_html_e( 'Mail (will not be published)', 'commentpress-core' ); ?> <?php echo ( $req ? '<span class="req">(' . __( 'required', 'commentpress-core' ) . ')</span>' : '' ); ?>
 									</small>
 								</label>
 								<br />
@@ -148,7 +146,9 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 							</p>
 
 							<p class="author_not_logged_in">
-								<label for="url"><small><?php esc_html_e( 'Website', 'commentpress-core' ); ?></small></label>
+								<label for="url">
+									<small><?php esc_html_e( 'Website', 'commentpress-core' ); ?></small>
+								</label>
 								<br />
 								<input type="text" name="url" id="url" value="<?php echo esc_attr( $commenter['comment_author_url'] ); ?>" size="30" />
 							</p>
