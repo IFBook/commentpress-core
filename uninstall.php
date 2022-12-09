@@ -135,7 +135,7 @@ function commentpress_taxonomy_restore( $taxonomy ) {
 	);
 
 	// Did we get any?
-	if ( count( $terms ) > 0 ) {
+	if ( ! empty( $terms ) ) {
 
 		// Delete each one in turn.
 		foreach ( $terms as $term ) {
