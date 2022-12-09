@@ -224,7 +224,7 @@ class CommentPress_Core_Loader {
 		 *
 		 * @since 3.6.3
 		 */
-		do_action_deprecated( 'commentpress_loaded', '4.0', 'commentpress/core/loaded' );
+		do_action_deprecated( 'commentpress_loaded', [], '4.0', 'commentpress/core/loaded' );
 
 		/**
 		 * Fires when CommentPress Core has fully loaded.
@@ -280,7 +280,7 @@ class CommentPress_Core_Loader {
 		 *
 		 * @since 3.6.2
 		 */
-		do_action_deprecated( 'commentpress_after_includes', '4.0', 'commentpress/core/loaded' );
+		do_action_deprecated( 'commentpress_after_includes', [], '4.0', 'commentpress/core/loaded' );
 
 	}
 
@@ -340,7 +340,7 @@ class CommentPress_Core_Loader {
 		 *
 		 * @since 3.6.2
 		 */
-		do_action_deprecated( 'commentpress_after_hooks', '4.0', 'commentpress/core/loaded' );
+		do_action_deprecated( 'commentpress_after_hooks', [], '4.0', 'commentpress/core/loaded' );
 
 	}
 

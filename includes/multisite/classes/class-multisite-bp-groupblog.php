@@ -818,7 +818,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 		 * @param int $site_text_format The numeric Site Text Format.
 		 * @param int $group_id The numeric ID of the BuddyPress Group.
 		 */
-		do_action_deprecated( 'commentpress/multisite/bp/groupblog/site/initialised', $blog_id, $site_text_format, $group_id );
+		do_action( 'commentpress/multisite/bp/groupblog/site/initialised', $blog_id, $site_text_format, $group_id );
 
 	}
 
