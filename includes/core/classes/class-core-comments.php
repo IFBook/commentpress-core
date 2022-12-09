@@ -70,8 +70,26 @@ class CommentPress_Core_Comments {
 	 */
 	public function initialise() {
 
-		// Register hooks.
+		// Only do this once.
+		static $done;
+		if ( isset( $done ) && $done === true ) {
+			return;
+		}
+
+		// Bootstrap object.
 		$this->register_hooks();
+
+		/**
+		 * Fires when the Comments object has loaded.
+		 *
+		 * Used internally to bootstrap objects.
+		 *
+		 * @since 4.0
+		 */
+		do_action( 'commentpress/core/comments/loaded' );
+
+		// We're done.
+		$done = true;
 
 	}
 
