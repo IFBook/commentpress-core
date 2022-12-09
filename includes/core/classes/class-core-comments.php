@@ -29,6 +29,24 @@ class CommentPress_Core_Comments {
 	public $core;
 
 	/**
+	 * Comment Tagging object.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var object $tagging The Comment Tagging object.
+	 */
+	public $tagging;
+
+	/**
+	 * Classes directory path.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $classes_path Relative path to the classes directory.
+	 */
+	private $classes_path = 'includes/core/classes/';
+
+	/**
 	 * Metabox template directory path.
 	 *
 	 * @since 4.0
@@ -77,6 +95,8 @@ class CommentPress_Core_Comments {
 		}
 
 		// Bootstrap object.
+		$this->include_files();
+		$this->setup_objects();
 		$this->register_hooks();
 
 		/**
@@ -90,6 +110,30 @@ class CommentPress_Core_Comments {
 
 		// We're done.
 		$done = true;
+
+	}
+
+	/**
+	 * Includes class files.
+	 *
+	 * @since 4.0
+	 */
+	public function include_files() {
+
+		// Include theme class files.
+		require_once COMMENTPRESS_PLUGIN_PATH . $this->classes_path . 'class-core-comments-tagging.php';
+
+	}
+
+	/**
+	 * Sets up the objects in this class.
+	 *
+	 * @since 4.0
+	 */
+	public function setup_objects() {
+
+		// Initialise theme objects.
+		$this->tagging = new CommentPress_Core_Comments_Tagging( $this );
 
 	}
 

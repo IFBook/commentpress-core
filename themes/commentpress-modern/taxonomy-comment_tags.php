@@ -1,6 +1,6 @@
 <?php
 /**
- * Comment Tags Taxonomy Template.
+ * "Comment Tags" Taxonomy Template.
  *
  * @package CommentPress_Core
  */
@@ -8,26 +8,12 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-/**
- * Enqueue accordion script.
- */
-function my_js_needed() {
-
-	// Enqueue accordion-like Javascript.
-	wp_enqueue_script(
-		'cp_special',
-		get_template_directory_uri() . '/assets/js/all-comments.js',
-		null, // Dependencies.
-		COMMENTPRESS_VERSION, // Version.
-		false
-	);
-
-}
-
-add_action( 'wp_enqueue_scripts', 'my_js_needed' );
-
 // Get HTML for this template.
-$html = commentpress_get_tagged_comments_content();
+$html = '';
+$core = commentpress_core();
+if ( ! empty( $core ) ) {
+	$html = $core->comments->tagging->archive_content_get();
+}
 
 get_header();
 
