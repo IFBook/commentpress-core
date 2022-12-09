@@ -134,20 +134,15 @@ function commentpress_taxonomy_restore( $taxonomy ) {
 		)
 	);
 
-	// Did we get any?
+	// Delete each one in turn - if we get any.
 	if ( ! empty( $terms ) ) {
-
-		// Delete each one in turn.
 		foreach ( $terms as $term ) {
-
-			// Delete data.
 			// phpcs:ignore: WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$wpdb->delete( $wpdb->term_taxonomy, [ 'term_taxonomy_id' => $term->term_taxonomy_id ] );
 			// phpcs:ignore: WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$wpdb->delete( $wpdb->term_relationships, [ 'term_taxonomy_id' => $term->term_taxonomy_id ] );
 			// phpcs:ignore: WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$wpdb->delete( $wpdb->terms, [ 'term_id' => $term->term_id ] );
-
 		}
 	}
 
