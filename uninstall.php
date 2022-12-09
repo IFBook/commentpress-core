@@ -108,6 +108,8 @@ function commentpress_schema_restore() {
  *
  * @see https://gist.github.com/wpsmith/9285391#file-uninstall-terms-taxonomy-2-php
  *
+ * @since 4.0
+ *
  * @param str $taxonomy The name of the Taxonomy to delete.
  */
 function commentpress_taxonomy_restore( $taxonomy ) {
