@@ -38,6 +38,24 @@ class CommentPress_Core_Comments_Tagging {
 	public $comments;
 
 	/**
+	 * Parts template directory path.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $parts_path Relative path to the Parts directory.
+	 */
+	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
+
+	/**
+	 * Comment Tagging Enabled setting key in Site Settings.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var str $key_sidebar The "Comment Tagging Enabled" setting key in Site Settings.
+	 */
+	public $key_tagging = 'cp_tagging_enabled';
+
+	/**
 	 * Taxonomy name.
 	 *
 	 * @since 4.0
@@ -86,11 +104,10 @@ class CommentPress_Core_Comments_Tagging {
 		}
 
 		// Register hooks.
-		$this->register_hooks_activation();
-		$this->register_hooks_taxonomy();
-		$this->register_hooks_admin();
-		$this->register_hooks_comments();
-		$this->register_hooks_front_end();
+		$this->register_hooks_settings();
+
+		// Init after the Database object has loaded settings.
+		add_action( 'plugins_loaded', [ $this, 'register_hooks_tagging' ], 20 );
 
 		/**
 		 * Fires when the Comments Tagging object has loaded.
@@ -98,6 +115,40 @@ class CommentPress_Core_Comments_Tagging {
 		 * @since 4.0
 		 */
 		do_action( 'commentpress/core/comments/tagging/loaded' );
+
+	}
+
+	/**
+	 * Registers "Site Settings" hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_settings() {
+
+		// Add our settings to default settings.
+		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ] );
+
+		// Inject form element into the "Commenting Settings" metabox on "Site Settings" screen.
+		add_action( 'commentpress/core/settings/site/metabox/comment/before', [ $this, 'settings_meta_box_part_get' ], 20 );
+
+		// Save Sidebar data from "Site Settings" screen.
+		add_action( 'commentpress/core/settings/site/save/before', [ $this, 'settings_meta_box_part_save' ] );
+
+	}
+
+	/**
+	 * Registers all other hooks.
+	 *
+	 * @since 4.0
+	 */
+	public function register_hooks_tagging() {
+
+		// Separated for clarity.
+		$this->register_hooks_activation();
+		$this->register_hooks_taxonomy();
+		$this->register_hooks_admin();
+		$this->register_hooks_comments();
+		$this->register_hooks_front_end();
 
 	}
 
@@ -123,6 +174,11 @@ class CommentPress_Core_Comments_Tagging {
 	 */
 	private function register_hooks_taxonomy() {
 
+		// Bail if not enabled.
+		if ( 'y' !== $this->setting_tagging_get() ) {
+			return;
+		}
+
 		// Create Taxonomy.
 		add_action( 'init', [ $this, 'taxonomy_create' ], 0 );
 
@@ -141,6 +197,11 @@ class CommentPress_Core_Comments_Tagging {
 	 * @since 4.0
 	 */
 	private function register_hooks_admin() {
+
+		// Bail if not enabled.
+		if ( 'y' !== $this->setting_tagging_get() ) {
+			return;
+		}
 
 		// Add admin menu item.
 		add_action( 'admin_menu', [ $this, 'admin_page_register' ] );
@@ -163,6 +224,11 @@ class CommentPress_Core_Comments_Tagging {
 	 */
 	private function register_hooks_comments() {
 
+		// Bail if not enabled.
+		if ( 'y' !== $this->setting_tagging_get() ) {
+			return;
+		}
+
 		// Intercept Comment save process.
 		add_action( 'comment_post', [ $this, 'comment_saved' ], 20, 2 );
 
@@ -184,6 +250,11 @@ class CommentPress_Core_Comments_Tagging {
 	 */
 	private function register_hooks_front_end() {
 
+		// Bail if not enabled.
+		if ( 'y' !== $this->setting_tagging_get() ) {
+			return;
+		}
+
 		// Register any public styles.
 		add_action( 'wp_enqueue_scripts', [ $this, 'front_end_enqueue_styles' ], 20 );
 
@@ -201,6 +272,113 @@ class CommentPress_Core_Comments_Tagging {
 
 		// Add tag data to AJAX-edited Comment data.
 		add_filter( 'commentpress_ajax_edited_comment', [ $this, 'front_end_ajax_edited_comment_filter' ], 10, 1 );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Appends our settings to the default core settings.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $settings The existing default core settings.
+	 * @return array $settings The modified default core settings.
+	 */
+	public function settings_get_defaults( $settings ) {
+
+		// Add our defaults.
+		$settings[ $this->key_tagging ] = 'n';
+
+		// --<
+		return $settings;
+
+	}
+
+	/**
+	 * Adds our form element to the "Commenting Settings" metabox.
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_part_get() {
+
+		// Get the value of the option.
+		$tagging = $this->setting_tagging_get();
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-comments-tagging-settings.php';
+
+	}
+
+	/**
+	 * Saves the data from "Site Settings" screen.
+	 *
+	 * Adds the data to the settings array. The settings are actually saved later.
+	 *
+	 * @see CommentPress_Core_Settings_Site::form_submitted()
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_part_save() {
+
+		// Find the data.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$tagging = isset( $_POST[ $this->key_tagging ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_tagging ] ) ) : 'n';
+
+		// Set default sidebar.
+		$this->setting_tagging_set( $tagging );
+
+		// Try and flush rewrite rules.
+		add_action( 'init', 'flush_rewrite_rules' );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the "Comment Tagging Enabled" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return str $page_nav_enabled The setting if found, default otherwise.
+	 */
+	public function setting_tagging_get() {
+
+		// Get the setting.
+		$tagging = $this->core->db->setting_get( $this->key_tagging );
+
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'tagging-GET' => ! empty( $tagging ) ? $tagging : 'n',
+			'backtrace' => $trace,
+		], true ) );
+
+		// Return setting or default if empty.
+		return ! empty( $tagging ) ? $tagging : 'n';
+
+	}
+
+	/**
+	 * Sets the "Comment Tagging Enabled" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param str $tagging The setting value.
+	 */
+	public function setting_tagging_set( $tagging ) {
+
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'tagging-SET' => $tagging,
+			//'backtrace' => $trace,
+		], true ) );
+
+		// Set the setting.
+		$this->core->db->setting_set( $this->key_tagging, $tagging );
 
 	}
 
