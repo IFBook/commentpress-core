@@ -347,14 +347,6 @@ class CommentPress_Core_Comments_Tagging {
 		// Get the setting.
 		$tagging = $this->core->db->setting_get( $this->key_tagging );
 
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'tagging-GET' => ! empty( $tagging ) ? $tagging : 'n',
-			'backtrace' => $trace,
-		], true ) );
-
 		// Return setting or default if empty.
 		return ! empty( $tagging ) ? $tagging : 'n';
 
@@ -368,14 +360,6 @@ class CommentPress_Core_Comments_Tagging {
 	 * @param str $tagging The setting value.
 	 */
 	public function setting_tagging_set( $tagging ) {
-
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'tagging-SET' => $tagging,
-			//'backtrace' => $trace,
-		], true ) );
 
 		// Set the setting.
 		$this->core->db->setting_set( $this->key_tagging, $tagging );
