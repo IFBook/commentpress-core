@@ -185,12 +185,11 @@ class CommentPress_AJAX_Comments {
 		$vars['cpajax_comment_refresh_interval'] = 5000;
 
 		/**
-		 * Allow Javascript vars to be filtered.
+		 * Filter the Javascript vars.
 		 *
 		 * @since 3.9.6
 		 *
-		 * @param array $vars The existing localisation array.
-		 * @return array $vars The modified localisation array.
+		 * @param array $vars The array of Javascript vars to be passed to the script.
 		 */
 		$vars = apply_filters( 'cpajax_javascript_vars', $vars );
 
@@ -338,7 +337,6 @@ class CommentPress_AJAX_Comments {
 		 * @since 3.9.12
 		 *
 		 * @param array $data The array of Comment data.
-		 * @return array $data The modified array of Comment data.
 		 */
 		$data = apply_filters( 'commentpress_ajax_get_comment', $data );
 
@@ -424,7 +422,6 @@ class CommentPress_AJAX_Comments {
 		 * @since 3.9.12
 		 *
 		 * @param array $data The array of Comment data.
-		 * @return array $data The modified array of Comment data.
 		 */
 		$data = apply_filters( 'commentpress_ajax_edited_comment', $data );
 
