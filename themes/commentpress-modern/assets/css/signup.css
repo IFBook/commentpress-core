@@ -217,7 +217,7 @@ styles for it to fit with our static header.
 }
 
 #content .mu_register #cp-multisite-options .checkbox label,
-#content .mu_register #cp-multisite-options .cp-workflow-type label
+#content .mu_register #cp-multisite-options .cp-blog-type label
 {
 	color: #000;
 	font-size: 1em;

@@ -3,10 +3,10 @@ Contributors: needle, commentpress
 Donate link: https://www.paypal.me/interactivist
 Tags: commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
 Requires at least: 4.9
-Tested up to: 5.8
-Stable tag: 4.0
+Tested up to: 6.1
+Stable tag: 4.0a
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 CommentPress Core allows fine-grained commenting in the margins of a text. Use it to annotate, workshop or debate a social text in a social context.
 
@@ -214,6 +214,10 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 
 == Changelog ==
+
+<h4>4.0</h4>
+
+* Remove support for workflow
 
 <h4>3.9.15</h4>
 

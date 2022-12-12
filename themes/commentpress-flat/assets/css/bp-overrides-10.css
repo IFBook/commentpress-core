@@ -1,0 +1,94 @@
+/*
+================================================================================
+CommentPress Flat BuddyPress v10+ Stylesheet
+================================================================================
+AUTHOR: Christian Wach <needle@haystack.co.uk>
+--------------------------------------------------------------------------------
+NOTES
+
+BuddyPress 10+ compatibility and overrides.
+
+--------------------------------------------------------------------------------
+*/
+
+/*
+#buddypress #activity-stream li.mini .bp-member-avatar-content img.profile-photo,
+#buddypress #activity-stream li.mini .bp-group-avatar-content img.group-photo
+{
+    width: 80px;
+    height: 80px;
+}
+*/
+
+#buddypress #activity-stream li.mini .bp-group-activity-preview,
+#buddypress #activity-stream li.mini .bp-member-activity-preview
+{
+    margin-top: 0.5em;
+}
+
+#buddypress #activity-stream li.mini .bp-group-activity-preview img.avatar,
+#buddypress #activity-stream li.mini .bp-member-activity-preview img.avatar
+{
+    width: 120px;
+    height: auto;
+	margin-left: auto;
+	margin-right: auto;
+	border: 2px solid #fff;
+}
+
+#buddypress .bp-member-preview-cover img,
+#buddypress .bp-group-preview-cover img
+{
+	height: 150px;
+}
+
+.bp-member-avatar-content,
+.bp-group-avatar-content
+{
+	 width: 128px;
+}
+
+@media screen and (max-width: 46.8em) {
+
+	#buddypress .bp-member-avatar-content,
+	#buddypress .bp-group-avatar-content
+	{
+	    width: 132px;
+		margin-bottom: 15px;
+	}
+
+}
+
+.bp-member-short-description .bp-profile-button,
+.bp-group-short-description .bp-profile-button
+{
+	text-align: center;
+}
+
+/**
+ * Select2 compatibility.
+ */
+#buddypress .standard-form .select2 input[type="search"]
+{
+	padding: 0;
+	border: none;
+	background: transparent;
+}
+
+/**
+ * Register link in BP Login Widget.
+ */
+.widget.buddypress #bp-login-widget-form .bp-login-widget-register-link
+{
+	margin-left: 10px;
+	vertical-align: unset;
+}
+
+/**
+ * Lost Password link in BP Login Widget.
+ */
+.widget.buddypress #bp-login-widget-form .bp-login-widget-password-link
+{
+	margin-left: 10px;
+}
+

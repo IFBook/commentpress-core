@@ -1,92 +1,65 @@
 <?php
-
-
 /**
- * Enqueue accordion script.
+ * "Comment Tags" Taxonomy Template.
+ *
+ * @package CommentPress_Core
  */
-function my_js_needed() {
-	// Enqueue accordion-like Javascript.
-	wp_enqueue_script(
-		'cp_special',
-		get_template_directory_uri() . '/assets/js/cp_js_all_comments.js',
-		null, // Dependencies.
-		COMMENTPRESS_VERSION // Version.
-	);
-}
 
-add_action( 'wp_enqueue_scripts', 'my_js_needed' );
-
-
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 // Get HTML for this template.
-$html = commentpress_get_tagged_comments_content();
+$html = '';
+$core = commentpress_core();
+if ( ! empty( $core ) ) {
+	$html = $core->comments->tagging->archive_content_get();
+}
 
+get_header();
 
-
-get_header(); ?>
-
-
-
-<!-- taxonomy-classification.php -->
-
+?>
+<!-- taxonomy-comment_tags.php -->
 <div id="wrapper">
+	<div id="main_wrapper" class="clearfix">
+		<div id="page_wrapper">
 
+			<div id="content" class="clearfix">
+				<div class="post">
 
+					<h3 class="post_title">
+						<?php
 
-<div id="main_wrapper" class="clearfix">
+						echo sprintf(
+							__( 'Comments Tagged &#8216;%s&#8217;', 'commentpress-core' ),
+							single_cat_title( '', false )
+						);
 
+						?>
+					</h3>
 
+					<div id="comments_in_page_wrapper">
 
-<div id="page_wrapper">
+						<?php if ( ! empty( $html ) ) : ?>
 
+							<?php echo $html; ?>
 
+						<?php else : ?>
 
-<div id="content" class="clearfix">
+							<h2 class="post_title"><?php esc_html_e( 'No Comments Found', 'commentpress-core' ); ?></h2>
+							<p><?php esc_html_e( 'Sorry, but there are no comments for this tag.', 'commentpress-core' ); ?></p>
+							<?php get_search_form(); ?>
 
-<div class="post">
+						<?php endif; ?>
 
+					</div>
 
+				</div><!-- /post -->
+			</div><!-- /content -->
 
-<h3 class="post_title"><?php
-	echo sprintf( __( 'Comments Tagged &#8216;%s&#8217;', 'commentpress-core' ), single_cat_title( '', false ) )
-?></h3>
-
-<?php if ( ! empty( $html ) ) : ?>
-
-	<?php echo $html; ?>
-
-<?php else : ?>
-
-	<h2 class="post_title"><?php _e( 'No Comments Found', 'commentpress-core' ); ?></h2>
-
-	<p><?php _e( "Sorry, but there are no comments for this tag.", 'commentpress-core' ); ?></p>
-
-	<?php get_search_form(); ?>
-
-<?php endif; ?>
-
-
-
-</div><!-- /post -->
-
-</div><!-- /content -->
-
-
-
-</div><!-- /page_wrapper -->
-
-
-
-</div><!-- /main_wrapper -->
-
-
-
+		</div><!-- /page_wrapper -->
+	</div><!-- /main_wrapper -->
 </div><!-- /wrapper -->
 
-
-
 <?php get_sidebar(); ?>
-
-
 
 <?php get_footer(); ?>

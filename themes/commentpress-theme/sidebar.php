@@ -1,311 +1,243 @@
 <?php
+/**
+ * Sidebar Template.
+ *
+ * @package CommentPress_Core
+ */
 
-// Declare access to globals.
-global $commentpress_core;
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
+// Get core plugin reference.
+$core = commentpress_core();
 
-
-// Init tab order.
+// If we have the plugin enabled, get order from plugin options.
 $_tab_order = [ 'comments', 'activity', 'contents' ];
-
-// If we have the plugin enabled. and the method exists.
-if (
-	is_object( $commentpress_core ) AND
-	method_exists( $commentpress_core, 'get_sidebar_order' )
-) {
-
-	// Get order from plugin options.
-	$_tab_order = $commentpress_core->get_sidebar_order();
-
+if ( ! empty( $core ) ) {
+	$_tab_order = $core->theme->sidebar->order_get();
 }
 
+// Get commentable status.
+$is_commentable = commentpress_is_commentable();
 
-
-?><!-- sidebar.php -->
-
+?>
+<!-- sidebar.php -->
 <div id="sidebar">
+	<div id="sidebar_inner">
+
+		<ul id="sidebar_tabs">
+			<?php
 
-<div id="sidebar_inner">
+			// -----------------------------------------------------------------------------
+			// SIDEBAR HEADERS.
+			// -----------------------------------------------------------------------------
+			foreach ( $_tab_order as $_tab ) {
 
+				switch ( $_tab ) {
 
+					// Comments Header.
+					case 'comments':
+						?>
 
-<ul id="sidebar_tabs">
+						<li id="comments_header" class="sidebar_header">
+							<h2><a href="#comments_sidebar">
+								<?php
 
-<?php
+								/**
+								 * Filters the Comments tab title.
+								 *
+								 * @since 3.4
+								 *
+								 * @param str The default Comments tab title.
+								 */
+								echo apply_filters( 'cp_tab_title_comments', __( 'Comments', 'commentpress-core' ) );
 
-// -----------------------------------------------------------------------------
-// SIDEBAR HEADERS.
-// -----------------------------------------------------------------------------
+								?>
+							</a></h2>
 
+							<?php
 
-foreach( $_tab_order AS $_tab ) {
+							// Show the minimise all button if we have the plugin enabled.
+							if ( ! empty( $core ) ) {
+								echo $core->display->get_minimise_all_button( 'comments' );
+							}
 
-	switch ( $_tab ) {
+							?>
+						</li>
 
+						<?php
 
+						break;
 
-		// Comments Header.
-		case 'comments':
+					// Activity Header.
+					case 'activity':
 
+						// Do we want to show Activity Tab?
+						if ( commentpress_show_activity_tab() ) {
 
+							/**
+							 * Filters the Activity tab title.
+							 *
+							 * @since 3.4
+							 *
+							 * @param str The default Activity tab title.
+							 */
+							$_activity_title = apply_filters( 'cp_tab_title_activity', __( 'Activity', 'commentpress-core' ) );
 
-?><li id="comments_header" class="sidebar_header">
-<h2><a href="#comments_sidebar"><?php
+							?>
+							<li id="activity_header" class="sidebar_header">
+								<h2><a href="#activity_sidebar"><?php echo $_activity_title; ?></a></h2>
+								<?php
 
-// Set default link name.
-$_comments_title = apply_filters(
+								// Show the minimise all button if we have the plugin enabled.
+								if ( ! empty( $core ) ) {
+									echo $core->display->get_minimise_all_button( 'activity' );
+								}
+
+								?>
+							</li>
+							<?php
+
+						}
+
+						break;
+
+					// Contents Header.
+					case 'contents':
+						?>
 
-	// Filter name.
-	'cp_tab_title_comments',
+						<li id="toc_header" class="sidebar_header">
+							<h2><a href="#toc_sidebar">
+								<?php
 
-	// Default value.
-	__( 'Comments', 'commentpress-core' )
+								/**
+								 * Filters the Contents tab title.
+								 *
+								 * @since 3.4
+								 *
+								 * @param str The default Contents tab title.
+								 */
+								echo apply_filters( 'cp_tab_title_toc', __( 'Contents', 'commentpress-core' ) );
+
+								?>
+							</a></h2>
+						</li>
+
+						<?php
+
+						break;
+
+				} // End switch.
+
+			} // End foreach.
+
+			?>
+
+		</ul>
+
+		<?php
+
+		// -----------------------------------------------------------------------------
+		// THE SIDEBARS THEMSELVES.
+		// -----------------------------------------------------------------------------
 
-);
+		// Access globals.
+		global $post;
 
-echo $_comments_title;
+		// If we have the plugin enabled.
+		if ( ! empty( $core ) ) {
 
-?></a></h2>
-<?php
+			// Is it commentable?
+			if ( $is_commentable ) {
 
-// Init.
-$_min = '';
+				/**
+				 * Try to locate template using WordPress method.
+				 *
+				 * @since 3.4
+				 *
+				 * @param str The existing path returned by WordPress.
+				 * @return str The modified path.
+				 */
+				$cp_comments_sidebar = apply_filters( 'cp_template_comments_sidebar', locate_template( 'assets/templates/comments_sidebar.php' ) );
 
-// If we have the plugin enabled.
-if ( is_object( $commentpress_core ) ) {
+				// Load it if we find it.
+				if ( $cp_comments_sidebar != '' ) {
+					load_template( $cp_comments_sidebar );
+				}
 
-	// Show the minimise all button.
-	$_min = $commentpress_core->get_minimise_all_button( 'comments' );
+			}
 
-}
+			/**
+			 * Try to locate template using WordPress method.
+			 *
+			 * @since 3.4
+			 *
+			 * @param str The existing path returned by WordPress.
+			 * @return str The modified path.
+			 */
+			$cp_toc_sidebar = apply_filters( 'cp_template_toc_sidebar', locate_template( 'assets/templates/toc_sidebar.php' ) );
 
-// Show the minimise all button.
-echo $_min;
+			// Load it if we find it.
+			if ( $cp_toc_sidebar != '' ) {
+				load_template( $cp_toc_sidebar );
+			}
 
-?>
-</li>
+			// Do we want to show Activity Tab?
+			if ( commentpress_show_activity_tab() ) {
 
-<?php
+				/**
+				 * Try to locate template using WordPress method.
+				 *
+				 * @since 3.4
+				 *
+				 * @param str The existing path returned by WordPress.
+				 * @return str The modified path.
+				 */
+				$cp_activity_sidebar = apply_filters( 'cp_template_activity_sidebar', locate_template( 'assets/templates/activity_sidebar.php' ) );
 
-break;
+				// Load it if we find it.
+				if ( $cp_activity_sidebar != '' ) {
+					load_template( $cp_activity_sidebar );
+				}
 
+			}
 
+		} else {
 
-		// Activity Header.
-		case 'activity':
+			// Default sidebar when plugin not active.
+			?>
+			<div id="toc_sidebar">
 
+				<div class="sidebar_header">
+					<h2>
+						<?php
 
+						/**
+						 * Filters the Contents tab title.
+						 *
+						 * @since 3.4
+						 *
+						 * @param str The default Contents tab title.
+						 */
+						echo apply_filters( 'cp_tab_title_toc', __( 'Contents', 'commentpress-core' ) );
 
-// Do we want to show activity tab?
-if ( commentpress_show_activity_tab() ) {
+						?>
+					</h2>
+				</div>
 
-	// Set default link name.
-	$_activity_title = apply_filters(
+				<div class="sidebar_minimiser">
 
-		// Filter name.
-		'cp_tab_title_activity',
+					<div class="sidebar_contents_wrapper">
+						<ul>
+							<?php wp_list_pages( 'sort_column=menu_order&title_li=' ); ?>
+						</ul>
+					</div><!-- /sidebar_contents_wrapper -->
 
-		// Default value.
-		__( 'Activity', 'commentpress-core' )
+				</div><!-- /sidebar_minimiser -->
 
-	);
+			</div><!-- /toc_sidebar -->
 
-	?>
-	<li id="activity_header" class="sidebar_header">
-	<h2><a href="#activity_sidebar"><?php echo $_activity_title; ?></a></h2>
-	<?php
+		<?php } ?>
 
-	// If we have the plugin enabled.
-	if ( is_object( $commentpress_core ) ) {
-
-		// Show the minimise all button.
-		echo $commentpress_core->get_minimise_all_button( 'activity' );
-
-	}
-
-	?>
-	</li>
-	<?php
-
-} else {
-
-	// Ignore activity.
-
-}
-
-break;
-
-
-
-		// Contents Header.
-		case 'contents':
-
-
-
-?>
-<li id="toc_header" class="sidebar_header">
-<h2><a href="#toc_sidebar"><?php
-
-// Set default link name.
-$_toc_title = apply_filters(
-
-	// Filter name.
-	'cp_tab_title_toc',
-
-	// Default value.
-	__( 'Contents', 'commentpress-core' )
-
-);
-
-echo $_toc_title;
-
-?></a></h2>
-</li>
-<?php
-
-break;
-
-
-
-	} // End switch.
-
-} // End foreach.
-
-
-?>
-
-</ul>
-
-
-
-<?php
-
-
-
-
-// -----------------------------------------------------------------------------
-// THE SIDEBARS THEMSELVES.
-// -----------------------------------------------------------------------------
-
-// Access globals.
-global $commentpress_core, $post;
-
-// If we have the plugin enabled.
-if ( is_object( $commentpress_core ) ) {
-
-
-
-	// Check commentable status.
-	$commentable = $commentpress_core->is_commentable();
-
-	// Is it commentable?
-	if ( $commentable ) {
-
-		/**
-		 * Try to locate template using WP method.
-		 *
-		 * @since 3.4
-		 *
-		 * @param str The existing path returned by WordPress.
-		 * @return str The modified path.
-		 */
-		$cp_comments_sidebar = apply_filters(
-			'cp_template_comments_sidebar',
-			locate_template( 'assets/templates/comments_sidebar.php' )
-		);
-
-		// Load it if we find it.
-		if ( $cp_comments_sidebar != '' ) load_template( $cp_comments_sidebar );
-
-	}
-
-	/**
-	 * Try to locate template using WP method.
-	 *
-	 * @since 3.4
-	 *
-	 * @param str The existing path returned by WordPress.
-	 * @return str The modified path.
-	 */
-	$cp_toc_sidebar = apply_filters(
-		'cp_template_toc_sidebar',
-		locate_template( 'assets/templates/toc_sidebar.php' )
-	);
-
-	// Load it if we find it.
-	if ( $cp_toc_sidebar != '' ) load_template( $cp_toc_sidebar );
-
-	// Do we want to show activity tab?
-	if ( commentpress_show_activity_tab() ) {
-
-		/**
-		 * Try to locate template using WP method.
-		 *
-		 * @since 3.4
-		 *
-		 * @param str The existing path returned by WordPress.
-		 * @return str The modified path.
-		 */
-		$cp_activity_sidebar = apply_filters(
-			'cp_template_activity_sidebar',
-			locate_template( 'assets/templates/activity_sidebar.php' )
-		);
-
-		// Load it if we find it.
-		if ( $cp_activity_sidebar != '' ) load_template( $cp_activity_sidebar );
-
-	}
-
-
-
-} else {
-
-
-
-
-
-// Default sidebar when plugin not active.
-?><div id="toc_sidebar">
-
-
-
-<div class="sidebar_header">
-
-<h2><?php echo $_toc_title; ?></h2>
-
-</div>
-
-
-
-<div class="sidebar_minimiser">
-
-<div class="sidebar_contents_wrapper">
-
-<ul>
-	<?php wp_list_pages('sort_column=menu_order&title_li='); ?>
-</ul>
-
-</div><!-- /sidebar_contents_wrapper -->
-
-</div><!-- /sidebar_minimiser -->
-
-
-
-</div><!-- /toc_sidebar -->
-
-
-
-<?php
-
-} // End check for plugin
-
-?>
-
-
-
-</div><!-- /sidebar_inner -->
-
+	</div><!-- /sidebar_inner -->
 </div><!-- /sidebar -->
-
-
-

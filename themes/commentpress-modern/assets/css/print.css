@@ -979,27 +979,4 @@ Updated by Christian Wach for CommentPress Core
 		display: none;
 	}
 
-
-
-	/* WP FEE compatibility */
-	.fee-thumbnail-toolbar,
-	.fee-insert-thumbnail,
-	.fee-content-body,
-	.fee-toolbar,
-	.wp-core-ui
-	{
-		display: none;
-	}
-
-	body.fee .cp_feature_image .fee-thumbnail.fee-empty + .cp_featured_title
-	{
-		padding: 0 !important;
-	}
-
-	body.fee .cp_feature_image .fee-thumbnail.fee-empty + .cp_featured_title .cp_featured_title_inner
-	{
-		margin: 0 !important;
-		padding: 0 0 0 24pt;
-	}
-
 }

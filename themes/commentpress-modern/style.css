@@ -1,13 +1,15 @@
-/*
-Theme Name: CommentPress Modern Theme
-Theme URI: http://www.futureofthebook.org/commentpress/
-Description: The next-generation base theme for use with the <em>CommentPress Core</em> plugin.
-Tags: commentpress, buddypress, groupblogs, groupblog, comments, commenting, debate, collaboration, sticky-post, threaded-comments, paragraph-comments
-Version: 3.9
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Author: Christian Wach
-Author URI: http://www.futureofthebook.org/commentpress/
-*/
+/**
+ * Theme Name: CommentPress Modern Theme
+ * Theme URI: http://www.futureofthebook.org/commentpress/
+ * Description: The next-generation base theme for use with the <em>CommentPress Core</em> plugin.
+ * Tags: commentpress, buddypress, groupblogs, groupblog, comments, commenting, debate, collaboration, sticky-post, threaded-comments, paragraph-comments
+ * Version: 4.0a
+ * License: GPLv2 or later
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ * Author: Christian Wach
+ * Author URI: https://haystack.co.uk
+ *
+ * @package CommentPress_Core
+ */
 
-/* all styles now enqueued: see functions.php */
+/* All styles enqueued: see functions.php */

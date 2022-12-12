@@ -1,0 +1,13 @@
+/**
+ * CommentPress Core Comment Tagging Admin Stylesheet.
+ *
+ * Implements styles in WordPress admin for all media.
+ *
+ * @package CommentPress_Core
+ */
+
+/* widen column */
+.fixed .column-comments
+{
+	width: 6em;
+}

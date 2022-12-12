@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<ruleset name="CMW.WordPress">
+
+	<!-- Add source codes in the report -->
+	<arg value="s" />
+	<arg name="colors" />
+
+	<!-- Check all PHP files in directory tree by default. -->
+	<arg name="extensions" value="php" />
+	<file>.</file>
+
+	<rule ref="WordPress">
+
+		<!-- I prefer slash-delimited Hooks -->
+		<exclude name="WordPress.NamingConventions.ValidHookName.UseUnderscores" />
+
+		<!-- Ignore docblock formatting -->
+		<exclude name="Squiz.Commenting.FunctionComment.SpacingAfterParamType" />
+
+		<!-- Yoda? Really? -->
+		<exclude name="WordPress.PHP.YodaConditions.NotYoda" />
+
+		<!-- I prefer my control structures -->
+		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing.BlankLineAfterEnd" />
+
+		<!-- Not a fan of arrow or equals alignment -->
+		<exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned" />
+		<exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning" />
+
+		<!-- PSR4 -->
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
+
+		<!-- Remove some checks to allow phpcbf to run in bulk mode -->
+		<exclude name="WordPress.PHP.StrictComparisons.LooseComparison" />
+		<exclude name="WordPress.PHP.StrictInArray.MissingTrueStrict" />
+		<exclude name="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase" />
+		<exclude name="WordPress.Security.EscapeOutput.OutputNotEscaped" />
+		<exclude name="Squiz.Commenting.InlineComment.NoSpaceBefore" />
+		<exclude name="Squiz.PHP.CommentedOutCode.Found" />
+		<exclude name="Squiz.Commenting.InlineComment.SpacingAfterAtFunctionEnd" />
+		<exclude name="Squiz.Commenting.BlockComment.HasEmptyLineBefore" />
+		<exclude name="PSR2.ControlStructures.SwitchDeclaration.BodyOnNextLineCASE" />
+		<exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect" />
+		<exclude name="WordPress.WP.I18n.MissingTranslatorsComment" />
+
+		<!-- Remove when error logging has been moved to a function -->
+		<exclude name="WordPress.PHP.DevelopmentFunctions.error_log_error_log" />
+		<exclude name="WordPress.PHP.DevelopmentFunctions.error_log_print_r" />
+		<exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket" />
+		<exclude name="PEAR.Functions.FunctionCallSignature.MultipleArguments" />
+		<exclude name="PEAR.Functions.FunctionCallSignature.CloseBracketLine" />
+
+	</rule>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array" value="commentpress-core" />
+		</properties>
+	</rule>
+
+	<!-- Allow short array syntax -->
+	<rule ref="Generic.Arrays.DisallowShortArraySyntax.Found">
+		<severity>0</severity>
+	</rule>
+	<rule ref="Generic.Arrays.DisallowLongArraySyntax.Found" />
+
+	<!-- Nesting levels -->
+	<rule ref="Generic.Metrics.NestingLevel">
+		<properties>
+			<property name="absoluteNestingLevel" value="5" />
+		</properties>
+	</rule>
+
+	<exclude-pattern>includes/core/assets/includes/mobile-detect/*</exclude-pattern>
+
+</ruleset>

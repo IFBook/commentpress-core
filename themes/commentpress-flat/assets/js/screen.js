@@ -137,6 +137,7 @@ CommentPress.theme.DOM = new function() {
 			// If mobile, don't hide textblock meta.
 			if ( cp_is_mobile == '0' ) {
 
+
 				// Have we explicitly hidden textblock meta?
 				if ( cp_textblock_meta == '0' ) {
 
@@ -592,13 +593,6 @@ CommentPress.theme.content = new function() {
 		// Store content padding-bottom on load.
 		content_padding_bottom = $('#page_wrapper').css( 'padding-bottom' );
 
-		// Hide workflow content.
-		$('#literal .post').css( 'display', 'none' );
-		$('#original .post').css( 'display', 'none' );
-
-		// Setup workflow tabs, if present.
-		CommentPress.common.content.workflow_tabs( content_min_height, content_padding_bottom );
-
 	};
 
 }; // End content class.
@@ -751,26 +745,26 @@ CommentPress.theme.sidebars = new function() {
 	this.enable_buttons = function() {
 
 		// Toggle for navigation.
-		$('#switcher .navigation-button').click( function(e) {
+		$('#switcher .navigation-button').on( 'click', function(e) {
 			e.preventDefault();
 			me.show_nav();
 		});
 
 		// Toggle for content - we don't have one of these in this theme!
-		$('#switcher .content-button').click( function(e) {
+		$('#switcher .content-button').on( 'click', function(e) {
 			e.preventDefault();
 			me.show_content();
 		});
 
 		// Toggle for comments sidebar.
-		$('#switcher .comments-button').click( function(e) {
+		$('#switcher .comments-button').on( 'click', function(e) {
 			e.preventDefault();
 			me.show_comments();
 			me.activate_sidebar( 'comments' );
 		});
 
 		// Toggle for activity sidebar.
-		$('#switcher .activity-button').click( function(e) {
+		$('#switcher .activity-button').on( 'click', function(e) {
 			e.preventDefault();
 			me.show_activity();
 			me.activate_sidebar( 'activity' );
@@ -944,7 +938,7 @@ CommentPress.theme.viewport = new function() {
 		 *
 		 * @since 3.8
 		 */
-		$(window).resize( function() {
+		$(window).on( 'resize', function() {
 
 			// Maintain height of sidebars.
 			CommentPress.theme.sidebars.set_height();
@@ -986,7 +980,7 @@ CommentPress.theme.viewport = new function() {
 		 *
 		 * @since 3.8
 		 */
-		$(window).scroll( function() {
+		$(window).on( 'scroll', function() {
 
 			// Declare vars.
 			var viewport, header_height, toc_sidebar_height, sidebar_height,
@@ -1282,10 +1276,6 @@ CommentPress.theme.viewport = new function() {
 
 			// Get anchor.
 			anchor_id = url.split('#')[1];
-
-			// Bail if it's WP FEE's custom anchor.
-			if ( anchor_id == 'edit=true' ) { return; }
-			if ( anchor_id == 'fee-edit-link' ) { return; }
 
 			// Locate in DOM.
 			anchor = $( '#' + anchor_id );
@@ -1807,45 +1797,6 @@ jQuery(document).ready( function($) {
 
 		// Remove highlight class.
 		jQuery( '.comment-wrapper' ).removeClass( 'background-highlight' );
-
-	});
-
-
-
-	/**
-	 * Hook into CommentPress AJAX Infinite Scroll page changed.
-	 *
-	 * This hook is present in this file because the WP FEE JS is not loaded
-	 * when WP FEE is active, but we still want to change the URL of the toggle
-	 * button to reflect the page URL change.
-	 *
-	 * @since 3.8
-	 */
-	$( document ).on( 'commentpress-post-changed', function( event ) {
-
-		// Declare local vars.
-		var toggler, new_url, toggle_url;
-
-		// Find new URL.
-		new_url = document.location.href;
-
-		// Get toggle URL.
-		toggler = $( '.editor_toggle a' );
-
-		// Bail if not found.
-		if ( toggler.length == 0 ) { return; }
-
-		// Get toggle URL.
-		toggle_url = toggler.attr( 'href' );
-
-		// Split on query string.
-		nonce = toggle_url.split( '?' )[1];
-
-		// Add to new URL.
-		new_url += '?' + nonce;
-
-		// Update toggle.
-		toggler.attr( 'href', new_url );
 
 	});
 
