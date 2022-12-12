@@ -149,7 +149,7 @@ CommentPress_Comments_Tagging.comments.select2 = new function() {
 		/**
 		 * Hook into CommentPress comment edit trigger.
 		 *
-		 * @since 4.0.3
+		 * @since 4.0
 		 *
 		 * @param {Object} data The event.
 		 * @param {Array} data The array of comment data.

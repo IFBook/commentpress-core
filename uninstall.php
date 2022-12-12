@@ -114,13 +114,6 @@ function commentpress_schema_restore() {
  */
 function commentpress_taxonomy_restore( $taxonomy ) {
 
-	// Bail if we have CommentPress 4.0.x.
-	if ( defined( 'COMMENTPRESS_VERSION' ) ) {
-		if ( version_compare( COMMENTPRESS_VERSION, '3.9.20', '>' ) ) {
-			return;
-		}
-	}
-
 	// Access DB object.
 	global $wpdb;
 
