@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
 				<option value="n" <?php echo ( $page_nav_enabled == 'n' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'No', 'commentpress-core' ); ?></option>
 			</select>
 			<p class="description"><?php esc_html_e( 'This controls the visibility of page numbering and navigation arrows on hierarchical Pages.', 'commentpress-core' ); ?></p>
-			<p class="description"><?php esc_html_e( 'By default, CommentPress creates "book-like" navigation for the built-in "Page" Post Type to create a "Document" from hierarchically-organised Pages. Select "No" if this is not the desired behaviour.', 'commentpress-core' ); ?></p>
+			<p class="description"><?php esc_html_e( 'By default, CommentPress creates "book-like" navigation for the built-in "Page" Post Type to create a "Document" from hierarchically-organized Pages. Select "No" if this is not the desired behavior.', 'commentpress-core' ); ?></p>
 		</td>
 	</tr>
 

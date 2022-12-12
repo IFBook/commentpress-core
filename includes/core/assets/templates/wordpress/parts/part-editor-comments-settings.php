@@ -26,7 +26,7 @@ defined( 'ABSPATH' ) || exit;
 
 <tr valign="top">
 	<th scope="row"><label for="<?php echo esc_attr( $this->key_promote ); ?>">
-		<?php esc_html_e( 'Comment form behaviour', 'commentpress-core' ); ?></label>
+		<?php esc_html_e( 'Comment form behavior', 'commentpress-core' ); ?></label>
 	</th>
 	<td>
 		<select id="<?php echo esc_attr( $this->key_promote ); ?>" name="<?php echo esc_attr( $this->key_promote ); ?>">

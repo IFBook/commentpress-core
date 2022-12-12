@@ -304,7 +304,7 @@ if ( ! function_exists( 'commentpress_customize_header_bg_color' ) ) :
 				$wp_customize,
 				'commentpress_header_bg_color',
 				[
-					'label' => __( 'Header Background Colour', 'commentpress-core' ),
+					'label' => __( 'Header Background Color', 'commentpress-core' ),
 					'section' => 'colors',
 					'settings' => 'commentpress_header_bg_color',
 				]
