@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
 	<?php
 	echo sprintf(
 		/* translators: %s: The trail to the background screen. */
-		__( 'You can set a custom background colour in %s.', 'commentpress-core' ),
+		__( 'You can set a custom background color in %s.', 'commentpress-core' ),
 		'<em>' . __( 'Appearance &#8594; Background', 'commentpress-core' ) . '</em>'
 	);
 	?>
@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
 	<?php
 	echo sprintf(
 		/* translators: %s: The trail to the header screen. */
-		__( 'You can also set a custom header image and header text colour in %s.', 'commentpress-core' ),
+		__( 'You can also set a custom header image and header text color in %s.', 'commentpress-core' ),
 		'<em>' . __( 'Appearance &#8594; Header', 'commentpress-core' ) . '</em>'
 	);
 	?>

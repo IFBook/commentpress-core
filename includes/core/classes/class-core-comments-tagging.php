@@ -1135,9 +1135,6 @@ class CommentPress_Core_Comments_Tagging {
 	/**
 	 * Add our front-end stylesheets.
 	 *
-	 * Currently using the 4.0.0 version of Select2. The incuded directory is a
-	 * copy of the 'dist' directory.
-	 *
 	 * @see https://github.com/select2/select2/tags
 	 *
 	 * @since 4.0

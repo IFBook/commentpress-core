@@ -29,6 +29,33 @@ class CommentPress_Core_Revisions {
 	public $core;
 
 	/**
+	 * Metabox template directory path.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $metabox_path Relative path to the Metabox directory.
+	 */
+	private $metabox_path = 'includes/core/assets/templates/wordpress/metaboxes/';
+
+	/**
+	 * Parts template directory path.
+	 *
+	 * @since 4.0
+	 * @access private
+	 * @var string $parts_path Relative path to the Parts directory.
+	 */
+	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
+
+	/**
+	 * Post Revisions Enabled setting key in Site Settings.
+	 *
+	 * @since 4.0
+	 * @access public
+	 * @var str $key_sidebar The "Post Revisions Enabled" setting key in Site Settings.
+	 */
+	public $key_revisions = 'cp_revisions_enabled';
+
+	/**
 	 * Newer Version meta key.
 	 *
 	 * @since 4.0
@@ -45,15 +72,6 @@ class CommentPress_Core_Revisions {
 	 * @var str $meta_key The "Version Count" meta key.
 	 */
 	public $meta_key_version_count = '_cp_version_count';
-
-	/**
-	 * Metabox template directory path.
-	 *
-	 * @since 4.0
-	 * @access private
-	 * @var string $metabox_path Relative path to the Metabox directory.
-	 */
-	private $metabox_path = 'includes/core/assets/templates/wordpress/metaboxes/';
 
 	/**
 	 * Metabox nonce name.
@@ -127,6 +145,44 @@ class CommentPress_Core_Revisions {
 	 */
 	public function register_hooks() {
 
+		// Register hooks.
+		$this->register_hooks_settings();
+
+		// Init after the Database object has loaded settings.
+		add_action( 'plugins_loaded', [ $this, 'register_hooks_revisions' ], 20 );
+
+	}
+
+	/**
+	 * Registers "Site Settings" hooks.
+	 *
+	 * @since 4.0
+	 */
+	private function register_hooks_settings() {
+
+		// Add our settings to default settings.
+		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ] );
+
+		// Inject form element into the "General Settings" metabox on "Site Settings" screen.
+		add_action( 'commentpress/core/settings/site/metabox/general/after', [ $this, 'settings_meta_box_part_get' ], 20 );
+
+		// Save Sidebar data from "Site Settings" screen.
+		add_action( 'commentpress/core/settings/site/save/before', [ $this, 'settings_meta_box_part_save' ] );
+
+	}
+
+	/**
+	 * Registers all other hooks.
+	 *
+	 * @since 4.0
+	 */
+	public function register_hooks_revisions() {
+
+		// Bail if not enabled.
+		if ( 'y' !== $this->setting_revisions_get() ) {
+			return;
+		}
+
 		// Add meta boxes.
 		add_action( 'add_meta_boxes', [ $this, 'metabox_add' ], 40, 2 );
 
@@ -135,6 +191,94 @@ class CommentPress_Core_Revisions {
 
 		// Maybe delete Newer Post pointer in Older Post meta.
 		add_action( 'before_delete_post', [ $this, 'revision_meta_delete' ] );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Appends our settings to the default core settings.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $settings The existing default core settings.
+	 * @return array $settings The modified default core settings.
+	 */
+	public function settings_get_defaults( $settings ) {
+
+		// Add our defaults.
+		$settings[ $this->key_revisions ] = 'n';
+
+		// --<
+		return $settings;
+
+	}
+
+	/**
+	 * Adds our form element to the "Commenting Settings" metabox.
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_part_get() {
+
+		// Get the value of the option.
+		$revisions = $this->setting_revisions_get();
+
+		// Include template file.
+		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-revisions-settings.php';
+
+	}
+
+	/**
+	 * Saves the data from "Site Settings" screen.
+	 *
+	 * Adds the data to the settings array. The settings are actually saved later.
+	 *
+	 * @see CommentPress_Core_Settings_Site::form_submitted()
+	 *
+	 * @since 4.0
+	 */
+	public function settings_meta_box_part_save() {
+
+		// Find the data.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$revisions = isset( $_POST[ $this->key_revisions ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_revisions ] ) ) : 'n';
+
+		// Set default sidebar.
+		$this->setting_revisions_set( $revisions );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the "Post Revisions Enabled" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @return str $page_nav_enabled The setting if found, default otherwise.
+	 */
+	public function setting_revisions_get() {
+
+		// Get the setting.
+		$revisions = $this->core->db->setting_get( $this->key_revisions );
+
+		// Return setting or default if empty.
+		return ! empty( $revisions ) ? $revisions : 'n';
+
+	}
+
+	/**
+	 * Sets the "Post Revisions Enabled" setting.
+	 *
+	 * @since 4.0
+	 *
+	 * @param str $revisions The setting value.
+	 */
+	public function setting_revisions_set( $revisions ) {
+
+		// Set the setting.
+		$this->core->db->setting_set( $this->key_revisions, $revisions );
 
 	}
 

@@ -791,17 +791,17 @@ HELPTEXT;
 
 			case 'comments':
 				// Define minimise button.
-				$tag = '<span id="cp_minimise_all_comments" title="' . __( 'Minimise all Comment Sections', 'commentpress-core' ) . '"></span>';
+				$tag = '<span id="cp_minimise_all_comments" title="' . __( 'Minimize all Comment Sections', 'commentpress-core' ) . '"></span>';
 				break;
 
 			case 'activity':
 				// Define minimise button.
-				$tag = '<span id="cp_minimise_all_activity" title="' . __( 'Minimise all Activity Sections', 'commentpress-core' ) . '"></span>';
+				$tag = '<span id="cp_minimise_all_activity" title="' . __( 'Minimize all Activity Sections', 'commentpress-core' ) . '"></span>';
 				break;
 
 			case 'toc':
 				// Define minimise button.
-				$tag = '<span id="cp_minimise_all_contents" title="' . __( 'Minimise all Contents Sections', 'commentpress-core' ) . '"></span>';
+				$tag = '<span id="cp_minimise_all_contents" title="' . __( 'Minimize all Contents Sections', 'commentpress-core' ) . '"></span>';
 				break;
 
 		}
@@ -822,8 +822,8 @@ HELPTEXT;
 
 		// Define minimise button.
 		$link = '<li>' .
-			'<a href="#" id="btn_header_min" class="css_btn" title="' . __( 'Minimise Header', 'commentpress-core' ) . '">' .
-				__( 'Minimise Header', 'commentpress-core' ) .
+			'<a href="#" id="btn_header_min" class="css_btn" title="' . __( 'Minimize Header', 'commentpress-core' ) . '">' .
+				__( 'Minimize Header', 'commentpress-core' ) .
 			'</a>' .
 		'</li>' . "\n";
 
