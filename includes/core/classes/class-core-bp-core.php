@@ -198,6 +198,11 @@ class CommentPress_Core_BuddyPress {
 	 */
 	public function groupblog_theme_get() {
 
+		// Bail if not GroupBlog context.
+		if ( ! $this->is_groupblog() ) {
+			return false;
+		}
+
 		// Bail if Groups Component is not active.
 		if ( ! bp_is_active( 'groups' ) ) {
 			return false;
