@@ -47,12 +47,7 @@ defined( 'ABSPATH' ) || exit;
 				<ol class="commentlist">
 					<?php
 
-					// Get Comments for this Post in ascending order.
-					$comments_in_page = get_comments( [
-						'post_id' => $post->ID,
-						'order' => 'ASC',
-					] );
-
+					// Define our formatting options.
 					$comments_args = [
 						'type' => 'comment',
 						'reply_text' => __( 'Reply to this comment', 'commentpress-core' ),
@@ -60,8 +55,14 @@ defined( 'ABSPATH' ) || exit;
 						'style' => 'ol',
 					];
 
+					// Get Comments for this Post in ascending order.
+					$comments_in_page = get_comments( [
+						'post_id' => $post->ID,
+						'order' => 'ASC',
+					] );
+
 					// List Comments.
-					wp_list_comments( $comments_in_page, $comments_args );
+					wp_list_comments( $comments_args, $comments_in_page );
 
 					?>
 				</ol>

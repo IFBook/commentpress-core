@@ -1020,7 +1020,7 @@ class CommentPress_Core_Comments_Tagging {
 	 * @param object $comment The WordPress Comment object.
 	 * @return str $text The markup showing the tags for a Comment.
 	 */
-	public function front_end_tags( $text = '', $comment ) {
+	public function front_end_tags( $text = '', $comment = null ) {
 
 		// Sanity check.
 		if ( ! isset( $comment->comment_ID ) ) {

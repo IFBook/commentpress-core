@@ -735,7 +735,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 		}
 
 		// Maybe apply to title.
-		if ( ! empty( $title ) ) {
+		if ( ! empty( $recent_title ) ) {
 
 			/**
 			 * Filters the Recent Comments title.
