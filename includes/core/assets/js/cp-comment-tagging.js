@@ -119,7 +119,8 @@ CommentPress_Comments_Tagging.comments.select2 = new function() {
 		$('.comment_tagger_select2').select2({
 			tags: true,
 			tokenSeparators: [','],
-			multiple: true
+			multiple: true,
+			dropdownParent: $('.comment_tagger_select2_container')
 		});
 
 	};
