@@ -3242,6 +3242,11 @@ Compatibility with Comment Tagger plugin
 	-webkit-appearance: textfield;
 }
 
+ol.commentlist li .select2-results__option
+{
+	padding: 6px;
+}
+
 .comment_tagger_tags
 {
 	font-size: 70%;
