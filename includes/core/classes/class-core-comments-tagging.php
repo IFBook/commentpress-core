@@ -1264,7 +1264,7 @@ class CommentPress_Core_Comments_Tagging {
 		}
 
 		// Add tag data.
-		$data = $this->filter_ajax_get_comment( $data );
+		$data = $this->front_end_ajax_get_comment_filter( $data );
 
 		// Get Comment.
 		$comment = get_comment( $data['id'] );
