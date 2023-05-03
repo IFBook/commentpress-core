@@ -24,7 +24,12 @@ if ( ! empty( $my_author->user_url ) && $my_author->user_url !== 'http://' && $m
 }
 
 // Select Author name.
-$my_author_name = empty( $my_author->display_name ) ? $my_author->nickname : $my_author->display_name;
+$my_author_name = __( 'Anonymous', 'commentpress-core' );
+if ( ! empty( $my_author->display_name ) ) {
+	$my_author_name = $my_author->display_name;
+} elseif ( ! empty( $my_author->nickname ) ) {
+	$my_author_name = $my_author->nickname;
+}
 
 // Get avatar.
 $my_avatar = get_avatar( $my_author->user_email, $size = '200' );
