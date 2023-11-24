@@ -114,7 +114,7 @@ class CommentPress_Core_Entry_Metabox {
 	 */
 	public function register_hooks() {
 
-		// Add meta boxes.
+		// Add meta boxes to our supported "Edit Entry" screens.
 		add_action( 'add_meta_boxes', [ $this, 'metabox_add' ], 20, 2 );
 
 		// Intercept save.

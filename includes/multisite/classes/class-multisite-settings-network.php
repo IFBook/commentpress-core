@@ -145,7 +145,7 @@ class CommentPress_Multisite_Settings_Network {
 		add_action( 'network_admin_menu', [ $this, 'admin_menu' ] );
 
 		// Add our meta boxes.
-		add_action( 'add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
+		add_action( 'commentpress/multisite/settings/network/page/add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
 
 		// Add link to Settings Page.
 		add_filter( 'network_admin_plugin_action_links', [ $this, 'action_links' ], 10, 2 );
@@ -286,7 +286,7 @@ class CommentPress_Multisite_Settings_Network {
 		 *
 		 * @param string $screen_id The ID of the current screen.
 		 */
-		do_action( 'add_meta_boxes', $screen->id, null );
+		do_action( 'commentpress/multisite/settings/network/page/add_meta_boxes', $screen->id );
 
 		// Grab columns.
 		$columns = ( 1 == $screen->get_columns() ? '1' : '2' );

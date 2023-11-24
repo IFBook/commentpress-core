@@ -172,7 +172,7 @@ class CommentPress_Core_Settings_Site {
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 
 		// Add our meta boxes.
-		add_action( 'add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
+		add_action( 'commentpress/core/settings/site/page/add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
 
 		// Add link to Settings Page.
 		add_filter( 'plugin_action_links', [ $this, 'action_links' ], 10, 2 );
@@ -513,7 +513,7 @@ class CommentPress_Core_Settings_Site {
 		 *
 		 * @param string $screen_id The ID of the current screen.
 		 */
-		do_action( 'add_meta_boxes', $screen->id, null );
+		do_action( 'commentpress/core/settings/site/page/add_meta_boxes', $screen->id );
 
 		// Grab columns.
 		$columns = ( 1 == $screen->get_columns() ? '1' : '2' );

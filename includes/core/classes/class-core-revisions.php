@@ -183,7 +183,7 @@ class CommentPress_Core_Revisions {
 			return;
 		}
 
-		// Add meta boxes.
+		// Add meta boxes to our supported "Edit" screens.
 		add_action( 'add_meta_boxes', [ $this, 'metabox_add' ], 40, 2 );
 
 		// Maybe create a new Revision.

@@ -212,7 +212,7 @@ class CommentPress_Core_Comments_Tagging {
 		// Add admin styles.
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_styles_enqueue' ] );
 
-		// Register a meta box.
+		// Register a meta box for the Edit Comment screen.
 		add_action( 'add_meta_boxes', [ $this, 'admin_meta_box_add' ] );
 
 	}
