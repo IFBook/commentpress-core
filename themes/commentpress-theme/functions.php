@@ -322,7 +322,7 @@ if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ) :
 			// Localisation array.
 			$vars = [
 				'localisation' => [
-					'submit' => __( 'Edit Comment', 'commentpress-core' ),
+					'submit' => __( 'Update Comment', 'commentpress-core' ),
 					'title' => __( 'Leave a comment', 'commentpress-core' ),
 					'edit_title' => __( 'Edit comment', 'commentpress-core' ),
 				],
