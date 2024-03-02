@@ -45,10 +45,10 @@ if ( ! function_exists( 'commentpress_setup' ) ) :
 
 		// Allow custom header.
 		add_theme_support( 'custom-header', [
-			'default-text-color' => 'eeeeee',
-			'width' => apply_filters( 'cp_header_image_width', 940 ),
-			'height' => apply_filters( 'cp_header_image_height', 67 ),
-			'wp-head-callback' => 'commentpress_header',
+			'default-text-color'  => 'eeeeee',
+			'width'               => apply_filters( 'cp_header_image_width', 940 ),
+			'height'              => apply_filters( 'cp_header_image_height', 67 ),
+			'wp-head-callback'    => 'commentpress_header',
 			'admin-head-callback' => 'commentpress_admin_header',
 		] );
 
@@ -62,29 +62,29 @@ if ( ! function_exists( 'commentpress_setup' ) ) :
 		 */
 		register_default_headers(
 			[
-				'caves-green' => [
-					'url' => '%s/assets/images/header/caves-green.jpg',
+				'caves-green'  => [
+					'url'           => '%s/assets/images/header/caves-green.jpg',
 					'thumbnail_url' => '%s/assets/images/header/caves-green-thumbnail.jpg',
 					/* translators: header image description */
-					'description' => __( 'Abstract Green', 'commentpress-core' ),
+					'description'   => __( 'Abstract Green', 'commentpress-core' ),
 				],
-				'caves-red' => [
-					'url' => '%s/assets/images/header/caves-red.jpg',
+				'caves-red'    => [
+					'url'           => '%s/assets/images/header/caves-red.jpg',
 					'thumbnail_url' => '%s/assets/images/header/caves-red-thumbnail.jpg',
 					/* translators: header image description */
-					'description' => __( 'Abstract Red', 'commentpress-core' ),
+					'description'   => __( 'Abstract Red', 'commentpress-core' ),
 				],
-				'caves-blue' => [
-					'url' => '%s/assets/images/header/caves-blue.jpg',
+				'caves-blue'   => [
+					'url'           => '%s/assets/images/header/caves-blue.jpg',
 					'thumbnail_url' => '%s/assets/images/header/caves-blue-thumbnail.jpg',
 					/* translators: header image description */
-					'description' => __( 'Abstract Blue', 'commentpress-core' ),
+					'description'   => __( 'Abstract Blue', 'commentpress-core' ),
 				],
 				'caves-violet' => [
-					'url' => '%s/assets/images/header/caves-violet.jpg',
+					'url'           => '%s/assets/images/header/caves-violet.jpg',
 					'thumbnail_url' => '%s/assets/images/header/caves-violet-thumbnail.jpg',
 					/* translators: header image description */
-					'description' => __( 'Abstract Violet', 'commentpress-core' ),
+					'description'   => __( 'Abstract Violet', 'commentpress-core' ),
 				],
 			]
 		);
@@ -122,7 +122,7 @@ if ( ! function_exists( 'commentpress_default_theme_customize_register' ) ) :
 		$wp_customize->add_section(
 			'cp_theme_options',
 			[
-				'title' => __( 'Theme Settings', 'commentpress-core' ),
+				'title'    => __( 'Theme Settings', 'commentpress-core' ),
 				'priority' => 36,
 			]
 		);
@@ -150,9 +150,9 @@ if ( ! function_exists( 'commentpress_default_theme_customize_register' ) ) :
 		$wp_customize->add_control(
 			'cp_min_page_width',
 			[
-				'label' => __( 'Minimum page width in px', 'commentpress-core' ),
+				'label'   => __( 'Minimum page width in px', 'commentpress-core' ),
 				'section' => 'cp_theme_options',
-				'type' => 'number',
+				'type'    => 'number',
 			]
 		);
 
@@ -322,8 +322,8 @@ if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ) :
 			// Localisation array.
 			$vars = [
 				'localisation' => [
-					'submit' => __( 'Update Comment', 'commentpress-core' ),
-					'title' => __( 'Leave a comment', 'commentpress-core' ),
+					'submit'     => __( 'Update Comment', 'commentpress-core' ),
+					'title'      => __( 'Leave a comment', 'commentpress-core' ),
 					'edit_title' => __( 'Edit comment', 'commentpress-core' ),
 				],
 			];
@@ -528,9 +528,9 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 
 		// Get all approved Comments.
 		$all_comments = get_comments( [
-			'status' => 'approve',
-			'orderby' => 'comment_post_ID,comment_date',
-			'order' => 'ASC',
+			'status'    => 'approve',
+			'orderby'   => 'comment_post_ID,comment_date',
+			'order'     => 'ASC',
 			'post_type' => $page_or_post,
 		] );
 
@@ -540,7 +540,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 		}
 
 		// Build list of Posts to which they are attached.
-		$posts_with = [];
+		$posts_with          = [];
 		$post_comment_counts = [];
 		foreach ( $all_comments as $comment ) {
 
@@ -565,10 +565,10 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 
 		// Get those Posts.
 		$posts = get_posts( [
-			'orderby' => 'comment_count',
-			'order' => 'DESC',
+			'orderby'   => 'comment_count',
+			'order'     => 'DESC',
 			'post_type' => $page_or_post,
-			'include' => $posts_with,
+			'include'   => $posts_with,
 		] );
 
 		// Kick out if none.
@@ -834,13 +834,13 @@ function commentpress_register_widget_areas() {
 
 	// Define an area where a Widget may be placed.
 	register_sidebar( [
-		'name' => __( 'CommentPress Footer', 'commentpress-core' ),
-		'id' => 'cp-license-8',
-		'description' => __( 'An optional widget area in the footer of a CommentPress theme', 'commentpress-core' ),
+		'name'          => __( 'CommentPress Footer', 'commentpress-core' ),
+		'id'            => 'cp-license-8',
+		'description'   => __( 'An optional widget area in the footer of a CommentPress theme', 'commentpress-core' ),
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget' => '</div>',
-		'before_title' => '<h3 class="widget-title">',
-		'after_title' => '</h3>',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h3 class="widget-title">',
+		'after_title'   => '</h3>',
 	] );
 
 }

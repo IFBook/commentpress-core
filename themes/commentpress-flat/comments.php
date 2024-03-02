@@ -109,9 +109,9 @@ if ( ! empty( $core ) ) {
 					<?php
 
 					wp_list_comments( [
-						'type' => 'comment',
+						'type'       => 'comment',
 						'reply_text' => __( 'Reply to this comment', 'commentpress-core' ),
-						'callback' => 'commentpress_comments',
+						'callback'   => 'commentpress_comments',
 					] );
 
 					?>

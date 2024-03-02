@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
 						<?php
 						// Show footer menu if assigned.
 						wp_nav_menu( [
-							'theme_location' => 'footer',
+							'theme_location'  => 'footer',
 							'container_class' => 'commentpress-footer-nav-menu',
 						] );
 						?>

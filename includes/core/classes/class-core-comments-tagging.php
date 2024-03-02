@@ -84,7 +84,7 @@ class CommentPress_Core_Comments_Tagging {
 
 		// Store references.
 		$this->comments = $comments;
-		$this->core = $comments->core;
+		$this->core     = $comments->core;
 
 		// Init when the Comments object is fully loaded.
 		add_action( 'commentpress/core/comments/loaded', [ $this, 'initialise' ] );
@@ -340,7 +340,7 @@ class CommentPress_Core_Comments_Tagging {
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $page_nav_enabled The setting if found, default otherwise.
+	 * @return str $tagging The setting if found, default otherwise.
 	 */
 	public function setting_tagging_get() {
 
@@ -419,36 +419,36 @@ class CommentPress_Core_Comments_Tagging {
 		$args = [
 
 			// General.
-			'public' => true,
-			'hierarchical' => false,
+			'public'                => true,
+			'hierarchical'          => false,
 
 			// Labels.
-			'labels' => [
-				'name' => __( 'Comment Tags', 'commentpress-core' ),
-				'singular_name' => __( 'Comment Tag', 'commentpress-core' ),
-				'menu_name' => __( 'Comment Tags', 'commentpress-core' ),
-				'search_items' => __( 'Search Comment Tags', 'commentpress-core' ),
-				'popular_items' => __( 'Popular Comment Tags', 'commentpress-core' ),
-				'all_items' => __( 'All Comment Tags', 'commentpress-core' ),
-				'edit_item' => __( 'Edit Comment Tag', 'commentpress-core' ),
-				'update_item' => __( 'Update Comment Tag', 'commentpress-core' ),
-				'add_new_item' => __( 'Add New Comment Tag', 'commentpress-core' ),
-				'new_item_name' => __( 'New Comment Tag Name', 'commentpress-core' ),
+			'labels'                => [
+				'name'                       => __( 'Comment Tags', 'commentpress-core' ),
+				'singular_name'              => __( 'Comment Tag', 'commentpress-core' ),
+				'menu_name'                  => __( 'Comment Tags', 'commentpress-core' ),
+				'search_items'               => __( 'Search Comment Tags', 'commentpress-core' ),
+				'popular_items'              => __( 'Popular Comment Tags', 'commentpress-core' ),
+				'all_items'                  => __( 'All Comment Tags', 'commentpress-core' ),
+				'edit_item'                  => __( 'Edit Comment Tag', 'commentpress-core' ),
+				'update_item'                => __( 'Update Comment Tag', 'commentpress-core' ),
+				'add_new_item'               => __( 'Add New Comment Tag', 'commentpress-core' ),
+				'new_item_name'              => __( 'New Comment Tag Name', 'commentpress-core' ),
 				'separate_items_with_commas' => __( 'Separate Comment Tags with commas', 'commentpress-core' ),
-				'add_or_remove_items' => __( 'Add or remove Comment Tag', 'commentpress-core' ),
-				'choose_from_most_used' => __( 'Choose from the most popular Comment Tags', 'commentpress-core' ),
+				'add_or_remove_items'        => __( 'Add or remove Comment Tag', 'commentpress-core' ),
+				'choose_from_most_used'      => __( 'Choose from the most popular Comment Tags', 'commentpress-core' ),
 			],
 
 			// Permalinks.
-			'rewrite' => [
+			'rewrite'               => [
 				//'with_front' => true,
 				'slug' => apply_filters( 'comment_tagger_tax_slug', 'comments/tags' ),
 			],
 
 			// Capabilities.
-			'capabilities' => [
+			'capabilities'          => [
 				'manage_terms' => 'manage_categories',
-				'edit_terms' => 'manage_categories',
+				'edit_terms'   => 'manage_categories',
 				'delete_terms' => 'manage_categories',
 				'assign_terms' => 'assign_' . $this->tax_name,
 			],
@@ -472,7 +472,7 @@ class CommentPress_Core_Comments_Tagging {
 
 		// Find all the Term IDs.
 		$terms = get_terms( $this->tax_name, [ 'hide_empty' => false ] );
-		$tids = [];
+		$tids  = [];
 		foreach ( $terms as $term ) {
 			$tids[] = $term->term_taxonomy_id;
 		}
@@ -489,7 +489,7 @@ class CommentPress_Core_Comments_Tagging {
 	 *
 	 * @since 4.0
 	 *
-	 * @param array $terms List of Term Taxonomy IDs.
+	 * @param array  $terms List of Term Taxonomy IDs.
 	 * @param object $taxonomy Current Taxonomy object of Terms.
 	 */
 	public function taxonomy_tag_count_update( $terms, $taxonomy ) {
@@ -551,7 +551,7 @@ class CommentPress_Core_Comments_Tagging {
 	 *
 	 * @param string $display WP just passes an empty string here.
 	 * @param string $column The name of the custom column.
-	 * @param int $term_id The ID of the Term being displayed in the table.
+	 * @param int    $term_id The ID of the Term being displayed in the table.
 	 */
 	public function taxonomy_comment_column_values( $display, $column, $term_id ) {
 
@@ -705,8 +705,8 @@ class CommentPress_Core_Comments_Tagging {
 
 		// Init "existing" and "new" arrays.
 		$existing_term_ids = [];
-		$new_term_ids = [];
-		$new_terms = [];
+		$new_term_ids      = [];
+		$new_terms         = [];
 
 		// Parse the received Terms.
 		foreach ( $comment_tags as $term ) {
@@ -757,8 +757,8 @@ class CommentPress_Core_Comments_Tagging {
 	 * @since 4.0
 	 *
 	 * @param array $caps The existing capabilities array for the WordPress user.
-	 * @param str $cap The capability in question.
-	 * @param int $user_id The numeric ID of the WordPress user.
+	 * @param str   $cap The capability in question.
+	 * @param int   $user_id The numeric ID of the WordPress user.
 	 * @param array $args The additional arguments.
 	 * @return array $caps The modified capabilities array for the WordPress user.
 	 */
@@ -802,7 +802,7 @@ class CommentPress_Core_Comments_Tagging {
 
 		// Init "existing" and "new" arrays.
 		$existing_term_ids = [];
-		$new_term_ids = [];
+		$new_term_ids      = [];
 
 		// Get sanitised Term IDs for any *existing* Terms.
 		if ( isset( $_POST['tax_input'][ $this->tax_name ] ) ) {
@@ -856,8 +856,8 @@ class CommentPress_Core_Comments_Tagging {
 
 		// Init "existing" and "new" arrays.
 		$existing_term_ids = [];
-		$new_term_ids = [];
-		$new_terms = [];
+		$new_term_ids      = [];
+		$new_terms         = [];
 
 		// Check and sanitise Terms array.
 		$comment_tags = filter_input( INPUT_POST, 'comment_tagger_tags', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
@@ -1016,7 +1016,7 @@ class CommentPress_Core_Comments_Tagging {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $text The content to prepend to the Comment identifer.
+	 * @param str    $text The content to prepend to the Comment identifer.
 	 * @param object $comment The WordPress Comment object.
 	 * @return str $text The markup showing the tags for a Comment.
 	 */
@@ -1098,8 +1098,8 @@ class CommentPress_Core_Comments_Tagging {
 		// Config.
 		$args = [
 			'orderby' => 'count',
-			'order' => 'DESC',
-			'number' => 5,
+			'order'   => 'DESC',
+			'number'  => 5,
 		];
 
 		// Get top 5 most used tags.
@@ -1196,7 +1196,7 @@ class CommentPress_Core_Comments_Tagging {
 		// Localisation array.
 		$vars = [
 			'localisation' => [],
-			'data' => [],
+			'data'         => [],
 		];
 
 		// Localise with WordPress function.
@@ -1234,9 +1234,9 @@ class CommentPress_Core_Comments_Tagging {
 		// Build array of simple Term objects.
 		$term_ids = [];
 		foreach ( $terms as $term ) {
-			$obj = new stdClass();
-			$obj->id = $this->tax_prefix . '-' . $term->term_id;
-			$obj->name = $term->name;
+			$obj        = new stdClass();
+			$obj->id    = $this->tax_prefix . '-' . $term->term_id;
+			$obj->name  = $term->name;
 			$term_ids[] = $obj;
 		}
 
@@ -1299,7 +1299,7 @@ class CommentPress_Core_Comments_Tagging {
 		}
 
 		// Build list of Posts to which they are attached.
-		$posts_with = [];
+		$posts_with          = [];
 		$post_comment_counts = [];
 		foreach ( $all_comments as $comment ) {
 
@@ -1324,13 +1324,13 @@ class CommentPress_Core_Comments_Tagging {
 
 		// Create args.
 		$args = [
-			'orderby' => 'comment_count',
-			'order' => 'DESC',
-			'post_type' => 'any',
-			'post__in' => $posts_with,
-			'posts_per_page' => -1,
+			'orderby'             => 'comment_count',
+			'order'               => 'DESC',
+			'post_type'           => 'any',
+			'post__in'            => $posts_with,
+			'posts_per_page'      => -1,
 			'ignore_sticky_posts' => 1,
-			'post_status' => [
+			'post_status'         => [
 				'publish',
 				'inherit',
 			],
@@ -1440,7 +1440,7 @@ class CommentPress_Core_Comments_Tagging {
 
 		// Get queried data.
 		$comment_term_id = get_queried_object_id();
-		$comment_term = get_queried_object();
+		$comment_term    = get_queried_object();
 
 		// Get Comment IDs.
 		$tagged_comments = get_objects_in_term( $comment_term_id, $comment_term->taxonomy );
@@ -1454,9 +1454,9 @@ class CommentPress_Core_Comments_Tagging {
 		// Define args.
 		$args = [
 			'comment__in' => $tagged_comments,
-			'status' => 'approve',
-			'orderby' => 'comment_post_ID,comment_date',
-			'order' => 'ASC',
+			'status'      => 'approve',
+			'orderby'     => 'comment_post_ID,comment_date',
+			'order'       => 'ASC',
 		];
 
 		/**
@@ -1545,11 +1545,11 @@ class CommentPress_Core_Comments_Tagging {
 		$parsed_args = wp_parse_args( $args, $defaults );
 
 		// Get Taxonomy data.
-		$tax_name = esc_attr( $parsed_args['taxonomy'] );
-		$taxonomy = get_taxonomy( $parsed_args['taxonomy'] );
+		$tax_name              = esc_attr( $parsed_args['taxonomy'] );
+		$taxonomy              = get_taxonomy( $parsed_args['taxonomy'] );
 		$user_can_assign_terms = current_user_can( $taxonomy->cap->assign_terms );
-		$comma = _x( ',', 'tag delimiter', 'commentpress-core' );
-		$terms_to_edit = get_terms_to_edit( $post->ID, $tax_name );
+		$comma                 = _x( ',', 'tag delimiter', 'commentpress-core' );
+		$terms_to_edit         = get_terms_to_edit( $post->ID, $tax_name );
 		if ( ! is_string( $terms_to_edit ) ) {
 			$terms_to_edit = '';
 		}

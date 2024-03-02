@@ -256,7 +256,7 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $page_nav_enabled The setting if found, default otherwise.
+	 * @return str $revisions The setting if found, default otherwise.
 	 */
 	public function setting_revisions_get() {
 
@@ -290,7 +290,7 @@ class CommentPress_Core_Revisions {
 	 * @since 3.4
 	 * @since 4.0 Renamed and moved to this class.
 	 *
-	 * @param string $post_type The WordPress Post Type.
+	 * @param string  $post_type The WordPress Post Type.
 	 * @param WP_Post $post The Post object.
 	 */
 	public function metabox_add( $post_type, $post ) {
@@ -336,7 +336,7 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $post_id The ID of the saved WordPress Post or Revision ID.
+	 * @param int    $post_id The ID of the saved WordPress Post or Revision ID.
 	 * @param object $post The saved WordPress Post object.
 	 */
 	public function revision_create( $post_id, $post ) {
@@ -424,14 +424,14 @@ class CommentPress_Core_Revisions {
 
 		// Define basics.
 		$new_post = [
-			'post_status' => 'draft',
-			'post_type' => 'post',
-			'comment_status' => 'open',
-			'ping_status' => 'open',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
+			'post_status'           => 'draft',
+			'post_type'             => 'post',
+			'comment_status'        => 'open',
+			'ping_status'           => 'open',
+			'to_ping'               => '', // Quick fix for Windows.
+			'pinged'                => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
+			'post_excerpt'          => '', // Quick fix for Windows.
 		];
 
 		// Default Page title.
@@ -496,7 +496,7 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $new_post_id The numeric ID of the new Post.
+	 * @param int     $new_post_id The numeric ID of the new Post.
 	 * @param WP_Post $post The WordPress Post object that has been copied.
 	 */
 	private function revision_meta_add( $new_post_id, $post ) {
@@ -557,7 +557,7 @@ class CommentPress_Core_Revisions {
 		// Get Posts with the about-to-be-deleted Post ID in meta.
 		$older_posts = get_posts( [
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-			'meta_key' => $this->meta_key_newer_id,
+			'meta_key'   => $this->meta_key_newer_id,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 			'meta_value' => $post_id,
 		] );
@@ -614,7 +614,7 @@ class CommentPress_Core_Revisions {
 		}
 
 		// Construct anchor.
-		$title = __( 'Newer version', 'commentpress-core' );
+		$title      = __( 'Newer version', 'commentpress-core' );
 		$newer_link = '<a href="' . get_permalink( $newer_post->ID ) . '" title="' . esc_attr( $title ) . '">' .
 			esc_html( $title ) . ' &rarr;' .
 		'</a>';
@@ -641,9 +641,9 @@ class CommentPress_Core_Revisions {
 		$args = [
 			'numberposts' => 1,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-			'meta_key' => $this->meta_key_newer_id,
+			'meta_key'    => $this->meta_key_newer_id,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
-			'meta_value' => $post_id,
+			'meta_value'  => $post_id,
 		];
 
 		// Get the array.
@@ -663,7 +663,7 @@ class CommentPress_Core_Revisions {
 		}
 
 		// Construct anchor.
-		$title = __( 'Older version', 'commentpress-core' );
+		$title      = __( 'Older version', 'commentpress-core' );
 		$older_link = '<a href="' . get_permalink( $older_post->ID ) . '" title="' . esc_attr( $title ) . '">' .
 			'&larr; ' . esc_html( $title ) .
 		'</a>';

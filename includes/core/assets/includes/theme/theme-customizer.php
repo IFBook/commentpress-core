@@ -156,7 +156,7 @@ if ( ! function_exists( 'commentpress_customize_site_image' ) ) :
 		$wp_customize->add_section(
 			'cp_site_image',
 			[
-				'title' => commentpress_customizer_get_site_image_title(),
+				'title'    => commentpress_customizer_get_site_image_title(),
 				'priority' => 25,
 			]
 		);
@@ -165,9 +165,9 @@ if ( ! function_exists( 'commentpress_customize_site_image' ) ) :
 		$wp_customize->add_setting(
 			'commentpress_theme_settings[cp_site_image]',
 			[
-				'default' => '',
+				'default'    => '',
 				'capability' => 'edit_theme_options',
-				'type' => 'option',
+				'type'       => 'option',
 			]
 		);
 
@@ -177,11 +177,11 @@ if ( ! function_exists( 'commentpress_customize_site_image' ) ) :
 				$wp_customize,
 				'cp_site_image',
 				[
-					'label' => commentpress_customizer_get_site_image_title(),
+					'label'       => commentpress_customizer_get_site_image_title(),
 					'description' => commentpress_customizer_get_site_image_description(),
-					'section' => 'cp_site_image',
-					'settings' => 'commentpress_theme_settings[cp_site_image]',
-					'priority' => 1,
+					'section'     => 'cp_site_image',
+					'settings'    => 'commentpress_theme_settings[cp_site_image]',
+					'priority'    => 1,
 				]
 			)
 		);
@@ -215,7 +215,7 @@ if ( ! function_exists( 'commentpress_customize_site_logo' ) ) :
 		$wp_customize->add_section(
 			'cp_inline_header_image',
 			[
-				'title' => __( 'Site Logo', 'commentpress-core' ),
+				'title'    => __( 'Site Logo', 'commentpress-core' ),
 				'priority' => 35,
 			]
 		);
@@ -224,9 +224,9 @@ if ( ! function_exists( 'commentpress_customize_site_logo' ) ) :
 		$wp_customize->add_setting(
 			'commentpress_theme_settings[cp_inline_header_image]',
 			[
-				'default' => '',
+				'default'    => '',
 				'capability' => 'edit_theme_options',
-				'type' => 'option',
+				'type'       => 'option',
 			]
 		);
 
@@ -236,11 +236,11 @@ if ( ! function_exists( 'commentpress_customize_site_logo' ) ) :
 				$wp_customize,
 				'cp_inline_header_image',
 				[
-					'label' => __( 'Logo Image', 'commentpress-core' ),
+					'label'       => __( 'Logo Image', 'commentpress-core' ),
 					'description' => commentpress_customizer_get_site_logo_description(),
-					'section' => 'cp_inline_header_image',
-					'settings' => 'commentpress_theme_settings[cp_inline_header_image]',
-					'priority' => 1,
+					'section'     => 'cp_inline_header_image',
+					'settings'    => 'commentpress_theme_settings[cp_inline_header_image]',
+					'priority'    => 1,
 				]
 			)
 		);
@@ -249,9 +249,9 @@ if ( ! function_exists( 'commentpress_customize_site_logo' ) ) :
 		$wp_customize->add_setting(
 			'commentpress_theme_settings[cp_inline_header_padding]',
 			[
-				'default' => '',
+				'default'    => '',
 				'capability' => 'edit_theme_options',
-				'type' => 'option',
+				'type'       => 'option',
 			]
 		);
 
@@ -259,9 +259,9 @@ if ( ! function_exists( 'commentpress_customize_site_logo' ) ) :
 		$wp_customize->add_control(
 			'commentpress_theme_settings[cp_inline_header_padding]',
 			[
-				'label' => __( 'Top padding in px', 'commentpress-core' ),
+				'label'   => __( 'Top padding in px', 'commentpress-core' ),
 				'section' => 'cp_inline_header_image',
-				'type' => 'text',
+				'type'    => 'text',
 			]
 		);
 
@@ -304,8 +304,8 @@ if ( ! function_exists( 'commentpress_customize_header_bg_color' ) ) :
 				$wp_customize,
 				'commentpress_header_bg_color',
 				[
-					'label' => __( 'Header Background Color', 'commentpress-core' ),
-					'section' => 'colors',
+					'label'    => __( 'Header Background Color', 'commentpress-core' ),
+					'section'  => 'colors',
 					'settings' => 'commentpress_header_bg_color',
 				]
 			)

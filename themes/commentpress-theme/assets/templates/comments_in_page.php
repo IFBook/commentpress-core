@@ -49,16 +49,16 @@ defined( 'ABSPATH' ) || exit;
 
 					// Define our formatting options.
 					$comments_args = [
-						'type' => 'comment',
+						'type'       => 'comment',
 						'reply_text' => __( 'Reply to this comment', 'commentpress-core' ),
-						'callback' => 'commentpress_comments',
-						'style' => 'ol',
+						'callback'   => 'commentpress_comments',
+						'style'      => 'ol',
 					];
 
 					// Get Comments for this Post in ascending order.
 					$comments_in_page = get_comments( [
 						'post_id' => $post->ID,
-						'order' => 'ASC',
+						'order'   => 'ASC',
 					] );
 
 					// List Comments.

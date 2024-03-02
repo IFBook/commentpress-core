@@ -26,7 +26,7 @@ class CommentPress_License_Widget extends WP_Widget {
 
 		// Widget settings.
 		$widget_options = [
-			'classname' => 'commentpress_widget',
+			'classname'   => 'commentpress_widget',
 			'description' => __( 'This widget is supplied by CommentPress Core for placing HTML in the page footer - for example, copyright or licensing information.', 'commentpress-core' ),
 		];
 
@@ -129,11 +129,11 @@ class CommentPress_License_Widget extends WP_Widget {
 
 		$instance = wp_parse_args( (array) $instance, [
 			'title' => '',
-			'text' => '',
+			'text'  => '',
 		] );
 
 		$title = wp_strip_all_tags( $instance['title'] );
-		$text = esc_textarea( $instance['text'] );
+		$text  = esc_textarea( $instance['text'] );
 
 		?>
 		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php esc_html_e( 'Title:', 'commentpress-core' ); ?></label>

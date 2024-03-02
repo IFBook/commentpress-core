@@ -612,7 +612,7 @@ class CommentPress_Multisite_Sites {
 	 * @since 4.0
 	 *
 	 * @param WP_Site $new_site The new site object.
-	 * @param array $args The array of initialization arguments.
+	 * @param array   $args The array of initialization arguments.
 	 */
 	public function site_initialise( $new_site, $args ) {
 
@@ -686,11 +686,11 @@ class CommentPress_Multisite_Sites {
 	 *
 	 * @since 3.3
 	 *
-	 * @param int $blog_id The numeric ID of the WordPress Blog.
-	 * @param int $user_id The numeric ID of the WordPress User.
-	 * @param str $domain The domain of the WordPress Blog.
-	 * @param str $path The path of the WordPress Blog.
-	 * @param int $site_id The numeric ID of the WordPress parent Site.
+	 * @param int   $blog_id The numeric ID of the WordPress Blog.
+	 * @param int   $user_id The numeric ID of the WordPress User.
+	 * @param str   $domain The domain of the WordPress Blog.
+	 * @param str   $path The path of the WordPress Blog.
+	 * @param int   $site_id The numeric ID of the WordPress parent Site.
 	 * @param array $meta The meta data of the WordPress Blog.
 	 */
 	public function site_initialise_legacy( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
@@ -724,7 +724,7 @@ class CommentPress_Multisite_Sites {
 
 		// Build args for compatibility with action.
 		$args = [
-			'title' => ! empty( $site->site_name ) ? $site->site_name : '',
+			'title'   => ! empty( $site->site_name ) ? $site->site_name : '',
 			'user_id' => $user_id,
 			'options' => $meta,
 		];
@@ -752,7 +752,7 @@ class CommentPress_Multisite_Sites {
 	 * @since 4.0
 	 *
 	 * @param array $allowed_themes The existing array of allowed themes.
-	 * @param int $blog_id The numeric ID of the Site.
+	 * @param int   $blog_id The numeric ID of the Site.
 	 * @return array $allowed_themes The modified array of allowed themes.
 	 */
 	public function themes_allowed_add( $allowed_themes, $blog_id ) {
@@ -763,9 +763,9 @@ class CommentPress_Multisite_Sites {
 		}
 
 		// Allow all parent themes.
-		$allowed_themes['commentpress-flat'] = 1;
+		$allowed_themes['commentpress-flat']   = 1;
 		$allowed_themes['commentpress-modern'] = 1;
-		$allowed_themes['commentpress-theme'] = 1;
+		$allowed_themes['commentpress-theme']  = 1;
 
 		/**
 		 * Filters the allowed themes on a CommentPress-enabled Site.

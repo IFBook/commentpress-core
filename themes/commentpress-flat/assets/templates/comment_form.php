@@ -15,7 +15,7 @@ global $post, $page;
 $core = commentpress_core();
 
 // Get User data.
-$user = wp_get_current_user();
+$user              = wp_get_current_user();
 $user_display_name = $user->exists() ? $user->display_name : '';
 
 /**

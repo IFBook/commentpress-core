@@ -393,7 +393,7 @@ class CommentPress_Plugin {
 	 * @since 4.0 Moved to this class.
 	 *
 	 * @param array $links The existing links array.
-	 * @param str $file The name of the plugin file.
+	 * @param str   $file The name of the plugin file.
 	 * @return array $links The modified links array.
 	 */
 	public function action_links( $links, $file ) {
@@ -404,7 +404,7 @@ class CommentPress_Plugin {
 		}
 
 		// Add PayPal link.
-		$paypal = 'https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=PZSKM8T5ZP3SC';
+		$paypal  = 'https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=PZSKM8T5ZP3SC';
 		$links[] = '<a href="' . esc_url( $paypal ) . '" target="_blank">' . __( 'Donate!', 'commentpress-core' ) . '</a>';
 
 		// --<
@@ -419,7 +419,7 @@ class CommentPress_Plugin {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $plugin The plugin file.
+	 * @param str  $plugin The plugin file.
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
 	public function plugin_activated( $plugin, $network_wide = false ) {
@@ -450,7 +450,7 @@ class CommentPress_Plugin {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $plugin The plugin file.
+	 * @param str  $plugin The plugin file.
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
 	public function plugin_deactivated( $plugin, $network_wide = false ) {

@@ -444,7 +444,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $name The name of the setting.
+	 * @param str   $name The name of the setting.
 	 * @param mixed $default The default value for the setting.
 	 * @return mixed The value of the setting if it exists, $default otherwise.
 	 */
@@ -460,7 +460,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $name The name of the setting.
+	 * @param str   $name The name of the setting.
 	 * @param mixed $value The value for the setting.
 	 */
 	public function setting_set( $name, $value = '' ) {
@@ -510,7 +510,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $name The name of the Site Option.
+	 * @param str   $name The name of the Site Option.
 	 * @param mixed $default The default value for the Site Option.
 	 * @return mixed The value of the Site Option if it exists, default otherwise.
 	 */
@@ -526,7 +526,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $name The name of the Site Option.
+	 * @param str   $name The name of the Site Option.
 	 * @param mixed $value The value for the Site Option.
 	 * @return bool True if the value was updated, false otherwise.
 	 */

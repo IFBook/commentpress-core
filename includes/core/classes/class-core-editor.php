@@ -126,7 +126,7 @@ class CommentPress_Core_Editor {
 
 		// Initialise objects.
 		$this->comments = new CommentPress_Core_Editor_Comments( $this );
-		$this->content = new CommentPress_Core_Editor_Content( $this );
+		$this->content  = new CommentPress_Core_Editor_Content( $this );
 
 	}
 

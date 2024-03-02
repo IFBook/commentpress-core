@@ -54,8 +54,8 @@ class WP_Customize_Site_Image_Control extends WP_Customize_Media_Control {
 	 * @since 3.8.5
 	 *
 	 * @param WP_Customize_Manager $manager The manager object.
-	 * @param string $id The ID.
-	 * @param array $args Extra arguments.
+	 * @param string               $id The ID.
+	 * @param array                $args Extra arguments.
 	 */
 	public function __construct( $manager, $id, $args = [] ) {
 

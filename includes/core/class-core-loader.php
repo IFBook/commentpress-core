@@ -292,31 +292,31 @@ class CommentPress_Core_Loader {
 	public function setup_objects() {
 
 		// Initialise core objects.
-		$this->db = new CommentPress_Core_Database( $this );
+		$this->db       = new CommentPress_Core_Database( $this );
 		$this->comments = new CommentPress_Core_Comments( $this );
-		$this->theme = new CommentPress_Core_Theme( $this );
+		$this->theme    = new CommentPress_Core_Theme( $this );
 
 		$this->settings_site = new CommentPress_Core_Settings_Site( $this );
 
 		$this->display = new CommentPress_Core_Display( $this );
 
-		$this->nav = new CommentPress_Core_Navigator( $this );
+		$this->nav      = new CommentPress_Core_Navigator( $this );
 		$this->document = new CommentPress_Core_Document( $this );
-		$this->entry = new CommentPress_Core_Entry( $this );
-		$this->parser = new CommentPress_Core_Parser( $this );
+		$this->entry    = new CommentPress_Core_Entry( $this );
+		$this->parser   = new CommentPress_Core_Parser( $this );
 
 		$this->device = new CommentPress_Core_Device( $this );
 		$this->editor = new CommentPress_Core_Editor( $this );
 
 		// Initialise legacy objects.
-		$this->revisions = new CommentPress_Core_Revisions( $this );
+		$this->revisions    = new CommentPress_Core_Revisions( $this );
 		$this->pages_legacy = new CommentPress_Core_Pages_Legacy( $this );
 
 		// Initialise ajax objects.
 		$this->ajax = new CommentPress_AJAX_Loader( $this );
 
 		// Initialise compatibility objects.
-		$this->bp = new CommentPress_Core_BuddyPress( $this );
+		$this->bp      = new CommentPress_Core_BuddyPress( $this );
 		$this->plugins = new CommentPress_Core_Plugins( $this );
 
 	}

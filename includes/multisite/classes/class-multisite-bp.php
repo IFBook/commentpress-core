@@ -299,7 +299,7 @@ class CommentPress_Multisite_BuddyPress {
 	 *
 	 * @since 3.3
 	 * @param WP_Site $new_site The new site object.
-	 * @param array $args The array of initialization arguments.
+	 * @param array   $args The array of initialization arguments.
 	 */
 	public function site_initialise( $new_site, $args ) {
 
@@ -344,11 +344,11 @@ class CommentPress_Multisite_BuddyPress {
 	 *
 	 * @since 3.3
 	 *
-	 * @param int $blog_id The numeric ID of the WordPress Blog.
-	 * @param int $user_id The numeric ID of the WordPress User.
-	 * @param str $domain The domain of the WordPress Blog.
-	 * @param str $path The path of the WordPress Blog.
-	 * @param int $site_id The numeric ID of the WordPress parent Site.
+	 * @param int   $blog_id The numeric ID of the WordPress Blog.
+	 * @param int   $user_id The numeric ID of the WordPress User.
+	 * @param str   $domain The domain of the WordPress Blog.
+	 * @param str   $path The path of the WordPress Blog.
+	 * @param int   $site_id The numeric ID of the WordPress parent Site.
 	 * @param array $meta The meta data of the WordPress Blog.
 	 */
 	public function site_initialise_legacy( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
@@ -401,18 +401,18 @@ class CommentPress_Multisite_BuddyPress {
 
 		// Define tracking args.
 		$args = [
-			'action_id' => 'new_page',
-			'bp_activity_admin_filter' => __( 'Published a new page', 'commentpress-core' ),
-			'bp_activity_front_filter' => __( 'Pages', 'commentpress-core' ),
-			'bp_activity_new_post' => __( '%1$s posted a new <a href="%2$s">page</a>', 'commentpress-core' ),
-			'bp_activity_new_post_ms' => __( '%1$s posted a new <a href="%2$s">page</a>, on the site %3$s', 'commentpress-core' ),
-			'contexts' => [ 'activity', 'member' ],
-			'comment_action_id' => 'new_blog_comment',
+			'action_id'                         => 'new_page',
+			'bp_activity_admin_filter'          => __( 'Published a new page', 'commentpress-core' ),
+			'bp_activity_front_filter'          => __( 'Pages', 'commentpress-core' ),
+			'bp_activity_new_post'              => __( '%1$s posted a new <a href="%2$s">page</a>', 'commentpress-core' ),
+			'bp_activity_new_post_ms'           => __( '%1$s posted a new <a href="%2$s">page</a>, on the site %3$s', 'commentpress-core' ),
+			'contexts'                          => [ 'activity', 'member' ],
+			'comment_action_id'                 => 'new_blog_comment',
 			'bp_activity_comments_admin_filter' => __( 'Commented on a page', 'commentpress-core' ),
 			'bp_activity_comments_front_filter' => __( 'Comments', 'commentpress-core' ),
-			'bp_activity_new_comment' => __( '%1$s commented on the <a href="%2$s">page</a>', 'commentpress-core' ),
-			'bp_activity_new_comment_ms' => __( '%1$s commented on the <a href="%2$s">page</a>, on the site %3$s', 'commentpress-core' ),
-			'position' => 100,
+			'bp_activity_new_comment'           => __( '%1$s commented on the <a href="%2$s">page</a>', 'commentpress-core' ),
+			'bp_activity_new_comment_ms'        => __( '%1$s commented on the <a href="%2$s">page</a>, on the site %3$s', 'commentpress-core' ),
+			'position'                          => 100,
 		];
 
 		// Apply tracking args.
@@ -627,7 +627,7 @@ class CommentPress_Multisite_BuddyPress {
 		$label = apply_filters( 'commentpress/multisite/bp/button/visit_blog/label', $label, $site_type );
 
 		// Apply label.
-		$button['link_text'] = $label;
+		$button['link_text']  = $label;
 		$button['link_title'] = $label;
 
 		// --<

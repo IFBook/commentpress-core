@@ -159,13 +159,13 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ) :
 			// Get Group Avatar.
 			$avatar_options = [
 				'item_id' => $group_id,
-				'object' => 'group',
-				'type' => 'full',
-				'alt' => __( 'Group avatar', 'commentpress-core' ),
-				'class' => 'cp_logo_image',
-				'width' => 48,
-				'height' => 48,
-				'html' => true,
+				'object'  => 'group',
+				'type'    => 'full',
+				'alt'     => __( 'Group avatar', 'commentpress-core' ),
+				'class'   => 'cp_logo_image',
+				'width'   => 48,
+				'height'  => 48,
+				'html'    => true,
 			];
 
 			// Add filter for the function above.
@@ -264,7 +264,7 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ) :
 
 			// Set defaults.
 			$args = [
-				'post_type' => 'attachment',
+				'post_type'   => 'attachment',
 				'numberposts' => 1,
 				'post_status' => null,
 				'post_parent' => $core->db->setting_get( 'cp_toc_page' ),
@@ -506,7 +506,7 @@ if ( ! function_exists( 'commentpress_page_title' ) ) :
 
 		// Init.
 		$title = '';
-		$sep = ' &#8594; ';
+		$sep   = ' &#8594; ';
 
 		/*
 		// Maybe use Blog title.
@@ -544,7 +544,7 @@ if ( ! function_exists( 'commentpress_page_title' ) ) :
 
 			if ( is_category() ) {
 				$category = get_the_category();
-				$title .= $category[0]->cat_name . $sep;
+				$title   .= $category[0]->cat_name . $sep;
 			}
 
 			// Current Page.
@@ -578,7 +578,7 @@ if ( ! function_exists( 'commentpress_has_page_children' ) ) :
 		// Init to look for published Pages.
 		$defaults = [
 			'post_parent' => $page_obj->ID,
-			'post_type' => 'page',
+			'post_type'   => 'page',
 			'numberposts' => -1,
 			'post_status' => 'publish',
 		];
@@ -702,7 +702,7 @@ if ( ! function_exists( 'commentpress_echo_post_author' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param int $author_id The numeric ID of the author.
+	 * @param int  $author_id The numeric ID of the author.
 	 * @param bool $echo Print or return the linked username.
 	 * @return str $author The linked username.
 	 */

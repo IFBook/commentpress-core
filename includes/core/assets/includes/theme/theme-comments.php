@@ -62,7 +62,7 @@ if ( ! function_exists( 'commentpress_get_comments' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param array $comments An array of WordPress Comment objects.
+	 * @param array  $comments An array of WordPress Comment objects.
 	 * @param string $page_or_post The WordPress Post Type to query.
 	 */
 	function commentpress_get_comments( $comments, $page_or_post ) {
@@ -180,7 +180,7 @@ if ( ! function_exists( 'commentpress_format_comment' ) ) :
 	 * @since 3.0
 	 *
 	 * @param object $comment The Comment object.
-	 * @param str $context Either "all" for all-comments or "by" for comments-by-commenter.
+	 * @param str    $context Either "all" for all-comments or "by" for comments-by-commenter.
 	 * @return str The formatted Comment HTML.
 	 */
 	function commentpress_format_comment( $comment, $context = 'all' ) {
@@ -343,9 +343,9 @@ if ( ! function_exists( 'commentpress_get_comments_by_content' ) ) :
 
 		// Get all approved Comments.
 		$all_comments = get_comments( [
-			'status' => 'approve',
+			'status'  => 'approve',
 			'orderby' => 'comment_author, comment_post_ID, comment_date',
-			'order' => 'ASC',
+			'order'   => 'ASC',
 		] );
 
 		// Kick out if none.
@@ -363,7 +363,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_content' ) ) :
 			// Add to authors with Comments array.
 			if ( ! in_array( $comment->comment_author_email, $authors_with ) ) {
 				$authors_with[] = $comment->comment_author_email;
-				$name = $comment->comment_author != '' ? $comment->comment_author : __( 'Anonymous', 'commentpress-core' );
+				$name           = $comment->comment_author != '' ? $comment->comment_author : __( 'Anonymous', 'commentpress-core' );
 				$author_names[ $comment->comment_author_email ] = $name;
 			}
 
@@ -503,7 +503,7 @@ if ( ! function_exists( 'commentpress_get_comment_activity' ) ) :
 			'number' => 10,
 			'status' => 'approve',
 			// Exclude trackbacks and pingbacks until we decide what to do with them.
-			'type' => '',
+			'type'   => '',
 		];
 
 		// If we are on a 404, for example.
@@ -911,14 +911,14 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 
 			// The built in walker works just fine since WordPress 3.8.
 			$args = [
-				'style' => 'ol',
-				'type' => $comment_type,
+				'style'    => 'ol',
+				'type'     => $comment_type,
 				'callback' => 'commentpress_comments',
 			];
 
 			// Get singular Post Type label.
 			$current_type = get_post_type();
-			$post_type = get_post_type_object( $current_type );
+			$post_type    = get_post_type_object( $current_type );
 
 			/**
 			 * Assign name of Post Type.
@@ -1291,7 +1291,7 @@ if ( ! function_exists( 'commentpress_comment_reply_link' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param array $args The reply links arguments.
+	 * @param array  $args The reply links arguments.
 	 * @param object $comment The Comment.
 	 * @param object $post The Post.
 	 */
@@ -1299,13 +1299,13 @@ if ( ! function_exists( 'commentpress_comment_reply_link' ) ) :
 
 		// Set some defaults.
 		$defaults = [
-			'add_below' => 'comment',
+			'add_below'  => 'comment',
 			'respond_id' => 'respond',
 			'reply_text' => __( 'Reply', 'commentpress-core' ),
 			'login_text' => __( 'Log in to Reply', 'commentpress-core' ),
-			'depth' => 0,
-			'before' => '',
-			'after' => '',
+			'depth'      => 0,
+			'before'     => '',
+			'after'      => '',
 		];
 
 		// Parse them.
@@ -1317,7 +1317,7 @@ if ( ! function_exists( 'commentpress_comment_reply_link' ) ) :
 
 		// Get the obvious.
 		$comment = get_comment( $comment );
-		$post = get_post( $post );
+		$post    = get_post( $post );
 
 		// Kick out if Comments closed.
 		if ( 'open' != $post->comment_status ) {
@@ -1349,7 +1349,7 @@ if ( ! function_exists( 'commentpress_comment_reply_link' ) ) :
 			);
 
 			// Build attributes.
-			$href = $addquery . '#' . $args['respond_id'];
+			$href    = $addquery . '#' . $args['respond_id'];
 			$onclick = 'return addComment.moveForm(' .
 				"'" . $args['add_below'] . '-' . $comment->comment_ID . "', " .
 				"'" . $comment->comment_ID . "', " .
@@ -1394,8 +1394,8 @@ if ( ! function_exists( 'commentpress_comments' ) ) :
 	 * @since 3.0
 	 *
 	 * @param object $comment The Comment object.
-	 * @param array $args The Comment arguments.
-	 * @param int $depth The Comment depth.
+	 * @param array  $args The Comment arguments.
+	 * @param int    $depth The Comment depth.
 	 */
 	function commentpress_comments( $comment, $args, $depth ) {
 
@@ -1416,8 +1416,8 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 	 * @since 3.0
 	 *
 	 * @param object $comment The Comment object.
-	 * @param array $args The Comment arguments.
-	 * @param int $depth The Comment depth.
+	 * @param array  $args The Comment arguments.
+	 * @param int    $depth The Comment depth.
 	 * @return str $html The Comment markup.
 	 */
 	function commentpress_get_comment_markup( $comment, $args, $depth ) {
@@ -1489,8 +1489,8 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 					$args,
 					[
 						'reply_text' => sprintf( __( 'Reply to %s', 'commentpress-core' ), get_comment_author( $comment->comment_ID ) ),
-						'depth' => $depth,
-						'max_depth' => $args['max_depth'],
+						'depth'      => $depth,
+						'max_depth'  => $args['max_depth'],
 					]
 				) );
 
@@ -1676,10 +1676,10 @@ if ( ! function_exists( 'commentpress_add_selection_classes' ) ) :
 	 *
 	 * @since 3.8
 	 *
-	 * @param array $classes An array of Comment classes.
-	 * @param string $class A comma-separated list of additional classes added to the list.
-	 * @param int $comment_id The Comment ID.
-	 * @param object $comment The Comment.
+	 * @param array       $classes An array of Comment classes.
+	 * @param string      $class A comma-separated list of additional classes added to the list.
+	 * @param int         $comment_id The Comment ID.
+	 * @param object      $comment The Comment.
 	 * @param int|WP_Post $post_id The Post ID or WP_Post object.
 	 */
 	function commentpress_add_selection_classes( $classes, $class, $comment_id, $comment, $post_id = 0 ) {
@@ -1722,7 +1722,7 @@ if ( ! function_exists( 'commentpress_comment_post_redirect' ) ) :
 	 *
 	 * @since 3.5
 	 *
-	 * @param str $link The link to the Comment.
+	 * @param str    $link The link to the Comment.
 	 * @param object $comment The Comment object.
 	 */
 	function commentpress_comment_post_redirect( $link, $comment ) {
@@ -1787,16 +1787,16 @@ if ( ! function_exists( 'commentpress_image_caption_shortcode' ) ) :
 	 *
 	 * @param array $empty WordPress passes '' as the first param.
 	 * @param array $attr Attributes attributed to the shortcode.
-	 * @param str $content Optional. Shortcode content.
+	 * @param str   $content Optional. Shortcode content.
 	 * @return str $caption The modified caption.
 	 */
 	function commentpress_image_caption_shortcode( $empty, $attr, $content ) {
 
 		// Get our shortcode vars.
 		$atts = shortcode_atts( [
-			'id' => '',
-			'align' => 'alignnone',
-			'width' => '',
+			'id'      => '',
+			'align'   => 'alignnone',
+			'width'   => '',
 			'caption' => '',
 		], $attr );
 
@@ -1818,9 +1818,9 @@ if ( ! function_exists( 'commentpress_image_caption_shortcode' ) ) :
 
 		// Allow a few tags.
 		$tags_to_allow = [
-			'em' => [],
+			'em'     => [],
 			'strong' => [],
-			'a' => [ 'href' ],
+			'a'      => [ 'href' ],
 		];
 
 		// Sanitise caption.
@@ -1856,9 +1856,9 @@ if ( ! function_exists( 'commentpress_multipage_comment_link' ) ) :
 	 *
 	 * @since 3.5
 	 *
-	 * @param str $link The existing Comment link.
+	 * @param str    $link The existing Comment link.
 	 * @param object $comment The Comment object.
-	 * @param array $args An array of extra arguments.
+	 * @param array  $args An array of extra arguments.
 	 * @return str $link The modified Comment link.
 	 */
 	function commentpress_multipage_comment_link( $link, $comment, $args ) {
@@ -1919,7 +1919,7 @@ if ( ! function_exists( 'commentpress_get_post_multipage_url' ) ) :
 	 *
 	 * @since 3.5
 	 *
-	 * @param int $i The Page number.
+	 * @param int     $i The Page number.
 	 * @param WP_Post $post The WordPress Post object.
 	 * @return str $url The URL to the Sub-page.
 	 */

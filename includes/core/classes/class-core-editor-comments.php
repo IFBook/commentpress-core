@@ -75,7 +75,7 @@ class CommentPress_Core_Editor_Comments {
 
 		// Store references.
 		$this->editor = $editor;
-		$this->core = $editor->core;
+		$this->core   = $editor->core;
 
 		// Init when the editor object is fully loaded.
 		add_action( 'commentpress/core/editor/loaded', [ $this, 'initialise' ] );
@@ -150,7 +150,7 @@ class CommentPress_Core_Editor_Comments {
 	public function settings_get_defaults( $settings ) {
 
 		// Add our defaults.
-		$settings[ $this->key_editor ] = 1; // Default to TinyMCE.
+		$settings[ $this->key_editor ]  = 1; // Default to TinyMCE.
 		$settings[ $this->key_promote ] = 0;
 
 		// --<
@@ -166,7 +166,7 @@ class CommentPress_Core_Editor_Comments {
 	public function settings_meta_box_part_get() {
 
 		// Get settings.
-		$editor = $this->setting_editor_get();
+		$editor  = $this->setting_editor_get();
 		$promote = $this->setting_promote_get();
 
 		// Include template file.
@@ -294,21 +294,21 @@ class CommentPress_Core_Editor_Comments {
 		$vars['cp_is_mobile'] = 0;
 		if ( $this->core->device->is_mobile() ) {
 			$vars['cp_is_mobile'] = 1;
-			$vars['cp_tinymce'] = 0;
+			$vars['cp_tinymce']   = 0;
 		}
 
 		// Don't add TinyMCE if touch device.
 		$vars['cp_is_touch'] = 0;
 		if ( $this->core->device->is_touch() ) {
 			$vars['cp_is_touch'] = 1;
-			$vars['cp_tinymce'] = 0;
+			$vars['cp_tinymce']  = 0;
 		}
 
 		// Don't add TinyMCE if tablet device.
 		$vars['cp_is_tablet'] = 0;
 		if ( $this->core->device->is_tablet() ) {
 			$vars['cp_is_tablet'] = 1;
-			$vars['cp_tinymce'] = 0;
+			$vars['cp_tinymce']   = 0;
 		}
 
 		// Support touch device testing if constant is set.
@@ -394,7 +394,7 @@ class CommentPress_Core_Editor_Comments {
 		 * @param array The default TinyMCE 4 config.
 		 */
 		$tinymce_config = apply_filters( 'commentpress_rte_tinymce', [
-			'theme' => 'modern',
+			'theme'     => 'modern',
 			'statusbar' => false,
 		] );
 
@@ -421,16 +421,16 @@ class CommentPress_Core_Editor_Comments {
 			'textarea_rows' => 10,
 
 			// Might as well start with teeny.
-			'teeny' => true,
+			'teeny'         => true,
 
 			// Give the iframe a white background.
-			'editor_css' => $editor_css,
+			'editor_css'    => $editor_css,
 
 			// Configure TinyMCE.
-			'tinymce' => $tinymce_config,
+			'tinymce'       => $tinymce_config,
 
 			// Configure Quicktags.
-			'quicktags' => $quicktags,
+			'quicktags'     => $quicktags,
 
 		];
 

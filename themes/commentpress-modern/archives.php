@@ -50,25 +50,25 @@ get_header();
 
 								// Configure.
 								$defaults = [
-									'show_option_all' => '',
-									'orderby' => 'name',
-									'order' => 'ASC',
-									'show_last_update' => 0,
-									'style' => 'list',
-									'show_count' => 0,
-									'hide_empty' => 0,
+									'show_option_all'    => '',
+									'orderby'            => 'name',
+									'order'              => 'ASC',
+									'show_last_update'   => 0,
+									'style'              => 'list',
+									'show_count'         => 0,
+									'hide_empty'         => 0,
 									'use_desc_for_title' => 1,
-									'child_of' => 0,
-									'feed' => '',
-									'feed_type' => '',
-									'feed_image' => '',
-									'exclude' => '',
-									'exclude_tree' => '',
-									'current_category' => 0,
-									'hierarchical' => true,
-									'title_li' => '',
-									'echo' => 1,
-									'depth' => 0,
+									'child_of'           => 0,
+									'feed'               => '',
+									'feed_type'          => '',
+									'feed_image'         => '',
+									'exclude'            => '',
+									'exclude_tree'       => '',
+									'current_category'   => 0,
+									'hierarchical'       => true,
+									'title_li'           => '',
+									'echo'               => 1,
+									'depth'              => 0,
 								];
 
 								// Show them.
@@ -92,17 +92,17 @@ get_header();
 
 							// Configure.
 							$args = [
-								'smallest' => 1,
-								'largest' => 1,
-								'unit' => 'em',
-								'number' => 0,
-								'format' => 'list',
+								'smallest'  => 1,
+								'largest'   => 1,
+								'unit'      => 'em',
+								'number'    => 0,
+								'format'    => 'list',
 								'separator' => '\n',
-								'orderby' => 'name',
-								'order' => 'ASC',
-								'link' => 'view',
-								'taxonomy' => 'post_tag',
-								'echo' => false,
+								'orderby'   => 'name',
+								'order'     => 'ASC',
+								'link'      => 'view',
+								'taxonomy'  => 'post_tag',
+								'echo'      => false,
 							];
 
 							// Get them.

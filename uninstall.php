@@ -90,7 +90,7 @@ function commentpress_schema_restore() {
 		);
 
 		// Write to log.
-		$e = new \Exception();
+		$e     = new \Exception();
 		$trace = $e->getTraceAsString();
 		error_log( print_r( [
 			'CommentPress Uninstall Error' => $message,

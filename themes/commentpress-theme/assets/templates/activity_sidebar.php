@@ -24,7 +24,7 @@ $is_commentable = commentpress_is_commentable();
 if ( $is_commentable && ! post_password_required() ) {
 
 	// Get singular Post Type label.
-	$current_type = get_post_type();
+	$current_type  = get_post_type();
 	$post_type_obj = get_post_type_object( $current_type );
 
 	/**
@@ -177,7 +177,7 @@ $_max_members = 10;
 
 						// Define args.
 						$recent_groupblog_activity = [
-							'action' => [
+							'action'     => [
 								'new_groupblog_comment',
 								'new_groupblog_post',
 							],
@@ -264,10 +264,10 @@ $_max_members = 10;
 
 					// Get recently active Members.
 					$members_recently_active = [
-						'user_id' => 0,
-						'type' => 'online',
-						'per_page' => $_max_members,
-						'max' => $_max_members,
+						'user_id'         => 0,
+						'type'            => 'online',
+						'per_page'        => $_max_members,
+						'max'             => $_max_members,
 						'populate_extras' => 1,
 					];
 
@@ -312,10 +312,10 @@ $_max_members = 10;
 
 					// Get online Members.
 					$members_online = [
-						'user_id' => 0,
-						'type' => 'online',
-						'per_page' => $_max_members,
-						'max' => $_max_members,
+						'user_id'         => 0,
+						'type'            => 'online',
+						'per_page'        => $_max_members,
+						'max'             => $_max_members,
 						'populate_extras' => 1,
 					];
 

@@ -75,7 +75,7 @@ class CommentPress_Core_Theme_Sidebar {
 
 		// Store references.
 		$this->theme = $theme;
-		$this->core = $theme->core;
+		$this->core  = $theme->core;
 
 		// Init when the theme object is fully loaded.
 		add_action( 'commentpress/core/theme/loaded', [ $this, 'initialise' ] );
@@ -447,7 +447,7 @@ class CommentPress_Core_Theme_Sidebar {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $post_id The numeric ID of the Post.
+	 * @param int  $post_id The numeric ID of the Post.
 	 * @param bool $raw Pass "true" to get the actual meta value.
 	 * @return string $sidebar The Sidebar identifier.
 	 */
@@ -484,7 +484,7 @@ class CommentPress_Core_Theme_Sidebar {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $post_id The numeric ID of the Post.
+	 * @param int    $post_id The numeric ID of the Post.
 	 * @param string $sidebar The Sidebar identifier.
 	 */
 	public function set_for_post_id( $post_id, $sidebar ) {

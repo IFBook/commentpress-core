@@ -359,11 +359,11 @@ class CommentPress_AJAX_Infinite_Scroll {
 
 		// Construct response.
 		$response = [
-			'post_id' => $post->ID,
-			'url' => get_permalink( $post->ID ),
-			'title' => $page_title,
-			'content' => $data,
-			'comments' => $comments,
+			'post_id'        => $post->ID,
+			'url'            => get_permalink( $post->ID ),
+			'title'          => $page_title,
+			'content'        => $data,
+			'comments'       => $comments,
 			'comment_status' => $post->comment_status,
 		];
 

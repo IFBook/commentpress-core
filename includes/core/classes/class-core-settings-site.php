@@ -220,7 +220,8 @@ class CommentPress_Core_Settings_Site {
 	public function admin_menu() {
 
 		// Check User permissions.
-		if ( ! $this->page_capability() ) {
+		$capability = $this->page_capability();
+		if ( false === $capability ) {
 			return;
 		}
 
@@ -254,7 +255,7 @@ class CommentPress_Core_Settings_Site {
 		$this->parent_page = add_options_page(
 			__( 'Site Settings for CommentPress', 'commentpress-core' ),
 			__( 'CommentPress', 'commentpress-core' ),
-			'manage_options', // Required caps.
+			$capability, // Required caps.
 			$this->parent_page_slug, // Slug name.
 			[ $this, 'page_settings' ] // Callback.
 		);
@@ -272,7 +273,7 @@ class CommentPress_Core_Settings_Site {
 			$this->parent_page_slug, // Parent slug.
 			__( 'Site Settings for CommentPress', 'commentpress-core' ),
 			__( 'CommentPress', 'commentpress-core' ),
-			'manage_options', // Required caps.
+			$capability, // Required caps.
 			$this->settings_page_slug, // Slug name.
 			[ $this, 'page_settings' ]
 		);
@@ -420,7 +421,7 @@ class CommentPress_Core_Settings_Site {
 	 *
 	 * @since 4.0
 	 *
-	 * @return bool True if the current User has the capability, false otherwise.
+	 * @return string|bool The capability if the current User has it, false otherwise.
 	 */
 	public function page_capability() {
 
@@ -439,7 +440,7 @@ class CommentPress_Core_Settings_Site {
 		}
 
 		// --<
-		return true;
+		return $capability;
 
 	}
 
@@ -822,7 +823,7 @@ class CommentPress_Core_Settings_Site {
 	 * @since 4.0
 	 *
 	 * @param array $links The existing links array.
-	 * @param str $file The name of the plugin file.
+	 * @param str   $file The name of the plugin file.
 	 * @return array $links The modified links array.
 	 */
 	public function action_links( $links, $file ) {

@@ -236,9 +236,9 @@ class CommentPress_Core_Theme {
 
 		// Add our defaults.
 		$settings[ $this->key_featured_images ] = 'n';
-		$settings[ $this->key_textblock_meta ] = 'y';
-		$settings[ $this->key_excerpt_length ] = 55;
-		$settings[ $this->key_scroll_speed ] = 800;
+		$settings[ $this->key_textblock_meta ]  = 'y';
+		$settings[ $this->key_excerpt_length ]  = 55;
+		$settings[ $this->key_scroll_speed ]    = 800;
 
 		// --<
 		return $settings;
@@ -275,9 +275,9 @@ class CommentPress_Core_Theme {
 
 		// Get settings.
 		$featured_images = $this->setting_featured_images_get();
-		$textblock_meta = $this->setting_textblock_meta_get();
-		$excerpt_length = $this->setting_excerpt_length_get();
-		$scroll_speed = $this->setting_scroll_speed_get();
+		$textblock_meta  = $this->setting_textblock_meta_get();
+		$excerpt_length  = $this->setting_excerpt_length_get();
+		$scroll_speed    = $this->setting_scroll_speed_get();
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-theme.php';
@@ -670,10 +670,10 @@ class CommentPress_Core_Theme {
 		 */
 		$this->core->db->option_wp_backup( 'sidebars_widgets', [
 			'wp_inactive_widgets' => [],
-			'sidebar-1' => [],
-			'sidebar-2' => [],
-			'sidebar-3' => [],
-			'array_version' => 3,
+			'sidebar-1'           => [],
+			'sidebar-2'           => [],
+			'sidebar-3'           => [],
+			'array_version'       => 3,
 		] );
 
 	}
@@ -802,16 +802,16 @@ class CommentPress_Core_Theme {
 			// Define localisation array.
 			$texthighlighter_vars = [
 				'popover_textblock' => $popover_textblock,
-				'popover_comment' => $popover_comment,
+				'popover_comment'   => $popover_comment,
 			];
 
 			// Create translations.
 			$texthighlighter_translations = [
-				'dialog_title' => esc_html__( 'Are you sure?', 'commentpress-core' ),
+				'dialog_title'   => esc_html__( 'Are you sure?', 'commentpress-core' ),
 				'dialog_content' => esc_html__( 'You have not yet submitted your comment. Are you sure you want to discard it?', 'commentpress-core' ),
-				'dialog_yes' => esc_html__( 'Discard', 'commentpress-core' ),
-				'dialog_no' => esc_html__( 'Keep', 'commentpress-core' ),
-				'backlink_text' => esc_html__( 'Back', 'commentpress-core' ),
+				'dialog_yes'     => esc_html__( 'Discard', 'commentpress-core' ),
+				'dialog_no'      => esc_html__( 'Keep', 'commentpress-core' ),
+				'backlink_text'  => esc_html__( 'Back', 'commentpress-core' ),
 			];
 
 			// Add to vars.
@@ -863,7 +863,7 @@ class CommentPress_Core_Theme {
 		$vars['cp_bp_adminbar'] = 'n';
 
 		// Match WordPress 3.8+ admin bar.
-		$vars['cp_wp_adminbar_height'] = '32';
+		$vars['cp_wp_adminbar_height']   = '32';
 		$vars['cp_wp_adminbar_expanded'] = '0';
 
 		// Are we showing the WordPress admin bar?
@@ -1018,7 +1018,7 @@ class CommentPress_Core_Theme {
 			'_builtin' => false,
 		];
 
-		$output = 'names'; // Can be "names" or "objects" - "names" is the default.
+		$output   = 'names'; // Can be "names" or "objects" - "names" is the default.
 		$operator = 'and'; // Can be "and" or "or".
 
 		// Get Post Types.

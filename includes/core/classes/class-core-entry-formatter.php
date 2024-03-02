@@ -118,7 +118,7 @@ class CommentPress_Core_Entry_Formatter {
 
 		// Store references.
 		$this->entry = $entry;
-		$this->core = $entry->core;
+		$this->core  = $entry->core;
 
 		// Init when the entry object is fully loaded.
 		add_action( 'commentpress/core/entry/loaded', [ $this, 'initialise' ] );
@@ -271,7 +271,7 @@ class CommentPress_Core_Entry_Formatter {
 		$site_text_format = $this->setting_formatter_get();
 
 		// Get the "Text Format" options markup without showing default.
-		$show_default = false;
+		$show_default        = false;
 		$text_format_options = $this->formats_select_options_get( $text_formats, $site_text_format, $show_default );
 
 		// Include template file.
@@ -467,7 +467,7 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $new_post_id The numeric ID of the new Post.
+	 * @param int     $new_post_id The numeric ID of the new Post.
 	 * @param WP_Post $post The WordPress Post object that has been copied.
 	 */
 	public function revision_formatter_set( $new_post_id, $post ) {
@@ -599,8 +599,8 @@ class CommentPress_Core_Entry_Formatter {
 	 * @since 4.0
 	 *
 	 * @param array $text_formats The array of Text Formats.
-	 * @param int $site_text_format The current "Text Format" option.
-	 * @param bool $show_default True includes the "Use default" option, false does not.
+	 * @param int   $site_text_format The current "Text Format" option.
+	 * @param bool  $show_default True includes the "Use default" option, false does not.
 	 * @return string $markup The "Text Format" options markup.
 	 */
 	public function formats_select_options_get( $text_formats, $site_text_format, $show_default = true ) {
@@ -651,7 +651,7 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $post_id The numeric ID of the Post.
+	 * @param int  $post_id The numeric ID of the Post.
 	 * @param bool $raw Pass "true" to get the actual meta value.
 	 * @return int $formatter The numeric ID of the Formatter.
 	 */

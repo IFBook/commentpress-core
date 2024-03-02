@@ -78,8 +78,8 @@ get_header();
 										get_permalink(),
 										the_title_attribute( [
 											'before' => __( 'Permanent Link:', 'commentpress-core' ),
-											'after' => '',
-											'echo' => false,
+											'after'  => '',
+											'echo'   => false,
 										] ),
 										$post_title
 									);
@@ -95,11 +95,11 @@ get_header();
 
 					// Define our args.
 					$author_pages_args = [
-						'post_status' => 'publish',
-						'post_type' => 'page',
-						'author' => $my_author->ID,
+						'post_status'    => 'publish',
+						'post_type'      => 'page',
+						'author'         => $my_author->ID,
 						'posts_per_page' => 0,
-						'no_found_rows' => true,
+						'no_found_rows'  => true,
 					];
 
 					// The Pages query.

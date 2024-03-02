@@ -135,9 +135,9 @@ class CommentPress_Core_Entry {
 	public function setup_objects() {
 
 		// Initialise objects.
-		$this->metabox = new CommentPress_Core_Entry_Metabox( $this );
+		$this->metabox   = new CommentPress_Core_Entry_Metabox( $this );
 		$this->formatter = new CommentPress_Core_Entry_Formatter( $this );
-		$this->single = new CommentPress_Core_Entry_Single( $this );
+		$this->single    = new CommentPress_Core_Entry_Single( $this );
 
 	}
 

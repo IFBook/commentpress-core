@@ -310,7 +310,7 @@ HELPTEXT;
 	 *
 	 * @since 3.4
 	 *
-	 * @param int $author_id The numeric ID of the author.
+	 * @param int  $author_id The numeric ID of the author.
 	 * @param bool $echo True if link is to be echoed, false if returned.
 	 */
 	private function echo_post_author( $author_id, $echo = true ) {
@@ -335,7 +335,7 @@ HELPTEXT;
 		} else {
 
 			// Link to theme's Author Page.
-			$link = sprintf(
+			$link   = sprintf(
 				'<a href="%1$s" title="%2$s" rel="author">%3$s</a>',
 				get_author_posts_url( $user->ID, $user->user_nicename ),
 				esc_attr( sprintf( __( 'Posts by %s', 'commentpress-core' ), $user->display_name ) ),
@@ -371,9 +371,9 @@ HELPTEXT;
 			// Display menu.
 			wp_nav_menu( [
 				'theme_location' => 'toc',
-				'echo' => true,
-				'container' => '',
-				'items_wrap' => '%3$s',
+				'echo'           => true,
+				'container'      => '',
+				'items_wrap'     => '%3$s',
 			] );
 
 			// --<
@@ -446,17 +446,17 @@ HELPTEXT;
 
 		// Set list Pages defaults.
 		$defaults = [
-			'depth' => $depth,
-			'show_date' => '',
-			'date_format' => $this->core->db->setting_get( 'date_format' ),
-			'child_of' => 0,
-			'exclude' => implode( ',', $exclude ),
-			'title_li' => '',
-			'echo' => 1,
-			'authors' => '',
-			'sort_column' => 'menu_order, post_title',
-			'link_before' => '',
-			'link_after' => '',
+			'depth'        => $depth,
+			'show_date'    => '',
+			'date_format'  => $this->core->db->setting_get( 'date_format' ),
+			'child_of'     => 0,
+			'exclude'      => implode( ',', $exclude ),
+			'title_li'     => '',
+			'echo'         => 1,
+			'authors'      => '',
+			'sort_column'  => 'menu_order, post_title',
+			'link_before'  => '',
+			'link_after'   => '',
 			'exclude_tree' => '',
 		];
 
@@ -485,13 +485,13 @@ HELPTEXT;
 		if ( $comment_count == 0 ) {
 
 			// Show add Comment icon.
-			$icon = 'comment-add.png';
+			$icon  = 'comment-add.png';
 			$class = ' no_comments';
 
 		} elseif ( $comment_count > 0 ) {
 
 			// Show Comments Present icon.
-			$icon = 'comment.png';
+			$icon  = 'comment.png';
 			$class = ' has_comments';
 
 		}

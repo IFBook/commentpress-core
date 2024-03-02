@@ -113,7 +113,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 
 		// Store references.
 		$this->multisite = $groupblog->bp->multisite;
-		$this->bp = $groupblog->bp;
+		$this->bp        = $groupblog->bp;
 		$this->groupblog = $groupblog;
 
 		// Init when the BuddyPress Groupblog is fully loaded.
@@ -234,11 +234,11 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	public function settings_get_defaults( $settings ) {
 
 		// Add our new BuddyPress Groupblog defaults.
-		$settings[ $this->key_scheme ] = 'groupblog';
-		$settings[ $this->key_enabled ] = 0;
+		$settings[ $this->key_scheme ]   = 'groupblog';
+		$settings[ $this->key_enabled ]  = 0;
 		$settings[ $this->key_singular ] = $this->legacy_singular_get();
-		$settings[ $this->key_plural ] = $this->legacy_plural_get();
-		$settings[ $this->key_slug ] = $this->legacy_slug_get();
+		$settings[ $this->key_plural ]   = $this->legacy_plural_get();
+		$settings[ $this->key_slug ]     = $this->legacy_slug_get();
 
 		// --<
 		return $settings;
@@ -256,17 +256,17 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 		$current_scheme = $this->setting_scheme_get();
 
 		// Build scheme options.
-		$schemes = $this->schemes_get();
+		$schemes           = $this->schemes_get();
 		$groupblog_schemes = [];
 		foreach ( $schemes as $scheme => $names ) {
 			$groupblog_schemes[ $scheme ] = sprintf( '%1$s / %2$s', $names['singular'], $names['plural'] );
 		}
 
 		// Get custom naming scheme settings.
-		$enabled = $this->setting_enabled_get();
+		$enabled  = $this->setting_enabled_get();
 		$singular = $this->setting_singular_get();
-		$plural = $this->setting_plural_get();
-		$slug = $this->setting_slug_get();
+		$plural   = $this->setting_plural_get();
+		$slug     = $this->setting_slug_get();
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-bp-groupblog-names-settings-network.php';
@@ -903,27 +903,27 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 		$schemes = [
 
 			// BuddyPress Groupblog default.
-			'groupblog' => [
+			'groupblog'              => [
 				'singular' => __( 'Group Blog', 'commentpress-core' ),
-				'plural' => __( 'Group Blogs', 'commentpress-core' ),
+				'plural'   => __( 'Group Blogs', 'commentpress-core' ),
 			],
 
 			// CommentPress "document".
-			'document' => [
+			'document'               => [
 				'singular' => __( 'Document', 'commentpress-core' ),
-				'plural' => __( 'Documents', 'commentpress-core' ),
+				'plural'   => __( 'Documents', 'commentpress-core' ),
 			],
 
 			// CommentPress "class".
-			'class' => [
+			'class'                  => [
 				'singular' => __( 'Class', 'commentpress-core' ),
-				'plural' => __( 'Classes', 'commentpress-core' ),
+				'plural'   => __( 'Classes', 'commentpress-core' ),
 			],
 
 			// Legacy "workshop".
 			$this->legacy_slug_get() => [
 				'singular' => $this->legacy_singular_get(),
-				'plural' => $this->legacy_plural_get(),
+				'plural'   => $this->legacy_plural_get(),
 			],
 
 		];
@@ -950,7 +950,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 
 		// Use the custom naming scheme singular if enabled.
 		$enabled = $this->setting_enabled_get();
-		$single = $this->setting_singular_get();
+		$single  = $this->setting_singular_get();
 		if ( ! empty( $enabled ) && ! empty( $single ) ) {
 			return $single;
 		}
@@ -960,7 +960,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 
 			// Get the scheme singular name.
 			$current_scheme = $this->setting_scheme_get();
-			$schemes = $this->schemes_get();
+			$schemes        = $this->schemes_get();
 
 			foreach ( $schemes as $scheme => $names ) {
 				if ( $current_scheme === $scheme ) {
@@ -986,7 +986,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 
 		// Use the custom naming scheme plural if enabled.
 		$enabled = $this->setting_enabled_get();
-		$plural = $this->setting_plural_get();
+		$plural  = $this->setting_plural_get();
 		if ( ! empty( $enabled ) && ! empty( $plural ) ) {
 			return $plural;
 		}
@@ -996,7 +996,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 
 			// Get the scheme plural name.
 			$current_scheme = $this->setting_scheme_get();
-			$schemes = $this->schemes_get();
+			$schemes        = $this->schemes_get();
 
 			foreach ( $schemes as $scheme => $names ) {
 				if ( $current_scheme === $scheme ) {
@@ -1022,7 +1022,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 
 		// Use the custom naming scheme slug if enabled.
 		$enabled = $this->setting_enabled_get();
-		$slug = $this->setting_slug_get();
+		$slug    = $this->setting_slug_get();
 		if ( ! empty( $enabled ) && ! empty( $slug ) ) {
 			return $slug;
 		}
@@ -1032,7 +1032,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 
 			// Get the scheme slug.
 			$current_scheme = $this->setting_scheme_get();
-			$schemes = $this->schemes_get();
+			$schemes        = $this->schemes_get();
 
 			foreach ( $schemes as $scheme => $names ) {
 				if ( $current_scheme === $scheme ) {
@@ -1060,7 +1060,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 		return [
 			$this->legacy_slug_get() => [
 				'singular' => $this->legacy_singular_get(),
-				'plural' => $this->legacy_plural_get(),
+				'plural'   => $this->legacy_plural_get(),
 			],
 		];
 	}

@@ -203,7 +203,7 @@ class CommentPress_Core_Document {
 
 		// Add our defaults.
 		$settings[ $this->key_show_title ] = 'show';
-		$settings[ $this->key_show_meta ] = 'hide';
+		$settings[ $this->key_show_meta ]  = 'hide';
 
 		// --<
 		return $settings;
@@ -240,7 +240,7 @@ class CommentPress_Core_Document {
 
 		// Get settings.
 		$show_title = $this->setting_show_title_get();
-		$show_meta = $this->setting_show_meta_get();
+		$show_meta  = $this->setting_show_meta_get();
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-document.php';
@@ -549,10 +549,10 @@ class CommentPress_Core_Document {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $post_id The numeric ID of the Post.
+	 * @param int    $post_id The numeric ID of the Post.
 	 * @param string $meta_key The name of the meta key.
 	 * @param string $option The name of the site setting. Optional.
-	 * @param bool $raw Pass "true" to get the actual meta value.
+	 * @param bool   $raw Pass "true" to get the actual meta value.
 	 * @return mixed $value The meta value.
 	 */
 	public function get_for_post_id( $post_id, $meta_key, $option = '', $raw = false ) {
@@ -590,8 +590,8 @@ class CommentPress_Core_Document {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $post_id The numeric ID of the Post.
-	 * @param mixed $value The meta value.
+	 * @param int    $post_id The numeric ID of the Post.
+	 * @param mixed  $value The meta value.
 	 * @param string $meta_key The name of the meta key.
 	 */
 	public function set_for_post_id( $post_id, $value, $meta_key ) {
@@ -612,7 +612,7 @@ class CommentPress_Core_Document {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $post_id The numeric ID of the Post.
+	 * @param int    $post_id The numeric ID of the Post.
 	 * @param string $meta_key The name of the meta key.
 	 */
 	public function delete_for_post_id( $post_id, $meta_key ) {

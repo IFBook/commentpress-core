@@ -88,7 +88,7 @@ class CommentPress_Core_Entry_Metabox {
 
 		// Store references.
 		$this->entry = $entry;
-		$this->core = $entry->core;
+		$this->core  = $entry->core;
 
 		// Init when the entry object is fully loaded.
 		add_action( 'commentpress/core/entry/loaded', [ $this, 'initialise' ] );
@@ -129,7 +129,7 @@ class CommentPress_Core_Entry_Metabox {
 	 *
 	 * @since 4.0
 	 *
-	 * @param string $post_type The WordPress Post Type.
+	 * @param string  $post_type The WordPress Post Type.
 	 * @param WP_Post $post The Post object.
 	 */
 	public function metabox_add( $post_type, $post ) {
@@ -171,7 +171,7 @@ class CommentPress_Core_Entry_Metabox {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $post_id The numeric ID of the Post (or revision).
+	 * @param int    $post_id The numeric ID of the Post (or revision).
 	 * @param object $post The Post object.
 	 */
 	public function post_saved( $post_id, $post ) {

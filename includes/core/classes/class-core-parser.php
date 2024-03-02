@@ -252,7 +252,7 @@ class CommentPress_Core_Parser {
 
 		// Add our defaults.
 		$settings[ $this->key_post_types_disabled ] = [];
-		$settings[ $this->key_do_not_parse ] = 'n';
+		$settings[ $this->key_do_not_parse ]        = 'n';
 
 		// --<
 		return $settings;
@@ -268,8 +268,8 @@ class CommentPress_Core_Parser {
 
 		// Get settings.
 		$capable_post_types = $this->post_types_get_supported();
-		$selected_types = $this->setting_post_types_disabled_get();
-		$do_not_parse = $this->setting_do_not_parse_get();
+		$selected_types     = $this->setting_post_types_disabled_get();
+		$do_not_parse       = $this->setting_do_not_parse_get();
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-parser-settings.php';
@@ -422,7 +422,7 @@ class CommentPress_Core_Parser {
 
 		// Get only Post Types with an admin UI.
 		$args = [
-			'public' => true,
+			'public'  => true,
 			'show_ui' => true,
 		];
 
@@ -437,7 +437,7 @@ class CommentPress_Core_Parser {
 		}
 
 		// Built-in media descriptions are also supported.
-		$attachment = get_post_type_object( 'attachment' );
+		$attachment                                = get_post_type_object( 'attachment' );
 		$supported_post_types[ $attachment->name ] = $attachment->label;
 
 		// --<
@@ -2061,7 +2061,7 @@ class CommentPress_Core_Parser {
 	private function filter_captions( $content ) {
 
 		$start = '<!-- cp_caption_start -->';
-		$end = '<!-- cp_caption_end -->';
+		$end   = '<!-- cp_caption_end -->';
 
 		// Filter captioned images that are *not* inside other tags.
 		$pattern = [
@@ -2094,9 +2094,9 @@ class CommentPress_Core_Parser {
 	 * @since 3.9.3
 	 *
 	 * @param string $html Shortcode HTML output.
-	 * @param array $atts Array of shortcode attributes.
+	 * @param array  $atts Array of shortcode attributes.
 	 * @param string $file Media file.
-	 * @param int $post_id Post ID.
+	 * @param int    $post_id Post ID.
 	 * @param string $library Media library used for the shortcode.
 	 */
 	public function filter_audio_shortcode( $html, $atts, $file, $post_id, $library ) {
@@ -2112,9 +2112,9 @@ class CommentPress_Core_Parser {
 	 * @since 3.9.3
 	 *
 	 * @param string $html Shortcode HTML output.
-	 * @param array $atts Array of shortcode attributes.
+	 * @param array  $atts Array of shortcode attributes.
 	 * @param string $file Media file.
-	 * @param int $post_id Post ID.
+	 * @param int    $post_id Post ID.
 	 * @param string $library Media library used for the shortcode.
 	 */
 	public function filter_video_shortcode( $html, $atts, $file, $post_id, $library ) {
@@ -2338,8 +2338,8 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param array $comments The array of Comment objects.
-	 * @param array $text_signatures The array of Text Signatures.
+	 * @param array   $comments The array of Comment objects.
+	 * @param array   $text_signatures The array of Text Signatures.
 	 * @param integer $confidence The confidence level of Paragraph identity - default 90%.
 	 * @return array $assigned The array with Text Signatures as keys and array of Comments as values.
 	 */

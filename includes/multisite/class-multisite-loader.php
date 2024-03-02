@@ -177,13 +177,13 @@ class CommentPress_Multisite_Loader {
 	public function setup_objects() {
 
 		// Initialise objects.
-		$this->db = new CommentPress_Multisite_Database( $this );
-		$this->sites = new CommentPress_Multisite_Sites( $this );
-		$this->site = new CommentPress_Multisite_Site( $this );
+		$this->db               = new CommentPress_Multisite_Database( $this );
+		$this->sites            = new CommentPress_Multisite_Sites( $this );
+		$this->site             = new CommentPress_Multisite_Site( $this );
 		$this->settings_network = new CommentPress_Multisite_Settings_Network( $this );
-		$this->settings_site = new CommentPress_Multisite_Settings_Site( $this );
-		$this->revisions = new CommentPress_Multisite_Revisions( $this );
-		$this->bp = new CommentPress_Multisite_BuddyPress( $this );
+		$this->settings_site    = new CommentPress_Multisite_Settings_Site( $this );
+		$this->revisions        = new CommentPress_Multisite_Revisions( $this );
+		$this->bp               = new CommentPress_Multisite_BuddyPress( $this );
 
 	}
 

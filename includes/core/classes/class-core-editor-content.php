@@ -57,7 +57,7 @@ class CommentPress_Core_Editor_Content {
 
 		// Store references.
 		$this->editor = $editor;
-		$this->core = $editor->core;
+		$this->core   = $editor->core;
 
 		// Init when the editor object is fully loaded.
 		add_action( 'commentpress/core/editor/loaded', [ $this, 'initialise' ] );

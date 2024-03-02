@@ -102,8 +102,8 @@ get_header();
 										get_permalink(),
 										the_title_attribute( [
 											'before' => __( 'Permanent Link:', 'commentpress-core' ),
-											'after' => '',
-											'echo' => false,
+											'after'  => '',
+											'echo'   => false,
 										] ),
 										$post_title
 									);

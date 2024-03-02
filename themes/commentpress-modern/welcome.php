@@ -27,7 +27,7 @@ if ( ! empty( $core ) ) {
 
 		// Get Page attributes.
 		$page_title = get_the_title( $next_page_id );
-		$target = get_permalink( $next_page_id );
+		$target     = get_permalink( $next_page_id );
 
 		// Set the link.
 		$next_page_html = '<a href="' . $target . '" id="next_page" class="css_btn" title="' . esc_attr( $page_title ) . '">' .

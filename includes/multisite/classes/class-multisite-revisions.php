@@ -94,7 +94,7 @@ class CommentPress_Multisite_Revisions {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $title The existing title of the Post.
+	 * @param str    $title The existing title of the Post.
 	 * @param object $post The WordPress Post object.
 	 * @return str $title The modified title of the Post.
 	 */

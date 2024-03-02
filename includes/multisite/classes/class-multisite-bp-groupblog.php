@@ -186,7 +186,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 
 		// Store references.
 		$this->multisite = $bp->multisite;
-		$this->bp = $bp;
+		$this->bp        = $bp;
 
 		// Check compatibility before proceeding.
 		$this->compatibility_check();
@@ -285,8 +285,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 
 		// Initialise objects.
 		$this->groups = new CommentPress_Multisite_BuddyPress_Groupblog_Groups( $this );
-		$this->names = new CommentPress_Multisite_BuddyPress_Groupblog_Names( $this );
-		$this->site = new CommentPress_Multisite_BuddyPress_Groupblog_Site( $this );
+		$this->names  = new CommentPress_Multisite_BuddyPress_Groupblog_Names( $this );
+		$this->site   = new CommentPress_Multisite_BuddyPress_Groupblog_Site( $this );
 
 	}
 
@@ -358,10 +358,10 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	public function settings_get_defaults( $settings ) {
 
 		// Add our BuddyPress Groupblog defaults.
-		$settings[ $this->key_forced ] = 0;
-		$settings[ $this->key_privacy ] = 1;
+		$settings[ $this->key_forced ]        = 0;
+		$settings[ $this->key_privacy ]       = 1;
 		$settings[ $this->key_comment_login ] = 1;
-		$settings[ $this->key_theme ] = 'commentpress-flat';
+		$settings[ $this->key_theme ]         = 'commentpress-flat';
 
 		// --<
 		return $settings;
@@ -398,8 +398,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 
 		// Get settings.
 		$force_commentpress = $this->setting_forced_get();
-		$privacy = $this->setting_privacy_get();
-		$comment_login = $this->setting_comment_login_get();
+		$privacy            = $this->setting_privacy_get();
+		$comment_login      = $this->setting_comment_login_get();
 
 		// Get the valid Theme stylesheets and titles.
 		$groupblog_themes = $this->site->themes_get();
@@ -694,7 +694,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $blog_id The numeric ID of the new WordPress Site.
+	 * @param int   $blog_id The numeric ID of the new WordPress Site.
 	 * @param array $args The array of initialization arguments.
 	 */
 	public function form_signup_site_initialised( $blog_id, $args ) {

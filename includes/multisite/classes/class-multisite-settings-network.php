@@ -460,8 +460,8 @@ class CommentPress_Multisite_Settings_Network {
 	public function meta_box_wordpress_render() {
 
 		// Get settings.
-		$delete_first_page = $this->multisite->db->setting_get( 'cpmu_delete_first_page' );
-		$delete_first_post = $this->multisite->db->setting_get( 'cpmu_delete_first_post' );
+		$delete_first_page    = $this->multisite->db->setting_get( 'cpmu_delete_first_page' );
+		$delete_first_post    = $this->multisite->db->setting_get( 'cpmu_delete_first_post' );
 		$delete_first_comment = $this->multisite->db->setting_get( 'cpmu_delete_first_comment' );
 
 		// Include template file.
@@ -597,7 +597,7 @@ class CommentPress_Multisite_Settings_Network {
 	 * @since 4.0
 	 *
 	 * @param string $menu_slug The slug name to refer to this menu by (should be unique for this menu).
-	 * @param bool $echo Whether or not to echo the url - default is true.
+	 * @param bool   $echo Whether or not to echo the url - default is true.
 	 * @return string $url The URL.
 	 */
 	public function network_menu_page_url( $menu_slug, $echo = true ) {
@@ -635,7 +635,7 @@ class CommentPress_Multisite_Settings_Network {
 	 * @since 4.0 Moved to this class.
 	 *
 	 * @param array $links The existing links array.
-	 * @param str $file The name of the plugin file.
+	 * @param str   $file The name of the plugin file.
 	 * @return array $links The modified links array.
 	 */
 	public function action_links( $links, $file ) {

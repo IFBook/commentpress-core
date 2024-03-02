@@ -268,7 +268,7 @@ class CommentPress_Multisite_Site {
 	 *
 	 * @since 3.3
 	 *
-	 * @param int $blog_id The ID of the Blog to check.
+	 * @param int  $blog_id The ID of the Blog to check.
 	 * @param bool $legacy_check Whether to switch to the Blog to perform legacy check. Default true.
 	 * @return bool True if CommentPress-enabled, false otherwise.
 	 */

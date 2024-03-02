@@ -159,7 +159,7 @@ if ( ! function_exists( 'commentpress_page_navigation' ) ) :
 
 		// Build navigation list items.
 		$previous_list_item = ! empty( $previous_page_link ) ? '<li class="alignleft">' . $previous_page_link . '</li>' : '';
-		$next_list_item = ! empty( $next_page_link ) ? '<li class="alignright">' . $next_page_link . '</li>' : '';
+		$next_list_item     = ! empty( $next_page_link ) ? '<li class="alignright">' . $next_page_link . '</li>' : '';
 
 		// Merge navigation list items.
 		$nav_list = $previous_list_item . "\n" . $next_list_item . "\n";
@@ -644,16 +644,16 @@ if ( ! function_exists( 'commentpress_multipager' ) ) :
 
 		// Set default behaviour.
 		$defaults = [
-			'before' => '<div class="multipager">',
-			'after' => '</div>',
-			'link_before' => '',
-			'link_after' => '',
-			'next_or_number' => 'next',
-			'nextpagelink' => '<span class="alignright">' . __( 'Next page', 'commentpress-core' ) . ' &raquo;</span>',
+			'before'           => '<div class="multipager">',
+			'after'            => '</div>',
+			'link_before'      => '',
+			'link_after'       => '',
+			'next_or_number'   => 'next',
+			'nextpagelink'     => '<span class="alignright">' . __( 'Next page', 'commentpress-core' ) . ' &raquo;</span>',
 			'previouspagelink' => '<span class="alignleft">&laquo; ' . __( 'Previous page', 'commentpress-core' ) . '</span>',
-			'pagelink' => '%',
-			'more_file' => '',
-			'echo' => 0,
+			'pagelink'         => '%',
+			'more_file'        => '',
+			'echo'             => 0,
 		];
 
 		// Get Page links.
@@ -668,10 +668,10 @@ if ( ! function_exists( 'commentpress_multipager' ) ) :
 
 		// Get Page links.
 		$page_links .= wp_link_pages( [
-			'before' => '<div class="multipager multipager_all"><span>' . __( 'Pages: ', 'commentpress-core' ) . '</span>',
-			'after' => '</div>',
+			'before'   => '<div class="multipager multipager_all"><span>' . __( 'Pages: ', 'commentpress-core' ) . '</span>',
+			'after'    => '</div>',
 			'pagelink' => '<span class="multipager_link">%</span>',
-			'echo' => 0,
+			'echo'     => 0,
 		] );
 
 		// --<

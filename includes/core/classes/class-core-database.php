@@ -429,7 +429,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $name The name of the setting.
+	 * @param str   $name The name of the setting.
 	 * @param mixed $default The default value for the setting.
 	 * @return mixed The value of the setting if it exists, $default otherwise.
 	 */
@@ -445,7 +445,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $name The name of the setting.
+	 * @param str   $name The name of the setting.
 	 * @param mixed $value The value for the setting.
 	 */
 	public function setting_set( $name, $value = '' ) {
@@ -495,7 +495,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $name The name of the option.
+	 * @param str   $name The name of the option.
 	 * @param mixed $default The default value for the option.
 	 * @return mixed The value of the option if it exists, default otherwise.
 	 */
@@ -511,7 +511,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $name The name of the option.
+	 * @param str   $name The name of the option.
 	 * @param mixed $value The value for the option.
 	 * @return bool True if the value was updated, false otherwise.
 	 */
@@ -542,7 +542,7 @@ class CommentPress_Core_Database {
 	 * @since 3.4
 	 * @since 4.0 Renamed.
 	 *
-	 * @param str $name The name of the option to back up.
+	 * @param str   $name The name of the option to back up.
 	 * @param mixed $value The value of the option.
 	 */
 	public function option_wp_backup( $name, $value ) {
@@ -654,7 +654,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $name The name of the option.
+	 * @param str   $name The name of the option.
 	 * @param mixed $default The default value for the option.
 	 * @return mixed The value of the option if it exists, $default otherwise.
 	 */
@@ -668,7 +668,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $name The name of the option.
+	 * @param str   $name The name of the option.
 	 * @param mixed $value The value for the option.
 	 */
 	public function option_set( $name, $value = '' ) {

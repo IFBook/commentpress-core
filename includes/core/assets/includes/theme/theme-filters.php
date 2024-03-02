@@ -134,7 +134,7 @@ if ( ! function_exists( 'commentpress_site_title' ) ) :
 	 *
 	 * @since 3.8
 	 *
-	 * @param string $sep The title separator.
+	 * @param string  $sep The title separator.
 	 * @param boolean $echo Echo the result or not.
 	 * @return string $site_name The title of the Site.
 	 */
@@ -180,7 +180,7 @@ if ( ! function_exists( 'commentpress_post_classes' ) ) :
 	 *
 	 * @param array $classes The array of classes assigned to the Post.
 	 * @param array $class The additional classes assigned to the Post.
-	 * @param int $post_id The numeric ID of the Post.
+	 * @param int   $post_id The numeric ID of the Post.
 	 * @return array $classes The modified array of classes assigned to the Post.
 	 */
 	function commentpress_post_classes( $classes, $class, $post_id ) {

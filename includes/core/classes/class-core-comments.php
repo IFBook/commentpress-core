@@ -598,8 +598,8 @@ class CommentPress_Core_Comments {
 	 * @since 3.3
 	 *
 	 * @param array $caps The existing capabilities array for the WordPress User.
-	 * @param str $cap The capability in question.
-	 * @param int $user_id The numeric ID of the WordPress User.
+	 * @param str   $cap The capability in question.
+	 * @param int   $user_id The numeric ID of the WordPress User.
 	 * @param array $args The additional arguments.
 	 * @return array $caps The modified capabilities array for the WordPress User.
 	 */
@@ -714,7 +714,7 @@ class CommentPress_Core_Comments {
 	 * @since 3.4.8
 	 * @since 4.0 Moved to this class.
 	 *
-	 * @param str $editlink The existing HTML link.
+	 * @param str   $editlink The existing HTML link.
 	 * @param array $comment The Comment data.
 	 * @return str $editlink The modified HTML link.
 	 */

@@ -347,16 +347,16 @@ class CommentPress_Core_Pages_Legacy {
 
 		// Define Welcome Page.
 		$title = [
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'post_parent' => 0,
-			'comment_status' => 'open',
-			'ping_status' => 'closed',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
+			'post_status'           => 'publish',
+			'post_type'             => 'page',
+			'post_parent'           => 0,
+			'comment_status'        => 'open',
+			'ping_status'           => 'closed',
+			'to_ping'               => '', // Quick fix for Windows.
+			'pinged'                => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
+			'post_excerpt'          => '', // Quick fix for Windows.
+			'menu_order'            => 0,
 		];
 
 		// Add Post-specific stuff.
@@ -509,7 +509,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// Define args to update the Post.
 		$args = [
-			'ID' => $existing_id,
+			'ID'          => $existing_id,
 			'post_status' => 'publish',
 		];
 
@@ -548,7 +548,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// Define args to update the Post.
 		$args = [
-			'ID' => $existing_id,
+			'ID'          => $existing_id,
 			'post_status' => 'draft',
 		];
 
@@ -683,11 +683,11 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Build an array of the individual Special Page IDs, keyed by "name".
 		$special_pages_keyed = [
 			'cp_general_comments_page' => $this->core->db->setting_get( 'cp_general_comments_page', false ),
-			'cp_all_comments_page' => $this->core->db->setting_get( 'cp_all_comments_page', false ),
-			'cp_comments_by_page' => $this->core->db->setting_get( 'cp_comments_by_page', false ),
-			'cp_blog_page' => $this->core->db->setting_get( 'cp_blog_page', false ),
-			'cp_blog_archive_page' => $this->core->db->setting_get( 'cp_blog_archive_page', false ),
-			'cp_toc_page' => $this->core->db->setting_get( 'cp_toc_page', false ),
+			'cp_all_comments_page'     => $this->core->db->setting_get( 'cp_all_comments_page', false ),
+			'cp_comments_by_page'      => $this->core->db->setting_get( 'cp_comments_by_page', false ),
+			'cp_blog_page'             => $this->core->db->setting_get( 'cp_blog_page', false ),
+			'cp_blog_archive_page'     => $this->core->db->setting_get( 'cp_blog_archive_page', false ),
+			'cp_toc_page'              => $this->core->db->setting_get( 'cp_toc_page', false ),
 		];
 
 		// Try and delete each Page, bypassing trash.
@@ -1039,16 +1039,16 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// Define General Comments Page.
 		$general_comments = [
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'post_parent' => 0,
-			'comment_status' => 'open',
-			'ping_status' => 'open',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
+			'post_status'           => 'publish',
+			'post_type'             => 'page',
+			'post_parent'           => 0,
+			'comment_status'        => 'open',
+			'ping_status'           => 'open',
+			'to_ping'               => '', // Quick fix for Windows.
+			'pinged'                => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
+			'post_excerpt'          => '', // Quick fix for Windows.
+			'menu_order'            => 0,
 		];
 
 		// Add Post-specific stuff.
@@ -1113,16 +1113,16 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// Define All Comments Page.
 		$all_comments = [
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'post_parent' => 0,
-			'comment_status' => 'closed',
-			'ping_status' => 'closed',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
+			'post_status'           => 'publish',
+			'post_type'             => 'page',
+			'post_parent'           => 0,
+			'comment_status'        => 'closed',
+			'ping_status'           => 'closed',
+			'to_ping'               => '', // Quick fix for Windows.
+			'pinged'                => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
+			'post_excerpt'          => '', // Quick fix for Windows.
+			'menu_order'            => 0,
 		];
 
 		// Add Post-specific stuff.
@@ -1187,16 +1187,16 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// Define Comments by Author Page.
 		$group = [
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'post_parent' => 0,
-			'comment_status' => 'closed',
-			'ping_status' => 'closed',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
+			'post_status'           => 'publish',
+			'post_type'             => 'page',
+			'post_parent'           => 0,
+			'comment_status'        => 'closed',
+			'ping_status'           => 'closed',
+			'to_ping'               => '', // Quick fix for Windows.
+			'pinged'                => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
+			'post_excerpt'          => '', // Quick fix for Windows.
+			'menu_order'            => 0,
 		];
 
 		// Add Post-specific stuff.
@@ -1261,16 +1261,16 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// Define Blog Page.
 		$blog = [
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'post_parent' => 0,
-			'comment_status' => 'closed',
-			'ping_status' => 'closed',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
+			'post_status'           => 'publish',
+			'post_type'             => 'page',
+			'post_parent'           => 0,
+			'comment_status'        => 'closed',
+			'ping_status'           => 'closed',
+			'to_ping'               => '', // Quick fix for Windows.
+			'pinged'                => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
+			'post_excerpt'          => '', // Quick fix for Windows.
+			'menu_order'            => 0,
 		];
 
 		// Add Post-specific stuff.
@@ -1338,16 +1338,16 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// Define Blog Archive Page.
 		$blog = [
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'post_parent' => 0,
-			'comment_status' => 'closed',
-			'ping_status' => 'closed',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
+			'post_status'           => 'publish',
+			'post_type'             => 'page',
+			'post_parent'           => 0,
+			'comment_status'        => 'closed',
+			'ping_status'           => 'closed',
+			'to_ping'               => '', // Quick fix for Windows.
+			'pinged'                => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
+			'post_excerpt'          => '', // Quick fix for Windows.
+			'menu_order'            => 0,
 		];
 
 		// Add Post-specific stuff.
@@ -1414,16 +1414,16 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// Define TOC Page.
 		$toc = [
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'post_parent' => 0,
-			'comment_status' => 'closed',
-			'ping_status' => 'closed',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
+			'post_status'           => 'publish',
+			'post_type'             => 'page',
+			'post_parent'           => 0,
+			'comment_status'        => 'closed',
+			'ping_status'           => 'closed',
+			'to_ping'               => '', // Quick fix for Windows.
+			'pinged'                => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
+			'post_excerpt'          => '', // Quick fix for Windows.
+			'menu_order'            => 0,
 		];
 
 		// Default Page title.
@@ -1519,17 +1519,17 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 			case 'cp_welcome_page':
 				$link_title = __( 'Title Page', 'commentpress-core' );
-				$button = 'cover';
+				$button     = 'cover';
 				break;
 
 			case 'cp_all_comments_page':
 				$link_title = __( 'All Comments', 'commentpress-core' );
-				$button = 'allcomments';
+				$button     = 'allcomments';
 				break;
 
 			case 'cp_general_comments_page':
 				$link_title = __( 'General Comments', 'commentpress-core' );
-				$button = 'general';
+				$button     = 'general';
 				break;
 
 			case 'cp_blog_page':
@@ -1542,17 +1542,17 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 			case 'cp_blog_archive_page':
 				$link_title = __( 'Blog Archive', 'commentpress-core' );
-				$button = 'archive';
+				$button     = 'archive';
 				break;
 
 			case 'cp_comments_by_page':
 				$link_title = __( 'Comments by Commenter', 'commentpress-core' );
-				$button = 'members';
+				$button     = 'members';
 				break;
 
 			default:
 				$link_title = __( 'Members', 'commentpress-core' );
-				$button = 'members';
+				$button     = 'members';
 
 		}
 

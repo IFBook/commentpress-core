@@ -252,10 +252,10 @@ class CommentPress_Core_Navigator {
 
 		// Add our defaults.
 		$settings[ $this->key_page_nav_enabled ] = 'y';
-		$settings[ $this->key_post_type ] = 'page';
-		$settings[ $this->key_chapter_is_page ] = 1;
-		$settings[ $this->key_subpages ] = 1;
-		$settings[ $this->key_extended ] = 1;
+		$settings[ $this->key_post_type ]        = 'page';
+		$settings[ $this->key_chapter_is_page ]  = 1;
+		$settings[ $this->key_subpages ]         = 1;
+		$settings[ $this->key_extended ]         = 1;
 
 		// --<
 		return $settings;
@@ -292,10 +292,10 @@ class CommentPress_Core_Navigator {
 
 		// Get settings.
 		$page_nav_enabled = $this->setting_page_nav_enabled_get();
-		$post_type = $this->setting_post_type_get();
-		$chapter_is_page = $this->setting_chapter_is_page_get();
-		$show_subpages = $this->setting_subpages_get();
-		$extended = $this->setting_extended_get();
+		$post_type        = $this->setting_post_type_get();
+		$chapter_is_page  = $this->setting_chapter_is_page_get();
+		$show_subpages    = $this->setting_subpages_get();
+		$extended         = $this->setting_extended_get();
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-nav.php';
@@ -545,7 +545,7 @@ class CommentPress_Core_Navigator {
 
 		// Add our settings.
 		$vars['cp_toc_chapter_is_page'] = $this->setting_chapter_is_page_get();
-		$vars['cp_show_subpages'] = $this->setting_subpages_get();
+		$vars['cp_show_subpages']       = $this->setting_subpages_get();
 
 		// Default to Page navigation enabled.
 		$vars['cp_page_nav_enabled'] = 1;
@@ -662,16 +662,16 @@ class CommentPress_Core_Navigator {
 		// Init to look for published Pages.
 		$defaults = [
 			'post_parent' => $page_id,
-			'post_type' => 'page',
+			'post_type'   => 'page',
 			'numberposts' => -1,
 			'post_status' => 'publish',
-			'orderby' => 'menu_order, post_title',
-			'order' => 'ASC',
+			'orderby'     => 'menu_order, post_title',
+			'order'       => 'ASC',
 		];
 
 		// Get Page children.
 		$children = get_children( $defaults );
-		$kids =& $children;
+		$kids     =& $children;
 
 		// Do we have any?
 		if ( empty( $kids ) ) {
@@ -950,16 +950,16 @@ class CommentPress_Core_Navigator {
 				// Init to look for published Pages.
 				$defaults = [
 					'post_parent' => $page_obj->ID,
-					'post_type' => 'page',
+					'post_type'   => 'page',
 					'numberposts' => -1,
 					'post_status' => 'publish',
-					'orderby' => 'menu_order, post_title',
-					'order' => 'ASC',
+					'orderby'     => 'menu_order, post_title',
+					'order'       => 'ASC',
 				];
 
 				// Get Page children.
 				$children = get_children( $defaults );
-				$kids =& $children;
+				$kids     =& $children;
 
 				// Do we have any?
 				if ( ! empty( $kids ) ) {
@@ -1040,14 +1040,14 @@ class CommentPress_Core_Navigator {
 				// Init to look for published Pages.
 				$defaults = [
 					'post_parent' => $page_obj->ID,
-					'post_type' => 'page',
+					'post_type'   => 'page',
 					'numberposts' => -1,
 					'post_status' => 'publish',
 				];
 
 				// Get Page children.
 				$children = get_children( $defaults );
-				$kids =& $children;
+				$kids     =& $children;
 
 				// Do we have any?
 				if ( empty( $kids ) ) {
@@ -1143,14 +1143,14 @@ class CommentPress_Core_Navigator {
 
 		// Build Page query defaults.
 		$defaults = [
-			'child_of' => 0,
-			'sort_order' => 'ASC',
-			'sort_column' => 'menu_order, post_title',
+			'child_of'     => 0,
+			'sort_order'   => 'ASC',
+			'sort_column'  => 'menu_order, post_title',
 			'hierarchical' => 1,
-			'exclude' => $excludes,
-			'include' => '',
-			'authors' => '',
-			'parent' => -1,
+			'exclude'      => $excludes,
+			'include'      => '',
+			'authors'      => '',
+			'parent'       => -1,
 			'exclude_tree' => '',
 		];
 
@@ -1420,13 +1420,13 @@ class CommentPress_Core_Navigator {
 
 			// Default args for reference.
 			$args = [
-				'order' => 'ASC',
-				'orderby' => 'menu_order',
-				'post_type' => 'nav_menu_item',
-				'post_status' => 'publish',
-				'output' => ARRAY_A,
-				'output_key' => 'menu_order',
-				'nopaging' => true,
+				'order'                  => 'ASC',
+				'orderby'                => 'menu_order',
+				'post_type'              => 'nav_menu_item',
+				'post_status'            => 'publish',
+				'output'                 => ARRAY_A,
+				'output_key'             => 'menu_order',
+				'nopaging'               => true,
 				'update_post_term_cache' => false,
 			];
 
@@ -1544,7 +1544,7 @@ class CommentPress_Core_Navigator {
 	 * @since 3.0
 	 *
 	 * @param array $menu_items An array of Menu Item objects.
-	 * @param obj $menu_obj The Menu Item object.
+	 * @param obj   $menu_obj The Menu Item object.
 	 * @return array $sub_items The Menu Item children.
 	 */
 	private function menu_item_get_children( $menu_items, $menu_obj ) {
@@ -1671,9 +1671,9 @@ class CommentPress_Core_Navigator {
 	 */
 	public function number_to_roman( $arabic ) {
 
-		$ones = [ '', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX' ];
-		$tens = [ '', 'X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC' ];
-		$hundreds = [ '', 'C', 'CC', 'CCC', 'CD', 'D', 'DC', 'DCC', 'DCCC', 'CM' ];
+		$ones      = [ '', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX' ];
+		$tens      = [ '', 'X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC' ];
+		$hundreds  = [ '', 'C', 'CC', 'CCC', 'CD', 'D', 'DC', 'DCC', 'DCCC', 'CM' ];
 		$thousands = [ '', 'M', 'MM', 'MMM', 'MMMM' ];
 
 		if ( $arabic > 4999 ) {
@@ -1698,7 +1698,7 @@ class CommentPress_Core_Navigator {
 
 		} else {
 
-			$roman = $thousands[ ( $arabic - fmod( $arabic, 1000 ) ) / 1000 ];
+			$roman  = $thousands[ ( $arabic - fmod( $arabic, 1000 ) ) / 1000 ];
 			$arabic = fmod( $arabic, 1000 );
 			$roman .= $hundreds[ ( $arabic - fmod( $arabic, 100 ) ) / 100 ];
 			$arabic = fmod( $arabic, 100 );
