@@ -1,13 +1,16 @@
 <?php
 /**
- * Plugin Name: CommentPress Core
- * Plugin URI: http://www.futureofthebook.org/commentpress/
- * Description: CommentPress allows readers to comment in the margins of a text. You can use it to annotate, gloss, workshop, debate and more!
- * Author: Institute for the Future of the Book
- * Version: 4.0a
- * Author URI: http://www.futureofthebook.org
- * Text Domain: commentpress-core
- * Domain Path: /languages
+ * CommentPress Core
+ *
+ * Plugin Name:       CommentPress Core
+ * Description:       CommentPress allows readers to comment in the margins of a text. You can use it to annotate, gloss, workshop, debate and more!
+ * Plugin URI:        https://futureofthebook.org/commentpress/
+ * GitHub Plugin URI: https://github.com/christianwach/haystack-civicrm-utilities
+ * Version:           4.0a
+ * Author:            Institute for the Future of the Book
+ * Author URI:        https://www.futureofthebook.org
+ * Text Domain:       commentpress-core
+ * Domain Path:       /languages
  *
  * Special thanks to:
  *
