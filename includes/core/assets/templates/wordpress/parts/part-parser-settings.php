@@ -38,8 +38,8 @@ defined( 'ABSPATH' ) || exit;
 	</th>
 	<td>
 		<select id="<?php echo esc_attr( $this->key_do_not_parse ); ?>" name="<?php echo esc_attr( $this->key_do_not_parse ); ?>">
-			<option value="y" <?php echo ( $do_not_parse == 'y' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Yes', 'commentpress-core' ); ?></option>
-			<option value="n" <?php echo ( $do_not_parse == 'n' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'No', 'commentpress-core' ); ?></option>
+			<option value="y" <?php echo ( 'y' === $do_not_parse ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Yes', 'commentpress-core' ); ?></option>
+			<option value="n" <?php echo ( 'n' === $do_not_parse ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'No', 'commentpress-core' ); ?></option>
 		</select>
 		<p class="description"><?php esc_html_e( 'When comments are closed on an entry and there are no comments on that entry, if this option is set to "Yes" then the content will not be parsed for paragraphs, lines or blocks. Comments will also not be parsed, meaning that the entry behaves the same as content which is not commentable. Default prior to 3.8.10 was "No" - all content was always parsed.', 'commentpress-core' ); ?></p>
 		<p class="description"><?php esc_html_e( 'This setting can be overridden on individual entries.', 'commentpress-core' ); ?></p>

@@ -374,7 +374,7 @@ class CommentPress_Core_Revisions {
 		}
 
 		// We need to make sure this only runs once.
-		if ( $this->saved_post === false ) {
+		if ( false === $this->saved_post ) {
 			$this->saved_post = true;
 		} else {
 			return;
@@ -609,7 +609,7 @@ class CommentPress_Core_Revisions {
 		}
 
 		// Bail if it is not published.
-		if ( $newer_post->post_status !== 'publish' ) {
+		if ( 'publish' !== $newer_post->post_status ) {
 			return $newer_link;
 		}
 
@@ -658,7 +658,7 @@ class CommentPress_Core_Revisions {
 		$older_post = $older_posts[0];
 
 		// Bail if it is not published.
-		if ( $older_post->post_status !== 'publish' ) {
+		if ( 'publish' !== $older_post->post_status ) {
 			return $older_link;
 		}
 

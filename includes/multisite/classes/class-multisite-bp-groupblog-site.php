@@ -401,7 +401,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 	public function ajax_querystring( $query_string, $object ) {
 
 		// Bail if not an Activity object.
-		if ( $object !== 'activity' ) {
+		if ( 'activity' !== $object ) {
 			return $query_string;
 		}
 

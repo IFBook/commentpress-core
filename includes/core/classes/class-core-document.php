@@ -316,12 +316,12 @@ class CommentPress_Core_Document {
 		}
 
 		// Check edit permissions.
-		if ( $post->post_type === 'page' && ! current_user_can( 'edit_pages' ) ) {
+		if ( 'page' === $post->post_type && ! current_user_can( 'edit_pages' ) ) {
 			return;
 		}
 
 		// We need to make sure this only runs once.
-		if ( $this->saved_post === false ) {
+		if ( false === $this->saved_post ) {
 			$this->saved_post = true;
 		} else {
 			return;
@@ -401,7 +401,7 @@ class CommentPress_Core_Document {
 		// Do we need to check this, since only the first top level Page
 		// can now send this data? Doesn't hurt to check, I guess.
 		if (
-			$post->post_parent == '0' &&
+			0 === (int) $post->post_parent &&
 			! $this->core->pages_legacy->is_special_page() &&
 			$post->ID == $this->core->nav->page_get_first()
 		) {
@@ -530,7 +530,7 @@ class CommentPress_Core_Document {
 
 		// Check for "wide" layout.
 		$layout = $this->entry_title_page_layout_get( $post );
-		if ( $layout !== 'wide' ) {
+		if ( 'wide' !== $layout ) {
 			return $classes;
 		}
 
@@ -561,7 +561,7 @@ class CommentPress_Core_Document {
 		$override = get_post_meta( $post_id, $meta_key, true );
 
 		// Return raw value if requested.
-		if ( $raw === true ) {
+		if ( true === $raw ) {
 			return $override;
 		}
 
@@ -597,7 +597,7 @@ class CommentPress_Core_Document {
 	public function set_for_post_id( $post_id, $value, $meta_key ) {
 
 		// Delete the meta entry by passing an empty string.
-		if ( is_string( $value ) && $value === '' ) {
+		if ( is_string( $value ) && '' === $value ) {
 			$this->delete_for_post_id( $post_id, $meta_key );
 			return;
 		}

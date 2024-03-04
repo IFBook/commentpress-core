@@ -69,7 +69,7 @@ defined( 'ABSPATH' ) || exit;
 	$cp_user_links = apply_filters( 'cp_template_user_links', locate_template( 'assets/templates/user_links.php' ) );
 
 	// Load it if we find it.
-	if ( $cp_user_links != '' ) {
+	if ( '' != $cp_user_links ) {
 		load_template( $cp_user_links );
 	}
 
@@ -92,7 +92,7 @@ defined( 'ABSPATH' ) || exit;
 	$cp_navigation = apply_filters( 'cp_template_navigation', locate_template( 'assets/templates/navigation.php' ) );
 
 	// Load it if we find it.
-	if ( $cp_navigation != '' ) {
+	if ( '' != $cp_navigation ) {
 		load_template( $cp_navigation );
 	}
 

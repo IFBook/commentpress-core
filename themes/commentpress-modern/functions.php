@@ -478,7 +478,7 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 		$text_color = get_header_textcolor();
 
 		// If blank, we're hiding the title.
-		if ( $text_color == 'blank' ) {
+		if ( 'blank' === $text_color ) {
 			$css = 'text-indent: -9999px;';
 		} else {
 
@@ -737,13 +737,13 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 		$book_title = apply_filters( 'cp_page_all_comments_book_title', __( 'Comments on the Pages', 'commentpress-core' ) );
 
 		// Get title.
-		$title = ( $page_or_post == 'page' ) ? $book_title : $blog_title;
+		$title = ( 'page' === $page_or_post ) ? $book_title : $blog_title;
 
 		// Get data.
 		$data = commentpress_get_all_comments_content( $page_or_post );
 
 		// Did we get any?
-		if ( $data != '' ) {
+		if ( '' != $data ) {
 
 			// Set title.
 			$page_content .= '<h3 class="comments_hl">' . $title . '</h3>' . "\n\n";
@@ -754,16 +754,16 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 		}
 
 		// Get data for other Page Type.
-		$other_type = ( $page_or_post == 'page' ) ? 'post' : 'page';
+		$other_type = ( 'page' === $page_or_post ) ? 'post' : 'page';
 
 		// Get title.
-		$title = ( $page_or_post == 'page' ) ? $blog_title : $book_title;
+		$title = ( 'page' === $page_or_post ) ? $blog_title : $book_title;
 
 		// Get data.
 		$data = commentpress_get_all_comments_content( $other_type );
 
 		// Did we get any?
-		if ( $data != '' ) {
+		if ( '' != $data ) {
 
 			// Set title.
 			$page_content .= '<h3 class="comments_hl">' . $title . '</h3>' . "\n\n";
@@ -901,7 +901,7 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 
 					// When pulling Post in via AJAX, is_page() isn't available, so
 					// inspect the Post Type as well.
-					if ( is_page() || $post->post_type == 'page' ) {
+					if ( is_page() || 'page' === $post->post_type ) {
 
 						?>
 

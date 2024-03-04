@@ -199,7 +199,7 @@ if ( ! function_exists( 'commentpress_post_classes' ) ) :
 
 		// Check if the Formatter for this Post is overridden.
 		$overridden = $core->entry->formatter->is_overridden( $post_id );
-		if ( $overridden === false ) {
+		if ( false === $overridden ) {
 			return $classes;
 		}
 
@@ -270,7 +270,7 @@ if ( ! function_exists( 'commentpress_lexia_support_mime' ) ) :
 	function commentpress_lexia_support_mime( $post_type_name, $post_type ) {
 
 		// Only handle media.
-		if ( $post_type != 'attachment' ) {
+		if ( 'attachment' !== $post_type ) {
 			return $post_type_name;
 		}
 
@@ -342,7 +342,7 @@ if ( ! function_exists( 'commentpress_lexia_modify_entity_text' ) ) :
 	function commentpress_lexia_modify_entity_text( $entity_text, $post_type_name, $post_type ) {
 
 		// Only handle media.
-		if ( $post_type != 'attachment' ) {
+		if ( 'attachment' !== $post_type ) {
 			return $entity_text;
 		}
 

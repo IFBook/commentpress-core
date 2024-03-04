@@ -90,7 +90,7 @@ class CommentPress_Core_Entry {
 
 		// Only do this once.
 		static $done;
-		if ( isset( $done ) && $done === true ) {
+		if ( isset( $done ) && true === $done ) {
 			return;
 		}
 

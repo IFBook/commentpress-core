@@ -19,9 +19,9 @@ defined( 'ABSPATH' ) || exit;
 	<p>
 		<select id="<?php echo esc_attr( $this->key_sidebar ); ?>" name="<?php echo esc_attr( $this->key_sidebar ); ?>">
 			<option value="" <?php echo ( empty( $sidebar ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Use default', 'commentpress-core' ); ?></option>
-			<option value="toc" <?php echo ( $sidebar === 'toc' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Contents', 'commentpress-core' ); ?></option>
-			<option value="activity" <?php echo ( $sidebar === 'activity' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Activity', 'commentpress-core' ); ?></option>
-			<option value="comments" <?php echo ( $sidebar === 'comments' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Comments', 'commentpress-core' ); ?></option>
+			<option value="toc" <?php echo ( 'toc' === $sidebar ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Contents', 'commentpress-core' ); ?></option>
+			<option value="activity" <?php echo ( 'activity' === $sidebar ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Activity', 'commentpress-core' ); ?></option>
+			<option value="comments" <?php echo ( 'comments' === $sidebar ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Comments', 'commentpress-core' ); ?></option>
 		</select>
 	</p>
 

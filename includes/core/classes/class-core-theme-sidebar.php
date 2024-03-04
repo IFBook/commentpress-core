@@ -352,7 +352,7 @@ class CommentPress_Core_Theme_Sidebar {
 
 			// Use setting unless it's "comments".
 			// We don't need to look at the Entry meta in this case.
-			if ( $setting !== 'comments' ) {
+			if ( 'comments' !== $setting ) {
 				$default = $setting;
 			}
 
@@ -368,7 +368,7 @@ class CommentPress_Core_Theme_Sidebar {
 
 			// Use setting unless it's "comments".
 			// We don't need to look at the Entry meta in this case.
-			if ( $setting !== 'comments' ) {
+			if ( 'comments' !== $setting ) {
 				$default = $setting;
 			}
 
@@ -384,7 +384,7 @@ class CommentPress_Core_Theme_Sidebar {
 
 			// Use setting unless it's "comments".
 			// We don't need to look at the Entry meta in this case.
-			if ( $setting !== 'comments' ) {
+			if ( 'comments' !== $setting ) {
 				$default = $setting;
 			}
 
@@ -400,7 +400,7 @@ class CommentPress_Core_Theme_Sidebar {
 
 			// Use setting unless it's "comments".
 			// We don't need to look at the Entry meta in this case.
-			if ( $setting !== 'comments' ) {
+			if ( 'comments' !== $setting ) {
 				$default = $setting;
 			}
 
@@ -457,7 +457,7 @@ class CommentPress_Core_Theme_Sidebar {
 		$override = get_post_meta( $post_id, $this->meta_key, true );
 
 		// Return raw value if requested.
-		if ( $raw === true ) {
+		if ( true === $raw ) {
 			return $override;
 		}
 

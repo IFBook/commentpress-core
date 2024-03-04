@@ -641,7 +641,7 @@ class CommentPress_Multisite_Settings_Network {
 	public function action_links( $links, $file ) {
 
 		// Bail if not this plugin.
-		if ( $file !== plugin_basename( dirname( COMMENTPRESS_PLUGIN_FILE ) . '/commentpress-core.php' ) ) {
+		if ( plugin_basename( dirname( COMMENTPRESS_PLUGIN_FILE ) . '/commentpress-core.php' ) !== $file ) {
 			return $links;
 		}
 

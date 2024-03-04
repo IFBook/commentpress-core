@@ -604,7 +604,7 @@ class CommentPress_Core_Comments_Tagging {
 		// Add basic stylesheet if we're on our Taxonomy Page.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$taxonomy_page = isset( $_GET['taxonomy'] ) ? sanitize_text_field( wp_unslash( $_GET['taxonomy'] ) ) : '';
-		if ( ! empty( $taxonomy_page ) && $taxonomy_page === $this->tax_name && $pagenow == 'edit-tags.php' ) {
+		if ( ! empty( $taxonomy_page ) && $taxonomy_page === $this->tax_name && 'edit-tags.php' === $pagenow ) {
 
 			wp_enqueue_style(
 				'cp_tagging_css',
@@ -619,7 +619,7 @@ class CommentPress_Core_Comments_Tagging {
 		// The tags meta box requires this script if we're on the "Edit Comment" Page.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$action = isset( $_GET['action'] ) ? sanitize_text_field( wp_unslash( $_GET['action'] ) ) : '';
-		if ( $pagenow == 'comment.php' && ! empty( $action ) && $action === 'editcomment' ) {
+		if ( 'comment.php' === $pagenow && ! empty( $action ) && 'editcomment' === $action ) {
 			wp_enqueue_script( 'post' );
 		}
 
@@ -642,7 +642,7 @@ class CommentPress_Core_Comments_Tagging {
 
 		// If we're editing our Comment Taxonomy highlight the Comments menu.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( ! empty( $_GET['taxonomy'] ) && $_GET['taxonomy'] == $this->tax_name && $pagenow == 'edit-tags.php' ) {
+		if ( ! empty( $_GET['taxonomy'] ) && $_GET['taxonomy'] == $this->tax_name && 'edit-tags.php' === $pagenow ) {
 			$parent = 'edit-comments.php';
 		}
 
@@ -721,7 +721,7 @@ class CommentPress_Core_Comments_Tagging {
 				$term_id = isset( $tmp[1] ) ? intval( $tmp[1] ) : 0;
 
 				// Add to existing.
-				if ( $term_id !== 0 ) {
+				if ( 0 !== $term_id ) {
 					$existing_term_ids[] = $term_id;
 				}
 
@@ -886,7 +886,7 @@ class CommentPress_Core_Comments_Tagging {
 					$term_id = isset( $tmp[1] ) ? intval( $tmp[1] ) : 0;
 
 					// Add to existing.
-					if ( $term_id !== 0 ) {
+					if ( 0 !== $term_id ) {
 						$existing_term_ids[] = $term_id;
 					}
 
@@ -952,7 +952,7 @@ class CommentPress_Core_Comments_Tagging {
 			$exists = term_exists( $term, $this->tax_name );
 
 			// If it does.
-			if ( $exists !== 0 && $exists !== null ) {
+			if ( 0 !== $exists && null !== $exists ) {
 
 				/*
 				 * Should be array e.g. array( 'term_id' => 12, 'term_taxonomy_id' => 34 )
@@ -1391,7 +1391,7 @@ class CommentPress_Core_Comments_Tagging {
 					foreach ( $all_comments as $comment ) {
 
 						// Maybe show the Comment.
-						if ( $comment->comment_post_ID == get_the_ID() ) {
+						if ( get_the_ID() == $comment->comment_post_ID ) {
 							$html .= commentpress_format_comment( $comment );
 						}
 

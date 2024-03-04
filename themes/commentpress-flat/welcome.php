@@ -55,7 +55,7 @@ get_header();
 					<?php commentpress_get_feature_image(); ?>
 
 					<?php if ( ! commentpress_has_feature_image() ) : ?>
-						<?php if ( $next_page_html != '' ) : ?>
+						<?php if ( '' != $next_page_html ) : ?>
 							<div class="page_navigation">
 								<ul>
 									<li class="alignright">
@@ -86,7 +86,7 @@ get_header();
 
 				<?php endwhile; ?>
 
-				<?php if ( $next_page_html != '' ) : ?>
+				<?php if ( '' != $next_page_html ) : ?>
 					<div class="page_nav_lower">
 						<div class="page_navigation">
 							<ul>

@@ -17,8 +17,8 @@ defined( 'ABSPATH' ) || exit;
 	<p>
 		<select id="<?php echo esc_attr( $this->key_show_title ); ?>" name="<?php echo esc_attr( $this->key_show_title ); ?>">
 			<option value="" <?php echo ( empty( $show_title ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Use default', 'commentpress-core' ); ?></option>
-			<option value="show" <?php echo ( $show_title == 'show' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Show title', 'commentpress-core' ); ?></option>
-			<option value="hide" <?php echo ( $show_title == 'hide' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Hide title', 'commentpress-core' ); ?></option>
+			<option value="show" <?php echo ( 'show' === $show_title ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Show title', 'commentpress-core' ); ?></option>
+			<option value="hide" <?php echo ( 'hide' === $show_title ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Hide title', 'commentpress-core' ); ?></option>
 		</select>
 	</p>
 </div>
@@ -28,8 +28,8 @@ defined( 'ABSPATH' ) || exit;
 	<p>
 		<select id="<?php echo esc_attr( $this->key_show_meta ); ?>" name="<?php echo esc_attr( $this->key_show_meta ); ?>">
 			<option value="" <?php echo ( empty( $show_meta ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Use default', 'commentpress-core' ); ?></option>
-			<option value="show" <?php echo ( $show_meta == 'show' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Show meta', 'commentpress-core' ); ?></option>
-			<option value="hide" <?php echo ( $show_meta == 'hide' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Hide meta', 'commentpress-core' ); ?></option>
+			<option value="show" <?php echo ( 'show' === $show_meta ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Show meta', 'commentpress-core' ); ?></option>
+			<option value="hide" <?php echo ( 'hide' === $show_meta ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Hide meta', 'commentpress-core' ); ?></option>
 	</select>
 	</p>
 </div>

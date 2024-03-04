@@ -19,7 +19,7 @@ if ( ! empty( get_query_var( 'author_name' ) ) ) {
 
 // Do we have an URL for this User?
 $my_author_URL = '';
-if ( ! empty( $my_author->user_url ) && $my_author->user_url !== 'http://' && $my_author->user_url !== 'https://' ) {
+if ( ! empty( $my_author->user_url ) && 'http://' !== $my_author->user_url && 'https://' !== $my_author->user_url ) {
 	$my_author_URL = $my_author->user_url;
 }
 

@@ -164,7 +164,7 @@ class CommentPress_Multisite_Settings_Site {
 	public function register_hooks() {
 
 		// Bail if not network-enabled.
-		if ( $this->multisite->plugin->plugin_context !== 'mu_sitewide' ) {
+		if ( 'mu_sitewide' !== $this->multisite->plugin->plugin_context ) {
 			return;
 		}
 
@@ -658,7 +658,7 @@ class CommentPress_Multisite_Settings_Site {
 	public function action_links( $links, $file ) {
 
 		// Bail if not this plugin.
-		if ( $file !== plugin_basename( dirname( COMMENTPRESS_PLUGIN_FILE ) . '/commentpress-core.php' ) ) {
+		if ( plugin_basename( dirname( COMMENTPRESS_PLUGIN_FILE ) . '/commentpress-core.php' ) !== $file ) {
 			return $links;
 		}
 

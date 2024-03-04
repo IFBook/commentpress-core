@@ -126,7 +126,7 @@ class CommentPress_Core_Theme {
 
 		// Only do this once.
 		static $done;
-		if ( isset( $done ) && $done === true ) {
+		if ( isset( $done ) && true === $done ) {
 			return;
 		}
 
@@ -538,7 +538,7 @@ class CommentPress_Core_Theme {
 		$theme = apply_filters( 'commentpress_get_groupblog_theme', $this->core->bp->groupblog_theme_get() );
 
 		// Did we get a CommentPress Core one?
-		if ( $theme !== false ) {
+		if ( false !== $theme ) {
 
 			/*
 			 * We're in a Group Blog context.
@@ -851,7 +851,7 @@ class CommentPress_Core_Theme {
 		} else {
 
 			// Check for Post "comment_status".
-			$vars['cp_comments_open'] = ( $post->comment_status == 'open' ) ? 'y' : 'n';
+			$vars['cp_comments_open'] = ( 'open' === $post->comment_status ) ? 'y' : 'n';
 
 			// Set Post permalink.
 			$vars['cp_permalink'] = get_permalink( $post->ID );

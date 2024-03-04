@@ -193,7 +193,7 @@ class CommentPress_Core_Pages_Legacy {
 		$cp_delete_pages = '';
 
 		// Did we ask to auto-create Special Pages?
-		if ( $cp_create_pages == '1' ) {
+		if ( '1' == $cp_create_pages ) {
 
 			// Remove any existing Special Pages.
 			$this->special_pages_delete();
@@ -204,7 +204,7 @@ class CommentPress_Core_Pages_Legacy {
 		}
 
 		// Did we ask to delete Special Pages?
-		if ( $cp_delete_pages == '1' ) {
+		if ( '1' == $cp_delete_pages ) {
 			$this->special_pages_delete();
 		}
 
@@ -591,7 +591,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$page_on_front = $this->core->db->option_wp_get( 'page_on_front' );
 
 		// If the Welcome Page exists and it's the Front Page.
-		if ( $welcome_id !== false && $page_on_front == $welcome_id ) {
+		if ( false !== $welcome_id && $page_on_front == $welcome_id ) {
 			$is_home = $welcome_id;
 		} else {
 			$is_home = false;
@@ -758,7 +758,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		global $pagenow, $post_type;
 
 		// Check admin location.
-		if ( is_admin() && $pagenow == 'edit.php' && $post_type == 'page' ) {
+		if ( is_admin() && 'edit.php' === $pagenow && 'page' === $post_type ) {
 
 			// Get Special Pages array, if it's there.
 			$special_pages = $this->core->db->setting_get( 'cp_special_pages' );
@@ -790,7 +790,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		}
 
 		// Bail if not Page listings screen.
-		if ( $pagenow !== 'edit.php' || $post_type !== 'page' ) {
+		if ( 'edit.php' !== $pagenow || 'page' !== $post_type ) {
 			return $vars;
 		}
 

@@ -392,15 +392,15 @@ class CommentPress_Core_Entry_Formatter {
 		}
 
 		// Check edit permissions.
-		if ( $post->post_type === 'post' && ! current_user_can( 'edit_post', $post->ID ) ) {
+		if ( 'post' === $post->post_type && ! current_user_can( 'edit_post', $post->ID ) ) {
 			return;
 		}
-		if ( $post->post_type === 'page' && ! current_user_can( 'edit_pages' ) ) {
+		if ( 'page' === $post->post_type && ! current_user_can( 'edit_pages' ) ) {
 			return;
 		}
 
 		// We need to make sure this only runs once.
-		if ( $this->saved_post === false ) {
+		if ( false === $this->saved_post ) {
 			$this->saved_post = true;
 		} else {
 			return;
@@ -434,7 +434,7 @@ class CommentPress_Core_Entry_Formatter {
 
 		// Bail if there's no Site Text Format.
 		$text_format = $this->setting_formatter_get();
-		if ( $text_format === '' || $text_format === false ) {
+		if ( '' === $text_format || false === $text_format ) {
 			return $classes;
 		}
 
@@ -474,7 +474,7 @@ class CommentPress_Core_Entry_Formatter {
 
 		// Try and get the Formatter in the current Post.
 		$formatter = $this->get_for_post_id( $post->ID );
-		if ( $formatter === false || $formatter === '' || ! is_numeric( $formatter ) ) {
+		if ( false === $formatter || '' === $formatter || ! is_numeric( $formatter ) ) {
 			return;
 		}
 
@@ -541,7 +541,7 @@ class CommentPress_Core_Entry_Formatter {
 
 		// Try and get the Formatter in the current Post.
 		$formatter = $this->get_for_post_id( $post->ID );
-		if ( $formatter === false || $formatter === '' || ! is_numeric( $formatter ) ) {
+		if ( false === $formatter || '' === $formatter || ! is_numeric( $formatter ) ) {
 			return $parser;
 		}
 
@@ -617,9 +617,9 @@ class CommentPress_Core_Entry_Formatter {
 		$options = [];
 
 		// Maybe add "Use Default".
-		if ( $show_default === true ) {
+		if ( true === $show_default ) {
 			$options = [
-				'<option value="" ' . ( ( $site_text_format === false || $site_text_format === '' ) ? ' selected="selected"' : '' ) . '>' .
+				'<option value="" ' . ( ( false === $site_text_format || '' === $site_text_format ) ? ' selected="selected"' : '' ) . '>' .
 					esc_html__( 'Use default', 'commentpress-core' ) .
 				'</option>',
 			];
@@ -661,7 +661,7 @@ class CommentPress_Core_Entry_Formatter {
 		$override = get_post_meta( $post_id, $this->key_post_meta, true );
 
 		// Return raw value if requested.
-		if ( $raw === true ) {
+		if ( true === $raw ) {
 			return $override;
 		}
 
@@ -669,7 +669,7 @@ class CommentPress_Core_Entry_Formatter {
 		$formatter = $this->setting_formatter_get();
 
 		// Bail if something went wrong.
-		if ( $override === false || $override === '' || ! is_numeric( $override ) ) {
+		if ( false === $override || '' === $override || ! is_numeric( $override ) ) {
 			return $formatter;
 		}
 
@@ -694,7 +694,7 @@ class CommentPress_Core_Entry_Formatter {
 	public function set_for_post_id( $post_id, $formatter ) {
 
 		// Clear the Formatter by passing an empty string.
-		if ( is_string( $formatter ) && $formatter === '' ) {
+		if ( is_string( $formatter ) && '' === $formatter ) {
 			$this->delete_for_post_id( $post_id );
 			return;
 		}

@@ -55,7 +55,7 @@ class CommentPress_Core_Display {
 
 		// Only do this once.
 		static $done;
-		if ( isset( $done ) && $done === true ) {
+		if ( isset( $done ) && true === $done ) {
 			return;
 		}
 
@@ -146,7 +146,7 @@ HELPTEXT;
 		$list_style = $this->core->nav->setting_subpages_get();
 
 		// If not set or set to 'off'.
-		if ( $list_style === false || $list_style == '0' ) {
+		if ( false === $list_style || '0' == $list_style ) {
 
 			// -----------------------------------------------------------------
 			// Old-style undecorated list.
@@ -267,7 +267,7 @@ HELPTEXT;
 			$sep = ', ';
 
 			// Use ampersand if we're on the penultimate.
-			if ( $n == ( $author_count - 1 ) ) {
+			if ( ( $author_count - 1 ) === $n ) {
 				$sep = __( ' &amp; ', 'commentpress-core' );
 			}
 
@@ -388,7 +388,7 @@ HELPTEXT;
 		$page_on_front = $this->core->db->option_wp_get( 'page_on_front' );
 
 		// Print link to Welcome Page, if we have one and it's the Front Page.
-		if ( $welcome_id !== false && $page_on_front == $welcome_id ) {
+		if ( false !== $welcome_id && $page_on_front == $welcome_id ) {
 
 			// Define Welcome Page.
 			$title_page_title = get_the_title( $welcome_id );
@@ -432,7 +432,7 @@ HELPTEXT;
 		}
 
 		// Exclude Welcome Page, if we have one.
-		if ( $welcome_id !== false ) {
+		if ( false !== $welcome_id ) {
 			$exclude[] = $welcome_id;
 		}
 
@@ -482,7 +482,7 @@ HELPTEXT;
 		$icon = null;
 
 		// If we have no Comments.
-		if ( $comment_count == 0 ) {
+		if ( 0 === $comment_count ) {
 
 			// Show add Comment icon.
 			$icon  = 'comment-add.png';

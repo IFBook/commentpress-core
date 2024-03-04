@@ -283,7 +283,7 @@ class CommentPress_AJAX_Comments {
 
 		// Since this is an AJAX request, check security.
 		$result = check_ajax_referer( $this->nonce_action_form, false, false );
-		if ( $result === false ) {
+		if ( false === $result ) {
 			wp_send_json( $data );
 		}
 
@@ -442,7 +442,7 @@ class CommentPress_AJAX_Comments {
 
 		// Since this is an AJAX request, check security.
 		$result = check_ajax_referer( $this->nonce_action_form, false, false );
-		if ( $result === false ) {
+		if ( false === $result ) {
 			wp_send_json( $data );
 		}
 
@@ -510,7 +510,7 @@ class CommentPress_AJAX_Comments {
 			$depth = 1;
 
 			// Override depth if no parent.
-			if ( $comment->comment_parent != '0' ) {
+			if ( ! empty( $comment->comment_parent ) ) {
 				$depth = $this->comment_depth_get( $comment, $depth );
 			}
 
@@ -577,12 +577,12 @@ class CommentPress_AJAX_Comments {
 	public function reassign_button_add( $edit_button, $comment ) {
 
 		// Pass if not top level.
-		if ( $comment->comment_parent != '0' ) {
+		if ( ! empty( $comment->comment_parent ) ) {
 			return $edit_button;
 		}
 
 		// Pass if pingback or trackback.
-		if ( $comment->comment_type == 'trackback' || $comment->comment_type == 'pingback' ) {
+		if ( 'trackback' === $comment->comment_type || 'pingback' === $comment->comment_type ) {
 			return $edit_button;
 		}
 
@@ -637,7 +637,7 @@ class CommentPress_AJAX_Comments {
 
 		// Since this is an AJAX request, check security.
 		$result = check_ajax_referer( $this->nonce_action_form, false, false );
-		if ( $result === false ) {
+		if ( false === $result ) {
 			wp_send_json( $data );
 		}
 

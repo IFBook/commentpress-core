@@ -100,7 +100,7 @@ $core = commentpress_core();
 						$cp_navigation = apply_filters( 'cp_template_navigation', locate_template( 'assets/templates/navigation.php' ) );
 
 						// Load it if we find it.
-						if ( $cp_navigation != '' ) {
+						if ( '' != $cp_navigation ) {
 							load_template( $cp_navigation );
 						}
 

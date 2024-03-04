@@ -321,12 +321,12 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		}
 
 		// Only on new Blog Posts.
-		if ( ( $activity->type != 'new_blog_post' ) ) {
+		if ( 'new_blog_post' !== $activity->type ) {
 			return $activity;
 		}
 
 		// Only on CommentPress-enabled Group Blogs.
-		if ( ( false === $this->groupblog->site->is_commentpress_groupblog() ) ) {
+		if ( false === $this->groupblog->site->is_commentpress_groupblog() ) {
 			return $activity;
 		}
 
@@ -411,7 +411,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 						$sep = ', ';
 
 						// If we're on the penultimate.
-						if ( $n == ( $author_count - 1 ) ) {
+						if ( ( $author_count - 1 ) === $n ) {
 
 							// Use ampersand.
 							$sep = __( ' &amp; ', 'commentpress-core' );
@@ -505,12 +505,12 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	public function activity_post_meta( $activity ) {
 
 		// Only on new Blog Posts.
-		if ( ( $activity->type != 'new_groupblog_post' ) ) {
+		if ( 'new_groupblog_post' !== $activity->type ) {
 			return;
 		}
 
 		// Only on CommentPress-enabled Group Blogs.
-		if ( ( false === $this->groupblog->site->is_commentpress_groupblog() ) ) {
+		if ( false === $this->groupblog->site->is_commentpress_groupblog() ) {
 			return;
 		}
 
@@ -555,7 +555,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		if ( $new_status === $old_status ) {
 
 			// An edit of an existing Post should update the existing Activity item.
-			if ( $new_status == 'publish' ) {
+			if ( 'publish' === $new_status ) {
 
 				// Get Group ID.
 				$group_id = get_groupblog_group_id( get_current_blog_id() );
@@ -608,7 +608,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	public function activity_comment_custom( $activity ) {
 
 		// Only deal with Comments.
-		if ( ( $activity->type != 'new_blog_comment' ) ) {
+		if ( 'new_blog_comment' !== $activity->type ) {
 			return;
 		}
 
@@ -702,7 +702,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		$post = get_post( $comment->comment_post_ID );
 
 		// Was it a registered User?
-		if ( $comment->user_id != '0' ) {
+		if ( 0 !== (int) $comment->user_id ) {
 
 			// Get User details.
 			$user = get_userdata( $comment->user_id );
@@ -847,12 +847,12 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	public function activity_comment_meta( $activity ) {
 
 		// Only deal with Comments.
-		if ( ( $activity->type !== 'new_groupblog_comment' ) ) {
+		if ( 'new_groupblog_comment' !== $activity->type ) {
 			return $activity;
 		}
 
 		// Only do this on CommentPress-enabled Group Blogs.
-		if ( ( false === $this->groupblog->site->is_commentpress_groupblog() ) ) {
+		if ( false === $this->groupblog->site->is_commentpress_groupblog() ) {
 			return $activity;
 		}
 

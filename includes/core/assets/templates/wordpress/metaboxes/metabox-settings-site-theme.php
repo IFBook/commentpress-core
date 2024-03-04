@@ -51,8 +51,8 @@ defined( 'ABSPATH' ) || exit;
 		</th>
 		<td>
 			<select id="<?php echo esc_attr( $this->key_featured_images ); ?>" name="<?php echo esc_attr( $this->key_featured_images ); ?>">
-				<option value="y" <?php echo ( $featured_images == 'y' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Enabled', 'commentpress-core' ); ?></option>
-				<option value="n" <?php echo ( $featured_images == 'n' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Disabled', 'commentpress-core' ); ?></option>
+				<option value="y" <?php echo ( 'y' === $featured_images ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Enabled', 'commentpress-core' ); ?></option>
+				<option value="n" <?php echo ( 'n' === $featured_images ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Disabled', 'commentpress-core' ); ?></option>
 			</select>
 			<p class="description"><?php esc_html_e( 'CommentPress is most commonly used for text-based content, however some sites benefit from additional graphics and illustration. Enable Feature Images if this Site would benefit from them.', 'commentpress-core' ); ?></p>
 			<p class="description"><?php esc_html_e( 'If you have already implemented this in a child theme, you should choose "Disabled".', 'commentpress-core' ); ?></p>
@@ -65,8 +65,8 @@ defined( 'ABSPATH' ) || exit;
 		</th>
 		<td>
 			<select id="<?php echo esc_attr( $this->key_textblock_meta ); ?>" name="<?php echo esc_attr( $this->key_textblock_meta ); ?>">
-				<option value="y" <?php echo ( $textblock_meta == 'y' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Always', 'commentpress-core' ); ?></option>
-				<option value="n" <?php echo ( $textblock_meta == 'n' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'On rollover', 'commentpress-core' ); ?></option>
+				<option value="y" <?php echo ( 'y' === $textblock_meta ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Always', 'commentpress-core' ); ?></option>
+				<option value="n" <?php echo ( 'n' === $textblock_meta ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'On rollover', 'commentpress-core' ); ?></option>
 			</select>
 			<p class="description"><?php esc_html_e( 'This controls the display of the number to the left and the comment icon to the right of each paragraph, line or block that can be commented on.', 'commentpress-core' ); ?></p>
 		</td>

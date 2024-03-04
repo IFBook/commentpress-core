@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 global $post;
 
 // Override if there are no Comments (for print stylesheet to hide title).
-$no_comments_class = $post->comment_count == 0 ? ' no_comments' : '';
+$no_comments_class = ( 0 === $post->comment_count ) ? ' no_comments' : '';
 
 ?>
 <!-- comments_sidebar.php -->

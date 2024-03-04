@@ -78,7 +78,7 @@ if ( ! empty( $core ) ) {
 
 				<?php else : ?>
 
-					<?php if ( (int) $title_id !== (int) get_option( 'page_on_front' ) ) : ?>
+					<?php if ( (int) get_option( 'page_on_front' ) !== (int) $title_id ) : ?>
 
 						<?php $home_title = commentpress_navigation_blog_home_title(); ?>
 

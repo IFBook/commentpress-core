@@ -31,12 +31,12 @@ defined( 'ABSPATH' ) || exit;
 		<label for="<?php echo esc_attr( $this->key_enabled ); ?>"><?php echo esc_html_e( 'Set a custom naming scheme for Group Blogs', 'commentpress-core' ); ?></label>
 	</th>
 	<td>
-		<input id="<?php echo esc_attr( $this->key_enabled ); ?>" name="<?php echo esc_attr( $this->key_enabled ); ?>" value="1" type="checkbox"<?php echo ( $enabled == 1 ? ' checked="checked"' : '' ); ?> />
+		<input id="<?php echo esc_attr( $this->key_enabled ); ?>" name="<?php echo esc_attr( $this->key_enabled ); ?>" value="1" type="checkbox"<?php echo ( 1 == $enabled ? ' checked="checked"' : '' ); ?> />
 		<p class="description"><?php echo esc_html_e( 'Please note: if you set a custom name for Group Blogs, it will not be translatable.', 'commentpress-core' ); ?></p>
 	</td>
 </tr>
 
-<tr valign="top" class="nomenclature_name"<?php echo ( $enabled == 1 ? '' : ' style="display: none;"' ); ?>>
+<tr valign="top" class="nomenclature_name"<?php echo ( 1 == $enabled ? '' : ' style="display: none;"' ); ?>>
 	<th scope="row">
 		<label for="<?php echo esc_attr( $this->key_singular ); ?>"><?php echo esc_html_e( 'Singular name for Group Blogs', 'commentpress-core' ); ?></label>
 	</th>
@@ -45,7 +45,7 @@ defined( 'ABSPATH' ) || exit;
 	</td>
 </tr>
 
-<tr valign="top" class="nomenclature_plural"<?php echo ( $enabled == 1 ? '' : ' style="display: none;"' ); ?>>
+<tr valign="top" class="nomenclature_plural"<?php echo ( 1 == $enabled ? '' : ' style="display: none;"' ); ?>>
 	<th scope="row">
 		<label for="<?php echo esc_attr( $this->key_plural ); ?>"><?php echo esc_html_e( 'Plural name for Group Blogs', 'commentpress-core' ); ?></label>
 	</th>
@@ -54,7 +54,7 @@ defined( 'ABSPATH' ) || exit;
 	</td>
 </tr>
 
-<tr valign="top" class="nomenclature_slug"<?php echo ( $enabled == 1 ? '' : ' style="display: none;"' ); ?>>
+<tr valign="top" class="nomenclature_slug"<?php echo ( 1 == $enabled ? '' : ' style="display: none;"' ); ?>>
 	<th scope="row">
 		<label for="<?php echo esc_attr( $this->key_slug ); ?>"><?php echo esc_html_e( 'Slug for Group Blogs', 'commentpress-core' ); ?></label>
 	</th>

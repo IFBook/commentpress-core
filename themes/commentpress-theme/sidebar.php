@@ -161,7 +161,7 @@ $is_commentable = commentpress_is_commentable();
 				$cp_comments_sidebar = apply_filters( 'cp_template_comments_sidebar', locate_template( 'assets/templates/comments_sidebar.php' ) );
 
 				// Load it if we find it.
-				if ( $cp_comments_sidebar != '' ) {
+				if ( '' != $cp_comments_sidebar ) {
 					load_template( $cp_comments_sidebar );
 				}
 
@@ -178,7 +178,7 @@ $is_commentable = commentpress_is_commentable();
 			$cp_toc_sidebar = apply_filters( 'cp_template_toc_sidebar', locate_template( 'assets/templates/toc_sidebar.php' ) );
 
 			// Load it if we find it.
-			if ( $cp_toc_sidebar != '' ) {
+			if ( '' != $cp_toc_sidebar ) {
 				load_template( $cp_toc_sidebar );
 			}
 
@@ -196,7 +196,7 @@ $is_commentable = commentpress_is_commentable();
 				$cp_activity_sidebar = apply_filters( 'cp_template_activity_sidebar', locate_template( 'assets/templates/activity_sidebar.php' ) );
 
 				// Load it if we find it.
-				if ( $cp_activity_sidebar != '' ) {
+				if ( '' != $cp_activity_sidebar ) {
 					load_template( $cp_activity_sidebar );
 				}
 

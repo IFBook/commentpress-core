@@ -14,9 +14,6 @@
 		<!-- I prefer slash-delimited Hooks -->
 		<exclude name="WordPress.NamingConventions.ValidHookName.UseUnderscores" />
 
-		<!-- Yoda? Really? -->
-		<exclude name="WordPress.PHP.YodaConditions.NotYoda" />
-
 		<!-- I prefer my control structures -->
 		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing.BlankLineAfterEnd" />
 
@@ -39,8 +36,6 @@
 		<exclude name="WordPress.WP.I18n.MissingTranslatorsComment" />
 
 		<!-- Remove when error logging has been moved to a function -->
-<!-- 		<exclude name="WordPress.PHP.DevelopmentFunctions.error_log_error_log" /> -->
-		<exclude name="WordPress.PHP.DevelopmentFunctions.error_log_print_r" />
 		<exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket" />
 		<exclude name="PEAR.Functions.FunctionCallSignature.MultipleArguments" />
 		<exclude name="PEAR.Functions.FunctionCallSignature.CloseBracketLine" />

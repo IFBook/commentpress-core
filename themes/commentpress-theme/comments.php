@@ -48,7 +48,7 @@ if ( ! empty( $core ) ) {
 		$cp_comments_in_page = apply_filters( 'cp_template_comments_in_page', locate_template( 'assets/templates/comments_in_page.php' ) );
 
 		// Load it if we find it.
-		if ( $cp_comments_in_page != '' ) {
+		if ( '' !== $cp_comments_in_page ) {
 			load_template( $cp_comments_in_page );
 		}
 
@@ -70,7 +70,7 @@ if ( ! empty( $core ) ) {
 		$cp_comments_by_para = apply_filters( 'cp_template_comments_by_para', locate_template( 'assets/templates/comments_by_para.php' ) );
 
 		// Load it if we find it.
-		if ( $cp_comments_by_para != '' ) {
+		if ( '' !== $cp_comments_by_para ) {
 			load_template( $cp_comments_by_para );
 		}
 
@@ -163,6 +163,6 @@ if ( ! empty( $core ) ) {
 $cp_comment_form = apply_filters( 'cp_template_comment_form', locate_template( 'assets/templates/comment_form.php' ) );
 
 // Load it if we find it.
-if ( $cp_comment_form != '' ) {
+if ( '' != $cp_comment_form ) {
 	load_template( $cp_comment_form );
 }

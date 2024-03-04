@@ -121,7 +121,7 @@ class CommentPress_Multisite_Site {
 	public function core_initialise() {
 
 		// Bail if not network-enabled.
-		if ( $this->multisite->plugin->plugin_context !== 'mu_sitewide' ) {
+		if ( 'mu_sitewide' !== $this->multisite->plugin->plugin_context ) {
 			return;
 		}
 
@@ -275,7 +275,7 @@ class CommentPress_Multisite_Site {
 	public function is_commentpress( $blog_id = false, $legacy_check = true ) {
 
 		// Get current Site ID if the Blog ID isn't passed.
-		if ( $blog_id === false ) {
+		if ( false === $blog_id ) {
 			$blog_id = get_current_blog_id();
 		}
 
@@ -320,7 +320,7 @@ class CommentPress_Multisite_Site {
 		$core_active = false;
 
 		// Get current Site ID if no Blog ID is passed in.
-		if ( $blog_id === false ) {
+		if ( false === $blog_id ) {
 			$blog_id = get_current_blog_id();
 		}
 
@@ -347,7 +347,7 @@ class CommentPress_Multisite_Site {
 		}
 
 		// Do we need to switch back?
-		if ( isset( $switched ) && $switched === true ) {
+		if ( isset( $switched ) && true === $switched ) {
 			restore_current_blog();
 		}
 
@@ -384,7 +384,7 @@ class CommentPress_Multisite_Site {
 		$activate = isset( $_POST[ $this->key_enable ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_enable ] ) ) : '0';
 
 		// Bail if we did not ask to activate CommentPress Core.
-		if ( $activate !== '1' ) {
+		if ( '1' !== $activate ) {
 			return;
 		}
 
@@ -421,7 +421,7 @@ class CommentPress_Multisite_Site {
 		$deactivate = isset( $_POST[ $this->key_disable ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_disable ] ) ) : '0';
 
 		// Bail if we did not ask to deactivate CommentPress Core.
-		if ( $deactivate !== '1' ) {
+		if ( '1' !== $deactivate ) {
 			return;
 		}
 

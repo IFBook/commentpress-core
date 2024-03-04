@@ -177,7 +177,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 		$current_post_id = isset( $_POST['current_post_id'] ) ? absint( $_POST['current_post_id'] ) : '';
 
 		// Sanity check.
-		if ( $current_post_id === '' ) {
+		if ( '' === $current_post_id ) {
 			$data['status'] = __( 'Could not find current Post ID.', 'commentpress-core' );
 			wp_send_json( $data );
 		}
@@ -211,7 +211,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 		}
 
 		// Die if we don't get a key.
-		if ( $page_key === false ) {
+		if ( false === $page_key ) {
 			$data['status'] = __( 'Could not find a Page key.', 'commentpress-core' );
 			wp_send_json( $data );
 		}
@@ -293,7 +293,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 
 		// Get Page navigation.
 		$navigation = commentpress_page_navigation();
-		if ( $navigation != '' ) {
+		if ( '' !== $navigation ) {
 			$navigation = '<div class="page_navigation"><ul>' . $navigation . '</ul></div><!-- /page_navigation -->';
 		}
 
@@ -347,7 +347,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 		$cp_comments_by_para = apply_filters( 'cp_template_comments_by_para', locate_template( 'assets/templates/comments_by_para.php' ) );
 
 		// Load it if we find it.
-		if ( $cp_comments_by_para != '' ) {
+		if ( '' !== $cp_comments_by_para ) {
 			load_template( $cp_comments_by_para );
 		}
 

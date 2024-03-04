@@ -199,12 +199,12 @@ class CommentPress_Core_Entry_Metabox {
 		}
 
 		// Maybe save Page meta.
-		if ( $post->post_type == 'page' ) {
+		if ( 'page' === $post->post_type ) {
 			$this->page_meta_save( $post );
 		}
 
 		// Maybe save Post meta.
-		if ( $post->post_type == 'post' ) {
+		if ( 'post' === $post->post_type ) {
 			$this->post_meta_save( $post );
 		}
 

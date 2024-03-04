@@ -467,7 +467,7 @@ class CommentPress_Core_Parser {
 
 			// Individual entries can have parsing skipped.
 			$this->core->db->setting_get( 'cp_do_not_parse', 'n' ) == 'y' &&
-			$post->comment_status == 'closed' &&
+			'closed' === $post->comment_status &&
 			empty( $post->comment_count ) )
 
 		) {
@@ -920,7 +920,7 @@ class CommentPress_Core_Parser {
 			*/
 
 			// Further checks when there's a <p> tag.
-			if ( $tag == 'p' ) {
+			if ( 'p' === $tag ) {
 
 				// Set pattern by TinyMCE tag attribute, if we have one.
 				if ( substr( $paragraph, 0, 17 ) == '<p style="text-al' ) {
@@ -1006,7 +1006,7 @@ class CommentPress_Core_Parser {
 			$start = 0;
 
 			// Further checks when there's a <ol> tag.
-			if ( $tag == 'ol' ) {
+			if ( 'ol' === $tag ) {
 
 				// Compat with "WP Footnotes".
 				if ( substr( $paragraph, 0, 21 ) == '<ol class="footnotes"' ) {
@@ -1248,10 +1248,10 @@ class CommentPress_Core_Parser {
 		foreach ( $matches as $line ) {
 
 			// Is there any content?
-			if ( $line != '' ) {
+			if ( '' !== $line ) {
 
 				// Check for paras.
-				if ( $line == '<p>' || $line == '</p>' ) {
+				if ( '<p>' === $line || '</p>' === $line ) {
 
 					// Do we want to allow commenting on verses?
 
@@ -1434,14 +1434,14 @@ class CommentPress_Core_Parser {
 		foreach ( $output_array as $paragraph ) {
 
 			// Is there any content?
-			if ( $paragraph != '' ) {
+			if ( '' !== $paragraph ) {
 
 				/*
 				 * Check for paragraphs.
 				 *
 				 * TODO: Do we want to allow commenting on verses?
 				 */
-				if ( $paragraph !== '<p>' && $paragraph !== '</p>' ) {
+				if ( '<p>' !== $paragraph && '</p>' !== $paragraph ) {
 
 					// Line commenting.
 
@@ -1772,7 +1772,7 @@ class CommentPress_Core_Parser {
 		foreach ( $matches as $paragraph ) {
 
 			// Is there any content?
-			if ( $paragraph != '' ) {
+			if ( '' !== $paragraph ) {
 
 				// Get a signature for the Paragraph.
 				$text_signature = $this->text_signature_generate( $paragraph );
@@ -2298,7 +2298,7 @@ class CommentPress_Core_Parser {
 		foreach ( $comments as $comment ) {
 
 			// If it has a Text Signature.
-			if ( ! is_null( $comment->comment_signature ) && $comment->comment_signature != '' ) {
+			if ( ! is_null( $comment->comment_signature ) && '' !== $comment->comment_signature ) {
 
 				// Set key.
 				$key = '_cp_comment_page';
@@ -2358,7 +2358,7 @@ class CommentPress_Core_Parser {
 		foreach ( $comments as $comment ) {
 
 			// Test for empty Comment Text Signature.
-			if ( ! is_null( $comment->comment_signature ) && $comment->comment_signature != '' ) {
+			if ( ! is_null( $comment->comment_signature ) && '' !== $comment->comment_signature ) {
 
 				// Do we have an exact match in the Text Signatures array?
 				// NB: this will work, because we're already ensuring identical sigs are made unique.
@@ -2409,7 +2409,7 @@ class CommentPress_Core_Parser {
 						$comment->comment_signature = '';
 
 						// Is it a pingback or trackback?
-						if ( $comment->comment_type == 'trackback' || $comment->comment_type == 'pingback' ) {
+						if ( 'trackback' === $comment->comment_type || 'pingback' === $comment->comment_type ) {
 
 							// We have one - assign to pings.
 							$assigned['PINGS_AND_TRACKS'][] = $comment;
@@ -2428,7 +2428,7 @@ class CommentPress_Core_Parser {
 			} else {
 
 				// Is it a pingback or trackback?
-				if ( $comment->comment_type == 'trackback' || $comment->comment_type == 'pingback' ) {
+				if ( 'trackback' === $comment->comment_type || 'pingback' === $comment->comment_type ) {
 
 					// We have one - assign to pings.
 					$assigned['PINGS_AND_TRACKS'][] = $comment;

@@ -392,12 +392,12 @@ class CommentPress_Core_Entry_Single {
 		}
 
 		// Check edit permissions.
-		if ( $post->post_type === 'page' && ! current_user_can( 'edit_pages' ) ) {
+		if ( 'page' === $post->post_type && ! current_user_can( 'edit_pages' ) ) {
 			return;
 		}
 
 		// We need to make sure this only runs once.
-		if ( $this->saved_post === false ) {
+		if ( false === $this->saved_post ) {
 			$this->saved_post = true;
 		} else {
 			return;
@@ -622,7 +622,7 @@ class CommentPress_Core_Entry_Single {
 		$override = get_post_meta( $post_id, $meta_key, true );
 
 		// Return raw value if requested.
-		if ( $raw === true ) {
+		if ( true === $raw ) {
 			return $override;
 		}
 
@@ -658,7 +658,7 @@ class CommentPress_Core_Entry_Single {
 	public function set_for_post_id( $post_id, $value, $meta_key ) {
 
 		// Delete the meta entry by passing an empty string.
-		if ( is_string( $value ) && $value === '' ) {
+		if ( is_string( $value ) && '' === $value ) {
 			$this->delete_for_post_id( $post_id, $meta_key );
 			return;
 		}

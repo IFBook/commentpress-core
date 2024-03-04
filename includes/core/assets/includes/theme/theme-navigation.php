@@ -310,7 +310,7 @@ if ( ! function_exists( 'commentpress_page_navigation_get_previous_link' ) ) :
 		}
 
 		// Set an image if asking for Pages with Comments.
-		$img = ( $with_comments === true ) ? '<img src="' . get_template_directory_uri() . '/assets/images/prev.png" />' : '';
+		$img = ( true === $with_comments ) ? '<img src="' . get_template_directory_uri() . '/assets/images/prev.png" />' : '';
 
 		/**
 		 * Filters the "Previous Page" Navigation link CSS ID.

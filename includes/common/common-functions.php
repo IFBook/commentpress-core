@@ -68,7 +68,7 @@ function commentpress_minified() {
 function commentpress_find_plugin_by_name( $plugin_name = '' ) {
 
 	// Kick out if no param supplied.
-	if ( $plugin_name == '' ) {
+	if ( empty( $plugin_name ) ) {
 		return false;
 	}
 

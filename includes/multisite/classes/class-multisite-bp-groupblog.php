@@ -239,7 +239,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 
 		// Only do this once.
 		static $done;
-		if ( isset( $done ) && $done === true ) {
+		if ( isset( $done ) && true === $done ) {
 			return;
 		}
 
@@ -731,7 +731,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 		$core->nav->setting_post_type_set( $posts_or_pages );
 
 		// If we opted for Posts.
-		if ( $posts_or_pages == 'post' ) {
+		if ( 'post' === $posts_or_pages ) {
 
 			/**
 			 * Filters the "TOC shows extended Posts" option.

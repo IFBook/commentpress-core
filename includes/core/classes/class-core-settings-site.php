@@ -829,7 +829,7 @@ class CommentPress_Core_Settings_Site {
 	public function action_links( $links, $file ) {
 
 		// Bail if not this plugin.
-		if ( $file !== plugin_basename( dirname( COMMENTPRESS_PLUGIN_FILE ) . '/commentpress-core.php' ) ) {
+		if ( plugin_basename( dirname( COMMENTPRESS_PLUGIN_FILE ) . '/commentpress-core.php' !== $file ) ) {
 			return $links;
 		}
 

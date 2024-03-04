@@ -101,7 +101,7 @@ class CommentPress_Core_Database {
 
 		// Only do this once.
 		static $done;
-		if ( isset( $done ) && $done === true ) {
+		if ( isset( $done ) && true === $done ) {
 			return;
 		}
 
@@ -318,7 +318,7 @@ class CommentPress_Core_Database {
 		$save = apply_filters( 'commentpress/core/settings/upgrade/save', $save );
 
 		// Save settings if need be.
-		if ( $save === true ) {
+		if ( true === $save ) {
 			$this->settings_save();
 		}
 

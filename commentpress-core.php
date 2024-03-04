@@ -108,7 +108,7 @@ class CommentPress_Plugin {
 
 		// Only do this once.
 		static $done;
-		if ( isset( $done ) && $done === true ) {
+		if ( isset( $done ) && true === $done ) {
 			return;
 		}
 
@@ -337,7 +337,7 @@ class CommentPress_Plugin {
 	public function core_bootstrap() {
 
 		// Bail if plugin is activated network-wide.
-		if ( $this->plugin_context === 'mu_sitewide' ) {
+		if ( 'mu_sitewide' === $this->plugin_context ) {
 			return;
 		}
 
@@ -402,7 +402,7 @@ class CommentPress_Plugin {
 	public function action_links( $links, $file ) {
 
 		// Bail if not this plugin.
-		if ( $file !== plugin_basename( dirname( COMMENTPRESS_PLUGIN_FILE ) . '/commentpress-core.php' ) ) {
+		if ( plugin_basename( dirname( COMMENTPRESS_PLUGIN_FILE ) . '/commentpress-core.php' ) !== $file ) {
 			return $links;
 		}
 
@@ -428,7 +428,7 @@ class CommentPress_Plugin {
 	public function plugin_activated( $plugin, $network_wide = false ) {
 
 		// Bail if it's not our plugin.
-		if ( $plugin !== plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) {
+		if ( plugin_basename( COMMENTPRESS_PLUGIN_FILE ) !== $plugin ) {
 			return;
 		}
 
@@ -459,7 +459,7 @@ class CommentPress_Plugin {
 	public function plugin_deactivated( $plugin, $network_wide = false ) {
 
 		// Bail if it's not our plugin.
-		if ( $plugin !== plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) {
+		if ( plugin_basename( COMMENTPRESS_PLUGIN_FILE ) !== $plugin ) {
 			return;
 		}
 

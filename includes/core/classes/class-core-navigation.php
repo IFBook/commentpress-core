@@ -780,7 +780,7 @@ class CommentPress_Core_Navigator {
 		}
 
 		// If we don't get a key, the current Page is a Chapter and not a Page.
-		if ( $page_key === false ) {
+		if ( false === $page_key ) {
 			$this->next_pages = [];
 			return;
 		}
@@ -835,7 +835,7 @@ class CommentPress_Core_Navigator {
 
 		// Check if the supplied Welcome Page is the Front Page and this is it.
 		$title_id = $this->core->pages_legacy->is_title_page_the_homepage();
-		if ( $title_id !== false && is_front_page() ) {
+		if ( false !== $title_id && is_front_page() ) {
 
 			// Get the first readable Page.
 			$first_id = $this->page_get_first();
@@ -886,7 +886,7 @@ class CommentPress_Core_Navigator {
 
 		// We still need to check if the supplied Welcome Page is the Front Page.
 		$title_id = $this->core->pages_legacy->is_title_page_the_homepage();
-		if ( $title_id !== false && ! is_front_page() ) {
+		if ( false !== $title_id && ! is_front_page() ) {
 			return get_post( $title_id );
 		}
 
@@ -997,7 +997,7 @@ class CommentPress_Core_Navigator {
 		$page = get_page( $post_id );
 
 		// Is the top Page?
-		if ( $page->post_parent == 0 ) {
+		if ( 0 === (int) $page->post_parent ) {
 
 			// Yes -> return the ID.
 			return $page->ID;
@@ -1091,7 +1091,7 @@ class CommentPress_Core_Navigator {
 
 		// If the supplied Welcome Page is the Front Page.
 		$title_id = $this->core->pages_legacy->is_title_page_the_homepage();
-		if ( $title_id !== false ) {
+		if ( false !== $title_id ) {
 
 			// It will already be shown at the top of the Page list.
 			$excluded_pages[] = $title_id;
@@ -1164,7 +1164,7 @@ class CommentPress_Core_Navigator {
 		if ( $this->setting_chapter_is_page_get() != '1' ) {
 
 			// Filter Chapters out if we want all readable Pages.
-			if ( $mode == 'readable' ) {
+			if ( 'readable' === $mode ) {
 				$pages = $this->page_chapters_filter( $pages );
 			}
 
@@ -1282,7 +1282,7 @@ class CommentPress_Core_Navigator {
 			}
 
 			// If it's roman.
-			if ( $format == 'roman' ) {
+			if ( 'roman' === $format ) {
 
 				// Convert arabic to roman.
 				$this->page_numbers[ $page_obj->ID ] = $this->number_to_roman( $num );
@@ -1323,7 +1323,7 @@ class CommentPress_Core_Navigator {
 	public function page_number_get( $page_id ) {
 
 		// Bail if Page nav is disabled.
-		if ( $this->nav_enabled === false ) {
+		if ( false === $this->nav_enabled ) {
 			return false;
 		}
 
@@ -1440,7 +1440,7 @@ class CommentPress_Core_Navigator {
 				if ( $this->setting_chapter_is_page_get() != '1' ) {
 
 					// Do we want all readable Pages?
-					if ( $mode == 'readable' ) {
+					if ( 'readable' === $mode ) {
 
 						// Filter Chapters out.
 						$menu_items = $this->menu_items_filter( $this->menu_objects );
@@ -1627,7 +1627,7 @@ class CommentPress_Core_Navigator {
 		 */
 
 		// Is this the top Menu Item?
-		if ( $menu_obj->menu_item_parent == 0 ) {
+		if ( 0 === (int) $menu_obj->menu_item_parent ) {
 
 			// Yes -> return the object.
 			return $menu_obj;
@@ -1638,7 +1638,7 @@ class CommentPress_Core_Navigator {
 		$parent_obj = $this->menu_item_get_parent( $menu_obj );
 
 		// Is the top Menu Item?
-		if ( $parent_obj->menu_item_parent !== 0 ) {
+		if ( 0 !== (int) $parent_obj->menu_item_parent ) {
 
 			// No -> recurse upwards.
 			return $this->menu_item_get_top( $parent_obj );
@@ -1687,7 +1687,7 @@ class CommentPress_Core_Navigator {
 			 */
 			wp_die( __( 'Cannot represent numbers larger than 4999 in plain ASCII.', 'commentpress-core' ) );
 
-		} elseif ( $arabic == 0 ) {
+		} elseif ( 0 === $arabic ) {
 
 			/*
 			 * In about 725, Bede or one of his colleagues used the letter N, the

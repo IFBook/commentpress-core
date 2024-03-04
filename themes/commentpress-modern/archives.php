@@ -110,7 +110,7 @@ get_header();
 
 							?>
 
-							<?php if ( $tags != '' ) : ?>
+							<?php if ( '' != $tags ) : ?>
 								<?php echo $tags; ?>
 							<?php else : ?>
 								<ul>

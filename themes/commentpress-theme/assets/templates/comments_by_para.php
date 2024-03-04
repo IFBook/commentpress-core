@@ -59,7 +59,7 @@ if ( isset( $post->ID ) ) {
 			$cp_comment_form = apply_filters( 'cp_template_comment_form', locate_template( 'assets/templates/comment_form.php' ) );
 
 			// Load it if we find it.
-			if ( $cp_comment_form != '' ) {
+			if ( '' != $cp_comment_form ) {
 				load_template( $cp_comment_form );
 			}
 

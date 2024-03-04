@@ -99,7 +99,7 @@ class CommentPress_Multisite_Database {
 
 		// Only do this once.
 		static $done;
-		if ( isset( $done ) && $done === true ) {
+		if ( isset( $done ) && true === $done ) {
 			return;
 		}
 
@@ -326,7 +326,7 @@ class CommentPress_Multisite_Database {
 		$save = apply_filters( 'commentpress/multisite/settings/upgrade/save', $save );
 
 		// Save settings if need be.
-		if ( $save === true ) {
+		if ( true === $save ) {
 			$this->settings_save();
 		}
 

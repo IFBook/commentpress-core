@@ -196,7 +196,7 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ) :
 		$custom_avatar_pre = apply_filters( 'commentpress_header_image_pre_customizer', false );
 
 		// Show it if we get an override.
-		if ( $custom_avatar_pre !== false ) {
+		if ( false !== $custom_avatar_pre ) {
 			echo $custom_avatar_pre;
 			return;
 		}
@@ -247,7 +247,7 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ) :
 		$custom_avatar_post = apply_filters( 'commentpress_header_image_post_customizer', false );
 
 		// Did we get one?
-		if ( $custom_avatar_post !== false ) {
+		if ( false !== $custom_avatar_post ) {
 
 			// Show it.
 			echo $custom_avatar_post;
@@ -634,7 +634,7 @@ if ( ! function_exists( 'commentpress_echo_post_meta' ) ) :
 					$sep = ', ';
 
 					// If we're on the penultimate.
-					if ( $n == ( $author_count - 1 ) ) {
+					if ( ( $author_count - 1 ) === $n ) {
 
 						// Use ampersand.
 						$sep = __( ' &amp; ', 'commentpress-core' );
@@ -850,12 +850,12 @@ if ( ! function_exists( 'commentpress_get_full_name' ) ) :
 		$fullname = '';
 
 		// Add forename.
-		if ( $forename != '' ) {
+		if ( '' !== $forename ) {
 			$fullname .= $forename;
 		}
 
 		// Add surname.
-		if ( $surname != '' ) {
+		if ( '' !== $surname ) {
 			$fullname .= ' ' . $surname;
 		}
 
@@ -892,7 +892,7 @@ if ( ! function_exists( 'commentpress_add_tinymce_nextpage_button' ) ) :
 		$pos = array_search( 'wp_more', $buttons, true );
 
 		// Is it there?
-		if ( $pos !== false ) {
+		if ( false !== $pos ) {
 
 			// Get array up to that point.
 			$tmp_buttons = array_slice( $buttons, 0, $pos + 1 );
@@ -1158,7 +1158,7 @@ if ( ! function_exists( 'commentpress_get_post_css_override' ) ) :
 		$overridden = $core->entry->formatter->is_overridden( $post_id );
 
 		// Bail if not overridden.
-		if ( $overridden === false ) {
+		if ( false === $overridden ) {
 			return $class_name;
 		}
 
@@ -1225,7 +1225,7 @@ if ( ! function_exists( 'commentpress_get_post_title_visibility' ) ) :
 		}
 
 		// --<
-		return ( $show_title == 'show' ) ? true : false;
+		return ( 'show' === $show_title ) ? true : false;
 
 	}
 
@@ -1281,7 +1281,7 @@ if ( ! function_exists( 'commentpress_get_post_meta_visibility' ) ) :
 		}
 
 		// --<
-		return ( $show_meta == 'show' ) ? true : false;
+		return ( 'show' === $show_meta ) ? true : false;
 
 	}
 

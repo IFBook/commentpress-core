@@ -90,7 +90,7 @@ class CommentPress_Core_Comments {
 
 		// Only do this once.
 		static $done;
-		if ( isset( $done ) && $done === true ) {
+		if ( isset( $done ) && true === $done ) {
 			return;
 		}
 
@@ -404,7 +404,7 @@ class CommentPress_Core_Comments {
 		$result = $this->save_comment_page( $comment_id );
 
 		// Has the Comment been marked as spam?
-		if ( $comment_status === 'spam' ) {
+		if ( 'spam' === $comment_status ) {
 
 			// TODO: Check for AJAX request.
 

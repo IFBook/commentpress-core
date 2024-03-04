@@ -190,7 +190,7 @@ class CommentPress_Core_Plugins {
 		}
 
 		// It is if it's the unique "Subscribe to Comments Reloaded" Post.
-		if ( $post->ID == '-999' ) {
+		if ( '-999' == $post->ID ) {
 			return true;
 		}
 

@@ -31,8 +31,8 @@ defined( 'ABSPATH' ) || exit;
 		</th>
 		<td>
 			<select id="<?php echo esc_attr( $this->key_show_title ); ?>" name="<?php echo esc_attr( $this->key_show_title ); ?>">
-				<option value="show" <?php echo ( ( $show_title == 'show' ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Yes', 'commentpress-core' ); ?></option>
-				<option value="hide" <?php echo ( ( $show_title == 'hide' ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'No', 'commentpress-core' ); ?></option>
+				<option value="show" <?php echo ( ( 'show' === $show_title ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Yes', 'commentpress-core' ); ?></option>
+				<option value="hide" <?php echo ( ( 'hide' === $show_title ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'No', 'commentpress-core' ); ?></option>
 			</select>
 			<p class="description"><?php esc_html_e( 'This setting can be overridden on individual entries.', 'commentpress-core' ); ?></p>
 		</td>
@@ -44,8 +44,8 @@ defined( 'ABSPATH' ) || exit;
 		</th>
 		<td>
 			<select id="<?php echo esc_attr( $this->key_show_meta ); ?>" name="<?php echo esc_attr( $this->key_show_meta ); ?>">
-				<option value="show" <?php echo ( ( $show_meta == 'show' ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Yes', 'commentpress-core' ); ?></option>
-				<option value="hide" <?php echo ( ( $show_meta == 'hide' ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'No', 'commentpress-core' ); ?></option>
+				<option value="show" <?php echo ( ( 'show' === $show_meta ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Yes', 'commentpress-core' ); ?></option>
+				<option value="hide" <?php echo ( ( 'hide' === $show_meta ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'No', 'commentpress-core' ); ?></option>
 			</select>
 			<p class="description"><?php esc_html_e( 'Page "meta" contains the avatar and name of the author as well as the date published.', 'commentpress-core' ); ?></p>
 			<p class="description"><?php esc_html_e( 'This setting can be overridden on individual entries.', 'commentpress-core' ); ?></p>
