@@ -37,7 +37,7 @@ get_header();
 
 			<div id="content" class="clearfix">
 
-				<?php if ( isset( $_GET['s'] ) && ! empty( $_GET['s'] ) && have_posts() ) : ?>
+				<?php if ( isset( $_GET['s'] ) && ! empty( $_GET['s'] ) && have_posts() ) : /* phpcs:ignore WordPress.Security.NonceVerification.Recommended */ ?>
 
 					<div class="post">
 

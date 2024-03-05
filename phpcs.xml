@@ -26,7 +26,6 @@
 		<exclude name="Squiz.Commenting.BlockComment.HasEmptyLineBefore" />
 
 		<!-- Codestyle rules yet to be implemented. -->
-		<exclude name="WordPress.Security.NonceVerification.Recommended" />
 		<exclude name="WordPress.PHP.StrictComparisons.LooseComparison" />
 		<exclude name="WordPress.Security.EscapeOutput.OutputNotEscaped" />
 
@@ -38,13 +37,13 @@
 		</properties>
 	</rule>
 
-	<!-- Allow short array syntax -->
+	<!-- Allow short array syntax. -->
 	<rule ref="Generic.Arrays.DisallowShortArraySyntax.Found">
 		<severity>0</severity>
 	</rule>
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax.Found" />
 
-	<!-- Nesting levels -->
+	<!-- Nesting levels. -->
 	<rule ref="Generic.Metrics.NestingLevel">
 		<properties>
 			<property name="absoluteNestingLevel" value="5" />

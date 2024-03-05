@@ -36,7 +36,7 @@ get_header();
 						<h3 class="post_title"><?php esc_html_e( 'Archive for', 'commentpress-core' ); ?> <?php the_time( __( 'Y', 'commentpress-core' ) ); ?></h3>
 						<?php /* If this is an author archive. */ elseif ( is_author() ) : ?>
 							<h3 class="post_title"><?php esc_html_e( 'Author Archive', 'commentpress-core' ); ?></h3>
-						<?php /* If this is a paged archive. */ elseif ( isset( $_GET['paged'] ) && ! empty( $_GET['paged'] ) ) : ?>
+						<?php /* If this is a paged archive. */ elseif ( isset( $_GET['paged'] ) && ! empty( $_GET['paged'] ) ) : /* phpcs:ignore WordPress.Security.NonceVerification.Recommended */ ?>
 							<h3 class="post_title"><?php esc_html_e( 'Archives', 'commentpress-core' ); ?></h3>
 						<?php endif; ?>
 
