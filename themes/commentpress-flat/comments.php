@@ -108,11 +108,13 @@ if ( ! empty( $core ) ) {
 				<ol class="commentlist">
 					<?php
 
-					wp_list_comments( [
+					$args = [
 						'type'       => 'comment',
 						'reply_text' => __( 'Reply to this comment', 'commentpress-core' ),
 						'callback'   => 'commentpress_comments',
-					] );
+					];
+
+					wp_list_comments( $args );
 
 					?>
 				</ol>

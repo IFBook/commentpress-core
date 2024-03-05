@@ -56,10 +56,12 @@ defined( 'ABSPATH' ) || exit;
 					];
 
 					// Get Comments for this Post in ascending order.
-					$comments_in_page = get_comments( [
+					$comment_query = [
 						'post_id' => $post->ID,
 						'order'   => 'ASC',
-					] );
+					];
+
+					$comments_in_page = get_comments( $comment_query );
 
 					// List Comments.
 					wp_list_comments( $comments_args, $comments_in_page );

@@ -345,23 +345,27 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		$group = groups_get_group( [ 'group_id' => $group_id ] );
 
 		// See if we already have the modified Activity for this Blog Post.
-		$id = bp_activity_get_activity_id( [
+		$params = [
 			'user_id'           => $activity->user_id,
 			'type'              => 'new_groupblog_post',
 			'item_id'           => $group_id,
 			'secondary_item_id' => $activity->secondary_item_id,
-		] );
+		];
+
+		$id = bp_activity_get_activity_id( $params );
 
 		// If we don't find a modified item.
 		if ( ! $id ) {
 
 			// See if we have an unmodified Activity item.
-			$id = bp_activity_get_activity_id( [
+			$params = [
 				'user_id'           => $activity->user_id,
 				'type'              => $activity->type,
 				'item_id'           => $activity->item_id,
 				'secondary_item_id' => $activity->secondary_item_id,
-			] );
+			];
+
+			$id = bp_activity_get_activity_id( $params );
 
 		}
 
@@ -560,13 +564,16 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 				// Get Group ID.
 				$group_id = get_groupblog_group_id( get_current_blog_id() );
 
-				// Get existing Activity ID.
-				$id = bp_activity_get_activity_id( [
+				// Activity ID args.
+				$args = [
 					'component'         => 'groups',
 					'type'              => 'new_groupblog_post',
 					'item_id'           => $group_id,
 					'secondary_item_id' => $post->ID,
-				] );
+				];
+
+				// Get existing Activity ID.
+				$id = bp_activity_get_activity_id( $args );
 
 				// Bail if we don't have one.
 				if ( empty( $id ) ) {
@@ -581,11 +588,14 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 				// We currently have to fool `$this->activity_post_custom()`.
 				$activity->type = 'new_blog_post';
 
-				// Pass Activity to our method.
-				$this->activity_post_custom( $activity, [
+				// Build params.
+				$params = [
 					'group_id' => $group_id,
 					'post'     => $post,
-				] );
+				];
+
+				// Pass Activity to our method.
+				$this->activity_post_custom( $activity, $params );
 
 			}
 
@@ -669,23 +679,27 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		$group = groups_get_group( [ 'group_id' => $group_id ] );
 
 		// See if we already have the modified Activity for this Blog Comment.
-		$id = bp_activity_get_activity_id( [
+		$params = [
 			'user_id'           => $activity->user_id,
 			'type'              => $activity_type,
 			'item_id'           => $group_id,
 			'secondary_item_id' => $activity->secondary_item_id,
-		] );
+		];
+
+		$id = bp_activity_get_activity_id( $params );
 
 		// If we don't find a modified item.
 		if ( ! $id ) {
 
 			// See if we have an unmodified Activity item.
-			$id = bp_activity_get_activity_id( [
+			$params = [
 				'user_id'           => $activity->user_id,
 				'type'              => $activity->type,
 				'item_id'           => $activity->item_id,
 				'secondary_item_id' => $activity->secondary_item_id,
-			] );
+			];
+
+			$id = bp_activity_get_activity_id( $params );
 
 		}
 

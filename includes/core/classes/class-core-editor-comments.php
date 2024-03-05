@@ -386,31 +386,36 @@ class CommentPress_Core_Editor_Comments {
 		 */
 		$media_buttons = apply_filters( 'commentpress_rte_media_buttons', true );
 
+		// Basic config.
+		$tinymce_config = [
+			'theme'     => 'modern',
+			'statusbar' => false,
+		];
+
 		/**
 		 * Filters the TinyMCE 4 config.
 		 *
 		 * @since 3.4
 		 *
-		 * @param array The default TinyMCE 4 config.
+		 * @param array $tinymce_config The default TinyMCE 4 config.
 		 */
-		$tinymce_config = apply_filters( 'commentpress_rte_tinymce', [
-			'theme'     => 'modern',
-			'statusbar' => false,
-		] );
+		$tinymce_config = apply_filters( 'commentpress_rte_tinymce', $tinymce_config );
 
 		// No need for editor CSS.
 		$editor_css = '';
+
+		$quicktags = [
+			'buttons' => 'strong,em,ul,ol,li,link,close',
+		];
 
 		/**
 		 * Filters the quicktags setting.
 		 *
 		 * @since 3.4
 		 *
-		 * @param array The default quicktags setting.
+		 * @param array $quicktags The default quicktags setting.
 		 */
-		$quicktags = apply_filters( 'commentpress_rte_quicktags', [
-			'buttons' => 'strong,em,ul,ol,li,link,close',
-		] );
+		$quicktags = apply_filters( 'commentpress_rte_quicktags', $quicktags );
 
 		// Our settings.
 		$settings = [

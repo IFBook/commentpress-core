@@ -666,13 +666,16 @@ if ( ! function_exists( 'commentpress_multipager' ) ) :
 			$page_links
 		);
 
-		// Get Page links.
-		$page_links .= wp_link_pages( [
+		// Build new Page link args.
+		$args = [
 			'before'   => '<div class="multipager multipager_all"><span>' . __( 'Pages: ', 'commentpress-core' ) . '</span>',
 			'after'    => '</div>',
 			'pagelink' => '<span class="multipager_link">%</span>',
 			'echo'     => 0,
-		] );
+		];
+
+		// Get Page links.
+		$page_links .= wp_link_pages( $args );
 
 		// --<
 		return $page_links;

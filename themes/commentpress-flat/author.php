@@ -76,11 +76,13 @@ get_header();
 									printf(
 										'<a href="%s" title="%s">%s</a>',
 										get_permalink(),
-										the_title_attribute( [
-											'before' => __( 'Permanent Link:', 'commentpress-core' ),
-											'after'  => '',
-											'echo'   => false,
-										] ),
+										the_title_attribute(
+											[
+												'before' => __( 'Permanent Link:', 'commentpress-core' ),
+												'after'  => '',
+												'echo'   => false,
+											]
+										),
 										$post_title
 									);
 

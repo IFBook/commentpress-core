@@ -40,23 +40,29 @@ if ( ! function_exists( 'commentpress_setup' ) ) :
 		// Add title support.
 		add_theme_support( 'title-tag' );
 
-		// Allow custom backgrounds.
-		add_theme_support( 'custom-background', [
+		// Define custom background.
+		$background = [
 			'default-color'          => 'ccc',
 			'default-image'          => '',
 			'wp-head-callback'       => 'commentpress_background',
 			'admin-head-callback'    => '',
 			'admin-preview-callback' => '',
-		] );
+		];
 
-		// Allow custom header.
-		add_theme_support( 'custom-header', [
+		// Allow custom backgrounds.
+		add_theme_support( 'custom-background', $background );
+
+		// Define custom header.
+		$header = [
 			'default-text-color'  => '111111',
 			'width'               => apply_filters( 'cp_header_image_width', 940 ),
 			'height'              => apply_filters( 'cp_header_image_height', 67 ),
 			'wp-head-callback'    => 'commentpress_header',
 			'admin-head-callback' => 'commentpress_admin_header',
-		] );
+		];
+
+		// Allow custom header.
+		add_theme_support( 'custom-header', $header );
 
 		// Auto feed links.
 		add_theme_support( 'automatic-feed-links' );
@@ -522,12 +528,14 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 		$html = '';
 
 		// Get all approved Comments.
-		$all_comments = get_comments( [
+		$args = [
 			'status'    => 'approve',
 			'orderby'   => 'comment_post_ID,comment_date',
 			'order'     => 'ASC',
 			'post_type' => $page_or_post,
-		] );
+		];
+
+		$all_comments = get_comments( $args );
 
 		// Kick out if none.
 		if ( count( $all_comments ) == 0 ) {
@@ -559,12 +567,14 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 		}
 
 		// Get those Posts.
-		$posts = get_posts( [
+		$args = [
 			'orderby'   => 'comment_count',
 			'order'     => 'DESC',
 			'post_type' => $page_or_post,
 			'include'   => $posts_with,
-		] );
+		];
+
+		$posts = get_posts( $args );
 
 		// Kick out if none.
 		if ( count( $posts ) == 0 ) {
@@ -1068,59 +1078,69 @@ add_filter( 'commentpress/navigation/page/link/previous/css_classes', 'commentpr
 function commentpress_register_widget_areas() {
 
 	// Define an area where a Widget may be placed.
-	register_sidebar( [
-		'name'          => __( 'CommentPress Footer', 'commentpress-core' ),
-		'id'            => 'cp-license-8',
-		'description'   => __( 'An optional widget area in the footer of a CommentPress theme', 'commentpress-core' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</div>',
-		'before_title'  => '<h3 class="widget-title">',
-		'after_title'   => '</h3>',
-	] );
+	register_sidebar(
+		[
+			'name'          => __( 'CommentPress Footer', 'commentpress-core' ),
+			'id'            => 'cp-license-8',
+			'description'   => __( 'An optional widget area in the footer of a CommentPress theme', 'commentpress-core' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
+		]
+	);
 
 	// Define an area where a Widget may be placed.
-	register_sidebar( [
-		'name'          => __( 'Navigation Top', 'commentpress-core' ),
-		'id'            => 'cp-nav-top',
-		'description'   => __( 'An optional widget area at the top of the Navigation Column', 'commentpress-core' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</div></div></div>',
-		'before_title'  => '<h3 class="widget-title activity_heading">',
-		'after_title'   => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
-	] );
+	register_sidebar(
+		[
+			'name'          => __( 'Navigation Top', 'commentpress-core' ),
+			'id'            => 'cp-nav-top',
+			'description'   => __( 'An optional widget area at the top of the Navigation Column', 'commentpress-core' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</div></div></div>',
+			'before_title'  => '<h3 class="widget-title activity_heading">',
+			'after_title'   => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
+		]
+	);
 
 	// Define an area where a Widget may be placed.
-	register_sidebar( [
-		'name'          => __( 'Navigation Bottom', 'commentpress-core' ),
-		'id'            => 'cp-nav-bottom',
-		'description'   => __( 'An optional widget area at the bottom of the Navigation Column', 'commentpress-core' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</div></div></div>',
-		'before_title'  => '<h3 class="widget-title activity_heading">',
-		'after_title'   => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
-	] );
+	register_sidebar(
+		[
+			'name'          => __( 'Navigation Bottom', 'commentpress-core' ),
+			'id'            => 'cp-nav-bottom',
+			'description'   => __( 'An optional widget area at the bottom of the Navigation Column', 'commentpress-core' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</div></div></div>',
+			'before_title'  => '<h3 class="widget-title activity_heading">',
+			'after_title'   => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
+		]
+	);
 
 	// Define an area where a Widget may be placed.
-	register_sidebar( [
-		'name'          => __( 'Activity Top', 'commentpress-core' ),
-		'id'            => 'cp-activity-top',
-		'description'   => __( 'An optional widget area at the top of the Activity Column', 'commentpress-core' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</div></div></div>',
-		'before_title'  => '<h3 class="widget-title activity_heading">',
-		'after_title'   => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
-	] );
+	register_sidebar(
+		[
+			'name'          => __( 'Activity Top', 'commentpress-core' ),
+			'id'            => 'cp-activity-top',
+			'description'   => __( 'An optional widget area at the top of the Activity Column', 'commentpress-core' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</div></div></div>',
+			'before_title'  => '<h3 class="widget-title activity_heading">',
+			'after_title'   => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
+		]
+	);
 
 	// Define an area where a Widget may be placed.
-	register_sidebar( [
-		'name'          => __( 'Activity Bottom', 'commentpress-core' ),
-		'id'            => 'cp-activity-bottom',
-		'description'   => __( 'An optional widget area at the bottom of the Activity Column', 'commentpress-core' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</div></div></div>',
-		'before_title'  => '<h3 class="widget-title activity_heading">',
-		'after_title'   => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
-	] );
+	register_sidebar(
+		[
+			'name'          => __( 'Activity Bottom', 'commentpress-core' ),
+			'id'            => 'cp-activity-bottom',
+			'description'   => __( 'An optional widget area at the bottom of the Activity Column', 'commentpress-core' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</div></div></div>',
+			'before_title'  => '<h3 class="widget-title activity_heading">',
+			'after_title'   => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
+		]
+	);
 
 }
 

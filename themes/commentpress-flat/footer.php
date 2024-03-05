@@ -18,11 +18,15 @@ defined( 'ABSPATH' ) || exit;
 
 					<?php if ( has_nav_menu( 'footer' ) ) : ?>
 						<?php
+
 						// Show footer menu if assigned.
-						wp_nav_menu( [
+						$footer_menu = [
 							'theme_location'  => 'footer',
 							'container_class' => 'commentpress-footer-nav-menu',
-						] );
+						];
+
+						wp_nav_menu( $footer_menu );
+
 						?>
 					<?php endif; ?>
 

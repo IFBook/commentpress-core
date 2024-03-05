@@ -402,12 +402,15 @@ class CommentPress_Core_Settings_Site {
 			return;
 		}
 
-		// Add a help tab.
-		$screen->add_help_tab( [
+		// Build tab args.
+		$args = [
 			'id'      => 'commentpress-base',
 			'title'   => __( 'CommentPress Core Help', 'commentpress-core' ),
 			'content' => $this->core->display->get_help(),
-		] );
+		];
+
+		// Add a help tab.
+		$screen->add_help_tab( $args );
 
 		// --<
 		return $screen;

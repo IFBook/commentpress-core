@@ -368,13 +368,16 @@ HELPTEXT;
 		// Bail if there is a custom menu.
 		if ( has_nav_menu( 'toc' ) ) {
 
-			// Display menu.
-			wp_nav_menu( [
+			// Build menu.
+			$menu = [
 				'theme_location' => 'toc',
 				'echo'           => true,
 				'container'      => '',
 				'items_wrap'     => '%3$s',
-			] );
+			];
+
+			// Display menu.
+			wp_nav_menu( $menu );
 
 			// --<
 			return;

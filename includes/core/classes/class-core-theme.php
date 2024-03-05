@@ -668,13 +668,16 @@ class CommentPress_Core_Theme {
 		 *
 		 * @see wp_install_defaults()
 		 */
-		$this->core->db->option_wp_backup( 'sidebars_widgets', [
+		$widgets = [
 			'wp_inactive_widgets' => [],
 			'sidebar-1'           => [],
 			'sidebar-2'           => [],
 			'sidebar-3'           => [],
 			'array_version'       => 3,
-		] );
+		];
+
+		// Backup and overwrite option.
+		$this->core->db->option_wp_backup( 'sidebars_widgets', $widgets );
 
 	}
 

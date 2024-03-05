@@ -341,12 +341,15 @@ if ( ! function_exists( 'commentpress_get_comments_by_content' ) ) :
 		// Init return.
 		$html = '';
 
-		// Get all approved Comments.
-		$all_comments = get_comments( [
+		// Build query.
+		$query = [
 			'status'  => 'approve',
 			'orderby' => 'comment_author, comment_post_ID, comment_date',
 			'order'   => 'ASC',
-		] );
+		];
+
+		// Get all approved Comments.
+		$all_comments = get_comments( $query );
 
 		// Kick out if none.
 		if ( count( $all_comments ) == 0 ) {
@@ -1485,15 +1488,18 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 			// Are we threading Comments?
 			if ( get_option( 'thread_comments', false ) ) {
 
-				// Custom comment_reply_link.
-				$comment_reply = commentpress_comment_reply_link( array_merge(
+				// Build custom Comment reply link.
+				$comment_reply_link = array_merge(
 					$args,
 					[
 						'reply_text' => sprintf( __( 'Reply to %s', 'commentpress-core' ), get_comment_author( $comment->comment_ID ) ),
 						'depth'      => $depth,
 						'max_depth'  => $args['max_depth'],
 					]
-				) );
+				);
+
+				// Get custom Comment reply link.
+				$comment_reply = commentpress_comment_reply_link( $comment_reply_link );
 
 				// Wrap in div.
 				$comment_reply = '<div class="reply">' . $comment_reply . '</div><!-- /reply -->';
@@ -1793,13 +1799,16 @@ if ( ! function_exists( 'commentpress_image_caption_shortcode' ) ) :
 	 */
 	function commentpress_image_caption_shortcode( $empty, $attr, $content ) {
 
-		// Get our shortcode vars.
-		$atts = shortcode_atts( [
+		// Set the shortcode defaults.
+		$defaults = [
 			'id'      => '',
 			'align'   => 'alignnone',
 			'width'   => '',
 			'caption' => '',
-		], $attr );
+		];
+
+		// Get our shortcode vars.
+		$atts = shortcode_atts( $defaults, $attr );
 
 		if ( 1 > (int) $atts['width'] || empty( $atts['caption'] ) ) {
 			return $content;

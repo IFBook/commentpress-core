@@ -127,10 +127,12 @@ class CommentPress_License_Widget extends WP_Widget {
 	 */
 	public function form( $instance ) {
 
-		$instance = wp_parse_args( (array) $instance, [
+		$defaults = [
 			'title' => '',
 			'text'  => '',
-		] );
+		];
+
+		$instance = wp_parse_args( (array) $instance, $defaults );
 
 		$title = wp_strip_all_tags( $instance['title'] );
 		$text  = esc_textarea( $instance['text'] );

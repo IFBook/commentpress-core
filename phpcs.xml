@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ruleset name="CMW.WordPress">
 
-	<!-- Add source codes in the report -->
+	<!-- Add source codes in the report. -->
 	<arg value="s" />
 	<arg name="colors" />
 
@@ -11,13 +11,13 @@
 
 	<rule ref="WordPress">
 
-		<!-- I prefer slash-delimited Hooks -->
+		<!-- Allow slash-delimited hooks. -->
 		<exclude name="WordPress.NamingConventions.ValidHookName.UseUnderscores" />
 
-		<!-- I prefer my control structures -->
+		<!-- I prefer my control structures. -->
 		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing.BlankLineAfterEnd" />
 
-		<!-- PSR4 -->
+		<!-- PSR4: Allow legacy underscored filenames. -->
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
 
@@ -34,11 +34,6 @@
 		<exclude name="PSR2.ControlStructures.SwitchDeclaration.BodyOnNextLineCASE" />
 		<exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect" />
 		<exclude name="WordPress.WP.I18n.MissingTranslatorsComment" />
-
-		<!-- Remove when error logging has been moved to a function -->
-		<exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket" />
-		<exclude name="PEAR.Functions.FunctionCallSignature.MultipleArguments" />
-		<exclude name="PEAR.Functions.FunctionCallSignature.CloseBracketLine" />
 
 	</rule>
 

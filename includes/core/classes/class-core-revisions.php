@@ -554,13 +554,16 @@ class CommentPress_Core_Revisions {
 	 */
 	public function revision_meta_delete( $post_id ) {
 
-		// Get Posts with the about-to-be-deleted Post ID in meta.
-		$older_posts = get_posts( [
+		// Build query.
+		$query = [
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			'meta_key'   => $this->meta_key_newer_id,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 			'meta_value' => $post_id,
-		] );
+		];
+
+		// Get Posts with the about-to-be-deleted Post ID in meta.
+		$older_posts = get_posts( $query );
 
 		// Bail if we didn't get any.
 		if ( empty( $older_posts ) ) {

@@ -31,6 +31,9 @@ if ( ! empty( $my_author->display_name ) ) {
 	$my_author_name = $my_author->nickname;
 }
 
+// Get avatar.
+$my_avatar = get_avatar( $my_author->user_email, $size = '128' );
+
 get_header();
 
 ?>
@@ -44,7 +47,9 @@ get_header();
 
 					<h2 class="post_title"><?php echo esc_html( $my_author_name ); ?></h2>
 
-					<p><?php echo get_avatar( $my_author->user_email, $size = '128' ); ?></p>
+					<?php if ( ! empty( $my_avatar ) ) : ?>
+						<p><?php echo $my_avatar; ?></p>
+					<?php endif; ?>
 
 					<dl>
 
@@ -100,11 +105,13 @@ get_header();
 									printf(
 										'<a href="%s" title="%s">%s</a>',
 										get_permalink(),
-										the_title_attribute( [
-											'before' => __( 'Permanent Link:', 'commentpress-core' ),
-											'after'  => '',
-											'echo'   => false,
-										] ),
+										the_title_attribute(
+											[
+												'before' => __( 'Permanent Link:', 'commentpress-core' ),
+												'after'  => '',
+												'echo'   => false,
+											]
+										),
 										$post_title
 									);
 

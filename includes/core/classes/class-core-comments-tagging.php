@@ -1353,17 +1353,20 @@ class CommentPress_Core_Comments_Tagging {
 				$html .= '<li class="page_li"><!-- page li -->' . "\n\n";
 
 				// Define Comment count.
-				$comment_count_text = sprintf( _n(
-					// Singular.
-					'<span class="cp_comment_count">%d</span> comment',
-					// Plural.
-					'<span class="cp_comment_count">%d</span> comments',
-					// Number.
-					$post_comment_counts[ get_the_ID() ],
-					// Domain.
-					'commentpress-core'
+				$comment_count_text = sprintf(
+					_n(
+						// Singular.
+						'<span class="cp_comment_count">%d</span> comment',
+						// Plural.
+						'<span class="cp_comment_count">%d</span> comments',
+						// Number.
+						$post_comment_counts[ get_the_ID() ],
+						// Domain.
+						'commentpress-core'
+					),
 					// Substitution.
-				), $post_comment_counts[ get_the_ID() ] );
+					$post_comment_counts[ get_the_ID() ]
+				);
 
 				// Show it.
 				$html .= '<h4>' . get_the_title() . ' <span>(' . $comment_count_text . ')</span></h4>' . "\n\n";
