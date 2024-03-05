@@ -335,12 +335,15 @@ HELPTEXT;
 		} else {
 
 			// Link to theme's Author Page.
-			$link   = sprintf(
+			$link = sprintf(
+				/* translators: 1: Author link, 2: Link title, 3: User display name. */
 				'<a href="%1$s" title="%2$s" rel="author">%3$s</a>',
 				get_author_posts_url( $user->ID, $user->user_nicename ),
+				/* translators: %s: User display name. */
 				esc_attr( sprintf( __( 'Posts by %s', 'commentpress-core' ), $user->display_name ) ),
 				esc_html( $user->display_name )
 			);
+
 			$author = apply_filters( 'the_author_posts_link', $link );
 
 		}
@@ -509,6 +512,7 @@ HELPTEXT;
 			default:
 				// Define title text.
 				$title_text = sprintf(
+					/* translators: 1: The comment count, 2: The name of the commented-on entity. */
 					_n( 'There is %1$d comment written for this %2$s', 'There are %1$d comments written for this %2$s', $comment_count, 'commentpress-core' ),
 					$comment_count,
 					$this->core->parser->lexia_get()
@@ -516,6 +520,7 @@ HELPTEXT;
 
 				// Define add Comment text.
 				$add_text = sprintf(
+					/* translators: 1: Name of the commented-on entity, 2: The paragraph number. */
 					__( 'Leave a comment on %1$s %2$d', 'commentpress-core' ),
 					$this->core->parser->lexia_get(),
 					$para_num
@@ -527,9 +532,9 @@ HELPTEXT;
 			// Line-by-line, eg poetry.
 			// -----------------------------------------------------------------
 			case 'line':
-
 				// Define title text.
 				$title_text = sprintf(
+					/* translators: 1: The comment count, 2: The name of the commented-on entity. */
 					_n( 'There is %1$d comment written for this %2$s', 'There are %1$d comments written for this %2$s', $comment_count, 'commentpress-core' ),
 					$comment_count,
 					$this->core->parser->lexia_get()
@@ -537,6 +542,7 @@ HELPTEXT;
 
 				// Define add Comment text.
 				$add_text = sprintf(
+					/* translators: 1: Name of the commented-on entity, 2: The paragraph number. */
 					__( 'Leave a comment on %1$s %2$d', 'commentpress-core' ),
 					$this->core->parser->lexia_get(),
 					$para_num
@@ -548,9 +554,9 @@ HELPTEXT;
 			// Comment-blocks.
 			// -----------------------------------------------------------------
 			case 'block':
-
 				// Define title text.
 				$title_text = sprintf(
+					/* translators: 1: The comment count, 2: The name of the commented-on entity. */
 					_n( 'There is %1$d comment written for this %2$s', 'There are %1$d comments written for this %2$s', $comment_count, 'commentpress-core' ),
 					$comment_count,
 					$this->core->parser->lexia_get()
@@ -558,6 +564,7 @@ HELPTEXT;
 
 				// Define add Comment text.
 				$add_text = sprintf(
+					/* translators: 1: Name of the commented-on entity, 2: The paragraph number. */
 					__( 'Leave a comment on %1$s %2$d', 'commentpress-core' ),
 					$this->core->parser->lexia_get(),
 					$para_num
@@ -606,6 +613,7 @@ HELPTEXT;
 			default:
 				// Define permalink text.
 				$permalink_text = sprintf(
+					/* translators: 1: Name of the entity, 2: The paragraph number. */
 					__( 'Permalink for %1$s %2$d', 'commentpress-core' ),
 					$this->core->parser->lexia_get(),
 					$para_num
@@ -624,9 +632,9 @@ HELPTEXT;
 			// Line-by-line, eg poetry.
 			// -----------------------------------------------------------------
 			case 'line':
-
 				// Define permalink text.
 				$permalink_text = sprintf(
+					/* translators: 1: Name of the entity, 2: The paragraph number. */
 					__( 'Permalink for %1$s %2$d', 'commentpress-core' ),
 					$this->core->parser->lexia_get(),
 					$para_num
@@ -645,9 +653,9 @@ HELPTEXT;
 			// Comment-blocks.
 			// -----------------------------------------------------------------
 			case 'block':
-
 				// Define permalink text.
 				$permalink_text = sprintf(
+					/* translators: 1: Name of the entity, 2: The paragraph number. */
 					__( 'Permalink for %1$s %2$d', 'commentpress-core' ),
 					$this->core->parser->lexia_get(),
 					$para_num
@@ -689,14 +697,12 @@ HELPTEXT;
 		switch ( $tag ) {
 
 			case 'ul':
-
 				// Define list tag.
 				$para_tag = '<' . $tag . ' class="textblock" id="textblock-' . $text_signature . '">' .
 					'<li class="list_commenticon">' . $commenticon . '</li>';
 				break;
 
 			case 'ol':
-
 				// Define list tag.
 				$para_tag = '<' . $tag . ' class="textblock" id="textblock-' . $text_signature . '" start="0">' .
 					'<li class="list_commenticon">' . $commenticon . '</li>';
@@ -704,7 +710,6 @@ HELPTEXT;
 
 			// Compat with "WP Footnotes".
 			case 'ol class="footnotes"':
-
 				// Define list tag.
 				$para_tag = '<ol class="footnotes textblock" id="textblock-' . $text_signature . '" start="0">' .
 					'<li class="list_commenticon">' . $commenticon . '</li>';
@@ -712,7 +717,6 @@ HELPTEXT;
 
 			// Compat with "WP Footnotes".
 			case ( substr( $tag, 0, 10 ) == 'ol start="' ):
-
 				// Define list tag.
 				$para_tag = '<ol class="textblock" id="textblock-' . $text_signature . '" start="' . ( $start - 1 ) . '">' .
 					'<li class="list_commenticon">' . $commenticon . '</li>';
@@ -723,7 +727,6 @@ HELPTEXT;
 			case 'p style="text-align:left;"':
 			case 'p style="text-align: left"':
 			case 'p style="text-align: left;"':
-
 				// Define para tag.
 				$para_tag = '<' . $tag . ' class="textblock" id="textblock-' . $text_signature . '">' . $commenticon;
 				break;
@@ -732,7 +735,6 @@ HELPTEXT;
 			case 'p style="text-align:right;"':
 			case 'p style="text-align: right"':
 			case 'p style="text-align: right;"':
-
 				// Define para tag.
 				$para_tag = '<' . $tag . ' class="textblock textblock-right" id="textblock-' . $text_signature . '">' . $commenticon;
 				break;
@@ -741,7 +743,6 @@ HELPTEXT;
 			case 'p style="text-align:center;"':
 			case 'p style="text-align: center"':
 			case 'p style="text-align: center;"':
-
 				// Define para tag.
 				$para_tag = '<' . $tag . ' class="textblock textblock-center" id="textblock-' . $text_signature . '">' . $commenticon;
 				break;
@@ -750,25 +751,21 @@ HELPTEXT;
 			case 'p style="text-align:justify;"':
 			case 'p style="text-align: justify"':
 			case 'p style="text-align: justify;"':
-
 				// Define para tag.
 				$para_tag = '<' . $tag . ' class="textblock textblock-justify" id="textblock-' . $text_signature . '">' . $commenticon;
 				break;
 
 			case 'p class="notes"':
-
 				// Define para tag.
 				$para_tag = '<p class="notes textblock" id="textblock-' . $text_signature . '">' . $commenticon;
 				break;
 
 			case 'div':
-
 				// Define opening tag (we'll close it later).
 				$para_tag = '<div class="textblock" id="textblock-' . $text_signature . '">' . $commenticon;
 				break;
 
 			case 'span':
-
 				// Define opening tag (we'll close it later).
 				$para_tag = '<span class="textblock" id="textblock-' . $text_signature . '">' . $commenticon;
 				break;

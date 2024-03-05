@@ -47,7 +47,7 @@ get_header();
 
 							<?php the_post(); ?>
 
-							<?php if ( ! in_array( get_the_ID(), $_special_pages ) ) : ?>
+							<?php if ( ! in_array( get_the_ID(), $_special_pages, true ) ) : ?>
 
 								<div class="search_result">
 

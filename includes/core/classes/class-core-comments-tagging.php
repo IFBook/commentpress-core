@@ -415,47 +415,49 @@ class CommentPress_Core_Comments_Tagging {
 	 */
 	public function taxonomy_create() {
 
+		// Labels.
+		$labels = [
+			'name'                       => __( 'Comment Tags', 'commentpress-core' ),
+			'singular_name'              => __( 'Comment Tag', 'commentpress-core' ),
+			'menu_name'                  => __( 'Comment Tags', 'commentpress-core' ),
+			'search_items'               => __( 'Search Comment Tags', 'commentpress-core' ),
+			'popular_items'              => __( 'Popular Comment Tags', 'commentpress-core' ),
+			'all_items'                  => __( 'All Comment Tags', 'commentpress-core' ),
+			'edit_item'                  => __( 'Edit Comment Tag', 'commentpress-core' ),
+			'update_item'                => __( 'Update Comment Tag', 'commentpress-core' ),
+			'add_new_item'               => __( 'Add New Comment Tag', 'commentpress-core' ),
+			'new_item_name'              => __( 'New Comment Tag Name', 'commentpress-core' ),
+			'separate_items_with_commas' => __( 'Separate Comment Tags with commas', 'commentpress-core' ),
+			'add_or_remove_items'        => __( 'Add or remove Comment Tag', 'commentpress-core' ),
+			'choose_from_most_used'      => __( 'Choose from the most popular Comment Tags', 'commentpress-core' ),
+		];
+
+		/*
+		 * Rewrite Rules.
+		 *
+		 * Use `'with_front' => true,` to create a tag archive.
+		 */
+		$rewrite = [
+			'slug' => apply_filters( 'comment_tagger_tax_slug', 'comments/tags' ),
+		];
+
+		// Capabilities.
+		$capabilities = [
+			'manage_terms' => 'manage_categories',
+			'edit_terms'   => 'manage_categories',
+			'delete_terms' => 'manage_categories',
+			'assign_terms' => 'assign_' . $this->tax_name,
+		];
+
 		// Define Taxonomy arguments.
 		$args = [
-
-			// General.
 			'public'                => true,
 			'hierarchical'          => false,
-
-			// Labels.
-			'labels'                => [
-				'name'                       => __( 'Comment Tags', 'commentpress-core' ),
-				'singular_name'              => __( 'Comment Tag', 'commentpress-core' ),
-				'menu_name'                  => __( 'Comment Tags', 'commentpress-core' ),
-				'search_items'               => __( 'Search Comment Tags', 'commentpress-core' ),
-				'popular_items'              => __( 'Popular Comment Tags', 'commentpress-core' ),
-				'all_items'                  => __( 'All Comment Tags', 'commentpress-core' ),
-				'edit_item'                  => __( 'Edit Comment Tag', 'commentpress-core' ),
-				'update_item'                => __( 'Update Comment Tag', 'commentpress-core' ),
-				'add_new_item'               => __( 'Add New Comment Tag', 'commentpress-core' ),
-				'new_item_name'              => __( 'New Comment Tag Name', 'commentpress-core' ),
-				'separate_items_with_commas' => __( 'Separate Comment Tags with commas', 'commentpress-core' ),
-				'add_or_remove_items'        => __( 'Add or remove Comment Tag', 'commentpress-core' ),
-				'choose_from_most_used'      => __( 'Choose from the most popular Comment Tags', 'commentpress-core' ),
-			],
-
-			// Permalinks.
-			'rewrite'               => [
-				//'with_front' => true,
-				'slug' => apply_filters( 'comment_tagger_tax_slug', 'comments/tags' ),
-			],
-
-			// Capabilities.
-			'capabilities'          => [
-				'manage_terms' => 'manage_categories',
-				'edit_terms'   => 'manage_categories',
-				'delete_terms' => 'manage_categories',
-				'assign_terms' => 'assign_' . $this->tax_name,
-			],
-
+			'labels'                => $labels,
+			'rewrite'               => $rewrite,
+			'capabilities'          => $capabilities,
 			// Custom function to update the count.
 			'update_count_callback' => [ $this, 'taxonomy_tag_count_update' ],
-
 		];
 
 		// Go ahead and register the Taxonomy now.
@@ -1304,7 +1306,7 @@ class CommentPress_Core_Comments_Tagging {
 		foreach ( $all_comments as $comment ) {
 
 			// Add to Posts with Comments array.
-			if ( ! in_array( $comment->comment_post_ID, $posts_with ) ) {
+			if ( ! in_array( $comment->comment_post_ID, $posts_with, true ) ) {
 				$posts_with[] = $comment->comment_post_ID;
 			}
 
@@ -1354,6 +1356,7 @@ class CommentPress_Core_Comments_Tagging {
 
 				// Define Comment count.
 				$comment_count_text = sprintf(
+					/* translators: %d: Number of comments. */
 					_n(
 						// Singular.
 						'<span class="cp_comment_count">%d</span> comment',

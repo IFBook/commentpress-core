@@ -548,7 +548,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 		foreach ( $all_comments as $comment ) {
 
 			// Add to Posts with Comments array.
-			if ( ! in_array( $comment->comment_post_ID, $posts_with ) ) {
+			if ( ! in_array( $comment->comment_post_ID, $posts_with, true ) ) {
 				$posts_with[] = $comment->comment_post_ID;
 			}
 
@@ -591,6 +591,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 
 			// Define Comment count.
 			$comment_count_text = sprintf(
+				/* translators: %d: Number of comments. */
 				_n( '<span class="cp_comment_count">%d</span> comment', '<span class="cp_comment_count">%d</span> comments', $post_comment_counts[ $post->ID ], 'commentpress-core' ),
 				$post_comment_counts[ $post->ID ]
 			);

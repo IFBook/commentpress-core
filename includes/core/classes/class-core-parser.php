@@ -463,7 +463,7 @@ class CommentPress_Core_Parser {
 			! ( $post instanceof WP_Post ) ||
 
 			// Some Post Types can be skipped.
-			in_array( $post->post_type, $this->setting_post_types_disabled_get() ) || (
+			in_array( $post->post_type, $this->setting_post_types_disabled_get(), true ) || (
 
 			// Individual entries can have parsing skipped.
 			$this->core->db->setting_get( 'cp_do_not_parse', 'n' ) == 'y' &&
@@ -685,50 +685,29 @@ class CommentPress_Core_Parser {
 		// Act on parser.
 		switch ( $this->parser ) {
 
-			// For poetry.
+			// For Poetry, filter content by <br> and <br /> tags.
 			case 'line':
-
-				// Generate Text Signatures array.
 				$this->text_signatures = $this->line_signatures_generate( $content );
-
-				// Only continue parsing if we have an array of sigs.
 				if ( ! empty( $this->text_signatures ) ) {
-
-					// Filter content by <br> and <br /> tags.
 					$content = $this->lines_parse( $content );
-
 				}
 
 				break;
 
-			// For general prose.
+			// For Prose, filter content by <p>, <ul> and <ol> tags.
 			case 'tag':
-
-				// Generate Text Signatures array.
 				$this->text_signatures = $this->tag_signatures_generate( $content, 'p|ul|ol' );
-
-				// Only continue parsing if we have an array of sigs.
 				if ( ! empty( $this->text_signatures ) ) {
-
-					// Filter content by <p>, <ul> and <ol> tags.
 					$content = $this->tags_parse( $content, 'p|ul|ol' );
-
 				}
 
 				break;
 
-			// For Blocks.
+			// For Blocks, filter content by <!--commentblock--> quicktags.
 			case 'block':
-
-				// Generate Text Signatures array.
 				$this->text_signatures = $this->block_signatures_generate( $content );
-
-				// Only parse content if we have an array of sigs.
 				if ( ! empty( $this->text_signatures ) ) {
-
-					// Filter content by <!--commentblock--> quicktags.
 					$content = $this->blocks_parse( $content );
-
 				}
 
 				break;
@@ -1008,16 +987,14 @@ class CommentPress_Core_Parser {
 			// Further checks when there's a <ol> tag.
 			if ( 'ol' === $tag ) {
 
-				// Compat with "WP Footnotes".
 				if ( substr( $paragraph, 0, 21 ) == '<ol class="footnotes"' ) {
 
-					// Construct tag.
+					// Compat with "WP Footnotes".
 					$tag = 'ol class="footnotes"';
 
-				// Add support for <ol start="n">.
 				} elseif ( substr( $paragraph, 0, 11 ) == '<ol start="' ) {
 
-					// Parse tag.
+					// Add support for <ol start="n">.
 					preg_match( '/start="([^"]*)"/i', $paragraph, $matches );
 
 					// Construct new tag.
@@ -1164,7 +1141,7 @@ class CommentPress_Core_Parser {
 			$text_signature = $this->text_signature_generate( $paragraph );
 
 			// Do we have one already?
-			if ( in_array( $text_signature, $this->text_signatures ) ) {
+			if ( in_array( $text_signature, $this->text_signatures, true ) ) {
 
 				// Is it in the duplicates array?
 				if ( array_key_exists( $text_signature, $duplicates ) ) {
@@ -1449,7 +1426,7 @@ class CommentPress_Core_Parser {
 					$text_signature = $this->text_signature_generate( $paragraph );
 
 					// Do we have one already?
-					if ( in_array( $text_signature, $this->text_signatures ) ) {
+					if ( in_array( $text_signature, $this->text_signatures, true ) ) {
 
 						// Is it in the duplicates array?
 						if ( array_key_exists( $text_signature, $duplicates ) ) {
@@ -1778,7 +1755,7 @@ class CommentPress_Core_Parser {
 				$text_signature = $this->text_signature_generate( $paragraph );
 
 				// Do we have one already?
-				if ( in_array( $text_signature, $this->text_signatures ) ) {
+				if ( in_array( $text_signature, $this->text_signatures, true ) ) {
 
 					// Is it in the duplicates array?
 					if ( array_key_exists( $text_signature, $duplicates ) ) {
@@ -2362,7 +2339,7 @@ class CommentPress_Core_Parser {
 
 				// Do we have an exact match in the Text Signatures array?
 				// NB: this will work, because we're already ensuring identical sigs are made unique.
-				if ( in_array( $comment->comment_signature, $text_signatures ) ) {
+				if ( in_array( $comment->comment_signature, $text_signatures, true ) ) {
 
 					// Yes, assign to that key.
 					$assigned[ $comment->comment_signature ][] = $comment;
@@ -2648,7 +2625,7 @@ class CommentPress_Core_Parser {
 	public function paragraph_num_get_by_text_signature( $text_signature ) {
 
 		// Get position in array.
-		$num = array_search( $text_signature, $this->text_signatures_get() );
+		$num = array_search( $text_signature, $this->text_signatures_get(), true );
 
 		// --<
 		return $num + 1;

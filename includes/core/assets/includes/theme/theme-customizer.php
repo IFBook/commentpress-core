@@ -293,8 +293,6 @@ if ( ! function_exists( 'commentpress_customize_header_bg_color' ) ) :
 			'commentpress_header_bg_color',
 			[
 				'default' => '#' . $core->theme->header_bg_color,
-				//'capability' => 'edit_theme_options',
-				//'type' => 'option',
 			]
 		);
 

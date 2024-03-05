@@ -39,6 +39,7 @@ defined( 'ABSPATH' ) || exit;
 							<?php
 
 							echo sprintf(
+								/* translators: 1: Hame page link, 2: The current year. */
 								__( 'Website content &copy; %1$s %2$s. All rights reserved.', 'commentpress-core' ),
 								'<a href="' . home_url() . '">' . get_bloginfo( 'name' ) . '</a>',
 								gmdate( 'Y' )

@@ -53,6 +53,7 @@ get_header();
 
 								// Show text.
 								echo sprintf(
+									/* translators: 1: The list of categories, 2: The RSS feed link. */
 									__( 'This entry is filed under %1$s. You can follow any comments on this entry through the %2$s feed.', 'commentpress-core' ),
 									get_the_category_list( ', ' ),
 									$rss_link
@@ -73,6 +74,7 @@ get_header();
 
 									// Write out.
 									echo sprintf(
+										/* translators: %s: The trackback link. */
 										__( 'You can leave a comment, or %s from your own site.', 'commentpress-core' ),
 										$trackback_link
 									);
@@ -92,6 +94,7 @@ get_header();
 
 									// Write out.
 									echo sprintf(
+										/* translators: %s: The trackback link. */
 										__( 'Comments are currently closed, but you can %s from your own site.', 'commentpress-core' ),
 										$trackback_link
 									);

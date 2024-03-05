@@ -30,6 +30,7 @@ get_header();
 						<?php
 
 						echo sprintf(
+							/* translators: %s: The name of the tag. */
 							__( 'Comments Tagged &#8216;%s&#8217;', 'commentpress-core' ),
 							single_cat_title( '', false )
 						);

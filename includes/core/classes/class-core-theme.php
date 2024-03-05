@@ -1017,7 +1017,8 @@ class CommentPress_Core_Theme {
 
 		// TODO: Exactly how do we support Post Types?
 		$args = [
-			//'public' => true,
+			// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
+			// 'public' => true,
 			'_builtin' => false,
 		];
 

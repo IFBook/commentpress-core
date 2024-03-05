@@ -71,7 +71,6 @@ $is_commentable = commentpress_is_commentable();
 
 					// Activity Header.
 					case 'activity':
-
 						// Do we want to show Activity Tab?
 						if ( commentpress_show_activity_tab() ) {
 

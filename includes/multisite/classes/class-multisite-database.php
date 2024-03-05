@@ -168,6 +168,7 @@ class CommentPress_Multisite_Database {
 			return;
 		}
 
+		// phpcs:ignore Squiz.Commenting.InlineComment.SpacingAfterAtFunctionEnd
 		// Keep Site Options when deactivating.
 
 	}

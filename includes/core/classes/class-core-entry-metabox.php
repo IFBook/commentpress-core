@@ -135,7 +135,7 @@ class CommentPress_Core_Entry_Metabox {
 	public function metabox_add( $post_type, $post ) {
 
 		// Bail if not one of our supported Post Types.
-		if ( ! in_array( $post_type, $this->post_types ) ) {
+		if ( ! in_array( $post_type, $this->post_types, true ) ) {
 			return;
 		}
 

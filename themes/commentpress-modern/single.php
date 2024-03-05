@@ -69,6 +69,7 @@ get_header();
 
 								// Show text.
 								echo sprintf(
+									/* translators: %s: The RSS feed link. */
 									__( 'You can follow any comments on this entry through the %s feed.', 'commentpress-core' ),
 									$rss_link
 								);
@@ -88,6 +89,7 @@ get_header();
 
 									// Write out.
 									echo sprintf(
+										/* translators: %s: The trackback link. */
 										__( 'You can leave a comment, or %s from your own site.', 'commentpress-core' ),
 										$trackback_link
 									);
@@ -107,6 +109,7 @@ get_header();
 
 									// Write out.
 									echo sprintf(
+										/* translators: %s: The trackback link. */
 										__( 'Comments are currently closed, but you can %s from your own site.', 'commentpress-core' ),
 										$trackback_link
 									);

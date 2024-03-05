@@ -592,7 +592,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 			$tags = $theme->get( 'Tags' );
 
 			// Is it a CommentPress Core and Group Blog theme?
-			if ( in_array( 'commentpress', $tags ) && in_array( 'groupblog', $tags ) ) {
+			if ( in_array( 'commentpress', $tags, true ) && in_array( 'groupblog', $tags, true ) ) {
 
 				// Maybe use stylesheet as theme data.
 				if ( true === $stylesheets ) {

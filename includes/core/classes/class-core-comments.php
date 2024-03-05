@@ -348,9 +348,7 @@ class CommentPress_Core_Comments {
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
 	public function plugin_deactivate( $network_wide ) {
-
 		// Keep schema when deactivating.
-
 	}
 
 	// -------------------------------------------------------------------------
@@ -472,11 +470,11 @@ class CommentPress_Core_Comments {
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
 	 *
-	 * @param int $comment_ID The numeric ID of the Comment.
+	 * @param int $comment_id The numeric ID of the Comment.
 	 * @param int $page_number The number of the Page.
 	 * @param str $text_signature The Text Signature of the Comment.
 	 */
-	private function save_comment_page( $comment_ID, $page_number = false, $text_signature = '' ) {
+	private function save_comment_page( $comment_id, $page_number = false, $text_signature = '' ) {
 
 		// If no Page number is passed, look in POST.
 		if ( empty( $page_number ) ) {
@@ -502,10 +500,10 @@ class CommentPress_Core_Comments {
 			$key = '_cp_comment_page';
 
 			// Add or update the data.
-			if ( get_comment_meta( $comment_ID, $key, true ) != '' ) {
-				update_comment_meta( $comment_ID, $key, $page_number );
+			if ( get_comment_meta( $comment_id, $key, true ) != '' ) {
+				update_comment_meta( $comment_id, $key, $page_number );
 			} else {
-				add_comment_meta( $comment_ID, $key, $page_number, true );
+				add_comment_meta( $comment_id, $key, $page_number, true );
 			}
 
 			// Okay, we're done.

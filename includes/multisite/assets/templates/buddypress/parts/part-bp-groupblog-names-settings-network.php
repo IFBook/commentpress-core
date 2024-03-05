@@ -22,7 +22,17 @@ defined( 'ABSPATH' ) || exit;
 				<option value="<?php echo esc_attr( $scheme_slug ); ?>" <?php selected( $current_scheme, $scheme_slug ); ?>><?php echo esc_html( $scheme_title ); ?></option>
 			<?php endforeach; ?>
 		</select>
-		<p class="description"><?php printf( __( 'You can add additional translatable naming schemes for Group Blogs using the %s filter.', 'commentpress-core' ), '<code>commentpress/multisite/bp/groupblog/schemes</code>' ); ?></p>
+		<p class="description">
+			<?php
+
+			printf(
+				/* translators: %s: The name of the filter. */
+				__( 'You can add additional translatable naming schemes for Group Blogs using the %s filter.', 'commentpress-core' ),
+				'<code>commentpress/multisite/bp/groupblog/schemes</code>'
+			);
+
+			?>
+		</p>
 	</td>
 </tr>
 

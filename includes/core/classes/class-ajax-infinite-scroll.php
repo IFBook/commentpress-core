@@ -234,7 +234,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 		// Get title using buffer.
 		ob_start();
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//wp_title( '|', true, 'right' );
+		// wp_title( '|', true, 'right' );
 		bloginfo( 'name' );
 		commentpress_site_title( '|' );
 		$page_title = ob_get_contents();

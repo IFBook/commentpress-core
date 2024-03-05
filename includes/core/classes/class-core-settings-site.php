@@ -359,7 +359,7 @@ class CommentPress_Core_Settings_Site {
 		$subpages = apply_filters( 'commentpress/core/settings/site/page/subpages', $subpages );
 
 		// This tweaks the Settings subnav menu to show only one menu item.
-		if ( in_array( $plugin_page, $subpages ) ) {
+		if ( in_array( $plugin_page, $subpages, true ) ) {
 			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			$plugin_page = $this->parent_page_slug;
 			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
@@ -648,7 +648,7 @@ class CommentPress_Core_Settings_Site {
 		$settings_screens = $this->page_settings_screens_get();
 
 		// Bail if not the Screen ID we want.
-		if ( ! in_array( $screen_id, $settings_screens ) ) {
+		if ( ! in_array( $screen_id, $settings_screens, true ) ) {
 			return;
 		}
 

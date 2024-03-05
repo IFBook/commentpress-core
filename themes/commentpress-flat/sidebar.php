@@ -35,10 +35,9 @@ $is_commentable = commentpress_is_commentable();
 
 					// Comments Header.
 					case 'comments':
-
 						// Add active class.
 						$active_class = '';
-						if ( ! empty( $core ) && in_array( $core->theme->sidebar->default_get(), [ 'comments', 'toc' ] ) ) {
+						if ( ! empty( $core ) && in_array( $core->theme->sidebar->default_get(), [ 'comments', 'toc' ], true ) ) {
 							$active_class = ' class="active-tab"';
 						}
 
@@ -76,7 +75,6 @@ $is_commentable = commentpress_is_commentable();
 
 					// Activity Header.
 					case 'activity':
-
 						// Do we want to show Activity Tab?
 						if ( commentpress_show_activity_tab() ) {
 

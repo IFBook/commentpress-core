@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
 		<td>
 			<p>
 				<?php foreach ( $capable_post_types as $post_type_slug => $label ) : ?>
-					<?php if ( ! in_array( $post_type_slug, $selected_types ) ) : ?>
+					<?php if ( ! in_array( $post_type_slug, $selected_types, true ) ) : ?>
 						<input type="checkbox" class="settings-checkbox" id="<?php echo esc_attr( $this->key_post_types_enabled ); ?>_<?php echo esc_attr( $post_type_slug ); ?>" name="<?php echo esc_attr( $this->key_post_types_enabled ); ?>[]" value="<?php echo esc_attr( $post_type_slug ); ?>" checked="checked" />
 					<?php else : ?>
 						<input type="checkbox" class="settings-checkbox" id="<?php echo esc_attr( $this->key_post_types_enabled ); ?>_<?php echo esc_attr( $post_type_slug ); ?>" name="<?php echo esc_attr( $this->key_post_types_enabled ); ?>[]" value="<?php echo esc_attr( $post_type_slug ); ?>" />

@@ -67,12 +67,19 @@ class WP_Customize_Site_Image_Control extends WP_Customize_Media_Control {
 
 		// Set labels.
 		$this->button_labels = [
+			/* translators: %s: the "Site Image" label. */
 			'select'       => sprintf( __( 'Select %s', 'commentpress-core' ), $site_image ),
+			/* translators: %s: the "Site Image" label. */
 			'change'       => sprintf( __( 'Change %s', 'commentpress-core' ), $site_image ),
+			/* translators: %s: the "Site Image" label. */
 			'remove'       => sprintf( __( 'Remove %s', 'commentpress-core' ), $site_image ),
+			/* translators: %s: the "Site Image" label. */
 			'default'      => sprintf( __( 'Default %s', 'commentpress-core' ), $site_image ),
+			/* translators: %s: the "Site Image" label. */
 			'placeholder'  => sprintf( __( 'No %s selected', 'commentpress-core' ), $site_image ),
+			/* translators: %s: the "Site Image" label. */
 			'frame_title'  => sprintf( __( 'Select %s', 'commentpress-core' ), $site_image ),
+			/* translators: %s: the "Site Image" label. */
 			'frame_button' => sprintf( __( 'Choose %s', 'commentpress-core' ), $site_image ),
 		];
 

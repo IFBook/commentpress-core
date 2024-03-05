@@ -348,7 +348,7 @@ class CommentPress_Multisite_Sites {
 		$site_ids = $this->core_site_ids_get();
 
 		// Bail if already present.
-		if ( in_array( $site_id, $site_ids ) ) {
+		if ( in_array( $site_id, $site_ids, true ) ) {
 			return;
 		}
 
@@ -371,7 +371,7 @@ class CommentPress_Multisite_Sites {
 		$site_ids = $this->core_site_ids_get();
 
 		// Bail if not already present.
-		if ( ! in_array( $site_id, $site_ids ) ) {
+		if ( ! in_array( $site_id, $site_ids, true ) ) {
 			return;
 		}
 

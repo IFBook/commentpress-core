@@ -256,6 +256,7 @@ if ( ! function_exists( 'commentpress_format_comment' ) ) :
 
 			// Construct Comment header content.
 			$comment_meta_content = sprintf(
+				/* translators: 1: Comment link, 2: Comment author, 3: Comment date. */
 				__( '%1$s by %2$s on %3$s', 'commentpress-core' ),
 				$comment_anchor,
 				$comment_author,
@@ -278,8 +279,9 @@ if ( ! function_exists( 'commentpress_format_comment' ) ) :
 			 */
 			$comment_meta = apply_filters( 'commentpress_format_comment_all_meta', $comment_meta, $comment, $comment_anchor, $comment_author, $comment_date );
 
-		// If context is 'by commenter'.
 		} elseif ( 'by' === $context ) {
+
+			// Context is 'by commenter'.
 
 			// Construct link.
 			$page_link = trailingslashit( get_permalink( $comment->comment_post_ID ) );
@@ -289,6 +291,7 @@ if ( ! function_exists( 'commentpress_format_comment' ) ) :
 
 			// Construct Comment header content.
 			$comment_meta_content = sprintf(
+				/* translators: 1: Comment link, 2: Comment author, 3: Comment date. */
 				__( '%1$s on %2$s on %3$s', 'commentpress-core' ),
 				$comment_anchor,
 				$page_anchor,
@@ -364,7 +367,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_content' ) ) :
 		foreach ( $all_comments as $comment ) {
 
 			// Add to authors with Comments array.
-			if ( ! in_array( $comment->comment_author_email, $authors_with ) ) {
+			if ( ! in_array( $comment->comment_author_email, $authors_with, true ) ) {
 				$authors_with[] = $comment->comment_author_email;
 				$name           = ! empty( $comment->comment_author ) ? $comment->comment_author : __( 'Anonymous', 'commentpress-core' );
 				$author_names[ $comment->comment_author_email ] = $name;
@@ -691,6 +694,7 @@ if ( ! function_exists( 'commentpress_get_comment_activity_item' ) ) :
 				<p class="comment_activity_date">' .
 					'<a class="comment_activity_link' . $is_on_current_post . '" href="' . esc_url( get_comment_link( $comment->comment_ID ) ) . '">' .
 						sprintf(
+							/* translators: 1: Comment date, 2: Comment time. */
 							__( '%1$s at %2$s', 'commentpress-core' ),
 							get_comment_date( '', $comment->comment_ID ),
 							commentpress_get_comment_time( $comment->comment_ID )
@@ -749,6 +753,7 @@ if ( ! function_exists( 'commentpress_comments_by_para_format_pings' ) ) :
 
 		// Construct Comment count.
 		$return['comment_text'] = sprintf(
+			/* translators: %d: Comment count. */
 			_n( '<span>%d</span> Pingback or trackback', '<span>%d</span> Pingbacks and trackbacks', $comment_count, 'commentpress-core' ),
 			$comment_count // Substitution.
 		);
@@ -792,6 +797,7 @@ if ( ! function_exists( 'commentpress_comments_by_para_format_block' ) ) :
 
 		// Construct entity text.
 		$return['entity_text'] = sprintf(
+			/* translators: 1: Block name, 2: Paragraph number. */
 			__( '%1$s %2$s', 'commentpress-core' ),
 			$block_name,
 			$para_num
@@ -799,19 +805,22 @@ if ( ! function_exists( 'commentpress_comments_by_para_format_block' ) ) :
 
 		// Construct permalink text.
 		$return['permalink_text'] = sprintf(
+			/* translators: 1: Block name, 2: Paragraph number. */
 			__( 'Permalink for comments on %1$s %2$s', 'commentpress-core' ),
 			$block_name,
 			$para_num
 		);
 
-		// Construct Comment count.
+		// Construct Comment text.
 		$return['comment_text'] = sprintf(
+			/* translators: %d: Number of comments. */
 			_n( '<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span>', '<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span>', $comment_count, 'commentpress-core' ),
 			$comment_count // Substitution.
 		);
 
 		// Construct heading text.
 		$return['heading_text'] = sprintf(
+			/* translators: 1: Comment label, 2: Block name, 3: Paragraph number. */
 			__( '%1$s on <span class="source_block">%2$s %3$s</span>', 'commentpress-core' ),
 			$return['comment_text'],
 			$block_name,
@@ -1015,7 +1024,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 					echo '<div id="para_wrapper-' . $text_sig . '" class="paragraph_wrapper' . $no_comments_class . '">' . "\n\n";
 
 					// Have we already used this Text Signature?
-					if ( in_array( $text_sig, $used_text_sigs ) ) {
+					if ( in_array( $text_sig, $used_text_sigs, true ) ) {
 
 						// Show some kind of message.
 						// Should not be necessary now that we ensure unique Text Signatures.
@@ -1062,11 +1071,13 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 								// The link text depending on whether we've got registration.
 								if ( $registration ) {
 									$prompt = sprintf(
+										/* translators: %s: The name of the entity. */
 										__( 'Create an account to leave a comment on %s', 'commentpress-core' ),
 										$markup['entity_text']
 									);
 								} else {
 									$prompt = sprintf(
+										/* translators: %s: The name of the entity. */
 										__( 'Login to leave a comment on %s', 'commentpress-core' ),
 										$markup['entity_text']
 									);
@@ -1126,6 +1137,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 
 								// Construct link content.
 								$link_content = sprintf(
+										/* translators: %s: The name of the entity. */
 									__( 'Leave a comment on %s', 'commentpress-core' ),
 									$markup['entity_text']
 								);
@@ -1206,9 +1218,11 @@ if ( ! function_exists( 'commentpress_comment_form_title' ) ) :
 			$no_reply_text = __( 'Leave a reply', 'commentpress-core' );
 		}
 		if ( '' === $reply_to_comment_text ) {
+			/* translators: %s: Comment author. */
 			$reply_to_comment_text = __( 'Leave a reply to %s', 'commentpress-core' );
 		}
 		if ( '' === $reply_to_para_text ) {
+			/* translators: %s: The paragraph identifer. */
 			$reply_to_para_text = __( 'Leave a comment on %s', 'commentpress-core' );
 		}
 
@@ -1260,6 +1274,7 @@ if ( ! function_exists( 'commentpress_comment_form_title' ) ) :
 
 			// Construct link text.
 			$para_text = sprintf(
+				/* translators: 1: The block name, 2: Comment count. */
 				_x( '%1$s %2$s', 'The first substitution is the block name e.g. "paragraph". The second is the numeric comment count.', 'commentpress-core' ),
 				ucfirst( $core->parser->lexia_get() ),
 				$reply_to_para_id
@@ -1272,6 +1287,7 @@ if ( ! function_exists( 'commentpress_comment_form_title' ) ) :
 
 			// Construct Paragraph without link.
 			$paragraph = sprintf(
+				/* translators: 1: The block name, 2: Comment count. */
 				_x( '%1$s %2$s', 'The first substitution is the block name e.g. "paragraph". The second is the numeric comment count.', 'commentpress-core' ),
 				ucfirst( $core->parser->lexia_get() ),
 				$para_num
@@ -1492,6 +1508,7 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 				$comment_reply_link = array_merge(
 					$args,
 					[
+						/* translators: %s: Comment author. */
 						'reply_text' => sprintf( __( 'Reply to %s', 'commentpress-core' ), get_comment_author( $comment->comment_ID ) ),
 						'depth'      => $depth,
 						'max_depth'  => $args['max_depth'],
@@ -1630,6 +1647,7 @@ if ( ! function_exists( 'commentpress_comments_by_para_format_whole' ) ) :
 
 		// Construct entity text.
 		$return['entity_text'] = sprintf(
+			/* translators: %s: Name of the Post Type. */
 			__( 'the whole %s', 'commentpress-core' ),
 			$post_type_name
 		);
@@ -1650,18 +1668,21 @@ if ( ! function_exists( 'commentpress_comments_by_para_format_whole' ) ) :
 
 		// Construct permalink text.
 		$return['permalink_text'] = sprintf(
+			/* translators: %s: Name of the entity. */
 			__( 'Permalink for comments on %s', 'commentpress-core' ),
 			$return['entity_text']
 		);
 
 		// Construct Comment count.
 		$return['comment_text'] = sprintf(
+			/* translators: %d: The number of comments. */
 			_n( '<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comment</span>', '<span class="cp_comment_num">%d</span> <span class="cp_comment_word">Comments</span>', $comment_count, 'commentpress-core' ),
 			$comment_count // Substitution.
 		);
 
 		// Construct heading text.
 		$return['heading_text'] = sprintf(
+			/* translators: 1: Comment identifier, 2: Entity identifier. */
 			__( '%1$s on <span class="source_block">%2$s</span>', 'commentpress-core' ),
 			$return['comment_text'],
 			$return['entity_text']
@@ -1944,7 +1965,7 @@ if ( ! function_exists( 'commentpress_get_post_multipage_url' ) ) :
 			if ( 1 == $i ) {
 				$url = get_permalink();
 			} else {
-				if ( '' == get_option( 'permalink_structure' ) || in_array( $post->post_status, [ 'draft', 'pending' ] ) ) {
+				if ( '' == get_option( 'permalink_structure' ) || in_array( $post->post_status, [ 'draft', 'pending' ], true ) ) {
 					$url = add_query_arg( 'page', $i, get_permalink() );
 				} elseif ( 'page' == get_option( 'show_on_front' ) && get_option( 'page_on_front' ) == $post->ID ) {
 					$url = trailingslashit( get_permalink() ) . user_trailingslashit( "$wp_rewrite->pagination_base/" . $i, 'single_paged' );
@@ -1959,7 +1980,7 @@ if ( ! function_exists( 'commentpress_get_post_multipage_url' ) ) :
 			if ( 1 == $i ) {
 				$url = get_permalink( $post->ID );
 			} else {
-				if ( '' == get_option( 'permalink_structure' ) || in_array( $post->post_status, [ 'draft', 'pending' ] ) ) {
+				if ( '' == get_option( 'permalink_structure' ) || in_array( $post->post_status, [ 'draft', 'pending' ], true ) ) {
 					$url = add_query_arg( 'page', $i, get_permalink( $post->ID ) );
 				} elseif ( 'page' == get_option( 'show_on_front' ) && get_option( 'page_on_front' ) == $post->ID ) {
 					$url = trailingslashit( get_permalink( $post->ID ) ) . user_trailingslashit( "$wp_rewrite->pagination_base/" . $i, 'single_paged' );
@@ -2119,7 +2140,7 @@ if ( ! function_exists( 'commentpress_get_comment_time' ) ) :
 	 *
 	 * @since 4.0
 	 *
-	 * @param int|WP_Comment $comment_ID Optional. WP_Comment or ID of the comment for which to print the text.
+	 * @param int|WP_Comment $comment_id Optional. WP_Comment or ID of the comment for which to print the text.
 	 *                                   Default current comment.
 	 * @param string         $format     Optional. PHP time format. Defaults to the 'time_format' option.
 	 * @param bool           $gmt        Optional. Whether to use the GMT date. Default false.
@@ -2127,9 +2148,9 @@ if ( ! function_exists( 'commentpress_get_comment_time' ) ) :
 	 *                                   Default true.
 	 * @return string The formatted time.
 	 */
-	function commentpress_get_comment_time( $comment_ID = null, $format = '', $gmt = false, $translate = true ) {
+	function commentpress_get_comment_time( $comment_id = null, $format = '', $gmt = false, $translate = true ) {
 
-		$comment = get_comment( $comment_ID );
+		$comment = get_comment( $comment_id );
 
 		$comment_date = $gmt ? $comment->comment_date_gmt : $comment->comment_date;
 

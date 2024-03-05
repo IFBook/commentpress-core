@@ -356,7 +356,7 @@ class CommentPress_Core_Entry_Single {
 	public function entry_meta_box_part_get( $post ) {
 
 		// Bail if not one of our supported Post Types.
-		if ( ! in_array( $post->post_type, $this->post_types ) ) {
+		if ( ! in_array( $post->post_type, $this->post_types, true ) ) {
 			return;
 		}
 
@@ -387,7 +387,7 @@ class CommentPress_Core_Entry_Single {
 	public function entry_meta_box_part_save( $post ) {
 
 		// Bail if not one of our supported Post Types.
-		if ( ! in_array( $post->post_type, $this->post_types ) ) {
+		if ( ! in_array( $post->post_type, $this->post_types, true ) ) {
 			return;
 		}
 

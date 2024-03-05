@@ -348,6 +348,7 @@ if ( ! function_exists( 'commentpress_lexia_modify_entity_text' ) ) :
 
 		// Override entity text.
 		$entity_text = sprintf(
+			/* translators: %s: Name of the Post Type. */
 			__( 'the %s', 'commentpress-core' ),
 			$post_type_name
 		);

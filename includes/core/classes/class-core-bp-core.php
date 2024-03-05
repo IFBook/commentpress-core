@@ -226,7 +226,7 @@ class CommentPress_Core_BuddyPress {
 		$theme = wp_get_theme( $stylesheet );
 
 		// Bail if it's not a CommentPress Core theme.
-		if ( ! in_array( 'commentpress', (array) $theme->get( 'Tags' ) ) ) {
+		if ( ! in_array( 'commentpress', (array) $theme->get( 'Tags' ), true ) ) {
 			return false;
 		}
 

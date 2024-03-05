@@ -101,9 +101,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	 * @since 4.0
 	 */
 	public function register_hooks_latest() {
-
 		// Future compatibility goes here.
-
 	}
 
 	/**
@@ -449,6 +447,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 
 			// Replace the necessary values to display in Group Activity stream.
 			$activity->action = sprintf(
+				/* translators: 1: The author, 2: The activity name, 3: The name of the Post, 4: The name of the group. */
 				__( '%1$s updated a %2$s %3$s in the group %4$s:', 'commentpress-core' ),
 				$activity_author,
 				$activity_name,
@@ -460,6 +459,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 
 			// Replace the necessary values to display in Group Activity stream.
 			$activity->action = sprintf(
+				/* translators: 1: The author, 2: The activity name, 3: The name of the Post, 4: The name of the group. */
 				__( '%1$s wrote a new %2$s %3$s in the group %4$s:', 'commentpress-core' ),
 				$activity_author,
 				$activity_name,
@@ -795,6 +795,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 
 		// Replace the necessary values to display in Group Activity stream.
 		$activity->action = sprintf(
+			/* translators: 1: The author, 2: The link to the comment, 3: The activity name, 4: The name of the Post, 5: The name of the group. */
 			__( '%1$s left a %2$s on a %3$s %4$s in the group %5$s:', 'commentpress-core' ),
 			$user_link,
 			$comment_link,

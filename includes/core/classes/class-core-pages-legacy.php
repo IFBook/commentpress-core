@@ -695,7 +695,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		foreach ( $special_pages as $special_page_id ) {
 
 			// Skip if this Special Page is somehow missing.
-			$name = array_search( $special_page_id, $special_pages_keyed );
+			$name = array_search( $special_page_id, $special_pages_keyed, true );
 			if ( false === $name ) {
 				continue;
 			}
@@ -862,45 +862,38 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Switch by Page.
 		switch ( $page ) {
 
+			// Create Welcome Page.
 			case 'title':
-
-				// Create Welcome Page.
 				$new_id = $this->title_page_create();
 				break;
 
+			// Create General Comments Page.
 			case 'general_comments':
-
-				// Create General Comments Page.
 				$new_id = $this->general_comments_page_create();
 				break;
 
+			// Create All Comments Page.
 			case 'all_comments':
-
-				// Create All Comments Page.
 				$new_id = $this->all_comments_page_create();
 				break;
 
+			// Create Comments by Author Page.
 			case 'comments_by_author':
-
-				// Create Comments by Author Page.
 				$new_id = $this->comments_by_author_page_create();
 				break;
 
+			// Create Blog Page.
 			case 'blog':
-
-				// Create Blog Page.
 				$new_id = $this->blog_page_create();
 				break;
 
+			// Create Blog Page.
 			case 'blog_archive':
-
-				// Create Blog Page.
 				$new_id = $this->blog_archive_page_create();
 				break;
 
+			// Create TOC Page.
 			case 'toc':
-
-				// Create TOC Page.
 				$new_id = $this->toc_page_create();
 				break;
 
@@ -976,7 +969,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$special_pages = $this->core->db->setting_get( 'cp_special_pages', [] );
 
 		// Is it in our Special Pages array?
-		if ( in_array( $page_id, $special_pages ) ) {
+		if ( in_array( $page_id, $special_pages, true ) ) {
 
 			// Remove Page ID from array.
 			$special_pages = array_diff( $special_pages, [ $page_id ] );
@@ -1018,7 +1011,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		}
 
 		// Bail if the current Page is not a Special Page.
-		if ( ! in_array( $post->ID, $special_pages ) ) {
+		if ( ! in_array( $post->ID, $special_pages, true ) ) {
 			return false;
 		}
 

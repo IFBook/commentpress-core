@@ -21,19 +21,14 @@
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
 
-		<!-- Remove some checks to allow phpcbf to run in bulk mode -->
+		<!-- Allow example code blocks. -->
+		<exclude name="Squiz.PHP.CommentedOutCode.Found" />
+		<exclude name="Squiz.Commenting.BlockComment.HasEmptyLineBefore" />
+
+		<!-- Codestyle rules yet to be implemented. -->
 		<exclude name="WordPress.Security.NonceVerification.Recommended" />
 		<exclude name="WordPress.PHP.StrictComparisons.LooseComparison" />
-		<exclude name="WordPress.PHP.StrictInArray.MissingTrueStrict" />
-		<exclude name="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase" />
 		<exclude name="WordPress.Security.EscapeOutput.OutputNotEscaped" />
-		<exclude name="Squiz.Commenting.InlineComment.NoSpaceBefore" />
-		<exclude name="Squiz.PHP.CommentedOutCode.Found" />
-		<exclude name="Squiz.Commenting.InlineComment.SpacingAfterAtFunctionEnd" />
-		<exclude name="Squiz.Commenting.BlockComment.HasEmptyLineBefore" />
-		<exclude name="PSR2.ControlStructures.SwitchDeclaration.BodyOnNextLineCASE" />
-		<exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect" />
-		<exclude name="WordPress.WP.I18n.MissingTranslatorsComment" />
 
 	</rule>
 

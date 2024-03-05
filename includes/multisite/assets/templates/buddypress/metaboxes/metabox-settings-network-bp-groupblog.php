@@ -45,7 +45,18 @@ defined( 'ABSPATH' ) || exit;
 						<option value="<?php echo esc_attr( $theme_slug ); ?>" <?php selected( $current_theme, $theme_slug ); ?>><?php echo esc_html( $theme_title ); ?></option>
 					<?php endforeach; ?>
 				</select>
-				<p class="description"><?php printf( __( 'For themes or child themes to be recognized as eligible, they must be tagged with both the %1$s and %2$s tags.', 'commentpress-core' ), '<code>commentpress</code>', '<code>groupblog</code>' ); ?></p>
+				<p class="description">
+					<?php
+
+					printf(
+						/* translators: 1: The first tag name, 2: The second tag name. */
+						__( 'For themes or child themes to be recognized as eligible, they must be tagged with both the %1$s and %2$s tags.', 'commentpress-core' ),
+						'<code>commentpress</code>',
+						'<code>groupblog</code>'
+					);
+
+					?>
+				</p>
 			</td>
 		</tr>
 	<?php endif; ?>

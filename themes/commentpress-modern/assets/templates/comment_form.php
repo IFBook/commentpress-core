@@ -71,6 +71,7 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 
 				commentpress_comment_form_title(
 					__( 'Leave a Comment', 'commentpress-core' ),
+					/* translators: %s: The name of the comment author. */
 					__( 'Leave a Reply to %s', 'commentpress-core' )
 				);
 
@@ -83,6 +84,7 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 					<?php
 
 					$must_log_in = sprintf(
+						/* translators: %s: The login link. */
 						__( 'You must be <a href="%s">logged in</a> to post a comment.', 'commentpress-core' ),
 						esc_url( wp_login_url( get_permalink() ) )
 					);

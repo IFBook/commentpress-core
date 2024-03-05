@@ -737,6 +737,7 @@ if ( ! function_exists( 'commentpress_echo_post_author' ) ) :
 			$link = sprintf(
 				'<a href="%s" title="%s" rel="author">%s</a>',
 				get_author_posts_url( $user->ID, $user->user_nicename ),
+				/* translators: %s: The name of the author. */
 				esc_attr( sprintf( __( 'Posts by %s', 'commentpress-core' ), $user->display_name ) ),
 				esc_html( $user->display_name )
 			);

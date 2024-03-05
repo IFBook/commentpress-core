@@ -51,6 +51,7 @@ get_header();
 								<?php
 
 								echo sprintf(
+									/* translators: 1: The post date, 2: The post time, 3: The list of categories. */
 									__( 'This image was posted on %1$s at %2$s and is filed under %3$s.', 'commentpress-core' ),
 									esc_html( get_the_date( get_option( 'date_format' ) ) ),
 									get_the_time(),
@@ -70,6 +71,7 @@ get_header();
 								$rss_link = '<a href="' . esc_url( get_post_comments_feed_link() ) . '">' . $rss_text . '</a>';
 
 								echo sprintf(
+									/* translators: %s: The RSS feed link. */
 									__( 'You can follow any comments on this image through the %s feed.', 'commentpress-core' ),
 									$rss_link
 								);
@@ -86,6 +88,7 @@ get_header();
 
 									// Write out.
 									echo sprintf(
+										/* translators: %s: The trackback link. */
 										__( 'You are welcome to leave a comment, or %s from your own site.', 'commentpress-core' ),
 										$trackback_link
 									);
@@ -105,6 +108,7 @@ get_header();
 
 									// Write out.
 									echo sprintf(
+										/* translators: %s: The trackback link. */
 										__( 'Comments are currently closed, but you can %s from your own site.', 'commentpress-core' ),
 										$trackback_link
 									);

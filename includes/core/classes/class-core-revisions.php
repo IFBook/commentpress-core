@@ -580,6 +580,7 @@ class CommentPress_Core_Revisions {
 
 		}
 
+		// phpcs:ignore Squiz.Commenting.InlineComment.SpacingAfterAtFunctionEnd
 		// TODO: If there is a Newer Post, link Older Post to it.
 
 	}

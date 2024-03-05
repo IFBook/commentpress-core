@@ -257,6 +257,7 @@ class CommentPress_Multisite_Site {
 		------------------------------------------------------------------------
 		*/
 
+		// phpcs:ignore Squiz.Commenting.InlineComment.SpacingAfterAtFunctionEnd
 		// Reset any options set in core_activate().
 
 	}
@@ -288,7 +289,8 @@ class CommentPress_Multisite_Site {
 		$site_ids = $this->multisite->sites->core_site_ids_get();
 
 		// Is this Site active?
-		if ( ! empty( $site_ids ) && in_array( $blog_id, $site_ids ) ) {
+		// TODO: Check variable types.
+		if ( ! empty( $site_ids ) && in_array( $blog_id, $site_ids, true ) ) {
 			return true;
 		}
 

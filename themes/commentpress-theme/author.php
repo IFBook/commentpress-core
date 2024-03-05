@@ -18,9 +18,9 @@ if ( ! empty( get_query_var( 'author_name' ) ) ) {
 }
 
 // Do we have an URL for this User?
-$my_author_URL = '';
+$my_author_url = '';
 if ( ! empty( $my_author->user_url ) && 'http://' !== $my_author->user_url && 'https://' !== $my_author->user_url ) {
-	$my_author_URL = $my_author->user_url;
+	$my_author_url = $my_author->user_url;
 }
 
 // Select Author name.
@@ -58,9 +58,9 @@ get_header();
 							<dd><?php echo nl2br( esc_html( $my_author->description ) ); ?></dd>
 						<?php endif; ?>
 
-						<?php if ( ! empty( $my_author_URL ) ) : ?>
+						<?php if ( ! empty( $my_author_url ) ) : ?>
 							<dt><?php esc_html_e( 'Website', 'commentpress-core' ); ?></dt>
-							<dd><a href="<?php echo $my_author_URL; ?>"><?php echo esc_html( $my_author_URL ); ?></a></dd>
+							<dd><a href="<?php echo $my_author_url; ?>"><?php echo esc_html( $my_author_url ); ?></a></dd>
 						<?php endif; ?>
 
 						<?php if ( ! empty( $my_author->user_email ) ) : ?>

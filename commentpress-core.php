@@ -477,9 +477,11 @@ class CommentPress_Plugin {
 		 */
 		do_action( 'commentpress/deactivated', $network_wide );
 
-		// Do we want to trigger deactivation_hook for all sub-blogs?
-		// Or do we want to convert each instance into a self-contained
-		// CommentPress Core Blog?
+		/*
+		 * Do we want to trigger deactivation_hook for all sub-blogs?
+		 * Or do we want to convert each instance into a self-contained
+		 * CommentPress Core Blog?
+		 */
 
 	}
 

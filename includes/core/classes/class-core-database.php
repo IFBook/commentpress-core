@@ -167,6 +167,7 @@ class CommentPress_Core_Database {
 		// Init settings.
 		$this->settings_initialise();
 
+		// phpcs:ignore Squiz.Commenting.InlineComment.SpacingAfterAtFunctionEnd
 		// Keep options when deactivating.
 
 	}

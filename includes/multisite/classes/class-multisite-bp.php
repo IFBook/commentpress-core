@@ -404,13 +404,17 @@ class CommentPress_Multisite_BuddyPress {
 			'action_id'                         => 'new_page',
 			'bp_activity_admin_filter'          => __( 'Published a new page', 'commentpress-core' ),
 			'bp_activity_front_filter'          => __( 'Pages', 'commentpress-core' ),
+			/* translators: 1: The author name, 2: The link to the page. */
 			'bp_activity_new_post'              => __( '%1$s posted a new <a href="%2$s">page</a>', 'commentpress-core' ),
+			/* translators: 1: The author name, 2: The link to the page, 3: The name of the site. */
 			'bp_activity_new_post_ms'           => __( '%1$s posted a new <a href="%2$s">page</a>, on the site %3$s', 'commentpress-core' ),
 			'contexts'                          => [ 'activity', 'member' ],
 			'comment_action_id'                 => 'new_blog_comment',
 			'bp_activity_comments_admin_filter' => __( 'Commented on a page', 'commentpress-core' ),
 			'bp_activity_comments_front_filter' => __( 'Comments', 'commentpress-core' ),
+			/* translators: 1: The author name, 2: The link to the page. */
 			'bp_activity_new_comment'           => __( '%1$s commented on the <a href="%2$s">page</a>', 'commentpress-core' ),
+			/* translators: 1: The author name, 2: The link to the page, 3: The name of the site. */
 			'bp_activity_new_comment_ms'        => __( '%1$s commented on the <a href="%2$s">page</a>, on the site %3$s', 'commentpress-core' ),
 			'position'                          => 100,
 		];
@@ -431,7 +435,7 @@ class CommentPress_Multisite_BuddyPress {
 	public function activity_record_comments_on_pages( $post_types ) {
 
 		// Bail if in the array already.
-		if ( in_array( 'page', $post_types ) ) {
+		if ( in_array( 'page', $post_types, true ) ) {
 			return $post_types;
 		}
 
