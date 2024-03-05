@@ -156,6 +156,8 @@ class CommentPress_AJAX_Loader {
 	/**
 	 * Checks whether AJAX functionality can be activated.
 	 *
+	 * @since 4.0
+	 *
 	 * @return bool $allowed True if AJAX functionality can activate, false otherwise.
 	 */
 	public function can_activate() {
