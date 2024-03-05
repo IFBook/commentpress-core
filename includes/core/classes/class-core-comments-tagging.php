@@ -1397,7 +1397,7 @@ class CommentPress_Core_Comments_Tagging {
 					foreach ( $all_comments as $comment ) {
 
 						// Maybe show the Comment.
-						if ( get_the_ID() == $comment->comment_post_ID ) {
+						if ( (int) get_the_ID() === (int) $comment->comment_post_ID ) {
 							$html .= commentpress_format_comment( $comment );
 						}
 

@@ -12,106 +12,6 @@ defined( 'ABSPATH' ) || exit;
 
 
 
-if ( ! function_exists( 'commentpress_get_children' ) ) :
-
-	/**
-	 * Retrieve Comment children.
-	 *
-	 * @since 3.3
-	 *
-	 * @param object $comment The WordPress Comment object.
-	 * @param string $page_or_post The WordPress Post Type to query.
-	 * @return array $result The array of child Comments.
-	 */
-	function commentpress_get_children( $comment, $page_or_post ) {
-
-		// Declare access to globals.
-		global $wpdb;
-
-		// Does the Comment have children?
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-		return $wpdb->get_results(
-			$wpdb->prepare(
-				"
-				SELECT {$wpdb->comments}.*, {$wpdb->posts}.post_title, {$wpdb->posts}.post_name
-				FROM {$wpdb->comments}, {$wpdb->posts}
-				WHERE {$wpdb->comments}.comment_post_ID = {$wpdb->posts}.ID
-				AND {$wpdb->posts}.post_type = %s
-				AND {$wpdb->comments}.comment_approved = '1'
-				AND {$wpdb->comments}.comment_parent = %d
-				ORDER BY {$wpdb->comments}.comment_date ASC
-				",
-				$page_or_post,
-				$comment->comment_ID
-			)
-		);
-
-	}
-
-endif;
-
-
-
-if ( ! function_exists( 'commentpress_get_comments' ) ) :
-
-	/**
-	 * Generate Comments recursively.
-	 *
-	 * This function builds the list into a global called $cp_comment_output for
-	 * retrieval elsewhere.
-	 *
-	 * @since 3.0
-	 *
-	 * @param array  $comments An array of WordPress Comment objects.
-	 * @param string $page_or_post The WordPress Post Type to query.
-	 */
-	function commentpress_get_comments( $comments, $page_or_post ) {
-
-		// Declare access to globals.
-		global $cp_comment_output;
-
-		// Do we have any Comments?
-		if ( count( $comments ) > 0 ) {
-
-			// Open ul.
-			$cp_comment_output .= '<ul class="item_ul">' . "\n\n";
-
-			// Produce a checkbox for each.
-			foreach ( $comments as $comment ) {
-
-				// Open li.
-				$cp_comment_output .= '<li class="item_li">' . "\n\n";
-
-				// Format this Comment.
-				$cp_comment_output .= commentpress_format_comment( $comment );
-
-				// Get Comment children.
-				$children = commentpress_get_children( $comment, $page_or_post );
-
-				// Do we have any?
-				if ( count( $children ) > 0 ) {
-
-					// Recurse.
-					commentpress_get_comments( $children, $page_or_post );
-
-				}
-
-				// Close li.
-				$cp_comment_output .= '</li>' . "\n\n";
-
-			}
-
-			// Close ul.
-			$cp_comment_output .= '</ul>' . "\n\n";
-
-		}
-
-	}
-
-endif;
-
-
-
 if ( ! function_exists( 'commentpress_get_user_link' ) ) :
 
 	/**
@@ -184,14 +84,6 @@ if ( ! function_exists( 'commentpress_format_comment' ) ) :
 	 * @return str The formatted Comment HTML.
 	 */
 	function commentpress_format_comment( $comment, $context = 'all' ) {
-
-		// Declare access to globals.
-		global $cp_comment_output;
-
-		/*
-		// TODO: Enable WordPress API on comment?
-		$GLOBALS['comment'] = $comment;
-		*/
 
 		// Construct link.
 		$comment_link = get_comment_link( $comment->comment_ID );

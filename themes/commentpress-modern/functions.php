@@ -544,9 +544,6 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 	 */
 	function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 
-		// Declare access to globals.
-		global $cp_comment_output;
-
 		// Init output.
 		$html = '';
 
@@ -642,34 +639,11 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 
 			} else {
 
+				// Add the formatted Comments to the output.
 				foreach ( $all_comments as $comment ) {
-
-					if ( $comment->comment_post_ID == $post->ID ) {
-
-						// Show the Comment.
+					if ( (int) $comment->comment_post_ID === (int) $post->ID ) {
 						$html .= commentpress_format_comment( $comment );
-
-						/*
-						// Get Comment children.
-						$children = commentpress_get_children( $comment, $page_or_post );
-
-						// Do we have any?
-						if( count( $children ) > 0 ) {
-
-							// Recurse.
-							commentpress_get_comments( $children, $page_or_post );
-
-							// Show them.
-							$html .= $cp_comment_output;
-
-							// Clear global Comment output.
-							$cp_comment_output = '';
-
-						}
-						*/
-
 					}
-
 				}
 
 			}
