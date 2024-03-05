@@ -32,14 +32,6 @@
  * @since 3.0
  */
 
-// Define global IE var.
-var msie_detected = false;
-
-// Browser detection via conditional comments in <head>.
-if ( 'undefined' !== typeof cp_msie ) {
-	msie_detected = true;
-}
-
 // Test for our localisation object.
 if ( 'undefined' !== typeof CommentpressSettings ) {
 
