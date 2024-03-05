@@ -74,6 +74,9 @@ class CommentPress_Core_Plugins {
 		// Removes any "Theme My Login" Pages.
 		add_filter( 'commentpress/core/nav/page_list', [ $this, 'filter_theme_my_login_page' ] );
 
+		// Remove "Subscribe to Comments Reloaded" Page.
+		add_filter( 'commentpress/core/nav/page_list', [ $this, 'filter_subscribe_to_comments_reloaded_page' ] );
+
 		// Show the "Subscribe to Comments Reloaded" Subscription Checkbox.
 		add_action( 'commentpress_comment_form_pre_submit', [ $this, 'subscribe_to_comments_reloaded_show' ] );
 
@@ -92,12 +95,12 @@ class CommentPress_Core_Plugins {
 	public function is_commentable( $is_commentable ) {
 
 		// Theme My Login Page is not.
-		if ( $this->core->plugins->is_theme_my_login_page() ) {
+		if ( $this->is_theme_my_login_page() ) {
 			return false;
 		}
 
 		// Subscribe to Comments Reloaded Page is not.
-		if ( $this->core->plugins->is_subscribe_to_comments_reloaded_page() ) {
+		if ( $this->is_subscribe_to_comments_reloaded_page() ) {
 			return false;
 		}
 
@@ -190,12 +193,50 @@ class CommentPress_Core_Plugins {
 		}
 
 		// It is if it's the unique "Subscribe to Comments Reloaded" Post.
-		if ( '-999' == $post->ID ) {
+		if ( -999 === (int) $post->ID ) {
 			return true;
 		}
 
 		// --<
 		return false;
+
+	}
+
+	/**
+	 * Removes any "Subscribe to Comments Reloaded" Pages from the Navigation Page List.
+	 *
+	 * @since 4.0
+	 *
+	 * @param array $pages The existing array of Page objects.
+	 * @return array $clean The modified array of Page objects.
+	 */
+	public function filter_subscribe_to_comments_reloaded_page( $pages ) {
+
+		// Bail if there are none.
+		if ( empty( $pages ) ) {
+			return $pages;
+		}
+
+		// Access plugin.
+		global $wp_subscribe_reloaded;
+
+		// Bail if not present.
+		if ( ! isset( $wp_subscribe_reloaded ) ) {
+			return $pages;
+		}
+
+		// Init return.
+		$clean = [];
+
+		// Rebuild array without the unique "Subscribe to Comments Reloaded" Post.
+		foreach ( $pages as $page ) {
+			if ( -999 !== (int) $page->ID ) {
+				$clean[] = $page;
+			}
+		}
+
+		// --<
+		return $clean;
 
 	}
 
@@ -216,6 +257,7 @@ class CommentPress_Core_Plugins {
 
 		// Show the Subscription markup.
 		echo '<div class="stcr-wrapper">' .
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			$wp_subscribe_reloaded->stcr->subscribe_reloaded_show() .
 		'</div>';
 
