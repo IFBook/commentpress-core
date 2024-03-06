@@ -905,7 +905,13 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 				} else {
 
 					// Show heading.
-					echo '<h3 id="para_heading-' . $text_sig . '"' . $no_comments_class . '><a class="comment_block_permalink" title="' . $markup['permalink_text'] . '" href="#para_heading-' . $text_sig . '">' . $markup['heading_text'] . '</a></h3>' . "\n\n";
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo '<h3 id="para_heading-' . esc_attr( $text_sig ) . '"' . $no_comments_class . '>' .
+						'<a class="comment_block_permalink" title="' . esc_attr( $markup['permalink_text'] ) . '" href="#para_heading-' . esc_attr( $text_sig ) . '">' .
+							// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							$markup['heading_text'] .
+						'</a>' .
+					'</h3>' . "\n\n";
 
 					// Override if there are no Comments (for print stylesheet to hide them).
 					if ( 0 === $comment_count ) {
@@ -913,16 +919,17 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 					}
 
 					// Open Paragraph wrapper.
-					echo '<div id="para_wrapper-' . $text_sig . '" class="paragraph_wrapper' . $no_comments_class . '">' . "\n\n";
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo '<div id="para_wrapper-' . esc_attr( $text_sig ) . '" class="paragraph_wrapper' . $no_comments_class . '">' . "\n\n";
 
 					// Have we already used this Text Signature?
 					if ( in_array( $text_sig, $used_text_sigs, true ) ) {
 
 						// Show some kind of message.
 						// Should not be necessary now that we ensure unique Text Signatures.
-						echo '<div class="reply_to_para" id="reply_to_para-' . $para_num . '">' . "\n" .
+						echo '<div class="reply_to_para" id="reply_to_para-' . esc_attr( $para_num ) . '">' . "\n" .
 							'<p>' .
-								__( 'It appears that this paragraph is a duplicate of a previous one.', 'commentpress-core' ) .
+								esc_html__( 'It appears that this paragraph is a duplicate of a previous one.', 'commentpress-core' ) .
 							'</p>' . "\n" .
 						'</div>' . "\n\n";
 
@@ -986,9 +993,9 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 								$prompt = apply_filters( 'commentpress_reply_to_prompt_text', $prompt, $registration );
 
 								// Leave Comment link.
-								echo '<div class="reply_to_para" id="reply_to_para-' . $para_num . '">' . "\n" .
-									'<p><a class="reply_to_para" rel="nofollow" href="' . $redirect . '">' .
-										$prompt .
+								echo '<div class="reply_to_para" id="reply_to_para-' . esc_attr( $para_num ) . '">' . "\n" .
+									'<p><a class="reply_to_para" rel="nofollow" href="' . esc_url( $redirect ) . '">' .
+										esc_html( $prompt ) .
 									'</a></p>' . "\n" .
 								'</div>' . "\n\n";
 
@@ -1045,9 +1052,10 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 								$link_content = apply_filters( 'commentpress_reply_to_para_link_text', $link_content, $markup['entity_text'] );
 
 								// Leave Comment link.
-								echo '<div class="reply_to_para" id="reply_to_para-' . $para_num . '">' . "\n" .
-									'<p><a class="reply_to_para" href="' . $href . '"' . $onclick . '>' .
-										$link_content .
+								echo '<div class="reply_to_para" id="reply_to_para-' . esc_attr( $para_num ) . '">' . "\n" .
+									// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+									'<p><a class="reply_to_para" href="' . esc_url( $href ) . '"' . $onclick . '>' .
+										esc_html( $link_content ) .
 									'</a></p>' . "\n" .
 								'</div>' . "\n\n";
 
@@ -1130,7 +1138,7 @@ if ( ! function_exists( 'commentpress_comment_form_title' ) ) :
 		if ( 0 === $reply_to_comment_id && 0 === $reply_to_para_id ) {
 
 			// Write default title to Page.
-			echo $no_reply_text;
+			echo esc_html( $no_reply_text );
 			return;
 
 		}
@@ -1143,10 +1151,11 @@ if ( ! function_exists( 'commentpress_comment_form_title' ) ) :
 
 			// Get link to Comment.
 			$author = ( $link_to_parent ) ?
-				'<a href="#comment-' . $comment->comment_ID . '">' . get_comment_author( $comment->comment_ID ) . '</a>' :
-				get_comment_author( $comment->comment_ID );
+				'<a href="#comment-' . esc_attr( $comment->comment_ID ) . '">' . esc_html( get_comment_author( $comment->comment_ID ) ) . '</a>' :
+				esc_html( get_comment_author( $comment->comment_ID ) );
 
 			// Write to Page.
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			printf( $reply_to_comment_text, $author );
 			return;
 
@@ -1173,7 +1182,7 @@ if ( ! function_exists( 'commentpress_comment_form_title' ) ) :
 			);
 
 			// Construct Paragraph.
-			$paragraph = '<a href="#para_heading-' . $text_sig . '">' . $para_text . '</a>';
+			$paragraph = '<a href="#para_heading-' . esc_attr( $text_sig ) . '">' . $para_text . '</a>';
 
 		} else {
 
@@ -1188,6 +1197,7 @@ if ( ! function_exists( 'commentpress_comment_form_title' ) ) :
 		}
 
 		// Write to Page.
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		printf( $reply_to_para_text, $paragraph );
 
 	}
@@ -1312,6 +1322,7 @@ if ( ! function_exists( 'commentpress_comments' ) ) :
 	function commentpress_comments( $comment, $args, $depth ) {
 
 		// Build Comment as html.
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo commentpress_get_comment_markup( $comment, $args, $depth );
 
 	}

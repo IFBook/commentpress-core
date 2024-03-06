@@ -152,7 +152,7 @@ if ( ! function_exists( 'commentpress_site_title' ) ) :
 				if ( $echo ) {
 
 					// Add Site name.
-					echo ' ' . trim( $sep ) . ' ' . $current_site->site_name;
+					echo esc_html( ' ' . trim( $sep ) . ' ' . $current_site->site_name );
 
 				} else {
 

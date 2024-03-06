@@ -1685,7 +1685,7 @@ class CommentPress_Core_Navigator {
 			 * Since it is not possible to illustrate this in plain ASCII, this
 			 * function will refuse to convert numbers above 4999.
 			 */
-			wp_die( __( 'Cannot represent numbers larger than 4999 in plain ASCII.', 'commentpress-core' ) );
+			wp_die( esc_html__( 'Cannot represent numbers larger than 4999 in plain ASCII.', 'commentpress-core' ) );
 
 		} elseif ( 0 === $arabic ) {
 

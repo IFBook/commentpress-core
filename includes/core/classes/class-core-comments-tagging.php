@@ -568,7 +568,7 @@ class CommentPress_Core_Comments_Tagging {
 		}
 
 		$term = get_term( $term_id, $taxonomy );
-		echo $term->count;
+		echo esc_html( $term->count );
 
 	}
 
@@ -1045,7 +1045,7 @@ class CommentPress_Core_Comments_Tagging {
 				$term_href = get_term_link( $term, $this->tax_name );
 
 				// Construct link.
-				$term_link = '<a class="comment_tagger_tag_link" href="' . $term_href . '">' . esc_html( $term->name ) . '</a>';
+				$term_link = '<a class="comment_tagger_tag_link" href="' . esc_url( $term_href ) . '">' . esc_html( $term->name ) . '</a>';
 
 				// Wrap and add to list.
 				$tag_list[] = '<span class="comment_tagger_tag">' . $term_link . '</span>';
@@ -1054,7 +1054,7 @@ class CommentPress_Core_Comments_Tagging {
 
 			// Wrap in identifying div.
 			$tags = '<div class="comment_tagger_tags">' .
-				'<p>' . __( 'Tagged: ', 'commentpress-core' ) . implode( ' ', $tag_list ) . '</p>' .
+				'<p>' . esc_html__( 'Tagged: ', 'commentpress-core' ) . implode( ' ', $tag_list ) . '</p>' .
 			'</div>' . "\n\n";
 
 		} else {
@@ -1080,6 +1080,7 @@ class CommentPress_Core_Comments_Tagging {
 	public function front_end_markup() {
 
 		// Get content and echo.
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $this->front_end_markup_get();
 
 	}
@@ -1110,7 +1111,7 @@ class CommentPress_Core_Comments_Tagging {
 		// Construct default options for Select2.
 		$most_used_tags_array = [];
 		foreach ( $tags as $tag ) {
-			$most_used_tags_array[] = '<option value="' . $this->tax_prefix . '-' . $tag->term_id . '">' .
+			$most_used_tags_array[] = '<option value="' . esc_attr( $this->tax_prefix . '-' . $tag->term_id ) . '">' .
 				esc_html( $tag->name ) .
 			'</option>';
 		}
@@ -1118,11 +1119,11 @@ class CommentPress_Core_Comments_Tagging {
 
 		// Use Select2 in "tag" mode.
 		$html = '<div class="comment_tagger_select2_container">
-			<h5 class="comment_tagger_select2_heading">' . __( 'Tag this comment', 'commentpress-core' ) . '</h5>
+			<h5 class="comment_tagger_select2_heading">' . esc_html__( 'Tag this comment', 'commentpress-core' ) . '</h5>
 			<p class="comment_tagger_select2_description">' .
-				__( 'Select from existing tags or add your own.', 'commentpress-core' ) .
+				esc_html__( 'Select from existing tags or add your own.', 'commentpress-core' ) .
 				'<br />' .
-				__( 'Separate new tags with a comma.', 'commentpress-core' ) .
+				esc_html__( 'Separate new tags with a comma.', 'commentpress-core' ) .
 			'</p>
 			<select class="comment_tagger_select2" name="comment_tagger_tags[]" id="comment_tagger_tags" multiple="multiple" style="width: 100%;">
 				' . $most_used_tags . '
@@ -1551,7 +1552,7 @@ class CommentPress_Core_Comments_Tagging {
 		$parsed_args = wp_parse_args( $args, $defaults );
 
 		// Get Taxonomy data.
-		$tax_name              = esc_attr( $parsed_args['taxonomy'] );
+		$tax_name              = $parsed_args['taxonomy'];
 		$taxonomy              = get_taxonomy( $parsed_args['taxonomy'] );
 		$user_can_assign_terms = current_user_can( $taxonomy->cap->assign_terms );
 		$comma                 = _x( ',', 'tag delimiter', 'commentpress-core' );
@@ -1561,28 +1562,28 @@ class CommentPress_Core_Comments_Tagging {
 		}
 
 		?>
-		<div class="tagsdiv" id="<?php echo $tax_name; ?>">
+		<div class="tagsdiv" id="<?php echo esc_attr( $tax_name ); ?>">
 			<div class="jaxtag">
 			<div class="nojs-tags hide-if-js">
-				<label for="tax-input-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_or_remove_items; ?></label>
-				<p><textarea name="<?php echo "tax_input[$tax_name]"; ?>" rows="3" cols="20" class="the-tags" id="tax-input-<?php echo $tax_name; ?>" <?php disabled( ! $user_can_assign_terms ); ?> aria-describedby="new-tag-<?php echo $tax_name; ?>-desc"><?php echo str_replace( ',', $comma . ' ', get_terms_to_edit( $comment->comment_ID, $tax_name ) ); /* textarea_escaped by esc_attr() */ ?></textarea></p>
+				<label for="tax-input-<?php echo esc_attr( $tax_name ); ?>"><?php echo esc_attr( $taxonomy->labels->add_or_remove_items ); ?></label>
+				<p><textarea name="<?php echo esc_attr( "tax_input[$tax_name]" ); ?>" rows="3" cols="20" class="the-tags" id="tax-input-<?php echo esc_attr( $tax_name ); ?>" <?php disabled( ! $user_can_assign_terms ); ?> aria-describedby="new-tag-<?php echo esc_attr( $tax_name ); ?>-desc"><?php echo str_replace( ',', $comma . ' ', get_terms_to_edit( $comment->comment_ID, $tax_name ) ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ /* textarea_escaped by esc_attr() */ ?></textarea></p>
 			</div>
 			<?php if ( $user_can_assign_terms ) : ?>
 				<div class="ajaxtag hide-if-no-js">
-					<label class="screen-reader-text" for="new-tag-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_new_item; ?></label>
-					<input data-wp-taxonomy="<?php echo $tax_name; ?>" type="text" id="new-tag-<?php echo $tax_name; ?>" name="newtag[<?php echo $tax_name; ?>]" class="newtag form-input-tip" size="16" autocomplete="off" aria-describedby="new-tag-<?php echo $tax_name; ?>-desc" value="" />
+					<label class="screen-reader-text" for="new-tag-<?php echo esc_attr( $tax_name ); ?>"><?php echo esc_attr( $taxonomy->labels->add_new_item ); ?></label>
+					<input data-wp-taxonomy="<?php echo esc_attr( $tax_name ); ?>" type="text" id="new-tag-<?php echo esc_attr( $tax_name ); ?>" name="newtag[<?php echo esc_attr( $tax_name ); ?>]" class="newtag form-input-tip" size="16" autocomplete="off" aria-describedby="new-tag-<?php echo esc_attr( $tax_name ); ?>-desc" value="" />
 					<input type="button" class="button tagadd" value="<?php esc_attr_e( 'Add', 'commentpress-core' ); ?>" />
 				</div>
-				<p class="howto" id="new-tag-<?php echo $tax_name; ?>-desc"><?php echo $taxonomy->labels->separate_items_with_commas; ?></p>
+				<p class="howto" id="new-tag-<?php echo esc_attr( $tax_name ); ?>-desc"><?php echo esc_html( $taxonomy->labels->separate_items_with_commas ); ?></p>
 			<?php elseif ( empty( $terms_to_edit ) ) : ?>
-				<p><?php echo $taxonomy->labels->no_terms; ?></p>
+				<p><?php echo esc_html( $taxonomy->labels->no_terms ); ?></p>
 			<?php endif; ?>
 			</div>
 			<ul class="tagchecklist" role="list"></ul>
 		</div>
 
 		<?php if ( $user_can_assign_terms ) : ?>
-			<p class="hide-if-no-js"><button type="button" class="button-link tagcloud-link" id="link-<?php echo $tax_name; ?>" aria-expanded="false"><?php echo $taxonomy->labels->choose_from_most_used; ?></button></p>
+			<p class="hide-if-no-js"><button type="button" class="button-link tagcloud-link" id="link-<?php echo esc_attr( $tax_name ); ?>" aria-expanded="false"><?php echo esc_html( $taxonomy->labels->choose_from_most_used ); ?></button></p>
 		<?php endif; ?>
 
 		<?php

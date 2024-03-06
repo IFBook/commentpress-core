@@ -407,7 +407,7 @@ class CommentPress_Core_Comments {
 			// TODO: Check for AJAX request.
 
 			// Yes - let the commenter know without throwing an AJAX error.
-			wp_die( __( 'This comment has been marked as spam. Please contact a site administrator.', 'commentpress-core' ) );
+			wp_die( esc_html__( 'This comment has been marked as spam. Please contact a site administrator.', 'commentpress-core' ) );
 
 		}
 

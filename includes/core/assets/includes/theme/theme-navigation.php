@@ -193,6 +193,7 @@ if ( ! function_exists( 'commentpress_page_navigation_list' ) ) :
 		}
 
 		// Write to screen.
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '<ul>' . $list_items . '</ul>';
 
 	}
@@ -235,7 +236,7 @@ if ( ! function_exists( 'commentpress_page_navigation_get_next_link' ) ) :
 		}
 
 		// Set an image if asking for Pages with Comments.
-		$img = $with_comments ? '<img src="' . get_template_directory_uri() . '/assets/images/next.png" />' : '';
+		$img = $with_comments ? '<img src="' . esc_url( get_template_directory_uri() . '/assets/images/next.png' ) . '" />' : '';
 
 		/**
 		 * Filters the "Next Page" Navigation link CSS ID.
@@ -247,7 +248,7 @@ if ( ! function_exists( 'commentpress_page_navigation_get_next_link' ) ) :
 		$css_id = apply_filters( 'commentpress/navigation/page/link/next/css_id', 'next_page' );
 
 		// Build ID attribute.
-		$id = ! empty( $css_id ) ? ' id="' . $css_id . '"' : '';
+		$id = ! empty( $css_id ) ? ' id="' . esc_attr( $css_id ) . '"' : '';
 
 		/**
 		 * Filters the "Next Page" Navigation link CSS classes.
@@ -259,11 +260,11 @@ if ( ! function_exists( 'commentpress_page_navigation_get_next_link' ) ) :
 		$css_classes = apply_filters( 'commentpress/navigation/page/link/next/css_classes', [ 'css_btn' ] );
 
 		// Build class attribute.
-		$class = ! empty( $css_classes ) ? ' class="' . implode( ' ', $css_classes ) . '"' : '';
+		$class = ! empty( $css_classes ) ? ' class="' . implode( ' ', array_map( 'esc_attr', $css_classes ) ) . '"' : '';
 
 		// Construct link.
 		$link = $img .
-			'<a href="' . get_permalink( $next_page->ID ) . '"' . $id . $class . ' title="' . esc_attr( $title ) . '">' .
+			'<a href="' . esc_url( get_permalink( $next_page->ID ) ) . '"' . $id . $class . ' title="' . esc_attr( $title ) . '">' .
 				esc_html( $title ) .
 			'</a>';
 
@@ -604,7 +605,7 @@ if ( ! function_exists( 'commentpress_page_number' ) ) :
 			// Build Page number string.
 			$page_number = sprintf(
 				/* translators: %s: The span element containing the Page number. */
-				__( 'Page %s', 'commentpress-core' ),
+				esc_html__( 'Page %s', 'commentpress-core' ),
 				$element
 			);
 
@@ -615,8 +616,9 @@ if ( ! function_exists( 'commentpress_page_number' ) ) :
 
 		}
 
-		// Wrap in identifying class.
+		// Wrap markup in identifying class.
 		echo '<span class="' . esc_attr( ! is_numeric( $number ) ? 'roman' : 'arabic' ) . '">' .
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			$page_number .
 		'</span>';
 

@@ -201,7 +201,7 @@ class CommentPress_Core_Settings_Site {
 		echo '<div id="message" class="error"><p>' .
 			sprintf(
 				/* translators: 1: The opening anchor tag, 2: The closing anchor tag. */
-				__( 'CommentPress Core has been updated. Please visit the %1$sSettings Page%2$s.', 'commentpress-core' ),
+				esc_html__( 'CommentPress Core has been updated. Please visit the %1$sSettings Page%2$s.', 'commentpress-core' ),
 				'<a href="options-general.php?page=commentpress_admin">',
 				'</a>'
 			) .

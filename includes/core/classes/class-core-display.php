@@ -159,7 +159,7 @@ HELPTEXT;
 
 				// Write list item.
 				echo '<li class="title">' .
-					'<a href="' . get_permalink( $item->ID ) . '">' . get_the_title( $item->ID ) . ' (' . $count . ')</a>' .
+					'<a href="' . esc_url( get_permalink( $item->ID ) ) . '">' . esc_html( get_the_title( $item->ID ) . ' (' . $count . ')' ) . '</a>' .
 				'</li>' . "\n";
 
 			}
@@ -218,12 +218,13 @@ HELPTEXT;
 			$count = count( get_approved_comments( $item->ID ) );
 
 			// Write list item.
-			echo '<li class="title' . $current_post . '">
-				<div class="post-identifier">
-					' . $html . '
-				</div>
-				<a href="' . get_permalink( $item->ID ) . '" class="post_activity_link">' .
-					get_the_title( $item->ID ) . ' (' . $count . ')' .
+			echo '<li class="title' . esc_attr( $current_post ) . '">
+				<div class="post-identifier">' .
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					$html .
+				'</div>
+				<a href="' . esc_url( get_permalink( $item->ID ) ) . '" class="post_activity_link">' .
+					esc_html( get_the_title( $item->ID ) . ' (' . $count . ')' ) .
 				'</a>
 			</li>' . "\n";
 
@@ -350,6 +351,7 @@ HELPTEXT;
 
 		// If we're echoing.
 		if ( $echo ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $author;
 		} else {
 			return $author;
@@ -415,8 +417,8 @@ HELPTEXT;
 			}
 
 			// Echo list item.
-			echo '<li class="page_item page-item-' . $welcome_id . $is_active . '">' .
-				'<a href="' . get_permalink( $welcome_id ) . '">' . $title_page_title . '</a>' .
+			echo '<li class="page_item page-item-' . esc_attr( $welcome_id ) . esc_attr( $is_active ) . '">' .
+				'<a href="' . esc_url( get_permalink( $welcome_id ) ) . '">' . esc_html( $title_page_title ) . '</a>' .
 			'</li>';
 
 		}
