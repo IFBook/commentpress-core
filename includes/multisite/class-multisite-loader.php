@@ -25,7 +25,7 @@ class CommentPress_Multisite_Loader {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var CommentPress_Plugin
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CommentPress_Multisite_Loader {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $db The database object.
+	 * @var CommentPress_Core_Database
 	 */
 	public $db;
 
@@ -44,7 +44,7 @@ class CommentPress_Multisite_Loader {
 	 * @since 3.3
 	 * @since 4.0 Renamed.
 	 * @access public
-	 * @var object $sites The Sites object reference.
+	 * @var CommentPress_Multisite_Sites
 	 */
 	public $sites;
 
@@ -53,7 +53,7 @@ class CommentPress_Multisite_Loader {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $site The Single Site object reference.
+	 * @var CommentPress_Multisite_Site
 	 */
 	public $site;
 
@@ -62,7 +62,7 @@ class CommentPress_Multisite_Loader {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $settings_network The Network Settings object.
+	 * @var CommentPress_Multisite_Settings_Network
 	 */
 	public $settings_network;
 
@@ -71,7 +71,7 @@ class CommentPress_Multisite_Loader {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $settings_site The Site Settings object.
+	 * @var CommentPress_Core_Settings_Site
 	 */
 	public $settings_site;
 
@@ -80,7 +80,7 @@ class CommentPress_Multisite_Loader {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $revisions The revisions object reference.
+	 * @var CommentPress_Multisite_Revisions
 	 */
 	public $revisions;
 
@@ -89,16 +89,16 @@ class CommentPress_Multisite_Loader {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $bp The BuddyPress object reference.
+	 * @var CommentPress_Multisite_BuddyPress
 	 */
 	public $bp;
 
 	/**
-	 * Classes directory path.
+	 * Relative path to the classes directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $classes_path Relative path to the classes directory.
+	 * @var string
 	 */
 	private $classes_path = 'includes/multisite/classes/';
 

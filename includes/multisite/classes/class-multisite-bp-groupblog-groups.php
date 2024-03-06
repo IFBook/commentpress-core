@@ -25,7 +25,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $multisite The multisite loader object.
+	 * @var CommentPress_Multisite_Loader
 	 */
 	public $multisite;
 
@@ -34,7 +34,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $bp The BuddyPress object reference.
+	 * @var CommentPress_Multisite_BuddyPress
 	 */
 	public $bp;
 
@@ -43,7 +43,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $groupblog The BuddyPress Groupblog object reference.
+	 * @var CommentPress_Multisite_BuddyPress_Groupblog
 	 */
 	public $groupblog;
 

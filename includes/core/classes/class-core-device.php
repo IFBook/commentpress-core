@@ -24,7 +24,7 @@ class CommentPress_Core_Device {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -33,7 +33,7 @@ class CommentPress_Core_Device {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $is_mobile The mobile Device flag.
+	 * @var bool
 	 */
 	public $is_mobile;
 
@@ -42,7 +42,7 @@ class CommentPress_Core_Device {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $is_tablet The tablet Device flag.
+	 * @var bool
 	 */
 	public $is_tablet;
 
@@ -51,7 +51,7 @@ class CommentPress_Core_Device {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $is_mobile_touch The touchscreen Device flag.
+	 * @var bool
 	 */
 	public $is_mobile_touch;
 

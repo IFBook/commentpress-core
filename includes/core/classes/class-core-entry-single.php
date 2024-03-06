@@ -29,7 +29,7 @@ class CommentPress_Core_Entry_Single {
 	 * @since 3.3
 	 * @since 4.0 Renamed.
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -38,7 +38,7 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $entry The Entry object.
+	 * @var CommentPress_Core_Entry
 	 */
 	public $entry;
 
@@ -47,27 +47,27 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $post_types The array of supported Post Types.
+	 * @var array
 	 */
 	public $post_types = [
 		'page',
 	];
 
 	/**
-	 * Metabox template directory path.
+	 * Relative path to the Metabox directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Metabox directory.
+	 * @var string
 	 */
 	private $metabox_path = 'includes/core/assets/templates/wordpress/metaboxes/';
 
 	/**
-	 * Parts template directory path.
+	 * Relative path to the Parts directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $parts_path Relative path to the Parts directory.
+	 * @var string
 	 */
 	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
 
@@ -80,7 +80,7 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $key_show_title The Page Title visibility key.
+	 * @var string
 	 */
 	private $key_show_title = 'cp_title_visibility';
 
@@ -93,7 +93,7 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $key_show_meta The Page Meta visibility key.
+	 * @var string
 	 */
 	private $key_show_meta = 'cp_page_meta_visibility';
 
@@ -106,16 +106,18 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $key_para_num The Paragraph Number key.
+	 * @var string
 	 */
 	private $key_para_num = 'cp_starting_para_number';
 
 	/**
 	 * Prevent "save_post" callback from running more than once.
 	 *
+	 * True if Post already saved.
+	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $saved_post True if Post already saved.
+	 * @var bool
 	 */
 	public $saved_post = false;
 

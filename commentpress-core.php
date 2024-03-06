@@ -56,34 +56,34 @@ class CommentPress_Plugin {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $plugin_context The plugin context flag.
+	 * @var string
 	 */
 	public $plugin_context;
 
 	/**
-	 * Common directory path.
+	 * Relative path to the common directory.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $common_path Relative path to the common directory.
+	 * @var string
 	 */
 	public $common_path = 'includes/common/';
 
 	/**
-	 * Core directory path.
+	 * Relative path to the core directory.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $core_path Relative path to the core directory.
+	 * @var string
 	 */
 	public $core_path = 'includes/core/';
 
 	/**
-	 * Multisite directory path.
+	 * Relative path to the multisite directory.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $multisite_path Relative path to the multisite directory.
+	 * @var string
 	 */
 	public $multisite_path = 'includes/multisite/';
 

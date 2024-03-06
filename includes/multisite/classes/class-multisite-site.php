@@ -24,7 +24,7 @@ class CommentPress_Multisite_Site {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $multisite The multisite loader object.
+	 * @var CommentPress_Multisite_Loader
 	 */
 	public $multisite;
 
@@ -33,7 +33,7 @@ class CommentPress_Multisite_Site {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $key_enable The settings key for the "Enable CommentPress" setting.
+	 * @var string
 	 */
 	public $key_enable = 'cpmu_activate_commentpress';
 
@@ -42,16 +42,16 @@ class CommentPress_Multisite_Site {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $key_enable The settings key for the "Disable CommentPress" setting.
+	 * @var string
 	 */
 	public $key_disable = 'cpmu_deactivate_commentpress';
 
 	/**
-	 * Parts template directory path.
+	 * Relative path to the Parts directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $parts_path Relative path to the Parts directory.
+	 * @var string
 	 */
 	private $parts_path = 'includes/multisite/assets/templates/wordpress/parts/';
 

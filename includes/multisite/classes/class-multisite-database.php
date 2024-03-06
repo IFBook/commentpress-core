@@ -24,7 +24,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $multisite The multisite loader object.
+	 * @var CommentPress_Multisite_Loader
 	 */
 	public $multisite;
 
@@ -33,16 +33,16 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $plugin_version The plugin version.
+	 * @var string
 	 */
 	public $plugin_version;
 
 	/**
-	 * Upgrade flag.
+	 * Upgrade flag. False by default.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var bool $is_upgrade The upgrade flag. False by default.
+	 * @var bool
 	 */
 	public $is_upgrade = false;
 
@@ -51,7 +51,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $option_version The name of the multisite version site option.
+	 * @var string
 	 */
 	public $option_version = 'cpmu_version';
 
@@ -60,7 +60,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $option_settings The name of the multisite settings site option.
+	 * @var string
 	 */
 	public $option_settings = 'cpmu_options';
 
@@ -69,7 +69,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $settings The multisite settings array.
+	 * @var array
 	 */
 	public $settings = [];
 

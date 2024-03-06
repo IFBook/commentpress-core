@@ -30,16 +30,16 @@ class CommentPress_Core_Parser {
 	 * @since 3.0
 	 * @since 4.0 Renamed.
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
 	/**
-	 * Parts template directory path.
+	 * Relative path to the Parts directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $parts_path Relative path to the Parts directory.
+	 * @var string
 	 */
 	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
 
@@ -52,7 +52,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_post_types_disabled The settings key for this setting.
+	 * @var string
 	 */
 	private $key_post_types_disabled = 'cp_post_types_disabled';
 
@@ -63,7 +63,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_post_types_enabled The settings key for this setting.
+	 * @var string
 	 */
 	private $key_post_types_enabled = 'cp_post_types_enabled';
 
@@ -79,7 +79,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_featured_images The settings key for this setting.
+	 * @var string
 	 */
 	private $key_do_not_parse = 'cp_do_not_parse';
 
@@ -88,7 +88,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $text_signatures The Text Signatures array.
+	 * @var array
 	 */
 	public $text_signatures = [];
 
@@ -97,7 +97,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $comments_all The array of all Comments.
+	 * @var array
 	 */
 	public $comments_all = [];
 
@@ -106,7 +106,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $comments_approved The approved Comments array.
+	 * @var array
 	 */
 	public $comments_approved = [];
 
@@ -115,17 +115,19 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $comments_sorted The sorted Comments array.
+	 * @var array
 	 */
 	public $comments_sorted = [];
 
 	/**
 	 * Do Not Parse flag.
 	 *
+	 * False if content is parsed, true disables parsing.
+	 *
 	 * @see CommentPress_Core_Database->do_not_parse
 	 * @since 3.8.10
 	 * @access public
-	 * @var bool $do_not_parse False if content is parsed, true disables parsing.
+	 * @var bool
 	 */
 	public $do_not_parse = false;
 
@@ -136,16 +138,16 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.8.10
 	 * @access public
-	 * @var str $parser The parser identifier.
+	 * @var string
 	 */
 	public $parser = 'tag';
 
 	/**
-	 * Block name.
+	 * Block name (e.g. "paragraph", "line" etc).
 	 *
 	 * @since 3.8.10
 	 * @access public
-	 * @var str $block_name The name of the Block (e.g. "paragraph", "line" etc).
+	 * @var string
 	 */
 	public $block_name = '';
 

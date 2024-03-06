@@ -49,7 +49,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $multisite The multisite loader object.
+	 * @var CommentPress_Multisite_Loader
 	 */
 	public $multisite;
 
@@ -58,7 +58,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $bp The BuddyPress object reference.
+	 * @var CommentPress_Multisite_BuddyPress
 	 */
 	public $bp;
 
@@ -67,7 +67,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $groups The BuddyPress Groupblog Groups object.
+	 * @var CommentPress_Multisite_BuddyPress_Groupblog_Groups
 	 */
 	public $groups;
 
@@ -76,7 +76,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $names The BuddyPress Groupblog Names object.
+	 * @var CommentPress_Multisite_BuddyPress_Groupblog_Names
 	 */
 	public $names;
 
@@ -85,34 +85,34 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $site The BuddyPress Groupblog Site object.
+	 * @var CommentPress_Multisite_BuddyPress_Groupblog_Site
 	 */
 	public $site;
 
 	/**
-	 * Classes directory path.
+	 * Relative path to the classes directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $classes_path Relative path to the classes directory.
+	 * @var string
 	 */
 	private $classes_path = 'includes/multisite/classes/';
 
 	/**
-	 * Metabox template directory path.
+	 * Relative path to the Metabox directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Metabox directory.
+	 * @var string
 	 */
 	private $metabox_path = 'includes/multisite/assets/templates/buddypress/metaboxes/';
 
 	/**
-	 * Parts template directory path.
+	 * Relative path to the Parts directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $parts_path Relative path to the Parts directory.
+	 * @var string
 	 */
 	private $parts_path = 'includes/multisite/assets/templates/buddypress/parts/';
 
@@ -121,7 +121,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $compatibility Plugin compatibility flag.
+	 * @var string
 	 */
 	public $compatibility = 'none';
 
@@ -130,7 +130,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_forced The settings key for the "CommentPress enabled on all Group Blogs" setting.
+	 * @var string
 	 */
 	private $key_forced = 'cpmu_bp_force_commentpress';
 
@@ -139,7 +139,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_privacy The settings key for the "Group Blog privacy" setting.
+	 * @var string
 	 */
 	private $key_privacy = 'cpmu_bp_groupblog_privacy';
 
@@ -148,7 +148,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_comment_login The settings key for the "Require login to leave Comments on Group Blogs" setting.
+	 * @var string
 	 */
 	private $key_comment_login = 'cpmu_bp_require_comment_registration';
 
@@ -157,7 +157,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_theme The settings key for the "Default theme for Group Blogs" setting.
+	 * @var string
 	 */
 	private $key_theme = 'cpmu_bp_groupblog_theme';
 
@@ -166,7 +166,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_theme The Group meta key for the "Group Type" setting.
+	 * @var string
 	 */
 	private $key_group_meta = 'groupblogtype';
 

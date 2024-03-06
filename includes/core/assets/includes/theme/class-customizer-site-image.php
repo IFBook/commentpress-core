@@ -26,7 +26,7 @@ class WP_Customize_Site_Image_Control extends WP_Customize_Media_Control {
 	 *
 	 * @since 3.8.5
 	 * @access public
-	 * @var string $type The media type.
+	 * @var string
 	 */
 	public $type = 'media';
 
@@ -35,7 +35,7 @@ class WP_Customize_Site_Image_Control extends WP_Customize_Media_Control {
 	 *
 	 * @since 3.8.5
 	 * @access public
-	 * @var string $mime_type The mime type.
+	 * @var string
 	 */
 	public $mime_type = 'image';
 
@@ -44,7 +44,7 @@ class WP_Customize_Site_Image_Control extends WP_Customize_Media_Control {
 	 *
 	 * @since 3.8.5
 	 * @access public
-	 * @var array $button_labels The button labels.
+	 * @var array
 	 */
 	public $button_labels = [];
 

@@ -24,7 +24,7 @@ class CommentPress_Core_Comments {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -33,25 +33,25 @@ class CommentPress_Core_Comments {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $tagging The Comment Tagging object.
+	 * @var CommentPress_Core_Comments_Tagging
 	 */
 	public $tagging;
 
 	/**
-	 * Classes directory path.
+	 * Relative path to the classes directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $classes_path Relative path to the classes directory.
+	 * @var string
 	 */
 	private $classes_path = 'includes/core/classes/';
 
 	/**
-	 * Metabox template directory path.
+	 * Relative path to the Metabox directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Metabox directory.
+	 * @var string
 	 */
 	private $metabox_path = 'includes/core/assets/templates/wordpress/metaboxes/';
 
@@ -60,7 +60,7 @@ class CommentPress_Core_Comments {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_live The settings key for the "Live comment refreshing" setting.
+	 * @var string
 	 */
 	private $key_live = 'cp_para_comments_live';
 

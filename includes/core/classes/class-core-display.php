@@ -25,7 +25,7 @@ class CommentPress_Core_Display {
 	 * @since 3.0
 	 * @since 4.0 Renamed.
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 

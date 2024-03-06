@@ -24,7 +24,7 @@ class CommentPress_Core_Pages_Legacy {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 

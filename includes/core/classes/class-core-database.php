@@ -25,7 +25,7 @@ class CommentPress_Core_Database {
 	 * @since 3.0
 	 * @since 4.0 Renamed.
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -34,16 +34,16 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $plugin_version The plugin version.
+	 * @var string
 	 */
 	public $plugin_version;
 
 	/**
-	 * Upgrade flag.
+	 * Upgrade flag. False by default.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var bool $is_upgrade The upgrade flag. False by default.
+	 * @var bool
 	 */
 	public $is_upgrade = false;
 
@@ -53,7 +53,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $option_version The name of the core version option.
+	 * @var string
 	 */
 	public $option_version = 'commentpress_version';
 
@@ -62,7 +62,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $option_settings The name of the core settings option.
+	 * @var string
 	 */
 	public $option_settings = 'commentpress_options';
 
@@ -71,7 +71,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $settings The core settings array.
+	 * @var array
 	 */
 	public $settings = [];
 

@@ -24,16 +24,16 @@ class CommentPress_Multisite_Sites {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $multisite The multisite loader object.
+	 * @var CommentPress_Multisite_Loader
 	 */
 	public $multisite;
 
 	/**
-	 * Parts template directory path.
+	 * Relative path to the Parts directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $parts_path Relative path to the Parts directory.
+	 * @var string
 	 */
 	private $parts_path = 'includes/multisite/assets/templates/wordpress/parts/';
 
@@ -55,7 +55,7 @@ class CommentPress_Multisite_Sites {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_sites The settings key for the array of "CommentPress Sites enabled on the Network" setting.
+	 * @var string
 	 */
 	private $key_sites = 'commentpress_sites';
 
@@ -64,7 +64,7 @@ class CommentPress_Multisite_Sites {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_forced The settings key for the "CommentPress enabled on all Sites" setting.
+	 * @var string
 	 */
 	private $key_forced = 'cpmu_force_commentpress';
 
@@ -75,7 +75,7 @@ class CommentPress_Multisite_Sites {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_title_page_content The settings key for the "Default Welcome Page content" setting.
+	 * @var string
 	 */
 	private $key_title_page_content = 'cpmu_title_page_content';
 

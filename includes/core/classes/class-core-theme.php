@@ -24,7 +24,7 @@ class CommentPress_Core_Theme {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -33,25 +33,25 @@ class CommentPress_Core_Theme {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $sidebar The Sidebar object.
+	 * @var CommentPress_Core_Theme_Sidebar
 	 */
 	public $sidebar;
 
 	/**
-	 * Classes directory path.
+	 * Relative path to the classes directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $classes_path Relative path to the classes directory.
+	 * @var string
 	 */
 	private $classes_path = 'includes/core/classes/';
 
 	/**
-	 * Metabox template directory path.
+	 * Relative path to the Metabox directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Metabox directory.
+	 * @var string
 	 */
 	private $metabox_path = 'includes/core/assets/templates/wordpress/metaboxes/';
 
@@ -60,7 +60,7 @@ class CommentPress_Core_Theme {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_featured_images The settings key for the "Featured Images" setting.
+	 * @var string
 	 */
 	private $key_featured_images = 'cp_featured_images';
 
@@ -69,7 +69,7 @@ class CommentPress_Core_Theme {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_excerpt_length The settings key for the "Textblock meta" setting.
+	 * @var string
 	 */
 	private $key_textblock_meta = 'cp_textblock_meta';
 
@@ -78,7 +78,7 @@ class CommentPress_Core_Theme {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_excerpt_length The settings key for the "Excerpt length" setting.
+	 * @var string
 	 */
 	private $key_excerpt_length = 'cp_excerpt_length';
 
@@ -87,7 +87,7 @@ class CommentPress_Core_Theme {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_scroll_speed The settings key for the "Scroll speed" setting.
+	 * @var string
 	 */
 	private $key_scroll_speed = 'cp_js_scroll_speed';
 
@@ -96,7 +96,7 @@ class CommentPress_Core_Theme {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var bool $header_bg_color The default header background colour.
+	 * @var string
 	 */
 	public $header_bg_color = '2c2622';
 

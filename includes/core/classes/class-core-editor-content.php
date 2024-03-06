@@ -24,7 +24,7 @@ class CommentPress_Core_Editor_Content {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -33,7 +33,7 @@ class CommentPress_Core_Editor_Content {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $editor The Editor object.
+	 * @var CommentPress_Core_Pages_Editor
 	 */
 	public $editor;
 
@@ -42,7 +42,7 @@ class CommentPress_Core_Editor_Content {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $quicktag The "Comment Block" Quicktag.
+	 * @var string
 	 */
 	public $quicktag = '<!--commentblock-->';
 

@@ -25,7 +25,7 @@ class CommentPress_Core_Entry_Metabox {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -34,7 +34,7 @@ class CommentPress_Core_Entry_Metabox {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $entry The Entry object.
+	 * @var CommentPress_Core_Entry
 	 */
 	public $entry;
 
@@ -43,7 +43,7 @@ class CommentPress_Core_Entry_Metabox {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $post_types The array of supported Post Types.
+	 * @var array
 	 */
 	public $post_types = [
 		'post',
@@ -51,11 +51,11 @@ class CommentPress_Core_Entry_Metabox {
 	];
 
 	/**
-	 * Metabox template directory path.
+	 * Relative path to the Metabox directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Metabox directory.
+	 * @var string
 	 */
 	private $metabox_path = 'includes/core/assets/templates/wordpress/metaboxes/';
 
@@ -64,7 +64,7 @@ class CommentPress_Core_Entry_Metabox {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_field The name of the metabox nonce element.
+	 * @var string
 	 */
 	private $nonce_field = 'commentpress_core_entry_nonce';
 
@@ -73,7 +73,7 @@ class CommentPress_Core_Entry_Metabox {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_action The name of the metabox nonce action.
+	 * @var string
 	 */
 	private $nonce_action = 'commentpress_core_entry_action';
 

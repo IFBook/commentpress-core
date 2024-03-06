@@ -26,16 +26,16 @@ class CommentPress_Core_Navigator {
 	 * @since 3.0
 	 * @since 4.0 Renamed.
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
 	/**
-	 * Metabox template directory path.
+	 * Relative path to the Metabox directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Metabox directory.
+	 * @var string
 	 */
 	private $metabox_path = 'includes/core/assets/templates/wordpress/metaboxes/';
 
@@ -51,7 +51,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $key_page_nav_enabled The settings key for the "Page navigation enabled" setting.
+	 * @var string
 	 */
 	private $key_page_nav_enabled = 'cp_page_nav_enabled';
 
@@ -60,7 +60,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_post_type The settings key for the "Table of Contents contains" setting.
+	 * @var string
 	 */
 	private $key_post_type = 'cp_show_posts_or_pages_in_toc';
 
@@ -69,7 +69,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_chapter_is_page The settings key for the "Chapters are Headings/Pages" setting.
+	 * @var string
 	 */
 	private $key_chapter_is_page = 'cp_toc_chapter_is_page';
 
@@ -78,7 +78,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_subpages The settings key for the "Show Sub-Pages" setting.
+	 * @var string
 	 */
 	private $key_subpages = 'cp_show_subpages';
 
@@ -87,7 +87,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_extended The settings key for the "Appearance of TOC for Posts" setting.
+	 * @var string
 	 */
 	private $key_extended = 'cp_show_extended_toc';
 
@@ -96,7 +96,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $next_pages The "Next Pages" array.
+	 * @var array
 	 */
 	public $next_pages = [];
 
@@ -105,7 +105,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $previous_pages The "Previous Pages" array.
+	 * @var array
 	 */
 	public $previous_pages = [];
 
@@ -114,7 +114,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $next_posts The "Next Posts" array.
+	 * @var array
 	 */
 	public $next_posts = [];
 
@@ -123,7 +123,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $previous_posts The "Previous Posts" array.
+	 * @var array
 	 */
 	public $previous_posts = [];
 
@@ -132,7 +132,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $page_numbers The Page numbers array.
+	 * @var array
 	 */
 	public $page_numbers = [];
 
@@ -141,16 +141,18 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var array $menu_objects The Menu objects array.
+	 * @var array
 	 */
 	public $menu_objects = [];
 
 	/**
 	 * Page navigation enabled flag.
 	 *
+	 * True if Page Navigation is enabled, false otherwise.
+	 *
 	 * @since 3.8.10
 	 * @access public
-	 * @var bool $nav_enabled True if Page Navigation is enabled, false otherwise.
+	 * @var bool
 	 */
 	public $nav_enabled = true;
 

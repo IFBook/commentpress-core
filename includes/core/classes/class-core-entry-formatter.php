@@ -25,7 +25,7 @@ class CommentPress_Core_Entry_Formatter {
 	 * @since 3.3
 	 * @since 4.0 Renamed.
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -34,7 +34,7 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $entry The Entry object.
+	 * @var CommentPress_Core_Entry
 	 */
 	public $entry;
 
@@ -43,7 +43,7 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $post_types The array of supported Post Types.
+	 * @var array
 	 */
 	public $post_types = [
 		'post',
@@ -64,7 +64,7 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $key_formatter The "Text Format" setting in Site Settings.
+	 * @var string
 	 */
 	public $key_formatter = 'cp_blog_type';
 
@@ -76,7 +76,7 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $key_post_meta The "Text Format" meta key.
+	 * @var string
 	 */
 	public $key_post_meta = '_cp_post_type_override';
 
@@ -85,25 +85,27 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $element_select The name of the metabox select element.
+	 * @var string
 	 */
 	private $element_select = 'cp_formatter_value';
 
 	/**
-	 * Parts template directory path.
+	 * Relative path to the Parts directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $parts_path Relative path to the Parts directory.
+	 * @var string
 	 */
 	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
 
 	/**
 	 * Prevent "save_post" callback from running more than once.
 	 *
+	 * True if Post already saved.
+	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $saved_post True if Post already saved.
+	 * @var bool
 	 */
 	public $saved_post = false;
 

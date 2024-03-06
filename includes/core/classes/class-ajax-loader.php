@@ -22,7 +22,7 @@ class CommentPress_AJAX_Loader {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -31,7 +31,7 @@ class CommentPress_AJAX_Loader {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $settings_network The AJAX Comments object.
+	 * @var CommentPress_AJAX_Comments
 	 */
 	public $comments;
 
@@ -40,16 +40,16 @@ class CommentPress_AJAX_Loader {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $settings_network The Infinite Scroll object.
+	 * @var CommentPress_AJAX_Infinite_Scroll
 	 */
 	public $infinite;
 
 	/**
-	 * Classes directory path.
+	 * Relative path to the classes directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $classes_path Relative path to the classes directory.
+	 * @var string
 	 */
 	private $classes_path = 'includes/core/classes/';
 

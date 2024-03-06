@@ -24,7 +24,7 @@ class CommentPress_Multisite_BuddyPress {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $multisite The multisite loader object.
+	 * @var CommentPress_Multisite_Loader
 	 */
 	public $multisite;
 
@@ -33,25 +33,25 @@ class CommentPress_Multisite_BuddyPress {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $groupblog The BuddyPress Group Blog object reference.
+	 * @var CommentPress_Multisite_BuddyPress_Groupblog
 	 */
 	public $groupblog;
 
 	/**
-	 * Classes directory path.
+	 * Relative path to the classes directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $classes_path Relative path to the classes directory.
+	 * @var string
 	 */
 	private $classes_path = 'includes/multisite/classes/';
 
 	/**
-	 * Parts template directory path.
+	 * Relative path to the Parts directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $parts_path Relative path to the Parts directory.
+	 * @var string
 	 */
 	private $parts_path = 'includes/multisite/assets/templates/buddypress/parts/';
 

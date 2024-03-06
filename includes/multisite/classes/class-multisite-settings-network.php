@@ -24,7 +24,7 @@ class CommentPress_Multisite_Settings_Network {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $multisite The multisite loader object.
+	 * @var CommentPress_Multisite_Loader
 	 */
 	public $multisite;
 
@@ -33,7 +33,7 @@ class CommentPress_Multisite_Settings_Network {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $settings_page The reference to the Settings Page.
+	 * @var string
 	 */
 	public $settings_page;
 
@@ -42,25 +42,25 @@ class CommentPress_Multisite_Settings_Network {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $settings_page_slug The slug of the Settings Page.
+	 * @var string
 	 */
 	public $settings_page_slug = 'cpmu_admin_page';
 
 	/**
-	 * Page template directory path.
+	 * Relative path to the Page template directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $page_path Relative path to the Page template directory.
+	 * @var string
 	 */
 	private $page_path = 'includes/multisite/assets/templates/wordpress/pages/';
 
 	/**
-	 * Metabox template directory path.
+	 * Relative path to the Metabox directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Metabox directory.
+	 * @var string
 	 */
 	private $metabox_path = 'includes/multisite/assets/templates/wordpress/metaboxes/';
 
@@ -69,16 +69,16 @@ class CommentPress_Multisite_Settings_Network {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_field The name of the form nonce element.
+	 * @var string
 	 */
 	private $nonce_field = 'cpms_settings_network_nonce';
 
 	/**
-	 * Form nonce value.
+	 * Form nonce action.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_action The name of the form nonce action.
+	 * @var string
 	 */
 	private $nonce_action = 'cpms_settings_network_action';
 
@@ -87,7 +87,7 @@ class CommentPress_Multisite_Settings_Network {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $input_submit The "name" and "id" of the form.
+	 * @var string
 	 */
 	private $form_id = 'cpms_settings_network_form';
 
@@ -96,7 +96,7 @@ class CommentPress_Multisite_Settings_Network {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $input_submit The "name" and "id" of the form's submit input element.
+	 * @var string
 	 */
 	private $submit_id = 'cpms_settings_network_submit';
 

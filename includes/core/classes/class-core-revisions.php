@@ -24,25 +24,25 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
 	/**
-	 * Metabox template directory path.
+	 * Relative path to the Metabox directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Metabox directory.
+	 * @var string
 	 */
 	private $metabox_path = 'includes/core/assets/templates/wordpress/metaboxes/';
 
 	/**
-	 * Parts template directory path.
+	 * Relative path to the Parts directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $parts_path Relative path to the Parts directory.
+	 * @var string
 	 */
 	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
 
@@ -51,7 +51,7 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $key_sidebar The "Post Revisions Enabled" setting key in Site Settings.
+	 * @var string
 	 */
 	public $key_revisions = 'cp_revisions_enabled';
 
@@ -60,7 +60,7 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $meta_key_newer_id The "Newer Version" meta key.
+	 * @var string
 	 */
 	public $meta_key_newer_id = '_cp_newer_version';
 
@@ -69,7 +69,7 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $meta_key The "Version Count" meta key.
+	 * @var string
 	 */
 	public $meta_key_version_count = '_cp_version_count';
 
@@ -78,16 +78,16 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_field The name of the metabox nonce element.
+	 * @var string
 	 */
 	private $nonce_field = 'commentpress_core_revisions_nonce';
 
 	/**
-	 * Metabox nonce value.
+	 * Metabox nonce action.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_action The name of the metabox nonce action.
+	 * @var string
 	 */
 	private $nonce_action = 'commentpress_core_revisions_action';
 
@@ -96,16 +96,18 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $element_checkbox The name of the metabox checkbox element.
+	 * @var string
 	 */
 	private $element_checkbox = 'cp_revision_create';
 
 	/**
 	 * Prevent "save_post" callback from running more than once.
 	 *
+	 * True if Post already saved.
+	 *
 	 * @since 3.3
 	 * @access private
-	 * @var str $saved_post True if Post already saved.
+	 * @var bool
 	 */
 	private $saved_post = false;
 

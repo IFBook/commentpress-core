@@ -24,7 +24,7 @@ class CommentPress_Core_Editor {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -33,7 +33,7 @@ class CommentPress_Core_Editor {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $comments The Comments Editor object.
+	 * @var CommentPress_Core_Editor_Comments
 	 */
 	public $comments;
 
@@ -42,16 +42,16 @@ class CommentPress_Core_Editor {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $content The Content Editor object.
+	 * @var CommentPress_Core_Editor_Content
 	 */
 	public $content;
 
 	/**
-	 * Classes directory path.
+	 * Relative path to the classes directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $classes_path Relative path to the classes directory.
+	 * @var string
 	 */
 	private $classes_path = 'includes/core/classes/';
 

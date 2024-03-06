@@ -24,7 +24,7 @@ class CommentPress_Core_Comments_Tagging {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -33,16 +33,16 @@ class CommentPress_Core_Comments_Tagging {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $comments The Comments object.
+	 * @var CommentPress_Core_Comments
 	 */
 	public $comments;
 
 	/**
-	 * Parts template directory path.
+	 * Relative path to the Parts directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $parts_path Relative path to the Parts directory.
+	 * @var string
 	 */
 	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
 
@@ -51,16 +51,16 @@ class CommentPress_Core_Comments_Tagging {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $key_sidebar The "Comment Tagging Enabled" setting key in Site Settings.
+	 * @var string
 	 */
 	public $key_tagging = 'cp_tagging_enabled';
 
 	/**
-	 * Taxonomy name.
+	 * Comment Tags Taxonomy name.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $tax_name The name of the Comment Tags Taxonomy.
+	 * @var string
 	 */
 	private $tax_name = 'comment_tags';
 
@@ -69,7 +69,7 @@ class CommentPress_Core_Comments_Tagging {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $tax_prefix The Taxonomy prefix for Select2.
+	 * @var string
 	 */
 	private $tax_prefix = 'cmmnt_tggr';
 

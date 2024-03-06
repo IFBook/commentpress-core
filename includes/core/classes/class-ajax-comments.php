@@ -24,7 +24,7 @@ class CommentPress_AJAX_Comments {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -33,16 +33,16 @@ class CommentPress_AJAX_Comments {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $ajax The AJAX loader object.
+	 * @var CommentPress_AJAX_Loader
 	 */
 	public $ajax;
 
 	/**
-	 * Assets directory path.
+	 * Relative path to the assets directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $assets_path Relative path to the assets directory.
+	 * @var string
 	 */
 	private $assets_path = 'includes/core/assets/';
 
@@ -51,7 +51,7 @@ class CommentPress_AJAX_Comments {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_action_form The name of the form nonce action.
+	 * @var string
 	 */
 	private $nonce_action_form = 'cpajax_comment_nonce';
 
@@ -60,7 +60,7 @@ class CommentPress_AJAX_Comments {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_action_edit The name of the form nonce action.
+	 * @var string
 	 */
 	private $nonce_action_edit = 'cpajax_comment_edit_action';
 

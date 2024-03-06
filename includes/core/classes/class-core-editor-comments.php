@@ -24,7 +24,7 @@ class CommentPress_Core_Editor_Comments {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -33,16 +33,16 @@ class CommentPress_Core_Editor_Comments {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $editor The Editor object.
+	 * @var CommentPress_Core_Pages_Editor
 	 */
 	public $editor;
 
 	/**
-	 * Parts template directory path.
+	 * Relative path to the Parts directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $parts_path Relative path to the Parts directory.
+	 * @var string
 	 */
 	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
 
@@ -51,7 +51,7 @@ class CommentPress_Core_Editor_Comments {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_editor The settings key for the "Comment Editor" setting.
+	 * @var string
 	 */
 	private $key_editor = 'cp_comment_editor';
 
@@ -60,7 +60,7 @@ class CommentPress_Core_Editor_Comments {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_promote The settings key for the "Promote Reading or Commenting" setting.
+	 * @var string
 	 */
 	private $key_promote = 'cp_promote_reading';
 

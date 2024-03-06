@@ -26,7 +26,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $multisite The multisite loader object.
+	 * @var CommentPress_Multisite_Loader
 	 */
 	public $multisite;
 
@@ -35,7 +35,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $bp The BuddyPress object reference.
+	 * @var CommentPress_Multisite_BuddyPress
 	 */
 	public $bp;
 
@@ -44,16 +44,16 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $groupblog The BuddyPress Groupblog object reference.
+	 * @var CommentPress_Multisite_BuddyPress_Groupblog
 	 */
 	public $groupblog;
 
 	/**
-	 * Parts template directory path.
+	 * Relative path to the Parts directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $parts_path Relative path to the Parts directory.
+	 * @var string
 	 */
 	private $parts_path = 'includes/multisite/assets/templates/buddypress/parts/';
 
@@ -62,7 +62,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_scheme The settings key for the "Group Blog naming scheme" setting.
+	 * @var string
 	 */
 	private $key_scheme = 'cpmu_bp_workshop_scheme';
 
@@ -71,7 +71,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_enabled The settings key for the "Group Blog renaming enabled" setting.
+	 * @var string
 	 */
 	private $key_enabled = 'cpmu_bp_workshop_nomenclature';
 
@@ -80,7 +80,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_singular The settings key for the "singular name of a Group Blog." setting.
+	 * @var string
 	 */
 	private $key_singular = 'cpmu_bp_workshop_nomenclature_name';
 
@@ -89,7 +89,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_plural The settings key for the "plural name of a Group Blog" setting.
+	 * @var string
 	 */
 	private $key_plural = 'cpmu_bp_workshop_nomenclature_plural';
 
@@ -98,7 +98,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_slug The settings key for the "Group Blog slug" setting.
+	 * @var string
 	 */
 	private $key_slug = 'cpmu_bp_workshop_nomenclature_slug';
 
