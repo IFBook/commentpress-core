@@ -38,13 +38,13 @@ if ( ! function_exists( 'commentpress_admin_header' ) ) :
 	 */
 	function commentpress_admin_header() {
 
-		// Init with same colour as theme stylesheets and default in "class-core-theme.php".
+		// Init with same colour as theme stylesheets.
 		$colour = '2c2622';
 
-		// Override if we have the plugin enabled.
-		$core = commentpress_core();
-		if ( ! empty( $core ) ) {
-			$colour = $core->theme->header_bg_color_get();
+		// Do we have one set via the Customizer?
+		$header_bg_color = get_theme_mod( 'commentpress_header_bg_color', false );
+		if ( ! empty( $header_bg_color ) ) {
+			$colour = substr( $header_bg_color, 1 );
 		}
 
 		// Try and recreate the look of the theme header.

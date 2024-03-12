@@ -92,15 +92,6 @@ class CommentPress_Core_Theme {
 	private $key_scroll_speed = 'cp_js_scroll_speed';
 
 	/**
-	 * Default header background colour (hex, same as in theme stylesheet).
-	 *
-	 * @since 3.0
-	 * @access public
-	 * @var string
-	 */
-	public $header_bg_color = '2c2622';
-
-	/**
 	 * Constructor.
 	 *
 	 * @since 4.0
@@ -972,32 +963,6 @@ class CommentPress_Core_Theme {
 		 * @param array $vars The default Javascript vars.
 		 */
 		return apply_filters( 'commentpress_get_javascript_vars', $vars );
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Get current header background colour.
-	 *
-	 * @since 3.0
-	 *
-	 * @return str $header_bg_color The hex value of the header.
-	 */
-	public function header_bg_color_get() {
-
-		// TODO: Remove this method.
-
-		// Do we have one set via the Customizer?
-		$header_bg_color = get_theme_mod( 'commentpress_header_bg_color', false );
-
-		// Return it if we do.
-		if ( ! empty( $header_bg_color ) ) {
-			return substr( $header_bg_color, 1 );
-		}
-
-		// Fallback to default.
-		return $this->header_bg_color;
 
 	}
 

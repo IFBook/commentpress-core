@@ -453,10 +453,10 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 		// Init with same colour as theme stylesheets and default in class-core-database.php.
 		$bg_colour = '2c2622';
 
-		// Override if we have the plugin enabled.
-		$core = commentpress_core();
-		if ( ! empty( $core ) ) {
-			$bg_colour = $core->theme->header_bg_color_get();
+		// Do we have one set via the Customizer?
+		$header_bg_color = get_theme_mod( 'commentpress_header_bg_color', false );
+		if ( ! empty( $header_bg_color ) ) {
+			$bg_colour = substr( $header_bg_color, 1 );
 		}
 
 		/**
