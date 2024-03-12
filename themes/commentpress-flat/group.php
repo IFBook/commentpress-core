@@ -38,7 +38,7 @@ get_header();
 						<?php foreach ( $group_users as $group_user ) : ?>
 							<?php if ( '1' != $group_user->user_id ) : ?>
 								<li>
-									<a href="<?php echo home_url(); ?>/author/<?php echo $group_user->user_login; ?>/"><?php echo esc_html( $group_user->display_name ); ?></a>
+									<a href="<?php echo esc_url( get_author_posts_url( $group_user->ID ) ); ?>"><?php echo esc_html( $group_user->display_name ); ?></a>
 								</li>
 							<?php endif; ?>
 						<?php endforeach; ?>

@@ -44,7 +44,7 @@ $is_commentable = commentpress_is_commentable();
 						?>
 
 						<li id="comments_header" class="sidebar_header">
-							<h2><a href="#comments_sidebar"<?php echo $active_class; ?>>
+							<h2><a href="#comments_sidebar"<?php echo $active_class; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>>
 								<?php
 
 								/**
@@ -54,7 +54,9 @@ $is_commentable = commentpress_is_commentable();
 								 *
 								 * @param str The default Comments tab title.
 								 */
-								echo apply_filters( 'cp_tab_title_comments', __( 'Comments', 'commentpress-core' ) );
+								$cp_tab_title_comments = apply_filters( 'cp_tab_title_comments', __( 'Comments', 'commentpress-core' ) );
+
+								echo esc_html( $cp_tab_title_comments );
 
 								?>
 							</a></h2>
@@ -63,6 +65,7 @@ $is_commentable = commentpress_is_commentable();
 
 							// Show the minimise all button if we have the plugin enabled.
 							if ( ! empty( $core ) ) {
+								// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								echo $core->display->get_minimise_all_button( 'comments' );
 							}
 
@@ -95,12 +98,13 @@ $is_commentable = commentpress_is_commentable();
 
 							?>
 							<li id="activity_header" class="sidebar_header">
-								<h2><a href="#activity_sidebar"<?php echo $active_class; ?>><?php echo $_activity_title; ?></a></h2>
+								<h2><a href="#activity_sidebar"<?php echo $active_class; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>><?php echo $_activity_title; ?></a></h2>
 
 								<?php
 
 								// Show the minimise all button if we have the plugin enabled.
 								if ( ! empty( $core ) ) {
+									// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 									echo $core->display->get_minimise_all_button( 'activity' );
 								}
 

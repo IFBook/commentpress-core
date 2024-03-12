@@ -11,14 +11,14 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<!-- <?php echo $this->parts_path; ?>part-entry-single-entry.php -->
+<!-- <?php echo esc_html( $this->parts_path ); ?>part-entry-single-entry.php -->
 <div class="<?php echo esc_attr( $this->key_show_title ); ?>_wrapper">
 	<p><strong><label for="<?php echo esc_attr( $this->key_show_title ); ?>"><?php esc_html_e( 'Page Title Visibility', 'commentpress-core' ); ?></label></strong></p>
 	<p>
 		<select id="<?php echo esc_attr( $this->key_show_title ); ?>" name="<?php echo esc_attr( $this->key_show_title ); ?>">
-			<option value="" <?php echo ( empty( $show_title ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Use default', 'commentpress-core' ); ?></option>
-			<option value="show" <?php echo ( 'show' === $show_title ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Show title', 'commentpress-core' ); ?></option>
-			<option value="hide" <?php echo ( 'hide' === $show_title ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Hide title', 'commentpress-core' ); ?></option>
+			<option value="" <?php selected( $show_title, '' ); ?>><?php esc_html_e( 'Use default', 'commentpress-core' ); ?></option>
+			<option value="show" <?php selected( $show_title, 'show' ); ?>><?php esc_html_e( 'Show title', 'commentpress-core' ); ?></option>
+			<option value="hide" <?php selected( $show_title, 'hide' ); ?>><?php esc_html_e( 'Hide title', 'commentpress-core' ); ?></option>
 		</select>
 	</p>
 </div>
@@ -27,9 +27,9 @@ defined( 'ABSPATH' ) || exit;
 	<p><strong><label for="<?php echo esc_attr( $this->key_show_meta ); ?>"><?php esc_html_e( 'Page Meta Visibility', 'commentpress-core' ); ?></label></strong></p>
 	<p>
 		<select id="<?php echo esc_attr( $this->key_show_meta ); ?>" name="<?php echo esc_attr( $this->key_show_meta ); ?>">
-			<option value="" <?php echo ( empty( $show_meta ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Use default', 'commentpress-core' ); ?></option>
-			<option value="show" <?php echo ( 'show' === $show_meta ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Show meta', 'commentpress-core' ); ?></option>
-			<option value="hide" <?php echo ( 'hide' === $show_meta ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Hide meta', 'commentpress-core' ); ?></option>
+			<option value="" <?php selected( $show_meta, '' ); ?>><?php esc_html_e( 'Use default', 'commentpress-core' ); ?></option>
+			<option value="show" <?php selected( $show_meta, 'show' ); ?>><?php esc_html_e( 'Show meta', 'commentpress-core' ); ?></option>
+			<option value="hide" <?php selected( $show_meta, 'hide' ); ?>><?php esc_html_e( 'Hide meta', 'commentpress-core' ); ?></option>
 	</select>
 	</p>
 </div>

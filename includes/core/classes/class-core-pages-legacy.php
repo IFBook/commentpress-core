@@ -1562,8 +1562,8 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// Build link.
 		$link = '<li' . $active . '>' .
-			'<a href="' . $url . '" id="btn_' . $button . '" class="css_btn" title="' . $title . '">' .
-				$title .
+			'<a href="' . esc_url( $url ) . '" id="btn_' . esc_attr( $button ) . '" class="css_btn" title="' . esc_attr( $title ) . '">' .
+				esc_html( $title ) .
 			'</a>' .
 		'</li>' . "\n";
 

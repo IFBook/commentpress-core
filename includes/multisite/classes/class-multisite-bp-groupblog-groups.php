@@ -257,7 +257,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		// Construct option.
 		$option = '<option value="new_groupblog_post">' . esc_html( $name ) . '</option>' . "\n";
 
-		// Print.
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $option;
 
 	}
@@ -281,7 +281,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		// Construct option.
 		$option = '<option value="new_groupblog_comment">' . esc_html( $comment_name ) . '</option>' . "\n";
 
-		// Print.
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $option;
 
 	}

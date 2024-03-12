@@ -11,7 +11,7 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<!-- <?php echo $this->metabox_path; ?>metabox-settings-site-nav.php -->
+<!-- <?php echo esc_html( $this->metabox_path ); ?>metabox-settings-site-nav.php -->
 <table class="form-table">
 
 	<tr valign="top">
@@ -20,8 +20,8 @@ defined( 'ABSPATH' ) || exit;
 		</th>
 		<td>
 			<select id="<?php echo esc_attr( $this->key_page_nav_enabled ); ?>" name="<?php echo esc_attr( $this->key_page_nav_enabled ); ?>">
-				<option value="y" <?php echo ( 'y' === $page_nav_enabled ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Yes', 'commentpress-core' ); ?></option>
-				<option value="n" <?php echo ( 'n' === $page_nav_enabled ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'No', 'commentpress-core' ); ?></option>
+				<option value="y" <?php selected( $page_nav_enabled, 'y' ); ?>><?php esc_html_e( 'Yes', 'commentpress-core' ); ?></option>
+				<option value="n" <?php selected( $page_nav_enabled, 'n' ); ?>><?php esc_html_e( 'No', 'commentpress-core' ); ?></option>
 			</select>
 			<p class="description"><?php esc_html_e( 'This controls the visibility of page numbering and navigation arrows on hierarchical Pages.', 'commentpress-core' ); ?></p>
 			<p class="description"><?php esc_html_e( 'By default, CommentPress creates "book-like" navigation for the built-in "Page" Post Type to create a "Document" from hierarchically-organized Pages. Select "No" if this is not the desired behavior.', 'commentpress-core' ); ?></p>
@@ -34,8 +34,8 @@ defined( 'ABSPATH' ) || exit;
 		</th>
 		<td>
 			<select id="<?php echo esc_attr( $this->key_post_type ); ?>" name="<?php echo esc_attr( $this->key_post_type ); ?>">
-				<option value="post" <?php echo ( ( 'post' === $post_type ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Posts', 'commentpress-core' ); ?></option>
-				<option value="page" <?php echo ( ( 'page' === $post_type ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Pages', 'commentpress-core' ); ?></option>
+				<option value="post" <?php selected( $post_type, 'post' ); ?>><?php esc_html_e( 'Posts', 'commentpress-core' ); ?></option>
+				<option value="page" <?php selected( $post_type, 'page' ); ?>><?php esc_html_e( 'Pages', 'commentpress-core' ); ?></option>
 			</select>
 		</td>
 	</tr>
@@ -46,8 +46,8 @@ defined( 'ABSPATH' ) || exit;
 		</th>
 		<td>
 			<select id="<?php echo esc_attr( $this->key_chapter_is_page ); ?>" name="<?php echo esc_attr( $this->key_chapter_is_page ); ?>">
-				<option value="1" <?php echo ( ( '1' == $chapter_is_page ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Pages', 'commentpress-core' ); ?></option>
-				<option value="0" <?php echo ( ( '0' == $chapter_is_page ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Headings', 'commentpress-core' ); ?></option>
+				<option value="1" <?php selected( $chapter_is_page, '1' ); ?>><?php esc_html_e( 'Pages', 'commentpress-core' ); ?></option>
+				<option value="0" <?php selected( $chapter_is_page, '0' ); ?>><?php esc_html_e( 'Headings', 'commentpress-core' ); ?></option>
 			</select>
 			<p class="description"><?php esc_html_e( 'When Chapters are Pages, the Table of Contents will always show Sub-Pages.', 'commentpress-core' ); ?></p>
 		</td>
@@ -66,8 +66,8 @@ defined( 'ABSPATH' ) || exit;
 	<tr valign="top" class="show_extended"<?php echo ( 'post' === $post_type ? '' : ' style="display: none;"' ); ?>>
 		<th scope="row"><label for="<?php echo esc_attr( $this->key_extended ); ?>"><?php esc_html_e( 'Appearance of TOC for Posts', 'commentpress-core' ); ?></label></th>
 		<td><select id="<?php echo esc_attr( $this->key_extended ); ?>" name="<?php echo esc_attr( $this->key_extended ); ?>">
-				<option value="1" <?php echo ( ( '1' == $extended ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Extended information', 'commentpress-core' ); ?></option>
-				<option value="0" <?php echo ( ( '0' == $extended ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Just the title', 'commentpress-core' ); ?></option>
+				<option value="1" <?php selected( $extended, '1' ); ?>><?php esc_html_e( 'Extended information', 'commentpress-core' ); ?></option>
+				<option value="0" <?php selected( $extended, '0' ); ?>><?php esc_html_e( 'Just the title', 'commentpress-core' ); ?></option>
 			</select>
 		</td>
 	</tr>

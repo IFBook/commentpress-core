@@ -28,7 +28,7 @@ if ( isset( $post->ID ) ) {
 
 	?>
 
-	<div class="comments_container"<?php echo $comments_post_identifier; ?>>
+	<div class="comments_container"<?php echo $comments_post_identifier; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>>
 
 		<?php if ( 'closed' == $post->comment_status ) : ?>
 			<h3 class="nocomments comments-closed"><span><?php esc_html_e( 'Comments are closed', 'commentpress-core' ); ?></span></h3>

@@ -484,8 +484,8 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 		<style type="text/css">
 
 		#book_header {
-			background-color: #' . $bg_colour . ';
-			' . $bg_image . '
+			background-color: #' . esc_html( $bg_colour ) . ';
+			' . esc_attr( $bg_image ) . '
 			-webkit-background-size: cover;
 			-moz-background-size: cover;
 			-o-background-size: cover;
@@ -495,11 +495,11 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 		}
 
 		#title h1, #title h1 a {
-			' . $css . '
+			' . esc_attr( $css ) . '
 		}
 
 		#book_header #tagline {
-			' . $css . '
+			' . esc_attr( $css ) . '
 		}
 
 		</style>

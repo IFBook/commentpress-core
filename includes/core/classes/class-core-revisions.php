@@ -621,7 +621,7 @@ class CommentPress_Core_Revisions {
 
 		// Construct anchor.
 		$title      = __( 'Newer version', 'commentpress-core' );
-		$newer_link = '<a href="' . get_permalink( $newer_post->ID ) . '" title="' . esc_attr( $title ) . '">' .
+		$newer_link = '<a href="' . esc_url( get_permalink( $newer_post->ID ) ) . '" title="' . esc_attr( $title ) . '">' .
 			esc_html( $title ) . ' &rarr;' .
 		'</a>';
 
@@ -670,7 +670,7 @@ class CommentPress_Core_Revisions {
 
 		// Construct anchor.
 		$title      = __( 'Older version', 'commentpress-core' );
-		$older_link = '<a href="' . get_permalink( $older_post->ID ) . '" title="' . esc_attr( $title ) . '">' .
+		$older_link = '<a href="' . esc_url( get_permalink( $older_post->ID ) ) . '" title="' . esc_attr( $title ) . '">' .
 			'&larr; ' . esc_html( $title ) .
 		'</a>';
 

@@ -11,12 +11,12 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<!-- <?php echo $this->parts_path; ?>part-sites-settings-site.php -->
+<!-- <?php echo esc_html( $this->parts_path ); ?>part-sites-settings-site.php -->
 <tr valign="top">
 	<th scope="row">
-		<label for="<?php echo $this->key_enable; ?>"><?php esc_html_e( 'Enable CommentPress on this Site', 'commentpress-core' ); ?></label>
+		<label for="<?php echo esc_attr( $this->key_enable ); ?>"><?php esc_html_e( 'Enable CommentPress on this Site', 'commentpress-core' ); ?></label>
 	</th>
 	<td>
-		<input id="<?php echo $this->key_enable; ?>" name="<?php echo $this->key_enable; ?>" value="1" type="checkbox" />
+		<input id="<?php echo esc_attr( $this->key_enable ); ?>" name="<?php echo esc_attr( $this->key_enable ); ?>" value="1" type="checkbox" />
 	</td>
 </tr>

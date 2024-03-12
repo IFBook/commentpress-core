@@ -429,7 +429,7 @@ if ( ! function_exists( 'commentpress_background' ) ) :
 			.sidebar_contents_wrapper,
 			#footer_inner
 			{
-				' . trim( $style ) . '
+				' . esc_attr( $style ) . '
 			}
 
 		</style>
@@ -476,7 +476,7 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 
 		// Do we have a background-image?
 		if ( $header_image ) {
-			$bg_image = 'background-image: url("' . $header_image . '");';
+			$bg_image = 'background-image: url("' . esc_url( $header_image ) . '");';
 		}
 
 		// Get custom text colour.
@@ -505,8 +505,8 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 		<style type="text/css">
 
 		#header {
-			background-color: #' . $bg_colour . ';
-			' . $bg_image . '
+			background-color: #' . esc_attr( $bg_colour ) . ';
+			' . esc_attr( $bg_image ) . '
 			-webkit-background-size: cover;
 			-moz-background-size: cover;
 			-o-background-size: cover;
@@ -516,11 +516,11 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 		}
 
 		#title h1, #title h1 a {
-			' . $css . '
+			' . esc_attr( $css ) . '
 		}
 
 		#header #tagline {
-			' . $css . '
+			' . esc_attr( $css ) . '
 		}
 
 		</style>
@@ -876,7 +876,10 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 			 * @param str The HTML for showing the image.
 			 * @param WP_Post The current WordPress Post object.
 			 */
-			echo apply_filters( 'commentpress_get_feature_image', get_the_post_thumbnail( get_the_ID(), 'commentpress-feature' ), $post );
+			$cp_image = apply_filters( 'commentpress_get_feature_image', get_the_post_thumbnail( get_the_ID(), 'commentpress-feature' ), $post );
+
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $cp_image;
 
 			?>
 			<div class="cp_featured_title">
@@ -900,7 +903,7 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 
 						// Construct title.
 						$title = '<h2 class="post_title page_title"' . $cp_title_visibility . '>' .
-							'<a href="' . get_permalink() . '">' . get_the_title() . '</a>' .
+							'<a href="' . esc_url( get_permalink() ) . '">' . get_the_title() . '</a>' .
 						'</h2>';
 
 						/**
@@ -908,10 +911,13 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 						 *
 						 * @since 3.9.10
 						 *
-						 * @param str The HTML for showing the image.
-						 * @param WP_Post The current WordPress Post object.
+						 * @param str $title The HTML for showing the image.
+						 * @param WP_Post $post The current WordPress Post object.
 						 */
-						echo apply_filters( 'commentpress_get_feature_image_title', $title, $post );
+						$title = apply_filters( 'commentpress_get_feature_image_title', $title, $post );
+
+						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo $title;
 
 						?>
 						<div class="search_meta page_search_meta"<?php commentpress_post_meta_visibility( get_the_ID() ); ?>>
@@ -924,7 +930,7 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 
 						// Construct title.
 						$title = '<h2 class="post_title">' .
-							'<a href="' . get_permalink() . '">' . get_the_title() . '</a>' .
+							'<a href="' . esc_url( get_permalink() ) . '">' . get_the_title() . '</a>' .
 						'</h2>';
 
 						/**
@@ -932,10 +938,13 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 						 *
 						 * @since 3.9.10
 						 *
-						 * @param str The HTML for showing the image.
-						 * @param WP_Post The current WordPress Post object.
+						 * @param str $title The HTML for showing the image.
+						 * @param WP_Post $post The current WordPress Post object.
 						 */
-						echo apply_filters( 'commentpress_get_feature_image_title', $title, $post );
+						$title = apply_filters( 'commentpress_get_feature_image_title', $title, $post );
+
+						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo $title;
 
 						?>
 

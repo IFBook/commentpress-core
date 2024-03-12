@@ -11,7 +11,7 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<!-- <?php echo $this->parts_path; ?>part-sites-settings-network.php -->
+<!-- <?php echo esc_html( $this->parts_path ); ?>part-sites-settings-network.php -->
 <tr valign="top">
 	<th scope="row">
 		<label for="<?php echo esc_attr( $this->key_forced ); ?>"><?php esc_html_e( 'Make all new sites CommentPress-enabled', 'commentpress-core' ); ?></label>

@@ -41,7 +41,7 @@ get_header();
 								</p>
 							<?php endif; ?>
 
-							<?php echo commentpress_multipager(); ?>
+							<?php echo commentpress_multipager(); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 
 							<?php if ( ! empty( commentpress_get_page_number( get_the_ID() ) ) ) : ?>
 								<div class="running_header_bottom">

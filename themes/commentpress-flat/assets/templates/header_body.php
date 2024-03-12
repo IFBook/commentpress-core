@@ -40,7 +40,7 @@ defined( 'ABSPATH' ) || exit;
 
 	<div id="page_title">
 		<div id="title">
-			<h1><a href="<?php echo home_url(); ?>" title="<?php esc_attr_e( 'Home', 'commentpress-core' ); ?>"><?php bloginfo( 'title' ); ?></a></h1>
+			<h1><a href="<?php echo esc_url( home_url() ); ?>" title="<?php esc_attr_e( 'Home', 'commentpress-core' ); ?>"><?php bloginfo( 'title' ); ?></a></h1>
 		</div>
 		<div id="tagline">
 			<?php bloginfo( 'description' ); ?>

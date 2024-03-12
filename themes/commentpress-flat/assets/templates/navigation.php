@@ -33,7 +33,7 @@ if ( ! empty( $core ) ) {
 					<?php $site_title = commentpress_navigation_network_home_title(); ?>
 
 					<li>
-						<a href="<?php echo network_home_url(); ?>" id="btn_home" class="css_btn" title="<?php echo esc_attr( $site_title ); ?>"><?php echo esc_html( $site_title ); ?></a>
+						<a href="<?php echo esc_url( network_home_url() ); ?>" id="btn_home" class="css_btn" title="<?php echo esc_attr( $site_title ); ?>"><?php echo esc_html( $site_title ); ?></a>
 					</li>
 
 					<?php
@@ -84,7 +84,7 @@ if ( ! empty( $core ) ) {
 						<?php $home_title = commentpress_navigation_blog_home_title(); ?>
 
 						<li>
-							<a href="<?php echo home_url(); ?>" id="btn_home" class="css_btn" title="<?php echo esc_attr( $home_title ); ?>"><?php echo esc_html( $home_title ); ?></a>
+							<a href="<?php echo esc_url( home_url() ); ?>" id="btn_home" class="css_btn" title="<?php echo esc_attr( $home_title ); ?>"><?php echo esc_html( $home_title ); ?></a>
 						</li>
 
 					<?php endif; ?>
@@ -96,7 +96,7 @@ if ( ! empty( $core ) ) {
 					<?php $title_title = commentpress_navigation_title_page_title(); ?>
 
 					<li>
-						<a href="<?php echo $title_url; ?>" id="btn_cover" class="css_btn" title="<?php echo esc_attr( $title_title ); ?>"><?php echo esc_html( $title_title ); ?></a>
+						<a href="<?php echo esc_url( $title_url ); ?>" id="btn_cover" class="css_btn" title="<?php echo esc_attr( $title_title ); ?>"><?php echo esc_html( $title_title ); ?></a>
 					</li>
 
 				<?php endif; ?>
@@ -111,18 +111,23 @@ if ( ! empty( $core ) ) {
 				do_action( 'cp_nav_before_special_pages' );
 
 				// Show link to General Comments Page if we have one.
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo $core->pages_legacy->get_page_link( 'cp_general_comments_page' );
 
 				// Show link to All Comments Page if we have one.
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo $core->pages_legacy->get_page_link( 'cp_all_comments_page' );
 
 				// Show link to Comments-by-User Page if we have one.
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo $core->pages_legacy->get_page_link( 'cp_comments_by_page' );
 
 				// Show link to document Blog Page if we have one.
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo $core->pages_legacy->get_page_link( 'cp_blog_page' );
 
 				// Show link to document Blog Archive Page if we have one.
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo $core->pages_legacy->get_page_link( 'cp_blog_archive_page' );
 
 				?>
@@ -147,7 +152,7 @@ if ( ! empty( $core ) ) {
 						<?php if ( is_user_logged_in() ) : ?>
 
 							<li>
-								<a href="<?php echo trailingslashit( bp_get_blogs_directory_permalink() . 'create' ); ?>" title="<?php echo esc_attr( $new_site_title ); ?>" id="btn_create"><?php echo esc_html( $new_site_title ); ?></a>
+								<a href="<?php echo esc_url( trailingslashit( bp_get_blogs_directory_permalink() . 'create' ) ); ?>" title="<?php echo esc_attr( $new_site_title ); ?>" id="btn_create"><?php echo esc_html( $new_site_title ); ?></a>
 							</li>
 
 						<?php endif; ?>
@@ -155,7 +160,7 @@ if ( ! empty( $core ) ) {
 					<?php else : /* Standard WordPress multisite. */ ?>
 
 						<li<?php echo ( commentpress_page_navigation_is_signup() ? ' class="active_page"' : '' ); ?>>
-							<a href="<?php echo network_site_url(); ?>wp-signup.php" title="<?php esc_attr( $new_site_title ); ?>" id="btn_create"><?php echo esc_html( $new_site_title ); ?></a>
+							<a href="<?php echo esc_url( network_site_url( 'wp-signup.php' ) ); ?>" title="<?php esc_attr( $new_site_title ); ?>" id="btn_create"><?php echo esc_html( $new_site_title ); ?></a>
 						</li>
 
 					<?php endif; ?>
@@ -169,7 +174,7 @@ if ( ! empty( $core ) ) {
 					<?php $dashboard_title = commentpress_navigation_dashboard_title(); ?>
 
 					<li>
-						<a href="<?php echo admin_url(); ?>" title="<?php echo esc_attr( $dashboard_title ); ?>" id="btn_dash"><?php echo esc_html( $dashboard_title ); ?></a>
+						<a href="<?php echo esc_url( admin_url() ); ?>" title="<?php echo esc_attr( $dashboard_title ); ?>" id="btn_dash"><?php echo esc_html( $dashboard_title ); ?></a>
 					</li>
 
 				<?php endif; ?>

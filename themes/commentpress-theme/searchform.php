@@ -19,13 +19,13 @@ if ( function_exists( 'bp_search_form_type_select' ) && bp_is_root_blog() ) :
 
 	?>
 	<!-- searchform.php -->
-	<form action="<?php echo bp_search_form_action(); ?>" method="post" id="search-form">
+	<form action="<?php echo esc_url( bp_search_form_action() ); ?>" method="post" id="search-form">
 
 		<label for="search-terms" class="accessibly-hidden"><?php esc_html_e( 'Search for:', 'commentpress-core' ); ?></label>
 		<?php /* phpcs:ignore WordPress.Security.NonceVerification.Recommended */ ?>
 		<input type="text" id="search-terms" name="search-terms" value="<?php echo isset( $_REQUEST['s'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) ) : ''; ?>" />
 
-		<?php echo bp_search_form_type_select(); ?>
+		<?php echo bp_search_form_type_select(); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 
 		<input type="submit" name="search-submit" id="search-submit" value="<?php esc_attr_e( 'Search', 'commentpress-core' ); ?>" />
 
@@ -43,7 +43,7 @@ if ( function_exists( 'bp_search_form_type_select' ) && bp_is_root_blog() ) :
 
 	?>
 	<!-- searchform.php -->
-	<form method="get" id="searchform" action="<?php echo site_url(); ?>/">
+	<form method="get" id="searchform" action="<?php echo esc_url( site_url() ); ?>/">
 
 		<label for="s"><?php esc_html_e( 'Search for:', 'commentpress-core' ); ?></label>
 

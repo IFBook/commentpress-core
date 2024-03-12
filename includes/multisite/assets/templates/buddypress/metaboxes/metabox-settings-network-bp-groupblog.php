@@ -11,7 +11,7 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<!-- <?php echo $this->metabox_path; ?>metabox-settings-network-bp-groupblog.php -->
+<!-- <?php echo esc_html( $this->metabox_path ); ?>metabox-settings-network-bp-groupblog.php -->
 <table class="form-table">
 
 	<?php
@@ -50,7 +50,7 @@ defined( 'ABSPATH' ) || exit;
 
 					printf(
 						/* translators: 1: The first tag name, 2: The second tag name. */
-						__( 'For themes or child themes to be recognized as eligible, they must be tagged with both the %1$s and %2$s tags.', 'commentpress-core' ),
+						esc_html__( 'For themes or child themes to be recognized as eligible, they must be tagged with both the %1$s and %2$s tags.', 'commentpress-core' ),
 						'<code>commentpress</code>',
 						'<code>groupblog</code>'
 					);

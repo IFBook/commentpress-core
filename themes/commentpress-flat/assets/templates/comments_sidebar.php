@@ -16,7 +16,7 @@ $no_comments_class = ( 0 === $post->comment_count ) ? ' no_comments' : '';
 
 ?>
 <!-- comments_sidebar.php -->
-<div id="comments_sidebar" class="sidebar_container<?php echo $no_comments_class; ?>">
+<div id="comments_sidebar" class="sidebar_container<?php echo esc_attr( $no_comments_class ); ?>">
 
 	<div class="sidebar_header">
 		<h2><?php esc_html_e( 'Comments', 'commentpress-core' ); ?></h2>

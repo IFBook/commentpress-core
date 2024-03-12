@@ -618,6 +618,7 @@ class CommentPress_Multisite_Settings_Network {
 		$url = esc_url( $url );
 
 		if ( $echo ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $url;
 		}
 

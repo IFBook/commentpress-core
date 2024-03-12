@@ -11,7 +11,7 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<!-- <?php echo $this->parts_path; ?>part-bp-groupblog-signup.php -->
+<!-- <?php echo esc_html( $this->parts_path ); ?>part-bp-groupblog-signup.php -->
 <br />
 <div id="cp-multisite-options">
 

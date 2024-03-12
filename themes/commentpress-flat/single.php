@@ -47,13 +47,13 @@ get_header();
 
 							<?php the_content(); ?>
 
-							<?php echo commentpress_multipager(); ?>
+							<?php echo commentpress_multipager(); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 
 							<?php the_tags( '<div class="entry-meta"><p class="postmetadata">' . __( 'Tags: ', 'commentpress-core' ), '<span class="tag-divider">,</span> ', '</p></div>' ); ?>
 
 							<div class="entry-category-meta clearfix">
 								<p class="category-meta"><?php esc_html_e( 'Categories:', 'commentpress-core' ); ?></p>
-								<?php echo get_the_category_list( ', ' ); ?>
+								<?php echo get_the_category_list( ', ' ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 							</div>
 
 							<?php commentpress_geomashup_map_get(); ?>
@@ -65,13 +65,13 @@ get_header();
 								$rss_text = __( 'RSS 2.0', 'commentpress-core' );
 
 								// Construct RSS link.
-								$rss_link = '<a href="' . esc_url( get_post_comments_feed_link() ) . '">' . $rss_text . '</a>';
+								$rss_link = '<a href="' . esc_url( get_post_comments_feed_link() ) . '">' . esc_html( $rss_text ) . '</a>';
 
 								// Show text.
 								echo sprintf(
 									/* translators: %s: The RSS feed link. */
-									__( 'You can follow any comments on this entry through the %s feed.', 'commentpress-core' ),
-									$rss_link
+									esc_html__( 'You can follow any comments on this entry through the %s feed.', 'commentpress-core' ),
+									$rss_link // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								);
 
 								// Add trailing space.
@@ -85,13 +85,13 @@ get_header();
 									$trackback_text = __( 'trackback', 'commentpress-core' );
 
 									// Construct RSS link.
-									$trackback_link = '<a href="' . esc_url( get_trackback_url() ) . '"rel="trackback">' . $trackback_text . '</a>';
+									$trackback_link = '<a href="' . esc_url( get_trackback_url() ) . '"rel="trackback">' . esc_html( $trackback_text ) . '</a>';
 
 									// Write out.
 									echo sprintf(
 										/* translators: %s: The trackback link. */
-										__( 'You can leave a comment, or %s from your own site.', 'commentpress-core' ),
-										$trackback_link
+										esc_html__( 'You can leave a comment, or %s from your own site.', 'commentpress-core' ),
+										$trackback_link // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 									);
 
 									// Add trailing space.
@@ -105,13 +105,13 @@ get_header();
 									$trackback_text = __( 'trackback', 'commentpress-core' );
 
 									// Construct RSS link.
-									$trackback_link = '<a href="' . esc_url( get_trackback_url() ) . '"rel="trackback">' . $trackback_text . '</a>';
+									$trackback_link = '<a href="' . esc_url( get_trackback_url() ) . '"rel="trackback">' . esc_html( $trackback_text ) . '</a>';
 
 									// Write out.
 									echo sprintf(
 										/* translators: %s: The trackback link. */
-										__( 'Comments are currently closed, but you can %s from your own site.', 'commentpress-core' ),
-										$trackback_link
+										esc_html__( 'Comments are currently closed, but you can %s from your own site.', 'commentpress-core' ),
+										$trackback_link // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 									);
 
 									// Add trailing space.

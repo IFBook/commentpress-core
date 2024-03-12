@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
 
 		<!-- meta -->
 		<meta http-equiv="content-type" content="<?php bloginfo( 'html_type' ); ?>; charset=<?php bloginfo( 'charset' ); ?>" />
-		<meta name="description" content="<?php echo commentpress_header_meta_description(); ?>" />
+		<meta name="description" content="<?php echo esc_url( commentpress_header_meta_description() ); ?>" />
 		<?php if ( is_search() ) : ?>
 			<meta name="robots" content="noindex, nofollow" />
 		<?php endif; ?>
@@ -29,7 +29,7 @@ defined( 'ABSPATH' ) || exit;
 
 	</head>
 
-	<body<?php echo commentpress_get_body_id(); ?> <?php body_class( commentpress_get_body_classes( true ) ); ?>>
+	<body<?php commentpress_body_id(); ?> <?php body_class( commentpress_get_body_classes( true ) ); ?>>
 
 		<?php if ( function_exists( 'wp_body_open' ) ) : ?>
 			<?php wp_body_open(); ?>

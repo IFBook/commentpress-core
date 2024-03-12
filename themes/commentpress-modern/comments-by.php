@@ -25,7 +25,7 @@ get_header();
 					<h2 class="post_title"><?php esc_html_e( 'Comments by Commenter', 'commentpress-core' ); ?></h2>
 
 					<div id="comments_in_page_wrapper">
-						<?php echo $_page_content; ?>
+						<?php echo $_page_content; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 					</div>
 
 				</div><!-- /post -->

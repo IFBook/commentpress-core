@@ -48,17 +48,32 @@ get_header();
 					<h2 class="post_title"><?php echo esc_html( $my_author_name ); ?></h2>
 
 					<?php if ( ! empty( $my_avatar ) ) : ?>
-						<p><?php echo $my_avatar; ?></p>
+						<p><?php echo $my_avatar; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></p>
 					<?php endif; ?>
 
 					<?php if ( ! empty( $my_author->description ) ) : ?>
-						<p><?php echo nl2br( $my_author->description ); ?></p>
+						<p><?php echo nl2br( $my_author->description ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></p>
 					<?php endif; ?>
 
 					<!-- The Loop -->
 					<?php if ( have_posts() ) : ?>
 
-						<h3 class="author_pages_heading"><?php echo apply_filters( 'cp_author_page_posts_list_title', __( 'Posts written by', 'commentpress-core' ) ); ?> <?php echo esc_html( $my_author_name ); ?></h3>
+						<h3 class="author_pages_heading">
+							<?php
+
+							/**
+							 * Filter the Posts List title.
+							 *
+							 * @since 3.4
+							 *
+							 * @param str The default Posts List title.
+							 */
+							$posts_list_title = apply_filters( 'cp_author_page_posts_list_title', __( 'Posts written by', 'commentpress-core' ) );
+
+							echo esc_html( $posts_list_title ) . ' ' . esc_html( $my_author_name );
+
+							?>
+						</h3>
 
 						<ul class="author_pages">
 							<?php while ( have_posts() ) : ?>
@@ -68,14 +83,14 @@ get_header();
 
 									$post_title = sprintf(
 										/* translators: 1: The Post permalink, 2: The date published. */
-										__( '%1$s (on %2$s)', 'commentpress-core' ),
-										get_the_title(),
-										get_the_time( get_option( 'date_format' ) )
+										esc_html__( '%1$s on %2$s', 'commentpress-core' ),
+										esc_html( get_the_title() ),
+										esc_html( get_the_time( get_option( 'date_format' ) ) )
 									);
 
 									printf(
 										'<a href="%s" title="%s">%s</a>',
-										get_permalink(),
+										esc_url( get_permalink() ),
 										the_title_attribute(
 											[
 												'before' => __( 'Permanent Link:', 'commentpress-core' ),
@@ -83,7 +98,7 @@ get_header();
 												'echo'   => false,
 											]
 										),
-										$post_title
+										esc_html( $post_title )
 									);
 
 									?>
@@ -110,34 +125,27 @@ get_header();
 					?>
 
 					<?php if ( $author_pages->have_posts() ) : ?>
-						<h3 class="author_pages_heading"><?php echo apply_filters( 'cp_author_page_pages_list_title', __( 'Pages written by', 'commentpress-core' ) ); ?> <?php echo esc_html( $my_author_name ); ?></h3>
+						<h3 class="author_pages_heading">
+							<?php
+
+							/**
+							 * Filter the Posts List title.
+							 *
+							 * @since 3.4
+							 *
+							 * @param str The default Posts List title.
+							 */
+							$pages_list_title = apply_filters( 'cp_author_page_pages_list_title', __( 'Pages written by', 'commentpress-core' ) );
+
+							echo esc_html( $pages_list_title ) . ' ' . esc_html( $my_author_name );
+
+							?>
+						</h3>
 						<ul class="author_pages">
 							<?php while ( $author_pages->have_posts() ) : ?>
 								<?php $author_pages->the_post(); ?>
 								<li>
-									<?php
-
-									$post_permalink = sprintf(
-										'<a href="%s" title="%s">%s</a>',
-										get_permalink(),
-										the_title_attribute(
-											[
-												'before' => __( 'Permanent Link:', 'commentpress-core' ),
-												'after'  => '',
-												'echo'   => false,
-											]
-										),
-										get_the_title()
-									);
-
-									printf(
-										/* translators: 1: The Post permalink, 2: The date published. */
-										__( '%1$s on %2$s', 'commentpress-core' ),
-										$post_permalink,
-										get_the_time( get_option( 'date_format' ) )
-									);
-
-									?>
+									<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
 								</li>
 							<?php endwhile; ?>
 						</ul>

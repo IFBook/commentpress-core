@@ -60,8 +60,12 @@ $core = commentpress_core();
 					 * Filters the Search accordion title.
 					 *
 					 * @since 3.4
+					 *
+					 * @param str The default Search accordion title.
 					 */
-					echo apply_filters( 'cp_content_tab_search_title', __( 'Search', 'commentpress-core' ) );
+					$cp_search_title = apply_filters( 'cp_content_tab_search_title', __( 'Search', 'commentpress-core' ) );
+
+					echo esc_html( $cp_search_title );
 
 					?>
 				</h3>
@@ -80,8 +84,12 @@ $core = commentpress_core();
 						 * Filters the Special Pages accordion title.
 						 *
 						 * @since 3.4
+						 *
+						 * @param str The default Special Pages accordion title.
 						 */
-						echo apply_filters( 'cp_content_tab_special_pages_title', __( 'Special Pages', 'commentpress-core' ) );
+						$cp_special_pages_title = apply_filters( 'cp_content_tab_special_pages_title', __( 'Special Pages', 'commentpress-core' ) );
+
+						echo esc_html( $cp_special_pages_title );
 
 						?>
 					</h3>
@@ -95,7 +103,6 @@ $core = commentpress_core();
 						 * @since 3.4
 						 *
 						 * @param str The existing path returned by WordPress.
-						 * @return str The modified path.
 						 */
 						$cp_navigation = apply_filters( 'cp_template_navigation', locate_template( 'assets/templates/navigation.php' ) );
 
@@ -115,8 +122,12 @@ $core = commentpress_core();
 					 * Filters the Table of Contents accordion title.
 					 *
 					 * @since 3.4
+					 *
+					 * @param str The default Table of Contents accordion title.
 					 */
-					echo apply_filters( 'cp_content_tab_toc_title', __( 'Table of Contents', 'commentpress-core' ) );
+					$cp_toc_title = apply_filters( 'cp_content_tab_toc_title', __( 'Table of Contents', 'commentpress-core' ) );
+
+					echo esc_html( $cp_toc_title );
 
 					?>
 				</h3>
@@ -124,7 +135,7 @@ $core = commentpress_core();
 				<div class="paragraph_wrapper start_open">
 					<ul id="toc_list">
 						<?php if ( ! empty( $core ) ) : ?>
-							<?php echo $core->display->get_toc_list(); ?>
+							<?php echo $core->display->get_toc_list(); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 						<?php else : ?>
 							<?php wp_list_pages( 'sort_column=menu_order&title_li=' ); ?>
 						<?php endif; ?>

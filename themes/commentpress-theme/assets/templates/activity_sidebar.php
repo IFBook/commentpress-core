@@ -114,10 +114,10 @@ $_max_members = 10;
 
 					?>
 
-					<h3 class="activity_heading"><?php echo $page_comments_title; ?></h3>
+					<h3 class="activity_heading"><?php echo $page_comments_title; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></h3>
 
 					<div class="paragraph_wrapper page_comments_output">
-						<?php echo $_page_comments_output; ?>
+						<?php echo $_page_comments_output; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 					</div>
 
 					<?php
@@ -148,10 +148,10 @@ $_max_members = 10;
 
 					?>
 
-					<h3 class="activity_heading"><?php echo $_all_comments_title; ?></h3>
+					<h3 class="activity_heading"><?php echo esc_html( $_all_comments_title ); ?></h3>
 
 					<div class="paragraph_wrapper all_comments_output">
-						<?php echo $_all_comments_output; ?>
+						<?php echo $_all_comments_output; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 					</div>
 
 					<?php
@@ -210,7 +210,7 @@ $_max_members = 10;
 
 							?>
 
-							<h3 class="activity_heading"><?php echo $_section_header_text; ?></h3>
+							<h3 class="activity_heading"><?php echo esc_html( $_section_header_text ); ?></h3>
 
 							<div class="paragraph_wrapper workshop_comments_output">
 

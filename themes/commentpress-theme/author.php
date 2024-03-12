@@ -48,7 +48,7 @@ get_header();
 					<h2 class="post_title"><?php echo esc_html( $my_author_name ); ?></h2>
 
 					<?php if ( ! empty( $my_avatar ) ) : ?>
-						<p><?php echo $my_avatar; ?></p>
+						<p><?php echo $my_avatar; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></p>
 					<?php endif; ?>
 
 					<dl>
@@ -60,7 +60,7 @@ get_header();
 
 						<?php if ( ! empty( $my_author_url ) ) : ?>
 							<dt><?php esc_html_e( 'Website', 'commentpress-core' ); ?></dt>
-							<dd><a href="<?php echo $my_author_url; ?>"><?php echo esc_html( $my_author_url ); ?></a></dd>
+							<dd><a href="<?php echo esc_url( $my_author_url ); ?>"><?php echo esc_html( $my_author_url ); ?></a></dd>
 						<?php endif; ?>
 
 						<?php if ( ! empty( $my_author->user_email ) ) : ?>
@@ -104,7 +104,7 @@ get_header();
 
 									printf(
 										'<a href="%s" title="%s">%s</a>',
-										get_permalink(),
+										esc_url( get_permalink() ),
 										the_title_attribute(
 											[
 												'before' => __( 'Permanent Link:', 'commentpress-core' ),
@@ -112,7 +112,7 @@ get_header();
 												'echo'   => false,
 											]
 										),
-										$post_title
+										esc_html( $post_title )
 									);
 
 									?>

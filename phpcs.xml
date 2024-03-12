@@ -27,7 +27,6 @@
 
 		<!-- Codestyle rules yet to be implemented. -->
 		<exclude name="WordPress.PHP.StrictComparisons.LooseComparison" />
-		<exclude name="WordPress.Security.EscapeOutput.OutputNotEscaped" />
 
 	</rule>
 

@@ -11,13 +11,14 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<!-- <?php echo $this->page_path; ?>page-settings-network.php -->
+<!-- <?php echo esc_html( $this->page_path ); ?>page-settings-network.php -->
 <div class="wrap">
 
 	<h1><?php esc_html_e( 'CommentPress Network', 'commentpress-core' ); ?></h1>
 
 	<hr />
 
+	<?php /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 	<form method="post" id="<?php echo esc_attr( $this->form_id ); ?>" action="<?php echo $this->page_settings_submit_url_get(); ?>">
 
 		<?php wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ); ?>
@@ -26,7 +27,7 @@ defined( 'ABSPATH' ) || exit;
 
 		<div id="poststuff">
 
-			<div id="post-body" class="metabox-holder columns-<?php echo $columns; ?>">
+			<div id="post-body" class="metabox-holder columns-<?php echo esc_attr( $columns ); ?>">
 
 				<!--<div id="post-body-content">
 				</div>--><!-- #post-body-content -->

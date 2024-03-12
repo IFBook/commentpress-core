@@ -45,7 +45,7 @@ get_header();
 
 							<?php the_content(); ?>
 
-							<?php echo commentpress_multipager(); ?>
+							<?php echo commentpress_multipager(); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 
 							<?php /* Test for "Post Tags and Categories for Pages" plugin. */ ?>
 							<?php if ( class_exists( 'PTCFP' ) ) : ?>

@@ -56,10 +56,10 @@ $next_title = apply_filters( 'cp_nav_next_link_title', __( 'Newer Entries', 'com
 			?>
 			<ul class="blog_navigation">
 				<?php if ( ! empty( $pl ) ) { ?>
-					<li class="alignright"><?php echo $pl; ?></li>
+					<li class="alignright"><?php echo $pl; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></li>
 				<?php } ?>
 				<?php if ( ! empty( $nl ) ) { ?>
-					<li class="alignleft"><?php echo $nl; ?></li>
+					<li class="alignleft"><?php echo $nl; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></li>
 				<?php } ?>
 			</ul>
 			<?php
@@ -75,10 +75,10 @@ $next_title = apply_filters( 'cp_nav_next_link_title', __( 'Newer Entries', 'com
 			?>
 			<ul class="blog_navigation">
 				<?php if ( ! empty( $pl ) ) { ?>
-					<li class="alignright"><?php echo $pl; ?></li>
+					<li class="alignright"><?php echo $pl; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></li>
 				<?php } ?>
 				<?php if ( ! empty( $nl ) ) { ?>
-					<li class="alignleft"><?php echo $nl; ?></li>
+					<li class="alignleft"><?php echo $nl; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></li>
 				<?php } ?>
 			</ul>
 			<?php
@@ -94,10 +94,10 @@ $next_title = apply_filters( 'cp_nav_next_link_title', __( 'Newer Entries', 'com
 			?>
 			<ul class="blog_navigation">
 				<?php if ( ! empty( $nl ) ) { ?>
-					<li class="alignright"><?php echo $nl; ?></li>
+					<li class="alignright"><?php echo $nl; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></li>
 				<?php } ?>
 				<?php if ( ! empty( $pl ) ) { ?>
-					<li class="alignleft"><?php echo $pl; ?></li>
+					<li class="alignleft"><?php echo $pl; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></li>
 				<?php } ?>
 			</ul>
 			<?php
@@ -113,10 +113,10 @@ $next_title = apply_filters( 'cp_nav_next_link_title', __( 'Newer Entries', 'com
 			?>
 			<ul class="blog_navigation">
 				<?php if ( ! empty( $nl ) ) { ?>
-					<li class="alignright"><?php echo $nl; ?></li>
+					<li class="alignright"><?php echo $nl; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></li>
 				<?php } ?>
 				<?php if ( ! empty( $pl ) ) { ?>
-					<li class="alignleft"><?php echo $pl; ?></li>
+					<li class="alignleft"><?php echo $pl; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></li>
 				<?php } ?>
 			</ul>
 			<?php
@@ -133,10 +133,10 @@ $next_title = apply_filters( 'cp_nav_next_link_title', __( 'Newer Entries', 'com
 			?>
 			<ul class="blog_navigation">
 				<?php if ( ! empty( $nl ) ) { ?>
-					<li class="alignright"><?php echo $nl; ?></li>
+					<li class="alignright"><?php echo $nl; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></li>
 				<?php } ?>
 				<?php if ( ! empty( $pl ) ) { ?>
-					<li class="alignleft"><?php echo $pl; ?></li>
+					<li class="alignleft"><?php echo $pl; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></li>
 				<?php } ?>
 			</ul>
 			<?php

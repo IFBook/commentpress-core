@@ -30,8 +30,8 @@ if ( ! empty( $core ) ) {
 		$target     = get_permalink( $next_page_id );
 
 		// Set the link.
-		$next_page_html = '<a href="' . $target . '" id="next_page" class="css_btn" title="' . esc_attr( $page_title ) . '">' .
-			$page_title .
+		$next_page_html = '<a href="' . esc_url( $target ) . '" id="next_page" class="css_btn" title="' . esc_attr( $page_title ) . '">' .
+			esc_html( $page_title ) .
 		'</a>';
 
 	}
@@ -59,7 +59,7 @@ get_header();
 							<div class="page_navigation">
 								<ul>
 									<li class="alignright">
-										<?php echo $next_page_html; ?>
+										<?php echo $next_page_html; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 									</li>
 								</ul>
 							</div><!-- /page_navigation -->
@@ -81,7 +81,7 @@ get_header();
 
 							<?php the_content(); ?>
 
-							<?php echo commentpress_multipager(); ?>
+							<?php echo commentpress_multipager(); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 
 						</div><!-- /post -->
 					</div><!-- /content -->
@@ -93,7 +93,7 @@ get_header();
 						<div class="page_navigation">
 							<ul>
 								<li class="alignright">
-									<?php echo $next_page_html; ?>
+									<?php echo $next_page_html; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 								</li>
 							</ul>
 						</div><!-- /page_navigation -->

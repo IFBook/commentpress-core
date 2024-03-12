@@ -11,7 +11,7 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<!-- <?php echo $this->parts_path; ?>part-bp-groupblog-names-settings-network.php -->
+<!-- <?php echo esc_html( $this->parts_path ); ?>part-bp-groupblog-names-settings-network.php -->
 <tr valign="top">
 	<th scope="row">
 		<label for="<?php echo esc_attr( $this->key_scheme ); ?>"><?php echo esc_html_e( 'Default naming scheme for Group Blogs', 'commentpress-core' ); ?></label>
@@ -27,7 +27,7 @@ defined( 'ABSPATH' ) || exit;
 
 			printf(
 				/* translators: %s: The name of the filter. */
-				__( 'You can add additional translatable naming schemes for Group Blogs using the %s filter.', 'commentpress-core' ),
+				esc_html__( 'You can add additional translatable naming schemes for Group Blogs using the %s filter.', 'commentpress-core' ),
 				'<code>commentpress/multisite/bp/groupblog/schemes</code>'
 			);
 

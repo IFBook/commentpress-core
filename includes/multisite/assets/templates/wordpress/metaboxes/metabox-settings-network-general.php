@@ -11,7 +11,7 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<!-- <?php echo $this->metabox_path; ?>metabox-settings-network-general.php -->
+<!-- <?php echo esc_html( $this->metabox_path ); ?>metabox-settings-network-general.php -->
 <table class="form-table">
 
 	<?php

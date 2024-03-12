@@ -24,7 +24,7 @@ $core = commentpress_core();
 
 			<ul id="toc_list">
 				<?php if ( ! empty( $core ) ) : ?>
-					<?php echo $core->display->get_toc_list(); ?>
+					<?php echo $core->display->get_toc_list(); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 				<?php else : ?>
 					<?php wp_list_pages( 'sort_column=menu_order&title_li=' ); ?>
 				<?php endif; ?>

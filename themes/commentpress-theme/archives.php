@@ -106,7 +106,7 @@ get_header();
 							?>
 
 							<?php if ( ! empty( $tags ) ) : ?>
-								<?php echo $tags; ?>
+								<?php echo $tags; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 							<?php else : ?>
 								<ul>
 									<li class="no_tags"><?php esc_html_e( 'No tags yet', 'commentpress-core' ); ?></li>
