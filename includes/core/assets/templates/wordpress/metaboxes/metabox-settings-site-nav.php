@@ -46,19 +46,19 @@ defined( 'ABSPATH' ) || exit;
 		</th>
 		<td>
 			<select id="<?php echo esc_attr( $this->key_chapter_is_page ); ?>" name="<?php echo esc_attr( $this->key_chapter_is_page ); ?>">
-				<option value="1" <?php selected( $chapter_is_page, '1' ); ?>><?php esc_html_e( 'Pages', 'commentpress-core' ); ?></option>
-				<option value="0" <?php selected( $chapter_is_page, '0' ); ?>><?php esc_html_e( 'Headings', 'commentpress-core' ); ?></option>
+				<option value="1" <?php selected( $chapter_is_page, 1 ); ?>><?php esc_html_e( 'Pages', 'commentpress-core' ); ?></option>
+				<option value="0" <?php selected( $chapter_is_page, 0 ); ?>><?php esc_html_e( 'Headings', 'commentpress-core' ); ?></option>
 			</select>
 			<p class="description"><?php esc_html_e( 'When Chapters are Pages, the Table of Contents will always show Sub-Pages.', 'commentpress-core' ); ?></p>
 		</td>
 	</tr>
 
-	<tr valign="top" class="show_subpages"<?php echo ( 'page' === $post_type && '0' == $chapter_is_page ? '' : ' style="display: none;"' ); ?>>
+	<tr valign="top" class="show_subpages"<?php echo ( 'page' === $post_type && 0 === $chapter_is_page ? '' : ' style="display: none;"' ); ?>>
 		<th scope="row">
 			<label for="<?php echo esc_attr( $this->key_subpages ); ?>"><?php esc_html_e( 'Show Sub-Pages', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
-			<input id="<?php echo esc_attr( $this->key_subpages ); ?>" name="<?php echo esc_attr( $this->key_subpages ); ?>" value="1"  type="checkbox" <?php echo ( $show_subpages ? ' checked="checked"' : '' ); ?> />
+			<input id="<?php echo esc_attr( $this->key_subpages ); ?>" name="<?php echo esc_attr( $this->key_subpages ); ?>" value="1"  type="checkbox" <?php checked( 1, $show_subpages ); ?> />
 			<p class="description"><?php esc_html_e( 'When Sub-Pages are not shown, the Table of Contents will collapse the Menu when first loaded - only Chapters will be shown. Clicking on Chapters will reveal the Sub-Pages.', 'commentpress-core' ); ?></p>
 		</td>
 	</tr>

@@ -413,7 +413,7 @@ class CommentPress_Multisite_Settings_Site {
 		do_action( 'commentpress/multisite/settings/site/page/add_meta_boxes', $screen->id );
 
 		// Grab columns.
-		$columns = ( 1 == $screen->get_columns() ? '1' : '2' );
+		$columns = ( 1 === (int) $screen->get_columns() ? '1' : '2' );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->page_path . 'page-settings-site.php';

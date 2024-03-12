@@ -30,7 +30,7 @@ defined( 'ABSPATH' ) || exit;
 			<label for="<?php echo esc_attr( $this->key_forced ); ?>"><?php esc_html_e( 'Make all new Group Blogs CommentPress-enabled', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
-			<input id="<?php echo esc_attr( $this->key_forced ); ?>" name="<?php echo esc_attr( $this->key_forced ); ?>" value="1" type="checkbox"<?php echo ( '1' == $force_commentpress ? ' checked="checked"' : '' ); ?> />
+			<input id="<?php echo esc_attr( $this->key_forced ); ?>" name="<?php echo esc_attr( $this->key_forced ); ?>" value="1" type="checkbox"<?php checked( true, $force_commentpress ); ?> />
 		</td>
 	</tr>
 
@@ -66,7 +66,7 @@ defined( 'ABSPATH' ) || exit;
 			<label for="<?php echo esc_attr( $this->key_privacy ); ?>"><?php esc_html_e( 'Private Groups must have Private Group Blogs', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
-			<input id="<?php echo esc_attr( $this->key_privacy ); ?>" name="<?php echo esc_attr( $this->key_privacy ); ?>" value="1" type="checkbox"<?php echo ( 1 == $privacy ? ' checked="checked"' : '' ); ?> />
+			<input id="<?php echo esc_attr( $this->key_privacy ); ?>" name="<?php echo esc_attr( $this->key_privacy ); ?>" value="1" type="checkbox"<?php checked( true, $privacy ); ?> />
 		</td>
 	</tr>
 
@@ -75,7 +75,7 @@ defined( 'ABSPATH' ) || exit;
 			<label for="<?php echo esc_attr( $this->key_comment_login ); ?>"><?php esc_html_e( 'Require user login to post comments on Group Blogs', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
-			<input id="<?php echo esc_attr( $this->key_comment_login ); ?>" name="<?php echo esc_attr( $this->key_comment_login ); ?>" value="1" type="checkbox"<?php echo ( 1 == $comment_login ? ' checked="checked"' : '' ); ?> />
+			<input id="<?php echo esc_attr( $this->key_comment_login ); ?>" name="<?php echo esc_attr( $this->key_comment_login ); ?>" value="1" type="checkbox"<?php checked( true, $comment_login ); ?> />
 			<p class="description"><?php esc_html_e( 'The initial privacy setting when Group Blogs are created.', 'commentpress-core' ); ?></p>
 		</td>
 	</tr>

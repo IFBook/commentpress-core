@@ -76,7 +76,7 @@ get_header();
 									$rss_link // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								);
 
-								if ( ( 'open' == $post->comment_status ) && ( 'open' == $post->ping_status ) ) {
+								if ( ( 'open' === $post->comment_status ) && ( 'open' === $post->ping_status ) ) {
 
 									// Both Comments and pings are open.
 
@@ -96,7 +96,7 @@ get_header();
 									// Add trailing space.
 									echo ' ';
 
-								} elseif ( ! ( 'open' == $post->comment_status ) && ( 'open' == $post->ping_status ) ) {
+								} elseif ( ! ( 'open' === $post->comment_status ) && ( 'open' === $post->ping_status ) ) {
 
 									// Only pings are open.
 
@@ -116,7 +116,7 @@ get_header();
 									// Add trailing space.
 									echo ' ';
 
-								} elseif ( ( 'open' == $post->comment_status ) && ! ( 'open' == $post->ping_status ) ) {
+								} elseif ( ( 'open' === $post->comment_status ) && ! ( 'open' === $post->ping_status ) ) {
 
 									// Comments are open, pings are not.
 									esc_html_e( 'You can leave a comment. Pinging is currently not allowed.', 'commentpress-core' );
@@ -124,7 +124,7 @@ get_header();
 									// Add trailing space.
 									echo ' ';
 
-								} elseif ( ! ( 'open' == $post->comment_status ) && ! ( 'open' == $post->ping_status ) ) {
+								} elseif ( ! ( 'open' === $post->comment_status ) && ! ( 'open' === $post->ping_status ) ) {
 
 									// Neither Comments nor pings are open.
 									esc_html_e( 'Both comments and pings are currently closed.', 'commentpress-core' );

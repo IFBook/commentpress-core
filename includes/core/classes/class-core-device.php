@@ -106,7 +106,7 @@ class CommentPress_Core_Device {
 	public function detect() {
 
 		// Don't include in admin or wp-login.php.
-		if ( is_admin() || ( isset( $GLOBALS['pagenow'] ) && 'wp-login.php' == $GLOBALS['pagenow'] ) ) {
+		if ( is_admin() || ( isset( $GLOBALS['pagenow'] ) && 'wp-login.php' === $GLOBALS['pagenow'] ) ) {
 			return;
 		}
 

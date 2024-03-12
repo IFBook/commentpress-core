@@ -23,7 +23,7 @@ if ( ! empty( $core ) ) {
 	$next_page_id = $core->nav->page_get_first();
 
 	// If the link does not point to this Page and we're allowing Page nav.
-	if ( $next_page_id != $post->ID && false === $core->nav->page_nav_is_disabled() ) {
+	if ( $next_page_id !== $post->ID && false === $core->nav->page_nav_is_disabled() ) {
 
 		// Get Page attributes.
 		$page_title = get_the_title( $next_page_id );
@@ -55,7 +55,7 @@ get_header();
 					<?php commentpress_get_feature_image(); ?>
 
 					<?php if ( ! commentpress_has_feature_image() ) : ?>
-						<?php if ( '' != $next_page_html ) : ?>
+						<?php if ( ! empty( $next_page_html ) ) : ?>
 							<div class="page_navigation">
 								<ul>
 									<li class="alignright">
@@ -86,7 +86,7 @@ get_header();
 
 				<?php endwhile; ?>
 
-				<?php if ( '' != $next_page_html ) : ?>
+				<?php if ( ! empty( $next_page_html ) ) : ?>
 					<div class="page_nav_lower">
 						<div class="page_navigation">
 							<ul>

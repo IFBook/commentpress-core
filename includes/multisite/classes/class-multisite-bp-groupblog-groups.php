@@ -421,7 +421,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 						}
 
 						// If we're on the last, don't add.
-						if ( $n == $author_count ) {
+						if ( $n === $author_count ) {
 							$sep = '';
 						}
 
@@ -474,7 +474,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 
 		// Having marked all Group Blogs as public, we need to hide Activity from them if the Group is private
 		// or hidden, so they don't show up in sitewide Activity feeds.
-		if ( 'public' != $group->status ) {
+		if ( 'public' !== $group->status ) {
 			$activity->hide_sitewide = true;
 		} else {
 			$activity->hide_sitewide = false;
@@ -764,7 +764,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		$key = '_cp_comment_page';
 
 		// If the custom field has a value, we have a Sub-page Comment.
-		if ( get_comment_meta( $comment->comment_ID, $key, true ) != '' ) {
+		if ( get_comment_meta( $comment->comment_ID, $key, true ) !== '' ) {
 
 			// Get comment's Page from meta.
 			$page_num = get_comment_meta( $comment->comment_ID, $key, true );
@@ -830,7 +830,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		 * them if the Group is private or hidden, so they don't show up in sitewide
 		 * Activity feeds.
 		 */
-		if ( 'public' != $group->status ) {
+		if ( 'public' !== $group->status ) {
 			$activity->hide_sitewide = true;
 		} else {
 			$activity->hide_sitewide = false;

@@ -101,7 +101,7 @@ class CommentPress_Core_Editor_Content {
 	public function enqueue_scripts( $hook ) {
 
 		// Don't enqueue on "Edit Comment" screen.
-		if ( 'comment.php' == $hook ) {
+		if ( 'comment.php' === $hook ) {
 			return;
 		}
 
@@ -141,7 +141,7 @@ class CommentPress_Core_Editor_Content {
 		}
 
 		// Add only if User can edit in Rich-text Editor mode.
-		if ( get_user_option( 'rich_editing' ) != 'true' ) {
+		if ( ! user_can_richedit() ) {
 			return;
 		}
 

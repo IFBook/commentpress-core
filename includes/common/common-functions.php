@@ -91,7 +91,7 @@ function commentpress_find_plugin_by_name( $plugin_name = '' ) {
 	foreach ( $plugins as $key => $plugin ) {
 
 		// Is it ours?
-		if ( $plugin['Name'] == $plugin_name ) {
+		if ( $plugin['Name'] === $plugin_name ) {
 
 			// Now get the key, which is our path.
 			$path_to_plugin = $key;

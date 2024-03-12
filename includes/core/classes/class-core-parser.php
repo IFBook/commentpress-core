@@ -396,7 +396,7 @@ class CommentPress_Core_Parser {
 
 		// Default to parsing content and Comments.
 		$vars['cp_do_not_parse'] = 0;
-		if ( $this->setting_do_not_parse_get() == 'y' ) {
+		if ( $this->setting_do_not_parse_get() === 'y' ) {
 			$vars['cp_do_not_parse'] = 1;
 		}
 
@@ -468,7 +468,7 @@ class CommentPress_Core_Parser {
 			in_array( $post->post_type, $this->setting_post_types_disabled_get(), true ) || (
 
 			// Individual entries can have parsing skipped.
-			$this->core->db->setting_get( 'cp_do_not_parse', 'n' ) == 'y' &&
+			$this->core->db->setting_get( 'cp_do_not_parse', 'n' ) === 'y' &&
 			'closed' === $post->comment_status &&
 			empty( $post->comment_count ) )
 
@@ -820,7 +820,7 @@ class CommentPress_Core_Parser {
 		$key = '_cp_starting_para_number';
 
 		// If the custom field already has a value.
-		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 			// Get it.
 			$start_num = absint( get_post_meta( $post->ID, $key, true ) );
@@ -904,56 +904,56 @@ class CommentPress_Core_Parser {
 			if ( 'p' === $tag ) {
 
 				// Set pattern by TinyMCE tag attribute, if we have one.
-				if ( substr( $paragraph, 0, 17 ) == '<p style="text-al' ) {
+				if ( substr( $paragraph, 0, 17 ) === '<p style="text-al' ) {
 
 					// Test for left.
-					if ( substr( $paragraph, 0, 27 ) == '<p style="text-align:left;"' ) {
+					if ( substr( $paragraph, 0, 27 ) === '<p style="text-align:left;"' ) {
 						$tag = 'p style="text-align:left;"';
-					} elseif ( substr( $paragraph, 0, 26 ) == '<p style="text-align:left"' ) {
+					} elseif ( substr( $paragraph, 0, 26 ) === '<p style="text-align:left"' ) {
 						$tag = 'p style="text-align:left"';
-					} elseif ( substr( $paragraph, 0, 28 ) == '<p style="text-align: left;"' ) {
+					} elseif ( substr( $paragraph, 0, 28 ) === '<p style="text-align: left;"' ) {
 						$tag = 'p style="text-align: left;"';
-					} elseif ( substr( $paragraph, 0, 27 ) == '<p style="text-align: left"' ) {
+					} elseif ( substr( $paragraph, 0, 27 ) === '<p style="text-align: left"' ) {
 						$tag = 'p style="text-align: left"';
 					}
 
 					// Test for right.
-					if ( substr( $paragraph, 0, 28 ) == '<p style="text-align:right;"' ) {
+					if ( substr( $paragraph, 0, 28 ) === '<p style="text-align:right;"' ) {
 						$tag = 'p style="text-align:right;"';
-					} elseif ( substr( $paragraph, 0, 27 ) == '<p style="text-align:right"' ) {
+					} elseif ( substr( $paragraph, 0, 27 ) === '<p style="text-align:right"' ) {
 						$tag = 'p style="text-align:right"';
-					} elseif ( substr( $paragraph, 0, 29 ) == '<p style="text-align: right;"' ) {
+					} elseif ( substr( $paragraph, 0, 29 ) === '<p style="text-align: right;"' ) {
 						$tag = 'p style="text-align: right;"';
-					} elseif ( substr( $paragraph, 0, 28 ) == '<p style="text-align: right"' ) {
+					} elseif ( substr( $paragraph, 0, 28 ) === '<p style="text-align: right"' ) {
 						$tag = 'p style="text-align: right"';
 					}
 
 					// Test for center.
-					if ( substr( $paragraph, 0, 29 ) == '<p style="text-align:center;"' ) {
+					if ( substr( $paragraph, 0, 29 ) === '<p style="text-align:center;"' ) {
 						$tag = 'p style="text-align:center;"';
-					} elseif ( substr( $paragraph, 0, 28 ) == '<p style="text-align:center"' ) {
+					} elseif ( substr( $paragraph, 0, 28 ) === '<p style="text-align:center"' ) {
 						$tag = 'p style="text-align:center"';
-					} elseif ( substr( $paragraph, 0, 30 ) == '<p style="text-align: center;"' ) {
+					} elseif ( substr( $paragraph, 0, 30 ) === '<p style="text-align: center;"' ) {
 						$tag = 'p style="text-align: center;"';
-					} elseif ( substr( $paragraph, 0, 29 ) == '<p style="text-align: center"' ) {
+					} elseif ( substr( $paragraph, 0, 29 ) === '<p style="text-align: center"' ) {
 						$tag = 'p style="text-align: center"';
 					}
 
 					// Test for justify.
-					if ( substr( $paragraph, 0, 30 ) == '<p style="text-align:justify;"' ) {
+					if ( substr( $paragraph, 0, 30 ) === '<p style="text-align:justify;"' ) {
 						$tag = 'p style="text-align:justify;"';
-					} elseif ( substr( $paragraph, 0, 29 ) == '<p style="text-align:justify"' ) {
+					} elseif ( substr( $paragraph, 0, 29 ) === '<p style="text-align:justify"' ) {
 						$tag = 'p style="text-align:justify"';
-					} elseif ( substr( $paragraph, 0, 31 ) == '<p style="text-align: justify;"' ) {
+					} elseif ( substr( $paragraph, 0, 31 ) === '<p style="text-align: justify;"' ) {
 						$tag = 'p style="text-align: justify;"';
-					} elseif ( substr( $paragraph, 0, 30 ) == '<p style="text-align: justify"' ) {
+					} elseif ( substr( $paragraph, 0, 30 ) === '<p style="text-align: justify"' ) {
 						$tag = 'p style="text-align: justify"';
 					}
 
 				} // End check for text-align.
 
 				// Test for Simple Footnotes para "heading".
-				if ( substr( $paragraph, 0, 16 ) == '<p class="notes"' ) {
+				if ( substr( $paragraph, 0, 16 ) === '<p class="notes"' ) {
 					$tag = 'p class="notes"';
 				}
 
@@ -989,12 +989,12 @@ class CommentPress_Core_Parser {
 			// Further checks when there's a <ol> tag.
 			if ( 'ol' === $tag ) {
 
-				if ( substr( $paragraph, 0, 21 ) == '<ol class="footnotes"' ) {
+				if ( substr( $paragraph, 0, 21 ) === '<ol class="footnotes"' ) {
 
 					// Compat with "WP Footnotes".
 					$tag = 'ol class="footnotes"';
 
-				} elseif ( substr( $paragraph, 0, 11 ) == '<ol start="' ) {
+				} elseif ( substr( $paragraph, 0, 11 ) === '<ol start="' ) {
 
 					// Add support for <ol start="n">.
 					preg_match( '/start="([^"]*)"/i', $paragraph, $matches );
@@ -1210,7 +1210,7 @@ class CommentPress_Core_Parser {
 		$key = '_cp_starting_para_number';
 
 		// If the custom field already has a value.
-		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 			// Get it.
 			$start_num = absint( get_post_meta( $post->ID, $key, true ) );
@@ -1499,7 +1499,7 @@ class CommentPress_Core_Parser {
 		$key = '_cp_starting_para_number';
 
 		// If the custom field already has a value.
-		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 			// Get it.
 			$start_num = absint( get_post_meta( $post->ID, $key, true ) );
@@ -2058,7 +2058,7 @@ class CommentPress_Core_Parser {
 		$content = preg_replace( $pattern, $replace, $content );
 
 		// Check for captions at the very beginning of content.
-		if ( substr( $content, 0, 25 ) == $start ) {
+		if ( substr( $content, 0, 25 ) === $start ) {
 			$content = '<p>' . $content;
 		}
 
@@ -2283,13 +2283,13 @@ class CommentPress_Core_Parser {
 				$key = '_cp_comment_page';
 
 				// Does it have a Comment meta value?
-				if ( get_comment_meta( $comment->comment_ID, $key, true ) != '' ) {
+				if ( get_comment_meta( $comment->comment_ID, $key, true ) !== '' ) {
 
 					// Get the Page number.
 					$page_num = get_comment_meta( $comment->comment_ID, $key, true );
 
 					// Is it the current one?
-					if ( $page_num == $page ) {
+					if ( (int) $page_num === (int) $page ) {
 
 						// Add it.
 						$filtered[] = $comment;

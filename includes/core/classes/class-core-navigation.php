@@ -445,7 +445,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 4.0
 	 *
-	 * @return int $chapter_is_page The setting if found, false otherwise.
+	 * @return int $chapter_is_page The setting if found, zero otherwise.
 	 */
 	public function setting_chapter_is_page_get() {
 
@@ -453,7 +453,7 @@ class CommentPress_Core_Navigator {
 		$chapter_is_page = $this->core->db->setting_get( $this->key_chapter_is_page );
 
 		// Return setting or boolean if empty.
-		return ! empty( $chapter_is_page ) ? $chapter_is_page : 0;
+		return ! empty( $chapter_is_page ) ? (int) $chapter_is_page : 0;
 
 	}
 
@@ -476,7 +476,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 4.0
 	 *
-	 * @return int $subpages The setting if found, false otherwise.
+	 * @return int $subpages The setting if found, zero otherwise.
 	 */
 	public function setting_subpages_get() {
 
@@ -484,7 +484,7 @@ class CommentPress_Core_Navigator {
 		$subpages = $this->core->db->setting_get( $this->key_subpages );
 
 		// Return setting or boolean if empty.
-		return ! empty( $subpages ) ? $subpages : 0;
+		return ! empty( $subpages ) ? (int) $subpages : 0;
 
 	}
 
@@ -551,7 +551,7 @@ class CommentPress_Core_Navigator {
 
 		// Default to Page navigation enabled.
 		$vars['cp_page_nav_enabled'] = 1;
-		if ( $this->setting_page_nav_enabled_get() == 'n' ) {
+		if ( $this->setting_page_nav_enabled_get() === 'n' ) {
 			$vars['cp_page_nav_enabled'] = 0;
 		}
 
@@ -613,7 +613,7 @@ class CommentPress_Core_Navigator {
 	public function page_nav_is_disabled() {
 
 		// Overwrite flag if Page Navigation option is set to "off".
-		if ( $this->setting_page_nav_enabled_get() == 'n' ) {
+		if ( $this->setting_page_nav_enabled_get() === 'n' ) {
 			$this->nav_enabled = false;
 		}
 
@@ -720,7 +720,7 @@ class CommentPress_Core_Navigator {
 		}
 
 		// Are parent Pages viewable?
-		$viewable = $this->setting_chapter_is_page_get() == '1' ? true : false;
+		$viewable = $this->setting_chapter_is_page_get() === 1 ? true : false;
 
 		// Get the ID of the first child.
 		$first_child = $this->first_child_get( $post->ID );
@@ -769,7 +769,7 @@ class CommentPress_Core_Navigator {
 		foreach ( $all_pages as $key => $page_obj ) {
 
 			// Is it the currently viewed Page?
-			if ( $page_obj->ID == $post->ID ) {
+			if ( (int) $page_obj->ID === (int) $post->ID ) {
 
 				// Set Page key.
 				$page_key = $key;
@@ -1112,7 +1112,7 @@ class CommentPress_Core_Navigator {
 			 */
 
 			// Check if registration is allowed.
-			if ( '1' == get_option( 'users_can_register' ) && is_main_site() ) {
+			if ( get_option( 'users_can_register' ) && is_main_site() ) {
 
 				// Find the Registration Page by its slug.
 				$reg_page = get_page_by_path( 'register' );
@@ -1163,7 +1163,7 @@ class CommentPress_Core_Navigator {
 		}
 
 		// If Chapters are not Pages.
-		if ( $this->setting_chapter_is_page_get() != '1' ) {
+		if ( $this->setting_chapter_is_page_get() !== 1 ) {
 
 			// Filter Chapters out if we want all readable Pages.
 			if ( 'readable' === $mode ) {
@@ -1336,7 +1336,7 @@ class CommentPress_Core_Navigator {
 		global $post;
 
 		// Are parent Pages viewable?
-		$viewable = ( $this->setting_chapter_is_page_get() == '1' ) ? true : false;
+		$viewable = ( $this->setting_chapter_is_page_get() === 1 ) ? true : false;
 
 		// If they are.
 		if ( $viewable ) {
@@ -1439,7 +1439,7 @@ class CommentPress_Core_Navigator {
 			if ( $this->menu_objects ) {
 
 				// If Chapters are not Pages, filter the Menu Items.
-				if ( $this->setting_chapter_is_page_get() != '1' ) {
+				if ( $this->setting_chapter_is_page_get() !== 1 ) {
 
 					// Do we want all readable Pages?
 					if ( 'readable' === $mode ) {
@@ -1563,7 +1563,7 @@ class CommentPress_Core_Navigator {
 		foreach ( $menu_items as $key => $menu_item ) {
 
 			// Is this Menu Item a child of the passed in Menu object?
-			if ( $menu_item->menu_item_parent == $menu_obj->ID ) {
+			if ( (int) $menu_item->menu_item_parent === (int) $menu_obj->ID ) {
 
 				// Add to our return array.
 				$sub_items[] = $menu_item;
@@ -1594,7 +1594,7 @@ class CommentPress_Core_Navigator {
 			foreach ( $this->menu_objects as $key => $menu_item ) {
 
 				// Is this Menu Item the first parent of the passed in Menu object?
-				if ( $menu_item->ID == $menu_obj->menu_item_parent ) {
+				if ( (int) $menu_item->ID === (int) $menu_obj->menu_item_parent ) {
 
 					// --<
 					return $menu_item;

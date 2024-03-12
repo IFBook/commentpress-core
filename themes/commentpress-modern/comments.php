@@ -127,7 +127,7 @@ if ( ! empty( $core ) ) {
 
 		<?php else : /* This is displayed if there are no Comments so far. */ ?>
 
-			<?php if ( 'open' == $post->comment_status ) : ?>
+			<?php if ( 'open' === $post->comment_status ) : ?>
 
 				<!-- Comments are open, but there are no Comments. -->
 				<h3 class="nocomments"><span><?php esc_html_e( 'No comments on the whole page', 'commentpress-core' ); ?></span></h3>
@@ -165,6 +165,6 @@ if ( ! empty( $core ) ) {
 $cp_comment_form = apply_filters( 'cp_template_comment_form', locate_template( 'assets/templates/comment_form.php' ) );
 
 // Load it if we find it.
-if ( '' != $cp_comment_form ) {
+if ( ! empty( $cp_comment_form ) ) {
 	load_template( $cp_comment_form );
 }

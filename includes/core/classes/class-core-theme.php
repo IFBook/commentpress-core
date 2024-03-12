@@ -706,7 +706,7 @@ class CommentPress_Core_Theme {
 	public function scripts_enqueue() {
 
 		// Don't include in admin or wp-login.php.
-		if ( is_admin() || ( isset( $GLOBALS['pagenow'] ) && 'wp-login.php' == $GLOBALS['pagenow'] ) ) {
+		if ( is_admin() || ( isset( $GLOBALS['pagenow'] ) && 'wp-login.php' === $GLOBALS['pagenow'] ) ) {
 			return;
 		}
 
@@ -960,7 +960,7 @@ class CommentPress_Core_Theme {
 
 		// Show textblock meta unless setting is set to on rollover.
 		$vars['cp_textblock_meta'] = 1;
-		if ( $this->setting_textblock_meta_get() == 'n' ) {
+		if ( $this->setting_textblock_meta_get() === 'n' ) {
 			$vars['cp_textblock_meta'] = 0;
 		}
 

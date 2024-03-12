@@ -644,7 +644,7 @@ class CommentPress_Core_Comments_Tagging {
 
 		// If we're editing our Comment Taxonomy highlight the Comments menu.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( ! empty( $_GET['taxonomy'] ) && $_GET['taxonomy'] == $this->tax_name && 'edit-tags.php' === $pagenow ) {
+		if ( ! empty( $_GET['taxonomy'] ) && $_GET['taxonomy'] === $this->tax_name && 'edit-tags.php' === $pagenow ) {
 			$parent = 'edit-comments.php';
 		}
 
@@ -767,7 +767,7 @@ class CommentPress_Core_Comments_Tagging {
 	public function comment_terms_enable( $caps, $cap, $user_id, $args ) {
 
 		// Only apply caps to queries for edit_comment cap.
-		if ( 'assign_' . $this->tax_name != $cap ) {
+		if ( 'assign_' . $this->tax_name !== $cap ) {
 			return $caps;
 		}
 

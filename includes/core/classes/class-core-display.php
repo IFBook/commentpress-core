@@ -146,7 +146,7 @@ HELPTEXT;
 		$list_style = $this->core->nav->setting_subpages_get();
 
 		// If not set or set to 'off'.
-		if ( false === $list_style || '0' == $list_style ) {
+		if ( false === $list_style || 0 === $list_style ) {
 
 			// -----------------------------------------------------------------
 			// Old-style undecorated list.
@@ -210,7 +210,7 @@ HELPTEXT;
 			$current_post = '';
 
 			// If we're on the current Post and it's this item.
-			if ( is_singular() && ( $post instanceof WP_Post ) && $post->ID == $item->ID ) {
+			if ( is_singular() && ( $post instanceof WP_Post ) && $post->ID === $item->ID ) {
 				$current_post = ' current_page_item';
 			}
 
@@ -273,7 +273,7 @@ HELPTEXT;
 			}
 
 			// If we're on the last, don't add.
-			if ( $n == $author_count ) {
+			if ( $n === $author_count ) {
 				$sep = '';
 			}
 
@@ -396,7 +396,7 @@ HELPTEXT;
 		$page_on_front = $this->core->db->option_wp_get( 'page_on_front' );
 
 		// Print link to Welcome Page, if we have one and it's the Front Page.
-		if ( false !== $welcome_id && $page_on_front == $welcome_id ) {
+		if ( false !== $welcome_id && (int) $page_on_front === (int) $welcome_id ) {
 
 			// Define Welcome Page.
 			$title_page_title = get_the_title( $welcome_id );
@@ -718,7 +718,7 @@ HELPTEXT;
 				break;
 
 			// Compat with "WP Footnotes".
-			case ( substr( $tag, 0, 10 ) == 'ol start="' ):
+			case ( substr( $tag, 0, 10 ) === 'ol start="' ):
 				// Define list tag.
 				$para_tag = '<ol class="textblock" id="textblock-' . $text_signature . '" start="' . ( $start - 1 ) . '">' .
 					'<li class="list_commenticon">' . $commenticon . '</li>';

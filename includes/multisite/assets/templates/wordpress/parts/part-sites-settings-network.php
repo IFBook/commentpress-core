@@ -17,6 +17,6 @@ defined( 'ABSPATH' ) || exit;
 		<label for="<?php echo esc_attr( $this->key_forced ); ?>"><?php esc_html_e( 'Make all new sites CommentPress-enabled', 'commentpress-core' ); ?></label>
 	</th>
 	<td>
-		<input id="<?php echo esc_attr( $this->key_forced ); ?>" name="<?php echo esc_attr( $this->key_forced ); ?>" value="1" type="checkbox"<?php echo ( '1' == $forced ? ' checked="checked"' : '' ); ?> />
+		<input id="<?php echo esc_attr( $this->key_forced ); ?>" name="<?php echo esc_attr( $this->key_forced ); ?>" value="1" type="checkbox"<?php checked( true, $forced ); ?> />
 	</td>
 </tr>

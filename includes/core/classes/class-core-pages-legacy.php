@@ -189,11 +189,12 @@ class CommentPress_Core_Pages_Legacy {
 	public function settings_meta_box_save() {
 
 		// Init vars.
+		// TODO: Build functionality.
 		$cp_create_pages = '';
 		$cp_delete_pages = '';
 
 		// Did we ask to auto-create Special Pages?
-		if ( '1' == $cp_create_pages ) {
+		if ( '1' === $cp_create_pages ) {
 
 			// Remove any existing Special Pages.
 			$this->special_pages_delete();
@@ -204,7 +205,7 @@ class CommentPress_Core_Pages_Legacy {
 		}
 
 		// Did we ask to delete Special Pages?
-		if ( '1' == $cp_delete_pages ) {
+		if ( '1' === $cp_delete_pages ) {
 			$this->special_pages_delete();
 		}
 
@@ -592,8 +593,8 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$page_on_front = $this->core->db->option_wp_get( 'page_on_front' );
 
 		// If the Welcome Page exists and it's the Front Page.
-		if ( false !== $welcome_id && $page_on_front == $welcome_id ) {
-			$is_home = $welcome_id;
+		if ( false !== $welcome_id && (int) $page_on_front === (int) $welcome_id ) {
+			$is_home = (int) $welcome_id;
 		} else {
 			$is_home = false;
 		}

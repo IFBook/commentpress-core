@@ -405,7 +405,7 @@ class CommentPress_Core_Document {
 		if (
 			0 === (int) $post->post_parent &&
 			! $this->core->pages_legacy->is_special_page() &&
-			$post->ID == $this->core->nav->page_get_first()
+			$post->ID === $this->core->nav->page_get_first()
 		) {
 
 			// Get the value.

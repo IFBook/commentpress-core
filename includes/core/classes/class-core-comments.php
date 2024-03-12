@@ -290,7 +290,7 @@ class CommentPress_Core_Comments {
 	 *
 	 * @since 4.0
 	 *
-	 * @return int $live The setting if found, false otherwise.
+	 * @return int $live The setting if found, zero otherwise.
 	 */
 	public function setting_live_get() {
 
@@ -298,7 +298,7 @@ class CommentPress_Core_Comments {
 		$live = $this->core->db->setting_get( $this->key_live );
 
 		// Return setting or boolean if empty.
-		return ! empty( $live ) ? $live : 0;
+		return ! empty( $live ) ? (int) $live : 0;
 
 	}
 
@@ -500,7 +500,7 @@ class CommentPress_Core_Comments {
 			$key = '_cp_comment_page';
 
 			// Add or update the data.
-			if ( get_comment_meta( $comment_id, $key, true ) != '' ) {
+			if ( get_comment_meta( $comment_id, $key, true ) !== '' ) {
 				update_comment_meta( $comment_id, $key, $page_number );
 			} else {
 				add_comment_meta( $comment_id, $key, $page_number, true );

@@ -281,7 +281,7 @@ class CommentPress_Core_Editor_Comments {
 		$vars['cp_tinymce'] = $this->setting_editor_get();
 
 		// Don't add TinyMCE if Users must be logged in to comment.
-		if ( get_option( 'comment_registration' ) == '1' && ! is_user_logged_in() ) {
+		if ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) {
 			$vars['cp_tinymce'] = 0;
 		}
 

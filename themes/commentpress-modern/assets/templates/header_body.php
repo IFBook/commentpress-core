@@ -76,7 +76,7 @@ defined( 'ABSPATH' ) || exit;
 	$cp_toc_sidebar = apply_filters( 'cp_template_toc_sidebar', locate_template( 'assets/templates/toc_sidebar.php' ) );
 
 	// Load it if we find it.
-	if ( '' != $cp_toc_sidebar ) {
+	if ( ! empty( $cp_toc_sidebar ) ) {
 		load_template( $cp_toc_sidebar );
 	}
 

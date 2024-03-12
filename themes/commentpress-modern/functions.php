@@ -116,7 +116,7 @@ if ( ! function_exists( 'commentpress_setup' ) ) :
 		if ( ! empty( $core ) ) {
 
 			// Do we have the featured images option enabled?
-			if ( $core->theme->setting_featured_images_get() == 'y' ) {
+			if ( $core->theme->setting_featured_images_get() === 'y' ) {
 
 				// Use Featured Images - also known as Post Thumbnails.
 				add_theme_support( 'post-thumbnails' );
@@ -558,7 +558,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 		$all_comments = get_comments( $args );
 
 		// Kick out if none.
-		if ( count( $all_comments ) == 0 ) {
+		if ( count( $all_comments ) === 0 ) {
 			return $html;
 		}
 
@@ -582,7 +582,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 		}
 
 		// Kick out if none.
-		if ( count( $posts_with ) == 0 ) {
+		if ( count( $posts_with ) === 0 ) {
 			return $html;
 		}
 
@@ -597,7 +597,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 		$posts = get_posts( $args );
 
 		// Kick out if none.
-		if ( count( $posts ) == 0 ) {
+		if ( count( $posts ) === 0 ) {
 			return $html;
 		}
 
@@ -728,7 +728,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 		$data = commentpress_get_all_comments_content( $page_or_post );
 
 		// Did we get any?
-		if ( '' != $data ) {
+		if ( ! empty( $data ) ) {
 
 			// Set title.
 			$page_content .= '<h3 class="comments_hl">' . $title . '</h3>' . "\n\n";
@@ -748,7 +748,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 		$data = commentpress_get_all_comments_content( $other_type );
 
 		// Did we get any?
-		if ( '' != $data ) {
+		if ( ! empty( $data ) ) {
 
 			// Set title.
 			$page_content .= '<h3 class="comments_hl">' . $title . '</h3>' . "\n\n";
@@ -983,7 +983,8 @@ function commentpress_has_feature_image() {
 	$has_feature_image = false;
 
 	// Replacement check.
-	if ( '' != get_the_post_thumbnail() ) {
+	$thumbnail = get_the_post_thumbnail();
+	if ( ! empty( $thumbnail ) ) {
 		$has_feature_image = true;
 	}
 

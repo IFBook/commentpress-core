@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 <div id="comments_in_page_wrapper">
 	<div class="comments_container">
 
-		<?php if ( 'open' != $post->comment_status ) : ?>
+		<?php if ( 'open' !== $post->comment_status ) : ?>
 			<h3 class="nocomments comments-closed"><span><?php esc_html_e( 'Comments are closed', 'commentpress-core' ); ?></span></h3>
 		<?php endif; ?>
 
@@ -73,7 +73,7 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php else : /* This is displayed if there are no Comments so far. */ ?>
 
-			<?php if ( 'open' == $post->comment_status ) : ?>
+			<?php if ( 'open' === $post->comment_status ) : ?>
 				<h3 class="nocomments"><?php esc_html_e( 'No general comments yet.', 'commentpress-core' ); ?></h3>
 			<?php endif; ?>
 
@@ -94,7 +94,7 @@ defined( 'ABSPATH' ) || exit;
 $cp_comment_form = apply_filters( 'cp_template_comment_form', locate_template( 'assets/templates/comment_form.php' ) );
 
 // Load it if we find it.
-if ( '' != $cp_comment_form ) {
+if ( ! empty( $cp_comment_form ) ) {
 	load_template( $cp_comment_form );
 }
 

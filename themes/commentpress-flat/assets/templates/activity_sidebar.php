@@ -102,7 +102,7 @@ $_max_members = 10;
 
 				?>
 
-				<?php if ( $is_commentable && '' != $_page_comments_output ) { ?>
+				<?php if ( $is_commentable && ! empty( $_page_comments_output ) ) { ?>
 
 					<?php
 
@@ -136,7 +136,7 @@ $_max_members = 10;
 
 				<?php } /* End commentable Post/Page check. */ ?>
 
-				<?php if ( '' != $_all_comments_output ) { ?>
+				<?php if ( ! empty( $_all_comments_output ) ) { ?>
 
 					<?php
 

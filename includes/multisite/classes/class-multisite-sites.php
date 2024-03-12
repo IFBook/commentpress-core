@@ -831,7 +831,7 @@ class CommentPress_Multisite_Sites {
 		$overridden_content = stripslashes( $this->multisite->db->setting_get( $this->key_title_page_content ) );
 
 		// Override if different to what's been passed.
-		if ( $content != $overridden_content ) {
+		if ( $content !== $overridden_content ) {
 			$content = $overridden_content;
 		}
 

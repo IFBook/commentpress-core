@@ -247,7 +247,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_content' ) ) :
 		$all_comments = get_comments( $query );
 
 		// Kick out if none.
-		if ( count( $all_comments ) == 0 ) {
+		if ( count( $all_comments ) === 0 ) {
 			return $html;
 		}
 
@@ -277,7 +277,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_content' ) ) :
 		}
 
 		// Kick out if none.
-		if ( count( $authors_with ) == 0 ) {
+		if ( count( $authors_with ) === 0 ) {
 			return $html;
 		}
 
@@ -303,7 +303,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_content' ) ) :
 			foreach ( $all_comments as $comment ) {
 
 				// Does it belong to this author?
-				if ( $author == $comment->comment_author_email ) {
+				if ( $author === $comment->comment_author_email ) {
 
 					// Open li.
 					$html .= '<li class="item_li"><!-- item li -->' . "\n\n";
@@ -517,7 +517,7 @@ if ( ! function_exists( 'commentpress_get_comment_activity_item' ) ) :
 		}
 
 		// Approved comment?
-		if ( '0' == $comment->comment_approved ) {
+		if ( 1 === (int) $comment->comment_approved ) {
 			$comment_text = '<p><em>' . __( 'Comment awaiting moderation', 'commentpress-core' ) . '</em></p>';
 		} else {
 			$comment_text = get_comment_text( $comment->comment_ID );
@@ -527,7 +527,7 @@ if ( ! function_exists( 'commentpress_get_comment_activity_item' ) ) :
 		$is_on_current_post = '';
 
 		// On current Post?
-		if ( is_singular() && is_object( $post ) && $comment->comment_post_ID == $post->ID ) {
+		if ( is_singular() && is_object( $post ) && (int) $comment->comment_post_ID === (int) $post->ID ) {
 
 			// Access paging globals.
 			global $multipage, $page;
@@ -542,13 +542,13 @@ if ( ! function_exists( 'commentpress_get_comment_activity_item' ) ) :
 					$key = '_cp_comment_page';
 
 					// If the custom field already has a value.
-					if ( get_comment_meta( $comment->comment_ID, $key, true ) != '' ) {
+					if ( get_comment_meta( $comment->comment_ID, $key, true ) !== '' ) {
 
 						// Get Comment's Page from meta.
 						$page_num = get_comment_meta( $comment->comment_ID, $key, true );
 
 						// Is it this one?
-						if ( $page_num == $page ) {
+						if ( (int) $page_num === (int) $page ) {
 
 							// Is the right Page.
 							$is_on_current_post = ' comment_on_post';
@@ -782,7 +782,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 		$start_num = 1;
 
 		// Override if the custom field already has a value.
-		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 			$start_num = absint( get_post_meta( $post->ID, $key, true ) );
 		}
 
@@ -962,7 +962,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 						$used_text_sigs[] = $text_sig;
 
 						// Only add comment-on-para link if Comments are open and it's not the pingback section.
-						if ( 'open' == $post->comment_status && 'PINGS_AND_TRACKS' !== $text_signature ) {
+						if ( 'open' === $post->comment_status && 'PINGS_AND_TRACKS' !== $text_signature ) {
 
 							// If we have to log in to Comment.
 							if ( $login_to_comment ) {
@@ -1233,7 +1233,7 @@ if ( ! function_exists( 'commentpress_comment_reply_link' ) ) :
 		// Parse them.
 		$args = wp_parse_args( $args, $defaults );
 
-		if ( 0 == $args['depth'] || $args['max_depth'] <= $args['depth'] ) {
+		if ( 0 === $args['depth'] || $args['max_depth'] <= $args['depth'] ) {
 			return;
 		}
 
@@ -1242,7 +1242,7 @@ if ( ! function_exists( 'commentpress_comment_reply_link' ) ) :
 		$post    = get_post( $post );
 
 		// Kick out if Comments closed.
-		if ( 'open' != $post->comment_status ) {
+		if ( 'open' !== $post->comment_status ) {
 			return false;
 		}
 
@@ -1375,7 +1375,7 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 		}
 
 		// Check moderation status.
-		if ( '0' == $comment->comment_approved ) {
+		if ( 0 === (int) $comment->comment_approved ) {
 			$comment_text = '<p><em>' . __( 'Comment awaiting moderation', 'commentpress-core' ) . '</em></p>';
 		} else {
 			$comment_text = get_comment_text( $comment->comment_ID );
@@ -1815,7 +1815,7 @@ if ( ! function_exists( 'commentpress_multipage_comment_link' ) ) :
 			$key = '_cp_comment_page';
 
 			// Get the Page number if the custom field already has a value.
-			if ( get_comment_meta( $comment->comment_ID, $key, true ) != '' ) {
+			if ( get_comment_meta( $comment->comment_ID, $key, true ) !== '' ) {
 				$page_num = get_comment_meta( $comment->comment_ID, $key, true );
 			}
 
@@ -1865,12 +1865,12 @@ if ( ! function_exists( 'commentpress_get_post_multipage_url' ) ) :
 			// We assume we're in the loop.
 			global $post, $wp_rewrite;
 
-			if ( 1 == $i ) {
+			if ( 1 === (int) $i ) {
 				$url = get_permalink();
 			} else {
-				if ( '' == get_option( 'permalink_structure' ) || in_array( $post->post_status, [ 'draft', 'pending' ], true ) ) {
+				if ( ! get_option( 'permalink_structure' ) || in_array( $post->post_status, [ 'draft', 'pending' ], true ) ) {
 					$url = add_query_arg( 'page', $i, get_permalink() );
-				} elseif ( 'page' == get_option( 'show_on_front' ) && get_option( 'page_on_front' ) == $post->ID ) {
+				} elseif ( 'page' === get_option( 'show_on_front' ) && (int) get_option( 'page_on_front' ) === (int) $post->ID ) {
 					$url = trailingslashit( get_permalink() ) . user_trailingslashit( "$wp_rewrite->pagination_base/" . $i, 'single_paged' );
 				} else {
 					$url = trailingslashit( get_permalink() ) . user_trailingslashit( $i, 'single_paged' );
@@ -1880,12 +1880,12 @@ if ( ! function_exists( 'commentpress_get_post_multipage_url' ) ) :
 		} else {
 
 			// Use passed Post object.
-			if ( 1 == $i ) {
+			if ( 1 === (int) $i ) {
 				$url = get_permalink( $post->ID );
 			} else {
-				if ( '' == get_option( 'permalink_structure' ) || in_array( $post->post_status, [ 'draft', 'pending' ], true ) ) {
+				if ( ! get_option( 'permalink_structure' ) || in_array( $post->post_status, [ 'draft', 'pending' ], true ) ) {
 					$url = add_query_arg( 'page', $i, get_permalink( $post->ID ) );
-				} elseif ( 'page' == get_option( 'show_on_front' ) && get_option( 'page_on_front' ) == $post->ID ) {
+				} elseif ( 'page' === get_option( 'show_on_front' ) && (int) get_option( 'page_on_front' ) === (int) $post->ID ) {
 					$url = trailingslashit( get_permalink( $post->ID ) ) . user_trailingslashit( "$wp_rewrite->pagination_base/" . $i, 'single_paged' );
 				} else {
 					$url = trailingslashit( get_permalink( $post->ID ) ) . user_trailingslashit( $i, 'single_paged' );

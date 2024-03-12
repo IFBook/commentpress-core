@@ -143,7 +143,7 @@ if ( ! empty( $core ) ) {
 					</li>
 				<?php endif; /* End of Users can register check. */ ?>
 
-				<?php if ( ( is_user_logged_in() && get_site_option( 'registration' ) == 'blog' ) || get_site_option( 'registration' ) == 'all' ) : ?>
+				<?php if ( ( is_user_logged_in() && get_site_option( 'registration' ) === 'blog' ) || get_site_option( 'registration' ) === 'all' ) : ?>
 
 					<?php $new_site_title = commentpress_navigation_new_site_title(); ?>
 

@@ -104,7 +104,7 @@ class CommentPress_Multisite_Revisions {
 		$key = '_cp_version_count';
 
 		// If the custom field of our current Post has a value.
-		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 			// Get current value.
 			$value = get_post_meta( $post->ID, $key, true );

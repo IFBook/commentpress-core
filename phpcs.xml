@@ -25,9 +25,6 @@
 		<exclude name="Squiz.PHP.CommentedOutCode.Found" />
 		<exclude name="Squiz.Commenting.BlockComment.HasEmptyLineBefore" />
 
-		<!-- Codestyle rules yet to be implemented. -->
-		<exclude name="WordPress.PHP.StrictComparisons.LooseComparison" />
-
 	</rule>
 
 	<rule ref="WordPress.WP.I18n">

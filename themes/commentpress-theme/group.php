@@ -36,7 +36,7 @@ get_header();
 						<ul id="group_list">
 
 						<?php foreach ( $group_users as $group_user ) : ?>
-							<?php if ( '1' != $group_user->user_id ) : ?>
+							<?php if ( 1 !== (int) $group_user->user_id ) : ?>
 								<li>
 									<a href="<?php echo esc_url( get_author_posts_url( $group_user->ID ) ); ?>"><?php echo esc_html( $group_user->display_name ); ?></a>
 								</li>

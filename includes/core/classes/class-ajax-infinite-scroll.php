@@ -186,7 +186,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 		$all_pages = $this->core->nav->document_pages_get_all( 'readable' );
 
 		// If we have any Pages.
-		if ( count( $all_pages ) == 0 ) {
+		if ( count( $all_pages ) === 0 ) {
 			$data['status'] = __( 'Could not find any Pages.', 'commentpress-core' );
 			wp_send_json( $data );
 		}
@@ -198,7 +198,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 		foreach ( $all_pages as $key => $page_obj ) {
 
 			// Is it the currently viewed Page?
-			if ( $page_obj->ID == $current_post_id ) {
+			if ( (int) $page_obj->ID === (int) $current_post_id ) {
 
 				// Set Page key.
 				$page_key = $key;

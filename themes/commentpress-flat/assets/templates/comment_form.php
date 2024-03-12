@@ -37,7 +37,7 @@ if ( $cp_force_form ) {
 
 	// Init classes.
 	$forced_classes = [ 'cp_force_displayed' ];
-	if ( 'open' != $post->comment_status ) {
+	if ( 'open' !== $post->comment_status ) {
 		$forced_classes[] = 'cp_force_closed';
 	}
 
@@ -57,7 +57,7 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 
 ?>
 <!-- comment_form.php -->
-<?php if ( 'open' == $post->comment_status || $cp_force_form ) : ?>
+<?php if ( 'open' === $post->comment_status || $cp_force_form ) : ?>
 
 	<div id="respond_wrapper"<?php echo $forced_class; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>>
 		<div id="respond">

@@ -398,7 +398,7 @@ class CommentPress_Core_Settings_Site {
 		$screen = get_current_screen();
 
 		// Bail if not our screen.
-		if ( $screen->id != $this->settings_page ) {
+		if ( $screen->id !== $this->settings_page ) {
 			return;
 		}
 
@@ -520,7 +520,7 @@ class CommentPress_Core_Settings_Site {
 		do_action( 'commentpress/core/settings/site/page/add_meta_boxes', $screen->id );
 
 		// Grab columns.
-		$columns = ( 1 == $screen->get_columns() ? '1' : '2' );
+		$columns = ( 1 === (int) $screen->get_columns() ? '1' : '2' );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->page_path . 'page-settings-site.php';

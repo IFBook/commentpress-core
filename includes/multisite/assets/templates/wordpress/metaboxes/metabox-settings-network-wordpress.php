@@ -30,7 +30,7 @@ defined( 'ABSPATH' ) || exit;
 			<label for="cpmu_delete_first_page"><?php esc_html_e( 'Delete WordPress-generated Sample Page', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
-			<input id="cpmu_delete_first_page" name="cpmu_delete_first_page" value="1" type="checkbox"<?php echo ( '1' == $delete_first_page ? ' checked="checked"' : '' ); ?> />
+			<input id="cpmu_delete_first_page" name="cpmu_delete_first_page" value="1" type="checkbox"<?php checked( ! empty( $delete_first_page ) ? ' checked="checked"' : '' ); ?> />
 		</td>
 	</tr>
 
@@ -38,7 +38,7 @@ defined( 'ABSPATH' ) || exit;
 		<th scope="row">
 			<label for="cpmu_delete_first_post"><?php esc_html_e( 'Delete WordPress-generated Hello World post', 'commentpress-core' ); ?></label></th>
 		<td>
-			<input id="cpmu_delete_first_post" name="cpmu_delete_first_post" value="1" type="checkbox"<?php echo ( '1' == $delete_first_post ? ' checked="checked"' : '' ); ?> />
+			<input id="cpmu_delete_first_post" name="cpmu_delete_first_post" value="1" type="checkbox"<?php echo ( ! empty( $delete_first_post ) ? ' checked="checked"' : '' ); ?> />
 		</td>
 	</tr>
 
@@ -47,7 +47,7 @@ defined( 'ABSPATH' ) || exit;
 			<label for="cpmu_delete_first_comment"><?php esc_html_e( 'Delete WordPress-generated First Comment', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
-			<input id="cpmu_delete_first_comment" name="cpmu_delete_first_comment" value="1" type="checkbox"<?php echo ( '1' == $delete_first_comment ? ' checked="checked"' : '' ); ?> />
+			<input id="cpmu_delete_first_comment" name="cpmu_delete_first_comment" value="1" type="checkbox"<?php echo ( ! empty( $delete_first_comment ) ? ' checked="checked"' : '' ); ?> />
 		</td>
 	</tr>
 
