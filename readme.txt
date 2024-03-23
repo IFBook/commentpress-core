@@ -217,6 +217,7 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 <h4>4.0</h4>
 
+* Code refactored
 * Remove support for workflow
 
 <h4>3.9.15</h4>
