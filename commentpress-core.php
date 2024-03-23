@@ -6,7 +6,7 @@
  * Description:       CommentPress allows readers to comment in the margins of a text. You can use it to annotate, gloss, workshop, debate and more!
  * Plugin URI:        https://github.com/IFBook/commentpress-core
  * GitHub Plugin URI: https://github.com/IFBook/commentpress-core
- * Version:           4.0a
+ * Version:           4.0.0
  * Author:            Institute for the Future of the Book
  * Author URI:        https://futureofthebook.org/commentpress/
  * Text Domain:       commentpress-core
@@ -24,7 +24,7 @@
 defined( 'ABSPATH' ) || exit;
 
 // Set version.
-define( 'COMMENTPRESS_VERSION', '4.0a' );
+define( 'COMMENTPRESS_VERSION', '4.0.0' );
 
 // Store reference to this file.
 if ( ! defined( 'COMMENTPRESS_PLUGIN_FILE' ) ) {
