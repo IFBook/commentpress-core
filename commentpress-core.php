@@ -4,11 +4,11 @@
  *
  * Plugin Name:       CommentPress Core
  * Description:       CommentPress allows readers to comment in the margins of a text. You can use it to annotate, gloss, workshop, debate and more!
- * Plugin URI:        https://futureofthebook.org/commentpress/
- * GitHub Plugin URI: https://github.com/christianwach/haystack-civicrm-utilities
+ * Plugin URI:        https://github.com/IFBook/commentpress-core
+ * GitHub Plugin URI: https://github.com/IFBook/commentpress-core
  * Version:           4.0a
  * Author:            Institute for the Future of the Book
- * Author URI:        https://www.futureofthebook.org
+ * Author URI:        https://futureofthebook.org/commentpress/
  * Text Domain:       commentpress-core
  * Domain Path:       /languages
  *
