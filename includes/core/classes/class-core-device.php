@@ -138,13 +138,13 @@ class CommentPress_Core_Device {
 			return;
 		}
 
-		// The old CommentPress also includes Mobile_Detect.
-		if ( ! class_exists( 'Mobile_Detect' ) ) {
-			include_once COMMENTPRESS_PLUGIN_PATH . 'includes/core/assets/includes/mobile-detect/Mobile_Detect.php';
+		// Avoid class collisions.
+		if ( ! class_exists( '\Detection\MobileDetect' ) ) {
+			include_once COMMENTPRESS_PLUGIN_PATH . 'includes/core/assets/includes/mobile-detect/MobileDetect.php';
 		}
 
 		// Init.
-		$detect = new Mobile_Detect();
+		$detect = new \Detection\MobileDetect();
 
 		// Overwrite flag if mobile.
 		if ( $detect->isMobile() ) {
