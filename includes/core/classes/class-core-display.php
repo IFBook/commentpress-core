@@ -25,7 +25,7 @@ class CommentPress_Core_Display {
 	 * @since 3.0
 	 * @since 4.0 Renamed.
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -55,7 +55,7 @@ class CommentPress_Core_Display {
 
 		// Only do this once.
 		static $done;
-		if ( isset( $done ) && $done === true ) {
+		if ( isset( $done ) && true === $done ) {
 			return;
 		}
 
@@ -146,7 +146,7 @@ HELPTEXT;
 		$list_style = $this->core->nav->setting_subpages_get();
 
 		// If not set or set to 'off'.
-		if ( $list_style === false || $list_style == '0' ) {
+		if ( false === $list_style || 0 === $list_style ) {
 
 			// -----------------------------------------------------------------
 			// Old-style undecorated list.
@@ -159,7 +159,7 @@ HELPTEXT;
 
 				// Write list item.
 				echo '<li class="title">' .
-					'<a href="' . get_permalink( $item->ID ) . '">' . get_the_title( $item->ID ) . ' (' . $count . ')</a>' .
+					'<a href="' . esc_url( get_permalink( $item->ID ) ) . '">' . esc_html( get_the_title( $item->ID ) . ' (' . $count . ')' ) . '</a>' .
 				'</li>' . "\n";
 
 			}
@@ -210,7 +210,7 @@ HELPTEXT;
 			$current_post = '';
 
 			// If we're on the current Post and it's this item.
-			if ( is_singular() && ( $post instanceof WP_Post ) && $post->ID == $item->ID ) {
+			if ( is_singular() && ( $post instanceof WP_Post ) && $post->ID === $item->ID ) {
 				$current_post = ' current_page_item';
 			}
 
@@ -218,12 +218,13 @@ HELPTEXT;
 			$count = count( get_approved_comments( $item->ID ) );
 
 			// Write list item.
-			echo '<li class="title' . $current_post . '">
-				<div class="post-identifier">
-					' . $html . '
-				</div>
-				<a href="' . get_permalink( $item->ID ) . '" class="post_activity_link">' .
-					get_the_title( $item->ID ) . ' (' . $count . ')' .
+			echo '<li class="title' . esc_attr( $current_post ) . '">
+				<div class="post-identifier">' .
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					$html .
+				'</div>
+				<a href="' . esc_url( get_permalink( $item->ID ) ) . '" class="post_activity_link">' .
+					esc_html( get_the_title( $item->ID ) . ' (' . $count . ')' ) .
 				'</a>
 			</li>' . "\n";
 
@@ -267,12 +268,12 @@ HELPTEXT;
 			$sep = ', ';
 
 			// Use ampersand if we're on the penultimate.
-			if ( $n == ( $author_count - 1 ) ) {
+			if ( ( $author_count - 1 ) === $n ) {
 				$sep = __( ' &amp; ', 'commentpress-core' );
 			}
 
 			// If we're on the last, don't add.
-			if ( $n == $author_count ) {
+			if ( $n === $author_count ) {
 				$sep = '';
 			}
 
@@ -310,7 +311,7 @@ HELPTEXT;
 	 *
 	 * @since 3.4
 	 *
-	 * @param int $author_id The numeric ID of the author.
+	 * @param int  $author_id The numeric ID of the author.
 	 * @param bool $echo True if link is to be echoed, false if returned.
 	 */
 	private function echo_post_author( $author_id, $echo = true ) {
@@ -336,17 +337,21 @@ HELPTEXT;
 
 			// Link to theme's Author Page.
 			$link = sprintf(
+				/* translators: 1: Author link, 2: Link title, 3: User display name. */
 				'<a href="%1$s" title="%2$s" rel="author">%3$s</a>',
 				get_author_posts_url( $user->ID, $user->user_nicename ),
+				/* translators: %s: User display name. */
 				esc_attr( sprintf( __( 'Posts by %s', 'commentpress-core' ), $user->display_name ) ),
 				esc_html( $user->display_name )
 			);
+
 			$author = apply_filters( 'the_author_posts_link', $link );
 
 		}
 
 		// If we're echoing.
 		if ( $echo ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $author;
 		} else {
 			return $author;
@@ -368,13 +373,16 @@ HELPTEXT;
 		// Bail if there is a custom menu.
 		if ( has_nav_menu( 'toc' ) ) {
 
-			// Display menu.
-			wp_nav_menu( [
+			// Build menu.
+			$menu = [
 				'theme_location' => 'toc',
-				'echo' => true,
-				'container' => '',
-				'items_wrap' => '%3$s',
-			] );
+				'echo'           => true,
+				'container'      => '',
+				'items_wrap'     => '%3$s',
+			];
+
+			// Display menu.
+			wp_nav_menu( $menu );
 
 			// --<
 			return;
@@ -388,7 +396,7 @@ HELPTEXT;
 		$page_on_front = $this->core->db->option_wp_get( 'page_on_front' );
 
 		// Print link to Welcome Page, if we have one and it's the Front Page.
-		if ( $welcome_id !== false && $page_on_front == $welcome_id ) {
+		if ( false !== $welcome_id && (int) $page_on_front === (int) $welcome_id ) {
 
 			// Define Welcome Page.
 			$title_page_title = get_the_title( $welcome_id );
@@ -409,8 +417,8 @@ HELPTEXT;
 			}
 
 			// Echo list item.
-			echo '<li class="page_item page-item-' . $welcome_id . $is_active . '">' .
-				'<a href="' . get_permalink( $welcome_id ) . '">' . $title_page_title . '</a>' .
+			echo '<li class="page_item page-item-' . esc_attr( $welcome_id ) . esc_attr( $is_active ) . '">' .
+				'<a href="' . esc_url( get_permalink( $welcome_id ) ) . '">' . esc_html( $title_page_title ) . '</a>' .
 			'</li>';
 
 		}
@@ -432,7 +440,7 @@ HELPTEXT;
 		}
 
 		// Exclude Welcome Page, if we have one.
-		if ( $welcome_id !== false ) {
+		if ( false !== $welcome_id ) {
 			$exclude[] = $welcome_id;
 		}
 
@@ -446,17 +454,17 @@ HELPTEXT;
 
 		// Set list Pages defaults.
 		$defaults = [
-			'depth' => $depth,
-			'show_date' => '',
-			'date_format' => $this->core->db->setting_get( 'date_format' ),
-			'child_of' => 0,
-			'exclude' => implode( ',', $exclude ),
-			'title_li' => '',
-			'echo' => 1,
-			'authors' => '',
-			'sort_column' => 'menu_order, post_title',
-			'link_before' => '',
-			'link_after' => '',
+			'depth'        => $depth,
+			'show_date'    => '',
+			'date_format'  => $this->core->db->setting_get( 'date_format' ),
+			'child_of'     => 0,
+			'exclude'      => implode( ',', $exclude ),
+			'title_li'     => '',
+			'echo'         => 1,
+			'authors'      => '',
+			'sort_column'  => 'menu_order, post_title',
+			'link_before'  => '',
+			'link_after'   => '',
 			'exclude_tree' => '',
 		];
 
@@ -482,16 +490,16 @@ HELPTEXT;
 		$icon = null;
 
 		// If we have no Comments.
-		if ( $comment_count == 0 ) {
+		if ( 0 === $comment_count ) {
 
 			// Show add Comment icon.
-			$icon = 'comment-add.png';
+			$icon  = 'comment-add.png';
 			$class = ' no_comments';
 
 		} elseif ( $comment_count > 0 ) {
 
 			// Show Comments Present icon.
-			$icon = 'comment.png';
+			$icon  = 'comment.png';
 			$class = ' has_comments';
 
 		}
@@ -506,6 +514,7 @@ HELPTEXT;
 			default:
 				// Define title text.
 				$title_text = sprintf(
+					/* translators: 1: The comment count, 2: The name of the commented-on entity. */
 					_n( 'There is %1$d comment written for this %2$s', 'There are %1$d comments written for this %2$s', $comment_count, 'commentpress-core' ),
 					$comment_count,
 					$this->core->parser->lexia_get()
@@ -513,6 +522,7 @@ HELPTEXT;
 
 				// Define add Comment text.
 				$add_text = sprintf(
+					/* translators: 1: Name of the commented-on entity, 2: The paragraph number. */
 					__( 'Leave a comment on %1$s %2$d', 'commentpress-core' ),
 					$this->core->parser->lexia_get(),
 					$para_num
@@ -524,9 +534,9 @@ HELPTEXT;
 			// Line-by-line, eg poetry.
 			// -----------------------------------------------------------------
 			case 'line':
-
 				// Define title text.
 				$title_text = sprintf(
+					/* translators: 1: The comment count, 2: The name of the commented-on entity. */
 					_n( 'There is %1$d comment written for this %2$s', 'There are %1$d comments written for this %2$s', $comment_count, 'commentpress-core' ),
 					$comment_count,
 					$this->core->parser->lexia_get()
@@ -534,6 +544,7 @@ HELPTEXT;
 
 				// Define add Comment text.
 				$add_text = sprintf(
+					/* translators: 1: Name of the commented-on entity, 2: The paragraph number. */
 					__( 'Leave a comment on %1$s %2$d', 'commentpress-core' ),
 					$this->core->parser->lexia_get(),
 					$para_num
@@ -545,9 +556,9 @@ HELPTEXT;
 			// Comment-blocks.
 			// -----------------------------------------------------------------
 			case 'block':
-
 				// Define title text.
 				$title_text = sprintf(
+					/* translators: 1: The comment count, 2: The name of the commented-on entity. */
 					_n( 'There is %1$d comment written for this %2$s', 'There are %1$d comments written for this %2$s', $comment_count, 'commentpress-core' ),
 					$comment_count,
 					$this->core->parser->lexia_get()
@@ -555,6 +566,7 @@ HELPTEXT;
 
 				// Define add Comment text.
 				$add_text = sprintf(
+					/* translators: 1: Name of the commented-on entity, 2: The paragraph number. */
 					__( 'Leave a comment on %1$s %2$d', 'commentpress-core' ),
 					$this->core->parser->lexia_get(),
 					$para_num
@@ -603,6 +615,7 @@ HELPTEXT;
 			default:
 				// Define permalink text.
 				$permalink_text = sprintf(
+					/* translators: 1: Name of the entity, 2: The paragraph number. */
 					__( 'Permalink for %1$s %2$d', 'commentpress-core' ),
 					$this->core->parser->lexia_get(),
 					$para_num
@@ -621,9 +634,9 @@ HELPTEXT;
 			// Line-by-line, eg poetry.
 			// -----------------------------------------------------------------
 			case 'line':
-
 				// Define permalink text.
 				$permalink_text = sprintf(
+					/* translators: 1: Name of the entity, 2: The paragraph number. */
 					__( 'Permalink for %1$s %2$d', 'commentpress-core' ),
 					$this->core->parser->lexia_get(),
 					$para_num
@@ -642,9 +655,9 @@ HELPTEXT;
 			// Comment-blocks.
 			// -----------------------------------------------------------------
 			case 'block':
-
 				// Define permalink text.
 				$permalink_text = sprintf(
+					/* translators: 1: Name of the entity, 2: The paragraph number. */
 					__( 'Permalink for %1$s %2$d', 'commentpress-core' ),
 					$this->core->parser->lexia_get(),
 					$para_num
@@ -686,14 +699,12 @@ HELPTEXT;
 		switch ( $tag ) {
 
 			case 'ul':
-
 				// Define list tag.
 				$para_tag = '<' . $tag . ' class="textblock" id="textblock-' . $text_signature . '">' .
 					'<li class="list_commenticon">' . $commenticon . '</li>';
 				break;
 
 			case 'ol':
-
 				// Define list tag.
 				$para_tag = '<' . $tag . ' class="textblock" id="textblock-' . $text_signature . '" start="0">' .
 					'<li class="list_commenticon">' . $commenticon . '</li>';
@@ -701,15 +712,13 @@ HELPTEXT;
 
 			// Compat with "WP Footnotes".
 			case 'ol class="footnotes"':
-
 				// Define list tag.
 				$para_tag = '<ol class="footnotes textblock" id="textblock-' . $text_signature . '" start="0">' .
 					'<li class="list_commenticon">' . $commenticon . '</li>';
 				break;
 
 			// Compat with "WP Footnotes".
-			case ( substr( $tag, 0, 10 ) == 'ol start="' ):
-
+			case ( substr( $tag, 0, 10 ) === 'ol start="' ):
 				// Define list tag.
 				$para_tag = '<ol class="textblock" id="textblock-' . $text_signature . '" start="' . ( $start - 1 ) . '">' .
 					'<li class="list_commenticon">' . $commenticon . '</li>';
@@ -720,7 +729,6 @@ HELPTEXT;
 			case 'p style="text-align:left;"':
 			case 'p style="text-align: left"':
 			case 'p style="text-align: left;"':
-
 				// Define para tag.
 				$para_tag = '<' . $tag . ' class="textblock" id="textblock-' . $text_signature . '">' . $commenticon;
 				break;
@@ -729,7 +737,6 @@ HELPTEXT;
 			case 'p style="text-align:right;"':
 			case 'p style="text-align: right"':
 			case 'p style="text-align: right;"':
-
 				// Define para tag.
 				$para_tag = '<' . $tag . ' class="textblock textblock-right" id="textblock-' . $text_signature . '">' . $commenticon;
 				break;
@@ -738,7 +745,6 @@ HELPTEXT;
 			case 'p style="text-align:center;"':
 			case 'p style="text-align: center"':
 			case 'p style="text-align: center;"':
-
 				// Define para tag.
 				$para_tag = '<' . $tag . ' class="textblock textblock-center" id="textblock-' . $text_signature . '">' . $commenticon;
 				break;
@@ -747,25 +753,21 @@ HELPTEXT;
 			case 'p style="text-align:justify;"':
 			case 'p style="text-align: justify"':
 			case 'p style="text-align: justify;"':
-
 				// Define para tag.
 				$para_tag = '<' . $tag . ' class="textblock textblock-justify" id="textblock-' . $text_signature . '">' . $commenticon;
 				break;
 
 			case 'p class="notes"':
-
 				// Define para tag.
 				$para_tag = '<p class="notes textblock" id="textblock-' . $text_signature . '">' . $commenticon;
 				break;
 
 			case 'div':
-
 				// Define opening tag (we'll close it later).
 				$para_tag = '<div class="textblock" id="textblock-' . $text_signature . '">' . $commenticon;
 				break;
 
 			case 'span':
-
 				// Define opening tag (we'll close it later).
 				$para_tag = '<span class="textblock" id="textblock-' . $text_signature . '">' . $commenticon;
 				break;

@@ -24,7 +24,7 @@ class CommentPress_Multisite_Settings_Site {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $multisite The multisite loader object.
+	 * @var CommentPress_Multisite_Loader
 	 */
 	public $multisite;
 
@@ -33,7 +33,7 @@ class CommentPress_Multisite_Settings_Site {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $parent_page The reference to the parent Page.
+	 * @var string
 	 */
 	public $parent_page;
 
@@ -42,7 +42,7 @@ class CommentPress_Multisite_Settings_Site {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $parent_page_slug The slug of the parent Page.
+	 * @var string
 	 */
 	public $parent_page_slug = 'commentpress_admin';
 
@@ -51,7 +51,7 @@ class CommentPress_Multisite_Settings_Site {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $settings_page The reference to the Settings Page.
+	 * @var string
 	 */
 	public $settings_page;
 
@@ -60,7 +60,7 @@ class CommentPress_Multisite_Settings_Site {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $settings_page_slug The slug of the Settings Page.
+	 * @var string
 	 */
 	public $settings_page_slug = 'commentpress_settings';
 
@@ -69,25 +69,25 @@ class CommentPress_Multisite_Settings_Site {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $urls The array of Settings Page Tab URLs.
+	 * @var array
 	 */
 	public $urls = [];
 
 	/**
-	 * Page template directory path.
+	 * Relative path to the Page template directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $page_path Relative path to the Page template directory.
+	 * @var string
 	 */
 	private $page_path = 'includes/multisite/assets/templates/wordpress/pages/';
 
 	/**
-	 * Metabox template directory path.
+	 * Relative path to the Metabox directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Metabox directory.
+	 * @var string
 	 */
 	private $metabox_path = 'includes/multisite/assets/templates/wordpress/metaboxes/';
 
@@ -96,16 +96,16 @@ class CommentPress_Multisite_Settings_Site {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_field The name of the form nonce element.
+	 * @var string
 	 */
 	private $nonce_field = 'cpms_settings_site_nonce';
 
 	/**
-	 * Form nonce value.
+	 * Form nonce action.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_action The name of the form nonce action.
+	 * @var string
 	 */
 	private $nonce_action = 'cpms_settings_site_action';
 
@@ -114,7 +114,7 @@ class CommentPress_Multisite_Settings_Site {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $input_submit The "name" and "id" of the form.
+	 * @var string
 	 */
 	private $form_id = 'cpms_settings_site_form';
 
@@ -123,7 +123,7 @@ class CommentPress_Multisite_Settings_Site {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $input_submit The "name" and "id" of the form's submit input element.
+	 * @var string
 	 */
 	private $submit_id = 'cpms_settings_site_submit';
 
@@ -164,7 +164,7 @@ class CommentPress_Multisite_Settings_Site {
 	public function register_hooks() {
 
 		// Bail if not network-enabled.
-		if ( $this->multisite->plugin->plugin_context !== 'mu_sitewide' ) {
+		if ( 'mu_sitewide' !== $this->multisite->plugin->plugin_context ) {
 			return;
 		}
 
@@ -177,7 +177,7 @@ class CommentPress_Multisite_Settings_Site {
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 
 		// Add our meta boxes.
-		add_action( 'add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
+		add_action( 'commentpress/multisite/settings/site/page/add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
 
 		// Add link to Settings Page.
 		add_filter( 'plugin_action_links', [ $this, 'action_links' ], 10, 2 );
@@ -287,7 +287,7 @@ class CommentPress_Multisite_Settings_Site {
 		$subpages = apply_filters( 'commentpress/core/settings/site/page/subpages', $subpages );
 
 		// This tweaks the Settings subnav menu to show only one menu item.
-		if ( in_array( $plugin_page, $subpages ) ) {
+		if ( in_array( $plugin_page, $subpages, true ) ) {
 			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			$plugin_page = $this->parent_page_slug;
 			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
@@ -410,10 +410,10 @@ class CommentPress_Multisite_Settings_Site {
 		 *
 		 * @param string $screen_id The ID of the current screen.
 		 */
-		do_action( 'add_meta_boxes', $screen->id, null );
+		do_action( 'commentpress/multisite/settings/site/page/add_meta_boxes', $screen->id );
 
 		// Grab columns.
-		$columns = ( 1 == $screen->get_columns() ? '1' : '2' );
+		$columns = ( 1 === (int) $screen->get_columns() ? '1' : '2' );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->page_path . 'page-settings-site.php';
@@ -515,7 +515,7 @@ class CommentPress_Multisite_Settings_Site {
 		$settings_screens = $this->page_settings_screens_get();
 
 		// Bail if not the Screen ID we want.
-		if ( ! in_array( $screen_id, $settings_screens ) ) {
+		if ( ! in_array( $screen_id, $settings_screens, true ) ) {
 			return;
 		}
 
@@ -652,13 +652,13 @@ class CommentPress_Multisite_Settings_Site {
 	 * @since 4.0
 	 *
 	 * @param array $links The existing links array.
-	 * @param str $file The name of the plugin file.
+	 * @param str   $file The name of the plugin file.
 	 * @return array $links The modified links array.
 	 */
 	public function action_links( $links, $file ) {
 
 		// Bail if not this plugin.
-		if ( $file !== plugin_basename( dirname( COMMENTPRESS_PLUGIN_FILE ) . '/commentpress-core.php' ) ) {
+		if ( plugin_basename( dirname( COMMENTPRESS_PLUGIN_FILE ) . '/commentpress-core.php' ) !== $file ) {
 			return $links;
 		}
 

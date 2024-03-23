@@ -11,7 +11,7 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<!-- <?php echo $this->parts_path; ?>part-bp-groupblog-names-settings-network.php -->
+<!-- <?php echo esc_html( $this->parts_path ); ?>part-bp-groupblog-names-settings-network.php -->
 <tr valign="top">
 	<th scope="row">
 		<label for="<?php echo esc_attr( $this->key_scheme ); ?>"><?php echo esc_html_e( 'Default naming scheme for Group Blogs', 'commentpress-core' ); ?></label>
@@ -22,7 +22,17 @@ defined( 'ABSPATH' ) || exit;
 				<option value="<?php echo esc_attr( $scheme_slug ); ?>" <?php selected( $current_scheme, $scheme_slug ); ?>><?php echo esc_html( $scheme_title ); ?></option>
 			<?php endforeach; ?>
 		</select>
-		<p class="description"><?php printf( __( 'You can add additional translatable naming schemes for Group Blogs using the %s filter.', 'commentpress-core' ), '<code>commentpress/multisite/bp/groupblog/schemes</code>' ); ?></p>
+		<p class="description">
+			<?php
+
+			printf(
+				/* translators: %s: The name of the filter. */
+				esc_html__( 'You can add additional translatable naming schemes for Group Blogs using the %s filter.', 'commentpress-core' ),
+				'<code>commentpress/multisite/bp/groupblog/schemes</code>'
+			);
+
+			?>
+		</p>
 	</td>
 </tr>
 
@@ -31,12 +41,12 @@ defined( 'ABSPATH' ) || exit;
 		<label for="<?php echo esc_attr( $this->key_enabled ); ?>"><?php echo esc_html_e( 'Set a custom naming scheme for Group Blogs', 'commentpress-core' ); ?></label>
 	</th>
 	<td>
-		<input id="<?php echo esc_attr( $this->key_enabled ); ?>" name="<?php echo esc_attr( $this->key_enabled ); ?>" value="1" type="checkbox"<?php echo ( $enabled == 1 ? ' checked="checked"' : '' ); ?> />
+		<input id="<?php echo esc_attr( $this->key_enabled ); ?>" name="<?php echo esc_attr( $this->key_enabled ); ?>" value="1" type="checkbox"<?php checked( true, $enabled ); ?> />
 		<p class="description"><?php echo esc_html_e( 'Please note: if you set a custom name for Group Blogs, it will not be translatable.', 'commentpress-core' ); ?></p>
 	</td>
 </tr>
 
-<tr valign="top" class="nomenclature_name"<?php echo ( $enabled == 1 ? '' : ' style="display: none;"' ); ?>>
+<tr valign="top" class="nomenclature_name"<?php echo ( ! empty( $enabled ) ? '' : ' style="display: none;"' ); ?>>
 	<th scope="row">
 		<label for="<?php echo esc_attr( $this->key_singular ); ?>"><?php echo esc_html_e( 'Singular name for Group Blogs', 'commentpress-core' ); ?></label>
 	</th>
@@ -45,7 +55,7 @@ defined( 'ABSPATH' ) || exit;
 	</td>
 </tr>
 
-<tr valign="top" class="nomenclature_plural"<?php echo ( $enabled == 1 ? '' : ' style="display: none;"' ); ?>>
+<tr valign="top" class="nomenclature_plural"<?php echo ( ! empty( $enabled ) ? '' : ' style="display: none;"' ); ?>>
 	<th scope="row">
 		<label for="<?php echo esc_attr( $this->key_plural ); ?>"><?php echo esc_html_e( 'Plural name for Group Blogs', 'commentpress-core' ); ?></label>
 	</th>
@@ -54,7 +64,7 @@ defined( 'ABSPATH' ) || exit;
 	</td>
 </tr>
 
-<tr valign="top" class="nomenclature_slug"<?php echo ( $enabled == 1 ? '' : ' style="display: none;"' ); ?>>
+<tr valign="top" class="nomenclature_slug"<?php echo ( ! empty( $enabled ) ? '' : ' style="display: none;"' ); ?>>
 	<th scope="row">
 		<label for="<?php echo esc_attr( $this->key_slug ); ?>"><?php echo esc_html_e( 'Slug for Group Blogs', 'commentpress-core' ); ?></label>
 	</th>

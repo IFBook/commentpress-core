@@ -24,7 +24,7 @@ class CommentPress_Core_Editor_Comments {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -33,16 +33,16 @@ class CommentPress_Core_Editor_Comments {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $editor The Editor object.
+	 * @var CommentPress_Core_Pages_Editor
 	 */
 	public $editor;
 
 	/**
-	 * Parts template directory path.
+	 * Relative path to the Parts directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $parts_path Relative path to the Parts directory.
+	 * @var string
 	 */
 	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
 
@@ -51,7 +51,7 @@ class CommentPress_Core_Editor_Comments {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_editor The settings key for the "Comment Editor" setting.
+	 * @var string
 	 */
 	private $key_editor = 'cp_comment_editor';
 
@@ -60,7 +60,7 @@ class CommentPress_Core_Editor_Comments {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_promote The settings key for the "Promote Reading or Commenting" setting.
+	 * @var string
 	 */
 	private $key_promote = 'cp_promote_reading';
 
@@ -75,7 +75,7 @@ class CommentPress_Core_Editor_Comments {
 
 		// Store references.
 		$this->editor = $editor;
-		$this->core = $editor->core;
+		$this->core   = $editor->core;
 
 		// Init when the editor object is fully loaded.
 		add_action( 'commentpress/core/editor/loaded', [ $this, 'initialise' ] );
@@ -150,7 +150,7 @@ class CommentPress_Core_Editor_Comments {
 	public function settings_get_defaults( $settings ) {
 
 		// Add our defaults.
-		$settings[ $this->key_editor ] = 1; // Default to TinyMCE.
+		$settings[ $this->key_editor ]  = 1; // Default to TinyMCE.
 		$settings[ $this->key_promote ] = 0;
 
 		// --<
@@ -166,7 +166,7 @@ class CommentPress_Core_Editor_Comments {
 	public function settings_meta_box_part_get() {
 
 		// Get settings.
-		$editor = $this->setting_editor_get();
+		$editor  = $this->setting_editor_get();
 		$promote = $this->setting_promote_get();
 
 		// Include template file.
@@ -281,7 +281,7 @@ class CommentPress_Core_Editor_Comments {
 		$vars['cp_tinymce'] = $this->setting_editor_get();
 
 		// Don't add TinyMCE if Users must be logged in to comment.
-		if ( get_option( 'comment_registration' ) == '1' && ! is_user_logged_in() ) {
+		if ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) {
 			$vars['cp_tinymce'] = 0;
 		}
 
@@ -294,21 +294,21 @@ class CommentPress_Core_Editor_Comments {
 		$vars['cp_is_mobile'] = 0;
 		if ( $this->core->device->is_mobile() ) {
 			$vars['cp_is_mobile'] = 1;
-			$vars['cp_tinymce'] = 0;
+			$vars['cp_tinymce']   = 0;
 		}
 
 		// Don't add TinyMCE if touch device.
 		$vars['cp_is_touch'] = 0;
 		if ( $this->core->device->is_touch() ) {
 			$vars['cp_is_touch'] = 1;
-			$vars['cp_tinymce'] = 0;
+			$vars['cp_tinymce']  = 0;
 		}
 
 		// Don't add TinyMCE if tablet device.
 		$vars['cp_is_tablet'] = 0;
 		if ( $this->core->device->is_tablet() ) {
 			$vars['cp_is_tablet'] = 1;
-			$vars['cp_tinymce'] = 0;
+			$vars['cp_tinymce']   = 0;
 		}
 
 		// Support touch device testing if constant is set.
@@ -386,31 +386,36 @@ class CommentPress_Core_Editor_Comments {
 		 */
 		$media_buttons = apply_filters( 'commentpress_rte_media_buttons', true );
 
+		// Basic config.
+		$tinymce_config = [
+			'theme'     => 'modern',
+			'statusbar' => false,
+		];
+
 		/**
 		 * Filters the TinyMCE 4 config.
 		 *
 		 * @since 3.4
 		 *
-		 * @param array The default TinyMCE 4 config.
+		 * @param array $tinymce_config The default TinyMCE 4 config.
 		 */
-		$tinymce_config = apply_filters( 'commentpress_rte_tinymce', [
-			'theme' => 'modern',
-			'statusbar' => false,
-		] );
+		$tinymce_config = apply_filters( 'commentpress_rte_tinymce', $tinymce_config );
 
 		// No need for editor CSS.
 		$editor_css = '';
+
+		$quicktags = [
+			'buttons' => 'strong,em,ul,ol,li,link,close',
+		];
 
 		/**
 		 * Filters the quicktags setting.
 		 *
 		 * @since 3.4
 		 *
-		 * @param array The default quicktags setting.
+		 * @param array $quicktags The default quicktags setting.
 		 */
-		$quicktags = apply_filters( 'commentpress_rte_quicktags', [
-			'buttons' => 'strong,em,ul,ol,li,link,close',
-		] );
+		$quicktags = apply_filters( 'commentpress_rte_quicktags', $quicktags );
 
 		// Our settings.
 		$settings = [
@@ -421,16 +426,16 @@ class CommentPress_Core_Editor_Comments {
 			'textarea_rows' => 10,
 
 			// Might as well start with teeny.
-			'teeny' => true,
+			'teeny'         => true,
 
 			// Give the iframe a white background.
-			'editor_css' => $editor_css,
+			'editor_css'    => $editor_css,
 
 			// Configure TinyMCE.
-			'tinymce' => $tinymce_config,
+			'tinymce'       => $tinymce_config,
 
 			// Configure Quicktags.
-			'quicktags' => $quicktags,
+			'quicktags'     => $quicktags,
 
 		];
 

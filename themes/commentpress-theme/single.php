@@ -36,7 +36,7 @@ get_header();
 
 							<?php the_content(); ?>
 
-							<?php echo commentpress_multipager(); ?>
+							<?php echo commentpress_multipager(); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 
 							<?php commentpress_geomashup_map_get(); ?>
 
@@ -49,19 +49,20 @@ get_header();
 								$rss_text = __( 'RSS 2.0', 'commentpress-core' );
 
 								// Construct RSS link.
-								$rss_link = '<a href="' . esc_url( get_post_comments_feed_link() ) . '">' . $rss_text . '</a>';
+								$rss_link = '<a href="' . esc_url( get_post_comments_feed_link() ) . '">' . esc_html( $rss_text ) . '</a>';
 
 								// Show text.
 								echo sprintf(
-									__( 'This entry is filed under %1$s. You can follow any comments on this entry through the %2$s feed.', 'commentpress-core' ),
-									get_the_category_list( ', ' ),
-									$rss_link
+									/* translators: 1: The list of categories, 2: The RSS feed link. */
+									esc_html__( 'This entry is filed under %1$s. You can follow any comments on this entry through the %2$s feed.', 'commentpress-core' ),
+									get_the_category_list( ', ' ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+									$rss_link // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								);
 
 								// Add trailing space.
 								echo ' ';
 
-								if ( ( 'open' == $post->comment_status ) && ( 'open' == $post->ping_status ) ) {
+								if ( ( 'open' === $post->comment_status ) && ( 'open' === $post->ping_status ) ) {
 
 									// Both Comments and pings are open.
 
@@ -69,18 +70,19 @@ get_header();
 									$trackback_text = __( 'trackback', 'commentpress-core' );
 
 									// Construct RSS link.
-									$trackback_link = '<a href="' . esc_url( get_trackback_url() ) . '"rel="trackback">' . $trackback_text . '</a>';
+									$trackback_link = '<a href="' . esc_url( get_trackback_url() ) . '"rel="trackback">' . esc_html( $trackback_text ) . '</a>';
 
 									// Write out.
 									echo sprintf(
-										__( 'You can leave a comment, or %s from your own site.', 'commentpress-core' ),
-										$trackback_link
+										/* translators: %s: The trackback link. */
+										esc_html__( 'You can leave a comment, or %s from your own site.', 'commentpress-core' ),
+										$trackback_link // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 									);
 
 									// Add trailing space.
 									echo ' ';
 
-								} elseif ( ! ( 'open' == $post->comment_status ) && ( 'open' == $post->ping_status ) ) {
+								} elseif ( ! ( 'open' === $post->comment_status ) && ( 'open' === $post->ping_status ) ) {
 
 									// Only pings are open.
 
@@ -88,18 +90,19 @@ get_header();
 									$trackback_text = __( 'trackback', 'commentpress-core' );
 
 									// Construct RSS link.
-									$trackback_link = '<a href="' . esc_url( get_trackback_url() ) . '"rel="trackback">' . $trackback_text . '</a>';
+									$trackback_link = '<a href="' . esc_url( get_trackback_url() ) . '"rel="trackback">' . esc_html( $trackback_text ) . '</a>';
 
 									// Write out.
 									echo sprintf(
-										__( 'Comments are currently closed, but you can %s from your own site.', 'commentpress-core' ),
-										$trackback_link
+										/* translators: %s: The trackback link. */
+										esc_html__( 'Comments are currently closed, but you can %s from your own site.', 'commentpress-core' ),
+										$trackback_link // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 									);
 
 									// Add trailing space.
 									echo ' ';
 
-								} elseif ( ( 'open' == $post->comment_status ) && ! ( 'open' == $post->ping_status ) ) {
+								} elseif ( ( 'open' === $post->comment_status ) && ! ( 'open' === $post->ping_status ) ) {
 
 									// Comments are open, pings are not.
 									esc_html_e( 'You can leave a comment. Pinging is currently not allowed.', 'commentpress-core' );
@@ -107,7 +110,7 @@ get_header();
 									// Add trailing space.
 									echo ' ';
 
-								} elseif ( ! ( 'open' == $post->comment_status ) && ! ( 'open' == $post->ping_status ) ) {
+								} elseif ( ! ( 'open' === $post->comment_status ) && ! ( 'open' === $post->ping_status ) ) {
 
 									// Neither Comments nor pings are open.
 									esc_html_e( 'Both comments and pings are currently closed.', 'commentpress-core' );

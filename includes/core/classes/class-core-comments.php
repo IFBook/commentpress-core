@@ -24,7 +24,7 @@ class CommentPress_Core_Comments {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -33,25 +33,25 @@ class CommentPress_Core_Comments {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $tagging The Comment Tagging object.
+	 * @var CommentPress_Core_Comments_Tagging
 	 */
 	public $tagging;
 
 	/**
-	 * Classes directory path.
+	 * Relative path to the classes directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $classes_path Relative path to the classes directory.
+	 * @var string
 	 */
 	private $classes_path = 'includes/core/classes/';
 
 	/**
-	 * Metabox template directory path.
+	 * Relative path to the Metabox directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Metabox directory.
+	 * @var string
 	 */
 	private $metabox_path = 'includes/core/assets/templates/wordpress/metaboxes/';
 
@@ -60,7 +60,7 @@ class CommentPress_Core_Comments {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_live The settings key for the "Live comment refreshing" setting.
+	 * @var string
 	 */
 	private $key_live = 'cp_para_comments_live';
 
@@ -90,7 +90,7 @@ class CommentPress_Core_Comments {
 
 		// Only do this once.
 		static $done;
-		if ( isset( $done ) && $done === true ) {
+		if ( isset( $done ) && true === $done ) {
 			return;
 		}
 
@@ -290,7 +290,7 @@ class CommentPress_Core_Comments {
 	 *
 	 * @since 4.0
 	 *
-	 * @return int $live The setting if found, false otherwise.
+	 * @return int $live The setting if found, zero otherwise.
 	 */
 	public function setting_live_get() {
 
@@ -298,7 +298,7 @@ class CommentPress_Core_Comments {
 		$live = $this->core->db->setting_get( $this->key_live );
 
 		// Return setting or boolean if empty.
-		return ! empty( $live ) ? $live : 0;
+		return ! empty( $live ) ? (int) $live : 0;
 
 	}
 
@@ -348,9 +348,7 @@ class CommentPress_Core_Comments {
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
 	public function plugin_deactivate( $network_wide ) {
-
 		// Keep schema when deactivating.
-
 	}
 
 	// -------------------------------------------------------------------------
@@ -404,12 +402,12 @@ class CommentPress_Core_Comments {
 		$result = $this->save_comment_page( $comment_id );
 
 		// Has the Comment been marked as spam?
-		if ( $comment_status === 'spam' ) {
+		if ( 'spam' === $comment_status ) {
 
 			// TODO: Check for AJAX request.
 
 			// Yes - let the commenter know without throwing an AJAX error.
-			wp_die( __( 'This comment has been marked as spam. Please contact a site administrator.', 'commentpress-core' ) );
+			wp_die( esc_html__( 'This comment has been marked as spam. Please contact a site administrator.', 'commentpress-core' ) );
 
 		}
 
@@ -472,11 +470,11 @@ class CommentPress_Core_Comments {
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
 	 *
-	 * @param int $comment_ID The numeric ID of the Comment.
+	 * @param int $comment_id The numeric ID of the Comment.
 	 * @param int $page_number The number of the Page.
 	 * @param str $text_signature The Text Signature of the Comment.
 	 */
-	private function save_comment_page( $comment_ID, $page_number = false, $text_signature = '' ) {
+	private function save_comment_page( $comment_id, $page_number = false, $text_signature = '' ) {
 
 		// If no Page number is passed, look in POST.
 		if ( empty( $page_number ) ) {
@@ -502,10 +500,10 @@ class CommentPress_Core_Comments {
 			$key = '_cp_comment_page';
 
 			// Add or update the data.
-			if ( get_comment_meta( $comment_ID, $key, true ) != '' ) {
-				update_comment_meta( $comment_ID, $key, $page_number );
+			if ( get_comment_meta( $comment_id, $key, true ) !== '' ) {
+				update_comment_meta( $comment_id, $key, $page_number );
 			} else {
-				add_comment_meta( $comment_ID, $key, $page_number, true );
+				add_comment_meta( $comment_id, $key, $page_number, true );
 			}
 
 			// Okay, we're done.
@@ -598,8 +596,8 @@ class CommentPress_Core_Comments {
 	 * @since 3.3
 	 *
 	 * @param array $caps The existing capabilities array for the WordPress User.
-	 * @param str $cap The capability in question.
-	 * @param int $user_id The numeric ID of the WordPress User.
+	 * @param str   $cap The capability in question.
+	 * @param int   $user_id The numeric ID of the WordPress User.
 	 * @param array $args The additional arguments.
 	 * @return array $caps The modified capabilities array for the WordPress User.
 	 */
@@ -714,7 +712,7 @@ class CommentPress_Core_Comments {
 	 * @since 3.4.8
 	 * @since 4.0 Moved to this class.
 	 *
-	 * @param str $editlink The existing HTML link.
+	 * @param str   $editlink The existing HTML link.
 	 * @param array $comment The Comment data.
 	 * @return str $editlink The modified HTML link.
 	 */

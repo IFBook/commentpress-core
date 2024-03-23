@@ -28,9 +28,9 @@ if ( isset( $post->ID ) ) {
 
 	?>
 
-	<div class="comments_container"<?php echo $comments_post_identifier; ?>>
+	<div class="comments_container"<?php echo $comments_post_identifier; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>>
 
-		<?php if ( 'closed' == $post->comment_status ) : ?>
+		<?php if ( 'closed' === $post->comment_status ) : ?>
 			<h3 class="nocomments comments-closed"><span><?php esc_html_e( 'Comments are closed', 'commentpress-core' ); ?></span></h3>
 		<?php endif; ?>
 
@@ -59,7 +59,7 @@ if ( isset( $post->ID ) ) {
 			$cp_comment_form = apply_filters( 'cp_template_comment_form', locate_template( 'assets/templates/comment_form.php' ) );
 
 			// Load it if we find it.
-			if ( $cp_comment_form != '' ) {
+			if ( ! empty( $cp_comment_form ) ) {
 				load_template( $cp_comment_form );
 			}
 

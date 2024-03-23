@@ -38,16 +38,17 @@ if ( ! function_exists( 'commentpress_admin_header' ) ) :
 	 */
 	function commentpress_admin_header() {
 
-		// Init with same colour as theme stylesheets and default in "class-core-theme.php".
+		// Init with same colour as theme stylesheets.
 		$colour = '2c2622';
 
-		// Override if we have the plugin enabled.
-		$core = commentpress_core();
-		if ( ! empty( $core ) ) {
-			$colour = $core->theme->header_bg_color_get();
+		// Do we have one set via the Customizer?
+		$header_bg_color = get_theme_mod( 'commentpress_header_bg_color', false );
+		if ( ! empty( $header_bg_color ) ) {
+			$colour = substr( $header_bg_color, 1 );
 		}
 
 		// Try and recreate the look of the theme header.
+		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '
 			<style type="text/css">
 
@@ -93,6 +94,7 @@ if ( ! function_exists( 'commentpress_admin_header' ) ) :
 
 			</style>
 		';
+		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 
 	}
 
@@ -159,19 +161,20 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ) :
 			// Get Group Avatar.
 			$avatar_options = [
 				'item_id' => $group_id,
-				'object' => 'group',
-				'type' => 'full',
-				'alt' => __( 'Group avatar', 'commentpress-core' ),
-				'class' => 'cp_logo_image',
-				'width' => 48,
-				'height' => 48,
-				'html' => true,
+				'object'  => 'group',
+				'type'    => 'full',
+				'alt'     => __( 'Group avatar', 'commentpress-core' ),
+				'class'   => 'cp_logo_image',
+				'width'   => 48,
+				'height'  => 48,
+				'html'    => true,
 			];
 
 			// Add filter for the function above.
 			add_filter( 'bp_core_avatar_url', 'commentpress_fix_bp_core_avatar_url', 10, 1 );
 
 			// Show Group Avatar.
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo bp_core_fetch_avatar( $avatar_options );
 
 			// Remove filter.
@@ -196,7 +199,8 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ) :
 		$custom_avatar_pre = apply_filters( 'commentpress_header_image_pre_customizer', false );
 
 		// Show it if we get an override.
-		if ( $custom_avatar_pre !== false ) {
+		if ( false !== $custom_avatar_pre ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $custom_avatar_pre;
 			return;
 		}
@@ -216,17 +220,28 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ) :
 
 			// Override if there is top padding.
 			if ( isset( $options['cp_inline_header_padding'] ) && ! empty( $options['cp_inline_header_padding'] ) ) {
-				$style = ' style="padding-top: ' . $options['cp_inline_header_padding'] . 'px"';
+				$style = ' style="padding-top: ' . esc_attr( $options['cp_inline_header_padding'] ) . 'px"';
 			}
+
+			// Build image tag.
+			$image_tag = sprintf(
+				'<img src="%s" class="cp_logo_image"%s alt="%s" />',
+				esc_url( $options['cp_inline_header_image'] ),
+				$style,
+				esc_attr__( 'Logo', 'commentpress-core' )
+			);
 
 			/**
 			 * Filters the uploaded image markup.
 			 *
 			 * @since 3.4
 			 *
-			 * @param string The uploaded image markup.
+			 * @param string $image_tag The uploaded image markup.
 			 */
-			echo apply_filters( 'commentpress_header_image', '<img src="' . $options['cp_inline_header_image'] . '" class="cp_logo_image"' . $style . ' alt="' . __( 'Logo', 'commentpress-core' ) . '" />' );
+			$image_tag = apply_filters( 'commentpress_header_image', $image_tag );
+
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $image_tag;
 
 			// --<
 			return;
@@ -246,13 +261,10 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ) :
 		 */
 		$custom_avatar_post = apply_filters( 'commentpress_header_image_post_customizer', false );
 
-		// Did we get one?
-		if ( $custom_avatar_post !== false ) {
-
-			// Show it.
+		// Show it if we get an override.
+		if ( false !== $custom_avatar_post ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $custom_avatar_post;
-
-			// Bail before fallback.
 			return;
 
 		}
@@ -264,7 +276,7 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ) :
 
 			// Set defaults.
 			$args = [
-				'post_type' => 'attachment',
+				'post_type'   => 'attachment',
 				'numberposts' => 1,
 				'post_status' => null,
 				'post_parent' => $core->db->setting_get( 'cp_toc_page' ),
@@ -284,6 +296,24 @@ if ( ! function_exists( 'commentpress_get_header_image' ) ) :
 			}
 
 		}
+
+	}
+
+endif;
+
+
+
+if ( ! function_exists( 'commentpress_body_id' ) ) :
+
+	/**
+	 * Echoes an ID for the body tag.
+	 *
+	 * @since 4.0
+	 */
+	function commentpress_body_id() {
+
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo commentpress_get_body_id();
 
 	}
 
@@ -506,7 +536,7 @@ if ( ! function_exists( 'commentpress_page_title' ) ) :
 
 		// Init.
 		$title = '';
-		$sep = ' &#8594; ';
+		$sep   = ' &#8594; ';
 
 		/*
 		// Maybe use Blog title.
@@ -544,7 +574,7 @@ if ( ! function_exists( 'commentpress_page_title' ) ) :
 
 			if ( is_category() ) {
 				$category = get_the_category();
-				$title .= $category[0]->cat_name . $sep;
+				$title   .= $category[0]->cat_name . $sep;
 			}
 
 			// Current Page.
@@ -578,7 +608,7 @@ if ( ! function_exists( 'commentpress_has_page_children' ) ) :
 		// Init to look for published Pages.
 		$defaults = [
 			'post_parent' => $page_obj->ID,
-			'post_type' => 'page',
+			'post_type'   => 'page',
 			'numberposts' => -1,
 			'post_status' => 'publish',
 		];
@@ -633,16 +663,13 @@ if ( ! function_exists( 'commentpress_echo_post_meta' ) ) :
 					// Default to comma.
 					$sep = ', ';
 
-					// If we're on the penultimate.
-					if ( $n == ( $author_count - 1 ) ) {
-
-						// Use ampersand.
+					// Use ampersand if we're on the penultimate.
+					if ( ( $author_count - 1 ) === $n ) {
 						$sep = __( ' &amp; ', 'commentpress-core' );
-
 					}
 
 					// If we're on the last, don't add.
-					if ( $n == $author_count ) {
+					if ( $n === $author_count ) {
 						$sep = '';
 					}
 
@@ -655,16 +682,14 @@ if ( ! function_exists( 'commentpress_echo_post_meta' ) ) :
 					// Increment.
 					$n++;
 
-					// Yes - are we showing avatars?
+					// Maybe show avatar.
 					if ( get_option( 'show_avatars' ) ) {
-
-						// Get avatar.
 						echo get_avatar( $author->ID, $size = '32' );
-
 					}
 
 				}
 
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				?><cite class="fn"><?php echo $author_html; ?></cite>
 
 				<p><a href="<?php the_permalink(); ?>"><?php echo esc_html( get_the_date( get_option( 'date_format' ) ) ); ?></a></p>
@@ -702,7 +727,7 @@ if ( ! function_exists( 'commentpress_echo_post_author' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param int $author_id The numeric ID of the author.
+	 * @param int  $author_id The numeric ID of the author.
 	 * @param bool $echo Print or return the linked username.
 	 * @return str $author The linked username.
 	 */
@@ -736,7 +761,8 @@ if ( ! function_exists( 'commentpress_echo_post_author' ) ) :
 			// Link to theme's Author Page.
 			$link = sprintf(
 				'<a href="%s" title="%s" rel="author">%s</a>',
-				get_author_posts_url( $user->ID, $user->user_nicename ),
+				esc_url( get_author_posts_url( $user->ID, $user->user_nicename ) ),
+				/* translators: %s: The name of the author. */
 				esc_attr( sprintf( __( 'Posts by %s', 'commentpress-core' ), $user->display_name ) ),
 				esc_html( $user->display_name )
 			);
@@ -754,6 +780,7 @@ if ( ! function_exists( 'commentpress_echo_post_author' ) ) :
 
 		// If we're echoing.
 		if ( $echo ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $author;
 		} else {
 			return $author;
@@ -850,12 +877,12 @@ if ( ! function_exists( 'commentpress_get_full_name' ) ) :
 		$fullname = '';
 
 		// Add forename.
-		if ( $forename != '' ) {
+		if ( '' !== $forename ) {
 			$fullname .= $forename;
 		}
 
 		// Add surname.
-		if ( $surname != '' ) {
+		if ( '' !== $surname ) {
 			$fullname .= ' ' . $surname;
 		}
 
@@ -892,7 +919,7 @@ if ( ! function_exists( 'commentpress_add_tinymce_nextpage_button' ) ) :
 		$pos = array_search( 'wp_more', $buttons, true );
 
 		// Is it there?
-		if ( $pos !== false ) {
+		if ( false !== $pos ) {
 
 			// Get array up to that point.
 			$tmp_buttons = array_slice( $buttons, 0, $pos + 1 );
@@ -1114,6 +1141,7 @@ if ( ! function_exists( 'commentpress_get_post_version_info' ) ) :
 			return;
 		}
 
+		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		?>
 		<div class="version_info clear">
 			<ul>
@@ -1126,6 +1154,7 @@ if ( ! function_exists( 'commentpress_get_post_version_info' ) ) :
 			</ul>
 		</div>
 		<?php
+		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 
 	}
 
@@ -1158,7 +1187,7 @@ if ( ! function_exists( 'commentpress_get_post_css_override' ) ) :
 		$overridden = $core->entry->formatter->is_overridden( $post_id );
 
 		// Bail if not overridden.
-		if ( $overridden === false ) {
+		if ( false === $overridden ) {
 			return $class_name;
 		}
 
@@ -1195,6 +1224,7 @@ if ( ! function_exists( 'commentpress_post_title_visibility' ) ) :
 		}
 
 		// Write to screen.
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $visibility_attr;
 
 	}
@@ -1225,7 +1255,7 @@ if ( ! function_exists( 'commentpress_get_post_title_visibility' ) ) :
 		}
 
 		// --<
-		return ( $show_title == 'show' ) ? true : false;
+		return ( 'show' === $show_title ) ? true : false;
 
 	}
 
@@ -1251,6 +1281,7 @@ if ( ! function_exists( 'commentpress_post_meta_visibility' ) ) :
 		}
 
 		// Write to screen.
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $visibility_attr;
 
 	}
@@ -1281,7 +1312,7 @@ if ( ! function_exists( 'commentpress_get_post_meta_visibility' ) ) :
 		}
 
 		// --<
-		return ( $show_meta == 'show' ) ? true : false;
+		return ( 'show' === $show_meta ) ? true : false;
 
 	}
 
@@ -1312,6 +1343,7 @@ if ( ! function_exists( 'commentpress_geomashup_map_get' ) ) :
 		}
 
 		// Show map.
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '<div class="geomap">' . GeoMashup::map() . '</div>';
 
 	}

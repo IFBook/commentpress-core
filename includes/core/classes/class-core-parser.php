@@ -30,16 +30,16 @@ class CommentPress_Core_Parser {
 	 * @since 3.0
 	 * @since 4.0 Renamed.
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
 	/**
-	 * Parts template directory path.
+	 * Relative path to the Parts directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $parts_path Relative path to the Parts directory.
+	 * @var string
 	 */
 	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
 
@@ -52,7 +52,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_post_types_disabled The settings key for this setting.
+	 * @var string
 	 */
 	private $key_post_types_disabled = 'cp_post_types_disabled';
 
@@ -63,7 +63,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_post_types_enabled The settings key for this setting.
+	 * @var string
 	 */
 	private $key_post_types_enabled = 'cp_post_types_enabled';
 
@@ -79,7 +79,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_featured_images The settings key for this setting.
+	 * @var string
 	 */
 	private $key_do_not_parse = 'cp_do_not_parse';
 
@@ -88,7 +88,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $text_signatures The Text Signatures array.
+	 * @var array
 	 */
 	public $text_signatures = [];
 
@@ -97,7 +97,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $comments_all The array of all Comments.
+	 * @var array
 	 */
 	public $comments_all = [];
 
@@ -106,7 +106,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $comments_approved The approved Comments array.
+	 * @var array
 	 */
 	public $comments_approved = [];
 
@@ -115,17 +115,19 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $comments_sorted The sorted Comments array.
+	 * @var array
 	 */
 	public $comments_sorted = [];
 
 	/**
 	 * Do Not Parse flag.
 	 *
+	 * False if content is parsed, true disables parsing.
+	 *
 	 * @see CommentPress_Core_Database->do_not_parse
 	 * @since 3.8.10
 	 * @access public
-	 * @var bool $do_not_parse False if content is parsed, true disables parsing.
+	 * @var bool
 	 */
 	public $do_not_parse = false;
 
@@ -136,16 +138,16 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.8.10
 	 * @access public
-	 * @var str $parser The parser identifier.
+	 * @var string
 	 */
 	public $parser = 'tag';
 
 	/**
-	 * Block name.
+	 * Block name (e.g. "paragraph", "line" etc).
 	 *
 	 * @since 3.8.10
 	 * @access public
-	 * @var str $block_name The name of the Block (e.g. "paragraph", "line" etc).
+	 * @var string
 	 */
 	public $block_name = '';
 
@@ -252,7 +254,7 @@ class CommentPress_Core_Parser {
 
 		// Add our defaults.
 		$settings[ $this->key_post_types_disabled ] = [];
-		$settings[ $this->key_do_not_parse ] = 'n';
+		$settings[ $this->key_do_not_parse ]        = 'n';
 
 		// --<
 		return $settings;
@@ -268,8 +270,8 @@ class CommentPress_Core_Parser {
 
 		// Get settings.
 		$capable_post_types = $this->post_types_get_supported();
-		$selected_types = $this->setting_post_types_disabled_get();
-		$do_not_parse = $this->setting_do_not_parse_get();
+		$selected_types     = $this->setting_post_types_disabled_get();
+		$do_not_parse       = $this->setting_do_not_parse_get();
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->parts_path . 'part-parser-settings.php';
@@ -394,7 +396,7 @@ class CommentPress_Core_Parser {
 
 		// Default to parsing content and Comments.
 		$vars['cp_do_not_parse'] = 0;
-		if ( $this->setting_do_not_parse_get() == 'y' ) {
+		if ( $this->setting_do_not_parse_get() === 'y' ) {
 			$vars['cp_do_not_parse'] = 1;
 		}
 
@@ -422,7 +424,7 @@ class CommentPress_Core_Parser {
 
 		// Get only Post Types with an admin UI.
 		$args = [
-			'public' => true,
+			'public'  => true,
 			'show_ui' => true,
 		];
 
@@ -437,7 +439,7 @@ class CommentPress_Core_Parser {
 		}
 
 		// Built-in media descriptions are also supported.
-		$attachment = get_post_type_object( 'attachment' );
+		$attachment                                = get_post_type_object( 'attachment' );
 		$supported_post_types[ $attachment->name ] = $attachment->label;
 
 		// --<
@@ -463,11 +465,11 @@ class CommentPress_Core_Parser {
 			! ( $post instanceof WP_Post ) ||
 
 			// Some Post Types can be skipped.
-			in_array( $post->post_type, $this->setting_post_types_disabled_get() ) || (
+			in_array( $post->post_type, $this->setting_post_types_disabled_get(), true ) || (
 
 			// Individual entries can have parsing skipped.
-			$this->core->db->setting_get( 'cp_do_not_parse', 'n' ) == 'y' &&
-			$post->comment_status == 'closed' &&
+			$this->core->db->setting_get( 'cp_do_not_parse', 'n' ) === 'y' &&
+			'closed' === $post->comment_status &&
 			empty( $post->comment_count ) )
 
 		) {
@@ -685,50 +687,29 @@ class CommentPress_Core_Parser {
 		// Act on parser.
 		switch ( $this->parser ) {
 
-			// For poetry.
+			// For Poetry, filter content by <br> and <br /> tags.
 			case 'line':
-
-				// Generate Text Signatures array.
 				$this->text_signatures = $this->line_signatures_generate( $content );
-
-				// Only continue parsing if we have an array of sigs.
 				if ( ! empty( $this->text_signatures ) ) {
-
-					// Filter content by <br> and <br /> tags.
 					$content = $this->lines_parse( $content );
-
 				}
 
 				break;
 
-			// For general prose.
+			// For Prose, filter content by <p>, <ul> and <ol> tags.
 			case 'tag':
-
-				// Generate Text Signatures array.
 				$this->text_signatures = $this->tag_signatures_generate( $content, 'p|ul|ol' );
-
-				// Only continue parsing if we have an array of sigs.
 				if ( ! empty( $this->text_signatures ) ) {
-
-					// Filter content by <p>, <ul> and <ol> tags.
 					$content = $this->tags_parse( $content, 'p|ul|ol' );
-
 				}
 
 				break;
 
-			// For Blocks.
+			// For Blocks, filter content by <!--commentblock--> quicktags.
 			case 'block':
-
-				// Generate Text Signatures array.
 				$this->text_signatures = $this->block_signatures_generate( $content );
-
-				// Only parse content if we have an array of sigs.
 				if ( ! empty( $this->text_signatures ) ) {
-
-					// Filter content by <!--commentblock--> quicktags.
 					$content = $this->blocks_parse( $content );
-
 				}
 
 				break;
@@ -839,7 +820,7 @@ class CommentPress_Core_Parser {
 		$key = '_cp_starting_para_number';
 
 		// If the custom field already has a value.
-		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 			// Get it.
 			$start_num = absint( get_post_meta( $post->ID, $key, true ) );
@@ -920,59 +901,59 @@ class CommentPress_Core_Parser {
 			*/
 
 			// Further checks when there's a <p> tag.
-			if ( $tag == 'p' ) {
+			if ( 'p' === $tag ) {
 
 				// Set pattern by TinyMCE tag attribute, if we have one.
-				if ( substr( $paragraph, 0, 17 ) == '<p style="text-al' ) {
+				if ( substr( $paragraph, 0, 17 ) === '<p style="text-al' ) {
 
 					// Test for left.
-					if ( substr( $paragraph, 0, 27 ) == '<p style="text-align:left;"' ) {
+					if ( substr( $paragraph, 0, 27 ) === '<p style="text-align:left;"' ) {
 						$tag = 'p style="text-align:left;"';
-					} elseif ( substr( $paragraph, 0, 26 ) == '<p style="text-align:left"' ) {
+					} elseif ( substr( $paragraph, 0, 26 ) === '<p style="text-align:left"' ) {
 						$tag = 'p style="text-align:left"';
-					} elseif ( substr( $paragraph, 0, 28 ) == '<p style="text-align: left;"' ) {
+					} elseif ( substr( $paragraph, 0, 28 ) === '<p style="text-align: left;"' ) {
 						$tag = 'p style="text-align: left;"';
-					} elseif ( substr( $paragraph, 0, 27 ) == '<p style="text-align: left"' ) {
+					} elseif ( substr( $paragraph, 0, 27 ) === '<p style="text-align: left"' ) {
 						$tag = 'p style="text-align: left"';
 					}
 
 					// Test for right.
-					if ( substr( $paragraph, 0, 28 ) == '<p style="text-align:right;"' ) {
+					if ( substr( $paragraph, 0, 28 ) === '<p style="text-align:right;"' ) {
 						$tag = 'p style="text-align:right;"';
-					} elseif ( substr( $paragraph, 0, 27 ) == '<p style="text-align:right"' ) {
+					} elseif ( substr( $paragraph, 0, 27 ) === '<p style="text-align:right"' ) {
 						$tag = 'p style="text-align:right"';
-					} elseif ( substr( $paragraph, 0, 29 ) == '<p style="text-align: right;"' ) {
+					} elseif ( substr( $paragraph, 0, 29 ) === '<p style="text-align: right;"' ) {
 						$tag = 'p style="text-align: right;"';
-					} elseif ( substr( $paragraph, 0, 28 ) == '<p style="text-align: right"' ) {
+					} elseif ( substr( $paragraph, 0, 28 ) === '<p style="text-align: right"' ) {
 						$tag = 'p style="text-align: right"';
 					}
 
 					// Test for center.
-					if ( substr( $paragraph, 0, 29 ) == '<p style="text-align:center;"' ) {
+					if ( substr( $paragraph, 0, 29 ) === '<p style="text-align:center;"' ) {
 						$tag = 'p style="text-align:center;"';
-					} elseif ( substr( $paragraph, 0, 28 ) == '<p style="text-align:center"' ) {
+					} elseif ( substr( $paragraph, 0, 28 ) === '<p style="text-align:center"' ) {
 						$tag = 'p style="text-align:center"';
-					} elseif ( substr( $paragraph, 0, 30 ) == '<p style="text-align: center;"' ) {
+					} elseif ( substr( $paragraph, 0, 30 ) === '<p style="text-align: center;"' ) {
 						$tag = 'p style="text-align: center;"';
-					} elseif ( substr( $paragraph, 0, 29 ) == '<p style="text-align: center"' ) {
+					} elseif ( substr( $paragraph, 0, 29 ) === '<p style="text-align: center"' ) {
 						$tag = 'p style="text-align: center"';
 					}
 
 					// Test for justify.
-					if ( substr( $paragraph, 0, 30 ) == '<p style="text-align:justify;"' ) {
+					if ( substr( $paragraph, 0, 30 ) === '<p style="text-align:justify;"' ) {
 						$tag = 'p style="text-align:justify;"';
-					} elseif ( substr( $paragraph, 0, 29 ) == '<p style="text-align:justify"' ) {
+					} elseif ( substr( $paragraph, 0, 29 ) === '<p style="text-align:justify"' ) {
 						$tag = 'p style="text-align:justify"';
-					} elseif ( substr( $paragraph, 0, 31 ) == '<p style="text-align: justify;"' ) {
+					} elseif ( substr( $paragraph, 0, 31 ) === '<p style="text-align: justify;"' ) {
 						$tag = 'p style="text-align: justify;"';
-					} elseif ( substr( $paragraph, 0, 30 ) == '<p style="text-align: justify"' ) {
+					} elseif ( substr( $paragraph, 0, 30 ) === '<p style="text-align: justify"' ) {
 						$tag = 'p style="text-align: justify"';
 					}
 
 				} // End check for text-align.
 
 				// Test for Simple Footnotes para "heading".
-				if ( substr( $paragraph, 0, 16 ) == '<p class="notes"' ) {
+				if ( substr( $paragraph, 0, 16 ) === '<p class="notes"' ) {
 					$tag = 'p class="notes"';
 				}
 
@@ -1006,18 +987,16 @@ class CommentPress_Core_Parser {
 			$start = 0;
 
 			// Further checks when there's a <ol> tag.
-			if ( $tag == 'ol' ) {
+			if ( 'ol' === $tag ) {
 
-				// Compat with "WP Footnotes".
-				if ( substr( $paragraph, 0, 21 ) == '<ol class="footnotes"' ) {
+				if ( substr( $paragraph, 0, 21 ) === '<ol class="footnotes"' ) {
 
-					// Construct tag.
+					// Compat with "WP Footnotes".
 					$tag = 'ol class="footnotes"';
 
-				// Add support for <ol start="n">.
-				} elseif ( substr( $paragraph, 0, 11 ) == '<ol start="' ) {
+				} elseif ( substr( $paragraph, 0, 11 ) === '<ol start="' ) {
 
-					// Parse tag.
+					// Add support for <ol start="n">.
 					preg_match( '/start="([^"]*)"/i', $paragraph, $matches );
 
 					// Construct new tag.
@@ -1164,7 +1143,7 @@ class CommentPress_Core_Parser {
 			$text_signature = $this->text_signature_generate( $paragraph );
 
 			// Do we have one already?
-			if ( in_array( $text_signature, $this->text_signatures ) ) {
+			if ( in_array( $text_signature, $this->text_signatures, true ) ) {
 
 				// Is it in the duplicates array?
 				if ( array_key_exists( $text_signature, $duplicates ) ) {
@@ -1231,7 +1210,7 @@ class CommentPress_Core_Parser {
 		$key = '_cp_starting_para_number';
 
 		// If the custom field already has a value.
-		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 			// Get it.
 			$start_num = absint( get_post_meta( $post->ID, $key, true ) );
@@ -1248,10 +1227,10 @@ class CommentPress_Core_Parser {
 		foreach ( $matches as $line ) {
 
 			// Is there any content?
-			if ( $line != '' ) {
+			if ( '' !== $line ) {
 
 				// Check for paras.
-				if ( $line == '<p>' || $line == '</p>' ) {
+				if ( '<p>' === $line || '</p>' === $line ) {
 
 					// Do we want to allow commenting on verses?
 
@@ -1434,14 +1413,14 @@ class CommentPress_Core_Parser {
 		foreach ( $output_array as $paragraph ) {
 
 			// Is there any content?
-			if ( $paragraph != '' ) {
+			if ( '' !== $paragraph ) {
 
 				/*
 				 * Check for paragraphs.
 				 *
 				 * TODO: Do we want to allow commenting on verses?
 				 */
-				if ( $paragraph !== '<p>' && $paragraph !== '</p>' ) {
+				if ( '<p>' !== $paragraph && '</p>' !== $paragraph ) {
 
 					// Line commenting.
 
@@ -1449,7 +1428,7 @@ class CommentPress_Core_Parser {
 					$text_signature = $this->text_signature_generate( $paragraph );
 
 					// Do we have one already?
-					if ( in_array( $text_signature, $this->text_signatures ) ) {
+					if ( in_array( $text_signature, $this->text_signatures, true ) ) {
 
 						// Is it in the duplicates array?
 						if ( array_key_exists( $text_signature, $duplicates ) ) {
@@ -1520,7 +1499,7 @@ class CommentPress_Core_Parser {
 		$key = '_cp_starting_para_number';
 
 		// If the custom field already has a value.
-		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 			// Get it.
 			$start_num = absint( get_post_meta( $post->ID, $key, true ) );
@@ -1772,13 +1751,13 @@ class CommentPress_Core_Parser {
 		foreach ( $matches as $paragraph ) {
 
 			// Is there any content?
-			if ( $paragraph != '' ) {
+			if ( '' !== $paragraph ) {
 
 				// Get a signature for the Paragraph.
 				$text_signature = $this->text_signature_generate( $paragraph );
 
 				// Do we have one already?
-				if ( in_array( $text_signature, $this->text_signatures ) ) {
+				if ( in_array( $text_signature, $this->text_signatures, true ) ) {
 
 					// Is it in the duplicates array?
 					if ( array_key_exists( $text_signature, $duplicates ) ) {
@@ -2061,7 +2040,7 @@ class CommentPress_Core_Parser {
 	private function filter_captions( $content ) {
 
 		$start = '<!-- cp_caption_start -->';
-		$end = '<!-- cp_caption_end -->';
+		$end   = '<!-- cp_caption_end -->';
 
 		// Filter captioned images that are *not* inside other tags.
 		$pattern = [
@@ -2079,7 +2058,7 @@ class CommentPress_Core_Parser {
 		$content = preg_replace( $pattern, $replace, $content );
 
 		// Check for captions at the very beginning of content.
-		if ( substr( $content, 0, 25 ) == $start ) {
+		if ( substr( $content, 0, 25 ) === $start ) {
 			$content = '<p>' . $content;
 		}
 
@@ -2094,9 +2073,9 @@ class CommentPress_Core_Parser {
 	 * @since 3.9.3
 	 *
 	 * @param string $html Shortcode HTML output.
-	 * @param array $atts Array of shortcode attributes.
+	 * @param array  $atts Array of shortcode attributes.
 	 * @param string $file Media file.
-	 * @param int $post_id Post ID.
+	 * @param int    $post_id Post ID.
 	 * @param string $library Media library used for the shortcode.
 	 */
 	public function filter_audio_shortcode( $html, $atts, $file, $post_id, $library ) {
@@ -2112,9 +2091,9 @@ class CommentPress_Core_Parser {
 	 * @since 3.9.3
 	 *
 	 * @param string $html Shortcode HTML output.
-	 * @param array $atts Array of shortcode attributes.
+	 * @param array  $atts Array of shortcode attributes.
 	 * @param string $file Media file.
-	 * @param int $post_id Post ID.
+	 * @param int    $post_id Post ID.
 	 * @param string $library Media library used for the shortcode.
 	 */
 	public function filter_video_shortcode( $html, $atts, $file, $post_id, $library ) {
@@ -2298,19 +2277,19 @@ class CommentPress_Core_Parser {
 		foreach ( $comments as $comment ) {
 
 			// If it has a Text Signature.
-			if ( ! is_null( $comment->comment_signature ) && $comment->comment_signature != '' ) {
+			if ( ! is_null( $comment->comment_signature ) && '' !== $comment->comment_signature ) {
 
 				// Set key.
 				$key = '_cp_comment_page';
 
 				// Does it have a Comment meta value?
-				if ( get_comment_meta( $comment->comment_ID, $key, true ) != '' ) {
+				if ( get_comment_meta( $comment->comment_ID, $key, true ) !== '' ) {
 
 					// Get the Page number.
 					$page_num = get_comment_meta( $comment->comment_ID, $key, true );
 
 					// Is it the current one?
-					if ( $page_num == $page ) {
+					if ( (int) $page_num === (int) $page ) {
 
 						// Add it.
 						$filtered[] = $comment;
@@ -2338,8 +2317,8 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param array $comments The array of Comment objects.
-	 * @param array $text_signatures The array of Text Signatures.
+	 * @param array   $comments The array of Comment objects.
+	 * @param array   $text_signatures The array of Text Signatures.
 	 * @param integer $confidence The confidence level of Paragraph identity - default 90%.
 	 * @return array $assigned The array with Text Signatures as keys and array of Comments as values.
 	 */
@@ -2358,11 +2337,11 @@ class CommentPress_Core_Parser {
 		foreach ( $comments as $comment ) {
 
 			// Test for empty Comment Text Signature.
-			if ( ! is_null( $comment->comment_signature ) && $comment->comment_signature != '' ) {
+			if ( ! is_null( $comment->comment_signature ) && '' !== $comment->comment_signature ) {
 
 				// Do we have an exact match in the Text Signatures array?
 				// NB: this will work, because we're already ensuring identical sigs are made unique.
-				if ( in_array( $comment->comment_signature, $text_signatures ) ) {
+				if ( in_array( $comment->comment_signature, $text_signatures, true ) ) {
 
 					// Yes, assign to that key.
 					$assigned[ $comment->comment_signature ][] = $comment;
@@ -2409,7 +2388,7 @@ class CommentPress_Core_Parser {
 						$comment->comment_signature = '';
 
 						// Is it a pingback or trackback?
-						if ( $comment->comment_type == 'trackback' || $comment->comment_type == 'pingback' ) {
+						if ( 'trackback' === $comment->comment_type || 'pingback' === $comment->comment_type ) {
 
 							// We have one - assign to pings.
 							$assigned['PINGS_AND_TRACKS'][] = $comment;
@@ -2428,7 +2407,7 @@ class CommentPress_Core_Parser {
 			} else {
 
 				// Is it a pingback or trackback?
-				if ( $comment->comment_type == 'trackback' || $comment->comment_type == 'pingback' ) {
+				if ( 'trackback' === $comment->comment_type || 'pingback' === $comment->comment_type ) {
 
 					// We have one - assign to pings.
 					$assigned['PINGS_AND_TRACKS'][] = $comment;
@@ -2648,7 +2627,7 @@ class CommentPress_Core_Parser {
 	public function paragraph_num_get_by_text_signature( $text_signature ) {
 
 		// Get position in array.
-		$num = array_search( $text_signature, $this->text_signatures_get() );
+		$num = array_search( $text_signature, $this->text_signatures_get(), true );
 
 		// --<
 		return $num + 1;

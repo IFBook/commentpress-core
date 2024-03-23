@@ -30,7 +30,8 @@ get_header();
 						<?php
 
 						echo sprintf(
-							__( 'Comments Tagged &#8216;%s&#8217;', 'commentpress-core' ),
+							/* translators: %s: The name of the tag. */
+							esc_html__( 'Comments Tagged &#8216;%s&#8217;', 'commentpress-core' ),
 							single_cat_title( '', false )
 						);
 
@@ -41,7 +42,7 @@ get_header();
 
 						<?php if ( ! empty( $html ) ) : ?>
 
-							<?php echo $html; ?>
+							<?php echo $html; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 
 						<?php else : ?>
 

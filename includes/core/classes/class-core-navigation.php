@@ -26,16 +26,16 @@ class CommentPress_Core_Navigator {
 	 * @since 3.0
 	 * @since 4.0 Renamed.
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
 	/**
-	 * Metabox template directory path.
+	 * Relative path to the Metabox directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Metabox directory.
+	 * @var string
 	 */
 	private $metabox_path = 'includes/core/assets/templates/wordpress/metaboxes/';
 
@@ -51,7 +51,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $key_page_nav_enabled The settings key for the "Page navigation enabled" setting.
+	 * @var string
 	 */
 	private $key_page_nav_enabled = 'cp_page_nav_enabled';
 
@@ -60,7 +60,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_post_type The settings key for the "Table of Contents contains" setting.
+	 * @var string
 	 */
 	private $key_post_type = 'cp_show_posts_or_pages_in_toc';
 
@@ -69,7 +69,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_chapter_is_page The settings key for the "Chapters are Headings/Pages" setting.
+	 * @var string
 	 */
 	private $key_chapter_is_page = 'cp_toc_chapter_is_page';
 
@@ -78,7 +78,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_subpages The settings key for the "Show Sub-Pages" setting.
+	 * @var string
 	 */
 	private $key_subpages = 'cp_show_subpages';
 
@@ -87,7 +87,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_extended The settings key for the "Appearance of TOC for Posts" setting.
+	 * @var string
 	 */
 	private $key_extended = 'cp_show_extended_toc';
 
@@ -96,7 +96,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $next_pages The "Next Pages" array.
+	 * @var array
 	 */
 	public $next_pages = [];
 
@@ -105,7 +105,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $previous_pages The "Previous Pages" array.
+	 * @var array
 	 */
 	public $previous_pages = [];
 
@@ -114,7 +114,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $next_posts The "Next Posts" array.
+	 * @var array
 	 */
 	public $next_posts = [];
 
@@ -123,7 +123,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $previous_posts The "Previous Posts" array.
+	 * @var array
 	 */
 	public $previous_posts = [];
 
@@ -132,7 +132,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $page_numbers The Page numbers array.
+	 * @var array
 	 */
 	public $page_numbers = [];
 
@@ -141,16 +141,18 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var array $menu_objects The Menu objects array.
+	 * @var array
 	 */
 	public $menu_objects = [];
 
 	/**
 	 * Page navigation enabled flag.
 	 *
+	 * True if Page Navigation is enabled, false otherwise.
+	 *
 	 * @since 3.8.10
 	 * @access public
-	 * @var bool $nav_enabled True if Page Navigation is enabled, false otherwise.
+	 * @var bool
 	 */
 	public $nav_enabled = true;
 
@@ -252,10 +254,10 @@ class CommentPress_Core_Navigator {
 
 		// Add our defaults.
 		$settings[ $this->key_page_nav_enabled ] = 'y';
-		$settings[ $this->key_post_type ] = 'page';
-		$settings[ $this->key_chapter_is_page ] = 1;
-		$settings[ $this->key_subpages ] = 1;
-		$settings[ $this->key_extended ] = 1;
+		$settings[ $this->key_post_type ]        = 'page';
+		$settings[ $this->key_chapter_is_page ]  = 1;
+		$settings[ $this->key_subpages ]         = 1;
+		$settings[ $this->key_extended ]         = 1;
 
 		// --<
 		return $settings;
@@ -292,10 +294,10 @@ class CommentPress_Core_Navigator {
 
 		// Get settings.
 		$page_nav_enabled = $this->setting_page_nav_enabled_get();
-		$post_type = $this->setting_post_type_get();
-		$chapter_is_page = $this->setting_chapter_is_page_get();
-		$show_subpages = $this->setting_subpages_get();
-		$extended = $this->setting_extended_get();
+		$post_type        = $this->setting_post_type_get();
+		$chapter_is_page  = $this->setting_chapter_is_page_get();
+		$show_subpages    = $this->setting_subpages_get();
+		$extended         = $this->setting_extended_get();
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-nav.php';
@@ -443,7 +445,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 4.0
 	 *
-	 * @return int $chapter_is_page The setting if found, false otherwise.
+	 * @return int $chapter_is_page The setting if found, zero otherwise.
 	 */
 	public function setting_chapter_is_page_get() {
 
@@ -451,7 +453,7 @@ class CommentPress_Core_Navigator {
 		$chapter_is_page = $this->core->db->setting_get( $this->key_chapter_is_page );
 
 		// Return setting or boolean if empty.
-		return ! empty( $chapter_is_page ) ? $chapter_is_page : 0;
+		return ! empty( $chapter_is_page ) ? (int) $chapter_is_page : 0;
 
 	}
 
@@ -474,7 +476,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 4.0
 	 *
-	 * @return int $subpages The setting if found, false otherwise.
+	 * @return int $subpages The setting if found, zero otherwise.
 	 */
 	public function setting_subpages_get() {
 
@@ -482,7 +484,7 @@ class CommentPress_Core_Navigator {
 		$subpages = $this->core->db->setting_get( $this->key_subpages );
 
 		// Return setting or boolean if empty.
-		return ! empty( $subpages ) ? $subpages : 0;
+		return ! empty( $subpages ) ? (int) $subpages : 0;
 
 	}
 
@@ -545,11 +547,11 @@ class CommentPress_Core_Navigator {
 
 		// Add our settings.
 		$vars['cp_toc_chapter_is_page'] = $this->setting_chapter_is_page_get();
-		$vars['cp_show_subpages'] = $this->setting_subpages_get();
+		$vars['cp_show_subpages']       = $this->setting_subpages_get();
 
 		// Default to Page navigation enabled.
 		$vars['cp_page_nav_enabled'] = 1;
-		if ( $this->setting_page_nav_enabled_get() == 'n' ) {
+		if ( $this->setting_page_nav_enabled_get() === 'n' ) {
 			$vars['cp_page_nav_enabled'] = 0;
 		}
 
@@ -611,7 +613,7 @@ class CommentPress_Core_Navigator {
 	public function page_nav_is_disabled() {
 
 		// Overwrite flag if Page Navigation option is set to "off".
-		if ( $this->setting_page_nav_enabled_get() == 'n' ) {
+		if ( $this->setting_page_nav_enabled_get() === 'n' ) {
 			$this->nav_enabled = false;
 		}
 
@@ -662,16 +664,16 @@ class CommentPress_Core_Navigator {
 		// Init to look for published Pages.
 		$defaults = [
 			'post_parent' => $page_id,
-			'post_type' => 'page',
+			'post_type'   => 'page',
 			'numberposts' => -1,
 			'post_status' => 'publish',
-			'orderby' => 'menu_order, post_title',
-			'order' => 'ASC',
+			'orderby'     => 'menu_order, post_title',
+			'order'       => 'ASC',
 		];
 
 		// Get Page children.
 		$children = get_children( $defaults );
-		$kids =& $children;
+		$kids     =& $children;
 
 		// Do we have any?
 		if ( empty( $kids ) ) {
@@ -718,7 +720,7 @@ class CommentPress_Core_Navigator {
 		}
 
 		// Are parent Pages viewable?
-		$viewable = $this->setting_chapter_is_page_get() == '1' ? true : false;
+		$viewable = $this->setting_chapter_is_page_get() === 1 ? true : false;
 
 		// Get the ID of the first child.
 		$first_child = $this->first_child_get( $post->ID );
@@ -767,7 +769,7 @@ class CommentPress_Core_Navigator {
 		foreach ( $all_pages as $key => $page_obj ) {
 
 			// Is it the currently viewed Page?
-			if ( $page_obj->ID == $post->ID ) {
+			if ( (int) $page_obj->ID === (int) $post->ID ) {
 
 				// Set Page key.
 				$page_key = $key;
@@ -780,7 +782,7 @@ class CommentPress_Core_Navigator {
 		}
 
 		// If we don't get a key, the current Page is a Chapter and not a Page.
-		if ( $page_key === false ) {
+		if ( false === $page_key ) {
 			$this->next_pages = [];
 			return;
 		}
@@ -835,7 +837,7 @@ class CommentPress_Core_Navigator {
 
 		// Check if the supplied Welcome Page is the Front Page and this is it.
 		$title_id = $this->core->pages_legacy->is_title_page_the_homepage();
-		if ( $title_id !== false && is_front_page() ) {
+		if ( false !== $title_id && is_front_page() ) {
 
 			// Get the first readable Page.
 			$first_id = $this->page_get_first();
@@ -886,7 +888,7 @@ class CommentPress_Core_Navigator {
 
 		// We still need to check if the supplied Welcome Page is the Front Page.
 		$title_id = $this->core->pages_legacy->is_title_page_the_homepage();
-		if ( $title_id !== false && ! is_front_page() ) {
+		if ( false !== $title_id && ! is_front_page() ) {
 			return get_post( $title_id );
 		}
 
@@ -950,16 +952,16 @@ class CommentPress_Core_Navigator {
 				// Init to look for published Pages.
 				$defaults = [
 					'post_parent' => $page_obj->ID,
-					'post_type' => 'page',
+					'post_type'   => 'page',
 					'numberposts' => -1,
 					'post_status' => 'publish',
-					'orderby' => 'menu_order, post_title',
-					'order' => 'ASC',
+					'orderby'     => 'menu_order, post_title',
+					'order'       => 'ASC',
 				];
 
 				// Get Page children.
 				$children = get_children( $defaults );
-				$kids =& $children;
+				$kids     =& $children;
 
 				// Do we have any?
 				if ( ! empty( $kids ) ) {
@@ -997,7 +999,7 @@ class CommentPress_Core_Navigator {
 		$page = get_page( $post_id );
 
 		// Is the top Page?
-		if ( $page->post_parent == 0 ) {
+		if ( 0 === (int) $page->post_parent ) {
 
 			// Yes -> return the ID.
 			return $page->ID;
@@ -1040,14 +1042,14 @@ class CommentPress_Core_Navigator {
 				// Init to look for published Pages.
 				$defaults = [
 					'post_parent' => $page_obj->ID,
-					'post_type' => 'page',
+					'post_type'   => 'page',
 					'numberposts' => -1,
 					'post_status' => 'publish',
 				];
 
 				// Get Page children.
 				$children = get_children( $defaults );
-				$kids =& $children;
+				$kids     =& $children;
 
 				// Do we have any?
 				if ( empty( $kids ) ) {
@@ -1091,7 +1093,7 @@ class CommentPress_Core_Navigator {
 
 		// If the supplied Welcome Page is the Front Page.
 		$title_id = $this->core->pages_legacy->is_title_page_the_homepage();
-		if ( $title_id !== false ) {
+		if ( false !== $title_id ) {
 
 			// It will already be shown at the top of the Page list.
 			$excluded_pages[] = $title_id;
@@ -1110,7 +1112,7 @@ class CommentPress_Core_Navigator {
 			 */
 
 			// Check if registration is allowed.
-			if ( '1' == get_option( 'users_can_register' ) && is_main_site() ) {
+			if ( get_option( 'users_can_register' ) && is_main_site() ) {
 
 				// Find the Registration Page by its slug.
 				$reg_page = get_page_by_path( 'register' );
@@ -1143,14 +1145,14 @@ class CommentPress_Core_Navigator {
 
 		// Build Page query defaults.
 		$defaults = [
-			'child_of' => 0,
-			'sort_order' => 'ASC',
-			'sort_column' => 'menu_order, post_title',
+			'child_of'     => 0,
+			'sort_order'   => 'ASC',
+			'sort_column'  => 'menu_order, post_title',
 			'hierarchical' => 1,
-			'exclude' => $excludes,
-			'include' => '',
-			'authors' => '',
-			'parent' => -1,
+			'exclude'      => $excludes,
+			'include'      => '',
+			'authors'      => '',
+			'parent'       => -1,
 			'exclude_tree' => '',
 		];
 
@@ -1161,10 +1163,10 @@ class CommentPress_Core_Navigator {
 		}
 
 		// If Chapters are not Pages.
-		if ( $this->setting_chapter_is_page_get() != '1' ) {
+		if ( $this->setting_chapter_is_page_get() !== 1 ) {
 
 			// Filter Chapters out if we want all readable Pages.
-			if ( $mode == 'readable' ) {
+			if ( 'readable' === $mode ) {
 				$pages = $this->page_chapters_filter( $pages );
 			}
 
@@ -1282,7 +1284,7 @@ class CommentPress_Core_Navigator {
 			}
 
 			// If it's roman.
-			if ( $format == 'roman' ) {
+			if ( 'roman' === $format ) {
 
 				// Convert arabic to roman.
 				$this->page_numbers[ $page_obj->ID ] = $this->number_to_roman( $num );
@@ -1323,7 +1325,7 @@ class CommentPress_Core_Navigator {
 	public function page_number_get( $page_id ) {
 
 		// Bail if Page nav is disabled.
-		if ( $this->nav_enabled === false ) {
+		if ( false === $this->nav_enabled ) {
 			return false;
 		}
 
@@ -1334,7 +1336,7 @@ class CommentPress_Core_Navigator {
 		global $post;
 
 		// Are parent Pages viewable?
-		$viewable = ( $this->setting_chapter_is_page_get() == '1' ) ? true : false;
+		$viewable = ( $this->setting_chapter_is_page_get() === 1 ) ? true : false;
 
 		// If they are.
 		if ( $viewable ) {
@@ -1420,13 +1422,13 @@ class CommentPress_Core_Navigator {
 
 			// Default args for reference.
 			$args = [
-				'order' => 'ASC',
-				'orderby' => 'menu_order',
-				'post_type' => 'nav_menu_item',
-				'post_status' => 'publish',
-				'output' => ARRAY_A,
-				'output_key' => 'menu_order',
-				'nopaging' => true,
+				'order'                  => 'ASC',
+				'orderby'                => 'menu_order',
+				'post_type'              => 'nav_menu_item',
+				'post_status'            => 'publish',
+				'output'                 => ARRAY_A,
+				'output_key'             => 'menu_order',
+				'nopaging'               => true,
 				'update_post_term_cache' => false,
 			];
 
@@ -1437,10 +1439,10 @@ class CommentPress_Core_Navigator {
 			if ( $this->menu_objects ) {
 
 				// If Chapters are not Pages, filter the Menu Items.
-				if ( $this->setting_chapter_is_page_get() != '1' ) {
+				if ( $this->setting_chapter_is_page_get() !== 1 ) {
 
 					// Do we want all readable Pages?
-					if ( $mode == 'readable' ) {
+					if ( 'readable' === $mode ) {
 
 						// Filter Chapters out.
 						$menu_items = $this->menu_items_filter( $this->menu_objects );
@@ -1544,7 +1546,7 @@ class CommentPress_Core_Navigator {
 	 * @since 3.0
 	 *
 	 * @param array $menu_items An array of Menu Item objects.
-	 * @param obj $menu_obj The Menu Item object.
+	 * @param obj   $menu_obj The Menu Item object.
 	 * @return array $sub_items The Menu Item children.
 	 */
 	private function menu_item_get_children( $menu_items, $menu_obj ) {
@@ -1561,7 +1563,7 @@ class CommentPress_Core_Navigator {
 		foreach ( $menu_items as $key => $menu_item ) {
 
 			// Is this Menu Item a child of the passed in Menu object?
-			if ( $menu_item->menu_item_parent == $menu_obj->ID ) {
+			if ( (int) $menu_item->menu_item_parent === (int) $menu_obj->ID ) {
 
 				// Add to our return array.
 				$sub_items[] = $menu_item;
@@ -1592,7 +1594,7 @@ class CommentPress_Core_Navigator {
 			foreach ( $this->menu_objects as $key => $menu_item ) {
 
 				// Is this Menu Item the first parent of the passed in Menu object?
-				if ( $menu_item->ID == $menu_obj->menu_item_parent ) {
+				if ( (int) $menu_item->ID === (int) $menu_obj->menu_item_parent ) {
 
 					// --<
 					return $menu_item;
@@ -1627,7 +1629,7 @@ class CommentPress_Core_Navigator {
 		 */
 
 		// Is this the top Menu Item?
-		if ( $menu_obj->menu_item_parent == 0 ) {
+		if ( 0 === (int) $menu_obj->menu_item_parent ) {
 
 			// Yes -> return the object.
 			return $menu_obj;
@@ -1638,7 +1640,7 @@ class CommentPress_Core_Navigator {
 		$parent_obj = $this->menu_item_get_parent( $menu_obj );
 
 		// Is the top Menu Item?
-		if ( $parent_obj->menu_item_parent !== 0 ) {
+		if ( 0 !== (int) $parent_obj->menu_item_parent ) {
 
 			// No -> recurse upwards.
 			return $this->menu_item_get_top( $parent_obj );
@@ -1671,9 +1673,9 @@ class CommentPress_Core_Navigator {
 	 */
 	public function number_to_roman( $arabic ) {
 
-		$ones = [ '', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX' ];
-		$tens = [ '', 'X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC' ];
-		$hundreds = [ '', 'C', 'CC', 'CCC', 'CD', 'D', 'DC', 'DCC', 'DCCC', 'CM' ];
+		$ones      = [ '', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX' ];
+		$tens      = [ '', 'X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC' ];
+		$hundreds  = [ '', 'C', 'CC', 'CCC', 'CD', 'D', 'DC', 'DCC', 'DCCC', 'CM' ];
 		$thousands = [ '', 'M', 'MM', 'MMM', 'MMMM' ];
 
 		if ( $arabic > 4999 ) {
@@ -1685,9 +1687,9 @@ class CommentPress_Core_Navigator {
 			 * Since it is not possible to illustrate this in plain ASCII, this
 			 * function will refuse to convert numbers above 4999.
 			 */
-			wp_die( __( 'Cannot represent numbers larger than 4999 in plain ASCII.', 'commentpress-core' ) );
+			wp_die( esc_html__( 'Cannot represent numbers larger than 4999 in plain ASCII.', 'commentpress-core' ) );
 
-		} elseif ( $arabic == 0 ) {
+		} elseif ( 0 === $arabic ) {
 
 			/*
 			 * In about 725, Bede or one of his colleagues used the letter N, the
@@ -1698,7 +1700,7 @@ class CommentPress_Core_Navigator {
 
 		} else {
 
-			$roman = $thousands[ ( $arabic - fmod( $arabic, 1000 ) ) / 1000 ];
+			$roman  = $thousands[ ( $arabic - fmod( $arabic, 1000 ) ) / 1000 ];
 			$arabic = fmod( $arabic, 1000 );
 			$roman .= $hundreds[ ( $arabic - fmod( $arabic, 100 ) ) / 100 ];
 			$arabic = fmod( $arabic, 100 );

@@ -11,7 +11,7 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<!-- <?php echo $this->metabox_path; ?>metabox-settings-network-bp-groupblog.php -->
+<!-- <?php echo esc_html( $this->metabox_path ); ?>metabox-settings-network-bp-groupblog.php -->
 <table class="form-table">
 
 	<?php
@@ -30,7 +30,7 @@ defined( 'ABSPATH' ) || exit;
 			<label for="<?php echo esc_attr( $this->key_forced ); ?>"><?php esc_html_e( 'Make all new Group Blogs CommentPress-enabled', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
-			<input id="<?php echo esc_attr( $this->key_forced ); ?>" name="<?php echo esc_attr( $this->key_forced ); ?>" value="1" type="checkbox"<?php echo ( $force_commentpress == '1' ? ' checked="checked"' : '' ); ?> />
+			<input id="<?php echo esc_attr( $this->key_forced ); ?>" name="<?php echo esc_attr( $this->key_forced ); ?>" value="1" type="checkbox"<?php checked( true, $force_commentpress ); ?> />
 		</td>
 	</tr>
 
@@ -45,7 +45,18 @@ defined( 'ABSPATH' ) || exit;
 						<option value="<?php echo esc_attr( $theme_slug ); ?>" <?php selected( $current_theme, $theme_slug ); ?>><?php echo esc_html( $theme_title ); ?></option>
 					<?php endforeach; ?>
 				</select>
-				<p class="description"><?php printf( __( 'For themes or child themes to be recognized as eligible, they must be tagged with both the %1$s and %2$s tags.', 'commentpress-core' ), '<code>commentpress</code>', '<code>groupblog</code>' ); ?></p>
+				<p class="description">
+					<?php
+
+					printf(
+						/* translators: 1: The first tag name, 2: The second tag name. */
+						esc_html__( 'For themes or child themes to be recognized as eligible, they must be tagged with both the %1$s and %2$s tags.', 'commentpress-core' ),
+						'<code>commentpress</code>',
+						'<code>groupblog</code>'
+					);
+
+					?>
+				</p>
 			</td>
 		</tr>
 	<?php endif; ?>
@@ -55,7 +66,7 @@ defined( 'ABSPATH' ) || exit;
 			<label for="<?php echo esc_attr( $this->key_privacy ); ?>"><?php esc_html_e( 'Private Groups must have Private Group Blogs', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
-			<input id="<?php echo esc_attr( $this->key_privacy ); ?>" name="<?php echo esc_attr( $this->key_privacy ); ?>" value="1" type="checkbox"<?php echo ( $privacy == 1 ? ' checked="checked"' : '' ); ?> />
+			<input id="<?php echo esc_attr( $this->key_privacy ); ?>" name="<?php echo esc_attr( $this->key_privacy ); ?>" value="1" type="checkbox"<?php checked( true, $privacy ); ?> />
 		</td>
 	</tr>
 
@@ -64,7 +75,7 @@ defined( 'ABSPATH' ) || exit;
 			<label for="<?php echo esc_attr( $this->key_comment_login ); ?>"><?php esc_html_e( 'Require user login to post comments on Group Blogs', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
-			<input id="<?php echo esc_attr( $this->key_comment_login ); ?>" name="<?php echo esc_attr( $this->key_comment_login ); ?>" value="1" type="checkbox"<?php echo ( $comment_login == 1 ? ' checked="checked"' : '' ); ?> />
+			<input id="<?php echo esc_attr( $this->key_comment_login ); ?>" name="<?php echo esc_attr( $this->key_comment_login ); ?>" value="1" type="checkbox"<?php checked( true, $comment_login ); ?> />
 			<p class="description"><?php esc_html_e( 'The initial privacy setting when Group Blogs are created.', 'commentpress-core' ); ?></p>
 		</td>
 	</tr>

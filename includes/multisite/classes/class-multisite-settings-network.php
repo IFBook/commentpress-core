@@ -24,7 +24,7 @@ class CommentPress_Multisite_Settings_Network {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $multisite The multisite loader object.
+	 * @var CommentPress_Multisite_Loader
 	 */
 	public $multisite;
 
@@ -33,7 +33,7 @@ class CommentPress_Multisite_Settings_Network {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $settings_page The reference to the Settings Page.
+	 * @var string
 	 */
 	public $settings_page;
 
@@ -42,25 +42,25 @@ class CommentPress_Multisite_Settings_Network {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $settings_page_slug The slug of the Settings Page.
+	 * @var string
 	 */
 	public $settings_page_slug = 'cpmu_admin_page';
 
 	/**
-	 * Page template directory path.
+	 * Relative path to the Page template directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $page_path Relative path to the Page template directory.
+	 * @var string
 	 */
 	private $page_path = 'includes/multisite/assets/templates/wordpress/pages/';
 
 	/**
-	 * Metabox template directory path.
+	 * Relative path to the Metabox directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Metabox directory.
+	 * @var string
 	 */
 	private $metabox_path = 'includes/multisite/assets/templates/wordpress/metaboxes/';
 
@@ -69,16 +69,16 @@ class CommentPress_Multisite_Settings_Network {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_field The name of the form nonce element.
+	 * @var string
 	 */
 	private $nonce_field = 'cpms_settings_network_nonce';
 
 	/**
-	 * Form nonce value.
+	 * Form nonce action.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_action The name of the form nonce action.
+	 * @var string
 	 */
 	private $nonce_action = 'cpms_settings_network_action';
 
@@ -87,7 +87,7 @@ class CommentPress_Multisite_Settings_Network {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $input_submit The "name" and "id" of the form.
+	 * @var string
 	 */
 	private $form_id = 'cpms_settings_network_form';
 
@@ -96,7 +96,7 @@ class CommentPress_Multisite_Settings_Network {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $input_submit The "name" and "id" of the form's submit input element.
+	 * @var string
 	 */
 	private $submit_id = 'cpms_settings_network_submit';
 
@@ -145,7 +145,7 @@ class CommentPress_Multisite_Settings_Network {
 		add_action( 'network_admin_menu', [ $this, 'admin_menu' ] );
 
 		// Add our meta boxes.
-		add_action( 'add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
+		add_action( 'commentpress/multisite/settings/network/page/add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
 
 		// Add link to Settings Page.
 		add_filter( 'network_admin_plugin_action_links', [ $this, 'action_links' ], 10, 2 );
@@ -286,10 +286,10 @@ class CommentPress_Multisite_Settings_Network {
 		 *
 		 * @param string $screen_id The ID of the current screen.
 		 */
-		do_action( 'add_meta_boxes', $screen->id, null );
+		do_action( 'commentpress/multisite/settings/network/page/add_meta_boxes', $screen->id );
 
 		// Grab columns.
-		$columns = ( 1 == $screen->get_columns() ? '1' : '2' );
+		$columns = ( 1 === (int) $screen->get_columns() ? '1' : '2' );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->page_path . 'page-settings-network.php';
@@ -460,8 +460,8 @@ class CommentPress_Multisite_Settings_Network {
 	public function meta_box_wordpress_render() {
 
 		// Get settings.
-		$delete_first_page = $this->multisite->db->setting_get( 'cpmu_delete_first_page' );
-		$delete_first_post = $this->multisite->db->setting_get( 'cpmu_delete_first_post' );
+		$delete_first_page    = $this->multisite->db->setting_get( 'cpmu_delete_first_page' );
+		$delete_first_post    = $this->multisite->db->setting_get( 'cpmu_delete_first_post' );
 		$delete_first_comment = $this->multisite->db->setting_get( 'cpmu_delete_first_comment' );
 
 		// Include template file.
@@ -597,7 +597,7 @@ class CommentPress_Multisite_Settings_Network {
 	 * @since 4.0
 	 *
 	 * @param string $menu_slug The slug name to refer to this menu by (should be unique for this menu).
-	 * @param bool $echo Whether or not to echo the url - default is true.
+	 * @param bool   $echo Whether or not to echo the url - default is true.
 	 * @return string $url The URL.
 	 */
 	public function network_menu_page_url( $menu_slug, $echo = true ) {
@@ -618,6 +618,7 @@ class CommentPress_Multisite_Settings_Network {
 		$url = esc_url( $url );
 
 		if ( $echo ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $url;
 		}
 
@@ -635,13 +636,13 @@ class CommentPress_Multisite_Settings_Network {
 	 * @since 4.0 Moved to this class.
 	 *
 	 * @param array $links The existing links array.
-	 * @param str $file The name of the plugin file.
+	 * @param str   $file The name of the plugin file.
 	 * @return array $links The modified links array.
 	 */
 	public function action_links( $links, $file ) {
 
 		// Bail if not this plugin.
-		if ( $file !== plugin_basename( dirname( COMMENTPRESS_PLUGIN_FILE ) . '/commentpress-core.php' ) ) {
+		if ( plugin_basename( dirname( COMMENTPRESS_PLUGIN_FILE ) . '/commentpress-core.php' ) !== $file ) {
 			return $links;
 		}
 

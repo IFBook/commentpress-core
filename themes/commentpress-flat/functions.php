@@ -40,23 +40,29 @@ if ( ! function_exists( 'commentpress_setup' ) ) :
 		// Add title support.
 		add_theme_support( 'title-tag' );
 
-		// Allow custom backgrounds.
-		add_theme_support( 'custom-background', [
+		// Define custom background.
+		$background = [
 			'default-color'          => 'ccc',
 			'default-image'          => '',
 			'wp-head-callback'       => 'commentpress_background',
 			'admin-head-callback'    => '',
 			'admin-preview-callback' => '',
-		] );
+		];
+
+		// Allow custom backgrounds.
+		add_theme_support( 'custom-background', $background );
+
+		// Define custom header.
+		$header = [
+			'default-text-color'  => '111111',
+			'width'               => apply_filters( 'cp_header_image_width', 940 ),
+			'height'              => apply_filters( 'cp_header_image_height', 67 ),
+			'wp-head-callback'    => 'commentpress_header',
+			'admin-head-callback' => 'commentpress_admin_header',
+		];
 
 		// Allow custom header.
-		add_theme_support( 'custom-header', [
-			'default-text-color' => '111111',
-			'width' => apply_filters( 'cp_header_image_width', 940 ),
-			'height' => apply_filters( 'cp_header_image_height', 67 ),
-			'wp-head-callback' => 'commentpress_header',
-			'admin-head-callback' => 'commentpress_admin_header',
-		] );
+		add_theme_support( 'custom-header', $header );
 
 		// Auto feed links.
 		add_theme_support( 'automatic-feed-links' );
@@ -73,7 +79,7 @@ if ( ! function_exists( 'commentpress_setup' ) ) :
 		if ( ! empty( $core ) ) {
 
 			// Do we have the featured images option enabled?
-			if ( $core->theme->setting_featured_images_get() == 'y' ) {
+			if ( $core->theme->setting_featured_images_get() === 'y' ) {
 
 				// Use Featured Images - also known as Post Thumbnails.
 				add_theme_support( 'post-thumbnails' );
@@ -191,8 +197,8 @@ if ( ! function_exists( 'commentpress_enqueue_scripts_and_styles' ) ) :
 			// Localisation array.
 			$vars = [
 				'localisation' => [
-					'submit' => __( 'Edit Comment', 'commentpress-core' ),
-					'title' => __( 'Leave a comment', 'commentpress-core' ),
+					'submit'     => __( 'Update Comment', 'commentpress-core' ),
+					'title'      => __( 'Leave a comment', 'commentpress-core' ),
 					'edit_title' => __( 'Edit comment', 'commentpress-core' ),
 				],
 			];
@@ -400,7 +406,7 @@ if ( ! function_exists( 'commentpress_background' ) ) :
 			.sidebar_contents_wrapper,
 			#footer_inner
 			{
-				' . trim( $style ) . '
+				' . esc_attr( $style ) . '
 			}
 
 		</style>
@@ -424,10 +430,10 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 		// Init as transparent.
 		$bg_colour = 'transparent';
 
-		// Override if we have the plugin enabled.
-		$core = commentpress_core();
-		if ( ! empty( $core ) ) {
-			$bg_colour = $core->theme->header_bg_color_get();
+		// Do we have one set via the Customizer?
+		$header_bg_color = get_theme_mod( 'commentpress_header_bg_color', false );
+		if ( ! empty( $header_bg_color ) ) {
+			$bg_colour = substr( $header_bg_color, 1 );
 		}
 
 		/**
@@ -447,7 +453,7 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 
 		// Do we have a background-image?
 		if ( $header_image ) {
-			$bg_image = 'background-image: url("' . $header_image . '");';
+			$bg_image = 'background-image: url("' . esc_url( $header_image ) . '");';
 		}
 
 		// Get custom text colour.
@@ -455,7 +461,7 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 		$text_color = get_header_textcolor();
 
 		// If blank, we're hiding the title.
-		if ( $text_color == 'blank' ) {
+		if ( 'blank' === $text_color ) {
 			$css = 'text-indent: -9999px;';
 		} else {
 
@@ -476,8 +482,8 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 		<style type="text/css">
 
 		#header {
-			background-color: ' . $bg_colour . ';
-			' . $bg_image . '
+			background-color: #' . esc_attr( $bg_colour ) . ';
+			' . esc_attr( $bg_image ) . '
 			-webkit-background-size: cover;
 			-moz-background-size: cover;
 			-o-background-size: cover;
@@ -487,11 +493,11 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 		}
 
 		#title h1, #title h1 a {
-			' . $css . '
+			' . esc_attr( $css ) . '
 		}
 
 		#header #tagline {
-			' . $css . '
+			' . esc_attr( $css ) . '
 		}
 
 		</style>
@@ -515,33 +521,32 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 	 */
 	function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 
-		// Declare access to globals.
-		global $cp_comment_output;
-
 		// Init output.
 		$html = '';
 
 		// Get all approved Comments.
-		$all_comments = get_comments( [
-			'status' => 'approve',
-			'orderby' => 'comment_post_ID,comment_date',
-			'order' => 'ASC',
+		$args = [
+			'status'    => 'approve',
+			'orderby'   => 'comment_post_ID,comment_date',
+			'order'     => 'ASC',
 			'post_type' => $page_or_post,
-		] );
+		];
+
+		$all_comments = get_comments( $args );
 
 		// Kick out if none.
-		if ( count( $all_comments ) == 0 ) {
+		if ( count( $all_comments ) === 0 ) {
 			return $html;
 		}
 
 		// Build list of Posts to which they are attached.
-		$posts_with = [];
+		$posts_with          = [];
 		$post_comment_counts = [];
 		foreach ( $all_comments as $comment ) {
 
 			// Add to Posts with Comments array.
-			if ( ! in_array( $comment->comment_post_ID, $posts_with ) ) {
-				$posts_with[] = $comment->comment_post_ID;
+			if ( ! in_array( $comment->comment_post_ID, $posts_with, true ) ) {
+				$posts_with[] = (int) $comment->comment_post_ID;
 			}
 
 			// Increment counter.
@@ -554,20 +559,22 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 		}
 
 		// Kick out if none.
-		if ( count( $posts_with ) == 0 ) {
+		if ( count( $posts_with ) === 0 ) {
 			return $html;
 		}
 
 		// Get those Posts.
-		$posts = get_posts( [
-			'orderby' => 'comment_count',
-			'order' => 'DESC',
+		$args = [
+			'orderby'   => 'comment_count',
+			'order'     => 'DESC',
 			'post_type' => $page_or_post,
-			'include' => $posts_with,
-		] );
+			'include'   => $posts_with,
+		];
+
+		$posts = get_posts( $args );
 
 		// Kick out if none.
-		if ( count( $posts ) == 0 ) {
+		if ( count( $posts ) === 0 ) {
 			return $html;
 		}
 
@@ -581,6 +588,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 
 			// Define Comment count.
 			$comment_count_text = sprintf(
+				/* translators: %d: Number of comments. */
 				_n( '<span class="cp_comment_count">%d</span> comment', '<span class="cp_comment_count">%d</span> comments', $post_comment_counts[ $post->ID ], 'commentpress-core' ),
 				$post_comment_counts[ $post->ID ]
 			);
@@ -608,34 +616,11 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 
 			} else {
 
+				// Add the formatted Comments to the output.
 				foreach ( $all_comments as $comment ) {
-
-					if ( $comment->comment_post_ID == $post->ID ) {
-
-						// Show the Comment.
+					if ( (int) $comment->comment_post_ID === (int) $post->ID ) {
 						$html .= commentpress_format_comment( $comment );
-
-						/*
-						// Get Comment children.
-						$children = commentpress_get_children( $comment, $page_or_post );
-
-						// Do we have any?
-						if( count( $children ) > 0 ) {
-
-							// Recurse.
-							commentpress_get_comments( $children, $page_or_post );
-
-							// Show them.
-							$html .= $cp_comment_output;
-
-							// Clear global Comment output.
-							$cp_comment_output = '';
-
-						}
-						*/
-
 					}
-
 				}
 
 			}
@@ -714,13 +699,13 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 		$book_title = apply_filters( 'cp_page_all_comments_book_title', __( 'Comments on the Pages', 'commentpress-core' ) );
 
 		// Get title.
-		$title = ( $page_or_post == 'page' ) ? $book_title : $blog_title;
+		$title = ( 'page' === $page_or_post ) ? $book_title : $blog_title;
 
 		// Get data.
 		$data = commentpress_get_all_comments_content( $page_or_post );
 
 		// Did we get any?
-		if ( $data != '' ) {
+		if ( ! empty( $data ) ) {
 
 			// Set title.
 			$page_content .= '<h3 class="comments_hl">' . $title . '</h3>' . "\n\n";
@@ -731,16 +716,16 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 		}
 
 		// Get data for other Page Type.
-		$other_type = ( $page_or_post == 'page' ) ? 'post' : 'page';
+		$other_type = ( 'page' === $page_or_post ) ? 'post' : 'page';
 
 		// Get title.
-		$title = ( $page_or_post == 'page' ) ? $blog_title : $book_title;
+		$title = ( 'page' === $page_or_post ) ? $blog_title : $book_title;
 
 		// Get data.
 		$data = commentpress_get_all_comments_content( $other_type );
 
 		// Did we get any?
-		if ( $data != '' ) {
+		if ( ! empty( $data ) ) {
 
 			// Set title.
 			$page_content .= '<h3 class="comments_hl">' . $title . '</h3>' . "\n\n";
@@ -868,7 +853,10 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 			 * @param str The HTML for showing the image.
 			 * @param WP_Post The current WordPress Post object.
 			 */
-			echo apply_filters( 'commentpress_get_feature_image', get_the_post_thumbnail( get_the_ID(), 'commentpress-feature' ), $post );
+			$cp_image = apply_filters( 'commentpress_get_feature_image', get_the_post_thumbnail( get_the_ID(), 'commentpress-feature' ), $post );
+
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $cp_image;
 
 			?>
 			<div class="cp_featured_title">
@@ -878,7 +866,7 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 
 					// When pulling Post in via AJAX, is_page() isn't available, so
 					// inspect the Post Type as well.
-					if ( is_page() || $post->post_type == 'page' ) {
+					if ( is_page() || 'page' === $post->post_type ) {
 
 						?>
 
@@ -892,7 +880,7 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 
 						// Construct title.
 						$title = '<h2 class="post_title page_title"' . $cp_title_visibility . '>' .
-							'<a href="' . get_permalink() . '">' . get_the_title() . '</a>' .
+							'<a href="' . esc_url( get_permalink() ) . '">' . get_the_title() . '</a>' .
 						'</h2>';
 
 						/**
@@ -900,10 +888,13 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 						 *
 						 * @since 3.9.10
 						 *
-						 * @param str The HTML for showing the image.
-						 * @param WP_Post The current WordPress Post object.
+						 * @param str $title The HTML for showing the image.
+						 * @param WP_Post $post The current WordPress Post object.
 						 */
-						echo apply_filters( 'commentpress_get_feature_image_title', $title, $post );
+						$title = apply_filters( 'commentpress_get_feature_image_title', $title, $post );
+
+						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo $title;
 
 						?>
 						<div class="search_meta page_search_meta"<?php commentpress_post_meta_visibility( get_the_ID() ); ?>>
@@ -916,7 +907,7 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 
 						// Construct title.
 						$title = '<h2 class="post_title">' .
-							'<a href="' . get_permalink() . '">' . get_the_title() . '</a>' .
+							'<a href="' . esc_url( get_permalink() ) . '">' . get_the_title() . '</a>' .
 						'</h2>';
 
 						/**
@@ -924,10 +915,13 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 						 *
 						 * @since 3.9.10
 						 *
-						 * @param str The HTML for showing the image.
-						 * @param WP_Post The current WordPress Post object.
+						 * @param str $title The HTML for showing the image.
+						 * @param WP_Post $post The current WordPress Post object.
 						 */
-						echo apply_filters( 'commentpress_get_feature_image_title', $title, $post );
+						$title = apply_filters( 'commentpress_get_feature_image_title', $title, $post );
+
+						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo $title;
 
 						?>
 
@@ -966,7 +960,8 @@ function commentpress_has_feature_image() {
 	$has_feature_image = false;
 
 	// Replacement check.
-	if ( '' != get_the_post_thumbnail() ) {
+	$thumbnail = get_the_post_thumbnail();
+	if ( ! empty( $thumbnail ) ) {
 		$has_feature_image = true;
 	}
 
@@ -1068,59 +1063,69 @@ add_filter( 'commentpress/navigation/page/link/previous/css_classes', 'commentpr
 function commentpress_register_widget_areas() {
 
 	// Define an area where a Widget may be placed.
-	register_sidebar( [
-		'name' => __( 'CommentPress Footer', 'commentpress-core' ),
-		'id' => 'cp-license-8',
-		'description' => __( 'An optional widget area in the footer of a CommentPress theme', 'commentpress-core' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget' => '</div>',
-		'before_title' => '<h3 class="widget-title">',
-		'after_title' => '</h3>',
-	] );
+	register_sidebar(
+		[
+			'name'          => __( 'CommentPress Footer', 'commentpress-core' ),
+			'id'            => 'cp-license-8',
+			'description'   => __( 'An optional widget area in the footer of a CommentPress theme', 'commentpress-core' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
+		]
+	);
 
 	// Define an area where a Widget may be placed.
-	register_sidebar( [
-		'name' => __( 'Navigation Top', 'commentpress-core' ),
-		'id' => 'cp-nav-top',
-		'description' => __( 'An optional widget area at the top of the Navigation Column', 'commentpress-core' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget' => '</div></div></div>',
-		'before_title' => '<h3 class="widget-title activity_heading">',
-		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
-	] );
+	register_sidebar(
+		[
+			'name'          => __( 'Navigation Top', 'commentpress-core' ),
+			'id'            => 'cp-nav-top',
+			'description'   => __( 'An optional widget area at the top of the Navigation Column', 'commentpress-core' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</div></div></div>',
+			'before_title'  => '<h3 class="widget-title activity_heading">',
+			'after_title'   => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
+		]
+	);
 
 	// Define an area where a Widget may be placed.
-	register_sidebar( [
-		'name' => __( 'Navigation Bottom', 'commentpress-core' ),
-		'id' => 'cp-nav-bottom',
-		'description' => __( 'An optional widget area at the bottom of the Navigation Column', 'commentpress-core' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget' => '</div></div></div>',
-		'before_title' => '<h3 class="widget-title activity_heading">',
-		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
-	] );
+	register_sidebar(
+		[
+			'name'          => __( 'Navigation Bottom', 'commentpress-core' ),
+			'id'            => 'cp-nav-bottom',
+			'description'   => __( 'An optional widget area at the bottom of the Navigation Column', 'commentpress-core' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</div></div></div>',
+			'before_title'  => '<h3 class="widget-title activity_heading">',
+			'after_title'   => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
+		]
+	);
 
 	// Define an area where a Widget may be placed.
-	register_sidebar( [
-		'name' => __( 'Activity Top', 'commentpress-core' ),
-		'id' => 'cp-activity-top',
-		'description' => __( 'An optional widget area at the top of the Activity Column', 'commentpress-core' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget' => '</div></div></div>',
-		'before_title' => '<h3 class="widget-title activity_heading">',
-		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
-	] );
+	register_sidebar(
+		[
+			'name'          => __( 'Activity Top', 'commentpress-core' ),
+			'id'            => 'cp-activity-top',
+			'description'   => __( 'An optional widget area at the top of the Activity Column', 'commentpress-core' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</div></div></div>',
+			'before_title'  => '<h3 class="widget-title activity_heading">',
+			'after_title'   => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
+		]
+	);
 
 	// Define an area where a Widget may be placed.
-	register_sidebar( [
-		'name' => __( 'Activity Bottom', 'commentpress-core' ),
-		'id' => 'cp-activity-bottom',
-		'description' => __( 'An optional widget area at the bottom of the Activity Column', 'commentpress-core' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget' => '</div></div></div>',
-		'before_title' => '<h3 class="widget-title activity_heading">',
-		'after_title' => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
-	] );
+	register_sidebar(
+		[
+			'name'          => __( 'Activity Bottom', 'commentpress-core' ),
+			'id'            => 'cp-activity-bottom',
+			'description'   => __( 'An optional widget area at the bottom of the Activity Column', 'commentpress-core' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</div></div></div>',
+			'before_title'  => '<h3 class="widget-title activity_heading">',
+			'after_title'   => '</h3><div class="paragraph_wrapper"><div class="widget_wrapper clearfix">',
+		]
+	);
 
 }
 

@@ -24,7 +24,7 @@ class CommentPress_Core_Theme {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -33,25 +33,25 @@ class CommentPress_Core_Theme {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $sidebar The Sidebar object.
+	 * @var CommentPress_Core_Theme_Sidebar
 	 */
 	public $sidebar;
 
 	/**
-	 * Classes directory path.
+	 * Relative path to the classes directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $classes_path Relative path to the classes directory.
+	 * @var string
 	 */
 	private $classes_path = 'includes/core/classes/';
 
 	/**
-	 * Metabox template directory path.
+	 * Relative path to the Metabox directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Metabox directory.
+	 * @var string
 	 */
 	private $metabox_path = 'includes/core/assets/templates/wordpress/metaboxes/';
 
@@ -60,7 +60,7 @@ class CommentPress_Core_Theme {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_featured_images The settings key for the "Featured Images" setting.
+	 * @var string
 	 */
 	private $key_featured_images = 'cp_featured_images';
 
@@ -69,7 +69,7 @@ class CommentPress_Core_Theme {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_excerpt_length The settings key for the "Textblock meta" setting.
+	 * @var string
 	 */
 	private $key_textblock_meta = 'cp_textblock_meta';
 
@@ -78,7 +78,7 @@ class CommentPress_Core_Theme {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_excerpt_length The settings key for the "Excerpt length" setting.
+	 * @var string
 	 */
 	private $key_excerpt_length = 'cp_excerpt_length';
 
@@ -87,18 +87,9 @@ class CommentPress_Core_Theme {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_scroll_speed The settings key for the "Scroll speed" setting.
+	 * @var string
 	 */
 	private $key_scroll_speed = 'cp_js_scroll_speed';
-
-	/**
-	 * Default header background colour (hex, same as in theme stylesheet).
-	 *
-	 * @since 3.0
-	 * @access public
-	 * @var bool $header_bg_color The default header background colour.
-	 */
-	public $header_bg_color = '2c2622';
 
 	/**
 	 * Constructor.
@@ -126,7 +117,7 @@ class CommentPress_Core_Theme {
 
 		// Only do this once.
 		static $done;
-		if ( isset( $done ) && $done === true ) {
+		if ( isset( $done ) && true === $done ) {
 			return;
 		}
 
@@ -236,9 +227,9 @@ class CommentPress_Core_Theme {
 
 		// Add our defaults.
 		$settings[ $this->key_featured_images ] = 'n';
-		$settings[ $this->key_textblock_meta ] = 'y';
-		$settings[ $this->key_excerpt_length ] = 55;
-		$settings[ $this->key_scroll_speed ] = 800;
+		$settings[ $this->key_textblock_meta ]  = 'y';
+		$settings[ $this->key_excerpt_length ]  = 55;
+		$settings[ $this->key_scroll_speed ]    = 800;
 
 		// --<
 		return $settings;
@@ -275,9 +266,9 @@ class CommentPress_Core_Theme {
 
 		// Get settings.
 		$featured_images = $this->setting_featured_images_get();
-		$textblock_meta = $this->setting_textblock_meta_get();
-		$excerpt_length = $this->setting_excerpt_length_get();
-		$scroll_speed = $this->setting_scroll_speed_get();
+		$textblock_meta  = $this->setting_textblock_meta_get();
+		$excerpt_length  = $this->setting_excerpt_length_get();
+		$scroll_speed    = $this->setting_scroll_speed_get();
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-theme.php';
@@ -538,7 +529,7 @@ class CommentPress_Core_Theme {
 		$theme = apply_filters( 'commentpress_get_groupblog_theme', $this->core->bp->groupblog_theme_get() );
 
 		// Did we get a CommentPress Core one?
-		if ( $theme !== false ) {
+		if ( false !== $theme ) {
 
 			/*
 			 * We're in a Group Blog context.
@@ -668,13 +659,16 @@ class CommentPress_Core_Theme {
 		 *
 		 * @see wp_install_defaults()
 		 */
-		$this->core->db->option_wp_backup( 'sidebars_widgets', [
+		$widgets = [
 			'wp_inactive_widgets' => [],
-			'sidebar-1' => [],
-			'sidebar-2' => [],
-			'sidebar-3' => [],
-			'array_version' => 3,
-		] );
+			'sidebar-1'           => [],
+			'sidebar-2'           => [],
+			'sidebar-3'           => [],
+			'array_version'       => 3,
+		];
+
+		// Backup and overwrite option.
+		$this->core->db->option_wp_backup( 'sidebars_widgets', $widgets );
 
 	}
 
@@ -703,7 +697,7 @@ class CommentPress_Core_Theme {
 	public function scripts_enqueue() {
 
 		// Don't include in admin or wp-login.php.
-		if ( is_admin() || ( isset( $GLOBALS['pagenow'] ) && 'wp-login.php' == $GLOBALS['pagenow'] ) ) {
+		if ( is_admin() || ( isset( $GLOBALS['pagenow'] ) && 'wp-login.php' === $GLOBALS['pagenow'] ) ) {
 			return;
 		}
 
@@ -802,16 +796,16 @@ class CommentPress_Core_Theme {
 			// Define localisation array.
 			$texthighlighter_vars = [
 				'popover_textblock' => $popover_textblock,
-				'popover_comment' => $popover_comment,
+				'popover_comment'   => $popover_comment,
 			];
 
 			// Create translations.
 			$texthighlighter_translations = [
-				'dialog_title' => esc_html__( 'Are you sure?', 'commentpress-core' ),
+				'dialog_title'   => esc_html__( 'Are you sure?', 'commentpress-core' ),
 				'dialog_content' => esc_html__( 'You have not yet submitted your comment. Are you sure you want to discard it?', 'commentpress-core' ),
-				'dialog_yes' => esc_html__( 'Discard', 'commentpress-core' ),
-				'dialog_no' => esc_html__( 'Keep', 'commentpress-core' ),
-				'backlink_text' => esc_html__( 'Back', 'commentpress-core' ),
+				'dialog_yes'     => esc_html__( 'Discard', 'commentpress-core' ),
+				'dialog_no'      => esc_html__( 'Keep', 'commentpress-core' ),
+				'backlink_text'  => esc_html__( 'Back', 'commentpress-core' ),
 			];
 
 			// Add to vars.
@@ -851,7 +845,7 @@ class CommentPress_Core_Theme {
 		} else {
 
 			// Check for Post "comment_status".
-			$vars['cp_comments_open'] = ( $post->comment_status == 'open' ) ? 'y' : 'n';
+			$vars['cp_comments_open'] = ( 'open' === $post->comment_status ) ? 'y' : 'n';
 
 			// Set Post permalink.
 			$vars['cp_permalink'] = get_permalink( $post->ID );
@@ -863,7 +857,7 @@ class CommentPress_Core_Theme {
 		$vars['cp_bp_adminbar'] = 'n';
 
 		// Match WordPress 3.8+ admin bar.
-		$vars['cp_wp_adminbar_height'] = '32';
+		$vars['cp_wp_adminbar_height']   = '32';
 		$vars['cp_wp_adminbar_expanded'] = '0';
 
 		// Are we showing the WordPress admin bar?
@@ -957,7 +951,7 @@ class CommentPress_Core_Theme {
 
 		// Show textblock meta unless setting is set to on rollover.
 		$vars['cp_textblock_meta'] = 1;
-		if ( $this->setting_textblock_meta_get() == 'n' ) {
+		if ( $this->setting_textblock_meta_get() === 'n' ) {
 			$vars['cp_textblock_meta'] = 0;
 		}
 
@@ -969,32 +963,6 @@ class CommentPress_Core_Theme {
 		 * @param array $vars The default Javascript vars.
 		 */
 		return apply_filters( 'commentpress_get_javascript_vars', $vars );
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Get current header background colour.
-	 *
-	 * @since 3.0
-	 *
-	 * @return str $header_bg_color The hex value of the header.
-	 */
-	public function header_bg_color_get() {
-
-		// TODO: Remove this method.
-
-		// Do we have one set via the Customizer?
-		$header_bg_color = get_theme_mod( 'commentpress_header_bg_color', false );
-
-		// Return it if we do.
-		if ( ! empty( $header_bg_color ) ) {
-			return substr( $header_bg_color, 1 );
-		}
-
-		// Fallback to default.
-		return $this->header_bg_color;
 
 	}
 
@@ -1014,11 +982,12 @@ class CommentPress_Core_Theme {
 
 		// TODO: Exactly how do we support Post Types?
 		$args = [
-			//'public' => true,
+			// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
+			// 'public' => true,
 			'_builtin' => false,
 		];
 
-		$output = 'names'; // Can be "names" or "objects" - "names" is the default.
+		$output   = 'names'; // Can be "names" or "objects" - "names" is the default.
 		$operator = 'and'; // Can be "and" or "or".
 
 		// Get Post Types.

@@ -134,7 +134,7 @@ if ( ! function_exists( 'commentpress_site_title' ) ) :
 	 *
 	 * @since 3.8
 	 *
-	 * @param string $sep The title separator.
+	 * @param string  $sep The title separator.
 	 * @param boolean $echo Echo the result or not.
 	 * @return string $site_name The title of the Site.
 	 */
@@ -152,7 +152,7 @@ if ( ! function_exists( 'commentpress_site_title' ) ) :
 				if ( $echo ) {
 
 					// Add Site name.
-					echo ' ' . trim( $sep ) . ' ' . $current_site->site_name;
+					echo esc_html( ' ' . trim( $sep ) . ' ' . $current_site->site_name );
 
 				} else {
 
@@ -180,7 +180,7 @@ if ( ! function_exists( 'commentpress_post_classes' ) ) :
 	 *
 	 * @param array $classes The array of classes assigned to the Post.
 	 * @param array $class The additional classes assigned to the Post.
-	 * @param int $post_id The numeric ID of the Post.
+	 * @param int   $post_id The numeric ID of the Post.
 	 * @return array $classes The modified array of classes assigned to the Post.
 	 */
 	function commentpress_post_classes( $classes, $class, $post_id ) {
@@ -199,7 +199,7 @@ if ( ! function_exists( 'commentpress_post_classes' ) ) :
 
 		// Check if the Formatter for this Post is overridden.
 		$overridden = $core->entry->formatter->is_overridden( $post_id );
-		if ( $overridden === false ) {
+		if ( false === $overridden ) {
 			return $classes;
 		}
 
@@ -270,7 +270,7 @@ if ( ! function_exists( 'commentpress_lexia_support_mime' ) ) :
 	function commentpress_lexia_support_mime( $post_type_name, $post_type ) {
 
 		// Only handle media.
-		if ( $post_type != 'attachment' ) {
+		if ( 'attachment' !== $post_type ) {
 			return $post_type_name;
 		}
 
@@ -342,12 +342,13 @@ if ( ! function_exists( 'commentpress_lexia_modify_entity_text' ) ) :
 	function commentpress_lexia_modify_entity_text( $entity_text, $post_type_name, $post_type ) {
 
 		// Only handle media.
-		if ( $post_type != 'attachment' ) {
+		if ( 'attachment' !== $post_type ) {
 			return $entity_text;
 		}
 
 		// Override entity text.
 		$entity_text = sprintf(
+			/* translators: %s: Name of the Post Type. */
 			__( 'the %s', 'commentpress-core' ),
 			$post_type_name
 		);

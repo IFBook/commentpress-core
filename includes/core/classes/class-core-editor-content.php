@@ -24,7 +24,7 @@ class CommentPress_Core_Editor_Content {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -33,7 +33,7 @@ class CommentPress_Core_Editor_Content {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $editor The Editor object.
+	 * @var CommentPress_Core_Pages_Editor
 	 */
 	public $editor;
 
@@ -42,7 +42,7 @@ class CommentPress_Core_Editor_Content {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $quicktag The "Comment Block" Quicktag.
+	 * @var string
 	 */
 	public $quicktag = '<!--commentblock-->';
 
@@ -57,7 +57,7 @@ class CommentPress_Core_Editor_Content {
 
 		// Store references.
 		$this->editor = $editor;
-		$this->core = $editor->core;
+		$this->core   = $editor->core;
 
 		// Init when the editor object is fully loaded.
 		add_action( 'commentpress/core/editor/loaded', [ $this, 'initialise' ] );
@@ -101,7 +101,7 @@ class CommentPress_Core_Editor_Content {
 	public function enqueue_scripts( $hook ) {
 
 		// Don't enqueue on "Edit Comment" screen.
-		if ( 'comment.php' == $hook ) {
+		if ( 'comment.php' === $hook ) {
 			return;
 		}
 
@@ -141,7 +141,7 @@ class CommentPress_Core_Editor_Content {
 		}
 
 		// Add only if User can edit in Rich-text Editor mode.
-		if ( get_user_option( 'rich_editing' ) != 'true' ) {
+		if ( ! user_can_richedit() ) {
 			return;
 		}
 

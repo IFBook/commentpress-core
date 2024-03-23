@@ -1,13 +1,16 @@
 <?php
 /**
- * Plugin Name: CommentPress Core
- * Plugin URI: http://www.futureofthebook.org/commentpress/
- * Description: CommentPress allows readers to comment in the margins of a text. You can use it to annotate, gloss, workshop, debate and more!
- * Author: Institute for the Future of the Book
- * Version: 4.0a
- * Author URI: http://www.futureofthebook.org
- * Text Domain: commentpress-core
- * Domain Path: /languages
+ * CommentPress Core
+ *
+ * Plugin Name:       CommentPress Core
+ * Description:       CommentPress allows readers to comment in the margins of a text. You can use it to annotate, gloss, workshop, debate and more!
+ * Plugin URI:        https://github.com/IFBook/commentpress-core
+ * GitHub Plugin URI: https://github.com/IFBook/commentpress-core
+ * Version:           4.0a
+ * Author:            Institute for the Future of the Book
+ * Author URI:        https://futureofthebook.org/commentpress/
+ * Text Domain:       commentpress-core
+ * Domain Path:       /languages
  *
  * Special thanks to:
  *
@@ -53,34 +56,34 @@ class CommentPress_Plugin {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $plugin_context The plugin context flag.
+	 * @var string
 	 */
 	public $plugin_context;
 
 	/**
-	 * Common directory path.
+	 * Relative path to the common directory.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $common_path Relative path to the common directory.
+	 * @var string
 	 */
 	public $common_path = 'includes/common/';
 
 	/**
-	 * Core directory path.
+	 * Relative path to the core directory.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $core_path Relative path to the core directory.
+	 * @var string
 	 */
 	public $core_path = 'includes/core/';
 
 	/**
-	 * Multisite directory path.
+	 * Relative path to the multisite directory.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $multisite_path Relative path to the multisite directory.
+	 * @var string
 	 */
 	public $multisite_path = 'includes/multisite/';
 
@@ -105,7 +108,7 @@ class CommentPress_Plugin {
 
 		// Only do this once.
 		static $done;
-		if ( isset( $done ) && $done === true ) {
+		if ( isset( $done ) && true === $done ) {
 			return;
 		}
 
@@ -334,7 +337,7 @@ class CommentPress_Plugin {
 	public function core_bootstrap() {
 
 		// Bail if plugin is activated network-wide.
-		if ( $this->plugin_context === 'mu_sitewide' ) {
+		if ( 'mu_sitewide' === $this->plugin_context ) {
 			return;
 		}
 
@@ -393,18 +396,18 @@ class CommentPress_Plugin {
 	 * @since 4.0 Moved to this class.
 	 *
 	 * @param array $links The existing links array.
-	 * @param str $file The name of the plugin file.
+	 * @param str   $file The name of the plugin file.
 	 * @return array $links The modified links array.
 	 */
 	public function action_links( $links, $file ) {
 
 		// Bail if not this plugin.
-		if ( $file !== plugin_basename( dirname( COMMENTPRESS_PLUGIN_FILE ) . '/commentpress-core.php' ) ) {
+		if ( plugin_basename( dirname( COMMENTPRESS_PLUGIN_FILE ) . '/commentpress-core.php' ) !== $file ) {
 			return $links;
 		}
 
 		// Add PayPal link.
-		$paypal = 'https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=PZSKM8T5ZP3SC';
+		$paypal  = 'https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=PZSKM8T5ZP3SC';
 		$links[] = '<a href="' . esc_url( $paypal ) . '" target="_blank">' . __( 'Donate!', 'commentpress-core' ) . '</a>';
 
 		// --<
@@ -419,13 +422,13 @@ class CommentPress_Plugin {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $plugin The plugin file.
+	 * @param str  $plugin The plugin file.
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
 	public function plugin_activated( $plugin, $network_wide = false ) {
 
 		// Bail if it's not our plugin.
-		if ( $plugin !== plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) {
+		if ( plugin_basename( COMMENTPRESS_PLUGIN_FILE ) !== $plugin ) {
 			return;
 		}
 
@@ -450,13 +453,13 @@ class CommentPress_Plugin {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $plugin The plugin file.
+	 * @param str  $plugin The plugin file.
 	 * @param bool $network_wide True if network-activated, false otherwise.
 	 */
 	public function plugin_deactivated( $plugin, $network_wide = false ) {
 
 		// Bail if it's not our plugin.
-		if ( $plugin !== plugin_basename( COMMENTPRESS_PLUGIN_FILE ) ) {
+		if ( plugin_basename( COMMENTPRESS_PLUGIN_FILE ) !== $plugin ) {
 			return;
 		}
 
@@ -474,9 +477,11 @@ class CommentPress_Plugin {
 		 */
 		do_action( 'commentpress/deactivated', $network_wide );
 
-		// Do we want to trigger deactivation_hook for all sub-blogs?
-		// Or do we want to convert each instance into a self-contained
-		// CommentPress Core Blog?
+		/*
+		 * Do we want to trigger deactivation_hook for all sub-blogs?
+		 * Or do we want to convert each instance into a self-contained
+		 * CommentPress Core Blog?
+		 */
 
 	}
 

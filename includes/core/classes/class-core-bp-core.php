@@ -24,25 +24,29 @@ class CommentPress_Core_BuddyPress {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
 	/**
 	 * BuddyPress present flag.
 	 *
+	 * True if BuddyPress present, false otherwise.
+	 *
 	 * @since 3.3
 	 * @access public
-	 * @var bool $buddypress True if BuddyPress present, false otherwise.
+	 * @var bool
 	 */
 	public $buddypress = false;
 
 	/**
 	 * BuddyPress Groupblog flag.
 	 *
+	 * True if BuddyPress Groupblog present, false otherwise.
+	 *
 	 * @since 3.3
 	 * @access public
-	 * @var bool $bp_groupblog True if BuddyPress Groupblog present, false otherwise.
+	 * @var bool
 	 */
 	public $bp_groupblog = false;
 
@@ -226,7 +230,7 @@ class CommentPress_Core_BuddyPress {
 		$theme = wp_get_theme( $stylesheet );
 
 		// Bail if it's not a CommentPress Core theme.
-		if ( ! in_array( 'commentpress', (array) $theme->get( 'Tags' ) ) ) {
+		if ( ! in_array( 'commentpress', (array) $theme->get( 'Tags' ), true ) ) {
 			return false;
 		}
 

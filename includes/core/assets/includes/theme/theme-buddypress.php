@@ -135,7 +135,7 @@ if ( ! function_exists( 'commentpress_bp_activity_css_class' ) ) :
 		$current_activity = $activities_template->activity;
 
 		// Bail if not Group Activity.
-		if ( $current_activity->component !== 'groups' ) {
+		if ( 'groups' !== $current_activity->component ) {
 			return $existing_class;
 		}
 

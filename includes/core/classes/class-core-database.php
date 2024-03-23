@@ -25,7 +25,7 @@ class CommentPress_Core_Database {
 	 * @since 3.0
 	 * @since 4.0 Renamed.
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -34,16 +34,16 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $plugin_version The plugin version.
+	 * @var string
 	 */
 	public $plugin_version;
 
 	/**
-	 * Upgrade flag.
+	 * Upgrade flag. False by default.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var bool $is_upgrade The upgrade flag. False by default.
+	 * @var bool
 	 */
 	public $is_upgrade = false;
 
@@ -53,7 +53,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $option_version The name of the core version option.
+	 * @var string
 	 */
 	public $option_version = 'commentpress_version';
 
@@ -62,7 +62,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $option_settings The name of the core settings option.
+	 * @var string
 	 */
 	public $option_settings = 'commentpress_options';
 
@@ -71,7 +71,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $settings The core settings array.
+	 * @var array
 	 */
 	public $settings = [];
 
@@ -101,7 +101,7 @@ class CommentPress_Core_Database {
 
 		// Only do this once.
 		static $done;
-		if ( isset( $done ) && $done === true ) {
+		if ( isset( $done ) && true === $done ) {
 			return;
 		}
 
@@ -167,6 +167,7 @@ class CommentPress_Core_Database {
 		// Init settings.
 		$this->settings_initialise();
 
+		// phpcs:ignore Squiz.Commenting.InlineComment.SpacingAfterAtFunctionEnd
 		// Keep options when deactivating.
 
 	}
@@ -318,7 +319,7 @@ class CommentPress_Core_Database {
 		$save = apply_filters( 'commentpress/core/settings/upgrade/save', $save );
 
 		// Save settings if need be.
-		if ( $save === true ) {
+		if ( true === $save ) {
 			$this->settings_save();
 		}
 
@@ -429,7 +430,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $name The name of the setting.
+	 * @param str   $name The name of the setting.
 	 * @param mixed $default The default value for the setting.
 	 * @return mixed The value of the setting if it exists, $default otherwise.
 	 */
@@ -445,7 +446,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $name The name of the setting.
+	 * @param str   $name The name of the setting.
 	 * @param mixed $value The value for the setting.
 	 */
 	public function setting_set( $name, $value = '' ) {
@@ -495,7 +496,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $name The name of the option.
+	 * @param str   $name The name of the option.
 	 * @param mixed $default The default value for the option.
 	 * @return mixed The value of the option if it exists, default otherwise.
 	 */
@@ -511,7 +512,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $name The name of the option.
+	 * @param str   $name The name of the option.
 	 * @param mixed $value The value for the option.
 	 * @return bool True if the value was updated, false otherwise.
 	 */
@@ -542,7 +543,7 @@ class CommentPress_Core_Database {
 	 * @since 3.4
 	 * @since 4.0 Renamed.
 	 *
-	 * @param str $name The name of the option to back up.
+	 * @param str   $name The name of the option to back up.
 	 * @param mixed $value The value of the option.
 	 */
 	public function option_wp_backup( $name, $value ) {
@@ -654,7 +655,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $name The name of the option.
+	 * @param str   $name The name of the option.
 	 * @param mixed $default The default value for the option.
 	 * @return mixed The value of the option if it exists, $default otherwise.
 	 */
@@ -668,7 +669,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $name The name of the option.
+	 * @param str   $name The name of the option.
 	 * @param mixed $value The value for the option.
 	 */
 	public function option_set( $name, $value = '' ) {

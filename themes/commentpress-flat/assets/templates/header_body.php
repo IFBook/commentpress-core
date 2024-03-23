@@ -40,7 +40,7 @@ defined( 'ABSPATH' ) || exit;
 
 	<div id="page_title">
 		<div id="title">
-			<h1><a href="<?php echo home_url(); ?>" title="<?php esc_attr_e( 'Home', 'commentpress-core' ); ?>"><?php bloginfo( 'title' ); ?></a></h1>
+			<h1><a href="<?php echo esc_url( home_url() ); ?>" title="<?php esc_attr_e( 'Home', 'commentpress-core' ); ?>"><?php bloginfo( 'title' ); ?></a></h1>
 		</div>
 		<div id="tagline">
 			<?php bloginfo( 'description' ); ?>
@@ -76,7 +76,7 @@ defined( 'ABSPATH' ) || exit;
 	$cp_toc_sidebar = apply_filters( 'cp_template_toc_sidebar', locate_template( 'assets/templates/toc_sidebar.php' ) );
 
 	// Load it if we find it.
-	if ( $cp_toc_sidebar != '' ) {
+	if ( ! empty( $cp_toc_sidebar ) ) {
 		load_template( $cp_toc_sidebar );
 	}
 

@@ -29,7 +29,7 @@ class CommentPress_Core_Entry_Single {
 	 * @since 3.3
 	 * @since 4.0 Renamed.
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -38,7 +38,7 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $entry The Entry object.
+	 * @var CommentPress_Core_Entry
 	 */
 	public $entry;
 
@@ -47,27 +47,27 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $post_types The array of supported Post Types.
+	 * @var array
 	 */
 	public $post_types = [
 		'page',
 	];
 
 	/**
-	 * Metabox template directory path.
+	 * Relative path to the Metabox directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Metabox directory.
+	 * @var string
 	 */
 	private $metabox_path = 'includes/core/assets/templates/wordpress/metaboxes/';
 
 	/**
-	 * Parts template directory path.
+	 * Relative path to the Parts directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $parts_path Relative path to the Parts directory.
+	 * @var string
 	 */
 	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
 
@@ -80,7 +80,7 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $key_show_title The Page Title visibility key.
+	 * @var string
 	 */
 	private $key_show_title = 'cp_title_visibility';
 
@@ -93,7 +93,7 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $key_show_meta The Page Meta visibility key.
+	 * @var string
 	 */
 	private $key_show_meta = 'cp_page_meta_visibility';
 
@@ -106,16 +106,18 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $key_para_num The Paragraph Number key.
+	 * @var string
 	 */
 	private $key_para_num = 'cp_starting_para_number';
 
 	/**
 	 * Prevent "save_post" callback from running more than once.
 	 *
+	 * True if Post already saved.
+	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $saved_post True if Post already saved.
+	 * @var bool
 	 */
 	public $saved_post = false;
 
@@ -130,7 +132,7 @@ class CommentPress_Core_Entry_Single {
 
 		// Store references.
 		$this->entry = $entry;
-		$this->core = $entry->core;
+		$this->core  = $entry->core;
 
 		// Init when the entry object is fully loaded.
 		add_action( 'commentpress/core/entry/loaded', [ $this, 'initialise' ] );
@@ -209,7 +211,7 @@ class CommentPress_Core_Entry_Single {
 
 		// Add our defaults.
 		$settings[ $this->key_show_title ] = 'show';
-		$settings[ $this->key_show_meta ] = 'hide';
+		$settings[ $this->key_show_meta ]  = 'hide';
 
 		// --<
 		return $settings;
@@ -246,7 +248,7 @@ class CommentPress_Core_Entry_Single {
 
 		// Get settings.
 		$show_title = $this->setting_show_title_get();
-		$show_meta = $this->setting_show_meta_get();
+		$show_meta  = $this->setting_show_meta_get();
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-entry-single.php';
@@ -356,7 +358,7 @@ class CommentPress_Core_Entry_Single {
 	public function entry_meta_box_part_get( $post ) {
 
 		// Bail if not one of our supported Post Types.
-		if ( ! in_array( $post->post_type, $this->post_types ) ) {
+		if ( ! in_array( $post->post_type, $this->post_types, true ) ) {
 			return;
 		}
 
@@ -387,17 +389,17 @@ class CommentPress_Core_Entry_Single {
 	public function entry_meta_box_part_save( $post ) {
 
 		// Bail if not one of our supported Post Types.
-		if ( ! in_array( $post->post_type, $this->post_types ) ) {
+		if ( ! in_array( $post->post_type, $this->post_types, true ) ) {
 			return;
 		}
 
 		// Check edit permissions.
-		if ( $post->post_type === 'page' && ! current_user_can( 'edit_pages' ) ) {
+		if ( 'page' === $post->post_type && ! current_user_can( 'edit_pages' ) ) {
 			return;
 		}
 
 		// We need to make sure this only runs once.
-		if ( $this->saved_post === false ) {
+		if ( false === $this->saved_post ) {
 			$this->saved_post = true;
 		} else {
 			return;
@@ -434,7 +436,7 @@ class CommentPress_Core_Entry_Single {
 	 * @since 4.0
 	 *
 	 * @param int|object $post The Post object or ID.
-	 * @param bool $raw Pass "true" to get the actual meta value.
+	 * @param bool       $raw Pass "true" to get the actual meta value.
 	 * @return str $show_title The setting if found, default otherwise.
 	 */
 	public function entry_show_title_get( $post, $raw = false ) {
@@ -462,7 +464,7 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $show_title The setting value.
+	 * @param str        $show_title The setting value.
 	 * @param int|object $post The Post object or ID.
 	 */
 	public function entry_show_title_set( $show_title, $post ) {
@@ -488,7 +490,7 @@ class CommentPress_Core_Entry_Single {
 	 * @since 4.0
 	 *
 	 * @param int|object $post The Post object or ID.
-	 * @param bool $raw Pass "true" to get the actual meta value.
+	 * @param bool       $raw Pass "true" to get the actual meta value.
 	 * @return str $show_meta The setting if found, default otherwise.
 	 */
 	public function entry_show_meta_get( $post, $raw = false ) {
@@ -516,7 +518,7 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $show_meta The setting value.
+	 * @param str        $show_meta The setting value.
 	 * @param int|object $post The Post object or ID.
 	 */
 	public function entry_show_meta_set( $show_meta, $post ) {
@@ -575,7 +577,7 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 3.4
 	 *
-	 * @param int $number The starting Paragraph Number.
+	 * @param int        $number The starting Paragraph Number.
 	 * @param int|object $post The Post object or ID.
 	 */
 	private function entry_paragraph_start_number_set( $number, $post ) {
@@ -610,10 +612,10 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $post_id The numeric ID of the Post.
+	 * @param int    $post_id The numeric ID of the Post.
 	 * @param string $meta_key The name of the meta key.
 	 * @param string $option The name of the site setting. Optional.
-	 * @param bool $raw Pass "true" to get the actual meta value.
+	 * @param bool   $raw Pass "true" to get the actual meta value.
 	 * @return mixed $value The meta value.
 	 */
 	public function get_for_post_id( $post_id, $meta_key, $option = '', $raw = false ) {
@@ -622,7 +624,7 @@ class CommentPress_Core_Entry_Single {
 		$override = get_post_meta( $post_id, $meta_key, true );
 
 		// Return raw value if requested.
-		if ( $raw === true ) {
+		if ( true === $raw ) {
 			return $override;
 		}
 
@@ -651,14 +653,14 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $post_id The numeric ID of the Post.
-	 * @param mixed $value The meta value.
+	 * @param int    $post_id The numeric ID of the Post.
+	 * @param mixed  $value The meta value.
 	 * @param string $meta_key The name of the meta key.
 	 */
 	public function set_for_post_id( $post_id, $value, $meta_key ) {
 
 		// Delete the meta entry by passing an empty string.
-		if ( is_string( $value ) && $value === '' ) {
+		if ( is_string( $value ) && '' === $value ) {
 			$this->delete_for_post_id( $post_id, $meta_key );
 			return;
 		}
@@ -673,7 +675,7 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $post_id The numeric ID of the Post.
+	 * @param int    $post_id The numeric ID of the Post.
 	 * @param string $meta_key The name of the meta key.
 	 */
 	public function delete_for_post_id( $post_id, $meta_key ) {

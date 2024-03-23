@@ -24,7 +24,7 @@ class CommentPress_Multisite_Site {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $multisite The multisite loader object.
+	 * @var CommentPress_Multisite_Loader
 	 */
 	public $multisite;
 
@@ -33,7 +33,7 @@ class CommentPress_Multisite_Site {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $key_enable The settings key for the "Enable CommentPress" setting.
+	 * @var string
 	 */
 	public $key_enable = 'cpmu_activate_commentpress';
 
@@ -42,16 +42,16 @@ class CommentPress_Multisite_Site {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $key_enable The settings key for the "Disable CommentPress" setting.
+	 * @var string
 	 */
 	public $key_disable = 'cpmu_deactivate_commentpress';
 
 	/**
-	 * Parts template directory path.
+	 * Relative path to the Parts directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $parts_path Relative path to the Parts directory.
+	 * @var string
 	 */
 	private $parts_path = 'includes/multisite/assets/templates/wordpress/parts/';
 
@@ -121,7 +121,7 @@ class CommentPress_Multisite_Site {
 	public function core_initialise() {
 
 		// Bail if not network-enabled.
-		if ( $this->multisite->plugin->plugin_context !== 'mu_sitewide' ) {
+		if ( 'mu_sitewide' !== $this->multisite->plugin->plugin_context ) {
 			return;
 		}
 
@@ -257,6 +257,7 @@ class CommentPress_Multisite_Site {
 		------------------------------------------------------------------------
 		*/
 
+		// phpcs:ignore Squiz.Commenting.InlineComment.SpacingAfterAtFunctionEnd
 		// Reset any options set in core_activate().
 
 	}
@@ -268,14 +269,14 @@ class CommentPress_Multisite_Site {
 	 *
 	 * @since 3.3
 	 *
-	 * @param int $blog_id The ID of the Blog to check.
+	 * @param int  $blog_id The ID of the Blog to check.
 	 * @param bool $legacy_check Whether to switch to the Blog to perform legacy check. Default true.
 	 * @return bool True if CommentPress-enabled, false otherwise.
 	 */
 	public function is_commentpress( $blog_id = false, $legacy_check = true ) {
 
 		// Get current Site ID if the Blog ID isn't passed.
-		if ( $blog_id === false ) {
+		if ( false === $blog_id ) {
 			$blog_id = get_current_blog_id();
 		}
 
@@ -288,7 +289,8 @@ class CommentPress_Multisite_Site {
 		$site_ids = $this->multisite->sites->core_site_ids_get();
 
 		// Is this Site active?
-		if ( ! empty( $site_ids ) && in_array( $blog_id, $site_ids ) ) {
+		// TODO: Check variable types.
+		if ( ! empty( $site_ids ) && in_array( $blog_id, $site_ids, true ) ) {
 			return true;
 		}
 
@@ -320,7 +322,7 @@ class CommentPress_Multisite_Site {
 		$core_active = false;
 
 		// Get current Site ID if no Blog ID is passed in.
-		if ( $blog_id === false ) {
+		if ( false === $blog_id ) {
 			$blog_id = get_current_blog_id();
 		}
 
@@ -347,7 +349,7 @@ class CommentPress_Multisite_Site {
 		}
 
 		// Do we need to switch back?
-		if ( isset( $switched ) && $switched === true ) {
+		if ( isset( $switched ) && true === $switched ) {
 			restore_current_blog();
 		}
 
@@ -384,7 +386,7 @@ class CommentPress_Multisite_Site {
 		$activate = isset( $_POST[ $this->key_enable ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_enable ] ) ) : '0';
 
 		// Bail if we did not ask to activate CommentPress Core.
-		if ( $activate !== '1' ) {
+		if ( '1' !== $activate ) {
 			return;
 		}
 
@@ -421,7 +423,7 @@ class CommentPress_Multisite_Site {
 		$deactivate = isset( $_POST[ $this->key_disable ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->key_disable ] ) ) : '0';
 
 		// Bail if we did not ask to deactivate CommentPress Core.
-		if ( $deactivate !== '1' ) {
+		if ( '1' !== $deactivate ) {
 			return;
 		}
 

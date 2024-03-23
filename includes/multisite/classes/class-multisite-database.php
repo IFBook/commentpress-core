@@ -24,7 +24,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $multisite The multisite loader object.
+	 * @var CommentPress_Multisite_Loader
 	 */
 	public $multisite;
 
@@ -33,16 +33,16 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $plugin_version The plugin version.
+	 * @var string
 	 */
 	public $plugin_version;
 
 	/**
-	 * Upgrade flag.
+	 * Upgrade flag. False by default.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var bool $is_upgrade The upgrade flag. False by default.
+	 * @var bool
 	 */
 	public $is_upgrade = false;
 
@@ -51,7 +51,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $option_version The name of the multisite version site option.
+	 * @var string
 	 */
 	public $option_version = 'cpmu_version';
 
@@ -60,7 +60,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $option_settings The name of the multisite settings site option.
+	 * @var string
 	 */
 	public $option_settings = 'cpmu_options';
 
@@ -69,7 +69,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var array $settings The multisite settings array.
+	 * @var array
 	 */
 	public $settings = [];
 
@@ -99,7 +99,7 @@ class CommentPress_Multisite_Database {
 
 		// Only do this once.
 		static $done;
-		if ( isset( $done ) && $done === true ) {
+		if ( isset( $done ) && true === $done ) {
 			return;
 		}
 
@@ -168,6 +168,7 @@ class CommentPress_Multisite_Database {
 			return;
 		}
 
+		// phpcs:ignore Squiz.Commenting.InlineComment.SpacingAfterAtFunctionEnd
 		// Keep Site Options when deactivating.
 
 	}
@@ -326,7 +327,7 @@ class CommentPress_Multisite_Database {
 		$save = apply_filters( 'commentpress/multisite/settings/upgrade/save', $save );
 
 		// Save settings if need be.
-		if ( $save === true ) {
+		if ( true === $save ) {
 			$this->settings_save();
 		}
 
@@ -444,7 +445,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $name The name of the setting.
+	 * @param str   $name The name of the setting.
 	 * @param mixed $default The default value for the setting.
 	 * @return mixed The value of the setting if it exists, $default otherwise.
 	 */
@@ -460,7 +461,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $name The name of the setting.
+	 * @param str   $name The name of the setting.
 	 * @param mixed $value The value for the setting.
 	 */
 	public function setting_set( $name, $value = '' ) {
@@ -510,7 +511,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $name The name of the Site Option.
+	 * @param str   $name The name of the Site Option.
 	 * @param mixed $default The default value for the Site Option.
 	 * @return mixed The value of the Site Option if it exists, default otherwise.
 	 */
@@ -526,7 +527,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $name The name of the Site Option.
+	 * @param str   $name The name of the Site Option.
 	 * @param mixed $value The value for the Site Option.
 	 * @return bool True if the value was updated, false otherwise.
 	 */

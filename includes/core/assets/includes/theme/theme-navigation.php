@@ -159,7 +159,7 @@ if ( ! function_exists( 'commentpress_page_navigation' ) ) :
 
 		// Build navigation list items.
 		$previous_list_item = ! empty( $previous_page_link ) ? '<li class="alignleft">' . $previous_page_link . '</li>' : '';
-		$next_list_item = ! empty( $next_page_link ) ? '<li class="alignright">' . $next_page_link . '</li>' : '';
+		$next_list_item     = ! empty( $next_page_link ) ? '<li class="alignright">' . $next_page_link . '</li>' : '';
 
 		// Merge navigation list items.
 		$nav_list = $previous_list_item . "\n" . $next_list_item . "\n";
@@ -193,6 +193,7 @@ if ( ! function_exists( 'commentpress_page_navigation_list' ) ) :
 		}
 
 		// Write to screen.
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '<ul>' . $list_items . '</ul>';
 
 	}
@@ -235,7 +236,7 @@ if ( ! function_exists( 'commentpress_page_navigation_get_next_link' ) ) :
 		}
 
 		// Set an image if asking for Pages with Comments.
-		$img = $with_comments ? '<img src="' . get_template_directory_uri() . '/assets/images/next.png" />' : '';
+		$img = $with_comments ? '<img src="' . esc_url( get_template_directory_uri() . '/assets/images/next.png' ) . '" />' : '';
 
 		/**
 		 * Filters the "Next Page" Navigation link CSS ID.
@@ -247,7 +248,7 @@ if ( ! function_exists( 'commentpress_page_navigation_get_next_link' ) ) :
 		$css_id = apply_filters( 'commentpress/navigation/page/link/next/css_id', 'next_page' );
 
 		// Build ID attribute.
-		$id = ! empty( $css_id ) ? ' id="' . $css_id . '"' : '';
+		$id = ! empty( $css_id ) ? ' id="' . esc_attr( $css_id ) . '"' : '';
 
 		/**
 		 * Filters the "Next Page" Navigation link CSS classes.
@@ -259,11 +260,11 @@ if ( ! function_exists( 'commentpress_page_navigation_get_next_link' ) ) :
 		$css_classes = apply_filters( 'commentpress/navigation/page/link/next/css_classes', [ 'css_btn' ] );
 
 		// Build class attribute.
-		$class = ! empty( $css_classes ) ? ' class="' . implode( ' ', $css_classes ) . '"' : '';
+		$class = ! empty( $css_classes ) ? ' class="' . implode( ' ', array_map( 'esc_attr', $css_classes ) ) . '"' : '';
 
 		// Construct link.
 		$link = $img .
-			'<a href="' . get_permalink( $next_page->ID ) . '"' . $id . $class . ' title="' . esc_attr( $title ) . '">' .
+			'<a href="' . esc_url( get_permalink( $next_page->ID ) ) . '"' . $id . $class . ' title="' . esc_attr( $title ) . '">' .
 				esc_html( $title ) .
 			'</a>';
 
@@ -310,7 +311,7 @@ if ( ! function_exists( 'commentpress_page_navigation_get_previous_link' ) ) :
 		}
 
 		// Set an image if asking for Pages with Comments.
-		$img = ( $with_comments === true ) ? '<img src="' . get_template_directory_uri() . '/assets/images/prev.png" />' : '';
+		$img = ( true === $with_comments ) ? '<img src="' . get_template_directory_uri() . '/assets/images/prev.png" />' : '';
 
 		/**
 		 * Filters the "Previous Page" Navigation link CSS ID.
@@ -604,7 +605,7 @@ if ( ! function_exists( 'commentpress_page_number' ) ) :
 			// Build Page number string.
 			$page_number = sprintf(
 				/* translators: %s: The span element containing the Page number. */
-				__( 'Page %s', 'commentpress-core' ),
+				esc_html__( 'Page %s', 'commentpress-core' ),
 				$element
 			);
 
@@ -615,8 +616,9 @@ if ( ! function_exists( 'commentpress_page_number' ) ) :
 
 		}
 
-		// Wrap in identifying class.
+		// Wrap markup in identifying class.
 		echo '<span class="' . esc_attr( ! is_numeric( $number ) ? 'roman' : 'arabic' ) . '">' .
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			$page_number .
 		'</span>';
 
@@ -644,16 +646,16 @@ if ( ! function_exists( 'commentpress_multipager' ) ) :
 
 		// Set default behaviour.
 		$defaults = [
-			'before' => '<div class="multipager">',
-			'after' => '</div>',
-			'link_before' => '',
-			'link_after' => '',
-			'next_or_number' => 'next',
-			'nextpagelink' => '<span class="alignright">' . __( 'Next page', 'commentpress-core' ) . ' &raquo;</span>',
+			'before'           => '<div class="multipager">',
+			'after'            => '</div>',
+			'link_before'      => '',
+			'link_after'       => '',
+			'next_or_number'   => 'next',
+			'nextpagelink'     => '<span class="alignright">' . __( 'Next page', 'commentpress-core' ) . ' &raquo;</span>',
 			'previouspagelink' => '<span class="alignleft">&laquo; ' . __( 'Previous page', 'commentpress-core' ) . '</span>',
-			'pagelink' => '%',
-			'more_file' => '',
-			'echo' => 0,
+			'pagelink'         => '%',
+			'more_file'        => '',
+			'echo'             => 0,
 		];
 
 		// Get Page links.
@@ -666,13 +668,16 @@ if ( ! function_exists( 'commentpress_multipager' ) ) :
 			$page_links
 		);
 
-		// Get Page links.
-		$page_links .= wp_link_pages( [
-			'before' => '<div class="multipager multipager_all"><span>' . __( 'Pages: ', 'commentpress-core' ) . '</span>',
-			'after' => '</div>',
+		// Build new Page link args.
+		$args = [
+			'before'   => '<div class="multipager multipager_all"><span>' . __( 'Pages: ', 'commentpress-core' ) . '</span>',
+			'after'    => '</div>',
 			'pagelink' => '<span class="multipager_link">%</span>',
-			'echo' => 0,
-		] );
+			'echo'     => 0,
+		];
+
+		// Get Page links.
+		$page_links .= wp_link_pages( $args );
 
 		// --<
 		return $page_links;

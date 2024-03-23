@@ -32,7 +32,7 @@ get_header();
 
 							<?php the_content(); ?>
 
-							<?php echo commentpress_multipager(); ?>
+							<?php echo commentpress_multipager(); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 
 						</div><!-- /post -->
 

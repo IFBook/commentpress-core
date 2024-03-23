@@ -3,7 +3,7 @@ Contributors: needle, commentpress
 Donate link: https://www.paypal.me/interactivist
 Tags: commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
 Requires at least: 4.9
-Tested up to: 6.1
+Tested up to: 6.5
 Stable tag: 4.0a
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -217,6 +217,7 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 <h4>4.0</h4>
 
+* Code refactored
 * Remove support for workflow
 
 <h4>3.9.15</h4>

@@ -33,7 +33,7 @@ defined( 'ABSPATH' ) || exit;
 					<?php if ( is_user_logged_in() ) : ?>
 
 						<li>
-							<a href="<?php echo trailingslashit( bp_get_blogs_directory_permalink() . 'create' ); ?>" title="<?php echo esc_attr( $new_site_title ); ?>" id="btn_create"><?php echo esc_html( $new_site_title ); ?></a>
+							<a href="<?php echo esc_url( trailingslashit( bp_get_blogs_directory_permalink() . 'create' ) ); ?>" title="<?php echo esc_attr( $new_site_title ); ?>" id="btn_create"><?php echo esc_html( $new_site_title ); ?></a>
 						</li>
 
 					<?php endif; ?>
@@ -41,7 +41,7 @@ defined( 'ABSPATH' ) || exit;
 				<?php else : /* Standard WordPress multisite. */ ?>
 
 					<li>
-						<a href="<?php echo network_site_url(); ?>wp-signup.php" title="<?php echo esc_attr( $new_site_title ); ?>" id="btn_create" class="button"><?php echo esc_html( $new_site_title ); ?></a>
+						<a href="<?php echo esc_url( network_site_url( 'wp-signup.php' ) ); ?>" title="<?php echo esc_attr( $new_site_title ); ?>" id="btn_create" class="button"><?php echo esc_html( $new_site_title ); ?></a>
 					</li>
 
 				<?php endif; ?>
@@ -54,7 +54,7 @@ defined( 'ABSPATH' ) || exit;
 
 				<?php $dashboard_title = commentpress_navigation_dashboard_title(); ?>
 
-				<li><a href="<?php echo admin_url(); ?>" title="<?php echo esc_attr( $dashboard_title ); ?>" id="btn_dash" class="button"><?php echo esc_html( $dashboard_title ); ?></a></li>
+				<li><a href="<?php echo esc_url( admin_url() ); ?>" title="<?php echo esc_attr( $dashboard_title ); ?>" id="btn_dash" class="button"><?php echo esc_html( $dashboard_title ); ?></a></li>
 			<?php endif; ?>
 
 		<?php endif; ?>

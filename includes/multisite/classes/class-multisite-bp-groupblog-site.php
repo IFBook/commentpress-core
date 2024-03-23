@@ -24,7 +24,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $multisite The multisite loader object.
+	 * @var CommentPress_Multisite_Loader
 	 */
 	public $multisite;
 
@@ -33,7 +33,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $bp The BuddyPress object reference.
+	 * @var CommentPress_Multisite_BuddyPress
 	 */
 	public $bp;
 
@@ -42,7 +42,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $groupblog The BuddyPress Groupblog object reference.
+	 * @var CommentPress_Multisite_BuddyPress_Groupblog
 	 */
 	public $groupblog;
 
@@ -57,7 +57,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 
 		// Store references.
 		$this->multisite = $groupblog->bp->multisite;
-		$this->bp = $groupblog->bp;
+		$this->bp        = $groupblog->bp;
 		$this->groupblog = $groupblog;
 
 		// Init when the BuddyPress Groupblog is fully loaded.
@@ -355,8 +355,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $avatar The existing HTML for displaying an avatar.
-	 * @param int $blog_id The numeric ID of the WordPress Blog.
+	 * @param str   $avatar The existing HTML for displaying an avatar.
+	 * @param int   $blog_id The numeric ID of the WordPress Blog.
 	 * @param array $args Additional arguments.
 	 * @return str $avatar The modified HTML for displaying an avatar.
 	 */
@@ -378,7 +378,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 		// Define args.
 		$args = [
 			'item_id' => $group_id,
-			'object' => 'group',
+			'object'  => 'group',
 		];
 
 		// Get the Group avatar.
@@ -401,7 +401,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 	public function ajax_querystring( $query_string, $object ) {
 
 		// Bail if not an Activity object.
-		if ( $object !== 'activity' ) {
+		if ( 'activity' !== $object ) {
 			return $query_string;
 		}
 
@@ -447,7 +447,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 	 *
 	 * @since 3.3
 	 *
-	 * @param bool $approved True if the Comment is approved, false otherwise.
+	 * @param bool  $approved True if the Comment is approved, false otherwise.
 	 * @param array $commentdata The Comment data.
 	 * @return bool $approved Modified approval value. True if the Comment is approved, false otherwise.
 	 */
@@ -484,7 +484,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 	 *
 	 * @since 3.3
 	 *
-	 * @param bool $b True if there are Blogs, false otherwise.
+	 * @param bool   $b True if there are Blogs, false otherwise.
 	 * @param object $blogs The existing Blogs object.
 	 * @return object $blogs The modified Blogs object.
 	 */
@@ -510,14 +510,14 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 			unset( $blogs->blogs[ $key ] );
 
 			// Recalculate global values.
-			$blogs->blog_count = $blogs->blog_count - 1;
+			$blogs->blog_count       = $blogs->blog_count - 1;
 			$blogs->total_blog_count = $blogs->total_blog_count - 1;
-			$blogs->pag_num = $blogs->pag_num - 1;
+			$blogs->pag_num          = $blogs->pag_num - 1;
 
 		}
 
 		// Renumber the array keys to account for missing items.
-		$blogs_new = array_values( $blogs->blogs );
+		$blogs_new    = array_values( $blogs->blogs );
 		$blogs->blogs = $blogs_new;
 
 		// --<
@@ -564,7 +564,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 		$args = [
 
 			// Only error-free themes.
-			'errors' => false,
+			'errors'  => false,
 
 			// All themes.
 			'allowed' => null,
@@ -592,7 +592,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 			$tags = $theme->get( 'Tags' );
 
 			// Is it a CommentPress Core and Group Blog theme?
-			if ( in_array( 'commentpress', $tags ) && in_array( 'groupblog', $tags ) ) {
+			if ( in_array( 'commentpress', $tags, true ) && in_array( 'groupblog', $tags, true ) ) {
 
 				// Maybe use stylesheet as theme data.
 				if ( true === $stylesheets ) {

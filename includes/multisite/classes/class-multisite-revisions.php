@@ -24,7 +24,7 @@ class CommentPress_Multisite_Revisions {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $multisite The multisite loader object.
+	 * @var CommentPress_Multisite_Loader
 	 */
 	public $multisite;
 
@@ -94,7 +94,7 @@ class CommentPress_Multisite_Revisions {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $title The existing title of the Post.
+	 * @param str    $title The existing title of the Post.
 	 * @param object $post The WordPress Post object.
 	 * @return str $title The modified title of the Post.
 	 */
@@ -104,7 +104,7 @@ class CommentPress_Multisite_Revisions {
 		$key = '_cp_version_count';
 
 		// If the custom field of our current Post has a value.
-		if ( get_post_meta( $post->ID, $key, true ) != '' ) {
+		if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 
 			// Get current value.
 			$value = get_post_meta( $post->ID, $key, true );

@@ -24,7 +24,7 @@ class CommentPress_Core_Pages_Legacy {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -189,11 +189,12 @@ class CommentPress_Core_Pages_Legacy {
 	public function settings_meta_box_save() {
 
 		// Init vars.
+		// TODO: Build functionality.
 		$cp_create_pages = '';
 		$cp_delete_pages = '';
 
 		// Did we ask to auto-create Special Pages?
-		if ( $cp_create_pages == '1' ) {
+		if ( '1' === $cp_create_pages ) {
 
 			// Remove any existing Special Pages.
 			$this->special_pages_delete();
@@ -204,7 +205,7 @@ class CommentPress_Core_Pages_Legacy {
 		}
 
 		// Did we ask to delete Special Pages?
-		if ( $cp_delete_pages == '1' ) {
+		if ( '1' === $cp_delete_pages ) {
 			$this->special_pages_delete();
 		}
 
@@ -347,16 +348,16 @@ class CommentPress_Core_Pages_Legacy {
 
 		// Define Welcome Page.
 		$title = [
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'post_parent' => 0,
-			'comment_status' => 'open',
-			'ping_status' => 'closed',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
+			'post_status'           => 'publish',
+			'post_type'             => 'page',
+			'post_parent'           => 0,
+			'comment_status'        => 'open',
+			'ping_status'           => 'closed',
+			'to_ping'               => '', // Quick fix for Windows.
+			'pinged'                => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
+			'post_excerpt'          => '', // Quick fix for Windows.
+			'menu_order'            => 0,
 		];
 
 		// Add Post-specific stuff.
@@ -379,7 +380,8 @@ class CommentPress_Core_Pages_Legacy {
 
 This is your title page. Edit it to suit your needs. It has been automatically set as your homepage but if you want another page as your homepage, set it in <em>WordPress</em> &#8594; <em>Settings</em> &#8594; <em>Reading</em>.
 
-You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings</em> &#8594; <em>CommentPress</em> to make the site work the way you want it to. Use the Theme Customizer to change the way your site looks in <em>WordPress</em> &#8594; <em>Appearance</em> &#8594; <em>Customize</em>. For help with structuring, formatting and reading text in CommentPress, please refer to the <a href="http://www.futureofthebook.org/commentpress/">CommentPress website</a>.', 'commentpress-core'
+You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings</em> &#8594; <em>CommentPress</em> to make the site work the way you want it to. Use the Theme Customizer to change the way your site looks in <em>WordPress</em> &#8594; <em>Appearance</em> &#8594; <em>Customize</em>. For help with structuring, formatting and reading text in CommentPress, please refer to the <a href="http://www.futureofthebook.org/commentpress/">CommentPress website</a>.',
+			'commentpress-core'
 		);
 
 		/**
@@ -509,7 +511,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// Define args to update the Post.
 		$args = [
-			'ID' => $existing_id,
+			'ID'          => $existing_id,
 			'post_status' => 'publish',
 		];
 
@@ -548,7 +550,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// Define args to update the Post.
 		$args = [
-			'ID' => $existing_id,
+			'ID'          => $existing_id,
 			'post_status' => 'draft',
 		];
 
@@ -591,8 +593,8 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$page_on_front = $this->core->db->option_wp_get( 'page_on_front' );
 
 		// If the Welcome Page exists and it's the Front Page.
-		if ( $welcome_id !== false && $page_on_front == $welcome_id ) {
-			$is_home = $welcome_id;
+		if ( false !== $welcome_id && (int) $page_on_front === (int) $welcome_id ) {
+			$is_home = (int) $welcome_id;
 		} else {
 			$is_home = false;
 		}
@@ -683,18 +685,18 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Build an array of the individual Special Page IDs, keyed by "name".
 		$special_pages_keyed = [
 			'cp_general_comments_page' => $this->core->db->setting_get( 'cp_general_comments_page', false ),
-			'cp_all_comments_page' => $this->core->db->setting_get( 'cp_all_comments_page', false ),
-			'cp_comments_by_page' => $this->core->db->setting_get( 'cp_comments_by_page', false ),
-			'cp_blog_page' => $this->core->db->setting_get( 'cp_blog_page', false ),
-			'cp_blog_archive_page' => $this->core->db->setting_get( 'cp_blog_archive_page', false ),
-			'cp_toc_page' => $this->core->db->setting_get( 'cp_toc_page', false ),
+			'cp_all_comments_page'     => $this->core->db->setting_get( 'cp_all_comments_page', false ),
+			'cp_comments_by_page'      => $this->core->db->setting_get( 'cp_comments_by_page', false ),
+			'cp_blog_page'             => $this->core->db->setting_get( 'cp_blog_page', false ),
+			'cp_blog_archive_page'     => $this->core->db->setting_get( 'cp_blog_archive_page', false ),
+			'cp_toc_page'              => $this->core->db->setting_get( 'cp_toc_page', false ),
 		];
 
 		// Try and delete each Page, bypassing trash.
 		foreach ( $special_pages as $special_page_id ) {
 
 			// Skip if this Special Page is somehow missing.
-			$name = array_search( $special_page_id, $special_pages_keyed );
+			$name = array_search( $special_page_id, $special_pages_keyed, true );
 			if ( false === $name ) {
 				continue;
 			}
@@ -758,7 +760,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		global $pagenow, $post_type;
 
 		// Check admin location.
-		if ( is_admin() && $pagenow == 'edit.php' && $post_type == 'page' ) {
+		if ( is_admin() && 'edit.php' === $pagenow && 'page' === $post_type ) {
 
 			// Get Special Pages array, if it's there.
 			$special_pages = $this->core->db->setting_get( 'cp_special_pages' );
@@ -790,7 +792,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		}
 
 		// Bail if not Page listings screen.
-		if ( $pagenow !== 'edit.php' || $post_type !== 'page' ) {
+		if ( 'edit.php' !== $pagenow || 'page' !== $post_type ) {
 			return $vars;
 		}
 
@@ -861,45 +863,38 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		// Switch by Page.
 		switch ( $page ) {
 
+			// Create Welcome Page.
 			case 'title':
-
-				// Create Welcome Page.
 				$new_id = $this->title_page_create();
 				break;
 
+			// Create General Comments Page.
 			case 'general_comments':
-
-				// Create General Comments Page.
 				$new_id = $this->general_comments_page_create();
 				break;
 
+			// Create All Comments Page.
 			case 'all_comments':
-
-				// Create All Comments Page.
 				$new_id = $this->all_comments_page_create();
 				break;
 
+			// Create Comments by Author Page.
 			case 'comments_by_author':
-
-				// Create Comments by Author Page.
 				$new_id = $this->comments_by_author_page_create();
 				break;
 
+			// Create Blog Page.
 			case 'blog':
-
-				// Create Blog Page.
 				$new_id = $this->blog_page_create();
 				break;
 
+			// Create Blog Page.
 			case 'blog_archive':
-
-				// Create Blog Page.
 				$new_id = $this->blog_archive_page_create();
 				break;
 
+			// Create TOC Page.
 			case 'toc':
-
-				// Create TOC Page.
 				$new_id = $this->toc_page_create();
 				break;
 
@@ -975,7 +970,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		$special_pages = $this->core->db->setting_get( 'cp_special_pages', [] );
 
 		// Is it in our Special Pages array?
-		if ( in_array( $page_id, $special_pages ) ) {
+		if ( in_array( $page_id, $special_pages, true ) ) {
 
 			// Remove Page ID from array.
 			$special_pages = array_diff( $special_pages, [ $page_id ] );
@@ -1017,7 +1012,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		}
 
 		// Bail if the current Page is not a Special Page.
-		if ( ! in_array( $post->ID, $special_pages ) ) {
+		if ( ! in_array( $post->ID, $special_pages, true ) ) {
 			return false;
 		}
 
@@ -1039,16 +1034,16 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// Define General Comments Page.
 		$general_comments = [
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'post_parent' => 0,
-			'comment_status' => 'open',
-			'ping_status' => 'open',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
+			'post_status'           => 'publish',
+			'post_type'             => 'page',
+			'post_parent'           => 0,
+			'comment_status'        => 'open',
+			'ping_status'           => 'open',
+			'to_ping'               => '', // Quick fix for Windows.
+			'pinged'                => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
+			'post_excerpt'          => '', // Quick fix for Windows.
+			'menu_order'            => 0,
 		];
 
 		// Add Post-specific stuff.
@@ -1113,16 +1108,16 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// Define All Comments Page.
 		$all_comments = [
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'post_parent' => 0,
-			'comment_status' => 'closed',
-			'ping_status' => 'closed',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
+			'post_status'           => 'publish',
+			'post_type'             => 'page',
+			'post_parent'           => 0,
+			'comment_status'        => 'closed',
+			'ping_status'           => 'closed',
+			'to_ping'               => '', // Quick fix for Windows.
+			'pinged'                => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
+			'post_excerpt'          => '', // Quick fix for Windows.
+			'menu_order'            => 0,
 		];
 
 		// Add Post-specific stuff.
@@ -1187,16 +1182,16 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// Define Comments by Author Page.
 		$group = [
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'post_parent' => 0,
-			'comment_status' => 'closed',
-			'ping_status' => 'closed',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
+			'post_status'           => 'publish',
+			'post_type'             => 'page',
+			'post_parent'           => 0,
+			'comment_status'        => 'closed',
+			'ping_status'           => 'closed',
+			'to_ping'               => '', // Quick fix for Windows.
+			'pinged'                => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
+			'post_excerpt'          => '', // Quick fix for Windows.
+			'menu_order'            => 0,
 		];
 
 		// Add Post-specific stuff.
@@ -1261,16 +1256,16 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// Define Blog Page.
 		$blog = [
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'post_parent' => 0,
-			'comment_status' => 'closed',
-			'ping_status' => 'closed',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
+			'post_status'           => 'publish',
+			'post_type'             => 'page',
+			'post_parent'           => 0,
+			'comment_status'        => 'closed',
+			'ping_status'           => 'closed',
+			'to_ping'               => '', // Quick fix for Windows.
+			'pinged'                => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
+			'post_excerpt'          => '', // Quick fix for Windows.
+			'menu_order'            => 0,
 		];
 
 		// Add Post-specific stuff.
@@ -1338,16 +1333,16 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// Define Blog Archive Page.
 		$blog = [
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'post_parent' => 0,
-			'comment_status' => 'closed',
-			'ping_status' => 'closed',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
+			'post_status'           => 'publish',
+			'post_type'             => 'page',
+			'post_parent'           => 0,
+			'comment_status'        => 'closed',
+			'ping_status'           => 'closed',
+			'to_ping'               => '', // Quick fix for Windows.
+			'pinged'                => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
+			'post_excerpt'          => '', // Quick fix for Windows.
+			'menu_order'            => 0,
 		];
 
 		// Add Post-specific stuff.
@@ -1414,16 +1409,16 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// Define TOC Page.
 		$toc = [
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'post_parent' => 0,
-			'comment_status' => 'closed',
-			'ping_status' => 'closed',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
+			'post_status'           => 'publish',
+			'post_type'             => 'page',
+			'post_parent'           => 0,
+			'comment_status'        => 'closed',
+			'ping_status'           => 'closed',
+			'to_ping'               => '', // Quick fix for Windows.
+			'pinged'                => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
+			'post_excerpt'          => '', // Quick fix for Windows.
+			'menu_order'            => 0,
 		];
 
 		// Default Page title.
@@ -1519,17 +1514,17 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 			case 'cp_welcome_page':
 				$link_title = __( 'Title Page', 'commentpress-core' );
-				$button = 'cover';
+				$button     = 'cover';
 				break;
 
 			case 'cp_all_comments_page':
 				$link_title = __( 'All Comments', 'commentpress-core' );
-				$button = 'allcomments';
+				$button     = 'allcomments';
 				break;
 
 			case 'cp_general_comments_page':
 				$link_title = __( 'General Comments', 'commentpress-core' );
-				$button = 'general';
+				$button     = 'general';
 				break;
 
 			case 'cp_blog_page':
@@ -1542,17 +1537,17 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 			case 'cp_blog_archive_page':
 				$link_title = __( 'Blog Archive', 'commentpress-core' );
-				$button = 'archive';
+				$button     = 'archive';
 				break;
 
 			case 'cp_comments_by_page':
 				$link_title = __( 'Comments by Commenter', 'commentpress-core' );
-				$button = 'members';
+				$button     = 'members';
 				break;
 
 			default:
 				$link_title = __( 'Members', 'commentpress-core' );
-				$button = 'members';
+				$button     = 'members';
 
 		}
 
@@ -1568,8 +1563,8 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 
 		// Build link.
 		$link = '<li' . $active . '>' .
-			'<a href="' . $url . '" id="btn_' . $button . '" class="css_btn" title="' . $title . '">' .
-				$title .
+			'<a href="' . esc_url( $url ) . '" id="btn_' . esc_attr( $button ) . '" class="css_btn" title="' . esc_attr( $title ) . '">' .
+				esc_html( $title ) .
 			'</a>' .
 		'</li>' . "\n";
 

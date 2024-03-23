@@ -24,16 +24,16 @@ class CommentPress_Multisite_Sites {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $multisite The multisite loader object.
+	 * @var CommentPress_Multisite_Loader
 	 */
 	public $multisite;
 
 	/**
-	 * Parts template directory path.
+	 * Relative path to the Parts directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $parts_path Relative path to the Parts directory.
+	 * @var string
 	 */
 	private $parts_path = 'includes/multisite/assets/templates/wordpress/parts/';
 
@@ -55,7 +55,7 @@ class CommentPress_Multisite_Sites {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_sites The settings key for the array of "CommentPress Sites enabled on the Network" setting.
+	 * @var string
 	 */
 	private $key_sites = 'commentpress_sites';
 
@@ -64,7 +64,7 @@ class CommentPress_Multisite_Sites {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_forced The settings key for the "CommentPress enabled on all Sites" setting.
+	 * @var string
 	 */
 	private $key_forced = 'cpmu_force_commentpress';
 
@@ -75,7 +75,7 @@ class CommentPress_Multisite_Sites {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var str $key_title_page_content The settings key for the "Default Welcome Page content" setting.
+	 * @var string
 	 */
 	private $key_title_page_content = 'cpmu_title_page_content';
 
@@ -348,7 +348,7 @@ class CommentPress_Multisite_Sites {
 		$site_ids = $this->core_site_ids_get();
 
 		// Bail if already present.
-		if ( in_array( $site_id, $site_ids ) ) {
+		if ( in_array( $site_id, $site_ids, true ) ) {
 			return;
 		}
 
@@ -371,7 +371,7 @@ class CommentPress_Multisite_Sites {
 		$site_ids = $this->core_site_ids_get();
 
 		// Bail if not already present.
-		if ( ! in_array( $site_id, $site_ids ) ) {
+		if ( ! in_array( $site_id, $site_ids, true ) ) {
 			return;
 		}
 
@@ -612,7 +612,7 @@ class CommentPress_Multisite_Sites {
 	 * @since 4.0
 	 *
 	 * @param WP_Site $new_site The new site object.
-	 * @param array $args The array of initialization arguments.
+	 * @param array   $args The array of initialization arguments.
 	 */
 	public function site_initialise( $new_site, $args ) {
 
@@ -686,11 +686,11 @@ class CommentPress_Multisite_Sites {
 	 *
 	 * @since 3.3
 	 *
-	 * @param int $blog_id The numeric ID of the WordPress Blog.
-	 * @param int $user_id The numeric ID of the WordPress User.
-	 * @param str $domain The domain of the WordPress Blog.
-	 * @param str $path The path of the WordPress Blog.
-	 * @param int $site_id The numeric ID of the WordPress parent Site.
+	 * @param int   $blog_id The numeric ID of the WordPress Blog.
+	 * @param int   $user_id The numeric ID of the WordPress User.
+	 * @param str   $domain The domain of the WordPress Blog.
+	 * @param str   $path The path of the WordPress Blog.
+	 * @param int   $site_id The numeric ID of the WordPress parent Site.
 	 * @param array $meta The meta data of the WordPress Blog.
 	 */
 	public function site_initialise_legacy( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
@@ -724,7 +724,7 @@ class CommentPress_Multisite_Sites {
 
 		// Build args for compatibility with action.
 		$args = [
-			'title' => ! empty( $site->site_name ) ? $site->site_name : '',
+			'title'   => ! empty( $site->site_name ) ? $site->site_name : '',
 			'user_id' => $user_id,
 			'options' => $meta,
 		];
@@ -752,7 +752,7 @@ class CommentPress_Multisite_Sites {
 	 * @since 4.0
 	 *
 	 * @param array $allowed_themes The existing array of allowed themes.
-	 * @param int $blog_id The numeric ID of the Site.
+	 * @param int   $blog_id The numeric ID of the Site.
 	 * @return array $allowed_themes The modified array of allowed themes.
 	 */
 	public function themes_allowed_add( $allowed_themes, $blog_id ) {
@@ -763,9 +763,9 @@ class CommentPress_Multisite_Sites {
 		}
 
 		// Allow all parent themes.
-		$allowed_themes['commentpress-flat'] = 1;
+		$allowed_themes['commentpress-flat']   = 1;
 		$allowed_themes['commentpress-modern'] = 1;
-		$allowed_themes['commentpress-theme'] = 1;
+		$allowed_themes['commentpress-theme']  = 1;
 
 		/**
 		 * Filters the allowed themes on a CommentPress-enabled Site.
@@ -831,7 +831,7 @@ class CommentPress_Multisite_Sites {
 		$overridden_content = stripslashes( $this->multisite->db->setting_get( $this->key_title_page_content ) );
 
 		// Override if different to what's been passed.
-		if ( $content != $overridden_content ) {
+		if ( $content !== $overridden_content ) {
 			$content = $overridden_content;
 		}
 

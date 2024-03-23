@@ -23,15 +23,15 @@ if ( ! empty( $core ) ) {
 	$next_page_id = $core->nav->page_get_first();
 
 	// If the link does not point to this Page and we're allowing Page nav.
-	if ( $next_page_id != $post->ID && false === $core->nav->page_nav_is_disabled() ) {
+	if ( $next_page_id !== $post->ID && false === $core->nav->page_nav_is_disabled() ) {
 
 		// Get Page attributes.
 		$page_title = get_the_title( $next_page_id );
-		$target = get_permalink( $next_page_id );
+		$target     = get_permalink( $next_page_id );
 
 		// Set the link.
-		$next_page_html = '<a href="' . $target . '" id="next_page" class="css_btn" title="' . esc_attr( $page_title ) . '">' .
-			$page_title .
+		$next_page_html = '<a href="' . esc_url( $target ) . '" id="next_page" class="css_btn" title="' . esc_attr( $page_title ) . '">' .
+			esc_html( $page_title ) .
 		'</a>';
 
 	}
@@ -55,11 +55,11 @@ get_header();
 					<?php commentpress_get_feature_image(); ?>
 
 					<?php if ( ! commentpress_has_feature_image() ) : ?>
-						<?php if ( $next_page_html != '' ) : ?>
+						<?php if ( ! empty( $next_page_html ) ) : ?>
 							<div class="page_navigation">
 								<ul>
 									<li class="alignright">
-										<?php echo $next_page_html; ?>
+										<?php echo $next_page_html; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 									</li>
 								</ul>
 							</div><!-- /page_navigation -->
@@ -79,19 +79,19 @@ get_header();
 
 							<?php the_content(); ?>
 
-							<?php echo commentpress_multipager(); ?>
+							<?php echo commentpress_multipager(); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 
 						</div><!-- /post -->
 					</div><!-- /content -->
 
 				<?php endwhile; ?>
 
-				<?php if ( $next_page_html != '' ) : ?>
+				<?php if ( ! empty( $next_page_html ) ) : ?>
 					<div class="page_nav_lower">
 						<div class="page_navigation">
 							<ul>
 								<li class="alignright">
-									<?php echo $next_page_html; ?>
+									<?php echo $next_page_html; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 								</li>
 							</ul>
 						</div><!-- /page_navigation -->

@@ -22,7 +22,8 @@ get_header();
 					<?php if ( have_posts() ) : ?>
 
 						<?php /* If this is a category archive. */ if ( is_category() ) : ?>
-							<h3 class="post_title"><?php echo sprintf( __( 'Archive for the &#8216;%s&#8217; Category', 'commentpress-core' ), single_cat_title( '', false ) ); ?></h3>
+							<?php /* translators: %s: The name of the category. */ ?>
+							<h3 class="post_title"><?php echo sprintf( esc_html__( 'Archive for the &#8216;%s&#8217; Category', 'commentpress-core' ), single_cat_title( '', false ) ); ?></h3>
 						<?php /* If this is a tag archive. */ elseif ( is_tag() ) : ?>
 							<h3 class="post_title"><?php esc_html_e( 'Posts Tagged', 'commentpress-core' ); ?> &#8216;<?php single_tag_title(); ?>&#8217;</h3>
 						<?php /* If this is a daily archive. */ elseif ( is_day() ) : ?>
@@ -33,7 +34,7 @@ get_header();
 						<h3 class="post_title"><?php esc_html_e( 'Archive for', 'commentpress-core' ); ?> <?php the_time( __( 'Y', 'commentpress-core' ) ); ?></h3>
 						<?php /* If this is an author archive. */ elseif ( is_author() ) : ?>
 							<h3 class="post_title"><?php esc_html_e( 'Author Archive', 'commentpress-core' ); ?></h3>
-						<?php /* If this is a paged archive. */ elseif ( isset( $_GET['paged'] ) && ! empty( $_GET['paged'] ) ) : ?>
+						<?php /* If this is a paged archive. */ elseif ( isset( $_GET['paged'] ) && ! empty( $_GET['paged'] ) ) : /* phpcs:ignore WordPress.Security.NonceVerification.Recommended */ ?>
 							<h3 class="post_title"><?php esc_html_e( 'Archives', 'commentpress-core' ); ?></h3>
 						<?php endif; ?>
 

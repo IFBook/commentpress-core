@@ -26,13 +26,13 @@ get_header();
 
 						<div id="post-<?php the_ID(); ?>" class="post image_attachment">
 
-							<h2 class="post_title"><a href="<?php echo get_permalink( $post->post_parent ); ?>" rev="attachment" title="<?php esc_attr_e( 'Back to gallery', 'commentpress-core' ); ?>"><?php echo get_the_title( $post->post_parent ); ?></a> <span>&raquo; <a href="<?php the_permalink(); ?>" class="attachment_permalink" title="<?php esc_attr_e( 'Permalink for this image', 'commentpress-core' ); ?>"><?php the_title(); ?></a></span></h2>
+							<h2 class="post_title"><a href="<?php echo esc_url( get_permalink( $post->post_parent ) ); ?>" rev="attachment" title="<?php esc_attr_e( 'Back to gallery', 'commentpress-core' ); ?>"><?php echo esc_html( get_the_title( $post->post_parent ) ); ?></a> <span>&raquo; <a href="<?php the_permalink(); ?>" class="attachment_permalink" title="<?php esc_attr_e( 'Permalink for this image', 'commentpress-core' ); ?>"><?php the_title(); ?></a></span></h2>
 
-							<p class="back_button"><a class="button" href="<?php echo get_permalink( $post->post_parent ); ?>" rev="attachment" title="<?php esc_attr_e( 'Back to gallery', 'commentpress-core' ); ?>"><?php esc_html_e( 'Back to gallery', 'commentpress-core' ); ?></a></p>
+							<p class="back_button"><a class="button" href="<?php echo esc_url( get_permalink( $post->post_parent ) ); ?>" rev="attachment" title="<?php esc_attr_e( 'Back to gallery', 'commentpress-core' ); ?>"><?php esc_html_e( 'Back to gallery', 'commentpress-core' ); ?></a></p>
 
 							<div class="the_image_attachment">
 
-								<p class="image_attachment_wrap"><a class="image_attachment_link" href="<?php echo wp_get_attachment_url( $post->ID ); ?>"><?php echo wp_get_attachment_image( $post->ID, 'medium' ); ?></a></p>
+								<p class="image_attachment_wrap"><a class="image_attachment_link" href="<?php echo esc_url( wp_get_attachment_url( $post->ID ) ); ?>"><?php echo wp_get_attachment_image( $post->ID, 'medium' ); ?></a></p>
 
 								<div class="image_attachment_caption">
 									<?php /* Show "caption" if present. */ ?>
@@ -51,10 +51,11 @@ get_header();
 								<?php
 
 								echo sprintf(
-									__( 'This image was posted on %1$s at %2$s and is filed under %3$s.', 'commentpress-core' ),
+									/* translators: 1: The post date, 2: The post time, 3: The list of categories. */
+									esc_html__( 'This image was posted on %1$s at %2$s and is filed under %3$s.', 'commentpress-core' ),
 									esc_html( get_the_date( get_option( 'date_format' ) ) ),
-									get_the_time(),
-									get_the_category_list( ', ' )
+									esc_html( get_the_time() ),
+									get_the_category_list( ', ' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								);
 
 								?>
@@ -67,14 +68,15 @@ get_header();
 								$rss_text = __( 'RSS 2.0', 'commentpress-core' );
 
 								// Construct RSS link.
-								$rss_link = '<a href="' . esc_url( get_post_comments_feed_link() ) . '">' . $rss_text . '</a>';
+								$rss_link = '<a href="' . esc_url( get_post_comments_feed_link() ) . '">' . esc_html( $rss_text ) . '</a>';
 
 								echo sprintf(
-									__( 'You can follow any comments on this image through the %s feed.', 'commentpress-core' ),
-									$rss_link
+									/* translators: %s: The RSS feed link. */
+									esc_html__( 'You can follow any comments on this image through the %s feed.', 'commentpress-core' ),
+									$rss_link // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								);
 
-								if ( ( 'open' == $post->comment_status ) && ( 'open' == $post->ping_status ) ) {
+								if ( ( 'open' === $post->comment_status ) && ( 'open' === $post->ping_status ) ) {
 
 									// Both Comments and pings are open.
 
@@ -82,18 +84,19 @@ get_header();
 									$trackback_text = __( 'trackback', 'commentpress-core' );
 
 									// Construct RSS link.
-									$trackback_link = '<a href="' . esc_url( get_trackback_url() ) . '"rel="trackback">' . $trackback_text . '</a>';
+									$trackback_link = '<a href="' . esc_url( get_trackback_url() ) . '"rel="trackback">' . esc_html( $trackback_text ) . '</a>';
 
 									// Write out.
 									echo sprintf(
-										__( 'You are welcome to leave a comment, or %s from your own site.', 'commentpress-core' ),
-										$trackback_link
+										/* translators: %s: The trackback link. */
+										esc_html__( 'You are welcome to leave a comment, or %s from your own site.', 'commentpress-core' ),
+										$trackback_link // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 									);
 
 									// Add trailing space.
 									echo ' ';
 
-								} elseif ( ! ( 'open' == $post->comment_status ) && ( 'open' == $post->ping_status ) ) {
+								} elseif ( ! ( 'open' === $post->comment_status ) && ( 'open' === $post->ping_status ) ) {
 
 									// Only pings are open.
 
@@ -101,18 +104,19 @@ get_header();
 									$trackback_text = __( 'trackback', 'commentpress-core' );
 
 									// Construct RSS link.
-									$trackback_link = '<a href="' . esc_url( get_trackback_url() ) . '"rel="trackback">' . $trackback_text . '</a>';
+									$trackback_link = '<a href="' . esc_url( get_trackback_url() ) . '"rel="trackback">' . esc_html( $trackback_text ) . '</a>';
 
 									// Write out.
 									echo sprintf(
-										__( 'Comments are currently closed, but you can %s from your own site.', 'commentpress-core' ),
-										$trackback_link
+										/* translators: %s: The trackback link. */
+										esc_html__( 'Comments are currently closed, but you can %s from your own site.', 'commentpress-core' ),
+										$trackback_link // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 									);
 
 									// Add trailing space.
 									echo ' ';
 
-								} elseif ( ( 'open' == $post->comment_status ) && ! ( 'open' == $post->ping_status ) ) {
+								} elseif ( ( 'open' === $post->comment_status ) && ! ( 'open' === $post->ping_status ) ) {
 
 									// Comments are open, pings are not.
 									esc_html_e( 'You can leave a comment. Pinging is currently not allowed.', 'commentpress-core' );
@@ -120,7 +124,7 @@ get_header();
 									// Add trailing space.
 									echo ' ';
 
-								} elseif ( ! ( 'open' == $post->comment_status ) && ! ( 'open' == $post->ping_status ) ) {
+								} elseif ( ! ( 'open' === $post->comment_status ) && ! ( 'open' === $post->ping_status ) ) {
 
 									// Neither Comments nor pings are open.
 									esc_html_e( 'Both comments and pings are currently closed.', 'commentpress-core' );

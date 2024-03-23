@@ -89,12 +89,21 @@ function commentpress_schema_restore() {
 			$wpdb->comments
 		);
 
-		// Write to log.
-		$e = new \Exception();
+		// Build data to log.
+		$e     = new \Exception();
 		$trace = $e->getTraceAsString();
-		error_log( print_r( [
+		$data  = [
 			'CommentPress Uninstall Error' => $message,
-		], true ) );
+			'backtrace'                    => $trace,
+		];
+
+		// Format data.
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+		$error = print_r( $data, true );
+
+		// Write to log file.
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		error_log( $error );
 
 	}
 

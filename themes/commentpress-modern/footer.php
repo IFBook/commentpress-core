@@ -18,11 +18,15 @@ defined( 'ABSPATH' ) || exit;
 
 					<?php if ( has_nav_menu( 'footer' ) ) : ?>
 						<?php
+
 						// Show footer menu if assigned.
-						wp_nav_menu( [
-							'theme_location' => 'footer',
+						$footer_menu = [
+							'theme_location'  => 'footer',
 							'container_class' => 'commentpress-footer-nav-menu',
-						] );
+						];
+
+						wp_nav_menu( $footer_menu );
+
 						?>
 					<?php endif; ?>
 
@@ -35,9 +39,10 @@ defined( 'ABSPATH' ) || exit;
 							<?php
 
 							echo sprintf(
-								__( 'Website content &copy; %1$s %2$s. All rights reserved.', 'commentpress-core' ),
-								'<a href="' . home_url() . '">' . get_bloginfo( 'name' ) . '</a>',
-								gmdate( 'Y' )
+								/* translators: 1: Hame page link, 2: The current year. */
+								esc_html__( 'Website content &copy; %1$s %2$s. All rights reserved.', 'commentpress-core' ),
+								'<a href="' . esc_url( home_url() ) . '">' . esc_html( get_bloginfo( 'name' ) ) . '</a>',
+								esc_html( gmdate( 'Y' ) )
 							);
 
 							?>

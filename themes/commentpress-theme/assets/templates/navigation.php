@@ -33,7 +33,7 @@ $core = commentpress_core();
 
 // Get the ID and URL for the "Welcome Page".
 if ( ! empty( $core ) ) {
-	$title_id = $core->db->setting_get( 'cp_welcome_page' );
+	$title_id  = $core->db->setting_get( 'cp_welcome_page' );
 	$title_url = $core->pages_legacy->get_page_url( 'cp_welcome_page' );
 }
 
@@ -61,12 +61,12 @@ if ( ! empty( $core ) ) {
 
 			<?php if ( ! empty( $cp_page_nav ) ) : ?>
 				<ul>
-					<?php echo $cp_page_nav; ?>
+					<?php echo $cp_page_nav; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 				</ul>
 			<?php endif; ?>
 
 			<div id="cp_book_info">
-				<p><?php echo commentpress_page_title(); ?></p>
+				<p><?php echo esc_html( commentpress_page_title() ); ?></p>
 			</div>
 
 		<?php elseif ( is_single() ) : ?>
@@ -77,7 +77,7 @@ if ( ! empty( $core ) ) {
 			</ul>
 
 			<div id="cp_book_info">
-				<p><?php echo commentpress_page_title(); ?></p>
+				<p><?php echo esc_html( commentpress_page_title() ); ?></p>
 			</div>
 
 		<?php elseif ( is_home() || is_post_type_archive() ) : ?>
@@ -92,16 +92,16 @@ if ( ! empty( $core ) ) {
 			<?php if ( ! empty( $nl ) || ! empty( $pl ) ) : ?>
 				<ul id="blog_navigation">
 					<?php if ( ! empty( $nl ) ) : ?>
-						<li class="alignright"><?php echo $nl; ?></li>
+						<li class="alignright"><?php echo $nl; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></li>
 					<?php endif; ?>
 					<?php if ( ! empty( $pl ) ) : ?>
-						<li class="alignleft"><?php echo $pl; ?></li>
+						<li class="alignleft"><?php echo $pl; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></li>
 					<?php endif; ?>
 				</ul>
 			<?php endif; ?>
 
 			<div id="cp_book_info">
-				<p><?php echo __( 'Blog', 'commentpress-core' ); ?></p>
+				<p><?php esc_html_e( 'Blog', 'commentpress-core' ); ?></p>
 			</div>
 
 		<?php elseif ( is_day() || is_month() || is_year() ) : ?>
@@ -116,16 +116,16 @@ if ( ! empty( $core ) ) {
 			<?php if ( ! empty( $nl ) || ! empty( $pl ) ) : ?>
 				<ul id="blog_navigation">
 					<?php if ( ! empty( $nl ) ) : ?>
-						<li class="alignright"><?php echo $nl; ?></li>
+						<li class="alignright"><?php echo $nl; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></li>
 					<?php endif; ?>
 					<?php if ( ! empty( $pl ) ) : ?>
-						<li class="alignleft"><?php echo $pl; ?></li>
+						<li class="alignleft"><?php echo $pl; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></li>
 					<?php endif; ?>
 				</ul>
 			<?php endif; ?>
 
 			<div id="cp_book_info">
-				<p><?php echo __( 'Blog Archives:', 'commentpress-core' ); ?> <?php wp_title( '' ); ?></p>
+				<p><?php esc_html_e( 'Blog Archives:', 'commentpress-core' ); ?> <?php wp_title( '' ); ?></p>
 			</div>
 
 		<?php elseif ( is_search() ) : ?>
@@ -140,10 +140,10 @@ if ( ! empty( $core ) ) {
 			<?php if ( ! empty( $nl ) || ! empty( $pl ) ) : ?>
 				<ul id="blog_navigation">
 					<?php if ( ! empty( $nl ) ) : ?>
-						<li class="alignright"><?php echo $nl; ?></li>
+						<li class="alignright"><?php echo $nl; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></li>
 					<?php endif; ?>
 					<?php if ( ! empty( $pl ) ) : ?>
-						<li class="alignleft"><?php echo $pl; ?></li>
+						<li class="alignleft"><?php echo $pl; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></li>
 					<?php endif; ?>
 				</ul>
 			<?php endif; ?>
@@ -164,10 +164,10 @@ if ( ! empty( $core ) ) {
 			<?php if ( ! empty( $nl ) || ! empty( $pl ) ) : ?>
 				<ul id="blog_navigation">
 					<?php if ( ! empty( $nl ) ) : ?>
-						<li class="alignright"><?php echo $nl; ?></li>
+						<li class="alignright"><?php echo $nl; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></li>
 					<?php endif; ?>
 					<?php if ( ! empty( $pl ) ) : ?>
-						<li class="alignleft"><?php echo $pl; ?></li>
+						<li class="alignleft"><?php echo $pl; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></li>
 					<?php endif; ?>
 				</ul>
 			<?php endif; ?>
@@ -195,7 +195,7 @@ if ( ! empty( $core ) ) {
 				<?php $site_title = commentpress_navigation_network_home_title(); ?>
 
 				<li>
-					<a href="<?php echo network_home_url(); ?>" id="btn_home" class="css_btn" title="<?php echo esc_attr( $site_title ); ?>"><?php echo esc_html( $site_title ); ?></a>
+					<a href="<?php echo esc_url( network_home_url() ); ?>" id="btn_home" class="css_btn" title="<?php echo esc_attr( $site_title ); ?>"><?php echo esc_html( $site_title ); ?></a>
 				</li>
 
 				<?php if ( $core->bp->is_groupblog() ) : ?>
@@ -214,8 +214,8 @@ if ( ! empty( $core ) ) {
 						<?php
 
 						// When this Blog is a Group Blog.
-						$group = groups_get_group( [ 'group_id' => $group_id ] );
-						$group_url = bp_get_group_permalink( $group );
+						$group       = groups_get_group( [ 'group_id' => $group_id ] );
+						$group_url   = bp_get_group_permalink( $group );
 						$group_title = commentpress_navigation_group_home_title();
 
 						?>
@@ -230,12 +230,12 @@ if ( ! empty( $core ) ) {
 
 			<?php else : ?>
 
-				<?php if ( (int) $title_id !== (int) get_option( 'page_on_front' ) ) : ?>
+				<?php if ( (int) get_option( 'page_on_front' ) !== (int) $title_id ) : ?>
 
 					<?php $home_title = commentpress_navigation_blog_home_title(); ?>
 
 					<li>
-						<a href="<?php echo home_url(); ?>" id="btn_home" class="css_btn" title="<?php echo esc_attr( $home_title ); ?>"><?php echo esc_html( $home_title ); ?></a>
+						<a href="<?php echo esc_url( home_url() ); ?>" id="btn_home" class="css_btn" title="<?php echo esc_attr( $home_title ); ?>"><?php echo esc_html( $home_title ); ?></a>
 					</li>
 
 				<?php endif; ?>
@@ -247,7 +247,7 @@ if ( ! empty( $core ) ) {
 				<?php $title_title = commentpress_navigation_title_page_title(); ?>
 
 				<li>
-					<a href="<?php echo $title_url; ?>" id="btn_cover" class="css_btn" title="<?php echo esc_attr( $title_title ); ?>"><?php echo esc_html( $title_title ); ?></a>
+					<a href="<?php echo esc_url( $title_url ); ?>" id="btn_cover" class="css_btn" title="<?php echo esc_attr( $title_title ); ?>"><?php echo esc_html( $title_title ); ?></a>
 				</li>
 
 			<?php endif; ?>
@@ -255,18 +255,23 @@ if ( ! empty( $core ) ) {
 			<?php
 
 			// Show link to General Comments Page if we have one.
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $core->pages_legacy->get_page_link( 'cp_general_comments_page' );
 
 			// Show link to All Comments Page if we have one.
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $core->pages_legacy->get_page_link( 'cp_all_comments_page' );
 
 			// Show link to Comments-by-User Page if we have one.
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $core->pages_legacy->get_page_link( 'cp_comments_by_page' );
 
-			// Show link to book Blog Page if we have one.
+			// Show link to document Blog Page if we have one.
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $core->pages_legacy->get_page_link( 'cp_blog_page' );
 
-			// Show link to book Blog Archive Page if we have one.
+			// Show link to document Blog Archive Page if we have one.
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $core->pages_legacy->get_page_link( 'cp_blog_archive_page' );
 
 			?>
@@ -277,6 +282,7 @@ if ( ! empty( $core ) ) {
 
 	<ul id="minimiser_trigger">
 		<?php if ( ! empty( $core ) ) : ?>
+			<?php /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 			<?php echo $core->display->get_header_min_link(); /* Show minimise header button. */ ?>
 		<?php endif; ?>
 	</ul>

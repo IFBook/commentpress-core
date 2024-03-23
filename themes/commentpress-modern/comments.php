@@ -48,7 +48,7 @@ if ( ! empty( $core ) ) {
 		$cp_comments_in_page = apply_filters( 'cp_template_comments_in_page', locate_template( 'assets/templates/comments_in_page.php' ) );
 
 		// Load it if we find it.
-		if ( $cp_comments_in_page != '' ) {
+		if ( '' !== $cp_comments_in_page ) {
 			load_template( $cp_comments_in_page );
 		}
 
@@ -70,7 +70,7 @@ if ( ! empty( $core ) ) {
 		$cp_comments_by_para = apply_filters( 'cp_template_comments_by_para', locate_template( 'assets/templates/comments_by_para.php' ) );
 
 		// Load it if we find it.
-		if ( $cp_comments_by_para != '' ) {
+		if ( '' !== $cp_comments_by_para ) {
 			load_template( $cp_comments_by_para );
 		}
 
@@ -108,11 +108,13 @@ if ( ! empty( $core ) ) {
 				<ol class="commentlist">
 					<?php
 
-					wp_list_comments( [
-						'type' => 'comment',
+					$args = [
+						'type'       => 'comment',
 						'reply_text' => __( 'Reply to this comment', 'commentpress-core' ),
-						'callback' => 'commentpress_comments',
-					] );
+						'callback'   => 'commentpress_comments',
+					];
+
+					wp_list_comments( $args );
 
 					?>
 				</ol>
@@ -125,7 +127,7 @@ if ( ! empty( $core ) ) {
 
 		<?php else : /* This is displayed if there are no Comments so far. */ ?>
 
-			<?php if ( 'open' == $post->comment_status ) : ?>
+			<?php if ( 'open' === $post->comment_status ) : ?>
 
 				<!-- Comments are open, but there are no Comments. -->
 				<h3 class="nocomments"><span><?php esc_html_e( 'No comments on the whole page', 'commentpress-core' ); ?></span></h3>
@@ -163,6 +165,6 @@ if ( ! empty( $core ) ) {
 $cp_comment_form = apply_filters( 'cp_template_comment_form', locate_template( 'assets/templates/comment_form.php' ) );
 
 // Load it if we find it.
-if ( $cp_comment_form != '' ) {
+if ( ! empty( $cp_comment_form ) ) {
 	load_template( $cp_comment_form );
 }

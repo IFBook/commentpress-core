@@ -24,7 +24,7 @@ class CommentPress_Core_Settings_Site {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -33,7 +33,7 @@ class CommentPress_Core_Settings_Site {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $parent_page The reference to the parent Page.
+	 * @var string
 	 */
 	public $parent_page;
 
@@ -42,7 +42,7 @@ class CommentPress_Core_Settings_Site {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $parent_page_slug The slug of the parent Page.
+	 * @var string
 	 */
 	public $parent_page_slug = 'commentpress_admin';
 
@@ -51,7 +51,7 @@ class CommentPress_Core_Settings_Site {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $settings_page The reference to the Settings Page.
+	 * @var string
 	 */
 	public $settings_page;
 
@@ -60,7 +60,7 @@ class CommentPress_Core_Settings_Site {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $settings_page_slug The slug of the Settings Page.
+	 * @var string
 	 */
 	public $settings_page_slug = 'commentpress_settings';
 
@@ -69,25 +69,25 @@ class CommentPress_Core_Settings_Site {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var string $urls The array of Settings Page Tab URLs.
+	 * @var array
 	 */
 	public $urls = [];
 
 	/**
-	 * Page template directory path.
+	 * Relative path to the Page template directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $page_path Relative path to the Page template directory.
+	 * @var string
 	 */
 	private $page_path = 'includes/core/assets/templates/wordpress/pages/';
 
 	/**
-	 * Metabox template directory path.
+	 * Relative path to the Metabox directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Metabox directory.
+	 * @var string
 	 */
 	private $metabox_path = 'includes/core/assets/templates/wordpress/metaboxes/';
 
@@ -96,7 +96,7 @@ class CommentPress_Core_Settings_Site {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_field The name of the form nonce element.
+	 * @var string
 	 */
 	private $nonce_field = 'commentpress_core_settings_site_nonce';
 
@@ -105,7 +105,7 @@ class CommentPress_Core_Settings_Site {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_action The name of the form nonce value.
+	 * @var string
 	 */
 	private $nonce_action = 'commentpress_core_settings_site_action';
 
@@ -114,7 +114,7 @@ class CommentPress_Core_Settings_Site {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $input_submit The "name" and "id" of the form.
+	 * @var string
 	 */
 	private $form_id = 'commentpress_core_settings_site_form';
 
@@ -123,7 +123,7 @@ class CommentPress_Core_Settings_Site {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $input_submit The "name" and "id" of the form's submit input element.
+	 * @var string
 	 */
 	private $submit_id = 'commentpress_core_settings_site_submit';
 
@@ -172,7 +172,7 @@ class CommentPress_Core_Settings_Site {
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 
 		// Add our meta boxes.
-		add_action( 'add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
+		add_action( 'commentpress/core/settings/site/page/add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
 
 		// Add link to Settings Page.
 		add_filter( 'plugin_action_links', [ $this, 'action_links' ], 10, 2 );
@@ -201,7 +201,7 @@ class CommentPress_Core_Settings_Site {
 		echo '<div id="message" class="error"><p>' .
 			sprintf(
 				/* translators: 1: The opening anchor tag, 2: The closing anchor tag. */
-				__( 'CommentPress Core has been updated. Please visit the %1$sSettings Page%2$s.', 'commentpress-core' ),
+				esc_html__( 'CommentPress Core has been updated. Please visit the %1$sSettings Page%2$s.', 'commentpress-core' ),
 				'<a href="options-general.php?page=commentpress_admin">',
 				'</a>'
 			) .
@@ -220,7 +220,8 @@ class CommentPress_Core_Settings_Site {
 	public function admin_menu() {
 
 		// Check User permissions.
-		if ( ! $this->page_capability() ) {
+		$capability = $this->page_capability();
+		if ( false === $capability ) {
 			return;
 		}
 
@@ -254,7 +255,7 @@ class CommentPress_Core_Settings_Site {
 		$this->parent_page = add_options_page(
 			__( 'Site Settings for CommentPress', 'commentpress-core' ),
 			__( 'CommentPress', 'commentpress-core' ),
-			'manage_options', // Required caps.
+			$capability, // Required caps.
 			$this->parent_page_slug, // Slug name.
 			[ $this, 'page_settings' ] // Callback.
 		);
@@ -272,7 +273,7 @@ class CommentPress_Core_Settings_Site {
 			$this->parent_page_slug, // Parent slug.
 			__( 'Site Settings for CommentPress', 'commentpress-core' ),
 			__( 'CommentPress', 'commentpress-core' ),
-			'manage_options', // Required caps.
+			$capability, // Required caps.
 			$this->settings_page_slug, // Slug name.
 			[ $this, 'page_settings' ]
 		);
@@ -358,7 +359,7 @@ class CommentPress_Core_Settings_Site {
 		$subpages = apply_filters( 'commentpress/core/settings/site/page/subpages', $subpages );
 
 		// This tweaks the Settings subnav menu to show only one menu item.
-		if ( in_array( $plugin_page, $subpages ) ) {
+		if ( in_array( $plugin_page, $subpages, true ) ) {
 			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			$plugin_page = $this->parent_page_slug;
 			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
@@ -397,16 +398,19 @@ class CommentPress_Core_Settings_Site {
 		$screen = get_current_screen();
 
 		// Bail if not our screen.
-		if ( $screen->id != $this->settings_page ) {
+		if ( $screen->id !== $this->settings_page ) {
 			return;
 		}
 
-		// Add a help tab.
-		$screen->add_help_tab( [
+		// Build tab args.
+		$args = [
 			'id'      => 'commentpress-base',
 			'title'   => __( 'CommentPress Core Help', 'commentpress-core' ),
 			'content' => $this->core->display->get_help(),
-		] );
+		];
+
+		// Add a help tab.
+		$screen->add_help_tab( $args );
 
 		// --<
 		return $screen;
@@ -420,7 +424,7 @@ class CommentPress_Core_Settings_Site {
 	 *
 	 * @since 4.0
 	 *
-	 * @return bool True if the current User has the capability, false otherwise.
+	 * @return string|bool The capability if the current User has it, false otherwise.
 	 */
 	public function page_capability() {
 
@@ -439,7 +443,7 @@ class CommentPress_Core_Settings_Site {
 		}
 
 		// --<
-		return true;
+		return $capability;
 
 	}
 
@@ -513,10 +517,10 @@ class CommentPress_Core_Settings_Site {
 		 *
 		 * @param string $screen_id The ID of the current screen.
 		 */
-		do_action( 'add_meta_boxes', $screen->id, null );
+		do_action( 'commentpress/core/settings/site/page/add_meta_boxes', $screen->id );
 
 		// Grab columns.
-		$columns = ( 1 == $screen->get_columns() ? '1' : '2' );
+		$columns = ( 1 === (int) $screen->get_columns() ? '1' : '2' );
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->page_path . 'page-settings-site.php';
@@ -644,7 +648,7 @@ class CommentPress_Core_Settings_Site {
 		$settings_screens = $this->page_settings_screens_get();
 
 		// Bail if not the Screen ID we want.
-		if ( ! in_array( $screen_id, $settings_screens ) ) {
+		if ( ! in_array( $screen_id, $settings_screens, true ) ) {
 			return;
 		}
 
@@ -822,13 +826,13 @@ class CommentPress_Core_Settings_Site {
 	 * @since 4.0
 	 *
 	 * @param array $links The existing links array.
-	 * @param str $file The name of the plugin file.
+	 * @param str   $file The name of the plugin file.
 	 * @return array $links The modified links array.
 	 */
 	public function action_links( $links, $file ) {
 
 		// Bail if not this plugin.
-		if ( $file !== plugin_basename( dirname( COMMENTPRESS_PLUGIN_FILE ) . '/commentpress-core.php' ) ) {
+		if ( plugin_basename( dirname( COMMENTPRESS_PLUGIN_FILE ) . '/commentpress-core.php' !== $file ) ) {
 			return $links;
 		}
 

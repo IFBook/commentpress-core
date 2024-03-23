@@ -33,7 +33,7 @@ defined( 'ABSPATH' ) || exit;
 
 		<div id="page_title">
 			<div id="title">
-				<h1><a href="<?php echo home_url(); ?>" title="<?php esc_attr_e( 'Home', 'commentpress-core' ); ?>"><?php bloginfo( 'title' ); ?></a></h1>
+				<h1><a href="<?php echo esc_url( home_url() ); ?>" title="<?php esc_attr_e( 'Home', 'commentpress-core' ); ?>"><?php bloginfo( 'title' ); ?></a></h1>
 			</div>
 			<div id="tagline">
 				<?php bloginfo( 'description' ); ?>
@@ -69,7 +69,7 @@ defined( 'ABSPATH' ) || exit;
 	$cp_user_links = apply_filters( 'cp_template_user_links', locate_template( 'assets/templates/user_links.php' ) );
 
 	// Load it if we find it.
-	if ( $cp_user_links != '' ) {
+	if ( ! empty( $cp_user_links ) ) {
 		load_template( $cp_user_links );
 	}
 
@@ -92,7 +92,7 @@ defined( 'ABSPATH' ) || exit;
 	$cp_navigation = apply_filters( 'cp_template_navigation', locate_template( 'assets/templates/navigation.php' ) );
 
 	// Load it if we find it.
-	if ( $cp_navigation != '' ) {
+	if ( ! empty( $cp_navigation ) ) {
 		load_template( $cp_navigation );
 	}
 

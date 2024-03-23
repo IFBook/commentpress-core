@@ -5170,6 +5170,11 @@ div#respond .select2-container--default .select2-search--inline .select2-search_
 	-webkit-appearance: textfield;
 }
 
+ol.commentlist li .select2-results__option
+{
+	padding: 6px;
+}
+
 .comment_tagger_tags
 {
 	font-size: 70%;

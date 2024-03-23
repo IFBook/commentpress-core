@@ -24,7 +24,7 @@ class CommentPress_Core_Theme_Sidebar {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -33,25 +33,25 @@ class CommentPress_Core_Theme_Sidebar {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $theme The theme object.
+	 * @var CommentPress_Core_Theme
 	 */
 	public $theme;
 
 	/**
-	 * Parts template directory path.
+	 * Relative path to the Parts directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $parts_path Relative path to the Parts directory.
+	 * @var string
 	 */
 	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
 
 	/**
-	 * Sidebar setting key in Site Settings.
+	 * Default Sidebar setting key in Site Settings.
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $key_sidebar The "Default Sidebar" setting key in Site Settings.
+	 * @var string
 	 */
 	public $key_sidebar = 'cp_sidebar_default';
 
@@ -60,7 +60,7 @@ class CommentPress_Core_Theme_Sidebar {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $meta_key The "Sidebar" meta key.
+	 * @var string
 	 */
 	public $meta_key = '_cp_sidebar_default';
 
@@ -75,7 +75,7 @@ class CommentPress_Core_Theme_Sidebar {
 
 		// Store references.
 		$this->theme = $theme;
-		$this->core = $theme->core;
+		$this->core  = $theme->core;
 
 		// Init when the theme object is fully loaded.
 		add_action( 'commentpress/core/theme/loaded', [ $this, 'initialise' ] );
@@ -352,7 +352,7 @@ class CommentPress_Core_Theme_Sidebar {
 
 			// Use setting unless it's "comments".
 			// We don't need to look at the Entry meta in this case.
-			if ( $setting !== 'comments' ) {
+			if ( 'comments' !== $setting ) {
 				$default = $setting;
 			}
 
@@ -368,7 +368,7 @@ class CommentPress_Core_Theme_Sidebar {
 
 			// Use setting unless it's "comments".
 			// We don't need to look at the Entry meta in this case.
-			if ( $setting !== 'comments' ) {
+			if ( 'comments' !== $setting ) {
 				$default = $setting;
 			}
 
@@ -384,7 +384,7 @@ class CommentPress_Core_Theme_Sidebar {
 
 			// Use setting unless it's "comments".
 			// We don't need to look at the Entry meta in this case.
-			if ( $setting !== 'comments' ) {
+			if ( 'comments' !== $setting ) {
 				$default = $setting;
 			}
 
@@ -400,7 +400,7 @@ class CommentPress_Core_Theme_Sidebar {
 
 			// Use setting unless it's "comments".
 			// We don't need to look at the Entry meta in this case.
-			if ( $setting !== 'comments' ) {
+			if ( 'comments' !== $setting ) {
 				$default = $setting;
 			}
 
@@ -447,7 +447,7 @@ class CommentPress_Core_Theme_Sidebar {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $post_id The numeric ID of the Post.
+	 * @param int  $post_id The numeric ID of the Post.
 	 * @param bool $raw Pass "true" to get the actual meta value.
 	 * @return string $sidebar The Sidebar identifier.
 	 */
@@ -457,7 +457,7 @@ class CommentPress_Core_Theme_Sidebar {
 		$override = get_post_meta( $post_id, $this->meta_key, true );
 
 		// Return raw value if requested.
-		if ( $raw === true ) {
+		if ( true === $raw ) {
 			return $override;
 		}
 
@@ -484,7 +484,7 @@ class CommentPress_Core_Theme_Sidebar {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $post_id The numeric ID of the Post.
+	 * @param int    $post_id The numeric ID of the Post.
 	 * @param string $sidebar The Sidebar identifier.
 	 */
 	public function set_for_post_id( $post_id, $sidebar ) {

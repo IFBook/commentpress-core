@@ -11,4 +11,4 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<!-- <?php echo $this->parts_path; ?>part-document-settings.php -->
+<!-- <?php echo esc_html( $this->parts_path ); ?>part-document-settings.php -->

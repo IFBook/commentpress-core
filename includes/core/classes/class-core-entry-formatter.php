@@ -25,7 +25,7 @@ class CommentPress_Core_Entry_Formatter {
 	 * @since 3.3
 	 * @since 4.0 Renamed.
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -34,7 +34,7 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $entry The Entry object.
+	 * @var CommentPress_Core_Entry
 	 */
 	public $entry;
 
@@ -43,7 +43,7 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $post_types The array of supported Post Types.
+	 * @var array
 	 */
 	public $post_types = [
 		'post',
@@ -64,7 +64,7 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $key_formatter The "Text Format" setting in Site Settings.
+	 * @var string
 	 */
 	public $key_formatter = 'cp_blog_type';
 
@@ -76,7 +76,7 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $key_post_meta The "Text Format" meta key.
+	 * @var string
 	 */
 	public $key_post_meta = '_cp_post_type_override';
 
@@ -85,25 +85,27 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $element_select The name of the metabox select element.
+	 * @var string
 	 */
 	private $element_select = 'cp_formatter_value';
 
 	/**
-	 * Parts template directory path.
+	 * Relative path to the Parts directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $parts_path Relative path to the Parts directory.
+	 * @var string
 	 */
 	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
 
 	/**
 	 * Prevent "save_post" callback from running more than once.
 	 *
+	 * True if Post already saved.
+	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $saved_post True if Post already saved.
+	 * @var bool
 	 */
 	public $saved_post = false;
 
@@ -118,7 +120,7 @@ class CommentPress_Core_Entry_Formatter {
 
 		// Store references.
 		$this->entry = $entry;
-		$this->core = $entry->core;
+		$this->core  = $entry->core;
 
 		// Init when the entry object is fully loaded.
 		add_action( 'commentpress/core/entry/loaded', [ $this, 'initialise' ] );
@@ -271,7 +273,7 @@ class CommentPress_Core_Entry_Formatter {
 		$site_text_format = $this->setting_formatter_get();
 
 		// Get the "Text Format" options markup without showing default.
-		$show_default = false;
+		$show_default        = false;
 		$text_format_options = $this->formats_select_options_get( $text_formats, $site_text_format, $show_default );
 
 		// Include template file.
@@ -353,7 +355,7 @@ class CommentPress_Core_Entry_Formatter {
 	public function entry_meta_box_part_get( $post ) {
 
 		// Bail if not one of our supported Post Types.
-		if ( ! in_array( $post->post_type, $this->post_types ) ) {
+		if ( ! in_array( $post->post_type, $this->post_types, true ) ) {
 			return;
 		}
 
@@ -387,20 +389,20 @@ class CommentPress_Core_Entry_Formatter {
 	public function entry_meta_box_part_save( $post ) {
 
 		// Bail if not one of our supported Post Types.
-		if ( ! in_array( $post->post_type, $this->post_types ) ) {
+		if ( ! in_array( $post->post_type, $this->post_types, true ) ) {
 			return;
 		}
 
 		// Check edit permissions.
-		if ( $post->post_type === 'post' && ! current_user_can( 'edit_post', $post->ID ) ) {
+		if ( 'post' === $post->post_type && ! current_user_can( 'edit_post', $post->ID ) ) {
 			return;
 		}
-		if ( $post->post_type === 'page' && ! current_user_can( 'edit_pages' ) ) {
+		if ( 'page' === $post->post_type && ! current_user_can( 'edit_pages' ) ) {
 			return;
 		}
 
 		// We need to make sure this only runs once.
-		if ( $this->saved_post === false ) {
+		if ( false === $this->saved_post ) {
 			$this->saved_post = true;
 		} else {
 			return;
@@ -434,7 +436,7 @@ class CommentPress_Core_Entry_Formatter {
 
 		// Bail if there's no Site Text Format.
 		$text_format = $this->setting_formatter_get();
-		if ( $text_format === '' || $text_format === false ) {
+		if ( '' === $text_format || false === $text_format ) {
 			return $classes;
 		}
 
@@ -467,14 +469,14 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $new_post_id The numeric ID of the new Post.
+	 * @param int     $new_post_id The numeric ID of the new Post.
 	 * @param WP_Post $post The WordPress Post object that has been copied.
 	 */
 	public function revision_formatter_set( $new_post_id, $post ) {
 
 		// Try and get the Formatter in the current Post.
 		$formatter = $this->get_for_post_id( $post->ID );
-		if ( $formatter === false || $formatter === '' || ! is_numeric( $formatter ) ) {
+		if ( false === $formatter || '' === $formatter || ! is_numeric( $formatter ) ) {
 			return;
 		}
 
@@ -541,7 +543,7 @@ class CommentPress_Core_Entry_Formatter {
 
 		// Try and get the Formatter in the current Post.
 		$formatter = $this->get_for_post_id( $post->ID );
-		if ( $formatter === false || $formatter === '' || ! is_numeric( $formatter ) ) {
+		if ( false === $formatter || '' === $formatter || ! is_numeric( $formatter ) ) {
 			return $parser;
 		}
 
@@ -599,8 +601,8 @@ class CommentPress_Core_Entry_Formatter {
 	 * @since 4.0
 	 *
 	 * @param array $text_formats The array of Text Formats.
-	 * @param int $site_text_format The current "Text Format" option.
-	 * @param bool $show_default True includes the "Use default" option, false does not.
+	 * @param int   $site_text_format The current "Text Format" option.
+	 * @param bool  $show_default True includes the "Use default" option, false does not.
 	 * @return string $markup The "Text Format" options markup.
 	 */
 	public function formats_select_options_get( $text_formats, $site_text_format, $show_default = true ) {
@@ -617,9 +619,9 @@ class CommentPress_Core_Entry_Formatter {
 		$options = [];
 
 		// Maybe add "Use Default".
-		if ( $show_default === true ) {
+		if ( true === $show_default ) {
 			$options = [
-				'<option value="" ' . ( ( $site_text_format === false || $site_text_format === '' ) ? ' selected="selected"' : '' ) . '>' .
+				'<option value="" ' . ( ( false === $site_text_format || '' === $site_text_format ) ? ' selected="selected"' : '' ) . '>' .
 					esc_html__( 'Use default', 'commentpress-core' ) .
 				'</option>',
 			];
@@ -651,7 +653,7 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $post_id The numeric ID of the Post.
+	 * @param int  $post_id The numeric ID of the Post.
 	 * @param bool $raw Pass "true" to get the actual meta value.
 	 * @return int $formatter The numeric ID of the Formatter.
 	 */
@@ -661,7 +663,7 @@ class CommentPress_Core_Entry_Formatter {
 		$override = get_post_meta( $post_id, $this->key_post_meta, true );
 
 		// Return raw value if requested.
-		if ( $raw === true ) {
+		if ( true === $raw ) {
 			return $override;
 		}
 
@@ -669,7 +671,7 @@ class CommentPress_Core_Entry_Formatter {
 		$formatter = $this->setting_formatter_get();
 
 		// Bail if something went wrong.
-		if ( $override === false || $override === '' || ! is_numeric( $override ) ) {
+		if ( false === $override || '' === $override || ! is_numeric( $override ) ) {
 			return $formatter;
 		}
 
@@ -694,7 +696,7 @@ class CommentPress_Core_Entry_Formatter {
 	public function set_for_post_id( $post_id, $formatter ) {
 
 		// Clear the Formatter by passing an empty string.
-		if ( is_string( $formatter ) && $formatter === '' ) {
+		if ( is_string( $formatter ) && '' === $formatter ) {
 			$this->delete_for_post_id( $post_id );
 			return;
 		}

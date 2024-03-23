@@ -11,7 +11,7 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<!-- <?php echo $this->parts_path; ?>part-sites-signup.php -->
+<!-- <?php echo esc_html( $this->parts_path ); ?>part-sites-signup.php -->
 <div id="cp-multisite-options">
 
 	<h3><?php esc_html_e( 'CommentPress:', 'commentpress-core' ); ?></h3>

@@ -11,7 +11,7 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<!-- <?php echo $this->metabox_path; ?>metabox-settings-site-comments.php -->
+<!-- <?php echo esc_html( $this->metabox_path ); ?>metabox-settings-site-comments.php -->
 <table class="form-table">
 
 	<?php
@@ -30,7 +30,7 @@ defined( 'ABSPATH' ) || exit;
 			<label for="<?php echo esc_attr( $this->key_live ); ?>"><?php esc_html_e( '"Live" comment refreshing', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
-			<input id="<?php echo esc_attr( $this->key_live ); ?>" name="<?php echo esc_attr( $this->key_live ); ?>" value="1" type="checkbox" <?php echo ( ( $live == '1' ) ? ' checked="checked"' : '' ); ?> />
+			<input id="<?php echo esc_attr( $this->key_live ); ?>" name="<?php echo esc_attr( $this->key_live ); ?>" value="1" type="checkbox" <?php checked( 1, $live ); ?> />
 			<p class="description"><?php esc_html_e( 'Please note: enabling this may cause heavy load on your server.', 'commentpress-core' ); ?></p>
 		</td>
 	</tr>

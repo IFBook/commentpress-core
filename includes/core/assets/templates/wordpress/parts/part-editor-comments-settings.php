@@ -11,15 +11,15 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<!-- <?php echo $this->parts_path; ?>part-editor-comments-settings.php -->
+<!-- <?php echo esc_html( $this->parts_path ); ?>part-editor-comments-settings.php -->
 <tr valign="top">
 	<th scope="row">
 		<label for="<?php echo esc_attr( $this->key_editor ); ?>"><?php esc_html_e( 'Comment form editor', 'commentpress-core' ); ?></label>
 	</th>
 	<td>
 		<select id="<?php echo esc_attr( $this->key_editor ); ?>" name="<?php echo esc_attr( $this->key_editor ); ?>">
-			<option value="1" <?php echo ( ( $editor == '1' ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Rich-text Editor', 'commentpress-core' ); ?></option>
-			<option value="0" <?php echo ( ( $editor == '0' ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Plain-text Editor', 'commentpress-core' ); ?></option>
+			<option value="1" <?php selected( $editor, '1' ); ?>><?php esc_html_e( 'Rich-text Editor', 'commentpress-core' ); ?></option>
+			<option value="0" <?php selected( $editor, '0' ); ?>><?php esc_html_e( 'Plain-text Editor', 'commentpress-core' ); ?></option>
 		</select>
 	</td>
 </tr>
@@ -30,8 +30,8 @@ defined( 'ABSPATH' ) || exit;
 	</th>
 	<td>
 		<select id="<?php echo esc_attr( $this->key_promote ); ?>" name="<?php echo esc_attr( $this->key_promote ); ?>">
-			<option value="1" <?php echo ( ( $promote == '1' ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Promote reading', 'commentpress-core' ); ?></option>
-			<option value="0" <?php echo ( ( $promote == '0' ) ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Promote commenting', 'commentpress-core' ); ?></option>
+			<option value="1" <?php selected( $promote, '1' ); ?>><?php esc_html_e( 'Promote reading', 'commentpress-core' ); ?></option>
+			<option value="0" <?php selected( $promote, '0' ); ?>><?php esc_html_e( 'Promote commenting', 'commentpress-core' ); ?></option>
 		</select>
 		<p class="description"><?php esc_html_e( 'When promoting commenting, the comment form will be displayed and clicking or tapping a commentable block will scroll directly to the comment form in the comments section for that block.', 'commentpress-core' ); ?></p>
 		<p class="description"><?php esc_html_e( 'When promoting reading, the comment form will not be displayed by default and clicking or tapping a commentable block will scroll to the top of the comments section for that block.', 'commentpress-core' ); ?></p>

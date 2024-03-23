@@ -31,15 +31,16 @@ get_header();
 						 * @since 3.4
 						 *
 						 * @param str The default title.
-						 * @return str The modified title.
 						 */
-						echo apply_filters( 'cp_page_all_comments_title', __( 'All Comments', 'commentpress-core' ) );
+						$all_comments_title = apply_filters( 'cp_page_all_comments_title', __( 'All Comments', 'commentpress-core' ) );
+
+						echo esc_html( $all_comments_title );
 
 						?>
 					</h2>
 
 					<div id="comments_in_page_wrapper">
-						<?php echo $_page_content; ?>
+						<?php echo $_page_content; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 					</div>
 
 				</div><!-- /post -->

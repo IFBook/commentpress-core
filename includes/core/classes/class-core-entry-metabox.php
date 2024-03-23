@@ -25,7 +25,7 @@ class CommentPress_Core_Entry_Metabox {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -34,7 +34,7 @@ class CommentPress_Core_Entry_Metabox {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $entry The Entry object.
+	 * @var CommentPress_Core_Entry
 	 */
 	public $entry;
 
@@ -43,7 +43,7 @@ class CommentPress_Core_Entry_Metabox {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $post_types The array of supported Post Types.
+	 * @var array
 	 */
 	public $post_types = [
 		'post',
@@ -51,11 +51,11 @@ class CommentPress_Core_Entry_Metabox {
 	];
 
 	/**
-	 * Metabox template directory path.
+	 * Relative path to the Metabox directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Metabox directory.
+	 * @var string
 	 */
 	private $metabox_path = 'includes/core/assets/templates/wordpress/metaboxes/';
 
@@ -64,7 +64,7 @@ class CommentPress_Core_Entry_Metabox {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_field The name of the metabox nonce element.
+	 * @var string
 	 */
 	private $nonce_field = 'commentpress_core_entry_nonce';
 
@@ -73,7 +73,7 @@ class CommentPress_Core_Entry_Metabox {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_action The name of the metabox nonce action.
+	 * @var string
 	 */
 	private $nonce_action = 'commentpress_core_entry_action';
 
@@ -88,7 +88,7 @@ class CommentPress_Core_Entry_Metabox {
 
 		// Store references.
 		$this->entry = $entry;
-		$this->core = $entry->core;
+		$this->core  = $entry->core;
 
 		// Init when the entry object is fully loaded.
 		add_action( 'commentpress/core/entry/loaded', [ $this, 'initialise' ] );
@@ -114,7 +114,7 @@ class CommentPress_Core_Entry_Metabox {
 	 */
 	public function register_hooks() {
 
-		// Add meta boxes.
+		// Add meta boxes to our supported "Edit Entry" screens.
 		add_action( 'add_meta_boxes', [ $this, 'metabox_add' ], 20, 2 );
 
 		// Intercept save.
@@ -129,13 +129,13 @@ class CommentPress_Core_Entry_Metabox {
 	 *
 	 * @since 4.0
 	 *
-	 * @param string $post_type The WordPress Post Type.
+	 * @param string  $post_type The WordPress Post Type.
 	 * @param WP_Post $post The Post object.
 	 */
 	public function metabox_add( $post_type, $post ) {
 
 		// Bail if not one of our supported Post Types.
-		if ( ! in_array( $post_type, $this->post_types ) ) {
+		if ( ! in_array( $post_type, $this->post_types, true ) ) {
 			return;
 		}
 
@@ -171,7 +171,7 @@ class CommentPress_Core_Entry_Metabox {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $post_id The numeric ID of the Post (or revision).
+	 * @param int    $post_id The numeric ID of the Post (or revision).
 	 * @param object $post The Post object.
 	 */
 	public function post_saved( $post_id, $post ) {
@@ -199,12 +199,12 @@ class CommentPress_Core_Entry_Metabox {
 		}
 
 		// Maybe save Page meta.
-		if ( $post->post_type == 'page' ) {
+		if ( 'page' === $post->post_type ) {
 			$this->page_meta_save( $post );
 		}
 
 		// Maybe save Post meta.
-		if ( $post->post_type == 'post' ) {
+		if ( 'post' === $post->post_type ) {
 			$this->post_meta_save( $post );
 		}
 

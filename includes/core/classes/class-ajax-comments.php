@@ -24,7 +24,7 @@ class CommentPress_AJAX_Comments {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -33,16 +33,16 @@ class CommentPress_AJAX_Comments {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $ajax The AJAX loader object.
+	 * @var CommentPress_AJAX_Loader
 	 */
 	public $ajax;
 
 	/**
-	 * Assets directory path.
+	 * Relative path to the assets directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $assets_path Relative path to the assets directory.
+	 * @var string
 	 */
 	private $assets_path = 'includes/core/assets/';
 
@@ -51,7 +51,7 @@ class CommentPress_AJAX_Comments {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_action_form The name of the form nonce action.
+	 * @var string
 	 */
 	private $nonce_action_form = 'cpajax_comment_nonce';
 
@@ -60,7 +60,7 @@ class CommentPress_AJAX_Comments {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_action_edit The name of the form nonce action.
+	 * @var string
 	 */
 	private $nonce_action_edit = 'cpajax_comment_edit_action';
 
@@ -283,7 +283,7 @@ class CommentPress_AJAX_Comments {
 
 		// Since this is an AJAX request, check security.
 		$result = check_ajax_referer( $this->nonce_action_form, false, false );
-		if ( $result === false ) {
+		if ( false === $result ) {
 			wp_send_json( $data );
 		}
 
@@ -298,11 +298,11 @@ class CommentPress_AJAX_Comments {
 
 			// Add Comment data to array.
 			$data = [
-				'id' => $comment->comment_ID,
-				'parent' => $comment->comment_parent,
+				'id'       => $comment->comment_ID,
+				'parent'   => $comment->comment_parent,
 				'text_sig' => $comment->comment_signature,
-				'post_id' => $comment->comment_post_ID,
-				'content' => $comment->comment_content,
+				'post_id'  => $comment->comment_post_ID,
+				'content'  => $comment->comment_content,
 			];
 
 			// Get selection data.
@@ -316,13 +316,13 @@ class CommentPress_AJAX_Comments {
 
 				// Add to data.
 				$data['sel_start'] = $selection[0];
-				$data['sel_end'] = $selection[1];
+				$data['sel_end']   = $selection[1];
 
 			} else {
 
 				// Add default data.
 				$data['sel_start'] = 0;
-				$data['sel_end'] = 0;
+				$data['sel_end']   = 0;
 
 			}
 
@@ -375,7 +375,7 @@ class CommentPress_AJAX_Comments {
 
 		// Construct Comment data.
 		$comment_data = [
-			'comment_ID' => (int) $comment_id,
+			'comment_ID'      => (int) $comment_id,
 			'comment_content' => isset( $_POST['comment'] ) ? sanitize_textarea_field( wp_unslash( $_POST['comment'] ) ) : '',
 			'comment_post_ID' => isset( $_POST['comment_post_ID'] ) ? sanitize_text_field( wp_unslash( $_POST['comment_post_ID'] ) ) : '',
 		];
@@ -388,11 +388,11 @@ class CommentPress_AJAX_Comments {
 
 		// Add Comment data to array.
 		$data = [
-			'id' => $comment->comment_ID,
-			'parent' => $comment->comment_parent,
+			'id'       => $comment->comment_ID,
+			'parent'   => $comment->comment_parent,
 			'text_sig' => $comment->comment_signature,
-			'post_id' => $comment->comment_post_ID,
-			'content' => apply_filters( 'comment_text', get_comment_text( $comment->comment_ID ) ),
+			'post_id'  => $comment->comment_post_ID,
+			'content'  => apply_filters( 'comment_text', get_comment_text( $comment->comment_ID ) ),
 		];
 
 		// Get selection data.
@@ -406,13 +406,13 @@ class CommentPress_AJAX_Comments {
 
 			// Add to data.
 			$data['sel_start'] = $selection[0];
-			$data['sel_end'] = $selection[1];
+			$data['sel_end']   = $selection[1];
 
 		} else {
 
 			// Add default data.
 			$data['sel_start'] = 0;
-			$data['sel_end'] = 0;
+			$data['sel_end']   = 0;
 
 		}
 
@@ -442,7 +442,7 @@ class CommentPress_AJAX_Comments {
 
 		// Since this is an AJAX request, check security.
 		$result = check_ajax_referer( $this->nonce_action_form, false, false );
-		if ( $result === false ) {
+		if ( false === $result ) {
 			wp_send_json( $data );
 		}
 
@@ -480,12 +480,12 @@ class CommentPress_AJAX_Comments {
 
 		// Build arguments.
 		$args = [
-			'number' => $num_to_get,
+			'number'  => $num_to_get,
 			'orderby' => 'comment_date',
-			'order' => 'DESC',
+			'order'   => 'DESC',
 			'post_id' => $post_id,
-			'status' => 'approve',
-			'type' => 'comment',
+			'status'  => 'approve',
+			'type'    => 'comment',
 		];
 
 		// Get the Comments.
@@ -500,7 +500,7 @@ class CommentPress_AJAX_Comments {
 		$identifier = 1;
 
 		// Set args.
-		$args = [];
+		$args              = [];
 		$args['max_depth'] = get_option( 'thread_comments_depth' );
 
 		// Loop.
@@ -510,7 +510,7 @@ class CommentPress_AJAX_Comments {
 			$depth = 1;
 
 			// Override depth if no parent.
-			if ( $comment->comment_parent != '0' ) {
+			if ( ! empty( $comment->comment_parent ) ) {
 				$depth = $this->comment_depth_get( $comment, $depth );
 			}
 
@@ -522,10 +522,10 @@ class CommentPress_AJAX_Comments {
 
 			// Add Comment to array.
 			$data[ 'cpajax_new_comment_' . $identifier ] = [
-				'parent' => $comment->comment_parent,
-				'id' => $comment->comment_ID,
+				'parent'   => $comment->comment_parent,
+				'id'       => $comment->comment_ID,
 				'text_sig' => $comment->comment_signature,
-				'markup' => $html,
+				'markup'   => $html,
 			];
 
 			// Increment.
@@ -544,7 +544,7 @@ class CommentPress_AJAX_Comments {
 	 * @since 3.4
 	 *
 	 * @param object $comment The Comment object.
-	 * @param int $depth The depth of the Comment in a thread.
+	 * @param int    $depth The depth of the Comment in a thread.
 	 * @return int $depth The depth of the Comment in a thread.
 	 */
 	public function comment_depth_get( $comment, $depth ) {
@@ -570,19 +570,19 @@ class CommentPress_AJAX_Comments {
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $edit_button The existing edit button HTML.
+	 * @param str   $edit_button The existing edit button HTML.
 	 * @param array $comment The Comment this edit button applies to.
 	 * @return str $edit_button The modified edit button HTML.
 	 */
 	public function reassign_button_add( $edit_button, $comment ) {
 
 		// Pass if not top level.
-		if ( $comment->comment_parent != '0' ) {
+		if ( ! empty( $comment->comment_parent ) ) {
 			return $edit_button;
 		}
 
 		// Pass if pingback or trackback.
-		if ( $comment->comment_type == 'trackback' || $comment->comment_type == 'pingback' ) {
+		if ( 'trackback' === $comment->comment_type || 'pingback' === $comment->comment_type ) {
 			return $edit_button;
 		}
 
@@ -632,12 +632,12 @@ class CommentPress_AJAX_Comments {
 	public function comment_reassign() {
 
 		// Init return.
-		$data = [];
+		$data        = [];
 		$data['msg'] = '';
 
 		// Since this is an AJAX request, check security.
 		$result = check_ajax_referer( $this->nonce_action_form, false, false );
-		if ( $result === false ) {
+		if ( false === $result ) {
 			wp_send_json( $data );
 		}
 
@@ -645,7 +645,7 @@ class CommentPress_AJAX_Comments {
 		$comment_ids = [];
 
 		// Get incoming data.
-		$text_sig = isset( $_POST['text_signature'] ) ? sanitize_text_field( wp_unslash( $_POST['text_signature'] ) ) : '';
+		$text_sig   = isset( $_POST['text_signature'] ) ? sanitize_text_field( wp_unslash( $_POST['text_signature'] ) ) : '';
 		$comment_id = isset( $_POST['comment_id'] ) ? sanitize_text_field( wp_unslash( $_POST['comment_id'] ) ) : '';
 
 		// Sanity check.
@@ -675,8 +675,8 @@ class CommentPress_AJAX_Comments {
 	 *
 	 * @since 3.4
 	 *
-	 * @param int $comment_id The numeric ID of the Comment.
-	 * @param str $text_sig The Text Signature.
+	 * @param int   $comment_id The numeric ID of the Comment.
+	 * @param str   $text_sig The Text Signature.
 	 * @param array $comment_ids The array of Comment IDs.
 	 */
 	public function comment_children_reassign( $comment_id, $text_sig, &$comment_ids ) {
@@ -717,9 +717,9 @@ class CommentPress_AJAX_Comments {
 
 		// Build query args.
 		$args = [
-			'parent' => $comment_id,
+			'parent'  => $comment_id,
 			'orderby' => 'comment_date',
-			'order' => 'ASC',
+			'order'   => 'ASC',
 		];
 
 		// Get the child Comments.

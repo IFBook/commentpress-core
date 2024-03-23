@@ -24,7 +24,7 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var CommentPress_Plugin
 	 */
 	public $plugin;
 
@@ -33,7 +33,7 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $db The database object.
+	 * @var CommentPress_Core_Database
 	 */
 	public $db;
 
@@ -42,7 +42,7 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $display The display object.
+	 * @var CommentPress_Core_Display
 	 */
 	public $display;
 
@@ -51,7 +51,7 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $theme The theme object.
+	 * @var CommentPress_Core_Theme
 	 */
 	public $theme;
 
@@ -60,7 +60,7 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $document The Document object.
+	 * @var CommentPress_Core_Document
 	 */
 	public $document;
 
@@ -69,7 +69,7 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $entry The Entry object.
+	 * @var CommentPress_Core_Entry
 	 */
 	public $entry;
 
@@ -78,7 +78,7 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $settings_site The Site Settings object.
+	 * @var CommentPress_Core_Settings_Site
 	 */
 	public $settings_site;
 
@@ -87,7 +87,7 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $nav The Navigation object.
+	 * @var CommentPress_Core_Navigator
 	 */
 	public $nav;
 
@@ -96,7 +96,7 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $parser The parser object.
+	 * @var CommentPress_Core_Parser
 	 */
 	public $parser;
 
@@ -105,7 +105,7 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $comments The Comments object.
+	 * @var CommentPress_Core_Comments
 	 */
 	public $comments;
 
@@ -114,7 +114,7 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $revisions The Revisions object.
+	 * @var CommentPress_Core_Revisions
 	 */
 	public $revisions;
 
@@ -123,7 +123,7 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $bp The BuddyPress compatibility object.
+	 * @var CommentPress_Core_BuddyPress
 	 */
 	public $bp;
 
@@ -132,7 +132,7 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $plugins The plugin compatibility object.
+	 * @var CommentPress_Core_Plugins
 	 */
 	public $plugins;
 
@@ -141,7 +141,7 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $device The Device detection object.
+	 * @var CommentPress_Core_Device
 	 */
 	public $device;
 
@@ -150,7 +150,7 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $pages_legacy The legacy Special Pages object.
+	 * @var CommentPress_Core_Pages_Legacy
 	 */
 	public $pages_legacy;
 
@@ -159,7 +159,7 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $editor The Editor object.
+	 * @var CommentPress_Core_Pages_Editor
 	 */
 	public $editor;
 
@@ -168,16 +168,16 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $ajax The AJAX loader object.
+	 * @var CommentPress_AJAX_Loader
 	 */
 	public $ajax;
 
 	/**
-	 * Classes directory path.
+	 * Relative path to the classes directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $classes_path Relative path to the classes directory.
+	 * @var string
 	 */
 	private $classes_path = 'includes/core/classes/';
 
@@ -210,7 +210,7 @@ class CommentPress_Core_Loader {
 
 		// Only do this once.
 		static $done;
-		if ( isset( $done ) && $done === true ) {
+		if ( isset( $done ) && true === $done ) {
 			return;
 		}
 
@@ -292,31 +292,31 @@ class CommentPress_Core_Loader {
 	public function setup_objects() {
 
 		// Initialise core objects.
-		$this->db = new CommentPress_Core_Database( $this );
+		$this->db       = new CommentPress_Core_Database( $this );
 		$this->comments = new CommentPress_Core_Comments( $this );
-		$this->theme = new CommentPress_Core_Theme( $this );
+		$this->theme    = new CommentPress_Core_Theme( $this );
 
 		$this->settings_site = new CommentPress_Core_Settings_Site( $this );
 
 		$this->display = new CommentPress_Core_Display( $this );
 
-		$this->nav = new CommentPress_Core_Navigator( $this );
+		$this->nav      = new CommentPress_Core_Navigator( $this );
 		$this->document = new CommentPress_Core_Document( $this );
-		$this->entry = new CommentPress_Core_Entry( $this );
-		$this->parser = new CommentPress_Core_Parser( $this );
+		$this->entry    = new CommentPress_Core_Entry( $this );
+		$this->parser   = new CommentPress_Core_Parser( $this );
 
 		$this->device = new CommentPress_Core_Device( $this );
 		$this->editor = new CommentPress_Core_Editor( $this );
 
 		// Initialise legacy objects.
-		$this->revisions = new CommentPress_Core_Revisions( $this );
+		$this->revisions    = new CommentPress_Core_Revisions( $this );
 		$this->pages_legacy = new CommentPress_Core_Pages_Legacy( $this );
 
 		// Initialise ajax objects.
 		$this->ajax = new CommentPress_AJAX_Loader( $this );
 
 		// Initialise compatibility objects.
-		$this->bp = new CommentPress_Core_BuddyPress( $this );
+		$this->bp      = new CommentPress_Core_BuddyPress( $this );
 		$this->plugins = new CommentPress_Core_Plugins( $this );
 
 	}

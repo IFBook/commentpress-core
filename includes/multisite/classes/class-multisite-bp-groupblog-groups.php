@@ -25,7 +25,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	 *
 	 * @since 3.0
 	 * @access public
-	 * @var object $multisite The multisite loader object.
+	 * @var CommentPress_Multisite_Loader
 	 */
 	public $multisite;
 
@@ -34,7 +34,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $bp The BuddyPress object reference.
+	 * @var CommentPress_Multisite_BuddyPress
 	 */
 	public $bp;
 
@@ -43,7 +43,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $groupblog The BuddyPress Groupblog object reference.
+	 * @var CommentPress_Multisite_BuddyPress_Groupblog
 	 */
 	public $groupblog;
 
@@ -58,7 +58,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 
 		// Store references.
 		$this->multisite = $groupblog->bp->multisite;
-		$this->bp = $groupblog->bp;
+		$this->bp        = $groupblog->bp;
 		$this->groupblog = $groupblog;
 
 		// Init when the BuddyPress Groupblog is fully loaded.
@@ -101,9 +101,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	 * @since 4.0
 	 */
 	public function register_hooks_latest() {
-
 		// Future compatibility goes here.
-
 	}
 
 	/**
@@ -259,7 +257,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		// Construct option.
 		$option = '<option value="new_groupblog_post">' . esc_html( $name ) . '</option>' . "\n";
 
-		// Print.
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $option;
 
 	}
@@ -283,7 +281,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		// Construct option.
 		$option = '<option value="new_groupblog_comment">' . esc_html( $comment_name ) . '</option>' . "\n";
 
-		// Print.
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $option;
 
 	}
@@ -305,8 +303,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	 * @since 3.3
 	 *
 	 * @param object $activity The existing Activity object.
-	 * @param array $args {
-	 *     Optional. Handy if you've already parsed the Blog Post and Group ID.
+	 * @param array  $args {
+	 *      Optional. Handy if you've already parsed the Blog Post and Group ID.
 	 *
 	 *     @type WP_Post $post The WordPress Post object.
 	 *     @type int $group_id The Group ID.
@@ -321,19 +319,19 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		}
 
 		// Only on new Blog Posts.
-		if ( ( $activity->type != 'new_blog_post' ) ) {
+		if ( 'new_blog_post' !== $activity->type ) {
 			return $activity;
 		}
 
 		// Only on CommentPress-enabled Group Blogs.
-		if ( ( false === $this->groupblog->site->is_commentpress_groupblog() ) ) {
+		if ( false === $this->groupblog->site->is_commentpress_groupblog() ) {
 			return $activity;
 		}
 
 		// Clarify data.
 		$blog_id = $activity->item_id;
 		$post_id = $activity->secondary_item_id;
-		$post = get_post( $post_id );
+		$post    = get_post( $post_id );
 
 		// Get Group ID.
 		$group_id = get_groupblog_group_id( $blog_id );
@@ -345,23 +343,27 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		$group = groups_get_group( [ 'group_id' => $group_id ] );
 
 		// See if we already have the modified Activity for this Blog Post.
-		$id = bp_activity_get_activity_id( [
-			'user_id' => $activity->user_id,
-			'type' => 'new_groupblog_post',
-			'item_id' => $group_id,
+		$params = [
+			'user_id'           => $activity->user_id,
+			'type'              => 'new_groupblog_post',
+			'item_id'           => $group_id,
 			'secondary_item_id' => $activity->secondary_item_id,
-		] );
+		];
+
+		$id = bp_activity_get_activity_id( $params );
 
 		// If we don't find a modified item.
 		if ( ! $id ) {
 
 			// See if we have an unmodified Activity item.
-			$id = bp_activity_get_activity_id( [
-				'user_id' => $activity->user_id,
-				'type' => $activity->type,
-				'item_id' => $activity->item_id,
+			$params = [
+				'user_id'           => $activity->user_id,
+				'type'              => $activity->type,
+				'item_id'           => $activity->item_id,
 				'secondary_item_id' => $activity->secondary_item_id,
-			] );
+			];
+
+			$id = bp_activity_get_activity_id( $params );
 
 		}
 
@@ -411,7 +413,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 						$sep = ', ';
 
 						// If we're on the penultimate.
-						if ( $n == ( $author_count - 1 ) ) {
+						if ( ( $author_count - 1 ) === $n ) {
 
 							// Use ampersand.
 							$sep = __( ' &amp; ', 'commentpress-core' );
@@ -419,7 +421,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 						}
 
 						// If we're on the last, don't add.
-						if ( $n == $author_count ) {
+						if ( $n === $author_count ) {
 							$sep = '';
 						}
 
@@ -445,6 +447,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 
 			// Replace the necessary values to display in Group Activity stream.
 			$activity->action = sprintf(
+				/* translators: 1: The author, 2: The activity name, 3: The name of the Post, 4: The name of the group. */
 				__( '%1$s updated a %2$s %3$s in the group %4$s:', 'commentpress-core' ),
 				$activity_author,
 				$activity_name,
@@ -456,6 +459,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 
 			// Replace the necessary values to display in Group Activity stream.
 			$activity->action = sprintf(
+				/* translators: 1: The author, 2: The activity name, 3: The name of the Post, 4: The name of the group. */
 				__( '%1$s wrote a new %2$s %3$s in the group %4$s:', 'commentpress-core' ),
 				$activity_author,
 				$activity_name,
@@ -465,12 +469,12 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 
 		}
 
-		$activity->item_id = (int) $group_id;
+		$activity->item_id   = (int) $group_id;
 		$activity->component = 'groups';
 
 		// Having marked all Group Blogs as public, we need to hide Activity from them if the Group is private
 		// or hidden, so they don't show up in sitewide Activity feeds.
-		if ( 'public' != $group->status ) {
+		if ( 'public' !== $group->status ) {
 			$activity->hide_sitewide = true;
 		} else {
 			$activity->hide_sitewide = false;
@@ -505,12 +509,12 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	public function activity_post_meta( $activity ) {
 
 		// Only on new Blog Posts.
-		if ( ( $activity->type != 'new_groupblog_post' ) ) {
+		if ( 'new_groupblog_post' !== $activity->type ) {
 			return;
 		}
 
 		// Only on CommentPress-enabled Group Blogs.
-		if ( ( false === $this->groupblog->site->is_commentpress_groupblog() ) ) {
+		if ( false === $this->groupblog->site->is_commentpress_groupblog() ) {
 			return;
 		}
 
@@ -535,8 +539,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	 *
 	 * @since 3.8.5
 	 *
-	 * @param str $new_status New status for the Post.
-	 * @param str $old_status Old status for the Post.
+	 * @param str    $new_status New status for the Post.
+	 * @param str    $old_status Old status for the Post.
 	 * @param object $post The Post data.
 	 */
 	public function activity_post_status_transitioned( $new_status, $old_status, $post ) {
@@ -555,18 +559,21 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		if ( $new_status === $old_status ) {
 
 			// An edit of an existing Post should update the existing Activity item.
-			if ( $new_status == 'publish' ) {
+			if ( 'publish' === $new_status ) {
 
 				// Get Group ID.
 				$group_id = get_groupblog_group_id( get_current_blog_id() );
 
-				// Get existing Activity ID.
-				$id = bp_activity_get_activity_id( [
+				// Activity ID args.
+				$args = [
 					'component'         => 'groups',
 					'type'              => 'new_groupblog_post',
 					'item_id'           => $group_id,
 					'secondary_item_id' => $post->ID,
-				] );
+				];
+
+				// Get existing Activity ID.
+				$id = bp_activity_get_activity_id( $args );
 
 				// Bail if we don't have one.
 				if ( empty( $id ) ) {
@@ -574,18 +581,21 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 				}
 
 				// Retrieve Activity item and modify some properties.
-				$activity = new BP_Activity_Activity( $id );
-				$activity->content = $post->post_content;
+				$activity                = new BP_Activity_Activity( $id );
+				$activity->content       = $post->post_content;
 				$activity->date_recorded = bp_core_current_time();
 
 				// We currently have to fool `$this->activity_post_custom()`.
 				$activity->type = 'new_blog_post';
 
-				// Pass Activity to our method.
-				$this->activity_post_custom( $activity, [
+				// Build params.
+				$params = [
 					'group_id' => $group_id,
 					'post'     => $post,
-				] );
+				];
+
+				// Pass Activity to our method.
+				$this->activity_post_custom( $activity, $params );
 
 			}
 
@@ -608,7 +618,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	public function activity_comment_custom( $activity ) {
 
 		// Only deal with Comments.
-		if ( ( $activity->type != 'new_blog_comment' ) ) {
+		if ( 'new_blog_comment' !== $activity->type ) {
 			return;
 		}
 
@@ -669,23 +679,27 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		$group = groups_get_group( [ 'group_id' => $group_id ] );
 
 		// See if we already have the modified Activity for this Blog Comment.
-		$id = bp_activity_get_activity_id( [
-			'user_id' => $activity->user_id,
-			'type' => $activity_type,
-			'item_id' => $group_id,
+		$params = [
+			'user_id'           => $activity->user_id,
+			'type'              => $activity_type,
+			'item_id'           => $group_id,
 			'secondary_item_id' => $activity->secondary_item_id,
-		] );
+		];
+
+		$id = bp_activity_get_activity_id( $params );
 
 		// If we don't find a modified item.
 		if ( ! $id ) {
 
 			// See if we have an unmodified Activity item.
-			$id = bp_activity_get_activity_id( [
-				'user_id' => $activity->user_id,
-				'type' => $activity->type,
-				'item_id' => $activity->item_id,
+			$params = [
+				'user_id'           => $activity->user_id,
+				'type'              => $activity->type,
+				'item_id'           => $activity->item_id,
 				'secondary_item_id' => $activity->secondary_item_id,
-			] );
+			];
+
+			$id = bp_activity_get_activity_id( $params );
 
 		}
 
@@ -702,7 +716,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		$post = get_post( $comment->comment_post_ID );
 
 		// Was it a registered User?
-		if ( $comment->user_id != '0' ) {
+		if ( 0 !== (int) $comment->user_id ) {
 
 			// Get User details.
 			$user = get_userdata( $comment->user_id );
@@ -750,7 +764,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		$key = '_cp_comment_page';
 
 		// If the custom field has a value, we have a Sub-page Comment.
-		if ( get_comment_meta( $comment->comment_ID, $key, true ) != '' ) {
+		if ( get_comment_meta( $comment->comment_ID, $key, true ) !== '' ) {
 
 			// Get comment's Page from meta.
 			$page_num = get_comment_meta( $comment->comment_ID, $key, true );
@@ -777,10 +791,11 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 
 		// Construct links.
 		$comment_link = '<a href="' . $activity->primary_link . '">' . __( 'comment', 'commentpress-core' ) . '</a>';
-		$group_link = '<a href="' . bp_get_group_permalink( $group ) . '">' . esc_html( $group->name ) . '</a>';
+		$group_link   = '<a href="' . bp_get_group_permalink( $group ) . '">' . esc_html( $group->name ) . '</a>';
 
 		// Replace the necessary values to display in Group Activity stream.
 		$activity->action = sprintf(
+			/* translators: 1: The author, 2: The link to the comment, 3: The activity name, 4: The name of the Post, 5: The name of the group. */
 			__( '%1$s left a %2$s on a %3$s %4$s in the group %5$s:', 'commentpress-core' ),
 			$user_link,
 			$comment_link,
@@ -815,7 +830,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		 * them if the Group is private or hidden, so they don't show up in sitewide
 		 * Activity feeds.
 		 */
-		if ( 'public' != $group->status ) {
+		if ( 'public' !== $group->status ) {
 			$activity->hide_sitewide = true;
 		} else {
 			$activity->hide_sitewide = false;
@@ -847,18 +862,18 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	public function activity_comment_meta( $activity ) {
 
 		// Only deal with Comments.
-		if ( ( $activity->type !== 'new_groupblog_comment' ) ) {
+		if ( 'new_groupblog_comment' !== $activity->type ) {
 			return $activity;
 		}
 
 		// Only do this on CommentPress-enabled Group Blogs.
-		if ( ( false === $this->groupblog->site->is_commentpress_groupblog() ) ) {
+		if ( false === $this->groupblog->site->is_commentpress_groupblog() ) {
 			return $activity;
 		}
 
 		// Set a meta value for the Site Text Format of the Post.
 		$meta_value = $this->groupblog->site->text_format_get();
-		$result = bp_activity_update_meta( $activity->id, 'groupblogtype', 'groupblogtype-' . $meta_value );
+		$result     = bp_activity_update_meta( $activity->id, 'groupblogtype', 'groupblogtype-' . $meta_value );
 
 		// Prevent from firing again.
 		remove_action( 'bp_activity_after_save', [ $this, 'activity_comment_meta' ] );

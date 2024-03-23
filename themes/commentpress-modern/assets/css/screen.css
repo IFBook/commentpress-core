@@ -176,9 +176,8 @@ tt, code, kbd, samp
 	font-family: monospace;
 }
 /* setting a consistent width, 160px;
-   control of type=file still not possible
-   *width is for ie7 (no ie6 fallback) */
-input[type=text], input[type=password], textarea { width: 12.25em; *width: 11.9em; }
+   control of type=file still not possible */
+input[type=text], input[type=password], textarea { width: 12.25em; }
 
 /* prevents outlines - we set them explicitly for elements that require them */
 a:focus { outline: 0; }
@@ -3204,6 +3203,11 @@ Compatibility with Comment Tagger plugin
 #respond .select2-container--default .select2-search--inline .select2-search__field
 {
 	-webkit-appearance: textfield;
+}
+
+ol.commentlist li .select2-results__option
+{
+	padding: 6px;
 }
 
 .comment_tagger_tags

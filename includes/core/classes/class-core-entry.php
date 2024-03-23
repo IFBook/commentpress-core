@@ -24,7 +24,7 @@ class CommentPress_Core_Entry {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -33,7 +33,7 @@ class CommentPress_Core_Entry {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $metabox The Metabox object.
+	 * @var CommentPress_Core_Entry_Metabox
 	 */
 	public $metabox;
 
@@ -42,7 +42,7 @@ class CommentPress_Core_Entry {
 	 *
 	 * @since 3.3
 	 * @access public
-	 * @var object $formatter The Formatter object.
+	 * @var CommentPress_Core_Entry_Formatter
 	 */
 	public $formatter;
 
@@ -51,16 +51,16 @@ class CommentPress_Core_Entry {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $single The Single Entry object.
+	 * @var CommentPress_Core_Entry_Single
 	 */
 	public $single;
 
 	/**
-	 * Classes directory path.
+	 * Relative path to the classes directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $classes_path Relative path to the classes directory.
+	 * @var string
 	 */
 	private $classes_path = 'includes/core/classes/';
 
@@ -90,7 +90,7 @@ class CommentPress_Core_Entry {
 
 		// Only do this once.
 		static $done;
-		if ( isset( $done ) && $done === true ) {
+		if ( isset( $done ) && true === $done ) {
 			return;
 		}
 
@@ -135,9 +135,9 @@ class CommentPress_Core_Entry {
 	public function setup_objects() {
 
 		// Initialise objects.
-		$this->metabox = new CommentPress_Core_Entry_Metabox( $this );
+		$this->metabox   = new CommentPress_Core_Entry_Metabox( $this );
 		$this->formatter = new CommentPress_Core_Entry_Formatter( $this );
-		$this->single = new CommentPress_Core_Entry_Single( $this );
+		$this->single    = new CommentPress_Core_Entry_Single( $this );
 
 	}
 

@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 <div id="comments_in_page_wrapper">
 	<div class="comments_container">
 
-		<?php if ( 'open' != $post->comment_status ) : ?>
+		<?php if ( 'open' !== $post->comment_status ) : ?>
 			<h3 class="nocomments comments-closed"><span><?php esc_html_e( 'Comments are closed', 'commentpress-core' ); ?></span></h3>
 		<?php endif; ?>
 
@@ -49,17 +49,19 @@ defined( 'ABSPATH' ) || exit;
 
 					// Define our formatting options.
 					$comments_args = [
-						'type' => 'comment',
+						'type'       => 'comment',
 						'reply_text' => __( 'Reply to this comment', 'commentpress-core' ),
-						'callback' => 'commentpress_comments',
-						'style' => 'ol',
+						'callback'   => 'commentpress_comments',
+						'style'      => 'ol',
 					];
 
 					// Get Comments for this Post in ascending order.
-					$comments_in_page = get_comments( [
+					$comment_query = [
 						'post_id' => $post->ID,
-						'order' => 'ASC',
-					] );
+						'order'   => 'ASC',
+					];
+
+					$comments_in_page = get_comments( $comment_query );
 
 					// List Comments.
 					wp_list_comments( $comments_args, $comments_in_page );
@@ -71,7 +73,7 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php else : /* This is displayed if there are no Comments so far. */ ?>
 
-			<?php if ( 'open' == $post->comment_status ) : ?>
+			<?php if ( 'open' === $post->comment_status ) : ?>
 				<h3 class="nocomments"><?php esc_html_e( 'No general comments yet.', 'commentpress-core' ); ?></h3>
 			<?php endif; ?>
 
@@ -92,7 +94,7 @@ defined( 'ABSPATH' ) || exit;
 $cp_comment_form = apply_filters( 'cp_template_comment_form', locate_template( 'assets/templates/comment_form.php' ) );
 
 // Load it if we find it.
-if ( $cp_comment_form != '' ) {
+if ( ! empty( $cp_comment_form ) ) {
 	load_template( $cp_comment_form );
 }
 

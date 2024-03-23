@@ -18,13 +18,21 @@ if ( ! empty( get_query_var( 'author_name' ) ) ) {
 }
 
 // Do we have an URL for this User?
-$my_author_URL = '';
-if ( ! empty( $my_author->user_url ) && $my_author->user_url !== 'http://' && $my_author->user_url !== 'https://' ) {
-	$my_author_URL = $my_author->user_url;
+$my_author_url = '';
+if ( ! empty( $my_author->user_url ) && 'http://' !== $my_author->user_url && 'https://' !== $my_author->user_url ) {
+	$my_author_url = $my_author->user_url;
 }
 
 // Select Author name.
-$my_author_name = empty( $my_author->display_name ) ? $my_author->nickname : $my_author->display_name;
+$my_author_name = __( 'Anonymous', 'commentpress-core' );
+if ( ! empty( $my_author->display_name ) ) {
+	$my_author_name = $my_author->display_name;
+} elseif ( ! empty( $my_author->nickname ) ) {
+	$my_author_name = $my_author->nickname;
+}
+
+// Get avatar.
+$my_avatar = get_avatar( $my_author->user_email, $size = '128' );
 
 get_header();
 
@@ -39,7 +47,9 @@ get_header();
 
 					<h2 class="post_title"><?php echo esc_html( $my_author_name ); ?></h2>
 
-					<p><?php echo get_avatar( $my_author->user_email, $size = '128' ); ?></p>
+					<?php if ( ! empty( $my_avatar ) ) : ?>
+						<p><?php echo $my_avatar; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></p>
+					<?php endif; ?>
 
 					<dl>
 
@@ -48,9 +58,9 @@ get_header();
 							<dd><?php echo nl2br( esc_html( $my_author->description ) ); ?></dd>
 						<?php endif; ?>
 
-						<?php if ( ! empty( $my_author_URL ) ) : ?>
+						<?php if ( ! empty( $my_author_url ) ) : ?>
 							<dt><?php esc_html_e( 'Website', 'commentpress-core' ); ?></dt>
-							<dd><a href="<?php echo $my_author_URL; ?>"><?php echo esc_html( $my_author_URL ); ?></a></dd>
+							<dd><a href="<?php echo esc_url( $my_author_url ); ?>"><?php echo esc_html( $my_author_url ); ?></a></dd>
 						<?php endif; ?>
 
 						<?php if ( ! empty( $my_author->user_email ) ) : ?>
@@ -94,13 +104,15 @@ get_header();
 
 									printf(
 										'<a href="%s" title="%s">%s</a>',
-										get_permalink(),
-										the_title_attribute( [
-											'before' => __( 'Permanent Link:', 'commentpress-core' ),
-											'after' => '',
-											'echo' => false,
-										] ),
-										$post_title
+										esc_url( get_permalink() ),
+										the_title_attribute(
+											[
+												'before' => __( 'Permanent Link:', 'commentpress-core' ),
+												'after'  => '',
+												'echo'   => false,
+											]
+										),
+										esc_html( $post_title )
 									);
 
 									?>

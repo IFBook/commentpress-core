@@ -24,7 +24,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -33,16 +33,16 @@ class CommentPress_AJAX_Infinite_Scroll {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $ajax The AJAX loader object.
+	 * @var CommentPress_AJAX_Loader
 	 */
 	public $ajax;
 
 	/**
-	 * Assets directory path.
+	 * Relative path to the assets directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $assets_path Relative path to the assets directory.
+	 * @var string
 	 */
 	private $assets_path = 'includes/core/assets/';
 
@@ -177,7 +177,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 		$current_post_id = isset( $_POST['current_post_id'] ) ? absint( $_POST['current_post_id'] ) : '';
 
 		// Sanity check.
-		if ( $current_post_id === '' ) {
+		if ( '' === $current_post_id ) {
 			$data['status'] = __( 'Could not find current Post ID.', 'commentpress-core' );
 			wp_send_json( $data );
 		}
@@ -186,7 +186,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 		$all_pages = $this->core->nav->document_pages_get_all( 'readable' );
 
 		// If we have any Pages.
-		if ( count( $all_pages ) == 0 ) {
+		if ( count( $all_pages ) === 0 ) {
 			$data['status'] = __( 'Could not find any Pages.', 'commentpress-core' );
 			wp_send_json( $data );
 		}
@@ -198,7 +198,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 		foreach ( $all_pages as $key => $page_obj ) {
 
 			// Is it the currently viewed Page?
-			if ( $page_obj->ID == $current_post_id ) {
+			if ( (int) $page_obj->ID === (int) $current_post_id ) {
 
 				// Set Page key.
 				$page_key = $key;
@@ -211,7 +211,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 		}
 
 		// Die if we don't get a key.
-		if ( $page_key === false ) {
+		if ( false === $page_key ) {
 			$data['status'] = __( 'Could not find a Page key.', 'commentpress-core' );
 			wp_send_json( $data );
 		}
@@ -234,7 +234,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 		// Get title using buffer.
 		ob_start();
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//wp_title( '|', true, 'right' );
+		// wp_title( '|', true, 'right' );
 		bloginfo( 'name' );
 		commentpress_site_title( '|' );
 		$page_title = ob_get_contents();
@@ -293,7 +293,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 
 		// Get Page navigation.
 		$navigation = commentpress_page_navigation();
-		if ( $navigation != '' ) {
+		if ( '' !== $navigation ) {
 			$navigation = '<div class="page_navigation"><ul>' . $navigation . '</ul></div><!-- /page_navigation -->';
 		}
 
@@ -347,7 +347,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 		$cp_comments_by_para = apply_filters( 'cp_template_comments_by_para', locate_template( 'assets/templates/comments_by_para.php' ) );
 
 		// Load it if we find it.
-		if ( $cp_comments_by_para != '' ) {
+		if ( '' !== $cp_comments_by_para ) {
 			load_template( $cp_comments_by_para );
 		}
 
@@ -359,11 +359,11 @@ class CommentPress_AJAX_Infinite_Scroll {
 
 		// Construct response.
 		$response = [
-			'post_id' => $post->ID,
-			'url' => get_permalink( $post->ID ),
-			'title' => $page_title,
-			'content' => $data,
-			'comments' => $comments,
+			'post_id'        => $post->ID,
+			'url'            => get_permalink( $post->ID ),
+			'title'          => $page_title,
+			'content'        => $data,
+			'comments'       => $comments,
 			'comment_status' => $post->comment_status,
 		];
 

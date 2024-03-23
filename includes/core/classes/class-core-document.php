@@ -29,7 +29,7 @@ class CommentPress_Core_Document {
 	 * @since 3.3
 	 * @since 4.0 Renamed.
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -38,27 +38,27 @@ class CommentPress_Core_Document {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $post_types The array of supported Post Types.
+	 * @var array
 	 */
 	public $post_types = [
 		'page',
 	];
 
 	/**
-	 * Metabox template directory path.
+	 * Relative path to the Metabox directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Metabox directory.
+	 * @var string
 	 */
 	private $metabox_path = 'includes/core/assets/templates/wordpress/metaboxes/';
 
 	/**
-	 * Parts template directory path.
+	 * Relative path to the Parts directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $parts_path Relative path to the Parts directory.
+	 * @var string
 	 */
 	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
 
@@ -71,7 +71,7 @@ class CommentPress_Core_Document {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $key_number_format The Page Numbering format key.
+	 * @var string
 	 */
 	private $key_number_format = 'cp_number_format';
 
@@ -84,16 +84,18 @@ class CommentPress_Core_Document {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $key_layout The Page Layout key.
+	 * @var string
 	 */
 	private $key_layout = 'cp_page_layout';
 
 	/**
 	 * Prevent "save_post" callback from running more than once.
 	 *
+	 * True if Post already saved.
+	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $saved_post True if Post already saved.
+	 * @var bool
 	 */
 	public $saved_post = false;
 
@@ -203,7 +205,7 @@ class CommentPress_Core_Document {
 
 		// Add our defaults.
 		$settings[ $this->key_show_title ] = 'show';
-		$settings[ $this->key_show_meta ] = 'hide';
+		$settings[ $this->key_show_meta ]  = 'hide';
 
 		// --<
 		return $settings;
@@ -240,7 +242,7 @@ class CommentPress_Core_Document {
 
 		// Get settings.
 		$show_title = $this->setting_show_title_get();
-		$show_meta = $this->setting_show_meta_get();
+		$show_meta  = $this->setting_show_meta_get();
 
 		// Include template file.
 		include COMMENTPRESS_PLUGIN_PATH . $this->metabox_path . 'metabox-settings-site-document.php';
@@ -286,7 +288,7 @@ class CommentPress_Core_Document {
 	public function entry_meta_box_part_get( $post ) {
 
 		// Bail if not one of our supported Post Types.
-		if ( ! in_array( $post->post_type, $this->post_types ) ) {
+		if ( ! in_array( $post->post_type, $this->post_types, true ) ) {
 			return;
 		}
 
@@ -311,17 +313,17 @@ class CommentPress_Core_Document {
 	public function entry_meta_box_part_save( $post ) {
 
 		// Bail if not one of our supported Post Types.
-		if ( ! in_array( $post->post_type, $this->post_types ) ) {
+		if ( ! in_array( $post->post_type, $this->post_types, true ) ) {
 			return;
 		}
 
 		// Check edit permissions.
-		if ( $post->post_type === 'page' && ! current_user_can( 'edit_pages' ) ) {
+		if ( 'page' === $post->post_type && ! current_user_can( 'edit_pages' ) ) {
 			return;
 		}
 
 		// We need to make sure this only runs once.
-		if ( $this->saved_post === false ) {
+		if ( false === $this->saved_post ) {
 			$this->saved_post = true;
 		} else {
 			return;
@@ -401,9 +403,9 @@ class CommentPress_Core_Document {
 		// Do we need to check this, since only the first top level Page
 		// can now send this data? Doesn't hurt to check, I guess.
 		if (
-			$post->post_parent == '0' &&
+			0 === (int) $post->post_parent &&
 			! $this->core->pages_legacy->is_special_page() &&
-			$post->ID == $this->core->nav->page_get_first()
+			$post->ID === $this->core->nav->page_get_first()
 		) {
 
 			// Get the value.
@@ -530,7 +532,7 @@ class CommentPress_Core_Document {
 
 		// Check for "wide" layout.
 		$layout = $this->entry_title_page_layout_get( $post );
-		if ( $layout !== 'wide' ) {
+		if ( 'wide' !== $layout ) {
 			return $classes;
 		}
 
@@ -549,10 +551,10 @@ class CommentPress_Core_Document {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $post_id The numeric ID of the Post.
+	 * @param int    $post_id The numeric ID of the Post.
 	 * @param string $meta_key The name of the meta key.
 	 * @param string $option The name of the site setting. Optional.
-	 * @param bool $raw Pass "true" to get the actual meta value.
+	 * @param bool   $raw Pass "true" to get the actual meta value.
 	 * @return mixed $value The meta value.
 	 */
 	public function get_for_post_id( $post_id, $meta_key, $option = '', $raw = false ) {
@@ -561,7 +563,7 @@ class CommentPress_Core_Document {
 		$override = get_post_meta( $post_id, $meta_key, true );
 
 		// Return raw value if requested.
-		if ( $raw === true ) {
+		if ( true === $raw ) {
 			return $override;
 		}
 
@@ -590,14 +592,14 @@ class CommentPress_Core_Document {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $post_id The numeric ID of the Post.
-	 * @param mixed $value The meta value.
+	 * @param int    $post_id The numeric ID of the Post.
+	 * @param mixed  $value The meta value.
 	 * @param string $meta_key The name of the meta key.
 	 */
 	public function set_for_post_id( $post_id, $value, $meta_key ) {
 
 		// Delete the meta entry by passing an empty string.
-		if ( is_string( $value ) && $value === '' ) {
+		if ( is_string( $value ) && '' === $value ) {
 			$this->delete_for_post_id( $post_id, $meta_key );
 			return;
 		}
@@ -612,7 +614,7 @@ class CommentPress_Core_Document {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $post_id The numeric ID of the Post.
+	 * @param int    $post_id The numeric ID of the Post.
 	 * @param string $meta_key The name of the meta key.
 	 */
 	public function delete_for_post_id( $post_id, $meta_key ) {

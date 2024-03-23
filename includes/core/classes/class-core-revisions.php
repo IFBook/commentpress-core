@@ -24,25 +24,25 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
 	/**
-	 * Metabox template directory path.
+	 * Relative path to the Metabox directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $metabox_path Relative path to the Metabox directory.
+	 * @var string
 	 */
 	private $metabox_path = 'includes/core/assets/templates/wordpress/metaboxes/';
 
 	/**
-	 * Parts template directory path.
+	 * Relative path to the Parts directory.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $parts_path Relative path to the Parts directory.
+	 * @var string
 	 */
 	private $parts_path = 'includes/core/assets/templates/wordpress/parts/';
 
@@ -51,7 +51,7 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $key_sidebar The "Post Revisions Enabled" setting key in Site Settings.
+	 * @var string
 	 */
 	public $key_revisions = 'cp_revisions_enabled';
 
@@ -60,7 +60,7 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $meta_key_newer_id The "Newer Version" meta key.
+	 * @var string
 	 */
 	public $meta_key_newer_id = '_cp_newer_version';
 
@@ -69,7 +69,7 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var str $meta_key The "Version Count" meta key.
+	 * @var string
 	 */
 	public $meta_key_version_count = '_cp_version_count';
 
@@ -78,16 +78,16 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_field The name of the metabox nonce element.
+	 * @var string
 	 */
 	private $nonce_field = 'commentpress_core_revisions_nonce';
 
 	/**
-	 * Metabox nonce value.
+	 * Metabox nonce action.
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $nonce_action The name of the metabox nonce action.
+	 * @var string
 	 */
 	private $nonce_action = 'commentpress_core_revisions_action';
 
@@ -96,16 +96,18 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 * @access private
-	 * @var string $element_checkbox The name of the metabox checkbox element.
+	 * @var string
 	 */
 	private $element_checkbox = 'cp_revision_create';
 
 	/**
 	 * Prevent "save_post" callback from running more than once.
 	 *
+	 * True if Post already saved.
+	 *
 	 * @since 3.3
 	 * @access private
-	 * @var str $saved_post True if Post already saved.
+	 * @var bool
 	 */
 	private $saved_post = false;
 
@@ -183,7 +185,7 @@ class CommentPress_Core_Revisions {
 			return;
 		}
 
-		// Add meta boxes.
+		// Add meta boxes to our supported "Edit" screens.
 		add_action( 'add_meta_boxes', [ $this, 'metabox_add' ], 40, 2 );
 
 		// Maybe create a new Revision.
@@ -256,7 +258,7 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $page_nav_enabled The setting if found, default otherwise.
+	 * @return str $revisions The setting if found, default otherwise.
 	 */
 	public function setting_revisions_get() {
 
@@ -290,7 +292,7 @@ class CommentPress_Core_Revisions {
 	 * @since 3.4
 	 * @since 4.0 Renamed and moved to this class.
 	 *
-	 * @param string $post_type The WordPress Post Type.
+	 * @param string  $post_type The WordPress Post Type.
 	 * @param WP_Post $post The Post object.
 	 */
 	public function metabox_add( $post_type, $post ) {
@@ -336,7 +338,7 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $post_id The ID of the saved WordPress Post or Revision ID.
+	 * @param int    $post_id The ID of the saved WordPress Post or Revision ID.
 	 * @param object $post The saved WordPress Post object.
 	 */
 	public function revision_create( $post_id, $post ) {
@@ -374,7 +376,7 @@ class CommentPress_Core_Revisions {
 		}
 
 		// We need to make sure this only runs once.
-		if ( $this->saved_post === false ) {
+		if ( false === $this->saved_post ) {
 			$this->saved_post = true;
 		} else {
 			return;
@@ -424,14 +426,14 @@ class CommentPress_Core_Revisions {
 
 		// Define basics.
 		$new_post = [
-			'post_status' => 'draft',
-			'post_type' => 'post',
-			'comment_status' => 'open',
-			'ping_status' => 'open',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
+			'post_status'           => 'draft',
+			'post_type'             => 'post',
+			'comment_status'        => 'open',
+			'ping_status'           => 'open',
+			'to_ping'               => '', // Quick fix for Windows.
+			'pinged'                => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
+			'post_excerpt'          => '', // Quick fix for Windows.
 		];
 
 		// Default Page title.
@@ -496,7 +498,7 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $new_post_id The numeric ID of the new Post.
+	 * @param int     $new_post_id The numeric ID of the new Post.
 	 * @param WP_Post $post The WordPress Post object that has been copied.
 	 */
 	private function revision_meta_add( $new_post_id, $post ) {
@@ -554,13 +556,16 @@ class CommentPress_Core_Revisions {
 	 */
 	public function revision_meta_delete( $post_id ) {
 
-		// Get Posts with the about-to-be-deleted Post ID in meta.
-		$older_posts = get_posts( [
+		// Build query.
+		$query = [
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-			'meta_key' => $this->meta_key_newer_id,
+			'meta_key'   => $this->meta_key_newer_id,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 			'meta_value' => $post_id,
-		] );
+		];
+
+		// Get Posts with the about-to-be-deleted Post ID in meta.
+		$older_posts = get_posts( $query );
 
 		// Bail if we didn't get any.
 		if ( empty( $older_posts ) ) {
@@ -577,6 +582,7 @@ class CommentPress_Core_Revisions {
 
 		}
 
+		// phpcs:ignore Squiz.Commenting.InlineComment.SpacingAfterAtFunctionEnd
 		// TODO: If there is a Newer Post, link Older Post to it.
 
 	}
@@ -609,13 +615,13 @@ class CommentPress_Core_Revisions {
 		}
 
 		// Bail if it is not published.
-		if ( $newer_post->post_status !== 'publish' ) {
+		if ( 'publish' !== $newer_post->post_status ) {
 			return $newer_link;
 		}
 
 		// Construct anchor.
-		$title = __( 'Newer version', 'commentpress-core' );
-		$newer_link = '<a href="' . get_permalink( $newer_post->ID ) . '" title="' . esc_attr( $title ) . '">' .
+		$title      = __( 'Newer version', 'commentpress-core' );
+		$newer_link = '<a href="' . esc_url( get_permalink( $newer_post->ID ) ) . '" title="' . esc_attr( $title ) . '">' .
 			esc_html( $title ) . ' &rarr;' .
 		'</a>';
 
@@ -641,9 +647,9 @@ class CommentPress_Core_Revisions {
 		$args = [
 			'numberposts' => 1,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-			'meta_key' => $this->meta_key_newer_id,
+			'meta_key'    => $this->meta_key_newer_id,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
-			'meta_value' => $post_id,
+			'meta_value'  => $post_id,
 		];
 
 		// Get the array.
@@ -658,13 +664,13 @@ class CommentPress_Core_Revisions {
 		$older_post = $older_posts[0];
 
 		// Bail if it is not published.
-		if ( $older_post->post_status !== 'publish' ) {
+		if ( 'publish' !== $older_post->post_status ) {
 			return $older_link;
 		}
 
 		// Construct anchor.
-		$title = __( 'Older version', 'commentpress-core' );
-		$older_link = '<a href="' . get_permalink( $older_post->ID ) . '" title="' . esc_attr( $title ) . '">' .
+		$title      = __( 'Older version', 'commentpress-core' );
+		$older_link = '<a href="' . esc_url( get_permalink( $older_post->ID ) ) . '" title="' . esc_attr( $title ) . '">' .
 			'&larr; ' . esc_html( $title ) .
 		'</a>';
 

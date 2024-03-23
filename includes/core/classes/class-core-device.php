@@ -24,7 +24,7 @@ class CommentPress_Core_Device {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $core The core loader object.
+	 * @var CommentPress_Core_Loader
 	 */
 	public $core;
 
@@ -33,7 +33,7 @@ class CommentPress_Core_Device {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $is_mobile The mobile Device flag.
+	 * @var bool
 	 */
 	public $is_mobile;
 
@@ -42,7 +42,7 @@ class CommentPress_Core_Device {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $is_tablet The tablet Device flag.
+	 * @var bool
 	 */
 	public $is_tablet;
 
@@ -51,7 +51,7 @@ class CommentPress_Core_Device {
 	 *
 	 * @since 4.0
 	 * @access public
-	 * @var object $is_mobile_touch The touchscreen Device flag.
+	 * @var bool
 	 */
 	public $is_mobile_touch;
 
@@ -106,7 +106,7 @@ class CommentPress_Core_Device {
 	public function detect() {
 
 		// Don't include in admin or wp-login.php.
-		if ( is_admin() || ( isset( $GLOBALS['pagenow'] ) && 'wp-login.php' == $GLOBALS['pagenow'] ) ) {
+		if ( is_admin() || ( isset( $GLOBALS['pagenow'] ) && 'wp-login.php' === $GLOBALS['pagenow'] ) ) {
 			return;
 		}
 
@@ -138,13 +138,13 @@ class CommentPress_Core_Device {
 			return;
 		}
 
-		// The old CommentPress also includes Mobile_Detect.
-		if ( ! class_exists( 'Mobile_Detect' ) ) {
-			include_once COMMENTPRESS_PLUGIN_PATH . 'includes/core/assets/includes/mobile-detect/Mobile_Detect.php';
+		// Avoid class collisions.
+		if ( ! class_exists( '\Detection\MobileDetect' ) ) {
+			include_once COMMENTPRESS_PLUGIN_PATH . 'includes/core/assets/includes/mobile-detect/MobileDetect.php';
 		}
 
 		// Init.
-		$detect = new Mobile_Detect();
+		$detect = new \Detection\MobileDetect();
 
 		// Overwrite flag if mobile.
 		if ( $detect->isMobile() ) {

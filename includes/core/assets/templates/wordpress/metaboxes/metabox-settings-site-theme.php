@@ -11,21 +11,21 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<!-- <?php echo $this->metabox_path; ?>metabox-settings-site-theme.php -->
+<!-- <?php echo esc_html( $this->metabox_path ); ?>metabox-settings-site-theme.php -->
 <p>
 	<?php
 	echo sprintf(
 		/* translators: %s: The trail to the background screen. */
-		__( 'You can set a custom background color in %s.', 'commentpress-core' ),
-		'<em>' . __( 'Appearance &#8594; Background', 'commentpress-core' ) . '</em>'
+		esc_html__( 'You can set a custom background color in %s.', 'commentpress-core' ),
+		'<em>' . esc_html__( 'Appearance &#8594; Background', 'commentpress-core' ) . '</em>'
 	);
 	?>
 	<br>
 	<?php
 	echo sprintf(
 		/* translators: %s: The trail to the header screen. */
-		__( 'You can also set a custom header image and header text color in %s.', 'commentpress-core' ),
-		'<em>' . __( 'Appearance &#8594; Header', 'commentpress-core' ) . '</em>'
+		esc_html__( 'You can also set a custom header image and header text color in %s.', 'commentpress-core' ),
+		'<em>' . esc_html__( 'Appearance &#8594; Header', 'commentpress-core' ) . '</em>'
 	);
 	?>
 	<br>
@@ -51,8 +51,8 @@ defined( 'ABSPATH' ) || exit;
 		</th>
 		<td>
 			<select id="<?php echo esc_attr( $this->key_featured_images ); ?>" name="<?php echo esc_attr( $this->key_featured_images ); ?>">
-				<option value="y" <?php echo ( $featured_images == 'y' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Enabled', 'commentpress-core' ); ?></option>
-				<option value="n" <?php echo ( $featured_images == 'n' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Disabled', 'commentpress-core' ); ?></option>
+				<option value="y" <?php selected( $featured_images, 'y' ); ?>><?php esc_html_e( 'Enabled', 'commentpress-core' ); ?></option>
+				<option value="n" <?php selected( $featured_images, 'n' ); ?>><?php esc_html_e( 'Disabled', 'commentpress-core' ); ?></option>
 			</select>
 			<p class="description"><?php esc_html_e( 'CommentPress is most commonly used for text-based content, however some sites benefit from additional graphics and illustration. Enable Feature Images if this Site would benefit from them.', 'commentpress-core' ); ?></p>
 			<p class="description"><?php esc_html_e( 'If you have already implemented this in a child theme, you should choose "Disabled".', 'commentpress-core' ); ?></p>
@@ -65,8 +65,8 @@ defined( 'ABSPATH' ) || exit;
 		</th>
 		<td>
 			<select id="<?php echo esc_attr( $this->key_textblock_meta ); ?>" name="<?php echo esc_attr( $this->key_textblock_meta ); ?>">
-				<option value="y" <?php echo ( $textblock_meta == 'y' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'Always', 'commentpress-core' ); ?></option>
-				<option value="n" <?php echo ( $textblock_meta == 'n' ? ' selected="selected"' : '' ); ?>><?php esc_html_e( 'On rollover', 'commentpress-core' ); ?></option>
+				<option value="y" <?php selected( $textblock_meta, 'y' ); ?>><?php esc_html_e( 'Always', 'commentpress-core' ); ?></option>
+				<option value="n" <?php selected( $textblock_meta, 'n' ); ?>><?php esc_html_e( 'On rollover', 'commentpress-core' ); ?></option>
 			</select>
 			<p class="description"><?php esc_html_e( 'This controls the display of the number to the left and the comment icon to the right of each paragraph, line or block that can be commented on.', 'commentpress-core' ); ?></p>
 		</td>
@@ -86,7 +86,7 @@ defined( 'ABSPATH' ) || exit;
 			<label for="<?php echo esc_attr( $this->key_scroll_speed ); ?>"><?php esc_html_e( 'Scroll speed', 'commentpress-core' ); ?></label>
 		</th>
 		<td>
-			<input type="text" id="<?php echo esc_attr( $this->key_scroll_speed ); ?>" name="<?php echo esc_attr( $this->key_scroll_speed ); ?>" value="<?php echo $scroll_speed; ?>" class="small-text" /> <?php esc_html_e( 'milliseconds', 'commentpress-core' ); ?>
+			<input type="text" id="<?php echo esc_attr( $this->key_scroll_speed ); ?>" name="<?php echo esc_attr( $this->key_scroll_speed ); ?>" value="<?php echo esc_attr( $scroll_speed ); ?>" class="small-text" /> <?php esc_html_e( 'milliseconds', 'commentpress-core' ); ?>
 			<p class="description"><?php esc_html_e( 'Modifies the speed of scrolling when actions like clicking or tapping on a paragraph are performed.', 'commentpress-core' ); ?></p>
 		</td>
 	</tr>
@@ -100,7 +100,7 @@ defined( 'ABSPATH' ) || exit;
 	 *
 	 * @param str Empty by default so that it can be populated.
 	 */
-	echo apply_filters_deprecated( 'commentpress_theme_customisation_options', [ '' ], '4.0' );
+	echo apply_filters_deprecated( 'commentpress_theme_customisation_options', [ '' ], '4.0' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 	?>
 
