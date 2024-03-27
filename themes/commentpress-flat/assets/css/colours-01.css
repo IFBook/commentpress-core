@@ -283,6 +283,8 @@ h3.activity_heading:hover,
 
 #toc_sidebar .sidebar_minimiser ul#toc_list li.current_page_ancestor > a,
 #toc_sidebar .sidebar_minimiser ul#toc_list li.current_page_item > a,
+#toc_sidebar .sidebar_minimiser ul#toc_list li.current-menu-ancestor > a,
+#toc_sidebar .sidebar_minimiser ul#toc_list li.current-menu-item > a,
 #toc_sidebar .sidebar_minimiser ul#nav li.active_page > a
 {
 	background-color: #fff;
