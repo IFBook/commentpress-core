@@ -301,6 +301,8 @@ class CommentPress_Core_Parser {
 					$item = sanitize_text_field( wp_unslash( $item ) );
 				}
 			);
+		} else {
+			$post_types_enabled = [];
 		}
 
 		// Exclude the selected Post Types.
