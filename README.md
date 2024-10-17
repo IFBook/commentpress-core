@@ -5,7 +5,7 @@
 **Tags:** commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration<br/>
 **Requires PHP:** 7.4<br/>
 **Requires at least:** 4.9<br/>
-**Tested up to:** 6.5<br/>
+**Tested up to:** 6.6<br/>
 **Stable tag:** 4.0.1a<br/>
 **License:** GPLv2 or later<br/>
 **License URI:** https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
