@@ -9,6 +9,10 @@
  * Version:           4.0.1a
  * Author:            Institute for the Future of the Book
  * Author URI:        https://futureofthebook.org/commentpress/
+ * License:           GPLv2 or later
+ * License URI:       https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * Requires at least: 5.7
+ * Requires PHP:      7.4
  * Text Domain:       commentpress-core
  * Domain Path:       /languages
  *
@@ -18,6 +22,18 @@
  * Mark James for the icons: http://www.famfamfam.com/lab/icons/silk/
  *
  * @package CommentPress_Core
+ * @link    https://github.com/IFBook/commentpress-core
+ * @license GPL v2 or later
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  */
 
 // Exit if accessed directly.
