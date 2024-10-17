@@ -1,12 +1,13 @@
 === CommentPress Core ===
-Contributors: needle, commentpress
-Donate link: https://www.paypal.me/interactivist
-Tags: commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
+Contributors:      needle, commentpress
+Donate link:       https://www.paypal.me/interactivist
+Tags:              commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
+Requires PHP:      7.4
 Requires at least: 4.9
-Tested up to: 6.5
-Stable tag: 4.0.1a
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+Tested up to:      6.5
+Stable tag:        4.0.1a
+License:           GPLv2 or later
+License URI:       https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 CommentPress Core allows fine-grained commenting in the margins of a text. Use it to annotate, workshop or debate a social text in a social context.
 

@@ -3,6 +3,7 @@
 **Contributors:** [needle](https://profiles.wordpress.org/needle/), [commentpress](https://profiles.wordpress.org/commentpress/)<br/>
 **Donate link:** https://www.paypal.me/interactivist<br/>
 **Tags:** commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration<br/>
+**Requires PHP:** 7.4<br/>
 **Requires at least:** 4.9<br/>
 **Tested up to:** 6.5<br/>
 **Stable tag:** 4.0.1a<br/>
