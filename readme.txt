@@ -216,7 +216,12 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
-<h4>4.0</h4>
+<h4>4.0.1</h4>
+
+* Fix comment moderation status
+* Highlight menu items for Custom Post Types
+
+<h4>4.0.0</h4>
 
 * Code refactored
 * Remove support for workflow
