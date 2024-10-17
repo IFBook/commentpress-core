@@ -226,7 +226,7 @@ if ( ! function_exists( 'commentpress_remove_more_jump_link' ) ) :
 	/**
 	 * Disable more link jump.
 	 *
-	 * @see http://codex.wordpress.org/Customizing_the_Read_More
+	 * @see https://codex.wordpress.org/Customizing_the_Read_More
 	 *
 	 * @since 3.0
 	 *

@@ -1810,7 +1810,7 @@ class CommentPress_Core_Parser {
 		------------------------------------------------------------------------
 
 		Here's how these Quicktags work:
-		http://codex.wordpress.org/Customizing_the_Read_More
+		https://codex.wordpress.org/Customizing_the_Read_More
 
 		-------------
 		More Quicktag

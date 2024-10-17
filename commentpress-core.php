@@ -19,7 +19,7 @@
  * Special thanks to:
  *
  * Eddie Tejeda for CommentPress 2.0: https://www.visudo.com
- * Mark James for the icons: http://www.famfamfam.com/lab/icons/silk/
+ * Mark James for the icons: https://www.famfamfam.com/lab/icons/silk/
  *
  * @package CommentPress_Core
  * @link    https://github.com/IFBook/commentpress-core

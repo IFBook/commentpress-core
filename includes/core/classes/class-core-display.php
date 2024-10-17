@@ -95,12 +95,12 @@ class CommentPress_Core_Display {
 	public function get_help() {
 
 		$help = <<<HELPTEXT
-<p>For further information about using CommentPress, please refer to the <a href="http://www.futureofthebook.org/commentpress/support/">CommentPress support pages</a> or use one of the links below:</p>
+<p>For further information about using CommentPress, please refer to the <a href="https://www.futureofthebook.org/commentpress/support/">CommentPress support pages</a> or use one of the links below:</p>
 
 <ul>
-<li><a href="http://www.futureofthebook.org/commentpress/support/structuring-your-document/">Structuring your Document</a></li>
-<li><a href="http://www.futureofthebook.org/commentpress/support/formatting-your-document/">Formatting Your Document</a></li>
-<li><a href="http://www.futureofthebook.org/commentpress/support/using-commentpress/">How to read a CommentPress document</a></li>
+<li><a href="https://www.futureofthebook.org/commentpress/support/structuring-your-document/">Structuring your Document</a></li>
+<li><a href="https://www.futureofthebook.org/commentpress/support/formatting-your-document/">Formatting Your Document</a></li>
+<li><a href="https://www.futureofthebook.org/commentpress/support/using-commentpress/">How to read a CommentPress document</a></li>
 </ul>
 HELPTEXT;
 

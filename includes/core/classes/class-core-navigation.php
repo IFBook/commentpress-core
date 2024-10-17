@@ -1660,7 +1660,7 @@ class CommentPress_Core_Navigator {
 	 * Copyright (c) 2008, reusablecode.blogspot.com; some rights reserved.
 	 *
 	 * This work is licensed under the Creative Commons Attribution License. To view
-	 * a copy of this license, visit http://creativecommons.org/licenses/by/3.0/ or
+	 * a copy of this license, visit https://creativecommons.org/licenses/by/3.0/ or
 	 * send a letter to Creative Commons, 559 Nathan Abbott Way, Stanford, California
 	 * 94305, USA.
 	 *

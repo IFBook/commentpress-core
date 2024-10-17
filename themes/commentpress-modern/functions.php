@@ -999,7 +999,7 @@ endif;
 /**
  * Utility to test for Feature Image, because has_post_thumbnail() fails sometimes.
  *
- * @see http://codex.wordpress.org/Function_Reference/has_post_thumbnail
+ * @see https://codex.wordpress.org/Function_Reference/has_post_thumbnail
  *
  * @since 3.5
  *

@@ -592,7 +592,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 * [must_be_logged_in] =>
 	 * [block_self] =>
 	 * [wrapper_class] => blog-button visit
-	 * [link_href] => http://domain/site-slug/
+	 * [link_href] => https://domain/site-slug/
 	 * [link_class] => blog-button visit
 	 * [link_text] => Visit Site
 	 * [link_title] => Visit Site
