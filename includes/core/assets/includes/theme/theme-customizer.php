@@ -292,7 +292,7 @@ if ( ! function_exists( 'commentpress_customize_header_bg_color' ) ) :
 		$wp_customize->add_setting(
 			'commentpress_header_bg_color',
 			[
-				'default' => '#' . $core->theme->header_bg_color,
+				'default' => commentpress_header_bg_color(),
 			]
 		);
 

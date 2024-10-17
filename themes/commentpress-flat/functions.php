@@ -418,14 +418,16 @@ endif;
 
 
 
-if ( ! function_exists( 'commentpress_header' ) ) :
+if ( ! function_exists( 'commentpress_header_bg_color' ) ) :
 
 	/**
-	 * Custom header.
+	 * Gets the custom header background colour.
 	 *
-	 * @since 3.0
+	 * @since 4.0.1
+	 *
+	 * @return string $bg_colour The background colour.
 	 */
-	function commentpress_header() {
+	function commentpress_header_bg_color() {
 
 		// Init as transparent.
 		$bg_colour = 'transparent';
@@ -444,6 +446,32 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 		 * @param str $bg_color The default header bgcolor.
 		 */
 		$bg_colour = apply_filters( 'cp_default_header_bgcolor', $bg_colour );
+
+		// Handle transparent header background.
+		if ( 'transparent' !==  $bg_colour  ) {
+			$bg_colour = '#' . $bg_colour;
+		}
+
+		// --<
+		return $bg_colour;
+
+	}
+
+endif;
+
+
+
+if ( ! function_exists( 'commentpress_header' ) ) :
+
+	/**
+	 * Custom header.
+	 *
+	 * @since 3.0
+	 */
+	function commentpress_header() {
+
+		// Get the background colour for this theme.
+		$bg_colour = commentpress_header_bg_color();
 
 		// Init background-image.
 		$bg_image = '';
@@ -482,7 +510,7 @@ if ( ! function_exists( 'commentpress_header' ) ) :
 		<style type="text/css">
 
 		#header {
-			background-color: #' . esc_attr( $bg_colour ) . ';
+			background-color: ' . esc_attr( $bg_colour ) . ';
 			' . esc_attr( $bg_image ) . '
 			-webkit-background-size: cover;
 			-moz-background-size: cover;
