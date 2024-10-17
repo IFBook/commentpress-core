@@ -11,7 +11,7 @@
  * This program is free software. It comes without any warranty, to
  * the extent permitted by applicable law. You can redistribute it
  * and/or modify it under the terms of the WTFPL, Version 2, as
- * published by Sam Hocevar. See http://sam.zoy.org/wtfpl/
+ * published by Sam Hocevar. See https://sam.zoy.org/wtfpl/
  * for more details.
  *
  * @see https://github.com/huffpostlabs/highlighter.js/blob/master/jQuery.highlighter.js
@@ -20,7 +20,7 @@
 (function ($) {
 	/*
 	 * Code for triple click from
-	 * http://css-tricks.com/snippets/jquery/triple-click-event/
+	 * https://css-tricks.com/snippets/jquery/triple-click-event/
 	 */
 	$.event.special.tripleclick = {
 
@@ -59,7 +59,7 @@
 	 * of a container in the event of a triple
 	 * click.
 	 *
-	 * Adapted from http://stackoverflow.com/a/574922
+	 * Adapted from https://stackoverflow.com/a/574922
 	 */
 	function get_previoussibling(n) {
 		var y = n, x;
@@ -109,7 +109,7 @@
 				 * Insert an html <span> after a user selects text.
 				 * We then use the X-Y coordinates of that span
 				 * to place our tooltip.
-				 * Thanks to http://stackoverflow.com/a/3599599 for
+				 * Thanks to https://stackoverflow.com/a/3599599 for
 				 * some inspiration.
 				 */
 				function insertSpanAfterSelection(clicks) {
@@ -259,7 +259,7 @@
 	 * jQuery article on best practices for
 	 * plugins.
 	 *
-	 * http://docs.jquery.com/Plugins/Authoring
+	 * https://docs.jquery.com/Plugins/Authoring
 	 */
 	$.fn.highlighter = function (method) {
 		if (methods[method]) {

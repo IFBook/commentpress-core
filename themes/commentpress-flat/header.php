@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
 		<?php endif; ?>
 
 		<!-- profile -->
-		<link rel="profile" href="http://gmpg.org/xfn/11" />
+		<link rel="profile" href="https://gmpg.org/xfn/11" />
 
 		<!-- pingbacks -->
 		<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />

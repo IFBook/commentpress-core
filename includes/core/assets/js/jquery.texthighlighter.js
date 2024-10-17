@@ -1140,7 +1140,7 @@ CommentPress.texthighlighter.textblocks = new function() {
 	 * array of selection objects.
 	 *
 	 * This code is based loosely on:
-	 * http://stackoverflow.com/questions/13949059/persisting-the-changes-of-range-objects-after-selection-in-html/13950376#13950376
+	 * https://stackoverflow.com/questions/13949059/persisting-the-changes-of-range-objects-after-selection-in-html/13950376#13950376
 	 *
 	 * @since 3.8
 	 */

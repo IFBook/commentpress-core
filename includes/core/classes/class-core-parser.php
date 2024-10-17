@@ -301,6 +301,8 @@ class CommentPress_Core_Parser {
 					$item = sanitize_text_field( wp_unslash( $item ) );
 				}
 			);
+		} else {
+			$post_types_enabled = [];
 		}
 
 		// Exclude the selected Post Types.
@@ -1808,7 +1810,7 @@ class CommentPress_Core_Parser {
 		------------------------------------------------------------------------
 
 		Here's how these Quicktags work:
-		http://codex.wordpress.org/Customizing_the_Read_More
+		https://codex.wordpress.org/Customizing_the_Read_More
 
 		-------------
 		More Quicktag

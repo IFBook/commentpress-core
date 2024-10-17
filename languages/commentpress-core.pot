@@ -1,17 +1,17 @@
 # Copyright (C) 2024 Institute for the Future of the Book
-# This file is distributed under the same license as the CommentPress Core plugin.
+# This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: CommentPress Core 4.0a\n"
+"Project-Id-Version: CommentPress Core 4.0.1a\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/commentpress-core\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-03-23T17:44:12+00:00\n"
+"POT-Creation-Date: 2024-10-17T17:26:10+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: commentpress-core\n"
 
 #. Plugin Name of the plugin
@@ -42,7 +42,7 @@ msgstr ""
 msgid "https://futureofthebook.org/commentpress/"
 msgstr ""
 
-#: commentpress-core.php:411
+#: commentpress-core.php:427
 msgid "Donate!"
 msgstr ""
 
@@ -94,9 +94,9 @@ msgstr ""
 #: includes/core/assets/includes/theme/theme-comments.php:264
 #: includes/core/assets/includes/theme/theme-comments.php:490
 #: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:730
-#: themes/commentpress-flat/author.php:27
-#: themes/commentpress-modern/author.php:27
-#: themes/commentpress-theme/author.php:27
+#: themes/commentpress-flat/author.php:29
+#: themes/commentpress-modern/author.php:29
+#: themes/commentpress-theme/author.php:29
 msgid "Anonymous"
 msgstr ""
 
@@ -142,7 +142,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: includes/core/assets/includes/theme/theme-comments.php:685
-#: includes/core/classes/class-core-parser.php:751
+#: includes/core/classes/class-core-parser.php:753
 msgid "paragraph"
 msgstr ""
 
@@ -949,18 +949,18 @@ msgstr ""
 #. translators: %d: Number of comments.
 #. translators: %d: The number of comments.
 #: includes/core/classes/class-core-comments-tagging.php:1361
-#: themes/commentpress-flat/functions.php:592
-#: themes/commentpress-modern/functions.php:615
-#: themes/commentpress-theme/functions.php:594
+#: themes/commentpress-flat/functions.php:620
+#: themes/commentpress-modern/functions.php:643
+#: themes/commentpress-theme/functions.php:622
 msgid "<span class=\"cp_comment_count\">%d</span> comment"
 msgid_plural "<span class=\"cp_comment_count\">%d</span> comments"
 msgstr[0] ""
 msgstr[1] ""
 
 #: includes/core/classes/class-core-comments-tagging.php:1391
-#: themes/commentpress-flat/functions.php:612
-#: themes/commentpress-modern/functions.php:635
-#: themes/commentpress-theme/functions.php:621
+#: themes/commentpress-flat/functions.php:640
+#: themes/commentpress-modern/functions.php:663
+#: themes/commentpress-theme/functions.php:649
 msgid "Password protected"
 msgstr ""
 
@@ -1058,7 +1058,7 @@ msgid ""
 "\n"
 "This is your title page. Edit it to suit your needs. It has been automatically set as your homepage but if you want another page as your homepage, set it in <em>WordPress</em> &#8594; <em>Settings</em> &#8594; <em>Reading</em>.\n"
 "\n"
-"You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings</em> &#8594; <em>CommentPress</em> to make the site work the way you want it to. Use the Theme Customizer to change the way your site looks in <em>WordPress</em> &#8594; <em>Appearance</em> &#8594; <em>Customize</em>. For help with structuring, formatting and reading text in CommentPress, please refer to the <a href=\"http://www.futureofthebook.org/commentpress/\">CommentPress website</a>."
+"You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings</em> &#8594; <em>CommentPress</em> to make the site work the way you want it to. Use the Theme Customizer to change the way your site looks in <em>WordPress</em> &#8594; <em>Appearance</em> &#8594; <em>Customize</em>. For help with structuring, formatting and reading text in CommentPress, please refer to the <a href=\"https://www.futureofthebook.org/commentpress/\">CommentPress website</a>."
 msgstr ""
 
 #: includes/core/classes/class-core-pages-legacy.php:1052
@@ -1119,11 +1119,11 @@ msgstr ""
 msgid "Members"
 msgstr ""
 
-#: includes/core/classes/class-core-parser.php:742
+#: includes/core/classes/class-core-parser.php:744
 msgid "block"
 msgstr ""
 
-#: includes/core/classes/class-core-parser.php:746
+#: includes/core/classes/class-core-parser.php:748
 msgid "line"
 msgstr ""
 
@@ -1904,7 +1904,7 @@ msgstr ""
 #: themes/commentpress-flat/assets/templates/comment_form.php:156
 #: themes/commentpress-modern/assets/templates/comment_form.php:156
 #: themes/commentpress-theme/assets/templates/comment_form.php:156
-#: themes/commentpress-theme/author.php:62
+#: themes/commentpress-theme/author.php:64
 msgid "Website"
 msgstr ""
 
@@ -1988,25 +1988,25 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: themes/commentpress-flat/author.php:71
-#: themes/commentpress-modern/author.php:71
+#: themes/commentpress-flat/author.php:73
+#: themes/commentpress-modern/author.php:73
 msgid "Posts written by"
 msgstr ""
 
 #. translators: 1: The Post permalink, 2: The date published.
-#: themes/commentpress-flat/author.php:86
-#: themes/commentpress-modern/author.php:86
+#: themes/commentpress-flat/author.php:88
+#: themes/commentpress-modern/author.php:88
 msgid "%1$s on %2$s"
 msgstr ""
 
-#: themes/commentpress-flat/author.php:96
-#: themes/commentpress-modern/author.php:96
-#: themes/commentpress-theme/author.php:110
+#: themes/commentpress-flat/author.php:98
+#: themes/commentpress-modern/author.php:98
+#: themes/commentpress-theme/author.php:112
 msgid "Permanent Link:"
 msgstr ""
 
-#: themes/commentpress-flat/author.php:138
-#: themes/commentpress-modern/author.php:138
+#: themes/commentpress-flat/author.php:140
+#: themes/commentpress-modern/author.php:140
 msgid "Pages written by"
 msgstr ""
 
@@ -2089,67 +2089,67 @@ msgstr ""
 msgid "Edit comment"
 msgstr ""
 
-#: themes/commentpress-flat/functions.php:690
-#: themes/commentpress-modern/functions.php:713
-#: themes/commentpress-theme/functions.php:699
+#: themes/commentpress-flat/functions.php:718
+#: themes/commentpress-modern/functions.php:741
+#: themes/commentpress-theme/functions.php:727
 msgid "Comments on the Blog"
 msgstr ""
 
-#: themes/commentpress-flat/functions.php:699
-#: themes/commentpress-modern/functions.php:722
-#: themes/commentpress-theme/functions.php:708
+#: themes/commentpress-flat/functions.php:727
+#: themes/commentpress-modern/functions.php:750
+#: themes/commentpress-theme/functions.php:736
 msgid "Comments on the Pages"
-msgstr ""
-
-#: themes/commentpress-flat/functions.php:1068
-#: themes/commentpress-modern/functions.php:1068
-#: themes/commentpress-theme/functions.php:820
-msgid "CommentPress Footer"
-msgstr ""
-
-#: themes/commentpress-flat/functions.php:1070
-#: themes/commentpress-modern/functions.php:1070
-#: themes/commentpress-theme/functions.php:822
-msgid "An optional widget area in the footer of a CommentPress theme"
-msgstr ""
-
-#: themes/commentpress-flat/functions.php:1081
-#: themes/commentpress-modern/functions.php:1081
-msgid "Navigation Top"
-msgstr ""
-
-#: themes/commentpress-flat/functions.php:1083
-#: themes/commentpress-modern/functions.php:1083
-msgid "An optional widget area at the top of the Navigation Column"
-msgstr ""
-
-#: themes/commentpress-flat/functions.php:1094
-#: themes/commentpress-modern/functions.php:1094
-msgid "Navigation Bottom"
 msgstr ""
 
 #: themes/commentpress-flat/functions.php:1096
 #: themes/commentpress-modern/functions.php:1096
-msgid "An optional widget area at the bottom of the Navigation Column"
+#: themes/commentpress-theme/functions.php:848
+msgid "CommentPress Footer"
 msgstr ""
 
-#: themes/commentpress-flat/functions.php:1107
-#: themes/commentpress-modern/functions.php:1107
-msgid "Activity Top"
+#: themes/commentpress-flat/functions.php:1098
+#: themes/commentpress-modern/functions.php:1098
+#: themes/commentpress-theme/functions.php:850
+msgid "An optional widget area in the footer of a CommentPress theme"
 msgstr ""
 
 #: themes/commentpress-flat/functions.php:1109
 #: themes/commentpress-modern/functions.php:1109
-msgid "An optional widget area at the top of the Activity Column"
+msgid "Navigation Top"
 msgstr ""
 
-#: themes/commentpress-flat/functions.php:1120
-#: themes/commentpress-modern/functions.php:1120
-msgid "Activity Bottom"
+#: themes/commentpress-flat/functions.php:1111
+#: themes/commentpress-modern/functions.php:1111
+msgid "An optional widget area at the top of the Navigation Column"
 msgstr ""
 
 #: themes/commentpress-flat/functions.php:1122
 #: themes/commentpress-modern/functions.php:1122
+msgid "Navigation Bottom"
+msgstr ""
+
+#: themes/commentpress-flat/functions.php:1124
+#: themes/commentpress-modern/functions.php:1124
+msgid "An optional widget area at the bottom of the Navigation Column"
+msgstr ""
+
+#: themes/commentpress-flat/functions.php:1135
+#: themes/commentpress-modern/functions.php:1135
+msgid "Activity Top"
+msgstr ""
+
+#: themes/commentpress-flat/functions.php:1137
+#: themes/commentpress-modern/functions.php:1137
+msgid "An optional widget area at the top of the Activity Column"
+msgstr ""
+
+#: themes/commentpress-flat/functions.php:1148
+#: themes/commentpress-modern/functions.php:1148
+msgid "Activity Bottom"
+msgstr ""
+
+#: themes/commentpress-flat/functions.php:1150
+#: themes/commentpress-modern/functions.php:1150
 msgid "An optional widget area at the bottom of the Activity Column"
 msgstr ""
 
@@ -2434,36 +2434,36 @@ msgstr ""
 msgid "Blog Archives:"
 msgstr ""
 
-#: themes/commentpress-theme/author.php:57
+#: themes/commentpress-theme/author.php:59
 msgid "Profile"
 msgstr ""
 
-#: themes/commentpress-theme/author.php:67
+#: themes/commentpress-theme/author.php:69
 msgid "Email"
 msgstr ""
 
-#: themes/commentpress-theme/author.php:72
+#: themes/commentpress-theme/author.php:74
 msgid "Yahoo IM"
 msgstr ""
 
-#: themes/commentpress-theme/author.php:77
+#: themes/commentpress-theme/author.php:79
 msgid "AIM"
 msgstr ""
 
-#: themes/commentpress-theme/author.php:82
+#: themes/commentpress-theme/author.php:84
 msgid "Jabber / Google Talk"
 msgstr ""
 
-#: themes/commentpress-theme/author.php:88
+#: themes/commentpress-theme/author.php:90
 msgid "Posts by"
 msgstr ""
 
 #. translators: 1: The Post permalink, 2: The date published.
-#: themes/commentpress-theme/author.php:100
+#: themes/commentpress-theme/author.php:102
 msgid "%1$s (on %2$s)"
 msgstr ""
 
-#: themes/commentpress-theme/author.php:125
+#: themes/commentpress-theme/author.php:127
 msgid "No posts by this author."
 msgstr ""
 

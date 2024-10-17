@@ -517,7 +517,7 @@ if ( ! function_exists( 'commentpress_get_comment_activity_item' ) ) :
 		}
 
 		// Approved comment?
-		if ( 1 === (int) $comment->comment_approved ) {
+		if ( 0 === (int) $comment->comment_approved ) {
 			$comment_text = '<p><em>' . __( 'Comment awaiting moderation', 'commentpress-core' ) . '</em></p>';
 		} else {
 			$comment_text = get_comment_text( $comment->comment_ID );

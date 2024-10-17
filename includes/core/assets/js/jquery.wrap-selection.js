@@ -18,7 +18,7 @@
  * in order for it to work with CommentPress Core.
  *
  * The source copies can be found at the following addresses:
- * Karl Fritsche: http://cgit.drupalcode.org/its/tree/its.wrapSelection.js
+ * Karl Fritsche: https://cgit.drupalcode.org/its/tree/its.wrapSelection.js
  * Noe Nieto: https://github.com/tzicatl/jquery.wrapSelection
  *
  * The CommentPress Core version replaces the deprecated usage of $.browser with
@@ -27,7 +27,7 @@
  *
  * Regarding licensing... as Noe Nieto observes, the original plugin looks as
  * though it is abandonware. The original URL in the jQuery plugin repo does
- * not exist any more: <http://plugins.jquery.com/project/wrapSelection>, so
+ * not exist any more: <https://plugins.jquery.com/project/wrapSelection>, so
  * the assumption is that the license is derived from jQuery, which states that
  * "jQuery Foundation projects are released under the terms of the license
  * specified in the project's repo or if not specified, under the MIT license."
@@ -544,7 +544,7 @@
 		}
 	};
 
-	// compareDocumentPosition - MIT Licensed, by ob. http://plugins.jquery.com/project/compareDocumentPosition
+	// compareDocumentPosition - MIT Licensed, by ob. https://plugins.jquery.com/project/compareDocumentPosition
 	$.fn.compareDocumentPosition = function (node1, node2) {
 		//node.ownerDocument gives the document object, which isn't the right info for a disconnect
 		function getRootParent(node) {
@@ -565,7 +565,7 @@
 		//Internet Explorer
 		else if ("sourceIndex" in document.documentElement && "contains" in document.documentElement) {
 			$.fn.compareDocumentPosition = function (node1, node2) {
-				//Compare Position - MIT Licensed, John Resig; http://ejohn.org/blog/comparing-document-position/
+				//Compare Position - MIT Licensed, John Resig; https://ejohn.org/blog/comparing-document-position/
 				//Already checked for equality and disconnect
 				function comparePosition(node1, node2) {
 					return (node1.contains(node2) && 16) +
@@ -670,7 +670,7 @@
 			}
 
 			//Safari and others; will work in IE
-			//inspired by base2: http://code.google.com/p/base2/
+			//inspired by base2: https://code.google.com/p/base2/
 			$.fn.compareDocumentPosition = function (node1, node2) {
 				if (node1 === node2) {
 					return 0;

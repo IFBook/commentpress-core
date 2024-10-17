@@ -1,12 +1,13 @@
 === CommentPress Core ===
-Contributors: needle, commentpress
-Donate link: https://www.paypal.me/interactivist
-Tags: commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
+Contributors:      needle, commentpress
+Donate link:       https://www.paypal.me/interactivist
+Tags:              commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
+Requires PHP:      7.4
 Requires at least: 4.9
-Tested up to: 6.5
-Stable tag: 4.0.0
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+Tested up to:      6.6
+Stable tag:        4.0.1
+License:           GPLv2 or later
+License URI:       https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 CommentPress Core allows fine-grained commenting in the margins of a text. Use it to annotate, workshop or debate a social text in a social context.
 
@@ -22,14 +23,14 @@ Annotate, gloss, workshop, debate: with CommentPress Core you can do all of thes
 
 **Please note:** this plugin comes bundled with three official themes, one of which must be active for CommentPress Core to function. The "CommentPress Modern Theme" will be auto-activated when the plugin is first activated. The old "CommentPress Default Theme" is still included for those who wish to stay with it or have built their own child themes for it. Since version 3.9 a new "CommentPress Flat Theme" is included for those who want an alternative layout. If you are upgrading from a previous version of CommentPress (3.0.x - 3.3.x), please follow the instructions in the Installation section before doing so.
 
-For further information and instructions please see the [CommentPress website](http://www.futureofthebook.org/commentpress/) or visit the plugin's [GitHub repository](https://github.com/IFBook/commentpress-core). Contact the developers by email at [cpdev@futureofthebook.org](mailto:cpdev@futureofthebook.org).
+For further information and instructions please see the [CommentPress website](https://www.futureofthebook.org/commentpress/) or visit the plugin's [GitHub repository](https://github.com/IFBook/commentpress-core). Contact the developers by email at [cpdev@futureofthebook.org](mailto:cpdev@futureofthebook.org).
 
 **For sites hosted in the European Union, please note:** the "CommentPress Default Theme" makes use of cookies, but for presentational purposes only. If you intend to use the "CommentPress Default Theme" on a public site, you may need to inform visitors of this.
 
 Many thanks to the following for translations:
 
-* French - [Pouhiou](http://wordpress.org/support/profile/pouhiou)
-* Spanish - Andrew Kurtis from [WebHostingHub](http://www.webhostinghub.com/)
+* French - [Pouhiou](https://wordpress.org/support/profile/pouhiou)
+* Spanish - Andrew Kurtis from [WebHostingHub](https://www.webhostinghub.com/)
 * Dutch - Gerrit Jan Dijkgraaf
 * German - Chris Witte
 
@@ -215,7 +216,12 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
-<h4>4.0</h4>
+<h4>4.0.1</h4>
+
+* Fix comment moderation status
+* Highlight menu items for Custom Post Types
+
+<h4>4.0.0</h4>
 
 * Code refactored
 * Remove support for workflow
