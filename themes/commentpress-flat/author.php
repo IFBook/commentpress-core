@@ -11,6 +11,8 @@ defined( 'ABSPATH' ) || exit;
 // Get the User object for the Author.
 if ( ! empty( get_query_var( 'author_name' ) ) ) {
 	$my_author = get_user_by( 'login', get_query_var( 'author_name' ) );
+} elseif ( ! empty( get_query_var( 'author' ) ) ) {
+	$my_author = get_user_by( 'id', get_query_var( 'author' ) );
 } elseif ( ! empty( $author ) ) {
 	$my_author = get_userdata( (int) $author );
 } else {
