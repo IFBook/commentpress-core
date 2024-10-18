@@ -51,7 +51,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $ajax Reference to the AJAX loader object.
+	 * @param CommentPress_AJAX_Loader $ajax Reference to the AJAX loader object.
 	 */
 	public function __construct( $ajax ) {
 

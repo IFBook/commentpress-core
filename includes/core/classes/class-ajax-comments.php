@@ -69,7 +69,7 @@ class CommentPress_AJAX_Comments {
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $ajax Reference to the AJAX loader object.
+	 * @param CommentPress_AJAX_Loader $ajax Reference to the AJAX loader object.
 	 */
 	public function __construct( $ajax ) {
 
@@ -543,8 +543,8 @@ class CommentPress_AJAX_Comments {
 	 *
 	 * @since 3.4
 	 *
-	 * @param object $comment The Comment object.
-	 * @param int    $depth The depth of the Comment in a thread.
+	 * @param WP_Comment $comment The WordPress Comment object.
+	 * @param integer    $depth The depth of the Comment in a thread.
 	 * @return int $depth The depth of the Comment in a thread.
 	 */
 	public function comment_depth_get( $comment, $depth ) {

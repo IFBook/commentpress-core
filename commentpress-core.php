@@ -68,6 +68,8 @@ class CommentPress_Plugin {
 	/**
 	 * Plugin context flag.
 	 *
+	 * May be one of "standard", "mu_sitewide" or "mu_optional".
+	 *
 	 * Replaces the legacy "COMMENTPRESS_PLUGIN_CONTEXT" constant.
 	 *
 	 * @since 4.0

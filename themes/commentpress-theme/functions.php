@@ -117,7 +117,7 @@ if ( ! function_exists( 'commentpress_default_theme_customize_register' ) ) :
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $wp_customize Theme Customizer object.
+	 * @param WP_Customize_Manager $wp_customize Theme Customizer object.
 	 */
 	function commentpress_default_theme_customize_register( $wp_customize ) {
 

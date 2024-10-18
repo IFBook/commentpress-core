@@ -57,7 +57,7 @@ if ( ! function_exists( 'commentpress_amend_search_query' ) ) :
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $query The query object, passed by reference.
+	 * @param WP_Query $query The query object, passed by reference.
 	 */
 	function commentpress_amend_search_query( &$query ) {
 

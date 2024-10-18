@@ -126,7 +126,7 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $entry Reference to the core entry object.
+	 * @param CommentPress_Core_Entry $entry Reference to the core entry object.
 	 */
 	public function __construct( $entry ) {
 
@@ -384,7 +384,7 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $post The WordPress Post object.
+	 * @param WP_Post $post The WordPress Post object.
 	 */
 	public function entry_meta_box_part_save( $post ) {
 
@@ -435,8 +435,8 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int|object $post The Post object or ID.
-	 * @param bool       $raw Pass "true" to get the actual meta value.
+	 * @param int|WP_Post $post The Post object or ID.
+	 * @param bool        $raw Pass "true" to get the actual meta value.
 	 * @return str $show_title The setting if found, default otherwise.
 	 */
 	public function entry_show_title_get( $post, $raw = false ) {
@@ -464,8 +464,8 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str        $show_title The setting value.
-	 * @param int|object $post The Post object or ID.
+	 * @param str         $show_title The setting value.
+	 * @param int|WP_Post $post The Post object or ID.
 	 */
 	public function entry_show_title_set( $show_title, $post ) {
 
@@ -489,8 +489,8 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int|object $post The Post object or ID.
-	 * @param bool       $raw Pass "true" to get the actual meta value.
+	 * @param int|WP_Post $post The Post object or ID.
+	 * @param bool        $raw Pass "true" to get the actual meta value.
 	 * @return str $show_meta The setting if found, default otherwise.
 	 */
 	public function entry_show_meta_get( $post, $raw = false ) {
@@ -518,8 +518,8 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str        $show_meta The setting value.
-	 * @param int|object $post The Post object or ID.
+	 * @param str         $show_meta The setting value.
+	 * @param int|WP_Post $post The Post object or ID.
 	 */
 	public function entry_show_meta_set( $show_meta, $post ) {
 
@@ -543,7 +543,7 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int|object $post The Post object or ID.
+	 * @param int|WP_Post $post The Post object or ID.
 	 * @return int $number The starting Paragraph Number.
 	 */
 	public function entry_paragraph_start_number_get( $post ) {
@@ -577,8 +577,8 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 3.4
 	 *
-	 * @param int        $number The starting Paragraph Number.
-	 * @param int|object $post The Post object or ID.
+	 * @param int         $number The starting Paragraph Number.
+	 * @param int|WP_Post $post The Post object or ID.
 	 */
 	private function entry_paragraph_start_number_set( $number, $post ) {
 

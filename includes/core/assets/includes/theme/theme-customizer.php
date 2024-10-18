@@ -97,7 +97,7 @@ if ( ! function_exists( 'commentpress_customize_register' ) ) :
 	 *
 	 * @since 3.8.5
 	 *
-	 * @param object $wp_customize Theme Customizer object.
+	 * @param WP_Customize_Manager $wp_customize Theme Customizer object.
 	 */
 	function commentpress_customize_register( $wp_customize ) {
 
@@ -132,7 +132,7 @@ if ( ! function_exists( 'commentpress_customize_site_image' ) ) :
 	 *
 	 * @since 3.8.5
 	 *
-	 * @param object $wp_customize Theme Customizer object.
+	 * @param WP_Customize_Manager $wp_customize Theme Customizer object.
 	 */
 	function commentpress_customize_site_image( $wp_customize ) {
 
@@ -199,7 +199,7 @@ if ( ! function_exists( 'commentpress_customize_site_logo' ) ) :
 	 *
 	 * @since 3.8.5
 	 *
-	 * @param object $wp_customize Theme Customizer object.
+	 * @param WP_Customize_Manager $wp_customize Theme Customizer object.
 	 */
 	function commentpress_customize_site_logo( $wp_customize ) {
 
@@ -278,7 +278,7 @@ if ( ! function_exists( 'commentpress_customize_header_bg_color' ) ) :
 	 *
 	 * @since 3.8.5
 	 *
-	 * @param object $wp_customize Theme Customizer object.
+	 * @param WP_Customize_Manager $wp_customize Theme Customizer object.
 	 */
 	function commentpress_customize_header_bg_color( $wp_customize ) {
 

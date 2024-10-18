@@ -104,7 +104,7 @@ class CommentPress_Core_Document {
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $core Reference to the core plugin object.
+	 * @param CommentPress_Core_Loader $core Reference to the core loader object.
 	 */
 	public function __construct( $core ) {
 
@@ -308,7 +308,7 @@ class CommentPress_Core_Document {
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $post The WordPress Post object.
+	 * @param WP_Post $post The WordPress Post object.
 	 */
 	public function entry_meta_box_part_save( $post ) {
 
@@ -346,7 +346,7 @@ class CommentPress_Core_Document {
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $post The Post object.
+	 * @param WP_Post $post The WordPress Post object.
 	 * @return string $format The Page Numbering format.
 	 */
 	public function entry_page_numbering_get( $post ) {
@@ -387,7 +387,7 @@ class CommentPress_Core_Document {
 	 *
 	 * Only first top-level Page that is not the Welcome Page is allowed to save this.
 	 *
-	 * @param object $post The Post object.
+	 * @param WP_Post $post The WordPress Post object.
 	 */
 	private function entry_page_numbering_set( $post ) {
 
@@ -448,7 +448,7 @@ class CommentPress_Core_Document {
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $post The Post object.
+	 * @param WP_Post $post The WordPress Post object.
 	 * @return string $layout The layout for the Welcome Page.
 	 */
 	public function entry_title_page_layout_get( $post ) {
@@ -487,7 +487,7 @@ class CommentPress_Core_Document {
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $post The Post object.
+	 * @param WP_Post $post The WordPress Post object.
 	 */
 	private function entry_title_page_layout_set( $post ) {
 

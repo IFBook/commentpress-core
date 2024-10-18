@@ -23,8 +23,8 @@ if ( ! function_exists( 'commentpress_get_user_link' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $user The WordPress User object.
-	 * @param object $comment The WordPress Comment object.
+	 * @param WP_User $user The WordPress User object.
+	 * @param WP_Comment $comment The WordPress Comment object.
 	 * @return string $url The URL for the User.
 	 */
 	function commentpress_get_user_link( $user, $comment = null ) {
@@ -62,7 +62,7 @@ if ( ! function_exists( 'commentpress_get_user_link' ) ) :
 		 *
 		 * @param string $url The URL for the User.
 		 * @param WP_User The WordPress User object.
-		 * @param object The WordPress Comment object.
+		 * @param WP_Comment The WordPress Comment object.
 		 */
 		return apply_filters( 'commentpress_get_user_link', $url, $user, $comment );
 
@@ -79,9 +79,9 @@ if ( ! function_exists( 'commentpress_format_comment' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $comment The Comment object.
-	 * @param str    $context Either "all" for all-comments or "by" for comments-by-commenter.
-	 * @return str The formatted Comment HTML.
+	 * @param WP_Comment $comment The Comment object.
+	 * @param string     $context Either "all" for all-comments or "by" for comments-by-commenter.
+	 * @return string The formatted Comment HTML.
 	 */
 	function commentpress_format_comment( $comment, $context = 'all' ) {
 
@@ -164,10 +164,10 @@ if ( ! function_exists( 'commentpress_format_comment' ) ) :
 			 * @since 3.4
 			 *
 			 * @param string $comment_meta The Comment meta markup.
-			 * @param object The WordPress Comment object.
-			 * @param string The Comment anchor tag.
-			 * @param string The Comment author tag.
-			 * @param string The Comment date tag.
+			 * @param WP_Comment $comment The WordPress Comment object.
+			 * @param string $comment_anchor The Comment anchor tag.
+			 * @param string $comment_author The Comment author tag.
+			 * @param string $comment_date The Comment date tag.
 			 */
 			$comment_meta = apply_filters( 'commentpress_format_comment_all_meta', $comment_meta, $comment, $comment_anchor, $comment_author, $comment_date );
 
@@ -199,10 +199,10 @@ if ( ! function_exists( 'commentpress_format_comment' ) ) :
 			 * @since 3.4
 			 *
 			 * @param string $comment_meta The Comment meta markup.
-			 * @param object The WordPress Comment object.
-			 * @param string The Comment anchor tag.
-			 * @param string The Comment author tag.
-			 * @param string The Comment date tag.
+			 * @param WP_Comment $comment The WordPress Comment object.
+			 * @param string $comment_anchor The Comment anchor tag.
+			 * @param string $page_anchor The Comment author tag.
+			 * @param string $comment_date The Comment date tag.
 			 */
 			$comment_meta = apply_filters( 'commentpress_format_comment_by_meta', $comment_meta, $comment, $comment_anchor, $page_anchor, $comment_date );
 
@@ -466,7 +466,7 @@ if ( ! function_exists( 'commentpress_get_comment_activity_item' ) ) :
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $comment The Comment object.
+	 * @param WP_Comment $comment The WordPress Comment object.
 	 * @return string $item_html The modified Comment HTML.
 	 */
 	function commentpress_get_comment_activity_item( $comment ) {
@@ -1213,9 +1213,9 @@ if ( ! function_exists( 'commentpress_comment_reply_link' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param array  $args The reply links arguments.
-	 * @param object $comment The Comment.
-	 * @param object $post The Post.
+	 * @param array      $args The reply links arguments.
+	 * @param WP_Comment $comment The WordPress Comment object.
+	 * @param WP_Post    $post The WordPress Post object.
 	 */
 	function commentpress_comment_reply_link( $args = [], $comment = null, $post = null ) {
 
@@ -1295,10 +1295,10 @@ if ( ! function_exists( 'commentpress_comment_reply_link' ) ) :
 		 *
 		 * @since 3.4
 		 *
-		 * @param str $link The default the Comment Reply link.
+		 * @param string $link The default the Comment Reply link.
 		 * @param array $args The reply links arguments.
-		 * @param object $comment The Comment.
-		 * @param object $post The Post.
+		 * @param WP_Comment $comment The WordPress Comment object.
+		 * @param WP_Post $post The WordPress Post object.
 		 */
 		return apply_filters( 'comment_reply_link', $link, $args, $comment, $post );
 
@@ -1315,9 +1315,9 @@ if ( ! function_exists( 'commentpress_comments' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $comment The Comment object.
-	 * @param array  $args The Comment arguments.
-	 * @param int    $depth The Comment depth.
+	 * @param WP_Comment $comment The Comment object.
+	 * @param array      $args The Comment arguments.
+	 * @param int        $depth The Comment depth.
 	 */
 	function commentpress_comments( $comment, $args, $depth ) {
 
@@ -1338,10 +1338,10 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $comment The Comment object.
-	 * @param array  $args The Comment arguments.
-	 * @param int    $depth The Comment depth.
-	 * @return str $html The Comment markup.
+	 * @param WP_Comment $comment The WordPress Comment object.
+	 * @param array      $args The Comment arguments.
+	 * @param int        $depth The Comment depth.
+	 * @return string $html The Comment markup.
 	 */
 	function commentpress_get_comment_markup( $comment, $args, $depth ) {
 
@@ -1467,8 +1467,8 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 			 *
 			 * @since 3.4
 			 *
-			 * @param str The default edit link.
-			 * @param object $comment The Comment object.
+			 * @param string The default edit link.
+			 * @param WP_Comment $comment The WordPress Comment object.
 			 */
 			$editlink = apply_filters( 'cp_comment_edit_link', $editlink, $comment );
 
@@ -1479,8 +1479,8 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 		 *
 		 * @since 3.4
 		 *
-		 * @param str The default edit link.
-		 * @param object $comment The Comment object.
+		 * @param string The default edit link.
+		 * @param WP_Comment $comment The WordPress Comment object.
 		 */
 		$editlink = apply_filters( 'cp_comment_action_links', $editlink, $comment );
 
@@ -1610,7 +1610,7 @@ if ( ! function_exists( 'commentpress_add_selection_classes' ) ) :
 	 * @param array       $classes An array of Comment classes.
 	 * @param string      $class A comma-separated list of additional classes added to the list.
 	 * @param int         $comment_id The Comment ID.
-	 * @param object      $comment The Comment.
+	 * @param WP_Comment  $comment The WordPress Comment object.
 	 * @param int|WP_Post $post_id The Post ID or WP_Post object.
 	 */
 	function commentpress_add_selection_classes( $classes, $class, $comment_id, $comment, $post_id = 0 ) {
@@ -1653,8 +1653,8 @@ if ( ! function_exists( 'commentpress_comment_post_redirect' ) ) :
 	 *
 	 * @since 3.5
 	 *
-	 * @param str    $link The link to the Comment.
-	 * @param object $comment The Comment object.
+	 * @param str        $link The link to the Comment.
+	 * @param WP_Comment $comment The WordPress Comment object.
 	 */
 	function commentpress_comment_post_redirect( $link, $comment ) {
 
@@ -1790,10 +1790,10 @@ if ( ! function_exists( 'commentpress_multipage_comment_link' ) ) :
 	 *
 	 * @since 3.5
 	 *
-	 * @param str    $link The existing Comment link.
-	 * @param object $comment The Comment object.
-	 * @param array  $args An array of extra arguments.
-	 * @return str $link The modified Comment link.
+	 * @param string     $link The existing Comment link.
+	 * @param WP_Comment $comment The WordPress Comment object.
+	 * @param array      $args An array of extra arguments.
+	 * @return string $link The modified Comment link.
 	 */
 	function commentpress_multipage_comment_link( $link, $comment, $args ) {
 
@@ -2066,11 +2066,11 @@ if ( ! function_exists( 'commentpress_get_comment_time' ) ) :
 		 *
 		 * @since 1.5.0
 		 *
-		 * @param string|int $date      The comment time, formatted as a date string or Unix timestamp.
+		 * @param string|int $date      The Comment time, formatted as a date string or Unix timestamp.
 		 * @param string     $format    PHP date format.
 		 * @param bool       $gmt       Whether the GMT date is in use.
 		 * @param bool       $translate Whether the time is translated.
-		 * @param WP_Comment $comment   The comment object.
+		 * @param WP_Comment $comment   The WordPress Comment object.
 		 */
 		return apply_filters( 'get_comment_time', $date, $format, $gmt, $translate, $comment );
 	}

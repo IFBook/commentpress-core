@@ -52,7 +52,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $groupblog Reference to the BuddyPress Groupblog object.
+	 * @param CommentPress_Multisite_BuddyPress_Groupblog $groupblog Reference to the BuddyPress Groupblog object.
 	 */
 	public function __construct( $groupblog ) {
 
@@ -302,14 +302,14 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $activity The existing Activity object.
-	 * @param array  $args {
+	 * @param BP_Activity_Activity $activity The existing Activity object.
+	 * @param array                $args {
 	 *      Optional. Handy if you've already parsed the Blog Post and Group ID.
 	 *
 	 *     @type WP_Post $post The WordPress Post object.
 	 *     @type int $group_id The Group ID.
 	 * }
-	 * @return object $activity The modified Activity object.
+	 * @return BP_Activity_Activity $activity The modified Activity object.
 	 */
 	public function activity_post_custom( $activity, $args = [] ) {
 
@@ -503,8 +503,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $activity The existing Activity object.
-	 * @return object $activity The modified Activity object.
+	 * @param BP_Activity_Activity $activity The existing Activity object.
+	 * @return BP_Activity_Activity $activity The modified Activity object.
 	 */
 	public function activity_post_meta( $activity ) {
 
@@ -539,9 +539,9 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	 *
 	 * @since 3.8.5
 	 *
-	 * @param str    $new_status New status for the Post.
-	 * @param str    $old_status Old status for the Post.
-	 * @param object $post The Post data.
+	 * @param str     $new_status New status for the Post.
+	 * @param str     $old_status Old status for the Post.
+	 * @param WP_Post $post The WordPress Post object.
 	 */
 	public function activity_post_status_transitioned( $new_status, $old_status, $post ) {
 
@@ -612,8 +612,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $activity The existing Activity object.
-	 * @return object $activity The modified Activity object.
+	 * @param BP_Activity_Activity $activity The existing Activity object.
+	 * @return BP_Activity_Activity $activity The modified Activity object.
 	 */
 	public function activity_comment_custom( $activity ) {
 
@@ -809,13 +809,13 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		 *
 		 * @since 3.3
 		 *
-		 * @param string $action The Activity action.
-		 * @param object $activity The Activity object.
-		 * @param string $user_link The User link element.
-		 * @param string $comment_link The User link element.
-		 * @param string $activity_name The name of the Activity.
-		 * @param string $target_post_link The Target Post link element.
-		 * @param string $group_link The Group link element.
+		 * @param string               $action The Activity action.
+		 * @param BP_Activity_Activity $activity The Activity object.
+		 * @param string               $user_link The User link element.
+		 * @param string               $comment_link The User link element.
+		 * @param string               $activity_name The name of the Activity.
+		 * @param string               $target_post_link The Target Post link element.
+		 * @param string               $group_link The Group link element.
 		 */
 		$activity->action = apply_filters( 'commentpress_comment_activity_action', $activity->action, $activity, $user_link, $comment_link, $activity_name, $target_post_link, $group_link );
 
@@ -856,8 +856,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $activity The existing Activity object.
-	 * @return object $activity The modified Activity object.
+	 * @param BP_Activity_Activity $activity The existing Activity object.
+	 * @return BP_Activity_Activity $activity The modified Activity object.
 	 */
 	public function activity_comment_meta( $activity ) {
 

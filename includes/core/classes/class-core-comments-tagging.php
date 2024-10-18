@@ -78,7 +78,7 @@ class CommentPress_Core_Comments_Tagging {
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $comments Reference to the core Comments object.
+	 * @param CommentPress_Core_Comments $comments Reference to the core Comments object.
 	 */
 	public function __construct( $comments ) {
 
@@ -491,8 +491,8 @@ class CommentPress_Core_Comments_Tagging {
 	 *
 	 * @since 4.0
 	 *
-	 * @param array  $terms List of Term Taxonomy IDs.
-	 * @param object $taxonomy Current Taxonomy object of Terms.
+	 * @param array       $terms List of Term Taxonomy IDs.
+	 * @param WP_Taxonomy $taxonomy Current Taxonomy object of Terms.
 	 */
 	public function taxonomy_tag_count_update( $terms, $taxonomy ) {
 
@@ -1018,9 +1018,9 @@ class CommentPress_Core_Comments_Tagging {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str    $text The content to prepend to the Comment identifer.
-	 * @param object $comment The WordPress Comment object.
-	 * @return str $text The markup showing the tags for a Comment.
+	 * @param string     $text The content to prepend to the Comment identifer.
+	 * @param WP_Comment $comment The WordPress Comment object.
+	 * @return string $text The markup showing the tags for a Comment.
 	 */
 	public function front_end_tags( $text = '', $comment = null ) {
 
@@ -1523,7 +1523,7 @@ class CommentPress_Core_Comments_Tagging {
 	 *
 	 * @since 4.0
 	 *
-	 * @param WP_Post $post The Post object.
+	 * @param WP_Post $post The WordPress Post object.
 	 * @param array   $box {
 	 *     Tags meta box arguments.
 	 *

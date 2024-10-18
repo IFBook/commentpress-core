@@ -384,7 +384,7 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $post The WordPress Post object.
+	 * @param WP_Post $post The WordPress Post object.
 	 */
 	public function entry_meta_box_part_save( $post ) {
 

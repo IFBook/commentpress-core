@@ -161,7 +161,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $core Reference to the core plugin object.
+	 * @param CommentPress_Core_Loader $core Reference to the core loader object.
 	 */
 	public function __construct( $core ) {
 
@@ -809,7 +809,7 @@ class CommentPress_Core_Navigator {
 	 * @since 3.0
 	 *
 	 * @param bool $with_comments The requested Page has Comments. Default false.
-	 * @return object|bool $next_page The WordPress Post object, or false on failure.
+	 * @return WP_Post|bool $next_page The WordPress Post object, or false on failure.
 	 */
 	public function page_next_get( $with_comments = false ) {
 
@@ -858,7 +858,7 @@ class CommentPress_Core_Navigator {
 	 * @since 3.0
 	 *
 	 * @param bool $with_comments The requested Page has Comments. Default false.
-	 * @return object|bool $previous_page The WordPress Post object, or false on failure.
+	 * @return WP_Post|bool $previous_page The WordPress Post object, or false on failure.
 	 */
 	public function page_previous_get( $with_comments = false ) {
 
@@ -1545,8 +1545,8 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 *
-	 * @param array $menu_items An array of Menu Item objects.
-	 * @param obj   $menu_obj The Menu Item object.
+	 * @param array   $menu_items An array of Menu Item objects.
+	 * @param WP_Post $menu_obj The Menu Item object.
 	 * @return array $sub_items The Menu Item children.
 	 */
 	private function menu_item_get_children( $menu_items, $menu_obj ) {
@@ -1582,8 +1582,8 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 *
-	 * @param obj $menu_obj The Menu Item object.
-	 * @return int|bool $menu_item The parent Menu Item - or false if not found.
+	 * @param WP_Post $menu_obj The Menu Item object.
+	 * @return WP_Post|bool $menu_item The parent Menu Item - or false if not found.
 	 */
 	private function menu_item_get_parent( $menu_obj ) {
 
@@ -1615,8 +1615,8 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $menu_obj The queried Menu object.
-	 * @return object $parent_obj The parent object or false if not found.
+	 * @param WP_Post $menu_obj The queried Menu Item object.
+	 * @return WP_Post|bool $parent_obj The parent Menu Item object or false if not found.
 	 */
 	private function menu_item_get_top( $menu_obj ) {
 
@@ -1668,8 +1668,8 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 *
-	 * @param int $arabic The numeric Arabic value.
-	 * @return str $roman The Roman equivalent.
+	 * @param integer $arabic The numeric Arabic value.
+	 * @return string $roman The Roman equivalent.
 	 */
 	public function number_to_roman( $arabic ) {
 

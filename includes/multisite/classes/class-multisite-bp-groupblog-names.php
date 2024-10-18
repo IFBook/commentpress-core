@@ -107,7 +107,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $groupblog Reference to the BuddyPress Groupblog object.
+	 * @param CommentPress_Multisite_BuddyPress_Groupblog $groupblog Reference to the BuddyPress Groupblog object.
 	 */
 	public function __construct( $groupblog ) {
 

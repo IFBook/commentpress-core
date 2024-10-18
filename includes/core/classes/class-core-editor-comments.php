@@ -69,7 +69,7 @@ class CommentPress_Core_Editor_Comments {
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $editor Reference to the core editor object.
+	 * @param CommentPress_Core_Pages_Editor $editor Reference to the core editor object.
 	 */
 	public function __construct( $editor ) {
 

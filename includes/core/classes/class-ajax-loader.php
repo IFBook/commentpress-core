@@ -56,7 +56,7 @@ class CommentPress_AJAX_Loader {
 	/**
 	 * Constructor.
 	 *
-	 * @param object $core Reference to the core plugin object.
+	 * @param CommentPress_Core_Loader $core Reference to the core loader object.
 	 */
 	public function __construct( $core ) {
 

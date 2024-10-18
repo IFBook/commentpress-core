@@ -132,7 +132,7 @@ class CommentPress_Core_Settings_Site {
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $core Reference to the core loader object.
+	 * @param CommentPress_Core_Loader $core Reference to the core loader object.
 	 */
 	public function __construct( $core ) {
 

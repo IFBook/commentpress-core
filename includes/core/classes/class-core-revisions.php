@@ -116,7 +116,7 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $core Reference to the core plugin object.
+	 * @param CommentPress_Core_Loader $core Reference to the core loader object.
 	 */
 	public function __construct( $core ) {
 
@@ -293,7 +293,7 @@ class CommentPress_Core_Revisions {
 	 * @since 4.0 Renamed and moved to this class.
 	 *
 	 * @param string  $post_type The WordPress Post Type.
-	 * @param WP_Post $post The Post object.
+	 * @param WP_Post $post The WordPress Post object.
 	 */
 	public function metabox_add( $post_type, $post ) {
 
@@ -338,8 +338,8 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int    $post_id The ID of the saved WordPress Post or Revision ID.
-	 * @param object $post The saved WordPress Post object.
+	 * @param int     $post_id The ID of the saved WordPress Post or Revision ID.
+	 * @param WP_Post $post The saved WordPress Post object.
 	 */
 	public function revision_create( $post_id, $post ) {
 

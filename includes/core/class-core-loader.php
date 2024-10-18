@@ -186,7 +186,7 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $plugin The plugin object.
+	 * @param CommentPress_Plugin $plugin The plugin object.
 	 */
 	public function __construct( $plugin ) {
 

@@ -33,7 +33,7 @@ class CommentPress_Multisite_Revisions {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $multisite Reference to the multisite loader object.
+	 * @param CommentPress_Multisite_Loader $multisite Reference to the multisite loader object.
 	 */
 	public function __construct( $multisite ) {
 
@@ -94,8 +94,8 @@ class CommentPress_Multisite_Revisions {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str    $title The existing title of the Post.
-	 * @param object $post The WordPress Post object.
+	 * @param str     $title The existing title of the Post.
+	 * @param WP_Post $post The WordPress Post object.
 	 * @return str $title The modified title of the Post.
 	 */
 	public function new_post_title( $title, $post ) {

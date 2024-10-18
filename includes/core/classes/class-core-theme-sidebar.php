@@ -69,7 +69,7 @@ class CommentPress_Core_Theme_Sidebar {
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $theme Reference to the core theme object.
+	 * @param CommentPress_Core_Theme $theme Reference to the core theme object.
 	 */
 	public function __construct( $theme ) {
 
@@ -253,7 +253,7 @@ class CommentPress_Core_Theme_Sidebar {
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $post The WordPress Post object.
+	 * @param WP_Post $post The WordPress Post object.
 	 */
 	public function entry_meta_box_part_save( $post ) {
 

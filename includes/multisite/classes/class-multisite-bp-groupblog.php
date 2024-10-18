@@ -175,7 +175,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $bp Reference to the BuddyPress object.
+	 * @param CommentPress_Multisite_BuddyPress $bp Reference to the BuddyPress object.
 	 */
 	public function __construct( $bp ) {
 

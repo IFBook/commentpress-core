@@ -51,7 +51,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $groupblog Reference to the BuddyPress Groupblog object.
+	 * @param CommentPress_Multisite_BuddyPress_Groupblog $groupblog Reference to the BuddyPress Groupblog object.
 	 */
 	public function __construct( $groupblog ) {
 
@@ -484,9 +484,9 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 	 *
 	 * @since 3.3
 	 *
-	 * @param bool   $b True if there are Blogs, false otherwise.
-	 * @param object $blogs The existing Blogs object.
-	 * @return object $blogs The modified Blogs object.
+	 * @param bool              $b True if there are Blogs, false otherwise.
+	 * @param BP_Blogs_Template $blogs The existing Blogs object.
+	 * @return BP_Blogs_Template $blogs The modified Blogs object.
 	 */
 	public function remove_from_loop( $b, $blogs ) {
 

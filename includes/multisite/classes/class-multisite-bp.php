@@ -60,7 +60,7 @@ class CommentPress_Multisite_BuddyPress {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $multisite Reference to the multisite loader object.
+	 * @param CommentPress_Multisite_Loader $multisite Reference to the multisite loader object.
 	 */
 	public function __construct( $multisite ) {
 
@@ -298,6 +298,7 @@ class CommentPress_Multisite_BuddyPress {
 	 * The "wp_initialize_site" action has been available since WordPress 5.1.0.
 	 *
 	 * @since 3.3
+	 *
 	 * @param WP_Site $new_site The new site object.
 	 * @param array   $args The array of initialization arguments.
 	 */

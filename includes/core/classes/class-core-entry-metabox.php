@@ -82,7 +82,7 @@ class CommentPress_Core_Entry_Metabox {
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $entry Reference to the core entry object.
+	 * @param CommentPress_Core_Entry $entry Reference to the core entry object.
 	 */
 	public function __construct( $entry ) {
 
@@ -130,7 +130,7 @@ class CommentPress_Core_Entry_Metabox {
 	 * @since 4.0
 	 *
 	 * @param string  $post_type The WordPress Post Type.
-	 * @param WP_Post $post The Post object.
+	 * @param WP_Post $post The WordPress Post object.
 	 */
 	public function metabox_add( $post_type, $post ) {
 
@@ -171,8 +171,8 @@ class CommentPress_Core_Entry_Metabox {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int    $post_id The numeric ID of the Post (or revision).
-	 * @param object $post The Post object.
+	 * @param int     $post_id The numeric ID of the Post (or revision).
+	 * @param WP_Post $post The WordPress Post object.
 	 */
 	public function post_saved( $post_id, $post ) {
 
@@ -216,7 +216,7 @@ class CommentPress_Core_Entry_Metabox {
 		 *
 		 * @since 4.0
 		 *
-		 * @param object $post The WordPress Post object.
+		 * @param WP_Post $post The WordPress Post object.
 		 */
 		do_action( 'commentpress/core/settings/post/saved', $post );
 
@@ -229,7 +229,7 @@ class CommentPress_Core_Entry_Metabox {
 	 *
 	 * @since 3.0
 	 *
-	 * @param object $post The Post object.
+	 * @param WP_Post $post The WordPress Post object.
 	 */
 	private function post_meta_save( $post ) {
 
@@ -246,7 +246,7 @@ class CommentPress_Core_Entry_Metabox {
 		 *
 		 * @since 4.0
 		 *
-		 * @param object $post The WordPress Post object.
+		 * @param WP_Post $post The WordPress Post object.
 		 */
 		do_action( 'commentpress/core/settings/post/post_meta/saved', $post );
 
@@ -259,7 +259,7 @@ class CommentPress_Core_Entry_Metabox {
 	 *
 	 * @since 3.4
 	 *
-	 * @param object $post The Post object.
+	 * @param WP_Post $post The WordPress Post object.
 	 */
 	private function page_meta_save( $post ) {
 
@@ -276,7 +276,7 @@ class CommentPress_Core_Entry_Metabox {
 		 *
 		 * @since 4.0
 		 *
-		 * @param object $post The WordPress Post object.
+		 * @param WP_Post $post The WordPress Post object.
 		 */
 		do_action( 'commentpress/core/settings/post/page_meta/saved', $post );
 

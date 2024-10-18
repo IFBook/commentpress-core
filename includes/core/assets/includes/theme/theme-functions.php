@@ -600,7 +600,7 @@ if ( ! function_exists( 'commentpress_has_page_children' ) ) :
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $page_obj The WordPress Page object to query.
+	 * @param WP_Post $page_obj The WordPress Page object to query.
 	 * @return boolean True if Page has children, false otherwise.
 	 */
 	function commentpress_has_page_children( $page_obj ) {

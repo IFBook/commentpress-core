@@ -107,7 +107,7 @@ class CommentPress_Multisite_Loader {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $plugin The plugin object.
+	 * @param CommentPress_Plugin $plugin The plugin object.
 	 */
 	public function __construct( $plugin ) {
 

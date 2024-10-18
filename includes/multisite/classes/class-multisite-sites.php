@@ -84,7 +84,7 @@ class CommentPress_Multisite_Sites {
 	 *
 	 * @since 3.3
 	 *
-	 * @param object $multisite Reference to the multisite loader object.
+	 * @param CommentPress_Multisite_Loader $multisite Reference to the multisite loader object.
 	 */
 	public function __construct( $multisite ) {
 
