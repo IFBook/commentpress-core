@@ -175,7 +175,7 @@ class CommentPress_Core_Entry_Single {
 		add_filter( 'commentpress/core/settings/defaults', [ $this, 'settings_get_defaults' ] );
 
 		// Add our metaboxes to the Site Settings screen.
-		add_filter( 'commentpress/core/settings/site/metaboxes/after', [ $this, 'settings_meta_boxes_append' ], 30 );
+		add_action( 'commentpress/core/settings/site/metaboxes/after', [ $this, 'settings_meta_boxes_append' ], 30 );
 
 		// Save data from Site Settings form submissions.
 		add_action( 'commentpress/core/settings/site/save/before', [ $this, 'settings_meta_box_save' ] );
