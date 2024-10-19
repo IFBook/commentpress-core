@@ -373,10 +373,11 @@ class CommentPress_AJAX_Comments {
 			wp_send_json( $data );
 		}
 
-		// Construct Comment data.
+		// Construct Comment data. Comment content is run through the same filtering as WordPress core.
 		$comment_data = [
 			'comment_ID'      => (int) $comment_id,
-			'comment_content' => isset( $_POST['comment'] ) ? sanitize_textarea_field( wp_unslash( $_POST['comment'] ) ) : '',
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			'comment_content' => isset( $_POST['comment'] ) ? trim( wp_unslash( $_POST['comment'] ) ) : '',
 			'comment_post_ID' => isset( $_POST['comment_post_ID'] ) ? sanitize_text_field( wp_unslash( $_POST['comment_post_ID'] ) ) : '',
 		];
 
