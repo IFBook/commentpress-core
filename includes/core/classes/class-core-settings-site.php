@@ -759,8 +759,18 @@ class CommentPress_Core_Settings_Site {
 		 *
 		 * Used internally by:
 		 *
-		 * * CommentPress_Core_Entry_Document::settings_meta_box_part_save() (Priority: 10)
+		 * * CommentPress_Multisite_Site::settings_meta_box_part_save() (Priority: 1)
+		 * * CommentPress_Core_Comments_Tagging::settings_meta_box_part_save() (Priority: 10)
+		 * * CommentPress_Core_Comments::settings_meta_box_part_save() (Priority: 10)
+		 * * CommentPress_Core_Document::settings_meta_box_part_save() (Priority: 10)
+		 * * CommentPress_Core_Editor_Comments::settings_meta_box_part_save() (Priority: 10)
 		 * * CommentPress_Core_Entry_Formatter::settings_meta_box_part_save() (Priority: 10)
+		 * * CommentPress_Core_Entry_Single::settings_meta_box_part_save() (Priority: 10)
+		 * * CommentPress_Core_Navigator::settings_meta_box_part_save() (Priority: 10)
+		 * * CommentPress_Core_Pages_Legacy::settings_meta_box_part_save() (Priority: 10)
+		 * * CommentPress_Core_Parser::settings_meta_box_part_save() (Priority: 10)
+		 * * CommentPress_Core_Revisions::settings_meta_box_part_save() (Priority: 10)
+		 * * CommentPress_Core_Theme::settings_meta_box_part_save() (Priority: 10)
 		 * * CommentPress_Core_Theme_Sidebar::settings_meta_box_part_save() (Priority: 10)
 		 *
 		 * @since 4.0
