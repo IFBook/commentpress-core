@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: CommentPress Core 4.0.1a\n"
+"Project-Id-Version: CommentPress Core 4.0.2a\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/commentpress-core\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-10-17T17:26:10+00:00\n"
+"POT-Creation-Date: 2024-10-19T16:48:13+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: commentpress-core\n"
@@ -42,7 +42,7 @@ msgstr ""
 msgid "https://futureofthebook.org/commentpress/"
 msgstr ""
 
-#: commentpress-core.php:427
+#: commentpress-core.php:429
 msgid "Donate!"
 msgstr ""
 
@@ -474,7 +474,7 @@ msgstr ""
 
 #: includes/core/assets/templates/wordpress/metaboxes/metabox-settings-site-nav.php:38
 #: includes/core/assets/templates/wordpress/metaboxes/metabox-settings-site-nav.php:49
-#: includes/multisite/classes/class-multisite-bp.php:406
+#: includes/multisite/classes/class-multisite-bp.php:407
 msgid "Pages"
 msgstr ""
 
@@ -611,7 +611,7 @@ msgstr ""
 
 #: includes/core/assets/templates/wordpress/pages/page-settings-site.php:22
 #: includes/core/classes/class-core-settings-site.php:683
-#: includes/core/classes/class-core-settings-site.php:846
+#: includes/core/classes/class-core-settings-site.php:856
 #: includes/multisite/assets/templates/wordpress/pages/page-settings-site.php:22
 #: includes/multisite/classes/class-multisite-settings-network.php:421
 #: includes/multisite/classes/class-multisite-settings-site.php:540
@@ -776,7 +776,7 @@ msgstr ""
 #: includes/core/assets/templates/wordpress/parts/part-theme-sidebar-settings.php:23
 #: includes/core/classes/class-ajax-comments.php:263
 #: includes/core/classes/class-core-comments-tagging.php:542
-#: includes/multisite/classes/class-multisite-bp.php:414
+#: includes/multisite/classes/class-multisite-bp.php:415
 #: themes/commentpress-flat/assets/templates/comments_sidebar.php:22
 #: themes/commentpress-flat/assets/templates/header_body.php:36
 #: themes/commentpress-flat/sidebar.php:57
@@ -852,11 +852,11 @@ msgstr ""
 msgid "Please wait while the comments are reassigned. The page will refresh when this has been done."
 msgstr ""
 
-#: includes/core/classes/class-ajax-comments.php:603
+#: includes/core/classes/class-ajax-comments.php:604
 msgid "Drop on to a text-block to reassign this comment (and any replies) to it"
 msgstr ""
 
-#: includes/core/classes/class-ajax-comments.php:612
+#: includes/core/classes/class-ajax-comments.php:613
 msgid "Move"
 msgstr ""
 
@@ -1172,7 +1172,7 @@ msgstr ""
 msgid "Danger Zone"
 msgstr ""
 
-#: includes/core/classes/class-core-settings-site.php:844
+#: includes/core/classes/class-core-settings-site.php:854
 #: includes/multisite/classes/class-multisite-settings-site.php:669
 msgid "Site Settings"
 msgstr ""
@@ -1452,47 +1452,47 @@ msgstr ""
 msgid "BuddyPress Groupblog Settings"
 msgstr ""
 
-#: includes/multisite/classes/class-multisite-bp.php:405
+#: includes/multisite/classes/class-multisite-bp.php:406
 msgid "Published a new page"
 msgstr ""
 
 #. translators: 1: The author name, 2: The link to the page.
-#: includes/multisite/classes/class-multisite-bp.php:408
+#: includes/multisite/classes/class-multisite-bp.php:409
 msgid "%1$s posted a new <a href=\"%2$s\">page</a>"
 msgstr ""
 
 #. translators: 1: The author name, 2: The link to the page, 3: The name of the site.
-#: includes/multisite/classes/class-multisite-bp.php:410
+#: includes/multisite/classes/class-multisite-bp.php:411
 msgid "%1$s posted a new <a href=\"%2$s\">page</a>, on the site %3$s"
 msgstr ""
 
-#: includes/multisite/classes/class-multisite-bp.php:413
+#: includes/multisite/classes/class-multisite-bp.php:414
 msgid "Commented on a page"
 msgstr ""
 
 #. translators: 1: The author name, 2: The link to the page.
-#: includes/multisite/classes/class-multisite-bp.php:416
+#: includes/multisite/classes/class-multisite-bp.php:417
 msgid "%1$s commented on the <a href=\"%2$s\">page</a>"
 msgstr ""
 
 #. translators: 1: The author name, 2: The link to the page, 3: The name of the site.
-#: includes/multisite/classes/class-multisite-bp.php:418
+#: includes/multisite/classes/class-multisite-bp.php:419
 msgid "%1$s commented on the <a href=\"%2$s\">page</a>, on the site %3$s"
 msgstr ""
 
-#: includes/multisite/classes/class-multisite-bp.php:533
+#: includes/multisite/classes/class-multisite-bp.php:534
 msgid "Create a New Site"
 msgstr ""
 
-#: includes/multisite/classes/class-multisite-bp.php:559
+#: includes/multisite/classes/class-multisite-bp.php:560
 msgid "Document Home Page"
 msgstr ""
 
-#: includes/multisite/classes/class-multisite-bp.php:604
+#: includes/multisite/classes/class-multisite-bp.php:605
 msgid "View Site"
 msgstr ""
 
-#: includes/multisite/classes/class-multisite-bp.php:609
+#: includes/multisite/classes/class-multisite-bp.php:610
 msgid "View Document"
 msgstr ""
 
