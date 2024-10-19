@@ -471,7 +471,7 @@ if ( ! function_exists( 'commentpress_header_bg_color' ) ) :
 		$bg_colour = apply_filters( 'cp_default_header_bgcolor', $bg_colour );
 
 		// Handle transparent header background.
-		if ( 'transparent' !==  $bg_colour  ) {
+		if ( 'transparent' !== $bg_colour ) {
 			$bg_colour = '#' . $bg_colour;
 		}
 

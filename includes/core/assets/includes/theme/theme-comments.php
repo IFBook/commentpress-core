@@ -23,7 +23,7 @@ if ( ! function_exists( 'commentpress_get_user_link' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param WP_User $user The WordPress User object.
+	 * @param WP_User    $user The WordPress User object.
 	 * @param WP_Comment $comment The WordPress Comment object.
 	 * @return string $url The URL for the User.
 	 */
