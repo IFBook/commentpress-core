@@ -1455,45 +1455,59 @@ CommentPress.texthighlighter.commentform = new function() {
 	};
 
 	/**
-	 * Selection active handler - test for clicks outside the comment form.
+	 * Selection active handler - test for clicks outside the Comment Form.
 	 *
 	 * @since 3.8
 	 */
 	this.focus_active_handler = function( event ) {
 
-		// If the event target is not the comment form container.
-		if ( !$(event.target).closest( '#respond' ).length ) {
+		// Define vars.
+		var wp_modal_link, wp_modal_autocomplete, wp_modal_media,
+			comment_form, comment;
 
-			// If the event target is not a comment.
-			if ( !$(event.target).closest( '.comment-content' ).length ) {
+		// Check for clicks on WordPress modals.
+		wp_modal_link = $(event.target).closest( '.mce-panel' ).length;
+		wp_modal_link_options = $(event.target).closest( '#wp-link' ).length;
+		wp_modal_autocomplete = $(event.target).closest( '.wplink-autocomplete' ).length;
+		wp_modal_media = $(event.target).closest( '.media-modal' ).length;
 
-				// Do we have a current selection?
-				if ( me.current_selection_exists() ) {
+		// Bail for clicks on WordPress modals.
+		if ( wp_modal_link || wp_modal_link_options || wp_modal_autocomplete || wp_modal_media ) {
+			return;
+		}
 
-					// Do we have any content?
-					if ( me.comment_content_exists() ) {
+		// Check for clicks inside the Comment Form and on other Comments.
+		comment_form = $(event.target).closest( '#respond' ).length;
+		comment = $(event.target).closest( '.comment-content' ).length;
 
-						// Show modal.
-						me.modal();
+		// Bail for clicks on the Comment Form or other Comments.
+		if ( comment_form || comment ) {
+			return;
+		}
 
-						// Unbind document click handler.
-						$(document).off( 'click', me.focus_active_handler );
+		// Do we have a current selection?
+		if ( me.current_selection_exists() ) {
 
-					} else {
+			// Do we have any content?
+			if ( me.comment_content_exists() ) {
 
-						// Do modal yes.
-						me.modal_yes();
+				// Show modal.
+				me.modal();
 
-					}
+				// Unbind document click handler.
+				$(document).off( 'click', me.focus_active_handler );
 
-				} else {
+			} else {
 
-					// Do modal yes.
-					me.modal_yes();
-
-				}
+				// Do modal yes.
+				me.modal_yes();
 
 			}
+
+		} else {
+
+			// Do modal yes.
+			me.modal_yes();
 
 		}
 
@@ -2412,6 +2426,3 @@ jQuery(document).ready(function($) {
 	);
 
 }); // End document.ready()
-
-
-
