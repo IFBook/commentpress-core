@@ -817,7 +817,7 @@ CommentPress.common.content = new function() {
 
 
 	/**
-	 * Set up actions on generic linkss in textblocks.
+	 * Set up actions on generic links in textblocks.
 	 *
 	 * @since 3.8
 	 */
