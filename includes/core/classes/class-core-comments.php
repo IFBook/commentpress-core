@@ -727,7 +727,7 @@ class CommentPress_Core_Comments {
 		$fc = wp_featured_comments_load();
 
 		// Get markup.
-		return $editlink . $fc->comment_text( '' );
+		return $editlink . $fc->comment_text( '', $comment );
 
 	}
 
