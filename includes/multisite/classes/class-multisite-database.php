@@ -351,6 +351,8 @@ class CommentPress_Multisite_Database {
 		 * Used internally by:
 		 *
 		 * * CommentPress_Multisite_Sites::settings_get_defaults() (Priority: 10)
+		 * * CommentPress_Multisite_BuddyPress_Groupblog::settings_get_defaults() (Priority: 20)
+		 * * CommentPress_Multisite_BuddyPress_Groupblog_Names::settings_get_defaults() (Priority: 20)
 		 *
 		 * @since 4.0
 		 *
