@@ -664,7 +664,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 				if ( defined( 'BPGSITES_VERSION' ) ) {
 					if ( function_exists( 'bp_groupsites' ) ) {
 						$group_id = bp_groupsites()->activity->get_group_id_from_comment_form();
-					} else  {
+					} else {
 						global $bp_groupsites;
 						$group_id = $bp_groupsites->activity->get_group_id_from_comment_form();
 					}
