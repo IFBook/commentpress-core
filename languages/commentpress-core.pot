@@ -1,17 +1,17 @@
-# Copyright (C) 2024 Institute for the Future of the Book
+# Copyright (C) 2025 Institute for the Future of the Book
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: CommentPress Core 4.0.2a\n"
+"Project-Id-Version: CommentPress Core 4.0.4a\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/commentpress-core\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-10-19T16:48:13+00:00\n"
+"POT-Creation-Date: 2025-08-22T18:11:54+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: commentpress-core\n"
 
 #. Plugin Name of the plugin
@@ -49,31 +49,37 @@ msgstr ""
 #. translators: %s: the "Site Image" label.
 #: includes/core/assets/includes/theme/class-customizer-site-image.php:71
 #: includes/core/assets/includes/theme/class-customizer-site-image.php:81
+#, php-format
 msgid "Select %s"
 msgstr ""
 
 #. translators: %s: the "Site Image" label.
 #: includes/core/assets/includes/theme/class-customizer-site-image.php:73
+#, php-format
 msgid "Change %s"
 msgstr ""
 
 #. translators: %s: the "Site Image" label.
 #: includes/core/assets/includes/theme/class-customizer-site-image.php:75
+#, php-format
 msgid "Remove %s"
 msgstr ""
 
 #. translators: %s: the "Site Image" label.
 #: includes/core/assets/includes/theme/class-customizer-site-image.php:77
+#, php-format
 msgid "Default %s"
 msgstr ""
 
 #. translators: %s: the "Site Image" label.
 #: includes/core/assets/includes/theme/class-customizer-site-image.php:79
+#, php-format
 msgid "No %s selected"
 msgstr ""
 
 #. translators: %s: the "Site Image" label.
 #: includes/core/assets/includes/theme/class-customizer-site-image.php:83
+#, php-format
 msgid "Choose %s"
 msgstr ""
 
@@ -93,7 +99,7 @@ msgstr ""
 #: includes/core/assets/includes/theme/theme-comments.php:145
 #: includes/core/assets/includes/theme/theme-comments.php:264
 #: includes/core/assets/includes/theme/theme-comments.php:490
-#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:730
+#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:742
 #: themes/commentpress-flat/author.php:29
 #: themes/commentpress-modern/author.php:29
 #: themes/commentpress-theme/author.php:29
@@ -102,11 +108,13 @@ msgstr ""
 
 #. translators: 1: Comment link, 2: Comment author, 3: Comment date.
 #: includes/core/assets/includes/theme/theme-comments.php:152
+#, php-format
 msgid "%1$s by %2$s on %3$s"
 msgstr ""
 
 #. translators: 1: Comment link, 2: Comment author, 3: Comment date.
 #: includes/core/assets/includes/theme/theme-comments.php:187
+#, php-format
 msgid "%1$s on %2$s on %3$s"
 msgstr ""
 
@@ -119,6 +127,7 @@ msgstr ""
 #. translators: 1: The Comment date, 2: The Comment time.
 #: includes/core/assets/includes/theme/theme-comments.php:590
 #: includes/core/assets/includes/theme/theme-comments.php:1496
+#, php-format
 msgid "%1$s at %2$s"
 msgstr ""
 
@@ -136,6 +145,7 @@ msgstr ""
 
 #. translators: %d: Comment count.
 #: includes/core/assets/includes/theme/theme-comments.php:649
+#, php-format
 msgid "<span>%d</span> Pingback or trackback"
 msgid_plural "<span>%d</span> Pingbacks and trackbacks"
 msgstr[0] ""
@@ -148,11 +158,13 @@ msgstr ""
 
 #. translators: 1: Block name, 2: Paragraph number.
 #: includes/core/assets/includes/theme/theme-comments.php:693
+#, php-format
 msgid "%1$s %2$s"
 msgstr ""
 
 #. translators: 1: Block name, 2: Paragraph number.
 #: includes/core/assets/includes/theme/theme-comments.php:701
+#, php-format
 msgid "Permalink for comments on %1$s %2$s"
 msgstr ""
 
@@ -160,6 +172,7 @@ msgstr ""
 #. translators: %d: The number of comments.
 #: includes/core/assets/includes/theme/theme-comments.php:709
 #: includes/core/assets/includes/theme/theme-comments.php:1582
+#, php-format
 msgid "<span class=\"cp_comment_num\">%d</span> <span class=\"cp_comment_word\">Comment</span>"
 msgid_plural "<span class=\"cp_comment_num\">%d</span> <span class=\"cp_comment_word\">Comments</span>"
 msgstr[0] ""
@@ -167,6 +180,7 @@ msgstr[1] ""
 
 #. translators: 1: Comment label, 2: Block name, 3: Paragraph number.
 #: includes/core/assets/includes/theme/theme-comments.php:716
+#, php-format
 msgid "%1$s on <span class=\"source_block\">%2$s %3$s</span>"
 msgstr ""
 
@@ -176,11 +190,13 @@ msgstr ""
 
 #. translators: %s: The name of the entity.
 #: includes/core/assets/includes/theme/theme-comments.php:974
+#, php-format
 msgid "Create an account to leave a comment on %s"
 msgstr ""
 
 #. translators: %s: The name of the entity.
 #: includes/core/assets/includes/theme/theme-comments.php:980
+#, php-format
 msgid "Login to leave a comment on %s"
 msgstr ""
 
@@ -188,6 +204,7 @@ msgstr ""
 #. translators: %s: The paragraph identifer.
 #: includes/core/assets/includes/theme/theme-comments.php:1040
 #: includes/core/assets/includes/theme/theme-comments.php:1126
+#, php-format
 msgid "Leave a comment on %s"
 msgstr ""
 
@@ -197,12 +214,14 @@ msgstr ""
 
 #. translators: %s: Comment author.
 #: includes/core/assets/includes/theme/theme-comments.php:1122
+#, php-format
 msgid "Leave a reply to %s"
 msgstr ""
 
 #. translators: 1: The block name, 2: Comment count.
 #: includes/core/assets/includes/theme/theme-comments.php:1179
 #: includes/core/assets/includes/theme/theme-comments.php:1192
+#, php-format
 msgctxt "The first substitution is the block name e.g. \"paragraph\". The second is the numeric comment count."
 msgid "%1$s %2$s"
 msgstr ""
@@ -217,6 +236,7 @@ msgstr ""
 
 #. translators: %s: Comment author.
 #: includes/core/assets/includes/theme/theme-comments.php:1415
+#, php-format
 msgid "Reply to %s"
 msgstr ""
 
@@ -249,16 +269,19 @@ msgstr ""
 
 #. translators: %s: Name of the Post Type.
 #: includes/core/assets/includes/theme/theme-comments.php:1554
+#, php-format
 msgid "the whole %s"
 msgstr ""
 
 #. translators: %s: Name of the entity.
 #: includes/core/assets/includes/theme/theme-comments.php:1575
+#, php-format
 msgid "Permalink for comments on %s"
 msgstr ""
 
 #. translators: 1: Comment identifier, 2: Entity identifier.
 #: includes/core/assets/includes/theme/theme-comments.php:1589
+#, php-format
 msgid "%1$s on <span class=\"source_block\">%2$s</span>"
 msgstr ""
 
@@ -304,11 +327,13 @@ msgstr ""
 
 #. translators: %s: Name of the Post Type.
 #: includes/core/assets/includes/theme/theme-filters.php:352
+#, php-format
 msgid "the %s"
 msgstr ""
 
 #. translators: %s: The source URL of the Page being printed.
 #: includes/core/assets/includes/theme/theme-filters.php:543
+#, php-format
 msgid "Source: %s"
 msgstr ""
 
@@ -322,7 +347,7 @@ msgstr ""
 
 #: includes/core/assets/includes/theme/theme-functions.php:668
 #: includes/core/classes/class-core-display.php:272
-#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:419
+#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:425
 msgid " &amp; "
 msgstr ""
 
@@ -330,6 +355,7 @@ msgstr ""
 #. translators: %s: User display name.
 #: includes/core/assets/includes/theme/theme-functions.php:766
 #: includes/core/classes/class-core-display.php:344
+#, php-format
 msgid "Posts by %s"
 msgstr ""
 
@@ -383,6 +409,7 @@ msgstr ""
 
 #. translators: %s: The span element containing the Page number.
 #: includes/core/assets/includes/theme/theme-navigation.php:608
+#, php-format
 msgid "Page %s"
 msgstr ""
 
@@ -524,6 +551,7 @@ msgstr ""
 
 #. translators: %s: The trail to the background screen.
 #: includes/core/assets/templates/wordpress/metaboxes/metabox-settings-site-theme.php:19
+#, php-format
 msgid "You can set a custom background color in %s."
 msgstr ""
 
@@ -533,6 +561,7 @@ msgstr ""
 
 #. translators: %s: The trail to the header screen.
 #: includes/core/assets/templates/wordpress/metaboxes/metabox-settings-site-theme.php:27
+#, php-format
 msgid "You can also set a custom header image and header text color in %s."
 msgstr ""
 
@@ -952,6 +981,7 @@ msgstr ""
 #: themes/commentpress-flat/functions.php:620
 #: themes/commentpress-modern/functions.php:643
 #: themes/commentpress-theme/functions.php:622
+#, php-format
 msgid "<span class=\"cp_comment_count\">%d</span> comment"
 msgid_plural "<span class=\"cp_comment_count\">%d</span> comments"
 msgstr[0] ""
@@ -985,6 +1015,7 @@ msgstr ""
 #: includes/core/classes/class-core-display.php:518
 #: includes/core/classes/class-core-display.php:540
 #: includes/core/classes/class-core-display.php:562
+#, php-format
 msgid "There is %1$d comment written for this %2$s"
 msgid_plural "There are %1$d comments written for this %2$s"
 msgstr[0] ""
@@ -994,6 +1025,7 @@ msgstr[1] ""
 #: includes/core/classes/class-core-display.php:526
 #: includes/core/classes/class-core-display.php:548
 #: includes/core/classes/class-core-display.php:570
+#, php-format
 msgid "Leave a comment on %1$s %2$d"
 msgstr ""
 
@@ -1001,6 +1033,7 @@ msgstr ""
 #: includes/core/classes/class-core-display.php:619
 #: includes/core/classes/class-core-display.php:640
 #: includes/core/classes/class-core-display.php:661
+#, php-format
 msgid "Permalink for %1$s %2$d"
 msgstr ""
 
@@ -1145,6 +1178,7 @@ msgstr ""
 
 #. translators: 1: The opening anchor tag, 2: The closing anchor tag.
 #: includes/core/classes/class-core-settings-site.php:204
+#, php-format
 msgid "CommentPress Core has been updated. Please visit the %1$sSettings Page%2$s."
 msgstr ""
 
@@ -1173,7 +1207,7 @@ msgid "Danger Zone"
 msgstr ""
 
 #: includes/core/classes/class-core-settings-site.php:854
-#: includes/multisite/classes/class-multisite-settings-site.php:669
+#: includes/multisite/classes/class-multisite-settings-site.php:672
 msgid "Site Settings"
 msgstr ""
 
@@ -1215,6 +1249,7 @@ msgstr ""
 
 #. translators: 1: The first tag name, 2: The second tag name.
 #: includes/multisite/assets/templates/buddypress/metaboxes/metabox-settings-network-bp-groupblog.php:53
+#, php-format
 msgid "For themes or child themes to be recognized as eligible, they must be tagged with both the %1$s and %2$s tags."
 msgstr ""
 
@@ -1236,6 +1271,7 @@ msgstr ""
 
 #. translators: %s: The name of the filter.
 #: includes/multisite/assets/templates/buddypress/parts/part-bp-groupblog-names-settings-network.php:30
+#, php-format
 msgid "You can add additional translatable naming schemes for Group Blogs using the %s filter."
 msgstr ""
 
@@ -1325,36 +1361,39 @@ msgstr ""
 msgid "CommentPress:"
 msgstr ""
 
-#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:255
+#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:261
 msgid "CommentPress Posts"
 msgstr ""
 
-#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:279
+#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:285
 msgid "CommentPress Comments"
 msgstr ""
 
-#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:383
-#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:744
-#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:759
+#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:389
+#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:756
+#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:771
 msgid "post"
 msgstr ""
 
 #. translators: 1: The author, 2: The activity name, 3: The name of the Post, 4: The name of the group.
-#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:451
+#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:457
+#, php-format
 msgid "%1$s updated a %2$s %3$s in the group %4$s:"
 msgstr ""
 
 #. translators: 1: The author, 2: The activity name, 3: The name of the Post, 4: The name of the group.
-#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:463
+#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:469
+#, php-format
 msgid "%1$s wrote a new %2$s %3$s in the group %4$s:"
 msgstr ""
 
-#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:793
+#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:805
 msgid "comment"
 msgstr ""
 
 #. translators: 1: The author, 2: The link to the comment, 3: The activity name, 4: The name of the Post, 5: The name of the group.
-#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:799
+#: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:811
+#, php-format
 msgid "%1$s left a %2$s on a %3$s %4$s in the group %5$s:"
 msgstr ""
 
@@ -1364,26 +1403,31 @@ msgstr ""
 
 #. translators: %s: The singular name for a Group Blog.
 #: includes/multisite/classes/class-multisite-bp-groupblog-names.php:640
+#, php-format
 msgid "View %s"
 msgstr ""
 
 #. translators: %s: The singular name for a Group Blog.
 #: includes/multisite/classes/class-multisite-bp-groupblog-names.php:663
+#, php-format
 msgid "%s Comments"
 msgstr ""
 
 #. translators: %s: The singular name for a Group Blog.
 #: includes/multisite/classes/class-multisite-bp-groupblog-names.php:681
+#, php-format
 msgid "%s Posts"
 msgstr ""
 
 #. translators: %s: The lowercase singular name for a Group Blog.
 #: includes/multisite/classes/class-multisite-bp-groupblog-names.php:701
+#, php-format
 msgid "%s post"
 msgstr ""
 
 #. translators: %s: The singular name for a Group Blog.
 #: includes/multisite/classes/class-multisite-bp-groupblog-names.php:727
+#, php-format
 msgid "Recent Comments in this %s"
 msgstr ""
 
@@ -1393,26 +1437,31 @@ msgstr ""
 
 #. translators: %s: The plural name for a Group Blog.
 #: includes/multisite/classes/class-multisite-bp-groupblog-names.php:777
+#, php-format
 msgid "Recent Activity in your %s"
 msgstr ""
 
 #. translators: %s: The plural name for a Group Blog.
 #: includes/multisite/classes/class-multisite-bp-groupblog-names.php:804
+#, php-format
 msgid "Recent Activity in Public %s"
 msgstr ""
 
 #. translators: %s: The singular name for a Group Blog.
 #: includes/multisite/classes/class-multisite-bp-groupblog-names.php:830
+#, php-format
 msgid "Comments on %s Posts"
 msgstr ""
 
 #. translators: %s: The singular name for a Group Blog.
 #: includes/multisite/classes/class-multisite-bp-groupblog-names.php:854
+#, php-format
 msgid "Comments on %s Pages"
 msgstr ""
 
 #. translators: %s: The singular name for a Group Blog.
 #: includes/multisite/classes/class-multisite-bp-groupblog-names.php:885
+#, php-format
 msgid "%s Home Page"
 msgstr ""
 
@@ -1458,11 +1507,13 @@ msgstr ""
 
 #. translators: 1: The author name, 2: The link to the page.
 #: includes/multisite/classes/class-multisite-bp.php:409
+#, php-format
 msgid "%1$s posted a new <a href=\"%2$s\">page</a>"
 msgstr ""
 
 #. translators: 1: The author name, 2: The link to the page, 3: The name of the site.
 #: includes/multisite/classes/class-multisite-bp.php:411
+#, php-format
 msgid "%1$s posted a new <a href=\"%2$s\">page</a>, on the site %3$s"
 msgstr ""
 
@@ -1472,11 +1523,13 @@ msgstr ""
 
 #. translators: 1: The author name, 2: The link to the page.
 #: includes/multisite/classes/class-multisite-bp.php:417
+#, php-format
 msgid "%1$s commented on the <a href=\"%2$s\">page</a>"
 msgstr ""
 
 #. translators: 1: The author name, 2: The link to the page, 3: The name of the site.
 #: includes/multisite/classes/class-multisite-bp.php:419
+#, php-format
 msgid "%1$s commented on the <a href=\"%2$s\">page</a>, on the site %3$s"
 msgstr ""
 
@@ -1535,6 +1588,7 @@ msgstr ""
 #: themes/commentpress-modern/category.php:26
 #: themes/commentpress-theme/archive.php:26
 #: themes/commentpress-theme/category.php:26
+#, php-format
 msgid "Archive for the &#8216;%s&#8217; Category"
 msgstr ""
 
@@ -1773,6 +1827,7 @@ msgstr ""
 #: themes/commentpress-flat/assets/templates/activity_sidebar.php:44
 #: themes/commentpress-modern/assets/templates/activity_sidebar.php:44
 #: themes/commentpress-theme/assets/templates/activity_sidebar.php:44
+#, php-format
 msgid "Recent Comments on this %s"
 msgstr ""
 
@@ -1846,6 +1901,7 @@ msgstr ""
 #: themes/commentpress-flat/assets/templates/comment_form.php:75
 #: themes/commentpress-modern/assets/templates/comment_form.php:75
 #: themes/commentpress-theme/assets/templates/comment_form.php:75
+#, php-format
 msgid "Leave a Reply to %s"
 msgstr ""
 
@@ -1853,6 +1909,7 @@ msgstr ""
 #: themes/commentpress-flat/assets/templates/comment_form.php:88
 #: themes/commentpress-modern/assets/templates/comment_form.php:88
 #: themes/commentpress-theme/assets/templates/comment_form.php:88
+#, php-format
 msgid "You must be %1$slogged in%2$s to post a comment."
 msgstr ""
 
@@ -1904,7 +1961,7 @@ msgstr ""
 #: themes/commentpress-flat/assets/templates/comment_form.php:156
 #: themes/commentpress-modern/assets/templates/comment_form.php:156
 #: themes/commentpress-theme/assets/templates/comment_form.php:156
-#: themes/commentpress-theme/author.php:64
+#: themes/commentpress-theme/author.php:67
 msgid "Website"
 msgstr ""
 
@@ -1988,25 +2045,26 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: themes/commentpress-flat/author.php:73
-#: themes/commentpress-modern/author.php:73
+#: themes/commentpress-flat/author.php:76
+#: themes/commentpress-modern/author.php:76
 msgid "Posts written by"
 msgstr ""
 
 #. translators: 1: The Post permalink, 2: The date published.
-#: themes/commentpress-flat/author.php:88
-#: themes/commentpress-modern/author.php:88
+#: themes/commentpress-flat/author.php:91
+#: themes/commentpress-modern/author.php:91
+#, php-format
 msgid "%1$s on %2$s"
 msgstr ""
 
-#: themes/commentpress-flat/author.php:98
-#: themes/commentpress-modern/author.php:98
-#: themes/commentpress-theme/author.php:112
+#: themes/commentpress-flat/author.php:101
+#: themes/commentpress-modern/author.php:101
+#: themes/commentpress-theme/author.php:115
 msgid "Permanent Link:"
 msgstr ""
 
-#: themes/commentpress-flat/author.php:140
-#: themes/commentpress-modern/author.php:140
+#: themes/commentpress-flat/author.php:143
+#: themes/commentpress-modern/author.php:143
 msgid "Pages written by"
 msgstr ""
 
@@ -2020,6 +2078,7 @@ msgstr ""
 #: themes/commentpress-flat/category.php:29
 #: themes/commentpress-modern/category.php:29
 #: themes/commentpress-theme/category.php:29
+#, php-format
 msgid "Posts Tagged &#8216;%s&#8217;"
 msgstr ""
 
@@ -2063,6 +2122,7 @@ msgstr ""
 #: themes/commentpress-modern/footer.php:43
 #: themes/commentpress-theme/footer-wp-activate.php:40
 #: themes/commentpress-theme/footer.php:31
+#, php-format
 msgid "Website content &copy; %1$s %2$s. All rights reserved."
 msgstr ""
 
@@ -2190,6 +2250,7 @@ msgstr ""
 #: themes/commentpress-flat/image.php:55
 #: themes/commentpress-modern/image.php:55
 #: themes/commentpress-theme/image.php:55
+#, php-format
 msgid "This image was posted on %1$s at %2$s and is filed under %3$s."
 msgstr ""
 
@@ -2206,6 +2267,7 @@ msgstr ""
 #: themes/commentpress-flat/image.php:75
 #: themes/commentpress-modern/image.php:75
 #: themes/commentpress-theme/image.php:75
+#, php-format
 msgid "You can follow any comments on this image through the %s feed."
 msgstr ""
 
@@ -2228,6 +2290,7 @@ msgstr ""
 #: themes/commentpress-flat/image.php:92
 #: themes/commentpress-modern/image.php:92
 #: themes/commentpress-theme/image.php:92
+#, php-format
 msgid "You are welcome to leave a comment, or %s from your own site."
 msgstr ""
 
@@ -2238,6 +2301,7 @@ msgstr ""
 #: themes/commentpress-modern/single.php:113
 #: themes/commentpress-theme/image.php:112
 #: themes/commentpress-theme/single.php:98
+#, php-format
 msgid "Comments are currently closed, but you can %s from your own site."
 msgstr ""
 
@@ -2351,6 +2415,7 @@ msgstr ""
 #. translators: %s: The RSS feed link.
 #: themes/commentpress-flat/single.php:73
 #: themes/commentpress-modern/single.php:73
+#, php-format
 msgid "You can follow any comments on this entry through the %s feed."
 msgstr ""
 
@@ -2358,6 +2423,7 @@ msgstr ""
 #: themes/commentpress-flat/single.php:93
 #: themes/commentpress-modern/single.php:93
 #: themes/commentpress-theme/single.php:78
+#, php-format
 msgid "You can leave a comment, or %s from your own site."
 msgstr ""
 
@@ -2377,6 +2443,7 @@ msgstr ""
 #: themes/commentpress-flat/taxonomy-comment_tags.php:34
 #: themes/commentpress-modern/taxonomy-comment_tags.php:34
 #: themes/commentpress-theme/taxonomy-comment_tags.php:34
+#, php-format
 msgid "Comments Tagged &#8216;%s&#8217;"
 msgstr ""
 
@@ -2434,36 +2501,37 @@ msgstr ""
 msgid "Blog Archives:"
 msgstr ""
 
-#: themes/commentpress-theme/author.php:59
+#: themes/commentpress-theme/author.php:62
 msgid "Profile"
 msgstr ""
 
-#: themes/commentpress-theme/author.php:69
+#: themes/commentpress-theme/author.php:72
 msgid "Email"
 msgstr ""
 
-#: themes/commentpress-theme/author.php:74
+#: themes/commentpress-theme/author.php:77
 msgid "Yahoo IM"
 msgstr ""
 
-#: themes/commentpress-theme/author.php:79
+#: themes/commentpress-theme/author.php:82
 msgid "AIM"
 msgstr ""
 
-#: themes/commentpress-theme/author.php:84
+#: themes/commentpress-theme/author.php:87
 msgid "Jabber / Google Talk"
 msgstr ""
 
-#: themes/commentpress-theme/author.php:90
+#: themes/commentpress-theme/author.php:93
 msgid "Posts by"
 msgstr ""
 
 #. translators: 1: The Post permalink, 2: The date published.
-#: themes/commentpress-theme/author.php:102
+#: themes/commentpress-theme/author.php:105
+#, php-format
 msgid "%1$s (on %2$s)"
 msgstr ""
 
-#: themes/commentpress-theme/author.php:127
+#: themes/commentpress-theme/author.php:130
 msgid "No posts by this author."
 msgstr ""
 
@@ -2477,5 +2545,6 @@ msgstr ""
 
 #. translators: 1: The list of categories, 2: The RSS feed link.
 #: themes/commentpress-theme/single.php:57
+#, php-format
 msgid "This entry is filed under %1$s. You can follow any comments on this entry through the %2$s feed."
 msgstr ""
