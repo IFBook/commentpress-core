@@ -114,7 +114,7 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 4.0
 	 *
-	 * @param object $entry Reference to the core entry object.
+	 * @param CommentPress_Core_Entry $entry Reference to the core entry object.
 	 */
 	public function __construct( $entry ) {
 

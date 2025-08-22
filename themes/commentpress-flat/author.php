@@ -34,7 +34,10 @@ if ( ! empty( $my_author->display_name ) ) {
 }
 
 // Get avatar.
-$my_avatar = get_avatar( $my_author->user_email, $size = '200' );
+$my_avatar = '';
+if ( ! empty( $my_author->user_email ) ) {
+	$my_avatar = get_avatar( $my_author->user_email, $size = '200' );
+}
 
 get_header();
 

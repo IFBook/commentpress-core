@@ -2625,6 +2625,8 @@ Who's Online (activity tab)
 	float: none;
 	margin: 0;
 	vertical-align: middle;
+	width: 80px;
+	height: 80px;
 }
 
 
@@ -2687,6 +2689,8 @@ Recently Active (activity tab)
 	float: none;
 	margin: 0;
 	vertical-align: middle;
+	width: 80px;
+	height: 80px;
 }
 
 

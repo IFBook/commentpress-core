@@ -1710,6 +1710,7 @@ Compatibility with GeoMashup plugin
 Featured Comments Plugin Compatibility
 --------------------------------------------------------------------------------
 */
+.feature-bury-comments,
 .feature-burry-comments
 {
 	margin: 0 5px 0 0;
@@ -1718,6 +1719,11 @@ Featured Comments Plugin Compatibility
 	line-height: 1;
 }
 
+.feature-bury-comments a.feature-comments,
+.feature-bury-comments a.feature-comments:link,
+.feature-bury-comments a.feature-comments:hover,
+.feature-bury-comments a.feature-comments:active,
+.feature-bury-comments a.feature-comments:visited,
 .feature-burry-comments a.feature-comments,
 .feature-burry-comments a.feature-comments:link,
 .feature-burry-comments a.feature-comments:hover,

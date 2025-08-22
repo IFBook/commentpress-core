@@ -638,8 +638,11 @@ class CommentPress_Multisite_Settings_Site {
 		// Get Network Settings Page URL.
 		$url = $this->page_settings_url_get();
 
+		// Our array of arguments.
+		$args = [ 'updated' => 'true' ];
+
 		// Do the redirect.
-		wp_safe_redirect( $url );
+		wp_safe_redirect( add_query_arg( $args, $url ) );
 		exit();
 
 	}

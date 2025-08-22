@@ -581,7 +581,7 @@ class CommentPress_Multisite_Settings_Network {
 		$args = [ 'updated' => 'true' ];
 
 		// Do the redirect.
-		wp_safe_redirect( $url );
+		wp_safe_redirect( add_query_arg( $args, $url ) );
 		exit();
 
 	}

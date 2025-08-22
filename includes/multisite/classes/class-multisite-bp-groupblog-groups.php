@@ -169,9 +169,15 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 		remove_action( 'transition_post_status', 'bp_groupblog_catch_transition_post_type_status' );
 
 		// Drop the "BP Group Sites" Comment Activity action, if present.
-		global $bp_groupsites;
-		if ( ! empty( $bp_groupsites ) && is_object( $bp_groupsites ) ) {
-			remove_action( 'bp_activity_before_save', [ $bp_groupsites->activity, 'custom_comment_activity' ] );
+		if ( defined( 'BPGSITES_VERSION' ) ) {
+			if ( function_exists( 'bp_groupsites' ) ) {
+				remove_action( 'bp_activity_before_save', [ bp_groupsites()->activity, 'custom_comment_activity' ] );
+			} else {
+				global $bp_groupsites;
+				if ( ! empty( $bp_groupsites ) && is_object( $bp_groupsites ) ) {
+					remove_action( 'bp_activity_before_save', [ $bp_groupsites->activity, 'custom_comment_activity' ] );
+				}
+			}
 		}
 
 		// Implement our own Post Activity (with Co-Authors compatibility).
@@ -655,8 +661,14 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 			if ( $is_groupsite ) {
 
 				// Get Group ID from POST.
-				global $bp_groupsites;
-				$group_id = $bp_groupsites->activity->get_group_id_from_comment_form();
+				if ( defined( 'BPGSITES_VERSION' ) ) {
+					if ( function_exists( 'bp_groupsites' ) ) {
+						$group_id = bp_groupsites()->activity->get_group_id_from_comment_form();
+					} else {
+						global $bp_groupsites;
+						$group_id = $bp_groupsites->activity->get_group_id_from_comment_form();
+					}
+				}
 
 				// Kick out if not a Comment in a Group.
 				if ( false === $group_id ) {
