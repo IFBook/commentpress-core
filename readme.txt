@@ -216,6 +216,10 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+= 4.0.4 =
+
+* Better support for Featured Comments in original theme
+
 = 4.0.3 =
 
 * Fix appearance of "Discard Comment" modal
