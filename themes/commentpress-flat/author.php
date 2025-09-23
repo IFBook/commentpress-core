@@ -71,7 +71,7 @@ get_header();
 							 *
 							 * @since 3.4
 							 *
-							 * @param str The default Posts List title.
+							 * @param string The default Posts List title.
 							 */
 							$posts_list_title = apply_filters( 'cp_author_page_posts_list_title', __( 'Posts written by', 'commentpress-core' ) );
 
@@ -140,7 +140,7 @@ get_header();
 								 *
 								 * @since 3.4
 								 *
-								 * @param str The default Posts List title.
+								 * @param string The default Posts List title.
 								 */
 								$pages_list_title = apply_filters( 'cp_author_page_pages_list_title', __( 'Pages written by', 'commentpress-core' ) );
 

@@ -466,7 +466,7 @@ if ( ! function_exists( 'commentpress_header_bg_color' ) ) :
 		 *
 		 * @since 3.0
 		 *
-		 * @param str $bg_color The default header bgcolor.
+		 * @param string $bg_color The default header bgcolor.
 		 */
 		$bg_colour = apply_filters( 'cp_default_header_bgcolor', $bg_colour );
 
@@ -567,8 +567,8 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $page_or_post Retrieve either 'page' or 'post' Comments.
-	 * @return str $html The Comments markup.
+	 * @param string $page_or_post Retrieve either 'page' or 'post' Comments.
+	 * @return string $html The Comments markup.
 	 */
 	function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 
@@ -709,7 +709,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @return str $page_content The Page content.
+	 * @return string $page_content The Page content.
 	 */
 	function commentpress_get_all_comments_page_content() {
 
@@ -736,7 +736,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 		 *
 		 * @since 3.0
 		 *
-		 * @param str The default title of the "All Comments" Page.
+		 * @param string The default title of the "All Comments" Page.
 		 */
 		$blog_title = apply_filters( 'cp_page_all_comments_blog_title', __( 'Comments on the Blog', 'commentpress-core' ) );
 
@@ -745,7 +745,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 		 *
 		 * @since 3.0
 		 *
-		 * @param str The default title of the "All Comments" Page.
+		 * @param string The default title of the "All Comments" Page.
 		 */
 		$book_title = apply_filters( 'cp_page_all_comments_book_title', __( 'Comments on the Pages', 'commentpress-core' ) );
 
@@ -802,8 +802,8 @@ if ( ! function_exists( 'commentpress_add_loginout_id' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $link The existing link.
-	 * @return str $link The modified link.
+	 * @param string $link The existing link.
+	 * @return string $link The modified link.
 	 */
 	function commentpress_add_loginout_id( $link ) {
 
@@ -854,8 +854,8 @@ if ( ! function_exists( 'commentpress_convert_link_to_button' ) ) :
 	 *
 	 * @since 3.5
 	 *
-	 * @param str $link The existing link.
-	 * @return str $link The modified link.
+	 * @param string $link The existing link.
+	 * @return string $link The modified link.
 	 */
 	function commentpress_convert_link_to_button( $link ) {
 
@@ -901,7 +901,7 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 			 *
 			 * @since 3.9
 			 *
-			 * @param str The HTML for showing the image.
+			 * @param string  The HTML for showing the image.
 			 * @param WP_Post The current WordPress Post object.
 			 */
 			$cp_image = apply_filters( 'commentpress_get_feature_image', get_the_post_thumbnail( get_the_ID(), 'commentpress-feature' ), $post );
@@ -939,7 +939,7 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 						 *
 						 * @since 3.9.10
 						 *
-						 * @param str $title The HTML for showing the image.
+						 * @param string  $title The HTML for showing the image.
 						 * @param WP_Post $post The current WordPress Post object.
 						 */
 						$title = apply_filters( 'commentpress_get_feature_image_title', $title, $post );
@@ -966,7 +966,7 @@ if ( ! function_exists( 'commentpress_get_feature_image' ) ) :
 						 *
 						 * @since 3.9.10
 						 *
-						 * @param str $title The HTML for showing the image.
+						 * @param string  $title The HTML for showing the image.
 						 * @param WP_Post $post The current WordPress Post object.
 						 */
 						$title = apply_filters( 'commentpress_get_feature_image_title', $title, $post );
@@ -1034,8 +1034,8 @@ function commentpress_has_feature_image() {
  *
  * @since 4.0
  *
- * @param str $css_id The default Navigation link CSS ID.
- * @return str $css_id The modified Navigation link CSS ID.
+ * @param string $css_id The default Navigation link CSS ID.
+ * @return string $css_id The modified Navigation link CSS ID.
  */
 function commentpress_page_link_css_id( $css_id ) {
 	return '';

@@ -98,7 +98,7 @@ defined( 'ABSPATH' ) || exit;
 	 *
 	 * @since 3.4
 	 *
-	 * @param str Empty by default so that it can be populated.
+	 * @param string Empty by default so that it can be populated.
 	 */
 	echo apply_filters_deprecated( 'commentpress_theme_customisation_options', [ '' ], '4.0' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 

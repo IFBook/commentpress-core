@@ -377,7 +377,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $singular The singular name of a Group Blog if found, false otherwise.
+	 * @return string $singular The singular name of a Group Blog if found, false otherwise.
 	 */
 	public function setting_singular_get() {
 
@@ -394,7 +394,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $singular The singular name of a Group Blog.
+	 * @param string $singular The singular name of a Group Blog.
 	 */
 	public function setting_singular_set( $singular ) {
 
@@ -420,7 +420,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $plural The plural name of a Group Blog if found, false otherwise.
+	 * @return string $plural The plural name of a Group Blog if found, false otherwise.
 	 */
 	public function setting_plural_get() {
 
@@ -449,7 +449,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $plural The plural name of a Group Blog.
+	 * @param string $plural The plural name of a Group Blog.
 	 */
 	public function setting_plural_set( $plural ) {
 
@@ -463,7 +463,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $slug The slug for Group Blogs if found, false otherwise.
+	 * @return string $slug The slug for Group Blogs if found, false otherwise.
 	 */
 	public function setting_slug_get() {
 
@@ -480,7 +480,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $slug The slug for Group Blogs.
+	 * @param string $slug The slug for Group Blogs.
 	 */
 	public function setting_slug_set( $slug ) {
 
@@ -506,7 +506,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $scheme The naming scheme for Group Blogs if found, false otherwise.
+	 * @return string $scheme The naming scheme for Group Blogs if found, false otherwise.
 	 */
 	public function setting_scheme_get() {
 
@@ -523,7 +523,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $scheme The naming scheme for Group Blogs.
+	 * @param string $scheme The naming scheme for Group Blogs.
 	 */
 	public function setting_scheme_set( $scheme ) {
 
@@ -539,8 +539,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $name The existing name of a "blog".
-	 * @return str $name The modified name of a "blog".
+	 * @param string $name The existing name of a "blog".
+	 * @return string $name The modified name of a "blog".
 	 */
 	public function blog_name_filter( $name ) {
 
@@ -563,8 +563,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $slug The existing slug of a "blog".
-	 * @return str $slug The modified slug of a "blog".
+	 * @param string $slug The existing slug of a "blog".
+	 * @return string $slug The modified slug of a "blog".
 	 */
 	public function blog_slug_filter( $slug ) {
 
@@ -599,9 +599,9 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $label The existing Blogs button label.
-	 * @param str $site_text_format The text format of Blog. Either 'blog' or 'commentpress'.
-	 * @return str $label The modified Blogs button label.
+	 * @param string $label The existing Blogs button label.
+	 * @param string $site_text_format The text format of Blog. Either 'blog' or 'commentpress'.
+	 * @return string $label The modified Blogs button label.
 	 */
 	public function blog_visit_blog_button_filter( $label, $site_text_format ) {
 
@@ -653,7 +653,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 3.3
 	 *
-	 * @return str The name in the Group Blog Comments label.
+	 * @return string The name in the Group Blog Comments label.
 	 */
 	public function groupblog_comment_name() {
 
@@ -671,7 +671,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 3.3
 	 *
-	 * @return str The plural name in the Group Blog Posts label.
+	 * @return string The plural name in the Group Blog Posts label.
 	 */
 	public function groupblog_post_name() {
 
@@ -691,7 +691,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 3.3
 	 *
-	 * @return str The singular name of the Group Blog Post.
+	 * @return string The singular name of the Group Blog Post.
 	 */
 	public function activity_post_name() {
 
@@ -709,8 +709,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $title The title of the Recent Comments heading.
-	 * @return str $title The modified title of the Recent Comments heading.
+	 * @param string $title The title of the Recent Comments heading.
+	 * @return string $title The modified title of the Recent Comments heading.
 	 */
 	public function activity_tab_recent_title_blog_filter( $title ) {
 
@@ -758,8 +758,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $title The title of the "Recent Activity in..." heading.
-	 * @return str $title The modified title of the "Recent Activity in..." heading.
+	 * @param string $title The title of the "Recent Activity in..." heading.
+	 * @return string $title The modified title of the "Recent Activity in..." heading.
 	 */
 	public function activity_title_all_yours_filter( $title ) {
 
@@ -785,8 +785,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $title The title of the "Recent Activity in..." heading.
-	 * @return str $title The modified title of the "Recent Activity in..." heading.
+	 * @param string $title The title of the "Recent Activity in..." heading.
+	 * @return string $title The modified title of the "Recent Activity in..." heading.
 	 */
 	public function activity_title_all_public_filter( $title ) {
 
@@ -814,8 +814,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $title The title of the All Comments heading.
-	 * @return str $title The modified title of the All Comments heading.
+	 * @param string $title The title of the All Comments heading.
+	 * @return string $title The modified title of the All Comments heading.
 	 */
 	public function page_all_comments_blog_title( $title ) {
 
@@ -838,8 +838,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $title The title of the "Comments on..." heading.
-	 * @return str $title The modified title of the "Comments on..." heading.
+	 * @param string $title The title of the "Comments on..." heading.
+	 * @return string $title The modified title of the "Comments on..." heading.
 	 */
 	public function page_all_comments_book_title( $title ) {
 
@@ -864,8 +864,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $title The title of the "Group Blog Home Page" heading.
-	 * @return str $title The modified title of the "Group Blog Home Page" heading.
+	 * @param string $title The title of the "Group Blog Home Page" heading.
+	 * @return string $title The modified title of the "Group Blog Home Page" heading.
 	 */
 	public function nav_title_page_title_filter( $title ) {
 
@@ -944,7 +944,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $singular The singular name for Group Blogs.
+	 * @return string $singular The singular name for Group Blogs.
 	 */
 	public function scheme_singular_get() {
 
@@ -980,7 +980,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $plural The plural name for Group Blogs.
+	 * @return string $plural The plural name for Group Blogs.
 	 */
 	public function scheme_plural_get() {
 
@@ -1016,7 +1016,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $slug The slug for Group Blogs.
+	 * @return string $slug The slug for Group Blogs.
 	 */
 	public function scheme_slug_get() {
 
@@ -1070,7 +1070,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 3.3
 	 *
-	 * @return str $singular The legacy singular name of a Group Blog.
+	 * @return string $singular The legacy singular name of a Group Blog.
 	 */
 	public function legacy_singular_get() {
 		return __( 'Workshop', 'commentpress-core' );
@@ -1081,7 +1081,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 3.3
 	 *
-	 * @return str $plural The legacy plural name of a Group Blog.
+	 * @return string $plural The legacy plural name of a Group Blog.
 	 */
 	public function legacy_plural_get() {
 		return __( 'Workshops', 'commentpress-core' );
@@ -1092,7 +1092,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Names {
 	 *
 	 * @since 3.3
 	 *
-	 * @return str $slug The legacy slug of a Group Blog.
+	 * @return string $slug The legacy slug of a Group Blog.
 	 */
 	public function legacy_slug_get() {
 		return 'workshop';

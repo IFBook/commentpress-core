@@ -322,7 +322,7 @@ class CommentPress_Core_Theme_Sidebar {
 	 *
 	 * @since 3.4
 	 *
-	 * @return str $default The "code" of the default Sidebar.
+	 * @return string $default The "code" of the default Sidebar.
 	 */
 	public function default_get() {
 
@@ -338,7 +338,7 @@ class CommentPress_Core_Theme_Sidebar {
 		 *
 		 * @since 3.9.8
 		 *
-		 * @param str The default sidebar. Defaults to 'activity'.
+		 * @param string The default sidebar. Defaults to 'activity'.
 		 */
 		$default = apply_filters( 'commentpress_default_sidebar', 'activity' );
 

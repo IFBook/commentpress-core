@@ -116,7 +116,7 @@ if ( ! function_exists( 'commentpress_page_navigation_template' ) ) :
 		 *
 		 * @since 3.4
 		 *
-		 * @param str $template The path to the template.
+		 * @param string $template The path to the template.
 		 */
 		$template = apply_filters( 'cp_template_page_navigation', $template );
 
@@ -139,7 +139,7 @@ if ( ! function_exists( 'commentpress_page_navigation' ) ) :
 	 * @since 3.0
 	 *
 	 * @param bool $with_comments True returns the Previous Page and Next Page with Comments.
-	 * @return str $nav_list The unordered list of navigation links.
+	 * @return string $nav_list The unordered list of navigation links.
 	 */
 	function commentpress_page_navigation( $with_comments = false ) {
 
@@ -210,7 +210,7 @@ if ( ! function_exists( 'commentpress_page_navigation_get_next_link' ) ) :
 	 * @since 4.0
 	 *
 	 * @param bool $with_comments True returns the Next Page with Comments.
-	 * @return str $link The markup for the "Next Page" Navigation link.
+	 * @return string $link The markup for the "Next Page" Navigation link.
 	 */
 	function commentpress_page_navigation_get_next_link( $with_comments = false ) {
 
@@ -243,7 +243,7 @@ if ( ! function_exists( 'commentpress_page_navigation_get_next_link' ) ) :
 		 *
 		 * @since 4.0
 		 *
-		 * @param str The default "Next Page" Navigation link CSS ID.
+		 * @param string The default "Next Page" Navigation link CSS ID.
 		 */
 		$css_id = apply_filters( 'commentpress/navigation/page/link/next/css_id', 'next_page' );
 
@@ -285,7 +285,7 @@ if ( ! function_exists( 'commentpress_page_navigation_get_previous_link' ) ) :
 	 * @since 4.0
 	 *
 	 * @param bool $with_comments True returns the Previous Page with Comments.
-	 * @return str $link The markup for the "Previous Page" Navigation link.
+	 * @return string $link The markup for the "Previous Page" Navigation link.
 	 */
 	function commentpress_page_navigation_get_previous_link( $with_comments = false ) {
 
@@ -318,7 +318,7 @@ if ( ! function_exists( 'commentpress_page_navigation_get_previous_link' ) ) :
 		 *
 		 * @since 4.0
 		 *
-		 * @param str The default "Previous Page" Navigation link CSS ID.
+		 * @param string The default "Previous Page" Navigation link CSS ID.
 		 */
 		$css_id = apply_filters( 'commentpress/navigation/page/link/previous/css_id', 'previous_page' );
 
@@ -359,7 +359,7 @@ if ( ! function_exists( 'commentpress_navigation_network_home_title' ) ) :
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $title The default "Network Home" title.
+	 * @return string $title The default "Network Home" title.
 	 */
 	function commentpress_navigation_network_home_title() {
 
@@ -368,7 +368,7 @@ if ( ! function_exists( 'commentpress_navigation_network_home_title' ) ) :
 		 *
 		 * @since 3.4
 		 *
-		 * @param str The default Network Home title.
+		 * @param string The default Network Home title.
 		 */
 		$title = apply_filters( 'cp_nav_network_home_title', __( 'Site Home Page', 'commentpress-core' ) );
 
@@ -388,7 +388,7 @@ if ( ! function_exists( 'commentpress_navigation_group_home_title' ) ) :
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $title The default "Group Home" title.
+	 * @return string $title The default "Group Home" title.
 	 */
 	function commentpress_navigation_group_home_title() {
 
@@ -397,7 +397,7 @@ if ( ! function_exists( 'commentpress_navigation_group_home_title' ) ) :
 		 *
 		 * @since 3.4
 		 *
-		 * @param str The default Group Home Page title.
+		 * @param string The default Group Home Page title.
 		 */
 		$title = apply_filters( 'cp_nav_group_home_title', __( 'Group Home Page', 'commentpress-core' ) );
 
@@ -417,7 +417,7 @@ if ( ! function_exists( 'commentpress_navigation_blog_home_title' ) ) :
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $title The default "Blog Home" title.
+	 * @return string $title The default "Blog Home" title.
 	 */
 	function commentpress_navigation_blog_home_title() {
 
@@ -428,7 +428,7 @@ if ( ! function_exists( 'commentpress_navigation_blog_home_title' ) ) :
 		 *
 		 * @since 3.4
 		 *
-		 * @param str The default Home Page title.
+		 * @param string The default Home Page title.
 		 */
 		$title = apply_filters( 'cp_nav_blog_home_title', __( 'Home Page', 'commentpress-core' ) );
 
@@ -448,7 +448,7 @@ if ( ! function_exists( 'commentpress_navigation_title_page_title' ) ) :
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $title The default "Welcome Page" title.
+	 * @return string $title The default "Welcome Page" title.
 	 */
 	function commentpress_navigation_title_page_title() {
 
@@ -457,7 +457,7 @@ if ( ! function_exists( 'commentpress_navigation_title_page_title' ) ) :
 		 *
 		 * @since 3.4
 		 *
-		 * @param str The default Welcome Page title.
+		 * @param string The default Welcome Page title.
 		 */
 		$title = apply_filters( 'cp_nav_title_page_title', __( 'Title Page', 'commentpress-core' ) );
 
@@ -477,7 +477,7 @@ if ( ! function_exists( 'commentpress_navigation_new_site_title' ) ) :
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $title The default "New Site" title.
+	 * @return string $title The default "New Site" title.
 	 */
 	function commentpress_navigation_new_site_title() {
 
@@ -492,7 +492,7 @@ if ( ! function_exists( 'commentpress_navigation_new_site_title' ) ) :
 		 *
 		 * @since 3.4
 		 *
-		 * @param str The default New Site title.
+		 * @param string The default New Site title.
 		 */
 		$title = apply_filters( 'cp_user_links_new_site_title', __( 'Create a new document', 'commentpress-core' ) );
 
@@ -512,7 +512,7 @@ if ( ! function_exists( 'commentpress_navigation_dashboard_title' ) ) :
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $title The default "Dashboard" title.
+	 * @return string $title The default "Dashboard" title.
 	 */
 	function commentpress_navigation_dashboard_title() {
 
@@ -521,7 +521,7 @@ if ( ! function_exists( 'commentpress_navigation_dashboard_title' ) ) :
 		 *
 		 * @since 3.4
 		 *
-		 * @param str The default Dashboard title.
+		 * @param string The default Dashboard title.
 		 */
 		$title = apply_filters( 'cp_user_links_dashboard_title', __( 'Dashboard', 'commentpress-core' ) );
 
@@ -599,7 +599,6 @@ if ( ! function_exists( 'commentpress_page_number' ) ) :
 		 *
 		 * @param bool False by default. Return true to skip building string.
 		 */
-		// Allow this to be disabled.
 		if ( ! apply_filters( 'commentpress_hide_page_number_string', false ) ) {
 
 			// Build Page number string.
@@ -640,7 +639,7 @@ if ( ! function_exists( 'commentpress_multipager' ) ) :
 	 *
 	 * @since 3.5
 	 *
-	 * @return str $page_links The Next Page and Previous Page links.
+	 * @return string $page_links The Next Page and Previous Page links.
 	 */
 	function commentpress_multipager() {
 

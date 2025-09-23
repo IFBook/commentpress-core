@@ -445,7 +445,7 @@ if ( ! function_exists( 'commentpress_header_bg_color' ) ) :
 		 *
 		 * @since 3.0
 		 *
-		 * @param str $bg_color The default header bgcolor.
+		 * @param string $bg_color The default header bgcolor.
 		 */
 		$bg_colour = apply_filters( 'cp_default_header_bgcolor', $bg_colour );
 
@@ -546,8 +546,8 @@ if ( ! function_exists( 'commentpress_get_all_comments_content' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $page_or_post Retrieve either 'page' or 'post' Comments.
-	 * @return str $html The Comments markup.
+	 * @param string $page_or_post Retrieve either 'page' or 'post' Comments.
+	 * @return string $html The Comments markup.
 	 */
 	function commentpress_get_all_comments_content( $page_or_post = 'page' ) {
 
@@ -695,7 +695,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @return str $page_content The Page content.
+	 * @return string $page_content The Page content.
 	 */
 	function commentpress_get_all_comments_page_content() {
 
@@ -722,7 +722,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 		 *
 		 * @since 3.0
 		 *
-		 * @param str The default title of the "All Comments" Page.
+		 * @param string The default title of the "All Comments" Page.
 		 */
 		$blog_title = apply_filters( 'cp_page_all_comments_blog_title', __( 'Comments on the Blog', 'commentpress-core' ) );
 
@@ -731,7 +731,7 @@ if ( ! function_exists( 'commentpress_get_all_comments_page_content' ) ) :
 		 *
 		 * @since 3.0
 		 *
-		 * @param str The default title of the "All Comments" Page.
+		 * @param string The default title of the "All Comments" Page.
 		 */
 		$book_title = apply_filters( 'cp_page_all_comments_book_title', __( 'Comments on the Pages', 'commentpress-core' ) );
 
@@ -788,8 +788,8 @@ if ( ! function_exists( 'commentpress_add_loginout_id' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $link The existing link.
-	 * @return str $link The modified link.
+	 * @param string $link The existing link.
+	 * @return string $link The modified link.
 	 */
 	function commentpress_add_loginout_id( $link ) {
 
@@ -867,8 +867,8 @@ add_action( 'widgets_init', 'commentpress_register_widget_areas' );
  *
  * @since 3.9.8
  *
- * @param str $sidebar The default sidebar before any contextual modifications.
- * @return str $sidebar The modified sidebar before any contextual modifications.
+ * @param string $sidebar The default sidebar before any contextual modifications.
+ * @return string $sidebar The modified sidebar before any contextual modifications.
  */
 function commentpress_default_theme_default_sidebar( $sidebar ) {
 

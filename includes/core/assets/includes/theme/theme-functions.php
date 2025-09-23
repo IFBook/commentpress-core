@@ -119,7 +119,7 @@ if ( ! function_exists( 'commentpress_header_body_template' ) ) :
 		 *
 		 * @since 3.4
 		 *
-		 * @param str $template The path to the Header Body template.
+		 * @param string $template The path to the Header Body template.
 		 */
 		$template = apply_filters( 'cp_template_header_body', $template );
 
@@ -364,7 +364,7 @@ if ( ! function_exists( 'commentpress_get_body_classes' ) ) :
 	 *
 	 * @since 3.3
 	 *
-	 * @param boolean $raw If true, returns the class names, if false, returns the attribute.
+	 * @param bool $raw If true, returns the class names, if false, returns the attribute.
 	 * @return string $body_classes The class attribute for the body tag.
 	 */
 	function commentpress_get_body_classes( $raw = false ) {
@@ -460,7 +460,7 @@ if ( ! function_exists( 'commentpress_header_meta_description' ) ) :
 	 *
 	 * @since 3.9.10
 	 *
-	 * @return str $description The content of the meta description tag.
+	 * @return string $description The content of the meta description tag.
 	 */
 	function commentpress_header_meta_description() {
 
@@ -503,8 +503,7 @@ if ( ! function_exists( 'commentpress_header_meta_description' ) ) :
 		 *
 		 * @since 3.9.10
 		 *
-		 * @param str $description The existing meta description.
-		 * @return str $description The modified meta description.
+		 * @param string $description The existing meta description.
 		 */
 		$description = apply_filters( 'commentpress_header_meta_description', $description );
 
@@ -601,7 +600,7 @@ if ( ! function_exists( 'commentpress_has_page_children' ) ) :
 	 * @since 3.3
 	 *
 	 * @param WP_Post $page_obj The WordPress Page object to query.
-	 * @return boolean True if Page has children, false otherwise.
+	 * @return bool True if Page has children, false otherwise.
 	 */
 	function commentpress_has_page_children( $page_obj ) {
 
@@ -729,7 +728,7 @@ if ( ! function_exists( 'commentpress_echo_post_author' ) ) :
 	 *
 	 * @param int  $author_id The numeric ID of the author.
 	 * @param bool $echo Print or return the linked username.
-	 * @return str $author The linked username.
+	 * @return string $author The linked username.
 	 */
 	function commentpress_echo_post_author( $author_id, $echo = true ) {
 
@@ -867,9 +866,9 @@ if ( ! function_exists( 'commentpress_get_full_name' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $forename The WordPress User's first name.
-	 * @param str $surname The WordPress User's last name.
-	 * @return str $fullname The WordPress User's full name.
+	 * @param string $forename The WordPress User's first name.
+	 * @param string $surname The WordPress User's last name.
+	 * @return string $fullname The WordPress User's full name.
 	 */
 	function commentpress_get_full_name( $forename, $surname ) {
 
@@ -1007,7 +1006,7 @@ if ( ! function_exists( 'commentpress_license_image_css' ) ) :
 	 *
 	 * @since 3.3
 	 *
-	 * @return str The CSS for amending the license plugin image.
+	 * @return string The CSS for amending the license plugin image.
 	 */
 	function commentpress_license_image_css() {
 
@@ -1086,8 +1085,8 @@ if ( ! function_exists( 'commentpress_widget_title' ) ) :
 	 *
 	 * @since 3.8.10
 	 *
-	 * @param str $title The possibly-empty Widget title.
-	 * @return str $title The non-empty title.
+	 * @param string $title The possibly-empty Widget title.
+	 * @return string $title The non-empty title.
 	 */
 	function commentpress_widget_title( $title = '' ) {
 
@@ -1170,7 +1169,7 @@ if ( ! function_exists( 'commentpress_get_post_css_override' ) ) :
 	 * @since 3.3
 	 *
 	 * @param int $post_id The numeric ID of the Post.
-	 * @return str $class_name The CSS class.
+	 * @return string $class_name The CSS class.
 	 */
 	function commentpress_get_post_css_override( $post_id ) {
 

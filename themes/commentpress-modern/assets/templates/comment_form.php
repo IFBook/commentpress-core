@@ -93,7 +93,7 @@ $show_comment_form = apply_filters( 'commentpress_show_comment_form', true );
 					/**
 					 * Filters the "login required" text.
 					 *
-					 * @param str $must_log_in The default "login required" text.
+					 * @param string $must_log_in The default "login required" text.
 					 */
 					$must_log_in = apply_filters( 'commentpress_comment_form_hidden', $must_log_in );
 

@@ -341,8 +341,7 @@ class CommentPress_AJAX_Infinite_Scroll {
 		 *
 		 * @since 3.4
 		 *
-		 * @param str The existing path returned by WordPress.
-		 * @return str The modified path.
+		 * @param string The existing path returned by WordPress.
 		 */
 		$cp_comments_by_para = apply_filters( 'cp_template_comments_by_para', locate_template( 'assets/templates/comments_by_para.php' ) );
 

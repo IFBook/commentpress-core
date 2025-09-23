@@ -224,7 +224,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $compatibility The compatibility status flag.
+	 * @return string $compatibility The compatibility status flag.
 	 */
 	public function compatibility_get() {
 		return $this->compatibility;
@@ -588,7 +588,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $theme The theme "stylesheet".
+	 * @param string $theme The theme "stylesheet".
 	 */
 	public function setting_theme_set( $theme ) {
 
@@ -830,7 +830,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 * @since 4.0
 	 *
 	 * @param int $group_id The numeric ID of the Group.
-	 * @return str $group_type The Group Type identifier, or false on failure.
+	 * @return string $group_type The Group Type identifier, or false on failure.
 	 */
 	public function group_type_get( $group_id ) {
 
@@ -847,8 +847,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 *
 	 * @since 4.0
 	 *
-	 * @param int $group_id The numeric ID of the Group.
-	 * @param str $group_type The Group Type identifier.
+	 * @param int    $group_id The numeric ID of the Group.
+	 * @param string $group_type The Group Type identifier.
 	 */
 	public function group_type_set( $group_id, $group_type ) {
 
@@ -862,7 +862,7 @@ class CommentPress_Multisite_BuddyPress_Groupblog {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $formatter The "Text Format" setting.
+	 * @param string $formatter The "Text Format" setting.
 	 */
 	public function group_type_set_by_text_format( $formatter ) {
 

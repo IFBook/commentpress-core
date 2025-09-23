@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 3.4
  *
- * @param str The default Older Entries title.
+ * @param string The default Older Entries title.
  */
 $previous_title = apply_filters( 'cp_nav_previous_link_title', __( 'Older Entries', 'commentpress-core' ) );
 
@@ -24,7 +24,7 @@ $previous_title = apply_filters( 'cp_nav_previous_link_title', __( 'Older Entrie
  *
  * @since 3.4
  *
- * @param str The default Newer Entries title.
+ * @param string The default Newer Entries title.
  */
 $next_title = apply_filters( 'cp_nav_next_link_title', __( 'Newer Entries', 'commentpress-core' ) );
 
@@ -53,7 +53,7 @@ if ( ! empty( $core ) ) {
 			 *
 			 * @since 3.4
 			 *
-			 * @param str The default custom Page Navigation markup.
+			 * @param string The default custom Page Navigation markup.
 			 */
 			$cp_page_nav = apply_filters( 'cp_template_page_navigation', commentpress_page_navigation() );
 

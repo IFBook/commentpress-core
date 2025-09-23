@@ -125,8 +125,8 @@ if ( ! function_exists( 'commentpress_bp_activity_css_class' ) ) :
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $existing_class The existing class.
-	 * @return str $existing_class The overridden class.
+	 * @param string $existing_class The existing class.
+	 * @return string $existing_class The overridden class.
 	 */
 	function commentpress_bp_activity_css_class( $existing_class ) {
 

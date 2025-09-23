@@ -32,9 +32,8 @@ if ( $is_commentable && ! post_password_required() ) {
 	 *
 	 * @since 3.8.10
 	 *
-	 * @param str $singular_name The singular label for this Post Type.
-	 * @param str $current_type The Post Type identifier.
-	 * @return str $singular_name The modified label for this Post Type.
+	 * @param string $singular_name The singular label for this Post Type.
+	 * @param string $current_type The Post Type identifier.
 	 */
 	$post_type_name = apply_filters( 'commentpress_lexia_post_type_name', $post_type_obj->labels->singular_name, $current_type );
 
@@ -50,7 +49,7 @@ if ( $is_commentable && ! post_password_required() ) {
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $_paragraph_text The default "Recent Comments" phrase.
+	 * @param string $_paragraph_text The default "Recent Comments" phrase.
 	 */
 	$page_comments_title = apply_filters( 'cp_activity_tab_recent_title_page', $_paragraph_text );
 
@@ -64,7 +63,7 @@ if ( $is_commentable && ! post_password_required() ) {
  *
  * @since 3.4
  *
- * @param str The default "All Recent Comments" phrase.
+ * @param string The default "All Recent Comments" phrase.
  */
 $_all_comments_title = apply_filters( 'cp_activity_tab_recent_title_blog', __( 'Recent Comments in this Document', 'commentpress-core' ) );
 
@@ -197,6 +196,8 @@ $_max_members = 10;
 								 * Allow plugins to set their own title here.
 								 *
 								 * @since 3.4.8
+								 *
+								 * @param string The default phrase.
 								 */
 								$_section_header_text = apply_filters( 'cp_activity_tab_recent_title_all_yours', __( 'Recent Activity in your Documents', 'commentpress-core' ) );
 
@@ -206,6 +207,8 @@ $_max_members = 10;
 								 * Allow plugins to set their own title here.
 								 *
 								 * @since 3.4.8
+								 *
+								 * @param string The default phrase.
 								 */
 								$_section_header_text = apply_filters( 'cp_activity_tab_recent_title_all_public', __( 'Recent Activity in Public Documents', 'commentpress-core' ) );
 

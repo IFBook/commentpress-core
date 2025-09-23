@@ -30,7 +30,7 @@ get_header();
 						 *
 						 * @since 3.4
 						 *
-						 * @param str The default title.
+						 * @param string The default title.
 						 */
 						$all_comments_title = apply_filters( 'cp_page_all_comments_title', __( 'All Comments', 'commentpress-core' ) );
 

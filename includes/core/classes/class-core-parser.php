@@ -563,8 +563,8 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The content of the Page/Post.
-	 * @return str $content The modified content.
+	 * @param string $content The content of the Page/Post.
+	 * @return string $content The modified content.
 	 */
 	public function the_content( $content ) {
 
@@ -636,8 +636,8 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The existing content.
-	 * @return str $content The modified content.
+	 * @param string $content The existing content.
+	 * @return string $content The modified content.
 	 */
 	public function the_content_parse( $content ) {
 
@@ -672,7 +672,7 @@ class CommentPress_Core_Parser {
 			 *
 			 * @since 4.0
 			 *
-			 * @param str $parser The type of content parser to use.
+			 * @param string $parser The type of content parser to use.
 			 */
 			$this->parser = apply_filters( 'commentpress/core/parser/content/parser', 'tag' );
 
@@ -733,7 +733,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.8.10
 	 *
-	 * @param str $parser The type of content parser.
+	 * @param string $parser The type of content parser.
 	 */
 	public function lexia_set( $parser ) {
 
@@ -760,9 +760,8 @@ class CommentPress_Core_Parser {
 		 *
 		 * @since 3.8.10
 		 *
-		 * @param str $block_name The existing name of the Block.
-		 * @param str $parser The type of content parser.
-		 * @return str $block_name The modified name of the Block.
+		 * @param string $block_name The existing name of the Block.
+		 * @param string $parser The type of content parser.
 		 */
 		$this->block_name = apply_filters( 'commentpress_lexia_block_name', $block_name, $parser );
 
@@ -773,7 +772,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.8.10
 	 *
-	 * @return str $block_name The name of the Block.
+	 * @return string $block_name The name of the Block.
 	 */
 	public function lexia_get() {
 
@@ -789,9 +788,9 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The Post content.
-	 * @param str $tag The tag to filter by.
-	 * @return str $content the parsed content.
+	 * @param string $content The Post content.
+	 * @param string $tag The tag to filter by.
+	 * @return string $content the parsed content.
 	 */
 	private function tags_parse( $content, $tag = 'p|ul|ol' ) {
 
@@ -1063,8 +1062,8 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The Post content.
-	 * @param str $tag The tag to filter by.
+	 * @param string $content The Post content.
+	 * @param string $tag The tag to filter by.
 	 * @return array $matches The ordered array of matched items.
 	 */
 	private function tag_matches_get( $content, $tag = 'p|ul|ol' ) {
@@ -1101,8 +1100,8 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The Post content.
-	 * @param str $tag The tag to filter by.
+	 * @param string $content The Post content.
+	 * @param string $tag The tag to filter by.
 	 * @return array $text_signatures The ordered array of Text Signatures.
 	 */
 	private function tag_signatures_generate( $content, $tag = 'p|ul|ol' ) {
@@ -1183,8 +1182,8 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The Post content.
-	 * @return str $content The parsed content.
+	 * @param string $content The Post content.
+	 * @return string $content The parsed content.
 	 */
 	private function lines_parse( $content ) {
 
@@ -1307,7 +1306,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The Post content.
+	 * @param string $content The Post content.
 	 * @return array $output_array The ordered array of matched items.
 	 */
 	private function line_matches_get( $content ) {
@@ -1367,7 +1366,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The Post content.
+	 * @param string $content The Post content.
 	 * @return array $text_signatures The ordered array of Text Signatures.
 	 */
 	private function line_signatures_generate( $content ) {
@@ -1472,8 +1471,8 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The Post content.
-	 * @return str $content The parsed content.
+	 * @param string $content The Post content.
+	 * @return string $content The parsed content.
 	 */
 	private function blocks_parse( $content ) {
 
@@ -1579,7 +1578,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The Post content.
+	 * @param string $content The Post content.
 	 * @return array $output_array The ordered array of matched items.
 	 */
 	private function block_matches_get( $content ) {
@@ -1724,7 +1723,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The Post content.
+	 * @param string $content The Post content.
 	 * @return array $text_signatures The ordered array of Text Signatures.
 	 */
 	private function block_signatures_generate( $content ) {
@@ -1799,8 +1798,8 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The Post content.
-	 * @return str $content The modified Post content.
+	 * @param string $content The Post content.
+	 * @return string $content The modified Post content.
 	 */
 	private function filter_quicktags( $content ) {
 
@@ -1953,8 +1952,8 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $content The Post content.
-	 * @return str $content The filtered Post content.
+	 * @param string $content The Post content.
+	 * @return string $content The filtered Post content.
 	 */
 	private function filter_jetpack_sharing( $content ) {
 
@@ -1989,8 +1988,8 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $content The Post content.
-	 * @return str $content The filtered Post content.
+	 * @param string $content The Post content.
+	 * @return string $content The filtered Post content.
 	 */
 	private function filter_twitter_embeds( $content ) {
 
@@ -2036,8 +2035,8 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.8
 	 *
-	 * @param str $content The Post content.
-	 * @return str $content The filtered Post content.
+	 * @param string $content The Post content.
+	 * @return string $content The filtered Post content.
 	 */
 	private function filter_captions( $content ) {
 
@@ -2319,9 +2318,9 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param array   $comments The array of Comment objects.
-	 * @param array   $text_signatures The array of Text Signatures.
-	 * @param integer $confidence The confidence level of Paragraph identity - default 90%.
+	 * @param array $comments The array of Comment objects.
+	 * @param array $text_signatures The array of Text Signatures.
+	 * @param int   $confidence The confidence level of Paragraph identity - default 90%.
 	 * @return array $assigned The array with Text Signatures as keys and array of Comments as values.
 	 */
 	private function comments_assign( $comments, $text_signatures, $confidence = 90 ) {
@@ -2471,8 +2470,8 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $text The text of a Paragraph.
-	 * @return str $text_signature The generated Text Signature.
+	 * @param string $text The text of a Paragraph.
+	 * @return string $text_signature The generated Text Signature.
 	 */
 	private function text_signature_generate( $text ) {
 
@@ -2514,7 +2513,7 @@ class CommentPress_Core_Parser {
 	 * @since 4.0 Moved to this class.
 	 *
 	 * @param int $para_num The Paragraph Number in a Post.
-	 * @return str $text_signature The Text Signature.
+	 * @return string $text_signature The Text Signature.
 	 */
 	public function text_signature_get( $para_num ) {
 
@@ -2535,7 +2534,7 @@ class CommentPress_Core_Parser {
 	 * @since 3.4
 	 *
 	 * @param int $comment_id The numeric ID of the Comment.
-	 * @return str $text_signature The Text Signature for the Comment.
+	 * @return string $text_signature The Text Signature for the Comment.
 	 */
 	public function text_signature_get_by_comment_id( $comment_id ) {
 
@@ -2556,7 +2555,7 @@ class CommentPress_Core_Parser {
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
 	 *
-	 * @return str $result The HTML input.
+	 * @return string $result The HTML input.
 	 */
 	public function text_signature_field_get() {
 
@@ -2603,8 +2602,8 @@ class CommentPress_Core_Parser {
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
 	 *
-	 * @param str $text_signature The Text Signature.
-	 * @return str $input The HTML input element.
+	 * @param string $text_signature The Text Signature.
+	 * @return string $input The HTML input element.
 	 */
 	public function text_signature_input_get( $text_signature = '' ) {
 
@@ -2623,7 +2622,7 @@ class CommentPress_Core_Parser {
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $text_signature The Text Signature.
+	 * @param string $text_signature The Text Signature.
 	 * @return int $num The position in Text Signature array.
 	 */
 	public function paragraph_num_get_by_text_signature( $text_signature ) {

@@ -686,12 +686,12 @@ class CommentPress_Multisite_Sites {
 	 *
 	 * @since 3.3
 	 *
-	 * @param int   $blog_id The numeric ID of the WordPress Blog.
-	 * @param int   $user_id The numeric ID of the WordPress User.
-	 * @param str   $domain The domain of the WordPress Blog.
-	 * @param str   $path The path of the WordPress Blog.
-	 * @param int   $site_id The numeric ID of the WordPress parent Site.
-	 * @param array $meta The meta data of the WordPress Blog.
+	 * @param int    $blog_id The numeric ID of the WordPress Blog.
+	 * @param int    $user_id The numeric ID of the WordPress User.
+	 * @param string $domain The domain of the WordPress Blog.
+	 * @param string $path The path of the WordPress Blog.
+	 * @param int    $site_id The numeric ID of the WordPress parent Site.
+	 * @param array  $meta The meta data of the WordPress Blog.
 	 */
 	public function site_initialise_legacy( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 
@@ -822,8 +822,8 @@ class CommentPress_Multisite_Sites {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $content The existing content.
-	 * @return str $content The modified content.
+	 * @param string $content The existing content.
+	 * @return string $content The modified content.
 	 */
 	public function title_page_content_get( $content ) {
 
@@ -845,7 +845,7 @@ class CommentPress_Multisite_Sites {
 	 *
 	 * @since 3.3
 	 *
-	 * @return str $content The default Welcome Page content.
+	 * @return string $content The default Welcome Page content.
 	 */
 	public function title_page_content_default_get() {
 

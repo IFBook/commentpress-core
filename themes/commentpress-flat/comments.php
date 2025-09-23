@@ -42,8 +42,7 @@ if ( ! empty( $core ) ) {
 		 *
 		 * @since 3.4
 		 *
-		 * @param str The existing path returned by WordPress.
-		 * @return str The modified path.
+		 * @param string The existing path returned by WordPress.
 		 */
 		$cp_comments_in_page = apply_filters( 'cp_template_comments_in_page', locate_template( 'assets/templates/comments_in_page.php' ) );
 
@@ -64,8 +63,7 @@ if ( ! empty( $core ) ) {
 		 *
 		 * @since 3.4
 		 *
-		 * @param str The existing path returned by WordPress.
-		 * @return str The modified path.
+		 * @param string The existing path returned by WordPress.
 		 */
 		$cp_comments_by_para = apply_filters( 'cp_template_comments_by_para', locate_template( 'assets/templates/comments_by_para.php' ) );
 
@@ -159,8 +157,7 @@ if ( ! empty( $core ) ) {
  *
  * @since 3.4
  *
- * @param str The existing path returned by WordPress.
- * @return str The modified path.
+ * @param string The existing path returned by WordPress.
  */
 $cp_comment_form = apply_filters( 'cp_template_comment_form', locate_template( 'assets/templates/comment_form.php' ) );
 

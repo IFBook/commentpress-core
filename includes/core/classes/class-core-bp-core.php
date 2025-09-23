@@ -294,9 +294,9 @@ class CommentPress_Core_BuddyPress {
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $path The existing path to the template.
-	 * @param str $original_path The original path to the template.
-	 * @return str $path The modified path to the template.
+	 * @param string $path The existing path to the template.
+	 * @param string $original_path The original path to the template.
+	 * @return string $path The modified path to the template.
 	 */
 	public function bp_docs_comment_tempate( $path, $original_path ) {
 

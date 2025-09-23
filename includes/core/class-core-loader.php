@@ -481,8 +481,8 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $sidebar The sidebar identifier - 'comments', 'toc' or 'activity'.
-	 * @return str $sidebar The HTML for minimise button.
+	 * @param string $sidebar The sidebar identifier - 'comments', 'toc' or 'activity'.
+	 * @return string $sidebar The HTML for minimise button.
 	 */
 	public function get_minimise_all_button( $sidebar = 'comments' ) {
 		_deprecated_function( __METHOD__, '4.0' );
@@ -494,7 +494,7 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 3.4
 	 *
-	 * @return str $result The HTML for minimise button.
+	 * @return string $result The HTML for minimise button.
 	 */
 	public function get_header_min_link() {
 		_deprecated_function( __METHOD__, '4.0' );
@@ -508,8 +508,8 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $page_type The CommentPress Core name of a Special Page.
-	 * @return str $link The HTML link to that Page.
+	 * @param string $page_type The CommentPress Core name of a Special Page.
+	 * @return string $link The HTML link to that Page.
 	 */
 	public function get_page_link( $page_type = 'cp_all_comments_page' ) {
 		_deprecated_function( __METHOD__, '4.0' );
@@ -521,8 +521,8 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $page_type The CommentPress Core name of a Special Page.
-	 * @return str $url The URL of that Page.
+	 * @param string $page_type The CommentPress Core name of a Special Page.
+	 * @return string $url The URL of that Page.
 	 */
 	public function get_page_url( $page_type = 'cp_all_comments_page' ) {
 		_deprecated_function( __METHOD__, '4.0' );
@@ -536,7 +536,7 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 3.4
 	 *
-	 * @return str $return The code for the default sidebar.
+	 * @return string $return The code for the default sidebar.
 	 */
 	public function get_default_sidebar() {
 		_deprecated_function( __METHOD__, '4.0' );
@@ -562,7 +562,7 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 3.4
 	 *
-	 * @return str $result The HTML input.
+	 * @return string $result The HTML input.
 	 */
 	public function get_signature_field() {
 		_deprecated_function( __METHOD__, '4.0' );
@@ -575,7 +575,7 @@ class CommentPress_Core_Loader {
 	 * @since 3.4
 	 *
 	 * @param int $para_num The Paragraph Number in a Post.
-	 * @return str $text_signature The Text Signature.
+	 * @return string $text_signature The Text Signature.
 	 */
 	public function get_text_signature( $para_num ) {
 		_deprecated_function( __METHOD__, '4.0' );
@@ -613,7 +613,7 @@ class CommentPress_Core_Loader {
 	 *
 	 * @since 3.4
 	 *
-	 * @return boolean $is_tablet True if tablet OS, false otherwise.
+	 * @return bool $is_tablet True if tablet OS, false otherwise.
 	 */
 	public function is_tablet() {
 		_deprecated_function( __METHOD__, '4.0' );

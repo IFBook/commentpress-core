@@ -70,8 +70,7 @@ defined( 'ABSPATH' ) || exit;
 	 *
 	 * @since 3.4
 	 *
-	 * @param str The existing path returned by WordPress.
-	 * @return str The modified path.
+	 * @param string The existing path returned by WordPress.
 	 */
 	$cp_toc_sidebar = apply_filters( 'cp_template_toc_sidebar', locate_template( 'assets/templates/toc_sidebar.php' ) );
 

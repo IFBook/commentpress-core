@@ -63,7 +63,7 @@ function commentpress_sites_restore() {
  *
  * @since 3.0
  *
- * @return boolean $result The result of the database operation.
+ * @return bool $result The result of the database operation.
  */
 function commentpress_schema_restore() {
 
@@ -119,7 +119,7 @@ function commentpress_schema_restore() {
  *
  * @since 4.0
  *
- * @param str $taxonomy The name of the Taxonomy to delete.
+ * @param string $taxonomy The name of the Taxonomy to delete.
  */
 function commentpress_taxonomy_restore( $taxonomy ) {
 

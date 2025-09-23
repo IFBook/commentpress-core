@@ -387,8 +387,8 @@ class CommentPress_Core_Comments {
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
 	 *
-	 * @param int $comment_id The numeric ID of the Comment.
-	 * @param str $comment_status The status of the Comment.
+	 * @param int    $comment_id The numeric ID of the Comment.
+	 * @param string $comment_status The status of the Comment.
 	 */
 	public function save_comment( $comment_id, $comment_status ) {
 
@@ -418,9 +418,9 @@ class CommentPress_Core_Comments {
 	 *
 	 * @since 3.0
 	 *
-	 * @param int $comment_id The numeric ID of the Comment.
-	 * @param str $text_signature The Text Signature of the Comment.
-	 * @return boolean $result True if successful, false otherwise.
+	 * @param int    $comment_id The numeric ID of the Comment.
+	 * @param string $text_signature The Text Signature of the Comment.
+	 * @return bool $result True if successful, false otherwise.
 	 */
 	public function save_comment_signature( $comment_id, $text_signature = '' ) {
 
@@ -470,9 +470,9 @@ class CommentPress_Core_Comments {
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
 	 *
-	 * @param int $comment_id The numeric ID of the Comment.
-	 * @param int $page_number The number of the Page.
-	 * @param str $text_signature The Text Signature of the Comment.
+	 * @param int    $comment_id The numeric ID of the Comment.
+	 * @param int    $page_number The number of the Page.
+	 * @param string $text_signature The Text Signature of the Comment.
 	 */
 	private function save_comment_page( $comment_id, $page_number = false, $text_signature = '' ) {
 
@@ -523,9 +523,9 @@ class CommentPress_Core_Comments {
 	 *
 	 * @since 3.9
 	 *
-	 * @param int $comment_id The numeric ID of the Comment.
-	 * @param str $text_selection The Text Selection of the Comment.
-	 * @return boolean $result True if successful, false otherwise.
+	 * @param int    $comment_id The numeric ID of the Comment.
+	 * @param string $text_selection The Text Selection of the Comment.
+	 * @return bool $result True if successful, false otherwise.
 	 */
 	private function save_comment_selection( $comment_id, $text_selection = '' ) {
 
@@ -595,10 +595,10 @@ class CommentPress_Core_Comments {
 	 *
 	 * @since 3.3
 	 *
-	 * @param array $caps The existing capabilities array for the WordPress User.
-	 * @param str   $cap The capability in question.
-	 * @param int   $user_id The numeric ID of the WordPress User.
-	 * @param array $args The additional arguments.
+	 * @param array  $caps The existing capabilities array for the WordPress User.
+	 * @param string $cap The capability in question.
+	 * @param int    $user_id The numeric ID of the WordPress User.
+	 * @param array  $args The additional arguments.
 	 * @return array $caps The modified capabilities array for the WordPress User.
 	 */
 	public function enable_comment_editing( $caps, $cap, $user_id, $args ) {
@@ -712,9 +712,9 @@ class CommentPress_Core_Comments {
 	 * @since 3.4.8
 	 * @since 4.0 Moved to this class.
 	 *
-	 * @param str   $editlink The existing HTML link.
-	 * @param array $comment The Comment data.
-	 * @return str $editlink The modified HTML link.
+	 * @param string $editlink The existing HTML link.
+	 * @param array  $comment The Comment data.
+	 * @return string $editlink The modified HTML link.
 	 */
 	public function featured_comments_markup( $editlink, $comment ) {
 

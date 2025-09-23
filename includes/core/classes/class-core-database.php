@@ -387,7 +387,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 4.0
 	 *
-	 * @return boolean $success True if successful, or false otherwise.
+	 * @return bool $success True if successful, or false otherwise.
 	 */
 	public function settings_save() {
 
@@ -415,7 +415,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $name The name of the setting.
+	 * @param string $name The name of the setting.
 	 * @return bool True if the setting exists, false otherwise.
 	 */
 	public function setting_exists( $name ) {
@@ -430,8 +430,8 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str   $name The name of the setting.
-	 * @param mixed $default The default value for the setting.
+	 * @param string $name The name of the setting.
+	 * @param mixed  $default The default value for the setting.
 	 * @return mixed The value of the setting if it exists, $default otherwise.
 	 */
 	public function setting_get( $name, $default = false ) {
@@ -446,8 +446,8 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str   $name The name of the setting.
-	 * @param mixed $value The value for the setting.
+	 * @param string $name The name of the setting.
+	 * @param mixed  $value The value for the setting.
 	 */
 	public function setting_set( $name, $value = '' ) {
 
@@ -461,7 +461,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $name The name of the setting.
+	 * @param string $name The name of the setting.
 	 */
 	public function setting_delete( $name ) {
 
@@ -477,7 +477,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $name The name of the option.
+	 * @param string $name The name of the option.
 	 * @return bool True if option exists, false otherwise.
 	 */
 	public function option_wp_exists( $name ) {
@@ -496,8 +496,8 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str   $name The name of the option.
-	 * @param mixed $default The default value for the option.
+	 * @param string $name The name of the option.
+	 * @param mixed  $default The default value for the option.
 	 * @return mixed The value of the option if it exists, default otherwise.
 	 */
 	public function option_wp_get( $name, $default = false ) {
@@ -512,8 +512,8 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str   $name The name of the option.
-	 * @param mixed $value The value for the option.
+	 * @param string $name The name of the option.
+	 * @param mixed  $value The value for the option.
 	 * @return bool True if the value was updated, false otherwise.
 	 */
 	public function option_wp_set( $name, $value = '' ) {
@@ -528,7 +528,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $name The name of the option.
+	 * @param string $name The name of the option.
 	 */
 	public function option_wp_delete( $name ) {
 
@@ -543,8 +543,8 @@ class CommentPress_Core_Database {
 	 * @since 3.4
 	 * @since 4.0 Renamed.
 	 *
-	 * @param str   $name The name of the option to back up.
-	 * @param mixed $value The value of the option.
+	 * @param string $name The name of the option to back up.
+	 * @param mixed  $value The value of the option.
 	 */
 	public function option_wp_backup( $name, $value ) {
 
@@ -562,7 +562,7 @@ class CommentPress_Core_Database {
 	 * @since 3.4
 	 * @since 4.0 Renamed.
 	 *
-	 * @param str $name The name of the option.
+	 * @param string $name The name of the option.
 	 */
 	public function option_wp_restore( $name ) {
 
@@ -621,7 +621,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 *
-	 * @return boolean $success True if successful, or false otherwise.
+	 * @return bool $success True if successful, or false otherwise.
 	 */
 	public function options_save() {
 		_deprecated_function( __METHOD__, '4.0' );
@@ -642,7 +642,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $name The name of the option.
+	 * @param string $name The name of the option.
 	 * @return bool True if the option exists, false otherwise.
 	 */
 	public function option_exists( $name ) {
@@ -655,8 +655,8 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str   $name The name of the option.
-	 * @param mixed $default The default value for the option.
+	 * @param string $name The name of the option.
+	 * @param mixed  $default The default value for the option.
 	 * @return mixed The value of the option if it exists, $default otherwise.
 	 */
 	public function option_get( $name, $default = false ) {
@@ -669,8 +669,8 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str   $name The name of the option.
-	 * @param mixed $value The value for the option.
+	 * @param string $name The name of the option.
+	 * @param mixed  $value The value for the option.
 	 */
 	public function option_set( $name, $value = '' ) {
 		_deprecated_function( __METHOD__, '4.0' );
@@ -682,7 +682,7 @@ class CommentPress_Core_Database {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $name The name of the option.
+	 * @param string $name The name of the option.
 	 */
 	public function option_delete( $name ) {
 		_deprecated_function( __METHOD__, '4.0' );

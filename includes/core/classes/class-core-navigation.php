@@ -383,7 +383,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $page_nav_enabled The setting if found, default otherwise.
+	 * @return string $page_nav_enabled The setting if found, default otherwise.
 	 */
 	public function setting_page_nav_enabled_get() {
 
@@ -400,7 +400,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $page_nav_enabled The setting value.
+	 * @param string $page_nav_enabled The setting value.
 	 */
 	public function setting_page_nav_enabled_set( $page_nav_enabled ) {
 
@@ -414,7 +414,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $post_type The setting if found, default otherwise.
+	 * @return string $post_type The setting if found, default otherwise.
 	 */
 	public function setting_post_type_get() {
 
@@ -431,7 +431,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $post_type The setting value.
+	 * @param string $post_type The setting value.
 	 */
 	public function setting_post_type_set( $post_type ) {
 
@@ -596,8 +596,8 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.8.10
 	 *
-	 * @param str $template The existing path to the navigation template.
-	 * @return str $template An empty path to disable navigation.
+	 * @param string $template The existing path to the navigation template.
+	 * @return string $template An empty path to disable navigation.
 	 */
 	public function page_nav_disable( $template ) {
 		return '';
@@ -629,7 +629,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $mode Either 'structural' or 'readable'.
+	 * @param string $mode Either 'structural' or 'readable'.
 	 * @return array $all_pages The array of all "Document" Pages.
 	 */
 	public function document_pages_get_all( $mode = 'readable' ) {
@@ -1073,7 +1073,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $mode Either 'structural' or 'readable'.
+	 * @param string $mode Either 'structural' or 'readable'.
 	 * @return array $pages All "Document" Pages.
 	 */
 	private function page_list_parse( $mode ) {
@@ -1403,7 +1403,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $mode Either 'structural' or 'readable'.
+	 * @param string $mode Either 'structural' or 'readable'.
 	 * @return array $pages All "Document" Pages.
 	 */
 	private function menu_items_parse( $mode ) {
@@ -1668,7 +1668,7 @@ class CommentPress_Core_Navigator {
 	 *
 	 * @since 3.0
 	 *
-	 * @param integer $arabic The numeric Arabic value.
+	 * @param int $arabic The numeric Arabic value.
 	 * @return string $roman The Roman equivalent.
 	 */
 	public function number_to_roman( $arabic ) {
