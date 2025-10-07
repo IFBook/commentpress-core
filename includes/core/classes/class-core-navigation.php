@@ -1630,21 +1630,23 @@ class CommentPress_Core_Navigator {
 
 		// Is this the top Menu Item?
 		if ( 0 === (int) $menu_obj->menu_item_parent ) {
-
 			// Yes -> return the object.
 			return $menu_obj;
-
 		}
 
 		// Get parent Menu Item.
 		$parent_obj = $this->menu_item_get_parent( $menu_obj );
 
+		// For some reason, some parent items have no "menu_item_parent".
+		if ( empty( $parent_obj->menu_item_parent ) ) {
+			// No much we can do but return the object.
+			return $menu_obj;
+		}
+
 		// Is the top Menu Item?
 		if ( 0 !== (int) $parent_obj->menu_item_parent ) {
-
 			// No -> recurse upwards.
 			return $this->menu_item_get_top( $parent_obj );
-
 		}
 
 		// Yes -> return the object.
