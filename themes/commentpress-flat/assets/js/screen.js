@@ -137,7 +137,6 @@ CommentPress.theme.DOM = new function() {
 			// If mobile, don't hide textblock meta.
 			if ( cp_is_mobile == '0' ) {
 
-
 				// Have we explicitly hidden textblock meta?
 				if ( cp_textblock_meta == '0' ) {
 
@@ -1364,6 +1363,10 @@ CommentPress.theme.viewport = new function() {
 
 						// Restore global.
 						cp_tinymce = '1';
+
+						// Now activate TinyMCE.
+						addComment.disableForm();
+						addComment.enableForm();
 
 					}
 
