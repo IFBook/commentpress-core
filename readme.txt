@@ -4,7 +4,7 @@ Donate link:       https://www.paypal.me/interactivist
 Tags:              commentpress, buddypress, groups, blogs, groupblogs, comments, commenting, debate, collaboration
 Requires PHP:      7.4
 Requires at least: 4.9
-Tested up to:      6.8
+Tested up to:      6.9
 Stable tag:        4.0.5a
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
