@@ -216,6 +216,10 @@ When EVERY site has done this, go to "Network Admin" -> "Plugins":
 
 == Changelog ==
 
+= 4.0.5 =
+
+* Fix TinyMCE loading when navigating to a comment
+
 = 4.0.4 =
 
 * Better support for Featured Comments in original theme
