@@ -1,15 +1,15 @@
-# Copyright (C) 2025 Institute for the Future of the Book
+# Copyright (C) 2026 Institute for the Future of the Book
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: CommentPress Core 4.0.4a\n"
+"Project-Id-Version: CommentPress Core 4.0.5a\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/commentpress-core\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-22T18:11:54+00:00\n"
+"POT-Creation-Date: 2026-02-06T13:23:25+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: commentpress-core\n"
@@ -89,7 +89,7 @@ msgstr ""
 
 #: includes/core/assets/includes/theme/theme-comments.php:92
 #: includes/core/classes/class-ajax-comments.php:261
-#: includes/core/classes/class-core-theme.php:791
+#: includes/core/classes/class-core-theme.php:790
 #: themes/commentpress-flat/assets/templates/comment_form.php:173
 #: themes/commentpress-modern/assets/templates/comment_form.php:173
 #: themes/commentpress-theme/assets/templates/comment_form.php:173
@@ -326,13 +326,13 @@ msgid "File"
 msgstr ""
 
 #. translators: %s: Name of the Post Type.
-#: includes/core/assets/includes/theme/theme-filters.php:352
+#: includes/core/assets/includes/theme/theme-filters.php:351
 #, php-format
 msgid "the %s"
 msgstr ""
 
 #. translators: %s: The source URL of the Page being printed.
-#: includes/core/assets/includes/theme/theme-filters.php:543
+#: includes/core/assets/includes/theme/theme-filters.php:542
 #, php-format
 msgid "Source: %s"
 msgstr ""
@@ -345,7 +345,7 @@ msgstr ""
 msgid "Logo"
 msgstr ""
 
-#: includes/core/assets/includes/theme/theme-functions.php:668
+#: includes/core/assets/includes/theme/theme-functions.php:667
 #: includes/core/classes/class-core-display.php:272
 #: includes/multisite/classes/class-multisite-bp-groupblog-groups.php:425
 msgid " &amp; "
@@ -353,18 +353,18 @@ msgstr ""
 
 #. translators: %s: The name of the author.
 #. translators: %s: User display name.
-#: includes/core/assets/includes/theme/theme-functions.php:766
+#: includes/core/assets/includes/theme/theme-functions.php:765
 #: includes/core/classes/class-core-display.php:344
 #, php-format
 msgid "Posts by %s"
 msgstr ""
 
-#: includes/core/assets/includes/theme/theme-functions.php:1096
+#: includes/core/assets/includes/theme/theme-functions.php:1095
 msgid "Untitled Widget"
 msgstr ""
 
 #: includes/core/assets/includes/theme/theme-navigation.php:233
-#: includes/core/assets/includes/theme/theme-navigation.php:654
+#: includes/core/assets/includes/theme/theme-navigation.php:653
 msgid "Next page"
 msgstr ""
 
@@ -373,7 +373,7 @@ msgid "Next page with comments"
 msgstr ""
 
 #: includes/core/assets/includes/theme/theme-navigation.php:308
-#: includes/core/assets/includes/theme/theme-navigation.php:655
+#: includes/core/assets/includes/theme/theme-navigation.php:654
 msgid "Previous page"
 msgstr ""
 
@@ -408,12 +408,12 @@ msgid "Dashboard"
 msgstr ""
 
 #. translators: %s: The span element containing the Page number.
-#: includes/core/assets/includes/theme/theme-navigation.php:608
+#: includes/core/assets/includes/theme/theme-navigation.php:607
 #, php-format
 msgid "Page %s"
 msgstr ""
 
-#: includes/core/assets/includes/theme/theme-navigation.php:673
+#: includes/core/assets/includes/theme/theme-navigation.php:672
 msgid "Pages: "
 msgstr ""
 
@@ -785,18 +785,18 @@ msgstr ""
 #: themes/commentpress-flat/assets/templates/toc_sidebar.php:32
 #: themes/commentpress-modern/assets/templates/toc_sidebar.php:32
 #: themes/commentpress-theme/sidebar.php:123
-#: themes/commentpress-theme/sidebar.php:227
+#: themes/commentpress-theme/sidebar.php:224
 msgid "Contents"
 msgstr ""
 
 #: includes/core/assets/templates/wordpress/parts/part-theme-sidebar-entry.php:23
 #: includes/core/assets/templates/wordpress/parts/part-theme-sidebar-settings.php:22
-#: themes/commentpress-flat/assets/templates/activity_sidebar.php:83
+#: themes/commentpress-flat/assets/templates/activity_sidebar.php:82
 #: themes/commentpress-flat/assets/templates/header_body.php:37
 #: themes/commentpress-flat/sidebar.php:97
-#: themes/commentpress-modern/assets/templates/activity_sidebar.php:83
+#: themes/commentpress-modern/assets/templates/activity_sidebar.php:82
 #: themes/commentpress-modern/sidebar.php:97
-#: themes/commentpress-theme/assets/templates/activity_sidebar.php:83
+#: themes/commentpress-theme/assets/templates/activity_sidebar.php:82
 #: themes/commentpress-theme/sidebar.php:87
 msgid "Activity"
 msgstr ""
@@ -865,7 +865,7 @@ msgid "AJAX error!"
 msgstr ""
 
 #: includes/core/classes/class-ajax-comments.php:254
-#: includes/core/classes/class-core-theme.php:804
+#: includes/core/classes/class-core-theme.php:803
 msgid "Are you sure?"
 msgstr ""
 
@@ -1074,7 +1074,7 @@ msgstr ""
 msgid "Navigation Settings"
 msgstr ""
 
-#: includes/core/classes/class-core-navigation.php:1690
+#: includes/core/classes/class-core-navigation.php:1692
 msgid "Cannot represent numbers larger than 4999 in plain ASCII."
 msgstr ""
 
@@ -1215,27 +1215,27 @@ msgstr ""
 msgid "Theme Customization"
 msgstr ""
 
-#: includes/core/classes/class-core-theme.php:791
+#: includes/core/classes/class-core-theme.php:790
 msgid "Quote &amp; Comment"
 msgstr ""
 
-#: includes/core/classes/class-core-theme.php:794
+#: includes/core/classes/class-core-theme.php:793
 msgid "Quote"
 msgstr ""
 
-#: includes/core/classes/class-core-theme.php:805
+#: includes/core/classes/class-core-theme.php:804
 msgid "You have not yet submitted your comment. Are you sure you want to discard it?"
 msgstr ""
 
-#: includes/core/classes/class-core-theme.php:806
+#: includes/core/classes/class-core-theme.php:805
 msgid "Discard"
 msgstr ""
 
-#: includes/core/classes/class-core-theme.php:807
+#: includes/core/classes/class-core-theme.php:806
 msgid "Keep"
 msgstr ""
 
-#: includes/core/classes/class-core-theme.php:808
+#: includes/core/classes/class-core-theme.php:807
 msgid "Back"
 msgstr ""
 
@@ -1824,40 +1824,40 @@ msgid "No tags yet"
 msgstr ""
 
 #. translators: %s: The name of the Post Type.
-#: themes/commentpress-flat/assets/templates/activity_sidebar.php:44
-#: themes/commentpress-modern/assets/templates/activity_sidebar.php:44
-#: themes/commentpress-theme/assets/templates/activity_sidebar.php:44
+#: themes/commentpress-flat/assets/templates/activity_sidebar.php:43
+#: themes/commentpress-modern/assets/templates/activity_sidebar.php:43
+#: themes/commentpress-theme/assets/templates/activity_sidebar.php:43
 #, php-format
 msgid "Recent Comments on this %s"
 msgstr ""
 
-#: themes/commentpress-flat/assets/templates/activity_sidebar.php:69
-#: themes/commentpress-modern/assets/templates/activity_sidebar.php:69
-#: themes/commentpress-theme/assets/templates/activity_sidebar.php:69
+#: themes/commentpress-flat/assets/templates/activity_sidebar.php:68
+#: themes/commentpress-modern/assets/templates/activity_sidebar.php:68
+#: themes/commentpress-theme/assets/templates/activity_sidebar.php:68
 msgid "Recent Comments in this Document"
 msgstr ""
 
-#: themes/commentpress-flat/assets/templates/activity_sidebar.php:201
-#: themes/commentpress-modern/assets/templates/activity_sidebar.php:201
-#: themes/commentpress-theme/assets/templates/activity_sidebar.php:198
+#: themes/commentpress-flat/assets/templates/activity_sidebar.php:202
+#: themes/commentpress-modern/assets/templates/activity_sidebar.php:202
+#: themes/commentpress-theme/assets/templates/activity_sidebar.php:199
 msgid "Recent Activity in your Documents"
 msgstr ""
 
-#: themes/commentpress-flat/assets/templates/activity_sidebar.php:210
-#: themes/commentpress-modern/assets/templates/activity_sidebar.php:210
-#: themes/commentpress-theme/assets/templates/activity_sidebar.php:207
+#: themes/commentpress-flat/assets/templates/activity_sidebar.php:213
+#: themes/commentpress-modern/assets/templates/activity_sidebar.php:213
+#: themes/commentpress-theme/assets/templates/activity_sidebar.php:210
 msgid "Recent Activity in Public Documents"
 msgstr ""
 
-#: themes/commentpress-flat/assets/templates/activity_sidebar.php:281
-#: themes/commentpress-modern/assets/templates/activity_sidebar.php:281
-#: themes/commentpress-theme/assets/templates/activity_sidebar.php:278
+#: themes/commentpress-flat/assets/templates/activity_sidebar.php:284
+#: themes/commentpress-modern/assets/templates/activity_sidebar.php:284
+#: themes/commentpress-theme/assets/templates/activity_sidebar.php:281
 msgid "Recently Active Members"
 msgstr ""
 
-#: themes/commentpress-flat/assets/templates/activity_sidebar.php:329
-#: themes/commentpress-modern/assets/templates/activity_sidebar.php:329
-#: themes/commentpress-theme/assets/templates/activity_sidebar.php:326
+#: themes/commentpress-flat/assets/templates/activity_sidebar.php:332
+#: themes/commentpress-modern/assets/templates/activity_sidebar.php:332
+#: themes/commentpress-theme/assets/templates/activity_sidebar.php:329
 msgid "Who's Online"
 msgstr ""
 
@@ -1871,11 +1871,11 @@ msgid "Comments are closed"
 msgstr ""
 
 #: themes/commentpress-flat/assets/templates/comments_in_page.php:53
-#: themes/commentpress-flat/comments.php:113
+#: themes/commentpress-flat/comments.php:111
 #: themes/commentpress-modern/assets/templates/comments_in_page.php:53
-#: themes/commentpress-modern/comments.php:113
+#: themes/commentpress-modern/comments.php:111
 #: themes/commentpress-theme/assets/templates/comments_in_page.php:53
-#: themes/commentpress-theme/comments.php:113
+#: themes/commentpress-theme/comments.php:111
 msgid "Reply to this comment"
 msgstr ""
 
@@ -2063,8 +2063,8 @@ msgstr ""
 msgid "Permanent Link:"
 msgstr ""
 
-#: themes/commentpress-flat/author.php:143
-#: themes/commentpress-modern/author.php:143
+#: themes/commentpress-flat/author.php:145
+#: themes/commentpress-modern/author.php:145
 msgid "Pages written by"
 msgstr ""
 
@@ -2088,30 +2088,30 @@ msgstr ""
 msgid "Enter the password to view comments"
 msgstr ""
 
-#: themes/commentpress-flat/comments.php:103
-#: themes/commentpress-modern/comments.php:103
-#: themes/commentpress-theme/comments.php:103
+#: themes/commentpress-flat/comments.php:101
+#: themes/commentpress-modern/comments.php:101
+#: themes/commentpress-theme/comments.php:101
 msgid "on the whole page"
 msgstr ""
 
-#: themes/commentpress-flat/comments.php:123
-#: themes/commentpress-flat/comments.php:138
-#: themes/commentpress-modern/comments.php:123
-#: themes/commentpress-modern/comments.php:138
-#: themes/commentpress-theme/comments.php:123
-#: themes/commentpress-theme/comments.php:138
+#: themes/commentpress-flat/comments.php:121
+#: themes/commentpress-flat/comments.php:136
+#: themes/commentpress-modern/comments.php:121
+#: themes/commentpress-modern/comments.php:136
+#: themes/commentpress-theme/comments.php:121
+#: themes/commentpress-theme/comments.php:136
 msgid "Leave a comment on the whole page"
 msgstr ""
 
-#: themes/commentpress-flat/comments.php:133
-#: themes/commentpress-modern/comments.php:133
-#: themes/commentpress-theme/comments.php:133
+#: themes/commentpress-flat/comments.php:131
+#: themes/commentpress-modern/comments.php:131
+#: themes/commentpress-theme/comments.php:131
 msgid "No comments on the whole page"
 msgstr ""
 
-#: themes/commentpress-flat/comments.php:146
-#: themes/commentpress-modern/comments.php:146
-#: themes/commentpress-theme/comments.php:146
+#: themes/commentpress-flat/comments.php:144
+#: themes/commentpress-modern/comments.php:144
+#: themes/commentpress-theme/comments.php:144
 msgid "Comments are closed."
 msgstr ""
 
