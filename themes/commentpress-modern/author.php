@@ -71,7 +71,7 @@ get_header();
 							 *
 							 * @since 3.4
 							 *
-							 * @param str The default Posts List title.
+							 * @param string The default Posts List title.
 							 */
 							$posts_list_title = apply_filters( 'cp_author_page_posts_list_title', __( 'Posts written by', 'commentpress-core' ) );
 
@@ -113,50 +113,54 @@ get_header();
 
 					<?php endif; ?>
 
-					<?php
+					<?php if ( ! empty( $my_author->ID ) ) : ?>
 
-					// Define our args.
-					$author_pages_args = [
-						'post_status'    => 'publish',
-						'post_type'      => 'page',
-						'author'         => $my_author->ID,
-						'posts_per_page' => 0,
-						'no_found_rows'  => true,
-					];
+						<?php
 
-					// The Pages query.
-					$author_pages = new WP_Query( $author_pages_args );
+						// Define our args.
+						$author_pages_args = [
+							'post_status'    => 'publish',
+							'post_type'      => 'page',
+							'author'         => $my_author->ID,
+							'posts_per_page' => 0,
+							'no_found_rows'  => true,
+						];
 
-					?>
+						// The Pages query.
+						$author_pages = new WP_Query( $author_pages_args );
 
-					<?php if ( $author_pages->have_posts() ) : ?>
-						<h3 class="author_pages_heading">
-							<?php
+						?>
 
-							/**
-							 * Filter the Posts List title.
-							 *
-							 * @since 3.4
-							 *
-							 * @param str The default Posts List title.
-							 */
-							$pages_list_title = apply_filters( 'cp_author_page_pages_list_title', __( 'Pages written by', 'commentpress-core' ) );
+						<?php if ( $author_pages->have_posts() ) : ?>
+							<h3 class="author_pages_heading">
+								<?php
 
-							echo esc_html( $pages_list_title ) . ' ' . esc_html( $my_author_name );
+								/**
+								 * Filter the Posts List title.
+								 *
+								 * @since 3.4
+								 *
+								 * @param string The default Posts List title.
+								 */
+								$pages_list_title = apply_filters( 'cp_author_page_pages_list_title', __( 'Pages written by', 'commentpress-core' ) );
 
-							?>
-						</h3>
-						<ul class="author_pages">
-							<?php while ( $author_pages->have_posts() ) : ?>
-								<?php $author_pages->the_post(); ?>
-								<li>
-									<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
-								</li>
-							<?php endwhile; ?>
-						</ul>
+								echo esc_html( $pages_list_title ) . ' ' . esc_html( $my_author_name );
+
+								?>
+							</h3>
+							<ul class="author_pages">
+								<?php while ( $author_pages->have_posts() ) : ?>
+									<?php $author_pages->the_post(); ?>
+									<li>
+										<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
+									</li>
+								<?php endwhile; ?>
+							</ul>
+						<?php endif; ?>
+
+						<?php wp_reset_postdata(); ?>
+
 					<?php endif; ?>
-
-					<?php wp_reset_postdata(); ?>
 
 				</div><!-- /post -->
 			</div><!-- /content -->

@@ -345,12 +345,12 @@ class CommentPress_Multisite_BuddyPress {
 	 *
 	 * @since 3.3
 	 *
-	 * @param int   $blog_id The numeric ID of the WordPress Blog.
-	 * @param int   $user_id The numeric ID of the WordPress User.
-	 * @param str   $domain The domain of the WordPress Blog.
-	 * @param str   $path The path of the WordPress Blog.
-	 * @param int   $site_id The numeric ID of the WordPress parent Site.
-	 * @param array $meta The meta data of the WordPress Blog.
+	 * @param int    $blog_id The numeric ID of the WordPress Blog.
+	 * @param int    $user_id The numeric ID of the WordPress User.
+	 * @param string $domain The domain of the WordPress Blog.
+	 * @param string $path The path of the WordPress Blog.
+	 * @param int    $site_id The numeric ID of the WordPress parent Site.
+	 * @param array  $meta The meta data of the WordPress Blog.
 	 */
 	public function site_initialise_legacy( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 
@@ -519,8 +519,8 @@ class CommentPress_Multisite_BuddyPress {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $title The existing title of the "Create a new document" link.
-	 * @return str $title The overridden title of the "Create a new document" link.
+	 * @param string $title The existing title of the "Create a new document" link.
+	 * @return string $title The overridden title of the "Create a new document" link.
 	 */
 	public function text_title_new_site_filter( $title ) {
 
@@ -540,8 +540,8 @@ class CommentPress_Multisite_BuddyPress {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $title The existing title of the "Welcome Page".
-	 * @return str $title The modified title of  the "Welcome Page".
+	 * @param string $title The existing title of the "Welcome Page".
+	 * @return string $title The modified title of  the "Welcome Page".
 	 */
 	public function text_title_title_page_filter( $title ) {
 
@@ -617,7 +617,7 @@ class CommentPress_Multisite_BuddyPress {
 		 *
 		 * @since 3.3
 		 *
-		 * @param str $label The text of the "Visit Blog" button label.
+		 * @param string $label The text of the "Visit Blog" button label.
 		 */
 		$label = apply_filters_deprecated( 'cp_get_blogs_visit_blog_button', [ $label ], 'commentpress/multisite/bp/button/visit_blog/label' );
 
@@ -626,8 +626,8 @@ class CommentPress_Multisite_BuddyPress {
 		 *
 		 * @since 4.0
 		 *
-		 * @param str $label The text of the "Visit Blog" button label.
-		 * @param str $site_type The type of Blog.
+		 * @param string $label The text of the "Visit Blog" button label.
+		 * @param string $site_type The type of Blog.
 		 */
 		$label = apply_filters( 'commentpress/multisite/bp/button/visit_blog/label', $label, $site_type );
 

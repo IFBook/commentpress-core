@@ -545,8 +545,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Groups {
 	 *
 	 * @since 3.8.5
 	 *
-	 * @param str     $new_status New status for the Post.
-	 * @param str     $old_status Old status for the Post.
+	 * @param string  $new_status New status for the Post.
+	 * @param string  $old_status Old status for the Post.
 	 * @param WP_Post $post The WordPress Post object.
 	 */
 	public function activity_post_status_transitioned( $new_status, $old_status, $post ) {

@@ -265,7 +265,7 @@ class CommentPress_Core_Entry_Formatter {
 		 *
 		 * @since 3.3.1
 		 *
-		 * @param str The the Site Text Format label.
+		 * @param string The the Site Text Format label.
 		 */
 		$text_format_title = apply_filters( 'cp_blog_type_label', __( 'Text Format', 'commentpress-core' ) );
 
@@ -337,7 +337,7 @@ class CommentPress_Core_Entry_Formatter {
 		 *
 		 * @since 4.0
 		 *
-		 * @param str $formatter The "Text Format" setting.
+		 * @param string $formatter The "Text Format" setting.
 		 */
 		do_action( 'commentpress/core/formatter/setting/set', $formatter );
 
@@ -492,8 +492,8 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $name The existing name of the label.
-	 * @return str $name The modified name of the label.
+	 * @param string $name The existing name of the label.
+	 * @return string $name The modified name of the label.
 	 */
 	public function site_text_format_label( $name ) {
 		return __( 'Text Format', 'commentpress-core' );
@@ -533,8 +533,8 @@ class CommentPress_Core_Entry_Formatter {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $parser The existing Content Parser code.
-	 * @return str $parser The existing Content Parser code.
+	 * @param string $parser The existing Content Parser code.
+	 * @return string $parser The existing Content Parser code.
 	 */
 	public function content_parser( $parser ) {
 

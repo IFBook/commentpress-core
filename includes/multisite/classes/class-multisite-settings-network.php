@@ -635,8 +635,8 @@ class CommentPress_Multisite_Settings_Network {
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
 	 *
-	 * @param array $links The existing links array.
-	 * @param str   $file The name of the plugin file.
+	 * @param array  $links The existing links array.
+	 * @param string $file The name of the plugin file.
 	 * @return array $links The modified links array.
 	 */
 	public function action_links( $links, $file ) {

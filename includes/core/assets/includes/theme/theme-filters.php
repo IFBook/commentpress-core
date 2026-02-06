@@ -134,8 +134,8 @@ if ( ! function_exists( 'commentpress_site_title' ) ) :
 	 *
 	 * @since 3.8
 	 *
-	 * @param string  $sep The title separator.
-	 * @param boolean $echo Echo the result or not.
+	 * @param string $sep The title separator.
+	 * @param bool   $echo Echo the result or not.
 	 * @return string $site_name The title of the Site.
 	 */
 	function commentpress_site_title( $sep = '', $echo = true ) {
@@ -263,9 +263,9 @@ if ( ! function_exists( 'commentpress_lexia_support_mime' ) ) :
 	 *
 	 * @since 3.9
 	 *
-	 * @param str $post_type_name The existing singular name of the Post Type.
-	 * @param str $post_type The Post Type identifier.
-	 * @return str $post_type_name The modified singular name of the Post Type.
+	 * @param string $post_type_name The existing singular name of the Post Type.
+	 * @param string $post_type The Post Type identifier.
+	 * @return string $post_type_name The modified singular name of the Post Type.
 	 */
 	function commentpress_lexia_support_mime( $post_type_name, $post_type ) {
 
@@ -309,9 +309,8 @@ if ( ! function_exists( 'commentpress_lexia_support_mime' ) ) :
 		 *
 		 * @since 3.9
 		 *
-		 * @param str $mime_type_name The name for this mime type.
-		 * @param str $mime_type The mime type.
-		 * @return str $mime_type_name The modified name for this mime type.
+		 * @param string $mime_type_name The name for this mime type.
+		 * @param string $mime_type The mime type.
 		 */
 		$mime_type_name = apply_filters( 'commentpress_lexia_mime_type_name', $mime_type_name, $mime_type );
 
@@ -334,10 +333,10 @@ if ( ! function_exists( 'commentpress_lexia_modify_entity_text' ) ) :
 	 *
 	 * @since 3.9
 	 *
-	 * @param str $entity_text The current entity text.
-	 * @param str $post_type_name The singular name of the Post Type.
-	 * @param str $post_type The Post Type identifier.
-	 * @return str $entity_text The modified entity text.
+	 * @param string $entity_text The current entity text.
+	 * @param string $post_type_name The singular name of the Post Type.
+	 * @param string $post_type The Post Type identifier.
+	 * @return string $entity_text The modified entity text.
 	 */
 	function commentpress_lexia_modify_entity_text( $entity_text, $post_type_name, $post_type ) {
 
@@ -409,8 +408,8 @@ if ( ! function_exists( 'commentpress_add_link_css' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $link The existing link.
-	 * @return str $link The link with the custom class attribute added.
+	 * @param string $link The existing link.
+	 * @return string $link The link with the custom class attribute added.
 	 */
 	function commentpress_add_link_css( $link ) {
 
@@ -437,7 +436,7 @@ if ( ! function_exists( 'commentpress_get_link_css' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @return str $link The custom class attribute.
+	 * @return string $link The custom class attribute.
 	 */
 	function commentpress_get_link_css() {
 
@@ -464,7 +463,7 @@ if ( ! function_exists( 'commentpress_trap_empty_search' ) ) :
 	 *
 	 * @since 3.3
 	 *
-	 * @return str $template The path to the search template.
+	 * @return string $template The path to the search template.
 	 */
 	function commentpress_trap_empty_search() {
 
@@ -490,8 +489,8 @@ if ( ! function_exists( 'commentpress_amend_password_form' ) ) :
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $output The existing password form.
-	 * @return str $output The modified password form.
+	 * @param string $output The existing password form.
+	 * @return string $output The modified password form.
 	 */
 	function commentpress_amend_password_form( $output ) {
 

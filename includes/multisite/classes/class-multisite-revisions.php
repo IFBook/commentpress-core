@@ -79,8 +79,8 @@ class CommentPress_Multisite_Revisions {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $prefix The existing Post title prefix.
-	 * @return str An empty string.
+	 * @param string $prefix The existing Post title prefix.
+	 * @return string An empty string.
 	 */
 	public function new_post_title_prefix( $prefix ) {
 
@@ -94,9 +94,9 @@ class CommentPress_Multisite_Revisions {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str     $title The existing title of the Post.
+	 * @param string  $title The existing title of the Post.
 	 * @param WP_Post $post The WordPress Post object.
-	 * @return str $title The modified title of the Post.
+	 * @return string $title The modified title of the Post.
 	 */
 	public function new_post_title( $title, $post ) {
 

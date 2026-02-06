@@ -90,7 +90,7 @@ class CommentPress_Core_Display {
 	 *
 	 * @since 3.4
 	 *
-	 * @return str $help The help text formatted as HTML.
+	 * @return string $help The help text formatted as HTML.
 	 */
 	public function get_help() {
 
@@ -135,7 +135,7 @@ HELPTEXT;
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $params The parameters to list Posts by.
+	 * @param string $params The parameters to list Posts by.
 	 */
 	public function list_posts( $params = 'numberposts=-1&order=DESC' ) {
 
@@ -478,11 +478,11 @@ HELPTEXT;
 	 *
 	 * @since 3.4
 	 *
-	 * @param int $comment_count The number of Comments.
-	 * @param str $text_signature The Comment Text Signature.
-	 * @param str $block_type Either 'auto', 'line' or 'block'.
-	 * @param int $para_num Sequential commentable block number.
-	 * @return str $comment_icon The Comment icon formatted as HTML.
+	 * @param int    $comment_count The number of Comments.
+	 * @param string $text_signature The Comment Text Signature.
+	 * @param string $block_type Either 'auto', 'line' or 'block'.
+	 * @param int    $para_num Sequential commentable block number.
+	 * @return string $comment_icon The Comment icon formatted as HTML.
 	 */
 	public function get_comment_icon( $comment_count, $text_signature, $block_type = 'auto', $para_num = 1 ) {
 
@@ -597,11 +597,11 @@ HELPTEXT;
 	 *
 	 * @since 3.4
 	 *
-	 * @param int $comment_count The number of Comments.
-	 * @param str $text_signature The Comment Text Signature.
-	 * @param str $block_type Either 'auto', 'line' or 'block'.
-	 * @param int $para_num The sequential commentable Block number.
-	 * @return str $paragraph_icon The Paragraph icon formatted as HTML.
+	 * @param int    $comment_count The number of Comments.
+	 * @param string $text_signature The Comment Text Signature.
+	 * @param string $block_type Either 'auto', 'line' or 'block'.
+	 * @param int    $para_num The sequential commentable Block number.
+	 * @return string $paragraph_icon The Paragraph icon formatted as HTML.
 	 */
 	public function get_paragraph_icon( $comment_count, $text_signature, $block_type = 'auto', $para_num = 1 ) {
 
@@ -687,11 +687,11 @@ HELPTEXT;
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $text_signature The Comment Text Signature.
-	 * @param str $commenticon The Comment icon.
-	 * @param str $tag The tag.
-	 * @param str $start The ordered list start value.
-	 * @return str $para_tag The tag formatted as HTML.
+	 * @param string $text_signature The Comment Text Signature.
+	 * @param string $commenticon The Comment icon.
+	 * @param string $tag The tag.
+	 * @param string $start The ordered list start value.
+	 * @return string $para_tag The tag formatted as HTML.
 	 */
 	public function get_para_tag( $text_signature, $commenticon, $tag = 'p', $start = 0 ) {
 
@@ -784,8 +784,8 @@ HELPTEXT;
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $sidebar The sidebar identifier - "comments", "toc" or "activity".
-	 * @return str $tag The tag.
+	 * @param string $sidebar The sidebar identifier - "comments", "toc" or "activity".
+	 * @return string $tag The tag.
 	 */
 	public function get_minimise_all_button( $sidebar = 'comments' ) {
 
@@ -818,7 +818,7 @@ HELPTEXT;
 	 *
 	 * @since 3.4
 	 *
-	 * @return str $link The markup of the link.
+	 * @return string $link The markup of the link.
 	 */
 	public function get_header_min_link() {
 
@@ -839,8 +839,8 @@ HELPTEXT;
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $src The location of image file.
-	 * @param str $url The link target.
+	 * @param string $src The location of image file.
+	 * @param string $url The link target.
 	 * @return string $tag The markup.
 	 */
 	public function get_linked_image( $src = '', $url = '' ) {

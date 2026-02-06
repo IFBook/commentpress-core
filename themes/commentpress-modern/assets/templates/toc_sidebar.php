@@ -61,7 +61,7 @@ $core = commentpress_core();
 					 *
 					 * @since 3.4
 					 *
-					 * @param str The default Search accordion title.
+					 * @param string The default Search accordion title.
 					 */
 					$cp_search_title = apply_filters( 'cp_content_tab_search_title', __( 'Search', 'commentpress-core' ) );
 
@@ -85,7 +85,7 @@ $core = commentpress_core();
 						 *
 						 * @since 3.4
 						 *
-						 * @param str The default Special Pages accordion title.
+						 * @param string The default Special Pages accordion title.
 						 */
 						$cp_special_pages_title = apply_filters( 'cp_content_tab_special_pages_title', __( 'Special Pages', 'commentpress-core' ) );
 
@@ -102,7 +102,7 @@ $core = commentpress_core();
 						 *
 						 * @since 3.4
 						 *
-						 * @param str The existing path returned by WordPress.
+						 * @param string The existing path returned by WordPress.
 						 */
 						$cp_navigation = apply_filters( 'cp_template_navigation', locate_template( 'assets/templates/navigation.php' ) );
 
@@ -123,7 +123,7 @@ $core = commentpress_core();
 					 *
 					 * @since 3.4
 					 *
-					 * @param str The default Table of Contents accordion title.
+					 * @param string The default Table of Contents accordion title.
 					 */
 					$cp_toc_title = apply_filters( 'cp_content_tab_toc_title', __( 'Table of Contents', 'commentpress-core' ) );
 

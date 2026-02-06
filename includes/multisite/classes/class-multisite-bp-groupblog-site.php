@@ -179,8 +179,8 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $default_theme The existing theme "stylesheet" slug.
-	 * @return str $default_theme The modified theme "stylesheet" slug.
+	 * @param string $default_theme The existing theme "stylesheet" slug.
+	 * @return string $default_theme The modified theme "stylesheet" slug.
 	 */
 	public function theme_get( $default_theme ) {
 
@@ -355,10 +355,10 @@ class CommentPress_Multisite_BuddyPress_Groupblog_Site {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str   $avatar The existing HTML for displaying an avatar.
-	 * @param int   $blog_id The numeric ID of the WordPress Blog.
-	 * @param array $args Additional arguments.
-	 * @return str $avatar The modified HTML for displaying an avatar.
+	 * @param string $avatar The existing HTML for displaying an avatar.
+	 * @param int    $blog_id The numeric ID of the WordPress Blog.
+	 * @param array  $args Additional arguments.
+	 * @return string $avatar The modified HTML for displaying an avatar.
 	 */
 	public function avatar_get( $avatar, $blog_id = 0, $args = [] ) {
 

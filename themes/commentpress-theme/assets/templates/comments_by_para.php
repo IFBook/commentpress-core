@@ -54,7 +54,7 @@ if ( isset( $post->ID ) ) {
 			 *
 			 * @since 3.7
 			 *
-			 * @param str The path to the Comment form template.
+			 * @param string The path to the Comment form template.
 			 */
 			$cp_comment_form = apply_filters( 'cp_template_comment_form', locate_template( 'assets/templates/comment_form.php' ) );
 

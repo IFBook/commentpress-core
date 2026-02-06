@@ -63,8 +63,7 @@ defined( 'ABSPATH' ) || exit;
 	 *
 	 * @since 3.4
 	 *
-	 * @param str The existing path returned by WordPress.
-	 * @return str The modified path.
+	 * @param string The existing path returned by WordPress.
 	 */
 	$cp_user_links = apply_filters( 'cp_template_user_links', locate_template( 'assets/templates/user_links.php' ) );
 
@@ -86,8 +85,7 @@ defined( 'ABSPATH' ) || exit;
 	 *
 	 * @since 3.4
 	 *
-	 * @param str The existing path returned by WordPress.
-	 * @return str The modified path.
+	 * @param string The existing path returned by WordPress.
 	 */
 	$cp_navigation = apply_filters( 'cp_template_navigation', locate_template( 'assets/templates/navigation.php' ) );
 

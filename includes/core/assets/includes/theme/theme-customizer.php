@@ -19,7 +19,7 @@ if ( ! function_exists( 'commentpress_customizer_get_site_image_title' ) ) :
 	 *
 	 * @since 4.0
 	 *
-	 * @return str The default "Site Image" label.
+	 * @return string The default "Site Image" label.
 	 */
 	function commentpress_customizer_get_site_image_title() {
 
@@ -28,7 +28,7 @@ if ( ! function_exists( 'commentpress_customizer_get_site_image_title' ) ) :
 		 *
 		 * @since 3.8.6
 		 *
-		 * @param str The default "Site Image" label.
+		 * @param string The default "Site Image" label.
 		 */
 		return apply_filters( 'commentpress_customizer_site_image_title', __( 'Site Image', 'commentpress-core' ) );
 
@@ -45,7 +45,7 @@ if ( ! function_exists( 'commentpress_customizer_get_site_image_description' ) )
 	 *
 	 * @since 4.0
 	 *
-	 * @return str The default "Site Image" label.
+	 * @return string The default "Site Image" label.
 	 */
 	function commentpress_customizer_get_site_image_description() {
 
@@ -54,7 +54,7 @@ if ( ! function_exists( 'commentpress_customizer_get_site_image_description' ) )
 		 *
 		 * @since 3.8.6
 		 *
-		 * @param str The default "Site Image" description.
+		 * @param string The default "Site Image" description.
 		 */
 		return apply_filters( 'commentpress_customizer_site_image_description', __( 'Choose an image to represent this site. Other plugins may use this image to illustrate this site - in multisite directory listings, for example.', 'commentpress-core' ) );
 
@@ -71,7 +71,7 @@ if ( ! function_exists( 'commentpress_customizer_get_site_logo_description' ) ) 
 	 *
 	 * @since 4.0
 	 *
-	 * @return str The default "Site Logo" label.
+	 * @return string The default "Site Logo" label.
 	 */
 	function commentpress_customizer_get_site_logo_description() {
 
@@ -80,7 +80,7 @@ if ( ! function_exists( 'commentpress_customizer_get_site_logo_description' ) ) 
 		 *
 		 * @since 3.8.6
 		 *
-		 * @param str The default "Site Logo" description.
+		 * @param string The default "Site Logo" description.
 		 */
 		return apply_filters( 'commentpress_customizer_site_logo_description', __( 'You may prefer to display an image instead of text in the header of your site. The image must be a maximum of 70px tall. If it is less tall, then you can adjust the vertical alignment using the "Top padding in px" setting below.', 'commentpress-core' ) );
 

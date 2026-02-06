@@ -6,7 +6,7 @@
  * Description:       CommentPress allows readers to comment in the margins of a text. You can use it to annotate, gloss, workshop, debate and more!
  * Plugin URI:        https://github.com/IFBook/commentpress-core
  * GitHub Plugin URI: https://github.com/IFBook/commentpress-core
- * Version:           4.0.4
+ * Version:           4.0.5
  * Author:            Institute for the Future of the Book
  * Author URI:        https://futureofthebook.org/commentpress/
  * License:           GPLv2 or later
@@ -40,7 +40,7 @@
 defined( 'ABSPATH' ) || exit;
 
 // Set version.
-define( 'COMMENTPRESS_VERSION', '4.0.4' );
+define( 'COMMENTPRESS_VERSION', '4.0.5' );
 
 // Store reference to this file.
 if ( ! defined( 'COMMENTPRESS_PLUGIN_FILE' ) ) {
@@ -181,7 +181,7 @@ class CommentPress_Plugin {
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $plugin_context The current plugin context.
+	 * @return string $plugin_context The current plugin context.
 	 */
 	public function plugin_context_get() {
 		return $this->plugin_context;
@@ -413,8 +413,8 @@ class CommentPress_Plugin {
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
 	 *
-	 * @param array $links The existing links array.
-	 * @param str   $file The name of the plugin file.
+	 * @param array  $links The existing links array.
+	 * @param string $file The name of the plugin file.
 	 * @return array $links The modified links array.
 	 */
 	public function action_links( $links, $file ) {
@@ -440,8 +440,8 @@ class CommentPress_Plugin {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str  $plugin The plugin file.
-	 * @param bool $network_wide True if network-activated, false otherwise.
+	 * @param string $plugin The plugin file.
+	 * @param bool   $network_wide True if network-activated, false otherwise.
 	 */
 	public function plugin_activated( $plugin, $network_wide = false ) {
 
@@ -471,8 +471,8 @@ class CommentPress_Plugin {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str  $plugin The plugin file.
-	 * @param bool $network_wide True if network-activated, false otherwise.
+	 * @param string $plugin The plugin file.
+	 * @param bool   $network_wide True if network-activated, false otherwise.
 	 */
 	public function plugin_deactivated( $plugin, $network_wide = false ) {
 

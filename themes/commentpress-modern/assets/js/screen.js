@@ -1151,6 +1151,10 @@ CommentPress.theme.viewport = new function() {
 						// Restore global.
 						cp_tinymce = '1';
 
+						// Now activate TinyMCE.
+						addComment.disableForm();
+						addComment.enableForm();
+
 					}
 
 				} else {

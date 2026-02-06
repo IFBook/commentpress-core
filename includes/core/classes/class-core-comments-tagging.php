@@ -340,7 +340,7 @@ class CommentPress_Core_Comments_Tagging {
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $tagging The setting if found, default otherwise.
+	 * @return string $tagging The setting if found, default otherwise.
 	 */
 	public function setting_tagging_get() {
 
@@ -357,7 +357,7 @@ class CommentPress_Core_Comments_Tagging {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $tagging The setting value.
+	 * @param string $tagging The setting value.
 	 */
 	public function setting_tagging_set( $tagging ) {
 
@@ -681,7 +681,7 @@ class CommentPress_Core_Comments_Tagging {
 	 * @since 4.0
 	 *
 	 * @param int $comment_id The numeric ID of the Comment.
-	 * @param str $comment_status The status of the Comment.
+	 * @param string $comment_status The status of the Comment.
 	 */
 	public function comment_saved( $comment_id, $comment_status ) {
 
@@ -758,10 +758,10 @@ class CommentPress_Core_Comments_Tagging {
 	 *
 	 * @since 4.0
 	 *
-	 * @param array $caps The existing capabilities array for the WordPress user.
-	 * @param str   $cap The capability in question.
-	 * @param int   $user_id The numeric ID of the WordPress user.
-	 * @param array $args The additional arguments.
+	 * @param array  $caps The existing capabilities array for the WordPress user.
+	 * @param string $cap The capability in question.
+	 * @param int    $user_id The numeric ID of the WordPress user.
+	 * @param array  $args The additional arguments.
 	 * @return array $caps The modified capabilities array for the WordPress user.
 	 */
 	public function comment_terms_enable( $caps, $cap, $user_id, $args ) {
@@ -1090,8 +1090,8 @@ class CommentPress_Core_Comments_Tagging {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $content The existing content.
-	 * @return str $html The markup for the tags metabox.
+	 * @param string $content The existing content.
+	 * @return string $html The markup for the tags metabox.
 	 */
 	public function front_end_markup_get( $content = '' ) {
 
@@ -1288,7 +1288,7 @@ class CommentPress_Core_Comments_Tagging {
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $html The Comments.
+	 * @return string $html The Comments.
 	 */
 	public function archive_content_get() {
 

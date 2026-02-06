@@ -545,7 +545,7 @@ class CommentPress_AJAX_Comments {
 	 * @since 3.4
 	 *
 	 * @param WP_Comment $comment The WordPress Comment object.
-	 * @param integer    $depth The depth of the Comment in a thread.
+	 * @param int        $depth The depth of the Comment in a thread.
 	 * @return int $depth The depth of the Comment in a thread.
 	 */
 	public function comment_depth_get( $comment, $depth ) {
@@ -571,9 +571,9 @@ class CommentPress_AJAX_Comments {
 	 *
 	 * @since 3.4
 	 *
-	 * @param str   $edit_button The existing edit button HTML.
-	 * @param array $comment The Comment this edit button applies to.
-	 * @return str $edit_button The modified edit button HTML.
+	 * @param string $edit_button The existing edit button HTML.
+	 * @param array  $comment The Comment this edit button applies to.
+	 * @return string $edit_button The modified edit button HTML.
 	 */
 	public function reassign_button_add( $edit_button, $comment ) {
 
@@ -676,8 +676,8 @@ class CommentPress_AJAX_Comments {
 	 *
 	 * @since 3.4
 	 *
-	 * @param int   $comment_id The numeric ID of the Comment.
-	 * @param str   $text_sig The Text Signature.
+	 * @param int    $comment_id The numeric ID of the Comment.
+	 * @param string $text_sig The Text Signature.
 	 * @param array $comment_ids The array of Comment IDs.
 	 */
 	public function comment_children_reassign( $comment_id, $text_sig, &$comment_ids ) {

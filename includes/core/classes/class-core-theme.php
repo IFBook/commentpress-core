@@ -323,7 +323,7 @@ class CommentPress_Core_Theme {
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $featured_images The setting if found, default otherwise.
+	 * @return string $featured_images The setting if found, default otherwise.
 	 */
 	public function setting_featured_images_get() {
 
@@ -340,7 +340,7 @@ class CommentPress_Core_Theme {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $featured_images The setting value.
+	 * @param string $featured_images The setting value.
 	 */
 	public function setting_featured_images_set( $featured_images ) {
 
@@ -354,7 +354,7 @@ class CommentPress_Core_Theme {
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $textblock_meta The setting if found, default otherwise.
+	 * @return string $textblock_meta The setting if found, default otherwise.
 	 */
 	public function setting_textblock_meta_get() {
 
@@ -371,7 +371,7 @@ class CommentPress_Core_Theme {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $textblock_meta The setting value.
+	 * @param string $textblock_meta The setting value.
 	 */
 	public function setting_textblock_meta_set( $textblock_meta ) {
 
@@ -546,7 +546,7 @@ class CommentPress_Core_Theme {
 		 *
 		 * @since 3.4
 		 *
-		 * @param str The default slug of the theme.
+		 * @param string The default slug of the theme.
 		 */
 		$target_theme = apply_filters( 'cp_forced_theme_slug', 'commentpress-flat' );
 
@@ -586,8 +586,7 @@ class CommentPress_Core_Theme {
 		 *
 		 * @since 3.4
 		 *
-		 * @param str The slug of the default theme to switch to.
-		 * @return str The modified slug of the default theme to switch to.
+		 * @param string The slug of the default theme to switch to.
 		 */
 		$target_theme = apply_filters( 'cp_restore_theme_slug', WP_DEFAULT_THEME );
 

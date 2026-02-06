@@ -654,8 +654,8 @@ class CommentPress_Multisite_Settings_Site {
 	 *
 	 * @since 4.0
 	 *
-	 * @param array $links The existing links array.
-	 * @param str   $file The name of the plugin file.
+	 * @param array  $links The existing links array.
+	 * @param string $file The name of the plugin file.
 	 * @return array $links The modified links array.
 	 */
 	public function action_links( $links, $file ) {

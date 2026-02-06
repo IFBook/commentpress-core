@@ -404,7 +404,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @return boolean $success True if successful, or false otherwise.
+	 * @return bool $success True if successful, or false otherwise.
 	 */
 	public function settings_save() {
 
@@ -432,7 +432,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $name The name of the setting.
+	 * @param string $name The name of the setting.
 	 * @return bool True if the setting exists, false otherwise.
 	 */
 	public function setting_exists( $name ) {
@@ -447,8 +447,8 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str   $name The name of the setting.
-	 * @param mixed $default The default value for the setting.
+	 * @param string $name The name of the setting.
+	 * @param mixed  $default The default value for the setting.
 	 * @return mixed The value of the setting if it exists, $default otherwise.
 	 */
 	public function setting_get( $name, $default = false ) {
@@ -463,8 +463,8 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str   $name The name of the setting.
-	 * @param mixed $value The value for the setting.
+	 * @param string $name The name of the setting.
+	 * @param mixed  $value The value for the setting.
 	 */
 	public function setting_set( $name, $value = '' ) {
 
@@ -478,7 +478,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $name The name of the setting.
+	 * @param string $name The name of the setting.
 	 */
 	public function setting_delete( $name ) {
 
@@ -494,7 +494,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $name The name of the Site Option.
+	 * @param string $name The name of the Site Option.
 	 * @return bool True if Site Option exists, false otherwise.
 	 */
 	public function option_wpms_exists( $name ) {
@@ -513,8 +513,8 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str   $name The name of the Site Option.
-	 * @param mixed $default The default value for the Site Option.
+	 * @param string $name The name of the Site Option.
+	 * @param mixed  $default The default value for the Site Option.
 	 * @return mixed The value of the Site Option if it exists, default otherwise.
 	 */
 	public function option_wpms_get( $name, $default = false ) {
@@ -529,8 +529,8 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 3.3
 	 *
-	 * @param str   $name The name of the Site Option.
-	 * @param mixed $value The value for the Site Option.
+	 * @param string $name The name of the Site Option.
+	 * @param mixed  $value The value for the Site Option.
 	 * @return bool True if the value was updated, false otherwise.
 	 */
 	public function option_wpms_set( $name, $value = '' ) {
@@ -545,7 +545,7 @@ class CommentPress_Multisite_Database {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $name The name of the Site Option.
+	 * @param string $name The name of the Site Option.
 	 */
 	public function option_wpms_delete( $name ) {
 

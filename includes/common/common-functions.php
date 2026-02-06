@@ -37,7 +37,7 @@ function commentpress_multisite() {
  *
  * @since 3.8.5
  *
- * @return str $minified The string to be included in a filename.
+ * @return string $minified The string to be included in a filename.
  */
 function commentpress_minified() {
 
@@ -62,8 +62,8 @@ function commentpress_minified() {
  *
  * @since 3.4
  *
- * @param str $plugin_name The name of the plugin.
- * @return str $path_to_plugin The path to the plugin.
+ * @param string $plugin_name The name of the plugin.
+ * @return string $path_to_plugin The path to the plugin.
  */
 function commentpress_find_plugin_by_name( $plugin_name = '' ) {
 

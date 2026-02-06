@@ -258,7 +258,7 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $revisions The setting if found, default otherwise.
+	 * @return string $revisions The setting if found, default otherwise.
 	 */
 	public function setting_revisions_get() {
 
@@ -275,7 +275,7 @@ class CommentPress_Core_Revisions {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $revisions The setting value.
+	 * @param string $revisions The setting value.
 	 */
 	public function setting_revisions_set( $revisions ) {
 
@@ -444,7 +444,7 @@ class CommentPress_Core_Revisions {
 		 *
 		 * @since 3.3
 		 *
-		 * @param str $prefix The existing prefix.
+		 * @param string $prefix The existing prefix.
 		 */
 		$prefix = apply_filters( 'commentpress_new_post_title_prefix', $prefix );
 
@@ -453,7 +453,7 @@ class CommentPress_Core_Revisions {
 		 *
 		 * @since 3.3
 		 *
-		 * @param str $post_title The prefixed Post title.
+		 * @param string  $post_title The prefixed Post title.
 		 * @param WP_Post $post The WordPress Post object to make a copy of.
 		 */
 		$new_post['post_title'] = apply_filters( 'commentpress_new_post_title', $prefix . $post->post_title, $post );
@@ -463,7 +463,7 @@ class CommentPress_Core_Revisions {
 		 *
 		 * @since 3.3
 		 *
-		 * @param str $post_excerpt The Post excerpt.
+		 * @param string $post_excerpt The Post excerpt.
 		 */
 		$new_post['post_excerpt'] = apply_filters( 'commentpress_new_post_excerpt', $post->post_excerpt );
 
@@ -472,7 +472,7 @@ class CommentPress_Core_Revisions {
 		 *
 		 * @since 3.3
 		 *
-		 * @param str $post_content The Post content.
+		 * @param string $post_content The Post content.
 		 */
 		$new_post['post_content'] = apply_filters( 'commentpress_new_post_content', $post->post_content );
 
@@ -481,7 +481,7 @@ class CommentPress_Core_Revisions {
 		 *
 		 * @since 3.3
 		 *
-		 * @param str $post_author The Post author.
+		 * @param string $post_author The Post author.
 		 */
 		$new_post['post_author'] = apply_filters( 'commentpress_new_post_author', $post->post_author );
 
@@ -595,7 +595,7 @@ class CommentPress_Core_Revisions {
 	 * @since 4.0
 	 *
 	 * @param int $post_id The ID of the WordPress Post.
-	 * @return str $newer_link The HTML link to the newer WordPress Post.
+	 * @return string $newer_link The HTML link to the newer WordPress Post.
 	 */
 	public function link_next_get( $post_id ) {
 
@@ -636,7 +636,7 @@ class CommentPress_Core_Revisions {
 	 * @since 4.0
 	 *
 	 * @param int $post_id The ID of the WordPress Post.
-	 * @return str $older_link The HTML link to the older WordPress Post.
+	 * @return string $older_link The HTML link to the older WordPress Post.
 	 */
 	public function link_previous_get( $post_id ) {
 

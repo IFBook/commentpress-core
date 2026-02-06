@@ -289,7 +289,7 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $show_title The setting if found, default otherwise.
+	 * @return string $show_title The setting if found, default otherwise.
 	 */
 	public function setting_show_title_get() {
 
@@ -306,7 +306,7 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $show_title The setting value.
+	 * @param string $show_title The setting value.
 	 */
 	public function setting_show_title_set( $show_title ) {
 
@@ -320,7 +320,7 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 *
-	 * @return str $show_meta The setting if found, default otherwise.
+	 * @return string $show_meta The setting if found, default otherwise.
 	 */
 	public function setting_show_meta_get() {
 
@@ -337,7 +337,7 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str $show_meta The setting value.
+	 * @param string $show_meta The setting value.
 	 */
 	public function setting_show_meta_set( $show_meta ) {
 
@@ -437,7 +437,7 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @param int|WP_Post $post The Post object or ID.
 	 * @param bool        $raw Pass "true" to get the actual meta value.
-	 * @return str $show_title The setting if found, default otherwise.
+	 * @return string $show_title The setting if found, default otherwise.
 	 */
 	public function entry_show_title_get( $post, $raw = false ) {
 
@@ -464,7 +464,7 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str         $show_title The setting value.
+	 * @param string      $show_title The setting value.
 	 * @param int|WP_Post $post The Post object or ID.
 	 */
 	public function entry_show_title_set( $show_title, $post ) {
@@ -491,7 +491,7 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @param int|WP_Post $post The Post object or ID.
 	 * @param bool        $raw Pass "true" to get the actual meta value.
-	 * @return str $show_meta The setting if found, default otherwise.
+	 * @return string $show_meta The setting if found, default otherwise.
 	 */
 	public function entry_show_meta_get( $post, $raw = false ) {
 
@@ -518,7 +518,7 @@ class CommentPress_Core_Entry_Single {
 	 *
 	 * @since 4.0
 	 *
-	 * @param str         $show_meta The setting value.
+	 * @param string      $show_meta The setting value.
 	 * @param int|WP_Post $post The Post object or ID.
 	 */
 	public function entry_show_meta_set( $show_meta, $post ) {

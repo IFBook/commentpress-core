@@ -229,7 +229,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_content' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @return str $html The HTML for the Page.
+	 * @return string $html The HTML for the Page.
 	 */
 	function commentpress_get_comments_by_content() {
 
@@ -348,7 +348,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_page_content' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @return str $page_content The Page content.
+	 * @return string $page_content The Page content.
 	 */
 	function commentpress_get_comments_by_page_content() {
 
@@ -379,8 +379,8 @@ if ( ! function_exists( 'commentpress_get_comment_activity' ) ) :
 	 *
 	 * @since 3.3
 	 *
-	 * @param str $scope The scope of the Activities.
-	 * @return str $page_content The HTML output for Activities.
+	 * @param string $scope The scope of the Activities.
+	 * @return string $page_content The HTML output for Activities.
 	 */
 	function commentpress_get_comment_activity( $scope = 'all' ) {
 
@@ -829,8 +829,8 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 			 *
 			 * @since 3.8.10
 			 *
-			 * @param str $singular_name The singular label for this Post Type.
-			 * @param str $current_type The Post Type identifier.
+			 * @param string $singular_name The singular label for this Post Type.
+			 * @param string $current_type The Post Type identifier.
 			 */
 			$post_type_name = apply_filters( 'commentpress_lexia_post_type_name', $post_type->labels->singular_name, $current_type );
 
@@ -954,7 +954,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 						 *
 						 * @since 3.9
 						 *
-						 * @param str $text_sig The Text Signature of the Paragraph.
+						 * @param string $text_sig The Text Signature of the Paragraph.
 						 */
 						do_action( 'commentpress_after_paragraph_comments', $text_sig );
 
@@ -987,8 +987,8 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 								 *
 								 * @since 3.9
 								 *
-								 * @param str $prompt The link text when login is required.
-								 * @param bool $registration True if registration is open, false otherwise.
+								 * @param string $prompt The link text when login is required.
+								 * @param bool   $registration True if registration is open, false otherwise.
 								 */
 								$prompt = apply_filters( 'commentpress_reply_to_prompt_text', $prompt, $registration );
 
@@ -1009,7 +1009,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 								 *
 								 * @since 3.9
 								 *
-								 * @param str The default "onclick" attribute.
+								 * @param string The default "onclick" attribute.
 								 */
 								$onclick = apply_filters( 'commentpress_reply_to_para_link_onclick', ' onclick="' . $onclick . '"' );
 
@@ -1029,8 +1029,8 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 								 *
 								 * @since 3.9
 								 *
-								 * @param str The default "href" attribute.
-								 * @param str $text_sig The Text Signature of the Paragraph.
+								 * @param string The default "href" attribute.
+								 * @param string $text_sig The Text Signature of the Paragraph.
 								 */
 								$href = apply_filters( 'commentpress_reply_to_para_link_href', $query . '#respond', $text_sig );
 
@@ -1046,8 +1046,8 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 								 *
 								 * @since 3.9
 								 *
-								 * @param str $link_content The default link content.
-								 * @param str The entity text.
+								 * @param string $link_content The default link content.
+								 * @param string The entity text.
 								 */
 								$link_content = apply_filters( 'commentpress_reply_to_para_link_text', $link_content, $markup['entity_text'] );
 
@@ -1070,7 +1070,7 @@ if ( ! function_exists( 'commentpress_get_comments_by_para' ) ) :
 					 *
 					 * @since 3.9
 					 *
-					 * @param str $text_sig The Text Signature of the Paragraph.
+					 * @param string $text_sig The Text Signature of the Paragraph.
 					 */
 					do_action( 'commentpress_after_paragraph_wrapper', $text_sig );
 
@@ -1106,10 +1106,10 @@ if ( ! function_exists( 'commentpress_comment_form_title' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $no_reply_text The text to show when there are no Comments.
-	 * @param str $reply_to_comment_text The text to show when there are Comments.
-	 * @param str $reply_to_para_text The text to show on Paragraphs when there are Comments.
-	 * @param str $link_to_parent The link to the parent Comment.
+	 * @param string $no_reply_text The text to show when there are no Comments.
+	 * @param string $reply_to_comment_text The text to show when there are Comments.
+	 * @param string $reply_to_para_text The text to show on Paragraphs when there are Comments.
+	 * @param string $link_to_parent The link to the parent Comment.
 	 */
 	function commentpress_comment_form_title( $no_reply_text = '', $reply_to_comment_text = '', $reply_to_para_text = '', $link_to_parent = true ) {
 
@@ -1439,7 +1439,7 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 			 *
 			 * @since 3.4
 			 *
-			 * @param str The default edit link title text.
+			 * @param string The default edit link title text.
 			 */
 			$edit_title_text = apply_filters( 'cp_comment_edit_link_title_text', __( 'Edit this comment', 'commentpress-core' ) );
 
@@ -1448,7 +1448,7 @@ if ( ! function_exists( 'commentpress_get_comment_markup' ) ) :
 			 *
 			 * @since 3.4
 			 *
-			 * @param str The default edit link text.
+			 * @param string The default edit link text.
 			 */
 			$edit_text = apply_filters( 'cp_comment_edit_link_text', __( 'Edit', 'commentpress-core' ) );
 
@@ -1538,9 +1538,9 @@ if ( ! function_exists( 'commentpress_comments_by_para_format_whole' ) ) :
 	 *
 	 * @since 3.8.10
 	 *
-	 * @param str $post_type_name The singular name of the Post Type.
-	 * @param str $post_type The Post Type identifier.
-	 * @param int $comment_count The number of Comments on the Block.
+	 * @param string $post_type_name The singular name of the Post Type.
+	 * @param string $post_type The Post Type identifier.
+	 * @param int    $comment_count The number of Comments on the Block.
 	 * @return array $return Data array containing the translated strings.
 	 */
 	function commentpress_comments_by_para_format_whole( $post_type_name, $post_type, $comment_count ) {
@@ -1563,9 +1563,9 @@ if ( ! function_exists( 'commentpress_comments_by_para_format_whole' ) ) :
 		 *
 		 * @since 3.9
 		 *
-		 * @param str $entity_text The current entity text.
-		 * @param str $post_type_name The singular name of the Post Type.
-		 * @return str $entity_text The modified entity text.
+		 * @param string $entity_text The current entity text.
+		 * @param string $post_type_name The singular name of the Post Type.
+		 * @param string $post_type The Post Type identifier.
 		 */
 		$return['entity_text'] = apply_filters( 'commentpress_lexia_whole_entity_text', $return['entity_text'], $post_type_name, $post_type );
 
@@ -1653,7 +1653,7 @@ if ( ! function_exists( 'commentpress_comment_post_redirect' ) ) :
 	 *
 	 * @since 3.5
 	 *
-	 * @param str        $link The link to the Comment.
+	 * @param string     $link The link to the Comment.
 	 * @param WP_Comment $comment The WordPress Comment object.
 	 */
 	function commentpress_comment_post_redirect( $link, $comment ) {
@@ -1716,10 +1716,10 @@ if ( ! function_exists( 'commentpress_image_caption_shortcode' ) ) :
 	 *
 	 * @since 3.5
 	 *
-	 * @param array $empty WordPress passes '' as the first param.
-	 * @param array $attr Attributes attributed to the shortcode.
-	 * @param str   $content Optional. Shortcode content.
-	 * @return str $caption The modified caption.
+	 * @param array  $empty WordPress passes '' as the first param.
+	 * @param array  $attr Attributes attributed to the shortcode.
+	 * @param string $content Optional. Shortcode content.
+	 * @return string $caption The modified caption.
 	 */
 	function commentpress_image_caption_shortcode( $empty, $attr, $content ) {
 
@@ -1855,7 +1855,7 @@ if ( ! function_exists( 'commentpress_get_post_multipage_url' ) ) :
 	 *
 	 * @param int     $i The Page number.
 	 * @param WP_Post $post The WordPress Post object.
-	 * @return str $url The URL to the Sub-page.
+	 * @return string $url The URL to the Sub-page.
 	 */
 	function commentpress_get_post_multipage_url( $i, $post = '' ) {
 
@@ -1937,8 +1937,8 @@ if ( ! function_exists( 'commentpress_assign_default_editor' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $default_editor The default editor as set by WordPress.
-	 * @return str 'tinymce' our overridden default editor.
+	 * @param string $default_editor The default editor as set by WordPress.
+	 * @return string 'tinymce' our overridden default editor.
 	 */
 	function commentpress_assign_default_editor( $default_editor ) {
 
@@ -1966,8 +1966,8 @@ if ( ! function_exists( 'commentpress_add_tinymce_styles' ) ) :
 	 *
 	 * @since 3.0
 	 *
-	 * @param str $mce_css The default TinyMCE stylesheets as set by WordPress.
-	 * @return str $mce_css The list of stylesheets with ours added.
+	 * @param string $mce_css The default TinyMCE stylesheets as set by WordPress.
+	 * @return string $mce_css The list of stylesheets with ours added.
 	 */
 	function commentpress_add_tinymce_styles( $mce_css ) {
 

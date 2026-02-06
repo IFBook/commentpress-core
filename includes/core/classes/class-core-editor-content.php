@@ -96,7 +96,7 @@ class CommentPress_Core_Editor_Content {
 	 * @since 3.4
 	 * @since 4.0 Moved to this class and renamed.
 	 *
-	 * @param str $hook The requested Admin Page.
+	 * @param string $hook The requested Admin Page.
 	 */
 	public function enqueue_scripts( $hook ) {
 
@@ -196,8 +196,8 @@ class CommentPress_Core_Editor_Content {
 	 * @since 3.0
 	 * @since 4.0 Moved to this class.
 	 *
-	 * @param str $content The Post content.
-	 * @return str $content The modified Post content.
+	 * @param string $content The Post content.
+	 * @return string $content The modified Post content.
 	 */
 	public function has_quicktag( $content ) {
 
@@ -220,8 +220,8 @@ class CommentPress_Core_Editor_Content {
 	 * @since 3.0
 	 * @since 4.0 Moved to this class.
 	 *
-	 * @param str $content The Post content.
-	 * @return str $content The modified Post content.
+	 * @param string $content The Post content.
+	 * @return string $content The modified Post content.
 	 */
 	public function strip_quicktag( $content ) {
 

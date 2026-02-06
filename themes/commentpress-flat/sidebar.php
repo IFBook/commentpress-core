@@ -52,7 +52,7 @@ $is_commentable = commentpress_is_commentable();
 								 *
 								 * @since 3.4
 								 *
-								 * @param str The default Comments tab title.
+								 * @param string The default Comments tab title.
 								 */
 								$cp_tab_title_comments = apply_filters( 'cp_tab_title_comments', __( 'Comments', 'commentpress-core' ) );
 
@@ -92,7 +92,7 @@ $is_commentable = commentpress_is_commentable();
 							 *
 							 * @since 3.4
 							 *
-							 * @param str The default Activity tab title.
+							 * @param string The default Activity tab title.
 							 */
 							$_activity_title = apply_filters( 'cp_tab_title_activity', __( 'Activity', 'commentpress-core' ) );
 
@@ -139,8 +139,7 @@ $is_commentable = commentpress_is_commentable();
 			 *
 			 * @since 3.4
 			 *
-			 * @param str The existing path returned by WordPress.
-			 * @return str The modified path.
+			 * @param string The existing path returned by WordPress.
 			 */
 			$cp_comments_sidebar = apply_filters( 'cp_template_comments_sidebar', locate_template( 'assets/templates/comments_sidebar.php' ) );
 
@@ -159,8 +158,7 @@ $is_commentable = commentpress_is_commentable();
 			 *
 			 * @since 3.4
 			 *
-			 * @param str The existing path returned by WordPress.
-			 * @return str The modified path.
+			 * @param string The existing path returned by WordPress.
 			 */
 			$cp_activity_sidebar = apply_filters( 'cp_template_activity_sidebar', locate_template( 'assets/templates/activity_sidebar.php' ) );
 

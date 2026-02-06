@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 3.4
  *
- * @param str The default Older Entries title.
+ * @param string The default Older Entries title.
  */
 $previous_title = apply_filters( 'cp_nav_previous_link_title', __( 'Older Entries', 'commentpress-core' ) );
 
@@ -22,7 +22,7 @@ $previous_title = apply_filters( 'cp_nav_previous_link_title', __( 'Older Entrie
  *
  * @since 3.4
  *
- * @param str The default Newer Entries title.
+ * @param string The default Newer Entries title.
  */
 $next_title = apply_filters( 'cp_nav_next_link_title', __( 'Newer Entries', 'commentpress-core' ) );
 

@@ -57,7 +57,7 @@ class CommentPress_License_Widget extends WP_Widget {
 		 * @since 3.4
 		 *
 		 * @param string The content of the widget.
-		 * @param array $instance An array of settings for this Widget instance.
+		 * @param array  $instance An array of settings for this Widget instance.
 		 */
 		$text = apply_filters( 'commentpress_widget', empty( $instance['text'] ) ? '' : $instance['text'], $instance );
 

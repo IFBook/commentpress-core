@@ -849,7 +849,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $page The type of Special Page.
+	 * @param string $page The type of Special Page.
 	 * @return mixed $new_id The numeric ID of the new Page, or false on failure.
 	 */
 	public function special_page_create( $page ) {
@@ -919,7 +919,7 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 *
 	 * @since 3.4
 	 *
-	 * @param str $page The type of Special Page to delete.
+	 * @param string $page The type of Special Page to delete.
 	 * @return bool True if succesfully deleted, false otherwise.
 	 */
 	public function special_page_delete( $page ) {
@@ -1478,8 +1478,8 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
 	 *
-	 * @param str $page_type The CommentPress Core "name" of a Special Page.
-	 * @return str $link The HTML link to that Page.
+	 * @param string $page_type The CommentPress Core "name" of a Special Page.
+	 * @return string $link The HTML link to that Page.
 	 */
 	public function get_page_link( $page_type = 'cp_all_comments_page' ) {
 
@@ -1556,8 +1556,8 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 		 *
 		 * @since 3.4
 		 *
-		 * @param str $link_title The default Special Page title.
-		 * @param str $page_type The CommentPress Core "name" of a Special Page.
+		 * @param string $link_title The default Special Page title.
+		 * @param string $page_type The CommentPress Core "name" of a Special Page.
 		 */
 		$title = apply_filters( 'commentpress_page_link_title', $link_title, $page_type );
 
@@ -1579,8 +1579,8 @@ You can also set a number of options in <em>WordPress</em> &#8594; <em>Settings<
 	 * @since 3.4
 	 * @since 4.0 Moved to this class.
 	 *
-	 * @param str $page_type The CommentPress Core "name" of a Special Page.
-	 * @return str $url The URL of that Page.
+	 * @param string $page_type The CommentPress Core "name" of a Special Page.
+	 * @return string $url The URL of that Page.
 	 */
 	public function get_page_url( $page_type = 'cp_all_comments_page' ) {
 
